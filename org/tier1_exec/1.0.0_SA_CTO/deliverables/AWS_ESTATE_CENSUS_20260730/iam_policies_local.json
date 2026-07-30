@@ -1,0 +1,122 @@
+[
+    {
+        "n": "opal-assets-silver-write-pathfinder",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-pathfinder"
+    },
+    {
+        "n": "opal-data-refresh-lambda-policy",
+        "a": "arn:aws:iam::313476888478:policy/opal-data-refresh-lambda-policy"
+    },
+    {
+        "n": "opal-assets-write-eclipse",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-eclipse"
+    },
+    {
+        "n": "opal-assets-silver-write-smartx",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-smartx"
+    },
+    {
+        "n": "opal-assets-silver-write-msn",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-msn"
+    },
+    {
+        "n": "opal-assets-read",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-read"
+    },
+    {
+        "n": "opal-assets-silver-write-blackdiamond",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-blackdiamond"
+    },
+    {
+        "n": "opal-assets-silver-dlq-access",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-dlq-access"
+    },
+    {
+        "n": "opal-assets-silver-write-trueshares",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-trueshares"
+    },
+    {
+        "n": "website-estate-admin",
+        "a": "arn:aws:iam::313476888478:policy/website/website-estate-admin"
+    },
+    {
+        "n": "opal-assets-write-smartx",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-smartx"
+    },
+    {
+        "n": "opal-assets-one-way-fan-in-fence",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-one-way-fan-in-fence"
+    },
+    {
+        "n": "opal-assets-write-trueshares",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-trueshares"
+    },
+    {
+        "n": "opal-assets-write-pathfinder",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-pathfinder"
+    },
+    {
+        "n": "inf-andrew-otp-write",
+        "a": "arn:aws:iam::313476888478:policy/inf-andrew-otp-write"
+    },
+    {
+        "n": "ycharts-credentials-read",
+        "a": "arn:aws:iam::313476888478:policy/ycharts-credentials-read"
+    },
+    {
+        "n": "github-actions-portal-deploy",
+        "a": "arn:aws:iam::313476888478:policy/github-actions-portal-deploy"
+    },
+    {
+        "n": "OpalSecretsReader",
+        "a": "arn:aws:iam::313476888478:policy/OpalSecretsReader"
+    },
+    {
+        "n": "opal-assets-write-schwab",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-schwab"
+    },
+    {
+        "n": "bd-securities-access",
+        "a": "arn:aws:iam::313476888478:policy/bd-securities-access"
+    },
+    {
+        "n": "opal-assets-write-orion",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-orion"
+    },
+    {
+        "n": "opal-assets-silver-write-eclipse",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-eclipse"
+    },
+    {
+        "n": "OpalSecretsAdmin",
+        "a": "arn:aws:iam::313476888478:policy/OpalSecretsAdmin"
+    },
+    {
+        "n": "MDPFLegacyEmitInvoker",
+        "a": "arn:aws:iam::313476888478:policy/MDPFLegacyEmitInvoker"
+    },
+    {
+        "n": "market-update-lambda-policy",
+        "a": "arn:aws:iam::313476888478:policy/market-update-lambda-policy"
+    },
+    {
+        "n": "opal-assets-write-msn",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-msn"
+    },
+    {
+        "n": "opal-assets-silver-write-schwab",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-schwab"
+    },
+    {
+        "n": "opal-assets-silver-write-orion",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-silver-write-orion"
+    },
+    {
+        "n": "OpalPortalDeveloperAccess",
+        "a": "arn:aws:iam::313476888478:policy/OpalPortalDeveloperAccess"
+    },
+    {
+        "n": "opal-assets-write-blackdiamond",
+        "a": "arn:aws:iam::313476888478:policy/opal-assets-write-blackdiamond"
+    }
+]

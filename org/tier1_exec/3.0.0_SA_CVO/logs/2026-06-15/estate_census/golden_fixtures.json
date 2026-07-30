@@ -1,325 +1,338 @@
 {
- "fixtures": {
-  "security-scanner": {
-   "named_thread": "security-scanner",
-   "resource_count": 4,
-   "resources": [
-    "access-anomaly-scanner",
-    "cost-anomaly-scanner",
-    "opal-security-scanner-processor",
-    "security-sweep-comprehensive"
-   ]
+  "fixtures": {
+    "security-scanner": {
+      "named_thread": "security-scanner",
+      "resource_count": 4,
+      "resources": [
+        "access-anomaly-scanner",
+        "cost-anomaly-scanner",
+        "opal-security-scanner-processor",
+        "security-sweep-comprehensive"
+      ]
+    },
+    "portal-infra": {
+      "named_thread": "portal-infra",
+      "resource_count": 8,
+      "resources": [
+        "auth-validator-edge",
+        "cache-control-injector",
+        "opal-portal-authorizer",
+        "opal-portal-data-proxy",
+        "opal-session-analytics",
+        "opalinvest-auth-handler",
+        "portal-time-machine",
+        "public-data-router"
+      ]
+    },
+    "advi-bd": {
+      "named_thread": "advi-bd",
+      "resource_count": 20,
+      "resources": [
+        "bd-allocation-file-checker",
+        "bd-allocation-processor",
+        "bd-allocation-trigger",
+        "bd-asset-dim-trigger",
+        "bd-capture-output-versions",
+        "bd-client-detail",
+        "bd-fees-trigger",
+        "bd-gold-detail-checker",
+        "bd-gold-foundation",
+        "bd-gold-layer",
+        "bd-gold-trigger",
+        "bd-incrparity-trigger",
+        "bd-portal-publisher",
+        "bd-price-update",
+        "bd-realized-trigger",
+        "bd-time-machine",
+        "bd-transactions-trigger",
+        "bd-unrealized-trigger",
+        "historical-prices-scheduler",
+        "opal-bd-transaction-consolidator"
+      ]
+    },
+    "causality": {
+      "named_thread": "causality",
+      "resource_count": 6,
+      "resources": [
+        "causality-ai-query-handler",
+        "causality-analysis-generator",
+        "causality-data-enrichment",
+        "causality-thematic-signals-generator",
+        "causality-themes-fetcher",
+        "causality-trade-idea-generator"
+      ]
+    },
+    "market-overview": {
+      "named_thread": "market-overview",
+      "resource_count": 15,
+      "resources": [
+        "causality-history-manager",
+        "causality-market-update-generator",
+        "market-update-data-aggregator",
+        "market-update-exporter",
+        "market-update-generator",
+        "opal-market-overview-tiered-generator",
+        "opal-market-regime-classifier",
+        "opal-market-rsi-tiered-generator",
+        "opal-portal-fear-greed-fetcher",
+        "opal-portal-volatility-fetcher",
+        "opal-portfolio-version-get",
+        "opal-portfolio-versions-list",
+        "ycharts-market-data-pull",
+        "ycharts-session-capture",
+        "ycharts-session-probe"
+      ]
+    },
+    "advi-cot": {
+      "named_thread": "advi-cot",
+      "resource_count": 1,
+      "resources": [
+        "cot-bd-session-trigger"
+      ]
+    },
+    "macroeconomics": {
+      "named_thread": "macroeconomics",
+      "resource_count": 9,
+      "resources": [
+        "daily-agenda-generator",
+        "deck-generation",
+        "exec-summary-generator",
+        "fred-data-ingestion",
+        "fred-macro-ingestion",
+        "yang-generate-macro",
+        "yang-generate-macro-timeseries",
+        "yang-generate-risk-premium",
+        "yang-refresh-fred-cache"
+      ]
+    },
+    "ops-internal": {
+      "named_thread": "ops-internal",
+      "resource_count": 5,
+      "resources": [
+        "ec2-auto-shutdown-enforcer",
+        "ec2-runtime-monitor",
+        "schwab-anonymizer",
+        "test-yfinance-simple",
+        "yfinance-aapl-test"
+      ]
+    },
+    "news": {
+      "named_thread": "news",
+      "resource_count": 21,
+      "resources": [
+        "finbert-batch-processor",
+        "keyword-intelligence-generator",
+        "news-ingestion-scheduler",
+        "news-semantic-clustering",
+        "news-trending-analysis",
+        "opal-keyword-drilldown-generator",
+        "opal-news-ai-sentiment",
+        "opal-news-layer3-curation",
+        "opal-trending-image-generator",
+        "opal-trending-topics-portal-publisher",
+        "seeking-alpha-analysis-coordinator",
+        "seeking-alpha-analysis-dedup",
+        "seeking-alpha-analysis-listing-parser",
+        "seeking-alpha-analysis-scraper",
+        "seeking-alpha-news-coordinator",
+        "seeking-alpha-news-dedup",
+        "seeking-alpha-news-scraper",
+        "semantic-news-layer3-curation",
+        "semantic-trending-topics-portal-publisher",
+        "sentiment_query_api",
+        "test-seeking-alpha-unauth-simple"
+      ]
+    },
+    "insurance": {
+      "named_thread": "insurance",
+      "resource_count": 4,
+      "resources": [
+        "find-insure-crawl-web",
+        "find-insure-crawl-web-scraping-browser",
+        "find-insure-parse-web",
+        "find-insure-score-web"
+      ]
+    },
+    "advi-inf": {
+      "named_thread": "advi-inf",
+      "resource_count": 24,
+      "resources": [
+        "inf-accounts-v2-daily",
+        "inf-api-assets-v2",
+        "inf-api-positions",
+        "inf-api-reps",
+        "inf-api-txn",
+        "inf-assets-trigger",
+        "inf-billing-daily",
+        "inf-bronze-trigger",
+        "inf-client-detail",
+        "inf-ec2-launch-monitor",
+        "inf-ec2-retry-launch",
+        "inf-gold-trigger",
+        "inf-jwt-trigger",
+        "inf-nna-partition-checker",
+        "inf-otp-relay",
+        "inf-performance-daily",
+        "inf-portal-advisor-publisher",
+        "inf-portal-publisher",
+        "inf-silver-aggregator",
+        "inf-silver-chain",
+        "inf-tax-daily",
+        "inf-unified-account-dim-daily",
+        "shared-advisor-router",
+        "shared-advisor-router-response"
+      ]
+    },
+    "portfolio-management": {
+      "named_thread": "portfolio-management",
+      "resource_count": 12,
+      "resources": [
+        "infrastructure-daily-snapshot",
+        "opal-infrastructure-monitor",
+        "opal-pm-optimization-autosave-put",
+        "opal-pm-optimization-loader",
+        "opal-pm-snapshot-handler",
+        "opal-pm-upload-urls",
+        "opal-portfolio-autosave-get",
+        "opal-portfolio-autosave-put",
+        "opal-portfolio-excel-generator",
+        "opal-portfolio-export-download",
+        "opal-portfolio-funds-list",
+        "opal-portfolio-pickle-parser"
+      ]
+    },
+    "mdpf": {
+      "named_thread": "mdpf",
+      "resource_count": 2,
+      "resources": [
+        "mdpf-daily-trigger",
+        "mdpf-accrual-trigger"
+      ],
+      "rebaselined": "2026-07-30 CVO tool-walk #1: mirrors the TF-verified 07-30 map review (mdpf-freshness-checker TF-ABSENT, removed; mdpf-accrual-trigger added). The review predated this re-baseline only because --gate-b had been dropped from the CLI by the 07-29 rename regression -- the oracle was not invocable when the map changed."
+    },
+    "data-refresh": {
+      "named_thread": "data-refresh",
+      "resource_count": 1,
+      "resources": [
+        "opal-data-refresh-api"
+      ]
+    },
+    "graph-platform": {
+      "named_thread": "graph-platform",
+      "resource_count": 1,
+      "resources": [
+        "opal-globgrph-incremental-updater"
+      ]
+    },
+    "partners": {
+      "named_thread": "partners",
+      "resource_count": 1,
+      "resources": [
+        "opal-partners-data"
+      ]
+    },
+    "smartx": {
+      "named_thread": "smartx",
+      "resource_count": 5,
+      "resources": [
+        "opal-smartx-ingestion-pipeline",
+        "smartx-ec2-autostart",
+        "smartx-jwt-refresher",
+        "smartx-model-monthly-pull",
+        "smartx-rest-pull"
+      ]
+    },
+    "trade-submission": {
+      "named_thread": "trade-submission",
+      "resource_count": 7,
+      "resources": [
+        "trade-auth-handler",
+        "trade-authorizer",
+        "trade-dashboard-api",
+        "trade-identifier-cache",
+        "trade-parquet-batch-export",
+        "trade-submission-handler",
+        "trade-workflow-handler"
+      ]
+    },
+    "model-portfolios": {
+      "named_thread": "model-portfolios",
+      "resource_count": 17,
+      "resources": [
+        "yang-canon-interlock",
+        "yang-capture-output-versions",
+        "yang-cleanup-uploads",
+        "yang-generate-allocation-summary",
+        "yang-generate-etf-returns",
+        "yang-generate-latest",
+        "yang-generate-manifest",
+        "yang-generate-peer-performance",
+        "yang-generate-volatility",
+        "yang-get-prior-metadata",
+        "yang-ingest-dynamodb",
+        "yang-invalidate-cloudfront",
+        "yang-model-portfolio-benchmarks",
+        "yang-move-to-processed",
+        "yang-pipeline-trigger",
+        "yang-time-machine",
+        "yang-validate-files"
+      ]
+    },
+    "cma": {
+      "named_thread": "cma",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-cma"
+      ]
+    },
+    "correlation": {
+      "named_thread": "correlation",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-correlation"
+      ]
+    },
+    "factor-tilts": {
+      "named_thread": "factor-tilts",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-factor-tilts"
+      ]
+    },
+    "attribution": {
+      "named_thread": "attribution",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-holdings-attribution"
+      ]
+    },
+    "positioning": {
+      "named_thread": "positioning",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-positioning"
+      ]
+    },
+    "valuation": {
+      "named_thread": "valuation",
+      "resource_count": 1,
+      "resources": [
+        "yang-generate-valuation"
+      ]
+    },
+    "canonical-schwab": {
+      "resources": [
+        "canonical-schwab-si2"
+      ],
+      "added": "2026-07-30 CVO tool-walk #1: fixture coverage for the two previously declared-but-unmapped threads"
+    },
+    "m365-mcp": {
+      "resources": [
+        "m365-mcp-gateway"
+      ],
+      "added": "2026-07-30 CVO tool-walk #1: fixture coverage for the two previously declared-but-unmapped threads"
+    }
   },
-  "portal-infra": {
-   "named_thread": "portal-infra",
-   "resource_count": 8,
-   "resources": [
-    "auth-validator-edge",
-    "cache-control-injector",
-    "opal-portal-authorizer",
-    "opal-portal-data-proxy",
-    "opal-session-analytics",
-    "opalinvest-auth-handler",
-    "portal-time-machine",
-    "public-data-router"
-   ]
-  },
-  "advi-bd": {
-   "named_thread": "advi-bd",
-   "resource_count": 20,
-   "resources": [
-    "bd-allocation-file-checker",
-    "bd-allocation-processor",
-    "bd-allocation-trigger",
-    "bd-asset-dim-trigger",
-    "bd-capture-output-versions",
-    "bd-client-detail",
-    "bd-fees-trigger",
-    "bd-gold-detail-checker",
-    "bd-gold-foundation",
-    "bd-gold-layer",
-    "bd-gold-trigger",
-    "bd-incrparity-trigger",
-    "bd-portal-publisher",
-    "bd-price-update",
-    "bd-realized-trigger",
-    "bd-time-machine",
-    "bd-transactions-trigger",
-    "bd-unrealized-trigger",
-    "historical-prices-scheduler",
-    "opal-bd-transaction-consolidator"
-   ]
-  },
-  "causality": {
-   "named_thread": "causality",
-   "resource_count": 6,
-   "resources": [
-    "causality-ai-query-handler",
-    "causality-analysis-generator",
-    "causality-data-enrichment",
-    "causality-thematic-signals-generator",
-    "causality-themes-fetcher",
-    "causality-trade-idea-generator"
-   ]
-  },
-  "market-overview": {
-   "named_thread": "market-overview",
-   "resource_count": 15,
-   "resources": [
-    "causality-history-manager",
-    "causality-market-update-generator",
-    "market-update-data-aggregator",
-    "market-update-exporter",
-    "market-update-generator",
-    "opal-market-overview-tiered-generator",
-    "opal-market-regime-classifier",
-    "opal-market-rsi-tiered-generator",
-    "opal-portal-fear-greed-fetcher",
-    "opal-portal-volatility-fetcher",
-    "opal-portfolio-version-get",
-    "opal-portfolio-versions-list",
-    "ycharts-market-data-pull",
-    "ycharts-session-capture",
-    "ycharts-session-probe"
-   ]
-  },
-  "advi-cot": {
-   "named_thread": "advi-cot",
-   "resource_count": 1,
-   "resources": [
-    "cot-bd-session-trigger"
-   ]
-  },
-  "macroeconomics": {
-   "named_thread": "macroeconomics",
-   "resource_count": 9,
-   "resources": [
-    "daily-agenda-generator",
-    "deck-generation",
-    "exec-summary-generator",
-    "fred-data-ingestion",
-    "fred-macro-ingestion",
-    "yang-generate-macro",
-    "yang-generate-macro-timeseries",
-    "yang-generate-risk-premium",
-    "yang-refresh-fred-cache"
-   ]
-  },
-  "ops-internal": {
-   "named_thread": "ops-internal",
-   "resource_count": 5,
-   "resources": [
-    "ec2-auto-shutdown-enforcer",
-    "ec2-runtime-monitor",
-    "schwab-anonymizer",
-    "test-yfinance-simple",
-    "yfinance-aapl-test"
-   ]
-  },
-  "news": {
-   "named_thread": "news",
-   "resource_count": 21,
-   "resources": [
-    "finbert-batch-processor",
-    "keyword-intelligence-generator",
-    "news-ingestion-scheduler",
-    "news-semantic-clustering",
-    "news-trending-analysis",
-    "opal-keyword-drilldown-generator",
-    "opal-news-ai-sentiment",
-    "opal-news-layer3-curation",
-    "opal-trending-image-generator",
-    "opal-trending-topics-portal-publisher",
-    "seeking-alpha-analysis-coordinator",
-    "seeking-alpha-analysis-dedup",
-    "seeking-alpha-analysis-listing-parser",
-    "seeking-alpha-analysis-scraper",
-    "seeking-alpha-news-coordinator",
-    "seeking-alpha-news-dedup",
-    "seeking-alpha-news-scraper",
-    "semantic-news-layer3-curation",
-    "semantic-trending-topics-portal-publisher",
-    "sentiment_query_api",
-    "test-seeking-alpha-unauth-simple"
-   ]
-  },
-  "insurance": {
-   "named_thread": "insurance",
-   "resource_count": 4,
-   "resources": [
-    "find-insure-crawl-web",
-    "find-insure-crawl-web-scraping-browser",
-    "find-insure-parse-web",
-    "find-insure-score-web"
-   ]
-  },
-  "advi-inf": {
-   "named_thread": "advi-inf",
-   "resource_count": 24,
-   "resources": [
-    "inf-accounts-v2-daily",
-    "inf-api-assets-v2",
-    "inf-api-positions",
-    "inf-api-reps",
-    "inf-api-txn",
-    "inf-assets-trigger",
-    "inf-billing-daily",
-    "inf-bronze-trigger",
-    "inf-client-detail",
-    "inf-ec2-launch-monitor",
-    "inf-ec2-retry-launch",
-    "inf-gold-trigger",
-    "inf-jwt-trigger",
-    "inf-nna-partition-checker",
-    "inf-otp-relay",
-    "inf-performance-daily",
-    "inf-portal-advisor-publisher",
-    "inf-portal-publisher",
-    "inf-silver-aggregator",
-    "inf-silver-chain",
-    "inf-tax-daily",
-    "inf-unified-account-dim-daily",
-    "shared-advisor-router",
-    "shared-advisor-router-response"
-   ]
-  },
-  "portfolio-management": {
-   "named_thread": "portfolio-management",
-   "resource_count": 12,
-   "resources": [
-    "infrastructure-daily-snapshot",
-    "opal-infrastructure-monitor",
-    "opal-pm-optimization-autosave-put",
-    "opal-pm-optimization-loader",
-    "opal-pm-snapshot-handler",
-    "opal-pm-upload-urls",
-    "opal-portfolio-autosave-get",
-    "opal-portfolio-autosave-put",
-    "opal-portfolio-excel-generator",
-    "opal-portfolio-export-download",
-    "opal-portfolio-funds-list",
-    "opal-portfolio-pickle-parser"
-   ]
-  },
-  "mdpf": {
-   "named_thread": "mdpf",
-   "resource_count": 2,
-   "resources": [
-    "mdpf-daily-trigger",
-    "mdpf-freshness-checker"
-   ]
-  },
-  "data-refresh": {
-   "named_thread": "data-refresh",
-   "resource_count": 1,
-   "resources": [
-    "opal-data-refresh-api"
-   ]
-  },
-  "graph-platform": {
-   "named_thread": "graph-platform",
-   "resource_count": 1,
-   "resources": [
-    "opal-globgrph-incremental-updater"
-   ]
-  },
-  "partners": {
-   "named_thread": "partners",
-   "resource_count": 1,
-   "resources": [
-    "opal-partners-data"
-   ]
-  },
-  "smartx": {
-   "named_thread": "smartx",
-   "resource_count": 5,
-   "resources": [
-    "opal-smartx-ingestion-pipeline",
-    "smartx-ec2-autostart",
-    "smartx-jwt-refresher",
-    "smartx-model-monthly-pull",
-    "smartx-rest-pull"
-   ]
-  },
-  "trade-submission": {
-   "named_thread": "trade-submission",
-   "resource_count": 7,
-   "resources": [
-    "trade-auth-handler",
-    "trade-authorizer",
-    "trade-dashboard-api",
-    "trade-identifier-cache",
-    "trade-parquet-batch-export",
-    "trade-submission-handler",
-    "trade-workflow-handler"
-   ]
-  },
-  "model-portfolios": {
-   "named_thread": "model-portfolios",
-   "resource_count": 17,
-   "resources": [
-    "yang-canon-interlock",
-    "yang-capture-output-versions",
-    "yang-cleanup-uploads",
-    "yang-generate-allocation-summary",
-    "yang-generate-etf-returns",
-    "yang-generate-latest",
-    "yang-generate-manifest",
-    "yang-generate-peer-performance",
-    "yang-generate-volatility",
-    "yang-get-prior-metadata",
-    "yang-ingest-dynamodb",
-    "yang-invalidate-cloudfront",
-    "yang-model-portfolio-benchmarks",
-    "yang-move-to-processed",
-    "yang-pipeline-trigger",
-    "yang-time-machine",
-    "yang-validate-files"
-   ]
-  },
-  "cma": {
-   "named_thread": "cma",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-cma"
-   ]
-  },
-  "correlation": {
-   "named_thread": "correlation",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-correlation"
-   ]
-  },
-  "factor-tilts": {
-   "named_thread": "factor-tilts",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-factor-tilts"
-   ]
-  },
-  "attribution": {
-   "named_thread": "attribution",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-holdings-attribution"
-   ]
-  },
-  "positioning": {
-   "named_thread": "positioning",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-positioning"
-   ]
-  },
-  "valuation": {
-   "named_thread": "valuation",
-   "resource_count": 1,
-   "resources": [
-    "yang-generate-valuation"
-   ]
-  }
- },
- "source": "AUTHORITATIVE_lambda_taxonomy.json (single resource-level source; 45 divergences reconciled)",
- "note": "resolver MUST be regenerated from the same lambda->named_thread map for the gate to pass (resolver+fixtures one source)"
+  "source": "AUTHORITATIVE_lambda_taxonomy.json (single resource-level source; 45 divergences reconciled)",
+  "note": "resolver MUST be regenerated from the same lambda->named_thread map for the gate to pass (resolver+fixtures one source)"
 }

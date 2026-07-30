@@ -1,0 +1,38 @@
+{
+    "ResourceTagMappingList": [
+        {
+            "ResourceARN": "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-errors",
+            "Tags": [
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "fred-ingestion-stack"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:us-east-2:313476888478:stack/fred-ingestion-stack/d31f51d0-d6c2-11f0-a1b2-02372364efb5"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "LambdaErrorAlarm"
+                }
+            ]
+        },
+        {
+            "ResourceARN": "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-duration",
+            "Tags": [
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "fred-ingestion-stack"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:us-east-2:313476888478:stack/fred-ingestion-stack/d31f51d0-d6c2-11f0-a1b2-02372364efb5"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "LambdaDurationAlarm"
+                }
+            ]
+        }
+    ]
+}

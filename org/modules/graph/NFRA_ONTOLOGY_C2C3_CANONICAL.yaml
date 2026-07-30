@@ -1,0 +1,241 @@
+# NFRA_ONTOLOGY -- THE CANONICAL AGNOSTIC C2/C3 CATALOG (+ the C4 verticals layer)
+# =================================================================================
+# AUTHORITY: Andrew-direct SOVEREIGN, 2026-07-30 (CVO terminal, verbatim): 'you have full
+#   sovereign authority ... assess the agnostic honest structural C2, and thereby C3, and we
+#   construct the semantic names for the motifs and for their systems aggregations ...
+#   persisted in a manner that there is never any confusion about this again, so any agent
+#   asking about Ontology does not get lost in debt-terms and lacks coherence.'
+# Author: 3.0.0_SA_CVO under that authority. Extends (never replaces) NFRA_ONTOLOGY_RULE_BANK.yaml.
+#
+# >>> THE COHERENCE LAW -- READ THIS BEFORE ANY OTHER ONTOLOGY DOCUMENT <<<
+# C2 (motifs) and C3 (systems) are AGNOSTIC STRUCTURAL layers: recurring path-shapes and their
+# connected aggregations, named in the 14-role / 10-relation vocabulary. They are NOT debt
+# concepts. The six detector motifs (silent-display-fork, cross-firm-asymmetry, hardcoded-firm-
+# literal, dead-component, orphan-endpoint, render-without-null-guard) are a DEVIATION SUBSET --
+# defect-shaped departures FROM these canonical forms, absorbed from a defect-detector library.
+# They remain valid AS deviation motifs. Presenting them as 'the C2 catalog' or their clusters
+# as 'the C3 systems' is the exact incoherence this file exists to kill: THE PRIMARY POPULATION
+# OF C2/C3 IS THE CANONICAL CATALOG BELOW. A debt motif is a shadow; this file is the object.
+
+schema_version: 1
+authored: 2026-07-30
+population_law: canon-first-debt-subset
+honesty_invariants:
+  c2_c3: 'DISCOVERED, never declared -- membership comes from recurrence (>=2) and structural
+    union-find (NFRA_MOTIF_P2_c3_emergence.py); this catalog NAMES what recurs, it does not invent members.'
+  c4: 'DECLARED, never discovered -- a vertical exists only by a naming act (Andrew/CVO).
+    Emergence may PROPOSE a candidate cluster; only legislation admits it.'
+  reconciliation: 'a computed C3 component straddling two C4 verticals, or a vertical that is not
+    structurally connected, is an ADJUDICATION EVENT recorded with its reason (ownership is single;
+    participation is many).'
+
+# ---------------------------------------------------------------------------------------------
+# C2 -- THE TWELVE CANONICAL PATH-MOTIF FAMILIES (agnostic; defined in role vocabulary)
+# ---------------------------------------------------------------------------------------------
+c2_motif_families:
+  scheduled-ingest:
+    shape: 'Trigger(cron) -> Producer -> Store(raw/bronze)'
+    canon_binding: 'PIPELINE_CANON (first hop)'
+    meaning: 'Cadence-driven acquisition of external/source data into the raw layer.'
+    first_pass_recurrence: 2
+  staged-transform:
+    shape: 'Store -> Trigger(event) -> Transformer -> Store(next layer)'
+    canon_binding: 'PIPELINE_CANON (inner hop)'
+    meaning: 'Layer-to-layer refinement fired by upstream landing (the medallion inner step).'
+    first_pass_recurrence: 2
+  orchestrated-compute:
+    shape: 'Trigger -> Router -> Producer(EC2/StepFn) -> Store'
+    canon_binding: 'PIPELINE_CANON (heavy variant)'
+    meaning: 'A lambda marshals heavy compute (EC2 runner / StepFn) whose output lands in a Store.'
+    first_pass_recurrence: 12
+  fanin-quorum:
+    shape: 'Store xN -> Observer(quorum) -> Trigger(downstream)'
+    canon_binding: 'PIPELINE_CANON (junction)'
+    meaning: 'Multiple upstream completions observed until quorum, then downstream fired once.'
+    first_pass_recurrence: 3
+  publish-serve:
+    shape: 'Store(gold) -> Trigger -> Transformer(publisher) -> Store(served) -> Consumer(frontend)'
+    canon_binding: 'SERVED_LINEAGE_CANON'
+    meaning: 'Event-driven publication of refined data into served artifacts consumed by the portal.'
+    first_pass_recurrence: 7
+  scheduled-publish:
+    shape: 'Trigger(cron) -> Producer -> Store(served) -> Consumer(frontend)'
+    canon_binding: 'SERVED_LINEAGE_CANON (cadence variant)'
+    meaning: 'Cadence-driven regeneration of a served artifact.'
+    first_pass_recurrence: 10
+  generative-publish:
+    shape: 'Trigger -> Producer(model/LLM) -> Store(served) -> Consumer'
+    canon_binding: 'SERVED_LINEAGE_CANON (generative variant)'
+    meaning: 'A generation step (LLM/model inference) producing a served artifact.'
+    first_pass_recurrence: 14
+  api-serve:
+    shape: 'Consumer(request) -> Gateway -> Producer(handler) -> Store(read) -> response'
+    canon_binding: 'AUTH_CANON + SERVED_LINEAGE_CANON'
+    meaning: 'On-demand serving through an API surface reading Stores at request time.'
+    first_pass_recurrence: 25
+  edge-route:
+    shape: 'Gateway(CDN) -> Router(edge) -> Store'
+    canon_binding: 'AUTH_CANON (edge leg)'
+    meaning: 'Request-path rewriting/steering at the edge to firm-scoped origins.'
+    first_pass_recurrence: 30
+  access-guard:
+    shape: 'Gateway -> Guard -> policy verdict'
+    canon_binding: 'AUTH_CANON (guard leg)'
+    meaning: 'Authorization: identity resolved to an access verdict gating everything behind it.'
+    first_pass_recurrence: 2
+  enrichment-writeback:
+    shape: 'Store -> Transformer -> SAME Store (in-place)'
+    canon_binding: '(no canon yet -- candidate)'
+    meaning: 'In-place enrichment: read rows, compute, write fields back to the same Store.'
+    first_pass_recurrence: 5
+  watchdog-observe:
+    shape: 'Trigger -> Observer -> Sink(signal only, no data artifact)'
+    canon_binding: '(no canon yet -- candidate)'
+    meaning: 'Observation-only chains: presence/parity/liveness checks emitting signals, never data.'
+    first_pass_recurrence: 5
+
+# ---------------------------------------------------------------------------------------------
+# C3 -- THE FOURTEEN STRUCTURAL SYSTEMS (semantic names constructed 2026-07-30; the resolver
+# family field was the proto-C3 layer, now canonized. Many-to-many with C4 by design.)
+# ---------------------------------------------------------------------------------------------
+c3_structural_systems:
+  sys-bd-medallion:
+    kind: FIRM-MEDALLION
+    legacy_family_key: bd-medallion
+    meaning: 'The 49F/BD firm data refinery: scheduled ingest -> staged transform -> gold -> publish, on opal-data-bd.'
+    chain_count: 19
+    spans_verticals: [advi-bd]
+  sys-yang-analytics-engine:
+    kind: SHARED-ENGINE
+    legacy_family_key: yang-datapipeline
+    meaning: 'The shared quantitative analytics refinery; ONE system serving 8 business verticals (cma, correlation, factor-tilts, macro, market-overview, model-portfolios, positioning, valuation) -- the proof case that C3 systems and C4 verticals are different layers.'
+    chain_count: 14
+    spans_verticals: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation]
+  sys-partner-serving-platform:
+    kind: SERVING-PLATFORM
+    legacy_family_key: partners-portal-infra
+    meaning: 'The shared partner-serving spine: authorizer, edge routers, partner data APIs, data-refresh -- serves 6 verticals.'
+    chain_count: 13
+    spans_verticals: [advi-inf, data-refresh, mdpf, ops-internal, partners, portal-infra]
+  sys-inf-medallion:
+    kind: FIRM-MEDALLION
+    legacy_family_key: inf-medallion
+    meaning: 'The Inflection firm data refinery on opal-data-inf (bronze API pulls -> silver quorum -> gold dispatch -> platinum publishers).'
+    chain_count: 12
+    spans_verticals: [advi-inf]
+  sys-portfolio-management-suite:
+    kind: PRODUCT-SUITE
+    legacy_family_key: pm-tool
+    meaning: 'Portfolio management product chains (spans market-overview, portfolio-management, trade-submission).'
+    chain_count: 12
+    spans_verticals: [market-overview, portfolio-management, trade-submission]
+  sys-news-intelligence-engine:
+    kind: SHARED-ENGINE
+    legacy_family_key: news-seeking-alpha
+    meaning: 'News ingest, scoring, keyword/trending analytics feeding portal sentiment surfaces.'
+    chain_count: 12
+    spans_verticals: [news, ops-internal]
+  sys-estate-ops-platform:
+    kind: OPS-PLATFORM
+    legacy_family_key: graph-and-ops-and-casefind
+    meaning: 'Internal estate operations: graph platform, case-find, security scanning, m365 gateway, ops utilities -- serves 6 internal verticals.'
+    chain_count: 11
+    spans_verticals: [graph-platform, insurance, m365-mcp, ops-internal, portfolio-management, security-scanner]
+  sys-market-intelligence-engine:
+    kind: SHARED-ENGINE
+    legacy_family_key: market-analytics
+    meaning: 'Market data + sentiment analytics serving market-overview, model-portfolios, news, trade-submission.'
+    chain_count: 9
+    spans_verticals: [market-overview, model-portfolios, news, trade-submission]
+  sys-causality-engine:
+    kind: SHARED-ENGINE
+    legacy_family_key: causality-ai
+    meaning: 'Causality/thematic generation engine. NOTE applied-plane census 2026-07-30 found its producer lambdas DEAD on AWS -- flagged for retirement adjudication; the map serves its June shape until then.'
+    chain_count: 8
+    spans_verticals: [causality, market-overview, trade-submission]
+  sys-macro-data-engine:
+    kind: SHARED-ENGINE
+    legacy_family_key: fred-and-generated-outputs
+    meaning: 'FRED/macro pulls + generated macro outputs.'
+    chain_count: 8
+    spans_verticals: [macroeconomics]
+  sys-trade-submission-engine:
+    kind: PRODUCT-SUITE
+    legacy_family_key: trade-submission
+    meaning: 'Trade submission product chains.'
+    chain_count: 7
+    spans_verticals: [trade-submission]
+  UNASSIGNED-RESIDUE:
+    kind: RESIDUE
+    legacy_family_key: UNASSIGNED
+    meaning: 'Chains with no structural-system assignment yet. Adjudication owed; counted, never dropped.'
+    chain_count: 5
+    spans_verticals: [canonical-schwab, news, ops-internal, trade-submission]
+  sys-smartx-feed:
+    kind: FEED
+    legacy_family_key: smartx
+    meaning: 'SmartX partner feed intake.'
+    chain_count: 3
+    spans_verticals: [smartx]
+  sys-cot-mdpf-assets:
+    kind: FIRM-MEDALLION
+    legacy_family_key: cot-and-mdpf
+    meaning: 'Cottonwood medallion + the mdpf/assets monolith seam (firm-separated from bd by law).'
+    chain_count: 2
+    spans_verticals: [advi-cot, mdpf]
+
+# ---------------------------------------------------------------------------------------------
+# C4 -- VERTICALS: the legislated semantic business estate (the world model L1 layer)
+# ---------------------------------------------------------------------------------------------
+c4_verticals:
+  definition: 'A C4 Vertical is a legislated business function. Its extension is a set of D2
+    chains plus any computed C3 systems that nest under it as they emerge. Names live in
+    NAMED_THREAD_CATALOG.md + the estate-coverage manifest; process of record:
+    org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md.'
+  count_checksum: 27  # derive the current set from the resolver at read time; this digit is a checksum, not the source
+  pending_candidates_awaiting_naming: [etfs-reports, find-insure, ticket, value-parity, astn-wsjft]
+  naming_ladder_binding: 'c3_naming_ladder rung 1 resolves INTO this layer catalog -- computed
+    systems borrow their capability names from C4, never invent them.'
+
+# ---------------------------------------------------------------------------------------------
+# FIRST-PASS INSTANCE CENSUS (2026-07-30) -- method: structural-signature classification over
+# the 135 resolver chains (keyword-structural features -> ordered precedence rules). FIRST PASS:
+# family definitions above are canonical; per-chain assignments are adjudicable. Residue is
+# COUNTED, never dropped.
+# ---------------------------------------------------------------------------------------------
+first_pass_census:
+  denominator: 135
+  classified_total: 117
+  unclassified_residue_count: 18
+  unclassified_residue:
+    - MA-09-ycharts-market-data-pull
+    - PPI-13-schwab-anonymizer
+    - TS-3-dashboard-read
+    - TS-7-trade-authorizer
+    - bd-gold-detail-checker
+    - bd-gold-foundation
+    - bd-gold-layer-legacy
+    - canonical-schwab
+    - dualbiz-casefind-local
+    - find-insure-casefind-pipeline
+    - inf-portal-advisor-publisher
+    - kuzu-stitch-surface
+    - m365-mcp-gateway-ec2
+    - sentiment_query_api
+    - test-yfinance-simple
+    - yang-canon-interlock
+    - ycharts-session
+    - yfinance-aapl-test
+  instances_by_family:
+    access-guard: [PPI-02-opal-portal-authorizer, PPI-04-opal-partners-data]
+    api-serve: [MA-06-market-update-authoring-toolchain, MA-07-causality-market-update-generator, PPI-11-portal-time-machine, bd-capture-output-versions, bd-client-detail-api, globgrph-nessie-fargate-service, inf-bronze-api-pull, inf-client-detail, inf-ec2-launch-resilience, keyword-intelligence-gpt, pm-optimization-autosave-put, pm-optimization-loader, pm-snapshot-handler, pm-upload-urls, portfolio-autosave-get, portfolio-autosave-put, portfolio-excel-generator, portfolio-export-download, portfolio-funds-list, portfolio-pickle-parser, portfolio-version-get, portfolio-versions-list, smartx-ec2-csv-exporter, smartx-rest-daily-ingest, yang-time-machine-rollback]
+    edge-route: [FRED-04-yang-macro-canonical, PPI-01-auth-validator-edge, PPI-03-opalinvest-auth-handler, PPI-05-opal-portal-data-proxy, PPI-06-public-data-router, PPI-07-cache-control-injector, PPI-08-shared-advisor-router, PPI-09-shared-advisor-router-response, PPI-10-opal-data-refresh-api, TS-1-submit, bd-time-machine, causality-ai-query, causality-data-enrichment-movements, causality-generate-analysis, causality-history-manager, causality-market-update, causality-themes-fetch, causality-trade-idea, globgrph-derive-runner-fargate, globgrph-incremental-updater, inf-gold-dispatch-ec2, inf-portal-publisher, mdpf-global-view, opal-security-scanner-processor, seeking-alpha-analysis-scrape, seeking-alpha-local-scraper-scripts, seeking-alpha-news-scrape, smartx-model-monthly-benchmarks, yang-pipeline-orchestration, yang-volatility-orphan]
+    enrichment-writeback: [PPI-12-opal-session-analytics, causality-thematic-signals-daily, finbert-sentiment-scoring, keyword-drilldown-history, layer3-gpt-curation]
+    fanin-quorum: [cot-pipeline, inf-silver-aggregator-quorum, inf-silver-chain]
+    generative-publish: [FRED-05-yang-macro-timeseries, FRED-07-deck-generation, MA-01-market-overview-tiered, MA-08-yang-generate-volatility, TS-2-workflow, yang-benchmarks-etf-returns, yang-cma, yang-correlation, yang-factor-tilts, yang-ingest-dynamodb-market-data, yang-peer-performance, yang-portal-market-overview-tiered, yang-positioning-attribution-allocation, yang-valuation-risk-premium]
+    orchestrated-compute: [bd-allocations, bd-asset-dim, bd-bronze-transactions, bd-canonical-prices, bd-fees, bd-historical-prices, bd-incrparity, bd-realized-gains, bd-unrealized-gains, inf-bronze-runner-ec2, inf-gold-qa-runner, inf-jwt-exporter]
+    publish-serve: [FRED-06-exec-summary-generator, MA-03-market-regime-classifier, TS-4-identifier-cache, TS-6-trade-auth-handler, bd-gold-layer-pipeline, bd-portal-publisher, semantic-pipeline-parallel-set]
+    scheduled-ingest: [FRED-01-yield-curve-daily-ingest, news-ingestion]
+    scheduled-publish: [FRED-02-macro-fred-parallel-artifact, FRED-03-credit-spread-cache, FRED-08-daily-agenda-generator, MA-02-market-rsi-tiered, MA-04-fear-greed-fetcher, MA-05-volatility-fetcher, TS-5-parquet-batch-export, news-trending-analysis-gpt, trending-image-and-portal-publisher, yang-macro-and-timeseries]
+    staged-transform: [bd-txn-consolidator, inf-nna-partition-checker]
+    watchdog-observe: [bd-allocation-file-watchdog, ops-anomaly-scanners, ops-ec2-governance-lambdas, ops-infrastructure-monitors, test-seeking-alpha-unauth-simple]

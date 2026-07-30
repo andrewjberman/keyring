@@ -4,10 +4,17 @@
 there and are cited, not copied). **Author:** `3.0.0_SA_CVO`, Andrew-direct commission + plan-review
 approval 2026-07-29. **Canonical home:** `docs/architecture/NFRA_VELOCITY_ESTATE_PRD.md` (landed by
 base CTO from this staged copy).
-**Owner:** `1.0.0_SA_CTO` (arch-gate) · **Decompose/drive:** `2.0.0_SA_COO` · **Build:**
-`0.7.0_AE_CloudOps` (infra/triggers), `0.4.0_DS` + `0.5.0`/`0.6.2` (pipeline contracts),
-`0.2.0_DT` (portal/promote surfaces), 0.8.0-adjacent lanes where comp-tooling touches ·
+**Owner:** `1.0.0_SA_CTO~C` (arch-gate; base CTO seat dead and deliberately not respawned — Andrew
+designated ~C as CTO for this motion, MSTR 20260730T0519Z) · **Decompose/drive:** `2.0.0_SA_COO` ·
+**Build:** `0.7.0_AE_CloudOps` (infra/triggers AND the main-side telemetry/hook lane — PROGRAM §3b
+names "0.7.0/hook lane" as the main-side owner for WS-E6/R8), `0.4.0_DS` + `0.5.0`/`0.6.2`
+(pipeline contracts), `0.2.0_DT` (portal/promote surfaces) ·
 **Verify:** `3.0.0_SA_CVO` · **Inter-fabric comms:** `0.0.0_AB_MSTR`.
+*(CORRECTED 2026-07-30, COO-routed: the clause "0.8.0-adjacent lanes where comp-tooling touches" is
+STRUCK — 0.8.0_AE builds CORE on the ~Z fabric, and the worker rule is absolute: neither fabric
+routes work into the other; knowledge crosses as a git artifact, never as a borrowed agent. Read
+literally the clause licensed a seam breach on ESTATE's P1 critical path. Matches the JSON twin
+@dd4e5c691e.)*
 **Constitution:** `docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md`.
 **Founding statement:** `docs/briefs/NFRA_DEBTLOOPS_ANDREW_VOICE_MEMO_20260729.md` — *"we need to
 figure out a comprehensive infrastructure solution so that we can lever up our development and be

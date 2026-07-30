@@ -1,0 +1,834 @@
+[
+    {
+        "n": "agentbus-sim01-fleet-alpha-role",
+        "a": "arn:aws:iam::313476888478:role/agentbus-sim01-fleet-alpha-role"
+    },
+    {
+        "n": "agentbus-sim01-fleet-beta-role",
+        "a": "arn:aws:iam::313476888478:role/agentbus-sim01-fleet-beta-role"
+    },
+    {
+        "n": "astn-wsjft-orchestrator-role",
+        "a": "arn:aws:iam::313476888478:role/astn-wsjft-orchestrator-role"
+    },
+    {
+        "n": "astn-wsjft-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/astn-wsjft-scheduler-role"
+    },
+    {
+        "n": "astn-wsjft-scraper-role",
+        "a": "arn:aws:iam::313476888478:role/astn-wsjft-scraper-role"
+    },
+    {
+        "n": "AWSServiceRoleForAmazonOpenSearchServerless",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless"
+    },
+    {
+        "n": "AWSServiceRoleForAmazonOpenSearchService",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService"
+    },
+    {
+        "n": "AWSServiceRoleForAPIGateway",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/ops.apigateway.amazonaws.com/AWSServiceRoleForAPIGateway"
+    },
+    {
+        "n": "AWSServiceRoleForCloudFrontLogger",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/logger.cloudfront.amazonaws.com/AWSServiceRoleForCloudFrontLogger"
+    },
+    {
+        "n": "AWSServiceRoleForECS",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+    },
+    {
+        "n": "AWSServiceRoleForElasticLoadBalancing",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing"
+    },
+    {
+        "n": "AWSServiceRoleForLambdaReplicator",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/replicator.lambda.amazonaws.com/AWSServiceRoleForLambdaReplicator"
+    },
+    {
+        "n": "AWSServiceRoleForRDS",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+    },
+    {
+        "n": "AWSServiceRoleForResourceExplorer",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/resource-explorer-2.amazonaws.com/AWSServiceRoleForResourceExplorer"
+    },
+    {
+        "n": "AWSServiceRoleForSMSVoice",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/sms-voice.amazonaws.com/AWSServiceRoleForSMSVoice"
+    },
+    {
+        "n": "AWSServiceRoleForSupport",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/support.amazonaws.com/AWSServiceRoleForSupport"
+    },
+    {
+        "n": "AWSServiceRoleForTrustedAdvisor",
+        "a": "arn:aws:iam::313476888478:role/aws-service-role/trustedadvisor.amazonaws.com/AWSServiceRoleForTrustedAdvisor"
+    },
+    {
+        "n": "bd-49f-auto-login-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-auto-login-role"
+    },
+    {
+        "n": "bd-49f-etf-ownership-daily-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-etf-ownership-daily-role"
+    },
+    {
+        "n": "bd-49f-fees-runner-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-fees-runner-role"
+    },
+    {
+        "n": "bd-49f-keepalive-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-keepalive-role"
+    },
+    {
+        "n": "bd-49f-runner-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-runner-role"
+    },
+    {
+        "n": "bd-49f-session-trigger-role",
+        "a": "arn:aws:iam::313476888478:role/bd-49f-session-trigger-role"
+    },
+    {
+        "n": "bd-allocation-checker-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/bd-allocation-checker-lambda-role"
+    },
+    {
+        "n": "bd-allocation-processor-role",
+        "a": "arn:aws:iam::313476888478:role/bd-allocation-processor-role"
+    },
+    {
+        "n": "bd-cot-keepalive-role",
+        "a": "arn:aws:iam::313476888478:role/bd-cot-keepalive-role"
+    },
+    {
+        "n": "bd-daily-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/bd-daily-trigger-lambda-role"
+    },
+    {
+        "n": "bd-exporter-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/bd-exporter-ec2-role"
+    },
+    {
+        "n": "bd-gold-detail-generator-role",
+        "a": "arn:aws:iam::313476888478:role/bd-gold-detail-generator-role"
+    },
+    {
+        "n": "bd-gold-eventbridge-step-functions-role",
+        "a": "arn:aws:iam::313476888478:role/bd-gold-eventbridge-step-functions-role"
+    },
+    {
+        "n": "bd-gold-layer-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/bd-gold-layer-lambda-role"
+    },
+    {
+        "n": "bd-gold-step-functions-role",
+        "a": "arn:aws:iam::313476888478:role/bd-gold-step-functions-role"
+    },
+    {
+        "n": "bd-merge-daily-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/bd-merge-daily-lambda-role"
+    },
+    {
+        "n": "bd-pipeline-task-role",
+        "a": "arn:aws:iam::313476888478:role/bd-pipeline-task-role"
+    },
+    {
+        "n": "bd-processor-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/bd-processor-lambda-role"
+    },
+    {
+        "n": "bd-silver-merge-role",
+        "a": "arn:aws:iam::313476888478:role/bd-silver-merge-role"
+    },
+    {
+        "n": "canonical-schwab-automation-start-role",
+        "a": "arn:aws:iam::313476888478:role/canonical-schwab-automation-start-role"
+    },
+    {
+        "n": "canonical-schwab-events-invoke-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/canonical-schwab-events-invoke-ssm-role"
+    },
+    {
+        "n": "canonical-schwab-runner-role",
+        "a": "arn:aws:iam::313476888478:role/canonical-schwab-runner-role"
+    },
+    {
+        "n": "canonical-schwab-si2-daily-events-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/canonical-schwab-si2-daily-events-ssm-role"
+    },
+    {
+        "n": "canonical-schwab-si2-events-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/canonical-schwab-si2-events-ssm-role"
+    },
+    {
+        "n": "codebuild-semantic-clustering-role",
+        "a": "arn:aws:iam::313476888478:role/codebuild-semantic-clustering-role"
+    },
+    {
+        "n": "consolidation-gold-runner-automation-start-role",
+        "a": "arn:aws:iam::313476888478:role/consolidation-gold-runner-automation-start-role"
+    },
+    {
+        "n": "consolidation-gold-runner-events-invoke-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/consolidation-gold-runner-events-invoke-ssm-role"
+    },
+    {
+        "n": "consolidation-gold-runner-role",
+        "a": "arn:aws:iam::313476888478:role/consolidation-gold-runner-role"
+    },
+    {
+        "n": "cot-bd-session-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/cot-bd-session-trigger-lambda-role"
+    },
+    {
+        "n": "cot-etf-ownership-daily-role",
+        "a": "arn:aws:iam::313476888478:role/cot-etf-ownership-daily-role"
+    },
+    {
+        "n": "cot-exporter-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/cot-exporter-ec2-role"
+    },
+    {
+        "n": "cot-gold-layer-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/cot-gold-layer-ec2-role"
+    },
+    {
+        "n": "cot-rebalancer-runner-role",
+        "a": "arn:aws:iam::313476888478:role/cot-rebalancer-runner-role"
+    },
+    {
+        "n": "dc2-test1-eventbridge-invoke-role",
+        "a": "arn:aws:iam::313476888478:role/dc2-test1-eventbridge-invoke-role"
+    },
+    {
+        "n": "dc2-test1-orchestrator-role",
+        "a": "arn:aws:iam::313476888478:role/dc2-test1-orchestrator-role"
+    },
+    {
+        "n": "deck-generation-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/deck-generation-lambda-role"
+    },
+    {
+        "n": "demo-transform-runner-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/demo-transform-runner-ec2-role"
+    },
+    {
+        "n": "ec2-auto-shutdown-enforcer-role",
+        "a": "arn:aws:iam::313476888478:role/ec2-auto-shutdown-enforcer-role"
+    },
+    {
+        "n": "ec2-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/ec2-ssm-role"
+    },
+    {
+        "n": "ecsTaskExecutionRole",
+        "a": "arn:aws:iam::313476888478:role/ecsTaskExecutionRole"
+    },
+    {
+        "n": "etf-ownership-dashboard-role",
+        "a": "arn:aws:iam::313476888478:role/etf-ownership-dashboard-role"
+    },
+    {
+        "n": "etfs-avgcap-reader-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-avgcap-reader-role"
+    },
+    {
+        "n": "etfs-canon-fanin-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-canon-fanin-role"
+    },
+    {
+        "n": "etfs-netassets-daily-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-netassets-daily-role"
+    },
+    {
+        "n": "etfs-reports-orchestrator-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-reports-orchestrator-role"
+    },
+    {
+        "n": "etfs-reports-reporter-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-reports-reporter-role"
+    },
+    {
+        "n": "etfs-reports-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/etfs-reports-scheduler-role"
+    },
+    {
+        "n": "exec-summary-generator-role",
+        "a": "arn:aws:iam::313476888478:role/exec-summary-generator-role"
+    },
+    {
+        "n": "finbert-ec2-backfill-role",
+        "a": "arn:aws:iam::313476888478:role/finbert-ec2-backfill-role"
+    },
+    {
+        "n": "find-insure-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/find-insure-lambda-role"
+    },
+    {
+        "n": "FredIngestionLambdaRole",
+        "a": "arn:aws:iam::313476888478:role/FredIngestionLambdaRole"
+    },
+    {
+        "n": "FredMacroIngestionLambdaRole",
+        "a": "arn:aws:iam::313476888478:role/FredMacroIngestionLambdaRole"
+    },
+    {
+        "n": "github-actions-opal-deploy",
+        "a": "arn:aws:iam::313476888478:role/github-actions-opal-deploy"
+    },
+    {
+        "n": "gldinc-ss4c-canary-role",
+        "a": "arn:aws:iam::313476888478:role/gldinc-ss4c-canary-role"
+    },
+    {
+        "n": "globgrph-derive-build-role",
+        "a": "arn:aws:iam::313476888478:role/globgrph-derive-build-role"
+    },
+    {
+        "n": "historical-prices-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/historical-prices-lambda-role"
+    },
+    {
+        "n": "inf-accounts-v2-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-accounts-v2-daily-role"
+    },
+    {
+        "n": "inf-api-assets-v2-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-api-assets-v2-lambda-role"
+    },
+    {
+        "n": "inf-api-positions-role",
+        "a": "arn:aws:iam::313476888478:role/inf-api-positions-role"
+    },
+    {
+        "n": "inf-api-reps-role",
+        "a": "arn:aws:iam::313476888478:role/inf-api-reps-role"
+    },
+    {
+        "n": "inf-api-txn-role",
+        "a": "arn:aws:iam::313476888478:role/inf-api-txn-role"
+    },
+    {
+        "n": "inf-assets-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-assets-trigger-lambda-role"
+    },
+    {
+        "n": "inf-billing-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-billing-daily-role"
+    },
+    {
+        "n": "inf-bronze-runner-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/inf-bronze-runner-ec2-role"
+    },
+    {
+        "n": "inf-bronze-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-bronze-trigger-lambda-role"
+    },
+    {
+        "n": "inf-ec2-launch-monitor-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-ec2-launch-monitor-lambda-role"
+    },
+    {
+        "n": "inf-ec2-retry-launch-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-ec2-retry-launch-lambda-role"
+    },
+    {
+        "n": "inf-etf-ownership-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-etf-ownership-daily-role"
+    },
+    {
+        "n": "inf-eventbridge-ssm-role",
+        "a": "arn:aws:iam::313476888478:role/inf-eventbridge-ssm-role"
+    },
+    {
+        "n": "inf-exporter-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/inf-exporter-ec2-role"
+    },
+    {
+        "n": "inf-gold-layer-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/inf-gold-layer-ec2-role"
+    },
+    {
+        "n": "inf-gold-layer-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-gold-layer-lambda-role"
+    },
+    {
+        "n": "inf-gold-qa-runner-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/inf-gold-qa-runner-ec2-role"
+    },
+    {
+        "n": "inf-gold-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-gold-trigger-lambda-role"
+    },
+    {
+        "n": "inf-jwt-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-jwt-trigger-lambda-role"
+    },
+    {
+        "n": "inf-nna-partition-checker-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-nna-partition-checker-lambda-role"
+    },
+    {
+        "n": "inf-otp-relay-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-otp-relay-lambda-role"
+    },
+    {
+        "n": "inf-performance-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-performance-daily-role"
+    },
+    {
+        "n": "inf-silver-aggregator-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-silver-aggregator-lambda-role"
+    },
+    {
+        "n": "inf-silver-chain-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/inf-silver-chain-lambda-role"
+    },
+    {
+        "n": "inf-tax-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-tax-daily-role"
+    },
+    {
+        "n": "inf-unified-account-dim-daily-role",
+        "a": "arn:aws:iam::313476888478:role/inf-unified-account-dim-daily-role"
+    },
+    {
+        "n": "infrastructure-ops-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/infrastructure-ops-lambda-role"
+    },
+    {
+        "n": "infrastructure-snapshot-role",
+        "a": "arn:aws:iam::313476888478:role/infrastructure-snapshot-role"
+    },
+    {
+        "n": "lambda-access-anomaly-scanner-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-access-anomaly-scanner-role"
+    },
+    {
+        "n": "lambda-cost-anomaly-scanner-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-cost-anomaly-scanner-role"
+    },
+    {
+        "n": "lambda-ec2-runtime-monitor-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-ec2-runtime-monitor-role"
+    },
+    {
+        "n": "lambda-edge-execution-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-edge-execution-role"
+    },
+    {
+        "n": "lambda-execution-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-execution-role"
+    },
+    {
+        "n": "lambda-test-role",
+        "a": "arn:aws:iam::313476888478:role/lambda-test-role"
+    },
+    {
+        "n": "m365-mcp-gateway-role",
+        "a": "arn:aws:iam::313476888478:role/m365-mcp-gateway-role"
+    },
+    {
+        "n": "m365-ms-ingest-liveness-role",
+        "a": "arn:aws:iam::313476888478:role/m365-ms-ingest-liveness-role"
+    },
+    {
+        "n": "m365-otp-liveness-role",
+        "a": "arn:aws:iam::313476888478:role/m365-otp-liveness-role"
+    },
+    {
+        "n": "market-data-generator-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/market-data-generator-lambda-role"
+    },
+    {
+        "n": "market-update-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/market-update-lambda-role"
+    },
+    {
+        "n": "mdpf-accrual-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/mdpf-accrual-scheduler-role"
+    },
+    {
+        "n": "mdpf-accrual-trigger-role",
+        "a": "arn:aws:iam::313476888478:role/mdpf-accrual-trigger-role"
+    },
+    {
+        "n": "mdpf-daily-runner-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/mdpf-daily-runner-ec2-role"
+    },
+    {
+        "n": "mdpf-daily-trigger-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/mdpf-daily-trigger-lambda-role"
+    },
+    {
+        "n": "mdpf-freshness-checker-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/mdpf-freshness-checker-lambda-role"
+    },
+    {
+        "n": "news-dashboard-processor-role",
+        "a": "arn:aws:iam::313476888478:role/news-dashboard-processor-role"
+    },
+    {
+        "n": "news-ingestion-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/news-ingestion-lambda-role"
+    },
+    {
+        "n": "news-sentiment-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/news-sentiment-lambda-role"
+    },
+    {
+        "n": "opal-49f-served-guard",
+        "a": "arn:aws:iam::313476888478:role/opal-49f-served-guard"
+    },
+    {
+        "n": "opal-assets-bd49f-daily-pull-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-bd49f-daily-pull-role"
+    },
+    {
+        "n": "opal-assets-bd49f-dim-convert-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-bd49f-dim-convert-role"
+    },
+    {
+        "n": "opal-assets-bd49f-dim-convert-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-bd49f-dim-convert-scheduler-role"
+    },
+    {
+        "n": "opal-assets-bd49f-reporting-pull-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-bd49f-reporting-pull-role"
+    },
+    {
+        "n": "opal-assets-daily-emitter-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-daily-emitter-role"
+    },
+    {
+        "n": "opal-assets-ingest-router-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-ingest-router-role"
+    },
+    {
+        "n": "opal-assets-mdpf-egress-publisher-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-mdpf-egress-publisher-role"
+    },
+    {
+        "n": "opal-assets-mdpf-portal-publisher-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-mdpf-portal-publisher-role"
+    },
+    {
+        "n": "opal-assets-silver-blackdiamond-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-blackdiamond-role"
+    },
+    {
+        "n": "opal-assets-silver-eclipse-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-eclipse-role"
+    },
+    {
+        "n": "opal-assets-silver-etf-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-etf-role"
+    },
+    {
+        "n": "opal-assets-silver-orion-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-orion-role"
+    },
+    {
+        "n": "opal-assets-silver-schwab-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-schwab-role"
+    },
+    {
+        "n": "opal-assets-silver-smartx-role",
+        "a": "arn:aws:iam::313476888478:role/opal-assets-silver-smartx-role"
+    },
+    {
+        "n": "opal-cot-served-guard",
+        "a": "arn:aws:iam::313476888478:role/opal-cot-served-guard"
+    },
+    {
+        "n": "opal-cot-value-parity",
+        "a": "arn:aws:iam::313476888478:role/opal-cot-value-parity"
+    },
+    {
+        "n": "opal-data-refresh-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/opal-data-refresh-lambda-role"
+    },
+    {
+        "n": "opal-drift-producer-codebuild-role",
+        "a": "arn:aws:iam::313476888478:role/opal-drift-producer-codebuild-role"
+    },
+    {
+        "n": "opal-drift-producer-events-role",
+        "a": "arn:aws:iam::313476888478:role/opal-drift-producer-events-role"
+    },
+    {
+        "n": "opal-drift-producer-gha-role",
+        "a": "arn:aws:iam::313476888478:role/opal-drift-producer-gha-role"
+    },
+    {
+        "n": "opal-globgrph-comp-learns-producer-events",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-comp-learns-producer-events"
+    },
+    {
+        "n": "opal-globgrph-comp-learns-producer-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-comp-learns-producer-task"
+    },
+    {
+        "n": "opal-globgrph-cse-producer-scheduler",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-cse-producer-scheduler"
+    },
+    {
+        "n": "opal-globgrph-cse-producer-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-cse-producer-task"
+    },
+    {
+        "n": "opal-globgrph-derive-runner-events",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-derive-runner-events"
+    },
+    {
+        "n": "opal-globgrph-derive-runner-execution",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-derive-runner-execution"
+    },
+    {
+        "n": "opal-globgrph-derive-runner-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-derive-runner-task"
+    },
+    {
+        "n": "opal-globgrph-fedobs-emitter-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-fedobs-emitter-task"
+    },
+    {
+        "n": "opal-globgrph-fedobs-producer-events",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-fedobs-producer-events"
+    },
+    {
+        "n": "opal-globgrph-incremental-updater",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-incremental-updater"
+    },
+    {
+        "n": "opal-globgrph-nessie-execution",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-nessie-execution"
+    },
+    {
+        "n": "opal-globgrph-nessie-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-nessie-task"
+    },
+    {
+        "n": "opal-globgrph-resource-summaries-producer-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-resource-summaries-producer-task"
+    },
+    {
+        "n": "opal-globgrph-trino-execution",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-trino-execution"
+    },
+    {
+        "n": "opal-globgrph-trino-task",
+        "a": "arn:aws:iam::313476888478:role/opal-globgrph-trino-task"
+    },
+    {
+        "n": "opal-inf-served-guard",
+        "a": "arn:aws:iam::313476888478:role/opal-inf-served-guard"
+    },
+    {
+        "n": "opal-inf-value-parity",
+        "a": "arn:aws:iam::313476888478:role/opal-inf-value-parity"
+    },
+    {
+        "n": "opal-lambda-market-rsi-role",
+        "a": "arn:aws:iam::313476888478:role/opal-lambda-market-rsi-role"
+    },
+    {
+        "n": "opal-layer3-ec2-role",
+        "a": "arn:aws:iam::313476888478:role/opal-layer3-ec2-role"
+    },
+    {
+        "n": "opal-news-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/opal-news-lambda-role"
+    },
+    {
+        "n": "opal-portal-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/opal-portal-lambda-role"
+    },
+    {
+        "n": "opal-schwab-monolith-remap-role",
+        "a": "arn:aws:iam::313476888478:role/opal-schwab-monolith-remap-role"
+    },
+    {
+        "n": "opal-security-scanner-processor-role",
+        "a": "arn:aws:iam::313476888478:role/opal-security-scanner-processor-role"
+    },
+    {
+        "n": "opal-smartx-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/opal-smartx-lambda-role"
+    },
+    {
+        "n": "opal-stitch-produce-codebuild-role",
+        "a": "arn:aws:iam::313476888478:role/opal-stitch-produce-codebuild-role"
+    },
+    {
+        "n": "opal-stitch-produce-events-role",
+        "a": "arn:aws:iam::313476888478:role/opal-stitch-produce-events-role"
+    },
+    {
+        "n": "opal-stitch-source-gha-role",
+        "a": "arn:aws:iam::313476888478:role/opal-stitch-source-gha-role"
+    },
+    {
+        "n": "opal-surface-check-publish-gha-role",
+        "a": "arn:aws:iam::313476888478:role/opal-surface-check-publish-gha-role"
+    },
+    {
+        "n": "opal-ticket-api-role",
+        "a": "arn:aws:iam::313476888478:role/opal-ticket-api-role"
+    },
+    {
+        "n": "opal-website-dlm-role",
+        "a": "arn:aws:iam::313476888478:role/opal-website-dlm-role"
+    },
+    {
+        "n": "opal-website-wp-role",
+        "a": "arn:aws:iam::313476888478:role/opal-website-wp-role"
+    },
+    {
+        "n": "opalinvest-auth-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/opalinvest-auth-lambda-role"
+    },
+    {
+        "n": "orion-crawl-harness-role",
+        "a": "arn:aws:iam::313476888478:role/orion-crawl-harness-role"
+    },
+    {
+        "n": "partner-etl-ops-sqs-consumer-role",
+        "a": "arn:aws:iam::313476888478:role/partner-etl-ops-sqs-consumer-role"
+    },
+    {
+        "n": "partners-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/partners-lambda-role"
+    },
+    {
+        "n": "portal-auth-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/portal-auth-lambda-role"
+    },
+    {
+        "n": "portfolio-export-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/portfolio-export-lambda-role"
+    },
+    {
+        "n": "portfolio-management-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/portfolio-management-lambda-role"
+    },
+    {
+        "n": "quartz-si2-spike-role",
+        "a": "arn:aws:iam::313476888478:role/quartz-si2-spike-role"
+    },
+    {
+        "n": "rds-monitoring-role",
+        "a": "arn:aws:iam::313476888478:role/rds-monitoring-role"
+    },
+    {
+        "n": "schwab-anonymizer-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/schwab-anonymizer-lambda-role"
+    },
+    {
+        "n": "security-sweep-dedicated-role",
+        "a": "arn:aws:iam::313476888478:role/security-sweep-dedicated-role"
+    },
+    {
+        "n": "seeking-alpha-scraper-role",
+        "a": "arn:aws:iam::313476888478:role/seeking-alpha-scraper-role"
+    },
+    {
+        "n": "semantic-news-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/semantic-news-lambda-role"
+    },
+    {
+        "n": "sentiment_query_api-role",
+        "a": "arn:aws:iam::313476888478:role/sentiment_query_api-role"
+    },
+    {
+        "n": "smartx-assets-pull-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-assets-pull-role"
+    },
+    {
+        "n": "smartx-assets-pull-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-assets-pull-scheduler-role"
+    },
+    {
+        "n": "smartx-ec2-autostart-20251222183942113900000002",
+        "a": "arn:aws:iam::313476888478:role/smartx-ec2-autostart-20251222183942113900000002"
+    },
+    {
+        "n": "smartx-exporter-role-20251218220948293500000001",
+        "a": "arn:aws:iam::313476888478:role/smartx-exporter-role-20251218220948293500000001"
+    },
+    {
+        "n": "smartx-ingestion-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-ingestion-lambda-role"
+    },
+    {
+        "n": "smartx-jwt-refresher-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-jwt-refresher-role"
+    },
+    {
+        "n": "smartx-model-monthly-pull-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-model-monthly-pull-role"
+    },
+    {
+        "n": "smartx-model-monthly-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-model-monthly-scheduler-role"
+    },
+    {
+        "n": "smartx-rest-pull-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-rest-pull-role"
+    },
+    {
+        "n": "smartx-rest-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/smartx-rest-scheduler-role"
+    },
+    {
+        "n": "trade-submission-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/trade-submission-lambda-role"
+    },
+    {
+        "n": "vpc-flow-logs-role",
+        "a": "arn:aws:iam::313476888478:role/vpc-flow-logs-role"
+    },
+    {
+        "n": "workspace-sync-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/workspace-sync-lambda-role"
+    },
+    {
+        "n": "wp5-49f-feeder-scheduler-role",
+        "a": "arn:aws:iam::313476888478:role/wp5-49f-feeder-scheduler-role"
+    },
+    {
+        "n": "wsb-49f-model-aua-daily-role",
+        "a": "arn:aws:iam::313476888478:role/wsb-49f-model-aua-daily-role"
+    },
+    {
+        "n": "wsd-49f-partner-held-etf-daily-role",
+        "a": "arn:aws:iam::313476888478:role/wsd-49f-partner-held-etf-daily-role"
+    },
+    {
+        "n": "yang-pipeline-lambda-role",
+        "a": "arn:aws:iam::313476888478:role/yang-pipeline-lambda-role"
+    },
+    {
+        "n": "yang-pipeline-sfn-role",
+        "a": "arn:aws:iam::313476888478:role/yang-pipeline-sfn-role"
+    },
+    {
+        "n": "yang-varflag-check-role",
+        "a": "arn:aws:iam::313476888478:role/yang-varflag-check-role"
+    },
+    {
+        "n": "YChartsMarketDataPullLambdaRole",
+        "a": "arn:aws:iam::313476888478:role/YChartsMarketDataPullLambdaRole"
+    },
+    {
+        "n": "YChartsSessionCaptureLambdaRole",
+        "a": "arn:aws:iam::313476888478:role/YChartsSessionCaptureLambdaRole"
+    },
+    {
+        "n": "YChartsSessionProbeLambdaRole",
+        "a": "arn:aws:iam::313476888478:role/YChartsSessionProbeLambdaRole"
+    }
+]

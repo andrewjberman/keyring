@@ -1,0 +1,4 @@
+AWSServiceRoleForRDS "task/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS/3f316965-5e6b-4de8-be01-88fe711dfc9e"
+AWSServiceRoleForAmazonOpenSearchService "task/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService/bb7c785b-b78e-4df3-adf6-e26e804c78ef"
+AWSServiceRoleForAmazonOpenSearchServerless "task/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless/18f8cb19-ec8b-436c-8f3f-719f5e34ec64"
+AWSServiceRoleForSMSVoice "task/aws-service-role/sms-voice.amazonaws.com/AWSServiceRoleForSMSVoice/abb0070b-d0fa-4c31-a970-e2d451b58aad"

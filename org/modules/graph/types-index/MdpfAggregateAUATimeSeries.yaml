@@ -1,0 +1,55 @@
+type_name: MdpfAggregateAUATimeSeries
+definition_file: portal\src\api\portal-proxy.ts
+total_consumer_sites: 10
+default_fallback_sites: 0
+consumers:
+  - file: portal\src\api\endpoints\aum.ts
+    line: 458
+    category: reference
+    default_fallback: false
+    code: 'MdpfAggregateAUATimeSeries,'
+  - file: portal\src\api\endpoints\aum.ts
+    line: 477
+    category: reference
+    default_fallback: false
+    code: 'export async function getMdpfAggregateAUATimeSeries() {'
+  - file: portal\src\api\endpoints\aum.ts
+    line: 479
+    category: reference
+    default_fallback: false
+    code: 'return await portalProxy.getMdpfAggregateAUATimeSeries()'
+  - file: portal\src\api\endpoints\aum.ts
+    line: 482
+    category: reference
+    default_fallback: false
+    code: "'[getMdpfAggregateAUATimeSeries] Error fetching MDPF aggregate AUA:',"
+  - file: portal\src\api\endpoints\aum.ts
+    line: 493
+    category: reference
+    default_fallback: false
+    code: 'export async function getMdpfAggregateAUATimeSeriesByFirm(firmId: string) {'
+  - file: portal\src\api\endpoints\aum.ts
+    line: 495
+    category: reference
+    default_fallback: false
+    code: 'return await portalProxy.getMdpfAggregateAUATimeSeriesByFirm(firmId)'
+  - file: portal\src\api\endpoints\aum.ts
+    line: 498
+    category: reference
+    default_fallback: false
+    code: '`[getMdpfAggregateAUATimeSeriesByFirm] Error fetching MDPF ${firmId} AUA:`,'
+  - file: portal\src\pages\ModelPortfolios.tsx
+    line: 37
+    category: reference
+    default_fallback: false
+    code: 'import { getAUMMetrics, getAccountDistributionByFirm, getAUMMetricsByFirm, getMd'
+  - file: portal\src\pages\ModelPortfolios.tsx
+    line: 419
+    category: reference
+    default_fallback: false
+    code: 'queryFn: () => getMdpfAggregateAUATimeSeriesByFirm(effectiveFirmId),'
+  - file: portal\src\pages\ModelPortfolios.tsx
+    line: 432
+    category: reference
+    default_fallback: false
+    code: "queryFn: () => getMdpfAggregateAUATimeSeriesByFirm('global'),"

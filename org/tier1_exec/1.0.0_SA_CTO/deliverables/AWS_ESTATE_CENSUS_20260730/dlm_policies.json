@@ -1,0 +1,22 @@
+{
+    "Policies": [
+        {
+            "PolicyId": "policy-0c0c24e7981c5522c",
+            "Description": "NFRA_WEBSITE opal-website-wp daily EBS snapshots 7d retention",
+            "State": "ENABLED",
+            "Tags": {
+                "Project": "NFRA_WEBSITE",
+                "Owner": "0.7.0_AE_CloudOps",
+                "AutoShutdown": "disabled",
+                "ManagedBy": "Terraform",
+                "Environment": "Production",
+                "Persistent": "true",
+                "Component": "opal-capital-wordpress",
+                "System": "website",
+                "Name": "opal-website-dlm"
+            },
+            "PolicyType": "EBS_SNAPSHOT_MANAGEMENT",
+            "DefaultPolicy": false
+        }
+    ]
+}

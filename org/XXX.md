@@ -160,9 +160,15 @@ shells are non-interactive and source NO profile, so `.tools/` is reachable only
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
 echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header for the current list) -- it is not, and does not claim to be, all $T."
 # MANDATORY SECOND HALF (added 2026-07-29): RESOLUTION IS NOT EXECUTION. Actually RUN one, and
-# score it on OUTPUT, not on rc -- comp-which's exit code tracks MATCH/NO-MATCH, not health, so
-# `comp-which --help` or a no-match question BOTH exit 1 on a perfectly working tool. (Written
-# wrong the first time, same day, in the line meant to replace a false PASS with a false FAIL.)
+# score it on OUTPUT, not on rc. MEASURED 2026-07-30 (0.7.0_AE_CloudOps found it, COO re-derived
+# independently, true rc with no pipe): a REAL question exits 0, a NO-MATCH question ALSO exits 0,
+# and only `comp-which --help` exits 1. So the rc does NOT track match-vs-no-match -- it does not
+# discriminate the thing this line claimed it discriminated, which is a STRONGER reason to score on
+# output, not a weaker one. (This comment previously said "--help OR a no-match question BOTH exit 1."
+# Third revision of the same four lines: a false PASS, then a false FAIL, then a correct verdict
+# resting on a wrong mechanism. A rule can reach the right instruction via reasoning that is not
+# true, and it survives review because the INSTRUCTION reads correct -- so the mechanism gets
+# copied forward into the next rule, where it is load-bearing.)
 comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN (produced its own banner)." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- the forwarder exists and its TARGET does not. Run: bash .tools/provision-path-shims.sh"
 ```
 > ⚠ **The remedy line above once named the subset literally ("aws + comp-which + comp-system"). It went
