@@ -1,0 +1,206 @@
+[
+    {
+        "id": "i-0800437d1dbb0b5cc",
+        "ami": "ami-07ff62358b87c7116",
+        "state": "stopped",
+        "name": "bd-allocations"
+    },
+    {
+        "id": "i-07ebae29a16e43ed1",
+        "ami": "ami-0030e4319cbf4dbf2",
+        "state": "stopped",
+        "name": "seeking-alpha-scraper"
+    },
+    {
+        "id": "i-01003b035d2988dfb",
+        "ami": "ami-0c7217cdde317cfec",
+        "state": "stopped",
+        "name": "bd-gold-layer-runner"
+    },
+    {
+        "id": "i-06376c11d8b3c3443",
+        "ami": "ami-0c02fb55956c7d316",
+        "state": "stopped",
+        "name": "seeking-alpha-scraper"
+    },
+    {
+        "id": "i-00c7568bc510f7423",
+        "ami": "ami-059ec86c4552abf68",
+        "state": "stopped",
+        "name": "bd-transactions"
+    },
+    {
+        "id": "i-0090b823a4a0997e3",
+        "ami": "ami-0c7217cdde317cfec",
+        "state": "stopped",
+        "name": "bd-gold-qa-runner"
+    },
+    {
+        "id": "i-0e6f6dc014fdcf1cd",
+        "ami": "ami-07ff62358b87c7116",
+        "state": "stopped",
+        "name": "bd-assets"
+    },
+    {
+        "id": "i-074bfc40ee049dc62",
+        "ami": "ami-0453ec754f44f9a4a",
+        "state": "stopped",
+        "name": "bd-gold-detail-generator"
+    },
+    {
+        "id": "i-06ebcb27395eb3f49",
+        "ami": "ami-0030e4319cbf4dbf2",
+        "state": "stopped",
+        "name": "smartx-exporter"
+    },
+    {
+        "id": "i-00abf626b065373bc",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-0416edf7e4b901380",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-0868fc7e7ebec26f2",
+        "ami": "ami-07ff62358b87c7116",
+        "state": "stopped",
+        "name": "bd-fees"
+    },
+    {
+        "id": "i-0ed5afded2ebd4ed4",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "running",
+        "name": "inf-gold-layer-runner"
+    },
+    {
+        "id": "i-04373615f03fbf9a9",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "stopped",
+        "name": "inf-gold-qa-runner"
+    },
+    {
+        "id": "i-02448edb624a7a7cf",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "stopped",
+        "name": "mdpf-daily-runner"
+    },
+    {
+        "id": "i-0643a5bee8a8feabf",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "stopped",
+        "name": "cot-exporter"
+    },
+    {
+        "id": "i-0ed92ce2e72f505dc",
+        "ami": "ami-0c7217cdde317cfec",
+        "state": "stopped",
+        "name": "canonical-schwab-runner"
+    },
+    {
+        "id": "i-094c504a4384f9c47",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-025cba31603a6c8a6",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-032fa1babe1abe48a",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-0645235b8df17b085",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "terminated",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-081ae6aafb394fb1a",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "running",
+        "name": "inf-exporter"
+    },
+    {
+        "id": "i-083ad9ae297f88e9f",
+        "ami": "ami-0c1e21d82fe9c9336",
+        "state": "stopped",
+        "name": "inf-bronze-runner"
+    },
+    {
+        "id": "i-010f195f1798b40ad",
+        "ami": "ami-00948338a4aeec604",
+        "state": "stopped",
+        "name": "orion-crawl-harness"
+    },
+    {
+        "id": "i-0ec91038b9a2c73a6",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-088e7fa9323bac1b9",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-03c397afaa967d978",
+        "ami": "ami-0c1fe732b5494dc14",
+        "state": "stopped",
+        "name": "historical-prices-fetcher"
+    },
+    {
+        "id": "i-07dccb1615503ac99",
+        "ami": "ami-06c84fbfd615657d3",
+        "state": "running",
+        "name": "m365-mcp-gateway"
+    },
+    {
+        "id": "i-059405dfefcb4b44a",
+        "ami": "ami-00948338a4aeec604",
+        "state": "stopped",
+        "name": "astn-wsjft-scraper"
+    },
+    {
+        "id": "i-0fa1846f04ed7e337",
+        "ami": "ami-00948338a4aeec604",
+        "state": "stopped",
+        "name": "bd-49f-auto-login"
+    },
+    {
+        "id": "i-0f3d57a97f14727af",
+        "ami": "ami-0ab5e8edee718de14",
+        "state": "running",
+        "name": "quartz-si2-spike"
+    },
+    {
+        "id": "i-070477bf35fc54409",
+        "ami": "ami-00948338a4aeec604",
+        "state": "stopped",
+        "name": "etfs-reports-reporter"
+    },
+    {
+        "id": "i-0152e3fe2599fa630",
+        "ami": "ami-0d28727121d5d4a3c",
+        "state": "running",
+        "name": "opal-website-wp"
+    },
+    {
+        "id": "i-08ee5fb1991430cb9",
+        "ami": "ami-0c7217cdde317cfec",
+        "state": "stopped",
+        "name": "consolidation-gold-runner"
+    }
+]
