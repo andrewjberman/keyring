@@ -295,8 +295,8 @@ c4_verticals:
     chains plus any computed C3 systems that nest under it as they emerge. Names live in
     NAMED_THREAD_CATALOG.md + the estate-coverage manifest; process of record:
     org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md.'
-  count_checksum: 27  # derive the current set from the resolver at read time; this digit is a checksum, not the source
-  pending_candidates_awaiting_naming: [etfs-reports, find-insure, ticket, value-parity, astn-wsjft]
+  count_checksum: 29   # 27 - attribution (retired 07-30) + etf-reports + ceo-digest + ticketing  # derive the current set from the resolver at read time; this digit is a checksum, not the source
+  pending_candidates_awaiting_naming: []   # ALL RESOLVED by the 2026-07-30 adjudication pass (see adjudications_20260730)
   naming_ladder_binding: 'c3_naming_ladder rung 1 resolves INTO this layer catalog -- computed
     systems borrow their capability names from C4, never invent them.'
 
@@ -360,7 +360,7 @@ c4_segments:
     display_name: Partner Firm Data
     registry: [sys-bd-medallion, sys-inf-medallion, sys-cot-mdpf-assets, sys-smartx-feed]
     residue_inbound: [canonical-schwab chains]
-    verticals_served: [advi-bd, advi-inf, advi-cot, mdpf, smartx, model-portfolios, canonical-schwab, partners]
+    verticals_served: [advi-bd, advi-inf, advi-cot, mdpf, smartx, model-portfolios, canonical-schwab, partners, etf-reports]
     high_signal: >
       Everything that ingests, refines, and stores partner firm financial data: the per-firm
       medallion pipelines (bronze, silver, gold, platinum) for 49 Financial / 49F / Black
@@ -379,7 +379,7 @@ c4_segments:
     display_name: Market & Research Intelligence
     registry: [sys-yang-analytics-engine, sys-market-intelligence-engine, sys-news-intelligence-engine, sys-macro-data-engine, sys-causality-engine]
     flags: [sys-causality-engine producers DEAD on applied plane 2026-07-30 -- retirement adjudication owed]
-    verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal]
+    verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal, ceo-digest]
     high_signal: >
       The shared quantitative analytics and research-generation engines that compute what the
       portal knows about markets -- one engine serves many products by design. Look here for
@@ -396,7 +396,7 @@ c4_segments:
   interactive-products:
     display_name: Interactive Products
     registry: [sys-portfolio-management-suite, sys-trade-submission-engine]
-    verticals_served: [portfolio-management, trade-submission, market-overview]
+    verticals_served: [portfolio-management, trade-submission, market-overview, ticketing]
     high_signal: >
       The interactive product machinery -- where a user DOES something rather than reads
       something: portfolio management workflows, model portfolio selection, rebalancing views,
