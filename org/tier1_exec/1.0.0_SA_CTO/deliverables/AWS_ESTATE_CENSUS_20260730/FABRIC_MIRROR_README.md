@@ -27,3 +27,23 @@ dependencies on frozen maps"*, Andrew-direct 2026-07-30). Therefore:
   instruments.
 - The real fix is a remote on the Desktop repo -- OPEN AT ANDREW. Until then this mirror is the
   fabric's only read path, with its staleness stated rather than hidden.
+
+## DECLARED DEPENDENTS + the notify obligation (added 2026-07-30 ~2215Z)
+
+`0.7.0_AE_CloudOps~B` correctly pushed back: they READ this mirror and did not compute from it, but
+their estate-report pipeline's **queue semantics hang on `RESOLVER_DEFROST_DESIGN.md` section 4**
+(prose re-review queued when the COMPILED half changes). That is a DESIGN dependency, and by the
+cardinal rule's own scope clause -- *dependence is the operative verb* -- a depended-on mirror is
+exactly the class the rule forbids. They asked to be TOLD if it moves rather than discover it. Correct
+ask; granted.
+
+| Dependent | Depends on | Obligation |
+|---|---|---|
+| `0.7.0_AE_CloudOps~B` | `RESOLVER_DEFROST_DESIGN.md` s.1 (field split) + s.4 (per-field schema, queue trigger) | **CTO notifies ~B before/at any canonical change to s.1 or s.4** |
+| `0.7.0_AE_CloudOps~*` TAP lanes | `TRIGGER_ASSESSMENT_PROTOCOL.md`, `RULINGS_LEDGER.jsonl` (T6 join) | CTO notifies on protocol or ledger-schema change |
+
+**This table is the mitigation, not the fix.** A notify obligation is a person-shaped control, i.e.
+care rather than a control (`CONTROLS_OVER_CARE.md`). **The fix remains a remote on the canonical
+repo** -- open at Andrew, now carried in two agents' open-calls and having blocked two agents twice.
+Anyone adding a dependent here should read that as evidence the stopgap is accruing cost, not as
+permission to add more.
