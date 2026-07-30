@@ -9,7 +9,7 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.5"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
+  version: "1.6"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
                    # +dynamic_rails (D1 value/grain, D2 path/flow, D3 contract/obligation) between the ratified rungs;
                    # +completeness axis (PSTMRT P2, alongside variance); +type_tuple (rail,grain,plane,scope) -- the
                    # enforced typing vocab base 0.8.0's registration invariant validates tool declarations against.
@@ -374,7 +374,7 @@ c2c3_canonical_catalog:
   law: canon-first-debt-subset
   binding: 'The PRIMARY population of C2 (motifs) and C3 (systems) is the AGNOSTIC canonical
     catalog in the file above: twelve path-motif families defined in the 14-role/10-relation
-    vocabulary, and fourteen named structural systems. The six defect-detector motifs absorbed
+    vocabulary, and fourteen named deterministic structures. The six defect-detector motifs absorbed
     from the TSGRAPH library are a DEVIATION SUBSET (departures from canonical form), valid as
     deviation motifs, NEVER to be presented as the C2/C3 layer itself. Any tool, document, or
     agent answer describing C2/C3 in debt terms without naming the canonical layer first is
@@ -402,12 +402,12 @@ c4_verticals:   # v1.4: LAYER RENAMED C4 SEGMENTS (Andrew 2026-07-30) -- five ag
 # =============================================================================================
 # v1.5 (2026-07-30, Andrew-ratified at the CVO terminal) -- C3 DUAL-PARTITION. Additive.
 # =============================================================================================
-c3_dual_partition:
+c3_dual_partition:   # v1.6: projection labels ratified -- i. DETERMINISTIC STRUCTURES / ii. SEMANTIC VERTICALS (Andrew 2026-07-30: hammer deterministic-vs-semantic; never reuse 'Systems' in the projection language)
   status: 'RATIFIED 2026-07-30. The C3 grain carries TWO complete partitions of the same
     C2-instance ground set (chains); ONE SCHEMA: C4 -> C3(i|ii) -> C2 -> C1 -> C0.'
-  c3_i: 'STRUCTURAL SYSTEMS -- DISCOVERED never declared: deterministic union-find over shared
+  c3_i: 'DETERMINISTIC STRUCTURES -- DISCOVERED never declared: deterministic union-find over shared
     constituents; the semantic pass is NAMING ONLY (ladder rung 1 borrows from C3.ii, an
-    intra-rung borrow). Population: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c3_structural_systems.'
+    intra-rung borrow). Population: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c3_deterministic_structures.'
   c3_ii: 'SEMANTIC VERTICALS -- DECLARED never discovered: the legislated business partition of
     the same chains. Population: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c3_ii_semantic_verticals.'
   dual_key: 'every chain carries (family -> C3.i, named_thread -> C3.ii) -- two lossless

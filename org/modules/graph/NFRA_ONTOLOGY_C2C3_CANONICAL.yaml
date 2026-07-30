@@ -95,11 +95,11 @@ c2_motif_families:
     first_pass_recurrence: 5
 
 # ---------------------------------------------------------------------------------------------
-# C3.i -- THE FOURTEEN STRUCTURAL SYSTEMS (the STRUCTURAL projection of the dual-partitioned
+# C3.i -- THE FOURTEEN DETERMINISTIC STRUCTURES (the DETERMINISTIC projection of the dual-partitioned
 # C3 grain -- DISCOVERED never declared; semantic names constructed 2026-07-30; the resolver
 # family field was the proto-C3 layer, now canonized. Many-to-many with C4 by design.)
 # ---------------------------------------------------------------------------------------------
-c3_structural_systems:
+c3_deterministic_structures:
   sys-bd-medallion:
     kind: FIRM-MEDALLION
     legacy_family_key: bd-medallion
@@ -188,7 +188,7 @@ c3_structural_systems:
 
 # =============================================================================================
 # C3.ii -- SEMANTIC VERTICALS (the DUAL PARTITION of the C3 grain; Andrew-ratified 2026-07-30)
-# C3 is EXPLICITLY DUAL-PARTITIONED: C3.i = structural systems (above, DISCOVERED never
+# C3 is EXPLICITLY DUAL-PARTITIONED: C3.i = deterministic structures (above, DISCOVERED never
 # declared, deterministic union-find w/ a semantic naming pass) and C3.ii = semantic verticals
 # (below, DECLARED never discovered, legislated partition of the SAME C2-instance ground set).
 # BOTH aggregate C2 instances (chains) -- neither aggregates motif FAMILIES. The DUAL KEY lives

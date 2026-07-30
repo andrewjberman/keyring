@@ -119,6 +119,6 @@ resolver DEFENDS these as live until the census regenerates), 14 unmanaged-conso
 
 ## 6. ONTOLOGY BINDING (v1.3, 2026-07-30 — supersedes the "four-layer ladder" reading of §1)
 
-The world model and the ontology are ONE object (re-slotted 2026-07-30, C3 dual-partition): **C4 = SEGMENTS** (five legislated registries of C3.i) - **`named_thread` = C3.ii semantic verticals** - **`family` = C3.i structural systems** - **L2 chains = D2 instances of the 12 canonical C2 motif families, each carrying the DUAL KEY (family -> C3.i, named_thread -> C3.ii)** - **resources/artifacts/frontends = role-typed C0 nodes** (ownership single, participation many). C2/C3 are DISCOVERED-never-declared; C4 is DECLARED-never-discovered;
+The world model and the ontology are ONE object (re-slotted 2026-07-30, C3 dual-partition): **C4 = SEGMENTS** (five legislated registries of C3.i) - **`named_thread` = C3.ii semantic verticals** - **`family` = C3.i deterministic structures** - **L2 chains = D2 instances of the 12 canonical C2 motif families, each carrying the DUAL KEY (family -> C3.i, named_thread -> C3.ii)** - **resources/artifacts/frontends = role-typed C0 nodes** (ownership single, participation many). C2/C3 are DISCOVERED-never-declared; C4 is DECLARED-never-discovered;
 a computed C3 straddling verticals is an adjudication event. The debt/detector motifs are a
 deviation SUBSET of C2 — see the catalog's coherence law.
