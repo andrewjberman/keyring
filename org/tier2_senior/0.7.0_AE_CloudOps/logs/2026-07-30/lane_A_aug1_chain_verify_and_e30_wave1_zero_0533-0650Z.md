@@ -158,8 +158,30 @@ interior cleanliness** (DE's phrase). Corrected carried-day ranges, with the err
 ```
 inflection    RANGE 0-2   (0 only IF it produces 07-31; P is ~60%, not "high")
 cottonwood    RANGE 1-4   (1 is best-estimate but needs 3 further landings on an 85% feed)
-49financial   RANGE 0-3   (range unchanged, but its 95% interior makes it the STRONGEST)
+49financial   RANGE 0-1   (NARROWED from 0-3 by the n=2 watch, 1049Z -- see below)
 ```
+
+**49F WATCH RESULT (`bbfrc8wl9`, fired 1049Z) -- AND A RETRACTION OF MY OWN SCRIPT'S VERDICT:**
+```
+OBSERVED (solid)  data 07-28 landed 07-29 10:45:12Z lag=1d
+                  data 07-29 landed 07-30 10:45:11Z lag=1d   <- n=2, same minute
+                  -> a genuine fixed daily schedule at ~10:45Z. Backfill era over.
+DECIDING QUESTION 07-31 is a FRIDAY, the fire is SATURDAY. Does the producer RUN on a Saturday?
+                  49financial Saturday LANDINGS, all 61 keys : 0  (Thu 38 / Wed 16 / Tue 7)
+                  POSITIVE CONTROL cottonwood Saturday landings: 3 of 31 -> the test DETECTS them
+                  BOUND: that histogram is backfill-dominated (38 Thu = ONE backfill day), so
+                  steady-state observation is 2 days, both weekdays. UNDETERMINED, leaning AGAINST.
+VERDICT           0 IF it runs Saturday (~10:45Z = 3h15m pre-fire); 1 IF not (07-31 lands Mon 08-03).
+```
+**>> MY OWN WATCH SCRIPT PRINTED "-> carries 0 days" AND THAT DOES NOT FOLLOW. I retracted it to COO
+and DE. The mechanism is NEW and worth carrying: I BAKED A CONCLUSION INTO THE SCRIPT AT ARMING TIME,
+HOURS BEFORE I HAD THE EVIDENCE THAT QUALIFIES IT -- the script could not know about the Saturday
+question because I had not asked it yet. AN AUTOMATED VERDICT IS FROZEN AT AUTHORING TIME WHILE THE
+EVIDENCE KEEPS MOVING, and it fires under the authority of a live signal, so it reads as a fresh
+measurement. Earlier errors tonight were claims WIDER than what I measured; this was a claim written
+BEFORE I measured -- a wrong-VINTAGE conclusion, not a wrong-axis one.
+CORRECT DESIGN: a monitor emits an OBSERVATION, never a VERDICT. Mine should have printed
+`07-29.json landed 10:45:11Z, lag 1d` and stopped. <<**
 **Nobody should carry "inflection is clean" out of my earlier message.** UNCHANGED by this: the
 `_month_cap`/`_carried_daily` mechanism, and the refutation of ~C's T-1 premise (which never needed
 the presence rate). **It STRENGTHENS the remedy: a computed line needs no forecast at all -- it
