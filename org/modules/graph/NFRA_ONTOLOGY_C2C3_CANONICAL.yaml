@@ -318,8 +318,8 @@ c4_segments:
       from CDN cache; an endpoint 404s or returns HTML instead of JSON; or the question is who
       is allowed to see what, through which route. If the data is right in the bucket but
       wrong in the browser, the answer is in this segment.
-  global-infrastructure:
-    display_name: Global Infrastructure
+  estate-infrastructure:
+    display_name: Estate Infrastructure   # renamed from global-infrastructure (Andrew 2026-07-30): the segment that maintains the Estate itself -- coherent under the reservation, not colliding with it
     registry: [sys-estate-ops-platform]
     note: observation chains (watchdog-observe motif) route here even when the observed thing
       lives in another segment -- the observed belongs to its segment, the observing belongs here.
@@ -349,6 +349,27 @@ terminology_law:
     (plural, qualified -- the comp-semantic-estates tool name, Andrew-chosen) refers to the
     business-thread traversal domain and is the ONLY sanctioned qualified use; never shorten
     it to bare "estate(s)".
+  substrates: >
+    The RATIFIED platform partition of the Estate: the graph layer axis materializes C0-C3
+    SEPARATELY per substrate -- aws, portal, ms, pipeline (derive_runner NODE_TYPE_LAYER;
+    GLOBGRPH numbers the partition L1-L7 at design level). "Substrate" is the word for WHICH
+    PLATFORM a thing lives on. DEPRECATED LOOSE USE: per-platform "estate" phrasing ("the
+    SharePoint/OneDrive estate", 01_substrate.md) -- under the reservation, a platform is a
+    SUBSTRATE of the Estate, never an estate of its own.
+  territory_vs_map: >
+    NFRA_COMPUNIFY (Andrew-direct 5-surface apex): FOUR TERRITORY SURFACES where authoritative
+    state physically lives -- LOCAL, GIT, AWS-CLOUD, MS-CLOUD -- plus TRINO as the FEDERATION
+    surface (the derived join-layer across them, special, not a peer). The derived models
+    (Nessie -> Kuzu -> Iceberg) are the MAP layer over the territory: they can drift, the
+    territory cannot. "Territory" = where state lives; "map" = a derived representation of it.
+  surface: >
+    Scoped, not free: (a) a TERRITORY or FEDERATION surface (COMPUNIFY apex, above); (b) a
+    tool's declared coverage space (boundary_report address_space); (c) genesis-surface doc
+    tags. Do not coin new senses; qualify which sense on use.
+  plane: >
+    RATIFIED sense: DESIRED vs APPLIED (the ONTOLOGY2 plane axis -- config/TF vs live). The
+    loose usage "planes (AWS / pipeline / frontend / M365)" for platform partitions is
+    DEPRECATED in favor of SUBSTRATES.
   segments_vs_verticals: >
     C4 = SEGMENTS (Andrew 2026-07-30): the five agent-routing registries of C3 systems above.
     The 27 named threads are the BUSINESS OVERLAY (verticals) -- retained, listed per segment,
