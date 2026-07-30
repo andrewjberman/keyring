@@ -151,7 +151,7 @@ disjunct at `:219`, not coverage.
 
 | File | Change | Committed |
 |---|---|---|
-| `data/etfs/scripts/presentation/render_month_end.py` | `_carried_disclosure()` + fail-safe emission in `write_month_csvs` | **No — HELD UNLANDED**, ` M` unstaged, by COO constraint 2 |
+| `data/etfs/scripts/presentation/render_month_end.py` | `_carried_disclosure()` + fail-safe emission in `write_month_csvs` | **No — and as of 0745Z the tree is REVERTED to HEAD. The change lives ONLY as the patch. See Addendum.** |
 | `org/.../deliverables/carried_disclosure_20260730.patch` | Patch backup of the above | Yes — `75c66b8733` |
 | `org/.../deliverables/ETFS_AVGCAP_INTERIOR_COVERAGE_FINDING_20260730.md` | Standing record for Andrew question (b) | Yes — `7d7af02155` |
 
@@ -193,3 +193,70 @@ COO for ~C ahead of the 14:00Z fire.
    behave as the working-tree bytes did. **A landed change is not a verified change.**
 5. **[0.4.0_DE_ClientPlatform]** flag to whoever owns `org/ref/SESSION_LOG_STANDARD.md`: line 36 still
    directs agents to append to the retired `org/compiler-tools-log.md`.
+6. **[2.0.0_SA_COO]** assign an owner for the RE-UPLOAD step before the GO — see Addendum C. Without it
+   the GO is a no-op that reports success.
+
+---
+
+## Addendum (0740-0750Z) — the tree was reverted, and a commit is not a deploy
+
+*Written because the body above said the diff was in the working tree. **That is now false**, and a log
+that stopped here would send a successor hunting a modification that does not exist.*
+
+### A. Working tree REVERTED to HEAD (COO `20260730T072534Z`, on ~C's hazard flag)
+
+~C flagged the held diff as a live hazard in the shared worktree. COO rejected both offered options — a
+named stash (`0.7.0_AE_CloudOps` found a pre-existing hostile `stash@{0}: PROBE -- this must be BLOCKED,
+not executed` in that same shared stash) and an inert guarded commit (lands an unruled change to a
+payment-basis file, and makes "held unlanded" false) — ruling: **revert the tree; the committed patch is
+the durable artifact.**
+
+Executed. Verified by identity rather than by "the command ran":
+`md5 after revert == md5 of HEAD blob == d618e3b9931bde32c2d672363f8587ff`; `git status --porcelain` empty.
+
+**The work now exists in exactly two places:** patch `75c66b8733`, and a raw byte-copy in session
+scratchpad. **Re-apply = `git apply org/.../deliverables/carried_disclosure_20260730.patch`.**
+
+### B. I overstated my own patch verification; the negative control caught it
+
+I had reported the patch "verified — reverse-applies cleanly AND a corrupted copy is rejected." Re-running
+that control after the revert **failed**:
+
+> **`git apply --check` validates whether CONTEXT lines match the target. It does NOT validate the content
+> of ADDED lines** — a patch with mutated additions passes it. The reverse check discriminated only
+> because in reverse the added lines *become* context.
+
+A true statement about **applicability** doing duty as a claim about **fidelity** — the same wrong-axis
+family as the `cap` error and ~A's `12/12`, this time mine, about my own backup. Re-verified on a
+discriminating test: applied to a throwaway copy and byte-compared against the exercised file —
+CR-normalized md5 `4f4269cb4c5e4b155559d24a4325613b` on both sides, `diff --strip-trailing-cr` identical,
+and a mutated patch produces different bytes. The raw md5 gap was line endings only (`git show HEAD:`
+emits LF, a checkout gives CRLF), not content.
+
+### C. A COMMIT IS NOT A DEPLOY FOR THIS FILE
+
+`render_month_end.py` is neither Terraform-deployed nor bundled. The orchestrator's SSM command has the
+transient EC2 box pull it **from S3 at run time**:
+
+```python
+ARTIFACT_PREFIX = "s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports"    # lambda_function.py:44-47
+f"aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py ..."    # lambda_function.py:114
+```
+
+Measured read-only: deploy artifact **dated 2026-07-07 11:22:31**, 36767 bytes; deployed vs HEAD
+CR-normalized md5 `d618e3b9...` == `d618e3b9...` (**in sync — baseline clean**); occurrences of
+`"carried forward at the last known value"` in the deployed copy: **0**.
+
+> **A GO that stops at "land the commit" produces nothing.** Aug 1 pulls the 2026-07-07 artifact, renders
+> without the disclosure, uploads a PDF, sends the email, exits 0 — **a green run and a delivered report
+> with the remedy absent** — and nothing records the absence (the run path emits nothing; the only `print`
+> in the orchestrator is `:87`, a WARN on a failed SNS publish).
+
+**The GO needs two owned steps:** (1) `git apply` + `safe-commit` — mine; (2) **re-upload to
+`ARTIFACT_PREFIX` + md5-verify against the landed HEAD blob — NOT mine** (charter: cannot deploy AWS;
+DT/AE lane). Routed to COO as a routing decision, with `0.7.0_AE_CloudOps~A` flagged directly since they
+carry the 14:00Z exposure. **A two-step deploy with only step 1 assigned is the shape that fails silently.**
+
+*Rail note: `comp-which` returned no tool covering "is this EC2 artifact prefix current with HEAD"
+(`comp-pipescript deployed` maps bd/inf/cot/mdpf gold prefixes, not `ec2/etfs-reports`), so the raw `aws`
+read carried an inline `# rail-checked:` marker. A genuine coverage gap, not an override of convenience.*
