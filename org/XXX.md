@@ -271,6 +271,26 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 **Never use `TaskList` to check your watcher.** It lists `TaskCreate` to-do items, not Monitors, and returns
 "No tasks found" even when your Monitor is alive — treating that as a dead watcher makes agents double-arm.
 
+### ⚠ TILDE-LANE PATHS: THE TWO FAMILIES USE **OPPOSITE** FORMS. CHECK WHICH ONE YOU ARE IN.
+
+| you are writing… | canonical form | substituting `{serial}` whole gives… |
+|---|---|---|
+| **your AGENT FOLDER** (`org/{tier}/…`) | **FLAT** — `org/tier2_senior/0.7.0_AE_CloudOps~B/` | **the RIGHT answer.** Do substitute. |
+| **an INBOX** (`org/mcp/inbox/…`) | **NESTED** — `org/mcp/inbox/{base}/~{lane}/` | **the DEAD answer.** Never substitute. |
+
+**The same habit is correct in one family and silently fatal in the other**, which is why "flat is
+legacy" is a **false generalization** — it is true of inboxes only. Measured 2026-07-30: agent
+folders carry **148 tracked files under FLAT lane dirs vs 1 under nested** (newest flat commit
+2026-07-29; the lone nested dir's only commit is a 2026-05-27 emergency SALVAGE sweep, not a lane
+agent working). `Step 1`'s own `org/{tier_folder}/{your_serial}/README.md` **tells you to substitute**
+— and there that is right.
+
+**So: ask which FAMILY you are in before you build the path. Do not carry a rule across.** The
+inbox rule below is scoped to inboxes; it is not a principle about tilde serials in general.
+*(Both failure directions are live: an agent that over-applies "always split" creates a dead
+`org/{tier}/{base}/~{lane}/` agent folder; one that over-applies "flat is legacy" avoids the very
+folder its whole lane writes to.)*
+
 ### Inbox path — CANONICAL vs the FLAT form that silently swallows mail
 
 | | path | |
@@ -286,8 +306,11 @@ the nested dir"*). **A message placed there is delivered to nobody and reported 
 
 **THE TRAP IS SUBSTITUTION, and it is why this keeps happening: for a lane serial, `inbox/{serial}/`
 IS the flat path.** Writing your own serial into a `{serial}` slot silently produces the dead form —
-so **never substitute a lane serial into a `{serial}` path slot; split it into `{base}` + `~{lane}`
-first.** (Measured 2026-07-29: 36 flat dirs holding 329 messages exist as residue, last written
+so **never substitute a lane serial into an INBOX `{serial}` path slot; split it into `{base}` +
+`~{lane}` first.** ⚠ **SCOPE — INBOXES ONLY. This is NOT a general rule about tilde serials, and
+reading it as one breaks your agent folder** (see the two-families table above: there, substituting
+the whole serial is CORRECT). *The unscoped phrasing of this sentence is itself what made a reader
+generalize it, 2026-07-30.* (Measured 2026-07-29: 36 flat dirs holding 329 messages exist as residue, last written
 2026-06-17 — one day before LD-0202 landed the root fix. Nothing has written one since; every one is
 a substitution artifact.)
 
