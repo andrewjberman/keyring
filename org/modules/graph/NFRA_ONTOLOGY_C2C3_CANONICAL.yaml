@@ -304,13 +304,22 @@ c3_ii_semantic_verticals:
     - { system: sys-smartx-feed, vertical: smartx }
 
 # ---------------------------------------------------------------------------------------------
-# C4 -- VERTICALS: the legislated semantic business estate (the world model L1 layer)
+# c4_verticals -- SUPERSEDED SECTION (layer claim retired; checksum + candidate record retained).
+# VERTICALS WERE RE-SLOTTED TO C3.ii on 2026-07-30 (Andrew-ratified dual partition; LAYERS.md:
+# "VERTICALS ARE C3.ii"). The pre-re-slot definition below placed them at C4; C4 is the SEGMENTS
+# layer (c4_segments). The LIVE definition + population is c3_ii_semantic_verticals above --
+# never cite this section for a layer assignment. Caught by the CVO D-rail alignment pass
+# 2026-07-30: one canon file was carrying two contradictory layer assignments for "vertical".
 # ---------------------------------------------------------------------------------------------
 c4_verticals:
-  definition: 'A C4 Vertical is a legislated business function. Its extension is a set of D2
-    chains plus any computed C3 systems that nest under it as they emerge. Names live in
-    NAMED_THREAD_CATALOG.md + the estate-coverage manifest; process of record:
-    org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md.'
+  superseded_by: c3_ii_semantic_verticals   # re-slot 2026-07-30; retained for checksum + lineage only
+  definition: 'SUPERSEDED 2026-07-30: verticals are C3.ii SEMANTIC VERTICALS (see
+    c3_ii_semantic_verticals + LAYERS.md). Pre-re-slot text defined "a C4 Vertical [as] a
+    legislated business function" with an extension of D2 chains -- the SEMANTICS survive at
+    C3.ii; only the LAYER assignment was wrong. Names live in the estate-coverage manifest
+    (+ the census NAMED_THREAD_CATALOG.md at org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/
+    estate_census/ -- the bare filename previously cited here resolves nowhere); process of
+    record: org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md.'
   count_checksum: 29   # 27 - attribution (retired 07-30) + etf-reports + ceo-digest + ticketing  # derive the current set from the resolver at read time; this digit is a checksum, not the source
   pending_candidates_awaiting_naming: []   # ALL RESOLVED by the 2026-07-30 adjudication pass (see adjudications_20260730)
   naming_ladder_binding: 'c3_naming_ladder rung 1 resolves INTO this layer catalog -- computed
@@ -371,7 +380,8 @@ first_pass_census:
 #
 # PURPOSE: when a user queries an agent, the agent STARTS HERE. Each segment carries a dense
 # high-signal description -- the token surface a real query hits. Route: C4 segment -> C3 system
-# -> C2 motif (D2 chain) -> C1 -> C0. The 27 named threads remain the BUSINESS OVERLAY (verticals),
+# -> C2 motif (D2 chain) -> C1 -> C0. The C3.ii SEMANTIC VERTICALS (re-slotted from "overlay on
+# C4" 2026-07-30; count is the resolver's, never this comment's) are listed per segment,
 # listed per segment; both entry paths land in the same registries.
 # =============================================================================================
 c4_segments:
@@ -494,6 +504,9 @@ terminology_law:
     DEPRECATED in favor of SUBSTRATES.
   segments_vs_verticals: >
     C4 = SEGMENTS (Andrew 2026-07-30): the five agent-routing registries of C3 systems above.
-    The 27 named threads are the BUSINESS OVERLAY (verticals) -- retained, listed per segment,
-    many-to-many with C3 by design. An agent routes segment -> system -> chain; a business
-    question may equally enter by vertical name and lands in the same registries.
+    VERTICALS ARE C3.ii (re-slotted 2026-07-30 from the earlier "business overlay on C4"
+    framing this block briefly carried): the declared semantic partition of the SAME chain
+    ground set C3.i partitions deterministically -- listed per segment, many-to-many with
+    C3.i by design; the count is the resolver's, never prose's. An agent routes segment ->
+    structure -> chain; a business question may equally enter by C3.ii vertical name and
+    lands in the same registries.

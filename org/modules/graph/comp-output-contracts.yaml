@@ -5,8 +5,9 @@
 # header (R3: DESIRED-vs-APPLIED / source-vs-projection / graph vintage) from here, and the appender's
 # VERDICT/REFUSE classification (M3) is DERIVED from the exit_codes blocks below -- no frozen list.
 #
-# >>> THIS IS NOT A CURATED SUBSET. <<<  comp-tools.yaml carries ~24 of 83 tools BY DESIGN and its own
-# header says "Do NOT count tools from this file" -- and naming it as the derivation source is exactly the
+# >>> THIS IS NOT A CURATED SUBSET. <<<  comp-tools.yaml carries a deliberate SUBSET of the tool
+# population BY DESIGN (its own header says "Do NOT count tools from this file"; the true count is the
+# gate's, never a digit frozen here) -- and naming it as the derivation source is exactly the
 # defect this TO closes (it was named by three independent agents INSIDE the TO about that defect; ratified
 # correction to tools_index, MSTR 172141Z, main CTO accepted-in-full no re-gate). THIS file is the OPPOSITE:
 # it is ENFORCED-COMPLETE against tools_index by comp-manifest-check's output-contract invariant -- every
@@ -39,8 +40,14 @@
 # resolves to different code at different vintages (CLAUDE.md Rule 22) -- re-confirm on any material edit.
 
 version: 1
-last_reviewed: 2026-07-23
-owner: 0.8.0_AE_CloudComp
+# VINTAGE HONESTY (corrected 2026-07-30, Andrew-flagged): `last_reviewed` is NOT the file's edit
+# vintage -- git log is the ONLY edit record (hand-maintained "last updated" fields are the
+# frozen-digit class: this one read 07-23 while carrying 07-30 edits from three sessions).
+# The field below marks the last FULL R1R3 review pass over every entry; per-entry edits since
+# ride git authorship (E4.2 kind: vocabulary + comp-estate contract + truncation convention all
+# landed 2026-07-30 without a full-pass re-review).
+last_full_review_pass: 2026-07-23 (0.8.0_AE_CloudComp, the NFRA_MSBEFF.R1R3 authoring pass)
+owner: 0.8.0_AE_CloudComp   # R1R3 deliverable owner; the surface is ANY_EXEC_OR_AE (.owned-paths) -- edits ride git authorship
 enforced_complete_against: graph-call-manifest.yaml::tools_index
 enforcing_gate: comp-manifest-check (output-contract completeness member)
 
@@ -384,8 +391,20 @@ contracts:
       "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
     exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
 
+  # ---- TRUNCATION CONVENTION (tool-wide; comp-estate = reference implementation, Andrew-ratified
+  # 2026-07-30) ---- The --head N contract: modes DECLARE structure (body rows vs verdict/denominator
+  # footer -- no heuristics); under --head the first N body lines print, then the self-declaring
+  # marker `[TRUNCATED --head: showing N of M body lines; verdict/denominator follow|end of output]`
+  # (stdout + ONE stderr copy, pipe-survivable), then the footer ALWAYS prints. Rationale: naive
+  # unix-head truncation is verdict-destroying and silent -- every comp-estate mode prints its
+  # verdict LAST, so `| head` removes exactly the lines that prevent a truncated worldview being
+  # mistaken for the whole one. Rules: default bare --head = 50; --json output is NEVER truncated
+  # mid-object (a future --json mode leaves the pager unarmed + one stderr note); unarmed = pure
+  # pass-through (byte-identical, regression-checked over 10 modes at build). Rollout: other
+  # comp-tools adopt AS TOUCHED (no fleet retrofit sweep); pager helpers live in
+  # estate_infrastructure_cli.py (set_head/body/footer/close_pager).
   comp-estate:
-    coverage: "the Opal world model: C4 segments (stable canon) -> C3 systems -> chains (thread-model plane, resolver snapshot) -> live S3-key derivation (key plane, repo source); plus stable canon serving (--layers ladder doc, --definitions term registry) and the L3 census set-diff (--census-drift, tf/aws planes)"
+    coverage: "the Opal world model: C4 segments (stable canon) -> C3 systems -> chains (thread-model plane, resolver snapshot) -> live S3-key derivation (key plane, repo source); plus stable canon serving (--layers ladder doc, --definitions term registry) and the L3 census set-diff (--census-drift, tf/aws planes). --head N = verdict-preserving truncation per the convention block above (marker + footer always; unarmed = byte-identical)"
     blind_spots:
       - "DEPLOYED-plane divergence invisible: key plane reads the repo working tree, never live AWS artifacts -- the bridge, comp-kuzu canonical is the destination (printed in every banner)"
       - "thread-model layer rides the resolver whose underlying lambda census is FROZEN at 2026-06-15 -- run --census-drift for the live set-diff; the tool prints staleness, it cannot repair it"
@@ -449,7 +468,7 @@ contracts:
 # the literal string pipescript") was FIXED at source the same window (estate_infrastructure_cli
 # print-string rename, 17 lines, denominator printed).
 pending_declaration:
-  - comp-adapter-audit
+  # comp-adapter-audit: RETIRED 2026-07-30 (Andrew-ruled, staleness audit) before ever declaring a contract -- removed from pending_declaration with the tool
   - comp-assets
   - comp-aws
   - comp-axes

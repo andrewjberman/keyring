@@ -103,6 +103,125 @@ def _a(s):
     return s.translate(_NONASCII).encode("ascii", "replace").decode("ascii")
 
 
+# ---------------------------------------------------------------------------
+# Verdict-preserving --head truncation (Andrew-ratified design 2026-07-30).
+# Modes DECLARE structure -- no heuristics: body(line) = enumerable rows
+# (truncatable); footer(line) = verdict/denominator lines (ALWAYS printed);
+# plain print() = raw headers/banners (never counted, never cut). Under
+# --head N the first N body lines print, the remainder are COUNTED, then a
+# self-declaring marker (stdout + ONE stderr copy -- the stderr copy survives
+# a further unix-head pipe cut), then every footer. Body-only modes call
+# close_pager() so the marker still lands. Without --head: pure pass-through,
+# zero behavior change (byte-identical outputs, regression-checked at build).
+# --json rule (contract): structured output is NEVER truncated mid-object --
+# a future --json mode leaves the pager unarmed and prints one stderr note.
+# Shared by this module's legacy modes AND opal_estate_infrastructure's
+# native modes (one pager, one set of counters per process).
+# ---------------------------------------------------------------------------
+_HEAD = None
+_BODY_TOTAL = 0
+_BODY_SHOWN = 0
+_MARKER_EMITTED = False
+
+
+def set_head(n):
+    """Arm body truncation at n lines (None disarms). Resets counters."""
+    global _HEAD, _BODY_TOTAL, _BODY_SHOWN, _MARKER_EMITTED
+    _HEAD = n
+    _BODY_TOTAL = 0
+    _BODY_SHOWN = 0
+    _MARKER_EMITTED = False
+
+
+def head_armed():
+    return _HEAD is not None
+
+
+def body(line=""):
+    global _BODY_TOTAL, _BODY_SHOWN
+    _BODY_TOTAL += 1
+    if _HEAD is None or _BODY_SHOWN < _HEAD:
+        _BODY_SHOWN += 1
+        print(line)
+
+
+def _marker(tail):
+    global _MARKER_EMITTED
+    if _HEAD is not None and not _MARKER_EMITTED and _BODY_TOTAL > _BODY_SHOWN:
+        line = "[TRUNCATED --head: showing %d of %d body lines; %s]" % (
+            _BODY_SHOWN, _BODY_TOTAL, tail)
+        print(line)
+        sys.stderr.write(line + "\n")
+        _MARKER_EMITTED = True
+
+
+def footer(line=""):
+    _marker("verdict/denominator follow")
+    print(line)
+
+
+def ladder_context():
+    """(fam2sys, motif_idx) view-compiled from the canonical catalog at invocation, or
+    (None, None) with ONE loud stderr line on an unreadable catalog -- ladder annotations
+    are then SUPPRESSED rather than silently mislabeled (a wrong C3.i/C2 tag is worse than
+    an absent one). fam2sys: legacy family key -> C3.i structure name. motif_idx: chain
+    thread_id -> C2 motif family (first-pass census; absent = UNCLASSIFIED, honest: the
+    census residue + post-census naming-act chains)."""
+    try:
+        import yaml
+        cat = yaml.safe_load(open(os.path.join(
+            ROOT, "org", "modules", "graph", "NFRA_ONTOLOGY_C2C3_CANONICAL.yaml"),
+            encoding="utf-8"))
+        fam2sys = {v["legacy_family_key"]: k
+                   for k, v in cat["c3_deterministic_structures"].items()}
+        motif_idx = {}
+        for fam, ids in (cat["first_pass_census"].get("instances_by_family") or {}).items():
+            for i in ids:
+                motif_idx[i] = fam
+        return fam2sys, motif_idx
+    except Exception as exc:
+        sys.stderr.write(f"comp-estate: canonical catalog unreadable ({exc}) -- "
+                         "C3.i/C2 ladder annotations SUPPRESSED this run, not guessed.\n")
+        return None, None
+
+
+def _aslist(v, empty):
+    """Defect-2 guard (CTO descent test 2026-07-30): a hand-added chain row can carry a STR
+    where the renderer expects a LIST -- iterating it prints one character per line. Normalize;
+    never iterate a string as rows."""
+    if v is None or v == []:
+        return [empty]
+    if isinstance(v, str):
+        return [v]
+    return v
+
+
+def _census_prose(s):
+    """Defect-1 guard (CTO descent test 2026-07-30): chain prose is CENSUS-VINTAGE, and the
+    phrase 'LIVE fresh <date>' inside it is exactly the wording that stops a reader from
+    re-checking (measured: a 'LIVE fresh 2026-06-15' claim was 45 days stale against a live
+    head-object). Re-label the poison phrase at render time; comp-freshness owns live truth.
+    STALE-direction claims are left as-is -- over-warning drives a re-check, which is safe."""
+    s = _a(s)
+    if s and "LIVE fresh" in s:
+        s = s.replace("LIVE fresh", "SNAPSHOT-CLAIMED fresh (census-vintage, NOT a live read)")
+    return s
+
+
+def chain_ladder_line(t, fam2sys, motif_idx):
+    """The dual-key + motif annotation for one chain block, or None when suppressed."""
+    if fam2sys is None:
+        return None
+    struct = fam2sys.get(t.get("family") or "UNASSIGNED", "UNASSIGNED-RESIDUE")
+    motif = motif_idx.get(t["thread_id"], "UNCLASSIFIED (census residue / post-census chain)")
+    return f"  C3.i: {struct}   |   C2 motif: {motif}"
+
+
+def close_pager():
+    """End-of-mode hook for body-only modes (no footer): the marker still lands."""
+    _marker("end of output")
+
+
 def load():
     try:
         with open(RESOLVER, encoding="utf-8") as f:
@@ -129,24 +248,24 @@ def cmd_list(data):
     for t in threads:
         by_name[t["named_thread"]].append(t)
     print(
-        f"comp-estate - {len(data['named_threads'])} named threads / {len(threads)} sub-threads "
+        f"comp-estate - {len(data['named_threads'])} C3.ii semantic verticals / {len(threads)} chains (D2 = C2-motif instances) "
         f"(estate census {data.get('last_review', '')})"
     )
     print("=" * 78)
     print("Usage: comp-estate <name>   |   comp-estate --resource <substr>   |   comp-estate --validate")
     print()
-    print(f"{'NAME':<20} {'THREADS':>7}  {'IN-SCOPE':>8} {'OUT':>4} {'UNREV':>5}  TOOLS")
+    print(f"{'VERTICAL':<20} {'CHAINS':>7}  {'IN-SCOPE':>8} {'OUT':>4} {'UNREV':>5}  TOOLS")
     print("-" * 78)
     for name in data["named_threads"]:
         ts = by_name[name]
         sc = Counter(t["status"] for t in ts)
         tools = ",".join(sorted({t["owning_tool"] for t in ts}))
-        print(
+        body(
             f"{name:<20} {len(ts):>7}  {sc.get('in-scope', 0):>8} {sc.get('explicit-out', 0):>4} "
             f"{sc.get('unreviewed', 0):>5}  {tools}"
         )
-    print("-" * 78)
-    print(f"{'TOTAL':<20} {len(threads):>7}")
+    footer("-" * 78)
+    footer(f"{'TOTAL':<20} {len(threads):>7}")
 
 
 def _drill_call(tool, threads):
@@ -174,40 +293,46 @@ def cmd_thread(data, name):
     resources = data.get("resources_by_named_thread", {}).get(name, [])
     if not threads and not resources:
         # LOUD unknown name - never a silent empty result
-        sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread.\n")
-        sys.stderr.write(f"  -> known threads: {', '.join(data['named_threads'])}\n")
+        sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical.\n")
+        sys.stderr.write(f"  -> known verticals: {', '.join(data['named_threads'])}\n")
         sys.stderr.write("  -> run `comp-estate --list` for counts.\n")
         sys.exit(2)
     sc = Counter(t["status"] for t in threads)
     tc = Counter(t["owning_tool"] for t in threads)
     n_debt = sum(1 for t in threads if t.get("debtscan_flags"))
     print(
-        f"comp-estate {name} - {len(threads)} threads "
+        f"comp-estate C3.ii vertical '{name}' - {len(threads)} chains (D2 = C2-motif instances) "
         f"(in-scope {sc.get('in-scope', 0)} / explicit-out {sc.get('explicit-out', 0)} / "
         f"unreviewed {sc.get('unreviewed', 0)})"
         + (f" | {n_debt} with DEBT flags" if n_debt else "")
     )
     print("=" * 78)
+    print("NOTE: freshness adjectives inside chain prose are CENSUS-VINTAGE claims (snapshot")
+    print("      vintage in the header), never live reads -- comp-freshness owns live truth.")
+    fam2sys, motif_idx = ladder_context()
     for t in threads:
-        print(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
+        body(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
+        lad = chain_ladder_line(t, fam2sys, motif_idx)
+        if lad:
+            body(lad)
         # P3.1: surface DEBTSCAN flags inline with their meaning, not a silent code
         fl = t.get("debtscan_flags") or []
         if fl:
-            print(f"  DEBT: {', '.join(fl)}  ({'; '.join(_FLAG_MEANING.get(f, '?') for f in fl)})")
+            body(f"  DEBT: {', '.join(fl)}  ({'; '.join(_FLAG_MEANING.get(f, '?') for f in fl)})")
         if t.get("description"):
-            print(f"  what: {_a(t['description'])}")
-        for i, p in enumerate(t.get("producers") or ["(none recorded)"]):
-            print(f"  {'producers:' if i == 0 else '          '} {_a(p)}")
-        for i, s in enumerate(t.get("served_artifacts") or ["(no data artifact)"]):
-            print(f"    {'-> served:' if i == 0 else '          '} {_a(s)}")
+            body(f"  what: {_census_prose(t['description'])}")
+        for i, p in enumerate(_aslist(t.get("producers"), "(none recorded)")):
+            body(f"  {'producers:' if i == 0 else '          '} {_census_prose(p)}")
+        for i, s in enumerate(_aslist(t.get("served_artifacts"), "(no data artifact)")):
+            body(f"    {'-> served:' if i == 0 else '          '} {_census_prose(s)}")
         fe = _a(t.get("frontend_resolution") or "(none)")
-        print(f"    -> frontend: {fe}")
+        body(f"    -> frontend: {fe}")
         # P3.2: surface CVO's authoritative reachability when authored (never assert from grep)
         _st, _auth = _fe_status(t)
         if _auth:
-            print(f"    -> reachable: {_st} [CVO ground-truth]")
+            body(f"    -> reachable: {_st} [CVO ground-truth]")
     print("\n" + "-" * 78)
-    print("owning tools in this thread (drill in for live detail -- comp-estate stays read-only):")
+    print("owning tools in this vertical (drill in for live detail -- comp-estate stays read-only):")
     for tool, n in tc.most_common():
         print(f"  {n:>3}  {tool:<22} {OWNING_TOOLS.get(tool, '')}")
         drill = _drill_call(tool, threads)
@@ -217,10 +342,27 @@ def cmd_thread(data, name):
     # in this named thread, the single source the golden fixtures also derive from.
     if resources:
         print("\n" + "-" * 78)
-        print(f"resources ({len(resources)}) - every lambda/EC2/StepFn in '{name}':")
+        print(f"C0 facts ({len(resources)}) - the CENSUS-TAXONOMY roster for '{name}'. NOT exhaustive:")
+        print("  chain prose above may name facts outside the census (EC2/scripts/checkers -- the")
+        print("  measured mdpf case dropped 3); census regeneration closes the gap. Defect-3 honesty")
+        print("  label, CTO descent test 2026-07-30 -- do NOT use this roster as a census denominator.")
         for r in resources:
-            print(f"  {_a(r)}")
-    print("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
+            body(f"  {_a(r)}")
+    footer("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
+    footer("")
+    footer("DRILL DOWN THE LADDER -- one D-rail carries each descent; the rails ARE the fidelity:")
+    footer("  C4 -> C3   no rail: registry membership (a segment IS a registry of C3 systems).")
+    footer("             comp-estate --segments | --matrix | --structure <sys-name>")
+    footer("  C3 -> C2   rides D3 (contract/obligation): what binds a structure/vertical to its chains --")
+    footer("             cadence, completeness, canonical-source. SEEN ABOVE as the cron()/schedule tokens")
+    footer("             and STALE verdicts (D2+D3 derivations, never primitives). Each chain's C2 motif is")
+    footer("             printed on its block (UNCLASSIFIED = honest census residue).")
+    footer("  C2 -> C1   rides D2 (path/flow): a chain IS its motif instantiated as ordered C1 hops with")
+    footer("             per-hop transform + cadence -- the producers:/served:/frontend: rows above ARE the")
+    footer("             hops. Walk deeper: comp-blast <fn> (D2 forward) | comp-kuzu \"MATCH ...\" (canonical)")
+    footer("  C1 -> C0   rides D1 (value/grain): WHAT travels each edge at WHICH grain (artifact/partition/")
+    footer("             row/field) -- the served: keys above are partition-grain atoms. Per C0 fact: the")
+    footer("             roster above | comp-aws (cloud node) | comp-iam service <fn> (grants)")
 
 
 def cmd_resource(data, needle):
@@ -239,11 +381,12 @@ def cmd_resource(data, needle):
         if needle_l in blob:
             hits.append(t)
     if not hits:
-        sys.stderr.write(f"comp-estate: no thread references '{needle}'.\n")
+        sys.stderr.write(f"comp-estate: no chain references '{needle}'.\n")
         sys.exit(2)
-    print(f"comp-estate --resource '{needle}' -> {len(hits)} thread(s):")
+    print(f"comp-estate --resource '{needle}' -> {len(hits)} chain(s) (D2):")
     for t in hits:
-        print(f"  {t['named_thread']:<18} / {t['thread_id']:<32} [{t['status']} | {t['owning_tool']}]")
+        body(f"  {t['named_thread']:<18} / {t['thread_id']:<32} [{t['status']} | {t['owning_tool']}]")
+    close_pager()
 
 
 def cmd_tool(data, name, tool):
@@ -261,7 +404,7 @@ def cmd_tool(data, name, tool):
         sys.exit(2)
     threads = [t for t in data["threads"] if t["named_thread"] == name]
     if not threads:
-        sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread (see --list).\n")
+        sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical (see --list).\n")
         sys.exit(2)
     owned = [t for t in threads if t["owning_tool"] == tool]
     if not owned:
@@ -272,9 +415,10 @@ def cmd_tool(data, name, tool):
             f"(named thread '{name}' is owned by {', '.join(tools)}, not {tool})\n"
         )
         sys.exit(2)
-    print(f"{tool} owns {len(owned)}/{len(threads)} threads in '{name}':")
+    print(f"{tool} owns {len(owned)}/{len(threads)} chains in '{name}':")
     for t in owned:
-        print(f"  {t['thread_id']} [{t['status']}]")
+        body(f"  {t['thread_id']} [{t['status']}]")
+    close_pager()
 
 
 def cmd_validate(data):
@@ -287,10 +431,10 @@ def cmd_validate(data):
     ok = True
     print("comp-estate --validate (NFRA_PIPESCRIPT acceptance)")
     print("=" * 60)
-    print(f"  total sub-threads:        {len(threads)}")
-    print(f"  named threads:            {len(names)}")
+    print(f"  total chains (D2):        {len(threads)}")
+    print(f"  C3.ii verticals:          {len(names)}")
     print(f"  duplicate thread_ids:     {len(dup)} {dup if dup else ''}")
-    print(f"  threads w/o named bucket: {len(unbucketed)} {unbucketed if unbucketed else ''}")
+    print(f"  chains w/o vertical:      {len(unbucketed)} {unbucketed if unbucketed else ''}")
     if dup or unbucketed:
         ok = False
     sc = Counter(t["status"] for t in threads)
@@ -300,7 +444,7 @@ def cmd_validate(data):
     print("-" * 60)
     print(
         "RESULT:",
-        "PASS - every thread resolves to exactly one named thread, no orphan/dup"
+        "PASS - every chain resolves to exactly one C3.ii vertical, no orphan/dup"
         if ok
         else "FAIL - see above",
     )
@@ -367,7 +511,7 @@ def cmd_fe_reachability(data, name=None, orphans_only=False):
     threads = data["threads"]
     if name:
         if name not in set(data["named_threads"]):
-            sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread (see --list).\n")
+            sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical (see --list).\n")
             sys.exit(2)
         threads = [t for t in threads if t["named_thread"] == name]
     rows = [(t["named_thread"], t["thread_id"], *_fe_status(t), _fe_advisory(t)) for t in threads]
@@ -376,32 +520,32 @@ def cmd_fe_reachability(data, name=None, orphans_only=False):
         order = order + ["mounted-reachable"]
     summ = Counter(s for _, _, s, _, _ in rows)
     label = "--orphans" if orphans_only else "--fe-reachability"
-    print(f"comp-estate {label} ({name or 'estate'}) - {len(rows)} threads")
+    print(f"comp-estate {label} ({name or 'estate'}) - {len(rows)} chains (D2)")
     print("AUTHORITATIVE = CVO reachability_status field; * = provisional CLI flag; grep = supplementary hint")
     print("=" * 78)
     for s in order:
         for nt, tid, st, auth, adv in rows:
             if st == s:
-                print(f"  [{s:<17}] ({'CVO' if auth else 'cli'}) {nt}/{tid}")
+                body(f"  [{s:<17}] ({'CVO' if auth else 'cli'}) {nt}/{tid}")
                 if not auth and s in ("phantom", "frontend-orphan*", "unreviewed"):
-                    print(f"        grep: {adv}")
-    print("-" * 78)
-    print("SUMMARY: " + " | ".join(f"{k} {summ.get(k, 0)}" for k in order if summ.get(k)))
+                    body(f"        grep: {adv}")
+    footer("-" * 78)
+    footer("SUMMARY: " + " | ".join(f"{k} {summ.get(k, 0)}" for k in order if summ.get(k)))
     unrev = summ.get("unreviewed", 0)
     prov = summ.get("frontend-orphan*", 0)
     if unrev:
-        print(
+        footer(
             f"UNREVIEWED ({unrev}) -- CVO ground-truth not-yet-determined; needs comp-routes/"
             "comp-transform mount-verify. LOUD, never silently reachable."
         )
     if prov:
-        print(f"PROVISIONAL ({prov}) -- no CVO field yet; CVO confirms (0 once fully authored).")
+        footer(f"PROVISIONAL ({prov}) -- no CVO field yet; CVO confirms (0 once fully authored).")
     if summ.get("mounted-reachable"):
-        print(
+        footer(
             "Caveat: 'mounted-reachable' = NAMED-live-consumer (census lambda->S3->named .tsx), NOT strict "
             "mounted-UI-rendered; comp-routes/comp-transform mount-verify is the next rigor level (follow-on)."
         )
-    print(
+    footer(
         "Note: reachability is CVO's authoritative reachability_status field; the portal/src grep "
         "is a demoted supplementary hint (it is fooled by scaffolding -- see the time-machine phantoms)."
     )
@@ -420,21 +564,21 @@ def cmd_debt(data):
         for t in data["threads"]
         if t.get("debtscan_flags")
     ]
-    print(f"comp-estate --debt - {len(flagged)} threads carry DEBTSCAN flags")
+    print(f"comp-estate --debt - {len(flagged)} chains (D2) carry DEBTSCAN flags")
     print("=" * 78)
     by_nt = defaultdict(list)
     for nt, tid, fl in flagged:
         by_nt[nt].append((tid, fl))
     for nt in sorted(by_nt):
-        print(f"\n{nt}:")
+        body(f"\n{nt}:")
         for tid, fl in by_nt[nt]:
-            print(f"  {tid:<42} {', '.join(fl)}")
+            body(f"  {tid:<42} {', '.join(fl)}")
     seen = sorted({f for _, _, fl in flagged for f in fl})
     if seen:
-        print("\n" + "-" * 78)
+        footer("\n" + "-" * 78)
         for f in seen:
-            print(f"  {f:<22} {_FLAG_MEANING.get(f, '?')}")
-    print(
+            footer(f"  {f:<22} {_FLAG_MEANING.get(f, '?')}")
+    footer(
         "\nNote: these are the resolver's census-static flags; the live DEBTSCAN ledger "
         "(org/modules/graph/debtscan/) is the authoritative live-flag source."
     )
@@ -502,23 +646,23 @@ def cmd_gate_b(data, fixtures_path=None):
             line += f" | MISSING {sorted(missing)}"
         if extra:
             line += f" | EXTRA {sorted(extra)}"
-        print(line)
+        body(line)
 
     assign = defaultdict(list)
     for nt, rs in rbnt.items():
         for r in rs:
             assign[r].append(nt)
     doubles = {r: nts for r, nts in assign.items() if len(nts) > 1}
-    print("-" * 78)
-    print(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} named threads resource-complete (no missing/extra)")
-    print(
+    footer("-" * 78)
+    footer(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} C3.ii verticals resource-complete (no missing/extra)")
+    footer(
         f"GATE-C: {len(assign)} live resources mapped; "
         f"{len(doubles)} double-claimed"
         + (f" {dict(list(doubles.items())[:3])}" if doubles else "")
         + "  (orphan-vs-live-AWS = CVO's authoritative gate-c)"
     )
     clean = gb_fail == 0 and not doubles
-    print("RESULT:", "PASS" if clean else "FAIL")
+    footer("RESULT: " + ("PASS" if clean else "FAIL"))
     sys.exit(0 if clean else 2)
 
 

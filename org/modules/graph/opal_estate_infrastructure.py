@@ -1,6 +1,12 @@
 """opal_estate_infrastructure -- the OPAL estate traversal engine (C4: estate-infrastructure).
 
 Tool: `comp-estate` (the first point of contact for agent coherence over the Estate).
+PURPOSE (Andrew-direct 2026-07-30, VERBATIM): "the entire purpose of comp-estate is that its
+the global lossless fidelity descent from semantics to facts." The ladder drill -- C4 segments
+-> C3(i|ii) -> chains (D2) -> C2 motifs -> C1 interactions -> C0 facts, every return naming its
+next rung down and the D-rail the descent rides -- IS that purpose made operational; "lossless"
+is the dual-key maximum-fidelity property (two decompression paths from one join point, the
+property that placed the C3 dual-partition design).
 NAMING HISTORY, superseded rulings quoted for the record: born `opal_business_estates` under
 `comp-semantic-estates` (Andrew-direct 2026-07-29: "we are deprecating base pipescript. there is
 comp-pipescript only for future reference" / "pipescript needs to be categorically renamed as
@@ -65,6 +71,13 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
+if str(_HERE) not in sys.path:
+    sys.path.insert(0, str(_HERE))
+# ONE pager, shared with the legacy thread-model engine (same process, same counters):
+# body/footer declarations + the --head marker contract live in estate_infrastructure_cli.
+from estate_infrastructure_cli import (  # noqa: E402 -- must follow the sys.path insert above
+    body, close_pager, footer, head_armed, set_head,
+)
 _WS = _HERE.parent.parent.parent
 _SNAPSHOT = _HERE / "estate-coverage-resolver.json"
 _REFRESHER = _HERE / "gen-estate-resolver.py"
@@ -134,7 +147,7 @@ def emit_header(snap: dict) -> None:
     print("  PLANE: repo working tree. A DEPLOYED artifact whose source has diverged is NOT visible")
     print("  here -- this is the bridge; comp-kuzu canonical is the destination.")
     if stale:
-        print(f"  *** NAMING SNAPSHOT IS STALE (>{STALE_AFTER_DAYS}d). Thread NAMES may be wrong.")
+        print(f"  *** NAMING SNAPSHOT IS STALE (>{STALE_AFTER_DAYS}d). Vertical NAMES may be wrong.")
         print("  *** Keys are unaffected -- they are re-derived live, which is the point of this engine.")
 
 
@@ -304,11 +317,11 @@ def threads_of(snap: dict) -> dict:
 def cmd_list(snap: dict) -> int:
     th = threads_of(snap)
     print()
-    print(f"NAMED THREADS -- {len(th)} in the naming snapshot")
+    print(f"C3.ii SEMANTIC VERTICALS -- {len(th)} in the naming snapshot")
     for n in sorted(th):
-        print(f"  {n}")
-    print()
-    print(f"  denominator: {len(th)} thread(s). This is the SNAPSHOT's population, not the estate's.")
+        body(f"  {n}")
+    footer()
+    footer(f"  denominator: {len(th)} vertical(s). This is the SNAPSHOT's population, not the estate's.")
     return 0
 
 
@@ -317,35 +330,35 @@ def cmd_thread(snap: dict, name: str) -> int:
     hits = {k: v for k, v in th.items() if name.lower() in k.lower()}
     print()
     if not hits:
-        print(f"NO THREAD MATCHING {name!r} -- searched {len(th)} thread name(s) in the snapshot.")
+        print(f"NO C3.ii VERTICAL MATCHING {name!r} -- searched {len(th)} vertical name(s) in the snapshot.")
         print("  That is a statement about the SNAPSHOT's population, not about the estate.")
         return 1
     live = live_keys()
     snap_concrete, snap_patterns = _snapshot_keys(snap)
-    for tname, body in sorted(hits.items()):
-        print(f"THREAD: {tname}")
-        blob = json.dumps(body)
+    for tname, tbody in sorted(hits.items()):
+        body(f"C3.ii VERTICAL: {tname}")
+        blob = json.dumps(tbody)
         tconc, tpat = _snapshot_keys(json.loads(blob))
         tkeys = sorted(tconc)
         if not tkeys and not tpat:
-            print("  (no S3-key-shaped entries asserted for this thread in the snapshot)")
+            body("  (no S3-key-shaped entries asserted for this thread in the snapshot)")
         for k in tkeys:
             producers = live["keys"].get(k)
             if producers:
-                print(f"  LIVE           {k}")
+                body(f"  LIVE           {k}")
                 for pr in producers[:6]:
-                    print(f"                     <- {pr}")
+                    body(f"                     <- {pr}")
             else:
-                print(f"  STALE-IN-SNAPSHOT  {k}")
-                print("                     ^ asserted by the snapshot, NOT produced by any source in")
-                print("                       the scanned roots. Do NOT treat this key as served.")
+                body(f"  STALE-IN-SNAPSHOT  {k}")
+                body("                     ^ asserted by the snapshot, NOT produced by any source in")
+                body("                       the scanned roots. Do NOT treat this key as served.")
         for k in sorted(tpat):
-            print(f"  UNCOMPARABLE       {k}")
-            print("                     ^ a glob/template, not a single object -- no live/stale verdict")
-    print()
-    print(f"  live key denominator: {len(live['keys'])} distinct key(s) across {live['files']} file(s)"
-          + (f"; {live['errors']} unreadable/unparseable" if live["errors"] else ""))
-    print(f"  snapshot asserted {len(snap_concrete)} concrete key(s) + {len(snap_patterns)} pattern(s).")
+            body(f"  UNCOMPARABLE       {k}")
+            body("                     ^ a glob/template, not a single object -- no live/stale verdict")
+    footer()
+    footer(f"  live key denominator: {len(live['keys'])} distinct key(s) across {live['files']} file(s)"
+           + (f"; {live['errors']} unreadable/unparseable" if live["errors"] else ""))
+    footer(f"  snapshot asserted {len(snap_concrete)} concrete key(s) + {len(snap_patterns)} pattern(s).")
     return 0
 
 
@@ -355,11 +368,12 @@ def cmd_resource(snap: dict, substr: str) -> int:
     print()
     print(f"RESOURCE MATCH {substr!r} -- {len(hits)} of {len(live['keys'])} live key(s)")
     for k, producers in sorted(hits.items()):
-        print(f"  {k}")
+        body(f"  {k}")
         for pr in producers[:8]:
-            print(f"      <- {pr}")
+            body(f"      <- {pr}")
     if not hits:
         print("  none. That is a statement about the scanned roots, not about the estate.")
+    close_pager()
     return 0 if hits else 1
 
 
@@ -376,13 +390,13 @@ def cmd_drift(snap: dict) -> int:
     print(f"  live/stale verdict. Counting them as stale would manufacture {len(patterns)} findings.")
     print(f"  {len(gone)} of {len(concrete)} CONCRETE snapshot key(s) have NO live producer:")
     for k in gone[:40]:
-        print(f"    STALE-IN-SNAPSHOT  {k}")
+        body(f"    STALE-IN-SNAPSHOT  {k}")
     if len(gone) > 40:
-        print(f"    ... and {len(gone) - 40} more")
-    print()
-    print("  A stale estate map ACTIVELY DEFENDS ZOMBIES. Each line above is a key the old tool would")
-    print("  have served as fact. Absence of a live producer is NOT proof the key is dead -- a shell")
-    print("  or out-of-root producer is outside this denominator -- but it is never a LIVE claim.")
+        body(f"    ... and {len(gone) - 40} more")
+    footer()
+    footer("  A stale estate map ACTIVELY DEFENDS ZOMBIES. Each line above is a key the old tool would")
+    footer("  have served as fact. Absence of a live producer is NOT proof the key is dead -- a shell")
+    footer("  or out-of-root producer is outside this denominator -- but it is never a LIVE claim.")
     return 0
 
 
@@ -420,6 +434,15 @@ def cmd_layers() -> int:
     try:
         with open(p, encoding="utf-8") as f:
             content = f.read()
+        if head_armed():
+            # doc lines are all body; no verdict footer -> close_pager lands the marker
+            for ln in content.splitlines():
+                try:
+                    body(ln)
+                except UnicodeEncodeError:
+                    body(ln.encode("ascii", errors="replace").decode("ascii"))
+            close_pager()
+            return 0
         # encoding-safe on Windows consoles (cp1252 chokes on box-drawing glyphs)
         try:
             sys.stdout.write(content)
@@ -452,8 +475,8 @@ def cmd_definitions(term: str) -> int:
           f"changes only by naming act)")
     if term == "__ALL__":
         for k, v in terms.items():
-            print(f"  {k:22} [{v.get('status','?'):10}] {str(v.get('definition',''))[:90]}")
-        print(f"  denominator: {len(terms)} terms")
+            body(f"  {k:22} [{v.get('status','?'):10}] {str(v.get('definition',''))[:90]}")
+        footer(f"  denominator: {len(terms)} terms")
         return 0
     tl = term.lower()
     hits = {k: v for k, v in terms.items() if tl in k.lower()}
@@ -513,21 +536,24 @@ def cmd_matrix() -> int:
     print("")
     print("  C3.i DETERMINISTIC STRUCTURE -> C3.ii semantic-vertical span:")
     for sname in sorted(sysv, key=lambda k: -len(sysv[k])):
-        print(f"    {sname:34} ({len(sysv[sname]):2}) {', '.join(sorted(sysv[sname]))}")
+        body(f"    {sname:34} ({len(sysv[sname]):2}) {', '.join(sorted(sysv[sname]))}")
     print("")
     print("  C3.ii SEMANTIC VERTICAL -> C3.i structure span:")
     for v in sorted(vsys):
-        print(f"    {v:22} ({len(vsys[v])}) {', '.join(sorted(vsys[v]))}")
+        body(f"    {v:22} ({len(vsys[v])}) {', '.join(sorted(vsys[v]))}")
     bound = [(s, sorted(vs)[0]) for s, vs in sysv.items()
              if len(vs) == 1 and len(vsys.get(sorted(vs)[0], set())) == 1
              and s != "UNASSIGNED-RESIDUE"]
     names = ", ".join(f"{s}<->{v}" for s, v in sorted(bound)) or "none"
-    print("")
-    print(f"  bound_pairs (mutual 1:1, computed): {names}")
+    footer("")
+    footer(f"  bound_pairs (mutual 1:1, computed): {names}")
     declared = set(snap.get("named_threads", []))
     chainless = sorted(declared - set(vsys))
     if chainless:
-        print(f"  DECLARED-BUT-CHAINLESS (adjudication owed): {', '.join(chainless)}")
+        footer(f"  DECLARED-BUT-CHAINLESS (adjudication owed): {', '.join(chainless)}")
+    footer("  DRILL (one rail per descent): C3->C2 rides D3 -- comp-estate --structure <sys-name> (chains +")
+    footer("  motifs) | C2->C1 rides D2 -- comp-estate <vertical> (chain blocks = C1 hops) | C1->C0 rides")
+    footer("  D1 (grain) -- the C0 roster + served keys. Ladder + rails verbatim: comp-estate --layers")
     return 0
 
 
@@ -555,20 +581,68 @@ def cmd_segments() -> int:
     print(f"{TOOL} | C4 SEGMENTS -- the agent routing layer (source: {os.path.basename(cat)}, "
           f"rule bank v1.4)")
     print("  Route: C4 segment -> C3(i|ii) -> C2 motif (D2 chain) -> C1 -> C0. Verticals are C3.ii,")
-    print("  business overlay; `comp-estate <thread>` enters by vertical.\n")
+    print("  business overlay; `comp-estate <vertical>` enters at C3.ii.\n")
     for name, v in segs.items():
-        print("=" * 88)
-        print(f"SEGMENT: {name}   ({v.get('display_name', '')})")
-        print(f"  structures: {', '.join(v.get('registry', []))}")
+        body("=" * 88)
+        body(f"SEGMENT: {name}   ({v.get('display_name', '')})")
+        body(f"  structures: {', '.join(v.get('registry', []))}")
         if v.get("flags"):
-            print(f"  FLAGS: {'; '.join(v['flags'])}")
-        print(f"  verticals: {', '.join(v.get('verticals_served', []))}")
+            body(f"  FLAGS: {'; '.join(v['flags'])}")
+        body(f"  verticals: {', '.join(v.get('verticals_served', []))}")
         desc = " ".join(str(v.get("high_signal", "")).split())
         import textwrap
         for line in textwrap.wrap(desc, width=86):
-            print(f"    {line}")
-    print("=" * 88)
-    print(f"  denominator: {len(segs)} segments (the catalog is the source; this print is a view)")
+            body(f"    {line}")
+    footer("=" * 88)
+    footer(f"  denominator: {len(segs)} segments (the catalog is the source; this print is a view)")
+    footer("DRILL DOWN THE LADDER: C4->C3 is registry membership (this view). Below C3 one D-rail carries")
+    footer("  each descent: C3->C2 rides D3 (contract; comp-estate --structure <sys-name> = chains + motifs),")
+    footer("  C2->C1 rides D2 (comp-estate <vertical> = chain blocks whose rows ARE the C1 hops),")
+    footer("  C1->C0 rides D1 (grain; the C0 fact roster + served keys). The rails are the fidelity.")
+    return 0
+
+
+def cmd_structure(sysname: str) -> int:
+    """C3.i DRILL VIEW: one deterministic structure -> its chains (D2) grouped by C3.ii
+    vertical, each with its C2 motif. Closes the ladder-descent hole the 2026-07-30 drill
+    pass found: --matrix showed the C3 grid but NO mode entered by STRUCTURE, so C3.i was
+    reachable as a row label and nothing else. View-compiled (catalog + resolver + census)."""
+    import collections
+    legacy, data = _legacy()
+    fam2sys, motif_idx = legacy.ladder_context()
+    if fam2sys is None:
+        return 2
+    structures = sorted(set(fam2sys.values()))
+    hits = [s for s in structures if sysname.lower() in s.lower()]
+    if not hits:
+        print(f"{TOOL} --structure: NO C3.i structure matches {sysname!r} -- that is a statement "
+              f"about the catalog ({len(structures)} structures).", file=sys.stderr)
+        print(f"  known: {', '.join(structures)}", file=sys.stderr)
+        return 2
+    if len(hits) > 1:
+        print(f"{TOOL} --structure: AMBIGUOUS {sysname!r} -> {', '.join(hits)} -- narrow it.",
+              file=sys.stderr)
+        return 2
+    struct = hits[0]
+    fams = sorted(k for k, v in fam2sys.items() if v == struct)
+    chains = [t for t in data["threads"]
+              if fam2sys.get(t.get("family") or "UNASSIGNED", "UNASSIGNED-RESIDUE") == struct]
+    print(f"C3.i STRUCTURE: {struct} -- {len(chains)} chains (D2 = C2-motif instances)")
+    print("=" * 78)
+    byv = collections.defaultdict(list)
+    for t in chains:
+        byv[t["named_thread"]].append(t)
+    for v in sorted(byv):
+        body(f"\nC3.ii vertical: {v} ({len(byv[v])} chain(s))")
+        for t in byv[v]:
+            motif = motif_idx.get(t["thread_id"], "UNCLASSIFIED")
+            body(f"  {t['thread_id']:<44} C2 motif: {motif}")
+    footer("")
+    footer(f"  denominator: {len(chains)} chains across {len(byv)} vertical(s); "
+           f"catalog family key(s): {', '.join(fams)}")
+    footer("DRILL (rails): C3->C2 rides D3 (the contract binding this structure to its chains; motifs printed")
+    footer("  above) | C2->C1 rides D2 (comp-estate <vertical> = the chain blocks' C1 hop rows; comp-blast /")
+    footer("  comp-kuzu walk them) | C1->C0 rides D1 (grain: the vertical view's served keys + C0 roster)")
     return 0
 
 
@@ -627,12 +701,12 @@ def cmd_census_drift(plane: str) -> int:
           f"CENSUS-ONLY (gone or unmanaged-on-this-plane): {len(gone)}")
     print("  >> a SET diff -- equal counts prove nothing (66 changes once cancelled to zero net)")
     for n in added:
-        print(f"  + {n}")
+        body(f"  + {n}")
     for n in gone:
-        print(f"  - {n}")
-    print("  route the residue per ESTATE_WORLD_MODEL_PROCESS.md s.4 "
-          "(A=assign to a thread, B=add the missing plane/predicate, C=candidate NEW business "
-          "function -> naming is Andrew/CVO's, never auto)")
+        body(f"  - {n}")
+    footer("  route the residue per ESTATE_WORLD_MODEL_PROCESS.md s.4 "
+           "(A=assign to a thread, B=add the missing plane/predicate, C=candidate NEW business "
+           "function -> naming is Andrew/CVO's, never auto)")
     return 0
 
 
@@ -656,7 +730,7 @@ def _legacy():
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog=TOOL, description="Opal business-semantic estate traversal.")
-    ap.add_argument("name", nargs="?", help="named thread (substring)")
+    ap.add_argument("name", nargs="?", help="C3.ii vertical name (substring)")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--resource", metavar="SUBSTR")
     ap.add_argument("--drift", action="store_true", help="snapshot keys with no live producer")
@@ -664,7 +738,7 @@ def main(argv=None) -> int:
     ap.add_argument("--refresh-only", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--tool", nargs=2, metavar=("NAME", "TOOL"),
-                    help="sub-threads of NAME owned by TOOL (loud out-of-scope)")
+                    help="chains of NAME owned by TOOL (loud out-of-scope)")
     ap.add_argument("--debt", action="store_true", help="debtscan-flag view across all threads")
     ap.add_argument("--fe-reachability", action="store_true", dest="fe_reachability",
                     help="FE-reachability per backend thread (CVO ground-truth)")
@@ -682,6 +756,9 @@ def main(argv=None) -> int:
     ap.add_argument("--matrix", action="store_true",
                     help="the C3 cross-partition matrix: per-system vertical span x per-vertical "
                          "system span (view-compiled; a matrix CHANGE is an adjudication event)")
+    ap.add_argument("--structure", metavar="SYS",
+                    help="C3.i DRILL VIEW: one deterministic structure (substring) -> its chains "
+                         "grouped by C3.ii vertical, each with its C2 motif")
     ap.add_argument("--segments", action="store_true",
                     help="THE C4 ENTRY POINT: the five agent-routing segments, each a registry "
                          "of C3 systems with a high-signal description. Start here.")
@@ -690,7 +767,18 @@ def main(argv=None) -> int:
                          "(default plane: tf/DESIRED; --plane aws for APPLIED). "
                          "Process: org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md")
     ap.add_argument("--plane", choices=("tf", "aws"), default="tf")
+    ap.add_argument("--head", nargs="?", const=50, type=int, metavar="N",
+                    help="truncate BODY rows after N lines (bare --head = 50). "
+                         "Verdict-preserving by design: the truncation DECLARES itself "
+                         "(marker on stdout + one stderr copy) and the mode's "
+                         "verdict/denominator footer ALWAYS prints -- a cut denominator "
+                         "is how a truncated worldview gets mistaken for the whole one.")
     a = ap.parse_args(argv)
+
+    if a.head is not None:
+        if a.head < 0:
+            ap.error("--head takes a non-negative line count")
+        set_head(a.head)
 
     if a.layers:
         return cmd_layers()
@@ -700,6 +788,8 @@ def main(argv=None) -> int:
         return cmd_matrix()
     if a.segments:
         return cmd_segments()
+    if a.structure:
+        return cmd_structure(a.structure)
 
     if a.census_drift:
         return cmd_census_drift(a.plane)

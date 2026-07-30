@@ -9,7 +9,10 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.6"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
+  version: "1.7"   # 1.7 = D-rail alignment pass (CVO, Andrew-direct 2026-07-30): D2.motif_topology re-pointed
+                   #       from the bare-named exploration catalog (~20 families, resolved from nowhere) to the
+                   #       RATIFIED C2 catalog (c2_motif_families, 12); citation-only, no semantic change.
+                   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
                    # +dynamic_rails (D1 value/grain, D2 path/flow, D3 contract/obligation) between the ratified rungs;
                    # +completeness axis (PSTMRT P2, alongside variance); +type_tuple (rail,grain,plane,scope) -- the
                    # enforced typing vocab base 0.8.0's registration invariant validates tool declarations against.
@@ -251,7 +254,7 @@ dynamic_rails:
       flow_edges:    { FLOWS_TO: 961, WRITES: 562, READS: 712, WRITES_S3: 275, READS_S3: 323, EMITS_TO: 144, FETCHES: 109, PUBLISHES_TO: 36 }
       control_edges: { RUNS: 248, TRIGGERS: 145, INVOKES: 41 }   # the cadence SKELETON (who fires whom); the promised TIME is a D3 obligation
       cadence_nodes: { EVENT_RULE: 141, EVENT_SOURCE: 95, SCHEDULE: 10, STATE_MACHINE: 1 }
-      motif_topology: "NFRA_ONTOLOGY_CANONICAL_MOTIF_CATALOG.md @ef94dafda (~20 families / 4 planes) -- the un-timed shapes D2 times."
+      motif_topology: "the RATIFIED C2 catalog: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml#c2_motif_families (12 canonical agnostic families, Andrew-ratified 2026-07-30) -- the un-timed shapes D2 times. LINEAGE: seeded from the ~20-family/4-plane exploration catalog at org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_CANONICAL_MOTIF_CATALOG.md @ef94dafda (cited here as a bare filename until 2026-07-30, which resolved from nowhere; the exploration catalog PROPOSES, the ratified catalog ADMITS -- population law: canon-first-debt-subset)."
     derivations_licensed:
       - "freshness = D2 path + D3 cadence + upstream vintages + trading calendar (NEVER a wall-clock mtime -- CLAUDE.md NEVER#1). Freshness DERIVES FROM FLOW or it lies."
       - "staleness-vs-frozen = vintage advancing along the path vs the value not changing (the corpus 'FROZEN-BUT-FRESH' question, today unanswerable)."

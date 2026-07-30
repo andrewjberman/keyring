@@ -4,8 +4,20 @@
 # unexpected change. Per-firm, severity-tiered. Mechanism: carve the subgraph -> sign a baseline ->
 # (B) commit-time change-gate + (C) scheduled break/change scan + SEV-routed alarm. The risk is the
 # BACKEND (firm-specific AWS/data resources feeding the tab), NOT React -> carve deep on the data chain,
-# light on the frontend. Design: docs/architecture/NFRA_GRAPHS.md §10. STATUS: v0.3 (CTO carve-review 2026-06-12; v0.2 paths VERIFIED
-# against the live portal submodule 2026-06-11).
+# light on the frontend. Design: docs/architecture/NFRA_GRAPHS.md §10.
+# STATUS: v0.4 (CVO RE-GROUND 2026-07-30, Andrew-ruled off the staleness audit -- this file was the
+#   AT-RISK dated-baseline-under-a-live-SEV1-gate finding; Andrew: re-ground, not delete).
+#   MEASURED 2026-07-30: all 8 watched files EXIST at portal HEAD a969d615 (every SHA moved since the
+#   06-12 sign -- expected drift, the watch's job); frontend anchors resolve (Portfolio Analytics x5,
+#   fetch names present); serving lambdas + 4 of 5 buckets EXIST (opal-portal-market-data ABSENT --
+#   removed below); producers re-verified on BOTH planes (lambda list-functions + ec2
+#   describe-instances -- the lists mixed lambda and EC2 names UNTYPED, so a single-plane liveness
+#   read produced 4 false DEADs; members now plane-typed). THREE bd producers dead on both planes
+#   (matches the census adjudication) -- replaced with the measured-live bd-49f family.
+#   Prior: v0.3 (CTO carve-review 2026-06-12; v0.2 paths VERIFIED against live portal 2026-06-11).
+#   NOTE the 06-12 SIGNED BASELINE (.comp-graph/baseline.json + F6 anchor + watched_file_shas) is
+#   NOT re-signed by this pass -- re-signing is the D8/DE owner's act; every watched SHA has moved,
+#   so the file-SHA watch is in a fired-and-unacked state a re-sign would clear (owner item).
 #
 # severity: SEV1 (must-always-be-right; block-with-ack on commit-touch; page on break)
 #           SEV2 (lesser; warn on commit-touch; digest on break)
@@ -26,6 +38,10 @@ surfaces:
     why: "Andrew: the 'Portfolio Analytics' panel at the top of the Model Portfolios page -- SEV1, must always be right."
     aws_backend:   # NFRA_GRAPHS.D8-FP (2026-06-17): AWS-backend node membership for the in-derive scan (Option A). Names resolved to node_id at re-sign; a removed/changed member fires this surface. Producer-identity anchored (NOT bucket-writers).
       firm_scope: shared   # AUA aggregate is firm-split IN-DATA, single producer
+      # v0.4 plane note: mdpf-daily-runner is EC2 i-02448edb624a7a7cf (verified live 2026-07-30;
+      # stopped = on-demand normal); fired by the live mdpf-daily-trigger + mdpf-accrual-trigger
+      # lambdas (upstream -- the runner is the producer-identity anchor). NAMES BELOW STAY BARE:
+      # resign_surface_baseline.py resolves members by EXACT name lookup.
       producers: ["mdpf-daily-runner"]
       served_buckets: ["opal-data-mdpf", "opal-data-portal-v2"]
       serving_lambdas: ["opal-portal-data-proxy"]
@@ -42,8 +58,8 @@ surfaces:
     why: "Andrew: the Benchmark tab must ALWAYS be right; any logic/resource change or break raises a flag."
     aws_backend:   # NFRA_GRAPHS.D8-FP: producer-identity-anchored AWS-backend membership.
       firm_scope: shared   # Opal model-portfolio benchmark data, firm-agnostic
-      producers: ["yang-model-portfolio-benchmarks"]
-      served_buckets: ["opal-data-portal-v2", "opal-portal-market-data"]
+      producers: ["yang-model-portfolio-benchmarks"]   # v0.4: lambda, live-verified 2026-07-30
+      served_buckets: ["opal-data-portal-v2"]   # v0.4: opal-portal-market-data REMOVED -- head-bucket ABSENT 2026-07-30 (named here since v0.x; a scan keyed on it could never fire)
       serving_lambdas: ["opal-portal-data-proxy"]
 
   - id: advisor_intelligence
@@ -59,10 +75,17 @@ surfaces:
       firm_scope: per_firm
       per_firm:
         bd:
-          producers: ["bd-gold-layer-runner", "bd-gold-foundation", "bd-gold-layer", "bd-gold-trigger", "bd-gold-detail-generator", "bd-gold-detail-checker"]
+          # v0.4 RE-GROUND 2026-07-30: bd-gold-foundation + bd-gold-layer + bd-gold-detail-checker
+          # REMOVED -- dead on BOTH planes (lambda + EC2), matching the census adjudication; the
+          # live bd gold production family is the bd-49f re-architecture (measured on the applied
+          # plane; the census-drift UNMODELED set). Members plane-typed.
+          # planes: bd-gold-layer-runner = ec2 i-01003b035d2988dfb; bd-gold-detail-generator =
+          # ec2 i-074bfc40ee049dc62; the rest lambdas. All live-verified 2026-07-30.
+          producers: ["bd-gold-layer-runner", "bd-gold-detail-generator", "bd-gold-trigger", "bd-49f-runner", "bd-49f-fees-runner", "bd-49f-session-trigger", "bd-49f-keepalive"]
           served_buckets: ["opal-data-bd"]
           serving_lambdas: ["shared-advisor-router", "shared-advisor-router-response"]
         inf:
+          # planes: inf-gold-layer-runner = ec2 i-0ed5afded2ebd4ed4; the rest lambdas. All live-verified 2026-07-30.
           producers: ["inf-gold-layer-runner", "inf-portal-advisor-publisher", "inf-portal-publisher", "inf-gold-trigger"]
           served_buckets: ["opal-data-inf"]
           serving_lambdas: ["shared-advisor-router", "shared-advisor-router-response"]
@@ -81,8 +104,8 @@ surfaces:
     why: "Andrew: lesser severity than Benchmark, same monitoring shape."
     aws_backend:   # NFRA_GRAPHS.D8-FP: producer-identity-anchored AWS-backend membership.
       firm_scope: shared
-      producers: ["yang-generate-peer-performance"]
-      served_buckets: ["opal-data-portal-v2", "opal-portal-market-data"]
+      producers: ["yang-generate-peer-performance"]   # v0.4: lambda, live-verified 2026-07-30
+      served_buckets: ["opal-data-portal-v2"]   # v0.4: opal-portal-market-data REMOVED (bucket ABSENT, measured 2026-07-30)
       serving_lambdas: ["opal-portal-data-proxy"]
 
   - id: model_portfolios.aum

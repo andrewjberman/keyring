@@ -533,7 +533,6 @@ tool_grain_calibration:
     comp-types:        [type, symbol]
     # ---- below-file: component / route (portal / serving) ----
     comp-transform:    [component, field]
-    comp-adapter-audit: [component, field]
     comp-pii:          [component, field]
     comp-tooltip:      [component]
     comp-cache:        [component]
@@ -690,16 +689,7 @@ tools:
     concern: "React component field-RENDER schema-check (MISSING=runtime-undefined / UNUSED=waste; ternary-audit for new cohorts)"
     touches_resource: [portal-component]
     distinct_from:
-      - { tool: comp-adapter-audit, shared_resource: portal-component, my_concern: "JSX field-render vs TS type (MISSING/UNUSED)", their_concern: "ADAPTER field-threading vs LIVE S3 envelope (schema-drift)" }
       - { tool: comp-pii,           shared_resource: portal-component, my_concern: "JSX field-render schema-check", their_concern: "PII EXPOSURE (hashed vs cleartext)" }
-  - tool: comp-adapter-audit
-    surface: AWS-CLOUD
-    granularity: component
-    concern: "portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / fallback-order)"
-    touches_resource: [portal-component]
-    distinct_from:
-      - { tool: comp-transform, shared_resource: portal-component, my_concern: "adapter field-threading vs live S3", their_concern: "JSX field-render vs TS type" }
-      - { tool: comp-pii,       shared_resource: portal-component, my_concern: "adapter field-threading vs live S3", their_concern: "PII exposure" }
   - tool: comp-pii
     surface: AWS-CLOUD
     granularity: component
@@ -707,7 +697,6 @@ tools:
     touches_resource: [portal-component]
     distinct_from:
       - { tool: comp-transform,     shared_resource: portal-component, my_concern: "PII exposure", their_concern: "JSX field-render vs TS type" }
-      - { tool: comp-adapter-audit, shared_resource: portal-component, my_concern: "PII exposure", their_concern: "adapter field-threading vs live S3" }
   - tool: comp-tooltip
     surface: AWS-CLOUD
     granularity: component
@@ -996,7 +985,7 @@ redundancy_census:
     - { resource: parity,           tools: [comp-lambdamap, comp-parity, comp-incrparity], concerns: ["DEPLOY parity", "DATA/served parity", "INCREMENTAL parity"], state: DECLARED, finding: none }
     - { resource: freshness,        tools: [comp-freshness, comp-heat, comp-graph, comp-xray], concerns: ["pipeline-DATA freshness", "estate-OBJECT freshness", "graph-cache VINTAGE", "value-MOTION"], state: DECLARED, finding: none }
     - { resource: trace-graph,      tools: [comp-trace, comp-blast, comp-diff, comp-xref], concerns: ["dependency PATH walk", "IMPACT set", "uncommitted-CHANGE blast", "symbol OCCURRENCE"], state: DECLARED, finding: none }
-    - { resource: portal-component, tools: [comp-transform, comp-adapter-audit, comp-pii], concerns: ["JSX field-render vs TS type", "adapter field-threading vs live S3", "PII exposure"], state: DECLARED, finding: none }
+    - { resource: portal-component, tools: [comp-transform, comp-pii], concerns: ["JSX field-render vs TS type", "PII exposure"], state: DECLARED, finding: none }
     - { resource: estate-structure, tools: [comp-dups, comp-aws], concerns: ["DUPLICATE/dead census", "DUAL-MANAGED (TF-state conflict)"], state: DECLARED, finding: none }
     # census synced to the gate-formed touches_resource groups (CVO~B V1 P2-1): these 3 were correctly bidirectional in tools[] but missing from the summary
     - { resource: dispatch-dag,     tools: [comp-pipescript, comp-dispatch], concerns: ["per-SCRIPT io/deploy", "orchestration-DAG at CHAIN grain"], state: DECLARED, finding: none }

@@ -54,7 +54,16 @@ fi
 # x252 was starvation from exactly that, not a genuinely missing jq).
 SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || SCRIPT_DIR="."
 ROOT="${CLAUDE_PROJECT_DIR:-$(cd "${SCRIPT_DIR}/../.." 2>/dev/null && pwd)}"
-[ -z "${ROOT}" ] && ROOT="."
+# FAIL-CLOSED ROOT GUARD (CTO fabric-infra routing 2026-07-30): if ROOT is empty OR does not
+# actually contain org/mcp -- an unset var and a WRONG-DERIVE both produce a plausible path --
+# write NOTHING and leave a breadcrumb in temp. A telemetry row landing silently in a
+# CWD-relative shadow tree is strictly worse than a dropped row: 134 shadow trees / 7,557
+# stranded pre-07-17 rows were measured across the worktree, 3,400 of them inside the portal
+# submodule. The predecessor line here was `ROOT="."` -- the exact silent-degrade this replaces.
+if [ -z "${ROOT}" ] || [ ! -d "${ROOT}/org/mcp" ]; then
+    echo "$(date -u +%FT%TZ) TELEMETRY_HOOK_NO_ROOT cwd=$(pwd) root='${ROOT}'" >> "${TEMP:-/tmp}/claude-telemetry-hook-no-root.log" 2>/dev/null || true
+    exit 0
+fi
 JQ=""
 for _cand in "${CLAUDE_PROJECT_DIR:-}/.tools/jq.exe" ".tools/jq.exe" "${SCRIPT_DIR}/../jq.exe"; do
     if [ -x "${_cand}" ]; then JQ="${_cand}"; break; fi
