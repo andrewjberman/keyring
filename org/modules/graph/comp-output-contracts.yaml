@@ -468,7 +468,7 @@ contracts:
 # the literal string pipescript") was FIXED at source the same window (estate_infrastructure_cli
 # print-string rename, 17 lines, denominator printed).
 pending_declaration:
-  - comp-adapter-audit
+  # comp-adapter-audit: RETIRED 2026-07-30 (Andrew-ruled, staleness audit) before ever declaring a contract -- removed from pending_declaration with the tool
   - comp-assets
   - comp-aws
   - comp-axes

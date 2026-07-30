@@ -47,6 +47,10 @@ excluded_not_graph_use_cases: [comp-missions, comp-perf, comp-v5-composite-test,
 # SEED IS DELIBERATELY MINIMAL (TRIGGER_LAYER: no bulk-converting historical notes into a hundred
 # unowned items). Add an entry only at touch-time, when a REAL tool is genuinely retired.
 retired_aliases:
+  comp-adapter-audit:
+    successor: null    # retired outright -- no successor; comp-transform (JSX-vs-TS) and comp-pii keep their distinct portal-component concerns
+    retired: "2026-07-30 Andrew-ruled staleness-audit AT-RISK retirement -- executable + fixtures + registry rows deleted in one commit; ~/bin deprovisioned"
+    why: "portal adapter field-threading audit whose hand-frozen coverage denominator (19 of 122 adapters, censused 2026-07-10) decayed silently as the portal grew -- the dangerous quadrant: live-consumed claim, no re-census trigger. Andrew: delete over re-census."
   comp-semantic-estates:
     successor: comp-estate
     retired: "2026-07-30 naming consolidation (Andrew-direct) -- forwarder DELETED + ~/bin deprovisioned @29c3fedeb8; zero live callers at deletion (caller sweep in that commit)"
@@ -398,18 +402,6 @@ entries:
     freshness: "live portal/src"
     rebuild_trigger: "n/a"
     anti_pattern: "editing a shared type without enumerating consumers"
-    status: canonical
-
-  - id: trace.adapter.field_threading
-    use_case: "Pre-ship field-threading audit of a portal adapter function."
-    canonical_call: "comp-adapter-audit <adapter-fn> [--severity warn|error]"
-    tool: comp-adapter-audit
-    mode: rebuild
-    layer: trace
-    cost: "~60s (live S3 fetch + regex parse)"
-    freshness: "live S3 + portal"
-    rebuild_trigger: "n/a — needs the live served artifact"
-    anti_pattern: "shipping an adapter without verifying the field threads through"
     status: canonical
 
   - id: trace.platinum.reverse
@@ -894,18 +886,6 @@ entries:
     rebuild_trigger: "n/a"
     anti_pattern: "prefix-match gold script attribution as proof of the correct producer (FP class: D_04::build_firm_mix_summary prefix-matches nna_clients artifacts — name mismatch, DS must verify)"
     status: canonical    # NFRA_GRAPHS D7 2026-06-12
-
-  - id: anomaly.field.contract_break
-    use_case: "Are the portal response types out of sync with the S3 artifact shape? typed_field_count=0 means all fields are silently any. Run comp-adapter-audit for a live S3 diff; comp-transform for rendered-field coverage."
-    canonical_call: "comp-adapter-audit <adapter-fn> --severity warn  &&  comp-transform schema-check <Component>"
-    tool: comp-adapter-audit
-    mode: rebuild
-    layer: trace
-    cost: "~60s (live S3 fetch) + ~1s (comp-transform)"
-    freshness: "live S3 artifact + portal/src"
-    rebuild_trigger: "n/a — always live"
-    anti_pattern: "treating UNUSED fields as bugs without checking if they're passed wholesale to a sub-component (comp-platinum whole-object-pass FP); also: ADAPTER type mismatch in comp-transform (fetch return type != state var type) is a real bug even when comp-transform reports no MISSING fields"
-    status: canonical    # NFRA_GRAPHS D7 2026-06-12; highest-signal template this pilot
 
   - id: anomaly.cardinality.fanout_outlier
     use_case: "Is a component's fetch count or chain-resolution rate an outlier? 0 resolved chains on a high-fetch component = prod visibility gap (comp-platinum can't verify any gold->portal chain). Use comp-platinum summary for the distribution view."
@@ -1484,7 +1464,6 @@ tools_index:
   comp-cluster:  { does: "Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph (data-source clusters + drilldown depth/cohort + cross-panel SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache", subcommands: ["<Page>", "--list", "--coverage", "--json", "--db-path"], entries: [cloud.cluster.page_panel_drilldown] }
   comp-pii:      { does: "PII exposure audit (routes + components)", subcommands: [audit, scan], entries: [trace.pii.exposure] }
   comp-types:    { does: "TS type consumers (before editing a shared type)", subcommands: [index], entries: [trace.types.type_consumers] }
-  comp-adapter-audit: { does: "Portal adapter field-threading audit", subcommands: ["<adapter-fn>", "--severity"], entries: [trace.adapter.field_threading] }
   comp-tooltip:  { does: "Tooltip migration/coverage audit", subcommands: ["<args>"], entries: [meta.tooltip.migration] }
   comp-validate: { does: "Gold artifact invariant validation pre-upload", subcommands: ["<script_id> --artifact", "--list"], entries: [pipeline.validate.artifact] }
   comp-freshness: { does: "Is upstream S3 data fresh enough to run a gold chain", subcommands: [chain, script, artifact, ddb, all], entries: [pipeline.freshness.chain_ready] }
