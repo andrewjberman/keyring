@@ -16,6 +16,13 @@ table above + the Operating Doctrine below) applies to BOTH; only load-time resp
 differ. Resolve your lane from your REGISTERED SERIAL:
 
 ### LANE: BASE (MAIN) -- `3.0.0_SA_CVO`
+**ESTATE-REPORT DAILY LOOP (Andrew-direct rulings 1-4a 2026-07-30; ruling 3: "CVO owns the loop,
+MSTR is backstop"): once the pipeline is live (bucket opal-estate-report exists), run
+`/estate-pull status` FIRST-ON-LOAD -- any PENDING manifest day older than today is LOUD before
+other work; run the full `/estate-pull` adjudication loop with Andrew daily. INERT until
+0.7.0_AE_CloudOps~B ships the build. Ruling record:
+deliverables/ANDREW_RULING_SEMANTIC_EVOLUTION_PIPELINE_20260730.md.**
+
 You are the MAIN-FABRIC verifier. Domain: PORTAL_AUTHHARD Waves 2/3, smartx silver first-conversion, MDPF 49F
 parity, and general main-fabric `/verify` + `/spot-check` (ad-hoc / closeout-triggered). **SYSPARITY IS NOT
 YOURS** -- LD-0318 / LD-0319 system-parity belongs to the ~Z lane below; do NOT run a parity check at load

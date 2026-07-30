@@ -629,15 +629,27 @@ _piggyback_queue: list[dict] = []
 
 def _drain_piggyback() -> str:
     """Drain the piggyback queue and return formatted urgent header.
-    Returns empty string if no queued messages."""
+    Returns empty string if no queued messages.
+
+    RECIPIENT LABELING (CVO finding 20260730T215623Z, the retrieval half): this block
+    prepends the CALLING session's own queued broker mail onto WHATEVER tool response
+    comes next -- including a get_agent_status render for a DIFFERENT agent -- and it
+    previously carried no recipient labels at all, so the caller's own mail read as the
+    queried agent's (measured live: 13 MSTR-addressed messages rendered under
+    '# Status: 1.0.0_SA_CTO~C'). Every drain now names the session it was queued for
+    and every message names its addressed serial, so a misdelivered or misattributed
+    message is VISIBLE instead of silently double-claimed."""
     global _piggyback_queue
     if not _piggyback_queue:
         return ""
     msgs = _piggyback_queue[:]
     _piggyback_queue = []
-    lines = [f"URGENT: {len(msgs)} message(s) received while idle:\n"]
+    _mine = _my_serial or "this session (serial unset)"
+    lines = [f"URGENT: {len(msgs)} message(s) received while idle -- queued for **{_mine}** "
+             "(this session's OWN broker mail, NOT the queried agent's):\n"]
     for msg in msgs:
-        lines.append(f"--- Message from {msg.get('from_serial', '?')} ---")
+        lines.append(f"--- Message from {msg.get('from_serial', '?')} "
+                     f"to {msg.get('to_serial') or _mine} ---")
         subj = msg.get("subject", "(no subject)")
         lines.append(f"Subject: {subj}")
         lines.append(msg.get("body", ""))
@@ -1628,9 +1640,15 @@ async def send_message(
     filename = f"{ts}_{safe_from}_{safe_subject}.md"
 
     msg_path = inbox / filename
+    # To: carries the FULL ADDRESSED SERIAL, suffix included (CVO finding 20260730T215623Z,
+    # measured by 0.7.0_AE_CloudOps~B: this line wrote to_folder.name -- the agent FOLDER,
+    # which never carries a ~suffix -- so a lane-addressed message ROUTED to the nested lane
+    # dir while its own header claimed the BASE held it; the lane reader could not tell the
+    # message was theirs. LD-0202 family, header-vs-routing variant. The halt-gate's LD-0131
+    # recipient filter base-strips To: before comparing, so the full serial is compatible.)
     msg_content = (
         f"# Message from {from_agent}\n"
-        f"**To:** {to_folder.name}\n"
+        f"**To:** {to_agent}\n"
         f"**Date:** {ts}\n"
         f"{_sender_stamp}"
         f"**Subject:** {subject}\n\n"

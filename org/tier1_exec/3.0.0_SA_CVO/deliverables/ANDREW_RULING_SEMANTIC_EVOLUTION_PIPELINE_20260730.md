@@ -67,4 +67,64 @@ render-time or hand-pass corrections of semantic drift. This pipeline is the SYS
 frozen STRUCTURE dependencies die via the defrost design; frozen SEMANTICS get a daily
 activity-driven review loop with sovereign ratification.
 
+
+## RULING 2 -- BUILD FLOW + THE ESTATE REPORT (Andrew-direct, same terminal, ~2145Z, VERBATIM)
+
+> i want this build spec'd out to be in pattern with our existing kimi lambda structure, and the
+> eventbridge and the whole process etc under that spec by 0.7.0_AE_CloudOps~B (who is already
+> online RWA).THen I want them to send that spec to CVO for approval, CVO approves, ~B builds,
+> CVO tells CTO what we're doing, and in parallel you set up your launcher or whatever it is that
+> would have you check on that every day. THe idea would be however your charter works theres a
+> manifest every day that must be checked/switched. We get that recorded summary every day
+> accruing in the repo with the last day, the deterministically compiled resource list of what was
+> having changes (as a function of git commit review), and probably a section of delta through
+> some metric from the day before. This should be called the estate report, and its daily. We know
+> that it is compiled in some bucket every single day because its on a schedule, you use a skill
+> /estate-pull to go pull that report, we adjust it as needed or say no semantics updates, you
+> make the necessary changes, and that adjusted file for that day lives colocated in subfolder in
+> the same s3 bucket. Probably daily Kimi report in one subfolder, appended each day, and in the
+> other subfolder our generated file. DOes that design make sense? Give me your thoughts
+
+PARSED: spec by 0.7.0_AE_CloudOps~B (Kimi-lambda pattern + EventBridge) -> CVO approves -> ~B
+builds -> CVO informs CTO (SUPERSEDES ruling-1's "CTO authors the spec" lane note) -> CVO stands
+up the daily check: a per-day MANIFEST that must be checked/switched; /estate-pull skill pulls
+the day's ESTATE REPORT (name ratified), Andrew+CVO adjust or rule "no semantics updates", CVO
+lands changes; adjusted file colocated in the same bucket (subfolder A = daily Kimi report,
+append-only; subfolder B = the adjudicated file). Report content: AI summary + DETERMINISTIC
+changed-resource list (from git commit review) + a day-over-day delta section.
+OPEN AT ANDREW (flagged in CVO thoughts, same turn): ruling-1 put daily surfacing on MSTR-base
+(landed @d0f1df57c8/LD-0356); ruling-2 puts the operational daily loop on CVO -- the seam needs
+one owner ruling.
+
+
+## RULING 3 -- CLEARANCE + LOOP OWNERSHIP (Andrew-direct, same terminal, ~2158Z, VERBATIM)
+
+> ~B is cleared to start, CVO owns the loop, MSTR is backstop
+
+Resolves both open items: (1) the ~B instruction collision -- cleared, relayed same turn;
+(2) the ruling-1/ruling-2 ownership seam -- CVO owns the OPERATIONAL daily loop (/estate-pull +
+per-day manifest ledger, un-flipped days loud at every CVO load); MSTR-base's LD-0356 rule
+amends to GOVERNANCE BACKSTOP (verify the loop ran; escalate un-flipped days) -- amendment
+routed to MSTR same turn.
+
+
+## RULINGS 4 + 4a -- COMPUTE SHAPE (Andrew-direct at ~B's terminal ~2205/2210Z; verbatim recorded
+## by ~B @3acb8531c6, ESTATE_REPORT_PIPELINE_20260730/ANDREW_DIRECT_RULINGS.md -- pointer here)
+
+R4: EC2-with-autostart "may be more logical"; R4a: for runs exceeding 900s (graph scan +
+co-change analysis + Kimi). PARSE CORRECTION to ruling-1 item 4 of THIS record: "a Lambda
+carrying the Kimi API structure" was imprecise -- ~B grounded that NO Kimi lambda exists
+(every kimi-mentioning .tf carries aws_lambda_function count = 0); Kimi runs on EC2 in Node
+(bd_49f_auto_login.js:64-91, api.moonshot.ai, model kimi-k2.6). The BD pattern IS
+Scheduler -> orchestrator Lambda -> start EC2 -> SSM -> stop, so rulings 1 and 4 name the SAME
+architecture. ~B's design: FIRE-AND-FORGET orchestrator (NOT astn's poll-to-completion, which
+re-imports the 900s ceiling; scar at astn-pipeline/orchestrator.tf:120-124) + boot-scheduled
+hard-ceiling self-stop as the dead-man's switch.
+
+DOCTRINE-GRADE CATCH by ~B, banked: the astn pattern being cloned SHIPS moratorium-banned
+components (aws_sns_topic :13, cloudwatch_metric_alarm :139, sns:Publish :72) -- "A PATTERN-
+CLONE IS THE MOST LIKELY WAY A MORATORIUM GETS VIOLATED BY AN AGENT ACTING IN GOOD FAITH."
+Omission recorded as a decision-with-reason so no later agent restores parity with the source.
+The manifest ledger (default-alarming gate) is the replacement; no SNS/CW-alarm/SES in the build.
+
 -- 3.0.0_SA_CVO
