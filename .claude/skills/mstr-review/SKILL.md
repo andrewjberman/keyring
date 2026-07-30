@@ -110,6 +110,17 @@ Read the window, not just list it:
   >    chains were walked** and **which declared devices were not** — e.g.
   >    `walked: [sitez]; declared: [laptop, sitez]; UNWALKED: [laptop]`. A count with no device set
   >    beside it is not a count.
+  >
+  >    **DERIVE THE DECLARED SET, NEVER HAND-COPY IT (RV-0058 F-004):**
+  >    ```bash
+  >    bash .tools/agentbus-sqs.sh devices     # prints + EXERCISES the declared set
+  >    ```
+  >    **A hand-copied denominator cannot grow.** Add a third device and a hand-typed
+  >    `declared: [laptop, sitez]` still reads complete — the guard under-reports the exact gap it
+  >    exists to surface, which is its own failure mode one level up. The subcommand derives the set
+  >    from `queue_for`'s own case labels (single source of truth) and resolves each member's queue,
+  >    so a device added there appears here with no second edit. *This is the hand-copied-list class
+  >    `org/XXX.md` A.3 records twice — do not reintroduce it inside the fix for it.*
   > 2. **REFUSE THE FABRIC-WIDE ASSERTION when `walked ⊂ declared`.** Render
   >    **`OVERRIDE_COUNT: UNMEASURABLE (walked 1 of 2 device chains)`** — never a number, and never
   >    a zero. **A `0` from an unwalked chain is a measurement of the boundary, not of the fabric**
