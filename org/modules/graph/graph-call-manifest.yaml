@@ -47,6 +47,14 @@ excluded_not_graph_use_cases: [comp-missions, comp-perf, comp-v5-composite-test,
 # SEED IS DELIBERATELY MINIMAL (TRIGGER_LAYER: no bulk-converting historical notes into a hundred
 # unowned items). Add an entry only at touch-time, when a REAL tool is genuinely retired.
 retired_aliases:
+  comp-semantic-estates:
+    successor: comp-estate
+    retired: "2026-07-30 naming consolidation (Andrew-direct) -- forwarder DELETED + ~/bin deprovisioned @29c3fedeb8; zero live callers at deletion (caller sweep in that commit)"
+    why: "the ~1-day transitional name between pipescript and comp-estate; declared here so the retired-alias member POLICES routing surfaces (incl. the HUD hook) against citing it -- the HUD carried 4 bare-pipescript nudges undetected precisely because no deleted name was ever declared in this section (CVO, Andrew-direct programmatic-staleness mandate)"
+  comp-opalbizsem:
+    successor: comp-estate
+    retired: "2026-07-30 naming consolidation (Andrew-direct) -- tombstone DELETED + ~/bin deprovisioned @29c3fedeb8 per its own recorded delete-together condition"
+    why: "the ~40-minute name from 2026-07-29 before Andrew settled the naming; same policing rationale as comp-semantic-estates above"
   comp-learns-run:
     successor: null    # the comp-learns subsystem shipped as comp-learns-score + comp-learns-status (both live, tools_index); the monolithic runner name is retired
     retired: "NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND tools_index; last invoked in org/compiler-tools-log.md"

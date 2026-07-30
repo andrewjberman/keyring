@@ -13,7 +13,7 @@ must be able to know it is stale.
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
 MASTER_SHA256 = '59b9472535b2d03d53d68a39812df83dfb6e5b4e86e50187087d966078cf99a9'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = '4d1f8f4ee3802d50573cca886fb563d70c890cd5dc3758f3de8ab431e7a6f551'
+MANIFEST_SHA256 = '96177acbd739009d4e81cdcac7ac2b71ace61e0e9c10db50cf53a1f3d9ce1f46'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
 LEDGER_SHA256 = '931f52bad3c17b7b8c7491e6abe33e97e01ec222744c1e9f5cbf6b44ea7731a0'
 
@@ -2889,7 +2889,23 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                     'tools_index; last invoked in org/compiler-tools-log.md',
                                          'successor': None,
                                          'why': 'the comp-learns orchestrator/runner; superseded by the shipped '
-                                                'query pieces comp-learns-score / comp-learns-status'}},
+                                                'query pieces comp-learns-score / comp-learns-status'},
+                     'comp-opalbizsem': {'retired': '2026-07-30 naming consolidation (Andrew-direct) -- tombstone '
+                                                    'DELETED + ~/bin deprovisioned @29c3fedeb8 per its own recorded '
+                                                    'delete-together condition',
+                                         'successor': 'comp-estate',
+                                         'why': 'the ~40-minute name from 2026-07-29 before Andrew settled the '
+                                                'naming; same policing rationale as comp-semantic-estates above'},
+                     'comp-semantic-estates': {'retired': '2026-07-30 naming consolidation (Andrew-direct) -- '
+                                                          'forwarder DELETED + ~/bin deprovisioned @29c3fedeb8; zero '
+                                                          'live callers at deletion (caller sweep in that commit)',
+                                               'successor': 'comp-estate',
+                                               'why': 'the ~1-day transitional name between pipescript and '
+                                                      'comp-estate; declared here so the retired-alias member '
+                                                      'POLICES routing surfaces (incl. the HUD hook) against citing '
+                                                      'it -- the HUD carried 4 bare-pipescript nudges undetected '
+                                                      'precisely because no deleted name was ever declared in this '
+                                                      'section (CVO, Andrew-direct programmatic-staleness mandate)'}},
  'tools_index': {'comp-adapter-audit': {'does': 'Portal adapter field-threading audit',
                                         'entries': ['trace.adapter.field_threading'],
                                         'subcommands': ['<adapter-fn>', '--severity']},
