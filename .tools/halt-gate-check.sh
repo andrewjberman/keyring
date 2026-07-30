@@ -16,6 +16,8 @@
 #                                    override is audited to
 #                                    org/halt-gate-override-audit.log, exit 0.
 #   - Serial cannot be resolved   -> FAIL LOUD, exit 3. NEVER a silent pass.
+#   - Serial names NO known agent -> FAIL LOUD, exit 3 (Andrew-direct 2026-07-30;
+#     a corrupted serial file must not make the gate scan a nonexistent inbox).
 #
 # Non-interactive by contract: every consumer is an agent Bash-tool call with no
 # TTY. This library NEVER reads stdin -- both the routine ack and the STOP
@@ -117,6 +119,40 @@ halt_gate_resolve_serial() {
   return 1
 }
 
+# --- serial VALIDATION (Andrew-direct 2026-07-30) --------------------------------
+# A RESOLVED serial is not necessarily a REAL one. Measured 2026-07-30 (0.0.0_AB_
+# MSTR~Z, site Z): a printf escaping slip wrote "0.0.0_AB_MSTR~Zn" -- a serial that
+# exists nowhere -- into the session serial file, and this gate ACCEPTED it,
+# scanned a nonexistent nested inbox, and PASSED. Andrew-direct, verbatim:
+# "halt-gate should not accept nonexistent serials that should fail loudly."
+# Two checks, same resolver contract as inbox-watch.sh:82-89 / agent-poller.py
+# _find_agent_folder:
+#   (1) the BASE serial must match an agent home folder under the tier dirs;
+#   (2) a ~lane suffix must be a single uppercase letter (every fabric lane is:
+#       ~A..~E, ~Z; "Zn" is exactly the corruption shape that got through).
+# Unknown -> caller renders the loud exit-3 fail-closed banner. NEVER silent.
+halt_gate_validate_serial() {
+  local serial="$1" base lane tier d found=0
+  base="${serial%%~*}"
+  [ -n "$base" ] || return 1
+  if [ "$serial" != "$base" ]; then
+    lane="${serial#*~}"
+    case "$lane" in
+      [A-Z]) : ;;
+      *) return 1 ;;
+    esac
+  fi
+  for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do
+    for d in "${HALT_GATE_REPO_ROOT}/org/${tier}"/*/; do
+      [ -d "$d" ] || continue
+      case "$(basename "$d")" in
+        *"$base"*) found=1; break 2 ;;
+      esac
+    done
+  done
+  [ "$found" -eq 1 ]
+}
+
 # --- STOP-class classifier (ADHC_HALTGT.000 canonical rule) ---------------------
 # Return 0 if the message file is STOP-class, 1 if routine. Transcribes the
 # HALTGT_SEVERITY_CONVENTION.md match rule verbatim: a [STOP] or [HALT] token at
@@ -215,6 +251,28 @@ halt_gate_check() {
     printf '======================================================================\n' >&2
     return 3
   }
+
+  # A serial that matches NO agent fails closed exactly like an absent one
+  # (Andrew-direct 2026-07-30: "halt-gate should not accept nonexistent serials
+  # that should fail loudly"). Without this, a corrupted serial file (measured:
+  # "0.0.0_AB_MSTR~Zn", a printf slip on site Z) makes the gate scan a
+  # nonexistent inbox and green-light the push -- blind to every real STOP.
+  if ! halt_gate_validate_serial "$serial"; then
+    printf '======================================================================\n' >&2
+    printf 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)\n' >&2
+    printf '======================================================================\n' >&2
+    printf '  Resolved serial: %s\n' "$serial" >&2
+    printf '  No agent home folder under org/tier*_*/ matches its base, or its\n' >&2
+    printf '  ~lane suffix is not a single uppercase letter. This is usually a\n' >&2
+    printf '  CORRUPTED session serial file (escaping slip / stray character):\n' >&2
+    printf '    org/mcp/sessions/%s.serial\n' "${CLAUDE_CODE_SESSION_ID:-<unset>}" >&2
+    printf '  Scanning a nonexistent inbox would PASS while a real [STOP] to the\n' >&2
+    printf '  real you sits unread. Fix the serial file and re-run:\n' >&2
+    printf '    printf %%s\\\\n "<your-real-serial>" > "org/mcp/sessions/%s.serial"\n' \
+      "${CLAUDE_CODE_SESSION_ID:-<CLAUDE_CODE_SESSION_ID-IS-UNSET>}" >&2
+    printf '======================================================================\n' >&2
+    return 3
+  fi
 
   # Scan the serial's own inbox AND the base-serial inbox (strip ~X suffix) --
   # a tilde-lane agent's STOP can land in either. Dedupe when there is no suffix.
