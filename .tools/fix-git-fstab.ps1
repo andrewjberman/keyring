@@ -184,9 +184,16 @@ if (Test-Path $bash) {
     # LD-0340's live repair (`mount -f C: /c`) may ALREADY have /c mounted from shared
     # memory; an existing mount wins over fstab, so the line appears either way. The
     # check has to key on something only the fstab could have produced: THE FLAGS.
-    #   fstab-applied -> binary,posix=0,user,auto   (noumount REMOVED 2026-07-29 -- it is
+    #   fstab-applied -> binary,posix=0,user   (noumount REMOVED 2026-07-29 -- it is
     #                    invalid as an fstab-writable option and REJECTS THE WHOLE LINE)
-    #   volatile      -> binary,user      (what `mount -f` with no options gives)
+    #   volatile      -> binary,user           (what `mount -f` with no options gives)
+    # THE DISCRIMINATOR IS posix=0 -- it is what fstab adds and a bare `mount -f` does not.
+    # IT IS NOT ',auto'. MEASURED 2026-07-30 on the post-reboot table: an fstab mount does
+    # NOT echo 'auto'. Positive control from that same table -- /tmp also comes from this
+    # fstab and also shows no 'auto', while /, /bin and /cygdrive/c (the compiled-in mounts)
+    # all do. So a MISSING 'auto' is the signature of an fstab mount, i.e. evidence FOR the
+    # fix. 'auto' is corroborating, never required: pinning the predicate to a 5-sample
+    # observation across MSYS versions would just re-create the false FAIL fixed below.
     $cLine = ($mountOut | Where-Object { $_ -match ' on /c ' }) -join ''
     Say ""
     # THIRD CELL ADDED 2026-07-29: the original two-cell test (LIVE vs NOT-READ) mapped an ABSENT
@@ -205,13 +212,25 @@ if (Test-Path $bash) {
         Say "        AMBIGUOUS, not negative: this shell may be attached to a cached MSYS mount"
         Say "        table that predates the fstab, in which case the file has never been read at"
         Say "        all. Re-check from a genuinely fresh table (reboot) before concluding."
-    } elseif ($cLine -match 'noumount' -and $cLine -match 'posix=0') {
-        Say "    /c: FSTAB IS LIVE (flags carry posix=0 + noumount) -- durably fixed." 'Green'
+    # CORRECTED 2026-07-30 -- THIS BRANCH REQUIRED 'noumount' AND THEREFORE REPORTED FAILURE
+    # ON EVERY SUCCESSFUL APPLY. The 07-29 edit removed noumount from the fstab and updated
+    # the comment block above, and left the predicate demanding the token it had just deleted.
+    # The false FAIL is not the dangerous half: THE CHECK'S OWN GREEN CONDITION, READ
+    # LITERALLY, TELLS THE NEXT OPERATOR TO PUT 'noumount' BACK -- the single option that
+    # voids the entire fstab line and re-opens LD-0340. A verification instrument whose
+    # success path prescribes the original defect is worse than having no instrument.
+    # Grounded on the live post-reboot table: `C: on /c type ntfs (binary,posix=0,user)`.
+    } elseif ($cLine -match 'posix=0' -and $cLine -notmatch 'noumount') {
+        Say "    /c: FSTAB IS LIVE (flags carry posix=0, and no noumount) -- durably fixed." 'Green'
+        Say "        SOUND ONLY ON A FRESH MOUNT TABLE (post-reboot). This string is forgeable:"
+        Say "        'mount -o posix=0,user -f C: /c' produces it volatile-ly. The reboot is what"
+        Say "        removes the ambiguity, because no volatile mount survives one."
     } else {
         Say "    /c: MOUNTED, BUT NOT FROM THIS FSTAB." 'Yellow'
-        Say "        Flags are '$($cLine -replace '.*type ntfs ','')' -- that is the VOLATILE" 'Yellow'
-        Say "        mount from LD-0340's `mount -f C: /c`, which already held the mount"
-        Say "        point, so fstab could not take effect. THE DURABLE FIX IS UNPROVEN"
+        Say "        Flags are '$($cLine -replace '.*type ntfs ','')' -- no posix=0, or a" 'Yellow'
+        Say "        noumount that fstab cannot have written. Something else holds the mount"
+        Say "        point: typically LD-0340's volatile 'mount -f C: /c', which already held"
+        Say "        it, so fstab could not take effect. THE DURABLE FIX IS UNPROVEN"
         Say "        until the MSYS shared-memory mount table clears."
         Say "        Re-test after a reboot:" 'Yellow'
         Say "          & `"$bash`" -lc `"mount | grep ' /c '`"" 'White'
@@ -230,7 +249,10 @@ Say "  above: only 'FSTAB IS LIVE' is evidence. Anything else means WRITTEN-BUT-
 Say ""
 Say "  TO CLOSE IT: reboot (always clears the cache), then run" 'Yellow'
 Say "    & `"C:\Program Files\Git\bin\bash.exe`" -lc `"mount | grep ' /c '`"" 'White'
-Say "  EXPECT: binary,posix=0,user,auto   <- fstab LIVE, LD-0340 CLOSES." 'White'
+Say "  EXPECT: binary,posix=0,user        <- fstab LIVE, LD-0340 CLOSES." 'White'
+Say "          There is NO trailing ',auto' on a successful apply -- an fstab mount does not"
+Say "          echo it (measured 2026-07-30; /tmp is the positive control). Its ABSENCE is"
+Say "          evidence FOR the fix. Do not read it as a mismatch."
 Say "  binary,user                        -> still the VOLATILE mount; fstab not applied."
 Say "  nothing, AND a bash call prints 'invalid fstab option - <x>'"
 Say "                                     -> PARSED AND REJECTED. Fix option <x>: ONE bad"
