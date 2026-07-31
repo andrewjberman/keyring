@@ -133,3 +133,74 @@ and its boundary is proven at the POLICY layer. It is **not yet proven in the PA
 
 So: **BOUNDARY PROVEN, PATH UNPROVEN.** A policy-layer battery cannot tell you the producer will
 actually use the principal it was given -- that is the exact gap the fallback mutant exists to close.
+
+---
+
+# ADDENDUM -- LEG 2, 2026-07-31T15:10-15:25Z. Opened and CLOSED in the same session.
+
+**Status: CLOSED.** `1 added, 0 changed, 1 destroyed` (inline policy replaced; role untouched),
+0-diff verified, applied battery 11/11.
+
+## Why a second leg existed
+
+CVO ruled (135220Z, reaching me at 150113Z) that the date-literal shape was SUPERSEDED: it carried a
+**daily apply forever**, making a production capture path whose grant renews only if a human
+remembers -- CLAUDE.md's own scheduling law wearing IAM clothes. The time boundary moves to the
+storage layer (versioning ON + no delete grants), where it is actually expressible.
+
+## THE LEAK -- found on the DRAFT, before any apply
+
+Re-authoring to the ruled `*/text-input/*` shape and probing it:
+
+```
+Resource ".../*/text-input/*"
+PutObject {day}/signed-review/text-input/evil.md   ->  ALLOWED
+PutObject {day}/kimi-report/text-input/evil.json   ->  ALLOWED
+PutObject a/b/c/text-input/evil.md                 ->  ALLOWED
+```
+
+**IAM's `*` matches `/`.** `*/text-input/*` therefore means *any key containing `/text-input/` at any
+depth* -- so the capture writer could write INSIDE `signed-review/` by nesting a segment. That is the
+producer writing the reviewer surface: **signing its own capture**, which is the one boundary the
+entire design rests on.
+
+>> **IT WOULD HAVE SHIPPED GREEN. The specified adjacent-subfolder DENY passes over it:**
+>> `{day}/signed-review/x.md` is correctly DENIED while `{day}/signed-review/text-input/x.md` is
+>> ALLOWED. **The battery reports a clean boundary over an open one, with every verdict in it
+>> honest.** Both CVO's floor and ~A's rewritten battery would have returned a clean pass. <<
+
+`0.7.0_AE_CloudOps~A` reproduced it independently on a policy they authored themselves.
+
+## The fix, and its own probed residual
+
+`????-??-??/text-input/*` -- `?` is the single-character wildcard, pinning the day to ten date-shaped
+characters so `/text-input/` must follow immediately.
+
+**CVO then probed MY fix rather than accepting it**, and the residual is NAMED here because a residual
+named in the design is a residual and one discovered later is a finding:
+- `?` matches `/` too, so this is "any 10 chars with dashes at positions 5 and 8," not "one segment."
+- **Every real surface is excluded by the shape of its own name** -- verified by probe, not reading:
+  `signed-review` (pos 5 = `e`), `kimi-report` (pos 5 = `-` but pos 8 = `p`), `change-cochange`
+  (pos 5 = `g`), `deployment-motion` (pos 5 = `o`); `manifest.json` is day-root and unreachable.
+  **That is measured luck, not design. A SIXTH SUBFOLDER MUST BE RE-PROBED** -- a name with dashes at
+  positions 5 and 8 would be reachable and nothing here would warn you.
+- Accepted residual: a slash-bearing date-shaped prefix (`ab/d-ef-gh/text-input/x`) is allowed. It
+  reaches no real surface, mints only junk top-level prefixes, is visible in any listing, and is
+  provenance-harmless.
+- **And the NAME misleads** (~A): "date-shaped" reads like a date constraint. `aaaa-aa-aa` is allowed.
+
+## Applied battery -- 11/11, live role
+
+3 expected-ALLOW (today, past-day-deliberate, device/session deep nesting) - 7 expected-DENY
+(three NESTED probes, adjacent sibling, day-root manifest, DeleteObject, DeleteObjectVersion) -
+1 residual expected-ALLOWED-and-named. Applied truth read off the live primitive:
+`Sid=PutTextInputAnyDayNeverDelete`, `Resource=arn:aws:s3:::opal-estate-report/????-??-??/text-input/*`.
+
+## Floor amendment ratified out of this (CVO 151702Z)
+
+For any grant containing a mid-key wildcard the battery now includes **(i)** the NESTED probe -- the
+forbidden sibling with the allowed segment appended underneath, the only invocation that
+distinguishes `*` from a segment matcher -- and **(ii)** the RESIDUAL probe, one pathological
+same-shape key, expected ALLOWED-AND-NAMED so the residual stays measured rather than assumed.
+
+>> **A MID-KEY WILDCARD IS NOT A PATH-SEGMENT MATCHER: `*` IS NOT `[^/]*`, AND `?` IS NOT `[^/]`.** <<

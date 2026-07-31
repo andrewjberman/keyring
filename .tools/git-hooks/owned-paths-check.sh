@@ -38,6 +38,36 @@ RAW_AUTHOR="${GIT_AUTHOR_NAME:-}"
 AGENT="${RAW_AUTHOR%% <*}"
 
 # ---------------------------------------------------------------------------
+# MERGE EXEMPTION -- a merge does NOT author the files it carries.
+# ---------------------------------------------------------------------------
+# A merge commit legitimately spans every lane: it integrates origin's ALREADY-COMMITTED work
+# by OTHER authors, each of which was lane-checked WHEN IT WAS FIRST COMMITTED. Re-checking
+# those files against the INTEGRATOR's lane is a category error -- the integrator is not their
+# author -- and it blocks every legitimate integration.
+#
+# WHY THIS IS A NARROW EXEMPTION AND NOT A HOLE: without it, integrators must `--no-verify`
+# EVERY window merge, which bypasses NOT JUST THIS GATE BUT EVERY OTHER PRE-COMMIT GATE
+# (surface-check, ledger-check, the never-rules gate). A GATE THAT BLOCKS A LEGITIMATE,
+# UNAVOIDABLE, RECURRING OPERATION DOES NOT GET OBEYED -- IT GETS ROUTED AROUND, AND THE
+# DETOUR IS WIDER THAN THE GATE. The absence of this narrow exemption forces a broad bypass.
+#
+# Non-merge commits are unaffected: this fires ONLY when MERGE_HEAD exists (a merge in
+# progress) or HEAD already has 2+ parents. Found independently by 1.0.0_SA_CTO and
+# 0.0.0_AB_MSTR (integrator, LD-0367) within one hour, both blocked on real merges.
+# ⛔ MERGE_HEAD *ONLY*. Do NOT add "HEAD has two parents" as a second condition.
+# In a PRE-COMMIT hook, HEAD is the PREVIOUS commit -- so a two-parent-HEAD test exempts the
+# next ORDINARY commit after any merge, silently, for every agent. Caught by exercising this
+# very hook while HEAD happened to be a merge: the broadened form reported the exemption as
+# reachable and would have shipped a hole in an OWNERSHIP gate. MERGE_HEAD exists if and only
+# if a merge is in progress and is the commit about to be created -- which is exactly the case
+# being exempted, and nothing else.
+if [ -z "${OWNED_PATHS_STAGED_FILES:-}" ] \
+   && git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
+    echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)" >> "$AUDIT_LOG" 2>/dev/null || true
+    exit 0
+fi
+
+# ---------------------------------------------------------------------------
 # Get staged files (real git or test seam)
 # ---------------------------------------------------------------------------
 if [ -n "${OWNED_PATHS_STAGED_FILES:-}" ]; then
