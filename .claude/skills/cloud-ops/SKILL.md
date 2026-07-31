@@ -179,7 +179,7 @@ These ledger decisions bind AE 0.7 operating discipline. Cite in commit messages
 - `infra/aws/terraform/mdpf-pipeline/` — MDPF
 - `infra/aws/terraform/imo-pipeline/` — FIND_INSURE (today)
 - `infra/aws/terraform/shared-infra/` — KMS / OAI / cross-pipeline shared
-- `infra/aws/terraform/portal-auth/` — Portal Cognito + L@E
+- `infra/aws/terraform/portal-auth/` — Portal auth + Lambda@Edge. **⛔ NOT Cognito — Opal does NOT use Cognito.** Auth is custom RS256-signed JWTs issued at login, held client-side as `accessToken`, sent as `Authorization:` on every API call (`0.7.0_AE_CloudOps/prompt.md:112`). *Corrected 2026-07-31: this line read "Portal Cognito + L@E" and contradicted the AE prompt's flat prohibition on writing Cognito into a portal/trade auth context — a launch-loaded skill asserting the wrong auth primitive.*
 - `infra/aws/terraform/orion-pipeline/` — Orion JWT pattern
 - `infra/aws/terraform/smartx-pipeline/` — SmartX REST integration
 
