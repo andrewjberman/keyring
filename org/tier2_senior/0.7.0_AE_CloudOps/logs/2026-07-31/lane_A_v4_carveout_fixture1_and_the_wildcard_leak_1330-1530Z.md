@@ -144,9 +144,17 @@ report the EXISTENCE of a schedule cannot answer "when does it fire".**
 
 ## Blockers
 
-**None of mine.** Step 4 waits on ~B's step 3 (apply) -- released, not blocked. Two at Andrew, neither
-urgent today: the **retention ruling** on his own verbatim words (keeps the corpus out of the repo), and
-MEMORY.md sitting **~456 bytes over its own 17,408 cap**, where the overflow is the NEWEST entries.
+**None of mine.** Step 4 waits on ~B's step 3 (apply) -- released, not blocked. One at Andrew, not urgent
+today: the **retention ruling** on his own verbatim words (it is what keeps the corpus out of the repo).
+~~MEMORY.md over its 17,408B cap~~ **CLOSED before this log landed** -- another seat compacted the file and
+folded in my COO correction. *Struck rather than deleted: it was a live blocker for most of this window.*
+
+**A LATE ARRIVAL THAT BINDS EVERY LANE -- Andrew-direct 07-31, STANDING, not window-scoped:**
+**LANES COMMIT, INTEGRATORS PUSH.** I commit to my seams; **base MSTR pushes.** Also: **NEVER `git stash`**
+(Andrew-prohibited -- popping one has broken sessions) and **never park work in `.runtmp/`** (destroyed
+twice on 07-31). Cannot reach a seam? **Leave it IN-TREE untouched and tell the integrator** -- safe
+because the integration pass runs only `pull --merge` (which REFUSES rather than clobbers) + `push`,
+never `clean`/`reset`/`checkout`.
 
 ## Next Steps
 
@@ -157,4 +165,23 @@ MEMORY.md sitting **~456 bytes over its own 17,408 cap**, where the overflow is 
 3. **[0.7.0_AE_CloudOps~A]** Aug-1 ETFS fire, 10:00 AM ET tomorrow. Verified ready; **the cheap
    sufficient re-check is the renderer's VersionId** (`chTZ82Vf...`) -- md5 equality would NOT reveal a
    re-upload.
-4. **[Andrew]** retention ruling. **[MSTR]** MEMORY.md cap.
+4. **[Andrew]** retention ruling on his own verbatim words -- the only thing still at him from this lane.
+5. **[0.0.0_AB_MSTR]** pushes this commit; I do not (lanes commit, integrators push).
+
+## Postscript -- the merge I flagged, and the discrepancy I am recording but NOT chasing
+
+At 1533Z my own `git pull` left an unfinished merge (`MERGE_HEAD` = `ec07f20e74`, **0 conflicts**, 8 staged).
+Andrew halted me mid-diagnosis; **I ran no further git command and did not conclude it**, because concluding
+a merge is a write to a shared repo and the staged set was not yet proven to be merge content rather than a
+peer's local work. I flagged it LOUD to MSTR instead, since `git pull` refuses on a dirty tree -- **a
+half-finished merge is not file-level open work, it is a repo state, and it stops the integrator dead.**
+
+MSTR resolved it: concluded at `b351616ab8`, `MERGE_HEAD` gone, base pushed 0/0, `ajb.ps1` never touched.
+
+**THE DISCREPANCY, recorded once:** MSTR reports the merge was concluded *earlier in the session* and that
+the tree had no merge in progress since -- but **I measured `MERGE_HEAD` PRESENT at 1533Z carrying exactly
+`ec07f20e74`**, and `safe-commit` independently refused with *"cannot do a partial commit during a merge"*,
+which is a second instrument agreeing with my first. Both accounts cannot describe the same instant.
+**Andrew ruled: do NOT audit that merge retroactively** -- nothing is lost, it is all in git. So this is
+logged and dropped, not pursued. *If the class recurs, this timestamped pair of observations is the thread
+to pull; that is the whole reason it is written down rather than argued.*
