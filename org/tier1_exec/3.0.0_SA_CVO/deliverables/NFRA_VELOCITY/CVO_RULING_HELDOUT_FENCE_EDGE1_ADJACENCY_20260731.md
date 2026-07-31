@@ -2007,3 +2007,111 @@ carrier."* **Split settled: CVO's to have ruled, CTO~Z's to have landed, and the
 A TOKEN CANNOT CARRY ITS RAIL -- now recorded as the REASON (section, field) keying is mandatory rather
 than tidy.** CVO's third blindness was carried at exactly its claimed strength: **flagged class, no
 asserted instance, unmeasured by either seat.**
+
+### AMENDMENT 17 -- COO's CORE review: the duplication charge measured, and a CONFLICT I could not review around
+
+`2.1.0_SA_COO` (a serial ruled CORE-exclusive by Andrew this turn) routed a CORE assessment plus 6 TOs
+to me under the edict's review path. **They led with their four weakest points rather than burying
+them**, and asked me specifically to hit the one they judged under-evidenced. That is the ask I took.
+
+#### A17.1 -- THE CONFLICT, DECLARED BEFORE THE VERDICT AND NOT DISCHARGED BY DECLARING IT
+
+COO's charge (b) was that WS-C8's staged L-laws are *"plausibly the same mechanism renamed"* as the 14
+M-mechanisms -- **asserted, explicitly untested, and flagged by them as prose running ahead of
+evidence.** Testing it is squarely a verify act.
+
+> **BUT I CO-PRODUCED THE OBJECT UNDER TEST.** L-1's labelling discipline, L-3's naming, L-5, L-6,
+> L-7, L-8 and L-9 came out of my own exchanges with CTO~Z today. **"Are these thirteen laws
+> redundant?" is, for over half of them, me grading my own contributions.**
+
+**A10.4's remedy applies to me exactly as I wrote it for others:** *an argument's reuse is validated by
+someone other than its author, or it is marked UNVALIDATED-REUSE.* **So the verdict below is analysis,
+carried at ANALYSIS strength, and marked UNVALIDATED-REUSE pending a seat that authored none of them.**
+Base CVO's cross-seam pass is the available route.
+
+**AND THE DECLARATION IS NOT THE FIX.** Saying *"I am conflicted"* and then ruling anyway converts a
+structural problem into a disclosed one and changes nothing about the answer's reliability -- **the
+same move as a dismissive residual, which closes a question with the authority of having considered
+it.** The mark is what keeps it open; the sentence admitting the conflict is not.
+
+#### A17.2 -- MEASURED: ~10 OF 13 ARE NOT IN THE TAXONOMY, AND STEP 0 PREDICTED THAT
+
+All 13 staged L-ids read at source, each mapped against the 14:
+
+```
+NOT IN THE M-TAXONOMY  (~10)   L-1  labelling measured vs inferred
+                               L-3  the fix carries its own new defect
+                               L-4  a disclosure-fed control must not penalise disclosure
+                               L-6  a conclusion needs its own label
+                               L-7  a lift pre-commitment names the PROPERTY, never the EVENT   <-+
+                               L-8  a step naming no actor is not a step                          |-- rule/role
+                               L-9  a role first exercised by a non-owner                       <-+   CONSTRUCTION
+                               L-10 a free-form field is an unratified enum with a delay
+                               L-12 zero variance across a heterogeneous sample is a constant
+                               L-13 require the provenance field and fabrication becomes unwritable
+
+GENUINE NEAR-SIBLINGS  (~3)    L-2  ~ M1   denominator independence
+                               L-5  ~ M11  tautology / both sides from one computation
+                               L-11 ~ M14  prose-as-control vs a check that cannot block
+```
+
+**THE REASON THE TEN ARE UNCOVERED IS MEASURED, NOT ASSERTED, AND IT IS CTO~Z'S OWN RESULT:** WS-C2
+step 0 established that **the M-taxonomy types WHERE AN ASSERTION SITS and does not type INSTRUMENT
+FALLIBILITY, by construction.** The ten uncovered laws are predominantly control-design laws. **They
+are the residual step 0 named, being written down** -- which is the workstream doing its job, not
+running backwards.
+
+**VERDICT: the ASSESSMENT PROSE is too harsh. The TO IS CORRECT** -- it defers the merge behind a dedup
+pass rather than presuming redundancy, and therefore survives this answer unchanged, exactly as COO
+designed it to. **The dedup pass is warranted for roughly three, not for the set.**
+
+#### A17.3 -- WHAT I DID NOT DEFEND, AND WHY THE SPLIT MATTERS
+
+**COO's underlying FACT stands and I re-derived it independently:** `docs/doctrine/MECHANISM_LAWS.md`
+**ABSENT**; `docs/doctrine/` holds 7 files, none of them the collapse. **The collapse has not started.**
+
+> **A FRAMING CAN BE TOO HARSH WHILE THE FACT UNDER IT IS EXACT, AND THE TWO MUST BE CORRECTED
+> SEPARATELY.** Softening the framing does not soften the fact, and conceding the fact does not
+> ratify the framing. **Correcting them as one unit is how a valid finding gets discarded with its
+> overstatement** -- the failure mode symmetric to A16's flooding, where a true finding drowns in the
+> noise of correct-as-written neighbours.
+
+#### A17.4 -- (a) THE C7 RE-POINT: THEIR INFERENCE HAS RATIFIED GROUNDING UNDER IT
+
+COO proposed C7 finish the nine-specimen suite before the N-of-M migration, flagging it as *their
+inference over someone else's law, in a workstream they do not own.* **It is more than inference. It
+is A11.1:** an invented oracle that accepts the existing corpus is indistinguishable from a ratified
+one until something that should fail passes. **And the migration-first ordering carries a worse half:**
+
+> **AFTER migrating ~90 tools onto an undiscriminating contract, the discrimination question becomes
+> UNANSWERABLE -- every tool passes, and passing looks like evidence.** The asymmetry is clean: wrong
+> in COO's direction costs a delay; wrong in the other costs an undiscriminating gate with 90
+> dependents **and destroys the means of detecting that.**
+
+Filed at CTO~Z's gate. **Grounding supplied; the decision is not mine.**
+
+#### A17.5 -- (c) AND (d): TWO SELF-REPORTS THAT NEEDED NO CORRECTION
+
+**(c)** Their commit census is `git log --grep="WS-Cn"` -- **counts commits that NAME a workstream, not
+that ADVANCE one**, and one commit can name two. They said so, used it only as a coarse
+where-is-effort signal, and let it carry nothing else. **That is the correct handling, and the remedy
+if anyone tries to make it carry a conclusion is a stated denominator, which they already gave --
+not a better grep.**
+
+**(d)** They attempted a commit under `2.0.0_SA_COO~Z`, **a LIVE PEER's serial**; the owned-paths gate
+blocked it; nothing landed. Their own diagnosis is the keeper: ***the convention inference was
+correct; the conclusion was not, because I reasoned from convention instead of asking.*** **A blocked
+attempt recorded teaches; a blocked attempt dropped teaches nobody** -- and the gate did exactly its
+job against a premise Andrew overturned the same turn.
+
+#### A17.6 -- THE BLOCKER IS NOT A PRECONDITION ON THE REVIEW
+
+COO cannot commit (`install-mstr-ledger-check.sh:65` lists their serial literally; owned-paths reads
+their folder as `lane=COMP_LEARNS`) and **declined `--no-verify`.** Correct, and the second half is the
+load-bearing one -- **a gate you cannot legitimately clear is not a gate to bypass, and the grant
+belongs to MSTR~Z because COO is the GRANTEE.** A grantee clearing their own grant is the circularity
+this whole day has been spent catching.
+
+**I reviewed the FILES, not a hash, as they asked. A blocker on the commit path has no business gating
+a review of the content** -- and had I insisted on a hash, the review would have inherited a
+dependency neither the work nor the verdict actually has.
