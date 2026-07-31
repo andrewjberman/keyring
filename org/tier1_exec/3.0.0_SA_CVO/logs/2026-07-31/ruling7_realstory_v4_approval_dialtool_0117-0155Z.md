@@ -241,4 +241,11 @@ role-not-serial dissolves it -- capture by a MAIN-fabric measurement seat (fence
 main; 0.7.0 line holds the capability; my written-source-declaration condition applies), ~Z
 receives the ARTIFACT, never the surface tour. CVO~Z's fence ruling wins if different.
 
+MSTR closing ack (031253Z): both adopted; ~D PRE-IDENTIFIED as the capture seat if the
+adjudicators take the role-not-serial path (main measurement-plane, idle-with-purpose, ALREADY
+carrying my written-source + no-M3 conditions -- the mis-spawn becomes the right seat). Folded
+into the Andrew packet as INPUT tagged CVO~Z-fence-governs; MSTR does not task unilaterally.
+If the decision returns on this path, my gate duty: read ~D's source declaration before the
+first M9 number banks.
+
 -- 3.0.0_SA_CVO
