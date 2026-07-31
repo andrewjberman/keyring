@@ -173,3 +173,76 @@ SDK v1.2 hardcode disposed as MINE, queued, DERIVE-NOT-BUMP affirmed with a corr
 (8 occurrences / 7 files -- base CTO's list missed `tenants/demo/company.yaml`) plus a second
 defect (marker ABSENCE in the four required files) attached. Zero crons armed. Open call at Andrew on
 the SYSPARITY cron conflict stands (see the 0248-0330Z log). WS-C2 next.
+
+---
+
+# CORRECTION 1 -- F-2's LIVENESS PREMISE WAS FALSE (2026-07-31 ~0440Z)
+
+**Correcting BOTH this record and `..._design_attack_and_fence_ruling_0248-0330Z.md`, which describe
+`variance.Orphan` as "a SEPARATE, already-LIVE detector."** That is FALSE. Raised by
+`0.8.0_AE_CloudComp~C` (who halted rather than gate absent code), landed by CTO~Z @`17b24fad2`,
+**independently re-derived by me before acceptance** -- a refutation taken on trust is the same error
+as a claim taken on trust.
+
+```
+summary_corpus.py::_variance_verdict :581-582
+    if len(present) < 2:
+        return None   # singleton -> no firm-sibling; Orphan/Superseded deferred v1
+emission sites -> kind = Fork-Shadow x2 / Canonical / Twin.   NO Orphan.
+'Orphan' as a quoted VALUE in repo python: 0
+MY POSITIVE CONTROL: Fork-Shadow 9, Canonical 9, Twin 7  -> the search is alive
+```
+
+**`variance.Orphan` is DECLARED at four layers and IMPLEMENTED at none.**
+
+## What survives / what falls
+
+- **SURVIVES:** F-2's structural insight -- a token occupied on a ratified axis makes a reader believe
+  both are gated when only one is. True whether or not the colliding detector is built. The
+  `LEGACY` / `SILENT-RESIDENT` renames stand on their own merits. **F-1 is untouched** -- it was always
+  a declaration-level fact about `variance.labels`, not a liveness claim.
+- **FALLS:** the liveness limb, and with it F-2's **BLOCKING severity**. I wrote that the kill-list
+  danger "remains reachable through a path your gate does not name." **There was no path.** A blocking
+  finding on an unreachable bypass spends a gate's credibility on nothing -- the false-alarm face of
+  the same coin as a missed finding, and severity is not a rounding error.
+
+## The error, named precisely
+
+**The falsifying evidence was a CODE COMMENT on the returning line of the emitter.** I never opened
+`_variance_verdict`. I reasoned from `variance.polarity` and from the rule bank's own `# WIRED+LANDED`
+header carrying contract and wire commit hashes -- **treating a header comment asserting wiredness as
+evidence of wiredness.** Two named failures at once, both of which I invoked at other seats this same
+session:
+
+1. **DESIRED-read-as-APPLIED** -- my own F-7 charge against CTO~Z's S.4, filed and then committed by
+   me, in a finding I escalated to BLOCKING.
+2. **CHECK THE MARKER, NOT THE COMMENT** -- CLAUDE.md Rule 21 carries that scar with base-CVO's name
+   on it. **This seat is the one that rule was written about, and it repeated the class.**
+
+*Knowing a failure mode by name does not immunise you against writing it.* Third time tonight that
+sentence has been the finding, and this instance is mine.
+
+## Consequence I unmade
+
+I ruled item 17 *"measured before the gate is WRITTEN"* and CTO~Z made it a hard prerequisite on my
+disposition. **That prerequisite rested entirely on the false premise, so I WITHDREW it** -- holding
+`~C` to a budgeted `position_key` derivation would have spent real work sizing a guard for a detector
+that does not exist, on my error. CTO~Z's reclassification is adopted and is better than what I asked
+for: **the exclusion becomes a PRECONDITION on implementation** -- `Orphan` may not be implemented
+without the lifecycle exclusion landing in the same change. Gating a non-existent emitter yields a
+control that can never fire and can never be shown to fire: unfalsifiable, unmutatable, **not a
+control** -- my own standard, correctly turned on my own finding by the build lane.
+
+**Increment-2 verify UNAFFECTED:** `SILENT-RESIDENT` gates a real emitter, exercised 7/7 with negative
+controls and a mutant. That PASS rests on its own evidence.
+
+## The law this earns (routing to MSTR~Z with CTO~Z co-signing, as ONE proposal)
+
+> **A CHECK THAT CANNOT DISTINGUISH A THING FROM A STATEMENT ABOUT THE THING WILL FORBID THE RECORD
+> FROM DOCUMENTING ITSELF** -- and its sibling, **`git show` renders (smudge filter applied),
+> `git cat-file` reports (raw bytes).** One confuses a mention with the fact; the other confuses a
+> rendering with the bytes. Same law at two altitudes; splitting them loses the generality.
+
+*(Note for any re-verify: the false sentence is preserved as quoted provenance in
+`two_variance_orphan_correction`. Check it FIELD-BY-FIELD, never on the blob -- a blob search flags
+the correction itself. That is the token-USED vs token-NAMED trap for the third time tonight.)*
