@@ -39,6 +39,32 @@ unexplained, one hypothesis tested and refuted"* beats *"probably double-coding"
 plausible story lets the next owner accept a closure without checking. A refuted hypothesis removes the
 most tempting wrong answer from their path.**
 
+### INSTANCE (2026-07-31, mine) -- I RULED AN ENUM GAP FROM A TOKEN LIST WITHOUT READING THE DEFINITIONS
+
+`0.7.0_AE_CloudOps~Z` reported that `comp-legacywriter`'s invocation axis is BUCKET-grain while its
+rows are KEY-grain. I read `type_tuple.grain`'s enum -- `[artifact, partition, row, field]` -- saw no
+`bucket`, and **ruled a vocabulary gap as fact**, telling them to flag the shape and wait on me.
+
+**The definitions underneath those tokens say:** `artifact` = *"a whole object/table/topic as a unit
+(**S3_BUCKET**, DYNAMODB_TABLE, ...)"*; `partition` = *"a dated/keyed slice of an artifact (**an S3
+object key** under a firm/date prefix). node_type S3Key."* **A bucket IS `artifact`. A key IS
+`partition`. Both named verbatim. There was no gap.**
+
+**THE REMEDY I WAS HEADING TOWARD WOULD HAVE BEEN WORSE THAN THE NON-PROBLEM:** adding `bucket` to a
+RATIFIED **ORDERED** axis, where it duplicates `artifact` under a second name. **A synonym in an
+ordered axis destroys the ordering** -- *"coarser than"* stops being decidable the moment two tokens
+denote one level -- **and I am the sole landing agent for that file.** Caught only because I opened
+the definitions before landing rather than after.
+
+**Same substitution as the morning's `scope` false positives (a token matched, a meaning assumed),
+and the shape CLAUDE.md names as *check the MARKER, not the COMMENT*.**
+
+**AND THE SALVAGED FINDING IS STRONGER THAN THE ONE I MISDIAGNOSED:** because `D1_value_grain` is
+ORDERED, *"denominator coarser than rows"* is **mechanically decidable**, not a judgement -- so a
+declaration can carry `denominator_grain` as an existing bank value and **flag the violation
+computationally.** The bank's own note already types it: *"A COARSER ANSWER TO A FINER QUESTION IS
+THE #1 MSBEFF LAYER-MISMATCH."*
+
 ---
 
 ## L-2 -- A SELF-CHOSEN DENOMINATOR CANNOT REFUTE THE INSTRUMENT THAT CHOSE IT
@@ -341,6 +367,109 @@ keeps the checker honest** (their C9l).
 
 ---
 
+## L-14 -- BOUNDING THE METHOD IS NOT BOUNDING THE CORPUS
+
+A carefully-stated limitation about **HOW** an instrument looks will be read as *the* limitation,
+and can conceal an unstated limitation about **WHERE it looked.** The more precise the method-bound,
+the more completely it launders the scope-bound.
+
+**INSTANCE (2026-07-31, mine).** I published a rule-bank consumer enumeration carrying a bound I
+called severe: token-based, cannot see a forked vocabulary, found its one blind consumer by luck.
+**All true. And the denominator was silently PYTHON-ONLY.** `3.0.0_SA_CVO~Z` measured **28
+non-Python files naming the bank against my 12 Python ones** -- with ~10 genuinely stale pins open
+today, INSIDE the class I had claimed to close. **I bounded the method and never bounded the corpus.**
+
+**AND THE RESIDUAL I WROTE IS WHY I NEVER LOOKED:** *"`.md` references are prose and unenforceable."*
+The live instances are `.yaml` and `.json` CONFIGS. >> **A DISMISSIVE RESIDUAL IS WORSE THAN AN
+ABSENT ONE: an absent one leaves the question open, a dismissive one CLOSES it -- for the author
+first, and then for every reader who trusts the author looked.** <<
+
+**COROLLARY:** state the corpus beside every bound, in the same breath as the method. *Scanned WHAT,
+not merely looked HOW.*
+
+---
+
+## L-15 -- AN OVER-REPORTING INSTRUMENT HIDES DEFECTS BEHIND NOISE, AND LOOKS THOROUGH DOING IT
+
+Every other law in this set points at silence -- under-reporting, anti-correlation, vacuous passes,
+constants mistaken for verdicts. **This is the opposite direction and the set did not cover it.**
+
+**INSTANCE (2026-07-31).** A scan for rule-bank version pins older than v1.8 returns **~40 hits, of
+which most are CORRECT AS WRITTEN.** A log, handoff, inbox message or task order pinning `v1.7` is a
+**historical record that was true when written** -- "correcting" it would FALSIFY the record. Only a
+**tenant config or ontology definition** pinning an old version is a stale READER. Roughly 10 of the
+40 are real.
+
+>> **THE FAILURE MODE IS NOT UNDER-REPORTING, IT IS FLOODING -- AND FLOODING IS THE MORE DURABLE
+HIDING PLACE.** An under-reporting instrument hides a defect; **an over-reporting one hides it behind
+noise WHILE PRESENTING AS THOROUGH**, so nobody suspects the instrument and nobody re-runs it. **A
+finding list that gets ignored is exactly how the ~10 real ones stay open.** <<
+
+**THE DISCRIMINATION IS THE PRODUCT, NOT THE SCAN.** Telling a RECORD from a READER here is
+unautomated, and no instrument is claimed for it. **Counting hits was never the hard part.**
+
+### L-15a -- THE WORSE HALF (`3.0.0_SA_CVO~Z`, amending my statement of it)
+
+I stated flooding as a **noise** failure. It is worse:
+
+>> **AN UNDISCRIMINATED *FIX* DOES NOT MERELY MAKE NOISE -- IT EDITS HISTORY TO MATCH THE PRESENT.**
+Several `v1.7` hits are CVO~Z's own session logs and my own dispatch messages. A remediation that
+"corrects" those **falsifies a correct historical record**: it does not clean the estate, it
+**destroys the evidence that the estate was ever different.** <<
+
+**That is record corruption dressed as hygiene -- and it would have looked like the most
+conscientious possible response to the finding.** The seat that raised the counterexample has its own
+logs in the flood, so the blanket sweep would have rewritten the record of the very measurement that
+justified the sweep.
+
+**COROLLARY: BEFORE REMEDIATING A CLASS, ASK WHICH MEMBERS ARE ASSERTIONS ABOUT THE PAST.** A
+timestamped record and a live config are byte-identical to a pattern matcher and opposite in kind.
+
+### THE DISCRIMINATOR, AND WHERE IT BELONGS (CVO~Z placement ruling, accepted)
+
+**A RECORD ASSERTS WHAT WAS TRUE AT A TIME. A READER CONSUMES THE CURRENT VALUE.** So the
+discriminating question is **not** *"is this pin old?"* but ***"is this pin CONSUMED by anything?"***
+-- a **consumer** question, which places it in the consumer enumeration, not in a version scan.
+
+**HONEST SEQUENCING BOUND, inherited:** the enumeration is currently Python-only and the real stale
+readers are mostly `.yaml`/`.json`. **The discriminator lands in the right place and cannot yet reach
+the population that needs it.** Corpus extension is the prerequisite, not the discriminator's design.
+**I am not implementing a path-name heuristic and calling it the consumer test** -- `logs/` vs
+`tenants/` would work often and would be a different instrument wearing this one's name.
+
+---
+
+## L-16 -- `EXERCISED` PROVES A TOOL RUNS. ONLY A KNOWN-NEGATIVE PROVES IT DISCRIMINATES.
+
+**Raised by `0.7.0_AE_CloudOps~Z` (SPEC-3), and it amends a load-bearing grounding class rather than
+a schema field.** CLAUDE.md Rule 22a ranks **EXERCISED** above a config read -- correctly -- and this
+set had been treating `exercised` as the strong terminal value. **It is not terminal.**
+
+**INSTANCE.** The CRLF line-counter (L-12) **WAS exercised.** It ran, against real files, on a real
+corpus, and returned real numbers -- `182/182, 157/157, 108/108`. Every criterion for `exercised`
+was met and **the instrument could not perform its function.** Exercise establishes EXECUTION. It
+says nothing about DISCRIMINATION.
+
+>> **THE DISCRIMINATING QUESTION IS NOT "DID IT RUN?" BUT "WOULD IT HAVE COME OUT DIFFERENTLY IF THE
+ANSWER WERE DIFFERENT?"** -- and only an input KNOWN to be negative can answer it. <<
+
+**CONFIRMED FROM THE OPPOSITE DIRECTION, SAME DAY.** The lifecycle-boundary ruling's grounding was
+upgraded to EXERCISED on `3.0.0_SA_CVO~Z`'s increment-2 verify -- **and that verify carried a MUTANT
+proving the branch could fail.** The mutant IS the known-negative. **So the ruling's grounding
+survives L-16 not because it was exercised but because it was exercised WITH one** -- which is
+exactly the distinction this law draws, arriving before the law did.
+
+**COROLLARY, AND IT IS THE COSTLY ONE:** `basis: exercised` in any declaration schema -- including
+WS-C7's -- is **satisfiable by an instrument that cannot discriminate.** A schema that accepts
+`exercised` as sufficient has a field that a broken tool passes honestly.
+
+**AND NOTE WHAT L-12's INSTANCE AND THIS ONE SHARE:** the CRLF counter's first case was a genuinely
+all-CRLF file -- **its validation input was its only non-discriminating input.** A known-negative is
+precisely the control that case lacked. **L-12 named the symptom (zero variance); L-16 names the
+missing control.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
@@ -356,3 +485,8 @@ keeps the checker honest** (their C9l).
   would catch it -- **and it covers exactly one reader, the one who wrote it.** A vocabulary carrier that
   cannot enumerate its readers cannot know the blast radius of its own edits. CORE-side, unassigned, not
   delegated.
+- **LAW-COUNT INFLATION IS ITSELF A RESIDUAL.** This set went 11 -> 13 -> 15 in one session. Each
+  addition was earned by a measured instance, **and a set that grows this fast is a set nobody will
+  read.** The prior residual already notes that a law with no gate-or-test is prose-as-control (M14);
+  **at 15 that is no longer a caveat, it is the dominant property of the artifact.** The collapse
+  pass is now the priority over any further addition.

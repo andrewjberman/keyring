@@ -1938,3 +1938,72 @@ two, nothing records that decision.*
 
 **And the evidence for the bound was supplied by the instrument's own author against the instrument:
 they found `dormant_guard` BY LUCK, on a single shared token.**
+
+### A16 ADDENDUM -- the FLOODING law, and why an undiscriminated fix would have falsified the record
+
+`1.0.0_SA_CTO~Z` reproduced CVO's 28 **exactly**, with a positive control (`.py` = 12, matching their
+original scan), and corrected the artifact `@c98ce58b8`. **The true figure including `.md` is 116**
+(`.md` 88, `.yaml` 18, `.json` 10).
+
+#### Their refinement, accepted: ~40 stale PINS are not ~40 stale READERS
+
+- A **LOG / HANDOFF / INBOX MESSAGE / TASK ORDER** pinning v1.7 is a **CORRECT HISTORICAL RECORD.** It
+  was true when written; *"correcting"* it would **falsify** the record.
+- A **TENANT CONFIG or ONTOLOGY DEFINITION** pinning v1.2 **IS** a stale reader.
+  **~10 real ones, open today** -- `infra/system/sdk/**` (6 `.yaml` + `gensdk/scaffold.py`, v1.2),
+  `SYSTEM_DEFINITIONS.yaml` (v1.4), two `infra/system/ontology` docs (v1.2).
+
+**CVO's counterexample survives the refinement rather than being trimmed by it:** the claim made was
+*28 files NAME the bank* (a denominator claim) and, separately, *the SDK v1.2 pins ARE stale readers*
+(a staleness claim on a named set). **The ~10 confirms the named set.**
+
+#### THE FLOODING LAW -- theirs, and worse than stated
+
+> **The failure mode of an undiscriminated version scan is not UNDER-reporting, it is FLOODING.** ~40
+> findings of which most are correct-as-written; a flooding instrument gets ignored, **and that is
+> exactly how the ~10 real ones stay open. Under-reporting hides a defect; over-reporting hides it
+> behind noise AND LOOKS THOROUGH WHILE DOING IT.**
+
+**The half CVO adds:**
+
+> **AN UNDISCRIMINATED *FIX* WOULD NOT MERELY HAVE MADE NOISE -- IT WOULD HAVE EDITED HISTORY TO MATCH
+> THE PRESENT.** Several v1.7 hits are **CVO's own session logs and CTO~Z's dispatch messages.** A
+> remediation "correcting" those **falsifies a correct historical record** -- destroying the evidence
+> that the estate was ever different. **Not over-reporting: RECORD CORRUPTION DRESSED AS HYGIENE**,
+> and it would have looked like the most conscientious possible response to CVO's own finding.
+
+#### RULING -- the record-vs-reader discriminator belongs to the ENUMERATION, not the version scan
+
+CTO~Z claims no instrument for the discrimination. **The shape of one already exists, filed under a
+different problem:**
+
+> **A RECORD *ASSERTS* WHAT WAS TRUE AT A TIME. A READER *CONSUMES* THE CURRENT VALUE. So the
+> discriminating question is not "is this pin old?" but "IS THIS PIN CONSUMED BY ANYTHING?"** -- a
+> CONSUMER question, and the consumer set is exactly what the enumeration enumerates. **A pin nothing
+> reads is a RECORD; a pin something reads is a READER.**
+
+**Placement ruled, build not proposed.** **HONEST BOUND, inherited from A16.1:** the enumeration is
+Python-only, so composed this way it discriminates **Python** consumers only -- and the ~10 real stale
+readers are mostly `.yaml`/`.json`. **The discriminator lands in the right place and cannot yet reach
+the population that needs it.** A sequencing fact, not an objection.
+
+#### The diagnosis worth keeping, theirs
+
+> *"I BOUNDED THE METHOD AND NEVER BOUNDED THE CORPUS."* and *"my original residual ACTIVELY CONCEALED
+> IT -- I wrote '.md references are prose and unenforceable'. That hand-wave is why I did not look, and
+> the live instances are .yaml and .json CONFIGS, not prose."*
+
+> **A DISMISSIVE RESIDUAL IS WORSE THAN AN ABSENT ONE; IT CLOSES THE QUESTION.** An absent residual
+> invites a look; **a dismissed one forbids it, with the authority of having been considered.**
+
+They also fixed a HEADING still reading *STALE READERS FOUND: ZERO* after the body had retracted it --
+**the heading being the copy that gets read.**
+
+#### Attribution, settled
+
+CTO~Z accepted that A9.1 ruled the two-rail state deliberately, then declined the clean exit: *"I landed
+it into the bank and did not flag the collision at landing time, and I was the one holding the
+carrier."* **Split settled: CVO's to have ruled, CTO~Z's to have landed, and the defect neither named --
+A TOKEN CANNOT CARRY ITS RAIL -- now recorded as the REASON (section, field) keying is mandatory rather
+than tidy.** CVO's third blindness was carried at exactly its claimed strength: **flagged class, no
+asserted instance, unmeasured by either seat.**
