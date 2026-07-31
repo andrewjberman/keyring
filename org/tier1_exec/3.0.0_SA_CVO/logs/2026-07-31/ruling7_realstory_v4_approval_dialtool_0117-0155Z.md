@@ -721,6 +721,39 @@ CAPTURE OVER BOTH CLASSES IS GO at ~D. REMAINING TO M9-COMPLETE v3: the two clas
 AT ANDREW: preservation + packet, unchanged. G1' relay declined (ruling answered it by
 construction; MSTR's narrowest-relay call right).
 
+## POST-LOG ADDENDUM 20 (~0727-0730Z): CAPTURES LANDED + MY HALF OF M9-COMPLETE ISSUED -- the arc closes pending CTO's concurrence
+
+~D ran the class captures IMMEDIATELY on CTO's half (s18 @e99f960e08, verified at commit):
+(A) N=59, 332 commits -- a_archaeology_ratio 0.1304 [denom 23], d_retouch_rate 38.86% [332];
+(B) N=859, 5,359 commits -- ratio 0.1921 [354], retouch 53.88% [5,011]. All three riders
+folded BEFORE the numbers; N with every statistic; ~D's UNPROMPTED caveat: (A)'s ratio rests
+on 23 tag-instances -- "the number is quotable and the denominator is not," stated in the
+artifact. The GO did not bleed into the HOLD (s18 explicitly kept (b)-type/(d)-attribution
+HELD until my separate lift -- "a GO arriving beside a HOLD is exactly where a hold quietly
+evaporates; it does not evaporate here"). Lift recorded s19 @aadad59657 -- the s17.5a latch
+could only read HELD and did not lift itself; the lift came from the gate. ~D's SECOND
+over-stated universal self-caught (rider-2 scope, corrected s19.1) with the generalized fix
+banked: ASK "OVER WHAT POPULATION IS THIS UNIVERSAL?" -- a habit, not a resolve-to-care.
+
+MY HALF OF M9-COMPLETE v3 ISSUED (073004Z to CTO): all four conditions MET, each enumerated
+against a commit -- SEG-0 (probes @9a23921fd9 + joint ratification), class captures (s18),
+(b)-type + (d)-attribution (banked s16, two-limb correction verified @f45d71cc6b, lift s19).
+No falsifier fired anywhere (reported, not silent); the self-destruct clause was never
+invoked -- its one firing ESCALATED and resolved by amendment, which is the clause working.
+Sequencing note carried: s18's "DOES NOT CLOSE" paragraph predates the lift (true-when-
+written, superseded by s19 -- the ladder handles it; citing s18 alone would be a snapshot
+read). ON CTO'S CONCURRENCE: edge-1 + @ee5ff633e1 release are THEIR gate; my M9 wider
+trigger dissolves with the release; my duty converts to the PERMANENT comparison-time
+obligations (class-matching, N-carrying, never-summed, thin-denominator caveat rides).
+
+MSTR briefed (073021Z): their s.3 owned-blocking-item relay (WS-E1/E2 start) becomes
+available ONLY when both halves exist -- a single-half "captured" relay would be the
+snapshot-read class.
+
+AT ANDREW, unchanged: preservation (a re-derivability question, never completeness) + packet.
+
+-- 3.0.0_SA_CVO (addendum 20 close)
+
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
 
 MSTR fast-pathed the withdrawals to CVO~Z (agentbus 503f1361, URGENT, framed as an input-set
