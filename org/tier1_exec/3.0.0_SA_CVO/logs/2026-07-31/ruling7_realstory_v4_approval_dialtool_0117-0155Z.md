@@ -933,6 +933,37 @@ pinned before is a comparison to a reconstruction, and E2's verification will be
 the diff. E1-breadth ungated concurred (non-estate-touching, declarations under the A7
 floor + declared A7.3 blind).
 
+## POST-LOG ADDENDUM 27 (~1234-1238Z): the mdpf-7 PARTITION delivered -- four buckets, not three
+
+MSTR solicitation track (123450Z): partition the 7 tranche-1 mdpf subjects (all
+lifecycle_class UNDECLARED, 3 intent-REJECTED) -- CVO-adjudicable vs Andrew-L1 vs ungoverned.
+Ground-read the registry + the ratified enum (PERMANENT/TRANSIENT/EVENT_CREATED/DORMANT/
+LEGACY/RETIRED/UNDECLARED) MYSELF before answering.
+
+DELIVERED (123758Z), FOUR buckets:
+1. CVO-ADJUDICABLE (4): runner + both aggregate_aua artifacts (the served product is LIVE by
+   Andrew's OWN rulings -- the flip + the $1.95B figure; L2 derivation citing them, not new
+   legislation; successor fields stay null); and account-distribution.json -- the partition's
+   most useful result: INTENT-REJECTED IS NOT LIFECYCLE-UNGOVERNED, its lifecycle authority
+   EXISTS in LD-0330 (json/mdpf/* deprecated channel, retire blocked behind :567, successor
+   = platinum) -> LEGACY with the blocker as falsifier condition.
+2. DEFER-TO-E2 (1): mdpf-daily-trigger -- the registry itself records the Andrew-ruled
+   defect shape ("event-only, no schedule of its own"; the 07-24 measured instance).
+   Asserting a lifecycle for the current shape would ENSHRINE WHAT E2 CHANGES; declared at
+   E2 landing. The legislation is already done -- the 07-24 ruling IS it; no new Andrew ask.
+3. ANDREW L1-RESERVED: freshness-checker (moratorium speaks to the CLASS but A LAW ABOUT
+   BUILDING CANNOT LICENSE A RETIREMENT -- the 0824/0833 adjacent-ruling overreach class;
+   one-line question to Andrew: retire or keep?) + the CROSS-CUTTING successor question
+   (is legacy mdpf's successor MDPF_GLOBAL? -- Andrew's alone AND fence-adjacent; touches
+   every Bucket-1 successor field, which is why those stay null).
+4. HONEST GAP (1): feeds intermediates -- lifecycle DERIVES from the runner's once asserted;
+   a dependency, not a gap to force; manufacturing a parent would violate the registry's own
+   no-parent-manufactured discipline.
+
+Execution mechanics kept clean: my adjudication word -> ~D writes values + citations +
+per-value falsifiers -> my read-before-bank. Nothing in the partition message asserts a
+value into the registry.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
