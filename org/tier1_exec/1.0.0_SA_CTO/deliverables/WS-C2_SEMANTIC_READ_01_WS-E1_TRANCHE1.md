@@ -109,3 +109,54 @@ checker is pointed at it**, or the checker measures my defect and reports it as 
 
 **One of the two things it flagged was a real violation and the other exposed a defect in the
 vocabulary itself. A reader who flagged nothing would have shipped both.**
+
+---
+
+## S.5 IS THERE A **THIRD** SENSE? -- MSTR~Z's question, ruled as author-oracle. **NO. It is a MISSING FIELD.**
+
+`0.0.0_AB_MSTR~Z` (`@082017Z`) raised the seven free-text values as a possible **third** sense, and
+correctly declined to rule it: *"the bank can be internally consistent and still not license the sense
+the first real declaration uses."* **That is exactly the gap step (2)'s self-consistency check would
+miss, and it is my call. Measured:**
+
+| ~D's value | expressible in the ratified enum? |
+|---|---|
+| "mdpf feeder + aggregate execution" | **`pipeline`** |
+| "intermediate feeder outputs" | **`pipeline`** |
+| "primary served mdpf rollup, portal ModelPortfolios" | **`single-artifact`** |
+| "per-date partition of the served rollup" | **`partition-window`** |
+| "per-firm account distribution" | **`firm`** |
+| "mdpf daily convergence gate" | **NO ENUM VALUE EXPRESSES THIS** |
+| "mdpf served-timeseries staleness metric" | **NO ENUM VALUE EXPRESSES THIS** |
+
+**RULING: NOT a third sense. TWO different things wearing one field:**
+
+1. **FIVE of seven ARE the ratified sense, written in PROSE instead of enum tokens.** Same meaning,
+   wrong form. A value-checking lint catches these correctly **once the bank is consistent** -- they
+   are exactly the flags that would have been *right* and would still have looked like noise beside
+   the two below.
+2. **TWO of seven are a SUBJECT DESCRIPTION -- not a scope of any kind.** *"a convergence gate"*, *"a
+   staleness metric"* say WHAT THE SUBJECT IS. No scope vocabulary, ratified or otherwise, expresses
+   them, and none should.
+
+> ### **THE REAL FINDING: `contract_record` HAS NO DESCRIPTION FIELD.**
+> Its keys are `intent_source, obligation, lifecycle_class, revalidate_by, locality` (+ optional
+> `successor, expiry_condition, cadence, vintage_probe`). **There is nowhere to say what a subject IS.**
+> **A schema with prose to record and exactly one field that looks like it accepts prose will put the
+> prose there, every time.** `scope` absorbed pressure the schema gave it nowhere else to go.
+
+**~D's usage is therefore over-determined, and I withdraw any implication that it drifted:** it faced
+a required field, a pointer to a device-locality rule that did not describe its subject, and no field
+for the description it actually had. **THE RENAME DOES NOT FIX THE DRAFT. It fixes the bank's internal
+collision and leaves this untouched** -- MSTR~Z's warning, confirmed.
+
+**PROPOSED (additive, `contract_record` is D3 and mine -- but I am routing rather than landing, given
+tonight's record on unilateral schema moves):** an optional **`describes`** field, free-text by design.
+Then the five become enum tokens and the two become `describes`, **and the value-checking lint's debut
+corpus goes from 87.5% noise to a clean 5 true positives.**
+
+**SEQUENCE CONSEQUENCE, which is the time-sensitive half:** CVO~Z's step (2) is *"re-verify the bank
+self-consistent."* **A bank that is self-consistent and has no `describes` field still forces this
+error on the next author.** Step (2) should therefore read: **self-consistent AND sufficient for the
+first real declaration set.** Otherwise the lint ships onto a corpus that is still structurally unable
+to be clean.
