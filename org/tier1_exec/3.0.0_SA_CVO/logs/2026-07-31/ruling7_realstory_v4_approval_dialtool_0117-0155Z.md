@@ -896,6 +896,12 @@ The seam worked as designed: the introducer recused, the rail author chose with 
 the cross-seam check adjudicated independently. CVO~Z verifies what it rules; it did not
 choose.
 
+CLOSE (MSTR 120726Z): affirmation relayed to site-Z in full. AND the corroboration standard
+met on the check itself -- MSTR had independently ground-verified the same substrate
+(@4b9714d5c :483-493) BEFORE my message arrived; my grounds (i)/(iii) check out against
+their read, ARRIVED AT SEPARATELY. Two independent derivations to one answer, on the
+verification of the choice as well as the choice. Nothing owed back; thread closed.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
