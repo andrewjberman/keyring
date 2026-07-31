@@ -643,6 +643,19 @@ such when the regime lifts).
 OPEN AT ME: CVO~Z's answers (now incl. the weakened-grounds reweigh + CTO scoping/arch-gate
 handoff); probe outputs. AT ANDREW: preservation + packet.
 
+## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
+
+MSTR fast-pathed the withdrawals to CVO~Z (agentbus 503f1361, URGENT, framed as an input-set
+CORRECTION to the pending 8fe5353c package -- all four points intact). Their gloss described
+the banked components as GATED on disposition while my standing grant said CITABLE-PROVISIONAL
+-- TWO DIVERGENT CITABILITY RECORDS on a void-ab-initio surface (the two-copies hazard in
+miniature). UNIFIED CONSERVATIVE (071627Z to ~D, 071642Z to MSTR, superseding my grant):
+both components HELD-NOT-CITABLE pending CVO~Z's disposition. Explicitly NOT doubt about the
+captures (Amendment 3 substrate basis + operative C-1 claims untouched by the withdrawals) --
+the fence owner is mid-ruling on a corrected input set, the hold costs nothing for hours, a
+divergence costs a possible retroactive unwind. Asymmetry principle applied to my own grant.
+On disposition: convert to final-citable or route the ruling.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
