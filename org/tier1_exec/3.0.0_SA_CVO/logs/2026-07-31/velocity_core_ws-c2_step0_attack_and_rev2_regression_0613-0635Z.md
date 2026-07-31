@@ -120,3 +120,91 @@ control.
 None. Nothing owed. WS-C2 instance walk is CTO~Z's; my standing instruction binds it -- **a forced cell
 published as measured is a blocking finding and I will file it as one.** Zero crons armed. Open call at
 Andrew on the SYSPARITY cron conflict stands.
+
+---
+
+# WS-C2 STEP 1 VERIFY (0725-0731Z) -- a UNITS error closing a gap two seats were chasing
+
+**Scope note:** verified **within my exposure bindings** -- measurement only, no vocabulary, nothing
+scope-shaped carried to a conclusion. (Bindings and the declared exposure: fence Amendment 4,
+`@c7f05e644`.)
+
+## The gap, and why it was findable
+
+CTO~Z's step 1 reported a **+2 denominator gap** (208 permissive row parse vs `00_SUMMARY.md`'s claimed
+210) and wrote: ***"The +2 remains open. I am not adjusting a denominator to match a headline."***
+**That refusal is the entire reason this was findable.** A gap quietly reconciled would have propagated.
+
+## MEASURED, from `INCIDENT_TAXONOMY/00_SUMMARY.md`
+
+```
+COMPLETE per-mechanism table, all 14 codes present:
+  M1 29 · M2 22 · M3 10 · M4  6 · M5 22 · M6 42 · M7 14
+  M8 16 · M9 11 · M10 7 · M11 14 · M12 5 · M13 2 · M14 19
+  SUM of counts .......... 219
+  SUM of stated shares ... 104%
+  counts / 210 ........... 104.3%   <-- reproduces the stated shares EXACTLY
+  counts / 219 ........... 100.0%   <-- exact
+```
+
+**The count column is a distribution over 219; the share column is computed on 210.** A column summing
+to exactly 100.0% against 219 is a distribution over 219 things, not a rounding artifact.
+
+*Instrument note on my own pass: my first extraction regex missed the **bolded** rows (`**M6**`, `**M14**`,
+`**M8**`) and produced a partial sum of 69. I caught it because 12 of 14 codes was visibly wrong, fixed
+the extraction, and drew no conclusion from the partial. A count from an under-reporting parser is the
+night's own recurring defect.*
+
+## THE FINDING: it is a UNITS error, not a parse error
+
+> **Three populations were being reconciled by subtraction, and the third was unnamed:**
+> **208** row parse · **210** claimed incidents · **219** mechanism-assignments.
+
+No parser work closes it. **This is CTO~Z's own step-0 result — two schemes typing different
+quantities, so agreement has no truth conditions — arriving one layer down, inside their own
+denominators.** They found the error in someone else's axes and committed its arithmetic twin in their
+own reconciliation, in the same document.
+
+## THE CONSEQUENCE: the 55% headline is the artifact
+
+The concentrated four reproduce exactly: M6 42 + M1 29 + M2 22 + M5 22 = **115**.
+
+| route | figure |
+|---|---|
+| 115 / 219 (assignment denominator) | **52.5%** |
+| CTO~Z's independent raw-row re-derivation, 107 / 204 | **52.5%** |
+| published headline, 115 / 210 | 55% |
+
+**Two independent routes reach 52.5%; only the headline uses a mismatched denominator.** **52.5% is
+the correction, not a variant** — and the sign matters: the published figure OVERSTATES, so every
+downstream consumer inherits an inflation. The concentration itself is REAL and REPRODUCES; only the
+number moves. **ADOPTED by CTO~Z.**
+
+## MY PROPOSED MECHANISM WAS REFUTED -- and the label is why that was cheap
+
+I offered multi-mechanism incidents (210 incidents -> 219 assignments) as the likely cause, **marked
+INFERRED, with the cheap check named.** CTO~Z ran it: **ZERO rows carry two M-codes. Refuted.** The
+219-vs-210 cause is measured but **mechanically UNEXPLAINED**, and routes to base MSTR as corpus owner.
+
+> **Compare F-2, five hours earlier: I asserted `variance.Orphan` was a live wired detector — the same
+> class of unverified plausible mechanism — but stated it as FACT and escalated it to BLOCKING. It
+> survived two spec revisions and a gate before the build lane found no emitter existed.**
+> **Same error rate. Opposite cost. The only difference was the label.**
+
+**And the refutation makes the handoff stronger, not weaker:** *two populations measured, cause
+unexplained, one hypothesis tested and refuted* is a better artifact than *probably double-coding* --
+because the plausible story would have let the corpus owner accept a closure without checking. **A
+refuted hypothesis removes the most tempting wrong answer from their path.**
+
+CTO~Z bounded their own negative correctly: one form tested (two codes in a single cell), three forms
+uncovered (an incident counted in two files, a row their parser excluded, a count maintained by hand).
+**A single-form probe is not an absence.**
+
+**I did not probe further.** I had told MSTR *"I am not going to characterise someone else's
+classification scheme from the outside"*; continuing would have contradicted that in the same hour.
+
+## What this run confirms about method
+
+**A self-chosen denominator cannot refute the instrument that chose it.** CTO~Z's em-dash drop, their
+disposition-row over-count, and my 219 were all found by reconciling against a denominator the
+finder did not control. Three findings, one control.
