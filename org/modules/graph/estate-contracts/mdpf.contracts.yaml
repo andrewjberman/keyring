@@ -139,6 +139,20 @@ coverage:
       message -- "asserting a class mid-ordered-rewiring enshrines what the rewiring changes" --
       was applied one item later to keep feeds UNDECLARED. Surfaced, not resolved by me.
 
+  # ── ⚠ ANDREW-FLAGGED HOLD ON THE LIFECYCLE VALUES (MSTR 20260731T130925Z) ───────────────────
+  # THE TWO PERMANENT VALUES ABOVE ARE UNDER HOLD AND MAY STAND OR REVERT.
+  # Andrew flagged mdpf LIFECYCLE-GOVERNANCE as MDPF product work, which is deprioritised under the
+  # exclusive NFRA_VELOCITY focus. Bucket-1 writes and the solicitation track are PAUSED pending his
+  # scope steer. HELD, NOT DISCARDED.
+  #
+  # RECORDED HERE BECAUSE THE ALTERNATIVE IS WORSE: two PERMANENT values with a citation READ AS
+  # SETTLED to any future reader, and this registry is already a place readers treat as
+  # authoritative. A hold that lives only in an inbox is invisible to everyone who reads the file.
+  # Marking is the CONSERVATIVE direction -- it can only make the record weaker than the truth,
+  # never stronger.
+  lifecycle_values_under_hold: 2
+  lifecycle_hold_authority: "Andrew-flagged, relayed MSTR 20260731T130925Z; scope steer pending"
+
   intent_source_rejections:
     # MOVED OUT OF THE RECORDS: rejection_reason was an UNRATIFIED TERM (lint A7.1).
     # Registry-process metadata belongs in coverage, exactly as solicitation state does.
