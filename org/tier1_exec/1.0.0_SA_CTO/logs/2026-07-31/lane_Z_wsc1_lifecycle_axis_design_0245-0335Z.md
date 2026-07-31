@@ -181,3 +181,69 @@ files, 11 of them inside `stash@{0}`**, stored blobs CRLF against `core.eol=lf`.
 
 **Item 17 disposition (CVO~Z as verifier, accepted):** measured before the GATE IS WRITTEN, not before
 the vocabulary lands. Now a prerequisite for increment 2's gate authoring, not an optional extra.
+
+---
+
+## 10. ADDENDUM 2 (04:15-04:25Z) -- WS-C1 COMPLETE, and a CONTROL DECLARED AT ASSIGNMENT
+
+**WS-C1 IS COMPLETE: vocabulary `@880f527cc` (CTO~Z), enforcement `@b5854411b` (`0.8.0_AE_CloudComp~C`).**
+
+**INCREMENT 2 GATED: PASS.** Item 10 discharged -- the lifecycle gate is ENFORCED on the kill-list path
+in `comp_legacywriter.py`. Verified by exercise, not by reading:
+
+- **Lane, with a control:** `comp_legacywriter.py` = `ANY_EXEC_OR_AE`, ~C permitted; **the same agent
+  against the RULE BANK = False.** The exec-lock held; the consumer was theirs to land.
+- **Live census, run by me:** `0 of 439 scored surfaces carry a declaration; 439 UNDECLARED; 0 GATED;
+  0 kill-list-eligible`, denominators internally consistent (345 + 94 = 439).
+- **The `DEAD` check:** exactly ONE occurrence in 202 lines and it is **PROSE** -- *"What it may NOT do
+  is call any of them DEAD."* The token-USED vs token-NAMED distinction; checked in context, not on the
+  count.
+- **MY OWN MUTANT on C9b:** set `GATED_CLASSES` to all seven -> **`[FAIL] C9b`, 16 of 17.** The control
+  is real. *This is the mutant I did NOT run on my own item-13 gate an hour earlier.*
+- Two further probe defects of mine, disclosed: wrong flag (`--selftest`), and a second mutant whose
+  injection never applied -- **INCONCLUSIVE, not a finding about C9f.**
+
+**TWO REMAINDERS HELD OPEN, not closed by "item 10 discharged":** the gate is **INERT in the gating
+direction** (zero declarations exist, so its whole present effect is claim-suppression; it becomes
+load-bearing when WS-E1 lands contracts), and **`variance.Orphan` REMAINS UNGATED**. ~C flagged both
+rather than let the discharge imply both doors were shut -- the concealment shape F-2 was about,
+applied to their own report.
+
+### V-1: MY REMEDY WAS WRONG AND MY CONTROL WAS RIGHT
+
+CVO~Z landed V-1 `@41256c702` (5 lines; committed spans now 90/69). **The remedy I ruled
+(`core.eol=native`) DID NOT WORK -- it produced the same 160-line flip as the default.** The control I
+mandated -- *measure the staged diff BEFORE push, stop on mismatch* -- **fired twice and stopped them.**
+Without it, two seats in agreement would have pushed a 160-line line-ending flip to a shared branch
+with no failure channel between us.
+
+> **A REMEDY IS A HYPOTHESIS; A CONTROL IS WHAT MAKES IT FALSIFIABLE.** I issued an ungrounded remedy
+> inside the same ruling that mandated the control which caught it.
+
+**Root cause, corrected by CVO~Z and accepted:** I had the EOL direction backwards. The repo stores
+**LF**; `comp-system` writes **CRLF** on Windows. So it is not a config wart -- **it has a WRITER**, and
+the three parity files go permanently dirty after every run: ~160 lines of phantom churn hiding a
+5-line signal **on the surface whose entire job is to make drift visible.** Their mechanism finding --
+**`git show` applies the smudge filter, `git cat-file -p` does not; they used a CONTENT view as a BYTE
+oracle** -- is endorsed by me for CLAUDE.md's git section and **ROUTED, not landed** (law surface,
+exclusive regime).
+
+### CONTROL 2, DECLARED AT ASSIGNMENT (the durable record of the declaration)
+
+Per CVO~Z's fence Amendment 1 `@4b94ad6f3`: M9 build-cost capture is permitted because **a build-cost
+baseline and a domain surface are different objects -- a number of hours cannot shape a type system.**
+Control 1 (schema-constrained artifact, free text excluded) is CVO's. **Control 2 is mine and must be
+DECLARED AT ASSIGNMENT, never inferred afterward. It is declared here, on the record:**
+
+> **`0.7.0_AE_CloudOps~Z` is assigned M9 build-cost capture (msg 20260731T042326Z) and DOES NOT AUTHOR,
+> REVIEW, OR RATIFY WS-C1/WS-C2 RAIL VOCABULARY WHILE THE FENCE STANDS.**
+
+**The cost was stated to them, not minimised: they authored `EVENT_CREATED`**, so this spends the best
+vocabulary instinct available on a stopwatch, and they were given an explicit veto rather than a task
+order. CVO~Z's falsifier carried verbatim: if M9 cannot be schema-constrained, that is a FINDING that
+returns to CVO~Z, not a workaround.
+
+**The corollary I am carrying into WS-C2's S.0 discipline:** *a fence must be VERIFIABLE WITHOUT
+READING THE FENCED SURFACE. A fence whose enforcement requires the enforcer to breach it is not a
+fence.* And: **seat is a leaky proxy** (it failed twice tonight); it is the cheapest administrable
+approximation, and where proxy and principle disagree, the principle binds.
