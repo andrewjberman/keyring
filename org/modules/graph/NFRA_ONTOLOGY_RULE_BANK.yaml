@@ -255,6 +255,39 @@ node_bindings:
 
 dynamic_rails:
 
+  # =================================================================================================
+  # HELD-OUT FENCE -- BINDING ON EVERY RAIL AUTHOR. READ BEFORE SHAPING ANY D-RAIL.
+  # =================================================================================================
+  held_out_fence:
+    rule: "*** ADVI_PERFORMANCE AND MDPF_GLOBAL ARE THE HELD-OUT TEST SET. THEY MUST NOT SHAPE THESE RAILS. ***
+      No surface of either may be used as a vocabulary example, and no contract may be authored to make a rail
+      look expressive. Andrew-direct, 2026-07-29 ~2325Z, VERBATIM: 'this is setting up the framework... the real
+      test will be running ADVI_PERFORMANCE MDPF_GLOBAL and others.' Relayed via 0.0.0_AB_MSTR~Z 20260729T233721Z."
+    why_it_is_the_most_dangerous_item: "IF YOU SHAPE THE RAILS USING THEM, THE ONLY REAL TEST OF THIS FRAMEWORK IS
+      DESTROYED AND NOTHING WILL REPORT IT. A breached held-out set looks EXACTLY like a well-fitting rail: the
+      instrument's expectation would be derived from the very population it is meant to be tested against, so the
+      gap reads structurally zero and the fit reads excellent. THERE IS NO DOWNSTREAM SIGNAL THAT FIRES. This is a
+      silent-FALSE-CLEAN with no failure channel, and the only control is not to touch them."
+    obligation_on_every_author: "PUBLISH YOUR SHAPING CORPUS -- the denominator you drew from -- so a later reader
+      can verify the two held-out projects are absent. AN UNNAMED SHAPING CORPUS IS INDISTINGUISHABLE FROM A
+      BREACHED ONE. This is not a courtesy; it is the only way the fence is CHECKABLE by anyone other than the
+      author it binds."
+    verifiable_without_breaching: "A FENCE MUST BE VERIFIABLE WITHOUT READING THE FENCED SURFACE. A fence whose
+      enforcement requires the enforcer to breach it is not a fence (3.0.0_SA_CVO~Z, Amendment 1 corollary).
+      Check a declared shaping corpus against a schema, never against ADVI_PERFORMANCE or MDPF_GLOBAL."
+    binds_on: "the CAUSAL PATH INTO RAIL AUTHORSHIP -- not fabric, and NOT SEAT. Seat is a leaky proxy (it failed
+      twice in one session); it is the cheapest administrable approximation, and where proxy and principle
+      disagree, THE PRINCIPLE BINDS."
+    scope_note: "the DECOMPOSITION precondition on those two projects was RELEASED 2026-07-31 (@e8c7a32fa). THAT
+      IS NOT THIS FENCE. Decomposition may proceed; READING THOSE RECORDS BY VALUE TO SHAPE RAIL VOCABULARY STILL
+      MAY NOT. Anyone reading 'RELEASE' as 'the fence is down' has read a subject line and not a body."
+    lifted_only_by: "Andrew, or the CVO who owns the fence (3.0.0_SA_CVO~Z). NOT by a rail author, NOT by a phase
+      close, and NOT by the release of an adjacent precondition."
+    recorded_here_because: "WS-C2 acceptance requires the fence be stated IN THE RAIL SECTIONS THEMSELVES, so a
+      future author CANNOT INNOCENTLY BREACH IT. A constraint carried only in a design document or an inbox is a
+      single-carrier record whose failure mode is that nobody knows it exists -- and rail authorship is exactly
+      the moment it must be visible."
+
   D1_value_grain:
     sits_between: [C0, C1]
     names: "the VALUE that travels an edge and the GRAIN at which it is resolved."
