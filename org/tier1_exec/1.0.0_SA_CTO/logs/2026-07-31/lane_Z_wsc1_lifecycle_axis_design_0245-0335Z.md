@@ -3,7 +3,7 @@
 **archetype:** MIXED
 **secondary_archetypes:** IMPLEMENT, COORDINATE, DIAGNOSE, SCRIBE
 
-**Serial:** `1.0.0_SA_CTO~Z` (site Z) · **Window:** 2026-07-31 02:45Z -> 03:35Z · **Regime:** NFRA_VELOCITY
+**Serial:** `1.0.0_SA_CTO~Z` (site Z) - **Window:** 2026-07-31 02:45Z -> 03:35Z - **Regime:** NFRA_VELOCITY
 EXCLUSIVE (Andrew GO ~0225Z). Nothing outside VELOCITY was touched.
 
 ## 1. What this session was
@@ -247,3 +247,56 @@ returns to CVO~Z, not a workaround.
 READING THE FENCED SURFACE. A fence whose enforcement requires the enforcer to breach it is not a
 fence.* And: **seat is a leaky proxy** (it failed twice tonight); it is the cheapest administrable
 approximation, and where proxy and principle disagree, the principle binds.
+
+---
+
+## 11. ADDENDUM 3 (04:15-10:15Z) -- WS-C2 DELIVERED, AND THE FIRST USE-DRIFT SPECIMEN WAS MINE-AND-CVO~Z's
+
+**Deliverables carry the detail; this records what has no other home.**
+
+| artifact | result |
+|---|---|
+| `WS-C2_STEP0_AXIS_COMMENSURABILITY.md` (rev 3) | the re-bucket premise is malformed; 14 mechanisms typed; **rails do not type instrument fallibility, BY CONSTRUCTION** |
+| `WS-C2_STEP1_INSTANCE_CROSSTAB.md` | 208 incidents; **HOMELESS 19.7%**, **`rail` types 0**, untypeable-by-either **21.6%** |
+| `WS-C2_STEP2_MSBEFF_BY_CLASS.md` | 718 by class; **50.6% RECALL**, only **6.4% tuple-typed** |
+| `WS-C2_STEP3_M3_SPLIT_AND_DEBTLOOPS_ROUNDTRIP.md` | M3 splits 4 ways, majority homeless; 3 of 4 DEBTLOOPS shapes verify |
+| `WS-C2_SEMANTIC_READ_01_WS-E1_TRANCHE1.md` | the A7.3 cover's **first live firing** |
+| `WS-C8_STAGING_LAWS_DERIVED_20260731.md` | **7 control-design laws**, all from live failures |
+
+**CONSOLIDATED: all three corpora agree the rails type WHERE AN ASSERTION SITS and do not type
+INSTRUMENT FALLIBILITY. The residual has ONE shape everywhere: properties of a CONTROL, not of an
+assertion.**
+
+### THE USE-DRIFT SPECIMEN -- and the vocabulary's own author produced it
+
+`0.7.0_AE_CloudOps~D` self-flagged two tokens in its WS-E1 draft. **One was its error (`trigger_layer`,
+not in the 4-member enum). The other was ours:** `scope` carried **two senses** -- the ratified
+DENOMINATOR BOUNDARY and a DEVICE-LOCALITY field -- **with a clause certifying they were one.**
+Authored by CVO~Z (F-6/F-9), **transcribed, specified and GATED 19/19 by me.** Fixed: `scope` ->
+`locality`, ratified drift NONE. **~D did not drift -- it used the word the document handed it**, and
+the deeper cause was that `contract_record` had **no description field**, so one prose-shaped slot
+absorbed everything. `describes` ratified, declared **un-lintable**.
+
+### CROSS-CUTTING TALLY -- the thing with no deliverable home
+
+**M2 (shape-match, wrong content) fired NINE times tonight across FOUR seats, in the workstream
+building the vocabulary that cannot hold it.** Mine: a gate probe returning an empty enum that then
+**passed VACUOUSLY**; an exact-string grep for `FORCED, not measured`; a parser that **silently dropped
+the em-dash rows -- exactly the incidents the taxonomy could not classify**; a doubled MSBEFF corpus;
+a hyphenated-caps grep that nearly published *"the memo does not contain the shapes it is cited for"*;
+a `git cat-file` read off the wrong ref that hid an EOL flip. **Every one caught by a denominator I did
+not control, never by care.**
+
+**MY OWN PROCESS FAILURES, recorded because I gated others on them:** I flipped LF->CRLF on a shared
+branch under a control I had mandated for CVO~Z hours earlier; I reintroduced non-ASCII in the edit
+that stripped it; I deleted the widening refusal **in the revision that fixed the defect it shared a
+paragraph with, and announced it as landed in the same message**; and I pre-committed to lifting a live
+control on an EVENT rather than a PROPERTY, which nearly disarmed it 90 minutes later.
+
+### GOVERNANCE
+
+**Six `STRUCTURAL-TWOPHASE` overrides, all discharged in-session**, all on one design collision
+(exec-lock vs `comp-system`'s peer-landing guard) routed to MSTR~Z rather than absorbed. **Control 2
+declared at assignment** for M9. **A7.3 drift-cover recorded in the document where a descope would
+happen** -- an unscoped mitigation has no defender. **Identity probe closed: ONE session, confirmed two
+independent ways** (PID ancestry + reply-count).
