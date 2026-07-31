@@ -349,12 +349,13 @@ dynamic_rails:
     contract_record:
       names: "the record a CONTRACTED resource/process carries. ONE record, TWO views -- never two schemas. CORE fixes the vocabulary; ESTATE WS-E1 declares INSTANCES against it and adds no terms."
       required: [intent_source, obligation, lifecycle_class, revalidate_by, locality]
-      optional: [successor, expiry_condition, cadence, vintage_probe]
+      optional: [successor, expiry_condition, cadence, vintage_probe, describes]
       fields:
         intent_source:    "WHERE the obligation comes from -- a governance level ABOVE the artifact (a governed registry / a PRD / a law / a module's consumer-anchored PURPOSE). Binds to intent_denominator_binding.intent_from_above. An intent_source naming the artifact itself IS the denominator-is-its-own-configuration defect and is REJECTED at declaration."
         obligation:       "which obligation_types entr(ies) bind. ZERO obligations is not 'no obligation' -- it is UNDECLARED."
         lifecycle_class:  "exactly one lifecycle.enum value, PRODUCER-ASSERTED."
         revalidate_by:    "REQUIRED ON EVERY DECLARATION -- see lifecycle.decay."
+        describes:        "OPTIONAL free-text: WHAT THE SUBJECT IS (e.g. 'the mdpf daily convergence gate', 'a served-timeseries staleness metric'). *** EXPLICITLY NON-VOCABULARY AND NOT LINT-CHECKED. *** No token in this field resolves against the bank and no value-checking lint may be pointed at it -- A FREE-TEXT FIELD THAT IS NOT DECLARED UN-LINTABLE WILL EVENTUALLY BE LINTED, manufacturing exactly the noise the A9 sequence exists to avoid. WHY IT EXISTS (CVO~Z, ratified): its value is SEGREGATION, not convenience -- GIVING PROSE A DESIGNATED NON-VOCABULARY HOME IS WHAT KEEPS PROSE OUT OF VOCABULARY SLOTS. A schema with prose to record and exactly one field that looks like it accepts prose will put the prose there every time; WS-E1 tranche 1 put FIVE ratified-sense values AND two subject descriptions into `scope` because it had one exit. This removes the pressure, it does not merely absorb the overflow."
         locality:         "REQUIRED ON EVERY DECLARATION -- see lifecycle.locality_binding. RENAMED FROM `scope` 20260731 (CVO~Z ruling): the ratified type_tuple.scope means the DENOMINATOR BOUNDARY an assertion is complete-OVER; THIS field means WHERE THE ARTIFACT IS OBSERVABLE. Two different properties. The new name deliberately shares NO ROOT with the ratified token -- a shared root teaches a reader that `scope` is a FAMILY, which buys visibility without buying separation."
         expiry_condition: "the STATED condition under which the obligation lapses; consumed by the debt derivation. MUST BE MACHINE-EVALUABLE or it is decorative."
 
@@ -455,6 +456,7 @@ dynamic_rails:
         no_fallback: "it does NOT fall back to the declared value, and it does NOT fall back to PERMANENT."
         why:         "a HALF-DECLARED lifecycle is the UNFALSIFIABLE case and must be NOISIER than no declaration, not quieter. This axis SUPPRESSES findings, so an unfalsifiable declaration is a silencer that now carries the authority of a type system."
       undeclared_scope:
+        NOTE_ON_THE_WORD_SCOPE: "`scope` HERE MEANS THE REACH OF THIS RULE -- how far the UNDECLARED default extends. It is NOT `type_tuple.scope` (the DENOMINATOR BOUNDARY an assertion is complete-OVER) and NOT the declaration's `locality` field. DELIBERATELY NOT RENAMED (CVO~Z ruling, 20260731). The discriminating test is: DOES THIS KEY HOLD, OR COULD IT COME TO HOLD, A VALUE FROM THE RATIFIED ENUM? YES -> rename, because the value-bearing slot is what a lint resolves and what an author fills from the wrong vocabulary. NO -> the ordinary English word is fine and renaming is OVER-APPLICATION -- applying a minimum as a maximum. This key holds PROSE ABOUT A RULE'S REACH: no enum value, nothing a lint resolves, no slot an author fills. DO NOT LET 'no shared root' BECOME A RULE AGAINST A COMMON WORD. This clause closes the reader hazard at the cost of one line."
         default:     "UNDECLARED is the default for every uncontracted resource; coverage today is ~the whole estate."
         bound:       "UNDECLARED CONSTRAINS WHAT A TOOL MAY CLAIM; IT DOES NOT DISABLE WHAT A TOOL MAY CHECK."
         permitted:   "an existence check MAY still run and MAY still report 'absent'."
