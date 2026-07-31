@@ -215,20 +215,30 @@ RULES = [
      "(Andrew-direct 2026-07-29) -- it still resolves during the transition but new calls should "
      "use comp-estate. DISTINCT from comp-kuzu (an arbitrary cross-layer graph QUERY) and "
      "comp-pipescript io (one script's columns)"),
-    # THE DEPRECATION SHAPE, and it is deliberate: NAME lookup still finds the live executable,
-    # INTENT lookup goes to the successor (the rule above). A deprecated-but-LIVE tool must remain
-    # discoverable BY ITS OWN NAME -- an executable that still runs and cannot be found is worse
-    # than either keeping it or removing it, and the router is the only thing standing between an
-    # agent and a tool it cannot name. Retire this rule WITH the tombstone, not before.
+    # *** THE TOMBSTONE HAS FLIPPED. THIS RULE ANSWERS THE NAME; IT NO LONGER RECOMMENDS THE TOOL.
+    # The original shape was correct WHILE the executable still RAN: name-lookup found it,
+    # intent-lookup went to the successor, and "an executable that still runs and cannot be found
+    # is worse than keeping or removing it" was a real argument. IT STOPPED BEING TRUE. Measured
+    # 2026-07-31: `python .tools/pipescript` -> rc=2, "RETIRED -> use comp-estate", and bare
+    # `pipescript` does not resolve on PATH at all (positive control: comp-which resolves).
+    # CLAUDE.md: "Bare `pipescript` is a RETIRED rc=2 stub and is PROHIBITED."
+    # THE ROUTER WAS STILL RECOMMENDING IT: 735 routes, most recently 2026-07-31T15:42:18Z --
+    # a transition-era description that was TRUE WHEN WRITTEN and went stale with the transition
+    # it described. THE ROUTE OUTLIVED ITS PREMISE, which is why the entry keeps the QUERY
+    # PHRASINGS (discoverability, the original argument) and replaces the ANSWER (a prohibition,
+    # not a tool). Never delete the phrasings: an agent asking "pipescript" must be TOLD it is
+    # retired, not dropped into a no-match. ***
     (["pipescript", "bare pipescript", "plain pipescript", "the pipescript tool",
       "pipescript command", "pipescript name"],
-     "the bare-name pipescript executable (DEPRECATED NAME -- still resolves during transition)",
+     "PROHIBITED -- bare `pipescript` is RETIRED (rc=2 stub). Use `comp-estate`.",
      ["comp-estate <name>", "comp-estate --list", "comp-estate --resource <substr>"],
-     "the bare-name executable itself: named-thread estate traversal, still resolving and running "
-     "so in-flight callers do not break mid-wave. The NAME is deprecated (Andrew-direct "
-     "2026-07-29) because it evaded the comp-* census glob and the registration gate; the tombstone "
-     "flip is held to post-wave. If you are asking BY NAME you are in the right place; if you are "
-     "asking what is in a named thread, route by intent instead"),
+     "NOT A TOOL RECOMMENDATION -- A PROHIBITION. Bare `pipescript` was retired Andrew-direct "
+     "2026-07-29 ('we are deprecating base pipescript, there is comp-pipescript only for future "
+     "reference') and CLAUDE.md records it as a RETIRED rc=2 stub that is PROHIBITED. The stub "
+     "exits 2 by design -- a retired tool that exits 0 is indistinguishable from a working one. "
+     "The estate business-semantic traversal is now `comp-estate`, which re-derives S3 keys LIVE "
+     "from source instead of serving them frozen from a snapshot. NOTE `comp-pipescript` is a "
+     "DIFFERENT and legitimate tool, NOT a synonym -- do not conflate them"),
     (["portal", "component", "endpoint", ".tsx", "tsx", "frontend"],
      "portal component / route (generic -- ambiguous, disambiguates by design)",
      ["comp-transform schema-check <Component>", "comp-routes behaviors", "comp-estate <thread>"],
