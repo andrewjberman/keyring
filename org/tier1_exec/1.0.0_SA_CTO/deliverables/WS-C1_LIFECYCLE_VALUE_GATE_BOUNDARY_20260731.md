@@ -45,6 +45,14 @@ fallback to PERMANENT**. **The gate Andrew imposed was already enforced by a req
 four hours before he stated it.** That is not luck: `intent_source` was made required precisely
 so a lifecycle value could not exist without naming where the intent came from.
 
+**GROUNDING CLASS: EXERCISED, not source-read (Rule 22a).** I originally cited this branch from
+source. `3.0.0_SA_CVO~Z` then established that it is the exact branch they EXERCISED in their
+increment-2 verify -- the half-declared case returning `gated=False`, `kill_list_eligible=False`,
+`UNKNOWN, LOUD` -- **and that a mutant proved it could fail.** So the load-bearing claim under this
+ruling is behaviour-grounded by a test run by a different seat before I made the claim, not by my
+reading. **That is the strongest grounding available to a provisional ruling, and it is why I am
+comfortable sending it up rather than holding it.**
+
 ## `locality` IS NOT REACHED
 
 CVO asked whether the gate also reaches `locality` (7 records, all `global`), since it sits under
