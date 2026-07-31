@@ -1201,6 +1201,45 @@ RULED (134724Z to ~B; 134801Z step-0 routing to CTO):
    (seventh against-interest stop); I endorse the design, the creation act is not mine.
 ~B authors nothing until step 0; fixture 2 + synthesis proceed.
 
+## POST-LOG ADDENDUM 35 (~1349-1354Z): the {today} defect ruled -- EACH PROPERTY LIVES WHERE IT IS EXPRESSIBLE; my option-(i) ruling SUPERSEDED BY MYSELF; battery rewritten; retention stated-not-inherited
+
+CTO ARCH-GATE (134938Z): design APPROVED (+ trust-policy assumable ONLY by that
+user/device), CREATION HELD FOR ANDREW as a DISTINCT ACT (project authorization does not
+cover a new principal adjacent to his identity -- surfaced as a one-line yes/no). AND THE
+DEFECT: IAM CANNOT EVALUATE "TODAY" -- {today}/text-input/* is secretly one of three
+designs ((a) all-dates wildcard / (b) daily rotation / (c) tool-enforced-untestable), (a)
+the default if nobody decides, and CTO's line: "an evidence store that cannot say who
+wrote a record is not an evidence store; it is a folder."
+
+MY RULING (135220Z): (a)-DELIBERATE + STORAGE-LAYER INTEGRITY, BOTH PRINCIPALS --
+SUPERSEDING MY OWN OPTION-(i) DAILY-APPLY RULING from addendum 30 (retracted within the
+hour on a better argument; third self-retraction of a live ruling today, per CTO's count).
+THE PRINCIPLE, CTO-ratified as the keeper: >> EACH PROPERTY LIVES WHERE IT IS EXPRESSIBLE
+<< -- the SUBFOLDER boundary is statically expressible in IAM and STAYS there; the TIME
+boundary is not and MOVES to storage. CTO's sharpening: a property forced into a layer
+that cannot express it does not become weaker -- IT BECOMES FICTIONAL, and the fiction is
+load-bearing until someone tests it. Integrity = the CONJUNCTION versioning-RECOVERABLE +
+hashes-DETECTABLE + attribution-ASSIGNABLE, each conjunct testable. Residual named in the
+design verbatim (not protected from Andrew's own identity; attribution-and-accident threat
+model; an evidence store OF Andrew's words that Andrew can touch is not a defect).
+
+BATTERY REWRITTEN (relayed to ~A 135324Z, whose held floor was superseded mid-ack):
+per-principal ALLOWs all-dates subfolder-scoped (past-day ALLOW now EXPECTED-DELIBERATE --
+"a green that surprises nobody"); cross-principal DENYs unchanged; storage exercises NEW
+(versioning live check; OVERWRITE MUTANT 1->2 versions with original intact; FALLBACK
+MUTANT; manifest-hash detection vs a deliberately altered copy). ~A's DISCRIMINATOR
+PRINCIPLE ratified permanent: at least one expected-ALLOW and one expected-DENY on the
+same principal, or the run proves nothing -- an all-deny result reports the battery VOID,
+never boundaries-held (the anti-correlated-instrument catch in IAM form).
+
+RETENTION (CTO flag 135329Z, adopted, floor+2 to ~B 135427Z): the decision STATED not
+inherited -- noncurrent versions retained INDEFINITELY DELIBERATELY (evidence-store
+rationale), ANDREW'S STANDING RETENTION RULING GOVERNS ON ARRIVAL (his queue item and
+CTO's flag are one question); + LIVE lifecycle-rule check at authoring (an inherited
+expiry under a versioning guarantee fails silently and PASSES EVERY BATTERY TEST -- the
+battery measures at write time, the expiry acts days later). FIXTURE-1 pinning assigned
+to ~A (mechanics) with ~B's dedup_key list as ground truth.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
