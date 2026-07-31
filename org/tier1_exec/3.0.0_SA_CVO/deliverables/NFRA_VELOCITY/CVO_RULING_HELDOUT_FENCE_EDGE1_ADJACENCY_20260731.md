@@ -2561,3 +2561,245 @@ internally consistent.**
 > intermediate reporting a load-bearing INSTRUMENT rather than a virtue** -- and makes A22's finding
 > sharper than I wrote it: **an acceptance criterion that punishes self-reporting does not merely
 > discourage candour, it disables the only detector this class has.**
+
+### AMENDMENT 24 -- GATE 5 EXERCISED 9/9 with controls, and the bound that qualifies the PASS: every cell hit the FALLBACK resolver
+
+GATE 5 landed in the 17:01 pass. **Step 1 (does the code carry an arming marker) was discharged at
+source by base MSTR before landing. Step 2 -- the exercise -- was mine, and a grep cannot discharge a
+behavioural claim.** All nine cells were **pre-registered before the artifact existed on this device**,
+so the test could not be shaped by the thing it tests.
+
+#### A24.1 -- NINE CELLS, ALL AS REGISTERED
+
+```
+#  SERIAL             COMMAND                      EXPECT  ACTUAL
+1  0.0.0_AB_MSTR~Z    git push origin CLOUD        ALLOW   ALLOW   PASS
+2  1.0.0_SA_CTO~Z     git push origin CLOUD        DENY    DENY    PASS
+3  <empty>            git push                     DENY    DENY    PASS   fail-closed
+4  1.0.0_SA_CTO~Z     git fetch origin CLOUD       ALLOW   ALLOW   PASS
+5  1.0.0_SA_CTO~Z     echo '...git push...'        ALLOW   ALLOW   PASS   no fire on a MENTION
+-- the four I added, because running only the author's cells inherits the author's blind spots --
+6  3.0.0_SA_CVO~Z     git push origin CLOUD        DENY    DENY    PASS   the real threat on this box
+7  3.0.0_SA_CVO~Z     git pull origin CLOUD        DENY    DENY    PASS   THE VERB NO DELIVERED CELL TESTED
+8  3.0.0_SA_CVO~Z     "git  push"  (double space)  DENY    DENY    PASS   NO one-keystroke bypass
+9  3.0.0_SA_CVO~Z     git push --dry-run           ?       DENY           registered WITHOUT a prediction
+```
+
+**CELL 7 IS THE ONE THAT JUSTIFIED ADDING CELLS AT ALL:** the gate is named *integrator-only
+**push/pull*** and **not one delivered cell exercised pull.** A suite can be 13/13 green on half its own
+claim. **It passes -- but nobody knew that before it was run.**
+
+**CELL 9 KILLED MY OWN SECOND ORACLE.** `git push --dry-run` is DENIED, so the independent oracle I
+proposed **cannot run: I have one instrument, not two.** The gate's behaviour is correct -- a dry-run is
+still a push command and blocking it is fail-safe. **The value is in having registered the cell without
+a prediction rather than dropping it: a test whose purpose is to discover whether your OTHER test can
+exist is worth running first.**
+
+#### A24.2 -- CONTROLS ON MY OWN HARNESS
+
+> **A -- IS `ALLOW` A REAL VERDICT OR A SILENT CRASH?** An allowed cell emits empty output at `rc=0`;
+> denials emit the `permissionDecision":"deny"` JSON. **Checked because *"no deny found"* and *"the
+> script died"* are otherwise byte-identical** -- the same shape as every silent-absence finding today.
+> **B -- MUTANT: `0.0.0_AB_MSTR~Z` + `git rebase` -> DENY.** **GATE 5's allow-path does NOT exempt the
+> integrator from the other NEVER rules.** The failure I most wanted excluded: a push-allow quietly
+> widening into a blanket MSTR exemption.
+> **C -- NEGATIVE: `ls -la` -> ALLOW.** The matcher is not over-broad.
+
+#### A24.3 -- *** THE BOUND, AND IT LIKELY APPLIES TO BASE MSTR'S 13/13 TOO ***
+
+Control A surfaced this in the hook's own stderr:
+
+```
+never-rules-gate.sh: line 481: .../org/mcp/sessions/ctl-27294.serial: No such file or directory
+```
+
+> **A SYNTHETIC `session_id` HAS NO SERIAL FILE, SO RESOLUTION FALLS THROUGH TO `OPAL_AGENT_SERIAL`.
+> EVERY ONE OF MY NINE CELLS EXERCISED THE *FALLBACK* RESOLVER. THE *PRIMARY* RESOLVER -- session_id ->
+> per-session serial file -- IS UNEXERCISED.**
+
+**And the delivered harness instruction says *"session_id = any id"*, so base MSTR's 13/13 almost
+certainly carries the same bound, and neither suite stated it.**
+
+**THE CLAIM SUPPORTED:** *the gate decides correctly GIVEN a correctly-resolved serial.*
+**THE CLAIM UNTESTED:** *the gate resolves the serial correctly in production.*
+**WHY IT IS NOT PEDANTRY: in production the session-file path is PRIMARY. If it ever resolved an MSTR
+serial for a non-MSTR session, the gate ALLOWS a push it should deny -- and every cell in both suites
+stays green.** **This is *"I bounded the METHOD and never bounded the CORPUS"* arriving inside the
+instrument built to close a different failure.** *(One production sample exists on the allow branch:
+MSTR~Z's 17:01:42 push resolved correctly here. The primary path's DENY branch has been exercised by
+nobody, and I will not fabricate a peer's session file to reach it.)*
+
+#### A24.4 -- I VERIFIED MY OWN READ WAS CURRENT, AND MEASURED THE TRAP IN THE NEW STANDARD
+
+MSTR~Z corrected *"pull at will"* and made `git show origin/CLOUD:<path>` the fabric standard for
+load-bearing reads -- **because `git fetch` moves the ref only, `git pull` is now denied to seats, and a
+working tree can therefore sit up to one full window behind origin.** I had read the hook from the
+working tree, so I checked:
+
+```
+origin/CLOUD copy .......... 36598 B          working tree ....... 36598 B     diff CLEAN
+positive control ........... 2 vs 2           stderr ............. empty
+-> my 9/9 exercised the CURRENT hook. Verdict stands unqualified.
+```
+
+**AND THE PRESCRIBED REMEDY HAS A LIVE, MEASURED TRAP ON THIS DEVICE:**
+
+```
+MSYS_NO_PATHCONV=1 git show origin/CLOUD:.tools/hooks/never-rules-gate.sh | grep -c permissionDecision -> 2
+                   git show origin/CLOUD:.tools/hooks/never-rules-gate.sh | grep -c permissionDecision -> 0
+```
+
+> **Same file, same string, same second. Present twice, reported as ZERO, silently.**
+> **THE REMEDY WAS PRESCRIBED TO FIX STALENESS; UNGUARDED ON A DOT-LEADING PATH IT RETURNS A FALSE
+> ABSENCE ON THE MOST CURRENT DATA AVAILABLE.** **A 50-minute-old file gives you an old truth; this
+> gives you a confident nothing.** **And it lands exactly on the load-bearing class -- `.tools/`,
+> `.claude/`: hooks, gates, comp-tools, settings. The files most worth reading currently are the ones
+> the unguarded remedy cannot read.**
+
+**RECOMMENDED (routed to MSTR~Z + COO ahead of the Tier-2 cascade): `MSYS_NO_PATHCONV=1` on EVERY
+`git show <ref-with-a-slash>:<path>`, UNCONDITIONALLY -- not "for dot-leading paths."** CLAUDE.md
+already rules this way (*blanket the slashed-ref case, don't memorize the boundary*). **A per-path
+decision requires every seat to classify every path correctly forever; the blanket costs one prefix and
+cannot be got wrong -- and a rule applied only when remembered has the same failure profile as the prose
+stop GATE 5 just replaced with a mechanism.**
+
+### AMENDMENT 25 -- WS-C7 suite enumeration verified, a FENCE RULING closed, and A24's bound corrected to its true size
+
+Two records here: **A24's bound is narrower than I stated** (correction, at source, by the party who
+could measure it), and **WS-C7's suite-enumeration findings are verified with one fence question ruled.**
+
+#### A25.1 -- CORRECTION TO A24's BOUND: REAL FOR MY SUITE, PARTIALLY DISCHARGED ON BASE'S
+
+I recorded that every GATE 5 cell hit the FALLBACK resolver and inferred base MSTR's 13/13 *"almost
+certainly carries the same bound."* **Base MSTR re-verified rather than asserted, and the inference was
+too wide:**
+
+> **2 of their 13 cells DID exercise the PRIMARY resolver, using REAL serial files.** And the
+> discriminator is the part worth keeping: **env and file must DISAGREE, or the cell is green under
+> EITHER resolver and proves nothing about which one fired.** Their two cells: `file=NON-MSTR +
+> env=MSTR -> DENY` and `file=MSTR + env=NON-MSTR -> ALLOW`. **Both prove the session file is read AND
+> beats the env, in both directions.**
+
+**CORRECTED STATEMENT: the bound is REAL for my 9-cell suite (all synthetic session_ids -> fallback,
+confirmed by the `:481` stderr) and PARTIALLY DISCHARGED on base's 13.** **The gap was in the RELAY, not
+in their test** -- the 5-cell prose harness I was sent omitted the two production-critical cells, so my
+suite inherited a bound from an incomplete transmission. **They own that plainly.**
+
+> **AND THE GENERAL FORM SURVIVES INTACT: *a suite testing only the fallback leaves the PRIMARY
+> production path unbounded.*** **My finding was worth making and was not total. Both halves are
+> recorded because a correction that only records the first half is the same defect one level up.**
+**Not running the two closing cells: Andrew-direct, *"dont get bogged down in this we have work to
+do."* The thread is closed; the record is accurate; that is the whole obligation.**
+
+#### A25.2 -- FENCE RULING: `ADVI_STAUDT` CONTACT IS NON-SHAPING. NO REMEDIATION.
+
+`0.7.0_AE_CloudOps~Z` declared a marginal fence contact unprompted -- a broad `grep` for a
+"Class 1/Class 2" definition returned `ADVI_STAUDT.md` and printed three lines. **Measured: my binding
+names `ADVI_PERFORMANCE` (13 occurrences in my ruling) and `MDPF_GLOBAL` (21). `ADVI_STAUDT`: ZERO --
+never adjudicated, so this is a genuine first instance.**
+
+> **RULED on two independent grounds, either sufficient:**
+> **(1) OUTSIDE THE FENCE AS BOUND.** The fence names two programs. **ADVI-family adjacency is not
+> membership: a fence that silently expands by family is not a fence, it is a mood.**
+> **(2) NON-SHAPING EVEN IF INSIDE -- the load-bearing half.** The fence prohibits held-out material
+> **SHAPING THE RAILS**; the test is not *did you see it* but *did it supply anything*. **What was seen
+> ESTABLISHES A TOKEN COLLISION, which SUBTRACTS a naming option rather than supplying one. A collision
+> finding is a reason NOT to use a name; it cannot import a meaning.**
+
+**SURFACED, NOT RULED: whether the fence should name a FAMILY rather than two codes is a SCOPE question
+and Andrew's.** I ruled the instance; I did not redraw the boundary. **And the declaration is what made
+the ruling cheap -- an undeclared contact costs an investigation, a declared one costs a paragraph.**
+
+#### A25.3 -- THE SUITE FINDINGS VERIFIED, AND ONE CITATION-FORM DEFECT
+
+**FINDING 1 -- CONFIRMED AT SOURCE.** The DEBTLOOPS memo carries *"Type II corroboration: nine same-day
+specimens"* and *"Nine instrument failures were logged on 2026-07-29, all of them false negatives."*
+**The membership finding's FORM is the keeper:**
+
+> ***"A count that is right while its membership is wrong."*** **`3 of 9` is arithmetically fine and the
+> two sides of the fraction refer to DIFFERENT SETS.** **Strictly harder than a miscount, because every
+> check that verifies the arithmetic passes.** Same family as today's `219/210/208` units error and
+> `~C`'s *a zero cannot say which zero it is*.
+
+**FINDING 2 -- SUBSTANCE CONFIRMED, CITATION STALE.** The acceptance clause exists -- **`PRD.md:342`,
+not the cited `:222`** (the PRD is 427 lines; `:222` now carries fence text). **Exactly ONE occurrence
+in the PRD, used as a pass condition, defined nowhere.** **Rule 22's own case: *a line citation without
+a vintage is not a citation*, because `file:line` resolves at every vintage to different content.** The
+reasoning was sound; the citation format was not.
+
+**ON THEIR ~226 ESTATE-WIDE COUNT: I measure 456 occurrences / 357 lines / 128 files. NONE is 226, and I
+am NOT inventing a reconciliation** -- today already cost one plausible explanation that foreclosed a
+live discrepancy. **The collision is confirmed and load-bearing whichever unit is right; the number
+needs its unit stated.**
+
+### AMENDMENT 26 -- the cross-seam pass, and why F-2's remedy has a MEASURED failure rate in this estate
+
+Base CVO ran the Andrew-ordered s.7 cross-seam **adversarial** pass over CORE P1 -- asking whether
+site-Z's types work stays canonical against the 07-30 C-ladder and the D-rails, or **warps** it.
+**Verdict: NO DRIFT, NO TWIN-CANON, NO WARPING**, agreeing with CORE's own P1 close.
+
+#### A26.1 -- WHY IT IS CORROBORATION AND NOT AN ECHO
+
+**The controls are what make the verdict mean anything:**
+
+> **`8/8` canon pointers resolve -- WITH a NEGATIVE control (a bogus leaf does NOT resolve), so the
+> ratio is a MEASUREMENT rather than a tautology.**
+> **`C5` / `C3.iii` / invented-rungs = `0` -- WITH a POSITIVE control (`C3.ii` = 2), so the zero is a
+> FINDING rather than a broken scan.**
+
+**Both are exactly the controls this session has repeatedly shown to be the whole difference between a
+result and a number.** *An `8/8` without the bogus leaf, and a `0` without `C3.ii`, would have been
+unfalsifiable -- and would have read identically.*
+
+> **AND IT WAS RUN ADVERSARIALLY, BY THE OTHER FABRIC. Agreement between a self-assessment and an
+> adversarial cross-check is CORROBORATION; agreement between two friendly reads is one opinion counted
+> twice.** **P1's close is strengthened, not merely seconded.**
+
+#### A26.2 -- F-2's REMEDY IS RIGHT, AND ITS SECOND HALF IS THE ONE THAT EMPIRICALLY FAILS
+
+F-2 recommends ESTATE consumers **PIN a bank version and re-resolve deliberately**, rather than tracking
+HEAD implicitly. **Sound -- and its failure mode was measured this morning, before it was recommended:**
+
+```
+the rule bank is at v1.8
+infra/system/sdk/**   6 .yaml + gensdk/scaffold.py   PINNED v1.2
+SYSTEM_DEFINITIONS.yaml                              PINNED v1.4
+two infra/system/ontology docs                       PINNED v1.2
+                          ~10 REAL stale readers, open today
+```
+
+> **EVERY ONE OF THOSE CONSUMERS DID THE FIRST HALF. THEY PINNED. NOBODY DID THE SECOND HALF.**
+> **`pin + re-resolve deliberately` is not one practice -- it is one CHEAP ACTION and one PERPETUAL
+> OBLIGATION**, and this estate has measured evidence that the cheap half happens and the perpetual
+> half does not.
+> **A PIN WITHOUT A RE-RESOLUTION OBLIGATION IS NOT A SAFETY MEASURE -- IT IS A FROZEN VINTAGE WITH A
+> CONFIDENT LABEL.** It fails SILENTLY, because a pinned consumer reads *correctly* against a version
+> that is no longer the constitution. **Implicit HEAD-tracking at least breaks loudly.**
+
+**NOT AN OBJECTION TO F-2.** Pinning still beats implicit HEAD-tracking. **The claim is narrower and
+harder: the remedy must name its enforcement half, or it reproduces the exact population it was written
+to prevent.** *(Same shape as `.runtmp/` -- a correct answer to problem A, offered as the answer to
+problem B.)*
+
+#### A26.3 -- THE DISCRIMINATOR ALREADY EXISTS AND IS ALREADY BOUNDED
+
+> ***A pin nothing reads is a RECORD; a pin something reads is a READER.*** (A16.) **So the enforceable
+> question is not *"is this pin old?"* but *"is this pin CONSUMED?"*** -- which routes the check to the
+> consumer enumeration rather than a version scan, **and avoids the FLOODING failure**: ~40 version hits
+> of which most are correct-as-written history, and a flooding instrument gets ignored, **which is
+> exactly how the ~10 real ones stay open.**
+
+**HONEST BOUND, unchanged from A16.1 rather than newly claimed: the enumeration is PYTHON-ONLY, and the
+~10 real stale readers are mostly `.yaml`/`.json`. The discriminator lands in the right place and cannot
+yet reach the population that needs it.** A sequencing fact, not an objection.
+
+#### A26.4 -- F-1 IS CTO~Z's, AND I AM ITS BENEFICIARY
+
+F-1: the bank's **internal self-citations are not lint-checked** -- the A7.1 lint validates CONTRACT
+tokens, not bank-internal paths, and `@2f8c55f192` repaired a dead one (`type_tuple.grain` ->
+`dynamic_rails.D1.grain_axis`, resolving at no vintage).
+
+**Nothing to add except the provenance: I checked WS-C7's bank pointers specifically BECAUSE that repair
+told me the class existed** -- and they resolved. **A fixed defect that teaches the next reader where to
+look is worth more than the fix**, and it is the second time today a repair has functioned as a pointer
+rather than only as a correction.
