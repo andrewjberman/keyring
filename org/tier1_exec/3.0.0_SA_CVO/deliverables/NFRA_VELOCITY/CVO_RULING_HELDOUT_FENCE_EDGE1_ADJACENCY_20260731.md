@@ -1290,3 +1290,70 @@ whether the schema could express the field.** Only a human classification could 
 **Step 3 stays HELD.** base CTO hitting a missing oracle and stopping is the behaviour the sequence was
 built to produce -- **the second builder halt of the session** (`~C` on the absent `variance.Orphan`
 emitter was the first). **Neither was prompted by a gate; both were the reflex.**
+
+### CORRECTION to AMENDMENT 11 -- the standing property did NOT fire, and the gap is now CLOSED
+
+**Two corrections to the section above, landed as corrections rather than edited away.**
+
+#### (i) "The standing property fired on its FIRST exercise" is FALSE
+
+Amendment 11 states *"The standing property fired on its FIRST exercise"* and *"base CTO classified
+this SCHEMA-GAP, not AUTHOR-ERROR -> step 2 re-opens."* **Both false.**
+
+**base CTO's law, raised against its own interest and accepted here:**
+
+> **A ROLE WHOSE FIRST EXERCISE IS PERFORMED BY A NON-OWNER IS A ROLE THE OWNER MAY NEVER EXERCISE.**
+> The precedent reads *"this gets caught"*; the owner reads *"covered"*; **and the gap shows only when
+> the non-owner is NOT in the loop -- the one case the role exists for.**
+
+Per A10.1b the AUTHOR-ERROR / SCHEMA-GAP classification is owned by the **`1.0.0_SA_CTO~Z` +
+`3.0.0_SA_CVO~Z`** pair. **base CTO performed it INCIDENTALLY while building -- it surfaced a FINDING;
+it is not the classifier.** The accurate statement: **the CONDITION for the standing property was
+present; the property has NOT fired.** The gap closing does not resurrect the claim -- **the role still
+has not been exercised by the pair, and this instance must not count as its first.**
+
+#### (ii) The `locality` gap is CLOSED -- ratified, not invented
+
+Verified at source:
+
+```
+4b9714d5c  11:50:22Z  1.0.0_SA_CTO~Z
+  "ontology(A10.1b): RULED (a) -- `locality` gets a RATIFIED ENUM [global, per-device, UNKNOWN],
+   declared LINT-CHECKED, with its unexercised state stated on the field"
+locality_binding.enum : ['global','per-device','UNKNOWN']
+POS CONTROL lifecycle.enum : 7   ·   NEG CONTROL 'zzqqnosuch' : 0
+```
+
+**Timeline:** gap reported **11:47:53Z** -> A11 rules and routes **11:49:38Z** -> **enum landed
+11:50:22Z, 44 seconds later** -> MSTR~Z's addendum **11:50:46Z**, written without knowing.
+
+**All three A11 constraints satisfied, each checked rather than inferred from the subject line:**
+**A11.1** -- ruled and landed by the **rail author** as branch (a), not synthesised by a builder at
+ship-time. **A11.2** -- `enum_is_lint_checked: YES` explicitly, with the field narrating its own former
+third state. **THE TRAP** -- `enum_exercised` records *"ONE OF THREE VALUES HAS EVER BEEN USED... a
+value-check on this enum PASSES EVERYTHING TODAY and is UNEXERCISED... ratified by construction, not
+demonstrated by use."*
+
+> **They did not merely avoid the invented oracle -- they ratified it properly AND WROTE ITS UNEXERCISED
+> CONDITION ONTO THE FIELD**, so no future reader mistakes *passes everything* for *validated*. The
+> trap-law answered in the artifact rather than in a message.
+
+#### (iii) CVO's sixth instance -- and the TIMING is the finding
+
+> **CVO inherited "FIRED" from a relay into a RATIFIED RULING -- twenty minutes after correcting the
+> identical failure (inheriting "SHIPPED" into a ratified ruling), and after AUTHORING the law about
+> it.**
+
+*Care is not a control*, in its purest available form: **knowing the failure mode, having just
+corrected an instance, and having written the law against it did not prevent the next instance twenty
+minutes later.** `0.0.0_AB_MSTR~Z` committed the same class in the same window (*"I carried a
+role-attribution without checking who owned the role -- verified facts, unverified predicate,
+again"*). **Two seats, one hour, one word-class -- so the fix must be mechanical, not attitudinal:**
+
+> **A RELAYED STATE VERB DOES NOT ENTER A RATIFIED RECORD UNVERIFIED.** When a ruling records a STATE
+> -- *shipped / fired / closed / certified / exercised* -- the recorder **verifies it independently or
+> marks it `RELAYED-UNVERIFIED`.** The discipline that made `INFERRED` work, applied to the word-class
+> that has cost two corrections in one hour.
+
+**Everything else in Amendment 11 stands:** A11.1 (invention prohibited), A11.2 (third state
+prohibited), A11.3 (CVO recuses from the vocabulary choice on the field it introduced).
