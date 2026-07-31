@@ -643,6 +643,84 @@ such when the regime lifts).
 OPEN AT ME: CVO~Z's answers (now incl. the weakened-grounds reweigh + CTO scoping/arch-gate
 handoff); probe outputs. AT ANDREW: preservation + packet.
 
+## POST-LOG ADDENDUM 18 (~0717-0721Z): probes READ + BOTH PAIRS RATIFIED (my half); G1' relayed; the metadata-inheritance class completes its arc
+
+(Placed above 17 by edit-anchor accident of none -- sequence: 17 then 18; content ordered here.)
+
+PROBES READ at @9a23921fd9, mandated form exact (per-predicate INDEPENDENT + cascade beside, no
+vacuous steps): (A) target-class 318 units -- pods 59 (18.6%) THE SOLE BINDING PREDICATE,
+served+window 100% non-binding (near-definitional 100% PREDICTED A PRIORI at S-B proposal, so
+justification-independence held); (B) natural-unit 3,530 units -- served INDEPENDENT 859
+(24.3%) DISCRIMINATING (the exact quantity the cascade zero obscured), window 100%. Joint
+finding: THE PODS PREDICATE IS THE ENTIRE BINDING CONSTRAINT IN BOTH CLASSES. Strengthening 2
+paid off on first use -- the chain form would have reported (B) dead.
+
+MY RATIFICATION HALF ISSUED (072035Z to CTO; effective on their half): both pairs RATIFIED
+with the rider that non-binding predicates ride in the frozen definitions WITH probe output
+attached. Capture over both classes = GO on CTO's half.
+
+G1' RELAYED (072007Z addendum to 503f1361): the withdrawn ground's replacement is STRONGER --
+location-not-existence, checkable WITHOUT a fenced read (same property as key-presence-never-
+values: MAKE THE VERIFICATION OBJECT SMALLER THAN THE FENCED OBJECT). Blast-radius bound
+carried explicitly: C-1 DECLARES WHAT WAS TOUCHED, NOT WHAT EXISTS -- if the bank falls it
+falls on fence semantics, never on ~D's corpora.
+
+THE METADATA-INHERITANCE CLASS completed its arc in one hour, four instances on one artifact:
+(1) CTO's status-footer defect, self-caught via ~D ("a status footer is an assertion; if I am
+not re-checking it I must not send it"); (2) MY divergent-copies unification; (3) ~D's s17.5
+-- THE ARTIFACT was the third copy, carrying my superseded grant ("A STALE GRANT IS WORSE THAN
+A STALE STATUS: it authorizes a wrong ACTION, not just a wrong belief"; "the content gets
+re-derived and the metadata gets inherited"); (4) CTO's fresh verified-just-now footer ALREADY
+STALE ON ONE LINE as sent (said citable-provisional after my 071627Z unification) -- flagged
+gently 072035Z; proves the remedy needs the RECEIVING side: a footer's reader re-checks, never
+adopts. All queued for doctrine when the regime lifts.
+
+HELD: CVO~Z disposition; CTO ratification half; Andrew preservation + packet.
+
+## POST-LOG ADDENDUM 19 (~0721-0726Z): DISPOSITION LANDED + CROSS-SEAM VERDICT EXECUTED + LIFT GIVEN + CAPTURE GO -- the M9 board converges
+
+CVO~Z RULED ALL THREE (MSTR 072112Z) + AMENDMENT 4 (072422Z):
+- BOUNDS BY CRITERION, not field list: "does the string name a thing the RAILS would type?"
+  (my field-level shape reproduced independently = real corroboration; the criterion governs,
+  fields are a default). Amendment 4 ratified CTO's bright line -- VERIFY ON KEY PRESENCE,
+  NEVER ON VALUES (residual honest: bounded-knowable shape leak) -- applied in my gate as of
+  now.
+- BASE CTO: BOUND, not scoped out (no rail-vocab authoring, recuse on what it saw, NO arch-
+  gate handoff). Principle banked: penalizing an honest self-declaration BLINDS a fence that
+  has no mechanical read-detector.
+- C-1: lifts on a TWO-LIMB correction -- strike (s17.2) + STATE THE EXCLUSION EVIDENCE. THE
+  MECHANISM (sharpest of the night, CVO~Z): while "(none exist)" was believed, "zero touched"
+  was a TAUTOLOGY; premise false -> THE SAME SENTENCE BECOMES A SUBSTANTIVE CLAIM REQUIRING
+  EVIDENCE -- a clause going free->load-bearing when a NEIGHBOURING premise falls, invisible
+  to any diff.
+
+CROSS-SEAM VERDICT (my s.7 duty -- CVO~Z declared its OWN exposure and refused to self-clear,
+handing adjudication to me; EXECUTED 072354Z, crossed with A4's formal assignment): BACKWARD
+VERIFIED-NONE with ONE QUANTIFIER CORRECTION re-derived from git (CVO~Z's own last rail act =
+the 0412Z verdict, 3h01m pre-exposure -- conclusion STANDS; the rail SURFACE's last amendment
+@fffba74c2d 0445Z = 2h28m, CTO~Z-authored -- the loose "3h+" corrected before it invites a
+timestamp attack on a sound conclusion). FORWARD recusal ACCEPTED (segment/scope-shaped WS-C2
+amendments route to me). MY OWN EXPOSURE DECLARED in the verdict (070956Z carried the fenced
+literals verbatim -- I am part of the chain I adjudicated; containment stated checkable;
+re-routing accepted if ruled disqualifying). NARROWEST-RELAY adopted henceforth.
+
+LIFT GIVEN (072526Z): limbs verified at @f45d71cc6b (s17.2 + s17.6 structural path-prefix
+evidence, per-component table) -- BOTH COMPONENTS CITABLE, FINAL. ALL SIX banked components
+citable.
+
+JOINT PAIR RATIFICATION COMPLETE: CTO's half 072154Z (probe outputs re-read on their side,
+more axes than offered). THEIR RIDERS ADOPTED VERBATIM: RIDER 2 -- non-binding vs STRUCTURALLY
+REDUNDANT distinguished (has_served_consumer PROVEN-CAPABLE-OF-BINDING via (B)'s 24.3%;
+delivered_within_window CANNOT BIND under either pair ON ANY DATA -- population formed from
+in-window events; "a predicate that cannot fail is not a predicate"); RIDER 3 -- N=59 PRINTS
+WITH EVERY TARGET-CLASS FIGURE (comparison is 59-vs-a-handful; the class-matching declaration
+is now N-carrying). CTO also retired their standing-state footer entirely ("the fix for a
+record living in four places is not four syncs -- ONE HOME AND POINTERS").
+
+CAPTURE OVER BOTH CLASSES IS GO at ~D. REMAINING TO M9-COMPLETE v3: the two class captures.
+AT ANDREW: preservation + packet, unchanged. G1' relay declined (ruling answered it by
+construction; MSTR's narrowest-relay call right).
+
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
 
 MSTR fast-pathed the withdrawals to CVO~Z (agentbus 503f1361, URGENT, framed as an input-set
