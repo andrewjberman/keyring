@@ -1357,3 +1357,75 @@ again"*). **Two seats, one hour, one word-class -- so the fix must be mechanical
 
 **Everything else in Amendment 11 stands:** A11.1 (invention prohibited), A11.2 (third state
 prohibited), A11.3 (CVO recuses from the vocabulary choice on the field it introduced).
+
+### CLOSURE -- the s.7 cross-seam check, and why the recusal was right for a better reason than CVO gave
+
+**base CVO executed the designated independent check on `@4b9714d5c` and AFFIRMED branch (a)** on four
+grounds derived before reading anyone's rationale. **CVO verified the load-bearing evidence rather than
+accepting the affirmation** -- an affirmation taken on trust is the same error as a claim taken on trust.
+
+#### Evidence (i) CONFIRMED -- and it is stronger than "not transcribed"
+
+The adversarial question base CVO asked -- **the right one, on the axis that would have defeated the
+chain**: `per-device`/`global` originate in **CVO's own authored prose**, so was CTO~Z's ruling a
+TRANSCRIPTION, hollowing the recusal by letting the introducer's vocabulary in by another hand?
+
+```
+enum_means.UNKNOWN : "locality undetermined. LOUD, never silently `global` -- assuming `global` is
+                      what makes a device-local artifact readable as a fabric fact, which is the
+                      RV-0057 F-001 class."
+POS CONTROL 'locality_binding' : 2      NEG CONTROL 'n8qvr' : 0
+```
+
+**CVO's F-6 sense was TWO-VALUED -- `per-device` / `global`, with no way to say *we do not know*.**
+
+> **`UNKNOWN` does not merely add a value: IT FIXES A DEFECT IN THE VOCABULARY CVO INTRODUCED.** Under
+> a two-valued sense an undetermined artifact must be assigned one or the other, and **`global` is the
+> natural default -- precisely the RV-0057 F-001 failure the field exists to kill.** CVO's framing had
+> the default hazard baked in; **the third value encodes LOUD-not-silent into the type.**
+
+**Third correction F-6 has required today** -- the token re-sense, the denial clause, and the missing
+third value -- **all three found by other seats.** base CVO's test, ratified as standing:
+
+> **A TRANSCRIBER DOES NOT AMEND THE SOURCE'S ERRORS.**
+
+**The recusal was NOT hollowed. Verified, not assumed.**
+
+#### Ground (3) -- the one CVO could not have had, and it changes WHY the recusal was right
+
+> *"(b) was never a stable alternative -- the lifecycle rendering rules need MACHINE-DECIDABLE
+> locality, so under (b) some builder eventually synthesises the enum at build time under deadline.
+> **(b) DECAYS INTO THE A11.1 VIOLATION.** The choice was never enum-vs-free-form. It was **A RATIFIED
+> ORACLE TODAY vs AN INVENTED ONE LATER.**"*
+
+CVO recused treating (a) and (b) as genuinely open. **They were not -- and CVO could not have known
+it**, because it turns on the rendering rules' decidability requirement, which is rail-author knowledge.
+
+> **A BETTER JUSTIFICATION FOR RECUSAL THAN THE ONE CVO GAVE.** The recusal was framed as avoiding a
+> conflict of interest -- correct, but incidental. **Its real work was routing the choice to the seat
+> that HELD THE DECIDING FACT.** A seat disqualified by INTEREST is often also disqualified by
+> KNOWLEDGE, **and the second is why the routing produces a BETTER answer rather than merely a cleaner
+> one.**
+
+It also means **A11.1 was not a rule that was obeyed but the only reachable outcome** -- (b) was not the
+safer conservative choice, it was the same violation with a delay and worse provenance.
+
+#### The seam law
+
+> **A RECUSAL THAT NOBODY TESTS IS INDISTINGUISHABLE FROM A RECUSAL THAT WAS CIRCUMVENTED.**
+
+Same family as the session's other findings (*a control satisfied by accident is indistinguishable from
+a control working*), and **base CVO tested it on the exact axis that would have defeated it, on a chain
+it had every reason to affirm.** The 44-second turnaround was **checked rather than dismissed as a
+rubber stamp** -- speed was evidence of the routing working, and establishing that required the check.
+
+#### Named residual -- correct discipline, no action
+
+Some-but-not-all-devices granularity is **covered LOUD by `UNKNOWN`** until a real specimen demands a
+rail-author extension; falsifier path exists, nothing mechanised. **The M15/M2 named-residual discipline
+applied to a VOCABULARY rather than a control** -- first time this session it has been pointed there,
+and it transfers cleanly.
+
+**CHAIN CLOSED:** gap surfaced by a builder who halted rather than invent -> bounded by CVO -> chosen by
+the rail author -> independently affirmed and adversarially tested at the seam. **Four seats, no seat
+marking its own work.**
