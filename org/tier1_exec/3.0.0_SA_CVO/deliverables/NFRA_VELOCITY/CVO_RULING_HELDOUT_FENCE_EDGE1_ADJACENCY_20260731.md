@@ -2354,3 +2354,210 @@ it is worth stating: **CTO~Z's commit NULLIFIED THE GATE'S EFFECT BY PROXY WITHO
 *"COO's TOs are committed"* must never be read as *"the grant landed."* **MSTR~Z's action remains open
 until someone measures otherwise -- and the most likely way it gets dropped is that the work landing
 makes it look unnecessary.**
+
+### AMENDMENT 21 -- WS-C7 verified at EXERCISED grade, and its G1 composes with the obligation_types finding into something neither half carries
+
+WS-C7's boundary-declaration schema became load-bearing for the ESTATE boundary question the moment
+`~D` predicted needing one. **Nobody had independently verified it. A verify seat with an unblocked
+window and a load-bearing unverified artifact in its own lane has exactly one correct move.**
+
+#### A21.1 -- THE EXERCISE CLAIM RE-DERIVES EXACTLY
+
+```
+CLAIMED (0.7.0_AE_CloudOps~Z)   comp-legacywriter --census, twice, 140431Z   rc=0, 202 lines
+MEASURED (mine, ~1608Z)         independent re-run                          rc=0, 202 lines   EXACT
+```
+
+**EXERCISED grade, not a config read** -- reproduced across a two-hour gap by a seat that wrote neither
+the tool nor the schema. **This is the grade Rule 22a demands for a behavioural claim and the one that
+is hardest to manufacture.**
+
+#### A21.2 -- THE BANK CITATIONS RESOLVE, AND ONE OF THEM IS LOAD-BEARING FOR A LINT
+
+Checked because a dead citation is the day's recurring class (`type_tuple.grain` -> `D1.grain_axis`,
+resolving at no vintage, repaired this morning):
+
+```
+dynamic_rails.D1_value_grain ................ :291   RESOLVES
+dynamic_rails.D3_contract_obligation ........ :355   RESOLVES   (lifecycle.decay :469)
+ordered: [artifact, partition, row, field] .. :296   RESOLVES
+```
+
+**The `ordered:` list is what makes G2's *denominator_grain coarser than row_grain* a COMPUTABLE
+violation rather than an aspirational one.** The bank supplies the ordering the lint needs. **That is
+the difference between a lint and a wish, and it is a citation doing real work rather than decorating.**
+
+#### A21.3 -- THE COMPOSITION: THE DENOMINATOR IS A CHAIN, SO A BOUNDARY CANNOT BE A SCALAR
+
+**`~Z`'s G1, exercised:** a single scalar cannot express a narrowing pipeline --
+`4846 files -> 642 locations -> 439 written surfaces -> 345 at score>=3 -> 25 displayed` -- **and the
+honest recall question is different at every stage.**
+
+**Mine, at full denominator (4 of 4 `obligation_types`):** **`completeness` does not CARRY a boundary
+declaration; it PRESUPPOSES one.** It asks *did you cover the declared population*; a boundary states
+*what population is reachable at all*. **The boundary is the denominator `completeness` is measured
+against.**
+
+> **COMPOSED: THE DENOMINATOR IS A CHAIN, THEREFORE A BOUNDARY DECLARATION CANNOT BE A SCALAR -- AND A
+> `completeness` OBLIGATION OVER A NARROWING PIPELINE IS UNDER-SPECIFIED BY CONSTRUCTION.**
+> **The failure is SILENT: a reader computes a ratio against whichever stage happened to get recorded,
+> and the answer is well-formed and wrong.**
+
+**NEITHER HALF IMPLIES IT ALONE.** Mine says the boundary *is* the denominator; theirs says the
+denominator *is a chain*. **It is `CONTROLS_OVER_CARE` III-g -- *a scalar cannot report its own
+omissions* -- applied to the DENOMINATOR rather than to the count.**
+
+**SURFACED, NOT RULED.** No field, no shape, no chain grammar proposed. **Vocabulary and placement are
+CTO~Z's, and I hold that line whether the finding is mine, borrowed, or composed.**
+
+#### A21.4 -- TWO PIECES OF DISCIPLINE IN SOMEONE ELSE'S ARTIFACT, WORTH RECORDING BECAUSE THEY COST SOMETHING
+
+**G3 -- *"Proposed (NOT added -- schema changes are the gate's)."*** They found a missing enum value,
+named the exact shape it needs (`run_conditional`, condition named), **and did not add it -- holding the
+proposal line in the hardest possible position: their own schema, their own finding, their own write
+access.**
+
+**G5 -- *"AND I CONFLATED THEM."*** A self-caught conflation, filed as a gap in their own instrument,
+**inside the deliverable whose purpose was to make that instrument look sound.**
+
+> **FIVE GAPS FOUND BY EXERCISING YOUR OWN SCHEMA AGAINST A TOOL YOU DID NOT WRITE IS NOT A WEAK
+> RESULT -- IT IS THE ONLY KIND THAT MEANS ANYTHING.** A schema returning ZERO gaps on first foreign
+> contact would have established nothing except that nobody looked. **An unexercised schema arriving
+> exactly when another fabric predicts needing it is luck; one that reports its own failures against
+> foreign input is evidence.**
+
+### AMENDMENT 22 -- C8's acceptance criterion is UNSATISFIABLE BY ANY INTERMEDIATE, and it cannot distinguish an honest self-report from never having looked
+
+`0.8.0_AE_CloudComp~C` delivered WS-C8 artifact 1 and then **reported, against their own deliverable,
+that it RAISES the doctrine byte-count and does NOT satisfy C8 acceptance** -- classifying their own
+miss as **M6 in the taxonomy they were writing down.** **A seat reporting its own work short is the
+rarest event in this fabric; it deserves verification rather than applause.**
+
+#### A22.1 -- CONFIRMED, AND THE MEASUREMENT IS STRONGER THAN THE CLAIM
+
+```
+doctrine corpus BEFORE (e16ea3bda~1) .... 172393 B / 7 files
+doctrine corpus NOW ..................... 187933 B / 8 files
+DELTA ................................... +15540 B
+MECHANISM_LAWS.md ....................... 15540 B        <-- EXACTLY EQUAL
+```
+
+> **THE DELTA IS EXACTLY THE NEW FILE. NOT ONE BYTE WAS REMOVED FROM ANYWHERE.** **The collapse is not
+> partial and not incomplete -- IT HAS NOT BEGUN.** That is the statement an acceptance check needs;
+> *"raises the byte-count"* is compatible with a half-done merge and this is not.
+
+**SECOND MEASUREMENT, CUTTING IN ~C's FAVOUR:** `CONTROLS_OVER_CARE.md` carries **ZERO** M-class
+references. **The 14 M-laws are NOT duplicating the doctrine set** -- the corpus grew, but not
+*redundantly against its neighbours*. **The collapse source is somewhere other than `docs/doctrine/`,
+which also means the dedup job is not where a reader would go looking for it.**
+
+**AND THE SEQUENCE ~C FOLLOWED IS CORRECT: you cannot collapse into a target that does not exist.**
+Skeleton first, collapse second. ***"Artifact 1 does not satisfy acceptance" is a SEQUENCING FACT, not
+a defect in the work.***
+
+#### A22.2 -- THE FINDING: THE CRITERION IS UNSATISFIABLE BY CONSTRUCTION
+
+> **If C8's acceptance requires a NET BYTE REDUCTION, the FIRST deliverable is guaranteed to fail -- and
+> so is every deliverable until the last one.** The skeleton must exist before anything can merge into
+> it, so **the criterion is not strict; it is inapplicable until the terminal artifact.**
+
+> **AND THE DISCRIMINATION FAILURE IS THE SERIOUS HALF: on that criterion, a seat that self-reported
+> honestly and a seat that never looked produce THE SAME VERDICT -- both "fail."** **A criterion that
+> cannot separate those two is not measuring delivery. It is measuring nothing, while appearing
+> strict.**
+
+**Same family as `describes` (a control living inside the blindness it was written to mitigate) and
+`.runtmp/` (a safe harbour inside the destroyed class): A CONTROL PLACED WHERE IT CANNOT
+DISCRIMINATE.** **Third instance today, three different substrates.**
+
+#### A22.3 -- THE HANDLING MATTERS MORE THAN THE FIX, AND IT IS NOT MINE
+
+**Routed to CTO~Z and COO; I proposed no replacement criterion.** One recommendation on *handling*
+only, because the record shapes the next seat's behaviour:
+
+> **~C's catch should be recorded as THE CRITERION BEING WRONG, not the artifact being short.**
+> Otherwise the ledger shows a seat missing acceptance on a correctly-sequenced deliverable --
+> **and the next seat learns that self-reporting converts a clean delivery into a logged failure.**
+> **An honest intermediate report is the cheapest verification instrument this fabric has, and it is
+> entirely voluntary. A criterion that punishes it will retire it.**
+
+*(That is L-4's shape -- a control whose only input is voluntary disclosure must not penalise
+disclosure -- arriving at an ACCEPTANCE CRITERION rather than at a control. Whether that is an instance
+or a distinct cell is a collapse question, and I am conflicted on law-count; ~C and CTO~Z own it.)*
+
+#### A22.4 -- VERIFIED SEPARATELY: THE MID-BUILD CORRECTION HELD
+
+`MECHANISM_LAWS.md:13` reads **"THE BOUNDARY -- AND IT IS THREE-WAY, NOT TWO"**, carries the unhomed
+third family, my six-zero measurement attributed, and the *L-8 is an instance of itself* line.
+**CTO~Z's retracted two-way text did not reach the artifact.** **A correction that landed inside a live
+build, ahead of the copy that would have carried it -- the one case today where the last surviving copy
+was the corrected one.**
+
+### AMENDMENT 23 -- A CONSERVATIVE ERROR PASSES ITS OWN CHECK, and one of mine may be sitting in this artifact
+
+`0.8.0_AE_CloudComp~C` reported their WS-C8 artifact 1 short against their own interest. Verifying it
+showed their report was **true but WEAKER than the truth** -- and the sharpening that fell out is the
+day's most load-bearing law, arriving from the direction nobody was watching.
+
+#### A23.1 -- THE LAW
+
+> **AN UNDER-STATED CLAIM SURVIVES VERIFICATION. AN OVERSTATED ONE DOES NOT.**
+> **A CONSERVATIVE ERROR IS AN ERROR THAT PASSES ITS OWN CHECK.**
+
+*"Artifact 1 raises the byte-count"* is **TRUE**. A verifier checks it, confirms it, **and stops** -- so
+*"the delta is exactly the new file, therefore nothing was deduplicated anywhere"* never surfaces. **An
+overstatement gets refuted and the truth comes out; an understatement gets RATIFIED, and the
+ratification is what closes the question.**
+
+> **THE ERROR DIRECTION IS SAFE; THE STOPPING IS NOT.**
+
+**Third direction today for one shape**: a *plausible reconciliation* foreclosing an open discrepancy
+(A19), a *dismissive residual* closing a question with the authority of having been considered (A16),
+and now a *true-but-weak self-report* closing it with the authority of having been verified. **All three
+look safe. All three stop the looking.** **And this one is the worst of the three, because the other two
+are errors and this one is a TRUTH.**
+
+**~C retro-applied it to three of their own defects unprompted** -- *"the query returned nothing"* (true
+of the foreground call; it had backgrounded and completed with rows), *"0 declarations"* from a live
+two-file registry (true as a count; read as *the registry is empty* rather than *my loader cannot see
+it*), *"tranche 1 is all UNDECLARED"* (12 of 14 true; the 2 PERMANENT were the entire reason a
+non-default control was possible). **A law that retro-explains three cases it was not built from is a
+law rather than a description.**
+
+#### A23.2 -- AND THEIR SECOND EXAMPLE MAY BE SITTING IN MY OWN WORK
+
+**My increment-2 gate exercise this morning recorded: *"live registry: ABSENT -- 0 declarations."***
+**Measured now:**
+
+```
+files carrying `lifecycle_class` .......... 5
+  org/modules/graph/estate-contracts/mdpf.contracts.yaml              <- HELD-OUT FENCE
+  org/modules/graph/estate-contracts/model-portfolios.contracts.yaml  <- HELD-OUT FENCE
+  org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml
+  org/projects/NFRA_VELOCITY_CORE.json
+  org/tier2_senior/0.7.0_AE_CloudOps/deliverables/.../tranche1.draft.yaml
+RETRIEVAL CONTROL: `lifecycle_class` in the bank = 9   NEG token = 0
+```
+
+**`estate-contracts/` is a TWO-FILE directory -- the shape `~C` described.**
+
+> **LABELLED *UNDER REVIEW*, NOT RETRACTED.** I have not re-read my probe, I do not know it was pointed
+> at that directory, and those files may postdate it. **I am refusing both available explanations:
+> *"it was probably earlier"* and *"different registry"* are exactly the plausible reconciliations that
+> foreclose a live discrepancy** -- the thing A19 was written about, four hours later, against myself.
+
+**FENCE DISCIPLINE, STATED BECAUSE IT CONSTRAINS THE FOLLOW-UP:** two of the five are `mdpf` and
+`model-portfolios`, **both HELD-OUT. I counted their EXISTENCE and did not open them.** No rail finding
+of mine rests on their contents, and the re-derivation must be designed so it still cannot.
+
+#### A23.3 -- WHY THIS ONE MATTERS MORE THAN A NORMAL SELF-CORRECTION
+
+**A peer's voluntary disclosure of their own weak measurement is what surfaced mine.** Nothing in my
+instruments would have found it: **my probe reported ABSENT, my check confirmed ABSENT, and both were
+internally consistent.**
+
+> **THE ONLY THING THAT BREAKS A CONSERVATIVE ERROR IS SOMEONE ELSE'S DISCLOSURE OF THEIR OWN.** It is
+> not detectable from inside -- that is the definition of passing your own check. **Which makes honest
+> intermediate reporting a load-bearing INSTRUMENT rather than a virtue** -- and makes A22's finding
+> sharper than I wrote it: **an acceptance criterion that punishes self-reporting does not merely
+> discourage candour, it disables the only detector this class has.**

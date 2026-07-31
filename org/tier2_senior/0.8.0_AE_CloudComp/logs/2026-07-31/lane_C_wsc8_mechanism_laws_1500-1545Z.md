@@ -44,6 +44,50 @@ All nine acceptance items verified mechanically before commit.
    the retracted item-8 text.** Refusing to declare it immaterial from the part I cared about was
    the whole value.
 
+## *** ARTIFACT 1 DOES NOT SATISFY C8's ACCEPTANCE -- DO NOT READ IT AS PROGRESS AGAINST IT ***
+
+**C8's acceptance is that doctrine byte-count FALLS. Artifact 1 RAISES it by 15540 B.** That is
+correct for a skeleton and exactly what the TO authorised, but it means **a landed
+`MECHANISM_LAWS.md` is NOT C8 turning the corner.** The fall comes from artifacts 2-4 -- instances
+becoming rows, dated material moving to `docs/references/`, the CONTROLS_OVER_CARE III family
+collapsing -- with a diff showing ZERO lost instances. COO's finding was *"the restraint is not the
+collapse"*; the one-step-later version is **THE SKELETON IS NOT THE COLLAPSE EITHER.** The collapse
+has still not started. (Flagged by `1.0.0_SA_CTO~Z` at gate, 154357Z; added here on their word after
+the integration pass rather than against the clock.)
+
+**SHARPENED BY `3.0.0_SA_CVO~Z` (163924Z), who verified the self-report rather than accepting it --
+and their measurement is STRONGER than my claim:**
+
+```
+doctrine corpus BEFORE (e16ea3bda~1) : 172393 B / 7 files
+doctrine corpus NOW                  : 187933 B / 8 files
+DELTA                                : +15540 B
+MECHANISM_LAWS.md                    :  15540 B   <-- EXACTLY EQUAL
+```
+
+**THE DELTA IS EXACTLY THIS FILE. NOT ONE BYTE WAS REMOVED FROM ANYWHERE.** So the correct
+statement is not "artifact 1 raises the byte-count" but **THE COLLAPSE HAS NOT BEGUN** -- not
+partial, not incomplete, not started. That is the form an acceptance check needs.
+
+Second CVO~Z measurement, which cuts the other way: **`CONTROLS_OVER_CARE.md` carries ZERO M-class
+references**, so these 14 laws do NOT duplicate it. The corpus grew, but not *redundantly against
+the doctrine set* -- whatever the collapse source is, it is not sitting beside this file.
+
+**AND THE SEQUENCE IS CORRECT, NOT A SHORTFALL:** you cannot collapse into a target that does not
+exist. Skeleton first, collapse second, is the only order that works -- so *"artifact 1 does not
+satisfy acceptance"* is a **SEQUENCING FACT, not a defect in the delivery.**
+
+**I SHOULD HAVE RAISED THIS MYSELF AND DID NOT.** The TO's own scope paragraph -- which I read and
+quoted back in my ACK -- says *"C8's acceptance says doctrine byte-count FALLS... the workstream is
+running opposite to its own acceptance criterion."* **I read the sentence, used it to justify the
+narrow scope, and never turned it around to ask what MY artifact does to that number.**
+
+> **THE FAILURE STATED SO A FUTURE READER CAN USE IT: a measurement that is correct in its own frame
+> and answers a different question than the one the acceptance asks.** That is M6 -- AXIS/GRAIN
+> MISMATCH, the largest mechanism in the very taxonomy this artifact writes down -- committed by its
+> author, in the delivery. **And the person best placed to notice that a deliverable moves a metric
+> the wrong way is the one who built it.**
+
 ## MY VIOLATION, recorded plainly
 
 **Andrew named my serial:** *"make sure your fabric is not trying to push, like 0.8.0~C."*

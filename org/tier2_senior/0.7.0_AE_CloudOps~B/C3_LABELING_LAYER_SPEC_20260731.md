@@ -268,7 +268,26 @@ The rule bank rejects a self-sourced declaration outright:
 
 > **THIS IS WHY THE WALK IS LEGITIMATE AND SCAVENGING IS NOT, AND THE DIFFERENCE IS NOT EFFORT -- IT IS DIRECTION.** Scavenging reads UP from the artifact; the walk asserts DOWN from governance. The rule bank does not merely prefer the second; it rejects the first.
 
-**Proposed `intent_source` value form:** a resolvable pointer to the walk record (the dated walk entry + its participants), never a free-text "agreed". **CVO Q3.**
+**`intent_source` value form (R3):** a resolvable pointer to the walk record -- `walk:<record-id>#<item-id>` -- never a free-text "agreed".
+
+> ### ⚠ THE REJECTION IN THE PARAGRAPH ABOVE IS PROSE. NO INSTRUMENT PERFORMS IT.
+> **Measured by CTO 181021Z, who owns the lint:**
+> ```
+> intent_source: "process:test-subject"              (SELF-NAMING)  ->  PASS
+> intent_source: "zzz-not-a-governance-level-at-all" (garbage)      ->  PASS
+> ```
+> The rule bank says a self-naming `intent_source` *"IS the denominator-is-its-own-configuration
+> defect and is **REJECTED AT DECLARATION**."* **It is not. "Rejected at declaration" is currently a
+> statement of intent, not a behaviour -- and the precise defect this section's argument rests on
+> lands clean today.**
+>
+> **THIS DOES NOT WEAKEN THE ARGUMENT, AND THE DISTINCTION MATTERS: s.4.1 is about what makes the
+> walk LEGITIMATE, which stands on the rule bank's text regardless of enforcement.** What it changes
+> is what a READER may assume: **a walk assertion is not validated by a gate, because the gate is
+> prose.** Recording it here so this spec does not lean on a control that is not there -- which would
+> be s.6's own hazard (a claim reading as verified) committed by the section arguing for rigour.
+>
+> CTO's surface, CTO's gap, CTO routing it. **Not this spec's to fix, and NOT a reason to wait.**
 
 ---
 
@@ -377,18 +396,24 @@ Andrew: *"this needs a dedicated series of TOs wrapped into the project."* Propo
 
 | TO | Scope | Depends on |
 |---|---|---|
-| **C3L.1** | Walk-record schema; `intent_source` pointer form `walk:<record-id>#<item-id>`; typed basis + typed outcome; the s.6 requirement-4 render form | this spec ratified **+ ⚠ A RAIL-AUTHOR ACT (CORE / CTO~Z)** -- see below |
+| **C3L.1** | Walk-record schema; `intent_source` pointer form `walk:<record-id>#<item-id>`; typed basis + typed outcome; the s.6 requirement-4 render form | this spec ratified. **NO cross-fabric dependency** -- the rail-author blocker I claimed here was PHANTOM, see below |
 | **C3L.2** | Population + ordering: C3.ii enumeration as the agenda; **C3.i as an ordering lens only** (R1); walk batch sizing | C3L.1 |
 | **C3L.3** | Kimi-loop integration: how the cycle surfaces items and receives assertions | C3L.1, high-level signal |
 | **C3L.4** | `revalidate_by` maturation -> **persist-marked-stale** + re-entry; **per-consumer stale policy** (R4) | C3L.1 |
 | **C3L.5** | Consumer derivation contracts for E2 / E3 / E5 (s.8) + the prohibition on independent scavenging | C3L.1, C3L.4 |
 | **C3L.6** | The doubt path: **SOURCE-FIRST (s.2.2.2) as step 1**, then CVO investigation, then Andrew+CTO confirm; what each returns and how it is recorded | C3L.1 |
 
-> **⚠ C3L.1 CARRIES A CROSS-FABRIC DEPENDENCY, NAMED BY CVO AND EASY TO MISS: the A7.1 declare-time
-> lint REJECTS any token that does not resolve against the ratified bank.** So the `walk:` pointer
-> form **needs a RAIL-AUTHOR ACT (CORE / CTO~Z) before a single walk assertion can land.** Build the
-> walk without it and every assertion is refused at declaration. It is a real dependency on another
-> fabric and it belongs in the depends-on, not in a footnote.
+> **⛔ RETRACTED -- THE CROSS-FABRIC BLOCKER WAS PHANTOM. CTO TESTED IT (181021Z); THEY OWN THE LINT.**
+> I claimed the A7.1 declare-time lint would reject `walk:<record-id>#<item-id>` until a rail-author
+> act landed, and promoted it into this table as C3L.1's hardest dependency. **Measured:**
+> ```
+> intent_source: "walk:C3W-2026-07-31#item-014"   ->  records=1  findings=0  PASS
+> POSITIVE CONTROL (illegal lifecycle_class)      ->  REJECT, token named
+> ```
+> **The lint does not value-check `intent_source` at all -- it checks the field is PRESENT.**
+> **C3L.1 HAS NO CROSS-FABRIC DEPENDENCY.** Left standing, it would have gated the first TO on a CORE
+> act nobody needed to perform. *I inherited the claim from a review answer and promoted it without
+> testing it -- and the promotion made it look MORE verified, not less.*
 
 ---
 
@@ -416,7 +441,7 @@ Andrew: *"this needs a dedicated series of TOs wrapped into the project."* Propo
 | **WS-E1** | the estate-contract **registry AS ITS STORE** -- the walk is the WRITER, never a second home for intent | ✅ ruled (CTO 161617Z) |
 | **WS-E8.1** | the C3 population, **MEASURED** `@3e241b2f93`: 29 verticals / 138 chains; 13 systems + 1 completeness item | ✅ landed |
 | **Kimi Layer 1** (mine) | the high-level signal that surfaces which C3 items warrant a look -- **the Layer-1 -> Layer-2 seam is mine and nobody else can describe it** (s.7) | ✅ built, seam spec'd |
-| **CORE / CTO~Z** | a **RAIL-AUTHOR ACT** for the `walk:<record-id>#<item-id>` token -- **the A7.1 declare-time lint rejects unresolvable tokens, so without it EVERY walk assertion is refused at declaration** | ⚠ **NOT YET EXISTS -- cross-fabric, blocking C3L.1** |
+| ~~CORE / CTO~Z~~ | ~~a RAIL-AUTHOR ACT for the `walk:` token~~ | ⛔ **RETRACTED -- PHANTOM. CTO tested the lint 181021Z: the `walk:` form PASSES; `intent_source` is not value-checked. NO cross-fabric dependency.** |
 
 **EXPOSES** -- maintained `lifecycle_class`, ONE INTENT SOURCE, THREE RULED CONSUMERS:
 
