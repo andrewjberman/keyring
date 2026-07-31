@@ -2803,3 +2803,77 @@ tokens, not bank-internal paths, and `@2f8c55f192` repaired a dead one (`type_tu
 told me the class existed** -- and they resolved. **A fixed defect that teaches the next reader where to
 look is worth more than the fix**, and it is the second time today a repair has functioned as a pointer
 rather than only as a correction.
+
+### AMENDMENT 27 -- SEAMS STATEMENT for the Andrew-direct integration review: three seams visible only from the verify seat
+
+**Andrew has paused the program after WS-C8 to personally review C1/C2/C3/C7/C8 + the ESTATE work for
+INTEGRATION POINTS.** *"Whether these are five correct things that do not fit together."* **Eight seams
+are already on the joint list (MSTR~Z's five, plus my S-A/S-B/S-C). This adds what only the verify seat
+can see, and re-derives none of them.**
+
+**MY POSITION, STATED BECAUSE IT DETERMINES WHAT I CAN CONTRIBUTE:** I own no workstream deliverable. I
+verified INSIDE C1 (both increments), C2 (step 0), C7 (schema, applied artifact, suite enumeration) and
+C8 (artifact 1 and its acceptance). **So my edges are not one workstream's -- they are the couplings that
+are invisible from inside any single one.**
+
+#### S-D -- **C8's SCOPE IS DECIDED BY A C2 RESULT, AND NOTHING RECORDS THE DEPENDENCY**
+
+**C8's job is to collapse the taxonomy. What it must collapse was settled by a WS-C2 finding:** CTO~Z's
+step 0 established that **the M-taxonomy types WHERE AN ASSERTION SITS and does NOT type INSTRUMENT
+FALLIBILITY** -- by construction.
+
+That result is load-bearing twice over: **it is why the ~10 staged L-laws are not duplicates** (A17), and
+**it is what refuted C8's own two-way coverage claim** (A18).
+
+> **C8's scope is therefore a FUNCTION of a C2 output. If step 0 were revised, C8's collapse target
+> changes -- and no artifact in either workstream records that C8 CONSUMES it.** **A dependency nobody
+> wrote down survives only as long as the two people who remember it.**
+
+#### S-E -- **THE VERIFICATION LAYER RESTS ON A VOLUNTARY BEHAVIOUR, AND ONE ACCEPTANCE CRITERION PENALISES IT**
+
+Two halves measured today, in different workstreams, that compose into the sharpest cross-cutting seam
+I found:
+
+> **(i) A CONSERVATIVE ERROR IS UNDETECTABLE FROM INSIDE.** *"Artifact 1 raises the byte-count"* is TRUE
+> -- a verifier confirms it and STOPS, so the stronger truth never surfaces. **My own case: my probe
+> reported ABSENT, my check confirmed ABSENT, both internally consistent, and an auditor would have
+> confirmed it too.** **The only thing that broke it was another seat disclosing their own.**
+> **(ii) C8's ACCEPTANCE CRITERION CANNOT DISTINGUISH AN HONEST SELF-REPORT FROM NEVER HAVING LOOKED**
+> (A22). If acceptance requires net byte reduction, `~C`'s correctly-sequenced skeleton and a seat that
+> did nothing produce **the same verdict.**
+
+**COMPOSED: THE ESTATE'S DETECTION CAPABILITY FOR AN ENTIRE ERROR CLASS RESTS ON VOLUNTARY DISCLOSURE --
+AND AT LEAST ONE ACCEPTANCE CRITERION MAKES DISCLOSURE COSTLY.** **That is not a workstream defect. It
+is a seam between the workstreams and the VERIFICATION METHOD ITSELF, and it is unowned precisely
+because it is nobody's deliverable.** *(This is L-4 -- a control whose only input is voluntary disclosure
+must not penalise disclosure -- arriving at the program level rather than at a control.)*
+
+#### S-F -- **FOUR TERM COLLISIONS IN ONE DAY, ALL CAUGHT AFTER ADOPTION. NOBODY OWNS "IS THIS NAME TAKEN?"**
+
+```
+scope        C1          live in type_tuple, retired in contract_record -- a TWO-RAIL state
+layer        C1 round 2  already overloaded 3x; renamed
+pre-flight   ~D          already means a pre-build review in 3 live files
+Class 1/2    C7          1 use in the PRD, defined nowhere, collides estate-wide
+```
+
+**Every one was found AFTER a workstream had adopted the token, by the seat that tripped over it, and
+resolved ad hoc.** **FOUR IN ONE DAY ACROSS FOUR WORKSTREAMS IS NOT BAD LUCK -- IT IS A MISSING STEP.**
+
+> **There is a ratified resolution rule (*the newcomer renames*) and NO RESERVATION MECHANISM. Nothing
+> answers *"is this token already taken?"* BEFORE adoption, so the rule only ever fires as cleanup.**
+> **AND THE RULE DOES NOT COVER THE CASE THAT ALREADY HAPPENED:** `scope` is live in `type_tuple` and
+> retired in `contract_record`, **both ratified, so there is NO NEWCOMER** -- renaming either destroys a
+> correct meaning. A16's *a token cannot carry its rail* makes that a **KEYING** defect, not a
+> collision. **The resolution rule is sound and its residual is the shape the estate actually produced.**
+
+#### S-G -- ONE CORRECTION TO THE JOINT LIST'S PROVENANCE, NOT ITS CONTENT
+
+**MSTR~Z's resume asks me to *"commit the F-2 stale-reader measurement -- it still exists only in a
+message."* IT IS COMMITTED**, and was before the request: **A26 `@89cbe0e2a`, at origin, verified**
+(`AMENDMENT 26` = 1, `FROZEN VINTAGE` = 1, `stale readers` = 3, fresh negative token = 0, 2805 lines).
+
+**Recorded because it is the day's own recurring shape one level up:** *a correct instruction issued
+against a state that had already changed.* **No harm here -- but the same belief applied to a DELETION
+rather than a re-commit would have destroyed work, and the request read exactly as authoritative either
+way.**
