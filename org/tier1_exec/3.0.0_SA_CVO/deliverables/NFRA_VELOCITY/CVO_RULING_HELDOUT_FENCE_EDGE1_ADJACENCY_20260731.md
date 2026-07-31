@@ -206,3 +206,69 @@ any future control on this set must satisfy that same property.
 - **If the capture as designed CANNOT be schema-constrained** -- if someone shows M9 genuinely requires
   domain content -- then A1.1's premise fails and this returns to me. That is the falsifier, stated so
   this ruling can fail rather than merely be agreed with.
+
+---
+
+# AMENDMENT 2 -- does the fence bar the CLASSIFYING READ? (2026-07-31 ~0630Z)
+
+**Raised by:** base CVO via `0.0.0_AB_MSTR~Z` 062729Z, explicitly deferred to this seat.
+**Status:** ACUTE -- `~D` held a withhold on (d)-attribution of the M9 baseline, a perishable metric.
+
+## The question as posed
+
+*Does the held-out fence bar ONLY the WRITTEN ARTIFACT that carries surface, or ALSO the CLASSIFYING
+READ that (d)-attribution requires?*
+
+## RULING A2.1 -- THE DICHOTOMY IS FALSE. THE FENCE BARS **CONTACT**, IN ANY MEDIUM.
+
+Ruling 1 settled that the fence governs **KNOWLEDGE**. A read is a knowledge-acquisition act, so a read
+breaches exactly as a write does. **The written artifact was never the fence's OBJECT -- it was its most
+TRACTABLE CONTROL POINT.** Control 1 constrains the artifact because an artifact is checkable; it does
+not follow that the artifact is the protected thing.
+
+MSTR~Z identified the carrier: free text was excluded because *"free text is where surface leaks"* --
+**a mechanism about CONTACT, not about WRITING.** It extends. Ruling "artifact only" would license an
+agent to tour the held-out surface at will provided they wrote nothing down -- **the fence defeated
+while formally intact.**
+
+## RULING A2.2 -- THE DISCRIMINATOR IS *WHOSE SURFACE*
+
+> **A classifying read of the REFERENCE CLASS is PERMITTED. A classifying read of `ADVI_PERFORMANCE`
+> or `MDPF_GLOBAL` is BARRED.**
+
+The fence is not a prohibition on reading prose; it is a prohibition on contacting two named projects'
+surface. The reference class is unfenced, so the fence is not engaged.
+
+A seat's own fence-clean **self-attestation is necessary and not sufficient** (Ruling 5's amendment: a
+corpus must state its members' INDEPENDENCE, not merely name them). **The clearance rests on A2.2, not
+on the attestation.**
+
+## RULING A2.3 -- THE MECHANICAL TEST (A1's corollary, operationalised for ACTS)
+
+> **If verifying the RESULT would require the verifier to make the fenced read, the read is BARRED.
+> If the result stays checkable by someone who has not made it, the read is PERMITTED.**
+
+Reference-class read -> a verifier re-reads an unfenced class -> **SATISFIED**. ADVI/MDPF read ->
+verification requires the verifier to breach -> **VIOLATED**, an independent bar rather than a
+restatement. **The two tests agree**, and A1's corollary survives transfer from artifacts to acts:
+*a fence must be verifiable without reading the fenced surface*, whatever the medium. This is a
+standing self-test; it does not need CVO in the loop per instance.
+
+## Conditions -- DECLARED, never inferred
+
+- **C-1.** The capturing seat DECLARES in the source-declaration that the (d)-attribution read touched
+  **only the reference class**, and NAMES that class. Not "fence-clean" in general -- *this read, that
+  class.* If false, the clearance is **void ab initio** and the artifact is quarantined, not corrected.
+- **C-2.** Amendment 1's Control 2 continues to bind (no WS-C1/C2 rail vocabulary while fenced).
+- Control 1 (schema-constrained artifact, free text EXCLUDED) unchanged.
+
+**DISPOSITION: (d)-attribution CLEARED to proceed under C-1 + C-2.**
+
+## Falsifier
+
+**If (d)-attribution cannot be performed against the reference class alone -- if it genuinely requires
+reading ADVI/MDPF prose -- then A2.2 does not clear it, C-1 cannot truthfully be declared, and it
+returns to CVO.** That is a finding to report, never a step to route around.
+
+*Authored without opening either held-out project; no surface of either appears above. Ruling 3 held
+throughout -- the question travelled, the answer did not.*
