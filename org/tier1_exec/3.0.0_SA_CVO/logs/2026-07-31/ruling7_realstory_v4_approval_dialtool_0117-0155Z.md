@@ -100,4 +100,21 @@ clearance; go-live schedule flip; adjudication of PENDING 07-30 (likely mooted b
 3. [Andrew] Dialed-tool-flow ratification; the standing open-calls list above.
 4. [0.0.0_AB_MSTR] Backstop unchanged; first end-to-end fire remains their acceptance exercise.
 
+## POST-LOG ADDENDUM (~0210-0216Z): NFRA_VELOCITY exploration + a new open-call
+
+Andrew-direct arrivals after the log window: the NFRA_VELOCITY re-kickoff exploration
+(exclusive-work regime from GO; review @87c2ae2e83 + addenda @8db9c3ac47/@bb58e922e8) and the
+site-Z roster correction (MSTR~Z + 0.7.0_AE_CloudOps~Z authorized; CORE mstr-spawns itself at
+GO). Pre-GO checklist shrank to: CTO trio landing, main-side ESTATE staffing ruling, B-1..B-4
+carve-outs. All sequencing at Andrew.
+
+NEW OPEN-CALL (parked-until-named, carry the CORRECTED mechanism -- CTO 021538Z self-correction,
+accepted): ONE SWEEP of governance records written 07-30/31 against a LIVE roster read, instead
+of serial ad-hoc corrections (4 stale-roster instances in one day). Mechanism as corrected:
+ROSTER RECORDS ARE WRITE-ONCE SNAPSHOTS OF A CONTINUOUSLY-MUTATING SET and go stale in BOTH
+directions -- deaths recorded as alive AND births not recorded at all (instance 4 was a spawn no
+record carried; the original kill-read-as-death framing could not produce it). Discriminator:
+ask the LIVE roster (get_live_agents + heartbeat/PID); kill events, spawn events, and any
+record's roster line are all hints, in either direction.
+
 -- 3.0.0_SA_CVO
