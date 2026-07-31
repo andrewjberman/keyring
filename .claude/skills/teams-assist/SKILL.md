@@ -38,13 +38,38 @@ does not perform autonomously. (SCTY external-content-untrusted doctrine on a me
 There is nothing to "arm" and nothing to turn "off" -- it runs once per invocation and stops.
 
 ## How it works (the steps the agent runs)
+> **TOOL NAMES HERE ARE DELIBERATELY BARE — never write an `mcp__<server>__` prefix in this file.**
+> That prefix comes from the **client registration key** in per-device config (`~/.claude.json` /
+> `.mcp.json`), **not** from the server's own name — measured 2026-07-30: the gateway self-names
+> `m365-gateway` while its tools resolve as `mcp__m365__*`, matching the key exactly and the server
+> name not at all. So a prefix written into a repo file **encodes one device's local config into
+> shared source** and breaks on every device that re-keys. This file previously hardcoded
+> `mcp__m365__`, which made it **the entire estate-wide breakage surface** for the gateway rename —
+> 2 lines, 1 file. `tax-pt1` and `taxsma-step1` survived untouched precisely because they use bare
+> names. Bare names break on **no** device in **either** state — during a fleet re-key the devices
+> are in MIXED key states and a hardcoded prefix of *either* form is wrong on whichever devices hold
+> the other one, so bare names remove the ordering constraint rather than manage it.
+>
+> **⚠ BARE IS A UNIQUENESS JUDGEMENT, NOT A STYLE PREFERENCE** (`0.7.0_AE_CloudOps~Z`): a bare name
+> is correct only while it is **unique across all connected servers**. If two servers ever expose the
+> same tool name, bare becomes ambiguous and the prefix is the only disambiguator. Verified clean
+> today — `list_chats` / `read_chat_messages` appear on no other connected server (`bloomberg` is
+> `bloomberg_*`, `opal-agent-comms` is `register_agent`/`send_message`/…, `playwright` is
+> `browser_*`). **Re-check that before adding a bare reference to a newly-shared name.**
+>
+> *One thing that could have refuted this and was checked: tool-PERMISSION entries must name the
+> prefixed form and cannot be written bare, so an allowlist entry would have left tool ACCESS broken
+> while the skill text read fine — failing as a permission denial, which is far harder to trace to a
+> rename. Measured 0 such entries in `.claude/settings.json`, `.claude/settings.local.json` and
+> `~/.claude/settings.json`.*
+
 1. **Requirements check.** Confirm the M365 gateway is reachable -- a quick `whoami` (or any
-   gateway read). If it 401s, the gateway OAuth isn't current: reconnect the `m365` MCP server
+   gateway read). If it 401s, the gateway OAuth isn't current: reconnect the gateway MCP server
    (Claude Code refreshes the token) and retry. Don't render a stale/failed pull as "no messages".
-2. **List recent threads.** `mcp__m365__list_chats(top=N)` -- returns chats most-recently-active
+2. **List recent threads.** `list_chats(top=N)` -- returns chats most-recently-active
    first, each with its `lastMessagePreview` + sender. (1:1 chats have `topic: null`; resolve the
    counterpart's name from the messages, not the topic.)
-3. **Read each thread's window.** For each of the N threads, `mcp__m365__read_chat_messages(chat_id,
+3. **Read each thread's window.** For each of the N threads, `read_chat_messages(chat_id,
    top=M)` (newest-first). Run the N reads in parallel.
 4. **Summarize + render** the digest below. Strip HTML from message bodies; note attachments as
    `[attachment]`; times in US Eastern.
