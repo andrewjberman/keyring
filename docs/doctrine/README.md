@@ -30,3 +30,6 @@ grows inside CLAUDE.md taxes every session forever. It belongs here, and CLAUDE.
 - [`CONTROLS_OVER_CARE.md`](CONTROLS_OVER_CARE.md) — verification doctrine. Controls, grounding, instruments
   that lie, guards, scope, shared-worktree hazards, and the pricing of holds. *(Pointed at by CLAUDE.md Rule
   22 / 22a.)*
+- [`VERIFICATION_LAW.md`](VERIFICATION_LAW.md) — the thirteen verification laws, as an operational
+  checklist. *(Relocated from the agent memory index 2026-07-31, Andrew-direct: it was doctrine sitting
+  in an always-loaded 17,408-byte index, compressed to shorthand by the cap.)*
