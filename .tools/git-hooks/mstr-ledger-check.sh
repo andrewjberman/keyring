@@ -46,6 +46,20 @@ block() { echo "BLOCKED (mstr-ledger-check): $1" >&2; audit "BLOCK  ${AGENT:-UNK
 STAGED="${MSTR_LEDGER_STAGED_FILES:-$(git diff --cached --name-only 2>/dev/null || true)}"
 if [ -z "$STAGED" ]; then audit "PASS  ${AGENT:-UNKNOWN}  (no staged files)"; exit 0; fi
 
+# MERGE EXEMPTION (merge-exemption class, 2026-07-31) -- a merge integrates
+# already-committed, already-validated work; the integrator is NOT its author, so it
+# needs no Decision Ledger entry, and any merged records were schema-checked at their
+# own authorship. Same class as the owned-paths merge exemption (CTO, c0241a1eaa).
+# A merge is a merge regardless of how the staged list was sourced -- do NOT guard this
+# on MSTR_LEDGER_STAGED_FILES (that inversion was the owned-paths production bug).
+# Applied by 0.0.0_AB_MSTR (integrator) under Andrew-authorized emergency to clear a
+# fabric-wide merge deadlock (mstr-ledger blocked every window merge); CTO to review +
+# re-home the wording per SoD.
+if git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
+    audit "PASS  ${AGENT:-UNKNOWN}  (MERGE COMMIT -- ledger requirement exempt; merged records validated at their own authorship)"
+    exit 0
+fi
+
 # --- frontmatter field reader: fm <file> <field> -> value (first --- ... --- block)
 fm() {
   awk -v f="$2" '
