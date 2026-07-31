@@ -61,8 +61,16 @@ AGENT="${RAW_AUTHOR%% <*}"
 # reachable and would have shipped a hole in an OWNERSHIP gate. MERGE_HEAD exists if and only
 # if a merge is in progress and is the commit about to be created -- which is exactly the case
 # being exempted, and nothing else.
-if [ -z "${OWNED_PATHS_STAGED_FILES:-}" ] \
-   && git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
+# ⛔ AND DO NOT RE-ADD AN `OWNED_PATHS_STAGED_FILES` GUARD HERE. It was here, and IT KILLED THE
+# EXEMPTION IN PRODUCTION: the active .git/hooks/pre-commit (precomp_v1) HOISTS the staged list and
+# passes it to children via that env var, so in a REAL pre-commit run the var is ALWAYS SET, the
+# `-z` test is FALSE, and the exemption NEVER FIRED. It fired only on the direct-invocation path --
+# WHICH IS THE PATH I TESTED IT ON. My guard was written to keep the exemption out of the unit-test
+# seam and turned out to BE the production condition, inverted. A MERGE IS A MERGE REGARDLESS OF
+# HOW THE STAGED LIST WAS SOURCED. Found by 0.0.0_AB_MSTR on the exemption's FIRST REAL EXERCISE,
+# window-3, who HELD the stuck merge rather than --no-verify-ing it. (The STAGED= logic below still
+# honours both sources for the non-merge path; that is where the env var belongs.)
+if git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
     echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)" >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
