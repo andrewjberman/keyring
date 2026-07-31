@@ -1,0 +1,103 @@
+# 3.0.0_SA_CVO -- RULING 7/7a (THE REAL STORY), v4 spec approved, DIALED-TOOL-FLOW commissioned (2026-07-31 01:17Z -> 01:55Z)
+
+**archetype:** MIXED
+**secondary_archetypes:** COORDINATE, VALIDATE, SCRIBE
+
+## Summary
+
+Reinstantiated from handoff 2026-07-31_0100Z at the exact reserved point: Andrew's pending
+"need to do better than that" explanation. It arrived, and the session became the ruling-intake
++ spec-approval + new-commission session it was staged to be.
+
+1. STARTUP clean: registered PID 30716; A.3 probe 94/94 + comp-which EXERCISED (ran, not just
+   resolved); the Jul-29 CVO watcher confirmed MINE via round-trip self-message ([INBOX] event
+   fired) -- not killed, not re-armed; zero crons. Carried finding: audit-archive-invoker flags
+   org/tombstone-gate-audit.log as audit-log-shaped but not in MANIFEST (unrouted, non-blocking).
+2. RULING 7 -- THE REAL STORY (@66c83fd8e3, verbatim in the ruling record): every text of Andrew
+   terminal input tracked day-by-day; that store + git change + deployment motion synthesized
+   with meta-analysis and judgment into a sub-1000-char daily story (5-10 sentences that
+   mattered + a couple pointers); THE STORY is what Andrew feedbacks. Broadcast MSTR/CTO/~B same
+   turn. MSTR: parity binds on the story, no carrier amendment needed (shape-agnostic language;
+   oracle-mechanics change is their amendment trigger).
+3. RULING 7a (@1c3d953180, two MID-TURN messages, verbatim): (a) CVO reading of R7 CONFIRMED;
+   (b) the R7 verbatim text block goes IN Kimi's daily prompt every day; (c) capture mandate
+   confirmed sovereign ("track all my text inputs and have that saved somewhere"). Both arrived
+   through the exact channel ~B had just measured as dropped by naive capture.
+4. ~B's CAPTURE FINDING (their measurement, my gating): naive type=="user" transcript read
+   captures 2 of 5 = 40% of Andrew's input in the measured session and drops the 3 highest-signal
+   (rulings 4/4a + the hold, ALL mid-turn); correct capture = union user+queue-operation+
+   attachment, de-dup, fail-closed HUMAN/HARNESS/UNCLASSIFIED filter. Accepted as v4 §1 spine;
+   this CVO session became capture fixture 2 by construction (now >=3 mid-turn sovereign
+   instructions in it).
+5. v4 SPEC (SPEC_v4_THE_REAL_STORY.md @5b1511ae71 -- note ~B's cite @068dbba33b is the
+   pull-merge, corrected in my approval) READ IN FULL and APPROVED with ONE BINDING ADDENDUM:
+   the capture store's persistence contract (durable home/prefix grammar, IAM
+   producer-cannot-rewrite-history boundary, de-dup key, retention riding the open Andrew
+   retention ruling) must be named before Phase-1 build motion. Two fold-ins: fixture-2
+   denominator pinned at day close; AC5 sentence-boundary rule stated. Build order approved:
+   capture+fixtures -> synthesis -> story contract + validator LAST. My POINTER RULING is in the
+   spec as set: soft surface (Andrew's shape, no citation thicket) / hard substrate
+   (per-sentence basis+pointers+verbatim in JSON, fail-closed, story SHRINKS rather than
+   asserts; validator resolves independently of the builder's index).
+6. DIALED-TOOL-FLOW commissioned (Andrew-direct mid-turn ~0149Z, verbatim recorded) and DESIGNED
+   @b5c6441086: 9 exercised phases P0-P8 generalizing the comp-estate arc (scope/baseline,
+   purpose, name/aliases, registration/contracts, vocabulary/structure, dependency alignment,
+   exercise gates, residue audit, independent descent) + DIAL record with declared re-dial
+   triggers; frontrun queue ranked by routing centrality (measured at queue-build, never a
+   hand-list); Andrew holds only the two naming acts; every gate an exercise not an inspection.
+   DESIGN ONLY -- awaiting Andrew ratification; nothing armed.
+7. NFRA_WORLDMODEL (CTO @8ce0119fab): registered-and-parked; my ruling record IS Limb C; Limb C
+   scoping accepted as written at v0.1. THIS LOG is the session log owed per the Andrew-direct
+   relayed in it.
+
+## Compiler Tools
+
+| Tool | Runs | Result | Note |
+|---|---|---|---|
+| comp-which (A.3 exercise) | 1 | PASS | forwarder RAN (banner produced) -- exercise, not name-resolution |
+| comp-surface-check (in safe-commit) | 3 | OK | 1 file screened each commit; no critical surface touched |
+| comp-pulse diff (risk reflex, in safe-commit) | 3 | CLEAN | measured, 1 file vs 1622 danger nodes each |
+
+Short session dominated by ruling intake, spec review, and design authorship -- document-layer
+work grounded on git show / direct file reads (v4 spec read in full at its landing commit;
+~B's misci­te corrected by git log on the file path). No estate search/inspection arose that a
+comp-tool answers; no raw estate grep run.
+
+## MCP traffic
+
+Sent: RULING 7 broadcast (MSTR/CTO/~B) · RULING 7a broadcast (MSTR/CTO/~B) · watcher round-trip
+self-probe · v4 approval w/ addendum (~B) · NFRA_WORLDMODEL ack + commission broadcast (CTO) ·
+commission broadcast + v4-approved FYI (MSTR). Received: MSTR ack (parity binds on THE STORY,
+nothing owed) · ~B ruling-7 ack + salvage estimate + capture finding · ~B v4 delta spec notice ·
+CTO NFRA_WORLDMODEL URGENT.
+
+## Blockers
+
+None at me. AT ~B: capture-store addendum, then build (capture+fixtures first). AT ANDREW:
+dialed-tool-flow ratification (name/scope/land-as-skill); site-Z capture path; Desktop
+world-model repo remote; opal-estate-report retention (now covering his verbatim words); ~A
+clearance; go-live schedule flip; adjudication of PENDING 07-30 (likely mooted by v4 re-run).
+
+## Current State (successor-restartable)
+
+- Ruling record now carries R1-R7a, all verbatim: deliverables/
+  ANDREW_RULING_SEMANTIC_EVOLUTION_PIPELINE_20260730.md (R7 @66c83fd8e3, R7a @1c3d953180).
+- v4 approved @ my 015119Z message; ~B builds after landing the persistence-contract addendum.
+  The product is THE STORY; the R7 verbatim block is a versioned prompt artifact (prompt_sha in
+  every manifest, byte-for-byte asserted on the SENT payload).
+- DIALED_TOOL_FLOW_DESIGN_20260731.md @b5c6441086 awaits Andrew's word; if ratified, lands as
+  .claude/skills/dial-tool/ + DIAL record template + queue derivation.
+- Watcher: live Monitor (Jul-29 arm) confirmed mine by round-trip; do not kill on next
+  reinstantiation either -- same PID discriminator applies.
+- Unrouted minor: org/tombstone-gate-audit.log MANIFEST coverage finding (archive-invoker).
+
+## Next Steps
+
+1. [~B] Persistence-contract addendum -> build capture layer + both fixtures -> synthesis ->
+   story contract + validator; RAVC to CVO at each gate.
+2. [3.0.0_SA_CVO] Read the addendum when it lands; gate build RAVCs; receive any further Andrew
+   direction; pin fixture-2 denominator at day close.
+3. [Andrew] Dialed-tool-flow ratification; the standing open-calls list above.
+4. [0.0.0_AB_MSTR] Backstop unchanged; first end-to-end fire remains their acceptance exercise.
+
+-- 3.0.0_SA_CVO
