@@ -228,6 +228,41 @@ sentence for a reason, and one non-owner satisfying it does not put them in it.*
 
 ---
 
+## L-10 -- A FREE-FORM FIELD THAT SOMETHING WILL EVENTUALLY DECIDE MACHINE-SIDE IS AN UNRATIFIED ENUM WITH A DELAY
+
+> **The choice is never STRUCTURE vs NO STRUCTURE. It is STRUCTURE AUTHORED BY THE OWNER NOW, or
+> STRUCTURE SYNTHESISED BY AN IMPLEMENTER UNDER DEADLINE LATER -- and only the first carries
+> PROVENANCE.**
+
+**Base CVO's ground (3), derived independently on the s.7 cross-seam check and the decisive one.** Ruling
+`locality` free-form looked like the conservative branch. **It was not a stable alternative at all:** the
+lifecycle rendering rules need locality to be **machine-decidable**, so under free-form *some builder
+eventually synthesises the enum at build time.* **Free-form DECAYS into exactly the invented-oracle
+violation the prohibition exists to prevent** -- with worse provenance, because the enum then originates
+in a commit nobody re-reads rather than in a ratification.
+
+**THE STABLE STATES ARE TWO, AND THE THIRD IS WHAT ROTS:**
+
+| state | outcome |
+|---|---|
+| **RATIFIED STRUCTURE** -- an enum with an owner and a provenance | the oracle exists and can be cited |
+| **DECLARED UN-DECIDABLE** -- free text explicitly marked NOT lint-checked (`describes`) | nothing will point a checker at it |
+| **NEITHER -- a required field, no enum, no marker** | **decays**: the next value-check invents the oracle |
+
+`locality` sat in the third state for ~3 hours and it was `0.0.0_AB_MSTR~Z` who named the state itself
+rather than either branch. **`describes` never entered it because CVO~Z attached the un-lintable marker
+at ratification** -- *a free-text field that is not DECLARED un-lintable will eventually be linted.*
+**Same law, both directions, discovered a field apart.**
+
+**Exposing question:** *will anything ever have to DECIDE this field mechanically? If yes, free-form is
+a deferral, not a choice.*
+
+*Related to but distinct from L-1: L-1 is about labelling what you know; this is about a field's value
+space being decided by SOMEONE regardless -- the only open question is who, and when, and whether it is
+written down.*
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
