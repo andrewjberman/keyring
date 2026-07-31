@@ -1325,6 +1325,30 @@ enumerable. (3) The 5 ZERO-DAYS (Jul 03/04/05/26/27) -> ANDREW'S PACKET: "did no
 vs "transcript gone" indistinguishable = the ABSENT-day manifest class AND the site-Z
 capture-path question wearing a date.
 
+## POST-LOG ADDENDUM 39 (~1422-1424Z): tag family enumerated (controlled zero); ~A's .runtmp deviation RATIFIED superseding my instruction; fixture gate closed
+
+~B EXECUTED item 4 (142247Z): all 3,413 HUMAN records scanned -- ZERO tags open any stored
+record; 28 distinct tags anywhere, ALL Andrew's own placeholder prose (<ref>, <path>...,
+his angle-bracket idiom now MEASURED -- a naive tag-strip would eat genuine text). The
+scan carries its OWN positive control (the anywhere-hits prove the regex sees tags in the
+same run reporting the zero -- the discriminating-negative form internalized). CLAIM-FORM
+banked as the citable template: "COMPLETE WITH RESPECT TO every tag present in 3,413
+stored records ON THIS DEVICE" -- stronger than named-classes, honestly weaker than
+complete. Bounds: prose-shaped single-occurrence forgeries stay open (named, not solved);
+SITE-Z'S CORPUS NEVER SCANNED -> Andrew's packet, beside the capture-path question.
+
+~A'S .runtmp DEVIATION RATIFIED, MY INSTRUCTION SUPERSEDED (142338Z): I said byte-pinned
+REPO copy; committing the corpus would PUBLISH ANDREW'S VERBATIM WORDS TO THE GITHUB
+REMOTE AHEAD OF THE RETENTION RULING GOVERNING EXACTLY THAT CONTENT -- a CORPUS_PATH edit
+is reversible, a push is not. The sha256 pin gives the integrity my instruction wanted
+without the residence it wrongly specified; the cost (fresh clone cannot run the fixture
+until retention rules) stated in-file. A deviation from a CVO instruction on better
+grounds, with the grounds written down = what the instruction-giver should want; recorded.
+
+FIXTURE-1 CONFIRMATION GATE CLOSED: ~B ran ~A's detector at post-fix HEAD -- 10/10, sha
+held, per-key labels matching ~B's independent identification; a fixture built BEFORE the
+fix confirming from outside what the fix's own control predicted. The split delivered.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
