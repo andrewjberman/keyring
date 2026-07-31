@@ -2662,3 +2662,72 @@ already rules this way (*blanket the slashed-ref case, don't memorize the bounda
 decision requires every seat to classify every path correctly forever; the blanket costs one prefix and
 cannot be got wrong -- and a rule applied only when remembered has the same failure profile as the prose
 stop GATE 5 just replaced with a mechanism.**
+
+### AMENDMENT 25 -- WS-C7 suite enumeration verified, a FENCE RULING closed, and A24's bound corrected to its true size
+
+Two records here: **A24's bound is narrower than I stated** (correction, at source, by the party who
+could measure it), and **WS-C7's suite-enumeration findings are verified with one fence question ruled.**
+
+#### A25.1 -- CORRECTION TO A24's BOUND: REAL FOR MY SUITE, PARTIALLY DISCHARGED ON BASE'S
+
+I recorded that every GATE 5 cell hit the FALLBACK resolver and inferred base MSTR's 13/13 *"almost
+certainly carries the same bound."* **Base MSTR re-verified rather than asserted, and the inference was
+too wide:**
+
+> **2 of their 13 cells DID exercise the PRIMARY resolver, using REAL serial files.** And the
+> discriminator is the part worth keeping: **env and file must DISAGREE, or the cell is green under
+> EITHER resolver and proves nothing about which one fired.** Their two cells: `file=NON-MSTR +
+> env=MSTR -> DENY` and `file=MSTR + env=NON-MSTR -> ALLOW`. **Both prove the session file is read AND
+> beats the env, in both directions.**
+
+**CORRECTED STATEMENT: the bound is REAL for my 9-cell suite (all synthetic session_ids -> fallback,
+confirmed by the `:481` stderr) and PARTIALLY DISCHARGED on base's 13.** **The gap was in the RELAY, not
+in their test** -- the 5-cell prose harness I was sent omitted the two production-critical cells, so my
+suite inherited a bound from an incomplete transmission. **They own that plainly.**
+
+> **AND THE GENERAL FORM SURVIVES INTACT: *a suite testing only the fallback leaves the PRIMARY
+> production path unbounded.*** **My finding was worth making and was not total. Both halves are
+> recorded because a correction that only records the first half is the same defect one level up.**
+**Not running the two closing cells: Andrew-direct, *"dont get bogged down in this we have work to
+do."* The thread is closed; the record is accurate; that is the whole obligation.**
+
+#### A25.2 -- FENCE RULING: `ADVI_STAUDT` CONTACT IS NON-SHAPING. NO REMEDIATION.
+
+`0.7.0_AE_CloudOps~Z` declared a marginal fence contact unprompted -- a broad `grep` for a
+"Class 1/Class 2" definition returned `ADVI_STAUDT.md` and printed three lines. **Measured: my binding
+names `ADVI_PERFORMANCE` (13 occurrences in my ruling) and `MDPF_GLOBAL` (21). `ADVI_STAUDT`: ZERO --
+never adjudicated, so this is a genuine first instance.**
+
+> **RULED on two independent grounds, either sufficient:**
+> **(1) OUTSIDE THE FENCE AS BOUND.** The fence names two programs. **ADVI-family adjacency is not
+> membership: a fence that silently expands by family is not a fence, it is a mood.**
+> **(2) NON-SHAPING EVEN IF INSIDE -- the load-bearing half.** The fence prohibits held-out material
+> **SHAPING THE RAILS**; the test is not *did you see it* but *did it supply anything*. **What was seen
+> ESTABLISHES A TOKEN COLLISION, which SUBTRACTS a naming option rather than supplying one. A collision
+> finding is a reason NOT to use a name; it cannot import a meaning.**
+
+**SURFACED, NOT RULED: whether the fence should name a FAMILY rather than two codes is a SCOPE question
+and Andrew's.** I ruled the instance; I did not redraw the boundary. **And the declaration is what made
+the ruling cheap -- an undeclared contact costs an investigation, a declared one costs a paragraph.**
+
+#### A25.3 -- THE SUITE FINDINGS VERIFIED, AND ONE CITATION-FORM DEFECT
+
+**FINDING 1 -- CONFIRMED AT SOURCE.** The DEBTLOOPS memo carries *"Type II corroboration: nine same-day
+specimens"* and *"Nine instrument failures were logged on 2026-07-29, all of them false negatives."*
+**The membership finding's FORM is the keeper:**
+
+> ***"A count that is right while its membership is wrong."*** **`3 of 9` is arithmetically fine and the
+> two sides of the fraction refer to DIFFERENT SETS.** **Strictly harder than a miscount, because every
+> check that verifies the arithmetic passes.** Same family as today's `219/210/208` units error and
+> `~C`'s *a zero cannot say which zero it is*.
+
+**FINDING 2 -- SUBSTANCE CONFIRMED, CITATION STALE.** The acceptance clause exists -- **`PRD.md:342`,
+not the cited `:222`** (the PRD is 427 lines; `:222` now carries fence text). **Exactly ONE occurrence
+in the PRD, used as a pass condition, defined nowhere.** **Rule 22's own case: *a line citation without
+a vintage is not a citation*, because `file:line` resolves at every vintage to different content.** The
+reasoning was sound; the citation format was not.
+
+**ON THEIR ~226 ESTATE-WIDE COUNT: I measure 456 occurrences / 357 lines / 128 files. NONE is 226, and I
+am NOT inventing a reconciliation** -- today already cost one plausible explanation that foreclosed a
+live discrepancy. **The collision is confirmed and load-bearing whichever unit is right; the number
+needs its unit stated.**
