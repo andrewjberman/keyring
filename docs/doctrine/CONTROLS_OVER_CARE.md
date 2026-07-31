@@ -174,6 +174,25 @@ what survives contact with contrary evidence. A bare prohibition does not.**
 
 ## III. Instruments that lie
 
+> **BOUNDARY — THIS SECTION IS ONE OF THREE FAMILIES, AND THE OTHER TWO LIVE ELSEWHERE.**
+> **THIS SECTION (III)** holds **HOW AN INSTRUMENT LIES** — a tool or a measurement that runs and
+> reports something untrue about its own operation.
+> **`docs/doctrine/MECHANISM_LAWS.md`** holds **WHERE AN ASSERTION SITS** — the fourteen M-laws, the
+> ways a claim comes to be wrong about its subject. **The M-taxonomy does not type instrument
+> fallibility, by construction** (NFRA_VELOCITY WS-C2 step 0), so neither file is a subset of the
+> other. Read both.
+> **A THIRD FAMILY HAS NO HOME TODAY: HOW A RULE OR ROLE FAILS TO BE ONE** — how a rule is drafted
+> (name the PROPERTY, not the EVENT), how a procedure is drafted (a step naming no actor is not a
+> step), how a role is constituted (first exercised by a non-owner). Covered by **neither** file.
+> Named as an open gap; creating its home is not authorised here.
+>
+> *Added 2026-07-31 (NFRA_VELOCITY WS-C8 / DC-4, `1.0.0_SA_CTO~Z`). `MECHANISM_LAWS.md` already
+> pointed here 8 times; this file pointed back **zero** times (positive control: "instrument" ×28, so
+> the search discriminated). **A one-directional pointer is a reconciliation point** — two documents
+> on adjacent subjects with the boundary stated on one side only, so a reader arriving HERE could not
+> learn the other exists. This is the reciprocal half, and it is the first measured reduction under
+> the C8 acceptance criterion landed at `@21b3c6e11`.*
+
 **A COMMENT IS A CLAIM WITH NO VINTAGE AND NO TEST.**
 We write the invariant we MEAN into a comment, then read the comment back as evidence the invariant HOLDS.
 **A comment is never source-confirmation. The assertion is the claim.**
