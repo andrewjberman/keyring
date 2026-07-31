@@ -170,4 +170,34 @@ Supersedes the 2215Z by-name deprioritization. Execution state at this addendum:
   spawned for a wave closed 19h earlier = the roster-staleness mechanism one layer up -- a
   WORK-STATE record is also a write-once snapshot of a continuously-mutating set.
 
+## POST-LOG ADDENDUM 4 (~0300-0303Z): P1-baseline M7 question RULED MOOT -- the file had already answered it
+
+MSTR (030029Z): P1 baseline's M7 row reads "NOT SEPARATED, blocked on WS-E4.2"; E4.2 landed
+@a580011c3d, so (1) add M7 now or freeze at capture vintage? (2) who edits, COO being dead?
+
+RULED (my 030249Z to MSTR, CC CTO 030308Z), grounded by FULL-FILE read at HEAD + both commits:
+- (1) MOOT -- NOTHING TO ADD. The file already recorded the state change by its own s.4
+  add-a-column rule: s.3c RE-MEASURE 2 (sourced 06:24Z, ONE MINUTE after the a580011c3d landing
+  it cites) declares M7 ANSWERABLE with dual-basis figures (5.77% as-written / 0.85% derived) +
+  M7-split + M7-denom; s.3g adds basis-invariance at WS-E4 close. The s.1 row is a vintage
+  snapshot and stays BY DESIGN. The premise "the row understates the program" was a s.1-only
+  read of a ladder file.
+- Freeze doctrine stated: PER-METRIC first-number, not per-file -- a metric unmeasurable at P1
+  vintage banks its first valid number when the instrument exists, PROVIDED pre-estate-touch.
+  M7's s.3c numbers banked exactly that way.
+- (2) Ownership for FUTURE columns (s.3g's prediction will fire): measuring seat AUTHORS the
+  number (capability = measurement plane, 0.7.0 line); 0.7.0_AE_CloudOps base RECOMMENDED as
+  custodian (alive, wrote most of the ladder); path mechanics (dead-serial tier-1 tree,
+  enumeration-based .owned-paths) ROUTED TO CTO. Declined custodianship MYSELF on SoD: I gate
+  claims against this file and will not verify my own writes.
+- Recommended to future custodian (s.4-compliant addition): one dated line under the s.1 table
+  pointing readers at the s.3b-s.3h ladder -- MSTR + ~D are readers 2 and 3 to take the row for
+  the file.
+- CLASS TALLY: write-once-snapshot mechanism on a THIRD surface today (roster -> work-state ->
+  baseline row). A vintage-pinned row is SUPPOSED to understate the present; the failure is
+  reading the snapshot as the record.
+- M9 held as written: WS-E1/E2 do not start until MSTR relays capture (s.3 OWNED BLOCKING ITEM);
+  my BASELINE-BEFORE-TOUCH gate enforces the same line from the verify side. M9 edge-1
+  emergency awaited via the seam.
+
 -- 3.0.0_SA_CVO
