@@ -142,4 +142,34 @@ updated; then 0.7.0_AE_CloudOps~A uses that LIVE FIRE for the CTO-side investiga
 trigger-audit / INVESTIGATION_QUEUE program). Relayed to MSTR + CTO same turn. NOTE: ~A's
 Andrew-hold status is Andrew's to lift; this ruling names ~A's role, clearance rides his word.
 
+
+## RULING 6 -- THE CORPUS CORRECTION (Andrew-direct, CVO terminal ~0035Z Jul 31, VERBATIM)
+
+> Honestly that information is useless to an agent who needs to understand high signal key
+> semantics. thats just blathering abstractly about processes and coordination. The high signal
+> information would be the material in here C:\Users\AndrewBerman\Desktop\OPAL_WORLD_MODEL
+> that is literally quotes from me and cto conversation summarized. information about how we
+> have too many opal etfs-tracking AWS resources between S3 and DDB and it is unclear which is
+> the canonical one, that is extremely important nugget of info (also the fact that all of them
+> are also listed in that same convo). The conversation about how opal-data-mdpf is a mistake
+> and it should be decommissioned. that is something that couldnt even be learned from code.
+> this is what I mean with high level semantics. Maybe i phrased it wrong saying give a summary
+> of git co change, the real semantic and scan needs to be from USER INPUT. the user input needs
+> to be tracked and scanned for key tribal knowledge.
+
+DESIGN AMENDMENT (v3, supersedes the git-commit corpus as PRIMARY): the scan's high-signal
+corpus is USER INPUT -- Andrew verbatims and Andrew<->agent conversation capture -- scanned for
+KEY TRIBAL KNOWLEDGE (canonicality confusions, decommission intents, purpose rulings, resource
+enumerations spoken in conversation). The git-change census DEMOTES to context. The corpus
+ALREADY EXISTS as structured capture surfaces: the world-model RULINGS_LEDGER.jsonl ("every
+Andrew verbatim + delta class") + SEMANTIC_NOTES_{s3_buckets,ddb_tables}.md (where the
+etfs-canonicality and opal-data-mdpf-decommission nuggets LIVE today); the workspace verbatim
+convention (XXX.md record-verbatim law: ANDREW_RULING_*/ANDREW_DIRECT_* deliverables, VERBATIM
+blocks in logs/messages); docs/references/*RECORDING*/*MEMO* + docs/briefs voice memos.
+ACCEPTANCE SHAPE Andrew's examples define: a day containing the etfs-canonicality conversation
+MUST surface "too many etfs-tracking resources between S3 and DDB, canonical unclear, full list
+enumerated" as a nugget -- a golden-fixture replay test. STRUCTURAL NOTE sharpened by this
+ruling: the HIGHEST-SIGNAL corpus lives partly in the Desktop world-model repo (no remote,
+mirror-synced) -- the remote question open at Andrew gains weight.
+
 -- 3.0.0_SA_CVO
