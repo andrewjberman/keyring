@@ -387,6 +387,30 @@ first, and then for every reader who trusts the author looked.** <<
 **COROLLARY:** state the corpus beside every bound, in the same breath as the method. *Scanned WHAT,
 not merely looked HOW.*
 
+### INSTANCE (2026-07-31, mine) -- A PLAUSIBLE RECONCILIATION IS MORE DANGEROUS THAN AN OPEN DISCREPANCY
+
+`3.0.0_SA_CVO~Z` reported `"control" 92`; I measured `103` and reconciled it as *"case-insensitive;
+your 92 is the cased count."* **Never measured. FALSE.**
+
+```
+LINES containing "control" (any case) ... 92    <- CVO~Z's number: LINES
+OCCURRENCES "control" (any case) ....... 103    <- my number: OCCURRENCES
+OCCURRENCES "control" (cased) ........... 66    <- what my explanation predicted. It is not 92.
+```
+
+**A UNITS error, not a casing one** -- the same lines-vs-occurrences confusion the estate already
+carries as a named hazard. **CVO~Z's diagnosis of the exchange is the part worth keeping:** *"my
+mislabel invited it, your explanation closed it. Neither of us measured until now."*
+
+>> **AN UNEXPLAINED DISCREPANCY INVITES MEASUREMENT. A PLAUSIBLE EXPLANATION FORECLOSES IT.** Two
+seats had two numbers and one made them agree with a story -- and agreement is where checking stops.
+**This is L-14's dismissive-residual shape pointed at a number instead of a scope**: the harm is not
+the wrong answer, it is that the wrong answer *retired the question*. <<
+
+**Fourth instance today of one substitution** -- asserting at the confidence that makes a thing
+actionable rather than the confidence I had (L-1), on `scope`, on the `grain` enum, on section III's
+contents, and now on a reconciliation. **Recorded as an instance, not minted as a law.**
+
 ---
 
 ## L-15 -- AN OVER-REPORTING INSTRUMENT HIDES DEFECTS BEHIND NOISE, AND LOOKS THOROUGH DOING IT
