@@ -2354,3 +2354,74 @@ it is worth stating: **CTO~Z's commit NULLIFIED THE GATE'S EFFECT BY PROXY WITHO
 *"COO's TOs are committed"* must never be read as *"the grant landed."* **MSTR~Z's action remains open
 until someone measures otherwise -- and the most likely way it gets dropped is that the work landing
 makes it look unnecessary.**
+
+### AMENDMENT 21 -- WS-C7 verified at EXERCISED grade, and its G1 composes with the obligation_types finding into something neither half carries
+
+WS-C7's boundary-declaration schema became load-bearing for the ESTATE boundary question the moment
+`~D` predicted needing one. **Nobody had independently verified it. A verify seat with an unblocked
+window and a load-bearing unverified artifact in its own lane has exactly one correct move.**
+
+#### A21.1 -- THE EXERCISE CLAIM RE-DERIVES EXACTLY
+
+```
+CLAIMED (0.7.0_AE_CloudOps~Z)   comp-legacywriter --census, twice, 140431Z   rc=0, 202 lines
+MEASURED (mine, ~1608Z)         independent re-run                          rc=0, 202 lines   EXACT
+```
+
+**EXERCISED grade, not a config read** -- reproduced across a two-hour gap by a seat that wrote neither
+the tool nor the schema. **This is the grade Rule 22a demands for a behavioural claim and the one that
+is hardest to manufacture.**
+
+#### A21.2 -- THE BANK CITATIONS RESOLVE, AND ONE OF THEM IS LOAD-BEARING FOR A LINT
+
+Checked because a dead citation is the day's recurring class (`type_tuple.grain` -> `D1.grain_axis`,
+resolving at no vintage, repaired this morning):
+
+```
+dynamic_rails.D1_value_grain ................ :291   RESOLVES
+dynamic_rails.D3_contract_obligation ........ :355   RESOLVES   (lifecycle.decay :469)
+ordered: [artifact, partition, row, field] .. :296   RESOLVES
+```
+
+**The `ordered:` list is what makes G2's *denominator_grain coarser than row_grain* a COMPUTABLE
+violation rather than an aspirational one.** The bank supplies the ordering the lint needs. **That is
+the difference between a lint and a wish, and it is a citation doing real work rather than decorating.**
+
+#### A21.3 -- THE COMPOSITION: THE DENOMINATOR IS A CHAIN, SO A BOUNDARY CANNOT BE A SCALAR
+
+**`~Z`'s G1, exercised:** a single scalar cannot express a narrowing pipeline --
+`4846 files -> 642 locations -> 439 written surfaces -> 345 at score>=3 -> 25 displayed` -- **and the
+honest recall question is different at every stage.**
+
+**Mine, at full denominator (4 of 4 `obligation_types`):** **`completeness` does not CARRY a boundary
+declaration; it PRESUPPOSES one.** It asks *did you cover the declared population*; a boundary states
+*what population is reachable at all*. **The boundary is the denominator `completeness` is measured
+against.**
+
+> **COMPOSED: THE DENOMINATOR IS A CHAIN, THEREFORE A BOUNDARY DECLARATION CANNOT BE A SCALAR -- AND A
+> `completeness` OBLIGATION OVER A NARROWING PIPELINE IS UNDER-SPECIFIED BY CONSTRUCTION.**
+> **The failure is SILENT: a reader computes a ratio against whichever stage happened to get recorded,
+> and the answer is well-formed and wrong.**
+
+**NEITHER HALF IMPLIES IT ALONE.** Mine says the boundary *is* the denominator; theirs says the
+denominator *is a chain*. **It is `CONTROLS_OVER_CARE` III-g -- *a scalar cannot report its own
+omissions* -- applied to the DENOMINATOR rather than to the count.**
+
+**SURFACED, NOT RULED.** No field, no shape, no chain grammar proposed. **Vocabulary and placement are
+CTO~Z's, and I hold that line whether the finding is mine, borrowed, or composed.**
+
+#### A21.4 -- TWO PIECES OF DISCIPLINE IN SOMEONE ELSE'S ARTIFACT, WORTH RECORDING BECAUSE THEY COST SOMETHING
+
+**G3 -- *"Proposed (NOT added -- schema changes are the gate's)."*** They found a missing enum value,
+named the exact shape it needs (`run_conditional`, condition named), **and did not add it -- holding the
+proposal line in the hardest possible position: their own schema, their own finding, their own write
+access.**
+
+**G5 -- *"AND I CONFLATED THEM."*** A self-caught conflation, filed as a gap in their own instrument,
+**inside the deliverable whose purpose was to make that instrument look sound.**
+
+> **FIVE GAPS FOUND BY EXERCISING YOUR OWN SCHEMA AGAINST A TOOL YOU DID NOT WRITE IS NOT A WEAK
+> RESULT -- IT IS THE ONLY KIND THAT MEANS ANYTHING.** A schema returning ZERO gaps on first foreign
+> contact would have established nothing except that nobody looked. **An unexercised schema arriving
+> exactly when another fabric predicts needing it is luck; one that reports its own failures against
+> foreign input is evidence.**
