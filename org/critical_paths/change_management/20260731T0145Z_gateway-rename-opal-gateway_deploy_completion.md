@@ -39,9 +39,62 @@ sovereign, not by peer override.
 | 1 | ledger opened at deploy-start | **DONE** |
 | 2 | code committed + pushed before deploy (`042f96d44`) | **DONE** |
 | 3 | drift check — only the intended commit in range | **DONE** |
-| 4 | deploy via `safe-ec2-deploy.sh` (Rule 7) | PENDING |
-| 5 | **LIVE-PLANE verify** — the RUNNING gateway's `serverInfo.name`, not the deploy script's rc | PENDING |
-| 6 | ledger CLOSED in-session | PENDING |
+| 4 | deploy via `safe-ec2-deploy.sh` (Rule 7) — **code leg landed, wrapper then died; see 4a** | **DONE** |
+| 4a | **HALF-LANDED, repaired in-session** — manifest leg stranded by a charmap crash | **DONE** |
+| 5 | **LIVE-PLANE verify** — on-box file, service state, and BEHAVIOURAL response | **DONE** |
+| 6 | ledger CLOSED in-session | **DONE** |
+
+## Leg 4a — the deploy half-landed, and the failure was cosmetic-looking but not cosmetic
+
+`safe-ec2-deploy.sh` returned **rc=1** after the SSM step had already reported
+`OK: deploy Success (ssm:84d7f05d-cb2d-4551-9d59-72040c6c08f9)`. The wrapper then died on:
+
+```
+aws: [ERROR]: 'charmap' codec can't encode characters in position 434-473
+ERROR: Deployment script failed. Manifest not updated.
+```
+
+**So the CODE deployed and the MANIFEST did not** — precisely the half-landed state NEVER#6 exists
+for. Rule 8 makes `EC2_MANIFEST.json` the source of truth, so a stranded manifest leg leaves the
+estate's own record asserting `c390d1c6a` / `0.2.0_DT_PortfolioAnalytics` / `2026-07-15` while a
+different commit runs on the box — **an instrument that reads confidently and is wrong.**
+
+Repaired in-session with the wrapper's own jq semantics (`safe-ec2-deploy.sh:184-186`), same four
+fields. **`deployed_commit` records `48e1fceaf` — the commit actually packaged — NOT HEAD.** HEAD had
+moved to `78872c30c` (CVO's overnight work merging in) between deploy and repair; recording HEAD
+would have claimed a deploy that never happened. The gateway tree is byte-identical across that
+range (empty diff), so the code is current either way — but the field means *what was deployed*.
+
+**Root cause is the estate's own non-ASCII rule biting the deploy path on Windows:** the wrapper
+emits box-drawing/check glyphs and the CLI's cp1252 stdout cannot encode them. CLAUDE.md § Code
+Quality already forbids non-ASCII "in production code, logs, or anything that runs on AWS" — this is
+that rule's violation *inside the deploy tooling itself*, and its cost is a silently stranded leg
+after a SUCCESSFUL deploy. **Any EC2 deploy run from site Z will strand its manifest leg the same
+way.** Routed, not fixed here (deploy-wrapper ownership sits outside this lane).
+
+## LIVE-PLANE verification (leg 5) — three layers, config through behaviour
+
+| Layer | Check | Result |
+|---|---|---|
+| Artifact | on-box `/opt/m365-mcp-gateway/app/tools.py` | `:54` `FastMCP("opal-gateway", ...)` — new name present (line moved 37→54 by the 18-line comment, itself confirming the comment shipped) |
+| Process | `systemctl is-active` + `ActiveEnterTimestamp` | `active`, entered `2026-07-31 01:46:21 UTC` — restarted at deploy, not a stale process |
+| Socket | `ss -lntp` | uvicorn pid 1449219 listening `0.0.0.0:8080` |
+| **Behaviour** | `GET https://mcp.opalinvest.dev/mcp/` | **HTTP 401 in 0.87s** — app UP and enforcing auth. A dead app returns 502/503, so this discriminates |
+| **Closed loop** | that probe in the server's own journal | `01:49:58 ... "GET /mcp/ HTTP/1.1" 401 Unauthorized` — **my request appears in this instance's log**, proving the probe reached THIS box and not an edge cache |
+| Health | ALB checks since restart | `GET /health 200 OK` every 15s from both nodes, zero errors |
+
+## CLOSED — outcome
+
+**Rename deployed, behaviourally verified, manifest repaired, nothing stranded.** The gateway now
+self-identifies as `opal-gateway` in the MCP handshake.
+
+**And it changed nothing client-visible, exactly as predicted** — tool prefixes still read
+`mcp__m365__*` because those come from the registration key. That is not a defect in this deploy;
+it is the finding this deploy was re-scoped around, and the `tools.py:54` comment is what carries it
+forward.
+
+**Remaining, not mine:** client key `m365`→`opal` (MSTR, this device) · `teams-assist` literals →
+bare names (MSTR) · Alyssa's machine (Andrew, by his own word).
 
 ## Rollback
 
