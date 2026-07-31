@@ -129,3 +129,57 @@ zero rail vocabulary authored, reviewed or ratified. Zero crons. Inbox-watched.
 3. **[3.0.0_SA_CVO]** Whether the §3 population gap is disqualifying for banking under their gate —
    asked directly rather than left to be inferred later.
 4. **[me]** Hold. No self-selected work.
+
+---
+
+# ADDENDUM 0630-0645Z — the rulings phase (this log's "Next Steps" above are now SUPERSEDED)
+
+*Appended rather than edited: the section above was true when written and is now stale in three
+places. Recording the supersession instead of rewriting history.*
+
+## Rulings received
+
+| from | ruling |
+|---|---|
+| CVO 063042Z | §12 **BANKS** as rows — but the **M9 obligation does NOT discharge** on it. Two different objects. |
+| CTO 063251Z | `d_retouch_rate` + the four-predicate **range form ACKED** as the correct form. Consumers may cite (d). |
+| CTO 063318Z | **Edge-1 does NOT discharge** — and CTO *was going to discharge it* until they measured source durability. Reason changed: the hold is now justified by **completeness over the frozen class**, not by perishability. |
+| CVO~Z via MSTR 063611Z | Fence **Amendment 2**: (d)-attribution **CLEARED** under C-1 (declare the read touched only the reference class, naming it) + C-2. **My §0 self-attestation explicitly did NOT carry the clearance** — a self-attestation is necessary and not sufficient. Standing self-test A2.3 issued. |
+| CTO 063838Z | The **§3 hole is CTO's defect**, not mine. Segmentation must be justifiable on grounds **independent of the population it produces**; I am **contaminated** for candidate selection having seen the blob. Inbox **token-axis AUTHORIZED**. |
+
+## What I did
+
+- **Banked (b) token-axis** @`72f81ff5c2` — 54,700 files / 117,343,092 bytes enumerated at run time,
+  per-pattern, `scope: device_local`, 77/23 declaration required on any (b) figure.
+- **Landed §13** (the §3 segmentation hole) and **§14** (token-axis + why the bodies are untracked).
+- **Did NOT build the inbox snapshot.** CTO declined to order it; I reached the same conclusion
+  independently while sizing it, and found the reason CTO said they had not audited:
+  **`.gitignore:235` — "MCP runtime state … local runtime only"**, with a deliberate carve-out.
+  Preserving it **reverses a standing decision**, which is Andrew's call, not a measurement seat's.
+- **Did NOT write the C-1 declarations.** C-1 is **void ab initio + quarantine** if false, so it is
+  the one declaration here that must not be written optimistically. Open question upstream of it:
+  MDPF_GLOBAL is Phase 0 as a *project*, but the estate carries substantial pre-existing **mdpf
+  pipeline history** — so a reference class drawn from fabric history may contain mdpf-adjacent
+  prose. A2.3 points PERMITTED, but the contamination question sits upstream of the self-test and
+  **I will not resolve upstream of a ruling in the direction that lets me finish my own task.**
+
+## The finding that outlived the session
+
+Two agents produced **fabricated zeros from broken pathspecs within half an hour** — mine
+(`a_archaeology_ratio = 0.0000`, against a real 2,446-tag population) and CTO's (`0` tracked
+session-log files, against a real 4,260, on the measurement their discharge ruling turned on). Both
+caught **only** by separately-run positive controls.
+
+**The wrongness arrives disguised as significance.** A broken retrieval does not return a boring
+wrong answer; it returns a finding-shaped one — "zero archaeology!", "the whole log base is
+untracked!" — and a reader's skepticism is aimed at claims that look *weak*. This class looks
+strong. CTO has adopted the formulation; it is the most transferable thing produced tonight.
+
+## Superseding "Next Steps"
+
+1. **[1.0.0_SA_CTO]** The reference-class contamination question — decides whether C-1 is truthfully
+   declarable for (d)-attribution and (b)-type.
+2. **[1.0.0_SA_CTO + 3.0.0_SA_CVO]** A segmentation function, justified independently and frozen on
+   its own. **M9-COMPLETE is currently UNSATISFIABLE** until it exists — CTO routed that to CVO.
+3. **[Andrew, via MSTR]** Whether to reverse "local runtime only" and preserve the message store.
+4. **[me]** Holding. Segmentation stopped. No self-selected work.
