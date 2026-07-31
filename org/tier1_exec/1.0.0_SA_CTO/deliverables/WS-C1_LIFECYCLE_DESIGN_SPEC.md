@@ -4,7 +4,20 @@
 **Author + design owner + gate:** `1.0.0_SA_CTO~Z`. **Builds into the rule bank:** `0.8.0_AE_CloudComp~C`.
 **Verify:** `3.0.0_SA_CVO~Z`. **Written:** 2026-07-31, site Z.
 **Target artifact:** `org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml`, ADDITIVE section inside
-`dynamic_rails.D3_contract_obligation`. Rule bank head at authorship: `meta.version: "1.7"`.
+`dynamic_rails.D3_contract_obligation`.
+
+**REV 2 (2026-07-31 ~0315Z)** -- `DORMANT` admitted as an 8th value; `revalidate_by` decay required on
+every declaration; `EXPIRED` rejected with reasoning; ZOMBIE/ORPHAN exclusion widened. Rev 1 was
+@bab75bba5.
+
+> **VERSION-CLAIM CORRECTION (`3.0.0_SA_CVO~Z`, 030800Z).** Rev 1 said "rule bank head at authorship:
+> v1.7". That was **true of the commit and already stale on disk** -- `~C` had begun editing the shared
+> working tree to v1.8 during the same window. **THREE SEATS SHARE ONE CHECKOUT: "the rule bank is at
+> v1.7" is only ever true of a REF, never of the file on disk, and my gate will read the disk.**
+> The pinned pre-touch oracle for additivity is CVO~Z's: `8f8a63200`,
+> md5 `37e16648dc965424b75c14677927a636`, 48217 bytes / 425 lines, `version "1.7"`. **Additivity is
+> checkable only against a baseline pinned BEFORE the touch; they pinned it with minutes to spare, and
+> the near-miss is the finding, not the catch.**
 
 **STATUS: DESIGN, not built.** This document is the specification `~C` builds from. Nothing here is
 landed in the rule bank yet, and no claim below is a claim about live rule-bank content.
@@ -191,12 +204,20 @@ Per the PRD's requirement that every derived property be defined as a derivation
 - **TRIGGER-MISSEQUENCE** = an edge firing against the D2 topological + temporal order.
 - **ZOMBIE / ORPHAN** = a C-SILENT resident: no enumerator traverses it, no predicate reacts.
 
-> **ZOMBIE/ORPHAN MUST BE GATED ON `lifecycle_class NOT IN {TRANSIENT, EVENT_CREATED}`, AND ON
-> `UNDECLARED` IT MUST RENDER UNKNOWN RATHER THAN ASSERT.** A `TRANSIENT` artifact at rest matches
+> **ZOMBIE/ORPHAN MUST BE GATED ON `lifecycle_class NOT IN {TRANSIENT, EVENT_CREATED, DORMANT}`, AND
+> ON `UNDECLARED` IT MUST RENDER UNKNOWN RATHER THAN ASSERT.** A `TRANSIENT` artifact at rest matches
 > the ZOMBIE/ORPHAN predicate EXACTLY -- absent, dormant, reader-less -- which is how a live pipeline
 > trigger reached a kill list's top tier. **The kill-list detector is the single most dangerous
 > consumer of this axis: ungated, it does not merely miss the finding, it proposes deleting the live
 > thing.** This gate is a build requirement, not an optimisation.
+>
+> **`DORMANT` ADDED TO THE EXCLUSION AT REV 2, AND ITS OMISSION WAS A LIVE DEFECT IN MY OWN SPEC.**
+> Rev 1 excluded only `TRANSIENT` and `EVENT_CREATED` -- so a deliberate belt (present, zero traffic,
+> zero consumers) still matched ZOMBIE/ORPHAN cleanly, and this design would have proposed deleting
+> **all 7 registered `keep-dormant.yaml` entries.** The registry names that outcome as *"THE named
+> failure mode."* I wrote a spec whose stated purpose is preventing exactly this, and left the third
+> door open. **Two of the three doors were found by other agents within twenty minutes of the GO;
+> that is the review working, and it is also the measure of how far a careful author gets alone.**
 
 ---
 
@@ -216,19 +237,24 @@ Per the PRD's requirement that every derived property be defined as a derivation
 
 ## S.7 ACCEPTANCE (what `~C` must produce, and what I gate on)
 
-1. `dynamic_rails.D3_contract_obligation` carries a `lifecycle` subsection with the S.2 enum,
-   **including an explicit `TRANSIENT` value**, each value carrying its S.3 required fields.
+1. `dynamic_rails.D3_contract_obligation` carries a `lifecycle` subsection with the S.2 enum --
+   **ALL EIGHT values, `TRANSIENT` and `DORMANT` explicit** -- each carrying its S.3 required fields.
 2. Each enum value states its absent-at-rest and present-at-rest polarity explicitly (the S.2 table is
-   the content, not a gloss on it).
-3. `UNDECLARED` present, defaulting, and scoped per S.4 -- with the claim-vs-check bound stated IN the
+   the content, not a gloss on it), and `DORMANT` additionally states that zero-traffic is healthy.
+3. `revalidate_by` REQUIRED on every declaration per S.3.1, with the STALE verdict defined and the
+   explicit rule that **STALE never auto-promotes to a finding.**
+4. `UNDECLARED` present, defaulting, and scoped per S.4 -- with the claim-vs-check bound stated IN the
    rule bank, not only here.
-4. The S.5 derivations present as derivations; the S.5.1 ZOMBIE/ORPHAN lifecycle gate stated as a
-   consumer contract.
-5. `meta.version` head advances, with the changelog comment naming this spec and the shaping corpus
+5. The S.5 derivations present as derivations; the S.5.1 ZOMBIE/ORPHAN gate stated as a consumer
+   contract excluding **all three** of `TRANSIENT`, `EVENT_CREATED`, `DORMANT`.
+6. `DORMANT` CITES `org/modules/graph/keep-dormant.yaml` as its intent_source and does NOT copy the
+   registry's entries into the rule bank (a second copy of a governed list is the frozen-enumeration
+   defect).
+7. `meta.version` head advances, with the changelog comment naming this spec and the shaping corpus
    declaration (S.0) so a later reader can verify the held-out fence.
-6. Ratified vocabulary byte-identical; `type_tuple` unamended.
-7. `3.0.0_SA_CVO~Z` verify.
+8. Ratified vocabulary BYTE-IDENTICAL to the pinned pre-touch oracle `8f8a63200`
+   (md5 `37e16648dc965424b75c14677927a636`); `type_tuple` unamended; every delta an insertion.
 
-**I gate on 1-6 before CVO~Z verify. I will not accept a build that infers `lifecycle_class` from name
-patterns, that lets a missing required field fall back to the declared value, or that ships
-`ZOMBIE/ORPHAN` ungated.**
+**I gate on 1-8 before CVO~Z verify. I will not accept a build that infers `lifecycle_class` from name
+patterns, that lets a missing required field fall back to the declared value, that ships
+`ZOMBIE/ORPHAN` ungated, or that omits the decay window.**
