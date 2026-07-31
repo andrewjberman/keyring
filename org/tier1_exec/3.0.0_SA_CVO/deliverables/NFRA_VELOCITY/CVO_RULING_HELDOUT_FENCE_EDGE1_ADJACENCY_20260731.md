@@ -2731,3 +2731,75 @@ reasoning was sound; the citation format was not.
 am NOT inventing a reconciliation** -- today already cost one plausible explanation that foreclosed a
 live discrepancy. **The collision is confirmed and load-bearing whichever unit is right; the number
 needs its unit stated.**
+
+### AMENDMENT 26 -- the cross-seam pass, and why F-2's remedy has a MEASURED failure rate in this estate
+
+Base CVO ran the Andrew-ordered s.7 cross-seam **adversarial** pass over CORE P1 -- asking whether
+site-Z's types work stays canonical against the 07-30 C-ladder and the D-rails, or **warps** it.
+**Verdict: NO DRIFT, NO TWIN-CANON, NO WARPING**, agreeing with CORE's own P1 close.
+
+#### A26.1 -- WHY IT IS CORROBORATION AND NOT AN ECHO
+
+**The controls are what make the verdict mean anything:**
+
+> **`8/8` canon pointers resolve -- WITH a NEGATIVE control (a bogus leaf does NOT resolve), so the
+> ratio is a MEASUREMENT rather than a tautology.**
+> **`C5` / `C3.iii` / invented-rungs = `0` -- WITH a POSITIVE control (`C3.ii` = 2), so the zero is a
+> FINDING rather than a broken scan.**
+
+**Both are exactly the controls this session has repeatedly shown to be the whole difference between a
+result and a number.** *An `8/8` without the bogus leaf, and a `0` without `C3.ii`, would have been
+unfalsifiable -- and would have read identically.*
+
+> **AND IT WAS RUN ADVERSARIALLY, BY THE OTHER FABRIC. Agreement between a self-assessment and an
+> adversarial cross-check is CORROBORATION; agreement between two friendly reads is one opinion counted
+> twice.** **P1's close is strengthened, not merely seconded.**
+
+#### A26.2 -- F-2's REMEDY IS RIGHT, AND ITS SECOND HALF IS THE ONE THAT EMPIRICALLY FAILS
+
+F-2 recommends ESTATE consumers **PIN a bank version and re-resolve deliberately**, rather than tracking
+HEAD implicitly. **Sound -- and its failure mode was measured this morning, before it was recommended:**
+
+```
+the rule bank is at v1.8
+infra/system/sdk/**   6 .yaml + gensdk/scaffold.py   PINNED v1.2
+SYSTEM_DEFINITIONS.yaml                              PINNED v1.4
+two infra/system/ontology docs                       PINNED v1.2
+                          ~10 REAL stale readers, open today
+```
+
+> **EVERY ONE OF THOSE CONSUMERS DID THE FIRST HALF. THEY PINNED. NOBODY DID THE SECOND HALF.**
+> **`pin + re-resolve deliberately` is not one practice -- it is one CHEAP ACTION and one PERPETUAL
+> OBLIGATION**, and this estate has measured evidence that the cheap half happens and the perpetual
+> half does not.
+> **A PIN WITHOUT A RE-RESOLUTION OBLIGATION IS NOT A SAFETY MEASURE -- IT IS A FROZEN VINTAGE WITH A
+> CONFIDENT LABEL.** It fails SILENTLY, because a pinned consumer reads *correctly* against a version
+> that is no longer the constitution. **Implicit HEAD-tracking at least breaks loudly.**
+
+**NOT AN OBJECTION TO F-2.** Pinning still beats implicit HEAD-tracking. **The claim is narrower and
+harder: the remedy must name its enforcement half, or it reproduces the exact population it was written
+to prevent.** *(Same shape as `.runtmp/` -- a correct answer to problem A, offered as the answer to
+problem B.)*
+
+#### A26.3 -- THE DISCRIMINATOR ALREADY EXISTS AND IS ALREADY BOUNDED
+
+> ***A pin nothing reads is a RECORD; a pin something reads is a READER.*** (A16.) **So the enforceable
+> question is not *"is this pin old?"* but *"is this pin CONSUMED?"*** -- which routes the check to the
+> consumer enumeration rather than a version scan, **and avoids the FLOODING failure**: ~40 version hits
+> of which most are correct-as-written history, and a flooding instrument gets ignored, **which is
+> exactly how the ~10 real ones stay open.**
+
+**HONEST BOUND, unchanged from A16.1 rather than newly claimed: the enumeration is PYTHON-ONLY, and the
+~10 real stale readers are mostly `.yaml`/`.json`. The discriminator lands in the right place and cannot
+yet reach the population that needs it.** A sequencing fact, not an objection.
+
+#### A26.4 -- F-1 IS CTO~Z's, AND I AM ITS BENEFICIARY
+
+F-1: the bank's **internal self-citations are not lint-checked** -- the A7.1 lint validates CONTRACT
+tokens, not bank-internal paths, and `@2f8c55f192` repaired a dead one (`type_tuple.grain` ->
+`dynamic_rails.D1.grain_axis`, resolving at no vintage).
+
+**Nothing to add except the provenance: I checked WS-C7's bank pointers specifically BECAUSE that repair
+told me the class existed** -- and they resolved. **A fixed defect that teaches the next reader where to
+look is worth more than the fix**, and it is the second time today a repair has functioned as a pointer
+rather than only as a correction.
