@@ -1027,6 +1027,124 @@ adjudication because A PREMISE GENERATES NO QUERY -- the recall-blind again, thi
 costing me a withdrawal instead of costing the estate a wrong registry row. The hold is
 the difference.
 
+## POST-LOG ADDENDUM 29 (~1320-1325Z): ANDREW-DIRECT CARVE-OUT -- estate-report v4 UNPARKS; my hold (a) survives it; method ruled; MEMORY.md brought under cap
+
+ANDREW-DIRECT at ~B's terminal ~1320Z, VERBATIM (recorded + broadcast same turn by ~B):
+"I give you express permission to pick up on the Kimi user input project you left off on"
+-- the carve-out my 022854Z said his word governs. v4 / R7a capture work UNPARKS.
+
+~B GOT THE DANGEROUS PART RIGHT UNPROMPTED: "A SOVEREIGN SCHEDULING CARVE-OUT IS NOT A
+DISCHARGE OF A VERIFICATION HOLD" -- resuming AT my mid-key IAM gate, not through it, and
+NOT reusing the A5 evidence (day-first layout moved the boundary patterns; old evidence is
+about a different key shape). MY RULINGS (132131Z):
+1. Carve-out reading RATIFIED as a standing form: sovereign word governs WHAT proceeds; the
+   hold governs WHETHER a write path opens -- orthogonal by construction.
+2. METHOD APPROVED (every Rule-22a false-deny mode handled) with a REQUIRED PATTERN-SET
+   FLOOR, 4 separate invocations, raw verdicts: ALLOW today's text-input/ exact key; DENY
+   past-day same-subfolder (producer-cannot-rewrite-history's direct test); DENY same-day
+   signed-review/ (the mid-key wildcard hazard IS subfolder-spanning); DENY the PAST-day
+   day-root MANIFEST (history rewrites through the index even with object writes denied).
+   Un-expressible pattern = a DESIGN finding, reported not worked around.
+3. SCOPE DISCIPLINE confirmed: the carve-out does NOT touch retention, the site-Z capture
+   path, or the ADJACENT inbox-preservation question -- all three stay at Andrew (the same
+   over-read class, one door down). Hold (a) lifts on my read of the raw verdicts.
+
+MEMORY MAINTENANCE (same turn): another session compacted MEMORY.md (found it OVER CAP
+with the 6 NEWEST lines silently dropped, incl. the live regime directive -- new law
+banked: an append-only index under a tail-truncated cap drops its newest entries first;
+re-measure in bytes after every edit). My attribution correction SURVIVED the compaction;
+file was still 17,907/17,408 -- I compacted my own line-107 correction (content preserved)
+and REMOVED the resolved 07-30 halt-lifted line (historical, durable in LD-0354; the
+file's own rule is standing-prohibitions + active-triggers ONLY). Final: 17,352 < 17,408.
+Full index loads, newest lessons included.
+
+## POST-LOG ADDENDUM 30 (~1327-1330Z): HOLD (a) REFRAMED v2 -- the boundaries DO NOT EXIST; author-then-exercise; option (ii) ruled INEXPRESSIBLE
+
+~B, executing my battery, found THE WALL (132724Z): the mid-key boundaries exist NOWHERE --
+live policy (get-role-policy: leading-prefix daily/*, manifest/*, logs/*), live bucket (4
+old prefixes), AND Terraform all pre-date RULING 8. The ruling landed as a RECORD and the
+IAM was never rewritten -- the contract moved, its enforcement did not. PLUS the load-
+bearing iam.tf:104-106 comment still names adjudicated/* (superseded surface) as the
+boundary's whole purpose -- stale-record-with-authority on the exact line a grant-widening
+engineer would trust. ~B REPORTED instead of redefining my hold; also surfaced the ORDERING
+PARADOX (exercising via simulate-principal-policy requires attaching; attaching IS creating
+the write capability the hold gates) with the clean resolution: simulate-custom-policy on
+the DRAFT -- falsified before it can ever be live.
+
+RULED (132914Z), four parts:
+1. HOLD (a) v2 = AUTHOR-then-exercise; the A5 pass is now evidence about a policy that does
+   not implement the current contract.
+2. The stale comment fixed IN the authoring commit (names signed-review/, cites RULING 8).
+3. Sequence APPROVED: author -> simulate-custom-policy DRAFT (battery, 4 separate
+   invocations) -> safe-apply (Rule 18) -> simulate-principal-policy APPLIED (battery
+   again; draft=DESIRED cannot tell landed from planned) -> hold lifts on my read of step
+   4 -> only then the write path. Trivially-holding denies RUN ANYWAY.
+4. DESIGN RULED (i) explicit-{today}-literal, daily apply -- decisive ground: OPTION (ii)
+   IS INEXPRESSIBLE, not merely weaker. IAM has no condition comparing the KEY'S embedded
+   date to the current date; aws:CurrentTime bounds WHEN A CALL HAPPENS, not WHAT KEY IT
+   WRITES -- a time-conditioned grant permits writing past-day keys from a today-call. (ii)
+   expresses a DIFFERENT contract that resembles the real one: the axis-confusion class IN
+   POLICY FORM. Cost stated honestly: daily full-cycle apply, mitigated by the RIGHT failure
+   direction (missed apply = LOUD, CLOSED -- producer denied on today's keys, no silent
+   widening); runbook note REQUIRED in the authoring commit. Fallback bounded: broker-writer
+   redesign (static IAM + code-enforced key==today, mutant-testable) comes back as a DESIGN
+   question only if daily-apply proves unsustainable.
+
+## POST-LOG ADDENDUM 31 (~1333-1336Z): ANDREW'S LIFECYCLE-VALUES GATE REACHES MY OWN ADJUDICATION -- PERMANENT x3 SUSPENDED, applied to myself first
+
+CVO~Z's durable record landed in my tree (ANDREW_DIRECT_LIFECYCLE_VALUES_GATED_20260731.md,
+4-hop relay, verbatim carried unaltered): Andrew -- "It is impossible to know the Lifecycle
+Value of the resource without the user input pipeline you are building" + ~B proceeds the
+pipeline and LEADS the Lifecycle Values feature when it matures. Operative clauses (MSTR~Z
+reading, carried as theirs): the Kimi pipeline is an UPSTREAM DEPENDENCY of ESTATE
+Lifecycle Values INSIDE NFRA_VELOCITY (not a carve-out); the vocabulary MECHANISM
+continues; >> POPULATING LIFECYCLE VALUES IS GATED -- no value-population seat. << Open
+scope question surfaced-not-adjudicated (at Andrew + base MSTR + CTO~Z): does the gate
+reach ALREADY-LANDED declaration lifecycle fields?
+
+MY ACTION (133447Z, urgent, before anything banked): BUCKET-1 PERMANENT x3 CLEARANCE
+SUSPENDED -- not withdrawn -- my 125849Z adjudication IS value-population on any plain
+reading, predates the gate by ~30min, and no scope ruling exists; the asymmetry principle
+governs. ~D writes nothing on Bucket-1 until the answer lands. UNAFFECTED: account-
+distribution UNDECLARED (records a non-assertion) + feeds row-58 amendment (amends an
+intent citation) -- neither populates a value. AND THE MERITS, owned: my PERMANENT
+derivation reasoned from the SERVED PRODUCT's correctness rulings, but a correctly-served
+product and a resource's LIFECYCLE VALUE are different objects -- ~D's independent wall
+("cannot infer PERMANENT") + Andrew's word both say the second needs an input the estate
+does not capture yet. The suspension may be correct on the merits, not merely compliant.
+
+~B's TWO RESULTS (133323Z), both banked: (1) live 4/4 capture on their session -- a naive
+type=="user" extractor would have dropped THE SOVEREIGN CARVE-OUT GRANT, THE DEPENDENCY
+RULING, AND THE RELAY ORDER: the pipeline would have silently lost the exact rulings that
+authorized it, on the day they were issued (the project's justification, measured live).
+(2) Their own acceptance evidence held an instrument-that-cannot-fail: fixture 1 pinned to
+a LIVE-APPENDABLE transcript (a changed count indistinguishable from a grown corpus --
+every future number has a ready-made innocent explanation). Original 7/7 sound AT THE
+TIME; void as a STANDING gate. FIX APPROVED: byte-pinned sha256 copy, assertions
+ENUMERATED BY DEDUP_KEY not count, denominator+sha in the fixture's own output; fixture 2
+same form (my day-close pin concern dissolves). Sequenced after the IAM authoring.
+
+## POST-LOG ADDENDUM 32 (~1336-1339Z): SECOND Andrew carve-out heard at ~A's terminal (same grant); ~A's stale-hold proposal converted to a SoD ROLE -- step-4 independent executor
+
+~A (133644Z): Andrew-direct ~1330Z at THEIR terminal, verbatim -- "Also I authorize you as
+a carve out to proceed your project from CVO that is in the top of your logs" + "THe rest
+of the fabric is focused on NFRA_VELOCITY on the ESTATE half." Referent CONFIRMED by me =
+the estate-report v4 rebuild -- the SAME GRANT as ~B's ~1320Z, heard at two terminals, the
+second adding the regime-scope clause. Also Andrew-ruled: ajb.ps1 is DELIBERATE, do not
+touch (explains the earlier shared-worktree push collision).
+
+~A proposed running hold (a)'s exercise ON THE ORIGINAL HOLD TEXT -- the state had moved
+under them (boundaries do not exist; hold is v2; ~B mid-authoring). RESOLVED (133832Z) by
+CONVERSION, not stand-off: the collision is a SEPARATION-OF-DUTIES GAIN -- THE AUTHOR OF A
+BOUNDARY SHOULD NOT BE THE ONE WHO EXERCISES IT FOR THE LIFT. Roles: ~B authors + runs
+step 2 (draft battery, simulate-custom-policy); ~A runs STEP 4 (APPLIED battery,
+simulate-principal-policy) as INDEPENDENT EXECUTOR -- their stated method adopted as-is
+(incl. accessanalyzer for action-name validity + denominator-never-bare-PASS), the
+four-invocation floor binding, trivial denies run anyway. MY read of ~A's step-4 raw
+verdicts lifts hold (a) v2. Explicit warning delivered: do NOT exercise the current
+applied policy -- any verdict would be evidence about the stale object. Split coordinated
+via ~B's ACK per ~A's own proposal.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
