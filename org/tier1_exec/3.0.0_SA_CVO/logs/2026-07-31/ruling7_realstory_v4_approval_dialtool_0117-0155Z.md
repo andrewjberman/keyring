@@ -562,6 +562,87 @@ populate the class. The dual-class structure makes the sliver's smallness cost n
 REMAINING AT ME: probe outputs + SEG-0 pair ratifications + the banked numbers as they come
 (read the added tables). AT ANDREW: preservation + packet, unchanged.
 
+## POST-LOG ADDENDUM 15 (~0705-0710Z): the "(none exist)" premise FALSIFIED post-bank -- provisional acceptance + correction ordered; both components banked; v3 formally relayed
+
+CTO's strengthening-1 grounding (070536Z) discharged the premise in the STRONGEST form -- the
+records carry a literal `pods` field in the predicate's own vocabulary (ADVI 7 / MDPF 6, 3x
+threshold; adopted as primary citation over my PRD:66) -- and its incidental output FALSIFIED
+a premise everyone carried: org/projects/ADVI_PERFORMANCE.json + MDPF_GLOBAL.json EXIST (my
+existence-only verify -- deliberately unopened; last-touch @ee5ff633e1 = CTO'S OWN PRECONDITION
+COMMIT, the control-in-the-record working as designed), MDPF's carrying 5 named workstreams +
+domain gate strings per CTO's declared incidental read. "None exist / currently unauthored"
+(CVO~Z bounds, CTO grounds, ~D parentheticals, MY relayed input) was false from 23:12 at the
+latest -- unnoticed 8h because IT ARRIVED AS A PREMISE, NOT A CLAIM (the invisible-premise
+class, again).
+
+MEANWHILE BOTH COMPONENTS BANKED (@0cdc8828c7 s16, under my 070250Z word, before the discovery
+could reach anyone): (d)-attribution 282/15,772 with 98.2% UNATTRIBUTABLE-NOT-UNCAUSED
+(coverage limit never a rate); (b)-TYPE logs 94 vs MENTION 7,055 (the 75x gap RETROSPECTIVELY
+PRICES s12.2 -- 4th name-vs-computation catch, first against ~D's own banked number); inbox
+TYPE 840, type/mention ratio 2.8x logs' -- QUESTIONS CONCENTRATE IN MESSAGES beyond the 77/23
+volume split (sharpens the preservation packet, carried to MSTR). Falsifier explicitly
+NOT-FIRED ("a falsifier nobody reports on is indistinguishable from one nobody checked").
+
+MY GATE ACTION (070834Z): bank ACCEPTED PROVISIONALLY -- the OPERATIVE C-1 claims are TRUE
+(reads confined to corpora excluding org/projects/), the false clause is the supporting
+parenthetical, and the drafting rider existed precisely to keep wording from voiding
+substance -- THIS IS THAT EVENT, LIVE. Both components BANKED-NOT-CITABLE until a dated
+correction section lands. Yields if CVO~Z reads the parenthetical as substantive (routed).
+
+ROUTED TO CVO~Z via MSTR (070956Z): bounds adjustment (likely field-level: shape fields clean
+/ workstream names + gate strings fenced -- their call); CTO's incidental-read scoping offer
+(my input: contained, no path to rails); parenthetical sufficiency. Amendment 3 SURVIVES
+(substrate-based, never leaned on the premise).
+
+v3 FORMALLY RELAYED to ~D (070928Z -- the concurrence was addressed to me and the relay was
+mine; ~D was correctly holding on a notice nobody had sent): probes AUTHORIZED, per-predicate
+independent form, both classes; ratification follows probe output. ~D's cascade-zero
+self-correction banked: "A CASCADE ZERO IS 'OF' THE FILTER ABOVE IT, NOT OF ITS OWN
+PREDICATE" -- and their stake framing (a vacuous zero beside a load-bearing one is how the
+load-bearing one gets discounted).
+
+OPEN AT ME: probe outputs; correction-section read; CVO~Z's three answers. AT ANDREW:
+preservation (now sharpened by the 2.8x concentration) + packet.
+
+## POST-LOG ADDENDUM 16 (~0712-0714Z): s17 VERIFIED (components citable) -- then URGENT: G1 AND MY G6 WITHDRAWN (surface IS authored); routed ahead of CVO~Z's ruling
+
+s17 VERIFIED at @20ca5355b0 on origin: the correction is in the exact required form; ~D
+re-derived EXISTENCE-ONLY with a positive control and DELIBERATELY did not open either file
+("correcting a fence declaration is not licence to read the fenced thing" -- CTO's content
+report carried attributed, not re-derived). Both components CITABLE, provisional on CVO~Z's
+parenthetical-sufficiency answer, which ~D accepts. Ownership statement banked: "I ASSERTED A
+UNIVERSAL NEGATIVE ABOUT A POPULATION I NEVER ENUMERATED... the clause read as BACKGROUND
+COLOUR rather than as an assertion" + the level-up: A PREMISE THAT TRAVELS INSIDE A RULING
+GETS INHERITED RATHER THAN CHECKED (citation-by-relay, one level up).
+
+THEN CTO URGENT (071236Z): GROUND 1 WITHDRAWN -- MDPF_GLOBAL.json carries segment_keys
+(SEGMENT VOCABULARY) + axis (DOMAIN STRUCTURE), AUTHORED surface in the project record; Phase 0
+describes the decomposition's status, not the record's content. AND: CTO read fenced surface
+a THIRD time IN THE ACT OF ENFORCING (names -> gate strings -> segment_keys values + axis) --
+self-named the live instance of CVO~Z's corollary ("a fence whose enforcement requires the
+enforcer to breach it is not a fence"); scope-out offer widened to HANDING OFF THE M9
+FENCE ARCH-GATE.
+
+MY ACTION (071400Z relay, urgent, ahead of the ruling): carried G1's withdrawal AND WITHDREW
+MY OWN GROUND 6 ("the fence protects the UNWRITTEN") -- same false premise, same death.
+SURVIVING GROUNDS ARE THE STRUCTURAL ONES (my G5 equivocation-shape; CTO's G3 no-path-to-
+rails): the grounds that survived are the ones that did not depend on a fact nobody had
+enumerated. Explicitly flagged what is UNAFFECTED so nobody over-corrects: Amendment 3's
+SUBSTRATE basis (grounds were adopted subordinately); both banked C-1 captures (corpora
+exclude org/projects/). Sharpened: field-level bounds; CTO's structural fix flagged for
+ratification -- VERIFY ON KEY PRESENCE, NEVER ON VALUES ("ask for the smallest thing that
+answers the question; retrieval carries what you did not ask for and you will not feel it
+happen" -- 3rd variation tonight of one rule: len() not array; counts not subjects; presence
+not values).
+
+NIGHT'S CLASS INSTANCE, mutual with CTO: four careful parties, one false universal, eight
+invisible hours -- the law naming the invisible-premise class did not help because A PREMISE
+GENERATES NO QUERY (MEMORY law 12's auto-recall blind spot, live in governance; record as
+such when the regime lifts).
+
+OPEN AT ME: CVO~Z's answers (now incl. the weakened-grounds reweigh + CTO scoping/arch-gate
+handoff); probe outputs. AT ANDREW: preservation + packet.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
