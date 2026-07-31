@@ -88,13 +88,31 @@ def vocab(bank):
     rec = d3.get("contract_record") or {}
     life = d3.get("lifecycle") or {}
     ob = d3.get("obligation_types") or {}
+
+    # UN-LINTABLE FIELDS ARE READ FROM THE BANK, NOT ASSUMED.
+    # The bank marks free-text fields "NOT LINT-CHECKED" (CVO~Z A10.2). Until this block existed
+    # the lint skipped them only INCIDENTALLY -- because it happened to value-check just two fields
+    # -- so the correct behaviour was an ACCIDENT OF SCOPE, and the next value-check added would
+    # have silently started linting prose. CVO~Z's own condition names the failure: "a free-text
+    # field that is NOT DECLARED un-lintable WILL EVENTUALLY BE LINTED, manufacturing exactly the
+    # noise the A9 sequence exists to avoid." Reading the marker makes the exclusion STRUCTURAL:
+    # a future value-check cannot reach a field the bank has declared non-vocabulary.
+    fields = rec.get("fields") or {}
+    unlintable = {
+        name for name, desc in fields.items()
+        if isinstance(desc, str) and "NOT LINT-CHECKED" in desc.upper()
+    }
+
     v = {
         "required": set(rec.get("required") or []),
         "optional": set(rec.get("optional") or []),
         "lifecycle_enum": set(life.get("enum") or []),
         "obligation_types": set(ob.keys()),
+        "unlintable": unlintable,
     }
     for k, val in v.items():
+        if k == "unlintable":   # legitimately empty: a bank need not declare any free-text field
+            continue
         if not val:
             raise RuntimeError(
                 "vocabulary component %r resolved EMPTY -- refusing to lint against an empty "
@@ -112,13 +130,19 @@ def lint_record(rec: dict, key: str, v: dict) -> list[str]:
         out.append(
             "%s: UNRATIFIED TERM %r -- ESTATE declares INSTANCES and ADDS NO TERMS" % (key, extra)
         )
+    # STRUCTURAL EXCLUSION: a field the bank declared non-vocabulary is never value-checked.
+    # Guarded at each value-check below rather than in a sweep, so the exclusion is impossible to
+    # bypass by ADDING a check -- a new value-check that forgets `unlintable` is the failure mode,
+    # and the guard has to live where the check lives.
+    unlintable = v.get("unlintable", set())
+
     lc = rec.get("lifecycle_class")
-    if lc is not None and lc not in v["lifecycle_enum"]:
+    if "lifecycle_class" not in unlintable and lc is not None and lc not in v["lifecycle_enum"]:
         out.append(
             "%s: lifecycle_class %r DOES NOT RESOLVE (ratified: %s)"
             % (key, lc, sorted(v["lifecycle_enum"]))
         )
-    ob = rec.get("obligation")
+    ob = None if "obligation" in unlintable else rec.get("obligation")
     if ob is not None:
         for tok in (ob if isinstance(ob, list) else [ob]):
             if tok not in v["obligation_types"]:
