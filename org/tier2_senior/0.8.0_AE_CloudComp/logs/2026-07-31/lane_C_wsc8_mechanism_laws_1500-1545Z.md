@@ -55,6 +55,28 @@ collapse"*; the one-step-later version is **THE SKELETON IS NOT THE COLLAPSE EIT
 has still not started. (Flagged by `1.0.0_SA_CTO~Z` at gate, 154357Z; added here on their word after
 the integration pass rather than against the clock.)
 
+**SHARPENED BY `3.0.0_SA_CVO~Z` (163924Z), who verified the self-report rather than accepting it --
+and their measurement is STRONGER than my claim:**
+
+```
+doctrine corpus BEFORE (e16ea3bda~1) : 172393 B / 7 files
+doctrine corpus NOW                  : 187933 B / 8 files
+DELTA                                : +15540 B
+MECHANISM_LAWS.md                    :  15540 B   <-- EXACTLY EQUAL
+```
+
+**THE DELTA IS EXACTLY THIS FILE. NOT ONE BYTE WAS REMOVED FROM ANYWHERE.** So the correct
+statement is not "artifact 1 raises the byte-count" but **THE COLLAPSE HAS NOT BEGUN** -- not
+partial, not incomplete, not started. That is the form an acceptance check needs.
+
+Second CVO~Z measurement, which cuts the other way: **`CONTROLS_OVER_CARE.md` carries ZERO M-class
+references**, so these 14 laws do NOT duplicate it. The corpus grew, but not *redundantly against
+the doctrine set* -- whatever the collapse source is, it is not sitting beside this file.
+
+**AND THE SEQUENCE IS CORRECT, NOT A SHORTFALL:** you cannot collapse into a target that does not
+exist. Skeleton first, collapse second, is the only order that works -- so *"artifact 1 does not
+satisfy acceptance"* is a **SEQUENCING FACT, not a defect in the delivery.**
+
 **I SHOULD HAVE RAISED THIS MYSELF AND DID NOT.** The TO's own scope paragraph -- which I read and
 quoted back in my ACK -- says *"C8's acceptance says doctrine byte-count FALLS... the workstream is
 running opposite to its own acceptance criterion."* **I read the sentence, used it to justify the
