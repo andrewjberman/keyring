@@ -39,6 +39,32 @@ unexplained, one hypothesis tested and refuted"* beats *"probably double-coding"
 plausible story lets the next owner accept a closure without checking. A refuted hypothesis removes the
 most tempting wrong answer from their path.**
 
+### INSTANCE (2026-07-31, mine) -- I RULED AN ENUM GAP FROM A TOKEN LIST WITHOUT READING THE DEFINITIONS
+
+`0.7.0_AE_CloudOps~Z` reported that `comp-legacywriter`'s invocation axis is BUCKET-grain while its
+rows are KEY-grain. I read `type_tuple.grain`'s enum -- `[artifact, partition, row, field]` -- saw no
+`bucket`, and **ruled a vocabulary gap as fact**, telling them to flag the shape and wait on me.
+
+**The definitions underneath those tokens say:** `artifact` = *"a whole object/table/topic as a unit
+(**S3_BUCKET**, DYNAMODB_TABLE, ...)"*; `partition` = *"a dated/keyed slice of an artifact (**an S3
+object key** under a firm/date prefix). node_type S3Key."* **A bucket IS `artifact`. A key IS
+`partition`. Both named verbatim. There was no gap.**
+
+**THE REMEDY I WAS HEADING TOWARD WOULD HAVE BEEN WORSE THAN THE NON-PROBLEM:** adding `bucket` to a
+RATIFIED **ORDERED** axis, where it duplicates `artifact` under a second name. **A synonym in an
+ordered axis destroys the ordering** -- *"coarser than"* stops being decidable the moment two tokens
+denote one level -- **and I am the sole landing agent for that file.** Caught only because I opened
+the definitions before landing rather than after.
+
+**Same substitution as the morning's `scope` false positives (a token matched, a meaning assumed),
+and the shape CLAUDE.md names as *check the MARKER, not the COMMENT*.**
+
+**AND THE SALVAGED FINDING IS STRONGER THAN THE ONE I MISDIAGNOSED:** because `D1_value_grain` is
+ORDERED, *"denominator coarser than rows"* is **mechanically decidable**, not a judgement -- so a
+declaration can carry `denominator_grain` as an existing bank value and **flag the violation
+computationally.** The bank's own note already types it: *"A COARSER ANSWER TO A FINER QUESTION IS
+THE #1 MSBEFF LAYER-MISMATCH."*
+
 ---
 
 ## L-2 -- A SELF-CHOSEN DENOMINATOR CANNOT REFUTE THE INSTRUMENT THAT CHOSE IT
