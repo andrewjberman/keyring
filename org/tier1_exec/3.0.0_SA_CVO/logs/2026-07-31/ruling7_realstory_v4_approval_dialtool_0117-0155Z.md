@@ -1449,6 +1449,40 @@ declaration-truth gets the A7.3 treatment: a DECLARED BLIND, judgment-sampled ag
 independent enumeration where one exists, never certified by lint or mutant. Stated in
 every E5 verification I issue.
 
+## POST-LOG ADDENDUM 43 (~1459-1501Z): steps 1-4 landed -- BOUNDARY PROVEN / PATH UNPROVEN; NO partial lift; a DATE-LITERAL DISCREPANCY partly mine; two catches ratified
+
+~B (145932Z): role APPLIED (2/0/0, 0-diff, tagged v0.2.0, sync one-invocation); draft
+battery 6/6; applied battery 10/10 BOTH principals, each with its OWN separately-invoked
+positive control; trust = exactly one principal; deploy ledger opened AND closed
+in-session. Their honest headline: BOUNDARY PROVEN / PATH UNPROVEN -- fallback mutant NOT
+RUNNABLE (no write path exists), overwrite mutant not run, zero objects ever written
+through the role; they explicitly declined to infer a partial lift.
+
+RULED (150113Z):
+1. NO PARTIAL LIFT -- hold (a) v3 stays WHOLE. The fallback mutant is the PRECONDITION
+   that makes the policy verdicts meaningful; a policy-half lift = the GO-beside-HOLD
+   gradient. Battery BANKED AS EVIDENCE, not lifted on.
+2. DISCREPANCY, MY SHARE FIRST: the applied Resource carries the DATE LITERAL
+   (2026-07-31/text-input/*) = the option-(i) shape my 135220Z ruling SUPERSEDED -- and
+   the direction NEVER REACHED ~B (my 135427Z said "resolved underneath" WITHOUT WHICH
+   WAY; I told CTO and ~A only). AN UNSTATED RESOLUTION IS AN INVITATION TO INHERIT.
+   RE-AUTHOR ordered: Resource */text-input/* all-dates; DROP capture_day ENTIRELY (the
+   best fix for required-no-default is NO VARIABLE); time boundary at storage (versioning
+   Enabled, no delete grants -- DENY5 already proves, manifest hashes); expectations flip
+   per ~A's rewrite. WHY against a landed-and-passing shape: the literal carries A DAILY
+   APPLY FOREVER, unbudgeted/unowned -- a grant renewing only if a human remembers is a
+   pipeline whose trigger is a human remembering (Andrew's scheduling law in IAM clothes).
+3. CATCHES RATIFIED: (i) file:// InvalidInput isolation -- "reading 'not allowed' as
+   'denied' would have scored four passes on a call that never evaluated anything" (a
+   verdict-shaped error is not a verdict); inline-vs-file:// on an IDENTICAL policy = the
+   correct two-variable split. (ii) The safe-apply gate REFUSAL + ~B REFUSING the offered
+   override ("bypassing a live gate because my own change broke its ability to evaluate")
+   + the estate lesson: A REQUIRED NO-DEFAULT VARIABLE MAKES A MODULE UN-GATEABLE BY ANY
+   WRAPPER THAT PLANS IT VAR-LESS.
+
+SEQUENCE: re-author -> draft battery -> safe-apply -> ~A applied battery ((a)-shape
+expectations already theirs) -> write path -> mutants -> my read lifts (a) v3 WHOLE.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
