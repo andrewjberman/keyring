@@ -16,7 +16,13 @@ daily/YYYY/MM/DD/estate-report-YYYY-MM-DD.{md,json}   <- pipeline writes: Kimi/K
                                                          + DETERMINISTIC changed-resource list
                                                          (git-commit-derived, ladder-bucketed)
                                                          + day-over-day SET-delta
-manifest/YYYY-MM-DD.json                              <- pipeline writes: born {"status":"PENDING"}
+manifest/YYYY-MM-DD.json                              <- pipeline writes FIRST (status RUNNING at
+                                                         run start); rewrites PENDING on success,
+                                                         FAILED (+failure_reason) on caught error;
+                                                         hard crash leaves RUNNING + stale
+                                                         started_at (loud and true)
+config/_EPOCH.json                                  <- CVO writes ONCE at go-live flip (first
+                                                         expected date; makes ABSENCE computable)
 adjudicated/YYYY/MM/DD/estate-report-YYYY-MM-DD.md    <- CVO writes (this skill, Step 4)
 ```
 
@@ -38,17 +44,32 @@ construction; the report itself is Andrew-asked by name).
 - `aws s3api head-bucket --bucket opal-estate-report` — **absent bucket = INERT**: the pipeline
   has not shipped yet; print one line and stop. (Same inertness contract as MSTR's backstop rule.)
 
-## Step 1 — Enumerate the PENDING census (the manifest IS the oracle)
+## Step 1 — Enumerate + CLASSIFY every expected day (the manifest IS the oracle, and ABSENCE
+## is a state — contract v2, 2026-07-30, the guard-shares-failure-mode fix)
 
 ```bash
 aws s3api list-objects-v2 --bucket opal-estate-report --prefix manifest/ \
   --query "Contents[].Key" --output json
 ```
-Read each `manifest/YYYY-MM-DD.json`; collect every day with `status: PENDING`. Print the
-denominator: `N day(s) PENDING: <dates>`. **Any PENDING day OLDER than today is a LOUD finding**
-— the loop missed a day; say so first, adjudicate oldest-first. Zero PENDING + today's manifest
-absent after 9a ET = the PIPELINE missed its schedule — that is a real finding about the
-producer (route to ~B's lane), never silently absorbed.
+Compute the EXPECTED sequence: every date from `config/_EPOCH.json`'s first report date
+through today. Diff against the objects present and classify each expected day — print the
+full census with denominators:
+
+| State | Meaning | Action |
+|---|---|---|
+| **MISSING** (no object, past day) | the run NEVER STARTED (scheduler/orchestrator/boot failure) | LOUD producer finding -> ~B lane; never absorbed |
+| **RUNNING** + stale `started_at` | started, DIED before rewrite — "says exactly what happened" | LOUD producer finding -> ~B lane |
+| **FAILED** (+ `failure_reason`) | producer caught its own failure (e.g. SecretUnset) | LOUD producer finding -> ~B lane; the reason string is the artifact |
+| **PENDING** | report landed, awaiting adjudication | the normal loop: pull -> adjudicate -> land -> flip |
+| ADJUDICATED / NO_SEMANTIC_CHANGES | done | nothing |
+
+**Why manifest-first + epoch, stated so nobody reverts it:** the v1 contract wrote the manifest
+LAST, so a dying run left the day ABSENT — and the default-alarming gate failed because the
+alarming entry was written by the process that died (A GUARD MUST NOT SHARE A FAILURE MODE WITH
+THE THING IT GUARDS — third measured instance of the shape, 2026-07-30, found by ~B exercising
+A11). Manifest-first makes every STARTED run durably present in an honest state; `_EPOCH.json`
+(CVO-written ONCE at the go-live flip; the pipeline never touches it) makes NEVER-STARTED days
+computable. Adjudicate PENDING oldest-first.
 
 ## Step 2 — Pull
 

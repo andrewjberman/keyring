@@ -127,4 +127,89 @@ CLONE IS THE MOST LIKELY WAY A MORATORIUM GETS VIOLATED BY AN AGENT ACTING IN GO
 Omission recorded as a decision-with-reason so no later agent restores parity with the source.
 The manifest ledger (default-alarming gate) is the replacement; no SNS/CW-alarm/SES in the build.
 
+
+## RULING 5 -- END-TO-END INTENT (Andrew-direct, CVO terminal ~2312Z, VERBATIM)
+
+> What i want to be able to do is use this system end to end through MSTR to be able to
+> accurately update that reference artifact and then ~A can use that live fire to do the
+> investigative work for CTO.
+
+CVO READING (flagged as reading; MSTR/CTO map their own pieces): the full loop -- daily report ->
+CVO /estate-pull -> Andrew ratification -> landed semantic updates -> MSTR backstop verification --
+exercised END TO END so the REFERENCE ARTIFACT (the semantic reference layer the reports propose
+against: resolver prose / semantic notes / the world-model reference rung) stays accurately
+updated; then 0.7.0_AE_CloudOps~A uses that LIVE FIRE for the CTO-side investigative work (the
+trigger-audit / INVESTIGATION_QUEUE program). Relayed to MSTR + CTO same turn. NOTE: ~A's
+Andrew-hold status is Andrew's to lift; this ruling names ~A's role, clearance rides his word.
+
+
+## RULING 6 -- THE CORPUS CORRECTION (Andrew-direct, CVO terminal ~0035Z Jul 31, VERBATIM)
+
+> Honestly that information is useless to an agent who needs to understand high signal key
+> semantics. thats just blathering abstractly about processes and coordination. The high signal
+> information would be the material in here C:\Users\AndrewBerman\Desktop\OPAL_WORLD_MODEL
+> that is literally quotes from me and cto conversation summarized. information about how we
+> have too many opal etfs-tracking AWS resources between S3 and DDB and it is unclear which is
+> the canonical one, that is extremely important nugget of info (also the fact that all of them
+> are also listed in that same convo). The conversation about how opal-data-mdpf is a mistake
+> and it should be decommissioned. that is something that couldnt even be learned from code.
+> this is what I mean with high level semantics. Maybe i phrased it wrong saying give a summary
+> of git co change, the real semantic and scan needs to be from USER INPUT. the user input needs
+> to be tracked and scanned for key tribal knowledge.
+
+DESIGN AMENDMENT (v3, supersedes the git-commit corpus as PRIMARY): the scan's high-signal
+corpus is USER INPUT -- Andrew verbatims and Andrew<->agent conversation capture -- scanned for
+KEY TRIBAL KNOWLEDGE (canonicality confusions, decommission intents, purpose rulings, resource
+enumerations spoken in conversation). The git-change census DEMOTES to context. The corpus
+ALREADY EXISTS as structured capture surfaces: the world-model RULINGS_LEDGER.jsonl ("every
+Andrew verbatim + delta class") + SEMANTIC_NOTES_{s3_buckets,ddb_tables}.md (where the
+etfs-canonicality and opal-data-mdpf-decommission nuggets LIVE today); the workspace verbatim
+convention (XXX.md record-verbatim law: ANDREW_RULING_*/ANDREW_DIRECT_* deliverables, VERBATIM
+blocks in logs/messages); docs/references/*RECORDING*/*MEMO* + docs/briefs voice memos.
+ACCEPTANCE SHAPE Andrew's examples define: a day containing the etfs-canonicality conversation
+MUST surface "too many etfs-tracking resources between S3 and DDB, canonical unclear, full list
+enumerated" as a nugget -- a golden-fixture replay test. STRUCTURAL NOTE sharpened by this
+ruling: the HIGHEST-SIGNAL corpus lives partly in the Desktop world-model repo (no remote,
+mirror-synced) -- the remote question open at Andrew gains weight.
+
+
+## RULING 7 -- THE REAL STORY (Andrew-direct, CVO terminal, received ~0130Z Jul 31, recorded
+0136Z, VERBATIM -- this is the promised "need to do better than that" explanation from ~0053Z)
+
+> What i was going to say, was that every single text of user input from me into a terminal
+> session needs to be tracked somewhere on a day by day basis. that that text store, in
+> addition to git co change, in addition to deployment motion, needs to be synthesized
+> athletically with considerable meta analysis and judgment to get to the real story. the real
+> story is less than 1000 characters a day, it is high signal. the 5-10 sentences that
+> actually mattered and a couple reference pointers. Our focus should be on how to develop
+> this tool to extract the highest leverage items from these sources and construct that.
+> Those few sentences are what id feedback.
+
+CVO READING (flagged as reading; ~B specs the mechanism, CVO approves per Ruling 2):
+
+1. CAPTURE REQUIREMENT (new, and the missing layer): EVERY text of Andrew user input into a
+   terminal session, tracked day-by-day, in a durable text store. This is the COMPLETE PRIMARY
+   record -- wider than Ruling 6's curated capture surfaces (RULINGS_LEDGER / SEMANTIC_NOTES /
+   verbatim deliverables are DERIVED records; Ruling 7 demands the raw feed they derive from).
+   Candidate primary source for ~B's spec to ground: the harness session transcripts, which
+   already carry every user message with timestamps -- to be verified against "every single
+   text ... into a terminal session" (all sessions, all agents, both devices).
+2. THREE-SOURCE SYNTHESIS: (a) the user-input text store, (b) git change, (c) deployment
+   motion. This RE-ADMITS git change (demoted to appendix by Ruling 6) and ADDS deployment
+   motion -- as SYNTHESIS INPUTS to triangulate the story, not as the story.
+3. OUTPUT CONTRACT (supersedes the v3 nugget-census as the product): THE REAL STORY --
+   less than 1000 characters per day, the 5-10 sentences that actually mattered, plus a couple
+   of reference pointers. Produced by "considerable meta analysis and judgment", not by
+   extraction mechanics alone.
+4. THE FEEDBACK SURFACE: "Those few sentences are what id feedback" -- Andrew's daily
+   adjudication input IS the story. The /estate-pull loop reads the story; the nugget scan and
+   the census become internal means, not the deliverable.
+5. FOCUS DIRECTIVE: the development effort aims at EXTRACTION OF HIGHEST-LEVERAGE ITEMS from
+   these three sources and CONSTRUCTION of the story.
+
+STANDING CONSTRAINTS UNCHANGED BY THIS READING: Ruling 6's fail-closed provenance (a forged
+Andrew quote is worse than a missed nugget) binds the story's quotes and pointers; the golden
+fixtures (etfs-canonicality, opal-data-mdpf decommission-intent) remain acceptance shapes --
+a day whose input contained them must surface them in or behind the story.
+
 -- 3.0.0_SA_CVO

@@ -170,3 +170,8 @@ error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
 - NOT retracted, on purpose: the batches above stay in this append-only file. This annotation states
   what they mean; it does not erase them. An audit record that can be rewritten when it embarrasses
   the instrument is not an audit record.
+
+## 2026-07-31T011725Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/tombstone-gate-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/tombstone-gate-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
