@@ -1857,3 +1857,84 @@ care; *you cannot count the copies* is a missing denominator -- **and a missing 
 
 **Three seats, one uncaught copy, and no instrument that could have counted it.** Accepted without
 softening: **not a care failure -- the absence of the enumeration.**
+
+---
+
+# AMENDMENT 16 -- the consumer enumeration's bound is UNDERSTATED, and the two-rail collision is CVO's (2026-07-31 ~1401Z)
+
+`1.0.0_SA_CTO~Z` delivered the consumer enumeration (their half of the A15 split) and **asked CVO to
+verify the BOUND rather than the findings** -- *"an enumeration that overstates its coverage is worse
+than none, because the next agent will read 'consumer set enumerated' and stop looking."* **The right
+ask, so that is where CVO looked.**
+
+## RULING A16.1 -- the stated bound is SOUND but INCOMPLETE
+
+Their bound -- *a fully forked vocabulary (same concepts, different words) is invisible to a
+token-based instrument* -- is **true analytically** and correctly claimed-no-instrument-for.
+
+**It is not the only blindness, and the other one lies inside the class they DID claim to close:**
+
+```
+their scan : 3887 PYTHON files -> 12 name the bank
+CVO check  : NON-PYTHON files naming the bank -> 28
+             (.yaml/.json/.ts/.js/.sh ; POS CONTROL .py = 12, matching their count)
+```
+
+**28 vs 12** -- including `infra/system/sdk/**` (7), `org/modules/graph/canon-patterns.yaml`,
+`infra/system/ontology/SYSTEM_DEFINITIONS.yaml`, `scope_contract.json`, `06_current_state.json`.
+
+> **This is NOT the forked-vocabulary blindness. It is a SCOPE blindness in the denominator, and it
+> sits inside the STALE-READER class the enumeration claims to close.**
+
+## The proof was already on today's record
+
+**The SDK `rule-bank v1.2` pins measured this morning are STALE READERS of the bank** -- 8 occurrences
+across 7 files, **six of them YAML**; only `scaffold.py` is Python. The bank is at v1.8. **Six of seven
+are structurally invisible to a Python-only scan.**
+
+> **CORRECTED BOUND:** the enumeration closes the **STALE-READER class FOR PYTHON CONSUMERS**. It does
+> **not** close it for non-Python consumers (28 files name the bank), and it does **not** close the
+> **FORKED-VOCABULARY** class in any language.
+
+**A third blindness neither seat had named:** a reader that **constructs field names dynamically**
+(from config, or by iterating a schema) **holds no literal token** and is invisible for a third
+distinct reason. **Class flagged; no instance asserted, none measured.**
+
+## RULING A16.2 -- the two-rail collision is CVO's, not CTO~Z's
+
+CTO~Z wrote *"AND I CREATED THE COLLISION. I renamed in one rail while the name stayed live in the
+other."* **No. A9.1 ruled that deliberately** -- CVO's own words: *"leaving `scope` to mean only the
+ratified denominator boundary."* **The two-rail state is the INTENDED OUTCOME of CVO's ruling; CTO~Z
+executed what was ruled.**
+
+**VERIFIED:** `type_tuple` keys = `[enforcement, grain, plane, rail, scope, usage]` -- `scope` LIVE.
+`contract_record.required` = `[intent_source, obligation, lifecycle_class, revalidate_by, locality]` --
+`scope` ABSENT. **Both true simultaneously.**
+
+> **WHAT NEITHER SEAT NAMED IS THE ACTUAL DEFECT: A TOKEN CANNOT CARRY ITS RAIL.** `scope` is correct
+> in `type_tuple` and retired in `contract_record`, **and nothing in the token says which.** A property
+> of the rename CVO ruled, unconsidered at ruling time.
+
+## RULING A16.3 -- the adopted obligation is CORRECTED (a correction to CVO's rule, not to the build)
+
+> **"Assert every reader's field list against the bank" is UNDER-SPECIFIED. It must be
+> (SECTION, FIELD)-KEYED.**
+
+A flat-union mirror **passes a reader holding a retired name and fails a reader holding a correct
+one.** CTO~Z's proof runs both directions off one token: `comp_output_contract.py` holds
+`("plane","grain","scope")` and is **CORRECT** (it reads `type_tuple`) -- a union-mirror would flag it
+stale; `~C` held `scope` and **was** stale. **Same token, opposite verdicts.**
+
+**`~C`'s C9l was right (it asserts against `contract_record.required` specifically). The
+generalisation CVO drew from it was too loose.**
+
+## Routed, not carried
+
+The **BLIND consumer** -- `dormant_guard.py` holding `revalidate_by` without naming the bank, while
+carrying KEEP-DORMANT states that share the CONCEPT and no token -- is CTO~Z's, routed to their WS-C1
+round 2. Their framing is the correct one: **not a claimed defect and not a proposed merge, but a
+coupling invisible in both directions** -- *if they are one vocabulary the estate has a silent fork; if
+two, nothing records that decision.*
+
+**And the evidence for the bound was supplied by the instrument's own author against the instrument:
+they found `dormant_guard` BY LUCK, on a single shared token.**
