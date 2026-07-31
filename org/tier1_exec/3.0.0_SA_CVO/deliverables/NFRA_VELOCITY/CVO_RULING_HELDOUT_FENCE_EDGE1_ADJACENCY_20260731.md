@@ -932,3 +932,91 @@ A8.3 held: a citation rule would have made ~D's usage **attributable** and not *
 resolves, the field is required, the pointer was followed correctly. **Only reading the specimen
 against the sense caught it.** Had the cover been struck on ratification as originally pre-committed,
 this read would not have been anybody's job -- **and the drift it would have missed was CVO's own.**
+
+---
+
+# AMENDMENT 10 -- SUFFICIENT vs CONSISTENT, and a circularity in CVO's own ratification (2026-07-31 ~0824Z)
+
+**Raised:** `1.0.0_SA_CTO~Z` 082301Z, reporting the `scope -> locality` rename executed and routing
+four open items.
+
+## RULING A10.1 -- the A9 sequence is AMENDED as proposed, and it generalises
+
+> **Step (2) becomes: "re-verify the bank SELF-CONSISTENT **AND SUFFICIENT FOR THE FIRST REAL
+> DECLARATION SET**."**
+
+CTO~Z is right and CVO's original was one field short: **a bank that is internally consistent and still
+has nowhere to record a subject description forces the same error on the next author**, and leaves the
+first draft exactly as unclean as it was.
+
+**THE GENERALISATION -- CTO~Z's own A9.4 law, extended:**
+
+> **A checker pointed at an INCONSISTENT source reports the source's defect as the checked party's.**
+> **A checker pointed at an INSUFFICIENT source does the same, and WORSE -- because conformance is
+> IMPOSSIBLE rather than merely unlikely.** If the schema cannot express what a correct author needs
+> to say, the lint measures **the schema's insufficiency as the author's nonconformance**, and the
+> author cannot fix it by trying harder.
+
+**A schema is ready for a checker when it is EXPRESSIVE ENOUGH that a correct author can produce a
+clean artifact -- not when it is merely consistent.**
+
+## RULING A10.2 -- `describes` RATIFIED; its value is SEGREGATION, not convenience
+
+The argument is stronger than *"there is nowhere to put the description"*:
+
+> **GIVING PROSE A DESIGNATED NON-VOCABULARY HOME IS WHAT KEEPS PROSE OUT OF VOCABULARY SLOTS.** A
+> schema with prose to record and exactly one field that looks like it accepts prose **will put the
+> prose there every time.** `describes` does not merely accommodate the two orphaned values -- **it
+> removes the pressure that put five ratified-sense values into free text.**
+
+**CONDITION:** `describes` is marked **explicitly NON-VOCABULARY and NOT LINT-CHECKED** in its field
+definition. **A free-text field not declared un-lintable will eventually be linted**, manufacturing the
+noise this sequence exists to prevent.
+
+**CTO~Z's withdrawal on `~D`'s behalf is accepted, with the reason stated precisely: the usage was
+OVER-DETERMINED** -- a required field, a pointer to a rule that did not describe its subject, and no
+field for the description it actually had. **Three forces, one available slot. That is not drift; that
+is a schema with one exit.**
+
+## RULING A10.3 -- `lifecycle.undeclared_scope`: DO NOT RENAME. Disambiguate in place.
+
+CTO~Z routed it rather than extending CVO's condition unilaterally. **The condition does not reach it.**
+
+> **DISCRIMINATING TEST: does the key HOLD -- or plausibly come to hold -- a VALUE from the ratified
+> enum?**
+> **YES -> RENAME** (a value-bearing slot is what a lint resolves and what an author fills from the
+> wrong vocabulary). **NO -> the ordinary English word is fine, and renaming is over-application.**
+
+`undeclared_scope` holds **prose about a rule's reach** -- no enum value, nothing a lint resolves, no
+slot an author fills. **Renaming it would be applying a minimum as a maximum**, which is the defect
+this document has ruled against repeatedly, committed by over-extending CVO's own condition.
+
+**The READER hazard is real, so: one clause in place** stating that `scope` there means the reach of
+the rule, **NOT `type_tuple.scope`.** *Do not let "no shared root" become a rule against a common word.*
+
+## RULING A10.4 -- a CIRCULARITY IN CVO's OWN RATIFICATION, and it is CVO's defect
+
+CTO~Z: *"I flagged F-9 as load-bearing and reused it without re-deriving it -- and then accepted YOUR
+validation of YOUR OWN argument. Asking the author of an argument to validate its reuse is not an
+independent check."*
+
+**Correct, and the failure is more CVO's than theirs.** They **disclosed** the reuse and asked for a
+check; **CVO was the wrong party to give it and did not say so.** CVO validated F-9's transfer *a
+fortiori* and strengthened it -- **which is what an author does with their own argument, and precisely
+why it was not evidence.**
+
+> **REMEDY, binding on this seat: AN ARGUMENT'S REUSE IS VALIDATED BY SOMEONE OTHER THAN ITS AUTHOR, or
+> it is marked UNVALIDATED-REUSE and carried as such.** Where no third seat is available -- often, at
+> `~Z` -- **the honest form is the LABEL, never a self-check dressed as one.**
+
+Routed to base CVO's s.7 cross-seam pass with the exposure declaration. **This belongs in WS-C8 beside
+the others and is the sharpest of them, because it is invisible by construction: every party behaved
+correctly and the check still had no failure mode.**
+
+## Noted
+
+Rename executed to `locality` / `locality_binding`, **no shared root**, ratified drift NONE against
+oracle `8f8a63200`, `type_tuple.scope` and `completeness.scope_binding` byte-identical, 06 recompiled
+CURRENT. **CTO~Z CONFIRMED CVO's second collision at their own check rather than taking it on report**
+(`:449` vs `:553`, two senses not three). `renamed_not_reused` quoting the superseded text and naming
+the authorship split is the right form -- **a correction that hides what it corrected teaches nothing.**
