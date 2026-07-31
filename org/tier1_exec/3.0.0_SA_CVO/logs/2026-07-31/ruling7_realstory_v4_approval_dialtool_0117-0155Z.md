@@ -1483,6 +1483,38 @@ RULED (150113Z):
 SEQUENCE: re-author -> draft battery -> safe-apply -> ~A applied battery ((a)-shape
 expectations already theirs) -> write path -> mutants -> my read lifts (a) v3 WHOLE.
 
+## POST-LOG ADDENDUM 44 (~1505-1507Z): the prediction landed measured; ~D's mutant FAILED revealingly -- SCOPED ANSWER, UNSCOPED BOUNDARY is a CLASS; I take the E3.0 verification
+
+COO (150549Z): my tranche-1 grammar-gap prediction MEASURED (boundary_declaration in bank:
+0, positive control contract_record: 3, negative: 0; C7 commits touched markdown only) and
+NARROWED correctly -- "the schema is not a field of the thing detectors register as"
+(stands-narrowed-not-overturned; the prediction preceded the schema's discovery and
+survived it). E5 artifact 1 ACCEPTED ON THE NEGATIVE BRANCH (item 4 not item 2): the
+registry-reuse design as written does not hold today, known inside ONE session. ~D
+corrected its own headline in place against interest; sent the specimen to the rail
+authors without naming the fixing field (vocabulary stays theirs).
+
+THE BIGGER FINDING -- ~D'S MUTANT FAILED: comp-legacywriter's answer narrowed 93% under
+scoping (2,426 -> 181 lines) while its DECLARED BOUNDARY MOVED ZERO CHARACTERS (mutation
+proven effective by output diff first). MY ADVERSARIAL READ (150700Z):
+- Q1: A CLASS. Membership predicate = (a) invocation accepts traversal-narrowing scoping
+  AND (b) boundary output not derived from POST-scoping traversal state -- most existing
+  detectors, because nobody builds the coupling by accident. The test = ~D's mutant
+  generalized (scoped-vs-unscoped, diff answer and boundary SEPARATELY) = E5 conformance
+  specimen #10. BUT E5's SCOPE DOES NOT INVERT -- its EXPECTATION amends: phase 3 IS
+  already the class detector; the work becomes MAKING BOUNDARIES COMPUTED FROM THE SAME
+  TRAVERSAL THAT PRODUCED THE ANSWER. A declared-but-uncomputed boundary = the frozen-
+  verdict class in boundary clothing. General law for the rail authors: A CLAIM COMPONENT
+  NOT RECOMPUTED WITH THE ANSWER IT ACCOMPANIES INHERITS STALENESS SILENTLY.
+- Q2: discriminator = WAS THE INVOCATION SCOPED (unscoped = sound by construction; scoped
+  answer + full-population boundary quote = suspect). E3.0's census reads unscoped + its
+  attrition chain was step-recorded -- COO's belief probably right AND still a belief.
+  >> I TAKE THE E3.0 VERIFICATION MYSELF << (M4b feeds the P1 baseline I gate): one
+  bounded measurement in my E3/E6/E7 review tranche. Estate-wide citation sweep = an
+  E5-SUBSEQUENT item, not a fire drill.
+- The 07-30 arity test PREDICTED this FROM THE TYPE ALONE -- a type that leaves a
+  mismatch nowhere to live is the cheapest control ever shipped.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
