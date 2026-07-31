@@ -450,4 +450,39 @@ if printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_COMMIT" \
     fi
 fi
 
+# =========================================================================================
+# GATE 5 -- LD-0367 rule 2 / LD-0368: INTEGRATOR-ONLY push+pull on a SHARED branch.
+# Only 0.0.0_AB_MSTR (base) and 0.0.0_AB_MSTR~Z (site-Z) -- the two integration-window
+# integrators -- may `git push` or `git pull` a shared branch. Every other seat commits to a
+# SEAM and lets the hourly window (LD-0367) move it.
+#
+# WHY (proven, integration-window #1, 2026-07-31, measured not confessed): a seat that pushes
+# early PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS with its own -- CTO~Z's push carried MSTR~Z's
+# held commit (MSTR~Z's 380192d3d was an ancestor of CTO~Z's HEAD). Neither party chooses it and
+# the pusher cannot see what it carried. "just this one push" is therefore never local. A gate,
+# not a convention, because the violation is INVISIBLE to the violator.
+#
+# SCOPE, deliberately narrow, three ways:
+#   - `git fetch` is NOT blocked (LD-0367 rule 4: everyone fetches-by-hash mid-hour).
+#   - SHARED branches only (CLOUD/DEV/PROD/main/master); a scratch branch is the worker's own.
+#   - rebase-pull is already denied for EVERYONE by GATE 1 above (it runs first and exits).
+#
+# IDENTITY, fail-closed: the caller's serial comes from THIS call's own session_id (hook input
+# JSON -> LD-0290's per-session serial file, the reliable source; the SHARED .agent_context is
+# not), then $OPAL_AGENT_SERIAL. If it does not POSITIVELY resolve to an integrator MSTR, the
+# push/pull is DENIED. A false-deny is loud and the integrator fixes it in one step; a false-allow
+# silently republishes the whole tree -- so UNRESOLVED FAILS TO DENY, never to allow.
+# =========================================================================================
+_RE_PUSHPULL="${_GIT}"'(push|pull)([[:space:]]|$)'
+if printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES" \
+   && [ -n "$(scan PUSHPULL_AUTHORITY '' "$_RE_PUSHPULL")" ]; then
+    _SID=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // empty' 2>/dev/null)
+    _CALLER=""
+    [ -n "$_SID" ] && _CALLER=$(tr -d '[:space:]' < "$WS/org/mcp/sessions/${_SID}.serial" 2>/dev/null || true)
+    [ -z "$_CALLER" ] && _CALLER="${OPAL_AGENT_SERIAL:-}"
+    if ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
+        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
+    fi
+fi
+
 exit 0
