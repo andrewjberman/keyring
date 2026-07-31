@@ -109,3 +109,40 @@ what it says** -- and the accusation would have been footnoted with a grep.
 **REMAINING OPEN, and none of it blocks:** the `+2`/five-population cause (MSTR's); `GAP_NAMED`'s
 possible split; `TRIGGER-MISSEQUENCE`'s provenance (mine); M3 sub-class D; and the `layer` axis
 uncrossed against `verdict`.
+
+---
+
+## S.4 STOP: DO NOT DESCOPE THE TYPING WALK -- IT CARRIES A GOVERNANCE LOAD IT WAS NOT SCOPED FOR
+
+**Recorded HERE, in the document where a descope decision would actually be made, because the whole
+point of the finding is that this dependency has no defender.** Base CTO, relayed via `0.0.0_AB_MSTR~Z`
+`@080110Z`:
+
+> **The WS-C2 typing walk -- typing real specimens against the grammar -- is now the ONLY place
+> SEMANTIC DRIFT ON A RESOLVING TOKEN becomes visible, as a typing DISAGREEMENT.**
+
+**THE RESIDUAL IT COVERS:** `scope` or `grain` used in a sense D3 does not license -- **lexically
+clean, passes CVO~Z's Amendment-7 declare-time lint perfectly, and quietly redefines a ratified word.**
+A lint checks that a token RESOLVES; it cannot check that the sense is the licensed one. CVO~Z ratified
+the lint, named this residual as one it cannot close, and **deliberately declined to invent a mechanism
+for it** (the M15/M2 precedent -- name the homeless property rather than mis-route it). They identified
+this walk as the existing partial mitigation.
+
+**Base CTO has proposed a candidate mechanism -- high-semantic-room tokens must CITE the spec line they
+use -- and it is with CVO~Z to ratify or drop. UNTIL THAT IS RULED, THIS WALK IS THE WHOLE OF THE
+COVER.**
+
+> ### **A MITIGATION NOBODY KNOWS THEY ARE PROVIDING IS ONE THAT GETS DESCOPED FOR REASONS THAT LOOK LOCAL AND CORRECT.**
+> **AN UNSCOPED MITIGATION HAS NO DEFENDER.** It appears in nobody's requirements, so the decision to
+> trim it is made by someone who cannot see what it was holding -- and their reasoning will be sound
+> on every fact available to them.
+
+**BINDING ON ME AND ON ANY SUCCESSOR:** the typing walk is not descoped, deferred or "declared
+complete" on efficiency grounds **without first accounting for the A7.3 drift-cover.** If the candidate
+mechanism ratifies, this constraint lifts and should be struck. Until then it stands.
+
+*This is the same class as tonight's others with one variable changed: a correct local judgment resting
+on a mechanism the judge never read -- except here the unread mechanism is **what a neighbouring
+component is silently doing for you.*** And recording it in an inbox message alone would have
+reproduced the defect exactly -- **a single-carrier record of a dependency whose failure mode is that
+nobody knows it exists.**
