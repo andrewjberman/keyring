@@ -15,6 +15,20 @@ resolution:
     Re-resolved at every read. No cache outlives a read; an unreachable rule bank FAILS LOUD.
     Bank head re-read before declaring — it moved twice under tranche 1 on 07-31.
 
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# E2-SPLIT FLAG (base CTO 123849Z, relayed MSTR 124454Z -- applied retroactively to this tranche)
+#
+# `process:` SUBJECTS IN THIS FILE FALL UNDER THE E2 SPLIT. They are NOT RETRACTED and NOT WRONG
+# today: they are pinned at this vintage as E2's CONTRACTUAL BEFORE-EVIDENCE, and they are
+# RE-LINTED (a re-verification, never a retraction) once E2's trigger topology settles.
+#
+# THIS TRANCHE IS 6 PROCESS / 1 ARTIFACT. Under "breadth = artifact subjects only", exactly ONE
+# subject here -- model_portfolio_benchmarks.json -- is eligible going forward. Stated so a reader
+# does not mistake 7 declared subjects for 7 subjects that count toward breadth.
+#
+# The split is about E2 overlap, not about these declarations' validity.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+
 contracts:
 
   "process:yang-benchmarks-etf-returns":
