@@ -614,7 +614,7 @@ type_tuple:
   grain:
     enum: [artifact, partition, row, field]   # coarse -> fine
     forward: [row]                            # row not in the live graph -- declared, unpopulated
-    means: "the resolution of the value (dynamic_rails.D1.grain_axis). A COARSER answer to a FINER question is the #1 MSBEFF layer-mismatch."
+    means: "the resolution of the value (dynamic_rails.D1_value_grain.grain_axis). A COARSER answer to a FINER question is the #1 MSBEFF layer-mismatch."
   plane:
     enum: [source, projection, desired, applied, live, mixed, graph-cache]
     means: "WHERE the value is observed -- the intent-vs-config axis (INTENT_DENOMINATOR_SYNCHRONIZATION s.6). source=code AST; projection/graph-cache=a vintage'd graph read (a projection, not live); desired=declared config INTENT (TF/registry); applied=the config as landed; live=the runtime plane observed now; mixed=spans planes."
