@@ -363,7 +363,7 @@ This makes **AXIS 2 GENERATIVE** rather than merely gating -- it can **propose**
 
 > **IF SO, THE TWO AXES ARE NOT INDEPENDENT: FRICTION-AS-DUPLICATION READS INTENT'S OUTPUT.**
 
-That would make the walk a dependency of the **duplication detector** as well as of retirement -- a **fourth consumer**, strengthening one-source-several-consumers, but also meaning **the walk cannot be scoped as if only E3/E5 read it.** Routed by CVO to COO and CTO. **This spec NAMES the question and assumes neither answer** -- scoping the walk to two consumers when a third is coming would under-build it; assuming the third would over-build it against an unratified mechanism.
+**RULED SINCE (COO 175627Z): the duplication detector is an ENHANCEMENT, NOT A DEPENDENCY.** So the walk is **NOT** scoped against it, and this section stands as a **named open mechanism** rather than a fourth edge. I had framed it as *"the walk cannot be scoped as if only E3/E5 read it"* -- **that framing is withdrawn**: scoping the walk to three ruled consumers is correct, and building for a fourth that is not a dependency would be over-building against an unratified mechanism. The question of whether function-sameness needs axis 1's output stays open and interesting; it does not bind this design.
 
 > **⛔ FENCE, stated so it is not built wrong: the duplication analysis produces CANDIDATES FOR HUMAN ASSESSMENT** -- Andrew's own word is **"assessed."** **NOT an alarm, NOT a monitor, NOT a detector that pages.** The standing 2026-07-28 notification moratorium binds it.
 
@@ -402,6 +402,48 @@ Andrew: *"this needs a dedicated series of TOs wrapped into the project."* Propo
 | **R4** | **Expired `revalidate_by`: NONE of the three I proposed -- ONE STATE, PER-CONSUMER POLICY.** The assertion **PERSISTS, MARKED STALE, and RE-ENTERS the walk.** Decay-to-`UNDECLARED` is *a control that destroys its own evidence*; persist-as-current is the frozen map; **persist-marked-stale keeps the information AND makes the staleness legible.** Then consumers differ **legitimately**: **E3 (retirement, IRREVERSIBLE) must REFUSE a stale assertion. E2's deliberate-hold must HONOR one** -- refusing to re-arm a disarm on a stale label is strictly safer than re-arming. **Spec the state once; spec the policy per consumer.** |
 | **R5** | **NO countersignature -- doubt only**, per Andrew's (3). The reason is this spec's own s.6 hazard turned on CVO: *if CVO gated every landing, "CVO did not object" becomes a certification* -- the walked-vs-confirmed collapse wearing the reviewer's signature. CVO instead holds a **POST-HOC READ RIGHT**: may review landed assertions without gating them; a finding lands as a **DOUBT-RAISE that re-enters the item.** **Escalation-triggered on the way in, non-blocking on the way out.** |
 | **R6** | **Disagreement: the walk record carries a typed OUTCOME** -- `{AGREED, CONFIRMED_AFTER_INVESTIGATION, SOVEREIGN_OVERRIDE}`. **Andrew is sovereign and owes no justification; the record must still be LEGIBLE AS AN OVERRIDE**, because a future reader deciding whether to re-open needs to know the label rests on a ruling over disagreement rather than on agreement -- **those have different re-open triggers.** Composes with the typed basis in s.6.1. |
+
+---
+
+## 10.5 EDGES -- what this layer CONSUMES and EXPOSES (COO 175627Z, for Andrew's integration review)
+
+*Andrew's question is whether the systems COMPOSE, or whether we built several correct things that do not fit. This layer is the highest-fan-out node in the ESTATE half.*
+
+**CONSUMES**
+
+| from | what | status |
+|---|---|---|
+| **WS-E1** | the estate-contract **registry AS ITS STORE** -- the walk is the WRITER, never a second home for intent | ✅ ruled (CTO 161617Z) |
+| **WS-E8.1** | the C3 population, **MEASURED** `@3e241b2f93`: 29 verticals / 138 chains; 13 systems + 1 completeness item | ✅ landed |
+| **Kimi Layer 1** (mine) | the high-level signal that surfaces which C3 items warrant a look -- **the Layer-1 -> Layer-2 seam is mine and nobody else can describe it** (s.7) | ✅ built, seam spec'd |
+| **CORE / CTO~Z** | a **RAIL-AUTHOR ACT** for the `walk:<record-id>#<item-id>` token -- **the A7.1 declare-time lint rejects unresolvable tokens, so without it EVERY walk assertion is refused at declaration** | ⚠ **NOT YET EXISTS -- cross-fabric, blocking C3L.1** |
+
+**EXPOSES** -- maintained `lifecycle_class`, ONE INTENT SOURCE, THREE RULED CONSUMERS:
+
+| to | what it derives | note |
+|---|---|---|
+| **WS-E3** | Tier-A keep-dormant annotations | **must REFUSE a stale assertion** (retirement is irreversible) -- R4 |
+| **WS-E2** | the DELIBERATE-HOLD field | **must HONOR a stale assertion** -- refusing to re-arm on a stale label is strictly safer than re-arming -- R4 |
+| **WS-E5** | boundary declarations | |
+| *(act-3 duplication)* | *ENHANCEMENT, NOT A DEPENDENCY* (COO 175627Z) -- **not an edge; the walk is not scoped against it** | s.8.1 |
+
+**AND THE STRUCTURAL ONE:** the walk's output is the **INTENT axis** feeding the WS-E3 gate that is **currently structurally INERT** -- shed is two-axis, only FRICTION was ever instrumented (s.2.0).
+
+### 10.5.1 AN EDGE I EXPECTED THAT DOES NOT EXIST -- and this spec sits on it
+
+> **THE C7 BOUNDARY SCHEMA IS NOT WIRED INTO `contract_record`.**
+
+Found independently by **WS-E5** and by **MSTR~Z** (who surfaced the same C7-vs-D3 seam among five cross-fabric points). **This spec sits directly on that seam**: the walk writes `contract_record` fields, and a boundary vocabulary that does not reach that record cannot be asserted by the walk **no matter how the walk is designed.**
+
+**I am not proposing a fix** -- the seam belongs to C7/D3 owners, and inventing a bridge from this side is exactly the parallel-store hazard wearing a different name. **Recorded as a missing edge, which COO's brief says is the most valuable answer for this review.**
+
+### 10.5.2 SCOPE IS DELIBERATELY LEFT PARAMETERISED
+
+> **⛔ THE 29-vs-43 WALK DENOMINATOR IS AT ANDREW AND PENDING. THIS SPEC DOES NOT FIX IT.**
+
+Every mechanism here -- walk record, assertion unit, `revalidate_by` re-entry, consumer derivation -- is **written against a population it does not name a size for.** R2 fixes the *unit* (agenda = C3.ii vertical; assertion = `contract_record`); **it does not fix the count, and C3L.2 carries the enumeration as an input rather than a constant.**
+
+**A spec that pre-commits a scope Andrew is in the middle of deciding is worse than one that leaves it parameterised** -- it would have to be re-opened by the ruling instead of absorbing it.
 
 ---
 
