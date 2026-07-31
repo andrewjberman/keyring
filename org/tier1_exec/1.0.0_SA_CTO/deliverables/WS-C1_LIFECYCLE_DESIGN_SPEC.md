@@ -223,7 +223,20 @@ Each value that flips a detector's polarity carries fields making the declaratio
 |---|---|---|
 | `TRANSIENT` | `consumer` (**EXERCISED**, not merely resolvable), `max_dwell` (**BOUND to the consumer's D3 cadence**), `scope` | see S.3.2 -- both qualifiers are load-bearing and were added at rev 3 |
 | `EVENT_CREATED` | `creating_event`, `event_observable` (where the occurrence is INDEPENDENTLY visible), `scope` | without an independent observable, "absence = zero events" is unverifiable and byte-identical to "the writer is broken" |
-| `DORMANT` | `reason`, `rearm_condition`, `annotation_cite` (file:line), `revalidate_by` | **NOT INVENTED -- these are `keep-dormant.yaml`'s existing RULING-1 required fields, adopted verbatim.** `rearm_condition` is the one that matters: a belt nobody can state the re-arm for is not a belt |
+| `DORMANT` | `reason`, `rearm_condition`, **`annotation_cite` (`file:line @ <commit-ish>` -- NOT bare file:line, see R-3)**, `revalidate_by` | **NOT INVENTED -- these are `keep-dormant.yaml`'s existing RULING-1 required fields**, adopted with ONE strengthening. `rearm_condition` is the one that matters: a belt nobody can state the re-arm for is not a belt |
+
+> **R-3 RULED -- `annotation_cite` TAKES A VINTAGE, AND THIS IS A LIVE DEFECT IN THE REGISTRY TODAY,
+> NOT ONLY IN THIS SPEC.** `keep-dormant.yaml` RULING 1.2 requires `annotation_cite (file:line)`.
+> CLAUDE.md Rule 22 is explicit: **"A LINE CITATION WITHOUT A VINTAGE IS NOT A CITATION"** -- bare
+> `file:line` resolves at EVERY vintage, to DIFFERENT code. So at re-grounding time an entry's own
+> evidence pointer resolves against the CURRENT file and still reads valid **even if the cited line
+> moved or its meaning inverted -- the re-grounding cannot detect that it re-grounded on different
+> code.** Combined with S.3.1b this is the difference between a revalidation and a ritual.
+> **The lifecycle axis takes `file:line @ <commit-ish>`.** The registry's SEVEN LIVE ENTRIES carry the
+> bare form today and acceptance item 11 has `DORMANT` cite that registry as intent_source, so the axis
+> would INHERIT the defect. **Routed as a finding against `keep-dormant.yaml` (CTO arch-gated, not
+> mine to edit at ~Z under the exclusive regime); it does NOT block this build** -- the axis states the
+> stronger requirement and the registry is corrected on its own path. Found by `3.0.0_SA_CVO~Z`.
 | `LEGACY` | `successor` (live, EXERCISED), `intent_source` | makes debt computable; an unresolvable successor is not a supersession, it is a deletion |
 | `RETIRED` | `retirement_ruling` (intent_source) | a retirement with no ruling is an outage with paperwork |
 | `PERMANENT` | `intent_source`; optional `cadence` + `vintage_probe` | the default-looking value is still a claim from above, never the artifact's own config |
@@ -253,6 +266,42 @@ Generalized: **`revalidate_by` is REQUIRED on EVERY declaration.** S.3's own log
 Past its window a declaration renders **STALE -- re-confirm or promote**, as the registry already does.
 **STALE NEVER AUTO-PROMOTES TO A FINDING** -- that would make expiry a deletion warrant, the precise
 failure this axis exists to prevent. Stale is loud and non-actionable, which is the correct pairing.
+
+#### S.3.1a RULED (R-1): A STALE DECLARATION SUPPRESSES THE VERDICT, RELEASES THE OBSERVATION
+
+Rev 3 left a fork unresolved and CVO~Z declined to patch it, asking for a ruling. Both extremes are bad:
+
+| if STALE... | consequence |
+|---|---|
+| **keeps suppressing** | `SILENT-RESIDENT` stays gated off forever -- **the silencer SURVIVES ITS OWN EXPIRY**, and `revalidate_by` buys only a log line beside a still-silent detector. *The decay control decays.* |
+| **stops suppressing** | expiry re-arms a detector on a timer -- **the deletion-warrant-by-clock forbidden one sentence earlier.** |
+
+**RULING: neither. A STALE declaration SUPPRESSES THE DELETION-CLASS VERDICT and RELEASES THE
+OBSERVATION.** It degrades to exactly the S.4 bound -- it emits `ABSENT (lifecycle STALE)` /
+`PRESENT (lifecycle STALE)`: honest, visible, non-actionable, and NOT a kill-list candidate.
+
+This is CVO~Z's proposed escape and I am adopting it unchanged, because it needs no new concept -- it
+reuses the claim-vs-check machinery S.4 already defines -- and because it preserves the one asymmetry
+the whole axis rests on: **an expired declaration must stop CONCEALING, but expiry must never itself
+become EVIDENCE OF DEATH.** The observation returning is what a human re-grounding needs; the verdict
+staying suppressed is what stops the clock from authorizing a deletion.
+
+#### S.3.1b RULED (R-2): THE REVALIDATION PREDICATE MUST BE >= THE DECLARATION PREDICATE
+
+Rev 3 made the DECLARATION predicate strong (EXERCISED, not resolved) and left REVALIDATION undefined
+-- `keep-dormant`'s model is explicitly human ("demands a human re-grounding"). **Declared BY EXERCISE,
+re-confirmed BY READING: an artifact then converges over time to the WEAKER check, and every
+declaration in the estate eventually sits on a read-through with an exercise somewhere in its history
+and a fresh-looking date on top. A FRESHNESS DATE ON A WEAKER CHECK IS WORSE THAN NO DATE, because it
+reads as recently verified.**
+
+**RULING: whatever predicate the declaration required, revalidation requires AT LEAST that.** If
+`consumer` had to be EXERCISED to declare, it must be EXERCISED to revalidate. Otherwise what has been
+scheduled is a re-ASSERTION, not a re-VALIDATION.
+
+*This also answers a question rev 3 did not ask: **"EXERCISED" has no frequency.** Exercised once at
+declaration decays exactly like everything else. S.3.1b is what makes exercise a STANDING PROPERTY
+rather than an admission ticket.*
 
 ### S.3.2 THE `max_dwell` HOLE AND THE `RESOLVE`-vs-`EXERCISE` HOLE (F-3, F-4 -- the two I asked for)
 
@@ -368,12 +417,23 @@ the count.
 > miss the finding, it proposes deleting the live thing.** A build requirement, not an optimisation.
 >
 > **Three doors were open, and I found none of them alone.** Rev 1 gated only `TRANSIENT` and
-> `EVENT_CREATED`, so a deliberate belt (present, zero traffic, zero consumers) matched cleanly --
-> **this design would have proposed deleting all 7 registered `keep-dormant.yaml` entries**, the
-> outcome that registry names as *"THE named failure mode."* Rev 2 closed that and left
+> `EVENT_CREATED`, so a deliberate belt (present, zero traffic, zero consumers) matched the predicate
+> -- the outcome `keep-dormant.yaml` names as *"THE named failure mode."* Rev 2 closed that and left
 > `variance.Orphan` open. **A spec whose stated purpose is preventing an existence check from
 > proposing deletion of live infrastructure had two live paths to exactly that, while citing the
 > registry documenting one of them.**
+>
+> **AFFECTED POPULATION: UNKNOWN -- AND MY EARLIER "ALL 7 REGISTERED ENTRIES" WAS AN OVERCLAIM.**
+> Revs 2-3 stated the blast as 7. **That number is not measured.** `variance.Orphan` is a CONJUNCTION
+> -- *"singleton, NO SIBLING, no consumer"*. `keep-dormant` states belts are 0-consumer, so they
+> satisfy that conjunct; **whether they also satisfy no-sibling under variance's
+> `(node_type, position_key)` grouping HAS NOT BEEN MEASURED BY ANYONE.** CVO~Z printed it as
+> unmeasured rather than let my 7 stand, which is the correct handling of a denominator, and I am
+> adopting their form: **the population is UNKNOWN, bounded above by 7.**
+> **GATE CONSEQUENCE (acceptance item 14): the population is MEASURED before the `SILENT-RESIDENT`
+> gate is written, so the gate is not sized against an assumed blast radius.** *A spec that preaches
+> printed denominators asserted an unmeasured one twice, in the paragraph about deleting live
+> infrastructure.*
 
 ---
 
@@ -418,6 +478,16 @@ the count.
 13. Ratified vocabulary BYTE-IDENTICAL to `8f8a63200` (md5 `37e16648dc965424b75c14677927a636`);
     `type_tuple` unamended; every delta an insertion.
 
-**I gate 1-13 before CVO~Z verify. I will not accept a build that infers `lifecycle_class` from name
+14. **STALE semantics per S.3.1a**: a stale declaration SUPPRESSES THE DELETION-CLASS VERDICT and
+    RELEASES THE OBSERVATION (`ABSENT/PRESENT (lifecycle STALE)`) -- neither silent nor auto-promoting.
+15. **Revalidation predicate >= declaration predicate (S.3.1b)** stated explicitly: whatever had to be
+    EXERCISED to declare must be EXERCISED to revalidate.
+16. `annotation_cite` takes `file:line @ <commit-ish>`, never bare `file:line` (R-3).
+17. **THE `variance.Orphan` AFFECTED POPULATION IS MEASURED AND PRINTED BEFORE THE GATE IS WRITTEN**
+    (S.5.1). Report the number and its denominator; **UNKNOWN is an acceptable measured answer, an
+    assumed 7 is not.**
+
+**I gate 1-17 before CVO~Z verify. I will not accept a build that infers `lifecycle_class` from name
 patterns, lets a missing required field fall back, ships either detector ungated, omits the decay
-window, reuses `SUPERSEDED`/`ORPHAN`, or discharges item 10 with prose.**
+window, reuses `SUPERSEDED`/`ORPHAN`, discharges item 10 with prose, or sizes the gate against an
+assumed population.**
