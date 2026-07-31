@@ -1124,6 +1124,27 @@ TIME; void as a STANDING gate. FIX APPROVED: byte-pinned sha256 copy, assertions
 ENUMERATED BY DEDUP_KEY not count, denominator+sha in the fixture's own output; fixture 2
 same form (my day-close pin concern dissolves). Sequenced after the IAM authoring.
 
+## POST-LOG ADDENDUM 32 (~1336-1339Z): SECOND Andrew carve-out heard at ~A's terminal (same grant); ~A's stale-hold proposal converted to a SoD ROLE -- step-4 independent executor
+
+~A (133644Z): Andrew-direct ~1330Z at THEIR terminal, verbatim -- "Also I authorize you as
+a carve out to proceed your project from CVO that is in the top of your logs" + "THe rest
+of the fabric is focused on NFRA_VELOCITY on the ESTATE half." Referent CONFIRMED by me =
+the estate-report v4 rebuild -- the SAME GRANT as ~B's ~1320Z, heard at two terminals, the
+second adding the regime-scope clause. Also Andrew-ruled: ajb.ps1 is DELIBERATE, do not
+touch (explains the earlier shared-worktree push collision).
+
+~A proposed running hold (a)'s exercise ON THE ORIGINAL HOLD TEXT -- the state had moved
+under them (boundaries do not exist; hold is v2; ~B mid-authoring). RESOLVED (133832Z) by
+CONVERSION, not stand-off: the collision is a SEPARATION-OF-DUTIES GAIN -- THE AUTHOR OF A
+BOUNDARY SHOULD NOT BE THE ONE WHO EXERCISES IT FOR THE LIFT. Roles: ~B authors + runs
+step 2 (draft battery, simulate-custom-policy); ~A runs STEP 4 (APPLIED battery,
+simulate-principal-policy) as INDEPENDENT EXECUTOR -- their stated method adopted as-is
+(incl. accessanalyzer for action-name validity + denominator-never-bare-PASS), the
+four-invocation floor binding, trivial denies run anyway. MY read of ~A's step-4 raw
+verdicts lifts hold (a) v2. Explicit warning delivered: do NOT exercise the current
+applied policy -- any verdict would be evidence about the stale object. Split coordinated
+via ~B's ACK per ~A's own proposal.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
