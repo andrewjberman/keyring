@@ -12,6 +12,11 @@ WHAT IT CHECKS
   3. ENUMERATED VALUES against their ratified sets:
        lifecycle_class -> lifecycle.enum
        obligation      -> obligation_types keys
+       locality        -> lifecycle.locality_binding.enum, and ONLY IF the bank's
+                          `enum_is_lint_checked` says YES (A11 branch (a), ratified by the RAIL
+                          AUTHOR @4b9714d5c -- never synthesised here). The marker is READ, so a
+                          field ratified free-text under branch (b) cannot be value-checked even
+                          if it later grows an enum-shaped key.
      A LEGAL FIELD CARRYING AN ILLEGAL VALUE IS EXACTLY THE CASE THIS CATCHES. It was reported to
      the gate as undetectable-by-any-mechanical-check; it is not, and this is where that is proven.
 
@@ -103,15 +108,31 @@ def vocab(bank):
         if isinstance(desc, str) and "NOT LINT-CHECKED" in desc.upper()
     }
 
+    # LOCALITY (A11, CTO~Z branch (a) @4b9714d5c) -- value-checked ONLY IF THE BANK SAYS SO.
+    # The bank carries `enum_is_lint_checked` beside the enum; we READ it rather than assume, the
+    # same way `unlintable` is read. That makes the A11 (a)-vs-(b) branch STRUCTURAL: a field
+    # ratified as free-text (branch b) cannot be value-checked here even if it grows an enum-shaped
+    # key, and a field ratified as checked (branch a) is checked without anyone editing this file's
+    # policy. NOTE this is an ADDITIVE code change -- field NAMES resolve dynamically from the
+    # bank, but VALUE enums are extracted by explicit key, so a NEW enum does NOT auto-wire itself.
+    # (That distinction was over-generalized in relay as "no code change"; it is true of the rename,
+    # false of a new enum.)
+    lb = life.get("locality_binding") or {}
+    lb_checked = str(lb.get("enum_is_lint_checked") or "").strip().upper().startswith("YES")
+    locality_enum = set(lb.get("enum") or []) if lb_checked else set()
+
     v = {
         "required": set(rec.get("required") or []),
         "optional": set(rec.get("optional") or []),
         "lifecycle_enum": set(life.get("enum") or []),
         "obligation_types": set(ob.keys()),
         "unlintable": unlintable,
+        "locality_enum": locality_enum,
     }
     for k, val in v.items():
-        if k == "unlintable":   # legitimately empty: a bank need not declare any free-text field
+        # legitimately empty: a bank need not declare free-text fields, and a field ratified
+        # NOT-lint-checked (A11 branch b) correctly yields an empty locality oracle.
+        if k in ("unlintable", "locality_enum"):
             continue
         if not val:
             raise RuntimeError(
@@ -141,6 +162,12 @@ def lint_record(rec: dict, key: str, v: dict) -> list[str]:
         out.append(
             "%s: lifecycle_class %r DOES NOT RESOLVE (ratified: %s)"
             % (key, lc, sorted(v["lifecycle_enum"]))
+        )
+    loc = rec.get("locality")
+    if v.get("locality_enum") and "locality" not in unlintable             and loc is not None and loc not in v["locality_enum"]:
+        out.append(
+            "%s: locality %r DOES NOT RESOLVE (ratified: %s)"
+            % (key, loc, sorted(v["locality_enum"]))
         )
     ob = None if "obligation" in unlintable else rec.get("obligation")
     if ob is not None:
