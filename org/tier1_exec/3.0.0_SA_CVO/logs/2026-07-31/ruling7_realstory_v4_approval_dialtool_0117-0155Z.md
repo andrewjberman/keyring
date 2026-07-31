@@ -1580,6 +1580,79 @@ BIRTH. Both new cells (nested-sibling, residual) now standing on both sides. The
 sibling-in-kind note: the discriminator rule, fallback-mutant-first, and the nested cell
 all exist because A BATTERY CAN BE ENTIRELY HONEST AND STILL PROVE NOTHING.
 
+## POST-LOG ADDENDUM 47 (~1550-1642Z): ANDREW-DIRECT ESTATE REVIEW + /draw + THE C3 ROLE + the aggregator investigation ANSWERED FROM SOURCE
+
+ANDREW-DIRECT (in-session): "check through the work committed on the ESTATE side of
+NFRA_VELOCITY... true to the spirit of the PRD... and where through the phases we sit."
+DELIVERED, grounded on PRD + git with my own spot-checks: P1 CLOSED (E4.1 @c9cc2ea22a,
+E1 specimen @0bdca276e8, E3.0 @2da40ba711, M9 released @e8c7a32fa2 -- two I had already
+grounded personally). P2 SPLIT (E2 running @6fe65ce6f4; E1 breadth PARKED on Andrew's
+"mechanism proven, move on"). E5 (P3) and E6 (P4) BOTH PULLED FORWARD; E3 (P3)
+STRUCTURALLY INERT; E7 (P5) zero commits. >> THE PROGRAM IS NOW DEPENDENCY-ORDERED, NOT
+PHASE-ORDERED -- reported to Andrew plainly. << SPIRIT SCORED ON THE PRD'S OWN FOUR VERBS:
+SAY = mechanism proven / values sovereign-gated; FIRE = real motion + two instrument
+findings (142+12 vs carried 143+11 drift reported UNRECONCILED; `list-rules --query
+length(Rules)` returns 100 against a truth of 142); SHED = ZERO MOTION, the one verb with
+nothing behind it; MEASURE = strongest. THREE RISKS RAISED: the shed-nothing path; the
+product-grade test unable to move (ADVI/MDPF decomposition sits behind the same gate);
+and a MEASURED commit mix since the GO -- build lanes 74 / base governance 122, of which
+44 ARE MY OWN LOG, predicate and caveats stated (base-CTO count includes CORE work).
+
+/draw ISSUED (house-style ASCII, 3 views + analogy table). ANDREW ASKED WHETHER "plane"
+meant phases or CORE/ESTATE -- NEITHER, and it was MY defect: "plane" is the drawing
+convention, but WS-E4 IS LITERALLY NAMED "the measurement plane" in the PRD, so I reused
+a live estate term in a second sense inside the same artifact -- the token-re-sense class
+(CVO~Z's scope->locality, this morning), committed by me. Relabel offered (VIEW 1/2/3).
+
+THE C3 ROLE (Andrew ~1610Z, refined ~1613Z): COO relayed it FLAT ("three agreeing
+parties"), then CORRECTED IT INSIDE THE HOUR from Andrew's own refinement -- CTO+ANDREW
+walk the C3 items; CVO IS INVOKED ON DOUBT, investigates, reports; ANDREW+CTO CONFIRM.
+ESCALATION-TRIGGERED INVESTIGATOR, not co-signer. My 161537Z item 4 SUPERSEDED (it
+carried the flat form). Surviving bounds re-pointed: vintage binds; the counted-twice
+hazard MOVES to the confirming pair. COO's watch item taken to CTO as a spec item with a
+concrete fix: EVERY C3 LABEL CARRIES A TYPED BASIS {WALKED_NO_DOUBT |
+INVESTIGATED_AND_CONFIRMED | UNEXAMINED}, UNEXAMINED as the DEFAULT -- because "no doubt
+was raised" and "the item was verified" are otherwise BYTE-IDENTICAL in the record.
+
+FIRST DOUBT ITEM INVESTIGATED AND CLOSED (162413Z) -- the `aggregator` route:
+BOTH BRANCHES OF THE ESCALATED QUESTION HAD A FALSE PREMISE. The disarm was never aimed
+at stopping the chain: inf-gold-trigger's OWN SOURCE (:243-262) enumerates FOUR armed
+paths incl. the silver aggregator DIRECT invoke, says "disabling the rules is a PLACEBO...
+THE DOORS ARE NOT THE CHOKEPOINT," and puts the control IN the function. LIVE MEASURED:
+release sentinel MATCHES (source :55 vs get-function-configuration, negative-controlled),
+standing daily release Andrew+CTO+COO co-signed since 07-16 -> THE DAILY RUN IS THE
+AUTHORIZED NORMAL STATE. The $439K trap justification was itself falsified on the deployed
+artifact and the hold lifted. E2's refusal now correct ON THE MERITS, not only by caution.
+>> THE GENERAL LESSON: A CONTROL CAN BE CORRECT, DOCUMENTED, LIVE -- AND INVISIBLE TO
+EVERY INSTRUMENT AIMED AT ITS LAYER. Three instruments answered truthfully about rules and
+policies; the control lives in neither. ONLY READING THE FUNCTION FOUND IT. << Source-
+confirmed consequence for E2: RULES+SCHEDULER IS NOT THE TRIGGER POPULATION (producer-to-
+producer direct invoke is a third class, and the source says so).
+
+C3 LABELING LAYER SPEC v0.1 REVIEWED (~B author, Andrew-direct route; my 164214Z):
+APPROVED IN SHAPE (registry-is-the-store; intent_from_above -- "the difference is not
+effort, it is DIRECTION"; revalidate_by already required; one-source-several-consumers).
+ONE CORRECTION: its canonical case is RESOLVED by my investigation -- ~B's restraint was
+CORRECT (the spec author did not measure, the escalation path did; the fence worked), but
+a spec whose founding example is stale-at-issue is the stale-record class inside the
+document arguing against it -> rewrite as a worked example WITH a known answer, which is
+stronger. DESIGN CONSEQUENCE, the review's most important output: the spec has two paths
+(measure harder / ask governance) and the answer came from a THIRD -- READ WHAT THE AUTHOR
+ALREADY WROTE -> C3L.6's FIRST STEP is source-before-escalation, or the walk spends the
+two scarcest people in the fabric on already-authored questions, silently. SIX QUESTIONS
+RULED: Q1 C3.i OUT as assertion target / IN as ordering lens (falsifier named); Q2 agenda
+unit = C3.ii vertical, ASSERTION unit = contract_record, and the 1:N mismatch is a
+FEATURE (disagreeing members = a mis-drawn vertical); Q3 resolvable pointer, independently
+resolvable, AND it needs a rail-author act for the A7.1 lint (cross-fabric dependency
+named); Q4 ONE STATE (persist-marked-stale + re-enter) with PER-CONSUMER policy (E3
+refuses stale, E2 honors it); Q5 NO countersignature -- doubt only, because gating every
+landing makes "CVO did not object" a certification; Q6 typed OUTCOME incl.
+SOVEREIGN_OVERRIDE (legible as an override, not because Andrew owes justification but
+because re-open triggers differ). STRENGTHENING ON s.6: their three requirements are all
+about what the RECORD contains, and the failure is AT THE QUOTE SITE -> fourth
+requirement, THE BASIS TRAVELS WITH THE LABEL: `PERMANENT [walk:2026-07-31,
+agreed-on-sight]`; a bare PERMANENT is a MISQUOTE (the denominator-23 rule's form).
+
 LD-0367 (Andrew-direct, MSTR 152239Z) ACKed + BOUND (152405Z): INTEGRATION WINDOW --
 :00-:55 normal work to committable SEAMS, :45 warning, :55 clean-tree deadline (seam or
 own-.runtmp stash, NEVER a broken commit to beat the clock), :55-:00 HOLD while MSTR
