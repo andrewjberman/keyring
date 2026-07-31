@@ -407,6 +407,63 @@ MSTR 063624Z carried the returns:
 OPEN AT ME: ~D's inbox-bodies answer (perishability fork); then the C-1 declarations as they
 come. ESTATE + cross-seam pass remain my s.7 assignment; CORE is CVO~Z's directly.
 
+## POST-LOG ADDENDUM 11 (~0641-0647Z): M9-COMPLETE v2 (SEG-0 + the SELF-DESTRUCT clause) -- and the fence-clean-is-not-decision-clean lesson, at my expense
+
+UNSATISFIABILITY (CTO 064128Z, grounded by ~D's attempt): s.3 froze predicates over WORK UNITS
+and never defined what a work unit IS -- transitive path-connectivity produced ONE BLOB (8,043
+of 8,654 qualifying commits = 93% in a single component, hub paths carrying 9.9% of touches).
+"The blob is an artifact of the linking rule, not a property of the work." CTO owns the freeze
+approval; gate-method limit banked verbatim: A SPECIFICATION REVIEW CANNOT DETECT AN UNDEFINED
+TERM -- visible only at APPLICATION ("reading is exactly the operation that supplies missing
+referents from the reader's own head"). Indicts my source-declaration gate equally.
+
+M9-COMPLETE v2 (my 064249Z amendment, CTO 064541Z ACCEPTED, one step held):
+- SEG-0 prerequisite: segmentation function defined+frozen as its own pre-registered artifact
+  under the INDEPENDENCE RULE (justified on grounds independent of the population it produces).
+  ~D authors candidates, is contaminated for SELECTION; pristine selectors no longer exist
+  (stats fabric-wide) -- operative control = justification-independence + visible iteration
+  ledger, stated honestly.
+- TERMINAL STATES distinguished (CTO named it the SELF-DESTRUCT clause): fence-falsifier =
+  valid terminal (external control); SEG-0 unconstructibility = NOT self-terminal, ESCALATES
+  to joint CTO+CVO (likely Andrew) -- "an obligation that can discharge by declared failure of
+  its own key term is an obligation with a self-destruct."
+- (b) split: TOKEN-axis BANKED @72f81ff5c2 (verified on origin 4/4; 54,700 files/117.3MB
+  enumerated at run time) under CTO authorization -- mechanical, no fence question. TYPE-axis
+  under the A2.3 class ruling, C-1-analog, held on the upstream question below. COVERAGE
+  measured: logs 23% / inbox 77% of signal; THE THREE LITERAL PROGRAM-5.9 STRINGS EXIST ONLY
+  IN THE PERISHABLE STORE (1/9/4 vs durable 0/0/0) -- a durable-only (b) would be narrowly
+  correct and completely misleading; 77/23 split + this fact = REQUIRED declarations (s14.1).
+
+PRESERVATION -- FENCE-CLEAN IS NOT DECISION-CLEAN (instance 5 of the axis-clearance class,
+MINE): my mechanical-preservation proposal was fence-clean BY CONSTRUCTION and I read that as
+cleared OVERALL. ~D found the actual blocker: .gitignore:235 "local runtime only" + :248
+deliberate carve-out (I verified; the carve-out is MSTR's ENGINEERED git-transport mechanism,
+Andrew-direct 07-29 -- as deliberate as a decision gets). The ask is "reverse local-runtime-
+only for the message store" -- ANDREW'S, routed by CTO; CTO corrected their own "cheap" framing
+pre-packet. MY INSTRUCTION FORMALLY WITHDRAWN at ~D (064624Z) -- an instruction on the record
+is withdrawn on the record. R7a-adjacency flagged in the packet (one message-store ruling,
+both faces).
+
+FENCE-DEFINITION QUESTION relayed to CVO~Z via seam (064451Z), holds BOTH C-1 declarations:
+does pre-existing mdpf PIPELINE history count as MDPF_GLOBAL's fenced surface? CTO's 4 grounds
++ my 2 (Amendment-1 equivocation one level down; the fence protects the UNWRITTEN), all
+input-not-asserted; CTO's asymmetry principle banked (retroactive-nullification penalty ->
+proceed on a RULING, never a good argument); drafting rider: declaration states precisely
+what was touched, truthful under either ruling. ~D's upstream surfacing = THIRD against-
+interest refusal tonight (blob-tune refusal was the second).
+
+CTO's s.7 RETRACTION (their second manufactured mechanism tonight): my record was corrected
+PRE-retraction (addendum 9 @4ede32b4b5); no copy of mine carries it. Kept line: "a
+reconstruction that acquires a citation gets cited again by someone who cannot check it."
+
+DOCTRINE-GRADE LINES PRESERVED for CONTROLS_OVER_CARE when the regime lifts (doc edit parked
+per exclusivity): exercise-the-spec-joins-exercise-the-path; the self-destruct clause; the
+asymmetry principle; fence-clean-is-not-decision-clean; "a certificate you invented would have
+been a mechanism with no source" (CVO~Z).
+
+OPEN AT ME: CVO~Z fence-definition ruling -> read both C-1 declarations before (b)-type/(d)-
+attribution bank. AT ANDREW: preservation reversal + packet. SEG-0 candidates to come from ~D.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
