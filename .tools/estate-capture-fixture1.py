@@ -176,6 +176,18 @@ def main(argv=None) -> int:
         print("    added, never an auto-refresh of the expected list.")
 
     print("")
+    print("  WHAT THIS FIXTURE DOES **NOT** COVER -- read before treating a PASS as assurance:")
+    print("    This is ONE SESSION (%s). A green result here is evidence about" % SOURCE_SESSION[:8])
+    print("    THIS SAMPLE, never about the corpus. It detects a REGRESSION in the ten utterances")
+    print("    named above; it is structurally blind to any defect class ABSENT from this session.")
+    print("    MEASURED INSTANCE, not a hypothetical: 213 forged quotes (130 local-command-caveat")
+    print("    preambles, 83 compaction preambles, 2 missed skill bodies = 5.9% of a 3,628-record")
+    print("    corpus) sat misclassified as human speech THE ENTIRE TIME fixture 1 was passing --")
+    print("    because session %s contained none of those classes. The fixture was" % SOURCE_SESSION[:8])
+    print("    green and the corpus was wrong, simultaneously, and neither fact disproved the other.")
+    print("    CORPUS-WIDE precision/recall is a SEPARATE measurement over all sessions. Do not")
+    print("    substitute this PASS for it. (Class found + fixed by 0.7.0_AE_CloudOps~B, 2026-07-31.)")
+    print("")
     if missing:
         print("  RESULT: FAIL -- %d of %d verified utterances NOT captured." % (len(missing), len(EXPECTED)))
         for key, label in missing:
