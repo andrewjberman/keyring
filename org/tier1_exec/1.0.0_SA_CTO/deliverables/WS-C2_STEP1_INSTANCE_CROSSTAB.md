@@ -21,7 +21,7 @@
 | **+2** | **UNRESOLVED GAP vs the summary. Stated, not reconciled away.** |
 
 **THE 218 IS WRONG AND THE WAY IT IS WRONG MATTERS.** The 14 excess rows are *disposition* rows --
-`| **PROMOTE M1** | 9 instances... |`, `| **COLLAPSE §7a-§7d into instance rows under M6/M9** | ... |`.
+`| **PROMOTE M1** | 9 instances... |`, `| **COLLAPSE sec 7a-7d [rendered ASCII; source uses the section sign] into instance rows under M6/M9** | ... |`.
 They MENTION mechanisms; they are not incidents. **A mention counted as an instance is M8
 (TEXT vs SEMANTICS) committed against the very corpus that defines M8.**
 
