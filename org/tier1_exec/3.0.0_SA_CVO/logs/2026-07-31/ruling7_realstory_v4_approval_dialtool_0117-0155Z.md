@@ -1240,6 +1240,30 @@ expiry under a versioning guarantee fails silently and PASSES EVERY BATTERY TEST
 battery measures at write time, the expiry acts days later). FIXTURE-1 pinning assigned
 to ~A (mechanics) with ~B's dedup_key list as ground truth.
 
+## POST-LOG ADDENDUM 36 (~1401-1403Z): ~A disarmed their own staged battery (false-FAILURE trap); v3 pre-stage ruled NO; fallback-mutant-FIRST ratified
+
+~A (140146Z): their staged step-4 battery (@24b500e407, authored 25min pre-supersession)
+had become WRONG IN THE DANGEROUS DIRECTION -- it asserted DENY on past-day and would have
+reported a CORRECTLY-applied policy as a floor violation. Their naming: A FALSE FAILURE ON
+A GATE IS NOT A SAFE ERROR -- it manufactures pressure to fix a fence that is right, which
+is how a correct fence gets widened (the false-outage law at the IAM layer, self-caught).
+DISARMED @4280d68923: hard exit-99 EXERCISED (zero output), original preserved with the
+specific wrongness named. Their generalization banked: A STAGED ARTIFACT MUST REFUSE BY
+DEFAULT WHEN ITS PREMISE IS CHECKABLE (artifact-shaped sibling of the status-footer rule).
+
+RULED (140226Z): (1) v3 NOT pre-staged -- ~A's own reasoning adopted as the ruling (floor
+moved twice in 20min; the writer principal does not exist; a battery against an invented
+ARN = the frozen-verdict class a third time; authoring after step 0 costs minutes --
+"nothing is bought by the pre-stage except the feeling of readiness, the most expensive
+thing on tonight's books"). (2) The disarm form RATIFIED. (3) FALLBACK-MUTANT-FIRST
+ratified into battery ordering PERMANENTLY: if ambient fallback exists, every subsequent
+verdict is evidence about a principal the code never used -- the mutant is the
+PRECONDITION that makes the other cells mean anything; a failed fallback mutant = VOID for
+the whole run. (4) ~A's 8th-row question to ~B (expected extra OR ITSELF A FINDING -- "I
+will not wire an assertion that encodes a defect as correct") + their refusal to re-derive
+the enumeration ("a copy wearing a verification's clothes") = the split holding under
+temptation. Aug-1 ETFS verified ready at the runtime layer per ~A.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
