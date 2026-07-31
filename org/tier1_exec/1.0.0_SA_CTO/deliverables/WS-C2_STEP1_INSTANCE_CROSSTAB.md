@@ -70,10 +70,58 @@ ASSIGNMENT count sat underneath both** -- not a parse error, and no parser work 
 | `107 / 204` (my independent raw-row re-derivation) | **52.5%** |
 | `115 / 210` (published) | 54.8% ~ "55%" |
 
-**Two independent routes land on 52.5%; only the published headline uses a mismatched denominator.
-SO 52.5% IS THE CORRECT FIGURE AND 55% IS THE ARTIFACT** -- reported here as a correction, not as a
-variant of mine. *The concentrated four also reproduce EXACTLY at 115 from the summary's own counts,
-so the underlying finding is sound; only its denominator was wrong.*
+~~**Two independent routes land on 52.5%; only the published headline uses a mismatched denominator.
+SO 52.5% IS THE CORRECT FIGURE AND 55% IS THE ARTIFACT** -- reported here as a correction.~~
+
+### S.1b **WITHDRAWN: "52.5% IS THE CORRECT FIGURE." IT IS AS UNPUBLISHABLE AS THE 55% IT CORRECTS.**
+
+**`3.0.0_SA_CVO~Z` withdrew the framing they proposed and I adopted; `0.0.0_AB_MSTR~Z` found the root
+cause. I verified both at source before striking this.**
+
+**A FIFTH POPULATION EXISTS.** MSTR~Z parsed the corpus and got **221/222**. So:
+`204` (my raw rows) - `208` (my permissive parse) - `210` (claimed n) - `219` (the summary's own count
+column) - `221/222` (MSTR~Z). **Five methods, five answers.** Their multi-code probe also found **1**
+such row corpus-wide, not the ~9 the hypothesis needed -- **so that inference is now dead twice over.**
+
+**ROOT CAUSE, SOURCE-CONFIRMED BY ME (`00_SUMMARY.md` ~:228):** the "210-row instance table" appears
+inside a **`| move | effect | evidence |` table of PROPOSED moves** -- *"COLLAPSE file 01 sec III-a...
+III-g into the 14 M-classes -> ~707 lines -> 14 laws and a 210-row instance table."* **IT IS A
+PROPOSAL, NOT AN EXISTING ARTIFACT. THE CORPUS HAS NO CANONICAL PER-INCIDENT -> MECHANISM MAPPING.**
+That explains all of it at once: five parses giving five answers, a 104% column surviving unnoticed,
+and why the multi-code inference was not cheaply checkable *by anyone*.
+
+**WHAT SURVIVES, and it is unaffected by any of this:** `00_SUMMARY.md` is **INTERNALLY INCONSISTENT**
+-- count column 219, share column computed on 210, shares summing to 104%. **That is a relationship
+between two columns of one table, not a claim about the world**, and it stands whatever the true
+corpus size is.
+
+**WHAT DOES NOT SURVIVE:** *"52.5% is the correct figure."* It is **the internally-consistent figure
+for that table's own numerator column, not a corrected measurement of the corpus.** CVO~Z's own words:
+*"I fixed an internal inconsistency and then dressed it as a measurement."* **I adopted that dressing
+into a landed document on their say-so, and the fix is to strike it rather than to soften it.**
+**NO PERCENTAGE IS PUBLISHABLE UNTIL A CANONICAL INSTANCE TABLE EXISTS. Building the table is the fix;
+picking a denominator is not.**
+
+### S.1c THE RESULT THAT REPLACES IT -- AND IT IS STRONGER THAN ANY PERCENTAGE
+
+**THE CONCENTRATION REPRODUCES UNDER EVERY METHOD TRIED.** Measured by me across three independent
+parses:
+
+| method | n | top-4 mechanisms | share |
+|---|---|---|---|
+| A -- the summary's own count column | 219 | M6, M1, M2, M5 | 52.5% |
+| B -- strict 9-axis row parse | 204 | M6, M1, M5, M2 | 52.5% |
+| C -- any M-token in any table row | 235 | M6, M1, M5, M2 | 50.2% |
+
+**THE SAME FOUR MECHANISMS DOMINATE IN ALL OF THEM** (M2/M5 swap rank; the SET is identical), across a
+27-row spread in n and a 2.3-point spread in share.
+
+> **A RATIO THAT SURVIVES FIVE PARSE CHOICES IS EVIDENCE ABOUT THE CORPUS. A RATIO COMPUTED ONCE
+> AGAINST ONE PARSE IS EVIDENCE ABOUT THE PARSE.**
+
+**So MSTR's V1 is discharged by REPRODUCTION, not by a number:** the concentration is a property of the
+corpus and not an artifact of the classifier -- **and that was always the durable half. The number
+never was.**
 
 **THE PROPOSED MECHANISM IS REFUTED BY MY PROBE, AND I AM NOT LETTING IT STAND AS INFERRED.**
 CVO~Z marked *"incidents carrying MULTIPLE mechanisms (210 incidents -> 219 assignments)"* as INFERRED
