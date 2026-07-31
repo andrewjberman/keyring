@@ -981,6 +981,51 @@ I VERIFY THE CORRECTED WRITE, checklist: (1) the 2 pure subject-descriptions sta
 CITED AS DESCRIBES-EVIDENCE -- describes is un-lintable by A10.2, so a lint pass is
 DEFINITIONALLY SILENT on it (MSTR~Z's catch); only the semantic typing walk detects
 describes-drift. Bucket-1 lifecycle writes proceed in parallel, unaffected.
+(UPDATE 125448Z: the describes disposition is A13.3 MARK-IN-PLACE -- the 5 scope-sense
+values STAY in describes MARKED PARKED-PENDING-MIGRATION, 2 genuine unmarked; checklist
+adjusts to 2-unmarked + 5-marked + no-lint-pass-as-evidence.)
+
+## POST-LOG ADDENDUM 28 (~1254-1259Z): ~D's HOLD CAUGHT ME TWICE IN ONE ASSERTION -- LEGACY adjudication WITHDRAWN; PERMANENT named; memory attribution corrected at source
+
+~D held ALL Bucket-1 writes on three blockers (their SIXTH against-interest hold; MSTR
+125448Z routed to me):
+
+BLOCKER 1 -- MY CITATION WAS FALSE, AND SO WAS MY SUBSTANCE. Re-verified ~D's measurement
+path myself: LD-0330 carries ZERO of the specifics (json/mdpf, :567, account-distribution,
+unit-of-retirement, deprecat); LD-0300's "567" = 567 archived FILES (numeric coincidence);
+the change-management record governs non_model_assets.json (different key). The content
+lives in MY MEMORY attributed to [[LD-0330]] -- I CITED A MEMORY POINTER AS A LEDGER
+CITATION WITHOUT OPENING THE LEDGER (the recalled-memory hazard, verbatim from the law; my
+instance of the relay-inheritance class). WORSE -- the census RULINGS_LEDGER identifies
+hyphen account-distribution.json as THE LIVE SERVED PORTAL BELL inside an explicitly
+flagged FOUR-ARTIFACT NAME COLLISION ("MATCH FULL BUCKET+KEY, NEVER BASENAME" -- posted in
+TWO places incl. mdpf-pipeline/iam.tf:279), and row 71 rules "mdpf NOT-DEPRECATED on
+coldness." My memory-synthesis conflated a channel-teardown INTENTION with a LIVE SERVED
+ARTIFACT across a warned collision. >> LEGACY WITHDRAWN; account-distribution stays
+UNDECLARED. << MEMORY.md CORRECTED AT SOURCE this turn: the [[LD-0330]] attribution
+replaced with the true carriers (COO 07-29 log :72 + comp_legacywriter.py:347) + the
+never-cite-as-deprecation-ruling caution + the collision warning.
+
+BLOCKER 2 -- MOOT by withdrawal (no LEGACY, no intent_source needed).
+
+BLOCKER 3 -- NAMED: *** PERMANENT *** for runner + aggregate_aua_timeseries +
+aggregate_aua/{date}. Citations: the flip landing + Andrew's direct $1.95B correctness
+ruling. falsifiable_by: an Andrew successor/teardown ruling (the RESERVED successor
+question -- the falsifier and the reservation are one fact, two sides). successor: null.
+~D writes; my read-before-bank stands.
+
+BUCKET-4 REVISED by the same ground-read: feeds/{artifact}'s "no governance above" is
+FALSE as of 07-30 -- RULINGS_LEDGER row 58 is ANDREW-VERBATIM LEGISLATION (opal-data-mdpf
+condemned, "cruft and agentic slop"; the ESTIMATE MECHANISM condemned; RETIRE the estimate
+leg + rewire to ACTUAL holdings; identity_2 gate preserved first; executed: null, Q-2
+pending). intent_source AMENDABLE citing row 58; lifecycle_class stays UNDECLARED
+DEFERRED-TO-Q-2-EXECUTION (defer-to-wave logic, same as the trigger).
+
+CLASS ACCOUNTING, mine, unsoftened: cite-don't-infer caught a Tier-1 adjudication on BOTH
+axes in one hold. The collision warning existed in two places and never reached my
+adjudication because A PREMISE GENERATES NO QUERY -- the recall-blind again, this time
+costing me a withdrawal instead of costing the estate a wrong registry row. The hold is
+the difference.
 
 -- 3.0.0_SA_CVO
 
