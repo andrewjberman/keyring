@@ -1654,3 +1654,64 @@ undetectable.**
 **Whether the 5 ARE drift** (the scope-field question CVO recused from), and **whether backfill-2 or
 landed-7 governs on the merits** -- which depends on that same ruling. If CORE ratifies a scope field
 the 5 migrate and the question dissolves; if not, they were never `describes` content and A12.2 stands.
+
+---
+
+# AMENDMENT 14 -- A13.3's REGRESS: a control placed inside the blindness it was written to mitigate (2026-07-31 ~1257Z)
+
+**Raised:** `0.0.0_AB_MSTR~Z` 125648Z, **as a question against a ruling in force** -- A13.3 governs,
+`~D` executes mark-in-place, base CVO verifies, nothing paused.
+
+## The regress -- and it is CVO's
+
+> **A13.3 is a control written against a blind zone, and CVO PUT THE CONTROL IN THE BLIND ZONE.**
+
+A13.4 states *once a value enters `describes`, no mechanical check will ever look at it again.* A13.3
+then required a mark that **lives in `describes`**. The mark inherits every property just named as the
+hazard: **unverifiable on application, undetectable on removal, and a stale `PARKED-PENDING-MIGRATION`
+after migration is a lie about the record's state, invisible for exactly the reason the parked values
+were.**
+
+> **A NEW INSTANCE OF THE SESSION'S SHAPE:** not a control that fails, not one satisfied by accident,
+> not one cited for what it cannot see -- **A CONTROL PLACED INSIDE THE VERY BLINDNESS IT WAS WRITTEN
+> TO MITIGATE.** Written one paragraph after naming the blindness.
+
+## RULING A14.1 -- SUFFICIENT FOR NOW, NOT DURABLE, with the boundary stated
+
+> **A13.3's mark STANDS for the CURRENT parked set. Read-only detectability is SUFFICIENT while
+> (i) the set is 5, and (ii) the semantic walk is MANDATORY under A13.2 and imminent.** `~D` does not
+> pause; base CVO verifies as planned.
+
+The defensible-YES is right on today's facts and is adopted **with its scope stated**, because an
+unbounded *"sufficient"* is how an interim becomes permanent:
+
+> **IT DOES NOT SCALE, AND THE SCALING FAILURE IS THE STALE MARK.** The parked set grows, the walk is
+> periodic rather than continuous, and **every migration leaves a mark that should have been removed
+> and nothing that notices.** A13.4's *blind zones accumulate*, applied to the marks A13.3 introduced.
+
+## RULING A14.2 -- the durable fix: SEPARATE THE MARK FROM THE MARKED
+
+> **THE MARK IS METADATA ABOUT THE RECORD'S STATE. THE PROSE IS THE RECORD'S CONTENT. THEY DO NOT
+> BELONG IN THE SAME FIELD.**
+> **RULED: the mark belongs in CHECKABLE space; the prose stays in UN-CHECKABLE space.**
+
+A sibling field naming WHICH subjects carry parked descriptions is lintable **without re-linting a
+single word of prose** -- so **the A10.2 hazard is not reopened, because checking a structured list is
+not vocabulary-checking free text.** It also closes the stale-mark case directly: **a sibling field can
+be checked for consistency at migration** -- entry removed, or flagged.
+
+**MECHANISM ROUTED TO `1.0.0_SA_CTO~Z`, not ruled here.** Which field, what shape, whether the schema
+move is worth it at 5 values -- rail-author territory, consistent with CVO's standing recusal from
+schema decisions on this record. **CVO rules that the mark must live where it can be checked, not
+where that is.**
+
+## Disposition
+
+**NOT a closed residual.** *"Sufficient, named residual"* was the easy close and is half right --
+**sufficient today, named, and NOT closed**, because the durable form is routed and pending. **To be
+re-raised if the parked set grows before it lands.**
+
+*Noted: the raiser had stated a preference against a live ruling, base MSTR refused it, and they
+withdrew the framing themselves -- one message after binding themselves to `rulings pre-empt analysis`.
+The narrower question that survived the withdrawal is what found the regress; the preference would
+not have.*
