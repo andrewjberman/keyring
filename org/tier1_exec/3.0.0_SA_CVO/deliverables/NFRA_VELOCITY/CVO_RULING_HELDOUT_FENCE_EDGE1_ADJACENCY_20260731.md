@@ -1079,3 +1079,79 @@ is exactly why their refusal was right.**
 
 **Disposition: base MSTR KEEPS HOLDING, but as *awaiting a cert with a named owner and one open fact*,
 never as *queued behind CORE's work.* The first has an end.**
+
+## RULING A10.1b -- reading (b) STRUCK; the standing property gets an OWNER and a TRIGGER
+
+**Raised:** base MSTR via `0.0.0_AB_MSTR~Z` 113947Z, **non-blocking**. **Step 3 SHIPPED** on the
+narrowed *"sufficient for TRANCHE 1"* cert -- CTO~Z's self-narrowing reached the seam before the
+broader wording did.
+
+### The defect
+
+A10.1's *"sufficient for the first declaration set"* reads two ways:
+
+- **(a) the declarations that EXIST** -- tranche 1; met today (7 records / 0 findings / rc=0 / no delta).
+- **(b) the FULL WS-E1 declaration set** -- **unmeetable today by anyone; those records do not exist.**
+
+**(b) IS STRUCK**, and base MSTR's reason is decisive and better than *unmeetable*:
+
+> **It would gate a NON-BLOCKING STRENGTHENING on the COMPLETION OF ALL OF E1 -- inverting the A9
+> sequence's own intent, which was SHIP THE GATE BEFORE THE VOLUME.** A lint debuting on a corpus
+> already written is measuring archaeology. **Reading (b) guarantees the exact outcome the sequence
+> exists to prevent.**
+
+A criterion that inverts its own purpose under a fair reading is not ambiguous-but-harmless. **The
+reading is removed, not annotated.**
+
+### The amended criterion -- and why the obvious form was wrong
+
+Base MSTR proposed *"sufficient for the declarations that exist, **with an ongoing sufficiency-at-growth
+property**."* **The first half is adopted. The second half, as worded, is an ACTORLESS STEP -- L-8, in
+the amendment fixing L-8's third instance, in the same ruling.** It was nearly written that way.
+
+> **Step 2 certifies the bank SELF-CONSISTENT and SUFFICIENT FOR THE DECLARATION SET IT NAMES.**
+> Certifier `1.0.0_SA_CTO~Z`; verifier `3.0.0_SA_CVO~Z`.
+>
+> **STANDING PROPERTY: at EACH new tranche, the certifier CLASSIFIES every lint finding as
+> AUTHOR-ERROR or SCHEMA-GAP. A SCHEMA-GAP RE-OPENS STEP 2 for that tranche.**
+> **Trigger:** a tranche landing. **Owner:** the same pair.
+
+**Why the classification step is necessary rather than procedural:**
+
+> **A CONFORMANCE LINT CANNOT DISTINGUISH *"THE AUTHOR GOT IT WRONG"* FROM *"THE SCHEMA CANNOT EXPRESS
+> IT."*** Both are findings and both look identical. **So sufficiency-at-growth cannot be automated by
+> the lint that would detect it** -- it requires a judgement at each growth, and therefore an owner.
+
+Sibling of A10.2's law (*a conformance check cannot distinguish FIXED from DELETED*): **same
+instrument, same blindness, one layer over.**
+
+### The shared law behind three seats' errors this session
+
+`0.0.0_AB_MSTR~Z` relayed a certification four minutes before its author narrowed it, having
+**independently verified every number under it** -- and self-reported: ***"I checked the numbers and
+not the noun."***
+
+> **VERIFYING A NUMBER DOES NOT VERIFY THE CLAIM IT IS EMBEDDED IN.** The quantity gets checked because
+> it is checkable; **the noun it attaches to does not look like a claim, so nobody checks it.**
+
+Three substrates, one law: CVO's 52.5% (arithmetic solid, characterisation outran it) · CTO~Z
+certifying against *"the set that has landed"* while quoting a criterion about *"the first declaration
+set"* · MSTR~Z relaying verified numbers under an unverified predicate. **It cost nothing only because
+the author self-narrowed within four minutes and the recipient read the correction before acting --
+luck with good posture, not a control, and they said so themselves.**
+
+### The pattern in A10.1's own text
+
+Three distinct defects, **each found by someone trying to SATISFY the criterion, never by review:**
+**unowned** (no cert reached the seam) · **ambiguous** (its executor read it the other way) · **partly
+unsatisfiable** (found by asking whether it could ever ship).
+
+> **A criterion that was UNOWNED, AMBIGUOUS and PARTLY UNMEETABLE still LOOKED COMPLETE.** It stated a
+> condition, ordered a sequence, and argued its timing. **Every property a reader checks for was
+> present; the ones that make it OPERABLE were not.**
+
+This session's shape, **arriving in the text of a ruling rather than in an instrument** -- and it is
+CVO's. **The review that would have caught it does not exist, because a ruling gets RATIFIED rather
+than EXERCISED.** Findings came from execution, every time.
+
+**Step 3 stays shipped** -- safe under either reading on the existing corpus.
