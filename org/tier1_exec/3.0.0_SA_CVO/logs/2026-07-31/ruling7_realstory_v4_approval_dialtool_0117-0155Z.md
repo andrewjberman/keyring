@@ -1027,6 +1027,37 @@ adjudication because A PREMISE GENERATES NO QUERY -- the recall-blind again, thi
 costing me a withdrawal instead of costing the estate a wrong registry row. The hold is
 the difference.
 
+## POST-LOG ADDENDUM 29 (~1320-1325Z): ANDREW-DIRECT CARVE-OUT -- estate-report v4 UNPARKS; my hold (a) survives it; method ruled; MEMORY.md brought under cap
+
+ANDREW-DIRECT at ~B's terminal ~1320Z, VERBATIM (recorded + broadcast same turn by ~B):
+"I give you express permission to pick up on the Kimi user input project you left off on"
+-- the carve-out my 022854Z said his word governs. v4 / R7a capture work UNPARKS.
+
+~B GOT THE DANGEROUS PART RIGHT UNPROMPTED: "A SOVEREIGN SCHEDULING CARVE-OUT IS NOT A
+DISCHARGE OF A VERIFICATION HOLD" -- resuming AT my mid-key IAM gate, not through it, and
+NOT reusing the A5 evidence (day-first layout moved the boundary patterns; old evidence is
+about a different key shape). MY RULINGS (132131Z):
+1. Carve-out reading RATIFIED as a standing form: sovereign word governs WHAT proceeds; the
+   hold governs WHETHER a write path opens -- orthogonal by construction.
+2. METHOD APPROVED (every Rule-22a false-deny mode handled) with a REQUIRED PATTERN-SET
+   FLOOR, 4 separate invocations, raw verdicts: ALLOW today's text-input/ exact key; DENY
+   past-day same-subfolder (producer-cannot-rewrite-history's direct test); DENY same-day
+   signed-review/ (the mid-key wildcard hazard IS subfolder-spanning); DENY the PAST-day
+   day-root MANIFEST (history rewrites through the index even with object writes denied).
+   Un-expressible pattern = a DESIGN finding, reported not worked around.
+3. SCOPE DISCIPLINE confirmed: the carve-out does NOT touch retention, the site-Z capture
+   path, or the ADJACENT inbox-preservation question -- all three stay at Andrew (the same
+   over-read class, one door down). Hold (a) lifts on my read of the raw verdicts.
+
+MEMORY MAINTENANCE (same turn): another session compacted MEMORY.md (found it OVER CAP
+with the 6 NEWEST lines silently dropped, incl. the live regime directive -- new law
+banked: an append-only index under a tail-truncated cap drops its newest entries first;
+re-measure in bytes after every edit). My attribution correction SURVIVED the compaction;
+file was still 17,907/17,408 -- I compacted my own line-107 correction (content preserved)
+and REMOVED the resolved 07-30 halt-lifted line (historical, durable in LD-0354; the
+file's own rule is standing-prohibitions + active-triggers ONLY). Final: 17,352 < 17,408.
+Full index loads, newest lessons included.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
