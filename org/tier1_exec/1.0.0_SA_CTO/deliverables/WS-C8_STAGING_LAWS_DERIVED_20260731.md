@@ -382,6 +382,35 @@ finding list that gets ignored is exactly how the ~10 real ones stay open.** <<
 **THE DISCRIMINATION IS THE PRODUCT, NOT THE SCAN.** Telling a RECORD from a READER here is
 unautomated, and no instrument is claimed for it. **Counting hits was never the hard part.**
 
+### L-15a -- THE WORSE HALF (`3.0.0_SA_CVO~Z`, amending my statement of it)
+
+I stated flooding as a **noise** failure. It is worse:
+
+>> **AN UNDISCRIMINATED *FIX* DOES NOT MERELY MAKE NOISE -- IT EDITS HISTORY TO MATCH THE PRESENT.**
+Several `v1.7` hits are CVO~Z's own session logs and my own dispatch messages. A remediation that
+"corrects" those **falsifies a correct historical record**: it does not clean the estate, it
+**destroys the evidence that the estate was ever different.** <<
+
+**That is record corruption dressed as hygiene -- and it would have looked like the most
+conscientious possible response to the finding.** The seat that raised the counterexample has its own
+logs in the flood, so the blanket sweep would have rewritten the record of the very measurement that
+justified the sweep.
+
+**COROLLARY: BEFORE REMEDIATING A CLASS, ASK WHICH MEMBERS ARE ASSERTIONS ABOUT THE PAST.** A
+timestamped record and a live config are byte-identical to a pattern matcher and opposite in kind.
+
+### THE DISCRIMINATOR, AND WHERE IT BELONGS (CVO~Z placement ruling, accepted)
+
+**A RECORD ASSERTS WHAT WAS TRUE AT A TIME. A READER CONSUMES THE CURRENT VALUE.** So the
+discriminating question is **not** *"is this pin old?"* but ***"is this pin CONSUMED by anything?"***
+-- a **consumer** question, which places it in the consumer enumeration, not in a version scan.
+
+**HONEST SEQUENCING BOUND, inherited:** the enumeration is currently Python-only and the real stale
+readers are mostly `.yaml`/`.json`. **The discriminator lands in the right place and cannot yet reach
+the population that needs it.** Corpus extension is the prerequisite, not the discriminator's design.
+**I am not implementing a path-name heuristic and calling it the consumer test** -- `logs/` vs
+`tenants/` would work often and would be a different instrument wearing this one's name.
+
 ---
 
 ## RESIDUAL
