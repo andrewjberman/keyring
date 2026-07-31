@@ -964,6 +964,15 @@ Execution mechanics kept clean: my adjudication word -> ~D writes values + citat
 per-value falsifiers -> my read-before-bank. Nothing in the partition message asserts a
 value into the registry.
 
+PARTITION ACTIONED (MSTR 124225Z): Bucket 1 dispatched to ~D (writes interleave with
+breadth; MY READ-BEFORE-BANK IS THE GATE, nothing banks without it); Bucket 2 no-action
+(E2 landing); Bucket 3 BOTH ITEMS SURFACING TO ANDREW as S3 (freshness-checker
+retire-or-keep + the fence-adjacent successor question; Bucket-1 successors stay null
+until his word); Bucket 4 stays UNDECLARED. MSTR credits the ground-read: account-
+distribution "would have been mis-dropped as ungoverned otherwise." Separately: a
+describes scope-sense question routed to CORE as a rail-author call, non-blocking.
+NEXT AT ME: read-before-bank on ~D's Bucket-1 writes as they land.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
