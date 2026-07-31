@@ -1,7 +1,15 @@
 # C3 LABELING LAYER -- SPEC v0.1 (DRAFT, ISSUED TO CVO FOR REVIEW)
 
-**Author:** `0.7.0_AE_CloudOps~B` · **Date:** 2026-07-31 · **Status:** **v0.2 -- REVISED AFTER CVO REVIEW (164214Z), re-issued**
-**v0.2 changes:** s.2.2 rewritten as a RESOLVED worked example (CVO closed it under the escalation role) + new s.2.2.1/2.2.2 · **s.2.2.2 SOURCE-FIRST added as C3L.6 step 1** -- the third path neither this spec nor the estate had · s.6 requirement **4** added (basis travels with the label at every quote site) · s.10 six questions -> six rulings · C3L.1 cross-fabric rail dependency named · 14/14 upgraded to CVO-verified
+**Author:** `0.7.0_AE_CloudOps~B` · **Date:** 2026-07-31 · **Status:** **v0.3 -- REVISED AFTER CVO 164635Z + 171240Z, re-issued**
+
+**v0.3 changes (this revision):**
+- **NEW s.2.0 -- THE TWO-AXIS FRAME.** Andrew-direct: *"i like the AXIS of Intent and Friction."* SHED is INTENT × FRICTION; **only FRICTION was ever instrumented; the C3 walk is the missing sensor for INTENT.** Replaces an abstract justification with a measured one (`@2da40ba711`, 0 retirements / 6-of-6 KEEP-DORMANT).
+- **s.2.2 property 1 NARROWED** -- the wide "intent is not data" form is refuted by this case's own resolution; narrowed to *not available at the layer every instrument was aimed at*.
+- **s.2.2 property 3 RE-POINTED** -- it validates SOURCE-FIRST, not the walk: two senior seats independently reached for governance on an already-authored answer.
+- **NEW s.2.3 -- the walk's TRUE canonical case**: the three `intent_source: REJECTED_NO_GOVERNANCE_ABOVE` subjects, where all three escape routes are closed at once.
+- **NEW s.8.1** -- axis 2 may be GENERATIVE and may read axis 1's output; the axes may not be independent. Named as open, with the moratorium fence.
+
+*v0.2 changes: s.2.2 rewritten as a RESOLVED worked example + s.2.2.1/2.2.2 · SOURCE-FIRST as C3L.6 step 1 · s.6 requirement 4 · six questions -> six rulings · C3L.1 rail dependency · 14/14 CVO-verified.*
 **Tasked:** Andrew-direct via `1.0.0_SA_CTO` 163330Z -- *"have 0.7.0~B run the spec based on the text ive sent you and COO. Then have them issue that spec to CVO for review"*
 **Arch fences:** `1.0.0_SA_CTO` 163330Z · **Relay:** `2.0.0_SA_COO` 161347Z
 **Reviewer:** `3.0.0_SA_CVO`. **CVO REVIEWS; IT DOES NOT CO-AUTHOR.**
@@ -20,6 +28,31 @@
 > **(5)** "we need to build the system with 0.7.0~B into the Kimi loop not be doing anything ad hoc"
 
 **(3) CORRECTS (1), and the spec is built on (3).** (1) reads as three flat agreeing parties. (3) names the actual shape: **CTO + Andrew walk the items; CVO investigates ON DOUBT and reports back for those two to confirm.** COO's first relay over-flattened it and self-corrected. **CVO IS AN ESCALATION PATH, NOT A STANDING THIRD SIGNATORY** -- which also matters procedurally: a spec writing CVO into every decision would be CVO reviewing its own workload.
+
+---
+
+## 2.0 THE FRAME: SHED IS A TWO-AXIS DECISION, AND ONLY ONE AXIS WAS EVER INSTRUMENTED
+
+*Andrew-direct ~1655-1700Z, ratifying the decomposition verbatim: **"i like the AXIS of Intent and Friction."** Recorded by CVO at `org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/ANDREW_DIRECT_PRODUCTION_LEARNING_LOOP_20260731.md`.*
+
+A shed decision (WS-E3) has **two independent axes**:
+
+| | axis | the question | carried by | instrumented? |
+|---|---|---|---|---|
+| **1** | **INTENT** | *"is this still wanted?"* | `lifecycle_class`, **producer-asserted** | ❌ **NEVER** |
+| **2** | **FRICTION** | *"what does it cost to remove, and what to keep?"* | blast radius · live gates · writer-reader census | ✅ built |
+
+> ### **THE C3 WALK IS THE MISSING SENSOR FOR AXIS 1.**
+
+**And the consequence is measured, not argued.** WS-E3.0 closed at **0 retirements, 6-of-6 KEEP-DORMANT** (`@2da40ba711`), and the P1 baseline s.3c records why: **THE SAFE SLICE AND THE CLEARABLE SLICE DO NOT OVERLAP.**
+
+> **THE ESTATE HAS BEEN MAKING A TWO-AXIS DECISION ON ONE AXIS, AND THE HONEST VERDICT ON ONE AXIS IS
+> ALWAYS "DO NOT TOUCH IT."** A friction-only instrument cannot ever return *retire* -- not because
+> nothing should be retired, but because the axis that would say so is not wired up. **Zero
+> retirements was the correct output of a correctly-built instrument measuring the wrong number of
+> dimensions.**
+
+That is this layer's necessity: **measured, with a hash, in the estate's own closed workstream.** s.2 below states the mechanism-level version of the same thing.
 
 ---
 
@@ -82,9 +115,21 @@ Andrew's design **produces the record instead of inferring it.** That is this sp
 
 **Why it is the canonical specimen.** Three properties, and the third is the one that matters:
 
-1. **The missing thing is INTENT, not data.** More measurement produces more confidence and no more correctness -- the rule bank's own sampling-harder warning, live.
-2. **The two readings have opposite consequences.** Sanctioned successor -> leave it alone. Survivor -> it is an ungoverned daily production path. **A mechanical acceptance criterion ("zero unscheduled production pipelines") would re-arm the disarm** -- the E2 finding, arriving through this exact item.
-3. **COO and CTO INDEPENDENTLY classified it as a C3.ii state-of-system question before this spec existed.** The specimen was not selected to fit the design; the design was named to fit specimens like it.
+1. **NARROWED (CVO 164635Z) -- the wide form is REFUTED BY THIS CASE'S OWN RESOLUTION.** I wrote *"the missing thing is INTENT, not data; more measurement produces more confidence and no more correctness."* **False here: the intent WAS data.** It sat in a file, and one measurement of the *right object* closed it in about eight minutes. The true and narrower claim:
+   > **THE MISSING THING WAS NOT AVAILABLE AT THE LAYER EVERY INSTRUMENT WAS AIMED AT.**
+
+   That is demonstrated three times over (rules, resource policy, source search) and it is honest. **The wide form claims something this case disproves, and it is the first thing a competent reader would break.**
+2. **SURVIVES INTACT. The two readings have opposite consequences.** Sanctioned successor -> leave it alone. Survivor -> an ungoverned daily production path. **A mechanical acceptance criterion ("zero unscheduled production pipelines") would re-arm the disarm** -- the E2 finding, arriving through this exact item. Resolution does not retroactively unmake the doubt.
+3. **SURVIVES AS A FACT, BUT IT VALIDATES SOMETHING ELSE -- and this is the sharpest thing in the review.** I wrote it as *"the design was named to fit specimens like it."* What actually happened:
+   > **TWO SENIOR SEATS INDEPENDENTLY CLASSIFIED AN ITEM AS NEEDING GOVERNANCE WHEN ITS ANSWER WAS
+   > ALREADY AUTHORED IN THE ARTIFACT.**
+
+   No knock on either -- the source block is not obvious and neither had reason to open it. But it is **the estate habit, measured, on two of its best readers at once.** So property 3 **no longer validates the walk; it validates SOURCE-FIRST (s.2.2.2)**, and it is the strongest possible argument for making that step **MANDATORY rather than advisory** -- because the failure mode is exactly this: **competent seats reaching for governance in good faith.**
+
+> **THE CONSEQUENCE THIS SPEC ACCEPTS:** s.2.2 is now a **first-class specimen for C3L.6 STEP 1** and a
+> **WEAKER one for the walk's core justification** -- because for *this* item, governance was never
+> needed. **A spec must not rest its central mechanism on an example whose own resolution shows the
+> mechanism was not required.** The walk's true canonical case is s.2.3.
 
 **How the layer would resolve it.** Not by measuring harder -- by **asking the governance level that knows**:
 
@@ -144,6 +189,30 @@ And the three canonical properties survive intact: the missing thing was still *
 of instrument-layer measurement would have reached it -- all three instruments were correct and all
 three were mute); the two readings still had **opposite consequences**; and COO and CTO still
 classified it as a C3.ii state-of-system question **independently, before this spec existed.**
+
+---
+
+## 2.3 THE WALK'S TRUE CANONICAL CASE -- the three `REJECTED_NO_GOVERNANCE_ABOVE` subjects
+
+*Named by CVO (164635Z) from the registry, **verified by them directly rather than relayed**. s.2.2 proves STEP 1; **this proves THE WALK**. Two specimens, two steps.*
+
+**WS-E1 tranche 1 contains three subjects whose `intent_source` was REJECTED at declaration:**
+`mdpf-freshness-checker` · the per-firm account-distribution artifact · the feeds intermediates.
+Their recorded rejection reason is literally **"no governance level above cited; NOT MANUFACTURED."**
+
+**Why these are the walk's case and the aggregator was not** -- all three escape routes are closed at once:
+
+| path | why it cannot resolve them |
+|---|---|
+| **SOURCE-FIRST (s.2.2.2)** | **there is no authored intent to read.** `~D` looked and **declined to invent one.** |
+| **MEASURE HARDER** | that is precisely what `UNDECLARED` already records. More instrument-layer measurement returns the same non-answer. |
+| **SCAVENGE RESIDUE (s.2.1)** | there is no governance level above to scavenge *from*. That is the finding, not a gap in the search. |
+
+> ### **ONLY A GOVERNANCE ACT CAN SUPPLY WHAT IS MISSING. THERE IS NOTHING TO FIND -- SOMETHING HAS TO BE SAID.**
+
+**And the direction of the demonstration is what makes it decisive.** The estate has **already produced items where the honest answer is "nobody above this has said so"** -- and the registry **recorded that faithfully rather than manufacturing a parent.** The refusal to invent an `intent_source` is exactly right and it is exactly why the walk must exist: **a correct instrument, behaving correctly, has produced three holes that only a human act can fill.**
+
+**NOT MEASURED, DELIBERATELY.** These are cited from **the registry's own recorded rejection reasons** -- a citation, not a dispatch. I have not opened the three subjects, not traced their producers, and not formed a view on what any of them should be labelled. **That is the walk's output, not the spec's** (s.12).
 
 ---
 
@@ -278,10 +347,25 @@ Andrew: *"the part that we have been desigining thus far with 0.7.0~B is the **h
 
 ```
    THE AGREEMENT (WS-E1 registry, lifecycle_class)
-        ├──► E2  deliberate-hold        (derives)
-        ├──► E3  Tier-A keep-dormant    (derives)
-        └──► E5  enforcement half       (derives)
+        ├──► E2  deliberate-hold          (derives)
+        ├──► E3  Tier-A keep-dormant      (derives; REFUSES a stale assertion -- R4)
+        ├──► E5  enforcement half         (derives)
+        └──► ??  FRICTION-AS-DUPLICATION  (derives? -- OPEN, s.8.1)
 ```
+
+### 8.1 OPEN: are the two axes actually independent? -- NAMED, NOT ASSUMED
+
+Andrew, verbatim (~1655-1700Z): *"blast-radius is a way to potentially check overlap, in essence if something has highly overlapping blast radius and is doing the same function, that is very high friction, and needs to be assessed."*
+
+This makes **AXIS 2 GENERATIVE** rather than merely gating -- it can **propose** shed candidates, on the reasoning that two assets with heavily overlapping blast radius doing the same function are probably **one asset wearing two names**. A live specimen is already condemned in his own words: the estimate-shadowing-exact class, *"an agent built an ESTIMATOR for a quantity the estate already measures EXACTLY."*
+
+**THE PROBLEM FOR THIS SPEC'S SCOPE: overlap is COMPUTABLE; "doing the same function" is a SEMANTIC JUDGEMENT.** Function-sameness may require the **C3.ii vertical labels** -- which is **axis 1's own output**.
+
+> **IF SO, THE TWO AXES ARE NOT INDEPENDENT: FRICTION-AS-DUPLICATION READS INTENT'S OUTPUT.**
+
+That would make the walk a dependency of the **duplication detector** as well as of retirement -- a **fourth consumer**, strengthening one-source-several-consumers, but also meaning **the walk cannot be scoped as if only E3/E5 read it.** Routed by CVO to COO and CTO. **This spec NAMES the question and assumes neither answer** -- scoping the walk to two consumers when a third is coming would under-build it; assuming the third would over-build it against an unratified mechanism.
+
+> **⛔ FENCE, stated so it is not built wrong: the duplication analysis produces CANDIDATES FOR HUMAN ASSESSMENT** -- Andrew's own word is **"assessed."** **NOT an alarm, NOT a monitor, NOT a detector that pages.** The standing 2026-07-28 notification moratorium binds it.
 
 **Sequencing this unblocks:** lifecycle stage maintained → lifecycle values populated → **WS-E3 unblocks** (today structurally INERT: its PRD forbids retirement against an UNDECLARED lifecycle, and every contract reads UNDECLARED) → **WS-E5's enforcement half unblocks** (it rides E3's commit-gate ramp).
 
@@ -341,5 +425,7 @@ Andrew: *"this needs a dedicated series of TOs wrapped into the project."* Propo
 - **The 14/14 `UNDECLARED` count is now CVO-VERIFIED, not merely CTO-reported** (CVO read it from the registry directly: tranche 1 = 7 subjects all UNDECLARED, tranche 2 = 7 more). **I still did not verify it myself** -- the upgrade is in the source's independence, not in my evidence.
 - **EVERY FACT IN s.2.2 IS SECOND-HAND AND DELIBERATELY SO.** The daily `aggregator` caller, the three disabled rules, the 142-rule census, the resource-policy contents, the empty source search, and the independent COO/CTO classification are **CTO's and COO's measurements, cited as theirs and NOT re-derived by me** -- because re-deriving them is `DISPATCH-TO-MEASURE`, which is fenced. A worked example built on borrowed measurements is the correct shape here; **treating my re-telling of them as independent confirmation would be the exact error s.6 warns about**, committed by me, in the section arguing against it.
 - The scavenging positive-control failure (s.2.1, 4-vs-13) is **COO's measurement**, cited as theirs.
+- **s.2.3's three subjects were NOT MEASURED either, and that restraint is load-bearing twice.** They are cited from **the registry's own recorded rejection reasons** -- a citation, not a dispatch. I have not opened them, not traced their producers, and **hold no view on what any of them should be labelled.** Forming one would be the observer inference this entire layer exists to refuse, committed by the author of the document that forbids it -- and it would also **pre-empt the walk's first real output.**
+- **s.2.0's two-axis frame and the `@2da40ba711` result are CVO's relay of an Andrew-direct act**, cited as theirs; I have not re-derived the E3.0 closure.
 - The `revalidate_by` fit (s.5) is read off the ratified rule bank's own field list. **I have not exercised it**, and "the field exists" is not "the loop works."
 - Six open questions are open **because they are genuinely not mine**, not as hedging. Q1 and Q2 in particular could change the shape of the whole layer.
