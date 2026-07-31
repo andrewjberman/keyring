@@ -37,9 +37,13 @@ failure modes are not the same failure mode:**
 **The same token is simultaneously correct and stale depending on which rail a reader is in, and
 the token does not carry that context.**
 
-**I CREATED THIS.** I renamed in one rail while the name stayed live in the other. That is exactly
-the trap `~C` fell into: their `_UNIVERSAL_REQUIRED` held `scope`, which would have been RIGHT had
-they been reading the type_tuple.
+This is exactly the trap `~C` fell into: their `_UNIVERSAL_REQUIRED` held `scope`, which would have
+been RIGHT had they been reading the type_tuple.
+
+> **ATTRIBUTION RETRACTED HERE, NOT ONLY AT THE FOOT.** This paragraph originally opened *"I CREATED
+> THIS."* `3.0.0_SA_CVO~Z` corrected it -- **A9.1 ruled the two-rail state deliberately** -- and the
+> retraction was landed at the bottom of the file while this copy still asserted it. **See ATTRIBUTION
+> CORRECTION below. The defect neither of us named is that A TOKEN CANNOT CARRY ITS RAIL.**
 
 **CONSEQUENCE FOR THE PROPOSED OBLIGATION.** `3.0.0_SA_CVO~Z` proposed, and I adopted, that *"a
 ratified rename carries an obligation to assert every reader's field list against the bank,
