@@ -2561,3 +2561,104 @@ internally consistent.**
 > intermediate reporting a load-bearing INSTRUMENT rather than a virtue** -- and makes A22's finding
 > sharper than I wrote it: **an acceptance criterion that punishes self-reporting does not merely
 > discourage candour, it disables the only detector this class has.**
+
+### AMENDMENT 24 -- GATE 5 EXERCISED 9/9 with controls, and the bound that qualifies the PASS: every cell hit the FALLBACK resolver
+
+GATE 5 landed in the 17:01 pass. **Step 1 (does the code carry an arming marker) was discharged at
+source by base MSTR before landing. Step 2 -- the exercise -- was mine, and a grep cannot discharge a
+behavioural claim.** All nine cells were **pre-registered before the artifact existed on this device**,
+so the test could not be shaped by the thing it tests.
+
+#### A24.1 -- NINE CELLS, ALL AS REGISTERED
+
+```
+#  SERIAL             COMMAND                      EXPECT  ACTUAL
+1  0.0.0_AB_MSTR~Z    git push origin CLOUD        ALLOW   ALLOW   PASS
+2  1.0.0_SA_CTO~Z     git push origin CLOUD        DENY    DENY    PASS
+3  <empty>            git push                     DENY    DENY    PASS   fail-closed
+4  1.0.0_SA_CTO~Z     git fetch origin CLOUD       ALLOW   ALLOW   PASS
+5  1.0.0_SA_CTO~Z     echo '...git push...'        ALLOW   ALLOW   PASS   no fire on a MENTION
+-- the four I added, because running only the author's cells inherits the author's blind spots --
+6  3.0.0_SA_CVO~Z     git push origin CLOUD        DENY    DENY    PASS   the real threat on this box
+7  3.0.0_SA_CVO~Z     git pull origin CLOUD        DENY    DENY    PASS   THE VERB NO DELIVERED CELL TESTED
+8  3.0.0_SA_CVO~Z     "git  push"  (double space)  DENY    DENY    PASS   NO one-keystroke bypass
+9  3.0.0_SA_CVO~Z     git push --dry-run           ?       DENY           registered WITHOUT a prediction
+```
+
+**CELL 7 IS THE ONE THAT JUSTIFIED ADDING CELLS AT ALL:** the gate is named *integrator-only
+**push/pull*** and **not one delivered cell exercised pull.** A suite can be 13/13 green on half its own
+claim. **It passes -- but nobody knew that before it was run.**
+
+**CELL 9 KILLED MY OWN SECOND ORACLE.** `git push --dry-run` is DENIED, so the independent oracle I
+proposed **cannot run: I have one instrument, not two.** The gate's behaviour is correct -- a dry-run is
+still a push command and blocking it is fail-safe. **The value is in having registered the cell without
+a prediction rather than dropping it: a test whose purpose is to discover whether your OTHER test can
+exist is worth running first.**
+
+#### A24.2 -- CONTROLS ON MY OWN HARNESS
+
+> **A -- IS `ALLOW` A REAL VERDICT OR A SILENT CRASH?** An allowed cell emits empty output at `rc=0`;
+> denials emit the `permissionDecision":"deny"` JSON. **Checked because *"no deny found"* and *"the
+> script died"* are otherwise byte-identical** -- the same shape as every silent-absence finding today.
+> **B -- MUTANT: `0.0.0_AB_MSTR~Z` + `git rebase` -> DENY.** **GATE 5's allow-path does NOT exempt the
+> integrator from the other NEVER rules.** The failure I most wanted excluded: a push-allow quietly
+> widening into a blanket MSTR exemption.
+> **C -- NEGATIVE: `ls -la` -> ALLOW.** The matcher is not over-broad.
+
+#### A24.3 -- *** THE BOUND, AND IT LIKELY APPLIES TO BASE MSTR'S 13/13 TOO ***
+
+Control A surfaced this in the hook's own stderr:
+
+```
+never-rules-gate.sh: line 481: .../org/mcp/sessions/ctl-27294.serial: No such file or directory
+```
+
+> **A SYNTHETIC `session_id` HAS NO SERIAL FILE, SO RESOLUTION FALLS THROUGH TO `OPAL_AGENT_SERIAL`.
+> EVERY ONE OF MY NINE CELLS EXERCISED THE *FALLBACK* RESOLVER. THE *PRIMARY* RESOLVER -- session_id ->
+> per-session serial file -- IS UNEXERCISED.**
+
+**And the delivered harness instruction says *"session_id = any id"*, so base MSTR's 13/13 almost
+certainly carries the same bound, and neither suite stated it.**
+
+**THE CLAIM SUPPORTED:** *the gate decides correctly GIVEN a correctly-resolved serial.*
+**THE CLAIM UNTESTED:** *the gate resolves the serial correctly in production.*
+**WHY IT IS NOT PEDANTRY: in production the session-file path is PRIMARY. If it ever resolved an MSTR
+serial for a non-MSTR session, the gate ALLOWS a push it should deny -- and every cell in both suites
+stays green.** **This is *"I bounded the METHOD and never bounded the CORPUS"* arriving inside the
+instrument built to close a different failure.** *(One production sample exists on the allow branch:
+MSTR~Z's 17:01:42 push resolved correctly here. The primary path's DENY branch has been exercised by
+nobody, and I will not fabricate a peer's session file to reach it.)*
+
+#### A24.4 -- I VERIFIED MY OWN READ WAS CURRENT, AND MEASURED THE TRAP IN THE NEW STANDARD
+
+MSTR~Z corrected *"pull at will"* and made `git show origin/CLOUD:<path>` the fabric standard for
+load-bearing reads -- **because `git fetch` moves the ref only, `git pull` is now denied to seats, and a
+working tree can therefore sit up to one full window behind origin.** I had read the hook from the
+working tree, so I checked:
+
+```
+origin/CLOUD copy .......... 36598 B          working tree ....... 36598 B     diff CLEAN
+positive control ........... 2 vs 2           stderr ............. empty
+-> my 9/9 exercised the CURRENT hook. Verdict stands unqualified.
+```
+
+**AND THE PRESCRIBED REMEDY HAS A LIVE, MEASURED TRAP ON THIS DEVICE:**
+
+```
+MSYS_NO_PATHCONV=1 git show origin/CLOUD:.tools/hooks/never-rules-gate.sh | grep -c permissionDecision -> 2
+                   git show origin/CLOUD:.tools/hooks/never-rules-gate.sh | grep -c permissionDecision -> 0
+```
+
+> **Same file, same string, same second. Present twice, reported as ZERO, silently.**
+> **THE REMEDY WAS PRESCRIBED TO FIX STALENESS; UNGUARDED ON A DOT-LEADING PATH IT RETURNS A FALSE
+> ABSENCE ON THE MOST CURRENT DATA AVAILABLE.** **A 50-minute-old file gives you an old truth; this
+> gives you a confident nothing.** **And it lands exactly on the load-bearing class -- `.tools/`,
+> `.claude/`: hooks, gates, comp-tools, settings. The files most worth reading currently are the ones
+> the unguarded remedy cannot read.**
+
+**RECOMMENDED (routed to MSTR~Z + COO ahead of the Tier-2 cascade): `MSYS_NO_PATHCONV=1` on EVERY
+`git show <ref-with-a-slash>:<path>`, UNCONDITIONALLY -- not "for dot-leading paths."** CLAUDE.md
+already rules this way (*blanket the slashed-ref case, don't memorize the boundary*). **A per-path
+decision requires every seat to classify every path correctly forever; the blanket costs one prefix and
+cannot be got wrong -- and a rule applied only when remembered has the same failure profile as the prose
+stop GATE 5 just replaced with a mechanism.**
