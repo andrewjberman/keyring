@@ -464,6 +464,46 @@ been a mechanism with no source" (CVO~Z).
 OPEN AT ME: CVO~Z fence-definition ruling -> read both C-1 declarations before (b)-type/(d)-
 attribution bank. AT ANDREW: preservation reversal + packet. SEG-0 candidates to come from ~D.
 
+## POST-LOG ADDENDUM 12 (~0652-0654Z): THE SELF-DESTRUCT CLAUSE FIRED -- SEG-0 returned as a finding; joint adjudication delivered, estimand question DISSOLVED
+
+CTO 065200Z invoked the clause correctly: SEG-0 unconstructibility RETURNED for joint CTO+CVO
+adjudication. The finding (~D @6bcf83fbc2, two candidates hit it independently = property of
+the PREDICATE): pods_spanned>=2 is UNSATISFIABLE by ANY single-author segmentation (S-A: 3,530
+units, max pods 1, zero pass -- structural, measured not sampled) while the estate's own
+published work unit IS single-author -- and the predicate FORCES the segmentation it was
+supposed to filter (circular). CTO's substantive worry: multi-pod-only selects the
+coordination-heavy EXCEPTION, unrepresentative in the direction that FLATTERS the baseline.
+CTO self-declared their own one-axis clearance (ratified S-A on justification-independence,
+never probed satisfiability) -- the class measured on BOTH of us within the hour: it is a
+property of OWNING AN AXIS, not of any agent.
+
+CVO HALF DELIVERED (065349Z, effective on CTO concurrence; ~D previewed 065410Z, act-on-none-
+until):
+- Circularity resolved at the PAIR LEVEL: predicate+segmentation is jointly a CLASS DEFINITION
+  ("work shaped like the target projects" -- ADVI/MDPF are planned multi-seat, an argument
+  independent of any produced population). A pair may DEFINE a class; it may not pretend to
+  filter one it creates.
+- ESTIMAND DISSOLVES, does not escalate: capture BOTH classes from durable sources -- (A)
+  target-class (pods>=2 + ratified per-pipeline delivery-boundary) and (B) natural-unit
+  (single-author boundary, pods dropped, remaining predicates probe-gated) -- both labeled,
+  never summed, CLASS-MATCHING DECLARATION required at any future comparison. Nothing
+  perishable forces Andrew's word now; the remaining choice is comparison-time and reversible.
+  Packet gets a NOTE, not a blocking question. (House pattern: 77/23, dual-basis -- carry
+  both, don't pick.)
+- SEG-0 v3 MANDATORY: a MEASURED SATISFIABILITY PROBE per predicate-segmentation pair before
+  ratification (per pair, per predicate, cascade shown) -- incl. (B)'s remaining predicates
+  (S-A's cascade zeros were downstream of pods, prove nothing about the others). Exercise-
+  the-spec made structural.
+- Concur: S-A zero BANKS as structural evidence; S-B's 415 NOT-BANKED pending the ratified
+  per-pipeline run beside the global (gap = deviation cost).
+- Tally deliberately not quoted (M10: predicate-sensitive counts never travel bare).
+
+~D's blob-tune refusal, upstream-fence surfacing, and 0-vs-415 non-preference = three against-
+interest refusals now load-bearing in three separate control structures.
+
+OPEN AT ME: CTO concurrence on the joint ruling; CVO~Z fence-definition (holds both C-1s);
+then read-before-bank. AT ANDREW: preservation reversal; packet note (estimand, non-blocking).
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
