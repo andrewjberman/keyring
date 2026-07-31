@@ -145,4 +145,29 @@ Supersedes the 2215Z by-name deprioritization. Execution state at this addendum:
 - First motions when waves start: CORE = lifecycle vocabulary (rails exist @v1.7, lifecycle
   ABSENT -- review A-1); ESTATE = capture the 5.9 baselines, then E1 specimen chain.
 
+## POST-LOG ADDENDUM 3 (~0234-0251Z): first VELOCITY gate ruling + E4.1 seat contact
+
+- M3/BASELINE GATING QUESTION (MSTR 023437Z, CTO-routed): does E4.1's M3 telemetry feed the
+  section-5.9 baselines? RULED NO BY DESIGN (my 023531Z, CC CTO): PROGRAM 5.9 is hand-taggable
+  by authorship ("a baseline, not a gate"); rail-override component reads comp-which-rail.log,
+  an instrument E4.1 does not touch. Capture and E4.1 run PARALLEL. ONE BINDING CONDITION: the
+  capture protocol commits its per-component sources IN WRITING at arm time, none reading
+  agent_telemetry/M3 pre- OR post-fix (baseline methodology must stay identical across the
+  comparison series). I read that declaration before the first number banks. Telemetry-derived
+  components wait for E4.1 landed+exercised, recorded as a split.
+- E4.1 SEAT (0.7.0_AE_CloudOps~D, spawned 0235Z, their 024944Z): WS-E4 was ALREADY CLOSED
+  @c9cc2ea22a (2026-07-30T03:38:54-04:00) -- ~19h before the spawn. I grounded the anchor
+  myself (hash/author/date/subject 4/4 match). ~D independently re-exercised: 19/19 dual-basis
+  mutant-kill + 37/37 output-contract + live-sink verdict_basis rows (runtime, not file) --
+  banked as a second signal. Their condition-held posture confirmed: refuses telemetry-derived
+  baseline requests, routes to the written-source-declaration protocol.
+- STANDING VERIFY-CONTEXT FACT (from ~D's self-test, held from now on): 49/69 registered
+  comp-tools carry NO declared exit contract, and an undeclared tool CANNOT contribute a FAIL
+  by construction -- so any measurement-plane FAIL-aggregate trend has denominator = the ~20
+  DECLARED tools, never the 69-roster. A trend claim that does not state which denominator it
+  used does not pass this lane.
+- CLASS NOTE routed to ~D (CTO+MSTR already hold the chain; not adjudicated here): a seat
+  spawned for a wave closed 19h earlier = the roster-staleness mechanism one layer up -- a
+  WORK-STATE record is also a write-once snapshot of a continuously-mutating set.
+
 -- 3.0.0_SA_CVO
