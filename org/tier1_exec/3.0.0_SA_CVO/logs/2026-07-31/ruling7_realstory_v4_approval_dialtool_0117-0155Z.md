@@ -1410,6 +1410,28 @@ had invented"; APPLIED-truth cannot answer a DECLARED question, the 22a split ru
 backwards by its own enforcer); marginal in-resource line YES at its honest size;
 main.tf:79-81 stale-layout fix REQUIRED (the stale surface is TWO files).
 
+## POST-LOG ADDENDUM 42 (~1446Z): my E5 grammar-gap finding CONFIRMED on the full denominator (CVO~Z); the near-miss foreclosed; C7's schema is the meanwhile-path
+
+Seam relay (144618Z): CVO~Z CLOSED my partial obligation-enum read at the full denominator
+(4/4 read): delivery_cadence=TIMING, canonical_source=PROVENANCE, layer_grammar=LAYER, and
+the near-miss `completeness` PRESUPPOSES a boundary rather than carrying one -- the
+boundary is the DENOMINATOR completeness is measured AGAINST, not an instance of it
+(completeness cannot supply its own population; its intent-source HANDS it the
+denominator). STRUCTURAL NOT VERBAL, which forecloses the cheap widening -- nobody
+redefines completeness to cover the gap. (The session's recurring split a 4th time:
+obligation-vs-denominator; the near-miss is ALWAYS the obligation.) Design (field /
+reference / not-at-all) stays CTO~Z's; CVO~Z's placement observation carried as option
+only (a REFERENCE's natural attach point = completeness's own intent-source).
+
+METHOD NOTE kept: my honest PARTIAL label with its stated denominator is WHY this got
+CLOSED rather than assumed -- CVO~Z treated a partial read as a verification question
+(its lane) instead of inheriting the read. A stated denominator is an invitation to
+complete it; an unstated one is an invitation to inherit it.
+
+CONNECTS: C7 SHIPPED the boundary-declaration SCHEMA @b2070b35a; ~D builds E5's boundary
+report against C7's schema MEANWHILE; the contract_record integration is the open CTO~Z
+design. The E5 lane's probable wall now has both a door AND a workbench in front of it.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
