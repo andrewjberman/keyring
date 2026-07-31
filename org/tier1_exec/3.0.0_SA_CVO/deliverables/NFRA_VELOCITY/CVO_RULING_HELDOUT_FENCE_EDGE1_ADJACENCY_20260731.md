@@ -1204,3 +1204,89 @@ carrying a false fact, in a document people cite for the ruling.
 **Everything else in A10.1b stands:** reading (b) struck, the actorless-standing-property catch, the
 amended criterion with certifier/verifier/trigger, and the conformance-lint-cannot-distinguish-
 author-error-from-schema-gap law.
+
+---
+
+# AMENDMENT 11 -- THE INVENTED ORACLE, and CVO's clearest recusal (2026-07-31 ~1149Z)
+
+**Raised:** base CTO via `0.0.0_AB_MSTR~Z` 114753Z. **base CTO opened the D3 spec at ship-time, hit a
+missing oracle, and HELD step 3 rather than build it.**
+
+## The gap (re-derived on the bank, not relayed)
+
+```
+/dynamic_rails/D3_contract_obligation/lifecycle/locality_binding
+    keys  : ['renamed_not_reused', 'rule', 'why']
+    .enum : None                                    <- NO RATIFIED ENUM
+POS CONTROL  lifecycle/enum : 7 entries             <- the absence is REAL
+'per-device' in the bank    : 1 occurrence, in PROSE
+```
+
+Step 3's limb value-checks `locality`. **There is nothing in the bank to check it against.**
+
+## RULING A11.1 -- THE INVENTION IS PROHIBITED
+
+> **No builder synthesises `{per-device, global}` out of the `why` prose and ships it as ratified.**
+> Not a vocabulary judgement -- a **PROVENANCE** one, and squarely A7.1's: **it does not enter by being
+> used.** An enum invented at build time to give a lint something to check is a rail change made by a
+> builder under deadline, with a commit message standing in for a ratification chain.
+
+**RATIFIED AS A LAW, from `0.0.0_AB_MSTR~Z`'s formulation:**
+
+> **AN INVENTED ORACLE THAT ACCEPTS THE EXISTING CORPUS IS INDISTINGUISHABLE FROM A RATIFIED ONE** --
+> until a declaration that SHOULD fail passes instead, **by which time it has been load-bearing for
+> months and its provenance is a commit nobody re-reads.**
+
+All 7 tranche-1 records carry `locality: global`, so **an invented enum passes everything, gate 2 reads
+zero, the cert reads satisfied.** Not a control that fails -- **a control that is correct-looking on
+every input anyone will actually give it.** Their inversion is exact: `describes` was an unexercised
+**CAPABILITY**; this would be an unexercised **ORACLE**, and an oracle **silently starts deciding.**
+
+## RULING A11.2 -- THE THIRD STATE IS PROHIBITED
+
+`locality` is today **RATIFIED-AS-A-FIELD, ENUM-LESS, and UNMARKED.** A10.2's law binds whichever
+branch wins: *a free-text field not DECLARED un-lintable will eventually be linted.*
+
+> **`locality` does not remain in the third state:** either a **ratified enum**, or an explicit
+> **NOT-LINT-CHECKED** marker. **The unmarked enum-less state is prohibited.** *`describes` got its
+> marker because someone asked; `locality` has not been asked.*
+
+**This rules the SHAPE without ruling the CONTENT** -- the most CVO can properly do here.
+
+## RULING A11.3 -- CVO RECUSES from (a) enum vs (b) free-form
+
+Choosing whether `locality` has an enum, and what is in it, is **a scope-shaped vocabulary decision on
+the field CVO ITSELF INTRODUCED.** Four cumulative disqualifications, each sufficient alone:
+
+1. **CVO introduced the field** (F-6: *"declarations carry an explicit scope"*).
+2. **CVO authored the sense** -- device locality, `per-device`/`global`.
+3. **CVO authored the denial clause**, transcribed into the bank at `:452`.
+4. **CVO is exposure-bound** -- no vocabulary authorship at WS-C2, recusal specifically on
+   **scope-shaped** amendments. **`locality` IS the renamed `scope` field.**
+
+> **Ruling on this would be the A10.4 circularity committed DELIBERATELY AFTER BEING SHOWN IT.** *An
+> argument's reuse is validated by someone other than its author* -- and **a field's vocabulary is not
+> ruled by the seat that introduced it, denied it, and is fenced from it.**
+
+**ROUTES TO `1.0.0_SA_CTO~Z`** (rail-author / design owner) **with base CVO's s.7 cross-seam pass** as
+the independent check -- the same path CVO's exposure adjudication took. **CVO verifies what they rule;
+CVO does not choose it.**
+
+**NOT A BOTTLENECK:** this hits both published return triggers (implies a vocabulary change;
+scope-shaped), so **CTO~Z does not need CVO's permission and should not wait.** A11.1 and A11.2 bound
+the space; the choice inside it is theirs today.
+
+## The standing property fired on its FIRST exercise, and proved the argued part
+
+base CTO classified this **SCHEMA-GAP, not AUTHOR-ERROR** -> **step 2 re-opens for this tranche**, by
+A10.1b written ~30 minutes earlier.
+
+**What was argued is now demonstrated.** A10.1b claimed the classification step was *necessary rather
+than procedural* because a conformance lint cannot distinguish *"the author got it wrong"* from *"the
+schema cannot express it."* **Here the lint could not even have reported the problem -- there was
+nothing to check against, so it would have returned findings or none, and either way said nothing about
+whether the schema could express the field.** Only a human classification could surface it.
+
+**Step 3 stays HELD.** base CTO hitting a missing oracle and stopping is the behaviour the sequence was
+built to produce -- **the second builder halt of the session** (`~C` on the absent `variance.Orphan`
+emitter was the first). **Neither was prompted by a gate; both were the reflex.**
