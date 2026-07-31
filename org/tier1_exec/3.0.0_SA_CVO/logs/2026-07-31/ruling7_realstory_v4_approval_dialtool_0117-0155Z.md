@@ -1167,6 +1167,40 @@ E1 breadth declarations, E2's pinned trigger census. AT ANDREW: freshness-checke
 retire-or-keep, the mdpf successor question, the possible lifecycle-gate widening,
 preservation, the packet.
 
+## POST-LOG ADDENDUM 34 (~1346-1348Z): THE TEXT-INPUT PRODUCER IS AN ADMINISTRATOR -- hold (a) v3; per-principal batteries + the FALLBACK MUTANT; step 0 routed to CTO
+
+~B STOPPED BEFORE AUTHORING (134623Z) on one grounding check: the capture layer is DEVICE-
+SIDE BY FORCE (transcripts at ~/.claude/projects/, unreachable by the runner), the device
+runs as user/Andrew_Berman -- admin via GROUP (AdministratorAccessOpalCapital;
+list-attached-user-policies shows a comfortably NARROW principal, its own trap) -- and
+today's text-input write is ALREADY `allowed` before any policy exists. My battery against
+the runner role would have yielded FOUR IMMACULATE GREENS ON A ROLE THAT DOES NOT DO THE
+WRITING -- the wrong-object class, second instance today, Rule-22a-clean pedigree. THE
+WORSE HALF: storage-layer provenance ZERO -- a capture write, an Andrew hand-write, and
+any credential-holding agent session indistinguishable in CloudTrail and the object.
+~B's INFERRED/MEASURED separation exemplary (ambient-default INFERRED; the no-principal-
+selection design gap MEASURED; no defect claimed in unwritten code) -- banked as the
+template for design-gap claims.
+
+RULED (134724Z to ~B; 134801Z step-0 routing to CTO):
+1. HOLD (a) v3: CREATE-PRINCIPAL -> AUTHOR -> exercise. Batteries PER-PRINCIPAL (writer
+   role: {today}/text-input/* only; runner role: its subfolders) with CROSS-PRINCIPAL
+   DENYs in the floor -- runner DENIED on text-input (only the device-side capture writes
+   Andrew's words: the provenance property AS POLICY) and on signed-review; writer denied
+   on everything else.
+2. FIFTH INVOCATION REQUIRED -- THE FALLBACK MUTANT: break the assume-role path, run the
+   tool's write -- MUST FAIL LOUD; success = boto3 fell back to ambient admin = the role
+   is decoration (guard-nothing-invokes, caught by the only test that catches it). Runs at
+   step 4, ~A independent executor.
+3. DESIGN ENDORSED (assume-role from existing user, no new long-lived credentials,
+   CloudTrail attribution) + the PRINCIPLE RATIFIED: a pipeline whose one mandate is that
+   Andrew's words are faithfully recorded cannot have a storage layer where anything at
+   all could have written them -- CONTENT-LAYER PROVENANCE DEMANDS STORAGE-LAYER PARITY.
+4. STEP 0 (creating a principal adjacent to Andrew's OWN user) routed to CTO ARCH-GATE +
+   Andrew visibility -- the Rule-23 OURS-vs-DEPLOYED class; ~B refused to self-authorize
+   (seventh against-interest stop); I endorse the design, the creation act is not mine.
+~B authors nothing until step 0; fixture 2 + synthesis proceed.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
