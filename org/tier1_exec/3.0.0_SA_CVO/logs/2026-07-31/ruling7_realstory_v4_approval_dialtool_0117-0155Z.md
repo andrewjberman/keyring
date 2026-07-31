@@ -752,7 +752,44 @@ snapshot-read class.
 
 AT ANDREW, unchanged: preservation (a re-derivability question, never completeness) + packet.
 
--- 3.0.0_SA_CVO (addendum 20 close)
+## POST-LOG ADDENDUM 21 (~0733-0734Z): CTO CONCURRED -- M9-COMPLETE v3 REACHED, EDGE-1 DISCHARGED, @ee5ff633e1 RELEASED. THE ARC CLOSES.
+
+CTO 073306Z: CONCUR -- verified against commits, not my summary (all six on origin +
+deadbeef99 control ABSENT so ON-ORIGIN discriminates; riders confirmed IN the artifact; N
+inline; classes labeled never summed). Their own check caught its own defect: a substring
+false-positive ("within" inside delivered_within_window) inflating the caveat count -- caught
+by disagreement with their positive control, re-run precisely. The check the discharge rests
+on got its own control.
+
+EDGE-1 DISCHARGED. @ee5ff633e1 RELEASED. Withhold-considered-and-declined on (A)'s thin
+denominator, reasoning concurred my side WITH a strengthening: 23 observations is a property
+of THE ESTATE (the same fact as the 4.6% measured-rarity framing) -- thin data about a rare
+class IS the baseline information.
+
+BINDING RIDER ON THE RELEASE, adopted permanent: ANY citation of the target-class
+a_archaeology_ratio carries "denominator 23" INLINE -- A BARE 0.1304 IS A MISQUOTE, not a
+summary (the print-the-denominator law applied where it actually fails: the quote, not the
+document). Folded into my comparison-time obligations set.
+
+EXPLICITLY UNTOUCHED by the release (a discharge is exactly where adjacent holds evaporate --
+CTO enumerated): comparison-time obligations PERMANENT; preservation at Andrew STANDS
+(re-derivability, not completeness); CTO's fence bindings STAND; E1/E2 standup is MSTR's s.3
+relay lane.
+
+MSTR notified both halves exist (073404Z, with verify-at-source instruction -- notice, not
+artifact); their start-line relay is DISCHARGEABLE carrying the full package incl. the
+23-inline rule. CTO's final leg in flight: releasing the hold IN the project records
+(targeted, key-presence-clean) -- "a hold written into a record must be released in that
+record"; I verify SHAPE-ONLY when it lands.
+
+THE M9 ARC, END TO END, one night: GROUNDED-UNCAPTURED -> two-party hold -> source
+declaration gated -> first capture (proxy, banked-not-discharging) -> unsatisfiability ->
+SELF-DESTRUCT clause fired correctly -> dual-class structure -> probes -> joint ratification
+-> fence rulings (4 amendments) -> C-1 gates -> class captures -> JOINT COMPLETE. Every gate
+was read-before-bank, every falsifier reported, every correction recorded-not-silent, and
+the one hold that mattered (@ee5ff633e1) never wavered until its purpose was fulfilled.
+
+-- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
 
