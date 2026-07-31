@@ -28,6 +28,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "the mdpf daily convergence gate"
     cadence: "event-only: S3 ObjectCreated on the INF spine completion marker; no schedule of its own"
     successor: null
 
@@ -37,6 +38,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "mdpf feeder + aggregate execution"
     successor: null
 
   "process:mdpf-freshness-checker":
@@ -45,6 +47,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "a served-timeseries staleness metric"
 
   "artifact:s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json":
     intent_source: "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md"
@@ -52,6 +55,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "primary served mdpf rollup, portal ModelPortfolios"
     successor: null
 
   "artifact:s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json":
@@ -60,6 +64,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "per-date partition of the served rollup"
     successor: null
 
   "artifact:s3://opal-data-portal-v2/json/mdpf/{firmId}/account-distribution.json":
@@ -68,6 +73,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "per-firm account distribution"
 
   "artifact:s3://opal-data-mdpf/mdpf/feeds/{artifact}/*/{date}.parquet":
     intent_source: REJECTED_NO_GOVERNANCE_ABOVE   # reasons in coverage.intent_source_rejections
@@ -75,6 +81,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
+    describes: "intermediate feeder outputs"
 
 coverage:
   # REQUIRED EMISSION. The DENOMINATOR SOURCE rides beside the number, because a denominator
