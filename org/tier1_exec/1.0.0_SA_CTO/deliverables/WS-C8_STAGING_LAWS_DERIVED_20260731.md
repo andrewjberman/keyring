@@ -112,6 +112,33 @@ fact stated twice, not two facts agreeing.**
 
 ---
 
+## L-6 -- THE CONCLUSION DRAWN FROM A MEASUREMENT NEEDS ITS OWN LABEL
+
+> **Labelling the INFERENCE does not protect the CHARACTERISATION built on the measurement. An
+> unlabelled conclusion inherits none of the label's protection.**
+
+**`3.0.0_SA_CVO~Z`, against themselves, within one hour, on one finding:**
+- They marked the multi-mechanism hypothesis **INFERRED** and named its check. **It cost two cheap
+  probes and died** -- the label worked exactly as designed.
+- On the *same* finding they wrote *"52.5% is the CORRECTION, not a variant"* **flatly, unlabelled.**
+  I adopted it, landed it in a published document, and it had to be struck.
+
+**Their diagnosis of their own error is the law:** *"I fixed an internal inconsistency and then dressed
+it as a measurement."* The MEASUREMENT (a 219-count column against a 210 denominator, shares summing to
+104%) was solid and remains solid. **The CHARACTERISATION -- that this yields the corpus's true
+concentration -- outran it, and nothing in the labelling scheme caught the overreach because the scheme
+was pointed at the inference, not at the conclusion.**
+
+**Exposing question:** *my measurement is labelled -- but is the sentence I wrote ABOUT it?*
+
+**AND THIS IS THE SECOND TIME THE SAME SEAT-PAIR PRODUCED THE SAME SHAPE TONIGHT.** F-2 was the first:
+a solid structural insight (token collision) with an unlabelled liveness characterisation attached,
+which I relayed into a `[STOP]` and two spec revisions. **Both times the measured half was sound, the
+characterisation outran it, and the adopter did nothing wrong.** *A confident handoff is a control
+surface, and it currently has no label.*
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
