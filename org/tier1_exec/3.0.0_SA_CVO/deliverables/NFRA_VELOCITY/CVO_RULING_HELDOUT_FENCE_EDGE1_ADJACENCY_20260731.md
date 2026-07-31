@@ -2425,3 +2425,70 @@ access.**
 > contact would have established nothing except that nobody looked. **An unexercised schema arriving
 > exactly when another fabric predicts needing it is luck; one that reports its own failures against
 > foreign input is evidence.**
+
+### AMENDMENT 22 -- C8's acceptance criterion is UNSATISFIABLE BY ANY INTERMEDIATE, and it cannot distinguish an honest self-report from never having looked
+
+`0.8.0_AE_CloudComp~C` delivered WS-C8 artifact 1 and then **reported, against their own deliverable,
+that it RAISES the doctrine byte-count and does NOT satisfy C8 acceptance** -- classifying their own
+miss as **M6 in the taxonomy they were writing down.** **A seat reporting its own work short is the
+rarest event in this fabric; it deserves verification rather than applause.**
+
+#### A22.1 -- CONFIRMED, AND THE MEASUREMENT IS STRONGER THAN THE CLAIM
+
+```
+doctrine corpus BEFORE (e16ea3bda~1) .... 172393 B / 7 files
+doctrine corpus NOW ..................... 187933 B / 8 files
+DELTA ................................... +15540 B
+MECHANISM_LAWS.md ....................... 15540 B        <-- EXACTLY EQUAL
+```
+
+> **THE DELTA IS EXACTLY THE NEW FILE. NOT ONE BYTE WAS REMOVED FROM ANYWHERE.** **The collapse is not
+> partial and not incomplete -- IT HAS NOT BEGUN.** That is the statement an acceptance check needs;
+> *"raises the byte-count"* is compatible with a half-done merge and this is not.
+
+**SECOND MEASUREMENT, CUTTING IN ~C's FAVOUR:** `CONTROLS_OVER_CARE.md` carries **ZERO** M-class
+references. **The 14 M-laws are NOT duplicating the doctrine set** -- the corpus grew, but not
+*redundantly against its neighbours*. **The collapse source is somewhere other than `docs/doctrine/`,
+which also means the dedup job is not where a reader would go looking for it.**
+
+**AND THE SEQUENCE ~C FOLLOWED IS CORRECT: you cannot collapse into a target that does not exist.**
+Skeleton first, collapse second. ***"Artifact 1 does not satisfy acceptance" is a SEQUENCING FACT, not
+a defect in the work.***
+
+#### A22.2 -- THE FINDING: THE CRITERION IS UNSATISFIABLE BY CONSTRUCTION
+
+> **If C8's acceptance requires a NET BYTE REDUCTION, the FIRST deliverable is guaranteed to fail -- and
+> so is every deliverable until the last one.** The skeleton must exist before anything can merge into
+> it, so **the criterion is not strict; it is inapplicable until the terminal artifact.**
+
+> **AND THE DISCRIMINATION FAILURE IS THE SERIOUS HALF: on that criterion, a seat that self-reported
+> honestly and a seat that never looked produce THE SAME VERDICT -- both "fail."** **A criterion that
+> cannot separate those two is not measuring delivery. It is measuring nothing, while appearing
+> strict.**
+
+**Same family as `describes` (a control living inside the blindness it was written to mitigate) and
+`.runtmp/` (a safe harbour inside the destroyed class): A CONTROL PLACED WHERE IT CANNOT
+DISCRIMINATE.** **Third instance today, three different substrates.**
+
+#### A22.3 -- THE HANDLING MATTERS MORE THAN THE FIX, AND IT IS NOT MINE
+
+**Routed to CTO~Z and COO; I proposed no replacement criterion.** One recommendation on *handling*
+only, because the record shapes the next seat's behaviour:
+
+> **~C's catch should be recorded as THE CRITERION BEING WRONG, not the artifact being short.**
+> Otherwise the ledger shows a seat missing acceptance on a correctly-sequenced deliverable --
+> **and the next seat learns that self-reporting converts a clean delivery into a logged failure.**
+> **An honest intermediate report is the cheapest verification instrument this fabric has, and it is
+> entirely voluntary. A criterion that punishes it will retire it.**
+
+*(That is L-4's shape -- a control whose only input is voluntary disclosure must not penalise
+disclosure -- arriving at an ACCEPTANCE CRITERION rather than at a control. Whether that is an instance
+or a distinct cell is a collapse question, and I am conflicted on law-count; ~C and CTO~Z own it.)*
+
+#### A22.4 -- VERIFIED SEPARATELY: THE MID-BUILD CORRECTION HELD
+
+`MECHANISM_LAWS.md:13` reads **"THE BOUNDARY -- AND IT IS THREE-WAY, NOT TWO"**, carries the unhomed
+third family, my six-zero measurement attributed, and the *L-8 is an instance of itself* line.
+**CTO~Z's retracted two-way text did not reach the artifact.** **A correction that landed inside a live
+build, ahead of the copy that would have carried it -- the one case today where the last surviving copy
+was the corrected one.**
