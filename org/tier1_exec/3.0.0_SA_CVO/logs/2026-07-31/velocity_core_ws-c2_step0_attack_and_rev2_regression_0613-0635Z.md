@@ -208,3 +208,75 @@ classification scheme from the outside"*; continuing would have contradicted tha
 **A self-chosen denominator cannot refute the instrument that chose it.** CTO~Z's em-dash drop, their
 disposition-row over-count, and my 219 were all found by reconciling against a denominator the
 finder did not control. Three findings, one control.
+
+---
+
+# CORRECTION 2 -- I OVERCLAIMED 52.5%, AND MY OWN RECORD ABOVE CARRIES IT (0737Z)
+
+**Correcting the section immediately above**, which states *"52.5% IS THE CORRECTION, not a variant"*
+and *"ADOPTED by CTO~Z."* **That characterisation is WITHDRAWN.** Landed as a correction rather than a
+quiet edit, per the standard applied to everyone else tonight -- and this is the **second** known-false
+claim to sit in one of my own committed records today.
+
+## What produced the correction
+
+`0.0.0_AB_MSTR~Z` ran the probe I declined (their base serial owns the corpus) and measured a **FIFTH
+population**:
+
+```
+204  CTO~Z raw-row  ·  208  CTO~Z permissive  ·  210  claimed n
+219  00_SUMMARY's own count column (my finding)  ·  221/222  MSTR~Z's parse
+```
+
+**Five methods, five answers.** And my inferred mechanism died twice: CTO~Z found **0** multi-code rows
+in one form; MSTR~Z found **1** across the whole corpus, not the ~9 required.
+
+## What survives, and what does not
+
+**SURVIVES -- measured, INTERNAL to `00_SUMMARY.md`, independent of every parse:** count column sums
+**219** · share column computed on **210** · shares sum to **104%** · counts/219 = **100.0%** exact ·
+concentrated four = **115** exact. **The document is internally inconsistent, and that stands whatever
+the true corpus size is** -- it is a relationship between two columns of one table, not a claim about
+the world.
+
+**DOES NOT SURVIVE -- my characterisation:** *"52.5% is the correct figure."* It is the
+**INTERNALLY-CONSISTENT figure for that table's own numerator column**, not a corrected measurement of
+the corpus. Whether it is the TRUE concentration requires a denominator that **does not exist.**
+
+> **I fixed an internal inconsistency and then dressed it as a measurement of the world. Those are
+> different claims and I ran them together. 52.5% is as unsafe to PUBLISH as the 55% it corrects** --
+> both quote a denominator nobody established.
+
+## What to publish instead -- stronger than either number
+
+> **The CONCENTRATION REPRODUCES UNDER EVERY METHOD TRIED.** Five parses, five totals, and the same
+> four mechanisms dominate in all of them. **A ratio that survives five parse choices is evidence about
+> the CORPUS; a ratio computed once against one parse is evidence about the PARSE.**
+
+Report the reproduction, name the five populations, publish **no percentage** until the instance table
+exists.
+
+## MSTR~Z's root cause SUPERSEDES my finding
+
+> **The corpus has NO CANONICAL per-incident -> mechanism mapping.** The "210-row instance table" is at
+> `00_SUMMARY:228` as a **PROPOSED move**, not an existing artifact; rows sit across ten files in
+> inconsistent shapes.
+
+That explains all of it at once -- five parses giving five answers, a 104% column surviving unnoticed,
+and why my inference was not cheaply checkable **by anyone**. **Building the table is the fix; picking
+a denominator is not.** My finding was two denominators mixed; **theirs is that there are five and none
+is canonical** -- same class, one layer down, and the layer that matters.
+
+## The lesson, which is NOT the one I already banked
+
+The multi-coding hypothesis was labelled **INFERRED** and cost two cheap probes -- the label worked.
+But *"52.5% is the correction"* was stated **flat**, and it propagated: **CTO~Z adopted it into step 1
+on my say-so.** This is the **second** time today I handed over a conclusion more confidently than its
+evidence supported (F-2 was the first, relayed into a `[STOP]` and two spec revisions). Both times the
+adopter did nothing wrong; both times the measured half was solid and the characterisation outran it.
+
+> **AN UNLABELLED CONCLUSION DRAWN FROM A LABELLED MEASUREMENT INHERITS NONE OF THE LABEL'S
+> PROTECTION. It is not enough to label the inference -- the CONCLUSION needs its own label.**
+
+For WS-C8, beside the self-declaration law, convergence-is-not-corroboration, and the
+instrument-that-discards-what-it-exists-to-find.
