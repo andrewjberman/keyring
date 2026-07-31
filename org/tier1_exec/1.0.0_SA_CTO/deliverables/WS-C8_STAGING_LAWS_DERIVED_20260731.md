@@ -341,6 +341,49 @@ keeps the checker honest** (their C9l).
 
 ---
 
+## L-14 -- BOUNDING THE METHOD IS NOT BOUNDING THE CORPUS
+
+A carefully-stated limitation about **HOW** an instrument looks will be read as *the* limitation,
+and can conceal an unstated limitation about **WHERE it looked.** The more precise the method-bound,
+the more completely it launders the scope-bound.
+
+**INSTANCE (2026-07-31, mine).** I published a rule-bank consumer enumeration carrying a bound I
+called severe: token-based, cannot see a forked vocabulary, found its one blind consumer by luck.
+**All true. And the denominator was silently PYTHON-ONLY.** `3.0.0_SA_CVO~Z` measured **28
+non-Python files naming the bank against my 12 Python ones** -- with ~10 genuinely stale pins open
+today, INSIDE the class I had claimed to close. **I bounded the method and never bounded the corpus.**
+
+**AND THE RESIDUAL I WROTE IS WHY I NEVER LOOKED:** *"`.md` references are prose and unenforceable."*
+The live instances are `.yaml` and `.json` CONFIGS. >> **A DISMISSIVE RESIDUAL IS WORSE THAN AN
+ABSENT ONE: an absent one leaves the question open, a dismissive one CLOSES it -- for the author
+first, and then for every reader who trusts the author looked.** <<
+
+**COROLLARY:** state the corpus beside every bound, in the same breath as the method. *Scanned WHAT,
+not merely looked HOW.*
+
+---
+
+## L-15 -- AN OVER-REPORTING INSTRUMENT HIDES DEFECTS BEHIND NOISE, AND LOOKS THOROUGH DOING IT
+
+Every other law in this set points at silence -- under-reporting, anti-correlation, vacuous passes,
+constants mistaken for verdicts. **This is the opposite direction and the set did not cover it.**
+
+**INSTANCE (2026-07-31).** A scan for rule-bank version pins older than v1.8 returns **~40 hits, of
+which most are CORRECT AS WRITTEN.** A log, handoff, inbox message or task order pinning `v1.7` is a
+**historical record that was true when written** -- "correcting" it would FALSIFY the record. Only a
+**tenant config or ontology definition** pinning an old version is a stale READER. Roughly 10 of the
+40 are real.
+
+>> **THE FAILURE MODE IS NOT UNDER-REPORTING, IT IS FLOODING -- AND FLOODING IS THE MORE DURABLE
+HIDING PLACE.** An under-reporting instrument hides a defect; **an over-reporting one hides it behind
+noise WHILE PRESENTING AS THOROUGH**, so nobody suspects the instrument and nobody re-runs it. **A
+finding list that gets ignored is exactly how the ~10 real ones stay open.** <<
+
+**THE DISCRIMINATION IS THE PRODUCT, NOT THE SCAN.** Telling a RECORD from a READER here is
+unautomated, and no instrument is claimed for it. **Counting hits was never the hard part.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
@@ -356,3 +399,8 @@ keeps the checker honest** (their C9l).
   would catch it -- **and it covers exactly one reader, the one who wrote it.** A vocabulary carrier that
   cannot enumerate its readers cannot know the blast radius of its own edits. CORE-side, unassigned, not
   delegated.
+- **LAW-COUNT INFLATION IS ITSELF A RESIDUAL.** This set went 11 -> 13 -> 15 in one session. Each
+  addition was earned by a measured instance, **and a set that grows this fast is a set nobody will
+  read.** The prior residual already notes that a law with no gate-or-test is prose-as-control (M14);
+  **at 15 that is no longer a caveat, it is the dominant property of the artifact.** The collapse
+  pass is now the priority over any further addition.
