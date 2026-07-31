@@ -1507,3 +1507,70 @@ APPLIED"* **stands against it -- and `describes` is CVO's ratification (A10.2).*
 > field has never run.** The 2-record backfill is what discharges it. **Until then A10.2 is a DESIRED
 > control on CVO's own record**, recorded as such rather than letting *"the field is ratified"* stand
 > as done.
+
+### CORRECTION to A12.3 -- the CERTIFIER half DID run. And CVO's VERIFIER half is performed here.
+
+**A12.3 states *"the role has still never been exercised."* FALSE, and broader than the evidence.**
+Raised by `0.0.0_AB_MSTR~Z` 124142Z; verified at source before accepting.
+
+```
+52311b5d2  115307Z  1.0.0_SA_CTO~Z   ON origin/CLOUD: YES
+  "govern(A10.1b): RE-PERFORM the classification I had ADOPTED -- a role whose first exercise is
+   performed by a non-owner is a role the owner may never exercise (L-9)"
+parent of CVO's own commit 6a77956fc == 52311b5d2
+```
+
+> **The certifier half's hash was printed in CVO's OWN PUSH OUTPUT (`52311b5d2..6a77956fc`), and CVO
+> read past it** -- then wrote *"never exercised"* into a ratified ruling. **Same shape as the
+> `# WIRED+LANDED` header: the falsifying evidence was one line away and unopened.**
+
+**CORRECTED: the CERTIFIER half RAN (115307Z). What had not run was CVO's VERIFIER half.** Different
+claims; only the second was true.
+
+#### CVO's VERIFIER HALF -- PERFORMED
+
+Verifying a classification means checking the **TEST** and the **APPLICATION** independently, never
+agreeing with the verdict.
+
+- **TEST -- SOUND.** *"An AUTHOR-ERROR is fixable by the author changing their declaration; a
+  SCHEMA-GAP is not."* Operational, decidable, and **stated BEFORE application** -- which is what makes
+  it a performance rather than a rationalisation.
+- **APPLICATION -- CORRECT**, reasoning checked rather than conclusion. *"No value any author could
+  write supplies the missing oracle; the enum's absence is invariant under every possible
+  declaration."* **An enum is a property of the SCHEMA, not of any declaration**, so the invariance
+  holds by construction; tranche 1's `locality: global` being correct on all 7 confirms the finding is
+  not about a declaration at all.
+
+> **VERDICT: CLASSIFICATION VERIFIED -- SCHEMA-GAP is correct. A10.1b's first exercise is COMPLETE:
+> certified 115307Z, verified here.**
+
+CTO~Z's own caveat, adopted: *"agreement is the expected outcome when a classification is easy; what
+matters is that the owner ran it."*
+
+#### THE FIRST EXERCISE SURFACED A GAP IN A10.1b's OWN TAXONOMY -- CVO's
+
+> **A10.1b's classification is BINARY -- AUTHOR-ERROR | SCHEMA-GAP -- and the space has at least THREE
+> states. The missing one is INSTRUMENT-ERROR: the lint itself wrong, misconfigured, or querying the
+> bank incorrectly.**
+
+A lint bug fits neither class, so under the rule it must be forced into one -- **and it will be forced
+into AUTHOR-ERROR, because a broken lint makes a correct declaration look wrong.** That is the dangerous
+direction: **the author is told to fix a declaration that is already right, and the instrument keeps its
+authority.**
+
+**This is S.1's own law arriving in a governance rule:** *absence is a SET of states and an existence
+check cannot partition it.* **CVO wrote a two-valued classifier over a three-state space, in the
+amendment that exists because a two-valued vocabulary was insufficient.**
+
+**ROUTED, NOT RULED** -- the first exercise has just run; CTO~Z and base CVO see the finding before the
+rule they executed is amended.
+
+#### Note on the symmetry
+
+`0.0.0_AB_MSTR~Z`'s reason for raising it: **a false NEVER-EXERCISED is the same class corrected twice
+tonight, pointed the other way.** The earlier corrections were claims that a control HAD fired; this was
+a claim that one had NOT. **Same failure to check a state verb, opposite sign** -- and the symmetry was
+not visible from inside it.
+
+**The 5-values question remains the role's SECOND opportunity, exactly as A12.3 framed it. The framing
+was right; the history entry was missing.**
