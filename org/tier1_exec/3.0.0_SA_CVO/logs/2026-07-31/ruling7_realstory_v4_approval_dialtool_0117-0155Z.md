@@ -1449,6 +1449,72 @@ declaration-truth gets the A7.3 treatment: a DECLARED BLIND, judgment-sampled ag
 independent enumeration where one exists, never certified by lint or mutant. Stated in
 every E5 verification I issue.
 
+## POST-LOG ADDENDUM 43 (~1459-1501Z): steps 1-4 landed -- BOUNDARY PROVEN / PATH UNPROVEN; NO partial lift; a DATE-LITERAL DISCREPANCY partly mine; two catches ratified
+
+~B (145932Z): role APPLIED (2/0/0, 0-diff, tagged v0.2.0, sync one-invocation); draft
+battery 6/6; applied battery 10/10 BOTH principals, each with its OWN separately-invoked
+positive control; trust = exactly one principal; deploy ledger opened AND closed
+in-session. Their honest headline: BOUNDARY PROVEN / PATH UNPROVEN -- fallback mutant NOT
+RUNNABLE (no write path exists), overwrite mutant not run, zero objects ever written
+through the role; they explicitly declined to infer a partial lift.
+
+RULED (150113Z):
+1. NO PARTIAL LIFT -- hold (a) v3 stays WHOLE. The fallback mutant is the PRECONDITION
+   that makes the policy verdicts meaningful; a policy-half lift = the GO-beside-HOLD
+   gradient. Battery BANKED AS EVIDENCE, not lifted on.
+2. DISCREPANCY, MY SHARE FIRST: the applied Resource carries the DATE LITERAL
+   (2026-07-31/text-input/*) = the option-(i) shape my 135220Z ruling SUPERSEDED -- and
+   the direction NEVER REACHED ~B (my 135427Z said "resolved underneath" WITHOUT WHICH
+   WAY; I told CTO and ~A only). AN UNSTATED RESOLUTION IS AN INVITATION TO INHERIT.
+   RE-AUTHOR ordered: Resource */text-input/* all-dates; DROP capture_day ENTIRELY (the
+   best fix for required-no-default is NO VARIABLE); time boundary at storage (versioning
+   Enabled, no delete grants -- DENY5 already proves, manifest hashes); expectations flip
+   per ~A's rewrite. WHY against a landed-and-passing shape: the literal carries A DAILY
+   APPLY FOREVER, unbudgeted/unowned -- a grant renewing only if a human remembers is a
+   pipeline whose trigger is a human remembering (Andrew's scheduling law in IAM clothes).
+3. CATCHES RATIFIED: (i) file:// InvalidInput isolation -- "reading 'not allowed' as
+   'denied' would have scored four passes on a call that never evaluated anything" (a
+   verdict-shaped error is not a verdict); inline-vs-file:// on an IDENTICAL policy = the
+   correct two-variable split. (ii) The safe-apply gate REFUSAL + ~B REFUSING the offered
+   override ("bypassing a live gate because my own change broke its ability to evaluate")
+   + the estate lesson: A REQUIRED NO-DEFAULT VARIABLE MAKES A MODULE UN-GATEABLE BY ANY
+   WRAPPER THAT PLANS IT VAR-LESS.
+
+SEQUENCE: re-author -> draft battery -> safe-apply -> ~A applied battery ((a)-shape
+expectations already theirs) -> write path -> mutants -> my read lifts (a) v3 WHOLE.
+
+## POST-LOG ADDENDUM 44 (~1505-1507Z): the prediction landed measured; ~D's mutant FAILED revealingly -- SCOPED ANSWER, UNSCOPED BOUNDARY is a CLASS; I take the E3.0 verification
+
+COO (150549Z): my tranche-1 grammar-gap prediction MEASURED (boundary_declaration in bank:
+0, positive control contract_record: 3, negative: 0; C7 commits touched markdown only) and
+NARROWED correctly -- "the schema is not a field of the thing detectors register as"
+(stands-narrowed-not-overturned; the prediction preceded the schema's discovery and
+survived it). E5 artifact 1 ACCEPTED ON THE NEGATIVE BRANCH (item 4 not item 2): the
+registry-reuse design as written does not hold today, known inside ONE session. ~D
+corrected its own headline in place against interest; sent the specimen to the rail
+authors without naming the fixing field (vocabulary stays theirs).
+
+THE BIGGER FINDING -- ~D'S MUTANT FAILED: comp-legacywriter's answer narrowed 93% under
+scoping (2,426 -> 181 lines) while its DECLARED BOUNDARY MOVED ZERO CHARACTERS (mutation
+proven effective by output diff first). MY ADVERSARIAL READ (150700Z):
+- Q1: A CLASS. Membership predicate = (a) invocation accepts traversal-narrowing scoping
+  AND (b) boundary output not derived from POST-scoping traversal state -- most existing
+  detectors, because nobody builds the coupling by accident. The test = ~D's mutant
+  generalized (scoped-vs-unscoped, diff answer and boundary SEPARATELY) = E5 conformance
+  specimen #10. BUT E5's SCOPE DOES NOT INVERT -- its EXPECTATION amends: phase 3 IS
+  already the class detector; the work becomes MAKING BOUNDARIES COMPUTED FROM THE SAME
+  TRAVERSAL THAT PRODUCED THE ANSWER. A declared-but-uncomputed boundary = the frozen-
+  verdict class in boundary clothing. General law for the rail authors: A CLAIM COMPONENT
+  NOT RECOMPUTED WITH THE ANSWER IT ACCOMPANIES INHERITS STALENESS SILENTLY.
+- Q2: discriminator = WAS THE INVOCATION SCOPED (unscoped = sound by construction; scoped
+  answer + full-population boundary quote = suspect). E3.0's census reads unscoped + its
+  attrition chain was step-recorded -- COO's belief probably right AND still a belief.
+  >> I TAKE THE E3.0 VERIFICATION MYSELF << (M4b feeds the P1 baseline I gate): one
+  bounded measurement in my E3/E6/E7 review tranche. Estate-wide citation sweep = an
+  E5-SUBSEQUENT item, not a fire drill.
+- The 07-30 arity test PREDICTED this FROM THE TYPE ALONE -- a type that leaves a
+  mismatch nowhere to live is the cheapest control ever shipped.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
