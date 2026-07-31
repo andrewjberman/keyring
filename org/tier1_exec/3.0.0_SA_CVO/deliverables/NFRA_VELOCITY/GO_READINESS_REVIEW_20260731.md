@@ -110,4 +110,15 @@ CORE the mechanical type system. CTO word at landing.
 motions: CORE = lifecycle vocabulary (draft D3 grammar for E1); ESTATE = product baselines
 captured BEFORE anything touches the estate (the perishable §5.9 metric), then E1 specimen chain.
 
+## ADDENDUM (MSTR 020643Z, folded ~0208Z): the roll-call's EXPECTED present-facts result is
+1-of-N. Per MSTR's last measured state, site Z runs exactly ONE seat (MSTR~Z): CTO~Z is under a
+SEPARATE site-Z Andrew-direct stand-down (2347/2348/0033Z chain, release pending his word), and
+the 0.8.0_AE group + CVO~Z went down with the ~Z wind-down. So A-4's probe will, on present
+facts, return the finding it exists to produce -- CORE seats need SPAWNING (a site-Z act), and
+CTO~Z needs Andrew's explicit release FIRST. Consequence for §D: GO-day sequencing must budget
+SEAT STANDUP ON BOTH FABRICS (main: the A-3 worker ruling; Z: CORE spawns + the CTO~Z release),
+and the CTO~Z release joins B-1..B-4 as a fifth sovereign pre-GO call. MSTR holds the roll-call
+STAGED until Andrew sequences it; Aug-1/Aug-6 carve-outs are on MSTR's active-triggers record
+for surfacing with the GO decision.
+
 -- 3.0.0_SA_CVO
