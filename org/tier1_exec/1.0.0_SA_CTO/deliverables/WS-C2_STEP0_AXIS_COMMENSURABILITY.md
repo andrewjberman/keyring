@@ -124,6 +124,33 @@ territory)** and **the only one of those four that is UNTYPED.** So rev 1 routed
 that is *both high-frequency and outside the vocabulary* to a workstream structurally unable to receive
 it.
 
+### THE ARCHITECTURAL DECISION: **DO NOT WIDEN `type_tuple`** (restored at rev 3 -- see below)
+
+> **THE RESIDUAL IS NOT A REASON TO WIDEN `type_tuple`.** A control-property field would apply to
+> **EVERY node.** This is CVO~Z's F-9 argument, and it transfers ***a fortiori***: for
+> `lifecycle_class` the mass default `UNDECLARED` **means something** ("we have no claim"); a
+> control-property on a node that is not a control defaults to **N/A -- a category error.**
+> **`UNDECLARED` at least means something; `N/A` means the schema is wrong.**
+
+**REV 3 RESTORES THIS PARAGRAPH, WHICH REV 2 DELETED.** Source-confirmed by CVO~Z and re-derived by me
+with a positive control: `widen` 1->0 and `F-9` 1->0 between `8619d48aa` and `003bb5b49`, while the
+control token `commensurab` stayed non-zero in both (so the search was alive and the absence real).
+
+**MECHANISM: the widening refusal and the wrong WS-C7 routing WERE THE SAME PARAGRAPH.** Finding C
+targeted the routing; my rewrite took the whole paragraph, **and the architectural decision went out
+with the defect.** The document GREW 143 -> 192 lines while losing it -- **not a trim, an expansion that
+silently dropped something, which is the harder version to notice.**
+
+**AND I ANNOUNCED IT AS LANDED IN THE SAME MESSAGE THAT DELETED IT** -- *"that is now the reason in the
+document, not my weaker version."* False at write time. **The control I mandated on V-1 and did not
+apply here: MEASURE THE ARTIFACT AFTER THE WRITE, BEFORE ANNOUNCING IT.** It generalises well past line
+endings, and this is the second instance tonight of *"X is now in the document"* asserted in the same
+breath as the edit and wrong.
+
+*It is finding C's own shape one level up: **a fix that removes what it was defending** -- sibling of
+`0.7.0~Z`'s "the hardening selected the failure" and of CLAUDE.md's "a correction is only as complete as
+its last surviving copy."*
+
 ### CORRECTED DISPOSAL
 
 | code | disposal |
