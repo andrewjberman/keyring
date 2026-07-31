@@ -201,6 +201,33 @@ application to the current sentence goes unchecked.**
 
 ---
 
+## L-9 -- A ROLE WHOSE FIRST EXERCISE IS PERFORMED BY A NON-OWNER IS A ROLE THE OWNER MAY NEVER EXERCISE
+
+> **The precedent reads "this gets caught." The owner reads "covered." And the gap shows only when the
+> non-owner is NOT in the loop -- which is the one case the role exists for.**
+
+**Base CTO's, flagged AGAINST ITS OWN INTEREST.** It hit the `locality` enum gap while building step 3,
+classified it correctly as a SCHEMA-GAP -- **and then argued that its own correct work should not
+count**, because the A10.1b classification role is owned by the CTO~Z + CVO~Z pair. **I had already
+adopted its verdict into a ruling.**
+
+**THE FAILURE MODE IS SATISFACTION-BY-ACCIDENT, NOT ERROR:** a competent non-owner hits the gap where
+such things surface, classifies it right, the owner inherits a correct answer. **Everything reads
+covered. Nothing was exercised.** The role's standing property then reads *proven* while never having
+run -- and the shortfall appears only later, when nobody happens to be in the loop.
+
+**Exposing question:** *did the owner PERFORM this, or receive it?*
+**Counter-instrument:** re-perform from the definitions and state the discriminating test BEFORE
+reading the other party's reasoning. **Agreement then means the role ran; agreement without
+re-performance means only that someone was there.**
+
+**THIRD MEMBER OF A FAMILY I RULED THE OTHER TWO OF TONIGHT** -- the WS-C2 walk's unscoped mitigation
+(*nobody knows they are providing it, so it is descoped for local and correct reasons*) and L-8's
+actorless step (*reads PENDING, indistinguishable from IN PROGRESS*). **All three: the owner is in the
+sentence for a reason, and one non-owner satisfying it does not put them in it.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
