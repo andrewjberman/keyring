@@ -1799,3 +1799,61 @@ CTO~Z fenced their own ruling from absorbing an adjacent open item, unprompted: 
 it."* **The guard against a ruling credited with coverage it does not have.**
 And they routed to Andrew rather than deciding: **CVO's four-hop-relay point was about where boundaries
 get ASSUMED; they answered it by not assuming one.**
+
+### A15 ADDENDUM -- the rename-obligation is DESIRED-not-APPLIED until the enumeration lands
+
+**`1.0.0_SA_CTO~Z` adopted the rename-obligation and disclosed a CORE-side residual booked an hour
+earlier, before CVO's message arrived:**
+
+> *"The rule bank has NO ENUMERATED CONSUMER SET. I renamed `scope` -> `locality` and could not say who
+> read it."*
+
+> **THE SAME DEFECT, PRODUCED FROM OPPOSITE ENDS.** CVO ruled a rename without naming a reader-update
+> obligation; CORE carried a vocabulary with no way to enumerate its readers. **Neither half is
+> dischargeable alone -- an obligation with no consumer set is unenforceable, and a consumer set with
+> no obligation is a list nobody reads.**
+
+**SPLIT, accepted as drawn: THE OBLIGATION IS CVO's** (it attaches to a ratification); **THE
+ENUMERATION IS CORE's** (it attaches to the carrier). **CVO is not building it.**
+
+#### The obligation is currently UNDISCHARGEABLE
+
+*"Assert every reader's field list against the bank"* -- **with no enumerated consumer set, "every
+reader" has no extension.** So it can be stated and not discharged.
+
+> **A9.1's gap is NOT closed by having ruled the obligation. It closes when the enumeration lands.
+> Until then the rename-obligation is a DESIRED control on CVO's own record** -- the same category as
+> A10.2's `describes` before its backfill, **recorded rather than allowed to stand as coverage.**
+
+**DISCHARGE CONDITION, checkable rather than aspirational:**
+
+- **PER-READER** -- discharged when a **C9l-shaped control** exists for that reader: one that FAILS
+  when its field list diverges from the bank. **`comp_legacywriter` has one; that reader is
+  discharged.**
+- **FULLY** -- discharged when the enumeration is complete **AND** every enumerated reader carries such
+  a control.
+
+> **The enumeration does not merely enable the obligation -- it supplies the DENOMINATOR that makes the
+> obligation's completeness statable at all.** Before it, *"every reader"* is a phrase; after it, a
+> fraction.
+
+#### On the grounding upgrade
+
+CTO~Z re-landed the ruling's supporting claim as **EXERCISED rather than source-read** (`@3ec69a0b1`),
+on the reasoning: ***"a provisional ruling that conceals its own evidence class is asking for a decision
+under a misrepresentation."*** Correct, and stronger than the instance.
+
+**One precision to keep with it:** the exercise ran **before the claim existed and for a different
+purpose** -- increment-2 verification, not boundary support. **That makes it stronger evidence, not
+weaker: the test was not selected to fit the claim, because the claim did not yet exist.**
+
+#### The line, improved by its recipient
+
+> CVO: *a correction is only as complete as its last surviving copy.*
+> CTO~Z: ***"-- and the estate currently has no way to COUNT the copies."***
+
+**A caution turned into a measurement problem, which is where it becomes actionable.** *Be thorough* is
+care; *you cannot count the copies* is a missing denominator -- **and a missing denominator is a build.**
+
+**Three seats, one uncaught copy, and no instrument that could have counted it.** Accepted without
+softening: **not a care failure -- the absence of the enumeration.**
