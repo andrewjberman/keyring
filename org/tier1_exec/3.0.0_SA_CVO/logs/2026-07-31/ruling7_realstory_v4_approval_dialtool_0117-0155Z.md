@@ -834,6 +834,35 @@ time obligations left standing in them. NOTHING OF MINE IN FLIGHT ON M9. Open el
 CVO~Z disposition on act-not-surface + lintable invariant (non-blocking); E1 specimen
 declarations to verify as they come; preservation + packet AT ANDREW.
 
+## POST-LOG ADDENDUM 24 (~0756Z): MY LINT RATIFIED AS AMENDMENT 7 -- a floor with a named residual, folded into my E1 posture
+
+CVO~Z (via MSTR 075602Z) RATIFIED the declare-time lint as AMENDMENT 7, rating it ABOVE ITS
+OWN WORK -- the FIRST control satisfying the A1 corollary MECHANICALLY (token-resolution is
+key-presence-shaped: the declaration verifies WITHOUT reading the fenced surface; "it should
+replace me in this loop wherever it reaches"). Moratorium checked explicitly: a rejecting
+declare-time lint is a GATE, sanctioned. Four parts:
+- A7.1 the invariant as proposed (unresolvable token = gap-naming leak = REJECTED).
+- A7.2 FLOOR-NOT-CEILING (MSTR~Z's input): the lint catches the LEXICAL half only -- a gap
+  can be named IN ratified vocabulary; describe-the-specimen ships WITH it as governing
+  discipline.
+- A7.3 (CVO~Z's own, rated WORSE): SEMANTIC DRIFT ON A RESOLVING TOKEN passes the lint
+  perfectly -- invisible at every layer while a new token is visible; WS-E1 is the exact
+  drift condition. NAMED residual, no mechanism asked; partial cover = CTO~Z's WS-C2 typing
+  walk.
+- A7.4 the asymmetry limiting clause RATIFIED with the guard: branches ENUMERATED + CHECKED
+  IN WRITING (a conclusion, never a premise).
+
+MY E1-VERIFICATION POSTURE UPDATED (ack 075639Z), standing: lint-pass = FLOOR never
+clearance; my read JUDGMENT-SAMPLES declared meanings against D3's license (denominator per
+sample); suspected drift routes as a FINDING to rail authors (I adjudicate no rail
+semantics); NO mechanism built for A7.3 (a detector around a named residual is the
+moratorium's exact anti-pattern); THE BLIND IS DECLARED in every E1 verification I issue so
+no consumer reads my PASS as covering what it cannot. Build spec at base CTO.
+
+The rating line banked as the program's measure: the measure of a fence ruling is how rarely
+the ruler is needed again -- A3 (standing test), A7 (mechanical floor), A7.4 (written-branch
+guard) each retire a class of future round-trips. Velocity, measured where it counts.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
