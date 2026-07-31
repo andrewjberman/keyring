@@ -38,7 +38,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
-    describes: "mdpf feeder + aggregate execution"
+    describes: "[PARKED-PENDING-MIGRATION] mdpf feeder + aggregate execution"
     successor: null
 
   "process:mdpf-freshness-checker":
@@ -55,7 +55,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
-    describes: "primary served mdpf rollup, portal ModelPortfolios"
+    describes: "[PARKED-PENDING-MIGRATION] primary served mdpf rollup, portal ModelPortfolios"
     successor: null
 
   "artifact:s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json":
@@ -64,7 +64,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
-    describes: "per-date partition of the served rollup"
+    describes: "[PARKED-PENDING-MIGRATION] per-date partition of the served rollup"
     successor: null
 
   "artifact:s3://opal-data-portal-v2/json/mdpf/{firmId}/account-distribution.json":
@@ -73,7 +73,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
-    describes: "per-firm account distribution"
+    describes: "[PARKED-PENDING-MIGRATION] per-firm account distribution"
 
   "artifact:s3://opal-data-mdpf/mdpf/feeds/{artifact}/*/{date}.parquet":
     intent_source: REJECTED_NO_GOVERNANCE_ABOVE   # reasons in coverage.intent_source_rejections
@@ -81,7 +81,7 @@ contracts:
     lifecycle_class: UNDECLARED
     revalidate_by: "on producer assertion (solicitation outstanding)"
     locality: global
-    describes: "intermediate feeder outputs"
+    describes: "[PARKED-PENDING-MIGRATION] intermediate feeder outputs"
 
 coverage:
   # REQUIRED EMISSION. The DENOMINATOR SOURCE rides beside the number, because a denominator
@@ -105,6 +105,19 @@ coverage:
   # REJECTION RATE — a finding, not an obstacle (CTO 075420Z).
   intent_source_rejected: 3
   intent_source_accepted: 4
+  # ── describes PARKING (CVO~Z A13.3, FINAL -- supersedes the pull-out) ──────────────────────
+  # 5 of the 7 describes values carry the type_tuple.scope SENSE, not a subject description.
+  # They are PARKED IN PLACE and MARKED ON THE VALUE with [PARKED-PENDING-MIGRATION].
+  #
+  # WHY THE MARK IS LOAD-BEARING, not decoration: unmarked, a vocabulary-sense value is
+  # INDISTINGUISHABLE from a genuine description -- and because `describes` is declared
+  # UN-LINTABLE, NO INSTRUMENT WILL EVER TELL THEM APART. Exercised: garbage in describes ->
+  # lint PASS. The mark is the only distinguisher that will exist.
+  # Holds under both branches: scope field ratified -> the 5 migrate and the marks come off;
+  # not ratified -> they were never describes content. Either way the record SAYS which are parked.
+  describes_applied_unmarked: 2
+  describes_parked_marked: 5
+
   intent_source_rejections:
     # MOVED OUT OF THE RECORDS: rejection_reason was an UNRATIFIED TERM (lint A7.1).
     # Registry-process metadata belongs in coverage, exactly as solicitation state does.
