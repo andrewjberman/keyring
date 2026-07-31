@@ -1,0 +1,124 @@
+# WS-E1 TRANCHE 2 — the model-portfolios vertical (PRD order-of-attack item 2, "the mdpf channels")
+#
+# INSTANCES of the ratified contract_record. ZERO ADDED TERMS.
+# Built against the CURRENT bank head (re-read, not assumed): `locality` enum @4b9714d5c3,
+# `describes` @e03870fc53. Tranche 1's vintage was NOT carried forward.
+#
+# Every lifecycle_class is UNDECLARED at zero inference — producer-asserted, and nobody has been
+# solicited. MSTR holds the solicitation track; I record what is undeclared, I do not manufacture it.
+
+resolution:
+  resolved_against: "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+  resolved_version: "1.8"
+  resolved_at: "2026-07-31T12:40:00+00:00"   # computed offset, never a hand-typed Z
+  note: >-
+    Re-resolved at every read. No cache outlives a read; an unreachable rule bank FAILS LOUD.
+    Bank head re-read before declaring — it moved twice under tranche 1 on 07-31.
+
+contracts:
+
+  "process:yang-benchmarks-etf-returns":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: [canonical_source]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "model-portfolio + benchmark returns generators serving ModelPortfolios.tsx"
+    successor: null
+
+  "process:yang-ingest-dynamodb-market-data":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: [canonical_source]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "first-leg DDB ingest writing the data_pkl signature that gates downstream generation"
+    successor: null
+
+  "process:yang-peer-performance":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "peer-performance generator leg of the yang analytics engine"
+
+  "process:yang-pipeline-orchestration":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: [delivery_cadence]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "the orchestration state machine sequencing the yang analytics legs"
+
+  "artifact:s3://opal-data-portal-v2/json/benchmarks/model_portfolio_benchmarks.json":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: [canonical_source]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "served model-portfolio benchmarks, consumed by the portal ModelPortfolios page"
+    successor: null
+
+  # ── DEBT-FLAGGED SUBJECTS ──────────────────────────────────────────────────────────────────
+  # comp-estate carries `orphan-candidate` on two chains. RECORDED AS THE CENSUS'S VERDICT,
+  # NOT ADOPTED AS MINE. A lifecycle_class of RETIRED or DORMANT here would be OBSERVER-INFERRED
+  # from observed absence — the exact anti-pattern the bank names at :364. They stay UNDECLARED.
+  # Their debt flag is a fact about the CENSUS; their lifecycle is a fact only a producer can assert.
+
+  "process:MA-08-yang-generate-volatility":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "volatility generator; census flags orphan-candidate and names a live successor surface"
+
+  "process:yang-volatility-orphan":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding, MSTR track)"
+    locality: global
+    describes: "census-flagged orphan-candidate chain in the yang analytics vertical"
+
+coverage:
+  subjects_declared: 7
+  denominator_source: >-
+    ENUMERATED AT RUN TIME from `comp-estate model-portfolios` (2026-07-31): the vertical holds
+    8 CHAINS (4 in-scope / 4 explicit-out / 0 unreviewed). I declared 7 SUBJECTS drawn from those
+    chains — a chain is not a subject, so these two counts are NOT comparable and neither is the
+    other's denominator. Chains not represented here: yang-canon-interlock and
+    yang-time-machine-rollback.
+  denominator_confidence: incomplete_by_declaration
+  note_on_census_limit: >-
+    comp-estate declares its own C0 roster unusable as a denominator (it dropped 3 facts in the
+    measured mdpf case). The chain count above is from the chain listing, not the C0 roster, but it
+    inherits the same census vintage and is NOT a verified-complete enumeration of the vertical.
+
+  # ESTATE-WIDE CONTEXT — the number that makes tranche coverage legible
+  estate_wide_denominator: >-
+    29 C3.ii semantic verticals / 138 chains (comp-estate --list, census vintage 2026-07-30).
+    Tranches 1+2 together declare 14 subjects drawn from 2 verticals. THIS IS A SMALL FRACTION AND
+    THE FRACTION IS THE POINT — it is stated so no reader mistakes a populated registry for a
+    covered estate.
+
+  solicited_and_undeclared: 0
+  not_yet_solicited: 7
+  lifecycle_undeclared: 7
+  lifecycle_denominator: 7
+
+  intent_source_rejected: 7
+  intent_source_accepted: 0
+  rejection_rate_note: >-
+    7 OF 7 REJECTED — no governance level above any subject in this vertical could be cited without
+    naming the artifact's own config or schedule, which :354 rejects at declaration. NO PARENT WAS
+    MANUFACTURED FOR ANY OF THEM. Contrast tranche 1, where 4 of 7 cited a real PRD: the mdpf chain
+    has a governing PRD and this vertical does not. That difference is the finding, and it is a
+    measurement of governance coverage rather than of my effort.
+
+  census_debt_flags_observed: 2
+  debt_flag_note: >-
+    Two chains carry `orphan-candidate` in the census. RECORDED, NOT ADOPTED. Their lifecycle stays
+    UNDECLARED: inferring RETIRED or DORMANT from observed absence is the named anti-pattern
+    (:364). The debt flag is the census's verdict; the lifecycle is the producer's to assert.
