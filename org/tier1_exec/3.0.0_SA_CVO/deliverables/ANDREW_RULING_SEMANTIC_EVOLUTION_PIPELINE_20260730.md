@@ -172,4 +172,44 @@ enumerated" as a nugget -- a golden-fixture replay test. STRUCTURAL NOTE sharpen
 ruling: the HIGHEST-SIGNAL corpus lives partly in the Desktop world-model repo (no remote,
 mirror-synced) -- the remote question open at Andrew gains weight.
 
+
+## RULING 7 -- THE REAL STORY (Andrew-direct, CVO terminal, received ~0130Z Jul 31, recorded
+0136Z, VERBATIM -- this is the promised "need to do better than that" explanation from ~0053Z)
+
+> What i was going to say, was that every single text of user input from me into a terminal
+> session needs to be tracked somewhere on a day by day basis. that that text store, in
+> addition to git co change, in addition to deployment motion, needs to be synthesized
+> athletically with considerable meta analysis and judgment to get to the real story. the real
+> story is less than 1000 characters a day, it is high signal. the 5-10 sentences that
+> actually mattered and a couple reference pointers. Our focus should be on how to develop
+> this tool to extract the highest leverage items from these sources and construct that.
+> Those few sentences are what id feedback.
+
+CVO READING (flagged as reading; ~B specs the mechanism, CVO approves per Ruling 2):
+
+1. CAPTURE REQUIREMENT (new, and the missing layer): EVERY text of Andrew user input into a
+   terminal session, tracked day-by-day, in a durable text store. This is the COMPLETE PRIMARY
+   record -- wider than Ruling 6's curated capture surfaces (RULINGS_LEDGER / SEMANTIC_NOTES /
+   verbatim deliverables are DERIVED records; Ruling 7 demands the raw feed they derive from).
+   Candidate primary source for ~B's spec to ground: the harness session transcripts, which
+   already carry every user message with timestamps -- to be verified against "every single
+   text ... into a terminal session" (all sessions, all agents, both devices).
+2. THREE-SOURCE SYNTHESIS: (a) the user-input text store, (b) git change, (c) deployment
+   motion. This RE-ADMITS git change (demoted to appendix by Ruling 6) and ADDS deployment
+   motion -- as SYNTHESIS INPUTS to triangulate the story, not as the story.
+3. OUTPUT CONTRACT (supersedes the v3 nugget-census as the product): THE REAL STORY --
+   less than 1000 characters per day, the 5-10 sentences that actually mattered, plus a couple
+   of reference pointers. Produced by "considerable meta analysis and judgment", not by
+   extraction mechanics alone.
+4. THE FEEDBACK SURFACE: "Those few sentences are what id feedback" -- Andrew's daily
+   adjudication input IS the story. The /estate-pull loop reads the story; the nugget scan and
+   the census become internal means, not the deliverable.
+5. FOCUS DIRECTIVE: the development effort aims at EXTRACTION OF HIGHEST-LEVERAGE ITEMS from
+   these three sources and CONSTRUCTION of the story.
+
+STANDING CONSTRAINTS UNCHANGED BY THIS READING: Ruling 6's fail-closed provenance (a forged
+Andrew quote is worse than a missed nugget) binds the story's quotes and pointers; the golden
+fixtures (etfs-canonicality, opal-data-mdpf decommission-intent) remain acceptance shapes --
+a day whose input contained them must surface them in or behind the story.
+
 -- 3.0.0_SA_CVO
