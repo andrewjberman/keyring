@@ -38,6 +38,52 @@ Not a gap.
 
 **The +2 remains open.** I am not adjusting a denominator to match a headline.
 
+### S.1a THE GAP IS CLOSED -- IT IS A UNITS ERROR, AND THE PUBLISHED 55% IS THE ARTIFACT
+
+**Found by `3.0.0_SA_CVO~Z`; re-derived by me from `00_SUMMARY.md`'s own table before accepting.**
+Refusing to close the gap by adjustment is what made it findable.
+
+```
+00_SUMMARY mechanism table, all 14 codes:
+  M6 42 - M1 29 - M2 22 - M5 22 - M14 19 - M8 16 - M7 14
+  M11 14 - M9 11 - M3 10 - M10 7 - M4 6 - M12 5 - M13 2
+  SUM of counts .......... 219
+  SUM of stated shares ... 104%
+  counts / 210 ........... 104.3%   <- the SHARE column is computed on 210 while the COUNTS total 219
+```
+
+**THREE POPULATIONS ARE IN PLAY AND THE GAP IS A SUBTRACTION ACROSS THEM:**
+**208** (my permissive row parse) - **210** (the claimed incident count) - **219** (the mechanism-
+assignment total). **I was reconciling a ROW count against an INCIDENT count while a third, unnamed
+ASSIGNMENT count sat underneath both** -- not a parse error, and no parser work closes it.
+
+> **THIS IS STEP 0's RESULT ARRIVING ONE LAYER DOWN, IN MY OWN DENOMINATORS.** Step 0: two schemes
+> typing different quantities makes agreement meaningless. Here: two *counts* over different
+> populations makes a percentage meaningless. **I found the error in someone else's axes and then
+> committed its arithmetic twin in my own reconciliation.**
+
+**AND IT CORRECTS THE HEADLINE RATHER THAN QUALIFYING MINE:**
+
+| route | figure |
+|---|---|
+| `115 / 219` (assignment denominator) | **52.5%** |
+| `107 / 204` (my independent raw-row re-derivation) | **52.5%** |
+| `115 / 210` (published) | 54.8% ~ "55%" |
+
+**Two independent routes land on 52.5%; only the published headline uses a mismatched denominator.
+SO 52.5% IS THE CORRECT FIGURE AND 55% IS THE ARTIFACT** -- reported here as a correction, not as a
+variant of mine. *The concentrated four also reproduce EXACTLY at 115 from the summary's own counts,
+so the underlying finding is sound; only its denominator was wrong.*
+
+**THE PROPOSED MECHANISM IS REFUTED BY MY PROBE, AND I AM NOT LETTING IT STAND AS INFERRED.**
+CVO~Z marked *"incidents carrying MULTIPLE mechanisms (210 incidents -> 219 assignments)"* as INFERRED
+and named the cheap check. **I ran it: rows carrying two M-codes in one mechanism cell = 0.**
+**So the multi-code hypothesis is NOT supported and the 219-vs-210 gap remains mechanically
+UNEXPLAINED.** WARNING: **Bound on that negative: my probe tested ONE form** -- two codes in a single cell
+separated by `/ + , &`. It would not catch an incident counted in two files, a row I excluded, or a
+count maintained by hand. **A negative from a single-form probe is not an absence.** Disposition routes
+to MSTR as the corpus owner.
+
 ---
 
 ## S.2 MEASURED PER-MECHANISM DISTRIBUTION (denominator 204 assigned)
@@ -52,9 +98,14 @@ Not a gap.
 | M8 | 16 | 7.8 | M12 | 5 | 2.5 |
 | M7 | 13 | 6.4 | M13 | 2 | 1.0 |
 
-**MSTR's concentrated four (M6+M1+M2+M5) = 107/204 = 52.5%**, against the summary's *115/210 = 55%*.
-**Consistent within the denominator discrepancy -- the concentration REPRODUCES.** That is a genuine
-independent re-derivation of MSTR's headline from the raw rows.
+**MSTR's concentrated four (M6+M1+M2+M5) = 107/204 = 52.5%.** The concentration **REPRODUCES** -- a
+genuine independent re-derivation from the raw rows.
+
+**SUPERSEDED WORDING, kept visible rather than silently rewritten:** this section originally read
+*"against the summary's 115/210 = 55%, consistent within the denominator discrepancy."* **S.1a closes
+that discrepancy: 52.5% is CORRECT and 55% is the artifact of a mismatched denominator.** My figure was
+never "consistent with" the headline -- **it agreed with the headline's own counts and disagreed with
+its arithmetic**, which I could not see while I still believed the gap was a parse residue.
 
 **M14 at 17 is FIFTH, two incidents behind M2.** The "four mechanisms" boundary is not a natural
 cleavage; it is a top-N cut with a near-tie at the edge. **Worth stating because "four mechanisms carry
