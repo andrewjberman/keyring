@@ -915,6 +915,24 @@ also disqualified by KNOWLEDGE, and the second is why routing produces a BETTER 
 merely a CLEANER one." Hygienic -> epistemic. (3) Headed for WS-C8: A RECUSAL THAT NOBODY
 TESTS IS INDISTINGUISHABLE FROM A RECUSAL THAT WAS CIRCUMVENTED. Locality chain CLOSED.
 
+## POST-LOG ADDENDUM 26 (~1230-1231Z): E2 GATE ANSWER -- SATISFIED, with one wave-evidence rider
+
+MSTR /govern route (123012Z): base CTO sequenced ESTATE P2 (~D -> describes-backfill, then
+E1-breadth ungated) and gates E2 (trigger re-sequencing, estate-touching) ON MY GATE STATE,
+explicitly declining to infer it from outside ("wrong twice today reading one party's gate
+from outside it").
+
+ANSWERED (123111Z): SATISFIED. Basis checkable: s.5.9 product baselines CAPTURED AND
+COMPLETE (M9-COMPLETE v3 joint, released @e8c7a32fa2 shape-verified); the gate CONVERTED at
+that release exactly as pre-declared at 073004Z -- no residual hold exists for E2. ONE RIDER
+on E2's VERIFICATION PLAN (wave-evidence, NOT a hold): a PINNED BEFORE-SNAPSHOT of the
+trigger census at wave start (comp-trigger, two-system denominator -- 143 rules + 11
+schedules form; list-rules alone structurally blind to Scheduler per the P1 M6-adjacent
+finding). Not perishability (topology re-derivable from TF) -- but an after-diff without a
+pinned before is a comparison to a reconstruction, and E2's verification will be asked for
+the diff. E1-breadth ungated concurred (non-estate-touching, declarations under the A7
+floor + declared A7.3 blind).
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
