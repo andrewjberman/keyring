@@ -537,6 +537,31 @@ probe template); my read-before-bank duties queued (two C-1s + probe outputs + S
 ratifications). AT ANDREW unchanged: preservation reversal + packet (estimand note
 non-blocking). @ee5ff633e1 closed, carried.
 
+## POST-LOG ADDENDUM 14 (~0701-0703Z): C-1 GATE DISCHARGED -- both declarations PASS on independent re-derivation
+
+~D wrote both C-1s at s15 (@aee8ec028b + header-hygiene v5 @2dab415fdc), nothing banked
+pre-word -- and RE-DERIVED the substrate ground from the rule bank rather than citing the
+ruling message ("satisfied the clause's PURPOSE where citation-by-relay satisfies its letter"
+-- now part of how I read every substrate citation). s15.1's own sharpened ground: the D3 seed
+PREDATES the fence, so either legacy mdpf is outside it or every D3 rail is void ab initio.
+
+MY GATE (070250Z): re-ran the dispositive checks MYSELF -- :54/:60 held-out declaration, :325
+worked D3 exemplar (MDPF cadence contract as WRITTEN D3 instance), mdpf mentions 8@HEAD /
+5@8f8a63200, discrimination shown (absent token 0 vs real 670-line file). Independent
+agreement. PASS BOTH: (i) wording precise, (b) TRANSLATED; (ii) substrate citation in
+strongest form; (iii) (b) corpus ENUMERATED (4,207 logs + 54,700 bodies, window stated).
+CLEARED to classify + bank both components, added-table + declaration vintage; excursion =
+C-1 false = void ab initio; falsifier live, fires as FINDING.
+
+S-B PER-PIPELINE (ratified form): 59 qualifying / 725 coverage = 4.6%, vs the deviation's
+415 / 100% -- deviation inflated population 7.0x, denominator 21.7x; both published, neither
+retired. FRAMING BANKED: the 59-unit class being SMALL is a COMPARISON-TIME FACT, not a
+defect -- 4.6% is the measured rarity of target-shaped work; nobody widens the definition to
+populate the class. The dual-class structure makes the sliver's smallness cost nothing.
+
+REMAINING AT ME: probe outputs + SEG-0 pair ratifications + the banked numbers as they come
+(read the added tables). AT ANDREW: preservation + packet, unchanged.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
