@@ -625,6 +625,17 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && printf '%s\n' "${PATHSPEC[@]}" | grep -qE '\.too
       echo "  FIX: run 'comp-system' (regenerate 06), stage infra/system/06_current_state.{md,json} + the" >&2
       echo "       refreshed sibling docs, then re-commit. OR add a one-line AUDITED override to your -m:" >&2
       echo "       'system-current-override: <reason>' (over-rate is monitored -> escalates to P2.5 auto-regen)." >&2
+      echo "" >&2
+      echo "  IF YOUR COMMIT TOUCHES org/modules/graph/ (the rule bank): THE REGEN FIX ABOVE CANNOT WORK." >&2
+      echo "       comp-system would have to compile an UNCOMMITTED source -- i.e. launder unlanded work into" >&2
+      echo "       a committed artifact -- so it refuses. Each gate is correct and each points at the other." >&2
+      echo "       Land-then-recompile is TWO-PHASE BY NECESSITY and the override IS the legal path, not a" >&2
+      echo "       lapse. Use the RESERVED PREFIX so the monitored rate can tell the two populations apart:" >&2
+      echo "         system-current-override: STRUCTURAL-TWOPHASE/rule-bank -- <what landed>" >&2
+      echo "       DISCHARGE IT IN-SESSION with the recompile commit. A STRUCTURAL override left undischarged" >&2
+      echo "       IS a discipline event; a discharged one is not, and the prefix is what distinguishes them." >&2
+      echo "       (CTO arch-gate ruling, LD-0362: the gates are sound; the rate instrument's predicate merged" >&2
+      echo "        a correctness signal with a discipline signal, so a rising count read as the reverse.)" >&2
       exit 1
     fi
   elif [ "$CS_RC" = "1" ]; then
