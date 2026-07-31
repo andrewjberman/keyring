@@ -1145,6 +1145,28 @@ verdicts lifts hold (a) v2. Explicit warning delivered: do NOT exercise the curr
 applied policy -- any verdict would be evidence about the stale object. Split coordinated
 via ~B's ACK per ~A's own proposal.
 
+## POST-LOG ADDENDUM 33 (~1339Z): SCOPE RULED CONSERVATIVE -- the gate reaches lifecycle_class; suspension CONFIRMED on both grounds
+
+MSTR RULING (133941Z): the lifecycle-values gate REACHES declaration lifecycle_class
+fields -- "lifecycle_class IS 'the Lifecycle Value of the resource' Andrew named; there is
+no second object." PERMANENT x3 -> HELD AT UNDECLARED pending ~B's pipeline; account-
+distribution UNDECLARED + feeds row-58 amendment STAND (neither is a lifecycle value).
+Conservative on the asymmetry I cited (holding values Andrew might have allowed is
+recoverable; populating against an open sovereign gate is not); surfaced to Andrew for
+possible widening. My substantive point banked by MSTR as its own lesson: A PRODUCT
+CORRECTLY SERVED TODAY AND A RESOURCE'S LIFECYCLE VALUE ARE DIFFERENT OBJECTS -- the
+$1.95B ruling establishes served-correctness NOW, not lifecycle PERMANENCE; the conflation
+is the confident construction the gate stops, caught on my own adjudication first.
+Relayed to ~D (writes nothing on Bucket-1); scope ruling carried to CORE for visibility.
+
+STANDING STATE AFTER THE DAY'S FULL ARC: lifecycle VALUES wait for ~B's pipeline (the
+mdpf-7 partition's value half is DORMANT by sovereign design, not by gap); the vocabulary
+mechanism + locality enum + describes discipline all STAND; my open verify surfaces = ~B's
+step-2 draft battery, ~A's step-4 applied battery, the describes mark-in-place correction,
+E1 breadth declarations, E2's pinned trigger census. AT ANDREW: freshness-checker
+retire-or-keep, the mdpf successor question, the possible lifecycle-gate widening,
+preservation, the packet.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
