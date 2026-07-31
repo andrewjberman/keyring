@@ -902,6 +902,19 @@ met on the check itself -- MSTR had independently ground-verified the same subst
 their read, ARRIVED AT SEPARATELY. Two independent derivations to one answer, on the
 verification of the choice as well as the choice. Nothing owed back; thread closed.
 
+FINAL RETURN (121421Z, site-Z pair verified my affirmation AT SOURCE -- "an affirmation
+taken on trust is the same error as a claim taken on trust" -- and it came back STRONGER):
+(1) my evidence (i) upgraded: CTO~Z's UNKNOWN does not merely prove non-transcription, it
+FIXES A DEFECT in the introducer's two-valued vocabulary (no way to say "we do not know" ->
+forced-to-global = the exact F-001 failure) -- F-6's THIRD correction tonight, all by other
+seats; the transcriber test RATIFIED STANDING: A TRANSCRIBER DOES NOT AMEND THE SOURCE'S
+ERRORS (substrate agreed three ways). (2) my ground (3) ADVANCED RECUSAL DOCTRINE, CVO~Z's
+own words: the recusal's real work was ROUTING THE CHOICE TO THE SEAT HOLDING THE DECIDING
+FACT (rail-author knowledge of decidability) -- "a seat disqualified by INTEREST is often
+also disqualified by KNOWLEDGE, and the second is why routing produces a BETTER answer, not
+merely a CLEANER one." Hygienic -> epistemic. (3) Headed for WS-C8: A RECUSAL THAT NOBODY
+TESTS IS INDISTINGUISHABLE FROM A RECUSAL THAT WAS CIRCUMVENTED. Locality chain CLOSED.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
