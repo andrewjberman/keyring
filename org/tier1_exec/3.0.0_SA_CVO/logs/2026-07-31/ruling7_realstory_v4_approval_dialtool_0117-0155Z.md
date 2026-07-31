@@ -562,6 +562,48 @@ populate the class. The dual-class structure makes the sliver's smallness cost n
 REMAINING AT ME: probe outputs + SEG-0 pair ratifications + the banked numbers as they come
 (read the added tables). AT ANDREW: preservation + packet, unchanged.
 
+## POST-LOG ADDENDUM 15 (~0705-0710Z): the "(none exist)" premise FALSIFIED post-bank -- provisional acceptance + correction ordered; both components banked; v3 formally relayed
+
+CTO's strengthening-1 grounding (070536Z) discharged the premise in the STRONGEST form -- the
+records carry a literal `pods` field in the predicate's own vocabulary (ADVI 7 / MDPF 6, 3x
+threshold; adopted as primary citation over my PRD:66) -- and its incidental output FALSIFIED
+a premise everyone carried: org/projects/ADVI_PERFORMANCE.json + MDPF_GLOBAL.json EXIST (my
+existence-only verify -- deliberately unopened; last-touch @ee5ff633e1 = CTO'S OWN PRECONDITION
+COMMIT, the control-in-the-record working as designed), MDPF's carrying 5 named workstreams +
+domain gate strings per CTO's declared incidental read. "None exist / currently unauthored"
+(CVO~Z bounds, CTO grounds, ~D parentheticals, MY relayed input) was false from 23:12 at the
+latest -- unnoticed 8h because IT ARRIVED AS A PREMISE, NOT A CLAIM (the invisible-premise
+class, again).
+
+MEANWHILE BOTH COMPONENTS BANKED (@0cdc8828c7 s16, under my 070250Z word, before the discovery
+could reach anyone): (d)-attribution 282/15,772 with 98.2% UNATTRIBUTABLE-NOT-UNCAUSED
+(coverage limit never a rate); (b)-TYPE logs 94 vs MENTION 7,055 (the 75x gap RETROSPECTIVELY
+PRICES s12.2 -- 4th name-vs-computation catch, first against ~D's own banked number); inbox
+TYPE 840, type/mention ratio 2.8x logs' -- QUESTIONS CONCENTRATE IN MESSAGES beyond the 77/23
+volume split (sharpens the preservation packet, carried to MSTR). Falsifier explicitly
+NOT-FIRED ("a falsifier nobody reports on is indistinguishable from one nobody checked").
+
+MY GATE ACTION (070834Z): bank ACCEPTED PROVISIONALLY -- the OPERATIVE C-1 claims are TRUE
+(reads confined to corpora excluding org/projects/), the false clause is the supporting
+parenthetical, and the drafting rider existed precisely to keep wording from voiding
+substance -- THIS IS THAT EVENT, LIVE. Both components BANKED-NOT-CITABLE until a dated
+correction section lands. Yields if CVO~Z reads the parenthetical as substantive (routed).
+
+ROUTED TO CVO~Z via MSTR (070956Z): bounds adjustment (likely field-level: shape fields clean
+/ workstream names + gate strings fenced -- their call); CTO's incidental-read scoping offer
+(my input: contained, no path to rails); parenthetical sufficiency. Amendment 3 SURVIVES
+(substrate-based, never leaned on the premise).
+
+v3 FORMALLY RELAYED to ~D (070928Z -- the concurrence was addressed to me and the relay was
+mine; ~D was correctly holding on a notice nobody had sent): probes AUTHORIZED, per-predicate
+independent form, both classes; ratification follows probe output. ~D's cascade-zero
+self-correction banked: "A CASCADE ZERO IS 'OF' THE FILTER ABOVE IT, NOT OF ITS OWN
+PREDICATE" -- and their stake framing (a vacuous zero beside a load-bearing one is how the
+load-bearing one gets discounted).
+
+OPEN AT ME: probe outputs; correction-section read; CVO~Z's three answers. AT ANDREW:
+preservation (now sharpened by the 2.8x concentration) + packet.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
