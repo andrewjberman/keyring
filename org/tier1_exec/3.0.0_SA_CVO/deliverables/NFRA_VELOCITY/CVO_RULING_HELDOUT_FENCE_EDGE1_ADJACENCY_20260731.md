@@ -2877,3 +2877,84 @@ message."* IT IS COMMITTED**, and was before the request: **A26 `@89cbe0e2a`, at
 against a state that had already changed.* **No harm here -- but the same belief applied to a DELETION
 rather than a re-commit would have destroyed work, and the request read exactly as authoritative either
 way.**
+
+### AMENDMENT 28 -- THIS DOCUMENT HAS NO CANONICAL HOME, and three workstreams have already acted on it
+
+COO's Andrew-directed fabric audit found that **3 of 5 workstreams have material, gated, VERIFIED work
+whose summary exists only in an agent's personal deliverables folder** -- and named the consequence:
+*"a verification whose subject lives only in a personal deliverables folder is durable only as long as
+that folder is."*
+
+#### A28.1 -- THE FINDING APPLIES TO THIS FILE, AND HARDER THAN TO WHAT IT AUDITS
+
+> **`org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/CVO_RULING_..._20260731.md` -- 2879 lines.
+> Every fence ruling, every verification verdict, the `ADVI_STAUDT` ruling, the seams statement for
+> Andrew's review. NO CANONICAL HOME. One agent's personal directory.**
+
+**AND IT IS WORSE THAN A SUMMARY IN A FOLDER, BECAUSE THREE WORKSTREAMS HAVE ALREADY ACTED ON IT:**
+
+```
+CTO~Z corrected ~C's doctrine head MID-BUILD off the A18 six-zero measurement
+0.7.0_AE_CloudOps~Z is proceeding on the ADVI_STAUDT fence ruling (A25)
+CTO~Z's C8 scope RETRACTION cites the A18 refutation
+```
+
+> **A LOST SUMMARY COSTS RE-DERIVATION. A LOST *RULING* COSTS RE-LITIGATION OF DECISIONS PEOPLE HAVE
+> ALREADY BUILT ON.** **The verify seat's output is the highest-consequence instance of the defect the
+> verify seat was auditing in everyone else.**
+
+**Recorded HERE, inside the document it indicts, because a known defect belongs in the record that
+carries it -- and because this is the only place it currently CAN be recorded, which is the finding
+restating itself.** **Placement is `lane=ANY_CTO`; I am not proposing where it goes.**
+
+#### A28.2 -- ONE OVER-ATTRIBUTION CORRECTED, AGAINST MY OWN CREDIT
+
+COO derived their per-workstream rows **from commits rather than from me** -- the right method, and it
+produced one error in my favour. **Exactly what I verified:**
+
+```
+C1  increments 1 AND 2 -- additivity RE-DERIVED vs a pinned oracle; 7/7 RUN + mutant        YES
+C2  step 0 (design attack + rev2 regression) and step 1                                     YES
+C7  schema + applied artifact at EXERCISED grade (rc=0 / 202 lines re-derived);
+    suite findings 1 & 2 verified at source; finding 3 (fence) RULED                        YES
+C8  artifact 1 verified (three-way boundary held); acceptance-criterion defect found        YES
+C3  *** NOT VERIFIED BY ME. Nothing of mine attaches to that row. ***
+```
+
+> **An audit that credits a verification which does not exist is the same class as the rows it is
+> auditing** -- a claim with no artifact under it. **Correcting it downward is the only version that
+> leaves the audit usable.**
+
+#### A28.3 -- DC-1's SCOPE: A CANONICAL HOME WITHOUT AN EXPORT LIST FIXES DURABILITY AND HIDES THE SEAM
+
+COO asked whether **DC-1** (the C2 verdict as one document) is scoped right, expecting the fence
+amendments to be what I could see. **The load-bearing piece is different:**
+
+> **C2's step-0 RESULT IS CONSUMED BY C8** -- *the M-taxonomy types WHERE AN ASSERTION SITS and does not
+> type INSTRUMENT FALLIBILITY.* It is why the ~10 staged L-laws are not duplicates, and it is what
+> refuted C8's own two-way coverage claim. **C8's collapse SCOPE is a function of it.**
+> **THEREFORE DC-1 MUST CARRY WHAT OTHER WORKSTREAMS CONSUME FROM C2, NOT ONLY C2's OWN VERDICT.**
+
+**A document scoped to *"the corpus-walk verdict"* can be COMPLETE ON ITS OWN TERMS and still leave the
+C8 dependency undocumented** -- which is S-D exactly: *the two workstreams compose correctly today, by
+memory.*
+
+> **GIVING C2 A CANONICAL HOME WITHOUT ITS EXPORT LIST WOULD FIX THE DURABILITY PROBLEM, LEAVE THE
+> INTEGRATION PROBLEM UNTOUCHED, AND LOOK FIXED.** **That last clause is why it is worth saying before
+> the document is written rather than after.**
+
+**The fence piece, smaller and for completeness:** my standing instruction on C2's instance walk was that
+**a FORCED CELL PUBLISHED AS MEASURED IS A BLOCKING FINDING.** That constrains how the verdict could
+legitimately be reached, so it belongs in DC-1 **as a constraint on the method**, not as a footnote.
+
+#### A28.4 -- THE ROUTING DEFECT, ACCEPTED
+
+COO paused the fabric and sent the STOP **to the two builders and nobody else** -- not me, not CTO~Z, not
+MSTR~Z. CTO~Z caught it by issuing a GO 33 seconds later against a stop that did not exist for them.
+
+**Adopted rule: a STOP/START naming a workstream goes to its GATE OWNER and BUILDER; a fabric-wide pause
+goes to EVERY CORE seat, explicitly including the verifier.**
+
+> **The verifier is the non-obvious one and the reason is specific: a verifier who does not know about a
+> pause can CLEAR something the fabric has been told to stop touching** -- issuing a green against a
+> moving target, with the authority of a verification.
