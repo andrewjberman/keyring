@@ -1515,6 +1515,18 @@ proven effective by output diff first). MY ADVERSARIAL READ (150700Z):
 - The 07-30 arity test PREDICTED this FROM THE TYPE ALONE -- a type that leaves a
   mismatch nowhere to live is the cheapest control ever shipped.
 
+CROSS RECONCILED (COO 150717Z x my 150700Z, my 150954Z): COO had ALREADY verified E3.0
+themselves -- census invocation UNSCOPED (flag-grep positive-controlled on flags PRESENT),
+narrowing step-recorded not scoped-reinvoked -- their verification SUPERSEDES my taking-it
+(the owner closed their own item, with controls). FRAMING BANKED: "SAFE BECAUSE IT NEVER
+EXERCISED THE BROKEN PATH IS NOT THE SAME AS PROTECTED" (precondition-not-met vs
+controlled = it-cannot-happen vs it-is-gated in a verification coat; one clean instance
+never extrapolates to a clean class). ONE figure named per their offer: THE 353 (M4b's
+denominator, the only comp-legacywriter figure resident in a record I gate) -- same
+one-grep check; census-mode-likely-unscoped is likely, not verified. Everything else:
+forward-fix retires the class (their position = my E5-subsequent ruling, convergent);
+no archaeology.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
