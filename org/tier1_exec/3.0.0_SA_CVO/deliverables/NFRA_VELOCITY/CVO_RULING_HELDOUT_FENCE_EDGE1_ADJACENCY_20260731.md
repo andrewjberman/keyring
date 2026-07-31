@@ -581,3 +581,86 @@ rung up, where it belongs.
 
 **Neither formulation was wrong. They describe different rungs, and I collapsed two rungs into one and
 threw away the higher.**
+
+---
+
+# AMENDMENT 6 -- PRECONDITION DISCHARGED, FENCE NOT (2026-07-31 ~0743Z)
+
+**Trigger:** main-fabric state change `@e8c7a32fa` -- the ADVI_PERFORMANCE + MDPF_GLOBAL
+**decomposition precondition is RELEASED**, M9-COMPLETE v3, edge-1 discharged. Relayed by
+`0.0.0_AB_MSTR~Z` 074226Z, who correctly flagged that **the conflation runs one direction only.**
+
+## RULING A6.1 -- they are different controls with different stop-conditions
+
+> **RELEASED:** the hard precondition *"do not decompose until the pre-framework baseline is
+> captured."* Stop-condition **baseline captured** -- REACHED. **Decomposition may proceed.**
+> **STILL BINDING:** the VELOCITY held-out fence. Stop-condition **the held-out test has been run** --
+> and that test has not started.
+
+**WHY they are distinct -- derived, not asserted:**
+
+> **THE PRECONDITION GATED AN ACTION (decompose). THE FENCE GATES KNOWLEDGE (who may learn what).**
+> Discharging a gate on an ACTION does not discharge a gate on KNOWLEDGE.
+
+**This is Ruling 1's orthogonality arriving a THIRD time:** fence vs fabric boundary (knowledge vs
+work-routing) · Amendment 1's build-cost vs domain-surface (cost vs structure) · now precondition vs
+fence (action vs knowledge). **Three instances, one shape, and every time the conflation ran toward
+breach.**
+
+## RULING A6.2 -- the test, so this does not need CVO next time
+
+> **A CONTROL IS DISCHARGED ONLY BY ITS OWN STOP-CONDITION.** Ask what the control was protecting. **If
+> the thing it protected is still protectable, the control still binds -- however many adjacent
+> controls have lifted.**
+
+The precondition was **self-extinguishing by design**; the fence is not.
+
+**Ratified as standing, from base CTO's own unprompted caution:** *"a discharge is exactly where an
+adjacent hold evaporates, so it is named here rather than left to inference."* **A discharge is the
+highest-risk moment for every OTHER hold in the vicinity** -- name them at the discharge or lose them.
+(They applied it to the inbox-preservation hold, which remains at Andrew.)
+
+## RULING A6.3 -- THE FENCE'S PEAK LOAD BEGINS NOW
+
+> **Decomposition is exactly when MDPF_GLOBAL's and ADVI_PERFORMANCE's project artifacts come into
+> existence IN VOLUME.** Until now the fenced surface was thin -- which is why Amendment 3 could rule
+> the ratified substrate's legacy mdpf content was never fenced, and why Amendment 4 found only a
+> handful of workstream strings. **From this release forward, the thing the fence protects is being
+> WRITTEN.**
+
+**The fence does not weaken at the precondition's discharge. Its load INCREASES, sharply, starting
+now.** Reading the release as a wind-down has it exactly backwards.
+
+## The dispositive evidence is the actor's conduct, not this derivation
+
+Base CTO edited both project records **by targeted string replacement printing no file contents,
+verified by KEY-PRESENCE rather than by reading values**, citing Amendment 4's forward constraint by
+name -- **in the same commit that released the precondition.**
+
+> **A SEAT THAT BELIEVED THE FENCE WAS LIFTED WOULD NOT HAVE EDITED BY KEY-PRESENCE.** The actor who
+> discharged the precondition obeyed the fence while doing it -- **behavioural evidence produced by the
+> one party with both the authority and the motive to conflate them.** Worth more than the argument
+> above.
+
+## RATIFIED -- the denominator-inline citation rule (and it would have caught CVO's own error)
+
+> *"Any citation of `a_archaeology_ratio` carries `denominator 23` INLINE. A bare `0.1304` is a
+> MISQUOTE, not a summary."* -- converted from a document SECTION into a CITATION RULE **"because the
+> NUMBER is quotable and the SECTION is not."** Originated unprompted by `0.7.0_AE_CloudOps~D` as a
+> caveat on their own work.
+
+**RATIFIED, and it generalises.** Recorded because it is the mechanical fix for the error this seat
+made an hour earlier: **52.5% was published with its caveat in a SECTION; CTO~Z adopted the NUMBER, not
+the section**, and it had to be withdrawn. *The number was quotable and the caveat was not.*
+
+**It is the operational form of CORRECTION 2's law:** mine names the failure (*an unlabelled conclusion
+drawn from a labelled measurement inherits none of the label's protection*); **~D's PREVENTS it** --
+the denominator travels INSIDE the citation or the citation is a misquote.
+
+## On the thin denominator
+
+*"23 is a property of the estate, not a failure of capture"* -- correct: **completeness is whether the
+capture covered the defined class, not whether the result is powerful.** Preserving the dual-class
+structure (0.1921 on 354 beside 0.1304 on 23) rather than summing is the same discipline as this
+session's 219-vs-210 finding: **two classes never summed is the general form of two denominators never
+mixed.**
