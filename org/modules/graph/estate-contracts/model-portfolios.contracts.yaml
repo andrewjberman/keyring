@@ -26,6 +26,16 @@ resolution:
 # subject here -- model_portfolio_benchmarks.json -- is eligible going forward. Stated so a reader
 # does not mistake 7 declared subjects for 7 subjects that count toward breadth.
 #
+# THE SPLIT IS A DELIBERATE OVER-APPROXIMATION AND IT SHRINKS (base CTO, relayed MSTR 125457Z).
+# E2 fixes VIOLATIONS, not all triggers -- the true blast surface is the VIOLATING SUBSET, which is
+# unknowable until E2's typing pass produces it. So `process:` defers TOO MUCH ON PURPOSE
+# (safe-when-wrong: too much, never too little), and it SHRINKS once E2 types the graph -- every
+# NON-violating process subject declares immediately at that point.
+#
+# *** DO NOT READ THIS AS PERMANENT POLICY. A CONSERVATIVE PROXY NEVER REVISITED BECOMES A
+# PERMANENT TAX JUSTIFIED BY A MEASUREMENT NOBODY TOOK. *** Recorded here because that calcification
+# happens by inertia, in the file, long after the reasoning has left the messages.
+#
 # The split is about E2 overlap, not about these declarations' validity.
 # ─────────────────────────────────────────────────────────────────────────────────────────────
 

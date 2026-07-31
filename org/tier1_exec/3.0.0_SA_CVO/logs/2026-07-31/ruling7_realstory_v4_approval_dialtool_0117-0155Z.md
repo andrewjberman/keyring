@@ -973,6 +973,15 @@ distribution "would have been mis-dropped as ungoverned otherwise." Separately: 
 describes scope-sense question routed to CORE as a rail-author call, non-blocking.
 NEXT AT ME: read-before-bank on ~D's Bucket-1 writes as they land.
 
+QUEUED VERIFY DUTY (MSTR 124914Z): CVO~Z ruled the describes backfill = 2 records, 5
+BLOCKED (scope-sense values must not be forced into describes); landed tranche-1 has all 7
+in describes (~D wrote pre-ruling, MSTR endorsed pre-ruling, both corrected). ~D correcting;
+I VERIFY THE CORRECTED WRITE, checklist: (1) the 2 pure subject-descriptions stand; (2) the
+5 held BLOCKED recorded-not-dropped pending CORE's scope-field ruling; (3) NO LINT-PASS
+CITED AS DESCRIBES-EVIDENCE -- describes is un-lintable by A10.2, so a lint pass is
+DEFINITIONALLY SILENT on it (MSTR~Z's catch); only the semantic typing walk detects
+describes-drift. Bucket-1 lifecycle writes proceed in parallel, unaffected.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative

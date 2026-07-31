@@ -208,8 +208,11 @@ def main(argv):
         doc = yaml.safe_load(fh)
 
     results = {}
+    v_head = {}
     for label, ref in (("PIN(%s)" % (pin or "none"), pin), ("HEAD", None)):
         v = vocab(load_bank_at(ref))
+        if ref is None:
+            v_head = v          # the HEAD vocabulary is what the blind-spot notice reports from
         findings = []
         n = 0
         for key, rec in find_records(doc, v):
@@ -242,6 +245,16 @@ def main(argv):
         print("NOTE: this is the LEXICAL floor only. Describe-the-specimen-never-the-gap remains "
               "the governing discipline; a clean run is NOT clearance.")
         return 2
+    # THE EXCLUSION IS PRINTED, NOT REMEMBERED.
+    # MSTR~Z: "a LINT PASS is definitionally SILENT on `describes` -- it cannot stand as
+    # describes-evidence." True -- and the tool KNEW which fields it excluded and did not SAY so,
+    # which is how a PASS gets read as covering a field nothing checked. A verdict that omits its
+    # own blind spot invites exactly the over-read that blind spot makes dangerous.
+    _skipped = sorted(v_head.get("unlintable", ()))
+    if _skipped:
+        print("\nNOT CHECKED (bank-declared non-vocabulary -- no lint may speak to these): %s"
+              % ", ".join(_skipped))
+        print("  -> a PASS is SILENT on the above. It is not evidence about them.")
     print("\nVERDICT: PASS")
     print("RESULT: PASS (lexical floor only -- NOT clearance; A7.3 semantic drift is uncovered "
           "and remains a named open residual).")
