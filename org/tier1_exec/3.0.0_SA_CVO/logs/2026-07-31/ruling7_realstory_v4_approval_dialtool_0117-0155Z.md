@@ -1527,6 +1527,37 @@ one-grep check; census-mode-likely-unscoped is likely, not verified. Everything 
 forward-fix retires the class (their position = my E5-subsequent ruling, convergent);
 no archaeology.
 
+## POST-LOG ADDENDUM 45 (~1515-1517Z): MY (a) SHAPE LEAKED -- IAM's * MATCHES /; ~B caught it pre-apply by testing their own sentence; GO given with the FIX'S residual probed first
+
+~B STOP (151544Z): the all-dates shape I ORDERED (*/text-input/*) LEAKS -- IAM's `*`
+MATCHES `/`, so it means "any key containing /text-input/ at ANY DEPTH": the capture
+writer could write INSIDE signed-review/ by nesting (measured: {day}/signed-review/
+text-input/evil.md -> ALLOWED). THE boundary the whole design rests on -- A PRODUCER THAT
+CAN WRITE THE REVIEWER SURFACE CAN SIGN ITS OWN CAPTURE. AND BOTH BATTERIES WOULD HAVE
+GREENED OVER IT: the floor's DENY-2 tests the adjacent SIBLING (correctly denied) while
+the hazard lives in the NESTED variant (never tested) -- "the battery reports a clean
+boundary over an open one, and every verdict in it is honest." Caught ONLY because ~B
+tested their own comment ("mid-key wildcards are easy to get subtly wrong") instead of
+trusting it. NOTHING APPLIED; live role still on the date-literal; ~A held.
+
+MY GO (151702Z), the fix's OWN residual probed before the word: ~B's fix = ????-??-??/
+text-input/* (the ? single-char wildcard pins a 10-char date-shaped day segment). BUT `?`
+ALSO MATCHES `/` -- so I measured whether a key nested under any REAL surface can match:
+signed-review pos5='e' NO; kimi-report pos5='-' but pos8='p' NO; change-cochange pos5='g'
+NO; deployment-motion pos5='o' NO; manifest at day root unreachable. THE FIX HOLDS FOR
+EVERY SURFACE THAT EXISTS -- BY THE SHAPES OF THEIR OWN NAMES, which is measured luck not
+design = THE RESIDUAL, REQUIRED NAMED in the design doc (a pathological date-shaped-
+prefix-with-slash key like ab/d-ef-gh/text-input/x IS allowed -- can only mint junk
+top-level prefixes, provenance-harmless, listing-visible). FLOOR AMENDED PERMANENTLY:
+(i) ~B's NESTED PROBE for every mid-key wildcard (the forbidden sibling with the allowed
+segment appended underneath -- the only invocation distinguishing * from a segment
+matcher); (ii) MY RESIDUAL PROBE (one pathological same-shape key, expected ALLOWED-AND-
+NAMED where the design accepts it -- the residual stays measured, not assumed). STANDING
+FORM: A MID-KEY WILDCARD IS NOT A PATH-SEGMENT MATCHER; `*` IS NOT [^/]* AND `?` IS NOT
+[^/] -- the battery probes the wildcard's TRUE semantics, never the reading's.
+DeleteObjectVersion deny added (sibling). SEQUENCE: apply -> ~A re-runs with fixed-shape
+expectations + both probe types -> write path -> mutants -> whole lift.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
