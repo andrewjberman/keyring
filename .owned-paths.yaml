@@ -73,6 +73,16 @@ lanes:
       - 3.0.0_SA_CVO
     description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
+  WS_CONTRACT_AUTHORS:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 1.0.0_SA_CTO~Z
+      - 3.0.0_SA_CVO
+      - 3.0.0_SA_CVO~Z
+      - 0.7.0_AE_CloudOps~Z
+      - 0.8.0_AE_CloudComp~C
+    description: "NFRA_VELOCITY workstream-contract authoring. Grantor 0.0.0_AB_MSTR~Z 2026-07-31 (SoD: the grantee does not grant itself; 0.7.0_AE_CloudOps~Z raised it and did not self-grant). THREE CORRECT RULINGS THAT DID NOT COMPOSE: (1) contract folders live under CTO's deliverables (Andrew-direct); (2) the workstream OWNER authors the contract, not the gate (CTO~Z 183146Z); (3) that tree is BASE_EXEC only (:873). Composed, every NON-EXEC workstream owner was denied at the last step of the only work the pause permits -- DC-3 written, 331 lines, gate-clean, refused at commit. Mirrors the :845 task_orders precedent exactly: a MORE-SPECIFIC path override carving one subfolder out of an exec home so a non-owner may author into it. Scope is deliberately narrow -- ws_c*_contracts/*.md only, the two named workstream owners only, NOT the parent home. BASE_EXEC is unchanged everywhere else."
+
   GOVERNANCE_AUDIT:
     permitted_agents:
       - 0.0.0_AB_MSTR
@@ -870,6 +880,15 @@ paths:
   # -----------------------------------------------------------------------
   # org/tier1_exec — exec agent home folders
   # -----------------------------------------------------------------------
+  # Workstream-contract authoring override (more-specific than the CTO home rule below).
+  # Same shape as the task_orders override at the top of this section: one subfolder of an
+  # exec home opened to named non-execs, because the rule that put contracts THERE and the
+  # rule that says the workstream OWNER authors them are both correct and do not compose.
+  # Narrow on purpose: this pattern only, named agents only, parent home untouched.
+  "org/tier1_exec/1.0.0_SA_CTO/deliverables/ws_c*_contracts/*.md":
+    lane: WS_CONTRACT_AUTHORS
+    note: "NFRA_VELOCITY workstream contracts — the workstream owner authors; CTO gates"
+
   "org/tier1_exec/1.0.0_SA_CTO/**":
     lane: BASE_EXEC
     note: "Base CTO home — logs, task orders, prompt, briefs"
