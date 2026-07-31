@@ -178,12 +178,21 @@ def main(argv):
               "ONLY; A7.3 semantic drift has delta EXACTLY ZERO and is NOT covered here."
               % (len(pin_f), len(head_f)))
 
+    # THE VERDICT IS CARRIED IN STDOUT, NOT IN rc.
+    # This host has a DOCUMENTED rc-corruption class (MSYS shared-memory mount, not reboot-durable;
+    # "score controls on OUTPUT, never rc"). A GATE whose verdict rides only on an exit code FAILS
+    # OPEN wherever that code is corrupted -- and a gate that fails open is worse than no gate,
+    # because it is believed. Reported live by 0.7.0_AE_CloudOps~D, who saw REJECTED output return
+    # rc=0 and correctly scored the OUTPUT instead.
+    # CONSUMERS MUST MATCH THE `VERDICT:` LINE. rc is a convenience, never the contract.
     if pin_f or head_f:
-        print("\nRESULT: REJECTED at declare-time (A7.1).")
+        print("\nVERDICT: REJECT")
+        print("RESULT: REJECTED at declare-time (A7.1).")
         print("NOTE: this is the LEXICAL floor only. Describe-the-specimen-never-the-gap remains "
               "the governing discipline; a clean run is NOT clearance.")
         return 2
-    print("\nRESULT: PASS (lexical floor only -- NOT clearance; A7.3 semantic drift is uncovered "
+    print("\nVERDICT: PASS")
+    print("RESULT: PASS (lexical floor only -- NOT clearance; A7.3 semantic drift is uncovered "
           "and remains a named open residual).")
     return 0
 
