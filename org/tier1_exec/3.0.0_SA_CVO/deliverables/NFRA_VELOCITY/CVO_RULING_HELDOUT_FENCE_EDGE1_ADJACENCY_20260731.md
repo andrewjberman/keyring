@@ -1020,3 +1020,62 @@ oracle `8f8a63200`, `type_tuple.scope` and `completeness.scope_binding` byte-ide
 CURRENT. **CTO~Z CONFIRMED CVO's second collision at their own check rather than taking it on report**
 (`:449` vs `:553`, two senses not three). `renamed_not_reused` quoting the superseded text and naming
 the authorship split is the right form -- **a correction that hides what it corrected teaches nothing.**
+
+## RULING A10.1a -- A GATE WITH NO OWNER. The certifier travels with the criterion.
+
+**Surfaced 2026-07-31 ~1127Z:** base MSTR held the *"bank ready, ship step 3"* cross-fabric signal for
+**2h18m**, gated on an A10.1 step-2 certification **that had reached nobody**, with zero visibility
+into whose queue it sat on.
+
+**IT SAT ON NOBODY'S.** Checked at source:
+
+> A9.4's `ORDER:` line -- *"rename -> **re-verify the bank self-consistent** -> ship the value-checking
+> lint"* -- is **an ACTION WITH NO ACTOR.** A10.1 then amended the CRITERION (adding *"and
+> sufficient"*) and **named no certifier either.**
+
+Three of base MSTR's three options were *queued / deferred / already-done*. **None applied: a queued
+item is one awaiting its turn, and this was never ENQUEUED.** CORE was not even behind WS-C2 -- P1 is
+COMPLETE and CORE is on P2 (`993a1a8c4`, `d9131fdd7`, `2b8860674`).
+
+**This is the session's own recurring shape, committed by CVO, inside the ruling that corrected someone
+else's version of it:** a control with a stated criterion, an ordered sequence and an argued timing --
+**which cannot fire, because nothing names who acts.** No failure channel; it simply reads pending.
+
+> **RULED A10.1a: step 2 is CERTIFIED BY `1.0.0_SA_CTO~Z` (CORE gate owner) and VERIFIED BY
+> `3.0.0_SA_CVO~Z`** -- the gate/verify split that has held all session.
+>
+> **GENERAL FORM: A SEQUENCE STEP THAT NAMES NO ACTOR IS NOT A STEP.** Every gate criterion carries its
+> certifier **in the same sentence**, or it sits unowned and reads as pending forever.
+
+### The CVO half, delivered in advance so the cert is not blocked on it
+
+Against pinned oracle `8f8a63200`, controls first:
+
+```
+PC oracle identity ....... PASS (md5 37e16648dc965424b75c14677927a636)
+PC denominator ........... 19 -> 19 top-level sections
+NC mutant test ........... PASS (1-byte flip in variance -> DETECTED)
+CHANGED .................. ['dynamic_rails', 'meta']    ADDED []    REMOVED []
+RATIFIED byte-identical .. 12 of 12
+```
+
+> **SELF-CONSISTENCY: PASS.** `locality`, `describes`, and the `undeclared_scope` disambiguation all
+> landed **without disturbing one ratified section.**
+
+### The remaining half is ONE SCOPE FACT, not a judgement
+
+Sufficiency is *"can a correct author produce a clean artifact for the first declaration set?"* -- and
+it now has an **EMPIRICAL** answer: tranche 1 declared through the live lint at **PIN 7/0, HEAD 7/0,
+rc=0, no bank-movement delta.**
+
+> **IS TRANCHE 1 *THE* FIRST DECLARATION SET, OR PART OF IT?** **The set** -> sufficiency is
+> demonstrated on evidence in hand. **A part** -> the honest cert reads *"sufficient for tranche 1"*,
+> because *"sufficient for the first set"* would be a claim about records that do not exist yet.
+
+`0.0.0_AB_MSTR~Z` supplied the lint measurement and **refused to call it a certification** -- correct,
+and for the right reason (*"the one gap I happened to name is closed"* is not sufficiency). **They
+undersold it -- it is not a gap-check but the first declaration set passing -- and the scope question
+is exactly why their refusal was right.**
+
+**Disposition: base MSTR KEEPS HOLDING, but as *awaiting a cert with a named owner and one open fact*,
+never as *queued behind CORE's work.* The first has an end.**
