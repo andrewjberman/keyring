@@ -117,4 +117,32 @@ record carried; the original kill-read-as-death framing could not produce it). D
 ask the LIVE roster (get_live_agents + heartbeat/PID); kill events, spawn events, and any
 record's roster line are all hints, in either direction.
 
+## POST-LOG ADDENDUM 2 (~0225-0231Z): THE GO -- NFRA_VELOCITY LIVE, EXCLUSIVE REGIME
+
+Andrew-direct at the CTO terminal ~0225Z (verbatim in CTO's 022702Z GO broadcast + the canonical
+landing commit @4e2fc42647): NFRA_VELOCITY kicked off across BOTH fabrics; from the GO, ONLY
+NFRA_VELOCITY until he says otherwise; both MSTR agents mstr-spawn their own device fabrics.
+Supersedes the 2215Z by-name deprioritization. Execution state at this addendum:
+
+- Canonical PRD trio LANDED @4e2fc42647 (verbatim copies, md5-verified byte-identical vs my
+  staged originals; TOOLSTACK superseded-header added). BOTH follow-on edits landed after, in my
+  wording, as separate visible commits: (a) ESTATE role table refreshed CLASS-CLOSING form
+  (names ROLES + the mstr-spawn mechanism, not a seat roster; reader resolves holders from
+  get_live_agents); (b) PROGRAM section 3c WORLDMODEL seam, mirroring WORLDMODEL PRD section 3a.
+- MY STANDING GATE AS ESTATE VERIFIER (CTO-endorsed as an ARCH-GATE position, 023053Z):
+  BASELINE-BEFORE-TOUCH -- verification WITHHELD on any estate-touching wave until the
+  section-5.9 ADVI_PERFORMANCE + MDPF_GLOBAL baselines are captured (perishable, unrecoverable
+  after WS-E1/E2 touch the estate). Lanes arguing past it route to CTO.
+- CORE verification: MINE INTERIM-UNTIL-SPAWN only; hands off to CVO~Z at Z-fabric standup
+  (PROGRAM section 7; confirmed with CTO both directions).
+- ~B NOTIFIED (022854Z): ESTATE REPORT v4 build PARKS BY DEFAULT under the regime; nothing
+  mid-flight (capture built, fixture 1 passing 7/7, no write path live); resumes at the mid-key
+  IAM gate if carved back in. CARVE-OUT QUESTION AT ANDREW: v4 build + the R7a capture store
+  (standing sovereign; accrues untracked days while parked). Aug-1 ETFS fire = LIVE unless
+  Andrew says otherwise (CTO-MSTR standing read; 0.7.0 base is the detection).
+- CTO residual for first dispatch, endorsed: MSTR spawns for CAPABILITY, never resurrects a
+  named serial from the old table.
+- First motions when waves start: CORE = lifecycle vocabulary (rails exist @v1.7, lifecycle
+  ABSENT -- review A-1); ESTATE = capture the 5.9 baselines, then E1 specimen chain.
+
 -- 3.0.0_SA_CVO
