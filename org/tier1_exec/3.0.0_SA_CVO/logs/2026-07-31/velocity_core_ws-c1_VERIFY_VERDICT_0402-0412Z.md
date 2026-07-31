@@ -111,8 +111,65 @@ than routed to a comp-tool: no comp-tool answers "is section X byte-identical be
 the whole point of item 13 was byte-identity at a pinned vintage. Both probes were control-tested
 before their verdicts were read.
 
+---
+
+# INCREMENT 2 VERIFY (item 10) -- PASS. WS-C1 CLOSED, BOTH INCREMENTS.
+
+**Subject:** `comp_legacywriter.py` @`b5854411b` -- the D3 lifecycle gate on the kill-list path.
+CTO~Z gated 17/17 (with their own mutant on C9b). **Verified by EXERCISE, not config read** (Rule 22a:
+a behaviour claim needs the test that fails if the claim is false).
+
+Temp contract registry built; `resolve_lifecycle` RUN on every branch. Denominator: 6 declarations
+loaded, **7 cases exercised, 7 PASS**.
+
+| case | gated | kill_eligible | verdict |
+|---|---|---|---|
+| TRANSIENT fully declared | True | False | NOT-ASSERTED (declared healthy state) |
+| DORMANT fully declared | True | False | NOT-ASSERTED -- *the 7 belts rev-1 would have deleted* |
+| EVENT_CREATED fully declared | True | False | NOT-ASSERTED |
+| **PERMANENT (NEG CONTROL)** | **False** | **True** | eligible -- correctly NOT protected |
+| **LEGACY (NEG CONTROL)** | **False** | **True** | eligible -- debt, not a protected class |
+| TRANSIENT HALF-DECLARED | False | False | UNKNOWN, LOUD (missing revalidate_by, scope) |
+| UNDECLARED (no record) | False | False | OBSERVED (lifecycle UNDECLARED) -- never DEAD |
+
+**The negative controls are the load-bearing rows: a gate that protects everything is not a gate.**
+PERMANENT and LEGACY come back kill-ELIGIBLE, so it discriminates. The half-declared row is F-3/S.3
+working as specified -- no fallback to the declared value, no fallback to PERMANENT.
+
+**MUTANT ON MY OWN SUITE:** forced `GATED_CLASSES` to the full enum so PERMANENT became wrongly gated
+-- **my suite CAUGHT it.** The control can fail, so its pass is evidence.
+
+**CTO~Z's "inert" claim independently CONFIRMED:** live registry ABSENT, **0 declarations, gating path
+fires on 0 real resources today.** Present effect is entirely CLAIM-SUPPRESSION (the S.4 bound in code
+rather than prose), which is real; the *gating* direction is unexercised in production by construction.
+The code is honest about it -- an absent registry returns *"0 declarations, every resource UNDECLARED"*
+rather than an empty success, which is the difference between zero coverage and no problem.
+
+## V-2 -- observation on the gate's OUTPUT SHAPE (not a blocker)
+
+`kill_list_eligible=False` is reached by **three structurally different routes**: (1) GATED -- a
+POSITIVE CLAIM OF HEALTH; (2) HALF-DECLARED -- a declaration we cannot trust; (3) UNDECLARED -- no
+claim at all. A consumer branching on the **boolean alone** collapses all three.
+
+The information IS present (`declared`, `lifecycle_class`, `verdict` separate them cleanly), so this is
+not an implementation defect. The hazard is that `kill_list_eligible` is the field a downstream
+consumer reaches for, and it is a 3-to-1 collapse of **exactly the distinction the axis exists to
+preserve** -- *absence is a SET of states and an existence check cannot partition it*, S.1's own law
+reappearing one layer up, in the gate's own return shape. Recommended: the consumer contract states
+that `kill_list_eligible` must not be branched on alone.
+
+## Still open after WS-C1 closes
+
+`variance.Orphan` ungated (CTO~Z holding the gate's authoring on ~C's population measurement --
+endorsed) · item 17 population UNKNOWN, bounded above by 7 · **the first REAL declaration is worth an
+end-to-end verify** -- it will be the first execution of the gating path on a live resource, and my
+exercise used a synthetic registry.
+
 ## Blockers / Next
 
-None at me. Increment 2 (item 10, >=1 consumer actually gated) is `~C`'s, gated by CTO~Z; my verify
-follows the same sequence. V-1 awaiting CTO~Z's EOL call. Zero crons armed. Open call at Andrew on the
-SYSPARITY cron conflict stands (see the 0248-0330Z log).
+None at me. **WS-C1 CLOSED, both increments, verified.** V-1 closed @41256c702. Fence Amendment 1
+landed @4b94ad6f3 (M9 capture unblocked; Control 2 declared to `0.7.0_AE_CloudOps~Z` by CTO~Z).
+SDK v1.2 hardcode disposed as MINE, queued, DERIVE-NOT-BUMP affirmed with a corrected denominator
+(8 occurrences / 7 files -- base CTO's list missed `tenants/demo/company.yaml`) plus a second
+defect (marker ABSENCE in the four required files) attached. Zero crons armed. Open call at Andrew on
+the SYSPARITY cron conflict stands (see the 0248-0330Z log). WS-C2 next.
