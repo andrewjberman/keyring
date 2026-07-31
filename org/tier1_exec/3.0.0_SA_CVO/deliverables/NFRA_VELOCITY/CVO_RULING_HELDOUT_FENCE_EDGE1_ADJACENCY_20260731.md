@@ -1429,3 +1429,81 @@ and it transfers cleanly.
 **CHAIN CLOSED:** gap surfaced by a builder who halted rather than invent -> bounded by CVO -> chosen by
 the rail author -> independently affirmed and adversarially tested at the seam. **Four seats, no seat
 marking its own work.**
+
+---
+
+# AMENDMENT 12 -- the FIVE with no field, and A10.2 as a DESIRED control on CVO's own record (2026-07-31 ~1239Z)
+
+**Raised:** `0.0.0_AB_MSTR~Z` 123816Z, as a **measurement, explicitly not a ruling** -- which is what
+keeps the A10.1b role available.
+
+## The reconciliation (both counts right, different questions)
+
+```
+DRAFT @42a238e31 -- 7 free-text values, POS control 'scope:' = 7
+  2 x SUBJECT DESCRIPTION      -> belong in `describes`
+  5 x ratified type_tuple.SCOPE sense (pipeline x2, single-artifact, partition-window, firm)
+LANDED: locality 7 (all `global`) · describes 0 · scope 0
+```
+
+**All seven were DROPPED; nothing relocated** (CTO~Z's cert correct). **Only two are subject
+descriptions** (CTO~Z's 5-vs-2 split correct). *"How many dropped" = 7; "how many belong in
+`describes`" = 2.*
+
+**`contract_record` has NO scope field**, and `locality` is DEVICE-locality -- a different axis. **So
+the five did not go into the wrong field: there is no right field, and the information is now ABSENT
+rather than relocated.**
+
+## RULING A12.1 -- the DISPOSITION of the five is RECORDED, whichever reading wins
+
+Both readings are live and CVO is not choosing between them, **but they share a consequence neither
+states, and it is a CONTROL question rather than a design one:**
+
+> **UNDER (a)** -- the five belong nowhere -> **that is a DECISION and must be VISIBLE as one.**
+> **UNDER (b)** -- they need a field -> **that is a GAP.**
+> **NEITHER BRANCH LICENSES THE CURRENT STATE: the information left the record and nothing says why.**
+
+**RULED: the disposition is recorded either way** -- *discarded, out of scope for a contract_record*, or
+*blocked pending a field*. **A10.2's law is exactly this case (a conformance check cannot distinguish
+FIXED from DELETED); here the deletion is CONFIRMED and the reason UNRESOLVED**, which is the worst of
+the three states, because **a green lint now certifies a record that silently lost content.**
+
+## RULING A12.2 -- backfill = 2, and the refusal is the load-bearing half
+
+> **`describes` backfill = 2 records. The remaining 5 are BLOCKED and MUST NOT be forced into
+> `describes` to make the count come out.**
+
+`0.0.0_AB_MSTR~Z` withdrew their own *"relocate the seven"* framing before anyone challenged it:
+**it would have put five SCOPE values into a DESCRIPTION field -- re-committing the exact one-exit error
+`describes` was created to prevent.** A remedy reproducing the defect it was built for, caught by its own
+relayer. **Forcing the count is the failure mode here, not the shortfall.**
+
+## RULING A12.3 -- this is an A10.1b classification and must be PERFORMED, not ADOPTED
+
+The (a)-vs-(b) question **IS** the AUTHOR-ERROR / SCHEMA-GAP call: *did a correct author fail, or can
+the schema not express what they needed?* Owned by the **CTO~Z + CVO~Z** pair, and per base CTO's law
+-- ***a role whose first exercise is performed by a non-owner is a role the owner may never exercise***
+-- **it must be PERFORMED BY THE PAIR, never inherited from a relay.**
+
+**The role has still never been exercised. This is its SECOND genuine opportunity; the first was
+consumed before anyone noticed.**
+
+## RULING A12.4 -- CVO RECUSES again, same axis
+
+The discriminator -- ***does an obligation declaration need to state the population it covers?*** -- is
+**the ratified `type_tuple.scope` sense**, the exact token whose second sense CVO introduced, denied,
+and is exposure-bound against. **The disqualification is not weaker here than at `locality`; it is the
+same one on the same axis.** Routes to CTO~Z as rail author with base CVO's s.7 pass -- **the path that
+just produced `UNKNOWN`, a value that fixed a defect in CVO's own framing precisely because CVO was not
+in it.**
+
+## A10.2 is a DESIRED control on CVO's own record until the backfill lands
+
+**`locality` was DISCHARGED BY EXERCISE** -- base CTO ran the rejection. **`describes` remains 0-of-7
+and UNEXERCISED**, so CTO~Z's *"a capability that exists and has never been exercised is DESIRED, not
+APPLIED"* **stands against it -- and `describes` is CVO's ratification (A10.2).**
+
+> **CVO ratified a field to close a residual; the field landed, the residual did not close, and the
+> field has never run.** The 2-record backfill is what discharges it. **Until then A10.2 is a DESIRED
+> control on CVO's own record**, recorded as such rather than letting *"the field is ratified"* stand
+> as done.
