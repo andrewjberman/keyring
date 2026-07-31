@@ -292,6 +292,55 @@ Neither of us had put it where it could refuse.**
 
 ---
 
+## L-12 -- ZERO VARIANCE ACROSS A HETEROGENEOUS SAMPLE IS A CONSTANT, NOT A MEASUREMENT
+
+A result that returns the SAME value on every row of a deliberately varied sample has not measured
+the sample; it has reported itself. **Variance is the cheapest available check on an instrument you
+cannot otherwise audit, and it needs no ground truth.**
+
+**INSTANCE (2026-07-31, `0.7.0_AE_CloudOps~Z`, refuting a CRLF claim of mine):** 14 markdown files,
+3 seats, different authoring tools, different hours -- reported as `182/182, 157/157, 108/108, 45/45,
+65/65, 156/156, 68/68, 70/70, 86/86, 99/99, 88/88, 79/79, 223/223, 169/169`. **Every row 100%.** Three
+independent oracles (python blob-decode, `git cat-file` byte-count, `od` CR-byte census) then measured
+2 of the 3 named files at CR=0. The line-count DENOMINATORS matched mine exactly; only the numerator
+diverged -- so the defect was invisible to every check that compares totals.
+
+**AND IT CARRIES THE ANTI-CORRELATION SIGNATURE (L-1's class):** the instrument's first case was a file
+that genuinely IS all-CRLF, so it validated on the one input incapable of discriminating it. **A
+positive control chosen from the population you expect to confirm is not a control.**
+
+**COROLLARY -- WHAT SURVIVED THE REFUTATION IS THE VALUABLE PART.** Their `.gitattributes` analysis
+(no `*.md` rule, `core.autocrlf=false`, therefore git normalises nothing) was CORRECT and independent
+of the bad measurement, and it yields a root cause better than either original claim: **git normalises
+nothing, therefore THE WRITE PATH DECIDES, per file.** Counterexample proving it: four CTO deliverables
+on the same device, same repo, same night, are all-LF blobs (`0/81, 0/303, 0/493, 0/157`) because they
+are written through `open(..., newline="")`. **Sound reasoning on a false premise leaves the reasoning
+worth keeping; discard the conclusion, not the argument.**
+
+---
+
+## L-13 -- REQUIRE THE PROVENANCE FIELD AND THE FABRICATION BECOMES UNWRITABLE
+
+A rule that forbids asserting X without knowing X is prose, and prose is enforced by care (M14). A
+**required field naming WHERE THE ASSERTION CAME FROM** converts the same rule into a structural
+impossibility: the fabricated case cannot be expressed in the grammar at all.
+
+**INSTANCE (2026-07-31):** Andrew ruled that populating estate lifecycle VALUES is gated -- *"it is
+impossible to know the Lifecycle Value of the resource without the user input pipeline."*
+`contract_record.required` already carried `intent_source`. **Populating-without-knowing IS
+populating-without-an-`intent_source`, which renders UNKNOWN-LOUD with `kill_list_eligible: False`
+and no fallback to the declared value** (`comp_legacywriter.py:865-870`). **The gate was already
+enforced by a required field, hours before it was stated -- not by foresight about the ruling, but
+because requiring provenance forecloses fabrication generically.**
+
+**BOUND, AND IT IS L-10's:** this holds ONLY while the required field is CHECKED. A required field with
+no checker is the decay `0.7.0_AE_CloudOps~Z` named, and the same night proved it live -- a reader whose
+required-field list still said `scope` after the grammar renamed it `locality` silently demoted a valid
+`PERMANENT` declaration to UNDECLARED. **The structural guarantee is only as good as the mirror that
+keeps the checker honest** (their C9l).
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
@@ -301,3 +350,9 @@ Neither of us had put it where it could refuse.**
 - None of these has a GATE yet. **A law with no gate-or-test is prose-as-control (M14), which is one of
   the two mechanisms this vocabulary cannot type** -- so this note is, by its own corpus's reckoning,
   currently an instance of the thing it describes. That is stated, not resolved.
+- **NEW, and it is MINE, not a seat's:** the rule bank has **NO ENUMERATED CONSUMER SET.** I renamed
+  `scope` -> `locality` and could not say who read it; `0.8.0_AE_CloudComp~C` hit the same rename from
+  the reader side hours later. Their C9l grammar-drift mirror is the first instrument in the estate that
+  would catch it -- **and it covers exactly one reader, the one who wrote it.** A vocabulary carrier that
+  cannot enumerate its readers cannot know the blast radius of its own edits. CORE-side, unassigned, not
+  delegated.
