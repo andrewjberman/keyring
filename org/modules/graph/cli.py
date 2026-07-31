@@ -125,6 +125,22 @@ _FRESH_DEPRECATION = (
 )
 
 
+#: PHANTOM-CONSUMER is a VERDICT ABOUT THE ESTATE, so it may not share an exit code with a TOOL
+#: FAILURE. It used to exit 1 -- the code the standard reserves for "the tool failed, and ONLY that"
+#: (CTO 20260709T195217Z) -- which made THREE different events indistinguishable by rc: a real
+#: zero-consumer finding, a usage error, and an uncaught crash. All three measured at rc=1 on
+#: 2026-07-31 (crash: UnicodeEncodeError on 20 of 2252 nodes; usage: `--direction sideways`).
+#:
+#: THAT COLLISION WAS LOAD-BEARING, NOT COSMETIC: comp_debt/grounding_lib.py keyed
+#: `or r.returncode == 1` -> GRAPH_ZERO_CONSUMER, so a CRASH was laundered into evidence that a
+#: resource has no consumers -- i.e. into deletion evidence, on the one axis where being wrong is
+#: irreversible. A crash must never be readable as a finding about the estate.
+#:
+#: The verdict moves; 1 goes back to meaning ONLY "the tool failed". Callers should key on the
+#: PHANTOM-CONSUMER / CONSUMER-OK marker strings, which are stable and predate this change.
+EXIT_PHANTOM_CONSUMER = 4
+
+
 class _ContractParser(argparse.ArgumentParser):
     """argparse exits 2 on a USAGE error. The contract reserves 2 for STALE.
 
@@ -486,7 +502,7 @@ def cmd_blast(args):
             for n in phantoms:
                 print(f'  {n.id:<60}  {n.node_type}')
         if getattr(args, 'check_consumers', False):
-            sys.exit(1 if phantoms else 0)
+            sys.exit(EXIT_PHANTOM_CONSUMER if phantoms else 0)
         return
 
     query = args.query
@@ -601,7 +617,8 @@ def cmd_blast(args):
     else:
         upstream = []
 
-    # --check-consumers: exit 0 if >=1 downstream consumer, exit 1 if zero
+    # --check-consumers: exit 0 if >=1 downstream consumer, EXIT_PHANTOM_CONSUMER (4) if zero.
+    # NOT 1 -- 1 is reserved for "the tool failed" and a crash must never read as a verdict.
     if getattr(args, 'check_consumers', False):
         if downstream:
             print(f'CONSUMER-OK: {node.id} has {len(downstream)} downstream consumer(s)')
@@ -613,7 +630,7 @@ def cmd_blast(args):
             print('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
             print('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
             print('  before treating as orphan -- do not assume safe-to-delete.')
-            sys.exit(1)
+            sys.exit(EXIT_PHANTOM_CONSUMER)
 
     if args.json:
         by_type = {}
@@ -952,8 +969,9 @@ def main():
                               "default), both. Works with prefix-qualified queries "
                               "(lambda:, gold:, silver:, component:).")
     p_blast.add_argument("--check-consumers", action="store_true",
-                         help="Exit 0 if node has >=1 downstream consumer; exit 1 if zero (phantom-consumer check). "
-                              "Combine with --all-producers for sweep mode.")
+                         help="Exit 0 if node has >=1 downstream consumer; exit 4 if zero "
+                              "(PHANTOM-CONSUMER verdict). rc 1 is NOT a verdict -- it means the tool "
+                              "failed (usage error / crash). Combine with --all-producers for sweep mode.")
     p_blast.add_argument("--all-producers", action="store_true",
                          help="Sweep all producer nodes in graph; list those with zero downstream consumers. "
                               "Use with --check-consumers and --pipeline.")

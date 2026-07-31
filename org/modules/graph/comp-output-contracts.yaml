@@ -86,10 +86,20 @@ contracts:
     scope: estate
     vintage: ".comp-graph/graph.json build (comp-build cache; run comp-blast --check for freshness)"
     exit_codes:
-      "1": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate)"}
+      "1": {class: failure, meaning: "THE TOOL FAILED, AND ONLY THAT -- usage error or uncaught crash. NEVER a finding about the estate (CTO 20260709T195217Z)"}
       "2": {class: verdict, meaning: "graph STALE -- freshness probe (--check)"}
       "3": {class: refuse,  meaning: "NOT-FOUND: query did not resolve to a node -- nothing was traced, so nothing is concluded (input-resolution refusal, NOT a clean 'nothing-downstream')"}
-    exit_source: "org/modules/graph/cli.py:481,608 (phantom rc1), :199,202 (stale rc2), :263,568,790 (NOT-FOUND rc3) @2026-07-23"
+      "4": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate)"}
+    exit_source: "org/modules/graph/cli.py:502,632 (phantom rc4 via EXIT_PHANTOM_CONSUMER), :199,202 (stale rc2), :263,568,790 (NOT-FOUND rc3) @2026-07-31"
+    exit_code_change_20260731: >-
+      The phantom verdict MOVED 1 -> 4. It had been sharing rc=1 with usage errors and with uncaught
+      crashes, so three unrelated events were indistinguishable to any caller keying on rc -- measured
+      2026-07-31: crash (UnicodeEncodeError, 20 of 2252 nodes), `--direction sideways` (usage), and a
+      real zero-consumer finding ALL returned 1. The collision was load-bearing, not cosmetic:
+      comp_debt/grounding_lib.py keyed `returncode == 1` to GRAPH_ZERO_CONSUMER, so A CRASH WAS
+      LAUNDERED INTO EVIDENCE THAT A RESOURCE HAS NO CONSUMERS -- deletion evidence, on the one axis
+      where being wrong is irreversible. rc 1 now means only "the tool failed"; the CONSUMER-OK /
+      PHANTOM-CONSUMER marker strings are unchanged and remain the stable thing to key on.
     rebaseline_note: "the 39 historical rc3 rows were mis-classified FAIL by the frozen set (comp-blast was absent from it); they are REFUSE -- a named phantom that did not resolve, not a tool failure."
 
   comp-iam:

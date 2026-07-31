@@ -126,8 +126,16 @@ def graph_zero_consumer(resource_id: str, path: str = "", *, timeout: int = 30,
 
     Uses comp-blast's purpose-built consumer-check contract (not blast-radius text):
       rc 0 / CONSUMER-OK      -> GRAPH_REACHABLE   (>=1 downstream consumer)
-      rc 1 / PHANTOM-CONSUMER -> GRAPH_ZERO_CONSUMER (zero EXTRACTED downstream edges)
+      rc 4 / PHANTOM-CONSUMER -> GRAPH_ZERO_CONSUMER (zero EXTRACTED downstream edges)
       rc 3 / NOT-FOUND        -> GRAPH_UNKNOWN     (typo/missing node -- NEVER a false clear)
+      rc 1 / TOOL FAILED      -> GRAPH_UNKNOWN     (usage error or crash -- NOT a finding)
+
+    rc 4 (was 1) since 2026-07-31. THE OLD MAPPING TURNED A CRASH INTO DELETION EVIDENCE: comp-blast
+    crashes (UnicodeEncodeError) on 20 of 2252 nodes and exited 1, and the `or r.returncode == 1`
+    limb below classified that as GRAPH_ZERO_CONSUMER -- "nothing consumes this" -- when in truth
+    NOTHING HAD BEEN MEASURED AT ALL. A tool failure now falls through to GRAPH_UNKNOWN, which is the
+    honest verdict and can never be a false clear. The marker-string check runs FIRST and is
+    unchanged, so this leg reads correctly against comp-blast old or new.
       timeout/error           -> GRAPH_ZERO_PENDING if the path is dead-prior, else UNKNOWN
 
     NOTE (Rule 22, echoed by comp-blast itself): a PHANTOM-CONSUMER "zero" means "no
@@ -151,7 +159,7 @@ def graph_zero_consumer(resource_id: str, path: str = "", *, timeout: int = 30,
         up = out.upper()
         if "CONSUMER-OK" in up or r.returncode == 0:
             status = GRAPH_REACHABLE
-        elif "PHANTOM-CONSUMER" in up or r.returncode == 1:
+        elif "PHANTOM-CONSUMER" in up or r.returncode == 4:
             status = GRAPH_ZERO_CONSUMER
         elif "NOT-FOUND" in up or r.returncode == 3:
             status = GRAPH_ZERO_PENDING if prior else GRAPH_UNKNOWN
