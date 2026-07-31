@@ -1377,6 +1377,39 @@ SEQUENCE FROM HERE: ~B authors (TF) -> step-2 draft battery -> safe-apply -> ~A'
 applied battery incl. fallback-mutant-FIRST -> my read lifts (a) v3 -> the write path
 opens -> the capture store begins accruing under the contract Andrew's own words defined.
 
+## POST-LOG ADDENDUM 41 (~1427-1433Z): LD-0365 -- COO RESPAWNED (Andrew-direct), my TO-REVIEW GATE chartered; tranche-1 review DELIVERED; three crossing threads closed
+
+LD-0365 VERIFIED AT SOURCE before engaging (a killed-serial sender = the no-sender-auth
+law's verify-out-of-band case): Andrew-direct verbatim -- COO respawned EACH fabric,
+formal TO decomposition, "TO deliverables need to be reviewed by the respective Fabric
+CVOs. No more governance pontificating, we need results and progress." REVERSES the
+07-30 COO kill FOR THE COO ROLE. My chartered role: base CVO reviews ESTATE COO's TOs.
+
+REVIEW TRANCHE 1 (143146Z, the two LIVE TOs -- COO dispatched before review under the
+edict, correctly): E2 + E5 BOTH PASS, no amendment to either live lane. Endorsed: E2's
+carried-number discipline on my rider + "the correct deliverable is a SCHEDULE, not a
+detector that notices its absence"; E5's sensor-=-boundary-declaration-ON-existing
+moratorium resolution + negative-result-first-class + the lifecycle-suspension carried
+exactly (@7ed8a737ac). ONE SUBSTANTIVE FINDING (E5, non-blocking): the contract grammar
+(~:389 record shape) has NO boundary-declaration field and describes cannot carry one --
+THE WS-C1 FEEDBACK ROUTE IS THE PROBABLE FIRST OUTCOME, NOT THE if_mismatch TAIL;
+recommended pre-notifying the rail authors so the lane's probable wall has a door in it.
+Q1-Q4 ANSWERED grounded: no second E5 dependency (registration proceeds UNDECLARED --
+un-gated); ceiling partition confirmed both directions (PRD 193-198); E3 INERT confirmed
+w/ the refinement (the non-retiring slice is SPENT AND MEASURED EMPTY -- safe ∩ clearable
+= ∅ -- so INERT holds for the remainder; add to the TO so E3.0 is not relitigated as
+precedent); ONE-artifact mitigation ADEQUATE AS BUILT. E3/E6/E7 next cycle.
+
+CROSSING THREADS CLOSED: ~A's two pending rulings pointed to their already-made forms
+(deviation ratified 142338Z; #1/#10 ruled 140621Z); fixture-1 ACCEPTED (detector-not-
+fixture, both failure paths exercised, the do-not-re-pin warning IN the refusal text, the
+states-what-it-does-NOT-cover output carrying the measured 213 instance). ~B's retention
+correction ACCEPTED + RE-RULED: the conversion clause DISCHARGED-AS-ALREADY-SATISFIED
+(main.tf:86-90 declared the decision citing my own routing -- "arguing with a vacuum I
+had invented"; APPLIED-truth cannot answer a DECLARED question, the 22a split run
+backwards by its own enforcer); marginal in-resource line YES at its honest size;
+main.tf:79-81 stale-layout fix REQUIRED (the stale surface is TWO files).
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
