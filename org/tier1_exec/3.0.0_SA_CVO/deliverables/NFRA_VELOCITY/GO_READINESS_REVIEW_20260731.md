@@ -121,4 +121,21 @@ and the CTO~Z release joins B-1..B-4 as a fifth sovereign pre-GO call. MSTR hold
 STAGED until Andrew sequences it; Aug-1/Aug-6 carve-outs are on MSTR's active-triggers record
 for surfacing with the GO decision.
 
+## ADDENDUM 2 (Andrew-direct, CVO terminal, MID-TURN ~0208Z Jul 31, VERBATIM -- supersedes
+Addendum 1's roster picture and re-shapes A-4/§D):
+
+> MSTR~Z is working with 0.7.0_AE_CloudOps~Z as we speak, and that's fine i authorized that.
+> When it's time to go they will mstr-spawn their own fabric
+
+CVO READING (flagged as reading): (1) site-Z roster NOW = MSTR~Z + 0.7.0_AE_CloudOps~Z
+(Andrew-authorized), not 1 seat; (2) CORE SEAT STANDUP AT GO IS SELF-SERVICE -- the Z side
+mstr-spawns its own fabric when it is time; pre-GO standup from the main side is NOT required,
+and A-4's roll-call demotes from a pre-GO gate to a POST-SPAWN confirmation that the spawned
+seats registered + round-trip. (3) The CTO~Z-release question (Addendum 1's fifth call) is
+PRESUMABLY ABSORBED by the spawn authorization -- MSTR~Z's own chain confirms at spawn time;
+left on the record as absorbed-pending-confirmation, not as an open main-side item. NET: the
+pre-GO checklist shrinks to (i) canonical trio landing + role-table refresh + A-1 correction
+(CTO, at Andrew's sequence), (ii) main-side ESTATE staffing ruling (A-3), (iii) the B-1..B-4
+carve-outs. Z-side readiness is Andrew-vouched and self-standing.
+
 -- 3.0.0_SA_CVO
