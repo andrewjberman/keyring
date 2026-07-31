@@ -150,8 +150,18 @@ coverage:
   # authoritative. A hold that lives only in an inbox is invisible to everyone who reads the file.
   # Marking is the CONSERVATIVE direction -- it can only make the record weaker than the truth,
   # never stronger.
-  lifecycle_values_under_hold: 2
-  lifecycle_hold_authority: "Andrew-flagged, relayed MSTR 20260731T130925Z; scope steer pending"
+  lifecycle_values_SUSPENDED: 2
+  lifecycle_hold_authority: >-
+    SUSPENDED per base CVO, relayed MSTR 20260731T133912Z -- which SUPERSEDES the 132222Z
+    "stand for now". base CVO suspended its OWN Bucket-1 clearance, so these two values are
+    NOT CLEARED. read-before-bank never fired; nothing banks.
+    SUSPENDED IS NOT WITHDRAWN: if declaration lifecycle fields are ruled OUTSIDE Andrew's
+    lifecycle-values gate they resume untouched with citations intact; if INSIDE, they revert
+    to UNDECLARED. Either way nothing is written now.
+    Wider state: the lifecycle-value governance track is DEFERRED (not paused) pending the Kimi
+    track -- the authority for a lifecycle assertion is Andrew via that track, and UNDECLARED is
+    the correct holding state until it returns. This is "lifecycle must be ASSERTED by an
+    authority, never inferred" applied at the program level rather than the record level.
 
   intent_source_rejections:
     # MOVED OUT OF THE RECORDS: rejection_reason was an UNRATIFIED TERM (lint A7.1).
