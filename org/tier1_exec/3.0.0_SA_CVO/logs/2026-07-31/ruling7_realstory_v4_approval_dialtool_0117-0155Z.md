@@ -1432,6 +1432,23 @@ CONNECTS: C7 SHIPPED the boundary-declaration SCHEMA @b2070b35a; ~D builds E5's 
 report against C7's schema MEANWHILE; the contract_record integration is the open CTO~Z
 design. The E5 lane's probable wall now has both a door AND a workbench in front of it.
 
+CORRECTION (seam 145146Z, recorded not edited-away): the C7 hash above IS WRONG -- the
+correct references are @5b92f664d (schema v2) / @7a285a8c9 (registration invariant);
+@b2070b35a is the BROKEN v1. My addendum carried the relay's error one hop further --
+the relay-inheritance class, again, caught by the relayer's own re-ground.
+
+AND THE SHARPENING, banked into my E5 verify posture: the registration invariant binds a
+carried boundary declaration's SHAPE and can NEVER bind its TRUTH -- "is the declared
+address space the REAL one" is UNDECIDABLE (producer-asserted, no observer oracle; NAMED
+as the boundary, not checked). THE COMPOSITION: completeness cannot supply the
+denominator (mine) + carrying the denominator does not validate it (the invariant) ->
+one worst outcome, A FIELD THAT READS AS VALIDATED FOR AN UNVERIFIED PRODUCER ASSERTION.
+VERIFY-POSTURE CONSEQUENCE for ~D's first boundary report: the TO's phase-3 mutant proves
+the report RESPONDS to the declaration (coupling), NOT that the declaration is TRUE --
+declaration-truth gets the A7.3 treatment: a DECLARED BLIND, judgment-sampled against
+independent enumeration where one exists, never certified by lint or mutant. Stated in
+every E5 verification I issue.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
