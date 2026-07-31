@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 import time
 from pathlib import Path
@@ -170,6 +171,12 @@ def _require_query(args, parser, name: str = "query") -> None:
     So the positional is nargs='?' and this enforces it -- rather than argparse enforcing it and
     making `--check` impossible to call.
     """
+    # --check is a probe over the cache; --overlap-sweep ranges over a POPULATION. Neither takes a
+    # target, so neither may be blocked by the positional guard. (Note: --all-producers has this
+    # same shape and is NOT exempted here -- it is a separately reported defect with its own fix,
+    # and widening this guard silently on someone else's behalf is how a scope creeps.)
+    if getattr(args, "overlap_sweep", False):
+        return
     if not getattr(args, "check", False) and not getattr(args, name, None):
         parser.error(f"the following arguments are required: {name}")
 
@@ -475,8 +482,271 @@ def _print_cochange(node, top: int = 5) -> None:
         return
 
 
+# =============================================================================
+# PAIRWISE OVERLAP -- Andrew act 3 (verbatim): "if something has highly overlapping
+# blast radius and is doing the same function, that is very high friction, and needs
+# to be assessed."
+#
+# WHAT THIS BUILDS AND WHAT IT DELIBERATELY DOES NOT.
+#   COMPUTE  blast-radius overlap                     <- here
+#   PROPOSE  high-overlap pairs as CANDIDATES         <- here
+#   ASSESS   function-sameness                        <- A HUMAN. Andrew's own word is "assessed".
+#
+# >> THE OUTPUT IS A LIST OF QUESTIONS. THE MOMENT IT CARRIES A VERDICT IT HAS BECOME AN
+#    INFERENCE NOBODY WAS AUTHORIZED TO MAKE -- and this is the one mechanism in the program
+#    whose failure is IRREVERSIBLE, because what it proposes is DELETION. <<
+#
+# BINDING PROHIBITION (COO-proposed, CTO-ratified): NAME-SIMILARITY, PATH-ADJACENCY and
+# SHARED-VERTICAL ARE NOT EVIDENCE OF FUNCTION-SAMENESS AND MAY NEVER BE EMITTED AS SUCH.
+# Accordingly NO name, path, or vertical signal is computed anywhere below -- not weighted
+# low, not computed and hidden. The only inputs are graph edges.
+#
+# WHY RAW OVERLAP IS NOT THE METRIC -- MEASURED, not assumed. Over a bounded slice of 42 cot
+# gold scripts (25 with consumers, 151 distinct consumer nodes), SIX consumer nodes were each
+# shared by 19 of the 25 producers (platinum/firm/dashboard.json, platinum/clients/{*}/
+# mix_timeseries.json, ...). Raw Jaccard emits almost every pair as a candidate: a shared HUB
+# is what a pipeline looks like, not what a duplicate looks like. So each shared consumer is
+# weighted by its SPECIFICITY -- idf = ln(N / df) over the population actually swept -- and a
+# consumer that everything writes to contributes nearly nothing while one shared by exactly two
+# producers carries the signal.
+#
+# AND THE RELATION VERB IS KEPT. The graph types every edge (WRITES_S3 / READS_S3 / CALLS /
+# TRIGGERS / FETCHES ...) and the default blast render discards it, so a blast radius says WHAT
+# is downstream and never HOW. For duplication that distinction is the whole question: two
+# producers WRITING one artifact is a single-writer conflict, while two scripts CALLING one
+# helper is ordinary reuse. The pair report breaks the intersection down by verb and never
+# collapses them.
+# =============================================================================
+
+#: Edge verbs that mean "this node produces/owns the target", as opposed to merely reading or
+#: calling it. Kept explicit rather than inferred -- see the verb note above.
+_WRITE_VERBS = ("WRITES_S3", "SFN_INVOKES", "S3_INVOKES", "EVENT_INVOKES", "SNS_INVOKES", "TRIGGERS")
+
+
+def _consumer_verbs(g, node_id: str, depth: int) -> dict:
+    """{consumer_node_id: {edge_type, ...}} for one node's downstream blast radius."""
+    out: dict = {}
+    for n, e, _d in g.downstream(node_id, max_depth=depth):
+        out.setdefault(n.id, set()).add(getattr(e, "edge_type", "") or "")
+    return out
+
+
+def _overlap_population(g, selector: str | None, producer_types, grain: str = "script") -> list:
+    """The node ids the sweep ranges over. SELECTOR IS A NODE-ID PREFIX, never a name match.
+
+    A prefix like `gold:` or `lambda:` is an ADDRESS, not a name similarity -- it selects a
+    namespace, which is why it does not fall under the name-similarity prohibition. There is no
+    fuzzy matching here by design.
+
+    GRAIN is a SCOPE choice, not a similarity signal: `script` keeps only whole-unit nodes
+    (empty `function_name`), `function` keeps only function-grain nodes, `any` keeps both. It reads
+    the graph's own `function_name` field rather than parsing the id, so it is a structural property
+    and not an inference about relatedness. Default `script`, because the duplication question
+    Andrew posed is about ASSETS -- two functions inside one file sharing a logger is intra-file
+    structure, and the first sweep ranked exactly that noise at the top.
+    """
+    ids = []
+    for nid, n in sorted(g.nodes.items()):
+        if n.node_type not in producer_types:
+            continue
+        if selector and not nid.startswith(selector):
+            continue
+        is_fn = bool(getattr(n, "function_name", "") or "")
+        if grain == "script" and is_fn:
+            continue
+        if grain == "function" and not is_fn:
+            continue
+        ids.append(nid)
+    return ids
+
+
+def _overlap_metrics(a_map: dict, b_map: dict, idf: dict) -> dict:
+    """Raw AND specificity-weighted overlap for one pair, plus the verb breakdown.
+
+    Both scores are reported. The raw one is kept BECAUSE it is the misleading one -- a reader
+    who sees jaccard 0.91 next to weighted 0.04 can see the hub effect doing its work, which a
+    single corrected number would hide.
+    """
+    a, b = set(a_map), set(b_map)
+    inter, union = a & b, a | b
+    wi = sum(idf.get(c, 0.0) for c in inter)
+    wu = sum(idf.get(c, 0.0) for c in union)
+    verbs: dict = {}
+    for c in inter:
+        for v in sorted(a_map.get(c, set()) | b_map.get(c, set())):
+            verbs[v] = verbs.get(v, 0) + 1
+    shared_writes = sorted(
+        c for c in inter
+        if any(v in _WRITE_VERBS for v in (a_map.get(c, set()) | b_map.get(c, set())))
+    )
+    return {
+        "a_size": len(a), "b_size": len(b),
+        "intersection": len(inter), "union": len(union),
+        "jaccard": (len(inter) / len(union)) if union else 0.0,
+        "weighted_jaccard": (wi / wu) if wu else 0.0,
+        # THE RATIO ALONE IS NOT ENOUGH AND THE FIRST SWEEP PROVED IT: two function nodes whose
+        # entire blast radius is one shared `log` call scored a PERFECT 1.000, because wi/wu is
+        # scale-free and cannot tell "identical" from "standing on a single edge". `shared_mass` is
+        # the ABSOLUTE evidence -- summed idf over the intersection -- and a candidate must clear
+        # BOTH. A ratio needs a magnitude beside it or it will rank the thinnest evidence highest.
+        "shared_mass": wi,
+        "containment": (len(inter) / min(len(a), len(b))) if a and b else 0.0,
+        "verbs": verbs,
+        "shared_write_targets": shared_writes,
+        "shared": sorted(inter),
+    }
+
+
+def _idf_over(g, population: list, depth: int) -> tuple:
+    """(maps, idf, df) over the swept population. idf = ln(N/df) -- 0.0 for a universal hub."""
+    maps = {nid: _consumer_verbs(g, nid, depth) for nid in population}
+    maps = {k: v for k, v in maps.items() if v}
+    df: dict = {}
+    for m in maps.values():
+        for c in m:
+            df[c] = df.get(c, 0) + 1
+    n = len(maps)
+    idf = {c: (math.log(n / d) if d and n else 0.0) for c, d in df.items()}
+    return maps, idf, df
+
+
+def _print_pair(a_id: str, b_id: str, m: dict, df: dict, n_ref: int, top: int = 6) -> None:
+    """n_ref MUST be the idf REFERENCE population, never the scored slice.
+
+    df counts producers estate-wide, so pairing it with the slice size renders "shared by 33 of 5
+    producers" -- a denominator that does not belong to its numerator. Caught in this tool's own
+    output on the first estate-referenced run.
+    """
+    print(f'  {a_id}')
+    print(f'  {b_id}')
+    print(f'    blast sizes: {m["a_size"]} / {m["b_size"]}   shared: {m["intersection"]}   union: {m["union"]}')
+    print(f'    jaccard(raw) {m["jaccard"]:.3f}   WEIGHTED {m["weighted_jaccard"]:.3f}   '
+          f'mass {m["shared_mass"]:.2f}   containment {m["containment"]:.3f}')
+    if m["verbs"]:
+        print('    shared BY VERB: ' + ', '.join(f'{v}={c}' for v, c in sorted(m["verbs"].items())))
+    if m["shared_write_targets"]:
+        print(f'    !! SHARED WRITE TARGETS ({len(m["shared_write_targets"])}) -- 2+ producers writing one sink:')
+        for c in m["shared_write_targets"][:top]:
+            print(f'       {c}   (shared by {df.get(c, 0)} of {n_ref} producers estate-wide)')
+    shown = [c for c in m["shared"] if c not in m["shared_write_targets"]][:top]
+    if shown:
+        print('    other shared consumers (df = how many producers in the population share it):')
+        for c in shown:
+            print(f'       {c}   (df {df.get(c, 0)}/{n_ref} estate-wide)')
+
+
+def _overlap_preamble(n_pop: int, considered: int, depth: int, selector, excluded: int) -> None:
+    print('comp-blast OVERLAP -- CANDIDATES FOR HUMAN ASSESSMENT, NOT FINDINGS')
+    print(f'  population: {n_pop} producer nodes with >=1 extracted consumer'
+          f'  (selector={selector or "ALL producer types"}; depth={depth})')
+    print(f'  EXCLUDED: {excluded} producer node(s) in selector with ZERO extracted consumers '
+          f'-- nothing to overlap, not a judgement about them')
+    print(f'  pairs scored: {considered}')
+    print('  SCORING: weighted_jaccard over idf=ln(N/df) per shared consumer -- a consumer shared by')
+    print('   most of the population contributes ~0. Raw jaccard shown beside it so the hub effect is')
+    print('   VISIBLE rather than silently corrected.')
+    print('  NO name, path, or vertical signal is used. Overlap is NOT sameness: these are questions.')
+    print('  BLIND SPOT (inherited): "shared" = shared EXTRACTED edge. A dynamic/FUNC-key consumer is')
+    print('   invisible to the graph, so overlap is a LOWER BOUND on both sides.')
+
+
 def cmd_blast(args):
     g = _resolve_graph(args)
+
+    # --compare / --overlap-sweep: pairwise blast-radius overlap (Andrew act 3).
+    if getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None):
+        depth = getattr(args, 'depth', 10)
+        selector = getattr(args, 'population', None)
+        producer_types = _producer_node_types()
+
+        if getattr(args, 'compare', None):
+            # PAIR MODE: both nodes must resolve, and the population is what gives idf meaning.
+            am = g.find_node(args.query or '')
+            bm = g.find_node(args.compare)
+            if not am or not bm:
+                missing = args.query if not am else args.compare
+                print(f'NOT-FOUND: {missing!r} did not resolve to a node -- nothing compared, '
+                      f'nothing concluded.', file=sys.stderr)
+                sys.exit(3)
+            a_id, b_id = am[0].id, bm[0].id
+            # Same scope-vs-reference split as the sweep: the pair is the SCOPE, but idf must be
+            # estate-derived or a hub stops looking like a hub. `--population` narrows the reference
+            # only if the caller deliberately asks for a narrower estate.
+            grain = getattr(args, 'grain', None) or 'any'
+            reference = _overlap_population(g, selector, producer_types, grain)
+            for nid in (a_id, b_id):
+                if nid not in reference:
+                    reference.append(nid)
+            ref_maps, idf, df = _idf_over(g, reference, depth)
+            if a_id not in ref_maps or b_id not in ref_maps:
+                empty = a_id if a_id not in ref_maps else b_id
+                print(f'NO-OVERLAP-POSSIBLE: {empty} has zero extracted downstream consumers. '
+                      f'That is not a similarity verdict -- there is nothing to compare.')
+                sys.exit(0)
+            _overlap_preamble(len(ref_maps), 1, depth, selector, len(reference) - len(ref_maps))
+            print(f'  idf REFERENCE population: {len(ref_maps)} producer nodes (grain={grain})')
+            print()
+            m = _overlap_metrics(ref_maps[a_id], ref_maps[b_id], idf)
+            _print_pair(a_id, b_id, m, df, len(ref_maps))
+            print()
+            print('  ASSESSMENT REQUIRED (human): do these two do the SAME FUNCTION? This tool cannot')
+            print('  and must not answer that. High overlap with no function-sameness is normal coupling.')
+            return
+
+        # SWEEP MODE: rank every pair in the SCOPE by weighted overlap.
+        #
+        # SCOPE AND REFERENCE ARE DIFFERENT POPULATIONS AND CONFLATING THEM CORRUPTS THE WEIGHTING.
+        # `--population` chooses WHICH PAIRS ARE SCORED. But a consumer's SPECIFICITY is a property
+        # of the whole estate: `gold/artifacts/clients_tab.json` is written by 104 of 634 producers
+        # and is a hub no matter which slice you asked about. Computing idf inside a 5-node selector
+        # made ln(N/df) range over N=5 -- the hub stopped looking like a hub because everything in
+        # view shared it. So idf is ALWAYS derived from the full grain-matched producer set.
+        grain = getattr(args, 'grain', None) or 'script'
+        reference = _overlap_population(g, None, producer_types, grain)
+        ref_maps, idf, df = _idf_over(g, reference, depth)
+        population = _overlap_population(g, selector, producer_types, grain)
+        maps = {nid: ref_maps[nid] for nid in population if nid in ref_maps}
+        ids = sorted(maps)
+        min_score = getattr(args, 'min_score', None)
+        min_score = 0.30 if min_score is None else min_score
+        min_mass = getattr(args, 'min_mass', None)
+        min_mass = 1.0 if min_mass is None else min_mass
+        head = getattr(args, 'head', None) or 15
+        pairs = []
+        considered = 0
+        thin = 0
+        for i in range(len(ids)):
+            for j in range(i + 1, len(ids)):
+                considered += 1
+                m = _overlap_metrics(maps[ids[i]], maps[ids[j]], idf)
+                if m["weighted_jaccard"] < min_score:
+                    continue
+                if m["shared_mass"] < min_mass:
+                    thin += 1          # cleared the RATIO, failed the MAGNITUDE
+                    continue
+                pairs.append((m["weighted_jaccard"], ids[i], ids[j], m))
+        pairs.sort(key=lambda t: -t[0])
+        _overlap_preamble(len(maps), considered, depth, selector, len(population) - len(maps))
+        print(f'  idf REFERENCE population: {len(ref_maps)} producer nodes (estate-wide at this '
+              f'grain) -- specificity is an estate property, NOT a property of the slice')
+        print(f'  grain: {grain} (script = whole units; a function pair inside one file is '
+              f'intra-file structure, not duplication)')
+        print(f'  thresholds: weighted_jaccard >= {min_score} AND shared_mass >= {min_mass}')
+        print(f'  SUPPRESSED BY THE MASS FLOOR: {thin} pair(s) cleared the ratio and failed the '
+              f'magnitude -- thin evidence scoring high, reported so the floor is visible')
+        print(f'  CANDIDATES: {len(pairs)} pair(s) of {considered} scored'
+              + (f' -- showing top {head}' if len(pairs) > head else ''))
+        if len(pairs) > head:
+            print(f'  ({len(pairs) - head} candidate(s) NOT shown -- raise --head to see them; '
+                  f'this is a display cap, not a filter on the finding)')
+        print()
+        for score, a_id, b_id, m in pairs[:head]:
+            _print_pair(a_id, b_id, m, df, len(ref_maps))
+            print()
+        if not pairs:
+            print('  No pair cleared the threshold. That is a statement about THIS population at THIS')
+            print('  threshold, not evidence that the estate has no duplication.')
+        return
 
     # --all-producers sweep mode: list all producer nodes with zero downstream consumers
     if getattr(args, 'all_producers', False):
@@ -972,6 +1242,27 @@ def main():
                          help="Exit 0 if node has >=1 downstream consumer; exit 4 if zero "
                               "(PHANTOM-CONSUMER verdict). rc 1 is NOT a verdict -- it means the tool "
                               "failed (usage error / crash). Combine with --all-producers for sweep mode.")
+    p_blast.add_argument("--compare", metavar="NODE", default=None,
+                         help="PAIR MODE (act 3): blast-radius overlap between the query node and "
+                              "NODE. Emits CANDIDATE evidence for human assessment -- never a "
+                              "sameness verdict.")
+    p_blast.add_argument("--overlap-sweep", action="store_true",
+                         help="SWEEP MODE (act 3): rank every producer pair in the population by "
+                              "specificity-weighted blast-radius overlap. Candidates, not findings.")
+    p_blast.add_argument("--population", metavar="PREFIX", default=None,
+                         help="Restrict --overlap-sweep/--compare idf population to node ids with "
+                              "this ADDRESS prefix (e.g. 'gold:', 'lambda:'). A namespace, not a "
+                              "name match.")
+    p_blast.add_argument("--min-score", type=float, default=None,
+                         help="Weighted-jaccard threshold for --overlap-sweep (default 0.30).")
+    p_blast.add_argument("--min-mass", type=float, default=None,
+                         help="ABSOLUTE evidence floor: summed idf over shared consumers (default "
+                              "1.0). A ratio alone ranks a single shared edge at 1.000.")
+    p_blast.add_argument("--grain", choices=["script", "function", "any"], default=None,
+                         help="Population grain for --overlap-sweep (default script).")
+    p_blast.add_argument("--head", type=int, default=None,
+                         help="Cap candidate pairs displayed (default 15). A display cap; the "
+                              "unshown count is always printed.")
     p_blast.add_argument("--all-producers", action="store_true",
                          help="Sweep all producer nodes in graph; list those with zero downstream consumers. "
                               "Use with --check-consumers and --pipeline.")
