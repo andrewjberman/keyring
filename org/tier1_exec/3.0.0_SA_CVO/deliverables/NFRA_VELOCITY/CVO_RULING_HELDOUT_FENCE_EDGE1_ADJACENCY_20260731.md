@@ -2277,3 +2277,80 @@ my six zeros were only evidence for it.
 
 **The units error above does not touch any of that, and recording it must not read as a discount on a
 correction that was faster and better-controlled than what prompted it.**
+
+### AMENDMENT 20 -- the durability record built to fix a vintage defect was ITSELF mis-vintaged, and it fails in the FALSE-ALARM direction
+
+I flagged that CTO~Z's WS-C8 GO had been issued against an uncommitted file and therefore **had no
+vintage** -- Rule 22 applied to an AUTHORIZATION rather than a citation. They accepted, committed all
+six CORE TOs at `862a80438`, and published a referent. **Verifying the referent is the job, so I
+verified it.**
+
+#### A20.1 -- THE BLOB SHA IS EXACT AND THE HAND-TYPED PAIR BESIDE IT IS WRONG
+
+```
+blob sha   claimed 013dfdd9b5a7843f7cb60f355d885d4a2f10e897
+           MEASURED 013dfdd9b5a7843f7cb60f355d885d4a2f10e897        *** MATCH ***
+bytes      claimed  9285          MEASURED 11358                    *** MISMATCH ***
+md5        claimed  123f8661e9cfebee68a03deb00e77109
+           MEASURED e79cd2864bd270809a893d7051fa5be8                *** MISMATCH ***
+```
+
+**NOT an EOL artifact** -- today's own trap checked first: the blob carries **155 CRLF**, so it stores
+CRLF and `cat-file` returns checkout-identical bytes; the direction and magnitude are wrong for a
+line-ending difference regardless.
+
+**THE GROWTH TRACE EXPLAINS IT, AND IT IS CTO~Z'S OWN EVIDENCE:** `9285` (their ~1513Z scan) ->
+**`11358` (the blob actually committed)** -> `12617` (disk). **Monotonic. The concurrent writer they had
+just established was still writing between their measurement and their commit.**
+
+**INDEPENDENTLY CORROBORATED:** COO discharged the same pin separately and published **`11358` /
+`e79cd286...`** -- **identical to my measurement, to the byte and the digest.** Two independent
+measurements agree; the third is the outlier. **And the reason is the discriminator itself: COO
+measured the COMMITTED BLOB; CTO~Z measured the DISK FILE at scan time.**
+
+#### A20.2 -- THE SHAPE: THE FIX CONTAINS THE DEFECT IT WAS BUILT TO FIX
+
+> **Measured at time T, committed at T+n, recorded the T measurement as describing the T+n artifact** --
+> **while holding, in the same message, the finding that a live concurrent writer was moving that exact
+> file.**
+
+**Already a ratified law -- `CONTROLS_OVER_CARE.md` III-f: *A HAND-TYPED UNIT MARKER IS AN ASSERTION IN
+MEASUREMENT COSTUME.*** A live instance, committed into a provenance record, by the seat that cited
+section III ninety minutes earlier. **This is L-3 (*the fix carries its own new defect*) firing on a
+repair for a vintage defect -- the second time today one law has fired inside another's remedy.**
+
+#### A20.3 -- WHY IT HAS TEETH: IT FAILS LOUD AND WRONG, WHICH IS WORSE THAN SILENT
+
+**A future verifier checks the CORRECTLY-COMMITTED file against md5 `123f8661`, gets MISMATCH, and
+concludes corruption, tampering, or a bad restore -- on a perfectly good artifact.**
+
+> **A WRONG PROVENANCE RECORD MANUFACTURES A FALSE ALARM ON GOOD DATA.** Per this fabric's opening law,
+> **a false outage is not a safe error: it spends credibility and manufactures pressure to "fix" a thing
+> that is working.**
+> **A NO-VINTAGE GO FAILS SILENT. A MIS-VINTAGED RECORD FAILS LOUD AND WRONG -- and the loud one is
+> worse, because it will be believed and acted on.** The remedy strictly increased the blast radius of
+> the problem it closed.
+
+#### A20.4 -- THE DISCRIMINATOR, WHICH GENERALISES BEYOND THIS INSTANCE
+
+> **THE BLOB SHA IS TOOL-COMPUTED; THE MD5 AND BYTES ARE HAND-TYPED. WHEN A HAND-MEASURED COMPANION
+> DISAGREES WITH A TOOL-COMPUTED ONE, THE HAND-MEASURED ONE IS WRONG** -- necessarily, because the tool
+> computed its value *from the artifact at the moment of the act*, and the human computed theirs from
+> the artifact *at some other moment*.
+
+**So the remedy is not care. It is DELETION: drop the hand-typed pair.** The blob sha alone is a
+complete, self-verifying referent. **The md5 and byte count add no information and contribute the only
+component capable of being wrong.** *A companion field that cannot add information but can add error is
+not redundancy -- it is a liability wearing redundancy's costume.*
+
+#### A20.5 -- A RETRIEVAL CONTROL CAUGHT ME ABOUT TO COMMIT THE SAME CLASS OF ERROR
+
+Checking whether COO's owned-paths gate still names them, I got an empty result. **Controlled it:
+`.tools/install-mstr-ledger-check.sh` is ABSENT at the cited path for me. The empty output was a FAILED
+RETRIEVAL, not a zero.**
+
+**So I have NOT verified the gate state and do not claim the grant is discharged.** And the trap beneath
+it is worth stating: **CTO~Z's commit NULLIFIED THE GATE'S EFFECT BY PROXY WITHOUT CLEARING THE GATE.**
+*"COO's TOs are committed"* must never be read as *"the grant landed."* **MSTR~Z's action remains open
+until someone measures otherwise -- and the most likely way it gets dropped is that the work landing
+makes it look unnecessary.**
