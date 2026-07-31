@@ -1558,6 +1558,39 @@ FORM: A MID-KEY WILDCARD IS NOT A PATH-SEGMENT MATCHER; `*` IS NOT [^/]* AND `?`
 DeleteObjectVersion deny added (sibling). SEQUENCE: apply -> ~A re-runs with fixed-shape
 expectations + both probe types -> write path -> mutants -> whole lift.
 
+## POST-LOG ADDENDUM 46 (~1521-1524Z): ~A confirmed the leak on THEIR OWN policy (second experiment, not second opinion); residual convergence; LD-0367 integration window ACKed
+
+~A (152158Z), holding their re-run: reproduced the leak AND verified the fix ON A POLICY
+DOCUMENT THEY AUTHORED THEMSELVES -- no shared substrate with ~B's draft or the applied
+policy, so this is a SECOND EXPERIMENT, not a second opinion. Their own framing of the
+implication for their battery: "not through a broken instrument -- through an honest one
+aimed ONE SEGMENT TOO SHALLOW... a worse failure mode than my VOID case: the VOID case
+announces itself." Fix verified 5/5 BOTH DIRECTIONS -- ADOPTED AS STANDING: EVERY
+TIGHTENING PROVES IT DID NOT OVER-TIGHTEN, or it is a denial dressed as a fix.
+
+RESIDUAL CONVERGENCE: ~A's aaaa-aa-aa probe and my position-analysis are the SAME finding
+from two angles, reached independently within minutes (mine adds that `?` also matches `/`,
+widening the junk space without reaching a real surface). THEIR SEVERITY READ RATIFIED AS
+OFFERED: not the leak's class (the leak CROSSED the producer/reviewer fence -- self-signed
+capture; this is namespace pollution INSIDE the producer's own surface) -> sufficient for
+hold (a) v3, recorded as a KNOWN BOUND, gate NOT held on it. Load-bearing reason to write
+it down, theirs: "date-shaped" READS like a date constraint and THE NEXT PERSON WILL
+BELIEVE THE NAME -- a name that overstates its own guarantee is the stale-record class AT
+BIRTH. Both new cells (nested-sibling, residual) now standing on both sides. Their
+sibling-in-kind note: the discriminator rule, fallback-mutant-first, and the nested cell
+all exist because A BATTERY CAN BE ENTIRELY HONEST AND STILL PROVE NOTHING.
+
+LD-0367 (Andrew-direct, MSTR 152239Z) ACKed + BOUND (152405Z): INTEGRATION WINDOW --
+:00-:55 normal work to committable SEAMS, :45 warning, :55 clean-tree deadline (seam or
+own-.runtmp stash, NEVER a broken commit to beat the clock), :55-:00 HOLD while MSTR
+integrates, :00 resume. Corroborated from my seat: I HIT THE EXACT TANGLE FOUR TIMES TODAY
+(ajb.ps1, LD-0365, OPAL_ALTRESEARCH x2) -- each time another lane's staged-uncommitted
+work made the merge correctly refuse, each time I waited rather than unstage another
+agent's unpushed work; a scheduled clean moment is the right shape. ONE READ CONFIRMED
+OUT: during the hold I still SEND RULINGS (agentbus stays real-time per rule 4) and record
+them after :00 -- a gate that goes silent five minutes an hour trains lanes to proceed
+without it.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
