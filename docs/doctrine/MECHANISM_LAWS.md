@@ -64,6 +64,23 @@ mechanisms. Against a stated incident population of 210 that is a 9-assignment e
 measured multi-code, leaving **8 unreconciled** -- which is the structural gap, not an arithmetic
 slip, and is what WS-C8's instance table is chartered to fix.
 
+### THE MERGE NOTE -- why merged instances do NOT change any `n`
+
+**WS-C8 artifact 2 merged three staged laws into this file as INSTANCE ROWS, and NONE of them
+increments the `n` on its host mechanism.** The `n` values count **ASSIGNMENTS FROM THE INCIDENT
+TAXONOMY** -- one population, one parse, already unstable at 219-vs-210. The merged rows are
+**observations from a different corpus** (`WS-C8_STAGING_LAWS_DERIVED_20260731.md` @dd5d53314),
+collected by different seats under a different method.
+
+> **ADDING THEM TO `n` WOULD BE M1 COMMITTED BY THIS DOCUMENT** -- silently pooling two populations
+> under one denominator so that no reader could afterwards say which count came from where. **The
+> merge is additive in CONTENT and inert in ARITHMETIC**, and it is labelled that way on every row so
+> a later reader cannot mistake a merged instance for a taxonomy assignment.
+
+**Zero instances were lost in the merge:** each staged law's substance, its exposing question and its
+named counter-instrument are carried into the host mechanism's row; nothing was summarised away and
+nothing was deleted from the source, which remains authoritative at its pin.
+
 ---
 
 ## THE FOURTEEN
@@ -91,6 +108,14 @@ BELOW, gap printed every run; realised in the rule bank's `completeness` axis (p
 read-from-file from a governed registry, never from the artifact checked).
 **INSTANCES:** 29 assignments. Includes the correction above -- a distribution over *assignments*
 compared to a percentage over *incidents*, with nothing reconciling the two.
+**MERGED STAGED-LAW INSTANCES** (WS-C8 artifact 2; NOT added to the 29 -- see merge note):
+`L-2` *"a self-chosen denominator cannot refute the instrument that chose it"*
+(`WS-C8_STAGING_LAWS_DERIVED_20260731.md` @dd5d53314) -- **denominators you do not own are the only
+ones that can contradict you.** Three 2026-07-31 findings were caught by no other means: a strict
+parser silently dropping the 4 rows whose mechanism column is an em-dash (precisely the incidents
+the taxonomy could not classify); a naive grep scoring 14 disposition rows as incidents; and the
+**219**-vs-210 share column, found only by summing a table neither author maintained.
+*Exposing question, carried from L-2:* **whose count would have to be wrong for mine to be right?**
 
 ### M2 -- SHAPE-MATCH, WRONG CONTENT  (n=22)
 **LAW:** Retrieval broke and returned the right TYPE. An error message counted as content; an empty
@@ -119,6 +144,17 @@ never a note. **NO AUTOMATED GATE POSSIBLE for the general case: detecting that 
 un-read requires knowing who was obliged to read it, which no instrument holds.**
 **INSTANCES:** 19 assignments. Live 2026-07-31: a live dispatch existing only as an untracked file
 (the CORE task orders, committed for durability at `862a80438` once surfaced).
+**MERGED STAGED-LAW INSTANCES** (WS-C8 artifact 2; NOT added to the 19 -- see merge note):
+`L-11` *"a check that cannot block what it measures is not a gate, it is a comment"*
+(`WS-C8_STAGING_LAWS_DERIVED_20260731.md` @dd5d53314) -- **if the measurement and the action share a
+command block, the measurement has no path to stop the action; it will print a correct number beside
+a completed mistake.** `0.7.0_AE_CloudOps~Z` ran an ASCII check on a deliverable, **the check printed
+the count and the commit executed anyway**, because check and commit were one invocation. **The
+instrument worked perfectly and changed nothing.** *Placement, not logic* -- the sharpest variant of
+this mechanism, because unlike the other instances the control here is CORRECT and still inert.
+*Exposing question, carried from L-11:* **if this check FAILED right now, would anything stop?**
+*Counter-instrument:* the check runs as a **separate, blocking step** whose exit status the action
+depends on (their `ab6850527` is the first commit where it did).
 
 ### M8 -- TEXT vs SEMANTICS  (n=16)
 **LAW:** A mention scored as a use. The string was present; the value was never read.
@@ -146,6 +182,16 @@ the producer's own control battery rather than accepting the report.
 with no automated enforcement; a control never mutated has never been tested.**
 **INSTANCES:** 14 assignments. Live 2026-07-31: a lifecycle gate whose reading-nothing and
 reading-correctly produced identical output while the registry was all-default.
+**MERGED STAGED-LAW INSTANCES** (WS-C8 artifact 2; NOT added to the 14 -- see merge note):
+`L-5` *"convergence is not corroboration when the converging arguments share an unmeasured premise"*
+(`WS-C8_STAGING_LAWS_DERIVED_20260731.md` @dd5d53314) -- **N arguments agreeing is evidence only if
+their premises are independent; six grounds resting on one unchecked fact is one ground.** Twice in
+six hours: `3.0.0_SA_CVO~Z` refused six converging grounds and ruled from the ratified substrate --
+**ground 1 later measured FALSE**, so a ruling on the convergence would have been void; and they
+refused to let *"all 7 keep-dormant belts"* stand as corroborated by its own plausibility. Its
+arithmetic twin: *"the concentration survives the re-bucket"* would have been an artifact of
+non-independent axes -- **M6 and M5 both being grain mismatches is one fact stated twice, not two
+facts agreeing** -- which is this mechanism reaching the taxonomy's own summary statistics.
 
 ### M9 -- DESIRED vs APPLIED  (n=11)
 **LAW:** A configuration read was used for a behavioural claim. Declared and landed were treated as
