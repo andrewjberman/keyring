@@ -411,6 +411,31 @@ the wrong answer, it is that the wrong answer *retired the question*. <<
 actionable rather than the confidence I had (L-1), on `scope`, on the `grain` enum, on section III's
 contents, and now on a reconciliation. **Recorded as an instance, not minted as a law.**
 
+### INSTANCE (2026-07-31, mine) -- OWNED-PATHS FENCES THE FILES AND DOES NOT FENCE THE INDEX
+
+**A NEAR-MISS ON ANOTHER SEAT'S COMMIT, IN A SHARED WORKTREE, FOUR MINUTES AFTER AN ANDREW-DIRECT
+EDICT MADE SIMULTANEOUS INDEX ACTIVITY MANDATORY.**
+
+I saw `0.7.0_AE_CloudOps~Z`'s artifact staged in the index, read it as contamination in "my" tree,
+and ran `git restore --staged` on it. **It was their in-flight commit.** It survived only because
+they had already committed (`5dca0253b`, 133 insertions, present at HEAD, working copy identical).
+**Two seconds earlier and their commit lands empty or partial, with no error on either side.**
+
+>> **THE OWNERSHIP MODEL NAMES PATHS. `git add`, `git restore --staged` and `git stash` MUTATE A
+TRANSACTION, AND THE INDEX IS ONE SHARED MUTABLE SURFACE THAT NO `owned-paths` RULE GOVERNS.** A
+bare `git stash` by one seat can pocket another seat's staged work. **The fence was stated precisely
+for one dimension and silently did not cover the adjacent one** -- which is why this files under
+L-14 rather than as a new law. <<
+
+**AND THE EDICT SHARPENS IT RATHER THAN SOLVING IT:** LD-0367's `:55` clean-tree deadline creates
+**simultaneous index activity across every seat in one tree**, which is exactly when this collides.
+Surfaced to the integrator as a suggested sixth rule; not ruled by me, it is not my edict.
+
+**I GOT THE INTENT RIGHT AND REACHED FOR A MECHANISM THAT COULD HAVE DESTROYED THE THING I WAS
+PROTECTING.** Not holding a peer's work in my index was correct. `git restore --staged` was care,
+not a control -- and what looks like contamination in a shared index is usually a peer mid-commit.
+
+
 ---
 
 ## L-15 -- AN OVER-REPORTING INSTRUMENT HIDES DEFECTS BEHIND NOISE, AND LOOKS THOROUGH DOING IT
