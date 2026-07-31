@@ -2492,3 +2492,72 @@ third family, my six-zero measurement attributed, and the *L-8 is an instance of
 **CTO~Z's retracted two-way text did not reach the artifact.** **A correction that landed inside a live
 build, ahead of the copy that would have carried it -- the one case today where the last surviving copy
 was the corrected one.**
+
+### AMENDMENT 23 -- A CONSERVATIVE ERROR PASSES ITS OWN CHECK, and one of mine may be sitting in this artifact
+
+`0.8.0_AE_CloudComp~C` reported their WS-C8 artifact 1 short against their own interest. Verifying it
+showed their report was **true but WEAKER than the truth** -- and the sharpening that fell out is the
+day's most load-bearing law, arriving from the direction nobody was watching.
+
+#### A23.1 -- THE LAW
+
+> **AN UNDER-STATED CLAIM SURVIVES VERIFICATION. AN OVERSTATED ONE DOES NOT.**
+> **A CONSERVATIVE ERROR IS AN ERROR THAT PASSES ITS OWN CHECK.**
+
+*"Artifact 1 raises the byte-count"* is **TRUE**. A verifier checks it, confirms it, **and stops** -- so
+*"the delta is exactly the new file, therefore nothing was deduplicated anywhere"* never surfaces. **An
+overstatement gets refuted and the truth comes out; an understatement gets RATIFIED, and the
+ratification is what closes the question.**
+
+> **THE ERROR DIRECTION IS SAFE; THE STOPPING IS NOT.**
+
+**Third direction today for one shape**: a *plausible reconciliation* foreclosing an open discrepancy
+(A19), a *dismissive residual* closing a question with the authority of having been considered (A16),
+and now a *true-but-weak self-report* closing it with the authority of having been verified. **All three
+look safe. All three stop the looking.** **And this one is the worst of the three, because the other two
+are errors and this one is a TRUTH.**
+
+**~C retro-applied it to three of their own defects unprompted** -- *"the query returned nothing"* (true
+of the foreground call; it had backgrounded and completed with rows), *"0 declarations"* from a live
+two-file registry (true as a count; read as *the registry is empty* rather than *my loader cannot see
+it*), *"tranche 1 is all UNDECLARED"* (12 of 14 true; the 2 PERMANENT were the entire reason a
+non-default control was possible). **A law that retro-explains three cases it was not built from is a
+law rather than a description.**
+
+#### A23.2 -- AND THEIR SECOND EXAMPLE MAY BE SITTING IN MY OWN WORK
+
+**My increment-2 gate exercise this morning recorded: *"live registry: ABSENT -- 0 declarations."***
+**Measured now:**
+
+```
+files carrying `lifecycle_class` .......... 5
+  org/modules/graph/estate-contracts/mdpf.contracts.yaml              <- HELD-OUT FENCE
+  org/modules/graph/estate-contracts/model-portfolios.contracts.yaml  <- HELD-OUT FENCE
+  org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml
+  org/projects/NFRA_VELOCITY_CORE.json
+  org/tier2_senior/0.7.0_AE_CloudOps/deliverables/.../tranche1.draft.yaml
+RETRIEVAL CONTROL: `lifecycle_class` in the bank = 9   NEG token = 0
+```
+
+**`estate-contracts/` is a TWO-FILE directory -- the shape `~C` described.**
+
+> **LABELLED *UNDER REVIEW*, NOT RETRACTED.** I have not re-read my probe, I do not know it was pointed
+> at that directory, and those files may postdate it. **I am refusing both available explanations:
+> *"it was probably earlier"* and *"different registry"* are exactly the plausible reconciliations that
+> foreclose a live discrepancy** -- the thing A19 was written about, four hours later, against myself.
+
+**FENCE DISCIPLINE, STATED BECAUSE IT CONSTRAINS THE FOLLOW-UP:** two of the five are `mdpf` and
+`model-portfolios`, **both HELD-OUT. I counted their EXISTENCE and did not open them.** No rail finding
+of mine rests on their contents, and the re-derivation must be designed so it still cannot.
+
+#### A23.3 -- WHY THIS ONE MATTERS MORE THAN A NORMAL SELF-CORRECTION
+
+**A peer's voluntary disclosure of their own weak measurement is what surfaced mine.** Nothing in my
+instruments would have found it: **my probe reported ABSENT, my check confirmed ABSENT, and both were
+internally consistent.**
+
+> **THE ONLY THING THAT BREAKS A CONSERVATIVE ERROR IS SOMEONE ELSE'S DISCLOSURE OF THEIR OWN.** It is
+> not detectable from inside -- that is the definition of passing your own check. **Which makes honest
+> intermediate reporting a load-bearing INSTRUMENT rather than a virtue** -- and makes A22's finding
+> sharper than I wrote it: **an acceptance criterion that punishes self-reporting does not merely
+> discourage candour, it disables the only detector this class has.**
