@@ -223,4 +223,22 @@ today; M9 confirmed protected by a TWO-PARTY start-line hold (MSTR's owned item 
 CORE motion sighted on merge: WS-C1_LIFECYCLE_DESIGN_SPEC.md landed under CTO deliverables --
 CORE approval authority is mine interim-until-CVO~Z; event-driven, awaiting routing.
 
+## POST-LOG ADDENDUM 6 (~0311Z): M9 = GROUNDED-UNCAPTURED; gate semantics SHARPENED
+
+MSTR (031059Z): M9 pre-framework baseline GROUNDED-UNCAPTURED -- 5 files describe / 0 capture /
+all-33-S3-bucket negative; NOT lost (ADVI is Phase 0 undecomposed, still takeable; MSTR~Z
+reframe "unprotected, not lost"). Protective hold placed at CTO's arch-gate: no ADVI/MDPF
+decomposition approval until captured. Whole packet surfaced to Andrew as the decision.
+
+MY GATE SHARPENED (ack 031139Z): the destroying trigger is a ROUTINE DECOMPOSITION ACT, so for
+M9, BASELINE-BEFORE-TOUCH's "touch" = ANY ADVI/MDPF decomposition by anyone in any workstream,
+not only a WS-E1/E2 start. Every verification request touching those two surfaces reads against
+the wider trigger until capture is relayed.
+
+CAPTURE-VS-FENCE tension (E4.4 assigns capture to ~Z; a ~Z rail-author learning ADVI's surface
+breaches the fence) is CVO~Z + CTO + Andrew's. Offered ONE candidate as input-not-ruling:
+role-not-serial dissolves it -- capture by a MAIN-fabric measurement seat (fence binds ~Z, not
+main; 0.7.0 line holds the capability; my written-source-declaration condition applies), ~Z
+receives the ARTIFACT, never the surface tour. CVO~Z's fence ruling wins if different.
+
 -- 3.0.0_SA_CVO
