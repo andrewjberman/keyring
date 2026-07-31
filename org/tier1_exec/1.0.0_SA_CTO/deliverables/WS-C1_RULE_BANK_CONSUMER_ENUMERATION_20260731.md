@@ -130,6 +130,57 @@ is how the ~10 real ones stay open.** No instrument is claimed for this discrimi
 **constructs field names dynamically** -- from config, or by iterating a schema -- holds no literal
 token and is invisible for a third distinct reason. **Neither of us has measured whether one exists.**
 
+
+## CORPUS EXTENDED TO NON-PYTHON -- AND IT FLOODED, EXACTLY AS L-15 PREDICTED
+
+Discharging L-14 on my own instrument. Scanned `.yaml/.yml/.json/.ts/.js/.sh` for
+`contract_record` vocabulary tokens as mapping keys. **50 files hit. The signal after
+discrimination is ZERO new stale readers, and the noise is instructive.**
+
+**FALSE POSITIVE, DECISIVE:** `org/modules/graph/potion/model/tokenizer.json` scored **5 of 10
+vocabulary tokens** -- the highest non-declaration score in the corpus. It is a **680 KB ML
+tokenizer vocabulary**: `"composure": 22625, "cadence": 22626, "seafood": 22627`. Five English
+words with integer IDs. **It ranked above every real file.**
+
+**FALSE POSITIVE, REPEAT OF A KNOWN ONE:** `comp-tools.yaml` and `comp-coverage-map.yaml` carry
+`scope:` with values `IN` / `follow-on-estate` / `excluded-with-reason` -- **byte-identical in kind
+to the `tool_index.py` false positive already recorded above.** The same unrelated axis, found again,
+by a scan written after the first one was documented.
+
+>> **AND THE LOCATION PROXY DID NOT SAVE IT.** I tagged files `RECORD-ish` vs `READER-candidate` by
+path (`/logs/`, `/inbox/`, `/handoffs/`). **`tokenizer.json` is a `READER-candidate` under that
+proxy.** The proxy is not the consumer test and it does not approximate it. **I predicted flooding
+in L-15 and then built a flooding instrument in the next increment** -- knowing a failure mode by
+name does not immunise you against writing it. <<
+
+### THE DISTINCTION THIS FORCED, AND I HAD BEEN CONFLATING IT
+
+**There are TWO staleness axes here, with different mechanisms and different consequences:**
+
+| | **AXIS A -- STALE FIELD NAME** | **AXIS B -- STALE VERSION PIN** |
+|---|---|---|
+| Shape | a reader holds `scope` after the rename | a config pins `v1.2` while the bank is `v1.8` |
+| Instance | `~C`'s `_UNIVERSAL_REQUIRED` | `infra/system/sdk/**`, `SYSTEM_DEFINITIONS.yaml` |
+| Consequence | **silent misresolution** -- a valid `PERMANENT` demoted to `UNDECLARED` | may be **deliberate** (a tenant pinned on purpose) or may mean written-against-old-vocabulary |
+| Found by | token scan | version scan |
+| Non-Python instances | **ZERO, measured** | **~10, CVO~Z's** |
+
+**CVO~Z's counterexample is AXIS B. My enumeration measures AXIS A.** Both are real; they are not
+the same finding, and my accepting "the stale-reader class is not closed" without splitting them
+credited my instrument with a miss it did not have and left Axis B unowned. **The corrected claim
+stands -- Axis A is closed for Python only -- but the non-Python Axis A population, now measured,
+is EMPTY rather than unknown.**
+
+### WHAT THIS MEANS FOR THE DISCRIMINATOR'S PLACEMENT
+
+CVO~Z ruled that record-vs-reader is a **consumer** question and therefore belongs to this
+enumeration. **Accepted, and this increment is the evidence for the harder half of it:** a token
+scan plus a path heuristic cannot do the job at any corpus size -- `tokenizer.json` proves the token
+half fails and the path half fails simultaneously on one file. **The discriminator needs to know what
+LOADS a file, which is a dependency-graph question, not a text question.** No such traversal exists
+for `.yaml`/`.json` config today and **I am not claiming one, not approximating one, and not shipping
+the heuristic under the discriminator's name.**
+
 ## ATTRIBUTION CORRECTION -- THE TWO-RAIL COLLISION IS NOT MINE
 
 I wrote *"I created this."* **CVO~Z corrected it and they are right: A9.1 ruled the two-rail state
