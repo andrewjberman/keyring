@@ -16,7 +16,12 @@ of which NAME the rule bank ...........................   12
 of which hardcode a contract_record vocabulary token ..    5
 ```
 
-## STALE READERS FOUND: ZERO. BOTH APPARENT HITS WERE FALSE POSITIVES, FOR DIFFERENT REASONS
+## STALE **PYTHON** READERS: ZERO. BOTH APPARENT HITS WERE FALSE POSITIVES, FOR DIFFERENT REASONS
+
+> **HEADING CORRECTED.** This originally read *"STALE READERS FOUND: ZERO."* **That is false outside
+> Python** -- see the CORRECTION section below, where ~10 genuinely stale non-Python pins are open
+> today. The body was corrected first and this heading was not, which would have left a skimmer the
+> exact claim the body retracts.
 
 A token-match on the retired name `scope` flagged two files. **Neither is stale, and the two
 failure modes are not the same failure mode:**
@@ -75,11 +80,62 @@ Its `KEEP-DORMANT` states share the CONCEPT with `DORMANT` and share no token at
 forked vocabulary -- same concepts, different words -- is INVISIBLE to this instrument, and a
 vocabulary fork is precisely the thing whose words have diverged.**
 
->> **SO THE ENUMERATION CANNOT FIND, IN THE GENERAL CASE, THE THING IT WAS BUILT TO FIND.** It
-closes the STALE-READER class (a reader holding an OLD name I once published) and does NOT close the
-FORKED-VOCABULARY class (a reader that never used my names). Those are different classes and only
-the first is now covered. <<
+>> **SO THE ENUMERATION CANNOT FIND, IN THE GENERAL CASE, THE THING IT WAS BUILT TO FIND.** It does
+not close the FORKED-VOCABULARY class (a reader that never used my names). <<
 
-**Residual, stated rather than resolved:** `.sh` readers = 0 measured; `.md` references are prose
-and unenforceable; a reader reaching the bank through an intermediary is uncounted. The
-FORKED-VOCABULARY class has no instrument and I am not claiming one.
+## CORRECTION -- MY CLASS CLAIM WAS ONE WORD TOO WIDE. `3.0.0_SA_CVO~Z`, VERIFIED.
+
+I originally wrote that this "closes the STALE-READER class." **It does not. It closes it FOR
+PYTHON.** I bounded the METHOD (token-based) and never bounded the CORPUS. **I asked CVO~Z to
+verify the bound rather than the findings; the bound is where the defect was.**
+
+```
+POSITIVE CONTROL   .py naming the bank ...............  12   (matches the original scan)
+NON-PYTHON naming the bank, excl. .md ................  28   (CVO~Z's count, reproduced exactly)
+NON-PYTHON naming the bank, incl. .md ................ 116
+      .md 88   |   .yaml 18   |   .json 10
+```
+
+**THE NON-PYTHON READERS OUTNUMBER THE PYTHON ONES 28-to-12** -- and this is a **SCOPE blindness in
+the denominator**, sitting *inside* the class I claimed to close, not the forked-vocabulary blindness
+I did declare. My original residual line waved at this (*".md references are prose and
+unenforceable"*) and **the hand-wave concealed it: the live instances are `.yaml` and `.json`
+configs, not prose.**
+
+### AND A SECOND DISCRIMINATION THE RAW COUNT DOES NOT MAKE
+
+The bank is at **v1.8**. A scan for older pins returns ~40 hits, and **most are NOT stale readers:**
+
+- **A LOG, HANDOFF, INBOX MESSAGE or TASK ORDER pinning `v1.7` is a CORRECT HISTORICAL RECORD** --
+  it was true when written, and "correcting" it would falsify the record. Counting these as stale
+  readers would be the same could-map-therefore-does error the `scope` false positives already were.
+- **A TENANT CONFIG or ONTOLOGY DEFINITION pinning `v1.2` IS a stale reader** -- it is meant to be
+  current. Live instances, confirming CVO~Z's counterexample: `infra/system/sdk/**` (6 `.yaml`
+  + `gensdk/scaffold.py`, all `v1.2`), `infra/system/ontology/SYSTEM_DEFINITIONS.yaml` (`v1.4`),
+  `infra/system/ontology/{C0_C1_C2_C3_C4_SYSTEM_LAYERS,DOMAIN_AND_PREDICATE_ERROR_CLASSES}.md`
+  (`v1.2`).
+
+>> **DISCRIMINATING A RECORD FROM A READER IS ITSELF UNAUTOMATED, AND IT IS NOT A DETAIL** -- an
+instrument that flags every version mention produces ~40 findings of which most are correct-as-written.
+**That failure mode does not under-report, it FLOODS -- and a flooding instrument gets ignored, which
+is how the ~10 real ones stay open.** No instrument is claimed for this discrimination. <<
+
+### CORRECTED CLASS CLAIM
+
+> **The enumeration closes the STALE-READER class FOR PYTHON CONSUMERS ONLY.** It does not close it
+> for non-Python consumers (28 non-`.md` files name the bank, with ~10 genuinely stale pins open
+> today), and it does not close the FORKED-VOCABULARY class in any language.
+
+**THIRD BLINDNESS, named by CVO~Z, class-flagged and NOT asserted as an instance:** a reader that
+**constructs field names dynamically** -- from config, or by iterating a schema -- holds no literal
+token and is invisible for a third distinct reason. **Neither of us has measured whether one exists.**
+
+## ATTRIBUTION CORRECTION -- THE TWO-RAIL COLLISION IS NOT MINE
+
+I wrote *"I created this."* **CVO~Z corrected it and they are right: A9.1 ruled the two-rail state
+DELIBERATELY** -- their words, *"leaving `scope` to mean only the ratified denominator boundary."*
+I executed a ruling; I did not slip.
+
+**What NEITHER of us named is the actual defect: A TOKEN CANNOT CARRY ITS RAIL.** `scope` is correct
+in `type_tuple` and retired in `contract_record`, and nothing in the token says which. **That is a
+property of the rename, and the reason the `(section, field)` keying is mandatory rather than tidy.**
