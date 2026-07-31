@@ -348,14 +348,14 @@ dynamic_rails:
     # agree and both are wrong. CONFIRMATION ACROSS CORRELATED INSTRUMENTS IS NOT INDEPENDENCE.
     contract_record:
       names: "the record a CONTRACTED resource/process carries. ONE record, TWO views -- never two schemas. CORE fixes the vocabulary; ESTATE WS-E1 declares INSTANCES against it and adds no terms."
-      required: [intent_source, obligation, lifecycle_class, revalidate_by, scope]
+      required: [intent_source, obligation, lifecycle_class, revalidate_by, locality]
       optional: [successor, expiry_condition, cadence, vintage_probe]
       fields:
         intent_source:    "WHERE the obligation comes from -- a governance level ABOVE the artifact (a governed registry / a PRD / a law / a module's consumer-anchored PURPOSE). Binds to intent_denominator_binding.intent_from_above. An intent_source naming the artifact itself IS the denominator-is-its-own-configuration defect and is REJECTED at declaration."
         obligation:       "which obligation_types entr(ies) bind. ZERO obligations is not 'no obligation' -- it is UNDECLARED."
         lifecycle_class:  "exactly one lifecycle.enum value, PRODUCER-ASSERTED."
         revalidate_by:    "REQUIRED ON EVERY DECLARATION -- see lifecycle.decay."
-        scope:            "REQUIRED ON EVERY DECLARATION -- see lifecycle.scope_binding."
+        locality:         "REQUIRED ON EVERY DECLARATION -- see lifecycle.locality_binding. RENAMED FROM `scope` 20260731 (CVO~Z ruling): the ratified type_tuple.scope means the DENOMINATOR BOUNDARY an assertion is complete-OVER; THIS field means WHERE THE ARTIFACT IS OBSERVABLE. Two different properties. The new name deliberately shares NO ROOT with the ratified token -- a shared root teaches a reader that `scope` is a FAMILY, which buys visibility without buying separation."
         expiry_condition: "the STATED condition under which the obligation lapses; consumed by the debt derivation. MUST BE MACHINE-EVALUABLE or it is decorative."
 
     lifecycle:
@@ -378,13 +378,13 @@ dynamic_rails:
           meaning:          "written -> consumed -> DELETED; oscillates. The trough case."
           absent_at_rest:   "HEALTHY"
           present_at_rest:  "healthy IFF dwell < max_dwell; STRANDED beyond"
-          requires:         [consumer, max_dwell, scope]
+          requires:         [consumer, max_dwell, locality]
           falsifiable_by:   "you CANNOT declare TRANSIENT to silence a detector without naming a consumer that is EXERCISED (see exercised_not_resolved) and a max_dwell BOUND to that consumer's cadence (see max_dwell_binding). max_dwell creates the STRANDED finding that PROVES the declaration can still fail."
         EVENT_CREATED:
           meaning:          "absent until a triggering occurrence; monotonic + append-only thereafter. The prefix case."
           absent_at_rest:   "HEALTHY (zero occurrences so far)"
           present_at_rest:  "healthy; a NON-APPEND edit is an INTEGRITY finding"
-          requires:         [creating_event, event_observable, scope]
+          requires:         [creating_event, event_observable, locality]
           falsifiable_by:   "without an INDEPENDENT observable for the occurrence, 'absence == zero events' is unverifiable and BYTE-IDENTICAL to 'the writer is broken'. The observable must be independent OF THE ARTIFACT whose absence is being explained -- and independent of the INSTRUMENT that reported it (a re-run of one instrument on one device is not a second observation)."
         DORMANT:
           meaning:          "deliberately inactive and deliberately RETAINED -- a rollback lever, a wired-not-armed path, an armed fallback."
@@ -446,10 +446,10 @@ dynamic_rails:
           rule: "WHATEVER PREDICATE THE DECLARATION REQUIRED, REVALIDATION REQUIRES AT LEAST THAT. If consumer had to be EXERCISED to declare, it must be EXERCISED to revalidate."
           why:  "declared BY EXERCISE, re-confirmed BY READING means an artifact CONVERGES OVER TIME TO THE WEAKER CHECK -- every declaration eventually sits on a read-through with an exercise somewhere in its history and a fresh-looking date on top. A FRESHNESS DATE ON A WEAKER CHECK IS WORSE THAN NO DATE, because it reads as recently verified. Otherwise what has been scheduled is a re-ASSERTION, not a re-VALIDATION."
           exercise_has_no_frequency: "this is also what makes EXERCISE a STANDING PROPERTY rather than an ADMISSION TICKET. 'Exercised' once at declaration decays exactly like everything else; without this rule, EXERCISED has no frequency attached to it at all."
-      scope_binding:
-        rule: "every declaration carries an explicit scope. A DEVICE-LOCAL ARTIFACT IS PER-DEVICE OR IT IS UNKNOWN."
+      locality_binding:
+        rule: "every declaration carries an explicit LOCALITY. A DEVICE-LOCAL ARTIFACT IS PER-DEVICE OR IT IS UNKNOWN."
         why:  "a lifecycle state that differs per device with no shared oracle cannot be declared globally. Worked specimen: the three override logs are gitignored (.gitignore:68 `*.log`) = DEVICE-LOCAL, while the archive MANIFEST is a DECLARED path list carrying NO device qualifier -- so the same key is absent on one device and possibly written on another, and NO OBSERVER ON EITHER DEVICE CAN SEE BOTH. By the event_observable rule such a declaration renders UNKNOWN, LOUD."
-        not_a_tuple_change: "scope already exists in the type_tuple vocabulary (rail, grain, plane, scope); this is a FIELD ON THE DECLARATION reusing that vocabulary, NOT an amendment to type_tuple. The seam is not reopened."
+        renamed_not_reused: "*** THIS FIELD WAS ORIGINALLY NAMED `scope` AND THAT WAS A USE-DRIFT DEFECT, CORRECTED 20260731. *** The superseded clause read: 'scope already exists in the type_tuple vocabulary; this is a FIELD ON THE DECLARATION REUSING that vocabulary.' IT DID NOT REUSE IT. type_tuple.scope means the DENOMINATOR BOUNDARY an assertion is complete-OVER (enum: estate|tree|firm|pipeline|motif|partition-window|single-artifact); this field means WHERE AN ARTIFACT IS OBSERVABLE. Neither `per-device` nor `global` is in that enum -- the two senses were not even co-typed, and a clause CERTIFIED the identity it was breaking. Authored by 3.0.0_SA_CVO~Z (F-6), transcribed and GATED by 1.0.0_SA_CTO~Z (19/19, presence-only). FIRST LIVE SPECIMEN of the A7.3 use-drift residual -- surfaced by 0.7.0_AE_CloudOps~D reaching for the field as the bank's own pointer directed. The seam is still not reopened: type_tuple is UNAMENDED."
       required_field_failure:
         rule:        "a MISSING or UNRESOLVABLE required field renders the declaration UNKNOWN, LOUD."
         no_fallback: "it does NOT fall back to the declared value, and it does NOT fall back to PERMANENT."
