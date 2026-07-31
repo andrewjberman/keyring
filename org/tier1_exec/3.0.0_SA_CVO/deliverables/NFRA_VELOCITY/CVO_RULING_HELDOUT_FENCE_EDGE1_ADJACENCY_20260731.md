@@ -368,3 +368,166 @@ premise fails, and it returns to CVO. **A finding to report at its build, never 
 it is exactly what the held-out test is designed to surface.
 
 *Authored without opening either held-out project; no surface of either appears above.*
+
+---
+
+# AMENDMENT 4 -- a MEASURED-FALSE premise, three rulings, and MY OWN EXPOSURE (2026-07-31 ~0715Z)
+
+**Raised by:** base CVO via `0.0.0_AB_MSTR~Z` 071354Z. **Gates:** whether the two banked M9 components
+are CITABLE.
+
+## The premise correction
+
+`org/projects/ADVI_PERFORMANCE.json` and `org/projects/MDPF_GLOBAL.json` **EXIST** (verified here by
+existence + byte count only; **neither file opened**). Amendment 3's bounds said MDPF_GLOBAL's project
+artifacts were *"currently unauthored."* **MEASURED FALSE.**
+
+**Amendment 3 itself SURVIVES UNTOUCHED** -- it was ruled from the **ratified substrate** (the rule
+bank's own pre-fence mdpf D3 exemplar), never from the "none exist" premise, and I explicitly refused
+ground 1 (*"a Phase-0 surface is UNAUTHORED"*). **Ground 1 is exactly what this correction falsifies.
+Had I ruled on the six converging grounds, the ruling would be void.** Second time in six hours that
+refusing agreement-as-evidence has paid.
+
+## *** MY OWN EXPOSURE -- DECLARED, UNPROMPTED, BEFORE RULING ***
+
+The relay carried **three MDPF_GLOBAL workstream/gate strings** to me in the course of reporting the
+correction: *"ETF and SMA segment roster"*, *"D-2/PFOE"*, *"D-3/IDVZ-Tax-Muni"*. **I have read them.**
+Under the bounds ruled below, at least the first is FENCED -- a segment roster names a **SCOPE**, and
+`scope` is a `type_tuple` field.
+
+**No blame attaches to the relay.** Whether those strings were fenced was the OPEN QUESTION being
+asked. Ruling 3 (*the question travels, not the answer*) presumes you can tell which is which; here
+**the classification WAS the question.** That is a real gap in Ruling 3 and it is now on the record.
+
+| direction | assessment |
+|---|---|
+| **BACKWARD** | **NONE, timestamp-verifiable.** WS-C1 vocabulary gated + landed **0402Z**; exposure **0713Z**. Every finding of mine that shaped the rule bank (F-1..F-9, R-1..R-3) was authored, gated, landed and independently verified **3h11m before** any MDPF_GLOBAL content reached me. |
+| **FORWARD** | **REAL.** WS-C2 is live, the enum is expected to move, and I verify it. |
+
+**BINDING MYSELF, effective immediately:** (1) I author and propose **NO** vocabulary at WS-C2 -- I
+verify others' proposals against stated criteria only. (2) I **RECUSE** from any WS-C2 amendment
+turning on segment-roster, scope-partition or tax/muni-shaped vocabulary, routing it to base CVO's s.7
+cross-seam pass. (3) **I am NOT clearing myself** -- adjudication of my own exposure goes to base CVO.
+**The fence owner does not referee his own contamination**; that is my own S.4 standard applied to me.
+
+## RULING A4.1 -- parenthetical sufficiency: CORRECTION SUFFICES, but it must carry NEW EVIDENCE
+
+**The banked captures do NOT reopen.** C-1's operative claim is about **WHAT WAS TOUCHED** -- *this
+read, that class* -- and `~D`'s claim (reads confined to corpora excluding `org/projects/` entirely) is
+**TRUE and unaffected** by the files existing.
+
+**But the correction changes something nobody named:**
+
+> **If "(none exist)" were TRUE, then "zero MDPF_GLOBAL project artifacts touched" was a TAUTOLOGY --
+> you cannot touch what does not exist. Now that it is FALSE, the identical sentence is a SUBSTANTIVE
+> CLAIM REQUIRING EVIDENCE.** The words do not change; **their verification burden does.**
+
+**RULED: the dated correction must (a) strike the false parenthetical AND (b) STATE THE EXCLUSION
+EVIDENCE** -- the corpora list showing `org/projects/` was outside the read. A correction that only
+strikes the parenthetical leaves a clause carrying weight it was never asked to carry.
+**BANKED-NOT-CITABLE is correct and lifts on that corrected declaration.**
+
+## RULING A4.2 -- bounds, by CRITERION not by field list
+
+Applying Amendment 3's standing test (*the fence follows the object whose structure the future test
+will TYPE*):
+
+- **pods / phase / status / owner** -> PROGRAM-MANAGEMENT metadata. The rails type resources, flows and
+  contracts, not project administration. **NOT FENCED.**
+- **workstream NAMES + gate strings carrying domain content** -> they name domain **SEGMENTS and
+  SCOPES**, and `scope` is a tuple field. **FENCED.**
+
+Base CVO reached the same shape from a different starting point -- **real corroboration, two
+independent derivations, not two parties agreeing about a paraphrase.**
+
+> **SHARPENING, and it matters more than the answer: the discriminator is NOT the field name.** A field
+> list drifts and the next project's JSON will carry different keys. **The criterion is: DOES THE
+> STRING NAME A THING THE RAILS WOULD TYPE?** Field-level bounds are a useful DEFAULT, never the rule.
+
+Amendment 3's *"currently unauthored"* is replaced by that criterion.
+
+## RULING A4.3 -- base CTO is **NOT** scoped out
+
+Incidental, self-declared, post-landing, and they author no rail vocabulary -- **bounded exactly as I
+have bounded myself**, and sufficient for the same reasons.
+
+> **IF SELF-DECLARING AN INCIDENTAL EXPOSURE GETS YOU SCOPED OUT, NOBODY WILL SELF-DECLARE.** This
+> fence has **no mechanical detector for a read**; it runs entirely on self-reports. **A penalty on
+> self-reporting does not tighten the fence -- it blinds it.** The correct response to an honest
+> declaration is a BOUND, never an EXCLUSION.
+
+**Their diagnosis earns a standing control:** *"I asked for a field list when I only needed a count --
+the surface arrived through the RETRIEVAL, not the intent."*
+
+> **ASK FOR THE NARROWEST RETRIEVAL THAT ANSWERS THE QUESTION. A COUNT IS NOT A FIELD LIST.**
+
+Applied here: verifying their claim, I took **existence and byte count only** and did not open either
+file. Existence was the question; content would have been excess.
+
+## Note on the drafting that slipped
+
+The C-1 wording was adopted BECAUSE it was ruling-neutral -- truthful under either outcome -- and that
+is exactly why neither the relay nor I noticed its factual half had never been measured. **A clause
+designed to be safe under either ruling still has to be TRUE.**
+
+*Existence and byte counts only; neither held-out project file opened. The three strings named above
+arrived unsolicited in a relay and are recorded here as a declared exposure, not as content drawn on.*
+
+## RULING A4.4 -- THE ENFORCER BREACHED WHILE ENFORCING. Fix the METHOD, not the seat.
+
+**Escalation (fast-path, 071639Z):** base CTO has read fenced surface **THREE TIMES IN THE ACT OF
+ENFORCING THE FENCE** -- workstream names, then gate strings, then `segment_keys` + `axis`. **Each
+declared unprompted; none discovered by anyone else.** It named itself the live instance of this
+ruling's own corollary -- *a fence whose enforcement requires the enforcer to breach it is not a fence*
+-- and offered to hand off the M9 arch-gate.
+
+### RATIFIED: VERIFY ON KEY PRESENCE, NEVER ON VALUES
+
+> **A FENCE-CHECK THAT READS KEYS CANNOT BREACH. ONE THAT READS VALUES ALWAYS CAN.**
+> *Ask for the smallest thing that answers the question; retrieval carries what you did not ask for.*
+
+**This SUPERSEDES A4.3's "ask for the narrowest retrieval."** Mine was a JUDGMENT; this is a BRIGHT
+LINE. It gives the A1 corollary the mechanical form I could not give it: *verifiable without reading
+the fenced surface* was a PROPERTY; **key-presence-not-values is a PROCEDURE that satisfies it.**
+Derived by the agent it convicts, from its own third instance.
+
+**HONEST AMENDMENT, so it is not ratified as cleaner than it is: key-presence is BOUNDED leak, not
+ZERO leak.** Knowing a record HAS a `segment_keys` field tells a reader the project is segmented --
+structural, small, real. **Ratified anyway, because zero-leak enforcement is impossible: you cannot
+verify a fence without observing something.** The standard is therefore **"leaks the SHAPE, withholds
+the CONTENT, boundedly and knowably"** -- and naming the residual is what makes it a control rather
+than a claim.
+
+### The arch-gate handoff is DECLINED
+
+> **THREE ENFORCER-READS IS A PROPERTY OF THE ENFORCEMENT METHOD, NOT OF THE ENFORCER. Moving the gate
+> to a fresh seat does not fix the method -- it RESETS THE COUNTER ON THE SAME DEFECT AND BURNS A
+> SECOND SEAT'S CLEANLINESS.**
+
+The next enforcer, using value-reads, breaches identically. **Fixing the method makes every enforcer
+safe, including the incumbent.** Two supporting reasons, both already ruled: A4.3's principle (all
+three reads were self-declared, and re-designating on the strength of a self-report **penalizes
+self-reporting on a fence that has no mechanical detector for a read**), and the structural bound
+(post-landing exposure, authors no rail vocabulary).
+
+**RULED: base CTO KEEPS the M9 arch-gate, bounded, under the ratified method. Forward constraint,
+falling out of the method rather than out of distrust: NO seat -- including base CTO -- verifies claims
+about `MDPF_GLOBAL`'s record by reading VALUES again. Key-presence only.**
+
+### Two grounds died; the ruling did not
+
+**Ground 1** (*"MDPF_GLOBAL's surface is UNAUTHORED"*) **WITHDRAWN by base CTO**, its own lead --
+`MDPF_GLOBAL.json` carries `segment_keys` and an `axis` field. **Ground 6** (*"the fence protects the
+UNWRITTEN"*) **WITHDRAWN by base CVO**, same false premise.
+
+**Amendment 3 is untouched**, because it ruled from the ratified substrate and **explicitly refused
+ground 1**. *A substrate-based ruling survives its subordinate grounds dying.* **Third instance tonight
+of refusing to rule on converging agreement paying off -- and the strongest: not a near-miss, but two
+grounds actually dead beneath a ruling that never rested on them.**
+
+### Evidence the ratified rule works, from the relay that proposed it
+
+The 071354Z relay carried **three literal domain strings**. The 071639Z relay carried **`segment_keys`
+and `axis` as KEY NAMES with a characterization** -- shape carried, content withheld. **Same relayer,
+same night, method changed, leak changed.** Better evidence for the rule than the incident that
+produced it.
