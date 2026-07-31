@@ -346,6 +346,65 @@ def _ses_sender_lint_one(f: str) -> int:
     return 1
 
 
+def _nonascii_lint_one(f: str) -> int:
+    """CLAUDE.md Code Quality: no non-ASCII in production code, logs, or anything that runs on
+    AWS -- the rule names this failure by name ("breaks CloudWatch/charmap, grep, CI stdout").
+
+    WARN-ONLY (announce-then-enforce). Always returns 0: it must not block a commit while it
+    beds in, and a new gate that can block every agent in the fabric is not something to ship
+    unexercised at first sight.
+
+    SCOPE: authored .sh/.py under infra/** and .tools/** -- the paths whose output crosses into
+    AWS/CI/Windows-console encoding boundaries.
+
+    >> THE HONEST LIMIT, AND IT MUST TRAVEL WITH THIS CHECK: THIS CANNOT CATCH THE DEFECT THAT
+    MOTIVATED IT. Measured 2026-07-31 -- an m365-gateway deploy stranded its EC2_MANIFEST.json
+    leg (Rule 8 source-of-truth left asserting the PREVIOUS commit while new code ran) because
+    pip drew 40x U+2501 on the REMOTE box and those bytes crossed into a cp1252 stdout via SSM
+    StandardOutputContent. BOTH scripts involved were already ASCII-clean and always had been.
+    A SCANNER POINTED ONLY AT YOUR OWN FILES CANNOT SEE THE FAILURE THAT ARRIVES IN SOMEONE
+    ELSE'S OUTPUT. The other limb -- constraining what THIRD-PARTY tools emit into a channel
+    that crosses an encoding boundary (e.g. `pip --progress-bar off`) -- is the real control,
+    and this check is NOT it. Do not record this gate as closing that class. <<
+    """
+    try:
+        norm = f.replace("\\", "/")
+        if not (norm.startswith("infra/") or norm.startswith(".tools/")):
+            return 0
+        if _is_vendored(f):
+            return 0
+        raw = Path(f).read_bytes()
+    except Exception:  # noqa: BLE001 -- fail open; a lint must never break the gate
+        return 0
+
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        _echo(f"WARN (non-ascii): {f} is not valid UTF-8 -- not scanned.", sys.stderr)
+        return 0
+
+    hits = []
+    for lineno, line in enumerate(text.splitlines(), 1):
+        bad = {ch for ch in line if ord(ch) > 127}
+        if bad:
+            hits.append((lineno, sorted(bad, key=ord)))
+    if not hits:
+        return 0
+
+    shown = hits[:5]
+    for lineno, chars in shown:
+        cps = " ".join(f"U+{ord(c):04X}" for c in chars[:6])
+        _echo(f"  {f}:{lineno}  non-ASCII: {cps}", sys.stderr)
+    if len(hits) > len(shown):
+        _echo(f"  ... and {len(hits) - len(shown)} more line(s)", sys.stderr)
+    _echo(
+        f"WARN (non-ascii): {len(hits)} line(s) in {f} carry non-ASCII (CLAUDE.md Code Quality). "
+        f"Use OK:/WARN:/ERROR:/SKIP:/BLOCKED:. WARN-only for now -- not blocking.",
+        sys.stderr,
+    )
+    return 0
+
+
 def _shell_scan_one(f: str) -> int:
     """Mirrors `shell_cli.py scan <f>` exactly (same cmd_scan function -> identical printed
     findings/summary), then the wrapper's own BLOCKED line on an ERROR-class finding."""
@@ -601,6 +660,9 @@ def process_files(files: list[str]) -> int:
             if _ses_sender_lint_one(f) != 0:
                 return 1
 
+            # WARN-only, never blocks (see its docstring for the limit it does NOT close).
+            _nonascii_lint_one(f)
+
             checked += 1
 
         elif f.endswith(".sh"):
@@ -608,6 +670,12 @@ def process_files(files: list[str]) -> int:
                 if _shell_scan_one(f) != 0:
                     return 1
                 checked += 1
+
+            # Runs on ALL .sh regardless of Rule-16 scope: the deploy wrapper that motivated
+            # this check is NOT local-runtime-scoped, so gating it behind _shell_in_scope would
+            # have excluded the exact file whose non-ASCII stranded a manifest. Does not bump
+            # `checked` (mirrors manifest-check: this is a lint, not a scoped gate).
+            _nonascii_lint_one(f)
 
             # manifest-check runs on ALL .sh regardless of Rule-16 scope (mirrors bash:
             # this call sits OUTSIDE the _shell_in_scope block) -- does NOT bump `checked`.
