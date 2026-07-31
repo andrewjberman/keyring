@@ -50,6 +50,11 @@ import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    import yaml  # WS-E1's contract registry is YAML; absence is reported, never silently 0
+except ImportError:  # pragma: no cover - environment-dependent
+    yaml = None
+
 _HERE = Path(__file__).resolve().parent
 _WS = _HERE.parent.parent.parent  # org/modules/graph -> repo root
 if str(_HERE) not in sys.path:
@@ -753,34 +758,90 @@ def is_transient_marker(key: str) -> bool:
 # not from cwd -- the tool is invoked through a PATH shim from arbitrary directories.
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 LIFECYCLE_REGISTRY_DIR = "org/modules/graph/estate-contracts"
+RULE_BANK_PATH = "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+# The UNIVERSAL required fields of contract_record -- those required on EVERY declaration
+# regardless of lifecycle_class. Mirrors the rule bank; C9l asserts the mirror is faithful,
+# because this list going stale is exactly how a valid declaration got demoted to UNDECLARED.
+_UNIVERSAL_REQUIRED = ("revalidate_by", "locality")
 GATED_CLASSES = ("TRANSIENT", "EVENT_CREATED", "DORMANT")
 _LIFECYCLE_ENUM = ("PERMANENT", "TRANSIENT", "EVENT_CREATED", "DORMANT",
                    "LEGACY", "RETIRED", "UNDECLARED")
 
 
-def load_lifecycle_contracts(registry_dir: str | None = None) -> tuple[dict, str]:
-    """Load DECLARED (bucket,key) -> lifecycle_class contracts. Returns (map, provenance).
+def _split_s3_subject(subject: str) -> tuple[str, str] | None:
+    """`artifact:s3://bucket/key` -> (bucket, key). None for any other identity form.
 
-    Absent registry is NOT an error and NOT an empty success: it is zero coverage, reported
-    as such. Never infers; a resource missing from the registry is UNDECLARED, which is a
-    LOUD state and never a silent PERMANENT.
+    Returns None for `process:` subjects BY DESIGN -- a process is not an S3 location and
+    this scorer keys on (bucket, key). Declining to join is the honest answer; synthesising
+    a location for a process would manufacture a join the registry never asserted.
+    """
+    if not subject.startswith("artifact:s3://"):
+        return None
+    rest = subject[len("artifact:s3://"):]
+    bucket, _, key = rest.partition("/")
+    return (bucket, key) if bucket and key else None
+
+
+def load_lifecycle_contracts(registry_dir: str | None = None) -> tuple[dict, str]:
+    """Load DECLARED contracts, keyed (bucket,key) for S3 artifacts. Returns (map, provenance).
+
+    REGISTRY SHAPE (WS-E1): one `contracts:` block per file, SUBJECT-KEYED -- the key IS the
+    subject (`process:<name>` or `artifact:s3://<bucket>/<key>`) and the value is the record
+    it carries. There is no `bucket`/`key` field; an earlier version of this loader expected
+    one and read ZERO from a live 2-file registry while printing "registry ABSENT".
+
+    THE PROVENANCE STRING MUST DISTINGUISH FOUR STATES, because they mean different things
+    and an earlier version collapsed them into one number:
+      registry absent | registry present but unreadable-by-me | present and empty | present
+      with N subjects of which J are joinable to (bucket,key) here.
+    A loader that returns zero must be able to say WHETHER ZERO IS THE ANSWER OR THE FAILURE.
     """
     d = Path(registry_dir) if registry_dir else (_REPO_ROOT / LIFECYCLE_REGISTRY_DIR)
     if not d.is_dir():
         return {}, f"registry ABSENT at {d} -- 0 declarations, every resource UNDECLARED"
+
+    files = sorted(list(d.glob("*.yaml")) + list(d.glob("*.yml")) + list(d.glob("*.json")))
+    if not files:
+        return {}, f"registry PRESENT at {d} but holds 0 contract file(s) -- 0 declarations"
+    if yaml is None and any(f.suffix in (".yaml", ".yml") for f in files):
+        # FAIL LOUD. Reading 0 from a populated registry because a parser is missing is the
+        # exact false-zero this loader was rewritten to stop reporting as "absent".
+        return {}, (f"registry PRESENT at {d} with {len(files)} file(s) but PyYAML IS NOT "
+                    f"AVAILABLE -- CANNOT READ THEM. This is a TOOL FAILURE, not 0 declarations")
+
     contracts: dict = {}
-    files = sorted(d.glob("*.json"))
+    subjects = unreadable = templated = process_only = 0
     for f in files:
         try:
-            data = json.loads(f.read_text(encoding="utf-8"))
-        except (OSError, ValueError):
+            text = f.read_text(encoding="utf-8")
+            data = json.loads(text) if f.suffix == ".json" else yaml.safe_load(text)
+        except Exception:
+            unreadable += 1
             continue  # an unreadable contract is not a declaration; it stays UNDECLARED
-        for rec in data if isinstance(data, list) else [data]:
-            b, k = rec.get("bucket"), rec.get("key")
-            cls = rec.get("lifecycle_class")
-            if b and k and cls in _LIFECYCLE_ENUM:
-                contracts[(b, k)] = rec
-    return contracts, f"{len(contracts)} declaration(s) from {len(files)} file(s) at {d}"
+        block = (data or {}).get("contracts") or {}
+        if not isinstance(block, dict):
+            unreadable += 1
+            continue
+        for subject, rec in block.items():
+            if not isinstance(rec, dict):
+                continue
+            subjects += 1
+            loc = _split_s3_subject(str(subject))
+            if loc is None:
+                process_only += 1
+                continue
+            # A templated subject ({date}/{firmId}/*) cannot exact-match a concrete key.
+            # Counted and reported, NEVER silently pattern-guessed.
+            if any(t in loc[1] for t in ("{", "*")):
+                templated += 1
+                continue
+            contracts[loc] = rec
+
+    prov = (f"registry PRESENT at {d}: {len(files)} file(s), {subjects} subject(s) -- "
+            f"{len(contracts)} joinable to (bucket,key) here; {process_only} process-subject(s) "
+            f"NOT S3-addressable; {templated} templated subject(s) not exact-matchable"
+            + (f"; {unreadable} file(s) UNREADABLE" if unreadable else ""))
+    return contracts, prov
 
 
 def resolve_lifecycle(bucket: str, key: str, contracts: dict) -> dict:
@@ -795,7 +856,13 @@ def resolve_lifecycle(bucket: str, key: str, contracts: dict) -> dict:
     # A declaration whose required fields are missing/unresolvable renders UNKNOWN LOUD --
     # it does NOT fall back to the declared value and does NOT fall back to PERMANENT
     # (rule bank lifecycle.required_field_failure).
-    missing = [f for f in ("revalidate_by", "scope") if not rec.get(f)]
+    #
+    # FIELD NAMES TRACK THE RULE BANK, WHICH MOVES. This list previously read `scope`; the
+    # canonical grammar renamed it `locality`, and the stale name made a valid PERMANENT
+    # declaration render "half-declared: missing scope" -- a REAL declaration silently
+    # demoted to UNDECLARED by a reader that had gone stale. C9l asserts this list against
+    # the rule bank so the next rename fails a control instead of a live resolution.
+    missing = [f for f in _UNIVERSAL_REQUIRED if not rec.get(f)]
     if missing:
         return {"lifecycle_class": "UNDECLARED", "declared": True, "stale": False,
                 "gated": False, "kill_list_eligible": False,
@@ -1020,7 +1087,8 @@ def cmd_census(args) -> int:
     _elig = sum(1 for r in rows if r["kill_list_eligible"])
     print("D3 LIFECYCLE GATE (rule bank v1.8 @880f527cc -- DECLARED axis, never inferred)")
     print(f"  contracts: {_cprov}")
-    print(f"  {len(rows) - _undecl} of {len(rows)} scored surface(s) carry a declaration; "
+    print(f"  {len(_contracts)} declaration(s) loaded and joinable; "
+          f"{len(rows) - _undecl} of {len(rows)} scored surface(s) matched one; "
           f"{_undecl} UNDECLARED")
     print(f"  {_gated} GATED (TRANSIENT/EVENT_CREATED/DORMANT -- deadness NOT ASSERTED); "
           f"{_elig} kill-list-eligible")
@@ -1235,12 +1303,12 @@ def self_test() -> int:
     # "Stated is not enforced": these controls exist because a bound written in the rule bank and
     # not enforced in a consumer is a DESIRED control reading as APPLIED. Each asserts BEHAVIOUR.
     _live = {("b", "k"): {"lifecycle_class": "TRANSIENT", "revalidate_by": "2026-12-31",
-                          "scope": "single-artifact", "consumer": "x", "max_dwell": "1d"}}
+                          "locality": "global", "consumer": "x", "max_dwell": "1d"}}
     _perm = {("b", "k"): {"lifecycle_class": "PERMANENT", "revalidate_by": "2026-12-31",
-                          "scope": "single-artifact"}}
-    _half = {("b", "k"): {"lifecycle_class": "TRANSIENT", "scope": "single-artifact"}}  # no revalidate_by
+                          "locality": "global"}}
+    _half = {("b", "k"): {"lifecycle_class": "TRANSIENT", "locality": "global"}}  # no revalidate_by
     _stale = {("b", "k"): {"lifecycle_class": "TRANSIENT", "revalidate_by": "2020-01-01",
-                           "scope": "single-artifact", "_stale": True}}
+                           "locality": "global", "_stale": True}}
 
     g = resolve_lifecycle("b", "k", _live)
     check("C9a TRANSIENT is GATED -- deadness NOT ASSERTED, not merely down-weighted",
@@ -1282,6 +1350,95 @@ def self_test() -> int:
     check("C9g coverage is a PRINTED DENOMINATOR, and an absent registry is 0 -- not an error",
           isinstance(_cmap, dict) and isinstance(_prov, str) and len(_prov) > 0,
           f"{_prov}")
+
+    # ---- C9h-C9k: THE CONTROLS WHOSE ABSENCE LET THE LOADER READ ZERO FROM A LIVE REGISTRY ----
+    # The loader globbed *.json against a *.yaml registry and expected flat bucket/key records
+    # against a SUBJECT-KEYED shape. It reported "registry ABSENT ... 0 declarations" for a
+    # directory holding two files. Nothing failed, because zero was also the right answer that
+    # day. These four make the difference observable.
+
+    # C9h -- POSITIVE CONTROL ON THE LOADER ITSELF. A loader returning zero must be able to say
+    # whether zero is the ANSWER or the FAILURE. Skips honestly if the registry is not present.
+    _live_dir = _REPO_ROOT / LIFECYCLE_REGISTRY_DIR
+    if _live_dir.is_dir() and (list(_live_dir.glob("*.yaml")) or list(_live_dir.glob("*.json"))):
+        check("C9h LIVE REGISTRY loads N>0 joinable declaration(s) -- zero here would be the bug",
+              len(_cmap) > 0,
+              f"{len(_cmap)} joinable declaration(s); {_prov}")
+    else:
+        check("C9h live registry not present -- control SKIPPED, and saying so beats a silent pass",
+              True, "no contract files on disk; this control is vacuous here BY DECLARATION")
+
+    # C9i -- EXERCISE A NON-DEFAULT CLASS AGAINST REAL DATA. Every synthetic control above uses
+    # a fixture; this one asserts the loader+resolver agree with a declaration a producer really
+    # wrote. Without it, a gate that reads nothing and a gate that reads correctly are identical
+    # whenever the registry happens to be all-UNDECLARED.
+    _nondefault = [(loc, r.get("lifecycle_class")) for loc, r in _cmap.items()
+                   if r.get("lifecycle_class") not in (None, "UNDECLARED")]
+    if _nondefault:
+        (_b, _k), _cls = _nondefault[0]
+        _r = resolve_lifecycle(_b, _k, _cmap)
+        check("C9i a REAL non-UNDECLARED declaration resolves to its DECLARED class",
+              _r["lifecycle_class"] == _cls and _r["declared"],
+              f"s3://{_b}/{_k} -> declared {_cls}, resolved {_r['lifecycle_class']} "
+              f"({len(_nondefault)} non-default declaration(s) live)")
+    else:
+        check("C9i no non-UNDECLARED declaration live yet -- control VACUOUS, declared as such",
+              True, "every live subject is UNDECLARED; this control cannot discriminate today")
+
+    # C9j -- the REGISTRY SHAPE and the polarity inversion, exercised TOGETHER. A subject-keyed
+    # DORMANT must both PARSE and GATE. Fixture is written in the registry's real shape.
+    import tempfile
+    _td = tempfile.mkdtemp(prefix="clw_lc_")
+    try:
+        Path(_td, "fixture.contracts.yaml").write_text(
+            "contracts:\n"
+            "  artifact:s3://b/k:\n"
+            "    lifecycle_class: DORMANT\n"
+            "    revalidate_by: '2026-12-31'\n"
+            "    locality: global\n"
+            "    reason: fixture\n"
+            "    rearm_condition: fixture\n"
+            "    annotation_cite: 'f.tf:1 @abc1234'\n",
+            encoding="utf-8")
+        _fx, _fxprov = load_lifecycle_contracts(_td)
+        _fr = resolve_lifecycle("b", "k", _fx)
+        check("C9j SUBJECT-KEYED yaml parses AND a DORMANT subject is GATED (shape + polarity)",
+              len(_fx) == 1 and _fr["lifecycle_class"] == "DORMANT" and _fr["gated"]
+              and not _fr["kill_list_eligible"],
+              f"parsed={len(_fx)} class={_fr['lifecycle_class']} gated={_fr['gated']}")
+    finally:
+        import shutil
+        shutil.rmtree(_td, ignore_errors=True)
+
+    # C9k -- DECLINING to join is the correct answer, not a miss. A `process:` subject is not an
+    # S3 location; synthesising one would manufacture a join the registry never asserted.
+    check("C9k a `process:` subject does NOT join to (bucket,key) -- declining, not missing",
+          _split_s3_subject("process:mdpf-daily-trigger") is None
+          and _split_s3_subject("artifact:s3://bkt/a/b.json") == ("bkt", "a/b.json"),
+          "process -> None; artifact -> (bucket,key). Both directions asserted.")
+
+    # C9l -- THE GRAMMAR-DRIFT CONTROL. My required-field list MIRRORS the rule bank's
+    # contract_record.required, and a mirror that silently diverges is what demoted a valid
+    # PERMANENT declaration to "half-declared: missing scope" after `scope` was renamed
+    # `locality`. This asserts the mirror, so the NEXT rename fails a control instead of a
+    # live resolution. It compares only the UNIVERSAL fields (per-class ones live in polarity).
+    _rb = _REPO_ROOT / RULE_BANK_PATH
+    if yaml is not None and _rb.is_file():
+        try:
+            _rbd = yaml.safe_load(_rb.read_text(encoding="utf-8"))
+            _req = set((_rbd["dynamic_rails"]["D3_contract_obligation"]
+                        ["contract_record"]["required"]))
+            _class_scoped = {"intent_source", "obligation", "lifecycle_class"}
+            _universal = _req - _class_scoped
+            check("C9l my required-field list MIRRORS the rule bank (grammar-drift control)",
+                  set(_UNIVERSAL_REQUIRED) == _universal,
+                  f"mine={sorted(_UNIVERSAL_REQUIRED)} rule bank universal={sorted(_universal)}")
+        except Exception as e:
+            check("C9l rule bank unreadable -- CANNOT assert the mirror; that is a FAILURE",
+                  False, f"{type(e).__name__}: {e}")
+    else:
+        check("C9l rule bank/PyYAML unavailable -- mirror UNASSERTED, declared not assumed",
+              True, "control vacuous here BY DECLARATION")
 
     passed = sum(1 for _n, ok, _d in results if ok)
     total = len(results)
