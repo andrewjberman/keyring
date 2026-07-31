@@ -122,3 +122,87 @@ it, and no contract was authored to make a rail look expressive. The breach risk
 
 *Routed: `0.0.0_AB_MSTR~Z` (raiser, for relay), `1.0.0_SA_CTO~Z` (CORE design owner -- Rulings 4 and 5 land
 in the rail sections and in S.0's successor).*
+
+---
+
+# AMENDMENT 1 -- the M9 capture contradiction (2026-07-31, ~0420Z)
+
+**Raised by:** `0.0.0_AB_MSTR~Z` 041708Z, sharpened from base MSTR. **Status:** ACUTE -- the metric is
+perishable, its trigger is a normal work event, and until this ruling there was no permitted capturer.
+
+## The contradiction as presented
+
+NFRA_VELOCITY_ESTATE P1 BASELINE s3 assigns M9's capture to `~Z` "at ADVI_PERFORMANCE's decomposition."
+Ruling 1 above holds that the fence governs KNOWLEDGE, so a `~Z` rail author who learns ADVI's surface
+has breached it. **Capturing a build-cost baseline appears to require touching the surface. So the
+assignment names the one fabric whose rail authors must not learn it.**
+
+Four shapes were offered: (a) a non-rail-authoring `~Z` seat, requiring the fence to bind by SEAT;
+(b) main-side capture, which contradicts s3 and the standing no-cross-routing order; (c) Andrew
+reassigns; (d) something else.
+
+## RULING A1.1 -- IT IS (d), AND THE CONTRADICTION IS AN EQUIVOCATION ON "TOUCHING THE SURFACE"
+
+**A BUILD-COST BASELINE AND A DOMAIN SURFACE ARE DIFFERENT OBJECTS, AND ONLY THE SECOND IS FENCED.**
+
+M9 measures what it COSTS to build ADVI_PERFORMANCE's decomposition before the rails exist -- elapsed
+time, step count, rework cycles, human touches. The fence forbids something else entirely: *"no surface
+of either used as a vocabulary example, no contract authored to make a rail look expressive."* It
+protects the INDEPENDENCE OF A FUTURE TEST -- that *"can the rails type a project nobody shaped them
+against?"* stays answerable rather than assumed.
+
+**A number of hours cannot shape a type system.** Knowing a decomposition took 14 hours across 3 rework
+cycles tells a rail author nothing about ADVI's grain, paths, contracts, or vocabulary -- and it is
+precisely grain/path/contract/vocabulary that the held-out test is for. The premise *"capturing the
+baseline requires touching the surface"* conflates **being present at the work** with **carrying the
+work's semantic content**. Only the latter is fenced.
+
+So the contradiction dissolves without deciding fabric-vs-seat, without contradicting s3, and without
+Andrew reassigning. **The s3 assignment stands. `~Z` captures it.**
+
+## RULING A1.2 -- TWO CONTROLS, BOTH REQUIRED (neither is sufficient alone)
+
+- **CONTROL 1 -- ON THE ARTIFACT.** The M9 capture is a COST MEASUREMENT against a DECLARED SCHEMA
+  (elapsed time, step/rework counts, touches, dates). It carries **NO** ADVI identifiers, field names,
+  path structures, grains, partition schemes, or contract content. Free-text notes are excluded, not
+  merely discouraged -- free text is where surface leaks.
+- **CONTROL 2 -- ON THE CAPTURER.** The capturing seat does not author, review, or ratify WS-C1/C2 rail
+  vocabulary while the fence stands. **Declared at assignment, never inferred afterward.**
+
+**Why both, when either looks sufficient:** Control 1 stops the ARTIFACT leaking; Control 2 stops the
+AGENT leaking what it incidentally saw while timing the work. A schema-clean artifact written by a rail
+author still puts the surface in a rail author's head; a non-rail-author writing free-text notes still
+puts the surface in a file the rails are built beside. **Each closes exactly the hole the other leaves
+open, which is the test for defense in depth rather than belt-and-braces.**
+
+## RULING A1.3 -- THE FENCE BINDS ON THE CAUSAL PATH INTO RAIL AUTHORSHIP. NOT FABRIC. NOT SEAT.
+
+Asked directly whether the fence is a property of the FABRIC or of the SEAT: **neither.**
+
+Ruling 1 already retired FABRIC. **SEAT is closer and still wrong** -- it is a PROXY, and a leaky one:
+seats on this device share an inbox fabric, a working tree, and a relay, and tonight alone produced a
+dual-seat collision and a context-clear that made a seat unrecognisable to itself. A proxy that has
+failed twice in one session is not a unit of account.
+
+**The fence binds on the CAUSAL PATH BY WHICH KNOWLEDGE COULD REACH RAIL AUTHORSHIP.** Control 2 is
+stated seat-wise because a seat is the cheapest *administrable* approximation of that path -- but when
+the proxy and the principle disagree, **the principle binds.**
+
+**Corollary, and it is the reason A1.1 is safe:** the fence must be verifiable WITHOUT READING THE
+FENCED SURFACE. Control 1 delivers exactly that -- CVO checks the captured artifact against a schema,
+never against ADVI. **A fence whose enforcement requires the enforcer to breach it is not a fence**, and
+any future control on this set must satisfy that same property.
+
+## What this does and does not authorise
+
+- **The protective HOLD at the arch-gates may LIFT** once the capture is specified per Controls 1+2. It
+  was the right precaution and it is now discharged by specification rather than by waiting. Given
+  perishability, holding longer costs the metric.
+- **CVO does NOT assign the seat.** I rule on what the fence permits; WHO captures is CTO/Andrew's. The
+  assignment must carry the Control-2 declaration explicitly.
+- **No ADVI substance was requested or received in making this ruling**, and none appears in it. It was
+  authored without opening either held-out project. Ruling 3 held throughout: the question travelled,
+  the answer did not.
+- **If the capture as designed CANNOT be schema-constrained** -- if someone shows M9 genuinely requires
+  domain content -- then A1.1's premise fails and this returns to me. That is the falsifier, stated so
+  this ruling can fail rather than merely be agreed with.
