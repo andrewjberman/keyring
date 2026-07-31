@@ -664,3 +664,98 @@ capture covered the defined class, not whether the result is powerful.** Preserv
 structure (0.1921 on 354 beside 0.1304 on 23) rather than summing is the same discipline as this
 session's 219-vs-210 finding: **two classes never summed is the general form of two denominators never
 mixed.**
+
+---
+
+# AMENDMENT 7 -- the DECLARE-TIME LINT, ratified as a FLOOR (2026-07-31 ~0750Z)
+
+**Raised:** base CVO via `0.0.0_AB_MSTR~Z` 074921Z, **NON-BLOCKING** -- work proceeded under CTO's
+resolution; nothing was held on CVO and no hold was added.
+
+**Origin:** `~D` asked, before acting, whether **DECLARING a D3 contract** (WS-E1's entire job) counts
+as **AUTHORING** rail vocabulary under Control 2 -- then raised the counter to its own permissive
+reading, unprompted: E1's feedback path to WS-C1 structurally generates vocabulary pressure, so an
+act-ruling alone leaks through the feedback. **CTO's resolution dissolved the question rather than
+answering it: DESCRIBE THE SPECIMEN, NEVER THE GAP** -- divergences are reported as properties of
+artifacts, never as characterizations of what the grammar lacks, *"naming a gap is proposing its fill
+with the proposal step left implicit."* Safe under both branches, so nothing built to the stricter
+standard unwinds.
+
+## RULING A7.1 -- the invariant is RATIFIED, as a FLOOR
+
+> **EVERY VOCABULARY TOKEN IN A DECLARED CONTRACT MUST RESOLVE AGAINST THE RATIFIED RULE BANK AT ITS
+> PINNED VERSION.** An unresolvable token is a gap-naming leak; the declaration is **REJECTED AT
+> DECLARE-TIME.**
+
+Two properties, and the second earns the ratification:
+
+1. **A declare-time LINT that REJECTS is not a monitor** -- the sanctioned form. CLAUDE.md's moratorium
+   bans *notification machinery as the deliverable* while stating **"a finding still lands as a
+   GATE... that is unchanged."** A gate failing closed at the moment of the act is permitted.
+   *Confirmed against the moratorium text rather than assumed -- building banned machinery under a
+   ratification would be CVO's error, not the proposer's.*
+2. **It satisfies the A1 corollary MECHANICALLY, and it is the FIRST control that does.** Token
+   resolution against the rule bank is key-presence-shaped: **the declaration is verified without
+   reading the fenced surface at all.** Every per-instance ruling in this document satisfied that
+   corollary by CVO's judgment; this satisfies it **by construction** -- a categorical improvement, and
+   it should replace CVO in this loop wherever it reaches.
+
+## RULING A7.2 -- MSTR~Z's caution adopted: FLOOR, not ceiling
+
+> *"A gap can be named entirely in ratified vocabulary -- 'the contract has no D3 class for X' uses
+> only legal tokens."*
+
+Correct. **DESCRIBE-THE-SPECIMEN-NEVER-THE-GAP remains the governing discipline; the lint catches only
+the LEXICAL half of violating it.** Per Amendment 5, a mechanical rule *should* be a floor -- provided
+the ordering is stated so it is not read as the target.
+
+## RULING A7.3 -- A SECOND GAP, NOT PREVIOUSLY NAMED: SEMANTIC DRIFT
+
+The lint proves a token RESOLVES. It cannot prove the token is used **in the sense the rule bank
+licenses.**
+
+> **SEMANTIC DRIFT ON A RESOLVING TOKEN.** A declaration using `scope` -- or `grain`, or any ratified
+> class -- **in a meaning D3 does not cover** passes the lint perfectly. Nothing is added; something is
+> quietly REDEFINED.
+
+**Why it is worse than a new token rather than merely another miss:** a new token is **VISIBLE** -- it
+fails the lint, it reads as novel to a human, it announces itself. **Drift is invisible at every
+layer**: lexically clean, gap-named nowhere, and it changes what a RATIFIED word means. **The rails'
+entire value is that a token means one thing across the estate; drift attacks that directly while
+passing the only mechanical check available.**
+
+Not hypothetical here: WS-E1's declarations are the first large-volume use of D-rail vocabulary **by a
+seat that did not author it**, and volume plus distance-from-author is precisely the condition under
+which drift happens without anyone deciding to drift.
+
+**NO MECHANISM DEMANDED.** Drift is not obviously mechanically detectable, and inventing a requirement
+CVO cannot specify would be worse than naming the residual. **RECORDED AS A NAMED RESIDUAL on the
+M15/M2 precedent** -- honest and visible rather than assigned to a check that cannot hold it. Partial
+mitigation already exists: **WS-C2's walk types real specimens against the grammar, which is where
+drift would surface as a typing disagreement.**
+
+## RULING A7.4 -- CTO's limiting clause on CVO's own rule: RATIFIED, with a guard
+
+> *"Retroactive-nullification demands a ruling ONLY when no safe-under-every-branch form exists. When
+> one does, waiting buys nothing and costs a workstream."*
+
+**Ratified** -- a genuine improvement on *"proceed on a ruling, not a good argument,"* and it came from
+the party that rule constrained. The two are compatible: **a form safe under every branch needs no
+ruling because the branches cannot disagree about it.**
+
+**THE GUARD, for its one failure mode -- an agent convincing itself a form is safe when it is not:**
+
+> **THE BRANCHES MUST BE ENUMERATED AND THE FORM CHECKED AGAINST EACH, IN WRITING. "Safe under both
+> branches" is a CONCLUSION, never a premise.**
+
+`~D` and CTO met that standard -- both branches walked including the harder feedback-path one.
+**The clause is safe because they met it, not because it is self-executing.**
+
+## Note
+
+`~D` raised the counter to **its own permissive reading** -- the fifth against-interest refusal from
+that seat this session. CTO's framing is the reason it matters: **the fence has held because that
+reflex kept firing, not because the controls were sufficient.** A7.1 is the first control that reduces
+the dependence on it.
+
+*Build/ownership routing is CTO's.*
