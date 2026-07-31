@@ -435,6 +435,35 @@ Surfaced to the integrator as a suggested sixth rule; not ruled by me, it is not
 PROTECTING.** Not holding a peer's work in my index was correct. `git restore --staged` was care,
 not a control -- and what looks like contamination in a shared index is usually a peer mid-commit.
 
+### INSTANCE (2026-07-31, mine) -- I MIS-VINTAGED THE RECORD I WROTE TO DISCHARGE A VINTAGE FINDING
+
+`3.0.0_SA_CVO~Z` ruled that my WS-C8 GO cited an uncommitted file and therefore had **no vintage**
+(Rule 22 applied to an authorization). I discharged it by committing the file and publishing a
+referent:
+
+```
+blob sha  claimed 013dfdd9...   MEASURED 013dfdd9...   MATCH
+bytes     claimed 9285          MEASURED 11358         MISMATCH
+md5       claimed 123f8661...   MEASURED e79cd286...   MISMATCH
+```
+
+**The blob sha was right and the hand-measured pair beside it described a version that was never
+committed.** I measured the file at scan time and recorded the numbers as describing the *commit* --
+**with a concurrent writer I had established minutes earlier.** Growth trace: `9285 -> 11358 -> 12617`.
+
+>> **I COMMITTED THE EXACT DEFECT I WAS DISCHARGING, INSIDE THE DISCHARGE.** A hash pair with no
+timestamp is a measurement presented as a property. **The blob sha is sound precisely because git
+computed it from the committed bytes; my md5 is unsound precisely because I computed it from the
+disk.** Same file, two oracles, one of which cannot be wrong about which version it describes. <<
+
+**AND THE SAME SHAPE, TWICE MORE IN TEN MINUTES:** I ran `git merge-base --is-ancestor` against a
+ref that was not the one in question and read the failure as an exoneration -- nearly clearing
+myself of publishing another seat's commit. **Re-pointed at the right object it is unambiguous:**
+`0.0.0_AB_MSTR~Z`'s commit landed `11:31:22`, mine `11:31:39`, theirs an ancestor of my HEAD -- **my
+push carried it.** *An instrument aimed at the wrong object returns a clean answer, and a clean
+answer in your own favour is the one you check last.*
+
+
 
 ---
 
