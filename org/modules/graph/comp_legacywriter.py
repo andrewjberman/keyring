@@ -706,9 +706,114 @@ _MARKER_PATTERNS = ("trigger-pending", "trigger-mode", "pipeline-complete", "tri
 
 
 def is_transient_marker(key: str) -> bool:
-    """True when a key looks like a written-then-consumed marker rather than a durable artifact."""
+    """True when a key looks like a written-then-consumed marker rather than a durable artifact.
+
+    STOPGAP, NOT A TYPE SYSTEM. Superseded in principle by the declared D3 lifecycle axis
+    (rule bank v1.8, dynamic_rails.D3_contract_obligation.lifecycle) and KEPT ONLY until
+    declaration coverage is non-zero -- retiring it the day the type landed would drop real
+    coverage to the contracted set (near zero) while reporting progress. See
+    lifecycle.supersedes_stopgap in the rule bank.
+    """
     k = key.lower()
     return any(pat in k for pat in _MARKER_PATTERNS)
+
+
+# ---------------------------------------------------------------------------
+# D3 LIFECYCLE GATE (rule bank v1.8 @880f527cc, WS-C1 acceptance item 10)
+#
+# THE POINT, in one line: a SINGLE-POLARITY EXISTENCE DETECTOR IS WRONG ON 4 OF THE 7
+# lifecycle classes, and wrong in the direction that PROPOSES DELETING LIVE INFRASTRUCTURE.
+# This scorer is the kill-list path -- the single most dangerous consumer of that axis.
+#
+# TWO DISTINCT BEHAVIOURS, and conflating them is the defect this closes:
+#   GATED CLASSES  {TRANSIENT, EVENT_CREATED, DORMANT} -- absence (or zero traffic, for
+#                  DORMANT) is their DECLARED HEALTHY STATE. Deadness is not merely
+#                  down-weighted, it is NOT ASSERTED: score -> 0 with the class named.
+#   UNDECLARED     -- the estate's state today. Per rule bank lifecycle.undeclared_scope:
+#                  "UNDECLARED CONSTRAINS WHAT A TOOL MAY CLAIM; IT DOES NOT DISABLE WHAT A
+#                  TOOL MAY CHECK." So the scan still runs and still reports what it saw --
+#                  but it may NOT convert that observation into a lifecycle verdict, and
+#                  kill_list_eligible is False. The emitted verdict is
+#                  "OBSERVED (lifecycle UNDECLARED)", never "DEAD".
+#   STALE          -- suppresses the DELETION-CLASS VERDICT, releases the OBSERVATION
+#                  (rule bank lifecycle.decay.stale_semantics). Expiry must never itself
+#                  become evidence of death.
+#
+# PRODUCER-ASSERTED, NEVER OBSERVER-INFERRED. This resolver reads DECLARED contracts only.
+# It MUST NOT infer a class from key names, directory position, or observed absence -- doing
+# so would rebuild _MARKER_PATTERNS above with more syntax, which the spec rejects at gate.
+# is_transient_marker() is deliberately NOT consulted here; it remains a separate, clearly
+# labelled stopgap signal.
+#
+# COVERAGE TODAY IS ZERO BY CONSTRUCTION: the WS-E1 contract registry does not exist yet, so
+# every resource resolves UNDECLARED. That is the honest state, and the denominator is
+# printed rather than implied.
+# ---------------------------------------------------------------------------
+# repo root derived from THIS file's location (org/modules/graph/<this>.py -> parents[3]),
+# not from cwd -- the tool is invoked through a PATH shim from arbitrary directories.
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+LIFECYCLE_REGISTRY_DIR = "org/modules/graph/estate-contracts"
+GATED_CLASSES = ("TRANSIENT", "EVENT_CREATED", "DORMANT")
+_LIFECYCLE_ENUM = ("PERMANENT", "TRANSIENT", "EVENT_CREATED", "DORMANT",
+                   "LEGACY", "RETIRED", "UNDECLARED")
+
+
+def load_lifecycle_contracts(registry_dir: str | None = None) -> tuple[dict, str]:
+    """Load DECLARED (bucket,key) -> lifecycle_class contracts. Returns (map, provenance).
+
+    Absent registry is NOT an error and NOT an empty success: it is zero coverage, reported
+    as such. Never infers; a resource missing from the registry is UNDECLARED, which is a
+    LOUD state and never a silent PERMANENT.
+    """
+    d = Path(registry_dir) if registry_dir else (_REPO_ROOT / LIFECYCLE_REGISTRY_DIR)
+    if not d.is_dir():
+        return {}, f"registry ABSENT at {d} -- 0 declarations, every resource UNDECLARED"
+    contracts: dict = {}
+    files = sorted(d.glob("*.json"))
+    for f in files:
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue  # an unreadable contract is not a declaration; it stays UNDECLARED
+        for rec in data if isinstance(data, list) else [data]:
+            b, k = rec.get("bucket"), rec.get("key")
+            cls = rec.get("lifecycle_class")
+            if b and k and cls in _LIFECYCLE_ENUM:
+                contracts[(b, k)] = rec
+    return contracts, f"{len(contracts)} declaration(s) from {len(files)} file(s) at {d}"
+
+
+def resolve_lifecycle(bucket: str, key: str, contracts: dict) -> dict:
+    """Resolve the DECLARED lifecycle for one location. Never inferred."""
+    rec = contracts.get((bucket, key))
+    if not rec:
+        return {"lifecycle_class": "UNDECLARED", "declared": False, "stale": False,
+                "gated": False, "kill_list_eligible": False,
+                "verdict": "OBSERVED (lifecycle UNDECLARED)",
+                "basis": "no declaration found; NOT inferred"}
+    cls = rec.get("lifecycle_class", "UNDECLARED")
+    # A declaration whose required fields are missing/unresolvable renders UNKNOWN LOUD --
+    # it does NOT fall back to the declared value and does NOT fall back to PERMANENT
+    # (rule bank lifecycle.required_field_failure).
+    missing = [f for f in ("revalidate_by", "scope") if not rec.get(f)]
+    if missing:
+        return {"lifecycle_class": "UNDECLARED", "declared": True, "stale": False,
+                "gated": False, "kill_list_eligible": False,
+                "verdict": "UNKNOWN, LOUD (half-declared: missing %s)" % ",".join(missing),
+                "basis": "required field missing -- no fallback to the declared value"}
+    stale = bool(rec.get("_stale"))
+    gated = cls in GATED_CLASSES
+    if stale:
+        # Suppresses the deletion-class verdict, RELEASES the observation.
+        return {"lifecycle_class": cls, "declared": True, "stale": True, "gated": True,
+                "kill_list_eligible": False,
+                "verdict": f"OBSERVED (lifecycle STALE, was {cls})",
+                "basis": "past revalidate_by -- verdict suppressed, observation released"}
+    return {"lifecycle_class": cls, "declared": True, "stale": False, "gated": gated,
+            "kill_list_eligible": not gated,
+            "verdict": (f"NOT-ASSERTED (lifecycle {cls}: absence/zero-traffic is its declared "
+                        f"healthy state)" if gated else f"eligible (lifecycle {cls})"),
+            "basis": "declared contract"}
 
 
 def _load_json(path):
@@ -763,7 +868,7 @@ def load_debris(path):
     return out, f"{meta} ({len(out)} resource(s))"
 
 
-def dossier(bucket, key, entry, heat, dups, debris):
+def dossier(bucket, key, entry, heat, dups, debris, contracts=None):
     """Everything this estate can say about ONE (bucket,key) surface."""
     writers = entry["writers"]
     readers = entry["readers"]
@@ -843,11 +948,27 @@ def dossier(bucket, key, entry, heat, dups, debris):
 
     # A marker is not a dead artifact. It DEMOTES to zero and says why -- a transient key absent from
     # S3 is the expected steady state, not evidence of anything.
+    # NAME-PATTERN STOPGAP, kept until declared lifecycle coverage is non-zero. It is NOT the
+    # gate below and must not be read as one: a pattern-match on key names is not a type system.
     if is_transient_marker(key):
         signals.append("TRANSIENT-MARKER-DO-NOT-RETIRE")
         score = 0
 
+    # --- D3 LIFECYCLE GATE (rule bank v1.8) -- the DECLARED axis, never inferred -------------
+    lc = resolve_lifecycle(bucket, key, contracts if contracts is not None else {})
+    if lc["gated"]:
+        # Absence (or zero traffic, for DORMANT) is the DECLARED HEALTHY STATE. Deadness is
+        # NOT ASSERTED here -- this is the polarity inversion, not a down-weighting.
+        signals.append(f"LIFECYCLE-GATED-{lc['lifecycle_class']}")
+        score = 0
+    elif not lc["declared"]:
+        # UNDECLARED constrains what this tool may CLAIM, not what it may CHECK. The score is
+        # still computed and still reported; it is simply not a lifecycle verdict.
+        signals.append("LIFECYCLE-UNDECLARED-NO-CLAIM")
+
     return {
+        "lifecycle": lc,
+        "kill_list_eligible": lc["kill_list_eligible"],
         "location": f"s3://{bucket}/{key}",
         "bucket": bucket,
         "key": key,
@@ -884,10 +1005,27 @@ def cmd_census(args) -> int:
 
     st = static_axis()
     locs = build_locations(st["hits"])
-    rows = [dossier(b, k, e, heat, dups, debris) for (b, k), e in locs.items() if e["writers"]]
+    # D3 lifecycle contracts loaded ONCE per run so the gate cannot vary between rows.
+    _contracts, _cprov = load_lifecycle_contracts()
+    rows = [dossier(b, k, e, heat, dups, debris, _contracts)
+            for (b, k), e in locs.items() if e["writers"]]
     # Rank by score, then by HOW MANY AXES ACTUALLY MEASURED IT. A 5 confirmed by four live axes
     # outranks a 5 where two axes were blind -- the reviewer's time goes to what is verifiable.
     rows.sort(key=lambda r: (-r["deadness_score"], -r["axes_evaluable"], r["location"]))
+
+    print()
+    # D3 LIFECYCLE GATE COVERAGE -- a PRINTED DENOMINATOR, never a boolean and never implied.
+    _gated = sum(1 for r in rows if r["lifecycle"]["gated"])
+    _undecl = sum(1 for r in rows if not r["lifecycle"]["declared"])
+    _elig = sum(1 for r in rows if r["kill_list_eligible"])
+    print("D3 LIFECYCLE GATE (rule bank v1.8 @880f527cc -- DECLARED axis, never inferred)")
+    print(f"  contracts: {_cprov}")
+    print(f"  {len(rows) - _undecl} of {len(rows)} scored surface(s) carry a declaration; "
+          f"{_undecl} UNDECLARED")
+    print(f"  {_gated} GATED (TRANSIENT/EVENT_CREATED/DORMANT -- deadness NOT ASSERTED); "
+          f"{_elig} kill-list-eligible")
+    print("  UNDECLARED constrains what this tool may CLAIM, not what it may CHECK: the scan ran,")
+    print("  and every observation below stands. What it may NOT do is call any of them DEAD.")
 
     print()
     print("PHASE 5 -- WRITE-SURFACE CENSUS WITH DOSSIERS")
@@ -1092,6 +1230,58 @@ def self_test() -> int:
         isinstance(src.get("resolved"), dict),
         f"resolved={list(src['resolved'])}, unresolvable={src['unresolvable']}",
     )
+
+    # -------- C9 -- THE D3 LIFECYCLE GATE, EXERCISED (WS-C1 acceptance item 10) --------------
+    # "Stated is not enforced": these controls exist because a bound written in the rule bank and
+    # not enforced in a consumer is a DESIRED control reading as APPLIED. Each asserts BEHAVIOUR.
+    _live = {("b", "k"): {"lifecycle_class": "TRANSIENT", "revalidate_by": "2026-12-31",
+                          "scope": "single-artifact", "consumer": "x", "max_dwell": "1d"}}
+    _perm = {("b", "k"): {"lifecycle_class": "PERMANENT", "revalidate_by": "2026-12-31",
+                          "scope": "single-artifact"}}
+    _half = {("b", "k"): {"lifecycle_class": "TRANSIENT", "scope": "single-artifact"}}  # no revalidate_by
+    _stale = {("b", "k"): {"lifecycle_class": "TRANSIENT", "revalidate_by": "2020-01-01",
+                           "scope": "single-artifact", "_stale": True}}
+
+    g = resolve_lifecycle("b", "k", _live)
+    check("C9a TRANSIENT is GATED -- deadness NOT ASSERTED, not merely down-weighted",
+          g["gated"] and not g["kill_list_eligible"],
+          f"gated={g['gated']} kill_list_eligible={g['kill_list_eligible']} verdict={g['verdict']!r}")
+
+    # POSITIVE CONTROL, run separately: the gate must be able to NOT fire, or it is undiscriminating.
+    p = resolve_lifecycle("b", "k", _perm)
+    check("C9b POSITIVE CONTROL -- a declared PERMANENT is NOT gated (the gate can say 'no')",
+          (not p["gated"]) and p["kill_list_eligible"],
+          f"gated={p['gated']} kill_list_eligible={p['kill_list_eligible']}; a gate that fires on "
+          "everything suppresses everything and is not a gate")
+
+    u = resolve_lifecycle("b", "k", {})
+    check("C9c UNDECLARED -- may CHECK but may not CLAIM (never 'DEAD'), and is not kill-eligible",
+          u["lifecycle_class"] == "UNDECLARED" and not u["kill_list_eligible"]
+          and "UNDECLARED" in u["verdict"] and "DEAD" not in u["verdict"].upper(),
+          f"verdict={u['verdict']!r}")
+
+    h = resolve_lifecycle("b", "k", _half)
+    check("C9d half-declared -> UNKNOWN LOUD; NO fallback to the declared value, none to PERMANENT",
+          h["lifecycle_class"] == "UNDECLARED" and "UNKNOWN, LOUD" in h["verdict"]
+          and not h["kill_list_eligible"],
+          f"verdict={h['verdict']!r}; a missing required field must not resolve to TRANSIENT")
+
+    s = resolve_lifecycle("b", "k", _stale)
+    check("C9e STALE suppresses the DELETION-CLASS VERDICT and RELEASES the OBSERVATION",
+          s["stale"] and not s["kill_list_eligible"] and "OBSERVED" in s["verdict"],
+          f"verdict={s['verdict']!r}; expiry must never itself become evidence of death")
+
+    # NEGATIVE CONTROL on the resolver's honesty: it must NEVER infer from a marker-shaped name.
+    inferred = resolve_lifecycle("b", "gold/trigger-pending.json", {})
+    check("C9f NEVER INFERRED -- a marker-SHAPED name with no declaration stays UNDECLARED",
+          inferred["lifecycle_class"] == "UNDECLARED" and not inferred["gated"],
+          f"got {inferred['lifecycle_class']!r}; inferring here would rebuild _MARKER_PATTERNS "
+          "with more syntax, which the spec rejects at gate")
+
+    _cmap, _prov = load_lifecycle_contracts()
+    check("C9g coverage is a PRINTED DENOMINATOR, and an absent registry is 0 -- not an error",
+          isinstance(_cmap, dict) and isinstance(_prov, str) and len(_prov) > 0,
+          f"{_prov}")
 
     passed = sum(1 for _n, ok, _d in results if ok)
     total = len(results)

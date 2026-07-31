@@ -9,7 +9,62 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.7"   # 1.7 = D-rail alignment pass (CVO, Andrew-direct 2026-07-30): D2.motif_topology re-pointed
+  version: "1.8"   # 1.8 = NFRA_VELOCITY WS-C1 LIFECYCLE AXIS (ADDITIVE; LAW-2 promotion). Built from
+                   #       WS-C1_LIFECYCLE_DESIGN_SPEC.md REV 4 @50643084b (1.0.0_SA_CTO~Z design+gate;
+                   #       rev 3 @691860493 + the decay-half rulings R-1/R-2/R-3 and the withdrawn
+                   #       population claim). Acceptance items 1-17; built by 0.8.0_AE_CloudComp~C and
+                   #       LANDED BY CTO~Z -- org/modules/graph is exec-locked (ANY_EXEC) BY DESIGN, so the
+                   #       build path is BUILD (~C) -> HAND OFF -> GATE + LAND (CTO~Z); the lock is what
+                   #       makes it structurally impossible for a rule-bank increment to land ungated.
+                   #       REV-4 ADDITIONS: stale_semantics (a STALE declaration SUPPRESSES the
+                   #       deletion-class VERDICT and RELEASES the OBSERVATION -- so the silencer cannot
+                   #       survive its own expiry, and expiry never becomes evidence of death);
+                   #       revalidation_predicate (revalidation requires AT LEAST the declaration's own
+                   #       predicate -- otherwise declarations converge to the weaker check under a
+                   #       fresh-looking date, and EXERCISED becomes an admission ticket with no
+                   #       frequency); annotation_cite_vintage (`file:line @ <commit-ish>`, never bare --
+                   #       a bare cite re-grounds against current code and cannot detect that it did);
+                   #       affected_population (UNKNOWN, bounded above by 7, attempt + denominator
+                   #       recorded -- an earlier 'all 7 entries' claim was unmeasured, withdrawn by its
+                   #       author, and had ALREADY PROPAGATED into this file's staged build past every
+                   #       mechanical check, because it is prose about a population).
+                   #       PRD: docs/architecture/NFRA_VELOCITY_CORE_PRD.md WS-C1. Author 0.8.0_AE_CloudComp~C.
+                   #       ADDS inside dynamic_rails.D3_contract_obligation ONLY: +contract_record;
+                   #       +lifecycle (lifecycle_class enum: PERMANENT, TRANSIENT, EVENT_CREATED, DORMANT,
+                   #       LEGACY, RETIRED, UNDECLARED) with the FULL polarity table (absent-at-rest AND
+                   #       present-at-rest per value; DORMANT additionally zero-traffic-at-rest) + per-value
+                   #       REQUIRED FALSIFIER fields + exercised_not_resolved + max_dwell_binding + decay
+                   #       (revalidate_by on EVERY declaration; STALE never auto-promotes) + scope_binding +
+                   #       required_field_failure (UNKNOWN LOUD; NEVER a fallback to the declared value and
+                   #       NEVER to PERMANENT) + undeclared_scope (claim-vs-check bound);
+                   #       +lifecycle_derivations_licensed (debt, stranded, incomplete-decommission,
+                   #       frozen-vs-stale, ROLLING-as-a-derivation); +typed_violations incl. the gate naming
+                   #       BOTH SILENT-RESIDENT and variance.Orphan; +supersedes_stopgap.
+                   #       TOKEN HYGIENE (BLOCKING finding, CVO~Z design attack): SUPERSEDED and ORPHAN are
+                   #       ALREADY OCCUPIED on the ratified variance axis (variance.labels :115) with
+                   #       DIFFERENT definitions, so the lifecycle value is LEGACY and the typed violation is
+                   #       SILENT-RESIDENT; both verified ZERO-occurrence at the oracle before adoption.
+                   #       The collision was LOAD-BEARING: gating only the typed violation left
+                   #       variance.Orphan -- a separate LIVE wired detector flagging "singleton, no sibling,
+                   #       no consumer" -- ungated on exactly the at-rest signature of a TRANSIENT.
+                   #       KEY CONSEQUENCE: absence is HEALTHY on 2 of 7 rows and presence is a FINDING on 2
+                   #       of 7, so a SINGLE-POLARITY existence detector is WRONG ON 4 OF 7 -- in the
+                   #       direction that proposes deleting live infrastructure. A skip-list SUPPRESSES; a
+                   #       type INVERTS.
+                   #       SHAPING CORPUS (declared per the WS-C2 held-out fence so a later reader can verify
+                   #       it): the spec's S.0 -- the gold/trigger-pending.json trigger-marker class; the
+                   #       comp-legacywriter TRANSIENT-MARKER stopgap @d51f6b38a0 (the thing REPLACED);
+                   #       0.7.0_AE_CloudOps~Z's never-yet specimen (three override logs); D3 at v1.7 itself;
+                   #       org/modules/graph/keep-dormant.yaml (7 entries) + comp_debt/dormant_guard.py;
+                   #       0.8.0_AE_CloudComp~C's disclosed divergent draft enum; 3.0.0_SA_CVO~Z's design
+                   #       attack. ADVI_PERFORMANCE and MDPF_GLOBAL are the HELD-OUT SET and were NOT drawn
+                   #       on. Builder added no shaping surfaces beyond the spec's declared corpus.
+                   #       PROPOSED, NOT VALIDATED: acceptance is the WS-C2 walk; expect the enum to change.
+                   #       Ratified C0-C3 + 14 roles + 10 relations + variance + completeness BYTE-IDENTICAL
+                   #       to the pinned pre-touch oracle 8f8a63200 (md5 37e16648dc965424b75c14677927a636);
+                   #       D1/D2 untouched; type_tuple NOT amended. Unblocks ESTATE WS-E1.
+                   #       Gate: 1.0.0_SA_CTO~Z items 1-13 -> 3.0.0_SA_CVO~Z verify.
+                   # 1.7 = D-rail alignment pass (CVO, Andrew-direct 2026-07-30): D2.motif_topology re-pointed
                    #       from the bare-named exploration catalog (~20 families, resolved from nowhere) to the
                    #       RATIFIED C2 catalog (c2_motif_families, 12); citation-only, no semantic change.
                    # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
@@ -273,6 +328,188 @@ dynamic_rails:
       completeness:      "the assertion must cover a whole declared POPULATION. Intent-source: a governed registry (data/firm_registry.json). Realized by the `completeness` axis (PSTMRT P2 fold-in, below). Violation = Incomplete(missing=[...])."
       canonical_source:  "a value must originate from THE ONE blessed writer (one writer per quantity). Intent-source: the canonical-source ruling. Violation = shadow-recompute / wrong-writer."
       layer_grammar:     "a layer does ONLY its job (bronze raw / silver dedup+dtype / gold business-logic -- CLAUDE.md 17/17a). Intent-source: the layer-grammar law. Violation = a layer doing a later layer's job early (irreversible)."
+
+    # --- LIFECYCLE AXIS (v1.8, NFRA_VELOCITY WS-C1) -----------------------------------------------
+    # Built from WS-C1_LIFECYCLE_DESIGN_SPEC.md REV 3 @691860493 (1.0.0_SA_CTO~Z design+gate owner).
+    # ADDITIVE: ratified C0-C3 + 14 roles + 10 relations + variance + completeness BYTE-IDENTICAL to
+    # the pinned pre-touch oracle 8f8a63200 (md5 37e16648dc965424b75c14677927a636, 48217B/425 lines);
+    # type_tuple NOT amended -- lifecycle_class is a D3 obligation FIELD, never a fifth tuple field
+    # (a tuple field would apply to EVERY node, making UNDECLARED universal and the axis unshippable;
+    # as a D3 field it binds only CONTRACTED resources, which is the correct denominator).
+    #
+    # THE PROBLEM: an EXISTENCE CHECK is asked a question about LIFECYCLE that existence cannot answer.
+    # One "absent" symbol (404 / head-object miss / test -f false) stands for at least FOUR states:
+    #   (a) never existed and never will -- flat        (b) existed, deleted -- terminal
+    #   (c) absent RIGHT NOW, by design -- a TROUGH      (d) not yet occurred -- a monotonic PREFIX
+    # ABSENCE IS NOT A STATE. IT IS A SET OF STATES, AND AN EXISTENCE CHECK CANNOT PARTITION IT.
+    # Re-observation does NOT fix (c): sample forever and you keep landing in troughs -- sampling
+    # harder makes you MORE CONFIDENT AND NO MORE CORRECT. This is why a >=2-CONFIRMED bar fails: a
+    # transient key independently reads absent AND dormant AND reader-less, so two confirmed signals
+    # agree and both are wrong. CONFIRMATION ACROSS CORRELATED INSTRUMENTS IS NOT INDEPENDENCE.
+    contract_record:
+      names: "the record a CONTRACTED resource/process carries. ONE record, TWO views -- never two schemas. CORE fixes the vocabulary; ESTATE WS-E1 declares INSTANCES against it and adds no terms."
+      required: [intent_source, obligation, lifecycle_class, revalidate_by, scope]
+      optional: [successor, expiry_condition, cadence, vintage_probe]
+      fields:
+        intent_source:    "WHERE the obligation comes from -- a governance level ABOVE the artifact (a governed registry / a PRD / a law / a module's consumer-anchored PURPOSE). Binds to intent_denominator_binding.intent_from_above. An intent_source naming the artifact itself IS the denominator-is-its-own-configuration defect and is REJECTED at declaration."
+        obligation:       "which obligation_types entr(ies) bind. ZERO obligations is not 'no obligation' -- it is UNDECLARED."
+        lifecycle_class:  "exactly one lifecycle.enum value, PRODUCER-ASSERTED."
+        revalidate_by:    "REQUIRED ON EVERY DECLARATION -- see lifecycle.decay."
+        scope:            "REQUIRED ON EVERY DECLARATION -- see lifecycle.scope_binding."
+        expiry_condition: "the STATED condition under which the obligation lapses; consumed by the debt derivation. MUST BE MACHINE-EVALUABLE or it is decorative."
+
+    lifecycle:
+      field: lifecycle_class
+      names: "the SHAPE of a contracted thing's life -- NOT its current phase. Names how the thing behaves over time so a detector can select the CORRECT PREDICATE instead of assuming a single polarity."
+      producer_asserted: "PRODUCER-ASSERTED, NEVER OBSERVER-INFERRED. The observer cannot distinguish never-yet from dead BY LOOKING -- that is the entire problem -- so a vocabulary requiring the OBSERVER to classify has MOVED the impossible judgement, not removed it. ANY implementation inferring lifecycle_class from KEY NAMES, DIRECTORY POSITION, or OBSERVED ABSENCE has rebuilt the comp-legacywriter name-pattern stopgap with more syntax. Transience cannot be derived; it must be DECLARED."
+      enum: [PERMANENT, TRANSIENT, EVENT_CREATED, DORMANT, LEGACY, RETIRED, UNDECLARED]
+      token_hygiene: "SUPERSEDED and ORPHAN are DELIBERATELY ABSENT from this enum and from typed_violations. Both are ALREADY-OCCUPIED tokens on the ratified variance axis with DIFFERENT definitions (variance.labels :115; variance.Superseded is a cross-instance SIBLING verdict, variance.Orphan is 'singleton, no sibling, no consumer'). Reusing either would put two definitions on one token in ONE file -- against the settled prohibition (v1.6 @222b0c27c, Andrew-ratified; the C4 terminology_law reserving 'estate'). The lifecycle value is LEGACY (it matches the violation it produces, LEGACY-WRITER) and the typed violation is SILENT-RESIDENT (the PRD's own phrase, 'a C-SILENT resident'). Both verified ZERO occurrences at the oracle before adoption."
+      # THE POLARITY TABLE -- THE DELIVERABLE, NOT DECORATION. Both polarities on every row, because a
+      # detector must know WHICH PREDICATE TO RUN, not merely which rows to skip.
+      polarity:
+        PERMANENT:
+          meaning:          "present from creation onward."
+          absent_at_rest:   "FINDING (missing)"
+          present_at_rest:  "healthy; with a declared cadence, healthy IFF vintage advances, else FROZEN"
+          requires:         [intent_source]
+          optional:         [cadence, vintage_probe]
+          falsifiable_by:   "the default-LOOKING value is still a CLAIM FROM ABOVE, never the artifact's own config."
+        TRANSIENT:
+          meaning:          "written -> consumed -> DELETED; oscillates. The trough case."
+          absent_at_rest:   "HEALTHY"
+          present_at_rest:  "healthy IFF dwell < max_dwell; STRANDED beyond"
+          requires:         [consumer, max_dwell, scope]
+          falsifiable_by:   "you CANNOT declare TRANSIENT to silence a detector without naming a consumer that is EXERCISED (see exercised_not_resolved) and a max_dwell BOUND to that consumer's cadence (see max_dwell_binding). max_dwell creates the STRANDED finding that PROVES the declaration can still fail."
+        EVENT_CREATED:
+          meaning:          "absent until a triggering occurrence; monotonic + append-only thereafter. The prefix case."
+          absent_at_rest:   "HEALTHY (zero occurrences so far)"
+          present_at_rest:  "healthy; a NON-APPEND edit is an INTEGRITY finding"
+          requires:         [creating_event, event_observable, scope]
+          falsifiable_by:   "without an INDEPENDENT observable for the occurrence, 'absence == zero events' is unverifiable and BYTE-IDENTICAL to 'the writer is broken'. The observable must be independent OF THE ARTIFACT whose absence is being explained -- and independent of the INSTRUMENT that reported it (a re-run of one instrument on one device is not a second observation)."
+        DORMANT:
+          meaning:          "deliberately inactive and deliberately RETAINED -- a rollback lever, a wired-not-armed path, an armed fallback."
+          absent_at_rest:   "FINDING (a belt that vanished)"
+          present_at_rest:  "healthy"
+          zero_traffic_at_rest: "HEALTHY -- and this THIRD question is unique to this row. With a declared cadence, no traffic is FROZEN (a finding); for DORMANT, NO TRAFFIC IS THE DECLARED HEALTHY STATE. A rollback lever being exercised is not a lever. So an existence-PLUS-traffic detector is STILL WRONG here; only the declaration separates belt from corpse."
+          requires:         [reason, rearm_condition, annotation_cite, revalidate_by]
+          intent_source:    "org/modules/graph/keep-dormant.yaml -- the CANONICAL registry (CTO arch-gated RULING 1; schema_version 1; revalidation_default_days 180) + its guard org/modules/graph/comp_debt/dormant_guard.py. THIS AXIS DOES NOT REPLACE THE REGISTRY -- IT TYPES IT."
+          do_not_copy:      "DORMANT declarations CITE the registry; they NEVER copy its entries into this file. A second copy of a governed list IS the frozen-enumeration defect."
+          fields_adopted_verbatim: "reason / rearm_condition / annotation_cite / revalidate_by are keep-dormant.yaml's OWN RULING-1 required fields (registry :14-17), adopted from it -- not invented here, and adopted with ONE STRENGTHENING (annotation_cite_vintage below). rearm_condition is the load-bearing one: A BELT NOBODY CAN STATE THE RE-ARM FOR IS NOT A BELT."
+          annotation_cite_vintage: "annotation_cite TAKES `file:line @ <commit-ish>` -- NEVER a bare `file:line`. CLAUDE.md Rule 22: A LINE CITATION WITHOUT A VINTAGE IS NOT A CITATION, because a bare file:line resolves at EVERY vintage, to DIFFERENT code. At re-grounding time a bare pointer resolves against the CURRENT file and STILL READS VALID even if the cited line moved or its meaning inverted -- THE RE-GROUNDING CANNOT DETECT THAT IT RE-GROUNDED ON DIFFERENT CODE. Combined with revalidation_predicate below, that is the difference between a revalidation and a ritual."
+          inherited_defect_disclosed: "THE REGISTRY'S SEVEN LIVE ENTRIES CARRY THE BARE FORM TODAY, and DORMANT cites that registry as intent_source -- so this axis would INHERIT the defect if it merely adopted the field as-is. It does not: the axis states the STRONGER requirement, and the registry correction is routed on its own path (keep-dormant.yaml is CTO arch-gated and is not edited from here). Disclosed rather than silently diverged, so a reader who finds the two forms disagreeing knows which is intended and why."
+          why:              "the registry states the gap in the estate's own words: 'A deliberate belt and a corpse are IDENTICAL on every mechanical signal (both DISABLED, both 0-invocation, both 0-consumer). Only the INTENT ANNOTATION separates them' -- and 'a false-positive (decommission a deliberate belt) is THE named failure mode.' Its tier_c_never_sufficient signals (bare DISABLED / 0 CloudTrail / 0 invocations / no graph consumer / git-cold / un-queried) are DEBT signals, never a keep on their own."
+        LEGACY:
+          meaning:          "a live successor exists; the thing may still be READ."
+          absent_at_rest:   "per successor"
+          present_at_rest:  "healthy to READ; a WRITE is LEGACY-WRITER"
+          requires:         [successor, intent_source]
+          falsifiable_by:   "successor must be LIVE and EXERCISED (see exercised_not_resolved) -- that is what makes debt COMPUTABLE. An unresolvable successor is not a supersession, it is a deletion wearing the wrong label."
+        RETIRED:
+          meaning:          "decommissioned by ruling; absence is the correct TERMINAL state."
+          absent_at_rest:   "healthy (terminal)"
+          present_at_rest:  "FINDING (incomplete decommission)"
+          requires:         [retirement_ruling]
+          falsifiable_by:   "a retirement with NO RULING is an outage with paperwork."
+        UNDECLARED:
+          meaning:          "no lifecycle declared. TODAY THIS IS ESSENTIALLY THE WHOLE ESTATE."
+          absent_at_rest:   "UNKNOWN, LOUD"
+          present_at_rest:  "UNKNOWN, LOUD"
+          requires:         []
+          falsifiable_by:   "n/a -- UNDECLARED is the honest absence of a claim, never a claim itself. It NEVER silently resolves to PERMANENT."
+      polarity_inversion:
+        law:        "A DETECTOR CANNOT MERELY KNOW ABOUT TRANSIENT AND SKIP IT. IT MUST RUN THE OPPOSITE PREDICATE."
+        arithmetic: "absence is HEALTHY on 2 of 7 rows (TRANSIENT, EVENT_CREATED) and presence is a FINDING on 2 of 7 (RETIRED; a WRITE to LEGACY). A SINGLE-POLARITY EXISTENCE DETECTOR IS WRONG ON FOUR OF SEVEN ROWS -- and wrong in the DANGEROUS direction on TRANSIENT, EVENT_CREATED and DORMANT, where it reports a healthy system as dead and PROPOSES DELETING A LIVE ONE."
+        measured:   "not hypothetical: a live pipeline trigger (the gold/trigger-pending.json class) reached a kill list's TOP TIER on 'no object found'."
+        skip_vs_type: "A SKIP-LIST SUPPRESSES; A TYPE INVERTS. Suppression also loses the OTHER direction -- STRANDED (presence beyond dwell) is a real defect with no name today: a transient marker written and never consumed is a DEAD PIPELINE LEG, and no current instrument can state it in either direction."
+      exercised_not_resolved:
+        rule: "consumer and successor must be EXERCISED, NOT MERELY RESOLVED."
+        why:  "A CONSUMER THAT RESOLVES IN D2 BUT DIED SIX MONTHS AGO STILL RESOLVES. Resolution proves a name binds; it never proves the thing runs. Same structural reason WS-C7's reachability limb must EXERCISE rather than RESOLVE (the RESOLVED-BUT-CANNOT-RUN specimen: a forwarder that resolves while its target is gone)."
+        chained_failure: "unfixed, this chains with an unbound max_dwell: TRANSIENT declared -> SILENT-RESIDENT gated OFF -> STRANDED bounded by a declarer-chosen scalar -> A GENUINELY DEAD TRANSIENT KEY IS INVISIBLE TO BOTH DETECTORS. Strictly WORSE than today, which at least reports it -- wrongly, but loudly."
+      max_dwell_binding:
+        rule: "max_dwell BINDS to the declared consumer's D3 delivery_cadence. It is NOT a free scalar chosen by the declarer."
+        why:  "max_dwell was the ONLY free scalar among the required fields -- every other one (consumer, successor, creating_event, event_observable, retirement_ruling, cadence, vintage_probe, intent_source) is a POINTER the graph must resolve. ATTACK: declare TRANSIENT, name any consumer, set max_dwell absurdly large -- the falsifier is satisfied TO THE LETTER, SILENT-RESIDENT is gated off, and STRANDED never fires. A PERMANENT SILENCER WEARING A FALSIFIER. The cure is this axis's own PERMANENT rule: never the artifact's own config."
+        mechanism: "D3 already carries delivery_cadence (obligation_types.delivery_cadence), so the binding exists and costs nothing. A transient key CANNOT legitimately dwell longer than the cycle that consumes it."
+        landing_state: "HONEST CONSEQUENCE AT THIS LANDING: no consumer has a declared D3 cadence yet (WS-E1's registry does not exist), so every TRANSIENT declaration is currently UNRESOLVABLE and renders UNKNOWN LOUD per required_field_failure. THAT IS THE CORRECT FAILURE DIRECTION -- the axis ships LOUD rather than SILENCING -- and the marker population stays on the comp-legacywriter stopgap until cadences are declared. Stated so it is not later read as a defect."
+      decay:
+        rule: "revalidate_by is REQUIRED ON EVERY DECLARATION, not only DORMANT."
+        why:  "A FALSIFIER VERIFIED ONCE AND NEVER AGAIN IS A CONTROL THAT CANNOT FAIL. A TRANSIENT declaration whose consumer was deleted last month is a perfectly-formed, fully-populated, PERMANENTLY-SILENCING LIE -- it still names a consumer, the field is still present, and the detector it disarms will never fire again. A falsifier-requirement without decay PASSES it."
+        source: "not invented here: keep-dormant.yaml already carries revalidation_default_days 180 + a per-entry revalidate_by, on RULING-1's reasoning that 'A deliberate belt can DECAY into a true corpse... The registry is NOT write-once.' Generalized from that registry to every lifecycle value."
+        stale_verdict: "past its window a declaration renders STALE -- re-confirm or promote."
+        stale_never_auto_promotes: "STALE NEVER AUTO-PROMOTES TO A FINDING. That would make EXPIRY A DELETION WARRANT -- precisely the failure this axis exists to prevent. Stale is LOUD and NON-ACTIONABLE, which is the correct pairing."
+        stale_semantics:
+          rule: "A STALE DECLARATION SUPPRESSES THE DELETION-CLASS VERDICT AND RELEASES THE OBSERVATION."
+          emits: "`ABSENT (lifecycle STALE)` / `PRESENT (lifecycle STALE)` -- honest, visible, NON-ACTIONABLE, and NOT a kill-list candidate. It degrades to exactly the undeclared_scope bound; no new concept is needed."
+          why_not_keep_suppressing: "if STALE kept suppressing, SILENT-RESIDENT would stay gated off FOREVER -- THE SILENCER WOULD SURVIVE ITS OWN EXPIRY, and revalidate_by would buy only a log line beside a still-silent detector. THE DECAY CONTROL WOULD ITSELF DECAY."
+          why_not_stop_suppressing: "if STALE stopped suppressing, expiry would RE-ARM A DETECTOR ON A TIMER -- the deletion-warrant-by-clock forbidden one line above."
+          asymmetry: "the whole axis rests on this: AN EXPIRED DECLARATION MUST STOP CONCEALING, BUT EXPIRY MUST NEVER ITSELF BECOME EVIDENCE OF DEATH. The observation returning is what a human re-grounding needs; the verdict staying suppressed is what stops the clock from authorizing a deletion."
+        revalidation_predicate:
+          rule: "WHATEVER PREDICATE THE DECLARATION REQUIRED, REVALIDATION REQUIRES AT LEAST THAT. If consumer had to be EXERCISED to declare, it must be EXERCISED to revalidate."
+          why:  "declared BY EXERCISE, re-confirmed BY READING means an artifact CONVERGES OVER TIME TO THE WEAKER CHECK -- every declaration eventually sits on a read-through with an exercise somewhere in its history and a fresh-looking date on top. A FRESHNESS DATE ON A WEAKER CHECK IS WORSE THAN NO DATE, because it reads as recently verified. Otherwise what has been scheduled is a re-ASSERTION, not a re-VALIDATION."
+          exercise_has_no_frequency: "this is also what makes EXERCISE a STANDING PROPERTY rather than an ADMISSION TICKET. 'Exercised' once at declaration decays exactly like everything else; without this rule, EXERCISED has no frequency attached to it at all."
+      scope_binding:
+        rule: "every declaration carries an explicit scope. A DEVICE-LOCAL ARTIFACT IS PER-DEVICE OR IT IS UNKNOWN."
+        why:  "a lifecycle state that differs per device with no shared oracle cannot be declared globally. Worked specimen: the three override logs are gitignored (.gitignore:68 `*.log`) = DEVICE-LOCAL, while the archive MANIFEST is a DECLARED path list carrying NO device qualifier -- so the same key is absent on one device and possibly written on another, and NO OBSERVER ON EITHER DEVICE CAN SEE BOTH. By the event_observable rule such a declaration renders UNKNOWN, LOUD."
+        not_a_tuple_change: "scope already exists in the type_tuple vocabulary (rail, grain, plane, scope); this is a FIELD ON THE DECLARATION reusing that vocabulary, NOT an amendment to type_tuple. The seam is not reopened."
+      required_field_failure:
+        rule:        "a MISSING or UNRESOLVABLE required field renders the declaration UNKNOWN, LOUD."
+        no_fallback: "it does NOT fall back to the declared value, and it does NOT fall back to PERMANENT."
+        why:         "a HALF-DECLARED lifecycle is the UNFALSIFIABLE case and must be NOISIER than no declaration, not quieter. This axis SUPPRESSES findings, so an unfalsifiable declaration is a silencer that now carries the authority of a type system."
+      undeclared_scope:
+        default:     "UNDECLARED is the default for every uncontracted resource; coverage today is ~the whole estate."
+        bound:       "UNDECLARED CONSTRAINS WHAT A TOOL MAY CLAIM; IT DOES NOT DISABLE WHAT A TOOL MAY CHECK."
+        permitted:   "an existence check MAY still run and MAY still report 'absent'."
+        forbidden:   "it may NOT convert that observation into a LIFECYCLE VERDICT -- dead / orphan / kill-list candidate -- without a resolvable lifecycle_class."
+        emit:        "the honest finding is `ABSENT (lifecycle UNDECLARED)` -- honest, actionable, cheap. It is NOT `DEAD`."
+        why_bounded: "if UNDECLARED made every existing detector render UNKNOWN, the axis would be unshippable and quietly bypassed within a week. The bound is part of the design, not a concession."
+        stated_is_not_enforced: "A BOUND STATED HERE AND NOT ENFORCED IN A CONSUMER IS A DESIRED-ONLY CONTROL READING AS APPLIED -- CLAUDE.md Rule 22a's exact class. Ship that and every consumer keeps emitting DEAD while this file says they must not, which makes the estate LOOK governed. See typed_violations.gate.enforcement for the consumer actually gated."
+        ramp:        "announce-then-enforce. Declaration coverage is a PRINTED DENOMINATOR (N of M contracted resources carry a resolvable lifecycle_class), never a boolean -- and the GATE owns that count, never this prose."
+        inherits:    "D3's standing coverage_boundary law extended one axis: the ABSENCE of a declared contract is NOT the absence of an obligation."
+
+    lifecycle_derivations_licensed:   # definitional, never primitives
+      debt:                    "expired_obligation UNION legacy_with_live_successor, where expired_obligation = a contract whose expiry_condition is TRUE and whose class is NOT RETIRED; legacy_with_live_successor = class LEGACY with an EXERCISED live successor AND a live writer still writing to it."
+      stranded:                "class TRANSIENT AND observed dwell > max_dwell (itself cadence-bound). NEW -- not statable by any current instrument in EITHER direction."
+      incomplete_decommission: "class RETIRED AND present at rest."
+      frozen_vs_stale:         "a PERMANENT with a declared cadence: NON-ADVANCING vintage (frozen) vs a vintage advancing but behind cadence (stale)."
+      rolling_is_a_derivation: "ROLLING IS A DERIVATION, NOT A CLASS. ROLLING == PERMANENT + a declared D3 cadence, with FROZEN falling straight out of its own required fields -- so promoting it to a class would violate the PRD's own law that every derived property is DEFINED AS A DERIVATION, never a primitive. FLAGGED FOR WS-C2 RE-TEST: if the walk finds a rolling artifact NOT expressible as PERMANENT+cadence, this collapse was wrong and the value returns."
+      recall_scoping:          "debt recall EQUALS contract coverage, which starts near zero. Today's debt lives in the UNCONTRACTED complement, so a derived kill list and a source census cover COMPLEMENTARY populations; BOTH counts print every wave with the gap named as coverage debt."
+    typed_violations:
+      LEGACY_WRITER:        "a D2 WRITES edge whose target carries LEGACY with a live successor, or whose obligation is expired."
+      CLOBBER:              "two writers at one (key, grain) with no adjudicating canonical_source contract."
+      TRIGGER_MISSEQUENCE:  "an edge firing against the D2 topological + temporal order."
+      SILENT_RESIDENT:      "a C-SILENT resident: no enumerator traverses it, no predicate reacts. (Named SILENT-RESIDENT, never ZOMBIE/ORPHAN -- see lifecycle.token_hygiene.)"
+      gate:
+        gated_consumers: "THE GATE MUST NAME BOTH DETECTORS -- naming only the typed violation leaves the danger reachable."
+        one_silent_resident: "SILENT-RESIDENT is gated on `lifecycle_class NOT IN {TRANSIENT, EVENT_CREATED, DORMANT}`; on UNDECLARED it RENDERS UNKNOWN rather than asserting."
+        two_variance_orphan: "variance.Orphan IS A GATED CONSUMER AND IS NAMED AS ONE -- but as a DEFERRED-UNTIL-IMPLEMENTED PRECONDITION, NOT as a guard on running code. **IT HAS NO EMITTER. IT IS DECLARED AT EVERY DECLARATIVE LAYER AND IMPLEMENTED AT NONE.** Source-confirmed 20260731 (0.8.0_AE_CloudComp~C found it; 1.0.0_SA_CTO~Z re-confirmed with a discriminating positive control) at org/modules/graph/debtscan/summary_corpus.py::_variance_verdict :581-582 -- `if len(present) < 2: return None  # singleton -> no firm-sibling; Orphan/Superseded deferred v1`. A SINGLETON RETURNS None: not an Orphan verdict, NO verdict. The function has exactly FOUR emission sites (:590 :597 :598 :599) and they emit only Fork-Shadow x2 / Canonical / Twin. ZERO python in the repo emits 'Orphan' as a VALUE, and `kind` is never constructed dynamically, so there is no indirect path; the positive control (the same search finds Fork-Shadow and Canonical) proves the search discriminates. THEREFORE THERE IS NO REACHABLE BYPASS TODAY."
+        two_variance_orphan_precondition: "**ORPHAN MAY NOT BE IMPLEMENTED WITHOUT (1) THE LIFECYCLE EXCLUSION AND (2) AN EXPLICIT STATEMENT OF WHICH NO-CONSUMER READING IT USES, BOTH LANDING IN THE SAME CHANGE.** The gate is a PRECONDITION ON THE IMPLEMENTATION, enforceable at the moment it becomes enforceable, and honest in the interval. Whoever implements the deferred verdict INHERITS both requirements instead of discovering them. Gating a non-existent emitter would instead have produced a control that CAN NEVER FIRE and can never be shown to fire -- unfalsifiable, unmutatable, passing every review while meaning nothing: the exact object this workstream exists to prevent."
+        two_variance_orphan_named_casualty: "**THE PRECONDITION HAS A NAMED FIRST CASUALTY WAITING FOR IT.** Measured 20260731 (0.8.0_AE_CloudComp~C, 1 node, exact name, BOTH directions, ALL incident edges returned, no LIMIT hit): `inf-gold-incremental-daily` -- keep-dormant entry 1, TIER A, firm=inf -- CLEARS BOTH STRUCTURAL CONJUNCTS of variance.Orphan. no-sibling: SATISFIED (singleton at (CloudNode, '{firm}-gold-incremental-daily')). no-consumer: SATISFIED under the governed reading -- its four incident edges are TRIGGERS out, DEAD_LETTERS_TO out, EMITS_TO in (a cron), CONTAINS in (AEventMotif), and ZERO are consumes-class (relations.consumes.binds_up = {READS, READS_S3, READS_FIELD, READS_SECRET, READS_URL, FETCHES, RENDERS}; denominator 7, present 0). **SO THE INSTANT SOMEONE IMPLEMENTS THE DEFERRED VERDICT, A REGISTERED TIER-A DELIBERATE BELT IS FLAGGED -- UNLESS THE EXCLUSION LANDS IN THE SAME CHANGE.** That is what makes this precondition load-bearing rather than hygienic."
+        two_variance_orphan_undefined_predicate: "**AND THE READING IS UNMADE, WHICH IS THE SHARPER FINDING: 'no consumer' HAS NO IMPLEMENTED DEFINITION.** Orphan is deferred, so no code defines which edges count as consumption. The measurement therefore did NOT pick one -- it applied the rule bank's own `consumes` binding as the governed proxy and reported BOTH readings: **READING A (strict governed consumes) -> no consumer -> full Orphan candidate; READING B (any inbound dependency at all) -> it has two (EMITS_TO, CONTAINS) -> not isolated.** A matches this rule bank's own relation axis and is weighted accordingly, **but THE DIVERGENCE IS THE FINDING: whoever implements Orphan WILL pick one, nothing today tells them which, and THAT CHOICE ALONE DETERMINES WHETHER A LIVE KEEP-DORMANT BELT IS FLAGGED.** An unmade definitional choice with a live consequence, sitting unrecorded until now -- hence requirement (2) in the precondition above."
+        silent_resident_divergence: "**SILENT-RESIDENT AND variance.Orphan DIVERGE ON THIS EXACT RESOURCE, which is substantive evidence the rename did real work beyond token hygiene.** `inf-gold-incremental-daily` IS CONTAINED BY `AEventMotif`, so a motif enumerator DOES traverse it -- and SILENT-RESIDENT is 'no enumerator traverses it, no predicate reacts'. **It would be a variance.Orphan candidate (under reading A) and NOT a SILENT-RESIDENT.** The two violations were therefore never interchangeable, and the F-1/F-2 renames separated two genuinely different predicates rather than merely two colliding tokens."
+        two_variance_orphan_correction: "THIS ENTRY PREVIOUSLY READ 'a SEPARATE, LIVE, ALREADY-WIRED detector that FLAGS on...'. **THAT WAS FALSE, AND IT WAS GATED BY CTO~Z AND VERIFIED BY CVO~Z BEFORE ANYONE CHECKED THE EMITTER.** The chain: variance.labels LISTS Orphan; variance.catalog DEFINES it ('singleton, no sibling, no consumer'); variance.polarity ASSERTS it on the FLAGS side; variance_dimensions.yaml:80 PHRASES it. **EVERY ARTIFACT ONE WOULD CONSULT TO CHECK WHETHER IT EXISTS SAYS IT EXISTS. The single layer that would falsify it -- the emitter -- is the one nobody opened.** Three seats asserted liveness from a catalog entry: CVO~Z in finding F-2, CTO~Z relaying it into a BLOCKING ruling and a spec revision, and ~C writing this very sentence. It is the DESIRED-READ-AS-APPLIED substitution (CLAUDE.md Rule 22a), committed INSIDE the axis built to stop it, by all three of the people building it. **F-2's STRUCTURAL INSIGHT STANDS UNCHANGED -- a shared token across two axes makes a reader believe both are gated when only one is; that is what forced the LEGACY / SILENT-RESIDENT renames and those renames remain correct. ONLY ITS LIVENESS PREMISE WAS FALSE.** The danger was never 'live and unguarded'; it was 'DECLARED, UNBUILT, AND INDISTINGUISHABLE FROM LIVE AT EVERY LAYER WE CHECKED' -- which is the more dangerous shape, because it is what a careful reader confirms."
+        why_the_collision_was_load_bearing: "the shared token is WHY the bypass looked covered: a builder reading 'ORPHAN is gated' reasonably believes BOTH are gated, when only the typed violation was. A GATE WHOSE NAMING CONCEALED ITS OWN BYPASS. variance carries an advisory: clause, but it names Fork-Shadow explicitly and is SILENT on Orphan while polarity: says it FLAGS Orphan -- the silence is the gap."
+        danger_ranking: "the kill-list path is the SINGLE MOST DANGEROUS CONSUMER of this axis: UNGATED, IT DOES NOT MERELY MISS THE FINDING -- IT PROPOSES DELETING THE LIVE THING. A build requirement, not an optimisation."
+        affected_population:
+          verdict: "MEASURED 20260731 (0.8.0_AE_CloudComp~C): AT MOST 3 OF 7, with EXACTLY ONE CONFIRMED SINGLETON and a CONFIRMED FLOOR OF 0. Supersedes the prior 'UNKNOWN, bounded above by 7', which itself superseded an assumed 'all 7' -- see mechanism_error below, which is the load-bearing half."
+          measured_result: "4 of 7 POSITIVELY EXCLUDED. THREE (entries 2 /mdpf/custody_source, 3 the mdpf ledger LEVER, 7 imo-find-insure-credentials) CANNOT RECEIVE A VARIANCE VERDICT AT ALL -- mdpf and imo are not values of the firm dimension [bd, cot, inf], so position_key is UNCHANGED and the governed mechanism explicitly yields 'no firm dimension -> NO VERDICT (counted, never guessed)'. They were never reachable by this detector. ONE (entry 4 bd-gold-qa-runner) HAS A LIVE SIBLING, inf-gold-qa-runner: both group to (CloudNode, '{firm}-gold-qa-runner'), and variance.Orphan requires 'singleton, NO SIBLING, no consumer' -- a two-member group fails the conjunction at the second conjunct. THE REGISTRY'S MOST CONCRETE, MOST OBVIOUSLY-DORMANT-LOOKING BELT -- AN IDLE QA-RUNNER EC2 INSTANCE -- WAS NEVER AN ORPHAN CANDIDATE. ONE CONFIRMED SINGLETON: entry 1 inf-gold-incremental-daily (a substring probe that WOULD have returned bd/cot counterparts returned none), which clears the no-sibling conjunct ONLY; its no-consumer conjunct is UNMEASURED, so it is NOT called an Orphan. TWO (entries 5, 6) returned zero rows and are recorded as NOT PRESENT UNDER THEIR REGISTRY NAME -- which is what was measured, NOT 'absent from the graph'."
+          method: "the GOVERNED implementation was RUN, not hand-simulated: summary_corpus.py::_position_key -- the function the variance axis itself uses -- fed from variance_dimensions.yaml (firm values + the governed firm_aliases map). Hand-simulating the stripping rule would have been re-deriving a governed mechanism and calling the result a measurement."
+          probe_denominator: "4 name substrings, 1 graph query, 7 CloudNode rows returned, CloudNode label ONLY."
+          error_direction: "A MISSED SIBLING INFLATES THE SINGLETON COUNT, IT DOES NOT DEFLATE IT -- anything called SINGLETON might have a sibling under a naming convention the substring missed. So 1 is an UPPER bound on confirmed singletons and the true count could be 0. The error runs toward OVER-counting orphans, which is the SAFE direction for a kill-list gate. A measurement that states which way it fails is worth several that state only a value."
+          limits: "the no-consumer conjunct is unmeasured for EVERY entry; only the CloudNode label was probed, so a sibling or candidate could sit outside it; entries 5/6's zero rows are a statement about the PROBE, not about the graph."
+          mechanism_error: "THE ASSUMED 7 WAS NOT MERELY IMPRECISE -- IT WAS WRONG ABOUT THE MECHANISM. It came from reasoning 'belts are 0-consumer, therefore belts are Orphans': SATISFYING ONE CONJUNCT OF A CONJUNCTION AND TREATING IT AS THE WHOLE. variance.Orphan is singleton AND no-sibling AND no-consumer; keep-dormant establishes only the third. The claim then propagated from the design spec into a staged build, PAST EVERY MECHANICAL CHECK, because A COLLAPSED CONJUNCTION READS AS A CONFIDENT SENTENCE and no parser reads prose about a population."
+          gate_sizing_rule: "THE GATE IS SIZED ON CLASS-CORRECTNESS, NEVER ON THIS COUNT. DORMANT is excluded because ABSENCE AND ZERO-TRAFFIC ARE ITS DECLARED HEALTHY STATE -- true at 7 exposed entries, at 3, at 1, and at 0. A COUNT-BASED JUSTIFICATION WOULD HAVE ROTTED THE MOMENT THE REGISTRY GREW, and would have INVERTED on this very measurement: a gate justified by '7 belts at risk' looks unnecessary once the answer is 'at most 3, possibly 0', when in fact the gate is no less right. Cite this measurement as evidence that THE DETECTOR'S REACH IS NARROWER THAN ASSUMED -- never as the reason the gate exists."
+          why_unknown: "variance.Orphan is a CONJUNCTION -- 'singleton, NO SIBLING, no consumer'. keep-dormant states belts are 0-consumer, so they satisfy THAT conjunct; whether they ALSO satisfy no-sibling under variance's grouping_key (node_type, position_key) HAS NOT BEEN MEASURED BY ANYONE. Satisfying one conjunct of a conjunction is not satisfying the conjunction."
+          denominator: "7 registered keep-dormant.yaml entries is the UPPER BOUND (the full registry), not the affected count."
+          attempt: "attempted here against the live graph (comp-kuzu, resolving the registry's resource_ids to nodes to test the no-sibling conjunct). The FOREGROUND call exceeded 120s and was BACKGROUNDED; IT COMPLETED, exit 0, RETURNING 3 CloudNode rows -- so this is a PARTIAL measurement, NOT a failed one. RESOLVED: bd-gold-qa-runner (entry 4, ec2_instance) and inf-gold-incremental-daily (entry 1, event_rule). DID NOT RESOLVE: /mdpf/custody_source (entry 2) under a name-contains probe. Entries 3, 5, 6, 7 were NOT PROBED -- the query covered 3 of 7, and THAT is this attempt's denominator. NOTABLE: a DISTINCT CloudNode `bd-gold-qa-runner-forgotten` exists alongside entry 4 with the same node_type; IF the two group together under variance's grouping_key (node_type, position_key) then entry 4 HAS A SIBLING and is therefore not a singleton, hence never a variance.Orphan candidate at all. THAT IS NOT COMPUTED HERE -- position_key was not derived, and a shared name prefix is NOT a shared position_key. Two entries are additionally doubtful as graph nodes on separate grounds -- entry 3 is a LEDGER LEVER (a change-management record, not an AWS resource) and entry 7 a secret_version the registry itself annotates as having NO TF secret_version -- so the true affected count may be materially below 7 for reasons unrelated to the sibling test. VERDICT UNCHANGED: UNKNOWN, bounded above by 7."
+          attempt_provenance: "an earlier form of this field read 'the query EXCEEDED A 120s TIMEOUT and returned nothing.' THE SECOND HALF WAS FALSE and its author (0.8.0_AE_CloudComp~C) caught and reported it BEFORE this landed, unprompted. The query had been backgrounded and COMPLETED SUCCESSFULLY WITH RESULTS; the exit code and output file were available the whole time and were not read. RECORDED HERE BECAUSE IT IS THE SAME DEFECT THIS FIELD EXISTS TO PREVENT, ONE LEVEL DOWN: item 17 exists because an unmeasured NUMBER propagated; this was a TOOL'S NON-RETURN standing in for a NULL RESULT. A backgrounded process that completes is the most recoverable kind of 'nothing' there is -- and 'the tool did not come back' is not a measurement, it is a missing observation wearing one."
+          gate_consequence: "THE SILENT-RESIDENT GATE IS THEREFORE NOT SIZED AGAINST THIS POPULATION. The gate is correct independent of the count: it excludes DORMANT by CLASS, not by blast radius. The measurement is owed before anyone reasons about how much the gate BUYS."
+          provenance: "an earlier form of this section asserted the affected population as 'all 7 registered entries'. That number was never measured, was withdrawn by its author, and HAD ALREADY PROPAGATED INTO THIS FILE'S STAGED BUILD before withdrawal -- past every mechanical check, because it is PROSE ABOUT A POPULATION and no parser reads that. Recorded because it is the cheapest available demonstration of why a printed denominator is a gate item and not a note."
+        measured: "the structural fact, which does NOT depend on the count: a design gating only TRANSIENT + EVENT_CREATED leaves a deliberate belt (present, zero traffic, zero consumers) MATCHING THE PREDICATE -- the outcome keep-dormant.yaml names as THE named failure mode."
+        enforcement: "SEE comp_legacywriter.py -- the kill-list consumer is ACTUALLY GATED (not merely bounded here), per the acceptance rule that a stated-only bound is a DESIRED control masquerading as APPLIED."
+    supersedes_stopgap:
+      what:         "org/modules/graph/comp_legacywriter.py `_MARKER_PATTERNS` -- 9 hardcoded name substrings matched by is_transient_marker(), demoting a hit to score 0 with signal TRANSIENT-MARKER-DO-NOT-RETIRE. Landed @d51f6b38a0 (1.0.0_SA_CTO~C, 2026-07-29)."
+      why_replaced: "A PATTERN-MATCH ON KEY NAMES IS NOT A TYPE SYSTEM, and this one is itself a FROZEN ENUMERATION. It fails BOTH directions: a transient key matching no pattern is silently retirable (false NEGATIVE -- the live-trigger kill), and a DURABLE key containing '.lock' or '/state.json' is silently demoted to score 0 (false POSITIVE -- real debt made invisible). NEITHER direction is observable from its own output. It is also a SKIP-LIST, so it can never produce STRANDED."
+      status:       "KEEP THE GUARD until TRANSIENT declarations cover the marker population. Retiring the stopgap the day the type lands would drop real coverage to the contracted set (near zero) while REPORTING PROGRESS -- the denominator-shrinks-and-looks-like-progress shape. THE STOPGAP RETIRES WHEN THE COVERAGE GAP IS ZERO, NOT WHEN THE TYPE EXISTS."
+
     intent_denominator_binding:
       intent_from_above:      "a D3 obligation is sourced from a governance level ABOVE the artifact (registry / contract / law) -- NEVER the artifact's own config (the denominator-is-its-own-configuration defect, INTENT_DENOMINATOR_SYNCHRONIZATION s.2)."
       denominator_from_below: "enumerated AT RUN TIME via a D2 path at a D1 grain -- the real instances, never a frozen or curated list, never the same artifact that supplied the intent."
@@ -284,9 +521,17 @@ dynamic_rails:
     derivations_licensed:
       - "freshness = this cadence obligation + D2 path + upstream vintages + trading calendar."
       - "completeness verdict = this completeness obligation (population from the registry) vs the D1/D2-enumerated present structures (see the `completeness` axis)."
+      - "debt / stranded / incomplete-decommission / frozen-vs-stale / rolling = the LIFECYCLE derivations -- see lifecycle_derivations_licensed above."
     coverage_boundary:
       - "MOST obligations are NOT in the graph -- they are declared contracts. D3 is the rail most reliant on read-from-file intent-sources; an undeclared obligation is a FORWARD element, marked LOUD."
       - "the ABSENCE of a declared contract is NOT the absence of an obligation -- it is an UNDECLARED obligation (a gap), rendered UNKNOWN, never Complete."
+      - "LIFECYCLE COVERAGE AT THIS LANDING IS ZERO INSTANCES. The vocabulary is declared here; the instance population is ESTATE WS-E1's registry, which does not exist yet. Every estate resource is therefore UNDECLARED today (honest denominator 0 / all-contracted). Reading this section as though the estate were typed is the frozen-record defect applied to a rail that just landed."
+      - "THIS VOCABULARY IS PROPOSED, NOT VALIDATED -- fitted to the spec's declared corpus and its real acceptance test is the WS-C2 walk against MSBEFF's 718 findings, the 210-incident INCIDENT_TAXONOMY and the DEBTLOOPS shapes. EXPECT THE ENUM TO CHANGE THERE; if it does not change at all, be suspicious of the walk."
+      - "EVENT_CREATED RESTS SUBSTANTIALLY ON A SINGLE INSTRUMENT. Its specimen and the 'independent second observation' of that specimen came from the SAME instrument (audit-archive-invoker) on the SAME device against the SAME declared manifest -- a RE-RUN, not a second observation. Three agents ran it; that is three runs of ONE instrument. Discharged at WS-C2 by a specimen from a DIFFERENT instrument. Recorded because this axis's own S.1 law is that confirmation across correlated instruments is not independence -- and this is the degenerate case, one instrument."
+      - "TRANSIENCE IS UNVERIFIABLE AGAINST THE GRAPH BY CONSTRUCTION -- a written-then-deleted marker is not a durable object, so no graph read and no existence probe can CONFIRM a TRANSIENT declaration. It is producer-asserted and falsifiable only via its EXERCISED consumer + cadence-bound max_dwell (the STRANDED path). A real asymmetry, not a gap to close later."
+      - "THE max_dwell CADENCE BINDING IS CURRENTLY UNSATISFIABLE IN PRACTICE -- no consumer carries a declared D3 delivery_cadence yet, so every TRANSIENT declaration renders UNKNOWN LOUD today. Correct failure direction (loud, not silencing), but it means the axis ships INERT for the marker population and the comp-legacywriter stopgap remains load-bearing until WS-E1 declares cadences."
+      - "EXERCISED-not-resolved IS A REQUIREMENT ON DECLARATIONS, NOT A CAPABILITY THIS FILE PROVIDES -- no exerciser exists yet. Until one does, 'EXERCISED' is enforced only by the declarer's honesty and by review, which is exactly the DESIRED-vs-APPLIED gap this axis warns about. Named so it is not read as already-mechanized."
+      - "expiry_condition MACHINE-EVALUABILITY IS UNENFORCED -- the grammar REQUIRES it, no gate CHECKS it, so the debt derivation's expired_obligation limb cannot fire for an unevaluable condition. Gate candidate for WS-E1."
 
 # --- AXIS: COMPLETENESS (cross-instance operator, orthogonal to VARIANCE) -- NFRA_PSTMRT P2 fold -----
 # Separation (variance) says NEVER-MERGE; completeness says NEVER-MISSING -- orthogonal axes of the SAME
