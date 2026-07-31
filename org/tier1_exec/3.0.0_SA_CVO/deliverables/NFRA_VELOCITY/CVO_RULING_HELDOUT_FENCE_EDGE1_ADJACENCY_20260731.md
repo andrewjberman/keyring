@@ -1715,3 +1715,87 @@ re-raised if the parked set grows before it lands.**
 withdrew the framing themselves -- one message after binding themselves to `rulings pre-empt analysis`.
 The narrower question that survived the withdrawal is what found the regress; the preference would
 not have.*
+
+---
+
+# AMENDMENT 15 -- the scope question ANSWERED by CORE, verified; and A9.1's uncaught reader (2026-07-31 ~1346Z)
+
+**The question CVO surfaced-and-refused-to-adjudicate at 133008Z was ruled by `1.0.0_SA_CTO~Z` as CORE
+owner** (`@d0fa2c55a`), **provisional and routed to Andrew.** CVO verified both load-bearing claims at
+source rather than accepting them.
+
+## The boundary ruled: `intent_source`
+
+- **DERIVED from a cited, existing `intent_source`** (ratified PRD / Andrew-direct / a producer
+  declaring its own artifact) -> **knowable today, LEGAL, not gated.** Both landed `PERMANENT` records
+  cite `docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md` -- **the value was READ OFF A DOCUMENT, not
+  decided.**
+- **DECIDED with NO `intent_source`** -> **exactly what Andrew gated.** `~B`'s.
+- **`locality` NOT REACHED** -- it is OBSERVABLE from the artifact's own addressing; `lifecycle_class`
+  is INTENT. *Andrew gated intent-that-requires-asking; locality does not require asking.*
+
+## VERIFIED (1) -- the strong form, and it was ALREADY EXERCISED
+
+```
+comp_legacywriter.py (origin, 1588 lines, POS CONTROL 'lifecycle' = 67):
+  missing = [f for f in _UNIVERSAL_REQUIRED if not rec.get(f)]
+  if missing: -> lifecycle_class UNDECLARED · gated False · kill_list_eligible False
+               verdict "UNKNOWN, LOUD (half-declared: missing %s)"
+               basis  "required field missing -- no fallback to the declared value"
+```
+
+**Populating-without-`intent_source` is UNWRITABLE in this grammar. The gate was already enforced by a
+required field before the ruling existed.**
+
+> **AND IT IS CONFIRMED BY TEST, NOT ONLY BY READING: this is the exact branch CVO exercised in the
+> increment-2 verify** -- the *TRANSIENT HALF-DECLARED* case returning `gated=False`,
+> `kill_list_eligible=False`, `UNKNOWN, LOUD`, **with a mutant test proving the suite could fail.**
+> The ruling rests on behaviour independently exercised hours before it was cited.
+
+## *** A LIVE CONSEQUENCE OF CVO's OWN A9.1 RENAME ***
+
+From the fix comment at source:
+
+> *"This list previously read `scope`; the canonical grammar renamed it `locality`, and the stale name
+> made a valid PERMANENT declaration render 'half-declared: missing scope' -- **A REAL DECLARATION
+> SILENTLY DEMOTED TO UNDECLARED by a reader that had gone stale.**"*
+
+**Downstream of A9.1.** The rename was correct and would be ruled again; **it also had a live
+consequence -- a valid declaration silently downgraded by a reader whose field list had gone stale
+against the bank.**
+
+**A9.1 bounded the NAME (no shared root) and said nothing about WHO UPDATES THE THINGS THAT READ IT.**
+*A correction is only as complete as its last surviving copy* -- a line CVO quoted at others tonight,
+and CVO's own rename produced exactly one uncaught copy.
+
+> **ADOPTED AS THE GENERAL FORM, from CTO~Z's fix (C9l asserts the reader's list AGAINST THE RULE
+> BANK): A RATIFIED RENAME CARRIES AN OBLIGATION TO ASSERT EVERY READER'S FIELD LIST AGAINST THE BANK,
+> MECHANICALLY -- so the next rename fails a CONTROL instead of a LIVE RESOLUTION.**
+
+## VERIFIED (2) -- CVO's self-invalidated finding is DISCHARGED
+
+```
+:791  "...read ZERO from a live 2-file registry while printing 'registry ABSENT'"
+:795  registry absent | present but unreadable-by-me | present and empty | present with N
+:813  counters: subjects / unreadable / templated / process_only
+```
+
+**The four states are distinguished at source.** The increment-2 *"inert"* finding can be re-grounded
+-- **it no longer rests on an instrument that could not tell EMPTY from UNREADABLE.** Verified here
+rather than taken from CTO~Z's re-run, which was itself run rather than accepted from `~C`'s report.
+
+## What makes the question live rather than hypothetical
+
+**2 of 14 records declare `PERMANENT`; one is joinable and is the single kill-list-eligible surface of
+439.** So *"does the gate reach landed work?"* carries a **deletion-adjacent** consequence. Cost of
+being wrong is bounded -- 2 records to UNDECLARED, eligibility to 0, **and no automated consumer of
+`kill_list_eligible` exists repo-wide** -- which is why provisional is safe, **not why the gate does
+not matter.**
+
+## Noted
+
+CTO~Z fenced their own ruling from absorbing an adjacent open item, unprompted: *"this does NOT close
+`locality`'s own `enum_exercised` weakness. Different defect, still open, do not let my ruling absorb
+it."* **The guard against a ruling credited with coverage it does not have.**
+And they routed to Andrew rather than deciding: **CVO's four-hop-relay point was about where boundaries
+get ASSUMED; they answered it by not assuming one.**
