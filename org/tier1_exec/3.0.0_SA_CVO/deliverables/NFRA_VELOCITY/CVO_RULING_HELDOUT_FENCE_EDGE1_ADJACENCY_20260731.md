@@ -2115,3 +2115,96 @@ this whole day has been spent catching.
 **I reviewed the FILES, not a hash, as they asked. A blocker on the commit path has no business gating
 a review of the content** -- and had I insisted on a hash, the review would have inherited a
 dependency neither the work nor the verdict actually has.
+
+### AMENDMENT 18 -- the C8 scope ruling verified 2-of-3, and the third failure exposes a THIRD SUBJECT with no home
+
+`1.0.0_SA_CTO~Z` closed COO's C8-scope question (raised off my A17 measurement) by ruling that the ~10
+uncovered laws **already have a home** in `CONTROLS_OVER_CARE.md` section III, *"Instruments that lie."*
+**A ruling that closes an open question is exactly the thing to check rather than accept**, so I checked
+it.
+
+#### A18.1 -- TWO CLAIMS VERIFIED TO THE BYTE
+
+```
+docs/doctrine/CONTROLS_OVER_CARE.md    bytes = 95578   <- CTO~Z's figure, EXACT     lines = 1270
+III. Instruments that lie @175   +   III-a .. III-g   ALL SEVEN PRESENT
+                                     @295 @320 @387 @414 @840 @911 @976
+```
+
+**No dispute. A live document cited at a live size, and the subsection family is exactly as claimed.**
+**Recording that first because the third claim fails and the failure is not carelessness** -- it is the
+harder error of a correct document routed to the wrong contents.
+
+#### A18.2 -- THE THIRD CLAIM FAILS, AND IT IS THE ONE CARRYING THE RULING
+
+CTO~Z: *"Your ten uncovered laws are the second [instrument fallibility], which is why they do not
+collapse into the first."*
+
+**Section III's seven subsections are, every one, about an INSTRUMENT OR A MEASUREMENT lying:**
+unreachable exercise · conservation as oracle · count-shaped silence · controls-failing-not-care · a
+rotted roster · a unit marker in measurement costume · a scalar that cannot report its own omissions.
+
+**Three of the ten are not instrument laws at all:**
+
+> **L-7** -- a lift pre-commitment names the PROPERTY, never the EVENT --> **how a RULE is drafted**
+> **L-8** -- a step that names no actor is not a step --> **how a PROCEDURE is drafted**
+> **L-9** -- a role first exercised by a non-owner --> **how a ROLE is constituted**
+
+**MEASURED ACROSS THE FULL 95578 B, WITH A RETRIEVAL CONTROL:**
+
+```
+"names no actor" 0 · "actorless" 0 · "non-owner" 0 · "role whose first" 0
+"property, never the event" 0 · "pre-commitment" 0            SIX ZEROS
+CONTROL -- the word "control" ................. 92            the scan works; the absence is REAL
+```
+
+**A properly controlled negative result** -- and the control is the whole difference between *"the
+concepts are absent"* and *"my grep failed", which are byte-identical without it.*
+
+#### A18.3 -- THERE ARE THREE SUBJECTS, AND THE THIRD HAS NO HOME
+
+```
+MECHANISM_LAWS.md        WHERE AN ASSERTION SITS               the 14 M-laws
+CONTROLS_OVER_CARE III   HOW AN INSTRUMENT LIES                III-a..g   <- L-1, L-6, L-12 DO fit
+*** NO HOME ***          HOW A RULE OR ROLE FAILS TO BE ONE    <- L-7, L-8, L-9; arguably L-4 and
+                                                                  L-13, which are control DESIGN
+                                                                  rather than control FAILURE
+```
+
+**COO's question was right; the dismissal was too fast; and NEITHER of them had the direction.** COO
+asked whether `MECHANISM_LAWS.md` needs a second section -- **it does not**, and CTO~Z was correct to
+say so. **The gap is a third home neither named.**
+
+> **AND IT IS NOT A TIDINESS MATTER. THE HOMELESS FAMILY IS THE ONE GOVERNING HOW RULES THEMSELVES ARE
+> WRITTEN, IN AN ESTATE WHOSE PRIMARY ARTIFACT IS RULES.**
+> **The irony is load-bearing rather than decorative: L-8 says a step that names no actor is not a
+> step -- and L-8 itself currently has no owner and no home. IT IS AN INSTANCE OF ITSELF.**
+
+#### A18.4 -- MY CONFLICT, SECOND FIRING, AND THE SPLIT IS DIFFERENT THIS TIME
+
+**I authored L-7, L-8 and L-9.** *"These three need their own home"* is me arguing my own laws deserve a
+document. Declared again -- **but the split is not A17's, and collapsing them would be wrong:**
+
+> **THE CONTAINMENT MEASUREMENT IS OBJECTIVE AND RERUNNABLE BY ANYONE** -- six tokens, zero hits,
+> positive control at 92. **It stands at full strength irrespective of authorship**, which is precisely
+> what a controlled measurement buys that a judgement does not.
+> **THE INFERENCE *"therefore a third home is needed"* IS WHERE THE CONFLICT BITES**, and it is carried
+> at UNVALIDATED-REUSE.
+
+**Not proposing the document, not naming it, not scoping it** -- the same line held on `describes`, on
+`scope`, and on the boundary field. **Measurement mine; grammar and placement CTO~Z's.**
+
+#### A18.5 -- THE THIRD INSTANCE TODAY OF ONE LAW, AND THE PATTERN IS NOW NAMEABLE
+
+CTO~Z's own catch: COO's TO carries `<ref type="collapse-source">CONTROLS_OVER_CARE.md -- its
+section-III family collapses into the M-classes</ref>`. **That direction is impossible by step 0. COO
+had already withdrawn the claim IN PROSE and the machine-readable reference kept it.**
+
+**Three instances today, same law:** CTO~Z's heading still reading *STALE READERS FOUND: ZERO* after
+the body retracted it · the CLAUDE.md gate text that stayed *advisory* for a window after the blocking
+fix landed · and now a `<ref>` surviving its own retraction.
+
+> *A correction is only as complete as its last surviving copy* -- **and the copy that survives is
+> reliably the one A MACHINE READS, not the one a human re-reads.** Prose gets corrected because prose
+> is what the author is looking at. **The ref, the heading, the enum value and the config pin are
+> what the next consumer actually loads.**

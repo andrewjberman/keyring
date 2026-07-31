@@ -490,3 +490,56 @@ missing control.**
   read.** The prior residual already notes that a law with no gate-or-test is prose-as-control (M14);
   **at 15 that is no longer a caveat, it is the dominant property of the artifact.** The collapse
   pass is now the priority over any further addition.
+
+---
+
+## *** THE THIRD SUBJECT -- A HOMELESS FAMILY, AND IT IS THE ONE ABOUT DRAFTING LAW ***
+
+**Found by `3.0.0_SA_CVO~Z` refuting a scope ruling of mine four minutes after I issued it.**
+
+I ruled that the staged control-design laws belong in `docs/doctrine/CONTROLS_OVER_CARE.md` section III
+("Instruments that lie"), and that C8's scope was therefore **not** one section short. **Claims about the
+document verified exactly -- 95578 B, section III at :175, all seven subsections III-a..III-g present.
+THE COVERAGE INFERENCE FAILED.**
+
+```
+"names no actor" 0 | "actorless" 0 | "non-owner" 0 | "role whose first" 0
+"property, never the event" 0 | "pre-commitment" 0          <- SIX ZEROS across 95578 B
+POSITIVE CONTROLS  "control" 103 | "instrument" 37          <- the scan works; the absence is real
+BROAD PROBES       "actor" 1 | "drafted" 1 | "who does" 0   <- absent under other wording too
+```
+
+**I READ THE SECTION TITLE AND THE SUBSECTION TITLES AND INFERRED THE CONTENTS.** Third instance today
+of one substitution -- the `scope` false positives (a token matched, a meaning assumed), the `grain` enum
+gap ruled from a token list without opening the definitions, and now a doctrine section I routed laws into
+by reading its heading. **Each time the correction cost one retrieval I did not run.**
+
+### THE SHAPE IS THREE SUBJECTS, NOT TWO
+
+| Home | Subject | Members |
+|---|---|---|
+| `MECHANISM_LAWS.md` (being built) | **WHERE AN ASSERTION SITS** | the 14 M-laws |
+| `CONTROLS_OVER_CARE.md` III | **HOW AN INSTRUMENT LIES** | L-1, L-6, L-12 fit |
+| **NO HOME** | **HOW A RULE OR ROLE FAILS TO BE ONE** | **L-7, L-8, L-9** (+ arguably L-4, L-13) |
+
+- **L-7** -- a lift pre-commitment must name the PROPERTY, never the EVENT --> **how a RULE is drafted**
+- **L-8** -- a step that names no actor is not a step --> **how a PROCEDURE is drafted**
+- **L-9** -- a role first exercised by a non-owner --> **how a ROLE is constituted**
+
+>> **THE GAP IS STRUCTURAL, NOT TIDINESS: this is the family governing HOW RULES THEMSELVES ARE WRITTEN,
+in an estate whose primary artifact IS rules** -- CLAUDE.md, the doctrine set, the rule bank, every task
+order. <<
+
+**AND THE IRONY IS LOAD-BEARING RATHER THAN DECORATIVE (CVO~Z's observation, kept in their words):
+L-8 says a step that names no actor is not a step -- and L-8 ITSELF HAS NO OWNER AND NO HOME. IT IS AN
+INSTANCE OF ITSELF.**
+
+### DISPOSITION -- NAMED, NOT BUILT
+
+**The third home is NOT created here and `0.8.0_AE_CloudComp~C` is NOT authorized to create it.** Their
+GO covers the 14-M-law skeleton only; I corrected their boundary line mid-build from two-way to
+**THREE-WAY, naming the third family as UNHOMED** -- because a doctrine head whose first act is a
+coverage claim that is false is worse than one that opens by naming its gap.
+
+**Creating a third doctrine file reflexively would be law-count inflation one level up** -- the residual
+already booked below -- **so the home decision is queued behind C8 artifact 1, and it is mine.**
