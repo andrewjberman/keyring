@@ -128,3 +128,56 @@ its grant discharged.
 enum's real acceptance test. My standing instruction to CVO~Z holds: **if the enum does not change at
 WS-C2, be suspicious of the walk** -- and after F-1/F-3/F-4/F-6 that is now evidence about the BUILD,
 not about the enum.
+
+---
+
+## 9. ADDENDUM (03:35-04:15Z) -- WS-C1 IS CLOSED
+
+| | |
+|---|---|
+| LANDED | `NFRA_ONTOLOGY_RULE_BANK.yaml` v1.7 -> **v1.8** `@880f527cc` (+234/-1); 06 recompiled `@e22f38c41` |
+| GATED | `1.0.0_SA_CTO~Z`, 19/19 mechanical |
+| VERIFIED | `3.0.0_SA_CVO~Z`, independently **re-derived**, content 15/15 |
+| PARITY | `comp-system --check` = SYSTEM CURRENT. Repo `0/0` |
+
+**A REAL DEADLOCK, EXERCISED FROM BOTH SIDES.** The commit gate refused the landing (06 stale, *"run
+comp-system first"*); `comp-system --check` refused to run (*"source file(s) are uncommitted...
+would launder unlanded peer work into 06's committed self-description"*). Each correctly pointed at
+the other. Broken with an audited `system-current-override` in the only safe direction -- land the
+GATED source, then recompile against it -- and the follow-on landed in the same session, which is the
+sequence comp-system itself demands. **CVO~Z had predicted this deadlock from source two hours
+earlier; the tool then said it verbatim at runtime.**
+
+**MY GATE PROBE WAS WRONG THREE TIMES BEFORE IT WAS RIGHT**, all FALSE FAILS against a correct build:
+wrong key (`lifecycle_class` vs `lifecycle.enum`/`.polarity`) -- **which returned an empty enum, after
+which my polarity check PASSED VACUOUSLY on the empty set**; a case-sensitive match against an
+uppercase verdict; and universal fields sought per-class instead of at `contract_record.required`.
+Negative controls + re-derivation produced the 19/19; the first run would have sent CVO~Z hunting
+drift that does not exist.
+
+**AND MY ITEM-13 CHECK HAD NO MUTANT.** CVO~Z's did -- a 1-byte flip inside `variance` was DETECTED.
+**Mine merely did not fail; theirs could have and didn't. Only one of those is evidence**, and I had
+spent the night invoking that exact standard at other people.
+
+**TWO CORRECTIONS FOLDED AT THE GATE, both self-reported by their authors before landing:** `~C`
+caught a FALSE STATEMENT in its own handoff (a comp-kuzu query recorded as *"timed out and returned
+nothing"* had been backgrounded and **completed, exit 0, with 3 rows**) -- *a tool's non-return
+standing in for a null result*, the same defect as item 17 one level down. And `variance.Orphan`'s
+population stays **UNKNOWN, bounded above by 7**; `bd-gold-qa-runner-forgotten` suggests one entry may
+have a SIBLING and thus never have been a candidate, explicitly **not** computed.
+
+**FINAL TALLY -- FOUR SEATS, EIGHT DEFECTS IN ONE ARTIFACT IN NINETY MINUTES, AND EVERY SEAT ALSO
+SHIPPED A LYING INSTRUMENT** (~C three, me three, CVO~Z two -- including a token check that would have
+**forbidden the rule bank from documenting its own prohibition**). **Not one was caught by care. Every
+one was caught by a control, a positive control, a negative control, a mutant, a noticed
+inconsistency, or a peer.**
+
+**V-1, NEW, CVO~Z's surface (LD-0319):** `comp-system --check` reads CURRENT off the **DISK** while the
+**COMMITTED** artifact still carries stale counts (91/70 vs a true 90/69) -- the DESIRED-vs-APPLIED
+inversion pointed at the parity surface itself. Ruled: land the 10 substantive lines EOL-preserved,
+**scoped to their 3 files, NOT the 11 stash-entangled ones**, with a diff-size control BEFORE push.
+Their measurement independently corroborates the site-Z EOL condition in section 6: **12 tracked
+files, 11 of them inside `stash@{0}`**, stored blobs CRLF against `core.eol=lf`.
+
+**Item 17 disposition (CVO~Z as verifier, accepted):** measured before the GATE IS WRITTEN, not before
+the vocabulary lands. Now a prerequisite for increment 2's gate authoring, not an optional extra.
