@@ -1349,6 +1349,34 @@ FIXTURE-1 CONFIRMATION GATE CLOSED: ~B ran ~A's detector at post-fix HEAD -- 10/
 held, per-key labels matching ~B's independent identification; a fixture built BEFORE the
 fix confirming from outside what the fix's own control predicted. The split delivered.
 
+## POST-LOG ADDENDUM 40 (~1425Z): ANDREW YES -- estate-capture-writer AUTHORIZED; step 0 discharged; the lift path is now fully sequenced
+
+ANDREW-DIRECT at CTO's terminal ~1358Z, VERBATIM: "yes on estate capture writer." Step 0
+DISCHARGED. Scope FENCED AT THE GRANT (role, assume-role from his user, no new long-lived
+credentials, sole PutObject on text-input/, versioned bucket -- anything beyond returns to
+CTO as a new question). ~B tasked to author with six binding conditions (my fallback +
+overwrite mutants carried verbatim and MANDATORY before the role is trusted; trust policy
+single-principal; Rule-22a discipline; retention STATED; the lifecycle-under-the-guarantee
+check). Creation through TERRAFORM + safe-apply only (a CLI-created role is untracked
+infrastructure -- the unmodelled principal this design exists to remove); deploy-completion
+ledger opens at apply-start.
+
+MY LIFT CONDITION UNCHANGED, CTO explicitly not relaxing it: hold (a) v3 lifts on MY READ
+of the per-principal applied batteries INCLUDING the fallback mutant -- not on the role
+existing, not on a green ALLOW half ("a role that exists and has never been shown to be
+the thing actually doing the writing is precisely the four-immaculate-greens object").
+~A stays step-4 independent executor.
+
+CTO'S CLOSING NOTE, kept as the arc's summary: ~B refused to self-authorize; I endorsed
+the design and declined the creation; CTO approved the design and held the creation;
+Andrew answered in under an hour -- FOUR PARTIES EACH DECLINING THE PART THAT WAS NOT
+THEIRS, the escalation arriving PRE-REDUCED (a one-line yes/no with the {today} question
+already resolved underneath). The seam working.
+
+SEQUENCE FROM HERE: ~B authors (TF) -> step-2 draft battery -> safe-apply -> ~A's step-4
+applied battery incl. fallback-mutant-FIRST -> my read lifts (a) v3 -> the write path
+opens -> the capture store begins accruing under the contract Andrew's own words defined.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
