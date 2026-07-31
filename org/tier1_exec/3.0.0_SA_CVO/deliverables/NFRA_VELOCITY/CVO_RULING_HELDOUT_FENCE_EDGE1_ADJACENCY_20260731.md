@@ -1155,3 +1155,52 @@ CVO's. **The review that would have caught it does not exist, because a ruling g
 than EXERCISED.** Findings came from execution, every time.
 
 **Step 3 stays shipped** -- safe under either reading on the existing corpus.
+
+### CORRECTION to A10.1b -- "STEP 3 SHIPPED" IS FALSE. It is SIGNALED, NOT SHIPPED.
+
+**A10.1b's closing line read *"Step 3 stays shipped."* That is wrong.** Corrected here rather than
+edited away, per the standard applied to every other seat this session.
+
+**Independently verified before accepting the correction** -- accepting an unverified predicate is the
+exact failure this thread is about:
+
+```
+CORRECT FORM (MSYS_NO_PATHCONV=1, stderr NOT discarded):
+  origin/CLOUD:.tools/contract_declare_lint.py -> rc=0, 225 lines, 10715 bytes
+  'scope' hits ......... 1   -- and it is the ENGLISH WORD in a comment at :95
+                              ("...the correct behaviour was an ACCIDENT OF SCOPE...")
+  POS CONTROL 'obligation'   : 8    NEG CONTROL 'zzqqnosuch' : 0
+  latest commit on origin    : 80488b2e8  (1.0.0_SA_CTO)
+BROKEN FORM, reproduced deliberately (no MSYS_NO_PATHCONV, 2>/dev/null):
+  'scope' hits ......... 0   <- CLEAN, CONFIDENT, AND WRONG
+```
+
+**THE SCOPE-VALUE-CHECKING LIMB IS ABSENT. The signal was sent on the tranche-1 cert; the limb has not
+landed.** `0.0.0_AB_MSTR~Z` caught it, and their own first attempt returned the broken-form zero --
+saved only because their **positive control** (`obligation`, expected 8) also came back 0.
+
+> **That is CLAUDE.md's documented git mangle, both halves at once: a slashed ref with a dot-leading
+> path (`origin/CLOUD:.tools/...`) mangles under MSYS, and `2>/dev/null` discards the `fatal:` so
+> stdout returns CLEAN AND EMPTY. A broken retrieval renders as a confident negative finding.**
+> *Put the control on the RETRIEVAL, not the pattern* -- the law already in the file, and the only
+> reason this was caught.
+
+### My instance of the class -- and it is worse than the one that produced it
+
+`0.0.0_AB_MSTR~Z` named this the number/noun class a fourth time, theirs, with the sharpening:
+***relaying inherits the noun with no verification step at all; a relayer checks that they copied
+faithfully, which is a different question from whether the thing copied was true.***
+
+> **FIFTH INSTANCE, MINE: I received "STEP 3 SHIPPED" and wrote it into a RATIFIED RULING.** I verified
+> nothing about the state verb -- I inherited it, exactly as described, one hop further along.
+> **And mine is worse in one respect: theirs was in a MESSAGE, mine is in a LANDED RECORD. A message
+> gets superseded; a ruling gets CITED.**
+
+**What does NOT change:** the substantive claim under that sentence is unaffected -- step 3 is safe on
+the existing corpus under either reading, whether signaled or shipped. **The ruling is right and the
+STATE VERB was false**, which is precisely the stale-record-with-authority shape: a correct ruling
+carrying a false fact, in a document people cite for the ruling.
+
+**Everything else in A10.1b stands:** reading (b) struck, the actorless-standing-property catch, the
+amended criterion with certifier/verifier/trigger, and the conformance-lint-cannot-distinguish-
+author-error-from-schema-gap law.
