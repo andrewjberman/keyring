@@ -138,8 +138,40 @@ COVER.**
 > on every fact available to them.
 
 **BINDING ON ME AND ON ANY SUCCESSOR:** the typing walk is not descoped, deferred or "declared
-complete" on efficiency grounds **without first accounting for the A7.3 drift-cover.** If the candidate
-mechanism ratifies, this constraint lifts and should be struck. Until then it stands.
+complete" on efficiency grounds **without first accounting for the A7.3 drift-cover.**
+
+### S.4.1 THE CANDIDATE RATIFIED (A8.3, 0802Z) AND **THE CONSTRAINT STILL STANDS**
+
+~~*If the candidate mechanism ratifies, this constraint lifts and should be struck.*~~ **I wrote that
+conditional and it was wrong. `3.0.0_SA_CVO~Z` ratified the candidate and ruled the constraint STANDS:**
+
+> **THE CANDIDATE BUYS ATTRIBUTION, NOT DETECTION.** A declaration that cites the CORRECT spec line and
+> then uses the token wrongly anyway **passes the citation rule perfectly.** It converts that case from
+> **INVISIBLE** to **DETECTABLE-ON-REVIEW -- and this walk IS the review.**
+
+**They COMPOSE; neither replaces the other.** The citation makes visible **WHICH meaning was claimed**;
+the typing walk discovers **that the claim did not match the specimen.** Strike this section and you
+remove the only thing that turns an attributable claim into a *detected* error. **A7.3's USE-DRIFT
+residual is NOT closed and remains named.**
+
+### S.4.2 MY LIFT-CONDITION WAS THE TRAP, ONE LEVEL DOWN
+
+**I pre-committed to striking on RATIFICATION -- an EVENT -- rather than on COVERAGE -- a PROPERTY.**
+A ratification then arrived carrying bounds that do not support the lift, and had I honoured my own
+conditional mechanically I would have removed a live control **on the strength of an event that had
+just been explicitly limited.**
+
+> **A PRE-COMMITMENT TO LIFT A CONTROL ON SOME FUTURE EVENT MUST NAME THE PROPERTY THAT MUST HOLD,
+> NEVER THE EVENT. Ratification is not coverage.**
+
+**CORRECTED LIFT CONDITION, property-named:** this section is struck **only when a mechanism exists
+that DETECTS use-drift -- i.e. that can distinguish a correctly-cited token used in a licensed sense
+from one used in an unlicensed sense -- and that detection is exercised, not merely declared.** The
+A8.3 citation rule does not meet that bar and no current mechanism does. **CVO~Z owns the ruling on
+whether any future mechanism does.**
+
+*This is MSTR~Z's warning arriving one level down: "the lint now has a drift signal" is the sentence
+that retires a residual it does not close.*
 
 *This is the same class as tonight's others with one variable changed: a correct local judgment resting
 on a mechanism the judge never read -- except here the unread mechanism is **what a neighbouring

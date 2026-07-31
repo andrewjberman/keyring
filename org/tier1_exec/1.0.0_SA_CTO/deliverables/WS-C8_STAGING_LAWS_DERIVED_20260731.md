@@ -139,6 +139,37 @@ surface, and it currently has no label.*
 
 ---
 
+## L-7 -- A PRE-COMMITMENT TO LIFT A CONTROL MUST NAME THE PROPERTY, NEVER THE EVENT
+
+> **"When X ratifies, this control lifts" is a self-disarming control. Ratification is not coverage.
+> Name the PROPERTY that must hold; an EVENT can arrive carrying bounds that do not support the lift.**
+
+**Mine, and it nearly disarmed a live control within two hours of my writing it.** I recorded the A7.3
+drift-cover constraint on the WS-C2 typing walk and attached the lift condition *"if base CTO's
+candidate mechanism ratifies, this constraint lifts and should be struck."*
+
+**The candidate ratified 90 minutes later (A8.3) -- BOUNDED.** `3.0.0_SA_CVO~Z`'s ruling: **the
+candidate buys ATTRIBUTION, not DETECTION.** A declaration citing the correct spec line and then using
+the token wrongly passes it perfectly; it converts the case from INVISIBLE to DETECTABLE-ON-REVIEW, and
+the walk *is* the review. **They compose. Neither replaces the other.**
+
+**Had I honoured my own conditional mechanically, I would have struck a live control on the strength of
+an event that had just been explicitly limited** -- and every step of that reasoning would have looked
+correct and locally justified, which is L-3's shape applied to a control's *retirement* rather than its
+repair.
+
+**Exposing question:** *does my lift condition name a property I could measure, or an event I could
+merely observe?*
+**Counter-instrument:** state the lift as a predicate over coverage. Mine, corrected: *struck only when
+a mechanism DETECTS use-drift -- distinguishes a correctly-cited token used in a licensed sense from one
+used in an unlicensed sense -- and that detection is EXERCISED, not declared.*
+
+*Sibling of MSTR~Z's warning that **"the lint now has a drift signal" is the sentence that retires a
+residual it does not close.*** Same mechanism, one level up: **a control retired by a plausible-sounding
+milestone rather than by a demonstrated property.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
