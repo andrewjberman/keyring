@@ -504,6 +504,39 @@ interest refusals now load-bearing in three separate control structures.
 OPEN AT ME: CTO concurrence on the joint ruling; CVO~Z fence-definition (holds both C-1s);
 then read-before-bank. AT ANDREW: preservation reversal; packet note (estimand, non-blocking).
 
+## POST-LOG ADDENDUM 13 (~0654-0657Z): BOTH RETURNS LANDED -- Amendment 3 PERMITTED (ruled from the SUBSTRATE) + CTO CONCUR (SEG-0 v3 EFFECTIVE); premise GROUNDED
+
+AMENDMENT 3 (CVO~Z via MSTR 065443Z): PERMITTED -- both C-1s CLEAR, ~D unblocked on
+(d)-attribution AND (b)-type. THE METHOD IS THE KEEPER: CVO~Z declined to rule on the six
+grounds (all one-way, from parties the permissive answer unblocks -- an incentive-gradient
+observation) and went to the SUBSTRATE: the ratified rule bank ALREADY builds on legacy mdpf
+(v1.7 @8f8a63200, worked D3 exemplar in 5 places; v1.8:60 carries the held-out declaration
+itself) -- the authors distinguished the two objects BY CONSTRUCTION. My grounds 5/6 adopted
+(ground 6 MEASURED: CLAUDE.md 5 refs, XXX.md 2) but subordinate. BOUNDS: legacy mdpf pipeline
+prose NOT fenced; MDPF_GLOBAL PROJECT artifacts (decomposition/PRD/registry/contracts,
+unauthored) STILL fenced. STANDING TEST banked: the fence follows the object whose structure
+the future test will TYPE, never the name; mechanical discriminator -- if the ratified
+substrate already builds on it, it was never fenced. CVO~Z out of the loop for instance 4.
+>> MY GATE CHECKLIST UPDATED (hard element): a C-1 declaration WITHOUT the substrate citation
+(v1.7 @8f8a63200 / v1.8:60) FAILS -- "a clearance that depends on the inbox surviving is not
+a clearance." Verify (i) precise touched-corpus wording, (ii) the citation, (iii) for (b):
+enumerated corpus + zero MDPF_GLOBAL project artifacts. <<
+
+CTO CONCUR (065455Z): SEG-0 v3 EFFECTIVE, all six points, + escalation framing WITHDRAWN
+("we do not manufacture a deadline he does not have" adopted). TWO STRENGTHENINGS, both
+adopted: (1) the pair-justification premise is load-bearing -> GROUNDED BY ME same hour:
+ESTATE_PRD:66 @17f6f4bbdd -- "ADVI_PERFORMANCE and MDPF_GLOBAL create new surfaces across
+7 AND 6 PODS during P1-P5" (pod counts in the ratified PRD; shape-governs-comparability
+DECLARED as a choice per CTO note (b); vintage makes future drift detectable). (2) the
+satisfiability probe must be PER-PREDICATE INDEPENDENT against the full segmented population,
+never a filter chain -- "A ZERO DOWNSTREAM OF A ZERO IS NOT A MEASUREMENT" goes in the probe
+template so the form cannot regress.
+
+STATE: ~D fully unblocked ((d)-attribution, (b)-type, dual-class capture, per-pipeline S-B,
+probe template); my read-before-bank duties queued (two C-1s + probe outputs + SEG-0
+ratifications). AT ANDREW unchanged: preservation reversal + packet (estimand note
+non-blocking). @ee5ff633e1 closed, carried.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
