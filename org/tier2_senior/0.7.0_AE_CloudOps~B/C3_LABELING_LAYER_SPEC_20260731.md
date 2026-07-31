@@ -196,9 +196,30 @@ classified it as a C3.ii state-of-system question **independently, before this s
 
 *Named by CVO (164635Z) from the registry, **verified by them directly rather than relayed**. s.2.2 proves STEP 1; **this proves THE WALK**. Two specimens, two steps.*
 
-**WS-E1 tranche 1 contains three subjects whose `intent_source` was REJECTED at declaration:**
-`mdpf-freshness-checker` · the per-firm account-distribution artifact · the feeds intermediates.
-Their recorded rejection reason is literally **"no governance level above cited; NOT MANUFACTURED."**
+**Subjects whose `intent_source` was REJECTED at declaration**, recorded reason literally
+**"no governance level above cited; NOT MANUFACTURED."**
+
+> ### ⚠ MEASURED 2026-07-31 BY THE C3L.3 AGENDA BUILDER: THE CLASS IS **10**, NOT 3.
+> ```
+> mdpf.contracts.yaml             (tranche 1)  :  3   <- the number this spec carried
+> model-portfolios.contracts.yaml (tranche 2)  :  7   <- never counted by anyone
+>                                       TOTAL  : 10   of 14 subjects = 71%
+> ```
+> **CVO's "three in tranche 1" was CORRECT AS SCOPED and this spec repeated it faithfully -- then
+> presented those subjects as THE WALK'S CANONICAL CASE, which is a claim about the CLASS, not about
+> tranche 1.** Tranche 2 more than tripled the population and nobody re-counted, because the number
+> had already been verified once and verification does not expire quietly -- **it expires when the
+> denominator moves underneath it.**
+>
+> **THE FINDING STRENGTHENS THE CASE RATHER THAN WEAKENING IT: 71% OF THE DECLARED ESTATE HAS NO
+> CITABLE GOVERNANCE LEVEL ABOVE IT.** That is not a registry defect -- the registry declining to
+> manufacture a parent is correct behaviour, ten times over. It is the size of the thing only a
+> governance act can resolve.
+
+Tranche 1: `mdpf-freshness-checker` · the per-firm account-distribution artifact · the feeds
+intermediates. Tranche 2 adds seven more (the yang benchmark/market-data/peer-performance/
+orchestration processes, the model-portfolio benchmarks artifact, the volatility generator, and the
+volatility orphan).
 
 **Why these are the walk's case and the aggregator was not** -- all three escape routes are closed at once:
 
