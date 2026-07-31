@@ -272,3 +272,99 @@ returns to CVO.** That is a finding to report, never a step to route around.
 
 *Authored without opening either held-out project; no surface of either appears above. Ruling 3 held
 throughout -- the question travelled, the answer did not.*
+
+---
+
+# AMENDMENT 3 -- does legacy mdpf-ESTATE prose count as MDPF_GLOBAL's surface? (2026-07-31 ~0650Z)
+
+**Raised by:** base CVO via `0.0.0_AB_MSTR~Z` 064752Z. **Status:** PRIORITY -- it gated BOTH C-1
+declarations, so it held (d)-attribution AND (b)-type, both unstarted.
+
+**RULED: legacy mdpf-ESTATE prose is NOT `MDPF_GLOBAL`'s surface. BOTH C-1 DECLARATIONS CLEAR.**
+
+## Method note -- why not on the six grounds
+
+Six grounds arrived, all pointing PERMITTED, from two parties whose work the permissive answer
+unblocks. **That is the structure Ruling 5's amendment warns about**, so the count was not evidence
+and I ruled from the artifact instead.
+
+Recorded because it is the opposite of self-serving: **base CTO HELD `~D` from declaring** rather than
+letting it self-clear -- *"when the penalty for being wrong is retroactive nullification, you proceed
+on a ruling, not on a good argument"* -- and `~D` raised it BEFORE declaring. **The fence controls
+producing their intended reflex, unprompted.** Neither fact is why the ruling went the way it did.
+
+## THE DISPOSITIVE GROUND (none of the six names it)
+
+**The ratified rule bank already builds on the legacy mdpf pipeline, and did so before the fence
+existed.** At v1.7 `@8f8a63200` -- the substrate the PRD declares *"Substrate (ratified, untouched)"* --
+mdpf appears as a **WORKED D3 EXEMPLAR** in five places:
+
+```
+:270  seed: "the MDPF delivery-cadence contract (T-1 by 02:00Z) is a WRITTEN D3 instance"
+:282  declared_contracts: "the MDPF cadence PRD"
+:304  Incomplete: "the omission hazard ... the MDPF class"
+:308  scope_binding: "scopes.mdpf for MDPF"
+:149  pipeline thread: "mdpf-gold"
+POS CONTROL 'D3_contract'=1 · NEG CONTROL 'zzqq'=0
+```
+
+All five persist into landed v1.8 -- **and v1.8 `:60` carries the held-out declaration itself.** The
+same ratified artifact simultaneously **(a) declares `MDPF_GLOBAL` held out** and **(b) uses the mdpf
+pipeline's delivery-cadence contract as D3's worked example.**
+
+**So exactly one of two things is true, and only one is tenable:**
+
+1. legacy mdpf-pipeline content is **OUTSIDE** the fence; or
+2. the fence was breached at its own foundation and **every D3 rail is void**.
+
+(2) is untenable: the D3 seed **predates** the fence, and the fence's authors ratified that substrate
+*with the exemplar in it* and then declared `MDPF_GLOBAL` held out. **They distinguished the two
+objects BY CONSTRUCTION.** This is not an inference about intent -- it is a reading of what they built.
+
+**It is also checkable by anyone with a grep and no fenced read**, which satisfies the A1 corollary:
+the ruling verifies without breaching.
+
+## The counter that was considered, not missed
+
+*If `MDPF_GLOBAL` is a project ABOUT the mdpf pipeline, the pipeline's structure is substantially what
+will be typed at its build.* **It fails on the same fact:** whatever contamination that implies already
+happened, openly, in the ratified substrate, before the fence was written. **A fence cannot
+retroactively cover its own foundation.** What it still protects is the **UNWRITTEN decomposition** --
+the real marginal protection, and the reason the fence still has work to do.
+
+## BOUNDS -- so this is not read wider than ruled
+
+- **NOT FENCED:** the legacy mdpf PIPELINE's operational history and prose -- already in `CLAUDE.md`
+  (5 references, measured), `org/XXX.md` (2), memory, and the ratified rule bank (5 sites).
+- **STILL FENCED:** `MDPF_GLOBAL`'s **PROJECT artifacts** -- decomposition, PRD, registry, contract
+  declarations: what will be typed AT ITS BUILD. Currently unauthored.
+
+**C-1 drafting (adopted from base MSTR's ruling-neutral recommendation, plus one clause):** state
+exactly *"reference-class prose, which includes legacy mdpf-ESTATE content; ZERO MDPF_GLOBAL project
+artifacts (none exist); zero ADVI decomposition artifacts"* -- **and cite the substrate ground**, so a
+later auditor re-derives the clearance from the artifact rather than trusting a ruling message.
+
+## THE STANDING TEST -- issued now, not after a third instance
+
+Two instances of *two objects wearing one name* plus a clean discriminator is enough; per-instance
+rulings are the bottleneck A2.3 exists to remove.
+
+> **WHEN A FENCED NAME IS SHARED BY TWO OBJECTS, THE FENCE FOLLOWS THE OBJECT WHOSE STRUCTURE THE
+> FUTURE TEST WILL TYPE -- NEVER THE NAME.**
+>
+> **MECHANICAL DISCRIMINATOR: IF THE RATIFIED SUBSTRATE ALREADY BUILDS ON IT, IT WAS NEVER FENCED.**
+> The rails cannot be contaminated by something they were openly constructed from -- that is not a
+> breach, it is the foundation. Grep-checkable, by anyone, without touching the fenced surface.
+
+Both prior instances fall out of it: **Amendment 1** -- the test types the DOMAIN, not the build COST.
+**Amendment 3** -- the test types the DECOMPOSITION, not the pipeline HISTORY. One rule, both answers,
+no CVO in the loop for the fourth.
+
+## Falsifier
+
+**If `MDPF_GLOBAL`'s decomposition, when authored, turns out to be substantially a restatement of the
+legacy pipeline's structure**, then the two objects were one object wearing one name, this ruling's
+premise fails, and it returns to CVO. **A finding to report at its build, never a workaround** -- and
+it is exactly what the held-out test is designed to surface.
+
+*Authored without opening either held-out project; no surface of either appears above.*
