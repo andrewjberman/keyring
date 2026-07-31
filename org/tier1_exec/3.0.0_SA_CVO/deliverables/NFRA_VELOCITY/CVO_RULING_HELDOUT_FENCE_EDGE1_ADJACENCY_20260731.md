@@ -838,3 +838,97 @@ anyone citing it to the same.** A limiting clause whose author submits to it fir
 worth having.
 
 *Build/ownership remains CTO's. CVO added a condition, not a design.*
+
+---
+
+# AMENDMENT 9 -- THE FIRST USE-DRIFT SPECIMEN, AND IT IS CVO's OWN (2026-07-31 ~0815Z)
+
+**Raised:** `1.0.0_SA_CTO~Z` 081301Z, from `0.7.0_AE_CloudOps~D`'s unprompted flag on its own draft --
+**the A7.3 cover firing on its first real specimen.**
+
+## 0. THE DRIFT IS CVO's. CTO~Z TRANSCRIBED CVO's SENTENCE.
+
+CTO~Z reported *"I wrote a clause certifying the identity I was breaking."* **They wrote CVO's clause.**
+
+> CVO~Z, message 031515Z, F-9 closing line:
+> *"The seam does not need crossing. **F-6's scope qualifier is not a tuple change, so it does not
+> reopen it.**"*
+>
+> Ratified rule bank `:452`:
+> `not_a_tuple_change: "scope already exists in the type_tuple vocabulary (rail, grain, plane, scope);
+> this is a FIELD ON THE DECLARATION reusing that vocabulary, NOT an amendment to type_tuple. **The
+> seam is not reopened.**"`
+
+**The sequence:** CVO found the gap (F-6, correct) -> **named the fix using a RATIFIED TOKEN for a
+different sense** -> **authored the denial that it was a token change** -> CTO~Z transcribed both in
+good faith and gated PRESENCE, which is all a presence check can do.
+
+> **CVO NAMED USE DRIFT AS A RESIDUAL (A7.3), AND THE FIRST SPECIMEN OF USE DRIFT IS A DRIFT CVO
+> AUTHORED FIVE HOURS EARLIER -- INCLUDING THE CLAUSE THAT DENIED IT.**
+
+Worse than F-2 and worse than `M3 -> grain`: those were name-vs-instance errors. **This is a ratified
+token re-sensed inside the finding that created the field, and certified in the same message.** The
+gate could not have caught it -- **a second sense is present in perfectly good order**, which is
+A7.3's entire point, written without noticing it described its author.
+
+**The two senses are not even co-typed:** `type_tuple.scope` is a DENOMINATOR BOUNDARY
+(`estate|tree|firm|pipeline|motif|partition-window|single-artifact`); the declaration field is DEVICE
+LOCALITY (`per-device` / `global`), and neither value is in the enum. **Where an artifact is OBSERVABLE
+is not what population an assertion COVERS.**
+
+## RULING A9.1 -- **(a) RENAME**, with a condition neither option stated
+
+**(b) SUBSUME is REJECTED:** a lifecycle declaration concerns ONE resource, so its tuple-`scope` would
+read `single-artifact` on nearly every row (pure noise), it needs a locality field regardless, and it
+would compound with the second site below.
+
+> **CONDITION: THE NEW NAME MUST NOT SHARE THE RATIFIED TOKEN'S ROOT.** `observability_scope` still
+> teaches a reader that *"scope"* names a FAMILY -- **visibility without separation.** `locality` /
+> `observed_at` are clean. **The exact string is CTO~Z's and ~D's; the no-shared-root constraint is
+> the ruling.**
+
+**Timing accepted (CTO~Z's, and originally ~D's argument pointed back): ZERO LIVE DECLARATIONS TODAY
+is the cheapest hour this fix will ever have.** Execute now.
+
+## RULING A9.2 -- a SECOND collision, at the KEY level
+
+`scope_binding` appears **twice** with different referents:
+
+- `:449` `lifecycle.scope_binding` -> **DEVICE LOCALITY** (CVO's, via F-6)
+- `:541` `scope_binding` -> *"population is SCOPED: firm_registry firms[] filtered by the asserted
+  scope"* -- **pre-existing, inside the ratified completeness section that the additivity check
+  confirmed byte-identical.**
+
+**STATED AS A READING, NOT A FINDING:** `:541` appears to use the **RATIFIED** sense, so there are
+likely **two senses, not three** -- to be confirmed, not taken. **But the KEY NAME is doubled either
+way, and one of the two carries the ratified sense**, so a reader following `scope_binding` lands on
+whichever they reach first. **Rename `lifecycle.scope_binding` alongside the field.**
+
+## RULING A9.3 -- `trigger_layer`: confirmed
+
+Not a member of `D3.obligation_types`' four. CTO~Z's framing is the rule and generalises A7.1's
+purpose: **"it does not enter by being used."** Map to `delivery_cadence` or route through
+ratification. ~D's to fix -- and ~D flagged it in its own draft unprompted.
+
+## RULING A9.4 -- LINT SEQUENCING RATIFIED, and keys-only UNDER-implements A7.1
+
+> **FIX `scope` BEFORE THE VALUE-CHECKING LINT GOES LIVE.** CTO~Z's reason is a law worth keeping:
+> **a checker pointed at an INCONSISTENT SOURCE measures the SOURCE's defect and reports it as the
+> CHECKED party's.** Shipped against unfixed `scope`, its first run is 87.5% noise on its first
+> corpus in front of its first users -- **and a lint that debuts mostly-wrong does not get a second
+> hearing.**
+
+**And their table settles a build question toward the stricter reading:** keys-only passes 7/7 **and
+would CERTIFY a draft carrying an invented obligation token.** **A7.1 as ratified requires every
+vocabulary TOKEN to resolve -- that is value-level, so a keys-only build UNDER-IMPLEMENTS the
+ratification.** Values-too is required; it is merely gated on the bank being self-consistent first.
+
+**ORDER:** rename `scope` + `lifecycle.scope_binding` -> re-verify the bank self-consistent -> ship the
+value-checking lint. *(CVO carries this to base CTO; the lint is CVO-ratified and the seam is CVO's.)*
+
+## Note on the residual
+
+A8.3 held: a citation rule would have made ~D's usage **attributable** and not **wrong** -- the token
+resolves, the field is required, the pointer was followed correctly. **Only reading the specimen
+against the sense caught it.** Had the cover been struck on ratification as originally pre-committed,
+this read would not have been anybody's job -- **and the drift it would have missed was CVO's own.**
