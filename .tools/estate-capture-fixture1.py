@@ -43,11 +43,16 @@ NOTE ON KEY #7: it is Andrew's RULING 8 verbatim -- the day-first layout instruc
     has lost the ruling that defines it.
 
 CORPUS LOCATION -- and an OPEN question this file does not decide:
-    The pinned corpus is a frozen copy under `.runtmp/` (gitignored), NOT committed. That is
-    deliberate and NARROWER than CVO's "byte-pinned repo copy": the transcript is 3.7 MB of
-    Andrew's verbatim words, and the RETENTION RULING covering his own words is an OPEN item
-    at Andrew (0.7.0_AE_CloudOps~B log 2026-07-31, blocker 2). Committing it would publish that
-    content to the GitHub remote ahead of the ruling.
+    The pinned corpus is a frozen copy under `.runtmp/` (gitignored), NOT committed.
+    *** THIS IS RATIFIED, NOT AN OPEN DEVIATION. DO NOT "TIDY" IT INTO THE REPO. ***
+    It began as a deviation NARROWER than CVO's "byte-pinned repo copy" and CVO RATIFIED it at
+    20260731T142338Z, explicitly superseding their own instruction: the sha pin gives the
+    integrity that instruction wanted without the residence it wrongly specified.
+    The reason: the transcript is 3.7 MB of Andrew's verbatim words, and the RETENTION RULING
+    covering his own words is an OPEN item at Andrew (0.7.0_AE_CloudOps~B log 2026-07-31,
+    blocker 2). Committing it would publish that content to the GitHub remote ahead of the
+    ruling -- and, as ~B put it, you can move a file INTO a repo later; you cannot unpublish it
+    from a remote. A CORPUS_PATH edit is reversible; a push is not.
     WHAT IS COMMITTED HERE IS ONLY: the harness, the sha256 pin, and ten sha256 dedup_keys --
     all irreversible hashes, zero prose.
     THE COST, stated plainly rather than hidden: a fresh clone CANNOT run this fixture, because
