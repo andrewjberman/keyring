@@ -1,0 +1,113 @@
+# WS-E1 TRANCHE 1 — the mdpf specimen chain
+#
+# INSTANCES of the ratified contract_record (RULE_BANK v1.8 :349-357). ZERO ADDED TERMS.
+# Subject identity is the KEY; the value is the record the subject CARRIES.
+#
+# EVERY lifecycle_class IS `UNDECLARED` AND THAT IS DELIBERATE, NOT INCOMPLETE:
+#   recording UNDECLARED is DECLINING to infer a lifecycle, not inferring one (README prohibition 2).
+#   It asserts nothing about life shape; it records that NO PRODUCER HAS ASSERTED ONE.
+#   UNDECLARED AUTHORIZES NOTHING.
+#
+# Scope: the LEGACY mdpf pipeline (Amendment 3 — explicitly NOT fenced).
+# MDPF_GLOBAL's project artifacts are FENCED and appear nowhere in this file.
+
+resolution:
+  # A DATED OBSERVATION, never a mirror. "On date D this resolved to X" can only ever be true.
+  resolved_against: "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+  resolved_version: "1.8"
+  resolved_at: "2026-07-31T07:55:00+00:00"   # computed offset, never a hand-typed Z
+  note: >-
+    Values are re-resolved at every read. No cache outlives a read; unreachable rule bank FAILS
+    LOUD rather than serving a stale copy (README prohibition 1).
+
+contracts:
+
+  "process:mdpf-daily-trigger":
+    intent_source: "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md"
+    obligation: [delivery_cadence]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+    cadence: "event-only: S3 ObjectCreated on the INF spine completion marker; no schedule of its own"
+    successor: null
+
+  "process:mdpf-daily-runner":
+    intent_source: "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md"
+    obligation: [delivery_cadence]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+    successor: null
+
+  "process:mdpf-freshness-checker":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE   # reasons in coverage.intent_source_rejections
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+
+  "artifact:s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json":
+    intent_source: "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md"
+    obligation: [delivery_cadence, completeness]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+    successor: null
+
+  "artifact:s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json":
+    intent_source: "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md"
+    obligation: [completeness]
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+    successor: null
+
+  "artifact:s3://opal-data-portal-v2/json/mdpf/{firmId}/account-distribution.json":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE   # reasons in coverage.intent_source_rejections
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+
+  "artifact:s3://opal-data-mdpf/mdpf/feeds/{artifact}/*/{date}.parquet":
+    intent_source: REJECTED_NO_GOVERNANCE_ABOVE   # reasons in coverage.intent_source_rejections
+    obligation: []
+    lifecycle_class: UNDECLARED
+    revalidate_by: "on producer assertion (solicitation outstanding)"
+    locality: global
+
+coverage:
+  # REQUIRED EMISSION. The DENOMINATOR SOURCE rides beside the number, because a denominator
+  # without its provenance is how coverage rises by shrinking.
+  subjects_declared: 7
+  denominator_source: >-
+    ENUMERATED AT RUN TIME from the comp-estate mdpf chain prose (2026-07-31). NOT the census C0
+    roster — comp-estate declares that roster unusable as a denominator and it dropped 3 facts in
+    the measured mdpf case. This denominator is therefore ITSELF UNVERIFIED-COMPLETE and must not
+    be quoted as the chain's true size.
+  denominator_confidence: incomplete_by_declaration
+
+  # SOLICITATION STATE — a property of THE REGISTRY'S PROCESS, not of any contract.
+  # Lives here, adds no term to the record.
+  solicited_and_undeclared: 0
+  not_yet_solicited: 7
+  note: >-
+    ALL SEVEN ARE NOT-YET-SOLICITED. A registry of all-UNDECLARED must not read as "the estate has
+    no contracts" when it means "we have not asked yet."
+
+  # REJECTION RATE — a finding, not an obstacle (CTO 075420Z).
+  intent_source_rejected: 3
+  intent_source_accepted: 4
+  intent_source_rejections:
+    # MOVED OUT OF THE RECORDS: rejection_reason was an UNRATIFIED TERM (lint A7.1).
+    # Registry-process metadata belongs in coverage, exactly as solicitation state does.
+    "process:mdpf-freshness-checker": "no governance level above; naming its own schedule/config is the :354 defect. Not manufactured."
+    "artifact:s3://opal-data-portal-v2/json/mdpf/{firmId}/account-distribution.json": "no governance level above cited; not manufactured. NOTE without prejudice: second portal-visible key shape in the chain; single-writer adjudication is enabled, not pre-judged."
+    "artifact:s3://opal-data-mdpf/mdpf/feeds/{artifact}/*/{date}.parquet": "no governance level above cited; not manufactured."
+  rejection_rate_note: >-
+    3 of 7 subjects have NO citable governance level above them. Reported as a rate with its
+    denominator. No parent was manufactured for any of them.
+
+  # UNDECLARED RATE — the WS-C1 feedback form: a RATE NAMES NOTHING.
+  lifecycle_undeclared: 7
+  lifecycle_denominator: 7
