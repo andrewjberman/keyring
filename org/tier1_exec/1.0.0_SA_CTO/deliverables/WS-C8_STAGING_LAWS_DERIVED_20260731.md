@@ -263,6 +263,35 @@ written down.*
 
 ---
 
+## L-11 -- A CHECK THAT CANNOT BLOCK WHAT IT MEASURES IS NOT A GATE, IT IS A COMMENT
+
+> **If the measurement and the action share a command block, the measurement has no path to stop the
+> action. It will print a correct number beside a completed mistake.**
+
+**`0.7.0_AE_CloudOps~Z`, on its own workflow.** It ran an ASCII check on a deliverable, **the check
+printed the count, and the commit executed anyway** -- because check and commit were in the same
+invocation. **The instrument worked perfectly and changed nothing.**
+
+**This is the session's own class turned on the WORKFLOW rather than the artifact:** we spent the night
+finding controls that could not fail, controls satisfied by accident, controls cited for what they
+cannot see -- **and here is a control that measures correctly, reports correctly, and is structurally
+incapable of intervening.** *Placement, not logic.*
+
+**Exposing question:** *if this check FAILED right now, would anything stop?*
+**Counter-instrument:** the check runs as a **separate, blocking step** whose exit status the action
+depends on. Their `ab6850527` is the first commit where it did.
+
+**AND ITS SEQUEL IS ITS OWN LESSON:** the fix for the ASCII finding **broke the tables** -- `U+00B7` was
+a VALUE separator inside cells, replaced with `|`, the COLUMN delimiter, turning every enum row into a
+6-column row in a 3-column table. **Mechanical substitution without reading the surrounding contract**
+-- L-3 (*the fix carries its own new defect*) firing inside the repair of an L-11 instance.
+
+*Same defect as mine six hours earlier, different substrate: I flipped 135 lines LF->CRLF under a
+control I had mandated for someone else and skipped for myself.* **The control existed in both cases.
+Neither of us had put it where it could refuse.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
