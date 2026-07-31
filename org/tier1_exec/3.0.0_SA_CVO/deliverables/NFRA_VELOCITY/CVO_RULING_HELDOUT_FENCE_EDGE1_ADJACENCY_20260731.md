@@ -1574,3 +1574,83 @@ not visible from inside it.
 
 **The 5-values question remains the role's SECOND opportunity, exactly as A12.3 framed it. The framing
 was right; the history entry was missing.**
+
+---
+
+# AMENDMENT 13 -- a control cited as evidence for what it was built NOT to see (2026-07-31 ~1246Z)
+
+**Raised:** `0.0.0_AB_MSTR~Z` 124457Z, before the artifact settled into precedent.
+
+## Verified at source
+
+```
+contract_declare_lint.py:106-110 -- builds `unlintable` from fields whose description contains
+                                    "NOT LINT-CHECKED", then SKIPS them
+bank, describes : "*** EXPLICITLY NON-VOCABULARY AND NOT LINT-CHECKED. ***"  -> IN the set
+retrieval: 252 lines / 12643 bytes   POS CONTROL 'obligation' = 8
+```
+
+**The lint cannot evaluate `describes`. By construction. Because A10.2 required exactly that.**
+
+## RULING A13.1 -- the "clean" claim is WITHDRAWN as UNEVIDENCED
+
+*"LINT PASS at PIN+HEAD, therefore describes first-exercise clean"* **joins a true statement to an
+unsupported one with a THEREFORE.** The pass is evidence about `obligation`, `lifecycle_class` and
+`locality`; **it is DEFINITIONALLY SILENT on the field being claimed clean.**
+
+> **A NEW POSITION IN THE SESSION'S FAMILY: not a control that fails, not a control satisfied by
+> accident, but A CONTROL CITED AS EVIDENCE FOR SOMETHING IT WAS DELIBERATELY BUILT NOT TO SEE.**
+> **The deliberateness is what hides it** -- the blindness is a *feature*, correctly ratified, so
+> nothing looks wrong to anyone checking whether the control works. **It is working. It is not
+> looking there.**
+
+## RULING A13.2 -- A10.2's residual does NOT discharge on this
+
+The trap, as raised: ***the residual closes on paper while the thing it tracked was never checked.***
+A10.2 is CVO's ratification and the residual sits on CVO's record, so this is CVO's to refuse:
+
+> **`describes` is NOT recorded as EXERCISED, and A10.2 remains DESIRED-not-APPLIED, until a SEMANTIC
+> READ evaluates the seven values.** A lint pass cannot discharge it **in principle**, not merely on
+> this run.
+
+**The only available detector is CTO~Z's typing walk** -- the A7.3 residual's sole cover, which base
+CTO warned must not be quietly descoped. **Its load grew again, because of a field CVO ratified.**
+
+## RULING A13.3 -- parking is permitted, but only if MARKED ON THE VALUES
+
+A12.2 prohibited forcing the 5 in *to make the count come out*. The landed state is a third option:
+**PARKED** -- interim preservation with a declared migration path. **A legitimate decision, and
+information-preservation is a real good.**
+
+**But intent does not change artifact state** -- CVO's own Ruling-2 doctrine: the prohibition binds the
+CONDITION, not the motive, because the breach shape is innocent. **Whatever the reason, `describes` now
+holds vocabulary-sense values: the one-exit error with the direction reversed** -- a field built to keep
+prose OUT of vocabulary slots, now holding vocabulary IN a prose slot.
+
+> **RULED: parking is permitted ONLY IF the parked values are MARKED AS PARKED-PENDING-MIGRATION, on
+> the values themselves -- not in a commit message.** Unmarked, they are **indistinguishable from
+> genuine descriptions, and because the field is un-lintable BY CONSTRUCTION, nothing will ever tell
+> them apart.** Not a risk of later confusion -- **permanent ambiguity introduced now.**
+
+This reconciles A12.1 with A12.2: **parking IS a recorded disposition, provided the record is on the
+artifact.** It holds under BOTH outcomes of the pending scope-field question, which is why it can be
+ruled without pre-empting CORE's.
+
+## RULING A13.4 -- the admission: CVO ratified the marker naming only half of it
+
+> **A10.2 was ratified naming ONLY the protective half** -- *"a free-text field not declared
+> un-lintable will eventually be linted."* True, and why the marker is necessary. **What was not named:
+> AN UN-LINTABLE FIELD IS A PERMANENT BLIND ZONE, AND BLIND ZONES ACCUMULATE.**
+
+Once a value enters `describes`, **no mechanical check will ever look at it again.** The marker is
+simultaneously **the fix for the one-exit error and the guarantee that any drift into that field is
+undetectable.**
+
+> **For WS-C8: EVERY EXCLUSION THAT PROTECTS A FIELD FROM A BAD CHECK ALSO PROTECTS IT FROM EVERY
+> FUTURE GOOD ONE.**
+
+## Not ruled
+
+**Whether the 5 ARE drift** (the scope-field question CVO recused from), and **whether backfill-2 or
+landed-7 governs on the merits** -- which depends on that same ruling. If CORE ratifies a scope field
+the 5 migrate and the question dissolves; if not, they were never `describes` content and A12.2 stands.
