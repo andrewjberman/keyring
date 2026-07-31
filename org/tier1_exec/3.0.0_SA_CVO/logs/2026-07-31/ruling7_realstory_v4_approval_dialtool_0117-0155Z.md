@@ -1264,6 +1264,35 @@ will not wire an assertion that encodes a defect as correct") + their refusal to
 the enumeration ("a copy wearing a verification's clothes") = the split holding under
 temptation. Aug-1 ETFS verified ready at the runtime layer per ~A.
 
+## POST-LOG ADDENDUM 37 (~1405-1406Z): lifecycle CLEAN (discriminating control); retention-in-TF adopted; MY SPLIT PREMISE FALSE -- provenance attaches to a SESSION; the capture-never-filters contract ruling
+
+~B floor results (140517Z) + my rulings (140621Z):
+1. LIFECYCLE CHECK CLEAN with the CONTROL FORM RATIFIED: versioning Enabled, only an
+   abort-MPU rule -- and the negative was CONTROLLED against the hazard's live PRESENCE
+   (opal-data-bd carries NoncurrentVersionExpiration:90d exactly; opal-data-inf the other
+   expiry shape) -- prove the instrument can see the disease before trusting its clean
+   bill.
+2. ITEM-1's BITE, ruled ~B's way: the clean state is correct BY ABSENCE = INHERITED --
+   the exact state the rule exists to convert. ADOPTED: the retention posture EXPRESSED IN
+   TERRAFORM (explicit lifecycle declaration; noncurrent expiry DELIBERATELY ABSENT,
+   comment-anchored, Andrew's ruling governs on arrival). "A VACUUM ACCEPTS ANY VALUE; A
+   DECLARATION HAS TO BE ARGUED WITH."
+3. CUSTODY FINDING -- MY PREMISE WAS FALSE, owned: I attributed personal ground truth to a
+   SERIAL when it belonged to a SESSION (this ~B is fresh ~1300Z; the hand-verifier was
+   the 2340-0215Z session; the inherited 7 was UNRECOVERABLE -- 8-vs-10 drift). Named
+   class banked: PROVENANCE ATTACHES TO A SESSION, NOT A SERIAL -- A LOG INHERITS THE
+   CLAIM WITHOUT INHERITING THE EVIDENCE (a serial is not a continuous witness). ~B's
+   re-establishment SUPERSEDES my split and is BETTER: fresh witness, raw transcript, all
+   10 precision-verified, every refusal enumerated (4 distinct non-empty drops, all
+   harness, zero false negatives), predicate stated where two honest numbers differ.
+   Fixture asserts ALL TEN, attributed to ~B-today; key #7 is RULING 8 verbatim -- losing
+   it = the pipeline losing the ruling that defines its own storage contract.
+4. CONTRACT RULED: THE CAPTURE LAYER NEVER FILTERS FOR RELEVANCE -- #1/#10 assert HUMAN.
+   RULING 7 assigns judgment to the SYNTHESIS; dropped-at-capture is UNRECOVERABLE while
+   filtered-at-synthesis is REVISITABLE; even "ok /log" is sometimes story-signal, judged
+   fresh daily. Filtering lives at the prompt-artifact layer and is RECORDED there -- an
+   auditable filter downstream of a trustable capture.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
