@@ -243,4 +243,37 @@ CVO READING (flagged as reading):
    Coverage denominator caveat stands: harness transcripts are device-local; site-Z sessions
    need their own capture path (rides the open remote/mirror gate).
 
+
+## RULING 8 -- DAY-FIRST LAYOUT + CO-CHANGE (Andrew-direct at ~B's TERMINAL, TWO MID-TURN
+messages ~0155Z Jul 31; receiving record = ~B's deliverable @8361fbf6d6, verbatim there per
+XXX.md; quoted here from that record)
+
+> where it would be, would be the same bucket where kimi tracks the change logs and other
+> story details
+
+> should be a daily sub folder in there for text-input, change-cochange, deployment-motion,
+> kimi-report, signed-review, something like this
+
+CVO READING (flagged as reading): (1) the capture store's home is the SAME bucket
+(opal-estate-report), answering the persistence-contract addendum's "where" sovereignly;
+(2) layout is DAY-FIRST -- s3://opal-estate-report/{YYYY-MM-DD}/ with per-day subfolders
+text-input / change-cochange / deployment-motion / kimi-report / signed-review -- superseding
+~B's class-first grammar (the unit of the product is a DAY); (3) "signed-review" replaces
+"adjudicated" as the reviewer surface name; (4) "change-cochange" makes CO-CHANGE a REQUIRED
+ANALYTIC of synthesis input (b) -- see the correction below. "something like this" = the
+enumeration is shape-guidance, exact set pinned in ~B's spec (manifest home included -- an
+ORACLE-MECHANICS pin that trips MSTR's declared carrier-amendment trigger when placed).
+
+## CORRECTION TO THE RULING 7 CVO READING (recorded 2026-07-31 ~0200Z, CVO-owned)
+
+Ruling 7's verbatim says "git co change". My READING (point 2 above) compressed it to
+"git change" -- and ~B's spec carried the same mis-read independently, through two approval
+rounds. Andrew's folder name "change-cochange" (Ruling 8) names it a second time: CO-CHANGE --
+what moves TOGETHER -- is a required analytic, not a synonym for change. Two files that always
+change in the same commit are coupled whether or not any graph declares it; that coupling is
+tribal knowledge no artifact records, which is precisely this program's corpus. The verbatim
+record above was never wrong (the phrasing IS the ruling); the READING was, in both readers,
+and it was caught by NAMING, not by review -- a folder name forces enumeration where prose
+lets a token be skimmed. Input (b) = git change AND co-change.
+
 -- 3.0.0_SA_CVO
