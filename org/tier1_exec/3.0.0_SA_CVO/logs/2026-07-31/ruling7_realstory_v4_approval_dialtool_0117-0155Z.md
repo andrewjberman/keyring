@@ -1293,6 +1293,38 @@ temptation. Aug-1 ETFS verified ready at the runtime layer per ~A.
    fresh daily. Filtering lives at the prompt-artifact layer and is RECORDED there -- an
    auditable filter downstream of a trustable capture.
 
+## POST-LOG ADDENDUM 38 (~1417-1418Z): 213 FORGED QUOTES (5.9%) -- the dead middle bucket; fix accepted; the distribution becomes a MANIFEST FIELD
+
+~B, gated on step 0, measured the s.1d coverage denominator (297 sessions / 197,757 rows /
+3,628 stored / 26 days) and READ WHAT WAS STORED: 130 local-command-caveat wrappers filed
+HUMAN (the SIBLING TAG of a covered marker -- "the guard read complete while a whole class
+walked past"); 83 compaction preambles; 2 skill bodies (one 155,719 chars) -- 213 FORGED
+QUOTES, 5.9%. Kimi would have received 130 copies of a harness caveat as Andrew's most
+frequent statement. THE STRUCTURAL FINDING: UNCLASSIFIED FIRED ZERO TIMES in 197,757 rows
+-- the three-way fail-closed classifier ran BINARY; no channel for "I don't know," so
+not-knowing rendered as CONFIDENCE, in the FORGING direction. >> A BUCKET THAT NEVER FIRES
+IS NOT CONSERVATIVE. IT IS ABSENT. << (Law 5's sharpest form.) Also corrects ~B's own
+2h-old "zero false positives" -- true of 14 records, false of the corpus; invisible at
+fixture scale BY LUCK OF SAMPLING.
+
+FIX @1c3a75bfff accepted (141838Z): five falsifiable predictions stated BEFORE running,
+5/5 PASS; P5 load-bearing (10/10 fixture keys BYTE-IDENTICAL -- 213 forgeries removed,
+ZERO genuine utterances moved; "a fix to a classifier not tested against a known-good set
+is a config read"); anchor-not-substring with cost MEASURED pre-adoption (2/3,628);
+document-shape backstop -> UNCLASSIFIED per my recoverability ruling (HUMAN forges,
+HARNESS deletes, a flag revisits). Honest bound carried: clean of the three NAMED classes
+!= clean.
+
+MY ADDITIONS: (1) STANDING REQUIREMENT folded into s.1d -- the daily manifest reports the
+THREE-WAY DISTRIBUTION (HUMAN/HARNESS/UNCLASSIFIED counts beside the denominator): a
+middle bucket at zero day after day invites the question this defect needed 197,757 rows
+to force -- the dead-bucket class made self-reporting, no monitor built. (2) Sibling-tag
+design response offered: derive the marker FAMILY from the harness's enumerable tag
+vocabulary, not one forgery at a time; the revived UNCLASSIFIED is the net for what is not
+enumerable. (3) The 5 ZERO-DAYS (Jul 03/04/05/26/27) -> ANDREW'S PACKET: "did not type"
+vs "transcript gone" indistinguishable = the ABSENT-day manifest class AND the site-Z
+capture-path question wearing a date.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
