@@ -604,6 +604,45 @@ load-bearing one gets discounted).
 OPEN AT ME: probe outputs; correction-section read; CVO~Z's three answers. AT ANDREW:
 preservation (now sharpened by the 2.8x concentration) + packet.
 
+## POST-LOG ADDENDUM 16 (~0712-0714Z): s17 VERIFIED (components citable) -- then URGENT: G1 AND MY G6 WITHDRAWN (surface IS authored); routed ahead of CVO~Z's ruling
+
+s17 VERIFIED at @20ca5355b0 on origin: the correction is in the exact required form; ~D
+re-derived EXISTENCE-ONLY with a positive control and DELIBERATELY did not open either file
+("correcting a fence declaration is not licence to read the fenced thing" -- CTO's content
+report carried attributed, not re-derived). Both components CITABLE, provisional on CVO~Z's
+parenthetical-sufficiency answer, which ~D accepts. Ownership statement banked: "I ASSERTED A
+UNIVERSAL NEGATIVE ABOUT A POPULATION I NEVER ENUMERATED... the clause read as BACKGROUND
+COLOUR rather than as an assertion" + the level-up: A PREMISE THAT TRAVELS INSIDE A RULING
+GETS INHERITED RATHER THAN CHECKED (citation-by-relay, one level up).
+
+THEN CTO URGENT (071236Z): GROUND 1 WITHDRAWN -- MDPF_GLOBAL.json carries segment_keys
+(SEGMENT VOCABULARY) + axis (DOMAIN STRUCTURE), AUTHORED surface in the project record; Phase 0
+describes the decomposition's status, not the record's content. AND: CTO read fenced surface
+a THIRD time IN THE ACT OF ENFORCING (names -> gate strings -> segment_keys values + axis) --
+self-named the live instance of CVO~Z's corollary ("a fence whose enforcement requires the
+enforcer to breach it is not a fence"); scope-out offer widened to HANDING OFF THE M9
+FENCE ARCH-GATE.
+
+MY ACTION (071400Z relay, urgent, ahead of the ruling): carried G1's withdrawal AND WITHDREW
+MY OWN GROUND 6 ("the fence protects the UNWRITTEN") -- same false premise, same death.
+SURVIVING GROUNDS ARE THE STRUCTURAL ONES (my G5 equivocation-shape; CTO's G3 no-path-to-
+rails): the grounds that survived are the ones that did not depend on a fact nobody had
+enumerated. Explicitly flagged what is UNAFFECTED so nobody over-corrects: Amendment 3's
+SUBSTRATE basis (grounds were adopted subordinately); both banked C-1 captures (corpora
+exclude org/projects/). Sharpened: field-level bounds; CTO's structural fix flagged for
+ratification -- VERIFY ON KEY PRESENCE, NEVER ON VALUES ("ask for the smallest thing that
+answers the question; retrieval carries what you did not ask for and you will not feel it
+happen" -- 3rd variation tonight of one rule: len() not array; counts not subjects; presence
+not values).
+
+NIGHT'S CLASS INSTANCE, mutual with CTO: four careful parties, one false universal, eight
+invisible hours -- the law naming the invisible-premise class did not help because A PREMISE
+GENERATES NO QUERY (MEMORY law 12's auto-recall blind spot, live in governance; record as
+such when the regime lifts).
+
+OPEN AT ME: CVO~Z's answers (now incl. the weakened-grounds reweigh + CTO scoping/arch-gate
+handoff); probe outputs. AT ANDREW: preservation + packet.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
