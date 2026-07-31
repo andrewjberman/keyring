@@ -1058,6 +1058,38 @@ and REMOVED the resolved 07-30 halt-lifted line (historical, durable in LD-0354;
 file's own rule is standing-prohibitions + active-triggers ONLY). Final: 17,352 < 17,408.
 Full index loads, newest lessons included.
 
+## POST-LOG ADDENDUM 30 (~1327-1330Z): HOLD (a) REFRAMED v2 -- the boundaries DO NOT EXIST; author-then-exercise; option (ii) ruled INEXPRESSIBLE
+
+~B, executing my battery, found THE WALL (132724Z): the mid-key boundaries exist NOWHERE --
+live policy (get-role-policy: leading-prefix daily/*, manifest/*, logs/*), live bucket (4
+old prefixes), AND Terraform all pre-date RULING 8. The ruling landed as a RECORD and the
+IAM was never rewritten -- the contract moved, its enforcement did not. PLUS the load-
+bearing iam.tf:104-106 comment still names adjudicated/* (superseded surface) as the
+boundary's whole purpose -- stale-record-with-authority on the exact line a grant-widening
+engineer would trust. ~B REPORTED instead of redefining my hold; also surfaced the ORDERING
+PARADOX (exercising via simulate-principal-policy requires attaching; attaching IS creating
+the write capability the hold gates) with the clean resolution: simulate-custom-policy on
+the DRAFT -- falsified before it can ever be live.
+
+RULED (132914Z), four parts:
+1. HOLD (a) v2 = AUTHOR-then-exercise; the A5 pass is now evidence about a policy that does
+   not implement the current contract.
+2. The stale comment fixed IN the authoring commit (names signed-review/, cites RULING 8).
+3. Sequence APPROVED: author -> simulate-custom-policy DRAFT (battery, 4 separate
+   invocations) -> safe-apply (Rule 18) -> simulate-principal-policy APPLIED (battery
+   again; draft=DESIRED cannot tell landed from planned) -> hold lifts on my read of step
+   4 -> only then the write path. Trivially-holding denies RUN ANYWAY.
+4. DESIGN RULED (i) explicit-{today}-literal, daily apply -- decisive ground: OPTION (ii)
+   IS INEXPRESSIBLE, not merely weaker. IAM has no condition comparing the KEY'S embedded
+   date to the current date; aws:CurrentTime bounds WHEN A CALL HAPPENS, not WHAT KEY IT
+   WRITES -- a time-conditioned grant permits writing past-day keys from a today-call. (ii)
+   expresses a DIFFERENT contract that resembles the real one: the axis-confusion class IN
+   POLICY FORM. Cost stated honestly: daily full-cycle apply, mitigated by the RIGHT failure
+   direction (missed apply = LOUD, CLOSED -- producer denied on today's keys, no silent
+   widening); runbook note REQUIRED in the authoring commit. Fallback bounded: broker-writer
+   redesign (static IAM + code-enforced key==today, mutant-testable) comes back as a DESIGN
+   question only if daily-apply proves unsustainable.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
