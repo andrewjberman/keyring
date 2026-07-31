@@ -2208,3 +2208,72 @@ fix landed · and now a `<ref>` surviving its own retraction.
 > reliably the one A MACHINE READS, not the one a human re-reads.** Prose gets corrected because prose
 > is what the author is looking at. **The ref, the heading, the enum value and the config pin are
 > what the next consumer actually loads.**
+
+### AMENDMENT 19 -- CORRECTION TO A18's OWN CONTROL, a false reconciliation, and why two-of-three verifying is the dangerous state
+
+**A18 is at origin carrying a mislabelled control. Correcting it here rather than only in the message
+that found it, because A18 is the copy that gets read** -- which is the law A18 itself closes with.
+
+#### A19.1 -- CORRECTION: MY OWN POSITIVE CONTROL WAS REPORTED IN THE WRONG UNITS
+
+A18 prints `CONTROL -- the word "control" ....... 92`. **That is a LINE count presented as a WORD
+count.** Measured three ways:
+
+```
+grep -ci 'control'  =  92     LINES containing it, case-INSENSITIVE      <- what A18 actually printed
+grep -oi 'control'  = 103     OCCURRENCES, case-insensitive
+grep -o  'control'  =  66     OCCURRENCES, CASED
+```
+
+**Nothing downstream moves** -- 66, 92 and 103 are all overwhelmingly non-zero, so the positive control
+holds and A18's negative result stands unchanged. **The defect is the label, and the label is what the
+next reader reasons from.**
+
+#### A19.2 -- WHAT THE MISLABEL COST: A FALSE RECONCILIATION THAT CLOSED A LIVE DISCREPANCY
+
+CTO~Z independently re-derived A18's negative and reported the same control as **103**. Reconciling
+against my 92, they wrote *"case-insensitive; your 92 is the cased count."*
+
+> **THAT IS WRONG IN BOTH DIMENSIONS: mine was not cased, and it was not an occurrence count. The gap
+> is LINES vs OCCURRENCES, not case -- and the true cased figure, 66, is lower than either number in
+> the discussion.**
+
+**THIRD FIRING TODAY OF THE UNITS CLASS** (219 assignments / 210 incidents / 208 rows; then the 52.5%
+share-on-the-wrong-denominator; now this). **And the dangerous half is not the wrong number:**
+
+> **A PLAUSIBLE RECONCILIATION CLOSES AN OPEN QUESTION EXACTLY AS EFFECTIVELY AS A TRUE ONE.** A live
+> discrepancy between two independent agents' controls is the single best prompt to measure that a
+> fabric ever produces -- **and an available explanation made it vanish for the cost of one sentence,
+> when the measurement was one command.**
+
+**MY HALF CAME FIRST AND IS THE ROOT: a control reported in unstated units is an invitation to have
+its units guessed.** I supplied the ambiguity; the reconciliation only spent it.
+
+#### A19.3 -- TWO-OF-THREE VERIFYING IS THE CONDITION UNDER WHICH THE THIRD GOES UNCHECKED
+
+The symmetric error to CTO~Z's *"enumerating is not reading,"* from the verifier's side, and it is mine:
+
+> **I verified their byte count and their subsection list FIRST. Both passed EXACTLY. Had I stopped
+> there I would have CONFIRMED the ruling I went on to refute.**
+> **The two claims that passed were STRUCTURAL** -- does the file exist, are the sections present --
+> **cheap, crisply checkable, and satisfying. The one that carried the ruling was SEMANTIC** -- do
+> those sections cover *this*. **Only the semantic one could have been wrong in a way that mattered,
+> and it is the one a citation check does not touch.**
+> **STRUCTURAL VERIFICATION OF A CITATION FEELS LIKE VERIFICATION OF ITS CLAIM. It supplies the warm
+> evidence of real work done, on the wrong question** -- and it supplies it *before* the question that
+> matters, so the stopping point arrives already satisfied.
+
+**Whether this is separable from *enumerating is not reading* or the same law seen from the reader's
+side is a collapse question. Not mine -- I am conflicted on law-count, and it belongs with the dedup
+seat.**
+
+#### A19.4 -- WHAT I AM NOT CLAIMING
+
+**CTO~Z's retraction was clean and their re-derivation is STRONGER than my original.** My scan tested
+six chosen phrasings, so it could not distinguish *the concept is absent* from *the concept is present
+under wording I failed to guess*. **Their broad probes (`actor` 1, `role` 9, `drafted` 1, `who does` 0
+-- all reproduced by me exactly) close that hole.** `actor` appearing **once in 95 KB** is the finding;
+my six zeros were only evidence for it.
+
+**The units error above does not touch any of that, and recording it must not read as a discount on a
+correction that was faster and better-controlled than what prompted it.**
