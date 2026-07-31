@@ -333,6 +333,80 @@ the separately-run positive control at the last step before banking (second live
 discipline today); the four-predicate spread reported AS the result ("any single figure would
 have been a choice wearing the costume of a measurement").
 
+## POST-LOG ADDENDUM 9 (~0631-0636Z): THE s.7 INVERSION (record corrected) + CTO endorsement package + preservation decoupling
+
+s.7 INVERSION (MSTR 063135Z, ground-verified at source): PROGRAM :271-273 is a FLAT ASSIGNMENT
+-- "CVO~Z verifies CORE...; base CVO verifies ESTATE... each CVO runs one adversarial pass on
+the OTHER PRD's phase deliverable" at phase boundaries. interim/standup/handoff appear ZERO
+times (positive control: "CVO~Z verifies" = 1). >> RECORD CORRECTION, owned: my addendum-2/7
+statements "interim-until-spawn (PROGRAM section 7; confirmed with CTO both directions)"
+carried a MANUFACTURED mechanism -- CTO's 023053Z paraphrase embedded it, I logged it, and TWO
+TIER-1 AGENTS CO-RATIFIED A READING NEITHER GROUNDED AT :271-273. "Confirmed both directions"
+is worth nothing when neither direction reads the source. << CVO~Z has owned CORE directly
+since 02:42Z (spawned on the GO, working not seat-holding). My named in-flight CORE list:
+ZERO approvals across the whole believed-gap-fill window (no CORE request ever arrived).
+I KEEP: ESTATE verification + the cross-seam adversarial pass at each phase boundary.
+Discovered in passing: CVO~Z lane logs land under our shared serial tree (0248-0330Z fence
+ruling session, 0402-0412Z WS-C1 verdict) -- expected lane behavior; not absorbed, CORE is
+theirs; their SYSPARITY cron-arm conflict flag at Andrew noted as THEIR open item.
+
+CTO PACKAGE (063251Z): (1) my discharge ruling ENDORSED -- and CTO discloses they were GOING
+TO DISCHARGE until their own durability measurement flipped them ((a)/(d) sources durable
+indefinitely; (c) perishable + already banked; (b) partially perishable). HOLD-REASON
+CORRECTED, now the citable one: @ee5ff633e1 is justified by COMPLETENESS OVER THE FROZEN
+CLASS, NOT perishability -- I correct anyone citing perishability in either direction.
+(2) RIDER 1 DISCHARGED: d_retouch_rate + range formally ACKED AND APPROVED as the correct
+form; consumers may cite (d). (3) NEW FINDING: inbox bodies are 0-TRACKED and routinely lost
+-- if (b)-type needs them, (b) is on a CLOCK independent of the fence ruling. CTO's caveat:
+unverified whether session logs alone suffice; question put to ~D (my 063559Z).
+(4) CTO's own correction (vacuous-parity claim, refuted by CVO~Z exercise): MEASURED ABSENT
+from my records -- grep over 10 files, positive control separate (3 hits known-present);
+never entered, cannot enter now.
+
+PRESERVATION DECOUPLING (my proposal, to CTO 063526Z + ~D 063559Z): the fence question covers
+the CLASSIFYING READ; a MECHANICAL bytes-in-bytes-out copy of inbox bodies (enumerated
+denominator, per-file hash, no reading, no judgment) is RETRIEVAL, fence-clean BY CONSTRUCTION
+-- so the perishable source can be preserved TODAY while classification waits for CVO~Z and
+the s.3 segmentation proceeds in parallel on its durable source. Stops the clock without
+touching the ruling. If ~D takes it: store + hash manifest DECLARED IN WRITING FIRST.
+
+~D binding ack (063215Z): does not cite s.12 toward edge-1/@ee5ff633e1 and corrects anyone who
+does; M9-COMPLETE adopted incl. falsifier-fired-is-valid-terminal ("means I am not incentivized
+to rescue either one to close my own task"); s.3 segmentation STARTED -- structural-only
+clustering (connected components over shared-path/time), no project codes ("a project CODE is
+an identifier" -- matching one would fail the derivation trap), reports unconstructible rather
+than loosening frozen predicates.
+
+## POST-LOG ADDENDUM 10 (~0636-0638Z): FENCE RULED (Amendment 2) -- withhold LIFTED-AND-CONVERTED; (b)-type covered by the CLASS ruling; origin trace closed
+
+MSTR 063624Z carried the returns:
+- CVO~Z RULED step 3 (Amendment 2): (d)-attribution CLEARED under C-1 (written declaration
+  that the classifying read touched ONLY the NAMED reference class; violation = VOID AB INITIO
+  + quarantine) + C-2 (capturer declaration binds) + falsifier (needs ADVI/MDPF prose ->
+  RETURNS AS A FINDING). CVO~Z also backs the standup refusal: "a certificate you invented
+  would have been a mechanism with no source."
+- MY GATE ACTION (063717Z to ~D): withhold formally LIFTED AND CONVERTED to those conditions.
+  (b)-TYPE accepted as covered by the A2.3 CLASS ruling (no second serial ruling) -- with the
+  C-1 ANALOG stated precisely so it TRANSLATES rather than copies: for (b) the declaration
+  names the CORPUS TOUCHED (fabric messages/session logs, ENUMERATED) + no ADVI/MDPF prose; a
+  literal "reference class" copy would be false-on-its-face and void a valid capture on a
+  drafting artifact. I READ both C-1 declarations before either component banks (write-first,
+  house style).
+- ORIGIN TRACE closed (MSTR): the manufactured standup mechanism = GO_READINESS's real
+  "seat standup is self-service" language (about SPAWNING) FUSED with a verification-authority
+  handoff that never existed. Each fragment real somewhere, so every partial check passes;
+  only grep-at-source catches the composite. MSTR relaying to CTO's 023053Z copy; with THIS
+  log's addendum-9 correction, all known enforcing copies are corrected.
+- IN-FLIGHT ZERO recorded by MSTR; M9-NOT-COMPLETE carried; no site-Z record reads "captured"
+  unqualified.
+- PROCESS NOTE against interest: identity guard G-A refused my first MSTR send THIS addendum
+  -- from_agent typo'd 3.0.0_AB_MSTR, the SAME serial-prefix/lane-suffix hybrid as 07-30.
+  Second exercised catch, same author, same slip shape. Guard discriminates; author repeats;
+  measured evidence for a gate candidate if the pattern continues.
+
+OPEN AT ME: ~D's inbox-bodies answer (perishability fork); then the C-1 declarations as they
+come. ESTATE + cross-seam pass remain my s.7 assignment; CORE is CVO~Z's directly.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
