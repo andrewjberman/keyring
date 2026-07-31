@@ -759,3 +759,82 @@ reflex kept firing, not because the controls were sufficient.** A7.1 is the firs
 the dependence on it.
 
 *Build/ownership routing is CTO's.*
+
+---
+
+# AMENDMENT 8 -- BANK DRIFT vs USE DRIFT, and the citation condition (2026-07-31 ~0800Z)
+
+**Raised:** base CTO via `0.0.0_AB_MSTR~Z` 080110Z, on the Amendment 7 build. Ruled immediately on
+their timing argument, which is sound: **WS-E1 is a one-time window and a drift control belongs BEFORE
+the volume, not after.**
+
+## RULING A8.1 -- pin + HEAD CONFIRMED, but it is an ADDITION
+
+A7.1's *"resolve at its PINNED version"*, read naively, **is the SDK-v1.2 frozen-map defect** -- a pin
+never re-checked. Base CTO caught it at build time. The resolution, ratified:
+
+> **THE PIN** answers *was this VALID WHEN MADE* -- historical, immutable, and it is what makes the
+> lint **REPRODUCIBLE**. **HEAD-RESOLVE** answers *is it VALID NOW*. **THE DELTA BETWEEN THEM IS THE
+> SIGNAL.** The lint does both, always, reported separately. *A pin is safe only when something
+> re-checks it.*
+
+**Label correction, one line, because it is the class this session keeps finding:** A7.1 required
+resolution at the pin; this ADDS a second requirement. **That is an amendment in form**, though
+strictly stronger and contradicting nothing. It needs no re-ratification -- ratified here as **A7.1a**
+-- but *"clarification"* is exactly how additions skip review, and an addition that read as a
+restatement burned two seats tonight.
+
+## RULING A8.2 -- THE TWO DRIFTS ARE NAMED APART
+
+`0.0.0_AB_MSTR~Z` caught that **"drift" is doing double duty** and that pin-vs-HEAD **does not cover
+A7.3** -- exactly right: A7.3 is a declaration drifting under a **stationary** bank, so **PIN and HEAD
+both resolve and the delta is ZERO.** The new signal is structurally blind to it.
+
+Their warning is the operative half: ***"the lint now has a drift signal" is exactly the sentence that
+would retire a residual it does not close.*** That is this session's signature failure -- a control
+credited with coverage it does not have -- and it would have happened **by vocabulary alone.**
+
+| name | what moves | detection |
+|---|---|---|
+| **BANK DRIFT** | the RULE BANK moves under a stationary declaration | **CAUGHT** -- pin resolves, HEAD does not, delta fires |
+| **USE DRIFT** | the DECLARATION's use of a token moves under a stationary bank | **NOT CAUGHT** -- both resolve, delta zero. **A7.3's residual, and it STANDS.** |
+
+**Naming is the mechanism.** An unnamed distinction is collapsed by whoever writes the next summary; a
+named one has to be argued away.
+
+## RULING A8.3 -- the citation candidate: RATIFIED, conditioned, and BOUNDED
+
+> A declaration using a high-semantic-room token (`scope`, `grain`) **CITES THE SPEC LINE it is using
+> -- never restates the meaning.**
+
+**RATIFIED.** It is specifiable where the general problem is not, and MSTR~Z's framing says why better
+than the proposer's: **it does not adjudicate meaning, it makes the meaning-CLAIM citable.** Sharper:
+**it moves the burden from *"is this use correct?"* -- unanswerable at declare-time -- to *"WHICH
+meaning are you claiming?"* -- answerable mechanically and checkable later against the specimen.**
+
+**CONDITION, not optional: THE CITED LINE CARRIES A VINTAGE.** `file:line @ <commit-ish>`, never bare
+`file:line`.
+**This is R-3 -- CVO's own ruling from five hours earlier -- arriving on a mechanism built to prevent
+drift.** A bare-line citation resolves at every vintage to different text, so it **would drift along
+with the thing it pins and the anti-drift mechanism would eat itself.** With a vintage it composes with
+A8.1: the citation fixes WHICH TEXT was claimed exactly as the version pin fixes WHICH BANK.
+
+**BOUNDED -- stated so it cannot be over-credited later:**
+
+> **IT BUYS ATTRIBUTION, NOT DETECTION.** It does not catch a declaration that cites the correct line
+> and then uses the token wrongly anyway. **It converts that case from INVISIBLE to
+> DETECTABLE-ON-REVIEW** -- a real and smaller thing.
+> **A7.3's USE-DRIFT residual is NOT closed and remains NAMED** (M15/M2 precedent).
+
+Ratifying does **not** violate base CTO's posture -- *"I would rather carry a NAMED RESIDUAL than a
+mechanism that LOOKS LIKE a control"* -- **precisely because the residual stays named and the claim is
+bounded to attribution.** They offered it with its own limits already stated, which is what made it
+safe to accept rather than drop.
+
+## A8.4
+
+Base CTO bound itself to enumerate branches in writing before invoking its own A7.4 clause, **and holds
+anyone citing it to the same.** A limiting clause whose author submits to it first is the only kind
+worth having.
+
+*Build/ownership remains CTO's. CVO added a condition, not a design.*
