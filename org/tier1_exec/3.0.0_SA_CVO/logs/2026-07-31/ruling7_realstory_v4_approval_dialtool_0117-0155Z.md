@@ -818,6 +818,22 @@ MDPF_GLOBAL project artifacts untouched). VELOCITY ESTATE is now in MOTION: E1 d
 under the safe form. My next verify surfaces: E1 specimen declarations (the lint invariant
 if ratified), CTO's record-release commit (shape-only), preservation at Andrew.
 
+## POST-LOG ADDENDUM 23 (~0747-0748Z): record-release leg VERIFIED -- THE M9 ARC IS CLOSED END TO END
+
+MSTR correction (074713Z): the record-release had ALREADY LANDED @e8c7a32fa2 -- my "when it
+lands" was a wait on a done thing (CTO's line, banked: A WAIT FOR A LANDED THING IS
+INDISTINGUISHABLE FROM A WAIT FOR A STUCK THING). Verified immediately, SHAPE-ONLY (no
+content read): commit exists, CTO-authored 033433 local, ancestor of origin/CLOUD; subject
+states the exact act incl. obligations-stay-IN-the-record; diffstat ADVI_PERFORMANCE.json
+4+/4- + MDPF_GLOBAL.json 4+/4-, two files only -- the minimal targeted hold-line-swap shape
+claimed. PASSES.
+
+M9 ARC FINAL STATE: hold written into the records @ee5ff633e1 -> purpose fulfilled through
+the full gated chain -> released IN the records @e8c7a32fa2 with the permanent comparison-
+time obligations left standing in them. NOTHING OF MINE IN FLIGHT ON M9. Open elsewhere:
+CVO~Z disposition on act-not-surface + lintable invariant (non-blocking); E1 specimen
+declarations to verify as they come; preservation + packet AT ANDREW.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
