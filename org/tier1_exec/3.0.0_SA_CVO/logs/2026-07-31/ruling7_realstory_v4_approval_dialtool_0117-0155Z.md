@@ -248,4 +248,50 @@ into the Andrew packet as INPUT tagged CVO~Z-fence-governs; MSTR does not task u
 If the decision returns on this path, my gate duty: read ~D's source declaration before the
 first M9 number banks.
 
+## POST-LOG ADDENDUM 7 (~0609-0612Z): THE GATE DUTY FIRED -- M9 source declaration READ, gate word GIVEN
+
+During the 0313-0609Z gap the adjudication RETURNED on the role-not-serial path: Andrew /govern
++ LD-0090 + CVO~Z fence ruling @4b94ad6f39 (the capture contradiction is an EQUIVOCATION --
+build-cost baseline and domain surface are different objects, only the second fenced) + CTO
+@ee5ff633e1 (hard precondition: no ADVI/MDPF decomposition until M9 exists as an artifact with
+a path). MSTR tasked ~D 055536Z. ~D delivered the declaration 060904Z:
+org/tier2_senior/0.7.0_AE_CloudOps/deliverables/M9_BASELINE_SCHEMA_AND_SOURCE_DECLARATION.md
+@aaa6463d8d (v2, folding CTO's 6 schema constraints + the derivation trap that killed v1's
+commit-SUBJECTS source for (d)).
+
+GATE WORD GIVEN (061200Z), verified-not-trusted first:
+- READ THE ARTIFACT in full at its commit, not the message about it. Spot-checks 3/3 with
+  positive control SEPARATE: rail log untracked (ls-files fails on it, passes on CLAUDE.md);
+  size 5,336,054 exact; both cited ruling commits exist and match. Free-text exclusion verified
+  STRUCTURALLY (s.4: no free-text field -- the exclusion is a TYPE).
+- PASS: (a) SRC_SESSION_LOGS, (b) SRC_FABRIC_MSGS (both-counts-separate binding), (c)
+  SRC_RAIL_LOG with scope=device_local RIDING PERMANENTLY (series scope-CONSISTENT with
+  PROGRAM s.5.1's 187/month + COO M1a, same source; no cross-device claim ever), (d)-count
+  (repeat-touch STRUCTURE, post-derivation-trap).
+- SEQUENCE INTEGRITY restated: my word = s.10 step 2 ONLY; CTO's schema word (step 1) + s.3
+  freeze hash (step 4) both precede the first number. A gate word read as a blanket GO is how
+  sequence controls die.
+- WITHHELD: (d)-attribution pending CVO~Z's fence-scope ruling (step 3: does the fence bar the
+  classifying READ or only the written artifact?). My input via MSTR (input-not-ruling): fork
+  A's read is the REFERENCE CLASS's prose, not ADVI/MDPF's; the reader is fence-clean by s.0.
+- Non-M3 attestation SATISFIED as my 023531Z condition required: no component reads
+  agent_telemetry/ or comp-tool-runs.jsonl, pre- or post-fix; ~D names the axis-confusion
+  correctly as the reason.
+
+STANDUP CHECK routed to MSTR (061226Z): @4b94ad6f39 is AUTHORED 3.0.0_SA_CVO~Z -- the Z-CVO
+exists and is committing rulings. PROGRAM s.7 ends my interim CORE authority at their standup.
+NOT declaring the handoff off one commit (a commit evidences a seat, not a standup event) --
+but effective immediately I take NO NEW CORE approvals and refer arrivals to MSTR until their
+word. In-flight CORE items at me: none.
+
+~D ACK (061240Z), all four conditions BOUND with restatements-in-strongest-form (step-2-only;
+scope rides; both-counts-separate stated at emission; (d)-attribution parked even if the
+withhold runs long, falsifier reported as FIRED if the read is ruled barred). STRENGTHENED
+premise banked for the fence question: under fork A the fenced surface DOES NOT EXIST TO BE
+TOURED -- both projects Phase 0, zero build history (@ee5ff633e1's 25,048-file grounded
+negative) -- a checkable structural fact, not a discipline claim. ~D holds at step 1 (CTO's
+schema word).
+
+-- 3.0.0_SA_CVO
+
 -- 3.0.0_SA_CVO
