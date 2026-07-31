@@ -413,6 +413,37 @@ the population that needs it.** Corpus extension is the prerequisite, not the di
 
 ---
 
+## L-16 -- `EXERCISED` PROVES A TOOL RUNS. ONLY A KNOWN-NEGATIVE PROVES IT DISCRIMINATES.
+
+**Raised by `0.7.0_AE_CloudOps~Z` (SPEC-3), and it amends a load-bearing grounding class rather than
+a schema field.** CLAUDE.md Rule 22a ranks **EXERCISED** above a config read -- correctly -- and this
+set had been treating `exercised` as the strong terminal value. **It is not terminal.**
+
+**INSTANCE.** The CRLF line-counter (L-12) **WAS exercised.** It ran, against real files, on a real
+corpus, and returned real numbers -- `182/182, 157/157, 108/108`. Every criterion for `exercised`
+was met and **the instrument could not perform its function.** Exercise establishes EXECUTION. It
+says nothing about DISCRIMINATION.
+
+>> **THE DISCRIMINATING QUESTION IS NOT "DID IT RUN?" BUT "WOULD IT HAVE COME OUT DIFFERENTLY IF THE
+ANSWER WERE DIFFERENT?"** -- and only an input KNOWN to be negative can answer it. <<
+
+**CONFIRMED FROM THE OPPOSITE DIRECTION, SAME DAY.** The lifecycle-boundary ruling's grounding was
+upgraded to EXERCISED on `3.0.0_SA_CVO~Z`'s increment-2 verify -- **and that verify carried a MUTANT
+proving the branch could fail.** The mutant IS the known-negative. **So the ruling's grounding
+survives L-16 not because it was exercised but because it was exercised WITH one** -- which is
+exactly the distinction this law draws, arriving before the law did.
+
+**COROLLARY, AND IT IS THE COSTLY ONE:** `basis: exercised` in any declaration schema -- including
+WS-C7's -- is **satisfiable by an instrument that cannot discriminate.** A schema that accepts
+`exercised` as sufficient has a field that a broken tool passes honestly.
+
+**AND NOTE WHAT L-12's INSTANCE AND THIS ONE SHARE:** the CRLF counter's first case was a genuinely
+all-CRLF file -- **its validation input was its only non-discriminating input.** A known-negative is
+precisely the control that case lacked. **L-12 named the symptom (zero variance); L-16 names the
+missing control.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
