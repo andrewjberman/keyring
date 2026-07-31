@@ -212,4 +212,35 @@ Andrew quote is worse than a missed nugget) binds the story's quotes and pointer
 fixtures (etfs-canonicality, opal-data-mdpf decommission-intent) remain acceptance shapes --
 a day whose input contained them must surface them in or behind the story.
 
+
+## RULING 7a -- STANDING PROMPT BLOCK + CAPTURE MANDATE CONFIRMED (Andrew-direct, CVO
+terminal, TWO MID-TURN messages ~0141Z Jul 31, VERBATIM -- received while the CVO turn was
+running, i.e. through the exact channel ~B's capture measurement found a naive extractor DROPS)
+
+First message (confirms the CVO reading of Ruling 7, then adds a standing prompt requirement):
+
+> Yes this is correct also this text block here "{the story}" is extremely important text
+> block, kimi should see it every day when constructing the report
+
+Second message:
+
+> also we need to figure out how to track all my text inputs and have that saved somewhere
+
+CVO READING (flagged as reading):
+
+1. The CVO reading of Ruling 7 is CONFIRMED sovereign ("Yes this is correct").
+2. STANDING PROMPT BLOCK: the Ruling 7 verbatim text block -- Andrew's own definition of THE
+   REAL STORY -- must be IN Kimi's prompt EVERY DAY when it constructs the report. Not a
+   paraphrase, not a distilled instruction: the text block itself. v4 spec requirement: the
+   daily prompt contract embeds the Ruling 7 verbatim, and the prompt artifact is versioned so
+   a day's report is traceable to the exact block it saw.
+3. CAPTURE MANDATE CONFIRMED as its own open workstream: track ALL Andrew text inputs, saved
+   somewhere. In flight at ~B (v4 capture layer): grounded finding is that a naive
+   type=="user" transcript read captures ~40% and drops mid-turn input; correct capture =
+   union of user + queue-operation + attachment rows, de-duplicated, then fail-closed
+   human-text filtering. THESE TWO MESSAGES THEMSELVES arrived mid-turn and are live
+   instances of the dropped class -- the capture fixture now includes them by construction.
+   Coverage denominator caveat stands: harness transcripts are device-local; site-Z sessions
+   need their own capture path (rides the open remote/mirror gate).
+
 -- 3.0.0_SA_CVO
