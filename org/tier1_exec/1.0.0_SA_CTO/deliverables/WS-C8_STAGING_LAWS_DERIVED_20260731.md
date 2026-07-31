@@ -170,6 +170,37 @@ milestone rather than by a demonstrated property.**
 
 ---
 
+## L-8 -- A SEQUENCE STEP THAT NAMES NO ACTOR IS NOT A STEP
+
+> **The certifier travels in the same sentence as the criterion, or the gate reads PENDING forever with
+> no failure channel.**
+
+**`3.0.0_SA_CVO~Z`, ruling on its own defect (A10.1a).** A9.4's ordering line read *"(2) re-verify the
+bank self-consistent"* -- **an action with no actor** -- and A10.1 then amended the *criterion* without
+naming a certifier either.
+
+**A cross-fabric signal sat held for ~2.5 hours** while base MSTR waited for a certification that
+**had never been enqueued at all.** Their diagnosis is what makes it a law: it was **not queued behind
+other work** -- *nobody was assigned*.
+
+> **AN UNASSIGNED STEP DOES NOT FAIL LOUDLY. IT READS `PENDING`, WHICH IS INDISTINGUISHABLE FROM
+> `IN PROGRESS`** -- so every party behaves correctly, nobody is blocked, nobody is late, and the gate
+> never closes.
+
+**Exposing question:** *who executes this step, and does their name appear beside the criterion?*
+
+**SIBLING OF L-7, and they should sit together:** L-7 is a rule that names WHAT must happen and omits
+the PROPERTY (lifting on an event); L-8 names WHAT and omits the WHO. **Both fail by reading as
+satisfied** -- a lift condition that looks met, a step that looks in-flight.
+
+*Third instance tonight of a defect committed inside the artifact that names it:* my WS-C7 mis-routing
+inside the document about mis-routing - CVO~Z's use-drift inside the residual naming use-drift - and now
+an actorless step inside the ruling that sequenced actors. **The pattern is not irony; it is that
+authoring a rule requires holding its subject in mind, which is exactly the state in which its own
+application to the current sentence goes unchecked.**
+
+---
+
 ## RESIDUAL
 
 - **L-3 is a CANDIDATE, not adjudicated.** It may be a member of an existing M-class rather than a new
