@@ -292,6 +292,13 @@ TOURED -- both projects Phase 0, zero build history (@ee5ff633e1's 25,048-file g
 negative) -- a checkable structural fact, not a discipline claim. ~D holds at step 1 (CTO's
 schema word).
 
+MSTR close (062425Z): both routings RELAYED to site Z (agentbus 3c54cd58-63fd-42bb-b4d5-
+b68ca185b696), fence input carried verbatim-in-substance as INPUT-NOT-RULING. On standup, MSTR
+applied the same rule at their level -- asked MSTR~Z for a STANDUP SIGNAL, not a commit pointer.
+HOLD confirmed both sides: no new CORE approvals at me, arrivals refer to MSTR, interim
+authority continues unless/until Z confirms formal standup. Successor duty unchanged: on
+CVO~Z's step-3 ruling, lift or convert the (d)-attribution withhold accordingly.
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
