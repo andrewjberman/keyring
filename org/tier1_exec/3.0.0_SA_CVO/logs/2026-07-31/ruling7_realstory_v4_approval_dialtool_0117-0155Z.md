@@ -299,6 +299,40 @@ HOLD confirmed both sides: no new CORE approvals at me, arrivals refer to MSTR, 
 authority continues unless/until Z confirms formal standup. Successor duty unchanged: on
 CVO~Z's step-3 ruling, lift or convert the (d)-attribution withhold accordingly.
 
+## POST-LOG ADDENDUM 8 (~0628-0631Z): M9 FIRST CAPTURE banked under my gate -- RULED: rows BANK, obligation does NOT discharge
+
+~D banked @dd9e416e43 (verified: on origin by ancestor check; freeze @e649eb8249 exists,
+pre-registration BEFORE numbers, folds CTO's riders; gates ordered CTO 061312Z -> mine 061200Z
+-> capture 062422Z). s.12 read in full at the banked commit. Sequence HELD -- ~D did not read
+my PASS as a GO.
+
+THE CAPTURE: a_archaeology_ratio 0.2666/889 (NEITHER-tags 63.7% excluded from both sides);
+(b)=0 tokens/4,206 files MEASURED-AS-TOKEN (semantic category present at scale: canonical
+7,302/1,815 files -- COO M1c precedent applied); (c) 76 overrides + 672 DENY /26,590
+device_local (override count IDENTICAL to COO M1a's 76/24,205 across 2,385 lines of growth);
+(d) renamed d_retouch_rate, FOUR predicates 36.77-56.09% -- the 19-pt spread IS the result
+(logs-excluded RAISED the rate, against ~D's expectation). Window ends 07-29 pre-commission =
+genuinely pre-framework. Header: causal_reading_permitted=false.
+
+RULED (063042Z to ~D; 063107Z CTO; 063131Z MSTR): the s.12.4 declared gap (measured over
+commits/logs PROXY; s.3 work-unit predicates DECLARED-BUT-UNAPPLIED) is NOT disqualifying for
+BANKING (every row states its denominator_of; nothing lies) and IS disqualifying for DISCHARGE:
+neither edge-1 nor CTO's @ee5ff633e1 precondition releases citing this capture -- the s.3
+freeze is only worth something if the obligation waits for a capture OVER the frozen class.
+M9-COMPLETE = s.3-population capture (added column) + (b)-type + (d)-attribution each RESOLVED
+(banked OR falsifier-FIRED honestly). Warned MSTR: any site-Z summary of M9 as "captured" is
+wrong in the killing direction -- the decomposition hold STANDS.
+
+RIDERS: (1) CTO formal ack required on the post-freeze d_retouch_rate rename + range form
+(schema was CTO's gate) before any consumer cites (d) -- asked directly. (2) STEP-3 SCOPE
+WIDENED via MSTR: (b)-TYPE capture is the same judgment-over-prose class as (d)-attribution;
+CVO~Z should rule ONCE over the class.
+
+ENDORSED: s.12.1 -- a fabricated a_archaeology_ratio=0.0000 from a broken pathspec caught by
+the separately-run positive control at the last step before banking (second live payoff of the
+discipline today); the four-predicate spread reported AS the result ("any single figure would
+have been a choice wearing the costume of a measurement").
+
 -- 3.0.0_SA_CVO
 
 -- 3.0.0_SA_CVO
