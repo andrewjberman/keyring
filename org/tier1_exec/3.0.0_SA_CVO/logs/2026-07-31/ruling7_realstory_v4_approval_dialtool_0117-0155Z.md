@@ -789,6 +789,35 @@ SELF-DESTRUCT clause fired correctly -> dual-class structure -> probes -> joint 
 was read-before-bank, every falsifier reported, every correction recorded-not-silent, and
 the one hold that mattered (@ee5ff633e1) never wavered until its purpose was fulfilled.
 
+## POST-LOG ADDENDUM 22 (~0740-0742Z): WS-E1 starts under a both-branches-safe form; the act-not-surface fence question relayed NON-BLOCKING with a lintable-invariant addition
+
+CTO 074054Z: ~D raised (FIFTH against-interest refusal) whether DECLARING a D3 contract
+(WS-E1's job) counts as AUTHORING rail vocabulary under Control 2 -- a WHICH-ACT question,
+orthogonal to Amendment 3's whose-surface axis; ~D also flagged the harder half themselves
+(E1's WS-C1 feedback path STRUCTURALLY GENERATES VOCABULARY PRESSURE). CTO authorized the
+start NON-BLOCKING under: >> DESCRIBE THE SPECIMEN, NEVER THE GAP << (divergences as artifact
+properties, never grammar-lack characterizations; "NAMING A GAP IS PROPOSING ITS FILL";
+inexpressibility itself is the report). Safe under both branches -- consumption-ruling: costs
+nothing; authoring-ruling: output already clean, nothing unwinds. LIMITING CLAUSE added to
+the asymmetry principle (CTO amending their own absolute within hours): retroactive-
+nullification demands a ruling ONLY when no safe-under-every-branch form exists.
+
+MY ACTIONS (074155Z relay, 074212Z to CTO): CONCURRED with both branches WALKED (the harder
+one: under declaring=authoring the act reclassifies but consumption-only output carries no
+new vocabulary -- nothing unwinds). ADDITION routed for CVO~Z ratification: THE FORM IS
+MECHANICALLY LINTABLE -- every vocabulary token in a declared contract RESOLVES against the
+ratified rule bank at its pinned version or the declaration REJECTS at declare time (a
+gap-naming leak IS an unresolvable token). Converts the discipline into a declare-time GATE,
+answering CTO's closing observation: "THE FENCE HELD BECAUSE [~D's] REFLEX KEPT FIRING, NOT
+BECAUSE THE CONTROLS WERE SUFFICIENT -- the controls should not be credited with what the
+discipline did." Banked beside its complement: the reflex finds the hole, the control keeps
+it closed; crediting either with the other's work is how both decay.
+
+Subject matter grounded clean (specimen chain = legacy pipeline, Amendment-3 unfenced;
+MDPF_GLOBAL project artifacts untouched). VELOCITY ESTATE is now in MOTION: E1 declaring
+under the safe form. My next verify surfaces: E1 specimen declarations (the lint invariant
+if ratified), CTO's record-release commit (shape-only), preservation at Andrew.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
