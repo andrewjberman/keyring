@@ -1,0 +1,37 @@
+{
+  "project_code": "OPAL_ALTRESEARCH",
+  "macro_code": "OPAL",
+  "name": "ALTRESEARCH -- equity research call transcript corpus, joined to Opal ETF weights, to rank alternative-data pipeline opportunities by firm-wide position materiality",
+  "description": "Andrew-direct commission 2026-07-31 (CRO terminal). Two halves that meet at a join. (A) CORPUS: a structured store at research_transcripts/ for the equity research team's Teams call transcripts -- Andrew pastes each transcript and states its date, CRO structures it into bronze(verbatim)/silver(parsed)/index(mentions). Iterative until the back catalogue is exhausted. (B) MATERIALITY JOIN: collate the corpus for security names appearing in the four Opal ETFs (DIVZ, IDVZ, PFOE, PFDE), then produce a weighted aggregate per security ACROSS the four funds plus ranked weights WITHIN each fund, ordered from the largest position. PREMISE (Andrew, verbatim): 'the heavier the position is in the ETF and for the firm as a whole, those are the most material candidates for ALTRESEARCH alt data pipelines.' The corpus tells us what the research team spends attention on; the ETF weights tell us what the firm has capital behind; the intersection, ranked, is the build queue.",
+  "prds": [
+    {
+      "path": "research_transcripts/README.md",
+      "label": "Store contract: layout, bronze-is-raw discipline, the three-clock timestamp model, coverage semantics, ingest procedure, known limits",
+      "date": "2026-07-31"
+    }
+  ],
+  "status": "active",
+  "phase": "*** PHASE 1 OPEN 2026-07-31 -- CORPUS INGEST, 1 of N transcripts landed. *** Store stood up at research_transcripts/ with the bronze/silver/index layout and a reusable parser (bin/ingest_transcript.py) built rather than hand-structuring, because the corpus is explicitly multi-transcript. RT-20260727-1023 (Mon 2026-07-27, 10:23 ET) ingested: 53 utterances, ZERO unparsed lines, 2 speakers (Adam Muller; CONFERENCE ROOM, a shared device that may carry multiple unresolved people). The parser reports coverage rather than assuming it -- this paste is PARTIAL at 3.7% of its own 1h17m span across two disjoint segments, so no attention-share statistic may be computed from it. 4 mentions and 3 alt-data candidates hand-curated to establish the grammar; the automated extractor is DEFERRED by design until the ETF constituent union is complete, since that union is the extractor's dictionary. MATERIALITY JOIN PARTIALLY BLOCKED: per-security holdings exist for PFOE/PFDE only (filepoint source, 108 rows/day, carrying holding_ticker/cusip/market_value/weight_pct/fund_net_assets -- every field the aggregate needs). DIVZ/IDVZ constituent holdings are NOT ingested: the TrueShares tree carries bronze/netassets HTML plus silver/fact_netassets_page and nothing else (measured, 160 keys, positive-controlled). Andrew's instinct that we already have it was HALF right and the half matters -- the fund page we scrape daily does link a holdings table, but it is JS-rendered (0 <tr> in 465KB) and resolves to a TrueShares-published Google Sheets CSV export. So the data is REACHABLE and one parser away, but not yet on our wire. First join already validates the premise: ASML, discussed for ~90s as a moat-erosion thesis, is a 6.53% position in PFOE.",
+  "blocking": "(1) EGRESS WORD from Andrew to pull the TrueShares-published DIVZ/IDVZ holdings CSV -- TrueShares/Google Sheets is not on the lifted-vendor list, and availability is not authorization. Without it the '4-ETF weighted aggregate' is structurally a 2-ETF aggregate and must be labelled as such. (2) Remaining transcripts -- Andrew pastes them; corpus ingest is operator-paced by design, not agent-blocked.",
+  "owner": "4.0.0_SA_CRO",
+  "build": "4.0.0_SA_CRO (corpus + join + ranking). Any DIVZ/IDVZ holdings INGEST that lands as a production silver converter routes to DS under Rule 13.",
+  "verify": "3.0.0_SA_CVO (unassigned; the ranking is a decision input, not a served client number -- verification bar rises if it ever reaches a client surface)",
+  "comms": "Andrew-direct at CRO terminal",
+  "sovereign": "Andrew (commission 2026-07-31, incl. the project code and the materiality premise)",
+  "created": "2026-07-31",
+  "pods": [
+    "4.0"
+  ],
+  "pipeline": "research corpus + etfs (opal-data-etfs / opal-data-assets trueshares+pathfinder trees)",
+  "hazards": [
+    "COVERAGE: a pasted Teams transcript is frequently PARTIAL (transcript 1 = 3.7%). A gap is UNOBSERVED, not empty. Never compute share-of-attention or 'the team never discussed X' from a partial paste without stating the denominator.",
+    "TIMESTAMPS: three clocks. Line offsets are ELAPSED from RECORDING start (transcript 1 opens at 2:47, so recording start != meeting start); meeting start is OPERATOR-STATED in Eastern; derived_utc is COMPUTED, never observed. DST offset is passed explicitly, never inferred.",
+    "SPEAKER IDENTITY: 'CONFERENCE ROOM' is a room device and may aggregate several people. Speaker-attributed analysis must treat it as unresolved rather than as one analyst.",
+    "TWO QUANTITIES, NOT ONE: a weighted aggregate ACROSS funds and a ranked weight WITHIN a fund answer different questions. A name can be a top-5 position in one fund and immaterial firm-wide. Label the basis on every figure -- this is the 0824/0833 lesson in a new place.",
+    "DENOMINATOR OF THE AGGREGATE: 'weighted across the 4 ETFs' is ambiguous until the weighting basis is fixed. Weight-by-fund-net-assets (the firm-materiality reading, and the one the premise implies) differs from a simple mean of weight_pct. State the basis in the artifact.",
+    "BRONZE: raw/ is byte-faithful and never cleaned. A research call is a one-shot capture -- if the parser drops a line and the raw was tidied first, the content is gone permanently.",
+    "SENSITIVITY: internal research-call transcripts carrying non-public views on securities held in Opal funds, git-tracked in a private repo. Consistent with existing workspace practice for positions/client data, but a different content class -- surfaced to Andrew, his call."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

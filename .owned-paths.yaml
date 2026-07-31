@@ -898,6 +898,10 @@ paths:
     lane: CRO_WORKSPACE
     note: "Workspace-wide CRO home — charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED — there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD). LD-0331."
 
+  "research_transcripts/**":
+    lane: CRO_WORKSPACE
+    note: "OPAL_ALTRESEARCH transcript corpus -- equity research call transcripts (bronze verbatim / silver structured / index), joined to Opal ETF constituent weights to rank alt-data pipeline candidates by position materiality. Andrew-direct 2026-07-31 at the CRO terminal, incl. the project code ('You may register the project as OPAL_ALTRESEARCH') and the root location. The CRO home rule (org/tier1_exec/4.0.0_SA_CRO/**) does not reach a root path -- same enumeration gap as LD-0331, a title is not a grant. Added 2026-07-31 by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). NARROW read on the LD-0331 standing-capability question: this authorizes THIS root path, not blanket root-write; the direct-registration question stays PARKED (Andrew spoke to it once today, narrow reading applied)."
+
   # -----------------------------------------------------------------------
   # org/tier2_senior — agent home folders by serial prefix
   # -----------------------------------------------------------------------

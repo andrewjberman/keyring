@@ -1264,6 +1264,119 @@ will not wire an assertion that encodes a defect as correct") + their refusal to
 the enumeration ("a copy wearing a verification's clothes") = the split holding under
 temptation. Aug-1 ETFS verified ready at the runtime layer per ~A.
 
+## POST-LOG ADDENDUM 37 (~1405-1406Z): lifecycle CLEAN (discriminating control); retention-in-TF adopted; MY SPLIT PREMISE FALSE -- provenance attaches to a SESSION; the capture-never-filters contract ruling
+
+~B floor results (140517Z) + my rulings (140621Z):
+1. LIFECYCLE CHECK CLEAN with the CONTROL FORM RATIFIED: versioning Enabled, only an
+   abort-MPU rule -- and the negative was CONTROLLED against the hazard's live PRESENCE
+   (opal-data-bd carries NoncurrentVersionExpiration:90d exactly; opal-data-inf the other
+   expiry shape) -- prove the instrument can see the disease before trusting its clean
+   bill.
+2. ITEM-1's BITE, ruled ~B's way: the clean state is correct BY ABSENCE = INHERITED --
+   the exact state the rule exists to convert. ADOPTED: the retention posture EXPRESSED IN
+   TERRAFORM (explicit lifecycle declaration; noncurrent expiry DELIBERATELY ABSENT,
+   comment-anchored, Andrew's ruling governs on arrival). "A VACUUM ACCEPTS ANY VALUE; A
+   DECLARATION HAS TO BE ARGUED WITH."
+3. CUSTODY FINDING -- MY PREMISE WAS FALSE, owned: I attributed personal ground truth to a
+   SERIAL when it belonged to a SESSION (this ~B is fresh ~1300Z; the hand-verifier was
+   the 2340-0215Z session; the inherited 7 was UNRECOVERABLE -- 8-vs-10 drift). Named
+   class banked: PROVENANCE ATTACHES TO A SESSION, NOT A SERIAL -- A LOG INHERITS THE
+   CLAIM WITHOUT INHERITING THE EVIDENCE (a serial is not a continuous witness). ~B's
+   re-establishment SUPERSEDES my split and is BETTER: fresh witness, raw transcript, all
+   10 precision-verified, every refusal enumerated (4 distinct non-empty drops, all
+   harness, zero false negatives), predicate stated where two honest numbers differ.
+   Fixture asserts ALL TEN, attributed to ~B-today; key #7 is RULING 8 verbatim -- losing
+   it = the pipeline losing the ruling that defines its own storage contract.
+4. CONTRACT RULED: THE CAPTURE LAYER NEVER FILTERS FOR RELEVANCE -- #1/#10 assert HUMAN.
+   RULING 7 assigns judgment to the SYNTHESIS; dropped-at-capture is UNRECOVERABLE while
+   filtered-at-synthesis is REVISITABLE; even "ok /log" is sometimes story-signal, judged
+   fresh daily. Filtering lives at the prompt-artifact layer and is RECORDED there -- an
+   auditable filter downstream of a trustable capture.
+
+## POST-LOG ADDENDUM 38 (~1417-1418Z): 213 FORGED QUOTES (5.9%) -- the dead middle bucket; fix accepted; the distribution becomes a MANIFEST FIELD
+
+~B, gated on step 0, measured the s.1d coverage denominator (297 sessions / 197,757 rows /
+3,628 stored / 26 days) and READ WHAT WAS STORED: 130 local-command-caveat wrappers filed
+HUMAN (the SIBLING TAG of a covered marker -- "the guard read complete while a whole class
+walked past"); 83 compaction preambles; 2 skill bodies (one 155,719 chars) -- 213 FORGED
+QUOTES, 5.9%. Kimi would have received 130 copies of a harness caveat as Andrew's most
+frequent statement. THE STRUCTURAL FINDING: UNCLASSIFIED FIRED ZERO TIMES in 197,757 rows
+-- the three-way fail-closed classifier ran BINARY; no channel for "I don't know," so
+not-knowing rendered as CONFIDENCE, in the FORGING direction. >> A BUCKET THAT NEVER FIRES
+IS NOT CONSERVATIVE. IT IS ABSENT. << (Law 5's sharpest form.) Also corrects ~B's own
+2h-old "zero false positives" -- true of 14 records, false of the corpus; invisible at
+fixture scale BY LUCK OF SAMPLING.
+
+FIX @1c3a75bfff accepted (141838Z): five falsifiable predictions stated BEFORE running,
+5/5 PASS; P5 load-bearing (10/10 fixture keys BYTE-IDENTICAL -- 213 forgeries removed,
+ZERO genuine utterances moved; "a fix to a classifier not tested against a known-good set
+is a config read"); anchor-not-substring with cost MEASURED pre-adoption (2/3,628);
+document-shape backstop -> UNCLASSIFIED per my recoverability ruling (HUMAN forges,
+HARNESS deletes, a flag revisits). Honest bound carried: clean of the three NAMED classes
+!= clean.
+
+MY ADDITIONS: (1) STANDING REQUIREMENT folded into s.1d -- the daily manifest reports the
+THREE-WAY DISTRIBUTION (HUMAN/HARNESS/UNCLASSIFIED counts beside the denominator): a
+middle bucket at zero day after day invites the question this defect needed 197,757 rows
+to force -- the dead-bucket class made self-reporting, no monitor built. (2) Sibling-tag
+design response offered: derive the marker FAMILY from the harness's enumerable tag
+vocabulary, not one forgery at a time; the revived UNCLASSIFIED is the net for what is not
+enumerable. (3) The 5 ZERO-DAYS (Jul 03/04/05/26/27) -> ANDREW'S PACKET: "did not type"
+vs "transcript gone" indistinguishable = the ABSENT-day manifest class AND the site-Z
+capture-path question wearing a date.
+
+## POST-LOG ADDENDUM 39 (~1422-1424Z): tag family enumerated (controlled zero); ~A's .runtmp deviation RATIFIED superseding my instruction; fixture gate closed
+
+~B EXECUTED item 4 (142247Z): all 3,413 HUMAN records scanned -- ZERO tags open any stored
+record; 28 distinct tags anywhere, ALL Andrew's own placeholder prose (<ref>, <path>...,
+his angle-bracket idiom now MEASURED -- a naive tag-strip would eat genuine text). The
+scan carries its OWN positive control (the anywhere-hits prove the regex sees tags in the
+same run reporting the zero -- the discriminating-negative form internalized). CLAIM-FORM
+banked as the citable template: "COMPLETE WITH RESPECT TO every tag present in 3,413
+stored records ON THIS DEVICE" -- stronger than named-classes, honestly weaker than
+complete. Bounds: prose-shaped single-occurrence forgeries stay open (named, not solved);
+SITE-Z'S CORPUS NEVER SCANNED -> Andrew's packet, beside the capture-path question.
+
+~A'S .runtmp DEVIATION RATIFIED, MY INSTRUCTION SUPERSEDED (142338Z): I said byte-pinned
+REPO copy; committing the corpus would PUBLISH ANDREW'S VERBATIM WORDS TO THE GITHUB
+REMOTE AHEAD OF THE RETENTION RULING GOVERNING EXACTLY THAT CONTENT -- a CORPUS_PATH edit
+is reversible, a push is not. The sha256 pin gives the integrity my instruction wanted
+without the residence it wrongly specified; the cost (fresh clone cannot run the fixture
+until retention rules) stated in-file. A deviation from a CVO instruction on better
+grounds, with the grounds written down = what the instruction-giver should want; recorded.
+
+FIXTURE-1 CONFIRMATION GATE CLOSED: ~B ran ~A's detector at post-fix HEAD -- 10/10, sha
+held, per-key labels matching ~B's independent identification; a fixture built BEFORE the
+fix confirming from outside what the fix's own control predicted. The split delivered.
+
+## POST-LOG ADDENDUM 40 (~1425Z): ANDREW YES -- estate-capture-writer AUTHORIZED; step 0 discharged; the lift path is now fully sequenced
+
+ANDREW-DIRECT at CTO's terminal ~1358Z, VERBATIM: "yes on estate capture writer." Step 0
+DISCHARGED. Scope FENCED AT THE GRANT (role, assume-role from his user, no new long-lived
+credentials, sole PutObject on text-input/, versioned bucket -- anything beyond returns to
+CTO as a new question). ~B tasked to author with six binding conditions (my fallback +
+overwrite mutants carried verbatim and MANDATORY before the role is trusted; trust policy
+single-principal; Rule-22a discipline; retention STATED; the lifecycle-under-the-guarantee
+check). Creation through TERRAFORM + safe-apply only (a CLI-created role is untracked
+infrastructure -- the unmodelled principal this design exists to remove); deploy-completion
+ledger opens at apply-start.
+
+MY LIFT CONDITION UNCHANGED, CTO explicitly not relaxing it: hold (a) v3 lifts on MY READ
+of the per-principal applied batteries INCLUDING the fallback mutant -- not on the role
+existing, not on a green ALLOW half ("a role that exists and has never been shown to be
+the thing actually doing the writing is precisely the four-immaculate-greens object").
+~A stays step-4 independent executor.
+
+CTO'S CLOSING NOTE, kept as the arc's summary: ~B refused to self-authorize; I endorsed
+the design and declined the creation; CTO approved the design and held the creation;
+Andrew answered in under an hour -- FOUR PARTIES EACH DECLINING THE PART THAT WAS NOT
+THEIRS, the escalation arriving PRE-REDUCED (a one-line yes/no with the {today} question
+already resolved underneath). The seam working.
+
+SEQUENCE FROM HERE: ~B authors (TF) -> step-2 draft battery -> safe-apply -> ~A's step-4
+applied battery incl. fallback-mutant-FIRST -> my read lifts (a) v3 -> the write path
+opens -> the capture store begins accruing under the contract Andrew's own words defined.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
