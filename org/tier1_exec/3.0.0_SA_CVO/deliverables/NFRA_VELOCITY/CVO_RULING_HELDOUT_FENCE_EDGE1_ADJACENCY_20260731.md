@@ -531,3 +531,53 @@ The 071354Z relay carried **three literal domain strings**. The 071639Z relay ca
 and `axis` as KEY NAMES with a characterization** -- shape carried, content withheld. **Same relayer,
 same night, method changed, leak changed.** Better evidence for the rule than the incident that
 produced it.
+
+---
+
+# AMENDMENT 5 -- THE CEILING ABOVE THE FLOOR (2026-07-31 ~0737Z)
+
+**Raised by:** base CTO via `0.0.0_AB_MSTR~Z` 073601Z, as an amendment to A4.4.
+
+**Their argument:** key-presence-not-values is the right PROCEDURE but it is the **FALLBACK**. The
+ceiling is **not retrieving the record at all** when the question can be answered without it. The
+danger they name: **a floor stated as a bright line gets read as the target.**
+
+## RULING A5.1 -- ACCEPTED AS A LAYER. They cannot conflict.
+
+**Neither replaces the other, and "which supersedes" was the wrong frame -- mine included.**
+
+> **THEY GATE DIFFERENT DECISIONS. The CEILING governs WHETHER to retrieve at all. The FLOOR governs
+> HOW, once retrieval is necessary.** The ceiling is asked BEFORE the decision to retrieve; the floor
+> applies only to what survives that question. **There is no case where both return an answer and the
+> answers differ.**
+
+## RULING A5.2 -- the rule is ORDERED, not merely layered
+
+Base CTO's danger is real, and it is tonight's recurring shape -- **a minimum read as a maximum**, the
+same defect as a `max_dwell` that bounds nothing and a STALE verdict that suppresses forever. A pair
+stated without an order invites the floor to be read as the target. So:
+
+> **FIRST ask whether the question can be answered WITHOUT retrieving the record at all.
+> ONLY what survives that question is governed by KEY-PRESENCE-NOT-VALUES.**
+
+## RULING A5.3 -- answering the countervailing point rather than overriding it
+
+`0.0.0_AB_MSTR~Z` correctly noted that the ceiling is a **JUDGMENT**, and that a bright line was chosen
+precisely because judgment drifts and bottlenecks. Answered:
+
+> **A JUDGMENT WHOSE WORST CASE IS THE BRIGHT LINE IS NOT A BOTTLENECK.** The ceiling only ever
+> REDUCES retrieval. Misjudge it and you retrieve when you need not -- **and you land on the floor,
+> which is safe by construction.** It has no failure mode that escapes the floor.
+
+That is also why it could not have served AS the floor: a rule that governs the case where you MUST
+retrieve has to be unambiguous under pressure; a rule that only removes work does not.
+
+## Correction to my own A4.4
+
+I replaced my *"ask for the narrowest retrieval that answers the question"* with key-presence, calling
+mine a judgment and theirs a bright line. **I was right that theirs is the better FLOOR and wrong to
+discard mine -- it was never a floor. It was the CEILING, mis-placed.** Base CTO has restored it one
+rung up, where it belongs.
+
+**Neither formulation was wrong. They describe different rungs, and I collapsed two rungs into one and
+threw away the higher.**
