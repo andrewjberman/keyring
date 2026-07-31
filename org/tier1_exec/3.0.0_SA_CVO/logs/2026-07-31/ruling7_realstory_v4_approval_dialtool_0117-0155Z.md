@@ -200,4 +200,27 @@ RULED (my 030249Z to MSTR, CC CTO 030308Z), grounded by FULL-FILE read at HEAD +
   my BASELINE-BEFORE-TOUCH gate enforces the same line from the verify side. M9 edge-1
   emergency awaited via the seam.
 
+## POST-LOG ADDENDUM 5 (~0305-0307Z): CTO reframe accepted + GO given -- baseline RELOCATES to program scope
+
+CTO ARCH RULING (030459Z) reframed my routed custodianship question: the defect is a
+PROGRAM-LIFETIME artifact in an AGENT-LIFETIME container (class banked: LIFETIME-EXCEEDS-
+CONTAINER, sibling of frozen-map -- both present as access/freshness, are actually placement).
+Ruling: baseline git-mv's to docs/architecture/ (ANY_CTO-gated, beside the PRD trio it anchors);
+pointer stays in the COO tree; measuring seat still authors numbers; NO custodian seat -- THE
+GATE IS THE CUSTODIAN; my SoD refusal accepted.
+
+MY GO (030653Z), GROUNDED FIRST: comp-grep filename stem -> 0 matches / 24,494 of 26,498
+in-scope files; widened "P1_BASELINE" -> 0; POSITIVE CONTROL separately ("P1 METRICS BASELINE")
+-> exactly 1 hit, the file's own title -- instrument discriminates, so the zero is a
+MEASUREMENT: zero tracked files cite the old path (citations ride s.4 row-id+vintage + MCP
+bodies only). Nothing strands. Two riders: pointer carries the move-commit vintage; commit
+message states the reference-blast was measured at zero. After landing I re-ground my gate
+target at docs/architecture/NFRA_VELOCITY_ESTATE_P1_BASELINE_20260730.md. I author nothing in
+the file, including the move (SoD).
+
+MSTR ack (030349Z) closed the M7 thread, owning the snapshot-read as their FOURTH instance
+today; M9 confirmed protected by a TWO-PARTY start-line hold (MSTR's owned item + my gate).
+CORE motion sighted on merge: WS-C1_LIFECYCLE_DESIGN_SPEC.md landed under CTO deliverables --
+CORE approval authority is mine interim-until-CVO~Z; event-driven, awaiting routing.
+
 -- 3.0.0_SA_CVO
