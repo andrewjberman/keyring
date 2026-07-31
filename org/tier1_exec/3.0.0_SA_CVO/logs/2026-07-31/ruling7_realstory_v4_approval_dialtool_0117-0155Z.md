@@ -1090,6 +1090,40 @@ RULED (132914Z), four parts:
    redesign (static IAM + code-enforced key==today, mutant-testable) comes back as a DESIGN
    question only if daily-apply proves unsustainable.
 
+## POST-LOG ADDENDUM 31 (~1333-1336Z): ANDREW'S LIFECYCLE-VALUES GATE REACHES MY OWN ADJUDICATION -- PERMANENT x3 SUSPENDED, applied to myself first
+
+CVO~Z's durable record landed in my tree (ANDREW_DIRECT_LIFECYCLE_VALUES_GATED_20260731.md,
+4-hop relay, verbatim carried unaltered): Andrew -- "It is impossible to know the Lifecycle
+Value of the resource without the user input pipeline you are building" + ~B proceeds the
+pipeline and LEADS the Lifecycle Values feature when it matures. Operative clauses (MSTR~Z
+reading, carried as theirs): the Kimi pipeline is an UPSTREAM DEPENDENCY of ESTATE
+Lifecycle Values INSIDE NFRA_VELOCITY (not a carve-out); the vocabulary MECHANISM
+continues; >> POPULATING LIFECYCLE VALUES IS GATED -- no value-population seat. << Open
+scope question surfaced-not-adjudicated (at Andrew + base MSTR + CTO~Z): does the gate
+reach ALREADY-LANDED declaration lifecycle fields?
+
+MY ACTION (133447Z, urgent, before anything banked): BUCKET-1 PERMANENT x3 CLEARANCE
+SUSPENDED -- not withdrawn -- my 125849Z adjudication IS value-population on any plain
+reading, predates the gate by ~30min, and no scope ruling exists; the asymmetry principle
+governs. ~D writes nothing on Bucket-1 until the answer lands. UNAFFECTED: account-
+distribution UNDECLARED (records a non-assertion) + feeds row-58 amendment (amends an
+intent citation) -- neither populates a value. AND THE MERITS, owned: my PERMANENT
+derivation reasoned from the SERVED PRODUCT's correctness rulings, but a correctly-served
+product and a resource's LIFECYCLE VALUE are different objects -- ~D's independent wall
+("cannot infer PERMANENT") + Andrew's word both say the second needs an input the estate
+does not capture yet. The suspension may be correct on the merits, not merely compliant.
+
+~B's TWO RESULTS (133323Z), both banked: (1) live 4/4 capture on their session -- a naive
+type=="user" extractor would have dropped THE SOVEREIGN CARVE-OUT GRANT, THE DEPENDENCY
+RULING, AND THE RELAY ORDER: the pipeline would have silently lost the exact rulings that
+authorized it, on the day they were issued (the project's justification, measured live).
+(2) Their own acceptance evidence held an instrument-that-cannot-fail: fixture 1 pinned to
+a LIVE-APPENDABLE transcript (a changed count indistinguishable from a grown corpus --
+every future number has a ready-made innocent explanation). Original 7/7 sound AT THE
+TIME; void as a STANDING gate. FIX APPROVED: byte-pinned sha256 copy, assertions
+ENUMERATED BY DEDUP_KEY not count, denominator+sha in the fixture's own output; fixture 2
+same form (my day-close pin concern dissolves). Sequenced after the IAM authoring.
+
 -- 3.0.0_SA_CVO
 
 ## POST-LOG ADDENDUM 17 (~0715-0716Z): relay confirmed; citability STATE UNIFIED conservative
