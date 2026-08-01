@@ -147,13 +147,40 @@ it" concern, one layer down.
 
 - **The Aug-1 ETFS month-end fire is DONE and DELIVERED.** July report + 3 partner rebate CSVs live at
   `s3://opal-data-etfs/platinum/reports/2026-07/`. Next fire: **2026-09-01 14:00Z**, same schedule.
-- **OPEN, OWNED BY MSTR -- the one thing I could not reconcile:** the orchestrator's newest log event
-  is 14:00:15Z with a REPORT Duration of 52749 ms (back-computing to a ~13:59:22Z start, BEFORE the
-  schedule), and a function that ended at 14:00:15Z cannot have sent at ~14:01:00Z. Probable cause is
-  a per-CONTAINER log stream holding an older invocation's REPORT -- **NOT verified, so not asserted.**
-  The delivery verdict does not rest on that timeline. **If the send is not the orchestrator's, our
-  model of this chain is incomplete**, and that is worth settling while nothing is on fire rather than
-  at 14:00Z on 2026-09-01.
+- **RESIDUAL: SETTLED SAME DAY, ON EVIDENCE (14:13Z, routed to CTO + MSTR). THE CHAIN MODEL IS
+  CORRECT -- the orchestrator IS the sender and there is no unmodelled producer.** Re-pulled the log
+  events WITH timestamps (the thing I had failed to do -- I queried `events[].message` and discarded
+  them):
+  ```
+  14:00:15.385Z  START   RequestId 9d6a6dfb        14:00:56Z   artifacts written
+  14:00:16Z      EC2 launch                        ~14:01:00Z  SES send
+  14:01:08.135Z  END     SAME RequestId, 52749.45 ms  -> 15.385->68.135 = 52.75s, matches EXACTLY
+  ```
+  The function's lifetime **fully contains** both the artifact write and the send; the 14:01:08
+  self-stop is its last act, which is why the EC2 transition carries the same second.
+  **CAUSE -- and it is the same class as the other two:** `describe-log-streams -> lastEventTimestamp`
+  returned **14:00:15.385Z, the START event**, while the END at 14:01:08 already existed. That field
+  is EVENTUALLY CONSISTENT and was 53 seconds stale.
+  > **A LAMBDA'S TRUE WINDOW IS ITS START/END EVENTS, NEVER THE STREAM'S `lastEventTimestamp` --
+  > which will read stale at exactly the moment you are debugging a live fire.**
+  > **STREAM METADATA IS NOT STREAM CONTENT.** I went to the authoritative per-timestamp record for
+  > the SES send and got the right answer; I did NOT do it for the log, and manufactured a mystery.
+  That makes **THREE** lagging/adjacent AWS surfaces in one 25-minute fire: `SentLast24Hours`, the
+  silent log, and `lastEventTimestamp`. Not routed as a CTO-level finding -- it would have been one
+  only if the answer had gone the other way. **September needs no chain-model change.**
+
+- **A SECOND FINDING THAT IS MINE, and I declined CTO's generous framing of it.** CTO noted July is
+  the first month carrying partner CSVs and said I "could not have had" that from inside the fire.
+  **I could have, and I did** -- my own pre-fire baseline printed all four prior objects
+  (`2026-05/` and `2026-06/`, `etf_ownership.{html,pdf}`, zero CSVs). I used that listing to prove
+  July ABSENT and never asked what the PRESENT months contained.
+  > **A PROBE AIMED AT ONE QUESTION WILL NOT VOLUNTEER THE ANSWER TO A QUESTION YOU DID NOT ASK,
+  > EVEN WHEN THE DATA IS ON THE SCREEN.** I was looking for a missing key and stopped the moment I
+  > found it missing.
+  Consequence: there is no prior-month CSV baseline, so "3 CSVs present" is unbacked by a predecessor
+  until Sep-1. **For September the count must be derived from the partner roster, not from the
+  literal 3** -- which I have now written down twice, and which is exactly how a magic constant is
+  born.
 - **Regime unchanged:** Andrew hard pause on new ESTATE starts; an idle seat at this gate is correct.
   Zero crons. Lane tree clean. Nothing applied to AWS.
 
@@ -161,7 +188,7 @@ it" concern, one layer down.
 
 ## Next Steps
 
-1. **[0.0.0_AB_MSTR]** Owns the log-timeline residual, to resolve before the September fire.
+1. **[CLOSED]** ~~Log-timeline residual~~ -- SETTLED same day on evidence (14:13Z): the orchestrator IS the sender, chain model correct, no September change needed.
 2. **[0.7.0_AE_CloudOps]** Remaining comp-blast dial fixes when the pause lifts: the
    UnicodeEncodeError itself, `--direction up`, the substring `matches[0]` ambiguity, the FETCHES gap.
 3. **[Andrew]** The act-3 threshold question still stands: 174 of 1891 gold pairs clear at 0.70/3.0.
