@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-01
 **Task Order:** INF_ETF_OWNERSHIP_SCHEDULED_FLOOR (MSTR-dispatched, spec by 1.0.0_SA_CTO, Andrew-direct)
-**Status:** COMPLETE (AC1, AC2, AC3v2, AC4, AC5, AC6, AC7, AC8 evidenced; report sent to CTO for close)
+**Status:** COMPLETE -- AC1-AC8 CONFIRMED AND CLOSED by CTO (CTO independently re-derived 6 of 8 live). Pushed to origin/CLOUD by MSTR (tag inf-pipeline-v1.7.94).
 
 ---
 
@@ -132,9 +132,54 @@ All commits local on `CLOUD`, un-pushed by design (integrator-only push, LD-0367
 
 ## Blockers
 
-None on my side. One open item routed to CTO/Andrew (not blocking close): whether to authorize a
-delete-and-refill test of the automatic catch-up sweep's own trailing-window scan (see AC4 part 2 caveat
-above) for maximal rigor, or accept the explicit-date-path evidence as sufficient.
+None. Resolved: MSTR ratified a non-destructive alternative to the delete-and-refill AC4 caveat
+(prefer exercising the scan against a synthetic fixture over deleting a correct production object);
+CTO then ran a full trading-day census and found ZERO real gaps remain (10 absences are all closed
+days: 05-02/03, 05-09/10, 07-03/04/05, 07-11/12, 07-19), foreclosing any live-gap option anyway. CTO's
+final ask (exercise `_catchup_missing_dates()` in isolation against a synthetic present/absent fixture,
+both directions, touching no S3) was completed and closes AC4 part 2 -- see Verification (AC4 part 2,
+final) below.
+
+---
+
+## Verification (AC4 part 2, final -- isolation test)
+
+CTO's verdict (20260801T194548Z) CONFIRMED AC1-AC3v2, AC4 part 1, AC5-AC8 live (re-derived 6 of 8
+independently) and set one bounded closing item: prove the catch-up scan *discriminates* (returns a
+hole when one exists, returns empty when one does not) rather than either always firing or being
+inertly correct-by-luck on real data that happened to have no gap. Built an isolation test
+(`test_catchup_scan_isolation.py`, run from the scratchpad, NOT committed -- ad-hoc verification per
+CTO's ask, not requested as permanent test infra): imports the real `lambda_function.py` unmodified
+and monkeypatches only its S3-touching collaborators (`_output_exists`, `_holdings_exists`,
+`_holdings_key_for`, `_compute_and_write_slice`) so `_catchup_missing_dates()` itself runs untouched
+against a synthetic present/absent set. Zero AWS calls made (no credentials needed to run it).
+
+```
+window (10 trailing days from real 'now'): ['2026-07-31'..'2026-07-22']
+chosen synthetic hole date: 2026-07-28
+
+=== FIXTURE (a): hole at 2026-07-28 ===
+scan returned dates: ['2026-07-28']
+compute calls made:  ['2026-07-28']
+PASS: scan returned exactly the synthetic hole, nothing else.
+
+=== FIXTURE (b): no hole ===
+scan returned dates: []
+compute calls made:  []
+PASS: scan returned empty -- it discriminates, it does not always fire.
+```
+
+Sent to CTO 20260801T194738Z. **AC4 part 2 CLOSED. AC1-AC8: all confirmed and closed.**
+
+CTO's close-out verdict (20260801T194817Z): **AC1-AC8 ALL CONFIRMED — INF_ETF_OWNERSHIP_SCHEDULED_FLOOR
+CLOSED, no rework** — with one explicit ask: land the fixture as a COMMITTED regression test, not
+leave it as a scratch script, because the sweep is now "the thing standing between us and a repeat"
+and an unguarded sweep is one refactor away from silently always returning `[]`. Landed at
+`infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py` (matches the repo's
+existing `test_*.py`-beside-`lambda_function.py` unittest-free convention, e.g.
+`inf-accounts-v2-daily/test_zero_row_roster_guard.py`) — re-ran clean (4/4 PASS, exit 0), py_compile
+clean, committed `288bfe8378`. Excluded from the deploy zip automatically (build-and-upload.sh's
+`test_*.py` ignore pattern) — no source-map/lambda-source-map.json registration needed.
 
 ---
 
@@ -143,18 +188,20 @@ above) for maximal rigor, or accept the explicit-date-path evidence as sufficien
 `inf-etf-ownership-daily` now has exactly one trigger (`inf-etf-ownership-daily-schedule`,
 `cron(0 15 * * ? *)`, ENABLED) with no event-pattern/external-bucket dependency — verified deployed
 (not just committed) via `aws events describe-rule` + `get-policy` + a live invoke + CloudWatch Logs +
-S3 head-object. Terraform is 0-diff. `trigger-map.json` and `pipeline_inventory.xml` both reflect the
-new shape. Tag `inf-pipeline-v1.7.94` is cut locally; commits sit on local `CLOUD` awaiting the MSTR
-integration window per LD-0367. Full AC1-AC8 evidence sent to `1.0.0_SA_CTO` (the designated validator)
-for close-or-rework; one open discretionary item (delete-based sweep test) flagged, not blocking.
+S3 head-object, and CTO independently re-derived 6 of the 8 ACs live rather than trusting this report.
+Terraform is 0-diff. `trigger-map.json` and `pipeline_inventory.xml` both reflect the new shape.
+Commits `af4f123e2c`..`86406fb4b3` + tag `inf-pipeline-v1.7.94` are PUSHED to `origin/CLOUD` (MSTR
+integrated them same-session). AC1-AC8 are all CONFIRMED AND CLOSED per CTO's verdict. Task complete.
 
 ---
 
 ## Next Steps
 
-1. **[1.0.0_SA_CTO]** Validate AC1-AC8 evidence and close INF_ETF_OWNERSHIP_SCHEDULED_FLOOR, or REWORK
-   with a named gap.
-2. **[0.0.0_AB_MSTR]** Pull the local `CLOUD` commits (`af4f123e2c`..`86406fb4b3`) + tag
-   `inf-pipeline-v1.7.94` at the next integration window.
-3. **[Andrew / 1.0.0_SA_CTO]** Decide whether the delete-and-refill sweep test (AC4 caveat) is worth the
-   one-object S3 delete, or whether the explicit-date-path evidence already on record is sufficient.
+None outstanding. CTO: "Closed. Stand down on this thread." Only residual note for a future session
+touching this producer: `CATCHUP_WINDOW_DAYS = 10` in `lambda_function.py` is a starting suggestion per
+CTO, not a floor -- widen it with justification (logged, not silent) if a longer real upstream backfill
+lag is ever measured, and keep `test_catchup_scan.py` green (especially fixture (b), the empty-result
+arm) if that constant or the sweep's logic ever changes.
+
+1. **[0.0.0_AB_MSTR]** Pull the final commit (`288bfe8378`, the committed test) at the next integration
+   window -- everything else from this task is already on `origin/CLOUD`.
