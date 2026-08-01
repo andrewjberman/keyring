@@ -1,13 +1,13 @@
-# VERIFICATION LAW — the thirteen
+# VERIFICATION LAW — the fourteen
 
-**Relocated from `MEMORY.md` 2026-07-31 (Andrew-direct cleanup).** These thirteen laws lived in the
+**Relocated from `MEMORY.md` 2026-07-31 (Andrew-direct cleanup).** These laws lived in the
 always-loaded agent memory index, where a 17,408-byte cap had compressed them into telegraphic
 shorthand. They are doctrine — durable principles that bind every agent — so by this directory's own
 routing rule they belong here, and they are restored to readable form.
 
 **Relationship to the neighbours.** [`MECHANISM_LAWS.md`](MECHANISM_LAWS.md) is a *taxonomy*: the
 fourteen shapes an assertion goes wrong in, with measured frequencies. This file is a *checklist*: the
-thirteen things to do before you believe a result. They overlap by design — a law here often names a
+things to do before you believe a result. They overlap by design — a law here often names a
 shape there — but a taxonomy tells you what happened and a checklist tells you what to run.
 [`CONTROLS_OVER_CARE.md`](CONTROLS_OVER_CARE.md) carries the full verification doctrine these compress.
 
@@ -110,6 +110,39 @@ stdout (`; echo TRUE_RC=$?`, or `${PIPESTATUS[0]}` when piping). Absent, `$?` is
 
 **Score controls on OUTPUT, never on rc.**
 *See `memory/reference-cygwin-harness-exit-codes-corrupted-capture-true-rc-in-stdout`.*
+
+## 14 — Metadata about a record is not the record. Eventually-consistent surfaces read stale exactly when you are debugging a live fire
+
+**Found 2026-08-01 by `0.7.0_AE_CloudOps` — three instances inside one 25-minute month-end fire**, each
+a lagging or adjacent AWS surface returning a right-looking wrong answer about an action that had
+already succeeded:
+
+| surface | what it said | truth |
+|---|---|---|
+| SES `SendQuota.SentLast24Hours` | unchanged `1.0 -> 1.0` — reads as "no send" | the send happened; it is a rolling, eventually-consistent counter |
+| a log grep for `ses\|email\|sent` | empty — reads as "it never sent" | the function emits no line for its most consequential step |
+| CloudWatch `describe-log-streams` -> `lastEventTimestamp` | `14:00:15.385Z`, the **START** event | the **END** at `14:01:08.135Z` already existed; the field had not caught up (53 s stale) |
+
+**Any one of these, believed, produces a RED ALERT on a pipeline that has already delivered** — a
+false outage on a partner-rebate basis. The third one is the sharpest: it manufactured an
+"unreconcilable" timeline (a function that ended at 14:00:15Z cannot have sent at 14:01:00Z) and with
+it a phantom unmodelled producer.
+
+**The fix was identical every time: go to the authoritative per-timestamp record.**
+
+> **A LAMBDA'S TRUE WINDOW IS ITS `START`/`END` EVENTS, NEVER THE STREAM'S `lastEventTimestamp`.**
+
+The general form, and the reason this is a law and not an AWS trivium:
+
+> **STREAM METADATA IS NOT STREAM CONTENT. A summary field ABOUT a set of records is a different
+> object from the records, with its own — usually weaker — consistency guarantee. Query the events.**
+
+**Corollary, and the finder's own words on their own miss:** *"a probe aimed at one question will not
+volunteer the answer to a question you did not ask, even when the data is on the screen."* The same
+pre-fire listing that proved July's artifacts were ABSENT also showed that May and June carried **no
+partner CSVs at all** — a materially useful fact, printed in the operator's own terminal, unread
+because the probe was aimed at absence. **Enumerate what your output contains, not only what you went
+looking for.**
 
 ---
 
