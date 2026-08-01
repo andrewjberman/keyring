@@ -2,8 +2,10 @@
 
 **Date:** 2026-08-01
 **Task Order:** ETFS_PRODUCERS_REPOINT_TO_OPAL_DATA_ASSETS (CTO GO @4f34addd74, Andrew-direct)
-**Status:** COMPLETE for 49F (already-correct, reverified) + cottonwood (repointed, deployed, verified).
-INFLECTION LEG CANCELLED (CTO-ratified) after I found its proposed source is not clean.
+**Status:** CLOSED by CTO (20260801T233724Z) -- 49F + cottonwood CONFIRMED, CTO independently
+re-derived AC3 (50,292,778.58 exact) and AC5 (IAM allow/implicitDeny both sides) live, not from
+this report. INFLECTION LEG CANCELLED (CTO-ratified) after I found its proposed source is not
+clean. Drift finding routed to MSTR/COO by CTO -- not mine to action.
 
 ---
 
