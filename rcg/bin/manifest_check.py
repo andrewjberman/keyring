@@ -34,7 +34,10 @@ def main() -> int:
     append_only = set(spec.get("append_only", []))
 
     tracked = {p for p in git("ls-files", "--", "rcg/").splitlines() if p}
-    staged = {p for p in git("diff", "--cached", "--name-only", "--", "rcg/").splitlines() if p}
+    # --diff-filter=d: a staged DELETION leaves the population -- without it, removing a
+    # leaked file re-flags the removal itself (measured on the scans/ CRLF-leak cleanup)
+    staged = {p for p in git("diff", "--cached", "--name-only", "--diff-filter=d",
+                             "--", "rcg/").splitlines() if p}
     population = tracked | staged
     extras = sorted(population - allowed)
 

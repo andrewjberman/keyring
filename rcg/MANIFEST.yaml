@@ -10,6 +10,7 @@ writer_lane: 4.0.0_SA_CRO   # single-writer; .owned-paths grant is a ferry item 
 allowed_paths:
   - rcg/MANIFEST.yaml
   - rcg/.gitignore
+  - rcg/.gitattributes
   - rcg/charters.yaml
   - rcg/rulings/RULINGS.jsonl
   - rcg/ledger/DISPOSITIONS.jsonl
