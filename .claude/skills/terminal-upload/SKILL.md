@@ -12,6 +12,13 @@ gateway's server-side `opal_data_refresh_upload` (the same channel the UI uses):
 never pass through the chat, and it returns three confirmations (uploaded / pipeline /
 displayed) so nothing half-lands silently.
 
+> **SYNC RULE (two copies exist):** this repo file is CANONICAL. A self-contained duplicate
+> lives at the DEVICE HOME level — `%USERPROFILE%\.claude\skills\terminal-upload\SKILL.md` —
+> so any Claude session on the terminal machine (no repo checkout, no fabric context) can run
+> the process. **Any edit here must be re-copied there** (adapting repo-relative references —
+> the home copy carries its context inline). Two copies WILL drift silently otherwise; this
+> line is the tripwire.
+
 ## Invocation forms
 
 | Form | Behavior |
