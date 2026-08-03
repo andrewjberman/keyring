@@ -68,6 +68,17 @@ inputs the moment they accrue.**
   ceased representing reality; worth naming as an RCG seed-label candidate when the cohorts
   reach `data/`.
 
+## STANDING DIAL CHECK (Andrew-direct RULING 2026-08-03 ~2240Z, verbatim @
+## ANDREW_RULING_projections_default_kuzu_full_graph_20260803.md)
+
+Every dial's P0/P1 now asks: **is this tool's universe (a) the kuzudb full resource graph, (b) a
+declared TERRITORY-specific full graph (AWS_CLOUD / MS_CLOUD / GIT), or (c) a DECLARED,
+intentional exception (hand-drawn registry / amalgamation — comp-estate's C3.ii semantic layer is
+the named legal example)?** Anything else — a private, incidentally-scoped universe — is a
+finding, not a style choice. Trigger case: comp-blast's private 2,255-node trace graph (4 bucket
+nodes) vs comp-kuzu's canonical 20,480-node DB that carried the very node blast missed.
+comp-blast specifically: MUST cover all of AWS (build routing at CTO).
+
 ## comp-blast P0-census input (measured this session, Andrew-directed opal-data-mdpf trace)
 
 - **`opal-data-mdpf` is ABSENT from the blast graph universe** — only 4 S3_BUCKET nodes exist
