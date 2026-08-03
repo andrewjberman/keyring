@@ -1465,6 +1465,10 @@ paths:
     lane: DATA_REFRESH_DEPLOY
     note: "data_refresh Lambda source -- full AE set preserved + DT 0.2.0 (sovereign-delegate DT holding the CTO-issued TO authority on this Lambda; deployed BE01 v2.3.0 under audited override 2026-07-17). Longest-match overrides infra/aws/** AE-only. COO grantor-landed on CTO arch-gate pass 20260717T163706Z; mirrors YANG_PIPELINE_DEPLOY."
 
+  "infra/aws/terraform/data-refresh/**":
+    lane: DATA_REFRESH_DEPLOY
+    note: "data-refresh Terraform root (CHANGELOG.json + pipeline TF the DT deploy legs write). Added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD; CTO ARCH-GATE PASS 20260803T162641Z): the 07-17 grant scoped only the lambda-source path and this TF-root rule was MISSING, so the path fell through to infra/aws/** AE-only while the lane description already said 'Mirrors YANG_PIPELINE_DEPLOY exactly' -- a record-consistency fix as much as a grant; the lane intent always covered it. Closes the gap DT exercised via audited CLOUD_OPS_OR_ETL override on the W3 deploy record 2603dca42f. Mirrors yang :1452. ZERO membership change -- binds the path to the already-gated lane (DT per 07-17 gate, DS per 20260803T155644Z gate, AE set untouched). Longest-match overrides infra/aws/** AE-only."
+
   "infra/aws/lambda-edge/public-data-router/**":
     lane: PUBLIC_DATA_ROUTER_DEPLOY
     note: "public-data-router edge function source -- full AE set PRESERVED + DT 0.2.0 (the live portal-promote lane; CTO WO-3 names this router as DT's surface, GO 005733Z, Andrew-direct repoint-tonight). Longest-match overrides infra/aws/** AE-only. SCOPED to this one edge function: the other lambda-edge functions remain CLOUD_OPS_OR_ETL. COO grantor-landed 2026-07-29 (SoD); CTO arch-gate cc'd."
