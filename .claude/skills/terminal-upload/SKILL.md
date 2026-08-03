@@ -55,11 +55,13 @@ because the operator asked for exactly this. `dry` exists for everything short o
 ## Step 1 — Pull + tripwire (leg 1)
 
 ```
-"<cma-python>" "<project>\tools\run_daily_pull.py" [--skip-pull] [--allow-stale N]
+"<cma-python>" -u "<project>\tools\run_daily_pull.py" [--skip-pull] [--allow-stale N]
 ```
 
 - The notebooks take **minutes** — run under Bash `run_in_background` and act on the
-  completion notification; do not poll.
+  completion notification; do not poll. The `-u` is load-bearing under redirection:
+  without it the parent's buffered prints land AFTER the tripwire subprocess output and
+  the log reads out of order (found in the 2026-08-03 shakedown).
 - Both notebooks are **idempotent by date** (an existing today-PKL is reused), so re-running
   after a hiccup is always safe.
 - The runner ends with the tripwire (expected keys, duplicate rows, as-of date, row-count
