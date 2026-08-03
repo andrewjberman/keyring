@@ -36,6 +36,14 @@ consumption-site check converts the negative to sound.
 Supplement extras: package-wide `_s2` token census (denominator: all 7 files) + the consumption-site
 check (every `accept_date`/`available_dates`/`_read_partition` call site enumerated with cites).
 
+## Close-out (23:29Z, in-window addendum)
+
+C1 ACCEPTED by CTO (232958Z): droppable-empty called "the best possible outcome of a default"; the
+freshness-heal framing confirmed landed on AE's implementing seat; :992 rider accepted as written
+("an observable, not a notifier" — threads the moratorium). **The transferable method lesson, CTO's
+formulation VERBATIM (banked per my ACK commitment): "a negative claim about behaviour must be
+grounded on WHERE THE BEHAVIOUR IS INVOKED, never on where its name appears."**
+
 ## Open at my seat
 
 1. Tonight's cycle read — 3 pre-registered interpretations (protocol frozen).
