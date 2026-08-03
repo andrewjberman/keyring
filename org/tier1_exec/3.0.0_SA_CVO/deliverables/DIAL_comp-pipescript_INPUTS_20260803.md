@@ -17,11 +17,14 @@ inputs the moment they accrue.**
    deletion (a future tracer reads no-writes as orphan — same class as comp-iam Rule 22a).
    epistemic_status: OBSERVED (measured live by DS).
 
-2. **ASSETS MONOLITH TREE ABSENT FROM THE PIPELINE MAP** (0.4.0_DS_ClientPlatform under
-   OPAL_VENDORPROVENANCE.WS1, 2026-08-03, via CTO 210613Z): `comp-pipescript io` returns rc=2 on
-   `data/assets/scripts/silver/*` — the opal-data-assets tree is not in the pipeline map, so the
-   deploy-verify instrument cannot see the estate's CANONICAL tree at all. COO holds it as a
-   build candidate. epistemic_status: OBSERVED (measured live by DS).
+2. **ASSETS MONOLITH TREE ABSENT FROM THE PIPELINE MAP — TWO-LAYER** (via CTO 210613Z + COO
+   211830Z): (a) SILVER case — `comp-pipescript io` rc=2 on `data/assets/scripts/silver/*`
+   (0.4.0_DS_ClientPlatform, OPAL_VENDORPROVENANCE.WS1); (b) GOLD case, independently measured —
+   all three cottonwood producers, the tool's own error naming its valid trees as bd/inf/cot/mdpf
+   (0.2.0_DS, T1.C). The deploy-verify instrument cannot see the estate's CANONICAL tree at
+   either layer. **Build TO staged @2f256a3830 to `0.8.0_AE_CloudComp~B` (CTO route-as-build);
+   its Phase 3 report is addressed to 3.0.0_SA_CVO for register closure — OPEN CVO OBLIGATION.**
+   epistemic_status: OBSERVED (measured live by DS, twice, independently).
 
 3. **INTERFACE DRIFT MARKER**: the `--pipeline mdpf` flag is described by DS as "now-required" —
    a recent interface change; P5 (dependency alignment) must sweep every canon surface that
@@ -30,9 +33,11 @@ inputs the moment they accrue.**
 
 ## Adjacent register notes accrued the same evening (NOT comp-pipescript; recorded so they land somewhere durable)
 
-- **comp-estate**: `comp-estate mdpf` renders the accrual producer family as a C0 fact
-  (`mdpf-accrual-trigger`) rather than its own chain block — second producer family lacks a
-  chain-block rendering (DS via COO 205716Z). Register-only residual on comp-estate's record.
+- **comp-estate — TWO distinct rendering blindnesses on the mdpf vertical**: (a) the accrual
+  producer family renders as a C0 fact (`mdpf-accrual-trigger`) rather than its own chain block
+  (DS via COO 205716Z); (b) the cottonwood MDPF legs render in NO chain at all — only `advi-cot`
+  exists, a different thread (0.2.0_DS, T1.C Phase 1, via COO 211830Z). Register-only residuals
+  on comp-estate's record; candidate P6 exercise gates for a future comp-estate re-dial.
 - **comp-routes**: cache-policy identity/TTL blindness @aeca48e395 RE-CONFIRMED by ~F's T3.A
   (worked around on live `get-distribution-config`; DESIRED/APPLIED agreed 25=25 this
   instance) (CTO 210613Z). Existing register entry stands, now with a live workaround record.
