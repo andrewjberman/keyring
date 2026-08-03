@@ -44,8 +44,11 @@ def main() -> int:
                               capture_output=True)
         if head.returncode != 0:
             continue  # not yet in HEAD -- first commit of the file, nothing to protect
-        current = (WS / path).read_bytes()
-        if not current.startswith(head.stdout):
+        # Compare LINE CONTENT, not raw bytes: git stores LF-normalized blobs while the
+        # Windows working copy may carry CRLF (git status reads clean across that gap; a
+        # raw startswith read all four ledgers as tampered on the first exercised control).
+        current = (WS / path).read_bytes().replace(b"\r\n", b"\n")
+        if not current.startswith(head.stdout.replace(b"\r\n", b"\n")):
             tampered.append(path)
 
     print(f"rcg-manifest-check: DENOMINATOR {len(population)} tracked+staged file(s) under "
