@@ -1,7 +1,7 @@
 {
  "snapshot_utc": "2026-08-03T2245Z-approx",
  "workflow": "wf_8cc61343-095",
- "status": "PARTIAL MID-FLIGHT SNAPSHOT -- pre-merge, pre-verification, ASSESSED-only; persisted on Andrew instruction (token-budget protection)",
+ "status": "COMPLETE 12/12 -- pre-merge ASSESSED verdicts, workflow wf_8cc61343-095 (12 agents, 0 errors, 41min)",
  "completed_slices": [
   0,
   1,
@@ -10,14 +10,13 @@
   4,
   5,
   6,
+  7,
   8,
   9,
   10,
   11
  ],
- "pending_slices": [
-  7
- ],
+ "pending_slices": [],
  "results": [
   {
    "slice_id": 0,
@@ -19839,6 +19838,2171 @@
      "binary": "KEEP",
      "confidence": "HIGH",
      "reasoning": "Recent (35d) script against opal-users-v2, the Andrew-confirmed official user DB; marked 1.0, p_archive 0.0."
+    }
+   ]
+  },
+  {
+   "slice_id": 7,
+   "assessments": [
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO",
+     "n_files": 6,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Live CTO seat root (README + dated determinations), touch 9.7d, near-zero decay (cc 0.02, lex 0.0); org work-record default applies. Sub-split entries below cover deliverables/ and threads/."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables",
+     "n_files": 46,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Flat CTO deliverable work-records of an active seat; rule-2 default, no divergence family contradicts."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS",
+     "n_files": 85,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Census deliverable whose SYNTHESIS.md is cited directly by CLAUDE.md (msys_argv_guard rule) - organizationally load-bearing record."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730",
+     "n_files": 71,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Days-old estate census feeding current VELOCITY work; recent work-record."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/cot_gold_bughunt_reports",
+     "n_files": 69,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "cot-firm bughunt report set - work-records with lookback value; firm-fenced, judged on its own."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MSBEFF",
+     "n_files": 18,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "CTO project deliverable records; rule-2 default, no contradicting family."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ETFS_JULY_2026_FINAL",
+     "n_files": 9,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Record of the July ETFS month-end fire (delivered Aug-1, Sep-1 carry live) - lookback-critical."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ETFS_ORION_LABEL_CORRECTION",
+     "n_files": 4,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Correction record on the live ETFS surface; work-record default."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_COMPCLOSE",
+     "n_files": 3,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closeout deliverable records; rule-2 default."
+    },
+    {
+     "cohort": "org/tier1_exec/1.0.0_SA_CTO/threads",
+     "n_files": 3,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Seat-local thread records, not org/threads/*/context dedup copies; work-record default."
+    },
+    {
+     "cohort": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos",
+     "n_files": 100,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "89/100 files are context/ snapshot copies (dedup-shaped ARCHIVE per ratified rule 2), era_retired=100 (ADVI_HISTBF closed), marked 0.0, cc_div 0.76 - four families agree.",
+     "exceptions": [
+      {
+       "path": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos/THREAD.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread's own record, not a snapshot copy"
+      },
+      {
+       "path": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos/CONTEXT.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos/CONTEXT_COMPILED.md",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos/TURN.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos/messages",
+       "verdict": "REFERENCE_KEEP",
+       "why": "7 original message work-records, not dedup copies"
+      }
+     ]
+    },
+    {
+     "cohort": "tools/market_update/components",
+     "n_files": 73,
+     "verdict": "CONTESTED",
+     "binary": "NONE",
+     "confidence": "SPLIT",
+     "reasoning": "Evidence families genuinely conflict: 42% mechanically reachable via a reachable orchestrator, zero dead markers/retired vocab (rule 1 blocks age-based archive), yet production stopped ~8mo ago (last pptx Nov 2025), cc_div 0.58, model 0.99. Dormant-but-intact tool with no declared supersession - cannot decide honestly."
+    },
+    {
+     "cohort": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati",
+     "n_files": 59,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "46/59 are context/ snapshot copies (rule-2 dedup ARCHIVE), era_retired=59, marked 0.0, cc_div 0.63 - families agree.",
+     "exceptions": [
+      {
+       "path": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati/THREAD.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati/CONTEXT.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati/CONTEXT_COMPILED.md",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati/TURN.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI_PRICES-001-lot-valuation-reconciliation-investigati/messages",
+       "verdict": "REFERENCE_KEEP",
+       "why": "original message work-records"
+      }
+     ]
+    },
+    {
+     "cohort": "org/mcp/input0",
+     "n_files": 44,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Dated verdict records emitted by the input0/verify-channel process - org work-records with audit lookback value; lex_retired 0.5 is expected (records name closed projects)."
+    },
+    {
+     "cohort": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l",
+     "n_files": 40,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "27/40 are context/ snapshot copies (rule-2 dedup ARCHIVE), marked 0.0, 152d dormant, cc_div 0.71, p_archive 1.0.",
+     "exceptions": [
+      {
+       "path": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l/THREAD.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l/CONTEXT.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l/CONTEXT_COMPILED.md",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l/TURN.json",
+       "verdict": "REFERENCE_KEEP",
+       "why": "thread record"
+      },
+      {
+       "path": "org/threads/ADVI-006-pattern-0-books-tab-design-brief-l2-l3-l/messages",
+       "verdict": "REFERENCE_KEEP",
+       "why": "original message work-records"
+      }
+     ]
+    },
+    {
+     "cohort": "infra/aws/opalinvest_dev",
+     "n_files": 32,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Infra for opalinvest.dev - Andrew's live dashboard domain (CLAUDE.md rule 23); marked 0.47, model 0.01 keep-side; rule 7 forbids archiving possibly-deployed infra."
+    },
+    {
+     "cohort": "org/tier0_exec/0.0.0_AB_MSTR",
+     "n_files": 29,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Actively-live MSTR seat (touch 5d, findings dated 07-31), near-zero decay; live work product, not dormant records."
+    },
+    {
+     "cohort": "data/smartx/docs",
+     "n_files": 18,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Docs of the LIVE SmartX/0824 model-portfolios feed (header 'Updated Nov 21 2025', last real commit Feb 2026 canonical-IAM update); rule 3 keeps live-system docs. cc_div 0.5 signals drift needing refresh, not archive."
+    },
+    {
+     "cohort": "data/inf/API",
+     "n_files": 13,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "INF firm API/eclipse domain docs, touch 26d, cc_div 0.0, low lex decay; eclipse egress is a standing approved live workstream."
+    },
+    {
+     "cohort": "infra/aws/manifests",
+     "n_files": 12,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "marked_frac 1.0, p_archive 0.04; manifests are deployment source-of-truth class (deployment rules 8), age alone is not archive evidence."
+    },
+    {
+     "cohort": "workflows/ycharts/stress-test",
+     "n_files": 10,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (32d) prepared workflow configs, marked 0.5, p_archive 0.06; ycharts egress being HELD gates use, not the artifact."
+    },
+    {
+     "cohort": "data/yang_pkl/scripts",
+     "n_files": 7,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "READMEs/standards for the yang CMA pipeline whose runtime now lives in the live yang_pipeline Lambda; original-scripts documentation with lookback value, no dead markers or retired vocab."
+    },
+    {
+     "cohort": "org/tier1_exec/2.1.0_SA_COO",
+     "n_files": 7,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "COO 2.1.0 is LIVE and dispatching (LD-0365); records touched 3.3d, includes an Andrew-direct verbatim record."
+    },
+    {
+     "cohort": "org/tier3_junior/0.2.1_RD_Positioning",
+     "n_files": 6,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Retired junior seat's deliverables - org work-record default (rule 2); decay is expected for an inactive seat, not archive evidence."
+    },
+    {
+     "cohort": "docs/architecture/security-scanner-source",
+     "n_files": 5,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Deliberate reference capture of the source Factor Scanner Excel system ('Generated from actual code'); marked 0.8 says still cited; retired vocab reflects the legacy system it documents."
+    },
+    {
+     "cohort": "org/tier3_junior/0.2.6_RD_Correlation",
+     "n_files": 5,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Retired junior seat work-records; rule-2 default, no divergence family beyond expected dormancy."
+    },
+    {
+     "cohort": "docs/reference/yang-original-scripts",
+     "n_files": 4,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Explicitly a reference preservation of Yang's original notebooks (marked 0.75, p_archive 0.01) - keeping these IS the directory's purpose."
+    },
+    {
+     "cohort": "org/threads/templates",
+     "n_files": 4,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Canonical template originals for the thread mechanism whose orchestrator.sh is still mechanically reachable; these are the sources the dedup-shaped copies derive from, not copies themselves."
+    },
+    {
+     "cohort": "design/systems/portal",
+     "n_files": 3,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Live portal design system, marked 1.0, touch 19d, p_archive 0.0."
+    },
+    {
+     "cohort": "infra/aws/step-functions",
+     "n_files": 3,
+     "verdict": "CONTESTED",
+     "binary": "NONE",
+     "confidence": "SPLIT",
+     "reasoning": "bd-gold step-function definitions unreferenced in repo (marked 0.0, 172d) but may be deployed live in AWS; rule 7 mandates CONTESTED over ARCHIVE for possibly-deployed infra not verified here."
+    },
+    {
+     "cohort": "data/black_diamond/config",
+     "n_files": 2,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "office_mapping README is mechanically reachable config of the live bd pipeline; per-file features split the cohort.",
+     "exceptions": [
+      {
+       "path": "data/black_diamond/config/yahoo_safe_tickers.txt",
+       "verdict": "ARCHIVE",
+       "why": "one-shot AE backfill list built for ADVI_PRICES-004 (closed era), reach 0, lex_retired 1.0"
+      }
+     ]
+    },
+    {
+     "cohort": "infra/aws/agentbus",
+     "n_files": 2,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Egress-strip control + its test for the LIVE agentbus (OPAL_SQSCHAT active, touch 5d on project); security control code of a live channel."
+    },
+    {
+     "cohort": "research_transcripts/raw/2026-07-27",
+     "n_files": 2,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Raw inputs of the live research-transcripts ingest (index updated 0.2d ago); raw layer stays untouched."
+    },
+    {
+     "cohort": "tools/tax_sma/tests",
+     "n_files": 2,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Tests for the live tax_sma tool (active tax-pt/taxsma skills, PFMG_TAXSMA PRD in flight); tests being unreferenced is normal."
+    },
+    {
+     "cohort": "comp-constants.config.yaml",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Live comp-tool config, touched 11.9d ago; runtime name-loaded so mechanical reach understates."
+    },
+    {
+     "cohort": "data/analysis/fy2025_49f_market_return_xcheck.py",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "49F-era one-shot cross-check diagnostic - presumed-deprecated per R-0017; unreferenced, 111d, model 0.97 concur."
+    },
+    {
+     "cohort": "data/analysis/t1_cap_audit_dump.py",
+     "n_files": 1,
+     "verdict": "MIGRATE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "49F-era audit-dump diagnostic (R-0017 presumed-deprecated) but mechanically reachable from live roots (marked 1.0) - archive only after the live citation is repaired."
+    },
+    {
+     "cohort": "data/etfs/ETFS_ARCHITECTURE_AND_MECHANISMS.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Architecture doc of the live ETFS system (Sep-1 fire pending), marked 1.0, touch 39d, p_archive 0.02."
+    },
+    {
+     "cohort": "data/schwab/DATA_DICTIONARY.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Carries an explicit 2026-07-08 errata banner: SUPERSEDED by DATA_PLATFORM_D1_schwab_field_spec.md and deliberately 'Preserved below, not deleted' - a declared keep-as-historical decision, still cited (marked 1.0)."
+    },
+    {
+     "cohort": "data/seeking-alpha/PRODUCTION_BACKFILL_GUIDE.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "The seeking-alpha tree carries a tree-level DEPRECATED.md; this guide is unreferenced (reach 0), 192d, model 1.0 - declared deprecation + absence + era agree."
+    },
+    {
+     "cohort": "data/seeking-alpha/backfill_ui.py",
+     "n_files": 1,
+     "verdict": "MIGRATE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Part of the DEPRECATED-declared seeking-alpha tree but still mechanically reachable (reach 1) - archive after citation repair."
+    },
+    {
+     "cohort": "data/smartx/HANDOFF_UPLOAD_INSTRUCTIONS.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "One-time handoff upload instructions, 202d, unreferenced, cc_div 0.54 - ephemeral coordination doc whose act completed; distinct from the kept live-system docs sibling cohort."
+    },
+    {
+     "cohort": "data/yang_macros_re/__init__.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Package marker of the intact YALP_MACROS adapter harness (shipped DS work, ~69d); no dead markers or retired vocab in the package - rule 1 blocks age-based archive; verdict follows the package."
+    },
+    {
+     "cohort": "deck_generation/RUNTIME.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ Andrew carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/archetype_previews/chart-pie.txt",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/archetype_previews/cover-minimal.txt",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/archetype_previews/list-checklist.txt",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/archetype_previews/stat-stacked.txt",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/archetype_previews/table-heatmap.txt",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/engine/brand.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4); also marked 1.0."
+    },
+    {
+     "cohort": "deck_generation/engine/orchestrator.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4); marked 1.0."
+    },
+    {
+     "cohort": "deck_generation/lambda_api/test_local.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/scripts/04_build_taxonomy.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4); marked 1.0."
+    },
+    {
+     "cohort": "deck_generation/scripts/run_orchestrated_generation.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/specs/templates",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "deck_generation/tests/test_fit_audit.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "deck_generation/ carve-out (rule 4)."
+    },
+    {
+     "cohort": "docs/BACKEND_ISSUE_PORTFOLIO_LOADER.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Resolved-issue ticket shape, unreferenced, 167d, model 1.0 - ephemeral coordination doc, nothing live depends on it."
+    },
+    {
+     "cohort": "docs/analysis/2026-04-15_incremental_runs_feasibility.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Cited feasibility analysis (marked 1.0, p 0.12) on a topic still live (incremental parity standard in flight)."
+    },
+    {
+     "cohort": "docs/architecture/49FRECN_STANDING_BACKLOG.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Standing backlog record, marked 1.0, model 0.01; retired vocab reflects items it tracks, not the doc's status."
+    },
+    {
+     "cohort": "docs/architecture/ADHC_COMPIL_V4.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-generation PRD (V5 followed) but still cited (marked 1.0, model 0.0); governance record kept in place."
+    },
+    {
+     "cohort": "docs/architecture/ADHC_LAMBDADOC.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Cited (marked 1.0), model 0.0, no era/lex decay - stable doc whose subjects show moderate movement only."
+    },
+    {
+     "cohort": "docs/architecture/ADVISOR_INTELLIGENCE_COMPLETION.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Completion record of the ADVI program, still cited (marked 1.0); organizational record."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_ANONYM_PRD.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-era ADVI PRD, cited (marked 1.0, p 0.01); governance record."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_DEMOV1.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Touched 27d ago, marked 1.0, cc_div 0.08 - still-maintained project doc despite retired era-code."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_HISTBF.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "PRD of the retired ADVI_HISTBF project (era_retired, lex 0.59) but cited (marked 1.0, cc_div 0.0); closed-project governance record."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_INFLEC_AUDIT.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Audit record still cited (marked 1.0); cc_div 0.94 marks it as a record of past state, not a live spec."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_INFREL.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-era PRD, cited (marked 1.0, p 0.03); governance record."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_ORIAPI.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-era PRD (era_retired, lex 0.28), cited (marked 1.0); governance record."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_REBORN_WS1_WS3_VALIDATION.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Validation record, cited (marked 1.0); lookback value."
+    },
+    {
+     "cohort": "docs/architecture/ADVI_STAUDT.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-era PRD, cited; cc_div 0.97 says its subjects moved - record of past state."
+    },
+    {
+     "cohort": "docs/architecture/ASTN_WSJFT_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent PRD (40d), marked 1.0, zero decay signals."
+    },
+    {
+     "cohort": "docs/architecture/COMPILER_BLAST_SCRIPT_ARTIFACT_EDGES.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "comp-blast design record, cited (marked 1.0, p 0.0); cc_div 0.8 = drifted record, keep as reference."
+    },
+    {
+     "cohort": "docs/architecture/COMP_LEARNS_BENCHMARK_AUTHORING_SOP.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "SOP for the COMP_LEARNS program, cited (marked 1.0, p 0.05); dormant program record."
+    },
+    {
+     "cohort": "docs/architecture/COMP_LEARNS_PILOT.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Pilot record, cited (marked 1.0); cc_div 1.0 marks it historical."
+    },
+    {
+     "cohort": "docs/architecture/COMP_LEARNS_WAVE_PRD_TEMPLATE.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Template of a dormant program, cited (marked 1.0, cc 0.0); reusable record."
+    },
+    {
+     "cohort": "docs/architecture/DATA_PLATFORM_RECON_ROE.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (40d) rules-of-engagement doc, marked 1.0, zero decay."
+    },
+    {
+     "cohort": "docs/architecture/ETFS_PRODUCERS_REPOINT_TO_OPAL_DATA_ASSETS.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "2d old, marked 1.0, live ETFS/OPAL_ASSETS workstream."
+    },
+    {
+     "cohort": "docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Gold-logic determination record, cited (marked 1.0, p 0.01); design rationale lookback."
+    },
+    {
+     "cohort": "docs/architecture/INFETL_MASTER_DATA_REGISTRY.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Andrew-demanded canonical registry of the live INF pipeline (verified: its DEPRECATED tokens label registry CONTENT rows, not the doc); cc_div 0.77 means it needs refresh, not archive - marked 1.0."
+    },
+    {
+     "cohort": "docs/architecture/INFLEC_ENRICH_SCOPE.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Scope record, cited (marked 1.0, cc 0.0, p 0.0); stable closed-scope reference."
+    },
+    {
+     "cohort": "docs/architecture/MDLP_RVVALT_RFR_SPEC.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Spec record, cited (marked 1.0, p 0.0); retired vocab reflects the era it specifies."
+    },
+    {
+     "cohort": "docs/architecture/MDPF_GLOBAL_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Touched today (0d), marked 1.0, live MDPF program."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_AGENTBUS_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Touched 5.3d, marked 1.0, agentbus is live infrastructure."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_COMPDRIFT_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (34d) PRD of live comp tooling, marked 1.0, minimal decay."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_COMPROUTE_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (33.9d) comp-tooling PRD, marked 1.0, p 0.0."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_DTAFLP.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Touched 27d, marked 1.0, low decay despite retired era-code in path."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_GRAPHDEPTH_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (34d) graph-platform PRD, marked 1.0."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_MOTIF_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (27.5d) PRD, marked 1.0, p 0.0."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_PIPESCRIPT_PRD.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "PRD of the tool since renamed comp-estate (pipescript itself prohibited, Andrew 07-29); still cited (marked 1.0) - historical design record of a live successor."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_TERRAFORM_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Recent (26d), marked 1.0, Terraform program active (NFRA_TERRAFORM.json also active)."
+    },
+    {
+     "cohort": "docs/architecture/NFRA_VELOCITY_CORE_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "3.2d old; NFRA_VELOCITY is the EXCLUSIVE live regime (LD-0361)."
+    },
+    {
+     "cohort": "docs/architecture/OPAL_ASSETS_COMPONENT_GRAIN_SCHEMA.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "21d, marked 1.0, OPAL_ASSETS is the live monolith macro-project; lex 1.0 is a small-denominator instrument artifact against p_archive 0.0."
+    },
+    {
+     "cohort": "docs/architecture/OPAL_RUNNERS_49F_ARCH_SESSION_LOCK_20260715.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (19d) architecture session-lock record, marked 1.0, low decay."
+    },
+    {
+     "cohort": "docs/architecture/PORTAL_AUTHHARD_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "14d, marked 1.0, portal auth hardening live."
+    },
+    {
+     "cohort": "docs/architecture/SCTY_PREMCP_PRD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "33d, marked 1.0, security/MCP gateway program live."
+    },
+    {
+     "cohort": "docs/architecture/TELEMETRY_LIVENESS_FRAMEWORK.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Framework doc for live telemetry mechanisms (stimulus-scan/agent_telemetry), marked 1.0; cc_div 0.49 moderate drift only."
+    },
+    {
+     "cohort": "docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recently-closed fold-in PRD (13d, dead marker present); cited (marked 1.0) - completed-project governance record."
+    },
+    {
+     "cohort": "docs/architecture/YALP_POSITN.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-era YALP PRD, cited (marked 1.0, p 0.0); governance record."
+    },
+    {
+     "cohort": "docs/briefs/ADVI_49PUSH_P1_validation_report.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Validation-report work-record of a closed push; lookback default for briefs."
+    },
+    {
+     "cohort": "docs/briefs/ADVI_SHARED_AUDIT.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Audit brief, cited (marked 1.0, p 0.01); work-record."
+    },
+    {
+     "cohort": "docs/briefs/DATA_ANALYTICS_A1_C_00_canonical_performance_briefing.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (39d) briefing work-record, cc 0.0."
+    },
+    {
+     "cohort": "docs/briefs/DATA_ANALYTICS_canonize_gold_archgate_brief_v1.0.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent brief carrying a dead marker (likely versioned-superseded) - kept as work-record per briefs default."
+    },
+    {
+     "cohort": "docs/briefs/DATA_PLATFORM_DC_CHAR_orion_own_account_api_quality.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (40d), marked 1.0, p 0.01; ORION egress is a standing live workstream."
+    },
+    {
+     "cohort": "docs/briefs/ETFS_canonical_output_and_charts_design_v0.1.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (39d) design brief on the live ETFS surface, marked 1.0, zero decay."
+    },
+    {
+     "cohort": "docs/briefs/NFRA_ONTOCLARITY_BRIEF_20260719.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent brief with dead marker (closed/absorbed); cited (marked 1.0) - work-record."
+    },
+    {
+     "cohort": "docs/briefs/SOVEREIGN_DELEGATE_AGENT_BRIEFING.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (20d) briefing, marked 1.0, p 0.01, low divergence."
+    },
+    {
+     "cohort": "docs/briefs/advi-infmvp-f5-canonical-advisor-nna-phase0-20260528.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Phase-0 brief work-record, cited (marked 1.0); retired vocab reflects closed phase."
+    },
+    {
+     "cohort": "docs/briefs/advisor-intelligence-distribution-panel-brief.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Old panel brief, unreferenced - work-record lookback default; no era/lex divergence to justify archive."
+    },
+    {
+     "cohort": "docs/briefs/ae-brief-opal-data-etfs-bucket.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "AE brief on the ETFS bucket, cited (marked 1.0) but cc_div 0.82 - record of past state."
+    },
+    {
+     "cohort": "docs/briefs/audit-archive-invoker-spec-20260716.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Spec for the audit-archive-invoker referenced in current tooling lore; recent (18d), marked 1.0."
+    },
+    {
+     "cohort": "docs/briefs/bd-49f-ec2-scrape-to-datamining-api-migration-20260625.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Migration brief, marked 1.0, p 0.0, recent-ish (39d), low divergence."
+    },
+    {
+     "cohort": "docs/briefs/bd-unrealized-export-500k-row-cap-finding-20260709.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (25.6d) finding on the live bd export path, marked 1.0."
+    },
+    {
+     "cohort": "docs/briefs/cmpaws-cvo-handaudit-pass1-20260603.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Hand-audit pass record; work-record default."
+    },
+    {
+     "cohort": "docs/briefs/comp-lambdamap-source-map-compiler-prd-20260601.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Early comp-tool PRD draft; work-record with design lineage value."
+    },
+    {
+     "cohort": "docs/briefs/cot-bd-pipeline-deepdive-medallion-port-plan-20260608.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "cot medallion port plan, cited (marked 1.0); planning record of an executed port."
+    },
+    {
+     "cohort": "docs/briefs/cot-transactions-field-population-analysis-20260608.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "cot field analysis record, cited; work-record."
+    },
+    {
+     "cohort": "docs/briefs/data-platform-d2b-bd-rest-endpoint-catalog-20260708.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (26d) endpoint catalog for the live bd REST path, marked 1.0, cc 0.05."
+    },
+    {
+     "cohort": "docs/briefs/data-scientist-inflec-advisor-granularity.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "DS brief record, cited (marked 1.0); lex 0.7 reflects closed-era subjects - record, not live spec."
+    },
+    {
+     "cohort": "docs/briefs/de-brief-profil-003-tax-exposure-already-live.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Debrief record of a resolved question; work-record default."
+    },
+    {
+     "cohort": "docs/briefs/devops-brief-advi-005-rolling-flows.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-task devops brief; work-record lookback default despite decay."
+    },
+    {
+     "cohort": "docs/briefs/devops-brief-mixv2-001.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-task brief; work-record default."
+    },
+    {
+     "cohort": "docs/briefs/devops-brief-nnavar-volume-gap-ec2-run.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Closed-task brief; work-record default."
+    },
+    {
+     "cohort": "docs/briefs/discrimination-eval-v0.7.3-20260528.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Versioned eval-result record; work-record with benchmark lineage value."
+    },
+    {
+     "cohort": "docs/briefs/dt-brief-canonical-users-table-rename.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Record of the users-table rename that produced today's official opal-users-v2; executed-change record, cited."
+    },
+    {
+     "cohort": "docs/briefs/find-insure-024-ranked-target-list-20260529.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Target-list work product of the find workstream; record."
+    },
+    {
+     "cohort": "docs/briefs/find-insure-job-board-endpoint-manifest-v0.0.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Endpoint manifest v0.0 record, cited (marked 1.0); find program record."
+    },
+    {
+     "cohort": "docs/briefs/find-insure-phase2b-multi-board-design-v0.1.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Design draft record, cited; work-record."
+    },
+    {
+     "cohort": "docs/briefs/forms-trade-request-graph-access-and-federation-20260713.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (21d) design brief, unreferenced but zero decay; work-record."
+    },
+    {
+     "cohort": "docs/briefs/gold-rightsizing-optimization-framework-20260605.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Framework brief, cited (marked 1.0, p 0.0); record."
+    },
+    {
+     "cohort": "docs/briefs/inf-incremental-q2-backdate-probe-20260514.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Probe record of a completed investigation; work-record."
+    },
+    {
+     "cohort": "docs/briefs/infgro-window-twr-aggregation-ruling-20260515.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "A ruling record (methodology decision) - cited, high lookback value."
+    },
+    {
+     "cohort": "docs/briefs/infnna-p0-geo-nna-flowloss-mechanism-20260602.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanism-finding record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-49f-nonmodel-custody-cutout-audit-20260518.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Audit record, cited (marked 1.0); work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-assets-028-phase0-schwab-whole-source-20260520.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Phase-0 record; work-record default."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-assets-031-a4-1c-rerun-ravc2-20260521.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "RAVC rerun record; verification-history lookback."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-cohort-1c-serving-continuity-verify-20260601.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Serving-continuity verification record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-global-daily-chain-codify-design-20260518.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Design record for the MDPF chain (cc 0.86 = since-evolved); design-lineage record."
+    },
+    {
+     "cohort": "docs/briefs/mdpf-trigger-repoint-schwab-rps-freshness-spec-20260701.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Trigger-repoint spec record (33d); work-record on a still-live seam."
+    },
+    {
+     "cohort": "docs/briefs/mdsrc-c2-input-readiness-20260521.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Readiness record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdsrc-c4-phase2c-serving-path-drift-baseline-20260522.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Drift-baseline record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdsrc-m1-macro-data-contract-20260521.tsv",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Data-contract artifact record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdsrc-ws1-external-market-data-audit-20260520.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Audit record, cited (marked 1.0, cc 0.0); work-record."
+    },
+    {
+     "cohort": "docs/briefs/mdsrc-ycharts-capture-probe-20260520.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Probe record, cited; work-record."
+    },
+    {
+     "cohort": "docs/briefs/modelportfolios-dataasof-timestamp-mis-sourced-20260609.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Defect-finding record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/nfra-comproute-brief-20260701.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (33.9d) brief backing the live NFRA_COMPROUTE PRD, marked 1.0."
+    },
+    {
+     "cohort": "docs/briefs/nfra-endpoints-prd-proposal-20260708.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (26d) PRD proposal, marked 1.0, p 0.0."
+    },
+    {
+     "cohort": "docs/briefs/nfra_agentbus_s1_security_model_spec_DRAFT_20260702.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Security-model spec for the live agentbus, marked 1.0, recent (32d); cc 0.89 flags drift to reconcile, not archive."
+    },
+    {
+     "cohort": "docs/briefs/positioning-security-name-casing-trace-20260601.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Trace record of a resolved investigation; work-record."
+    },
+    {
+     "cohort": "docs/briefs/recharts-v3-stacked-order-advisory-brief-20260601.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Advisory on a library behavior still in the portal stack; marked 1.0, p 0.01."
+    },
+    {
+     "cohort": "docs/briefs/scty-mcp-employee-onboarding-usertype-guardrails-advance-20260701.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (33d) guardrails brief; work-record on live SCTY surface."
+    },
+    {
+     "cohort": "docs/briefs/silver-yaml-v3-mapping-proposal.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Proposal record, cited (marked 1.0) but cc_div 1.0 - superseded-by-evolution proposal kept as design lineage."
+    },
+    {
+     "cohort": "docs/briefs/test-build-preflight-gate-proposal-20260701.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (33.8d) gate proposal, marked 1.0, p 0.01."
+    },
+    {
+     "cohort": "docs/briefs/yalp_causal_phase0_substrate_survey_20260526.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "YALP-era survey record, cited (marked 1.0); work-record."
+    },
+    {
+     "cohort": "docs/briefs/yalp_correl_side_by_side_spreadsheet_2026-05-22.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "YALP-era analysis record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/yalp_macros_phase2a_aggregate_orphan_reconnaissance_2026-05-26.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Reconnaissance record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/yalp_macros_to003_yang_publication_timing_consult.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Consult record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/yalp_positn_t002_validate_fresh_cookie_20260526.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Validation task record; work-record."
+    },
+    {
+     "cohort": "docs/briefs/ycharts-bloomberg-portal-data-sourcing-audit-20260520.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Sourcing audit record, cited (marked 1.0); work-record."
+    },
+    {
+     "cohort": "docs/cost_analysis/monthly_costs_june_2025_to_feb_2026.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Historical cost record - inherently lookback material; absence alone (one family) cannot archive it."
+    },
+    {
+     "cohort": "docs/data/inflec_histbf_silver_backfill_scope.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Scope record of the completed HISTBF backfill; work-record."
+    },
+    {
+     "cohort": "docs/data/transaction_type_canonical_reference.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Canonical transaction-type reference, cited (marked 1.0, p 0.03); canonical references stay with the live system."
+    },
+    {
+     "cohort": "docs/deployment/TERRAFORM_PROTOCOL.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Cited by name in CLAUDE.md as the one-document TF mechanism; recent (19d), marked 1.0."
+    },
+    {
+     "cohort": "docs/handoffs/2026-01-15_data_scientist_to_react_designer_nna_dual_mode.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Agent-serial handoff - explicitly the rule-2 REFERENCE_KEEP class."
+    },
+    {
+     "cohort": "docs/handoffs/2026-01-16_data_scientist_to_dashboard_engineer_timeseries_chart.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Agent handoff record; rule-2 class."
+    },
+    {
+     "cohort": "docs/lambda-requests/API_GATEWAY_SETUP_NEEDED.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Long-fulfilled setup-request ticket (167d, 'NEEDED' naming, unreferenced, model 1.0) - ephemeral coordination artifact, nothing live depends on it."
+    },
+    {
+     "cohort": "docs/lambda-requests/policy-return-fix-handoff.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Resolved fix-request ticket, 181d, unreferenced, model 1.0 - same ephemeral ticket class."
+    },
+    {
+     "cohort": "docs/reference/costaws-rightsizing-methodology-v1.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Methodology reference, 52d, no divergence signals; reference class."
+    },
+    {
+     "cohort": "docs/reference/lusha-endpoint-inventory.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Inventory for the Lusha toolset that is live in the MCP roster; marked 1.0, p 0.0."
+    },
+    {
+     "cohort": "docs/security/EMERGENCY_SSH_PROCEDURE.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Emergency operational procedure - absence+age is one family and rule 1 forbids archiving a stable procedure on it; wrongly archiving an emergency runbook is the costly error."
+    },
+    {
+     "cohort": "docs/security/SSM_ACCESS_GUIDE.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "SSM access guide for live EC2/SSM deploy paths (deployment rules still route via SSM); absence-only evidence."
+    },
+    {
+     "cohort": "docs/sessions/2026-02-25_devops_wordcloud_fix_market_overview_migration.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Session log - rule-2 work-record class."
+    },
+    {
+     "cohort": "docs/task_orders/2026-01-27_aws_engineer_bd_allocation_pipeline_fix.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Task-order record - rule-2 work-record class."
+    },
+    {
+     "cohort": "etf_netassets_watch/run_daily.cmd",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Daily runner for the ETF net-assets watch, marked 1.0, p 0.0; ETFS estate live."
+    },
+    {
+     "cohort": "infra/aws/NFRA_TERRAFORM_P2_lambda_execution_role_iam_coverage_matrix_20260709.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Dated IAM coverage-matrix deliverable (25d) - work-record of the active NFRA_TERRAFORM program."
+    },
+    {
+     "cohort": "infra/linting/smart-lint.sh",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanically reachable lint tooling (marked 1.0, p 0.01); age alone not archive evidence."
+    },
+    {
+     "cohort": "infra/prompts/react_designer.md",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "Pre-serial-era agent prompt ('react_designer' role no longer exists in the serial fabric) with a dead marker, unreferenced, model 1.0 - three families agree."
+    },
+    {
+     "cohort": "infra/security/SECURITY_ORGANIZATION_ARCHITECTURE.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Old security-org architecture doc; only absence-family + model evidence against it (no dead marker/era/lex), and newer SCTY docs do not declare supersession - keep as reference."
+    },
+    {
+     "cohort": "infra/system/06_current_state.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Touched 3.1d, marked 1.0 - live system-state artifact."
+    },
+    {
+     "cohort": "infra/system/system_parity.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Touched 9.2d, marked 1.0 - live parity tooling."
+    },
+    {
+     "cohort": "infra/website/RUNBOOK.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Recent (21d), marked 1.0 - live website runbook."
+    },
+    {
+     "cohort": "org/XXX.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "The startup protocol CLAUDE.md orders every agent to read first; touched 3.7d."
+    },
+    {
+     "cohort": "org/critical_paths/MDPF_RESET_DIRECTIVE_20260728T2220Z.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "6d-old directive on the live MDPF critical path; critical_paths is a gate-bearing directory."
+    },
+    {
+     "cohort": "org/daily_log/2026-03-09.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Daily log - rule-2 work-record class."
+    },
+    {
+     "cohort": "org/mcp/.last-drive-2.0.0_SA_COO",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "State marker of the live COO /drive mechanism (COO live per LD-0365), marked 1.0."
+    },
+    {
+     "cohort": "org/mcp/check-inbox.sh",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Live fabric comms tooling, marked 1.0."
+    },
+    {
+     "cohort": "org/mcp/inbox-watch.sh",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Named in CLAUDE.md rule 16 as the canonical fallback pattern; touched 4.2d; core comms infra."
+    },
+    {
+     "cohort": "org/mcp/test_send_message_push_target.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recent (25d) test of the live send_message push mechanism; test files being unreferenced is normal."
+    },
+    {
+     "cohort": "org/modules/exec",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "exec-toolkit.yaml registry, marked 1.0, p 0.01; module registry of live exec tooling."
+    },
+    {
+     "cohort": "org/projects/ADHC_COMPIL_V5.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record; registry tooling (/registry-check) reads the full set - records stay."
+    },
+    {
+     "cohort": "org/projects/ADHC_KEEPWARM.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADHC_TRIGMRK.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_APISCP.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_COTETL.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Active-era project record (touch 38d, marked 1.0, era current)."
+    },
+    {
+     "cohort": "org/projects/ADVI_FEREFI.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_INFDRF.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_INFLV2.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_INFUSR.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_OTHDED.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/ADVI_ROLEAUA.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record (dead marker = closed status, expected)."
+    },
+    {
+     "cohort": "org/projects/ADVI_TWR.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active project, touched 5.5d, marked 1.0."
+    },
+    {
+     "cohort": "org/projects/BDPL_CNPRCS.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/DEBT_1STRUN.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/FIND_DUALBIZ.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "FIND_DUALBIZ is actively worked right now (fresh dualbiz files in the working tree); registry record of a live project."
+    },
+    {
+     "cohort": "org/projects/MDPF_3FIRMS.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active MDPF project, touched 10.4d."
+    },
+    {
+     "cohort": "org/projects/MDPF_OWNTS.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/NFRA_AKPIPE.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active project, touched 11.1d."
+    },
+    {
+     "cohort": "org/projects/NFRA_COMPPROOF.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/NFRA_DEBTSCAN.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Registry record of the debtscan program (ledgers still cited in CLAUDE.md pointers); record class either way."
+    },
+    {
+     "cohort": "org/projects/NFRA_GRAPHFEED.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active-era project record, touched 19d."
+    },
+    {
+     "cohort": "org/projects/NFRA_MOTIF.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Recently-closed project record (touch 20.6d, era_retired)."
+    },
+    {
+     "cohort": "org/projects/NFRA_PIPESCRIPT.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project record of the renamed tool; registry record."
+    },
+    {
+     "cohort": "org/projects/NFRA_TERRAFORM.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active project, touched 25.2d, era current."
+    },
+    {
+     "cohort": "org/projects/NFRA_TOOLUNIFY.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Project closed 5d ago (dead marker = closed status); freshly-closed registry record."
+    },
+    {
+     "cohort": "org/projects/OPAL_ASSETS_49METATABLES.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed sub-project record under the live OPAL_ASSETS macro."
+    },
+    {
+     "cohort": "org/projects/OPAL_SQSCHAT.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Active project (agentbus live), touched 5.1d."
+    },
+    {
+     "cohort": "org/projects/POSN_BMKVIZ.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/SXIN_PRODCT.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/YALP_CMASMP.json",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Closed-project registry record."
+    },
+    {
+     "cohort": "org/projects/project_inflec_mix_classification_approach.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Approach record, cited (marked 1.0); registry-adjacent record."
+    },
+    {
+     "cohort": "org/ref/SESSION_LOG_STANDARD.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "The canonical standard the /log skill mandates for every agent; touched 4.6d - model p 1.0 is plainly wrong here."
+    },
+    {
+     "cohort": "org/seams/cross-domain-servedurl-to-s3-join.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Seam report record (46.9d); verification-history work-record."
+    },
+    {
+     "cohort": "org/threads/orchestrator.sh",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "The thread mechanism engine, mechanically reachable (marked 1.0, p 0.05); dormant but intact, no divergence signals."
+    },
+    {
+     "cohort": "org/tier0/STAKES_MATRIX.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Tier-0 governance matrix, marked 1.0, low decay."
+    },
+    {
+     "cohort": "rcg/.gitattributes",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Part of the live RCG system itself, touched 0.1d."
+    },
+    {
+     "cohort": "rcg/charters.yaml",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Live RCG charter registry, touched today."
+    },
+    {
+     "cohort": "research/debt_spiral_analysis/FULL_EQUATION.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Pre-fabric research note, stable with zero divergence signals - rule 1: old+unreferenced alone is not archive evidence for stable research content."
+    },
+    {
+     "cohort": "research/vix_strategy/requirements.txt",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Part of an intact dormant research project; follows its project, no divergence signals."
+    },
+    {
+     "cohort": "research_transcripts/analysis/source_idvz_holdings_20260731.csv",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "3d-old analysis output of the live research_transcripts system."
+    },
+    {
+     "cohort": "research_transcripts/index/transcripts.jsonl",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "The live transcript index, updated 0.2d ago, marked 1.0."
+    },
+    {
+     "cohort": "research_transcripts/raw/2026-05-15",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Raw layer of the live transcript ingest; raw stays untouched."
+    },
+    {
+     "cohort": "research_transcripts/raw/2026-06-29",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Raw layer of the live transcript ingest."
+    },
+    {
+     "cohort": "research_transcripts/structured/RT-20260407-1027.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Structured output of the live transcript pipeline (indexed by the 0.2d-fresh index)."
+    },
+    {
+     "cohort": "research_transcripts/structured/RT-20260519-1226.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Structured output of the live transcript pipeline."
+    },
+    {
+     "cohort": "research_transcripts/structured/RT-20260702-1030.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Structured output of the live transcript pipeline."
+    },
+    {
+     "cohort": "security/SCTY_macro_proposal.md",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "SCTY macro proposal (40d), marked 1.0, security program active; cc 0.54 flags drift to reconcile."
+    },
+    {
+     "cohort": "tests/cloudfront/benchmark_api_performance.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanically reachable test (marked 1.0, p 0.01); age alone not archive evidence."
+    },
+    {
+     "cohort": "tests/comp_freshness/gold_freshness_config_fail_test.yaml",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Negative-control fixture for the live comp-freshness instrument; fixtures load by name at runtime so reach 0 understates - deleting a fail-fixture silently weakens a control."
+    },
+    {
+     "cohort": "tests/exec_summary/conftest.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "conftest.py is loaded implicitly by pytest - mechanically invisible to reach analysis; part of an existing test suite."
+    },
+    {
+     "cohort": "timeseries/1m.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale (202d) macro-data snapshot at repo root, unreferenced; data artifact of the retired local collection era (portal macro data now serves from S3 pipelines)."
+    },
+    {
+     "cohort": "timeseries/aaii_bond_allocation.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Same stale unreferenced data-snapshot class (its subject now handled by the yang_macros_re AAII adapter path)."
+    },
+    {
+     "cohort": "timeseries/business_inventories_yoy.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "timeseries/dxy.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "timeseries/hourly_earnings_mom.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "timeseries/nahb_housing_market_index.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "timeseries/retail_sales_ex_auto_and_gas_mom.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "timeseries/unemployment_rate.json",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "Stale unreferenced repo-root data snapshot, 202d."
+    },
+    {
+     "cohort": "tools/SESSION_ANALYTICS_INSIGHTS.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Analysis-insights record; only absence-family evidence against it, no era/lex divergence - record class."
+    },
+    {
+     "cohort": "tools/canon/backfill_interlock.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanically reachable canon tooling (marked 1.0, p 0.17)."
+    },
+    {
+     "cohort": "tools/market_update/Opal Market Update December 16 2024.pptx",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Delivered client market-update deck - finished deliverable with organizational-record value, independent of the tool's fate."
+    },
+    {
+     "cohort": "tools/market_update/Opal Market Update Nov 24 2025.pptx",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Delivered client deck (most recent of the series); organizational record."
+    },
+    {
+     "cohort": "tools/market_update/Opal Market Update October 28 2024.pptx",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Delivered client deck; organizational record."
+    },
+    {
+     "cohort": "tools/market_update/STYLE_GUIDE.txt",
+     "n_files": 1,
+     "verdict": "CONTESTED",
+     "binary": "NONE",
+     "confidence": "SPLIT",
+     "reasoning": "Input of the market_update tool - follows the components cohort's split evidence (intact+reachable orchestrator vs 8mo production dormancy)."
+    },
+    {
+     "cohort": "tools/market_update/orchestrator.py",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanically reachable entry point (marked 1.0, p 0.02) of a dormant-but-intact tool; no divergence signals, rule 1 blocks age-based archive."
+    },
+    {
+     "cohort": "tools/news_scanner/DEPLOYMENT_SUMMARY.md",
+     "n_files": 1,
+     "verdict": "REFERENCE_KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Deployment record of the news_scanner consolidation; record class, only absence+model against it."
+    },
+    {
+     "cohort": "tools/news_scanner/logs",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "A committed cron_error.log - runtime log residue (250d), unreferenced; log artifacts are unambiguous archive material (naming + content-kind + absence agree)."
+    },
+    {
+     "cohort": "tools/seeking-alpha-ui/start-ui.bat",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "HIGH",
+     "reasoning": "Launcher for the seeking-alpha system whose data tree carries a tree-level DEPRECATED.md; declared deprecation + absence + era."
+    },
+    {
+     "cohort": "tools/user_activity_deep_dive.py",
+     "n_files": 1,
+     "verdict": "ARCHIVE",
+     "binary": "ARCHIVE_CANDIDATE",
+     "confidence": "LEAN",
+     "reasoning": "One-off deep-dive diagnostic script (178d, unreferenced, model 0.99) from the same closed analytics investigation as SESSION_ANALYTICS_INSIGHTS - dead investigation code, not a record."
+    },
+    {
+     "cohort": "users/configs/opal-capital.json",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "LEAN",
+     "reasoning": "Mechanically reachable config (reach=1 per features); archiving a referenced config risks breakage - firm-name file, unrelated to the opalcapital.com domain prohibition."
+    },
+    {
+     "cohort": "workflows/.gitignore",
+     "n_files": 1,
+     "verdict": "KEEP",
+     "binary": "KEEP",
+     "confidence": "HIGH",
+     "reasoning": "Housekeeping file of the active workflows/ tree (sibling stress-test work is 32d fresh)."
     }
    ]
   }

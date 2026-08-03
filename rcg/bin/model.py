@@ -57,6 +57,19 @@ def main() -> int:
     scan_dir = newest_scan()
     rows = load_jsonl(scan_dir / "features.jsonl")
     seeds = {s["path"]: s["label"] for s in load_jsonl(scan_dir / "seed_labels.jsonl")}
+    # RATIFIED labels from the ledger DOMINATE seeds (override on conflict, 5x weight):
+    # they carry Andrew's rulings / delegation-backed assessments -- the signal seeds
+    # structurally lack (E-0001 measured: archive-precision 0.153 on the band without them)
+    ratified: dict = {}
+    src_weight = {"andrew_ratification": 5.0, "assessed_ratified_by_delegation": 3.0}
+    rat_w: dict = {}
+    ledger = WS / "rcg" / "ledger" / "LABELS.jsonl"
+    if ledger.exists():
+        for r in load_jsonl(ledger):
+            if r.get("binary") in ("KEEP", "ARCHIVE_CANDIDATE"):
+                ratified[r["path"]] = r["binary"]
+                rat_w[r["path"]] = src_weight.get(r.get("source", ""), 2.0)
+    seeds = {**seeds, **ratified}
     head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=WS,
                           capture_output=True, text=True).stdout.strip()
     version = {"cycle": 0, "head": head,
@@ -79,6 +92,9 @@ def main() -> int:
             out.append(vec)
         return out
 
+    n_rat = sum(1 for p2 in ratified if p2 in {r["path"] for r in rows})
+    print(f"[model] ratified labels folded: {len(ratified)} ({n_rat} in scoreable rows), 5x weight")
+    weights = rat_w
     train_rows = [r for r in rows if r["path"] in seeds]
     y = [1 if seeds[r["path"]] == "ARCHIVE_CANDIDATE" else 0 for r in train_rows]
     cat_idx = [cols.index(c) for c in CATEGORICAL]
@@ -109,7 +125,8 @@ def main() -> int:
     # final fit on all seeds; score everything
     clf = CatBoostClassifier(iterations=300, depth=6, random_seed=17,
                              auto_class_weights="Balanced", verbose=0)
-    clf.fit(Pool(matrix(train_rows), y, cat_features=cat_idx))
+    w = [weights.get(r["path"], 1.0) for r in train_rows]
+    clf.fit(Pool(matrix(train_rows), y, cat_features=cat_idx, weight=w))
     (WS / "rcg" / "models").mkdir(exist_ok=True)
     clf.save_model(str(WS / "rcg" / "models" / f"rcg_v0_{head}.cbm"))
     probs = clf.predict_proba(matrix(rows))
