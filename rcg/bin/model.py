@@ -1,0 +1,140 @@
+"""RCG stage-C model: CatBoost binary {KEEP, ARCHIVE_CANDIDATE} over the feature matrix.
+
+W1 stage C (PRD s.9; estimator ratified R-0002). Trains on the SEED labels only (v0 --
+ratified labels take over as they accrue, W2 stage I), scores every scoreable file, and
+emits predictions.jsonl + a model-version stamp. Target space is BINARY by design until
+ratifications exist: full disposition classes are never minted from seeds.
+
+EPISTEMIC STATUS (R-0010): every score is OBSERVED (a number from a deterministic run)
+wrapping ASSESSED-at-best provenance (seed labels are OBSERVED-derived; future ratified
+labels are RATIFIED) -- the stamp carries both. A score never outranks the grader.
+
+BOUNDARY DECLARATION (printed every run):
+  address_space      scoreable rows of the newest vintage carrying features.
+  traversal_residue  the model sees ONLY the feature columns -- no content, no context;
+                     drift-vs-age caution: age features legitimately inform ARCHIVE
+                     probability (dispositions), but the relevance/drift verdict stays
+                     the separate computed columns -- read importances, not vibes.
+  presentation       predictions.jsonl is the truth; the print is aggregates.
+  failure_direction  seed-circularity -- the model learns the seeds' shape, so holdout
+                     metrics OVERSTATE real precision until ratified labels arrive
+                     (declared; the prospective test at stage F is the honest number).
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+WS = Path(__file__).resolve().parents[2]
+CATEGORICAL = ["fs_root", "f_content", "f_class"]
+DROP = {"path"}
+BAND = (0.35, 0.65)
+
+
+def newest_scan() -> Path:
+    scans = sorted((WS / "rcg" / "scans").glob("*/features.jsonl"))
+    if not scans:
+        print("BLOCKED: no features vintage -- run the W1 A-B stages first")
+        sys.exit(3)
+    return scans[-1].parent
+
+
+def load_jsonl(path: Path) -> list[dict]:
+    with path.open(encoding="utf-8", errors="replace") as h:
+        return [json.loads(line) for line in h]
+
+
+def md5_8(path: Path) -> str:
+    return hashlib.md5(path.read_bytes()).hexdigest()[:8]
+
+
+def main() -> int:
+    from catboost import CatBoostClassifier, Pool
+
+    scan_dir = newest_scan()
+    rows = load_jsonl(scan_dir / "features.jsonl")
+    seeds = {s["path"]: s["label"] for s in load_jsonl(scan_dir / "seed_labels.jsonl")}
+    head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=WS,
+                          capture_output=True, text=True).stdout.strip()
+    version = {"cycle": 0, "head": head,
+               "labels_md5": md5_8(scan_dir / "seed_labels.jsonl"),
+               "rulings_md5": md5_8(WS / "rcg" / "rulings" / "RULINGS.jsonl"),
+               "label_provenance": "seed-only (OBSERVED-derived; zero RATIFIED yet)"}
+
+    cols = [k for k in rows[0] if k not in DROP]
+
+    def matrix(subset: list[dict]) -> list[list]:
+        out = []
+        for r in subset:
+            vec = []
+            for c in cols:
+                v = r[c]
+                if c in CATEGORICAL:
+                    vec.append(str(v))
+                else:
+                    vec.append(float(v) if v is not None else -1.0)
+            out.append(vec)
+        return out
+
+    train_rows = [r for r in rows if r["path"] in seeds]
+    y = [1 if seeds[r["path"]] == "ARCHIVE_CANDIDATE" else 0 for r in train_rows]
+    cat_idx = [cols.index(c) for c in CATEGORICAL]
+    n_pos = sum(y)
+    print(f"[model] vintage {scan_dir.name}; version {version}")
+    print(f"[model] seeds {len(train_rows)} (ARCHIVE {n_pos} / KEEP {len(y) - n_pos}); "
+          f"features {len(cols)} ({len(CATEGORICAL)} categorical)")
+
+    # sanity holdout (stratified 80/20) -- OVERSTATES per boundary declaration
+    tr_x, tr_y, ho_x, ho_y = [], [], [], []
+    counters = {0: 0, 1: 0}
+    for r, label in zip(train_rows, y):
+        counters[label] += 1
+        (ho_x if counters[label] % 5 == 0 else tr_x).append(r)
+        (ho_y if counters[label] % 5 == 0 else tr_y).append(label)
+    clf = CatBoostClassifier(iterations=300, depth=6, random_seed=17,
+                             auto_class_weights="Balanced", verbose=0)
+    clf.fit(Pool(matrix(tr_x), tr_y, cat_features=cat_idx))
+    pred = clf.predict(matrix(ho_x))
+    tp = sum(1 for p, t in zip(pred, ho_y) if p == 1 and t == 1)
+    fp = sum(1 for p, t in zip(pred, ho_y) if p == 1 and t == 0)
+    fn = sum(1 for p, t in zip(pred, ho_y) if p == 0 and t == 1)
+    prec = tp / (tp + fp) if (tp + fp) else 0.0
+    rec = tp / (tp + fn) if (tp + fn) else 0.0
+    print(f"[model] seed-holdout sanity (n={len(ho_y)}): ARCHIVE precision "
+          f"{prec:.3f} recall {rec:.3f} -- OVERSTATES, see boundary")
+
+    # final fit on all seeds; score everything
+    clf = CatBoostClassifier(iterations=300, depth=6, random_seed=17,
+                             auto_class_weights="Balanced", verbose=0)
+    clf.fit(Pool(matrix(train_rows), y, cat_features=cat_idx))
+    (WS / "rcg" / "models").mkdir(exist_ok=True)
+    clf.save_model(str(WS / "rcg" / "models" / f"rcg_v0_{head}.cbm"))
+    probs = clf.predict_proba(matrix(rows))
+    n_band = 0
+    with (scan_dir / "predictions.jsonl").open("w", encoding="utf-8", newline="\n") as h:
+        for r, p in zip(rows, probs):
+            p_arch = round(float(p[1]), 4)
+            band = BAND[0] <= p_arch <= BAND[1]
+            n_band += band
+            h.write(json.dumps({"path": r["path"], "p_archive": p_arch,
+                                "uncertain": band, "seed": seeds.get(r["path"]),
+                                "model_version": version["head"]}) + "\n")
+
+    imp = sorted(zip(cols, clf.get_feature_importance()), key=lambda x: -x[1])[:8]
+    print("[model] top importances: " + ", ".join(f"{c}={v:.1f}" for c, v in imp))
+    non_seed = [(r["path"], float(p[1])) for r, p in zip(rows, probs)
+                if r["path"] not in seeds]
+    hi_arch = sorted(non_seed, key=lambda x: -x[1])[:12]
+    print(f"[model] scored {len(rows)}; uncertain band {n_band}; top NON-SEED archive "
+          f"candidates:")
+    for path, p in hi_arch:
+        print(f"    p={p:.3f}  {path}")
+    print("[boundary] " + __doc__.split("BOUNDARY DECLARATION", 1)[1].strip())
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
