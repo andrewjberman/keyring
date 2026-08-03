@@ -44,4 +44,16 @@ adjudicate).**
   every subsequent dial checks: "is this tool's universe the canonical graph, a declared territory
   graph, or a DECLARED exception?" — anything else is a finding.
 
+## ADDENDUM — fix-first directive (Andrew-direct, same terminal, next message, VERBATIM)
+
+> Yeah that needs to be fixed, we need to work on comp-blast first and fix it and test it to make
+> sure it uses kuzu. Is there some kind of special regex or property of this trace-graph that is
+> higher quality or better scoped for some reason to comp-blast?
+
+SEQUENCING EFFECT: comp-blast kuzu-projection fix + test moves AHEAD of the comp-pipescript dial
+in this session's queue. The technical question is answered in-session (CVO analysis, grounded on
+`org/modules/graph/trace_graph.py:402` + the kuzu node_type/edge_type censuses): no special
+property justifies the private universe; the one preservable property is invocation-time
+head-pinning (working-tree freshness), which survives as a subject-scoped overlay, not a universe.
+
 — 3.0.0_SA_CVO
