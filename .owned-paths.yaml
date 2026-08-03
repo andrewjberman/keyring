@@ -447,6 +447,11 @@ lanes:
       - 2.0.0_SA_COO
     description: "Workspace-wide CRO home (org/tier1_exec/4.0.0_SA_CRO/**) -- Chief Research Officer, Tier-1 exec established Andrew-direct 2026-07-22 ('Let's make you an exec agent. make your serial 4.0.0_SA_CRO (chief research officer), that way you can work freely as an exec'). Mandate: competitive recon + external research + translation into buildable specs; owns the append-only RECON_REGISTER.md. CTO + COO retain write access to author gate-review reports into the CRO home, mirroring CVO_WORKSPACE. Added 2026-07-22 by 0.0.0_AB_MSTR as GRANTOR -- the CRO is the GRANTEE and did not commit its own grant (Andrew SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane). Exact CVO_WORKSPACE precedent: a new exec's home must be enumerated or safe-commit returns UNDEFINED. LD-0331."
 
+  RCG_OPERATOR:
+    permitted_agents:
+      - 4.0.0_SA_CRO
+    description: "SINGLE-WRITER lane for rcg/** -- the Repo Coherence Graph operator seat (NFRA_REPOCOHERENCEGRAPH PRD section 12: 'Single-writer lane in .owned-paths.yaml (the RCG operator seat; grantor commits the grant per SoD -- the CRO does not write its own)'). Andrew-direct 2026-08-03 ~17:5xZ at the CTO terminal, relaying the CRO ferry ask VERBATIM: 'please handle this grant for 4.0.0_SA_CRO: Ferry ask (to CTO, or MSTR as grantor): one .owned-paths.yaml amendment -- rcg/** as a single-writer lane for 4.0.0_SA_CRO -- authored and committed by the grantor, not me.' Added 2026-08-03 by 1.0.0_SA_CTO as GRANTOR (CRO is GRANTEE and did not commit its own grant -- SoD held; grantor role assigned by Andrew's own words 'to CTO... as grantor'). DELIBERATELY narrower than CRO_WORKSPACE (no CTO/COO members): the folder's contract is single-writer + a MANIFEST pre-commit gate denying out-of-manifest writes + append-only rulings/ledger + no-satellite-prose -- exec write access would dilute the contract the lane exists to enforce. Build-lane staffing, when CTO/COO assign it, arrives as a NEW arch-gated amendment, never an implicit widening. The MANIFEST gate (PRD P0) wires separately in the commit-gate chain; this lane is the WHO, the manifest is the WHAT."
+
   ANY:
     permitted_agents: "*"
     description: "Intentionally multi-agent-writable (shared logs, timeseries, misc)"
@@ -923,9 +928,9 @@ paths:
     lane: CRO_WORKSPACE
     note: "OPAL_ALTRESEARCH transcript corpus -- equity research call transcripts (bronze verbatim / silver structured / index), joined to Opal ETF constituent weights to rank alt-data pipeline candidates by position materiality. Andrew-direct 2026-07-31 at the CRO terminal, incl. the project code ('You may register the project as OPAL_ALTRESEARCH') and the root location. The CRO home rule (org/tier1_exec/4.0.0_SA_CRO/**) does not reach a root path -- same enumeration gap as LD-0331, a title is not a grant. Added 2026-07-31 by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). NARROW read on the LD-0331 standing-capability question: this authorizes THIS root path, not blanket root-write; the direct-registration question stays PARKED (Andrew spoke to it once today, narrow reading applied)."
 
-  # -----------------------------------------------------------------------
-  # org/tier2_senior — agent home folders by serial prefix
-  # -----------------------------------------------------------------------
+  "rcg/**":
+    lane: RCG_OPERATOR
+    note: "Repo Coherence Graph home (NFRA_REPOCOHERENCEGRAPH) -- MANIFEST.yaml, charters, append-only rulings/ledger, grader instructions, engine, workflows; scans/ + models/ are gitignored/local. SINGLE-WRITER: 4.0.0_SA_CRO only, per PRD section 12 ('IMPERATIVE that folder is kept immaculately clean' -- Andrew). Root path needs its own rule per the enumeration principle (a title is not a grant; no wildcard reaches repo root -- same class as research_transcripts). Added 2026-08-03 by 1.0.0_SA_CTO (grantor; CRO is grantee -- SoD; Andrew-direct assignment of the grantor role at the CTO terminal same day). The lane governs WHO writes; the PRD's MANIFEST pre-commit gate (P0, wires separately) governs WHAT is writable inside."
   "org/tier2_senior/0.1.0_*/**":
     lane: POD1
     note: "Pod 1 MarketIntelligence agent folders"
