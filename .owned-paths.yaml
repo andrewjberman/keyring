@@ -796,6 +796,9 @@ paths:
   "org/mcp/sovereign-registry-override-audit.log":
     lane: GOVERNANCE_AUDIT
     note: "LIVE sovereign-registry unfiltered-read audit log -- tracked 2026-07-16 (RV-0050 F-A). Overrides the org/mcp/** catch-all per longest-match-wins."
+  "org/tombstone-gate-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE tombstone-gate override audit log -- the FIFTH member of the RV-0050 F-A rare-bypass class, added 2026-08-03. Surfaced by the audit-archive-invoker's COVERAGE clause firing UNCOVERED-AUDIT-LOG on every agent's startup (it was manifest-absent, i.e. neither archived nor tamper-checked). CTO ruled COVER-not-exclude (gate); 0.7.0_AE_CloudOps authored the MANIFEST + .gitignore edits and CONCURRED on tracked-live (owner + second call); an exec lands the bundle -- three parties, so no seat both ruled and executed. WHY TRACKED-LIVE and not snapshot-only: writer profile matches the four above exactly (1 line / 86 bytes since 2026-07-30, gate-bypass content, no commit-path writer), and snapshot-only durability cannot see a line written AND removed between snapshots -- for a BYPASS log that gap is the whole hazard, because an override record's ABSENCE IS INDISTINGUISHABLE FROM 'no override ever happened'. Path rule authored by 1.0.0_SA_CTO per the precedent that ws CTO authored the original four (07-13 add, 07-16 amend); this is governance authorship over a log file, NOT a self-grant -- no seat gains write access it sought. Expect a TRANSIENT invoker INTEGRITY/ERROR-FAILCLOSED (baseline missing for a newly-covered log) until the next due snapshot mints: correct fail-closed behaviour for a mid-cycle coverage add, not a defect."
 
   "org/tier0/CONSTITUTION.md":
     lane: TIER0_LAW
