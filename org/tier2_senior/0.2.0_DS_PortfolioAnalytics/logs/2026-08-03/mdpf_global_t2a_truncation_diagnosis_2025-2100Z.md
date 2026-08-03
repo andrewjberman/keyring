@@ -70,12 +70,15 @@ cites this live state, never the graph.
 
 ## Blockers
 
-- None at my seat. Open waits: CTO ACK on T2.A evidence + CTO landing of the PRD patch
-  (`deliverables/MDPF_GLOBAL_T2A_prd_addendum_c_label_retirement.patch` @bc292d84cd).
+- None. CLOSE-OUT (20:59–21:00Z, in-window update): CTO RAVC-4 ACCEPT 20:59:29Z — evidence
+  validated (cites spot-checked at source), PRD patch LANDED VERBATIM @440d16e018 (acceptance
+  item 2 closed), T2.B RULING issued same commit (revamp/hyphen canonical, T-1 settled-close
+  frontier, schedule floor w/ INF demoted to accelerator, underscore+runner retire to T5 behind
+  a delta census — my two census observations named items 1+2). ACK sent 21:00:02Z; close
+  request to COO 21:00:08Z.
 
 ## Next Steps
 
-1. [1.0.0_SA_CTO] Validate T2.A acceptance; land the Addendum-C patch (or authorize audited
-   override); proceed T2.B producer-unification ruling on this evidence.
-2. [0.2.0_DS — me] Chase CTO per RAVC if silent >1 working window; act on W1 amended TO when cut;
-   stay event-driven.
+1. [2.0.0_SA_COO] Complete-mark MDPF_GLOBAL.T2A (close request 21:00:08Z; full evidence chain
+   0b5acf3148 / bc292d84cd / CTO 440d16e018).
+2. [0.2.0_DS — me] Event-driven: W1 amended-TO watch; T2.B/T5 delta-census support on request.
