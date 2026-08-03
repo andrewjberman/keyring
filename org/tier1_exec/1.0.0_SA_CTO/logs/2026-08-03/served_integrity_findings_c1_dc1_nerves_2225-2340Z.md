@@ -82,7 +82,45 @@ on git evidence instead). **The shared failure is asserting a source rather than
 | python set-diff over JSON artifacts (nerves x3 builds, census.yaml, registry) | PASS after self-caught vacuous first pass; positive control (schema-key equality) added |
 | git log/show/grep for provenance + file-existence discrimination | PASS -- separated 20 benign losses from 2 real ones |
 
+## ADDENDUM (2340-2345Z) -- the shell half resolved, and it is the LARGER of the two
+
+The census + depth verdict landed after the body above was written. **Both were bounded, and the shell
+half turned out MATERIALLY MORE SERIOUS than the double-count.**
+
+**BOUNDED:** 4 serve days (07-28..07-31) x all 12 platinum/firm artifacts = 48 artifact-day pairs
+published off a near-empty latest-snapshot (3-row 07-27, then 1-row 07-29). **Window CLOSED at the
+08-01 publish** (denominator: 90 partitions / 222 surviving serve-writes / 26 near-empty).
+
+**DEPTH = FLOWED, not selection-only.** ADV attribution derives from the allocations enrichment (Rep
+Code) that a 1-3-row snapshot lacks, so **attribution degenerated to one bucket carrying the whole
+firm**: `views.adv.y1/y2/y3.donut.total` served **463,649,292.59** where the restated values are
+**436,654,607.00 / 0 / 0**; CLA geo `nmnc.inflows` **371,657,251.14 vs 5,289,440.48 restated (~70x)**.
+It reached dashboard / header_metrics / leaderboard headline surfaces.
+
+**THE DISCRIMINATOR THAT MAKES IT DISCLOSABLE (0.4.0_DS):** *a historical period total cannot
+legitimately move day-over-day* -- so a moved y1/y2/y3 donut is unambiguously shell flow, not drift.
+That converts ~4,000-4,700 restated paths (which prove nothing; drift restates daily) into a small
+defensible core. **They also volunteered that their own raw counts OVERSTATE** -- handing me the
+smaller defensible number against their own incentive.
+
+**RESIDUAL I RAISED, recorded @97f039f643, routed to OVP WS-5 (not built, no alarm):** the guard tests
+`has_data == 0` -- ZERO ROWS -- while the real failure is a 1-3-row PARTIAL that passes. **LAG=1 removes
+the KNOWN PRODUCER; it does not teach the guard to see a partial.** Truncated transfers, partial vendor
+days, mid-write retries all still walk through. *A row-count>0 test is an existence test wearing a
+completeness test's name* -- the night's recurring class, one more time.
+
+**FALSE-OUTAGE AVOIDED, self-caught:** the same seat reported a converter defect, then found their own
+comparison invalid (a period-table RUN-DATE frontier measured against SNAPSHOT as-of frontiers) and
+deployed NO fix to a working converter. NEVER#1 discipline exercised by the person who raised it.
+
+**PERMANENT LIMIT, stated not smoothed:** pre-07-19 serve history is unreconstructable, so the June
+double-count episode's SERVE moments can never be recovered -- its artifact impact is measured, its
+serve history is gone.
+
 ## Open at close
 
-Andrew's disclosure package (the only sovereign item). Then: Leg A apply, Leg B on his word,
-T2.C schema gate, shell census, converter lag, cross-tree divergence census, BR1 Phase A brief.
+**Andrew's disclosure package -- COMPLETE ON INPUTS, awaiting his call (the only sovereign item).** Two
+mechanisms: the double-count (2 episodes, small + persistent, fix BUILT-HELD) and the shell flow (4 days,
+large + visible + already self-corrected, forward fix DEPLOYED). Different conversations; one package.
+Then: Leg A apply, Leg B on his word, T2.C schema gate, converter closure via tonight's cycle (read, not
+hand-run), cross-tree divergence census, BR1 Phase A brief, comp-tool universe audit (queued behind).
