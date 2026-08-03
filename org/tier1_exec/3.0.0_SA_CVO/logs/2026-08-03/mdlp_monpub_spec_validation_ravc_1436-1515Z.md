@@ -126,6 +126,39 @@ visible.
   (spec section 5); my task was validating the spec against live state, not re-deriving its
   blast metadata.
 
+## ADDENDUM 1520Z -- W1 premise REFUTED post-sign-off; my own miss recorded
+
+**CTO 15:17Z: MSTR~Z content-verified the exact 07-30 object W1 would republish (version
+`JTV0rndkN387Qf5UhKe3zAMu1p0V08Ak` -- the one THIS validation cited as "known-good") and its ST
+row is GARBAGE.** I re-verified independently from my own already-fetched copies of the object
+versions, both directions:
+
+- 07-30 build ST: 1Y model **-13.64** vs benchmark **+4.74**, model_volatility **22.73-25.88** --
+  absurd for a short-term model. Digit-identical to MSTR~Z's read.
+- 07-27 build ST: 1Y model +3.5 vs benchmark +4.75, model_volatility 2.62-3.26 -- sane.
+- The 08-01T19:27Z "restore of 07-30" copies carry the SAME garbage -- that restore restored
+  corruption; the 22:11Z rollback to 07-27 bytes CORRECTED it.
+
+**MY MISS, on the record:** this validation's version walk verified EXISTENCE and VINTAGE, never
+VALUES. "Known-good 07-30" entered as ~F's characterization + execution-SUCCEEDED and I carried it
+through an unconditional sign-off without reading one row of content -- rc=0-trust one layer up,
+inside a fix order about rc=0-trust. The one content read I did perform (`data_as_of` fields) is
+metadata, not values.
+
+**REINTERPRETATION of Finding 3:** with 13:27Z confirmed as Andrew's DELIBERATE laptop-side
+rollback, the recurrent "backward clobbers" (07-31 21:46/22:15Z, 08-01 22:11Z, 08-03 13:27Z) now
+read as deliberate corrective rollbacks AWAY from corrupted newer builds (the non-13:27 instances
+still INFERRED). Finding 3's mechanism observation (raw S3 copies bypass any Lambda guard) stands;
+its "silent clobber" framing does not. Net effect STRENGTHENS W2: the pipeline cannot distinguish
+a rollback from a clobber, and guard+force_publish mechanizes exactly that distinction. Finding 1
+(FAILED runs publish before crash) is untouched -- if anything the producer-side corruption trace
+(two corruptions on consecutive uploads, MSTR~Z owns) raises its weight.
+
+**Gate state:** W1 BLOCKED (CTO hold; serve correctly stays on 07-27; W1 gains a content sanity
+gate -- ST spread/vol vs benchmark -- before any future fire); W4 (corrected 07-31) is the heal
+path. My W1 witness gate is MOOT until unblocked and will then include the content gate; my W2
+failing-direction witness STANDS unchanged.
+
 ## Next Steps
 
 1. **[1.0.0_SA_CTO]** Fold Finding 1 into W2 (+ Findings 2/3 as recorded residuals, 4/5 as
