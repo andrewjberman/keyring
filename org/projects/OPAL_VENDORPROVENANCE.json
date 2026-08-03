@@ -1,0 +1,83 @@
+{
+  "project_code": "OPAL_VENDORPROVENANCE",
+  "macro_code": "OPAL",
+  "name": "Vendor As-Of Provenance + the Silver Pattern Canon",
+  "description": "Andrew-direct 2026-08-03 (voice memo Task 4 + typed directive, verbatim in docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md s.3). Establish, per (vendor, endpoint) feeding the estate, a grounded AS-OF CONTRACT -- does the endpoint provide an as-of datum, and what does its date label MEAN (settled-close / intraday / run-date-echo / file-vintage / loud UNKNOWN). This census is a NECESSARY PREREQUISITE (Andrew-explicit) to the silver pattern canon: silver deduplicated on a declared STABLE KEY per fact table per bucket, data complete and unadulterated. Once the contracts stand, sync everything to ONE NYSE weekend/holiday calendar authority so 'when is this data from, and are we missing data we should have' is answerable by lookup, not archaeology. Motivating incident: the Orion run-date-echo label defect (inflection July rebate basis understated $424,062.91 / 0.891%; T vs T-1 cross-partner divergence inside one paying artifact).",
+  "status": "active",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-08-03",
+  "created_by": "1.0.0_SA_CTO",
+  "pipeline": "cross-vendor (opal-data-assets + legacy partner buckets pending D-2)",
+  "prd": "docs/architecture/OPAL_VENDORPROVENANCE_PRD.md",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_VENDORPROVENANCE_PRD.md",
+      "label": "OPAL_VENDORPROVENANCE PRD v1.0 -- as-of contracts, calendar unification, ingest stamps, stable-key census, completeness verdicts",
+      "date": "2026-08-03"
+    },
+    {
+      "path": "docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md",
+      "label": "Andrew-direct voice memo transcript + typed directive (the charter, verbatim)",
+      "date": "2026-08-03"
+    }
+  ],
+  "phase": "PHASE 0 -- PRD v1.0 authored + registered 2026-08-03 from the Andrew-direct memo and typed directive. Grounded current state: 7 vendor sub-buckets in opal-data-assets; 19 silver tables in schwab/08242234 alone; two NYSE calendar authorities (lib/trading_calendar.py + _orion_vendor_asof.py hardcoded set); as-of semantics sealed for Orion only, UNKNOWN everywhere else. No decomposition, no dispatch yet.",
+  "blocking": "COO decomposition into task orders. CTO holds D-1 (registry home/format), D-2 (bind legacy partner buckets too -- recommended YES), D-3 (stamp rollout order -- recommended Orion first, then SmartX/BlackDiamond as MDPF_GLOBAL's priority exemplars). No Andrew gate on starting WS-1 census work.",
+  "pods": ["0.4", "0.6", "0.7", "1.0", "2.0", "3.0"],
+  "thread_counter": 0,
+  "threads": [],
+  "related": [
+    "MDPF_GLOBAL",
+    "MDPF_DEBTCLEAN",
+    "MDPF_CHANNEL_INDEPENDENCE",
+    "OPAL_CONSOLIDATION",
+    "ETFS_AVGCAP"
+  ],
+  "workstreams": [
+    {
+      "id": "WS-1",
+      "name": "Vendor endpoint as-of census -> As-Of Contract Registry",
+      "status": "not_started",
+      "gate": "Every row grounded (file:line @ commit or exercised probe); UNKNOWN is legal and loud; denominator = live ingest inventory, never memory."
+    },
+    {
+      "id": "WS-2",
+      "name": "NYSE calendar unification (one authority + parity CI)",
+      "status": "not_started",
+      "gate": "Exercised: a mutant closed-date divergence must fail CI."
+    },
+    {
+      "id": "WS-3",
+      "name": "Ingest provenance stamps (pull_time, vendor_label_date, resolved_trading_date, asof_basis)",
+      "status": "not_started",
+      "gate": "Rule 17-safe (metadata addition, no slimming); consumer column-audit before schema lands; one vendor exemplar end-to-end before rollout."
+    },
+    {
+      "id": "WS-4",
+      "name": "Stable-key research per fact table per bucket",
+      "status": "not_started",
+      "gate": "Every declared key exercised against a real duplicate; measured duplicate rates recorded."
+    },
+    {
+      "id": "WS-5",
+      "name": "Completeness verdicts over the serve window (2024-11+)",
+      "status": "not_started",
+      "gate": "Gaps land as owned findings, never silent fixes; frontier arithmetic per table's completeness_rule."
+    }
+  ],
+  "standing_guards": [
+    "The as-of census PRECEDES the silver canon -- Andrew-explicit ordering; do not certify dedup/completeness over uninterpreted date labels.",
+    "Rule 17/17a bind and are ENFORCED here, never bent: silver = dedup + dtype only; bronze raw; parquet is a silver format.",
+    "Alert moratorium binds: findings land as registry rows, gates, or owned blocking items -- never monitors/SNS/SES.",
+    "Vendor egress: census reads OUR buckets/code/existing pulls; any NEW vendor call routes through standing egress rules. Availability is not authorization.",
+    "UNKNOWN is the honest value for an unestablishable contract -- recorded loud, never replaced by inference."
+  ],
+  "grounding": [
+    "docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md (charter verbatim, voice + typed)",
+    "data/inf/scripts/silver/_orion_vendor_asof.py (the one sealed vendor as-of contract, 2026-07-02)",
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/ETFS_ORION_LABEL_CORRECTION/BRIEF_etfs_inflection_effort_and_seat_roster.md (motivating incident, figures)",
+    "lib/trading_calendar.py (frontier authority, NEVER#1) + its parity CI (ETFS weekend)",
+    "live s3 ls 2026-08-03: opal-data-assets vendor sub-buckets + schwab/08242234/silver table census"
+  ],
+  "verification_bar": "Every (vendor, endpoint) feeding the estate has a grounded as-of contract row or a loud UNKNOWN; one calendar authority with parity-CI coverage over every copy; ingest stamps flowing on the MDPF-feeding vendors at minimum; every opal-data-assets silver fact table carries a declared, exercised stable dedup key and an evaluated completeness verdict over the serve window."
+}

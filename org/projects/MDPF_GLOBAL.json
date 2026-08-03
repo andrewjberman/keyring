@@ -20,10 +20,15 @@
       "path": "docs/references/MDPF_GLOBAL_ANDREW_RECORDING_20260729.md",
       "label": "Andrew-direct voice substrate transcript and scope bounds",
       "date": "2026-07-29"
+    },
+    {
+      "path": "docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md",
+      "label": "Andrew-direct voice memo -- the five execution tasks (T1-T5) + typed directive; folded as PRD Addendum C",
+      "date": "2026-08-03"
     }
   ],
-  "phase": "PHASE 0 -- PRD v1.0 and project registry authored 2026-07-29 from Andrew-direct voice substrate plus the mission-register PORTAL.MODEL_PORTFOLIOS goal text. No build, frontend work, dispatch, or production serving change has been started. WS-1 can inventory the ETF/SMA roster and label traps; WS-2 is gated on Andrew's Cottonwood strategy-portfolio list; WS-3 global composition is gated on D-1 global-only confirmation.",
-  "blocking": "*** PRECONDITION RELEASED 2026-07-31T07:33Z (CTO arch-gate, @ee5ff633e1 discharged). The M9 pre-framework baseline IS CAPTURED and complete per the joint CTO+CVO M9-COMPLETE v3 definition (capture s18 @e99f960e08; SEG-0 pairs jointly ratified; probes @9a23921fd9 -- all verified on origin). DECOMPOSITION IS NO LONGER GATED BY THIS. *** STILL BINDING, PERMANENTLY, at comparison time: class-matching declaration; N carried with every statistic; the two classes NEVER summed; and any citation of the target-class a_archaeology_ratio carries `denominator 23` INLINE -- a bare 0.1304 is a MISQUOTE, not a summary (23 observations across 59 units; one differently-tagged session moves it materially). SEPARATE AND STILL OPEN: the inbox-preservation question at Andrew is about future re-derivability, NOT baseline completeness -- this release does not answer it. *** This project is NFRA_VELOCITY's PROVING GROUND: its pre-framework build-cost baseline is metric M9, the ONLY metric that measures the program's objective function and THE ONLY ONE THAT CANNOT BE RE-TAKEN (docs/architecture/NFRA_VELOCITY_ESTATE_P1_BASELINE_20260730.md, M9 row + s.3). GROUNDED NEGATIVE 2026-07-31: the baseline is NOT CAPTURED -- MSTR~Z searched git + local FS (25,048 files / 23,518 commits, all branches): 5 files DESCRIBE the obligation, ZERO capture it; MSTR closed the S3 half across all 33 buckets: negative. It is UNCAPTURED BUT STILL TAKEABLE (this project is PHASE 0, undecomposed) -- unprotected, not lost. >> THE ACT THAT DESTROYS IT IS A ROUTINE, CORRECT DECOMPOSITION REQUIRING NO ANNOUNCEMENT. No guard will fire, because nothing will be wrong. A seat that never read the M9 row could do everything right and still kill the measurement. << THEREFORE: no decomposition, no contract-at-creation, no WS-E1 forward half, and no standalone product work on this project until the baseline exists as an ARTIFACT WITH A PATH. CTO withholds arch-gate approval on any such request until then. This is a WORK-ORDERING PRECONDITION, not a guard/alarm/monitor -- the alert moratorium does not reach it and must not be cited against it. CAPTURE OWNERSHIP IS AN OPEN SOVEREIGN CALL (Andrew), fence-flagged by MSTR~Z: E4.4 s3 assigns capture to ~Z, but a ~Z rail-author capturing this surface means the party being measured controls its own 'before' -- the same SoD principle CVO applied when declining custodianship of the baseline file. Hold: MSTR 20260731T031031Z. Ruling: CTO 20260731T031xZ.  ||  PRIOR BLOCKING (unchanged): Andrew D-1 confirmation that the four-term residual applies global-only and leaves the A4 per-firm two-term invariant untouched; Andrew's Cottonwood accessible strategy-portfolio list for WS-2; COO decomposition before dispatch. D-2/PFOE and D-3/IDVZ-Tax-Muni are roster decisions before WS-1 closes. Frontend explicitly out of scope.",
+  "phase": "PHASE 1 -- EXECUTION PLAN RULED 2026-08-03 (Andrew-direct voice memo + typed directive; transcript docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md; folded as PRD Addendum C). Five tasks T1-T5 carry the Addendum-B end-to-end completion mandate: T1 route/trigger canon incl. Cottonwood on-pattern; T2 one synchronized daily schedule for the timeseries family across all 4 scopes; T3 CloudFront/cache census; T4 MDPF-scoped silver dedup verification (estate-wide half = OPAL_VENDORPROVENANCE, Andrew-explicit split); T5 legacy decommission gated on T1-T3 proven. All five live-grounded against AWS 2026-08-03 in Addendum C (the None-schedule INF contingency reproduced the global-view delay THAT MORNING). Taxonomy half (segment_v1, WS-1..WS-5) unchanged. VELOCITY sequencing (Addendum A.2) superseded by the 08-03 memo -- VELOCITY suspended 08-03 Andrew-direct; A.1 held-out-set discipline still binds. No decomposition or dispatch yet.",
+  "blocking": "PRIMARY: COO decomposition of the T1-T5 execution plan (PRD Addendum C; no Andrew gate on starting -- the 08-03 memo IS the instruction). CTO owes the C.3 producer-unification architecture ruling at decomposition time (one canonical timeseries producer chain; recommendation in Addendum C). *** M9 BASELINE: PRECONDITION RELEASED 2026-07-31T07:33Z (CTO arch-gate, @ee5ff633e1 discharged) -- the pre-framework baseline IS CAPTURED per the joint CTO+CVO M9-COMPLETE v3 definition (capture s18 @e99f960e08; probes @9a23921fd9; verified on origin). Decomposition is NOT gated by it. STILL BINDING, PERMANENTLY, at comparison time: class-matching declaration; N carried with every statistic; the two classes NEVER summed; any citation of the target-class a_archaeology_ratio carries `denominator 23` INLINE -- a bare 0.1304 is a MISQUOTE (23 observations across 59 units). SEPARATE AND STILL OPEN at Andrew: the inbox-preservation question (future re-derivability, not baseline completeness). Full capture-history narrative: git log of this file. *** TAXONOMY HALF (unchanged): Andrew D-1 four-term-global-only confirmation before WS-3; Andrew's Cottonwood accessible strategy-portfolio list before WS-2; D-2/PFOE + D-3/IDVZ-Tax-Muni roster decisions before WS-1 closes. Frontend explicitly out of scope.",
   "pods": [
     "0.4",
     "0.6",
@@ -81,6 +86,43 @@
       "name": "Verification",
       "status": "not_started",
       "gate": "Synthetic unclassified-member control must go loud, not silently fall into non_model."
+    }
+  ],
+  "execution_tasks_20260803": [
+    {
+      "id": "T1",
+      "name": "Route + trigger canon; Cottonwood on-pattern",
+      "status": "not_started",
+      "grounding": "mdpf-daily-refresh-trigger ScheduleExpression=None ENABLED (live 08-03); cottonwood = cron(0 2) event-chain via cot-bd-session-trigger, absent from underscore platinum plane",
+      "gate": "Every MDPF ingest/publish leg on the canonical opal-data-assets route with a dedicated schedule; event dependencies demoted to accelerators (NEVER#4)."
+    },
+    {
+      "id": "T2",
+      "name": "One synchronized daily schedule -- timeseries family, all four scopes",
+      "status": "not_started",
+      "grounding": "Twin producer planes diverge: hyphen (accrual, ran 08-03, ends 07-30) vs underscore (runner, ended 07-31, did NOT run 08-03 -- INF pipeline-failed.json 10:50). Truncation mechanism INFERRED, needs source confirmation.",
+      "gate": "C.3 producer-unification ruling lands first; scheduled-run evidence only (never hand-runs, per MDPF_CHANNEL_INDEPENDENCE bar)."
+    },
+    {
+      "id": "T3",
+      "name": "CloudFront/cache pattern census + canonical invalidation timing",
+      "status": "not_started",
+      "grounding": "/api/general/* chain: auth-validator-edge -> public-data-router (platinum rewrite) -> cache-control-injector; comp-routes cache-policy blindness is a known instrument gap -- ground on the live distribution.",
+      "gate": "Cache map + invalidation timing that cannot clash with the T2 schedule; grounded live, not tool-only."
+    },
+    {
+      "id": "T4",
+      "name": "Silver dedup verification, MDPF-feeding tables (exemplars for OPAL_VENDORPROVENANCE)",
+      "status": "not_started",
+      "grounding": "Estate-wide stable-key research + as-of prerequisite parsed out to OPAL_VENDORPROVENANCE per Andrew-explicit split; MDPF acceptance consumes its verdicts.",
+      "gate": "Blocked-by: OPAL_VENDORPROVENANCE WS-1 as-of contracts for SmartX/BlackDiamond/Orion-Eclipse/Schwab-0824 (Andrew: necessary prerequisite)."
+    },
+    {
+      "id": "T5",
+      "name": "Legacy publisher/scheduler decommission",
+      "status": "not_started",
+      "grounding": "opal-data-mdpf/code/ is the LIVE runner code path (mdpf-daily-dispatch.sh) -- migrate before kill; json/mdpf retire blocked behind dim_mdpf_aggregate_aua_timeseries.py:567 bare-except; readers flipped 07-29.",
+      "gate": "Fires only after T1-T3 canon proven + no backfill gaps (memo-verbatim ordering); re-point readers THEN retire emission; every kill enumerated with evidence."
     }
   ],
   "open_decisions": [
@@ -143,7 +185,7 @@
     "contract_at_creation": "Every artifact and process this project CREATES declares its D3 contract AS IT IS BUILT -- writer, cadence, completeness_scope, canonical_source, successor, lifecycle (including TRANSIENT where it applies; a new trigger marker will hit that class immediately). NFRA_VELOCITY's WS-E1 contracts the estate RETROACTIVELY; that is cleanup. Contract-at-creation is the actual product, and the thesis 'a pivot carries its own cleanup obligation' is only ever proven FORWARD. If this project builds conventionally, the framework retires old debt while this mints new debt at the same rate and the program nets zero while both sides report success.",
     "perishable_baseline": "PERISHABLE -- capturable ONLY before NFRA_VELOCITY WS-E1 (contract declaration) and WS-E2 (trigger re-sequencing) change the substrate this project builds on. After that there is no way to observe what a product build cost WITHOUT the framework, and the program is left comparing itself to itself. Capture at decomposition, hand-tagged is sufficient: (a) wall-clock and agent-context spent on ARCHAEOLOGY vs BUILD; (b) count of 'which artifact is canonical / who writes this / is this live' questions; (c) rail-override count; (d) rework waves caused by a wrong denominator.",
     "true_blocking_edge_on_the_framework": "READ, NOT RULED (1.0.0_SA_CTO~C): the only NFRA_VELOCITY deliverable this project genuinely blocks on is the WS-C1 D3 LIFECYCLE VOCABULARY. Everything else can land underneath it while it runs. If this project waits for VELOCITY P5, the framework will have cost more velocity than it created -- which is the DEBTLOOPS complaint turned on the program written to answer it. Sequencing is Andrew's.",
-    "pending_from_andrew": "A VOICE MEMO is coming (Andrew-direct 2026-07-29 ~23:30Z) to bring in more detail on this project, wrapping in a substantial amount of the CURRENT MDPF work. Expect scope EXPANSION, not clarification-only. Do not treat this project's Phase-0 scope as settled until that memo is transcribed and folded.",
+    "pending_from_andrew": "RESOLVED in two installments: the 07-29 enrichment memo landed as PRD Addendum B (end-to-end completion absorption), and the 2026-08-03 memo landed as PRD Addendum C (the five execution tasks T1-T5; transcript docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md). Scope is now settled unless Andrew expands it again.",
     "cross_reference": [
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_PROGRAM.md",
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_CORE_PRD.md",
