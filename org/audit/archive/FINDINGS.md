@@ -181,3 +181,9 @@ error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
 - log: org/mass-deletion-audit.log
 - detail: non-append edit: first divergence at line 1, col 112 (baseline 700B / live-head 706B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+
+## 2026-08-03T150524Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/mass-deletion-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/mass-deletion-audit.log
+- detail: non-append edit: first divergence at line 7, col 1 (baseline 1014B / live-head 700B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
