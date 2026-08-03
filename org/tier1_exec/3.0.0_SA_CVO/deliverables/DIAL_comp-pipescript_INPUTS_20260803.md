@@ -52,6 +52,21 @@ inputs the moment they accrue.**
   should target the census producer, not each tool's rendering.** Context (ASSESSED): the
   described instrument is of the class the 2026-07-28 moratorium bans building — the prose
   likely predates the moratorium; the map describes an instrument that was legislated away.
+- **comp-estate (d) — frontend row asserts a reader the DEPLOYED artifact refutes** (~F T5.A
+  census @b877dbc0f5, via COO 221526Z): mdpf chain prose asserts `portal_data_proxy`
+  `/aum/aggregate-mdpf` reads the underscore root — FALSIFIED on the deployed plane (deployed
+  proxy sha LpodJICu, 2/2 py files, zero mdpf references; `/v1/aum/*` reads DynamoDB).
+  epistemic_status: OBSERVED (deployed-artifact read). Fourth mdpf-vertical staleness instance
+  tonight.
+- **NEW HAZARD CLASS (its own line, per COO): A NEVER-DEPLOYED DIFF FILE IN THE REPO READS AS
+  EVIDENCE OF A LIVE ROUTE to any text-plane instrument** — provenance of (d)'s stale claim is
+  `data/mdpf/scripts/backfill/HANDOFF_AE_lambda_route.diff` (never deployed) + the `aum.ts:474`
+  comment; the claim propagated diff -> estate prose -> CTO ruling seed before ~F's
+  deployed-plane read killed it. Only a deployed-artifact read refutes this class.
+  Cross-reference (ASSESSED): this is exactly the ACTIVE x RELEVANT drift class
+  NFRA_REPOCOHERENCEGRAPH's relevance_axis exists to catch — a HANDOFF diff whose content
+  ceased representing reality; worth naming as an RCG seed-label candidate when the cohorts
+  reach `data/`.
 
 ## comp-blast carry-forward (from the unclosed 07-31 dial — for whoever closes it)
 
