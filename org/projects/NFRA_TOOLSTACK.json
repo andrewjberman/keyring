@@ -1,0 +1,26 @@
+{
+  "project_code": "NFRA_TOOLSTACK",
+  "macro_code": "NFRA",
+  "name": "TOOLSTACK -- PROGRAM (constitutional stack): one program, 4 layers -- ONTOLOGY2 (constitutional/rails) -> TOOLARCH (mechanical/coverage spaces) -> TOOLSEM (semantic/query->denominator) -> TOOLBHVR (behavioral/harness)",
+  "description": "Program of record 2026-07-23 (~Z, Andrew-direct verbatim). Constitution = docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md. Build BOTTOM-UP: ONTOLOGY2 P1 first, then TOOLARCH + MSBEFF mechanical R-cells, then TOOLSEM, then TOOLBHVR. MSBEFF (audit) + PSTMRT (first enforcement) feed it; R1-R8 re-home across the layers. NOTE: this JSON was created AT CLOSE (2026-08-03) -- the program previously existed as a REGISTRY row only (no project JSON), which is what the comp-state REGROW BEHIND finding on it detected.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_TOOLSTACK_PROGRAM.md",
+      "label": "Program doc (4-layer constitutional stack)",
+      "date": "2026-07-23"
+    }
+  ],
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED 2026-08-03 (record hygiene, NOT a new sovereign decision): all 4 constituent layers were closed complete-as-superseded by NFRA_VELOCITY on 2026-07-29 per Andrew-direct plan-review ruling at the NFRA_VELOCITY commissioning (closing commit 5782b1ded1 -- ONTOLOGY2 re-homed to VELOCITY_CORE WS-C1/C2, TOOLARCH to WS-C3/C4, TOOLSEM to WS-C6, TOOLBHVR to VELOCITY_ESTATE WS-E6). A program umbrella whose every layer is superseded is itself superseded; the row's continued Active status was the stale-record-with-authority hazard. Close directed by 1.0.0_SA_CTO (message 20260803T151725Z to COO: 'MY CALL, close it Complete-as-superseded'), executed by 2.0.0_SA_COO. Open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger. Program doc + constitution stay as design provenance.",
+  "blocking": "None",
+  "created": "2026-07-23",
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8"
+  ],
+  "pipeline": "estate-wide (ontology / comp tooling / meta)",
+  "thread_counter": 0,
+  "threads": [],
+  "completed": "2026-08-03"
+}
