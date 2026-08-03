@@ -61,3 +61,7 @@ charters:
   lib/:                             { charter: LIVE_CODE }
   security/:                        { charter: GOVERNED_REGISTRY }
   design/:                          { charter: WORKPRODUCT_ARCHIVE }
+  # coverage-closure amendment (2026-08-03, from census vintage 20260803T181844Z: 21 UNCHARTERED)
+  .github/:                         { charter: LIVE_CODE }             # CI workflows
+  CLAUDE.md:                        { charter: DOCTRINE }              # law surface
+  "*":                              { charter: GOVERNED_REGISTRY }     # root-level files (.gitignore, .owned-paths.yaml, ajb.ps1, ...) -- lowest specificity, matches only path-without-slash

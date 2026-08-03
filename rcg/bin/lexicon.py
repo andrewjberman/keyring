@@ -1,0 +1,119 @@
+"""RCG estate name lexicon: canonical identifiers tagged LIVE / RETIRED / status, per scan.
+
+Feeds reference_lexical features and mark.py's lexical-citation edges (PRD s.6). The
+RETIRED tags are MEASURED where possible (a tool registered in a registry but absent from
+.tools/ is retired-by-evidence, never by recollection).
+
+BOUNDARY DECLARATION (printed every run):
+  address_space      four channels: .tools basenames | org/projects codes+status |
+                     SYSTEM_DEFINITIONS term keys+status | lambda-source-map names.
+  traversal_residue  agent serials (runtime liveness, not lexicon-stable), S3 bucket/key
+                     grammars, portal identifiers, file basenames at large -- all OUT of
+                     v1, declared. A mention of an out-channel identifier scores nothing.
+  presentation       full lexicon at scans/<vintage>/lexicon.json; the print is counts.
+  failure_direction  UNDER-enumeration (a channel misparse drops tokens LOUDLY via its
+                     printed denominator, never silently).
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+import yaml
+
+WS = Path(__file__).resolve().parents[2]
+
+
+def channel_tools() -> list[dict]:
+    """.tools/ basenames = LIVE; registry-only names = RETIRED-by-evidence."""
+    live = {p.name for p in (WS / ".tools").iterdir()
+            if p.is_file() and not p.name.endswith((".md", ".txt", ".log"))}
+    entries = [{"token": t, "kind": "tool", "status": "LIVE", "source": ".tools/"}
+               for t in sorted(live)]
+    registry_names: set = set()
+    for reg in ("org/modules/graph/graph-call-manifest.yaml",
+                "org/modules/graph/comp-tools.yaml",
+                "org/modules/graph/TOOL_MASTER.yaml"):
+        path = WS / reg
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        registry_names |= set(re.findall(r"\b(comp-[a-z0-9-]+)\b", text))
+    ghosts = sorted(t for t in registry_names
+                    if t not in live and not any(t.startswith(x + "-") for x in live))
+    entries += [{"token": t, "kind": "tool", "status": "RETIRED",
+                 "source": "registry-only (absent from .tools/ -- retired-by-evidence)"}
+                for t in ghosts]
+    return entries
+
+
+def channel_projects() -> list[dict]:
+    out = []
+    for p in sorted((WS / "org" / "projects").glob("*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            out.append({"token": p.stem, "kind": "project", "status": "UNPARSEABLE",
+                        "source": str(p.relative_to(WS))})
+            continue
+        status = str(d.get("status", "unknown")).lower()
+        live = "LIVE" if status in ("active", "on-hold", "on_hold") else "RETIRED"
+        out.append({"token": d.get("project_code", p.stem), "kind": "project",
+                    "status": live, "detail": status, "source": str(p.relative_to(WS))})
+    return out
+
+
+def channel_terms() -> list[dict]:
+    path = WS / "infra" / "system" / "ontology" / "SYSTEM_DEFINITIONS.yaml"
+    spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+    out = []
+    for term, body in spec.get("terms", {}).items():
+        status = body.get("status", "unknown")
+        live = "LIVE" if status == "reserved_ratified" else (
+            "RETIRED" if status == "deprecated" else "CONTESTED")
+        out.append({"token": term, "kind": "term", "status": live, "detail": status,
+                    "source": "SYSTEM_DEFINITIONS.yaml"})
+    return out
+
+
+def channel_lambdas() -> list[dict]:
+    path = WS / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+    d = json.loads(path.read_text(encoding="utf-8"))
+    # The map wraps its entries: real names live under "functions"; top-level keys are
+    # metadata (_description, _updated, ...). The naive d.keys() read returned 5 metadata
+    # keys as "lambdas" -- caught because 5 was implausible for this estate.
+    functions = d.get("functions", {}) if isinstance(d, dict) else {}
+    return [{"token": n, "kind": "lambda", "status": "LIVE",
+             "source": "lambda-source-map.json#functions"} for n in sorted(functions)]
+
+
+def main() -> int:
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    scans = sorted((WS / "rcg" / "scans").iterdir()) if (WS / "rcg" / "scans").exists() else []
+    out_dir = scans[-1] if scans else (WS / "rcg" / "scans" / f"{stamp}_lexonly")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    channels = {"tools": channel_tools(), "projects": channel_projects(),
+                "terms": channel_terms(), "lambdas": channel_lambdas()}
+    lexicon = [e for entries in channels.values() for e in entries]
+    (out_dir / "lexicon.json").write_text(
+        json.dumps({"built": stamp, "entries": lexicon}, indent=1), encoding="utf-8")
+
+    print(f"[lexicon] {len(lexicon)} identifiers -> {out_dir.relative_to(WS)}/lexicon.json")
+    for name, entries in channels.items():
+        by = {}
+        for e in entries:
+            by[e["status"]] = by.get(e["status"], 0) + 1
+        print(f"  {name:<10} {len(entries):>4}  {by}")
+    ghosts = [e["token"] for e in channels["tools"] if e["status"] == "RETIRED"]
+    if ghosts:
+        print(f"  [finding] registry-only tool names (retired-by-evidence): {ghosts}")
+    print("[boundary] " + __doc__.split("BOUNDARY DECLARATION", 1)[1].strip())
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
