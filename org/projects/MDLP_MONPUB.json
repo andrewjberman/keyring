@@ -12,7 +12,7 @@
   ],
   "status": "active",
   "phase": "Phase 2: SERVE HEALED at true T-1 2026-07-31 (W4 recovery publish 16:10Z, CVO witness PASS x7 values-read @b16913d35e; ETag ada142139b). W1 complete-as-superseded (07-30 target was content-refuted garbage; W4 achieved the intent at a better target). W2 code deployed live yang-v2.4.17, passing leg CLOSED via the recovery publish; failing-direction battery pending CVO witness. W3 code committed b48785adad, deploy pending. W5 (rollback picker hex-sort) + W6 (client-cache invalidation) ordered off CVO's Andrew-direct audit @30a13b89b1, GOs out.",
-  "blocking": "W2 failing battery (DS package -> CVO witness); W3/W5 deploys (DT); W6 portal exercise (DT); 0730 formal trace doc (sitez, post-promote)",
+  "blocking": "W6 mechanical exercise + W8 scratch session (handle_rollback entry, CVO witness, scratch env held); W9 TTL hardening at AE~F; W6+W8 live legs ride next genuine rollback occasion. W2 WITNESSED-COMPLETE @9ba99fcb5c; W3/W5 deployed+accepted; trace doc @f0ee7c588.",
   "created": "2026-08-03",
   "pods": ["0.2"],
   "pipeline": "yang-pipeline, data-refresh",
