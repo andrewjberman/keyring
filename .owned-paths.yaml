@@ -1441,6 +1441,10 @@ paths:
     lane: POD1_OR_AE
     note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) — POD1 DS authors, AE deploys."
 
+  "infra/aws/lambda/v2_portal/yang_pipeline/**":
+    lane: YANG_PIPELINE_DEPLOY
+    note: "yang-pipeline Lambda SOURCE (yang-model-portfolio-benchmarks et al). Added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD; CTO ARCH-GATE PASS 20260803T170310Z): third record-consistency gap of the day on this family -- the lane's source-map exact-file rule (:1472ish) and TF-root rule bind to YANG_PIPELINE_DEPLOY but the Lambda SOURCE dir had NO rule and fell through to infra/aws/** AE-only, so DS's 46d4b1110d membership grant was inert for source commits (audited override on 4024664d71 cited the gap). Zero membership change -- binds the path to the already-gated lane (DT 06-26 gate, DS 20260803T155644Z gate, AE set untouched). Longest-match overrides infra/aws/** AE-only."
+
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
     note: "Trade-pipeline Lambda source — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3; longest-match overrides infra/aws/** AE-only rule (COO ruling 2026-05-01 TRSB_PATHFIX)"
