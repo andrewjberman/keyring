@@ -68,6 +68,20 @@ inputs the moment they accrue.**
   ceased representing reality; worth naming as an RCG seed-label candidate when the cohorts
   reach `data/`.
 
+## comp-blast P0-census input (measured this session, Andrew-directed opal-data-mdpf trace)
+
+- **`opal-data-mdpf` is ABSENT from the blast graph universe** — only 4 S3_BUCKET nodes exist
+  (bd / inf / portal-v2 / assets), so comp-blast returns NOT-FOUND on the estate's whole mdpf
+  feeder bucket and structurally cannot answer "who consumes it." Consumer census had to be done
+  by code-plane grep + live primitives (2026-08-03; production consumers DO exist: mdpf-daily-trigger
+  Lambda Active, mdpf-daily-refresh-trigger rule ENABLED + firing, EC2 runner last complete run
+  07-31 refreshing LEGACY platinum/mdpf/* while the teardown is PARKED). Same mdpf-tree
+  coverage-hole family as the comp-pipescript items above. epistemic_status: OBSERVED.
+- **Andrew framing to carry into the dial (2026-08-03, this terminal):** a comp-blast NEAR-MATCH
+  is itself signal — "probably a good indicator of a duplicated/legacy resource... the reason for
+  using comp-blast," not merely a typo aid. Candidate P4 output-vocabulary refinement: label
+  near-matches as potential duplicate/legacy candidates, not only "typo candidates."
+
 ## comp-blast carry-forward (from the unclosed 07-31 dial — for whoever closes it)
 
 Still live at `org/modules/graph/` (zero commits since 07-31 evening), in AE's stated fix order:
