@@ -1,4 +1,4 @@
-# RCG grader standing instructions -- v1 (2026-08-03)
+# RCG grader standing instructions -- v2 (2026-08-03, R-0007/R-0008 folded)
 
 Versioned stage-D context for the agent grader. Amended ONLY via W2 stage H (a ruling's
 non-mechanical residue) or a MODEL_EVAL disagreement analysis; every amendment bumps the
@@ -8,9 +8,24 @@ version line and cites its source ruling/eval id.
 CRO-solo, silent to the fabric. Cross-seat acts queue as ferry_item ledger entries; Andrew
 carries them manually. No MCP dispatch for RCG work until R-0001 is superseded.
 
+## THE TWO AXES (R-0007 -- canonical names, codebase-only scope)
+- **activity_axis** -- mechanical reachability/dependency (mark.py). Computed, never judged.
+- **relevance_axis** -- file-level DRIFT analysis, DOWNSTREAM of the activity_axis: does a
+  document accurately represent the state/process it describes? **A new canonical doc and
+  an OLD STABLE CANON are both CLEAN -- age alone is never drift** (R-0007 verbatim: "can
+  be a new canonical doc, or an old stable canon, so deterministic tools must be designed
+  accordingly"). Drift evidence: retired-vocabulary density, dangling references, the
+  described subject changing while the describer did not (co-change divergence).
+- RCG is the CODEBASE ESTATE in the knowledge_plane, solely and entirely. lifecycle_value
+  (semantic systems, execution_space, Kimi pipeline) is a SEPARATE system (R-0008) -- the
+  grader never consumes or emits it.
+- Queue order (R-0007): high-drift -> agent grades FIRST; hand to Andrew ONLY if the agent
+  is still unsure. Clearly-deprecated -> summary-delete queue, still reviewed, never auto.
+
 ## The verdict discipline
-1. **ACTIVE is computed, never judged** -- take `reach_from_root` + `active_strength` from
-   mark.py as fact; the grader's job is RELEVANT and the disposition.
+1. **The activity_axis is computed, never judged** -- take `reach_from_root` +
+   `active_strength` from mark.py as fact; the grader's job is the relevance_axis verdict
+   and the disposition.
 2. **Review order is the two-pointer rule**: relevance descending `active_strength`; sweep
    candidacy ascending. The top of the reach graph is judged FIRST.
 3. **Confidence is CONVERGENCE, not a vibe**: HIGH = >=3 independent feature families agree,
