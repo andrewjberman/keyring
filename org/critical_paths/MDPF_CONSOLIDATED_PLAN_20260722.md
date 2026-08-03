@@ -8,7 +8,20 @@ comprehensive, directed plan to efficiently address it."*
 
 ## ⚠ PART 0 — THE ARMED HAZARD. READ THIS BEFORE ANY TERRAFORM WORK.
 
-> ### **`infra/aws/terraform/portal-auth/` IS 9 BEHAVIORS AHEAD OF LIVE. AN UNTARGETED `terraform apply` IN THAT ROOT FIRES THE MDPF FLIP — THE ONE ROLLED BACK ON A P0 THIS MORNING — WITH THE CO-SIGN AT 0 OF 3.**
+> **✅ DISCHARGED-AS-STALE 2026-08-03 ~1715Z (2.0.0_SA_COO, CTO-routed 20260803T171227Z): THE DIVERGENCE
+> DESCRIBED BELOW NO LONGER EXISTS IN THE TREE.** The 9-behaviors-ahead state was measured 07-22; as of the
+> 2026-08-03 W9 apply, repo and live AGREE (24 original behaviors + the W9 `/api/general/*` cache-policy swap
+> = 25; zero `/api/general/{mdpf,portfolios}` flip behaviors declared). Evidence: `0.7.0_AE_CloudOps~F`'s W9
+> saved plan (1 add / 1 change / 0 destroy — it would have shown the 9 additions and did not) + live
+> `get-distribution-config` + 0-diff re-plan, log @7eeec44ee8; CTO independently confirmed repo/live 24+1
+> (msg 20260803T171227Z). **An untargeted apply in this root can no longer fire the flip, because the tree no
+> longer carries the flip declarations** — the MDPF flip program itself rolled forward into MDPF_3FIRMS
+> (RF-ledger) and any future flip re-lands under its own co-sign discipline; nothing here re-arms silently.
+> This banner exists because the stale ARMED text was making the risk-reflex HOLD on
+> `cloudfront-distribution.tf` fire forever on a hazard that had ceased to exist — the
+> stale-record-with-authority class. The original text is PRESERVED below as the record of what was true 07-22.
+
+> ### ~~**`infra/aws/terraform/portal-auth/` IS 9 BEHAVIORS AHEAD OF LIVE. AN UNTARGETED `terraform apply` IN THAT ROOT FIRES THE MDPF FLIP — THE ONE ROLLED BACK ON A P0 THIS MORNING — WITH THE CO-SIGN AT 0 OF 3.**~~ *(true 07-22, stale 08-03 — see discharge banner)*
 
 **Surfaced by `0.7.0_AE_CloudOps`; CTO re-verified both sides live at 1525Z rather than trusting the report:**
 
