@@ -17,7 +17,12 @@
 - yang-model-portfolio-benchmarks: baseline (deployed W2) `5EPfYG...` -> `Ml7okrOe6+2uT+hZScO6u3aSg8/lbacrD4Q1g8z74uY=`
 
 ## Legs
-- [ ] data_refresh: map commit, plan=1, safe-apply, 0-diff, live sha, tag data-refresh-v2.6.0 verified
-- [ ] yang: map commit, plan=1, safe-apply, 0-diff, live sha, deployment_map, tag yang-v2.4.18 verified
+- [x] data_refresh: map 85c9f11c4b, plan=1, safe-apply complete, 0-diff, live sha E4944Imr... (17:08Z),
+      record 52cf5a3c74 (sweep-check clean), tag data-refresh-v2.6.0 verified (cat-file -> tag)
+- [x] yang: map 85c9f11c4b, plan=1, safe-apply complete, 0-diff, live sha Ml7okrOe... (17:10:09Z),
+      record 0b80be8f7c (sweep-check clean), deployment_map yang-v2.4.18, tag verified
 - [ ] Scratch end-to-end exercise (CVO witness; entry via handle_rollback, negative control separate)
-- [ ] Ledger closed
+      -- OPEN: design gap surfaced to CVO/DS (scratch bucket has NO manifest S3 trigger, so a pure
+      env-scoped end-to-end cannot traverse data_refresh -> SFN; design session pending)
+- [x] Deploy legs closed 17:15Z; ledger stays OPEN only for the exercise leg (deploys themselves
+      are COMPLETE + verified -- nothing half-landed)
