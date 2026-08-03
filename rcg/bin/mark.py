@@ -122,13 +122,32 @@ def build_root_set(population: set) -> tuple[set, dict]:
                     why[p] = "root:lambda-source-map"
                     n_lambda_roots += 1
                 break
+    # EC2_MANIFEST service trees -- EC2 code deploys via S3->EC2 pull (CLAUDE.md rules
+    # 8/12), so repo-side EC2 source is live-in-production while unreferenced in-repo;
+    # without this the whole infra/aws/ec2 tree reads unmarked (stage-D cycle-1 finding)
+    man = WS / "infra" / "aws" / "ec2" / "EC2_MANIFEST.json"
+    n_ec2 = 0
+    try:
+        services = json.loads(man.read_text(encoding="utf-8")).get("services", {})
+    except (OSError, json.JSONDecodeError):
+        services = {}
+    sdirs = {str(v.get("source_path", "")).strip("/").replace("\\", "/")
+             for v in services.values() if isinstance(v, dict)}
+    for p in population:
+        for d in sdirs:
+            if d and (p == d or p.startswith(d + "/")):
+                if p not in roots:
+                    roots.add(p)
+                    why[p] = "root:ec2-manifest"
+                    n_ec2 += 1
+                break
     # terraform tree
     for p in population:
         if p.startswith("infra/aws/terraform/") and p not in roots:
             roots.add(p)
             why[p] = "root:terraform"
     print(f"[roots] {len(roots)} root files ({n_lambda_roots} via lambda-source-map "
-          f"{len(dirs)} mapped source dirs)")
+          f"{len(dirs)} dirs; {n_ec2} via EC2_MANIFEST {len(sdirs)} services)")
     return roots, why
 
 

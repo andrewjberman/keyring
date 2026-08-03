@@ -40,6 +40,7 @@ charters:
   "org/**/handoffs/":               { content: RECORD,      handling: APPEND_ONLY }
   org/tier0/ledger/:                { content: RECORD,      handling: APPEND_ONLY }
   org/audit/:                       { content: RECORD,      handling: APPEND_ONLY }
+  org/critical_paths/change_management/: { content: RECORD, handling: APPEND_ONLY }  # 418 law-mandated deploy ledgers (stage-D cycle-1 finding)
   # infra
   infra/:                           { content: CODE,        handling: SCORE }
   infra/system/ontology/:           { content: REGISTRY,    handling: SCORE }
