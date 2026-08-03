@@ -82,3 +82,18 @@ correction, DDB rows noted to the emitter owner.
   + my docstring rider share the tree; their commit carries both.
 - Do NOT cite $458,189,558.77 as a verified anchor anywhere, ever.
 - Do NOT read the ADHOC LAG TO as closed -- outcome-B holds it open by its own terms.
+
+## Addendum ~23:40Z -- shell-serve census (new GO @337aea9aeb) + Leg-2 self-correction
+
+- Census @a6d1dc1797: 90 partitions row-counted, 222 surviving serve-writes, 26 near-empty
+  marked; DAY-LIST = 07-28..07-31 x all 12 platinum artifacts consumed near-empty
+  latest-snapshots; exposure closed 08-01; pre-07-19 serve moments UNKNOWN (no surviving
+  versions). Routed to CTO cc COO as the Andrew-package input.
+- Leg 2: my 232021Z converter-lag diagnosis was WRONG -- corrected on instrument evidence
+  (set-identity PASS 732/732 frontier 08-03; snapshot as-of vs period run-date label
+  frontiers). NO fix deployed to the working converter. Closure = tonight's scheduled
+  advance, read not hand-run.
+- Window precision folded from 0.2.0's convergent census @47f7c82dc1 (July onset 07-21;
+  served June episode 06-15..06-18).
+- Anchor TO closed at my seat (COO landed their record @0a17ddf3be; DT queued).
+- Compiler Tools for the census TO: reproduced in the deliverable doc s.'Compiler Tools'.
