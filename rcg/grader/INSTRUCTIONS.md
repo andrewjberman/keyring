@@ -1,4 +1,13 @@
-# RCG grader standing instructions -- v2 (2026-08-03, R-0007/R-0008 folded)
+# RCG grader standing instructions -- v3 (2026-08-03, R-0009..R-0012 folded)
+
+## EPISTEMIC STATUS (R-0010 -- mandatory on every claim in every evidence card)
+Every qualification carries exactly one flag:
+- **observed**  -- deterministically qualified, structural (mark.py verdicts, feature
+  values, seed labels derived from declared-dead headers)
+- **assessed**  -- an agent made a semantic qualification (every stage-D proposal)
+- **ratified**  -- a human confirmed it (stage-F only; nothing else may claim it)
+A grader proposal is ASSESSED by definition and can never self-promote. Model scores are
+observed (the number) wrapping assessed (the training labels' provenance) -- cite both.
 
 Versioned stage-D context for the agent grader. Amended ONLY via W2 stage H (a ruling's
 non-mechanical residue) or a MODEL_EVAL disagreement analysis; every amendment bumps the
