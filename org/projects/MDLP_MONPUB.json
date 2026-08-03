@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: spec drafted, 3.0.0_SA_CVO validation pending (Andrew-direct gate)",
-  "blocking": "CVO sign-off on the spec; DS/DT_PortfolioAnalytics not live (spawns via MSTR after sign-off)",
+  "phase": "Phase 1: CVO CONDITIONAL GO folded (verdict 145054Z @f4ab1ae778 -- W2 build-before-publish amendment + W1 estate probe + 2 recorded residuals + W3 Choice-state widening). TOs W1-W4 pending, GOs issued; W1 (stop-the-bleed re-publish) is the P0.",
+  "blocking": "DS/DT_PortfolioAnalytics not live -- spawn request at MSTR; GO mail queued in their inboxes",
   "created": "2026-08-03",
   "pods": ["0.2"],
   "pipeline": "yang-pipeline, data-refresh",
