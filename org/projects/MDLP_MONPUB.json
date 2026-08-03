@@ -1,0 +1,21 @@
+{
+  "project_code": "MDLP_MONPUB",
+  "macro_code": "MDLP",
+  "name": "ST Model Portfolio manifest silent-regression fix (monotonic publish guard)",
+  "description": "Portal Model Portfolios benchmark surface served regressed data (data_as_of 2026-07-27 after a correct 07-30 publish was silently clobbered by a later reprocess of an older upload). Fix per 0.7.0_AE_CloudOps~F's live-verified finding @99c3e50a36: W1 stop-the-bleed re-publish of 07-30; W2 monotonic date-guard on yang-model-portfolio-benchmarks' publish path (with deliberate-rollback escape hatch); W3 data_refresh handle_status() Pass-state/Skip* visibility; W4 diagnose+fix the 07-31 duplicate-labels data.pkl defect. MSTR-relayed Andrew-direct 2026-08-03: CTO orders and logs the fix, CVO validates the spec BEFORE the fix process runs, then route to DS/DT_PortfolioAnalytics.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDLP_MONPUB_MANIFEST_REGRESSION_FIX.md",
+      "label": "Manifest regression fix spec v0.1",
+      "date": "2026-08-03"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: spec drafted, 3.0.0_SA_CVO validation pending (Andrew-direct gate)",
+  "blocking": "CVO sign-off on the spec; DS/DT_PortfolioAnalytics not live (spawns via MSTR after sign-off)",
+  "created": "2026-08-03",
+  "pods": ["0.2"],
+  "pipeline": "yang-pipeline, data-refresh",
+  "thread_counter": 0,
+  "threads": []
+}
