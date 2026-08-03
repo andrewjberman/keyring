@@ -72,21 +72,23 @@ def compile_charters() -> list[tuple[re.Pattern, str, int]]:
         rx = rx.replace("", ".*")
         if pat.endswith("/"):
             rx = rx + ".*"
-        rules.append((re.compile("^" + rx + "$"), cfg["charter"], specificity))
+        rules.append((re.compile("^" + rx + "$"),
+                      (cfg["content"], cfg["handling"]), specificity))
     rules.sort(key=lambda r: -r[2])  # most-specific first
     return rules
 
 
-def charter_of(path: str, rules: list[tuple[re.Pattern, str, int]]) -> str:
-    for rx, charter, _ in rules:
+def charter_of(path: str, rules: list) -> tuple:
+    """v2: returns (content, handling) -- two orthogonal MECE fields (R-0009)."""
+    for rx, pair, _ in rules:
         if rx.match(path):
-            return charter
-    return "UNCHARTERED"
+            return pair
+    return ("UNCHARTED", "SCORE")
 
 
-def class_of(path: str, charter: str) -> str:
-    if charter == "APPEND_ONLY_RECORD":
-        return "RECORD"  # by charter, never extension (PRD s.4)
+def class_of(path: str, content: str) -> str:
+    if content == "RECORD":
+        return "RECORD"  # by charter content, never extension (PRD s.4)
     ext = Path(path).suffix.lower()
     if ext in EXEC_EXT:
         return "EXEC"
@@ -148,12 +150,12 @@ def main() -> int:
     rows = []
     census: dict = defaultdict(lambda: defaultdict(int))
     for path in files:
-        charter = charter_of(path, rules)
-        fclass = class_of(path, charter)
+        content, handling = charter_of(path, rules)
+        fclass = class_of(path, content)
         root = path.split("/", 1)[0] if "/" in path else "(root)"
         signals = sorted(k for k, rx in NAME_SIGNALS.items() if rx.search(path))
         status_markers: list = []
-        if fclass in ("DOC", "REG") and charter not in ("EXCLUDED",):
+        if fclass in ("DOC", "REG") and handling != "EXCLUDE":
             try:
                 head_text = (WS / path).read_text(encoding="utf-8", errors="ignore")[:4096]
                 status_markers = sorted(set(STATUS_PAT.findall(head_text)))
@@ -161,7 +163,8 @@ def main() -> int:
                 status_markers = ["UNREADABLE"]
         tp = temporal[path]
         row = {
-            "path": path, "root": root, "charter": charter, "class": fclass,
+            "path": path, "root": root, "content": content, "handling": handling,
+            "class": fclass,
             "fs_depth": path.count("/"),
             "fs_name_signal": signals,
             "s_header_status": status_markers,
@@ -173,7 +176,8 @@ def main() -> int:
         rows.append(row)
         census[root]["files"] += 1
         census[root][f"class:{fclass}"] += 1
-        census[root][f"charter:{charter}"] += 1
+        census[root][f"content:{content}"] += 1
+        census[root][f"handling:{handling}"] += 1
         if status_markers and set(status_markers) & {"SUPERSEDED", "DEPRECATED", "RETIRED",
                                                      "OBSOLETE", "ARCHIVED"}:
             census[root]["declared_dead_markers"] += 1
@@ -182,9 +186,8 @@ def main() -> int:
         for row in rows:
             h.write(json.dumps(row, ensure_ascii=False) + "\n")
 
-    protected = {"APPEND_ONLY_RECORD", "DOCTRINE", "PROTECTED_LIVE_CORE", "EXCLUDED"}
-    n_protected = sum(1 for r in rows if r["charter"] in protected)
-    n_uncharted = sum(1 for r in rows if r["charter"] == "UNCHARTERED")
+    n_protected = sum(1 for r in rows if r["handling"] != "SCORE")
+    n_uncharted = sum(1 for r in rows if r["content"] == "UNCHARTED")
     summary = {
         "vintage": {"stamp": stamp, "head": head}, "population": len(files),
         "protected": n_protected, "scoreable": len(files) - n_protected,

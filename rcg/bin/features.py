@@ -25,7 +25,6 @@ import sys
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[2]
-PROTECTED = {"APPEND_ONLY_RECORD", "DOCTRINE", "PROTECTED_LIVE_CORE", "EXCLUDED"}
 DEAD_MARKERS = {"SUPERSEDED", "DEPRECATED", "RETIRED", "OBSOLETE", "ARCHIVED", "DO NOT USE"}
 CANON_MARKERS = {"CANONICAL", "AUTHORITATIVE"}
 MAX_LEX_BYTES = 512_000
@@ -46,30 +45,75 @@ def load_jsonl(path: Path) -> list[dict]:
 
 def build_lex_patterns(scan_dir: Path) -> tuple:
     lex = json.loads((scan_dir / "lexicon.json").read_text(encoding="utf-8"))
-    live, retired = [], []
+    live, retired, nonconform = [], [], []
     for e in lex["entries"]:
         (live if e["status"] == "LIVE" else
-         retired if e["status"] == "RETIRED" else []).append(re.escape(e["token"]))
+         retired if e["status"] == "RETIRED" else
+         nonconform if e["status"] == "NONCONFORM" else []).append(re.escape(e["token"]))
     mk = lambda toks: re.compile(r"\b(?:" + "|".join(  # noqa: E731
         sorted(toks, key=len, reverse=True)) + r")\b") if toks else None
-    return mk(live), mk(retired), len(live), len(retired)
+    return mk(live), mk(retired), mk(nonconform), len(live), len(retired), len(nonconform)
+
+
+def load_edges(scan_dir: Path) -> dict:
+    out: dict = {}
+    p = scan_dir / "edges.jsonl"
+    if p.exists():
+        with p.open(encoding="utf-8", errors="replace") as h:
+            for line in h:
+                d = json.loads(line)
+                out[d["src"]] = d["dst"]
+    return out
+
+
+def target_commit_times(targets: set) -> dict:
+    """One streaming git-log pass: per-target sorted commit timestamps (newest first).
+
+    Powers co_change_divergence: for doc D, the fraction of each cited target's history
+    that happened AFTER D's own last touch -- 'the subject kept moving, the describer
+    did not.' Age alone never scores: a doc whose targets are frozen scores 0 at any age.
+    """
+    import subprocess
+    times: dict = {t: [] for t in targets}
+    proc = subprocess.Popen(["git", "log", "--format=%x01%at", "--name-only"],
+                            cwd=WS, stdout=subprocess.PIPE, text=True,
+                            encoding="utf-8", errors="replace")
+    at = None
+    assert proc.stdout is not None
+    for line in proc.stdout:
+        line = line.rstrip("\n")
+        if line.startswith("\x01"):
+            at = int(line[1:])
+        elif line and at is not None:
+            rec = times.get(line)
+            if rec is not None:
+                rec.append(at)
+    proc.wait()
+    return times
 
 
 def main() -> int:
     scan_dir = newest_scan()
     inventory = {r["path"]: r for r in load_jsonl(scan_dir / "inventory.jsonl")}
     marked = {r["path"]: r for r in load_jsonl(scan_dir / "marked.jsonl")}
-    live_rx, retired_rx, n_live, n_retired = build_lex_patterns(scan_dir)
-    print(f"[features] vintage {scan_dir.name}; lexicon {n_live} LIVE / "
-          f"{n_retired} RETIRED tokens")
+    live_rx, retired_rx, nonconf_rx, n_live, n_retired, n_nonconf = \
+        build_lex_patterns(scan_dir)
+    edges = load_edges(scan_dir)
+    doc_targets: set = set()
+    for path, inv in inventory.items():
+        if inv["class"] == "DOC" and inv["handling"] == "SCORE":
+            doc_targets.update(edges.get(path, ()))
+    print(f"[features] vintage {scan_dir.name}; lexicon {n_live} LIVE / {n_retired} "
+          f"RETIRED / {n_nonconf} NONCONFORM tokens; co-change targets {len(doc_targets)}")
+    ttimes = target_commit_times(doc_targets)
 
     rows, seeds = [], []
     n_lex_scanned = 0
     for path, inv in inventory.items():
-        if inv["charter"] in PROTECTED:
+        if inv["handling"] != "SCORE":
             continue
         mk = marked[path]
-        lex_live = lex_retired = 0
+        lex_live = lex_retired = lex_nonconf = 0
         if inv["class"] in ("DOC", "EXEC", "REG"):
             try:
                 text = (WS / path).read_text(encoding="utf-8",
@@ -80,11 +124,30 @@ def main() -> int:
             if text:
                 lex_live = len(live_rx.findall(text)) if live_rx else 0
                 lex_retired = len(retired_rx.findall(text)) if retired_rx else 0
+                lex_nonconf = len(nonconf_rx.findall(text)) if nonconf_rx else 0
+        # co_change_divergence v2.1 (DOC only): mean fraction of each cited target's
+        # history AFTER this doc's last touch. Frozen targets -> 0 at any age. Two
+        # guards, both from a FAILED directional control (R-0013 drill, 2026-08-03):
+        # a doc touched today scored 0.523 because (a) NEWBORN targets (thin history)
+        # max the fraction on no evidence -> targets need >=5 lifetime commits to
+        # vote; (b) same-session co-creation read as drift -> commits within 1 day
+        # of the doc's own last touch are ALIGNED, not divergence.
+        cc_div, cc_targets = 0.0, 0
+        if inv["class"] == "DOC" and inv["t_last"]:
+            cutoff = inv["t_last"] + 86400
+            fracs = []
+            for t in edges.get(path, ()):
+                hist = ttimes.get(t)
+                if hist and len(hist) >= 5:
+                    fracs.append(sum(1 for ts in hist if ts > cutoff) / len(hist))
+            if fracs:
+                cc_div = round(sum(fracs) / len(fracs), 3)
+                cc_targets = len(fracs)
         path_retired = bool(retired_rx.search(path)) if retired_rx else False
         statuses = set(inv["s_header_status"])
         row = {
             "path": path,
-            "fs_root": inv["root"], "fs_charter": inv["charter"],
+            "fs_root": inv["root"], "f_content": inv["content"],
             "f_class": inv["class"], "fs_depth": inv["fs_depth"],
             "sig_dated": int("dated" in inv["fs_name_signal"]),
             "sig_testish": int("testish" in inv["fs_name_signal"]),
@@ -102,6 +165,8 @@ def main() -> int:
             "lex_out_live": lex_live, "lex_out_retired": lex_retired,
             "lex_retired_ratio": round(lex_retired / (lex_live + lex_retired), 3)
             if (lex_live + lex_retired) else 0.0,
+            "lex_canon_nonconform": lex_nonconf,
+            "co_change_divergence": cc_div, "co_change_targets": cc_targets,
             "era_retired_code_in_path": int(path_retired),
         }
         rows.append(row)

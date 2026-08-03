@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -79,6 +80,46 @@ def channel_terms() -> list[dict]:
     return out
 
 
+def channel_canon_nonconform() -> list[dict]:
+    """Naming-act violations, MECHANICALLY generated from the canon's own keys (R-0013:
+    concretely resolvable end-to-end, zero prose parsing, zero curation).
+
+    For each SYSTEM_DEFINITIONS term key: the dashed variant (v1.6 underscore act) and the
+    Capitalized_Segments variant (R-0004/R-0014 lowercase act) are NONCONFORMING usages --
+    EXCEPT variants that collide with a real on-disk path component (e.g. the
+    estate-contracts DIRECTORY is legal on disk; only the definition-key usage is bound).
+    """
+    path = WS / "infra" / "system" / "ontology" / "SYSTEM_DEFINITIONS.yaml"
+    spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+    out_p = subprocess.run(["git", "ls-files"], cwd=WS, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace")
+    components: set = set()
+    for line in out_p.stdout.splitlines():
+        for comp in line.split("/"):
+            components.add(comp)
+            components.add(comp.rsplit(".", 1)[0])
+    entries = []
+    excluded = 0
+    for term in spec.get("terms", {}):
+        variants = set()
+        if "_" in term:
+            variants.add(term.replace("_", "-"))
+            variants.add("_".join(seg.capitalize() for seg in term.split("_")))
+        elif term != term.lower():
+            variants.add(term)  # a capitalized single-word key is itself nonconforming
+        for v in variants:
+            if v == term:
+                continue
+            if v in components:
+                excluded += 1
+                continue
+            entries.append({"token": v, "kind": "canon_nonconform", "status": "NONCONFORM",
+                            "source": f"generated from canon key '{term}' (naming acts)"})
+    entries.append({"token": "__meta_excluded_path_collisions__", "kind": "canon_nonconform_meta",
+                    "status": "META", "source": f"{excluded} variant(s) excluded as real path components"})
+    return entries
+
+
 def channel_lambdas() -> list[dict]:
     path = WS / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
     d = json.loads(path.read_text(encoding="utf-8"))
@@ -97,7 +138,8 @@ def main() -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     channels = {"tools": channel_tools(), "projects": channel_projects(),
-                "terms": channel_terms(), "lambdas": channel_lambdas()}
+                "terms": channel_terms(), "lambdas": channel_lambdas(),
+                "canon_nonconform": channel_canon_nonconform()}
     lexicon = [e for entries in channels.values() for e in entries]
     (out_dir / "lexicon.json").write_text(
         json.dumps({"built": stamp, "entries": lexicon}, indent=1), encoding="utf-8")

@@ -164,8 +164,8 @@ def build_edges(rows: list[dict]) -> tuple[dict, dict]:
     known_roots = {p.split("/", 1)[0] for p in population if "/" in p}
 
     for row in rows:
-        src, fclass, charter = row["path"], row["class"], row["charter"]
-        if fclass not in ("EXEC", "REG", "DOC") or charter in ("EXCLUDED",):
+        src, fclass = row["path"], row["class"]
+        if fclass not in ("EXEC", "REG", "DOC") or row["handling"] == "EXCLUDE":
             continue
         if fclass == "RECORD":
             continue
@@ -295,11 +295,13 @@ def main() -> int:
         for row in marked_rows:
             h.write(json.dumps(row) + "\n")
 
+    with (scan_dir / "edges.jsonl").open("w", encoding="utf-8", newline="\n") as h:
+        for src in sorted(edges):
+            h.write(json.dumps({"src": src, "dst": sorted(edges[src])}) + "\n")
     n_live = sum(1 for r in marked_rows if r["reach_from_root"])
-    protected = {"APPEND_ONLY_RECORD", "DOCTRINE", "PROTECTED_LIVE_CORE", "EXCLUDED"}
-    charter_of = {r["path"]: r["charter"] for r in rows}
+    handling_of = {r["path"]: r["handling"] for r in rows}
     unmarked_scoreable = [r["path"] for r in marked_rows if not r["reach_from_root"]
-                          and charter_of[r["path"]] not in protected]
+                          and handling_of[r["path"]] == "SCORE"]
     print(f"[edges] sources {stats['sources_scanned']} -> import {stats['import_edges']} "
           f"+ path {stats['path_edges']} + invoke {stats['invoke_edges']} edges; "
           f"oversize skipped {stats['oversize_skipped']}, ambiguous basenames skipped "

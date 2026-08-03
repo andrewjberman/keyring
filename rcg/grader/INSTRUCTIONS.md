@@ -2,10 +2,10 @@
 
 ## EPISTEMIC STATUS (R-0010 -- mandatory on every claim in every evidence card)
 Every qualification carries exactly one flag:
-- **observed**  -- deterministically qualified, structural (mark.py verdicts, feature
+- **OBSERVED**  -- deterministically qualified, structural (mark.py verdicts, feature
   values, seed labels derived from declared-dead headers)
-- **assessed**  -- an agent made a semantic qualification (every stage-D proposal)
-- **ratified**  -- a human confirmed it (stage-F only; nothing else may claim it)
+- **ASSESSED**  -- an agent made a semantic qualification (every stage-D proposal)
+- **RATIFIED**  -- a human confirmed it (stage-F only; nothing else may claim it)
 A grader proposal is ASSESSED by definition and can never self-promote. Model scores are
 observed (the number) wrapping assessed (the training labels' provenance) -- cite both.
 
