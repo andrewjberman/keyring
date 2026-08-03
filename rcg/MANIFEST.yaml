@@ -1,0 +1,41 @@
+# rcg/MANIFEST.yaml -- THE folder contract (NFRA_REPOCOHERENCEGRAPH PRD s.12)
+# INTENT source for the folder-cleanliness gate: the tracked tree under rcg/ must be a SUBSET
+# of allowed_paths (allowlist ceiling -- a listed-but-absent file is fine; an unlisted present
+# file is a DENY). Checker: rcg/bin/manifest_check.py (standalone; commit-chain wiring is a
+# CTO act, ferried). Any genuine addition amends THIS file in the SAME commit.
+# Andrew-direct 2026-08-03: "it is IMPERATIVE that folder is kept immaculately clean; should
+# be strict rules on writes and edits so that it does not become victim to the same sprawl."
+version: 1
+writer_lane: 4.0.0_SA_CRO   # single-writer; .owned-paths grant is a ferry item (SoD -- grantor commits)
+allowed_paths:
+  - rcg/MANIFEST.yaml
+  - rcg/.gitignore
+  - rcg/charters.yaml
+  - rcg/rulings/RULINGS.jsonl
+  - rcg/ledger/DISPOSITIONS.jsonl
+  - rcg/ledger/LABELS.jsonl
+  - rcg/ledger/MODEL_EVAL.jsonl
+  - rcg/grader/INSTRUCTIONS.md
+  - rcg/workflows/W1_REVIEW_PREP.md
+  - rcg/workflows/W2_POST_REVIEW.md
+  - rcg/bin/manifest_check.py
+  # P1 engine (planned members -- allowlist ceiling, not yet present):
+  - rcg/bin/scan.py
+  - rcg/bin/mark.py
+  - rcg/bin/features.py
+  - rcg/bin/lexicon.py
+  # P2 loop (planned):
+  - rcg/bin/model.py
+  - rcg/bin/packet.py
+  - rcg/bin/post_review.py
+append_only:
+  - rcg/rulings/RULINGS.jsonl
+  - rcg/ledger/DISPOSITIONS.jsonl
+  - rcg/ledger/LABELS.jsonl
+  - rcg/ledger/MODEL_EVAL.jsonl
+local_only:            # gitignored via rcg/.gitignore; measurements are ephemeral, decisions durable
+  - rcg/scans/
+  - rcg/models/
+rules:
+  - no-satellite-prose: analyses/notes become ledger entries or are not committed
+  - manifest-amends-in-same-commit: an addition without a manifest row in the same commit is a DENY
