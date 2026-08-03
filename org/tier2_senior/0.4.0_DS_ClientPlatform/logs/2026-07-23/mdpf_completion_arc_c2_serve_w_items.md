@@ -38,7 +38,10 @@ re-emits), 1 deploy-completion ledger opened+closed, ~10 Andrew-direct rulings e
    extension; the $124M frontier-absence question grounded as the designed band-coverage rule,
    fixed UPWARD through the production path). Count meta made self-describing @c29fbc7b2.
 7. **Convention PRD (@e1d525341, CTO) work items landed same-night:** W-2b three-quantity
-   convention in the COT artifacts (frontier total $458,189,558.77 / model $124,376,009.73 /
+   convention in the COT artifacts (frontier total ~~$458,189,558.77~~ **[SUPERSEDED
+   2026-08-03 @387fa87c90: KNOWN-WRONG as an anchor -- naive relationship-grain
+   double-count +$205,070.77; collapsed truth $457,984,488.00; both tie legs shared the
+   derivation]** / model $124,376,009.73 /
    non_model $333,813,549.04 all MEASURED, identity 0 violations, provenance-inheriting balance)
    @bb3267fa5; W-6 bell-curve (the fold was IN the numbers -- under-telling meta, third instance;
    in-band cottonwood_fold marker + republish to the DE-pinned legacy key, pre-overwrite bytes
