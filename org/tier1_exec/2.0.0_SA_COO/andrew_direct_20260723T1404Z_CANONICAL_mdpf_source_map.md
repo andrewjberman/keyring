@@ -244,7 +244,7 @@ CONFIRMED as DS's design (known-zero = presence). COO re-verifies Tier-A/B again
 
 ## >>> COUNTER-SIGN STOPPED THE LINE @~18:0xZ -- SERVE-BLOCKING COT-MODEL DEFECT (source-confirmed) <<<
 COO full co-sign against the re-walked table caught it in the SERVED WINDOW, PRE-SERVE: **cottonwood_bd_models @07-22
-= $458,178,642.78 = the TOTAL HOLDINGS ($458,189,558.77), not the model overlay (~$124M).** Global inflated to
+= $458,178,642.78 = the TOTAL HOLDINGS (~~$458,189,558.77~~ [SUPERSEDED 2026-08-03 @387fa87c90 by 0.4.0_DS per ADHOC.0722-tie TO: the figure is the naive double-counted sum, +$205,070.77 relationship-grain; collapsed truth $457,984,488.00 -- the COMPARISON this line makes still holds, the anchor value itself must not be cited as verified]), not the model overlay (~$124M).** Global inflated to
 **$2,285,478,797.47 (~$2.29B)** -- the entire +$333.8M jump from ~$1.95B is this ONE leg. MECHANISM (source-confirmed,
 I read the DDB source_field + both parquets): the emitter's `fact_model_assignment JOIN fact_holdings on
 externalId==AccountID` was UNFILTERED -- all 911 rebalancer accounts (incl. an "Implementation Default Account"),
