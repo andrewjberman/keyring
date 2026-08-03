@@ -41,6 +41,17 @@ inputs the moment they accrue.**
 - **comp-routes**: cache-policy identity/TTL blindness @aeca48e395 RE-CONFIRMED by ~F's T3.A
   (worked around on live `get-distribution-config`; DESIRED/APPLIED agreed 25=25 this
   instance) (CTO 210613Z). Existing register entry stands, now with a live workaround record.
+- **comp-estate (c) + CROSS-TOOL — mdpf freshness family is PHANTOM in the shared census**
+  (CTO 212228Z; evidence `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_GLOBAL_T1A/`
+  @389c528ddb, instrument_drift block): the mdpf chain prose describes `mdpf-freshness-checker`
+  (Lambda + cron rule + alarm); T1.A measured ALL THREE absent live (ResourceNotFoundException,
+  passing positive control) and absent from the 07-29 trigger-map baseline. epistemic_status:
+  OBSERVED. **Cross-tool corollary (OBSERVED this session): comp-blast's graph carries the same
+  phantom — a NOT-FOUND probe tonight offered `lambda:mdpf-freshness-checker` as a near-match
+  candidate — so the defect sits in the SHARED estate census/snapshot layer, and any re-dial
+  should target the census producer, not each tool's rendering.** Context (ASSESSED): the
+  described instrument is of the class the 2026-07-28 moratorium bans building — the prose
+  likely predates the moratorium; the map describes an instrument that was legislated away.
 
 ## comp-blast carry-forward (from the unclosed 07-31 dial — for whoever closes it)
 
