@@ -10,12 +10,15 @@
       "date": "2026-08-03"
     }
   ],
-  "status": "active",
-  "phase": "Phase 2: SERVE HEALED at true T-1 2026-07-31 (W4 recovery publish 16:10Z, CVO witness PASS x7 values-read @b16913d35e; ETag ada142139b). W1 complete-as-superseded (07-30 target was content-refuted garbage; W4 achieved the intent at a better target). W2 code deployed live yang-v2.4.17, passing leg CLOSED via the recovery publish; failing-direction battery pending CVO witness. W3 code committed b48785adad, deploy pending. W5 (rollback picker hex-sort) + W6 (client-cache invalidation) ordered off CVO's Andrew-direct audit @30a13b89b1, GOs out.",
-  "blocking": "W6 mechanical exercise + W8 scratch session (handle_rollback entry, CVO witness, scratch env held); W9 TTL hardening at AE~F; W6+W8 live legs ride next genuine rollback occasion. W2 WITNESSED-COMPLETE @9ba99fcb5c; W3/W5 deployed+accepted; trace doc @f0ee7c588.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE 2026-08-03 on Andrew-direct closeout (COO terminal ~1750Z, VERBATIM: \"WE can closeout this project, everything looks good for data refresh and the associated paths/lambdas/etc, visual smoke passes, make sure all TOs related are marked as completed including any registry entriues\"). FULL ARC, one day: regression found live (@99c3e50a36, portal serving 07-27 after silent last-writer-wins clobber) -> spec + W1-W4 ordered (CVO CONDITIONAL->UNCONDITIONAL GO) -> W1 superseded @1ab18def94 (07-30 target content-refuted; 07-27 was Andrew own rollback) -> W4 recovery 16:10:24Z through the NEW W2 guard (serve at true T-1 07-31, CVO values-read x7 @b16913d35e) -> W2 monotonic guard LIVE yang-v2.4.17, battery 4-of-4 CVO-witnessed @9ba99fcb5c -> W3 skip-visibility LIVE data-refresh-v2.4.0 -> W5 picker recency fix LIVE v2.5.0 -> W6 client-cache invalidation on PROD (portal-v2.1.155, CI 30837075543) -> W8 rollback force_publish plumbing LIVE v2.6.0 + yang-v2.4.18, 3-leg scratch exercise per CVO ruling -> W9/W9b edge-cache TTL hardening (policies agree with stamps: 300s + 60s, dual-regime authenticated PROD proof). W7 stood down unordered (Yang removed the offending Short Term portfolio at Bloomberg -- race solved at source, Andrew-direct ~1705Z, work sustained through fix per same ruling). RESIDUAL non-blocking legs ride the next genuine rollback occasion per spec 5c (W6-full + W8-traversal live exercise) -- PENDING-LIVE-OCCASION, tracked by COO, does not reopen this project. Producer-defect postmortem datum (2025-12-31 pkl same dup-labels class) banked in W4 record. Instrument follow-ups (R4-A trigger fix, sweep fix at 0.8.0~B; CF coverage gaps in CVO register) are OUTSIDE this project scope and continue on their own tracks.",
+  "blocking": "None",
   "created": "2026-08-03",
-  "pods": ["0.2"],
+  "pods": [
+    "0.2"
+  ],
   "pipeline": "yang-pipeline, data-refresh",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-08-03"
 }

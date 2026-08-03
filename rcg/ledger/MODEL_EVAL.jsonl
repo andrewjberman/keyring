@@ -1,0 +1,1 @@
+{"id": "E-0000", "date": "2026-08-03", "type": "genesis", "note": "append-only from this line; eval entries per cycle: {id,date,scan,cycle,model_version,prospective_precision_recall_per_class,calibration,grader_agreement,controls:{planted,passed},feature_importance_top,quarantined:bool}"}

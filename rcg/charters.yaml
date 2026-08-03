@@ -1,0 +1,63 @@
+# rcg/charters.yaml v1 -- per-root lifecycle grammars + the mark-and-sweep ROOT SET
+# (NFRA_REPOCOHERENCEGRAPH PRD s.5.1, s.8). Charters are a categorical feature AND a hard
+# override: protected charters are inventoried, never scored, never swept.
+version: 1
+charter_values: [LIVE_CODE, GOVERNED_REGISTRY, DOCTRINE, APPEND_ONLY_RECORD,
+                 WORKPRODUCT_ARCHIVE, SCRATCH, PROTECTED_LIVE_CORE, DATA_TREE, EXCLUDED]
+
+root_set:   # marking grows from here; vintage-weighted (the unmarked never confer life)
+  - CLAUDE.md
+  - org/XXX.md
+  - .claude/                       # skills, settings, hooks
+  - .tools/                        # + ~/bin forwarders resolve here
+  - org/mcp/server.py
+  - org/mcp/inbox-watch.sh
+  - infra/aws/lambda/ci/lambda-source-map.json   # -> every mapped Lambda tree
+  - infra/aws/terraform/           # TF tree
+  - .github/
+  - org/projects/                  # active-status JSONs only (status==active filter in mark.py)
+  - MEMORY.md                      # + memory frontmatter recall set
+  # registries consumed by live tools join the root set from the cycle-0 comp-tools map output
+
+charters:
+  # sub-scan: org (12,738 files at commissioning)
+  org/:                             { charter: WORKPRODUCT_ARCHIVE }   # residual default; overrides below
+  org/mcp/:                         { charter: LIVE_CODE }
+  org/modules/:                     { charter: GOVERNED_REGISTRY }     # incl. the registry-generation pileup (named cleanup target)
+  org/projects/:                    { charter: GOVERNED_REGISTRY }
+  "org/*/logs/":                    { charter: APPEND_ONLY_RECORD }    # protected: session-log history
+  "org/**/logs/":                   { charter: APPEND_ONLY_RECORD }
+  org/mcp/inbox/:                   { charter: APPEND_ONLY_RECORD }    # message residue incl. 36 known-dead flat dirs (sweep candidates come from a RULING, not a score)
+  "org/**/task_orders/":            { charter: APPEND_ONLY_RECORD }
+  "org/**/handoffs/":               { charter: APPEND_ONLY_RECORD }
+  org/tier0/ledger/:                { charter: APPEND_ONLY_RECORD }
+  org/audit/:                       { charter: APPEND_ONLY_RECORD }
+  # sub-scan: infra (7,956)
+  infra/:                           { charter: LIVE_CODE }
+  infra/system/ontology/:           { charter: GOVERNED_REGISTRY }     # canon + substrate + residue side by side -- prime P3-adjacent target
+  # sub-scan: data (1,820) -- FIRM FENCE: no cohort spans bd/cot/inf
+  data/:                            { charter: DATA_TREE }
+  # sub-scan: docs (1,366)
+  docs/:                            { charter: WORKPRODUCT_ARCHIVE }
+  docs/doctrine/:                   { charter: DOCTRINE }              # protected
+  docs/references/:                 { charter: APPEND_ONLY_RECORD }    # incident history
+  docs/architecture/:               { charter: GOVERNED_REGISTRY }     # PRDs: canonical-vs-superseded is the P3 question, adjudicated not swept-by-score
+  # protected core + misc roots
+  .tools/:                          { charter: PROTECTED_LIVE_CORE }   # never in a sweep queue in v1; cycle-0 maps it first
+  .claude/:                         { charter: PROTECTED_LIVE_CORE }
+  memory/:                          { charter: DOCTRINE }              # auto-recall store; own load semantics
+  rcg/:                             { charter: GOVERNED_REGISTRY }     # self; MANIFEST-gated
+  portal/:                          { charter: EXCLUDED }              # own repo, own process (v1 exclusion, Andrew-defaulted)
+  tools/:                           { charter: SCRATCH }               # PROVISIONAL -- the tools/-vs-.tools/ collision is scan_misc's first adjudication specimen; charter flips on that verdict
+  deck_generation/:                 { charter: WORKPRODUCT_ARCHIVE }
+  research_transcripts/:            { charter: GOVERNED_REGISTRY }     # OPAL_ALTRESEARCH corpus: raw immutable, structured canonical
+  timeseries/:                      { charter: SCRATCH }               # PROVISIONAL small-root cohorts:
+  research/:                        { charter: SCRATCH }               #   whole-cohort dispositions at scan_misc;
+  models/:                          { charter: SCRATCH }               #   SCRATCH here means "unadjudicated orphan root",
+  users/:                           { charter: SCRATCH }               #   NOT pre-judged cruft -- the two-axis verdict decides
+  workflows/:                       { charter: SCRATCH }
+  etf_netassets_watch/:             { charter: SCRATCH }
+  tests/:                           { charter: LIVE_CODE }
+  lib/:                             { charter: LIVE_CODE }
+  security/:                        { charter: GOVERNED_REGISTRY }
+  design/:                          { charter: WORKPRODUCT_ARCHIVE }
