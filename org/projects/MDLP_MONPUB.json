@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1: CVO CONDITIONAL GO folded (verdict 145054Z @f4ab1ae778 -- W2 build-before-publish amendment + W1 estate probe + 2 recorded residuals + W3 Choice-state widening). TOs W1-W4 pending, GOs issued; W1 (stop-the-bleed re-publish) is the P0.",
-  "blocking": "DS/DT_PortfolioAnalytics not live -- spawn request at MSTR; GO mail queued in their inboxes",
+  "phase": "Phase 2: SERVE HEALED at true T-1 2026-07-31 (W4 recovery publish 16:10Z, CVO witness PASS x7 values-read @b16913d35e; ETag ada142139b). W1 complete-as-superseded (07-30 target was content-refuted garbage; W4 achieved the intent at a better target). W2 code deployed live yang-v2.4.17, passing leg CLOSED via the recovery publish; failing-direction battery pending CVO witness. W3 code committed b48785adad, deploy pending. W5 (rollback picker hex-sort) + W6 (client-cache invalidation) ordered off CVO's Andrew-direct audit @30a13b89b1, GOs out.",
+  "blocking": "W6 mechanical exercise + W8 scratch session (handle_rollback entry, CVO witness, scratch env held); W9 TTL hardening at AE~F; W6+W8 live legs ride next genuine rollback occasion. W2 WITNESSED-COMPLETE @9ba99fcb5c; W3/W5 deployed+accepted; trace doc @f0ee7c588.",
   "created": "2026-08-03",
   "pods": ["0.2"],
   "pipeline": "yang-pipeline, data-refresh",

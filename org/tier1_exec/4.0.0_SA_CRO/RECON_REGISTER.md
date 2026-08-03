@@ -22,6 +22,7 @@ directory an engagement's artifacts live in.
 | **RCN-0001** | 2026-07-21 | **Black Diamond** (SS&C/Advent) — Cottonwood Capital Advisors tenant | 3 (teardown, roadmap, build spec) | 8 HAR captures + 4 CSV exports | `0.4.0_DS_ClientPlatform~Z` | **DELIVERED** — downstream build HELD at CTO registration |
 | **RCN-0002** | 2026-07-22 | **Orion Advisor Solutions** — Opal-accessible tenant | 2 (teardown, BD×Orion structural comparison) | 2 HARs (1 truncated) + public API docs + Eclipse OpenAPI | `4.0.0_SA_CRO` | **DELIVERED** |
 | **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
+| **RCN-0004** | 2026-08-03 | **The Opal repo itself** — Repo Coherence Graph (NFRA_REPOCOHERENCEGRAPH): knowledge-plane debt cleanout spec | 1 (implementation PRD) + project registration | Andrew's RCG proposal docx (326 paras) + the NFRA_VELOCITY record (program, 2 PRDs, type dictionary, constitution, contracts folder, 3 CVO logs) + repo census (25,273 tracked files) + 4 Andrew design rounds | `4.0.0_SA_CRO` | **DELIVERED** — spec staged for Andrew review; build HELD at CTO arch-gate + COO decomposition |
 
 ---
 
@@ -258,3 +259,57 @@ did not exercise risk-stats or after-tax screens, and BD is **not** scored as la
 - **NFRA_AKPIPE registered** (`org/projects/NFRA_AKPIPE.json`, active, phase = spec-landed pre-build). Build/deploy **HELD at CTO program registration + arch-gate**; COO staffs the cloud + content/NLP lanes. CRO proposes owners, dispatches nothing.
 - **Broadcast** to CTO + COO + MSTR 2026-07-23 ~19:16Z (the Andrew-direct decisions verbatim + the standing egress grant).
 - **Dependency exercised:** the `.owned-paths` 4.0.0 project-registration grant (LD-0331, line 556 — org/projects/*.json + REGISTRY, scoped) — first use.
+
+---
+
+## RCN-0004 — The Opal repo itself: Repo Coherence Graph implementation spec (NFRA_REPOCOHERENCEGRAPH)
+
+| Field | Value |
+|---|---|
+| **Target** | The ajb_workspace repo (knowledge plane) — 25,273 tracked files at commissioning |
+| **Date** | 2026-08-03 |
+| **Commissioned** | Andrew-direct at the CRO terminal, four design rounds, culminating: *"please write a detailed spec that covers the final version of what we have designed here including an implementation schedule that feeds into and informs the NFRA_VELOCITY project"* |
+| **Owner** | `4.0.0_SA_CRO` |
+| **Source document** | `C:\Users\AndrewBerman\Downloads\Repository Coherence Graph Proposal.docx` (Andrew, 2026-08-03; 326 paragraphs extracted) |
+
+### Evidence basis + denominators
+
+The proposal docx (full extraction, scratchpad) · the NFRA_VELOCITY record read at source
+(PROGRAM + CORE/ESTATE PRDs + TYPE_DICTIONARY + INTENT_DENOMINATOR_SYNCHRONIZATION + the
+core_nfra_velocity contracts folder + CVO logs @e2218a106f @fa505d4cff @e661f608cc) · live repo
+census (git ls-files, per-root counts printed in the PRD §0) · prior-art absence measured
+("coherence graph"/"behavioral fingerprint"/"Repository Coherence" = 0 hits, 24,715 of 26,710
+files scanned, comp-grep on-rails).
+
+### Artifacts
+
+| Artifact | Path |
+|---|---|
+| Implementation PRD (staged for CTO landing) | `org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_REPOCOHERENCEGRAPH_PRD_20260803.md` |
+| Project record | `org/projects/NFRA_REPOCOHERENCEGRAPH.json` + REGISTRY row |
+
+### Findings that carried
+
+1. **The RCG proposal and NFRA_VELOCITY are the two halves of Andrew's own INTENT/FRICTION
+   ruling arriving from opposite directions** — RCG is a friction/discovery instrument with no
+   intent side; VELOCITY is an intent/adjudication system starved on discovery over the
+   uncontracted complement. Composed, each covers the other's named gap.
+2. **ACTIVE is a computation, RELEVANT is a judgment** — mark-and-sweep GC over a typed
+   reference graph (with governance citations as first-class edges: prose is runtime in this
+   org) computes ACTIVE exactly; ML is spent only on the RELEVANT margin, with Andrew's cohort
+   ratifications as the only label source and the ratified active core as the semantic anchor.
+3. **The 2x2's off-diagonals are where the risk lives:** ACTIVE+NOT-RELEVANT (load-bearing
+   legacy — migrate, never archive) and NOT-ACTIVE+RELEVANT (doctrine/logs/rollback levers —
+   the quadrant mechanical cleanup destroys). Only NOT-ACTIVE+NOT-RELEVANT is cleanup.
+4. **RCG dispositions reuse VELOCITY's ratified `lifecycle_class`** — the spring cleaning IS the
+   type system's first mass population; a parallel vocabulary would commit the forked-vocabulary
+   class the VELOCITY record itself names as instrumentless.
+
+### Downstream
+
+- **NFRA_REPOCOHERENCEGRAPH registered** (active, P0 = spec staged, awaiting Andrew review + GO).
+  Build HELD at CTO arch-gate + COO decomposition; CRO proposes owners, dispatches nothing.
+- **NFRA_VELOCITY suspension (temporary, On-Hold + open-work ledger) triggers at RCG P0** —
+  Andrew-direct; execution of the suspension record is CTO/COO's.
+- **The VELOCITY granular redesign is explicitly downstream** of the RCG hand-off (Andrew: *"we
+  will cover that after"*).
