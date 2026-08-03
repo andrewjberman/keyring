@@ -88,13 +88,14 @@
       "gate": "Synthetic unclassified-member control must go loud, not silently fall into non_model."
     }
   ],
+  "decomposition": "PRD Addendum C s.C.4 (2026-08-03, Andrew-direct request): tasks cut into surgical workstreams T1.A/B/C, T2.A/B/C, T3.A/B, T4.A, T5.A/B -- each with objective machine-checkable acceptance, typed evidence, dependency spine (censuses parallel -> T2.B ruling -> implementation -> CANON PROVEN -> T5.B kills), and suggested lanes. COO owns lane assignment + TO authoring from that table. CODE-STORE RULING (Andrew-direct 2026-08-03 ~19:25Z, verbatim in memo-doc s.4): firm-specific runner code lives in that firm's bucket at a canonical location+format -> workstream T1.B; consolidated-runner extension (opal-data-assets/code/) is CTO-proposed.",
   "execution_tasks_20260803": [
     {
       "id": "T1",
       "name": "Route + trigger canon; Cottonwood on-pattern",
       "status": "not_started",
       "grounding": "mdpf-daily-refresh-trigger ScheduleExpression=None ENABLED (live 08-03); cottonwood = cron(0 2) event-chain via cot-bd-session-trigger, absent from underscore platinum plane",
-      "gate": "Every MDPF ingest/publish leg on the canonical opal-data-assets route with a dedicated schedule; event dependencies demoted to accelerators (NEVER#4)."
+      "gate": "Every MDPF ingest/publish leg on the canonical opal-data-assets route with a dedicated schedule; event dependencies demoted to accelerators (NEVER#4). Workstreams T1.A census / T1.B code-store canon (Andrew ruling 08-03: firm runner code -> firm bucket, canonical location+format) / T1.C cottonwood parity -- acceptance in PRD s.C.4."
     },
     {
       "id": "T2",
