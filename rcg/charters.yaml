@@ -48,7 +48,8 @@ charters:
   memory/:                          { charter: DOCTRINE }              # auto-recall store; own load semantics
   rcg/:                             { charter: GOVERNED_REGISTRY }     # self; MANIFEST-gated
   portal/:                          { charter: EXCLUDED }              # own repo, own process (v1 exclusion, Andrew-defaulted)
-  tools/:                           { charter: SCRATCH }               # PROVISIONAL -- the tools/-vs-.tools/ collision is scan_misc's first adjudication specimen; charter flips on that verdict
+  tools/tax_sma/:                   { charter: LIVE_CODE }             # MEASURED live (cycle-0): cited by the live tax-pt1/2/3 skills -- tools/ is MIXED, not dead wholesale
+  tools/:                           { charter: SCRATCH }               # residual PROVISIONAL -- non-tax_sma remainder is scan_misc's adjudication specimen
   deck_generation/:                 { charter: WORKPRODUCT_ARCHIVE }
   research_transcripts/:            { charter: GOVERNED_REGISTRY }     # OPAL_ALTRESEARCH corpus: raw immutable, structured canonical
   timeseries/:                      { charter: SCRATCH }               # PROVISIONAL small-root cohorts:
