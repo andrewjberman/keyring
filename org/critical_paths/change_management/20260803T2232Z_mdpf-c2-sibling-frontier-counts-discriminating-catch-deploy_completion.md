@@ -12,7 +12,9 @@
 | CORRUPTED body (stubbed reader returning unparseable bytes; zero S3 writes) | **silent `{}` with the WARN saying "absent"** — the defect: a parse failure wearing the absence label | **raises** `RuntimeError: C2-SIBLING FAIL-LOUD: staged account_dist 49financial UNPARSEABLE ... (JSONDecodeError...)`, `__cause__: JSONDecodeError` |
 | SUCCESS (real `49financial` staged read) | sha256 `44136fa355b3...` | sha256 **IDENTICAL** |
 
-Raise path = the same traced per-stage surface as C2 (caller `:1901`-class in the global build → main → rc≠0 → dispatch → `STAGE6-REVAMP status=error`).
+**Raise path — traced FRESH for THIS call site (C2b acceptance: not inherited from C2):** the three call sites (`:884` build_49f_artifact, `:1109` build_inflection_artifact, `:1927` build_global_artifact @72cd1a7860) sit in functions containing **zero** try/except statements (scanned spans `:794-1080`, `:1072-1180`, `:1741-2000`); `main` has no enclosing try (C2 trace, same structure) → rc≠0 → dispatch `|| return 1` → `STAGE6-REVAMP status=error`. All three sites reach the per-stage surface.
+
+**TO reconciliation:** this work executed 22:29–22:32Z on CTO's direct ruling (222834Z to this seat) and CROSSED with the formal `MDPF_GLOBAL.C2b` TO @1d62ca44db (COO GO 22:31:37Z, citing the CTO→COO grant record 222901Z). Same ruling, two message IDs — commit @72cd1a7860 cites 222834Z; this ledger carries both. TO flipped pending; every C2b acceptance item is satisfied by the work above including the discriminating pair with the corruption leg shown failing on pre-fix code.
 
 ## Verification
 
