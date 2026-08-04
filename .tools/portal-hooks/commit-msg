@@ -1,0 +1,157 @@
+#!/bin/bash
+# Portal commit-msg hook -- SURFACE_ACK AUTO-APPEND (CTO-ratified gate 2026-08-04; built 0.2.0_DT).
+#
+# THE SEAM THIS CLOSES (incident 2026-08-04, portal CI run 30880062845): the local ack channel is
+# the SURFACE_ACK env var (audited to org/surface-check-ack-audit.log by the checker in the
+# pre-commit hook); the CI backstop's ack channel is a COMMIT-MESSAGE line matching its exact sed
+#   s/^[[:space:]]*SURFACE_ACK:[[:space:]]*//p
+# Nothing tied the two channels: a correctly-authorized, correctly-audited ack whose message line
+# read 'SURFACE_ACK justification: ...' was INVISIBLE to the backstop, which failed RED on
+# authorized work (cost: a blocked PROD promote). This hook makes ONE AUTHORING ACT feed BOTH
+# channels: when SURFACE_ACK is set at commit time, the canonical line is appended MECHANICALLY,
+# then verified with the CI's OWN pattern -- the control lives on the retrieval (the backstop's
+# exact sed, never a lookalike regex).
+#
+# Fix shape (CTO 052038Z, ratified): AUTO-APPEND, not verify-and-refuse -- authors never need to
+# know the CI's format; the knowledge gap that produced the instance cannot recur.
+# --no-verify BYPASSABLE like every local hook; portal CI stays the non-bypassable backstop, and
+# this hook must never weaken what the backstop refuses (it only makes the backstop SEE the ack).
+#
+# Source of truth: <workspace>/.tools/portal-hooks/commit-msg (parent repo). Installed into
+# portal/.git/hooks/commit-msg by .tools/portal-hooks/install.sh (portal/.git/hooks not committed).
+# Rule 16: sed / head / printf / mktemp / rm only (Git Bash 3.6.7 defaults). ASCII only. bash-3 safe.
+
+# The CI's EXACT extraction pattern (portal .github/workflows/surface-check.yml). This sed IS the
+# contract: any change to the workflow's pattern must land here in the same change, and vice versa.
+CI_SED='s/^[[:space:]]*SURFACE_ACK:[[:space:]]*//p'
+
+extract() {
+  # extract <file> -> first CI-parseable ack reason (empty if none)
+  sed -n "$CI_SED" "$1" | head -1
+}
+
+# ---------------------------------------------------------------------------------------------
+# --selftest: leg-2 fixtures, both directions, no repo mutation. Run by hand:
+#   bash .tools/portal-hooks/commit-msg --selftest
+# ---------------------------------------------------------------------------------------------
+if [ "$1" = "--selftest" ]; then
+  FAIL=0
+  T="$(mktemp)"
+
+  # Fixture 1 (canonical direction): plain message + env -> append path yields an extractable
+  # line equal to the env reason.
+  printf 'subject line\n\nbody text\n' > "$T"
+  SURFACE_ACK="fixture-reason-1" "$0" "$T" || FAIL=1
+  GOT="$(extract "$T")"
+  if [ "$GOT" = "fixture-reason-1" ]; then
+    echo "PASS 1: append path -- appended line extracts under the CI's exact sed, equals env reason"
+  else
+    echo "FAIL 1: append path -- extracted [$GOT], wanted [fixture-reason-1]"; FAIL=1
+  fi
+
+  # Fixture 2 (the incident mutant, discriminating negative): the malformed 'SURFACE_ACK
+  # justification:' form does NOT satisfy the CI pattern on its own. This is the exact 7d544d27
+  # shape; if this ever extracts non-empty, the negative control has stopped discriminating.
+  printf 'subject\n\nSURFACE_ACK justification: some reason\n' > "$T"
+  GOT="$(extract "$T")"
+  if [ -z "$GOT" ]; then
+    echo "PASS 2: mutant form 'SURFACE_ACK justification:' does NOT extract (incident shape held as negative)"
+  else
+    echo "FAIL 2: mutant form EXTRACTED [$GOT] -- the CI pattern or this copy of it drifted"; FAIL=1
+  fi
+
+  # Fixture 3 (mutant + hook): same malformed message WITH env set -> hook appends the canonical
+  # line; extraction then sees ONLY the canonical one (the malformed line stays inert prose).
+  printf 'subject\n\nSURFACE_ACK justification: some reason\n' > "$T"
+  SURFACE_ACK="fixture-reason-3" "$0" "$T" || FAIL=1
+  GOT="$(extract "$T")"
+  if [ "$GOT" = "fixture-reason-3" ]; then
+    echo "PASS 3: hook repairs the incident shape -- canonical line appended beside inert malformed prose"
+  else
+    echo "FAIL 3: extracted [$GOT], wanted [fixture-reason-3]"; FAIL=1
+  fi
+
+  # Fixture 4 (two-story drift refused LOUD): an existing canonical line that DIFFERS from the
+  # env reason must fail the commit (rc=1), never silently pick a story.
+  printf 'subject\n\nSURFACE_ACK: a different story\n' > "$T"
+  if SURFACE_ACK="fixture-reason-4" "$0" "$T" 2>/dev/null; then
+    echo "FAIL 4: drift between message line and env reason was ACCEPTED"; FAIL=1
+  else
+    echo "PASS 4: two-story drift (message line != audited env reason) refused LOUD, rc=1"
+  fi
+
+  # Fixture 5 (idempotent): existing canonical line EQUAL to env -> no duplicate append.
+  printf 'subject\n\nSURFACE_ACK: same-reason\n' > "$T"
+  SURFACE_ACK="same-reason" "$0" "$T" || FAIL=1
+  N="$(sed -n "$CI_SED" "$T" | wc -l | tr -d ' ')"
+  if [ "$N" = "1" ]; then
+    echo "PASS 5: idempotent -- matching line not duplicated"
+  else
+    echo "FAIL 5: expected 1 canonical line, found $N"; FAIL=1
+  fi
+
+  # Fixture 6 (multiline env refused LOUD): a reason that cannot ride one message line without
+  # diverging from the audit log's one-line record is refused at authoring.
+  printf 'subject\n' > "$T"
+  if SURFACE_ACK="line one
+line two" "$0" "$T" 2>/dev/null; then
+    echo "FAIL 6: multiline SURFACE_ACK was ACCEPTED (audit/message two-story drift risk)"; FAIL=1
+  else
+    echo "PASS 6: multiline SURFACE_ACK refused LOUD at authoring"
+  fi
+
+  rm -f "$T"
+  [ "$FAIL" = "0" ] && echo "SELFTEST: 6/6 PASS" || echo "SELFTEST: FAILURES PRESENT"
+  exit "$FAIL"
+fi
+
+# ---------------------------------------------------------------------------------------------
+# Hook body (git invokes: commit-msg <msgfile>)
+# ---------------------------------------------------------------------------------------------
+MSGFILE="$1"
+
+# No ack in play -> zero-cost exit (the common path; this hook adds nothing to normal commits).
+[ -z "$SURFACE_ACK" ] && exit 0
+[ -z "$MSGFILE" ] || [ ! -f "$MSGFILE" ] && exit 0
+
+# A multiline reason cannot ride a single message line without two-story drift against the audit
+# log's one-line record -- refuse LOUD at authoring (fix: re-run with a single-line reason).
+case "$SURFACE_ACK" in
+  *"
+"*)
+    echo "SURFACE_ACK[commit-msg]: FAIL -- SURFACE_ACK is multiline; the audit log records one" >&2
+    echo "  line and the CI parses one line, so a multiline reason forks the two records." >&2
+    echo "  Re-run the commit with a single-line SURFACE_ACK reason." >&2
+    exit 1
+    ;;
+esac
+
+EXTRACTED="$(extract "$MSGFILE")"
+
+if [ -z "$EXTRACTED" ]; then
+  # AUTO-APPEND: one authoring act (the env var the checker just audited) feeds the CI channel.
+  printf '\nSURFACE_ACK: %s\n' "$SURFACE_ACK" >> "$MSGFILE"
+  EXTRACTED="$(extract "$MSGFILE")"
+fi
+
+# POST-APPEND SELF-CHECK on the CI's exact pattern. Empty extraction after an append means this
+# copy of the pattern and the append disagree -- fail LOUD, never hand the backstop a message we
+# did not verify it can read.
+if [ -z "$EXTRACTED" ]; then
+  echo "SURFACE_ACK[commit-msg]: FAIL -- appended line does not extract under the CI's exact sed." >&2
+  echo "  This hook and the CI pattern have drifted; fix .tools/portal-hooks/commit-msg." >&2
+  exit 1
+fi
+
+# TWO-STORY GUARD: the message's first canonical line must equal the audited env reason. A
+# hand-written line that tells a different story from the audit log is refused, not adjudicated.
+if [ "$EXTRACTED" != "$SURFACE_ACK" ]; then
+  echo "SURFACE_ACK[commit-msg]: FAIL -- the message already carries a canonical ack line that" >&2
+  echo "  DIFFERS from the audited SURFACE_ACK env reason. One authorization, one story:" >&2
+  echo "    message line: $EXTRACTED" >&2
+  echo "    env (audited): $SURFACE_ACK" >&2
+  echo "  Align them (or unset the stale one) and re-commit." >&2
+  exit 1
+fi
+
+exit 0

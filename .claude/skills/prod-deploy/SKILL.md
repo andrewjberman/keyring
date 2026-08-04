@@ -95,6 +95,19 @@ git merge --no-ff origin/DEV \
 # Parity gate — MUST be empty; non-empty = something is wrong with the merge
 git diff origin/DEV HEAD   # empty = OK; any output = ABORT
 
+# SEV1 HAND-CHECK ON THE MERGED TREE (COO adjudication 2026-08-04T054422Z, standing promote step):
+# when the promote touches model-portfolio / benchmark / ADVI surfaces, run comp-surface-check BY
+# HAND against the real merged result BEFORE the push and READ the output — silence is not a pass
+# (Rule 20). Extract the ack from the ACTUAL merge range with the CI's own pattern so the check
+# observes the same composition the backstop parses:
+#   ACK="$(git log --format=%B origin/PROD..HEAD | sed -n 's/^[[:space:]]*SURFACE_ACK:[[:space:]]*//p' | head -1)"
+#   SURFACE_ACK="$ACK" <workspace>/.tools/comp-surface-check check --mode blocking \
+#     --file portal/<each changed file>
+# Cite the verdict line (e.g. "SEV1 ACKNOWLEDGED ... Proceeding., rc=0") in the promote record.
+# This is the observed composition at the last reversible moment — the CI gate runs on DEV pushes
+# only, so no CI run ever evaluates the SEV1 files together with the ack for the PROD range.
+# First exercised: canonical-map promote 2d33ea2c, 2026-08-04 (ledger 20260804T0558Z).
+
 git push origin PROD       # plain push; no MSYS_NO_PATHCONV; VALGATE + tsc gate runs here
 ```
 The main `portal/` tree stays on DEV throughout — never run the merge there, and never run
@@ -112,6 +125,13 @@ The PROD push triggers `deploy.yml`: build → deploy to the server → annotate
 gh run list --branch PROD --limit 1                 # grab the run id
 gh run view <run-id> --json conclusion,status       # THE verification
 ```
+- **A "CI green" claim ENUMERATES WORKFLOWS, listed by headSha — never the branch badge or a
+  single run** (CTO-banked near-miss law, 2026-08-04). Multiple workflows run per push
+  (`gh run list --json databaseId,headSha,workflowName,status,conclusion` filtered to the exact
+  sha); one can be green while another is red on the SAME commit. Incident-as-fixture: on
+  `7d544d27`, `CI - Build & Validate` was SUCCESS while the `Surface-Check Gate` was FAILURE
+  (runs 30880062803 / 30880062845) — a promote verified on the first workflow alone would have
+  launched past a red non-bypassable backstop; it was caught only by listing runs by headSha.
 - **`gh run watch` can HANG on benign warning output** (Node 20 deprecation, cache 400) — watch
   silence is NOT a stall signal and NOT a success signal. Always confirm the final outcome via
   `gh run view --json conclusion` (DT anomaly, v2.1.121 promote 2026-06-12). `conclusion:

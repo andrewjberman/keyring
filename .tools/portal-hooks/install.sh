@@ -26,5 +26,6 @@ install_hook() {
 
 install_hook pre-push
 install_hook pre-commit   # LD-0273 Stage-1: comp-surface-check gate at the submodule boundary
+install_hook commit-msg   # SURFACE_ACK auto-append (CTO gate 2026-08-04): one authoring act feeds the audit log AND the CI-parseable message line
 
 echo "OK: portal hooks installed"
