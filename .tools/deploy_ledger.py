@@ -189,11 +189,17 @@ def _canonical_pipeline_legs(pipeline_dir: str) -> list[dict]:
                  f"(known: {sorted(core.PIPELINE_MAP)})")
     bucket, firm = core.PIPELINE_MAP[pipeline_dir]
     legs = []
-    for layer in sorted(core.VALID_LAYERS):
+    # Per-TREE layers (tree_layers), not PIPELINE_MAP x VALID_LAYERS: the union
+    # vocabulary mints phantom (tree, layer) pairs once trees stop sharing one
+    # layer set (the 2026-08-04 mdpf flip added backfill/feeders/assets_gold to
+    # the union; bd has no backfill, and mdpf's s3 prefix is code/scripts/<l>/,
+    # not code/<l>/). The tree's own (repo_home, s3_prefix) pairs are the truth.
+    # bd/inf/cot legs are byte-identical to the old cross-product.
+    for layer, (_repo_home, s3_prefix) in sorted(core.tree_layers(pipeline_dir).items()):
         legs.append({
             "id": f"{firm}-{layer}",
             "kind": "s3-prefix",
-            "target": f"s3://{bucket}/code/{layer}/",
+            "target": f"s3://{bucket}/{s3_prefix}",
             "proof_required": f"comp-pipescript deployed --pipeline {firm}-{layer} MATCH line",
             "proof": None, "closed_at": None,
         })

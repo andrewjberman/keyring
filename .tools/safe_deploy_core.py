@@ -7,6 +7,7 @@ bypass audit logging. Callable directly or importable by test_safe_deploy.py.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import pathlib
 import re
@@ -48,13 +49,19 @@ WORKSPACE = pathlib.Path(__file__).parent.parent
 # deploy_gated: True  = in the Rule-13 deploy gate (file_to_s3_target resolves;
 #                       a push DEPLOYS it). bd/inf/cot -- unchanged, byte-identical.
 # deploy_gated: False = DECLARED CHECK-ONLY. Visible to staleness sweeps, NOT a
-#                       deploy target. This is the declared-UNKNOWN sentinel
-#                       applied to gate membership: mdpf having no deploy path is
-#                       now an AUDITABLE one-line fact instead of an absence
-#                       nobody can query. Flipping mdpf to True would start
-#                       uploading on DS pushes -- a live-behavior change that is
-#                       deliberately NOT bundled here (CTO's call, not a side
-#                       effect of a record fix).
+#                       deploy target.
+# mdpf FLIPPED True 2026-08-04 on ANDREW-DIRECT (0.2.0_DS terminal ~18:4xZ,
+# verbatim record ANDREW_DIRECT_20260804_DS_RESOURCE_DEPLOYMENT_ABILITY.md; CTO
+# shape-approval 185213Z, COO 185209Z): "If you are editing these scripts you
+# need to be able to deploy them so we do not keep ending up in this situation."
+# The prior False carried an in-code note that the flip was "CTO's call" -- that
+# pending call, never made, is the mechanism under the 2026-08-04
+# committed-but-never-deployed incidents (acct-dist 12-day stale fold et al.).
+# SHARED-HOME layers (tree["shared_repo_homes"]) deploy under the S3-MEMBERSHIP
+# GUARD in main(): key-exists = update (enforced); 404 = SKIP-NOT-MEMBER, loud,
+# printing the probed key + prefix denominator (first-mints stay explicit/manual).
+# Membership is keyed on S3-KEY-EXISTENCE, never on local path -- so a repo-home
+# migration (e.g. CANRTE W-4 moving the cot slice/pair) changes NOTHING here.
 # ---------------------------------------------------------------------------
 CODE_TREES: dict[str, dict] = {
     "black_diamond": {
@@ -87,14 +94,15 @@ CODE_TREES: dict[str, dict] = {
             "bronze": ("data/cot/scripts/bronze", "code/bronze/"),
         },
     },
-    # CHECK-ONLY. Non-standard layout: preserves scripts/<layer>/ under code/,
-    # and two of its six layers are fed from data/assets/, not data/mdpf/.
-    # MDPF_COUNTS (2026-06-05) proved an mdpf script can strand stale on S3, so
-    # it must stay VISIBLE to the sweep even while outside the deploy gate.
+    # DEPLOY-GATED since 2026-08-04 (Andrew-direct; see the flip note above).
+    # Non-standard layout: preserves scripts/<layer>/ under code/, and two of its
+    # six layers are fed from data/assets/, not data/mdpf/ (shared homes -- the
+    # membership guard governs those two; the mdpf-native four deploy
+    # unconditionally like bd/inf/cot).
     "mdpf": {
         "bucket": "opal-data-mdpf",
         "label": "mdpf",
-        "deploy_gated": False,
+        "deploy_gated": True,
         # SHARED repo homes: data/assets/scripts/{gold,silver} serve MULTIPLE
         # destinations, and only a SUBSET of each is deployed to mdpf's tree
         # (3 of 7 under gold; 1 of 13 under silver, measured 2026-07-28). For a
@@ -163,9 +171,12 @@ PIPELINE_MAP: dict[str, tuple[str, str]] = {
 
 BYPASS_AUDIT_LOG = WORKSPACE / "org" / "safe-deploy-bypass-audit.log"
 
-# DERIVED -- the layer vocabulary of the GATED trees. Byte-identical to the
-# hand-written {"gold", "silver", "bronze"}. mdpf's extra layers are deliberately
-# NOT here: they are check-only and must never widen the deploy gate.
+# DERIVED -- the layer vocabulary of the GATED trees. WIDENED 2026-08-04 by the
+# mdpf flip (adds backfill/feeders/assets_gold to the union). NOTE: this is a
+# UNION vocabulary, not a per-tree fact -- crossing PIPELINE_MAP x VALID_LAYERS
+# uniformly mints phantom (tree, layer) pairs (bd has no backfill). Consumers
+# enumerate a TREE's real legs via tree_layers(name), never this cross-product
+# (deploy_ledger corrected with the flip).
 VALID_LAYERS = {
     layer
     for tree in CODE_TREES.values()
@@ -274,6 +285,71 @@ def file_to_s3_target(rel_path: str) -> Optional[tuple[str, str, str]]:
                 continue
             return tree["bucket"], f"{s3_prefix}{suffix}", tree["label"]
     return None
+
+
+def resolve_tree_layer(rel_path: str) -> Optional[tuple[str, dict, str]]:
+    """Resolve rel_path to (tree_name, tree_dict, layer_name) for deploy-gated trees.
+
+    The membership-guard companion to file_to_s3_target: the caller needs to know
+    WHICH layer matched to test `layer in tree["shared_repo_homes"]`. Same loop,
+    same first-match semantics; returns None exactly where file_to_s3_target does."""
+    norm = rel_path.replace("\\", "/")
+    if not norm.endswith(".py"):
+        return None
+    for name, tree in CODE_TREES.items():
+        if not tree["deploy_gated"]:
+            continue
+        for layer, (repo_home, _s3_prefix) in tree["layers"].items():
+            if norm.startswith(repo_home + "/") and norm[len(repo_home) + 1:]:
+                return name, tree, layer
+    return None
+
+
+def s3_key_exists(bucket: str, key: str) -> tuple[Optional[bool], str]:
+    """head-object existence probe for the shared-home membership guard.
+
+    Returns (True, "") exists / (False, "") 404 / (None, err) UNDETERMINED --
+    the caller must fail closed on None (an unreachable S3 is not a 404).
+    Uses the same aws resolution as deploy_file (the .tools shim path)."""
+    aws_bin = _find_aws()
+    if not aws_bin:
+        return None, "aws CLI not found"
+    r = subprocess.run(
+        [aws_bin, "s3api", "head-object", "--bucket", bucket, "--key", key],
+        capture_output=True, text=True, timeout=30, env=_aws_env(),
+    )
+    if r.returncode == 0:
+        return True, ""
+    if "(404)" in r.stderr or "Not Found" in r.stderr:
+        return False, ""
+    return None, r.stderr.strip()[:200]
+
+
+def s3_prefix_keycount(bucket: str, prefix: str) -> str:
+    """Best-effort member count under a prefix, for the SKIP-NOT-MEMBER audit line.
+    Single list-objects-v2 page (<=1000): honest for these code prefixes (~3-40
+    objects); labeled as page-bounded so the denominator is never read as a
+    paginated total (the CLAUDE.md length()-per-page trap)."""
+    aws_bin = _find_aws()
+    if not aws_bin:
+        return "?"
+    # MATERIALIZED count, not --query: this box's CLI v1 response carries NO
+    # KeyCount field at all (measured: keys = Contents/Prefix/RequestCharged, so
+    # `--query KeyCount` prints "None"), and a `length(Contents)` query is the
+    # CLAUDE.md per-page-length trap waiting for a >1000-key prefix. Parse the
+    # JSON, count the materialized list; the single-page bound stays labeled at
+    # the call site.
+    r = subprocess.run(
+        [aws_bin, "s3api", "list-objects-v2", "--bucket", bucket,
+         "--prefix", prefix, "--output", "json"],
+        capture_output=True, text=True, timeout=30, env=_aws_env(),
+    )
+    if r.returncode != 0:
+        return "?"
+    try:
+        return str(len(json.loads(r.stdout or "{}").get("Contents", [])))
+    except Exception:
+        return "?"
 
 
 def detect_script_files(
@@ -649,9 +725,11 @@ def main(argv: list[str]) -> int:
     print(f"safe-deploy: {len(files)} script file(s) to deploy")
     for f in files:
         target = file_to_s3_target(f)
-        layer = target[1].split("/")[1] if target else "?"   # s3_key = code/<layer>/...
+        # Full destination prefix, not code/<segment>/ -- mdpf's non-standard
+        # layout (code/scripts/<layer>/) truncated wrong under the old split.
+        dest = target[1].rsplit("/", 1)[0] + "/" if target else "?"
         author = _file_author(author_range, f)
-        print(f"  {f}  (authored by {author}) -> code/{layer}/")
+        print(f"  {f}  (authored by {author}) -> {dest}")
     print()
 
     # --allow-stale bypass (unchanged: no S3 upload happens, so nothing SERVES;
@@ -749,9 +827,40 @@ def main(argv: list[str]) -> int:
         if target is None:
             continue
         bucket, s3_key, label = target
+        tag = f"[{label}] {rel_path}"
+
+        # SHARED-HOME MEMBERSHIP GUARD (Andrew-direct flip 2026-08-04; CTO riders
+        # 185213Z). A shared repo home serves MULTIPLE destinations and only a
+        # subset belongs to this tree -- the S3 side is the authority on
+        # membership: key-exists = an UPDATE (deploy enforced); 404 = not a
+        # member (skip LOUD, printing the exact probed key + the prefix
+        # denominator so the skip is auditable against what it actually probed);
+        # any other probe outcome = UNDETERMINED (fail closed -- an unreachable
+        # S3 is not a 404). First-mints of a NEW shared-home script stay an
+        # explicit manual step. Membership keys on S3-KEY-EXISTENCE, never local
+        # path, so a repo-home migration (CANRTE W-4 class) needs no edit here.
+        rtl = resolve_tree_layer(rel_path)
+        if rtl is not None:
+            _name, tree, layer = rtl
+            if layer in tree.get("shared_repo_homes", set()):
+                exists, err = s3_key_exists(bucket, s3_key)
+                if exists is None:
+                    print(f"  ERROR  MEMBERSHIP_PROBE_FAILED  {tag}")
+                    print(f"           s3://{bucket}/{s3_key}: {err}")
+                    failed = True
+                    break
+                if exists is False:
+                    prefix = s3_key.rsplit("/", 1)[0] + "/"
+                    n = s3_prefix_keycount(bucket, prefix)
+                    print(f"  SKIP-NOT-MEMBER  {tag}")
+                    print(f"           probed s3://{bucket}/{s3_key} -> 404; "
+                          f"prefix {prefix} carries {n} member(s) (single page). "
+                          f"A NEW shared-home script first-mints explicitly, "
+                          f"never via the push gate.")
+                    continue
+
         local_path = WORKSPACE / rel_path.replace("/", os.sep)
         status, detail = deploy_file(local_path, bucket, s3_key)
-        tag = f"[{label}] {rel_path}"
         if status == "MATCH":
             print(f"  DEPLOYED  {tag}")
             deployed.append((rel_path, bucket, s3_key))

@@ -35,16 +35,27 @@ _core = importlib.machinery.SourceFileLoader(
 
 
 # ---------------------------------------------------------------------------
-# FROZEN FIXTURE -- the pre-derivation literals. DO NOT compute these.
+# FROZEN FIXTURE -- hand-written literals, never computed from the code under
+# test. RE-FROZEN 2026-08-04: the mdpf rows below changed from the original
+# 92e41ad1b3 transcription on ANDREW-DIRECT authority (0.2.0_DS terminal
+# ~18:4xZ, "If you are editing these scripts you need to be able to deploy
+# them"; CTO shape-approval 185213Z) -- the exact live-behavior change the old
+# fixture existed to refuse is now the AUTHORIZED contract. bd/inf/cot rows are
+# byte-identical to the original fixture; a divergence there is still the
+# firm-separation defect class this file guards.
 # ---------------------------------------------------------------------------
 FROZEN_PIPELINE_MAP = {
     "black_diamond": ("opal-data-bd", "bd"),
     "inf": ("opal-data-inf", "inf"),
     "cot": ("opal-data-cot", "cot"),
+    "mdpf": ("opal-data-mdpf", "mdpf"),
 }
-FROZEN_VALID_LAYERS = {"gold", "silver", "bronze"}
+FROZEN_VALID_LAYERS = {"gold", "silver", "bronze", "backfill", "feeders", "assets_gold"}
 
-# file_to_s3_target semantics as they stood before the change.
+# file_to_s3_target semantics: bd/inf/cot unchanged; mdpf resolves per its
+# declared non-standard layout (code/scripts/<layer>/, assets_* fed from
+# data/assets/). Shared-home membership (S3-key-existence) is enforced at
+# DEPLOY time in main(), not here -- resolution is deliberately lexical.
 FROZEN_TARGETS = [
     ("data/black_diamond/scripts/gold/x.py", ("opal-data-bd", "code/gold/x.py", "bd")),
     ("data/black_diamond/scripts/gold/lib/y.py", ("opal-data-bd", "code/gold/lib/y.py", "bd")),
@@ -52,11 +63,11 @@ FROZEN_TARGETS = [
     ("data/inf/scripts/gold/g.py", ("opal-data-inf", "code/gold/g.py", "inf")),
     ("data/inf/scripts/bronze/b.py", ("opal-data-inf", "code/bronze/b.py", "inf")),
     ("data/cot/scripts/silver/c.py", ("opal-data-cot", "code/silver/c.py", "cot")),
-    # CHECK-ONLY trees must NOT resolve -- registering mdpf as gated would start
-    # deploying it on push, a live-behavior change nobody authorized.
-    ("data/mdpf/scripts/gold/m.py", None),
-    ("data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py", None),
-    ("data/assets/scripts/gold/build_dim_model_portfolio.py", None),
+    ("data/mdpf/scripts/gold/m.py", ("opal-data-mdpf", "code/scripts/gold/m.py", "mdpf")),
+    ("data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py",
+     ("opal-data-mdpf", "code/scripts/backfill/build_aggregate_aua_timeseries.py", "mdpf")),
+    ("data/assets/scripts/gold/build_dim_model_portfolio.py",
+     ("opal-data-mdpf", "code/scripts/assets_gold/build_dim_model_portfolio.py", "mdpf")),
     # Undeclared layer / non-.py / out of scope.
     ("data/black_diamond/scripts/probes/p.py", None),
     ("data/black_diamond/scripts/gold/x.txt", None),
@@ -247,8 +258,14 @@ def _load_pipeline_cli():
     ).load_module()  # noqa: FWD001
 
 
-# Routing contract. Case 3 (bare id -> bd-gold) is PRESERVED BACKWARD-COMPAT, not a
-# bug -- asserted explicitly so a future reader cannot mistake it for one.
+# Routing contract. Case 3 RE-FROZEN 2026-08-04: the bare-id -> bd-gold fallback
+# this fixture previously PRESERVED was SUPERSEDED by the Andrew-direct stub
+# ruling 2026-07-30 (@64a17a77b9, extending @10d1bb29e3: a bare id returns None
+# and the caller REFUSES loud -- the silent bd default was the wrong-tree class
+# on the deploy verifier itself). This fixture went STALE for 5 days (frozen
+# 07-28, superseded 07-30, failing since) -- found + re-frozen during the
+# 2026-08-04 mdpf-flip landing; the finding is the fixture's staleness, not the
+# router.
 FROZEN_ROUTING = [
     ("data/black_diamond/scripts/gold/x.py", "bd-gold", "case1 data-dir path"),
     ("data/inf/scripts/silver/s.py", "inf-gold", "case1 data-dir path"),
@@ -256,9 +273,9 @@ FROZEN_ROUTING = [
     ("data/mdpf/scripts/gold/m.py", "mdpf", "case1 data-dir path"),
     ("data/assets/scripts/gold/build_cottonwood_mdpf_pair.py", "mdpf", "case2 cross-tree repo home"),
     ("data/assets/scripts/silver/rebalancer_schemas.py", "mdpf", "case2 cross-tree repo home"),
-    ("D_00", "bd-gold", "case3 PRESERVED bare-id backward-compat"),
-    ("dim_mdpf_aggregate_aua_timeseries.py", "bd-gold", "case3 PRESERVED bare id"),
-    ("", "bd-gold", "case3 PRESERVED empty"),
+    ("D_00", None, "case3 SUPERSEDED 07-30: bare id refuses (None), no bd default"),
+    ("dim_mdpf_aggregate_aua_timeseries.py", None, "case3 SUPERSEDED bare id"),
+    ("", None, "case3 SUPERSEDED empty"),
 ]
 
 
@@ -275,12 +292,13 @@ def test_routing_contract(results: list) -> None:
         not bad,
         "; ".join(bad),
     )
-    # The preserved case, called out on its own so it cannot be "cleaned up".
+    # The superseded case, called out on its own so the refusal cannot silently
+    # regress back to a bd default (the 07-30 stub ruling's whole point).
     _check(
         results,
-        "PRESERVED: a bare bd id still routes to bd-gold (documented backward-compat)",
-        pcli.resolve_pipeline_from_arg("D_00") == "bd-gold",
-        "the bare-id fallthrough is an interface, not a bug -- do not remove it",
+        "SUPERSEDED: a bare id returns None (caller refuses; no silent bd-gold default)",
+        pcli.resolve_pipeline_from_arg("D_00") is None,
+        "a non-None bare-id resolution reintroduces the wrong-tree silent default",
     )
 
 
