@@ -115,12 +115,17 @@ def execute_and_record(ws: Path):
     (ws / "m").write_text("batch\n", encoding="utf-8")
     run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
     sha = run(["git", "rev-parse", "HEAD"], ws).stdout.strip()
+    # APPEND a complete row -- never mutate. The ledger is append-only, and the
+    # first version of this helper REWROTE lines[-1] in place, which is exactly
+    # why the suite passed 16/16 while load_batch's first-row-wins bug made
+    # executed_commit structurally unreadable on any real ledger. A fixture that
+    # violates the contract under test cannot test the contract.
     bp = ws / "rcg" / "ledger" / "BATCHES.jsonl"
     lines = bp.read_text(encoding="utf-8").strip().splitlines()
     row = json.loads(lines[-1])
     row["executed_commit"] = sha
-    lines[-1] = json.dumps(row)
-    bp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    row["status"] = "EXECUTED"
+    bp.write_text("\n".join(lines) + "\n" + json.dumps(row) + "\n", encoding="utf-8")
     run(["git", "add", "-A"], ws)
     (ws / "m").write_text("record executed_commit\n", encoding="utf-8")
     run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
@@ -208,6 +213,52 @@ def _e1(ws):
     stage_delete(ws, BATCH)
 case("E1 missing batch ledger -> rc=3 CANNOT EVALUATE (not a pass)", 3, "CANNOT EVALUATE", _e1)
 
+
+# --- LEDGER RESOLUTION: the live shape the fixture originally could not produce.
+# A batch that is born DRAFT and RATIFIED by an APPENDED row must resolve to
+# RATIFIED. Under the original first-row-wins load_batch this denied forever, and
+# no amount of deny-case coverage could see it -- the fixture mutated rows in
+# place instead of appending, so the append-only contract was never under test.
+def _append_row(ws, **over):
+    bp = ws / "rcg" / "ledger" / "BATCHES.jsonl"
+    lines = bp.read_text(encoding="utf-8").strip().splitlines()
+    row = json.loads(lines[-1])
+    row.update(over)
+    bp.write_text("\n".join(lines) + "\n" + json.dumps(row) + "\n", encoding="utf-8")
+    run(["git", "add", "-A"], ws)
+    (ws / "m").write_text("append\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+
+def _draft_then_ratified(ws):
+    bp = ws / "rcg" / "ledger" / "BATCHES.jsonl"
+    lines = bp.read_text(encoding="utf-8").strip().splitlines()
+    row = json.loads(lines[-1])
+    row["status"] = "DRAFT"
+    lines[-1] = json.dumps(row)
+    bp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    run(["git", "add", "-A"], ws)
+    (ws / "m").write_text("draft\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+    _append_row(ws, status="RATIFIED")          # the transition, APPENDED
+    stage_delete(ws, BATCH)
+case("L1 DRAFT then APPENDED RATIFIED resolves RATIFIED (last-row-wins)", 0, "PERMIT",
+     _draft_then_ratified)
+
+def _delta_row(ws):
+    # a DELTA row (no paths) must fail LOUD, never silently inherit the earlier row
+    _append_row(ws, paths=None)
+    bp = ws / "rcg" / "ledger" / "BATCHES.jsonl"
+    lines = bp.read_text(encoding="utf-8").strip().splitlines()
+    row = json.loads(lines[-1])
+    row.pop("paths", None)
+    lines[-1] = json.dumps(row)
+    bp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    run(["git", "add", "-A"], ws)
+    (ws / "m").write_text("delta\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+    stage_delete(ws, BATCH)
+case("L2 incomplete DELTA last row -> rc=3, no silent field inheritance", 3,
+     "CANNOT EVALUATE", _delta_row)
 
 # ---------------------------------------------------------------- REVERT mode
 # The leg that was UNAUTHORABLE until R1-R4 existed. RV1 is the control that

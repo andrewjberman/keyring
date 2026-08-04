@@ -136,14 +136,55 @@ def load_labels() -> tuple[dict[str, dict], int]:
 
 
 def load_batch(batch_id: str) -> dict:
+    """Resolve LAST ROW PER ID -- the same semantics load_labels() uses.
+
+    CORRECTED 2026-08-04 (found by 4.0.0_SA_CRO on the live execution attempt).
+    This returned the FIRST matching row, which on an APPEND-ONLY ledger is
+    strictly wrong and broke the design in two places at once:
+
+      * a batch could never leave DRAFT -- an appended RATIFIED row was
+        unreachable, so C3 denied a properly ratified batch; and
+      * `executed_commit` could NEVER become readable BY CONSTRUCTION, because
+        it is appended AFTER the deletion commit. R3, and therefore the entire
+        revert leg, was unreachable on any live ledger.
+
+    Worse than either bug: this file's two ledgers had OPPOSITE resolution rules
+    -- labels last-wins (R-0022), batches first-wins -- a latent trap for every
+    future reader of either. They are now harmonized.
+
+    WHY THE 16/16 SUITE MISSED IT: the fixture MUTATED the batch row in place
+    instead of APPENDING a new one, so it never exercised the append-only shape
+    the real ledger actually has. A fixture that violates the contract under test
+    cannot test the contract. Third instance tonight of the same class -- CRO's
+    prose-vs-ledger gap, my C6/revert PERMIT gap, and now fixture-vs-live -- and
+    each one was found by running the real sequence, never by reading.
+
+    NO FIELD MERGING: the last row wins WHOLESALE and must be complete. Merging
+    would let a partial row silently inherit stale paths/sha/count from an
+    earlier one, which is precisely the kind of quiet inheritance a
+    delete-authorizing ledger must not have. An incomplete last row fails LOUD
+    below.
+    """
+    resolved: dict | None = None
+    seen = 0
     for line in show_at_head(BATCHES).splitlines():
         line = line.strip()
         if not line:
             continue
         row = json.loads(line)
         if row.get("id") == batch_id:
-            return row
-    raise CannotEvaluate(f"batch {batch_id} not found in {BATCHES} at HEAD")
+            resolved = row
+            seen += 1
+    if resolved is None:
+        raise CannotEvaluate(f"batch {batch_id} not found in {BATCHES} at HEAD")
+    if seen > 1:
+        print(f"  batch {batch_id}: {seen} rows, resolved to the LAST (append-only evolution)")
+    if "paths" not in resolved:
+        raise CannotEvaluate(
+            f"batch {batch_id}'s LAST row carries no 'paths' -- resolution is last-row-wins "
+            f"WHOLESALE with no field merging, so every appended row must be COMPLETE "
+            f"(paths + sha256 + count + status). Append a full row, not a delta.")
+    return resolved
 
 
 # ---------------------------------------------------------------- checks
