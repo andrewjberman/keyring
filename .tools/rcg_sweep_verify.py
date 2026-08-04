@@ -335,9 +335,24 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
         fail.append(f"C2 {len(extra)} path(s) deleted but NOT in the batch (unratified): "
                     + ", ".join(sorted(extra)[:5]) + (" ..." if len(extra) > 5 else ""))
     if missing:
+        # THE HINT IS LOAD-BEARING, added 2026-08-04 after it cost a live diagnosis.
+        # This gate CANNOT distinguish "the batch and the tree genuinely diverged"
+        # from "your commit only carried part of the batch" -- both present as
+        # missing paths. On B-0002 a 500-path list piped through xargs split into
+        # multiple git invocations (375/125); the gate correctly refused all three
+        # partial commits, but the message sent the operator chasing divergence
+        # theories for two rounds. A deny that names the wrong cause is a correct
+        # verdict pointing at the wrong repair.
+        hint = ""
+        if len(declared) > 100:
+            hint = (f"\n        NOTE: this batch has {len(declared)} paths. If you piped them to git, "
+                    "CHECK FOR PATHSPEC SPLITTING FIRST -- past the arg limit xargs silently splits "
+                    "into several invocations and each partial commit fails this check. Use "
+                    "`git commit --only --pathspec-from-file=<file>` (one invocation). This gate "
+                    "cannot tell a partial invocation from a real divergence.")
         fail.append(f"C2 {len(missing)} batch path(s) NOT deleted by this commit -- batch and tree "
                     "have diverged: " + ", ".join(sorted(missing)[:5])
-                    + (" ..." if len(missing) > 5 else ""))
+                    + (" ..." if len(missing) > 5 else "") + hint)
 
     # --- C8 size cap --------------------------------------------------------
     if len(deleted) > cap:

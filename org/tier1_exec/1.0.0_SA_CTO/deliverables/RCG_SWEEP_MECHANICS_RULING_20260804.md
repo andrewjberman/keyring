@@ -142,6 +142,15 @@ audit trail stays complete and one gate does not blind the other.
   folder clean as batches accumulate.
 - **No glob, ever.** The whole design rests on the path set being fixed at ratification time.
 
+**COMMIT FORM FOR LARGE BATCHES -- `git commit --only --pathspec-from-file=<file>`.** Added
+2026-08-04 after it cost a live diagnosis on B-0002: a 500-path list piped through `xargs` **silently
+splits into several `git` invocations** past the arg limit (measured: a 375/125 split). The gate
+correctly refused all three partial commits on C2 -- but **it cannot distinguish a partial invocation
+from a genuine batch/tree divergence**, so a correct verdict pointed at the wrong repair for two
+rounds. `--pathspec-from-file` is a single invocation and cannot split. B-0001's 93 paths fit in one
+invocation *by luck of size*, which is why batch 1 never surfaced it. C2's deny message now carries
+the hint for any batch over 100 paths.
+
 ## 6. The grant, and separation of duties
 
 The sweep-executor identity is **`4.0.0_SA_CRO~SWEEP`**.
