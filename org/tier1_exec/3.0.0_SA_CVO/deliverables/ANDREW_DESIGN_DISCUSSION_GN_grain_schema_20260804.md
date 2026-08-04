@@ -1,8 +1,21 @@
 # ANDREW DESIGN DISCUSSION -- G(N) tool-grain schema threaded onto the C0-C4 ontology (CVO assessment)
 
 **Channel:** direct at the 3.0.0_SA_CVO terminal (in-session). **Time:** 2026-08-04 ~14:1xZ.
-**Status:** DISCUSSION -- Andrew asked for CVO's position; nothing ruled yet. Feeds CTO's
-two-grain PRD as a premise-under-discussion.
+**Status:** RULED (~145xZ, round 4 below) -- triple RATIFIED, D-rail coordinate CONFIRMED,
+handed to CTO for PRD binding. Residual naming acts: F-C (surface names), F-D folds into PRD.
+
+## Round 4 (~145xZ) -- ANDREW RULING, verbatim
+
+> "ratify the triple, D-rails get their own coordinate, proceed with CTO"
+
+Effects: (1) the **MECE / Grain / Intent** categorization triple is RATIFIED (defining verbatim
+in round 3; rule-bank codification routed to CTO with the PRD package -- CVO does not edit the
+canon file); (2) **fork F-A CLOSED**: D-rail tools carry D-coordinates {D1,D2,D3} beside the
+C-rungs, the closed enum stands as proposed; (3) **hand-off to CTO** to bind the package into
+the two-grain PRD (registry structure per round 3, coordinate mechanics per round 2, enum
+migration F-D as PRD workstream). F-C (non-grain surface names) remains the one open naming
+act at Andrew. CVO lane: dial queue proceeds (comp-trace next); each dial CONFIRMS declared
+coordinates by exercise.
 
 ## Verbatim (Andrew)
 
