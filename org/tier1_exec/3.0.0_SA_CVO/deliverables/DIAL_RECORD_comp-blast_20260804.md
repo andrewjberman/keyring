@@ -56,7 +56,13 @@ deliberately, with a committed one-line reason.
 
 ## Residue (open, owned)
 
-- Stat-modes kuzu re-base — CTO/COO routing (from Item A).
+- Stat-modes re-base — **DISPOSED BY CTO RULING 20260804T002607Z (superseding this record's
+  "CTO/COO routing" line the same hour):** declared exception ratified INTERIM ONLY; end-state is
+  a **DECLARED TERRITORY derived from the canonical graph** (the ruling's own second clause) —
+  neither the private graph nor a naive kuzu re-base (an undefined population would be traded for
+  a wrong one). Owner: `0.7.0_AE_CloudOps~A` (volunteered). Acceptance terms: the population
+  definition is EMITTED IN the output; scores across population definitions are NOT COMPARABLE —
+  any historical series spanning the switch is re-derived, never carried forward.
 - Spec 3.5 extraction-pass absorb-or-delete — deletions RULED per P7, not taken; unchanged.
 - Two naming acts at Andrew (do not block): comp-blast formal purpose line (P1); `chain`
   reserved-term collision.

@@ -78,6 +78,13 @@ the named legal example)?** Anything else — a private, incidentally-scoped uni
 finding, not a style choice. Trigger case: comp-blast's private 2,255-node trace graph (4 bucket
 nodes) vs comp-kuzu's canonical 20,480-node DB that carried the very node blast missed.
 comp-blast specifically: MUST cover all of AWS (build routing at CTO).
+**FRAMING (CTO 20260804T003737Z, carried into every universe audit): A HAND-DRAWN REGISTRY CAN
+CONTAIN PHANTOMS; A LIVE PROJECTION STRUCTURALLY CANNOT.** The phantom mdpf-freshness-checker
+left comp-blast's universe not because anyone fixed it but because a projection from live
+canonical state cannot carry a nonexistent node — a categorical property, not a coverage
+improvement. A non-conforming tool is therefore not merely under-covered: it is CAPABLE OF
+ASSERTING RESOURCES THAT DO NOT EXIST. (Exercised proof: the phantom class now survives only in
+comp-estate's census snapshot — one named target with a known mechanism.)
 
 ## comp-blast P0-census input (measured this session, Andrew-directed opal-data-mdpf trace)
 
