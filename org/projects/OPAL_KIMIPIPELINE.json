@@ -1,0 +1,19 @@
+{
+  "project_code": "OPAL_KIMIPIPELINE",
+  "macro_code": "OPAL",
+  "name": "Kimi Semantic Vertical Pipeline",
+  "description": "The daily 9a-ET semantic-evolution vertical (estate-report / SemanticEvolution system): deterministic changed-resource compilation + Kimi K3 exec summary and semantic-prose proposals -> S3 behind a per-day manifest gate -> pipeline SUGGESTS, Andrew RATIFIES, CVO LANDS, MSTR backstops. 'Kimi Semantic Vertical Pipeline' is Andrew's standing token for the system (naming act 2026-08-04). Registered the day the pipeline went LIVE: KIMI_EMPTY reasoning-starvation fix deployed, first complete report produced (2026-08-04, 2 proposals), _EPOCH written, schedule ENABLED.",
+  "status": "active",
+  "registered": "2026-08-04",
+  "owner": "1.0.0_SA_CTO~B",
+  "authority": "Andrew-direct 2026-08-04 1745Z (no gates, execute-in-session, no COO routing) -- verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_kimipipeline_no_gates_execute_in_session_20260804.md",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_KIMIPIPELINE_PRD.md",
+      "label": "PRD v1 -- as-built + open scope",
+      "date": "2026-08-04"
+    }
+  ],
+  "phase": "LIVE + first-adjudication pending. Closed 2026-08-04: KIMI_EMPTY root-caused (two independent derivations) + fixed @95e1f0283, deploy ETag-verified, validation fire clean (manifest 2026-08-04 PENDING ai_section PRESENT 2 proposals -- first complete report ever), _EPOCH go-live flip (CVO), scheduler ENABLED @a21238059 (0-diff, tag estate-report-v1.1.0), EC2_MANIFEST id fix @3fbdd8850. Open (PRD s.4): first real adjudication w/ Andrew (RULING-5 acceptance), 08-05 first scheduled fire watch, v4 day-first migration (~B quiet window), MSTR load-check + anchor record fix, capture uploader + site-Z, day-record home consolidation.",
+  "blocking": "None -- open items are owned and sequenced; quiet-window seats named in PRD s.6."
+}
