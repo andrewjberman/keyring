@@ -144,3 +144,26 @@ re-dial executed by the verifier, all probes pipe-free rc.
   pipescript-suite-check.sh) before interpreting any discrepancy as a defect.
 
 Trigger 5 CONSUMED; re-dial CLOSED. Remaining open triggers unchanged.
+
+## F10 VERIFIED CLOSED + F11 opened -- 2026-08-04 ~1745Z
+
+**F10 CLOSED-VERIFIED (~D repair @3e2da967b, my own exercise):** (1) repaired file 3/3 green at
+HEAD; (2) enrollment BY FIRE confirmed -- WATCH_GLOBS extended at the single derivation point and
+the landing commit's own gate run fired ON the enrolled file (audit 20260804T172722Z, 7 files /
+54 passed, trigger = the enrolled file); (3) injection pattern read at source: guard MECHANISM
+tested via monkeypatched sovereign_held.SOVEREIGN_HELD_PATHS (resolved at call time), never the
+governance set; include_held_override exercised UNDER the injection; post-lift bd-READS assertion
+present. ~D's neutered-guard mutant discrimination accepted on their evidence + my structural
+read of the test.
+
+**F11 (MED, CONFIRMED by my own run -- 6 failed / 4 passed reproduced verbatim): six more
+F10-class stale-reds across 4 sibling held-family files, silently red, unwatched by any gate:**
+comp_secrets_bd_hold (1), freshness_manifest_gen_bd_hold (2), incrparity_cli_bd_hold (1),
+platinum_held_path_guard (2). Correctly NOT blanket-repaired at ~D's seat: **per-file target
+truth differs** -- incrparity's guard was DELETED @f9ddda52f (retired-not-lifted, a different
+truth than F10's lifted-mechanism-retained), the others need their own mechanism reads before a
+repair direction is honest. Routed to COO: extends the queued morning graph-tests-hygiene TO --
+part (a) per-file repair now has 6 named instances with the per-file-truth caveat; part (c)'s
+predicate-not-roster sweep found its instances early. Census denominators banked from ~D: 91
+test files / 7 gate-watched / 90 collect-clean / 1 broken (adapter_audit, at CTO~B); ZERO
+comp-depth test files exist (confirms the depth-dial suite-gap point).
