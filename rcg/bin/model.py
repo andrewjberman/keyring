@@ -66,8 +66,14 @@ def main() -> int:
     # parity-with-delegation, revisit at cycle-4 once E-0004 calibration exists).
     # An UNKNOWN source falls to 2.0 AND is reported in the per-source census below --
     # a silent default is how an acked weight fails to reach the trainer.
+    # CTO~B ruling 20260804T145728Z -- weight follows the WARRANT'S ORIGIN, not the
+    # writing hand: rows that mechanically RESTORE Andrew-ratified verdicts carry his
+    # weight class (precedence_correction 5.0); rows that ADD verified agent judgment
+    # carry the adjudication class (coherence_correction 3.0). CALIBRATION FLAG: the
+    # 4,110-row 2.0->5.0 shift is KEEP-mass -- watch archive-recall at the next eval.
     src_weight = {"andrew_ratification": 5.0, "assessed_ratified_by_delegation": 3.0,
-                  "cycle3_adjudication": 3.0}
+                  "cycle3_adjudication": 3.0, "precedence_correction": 5.0,
+                  "coherence_correction": 3.0}
     rat_w: dict = {}
     src_census: dict = {}
     ledger = WS / "rcg" / "ledger" / "LABELS.jsonl"
