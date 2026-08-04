@@ -57,6 +57,31 @@ C2+C3.i discovered-never-declared; C3.ii+C4 declared-never-discovered.
    collide with G(N) grain vocabulary -- surfaces are UX, coordinates are ontology. Non-grain
    surface names (navigate/drill) = a naming act at Andrew.
 
+## Round 2 (~143xZ) -- Andrew verbatim
+
+> "I agree completely with indexing into C ladder versus adding mirrored G. The only question
+> becomes how exactly is C ladder indexed if there is technically some overlap, e.g. comp-estate
+> could really be c4 and c3."
+
+**RESOLVED BY THIS WORD: fork F-B closes as INDEX-INTO-C (no mirrored G ladder).**
+
+CVO answer on the indexing mechanics (delivered in-session, summary):
+- The indexable unit is the MODE / manifest ENTRY (the answer-type), never the binary. Overlap
+  dissolves at mode granularity: comp-estate --segments=C4, <thread>=C3.ii, --matrix=C3-recon,
+  --layers/--definitions=CANON-SERVER, key-derivation=C0. The manifest's entries: rows and the
+  output-contract per-mode blocks (comp-pipescript's `deployed:{plane:applied}` precedent) are
+  the EXISTING machinery -- the index lives there, gate-checked; the tool-level list is DERIVED
+  from mode declarations (a predicate, not a roster).
+- SUBJECT-vs-CONTENT rule: the coordinate is the rung of the question's SUBJECT; constituents
+  rendered in the body do not change it ("what is in this thread" = C3.ii even though the answer
+  lists C0s/C1s).
+- C3 keeps its sub-partition in the enum (C3.i vs C3.ii) because the invariant pair assigns
+  different OBLIGATIONS (a C3.i-indexed mode may never hand-insert membership; a C3.ii mode
+  serves legislation).
+- Proposed closed enum: {C0, C1, C2, C3.i, C3.ii, C4, D1, D2, D3} + non-subject classes
+  {SUBSTRATE, ROUTER, GATE, PRODUCER, CANON-SERVER}. Cross-rung JOURNEYS are surface UX
+  composing crisply-indexed steps; surfaces carry no coordinate.
+
 ## Open forks needing a word (Andrew or PRD treatment)
 
 - F-A: D-rail tools -- separate D-coordinate (recommended) vs folded into G?
