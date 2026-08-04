@@ -1,0 +1,44 @@
+# comp-trace P0 baselines -- 2026-08-04 (cut by 3.0.0_SA_CVO, rc captured direct)
+## Q1 known component walk (shim's own usage example)
+rc=0
+--stdout head:
+No up connections found for: component:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx
+DOWNSTREAM trace from: component:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx
+
+  -> [FETCHES] getFirmLeaderboard (ENDPOINT)
+     file: portal/src/api/endpoints/advisor-intelligence.ts
+--stderr head:
+STALE_NODE_WARN: 23 node(s) have source-file SHA drift since last comp-build:
+  endpoint:getAUMMetricsByFirm: indexed=1064c81b09a7 -> current=232050de6196
+  endpoint:getAccountDistributionByFirm: indexed=1064c81b09a7 -> current=232050de6196
+  endpoint:sortModelsByAUM: indexed=1064c81b09a7 -> current=232050de6196
+  endpoint:formatPercentChange: indexed=1064c81b09a7 -> current=232050de6196
+
+## Q2 NEGATIVE CONTROL: bogus node
+rc=3
+--stdout:
+--stderr:
+NOT-FOUND: no graph node matches 'zz-no-such-node-9999.tsx' -- check the name (typo?) or run comp-build. This is a NOT-FOUND, not a 'nothing-upstream/downstream' clear.
+
+## Q3 gold-script walk (cross-layer anchor, comp-blast comparator)
+rc=3
+--stdout head:
+
+## Q3 interpretation CORRECTED by Q4 (same session):
+Q3 'A_00.accounts_dimension.py' -> rc=3 NOT-FOUND. Q4 'gold:A_00.accounts_dimension'
+-> rc=0 "Multiple matches" (GOLD_SCRIPT + per-function nodes). The trace graph DOES
+model gold scripts; Q3 was a NAME-FORM miss, not a universe boundary.
+
+## FINDING CANDIDATES (P0 stage; confirm through the dial):
+- T1: NOT-FOUND declares NO universe/denominator and suggests NO near-matches/prefix
+  tiers -- a bare-name miss on an EXISTING prefixed node is indistinguishable from a
+  truly-absent node (Q3/Q4 exercised pair). comp-blast's dial fixed this exact class
+  (its rc=3 prints "20480 nodes (CANONICAL KUZU GRAPH)" + universe declaration).
+- T2: disambiguation list returns rc=0 (comp-blast: rc=5 AMBIGUOUS-SUBJECT, refuses).
+  Family-inconsistent; a scripted caller cannot distinguish list-vs-walk without
+  parsing stdout.
+- T3: STALE_NODE_WARN live (23 nodes SHA-drifted) -- good instinct, undeclared
+  semantics (no output contract; pending :556). Cache-TTL freshness vs indexed-SHA
+  drift are two vintage axes, neither declared.
+- T0 (context): comp-trace = the NAVIGATE-surface spine with NO output contract;
+  spine tools should lead the 49-pending backfill.
