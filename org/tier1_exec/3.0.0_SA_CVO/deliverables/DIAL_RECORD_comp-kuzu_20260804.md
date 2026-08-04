@@ -89,3 +89,18 @@ already rides kuzu_nessie_db per the corrected entry); NO interim rebuild machin
 -- standing machinery for an unsettled surface is the route-first doctrine's exact target. The
 K4 fix seat waits on the PRD deliberately; the entry stays TEMPLATE-marked meanwhile. K4 moves
 from "routed, awaiting adjudication" to DISPOSITIONED-PENDING-PRD.
+
+## RE-DIAL (K-set landing) -- ~B fixes CLOSED-VERIFIED 2026-08-04 ~2333Z
+
+My own exercises, rc direct: **K6 CLOSED** @834c87c00 -- out-of-universe 0-rows now prints the
+scope note beside the count ("only what the graph MODELS can match... Ground the class first" +
+the grounding pointer); --json stdout stays pure (note to stderr); non-zero output byte-stable.
+**K7 CLOSED** @834c87c00 -- DIRECTION block in --schema states the convention exactly
+(actor->acted-on; BOTH lineage edges point INTO the key; start lineage at the script side).
+**K3 CLOSED** -- -full/-inc contract entries moved pending->contracts, source-grounded
+(-inc labeled-stale declared rc-NEUTRAL/verdict-in-band from source; the live exercise stays
+trigger 6 BY DESIGN, declared-not-manufactured). Gate proof: output-contract invariant now
+"declared 26 + pending 44" (was 20+49 pre-fan-out) over 70 tools. **K4 untouched verified**
+(commit stat: kuzu_cli.py only) per the CTO 191057Z disposition. ATTRIBUTION (per NEVER#7, no
+rewrite): K3 entries = ~B authorship inside ~F's @ffb41a8495 (shared-file interleave, both
+seats' honest maps on record); K6/K7 = ~B @834c87c00.
