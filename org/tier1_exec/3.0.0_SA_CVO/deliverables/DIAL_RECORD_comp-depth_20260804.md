@@ -50,3 +50,14 @@ migration's subject matter. **Method:** DIALED_TOOL_FLOW_DESIGN_20260731.md.
 7. P8 descent completion.
 
 — 3.0.0_SA_CVO
+
+## RE-DIAL (triggers 1/2 fired) -- ~F fixes @ffb41a849 CLOSED-VERIFIED 2026-08-04 ~2325Z
+
+My own exercises, rc direct: **DEPTH-1 CLOSED** -- out-of-enum grain now rc=2 REFUSED naming the
+closed enum + its size (14 values) DERIVED AT CALL TIME from grain_contract.node_type_grain
+(predicate-not-roster); applied across scope/drill/rollup/blast-at-grain; in-enum-but-empty
+stays honest rc=0 (scope file byte-identical: 4817 nodes w/ denominator). **DEPTH-0 CLOSED** --
+contract entry authored (grain=field per ONTOLOGY2 canon after manifest-check BLOCKED
+grain=function -- the coordinate invariant exercising itself at authoring time); manifest-check
+completeness PASS post-fix. The family declare-and-refuse rule is now LANDED-EXERCISED on this
+tool, not just ruled.

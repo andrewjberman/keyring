@@ -80,3 +80,15 @@ reading this record -- the vintage axes are invisible exactly when nobody looks.
   comp-build" advice is redundant with the auto-rebuild that follows it.
 - **Cross-instrument (shared with kuzu record): scope asymmetry, no cross-pointer** (gold_dispatch
   trace-only; AWS planes kuzu-only). NAVIGATE-consolidation material, routed CTO.
+
+## RE-DIAL (triggers 1/2/3 fired) -- ~F fixes @ffb41a849 CLOSED-VERIFIED 2026-08-04 ~2325Z
+
+My own exercises, rc direct: **T1 CLOSED** (the exercised pair now discriminates: rc=3 +
+"2252 nodes (HEAD-PINNED TRACE GRAPH)" + universe declaration + gold:A_00.accounts_dimension as
+the FIRST [UNVERIFIED] near-match). **T3 CLOSED** (provenance header both axes on stderr, every
+walk; --json stdout stays pure {query,traces}). **T5 CLOSED** (bare call teaches the shim form,
+comp-trace-prog usage rc=1; the cli.py subcommand form gone). **T6 CLOSED** (--exact
+self-selects: zero multi-match, single-node walk from the canonical id; miss = rc=3 naming the
+mode). **T0 PARTIAL: RESTORE-IN-FLIGHT** -- the ~B/~F shared-file interleave left comp-trace's
+contract entry momentarily neither declared nor pending at @ffb41a849; follow-up commit on ~B's
+ACK; I verify the restored block on landing. T2 correctly untouched (PRD-gated; diff grepped).
