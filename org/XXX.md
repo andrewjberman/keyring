@@ -230,6 +230,34 @@ get_agent_status("{your_serial}")   # broker channel
 ```
 `send_message` writes to **both**, but each probe reads only one. **`check-inbox` alone is insufficient.**
 
+**B.1 — Find the work you actually hold. RUN THIS; do NOT read your folder:**
+```bash
+python .tools/to-check.py --all --assignee {your_FULL_suffixed_serial}
+```
+**`--all` IS LOAD-BEARING — never trim it.** The default view scopes to projects whose PRD is <=14d old,
+so **a TO whose project PRD has aged out DISAPPEARS WHILE STILL OPEN — the view goes blind to exactly
+the TOs that have been stalled LONGEST.** Trimming `--all` silently restores that blindness.
+**MEASURED 2026-08-04: 237 of 272 live TOs — 87% — are invisible in the default view; 60 of them are
+`pending`.** The default shows 35 of 272. This is the estate-wide condition, not a quirk of one seat.
+
+Two reading notes so the output does not mislead you: `--assignee` is a **substring** match (`:12`
+"partial match ok"), and the rollup groups by **PRIMARY** assignee — so a JOINT TO appears under the
+other seat's heading while still being yours. Read the rows, not just the headings.
+
+⛔ **Two reads that will tell you you are IDLE while you hold a live P0:**
+- **YOUR AGENT FOLDER.** A lane's TOs frequently live in the **BASE** folder — `issued_to` is the only
+  truth, never file location. A lane agent reading `{agent_folder}/task_orders/` sees an empty-or-stale
+  set. *(Step 1's "read your agent folder" is for IDENTITY, not for work.)*
+- **`get_agent_status`'s pending-TO list.** It is FOLDER-keyed (`org/mcp/server.py:809-812`), so a lane
+  query returns the whole base folder's work — one measured case returned **12 TOs spanning 5 assignees
+  when the lane held 3**. A list that is mostly other seats' work trains you to skim it. Use it for
+  liveness and messages; **it is not the authority on what you hold.**
+
+*Why this line exists: a CTO-gated closure row on an Andrew-direct P0 sat `pending` for TEN DAYS in
+plain sight of a WORKING instrument nobody was pointed at (CI-R7R8, 2026-07-24 -> 08-03). The tool was
+already correct; the guidance pointed at the folder. Measured + falsified by `0.7.0_AE_CloudOps~B`,
+2026-08-04.*
+
 **C. Arm the persistent inbox Monitor — run `/watcher` (once, at load).**
 
 It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line becomes a
