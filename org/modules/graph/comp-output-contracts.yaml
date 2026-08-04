@@ -77,19 +77,42 @@ contracts:
   # ===== VERDICT tools (a contracted nonzero is an ESTATE-VERDICT, not a tool crash) =====
 
   comp-blast:
-    coverage: "extracted graph edges (AST-derived imports + declared I/O) for the resolved node"
+    coverage: "the CANONICAL KUZU resource graph (~20,480 CloudNode / ~40,945 CloudEdge) -- all of AWS plus the GIT code plane and MS_CLOUD -- overlaid with the blasted SUBJECT's worktree-derived edges"
+    address_space: "kuzu_nessie_db CloudNode/CloudEdge (estate) + a subject-scoped working-tree overlay (mid-edit, uncommitted included)"
+    universe_change_20260803: >-
+      ANDREW-DIRECT RULING (ANDREW_RULING_projections_default_kuzu_full_graph_20260803.md, verbatim:
+      "all projections should by default be kuzudb full resource graph ... Comp-blast absolutely
+      should cover all of AWS"). comp-blast previously built a PRIVATE trace graph at invocation --
+      2,255 nodes / 2,950 edges / ~35s cold, carrying exactly FOUR S3_BUCKET nodes. `comp-blast
+      opal-data-mdpf`, a real production bucket with live consumers verified the same session,
+      returned NOT-FOUND while comp-kuzu resolved it. The full graph existed, was fresh, and knew the
+      answer; the projection did not ask it. A private universe is not a smaller answer, it is a
+      CONFIDENT WRONG ONE -- on a Rule-20 change-safety gate a NOT-FOUND reads as "nothing breaks".
+      The ONE property worth keeping was invocation-time head-pinning, which survives as a
+      subject-scoped OVERLAY (seconds, one file) rather than a whole private universe (35s,
+      everything). Cold path IMPROVED: ~2.5s vs ~35s.
+    declared_exceptions:
+      - "--compare / --overlap-sweep / --all-producers still read the PRIVATE trace graph. These are corpus-STATISTICS over a producer population; idf is defined over that population, so silently swapping it would change what every score MEANS while the numbers kept printing. Declared at runtime on stderr (named + vintaged + scoped) per the ruling's exception clause. Re-basing them is routed residue, not silently done."
     blind_spots:
-      - "dynamic / FUNC-key consumers are INVISIBLE (the comp-pipescript dynamic-key miss class) -- 'zero downstream' is 'no EXTRACTED edge', NOT provably no consumer"
-      - "a target outside the indexed node set (e.g. an unindexed component dir) has no edges to trace at all"
+      - "dynamic / FUNC-key consumers are INVISIBLE (the comp-pipescript dynamic-key miss class) -- 'zero dependents' is 'no EXTRACTED edge', NOT provably no consumer"
+      - "kuzu trails the live estate (02:00Z full re-derive + CloudTrail incremental); the overlay covers ONLY the blasted subject's own edges, so a mid-edit change to a DIFFERENT file is not reflected"
+      - "a subject with no worktree file (an S3 bucket, an IAM role) has NO overlay -- reported as scope=none, never as a silent empty overlay"
+    failure_direction: "REFUSE, never guess -- an unresolvable subject exits 3, an ambiguous one exits 5, and an unreachable graph exits 1. comp-blast NEVER falls back to a private scan (a silent fallback re-creates the defect this rebase removed, invisibly)."
     plane: projection
     grain: field
     scope: estate
-    vintage: ".comp-graph/graph.json build (comp-build cache; run comp-blast --check for freshness)"
+    vintage: "DUAL, always printed: the comp-kuzu provenance block (snapshot-id + build age + per-table vintage) AND a worktree overlay line (HEAD short-sha + dirty flag + subject-file count + content digest). A single-vintage answer is a P3 conformance failure."
     exit_codes:
-      "1": {class: failure, meaning: "THE TOOL FAILED, AND ONLY THAT -- usage error or uncaught crash. NEVER a finding about the estate (CTO 20260709T195217Z)"}
+      "1": {class: failure, meaning: "THE TOOL FAILED, AND ONLY THAT -- usage error, uncaught crash, or the canonical graph unreachable. NEVER a finding about the estate (CTO 20260709T195217Z)"}
       "2": {class: verdict, meaning: "graph STALE -- freshness probe (--check)"}
       "3": {class: refuse,  meaning: "NOT-FOUND: query did not resolve to a node -- nothing was traced, so nothing is concluded (input-resolution refusal, NOT a clean 'nothing-downstream')"}
-      "4": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate)"}
+      "4": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate) -- evaluated over dependents in BOTH directions, so no display flag can manufacture it"}
+      "5": {class: refuse,  meaning: "AMBIGUOUS-SUBJECT: the query matched multiple nodes and comp-blast REFUSED to pick one. The nodes EXIST (so not 3) and no answer was given (so not 0). Re-run with an exact node id."}
+    defects_fixed_20260803:
+      a: "cp1252 UnicodeEncodeError (28 of 2,255 nodes measured, 20 of 2,252 on 07-31). ROOT: nerves-risk-edges.json stores non-ASCII JSON-ESCAPED, so the FILE scans as pure ASCII while json.load decodes real arrows into the claim prose _render_risk prints. The failing nodes were the RISK-BEARING ones, so the crash silenced HOLD warnings on the most dangerous files in the estate. Fixed at the EMISSION BOUNDARY (blast_universe.ascii_safe), not in the data -- the corpus is harvested from commit prose, so non-ASCII is a permanent inflow and a data edit would re-break on the next harvest."
+      b: "`--direction up` inverted `--check-consumers` into a FALSE PHANTOM. Measured: gold:A_00.accounts_dimension (143 real consumers) returned rc=0 CONSUMER-OK by default and rc=4 PHANTOM-CONSUMER with --direction up -- and grounding_lib maps rc=4 to deletion evidence. The verdict is now evaluated over the full dependent set in BOTH directions; direction governs DISPLAY only."
+      c: "substring find_node + matches[0] answered about a DIFFERENT node at rc=0. Measured: `comp-blast load_accounts_dim` returned a full answer about gold:B_01.holdings_lots:load_accounts_dimension -- different function, different script -- while the exact node existed among 17 matches, with nothing saying a choice had been made. Resolution is now exact-id -> colon-suffix -> exact-segment -> substring, and ANY ambiguous tier refuses with rc=5."
+      d: "upstream traversal hid FETCHES callers. PROVEN not assumed (the spec asked): this did NOT dissolve under kuzu. endpoint:getPlatinumPartnerAnalytics has EIGHT upstream callers via FETCHES and ZERO downstream; the old default computed upstream only for function-grain GOLD_SCRIPT, a node_type that existed only in the retired universe, so under kuzu the default hid every caller in the estate -- and with defect (b) would have called that live endpoint an orphan. The default is now bidirectional, because this graph MIXES edge conventions: WRITES points producer->artifact (consumers downstream) while CALLS/FETCHES/READS point consumer->producer (consumers upstream)."
     exit_source: "org/modules/graph/cli.py:502,632 (phantom rc4 via EXIT_PHANTOM_CONSUMER), :199,202 (stale rc2), :263,568,790 (NOT-FOUND rc3) @2026-07-31"
     exit_code_change_20260731: >-
       The phantom verdict MOVED 1 -> 4. It had been sharing rc=1 with usage errors and with uncaught

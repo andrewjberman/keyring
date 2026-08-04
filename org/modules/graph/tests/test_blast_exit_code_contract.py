@@ -65,20 +65,56 @@ def _run(*argv: str) -> subprocess.CompletedProcess:
 _MAX_CANDIDATES = 6
 
 
+#: CANDIDATES COME FROM THE UNIVERSE THE TOOL ACTUALLY QUERIES (kuzu, per the Andrew ruling
+#: 2026-08-03) -- NOT from the retired `.comp-graph/graph.json` trace cache.
+#:
+#: This is not a cosmetic re-point. Kuzu addresses a gold script as
+#: `pipeline:bd:gold:A_00.accounts_dimension`; the trace cache addressed it as
+#: `gold:A_00.accounts_dimension`, and kuzu carries ZERO `gold:`-prefixed ids. Worse for THIS file:
+#: a node with no outbound edge in the small private graph very often HAS dependents in the estate
+#: graph, so every phantom candidate resolved to CONSUMER-OK and `test_phantom_verdict_is_4_not_1`
+#: -- the regression this whole file exists for -- SKIPPED. Measured on the first post-rewire run:
+#: 5 passed, 2 skipped.
+#:
+#: A SKIPPED TEST IS NOT A GATE (this file's own words). Deriving from the live universe keeps every
+#: assertion below byte-identical while restoring the test's ability to fire.
+_KUZU_CACHE: dict = {}
+
+
 def _graph() -> dict:
-    cache = _REPO / ".comp-graph" / "graph.json"
-    if not cache.exists():
-        pytest.skip("graph cache absent -- cannot pick live nodes")
-    return json.loads(cache.read_text(encoding="utf-8"))
+    """The live universe, shaped like the old cache dict so the assertions below are unchanged."""
+    if _KUZU_CACHE:
+        return _KUZU_CACHE
+    sys.path.insert(0, str(_REPO))
+    try:
+        from org.modules.graph import comp_blast_universe as bu
+        g, _prov, _path = bu.load_kuzu_universe(refresh=False)
+    except Exception as ex:  # noqa: BLE001
+        pytest.skip(f"canonical kuzu universe unavailable -- cannot pick live nodes ({ex})")
+    _KUZU_CACHE["nodes"] = {nid: {"node_type": n.node_type} for nid, n in g.nodes.items()}
+    _KUZU_CACHE["edges"] = [{"source": e.source, "target": e.target} for e in g.edges]
+    return _KUZU_CACHE
 
 
 def _with_and_without_outbound() -> tuple:
-    """(has-downstream, no-downstream) node-id lists, computed from the cache without subprocesses."""
+    """(has-dependents, no-dependents) node-id lists, computed in-process without subprocesses.
+
+    DEPENDENTS, not merely outbound edges: after the defect-(b) fix the consumer verdict is
+    evaluated in BOTH directions (this graph mixes edge conventions -- WRITES points
+    producer->artifact, CALLS/FETCHES point consumer->producer). A candidate picked on outbound
+    edges alone would be a phantom by this file's model and CONSUMER-OK by the tool's, and the test
+    would fail for a reason that is not a defect.
+    """
     g = _graph()
     nodes = g.get("nodes", {})
-    sources = {e.get("source") for e in g.get("edges", []) if e.get("source")}
-    have = [n for n in nodes if n in sources]
-    havent = [n for n in nodes if n not in sources]
+    linked = set()
+    for e in g.get("edges", []):
+        if e.get("source"):
+            linked.add(e["source"])
+        if e.get("target"):
+            linked.add(e["target"])
+    have = [n for n in nodes if n in linked]
+    havent = [n for n in nodes if n not in linked]
     return have, havent
 
 

@@ -35,6 +35,13 @@ from org.modules.graph.trace_graph import (  # noqa: E402
     diff_graphs, save_baseline, format_delta,
     check_node_freshness, emit_stale_warn,
 )
+from org.modules.graph import comp_blast_universe as _bu  # noqa: E402
+
+# DEFECT (a) ROOT FIX: make this process's streams ASCII-tolerant before anything can emit.
+# Installed at IMPORT, not inside cmd_blast, because the crash surface includes code that runs
+# before/around the command handler (argparse errors, tracebacks, the risk banner). See
+# comp_blast_universe.ascii_safe for the measured root.
+_bu.install_ascii_stdout()
 
 
 def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> TraceGraph:
@@ -650,8 +657,45 @@ def _overlap_preamble(n_pop: int, considered: int, depth: int, selector, exclude
     print('   invisible to the graph, so overlap is a LOWER BOUND on both sides.')
 
 
+def _declare_trace_exception() -> None:
+    """Ruling clause 2 / spec 3.4: a non-canonical universe is legal ONLY as a DECLARED exception.
+
+    The three statistical modes (--compare / --overlap-sweep / --all-producers) are corpus-STATISTICS
+    over producer scripts, not existence or traversal questions. Their idf weighting is defined over
+    a producer POPULATION; silently swapping that population would not widen the answer, it would
+    change what every score MEANS while the numbers kept printing. So they stay on the private trace
+    graph FOR NOW and say so out loud, named + vintaged + scoped. Undeclared amalgamation is the
+    defect; a declared one is the ruling's own exception clause. Routed to CVO as residue.
+    """
+    verdict, detail, n, _drift = trace_freshness()
+    _bu.aprint("=== DECLARED EXCEPTION (Andrew ruling 2026-08-03, clause 2) ===", file=sys.stderr)
+    _bu.aprint("  universe: PRIVATE trace graph (not the canonical kuzu graph)", file=sys.stderr)
+    _bu.aprint("  scope:    --compare / --overlap-sweep / --all-producers ONLY "
+               "(statistical modes; idf is defined over a producer population)", file=sys.stderr)
+    _bu.aprint(f"  vintage:  {verdict} -- {detail}", file=sys.stderr)
+    _bu.aprint("  residue:  re-basing these onto kuzu is a follow-on, not silently done here.",
+               file=sys.stderr)
+    _bu.aprint("=" * 46, file=sys.stderr)
+
+
 def cmd_blast(args):
-    g = _resolve_graph(args)
+    # The 3-state freshness contract is UNCHANGED (spec 4 "must survive"): --check reports the SAME
+    # `_freshness_probe` expression the status surface reports, --force re-derives. It governs the
+    # WORKTREE OVERLAY's source -- the only part of comp-blast still derived from the tree. Kuzu's
+    # own vintage is a SEPARATE axis and is reported on every invocation in the dual-provenance
+    # block, never folded into this predicate (two vintages, two reports).
+    if getattr(args, "check", False):
+        sys.exit(_freshness_probe())
+    if getattr(args, "fresh", False):
+        print(_FRESH_DEPRECATION, file=sys.stderr)
+
+    _sweep_mode = bool(getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None)
+                       or getattr(args, 'all_producers', False))
+    if _sweep_mode:
+        g = _get_graph(force_rebuild=getattr(args, "force", False))
+        _declare_trace_exception()
+    else:
+        g = None      # the main path's universe is kuzu; resolved after the sweep blocks
 
     # --compare / --overlap-sweep: pairwise blast-radius overlap (Andrew act 3).
     if getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None):
@@ -781,7 +825,44 @@ def cmd_blast(args):
     if args.function:
         query = f"{Path(query).stem}:{args.function}"
 
-    matches = g.find_node(query)
+    # ---------------------------------------------------------------- THE UNIVERSE IS KUZU
+    # Andrew-direct 2026-08-03. Loads in ~2.5s against the private scan's ~35s, and carries 20,480
+    # nodes / 40,924 edges against 2,255 / 2,950 -- including the 33 S3 buckets the private universe
+    # narrowed to 4, which is what made `comp-blast opal-data-mdpf` a NOT-FOUND on a live bucket.
+    #
+    # FAIL LOUD, NEVER FALL BACK (spec 7): if kuzu is unreachable this exits 1 (TOOL FAILED). A
+    # silent fallback to the private scan would reproduce the exact defect the ruling removes, and
+    # would do it invisibly -- the tool would answer from a universe the operator did not choose and
+    # cannot see, which is strictly worse than the NOT-FOUND that started this.
+    try:
+        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+    except _bu.KuzuUnavailable as ex:
+        _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
+        _bu.aprint("  comp-blast does NOT fall back to a private scan. Fix the graph, then re-run.",
+                   file=sys.stderr)
+        sys.exit(1)
+
+    # ---------------------------------------------------------------- SUBJECT RESOLUTION (defect c)
+    _kind, matches = _bu.resolve_subject(g, query)
+
+    if _kind == _bu.RESOLVE_AMBIGUOUS:
+        # DEFECT (c): the old code took matches[0] and answered, at rc=0, about whichever node
+        # happened to sort first -- measured: `comp-blast load_accounts_dim` returned a full blast
+        # answer about `gold:B_01.holdings_lots:load_accounts_dimension`, a DIFFERENT function in a
+        # DIFFERENT script, while the exact node existed among 17 matches, with nothing in the
+        # output saying a choice had been made. rc=5 is a NEW disjoint code (CVO-pinned): the nodes
+        # exist (so not 3) and we refused to answer (so not 0).
+        _bu.aprint(f"AMBIGUOUS-SUBJECT: '{query}' matches {len(matches)} nodes -- refusing to pick.",
+                   file=sys.stderr)
+        _bu.aprint("  comp-blast will NOT answer a change-safety question about a subject it had to "
+                   "guess. Re-run with one of these exact node ids:", file=sys.stderr)
+        for m in matches[:12]:
+            _bu.aprint(f"    {m.id}   [{m.node_type}]", file=sys.stderr)
+        if len(matches) > 12:
+            _bu.aprint(f"    ... and {len(matches) - 12} more", file=sys.stderr)
+        _bu.aprint("  This is a REFUSAL, not a 'nothing breaks' clear.", file=sys.stderr)
+        sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
+
     if not matches:
         # THE DANGER WARNING MUST NOT DEPEND ON THE STRUCTURAL GRAPH MODELLING THE NODE
         # (NFRA_NERVES L3b). `build_assets_dim.py` -- ONE OF THE THREE FROZEN FILES -- is a SILVER
@@ -802,14 +883,16 @@ def cmd_blast(args):
         # consumers existed, and a harness author nearly deleted a fail-closed gate's public
         # symbol on that "clear". A scan whose universe you cannot see is a scan you cannot
         # reason from: print the universe.
-        print(f"NOT-FOUND: no graph node matches '{query}' -- and here is the universe that "
-              f"verdict is over, so typo and out-of-scope stop looking identical:", file=sys.stderr)
+        _bu.aprint(f"NOT-FOUND: no graph node matches '{query}' -- and here is the universe that "
+                   f"verdict is over, so typo and out-of-scope stop looking identical:",
+                   file=sys.stderr)
         from collections import Counter as _Counter
         _tc = _Counter(n.node_type for n in g.nodes.values())
-        print(f"  denominator: {len(g.nodes)} nodes -- "
-              + ", ".join(f"{t}={c}" for t, c in _tc.most_common()), file=sys.stderr)
-        print("  NOT in this universe (structural, COMPRAIL F-5): .tools/* and org/modules/* -- "
-              "the compiler tools themselves.", file=sys.stderr)
+        _bu.aprint(f"  denominator: {len(g.nodes)} nodes (CANONICAL KUZU GRAPH) -- "
+                   + ", ".join(f"{t}={c}" for t, c in _tc.most_common(14)), file=sys.stderr)
+        _bu.aprint("  universe: the canonical kuzu resource graph -- ALL of AWS plus the GIT code "
+                   "plane and MS_CLOUD (Andrew ruling 2026-08-03). The old private trace universe "
+                   "(2,255 nodes, 4 S3 buckets) is retired.", file=sys.stderr)
         # F-5 FALLBACK (NFRA_INSTDRILL item 8): consult comp-pydeps, the reference graph that DOES
         # model the compiler layer, so this is an ANSWER instead of a blindness disclaimer.
         try:
@@ -852,9 +935,15 @@ def cmd_blast(args):
             _sugg = [n for n in _names if query.lower() in n.lower()][:5]
         _sugg = _sugg[:6]
         if _sugg:
-            print("  near-matches in the graph (typo candidates):", file=sys.stderr)
+            # Andrew-direct, same session (verbatim in the dial ledger): near-matches are
+            # DUPLICATE/LEGACY candidates, not merely typo candidates. On an estate-wide universe a
+            # near-match is far more often a real second copy -- a legacy name still carrying
+            # traffic -- than a misspelling, and calling it a typo tells the reader to correct their
+            # query when the finding is that the estate has two of something.
+            _bu.aprint("  near-matches in the graph (DUPLICATE / LEGACY candidates -- these are "
+                       "real nodes, not spelling hints):", file=sys.stderr)
             for _s in _sugg:
-                print(f"    - {_s}", file=sys.stderr)
+                _bu.aprint(f"    - {_s}", file=sys.stderr)
         print("  not a typo? by question: comp-xref <symbol> (graph-wide occurrence) | "
               "comp-symbols <file> (what a file defines) | comp-grep <pattern> (on-rails text "
               "search; .tools/ + org/modules INCLUDED).", file=sys.stderr)
@@ -863,44 +952,73 @@ def cmd_blast(args):
 
     node = matches[0]
 
-    # F.4: --direction flag wires through uniformly for all resolver paths
-    # (bare name, prefix-qualified lambda:/gold:/component:, full file path).
-    # Default (None) preserves existing blast-radius semantic: downstream-only
-    # unless the node is function-grain (ADHC_ROUTER.T1).
+    # ---------------------------------------------------------------- WORKTREE OVERLAY (head-pin)
+    # The ONE property of the retired private universe worth keeping: kuzu trails the estate by
+    # hours and models what is COMMITTED/LIVE, but "what breaks if I change X" is a MID-EDIT
+    # question about a tree that may not even be committed yet. So the subject's OWN edges are
+    # re-derived from the working tree now, and overlaid. Overlay wins on the subject's own edges;
+    # kuzu wins on everything else.
+    try:
+        _ov_edges, _ov_prov = _bu.derive_overlay(node, query)
+        _bu.apply_overlay(g, node, _ov_edges)
+    except Exception as _ex:  # noqa: BLE001 -- the overlay is additive; never lose the kuzu answer
+        _ov_prov = {"head": "unknown", "dirty": False, "files": 0, "digest": "-",
+                    "scope": f"FAILED ({type(_ex).__name__})"}
+
     direction = getattr(args, 'direction', None)
 
-    is_function_grain = (
-        node.node_type == "GOLD_SCRIPT"
-        and getattr(node, "function_name", None)
-        and node.id.count(":") >= 2
-    )
-
-    # Downstream: always, except when direction is explicitly 'up'
+    # ---------------------------------------------------------------- DEFECT (d): the default hid callers
+    # The old default computed upstream ONLY for function-grain GOLD_SCRIPT nodes. That node_type is
+    # an artifact of the RETIRED private universe -- kuzu types the same things Endpoint / Hook /
+    # PipelineFunction / ReactComponent -- so under kuzu the old rule is False for essentially every
+    # node and the default would hide every caller in the estate.
+    #
+    # MEASURED, not assumed (the spec asked for proof): `endpoint:getPlatinumPartnerAnalytics` has
+    # EIGHT upstream callers via FETCHES and ZERO downstream. The old default reported "affects >= 1
+    # downstream" and showed none of the 8. Combined with defect (b) it would call that endpoint a
+    # PHANTOM-CONSUMER -- a deletion verdict on a live endpoint with 8 real callers.
+    #
+    # So the default is now BOTH directions. "What breaks if I change X" is genuinely bidirectional
+    # because this graph mixes edge conventions: WRITES points producer->artifact (consumers are
+    # DOWNSTREAM) while CALLS/FETCHES/READS point consumer->producer (consumers are UPSTREAM).
     downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
+    upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
 
-    # Upstream: when direction is 'up'/'both', or for function-grain with no explicit direction
-    # (preserves ADHC_ROUTER.T1 semantic — "what breaks if I change this function?")
-    if direction in ('up', 'both'):
-        upstream = g.upstream(node.id, max_depth=args.depth)
-    elif direction is None and is_function_grain:
-        upstream = g.upstream(node.id, max_depth=args.depth)
-    else:
-        upstream = []
-
-    # --check-consumers: exit 0 if >=1 downstream consumer, EXIT_PHANTOM_CONSUMER (4) if zero.
-    # NOT 1 -- 1 is reserved for "the tool failed" and a crash must never read as a verdict.
+    # ---------------------------------------------------------------- DEFECT (b): direction vs verdict
+    # The old code derived the verdict from `downstream`, which `--direction up` had just forced to
+    # []. Same node, same estate, two answers: `--check-consumers` said CONSUMER-OK/143 consumers,
+    # and `--check-consumers --direction up` said PHANTOM-CONSUMER at rc=4 -- a false ORPHAN verdict,
+    # which grounding_lib maps to deletion evidence, on the one axis where being wrong is
+    # irreversible.
+    #
+    # Composed correctly (the spec's first option): the verdict is a question about the SUBJECT, so
+    # it is evaluated over the FULL dependent set and a display flag cannot change it. A node is a
+    # phantom only if NOTHING depends on it in either direction. This makes a false phantom
+    # structurally impossible to produce by passing a direction flag.
     if getattr(args, 'check_consumers', False):
-        if downstream:
-            print(f'CONSUMER-OK: {node.id} has {len(downstream)} downstream consumer(s)')
+        dependents = g.downstream(node.id, max_depth=args.depth) + g.upstream(node.id, max_depth=args.depth)
+        _seen_dep = set()
+        dependents = [t for t in dependents if not (t[0].id in _seen_dep or _seen_dep.add(t[0].id))]
+        if direction is not None:
+            _bu.aprint(f'  NOTE: --direction {direction} governs DISPLAY only; the consumer verdict '
+                       f'is evaluated over the full dependent set in both directions.',
+                       file=sys.stderr)
+        if dependents:
+            _bu.aprint(f'CONSUMER-OK: {node.id} has {len(dependents)} dependent(s)')
             sys.exit(0)
         else:
-            print(f'PHANTOM-CONSUMER: {node.id} -- zero downstream consumers IN GRAPH')
-            print(f'  Node type: {node.node_type}')
-            print('  "Zero" = no EXTRACTED edge, NOT provably no consumer. A real consumer')
-            print('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
-            print('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
-            print('  before treating as orphan -- do not assume safe-to-delete.')
+            _bu.aprint(f'PHANTOM-CONSUMER: {node.id} -- zero dependents IN GRAPH (both directions)')
+            _bu.aprint(f'  Node type: {node.node_type}')
+            _bu.aprint('  "Zero" = no EXTRACTED edge, NOT provably no consumer. A real consumer')
+            _bu.aprint('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
+            _bu.aprint('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
+            _bu.aprint('  before treating as orphan -- do not assume safe-to-delete.')
             sys.exit(EXIT_PHANTOM_CONSUMER)
+
+    # DUAL PROVENANCE, ALWAYS (spec 3.3): both universes answered, so both vintages are reported.
+    # A single-vintage answer is a P3 conformance failure -- the reader cannot tell an estate fact
+    # (hours old) from a worktree fact (this second) without it.
+    _dual = _bu.format_dual_provenance(_kuzu_prov, _ov_prov)
 
     if args.json:
         by_type = {}
@@ -914,20 +1032,29 @@ def cmd_blast(args):
                 "id": n.id, "label": n.label, "depth": d,
                 "direction": "upstream",
             })
-        print(json.dumps({"source": node.id, "consumers": by_type}, indent=2))
+        print(_bu.ascii_safe(json.dumps({
+            "source": node.id,
+            "node_type": node.node_type,
+            "consumers": by_type,
+            "provenance": {"kuzu": _kuzu_prov, "overlay": _ov_prov},
+        }, indent=2, default=str)))
     else:
+        _bu.aprint(_dual, file=sys.stderr)
         _print_risk(node)              # NFRA_NERVES L3b -- THE HOLD PRINTS FIRST. A hold is not a footnote.
-        print(format_blast(node.id, downstream))
+        _bu.aprint(format_blast(node.id, downstream))
         _print_cochange(node)          # NFRA_NERVES L3a consumer -- the graph's TRAFFIC layer
         if upstream:
-            print()
-            print(f"CALLER CHAIN (upstream from {node.id}):")
+            _bu.aprint("")
+            _bu.aprint(f"CALLER CHAIN (upstream from {node.id}) -- {len(upstream)} caller(s):")
             seen = set()
             for n, _, d in upstream:
                 if n.id in seen:
                     continue
                 seen.add(n.id)
-                print(f"  [{d}] {n.label}")
+                # Print the ID, not the bare label. Labels are not unique -- four different
+                # portal components all render as "index" -- so a caller chain of repeated
+                # labels is unreadable exactly when it matters most.
+                _bu.aprint(f"  [{d}] {n.id}   [{n.node_type}]")
 
 
 def cmd_diff(args):
