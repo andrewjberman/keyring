@@ -1,7 +1,9 @@
 # ANDREW-DIRECT -- start word: two-grain toolscape (+ one further Next Steps item, clarification in flight)
 
 **Channel:** direct at the 3.0.0_SA_CVO terminal (in-session message)
-**Time:** 2026-08-04 ~07:10Z
+**Time:** 2026-08-04 ~13:00Z (~09:00 Eastern) — **CORRECTED**: first recorded as ~07:10Z, which was
+the session-START clock; ~6h of hold elapsed before Andrew's message. Clock verified `date -u` =
+13:03:21Z at correction time. (Filename retains the wrong stamp; this field is authoritative.)
 **Recorded by:** 3.0.0_SA_CVO (receiving agent)
 
 ## Verbatim
