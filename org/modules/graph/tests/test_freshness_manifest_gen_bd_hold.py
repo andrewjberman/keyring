@@ -1,20 +1,28 @@
-"""NFRA_TOOLPASS C0 (census reader #5): .tools/freshness_manifest_gen.py is a PATH-runnable generator;
-_load_yaml_list (:107) yaml.safe_load(open()) the bd-gold freshness config
-(data/black_diamond/scripts/gold/gold_freshness_config.yaml, CONFIG_FILES :57) with NO held guard --
-while the SIBLING comp-freshness guards the SAME file via COMP_FRESHNESS_PIPELINE. FIX: honor the SAME
-flag so one signal re-enables both; skip the held config by default (inf/cot/served pass through).
+"""freshness_manifest_gen held-config GUARD MECHANISM oracle (post-lift form).
 
-bd-SAFE + hermetic: monkeypatches ROOT to a tmp dir with SYNTHETIC bd + inf configs -- NEVER the real
-bd tree. Non-vacuous: the held config -> [] by default, reads under COMP_FRESHNESS_PIPELINE=1 (same file).
+HISTORY: authored by 3.0.0_SA_CVO~B under NFRA_TOOLPASS C0 while the 2026-07-09 hold was live;
+the hold-era assertions (bd config held-by-default) went stale-red after the retraction landed
+(SOVEREIGN_HELD_PATHS=() @7a07814b94, the 13-file predicate-split wave -- the ENGINE is right,
+the tests were stale; dial F11, TO ADHOC.graph-tests-hygiene-f11-family).
 
-# rail-checked: assurance oracle for freshness_manifest_gen under test (NFRA_TOOLPASS sec.6)
-Author: 3.0.0_SA_CVO~B.
+TRUTH DETERMINATION (grounded at HEAD before this repair): LIFTED, mechanism retained --
+.tools/freshness_manifest_gen.py:117 still guards via `_is_held(rel_path)` delegated to
+sovereign_held.is_held_path, which resolves SOVEREIGN_HELD_PATHS at CALL time; the set is
+empty, so nothing is held. Repaired to post-lift truth + INJECTED-mechanism cases
+(monkeypatch on the predicate's own globals -- never the governance set).
+
+bd-SAFE + hermetic as before: tmp-dir ROOT, synthetic configs, real trees never touched.
+# rail-checked: assurance oracle for freshness_manifest_gen (dial F11 repair)
+Original author: 3.0.0_SA_CVO~B. F11 repair: 0.8.0_AE_CloudComp~D.
 """
+from __future__ import annotations
 
 import importlib.util
 import os
 import tempfile
 from pathlib import Path
+
+import pytest
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))
@@ -29,11 +37,26 @@ _INF_REL = "data/inf/scripts/gold/gold_freshness_config.yaml"
 _YAML = "- artifact_id: x\n  cadence: daily\n"
 
 
-def test_is_held_predicate():
-    assert fmg._is_held(_BD_REL) is True
-    assert fmg._is_held("data/canonical/schwab/silver/x.yaml") is True
+# SYNTHETIC injection marker (substring semantics, sovereign_held.py:80).
+_SYNTH = "synthetic_held_zone_f11"
+
+
+@pytest.fixture
+def injected_hold(monkeypatch):
+    """Inject a synthetic held marker into the predicate's OWN module globals --
+    fmg._is_held IS sovereign_held.is_held_path, which reads SOVEREIGN_HELD_PATHS from its
+    defining module's globals at call time; patching those globals arms the mechanism without
+    touching the (correctly empty) governance state."""
+    monkeypatch.setitem(fmg._is_held.__globals__, "SOVEREIGN_HELD_PATHS", (_SYNTH + "/",))
+
+
+def test_is_held_predicate_post_lift_and_under_injection(injected_hold):
+    # POST-LIFT TRUTH for the real trees: nothing is held (the retraction emptied the set).
+    assert fmg._is_held(_BD_REL) is False, "post-lift: bd is NOT held (SOVEREIGN_HELD_PATHS=())"
     assert fmg._is_held(_INF_REL) is False
-    assert fmg._is_held("data/cot/scripts/gold/gold_freshness_config.yaml") is False
+    # MECHANISM: the injected marker IS held -- the predicate still discriminates.
+    assert fmg._is_held(_SYNTH + "/scripts/gold/x.yaml") is True, \
+        "injected marker must register as held (the mechanism, not governance)"
 
 
 def _load(rel, include_held):
@@ -54,21 +77,21 @@ def _load(rel, include_held):
             os.environ.pop("COMP_FRESHNESS_PIPELINE", None)
 
 
-def test_bd_config_held_by_default_reads_under_flag_nonvacuous():
-    assert _load(_BD_REL, include_held=False) == [], "held bd config must be skipped by default (guard)"
-    assert _load(_BD_REL, include_held=True), \
-        "COMP_FRESHNESS_PIPELINE=1 must READ the bd config (non-vacuous; same file, only the flag differs)"
+def test_bd_config_read_post_lift():
+    """POST-LIFT TRUTH: the bd config READS by default now -- nothing is held."""
+    assert _load(_BD_REL, include_held=False), \
+        "post-lift: the bd freshness config must be READ by default (the retraction emptied the set)"
+
+
+def test_injected_held_config_skipped_and_reads_under_flag(injected_hold):
+    """THE MECHANISM under injection: a config under the injected marker is skipped by default
+    and READS under COMP_FRESHNESS_PIPELINE=1 -- the non-vacuous flag pair, same file."""
+    rel = _SYNTH + "/scripts/gold/gold_freshness_config.yaml"
+    assert _load(rel, include_held=False) == [], \
+        "a config under the INJECTED held marker must be skipped by default (guard mechanism)"
+    assert _load(rel, include_held=True), \
+        "COMP_FRESHNESS_PIPELINE=1 must READ the same config under injection (non-vacuous)"
 
 
 def test_inf_config_always_read():
     assert _load(_INF_REL, include_held=False), "inf config is not held -> must read regardless of the flag"
-
-
-if __name__ == "__main__":
-    test_is_held_predicate()
-    print("PASS: _is_held -- bd/schwab held, inf/cot not")
-    test_bd_config_held_by_default_reads_under_flag_nonvacuous()
-    print("PASS: bd freshness config held by default, read under COMP_FRESHNESS_PIPELINE=1 (non-vacuous)")
-    test_inf_config_always_read()
-    print("PASS: inf config always read (not held)")
-    print("=== freshness_manifest_gen bd-hold: ALL PASS ===")

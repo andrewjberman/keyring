@@ -1,14 +1,20 @@
-"""NFRA_TOOLPASS: comp-secrets `consumers` git-greps ["infra/","data/","org/",".tools/","docs/"]
-for a secret name/arn -- `data/` includes data/black_diamond, so it READS bd SOURCE content (the
-bd-reader class). FIX: git :(exclude) magic pathspec for the held dirs unless
-COMP_SECRETS_INCLUDE_HELD=1, NAMED (loud-note), matching the comp-pipescript deployed pattern.
+"""comp-secrets `consumers` held-dir EXCLUDE MECHANISM oracle (post-lift form).
 
-This test (synthetic, monkeypatched -- NEVER actually git-greps bd) captures the git-grep argv and
-asserts the held :(exclude) pathspecs are present by default and dropped under the override.
+HISTORY: authored by 3.0.0_SA_CVO~B under NFRA_TOOLPASS while the 2026-07-09 hold was live;
+the hold-era assertion (bd/schwab :(exclude) pathspecs present by default) went stale-red after
+the retraction landed (SOVEREIGN_HELD_PATHS=() @7a07814b94 -- HELD_PATH_MARKERS aliases it, so
+the exclude list is correctly EMPTY; dial F11, TO ADHOC.graph-tests-hygiene-f11-family).
 
-# rail-checked: assurance oracle for comp-secrets under test (NFRA_TOOLPASS sec.6)
-Author: 3.0.0_SA_CVO~B.
+TRUTH DETERMINATION (grounded at HEAD before this repair): LIFTED, mechanism retained --
+.tools/comp-secrets:276-278 still derives `:(exclude)` pathspecs from HELD_PATH_MARKERS at call
+time unless the include_held flag is set; the set is empty, so zero excludes emit. Repaired to
+post-lift truth + INJECTED-mechanism cases (monkeypatch on the tool module's own binding).
+
+Synthetic + monkeypatched as before -- NEVER actually git-greps anything.
+# rail-checked: assurance oracle for comp-secrets (dial F11 repair)
+Original author: 3.0.0_SA_CVO~B. F11 repair: 0.8.0_AE_CloudComp~D.
 """
+from __future__ import annotations
 
 import importlib.util
 import io
@@ -61,29 +67,38 @@ def _run(include_held: bool):
     return [a for a in captured if a and a[0] == "git"]
 
 
-def test_consumers_excludes_bd_and_schwab_by_default():
+# SYNTHETIC injection marker; must start with "data/" because the guard filters markers on that
+# prefix (.tools/comp-secrets:278 `if m.startswith("data/")`).
+_SYNTH_MARKER = "data/synthetic_held_zone_f11/"
+
+
+def test_consumers_emits_no_excludes_post_lift():
+    """POST-LIFT TRUTH: HELD_PATH_MARKERS is empty, so NO :(exclude) pathspecs emit -- the grep
+    covers every tree, which is the correct lifted behavior."""
     calls = _run(include_held=False)
     assert calls, "cmd_consumers should invoke git grep"
     for argv in calls:
-        assert ":(exclude)data/black_diamond/" in argv, f"bd source not excluded: {argv}"
-        assert ":(exclude)data/canonical/schwab/silver/" in argv, f"schwab source not excluded: {argv}"
+        excludes = [a for a in argv if str(a).startswith(":(exclude)")]
+        assert excludes == [], (
+            f"post-lift: zero excludes must emit (the governance set is empty): {excludes}"
+        )
 
 
-def test_include_held_override_drops_the_exclude_non_vacuous():
-    calls = _run(include_held=True)
-    assert calls, "cmd_consumers should invoke git grep"
-    for argv in calls:
-        assert ":(exclude)data/black_diamond/" not in argv, \
-            "COMP_SECRETS_INCLUDE_HELD=1 must DROP the exclude (proves the guard gates -- non-vacuous)"
-
-
-if __name__ == "__main__":
-    d = _run(False)
-    print(f"[default]  git calls={len(d)}  bd-excluded={all(':(exclude)data/black_diamond/' in a for a in d)}")
-    test_consumers_excludes_bd_and_schwab_by_default()
-    print("PASS: consumers excludes bd + schwab source by default (:(exclude) pathspec in every git-grep call)")
-    o = _run(True)
-    print(f"[override] git calls={len(o)}  bd-excluded={any(':(exclude)data/black_diamond/' in a for a in o)}")
-    test_include_held_override_drops_the_exclude_non_vacuous()
-    print("PASS: COMP_SECRETS_INCLUDE_HELD=1 drops the exclude (non-vacuous)")
-    print("=== comp-secrets consumers bd-hold: ALL PASS ===")
+def test_injected_markers_emit_excludes_and_flag_drops_them(monkeypatch):
+    """THE MECHANISM under injection: patch the tool module's own HELD_PATH_MARKERS binding
+    (comp-secrets imported the name; :278 reads it from module globals at call time) -- the
+    exclude derivation must emit the injected marker by default and DROP it under
+    COMP_SECRETS_INCLUDE_HELD=1 (the non-vacuous pair)."""
+    monkeypatch.setattr(cs, "HELD_PATH_MARKERS", (_SYNTH_MARKER,))
+    default_calls = _run(include_held=False)
+    assert default_calls, "cmd_consumers should invoke git grep"
+    for argv in default_calls:
+        assert ":(exclude)" + _SYNTH_MARKER in argv, (
+            f"the INJECTED marker must emit as an exclude by default (mechanism): {argv}"
+        )
+    override_calls = _run(include_held=True)
+    assert override_calls, "cmd_consumers should invoke git grep"
+    for argv in override_calls:
+        assert ":(exclude)" + _SYNTH_MARKER not in argv, (
+            "COMP_SECRETS_INCLUDE_HELD=1 must DROP the injected exclude (non-vacuous)"
+        )

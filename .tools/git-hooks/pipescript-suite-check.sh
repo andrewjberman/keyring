@@ -77,12 +77,20 @@ org/modules/graph/sovereign_held.py
 # mechanism and predates the pipescript glob -- the F9 rot class survives
 # wherever the glob cannot see, so membership is extended HERE, the one
 # derivation point, never a second list.
+# F11 family enrolled 2026-08-04 (TO ADHOC.graph-tests-hygiene-f11-family): the three
+# repaired held-guard mechanism oracles join the suite; their engines (comp-secrets,
+# freshness_manifest_gen, platinum_cli) delegate to the same sovereign_held predicate the
+# pipescript engine uses, so they redden on the same cause class. test_incrparity_cli_bd_hold
+# is RETIRED (guard deleted @f9ddda52f), not enrolled.
 WATCH_GLOBS="
 org/modules/graph/tests/test_multi_pipeline.py
 org/modules/graph/tests/test_pipeline_gaps.py
 org/modules/graph/tests/test_pipescript_*.py
 org/modules/graph/tests/test_sovereign_held_no_drift.py
 org/modules/graph/tests/test_extract_column_gaps_bd_hold.py
+org/modules/graph/tests/test_comp_secrets_bd_hold.py
+org/modules/graph/tests/test_freshness_manifest_gen_bd_hold.py
+org/modules/graph/tests/test_platinum_held_path_guard.py
 "
 
 STAGED="${PIPESCRIPT_SUITE_STAGED_FILES:-$(git diff --cached --name-only 2>/dev/null || true)}"

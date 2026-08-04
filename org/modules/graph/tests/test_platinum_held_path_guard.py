@@ -58,17 +58,61 @@ class _FakeSio:
         self.file_path = file_path
 
 
-_HELD_BD = "data/black_diamond/scripts/gold/G_00_synthetic.py"
+_BD_PATH = "data/black_diamond/scripts/gold/G_00_synthetic.py"
 _NONHELD_INF = "data/inf/scripts/gold/INF_D_04.synthetic.py"
 _KEY = "platinum/firm/mix_summary.json"
 
 
-def test_guard_prevents_read_on_a_held_bd_path(monkeypatch):
-    """THE GUARD BITES: on a held bd path, read_text is NEVER called (no held read).
+# F11 REPAIR (TO ADHOC.graph-tests-hygiene-f11-family, 0.8.0_AE_CloudComp~D): the hold-era
+# assertions (bd held-by-default) went stale-red after the retraction landed
+# (SOVEREIGN_HELD_PATHS=() @7a07814b94). TRUTH DETERMINATION at HEAD: LIFTED, mechanism
+# retained -- platinum_cli.py:313 still guards via _held_path_hit, whose predicate
+# (sovereign_held.is_held_path) resolves the governance set at CALL time; the set is empty.
+# The guard mechanism is now tested via an INJECTED synthetic marker patched into the
+# predicate's own defining globals; governance values are never re-asserted.
+_SYNTH_ZONE = "synthetic_held_zone_f11"
+_SYNTH_HELD = _SYNTH_ZONE + "/scripts/gold/G_00_synthetic.py"
 
-    This assertion is the non-vacuity proof: delete the `_held_path_hit` guard and read_text
-    gets called on the bd path -> `calls` is non-empty -> this test goes RED.
-    """
+
+def _inject(monkeypatch):
+    """Arm the mechanism in BOTH sovereign_held module instances. trace_graph binds the predicate
+    relatively when package-imported and bare when standalone (trace_graph.py:27-32), and
+    platinum_cli's guard (:308) imports the PACKAGE trace_graph at call time -- so the standalone
+    _TG instance this test loaded and the package instance the guard consults are two distinct
+    module objects over one file. Patching only one leaves the other un-armed (measured: the
+    guard test failed with a single-instance patch). is_held_path reads SOVEREIGN_HELD_PATHS
+    from its defining module's globals at call time; substring semantics (sovereign_held.py:80)
+    make the marker match by construction."""
+    import importlib
+    if str(_REPO) not in sys.path:
+        sys.path.insert(0, str(_REPO))
+    _sh_pkg = importlib.import_module("org.modules.graph.sovereign_held")
+    monkeypatch.setattr(_sh_pkg, "SOVEREIGN_HELD_PATHS", (_SYNTH_ZONE + "/",))
+    monkeypatch.setitem(_TG._shared_is_held_path.__globals__,
+                        "SOVEREIGN_HELD_PATHS", (_SYNTH_ZONE + "/",))
+
+
+def test_bd_path_is_read_post_lift(monkeypatch):
+    """POST-LIFT TRUTH: nothing is held, so a bd gold path IS read and its producer fn named --
+    the read HAPPENS now (this inverts the hold-era assertion, deliberately)."""
+    calls = []
+
+    def fake_read_text(self, *a, **k):
+        calls.append(str(self).replace("\\", "/"))
+        return "def synthetic_producer():\n    s3.put_object(Key='mix_summary.json')\n"
+
+    monkeypatch.setattr(pathlib.Path, "read_text", fake_read_text)
+    out = M._find_producer_function(_FakeSio(_BD_PATH), _KEY)
+    assert out == "synthetic_producer", (
+        f"post-lift: a bd gold script must be read + its producer fn named like any other, got {out!r}"
+    )
+    assert len(calls) == 1, f"expected exactly one read of the bd path post-lift, got {calls}"
+
+
+def test_guard_prevents_read_under_injected_hold(monkeypatch):
+    """THE GUARD BITES under injection: on a path under the INJECTED marker, read_text is NEVER
+    called. Non-vacuity: neuter the :313 guard and the read happens -> this test goes RED."""
+    _inject(monkeypatch)
     calls = []
 
     def fake_read_text(self, *a, **k):
@@ -76,11 +120,11 @@ def test_guard_prevents_read_on_a_held_bd_path(monkeypatch):
         return "def anything():\n    pass\n"
 
     monkeypatch.setattr(pathlib.Path, "read_text", fake_read_text)
-    out = M._find_producer_function(_FakeSio(_HELD_BD), _KEY)
-    assert out == "", "held gold script must degrade to metadata-only (empty producer fn)"
+    out = M._find_producer_function(_FakeSio(_SYNTH_HELD), _KEY)
+    assert out == "", "an injected-held script must degrade to metadata-only (empty producer fn)"
     assert calls == [], (
-        f"SOVEREIGN VIOLATION: read_text was called on a HELD path {calls} -- the guard did not "
-        f"bite. A held bd gold script's CONTENT was read to name a producer fn."
+        f"MECHANISM FAILURE: read_text was called on an injected-held path {calls} -- "
+        f"the :313 chokepoint did not bite."
     )
 
 
@@ -107,14 +151,17 @@ def test_guard_does_not_overfire_on_a_non_held_inf_path(monkeypatch):
 
 
 def test_held_path_hit_is_a_pure_string_check_never_opens(monkeypatch):
-    """The load-bearing property: _held_path_hit NEVER opens a file, so calling the guard
-    cannot itself read held content."""
+    """The load-bearing property (unchanged by the lift): _held_path_hit NEVER opens a file, so
+    calling the guard cannot itself read held content. Values updated to post-lift truth +
+    injection: real trees are NOT held; the injected marker IS -- all decided without a file op."""
+    _inject(monkeypatch)
+
     def boom(self, *a, **k):
         raise AssertionError("_held_path_hit opened a file -- it must be a pure string check")
 
     monkeypatch.setattr(pathlib.Path, "read_text", boom)
     monkeypatch.setattr(pathlib.Path, "open", boom)
-    assert _TG._held_path_hit(_HELD_BD) is True, "bd gold path must be held"
-    assert _TG._held_path_hit("schwab/silver/x.py") is True, "schwab silver must be held"
+    assert _TG._held_path_hit(_SYNTH_HELD) is True, "injected marker must be held (mechanism)"
+    assert _TG._held_path_hit(_BD_PATH) is False, "post-lift: bd gold path is NOT held"
     assert _TG._held_path_hit(_NONHELD_INF) is False, "inf gold path must NOT be held"
     assert _TG._held_path_hit(None) is False, "None path is not held (no crash)"
