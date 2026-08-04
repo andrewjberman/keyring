@@ -1,0 +1,12 @@
+2026-08-04T01:18:00Z  DENIED          batch=<unset>  RCG_BATCH_ID is not set. Run: RCG_BATCH_ID=B-000N git commit ...
+2026-08-04T01:18:00Z  DENIED          batch=B-9999  batch B-9999 failed verification (see the check output above)
+2026-08-04T01:47:14Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T01:49:51Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T01:51:37Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T02:03:58Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T02:04:01Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T02:05:20Z  PERMITTED       batch=B-0001  mode=execute cap=100
+2026-08-04T02:07:27Z  PERMITTED       batch=B-0001  mode=execute cap=100
+2026-08-04T02:08:57Z  PERMITTED       batch=B-0001  mode=revert cap=100
+2026-08-04T02:10:04Z  DENIED          batch=B-0001  batch B-0001 failed execute verification (see the check output above)
+2026-08-04T02:11:36Z  PERMITTED       batch=B-0001  mode=execute cap=100
