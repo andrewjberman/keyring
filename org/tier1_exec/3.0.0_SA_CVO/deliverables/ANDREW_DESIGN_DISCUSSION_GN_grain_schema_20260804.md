@@ -155,7 +155,17 @@ rail. This ruling retires grain terminology from TOOL CLASSIFICATION; the F-D mi
 (stage-2 `grain:` field -> `coordinate:`) completes that side. Purging the word from the graph
 contract would collide with existing ratified canon and is NOT proposed.
 
-## Open forks needing a word (Andrew or PRD treatment)
+## Round 6 (~151xZ) -- ANDREW NAMING ACT, verbatim
+
+> ""toolscape consolidation (C-indexed)" works, proceed"
+
+**F-C CLOSED.** The initiative is named **"toolscape consolidation (C-indexed)"** (successor
+label to "two-grain toolscape"; surfaces NAVIGATE/DRILL per round 5). ALL FOUR FORKS NOW
+CLOSED: F-A D-rail coordinate (round 4) · F-B index-into-C (round 2) · F-C this naming act ·
+F-D enum migration (folded into the PRD as a workstream, CTO-confirmed 150514Z). Relayed to
+CTO same turn -- the PRD title layer was waiting on exactly this word.
+
+## Open forks needing a word (Andrew or PRD treatment) -- ALL CLOSED as of round 6
 
 - F-A: D-rail tools -- separate D-coordinate (recommended) vs folded into G?
 - F-B: spelling -- "G(N)" as the tool-side alias of C(N), or drop G entirely and declare
