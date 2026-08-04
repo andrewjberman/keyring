@@ -1579,8 +1579,11 @@
   "n_files": 4,
   "registry_fns": [],
   "tf": [],
-  "live": [],
-  "verdict": "ORPHAN"
+  "live": [
+   "opal-trending-image-generator"
+  ],
+  "verdict": "DIVERGENT",
+  "correction": "CORRECTED per the prose sweep class-(iv) retraction + CTO~B 142159Z: live fn opal-trending-image-generator EXISTS; registry source_dir points at trending_image_selector/ (crosswalk error, CTO~B board). Initial ORPHAN was a prefix-blind name-guess miss. Machine table lagged the prose -- the pyiceberg class in miniature; fixed in-place, history in git."
  },
  {
   "tree": "infra/aws/lambda/trending_image_selector",

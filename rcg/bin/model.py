@@ -61,15 +61,49 @@ def main() -> int:
     # they carry Andrew's rulings / delegation-backed assessments -- the signal seeds
     # structurally lack (E-0001 measured: archive-precision 0.153 on the band without them)
     ratified: dict = {}
-    src_weight = {"andrew_ratification": 5.0, "assessed_ratified_by_delegation": 3.0}
+    # weights are RULED values, not defaults: andrew 5x (R-0019 authority),
+    # delegation 3x (R-0020), cycle3_adjudication 3x (CTO~B ack 20260804T135024Z,
+    # parity-with-delegation, revisit at cycle-4 once E-0004 calibration exists).
+    # An UNKNOWN source falls to 2.0 AND is reported in the per-source census below --
+    # a silent default is how an acked weight fails to reach the trainer.
+    src_weight = {"andrew_ratification": 5.0, "assessed_ratified_by_delegation": 3.0,
+                  "cycle3_adjudication": 3.0}
     rat_w: dict = {}
+    src_census: dict = {}
     ledger = WS / "rcg" / "ledger" / "LABELS.jsonl"
     if ledger.exists():
         for r in load_jsonl(ledger):
             if r.get("binary") in ("KEEP", "ARCHIVE_CANDIDATE"):
                 ratified[r["path"]] = r["binary"]
-                rat_w[r["path"]] = src_weight.get(r.get("source", ""), 2.0)
+                src = r.get("source", "")
+                rat_w[r["path"]] = src_weight.get(src, 2.0)
+                key = f"{src}@{src_weight.get(src, 2.0)}" + \
+                      ("" if src in src_weight else " (DEFAULT -- unruled source)")
+                src_census[key] = src_census.get(key, 0) + 1
     seeds = {**seeds, **ratified}
+    print("[model] per-source label census (weight applied): " +
+          ", ".join(f"{k}={v}" for k, v in sorted(src_census.items())))
+
+    # TRAINING POOL: newest features per path across ALL scan vintages -- NOT just the
+    # newest scan. Ratified labels on since-deleted files are the best-confirmed
+    # positives (the 2026-08-04 sweep removed 2,940 = 34% of the ARCHIVE class), and a
+    # post-sweep rescan carries no features for them: training only on the newest
+    # vintage would silently drop them, wasting the ratification compute. Later
+    # vintages win per path; scoring stays newest-vintage-only (rows) below.
+    train_pool_by_path: dict = {}
+    n_vintages = 0
+    for vd in sorted(d for d in (WS / "rcg" / "scans").iterdir() if d.is_dir()):
+        fp = vd / "features.jsonl"
+        if fp.exists():
+            n_vintages += 1
+            for r in load_jsonl(fp):
+                train_pool_by_path[r["path"]] = r
+    n_resurrected = sum(1 for p in train_pool_by_path
+                        if p not in {r["path"] for r in rows})
+    print(f"[model] training pool: {len(train_pool_by_path)} paths across {n_vintages} "
+          f"vintages ({n_resurrected} retained from older vintages only -- deleted or "
+          f"pre-rescan files whose labels stay trainable)")
+
     head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=WS,
                           capture_output=True, text=True).stdout.strip()
     version = {"cycle": 0, "head": head,
@@ -84,7 +118,7 @@ def main() -> int:
         for r in subset:
             vec = []
             for c in cols:
-                v = r[c]
+                v = r.get(c)  # older-vintage rows may lack newer feature columns
                 if c in CATEGORICAL:
                     vec.append(str(v))
                 else:
@@ -92,10 +126,11 @@ def main() -> int:
             out.append(vec)
         return out
 
-    n_rat = sum(1 for p2 in ratified if p2 in {r["path"] for r in rows})
-    print(f"[model] ratified labels folded: {len(ratified)} ({n_rat} in scoreable rows), 5x weight")
+    n_rat = sum(1 for p2 in ratified if p2 in train_pool_by_path)
+    print(f"[model] ratified labels folded: {len(ratified)} ({n_rat} with features in the "
+          f"training pool), per-source weights above")
     weights = rat_w
-    train_rows = [r for r in rows if r["path"] in seeds]
+    train_rows = [r for r in train_pool_by_path.values() if r["path"] in seeds]
     y = [1 if seeds[r["path"]] == "ARCHIVE_CANDIDATE" else 0 for r in train_rows]
     cat_idx = [cols.index(c) for c in CATEGORICAL]
     n_pos = sum(y)
