@@ -92,3 +92,14 @@ self-selects: zero multi-match, single-node walk from the canonical id; miss = r
 mode). **T0 PARTIAL: RESTORE-IN-FLIGHT** -- the ~B/~F shared-file interleave left comp-trace's
 contract entry momentarily neither declared nor pending at @ffb41a849; follow-up commit on ~B's
 ACK; I verify the restored block on landing. T2 correctly untouched (PRD-gated; diff grepped).
+
+## T0 CLOSED -- restore @3293a0cda verified 2026-08-04 ~2340Z
+
+Contract block present (:513, position preserved, grain=field intact), coverage line carries the
+LIVE-denominator promise, and the dial's cross-instrument scope-asymmetry finding is woven in as
+a DECLARED blind spot -- the record's own finding became the contract's honesty line. Gate
+stable: declared 26 + pending 44 over 70. The comp-trace dial is now FULLY CLOSED, no armed
+residuals. (Session note: third shared-YAML interleave tonight disclosed by ~F -- a comp-heat
+entry rode their commit, true author routed via COO; comp-heat now declared-ahead-of-landed
+while its engine edits sit uncommitted at the heat-cluster seat -- transient mid-build state,
+verify armed on that seat's landing.)
