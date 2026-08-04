@@ -162,6 +162,34 @@ and partly undeclared:
 - The F2 universe naming act (at Andrew) and the ms-cloud surface gap (high) are the two
   coverage-universe items that shape PRD scope hardest.
 
+## R-1 — CTO RULING (2026-08-04 ~13:2xZ): comp-pipescript is ABSORBED, not retired
+
+**Trigger:** Andrew at the COO terminal ~1314Z (record @ea609ab28), verbatim: *"…we are about to
+make two layer grain broad and deep search, and may no longer need com-pipescript when we're done
+here"* / *"unless comp-pipescript becomes the script-grain and comp-trace becomes the node-grain
+(deep, and broad, respectively) of the two-grain initiative"*. COO held the staged F1/F9 GOs
+(@606d3d1f4) and routed the absorption question here as umbrella owner.
+
+**Ruling:** Andrew's second sentence IS the design of record — it restates his own 06:3xZ design
+direction (@6b6e68455d: *"a broader, node 'comp-trace' style tool for nodes… then at any given
+node with executable code they can go to 'comp-pipescript' code level"*) and this audit's
+partition (§2.B: comp-pipescript = the Grain-2 archetype). Under banked constraint #1 (typed
+dispatch over EXISTING engines — the surfaces route, they do not rewrite):
+
+- **The ENGINE survives as the script-grain (deep) of the two-grain surface.** comp-trace-class
+  navigation is the node-grain (broad).
+- **What may retire at consolidation is the standalone SURFACE** — the separately-learned
+  13-subcommand entry point folds into the Grain-2 face. That is a routing change, not an engine
+  retirement.
+- **Therefore F1/F9 are investments in the surviving engine — COO fires the GOs.** Reinforcing,
+  independent of the future: the F1 double-false-clean is LIVE today on the $22M-class ad-hoc-run
+  guard, and comp-pipescript remains that guard through any interim — the hold traded a live
+  hazard against at most two files of build waste.
+
+**Boundaries:** this ruling does not pre-decide MDPF_CANRTE fork F-3 (consistent either way —
+both want the engine healthy, and C-2 there already carries the cross-tree blindness fix), and
+does not touch the F2 universe naming act (at Andrew).
+
 ## Compiler Tools (this audit's evidence)
 
 | tool / probe | result | use |
