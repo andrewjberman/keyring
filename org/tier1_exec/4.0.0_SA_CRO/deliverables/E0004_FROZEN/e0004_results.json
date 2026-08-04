@@ -1,0 +1,70 @@
+{
+ "prior_c4259ace": {
+  "FULL": {
+   "n": 336,
+   "tp": 0,
+   "fp": 4,
+   "fn": 11,
+   "tn": 321,
+   "accuracy": 0.955,
+   "mean_p_when_ARCHIVE": 0.014,
+   "mean_p_when_KEEP": 0.04
+  },
+  "FLIPS": {
+   "n": 12,
+   "tp": 0,
+   "fp": 1,
+   "fn": 11,
+   "tn": 0,
+   "accuracy": 0.0,
+   "mean_p_when_ARCHIVE": 0.014,
+   "mean_p_when_KEEP": 0.663
+  },
+  "BAND": {
+   "n": 11,
+   "tp": 0,
+   "fp": 2,
+   "fn": 0,
+   "tn": 9,
+   "accuracy": 0.818,
+   "mean_p_when_ARCHIVE": null,
+   "mean_p_when_KEEP": 0.445
+  },
+  "flip_paths_n": 12,
+  "band_n": 11
+ },
+ "v3_a35ac7af": {
+  "FULL": {
+   "n": 336,
+   "tp": 0,
+   "fp": 11,
+   "fn": 11,
+   "tn": 314,
+   "accuracy": 0.935,
+   "mean_p_when_ARCHIVE": 0.026,
+   "mean_p_when_KEEP": 0.049
+  },
+  "FLIPS": {
+   "n": 12,
+   "tp": 0,
+   "fp": 1,
+   "fn": 11,
+   "tn": 0,
+   "accuracy": 0.0,
+   "mean_p_when_ARCHIVE": 0.026,
+   "mean_p_when_KEEP": 0.725
+  },
+  "BAND": {
+   "n": 14,
+   "tp": 0,
+   "fp": 8,
+   "fn": 0,
+   "tn": 6,
+   "accuracy": 0.429,
+   "mean_p_when_ARCHIVE": null,
+   "mean_p_when_KEEP": 0.532
+  },
+  "flip_paths_n": 12,
+  "band_n": 14
+ }
+}
