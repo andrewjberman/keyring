@@ -16,6 +16,7 @@ allowed_paths:
   - rcg/ledger/DISPOSITIONS.jsonl
   - rcg/ledger/LABELS.jsonl
   - rcg/ledger/MODEL_EVAL.jsonl
+  - rcg/ledger/BATCHES.jsonl
   - rcg/grader/INSTRUCTIONS.md
   - rcg/workflows/W1_REVIEW_PREP.md
   - rcg/workflows/W2_POST_REVIEW.md
@@ -31,9 +32,11 @@ allowed_paths:
   - rcg/bin/post_review.py
 append_only:
   - rcg/rulings/RULINGS.jsonl
+  - rcg/ledger/BATCHES.jsonl
   - rcg/ledger/DISPOSITIONS.jsonl
   - rcg/ledger/LABELS.jsonl
   - rcg/ledger/MODEL_EVAL.jsonl
+  - rcg/ledger/BATCHES.jsonl
 local_only:            # gitignored via rcg/.gitignore; measurements are ephemeral, decisions durable
   - rcg/scans/
   - rcg/models/

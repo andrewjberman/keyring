@@ -1,0 +1,1 @@
+{"id": "B-0000", "date": "2026-08-04", "type": "genesis", "note": "append-only per CTOB-RCG-001 s.5.1: batch entries {id,date,status:DRAFT|RATIFIED|EXECUTED|REVERT_EXERCISED,paths:[FULL explicit list, NO GLOBS],sha256_sorted_list,count,citing_ruling,cohorts,executed_commit?,revert_commit?}"}
