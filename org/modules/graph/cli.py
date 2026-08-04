@@ -955,10 +955,10 @@ def cmd_blast(args):
             # near-match is far more often a real second copy -- a legacy name still carrying
             # traffic -- than a misspelling, and calling it a typo tells the reader to correct their
             # query when the finding is that the estate has two of something.
-            _bu.aprint("  near-matches in the graph (DUPLICATE / LEGACY candidates -- these are "
-                       "real nodes, not spelling hints):", file=sys.stderr)
+            _bu.aprint("  near-matches in the graph (UNVERIFIED -- DUPLICATE / LEGACY candidates, "
+                       "not implied edges; real nodes, not spelling hints):", file=sys.stderr)
             for _s in _sugg:
-                _bu.aprint(f"    - {_s}", file=sys.stderr)
+                _bu.aprint(f"    - {_s} [UNVERIFIED]", file=sys.stderr)
         print("  not a typo? by question: comp-xref <symbol> (graph-wide occurrence) | "
               "comp-symbols <file> (what a file defines) | comp-grep <pattern> (on-rails text "
               "search; .tools/ + org/modules INCLUDED).", file=sys.stderr)

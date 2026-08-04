@@ -650,12 +650,23 @@ def format_blast(node_id: str, results: list[tuple[Node, Edge, int]]) -> str:
         return (f"No downstream consumers found for: {node_id} "
                 f"(no EXTRACTED edge -- NOT provably zero).\n  {BLAST_EDGE_CAVEAT}")
 
+    # Check if subject is served-tier (json/ tier, graph-invisible across seams)
+    _is_served_tier = "json/" in node_id.lower() or "/json/" in node_id.replace("\\", "/").lower()
+
     # Group by type
     by_type: dict[str, list[Node]] = {}
     for node, edge, depth in results:
         by_type.setdefault(node.node_type, []).append(node)
 
     lines = [f"BLAST RADIUS: {node_id}", ""]
+
+    # DECLARED-LIMITATION LINE: if subject is served-tier, state the limitation
+    if _is_served_tier:
+        lines.append("  DECLARED LIMITATION: subject is in served-tier (json/ output). "
+                     "The graph carries zero cross-plane edges today (0 of 232 S3Key nodes).")
+        lines.append("  This blast radius is a LOWER BOUND for served-tier subjects.")
+        lines.append("")
+
     for ntype, nodes in sorted(by_type.items()):
         lines.append(f"  {ntype} ({len(nodes)}):")
         for n in nodes:
