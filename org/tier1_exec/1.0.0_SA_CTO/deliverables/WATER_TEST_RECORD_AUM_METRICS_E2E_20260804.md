@@ -55,6 +55,34 @@ the 49f builder (scope SS6) · UTC-vs-ET run_date basis (cot retry-net, cross-pi
 same-class specimens in one day: convention divergence inside a chain is structural, not
 MDPF-local.
 
+## SUPERSEDE ADDENDUM (closed ~17:57Z) — the interim is RETIRED; fresh 4/4 at the T-1 frontier
+
+Condition-3 executed across four rounds and CLOSED at the serve (AE 175723Z, live-verified
+head-object + content, never the lambda summary): all four `aum-metrics` stamped 17:53:44-45Z —
+**49f / inflection / global @ 2026-08-03** (the T-1 frontier), **cottonwood @ 2026-07-31** (its
+roster-declared cadence frontier, up from 07-24). Cottonwood serves 5 canonical by_model rows,
+NO moderate-income row, meta residual {$6,220,375.05 / 8 accts, G8 standing ruling cited} — the
+ruled shape exactly. One cent-level staged-vs-served read flagged to 0.2.0's six-signal pass.
+
+**The classification arc inside the supersede** (the record's second incident-as-evidence):
+'Opal Moderate Income Portfolio' (new BD strategy, $5.0M/6 accts) → vocabulary gate refused
+LOUD → three-way discriminator (CRO branches incl. the residual-conversion stop) → pre-refinement
+mint landed → CRO sharpened to COMPOSITION-PRESENCE → DS proved ABSENT on the blend-table oracle
+(30-row full read, 16 parents) → revert @54b15511c → round-4 green. **Controls that held: the
+global composition gate refused the $5.0M misclassification TWICE (delta = the amount to the
+dollar); AE's listing-derivation full hold kept disputed content off the serve.** Stale-beats-
+misclassified ruled and vindicated.
+
+**Two architecture findings banked to CANRTE from the supersede rounds:**
+1. **Staged-input deadlock (AE):** stage 6a reads staging BEFORE 6d can rebuild it — a gate that
+   refuses on poisoned staging also blocks the run that would FIX the staging; self-heal gap,
+   design note for the canonical route's stage contract.
+2. The mint-free re-stage by 0.2.0_DS was the deadlock break — cross-seat, correct, on the
+   reviewed path.
+
+Remaining open (unchanged): NEVER#4 acceptance (a SCHEDULED run proving the chain), the
+post-test one-hunk queue, and the F-A first live exercise tomorrow 12:15Z.
+
 ## Compiler Tools
 
 comp-routes trace/origins (pointer chain + real origin bucket) · comp-trigger (publisher schedule
