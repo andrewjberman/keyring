@@ -66,3 +66,19 @@ tie print must carry the verified figures WITH VINTAGE (@07-30) for the DT gate.
 - The BR1 Eclipse puller writes bronze/eclipse_qa/ ONLY until cut day.
 - The retire ruling's box keeps running until BOTH BR1 gates are live + exercised; the
   stop is Andrew/COO-confirmed, never automatic.
+
+## Addendum ~05:45Z -- BR1-DS three legs shipped + exercised (TO COMPLETE per COO 054210Z)
+
+| Leg | Artifact | Exercises (observed vs expect) |
+|---|---|---|
+| 1 puller | infra/aws/lambda/inf-pipeline/inf-api-eclipse/lambda_function.py | refuse-past-date NEG (2026-08-01 -> RAISED, mechanism named) PASS; POS (today passes guard to auth boundary) PASS |
+| 2 emitter | infra/aws/lambda/inf-pipeline/inf-bronze-complete-emitter/lambda_function.py | REFUSAL (synthetic-missing transactions -> WITHHELD+RAISED, full 6-dim verdict printed) PASS; POSITIVE (2026-07-31 known-complete -> COMPLETE dry-run, all dims via key sets) PASS; DATE-GUARD (past date w/o dry_run -> REFUSED) PASS |
+| 3 harness | org/tier2_senior/0.4.0_DS_ClientPlatform/scripts/eclipse_overlap_compare.py | classification design (IDENTICAL/VALUE-DRIFT-quantified/STRUCTURAL=fail/MISSING=fail); first live run = day-1 of the 5-TD clock (rides AE's first scheduled staging fire) |
+
+Design calls ratified (COO 054210Z): the staging-suffixed sentinel blocks the dual-writer
+class STRUCTURALLY (the defect event cannot occur -- stronger than detection); v1
+ATTEMPTED -> fleet PRESENT stricter-safe; the committed ledger
+(deliverables/BR1_overlap_ledger.jsonl) is Gate-1's acceptance oracle -- COO reads the
+ledger, not summaries. Standing duty: harness + ledger entry each comparison day.
+Remaining open at this seat: EMIT-2 residual (honest-null render + scheduled-fire read,
+both riding today's 09:00 fire) + T4.A residue + the scheduled-evidence reads.
