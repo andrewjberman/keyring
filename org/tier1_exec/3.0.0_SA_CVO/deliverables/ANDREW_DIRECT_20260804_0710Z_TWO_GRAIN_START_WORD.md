@@ -23,6 +23,11 @@ the session-START clock; ~6h of hold elapsed before Andrew's message. Clock veri
   it from the list this same exchange; candidates: (2) comp-blast honesty edits + graph-seam
   census fix thread, (3) Kimi build legs (already in flight), (4) COO's F1-widened + F9 routing
   (queued), (5) the F2 naming act.
+- **RESOLVED ~13:05Z (Andrew, same exchange, structured-choice answer): the second item is the
+  GRAPH-SEAM / COMP-BLAST FIXES thread** — the two comp-blast honesty edits (~A builds, CVO
+  verifies on landing) PLUS COO dispatching the queued F1-widened postdeps fix TO and the F9
+  commit-gate build to the graph lane. Kimi chain and F2 naming act explicitly NOT the named
+  item (they retain their existing gates/owners unchanged).
 - **Supersedes-for-scope:** the earlier same-session Andrew-direct hold ("finish startup and hold
   for further advisory") is lifted FOR THE ITEMS THIS WORD NAMES; the hold's general posture is
   otherwise unchanged until Andrew says otherwise.
