@@ -98,7 +98,7 @@ entries:
   - id: cloud.lookup.nodes_by_type
     use_case: "List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles)."
     canonical_call: |
-      comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.id, n.name LIMIT 50"
+      comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.node_id, n.name LIMIT 50"
     tool: comp-kuzu
     mode: query
     layer: cloud
@@ -111,7 +111,7 @@ entries:
   - id: cloud.reachability.transitive
     use_case: "What can X reach transitively (role->resources, lambda->KMS via role/policy)?"
     canonical_call: |
-      comp-kuzu "MATCH (a:CloudNode {name:$x})-[*1..3]->(b:CloudNode) RETURN DISTINCT b.node_type, b.id"
+      comp-kuzu "MATCH (a:CloudNode {name:$x})-[*1..3]->(b:CloudNode) RETURN DISTINCT b.node_type, b.node_id  // TEMPLATE: no CLI param binding -- substitute $x with a literal name before running"
     tool: comp-kuzu
     mode: query
     layer: cloud
@@ -124,7 +124,7 @@ entries:
   - id: cloud.blast.what_breaks
     use_case: "What breaks if I change/remove this cloud resource (blast radius)?"
     canonical_call: |
-      comp-kuzu "MATCH (n:CloudNode {id:$arn})<-[e:CloudEdge*1..3]-(dep) RETURN dep.id, dep.node_type, e"
+      comp-kuzu "MATCH (n:CloudNode {node_id:$arn})<-[e:CloudEdge*1..3]-(dep) RETURN dep.node_id, dep.node_type, e  // TEMPLATE: no CLI param binding -- substitute $arn with a literal ARN before running"
     tool: comp-kuzu
     mode: query
     layer: cloud
@@ -917,7 +917,7 @@ entries:
     canonical_call: |
       comp-kuzu "MATCH (c:PortalComponent {name:$comp})-[:FETCHES]->(:ApiRoute)
                  -[:ROUTES_TO]->(l:CloudNode {node_type:'LAMBDA'})-[:WRITES]->(b:CloudNode {node_type:'S3_BUCKET'})
-                 RETURN c.name, l.name, b.id"
+                 RETURN c.name, l.name, b.node_id"  # TEMPLATE (planned, post P2-STITCH): edge labels non-literal, $comp needs literal substitution
     tool: comp-kuzu
     mode: query
     layer: cross-layer
