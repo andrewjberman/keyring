@@ -128,6 +128,33 @@ CVO structural answer (delivered in-session, summary):
 - Rollout: pure-add on the 20 declared contracts; the 49-pending tail is the worklist;
   announce-then-enforce per comp-rail precedent.
 
+## Round 5 (~150xZ) -- Andrew verbatim (vocabulary correction)
+
+> "Is there a reason we're using the term grain-1? i thought we came to the conclusion we just
+> wanted to index off C(N) and not use any G(N) or "grain"-explicit terminology/ontology?"
+
+**CVO acknowledgment: no reason -- legacy carry-over.** "Grain-1/Grain-2" is the ORIGINAL
+two-grain-initiative vocabulary (@6b6e68455, which PREDATES the C-indexing conclusion), and I
+kept using it after flagging its collision myself as F-C. The correct behavior pending a
+naming act was to STOP using the colliding term, not continue it.
+
+**Forward vocabulary (this exchange effectively opens/answers F-C):**
+- Coordinates: **C(N) / D(N) only.** No G(N), ever, anywhere.
+- The two surfaces: functional names -- **NAVIGATE** (breadth: C0/C1 topology up through
+  C3/C4 semantics) and **DRILL** (depth: compiles C0 facts from content; comp-pipescript
+  archetype). No "grain" in surface names.
+- The initiative label ("two-grain toolscape") itself needs renaming -- naming act at Andrew;
+  candidates offered: "toolscape consolidation (C-indexed)" / "navigate+drill toolscape".
+- PRD MUST NOT harden "Grain-1/Grain-2" (the universe audit's partition headings carry them) --
+  relayed to CTO same turn.
+
+**Honest boundary (surfaced, not adjudicated):** the WORD "grain" survives in two
+already-ratified NON-tool-classification homes -- the graph stable-grain contract
+(coverage-map grain_contract, node/edge `level` attribute) and the rule bank's D1 "value/grain"
+rail. This ruling retires grain terminology from TOOL CLASSIFICATION; the F-D migration
+(stage-2 `grain:` field -> `coordinate:`) completes that side. Purging the word from the graph
+contract would collide with existing ratified canon and is NOT proposed.
+
 ## Open forks needing a word (Andrew or PRD treatment)
 
 - F-A: D-rail tools -- separate D-coordinate (recommended) vs folded into G?
