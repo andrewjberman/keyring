@@ -53,6 +53,14 @@ BATCHES = "rcg/ledger/BATCHES.jsonl"
 
 PERMIT, DENY, CANNOT_EVAL = 0, 2, 3
 
+# NUL separator for git -z output. Built with chr(0) DELIBERATELY: writing the
+# two-character backslash-zero escape through a heredoc put a REAL null byte
+# in this file and python refused to parse it ("source code cannot contain
+# null bytes") -- twice, the second time inside the comment warning about it.
+# writing that escape through a heredoc put a REAL null byte in this file and
+# python refused to parse it ("source code cannot contain null bytes").
+NUL = chr(0)
+
 
 class CannotEvaluate(Exception):
     """Raised when a property cannot be established. Always becomes a DENY."""
@@ -65,6 +73,27 @@ def git(*args: str, allow_fail: bool = False) -> str:
             return ""
         raise CannotEvaluate(f"git {' '.join(args)} rc={out.returncode}: {out.stderr.strip()}")
     return out.stdout
+
+
+def git_paths(*args: str) -> set[str]:
+    """Read a PATH LIST from git with -z. Never parse paths by line or whitespace.
+
+    Two hazards, both closed by -z:
+      * a path containing a SPACE breaks any .split() consumer -- live in this
+        estate right now: B-0004 deleted
+        '.../session_diagfix012_leaderboard_joe_brandenbur g_fix.md', and my own
+        verification script (which used .split()) reported it as 3 spurious
+        non-ARCHIVE paths. B-0001..B-0003 had passed the same script by LUCK OF
+        PATH CONTENT, which is the third "passed by luck of the input" of this
+        session (after the xargs arg-limit and the 93-path single invocation).
+      * a path with non-ASCII or control characters is C-QUOTED by git under
+        core.quotepath ("a\\303\\251b"), so the emitted string is not the literal
+        path and would never match the ledger entry -- a C2 set-equality FALSE
+        DENY. Fail-closed, therefore safe, but it would read as batch/tree
+        divergence and send an operator hunting the wrong thing, exactly like the
+        xargs split did. -z suppresses quoting entirely.
+    """
+    return {p for p in git(*args, "-z").split("\0") if p}
 
 
 def show_at_head(path: str) -> str:
@@ -227,14 +256,12 @@ def run_revert_checks(batch_id: str) -> tuple[int, list[str]]:
     parent = git("rev-parse", f"{executed}^").strip()
 
     # --- R1 addition-only --------------------------------------------------
-    nonadd = {p for p in git("diff", "--cached", "--name-only",
-                             "--diff-filter=DMRTUXB").splitlines() if p}
+    nonadd = git_paths("diff", "--cached", "--name-only", "--diff-filter=DMRTUXB")
     if nonadd:
         fail.append(f"R1 NOT addition-only -- {len(nonadd)} non-addition change(s): "
                     + ", ".join(sorted(nonadd)[:5]) + (" ..." if len(nonadd) > 5 else ""))
 
-    added = {p for p in git("diff", "--cached", "--name-only",
-                            "--diff-filter=A").splitlines() if p}
+    added = git_paths("diff", "--cached", "--name-only", "--diff-filter=A")
     print(f"  DENOMINATOR: {len(added)} staged addition(s) vs {len(declared)} declared in batch; "
           f"restoring from {parent[:12]} (parent of {str(executed)[:12]})")
 
@@ -299,7 +326,7 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
     # load_batch already read HEAD, so presence is proven. The remaining half is
     # that THIS commit does not also author it (SoD: the executor may not author
     # its own authorization in the same act).
-    staged_all = {p for p in git("diff", "--cached", "--name-only").splitlines() if p}
+    staged_all = git_paths("diff", "--cached", "--name-only")
     if BATCHES in staged_all:
         fail.append(f"C3 batch ledger {BATCHES} is MODIFIED in this commit -- the executor may "
                     f"not author its own authorization in the same act (SoD)")
@@ -318,14 +345,12 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
                     "execution against a different tree (ruling s.5.1)")
 
     # --- C1 deletion-only ---------------------------------------------------
-    nondel = {p for p in git("diff", "--cached", "--name-only",
-                             "--diff-filter=ACMRTUXB").splitlines() if p}
+    nondel = git_paths("diff", "--cached", "--name-only", "--diff-filter=ACMRTUXB")
     if nondel:
         fail.append(f"C1 NOT deletion-only -- {len(nondel)} non-deletion change(s): "
                     + ", ".join(sorted(nondel)[:5]) + (" ..." if len(nondel) > 5 else ""))
 
-    deleted = {p for p in git("diff", "--cached", "--name-only",
-                              "--diff-filter=D").splitlines() if p}
+    deleted = git_paths("diff", "--cached", "--name-only", "--diff-filter=D")
     note(f"  DENOMINATOR: {len(deleted)} staged deletion(s) vs {len(declared)} declared in batch")
 
     # --- C2 exact set equality, BOTH directions -----------------------------
@@ -436,7 +461,7 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
     # tree that LOOKS present and cannot import. Specimen, queued for execution
     # 2026-08-03 before R-0022 corrected it:
     #   ARCHIVE click/__init__.py, click/core.py  +  KEEP click/decorators.py
-    tracked = {p for p in git("ls-files").splitlines() if p}
+    tracked = git_paths("ls-files")
     survivors = tracked - deleted
     broken = []
     for p in sorted(deleted):
@@ -470,7 +495,7 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
     # about what deleting it MEANS.
     try:
         tree: dict[str, str] = {}
-        for line in git("ls-tree", "-r", "HEAD").splitlines():
+        for line in git("ls-tree", "-r", "-z", "HEAD").split(NUL):
             meta, _, path = line.partition("\t")
             parts = meta.split()
             if len(parts) >= 3 and path:
