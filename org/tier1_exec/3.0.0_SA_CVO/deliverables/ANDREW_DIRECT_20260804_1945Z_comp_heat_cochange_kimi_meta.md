@@ -49,3 +49,13 @@ CVO reading (confirmed with Andrew in-session):
 3. **Packaging recommendation (CVO -> COO/CTO)**: one graph-lane seat takes the cluster --
    comp-cochange build + comp-heat compare mode + CH-3 basis emission -- same battery seam,
    same substrate (git history), same acceptance discipline (born-registered / basis-in-output).
+
+## Round 3 (~2020Z) -- Andrew verbatim (CH-2 resolved)
+
+> "Also yes we do need federated Trino mode registered"
+
+**CH-2 RULED: REGISTERED** (not retired). The `federated` mode joins the tools_index subcommand
+declaration + gets a contract row; dial re-dial trigger 6 converts from
+registration-or-retirement to REGISTRATION-VERIFY (my exercise on landing -- which also converts
+the P6 deferred federated probe into a due exercise once registration lands). Joins the
+one-seat cluster: cochange + compare + basis-emission + federated registration.
