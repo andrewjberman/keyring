@@ -124,3 +124,12 @@ outright -- it TRANSFORMS into an explicit OFFTAKE VIEW of the Kimi pipeline's C
 (the sovereign-stamped goals survive as C4-tier intent; the lexical sub-group/glob layer still
 dissolves; activity reporting succeeds to cochange grain rollups). MSTR ownership of org/tier0
 unchanged -- transformation design lands via MSTR or Andrew's bypass word.
+
+## Round 8 (~2155Z) -- ANDREW RATIFICATION, verbatim
+
+> "I like it, proceed."
+
+RATIFIED: the missions-as-Kimi-offtake transformation design (round-7 layer table). Execution:
+CVO writes the transformation spec as a committed deliverable; routes to MSTR (owner, executes)
+sequenced AFTER cochange grain lands; CC CTO~B (stance layer succeeds to State/Friction),
+0.2.0_DS (grain gains a second consumer), COO (sequencing).
