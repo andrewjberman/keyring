@@ -86,9 +86,22 @@ fi
 # string still said WARN.)
 CAP="${RCG_SWEEP_CAP:-100}"
 
-if ! python "$ENGINE" --batch-id "$RCG_BATCH_ID" --cap "$CAP"; then
-    _deny "batch $RCG_BATCH_ID failed verification (see the check output above)"
+# MODE. Default 'execute' (the deletion batch). 'revert' is the s.7 restore leg:
+# addition-only, set-equal to the batch, and every blob hash-identical to the
+# pre-deletion tree -- so revert mode can restore exactly what was deleted and
+# nothing else. It exists because the restore leg was otherwise UNAUTHORABLE: the
+# sweep identity is the only one holding those lanes (granting them is what made
+# it so -- measured 93/93 vs 0/93 for every exec seat), and C1 forbade it from
+# committing additions. A safety case that cannot be executed is not a safety case.
+MODE="${RCG_SWEEP_MODE:-execute}"
+case "$MODE" in
+  execute|revert) ;;
+  *) _deny "RCG_SWEEP_MODE='$MODE' is not a mode (expected 'execute' or 'revert')" ;;
+esac
+
+if ! python "$ENGINE" --batch-id "$RCG_BATCH_ID" --cap "$CAP" --mode "$MODE"; then
+    _deny "batch $RCG_BATCH_ID failed $MODE verification (see the check output above)"
 fi
 
-_audit "PERMITTED" "cap=$CAP"
+_audit "PERMITTED" "mode=$MODE cap=$CAP"
 exit 0

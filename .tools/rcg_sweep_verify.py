@@ -147,6 +147,104 @@ def load_batch(batch_id: str) -> dict:
 
 
 # ---------------------------------------------------------------- checks
+def run_revert_checks(batch_id: str) -> tuple[int, list[str]]:
+    """REVERT mode -- the restore leg of the ruling's s.7 exercise.
+
+    WHY THIS EXISTS, and it is a defect in the original design rather than an
+    enhancement: s.7 makes an exercised `git revert` the batch-1 acceptance
+    condition, because the PRD's entire safety case for `git rm` over
+    move-to-archive is that reversal is one git command. But a revert of a
+    deletion batch is ADDITIONS, which C1 (deletion-only) denies -- and the
+    sweep identity is the ONLY identity that can reach those paths, because
+    granting it the delete lanes is what made it so. Measured on B-0001:
+    ~SWEEP 93/93, every exec seat 0/93.
+
+    So the recovery path was STRUCTURALLY UNAUTHORABLE from the moment the grant
+    landed: the one seat able to restore was the one seat forbidden to. Nobody
+    would have found that by reading, because the deny suite was complete and
+    correct -- it is the PERMIT side of the revert leg that was never driven.
+    Found by 4.0.0_SA_CRO reading the source before executing, who declined to
+    resolve it by overriding the gate. Same lesson as this file's own C6.
+
+    SAFE BY CONSTRUCTION, the same way C2 is: revert mode cannot introduce
+    content. Every added path must be in the ratified batch AND its staged blob
+    must be hash-identical to the blob at the parent of the execution commit.
+    You may restore exactly what was deleted, and nothing else.
+    """
+    fail: list[str] = []
+    batch = load_batch(batch_id)
+    declared = set(batch.get("paths") or [])
+    executed = batch.get("executed_commit")
+    print(f"rcg-sweep-check: REVERT mode, batch {batch_id} status={batch.get('status')} "
+          f"declared={len(declared)} executed_commit={executed}")
+
+    # --- R3 the execution commit must be recorded -------------------------
+    if not executed:
+        raise CannotEvaluate(
+            "R3 batch has no executed_commit recorded -- there is nothing to restore FROM. "
+            "Record it (in a separate commit) before reverting.")
+    parent = git("rev-parse", f"{executed}^").strip()
+
+    # --- R1 addition-only --------------------------------------------------
+    nonadd = {p for p in git("diff", "--cached", "--name-only",
+                             "--diff-filter=DMRTUXB").splitlines() if p}
+    if nonadd:
+        fail.append(f"R1 NOT addition-only -- {len(nonadd)} non-addition change(s): "
+                    + ", ".join(sorted(nonadd)[:5]) + (" ..." if len(nonadd) > 5 else ""))
+
+    added = {p for p in git("diff", "--cached", "--name-only",
+                            "--diff-filter=A").splitlines() if p}
+    print(f"  DENOMINATOR: {len(added)} staged addition(s) vs {len(declared)} declared in batch; "
+          f"restoring from {parent[:12]} (parent of {str(executed)[:12]})")
+
+    # --- R2 exact set equality, both directions ---------------------------
+    extra, missing = added - declared, declared - added
+    if extra:
+        fail.append(f"R2 {len(extra)} path(s) added but NOT in the batch: "
+                    + ", ".join(sorted(extra)[:5]) + (" ..." if len(extra) > 5 else ""))
+    if missing:
+        fail.append(f"R2 {len(missing)} batch path(s) NOT restored -- a partial restore leaves "
+                    "the tree in neither state: " + ", ".join(sorted(missing)[:5])
+                    + (" ..." if len(missing) > 5 else ""))
+
+    # --- R4 CONTENT IDENTITY -- the check that makes this mode safe --------
+    staged_blob: dict[str, str] = {}
+    # --abbrev=40 IS LOAD-BEARING: `--raw` abbreviates blob shas by default, and
+    # `git rev-parse <tree>:<path>` returns the full 40. Without it every single
+    # path compares unequal and a PERFECT restore is denied as tampered -- which
+    # is exactly how this line was first written, and what RV1 caught.
+    for line in git("diff", "--cached", "--raw", "--abbrev=40",
+                    "--diff-filter=A").splitlines():
+        if not line.startswith(":"):
+            continue
+        meta, _, path = line.partition("\t")
+        parts = meta.split()
+        if len(parts) >= 4 and path:
+            staged_blob[path] = parts[3]
+
+    mismatched, unresolvable = [], []
+    for p in sorted(added & declared):
+        want = subprocess.run(["git", "rev-parse", f"{parent}:{p}"], cwd=WS,
+                              capture_output=True, text=True)
+        if want.returncode != 0:
+            unresolvable.append(p)
+            continue
+        if staged_blob.get(p) != want.stdout.strip():
+            mismatched.append(p)
+    if unresolvable:
+        fail.append(f"R4 {len(unresolvable)} path(s) did not exist at {parent[:12]} -- this is not "
+                    "a restore of that deletion: " + ", ".join(unresolvable[:5]))
+    if mismatched:
+        fail.append(f"R4 {len(mismatched)} path(s) restored with CONTENT THAT DIFFERS from what was "
+                    "deleted (revert mode may restore, never author): "
+                    + ", ".join(mismatched[:5]) + (" ..." if len(mismatched) > 5 else ""))
+
+    if not fail:
+        print(f"  PERMIT -- addition-only, exactly the ratified batch, all {len(added)} blob(s) "
+              f"hash-identical to {parent[:12]}. A true restore.")
+    return (DENY if fail else PERMIT), fail
+
+
 def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
     fail: list[str] = []
     note = print
@@ -323,6 +421,9 @@ def main() -> int:
     ap.add_argument("--batch-id", required=True)
     ap.add_argument("--cap", type=int, default=100,
                     help="ramp cap; ruling s.7 sets batch 1 at 100 until the revert is exercised")
+    ap.add_argument("--mode", choices=("execute", "revert"), default="execute",
+                    help="execute = the deletion batch (C1-C8); revert = the s.7 restore leg "
+                         "(R1-R4, addition-only and blob-identical to the pre-deletion tree)")
     ap.add_argument("--workspace", default=None,
                     help="TEST SEAM ONLY -- run against a fixture repo. Production callers never "
                          "pass this; the pre-commit wrapper does not expose it.")
@@ -333,7 +434,10 @@ def main() -> int:
         WS = Path(args.workspace).resolve()
 
     try:
-        rc, fail = run_checks(args.batch_id, args.cap)
+        if args.mode == "revert":
+            rc, fail = run_revert_checks(args.batch_id)
+        else:
+            rc, fail = run_checks(args.batch_id, args.cap)
     except CannotEvaluate as e:
         print(f"rcg-sweep-check: CANNOT EVALUATE -- {e}")
         print("  A property that cannot be established is a DENY, never a pass.")

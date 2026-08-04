@@ -99,13 +99,36 @@ def build_fixture(tmp: Path) -> Path:
     return ws
 
 
-def verify(ws: Path, cap=100, extra=None):
-    cmd = [sys.executable, str(VERIFIER), "--batch-id", "B-0001",
+def verify(ws: Path, cap=100, extra=None, mode="execute"):
+    cmd = [sys.executable, str(VERIFIER), "--batch-id", "B-0001", "--mode", mode,
            "--cap", str(cap), "--workspace", str(ws)]
     if extra:
         cmd += extra
     r = run(cmd, ws)
     return r.returncode, r.stdout + r.stderr
+
+
+def execute_and_record(ws: Path):
+    """Land the batch deletion, then record executed_commit -- the real sequence.
+    Returns nothing; leaves HEAD at the ledger-update commit."""
+    stage_delete(ws, BATCH)
+    (ws / "m").write_text("batch\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+    sha = run(["git", "rev-parse", "HEAD"], ws).stdout.strip()
+    bp = ws / "rcg" / "ledger" / "BATCHES.jsonl"
+    lines = bp.read_text(encoding="utf-8").strip().splitlines()
+    row = json.loads(lines[-1])
+    row["executed_commit"] = sha
+    lines[-1] = json.dumps(row)
+    bp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    run(["git", "add", "-A"], ws)
+    (ws / "m").write_text("record executed_commit\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+    return sha
+
+
+def stage_revert(ws: Path, sha: str):
+    run(["git", "revert", "--no-commit", sha], ws)
 
 
 def stage_delete(ws: Path, paths):
@@ -184,6 +207,57 @@ def _e1(ws):
     run(["git", "commit", "-q", "-m", "drop batches", "--no-verify"], ws)
     stage_delete(ws, BATCH)
 case("E1 missing batch ledger -> rc=3 CANNOT EVALUATE (not a pass)", 3, "CANNOT EVALUATE", _e1)
+
+
+# ---------------------------------------------------------------- REVERT mode
+# The leg that was UNAUTHORABLE until R1-R4 existed. RV1 is the control that
+# matters most: the deny suite for revert was vacuously complete before, because
+# nothing could legally permit a restore at all.
+def rcase(name, expect_rc, expect_token, mutate):
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        ws = build_fixture(tmp)
+        mutate(ws)
+        rc, out = verify(ws, mode="revert")
+        ok = (rc == expect_rc) and (expect_token in out if expect_token else True)
+        results.append((ok, name, rc, expect_rc, expect_token, out))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def _rv1(ws):
+    sha = execute_and_record(ws)
+    stage_revert(ws, sha)
+rcase("RV1 true restore PERMITS (the leg that had no legal author)", 0, "PERMIT", _rv1)
+
+def _rv2(ws):  # content differs -- revert mode may restore, never author
+    sha = execute_and_record(ws)
+    stage_revert(ws, sha)
+    p = ws / BATCH[0]
+    p.write_text("TAMPERED ON THE WAY BACK\n", encoding="utf-8")
+    run(["git", "add", "--", BATCH[0]], ws)
+rcase("RV2 restore with ALTERED content DENIES (R4 blob identity)", 2, "[R4]", _rv2)
+
+def _rv3(ws):  # an extra file smuggled into the restore
+    sha = execute_and_record(ws)
+    stage_revert(ws, sha)
+    extra = ws / "data" / "black_diamond" / "archive" / "gold" / "smuggled.json"
+    extra.write_text("not in the batch\n", encoding="utf-8")
+    run(["git", "add", "--", str(extra.relative_to(ws)).replace("\\", "/")], ws)
+rcase("RV3 extra path smuggled into a restore DENIES (R2)", 2, "[R2]", _rv3)
+
+def _rv4(ws):  # a deletion staged while in revert mode
+    sha = execute_and_record(ws)
+    stage_revert(ws, sha)
+    run(["git", "rm", "-q", "--", "data/black_diamond/archive/gold/keepme.json"], ws)
+rcase("RV4 deletion staged in revert mode DENIES (R1)", 2, "[R1]", _rv4)
+
+def _rv5(ws):  # no executed_commit recorded -> nothing to restore FROM
+    stage_delete(ws, BATCH)
+    (ws / "m").write_text("batch\n", encoding="utf-8")
+    run(["git", "commit", "-q", "-F", "m", "--no-verify"], ws)
+    run(["git", "revert", "--no-commit", "HEAD"], ws)
+rcase("RV5 no executed_commit -> rc=3 CANNOT EVALUATE", 3, "CANNOT EVALUATE", _rv5)
 
 print()
 npass = sum(1 for ok, *_ in results if ok)

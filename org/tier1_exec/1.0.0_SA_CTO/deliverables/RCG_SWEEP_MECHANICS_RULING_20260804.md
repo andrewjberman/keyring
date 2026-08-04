@@ -198,6 +198,33 @@ files for the first execution.** Then:
 > Execute -> verify the deletion -> **`git revert` the batch commit** -> verify every file is
 > restored byte-identical -> re-apply. Only then does the cap lift.
 
+### 7.1 The restore leg had no legal author -- AMENDED 2026-08-04, same session
+
+**A defect in this ruling as first written, found by `4.0.0_SA_CRO` reading the gate's source before
+executing and declining to work around it.** A revert of a deletion batch is **additions**, which
+**C1 denies** -- and the sweep identity is the **only** identity that can reach those paths, because
+granting it the delete lanes in s.6 is what made it so.
+
+> Measured on B-0001 (93 paths, lane `POD4`): `4.0.0_SA_CRO~SWEEP` **93/93**;
+> `1.0.0_SA_CTO~B`, base CTO, MSTR, COO all **0/93**.
+
+**So the recovery path was structurally unauthorable from the moment the grant landed: the one seat
+able to restore was the one seat forbidden to.** Nobody would have found that by reading -- the deny
+suite was complete *and correct*. It is the **PERMIT side of the revert leg that was never driven**,
+and a revert-mode deny suite was vacuously complete because nothing could legally permit a restore at
+all. Precisely the lesson C6 had already taught this session, recurring one layer up.
+
+**Fix: a REVERT mode, safe the same way C2 is -- it cannot introduce content.**
+
+| # | Check |
+|---|---|
+| **R1** | **ADDITION-ONLY.** Zero `D/M/R/T`. |
+| **R2** | **EXACT SET EQUALITY** with the batch list, both directions. A partial restore leaves the tree in neither state. |
+| **R3** | The batch's **`executed_commit`** is recorded (a separate commit, after execution). Absent, there is nothing to restore *from* -- `CANNOT EVALUATE`. |
+| **R4** | **CONTENT IDENTITY.** Every staged blob is **hash-identical** to the blob at the parent of `executed_commit`. **You may restore exactly what was deleted, and nothing else.** |
+
+Invocation: `RCG_SWEEP_MODE=revert RCG_BATCH_ID=B-0001 git commit ...`
+
 The PRD's entire safety argument for `git rm` over move-to-`archive/` is *"reversal is `git revert` /
 `git checkout <sha> -- path`."* **That reversal has never been run.** A recovery path that has never
 been executed is not a recovery path -- it is a belief about one, and this estate has a standing rule
