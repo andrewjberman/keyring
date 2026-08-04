@@ -53,6 +53,14 @@ deliberately, with a committed one-line reason.
 4. Engine change > ~50 lines in `cli.py` blast paths or `comp_blast_universe.py`.
 5. comp-which/HUD routing changes that point new callers at it.
 6. A caller found keying on rc semantics outside the published contract.
+7. **(added post-CLOSE, ~A's wording, ratified into the template): a universe/data-source change
+   re-opens the dial for every suite that DERIVES FIXTURES from it — verify the fixtures still
+   SELECT, not that the suite still PASSES.** Live instance that earned it: after the universe
+   swap, `test_blast_overlap_pairwise.py` sat 8/8 GREEN with four tests exercising NOTHING (stale
+   `gold:`-prefixed population selector → N=0 → "no pair cleared the threshold" true by
+   construction) — the vacuous-pass class with the skip symptom removed. Repaired @3a1f36e544:
+   selector derived live from the territory + `_assert_non_vacuous` fails an empty sweep;
+   mutant-proven (reverted selector: 3 failed/5 passed where the identical state had been 8/8).
 
 ## Residue (open, owned)
 
@@ -63,6 +71,13 @@ deliberately, with a committed one-line reason.
   a wrong one). Owner: `0.7.0_AE_CloudOps~A` (volunteered). Acceptance terms: the population
   definition is EMITTED IN the output; scores across population definitions are NOT COMPARABLE —
   any historical series spanning the switch is re-derived, never carried forward.
+  **→ DISCHARGED 2026-08-04 ~00:58Z @3a1f36e544 + 3734c4a81d:** all three modes now run on the
+  canonical graph narrowed to the DECLARED TERRITORY (role-derived producer predicate, N=842 of
+  20,480, definition emitted every run). **CVO-verified by exercise:** live `--all-producers` now
+  prints the DECLARED TERRITORY block (role-derived over canonical kuzu + non-comparability
+  warning) in place of the private-graph exception block; repaired pairwise suite re-run by
+  verifier. Bulk forms of defects (c) and (b) fixed in `--compare`/`--all-producers` in the same
+  motion. Re-dial trigger 2 is thereby CONSUMED; trigger 7 (below) was added from this event.
 - Spec 3.5 extraction-pass absorb-or-delete — deletions RULED per P7, not taken; unchanged.
 - Two naming acts at Andrew (do not block): comp-blast formal purpose line (P1); `chain`
   reserved-term collision.
