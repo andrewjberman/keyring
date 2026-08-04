@@ -55,10 +55,26 @@ import comp_missions  # noqa: E402  -- THE substrate; this module never calls gi
 
 # The author-serial convention: N.N.N_TT_Name[~lane]. TYPE = the role segment.
 _SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_([A-Z]{2,4})_")
+# unknown/CI markers (CVO CC-3 author-class axis): bots + service identities.
+_CI_RE = re.compile(r"\[bot\]|noreply|github-actions|dependabot", re.I)
+
+
+def author_class(author: str) -> str:
+    """CVO CC-3 (dial finding, 2026-08-04): the AUTHOR-CLASS axis {agent-serial |
+    human | unknown-ci}. Before this axis, a human author was structurally unable
+    to surface in any row while still being folded into the totals -- counted but
+    invisible ('dropped-but-counted'). Humans are now a VISIBLE class: counted in
+    their own denominator line, deliberately excluded from PAIRING (the F4
+    instrument measures agent-type co-movement; a human is not an agent type)."""
+    if _SERIAL_RE.search(author):
+        return "agent-serial"
+    if _CI_RE.search(author):
+        return "unknown-ci"
+    return "human"
 
 
 def agent_tag(author: str, grain: str) -> str | None:
-    """Author string -> agent tag at the requested grain, or None (UNATTRIBUTED)."""
+    """Author string -> agent tag at the requested grain, or None (not agent-class)."""
     if grain == "serial":
         m = re.search(r"\b(\d+\.\d+\.\d+_[A-Z]{2,4}_[A-Za-z0-9]+(~[A-Z])?)", author)
         return m.group(1) if m else None
@@ -68,29 +84,51 @@ def agent_tag(author: str, grain: str) -> str | None:
 
 def walk(since: str | None, rng: str | None):
     """Dispatch the substrate walk. RANGE: prefix = DAG range (comp_missions' own
-    author-date-nonmonotonic lesson); plain string = git --since expression."""
+    author-date-nonmonotonic lesson); plain string = git --since expression.
+    CITATION LAW (CVO CC-1): a CONTROL cited on the record must pin --range A..B,
+    never a moving --since -- a control over a rolling window is not reproducible
+    (the DExDT negative control reproduced differently at the verifier's seat for
+    exactly this reason)."""
     expr = f"RANGE:{rng}" if rng else (since or "14 days ago")
     return comp_missions.commits(expr, None)
 
 
 def head_anchor() -> str:
+    """HEAD line incl. ahead/behind origin (CVO CC-2, the comp-heat clock ruling:
+    device-relativity -- a HEAD hash without its origin offset reads identically
+    on a device that has not pulled). Counts ride the substrate's own git runner."""
     cs = comp_missions.commits("RANGE:HEAD~1..HEAD", None)
-    if cs:
-        c = cs[0]
-        return f"{c['short']}  {c['iso']}  {c['author'][:30]}"
-    return "(unresolvable)"
+    if not cs:
+        return "(unresolvable)"
+    c = cs[0]
+    try:
+        upstream = comp_missions._run(
+            ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"]).strip()
+        counts = comp_missions._run(
+            ["git", "rev-list", "--left-right", "--count", f"{upstream}...HEAD"]).split()
+        offset = f"  [{upstream}: behind {counts[0]} / ahead {counts[1]}]"
+    except SystemExit:
+        offset = "  [no upstream resolvable]"
+    return f"{c['short']}  {c['iso']}  {c['author'][:30]}{offset}"
 
 
 def tag_commits(cs: list, grain: str):
-    """Split the walk into (attributed[(tag, commit)], total, untagged_authors)."""
+    """Split the walk into (attributed[(tag, commit)], class_counts, untagged_authors).
+
+    CC-3: class_counts is the author-class census {agent-serial, human, unknown-ci};
+    human/unknown-ci commits are counted THERE (visible) and excluded from pairing."""
     attributed, untagged = [], Counter()
+    class_counts = Counter()
     for c in cs:
-        t = agent_tag(c["author"], grain)
-        if t:
-            attributed.append((t, c))
-        else:
-            untagged[c["author"]] += 1
-    return attributed, untagged
+        cls = author_class(c["author"])
+        class_counts[cls] += 1
+        if cls == "agent-serial":
+            t = agent_tag(c["author"], grain)
+            if t:
+                attributed.append((t, c))
+                continue
+        untagged[f"{c['author']} [{cls}]"] += 1
+    return attributed, class_counts, untagged
 
 
 def build_pairs(attributed, min_shared: int):
@@ -120,11 +158,12 @@ def build_pairs(attributed, min_shared: int):
     return rows, active, possible, len(rows)
 
 
-def denominator_block(total: int, attributed_n: int, untagged: Counter,
-                      observed: int, possible: int) -> dict:
+def denominator_block(total: int, attributed_n: int, class_counts: Counter,
+                      untagged: Counter, observed: int, possible: int) -> dict:
     return {
         "commits_attributed": attributed_n,
         "commits_total": total,
+        "author_class_counts": dict(class_counts),   # CC-3: humans/CI VISIBLE here
         "unattributed_authors": dict(untagged.most_common(5)),
         "pairs_observed": observed,
         "pairs_possible": possible,
@@ -133,9 +172,12 @@ def denominator_block(total: int, attributed_n: int, untagged: Counter,
 
 def fmt_denoms(d: dict) -> list[str]:
     ua = ", ".join(f"{k} x{v}" for k, v in d["unattributed_authors"].items()) or "-"
+    cc = d.get("author_class_counts", {})
+    cls = ", ".join(f"{k}={cc.get(k, 0)}" for k in ("agent-serial", "human", "unknown-ci"))
     return [
         f"DENOMINATOR 1 (F4): commits-attributed {d['commits_attributed']} / total "
-        f"{d['commits_total']} (unattributed counted, never dropped: {ua})",
+        f"{d['commits_total']}  author-class census: {cls} (human/unknown-ci counted "
+        f"VISIBLY, excluded from pairing; residue: {ua})",
         f"DENOMINATOR 2 (F4): pairs-observed {d['pairs_observed']} / possible "
         f"{d['pairs_possible']} (possible = C(active-tags, 2))",
     ]
@@ -169,9 +211,10 @@ def main() -> int:
 
     window = f"range {a.rng}" if a.rng else (a.since or "14 days ago")
     cs = walk(a.since, a.rng)
-    attributed, untagged = tag_commits(cs, a.grain)
+    attributed, class_counts, untagged = tag_commits(cs, a.grain)
     rows, active, possible, observed = build_pairs(attributed, a.min_shared)
-    denoms = denominator_block(len(cs), len(attributed), untagged, observed, possible)
+    denoms = denominator_block(len(cs), len(attributed), class_counts, untagged,
+                               observed, possible)
 
     if a.mode == "pair":
         if len(a.args) != 2:
@@ -255,14 +298,21 @@ def self_test() -> int:
     ]
     bad = [(a, g, want, agent_tag(a, g)) for a, g, want in fixtures
            if agent_tag(a, g) != want]
+    # CC-3 fixture: author-class axis discriminates (a window w/ human commits must census them)
+    cls_fix = [("Andrew Berman", "human"), ("0.2.0_DS_PortfolioAnalytics", "agent-serial"),
+               ("github-actions[bot]", "unknown-ci"), ("dependabot[bot]", "unknown-ci")]
+    bad_cls = [(a, w, author_class(a)) for a, w in cls_fix if author_class(a) != w]
+    for a, w, got in bad_cls:
+        print(f"FAIL class: {a!r} want={w!r} got={got!r}")
     for a, g, want, got in bad:
         print(f"FAIL parse: {a!r} grain={g} want={want!r} got={got!r}")
     smoke = comp_missions.commits("RANGE:HEAD~5..HEAD", None)
     ok_smoke = len(smoke) >= 1 and all("paths" in c and "author" in c for c in smoke)
     print(f"parse fixtures: {len(fixtures) - len(bad)}/{len(fixtures)} PASS")
+    print(f"author-class fixtures: {len(cls_fix) - len(bad_cls)}/{len(cls_fix)} PASS")
     print(f"substrate smoke (HEAD~5..HEAD): {len(smoke)} commits walked, "
           f"fields present: {ok_smoke}")
-    return 0 if (not bad and ok_smoke) else 1
+    return 0 if (not bad and not bad_cls and ok_smoke) else 1
 
 
 if __name__ == "__main__":
