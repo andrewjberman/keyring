@@ -54,6 +54,42 @@ def _prov_line(h) -> str:
     return "[marker-head: %s | head=%s]" % (p.get("status", "?"), str(p.get("marker_head"))[:24])
 
 
+def _grain_enum() -> set:
+    """DEPTH-1 (comp-depth dial 2026-08-04): the CLOSED grain enum, DERIVED at call time from the
+    grain_contract ~C governs (comp-coverage-map.yaml node_type_grain keys) -- never a hand-frozen
+    roster (a predicate is not a roster; a frozen list here would drift from the contract silently,
+    re-creating the defect one layer up)."""
+    gc = MR._load_grain_contract()
+    dom = set()
+    for grains in (gc.get("node_type_grains") or {}).values():
+        dom |= set(grains)
+    return dom
+
+
+def _require_grain(grain):
+    """Validate a coordinate-valued grain argument against the closed enum. Returns None when
+    valid (or when the contract is unreadable -- surfaced, never silently validated); rc=2 refuse
+    otherwise. An out-of-enum grain must NEVER read as an empty-but-valid answer: pre-fix,
+    `scope zz-bogus-grain` returned rc=0 '0 node(s)' -- a typo'd grain byte-indistinguishable from
+    a legitimately empty one (the F1/K1 false-clean family AT the grain axis, on the engine that
+    OWNS the grain coordinate). In-enum-but-empty still answers an honest 0 at rc=0."""
+    dom = _grain_enum()
+    if not dom:
+        sys.stderr.write("WARN: grain_contract unreadable -- grain argument UNVALIDATED "
+                         "(proceeding; an empty answer below may be a contract-load failure, "
+                         "not an estate fact)\n")
+        return None
+    if grain not in dom:
+        sys.stderr.write(
+            "REFUSED: %r is not a grain. The grain vocabulary is a CLOSED ENUM "
+            "(grain_contract.node_type_grain, %d values):\n  %s\n"
+            % (grain, len(dom), " ".join(sorted(dom))))
+        sys.stderr.write("  A typo'd grain must refuse loudly, never answer '0 node(s)' -- an "
+                         "out-of-enum 0 is byte-identical to a legitimately empty grain.\n")
+        return 2
+    return None
+
+
 def _opt(argv, name):
     if name in argv:
         i = argv.index(name)
@@ -112,6 +148,9 @@ def cmd_scope(argv) -> int:
         sys.stderr.write("comp-depth scope <grain> [--limit N]\n")
         return 2
     grain = argv[0]
+    rc = _require_grain(grain)
+    if rc is not None:
+        return rc
     limit = int(_opt(argv, "--limit") or 20)
     h = _load()
     print(_prov_line(h))
@@ -126,6 +165,9 @@ def cmd_drill(argv) -> int:
     if not argv or not to:
         sys.stderr.write("comp-depth drill <node-id> --to <grain>\n")
         return 2
+    rc = _require_grain(to)
+    if rc is not None:
+        return rc
     h = _load()
     print(_prov_line(h))
     res = h.drill(argv[0], to)
@@ -139,6 +181,9 @@ def cmd_rollup(argv) -> int:
     if not argv or not to:
         sys.stderr.write("comp-depth rollup <node-id> --to <grain>\n")
         return 2
+    rc = _require_grain(to)
+    if rc is not None:
+        return rc
     h = _load()
     print(_prov_line(h))
     res = h.rollup(argv[0], to)
@@ -153,6 +198,9 @@ def cmd_blast(argv) -> int:
     if not argv or not grain:
         sys.stderr.write("comp-depth blast <node-id> --grain <grain>\n")
         return 2
+    rc = _require_grain(grain)
+    if rc is not None:
+        return rc
     h = _load()
     print(_prov_line(h))
     tg = _full(h)

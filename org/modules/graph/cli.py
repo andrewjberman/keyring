@@ -44,6 +44,13 @@ from org.modules.graph import comp_blast_universe as _bu  # noqa: E402
 _bu.install_ascii_stdout()
 
 
+#: T3 (comp-trace dial 2026-08-04): the load-path provenance facts, recorded by _get_graph as a
+#: side effect of work it already does -- NEVER recomputed by a header printer (a second
+#: check_node_freshness call would re-hash every file-backed node to answer a question this path
+#: just answered). Axes: cache built_at (age) + indexed-SHA drift at load + served-vs-rebuilt.
+_LOAD_PROVENANCE: dict = {}
+
+
 def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> TraceGraph:
     """Load cached graph or build a new one.
 
@@ -64,8 +71,15 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
                 # regression -- (a), the literal Kuzu-projection re-point, is the deferred follow-on).
                 drift = check_node_freshness(g, _WORKSPACE)
                 if not drift:
+                    _LOAD_PROVENANCE.update(
+                        built_at=g.built_at, drift_at_load=0,
+                        indexed=sum(1 for n in g.nodes.values() if n.source_sha),
+                        served="cache")
                     return g
                 emit_stale_warn(drift)   # drifted -> fall through to a head-pinned rebuild
+                _LOAD_PROVENANCE.update(
+                    drift_at_load=len(drift),
+                    indexed=sum(1 for n in g.nodes.values() if n.source_sha))
                 # Say the rebuild is HAPPENING, right after the warn -- measured misread
                 # 2026-07-29: the warn's "rerun comp-build to refresh" hint reads as
                 # answers-will-be-stale, when this path REBUILDS FROM CURRENT SOURCE before
@@ -76,6 +90,10 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
                       file=sys.stderr)
             elif (time.time() - g.built_at) < 300:
                 # freshness opted out (e.g. internal callers) -> retain the cheap TTL fast-path
+                _LOAD_PROVENANCE.update(
+                    built_at=g.built_at, drift_at_load=None,
+                    indexed=sum(1 for n in g.nodes.values() if n.source_sha),
+                    served="cache-ttl (freshness check opted out)")
                 return g
         except Exception as e:  # noqa: BLE001 -- resilience: a corrupt/truncated cache MUST self-heal to a rebuild
             # Disclose, don't swallow silently: this fires on a truncated cache (the C1 reap
@@ -89,6 +107,11 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
     t0 = time.time()
     g = build_graph(_WORKSPACE)
     g.save(_CACHE_FILE)
+    _LOAD_PROVENANCE.update(
+        built_at=g.built_at,
+        indexed=sum(1 for n in g.nodes.values() if n.source_sha),
+        served="rebuilt (head-pinned from CURRENT source this invocation)")
+    _LOAD_PROVENANCE.setdefault("drift_at_load", None)
     elapsed = time.time() - t0
     print(f"Graph built: {len(g.nodes)} nodes, {len(g.edges)} edges ({elapsed:.1f}s)", file=sys.stderr)
     # AC-GRAIN sentinel (NFRA_GRAPHS D5) — WARN-level on the trace graph. The cloud
@@ -280,24 +303,111 @@ def cmd_build(args):
     print(f"\nSource SHAs indexed: {indexed_count}/{file_node_count} file-backed nodes")
 
 
+def _trace_near_matches(g: TraceGraph, query: str) -> list:
+    """T1: the two-tier fuzzy pass comp-blast's repaired rc=3 uses -- full ids, then each id's
+    LAST segment (node ids are prefixed forms, so a bare-name typo never fuzzy-matches a full id;
+    'A_00.accounts_dimension.py' finds 'gold:A_00.accounts_dimension' only via its segment)."""
+    import difflib as _difflib
+    _names = list(g.nodes.keys())
+    _by_seg: dict = {}
+    for _n in _names:
+        _seg = _n.replace("\\", "/").split(":")[-1].split("/")[-1]
+        _by_seg.setdefault(_seg.lower(), []).append(_n)
+    _sugg = _difflib.get_close_matches(query, _names, n=5, cutoff=0.55)
+    for _hit in _difflib.get_close_matches(query.lower(), list(_by_seg.keys()), n=5, cutoff=0.6):
+        for _full in _by_seg[_hit]:
+            if _full not in _sugg:
+                _sugg.append(_full)
+    if not _sugg:
+        _sugg = [n for n in _names if query.lower() in n.lower()][:5]
+    return _sugg[:6]
+
+
+def _emit_trace_provenance(g: TraceGraph) -> None:
+    """T3 (comp-trace dial 2026-08-04): BOTH vintage axes, printed on EVERY walk, to stderr
+    (clean stdout preserved; the comp-kuzu provenance header is the family reference, and like it
+    this prints unconditionally -- the axes were invisible exactly when nobody looked).
+
+    Axis 1: cache built_at + age (the TTL/vintage axis). Axis 2: indexed-SHA drift at load (the
+    head-pin axis -- a drifted cache is DISCARDED and rebuilt before answering, so a nonzero
+    drift_at_load means the answers below are FRESHER than the cache was, never staler). Facts come
+    from _LOAD_PROVENANCE (recorded on the load path); nothing is recomputed here. The vintage
+    FIELD DECLARATIONS live in the registration/contract (~A's seam, ADHOC dial fan-out) -- this
+    function is the engine-side PRINTING half only."""
+    built = _LOAD_PROVENANCE.get("built_at")
+    age = (time.time() - built) if built else None
+    age_s = ("%.1fmin" % (age / 60)) if age is not None and age < 3600 else \
+            ("%.1fh" % (age / 3600)) if age is not None else "?"
+    built_s = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(built)) if built else "?"
+    drift = _LOAD_PROVENANCE.get("drift_at_load")
+    indexed = _LOAD_PROVENANCE.get("indexed", sum(1 for n in g.nodes.values() if n.source_sha))
+    drift_s = ("UNCHECKED (freshness check not on this path)" if drift is None
+               else f"{drift} of {indexed} indexed nodes")
+    print("=== comp-trace provenance ===", file=sys.stderr)
+    print(f"  cache: {_CACHE_FILE}  built_at={built_s} (age {age_s})", file=sys.stderr)
+    print(f"  sha-drift at load: {drift_s}  |  served: "
+          f"{_LOAD_PROVENANCE.get('served', '?')}", file=sys.stderr)
+    print(f"  universe: head-pinned TRACE graph, {len(g.nodes)} nodes / {len(g.edges)} edges "
+          f"(gold+components+lambda+s3+endpoints -- NOT the kuzu estate planes)", file=sys.stderr)
+
+
 def cmd_trace(args):
     g = _resolve_graph(args)
     query = args.query
+    _emit_trace_provenance(g)
 
     # Find matching nodes
     matches = g.find_node(query)
+    if getattr(args, "exact", False):
+        # T6 (comp-trace dial 2026-08-04): the exact canonical id could not self-select -- its
+        # function children prefix-match beside it, and no selector existed. --exact narrows to
+        # the node whose id EQUALS the query, byte-for-byte. An --exact miss is a NOT-FOUND
+        # (rc=3), never a silent widening back to the prefix set.
+        matches = [m for m in matches if m.id == query]
     if not matches:
         # NOT-FOUND is LOUD (rc=3), NOT a silent rc=0. A query that resolves to
         # zero nodes is a typo / wrong-target, which on a Rule-20 change-safety
         # gate must NEVER read as a verified "nothing depends on this" clear.
         # Only a SUCCESSFUL match that then has zero results may exit 0.
         # (false-clear fix, 3.0.0_SA_CVO 2026-06-26; comp-tools duress sweep)
+        #
+        # AND (T1, comp-trace dial 2026-08-04, mirroring comp-blast's repaired rc=3 form): it
+        # prints its DENOMINATOR + UNIVERSE + NEAR-MATCHES. Exercised pair that forced this:
+        # 'A_00.accounts_dimension.py' -> bare NOT-FOUND while 'gold:A_00.accounts_dimension'
+        # resolved -- a bare-name miss on an EXISTING prefixed node was indistinguishable from a
+        # truly-absent node, and the old text ("typo? or run comp-build") actively suggested the
+        # wrong remedies.
+        near = _trace_near_matches(g, query)
         if args.json:
-            print(json.dumps({"query": query, "matches": [], "status": "NOT_FOUND"}))
-        else:
-            print(f"NOT-FOUND: no graph node matches '{query}' -- check the name "
-                  f"(typo?) or run comp-build. This is a NOT-FOUND, not a "
-                  f"'nothing-upstream/downstream' clear.", file=sys.stderr)
+            print(json.dumps({
+                "query": query, "matches": [], "status": "NOT_FOUND",
+                "exact": bool(getattr(args, "exact", False)),
+                "denominator": len(g.nodes),
+                "universe": "head-pinned TRACE graph (gold scripts+functions, lambdas, "
+                            "S3 artifacts, endpoints, eventbridge, portal components)",
+                "near_matches_unverified": near,
+            }))
+            sys.exit(3)
+        _mode = " under --exact (id must EQUAL the query)" if getattr(args, "exact", False) else ""
+        print(f"NOT-FOUND: no graph node matches '{query}'{_mode} -- and here is the universe "
+              f"that verdict is over, so typo and out-of-scope stop looking identical:",
+              file=sys.stderr)
+        from collections import Counter as _Counter
+        _tc = _Counter(n.node_type for n in g.nodes.values())
+        print(f"  denominator: {len(g.nodes)} nodes (HEAD-PINNED TRACE GRAPH) -- "
+              + ", ".join(f"{t}={c}" for t, c in _tc.most_common(14)), file=sys.stderr)
+        print("  universe: gold scripts+functions (gold:), lambdas (lambda:), S3 artifacts (s3:), "
+              "endpoints, eventbridge rules, portal components -- built from the working tree. "
+              "AWS config planes (IAM/SG/DNS/...) and the silver tier are OUT of this universe: "
+              "ask comp-kuzu / comp-blast for those.", file=sys.stderr)
+        if near:
+            # Near-matches are DUPLICATE/LEGACY candidates, not merely typo candidates
+            # (Andrew-direct ruling banked in the comp-blast dial, mirrored here verbatim-in-kind).
+            print("  near-matches in the graph (UNVERIFIED -- DUPLICATE / LEGACY candidates, "
+                  "not implied edges; real nodes, not spelling hints):", file=sys.stderr)
+            for _s in near:
+                print(f"    - {_s} [UNVERIFIED]", file=sys.stderr)
+        print("  This is a NOT-FOUND, not a 'nothing-upstream/downstream' clear.", file=sys.stderr)
         sys.exit(3)
 
     if len(matches) > 1 and not args.all:
@@ -316,7 +426,14 @@ def cmd_trace(args):
             print(f"  [{m.node_type}] {m.id} -- {m.label}")
         if len(matches) > 10:
             print(f"  ... and {len(matches) - 10} more")
-        print("\nUse a more specific query or --all to trace all matches.")
+        if any(m.id == query for m in matches):
+            # T6: the canonical id is AMONG its own prefix-matching children -- say so, and name
+            # the selector, instead of sending the user hunting for "a more specific query" that
+            # cannot exist (the id is already fully specific).
+            print(f"\nNOTE: '{query}' IS an exact node id in this set -- re-run with --exact to "
+                  f"select it alone.")
+        print("\nUse a more specific query, --exact for an exact-id match, or --all to trace all "
+              "matches.")
         sys.exit(0)
 
     targets = matches if args.all else [matches[0]]
@@ -1356,9 +1473,18 @@ def main():
     p_build.add_argument("--check", action="store_true",
                          help="Verify cached graph SHA freshness without rebuilding (exit 2 on drift)")
 
-    # trace
-    p_trace = sub.add_parser("trace", help="Trace data path from a node")
+    # trace -- prog is the SHIM name (T5, comp-trace dial 2026-08-04): the public entry is
+    # `.tools/comp-trace <query>`, and the bare-call usage error previously printed the cli.py
+    # subcommand form (`usage: cli.py [-h] {build,trace,blast,diff,xref}`), teaching a cold user
+    # an invocation the shim BREAKS (`comp-trace trace <q>` errors; bare `comp-trace trace`
+    # consumes the word 'trace' AS the query). The first output a cold user ever sees must teach
+    # the form that works.
+    p_trace = sub.add_parser("trace", prog="comp-trace", help="Trace data path from a node")
     p_trace.add_argument("query", nargs="?", help="File, component, or node to trace")
+    p_trace.add_argument("--exact", action="store_true",
+                         help="Match ONLY the node whose id EQUALS the query byte-for-byte "
+                              "(self-selection for a canonical id whose children prefix-match "
+                              "beside it). A miss under --exact is NOT-FOUND (rc=3).")
     p_trace.add_argument("--direction",
                          choices=["up", "upstream", "down", "downstream", "both"],
                          default="both",
@@ -1438,7 +1564,10 @@ def main():
     if args.command == "build":
         cmd_build(args)
     elif args.command == "trace":
-        _require_query(args, parser)
+        # T5: error on the TRACE subparser (prog=comp-trace), not the top-level cli.py parser --
+        # the bare-call usage must teach the shim form. blast keeps the top-level parser
+        # deliberately (out of this fix's scope; byte-stability of unrelated output).
+        _require_query(args, p_trace)
         cmd_trace(args)
     elif args.command == "blast":
         _require_query(args, parser)

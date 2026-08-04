@@ -456,6 +456,52 @@ contracts:
       "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
     exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
 
+  # ---- comp-kuzu VARIANTS (declared per dial(comp-kuzu) K3, 2026-08-04, 0.7.0_AE_CloudOps~B) ----
+  # Same engine (kuzu_cli.py), same query surface as comp-kuzu; ONLY the refresh discipline differs.
+  # The K3 finding: -inc's labeled-stale serve is VERDICT-BEARING with undeclared rc/stdout
+  # semantics -- declared here from source (+ exercised paths); the labeled-stale serve itself is
+  # the dial's P6 skip = re-dial trigger 6, so its declaration is SOURCE-grounded, exercise pending.
+  comp-kuzu-full:
+    coverage: "identical Cypher query surface to comp-kuzu over the canonical Kuzu DB; differs ONLY in refresh discipline -- forces the full kuzu_nessie_load projection UNCONDITIONALLY before serving (MSTR-startup daily ground-truth reset)"
+    blind_spots:
+      - "same modeled-universe bound as comp-kuzu (0-rows scope note printed since dial K6); a rebuild failure is WARN-and-proceed on the prior DB, never an exit -- read stderr, not rc, for refresh outcome"
+    plane: projection
+    grain: field
+    scope: estate
+    vintage: "post-rebuild canonical DB (provenance header on stderr every call; on rebuild success vintage = current HEAD)"
+    exit_codes:
+      "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute (refresh exceptions are WARN-and-proceed, not exits)"}
+    exit_source: "infra/aws/globgrph/kuzu_cli.py:65-66 (DB-missing), :89-90 (query error); refresh exception WARN-and-proceed :60-62 @2026-08-04 (dial K3 declaration)"
+  comp-kuzu-inc:
+    coverage: "identical Cypher query surface to comp-kuzu; refresh discipline = incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild (Andrew O-1 / NFRA_KUZUSPLIT section-4 hard gate)"
+    blind_spots:
+      - "same modeled-universe bound as comp-kuzu (0-rows scope note printed since dial K6)"
+      - "THE VERDICT-BEARING BEHAVIOR IS IN-BAND, NOT IN THE rc: a labeled-stale serve exits 0 -- the verdict rides stderr (provenance marker 'SERVED LABELED-STALE ... behind-by-N' + WARN line) and the persistent .fallback.jsonl sink beside the DB. An rc-only caller CANNOT distinguish fresh from labeled-stale; read the header"
+    plane: projection
+    grain: field
+    scope: estate
+    vintage: "as labeled per call -- current on small-delta incremental; PRIOR vintage honestly labeled on large-delta/timeout/error fallback (never half-built: complete prior projection)"
+    exit_codes:
+      "1": {class: fail, meaning: "DB not found -- incl. inc COLD START (no local DB to serve stale; inc NEVER full-rebuilds: run comp-kuzu-full or wait for MSTR startup) -- or Cypher query error"}
+    exit_source: "infra/aws/globgrph/kuzu_cli.py:65-66 + :89-90 (shared engine); labeled-stale fallback = rc-neutral rebuild_fn, _canonical.py:483-530 (COND-1 in-band marker :524-529, COND-2 .fallback.jsonl :423) @2026-08-04 -- SOURCE-grounded; live labeled-stale exercise remains dial re-dial trigger 6"
+
+
+  # DEPTH-0 (comp-depth dial 2026-08-04, CVO record DIAL_RECORD_comp-depth_20260804.md): declared
+  # by exercise, same policy + author + verify path as comp-trace above.
+  comp-depth:
+    coverage: "grain-coordinate queries over the ONE marker-head graph (grains/scope/drill/rollup/grain-scoped blast); the grain vocabulary is a CLOSED ENUM derived AT CALL TIME from grain_contract.node_type_grain in comp-coverage-map.yaml (14 values at declaration -- the enum is the contract's, never a roster frozen here); denominators are built into answers (scope prints N, blast prints 'K of N reachable')"
+    blind_spots:
+      - "'chain' grain is SOURCE-ONLY (tool_grain_calibration.source_only_grains; no graph node_type) -- dispatch-DAG questions are out of scope"
+      - "a node 'not found at the marker head' is a fact about the marker-head graph, not proof of estate absence"
+    plane: projection
+    grain: artifact
+    scope: estate
+    vintage: "'[marker-head: <status> | head=<id>]' printed on EVERY call (the D4 one-head contract; exercised strong -- all 7 dial probes)"
+    exit_codes:
+      "1": {class: fail, meaning: "tool error -- node not found at the marker head, or a caught exception (message, never a stack dump)"}
+      "2": {class: refuse, meaning: "bad invocation -- missing args, OR an OUT-OF-ENUM grain (DEPTH-1 fix: refuses loudly naming the closed enum + its size; an in-enum-but-empty grain still answers an honest 0 at rc=0)"}
+    exit_source: "org/modules/graph/comp_depth_cli.py _require_grain (rc2) + cmd_* arg guards (rc2) + main exception path (rc1) @2026-08-04 DEPTH-1 landing commit"
+
   # ---- TRUNCATION CONVENTION (tool-wide; comp-estate = reference implementation, Andrew-ratified
   # 2026-07-30) ---- The --head N contract: modes DECLARE structure (body rows vs verdict/denominator
   # footer -- no heuristics); under --head the first N body lines print, then the self-declaring
@@ -546,7 +592,7 @@ pending_declaration:
   - comp-deadgrant
   - comp-debris
   - comp-denytest
-  - comp-depth
+  # comp-depth: DECLARED 2026-08-04 (DEPTH-0, dial fan-out) -- moved to contracts:
   - comp-describe
   - comp-diff
   - comp-dispatch
@@ -560,8 +606,6 @@ pending_declaration:
   - comp-iam-usage
   - comp-icedrill
   - comp-incrparity
-  - comp-kuzu-full
-  - comp-kuzu-inc
   - comp-learns-score
   - comp-learns-status
   - comp-ontolint
@@ -578,7 +622,7 @@ pending_declaration:
   - comp-tool-health
   - comp-toolgraph
   - comp-tooltip
-  - comp-trace
+  # comp-trace: DECLARED 2026-08-04 (T0, dial fan-out) -- moved to contracts:
   - comp-transform
   - comp-types
   - comp-whoread
