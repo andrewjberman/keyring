@@ -106,3 +106,21 @@ unresolved tail); (3) RETIRE the missions.yaml/path-glob lexical layer -- the mi
 dissolves into the C-ladder (C4 = mission tier, C3.ii = sub-groups, activity = cochange grain
 rollups). Retirement executes at MSTR (their LD-0341 artifact; ruled-deletion + delete-together
 discipline; routed this turn with the verbatim).
+
+## Round 7 (~2140Z) -- Andrew verbatim: missions folder finalization as a Kimi offtake
+
+> "Ok that works for me, I wasnt sure if it was a scenario whereby the agents had come up with
+> some new work modality on their own. In any case, we need to keep moving. So 0.2.0_DS is now
+> working on comp-cochange, do we need to finalize the /missions folder, just run through it and
+> make sure that it is entirely synced with the Kimi Pipeline, even exclusively documenting it
+> as an offtake of sorts? I think it may be prudent to give that thing a once over and make sure
+> that it is deeply integrated, and even transformed so as to be representative, of the Kimi
+> Pipeline c4 c3 information and data layering."
+
+Effects: (1) donor/TAKE mechanism accepted; (2) work split confirmed -- 0.2.0_DS carries the
+comp-cochange build forward (base + the ruled extension modes per the recorded spec); CVO runs
+the missions once-over; (3) REFINES round 6's part-3: the missions surface is not retired
+outright -- it TRANSFORMS into an explicit OFFTAKE VIEW of the Kimi pipeline's C4/C3 layering
+(the sovereign-stamped goals survive as C4-tier intent; the lexical sub-group/glob layer still
+dissolves; activity reporting succeeds to cochange grain rollups). MSTR ownership of org/tier0
+unchanged -- transformation design lands via MSTR or Andrew's bypass word.
