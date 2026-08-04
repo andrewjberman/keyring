@@ -43,7 +43,14 @@ Classification basis: each tool's `does:` line in `graph-call-manifest.yaml` too
 present. Rows grounded ONLY on the `does:` line are first-pass CTO reads — the dial program
 (next step) is the instrument that confirms or moves them. Marked **[INFERRED]** where so.
 
-### A. GRAIN-1 CANDIDATES — node navigation over the graph (16)
+> **VOCAB CORRECTION (Andrew-direct ~150xZ via CVO, BINDING FORWARD):** no grain-explicit
+> terminology on the tool-classification side — coordinates are **C(N)/D(N) only**, the two
+> surfaces are **NAVIGATE** (breadth) and **DRILL** (depth). The headings below are re-headed
+> accordingly (original "Grain-1/Grain-2" wording retired; the word *grain* survives only in the
+> ratified graph-side homes — grain_contract, D1 value rail — per the honestly-surfaced boundary).
+> The PRD must inherit THIS vocabulary, not the original headings.
+
+### A. NAVIGATE-SURFACE CANDIDATES — breadth, node navigation over the graph (16)
 
 `comp-trace` (dependency walk) · `comp-blast` (blast radius) · `comp-diff` (change->blast) ·
 `comp-depth` (grain-coordinate scope/drill/rollup — see §3) · `comp-platinum` (fullstack
@@ -54,7 +61,7 @@ component->gold) · `comp-cluster` (page->panel->drilldown) · `comp-routes` (se
 traversal; may be C] · `comp-xref` (symbol cross-ref) [INFERRED] · `comp-pydeps` (compiler-layer
 reference graph) · `comp-toolgraph` (the tool suite as a graph) [INFERRED — meta-plane].
 
-### B. GRAIN-2 CANDIDATES — code/executable drill at a node (10)
+### B. DRILL-SURFACE CANDIDATES — depth, code/executable drill at a node (10)
 
 `comp-pipescript` (the archetype: io/dag/deployed/postdeps per gold script) · `comp-symbols`
 (intra-file AST inventory) · `comp-dispatch` (orchestration-DAG, chain grain — declared sibling
