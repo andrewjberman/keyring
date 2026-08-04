@@ -81,3 +81,11 @@ path. Two COLD-FOUND findings folded, one verdict of mine amended:
 - **Cross-instrument (shared with trace record): scope asymmetry, no cross-pointer** --
   gold_dispatch in trace's universe not kuzu's; AWS planes in kuzu's not trace's; neither
   instrument points across on a miss. NAVIGATE-consolidation material, routed CTO.
+
+## K4 DISPOSITION (CTO ruling 191057Z) -- RETIRE-CANDIDATE AT THE PRD
+
+The stitch DB's fate is adjudicated at the C-indexed consolidation PRD (canonical cross-layer
+already rides kuzu_nessie_db per the corrected entry); NO interim rebuild machinery gets built
+-- standing machinery for an unsettled surface is the route-first doctrine's exact target. The
+K4 fix seat waits on the PRD deliberately; the entry stays TEMPLATE-marked meanwhile. K4 moves
+from "routed, awaiting adjudication" to DISPOSITIONED-PENDING-PRD.
