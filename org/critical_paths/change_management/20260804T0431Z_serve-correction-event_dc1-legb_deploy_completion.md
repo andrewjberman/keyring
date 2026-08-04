@@ -21,6 +21,23 @@ relationship-grain collapse at all three sites (@3accc408f8) + Andrew's grain no
 
 **Rule-22a behavioral verification (pending, scheduled-run-only):** the first v3 cycle (floor 09:00 / accrual 09:40 / publisher 09:50 ET today) rebuilds via the corrected builders; DS exercises the served artifact at first corrected publish (step-down read + participation meta presence) and reports per RAVC. A dry QA replay is not production evidence.
 
+### Interim classification (CTO ask 044357Z, grep-grounded 044728Z): THE INTERIM SPLITS BY ROW
+
+`channel_sources.py:446` `cot_total` reads **RAW `fact_holdings`** (`COT_HOLDINGS` :64) — the custody
+channel row is **STATUS-QUO** (overstated on dual days) until Leg B lands. `cot_models` (`:472`)
+reads **the COLLAPSED SLICE artifact** (`COT_PAIR_SERIES_KEY` :68-69, one-writer law) — the model
+overlay row **CORRECTS EARLY** at the first slice rebuild after Leg 1 (this morning's 09:00 ET fire).
+Both rows' step-downs land under the one pre-registered interpretation.
+
+### Sequencing rider satisfied (CTO amended grant 043122Z): WS-E stale-minuend guard LANDED
+
+@e2ae8f898d deployed + MATCH pre-gate-cut: `detect_stale_partners` self-detection (feeder content
+vintages vs 2 td window incl. the mixed-vintage spread class; env = audited override only) + the
+`:1012` inversion for self-detected partners (tainted block dropped → unchanged executor rolls;
+stamp = worst content vintage, never max-published). Three exercise legs, the discriminator leading:
+present-but-tainted DROPPED-AND-ROLLED; fresh-day empty + sha-identical; forced-stale through the
+new source w/ the loud path reachable. **AE's freshness-gate cut is released to sequence.**
+
 ## LEG 2 — C1impl Leg B, emitter cot_total collapse (0.7.0_AE_CloudOps) — IN-WINDOW
 
 AE lands the emitter change as its own targeted leg before today's 09:00 ET fire (their 043101Z: emitter artifact state verified vs the C1impl TO first). Sections to be appended by AE.
