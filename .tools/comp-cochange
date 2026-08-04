@@ -1,0 +1,13 @@
+#!/bin/bash
+# comp-cochange -- agent-type CO-MOVEMENT over git history (READ-ONLY; F4 instrument).
+# Which agent types change the same files together, with BOTH F4 denominators printed
+# (commits-attributed/total AND pairs-observed/possible). Typed dispatch over the
+# comp-missions commit walk -- runs no git of its own. Feeds the Friction battery
+# (Kimi meta-analysis) beside comp-blast overlap + comp-heat trajectory.
+#   comp-cochange [matrix] [--since "14 days ago" | --range A..B] [--top N] [--json]
+#   comp-cochange pair DS AE  |  comp-cochange file <path-substr>  |  --self-test
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_cochange.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-cochange" "$*" $_exit 2>/dev/null
+exit $_exit

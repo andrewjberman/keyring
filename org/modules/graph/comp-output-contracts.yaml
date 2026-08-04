@@ -74,6 +74,31 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  # BORN-REGISTERED entry (ADHOC.comp-cochange-build 2026-08-04): first tool landed WITH its
+  # contract + coordinate + intent_from_above in the SAME commit as the code -- the new-tool
+  # normative rule (CVO's phrasing, CTO-adopted 200144Z: a regime that only backfills teaches
+  # new tools to be born unregistered). The subject_coordinate + intent_from_above fields are
+  # this entry's addition to the schema; the first CVO dial confirms the provisional coordinate.
+  comp-cochange:
+    coverage: "agent-type CO-MOVEMENT pairs over the window's ATTRIBUTED commits (author-serial convention is the tag source); BOTH F4 denominators printed on every output (commits-attributed/total AND pairs-observed/possible)"
+    blind_spots:
+      - "UNATTRIBUTED commits (non-serial authors, e.g. human operators) count in denominator 1 and are excluded from pairs -- visible, never dropped, but their co-movement is unmeasured"
+      - "file-grain coupling only: two types editing DIFFERENT files of one coupled system do not pair here (comp-blast overlap is that Friction-battery leg)"
+      - "merge commits excluded by the substrate walk (comp_missions --no-merges, its own documented choice)"
+    plane: source
+    # canon tokens (ONTOLOGY2): evidence grain = the FILE (artifact); the agent-type PAIR
+    # aggregation sits ABOVE that grain -- described here in prose, not a new enum value
+    # (enum growth = LAW-2 promotion, ~C's lane, deliberately not exercised at birth).
+    grain: artifact
+    scope: estate
+    vintage: "n/a -- computed live over the caller-set window (default 14 days); HEAD anchor printed on every output"
+    subject_coordinate: "C1-discovered-relations (PROVISIONAL -- first CVO dial confirms; declared at birth per the C-indexed regime)"
+    intent_from_above: "Andrew @22f33727a (co-change over git records tagged by agent types, for the Kimi meta-analysis segment) + CTO~B F4 instrument definition (co-movement + the two denominators) + the State/Friction design's Friction battery as the named consumer -- obligation sourced from the sovereign proposal and the segment design, never this tool's own config"
+    exit_codes:
+      "1": {class: fail, meaning: "self-test failure (parse fixtures or substrate smoke)"}
+      "2": {class: refuse, meaning: "bad invocation (mode arguments)"}
+    exit_source: "org/modules/graph/comp_cochange.py (self_test rc1 :bottom; argparse/mode rc2 :main) @the born-registered landing commit 2026-08-04"
+
   # ===== VERDICT tools (a contracted nonzero is an ESTATE-VERDICT, not a tool crash) =====
 
   comp-blast:

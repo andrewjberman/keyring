@@ -932,6 +932,19 @@ entries:
     status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
     notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."
 
+  # ---- AGENT-TYPE CO-MOVEMENT (comp-cochange / F4, Friction battery) ----
+  - id: estate.cochange.agent_type_comovement
+    use_case: "What changes together with X? Which agent types co-move on the same files over a window (friction/coordination surfaces; the Kimi Friction-battery leg beside comp-blast overlap + comp-heat trajectory)?"
+    canonical_call: "comp-cochange [matrix | pair <T1> <T2> | file <path-substr>] [--since \"14 days ago\" | --range A..B] [--grain type|serial] [--json]"
+    tool: comp-cochange
+    mode: query
+    layer: pipeline
+    cost: "~seconds (one comp-missions commit walk, derived live)"
+    freshness: "derived live from git history at call time; HEAD anchor printed on every output"
+    rebuild_trigger: "n/a (always derived live)"
+    anti_pattern: "raw `git log --name-only` pair-hunting (connection-blind, no denominators); comp-heat (WRITE-freshness of objects, not pair co-movement); comp-missions (mission attribution, not coupling)"
+    status: canonical   # ADHOC.comp-cochange-build 2026-08-04: Andrew @22f33727a + CTO arch word 200144Z; BORN-REGISTERED (first tool under the C-indexed regime; contract + coordinate + intent_from_above in the landing commit)
+
   # ---- ESTATE OBJECT HYGIENE (comp-heat / NFRA_HEATMAP_OBJECT) ----
   - id: estate.heat.object_freshness
     use_case: "What repo/estate files are stale / dead / safe to archive? (per-path hot/warm/cold + ranked COLD SUBTREES = archive candidates)"
@@ -1466,6 +1479,7 @@ tools_index:
   comp-transform: { does: "React component field-render schema-check (MISSING/UNUSED)", subcommands: [schema-check, ternary-audit], entries: [trace.transform.component_fields] }
   comp-cache:    { does: "React Query cache-key collision detection", subcommands: [map, collisions, key], entries: [trace.cache.key_collisions] }
   comp-cluster:  { does: "Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph (data-source clusters + drilldown depth/cohort + cross-panel SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache", subcommands: ["<Page>", "--list", "--coverage", "--json", "--db-path"], entries: [cloud.cluster.page_panel_drilldown] }
+  comp-cochange: { does: "agent-type CO-MOVEMENT over git history (F4 instrument): which agent TYPES change the SAME FILES within a window, with BOTH F4 denominators on every output (commits-attributed/total AND pairs-observed/possible). Typed dispatch over the comp-missions commit walk -- runs NO git of its own; READ-ONLY, no LLM, observations never verdicts (UNATTRIBUTED authors counted in denominator 1, never dropped). Feeds the Friction battery (Kimi meta-analysis) beside comp-blast overlap + comp-heat trajectory. Subject-coordinate C1-discovered-relations (provisional -- first CVO dial confirms).", subcommands: [matrix, "pair <T1> <T2>", "file <path-substr>", "--since", "--range", "--grain type|serial", "--json", "--self-test"], entries: [estate.cochange.agent_type_comovement] }
   comp-pii:      { does: "PII exposure audit (routes + components)", subcommands: [audit, scan], entries: [trace.pii.exposure] }
   comp-types:    { does: "TS type consumers (before editing a shared type)", subcommands: [index], entries: [trace.types.type_consumers] }
   comp-tooltip:  { does: "Tooltip migration/coverage audit", subcommands: ["<args>"], entries: [meta.tooltip.migration] }

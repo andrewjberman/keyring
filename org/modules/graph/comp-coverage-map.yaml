@@ -862,6 +862,16 @@ meta_tools:
       - { tool: comp-drift, shared_resource: estate-structure, my_concern: "who WRITES the same key (producer-side collision)", their_concern: "propagation-seam abandonment/disposition (edges-that-go-nowhere)" }
       - { tool: comp-xray,  shared_resource: freshness, my_concern: "TWO producers racing one key (a clobber, from version-history etag interleave)", their_concern: "value-MOTION of ONE key (frozen-but-fresh content)" }
     not_homed_reason: "estate-wide write-TARGET scanner (like comp-dups/comp-similar): scans ALL producer code (data/ + infra/) + probes ANY S3 key's version history -- not homed to one surface/pipeline. STATIC = a code candidate-finder (write-call-windowed; bucket-blind on bare Key=); the ORACLE is the LIVE version-history etag-lineage interleave (--live/--sweep). Born from the 2026-07-21 aum-timeseries clobber (build_legacy_compat_emit.py frozen 11:30 emit vs mdpf-daily-runner fresh ~15:00 write). Author 3.0.0_SA_CVO. self-test 5/5. Engine org/modules/graph/clobber_scan.py"
+  - tool: comp-cochange
+    role: comovement-scanner
+    routable: true
+    declared_grain: [pair, file]   # agent-type pair grain; per-pair shared-file evidence beneath
+    concern: "agent-type CO-MOVEMENT -- which agent TYPES change the SAME FILES within a window (friction/coordination surfaces), with BOTH F4 denominators on every output (commits-attributed/total AND pairs-observed/possible). The Kimi Friction-battery leg beside comp-blast overlap + comp-heat trajectory"
+    distinct_from:
+      - { tool: comp-heat,     shared_resource: git-history, my_concern: "PAIR co-movement (who moves WITH whom)", their_concern: "object WRITE-freshness (how recently a file moved at all)" }
+      - { tool: comp-missions, shared_resource: git-history, my_concern: "agent-type x agent-type coupling over shared files", their_concern: "commit->mission attribution (which mission a commit serves)" }
+      - { tool: comp-blast,    shared_resource: estate-structure, my_concern: "OBSERVED co-change in history (empirical coupling)", their_concern: "DECLARED dependency blast radius (structural coupling)" }
+    not_homed_reason: "estate-wide history scanner (like comp-clobber/comp-dups): typed dispatch over the comp-missions commit walk, runs NO git of its own -- not homed to one surface/pipeline. READ-ONLY, no LLM, observations + denominators never verdicts; UNATTRIBUTED authors counted in denominator 1, never dropped. BORN-REGISTERED 2026-08-04 (first tool under the C-indexed regime: contract + subject-coordinate C1-discovered-relations provisional + intent_from_above in the landing commit; Andrew @22f33727a, CTO arch word 200144Z, CTO~B F4 definition). Author 0.2.0_DS_PortfolioAnalytics. Engine org/modules/graph/comp_cochange.py"
   - tool: comp-dataflow
     role: lineage-scanner
     routable: true
