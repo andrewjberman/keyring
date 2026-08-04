@@ -2,9 +2,13 @@
 
 **archetype:** MIXED (IMPLEMENT + DIAGNOSE + COORDINATE)
 **Serial:** `1.0.0_SA_CTO~B` (RCG execution-coordination seat, spawned Andrew-direct per RCG `R-0021`)
-**Window:** 2026-08-04 00:45Z - 01:30Z
-**Counterpart:** `4.0.0_SA_CRO` (live throughout; 4 message round-trips)
-**Commits:** `2cdb15c78b` · `0fb3be24a3` · `5d8b576299` · `b308fa7132`
+**Window:** 2026-08-04 00:45Z - 06:12Z *(the filename carries the OPENING window only; the work ran
+on past it and the addenda below are in time order. Filename left unchanged because prior commit
+messages cite it.)*
+**Counterpart:** `4.0.0_SA_CRO` (live throughout; ~14 message round-trips). Also `1.0.0_SA_CTO` (base,
+routed finding), `3.0.0_SA_CVO~B` (independent batch verify, Andrew-provisioned).
+**Commits:** 20 by this seat, `2cdb15c78b` (first) through `f89342092b` (last) --
+`git log --author="1.0.0_SA_CTO~B" 2cdb15c78b^..HEAD`
 
 ---
 
@@ -109,6 +113,88 @@ real-data run, before any batch was cut. Routed to CRO.
 | `audit-archive-invoker` | rc=1, 1 finding | `org/tombstone-gate-audit.log` baseline missing from the 2026-08-03T143634Z archive -- **routed to CTO Base, predates this seat** |
 | `mass-deletion-check --mode` | measured | `effective mode: block`, threshold 25 -- the live constraint item 5 had to design around |
 | raw `grep`/`git` | used | ledger/charter arithmetic and lane-reachability measurement; no comp-tool models label-vs-charter-vs-lane intersection, which is the whole question |
+
+---
+
+## Blockers
+
+**NONE.** Nothing in this seat's scope is blocked, and nothing is waiting on Andrew.
+
+Verified rather than assumed, per the blocker protocol:
+- `D-0002` (the CVO verify arm) READ as blocked-at-Andrew for most of the session. It was not --
+  Andrew had already ferried it. Confirmed at source: `D-0005` in `rcg/ledger/DISPOSITIONS.jsonl`
+  records him provisioning `3.0.0_SA_CVO~B` personally, and that seat's verify deliverable
+  `c11c4b61fb` reads **VERDICT: CLEAN, 26/26 PASS**. I carried it as open for ~2h on an inference I
+  had not tested; asking closed it in one message.
+- The 4 held stragglers are **routed, not blocked** -- they need a disposition in CRO's ledger, which
+  CRO can make without me.
+
+## Current State
+
+*Written for a reader with zero prior context.*
+
+**What this seat is.** `1.0.0_SA_CTO~B` is a CTO lane Andrew spawned (RCG ruling `R-0021`) so that
+`NFRA_REPOCOHERENCEGRAPH` execution-gating does not sit on CTO Base's served-integrity board. It is
+the single authorized cross-seat counterpart to `4.0.0_SA_CRO`, which otherwise runs under `R-0001`
+fabric silence.
+
+**What RCG is doing.** Deleting dead weight from the repo: every tracked file is labelled
+(KEEP / REFERENCE_KEEP / MIGRATE / ARCHIVE) in `rcg/ledger/LABELS.jsonl`, and ARCHIVE files are
+removed by `git rm` in ratified batches. Git history is the archive; recovery is `git revert`.
+
+**The two things this seat built, both live:**
+
+1. `.tools/git-hooks/rcg-manifest-check.sh` -- pre-commit **stage 5**. Enforces that the `rcg/`
+   folder tree is a subset of `rcg/MANIFEST.yaml`. Scoped (no-ops unless `rcg/` is staged) and
+   FAIL-CLOSED (a missing checker while `rcg/` is staged is a DENY, unlike stages 2-4 which silently
+   skip). Installer `install-rcg-manifest.sh`, test `test-rcg-manifest-check.sh` (4/4).
+2. `.tools/rcg_sweep_verify.py` + `.tools/git-hooks/rcg-sweep-check.sh` -- pre-commit **stage 6**.
+   Fires on the **author identity** `4.0.0_SA_CRO~SWEEP`, not on a declared trailer, so that seat has
+   no un-gated commit shape. 8 execute checks (C1 deletion-only, C2 exact set equality both
+   directions, C3 batch prior-committed, C4 re-derived label==ARCHIVE, C5 re-derived charter==SCORE,
+   C6 cohort-ratification supremacy, C7 package coherence, C8 size cap) + 4 revert checks (R1-R4,
+   blob-hash identity) + a non-blocking content-uniqueness advisory. Invocation:
+   `RCG_BATCH_ID=B-000N [RCG_SWEEP_MODE=revert] git commit ...`. Test
+   `.tools/test_rcg_sweep_verify.py` -- **18/18**. Audit trail `org/rcg-sweep-audit.log`.
+
+**The ruling.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/RCG_SWEEP_MECHANICS_RULING_20260804.md`
+(CTOB-RCG-001). Principle: **authority attaches to the BATCH, not the SEAT** -- the executing identity
+may hold a broad delete lane because a gate makes that lane unusable for anything but an exact ratified
+batch, and every safety property is re-derived at execution from ledger + tree, never read from the
+batch.
+
+**The grant.** `.owned-paths.yaml` gives `4.0.0_SA_CRO~SWEEP` membership in 5 lanes (`POD4`,
+`CLOUD_OPS_OR_ETL`, `ANY_CTO`, `POD1`, `SHARED_OPAL_ETL`). `BASE_EXEC` and `POD2` were **deliberately
+withheld** -- that withholding later blocked a mis-cut batch (see Addendum 7).
+
+**Execution to date.** 7 batches: CRO's B-0001 (93) / B-0002 (500) / B-0003 (497) / B-0004 (484) /
+B-0005 (500) / B-0006 (487), plus this seat's straggler commit `2b536176be` (8). Each CRO batch was
+re-derived by this seat from the commit -- deletion-only, set-equal, all ARCHIVE, zero protected
+charter -- not accepted from the executor's report. B-0001's `git revert` was executed and verified
+byte-identical, discharging the ruling's s.7 acceptance condition: **recovery is a fact, not a claim.**
+
+**Queue:** ~375 ARCHIVE files still tracked at last re-derivation (from 7,048 at session start; the
+drop is partly execution and partly the `R-0022` correction).
+
+## Next Steps
+
+- **[`4.0.0_SA_CRO`]** B-0007 onward. Needs nothing from this seat -- the ruling permits the
+  mechanism and the mechanism permits the batch.
+- **[`4.0.0_SA_CRO`]** disposition the **4 held stragglers** in the ledger: `org/ka_testing/Dockerfile`
+  + `.dockerignore` and `docs/deployment/BD_PORTAL_PUBLISHER_PLAN.md` (surviving files depend on them
+  -- likely REFERENCE_KEEP or MIGRATE-with-citation-repair), and `data/yang_pkl/README.md` (lane
+  `POD2`, needs a POD2 member or an amendment).
+- **[`1.0.0_SA_CTO`]** rule the `org/rcg-sweep-audit.log` archive-MANIFEST coverage item (concurred:
+  ADD, rare-bypass class). This seat owns the writer, so per SoD the coverage is authored by others.
+- **[unowned, named]** extend C7 past the Python-package shape. `org/ka_testing` proved the general
+  case live: a **KEEP** file (`docs/compose.yml`, `build: .`) depending on an **ARCHIVE** file. The
+  generalisable check is "a surviving file references a deleted file by name". Residual risk 2 in the
+  ruling; now evidenced twice.
+- **[standing]** no install-all hook entry point (`.owned-paths.yaml:114`) -- a clone can hold the
+  lane grant without the gate. Bounded to primary-laptop-only execution with the installer run as
+  recorded batch prep.
+
+---
 
 ## ADDENDUM 01:30-01:45Z -- the restore leg had no legal author (`e3a07f97f4`)
 
