@@ -167,23 +167,41 @@ batch.
 `CLOUD_OPS_OR_ETL`, `ANY_CTO`, `POD1`, `SHARED_OPAL_ETL`). `BASE_EXEC` and `POD2` were **deliberately
 withheld** -- that withholding later blocked a mis-cut batch (see Addendum 7).
 
-**Execution to date.** 7 batches: CRO's B-0001 (93) / B-0002 (500) / B-0003 (497) / B-0004 (484) /
-B-0005 (500) / B-0006 (487), plus this seat's straggler commit `2b536176be` (8). Each CRO batch was
-re-derived by this seat from the commit -- deletion-only, set-equal, all ARCHIVE, zero protected
-charter -- not accepted from the executor's report. B-0001's `git revert` was executed and verified
-byte-identical, discharging the ruling's s.7 acceptance condition: **recovery is a fact, not a claim.**
+**Execution -- THE ARCHIVE SWEEP PROGRAMME IS COMPLETE.** 7 CRO batches plus this seat's straggler
+commit, re-derived from the commits by this seat rather than accepted from the executor's reports:
 
-**Queue:** ~375 ARCHIVE files still tracked at last re-derivation (from 7,048 at session start; the
-drop is partly execution and partly the `R-0022` correction).
+| B-0001 | B-0002 | B-0003 | B-0004 | B-0005 | B-0006 | B-0007 | `2b536176be` (mine) | **total** |
+|---|---|---|---|---|---|---|---|---|
+| 93 | 500 | 497 | 484 | 500 | 487 | 371 | 8 | **2,940 files** |
+
+Every batch: deletion-only, set-equal to its ratified batch, all ARCHIVE, **zero protected-charter
+violations**. B-0001's `git revert` was executed and verified byte-identical, discharging the ruling's
+s.7 acceptance condition -- **recovery is a fact, not a claim.**
+
+**Queue: 1, not 0.** CRO's close reported "DRY"; re-derived, exactly one ARCHIVE label remains tracked
+-- `data/yang_pkl/README.md`, lane `POD2`, which neither seat can execute and which CRO routed at
+`D-0006`. The body of their message says so; only the subject rounds it. *Recorded because a successor
+reading "dry" does not go looking for the one.* Started at 7,048; the drop is part execution, part the
+`R-0022` correction.
+
+**The 4 held stragglers are dispositioned** (`29739ed4b`): all three dependency cases re-labelled
+**REFERENCE_KEEP** and still tracked -- `org/ka_testing/Dockerfile`, `.dockerignore`,
+`docs/deployment/BD_PORTAL_PUBLISHER_PLAN.md`. CRO re-verified both dependencies at source rather than
+taking my word.
 
 ## Next Steps
 
-- **[`4.0.0_SA_CRO`]** B-0007 onward. Needs nothing from this seat -- the ruling permits the
-  mechanism and the mechanism permits the batch.
-- **[`4.0.0_SA_CRO`]** disposition the **4 held stragglers** in the ledger: `org/ka_testing/Dockerfile`
-  + `.dockerignore` and `docs/deployment/BD_PORTAL_PUBLISHER_PLAN.md` (surviving files depend on them
-  -- likely REFERENCE_KEEP or MIGRATE-with-citation-repair), and `data/yang_pkl/README.md` (lane
-  `POD2`, needs a POD2 member or an amendment).
+- ~~**[`4.0.0_SA_CRO`]** B-0007 onward~~ -- **DONE. Programme complete, 2,940 files.**
+- ~~**[`4.0.0_SA_CRO`]** disposition the 4 held stragglers~~ -- **DONE** (`29739ed4b`), verified.
+- **[`4.0.0_SA_CRO` + this seat]** the **R-0019 lambda TF cross-check** -- cycle 3's human mass, ~411
+  files by CRO's re-derived predicate. **This is the unfinished half of the finding that opened the
+  session**: `R-0019`'s own open_question was "lambda TF cross-check", and the 4,103-file pyiceberg
+  contradiction sat inside exactly that subtree. Two things I asked be carried into the scoping:
+  treat every `andrew_ratification` cohort verdict there as binding and re-derive at adjudication
+  time (C6's rationale by hand, where the cohort grain is coarser than a directory), and **look
+  deliberately for the `ka_testing` shape** -- a Lambda tree is exactly where "delete the build
+  recipe, keep the app" hides, and C7 only sees `__init__.py`.
+- **[`POD2` member]** execute `data/yang_pkl/README.md` (`D-0006`), the one remaining ARCHIVE file.
 - **[`1.0.0_SA_CTO`]** rule the `org/rcg-sweep-audit.log` archive-MANIFEST coverage item (concurred:
   ADD, rare-bypass class). This seat owns the writer, so per SoD the coverage is authored by others.
 - **[unowned, named]** extend C7 past the Python-package shape. `org/ka_testing` proved the general
