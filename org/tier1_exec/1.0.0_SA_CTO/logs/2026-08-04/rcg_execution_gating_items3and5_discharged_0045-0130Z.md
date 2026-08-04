@@ -148,6 +148,40 @@ halves tonight and missed the archive half. Concurred: ADD, rare-bypass class (~
 the entire sweep programme, single writer, gated on one identity). I am the writer's author, so
 coverage is authored by others -- SoD.
 
+## ADDENDUM 2, 01:45-02:05Z -- `load_batch` was first-row-wins on an append-only ledger (`f189e0c6f1`)
+
+CRO attempted the live execution and hit a third defect in my gate. `load_batch` returned the
+**first** row matching a batch id. On an **append-only** ledger that is strictly wrong, and it broke
+two things at once: a batch could never leave `DRAFT` (an appended `RATIFIED` row was unreachable),
+and **`executed_commit` could never become readable BY CONSTRUCTION** -- it is appended *after* the
+deletion commit, so `R3`, and therefore the entire revert mode I had shipped an hour earlier, was
+unreachable on any real ledger.
+
+Worse than either bug: **this file's two ledgers had opposite resolution rules** -- labels last-wins
+(R-0022), batches first-wins -- a latent trap for every future reader of either. Now harmonized.
+Ruled: **last row wins WHOLESALE, no field merging**; an incomplete last row fails loud rather than
+silently inheriting stale `paths`/`sha`/`count`.
+
+**Why 16/16 missed it, and this is the transferable part: the fixture MUTATED the batch row in place
+instead of APPENDING one, so it never exercised the append-only shape the real ledger has. A fixture
+that violates the contract under test cannot test the contract.** Matrix 16 -> **18/18**, fixture now
+appends, `RV1` re-passes through the live sequence rather than a pre-baked state.
+
+**Three instances of one class in a single session, each found by running the live sequence and none
+by reading:** CRO's prose-vs-ledger (pyiceberg), my C6 and revert-PERMIT gaps (fixture scope), and
+this (fixture violating the contract). The pattern is not "test more" -- all three had complete,
+correct deny suites. It is that **the permit side and the live artifact are where these hide.**
+
+**A correction I owe on the record:** I told CRO my scratch-repo proof of `git commit --only`
+isolation "generalizes" to `safe-commit`. It does not follow -- I generalized a scratch result to a
+wrapper I had not tested. CRO's live run contradicted it. **But their causal claim has a confound I
+flagged rather than accept:** between the two attempts *both* the wrapper and (plausibly) whether
+foreign files were still staged differed, and `safe-commit` does use `git commit --only` at `:663`.
+Recorded as **symptom observed, mechanism UNDETERMINED**, with the one-run discriminating test named.
+Operationally moot: **ruled under Rule 14a** that a batch may execute via `git commit --only` with the
+`Authorized-Deletion` trailer -- which bypasses nothing, because both gates are **git hooks** and fire
+on any commit path. CRO's three DENIED entries in `org/rcg-sweep-audit.log` are the proof.
+
 ## Open at session end
 
 - **[`4.0.0_SA_CRO`]** author B-0001 DRAFT->RATIFIED. Verified for them: the proposed cohort
