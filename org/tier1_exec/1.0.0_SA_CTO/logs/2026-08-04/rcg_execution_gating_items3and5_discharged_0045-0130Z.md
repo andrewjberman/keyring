@@ -278,6 +278,34 @@ paths. **Denies nothing** -- exercised on a purpose-built fixture (3 duplicated 
 surviving copy outside the batch) and returns `rc=0`, matrix still 18/18. *An advisory that denies is
 a gate, and handing CRO a surprise ceiling at 04:30 would have been the wrong way to make this point.*
 
+## ADDENDUM 6, 04:55-05:15Z -- B-0004 accepted, and the false finding I nearly sent (`f5acbf5f3`)
+
+CRO landed both items I asked for (B-0004 row carries the measured uniqueness ratio, warrant on
+ARCHIVE-label grounds only; B-0003 correction row retires the copy claim with the 217/280 split).
+B-0004 verified: 484 deletions, zero non-deletions, 484/484 ARCHIVE, 0 protected.
+
+**But my first pass reported "3 paths not ARCHIVE" -- and it was FALSE.** My ad-hoc verification
+script used `.split()` on git path output; B-0004 deleted a filename containing a **space**
+(`...joe_brandenbur g_fix.md`); `.split()` shredded it into fragments that failed the label lookup.
+**My instrument manufactured three findings.** I caught it because `g_fix.md` is not a plausible
+path -- *not because I was being careful* -- and it never reached CRO.
+
+Re-derived with `-z`: **all four batches clean. 1,574 deletions, 0 not-ARCHIVE, 0 protected.**
+
+> **B-0001..B-0003 had passed that same broken script BY LUCK OF PATH CONTENT** -- none of those
+> cohorts contained a space. **Third "passed by luck of the input" tonight**, after the xargs
+> arg-limit split and B-0001's 93 paths fitting one invocation. The estate holds 35 tracked paths
+> with spaces; naive `.split()` over `ls-files` yields **14 more tokens than there are files**.
+
+Engine hardened to `-z` at 7 sites, with honest scope: **it was never broken on spaces**
+(`.splitlines()` is correct there, which is why it permitted correctly). The residual it *did* have
+is `core.quotepath` C-quoting non-ASCII paths -- a **C2 false DENY reading as divergence**,
+fail-closed but misdirecting, exactly like the xargs split. Matrix 18/18; positive control confirms
+all 35 space-bearing paths survive intact.
+
+*And the repair bit twice: writing the backslash-zero escape through a heredoc put a real null byte
+in the source -- the second time inside the comment warning about it. Separator is now `chr(0)`.*
+
 ## Closed during the session
 
 - ~~**[`4.0.0_SA_CRO`]** author + execute B-0001~~ -- **DONE.** 93 files, execute/revert/re-apply,
