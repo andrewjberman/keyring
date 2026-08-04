@@ -457,10 +457,10 @@ marker (audited). Raw search is text-local and connection-blind — it misses co
 
 | Role | Minimum |
 |------|---------|
-| DS | `comp-pipescript io` for every gold script touched. `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc run. `comp-validate <script> --artifact <file>` before signaling AE. |
+| DS | `comp-pipescript io <script> --pipeline <tree>` for every gold script touched (**`--pipeline` REQUIRED — flagless is rc=2 REFUSED since 07-30**). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps <script> --firm <firm>` before any ad-hoc run (flagless silently defaults to bd). `comp-validate <script> --artifact <file>` before signaling AE. |
 | DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` for 4xx/auth debugging. **New cohort/metric/mode:** `comp-transform schema-check --feature [token]` + `comp-transform ternary-audit [Component]` at Phase 1. |
-| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after any new boto3 call **(necessary, NOT sufficient — see below)**. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
-| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps` before any gold run. `comp-iam gaps` after any `iam.tf` change **(necessary, NOT sufficient — see below)**. `comp-blast` on infra before changes. |
+| DT | `comp-pipescript io <script> --pipeline <tree>` for every script deployed (**`--pipeline` REQUIRED — flagless is rc=2 REFUSED**). `comp-iam service <lambda>` after any new boto3 call **(necessary, NOT sufficient — see below)**. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
+| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps <script> --firm <firm>` before any gold run (flagless silently defaults to bd). `comp-iam gaps` after any `iam.tf` change **(necessary, NOT sufficient — see below)**. `comp-blast` on infra before changes. |
 | RD | `comp-transform fields` for every component rendering data. |
 | COO | `comp-pipescript overlap A B` before authoring cross-domain coordination. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
 
