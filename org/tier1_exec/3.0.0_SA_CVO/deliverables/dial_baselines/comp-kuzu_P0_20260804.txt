@@ -129,3 +129,9 @@ pipe-corrupted-rc class). Clean re-measures, rc captured direct:
 calls cite the nonexistent `id` property -- :101 (RETURN n.id), :114 (RETURN b.id),
 :127 ({id:$arn} + RETURN dep.id). Each binder-fails as written against the live
 schema (exercised this session). The mandated catalog teaches a failing form.
+
+## K1 CLOSED (~1340Z) -- CTO repaired @e0d657799, CVO-verified by exercise:
+4 lines node_id'd (residual census 0), :101 verbatim rc=0/50 rows, and the new
+inline-// TEMPLATE comment exercised on the copy-blind path (substituted :114
+WITH comment included: rc=0, real rows) -- kuzu accepts // comments, the fix
+did not relocate the copy failure. comp-system 06 recompile @e1df5bb21 (CTO).
