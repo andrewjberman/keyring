@@ -23,5 +23,16 @@ the Global displayed axis to the complete-data frontier (DE, rides the pending d
 form = the global fold emits `complete_through` explicitly and FE reads it (canon-route program,
 L3 fold contract — Phase-B item). The deploy gate binds on the IMMEDIATE form.
 
+**ADDENDUM ~16:48Z, VERBATIM (third edict item):**
+> "In addition to that, we have three different timestamps, two non-canonical that just got
+> added to the 'Portfolio Analytics' panel in Model Portfolios portal page, in addition to the
+> canonical one that sits on the bottom right. The two non-canonical ones need to not be there.
+> Any non-canonical timestamps are not acceptable and must be cleared."
+
+**Scope as surfaced:** 3. **TIMESTAMP HYGIENE (DE, same deploy gate):** the Portfolio Analytics
+panel shows exactly ONE timestamp — the canonical bottom-right one. The two newly-added
+non-canonical timestamps are removed before the deploy, and the GENERAL RULE binds forward: no
+non-canonical timestamp ships on any portal surface.
+
 **Broadcast:** DE 0.4.0 + DT 0.4.0 + DT 0.2.0 (authority question still open at Andrew — the
 edict binds WHOEVER deploys) + COO (dispatch) — same turn.
