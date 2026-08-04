@@ -55,6 +55,44 @@ only, no builds, no kills (T5 is gated on T1-T3 proven, memo-verbatim ordering).
    `mdpf-daily-stage5-ownts-failed` + `mdpf-daily-trigger-dlq-not-empty`; SQS
    `mdpf-daily-trigger-dlq`; runner SG/instance-profile/roles. All kuzu-live nodes.
 
+## ADDENDUM (Andrew follow-up, ~01:5xZ): DO THE LEGACY ROUTES RESOLVE PORTAL-FACING? — YES, THREE OF FOUR
+
+Andrew's premise to test, verbatim: *"Every single one of these resources listed in the 'bullshit'
+ranked list is dead. check if any of that resolves in a portal-facing view."* Serve-plane
+measurement (all OBSERVED):
+
+- **The serve prefix `opal-data-portal-v2/platinum/mdpf/` is being written by BOTH legacy planes
+  right now:** hyphen-plane files (`global/aggregate-aua-timeseries.json`,
+  `global/non-model-assets.json`, `49financial/account-distribution.json`,
+  `49financial/aggregate-aua-timeseries.json`) all last-modified **2026-08-03 12:15 ET** — the
+  ACCRUAL plane's 08-03 run (route 4). Underscore files (`aggregate_aua_timeseries.json` top-level
+  + per-firm) last-modified **2026-07-31 11:00 ET** — the RUNNER chain's last run (route 3);
+  kuzu names the writer (`build_aggregate_aua_timeseries` WRITES_S3).
+- **The portal fetches exactly these families** (deployed-relevant source, portal/src):
+  `aum.ts:544` -> `/api/general/mdpf/{firmId}/account-distribution.json` (the bell);
+  `portal-proxy.ts:507` -> `/api/general/mdpf/aggregate-aua-timeseries.json`;
+  `aum.ts:622` -> `/api/general/mdpf/{firmId}/aum-metrics.json` (whose `:560` comment claims a
+  json/mdpf legacy-channel mapping — comment-level claim, T5.A-class caution). The
+  `/api/general/*` chain rewrites to platinum per the T3 grounding; exact per-path rewrite is
+  T3.B's census to pin.
+- **The feeder pair (route 2) is INSIDE the served bytes:** the served timeseries' own
+  `source_vintage_last.by_feeder` block enumerates `model_aua_positions` / `model_composition` /
+  `non_model_aua` / `etf_net_assets` / `partner_held_etf` per-firm vintages — the
+  `opal-data-mdpf/mdpf/feeds/` outputs. The serve content is DERIVED from the legacy feeds.
+- **Two bells, both fresh 08-03** (the 4-way collision class): platinum
+  `49financial/account-distribution.json` 12:15 ET (accrual-written) AND json
+  `mdpf/49financial/account-distribution.json` **07:30 ET — the exact smartx cron hour
+  (cron(30 11)Z)**, disable-flags notwithstanding (correlation OBSERVED on timestamps; writer
+  identity INFERRED pending code read — route 1).
+
+**VERDICT: routes 1-4 are NOT dead-as-product — the Model Portfolios page is being kept fresh BY
+the legacy machinery today.** Only items 5-7 (dead grants, shadow keys, accessories) are dead-dead.
+Andrew's premise is NORMATIVELY correct (per his own canon these routes must die) and FACTUALLY
+inverted (killing the ranked list today would freeze/blank the served page — which is precisely
+why the memo gates T5 on T1-T3 proven). Live corollary for T2.B/C.3: **the freshest serve writer
+today is the ACCRUAL plane; the canonical publisher (fired 08-02) writes only part of the
+surface; the twin-plane divergence is live ON the serve prefix.**
+
 ## Instrument note (dial-session evidence)
 
 The pre-rebase comp-blast could not have produced this census — `opal-data-mdpf` was NOT-FOUND in
