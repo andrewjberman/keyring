@@ -931,6 +931,10 @@ paths:
     lane: COMP_LEARNS
     note: "COMP_LEARNS CVO home — responses, reviews"
 
+  "org/estate-reports/**":
+    lane: CVO_WORKSPACE
+    note: "Estate-pull canonical day-record home (estate-report daily records). Before this rule the path had NO rule at all — safe-commit blocked the first-ever day record (CVO finding G9, first live exercise of the 07-30 manifest flip, 2026-08-04). Lane CVO_WORKSPACE = 3.0.0_SA_CVO + CTO + COO. Added 2026-08-04 by 2.0.0_SA_COO (grantor; CVO is grantee — SoD, grantee never commits its own grant) per CVO request 051922Z under the Andrew-approved Kimi close path (MSTR broadcast 050326Z)."
+
   "org/tier1_exec/4.0.0_SA_CRO/**":
     lane: CRO_WORKSPACE
     note: "Workspace-wide CRO home — charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED — there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD). LD-0331."
