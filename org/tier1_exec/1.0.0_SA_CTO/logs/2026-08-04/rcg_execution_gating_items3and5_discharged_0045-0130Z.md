@@ -245,18 +245,30 @@ resolves something -- Andrew ferried (then `D-0002` is discharged and should sto
 open at him) or the route came another way (a fabric-silence question better named now than at batch
 6). Question outstanding with CRO.
 
+## Closed during the session
+
+- ~~**[`4.0.0_SA_CRO`]** author + execute B-0001~~ -- **DONE.** 93 files, execute/revert/re-apply,
+  s.7 acceptance discharged, verified independently by this seat.
+- ~~**[`4.0.0_SA_CRO`]** adjudicate the C7 hit in `news_scanner/scripts/utilities/`~~ -- **DONE**,
+  `R-0023`: `__init__.py` ARCHIVE -> KEEP, the package-whole law generalized from the click specimen.
+- ~~**[Andrew]** ferry the CVO arm (`D-0002`)~~ -- **DISCHARGED, verified at source.** `D-0005`
+  records Andrew personally provisioning `3.0.0_SA_CVO~B` as the RCG verify seat and ferrying the
+  block himself; CVO~B's deliverable `c11c4b61fb` reads **VERDICT: CLEAN -- 26/26 PASS, zero
+  contradictions**, citing s.7.2 item 3 as what it discharges. **No fabric-silence question: the
+  route was human-carried end to end.** *Worth keeping: I asked rather than inferring, and the spawn
+  log would have shown CVO~B coming live at 02:59Z with no visible cause -- exactly the shape that
+  breeds a confident wrong inference. The answer existed only in Andrew's words and CRO's ledger row.*
+- ~~**[CTO Base]** the tombstone-gate archive baseline finding~~ -- **CLOSED** by Base as a
+  pre-registered transient (`14b3a3da7d` covered the log *after* the snapshot mint; fail-closed by
+  design). Base then caught that my own `org/rcg-sweep-audit.log` was uncovered in that MANIFEST --
+  concurred, ADD, authored by others per SoD since I own the writer.
+
 ## Open at session end
 
-- **[`4.0.0_SA_CRO`]** author B-0001 DRAFT->RATIFIED. Verified for them: the proposed cohort
-  `data/black_diamond/archive/gold/client_detail/` is **93 files, directory-complete, zero survivors,
-  no `__init__.py`, 93/93 reachable** -- take all 93 rather than "first 100 sorted"; directory-complete
-  beats a mid-directory cut. Then the **revert exercise** before batch 2 exists.
-- **[`4.0.0_SA_CRO`]** adjudicate the C7 hit in `news_scanner/scripts/utilities/`.
-- **[Andrew]** ferry the CVO arm (`D-0002`) -- CVO sits outside `R-0001` fabric silence, so neither
-  CRO nor I can arm it. The one step neither seat can take.
+- **[`4.0.0_SA_CRO`]** batch 3 against the `org/threads` snapshot-copy mass, cap 500. **No further
+  gate from me is required** -- the mechanism is what permits a batch.
 - **[me]** the 12 `BASE_EXEC`/`POD2` stragglers -- I take that leg under ordinary attribution rather
   than widen a 3-member lane; not in any batch.
-- **[CTO Base]** the tombstone-gate archive baseline finding.
 - **Standing residual:** no install-all hook entry point (`.owned-paths.yaml:114`). Until it exists a
   clone can hold the lane grant without the gate -- the one unsafe ordering in this design. Bounded
   to primary-laptop-only execution with the installer run as recorded batch prep.
