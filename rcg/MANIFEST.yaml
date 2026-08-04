@@ -13,6 +13,7 @@ allowed_paths:
   - rcg/.gitattributes
   - rcg/charters.yaml
   - rcg/rulings/RULINGS.jsonl
+  - rcg/rulings/VERDICTS.jsonl
   - rcg/ledger/DISPOSITIONS.jsonl
   - rcg/ledger/LABELS.jsonl
   - rcg/ledger/MODEL_EVAL.jsonl
@@ -32,6 +33,7 @@ allowed_paths:
   - rcg/bin/post_review.py
 append_only:
   - rcg/rulings/RULINGS.jsonl
+  - rcg/rulings/VERDICTS.jsonl
   - rcg/ledger/BATCHES.jsonl
   - rcg/ledger/DISPOSITIONS.jsonl
   - rcg/ledger/LABELS.jsonl

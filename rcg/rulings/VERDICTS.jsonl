@@ -1,0 +1,11 @@
+{"id": "V-0000", "date": "2026-08-04", "type": "genesis", "note": "machine-readable ratified cohort->verdict map (CTO~B review note 212158Z: without this, label-vs-warrant degrades to descent-checking). Append-only; one row per (ruling, path_prefix); prefix rows only -- prose-scoped cohorts stay in RULINGS.jsonl and are NOT enforceable here until a ruling refines them to prefixes. Consumer: rcg/bin/manifest_check.py label-vs-warrant pass."}
+{"ruling": "R-0019", "path_prefix": "infra/aws/lambda/layers/", "verdict": "KEEP", "date": "2026-08-04", "cite": "R-0019 scope item (1): layers/+v2_portal/ KEEP"}
+{"ruling": "R-0019", "path_prefix": "infra/aws/lambda/v2_portal/", "verdict": "KEEP", "date": "2026-08-04", "cite": "R-0019 scope item (1): layers/+v2_portal/ KEEP"}
+{"ruling": "R-0019", "path_prefix": "infra/aws/lambda/portal/", "verdict": "MIGRATE", "date": "2026-08-04", "cite": "R-0019 scope item (1): portal/+market_query+test_seeking_alpha_unauth MIGRATE"}
+{"ruling": "R-0019", "path_prefix": "infra/aws/lambda/market_query/", "verdict": "MIGRATE", "date": "2026-08-04", "cite": "R-0019 scope item (1)"}
+{"ruling": "R-0019", "path_prefix": "infra/aws/lambda/test_seeking_alpha_unauth/", "verdict": "MIGRATE", "date": "2026-08-04", "cite": "R-0019 scope item (1)"}
+{"ruling": "R-0019", "path_prefix": "org/modules/graph/", "verdict": "REFERENCE_KEEP", "date": "2026-08-04", "cite": "R-0019 scope item (2)"}
+{"ruling": "R-0019", "path_prefix": "data/canonical/schwab/", "verdict": "KEEP", "date": "2026-08-04", "cite": "R-0019 scope item (8): live-system carve-out"}
+{"ruling": "R-0019", "path_prefix": "infra/system/sdk/", "verdict": "KEEP", "date": "2026-08-04", "cite": "R-0019 scope item (9)"}
+{"ruling": "R-0023", "path_prefix": "tools/news_scanner/scripts/utilities/__init__.py", "verdict": "KEEP", "date": "2026-08-04", "cite": "R-0023: package coherence law, exact-path row"}
+{"id": "V-NOTE-0001", "date": "2026-08-04", "type": "residue", "note": "NOT ENFORCEABLE AS PREFIXES (prose-scoped in R-0019, need ruling refinement): items (3-6) 'org tier work-record cohorts REFERENCE_KEEP', (7) 'data/black_diamond/diagnostics ARCHIVE' (diagnostics is a content class not a clean prefix), (10) 'bd/scripts diagnostics ARCHIVE, bronze converter CONTESTED'. Flagged for the cycle-4 sitting."}

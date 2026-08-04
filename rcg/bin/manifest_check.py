@@ -10,6 +10,7 @@ D-0001 CTO ferry item. rc: 0 clean / 2 deny / 3 cannot-evaluate (never a silent 
 """
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,50 @@ def git(*args: str) -> str:
         print(f"BLOCKED: git {' '.join(args)} rc={out.returncode}: {out.stderr.strip()}")
         sys.exit(3)
     return out.stdout
+
+
+def load_jsonl(path: Path) -> list[dict]:
+    with path.open(encoding="utf-8", errors="replace") as h:
+        return [json.loads(line) for line in h if line.strip()]
+
+
+def label_vs_warrant() -> tuple[list[str], list[str]]:
+    """Cycle-4 policy s.3 (CTO~B 212158Z): a path's FINAL label (last-row-wins) must match
+    the ratified verdict of the covering VERDICTS.jsonl prefix row. Descent-only review
+    passed the 2026-08-04 label-constant defect; this pass fails it. A final row citing a
+    DIFFERENT ruling than the verdict's is a legitimate later adjudication -> INFO, not
+    DENY. Returns (violations, infos); coverage denominator is printed by the caller."""
+    verdicts_p = WS / "rcg" / "rulings" / "VERDICTS.jsonl"
+    ledger_p = WS / "rcg" / "ledger" / "LABELS.jsonl"
+    if not verdicts_p.exists() or not ledger_p.exists():
+        return [], []
+    verdicts = [v for v in load_jsonl(verdicts_p)
+                if v.get("ruling") and v.get("path_prefix") and v.get("verdict")]
+    final: dict[str, dict] = {}
+    for r in load_jsonl(ledger_p):
+        if r.get("path") and r.get("label"):
+            final[r["path"]] = r
+    violations: list[str] = []
+    infos: list[str] = []
+    checked = 0
+    for path, row in final.items():
+        for v in verdicts:
+            if not path.startswith(v["path_prefix"]):
+                continue
+            checked += 1
+            if (row.get("label") or "").upper() == v["verdict"]:
+                continue
+            msg = (f"{path}: final label {row.get('label')} (source={row.get('source')}, "
+                   f"cites {row.get('ruling')}) vs {v['ruling']} verdict {v['verdict']} "
+                   f"for prefix {v['path_prefix']}")
+            if row.get("ruling") == v["ruling"] or not row.get("ruling"):
+                violations.append(msg)
+            else:
+                infos.append(msg)
+    print(f"label-vs-warrant: {checked} final-state path(s) under {len(verdicts)} "
+          f"verdict prefix(es); violations {len(violations)}, "
+          f"later-ruling overrides (INFO) {len(infos)}")
+    return violations, infos
 
 
 def main() -> int:
@@ -56,13 +101,18 @@ def main() -> int:
 
     print(f"rcg-manifest-check: DENOMINATOR {len(population)} tracked+staged file(s) under "
           f"rcg/ vs {len(allowed)} allowed; append-only checked: {len(append_only & population)}")
-    if extras or tampered:
+    lvw_violations, lvw_infos = label_vs_warrant()
+    for m in lvw_infos:
+        print(f"  INFO [later-ruling-override] {m}")
+    if extras or tampered or lvw_violations:
         for p in extras:
             print(f"  DENY [not-in-manifest] {p}  -> amend rcg/MANIFEST.yaml in the SAME commit or remove")
         for p in tampered:
             print(f"  DENY [append-only-edited] {p}  -> prior lines are immutable; append, never edit")
+        for m in lvw_violations:
+            print(f"  DENY [label-vs-warrant] {m}  -> a row's label must implement the verdict of the ruling it cites; ESCALATE, never land")
         return 2
-    print("  CLEAN -- tree is a subset of the manifest; append-only intact.")
+    print("  CLEAN -- tree is a subset of the manifest; append-only intact; labels match warrants.")
     return 0
 
 
