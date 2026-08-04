@@ -82,6 +82,39 @@ CVO answer on the indexing mechanics (delivered in-session, summary):
   {SUBSTRATE, ROUTER, GATE, PRODUCER, CANON-SERVER}. Cross-rung JOURNEYS are surface UX
   composing crisply-indexed steps; surfaces carry no coordinate.
 
+## Round 3 (~144xZ) -- Andrew verbatim
+
+> "Interesting, I like it, my only question on this regard is where/how this is structured into
+> the registry. i want to make sure that all these modes and coordinates (and the prose "why")
+> are rigidly categorized, preferably according to our 3-tiered ontology (1.) MECE 2.) Grain
+> 3.) Intent)"
+
+**GROUNDING NOTE (honest):** "MECE / Grain / Intent" as a NAMED TRIPLE does not appear in the
+ontology canon (grep: 0 hits for MECE in NFRA_ONTOLOGY_RULE_BANK.yaml + SYSTEM_DEFINITIONS.yaml)
+-- **this verbatim is therefore the triple's defining act**, recorded here as a naming-act
+candidate for ratification into the rule bank. Tier 3 however has EXISTING ratified law to bind
+to: `intent_source` / `intent_from_above` (rule bank :389/:557-558) -- intent comes from a
+governance level ABOVE the artifact, never the artifact's own config (the
+denominator-is-its-own-configuration defect, REJECTED at declaration).
+
+CVO structural answer (delivered in-session, summary):
+- ONE DECLARATION HOME: comp-output-contracts.yaml per-mode blocks gain `coordinate:` +
+  `intent:` (the per-mode shape already exists -- comp-pipescript's `deployed:{plane:applied}`).
+  Manifest `entries:` rows are the ROUTING VIEW, validated against the contract (mismatch =
+  gate FAIL); tools_index rollups DERIVED. Declare once, derive elsewhere.
+- TIER 1 MECE = two invariants in comp-manifest-check: EXCLUSIVITY (every mode exactly one
+  value from the closed enum {C0,C1,C2,C3.i,C3.ii,C4,D1,D2,D3} + classes {SUBSTRATE,ROUTER,
+  GATE,PRODUCER,CANON-SERVER}) x EXHAUSTIVENESS (declared-mode set reconciles with the tool's
+  ACTUAL argparse surface -- the existing subcommand census IS the oracle; its current 41
+  UNKNOWN + 12 drifted tail is the measured gap, visible and bounded).
+- TIER 2 GRAIN = the `coordinate:` field (round-2 mechanics: subject-rung, per mode).
+- TIER 3 INTENT = the `intent:` prose field, ADMISSIBLE ONLY WITH AN ABOVE-SOURCE (consumer /
+  registry / PRD / ruling citation) per intent_from_above -- a tool describing itself is
+  rejected at declaration. Prose hangs off gate-checked structured rows (TRIGGER_LAYER: lint
+  the field, never text-match prose).
+- Rollout: pure-add on the 20 declared contracts; the 49-pending tail is the worklist;
+  announce-then-enforce per comp-rail precedent.
+
 ## Open forks needing a word (Andrew or PRD treatment)
 
 - F-A: D-rail tools -- separate D-coordinate (recommended) vs folded into G?
