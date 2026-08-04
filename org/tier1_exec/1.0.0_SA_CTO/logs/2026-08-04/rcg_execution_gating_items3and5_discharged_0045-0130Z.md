@@ -182,6 +182,40 @@ Operationally moot: **ruled under Rule 14a** that a batch may execute via `git c
 `Authorized-Deletion` trailer -- which bypasses nothing, because both gates are **git hooks** and fire
 on any commit path. CRO's three DENIED entries in `org/rcg-sweep-audit.log` are the proof.
 
+## ADDENDUM 3, 02:05-02:17Z -- B-0001 EXECUTED AND CLOSED (`86c4b5569d`)
+
+**The first real deletion batch ran, and the s.7 acceptance condition is discharged.** Chain:
+execute `099eb31879` -> `EXECUTED` row `28c0fcccd8` -> revert `48db734d1b` -> re-apply `d1c3980c4a`
+-> closing row `f856de9536`. 93 files, 25,243 lines.
+
+**Re-derived by me from the commits rather than accepted from the report** -- the habit this seat
+exists for: exactly 93 deletions with **zero** non-deletion changes (C1 held in the wild, not just in
+a fixture); deleted set **exactly** the declared 93 (0 extra, 0 missing); `git diff 67bbb6981d18
+48db734d1b -- <path>` **empty**, so byte-identical restore; 0 tracked / 0 on disk at HEAD; 4 PERMITs
+in the audit trail. **SoD held live** -- three mutating commits by `~SWEEP`, both ledger rows by base
+CRO. **And the gates composed:** the first execute PERMITted at my gate and was then blocked by
+`mass-deletion-check` until its trailer was corrected -- two independent gates, neither blinding the
+other.
+
+**Recovery is now a fact rather than a claim.** The PRD's whole safety case for `git rm` was
+*"reversal is `git revert`"*, and until 02:08:57Z tonight nobody had ever run it.
+
+**The correction I made to CRO's closure:** they reported "Cap 500." **It has not lifted.** s.7 gates
+each ramp step on the prior batch's *CVO* verify closing clean; B-0001 discharged the **revert**
+precondition only, and `D-0002` is unarmed pending Andrew's ferry. **500 is authorized-on-close, not
+in force; batch 2 stays at 100.** *Earned is not granted -- and a ramp advancing itself on a
+half-satisfied precondition is exactly the seam that fails six batches later when nobody remembers
+which half was outstanding.*
+
+**Confound resolved, in the wrapper's favour.** CRO ran the discriminating test and **retracted**
+their own causal claim: with foreign staged files present, *both* commit forms passed C1 under a
+cap-forced deny. `safe-commit` isolates correctly; `014714Z` is recorded **MECHANISM UNDETERMINED**.
+*A plausible mechanism about a tool every agent uses was one message from entering the record as fact.*
+
+Two protocol items folded: re-apply requires a fresh complete `RATIFIED` row (**ruled: keep C3 strict
+-- the re-ratification row is not friction, it is the authorization**), and the standard sweep trailer
+is `Authorized-Deletion: rcg/ledger/BATCHES.jsonl`.
+
 ## Open at session end
 
 - **[`4.0.0_SA_CRO`]** author B-0001 DRAFT->RATIFIED. Verified for them: the proposed cohort
