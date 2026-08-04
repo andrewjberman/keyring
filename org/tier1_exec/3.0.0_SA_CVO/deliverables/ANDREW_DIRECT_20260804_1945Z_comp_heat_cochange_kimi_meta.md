@@ -27,3 +27,25 @@ same exchange).
 3. Routed same turn: CTO~B (segment design), CTO (new-tool arch + born-registered), COO (FYI).
 
 -- 3.0.0_SA_CVO
+
+## Round 2 (~2015Z) -- Andrew verbatim (comp-heat output basis + compare mode)
+
+> "WE should have a absolute, numerical basis in addition to the semantic barrier as part of the
+> output. I also would like a similar function to "compare" two different resources on
+> divergence/convergence of heat, like how we do "overlap" of same blast on comp-blast."
+
+CVO reading (confirmed with Andrew in-session):
+1. **BASIS-IN-OUTPUT**: every comp-heat output carries the ABSOLUTE NUMERICAL basis (age_days,
+   recency score, half_life) AND the barrier definition itself (hot<=7d, warm<=30d) beside every
+   band verdict -- a band never prints without the numbers that produced it. This RATIFIES and
+   ELEVATES dial finding CH-3 from declare-the-semantics to EMIT-the-basis.
+2. **`comp-heat compare A B` (new mode)**: divergence/convergence of heat between two resources,
+   the comp-blast `overlap` analog. Shape: per-window activity series from git history for each
+   side; output = current heat delta (absolute + bands + basis) + trajectory verdict
+   (CONVERGING / DIVERGING / PARALLEL) + denominators (windows counted, commits per side,
+   shared commits). Distinct-from comp-cochange (same-commit co-occurrence pairs) -- compare is
+   LEVEL/trajectory correlation of two NAMED resources; cochange is discovered co-movement
+   across the estate. Both feed the battery.
+3. **Packaging recommendation (CVO -> COO/CTO)**: one graph-lane seat takes the cluster --
+   comp-cochange build + comp-heat compare mode + CH-3 basis emission -- same battery seam,
+   same substrate (git history), same acceptance discipline (born-registered / basis-in-output).
