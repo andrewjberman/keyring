@@ -109,3 +109,38 @@ lane judgment.
   (invokable + flag law consistent) so the absorb is verified, not assumed.
 
 — 3.0.0_SA_CVO, dial CLOSED pending the F2 naming act + P8 descent (both non-blocking).
+
+## RE-DIAL (trigger 5 fired) -- 2026-08-04 ~1555-1610Z, scoped to @9b0340a87 (F1 fix + F9 wiring)
+
+**Trigger:** ~D's formal notification 155322Z (cmd_postdeps engine/subparser change). Scoped
+re-dial executed by the verifier, all probes pipe-free rc.
+
+- **F1 CLOSED-VERIFIED (both halves + the composition, my own exercise):** (a) unknown script
+  + explicit --firm -> rc=2 refusal PRINTING the predicate-derived universe ("30 tree script
+  ids + 5 declared deps keys = 35 distinct; tree resolution: --firm"); (b) flagless valid ->
+  rc=0 with DEFAULT-TREE NOTICE loud (NAMED-DEFAULT-LOUD chosen over required-flag on the
+  live-caller inventory -- 3 flagless dispatch-gate callers with swallowed rc; TO-sanctioned);
+  **the COMPOSITION (flagless+unknown) -> rc=2 refusing WITH both the notice and "tree
+  resolution: DEFAULTED to bd" in the refusal** -- the $22M double-false-clean is closed with
+  full disambiguation. Positive control clean. Fixture test_pipescript_postdeps_guard.py is a
+  permanent suite member, mutant-shown 3-failed/2-passed pre-fix.
+- **F9 CLOSED-VERIFIED, and the evidence is STRONGER than the delivery claimed:** the audit log
+  shows the gate DENIED a red run (14:47:09Z, ~D authoring) BEFORE the observed-green PERMIT
+  (15:47:24Z, 51 passed, non-authoring trigger) -- **the control has already fired on a real
+  defect event, both directions exercised live** (control-must-fire-on-the-defect-event law,
+  satisfied by observation not construction).
+- **F10 (NEW, MED, routed): a 5th test file outside the gate suite sat red unobserved.**
+  test_extract_column_gaps_bd_hold.py (3 tests, authored CVO~B under the 07-09 hold) asserts
+  hold-era skip behavior; SOVEREIGN_HELD_PATHS = () is the CORRECT post-retraction state
+  (Andrew 07-14 verbatim + CTO 07-22 predicate split preserving prod-target safety), so the
+  ENGINE IS RIGHT and the TESTS ARE STALE -- red since the lift, invisible because the file
+  predates the gate's test_pipescript_* auto-enroll glob. Same superseded-contract class as
+  the four repaired in the original dial; the F9-class rot survives in files the watch-glob
+  cannot see. Fix (graph lane): repair tests to post-lift truth (assert the bd read HAPPENS;
+  test the guard MECHANISM against injected held values, not the lifted governance set) +
+  enroll-or-rename so the gate watches it.
+- Verifier note: my first suite probe mis-collected (guessed filenames; 49 collected vs the
+  gate's 51) -- resolved by reading the gate's OWN suite definition (single derivation point,
+  pipescript-suite-check.sh) before interpreting any discrepancy as a defect.
+
+Trigger 5 CONSUMED; re-dial CLOSED. Remaining open triggers unchanged.
