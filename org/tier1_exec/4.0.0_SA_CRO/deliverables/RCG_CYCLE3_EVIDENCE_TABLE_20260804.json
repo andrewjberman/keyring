@@ -1,0 +1,1755 @@
+[
+ {
+  "tree": "infra/aws/lambda",
+  "n_files": 5,
+  "registry_fns": [
+   "access-anomaly-scanner",
+   "astn-wsjft-orchestrator",
+   "bd-49f-etf-ownership-daily",
+   "bd-49f-fees-runner",
+   "bd-49f-keepalive",
+   "bd-49f-runner",
+   "bd-49f-session-trigger",
+   "bd-allocation-processor",
+   "bd-allocation-trigger",
+   "bd-asset-dim-trigger",
+   "bd-client-detail",
+   "bd-cot-keepalive",
+   "bd-fees-trigger",
+   "bd-gold-trigger",
+   "bd-incrparity-trigger",
+   "bd-price-update",
+   "bd-realized-trigger",
+   "bd-silver-merge",
+   "bd-transactions-trigger",
+   "bd-unrealized-trigger",
+   "cost-anomaly-scanner",
+   "cot-bd-session-trigger",
+   "cot-etf-ownership-daily",
+   "cot-rebalancer-runner",
+   "daily-agenda-generator",
+   "deck-generation",
+   "ec2-auto-shutdown-enforcer",
+   "estate-report-orchestrator",
+   "etf-ownership-dashboard",
+   "etfs-canon-fanin",
+   "etfs-netassets-daily",
+   "etfs-reports-orchestrator",
+   "exec-summary-generator",
+   "finbert-batch-processor",
+   "fred-data-ingestion",
+   "fred-macro-ingestion",
+   "gldinc-ss4c-canary",
+   "historical-prices-scheduler",
+   "inf-accounts-v2-daily",
+   "inf-api-assets-v2",
+   "inf-api-positions",
+   "inf-api-reps",
+   "inf-api-txn",
+   "inf-assets-trigger",
+   "inf-billing-daily",
+   "inf-bronze-trigger",
+   "inf-client-detail",
+   "inf-ec2-launch-monitor",
+   "inf-ec2-retry-launch",
+   "inf-etf-ownership-daily",
+   "inf-gold-trigger",
+   "inf-jwt-trigger",
+   "inf-nna-partition-checker",
+   "inf-otp-relay",
+   "inf-performance-daily",
+   "inf-portal-advisor-publisher",
+   "inf-portal-publisher",
+   "inf-silver-aggregator",
+   "inf-silver-chain",
+   "inf-tax-daily",
+   "inf-unified-account-dim-daily",
+   "infrastructure-daily-snapshot",
+   "keyword-intelligence-generator",
+   "m365-otp-liveness",
+   "mdpf-accrual-trigger",
+   "mdpf-daily-trigger",
+   "news-ingestion-scheduler",
+   "news-semantic-clustering",
+   "news-trending-analysis",
+   "opal-assets-bd49f-daily-pull",
+   "opal-assets-bd49f-dim-convert",
+   "opal-assets-bd49f-reporting-pull",
+   "opal-assets-daily-emitter",
+   "opal-assets-ingest-mirror",
+   "opal-assets-mdpf-portal-publisher",
+   "opal-assets-silver-blackdiamond",
+   "opal-assets-silver-eclipse",
+   "opal-assets-silver-etf",
+   "opal-assets-silver-orion",
+   "opal-assets-silver-schwab",
+   "opal-assets-silver-smartx",
+   "opal-bd-transaction-consolidator",
+   "opal-data-refresh-api",
+   "opal-globgrph-incremental-updater",
+   "opal-infrastructure-monitor",
+   "opal-keyword-drilldown-generator",
+   "opal-market-overview-tiered-generator",
+   "opal-market-regime-classifier",
+   "opal-market-rsi-tiered-generator",
+   "opal-news-layer3-curation",
+   "opal-partners-data",
+   "opal-pm-optimization-autosave-put",
+   "opal-pm-optimization-loader",
+   "opal-pm-snapshot-handler",
+   "opal-pm-upload-urls",
+   "opal-portal-data-proxy",
+   "opal-portal-fear-greed-fetcher",
+   "opal-portal-volatility-fetcher",
+   "opal-portfolio-autosave-get",
+   "opal-portfolio-autosave-put",
+   "opal-portfolio-excel-generator",
+   "opal-portfolio-export-download",
+   "opal-portfolio-funds-list",
+   "opal-portfolio-pickle-parser",
+   "opal-portfolio-version-get",
+   "opal-portfolio-versions-list",
+   "opal-security-scanner-processor",
+   "opal-smartx-ingestion-pipeline",
+   "opal-ticket-api",
+   "opal-trending-image-generator",
+   "opal-trending-topics-portal-publisher",
+   "partner-etl-ops-sqs-consumer",
+   "portal-time-machine",
+   "schwab-anonymizer",
+   "security-sweep-comprehensive",
+   "seeking-alpha-analysis-coordinator",
+   "seeking-alpha-analysis-dedup",
+   "seeking-alpha-analysis-listing-parser",
+   "seeking-alpha-analysis-scraper",
+   "seeking-alpha-news-coordinator",
+   "seeking-alpha-news-dedup",
+   "seeking-alpha-news-scraper",
+   "semantic-news-layer3-curation",
+   "semantic-trending-topics-portal-publisher",
+   "sentiment_query_api",
+   "smartx-assets-daily-pull",
+   "smartx-ec2-autostart",
+   "smartx-jwt-refresher",
+   "smartx-rest-pull",
+   "trade-dashboard-api",
+   "trade-parquet-batch-export",
+   "trade-submission-handler",
+   "trade-workflow-handler",
+   "wsb-49f-model-aua-daily",
+   "wsd-49f-partner-held-etf-daily",
+   "yang-canon-interlock",
+   "yang-capture-output-versions",
+   "yang-cleanup-uploads",
+   "yang-generate-allocation-summary",
+   "yang-generate-cma",
+   "yang-generate-correlation",
+   "yang-generate-etf-returns",
+   "yang-generate-factor-tilts",
+   "yang-generate-holdings-attribution",
+   "yang-generate-latest",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-manifest",
+   "yang-generate-peer-performance",
+   "yang-generate-positioning",
+   "yang-generate-risk-premium",
+   "yang-generate-valuation",
+   "yang-generate-volatility",
+   "yang-get-prior-metadata",
+   "yang-ingest-dynamodb",
+   "yang-invalidate-cloudfront",
+   "yang-model-portfolio-benchmarks",
+   "yang-move-to-processed",
+   "yang-pipeline-trigger",
+   "yang-refresh-fred-cache",
+   "yang-time-machine",
+   "yang-validate-files",
+   "yang-varflag-check",
+   "ycharts-market-data-pull",
+   "ycharts-session-capture",
+   "ycharts-session-probe"
+  ],
+  "tf": [
+   "infra/aws/terraform/astn-pipeline/orchestrator.tf:21",
+   "infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf:2",
+   "infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:368",
+   "infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:67",
+   "infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:195",
+   "infra/aws/terraform/bd-pipeline/bd-49f-session-chain.tf:10",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:129",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:35",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:80",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:164",
+   "infra/aws/terraform/cot-pipeline/cot-detection-layer.tf:71",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:65",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:20",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:310",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:202",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:95",
+   "infra/aws/terraform/bd-pipeline/bd-silver-merge.tf:2",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:50",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:110",
+   "infra/aws/terraform/cot-pipeline/lambdas.tf:8",
+   "infra/aws/terraform/cot-pipeline/cot-etf-ownership-daily.tf:2",
+   "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:7",
+   "infra/aws/terraform/deck-generation-pipeline/lambdas.tf:10",
+   "infra/aws/terraform/estate-report/orchestrator.tf:11",
+   "infra/aws/terraform/shared-infra/etfs-presentation.tf:2",
+   "infra/aws/terraform/etfs-canon/fanin-lambda.tf:2",
+   "infra/aws/terraform/etfs-netassets/netassets-lambda.tf:2",
+   "infra/aws/terraform/etfs-reports/orchestrator.tf:22",
+   "infra/aws/terraform/exec-summary/main.tf:17",
+   "infra/aws/terraform/fred-pipeline/lambdas.tf:2",
+   "infra/aws/terraform/fred-pipeline/lambdas.tf:63",
+   "infra/aws/terraform/bd-pipeline/gldinc-ss4c.tf:28",
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:284",
+   "infra/aws/terraform/inf-pipeline/inf-accounts-v2-daily.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-api-assets-v2.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-api-positions.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-api-reps.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-api-txn.tf:2",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:399",
+   "infra/aws/terraform/inf-pipeline/inf-billing-daily.tf:2",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:351",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:58",
+   "infra/aws/terraform/inf-pipeline/inf-ec2-launch-monitor.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-ec2-retry-launch.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-etf-ownership-daily.tf:2",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:80",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:310",
+   "infra/aws/terraform/inf-pipeline/inf-nna-partition-checker.tf:2",
+   "infra/aws/terraform/inf-pipeline/lambda-otp-relay.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-performance-daily.tf:2",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:31",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:18",
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:286",
+   "infra/aws/terraform/inf-pipeline/inf-silver-chain.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-tax-daily.tf:2",
+   "infra/aws/terraform/inf-pipeline/inf-unified-account-dim-daily.tf:2",
+   "infra/aws/terraform/shared-infra/infra-snapshot.tf:2",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:5",
+   "infra/aws/terraform/m365-mcp-gateway/otp-liveness.tf:12",
+   "infra/aws/terraform/mdpf-pipeline/accrual-bridge.tf:17",
+   "infra/aws/terraform/mdpf-pipeline/lambdas.tf:2",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:32",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:144",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:11",
+   "infra/aws/terraform/opal-assets/bd49f_pull.tf:31",
+   "infra/aws/terraform/opal-assets/bd49f_convert.tf:27",
+   "infra/aws/terraform/opal-assets/bd49f_reporting_pull.tf:28",
+   "infra/aws/terraform/opal-assets/emitter.tf:20",
+   "infra/aws/terraform/opal-assets/mirror.tf:40",
+   "infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf:2",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/opal-assets/silver.tf:NAME-NOT-FOUND",
+   "infra/aws/terraform/data-refresh/main.tf:3",
+   "infra/aws/terraform/shared-infra/infra-monitor.tf:2",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:343",
+   "infra/aws/terraform/market-overview/lambdas.tf:49",
+   "infra/aws/terraform/market-overview/lambdas.tf:11",
+   "infra/aws/terraform/market-overview/lambdas.tf:60",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:105",
+   "infra/aws/terraform/partners-api/lambdas.tf:7",
+   "infra/aws/terraform/portfolio-management/main.tf:182",
+   "infra/aws/terraform/portfolio-management/main.tf:134",
+   "infra/aws/terraform/portfolio-management/main.tf:152",
+   "infra/aws/terraform/portfolio-management/main.tf:167",
+   "infra/aws/terraform/market-overview/lambdas.tf:79",
+   "infra/aws/terraform/market-overview/lambdas.tf:21",
+   "infra/aws/terraform/market-overview/lambdas.tf:122",
+   "infra/aws/terraform/portfolio-management/main.tf:39",
+   "infra/aws/terraform/portfolio-management/main.tf:51",
+   "infra/aws/terraform/portfolio-management/main.tf:63",
+   "infra/aws/terraform/portfolio-management/main.tf:200",
+   "infra/aws/terraform/portfolio-management/main.tf:81",
+   "infra/aws/terraform/portfolio-management/main.tf:93",
+   "infra/aws/terraform/portfolio-management/main.tf:108",
+   "infra/aws/terraform/portfolio-management/main.tf:120",
+   "infra/aws/terraform/security-scanner-pipeline/lambdas.tf:5",
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:48",
+   "infra/aws/terraform/ticket-center/main.tf:3",
+   "infra/aws/terraform/market-overview/lambdas.tf:38",
+   "infra/aws/terraform/shared-infra/partner-etl-ops-sqs-consumer.tf:2",
+   "infra/aws/terraform/data-refresh/main.tf:48",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:180",
+   "infra/aws/terraform/news-pipeline/lambdas.tf:204",
+   "infra/aws/terraform/smartx-pipeline/assets-pull-lambda.tf:2",
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:2",
+   "infra/aws/terraform/smartx-pipeline/rest-pull.tf:6",
+   "infra/aws/terraform/smartx-pipeline/rest-pull.tf:7",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:5",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:4",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:7",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:6",
+   "infra/aws/terraform/mdpf-pipeline/wp5-feeder-schedules.tf:30",
+   "infra/aws/terraform/mdpf-pipeline/wp5-feeder-schedules.tf:121",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:347",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:127",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:71",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:176",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:331",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:315",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:204",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:271",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:188",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:85",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:287",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:299",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:51",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:216",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:164",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:255",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:243",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:107",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:41",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:95",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:150",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:228",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:61",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:16",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:117",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:137",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:31",
+   "infra/aws/terraform/yang-pipeline/varflag.tf:2",
+   "infra/aws/terraform/ycharts-pipeline/market-data-pull.tf:7",
+   "infra/aws/terraform/ycharts-pipeline/lambdas.tf:60",
+   "infra/aws/terraform/ycharts-pipeline/lambdas.tf:10"
+  ],
+  "live": [
+   "access-anomaly-scanner",
+   "astn-wsjft-orchestrator",
+   "bd-49f-etf-ownership-daily",
+   "bd-49f-fees-runner",
+   "bd-49f-keepalive",
+   "bd-49f-runner",
+   "bd-49f-session-trigger",
+   "bd-allocation-processor",
+   "bd-allocation-trigger",
+   "bd-asset-dim-trigger",
+   "bd-cot-keepalive",
+   "bd-fees-trigger",
+   "bd-gold-trigger",
+   "bd-incrparity-trigger",
+   "bd-price-update",
+   "bd-realized-trigger",
+   "bd-silver-merge",
+   "bd-transactions-trigger",
+   "bd-unrealized-trigger",
+   "cost-anomaly-scanner",
+   "cot-bd-session-trigger",
+   "cot-etf-ownership-daily",
+   "cot-rebalancer-runner",
+   "daily-agenda-generator",
+   "deck-generation",
+   "ec2-auto-shutdown-enforcer",
+   "estate-report-orchestrator",
+   "etf-ownership-dashboard",
+   "etfs-canon-fanin",
+   "etfs-netassets-daily",
+   "etfs-reports-orchestrator",
+   "exec-summary-generator",
+   "finbert-batch-processor",
+   "fred-data-ingestion",
+   "fred-macro-ingestion",
+   "gldinc-ss4c-canary",
+   "historical-prices-scheduler",
+   "inf-accounts-v2-daily",
+   "inf-api-assets-v2",
+   "inf-api-positions",
+   "inf-api-reps",
+   "inf-api-txn",
+   "inf-assets-trigger",
+   "inf-billing-daily",
+   "inf-bronze-trigger",
+   "inf-client-detail",
+   "inf-ec2-launch-monitor",
+   "inf-ec2-retry-launch",
+   "inf-etf-ownership-daily",
+   "inf-gold-trigger",
+   "inf-jwt-trigger",
+   "inf-nna-partition-checker",
+   "inf-otp-relay",
+   "inf-performance-daily",
+   "inf-portal-advisor-publisher",
+   "inf-portal-publisher",
+   "inf-silver-aggregator",
+   "inf-silver-chain",
+   "inf-tax-daily",
+   "inf-unified-account-dim-daily",
+   "infrastructure-daily-snapshot",
+   "keyword-intelligence-generator",
+   "m365-otp-liveness",
+   "mdpf-accrual-trigger",
+   "mdpf-daily-trigger",
+   "news-ingestion-scheduler",
+   "news-semantic-clustering",
+   "news-trending-analysis",
+   "opal-assets-bd49f-daily-pull",
+   "opal-assets-bd49f-dim-convert",
+   "opal-assets-bd49f-reporting-pull",
+   "opal-assets-daily-emitter",
+   "opal-assets-ingest-mirror",
+   "opal-assets-mdpf-portal-publisher",
+   "opal-assets-silver-blackdiamond",
+   "opal-assets-silver-eclipse",
+   "opal-assets-silver-etf",
+   "opal-assets-silver-orion",
+   "opal-assets-silver-schwab",
+   "opal-assets-silver-smartx",
+   "opal-bd-transaction-consolidator",
+   "opal-data-refresh-api",
+   "opal-globgrph-incremental-updater",
+   "opal-infrastructure-monitor",
+   "opal-keyword-drilldown-generator",
+   "opal-market-overview-tiered-generator",
+   "opal-market-regime-classifier",
+   "opal-market-rsi-tiered-generator",
+   "opal-news-layer3-curation",
+   "opal-partners-data",
+   "opal-pm-optimization-autosave-put",
+   "opal-pm-optimization-loader",
+   "opal-pm-snapshot-handler",
+   "opal-pm-upload-urls",
+   "opal-portal-data-proxy",
+   "opal-portal-fear-greed-fetcher",
+   "opal-portal-volatility-fetcher",
+   "opal-portfolio-autosave-get",
+   "opal-portfolio-autosave-put",
+   "opal-portfolio-excel-generator",
+   "opal-portfolio-export-download",
+   "opal-portfolio-funds-list",
+   "opal-portfolio-pickle-parser",
+   "opal-portfolio-version-get",
+   "opal-portfolio-versions-list",
+   "opal-security-scanner-processor",
+   "opal-smartx-ingestion-pipeline",
+   "opal-ticket-api",
+   "opal-trending-image-generator",
+   "opal-trending-topics-portal-publisher",
+   "partner-etl-ops-sqs-consumer",
+   "portal-time-machine",
+   "schwab-anonymizer",
+   "security-sweep-comprehensive",
+   "seeking-alpha-analysis-coordinator",
+   "seeking-alpha-analysis-dedup",
+   "seeking-alpha-analysis-listing-parser",
+   "seeking-alpha-analysis-scraper",
+   "seeking-alpha-news-coordinator",
+   "seeking-alpha-news-dedup",
+   "seeking-alpha-news-scraper",
+   "semantic-news-layer3-curation",
+   "semantic-trending-topics-portal-publisher",
+   "sentiment_query_api",
+   "smartx-assets-daily-pull",
+   "smartx-ec2-autostart",
+   "smartx-jwt-refresher",
+   "smartx-rest-pull",
+   "trade-dashboard-api",
+   "trade-parquet-batch-export",
+   "trade-submission-handler",
+   "trade-workflow-handler",
+   "wsb-49f-model-aua-daily",
+   "wsd-49f-partner-held-etf-daily",
+   "yang-canon-interlock",
+   "yang-capture-output-versions",
+   "yang-cleanup-uploads",
+   "yang-generate-allocation-summary",
+   "yang-generate-cma",
+   "yang-generate-correlation",
+   "yang-generate-etf-returns",
+   "yang-generate-factor-tilts",
+   "yang-generate-holdings-attribution",
+   "yang-generate-latest",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-manifest",
+   "yang-generate-peer-performance",
+   "yang-generate-positioning",
+   "yang-generate-risk-premium",
+   "yang-generate-valuation",
+   "yang-generate-volatility",
+   "yang-get-prior-metadata",
+   "yang-ingest-dynamodb",
+   "yang-invalidate-cloudfront",
+   "yang-model-portfolio-benchmarks",
+   "yang-move-to-processed",
+   "yang-pipeline-trigger",
+   "yang-refresh-fred-cache",
+   "yang-time-machine",
+   "yang-validate-files",
+   "yang-varflag-check",
+   "ycharts-market-data-pull",
+   "ycharts-session-capture",
+   "ycharts-session-probe"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/access-anomaly-scanner",
+  "n_files": 2,
+  "registry_fns": [
+   "access-anomaly-scanner"
+  ],
+  "tf": [],
+  "live": [
+   "access-anomaly-scanner"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/artifacts",
+  "n_files": 1,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:3",
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:8",
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:19"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/astn-wsjft-orchestrator",
+  "n_files": 1,
+  "registry_fns": [
+   "astn-wsjft-orchestrator"
+  ],
+  "tf": [
+   "infra/aws/terraform/astn-pipeline/orchestrator.tf:21"
+  ],
+  "live": [
+   "astn-wsjft-orchestrator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/bd_transaction_consolidator",
+  "n_files": 4,
+  "registry_fns": [
+   "opal-bd-transaction-consolidator"
+  ],
+  "tf": [],
+  "live": [
+   "opal-bd-transaction-consolidator"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/cloudfront_market_generator",
+  "n_files": 2,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/cost-anomaly-scanner",
+  "n_files": 2,
+  "registry_fns": [
+   "cost-anomaly-scanner"
+  ],
+  "tf": [],
+  "live": [
+   "cost-anomaly-scanner"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/cot-pipeline",
+  "n_files": 7,
+  "registry_fns": [
+   "bd-cot-keepalive",
+   "cot-bd-session-trigger",
+   "cot-etf-ownership-daily",
+   "cot-rebalancer-runner"
+  ],
+  "tf": [
+   "infra/aws/terraform/cot-pipeline/cot-detection-layer.tf:71",
+   "infra/aws/terraform/cot-pipeline/lambdas.tf:8",
+   "infra/aws/terraform/cot-pipeline/cot-etf-ownership-daily.tf:2",
+   "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:7"
+  ],
+  "live": [
+   "bd-cot-keepalive",
+   "cot-bd-session-trigger",
+   "cot-etf-ownership-daily",
+   "cot-rebalancer-runner"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/data_refresh",
+  "n_files": 9,
+  "registry_fns": [
+   "opal-data-refresh-api",
+   "portal-time-machine"
+  ],
+  "tf": [
+   "infra/aws/terraform/data-refresh/main.tf:3",
+   "infra/aws/terraform/data-refresh/main.tf:48"
+  ],
+  "live": [
+   "opal-data-refresh-api",
+   "portal-time-machine"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/deck-generation",
+  "n_files": 1,
+  "registry_fns": [
+   "deck-generation"
+  ],
+  "tf": [
+   "infra/aws/terraform/deck-generation-pipeline/lambdas.tf:10"
+  ],
+  "live": [
+   "deck-generation"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/ec2-auto-shutdown-enforcer",
+  "n_files": 4,
+  "registry_fns": [
+   "ec2-auto-shutdown-enforcer"
+  ],
+  "tf": [],
+  "live": [
+   "ec2-auto-shutdown-enforcer"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/estate-report-orchestrator",
+  "n_files": 1,
+  "registry_fns": [
+   "estate-report-orchestrator"
+  ],
+  "tf": [
+   "infra/aws/terraform/estate-report/orchestrator.tf:11"
+  ],
+  "live": [
+   "estate-report-orchestrator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/etfs-pipeline",
+  "n_files": 6,
+  "registry_fns": [
+   "etf-ownership-dashboard",
+   "etfs-canon-fanin",
+   "etfs-netassets-daily"
+  ],
+  "tf": [
+   "infra/aws/terraform/shared-infra/etfs-presentation.tf:2",
+   "infra/aws/terraform/etfs-canon/fanin-lambda.tf:2",
+   "infra/aws/terraform/etfs-netassets/netassets-lambda.tf:2"
+  ],
+  "live": [
+   "etf-ownership-dashboard",
+   "etfs-canon-fanin",
+   "etfs-netassets-daily"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/etfs-reports-orchestrator",
+  "n_files": 1,
+  "registry_fns": [
+   "etfs-reports-orchestrator"
+  ],
+  "tf": [
+   "infra/aws/terraform/etfs-reports/orchestrator.tf:22"
+  ],
+  "live": [
+   "etfs-reports-orchestrator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/exec-summary-generator",
+  "n_files": 15,
+  "registry_fns": [
+   "exec-summary-generator"
+  ],
+  "tf": [
+   "infra/aws/terraform/exec-summary/main.tf:17"
+  ],
+  "live": [
+   "exec-summary-generator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/finbert",
+  "n_files": 10,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf:4",
+   "infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf:89",
+   "infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf:90"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/finbert_batch_processor",
+  "n_files": 1,
+  "registry_fns": [
+   "finbert-batch-processor"
+  ],
+  "tf": [],
+  "live": [
+   "finbert-batch-processor"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/fred-data-ingestion",
+  "n_files": 2,
+  "registry_fns": [
+   "fred-data-ingestion"
+  ],
+  "tf": [
+   "infra/aws/terraform/fred-pipeline/lambdas.tf:2"
+  ],
+  "live": [
+   "fred-data-ingestion"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/fred-macro-ingestion",
+  "n_files": 1,
+  "registry_fns": [
+   "fred-macro-ingestion"
+  ],
+  "tf": [
+   "infra/aws/terraform/fred-pipeline/lambdas.tf:63"
+  ],
+  "live": [
+   "fred-macro-ingestion"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/globgrph",
+  "n_files": 4,
+  "registry_fns": [
+   "opal-globgrph-incremental-updater"
+  ],
+  "tf": [],
+  "live": [
+   "opal-globgrph-incremental-updater"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/historical-prices-scheduler",
+  "n_files": 1,
+  "registry_fns": [
+   "historical-prices-scheduler"
+  ],
+  "tf": [
+   "infra/aws/terraform/bd-pipeline/lambdas.tf:284"
+  ],
+  "live": [
+   "historical-prices-scheduler"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-client-detail",
+  "n_files": 1,
+  "registry_fns": [
+   "inf-client-detail"
+  ],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:58"
+  ],
+  "live": [
+   "inf-client-detail"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-gold-trigger",
+  "n_files": 1,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/iam.tf:387",
+   "infra/aws/terraform/inf-pipeline/iam.tf:388",
+   "infra/aws/terraform/inf-pipeline/iam.tf:392"
+  ],
+  "live": [
+   "inf-gold-trigger"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-otp-relay",
+  "n_files": 1,
+  "registry_fns": [
+   "inf-otp-relay"
+  ],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/lambda-otp-relay.tf:2"
+  ],
+  "live": [
+   "inf-otp-relay"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-portal-advisor-publisher",
+  "n_files": 1,
+  "registry_fns": [
+   "inf-portal-advisor-publisher"
+  ],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:31"
+  ],
+  "live": [
+   "inf-portal-advisor-publisher"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-portal-publisher",
+  "n_files": 1,
+  "registry_fns": [
+   "inf-portal-publisher"
+  ],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:18"
+  ],
+  "live": [
+   "inf-portal-publisher"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/inf-silver-aggregator",
+  "n_files": 1,
+  "registry_fns": [
+   "inf-silver-aggregator"
+  ],
+  "tf": [
+   "infra/aws/terraform/inf-pipeline/lambdas.tf:286"
+  ],
+  "live": [
+   "inf-silver-aggregator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/infrastructure-daily-snapshot",
+  "n_files": 1,
+  "registry_fns": [
+   "infrastructure-daily-snapshot"
+  ],
+  "tf": [
+   "infra/aws/terraform/shared-infra/infra-snapshot.tf:2"
+  ],
+  "live": [
+   "infrastructure-daily-snapshot"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/keyword_drilldown_generator",
+  "n_files": 3,
+  "registry_fns": [
+   "opal-keyword-drilldown-generator"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:343"
+  ],
+  "live": [
+   "opal-keyword-drilldown-generator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/keyword_intelligence_generator",
+  "n_files": 1,
+  "registry_fns": [
+   "keyword-intelligence-generator"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:5"
+  ],
+  "live": [
+   "keyword-intelligence-generator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/lib",
+  "n_files": 2,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/modules/partner-firm-table/main.tf:14",
+   "infra/aws/terraform/imo-pipeline/phase1-scraping-browser-lambda.tf:63",
+   "infra/aws/terraform/imo-pipeline/phase1-scraping-browser-lambda.tf:64"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/m365-ms-ingest-liveness",
+  "n_files": 1,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/m365-mcp-gateway/ms-ingest.tf:23",
+   "infra/aws/terraform/m365-mcp-gateway/ms-ingest.tf:24",
+   "infra/aws/terraform/m365-mcp-gateway/ms-ingest.tf:28"
+  ],
+  "live": [
+   "m365-ms-ingest-liveness"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/m365-otp-liveness",
+  "n_files": 1,
+  "registry_fns": [
+   "m365-otp-liveness"
+  ],
+  "tf": [
+   "infra/aws/terraform/m365-mcp-gateway/otp-liveness.tf:12"
+  ],
+  "live": [
+   "m365-otp-liveness"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/mdpf-manifest",
+  "n_files": 4,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/mdpf-pipeline",
+  "n_files": 14,
+  "registry_fns": [
+   "mdpf-accrual-trigger",
+   "mdpf-daily-trigger",
+   "wsb-49f-model-aua-daily",
+   "wsd-49f-partner-held-etf-daily"
+  ],
+  "tf": [
+   "infra/aws/terraform/mdpf-pipeline/accrual-bridge.tf:17",
+   "infra/aws/terraform/mdpf-pipeline/lambdas.tf:2",
+   "infra/aws/terraform/mdpf-pipeline/wp5-feeder-schedules.tf:30",
+   "infra/aws/terraform/mdpf-pipeline/wp5-feeder-schedules.tf:121"
+  ],
+  "live": [
+   "mdpf-accrual-trigger",
+   "mdpf-daily-trigger",
+   "wsb-49f-model-aua-daily",
+   "wsd-49f-partner-held-etf-daily"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/news_ingestion_scheduler",
+  "n_files": 6,
+  "registry_fns": [
+   "news-ingestion-scheduler"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:32"
+  ],
+  "live": [
+   "news-ingestion-scheduler"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/news_layer3_curation",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-news-layer3-curation"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:105"
+  ],
+  "live": [
+   "opal-news-layer3-curation"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/news_scanner",
+  "n_files": 3,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/news_semantic_clustering",
+  "n_files": 15,
+  "registry_fns": [
+   "news-semantic-clustering"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:144"
+  ],
+  "live": [
+   "news-semantic-clustering"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/news_trending_analysis",
+  "n_files": 10,
+  "registry_fns": [
+   "news-trending-analysis"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:11"
+  ],
+  "live": [
+   "news-trending-analysis"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/opal-assets-absence-check",
+  "n_files": 2,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/opal-assets-absence/main.tf:47",
+   "infra/aws/terraform/opal-assets-absence/main.tf:48"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/opal_pm_snapshot_handler",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-pm-snapshot-handler"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:152"
+  ],
+  "live": [
+   "opal-pm-snapshot-handler"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/opal_pm_upload_urls",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-pm-upload-urls"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:167"
+  ],
+  "live": [
+   "opal-pm-upload-urls"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/opal_security_scanner_processor",
+  "n_files": 4,
+  "registry_fns": [
+   "opal-security-scanner-processor"
+  ],
+  "tf": [
+   "infra/aws/terraform/security-scanner-pipeline/lambdas.tf:5"
+  ],
+  "live": [
+   "opal-security-scanner-processor"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/partner-etl-ops-sqs-consumer",
+  "n_files": 1,
+  "registry_fns": [
+   "partner-etl-ops-sqs-consumer"
+  ],
+  "tf": [
+   "infra/aws/terraform/shared-infra/partner-etl-ops-sqs-consumer.tf:2"
+  ],
+  "live": [
+   "partner-etl-ops-sqs-consumer"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portal_authorizer",
+  "n_files": 2,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/shared-infra/main.tf:451",
+   "infra/aws/terraform/portal-auth/lambdas.tf:46",
+   "infra/aws/terraform/portal-auth/lambdas.tf:51"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/portal_data_proxy",
+  "n_files": 4,
+  "registry_fns": [
+   "opal-portal-data-proxy"
+  ],
+  "tf": [
+   "infra/aws/terraform/market-overview/lambdas.tf:79"
+  ],
+  "live": [
+   "opal-portal-data-proxy"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_autosave_get",
+  "n_files": 3,
+  "registry_fns": [
+   "opal-portfolio-autosave-get"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:39"
+  ],
+  "live": [
+   "opal-portfolio-autosave-get"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_autosave_put",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-portfolio-autosave-put"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:51"
+  ],
+  "live": [
+   "opal-portfolio-autosave-put"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_excel_generator",
+  "n_files": 5,
+  "registry_fns": [
+   "opal-portfolio-excel-generator"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:63"
+  ],
+  "live": [
+   "opal-portfolio-excel-generator"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_export_download",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-portfolio-export-download"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:200"
+  ],
+  "live": [
+   "opal-portfolio-export-download"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_funds_list",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-portfolio-funds-list"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:81"
+  ],
+  "live": [
+   "opal-portfolio-funds-list"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_optimization_autosave_put",
+  "n_files": 4,
+  "registry_fns": [
+   "opal-pm-optimization-autosave-put"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:182"
+  ],
+  "live": [
+   "opal-pm-optimization-autosave-put"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_optimization_loader",
+  "n_files": 3,
+  "registry_fns": [
+   "opal-pm-optimization-loader"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:134"
+  ],
+  "live": [
+   "opal-pm-optimization-loader"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_pickle_parser",
+  "n_files": 3,
+  "registry_fns": [
+   "opal-portfolio-pickle-parser"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:93"
+  ],
+  "live": [
+   "opal-portfolio-pickle-parser"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_version_get",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-portfolio-version-get"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:108"
+  ],
+  "live": [
+   "opal-portfolio-version-get"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/portfolio_versions_list",
+  "n_files": 2,
+  "registry_fns": [
+   "opal-portfolio-versions-list"
+  ],
+  "tf": [
+   "infra/aws/terraform/portfolio-management/main.tf:120"
+  ],
+  "live": [
+   "opal-portfolio-versions-list"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/precompute_market_metrics",
+  "n_files": 3,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/market-overview/cloudfront-market-metrics.tf:17"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/public-data-router",
+  "n_files": 1,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/portal-auth/lambda-edge.tf:18",
+   "infra/aws/terraform/portal-auth/lambda-edge.tf:130",
+   "infra/aws/terraform/portal-auth/lambda-edge.tf:136"
+  ],
+  "live": [
+   "public-data-router"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/schwab-anonymizer",
+  "n_files": 1,
+  "registry_fns": [
+   "schwab-anonymizer"
+  ],
+  "tf": [],
+  "live": [
+   "schwab-anonymizer"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/schwab-bronze-freshness",
+  "n_files": 3,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/security-sweep-comprehensive",
+  "n_files": 4,
+  "registry_fns": [
+   "security-sweep-comprehensive"
+  ],
+  "tf": [],
+  "live": [
+   "security-sweep-comprehensive"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/security-sweep-daily",
+  "n_files": 2,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-analysis-coordinator",
+  "n_files": 1,
+  "registry_fns": [
+   "seeking-alpha-analysis-coordinator"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-analysis-coordinator"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-analysis-listing-parser",
+  "n_files": 1,
+  "registry_fns": [
+   "seeking-alpha-analysis-listing-parser"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-analysis-listing-parser"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-analysis-scraper",
+  "n_files": 3,
+  "registry_fns": [
+   "seeking-alpha-analysis-scraper"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-analysis-scraper"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-dedup-coordinator",
+  "n_files": 1,
+  "registry_fns": [
+   "seeking-alpha-analysis-dedup"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-analysis-dedup"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-news-coordinator",
+  "n_files": 2,
+  "registry_fns": [
+   "seeking-alpha-news-coordinator"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-news-coordinator"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-news-dedup",
+  "n_files": 2,
+  "registry_fns": [
+   "seeking-alpha-news-dedup"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-news-dedup"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/seeking-alpha-news-scraper",
+  "n_files": 4,
+  "registry_fns": [
+   "seeking-alpha-news-scraper"
+  ],
+  "tf": [],
+  "live": [
+   "seeking-alpha-news-scraper"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/semantic-news-layer3-curation",
+  "n_files": 5,
+  "registry_fns": [
+   "semantic-news-layer3-curation"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:180"
+  ],
+  "live": [
+   "semantic-news-layer3-curation"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/semantic-trending-topics-portal-publisher",
+  "n_files": 4,
+  "registry_fns": [
+   "semantic-trending-topics-portal-publisher"
+  ],
+  "tf": [
+   "infra/aws/terraform/news-pipeline/lambdas.tf:204"
+  ],
+  "live": [
+   "semantic-trending-topics-portal-publisher"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/sentiment_query_api",
+  "n_files": 2,
+  "registry_fns": [
+   "sentiment_query_api"
+  ],
+  "tf": [],
+  "live": [
+   "sentiment_query_api"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/shared",
+  "n_files": 5,
+  "registry_fns": [],
+  "tf": [
+   "infra/aws/terraform/shared-infra/etfs-aggregation-iam.tf:39",
+   "infra/aws/terraform/partner-firms/49financial.tf:6",
+   "infra/aws/terraform/shared-infra/lambda-execution-role.tf:1"
+  ],
+  "live": [],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx-ec2-autostart",
+  "n_files": 1,
+  "registry_fns": [
+   "smartx-ec2-autostart"
+  ],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:2"
+  ],
+  "live": [
+   "smartx-ec2-autostart"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx_assets_pull",
+  "n_files": 14,
+  "registry_fns": [
+   "smartx-assets-daily-pull"
+  ],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/assets-pull-lambda.tf:2"
+  ],
+  "live": [
+   "smartx-assets-daily-pull"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx_ingestion_pipeline",
+  "n_files": 16,
+  "registry_fns": [
+   "opal-smartx-ingestion-pipeline"
+  ],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/lambdas.tf:48"
+  ],
+  "live": [
+   "opal-smartx-ingestion-pipeline"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx_jwt_refresher",
+  "n_files": 1,
+  "registry_fns": [
+   "smartx-jwt-refresher"
+  ],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/rest-pull.tf:6"
+  ],
+  "live": [
+   "smartx-jwt-refresher"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx_query",
+  "n_files": 1,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/smartx_rest_pull",
+  "n_files": 3,
+  "registry_fns": [
+   "smartx-rest-pull"
+  ],
+  "tf": [
+   "infra/aws/terraform/smartx-pipeline/rest-pull.tf:7"
+  ],
+  "live": [
+   "smartx-rest-pull"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/ticket_center",
+  "n_files": 1,
+  "registry_fns": [
+   "opal-ticket-api"
+  ],
+  "tf": [
+   "infra/aws/terraform/ticket-center/main.tf:3"
+  ],
+  "live": [
+   "opal-ticket-api"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/trade-pipeline",
+  "n_files": 18,
+  "registry_fns": [
+   "trade-dashboard-api",
+   "trade-parquet-batch-export",
+   "trade-submission-handler",
+   "trade-workflow-handler"
+  ],
+  "tf": [
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:5",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:4",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:7",
+   "infra/aws/terraform/trade-pipeline/lambdas.tf:6"
+  ],
+  "live": [
+   "trade-dashboard-api",
+   "trade-parquet-batch-export",
+   "trade-submission-handler",
+   "trade-workflow-handler"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/trending_image_generator",
+  "n_files": 4,
+  "registry_fns": [],
+  "tf": [],
+  "live": [],
+  "verdict": "ORPHAN"
+ },
+ {
+  "tree": "infra/aws/lambda/trending_image_selector",
+  "n_files": 5,
+  "registry_fns": [
+   "opal-trending-image-generator"
+  ],
+  "tf": [],
+  "live": [
+   "opal-trending-image-generator"
+  ],
+  "verdict": "DIVERGENT"
+ },
+ {
+  "tree": "infra/aws/lambda/v2_portal",
+  "n_files": 94,
+  "registry_fns": [
+   "opal-market-overview-tiered-generator",
+   "opal-market-regime-classifier",
+   "opal-market-rsi-tiered-generator",
+   "opal-partners-data",
+   "opal-portal-fear-greed-fetcher",
+   "opal-portal-volatility-fetcher",
+   "opal-trending-topics-portal-publisher",
+   "yang-canon-interlock",
+   "yang-capture-output-versions",
+   "yang-cleanup-uploads",
+   "yang-generate-allocation-summary",
+   "yang-generate-cma",
+   "yang-generate-correlation",
+   "yang-generate-etf-returns",
+   "yang-generate-factor-tilts",
+   "yang-generate-holdings-attribution",
+   "yang-generate-latest",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-manifest",
+   "yang-generate-peer-performance",
+   "yang-generate-positioning",
+   "yang-generate-risk-premium",
+   "yang-generate-valuation",
+   "yang-generate-volatility",
+   "yang-get-prior-metadata",
+   "yang-ingest-dynamodb",
+   "yang-invalidate-cloudfront",
+   "yang-model-portfolio-benchmarks",
+   "yang-move-to-processed",
+   "yang-pipeline-trigger",
+   "yang-refresh-fred-cache",
+   "yang-time-machine",
+   "yang-validate-files",
+   "yang-varflag-check"
+  ],
+  "tf": [
+   "infra/aws/terraform/market-overview/lambdas.tf:49",
+   "infra/aws/terraform/market-overview/lambdas.tf:11",
+   "infra/aws/terraform/market-overview/lambdas.tf:60",
+   "infra/aws/terraform/partners-api/lambdas.tf:7",
+   "infra/aws/terraform/market-overview/lambdas.tf:21",
+   "infra/aws/terraform/market-overview/lambdas.tf:122",
+   "infra/aws/terraform/market-overview/lambdas.tf:38",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:347",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:127",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:71",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:176",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:331",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:315",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:204",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:271",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:188",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:85",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:287",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:299",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:51",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:216",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:164",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:255",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:243",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:107",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:41",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:95",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:150",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:228",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:61",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:16",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:117",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:137",
+   "infra/aws/terraform/yang-pipeline/lambdas.tf:31",
+   "infra/aws/terraform/yang-pipeline/varflag.tf:2"
+  ],
+  "live": [
+   "opal-market-overview-tiered-generator",
+   "opal-market-regime-classifier",
+   "opal-market-rsi-tiered-generator",
+   "opal-partners-data",
+   "opal-portal-fear-greed-fetcher",
+   "opal-portal-volatility-fetcher",
+   "opal-trending-topics-portal-publisher",
+   "yang-canon-interlock",
+   "yang-capture-output-versions",
+   "yang-cleanup-uploads",
+   "yang-generate-allocation-summary",
+   "yang-generate-cma",
+   "yang-generate-correlation",
+   "yang-generate-etf-returns",
+   "yang-generate-factor-tilts",
+   "yang-generate-holdings-attribution",
+   "yang-generate-latest",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-manifest",
+   "yang-generate-peer-performance",
+   "yang-generate-positioning",
+   "yang-generate-risk-premium",
+   "yang-generate-valuation",
+   "yang-generate-volatility",
+   "yang-get-prior-metadata",
+   "yang-ingest-dynamodb",
+   "yang-invalidate-cloudfront",
+   "yang-model-portfolio-benchmarks",
+   "yang-move-to-processed",
+   "yang-pipeline-trigger",
+   "yang-refresh-fred-cache",
+   "yang-time-machine",
+   "yang-validate-files",
+   "yang-varflag-check"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/ycharts-market-data-pull",
+  "n_files": 8,
+  "registry_fns": [
+   "ycharts-market-data-pull"
+  ],
+  "tf": [
+   "infra/aws/terraform/ycharts-pipeline/market-data-pull.tf:7"
+  ],
+  "live": [
+   "ycharts-market-data-pull"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/ycharts-session-capture",
+  "n_files": 3,
+  "registry_fns": [
+   "ycharts-session-capture"
+  ],
+  "tf": [
+   "infra/aws/terraform/ycharts-pipeline/lambdas.tf:60"
+  ],
+  "live": [
+   "ycharts-session-capture"
+  ],
+  "verdict": "LIVE"
+ },
+ {
+  "tree": "infra/aws/lambda/ycharts-session-probe",
+  "n_files": 1,
+  "registry_fns": [
+   "ycharts-session-probe"
+  ],
+  "tf": [
+   "infra/aws/terraform/ycharts-pipeline/lambdas.tf:10"
+  ],
+  "live": [
+   "ycharts-session-probe"
+  ],
+  "verdict": "LIVE"
+ }
+]
