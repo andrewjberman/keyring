@@ -234,6 +234,47 @@ belief into a fact, and it is the cheapest control in this document.
 Ramp after a clean batch-1 including the revert exercise: 100 -> 500 -> uncapped, each step gated on
 the prior batch's CVO verify closing clean.
 
+### 7.2 B-0001 CLOSED 2026-08-04 ~02:12Z -- the acceptance condition is DISCHARGED
+
+The full chain ran and was **independently re-derived by this seat from the commits, not accepted from
+the executor's report**: execute `099eb31879` (exactly 93 deletions, **zero** non-deletion changes --
+C1 held in the wild) -> `EXECUTED` row `28c0fcccd8` -> **revert `48db734d1b`** -> re-apply
+`d1c3980c4a` -> closing row `f856de9536`. Re-derived here: deleted set **exactly equal** to the
+batch's declared 93 (0 extra, 0 missing); `git diff 67bbb6981d18 48db734d1b -- <path>` **empty**, so
+the restore was byte-identical; 0 tracked and 0 on disk at HEAD after re-apply. Gate audit carries
+four PERMITs (`execute`/`execute`/`revert`/`execute`).
+
+**SoD held in practice, not just on paper:** all three mutating commits authored by
+`4.0.0_SA_CRO~SWEEP`; both ledger rows by base `4.0.0_SA_CRO`. **And the gates composed:** the first
+execute PERMITted here and was then blocked by `mass-deletion-check` until its attribution trailer was
+corrected -- two independent gates, each doing its own job, neither blinding the other.
+
+> **RECOVERY IS NOW A FACT RATHER THAN A CLAIM.** The PRD's safety case for `git rm` -- *"reversal is
+> `git revert`"* -- has been executed end-to-end and verified byte-identical. That is what s.7 was for.
+
+**Three protocol items folded from the live run:**
+
+1. **RE-APPLY REQUIRES A FRESH COMPLETE `RATIFIED` ROW.** Under last-row-wins the re-apply leg
+   correctly C3-denied on `status=EXECUTED`. **Ruled: keep C3 strict; do NOT add a re-execution-
+   permitting status.** Re-applying a deletion *after* a revert is a genuine authorization decision,
+   and the re-ratification row is not friction -- **it IS the authorization.** Widening a status
+   vocabulary to auto-permit re-execution would trade an explicit act for convenience in the one gate
+   that must not have any.
+2. **STANDARD SWEEP TRAILER: `Authorized-Deletion: rcg/ledger/BATCHES.jsonl`.** The existing gate
+   accepts an `LD-####` id or an existing file path; the batch ledger is the semantically exact
+   referent -- the attribution *is* the batch record.
+3. **THE CAP HAS NOT LIFTED YET.** The ramp reads *"each step gated on the prior batch's CVO verify
+   closing clean."* Batch 1 discharged the **revert** precondition; the **CVO** precondition is
+   outstanding because `D-0002` is unarmed pending Andrew's ferry. So 500 is **authorized-on-close,
+   not in force.** Batch 2 stays at 100 until CVO's B-0001 verify closes clean. *Earned is not
+   granted, and this is exactly the seam where a ramp quietly advances itself.*
+
+**One confound resolved, in the wrapper's favour.** CRO's live claim that `safe-commit`'s hook view is
+full-index was **retracted after running the discriminating test**: with foreign staged files present,
+**both** commit forms passed C1 under a cap-forced deny. `safe-commit` isolates correctly (`:663`),
+and the 014714Z C1 deny's mechanism is recorded **UNDETERMINED** rather than attributed. *A plausible
+mechanism about a core tool was one message away from entering the record as fact.*
+
 ## 8. Scope -- what this ruling does NOT authorize
 
 - **`MIGRATE` never executes here.** 5,715 files post-`R-0022`, dominated by vendored-dependency trees
