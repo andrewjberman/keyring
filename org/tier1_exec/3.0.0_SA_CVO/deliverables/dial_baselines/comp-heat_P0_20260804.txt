@@ -1,0 +1,35 @@
+# comp-heat P0 baselines -- 2026-08-04 (rc direct; consumer anchor = Kimi meta-analysis)
+## Q1 freshness scoped (org/modules/graph)
+rc=0
+=== comp-heat freshness  scope=org/modules/graph/  files=404  half_life=30.0d ===
+  bands: hot=51 warm=185 cold=168 (cold_frac=0.42)
+  coldest 5 paths:
+        117d  cold  [git  ]  org/modules/graph/DESIGN.md
+        117d  cold  [git  ]  org/modules/graph/__init__.py
+        105d  cold  [git  ]  org/modules/graph/tests/__init__.py
+        105d  cold  [git  ]  org/modules/graph/tests/test_pipeline_gaps.py
+         99d  cold  [git  ]  org/modules/graph/tests/test_platinum_nested_keys.py
+
+## Q2 drift (uncommitted writes)
+rc=0
+=== comp-heat drift: writes NOT in a commit  (193: 54 modified + 139 untracked, freshest first) ===
+        0.00d  untracked [??]  org/tier1_exec/3.0.0_SA_CVO/deliverables/dial_baselines/comp-heat_P0_20260804.txt
+        0.03d  untracked [??]  org/critical_paths/change_management/20260804T192349Z_model_portfolios-benchmark_all_approval.md
+        0.04d  untracked [??]  org/critical_paths/change_management/20260804T190346Z_model_portfolios-benchmark_all_approval.md
+        0.04d  untracked [??]  org/pipescript-suite-gate-audit.log
+        0.05d  untracked [??]  memory/
+  (LOCAL->GIT layer; the GIT->DEPLOY hop = `comp-pipescript deployed` + `comp-freshness`)
+
+## Q3 score (fixed input -> deterministic golden)
+rc=0
+=== comp-heat score: test-item ===
+  age=45.00d  half_life=30.0d  recency=0.3536  band=COLD
+
+## Q4 NEGATIVE: bogus path
+rc=0
+comp-heat freshness: no tracked/untracked files under 'zz/no/such/path/' (check the path is repo-root-relative).
+
+## Q5 JSON shape (consumer contract probe)
+rc=0
+valid JSON; keys: ['scope', 'half_life_days', 'summary', 'paths', 'cold_subtrees']
+summary: {'n': 9, 'bands': {'hot': 0, 'warm': 3, 'cold': 6}, 'cold_frac': 0.6666666666666666, 'mean_score': 0.4808494782748975}
