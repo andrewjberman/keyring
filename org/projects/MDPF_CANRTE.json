@@ -1,0 +1,21 @@
+{
+  "project_code": "MDPF_CANRTE",
+  "macro_code": "MDPF",
+  "name": "MDPF Canonical Per-Firm Route",
+  "description": "ONE canonical route for the MDPF chain silver -> spine -> metrics -> bridge -> platinum: identical steps, shapes, and path grammar for 49financial, cottonwood, and inflection. Kills the gold-layer-1 divergences (49f DDB custody detour, cottonwood-only gold dim, inflection direct-silver leg, naming/grammar residue) via three CTO-ruled design forks under two banked constraints. Andrew-direct mandate at the DS terminal 2026-08-04 ~06:00Z (@f9952d616f, verbatim in log) + program GO at the CTO terminal ~13:07Z (@ff160d0b5).",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_CANONICAL_ROUTE_SCOPE.md",
+      "label": "TIGHT SCOPE v0.1 (the seating gate; pre-PRD)",
+      "date": "2026-08-04"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase A: DESIGN -- tight scope landed (seating gate per Andrew word 6); 0.4.0_DS_ClientPlatform sole Phase-A seat, COO to issue the scoped TO; fork rulings (DDB-walk vs retired / dim-for-all vs spine-direct / Model-B vs per-firm) return to CTO on design landing",
+  "blocking": "COO Phase-A TO issuance to 0.4.0_DS_ClientPlatform (scope-cited, tightly bounded)",
+  "created": "2026-08-04",
+  "pods": ["0.4", "0.2"],
+  "pipeline": "mdpf",
+  "thread_counter": 0,
+  "threads": []
+}
