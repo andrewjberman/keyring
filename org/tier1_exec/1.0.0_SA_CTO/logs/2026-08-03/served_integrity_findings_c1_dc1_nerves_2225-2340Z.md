@@ -165,6 +165,51 @@ static ones verifiable by inspection. Inspection is the evidence class that fail
 a claim that my own ratification never happened -- before noticing 19:00Z **IS** 15:00 EDT. Reporting the
 near-miss instead of deleting it is what makes their other claims weightable.
 
+## ADDENDUM 3 (0025-0035Z) -- THE EXPOSURE NUMBER: 87%, and CI-R7R8 was the TIP
+
+**MEASURED (`0.7.0_AE_CloudOps~B`, read-only, 4 positive controls): 237 of 272 LIVE TOs -- 87% -- are
+INVISIBLE in the default `/to-check` view. 60 of them are `pending`. The default shows 35 of 272.**
+Mechanism: the default scopes to projects whose PRD is <=14d old, so a TO is dropped BY ITS PROJECT'S
+PRD AGE, not by its own status/age/priority. **THE VIEW GOES BLIND TO EXACTLY THE TOs STALLED LONGEST**
+-- the fifth anti-correlated instrument of the session and the widest, since it governs what every seat
+believes it holds.
+
+**THE TO's PREMISE WAS FALSIFIED FIRST, AND THE PREMISE WAS MINE AND COO's:** I diagnosed folder-vs-
+`issued_to` keying; `.tools/to-check.py` was ALREADY `issued_to`-keyed (`:211/:136/:419-422`), proven by
+a discriminating pair (5 same-folder siblings correctly excluded). Neither exec exercised the instrument
+before staging a fix for it. ~B declined to manufacture a change to satisfy AC-2 and recorded it
+unsatisfiable -- correct.
+
+**NAMED ITEMS BEHIND THE WINDOW:** `ANDREW_DIRECT_20260714_TAXSMA_TICKET_SYSTEM_SCOPING` (pending,
+hidden, THREE WEEKS, dead seat) · CI-R9 + CI-C1C2 (same Andrew-direct 07-24 P0 authorization as R7R8,
+zero commits, dead seats -- CONFIRMED twins) · cottonwood-surface work pending+hidden ON THE NIGHT we
+found two cottonwood served-integrity defects · **13 live TOs assigned to NOBODY.**
+
+**THE BOUND I AM ENFORCING (~B's, and it is right): 237 IS AN EXPOSURE COUNT, NOT A NEGLECT COUNT.**
+Many are legitimately dormant or held. What is true of all is that no default view surfaces them, **so a
+STALLED one cannot be distinguished from a PARKED one without opening it** -- the indistinguishability
+IS the defect. COO's live counterexample: `ADHOC.shell-serve-census` read hidden-PENDING while its Leg 1
+was already delivered and at me.
+
+**~B's FALSE ZERO, self-disclosed in the same message as the result:** their first scan returned
+`LIVE=0 / HIDDEN=0` -- a guessed module API, a silent fallback, and a clean confident all-clear. Caught
+only because 0 live TOs is impossible. The four positive controls exist BECAUSE of it. **"KNOWING A
+FAILURE MODE BY NAME DID NOT STOP ME WRITING IT."** Had it shipped, the fabric stands down on
+"no exposure" with 237 hidden.
+
+**LANDED @415eef540e:** `org/XXX.md` Step 1b-B.1 -- every agent now runs
+`to-check.py --all --assignee <FULL serial>`, with `--all` named load-bearing IN the line and the two
+IDLE-reporting reads named (the agent folder; `get_agent_status`'s folder-keyed TO list). **I EXERCISED
+THE LINE BEFORE COMMITTING IT** and my own run exposed two output traps (`--assignee` is a SUBSTRING
+match; the rollup groups by PRIMARY assignee so a JOINT TO hides under another seat's heading) -- both
+now in the law. My first draft would have shipped a command that could confuse its intended reader.
+
+**RATIFIED:** ONE project-level sweep of ALL remaining CHANNEL_INDEPENDENCE closure rows (mine --
+delivery-state + gate-state per row, MISSING stated as MISSING never inferred from delivery, plus a
+supersession verdict per row). **AND THE RULE I PUT ON BOTH COO AND MYSELF: a carried obligation goes
+into a DURABLE CARRIER TONIGHT, not into intent -- intent is the storage medium that failed for ten days
+on R7R8 and five on 6c.**
+
 ## Open at close
 
 **Andrew's disclosure package -- COMPLETE ON INPUTS, awaiting his call (the only sovereign item).** Two
