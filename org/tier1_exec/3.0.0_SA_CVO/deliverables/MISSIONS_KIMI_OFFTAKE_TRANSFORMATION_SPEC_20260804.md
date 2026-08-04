@@ -27,7 +27,11 @@ between C4 / C3.ii / C3.i than as a second, hand-drawn semantic schema.
 3. **STANCE** (the human-judgment content -- DECIDED/BUILT/SERVING, FRONTIER, BLOCKED-ON):
    succeeds to the State half of the OPAL_KIMIPIPELINE State/Friction design (lifecycle_value
    7-enum; Kimi PROPOSES, Andrew RATIFIES, CVO LANDS via the daily loop). Existing state.yaml
-   stance content migrates as the seed values, marked pre-mechanism vintage. Judgment fields
+   stance content migrates as the seed values, marked pre-mechanism vintage. **PRECEDENCE
+   (CTO~B 222453Z, mirrored so both sides carry it): a Phase-0-RATIFIED lifecycle_value
+   OUTRANKS a migrated seed** -- ratification is the assertion, a seed is ancestry entering as
+   a PROPOSAL -- and a seed contradicting a ratified value surfaces as a NAMED reconciliation
+   item at the next sitting, never a silent land. Judgment fields
    the enum cannot carry (FRONTIER prose, BLOCKED-ON specifics) remain human-written,
    anchored to vertical ids.
 4. **GOALS**: root_goal + the sovereign-approved goals survive VERBATIM, re-homed per
