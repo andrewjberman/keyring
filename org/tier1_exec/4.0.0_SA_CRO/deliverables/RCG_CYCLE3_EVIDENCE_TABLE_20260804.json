@@ -697,7 +697,8 @@
    "infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf:90"
   ],
   "live": [],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "RESOLVED (CTO~B 153639Z + CRO recipe pass): dead source tree; TF signal was policy-NAME noise (real Resource = live opal-news-ai-sentiment). Adjudicated ARCHIVE, all 10 files."
  },
  {
   "tree": "infra/aws/lambda/finbert_batch_processor",
@@ -1037,7 +1038,8 @@
    "infra/aws/terraform/opal-assets-absence/main.tf:48"
   ],
   "live": [],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "NOTE (CTO~B 153639Z, NOT yet resolved): appears in the registry per its _updated note -- likely the same join-artifact class; pending ground-out."
  },
  {
   "tree": "infra/aws/lambda/opal_pm_snapshot_handler",
@@ -1105,7 +1107,8 @@
    "infra/aws/terraform/portal-auth/lambdas.tf:51"
   ],
   "live": [],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "RESOLVED (CTO~B 153639Z): stray pre-move copy; canonical at infra/aws/users/lambda/portal-authorizer, fn opal-portal-authorizer LIVE. Adjudicated ARCHIVE. Prefix-join artifact class."
  },
  {
   "tree": "infra/aws/lambda/portal_data_proxy",
