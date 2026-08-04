@@ -306,6 +306,49 @@ all 35 space-bearing paths survive intact.
 *And the repair bit twice: writing the backslash-zero escape through a heredoc put a real null byte
 in the source -- the second time inside the comment warning about it. Separator is now `chr(0)`.*
 
+## ADDENDUM 7, 05:20-06:00Z -- the stragglers taken (`2b536176be`), 8 of 12, and why 4 were held
+
+Andrew-direct: *"take the 12 stragglers now."* Took **8**. Held 4, and the holds are the content.
+
+**This was the least-gated deletion in the programme, and I said so in the commit.** `rcg-sweep-check`
+fires on the `~SWEEP` **author identity**, so it does not fire for me; `mass-deletion-check`'s
+threshold is 25, so 8 does not reach it. **No gate covered that commit.** I ran the gate's own checks
+by hand rather than inherit a pass I was not entitled to -- C4/C5/C6/C7 all clean, uniqueness 1 copy
+/ 7 unique, so the warrant is stated on **ARCHIVE-label grounds, not copy grounds** (the B-0003
+lesson, applied to my own batch).
+
+**HELD, and three for one reason: a surviving file depends on the deleted one.**
+
+- **`org/ka_testing/Dockerfile` + `.dockerignore`** -- that tree is 67 tracked files: **63
+  REFERENCE_KEEP + 2 KEEP + exactly these 2 ARCHIVE** -- and `docker-compose.yml`, labelled **KEEP**,
+  carries `build: .`. **A KEEP file depends on an ARCHIVE file.** Deleting them leaves a 65-file
+  project that looks intact and cannot build. The click specimen generalised past Python packages:
+  **residual risk 2 of my own ruling, with a live specimen, found on MY batch.**
+- **`docs/deployment/BD_PORTAL_PUBLISHER_PLAN.md`** -- cited by live Terraform at
+  `infra/aws/terraform/bd-pipeline/lambdas.tf:231`.
+- **`data/yang_pkl/README.md`** -- lane `POD2`, **not mine**. I had said I would take "the 12"; I can
+  only take what I own. Routed, not quietly widened and not quietly dropped.
+
+**Reference checks on what I DID take**, since three sat in live fabric-comms territory and *a name
+appearing somewhere is not a dependency*: `session-startup.sh` had zero live references;
+`agent-poller.py`'s `cl_liveness` mention is a **comment about REMOVED routing** naming the `.json`,
+not the `.lock`; the `/drive` skill references the **base** `.last-drive-2.0.0_SA_COO`, never the
+`~B` lane variant, and self-creates it anyway.
+
+### The accident that proved the s.6 withholding was load-bearing
+
+CRO's B-0006 first cut **failed to exclude my 12 stragglers**, and the **owned-paths gate DENIED**,
+naming them exactly; all 12 restored intact. **That save existed only because I withheld `BASE_EXEC`
+and `POD2` from the grant.** I could have granted them -- the sweep gate constrains the identity
+anyway, and **every check would have passed**: the labels say ARCHIVE, the charter says SCORE, so
+C4/C5/C6/C7 would all have permitted deleting `org/mcp/session-startup.sh` and `cl_liveness.lock`.
+What stopped it was a **lane boundary I declined to widen for 12 files**; what made those two safe to
+delete afterwards was **three reference checks by hand that no gate performs.**
+
+> **"The grant is safe because a gate constrains it" is not a licence to take every widening the gate
+> would tolerate.** Written into s.6 as a judgment call; demonstrated three hours later by an
+> accident. **Defence in depth is not redundancy when the layers see different things.**
+
 ## Closed during the session
 
 - ~~**[`4.0.0_SA_CRO`]** author + execute B-0001~~ -- **DONE.** 93 files, execute/revert/re-apply,
@@ -328,8 +371,10 @@ in the source -- the second time inside the comment warning about it. Separator 
 
 - **[`4.0.0_SA_CRO`]** batch 3 against the `org/threads` snapshot-copy mass, cap 500. **No further
   gate from me is required** -- the mechanism is what permits a batch.
-- **[me]** the 12 `BASE_EXEC`/`POD2` stragglers -- I take that leg under ordinary attribution rather
-  than widen a 3-member lane; not in any batch.
+- **[`4.0.0_SA_CRO`]** disposition the **4 held stragglers** in the ledger: the `ka_testing`
+  Dockerfile pair and `BD_PORTAL_PUBLISHER_PLAN.md` (surviving files depend on them -- likely
+  REFERENCE_KEEP or MIGRATE-with-citation-repair), and `data/yang_pkl/README.md` (needs a POD2 member
+  or an amendment).
 - **Standing residual:** no install-all hook entry point (`.owned-paths.yaml:114`). Until it exists a
   clone can hold the lane grant without the gate -- the one unsafe ordering in this design. Bounded
   to primary-laptop-only execution with the installer run as recorded batch prep.
