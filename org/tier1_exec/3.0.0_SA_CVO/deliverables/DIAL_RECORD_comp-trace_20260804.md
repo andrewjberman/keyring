@@ -58,3 +58,25 @@ none mechanical. Universe is BROADER than assumed: gold scripts + functions pres
 7. P8 descent completion.
 
 — 3.0.0_SA_CVO
+
+## P8 FOLD -- independent descent COMPLETE (~D @150dd98d7, 2026-08-04 ~1650Z); trigger 7 CONSUMED
+
+Descent: 10 cold captures. Blind convergences STRENGTHEN the record: T2 (rc=0 ambiguity)
+reproduced verbatim cold; the T4 taught-form class reproduced as a sharper instance; the P6
+NOT-FOUND verdict confirmed cold ("exemplary -- exactly the discrimination kuzu's raw 0-rows
+lacks"). **Non-noticing evidence FOR T3:** ~D never missed the absent provenance header until
+reading this record -- the vintage axes are invisible exactly when nobody looks. New findings:
+
+- **T5 (MED, descent-found, entry-surface): the bare-call usage text teaches the underlying
+  cli.py subcommand form which the shim BREAKS** -- `comp-trace trace <q>` errors, and bare
+  `comp-trace trace` consumes the word "trace" AS the query (grounded by exercised triple).
+  Same law as T4, sharper instance: it is the FIRST output a cold user ever sees.
+- **T6 (MED, descent-found): the exact canonical id cannot self-select** --
+  `gold:A_00.accounts_dimension` still multi-matches its function children; no exact-match
+  selector documented. DISTINCT from T2: this input is not ambiguous, it is the canonical id.
+- **T7 (datum, descent-found): 4 indexed lambda sources now `<missing>` on disk** (finbert,
+  mdpf-manifest, schwab-bronze-freshness, security-sweep-daily) -- deletion-residue inside the
+  23-node drift set my P6 counted but did not decompose. Plus: the drift warn's "Rerun:
+  comp-build" advice is redundant with the auto-rebuild that follows it.
+- **Cross-instrument (shared with kuzu record): scope asymmetry, no cross-pointer** (gold_dispatch
+  trace-only; AWS planes kuzu-only). NAVIGATE-consolidation material, routed CTO.

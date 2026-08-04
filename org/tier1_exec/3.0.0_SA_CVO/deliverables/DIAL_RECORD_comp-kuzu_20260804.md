@@ -60,3 +60,24 @@ start word ~1300Z @74451794e/@fa4279588, sequencing CTO-concurred 131701Z).
 7. P8 descent completion.
 
 — 3.0.0_SA_CVO
+
+## P8 FOLD -- independent descent COMPLETE (~D @150dd98d7, 2026-08-04 ~1650Z); trigger 7 CONSUMED
+
+Descent: 10 cold captures, independence held (zero dial-record reads pre-diff, gate-cited).
+Convergence: the K1 repair HELD under cold use (primer taught node_id correctly); the off-default
+findings (K3/K4/K5, -inc skip) were never hit cold -- consistent with defect mass off the default
+path. Two COLD-FOUND findings folded, one verdict of mine amended:
+
+- **K6 (MED, descent-found; amends my P6 "honest-empty PASS"): 0-rows carries no universe/scope
+  statement.** My P6 scored bare "(0 rows)" as honest-empty -- TRUE from the dialer's frame,
+  INSUFFICIENT from cold use: 3 of ~D's 8 real questions returned 0 rows whose honest reading was
+  out-of-universe (tool sources, config yamls, dispatch harnesses) or wrong-pattern, and nothing
+  discriminates. This is the kuzu instance of trace-T1 -- the family design point (with DEPTH-1)
+  now has instances measured on THREE instruments. Remedy shape per the family rule: a one-line
+  scope note on 0-rows or unmodeled-class naming in the primer.
+- **K7 (LOW-MED, descent-found): lineage edge-direction convention stated nowhere** -- READS_S3
+  points script->key, so BOTH lineage edges point INTO the key and a naive flow traversal
+  silently 0-rows (~D K7, self-corrected K7b -> 17 readers). One primer line kills the class.
+- **Cross-instrument (shared with trace record): scope asymmetry, no cross-pointer** --
+  gold_dispatch in trace's universe not kuzu's; AWS planes in kuzu's not trace's; neither
+  instrument points across on a miss. NAVIGATE-consolidation material, routed CTO.
