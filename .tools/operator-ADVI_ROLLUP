@@ -1,0 +1,13 @@
+#!/bin/bash
+# operator-ADVI_ROLLUP -- project operator shim (rendered by operator.py)
+# Drives ADVI_ROLLUP to closure. MANDATORY for 2.0.0_SA_COO. Optional for other agents.
+#
+# Usage: operator-ADVI_ROLLUP [--agent SERIAL] [--elevate|--json|--render]
+#
+# Exit codes:
+#   0  continue (directive emitted)
+#   1  done (all TOs complete)
+#   2  fork (elevate to CTO)
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/operator.py" "ADVI_ROLLUP" "$@"

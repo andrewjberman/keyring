@@ -1,0 +1,15 @@
+#!/bin/bash
+# validator-ADVI_ROLLUP -- project validator shim (rendered by validator.py)
+# Validates ADVI_ROLLUP against PRD + TO intent. MANDATORY for 2.0.0_SA_COO
+# at project closure. Optional for other agents managing synthesis/delivery.
+#
+# Usage: validator-ADVI_ROLLUP [--agent SERIAL] [--elevate|--json|--render]
+#
+# Exit codes:
+#   0  continue (validation work remains)
+#   1  done (all targets validated with sufficient evidence)
+#   2  fork (elevate to CTO)
+#   3  error
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/validator.py" "ADVI_ROLLUP" "$@"

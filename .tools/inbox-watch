@@ -1,0 +1,5 @@
+#!/bin/bash
+# inbox-watch -- wrapper that works from any directory
+# Usage: inbox-watch <agent_serial>
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec bash "$WORKSPACE/org/mcp/inbox-watch.sh" "$@"

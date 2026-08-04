@@ -1,0 +1,5 @@
+#!/bin/bash
+# check-inbox -- wrapper that works from any directory
+# Usage: check-inbox <agent_serial>
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec bash "$WORKSPACE/org/mcp/check-inbox.sh" "$@"

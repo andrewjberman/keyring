@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# frontend-dev — wrapper for .tools/frontend-dev.py
+# Resolves python and the workspace-relative script path regardless of cwd.
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec python "$SCRIPT_DIR/frontend-dev.py" "$@"
