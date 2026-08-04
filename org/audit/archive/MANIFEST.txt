@@ -20,3 +20,4 @@ org/mcp/orphan-audit.log
 org/mcp/sovereign-registry-override-audit.log
 org/tier0/audit/ledger-hook-audit.log
 org/tombstone-gate-audit.log
+org/rcg-sweep-audit.log
