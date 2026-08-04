@@ -216,6 +216,35 @@ Two protocol items folded: re-apply requires a fresh complete `RATIFIED` row (**
 -- the re-ratification row is not friction, it is the authorization**), and the standard sweep trailer
 is `Authorized-Deletion: rcg/ledger/BATCHES.jsonl`.
 
+## ADDENDUM 4, 03:16-03:45Z -- B-0002 (500 files) and a new defect class (`2481fa16a`)
+
+CVO~B's independent verify of B-0001 closed CLEAN (`c11c4b61fb`, 26/26 re-derived, under its own
+serial) at 03:16Z, discharging the cap-lift precondition. **B-0002 executed at 03:31Z: 500 files,
+84 directory-complete dirs.** Verified here from the commit, not the report: **500 deletions, zero
+non-deletions** (C1 held at 5x batch-1's size), **500/500 ARCHIVE** at HEAD re-derived, **0**
+protected-charter intersections. Order checked as well as substance -- the CVO close preceded the
+execution by 30 minutes with the discharge row between.
+
+**A DEFECT CLASS I HAD NOT BEEN WATCHING FOR: the gate's SPEECH, not its verdict.** A 500-path list
+piped through `xargs` **silently split into multiple `git` invocations** (measured 375/125). C2
+correctly refused all three partial commits -- **but C2 cannot distinguish a partial invocation from
+a genuine batch/tree divergence**, and its message asserted divergence. CRO chased two wrong theories
+before the invocation count explained it.
+
+> **A correct verdict that names the wrong cause is a correct verdict pointing at the wrong repair
+> -- and it is harder to catch than a wrong verdict, precisely because the decision is right.**
+
+Fixed both ways: C2's message now states it cannot tell the two apart and hints at splitting for any
+batch over 100 paths; s.5.1 rules the standard large-batch form
+`git commit --only --pathspec-from-file=<file>` (one invocation, cannot split). **B-0001's 93 paths
+fit in one invocation by luck of size -- batch 1 passing was never evidence the form was sound.**
+
+**Asked, not inferred:** who armed CVO~B. The verify is unimpeachable on substance, but `D-0002`'s
+arm was routed through Andrew's ferry because CVO sits outside `R-0001` silence. Either answer
+resolves something -- Andrew ferried (then `D-0002` is discharged and should stop being carried as
+open at him) or the route came another way (a fabric-silence question better named now than at batch
+6). Question outstanding with CRO.
+
 ## Open at session end
 
 - **[`4.0.0_SA_CRO`]** author B-0001 DRAFT->RATIFIED. Verified for them: the proposed cohort
