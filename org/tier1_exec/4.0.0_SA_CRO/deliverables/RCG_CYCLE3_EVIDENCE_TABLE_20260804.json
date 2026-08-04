@@ -791,7 +791,8 @@
   "live": [
    "inf-gold-trigger"
   ],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "RESOLVED (CTO~B 152341Z): NOT a registry gap -- canonical source lives at inf-pipeline/inf-gold-trigger/; this tree is a stray pre-move copy, adjudicated ARCHIVE. The DIVERGENT verdict was a name-keyed-vs-path-keyed join artifact."
  },
  {
   "tree": "infra/aws/lambda/inf-otp-relay",
@@ -915,7 +916,8 @@
   "live": [
    "m365-ms-ingest-liveness"
   ],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "RESOLVED (CTO~B 152341Z): the ONE TRUE class-(iii) registry gap -- entry drafted by CTO~B, routed to 0.7.0_AE_CloudOps to land (owned-paths lane)."
  },
  {
   "tree": "infra/aws/lambda/m365-otp-liveness",
@@ -1281,7 +1283,8 @@
   "live": [
    "public-data-router"
   ],
-  "verdict": "DIVERGENT"
+  "verdict": "DIVERGENT",
+  "resolution": "RESOLVED (CTO~B 152341Z): NOT a registry gap -- canonical source lives at lambda-edge/public-data-router/; this tree is a stray pre-move copy, adjudicated ARCHIVE. Same join-artifact mechanism."
  },
  {
   "tree": "infra/aws/lambda/schwab-anonymizer",
