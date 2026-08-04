@@ -103,15 +103,64 @@ estate** -- and combined with (b) would have called that live endpoint an orphan
 | `comp-pulse diff` (risk reflex) | CLEAN | measured: 5 files vs 1,662 danger nodes |
 | `comp-grep`/`comp-which` | n/a | Targets were known from the spec (`cli.py`, `trace_graph.py`); used native Read/Grep on named files, which is the on-rails exception |
 
+---
+
+# PHASE 2 (same session, ~0030-0100Z) -- residue closed
+
+**Commits:** `3a1f36e544` (declared territory) · `3734c4a81d` (second comp-system discharge)
+
+**Verdicts received:** CVO `CLOSE = PASS` (RAVC-4, every gate exercised independently; 07-31 DIAL
+discharged). CTO arch call: exception ratified as **INTERIM ONLY**, conforming end-state routed to me.
+Both then verified this phase by exercise rather than filing; CVO re-ran the repaired suite itself.
+
+## The reframe I did not have
+
+I framed the exception as private-vs-canonical. CTO reframed it: **the population was defined by
+whatever the private cache happened to contain, which is not a definition at all** -- and a naive
+re-base to all 20,480 nodes would trade an *undefined* population for a *wrong* one. The conforming
+form is Andrew's own second clause: a territory-specific full graph.
+
+Producer population is now a **role-derived predicate** -- `>=1 outbound
+WRITES|WRITES_S3|PROJECTS_TO|TRIGGERS|SFN_INVOKES|S3_INVOKES|EVENT_INVOKES|SNS_INVOKES` edge.
+**N=842**, from 922 role-matched, of 20,480. CTO's sharper naming, now the audit's test for every
+tool: **A PREDICATE IS NOT A ROSTER** -- a type allowlist is a hand-drawn registry wearing a new name.
+T1 met (definition emitted every run). T2 met and **scoped to what I actually searched** rather than
+claimed as universal absence.
+
+## The catch that matters: my own doctrine, inside my own build, within the hour
+
+`test_blast_overlap_pairwise.py` was **8/8 green before AND after** the universe swap -- and four
+tests had stopped exercising anything. They pass `--population gold:A_`; kuzu carries **zero**
+`gold:`-prefixed ids (measured **N=0**), so the sweep scored "0 pair(s) of 0". The mass-floor test
+asserts *"No pair cleared the threshold"* -- **true by construction at zero pairs**, so the test that
+exists to prove the floor suppresses stopped proving it and reported success for doing so.
+
+**Nothing skipped.** The exit-code case at least printed a skip line; this was the same disease with
+the symptom removed -- full green, zero coverage. Had I read "8 passed" and moved on, I would have
+shipped a re-base whose own gate was inert.
+
+Repaired in two halves (re-pointing alone leaves the trap armed for the next universe change):
+selector **derived live**, plus `_assert_non_vacuous` + a positive control so an empty sweep FAILS.
+**Mutant-proven:** stale selector -> 3 failed / 5 passed, from a state that had been 8/8 green.
+**The pass count was 8 before and after the repair -- only the mutant discriminates. I would have
+believed the count.** Ratified by CVO as re-dial trigger 7, verbatim.
+
+Two inherited defects rode along, found by asking whether the single-node fixes applied to the sweep
+modes: `--compare` carried defect (c) (`find_node` + `[0]` -- could silently score a DIFFERENT node
+against your target; now rc=5), and `--all-producers` now checks dependents in both directions or it
+flags every FETCHES-consumed node as a phantom -- the bulk form of defect (b).
+
+**Regression:** 35 passed / 1 skipped across all three blast suites. manifest-check PASS.
+
 ## Blockers
 
 **None.** Nothing is waiting on me.
 
 ## Next Steps
 
-1. **[3.0.0_SA_CVO]** Run the s6 acceptance battery + issue the CLOSE verdict (also closes the
-   07-31 comp-blast DIAL record).
-2. **[3.0.0_SA_CVO / 1.0.0_SA_CTO]** Rule on the declared exception: re-base the three statistical
-   modes onto kuzu, or ratify the exception permanently.
+1. ~~**[3.0.0_SA_CVO]** acceptance battery + CLOSE~~ -- **DONE: PASS**, 07-31 DIAL discharged.
+2. ~~**[CVO/CTO]** rule on the declared exception~~ -- **DONE: DISCHARGED** @`3a1f36e544`.
 3. **[Andrew, non-blocking]** comp-blast's formal purpose line (P1) and the `chain` reserved-term
-   collision -- both explicitly do not block this build.
+   collision -- both explicitly do not block.
+4. **[me, standing]** Residue scope held as CVO ruled it: **one scoped item, not a standing licence.**
+   Another non-conformant tool universe is a FINDING routed to CTO + CVO, not a task I take.
