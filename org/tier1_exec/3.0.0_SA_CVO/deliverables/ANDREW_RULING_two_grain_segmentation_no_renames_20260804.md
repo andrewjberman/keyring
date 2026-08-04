@@ -18,7 +18,9 @@
    (breadth), comp-pipescript = script-grain (io/detail), both KEPT, no renames.**
 2. **COO's F1/F9 GO-hold condition is satisfied on COO's own stated disposition** (131747Z:
    "if comp-pipescript is absorbed as script-grain, F1/F9 fire as-is"). The held-staged TOs
-   (@606d3d1f4) are clear to GO.
+   (@606d3d1f4) are clear to GO. *STATE-SYNC (COO 135642Z): the GOs had ALREADY FIRED 132102Z
+   on CTO's R-1 umbrella ruling @a246c725a (131929Z) -- this Andrew word CONFIRMS sovereignly
+   rather than unblocks; ~D executing F9-then-F1.*
 3. **Design premise for CTO's PRD:** grain-2 stays SEGMENTED -- a family of script-level/detail
    tools (room for future non-executable script-grain tools), not one monolithic drill binary.
    No renames = the consolidation is typed dispatch + declared universes over EXISTING names
