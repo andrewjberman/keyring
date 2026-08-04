@@ -2951,12 +2951,22 @@ def cmd_postdeps(args):
 
     # TOOL-02 scope resolution: --firm beats path auto-detect beats bd default.
     firm = getattr(args, 'firm', None)
+    _firm_source = "--firm" if firm else None
     if not firm:
         _np = (getattr(args, 'script_name', '') or '').replace('\\', '/')
         for _dir, _pk in _DATADIR_TO_PIPELINE.items():
             if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
                 firm = _pk.split('-')[0]
+                _firm_source = "path auto-detect"
                 break
+    # Dial F1 half (b): the bd default SURVIVES but is NAMED LOUD below, never silent.
+    # Required-flag (io-family precedent) was REJECTED on the live-caller inventory:
+    # 3 dispatch-gate call sites (bd/cot/inf gold_dispatch check_partial_deps) invoke
+    # postdeps flagless with rc+stderr swallowed and stdout-grep parsing -- a flagless
+    # rc=2 would silently vacuate the WORKING bd $22M-class gate (empty stdout = zero
+    # [BLOCKING] lines = vacuous pass). With the half-(a) unknown-id guard below,
+    # flagless+unknown still refuses rc=2, so the F1 composition stays closed.
+    _firm_defaulted = firm is None
     firm = firm or "bd"
 
     deps_rel = _POSTDEPS_CONFIGS.get(firm)
@@ -3004,6 +3014,10 @@ def cmd_postdeps(args):
     # Provenance header (TOOL-02): name the tree + the exact config answering.
     print(f"PIPELINE DEPENDENCIES [{firm}]")
     print(f"  Config: {deps_rel}")
+    if _firm_defaulted:
+        print("  DEFAULT-TREE NOTICE: no --firm given and the script arg names no tree --")
+        print("  answering from the DEFAULT tree 'bd'. If you meant inf/cot/mdpf, re-run")
+        print("  with --firm <tree>.")
     print()
 
     has_output = False
@@ -3045,6 +3059,34 @@ def cmd_postdeps(args):
 
     if not has_output:
         if script_filter:
+            # Dial F1 half (a): discriminate UNKNOWN from KNOWN-with-no-deps. An unknown
+            # script id must never read as clean on the $22M-class mode. The validation
+            # universe is DERIVED AT RUNTIME from the same maps the tool resolves trees
+            # from -- tree DAG script ids (_build_dag via _FIRM_TO_PIPELINE) UNION the
+            # deps-config keys just parsed -- never a hand-copied roster
+            # (memory/feedback_a_predicate_is_not_a_roster.md). A tree widening that
+            # extends the DAG registry / _POSTDEPS_CONFIGS extends this guard with
+            # zero edits here. Matching mirrors the filter loop above (substring on
+            # lowered keys) so anything that COULD have matched a deps key is known.
+            _deps_keys = {str(k).lower() for k in post_steps} | {str(k).lower() for k in preconditions}
+            _tree_ids = set()
+            _tree_note = ""
+            try:
+                _dag = _build_dag(_FIRM_TO_PIPELINE[firm])
+                _tree_ids = {str(s).lower() for s in _dag.scripts}
+            except Exception as _e:
+                _tree_note = f"; tree ids UNDERIVABLE ({_e.__class__.__name__}) -- validated against deps keys only"
+            _known = any(script_filter in k for k in _deps_keys) or \
+                     any(script_filter in s for s in _tree_ids)
+            if not _known:
+                _n = len(_tree_ids | _deps_keys)
+                _res = "DEFAULTED to bd" if _firm_defaulted else (_firm_source or "resolved")
+                print(f"  REFUSED (rc=2): unknown script id {script_filter!r} -- not found in tree {firm!r}.")
+                print(f"  (universe searched: {len(_tree_ids)} tree script ids + {len(_deps_keys)} declared"
+                      f" deps keys = {_n} distinct{_tree_note}; tree resolution: {_res}.)")
+                print("  A typo must never read as 'clear to run' on the $22M-class guard (dial F1).")
+                print("  Re-run with a real script id, or name the tree: --firm bd|inf|cot|mdpf.")
+                sys.exit(2)
             print(f"  No dependencies declared for: {script_filter}")
         else:
             print("  No dependencies declared.")
