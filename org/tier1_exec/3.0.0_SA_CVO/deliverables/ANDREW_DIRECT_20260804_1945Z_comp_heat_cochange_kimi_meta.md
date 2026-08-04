@@ -93,3 +93,16 @@ with its discriminators printed (both trend directions + overlap direction + lif
 when available); (c) SUBSTRATE LAW: the full local-git grid (same as comp-heat, no filtered
 subsection) + the Kimi runner's node classification for grain continuity -- TAKE-time
 verification owed on comp_missions.commits() completeness.
+
+## Round 6 (~2130Z) -- ANDREW RULING, verbatim
+
+> "Yes I agree with this layout completely, let's get it done."
+
+RULED, three parts: (1) EXTRACT commits() from .tools/comp_missions.py into a neutral shared
+module (org/modules/graph/commit_stream.py) -- the parser survives, the home renames; (2) PORT
+the DECLARED -> DERIVED -> UNMAPPED precedence into cochange grain mode as declared-vertical
+trailer -> Kimi attribution -> unresolved-printed (the trailer is the mechanism that shrinks the
+unresolved tail); (3) RETIRE the missions.yaml/path-glob lexical layer -- the missions concept
+dissolves into the C-ladder (C4 = mission tier, C3.ii = sub-groups, activity = cochange grain
+rollups). Retirement executes at MSTR (their LD-0341 artifact; ruled-deletion + delete-together
+discipline; routed this turn with the verbatim).
