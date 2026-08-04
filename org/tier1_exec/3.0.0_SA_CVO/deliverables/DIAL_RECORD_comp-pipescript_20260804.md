@@ -26,6 +26,12 @@
   → rc=0 "No dependencies declared" — byte-identical to a known-clean script. On the mode that
   exists because of the $22M incident, a typo answers "clear to run, no post-steps." Fix:
   validate script_id against tree scripts ∪ deps keys; unknown → rc=2 (TOOL-02 pattern).
+  **AMENDED 2026-08-04 ~06:2xZ (CTO datum, CVO re-exercised both limbs): postdeps FLAGLESS also
+  works and SILENTLY DEFAULTS TO bd (rc=0, `[bd]` banner) — the exact silent-tree-default class
+  the 07-30 stub killed for the io family survives on THIS mode. Composition is the sharp edge:
+  flagless + typo'd script = silent wrong-tree default + rc=0 no-deps = DOUBLE false-clean on the
+  $22M guard. The F1 fix must carry both halves: unknown-script rc=2 AND the required-flag
+  treatment (or an explicit named default) for postdeps.**
 - **F2 SEV-HIGH — undeclared 4-of-10 universe** (see conformance row). Naming act at Andrew:
   declare CODE_TREES as an intentional deploy-gate-scoped exception, or widen. The uncovered
   six include the CANONICAL assets monolith (own bucket), etfs (live monthly production fire),
@@ -42,7 +48,10 @@
 - **F5 SEV-MED (standing input re-affirmed) — io WRITES = script-body only**; dispatcher-staged
   writes invisible (DS-measured, `mdpf-daily-dispatch.sh:476-488` class). Fix: one declared-
   limitation line in io output — under-reporting drives deletion (Rule 22a class).
-- **F6 SEV-LOW** — per-mode flag-surface inconsistency + mixed-grain choices enum.
+- **F6 SEV-LOW** — per-mode flag-surface inconsistency + mixed-grain choices enum. **Sharpened
+  (CTO-exercised, CVO-confirmed): on the io family, `--firm` ALONE does NOT satisfy the refusal —
+  `--pipeline` is THE required flag; `--firm` is a narrower auxiliary. The law rows now say so
+  (@a86d54fb5).**
 - **F7 SEV-LOW** — no provenance header on io output (vintage = working tree, undeclared).
 - **F8 SEV-LOW** — comp-which routes the deploy-verify question ("is the deployed copy current")
   to the `io` row, not `deployed` (mode-level routing miss, score-tie artifact).
@@ -88,5 +97,15 @@ lane judgment.
    via CTO/COO; assets leg already staged at ~B).
 2. Nothing else sovereign — F1/F3/F5/F6/F7 are build fixes (routing: COO/CTO to the graph-lane
    owner), F4 law rows are CTO's to land, F9 runner-wiring is CTO routing.
+
+## Post-close dispositions (CTO 062256Z, logged 2026-08-04 ~06:2xZ)
+
+- **F4 LANDED @a86d54fb5** — CLAUDE.md rows + XXX.md role minimums corrected, forms verified by
+  exercise before editing; manifest :288 + 9 skill docs + shim header remain with owning lanes.
+- **F9 → path-scoped commit-gate stage** (rcg-sweep-check shape): the suite runs when engine/
+  subparser/test files are staged — observes on the CAUSE, not a clock. Build via COO; acceptance
+  = mutant-exercised fire + silent-on-unrelated + first run OBSERVED green.
+- **F3 → WS4-absorb CONFIRMED**, condition: WS4's acceptance names stats+inject as exercise cases
+  (invokable + flag law consistent) so the absorb is verified, not assumed.
 
 — 3.0.0_SA_CVO, dial CLOSED pending the F2 naming act + P8 descent (both non-blocking).
