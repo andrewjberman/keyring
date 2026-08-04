@@ -80,3 +80,16 @@ one-seat cluster: cochange + compare + basis-emission + federated registration.
 Effects: the COO critical-path seat for the cochange BUILD is SUPERSEDED -- Andrew pulls the
 design/build to this terminal (CTO~B Kimi-legs precedent; owned-paths bypass will cite this
 verbatim). Design discussion in-session; born-registered discipline binds the build.
+
+## Round 5 (~2110Z) -- ANDREW ADJUDICATION, verbatim
+
+> "yeah that works, lets do it"
+
+RULED: (a) DONOR = TAKE (0.2.0_DS's exercised implementation, committed as-is under their author
+line, reshaped here); (b) the composed mode is named **`diverge`** -- measurement name, family
+lexicon with comp-heat compare; MIGRATION is one labeled INFERRED-class interpretation among
+candidates (migration-like / layering-like / burst-like / coincidental-coupling), emitted only
+with its discriminators printed (both trend directions + overlap direction + lifecycle state
+when available); (c) SUBSTRATE LAW: the full local-git grid (same as comp-heat, no filtered
+subsection) + the Kimi runner's node classification for grain continuity -- TAKE-time
+verification owed on comp_missions.commits() completeness.
