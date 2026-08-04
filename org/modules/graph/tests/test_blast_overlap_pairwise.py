@@ -50,6 +50,68 @@ def _run(*argv: str) -> subprocess.CompletedProcess:
     )
 
 
+#: THE SELECTOR IS DERIVED LIVE, NEVER HARDCODED -- and this is a repair, not a preference.
+#:
+#: These tests were written against `--population gold:A_`. When comp-blast's universe moved to the
+#: canonical kuzu graph (2026-08-03/04) that prefix stopped matching ANYTHING: kuzu addresses the
+#: same scripts as `pipeline:bd:gold:A_...` and carries ZERO `gold:`-prefixed ids. MEASURED at the
+#: switch: selector `gold:A_` -> N=0, so the sweep scored "0 pair(s) of 0" and FOUR tests here kept
+#: passing while exercising nothing --
+#:   * the mass-floor test asserted "No pair cleared the threshold", which is TRUE BY CONSTRUCTION
+#:     when there are no pairs at all, so it stopped testing the floor it exists to test;
+#:   * the framing test asserted banned strings were ABSENT from output that printed no pairs;
+#:   * the denominator test's per-pair loop body never executed.
+#: All eight stayed green. GREEN WENT GREENER AND THE COVERAGE WENT TO ZERO -- the same class as the
+#: skip caught in the sibling exit-code suite, one layer subtler because nothing even skipped.
+#:
+#: Deriving the selector from the live universe means the fixture cannot silently stop selecting;
+#: and `_assert_non_vacuous` below makes any future emptiness FAIL instead of pass.
+_SELECTOR_CACHE: list = []
+
+
+def _selector() -> str:
+    """A population prefix that actually selects producers in the CURRENT universe."""
+    if _SELECTOR_CACHE:
+        return _SELECTOR_CACHE[0]
+    import pytest
+    try:
+        from org.modules.graph import comp_blast_universe as bu
+        g, _p, _d = bu.load_kuzu_universe(refresh=False)
+    except Exception as ex:  # noqa: BLE001
+        pytest.skip(f"canonical universe unavailable: {ex}")
+    ids, _def = bu.declared_producer_territory(g, None, "script")
+    if len(ids) < 2:
+        pytest.skip("fewer than 2 producers in the territory -- no pair to score")
+    # Longest common-prefix namespace shared by a workable slice: walk candidate prefixes from the
+    # most specific id downward until at least 2 producers match.
+    head = ids[0]
+    for cut in range(len(head), 0, -1):
+        pref = head[:cut]
+        if sum(1 for i in ids if i.startswith(pref)) >= 2:
+            _SELECTOR_CACHE.append(pref)
+            return pref
+    _SELECTOR_CACHE.append("")
+    return ""
+
+
+def _assert_non_vacuous(out: str) -> None:
+    """A sweep that scored NOTHING cannot support any assertion about scoring.
+
+    Without this, every assertion in this file is satisfiable by an empty population -- which is
+    exactly how four of them survived the universe swap. This turns that failure mode from a silent
+    pass into a loud one.
+    """
+    for line in out.splitlines():
+        if "CANDIDATES:" in line and "pair(s) of" in line:
+            scored = int(line.rsplit("of", 1)[1].strip().split()[0])
+            assert scored > 0, (
+                "VACUOUS TEST: the sweep scored 0 pairs, so every assertion below passes "
+                "trivially. The selector no longer selects anything in this universe."
+            )
+            return
+    raise AssertionError("could not find the CANDIDATES denominator line -- cannot prove non-vacuity")
+
+
 # ---- metric unit tests: synthetic, so the property is isolated from live-graph drift ----------
 
 def _idf(df: dict, n: int) -> dict:
@@ -112,15 +174,16 @@ def test_sweep_runs_without_a_query_positional():
 
     (`--all-producers` has this same shape and IS still blocked -- a separately reported defect.)
     """
-    r = _run("--overlap-sweep", "--population", "gold:A_", "--min-score", "0.9", "--head", "1")
+    r = _run("--overlap-sweep", "--population", _selector(), "--min-score", "0.9", "--head", "1")
     assert "required: query" not in (r.stdout + r.stderr), "positional guard blocked the sweep"
     assert r.returncode == 0, f"rc={r.returncode}\n{r.stdout}\n{r.stderr}"
 
 
 def test_output_is_framed_as_candidates_not_findings():
     """THE PROHIBITION, asserted on the surface a human actually reads."""
-    r = _run("--overlap-sweep", "--population", "gold:A_", "--min-score", "0.4", "--head", "1")
+    r = _run("--overlap-sweep", "--population", _selector(), "--min-score", "0.4", "--head", "1")
     out = r.stdout
+    _assert_non_vacuous(out)
     assert "CANDIDATES FOR HUMAN ASSESSMENT, NOT FINDINGS" in out
     assert "Overlap is NOT sameness" in out
     assert "NO name, path, or vertical signal is used" in out
@@ -130,8 +193,9 @@ def test_output_is_framed_as_candidates_not_findings():
 
 def test_denominators_are_coherent_and_estate_referenced():
     """df is estate-wide, so it may never be printed against the slice size (measured bug)."""
-    r = _run("--overlap-sweep", "--population", "gold:A_", "--min-score", "0.4", "--head", "1")
+    r = _run("--overlap-sweep", "--population", _selector(), "--min-score", "0.4", "--head", "1")
     out = r.stdout
+    _assert_non_vacuous(out)
     assert "idf REFERENCE population" in out, "the reference population must be stated"
     ref = None
     for line in out.splitlines():
@@ -146,7 +210,13 @@ def test_denominators_are_coherent_and_estate_referenced():
 
 def test_suppression_count_is_reported_not_silent():
     """A filter that hides pairs must say how many -- silent truncation reads as 'nothing there'."""
-    r = _run("--overlap-sweep", "--population", "gold:A_", "--min-score", "0.4",
+    # POSITIVE CONTROL FIRST: prove the same selector DOES score pairs without the floor.
+    # Otherwise "No pair cleared the threshold" is satisfied by an empty population and this test
+    # asserts nothing -- which is precisely what happened at the universe switch.
+    control = _run("--overlap-sweep", "--population", _selector(), "--min-score", "0.4", "--head", "1")
+    _assert_non_vacuous(control.stdout)
+
+    r = _run("--overlap-sweep", "--population", _selector(), "--min-score", "0.4",
              "--min-mass", "9999", "--head", "1")
     assert "SUPPRESSED BY THE MASS FLOOR:" in r.stdout
     assert "No pair cleared the threshold" in r.stdout

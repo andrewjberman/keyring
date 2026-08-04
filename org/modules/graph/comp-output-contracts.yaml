@@ -92,7 +92,14 @@ contracts:
       subject-scoped OVERLAY (seconds, one file) rather than a whole private universe (35s,
       everything). Cold path IMPROVED: ~2.5s vs ~35s.
     declared_exceptions:
-      - "--compare / --overlap-sweep / --all-producers still read the PRIVATE trace graph. These are corpus-STATISTICS over a producer population; idf is defined over that population, so silently swapping it would change what every score MEANS while the numbers kept printing. Declared at runtime on stderr (named + vintaged + scoped) per the ruling's exception clause. Re-basing them is routed residue, not silently done."
+      - "NONE. The interim exception (--compare / --overlap-sweep / --all-producers reading the private trace graph) was DISCHARGED 2026-08-04: all three now run on the canonical graph narrowed to a DECLARED TERRITORY. CTO arch call: the problem was never private-vs-canonical, it was that THE POPULATION WAS DEFINED BY WHATEVER THE PRIVATE CACHE HAPPENED TO CONTAIN -- not a definition at all -- and a naive re-base to all 20,480 nodes would have traded an undefined population for a wrong one."
+    declared_territory:
+      predicate: "a node with >=1 outbound edge of type WRITES|WRITES_S3|PROJECTS_TO|TRIGGERS|SFN_INVOKES|S3_INVOKES|EVENT_INVOKES|SNS_INVOKES"
+      basis: "ROLE-derived, not TYPE-derived. A node_type allowlist would re-encode the same accident in new names -- still a list someone chose. Role membership is a property of the GRAPH, self-maintaining as the estate changes, and it matches what the metric measures (overlap of what two things WRITE)."
+      grain_rule: "function-grain node_types = PipelineFunction|Hook|DataFetch (kuzu has no function_name field; the retired universe read grain off one)"
+      emitted: "The DEFINITION is printed on every statistical run -- predicate + grain rule + selector + N -- never a label. A score without its population is not a weak number, it is an uninterpretable one. (CTO acceptance term T1.)"
+      not_comparable: "SCORES ACROSS POPULATION DEFINITIONS ARE NOT COMPARABLE -- a score over a different population is a different statistic wearing the same name. Nothing persists comp-blast overlap scores (verified: computed-and-printed only; debtscan dups_latest.json is dup_scan's output, not comp-blast's), so the T2 invalidation was a no-op HERE -- scoped to what was actually searched, not claimed as a universal absence. (CTO acceptance term T2.)"
+      declared_tradeoff: "Membership moves when extraction coverage moves. That is why N is emitted: a change in N between runs is a FINDING about coverage, not noise to absorb."
     blind_spots:
       - "dynamic / FUNC-key consumers are INVISIBLE (the comp-pipescript dynamic-key miss class) -- 'zero dependents' is 'no EXTRACTED edge', NOT provably no consumer"
       - "kuzu trails the live estate (02:00Z full re-derive + CloudTrail incremental); the overlay covers ONLY the blasted subject's own edges, so a mid-edit change to a DIFFERENT file is not reflected"

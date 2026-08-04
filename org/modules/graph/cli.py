@@ -657,25 +657,23 @@ def _overlap_preamble(n_pop: int, considered: int, depth: int, selector, exclude
     print('   invisible to the graph, so overlap is a LOWER BOUND on both sides.')
 
 
-def _declare_trace_exception() -> None:
-    """Ruling clause 2 / spec 3.4: a non-canonical universe is legal ONLY as a DECLARED exception.
+def _sweep_universe(args):
+    """The statistical modes' universe: the SAME canonical graph, narrowed to a DECLARED TERRITORY.
 
-    The three statistical modes (--compare / --overlap-sweep / --all-producers) are corpus-STATISTICS
-    over producer scripts, not existence or traversal questions. Their idf weighting is defined over
-    a producer POPULATION; silently swapping that population would not widen the answer, it would
-    change what every score MEANS while the numbers kept printing. So they stay on the private trace
-    graph FOR NOW and say so out loud, named + vintaged + scoped. Undeclared amalgamation is the
-    defect; a declared one is the ruling's own exception clause. Routed to CVO as residue.
+    CTO arch call 2026-08-04 closed the interim exception these modes shipped under. The problem was
+    never "private vs canonical" -- it was that THE POPULATION WAS DEFINED BY WHATEVER THE PRIVATE
+    CACHE HAPPENED TO CONTAIN, which is not a definition. A naive re-base to all 20,480 nodes would
+    have traded an undefined population for a wrong one. The conforming form is Andrew's own second
+    clause -- a territory-specific full graph: an explicit written filter over the canonical graph,
+    inspectable and reproducible, that changes deliberately instead of by cache drift.
     """
-    verdict, detail, n, _drift = trace_freshness()
-    _bu.aprint("=== DECLARED EXCEPTION (Andrew ruling 2026-08-03, clause 2) ===", file=sys.stderr)
-    _bu.aprint("  universe: PRIVATE trace graph (not the canonical kuzu graph)", file=sys.stderr)
-    _bu.aprint("  scope:    --compare / --overlap-sweep / --all-producers ONLY "
-               "(statistical modes; idf is defined over a producer population)", file=sys.stderr)
-    _bu.aprint(f"  vintage:  {verdict} -- {detail}", file=sys.stderr)
-    _bu.aprint("  residue:  re-basing these onto kuzu is a follow-on, not silently done here.",
-               file=sys.stderr)
-    _bu.aprint("=" * 46, file=sys.stderr)
+    try:
+        g, prov, _path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+    except _bu.KuzuUnavailable as ex:
+        _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
+        sys.exit(1)
+    _bu.aprint(prov, file=sys.stderr)
+    return g
 
 
 def cmd_blast(args):
@@ -692,8 +690,7 @@ def cmd_blast(args):
     _sweep_mode = bool(getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None)
                        or getattr(args, 'all_producers', False))
     if _sweep_mode:
-        g = _get_graph(force_rebuild=getattr(args, "force", False))
-        _declare_trace_exception()
+        g = _sweep_universe(args)
     else:
         g = None      # the main path's universe is kuzu; resolved after the sweep blocks
 
@@ -701,23 +698,32 @@ def cmd_blast(args):
     if getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None):
         depth = getattr(args, 'depth', 10)
         selector = getattr(args, 'population', None)
-        producer_types = _producer_node_types()
 
         if getattr(args, 'compare', None):
             # PAIR MODE: both nodes must resolve, and the population is what gives idf meaning.
-            am = g.find_node(args.query or '')
-            bm = g.find_node(args.compare)
+            # Same refusal discipline as the main path (defect c): the pair mode used find_node +
+            # [0], so a --compare could silently score a DIFFERENT node against your target.
+            a_kind, am = _bu.resolve_subject(g, args.query or '')
+            b_kind, bm = _bu.resolve_subject(g, args.compare)
+            for _k, _m, _q in ((a_kind, am, args.query), (b_kind, bm, args.compare)):
+                if _k == _bu.RESOLVE_AMBIGUOUS:
+                    _bu.aprint(f'AMBIGUOUS-SUBJECT: {_q!r} matches {len(_m)} nodes -- refusing to '
+                               f'pick one to compare.', file=sys.stderr)
+                    for _n in _m[:10]:
+                        _bu.aprint(f'    {_n.id}   [{_n.node_type}]', file=sys.stderr)
+                    sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
             if not am or not bm:
                 missing = args.query if not am else args.compare
-                print(f'NOT-FOUND: {missing!r} did not resolve to a node -- nothing compared, '
-                      f'nothing concluded.', file=sys.stderr)
+                _bu.aprint(f'NOT-FOUND: {missing!r} did not resolve to a node -- nothing compared, '
+                           f'nothing concluded.', file=sys.stderr)
                 sys.exit(3)
             a_id, b_id = am[0].id, bm[0].id
             # Same scope-vs-reference split as the sweep: the pair is the SCOPE, but idf must be
             # estate-derived or a hub stops looking like a hub. `--population` narrows the reference
             # only if the caller deliberately asks for a narrower estate.
             grain = getattr(args, 'grain', None) or 'any'
-            reference = _overlap_population(g, selector, producer_types, grain)
+            reference, _refdef = _bu.declared_producer_territory(g, selector, grain)
+            _bu.aprint(_bu.format_population_definition(_refdef, "idf reference"), file=sys.stderr)
             for nid in (a_id, b_id):
                 if nid not in reference:
                     reference.append(nid)
@@ -746,9 +752,14 @@ def cmd_blast(args):
         # made ln(N/df) range over N=5 -- the hub stopped looking like a hub because everything in
         # view shared it. So idf is ALWAYS derived from the full grain-matched producer set.
         grain = getattr(args, 'grain', None) or 'script'
-        reference = _overlap_population(g, None, producer_types, grain)
+        reference, _refdef = _bu.declared_producer_territory(g, None, grain)
+        _bu.aprint(_bu.format_population_definition(_refdef, "idf reference -- estate-wide"),
+                   file=sys.stderr)
         ref_maps, idf, df = _idf_over(g, reference, depth)
-        population = _overlap_population(g, selector, producer_types, grain)
+        population, _popdef = _bu.declared_producer_territory(g, selector, grain)
+        if selector:
+            _bu.aprint(_bu.format_population_definition(_popdef, "scored population"),
+                       file=sys.stderr)
         maps = {nid: ref_maps[nid] for nid in population if nid in ref_maps}
         ids = sorted(maps)
         min_score = getattr(args, 'min_score', None)
@@ -795,17 +806,21 @@ def cmd_blast(args):
     # --all-producers sweep mode: list all producer nodes with zero downstream consumers
     if getattr(args, 'all_producers', False):
         pipeline = getattr(args, 'pipeline', None)
-        producer_types = _producer_node_types()
+        territory, _tdef = _bu.declared_producer_territory(g, None, 'any')
+        _bu.aprint(_bu.format_population_definition(_tdef, "swept territory"), file=sys.stderr)
         phantoms = []
         checked = 0
-        for node_id, node in sorted(g.nodes.items()):
-            if node.node_type not in producer_types:
+        for node_id in territory:
+            node = g.nodes.get(node_id)
+            if node is None:
                 continue
             if not _is_producer_pipeline_match(node_id, pipeline):
                 continue
             checked += 1
-            downstream = g.downstream(node_id, max_depth=1)
-            if not downstream:
+            # Dependents in BOTH directions, same as the single-node verdict (defect b). A
+            # one-directional sweep would flag every FETCHES-consumed node as a phantom -- the
+            # bulk version of the false-orphan class.
+            if not (g.downstream(node_id, max_depth=1) or g.upstream(node_id, max_depth=1)):
                 phantoms.append(node)
         print(f'PHANTOM-CONSUMER SWEEP: {len(phantoms)} producers with zero EXTRACTED-edge consumers of {checked} checked')
         print('  (LOWER BOUND -- "zero" = no extracted edge, NOT provably orphan; dynamic/FUNC-key')

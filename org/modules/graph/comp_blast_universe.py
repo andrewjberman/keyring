@@ -446,6 +446,105 @@ def apply_overlay(g: TraceGraph, node: Node, edges: list[Edge]) -> None:
     g._indexed = False
 
 
+# --------------------------------------------------------------------------- declared territory
+#: Edge types that mean "this node PRODUCES the target", as opposed to merely reading or calling it.
+#: This is the ROLE half of the producer predicate and it is written down here, once, rather than
+#: inferred -- an inferred producer set is the same accident the type allowlist was.
+PRODUCER_EDGE_TYPES = (
+    "WRITES", "WRITES_S3", "PROJECTS_TO", "TRIGGERS",
+    "SFN_INVOKES", "S3_INVOKES", "EVENT_INVOKES", "SNS_INVOKES",
+)
+
+#: Node types that are FUNCTION grain in the canonical graph. The retired universe carried a
+#: `function_name` field and grain was read off it; kuzu nodes have no such field, so grain is a
+#: node_type property here. Declared explicitly because a silently-wrong grain filter would put
+#: intra-file structure back at the top of the ranking -- the exact noise the first sweep produced.
+FUNCTION_GRAIN_TYPES = ("PipelineFunction", "Hook", "DataFetch")
+
+
+def declared_producer_territory(g: TraceGraph, selector: str | None = None,
+                                grain: str = "script") -> tuple[list, dict]:
+    """THE PRODUCER POPULATION, as an explicit filter over the canonical graph.
+
+    CTO arch call 2026-08-04: the old population was `node_type in {LAMBDA, GOLD_SCRIPT,
+    GOLD_FUNCTION, SILVER_SCRIPT, S3_ARTIFACT}` evaluated over a private cache -- i.e. THE
+    POPULATION WAS DEFINED BY WHATEVER THAT CACHE HAPPENED TO CONTAIN, WHICH IS NOT A DEFINITION AT
+    ALL. And a naive re-base to all 20,480 kuzu nodes is equally wrong: that is not the producer
+    population either, so it would trade an undefined population for a wrong one. The conforming
+    form is Andrew's own second clause -- a TERRITORY-SPECIFIC full graph: an explicit, written,
+    inspectable filter over the canonical graph.
+
+    ROLE-BASED, NOT TYPE-BASED (the choice is load-bearing, so it is stated):
+    a producer is a node with at least one outbound PRODUCER_EDGE_TYPES edge. Type-based would have
+    re-encoded the same accident in new names -- still a list someone chose. Role-based makes
+    membership a PROPERTY OF THE GRAPH, self-maintaining as the estate changes, and it matches what
+    the metric actually measures (overlap of what two things WRITE).
+
+    THE TRADEOFF, declared rather than hidden: membership now moves when extraction coverage moves.
+    That is why the returned definition carries N -- a change in N between runs is a FINDING about
+    coverage, not noise to absorb.
+
+    Returns (ids, definition). The definition is emitted in the output per CTO term T1: a score is
+    uninterpretable without the population it was computed against.
+    """
+    if not g.edges:
+        return [], {"predicate": "n/a", "n": 0, "error": "universe carries no edges"}
+
+    producers = set()
+    for e in g.edges:
+        if e.edge_type in PRODUCER_EDGE_TYPES:
+            producers.add(e.source)
+
+    ids = []
+    for nid in sorted(producers):
+        node = g.nodes.get(nid)
+        if node is None:
+            continue
+        if selector and not nid.startswith(selector):
+            continue
+        is_fn = node.node_type in FUNCTION_GRAIN_TYPES
+        if grain == "script" and is_fn:
+            continue
+        if grain == "function" and not is_fn:
+            continue
+        ids.append(nid)
+
+    definition = {
+        "territory": "PRODUCER (role-derived) over the canonical kuzu graph",
+        "predicate": ("node has >=1 outbound edge of type " + "|".join(PRODUCER_EDGE_TYPES)),
+        "grain": grain,
+        "grain_rule": ("function-grain node_types = " + "|".join(FUNCTION_GRAIN_TYPES)),
+        "selector": selector or "(none -- whole territory)",
+        "universe_nodes": len(g.nodes),
+        "producers_before_filters": len(producers),
+        "n": len(ids),
+    }
+    return ids, definition
+
+
+def format_population_definition(definition: dict, role: str = "population") -> str:
+    """CTO acceptance term T1: emit the DEFINITION, not a name for it.
+
+    A score without its population is not a weak number, it is an uninterpretable one -- the same
+    shape as the dual-provenance rule: the reader must be able to see what the answer is an answer
+    OVER. So this prints the predicate itself and the resulting N, never a label like "producers".
+    """
+    lines = [f"=== DECLARED TERRITORY ({role}) ==="]
+    lines.append(f"  territory:  {definition.get('territory', '?')}")
+    lines.append(f"  predicate:  {definition.get('predicate', '?')}")
+    lines.append(f"  grain:      {definition.get('grain', '?')}  ({definition.get('grain_rule', '')})")
+    lines.append(f"  selector:   {definition.get('selector', '?')}")
+    lines.append(f"  N:          {definition.get('n', 0)} node(s) "
+                 f"(from {definition.get('producers_before_filters', 0)} role-matched "
+                 f"of {definition.get('universe_nodes', 0)} in the universe)")
+    lines.append("  NOT COMPARABLE ACROSS DEFINITIONS: a score computed over a different population "
+                 "is a different")
+    lines.append("  statistic wearing the same name. Do not trend these against scores from another "
+                 "predicate or N.")
+    lines.append("=" * 34)
+    return ascii_safe("\n".join(lines))
+
+
 def format_dual_provenance(kuzu_block: str, overlay: dict) -> str:
     """BOTH vintages, ALWAYS (spec 3.3). A single-vintage answer is a P3 conformance failure.
 
