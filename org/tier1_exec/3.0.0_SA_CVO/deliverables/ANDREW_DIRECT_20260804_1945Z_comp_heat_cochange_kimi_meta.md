@@ -59,3 +59,24 @@ declaration + gets a contract row; dial re-dial trigger 6 converts from
 registration-or-retirement to REGISTRATION-VERIFY (my exercise on landing -- which also converts
 the P6 deferred federated probe into a due exercise once registration lands). Joins the
 one-seat cluster: cochange + compare + basis-emission + federated registration.
+
+## Round 4 (~2045Z) -- Andrew verbatim: comp-cochange designed/built HERE (CVO terminal), not handed off
+
+> "Great ok, let's you and I design/build comp-cochange while we're here rather than handing it
+> off elsewhere. What we have that makes this really interesting, is that all our agents are
+> grouped by type (SA, DS, AE, DE, etc) as well as by pod, 0.4.0 0.5.0 0.6.0 etc. I think the
+> most interesting lever for how to maneuever with the co-change then is by getting lots of
+> granular info off this, at a summary level (what agent types are most active "today" "this
+> week" etc, dynamic window selection), also at the agent level (what individual agents are most
+> active and where are their commits), maybe even multiples like volume of commits and regions
+> of where those commits are located like an absolute metric or something. Let's discuss various
+> ways we can employ cochange for getting high signal information off that basis, like for
+> example something i think would be very interesting is being able to assess commit activity on
+> a given c0 c1 c2 c3.i grain because theyre structural aggregates. this would be very
+> interesting in the case of migrations whereby we see that a new c3.i has way more activity
+> than another c3.i that also has massive overlap on comp-blast, this helps us get to high
+> signal conclusions and architectural delta understanding."
+
+Effects: the COO critical-path seat for the cochange BUILD is SUPERSEDED -- Andrew pulls the
+design/build to this terminal (CTO~B Kimi-legs precedent; owned-paths bypass will cite this
+verbatim). Design discussion in-session; born-registered discipline binds the build.
