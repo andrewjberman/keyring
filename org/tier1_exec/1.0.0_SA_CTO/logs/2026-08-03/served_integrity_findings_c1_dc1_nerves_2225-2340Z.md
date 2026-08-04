@@ -117,6 +117,54 @@ deployed NO fix to a working converter. NEVER#1 discipline exercised by the pers
 double-count episode's SERVE moments can never be recovered -- its artifact impact is measured, its
 serve history is gone.
 
+## ADDENDUM 2 (0000-0015Z) -- CI-R7R8: a ten-day-stalled gate of MINE, and what the missing verdict cost
+
+**A CTO-gated closure row (MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 row 7) sat `pending` for TEN DAYS under an
+Andrew-direct P0** because my gate verdict was owed from 07-24 and never given -- dropped in the ~1943Z
+fabric-pause handover. Surfaced by a fresh `0.7.0_AE_CloudOps~B` session. **The delivery was complete the
+same day it was ordered; the gap was entirely mine.**
+
+**~B REFUSED TO SELF-MARK** though XXX.md would have permitted it: *"flipping pending->complete on a gated
+row with no gate on record MANUFACTURES THE GATE."* Correct -- self-mark covers completion of your own
+DELIVERY, never an adjudication belonging to another seat. **Then they told me to HOLD my verdict** until
+they measured whether a sibling row had re-broken it. Both calls were right.
+
+**MEASUREMENT (theirs, re-measured by me with a POSITIVE CONTROL): fork (a), LITERALS.** The trigger's
+892 lines carry `roster` refs = **0**, `cottonwood` refs = **0** (control: `inflection` = 5, so the zero
+is a real absence), `:748 partners = {"49financial": bd}` hardcoded. Row 13 **fails all four limbs of its
+own acceptance text** -- which lives at `PRD:399 @4f60111035`, **my own 07-24 commit**.
+
+**VERDICT: ROW 7 REFUSED at the trigger address.** The ARTIFACT is intact (the partner-#4 test was RUN,
+not asserted); the ESTATE-LEVEL PROPERTY -- *onboarding a partner is a roster row and nothing else* -- is
+FALSE there. **The monolith migration re-broke row 7 at a new address; the old evidence does not cover the
+new address.**
+
+>> **THE LESSON, AND IT IS ABOUT MY FAILURE, NOT THE LANE'S: my own acceptance text said "LANDS IN THE
+SAME CHANGE AS ROW 7." That clause WAS the control against exactly the state measured, and it was
+enforceable only at my gate. No verdict -> nobody watched the coupling -> the 07-28 re-point landed
+unchallenged four days later. AN UNISSUED GATE VERDICT IS NOT A PAPERWORK GAP; IT IS A DISABLED
+CONTROL.** <<
+
+**THE FINDING THAT OUTRANKED THE ROW:** the MDPF freshness gate has **ZERO representation of cottonwood**
+-- the partner carrying BOTH of today's served-integrity defects. Routed as a must-answer-BEFORE-the-cut
+question (supersede or inherit?), because shipping the blindness into the new design would be the
+fix-the-instance-keep-the-class error.
+**ANSWERED WELL, same window:** floor path SUPERSEDES (per-partner honesty moves to the roster-driven
+participation schema where cottonwood IS represented) **AND** the residual accelerator gets
+roster-derivation folded into the SAME Lambda change -- no partner literal survives at either layer.
+Row 7's gate becomes **re-runnable on that change's verified landing**, so the refusal has a dated path
+to satisfied rather than sitting open.
+
+**TWO CORRECTIONS *OF ME*, both accepted:** AE right-sized my "would read healthy the day the feed
+breaks" (cottonwood is not gated at dispatch at all -- it is an onboarding/consistency gap, and the live
+served-integrity gap closes at the producer schema); and COO added the acceptance criterion I stopped
+short of -- **EXERCISE the gate per roster partner**, a BEHAVIOURAL property, where my two criteria were
+static ones verifiable by inspection. Inspection is the evidence class that failed repeatedly tonight.
+
+**~B's TIMEZONE NEAR-MISS, self-disclosed:** they had "the amendment was never landed" half-written --
+a claim that my own ratification never happened -- before noticing 19:00Z **IS** 15:00 EDT. Reporting the
+near-miss instead of deleting it is what makes their other claims weightable.
+
 ## Open at close
 
 **Andrew's disclosure package -- COMPLETE ON INPUTS, awaiting his call (the only sovereign item).** Two
