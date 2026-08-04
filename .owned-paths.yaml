@@ -795,6 +795,9 @@ paths:
   "org/rcg-sweep-audit.log":
     lane: GOVERNANCE_AUDIT
     note: "LIVE RCG sweep-gate audit log (ruling CTOB-RCG-001, .tools/git-hooks/rcg-sweep-check.sh). Rare bypass-class log like its four 2026-07-16 siblings -- one line per sweep-batch verdict, so TRACKED LIVE rather than snapshot-only; the high-churn rationale that keeps git-author-override gitignored does not apply at this volume. Sibling .gitignore un-ignore added in the same commit. Added 2026-08-04 by 1.0.0_SA_CTO~B."
+  "org/pipescript-suite-gate-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE pipescript-suite commit-gate audit log (F9 gate @783d508, one line per fire: PERMITTED/DENIED/SKIPPED-BYPASS with author+denominator+triggers). Rare-bypass-class volume (one line per engine/suite commit) -- TRACKED LIVE per the rcg-sweep-audit precedent directly above. SoD held: enumeration committed by CTO, not the gate's builder (~D). Sibling .gitignore un-ignore in the same commit. Added 2026-08-04 by 1.0.0_SA_CTO (F9 acceptance ruling 155610Z)."
   "org/safe-deploy-bypass-audit.log":
     lane: GOVERNANCE_AUDIT
     note: "LIVE safe-deploy bypass audit log -- tracked 2026-07-16 (RV-0050 F-A). Known format defect: actor=UNKNOWN on all 3 historical entries; writer patch at CTO gate (0.7.0~B proposes, copying halt-gate's agent= format)."
