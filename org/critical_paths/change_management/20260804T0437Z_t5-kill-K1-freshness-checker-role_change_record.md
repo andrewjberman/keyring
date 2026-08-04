@@ -1,6 +1,6 @@
 # T5 DEAD-CONSUMER KILL K1 -- mdpf-freshness-checker IAM role family (change record + rollback note)
 
-**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T04:37Z | **Status:** OPEN (closes on verified destroy)
+**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T04:37Z | **Status:** CLOSED 2026-08-04T04:50Z (destroy verified)
 **Authorization:** COO GO 20260804T042634Z, under CTO split-gate ruling 042600Z, under Andrew's categorical
 word; checker family independently ruled TERMINATE by Andrew 0343Z (doubly dead). Kill-list row 17
 (@39c51b487e amendment #2; CVO census item 5).
@@ -35,7 +35,9 @@ definition preserved at iam.tf@440d16e018:759-842.
 
 ## POST-KILL VERIFY (filled at close)
 
-- `aws iam get-role --role-name mdpf-freshness-checker-lambda-role` -> NoSuchEntity: [pending]
+- `aws iam get-role --role-name mdpf-freshness-checker-lambda-role` -> NoSuchEntity: **CONFIRMED 04:49Z**
+  (positive control same call shape: opal-portal-lambda-role resolves). Apply: 0/0/3 destroyed;
+  targeted re-plan "No changes." Tag: mdpf-pipeline-v2.0.1 (covers K1+K2).
 - Access evidence window: IAM has no per-role access logs wired here; last-accessed evidence =
   the nonexistent principal (structural zero). Stated honestly: no log window exists or is needed --
   a role with no function cannot have been used since the function's teardown.

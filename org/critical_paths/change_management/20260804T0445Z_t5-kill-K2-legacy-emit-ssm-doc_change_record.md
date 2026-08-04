@@ -1,6 +1,6 @@
 # T5 DEAD-CONSUMER KILL K2 -- mdpf-legacy-emit-on-demand SSM doc + never-attached invoker policy (change record + rollback note)
 
-**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T04:45Z | **Status:** OPEN (closes on verified destroy)
+**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T04:45Z | **Status:** CLOSED 2026-08-04T04:53Z (destroy verified)
 **Authorization:** COO GO 20260804T042634Z (CTO split-gate 042600Z, Andrew categorical). Kill-list row 10
 (on-demand half) @b877dbc0f5; CVO census item 7 accessory, "dead-dead" class.
 
@@ -33,7 +33,9 @@ source-declared). Historical definition at legacy-emit-ssm.tf@ce77c1107.
 
 ## POST-KILL VERIFY (filled at close)
 
-- `aws ssm describe-document --name mdpf-legacy-emit-on-demand` -> InvalidDocument: [pending]
-- `aws iam list-policies` no MDPFLegacyEmitInvoker: [pending]
+- `aws ssm describe-document --name mdpf-legacy-emit-on-demand` -> InvalidDocument: **CONFIRMED 04:53Z**
+  (positive control: opal-schwab-archive-01raw resolves on the same call shape).
+- `aws iam list-policies` no MDPFLegacyEmitInvoker: **CONFIRMED 04:53Z** (empty result).
+  Apply: 0/0/2 destroyed. Tag: mdpf-pipeline-v2.0.1 (covers K1+K2).
 - Access window: zero invocations in retained SSM history pre-kill (stated above); policy had zero
   attached principals, so zero possible users.

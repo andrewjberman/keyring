@@ -1,6 +1,6 @@
 # T5 DEAD-CONSUMER KILL K5 -- canonical-schwab-si2-download-schedule rule family (change record + rollback note)
 
-**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T05:05Z | **Status:** OPEN (closes on verified destroy)
+**Executor:** 0.7.0_AE_CloudOps~F | **Opened:** 2026-08-04T05:05Z | **Status:** CLOSED 2026-08-04T05:12Z (destroy verified)
 **Authorization:** COO GO 042634Z (CTO split-gate 042600Z, Andrew categorical). Kill-list row 12
 @b877dbc0f5 (T1.A LEGACY-KILL-CANDIDATE nomination + 49F converter-ops Andrew-deprecation 07-30 context).
 
@@ -26,7 +26,10 @@ removal + targeted safe-apply (4 destroys). Rollback: `git revert` + targeted ap
 source-declared). Historical definition at schedule.tf@5b54436a0.
 
 ## POST-KILL VERIFY (filled at close)
-- `aws events describe-rule --name canonical-schwab-si2-download-schedule` -> ResourceNotFoundException: [pending]
-- Both LIVE daily-pull rules still ENABLED with intact targets post-apply: [pending]
+- `aws events describe-rule --name canonical-schwab-si2-download-schedule` -> ResourceNotFoundException: **CONFIRMED 05:11Z**;
+  role NoSuchEntity CONFIRMED same minute. Apply: 0/0/4 destroyed (post terraform init -reconfigure;
+  root backend needed re-init in this tree). State list post-apply: EMPTY.
+- Both LIVE daily-pull rules still ENABLED post-apply: **CONFIRMED 05:11Z** (08242234 + 08335338 both
+  `"State":"ENABLED"` -- the pre-kill blast-check held).
 - Access window: the rule was DISABLED (zero possible fires since before 07-29); no further log
   evidence exists or is needed for a disabled trigger.
