@@ -67,6 +67,10 @@ retired_aliases:
     successor: null    # coverage is now answered by `comp-manifest-check completeness` (the routable/placement/existence/registration invariant family)
     retired: "NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND tools_index; last invoked in org/compiler-tools-log.md"
     why: "standalone coverage-view tool; superseded by comp-manifest-check completeness"
+  pipescript:
+    successor: comp-estate
+    retired: "2026-07-30 Andrew-direct naming consolidation -- bare `pipescript` is a RETIRED rc=2 stub, PROHIBITED (CLAUDE.md comp-estate row); NOTE comp-pipescript is a DIFFERENT LIVE tool, not this alias"
+    why: "declared per dial(comp-kuzu) K5 (2026-08-04, CVO): the retired-alias invariant was BLIND to bare-pipescript citations while this name was undeclared -- the one live citation (molecule SKILL.md Dimension-3 upstream bullet) fixed in the declaring commit; from here the gate polices estate-wide"
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
@@ -922,8 +926,8 @@ entries:
     mode: query
     layer: cross-layer
     cost: "~ms"
-    freshness: "kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db"
-    rebuild_trigger: "n/a once stitched; reload on the nightly comp-aws derive->Nessie->kuzu cycle"
+    freshness: "kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db -- FROZEN VINTAGE (K4 adjudication 2026-08-04, CTO): last built 2026-07-07, NO nightly reload exists; the prior 'reload on the nightly cycle' claim was fiction. A stitch-DB query answers at its build vintage -- label it, never quote it as the estate (Rule 20 scratch-DB law)"
+    rebuild_trigger: "manual stitch rebuild only (no scheduled reload); canonical cross-layer freshness rides kuzu_nessie_db"
     anti_pattern: "comp-platinum (static heuristic, inf producer-incomplete) for a question the live stitch answers"
     status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
     notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."

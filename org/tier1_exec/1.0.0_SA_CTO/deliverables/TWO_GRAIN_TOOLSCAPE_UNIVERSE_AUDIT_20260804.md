@@ -190,6 +190,15 @@ dispatch over EXISTING engines — the surfaces route, they do not rewrite):
 both want the engine healthy, and C-2 there already carries the cross-tree blindness fix), and
 does not touch the F2 universe naming act (at Andrew).
 
+**SOVEREIGN-RATIFIED ~1347Z (CVO terminal, record @b80bbaab7), verbatim:** *"I thought about it
+and I like the idea of comp-trace for breadth, comp-pipescript for script io/detail, because
+there may be other script-level grain tools for non-executables so probably makes more sense to
+keep that segmented and that way we dont have to do renames."* Consequences absorbed into the
+PRD frame: both tools KEPT under their names (no-renames extends banked constraint #1 into a
+NAMING constraint); **Grain-2 is a SEGMENTED FAMILY, not a monolithic drill** — §2.B becomes an
+open family with comp-pipescript as first member, with room for script-level tools over
+NON-EXECUTABLES (his stated reason).
+
 ## Compiler Tools (this audit's evidence)
 
 | tool / probe | result | use |

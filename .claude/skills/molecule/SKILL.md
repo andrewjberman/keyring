@@ -65,7 +65,7 @@ This is the *analytical* state-read — enough to understand what's there and sm
 
 ### Dimension 3 — POSITION IN THE CHAIN (the "where does it sit"): lineage + reach
 Map the unit's neighborhood — half of what a deep analysis means:
-- **Upstream:** what feeds it (producers, source inputs, the DAG branch). `comp-pipescript io` / `pipescript <name>` / `comp-kuzu "MATCH (up)-[:...]->(n)"`.
+- **Upstream:** what feeds it (producers, source inputs, the DAG branch). `comp-pipescript io` / `comp-estate <name>` / `comp-kuzu "MATCH (up)-[:...]->(n)"`.
 - **Downstream:** what consumes it (served paths, portal components, derived artifacts, other scripts). `comp-blast <fn>` / `comp-pipescript consumers` / `comp-platinum reverse`.
 - **Dependencies + reach:** shared libs/defaults it inherits ([[reference_bucket_ref_rederive_trace_shared_lib_defaults_not_per_script_grep]]), IAM it needs, what breaks if it changes.
 - **Position smell:** orphan (no live consumer)? single-point-of-failure? co-located with differently-owned things? does the live graph's `drift_class` say something the doc doesn't? Each is a rated smell.
