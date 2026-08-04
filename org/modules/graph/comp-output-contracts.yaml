@@ -99,6 +99,25 @@ contracts:
       "2": {class: refuse, meaning: "bad invocation (mode arguments)"}
     exit_source: "org/modules/graph/comp_cochange.py (self_test rc1 :bottom; argparse/mode rc2 :main) @the born-registered landing commit 2026-08-04"
 
+  # Declared 2026-08-04 (the cluster item-4 registration, Andrew round-3 "we do need
+  # federated Trino mode registered"; leaves pending_declaration -- the CVO dial's
+  # no-output-contract finding closes). compare + basis-in-output land the same commit.
+  comp-heat:
+    coverage: "repo/estate OBJECT write-freshness from git history (tracked) + mtime (untracked): per-path bands + cold subtrees (freshness), uncommitted writes (drift), one-item score, two-resource heat trajectory compare, and the federated Trino estate-ASSETS x code-heat join"
+    blind_spots:
+      - "a file with no commits and no local mtime signal is invisible (comp-pulse's phantom-limb class)"
+      - "WRITE-freshness only: content that rewrites without meaning change reads hot, frozen-but-fresh values read per comp-xray (its lane, cross-linked)"
+      - "compare refuses (rc=2) on a path with zero git history -- no one-sided comparisons"
+      - "federated mode requires the in-VPC Trino path; absent/unreachable federation surfaces loud, never a silent empty"
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: "derived-on-demand from git at call time; basis (half-life + barrier definition) printed on every band verdict (CH-3 Andrew-ratified); compare prints upstream ahead/behind on its HEAD anchor"
+    exit_codes:
+      "2": {class: refuse, meaning: "compare: no git history for a named path (one-sided comparison refused); bad invocation"}
+      "3": {class: fail, kind: usage, meaning: "heatmap engine missing/unimportable at org/modules/heatmap/"}
+    exit_source: ".tools/comp-heat (cmd_compare refusal rc=2; engine-missing rc=3 across modes) @the 2026-08-04 item-2/3/4 landing commit"
+
   # ===== VERDICT tools (a contracted nonzero is an ESTATE-VERDICT, not a tool crash) =====
 
   comp-blast:
@@ -486,6 +505,30 @@ contracts:
     exit_source: "infra/aws/globgrph/kuzu_cli.py:65-66 + :89-90 (shared engine); labeled-stale fallback = rc-neutral rebuild_fn, _canonical.py:483-530 (COND-1 in-band marker :524-529, COND-2 .fallback.jsonl :423) @2026-08-04 -- SOURCE-grounded; live labeled-stale exercise remains dial re-dial trigger 6"
 
 
+  # T0 (comp-trace dial 2026-08-04, CVO record DIAL_RECORD_comp-trace_20260804.md): the NAVIGATE
+  # spine had NO output contract -- declared here by exercise, per the spine-leads-backfill policy.
+  # Author 0.7.0_AE_CloudOps~F (ADHOC.comp-trace-depth-fixes); CVO verifies on landing. The vintage
+  # FIELD declarations in the tool REGISTRATION are ~A's seam (same fan-out) -- this entry declares
+  # the contract; the engine prints the header (cli.py _emit_trace_provenance).
+  comp-trace:
+    coverage: "the head-pinned TRACE graph -- gold scripts+functions (gold:), lambdas, S3 artifacts, endpoints, eventbridge rules, portal components, extracted from the working tree (~2,252 nodes / ~2,948 edges at declaration; the LIVE denominator prints in the provenance header on every walk and in every rc=3 NOT-FOUND)"
+    blind_spots:
+      - "NOT the kuzu estate: AWS config planes (IAM/SG/DNS/KMS/...) and the silver tier are absent -- a NOT-FOUND here can be a live, kuzu-modeled resource (the comp-blast opal-data-mdpf class); the rc=3 output names this boundary and points at comp-kuzu/comp-blast"
+      - "scope asymmetry vs comp-kuzu, no cross-pointer yet (dial cross-instrument finding, NAVIGATE-consolidation material): gold_dispatch is trace-only; AWS planes are kuzu-only"
+      - "dynamic/computed references are invisible to extraction -- 'nothing upstream/downstream' is 'no EXTRACTED edge', never provably no consumer"
+    plane: projection
+    # canon token (ONTOLOGY2 enum [artifact,partition,row,field]): `field` matches the family
+    # references comp-blast + comp-kuzu (same graph plane). The function-grain nature of trace
+    # nodes is prose, not a new enum value (enum growth = LAW-2 promotion, ~C's lane).
+    grain: field
+    scope: estate
+    vintage: "DUAL, printed on EVERY walk to stderr ('=== comp-trace provenance ==='): (a) cache built_at + age, (b) indexed-SHA drift at load. Head-pinned: a drifted cache is DISCARDED and rebuilt from CURRENT source before answering, so drift_at_load>0 means the answers are FRESHER than the cache was, never staler."
+    exit_codes:
+      "1": {class: fail, meaning: "the tool failed, and ONLY that -- usage error (_ContractParser routes argparse's native 2 to 1) or crash"}
+      "2": {class: verdict, meaning: "STALE -- the --check freshness probe only; never printed by a walk"}
+      "3": {class: refuse, meaning: "NOT-FOUND: the query resolved to zero nodes (under --exact: no id EQUALS the query byte-for-byte) -- denominator + universe + UNVERIFIED near-matches (DUPLICATE/LEGACY candidates) printed; NEVER a 'nothing-upstream/downstream' clear"}
+    exit_source: "org/modules/graph/cli.py cmd_trace NOT-FOUND (rc3) + _ContractParser.error (rc1) + _freshness_probe (rc2) @2026-08-04 T1/T3/T5/T6 landing commit"
+
   # DEPTH-0 (comp-depth dial 2026-08-04, CVO record DIAL_RECORD_comp-depth_20260804.md): declared
   # by exercise, same policy + author + verify path as comp-trace above.
   comp-depth:
@@ -602,7 +645,6 @@ pending_declaration:
   - comp-genesis
   - comp-gitdrill
   - comp-graph
-  - comp-heat
   - comp-iam-usage
   - comp-icedrill
   - comp-incrparity
