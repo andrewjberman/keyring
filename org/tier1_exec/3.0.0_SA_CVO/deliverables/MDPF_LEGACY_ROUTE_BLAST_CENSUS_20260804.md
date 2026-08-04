@@ -89,9 +89,42 @@ measurement (all OBSERVED):
 the legacy machinery today.** Only items 5-7 (dead grants, shadow keys, accessories) are dead-dead.
 Andrew's premise is NORMATIVELY correct (per his own canon these routes must die) and FACTUALLY
 inverted (killing the ranked list today would freeze/blank the served page — which is precisely
-why the memo gates T5 on T1-T3 proven). Live corollary for T2.B/C.3: **the freshest serve writer
-today is the ACCRUAL plane; the canonical publisher (fired 08-02) writes only part of the
-surface; the twin-plane divergence is live ON the serve prefix.**
+why the memo gates T5 on T1-T3 proven).
+
+### CORRECTED 2026-08-04 ~02:2xZ (CTO reconciliation 022105Z, log-event-grounded — supersedes the
+### two struck datums above; struck text retained for the record, do not re-cite it)
+
+- ~~"the freshest serve writer today is the ACCRUAL plane; the canonical publisher (fired 08-02)
+  writes only part of the surface"~~ **WRONG, one event double-counted:** 12:15 ET = 16:15Z. The
+  publisher DID fire 08-03 16:15:29Z (Lambda START events on log CONTENT, 3/3 daily 08-01/02/03);
+  the scheduled accrual chain CULMINATES in the publisher fire, and the publisher writes the
+  WHOLE live hyphen serve surface (`written_by=opal-assets-mdpf-portal-publisher` provenance-
+  confirmed on 4 keys across 3 scopes; remainder timing-consistent 16:15:30-33Z). The hyphen
+  surface IS the canonical route's output.
+- **My "last fired 08-02" instrument identified:** comp-trigger's `LIVE fired-evidence` line reads
+  CloudWatch RULE-METRIC DATAPOINTS, which missed the 08-03 fire — metric datapoints are not log
+  events (VERIFICATION_LAW #14 class). Registered as a comp-trigger caveat in the dial ledger.
+- **What the canonical chain's health actually is:** the chain RUNS daily end-to-end, but its
+  SOURCE is truncated — `opal-data-assets/portal/gold/mdpf/*` daily partitions stop at
+  `2026-07-30.json` (written 07-31 11:46 ET; no 07-31+ partitions), so the publisher republishes
+  content ending 07-30 under fresh timestamps. That is the T2.A truncation, mechanism now visible
+  end-to-end (T2.A/T2.B own the source-side fix).
+- **Scope fix on item 3 (feeder lineage):** the `by_feeder` provenance block quoted above lives in
+  the UNDERSCORE (runner-written) artifacts — the feeds-lineage claim attaches to the legacy
+  underscore plane, NOT to the canonical hyphen surface (whose lineage is assets-side gold).
+- Underscore plane status per CTO: STOPPED legacy plane (one missed fire 08-03, weekend resolved
+  first — not a freeze). Bucket precision: serve = `opal-data-portal-v2`;
+  `opal-data-assets/platinum/mdpf/` is EMPTY (0 keys).
+
+**SURVIVING NET (post-correction):** canonical route = scheduler -> accrual chain -> publisher ->
+platinum hyphen surface, RUNNING but SOURCE-TRUNCATED at 07-30. Non-canonical routes to portal,
+confirmed: (1) SmartX -> `json/mdpf/{firm}/account-distribution.json` daily 11:30Z, UNCONDITIONAL
+in deployed code (~F @ae2d684f3b: lambda_function.py:63 -> :277/:282, zero env refs; the three
+DISABLE flags each bind a DIFFERENT write — global bell :419 / timeseries :836 / metrics :850 —
+so the per-firm bell cannot be env-disabled at all); (2) the runner chain's underscore families +
+etf_ownership_timeseries ON the serve prefix (last 07-31, origin opal-data-mdpf/mdpf/feeds);
+(3) json/mdpf channel residue. Which plane each portal path RENDERS remains the router question
+(T3.B pins the per-path rewrite).
 
 ## Instrument note (dial-session evidence)
 

@@ -100,6 +100,17 @@ comp-estate's census snapshot — one named target with a known mechanism.)
   using comp-blast," not merely a typo aid. Candidate P4 output-vocabulary refinement: label
   near-matches as potential duplicate/legacy candidates, not only "typo candidates."
 
+## comp-trigger caveat (measured 2026-08-04, CTO-corrected census datum)
+
+- **`comp-trigger`'s `LIVE fired-evidence` line reads CloudWatch RULE-METRIC DATAPOINTS, not log
+  events — and it MISSED a fire on the trailing edge**: it reported
+  `opal-assets-mdpf-portal-publisher-daily` "FIRED 6x (last datapoint 2026-08-02)" while the
+  Lambda's log START events show 08-01/08-02/08-03 16:15:2xZ, 3/3 (CTO 022105Z, filter-log-events
+  on event CONTENT). Same class as VERIFICATION_LAW #14 (stream metadata is not stream content).
+  **Rule for its output: the fired-evidence line is a FLOOR on recency, never a last-fire claim**
+  — a trailing-edge absence needs the log-event check before anyone cites "did not fire."
+  Candidate dial item when comp-trigger's turn comes. epistemic_status: OBSERVED (both limbs).
+
 ## comp-blast carry-forward (from the unclosed 07-31 dial — for whoever closes it)
 
 Still live at `org/modules/graph/` (zero commits since 07-31 evening), in AE's stated fix order:
