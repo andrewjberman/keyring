@@ -187,3 +187,13 @@ error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
 - log: org/mass-deletion-audit.log
 - detail: non-append edit: first divergence at line 7, col 1 (baseline 1014B / live-head 700B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+
+## 2026-08-03T223815Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/tombstone-gate-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_tombstone-gate-audit.log -->
+- log: org/tombstone-gate-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-03T143634Z\org_tombstone-gate-audit.log
+
+## 2026-08-04T013510Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/rcg-sweep-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/rcg-sweep-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
