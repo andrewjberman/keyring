@@ -245,6 +245,39 @@ resolves something -- Andrew ferried (then `D-0002` is discharged and should sto
 open at him) or the route came another way (a fabric-silence question better named now than at batch
 6). Question outstanding with CRO.
 
+## ADDENDUM 5, 04:26-04:45Z -- B-0003, and a defect category neither of us had (`90a5133cc`)
+
+B-0003 deleted 497 `org/threads/` files (`dd5914aa2`). **Mechanically flawless**, re-derived here:
+497 deletions, zero non-deletions, 497/497 ARCHIVE, 0 protected-charter, all under `org/threads/`,
+and **zero record-shaped subpaths** (no `/logs/`, `/task_orders/`, `/handoffs/`, `/ledger/` hiding
+where a charter glob might not reach).
+
+**Then I tested the WARRANT rather than the mechanics.** The batch row called this the *"snapshot-copy
+mass"* -- and copy-ness is mechanically decidable by blob hash, so I checked it against the tree at
+the commit's parent:
+
+> **217 of 497** had a surviving identical copy elsewhere. **280 did NOT.**
+> 44% snapshot-copy, 56% unique content -- and the unique half is the threads' own primary records:
+> `THREAD.json`, `TURN.json`, `CONTEXT_COMPILED.md`, `inline_notes.md`.
+
+Nothing was destroyed and nothing was violated -- git history retains all of it, recovery is one
+command, and the deletion may well be correct (5-month-old thread records, ARCHIVE, SCORE charter).
+**The problem is the stated reason.** *"These were copies"* is a far stronger warrant than *"these are
+old work records we judged archival,"* and a successor inherits whichever the row claims. The
+pyiceberg prose-vs-artifact gap again, in a much more benign form -- **named at 497 rather than
+discovered at 5,000.**
+
+> ### A GATE CHECKS WHAT A BATCH *IS*; IT CANNOT CHECK WHAT DELETING IT *MEANS*.
+> Every defect found tonight before this one was in the first column. This was the first in the
+> second, and it was only catchable because copy-ness happens to be mechanically decidable. **Most
+> warrants are not** -- which is why the operator states them and why the row's phrasing carries real
+> weight.
+
+Shipped a **uniqueness ADVISORY**: prints the duplicated/unique split per batch and names the unique
+paths. **Denies nothing** -- exercised on a purpose-built fixture (3 duplicated + 1 unique with a
+surviving copy outside the batch) and returns `rc=0`, matrix still 18/18. *An advisory that denies is
+a gate, and handing CRO a surprise ceiling at 04:30 would have been the wrong way to make this point.*
+
 ## Closed during the session
 
 - ~~**[`4.0.0_SA_CRO`]** author + execute B-0001~~ -- **DONE.** 93 files, execute/revert/re-apply,
