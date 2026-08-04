@@ -144,8 +144,38 @@ audit trail stays complete and one gate does not blind the other.
 
 ## 6. The grant, and separation of duties
 
-`.owned-paths.yaml` gains **one** narrow lane for the sweep-executor identity, described as
-gate-conditional and pointing at this ruling.
+The sweep-executor identity is **`4.0.0_SA_CRO~SWEEP`**.
+
+> **AMENDED 2026-08-04, same session, against my own text.** This section first said the grant is
+> *"one narrow lane."* **It is not, and I only found that by measuring instead of asserting.**
+> `owned-paths` resolves a lane **per path**, and a sweep spans every root -- so there is no single
+> lane to grant. Measured against the live 2,945-path queue: the queue touches **10 distinct lanes**,
+> of which **1,796 paths (61%) were already reachable** by that identity and needed no grant at all.
+> Seven lanes denied. *A ruling that specified a mechanism it had not measured would have sent the
+> executor to an audited override on first contact -- the exact outcome s.3(b) rejects.*
+
+**Granted: 5 lane memberships** -- `POD4` (778 paths), `CLOUD_OPS_OR_ETL` (160), `ANY_CTO` (130),
+`POD1` (41), `SHARED_OPAL_ETL` (28). Each carries an inline marker naming this ruling.
+
+**NOT granted, deliberately: `BASE_EXEC` (11 paths) and `POD2` (1).** Widening the fabric's most
+sensitive lane -- 3 members -- to reach 12 files, 6 of them deployment markdown, is a bad trade, and
+"the grant is safe because a gate constrains it" is not a licence to take every widening the gate
+would tolerate. **Those 12 execute under the ORDINARY path instead**: an exec seat already holding
+`BASE_EXEC` deletes them in a normal attributed commit (`Authorized-Deletion:` trailer, the 2026-07-09
+doctrine, unchanged). The sweep identity never touches `BASE_EXEC`. Net reach: **2,933 of 2,945.**
+
+**CONTROL RUN, because a grant is exactly the kind of change that quietly does more than it says.**
+After the amendment, re-measured: `4.0.0_SA_CRO~SWEEP` reaches 2,933; **`4.0.0_SA_CRO` (base) is
+UNCHANGED at 1,796.** The suffix-to-base auto-permit in `owned-paths-validate.py:125-160` runs
+suffix -> base only, so granting a lane to `~SWEEP` cannot widen the base seat -- now confirmed
+empirically, not merely read. Negative controls held: `CLAUDE.md` DENY for both identities,
+`org/tier0/ledger/**` DENY, and an unrelated seat's access was untouched.
+
+**One honest asymmetry to know about:** `owned-paths` permits `~SWEEP` on `docs/doctrine/**` (it
+falls in a granted lane), while check **C5** denies it (PROTECT charter). The lane is more permissive
+than the gate there. That is defense in depth working in the intended direction -- the *gate* is the
+binding constraint, and the lane never needed to be the tight one -- but it should be read as
+deliberate rather than discovered later and mistaken for a hole.
 
 | Role | Held by | Note |
 |---|---|---|

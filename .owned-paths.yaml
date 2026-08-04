@@ -141,6 +141,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 1.0.0_SA_CTO~B
       - 1.1.0_SA_CTO
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "Any CTO (base, ~B C-suite, or COMP_LEARNS) — architecture docs"
 
   POD1:
@@ -153,6 +154,7 @@ lanes:
       - 0.1.0_DS_MarketIntelligence~D
       - 0.1.0_DS_MarketIntelligence~E
       - 0.1.0_DT_MarketIntelligence
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "Pod 1 — MarketIntelligence (DE + DS + DT); DS tilde-lanes ~A-E added 2026-05-26 per Andrew direct YALP per-page parallelization mandate (Wave 1)"
 
   POD1_OR_AE:
@@ -199,6 +201,7 @@ lanes:
       - 0.4.2_RD_AdvisorIntelligence~B
       - 0.4.2_RD_AdvisorIntelligence~C
       - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "Pod 4 — ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD + RD~B/~C). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern. 0.4.2_RD_AdvisorIntelligence~B + ~C added 2026-06-02 by ws CTO: same gap — RD~B (INFNNA W2) + RD~C (INFPRM W1) spawned for the 3 parallel Inflection PRDs; base RD was enumerated but the tilde lanes weren't, blocking their own home-folder logs/** + task_orders/** self-commits (RD~B [BLOCKED-ASK] via COO). 0.4.0_DE_ClientPlatform~A added 2026-06-05 by 2.0.0_SA_COO (POD4 + POD4_OR_EXEC): same tilde-lane gap — DE~A (MDPF_COUNTS lane) home-folder logs/** self-commit blocked; DE base + DE~B were enumerated but ~A wasn't ([BLOCKED-ASK] via COO)."
 
   POD4_OR_AE:
@@ -272,6 +275,7 @@ lanes:
       - 0.5.0_AE_OpalETL~B
       - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "OpalETL shared service (AE 0.5.0 + ~B lane). 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the OpalETL lane (0.5.0 base + ~B) went fully offline; YALP_MDSRC.B2 was reassigned to ~A, which needs this lane to commit the SmartX pull .py (data/smartx/**). Tilde-lane owned-paths-gap pattern. 0.7.0_AE_CloudOps (base) added 2026-05-22 by COO: the ~A session re-registered to the base lane per Andrew directive (same agent); YALP_MDSRC.B4 (the B3-continuation deploy) commits the same SmartX pull .py from the base serial."
 
   SHARED_PARTNER_ETL:
@@ -302,6 +306,7 @@ lanes:
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
       - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO. 0.8.0_AE_CloudComp added 2026-06-26 by COO (2.0.0_SA_COO): the SAME enumeration gap — 0.8.0_AE_CloudComp is an AE agent (Andrew-direct LD-0218 made it the UNIFIED AWS+MS compiler/AE owner) and the lane is 'any AE agent'; it simply was not enumerated. A correct permanent add (it owns the globgrph-MS infra going forward, NFRA_MSGRAPH S2+ extract_ms_cloud in infra/aws/globgrph/). Grantee does not commit its own grant (SoD) — landed by COO grantor; CC CTO arch-awareness."
 
   DECK:
