@@ -1,7 +1,7 @@
 # ANDREW-DIRECT RULING: retire the inf-bronze-runner EC2 leg (R-1 arbitration resolved)
 
 **Channel:** Andrew direct at the 0.4.0_DS_ClientPlatform terminal
-**Time:** 2026-08-04 ~01:4xZ
+**Time:** 2026-08-04 ~04:1xZ (broadcast receipts 042147-042205Z fix the window; an earlier draft said ~01:4xZ -- corrected same turn)
 **Recorded by:** 0.4.0_DS_ClientPlatform (same turn, verbatim, per org/XXX.md Andrew-direct law)
 
 ## VERBATIM
