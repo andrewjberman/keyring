@@ -1,0 +1,59 @@
+# comp-depth P0 baselines -- 2026-08-04 (rc direct)
+## Q1 grains on a known node
+rc=0
+[marker-head: current | head=6623734423221152726]
+gold:A_00.accounts_dimension
+  node_type: PipelineScript
+  grains:    ['file', 'script']   (the DEPTH scope discriminator, node_type_grain)
+  level:     file   (CONTAINS-ladder position; None = pure resource-stratum)
+--stderr:
+
+## Q2 NEGATIVE: bogus node
+rc=1
+[marker-head: current | head=6623734423221152726]
+node not found at the marker head: zz-no-such-node-9999 (canon: zz-no-such-node-9999)
+
+## Q3 NEGATIVE: bogus grain
+rc=0
+[marker-head: current | head=6623734423221152726]
+scope grain=zz-bogus-grain -> 0 node(s):
+
+
+## Q4 valid scope (file grain, limit 5)
+rc=0
+[marker-head: current | head=6623734423221152726]
+scope grain=file -> 4817 node(s):
+  gold:A_00.accounts_dimension                         [grain=file,script level=file]
+  gold:A_01.advisor_assignments                        [grain=file,script level=file]
+  gold:A_02.fee_rate_history                           [grain=file,script level=file]
+  gold:A_03.positions_cube                             [grain=file,script level=file]
+  gold:A_04.client_dimension                           [grain=file,script level=file]
+  ... (4812 more)
+
+## Q5 drill coarse->fine
+rc=0
+[marker-head: current | head=6623734423221152726]
+drill gold:A_00.accounts_dimension -> grain=function (coarse->fine) -> 12 node(s):
+  gold:A_00.accounts_dimension:main                    [grain=function,symbol level=function]
+  gold:A_00.accounts_dimension:_run_full               [grain=function,symbol level=function]
+  gold:A_00.accounts_dimension:_run_incremental        [grain=function,symbol level=function]
+  gold:A_00.accounts_dimension:save_dimension          [grain=function,symbol level=function]
+  gold:A_00.accounts_dimension:build_accounts_dimensio [grain=function,symbol level=function]
+  gold:A_00.accounts_dimension:merge_incremental       [grain=function,symbol level=function]
+
+## Q6 rollup fine->coarse
+rc=0
+[marker-head: current | head=6623734423221152726]
+rollup gold:A_00.accounts_dimension:load_existing_dimension -> grain=file (fine->coarse, existential) -> 1 node(s):
+  gold:A_00.accounts_dimension                         [grain=file,script level=file]
+
+## Q7 grain-scoped blast
+rc=0
+[marker-head: current | head=6623734423221152726]
+blast gold:A_00.accounts_dimension (breadth) SCOPED to grain=file -> 71 of 826 reachable node(s):
+  gold:C_01b.role_aua_backfill                         [grain=file,script level=file]
+  gold:B_02.canonical_lots                             [grain=file,script level=file]
+  gold:C_08.advisor_fee_efficiency                     [grain=file,script level=file]
+  gold:INF_C_08.advisor_fee_efficiency                 [grain=file,script level=file]
+  gold:INF_B_01b.classify_new_securities               [grain=file,script level=file]
+  gold:INF_D_00.portal_aggregates                      [grain=file,script level=file]
