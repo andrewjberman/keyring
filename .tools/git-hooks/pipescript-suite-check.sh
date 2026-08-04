@@ -72,11 +72,17 @@ org/modules/graph/sovereign_held.py
 "
 
 # --- Suite files (repo-relative patterns; trigger AND invocation) ------------
+# test_extract_column_gaps_bd_hold.py enrolled 2026-08-04 (dial F10, TO
+# ADHOC.graph-tests-hygiene-f10): it oracles extract_pipeline's held-path guard
+# mechanism and predates the pipescript glob -- the F9 rot class survives
+# wherever the glob cannot see, so membership is extended HERE, the one
+# derivation point, never a second list.
 WATCH_GLOBS="
 org/modules/graph/tests/test_multi_pipeline.py
 org/modules/graph/tests/test_pipeline_gaps.py
 org/modules/graph/tests/test_pipescript_*.py
 org/modules/graph/tests/test_sovereign_held_no_drift.py
+org/modules/graph/tests/test_extract_column_gaps_bd_hold.py
 "
 
 STAGED="${PIPESCRIPT_SUITE_STAGED_FILES:-$(git diff --cached --name-only 2>/dev/null || true)}"
