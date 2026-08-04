@@ -1,0 +1,131 @@
+# comp-kuzu P0 baselines -- 2026-08-04 (cut by 3.0.0_SA_CVO)
+## Q1 node count
+=== comp-kuzu provenance ===
+  DB: kuzu_nessie_db  (20495 nodes / 41010 edges)
+  source: nessie
+    nodes snapshot-id: 6120433618380034963
+    edges snapshot-id: 1102034037599563632
+    nodes metadata: warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/metadata/00000-c468f23f-569f-4a89-a402-0bbdd35027cd.metadata.json
+  built: 2026-08-04T06:15:57.953027+00:00 (age: 7.0h)
+  Nessie HEAD: current (pin == marker HEAD)
+  per-table vintage (marker = authoritative; independent of local pin):
+    cse: last-write 9.8h ago (< 26h cadence)
+    graph_contracts: last-write 1170.4h ago
+    graph_edges: last-write 11.1h ago (< 26h cadence)
+    graph_nodes: last-write 7.8h ago  [STALE > 6h cadence]
+    NOTE: 'last-write' is the TABLE's write time, NOT the age of the data in it.
+          graph_nodes is written by TWO producers -- the 02:00Z full re-derive and
+          the event-driven CloudTrail incremental -- so one incremental row makes
+          the whole table read as freshly written. For the age of the DATA see the
+          cohort block below (per-producer observation time from snapshot_ts).
+============================
+COUNT(n._ID)
+------------
+20495       
+
+(1 rows)
+rc=0
+
+## Q2 edge count
+=== comp-kuzu provenance ===
+  DB: kuzu_nessie_db  (20495 nodes / 41010 edges)
+  source: nessie
+    nodes snapshot-id: 6120433618380034963
+    edges snapshot-id: 1102034037599563632
+    nodes metadata: warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/metadata/00000-c468f23f-569f-4a89-a402-0bbdd35027cd.metadata.json
+  built: 2026-08-04T06:15:57.953027+00:00 (age: 7.1h)
+  Nessie HEAD: current (pin == marker HEAD)
+  per-table vintage (marker = authoritative; independent of local pin):
+    cse: last-write 9.8h ago (< 26h cadence)
+    graph_contracts: last-write 1170.4h ago
+    graph_edges: last-write 11.1h ago (< 26h cadence)
+    graph_nodes: last-write 7.8h ago  [STALE > 6h cadence]
+    NOTE: 'last-write' is the TABLE's write time, NOT the age of the data in it.
+          graph_nodes is written by TWO producers -- the 02:00Z full re-derive and
+          the event-driven CloudTrail incremental -- so one incremental row makes
+          the whole table read as freshly written. For the age of the DATA see the
+          cohort block below (per-producer observation time from snapshot_ts).
+============================
+COUNT(e._ID)
+------------
+41010       
+
+(1 rows)
+rc=0
+
+## Q3 node_type census (top 15)
+=== comp-kuzu provenance ===
+  DB: kuzu_nessie_db  (20495 nodes / 41010 edges)
+  source: nessie
+    nodes snapshot-id: 6120433618380034963
+    edges snapshot-id: 1102034037599563632
+    nodes metadata: warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/metadata/00000-c468f23f-569f-4a89-a402-0bbdd35027cd.metadata.json
+  built: 2026-08-04T06:15:57.953027+00:00 (age: 7.1h)
+  Nessie HEAD: current (pin == marker HEAD)
+  per-table vintage (marker = authoritative; independent of local pin):
+    cse: last-write 9.8h ago (< 26h cadence)
+    graph_contracts: last-write 1170.4h ago
+    graph_edges: last-write 11.1h ago (< 26h cadence)
+    graph_nodes: last-write 7.8h ago  [STALE > 6h cadence]
+    NOTE: 'last-write' is the TABLE's write time, NOT the age of the data in it.
+          graph_nodes is written by TWO producers -- the 02:00Z full re-derive and
+          the event-driven CloudTrail incremental -- so one incremental row makes
+          the whole table read as freshly written. For the age of the DATA see the
+          cohort block below (per-producer observation time from snapshot_ts).
+============================
+n.node_type       c   
+----------------  ----
+Field             4969
+MS_FILE           4684
+JSXElement        2205
+JSXRender         1433
+PipelineFunction  1201
+MS_FOLDER         1044
+TypeDecl          807 
+IAM_POLICY        450 
+ReactComponent    442 
+Module            374 
+Prop              359 
+LOG_GROUP         236 
+S3Key             232 
+Component         199 
+IAM_ROLE          196 
+
+(15 rows)
+rc=0
+
+## Q4 NEGATIVE CONTROL: malformed Cypher (rc contract says 1)
+ERROR: query failed: Parser exception: Invalid input <MATCH (n:CloudNode RETURN>: expected rule oC_SingleQuery (line: 1, offset: 19)
+"MATCH (n:CloudNode RETURN oops"
+                    ^^^^^^
+rc=0
+
+## Q5 NEGATIVE CONTROL: nonexistent node (honest empty, rc 0)
+          the whole table read as freshly written. For the age of the DATA see the
+          cohort block below (per-producer observation time from snapshot_ts).
+============================
+ERROR: query failed: Binder exception: Cannot find property id for n.
+rc=0
+
+## Q6 fixed traversal: A_00 dependents count (comp-blast gate-5 anchor)
+---------------------
+23                   
+
+(1 rows)
+rc=0
+
+## CORRECTION BLOCK (same session, ~1325Z) -- Q4/Q5/Q6 rc values ABOVE are INVALID
+The rc=0 readings on Q4-Q6 above measured TAIL's exit through a pipe (the A.3
+pipe-corrupted-rc class). Clean re-measures, rc captured direct:
+- Q4 REDO malformed Cypher: rc=1, ERROR on stderr, stdout EMPTY -- contract HOLDS.
+- Q5 first form errored on `n.id` (property does not exist); REDO with n.node_id:
+  rc=0, honest "(0 rows)".
+- Q6 REDO: rc=0, count=23 (A_00 dependents, 2-hop).
+- SCHEMA (TABLE_INFO CloudNode): node_id(PK), arn, node_type, name, layer,
+  drift_class, source, snapshot_ts, props. NO `id` property.
+- POSITIVE CONTROL corrected form: LAMBDA lookup via n.node_id rc=0, 3 rows.
+
+## FINDING CANDIDATE K1 (canon-surface drift): graph-call-manifest.yaml canonical
+calls cite the nonexistent `id` property -- :101 (RETURN n.id), :114 (RETURN b.id),
+:127 ({id:$arn} + RETURN dep.id). Each binder-fails as written against the live
+schema (exercised this session). The mandated catalog teaches a failing form.
