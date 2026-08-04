@@ -35,6 +35,14 @@ def _run(include_held: bool):
     held_reads: list = []
     orig_rb = Path.read_bytes
     orig_which = shutil.which
+    # SYNTHETIC HELD (2026-08-04, comp-pipescript dial): the bd/49F sovereign prohibition was
+    # LIFTED COMPLETELY 2026-07-14, so is_held_bucket("opal-data-bd") is now False live and this
+    # suite's premise died with it -- test 1 went red, test 2 went VACUOUS (no bucket held means
+    # "SKIP not in out" passes without the override ever being exercised). The guard MECHANISM
+    # (:1940) remains in the code for any future held bucket; patching a synthetic held bucket
+    # keeps both tests non-vacuous and premise-independent. NOT a re-assertion of the bd hold.
+    orig_held = ps.is_held_bucket
+    ps.is_held_bucket = lambda bucket: bucket == "opal-data-bd"
 
     def _rb(self, *a, **k):
         s = str(self).replace("\\", "/")
@@ -59,6 +67,7 @@ def _run(include_held: bool):
     finally:
         Path.read_bytes = orig_rb
         shutil.which = orig_which
+        ps.is_held_bucket = orig_held
         os.environ.pop("COMP_PIPESCRIPT_INCLUDE_HELD", None)
     return buf.getvalue(), rc, held_reads
 

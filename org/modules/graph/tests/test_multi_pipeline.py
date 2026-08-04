@@ -101,12 +101,19 @@ class TestInfGoldScriptIO:
             "(FIRM_MIX_VIEWS_KEY used in s3.get_object(Key=FIRM_MIX_VIEWS_KEY))."
         )
 
-    def test_d04_reads_silver_accounts_dim(self, inf_gold_dag):
-        # FAILS_BEFORE_FIX: build_inf_gold_dag raised ImportError
+    def test_d04_reads_repointed_accounts_dim(self, inf_gold_dag):
+        # REPOINTED 2026-07-06 (ADVI_INFREF.REPOINT-COMPLETE, CTO-blessed): SILVER_ACCOUNTS_DIM
+        # in INF_D_04 now resolves to gold/dimensions/accounts_dimension_latest.parquet; the
+        # frozen silver/accounts_dim key has ZERO live gold readers (census 2026-08-04, dial).
+        # This fixture asserted the pre-repoint key and sat red ~4 weeks unobserved.
         sio = inf_gold_dag.scripts['INF_D_04']
-        assert 'silver/accounts_dim/latest.parquet' in sio.read_keys, (
-            "D_04 should READ silver/accounts_dim/latest.parquet "
-            "(SILVER_ACCOUNTS_DIM used in _read_s3_parquet(SILVER_ACCOUNTS_DIM))."
+        assert 'gold/dimensions/accounts_dimension_latest.parquet' in sio.read_keys, (
+            "D_04 should READ gold/dimensions/accounts_dimension_latest.parquet "
+            "(SILVER_ACCOUNTS_DIM repointed 2026-07-06, used in _read_s3_parquet)."
+        )
+        assert 'silver/accounts_dim/latest.parquet' not in sio.read_keys, (
+            "the frozen silver/accounts_dim key must NOT reappear in D_04's reads -- "
+            "its return would silently revert ADVI_INFREF.REPOINT-COMPLETE."
         )
 
     def test_d04_writes_platinum_timeseries(self, inf_gold_dag):
@@ -216,16 +223,16 @@ class TestCrossPipelineEdge:
             "'inf-silver:convert_orion_to_silver' missing from multi-pipeline DAG."
         )
 
-    def test_silver_accounts_dim_has_inf_gold_consumer(self, multi_dag):
-        # FAILS_BEFORE_FIX: build_multi_pipeline_dag raised ImportError
-        # D_04 reads silver/accounts_dim/latest.parquet from the silver layer.
-        # The multi-pipeline _readers index must contain 'inf-gold:INF_D_04' for this key,
-        # establishing the cross-layer (silver -> gold) consumer relationship.
-        readers = multi_dag._readers.get('silver/accounts_dim/latest.parquet', [])
-        assert 'inf-gold:INF_D_04' in readers, (
-            "The multi-pipeline _readers index should contain 'inf-gold:INF_D_04' for "
-            "'silver/accounts_dim/latest.parquet'. D_04 reads SILVER_ACCOUNTS_DIM via "
-            "_read_s3_parquet(SILVER_ACCOUNTS_DIM). "
+    def test_silver_gap_manifest_has_inf_gold_consumer(self, multi_dag):
+        # EDGE SWAPPED 2026-08-04 (comp-pipescript dial): the old fixture's edge
+        # (silver/accounts_dim -> INF_D_04) CEASED TO EXIST at the 2026-07-06 repoint --
+        # the silver key now has zero live gold readers, so no fixture can assert it.
+        # The cross-layer (silver -> gold) _readers index mechanism is still exercised,
+        # on an edge verified live: INF_D_00c s3.get_object(Key=GAP_MANIFEST_KEY) at :280.
+        readers = multi_dag._readers.get('silver/meta/gap_manifest.json', [])
+        assert 'inf-gold:INF_D_00c' in readers, (
+            "The multi-pipeline _readers index should contain 'inf-gold:INF_D_00c' for "
+            "'silver/meta/gap_manifest.json' (GAP_MANIFEST_KEY, s3.get_object at :280). "
             f"Actual readers: {readers}"
         )
 

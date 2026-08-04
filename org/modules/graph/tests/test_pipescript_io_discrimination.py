@@ -28,7 +28,10 @@ TERMS = ["accounts_dimension_latest.parquet", "INF_A_00"]        # the probe's d
 
 
 def _io(script: str) -> str:
-    r = subprocess.run([sys.executable, _CLI, "io", script], cwd=_WS,
+    # --pipeline is REQUIRED since 2026-07-30 (Andrew-direct no-silent-tree-default stub);
+    # the flagless form this fixture used returns REFUSED rc=2 and asserted on refusal text
+    # (red 07-30 -> 08-04, caught by the comp-pipescript dial). Both scripts here are inf-gold.
+    r = subprocess.run([sys.executable, _CLI, "io", script, "-p", "inf-gold"], cwd=_WS,
                        capture_output=True, text=True, timeout=90)
     return r.stdout + r.stderr
 
