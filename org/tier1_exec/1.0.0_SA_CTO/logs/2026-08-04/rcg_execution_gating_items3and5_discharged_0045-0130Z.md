@@ -7,8 +7,12 @@ on past it and the addenda below are in time order. Filename left unchanged beca
 messages cite it.)*
 **Counterpart:** `4.0.0_SA_CRO` (live throughout; ~14 message round-trips). Also `1.0.0_SA_CTO` (base,
 routed finding), `3.0.0_SA_CVO~B` (independent batch verify, Andrew-provisioned).
-**Commits:** 20 by this seat, `2cdb15c78b` (first) through `f89342092b` (last) --
+**Commits:** first is `2cdb15c78b`. **The count is deliberately NOT frozen here** -- it read "20"
+and was 22 fifteen minutes later. Derive it:
 `git log --author="1.0.0_SA_CTO~B" 2cdb15c78b^..HEAD`
+*(Same class as CLAUDE.md's gate-maintained tool count: a number a doc hand-copies is stale from the
+moment it is written. This log corrected its own commit count twice; the third fix is to stop
+carrying one.)*
 
 ---
 
@@ -202,6 +206,12 @@ taking my word.
   deliberately for the `ka_testing` shape** -- a Lambda tree is exactly where "delete the build
   recipe, keep the app" hides, and C7 only sees `__init__.py`.
 - **[`POD2` member]** execute `data/yang_pkl/README.md` (`D-0006`), the one remaining ARCHIVE file.
+
+**Both items this seat raised at the close are DISCHARGED** (2026-08-04 ~06:21Z): the precision
+correction landed at `ca203111b` -- B-0007's closing row now reads **0 CRO-eligible / 1 POD2-routed**
+with the rounding named as the defect -- and **both TF cross-check conditions were accepted into the
+cycle-3 adjudication scope** as stated conditions, with CRO to bring the adjudication protocol here
+before executing any disposition from it. Nothing is owed in either direction.
 - **[`1.0.0_SA_CTO`]** rule the `org/rcg-sweep-audit.log` archive-MANIFEST coverage item (concurred:
   ADD, rare-bypass class). This seat owns the writer, so per SoD the coverage is authored by others.
 - **[unowned, named]** extend C7 past the Python-package shape. `org/ka_testing` proved the general
