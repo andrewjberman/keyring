@@ -337,6 +337,48 @@ def test_overlay_provenance_is_truthful_about_worktree_mutation():
             fixture.unlink()
 
 
+def test_overlay_dirty_flag_flips_on_a_TRACKED_file():
+    """The `dirty` half of the overlay contract -- and it needs a TRACKED file to mean anything.
+
+    CVO's battery checks that a worktree mutation "must flip dirty AND change the digest". The
+    sibling test above uses an UNTRACKED fixture, which `git status --porcelain` reports as `??` in
+    every state -- so dirty is True throughout and the flip is never exercised. A fixture that
+    cannot be clean cannot test a clean->dirty transition.
+
+    So this one mutates a real tracked file and restores it in a finally. Verified end to end:
+    False -> True -> False with the digest moving and returning.
+    """
+    bu = _bu()
+    from org.modules.graph.trace_graph import Node
+    target = _GRAPH_DIR / "comp_ladder.py"
+    if not target.exists():
+        pytest.skip("tracked fixture absent")
+    r = subprocess.run(["git", "status", "--porcelain", "--", str(target)],
+                       capture_output=True, text=True, cwd=str(_REPO))
+    if r.stdout.strip():
+        pytest.skip("fixture is already dirty in this working tree -- cannot test the transition")
+
+    node = Node(id="comp_ladder", node_type="PipelineScript", label="comp_ladder")
+    orig = target.read_bytes()
+    try:
+        _e1, clean = bu.derive_overlay(node, "comp_ladder")
+        assert clean["scope"] == "subject" and clean["files"] >= 1
+        assert clean["dirty"] is False, "a clean tracked file reported dirty"
+
+        target.write_bytes(orig + b"\n# transient overlay probe\n")
+        _e2, dirty = bu.derive_overlay(node, "comp_ladder")
+        assert dirty["dirty"] is True, (
+            "the overlay did not notice an uncommitted edit -- the head-pin is decorative and a "
+            "mid-edit blast is silently answering from the committed estate"
+        )
+        assert dirty["digest"] != clean["digest"], "content digest did not move on a real mutation"
+    finally:
+        target.write_bytes(orig)
+
+    _e3, back = bu.derive_overlay(node, "comp_ladder")
+    assert back["dirty"] is False and back["digest"] == clean["digest"], "restore not observed"
+
+
 def test_dual_provenance_is_always_printed():
     """s3.3: BOTH vintages, always. A single-vintage answer is a P3 conformance failure."""
     r = _run("opal-data-mdpf")
