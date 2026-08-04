@@ -110,6 +110,44 @@ real-data run, before any batch was cut. Routed to CRO.
 | `mass-deletion-check --mode` | measured | `effective mode: block`, threshold 25 -- the live constraint item 5 had to design around |
 | raw `grep`/`git` | used | ledger/charter arithmetic and lane-reachability measurement; no comp-tool models label-vs-charter-vs-lane intersection, which is the whole question |
 
+## ADDENDUM 01:30-01:45Z -- the restore leg had no legal author (`e3a07f97f4`)
+
+**A defect in my own ruling, found by CRO reading the gate's source before executing.** s.7 makes an
+exercised `git revert` the acceptance condition. A revert of a deletion batch is **additions**, which
+**C1 denies** -- and the sweep identity is the only one that can reach those paths, *because granting
+it the delete lanes in s.6 is what made it so.* Measured on B-0001: `~SWEEP` **93/93**; `~B`, base
+CTO, MSTR, COO **0/93 each**.
+
+**The recovery path was structurally unauthorable from the moment my grant landed: the one seat able
+to restore was the one seat I forbade.** Invisible to reading, because the deny suite was complete
+*and correct* -- the revert deny-suite was **vacuously** complete, since nothing could legally permit
+a restore at all. **My own C6 lesson, recurring one layer up, four hours later, in my own code.**
+
+Fixed with a REVERT mode that cannot introduce content (R1 addition-only · R2 set equality both
+directions · R3 `executed_commit` recorded · **R4 blob-hash identity** to the pre-deletion tree).
+Matrix 11 -> **16/16**. The new cases caught **two more bugs in my own code**, both of which would
+have shipped and both of which would have bitten CRO mid-exercise:
+
+1. **R4 compared `git diff --raw`'s abbreviated sha to `git rev-parse`'s full 40-char sha** -- so a
+   *perfect* restore was denied as tampered on every path. `--abbrev=40` is now load-bearing and
+   commented as such.
+2. **RV5 returned rc=3 while printing "SWEEP DENIED"** -- right code, wrong story; told an operator
+   they were denied when the gate could not evaluate.
+
+**Also settled by exercise rather than reading** (CRO's open question on commit form): `git commit
+--only -- <pathspec>` isolates the pre-commit hook's index view to *exactly* the pathspec. Proven in
+a scratch repo with a foreign staged modification deliberately present -- the hook saw only the 2
+batch deletions; the foreign file stayed uncommitted. Batches ride **true `git rm` + the ordinary
+safe-commit pathspec form**; neither workaround CRO offered is needed.
+
+**Routed-finding loop closed both ways:** CTO Base closed the tombstone-gate finding as a
+*pre-registered transient* (`14b3a3da7d` added the log to the archive MANIFEST *after* the snapshot
+mint -- fail-closed by design, not a defect), and in the same pass caught that **my own
+`org/rcg-sweep-audit.log` is UNCOVERED in that MANIFEST**. I did the owned-paths and `.gitignore`
+halves tonight and missed the archive half. Concurred: ADD, rare-bypass class (~10-30 lines across
+the entire sweep programme, single writer, gated on one identity). I am the writer's author, so
+coverage is authored by others -- SoD.
+
 ## Open at session end
 
 - **[`4.0.0_SA_CRO`]** author B-0001 DRAFT->RATIFIED. Verified for them: the proposed cohort
