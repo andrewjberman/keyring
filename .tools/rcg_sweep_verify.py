@@ -452,6 +452,43 @@ def run_checks(batch_id: str, cap: int) -> tuple[int, list[str]]:
                     + ", ".join(f"{d} ({n} survive)" for d, n in broken[:5])
                     + (" ..." if len(broken) > 5 else ""))
 
+    # --- UNIQUE-CONTENT ADVISORY (added 2026-08-04) --------------------------
+    # Reports how much of the batch is content that survives NOWHERE else, by
+    # blob hash. DENIES NOTHING -- it exists because a batch's stated WARRANT can
+    # be wrong while its mechanics are perfect.
+    #
+    # Measured on B-0003, described in its own row as the "snapshot-copy mass":
+    # 217 of 497 had a surviving identical copy, 280 did NOT. The batch was
+    # mechanically flawless -- deletion-only, all ARCHIVE, no protected charter --
+    # and its justification was 44% true. Nothing was destroyed (git history
+    # retains, recovery is one command), but "these were copies" is a far stronger
+    # warrant than "these are old records we judged archival", and a successor
+    # inherits whichever one the row claims.
+    #
+    # So: print the true blast radius and let the operator state a warrant that
+    # holds. A gate can only check what the batch IS; this is the cheapest signal
+    # about what deleting it MEANS.
+    try:
+        tree: dict[str, str] = {}
+        for line in git("ls-tree", "-r", "HEAD").splitlines():
+            meta, _, path = line.partition("\t")
+            parts = meta.split()
+            if len(parts) >= 3 and path:
+                tree[path] = parts[2]
+        surviving_blobs = {b for p, b in tree.items() if p not in deleted}
+        uniq = [p for p in sorted(deleted) if tree.get(p) and tree[p] not in surviving_blobs]
+        dup = len(deleted) - len(uniq)
+        note(f"  ADVISORY -- content uniqueness: {dup} of {len(deleted)} have an identical copy "
+             f"surviving elsewhere; {len(uniq)} do NOT (unique content leaving the tree).")
+        if uniq:
+            note("      state the batch's warrant on grounds that cover the unique half:")
+            for p in uniq[:5]:
+                note(f"        {p}")
+            if len(uniq) > 5:
+                note(f"        ... +{len(uniq) - 5} more")
+    except CannotEvaluate:
+        note("  ADVISORY -- content uniqueness: NOT COMPUTED (tree unreadable). Advisory only.")
+
     # partial-directory REPORT (advisory -- residual risk 2 in the ruling: the
     # general gutted-tree class is reported, not denied)
     dirs: dict[str, int] = {}
