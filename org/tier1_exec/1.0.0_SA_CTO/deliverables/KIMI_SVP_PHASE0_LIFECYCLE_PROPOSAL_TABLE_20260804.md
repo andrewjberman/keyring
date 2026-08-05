@@ -20,7 +20,19 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 6 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest -- 2026-08-05)
+**SITTING PROGRESS: 7 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma -- 2026-08-05)
+
+> **CADENCE IS A DECLARED PROPERTY, AND IT WAS NOWHERE MACHINE-READABLE (row 7).** I proposed cma as
+> "PERMANENT with NO declared cadence" and argued the age therefore could not be a finding. **Andrew
+> corrected the premise, not the value: the cadence EXISTS and it is ANNUAL** -- *"this file gets
+> uploaded once a year."* That is a better answer than mine in both directions: the artifacts are
+> demonstrably HEALTHY (5 and 7 months, well inside a year), AND a freshness check here is
+> LEGITIMATE rather than impossible -- it simply needs a one-YEAR window. My version would have
+> banned a valid control; his supplies the parameter that makes it correct.
+> **The cadence lived only in his head.** Nothing in the estate declared it, which is exactly why a
+> survey reading artifacts alone cannot distinguish "annual product, on time" from "frozen." This is
+> the lead NEVER-rule's shape at a 365-day scale. NO CHECK IS PROPOSED HERE (standing moratorium) --
+> what is recorded is the DENOMINATOR that any future reasoning must use.
 
 > **CLASS FINDING (row 6) - EMAIL-ONLY PRODUCTS ARE STRUCTURALLY INVISIBLE TO OUR REACHABILITY
 > INSTRUMENTS.** `ceo-digest` records as `served: (no data artifact)` / `frontend: (none)` /
@@ -151,7 +163,7 @@ than inheriting my original framing.
 | 4 | canonical-schwab | **PERMANENT - RATIFIED 2026-08-05** | THE PRODUCT-AGNOSTIC INGEST SPINE for the Schwab custodial source. Two ENABLED twice-daily pulls (`canonical-schwab-si2-08335338-daily-pull` cron(45 9,21), `...-08242234-daily-pull` cron(15 10,22)) + an event-driven start accelerator (`canonical-schwab-xref-success`, legitimate - both pulls carry real crons). **20 silver tables (08335338) / 19 (08242234), 18 IDENTICAL** - divergence is 3 tables at the edge. **CORRECTION: my original row said 'six silver tables' - that was the CONVERTER count from the runbook, reported as a table count.** | HIGH | **DUAL-IDENTITY BOX - see finding below.** 08242234 has NO `gold/` (2nd instance of the INF class, different product) |
 | 5 | causality | **RETIRED - RATIFIED 2026-08-05** (Andrew VERBATIM: *"Retired completely."*) | **APPLIED PLANE IS EMPTY, measured:** 0 live Lambdas, 0 DynamoDB tables (was causality-generations + causality-saved-analyses), 0 refs in portal/src (comp-grep 405 of 405 files - complete scope, cross-checked `find portal/src -type f` = 405), and `causality-endpoints.ts` DOES NOT EXIST though the estate model cites it. Teardown on the record: `0.5.0_AE_OpalETL` 2026-06-11 + 2026-06-16; `safe-destroy.sh:10` exists partly because of it. **MY ORIGINAL ROW CLAIMED 'no evidence either way' - the evidence was abundant, I had simply never looked.** | HIGH | **ONTOLOGY LAG:** `comp-estate causality` still returns 5 chains with producers/API-GW/frontend prose, all flagged `producers-dead-applied-plane-20260730`. The model outlived the system by ~6 weeks |
 | 6 | ceo-digest | **PERMANENT - RATIFIED 2026-08-05** | **IT RAN THIS MORNING.** `astn-wsjft-3am-run` schedule ENABLED; EC2 `astn-wsjft-scraper` LaunchTime 2026-08-05T07:00:35Z = 3:00 AM ET today, stopped after (healthy transient signature). Chain `ceo-daily-wsjft-digest`: 3am-ET one-shot, Bright Data pull + LLM cited-bullet summary, **SES email to Austin**. **MY ORIGINAL ROW PROPOSED IT AS A DORMANT CANDIDATE ON 'no schedule/consumer evidence at hand' - it had fired 4 hours earlier.** | HIGH | **HUMAN-INBOX CONSUMER = INVISIBLE TO EVERY ARTIFACT-BASED INSTRUMENT** (no data artifact, no frontend, no queryable surface). See class note below |
-| 7 | cma | PERMANENT | yang-analytics family (capital-market assumptions), yang pipeline active | MED | — |
+| 7 | cma | **PERMANENT - RATIFIED 2026-08-05**, **CADENCE = ANNUAL** (Andrew VERBATIM: *"this file gets uploaded once a year"*) | Chain `yang-cma` / `sys-yang-analytics-engine`, motif generative-publish. Producers `yang-generate-cma` (cma_excel branch) + `data/yang_pkl/scripts`. SERVED, verified LIVE: `json/capital-markets/assumptions.json` 4,146 B LastMod **2026-03-11**; `views.json` 5,992 B LastMod **2026-01-09**. Frontend REAL + mounted: `portal/src/api/portal-proxy.ts:1363 getCMAAssumptions()` (views at :1399), CVO `mounted-reachable` | HIGH (was MED - I had rated it on a FAMILY NAME, not on this chain's evidence) | **5- and 7-month-old artifacts are HEALTHY against an annual cadence.** A daily/weekly freshness check here would false-alarm forever with a real-looking number |
 | 8 | correlation | PERMANENT | yang-analytics family, active engine | MED | — |
 | 9 | data-refresh | PERMANENT | opal-data-refresh-api live + P0 visibility work this window | HIGH | — |
 | 10 | etf-reports | PERMANENT | ETFS month-end email armed (Sep-1 fire, cron ENABLED); ETFS canon program active | HIGH | ETFS CANON question open — parked items keyed on it |
