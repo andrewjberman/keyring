@@ -163,8 +163,25 @@ all-clear precisely because presence was the only predicate. **Do not rebuild th
 hazard the same paragraph must close, because a model reading a freshness field will treat recent as
 reliable, and **it is not**:
 
-> **"Treat recent output as a LIVE ERROR SOURCE, not a settled baseline — freshness of a row is not
-> evidence of its reliability."**
+**RULING — Andrew-direct, CVO terminal, 2026-08-05 ~1550Z. This SUPERSEDES CRO's phrasing, VERBATIM:**
+
+> **"treat recent output as the last agent's understanding of state, not a settled baseline"**
+
+His correction of CRO's original — *"'recent output as a live error source' is true, but it gists too
+heavily in favor of guilt"* — and the distinction is **not cosmetic; it changes what the contract must
+require.**
+
+- *Live error source* implies **down-weight recent rows** — a suspicion heuristic. Under it, the
+  correct move is to trust new evidence less.
+- *The last agent's understanding of state* implies something different and more useful: a recent row
+  is **not suspect, it is UNSETTLED.** It carries **a viewpoint, and an author**, not a verdict.
+
+**So the requirement is POSITIVE, not defensive:** a stratum row does not get discounted for being
+recent — it must **carry whose understanding it is and whether anything ratified it.** The question a
+reader (human or model) must be able to answer is *"who understood this, when, and has it been
+adjudicated?"* — never *"is this new, and therefore shaky?"*
+
+*Original observation and the incident behind it remain CRO's; the frame is Andrew's.*
 
 Live instance, same day: `4.0.0_SA_CRO` landed a repair and **self-retracted half of it ~25 minutes
 later**, after a label was flipped on coherence reasoning when a ratified prior adjudication had
