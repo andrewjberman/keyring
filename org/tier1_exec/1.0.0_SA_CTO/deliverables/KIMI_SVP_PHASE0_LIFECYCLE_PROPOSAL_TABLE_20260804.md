@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 3 of 29 ratified** (advi-bd, advi-cot, advi-inf -- 2026-08-05). **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
+**SITTING PROGRESS: 4 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab -- 2026-08-05). **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
 `ANDREW_DIRECT_20260805_advi_bd_ratified_and_the_0833_0824_correction.md` (vertical 1 + the
 full-account-string ruling + the grain convention) and
 `ANDREW_DIRECT_20260805_canonical_medallion_form_and_advi_cot_ratified.md` (vertical 2 + the
@@ -57,12 +57,49 @@ be **two DIFFERENT PRODUCTS' masters** (MDPF and ADVI respectively), not two fee
 — so `canonical-schwab`'s boundary versus `advi-bd`/`mdpf` needs Andrew's word at its row rather
 than inheriting my original framing.
 
+
+> **FINDING (row 4) - ONE EC2 CARRIES TWO IDENTITIES, AND THE LIVE ONE IS NAMED "SPIKE".**
+> Andrew asked me to confirm which box is canonical because he recalled "another quartz spike EC2".
+> Ground-read: **there are not two boxes doing this. `i-0f3d57a97f14727af` IS both names.**
+>
+> | | value |
+> |---|---|
+> | `EC2_MANIFEST.json` (Rule 8 source of truth) | `canonical-schwab-si2` |
+> | LIVE AWS `Name` tag | **`quartz-si2-spike`** |
+> | IAM role / inline policies | `quartz-si2-spike-role`, `quartz-si2-monolith-write`, `quartz-si2-spike-inline` |
+> | other tags | `project=SCHWAB_SSOT.DERISK-1`, **`reversible=true`** |
+> | state | **RUNNING** (t3.large) - one of only 3 running instances in the estate |
+> | all 3 Schwab EventBridge rules target | `quartz-si2-spike (i-0f3d57a97f14727af)` |
+>
+> **IT IS THE CANONICAL ONE, on Andrew's own discriminator (the REST backend):**
+> `sdd-daily-pull.ps1` hits **`https://si2.schwabinstitutional.com/fileservices/SDDServices/`**
+> (SDD = Schwab Data Delivery), header: *"ADVI OPAL_ASSETS -- CANONICAL DAILY SDD PULL
+> (Andrew-direct 2026-07-13). Replaces the SI2 GUI auto-download channel."*
+>
+> **THE OTHER BOX IS REAL BUT IS NOT THIS PATH:** `canonical-schwab-runner`
+> (`i-0ed92ce2e72f505dc`, STOPPED) - manifest purpose *"build_canonical_daily.py (17 silver + G1-G14
+> gold) on production 01_raw/, **parallel/NOT-served**"*. A parallel non-served compute path is worth
+> its own look against the standing no-shadow-channel veto; NOT chased here.
+>
+> **WHY THE NAMING IS A RISK AND NOT A COSMETIC GRIPE:** a box tagged `spike` + `reversible=true` +
+> `DERISK-1` is asserting *disposable*, while actually being the sole live ingest for BOTH 49F Portal
+> products. Any cleanup sweep keyed on "spikes" or "reversible" would terminate production for ADVI
+> and MDPF simultaneously. That is exactly the failure the lifecycle rule bank names as primary -
+> *"a false-positive (decommission a deliberate belt) is THE named failure mode"* - except here the
+> misleading label is on a LIVE PRODUCER, not a dormant belt. **The spike graduated to production and
+> its name never did.**
+>
+> Incidental, from the same file and worth preserving - the incident that created this path:
+> the SI2 GUI channel *"exited rc=0 on ~22 consecutive cycles over 11 days while landing NOTHING
+> (delivery folder frozen at 2026-07-02 ... the vendor HAD posted). **A pipeline that grades its own
+> homework cannot report its own death.**"*
+
 | # | Vertical | Proposed | Evidence (one line) | Conf | Shift-watch note (R2 seed) |
 |---|---|---|---|---|---|
 | 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/schwab/08335338/`** — the 49F Black Diamond master. ADVI = "Advisor Intelligence", an Opal data product served by the Portal, scoped PER ADVISOR (49 Financial here). Layout `_ops/ bronze/ gold/ meta/ silver/`; daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` = **`s3://opal-data-assets/schwab/08242234/`, which is MDPF "Model Portfolios"** (`_ops/ bronze/ meta/ silver/` — no `gold/`). Corrected on Andrew-direct, verified by `aws s3 ls` | HIGH | — |
 | 2 | advi-cot | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/blackdiamond/cottonwood/`** (`bronze/ gold/ meta/ silver/`) — the BLACK DIAMOND vendor tree, NOT a Schwab account; 49F's sibling is `.../blackdiamond/49f/`. Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches; under the ratified grain convention this is NOT a lifecycle shift |
 | 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | **INF GOLD NOT MIGRATED** — gold still LIVE-writing to `s3://opal-data-inf/gold/` (2026-08-05 10:51Z) while its assets trees carry no `gold/`. Named OPAL_CONSOLIDATION fix. Plus canonical-route redesign in flight. Both interior — NOT lifecycle shifts |
-| 4 | canonical-schwab | PERMANENT | Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338); six silver tables | HIGH | — |
+| 4 | canonical-schwab | **PERMANENT - RATIFIED 2026-08-05** | THE PRODUCT-AGNOSTIC INGEST SPINE for the Schwab custodial source. Two ENABLED twice-daily pulls (`canonical-schwab-si2-08335338-daily-pull` cron(45 9,21), `...-08242234-daily-pull` cron(15 10,22)) + an event-driven start accelerator (`canonical-schwab-xref-success`, legitimate - both pulls carry real crons). **20 silver tables (08335338) / 19 (08242234), 18 IDENTICAL** - divergence is 3 tables at the edge. **CORRECTION: my original row said 'six silver tables' - that was the CONVERTER count from the runbook, reported as a table count.** | HIGH | **DUAL-IDENTITY BOX - see finding below.** 08242234 has NO `gold/` (2nd instance of the INF class, different product) |
 | 5 | causality | UNDECLARED | sys-causality-engine exists; this seat holds no activity/consumption evidence either way | — | resolve at sitting |
 | 6 | ceo-digest | UNDECLARED | UNASSIGNED-RESIDUE structure; no schedule/consumer evidence at hand | — | resolve at sitting — DORMANT candidate |
 | 7 | cma | PERMANENT | yang-analytics family (capital-market assumptions), yang pipeline active | MED | — |
