@@ -17,6 +17,15 @@ the one-directional-pointer trap in slow motion.
 **Instances, provenance, and the denominator caveat:**
 [`docs/references/ASSERTION_LAWS_INSTANCES_AND_PROVENANCE.md`](../references/ASSERTION_LAWS_INSTANCES_AND_PROVENANCE.md).
 
+> **AGENT-MEMORY EVIDENCE.** Citations of the form `memory/<slug>` root at the **agent memory
+> DIRECTORY** (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), not at the
+> repo. That corpus holds the **grounded incident records** behind several laws below — typically
+> 40–60 lines each with measured numbers — and the law here is the compression of them.
+> ⚠ **RESTORED 2026-08-05: my own merge of this file DROPPED these four pointers, which were the only
+> doctrine→memory links in the entire `docs/doctrine/` directory.** Consolidating a document and
+> silently severing its evidence is `M4` committed by the merge that was fixing `M4`. *(Audit:
+> `org/tier1_exec/4.0.0_SA_CRO/deliverables/MEMORY_CORPUS_AUDIT_20260805.md`.)*
+
 ---
 
 ## The boundary — this file is one of three families
@@ -44,10 +53,10 @@ the one-directional-pointer trap in slow motion.
 is about a **runtime**. Verify the artifact was fetched *and* loaded by the thing that runs it.
 
 **`VL#2` — An injected column is a HYPOTHESIS.** Adding a column to prove a theory produces a value
-shaped like evidence. It stays a hypothesis until something independent of the injection confirms it.
+shaped like evidence. It stays a hypothesis until something independent of the injection confirms it. *See `memory/feedback_an_injected_column_is_a_hypothesis` — three measured phantoms in one day.*
 
 **`VL#3` — A false premise gets answered ON, and returns as corroboration.** Ask a question containing
-a wrong assumption and you get a confident answer built on it. **Ask for the ARTIFACT, not the number.**
+a wrong assumption and you get a confident answer built on it. **Ask for the ARTIFACT, not the number.** *See `memory/feedback_a_question_carrying_a_false_premise`.*
 
 **`VL#4` — A guard nothing invokes is not a guard.** Existence is not enforcement. Find the call site
 or treat the guard as absent.
@@ -64,7 +73,7 @@ verified is not a claim that *is* verified.
 
 **`VL#8` — A stale record says something false WITH AUTHORITY.** **A retracted prohibition is only as
 dead as its last surviving copy.** Retraction must propagate to every enforcing copy — including
-**tests**, which are enforcing copies with teeth.
+**tests**, which are enforcing copies with teeth. *See `memory/feedback-retraction-propagates-to-every-enforcing-copy`.*
 
 **`VL#9` — Care is not a control.** Care is what you have *instead* of one. **Knowing a failure mode by
 name does not immunise you against writing it** — several instruments have been broken by the agent who
@@ -77,16 +86,16 @@ can be corrupted by the target's presence.**
 
 **`VL#11` — Host is UTC-4: no `Z` is ambiguous, and a HAND-TYPED `Z` is worse.** **Ambiguity *prompts*
 the check; forgery *cancels* it.** Use computed-offset forms (`--date=iso-strict`), never a typed unit
-or zone. **A zero from a time-windowed query needs a positive control.**
+or zone. **A zero from a time-windowed query needs a positive control.** *See `memory/feedback_aws_s3_ls_lastmodified_is_local_time_never_a_liveness_oracle`.*
 
 **`VL#12` — Control the RETRIEVAL, not the pattern.** A retrieval failure **returns a value**: `grep`
 enters binary mode and truncates while exiting 0; `grep -c` counts zero matches in an error message;
 `git show HEAD:<untracked>` returns a `fatal:` string a comparator will happily diff. **A wrong number
 is more dangerous than a zero — a zero invites suspicion, a plausible count does not.** And **print the
-PREDICATE, not just the denominator.**
+PREDICATE, not just the denominator.** *See `memory/feedback_profile_before_reporting_a_mechanism`.*
 
 **`VL#13` — Score controls on OUTPUT, never on rc.** Harness exit codes have been corrupted before, and
-the fix is not reboot-durable.
+the fix is not reboot-durable. *See `memory/reference-cygwin-harness-exit-codes-corrupted-capture-true-rc-in-stdout`.*
 
 **`VL#14` — Metadata about a record is not the record.** A summary field *about* a set of records is a
 different object from the records, with its own — usually weaker — consistency guarantee. **Eventually-
