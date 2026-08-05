@@ -35,15 +35,21 @@ OBSERVATION not a challenge to any ratification.** Measured 2026-08-05:
 | Cottonwood | `blackdiamond/cottonwood/` | `bronze silver gold` |
 | **Inflection** | `orion/inflection/` **and** `eclipse/inflection/` | `bronze silver` — **NO `gold/` in EITHER** |
 
-So one product (Advisor Intelligence) is served from three scopes, two of which carry a gold tier
-in-tree and one of which carries none in either of its two vendor trees. Under the canonical form
-ratified this sitting, gold is "various type processed analytics" — so INF's ADVI analytics are
-either produced elsewhere or produced under a different grammar. **A candidate answer that would
-link two open items: the non-conforming top-level `s3://opal-data-assets/gold/` prefix flagged in
-§4(a) of the canonical-form record.** NOT verified — stated as a hypothesis to test, not a finding,
-per the standing rule that a causal claim is INFERRED until source/graph-confirmed. Worth resolving
-before v3's vertical join treats path shape as derivable, since this is exactly a tree whose
-analytics would not anchor from its own path.
+**RESOLVED SAME SITTING — Andrew-direct, and the cause is CONFIRMED, not inferred.** He read the
+asymmetry as *"very quesitonable ... that points to migration not being completed there"* and named
+two candidate causes. Ground-read confirms the first, **and it is LIVE TODAY, not a legacy remnant**:
+`s3://opal-data-inf/gold/eclipse/2026-08-05/model_portfolio_{summary,households,accounts}.parquet`
+written 2026-08-05 10:51:06Z. **The migration moved bronze and silver into `opal-data-assets` and
+left gold behind in the superseded bucket, still producing.** His second candidate (producers writing
+gold straight into a shared location such as a DDB) is **UNTESTED and not excluded** — the two are
+not mutually exclusive.
+My earlier guess — the top-level `opal-data-assets/gold/` prefix — was NOT the answer; it stays open
+as a separate §4(a) item. *(Recording that my tidy two-items-become-one hypothesis was wrong: it was
+plausible, it closed two open threads at once, and it was not what the measurement said.)*
+**Full record + the medallion-intent ruling + the named consolidation fix:
+`OPAL_CONSOLIDATION_INF_GOLD_GAP_AND_MEDALLION_INTENT_20260805.md`.**
+Does NOT disturb row 3's PERMANENT: an incomplete migration is interior churn, which the ratified
+grain convention explicitly excludes from being a lifecycle shift. It lands on the SHIFT-WATCH seed.
 
 ⚠ **ROW-4 FLAG raised by the vertical-1 correction, not yet ruled:** row 4 (`canonical-schwab`)
 cites "Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338)". Those are now known to
@@ -55,7 +61,7 @@ than inheriting my original framing.
 |---|---|---|---|---|---|
 | 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/schwab/08335338/`** — the 49F Black Diamond master. ADVI = "Advisor Intelligence", an Opal data product served by the Portal, scoped PER ADVISOR (49 Financial here). Layout `_ops/ bronze/ gold/ meta/ silver/`; daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` = **`s3://opal-data-assets/schwab/08242234/`, which is MDPF "Model Portfolios"** (`_ops/ bronze/ meta/ silver/` — no `gold/`). Corrected on Andrew-direct, verified by `aws s3 ls` | HIGH | — |
 | 2 | advi-cot | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/blackdiamond/cottonwood/`** (`bronze/ gold/ meta/ silver/`) — the BLACK DIAMOND vendor tree, NOT a Schwab account; 49F's sibling is `.../blackdiamond/49f/`. Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches; under the ratified grain convention this is NOT a lifecycle shift |
-| 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | canonical-route redesign in flight (interior — NOT a lifecycle shift) |
+| 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | **INF GOLD NOT MIGRATED** — gold still LIVE-writing to `s3://opal-data-inf/gold/` (2026-08-05 10:51Z) while its assets trees carry no `gold/`. Named OPAL_CONSOLIDATION fix. Plus canonical-route redesign in flight. Both interior — NOT lifecycle shifts |
 | 4 | canonical-schwab | PERMANENT | Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338); six silver tables | HIGH | — |
 | 5 | causality | UNDECLARED | sys-causality-engine exists; this seat holds no activity/consumption evidence either way | — | resolve at sitting |
 | 6 | ceo-digest | UNDECLARED | UNASSIGNED-RESIDUE structure; no schedule/consumer evidence at hand | — | resolve at sitting — DORMANT candidate |
