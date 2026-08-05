@@ -21,10 +21,26 @@ carries weight: he ratified PERMANENT **while** correcting the evidence I offere
 value does not rest on the account-prefix detail I got wrong.
 
 ### 2. CORRECTION OF FACT (mine to own -- see below)
-| | Schwab account prefix | Product | Portal-facing name |
-|---|---|---|---|
-| **ADVI** | **0833** | Advisor Intelligence | scoped **per advisor** (49 Financial here) |
-| **MDPF** | **0824** | Model Portfolios | for 49F |
+**SECOND ANDREW-DIRECT, same sitting, VERBATIM:** *"Need to do better than that, use the full
+account string for that bucket, check opal-data-assets/schwab/ and write the correct data string."*
+
+Ground-read `aws s3 ls s3://opal-data-assets/schwab/` -> exactly two accounts:
+
+| | **FULL account (canonical)** | Canonical data string | Product | Layout |
+|---|---|---|---|---|
+| **ADVI** | **`08335338`** | `s3://opal-data-assets/schwab/08335338/` | Advisor Intelligence — Portal-served, scoped **per advisor** (49 Financial here) | `_ops/ bronze/ gold/ meta/ silver/` |
+| **MDPF** | **`08242234`** | `s3://opal-data-assets/schwab/08242234/` | Model Portfolios | `_ops/ bronze/ meta/ silver/` (**no `gold/`**) |
+
+Corroborated independently in the record: CVO~A 20260712T233824Z names "the Schwab dual-master-account
+addition (**08242234 SmartX / 08335338 BD**)".
+
+**WHY THE FULL STRING IS THE RULING AND NOT A STYLE NOTE -- THE ABBREVIATION IS THE DEFECT
+MECHANISM.** `0833` vs `0824` differ in **2 characters**; `08335338` vs `08242234` differ in **6**.
+The truncated form is what makes the two masters *look* like near-neighbours, and near-neighbours are
+what get substituted. **The guard I walked past was itself written in the confusable form** -- the
+MEMORY.md banner said `0833`/`0824`. So the control was not merely ignorable, it was stated in
+exactly the notation that enables the error it forbids. Banner rewritten to the full strings + the
+canonical `s3://` path, with the reason, so the next reader inherits the discriminating form.
 
 **The split is FOR BUSINESS-LOGIC REASONS** -- his words. It is not a storage-layout accident, and
 the two are not interchangeable.

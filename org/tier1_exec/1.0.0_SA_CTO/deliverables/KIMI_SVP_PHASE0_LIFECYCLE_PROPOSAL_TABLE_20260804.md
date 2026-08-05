@@ -25,7 +25,7 @@ satisfied by keeping those two statements separate, not by collapsing them.
 
 | # | Vertical | Proposed | Evidence (one line) | Conf | Shift-watch note (R2 seed) |
 |---|---|---|---|---|---|
-| 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **ADVI = the `0833` Schwab account** (Advisor Intelligence: an Opal data product served by the Portal, scoped PER ADVISOR — 49 Financial here). Daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` — **that is the MDPF account, not ADVI's**; corrected on Andrew-direct | HIGH | — |
+| 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/schwab/08335338/`** — the 49F Black Diamond master. ADVI = "Advisor Intelligence", an Opal data product served by the Portal, scoped PER ADVISOR (49 Financial here). Layout `_ops/ bronze/ gold/ meta/ silver/`; daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` = **`s3://opal-data-assets/schwab/08242234/`, which is MDPF "Model Portfolios"** (`_ops/ bronze/ meta/ silver/` — no `gold/`). Corrected on Andrew-direct, verified by `aws s3 ls` | HIGH | — |
 | 2 | advi-cot | PERMANENT | Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches |
 | 3 | advi-inf | PERMANENT | INF partner serving live; P0 aum-metrics work this session; MDPF_CANRTE covers its direct-silver leg | HIGH | canonical-route redesign in flight |
 | 4 | canonical-schwab | PERMANENT | Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338); six silver tables | HIGH | — |
