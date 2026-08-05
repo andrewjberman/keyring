@@ -1,0 +1,189 @@
+# SPEC — Kimi call subdivision + deterministic insight strata
+
+**For:** `1.0.0_SA_CTO~B` (runner + design owner). **From:** `3.0.0_SA_CVO`.
+**Authority:** Andrew-direct, CVO terminal, 2026-08-05 — subdivide the call layout; feed the model
+the high-signal deterministic strata our own tools already compute, *"not just obvious stuff."*
+**Sequencing:** Andrew ruled v3 State/Friction is sorted FIRST; this spec is the input to that work,
+not a parallel track.
+
+**Grounding vintage:** all `estate_report_runner.py` line cites are `@a254104b34` (tip for the file,
+deployed 2026-08-05T14:56:59Z, md5 `a110981492b461e19fb9be7848b9ad09`).
+
+---
+
+## 1. The measured problem this replaces
+
+| Fact | Evidence |
+|---|---|
+| **It is ONE call doing everything** | `:1072` — single `call_kimi(build_prompt(resources, window_desc), ...)` |
+| **The corpus NEVER reaches the model** | nuggets computed `:1058`, stored `:1096`, **never passed** — `build_prompt(resources, window_desc)` `:806` has no corpus parameter |
+| **The git payload is silently truncated mid-structure** | `:826` `[:60000]`. Today: 69,495 chars → **9,495 dropped (14%)**, cut mid-string at `"area:data-scripts": {\n "resource": "area` |
+| **89% of paths land in fallback labels** | today's run: 10 of 357 chain-resolved, 318 area-bucketed |
+
+**The causal chain, and it is not a model-quality problem:** the model is asked a *semantic* question
+(has this prose drifted?) using *mechanical* evidence (which files moved), with the semantic evidence
+withheld and 14% of the mechanical evidence silently missing. It can only propose against vocabulary
+it was given — which is why both 08-04 proposals and 5 of 9 today target `area:*` compiled fallback
+labels, and why Andrew has rejected that output class twice.
+
+---
+
+## 2. Organizing principle — GIVE IT CONTRADICTIONS, NOT MEASUREMENTS
+
+A single-signal fact is a metric; the model can only restate it. **Insight lives where two
+independent deterministic signals disagree.** Every stratum below is a pre-computed tension between
+two reads that *should* agree. That is a task a language model is good at — explain the
+contradiction, say which side is likely wrong, say what it implies. It is bad at manufacturing one
+from a bucket list, which is what we ask today.
+
+---
+
+## 3. The four strata groups (Andrew-regrouped 2026-08-05: by QUESTION, not by tool)
+
+Authored under CLAUDE.md Rule 24 — one intent per axis, one grain, mutually exclusive. Each group
+asks a distinct question about how belief and reality diverge.
+
+### GROUP A — DID WHAT WE WROTE ACTUALLY TAKE EFFECT?
+A propagation **ladder**; one purpose, four layers, a different tool per rung.
+
+| Rung | Tool | The gap |
+|---|---|---|
+| written → committed | `comp-heat drift` | uncommitted work (invisible risk in a shared tree) |
+| committed → deployed | `comp-pipescript deployed` | committed-but-never-deployed (a named CLAUDE.md class) |
+| deployed → served | md5/size vs the repo vintage | deployed artifact ≠ intended vintage |
+| served → current | `comp-freshness` (**trading-day aware**) | served output stale behind its frontier |
+
+*Hit twice today on this very pipeline. The trading-day basis is mandatory — a flat-hours read
+false-alarms every Monday.*
+
+### GROUP B — ARE OUR RELATIONSHIPS WHAT WE THINK?
+Same question at three depths: what is wired, what actually moves, which way it trends.
+
+- structural: `comp-blast --overlap-sweep`, `comp-pipescript overlap A B`
+- behavioral: `comp-cochange matrix|pair` (`--grain type|serial`)
+- temporal: `comp-heat compare` → CONVERGING / DIVERGING / PARALLEL **+ half-life**
+
+**The rows that matter are the disagreements**, not the agreements:
+- **coupled but only ONE side changed** → the silent-breakage leading indicator
+- **co-moved with NO dependency edge** → hidden coupling / duplicated logic / undeclared contract
+- **diverging with a rate** → a fork forming, an ownership split, or a quiet abandonment.
+  *The rate is what makes it a forecast rather than a snapshot.*
+
+### GROUP C — IS OUR LIFECYCLE PICTURE TRUE?
+`comp-heat freshness` cold subtrees × citation/reachability (`comp-estate --fe-reachability`,
+`--orphans-only`, `--debt`).
+- **cold AND cited** → dangerous to archive. *This is the exact cell that reversed the dated-briefs
+  archive decision on 08-04, after citations were found in production Lambda source.*
+- **cold AND uncited** → the safe-archive queue.
+
+### GROUP D — DO THINGS HAVE THEIR REAL NAMES?  ← **SUBSTRATE, NOT A PEER**
+`comp-estate` C3.ii semantic verticals vs the compiled `AREA_BUCKETS` fallback.
+
+**D sits UNDERNEATH A, B and C.** They all describe *subjects*; if 89% of subjects are named
+`area:docs`, every insight above is phrased about a bucket. **Fixing D lifts all three at once, and
+it is the direct fix for the rejected-proposal class.**
+
+**Sequence D first.** New questions become *askable* only once subjects have real names — a vertical
+that changed while its declared owner never touched it; two verticals whose co-movement suggests they
+are one; a vertical with no changes but open work claiming it. Those are not new tools; they are the
+same three questions finally asked about real things.
+
+---
+
+## 4. The call architecture
+
+**Today:** five cognitive acts in one call, competing for one shared budget —
+**R1** comprehend · **R2** narrate · **R3** detect drift · **R4** author prose · **R5** justify.
+`max_tokens: 32000` is shared between `reasoning_content` and `content` (`:855-863`) — raising it
+from 4000 fixed the starvation but **did not unbundle the contention**.
+
+### CALL 0 — DETERMINISTIC COMPILATION (no model)
+The comp-tools produce every stratum. **The model never computes a stratum, only interprets one.**
+Each stratum is emitted with its contract (§5). Group A rungs 1–3 and Group C's uncited queue are
+**LISTS, not insights** — they render in the report body and are NOT sent to a narration call.
+
+### CALL 1 — NARRATE (R2)  ·  audience: **Andrew**
+- **in:** stratum *summaries* + headline changes. Not raw payloads.
+- **out:** the plain-English brief. No jargon, no serials, no hashes.
+- **no** allowlist, **no** proposals. Judged on clarity alone.
+
+### CALLS 2..5 — DETECT (R3), ONE PER GROUP  ·  audience: **the canon**
+- **in:** that group's stratum + **the corpus nuggets** + the *current prose* of the entities named.
+- **out:** `{entity, field, why_suspect, evidence_ref}` — **CANDIDATES ONLY, NO PROSE.**
+- **HARD:** `entity` MUST be a canon entity from D. A candidate naming a compiled fallback label is
+  **rejected by the runner, not by asking the model nicely** (`:26` — prompt discipline is not a
+  control). This is the structural fix for the rejected-proposal class.
+- Separating detect from author makes the funnel visible: we can see how many candidates were found
+  vs authored vs adopted, per group, per day.
+
+### CALLS 6..N — AUTHOR + JUSTIFY (R4+R5), **ONE PER CANDIDATE**
+- **in:** that ONE entity's current prose + the specific evidence row + the nuggets bearing on it.
+- **out:** `{proposed_text, rationale, evidence_cited}`.
+- **HARD:** `evidence_cited` must reference a stratum row or nugget id. A proposal that cannot cite
+  what it saw is discarded — this stops prose inventing its own warrant.
+- Small prompt, small output, own budget. Fires **only** on R3 hits, so a zero-candidate day costs
+  nothing.
+
+**Why this removes the failure mode rather than mitigating it:** each call gets its own 32k budget,
+so narration and proposal no longer compete; each call's evidence is scoped to its job, so nothing
+needs a 60KB dump; and detection is constrained to real entities, so the output class Andrew rejected
+cannot be produced.
+
+---
+
+## 5. THE STRATUM CONTRACT — non-negotiable, and the reason is specific
+
+**Every stratum entering a prompt MUST carry its own denominator and its own input vintage.**
+
+```
+stratum: <name>
+question: <the contradiction it encodes>
+tool: <tool> <subcommand> <args>          vintage: <input freshness / commit-ish>
+denominator: scanned N of M <units>       rows: <k>
+[rows...]                                  # k may be 0 — that is a RESULT, not an absence
+```
+
+**Why this is load-bearing, not hygiene:** a stratum computed by a tool that returned clean zeros is
+**byte-identical** to a stratum with genuinely nothing to report. Kimi cannot distinguish "no
+coupling violations today" from "the coupling tool was pointed at the wrong universe and found
+nothing," and **it will narrate either with equal confidence.** We are deliberately throwing every
+angle at the wall (Andrew, 2026-08-05), which means shipping strata whose tools I have dialed and
+found imperfect — several returned clean zeros for whole classes of question on 08-04. **A
+high-signal stratum computed by a broken instrument produces CONFIDENT WRONG INSIGHT, which is
+strictly worse than today's obvious-but-harmless output.**
+
+Same law as the corpus defect found this morning: `degraded_sources: []` was the strongest possible
+all-clear precisely because presence was the only predicate. **Do not rebuild that shape one layer up.**
+
+**AND: NO SILENT TRUNCATION.** `[:60000]` must not survive into any call. A payload exceeding budget
+is chunked with a declared denominator, or the call fails loud. A model cannot know it was handed
+14% less than the day.
+
+---
+
+## 6. Explicitly NOT the model's job
+
+- Computing any stratum (deterministic, always).
+- Deciding which fields are proposable — allowlist enforced runner-side (`:26`).
+- Narrating Group A rungs 1–3 or C's uncited queue — those are compiled lists.
+- Discovering entities. It selects from D's canon; it never coins a name.
+
+---
+
+## 7. Open parameters — CVO ASSUMPTIONS, stated for Andrew's correction
+
+1. **Trailing window for Group B = 14 days.** Divergence and half-life are meaningless in a 24h
+   window. Consequence: part of the daily report becomes a slow-moving *trend* section that changes
+   weekly, not daily. **Product decision, not mine.**
+2. **D sequenced first.** It changes what every other call can say.
+3. **Cost/egress.** Subdivision multiplies vendor calls per day, and B and C require real computation
+   (`--overlap-sweep` across a population; `federated` hits Trino). **Andrew's call, not mine.**
+
+## 8. What I am NOT specifying — lane discipline
+
+I am not designing the API layout, the chunking mechanism, the retry semantics, or the runner's
+internal structure. That is CTO~B's lane with CTO on the architecture gate. **This spec states what
+the model must be given, what each call must be asked, and what must never be silently lost** — the
+verification requirements, not the implementation.
+
+-- 3.0.0_SA_CVO
