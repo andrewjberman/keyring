@@ -44,6 +44,21 @@ tools:
     cost: "~2s"
     output: "Node/edge counts by type, cached to .comp-graph/graph.json"
 
+  comp-cochange:
+    command: "comp-cochange <matrix | pair <T1> <T2> | file <path-substr>> [--since \"14 days ago\" | --range A..B] [--grain type|serial] [--json]"
+    segment_scope: cross-segment
+    when: |
+      - "Which agent TYPES change the same files together?" (matrix — co-movement ranked, shared files named)
+      - "Do these two seats collide?" (pair — one type-pair's shared surface)
+      - "Who co-moves on this file/tree?" (file — coupling around a path)
+      - The Kimi Semantic Vertical Pipeline's F4 Friction leg, beside comp-blast overlap + comp-heat trajectory
+    cost: "~seconds (one comp-missions commit walk; runs no git of its own, derived live)"
+    output: "Per-pair shared_files + jaccard + BOTH F4 denominators (commits-attributed/total AND pairs-observed/possible); HEAD anchor on every output; --json for machine form"
+    name_note: "DISTINCT from comp-heat (WRITE-freshness of objects, not pair co-movement) and comp-missions (mission attribution, not coupling). Answers COUPLING, not staleness."
+    guardrails: "READ-ONLY, no LLM, observations never verdicts; UNATTRIBUTED authors counted in denominator 1, never dropped."
+    engine: "org/modules/graph/comp_cochange.py (typed dispatch over the comp-missions walk)"
+    project: "OPAL_KIMIPIPELINE (F4 Friction instrument; born-registered 2026-08-04)"
+
   comp-heat:
     command: "comp-heat <freshness [path] | drift | score <id> --age-days N> [--half-life N] [--top N] [--json]"
     segment_scope: cross-segment
