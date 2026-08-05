@@ -187,6 +187,9 @@ function Get-AgentLoopDirective {
         '^2\.1\.0_SC_CompLearns(~[A-Za-z0-9]+)?$' {
             return "$header`n  CL Tier-2 SC (CompLearns) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so CL COO finds blocks. /work is AD-HOC."
         }
+        '^4\.0\.0_SA_CRO(~[A-Za-z0-9]+)?$' {
+            return "$header`n  ws CRO (Chief Research Officer, 4th Tier-1 exec -- recon->specs, does NOT dispatch) -- arms ZERO crons (LD-0157/0175 posture; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: RCG program work (rulings/batches/charters), Andrew directives + review signals via the Monitor. A TITLE IS NOT A GRANT: .owned-paths.yaml is enumeration-based -- if a commit is refused, route to the owning lane rather than overriding. No scoped-arming row exists for this seat in org/XXX.md Step 1b-F as of 2026-08-05; if one lands there later, that row is the only source of truth."
+        }
         '^0\.0\.[0-9]+_UA_' {
             return "$header`n  Tier-0 Utility Agent (UA) -- principal-facing tool surface (LD-0220, 2026-06-26). Arms ZERO crons; pre-armed via its launcher skills.`n  1. Run /watcher ONCE (arm-at-load).`n  2. Run the launcher skill(s) in your prompt.md 'On Launch' section (e.g. mstools arms /teams-assist; awstools arms its portal/AWS read tools) so your toolset is live the moment you launch.`n  Event-driven + on-demand: act on Monitor-delivered notifications; draft-and-ask on anything outward-facing/irreversible; not part of the PRD->TO dispatch hierarchy. Identity/brief: org/tier0_utility/$base/."
         }
