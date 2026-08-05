@@ -59,9 +59,15 @@ a law-pinned artifact is the name-pattern stopgap class. CRO now enforces law-pi
 
 ## 5. Also closed
 
-AE~E's Rule-1 census closure accepted (7/7 dispositioned; **the 3 decommission dossiers I explicitly
+AE~E's Rule-1 census closure accepted (7/7 dispositioned; **the decommission dossiers I explicitly
 did NOT close** — Andrew-confirm class, carried OPEN-AT-ANDREW so 7/7-dispositioned is never read as
-7/7-resolved). CVO's missions-STANCE seam absorbed with a precedence rule (ratified value outranks a
+7/7-resolved). **CORRECTED by AE~E 004443Z: the open set is TWO, not three** — I read the original
+verdict table and missed the same-file ADDENDUM (@0983e372a) where base CTO ruled D2
+`schwab-anonymizer` ADOPT-NOW (already imported zero-diff into security-ops, tag
+`security-ops-v0.2.1`); its retire question rides a later 49F owner consult and is NOT in the
+deletion queue. Open-at-Andrew = `opal-bd-transaction-consolidator` + `sentiment_query_api`.
+*A deliverable I cited by commit was amended in place after I read it — reading a file once and
+citing it later is a vintage claim, and mine was stale by minutes.* CVO's missions-STANCE seam absorbed with a precedence rule (ratified value outranks a
 migrated seed). Kimi pipeline ran its first scheduled-era day; F2 ruled scores-only.
 
 ## Compiler Tools
@@ -79,5 +85,5 @@ migrated seed). Kimi pipeline ran its first scheduled-era day; F2 ruled scores-o
 ## Open at session end
 
 Andrew's sitting: v6 4 cohorts + 2 architecture calls · cohort-B verdict · 314-row precedence
-residue · law-pinned-path predicate · 3 decommission dossiers. Kimi: comp-cochange gate half now
+residue · law-pinned-path predicate · 2 decommission dossiers. Kimi: comp-cochange gate half now
 cleared → **Phase-0 sitting is unblocked**; v3 runner build (~B quiet window) still open.
