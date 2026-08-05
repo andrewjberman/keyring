@@ -126,18 +126,27 @@ check "N4 echo mentioning terraform apply" 'echo "never run bare terraform apply
 # The ORIGINAL INTENT of these arms is still worth asserting and is preserved: the sanctioned merge
 # remedy must not be denied BY THE REBASE GATE. So assert the GATE, not the bare verdict -- a
 # verdict-only assertion cannot tell "denied for the right reason" from "denied for the wrong one".
-verdict_gate() { # command -> the BLOCKED(...) tag of whichever gate denied, or PASS
-    local out
+# CVO N5/N6 residual (2320Z, adjudicated): the prior form echoed PASS on a NON-DENY, but an ERRORED
+# hook ALSO produces a non-deny (empty stdout), so a gate that CRASHED read as PASS. That was live at
+# 1323Z when never-rules-gate.sh threw a parse error under an in-place edit. Fixed per CRO's vacuity
+# rule (DENOMINATOR_ERRORS/DERIVED_UNIVERSE §2): an instrument that did not run reports UNRUN, NEVER pass.
+# DISCRIMINATOR, exercised: a genuine ALLOW is rc=0 + empty stdout; an errored hook is rc!=0 + empty
+# stdout. The exit code is the only signal that separates them, so verdict_gate keys on it.
+verdict_gate() { # command -> BLOCKED(...) tag if denied | "ALLOW" if cleanly allowed | "UNRUN" if the hook errored
+    local out rc
     out=$(printf '%s' "$1" | "${JQ:-jq}" -Rs '{tool_input:{command:.}}' | bash "$HOOK" 2>/dev/null)
+    rc=$?
     if printf '%s' "$out" | grep -q '"permissionDecision":"deny"'; then
         printf '%s' "$out" | grep -oE 'BLOCKED \(([^)]*)\)' | head -1
-    else echo PASS; fi
+    elif [ "$rc" -ne 0 ]; then echo UNRUN     # hook crashed/parse-errored -> NOT a pass
+    else echo ALLOW; fi
 }
 check_not_rebase_gate() { # name, cmd -- must NOT be denied by the NEVER#7 rebase gate
     local g; g=$(verdict_gate "$2")
     case "$g" in
+        UNRUN)     FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "$1" "UNRUN -- hook produced no verdict (crash/parse-error), NOT a pass" ;;
         *NEVER#7*) FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "$1" "denied by the REBASE gate" ;;
-        *) PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "$1" "${g:-PASS} (not the rebase gate)" ;;
+        *)         PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "$1" "$g (not the rebase gate)" ;;
     esac
 }
 check_not_rebase_gate "N5 the REMEDY: git pull (merge) not rebase-gated" 'git pull origin CLOUD'

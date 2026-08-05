@@ -19,6 +19,16 @@ come from a measurement too, which is the argument for treating this file as unf
 **The deliverable is the ASSERT, not the predicate.** And a guard never observed to fail has not been
 shown that it can — mutate it before trusting it.
 
+> **THE VACUITY COROLLARY (CRO's rule, landing a second time 2026-08-05).** Every assert above can
+> itself go silent. An assert that cannot evaluate its input — the source did not run, the hook
+> crashed, the census returned empty — **reports UNRUN, NEVER pass.** *A control that returns clean on
+> no input is not a control.* Two independent instances one day apart: a sensor-side positive control
+> that could not name a member it knew was present (CRO, denominator doctrine), and a gate-test arm
+> that read a crashed hook's empty output as PASS (the `never-rules-gate` N5/N6 repair — the errored
+> hook was **live at 1323Z**). The discriminator is almost always the exit code: a clean allow and a
+> crash both produce empty output, and only `rc` separates them. **Treat an empty result as UNRUN
+> until proven ALLOW.**
+
 ## Why clause 1 alone is a trap
 
 A hand-drawn list fails **visibly and statically**: it goes stale, and eventually someone notices the
