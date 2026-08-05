@@ -1,10 +1,22 @@
-# Intent–Denominator Synchronization — the generalized schema behind every coverage failure
+# DENOMINATOR — the ontology of coverage
 
-**Status:** foundational doctrine (binds future behaviour; design spine of NFRA_ONTOLOGY2 +
-NFRA_ARCHTOOL). **Authored:** 2026-07-23, `1.0.0_SA_CTO~Z`.
+> **FILENAME IS LEGACY, DELIBERATELY.** This file is `INTENT_DENOMINATOR_SYNCHRONIZATION.md` because
+> **45 files point at that path**. The *title* is the subject; the *path* is an address. Renaming would
+> manufacture ~45 dangling citations — the defect this document is about.
+
+**Status:** foundational doctrine. The single authoritative home for denominator work: what a
+denominator is, how it goes wrong, how change is classified against it, and what to do at each class.
+
+**Centralized 2026-08-05 by `4.0.0_SA_CRO` on Andrew-direct** — *"expand that to Denominator work as a
+whole … an ontological subject that really could use a centralized coherent document"*, and *"would
+rather repoint and have centralized doc versus risk drift."* Absorbed: the route-classification model
+(formerly `infra/system/ontology/ROUTE_LOGIC_AND_THE_SEMANTIC_BOUNDARY.md`, now a pointer) and the five
+orthogonal shapes (from `ARCHETYPAL_LEARNING_LOOP.md` §2, which retains the loop design).
+
 **Instances:** [`docs/references/INTENT_DENOMINATOR_INSTANCES_20260723.md`](../references/INTENT_DENOMINATOR_INSTANCES_20260723.md)
-(`D-1`…`D-12`). Split 2026-08-05 on Andrew-direct: governance carries principle, the record carries
-what happened.
+(`D-1`…`D-12`).
+
+---
 
 ## §0 The directive, VERBATIM (Andrew, 2026-07-23)
 
@@ -15,34 +27,74 @@ what happened.
 > this is being able to synchronize intent with denominator. Our task here is to identify how this
 > process can be generalized."
 
-## §1 The two quantities, defined once
+---
 
-Every assertion the estate makes — a tool answer, a gate verdict, a freshness check, a completeness
-claim, a review sign-off — operates over a set. Two versions of that set exist, and the entire failure
-class is the gap between them:
+# PART I — WHAT A DENOMINATOR IS
 
-- **INTENT** — the set the assertion is SUPPOSED to cover. An **obligation**, sourced from **above**:
-  a governing level, a registry, a law, a contract.
-- **DENOMINATOR** — the set the assertion ACTUALLY covers. A **population**, enumerated from
+## §1 The two quantities
+
+Every assertion the estate makes operates over a set. Two versions of that set exist, and the entire
+failure class is the gap between them:
+
+- **INTENT (`I`)** — the set the assertion is SUPPOSED to cover. An **obligation**, sourced from
+  **above**: a governing level, a registry, a law, a contract.
+- **DENOMINATOR (`D`)** — the set the assertion ACTUALLY covers. A **population**, enumerated from
   **below**: the concrete instances that exist.
 
-An assertion is **SOUND** iff `DENOMINATOR ⊇ INTENT`. The **COVERAGE GAP** is `INTENT \ DENOMINATOR`.
+An assertion is **SOUND** iff `D ⊇ I`. The **COVERAGE GAP** is `I \ D`.
 
 > **A coverage failure is not a wrong answer; it is a correct answer over an unstated denominator
 > smaller than the intent.** That is why it reads green: the arithmetic is right, the scope is
 > silently wrong.
 
-## §2 The defect: a denominator that is its own configuration
+## §2 Two quantifiers, two independent failures
 
-The pathological case is **INTENT and DENOMINATOR drawn from the SAME artifact.** The instrument
-checks a thing against a set the thing itself defines. Then `INTENT ≡ DENOMINATOR` by construction,
-the gap is structurally 0, and **the instrument cannot fail even when it is wrong.**
+`D ⊇ I` is only half of soundness. An assertion carries **two** quantifiers:
 
-**The fix is always one shape: SEVER intent from denominator.** Source intent from a governance level
-ABOVE the artifact being checked; enumerate the denominator from the layer BELOW at run time; and
-DECLARE the residual gap. *(Instances: `D-3`, `D-4`, `D-6`.)*
+```
+    an assertion:   ∀ x ∈ D . P(x)          what it is taken to CLAIM:   ∀ x ∈ I . Q(x)
+                        │    │                                               │    │
+                        │    └── the PREDICATE you evaluated                 │    └── the property
+                        └─────── the DOMAIN you enumerated                   └─────── the population
+```
 
-## §3 The C(N) ladder — the two-directional flow this law rides on
+| # | Condition | Fails as | Name |
+|---|---|---|---|
+| 1 | `D ⊇ I` — the domain covers the intended population | **the SENSOR** | CLASS 1, domain under-reach |
+| 2 | `P ⊨ Q` — the predicate implies the property that matters | **the ORACLE** | CLASS 2, predicate insensitivity |
+
+> **A perfect `D` does not save a weak `P`.**
+
+**THE SENSOR BOUNDS THE ORACLE SPACE.** An oracle is a function over what the sensor **emits**, so
+oracle selection is a choice *within the sensor's emitted vocabulary* — **and if the property you need
+is not in that vocabulary, there is no oracle to select.**
+
+> ### Diagnostic order, and it is NOT symmetric:
+> ### ask **"does my sensor emit the token this question needs?"** BEFORE **"is my predicate sensitive?"**
+> An oracle question asked over a short sensor is unanswerable — **and it will not feel unanswerable.
+> It will return a clean verdict.**
+
+**The sensor-side control:** *name a member you KNOW is in `I`. Does `S` emit it?* That is the positive
+control, and it is the only check that dissents when two instruments share a sensor.
+⚠ **Its failure mode is vacuity:** if you cannot name a member you already know is in `I`, the control
+**does not pass — it does not run.** Report UNRUN, never clean.
+
+*(Taxonomy detail — orthogonality, the monotonicity test, the detection asymmetry — is owned by
+`infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md`, which defers the LAW to this file.)*
+
+## §3 The defect: a denominator that is its own configuration
+
+The pathological case is **INTENT and DENOMINATOR drawn from the SAME artifact.** The instrument checks
+a thing against a set the thing itself defines. Then `I ≡ D` by construction, the gap is structurally 0,
+and **the instrument cannot fail even when it is wrong.**
+
+**A coverage fraction is evidence only if its denominator is derived from OUTSIDE the instrument's own
+configuration.** `9/9` is a true statement about `PUBLISH_MAP`. Where the subjects are enumerable, the
+denominator is the **subject registry**, and the check is a **set-difference** against it.
+
+**The fix is always one shape: SEVER intent from denominator.** *(Instances: `D-3`, `D-4`, `D-6`.)*
+
+## §4 The C(N) ladder — the two-directional flow
 
 ```
             INTENT flows DOWN                         DENOMINATOR flows UP
@@ -56,140 +108,290 @@ DECLARE the residual gap. *(Instances: `D-3`, `D-4`, `D-6`.)*
    C0  FACT        ──type obligates─────▶      ◀──nodes are the atoms──  C0
 ```
 
-- **UPWARD = COMPOSITION = where the DENOMINATOR comes from.** Enumerate what exists bottom-up.
-- **DOWNWARD = OBLIGATION = where INTENT comes from.** A C3 contract obligates its C2 motifs; a
-  motif's shape obligates its C1 edges; a type obligates its C0 facts.
-
 **An assertion at layer N is sound iff the population reaching it from below covers the obligation
-reaching it from above.** Recursive: the same instrument applies unchanged at C0–C3 and at the D1/D2/D3
-dynamic rails.
+reaching it from above.** Recursive — the same instrument applies at C0–C3 and at the D1/D2/D3 rails.
 
-## §4 The dynamic rails give intent and denominator their GRAIN
+**The dynamic rails give the sets their GRAIN.** *Sets of what?* — unanswerable without a **grain**
+(D1), a **path** (D2) and a **contract** (D3). D3 supplies the intent; D1+D2 enumerate the denominator.
+**Freshness, provenance and staleness-vs-frozen are coverage gaps** between a D3 obligation and a D1/D2
+population.
 
-Sets *of what?* Unanswerable without a **grain**, a **path**, and a **contract** — ONTOLOGY2's D1/D2/D3:
-
-- **D3 (contract) SUPPLIES THE INTENT** — the cadence/completeness/canonical-source obligation.
-- **D2 (path) + D1 (grain) ENUMERATE THE DENOMINATOR** — walking the flow at the right grain.
-- **Freshness, provenance, staleness-vs-frozen are coverage gaps** between a D3 obligation and a
-  D1/D2 population. *"Freshness is downstream of flow"* is exactly this.
-
-## §5 How CHANGE happens — the change-propagation law
-
-A change enters at exactly one layer/rail. **The failure mode is a change that propagates in only ONE
-direction:**
-
-- **UP but not DOWN** → the population grew, no obligation was updated → the new instance is unchecked
-  (silent extra).
-- **DOWN but not UP** → the obligation grew, the population was not re-enumerated → the new requirement
-  is unmet and invisible (silent gap).
-
-> **Any change re-synchronizes BOTH directions or it is drift. A change is complete only when its
-> layer's denominator and its layer's intent have both been re-derived from it.**
-
-**And the deniable form: a new GRAIN is a change to the denominator that no diff shows.** A guard's
-coverage goes stale the moment the thing it guards gets more granular — nobody edits the guard, nobody
-edits the law, and the gap opens anyway. **Re-derive a registration invariant against the surface's
-CURRENT grain, not the grain it was written for.** *(Instance: `D-7`.)*
-
-## §6 Intent-vs-CONFIGURATION is the special case, not a separate axis
+## §5 Intent-vs-CONFIGURATION is a special case, not a separate axis
 
 DESIRED-vs-APPLIED is **one instance** of intent–denominator divergence where the intent happens to be
-a local configuration. It is more dangerous precisely because a config is BOTH a declaration of intent
-AND, if you let it, a definition of the denominator — which collapses them into the §2 tautology.
+a local configuration — more dangerous precisely because a config is BOTH a declaration of intent AND,
+if you let it, a definition of the denominator, which collapses it into §3.
 
 > **A configuration is a legitimate INTENT source only when it is governed from above; the moment it
 > also supplies the denominator, it is the denominator-is-its-own-configuration defect wearing a
 > config's clothes.** DESIRED-vs-APPLIED, completeness, freshness and coverage are not four problems —
 > they are one axis measured at four sites.
 
-## §6b YOUR PROBE IS AN INSTRUMENT TOO
+---
 
-> **A sample that misses a type reads EXACTLY like an absence of the property.**
+# PART II — CLASSIFYING CHANGE AGAINST A DENOMINATOR (the route model)
 
-A broad scan returning nothing is not evidence — a true absence and a sample that missed the relevant
-subset produce **byte-identical silence**. And a **malformed** probe does not fail loudly: it returns a
-clean, plausible number — a 0, an empty set, a byte-identical diff — that reads as a FINDING against a
-working tool. *(Instances: `D-9` scope, `D-10` shape.)*
+*Absorbed 2026-08-05 from `ROUTE_LOGIC_AND_THE_SEMANTIC_BOUNDARY.md` (CTO~Z 2026-07-24, derived from an
+Andrew working session; several corrections in it are his).*
 
-**This direction is the expensive one:** a false finding against a *working* instrument spends the
-author's time and the tool's credibility, and **a retraction never fully catches its own claim.**
+## §6 It is a 2×2, not a three-way switch
 
-**THE RULE, and it is the existing law pointed one step back at the apparatus doing the pointing:**
-run **Rule 22a's positive control on your PROBE** — as a separate invocation — before you report on the
-instrument. **If your probe cannot find a known-present instance, your probe is broken, not the target.**
+Every change gets asked **two independent questions** — and Q1 must precede Q2, because *"did anything
+move?"* is meaningless about a thing you never looked at.
 
-**THE FIRING CONDITION — because you cannot control every row:**
+- **Q1 — Did I look there?** Is it on an axis the enumerator traverses? *(the SENSOR)*
+- **Q2 — Did anything move?** Does any predicate react? *(the ORACLE)*
 
-> **WHEN YOUR INSTRUMENT REPORTS A DEFECT IN SOMETHING YOU HAVE INDEPENDENT GROUND TRUTH ON, CHECK THE
-> INSTRUMENT FIRST.**
+|  | **A predicate reacts** | **No predicate reacts** |
+|---|---|---|
+| **Traversed** (I looked) | **ROUTE A** — seen and guarded | **ROUTE B** — seen but unguarded |
+| **Not traversed** (I did not) | **C-DETECTED** — something moved, cannot localize | **C-SILENT** — total silence |
 
-A finding that contradicts ground truth you already hold is either a discovery that overturns what you
-know — rare — or a broken instrument — common. **A finding that contradicts *any* fact you
-independently hold halts the whole census until the instrument is cleared**, because a runner that lied
-about the row you know cold lied about the rows you don't. **One trusted row disciplines the entire
-denominator, and it costs nothing — you already hold the answer.** *(Instance: `D-11`.)*
+**C-DETECTED is real and usually omitted from the model.** A coarse predicate — a file hash, a byte
+count, an mtime — reacts to *any* change including one you cannot localize. Maximally sensitive,
+minimally informative, and **the cheapest available bridge into the inference gate.**
 
-## §6c A SOUND instrument's TRUE output can still be an unfalsifiable verdict
+> ### C-SILENT IS THE KILLER. Invisible *and* nothing moved.
+> The live case: a section added to the source, never traversed by the enumerator, and no predicate
+> sensitive to it. **Thirty consecutive ticks of nothing.** *(`D-12`.)*
 
-> **BOUNDARY:** the taxonomy — CLASS 1 (domain under-reach, `D ⊉ I`) vs CLASS 2 (predicate
-> insensitivity, `P ⊭ Q`), their orthogonality, the monotonicity test, the detection asymmetry — lives
-> in `infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md`. **This file remains the
-> authoritative LAW; that file owns the taxonomy and cites this one. If they disagree, this file wins.**
+**Per change the cells are exclusive; per cycle they are not.** One head-advance produces a *mixed*
+delta. **The routes classify ITEMS, not TICKS**, so honest output is a **distribution, never a verdict**:
 
-§6b covers a **broken** probe. This is the one it does not cover, and **it survives longest precisely
-because nothing about it looks wrong.** A malformed probe eventually returns an *implausible* number,
-and implausibility is a trigger. A sound probe returning a true-but-incomplete verdict returns a
-**plausible** number, forever. There is no anomaly to notice; it is caught only by an inference nobody
-is scheduled to make. *(Instance: `D-12` — a correct 100% held for ~30 ticks.)*
+```
+head @1.3 vs pin @1.2 · 6 items -> A · 1 item -> B · 1 unwalked section -> C
+```
 
-**THE OPERATIONAL RULE, cheap because it runs on evidence you already have:**
+**A tick that reports a single route has almost certainly collapsed a mixed delta into its most
+convenient member.**
 
-> **WHEN YOU ESTABLISH A STRUCTURAL PROPERTY, ASK WHAT INSTRUMENT THAT PROPERTY BLINDS.**
-> *Additivity* blinds presence-checks. *Supersetness* blinds membership checks. *Idempotence* blinds
-> run-count checks. *Monotonicity* blinds threshold checks. **Proving the property and trusting the
-> instrument are the two halves nobody puts together.**
+## §7 The one hard ordering constraint
 
-**The sharper self-directed form:** not *"is there evidence against my standing verdict?"* — that
-invites a search of the world. **"Have I already PRODUCED evidence against my standing verdict and
-failed to connect it?"** — a search of your own outputs, bounded and free. *A verdict held for thirty
-ticks deserves that search precisely because nothing has gone wrong.*
+> ### RESIDUE MUST BE COMPUTED BEFORE THE DELTA IS TRUSTED.
+> Until you know **how much of the surface you examined**, *"here's what changed"* is a statement about
+> your traversal, not about the source — and **a clean delta over a 40%-traversed surface reads
+> identically to a clean delta over a complete one.**
 
-## §7 The generalized PROCESS — Andrew's ask, answered
+## §8 The three routes
 
-**To synchronize intent with denominator, at any layer, for any assertion:**
+**ROUTE A — new members on a known axis · MECHANICAL · fully autonomous.** The enumerator already walks
+the axis and an existing predicate already discriminates. Extend `D`, reuse `P`, re-run, close in-cycle.
+**No human, ever.** *This should be the overwhelming majority of cycles; if it is not, the schema is
+under-built and the inference gate is being asked to do routine work.*
+
+**ROUTE B — traversed, but no predicate moves · SEMANTIC, recoverable · semi-autonomous.** Every
+predicate in the battery is monotone under the observed change-type, so nothing can redden regardless
+of how far the source drifts. **Determinism names the gap precisely** — *"presence-check is monotone
+under addition, and the observed edit was additive"* — but cannot choose the replacement.
+
+**ROUTE C — an orthogonal shape · SEMANTIC, committal · determinism HALTS.** The residue detectors fire.
+The loop reports the shape, the evidence, and its own inability to proceed, as a **blocking item, never
+a note**. **A loop that guesses at an axis it lacks produces exactly the confident-wrong-answer class
+this exists to eliminate.**
+
+```
+change detected
+├── MECHANICAL ──────────► A   (autonomous; no meaning-work whatsoever)
+└── SEMANTIC
+    ├── recoverable ─────► B   (verifiable; delegable behind a mutant)
+    └── committal ───────► C   (unverifiable; needs review; errors latent)
+```
+
+## §9 ⚠ "C = A NEW AXIS" UNDERCOUNTS C — the most common misreading
+
+**New-axis is the most legible C. It is NOT the definition.** The five codified orthogonal shapes:
+
+| # | SHAPE | DETERMINISTIC DETECTOR |
+|---|---|---|
+| 1 | **NEW AXIS** — a kind of thing the enumerator does not traverse | unwalked structural residue GREW |
+| 2 | **GRAIN SHIFT** — same axis, finer granularity | member count explodes at constant head; child-nodes appear under leaves |
+| 3 | **SEMANTIC REDIRECT** — same members, meaning moved | members identical, pass-rate unchanged, the field's SOURCE changed |
+| 4 | **VOCABULARY POVERTY** — a truth has no slot in the type | an observed outcome has no expressible member → coerced to the nearest sayable value |
+| 5 | **MERGE / SPLIT** — 1 concept → 2 | one member's edges bifurcate into disjoint clusters |
+
+> **GRAIN SHIFT (#2) IS A C, NOT A B** — and it is the one most often misfiled. *A guard's coverage goes
+> stale the moment the thing it guards gets more granular:* nobody edits the guard, nobody edits the law,
+> and the gap opens anyway, **because a new grain is a change to the denominator that no diff shows.**
+> The estate's own instance — an invariant written at TOOL grain while declarations grew to SUBCOMMAND
+> grain — is a **wrong C**, and it cost more than any single missing predicate has. *(`D-7`.)*
+
+> **SEMANTIC REDIRECT (#3) IS THE TRAP.** Every mechanical signal reads *"nothing changed"* — same
+> members, same pass rate, no residue. **If your model says "C means a new axis," you will classify this
+> as B, go try to fix the instrument, and fail — because the instrument is fine. The thing it measures
+> stopped meaning what its name says.**
+
+### The formulation that survives all five shapes
+
+> # B changes the INSTRUMENT. C changes the MODEL.
+
+- **B** — the thing being measured is fine; the *measurement* is wrong. **Fix the measurement.**
+- **C** — the measurement cannot be fixed, because the *thing being measured* is mis-conceived. **Fix
+  the model; the measurement follows.**
+
+## §10 B is DISCOVERY; C is COMMITMENT — and this is why one is verifiable
+
+In **B** there is already a right answer in the world and you are building an instrument to track it.
+You are **recovering** a truth, and you can be plainly **wrong** — the world grades you.
+
+In **C** there is no answer waiting to be recovered. *Is this one axis or two? Does it sit at C1 or
+between C1 and C2?* **There is no fact of the matter until you decide.** You are not discovering a
+grain — you are **legislating** one, and it becomes true by being adopted.
+
+**The discriminator is not "does this start with a discovery?"** (both can) **but what CLOSING it
+requires: B closes by finding; C closes by deciding.**
+
+| | **ROUTE B** | **ROUTE C** |
+|---|---|---|
+| The act | **selection within a bounded space** | **construction of the space** |
+| You are given | an axis, enumerable members, a known change-type | nothing to point at |
+| The question | *"which property of this known thing do I pin?"* | *"what is the thing, at what grain, sited where, and does it matter?"* |
+| Candidate set | small and listable | open |
+| Consistency check | against the existing type | none available |
+| Oversight | delegable behind a mechanical gate | **needs review; errors are latent** |
+| Cost when wrong | the gap stays open behind a guard that looks like coverage | a mis-shaped dimension is **codified into the schema** and everything downstream inherits it |
+
+**B has a gradient:** when the change-type is addition and a version head is sitting right there, the
+pin choice is nearly forced. **B's floor approaches A; C's floor is always high.**
+
+## §11 ⚠ B's verifiability is RELATIVE TO ITS SENSOR
+
+In B, once you pick a predicate you can prove you picked correctly: mutate the source with the
+change-type, confirm the guard reddens. **The machine grades your design act, same tick.**
+
+> **BUT THE UNQUALIFIED CLAIM IS FALSE, AND IT WAS LOAD-BEARING.** The mutant is injected into, and
+> observed through, **THE SAME SENSOR**.
+>
+> ### A SHORT SENSOR YIELDS A SHORT MUTANT, AND IT PASSES.
+> ### The mutant cannot test its own sensor's reach — not by care, not by repetition, not at any rate.
+
+**Exercised, not reasoned:** two independently-built censuses reconciled **member-for-member at 13** —
+and both carried the identical `if not f.endswith('.py')` filter, so both were short by the same file.
+The remedy in force was *pin the SET, not the COUNT*, precisely to defeat count-level agreement; **the
+member-level diff returned "identical, no action."** Only a **different enumeration** dissented.
+
+> **AGREEMENT BETWEEN TWO INSTRUMENTS THAT SHARE A SENSOR IS ONE MEASUREMENT COUNTED TWICE — and it
+> reads as corroboration.** The sensor-side check is not a mutant; it is the positive control (§2).
+
+**In C nothing grades the judgment.** You can verify the *machinery* — does the traversal walk it, does
+the predicate redden — but that tests the artifact, not the conception. Whether the axis is rightly
+grained, sited and named: **no mutant answers that. Only a later failure does.**
+
+## §12 B lands on C three ways — and C returns to A exactly once
+
+1. **B was a misdiagnosis; it was C all along.** You go to pick a pin and discover *why* nothing moved:
+   the thing that changed is a new **kind** of thing your axis cannot express. **This surfaces only when
+   someone tries to write the fix** — an argument for attempting the remedy early rather than filing B
+   and scheduling it.
+2. **B correctly diagnosed, but the remedy requires a new axis.** Diagnosis right; remedy routes through
+   inference anyway.
+3. **Repeated B on one axis is a C-signal by rate.** You are patching predicates while the *dimension*
+   is wrong-shaped. No single event escalates; the pattern does. *(The weak, after-the-fact form of §11.)*
+
+**And C returning to A is the entire purpose of the inference gate** — inference names the axis, emits a
+traversal and a predicate, and that axis becomes ordinary deterministic surface. Which is why the
+inference output contract demands **a mutant proving the new predicate can redden**: without it,
+inference resolves C into a **fresh B** — a new guard monotone under the very thing it was built for.
+**You would have spent the scarce resource and bought nothing.**
+
+---
+
+# PART III — WHAT TO DO
+
+## §13 The generalized PROCESS — synchronize intent with denominator, at any layer
 
 1. **NAME THE LAYER/RAIL** (C0–C3 structural; D1–D3 dynamic). An assertion that cannot name its layer
    is answering an unknown question.
 2. **SOURCE INTENT FROM ABOVE** — a governed obligation one level up, never from the artifact checked.
 3. **ENUMERATE DENOMINATOR FROM BELOW, AT RUN TIME** — real instances; never frozen, never curated,
    never the same artifact that supplied the intent.
-4. **DECLARE THE GAP** — `INTENT \ DENOMINATOR`, printed, every run. **A zero gap is a claim that must
-   be shown, never assumed.** An instrument that cannot compute the gap renders UNKNOWN, loudly.
+4. **DECLARE THE GAP** — `I \ D`, printed, every run. **A zero gap is a claim that must be shown, never
+   assumed.** An instrument that cannot compute the gap renders UNKNOWN, loudly.
 5. **ON CHANGE, RE-DERIVE BOTH** — or it is drift.
 
-**Layer-agnostic by construction** — the same five steps define a coverage declaration, a completeness
-gate, a freshness check, a registration invariant, a review sign-off, and a synthesized tool's
-self-test. NFRA_ARCHTOOL's stability grader is this process pointed at itself: a pattern is stable
-enough to build a tool from **only when its intent source is governed (law, not habit) and its
-denominator is enumerable (bounded, not open)**.
+## §14 The change-propagation law
 
-## §8 Two standing corollaries from the instance record
+A change enters at exactly one layer/rail. **The failure mode is propagation in only ONE direction:**
+
+- **UP but not DOWN** → the population grew, no obligation was updated → the new instance is unchecked.
+- **DOWN but not UP** → the obligation grew, the population was not re-enumerated → the new requirement
+  is unmet and invisible.
+
+> **Any change re-synchronizes BOTH directions or it is drift.** A change is complete only when its
+> layer's denominator and its layer's intent have both been re-derived from it.
+
+## §15 Your probe is an instrument too
+
+> **A sample that misses a type reads EXACTLY like an absence of the property.**
+
+A broad scan returning nothing is not evidence. A **malformed** probe does not fail loudly — it returns
+a clean, plausible number that reads as a FINDING against a working tool. **This direction is the
+expensive one:** a false finding against a *working* instrument spends the tool's credibility, and a
+retraction never fully catches its own claim. *(`D-9`, `D-10`.)*
+
+**Run the positive control on your PROBE, as a separate invocation, before reporting on the instrument.
+If your probe cannot find a known-present instance, your probe is broken, not the target.**
+
+**THE FIRING CONDITION — because you cannot control every row:**
+
+> ### WHEN YOUR INSTRUMENT REPORTS A DEFECT IN SOMETHING YOU HAVE INDEPENDENT GROUND TRUTH ON, CHECK THE INSTRUMENT FIRST.
+
+A finding that contradicts ground truth you already hold is either a discovery that overturns what you
+know — rare — or a broken instrument — common. **A finding contradicting *any* fact you independently
+hold halts the whole census until the instrument is cleared**, because a runner that lied about the row
+you know cold lied about the rows you don't. **One trusted row disciplines the entire denominator, and
+it costs nothing.** *(`D-11`: it fired on row 1 of 10, before a single false finding shipped.)*
+
+## §16 A sound instrument's TRUE output can still be unfalsifiable
+
+§15 covers a **broken** probe. This is the one it does not cover, and **it survives longest because
+nothing about it looks wrong.** A malformed probe eventually returns an *implausible* number, and
+implausibility is a trigger. A sound probe returning a true-but-incomplete verdict returns a
+**plausible** number, forever.
+
+> ### WHEN YOU ESTABLISH A STRUCTURAL PROPERTY, ASK WHAT INSTRUMENT THAT PROPERTY BLINDS.
+> *Additivity* blinds presence-checks. *Supersetness* blinds membership checks. *Idempotence* blinds
+> run-count checks. *Monotonicity* blinds threshold checks. **Proving the property and trusting the
+> instrument are the two halves nobody puts together.**
+
+**The self-directed form:** not *"is there evidence against my standing verdict?"* — that invites a
+search of the world. **"Have I already PRODUCED evidence against my standing verdict and failed to
+connect it?"** — a search of your own outputs, bounded and free. *A verdict held for thirty ticks
+deserves that search precisely because nothing has gone wrong.*
+
+## §17 Two standing corollaries
 
 **THE FIX FOR A FROZEN COUNT IS NEVER A FRESHER COUNT.** A hand-maintained digit beside a growing
 enumeration is a second, unsynchronized copy of the denominator. Delete the digit; the list is the
-count. *(This file's own §8 heading committed it: it read "the five instances" over six, then seven.)*
+count. *(This file's own former §8 heading read "the five instances" over six, then seven.)*
 
 **A CORRECT CITATION BOUNDS WHAT YOU VERIFIED, NEVER WHAT IS THERE.** A mechanism confirmed on one of
 two layers is not a confirmed mechanism — it is a denominator that happens to contain a true sentence.
-Rule 22's `file:line @ commit-ish` can be satisfied exactly and still not be the whole mechanism.
-*(Instance: `D-7`, caught only because acceptance was written as BEHAVIOR rather than registry-presence.)*
+Rule 22's `file:line @ commit-ish` can be satisfied exactly and still not be the whole mechanism. *(`D-7`.)*
+
+## §18 What the machinery is FOR
+
+| Instrument | Asks | Locates |
+|---|---|---|
+| **Residue** | *"is there something here I cannot mechanically account for?"* | the edge of what I traverse |
+| **Monotonicity** | *"can my mechanics react to what I can see?"* | the edge of what I can detect |
+
+> **DETERMINISM CAN COMPUTE THE RESIDUE. IT CANNOT INTERPRET IT.** It can always tell you **that** it is
+> blind; it can never tell you **what** the blindness is about. **The deterministic machinery exists to
+> find its own boundary and stop there loudly, rather than guessing past it.**
 
 ---
 
-**Related:** [`CONTROLS_OVER_CARE.md`](CONTROLS_OVER_CARE.md) · [`TRIGGER_LAYER.md`](TRIGGER_LAYER.md)
-(a finding lands as a gate; this says what the gate must check) · `NFRA_ONTOLOGY2_PRD.md` ·
-`NFRA_ARCHTOOL_PRD.md` · `NFRA_PSTMRT_PRD.md` (first enforcement site) ·
-`docs/references/MDPF_POSTMORTEM_20260722.md` (the incident that started it).
+## Cross-references (cite, do not copy)
 
-*Split 2026-08-05 by `4.0.0_SA_CRO` (380 → this + `D-1`…`D-12`). **Nothing cut — the evidence moved
-and is linked.***
+| The thing | Its home |
+|---|---|
+| The instances behind this file | [`../references/INTENT_DENOMINATOR_INSTANCES_20260723.md`](../references/INTENT_DENOMINATOR_INSTANCES_20260723.md) |
+| Class 1 / Class 2 taxonomy detail | `infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md` |
+| The learning-loop design these routes sit inside | `infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md` |
+| How you fail to see the thing | [`CONTROLS_OVER_CARE.md`](CONTROLS_OVER_CARE.md) |
+| Where an assertion sits (14 shapes) | [`MECHANISM_LAWS.md`](MECHANISM_LAWS.md) |
+| A finding lands as a gate, never a note | [`TRIGGER_LAYER.md`](TRIGGER_LAYER.md) |
+| A value must carry its basis | [`A_VALUE_MUST_CARRY_ITS_CLAIM.md`](A_VALUE_MUST_CARRY_ITS_CLAIM.md) |
+
+**This file is the authoritative LAW for denominator work. If any of the above disagrees with it, this
+file wins and the other is the drift.**
