@@ -23,6 +23,7 @@ directory an engagement's artifacts live in.
 | **RCN-0002** | 2026-07-22 | **Orion Advisor Solutions** — Opal-accessible tenant | 2 (teardown, BD×Orion structural comparison) | 2 HARs (1 truncated) + public API docs + Eclipse OpenAPI | `4.0.0_SA_CRO` | **DELIVERED** |
 | **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
 | **RCN-0004** | 2026-08-03 | **The Opal repo itself** — Repo Coherence Graph (NFRA_REPOCOHERENCEGRAPH): knowledge-plane debt cleanout spec | 1 (implementation PRD) + project registration | Andrew's RCG proposal docx (326 paras) + the NFRA_VELOCITY record (program, 2 PRDs, type dictionary, constitution, contracts folder, 3 CVO logs) + repo census (25,273 tracked files) + 4 Andrew design rounds | `4.0.0_SA_CRO` | **DELIVERED** — spec staged for Andrew review; build HELD at CTO arch-gate + COO decomposition |
+| **RCN-0005** | 2026-08-05 | **Opal MDPF portfolio ontology** -- five-category taxonomy, Model lifecycle, Client Mandates, Sleeves, selection/advisory axes, and fee basis | 2 (research/design specification + visual ontology diagram) | MDPF_GLOBAL PRD + Andrew recording + MDPF_3FIRMS PRD + live crosswalk source + Andrew/Yang direction + 5 Andrew/CRO design rounds + exact-contract repo scan across 5 roots | 4.0.0_SA_CRO | **STAGED FOR ANDREW REVIEW** -- no project/build/serve mutation |
 
 ---
 
@@ -259,6 +260,62 @@ did not exercise risk-stats or after-tax screens, and BD is **not** scored as la
 - **NFRA_AKPIPE registered** (`org/projects/NFRA_AKPIPE.json`, active, phase = spec-landed pre-build). Build/deploy **HELD at CTO program registration + arch-gate**; COO staffs the cloud + content/NLP lanes. CRO proposes owners, dispatches nothing.
 - **Broadcast** to CTO + COO + MSTR 2026-07-23 ~19:16Z (the Andrew-direct decisions verbatim + the standing egress grant).
 - **Dependency exercised:** the `.owned-paths` 4.0.0 project-registration grant (LD-0331, line 556 — org/projects/*.json + REGISTRY, scoped) — first use.
+
+---
+
+## RCN-0005 -- Opal MDPF Portfolio Ontology and Sleeve Attribution specification
+
+| Field | Value |
+|---|---|
+| **Target** | The proposed MDPF_GLOBAL product taxonomy and the missing client-level portfolio-construction substrate |
+| **Date** | 2026-08-05 |
+| **Commissioned** | Andrew-direct CRO discussion, subsequently amended from Andrew/Yang working-session direction: establish Models, Strategy, Alternative, Client, and Insurance; Primary/Custom Model lifecycle; nullable advisory and fee inclusion states |
+| **Owner** | `4.0.0_SA_CRO` |
+| **Status** | Proposal staged for Andrew review; no project registration, build dispatch, deploy, or served-output change |
+
+### Evidence basis + denominator
+
+Read at source: `MDPF_GLOBAL_PRD.md`, its Andrew voice-recording transcript,
+`MDPF_3FIRMS_PRD.md` A4/per-firm contract, the live MDPF model crosswalk, and the
+`MDPF_GLOBAL` project record. Five Andrew/CRO design rounds, including Andrew/Yang working-session
+direction, established the substantive definitions.
+An exact-contract scan across five repo roots (`org`, `data`, `portal`, `infra`, `docs`) found
+`segment_v1`/four-term contract identifiers only in the PRD and project/registry records, with zero
+producer or served-schema implementation hits.
+
+### Artifact
+
+`org/tier1_exec/4.0.0_SA_CRO/briefs/MDPF_PORTFOLIO_ONTOLOGY_AND_SLEEVE_ATTRIBUTION_SPEC_20260805.md`
+
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_PORTFOLIO_ONTOLOGY_DIAGRAM_20260805.svg`
+
+### Findings that carried
+
+1. The successor mutually exclusive categories are Models, Strategy, Alternative, Client, and
+   Insurance. SMA is not a category because every account in the population is inherently an SMA.
+2. Models require an effective-dated `primary|custom` class. The five archetypal ETF Models are
+   Primary; `fixed_income` is the initial Custom example; promotion preserves stable `model_id`.
+3. Strategy drilldown is `divz|idvz|pfoe|muni|tax`; Strategy accounts are individual-security-focused
+   and cannot contain Model references.
+4. Alternative separates product identity from `private_equity|private_credit|hedge_fund|real_asset`;
+   the initial example is `aqr` plus `hedge_fund`. Client and Insurance are unforked.
+5. `selection_origin`, `advisory_scope`, and `fee_basis` remain independent axes. Advisory scope is
+   `advised|excluded|null`; fee-basis status is `included|excluded|null`; null displays as Unknown.
+6. Fee basis is governed by an effective-dated client/household Fee Arrangement, resolved through
+   account/mandate applicability and optional sleeve overrides, then materialized at the leaf.
+7. `non_model` becomes compatibility arithmetic, not business ontology.
+8. The larger opportunity is an Opal Portfolio Blueprint backed by an effective-dated Sleeve
+   Attribution Ledger.
+9. The v0 `segment_v1` identifier is retired for the successor contract. The current target emits
+   `schema_id = portfolio_classification_v1` and carries an explicit no-blind-cast migration map.
+
+### Downstream
+
+- Andrew review/ratification of the ontology and open decisions.
+- If ratified, the owning exec lanes decide whether this becomes an MDPF_GLOBAL amendment or a sibling
+  project; CTO gates architecture/serving and COO owns decomposition/staffing.
+- The first proposed execution is representative-client discovery and source/authority census, not a
+  global chart or subtraction formula.
 
 ---
 

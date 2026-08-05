@@ -1,0 +1,291 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1800 1320' width='1800' height='1320' role='img' aria-labelledby='title desc'>
+  <title id='title'>MDPF Portfolio Classification and Sleeve Attribution</title>
+  <desc id='desc'>Current portfolio_classification_v1 diagram showing that all accounts are SMAs structurally, the five mutually exclusive categories Models, Strategy, Alternative, Client, and Insurance, category-specific drilldowns, client mandate and sleeve layers, advisory scope, fee basis, and the binding v0 supersession rules.</desc>
+
+  <defs>
+    <linearGradient id='headerGrad' x1='0' y1='0' x2='1' y2='0'>
+      <stop offset='0%' stop-color='#0B1F3A'/>
+      <stop offset='62%' stop-color='#173B63'/>
+      <stop offset='100%' stop-color='#145C66'/>
+    </linearGradient>
+    <linearGradient id='ledgerGrad' x1='0' y1='0' x2='1' y2='0'>
+      <stop offset='0%' stop-color='#EAF4FF'/>
+      <stop offset='100%' stop-color='#E7F7F4'/>
+    </linearGradient>
+    <filter id='shadow' x='-20%' y='-20%' width='140%' height='140%'>
+      <feDropShadow dx='0' dy='4' stdDeviation='6' flood-color='#0B1F3A' flood-opacity='0.13'/>
+    </filter>
+    <marker id='arrowNavy' markerWidth='10' markerHeight='10' refX='8' refY='3' orient='auto' markerUnits='strokeWidth'>
+      <path d='M0,0 L0,6 L9,3 z' fill='#234A72'/>
+    </marker>
+    <marker id='arrowTeal' markerWidth='10' markerHeight='10' refX='8' refY='3' orient='auto' markerUnits='strokeWidth'>
+      <path d='M0,0 L0,6 L9,3 z' fill='#14837B'/>
+    </marker>
+    <style>
+      .title { font: 700 34px Segoe UI, Arial, sans-serif; fill: #FFFFFF; }
+      .subtitle { font: 400 16px Segoe UI, Arial, sans-serif; fill: #D8E7F4; }
+      .kicker { font: 700 13px Segoe UI, Arial, sans-serif; fill: #73D2C6; letter-spacing: 1.7px; }
+      .section { font: 700 13px Segoe UI, Arial, sans-serif; fill: #45617B; letter-spacing: 1.35px; }
+      .cardTitle { font: 700 18px Segoe UI, Arial, sans-serif; fill: #102B47; }
+      .cardTitleSm { font: 700 16px Segoe UI, Arial, sans-serif; fill: #102B47; }
+      .cardBody { font: 400 13px Segoe UI, Arial, sans-serif; fill: #4B6175; }
+      .small { font: 400 12px Segoe UI, Arial, sans-serif; fill: #5B6F82; }
+      .micro { font: 700 10.5px Segoe UI, Arial, sans-serif; fill: #607588; letter-spacing: 0.45px; }
+      .pill { font: 700 10.5px Segoe UI, Arial, sans-serif; fill: #FFFFFF; letter-spacing: 0.2px; }
+      .pillDark { font: 700 10.5px Segoe UI, Arial, sans-serif; fill: #29445D; }
+      .axisTitle { font: 700 16px Segoe UI, Arial, sans-serif; fill: #132F4C; }
+      .axisBody { font: 600 11.5px Segoe UI, Arial, sans-serif; fill: #415D74; }
+      .warnTitle { font: 700 14px Segoe UI, Arial, sans-serif; fill: #6B3F11; }
+      .warnBody { font: 400 11.5px Segoe UI, Arial, sans-serif; fill: #695438; }
+      .flow { fill: none; stroke: #234A72; stroke-width: 2.3; marker-end: url(#arrowNavy); }
+      .flowTeal { fill: none; stroke: #14837B; stroke-width: 2.2; marker-end: url(#arrowTeal); }
+      .dash { fill: none; stroke: #8297AA; stroke-width: 1.8; stroke-dasharray: 6 5; marker-end: url(#arrowNavy); }
+    </style>
+  </defs>
+
+  <rect x='0' y='0' width='1800' height='1320' fill='#F5F8FB'/>
+  <rect x='0' y='0' width='1800' height='112' fill='url(#headerGrad)'/>
+  <text x='70' y='34' class='kicker'>RCN-0005 | CURRENT CONTRACT</text>
+  <text x='70' y='72' class='title'>MDPF Portfolio Classification &amp; Sleeve Attribution</text>
+  <text x='70' y='98' class='subtitle'>schema_id = portfolio_classification_v1 | five categories | effective-dated Model lifecycle | v0 explicitly superseded</text>
+  <rect x='1435' y='29' width='295' height='55' rx='27' fill='#FFFFFF' fill-opacity='0.12' stroke='#FFFFFF' stroke-opacity='0.35'/>
+  <text x='1582' y='52' text-anchor='middle' class='pill'>NORMATIVE TARGET</text>
+  <text x='1582' y='74' text-anchor='middle' class='subtitle'>Andrew / Yang revision</text>
+
+  <!-- SMA structural ribbon -->
+  <g filter='url(#shadow)'>
+    <rect x='70' y='138' width='1660' height='72' rx='18' fill='#E8F2FA' stroke='#86A8C4'/>
+    <rect x='70' y='138' width='12' height='72' rx='6' fill='#315C84'/>
+    <text x='108' y='169' class='cardTitle'>Every account is inherently an SMA</text>
+    <text x='108' y='193' class='cardBody'>SMA is the shared account structure, not a classification category. Never emit SMA as a sixth bucket.</text>
+    <rect x='1410' y='155' width='282' height='38' rx='19' fill='#315C84'/>
+    <text x='1551' y='179' text-anchor='middle' class='pill'>5 CATEGORIES, NOT 5 + SMA</text>
+  </g>
+
+  <text x='70' y='244' class='section'>RELATIONSHIP AND ATTRIBUTION LAYERS</text>
+  <text x='430' y='244' class='section'>MUTUALLY EXCLUSIVE PORTFOLIO CLASSIFICATION</text>
+  <text x='1360' y='244' class='section'>INDEPENDENT COLUMNS / AXES</text>
+
+  <!-- Relationship layers -->
+  <g filter='url(#shadow)'>
+    <rect x='70' y='266' width='320' height='84' rx='15' fill='#FFFFFF' stroke='#AFC4D8'/>
+    <text x='98' y='294' class='micro'>RELATIONSHIP ROOT</text>
+    <text x='98' y='322' class='cardTitle'>Client / Household</text>
+
+    <rect x='70' y='380' width='320' height='84' rx='15' fill='#FFFFFF' stroke='#AFC4D8'/>
+    <text x='98' y='408' class='micro'>CUSTODY PERIMETER</text>
+    <text x='98' y='436' class='cardTitle'>Account</text>
+
+    <rect x='70' y='494' width='320' height='96' rx='15' fill='#EDF4FB' stroke='#789BBA'/>
+    <text x='98' y='522' class='micro'>GOVERNING RELATIONSHIP</text>
+    <text x='98' y='550' class='cardTitle'>Client Mandate</text>
+    <text x='98' y='573' class='small'>Effective-dated | may span accounts</text>
+
+    <rect x='70' y='620' width='320' height='112' rx='15' fill='#E9F5F3' stroke='#5A9D95'/>
+    <text x='98' y='648' class='micro'>ATTRIBUTION GRAIN</text>
+    <text x='98' y='676' class='cardTitle'>Sleeve</text>
+    <text x='98' y='699' class='small'>Why the assets are present</text>
+    <text x='98' y='718' class='small'>and what governs them</text>
+
+    <rect x='70' y='762' width='320' height='112' rx='15' fill='url(#ledgerGrad)' stroke='#5D91AB'/>
+    <text x='98' y='790' class='micro'>CANONICAL LEAF</text>
+    <text x='98' y='818' class='cardTitle'>Holding / Tax Lot</text>
+    <text x='98' y='841' class='small'>One dollar -> one sleeve per date</text>
+    <text x='98' y='860' class='small'>or explicit weights summing to 1.0</text>
+  </g>
+
+  <path d='M230 350 L230 376' class='flow'/>
+  <path d='M230 464 L230 490' class='flow'/>
+  <path d='M230 590 L230 616' class='flow'/>
+  <path d='M230 732 L230 758' class='flow'/>
+
+  <!-- Classification frame -->
+  <rect x='430' y='266' width='900' height='608' rx='22' fill='#FFFFFF' stroke='#A7BCD0' stroke-width='1.5'/>
+  <text x='460' y='300' class='micro'>PORTFOLIO CATEGORY ASSIGNMENT | EXACTLY ONE CATEGORY</text>
+  <text x='460' y='326' class='cardBody'>Category-specific fields are required only where shown; every other qualifier/drilldown is null.</text>
+
+  <!-- Models -->
+  <g filter='url(#shadow)'>
+    <rect x='455' y='352' width='410' height='254' rx='17' fill='#F4FBFA' stroke='#54A399' stroke-width='2'/>
+    <rect x='455' y='352' width='410' height='9' rx='4' fill='#279489'/>
+    <text x='480' y='390' class='cardTitle'>Models</text>
+    <rect x='733' y='372' width='105' height='23' rx='11' fill='#1F6F77'/>
+    <text x='785' y='388' text-anchor='middle' class='pill'>category=models</text>
+    <text x='480' y='417' class='cardBody'>Branded Opal Models | qualifier required</text>
+
+    <rect x='480' y='438' width='173' height='142' rx='13' fill='#E4F3F1' stroke='#80B9B2'/>
+    <text x='497' y='466' class='cardTitleSm'>Primary</text>
+    <text x='497' y='487' class='micro'>BROAD PRODUCTION</text>
+    <text x='497' y='511' class='small'>ultra_short_term</text>
+    <text x='497' y='529' class='small'>short_term | intermediate_term</text>
+    <text x='497' y='547' class='small'>long_term | ultra_long_term</text>
+    <text x='497' y='568' class='micro'>ARCHETYPAL ETF MODELS</text>
+
+    <rect x='669' y='438' width='169' height='142' rx='13' fill='#F0EAF8' stroke='#A68BC5'/>
+    <text x='686' y='466' class='cardTitleSm'>Custom</text>
+    <text x='686' y='487' class='micro'>LIMITED PRODUCTION</text>
+    <text x='686' y='513' class='cardBody'>fixed_income</text>
+    <text x='686' y='539' class='small'>Large-client, ad hoc use</text>
+    <text x='686' y='559' class='small'>Still branded Opal</text>
+  </g>
+  <path d='M754 580 C754 596 650 596 650 580' class='flowTeal'/>
+  <text x='660' y='598' class='micro'>PROMOTION RETAINS MODEL_ID + HISTORY</text>
+
+  <!-- Strategy -->
+  <g filter='url(#shadow)'>
+    <rect x='890' y='352' width='415' height='254' rx='17' fill='#F2F6FB' stroke='#5D83AA' stroke-width='2'/>
+    <rect x='890' y='352' width='415' height='9' rx='4' fill='#4C83AE'/>
+    <text x='915' y='390' class='cardTitle'>Strategy</text>
+    <rect x='1160' y='372' width='120' height='23' rx='11' fill='#315C84'/>
+    <text x='1220' y='388' text-anchor='middle' class='pill'>category=strategy</text>
+    <text x='915' y='417' class='cardBody'>No qualifier | exactly one strategy drilldown</text>
+    <rect x='915' y='440' width='60' height='23' rx='11' fill='#4C83AE'/>
+    <text x='945' y='456' text-anchor='middle' class='pill'>divz</text>
+    <rect x='983' y='440' width='60' height='23' rx='11' fill='#4C83AE'/>
+    <text x='1013' y='456' text-anchor='middle' class='pill'>idvz</text>
+    <rect x='1051' y='440' width='60' height='23' rx='11' fill='#4C83AE'/>
+    <text x='1081' y='456' text-anchor='middle' class='pill'>pfoe</text>
+    <rect x='1119' y='440' width='60' height='23' rx='11' fill='#4C83AE'/>
+    <text x='1149' y='456' text-anchor='middle' class='pill'>muni</text>
+    <rect x='1187' y='440' width='60' height='23' rx='11' fill='#4C83AE'/>
+    <text x='1217' y='456' text-anchor='middle' class='pill'>tax</text>
+    <rect x='915' y='486' width='365' height='91' rx='12' fill='#E8EEF5'/>
+    <text x='935' y='514' class='cardTitleSm'>Account-exclusive rule</text>
+    <text x='935' y='539' class='cardBody'>Individual-security focused</text>
+    <text x='935' y='560' class='cardBody'>model_class / model_id / model_version_id = null</text>
+  </g>
+
+  <!-- Alternative -->
+  <g filter='url(#shadow)'>
+    <rect x='455' y='632' width='410' height='214' rx='17' fill='#FFF9EC' stroke='#CDA65C' stroke-width='2'/>
+    <rect x='455' y='632' width='410' height='9' rx='4' fill='#C99125'/>
+    <text x='480' y='670' class='cardTitle'>Alternative</text>
+    <rect x='708' y='652' width='130' height='23' rx='11' fill='#A8731F'/>
+    <text x='773' y='668' text-anchor='middle' class='pill'>category=alternative</text>
+    <text x='480' y='696' class='cardBody'>Product drilldown + separate required qualifier</text>
+    <rect x='480' y='716' width='112' height='42' rx='12' fill='#EFDDB9'/>
+    <text x='536' y='733' text-anchor='middle' class='micro'>PRODUCT</text>
+    <text x='536' y='750' text-anchor='middle' class='cardTitleSm'>aqr</text>
+    <text x='610' y='732' class='small'>private_equity | private_credit</text>
+    <text x='610' y='753' class='small'>hedge_fund | real_asset</text>
+    <rect x='610' y='774' width='174' height='25' rx='12' fill='#A8731F'/>
+    <text x='697' y='791' text-anchor='middle' class='pill'>aqr -> hedge_fund</text>
+    <text x='480' y='824' class='micro'>IDENTITY AND CLASS NEVER INFERRED FROM EACH OTHER</text>
+  </g>
+
+  <!-- Client and Insurance -->
+  <g filter='url(#shadow)'>
+    <rect x='890' y='632' width='198' height='214' rx='17' fill='#FFF7F0' stroke='#B98B58' stroke-width='2'/>
+    <rect x='890' y='632' width='198' height='9' rx='4' fill='#B18442'/>
+    <text x='915' y='670' class='cardTitle'>Client</text>
+    <text x='915' y='698' class='cardBody'>Known catch-all</text>
+    <text x='915' y='721' class='small'>No qualifier</text>
+    <text x='915' y='741' class='small'>No drilldown</text>
+    <text x='915' y='774' class='small'>Legacy holdings</text>
+    <text x='915' y='794' class='small'>RSUs / personal</text>
+    <text x='915' y='824' class='micro'>NOT A RESIDUAL</text>
+
+    <rect x='1107' y='632' width='198' height='214' rx='17' fill='#F4F1F8' stroke='#9784AD' stroke-width='2'/>
+    <rect x='1107' y='632' width='198' height='9' rx='4' fill='#7B6592'/>
+    <text x='1132' y='670' class='cardTitle'>Insurance</text>
+    <text x='1132' y='698' class='cardBody'>Current category</text>
+    <text x='1132' y='721' class='small'>No qualifier</text>
+    <text x='1132' y='741' class='small'>No drilldown</text>
+    <text x='1132' y='824' class='micro'>EXTENSIBLE LATER</text>
+  </g>
+
+  <path d='M390 422 C410 422 410 472 426 472' class='flow'/>
+  <path d='M390 676 C418 676 418 739 451 739' class='dash'/>
+
+  <!-- Independent axes -->
+  <g filter='url(#shadow)'>
+    <rect x='1360' y='266' width='370' height='170' rx='17' fill='#FFFFFF' stroke='#A9BDD0'/>
+    <rect x='1360' y='266' width='9' height='170' rx='4' fill='#1F7E79'/>
+    <text x='1390' y='300' class='axisTitle'>Selection Origin</text>
+    <text x='1390' y='323' class='axisBody'>Who originated the choice?</text>
+    <rect x='1390' y='346' width='65' height='23' rx='11' fill='#1F7E79'/>
+    <text x='1422' y='362' text-anchor='middle' class='pill'>opal</text>
+    <rect x='1462' y='346' width='68' height='23' rx='11' fill='#A06C24'/>
+    <text x='1496' y='362' text-anchor='middle' class='pill'>client</text>
+    <rect x='1537' y='346' width='128' height='23' rx='11' fill='#6C5A95'/>
+    <text x='1601' y='362' text-anchor='middle' class='pill'>external_manager</text>
+    <rect x='1390' y='381' width='78' height='23' rx='11' fill='#7A8995'/>
+    <text x='1429' y='397' text-anchor='middle' class='pill'>unknown</text>
+    <text x='1480' y='397' class='small'>Only axis retaining literal unknown</text>
+
+    <rect x='1360' y='462' width='370' height='166' rx='17' fill='#FFFFFF' stroke='#A9BDD0'/>
+    <rect x='1360' y='462' width='9' height='166' rx='4' fill='#315C84'/>
+    <text x='1390' y='496' class='axisTitle'>Advisory Scope</text>
+    <text x='1390' y='519' class='axisBody'>Nullable three-state column</text>
+    <rect x='1390' y='542' width='78' height='23' rx='11' fill='#315C84'/>
+    <text x='1429' y='558' text-anchor='middle' class='pill'>advised</text>
+    <rect x='1476' y='542' width='80' height='23' rx='11' fill='#9C5961'/>
+    <text x='1516' y='558' text-anchor='middle' class='pill'>excluded</text>
+    <rect x='1564' y='542' width='98' height='23' rx='11' fill='#7A8995'/>
+    <text x='1613' y='558' text-anchor='middle' class='pill'>null</text>
+    <text x='1390' y='590' class='small'>null displays as Unknown</text>
+    <text x='1390' y='610' class='small'>managed is not a valid target value</text>
+
+    <rect x='1360' y='654' width='370' height='220' rx='17' fill='#FFF9EC' stroke='#D8BE83'/>
+    <rect x='1360' y='654' width='9' height='220' rx='4' fill='#C99125'/>
+    <text x='1390' y='688' class='axisTitle'>Fee Basis</text>
+    <text x='1390' y='711' class='axisBody'>Status is separate from method</text>
+    <text x='1390' y='739' class='micro'>STATUS</text>
+    <rect x='1450' y='722' width='78' height='23' rx='11' fill='#2E8B57'/>
+    <text x='1489' y='738' text-anchor='middle' class='pill'>included</text>
+    <rect x='1536' y='722' width='78' height='23' rx='11' fill='#9C5961'/>
+    <text x='1575' y='738' text-anchor='middle' class='pill'>excluded</text>
+    <rect x='1622' y='722' width='70' height='23' rx='11' fill='#7A8995'/>
+    <text x='1657' y='738' text-anchor='middle' class='pill'>null</text>
+    <text x='1390' y='772' class='micro'>METHOD</text>
+    <text x='1390' y='796' class='small'>market_value | average_daily_balance</text>
+    <text x='1390' y='816' class='small'>period_end_value | not_asset_based | null</text>
+    <text x='1390' y='846' class='small'>Status null displays as Unknown</text>
+  </g>
+
+  <!-- Canonical ledger -->
+  <path d='M230 874 L230 914 L900 914 L900 946' class='flow'/>
+  <path d='M880 874 L880 942' class='flowTeal'/>
+  <path d='M1545 874 L1545 914 L1250 914 L1250 946' class='flowTeal'/>
+  <g filter='url(#shadow)'>
+    <rect x='70' y='948' width='1660' height='132' rx='20' fill='url(#ledgerGrad)' stroke='#5D91AB' stroke-width='2'/>
+    <rect x='70' y='948' width='13' height='132' rx='6' fill='#176D78'/>
+    <text x='108' y='980' class='micro'>CANONICAL LEAF SUBSTRATE | EFFECTIVE-DATED</text>
+    <text x='108' y='1012' class='cardTitle'>Sleeve Attribution Ledger</text>
+    <text x='108' y='1038' class='cardBody'>Carries schema ID, one category, permitted drilldown fields, selection origin, advisory scope, fee basis, source vintage, and confidence.</text>
+    <rect x='1180' y='977' width='510' height='70' rx='14' fill='#FFFFFF' fill-opacity='0.72' stroke='#95B5C6'/>
+    <text x='1205' y='1003' class='cardTitleSm'>Binding controls</text>
+    <text x='1205' y='1026' class='small'>Strategy + Model overlap = reject | invalid enum = reject</text>
+    <text x='1205' y='1044' class='small'>unattributed / null states print by count + value</text>
+  </g>
+
+  <!-- v0 supersession -->
+  <text x='70' y='1120' class='section'>V0 SUPERSESSION | NEVER BLINDLY CAST THE OLD FOUR SEGMENTS</text>
+  <g filter='url(#shadow)'>
+    <rect x='70' y='1140' width='1660' height='125' rx='18' fill='#FFF7E8' stroke='#D3B36E'/>
+    <rect x='70' y='1140' width='12' height='125' rx='6' fill='#C99125'/>
+
+    <text x='108' y='1172' class='warnTitle'>ETF Models</text>
+    <text x='108' y='1195' class='warnBody'>-> Models / Primary</text>
+    <text x='108' y='1216' class='warnBody'>registered IDs only</text>
+
+    <line x1='390' y1='1160' x2='390' y2='1245' stroke='#D8C293'/>
+    <text x='425' y='1172' class='warnTitle'>SMA Strategies</text>
+    <text x='425' y='1195' class='warnBody'>-> Strategy</text>
+    <text x='425' y='1216' class='warnBody'>drop SMA | Model fields null</text>
+
+    <line x1='735' y1='1160' x2='735' y2='1245' stroke='#D8C293'/>
+    <text x='770' y='1172' class='warnTitle'>v0 Custom Models</text>
+    <text x='770' y='1195' class='warnBody'>client-specific mix -> reclassify from evidence</text>
+    <text x='770' y='1216' class='warnBody'>NEVER cast to Models / Custom</text>
+
+    <line x1='1195' y1='1160' x2='1195' y2='1245' stroke='#D8C293'/>
+    <text x='1230' y='1172' class='warnTitle'>Non-Model residual</text>
+    <text x='1230' y='1195' class='warnBody'>-> Strategy / Alternative / Client / Insurance</text>
+    <text x='1230' y='1216' class='warnBody'>or loud unresolved control; never subtraction</text>
+
+    <text x='108' y='1248' class='micro'>OLD AXIS SEGMENT_V1 RETIRED | TARGET SCHEMA PORTFOLIO_CLASSIFICATION_V1</text>
+  </g>
+
+  <text x='70' y='1302' class='micro'>RCN-0005 | 4.0.0_SA_CRO | 2026-08-05 | PROPOSAL - no served-output change</text>
+</svg>
