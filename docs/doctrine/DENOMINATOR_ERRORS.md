@@ -6,11 +6,50 @@
 (*"which we historically listed as"*). Andrew approved recording it as doctrine **and making it
 operational**, same session.
 
-⚠ **NOT FOUND IN THE SEARCHABLE RECORD UNDER THESE NAMES.** `comp-grep` scanned **22,307 of 24,239
-files**; the only `Case C` hits are unrelated portal panel variants. **This is the first durable
-record of a taxonomy already being treated as established** — which is its own small finding about
-our records, and the reason it is written down rather than left in a message trail. *A taxonomy that
-binds people who were in the room, and no one else, is not a taxonomy.*
+> ## ⛔ RETRACTED CLAIM — READ THIS BEFORE THE TAXONOMY
+>
+> **This file originally asserted it was "the first durable record" of these five, citing a
+> `comp-grep` that scanned 22,307 of 24,239 files and returned zero. THAT CLAIM WAS FALSE.**
+> Retracted 2026-08-05 by `1.0.0_SA_CTO`; found by `4.0.0_SA_CRO`, verified at source and self-reported
+> by the draft's author `3.0.0_SA_CVO`, re-verified independently here before this edit.
+>
+> **THE PRIOR ART:** `infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md` §2 — created **@977e1251e9,
+> 2026-07-24, by `1.0.0_SA_CTO~Z`** — carries the same five, same order:
+> `1 NEW AXIS · 2 GRAIN SHIFT · 3 SEMANTIC REDIRECT · 4 VOCABULARY POVERTY · 5 MERGE / SPLIT`.
+> Twelve days earlier, **and authored by this file's own landing lane.**
+>
+> **THE MECHANISM, which is the part worth carrying:** the search pattern was MIXED CASE
+> (`Semantic Redirect`); the source is ALL CAPS. `comp-grep` uses Python `re`, case-sensitive by
+> default. Re-measured on the prior file: `Semantic Redirect` → **0 hits**; `SEMANTIC REDIRECT` →
+> **2 hits**. *The right tokens, in the wrong case, over an all-caps heading, return exactly what a
+> genuinely absent concept returns: zero.*
+>
+> **AND THE INSTRUMENT SAID SO.** `comp-grep` printed, verbatim: *"0 hits in the 22307 file(s)
+> actually searched. This is NOT a confirmation of absence — widen the pattern."* The warning was read
+> and the absence was published anyway — with the denominator quoted **as if it validated the claim**,
+> when the tool was saying the denominator was irrelevant to it.
+>
+> ### **A DENOMINATOR MAKES A ZERO AUDITABLE. IT DOES NOT MAKE IT TRUE.**
+>
+> That is the strongest specimen in this file's own subject matter, and it was committed **inside the
+> document that catalogues the class**, in its central provenance claim, after the instrument warned
+> in plain language. It is kept here rather than quietly fixed, because a retraction that leaves no
+> scar teaches nothing.
+
+**WHAT THIS FILE IS, CORRECTED:** not the first record and not a peer — a **SUBORDINATE, CROSS-LINKED**
+surface. Three surfaces of one taxonomy exist, with **different intents** — Rule 24 (iii) failing
+*across documents*, which is harder to see than a duplicate because each is correct about its own
+subject:
+
+| Surface | Date | Intent |
+|---|---|---|
+| `ARCHETYPAL_LEARNING_LOOP.md` §2 | 07-24 | shapes of CHANGE an enumerator cannot see — a **DETECTION** taxonomy |
+| CRO doctrine §9 | 08-05 | the same five carried forward + audited |
+| **this file** | 08-05 | how a semantic LENS misreads a substrate — a **DIAGNOSIS** taxonomy |
+
+**This file's only non-duplicative contribution is the operational half: classify before you remedy,
+because the class determines the remedy.** `4.0.0_SA_CRO` is **HOLDING THE FOLD** pending Andrew's
+ruling on which surface is authoritative — correctly, since merging first would preempt his call.
 
 > **LANDED WITH ITS OPEN QUESTIONS INTACT (CTO).** The two questions at the foot of this file are
 > **Andrew's to close, not mine to quietly resolve on his behalf.** They are recorded, not adjudicated,
