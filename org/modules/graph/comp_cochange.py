@@ -131,11 +131,47 @@ def tag_commits(cs: list, grain: str):
     return attributed, class_counts, untagged
 
 
+# ---------------------------------------------------------------- machine-co-movement exclusions
+# CVO S3, 2026-08-05. MEASURED on a 14-day window: the top shared file for nearly EVERY pair was
+# fabric bookkeeping, not coupling -- org/compiler-tools-log.md (251 commits in window, top-shared in
+# 15 pair rows) and infra/system/06_current_state.{md,json} (84 commits, 11 rows). Together they were
+# ~26 of the ~30 top-shared slots. A co-movement stratum built on that reports THE FABRIC'S OWN
+# PAPERWORK as the estate's strongest coupling signal.
+#
+# THE PRINCIPLE, and it is narrow ON PURPOSE: exclude co-movement that is MACHINE-WRITTEN, keep
+# co-movement that is HUMAN-WRITTEN. Two agents both editing a task order IS coordination and stays.
+# A file a GATE regenerates co-moves with everything BY CONSTRUCTION and is evidence of nothing.
+#
+# FORM per CTO's ratified predicate (08-05): a DECLARED EXCLUSION LIST WITH REASONS, never a roster
+# of inclusions -- an inclusion roster decays silently as the tree grows; an exclusion list decays
+# LOUDLY because new files land in the measured set by default and someone must justify removing one.
+# ⚠ EVERY EXCLUSION IS REPORTED IN THE OUTPUT. A silent exclusion is a denominator lie.
+MACHINE_COMOVEMENT_EXCLUSIONS = [
+    ("infra/system/06_current_state.md",
+     "GATE-REGENERATED: comp-system rewrites it on any commit tripping the system-current gate, "
+     "so it co-moves with everything by construction"),
+    ("infra/system/06_current_state.json",
+     "GATE-REGENERATED: machine sibling of the above"),
+    ("org/compiler-tools-log.md",
+     "RETIRED AUTO-APPEND (CLAUDE.md, Andrew-direct 2026-07-29): historical co-movement is "
+     "machine-generated and the writer no longer exists"),
+]
+_EXCLUDED_PATHS = {p for p, _ in MACHINE_COMOVEMENT_EXCLUSIONS}
+
+
 def build_pairs(attributed, min_shared: int):
-    """Core F4 aggregation. Returns (pair_rows, active_tags, possible, observed)."""
+    """Core F4 aggregation. Returns (pair_rows, active_tags, possible, observed, exclusion_report).
+
+    exclusion_report carries the DENOMINATOR of what was removed so the caller can print it:
+    a co-movement number whose exclusions are invisible cannot be audited by its reader.
+    """
     files_by_tag: dict[str, Counter] = defaultdict(Counter)   # tag -> file -> commit count
+    excluded_hits: Counter = Counter()                        # excluded path -> observations dropped
     for tag, c in attributed:
         for p in c["paths"]:
+            if p in _EXCLUDED_PATHS:
+                excluded_hits[p] += 1
+                continue
             files_by_tag[tag][p] += 1
     active = sorted(files_by_tag)
     rows = []
@@ -155,7 +191,13 @@ def build_pairs(attributed, min_shared: int):
         })
     rows.sort(key=lambda r: -r["shared_files"])
     possible = len(active) * (len(active) - 1) // 2
-    return rows, active, possible, len(rows)
+    exclusion_report = {
+        "declared": len(MACHINE_COMOVEMENT_EXCLUSIONS),
+        "fired": {p: int(n) for p, n in excluded_hits.most_common()},
+        "observations_dropped": int(sum(excluded_hits.values())),
+        "reasons": {p: r for p, r in MACHINE_COMOVEMENT_EXCLUSIONS},
+    }
+    return rows, active, possible, len(rows), exclusion_report
 
 
 def denominator_block(total: int, attributed_n: int, class_counts: Counter,
@@ -180,7 +222,26 @@ def fmt_denoms(d: dict) -> list[str]:
         f"VISIBLY, excluded from pairing; residue: {ua})",
         f"DENOMINATOR 2 (F4): pairs-observed {d['pairs_observed']} / possible "
         f"{d['pairs_possible']} (possible = C(active-tags, 2))",
+        _fmt_exclusions(d.get("machine_comovement_excluded")),
     ]
+
+
+def _fmt_exclusions(e) -> str:
+    """DENOMINATOR 3. A silent exclusion is a denominator lie: print what was removed and WHY.
+
+    Prints on EVERY run, including the none-fired case -- a reader must be able to tell
+    'nothing was excluded' from 'exclusions were not reported'.
+    """
+    if not e:
+        return "DENOMINATOR 3: machine-co-movement exclusions NOT COMPUTED (older engine path)"
+    if not e["fired"]:
+        return (f"DENOMINATOR 3: machine-co-movement EXCLUDED none -- {e['declared']} path(s) "
+                f"declared, none appeared in this window")
+    hits = "; ".join(f"{p.rsplit('/', 1)[-1]} x{n}" for p, n in e["fired"].items())
+    return (f"DENOMINATOR 3: machine-co-movement EXCLUDED {e['observations_dropped']} "
+            f"observation(s) over {len(e['fired'])}/{e['declared']} declared path(s) -- {hits}. "
+            f"Gate-regenerated / retired-auto-append files co-move BY CONSTRUCTION and are not "
+            f"coupling. HUMAN-written co-movement is never excluded.")
 
 
 def header_lines(mode: str, window: str, grain: str) -> list[str]:
@@ -212,9 +273,10 @@ def main() -> int:
     window = f"range {a.rng}" if a.rng else (a.since or "14 days ago")
     cs = walk(a.since, a.rng)
     attributed, class_counts, untagged = tag_commits(cs, a.grain)
-    rows, active, possible, observed = build_pairs(attributed, a.min_shared)
+    rows, active, possible, observed, excl = build_pairs(attributed, a.min_shared)
     denoms = denominator_block(len(cs), len(attributed), class_counts, untagged,
                                observed, possible)
+    denoms["machine_comovement_excluded"] = excl   # rendered by fmt_denoms; carried in --json
 
     if a.mode == "pair":
         if len(a.args) != 2:
