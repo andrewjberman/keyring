@@ -134,6 +134,61 @@ _DATADIR_TO_PIPELINE = {
 }
 _DATADIR_TO_PIPELINE["mdpf"] = "mdpf"
 
+
+def _discover_script_trees():
+    """WS-1 THE PREDICATE: re-derive the script-tree universe from the FILESYSTEM at call time.
+
+    Returns {tree: sorted[layer]} for every `data/<tree>/scripts/<layer>/` on disk -- NOT a frozen
+    list. This is the roster-to-predicate move (Andrew-direct 2026-08-05: comp-pipescript "needs to
+    be a script io generalist, not bound to a handful of gold pipelines"), and it is the same
+    a-predicate-is-not-a-roster class CTO ruled 2026-08-04.
+
+    MEASURED, which is why a predicate and not an extended list: `_DATADIR_TO_PIPELINE` derives from
+    the DEPLOY map (4 trees / 262 scripts). The filesystem carries TEN trees -- assets(77, the
+    OPAL_ASSETS monolith, DEPLOYABLE per Rule 13), smartx, seeking-alpha, etfs, demo, yang_pkl -- so
+    52.6% of data/*/scripts .py had no resolvable home. A longer hand-list would have gone stale the
+    next time someone adds a tree; a predicate cannot.
+    """
+    trees = {}
+    root = _THIS_DIR.parent.parent.parent
+    scripts_root = root / "data"
+    if not scripts_root.is_dir():
+        return trees
+    for tree_dir in sorted(scripts_root.iterdir()):
+        sdir = tree_dir / "scripts"
+        if not sdir.is_dir():
+            continue
+        layers = sorted(d.name for d in sdir.iterdir() if d.is_dir() and not d.name.startswith("__"))
+        if layers:
+            trees[tree_dir.name] = layers
+    return trees
+
+
+def _resolve_tree_from_path(raw):
+    """Parse `data/<tree>/scripts/<layer>/...` -> (tree, layer, in_roster) for ANY tree on disk.
+
+    THE DISTINCTION THIS TURNS ON, and it is what makes WS-1 additive rather than a relaxation of
+    the 07-30 ruling: that ruling forbids a SILENT GUESS about which tree a script belongs to (the
+    old bd-gold default returned clean zeros for other trees' scripts). A path that NAMES ITS OWN
+    TREE is not a guess -- it is the caller stating the tree explicitly, in the argument itself. So
+    refusing a fully-qualified path for want of a --pipeline flag is OVER-refusal: it demands the
+    caller repeat, in a flag, what they already said in the path.
+
+    Returns None when the argument does not name a tree -- and a bare id still refuses, unchanged,
+    because for a bare id there genuinely is nothing to resolve from.
+    """
+    p = (raw or "").replace("\\", "/").strip()
+    if "data/" not in p:
+        return None
+    seg = p.split("data/", 1)[1].split("/")
+    if len(seg) < 3 or seg[1] != "scripts":
+        return None
+    tree, layer = seg[0], seg[2]
+    known = _discover_script_trees()
+    if tree not in known:
+        return None
+    return (tree, layer, tree in _DATADIR_TO_PIPELINE)
+
 # --firm flag value -> pipeline-key.
 _FIRM_TO_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold", "mdpf": "mdpf"}
 
@@ -1404,11 +1459,11 @@ def cmd_io(args):
     # path auto-detect beats the bd-gold default. A data/<dir>/scripts/... path
     # routes to that tree's OWN graph -- never the bd fallback.
     _firm = getattr(args, 'firm', None)
+    _matched = False
     if _firm:
         pipeline = _FIRM_TO_PIPELINE[_firm]
     elif getattr(args, 'pipeline', None) in (None, 'bd-gold'):
         _np = (args.script_id or '').replace('\\', '/')
-        _matched = False
         for _dir, _pk in _DATADIR_TO_PIPELINE.items():
             if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
                 pipeline = _pk
@@ -1421,6 +1476,7 @@ def cmd_io(args):
             _aw = _autowalk_pipeline_for_script(args.script_id)
             if _aw:
                 pipeline = _aw
+                _matched = True
 
     if pipeline not in ('bd-gold', 'bd', 'inf'):
         # Explicit specific pipeline: direct DAG lookup (no cross-pipeline disambiguation needed)
@@ -1457,6 +1513,19 @@ def cmd_io(args):
                 print(f"Valid IDs: {', '.join(sorted(dag.scripts.keys()))}")
                 sys.exit(1)
     else:
+        # WS-2 (NFRA_SCRIPTGEN, Andrew-direct 2026-08-05: "curated-first, AST-always dispatch"):
+        # nothing resolved this id to a curated tree at all (no explicit --pipeline/--firm, no
+        # data/<tree>/scripts/ path match, no auto-walk hit -- pipeline is sitting on the bare
+        # 'bd-gold' default with _matched False). Before handing it to the bd/inf-only resolver
+        # (whose failure path is a bd-scoped "Script not found"), try the deterministic AST
+        # generalist on a real .py file so an out-of-roster tree (data/assets, data/smartx, ...)
+        # gets answered instead of misreported against the wrong graph. Only fires when the caller
+        # gave NO disambiguating signal at all; an explicit --pipeline bd-gold / --firm / bd|inf
+        # hint is respected literally and skips this (WS-1 acceptance: existing values keep their
+        # meaning).
+        if not _matched and not _firm and getattr(args, 'pipeline', None) is None:
+            if _generalist_io_fallback(args.script_id, "<no curated tree>"):
+                return
         # Default/shorthand: always route through resolver so disambiguation fires before any result
         hint = pipeline if pipeline in ('bd', 'inf') else None
         dag, script_id = _auto_resolve_script_id(args.script_id, hint)
@@ -3558,6 +3627,18 @@ def main():
     # whose None previously meant a SILENT bd-gold fallback (the wrong-tree clean-zero class).
     # `deployed` is exempt: its pipeline=None is the legitimate all-trees sweep / autodetect
     # mode (TOOL-01), not a silent default -- WS4 owns its hardening.
+    #
+    # WS-1 (NFRA_SCRIPTGEN, Andrew-direct 2026-08-05): replace "you must name a member of the
+    # --pipeline roster" with a RE-DERIVED PREDICATE -- try path-derived tree, then auto-walk,
+    # BEFORE refusing. This is the a-predicate-is-not-a-roster fix (CTO, 2026-08-04) applied to
+    # this gate: a new tree under data/ becomes resolvable with no allowlist edit. Explicit
+    # --pipeline (args.pipeline not None) is untouched -- it never reaches this block.
+    #
+    # `io` is further exempted from the hard refusal here (WS-2, curated-first / AST-always
+    # dispatch): cmd_io runs its own copy of this same path/auto-walk resolution and, on a
+    # genuine miss, tries the deterministic AST generalist on a real .py file before falling
+    # through to the bd/inf resolver's own not-found message (a real bd/inf bare id must keep
+    # resolving exactly as before -- WS-1 acceptance: in-universe scripts stay byte-identical).
     if getattr(args, 'command', None) in ('dag', 'io', 'chain', 'feeds', 'consumers', 'overlap') \
             and getattr(args, 'pipeline', 'x') is None:
         _hint = None
@@ -3566,7 +3647,34 @@ def main():
             if _v:
                 _hint = _v
                 break
-        _refuse_no_pipeline(_hint)
+        # WS-1: a FULLY-QUALIFIED PATH already names its tree, so there is nothing to guess and the
+        # 07-30 no-silent-default ruling is not engaged -- refusing here would demand the caller
+        # repeat in a flag what they already said in the argument. Scoped to `io` DELIBERATELY: it
+        # is the only command with the AST generalist wired behind it, so it can answer for a tree
+        # the curated DAG does not carry. dag/chain/feeds/consumers/overlap keep refusing unchanged
+        # (WS-4 territory), and `deployed` never reached this gate at all.
+        if getattr(args, 'command', None) == 'io' and _resolve_tree_from_path(_hint):
+            pass                      # resolvable from the path itself -> let cmd_io route it
+        else:
+            _refuse_no_pipeline(_hint)
+    if False:   # (structure preserved below; the refusal above already returned)
+        _hint = None
+        if args.command != 'io':
+            _gate_resolved = None
+            if _hint:
+                _gnp = _hint.replace('\\', '/')
+                for _gdir, _gpk in _DATADIR_TO_PIPELINE.items():
+                    if f"data/{_gdir}/scripts/" in _gnp or _gnp.startswith(f"data/{_gdir}/"):
+                        _gate_resolved = _gpk
+                        break
+                if _gate_resolved is None:
+                    _gate_resolved = _autowalk_pipeline_for_script(_hint)
+            if _gate_resolved:
+                args.pipeline = _gate_resolved
+            else:
+                _refuse_no_pipeline(_hint)
+        # else: 'io' falls through to cmd_io with args.pipeline still None -- cmd_io resolves
+        # (path/auto-walk/generalist) or refuses itself; see cmd_io.
     if not args.command:
         parser.print_help()
         sys.exit(0)
