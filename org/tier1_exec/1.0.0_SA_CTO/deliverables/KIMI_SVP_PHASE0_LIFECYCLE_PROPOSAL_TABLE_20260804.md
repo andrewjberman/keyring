@@ -20,7 +20,24 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 5 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality -- 2026-08-05)
+**SITTING PROGRESS: 6 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest -- 2026-08-05)
+
+> **CLASS FINDING (row 6) - EMAIL-ONLY PRODUCTS ARE STRUCTURALLY INVISIBLE TO OUR REACHABILITY
+> INSTRUMENTS.** `ceo-digest` records as `served: (no data artifact)` / `frontend: (none)` /
+> `reachable: unreviewed`. All three are TRUE, and all three are the signals a roster survey leans
+> on. Its only consumer is a human inbox, so it produces no artifact, has no frontend, and touches
+> no queryable surface -- it does not look neglected, **it looks nonexistent.** This is the exact
+> DANGEROUS direction the rule bank names: *"wrong in the DANGEROUS direction on TRANSIENT,
+> EVENT_CREATED and DORMANT, where it reports a healthy system as dead and PROPOSES DELETING A LIVE
+> ONE."* I was one ratification from proposing DORMANT on a system that had run four hours earlier.
+> **Any product whose delivery is an email, a report to a person, or any other non-artifact channel
+> shares this blindness.** Worth a deliberate sweep; NOT chased from this row.
+>
+> **AND THE PATTERN IN MY OWN `UNDECLARED` ROWS: two examined, two wrong, in OPPOSITE directions.**
+> `causality` was RETIRED where I said unknown; `ceo-digest` is PERMANENT-and-firing where I flagged
+> DORMANT. Those rows were not honest uncertainty -- they were UNEXAMINED rows wearing the enum's
+> word for honest uncertainty. The remaining three (`insurance`, `security-scanner`, `ticketing`)
+> get ground-read BEFORE they are put in front of Andrew, not after.
 
 > **RETIREMENT RULING ON RECORD (row 5).** `RETIRED` carries `requires: [retirement_ruling]` --
 > *"a retirement with NO RULING is an outage with paperwork."* A teardown had occurred (June 2026)
@@ -133,7 +150,7 @@ than inheriting my original framing.
 | 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | **INF GOLD NOT MIGRATED** — gold still LIVE-writing to `s3://opal-data-inf/gold/` (2026-08-05 10:51Z) while its assets trees carry no `gold/`. Named OPAL_CONSOLIDATION fix. Plus canonical-route redesign in flight. Both interior — NOT lifecycle shifts |
 | 4 | canonical-schwab | **PERMANENT - RATIFIED 2026-08-05** | THE PRODUCT-AGNOSTIC INGEST SPINE for the Schwab custodial source. Two ENABLED twice-daily pulls (`canonical-schwab-si2-08335338-daily-pull` cron(45 9,21), `...-08242234-daily-pull` cron(15 10,22)) + an event-driven start accelerator (`canonical-schwab-xref-success`, legitimate - both pulls carry real crons). **20 silver tables (08335338) / 19 (08242234), 18 IDENTICAL** - divergence is 3 tables at the edge. **CORRECTION: my original row said 'six silver tables' - that was the CONVERTER count from the runbook, reported as a table count.** | HIGH | **DUAL-IDENTITY BOX - see finding below.** 08242234 has NO `gold/` (2nd instance of the INF class, different product) |
 | 5 | causality | **RETIRED - RATIFIED 2026-08-05** (Andrew VERBATIM: *"Retired completely."*) | **APPLIED PLANE IS EMPTY, measured:** 0 live Lambdas, 0 DynamoDB tables (was causality-generations + causality-saved-analyses), 0 refs in portal/src (comp-grep 405 of 405 files - complete scope, cross-checked `find portal/src -type f` = 405), and `causality-endpoints.ts` DOES NOT EXIST though the estate model cites it. Teardown on the record: `0.5.0_AE_OpalETL` 2026-06-11 + 2026-06-16; `safe-destroy.sh:10` exists partly because of it. **MY ORIGINAL ROW CLAIMED 'no evidence either way' - the evidence was abundant, I had simply never looked.** | HIGH | **ONTOLOGY LAG:** `comp-estate causality` still returns 5 chains with producers/API-GW/frontend prose, all flagged `producers-dead-applied-plane-20260730`. The model outlived the system by ~6 weeks |
-| 6 | ceo-digest | UNDECLARED | UNASSIGNED-RESIDUE structure; no schedule/consumer evidence at hand | — | resolve at sitting — DORMANT candidate |
+| 6 | ceo-digest | **PERMANENT - RATIFIED 2026-08-05** | **IT RAN THIS MORNING.** `astn-wsjft-3am-run` schedule ENABLED; EC2 `astn-wsjft-scraper` LaunchTime 2026-08-05T07:00:35Z = 3:00 AM ET today, stopped after (healthy transient signature). Chain `ceo-daily-wsjft-digest`: 3am-ET one-shot, Bright Data pull + LLM cited-bullet summary, **SES email to Austin**. **MY ORIGINAL ROW PROPOSED IT AS A DORMANT CANDIDATE ON 'no schedule/consumer evidence at hand' - it had fired 4 hours earlier.** | HIGH | **HUMAN-INBOX CONSUMER = INVISIBLE TO EVERY ARTIFACT-BASED INSTRUMENT** (no data artifact, no frontend, no queryable surface). See class note below |
 | 7 | cma | PERMANENT | yang-analytics family (capital-market assumptions), yang pipeline active | MED | — |
 | 8 | correlation | PERMANENT | yang-analytics family, active engine | MED | — |
 | 9 | data-refresh | PERMANENT | opal-data-refresh-api live + P0 visibility work this window | HIGH | — |
