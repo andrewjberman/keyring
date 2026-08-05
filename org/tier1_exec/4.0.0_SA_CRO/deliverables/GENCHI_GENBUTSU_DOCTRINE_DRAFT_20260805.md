@@ -138,6 +138,29 @@ The measurement had no failure mode, so its PASS carried no information.
   isolation. Keep a proven-red case. Ask: *could this have failed? did my input reach the governed
   branch? was this actually pointed at the thing I am concluding about?*
 
+**4b. A NEGATIVE CONTROL IS NOT ENOUGH. A RESULT THAT EVERY HYPOTHESIS PREDICTS IS NOT A RESULT.**
+*Measured 2026-08-05, `1.0.0_SA_CTO`, on the commit granting these very lanes:* every probe returned
+`False`, **including the negative control** — a reading equally consistent with *"the grant failed"*
+and *"the harness is broken."* The **positive** control settled it: a probe that could not possibly
+be `False` came back `False`, exposing a wrong argument being passed. Without it, a correct edit
+would have been "fixed."
+**Ask of any result: which worlds does this rule OUT? If the answer is none, you have not measured.**
+
+**4c. THE ANTI-CORRELATED VERDICT — the cleanest pass is sometimes the most complete failure.**
+This is the sharpest member of the family and the least intuitive, so it needs its mechanism, not a
+warning:
+- **The orphan watcher.** A dead session's `inbox-watch.sh` keeps polling. It `mv`s each arriving
+  message to `read/` **before** echoing into a dead pipe. So the probe reads `w>0` (a process
+  exists) **and** `u==0` (inbox empty) — the strongest possible REACHABLE verdict — **and both limbs
+  hold *because* the agent is deaf.** The verdict is not merely undiscriminating; it is
+  **produced by** the failure, which is why it also passes a random-input control.
+- **The 93-of-93 PATH probe.** `command -v` reported every comp-tool resolving; **zero of them
+  ran.** All 93 forwarders existed because the provisioner ran, and all 93 were dead because they
+  shared one broken prefix. **The pass read 100% healthy precisely because the breakage was total
+  and single-caused.**
+**Test:** when a result is unusually clean, ask whether a *total* failure would produce exactly this
+reading. If yes, you have measured nothing. **Exercise the tool; never resolve its name.**
+
 ---
 
 ## The mechanism — comp-tools are foundational, not additive
@@ -179,6 +202,36 @@ the on-rails `comp-grep`/`comp-glob` itself. You do not need to know the catalog
 **A tool's blind spot belongs in the same row as the tool.** That column is the doctrine's fourth
 principle made operational: an instrument that does not declare what it cannot see will be read as
 having seen everything.
+
+### Three mechanisms that must survive any cut, because no agent will re-derive them
+
+A prohibition without its mechanism loses to the agent's own instruments. These three are
+counter-intuitive enough that the *reason* has to travel with the rule.
+
+**`comp-iam` FAILS GREEN, AND SILENCE IS THE DEFECT.** It models `(action)`, never
+`(action, resource)` — a role holding `s3:GetObject` on *any* bucket reports `[GRANTED]` for a call
+to *every* other. It is also blind to derived-object calls (`boto3.resource(...).Table(...)`),
+returned-buffer calls (`batch_writer`), and presigned URLs whose action happens at redemption.
+**Every one of those blind cases is a grant that IS required and that comp-iam reports nothing
+about.** So the risk is not `AccessDenied` — it is **a future engineer doing least-privilege cleanup
+deleting a needed grant as "unused."** Treat its operation list as a **FLOOR**, never a deletion
+warrant. Where a call is untraceable, annotate: *grant required, not observable at this call site.*
+
+**`simulate-principal-policy` HAS THREE INDEPENDENT FALSE-DENY MODES.** (1) Two or more
+`--resource-arns` in one call flips the **held** ones to `implicitDeny`. (2) It evaluates
+`Condition` blocks, so with no `--context-entries` a conditioned statement denies **byte-identically
+to a real deny**. (3) It does not validate action names — a **typo returns `implicitDeny` too**
+(exercised: `s3:ZzzNoSuchActionName9999`), so a misspelling is indistinguishable from a missing
+grant and sends you hunting a policy gap that does not exist. Therefore: **one ARN per call; the
+positive control as a SEPARATE invocation** (mode 1 silently disarms a batched control — *the very
+control the rule leans on*); `--context-entries` for conditioned statements; and use
+`accessanalyzer validate-policy` for action-name validity, never this.
+
+**A DESCRIBING LAYER NARRATES; AN ENFORCING LAYER DECIDES.** `comp-iam`'s default view is parsed
+Terraform (DESIRED) and cannot tell landed from planned. A hook COMMENT saying "staged" loses to an
+enforce-MARKER file saying ARMED. A skill doc saying a reaper never touches a process loses to the
+reaper's own `PATTERNS=` line. **When the two disagree, the enforcing layer is true — every time,
+without argument.**
 
 **Corollary — a gap in the tooling is a defect, not an inconvenience.** If you had to reach for a raw
 grep because no comp-tool fits, that is a coverage gap: record it (the rail log audits overrides) and
