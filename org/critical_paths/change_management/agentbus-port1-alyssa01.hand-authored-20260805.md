@@ -38,4 +38,56 @@ channel open.**
 
 ## Completion
 
-**OPEN.**
+**CLOSED 2026-08-05T22:45Z.** All four legs landed; control 1 is live and exercised.
+
+**L1** plan read before apply: 10 add / 0 change / 0 destroy, every action a create,
+`aws_iam_access_key` count 0 — the deny-by-default property confirmed in the plan rather
+than taken from the source comment.
+
+**L2 — APPLY STRANDED 2-of-10 ON A REAL DEFECT, THEN COMPLETED.** The first apply created
+the role and user, then failed `InvalidArnException` on the KMS key. Not a transient:
+`aws_iam_user.fleet_alyssa` sets `path = "/agentbus/"`, so its real ARN carries the path,
+while `local.user_b_arn` omitted it — the policy named a principal that does not exist.
+
+**KMS catching it was luck.** That same ARN is the principal in BOTH SQS queue policies,
+so the plausible failure was a channel that builds clean and grants Alyssa nothing:
+well-formed policy documents, every config read green, and the defect surfacing only as
+"messages never arrive". Fixed at the source — the path is now a local consumed by BOTH
+the resource and the ARN, so they can no longer drift apart. Re-plan showed role and user
+as no-op (no replacement forced); apply 8 added / 0 changed / 0 destroyed;
+`plan -detailed-exitcode` returned 0. Fix committed at `6f126f900`.
+
+**L3** tag `agentbus-alyssa01-v0.1.0` pushed with `--follow-tags`.
+
+**L4 — LIVE VERIFY, EXERCISED NOT INFERRED.** Applied `get-queue-attributes` on both
+queues shows the four partition statements carrying the CORRECTED path-bearing alyssa
+ARN — the fix confirmed in APPLIED state, not merely in source. Then, as the andrew fleet
+role, in three SEPARATE invocations:
+
+- positive control — Receive on its OWN inbound: authorised (rc=0, queue empty);
+- cross-read — Receive on ALYSSA'S inbound: **AccessDenied**;
+- directionality — Send to its OWN inbound: **AccessDenied**.
+
+The positive control ran first and separately on purpose: without it, the two denials are
+indistinguishable from a role that simply does not work.
+
+**Lane:** commits rode an audited `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL`
+(`infra/aws/terraform/**` is not MSTR's lane; the authority is Andrew's LD-0379 execution
+transfer, not lane membership). Steady-state ownership routes to `0.7.0_AE_CloudOps`.
+
+**NEAR-MISS, recorded because it nearly reached the remote:** the first attempt at the fix
+commit passed a DIRECTORY pathspec; `safe-commit` uses `git add -f`, which overrides
+`.gitignore`, and it swept in `.terraform/` — a 718 MB provider binary plus a local
+tfstate. Caught before push by reading the commit's own `--stat` instead of assuming a
+scoped pathspec stayed scoped. The destructive-reset guard then correctly refused to
+rewrite it, so the repair was to abandon that disposable worktree and recommit from a
+clean one with explicit FILE paths.
+
+## STILL OPEN — the channel is NOT open
+
+**This deploy landed control 1 only.** Controls 2/3/5 bind in the adapter, which is not
+built. **No real cross-fleet message flows until those are exercised — the transport
+existing is not the channel open.**
+
+Held by Andrew, not by this ledger: the Alyssa credential mint (the user has ZERO access
+keys by design) and the standing-Directive question.
