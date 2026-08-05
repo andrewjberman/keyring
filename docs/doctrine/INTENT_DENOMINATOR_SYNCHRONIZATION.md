@@ -220,6 +220,20 @@ change detected
 > as B, go try to fix the instrument, and fail — because the instrument is fine. The thing it measures
 > stopped meaning what its name says.**
 
+> ### ⚠ THE FIVE SHAPES FAIL ALL FOUR TAXONOMY POSTULATES (CLAUDE.md Rule 24). USE THEM AS A FIELD GUIDE, NOT AS A COMPUTABLE AXIS.
+> Audited 2026-08-05, Andrew-direct: `org/tier1_exec/4.0.0_SA_CRO/deliverables/FIVE_SHAPES_TAXONOMY_AUDIT_20260805.md`.
+> **MECE** — #2 and #5 both claim the tool-vs-subcommand instance; #3 and #4 both claim `auth_api_gw`;
+> #5's detector catches SPLIT only, so a MERGE is undetectable under a shape named for it.
+> **SAME GRAIN** — five values, five grains (axis-set · granularity · meaning · type-range ·
+> cardinality), which is *why* they cannot be exclusive.
+> **INTENT COHERENCE** — #4 is a standing property of the type, not a change event; the axis mixes both.
+> **STATE COHERENCE** — ⛔ **the residue detector reaches #1, #2, #5 and CANNOT reach #3, #4.** #3 needs
+> provenance the sensor does not emit; #4 needs the type to report a truth it has no slot for — §2's own
+> sensor-bounds-oracle law, turned on this schema. **A build plan for "the residue detector" silently
+> delivers three fifths of this axis and will report itself complete.**
+> **Until re-cut (a Route-C act, owner `1.0.0_SA_CTO`): classify with the shapes, but never compute a
+> coverage claim over them, and never read "detector exists" as uniform across the five.**
+
 ### The formulation that survives all five shapes
 
 > # B changes the INSTRUMENT. C changes the MODEL.
