@@ -153,6 +153,42 @@ than inheriting my original framing.
 >   resolves this box by Name tag" and attached a verify-it instruction, i.e. handed over a
 >   load-bearing assumption dressed as a footnote. It is Stage 1's whole safety argument and is now
 >   an explicit exercised check on their side.
+>
+> **NAMING CONFLICT RESOLVED 2026-08-05 -- and HOW it resolved is the part to preserve.**
+> `0.7.0_AE_CloudOps~C` stopped Stage 1 on finding a PRIOR Andrew-direct naming law
+> (`data/assets/docs/SCHWAB_BOX_ARCHETYPE.md:6`, 2026-07-17): *"this device is the 'Schwab Box.'
+> Drop 'quartz' / 'SI2 spike' entirely... A name that implies 'throwaway' for load-bearing infra is
+> a real defect."* The edict's `canonical-schwab-si2` still contains **SI2**. They refused to
+> adjudicate between two Andrew-directs -- correct, and the class he ruled against 2026-08-04.
+> Surfaced with both candidates + the 07-17 text quoted. **RULED VERBATIM: *"canonical-schwab-si2 is
+> fine, let's get that sorted out and proceed to the next."***
+> >> **A sovereign ruling made WITHOUT sight of a conflicting prior is an OVERSIGHT TO SURFACE; one
+> made WITH sight of it is a DECISION TO EXECUTE.** When he first said *"I agree with your rec"* the
+> 07-17 law was not in front of him -- my recommendation never mentioned it. The second time it was.
+> `~C` converted the first into the second at the cost of one message.
+>
+> **TASK A CLOSED @772ff82f5, re-derived by this seat:** instance terminated - rule
+> `ResourceNotFoundException` - **484 objects PRESERVED** under `canonical/schwab/` - dry-fit pinned
+> key intact (228,605 B). The box had **NEVER RUN ONCE**.
+> **THE GENERALISING FINDING: A TARGETED DESTROY ARMS A RESURRECTION.** After 11 verified-absent
+> resources, the `.tf` still DECLARED them -- `Plan: 11 to add`. The next apply by any agent, for any
+> unrelated change, would have recreated a terminated box with no ruling and nobody looking.
+> **terraform destroy removes INFRASTRUCTURE; only deleting the DECLARATION removes the INTENT.**
+> Applies to EVERY `-target` destroy in this estate; invisible to "is it gone from AWS?". Sibling:
+> `apply -target` WITHOUT `-destroy` printed *"Apply complete!"* at rc=0 having destroyed nothing.
+>
+> **THREE DEFECTS OF MINE IN ONE BRIEF, all caught by `~C` before they cost anything:** (1) "no rule
+> targets the stopped box" -- FALSE, bound via `InstanceId` inside the Input JSON payload, invisible
+> to a target-ARN scan *(and I had put that rule in a `/draw` Andrew ratified, as an accelerator on
+> the LIVE box -- corrected with him directly)*; (2) candidate S3 prefixes in the WRONG BUCKET; (3) a
+> "Terraform only" non-negotiable applied to a box TF does not lifecycle-manage (`managed_by`:
+> *"Terraform (IAM only -- the instance is a persistent Andrew-direct box, not TF
+> lifecycle-managed)"*) -- narrowed to sanction `aws ec2` tag mutation, since there is no TF state to
+> drift from and a `terraform import` would have put the sole live 49F ingest one careless apply from
+> replacement. **The common shape is not sloppy facts -- it is CONFIDENT CONSTRAINTS WHOSE
+> PRECONDITIONS I NEVER GROUNDED, stated in the register of a rule rather than a claim, which is the
+> register that discourages checking.**
+
 
 
 | # | Vertical | Proposed | Evidence (one line) | Conf | Shift-watch note (R2 seed) |
