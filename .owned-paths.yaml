@@ -71,6 +71,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
+      - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
     description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
   WS_CONTRACT_AUTHORS:
@@ -100,6 +101,7 @@ lanes:
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
+      - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
     description: "Tier-0 + Tier-1 startup-protocol docs — MSTR + ws CTO/COO/CVO + CL CTO/COO/CVO. Per Andrew direct 2026-05-26 (LD-0099 cluster): 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'. Routed to ws CTO for BASE_EXEC lane authorship (MSTR was blocked on BASE_EXEC for the LD-0099 c7dee9cd5 XXX.md edits + had to route them via MSTR [BLOCKED-ASK] ASK 1 cluster 2026-05-26T~13:05Z). Applies to org/XXX.md + org/ref/COO_STARTUP.md + org/ref/RAVC_PROTOCOL.md + org/ref/SESSION_LOG_STANDARD.md + org/ref/TASK_ORDER_PROTOCOL.md + org/ref/PROMPT_CONSTRUCTION_PROCESS.md. Added 2026-05-26 by ws CTO."
 
   MSTR_ARTIFACT_PATHS:
@@ -141,6 +143,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 1.0.0_SA_CTO~B
       - 1.1.0_SA_CTO
+      - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
     description: "Any CTO (base, ~B C-suite, or COMP_LEARNS) — architecture docs"
 
