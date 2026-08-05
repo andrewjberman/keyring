@@ -15,7 +15,22 @@ exactly right: *"the vintage print makes the frozen state VISIBLE today; the upl
 **This caveat is hard-coded here deliberately.** A green instrument cert is precisely the artifact
 that gets cited six weeks later as "the corpus thing was fixed."
 
-## ⚠ THE FIX IS COMMITTED, NOT DEPLOYED -- independently confirmed
+## ✅ DISCHARGED 2026-08-05T15:16Z — DO NOT RE-CITE THE WARNING BELOW AS LIVE
+
+**The committed-not-deployed condition described in this section was CLOSED by AE's DEP1** (deployed
+16:45:22Z; md5 `a110981492b461e19fb9be7848b9ad09` verified identical both sides at my seat), and
+superseded again by DEP2 at `9a1856bc03`. **The section is retained as the record of what was true
+when written — it is NOT an open item.**
+
+⚠ **Stamped here because it cost real time:** on the evening of 08-05 this section was read at
+line-level by a third party, re-cited as a **live tonight-window P1**, and routed to an AE seat with
+`@5fa68a33c` + `@72a187048` named as the artifacts to deploy — **both of which touch only this
+markdown file and contain zero deployable paths.** AE checked rather than acting, and caught it.
+**A discharged warning whose discharge lives further down the same document still reads LIVE at the
+point a reader hits it.** The discharge belongs where the warning is, not in an addendum below it.
+*(Found by `0.7.0_AE_CloudOps`, 08-05 ~2300Z. Their call, my defect.)*
+
+## ⚠ THE FIX IS COMMITTED, NOT DEPLOYED -- independently confirmed *(HISTORICAL — see discharge above)*
 
 CTO~B self-disclosed this unprompted. **I verified it rather than accepting it:**
 
