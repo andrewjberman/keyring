@@ -2040,6 +2040,13 @@ def cmd_deployed(args):
     matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
     uncovered = []  # TOOL-03 false-clean guard: tool-blindness, named -- NEVER silent
     aux_drift = []  # TOOL-03 aux CHECK-ONLY drift: visible but NEVER the deploy-gate token
+    not_in_tree = []  # SHARED-home non-members: informational, NEVER a defect -- but COUNTED.
+    # Why counted (CVO~B 2026-08-05, P8 cold descent): a not-in-tree row was printed and
+    # tallied NOWHERE -- not even in UNCOVERED -- so a run whose ONLY rows were not-in-tree
+    # produced an all-zero Summary at rc=0, byte-identical to a clean verified run. The
+    # reclassification below is CORRECT (absent-on-S3 in a shared home means NOT A MEMBER,
+    # not a missing deploy); the defect was that it left no trace in the denominator. The
+    # TOOL-02/03 false-clean guard covered the PREFIX-miss case and not the ROSTER-miss one.
     checked_any = False
 
     # ADHC_COMPIL_V4.019 Bug 1.1 fix: initialize skip_gold so silver-section gating
@@ -2107,6 +2114,7 @@ def cmd_deployed(args):
                 # defect. STALE/MATCH still bind -- those are real membership.
                 if status == "MISSING_ON_S3" and _layer in _mdpf_shared:
                     print(f"  [mdpf:{_layer}] {p.name:<44} {'not-in-tree':<14}")
+                    not_in_tree.append(label)
                     continue
                 print(f"  [mdpf:{_layer}] {p.name:<44} {status:<14}")
                 for line in extras:
@@ -2422,7 +2430,26 @@ def cmd_deployed(args):
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
           f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE, "
-          f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT")
+          f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT, "
+          f"{len(not_in_tree)} NOT-IN-TREE")
+    # NOTHING-VERIFIED guard (CVO~B 2026-08-05): rows were seen but not one of them was
+    # actually verified against S3. The common cause is a script OUTSIDE this tool's
+    # universe -- the path auto-detected into a tree it does not belong to, every file
+    # read as a shared-home non-member, and the old Summary reported that as all zeros.
+    # DELIBERATELY NARROW: fires only when the verified-outcome counters are ALL empty,
+    # so a real sweep carrying legitimate not-in-tree rows beside genuine MATCHes is
+    # untouched, and the deploy-gate tokens keep their exact meaning.
+    _verified_any = bool(matched or stale or missing_s3 or local_missing)
+    _nothing_verified = bool(not_in_tree) and not _verified_any
+    if _nothing_verified:
+        print()
+        print(f"  NOTHING VERIFIED: {len(not_in_tree)} row(s) resolved to a SHARED repo home as "
+              "non-members, and 0 script(s) were checked against S3.")
+        print("  This is NOT a clean result -- it is the tool reporting that it could not place "
+              "what you gave it.")
+        print("  Most likely: the script lives outside this tool's pipeline universe "
+              "(see `--pipeline` choices); a data/<tree>/scripts/... path auto-detects, and the "
+              "auto-detected tree may not be the script's real one.")
     if uncovered:
         print(f"  UNCOVERED ({len(uncovered)}) -- the tool CANNOT verify these; not clean, not dirty, UNVERIFIED:")
         for u in uncovered:
@@ -2452,6 +2479,9 @@ def cmd_deployed(args):
             print("  All checked scripts are up-to-date on S3.")
     elif not checked_any and not uncovered:
         print(f"  No scripts matched filter: {raw_filter!r}")
+    if _nothing_verified:
+        return 2  # UNVERIFIED -- consistent with this tool's existing rc=2 "cannot answer"
+    return 0
 
 
 def _resolve_gold_script(script_id: str) -> 'tuple[Path | None, str]':
@@ -3500,7 +3530,14 @@ def main():
         'shadow-detect': cmd_shadow_detect,
         'skipgate': cmd_skipgate,
     }
-    commands[args.command](args)
+    _rc = commands[args.command](args)
+    # Let a command signal a non-zero rc by RETURNING one (CVO~B 2026-08-05). Previously the
+    # return value was discarded, so every command that did not sys.exit() itself was pinned
+    # to rc=0 -- which is how `deployed` reported a nothing-verified run as success. Guarded
+    # on isinstance(int) so a command returning data (not a code) can never become an exit
+    # status; a 0/None return keeps the existing behaviour exactly.
+    if isinstance(_rc, int) and _rc:
+        sys.exit(_rc)
 
 
 if __name__ == '__main__':
