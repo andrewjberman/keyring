@@ -41,93 +41,29 @@ same posture `iam_cli._simulate_self_test` already takes for the decision plane.
 """
 from __future__ import annotations
 
-import json
-import shutil
-import subprocess
-from datetime import datetime, timezone
 from pathlib import Path
 
-# The APPLIED plane answers about live grants. A census older than this cannot be quoted as APPLIED
-# truth -- callers degrade to DESIRED-only rather than answer. Deliberately short: IAM changes are
-# exactly the thing that happens between deploys, and a permissive default here is a permissive
-# default in the GRANTED direction.
-DEFAULT_TTL_HOURS = 24
-
-# Freshness verdicts. Distinct values on purpose: NO_VINTAGE is NOT a kind of STALE -- "I cannot tell
-# how old this is" and "I can tell, and it is too old" are different epistemic states, and collapsing
-# them is how a missing measurement becomes a measured pass.
-FRESH = "FRESH"
-STALE = "STALE"
-NO_VINTAGE = "NO_VINTAGE"
-
-# F1 (CVO verify @da7478839, P1): a census dated in the FUTURE is its own state, not a fresh one.
-# Before this, `FRESH if age <= ttl` made a future date read FRESHER the further forward it was
-# pushed -- so ANY stale census became authoritative via a one-field edit. The gate refused a census
-# that CANNOT date itself and accepted one whose date is IMPOSSIBLE: the same epistemic state
-# (no trustworthy vintage), opposite verdicts.
-#
-# The asymmetry that makes it P1 rather than cosmetic: --allow-stale-census is AUDITED and stamps the
-# verdict "NOT an APPLIED-plane authority"; editing the date is SILENT and stamps nothing.
-# A CONTROL WHOSE BYPASS IS CHEAPER THAN ITS OVERRIDE CHANNELS BEHAVIOUR TOWARD THE BYPASS.
-FUTURE = "FUTURE"
-
-# Clock skew between the reader and whatever wrote the census is real and small; a genuinely
-# impossible date is not. Tolerate minutes, refuse hours.
-CLOCK_SKEW_TOLERANCE_HOURS = 0.25
-
-_ISO_Z = "%Y-%m-%dT%H:%M:%SZ"
-
-
-def _utcnow() -> datetime:
-    return datetime.now(timezone.utc)
-
-
-def parse_generated_utc(census: dict):
-    """Return the census's generated_utc as an aware datetime, or None if it has none.
-
-    None is a FIRST-CLASS RESULT, not an error and not a zero. A census with no vintage field is the
-    shipped 2026-06-03 census, and the whole point of this function is that its absence must be
-    reportable rather than defaulted. NEVER substitute file mtime here: mtime tracks the last time the
-    bytes moved (a copy, a re-checkout, a sync), not when AWS was read -- it would manufacture a
-    vintage that is not a measurement.
-    """
-    meta = census.get("_meta") or {}
-    raw = meta.get("generated_utc")
-    if not raw:
-        return None
-    try:
-        return datetime.strptime(str(raw), _ISO_Z).replace(tzinfo=timezone.utc)
-    except (ValueError, TypeError):
-        # A malformed stamp is NOT a missing one, but for the caller's purposes both mean "no usable
-        # vintage" -- and an unparseable date must never fall through as fresh.
-        return None
-
-
-def census_age_hours(census: dict, now=None):
-    """Age in hours, or None when the census carries no usable vintage."""
-    gen = parse_generated_utc(census)
-    if gen is None:
-        return None
-    delta = (now or _utcnow()) - gen
-    return delta.total_seconds() / 3600.0
-
-
-def census_freshness(census: dict, ttl_hours: float = DEFAULT_TTL_HOURS, now=None):
-    """Return (verdict, age_hours_or_None). Verdict is FRESH | STALE | NO_VINTAGE.
-
-    F3 (CVO verify, P1 DECLARATIVE): this docstring previously claimed a future-dated census was
-    "flagged by the caller's provenance line ... rather than silently accepted". It was not -- it
-    printed [FRESH] with no marker while the undated case got a loud "!!", and exit 1 was
-    byte-identical to a clean reconcile. VISIBLE-TO-A-CAREFUL-READER IS NOT A FLAG AND NOT A CONTROL,
-    and a record that describes a safeguard one strength above the code is worse than no record.
-    Now it is a real verdict (FUTURE) with a real refusal and a real marker.
-    """
-    age = census_age_hours(census, now=now)
-    if age is None:
-        return NO_VINTAGE, None
-    if age < -CLOCK_SKEW_TOLERANCE_HOURS:
-        return FUTURE, age
-    return (FRESH if age <= ttl_hours else STALE), age
+# ---------------------------------------------------------------------------------------------
+# THE VINTAGE GATE MOVED to census_substrate.py (2026-08-05, the descriptor-substrate extraction,
+# Andrew-present; record ANDREW_DIRECT_20260805_0050Z_descriptor_substrate_extraction.md). The
+# gate's HISTORY moved with it -- the F1 FUTURE-bypass mutant, the F3 declarative-drift lesson,
+# the NO_VINTAGE-is-not-STALE epistemics all live in the substrate's comments now. This module
+# RE-EXPORTS THE SAME OBJECTS so every existing import site (iam_cli.py, the 12-test vintage
+# suite) is untouched: one gate, one home, N doors. The commit_stream extraction pattern.
+# ---------------------------------------------------------------------------------------------
+from census_substrate import (  # noqa: F401 -- re-exports ARE the API
+    CLOCK_SKEW_TOLERANCE_HOURS,
+    DEFAULT_TTL_HOURS,
+    FRESH,
+    FUTURE,
+    NO_VINTAGE,
+    STALE,
+    _ISO_Z,
+    _utcnow,
+    census_age_hours,
+    census_freshness,
+    parse_generated_utc,
+)
 
 
 def census_scope(census: dict) -> dict:
@@ -194,37 +130,17 @@ def build_census(account: str | None = None, aws_bin: str = "aws") -> dict:
     Lazy subprocess by design: importing this module must not require AWS.
     """
     started = _utcnow()
-    # RESOLVE THE EXECUTABLE EXPLICITLY. On Windows `aws` is the .tools/aws.cmd shim and a bare
-    # subprocess argv cannot find it -- Python's CreateProcess honours PATHEXT for .exe but will not
-    # run an extensionless bash shim, so `["aws", ...]` raises WinError 2. Lifted from
-    # .tools/comp-tagauthz.py:39-47, whose comment names the hazard exactly: "a silent
-    # FileNotFoundError here would look exactly like an empty result. A failed probe must never be
-    # mistaken for a clean probe."
-    #
-    # MEASURED 2026-07-22: the first cut of this function passed a bare "aws" and died WinError 2.
-    # It failed LOUDLY (the caller degrades to "census NOT generated") -- but the brief said to lift
-    # comp-tagauthz's call, and lifting the CALL without its RESOLVER is how a proven mechanism is
-    # re-broken at a new site. The resolver was the load-bearing half.
-    exe = shutil.which(aws_bin) or shutil.which(aws_bin + ".cmd")
-    if not exe:
-        # DISTINCT from an AWS failure. "I could not find the CLI" and "the CLI said no" are
-        # different causes with the same downstream shape (no census), and collapsing them sends the
-        # reader hunting for a permissions problem that does not exist.
-        raise RuntimeError(
-            "AWS CLI NOT FOUND on PATH (looked for %r and %r). This is a TOOLING/PATH failure, not "
-            "an AWS or permissions failure, and NO census was generated." % (aws_bin, aws_bin + ".cmd"))
-    cmd = [exe, "iam", "get-account-authorization-details", "--output", "json"]
-    proc = subprocess.run(cmd, capture_output=True, text=True)
-    if proc.returncode != 0:
-        raise RuntimeError(
-            "get-account-authorization-details FAILED (rc=%s). APPLIED census NOT generated.\n"
-            "STDERR:\n%s" % (proc.returncode, proc.stderr.strip()[:2000]))
-    if not proc.stdout.strip():
-        # An empty stdout with rc=0 is the false-clean this estate hits repeatedly: a caller that
-        # json.loads('') gets a parse error naming the parser, not the fetch. Name it here instead.
-        raise RuntimeError("get-account-authorization-details returned EMPTY stdout with rc=0 -- "
-                           "a successful-looking read that produced nothing. Census NOT generated.")
-    aad = json.loads(proc.stdout)
+    # THE TRANSPORT MOVED to census_substrate.run_cli_json (2026-08-05 extraction): the explicit
+    # .cmd-aware exe resolver + the three NAMED failure classes (CliNotFound = tooling/PATH,
+    # CliCallFailed = the cloud said no, CliEmptyStdout = the rc=0-empty false-clean) -- with
+    # their measured history (the 07-22 WinError-2 first cut; "lifting the CALL without its
+    # RESOLVER is how a proven mechanism is re-broken at a new site") in the substrate's
+    # comments. All three subclass RuntimeError, so this function's failure contract is
+    # unchanged for every existing caller. This descriptor is shaper=custom: the AAD
+    # normalization below stays HERE, at its tool, riding the shared transport.
+    from census_substrate import run_cli_json
+    aad = run_cli_json(["iam", "get-account-authorization-details", "--output", "json"],
+                       cli_bin=aws_bin)
 
     roles_raw = aad.get("RoleDetailList") or []
     roles = []

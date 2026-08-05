@@ -602,6 +602,34 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
     return 0
 
 
+def census(root: str, out=None) -> int:
+    """Vintage-stamped APPLIED lambda census -- descriptor row #2 of the census substrate
+    (2026-08-05 extraction, Andrew-present; comp-iam is row #1). The whole mode is a
+    DESCRIPTOR CONSUMPTION: transport, failure classes, _meta stamp, field projection all
+    come from census_substrate; this function only picks the output path and prints the
+    summary. THAT is the scaling thesis measured: row #2 cost ~this function.
+
+    DISTINCT from `sha`: sha is the LIVE-PRIMARY sweep (boto3, no artifact, compares now
+    against the source-map now). A census is a DATED SNAPSHOT the vintage gate can
+    adjudicate -- the substrate's FRESH/STALE/NO_VINTAGE/FUTURE applies to it, and future
+    reconcile-style consumers resolve newest-by-vintage exactly like comp-iam does."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from census_substrate import build_descriptor_census
+    snap = build_descriptor_census("aws.lambda", tool="comp-lambdamap census")
+    date_tag = snap["_meta"]["generated_utc"][:10].replace("-", "")
+    out_path = os.path.join(root, out) if out else os.path.join(
+        root, "docs", "briefs", "cmpaws-lambda-census-%s.json" % date_tag)
+    with open(out_path, "w", encoding="utf-8") as fh:
+        json.dump(snap, fh, indent=2)
+    m = snap["_meta"]
+    print("OK: APPLIED lambda census written -> %s" % out_path)
+    print("  generated_utc : %s   account: %s" % (m["generated_utc"], m["account"]))
+    print("  api           : %s" % m["api"])
+    print("  functions     : %d" % snap["summary"]["item_count"])
+    print("  scope         : %s" % m["scope"])
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="comp-lambdamap")
     sub = ap.add_subparsers(dest="cmd")
@@ -624,10 +652,19 @@ def main(argv=None) -> int:
     rd.add_argument("--settle-retry-seconds", type=int, default=0,
                     help="C2: wait this long then re-check SETTLING entries before alerting (post-apply: ~45)")
     rd.add_argument("--deployed-commit", default="", help="commit sha for the audit record")
+    c = sub.add_parser("census",
+                       help="vintage-stamped APPLIED lambda census via the descriptor substrate "
+                            "(census_substrate.py aws.lambda row; 2026-08-05 extraction). "
+                            "Writes docs/briefs/cmpaws-lambda-census-<date>.json. DISTINCT from "
+                            "`sha` (live-primary sweep, no snapshot): a census is a dated "
+                            "artifact the vintage gate can adjudicate.")
+    c.add_argument("--out", default=None, help="output path (default docs/briefs/cmpaws-lambda-census-<date>.json)")
     args = ap.parse_args(argv)
     root = workspace_root()
     if args.cmd in (None, "check"):
         return check(root)
+    if args.cmd == "census":
+        return census(root, out=args.out)
     if args.cmd == "sha":
         return sha_check(root)
     if args.cmd == "derive":
