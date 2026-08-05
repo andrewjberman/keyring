@@ -806,6 +806,43 @@ import comp_iam_investigate  # noqa: E402 -- RoleLastUsed TRIAGE signal only (20
 _DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
 
 
+def _resolve_default_census(briefs_dir=None):
+    """Resolve the census `reconcile` uses when --census is not given. Returns (Path, note).
+
+    THE COMPOSITION FIX (2026-08-05, Andrew-present build; the operational gap the 07-22 plane
+    shipped with): `refresh-census` writes DATED files while this default pointed at ONE frozen
+    filename, so the two commands never composed without hand-passed paths -- the applied plane
+    sat fail-closed-refusing in daily use and read as "never acted on."
+
+    PREDICATE, NOT A ROSTER: candidates are globbed AT CALL TIME (docs/briefs/
+    cmpaws-iam-census-*.json); the newest parseable _meta.generated_utc wins (ISO-8601 strings
+    of one format compare lexicographically -- no datetime parse to get wrong). An unreadable
+    candidate is skipped-with-count, never fatal. RESOLUTION IS NOT FRESHNESS: the vintage gate
+    downstream still adjudicates FRESH/STALE/FUTURE/NO_VINTAGE on whatever this returns. With
+    zero dated candidates the legacy axis file returns and the gate refuses it LOUDLY -- the
+    pre-2026-08-05 behavior, demoted from only-path to fallback. `briefs_dir` is injectable so
+    the hermetic test never scans the real tree."""
+    base = Path(briefs_dir) if briefs_dir else (_WORKSPACE / "docs" / "briefs")
+    legacy = (Path(briefs_dir) / Path(_DEFAULT_CENSUS).name) if briefs_dir else (_WORKSPACE / _DEFAULT_CENSUS)
+    best, best_ts, scanned, unreadable = None, None, 0, 0
+    for p in sorted(base.glob("cmpaws-iam-census-*.json")):
+        scanned += 1
+        try:
+            ts = json.loads(p.read_text(encoding="utf-8")).get("_meta", {}).get("generated_utc")
+        except Exception:  # noqa: BLE001 -- skipped-with-count, never fatal
+            unreadable += 1
+            continue
+        if isinstance(ts, str) and len(ts) >= 19 and (best_ts is None or ts > best_ts):
+            best, best_ts = p, ts
+    if best is not None:
+        return best, (f"CENSUS RESOLVED: {best.name} (generated {best_ts}) -- newest "
+                      f"_meta.generated_utc of {scanned} dated candidate(s) scanned "
+                      f"({unreadable} unreadable, skipped)")
+    return legacy, (f"CENSUS RESOLVED: {legacy.name} -- LEGACY FALLBACK ({scanned} candidate(s) "
+                    f"scanned, none with a parseable _meta.generated_utc); the vintage gate will "
+                    f"refuse it -- run `comp-iam refresh-census`")
+
+
 def cmd_live(args):
     """LIVE-PRIMARY: the real estate is the population; Terraform is the overlay.
 
@@ -1091,7 +1128,11 @@ def cmd_reconcile(args):
     TF `s3:*` covers a live `s3:GetObject`). TF-only roles are reported as INFO
     (the census is customer-role-scoped; service-linked/internal roles aren't in it).
     """
-    census_path = Path(args.census) if args.census else (_WORKSPACE / _DEFAULT_CENSUS)
+    if args.census:
+        census_path = Path(args.census)
+    else:
+        census_path, _res_note = _resolve_default_census()
+        print(_res_note)
     if not census_path.exists():
         print(f"CENSUS NOT FOUND: {census_path}")
         print("  Pass --census <path> to the comp-aws live IAM census JSON "
@@ -1130,7 +1171,8 @@ def cmd_reconcile(args):
         print("  This is a COVERAGE refusal, not a clean result: nothing was compared, so nothing")
         print("  can be concluded about live-vs-Terraform drift. DESIRED-plane modes are unaffected")
         print("  (`comp-iam gaps` / `roles` / `role` still answer from Terraform).")
-        print("  Fix: `comp-iam refresh-census --out <path>` then re-run with --census <path>.")
+        print("  Fix: `comp-iam refresh-census` then re-run -- the newest dated census "
+              "auto-resolves (no --census needed since 2026-08-05).")
         print("  Override (AUDITED, and it makes the verdict non-authoritative): --allow-stale-census")
         sys.exit(3)
     if getattr(args, "allow_stale_census", False) and verdict != comp_iam_census.FRESH:

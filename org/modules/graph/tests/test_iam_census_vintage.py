@@ -226,3 +226,42 @@ def test_D4_scope_exclusion_assumption_still_holds__service_linked_is_never_TF_d
         "The D4 scope-exclusion suppresses service-linked roles as 'not IaC-governable'. That "
         "assumption is now FALSE, and the exclusion is hiding a gap we own. Narrow the rule to "
         "'service-linked AND NOT TF-declared' -- do NOT silence this test.")
+
+
+# ---------------------------------------------------------------------------
+# THE COMPOSITION RESOLVER (2026-08-05, Andrew-present build). refresh-census writes DATED
+# files; reconcile's default was ONE frozen filename; the two never composed without hand-passed
+# paths -- so the applied plane sat fail-closed-refusing in daily use and read as "never acted
+# on" (built-but-dormant). These tests exercise the resolution PREDICATE directly (injectable
+# briefs_dir; hermetic -- the real tree is never scanned). RESOLUTION IS NOT FRESHNESS: the
+# vintage gate still adjudicates downstream. Load-bearing assertions: (a) newest-dated WINS,
+# (b) an unreadable candidate is skipped-with-count never fatal, (c) zero dated candidates fall
+# back to the LEGACY file -- whose refusal is the GATE's job, not the resolver's.
+# ---------------------------------------------------------------------------
+
+def _dated_census(d, name, ts):
+    p = d / name
+    p.write_text(json.dumps({"_meta": {"generated_utc": ts}, "roles": {}}), encoding="utf-8")
+    return p
+
+
+def test_resolver_picks_newest_dated_census_and_skips_unreadable(tmp_path):
+    import sys as _s
+    _s.path.insert(0, str(_WS / "org" / "modules" / "graph"))
+    import iam_cli
+    _dated_census(tmp_path, "cmpaws-iam-census-20260722.json", "2026-07-22T19:44:11Z")
+    newest = _dated_census(tmp_path, "cmpaws-iam-census-20260805.json", "2026-08-05T00:24:00Z")
+    (tmp_path / "cmpaws-iam-census-broken.json").write_text("{not json", encoding="utf-8")
+    path, note = iam_cli._resolve_default_census(briefs_dir=tmp_path)
+    assert path == newest, "newest _meta.generated_utc must win"
+    assert "newest" in note and "3 dated candidate(s) scanned" in note and "1 unreadable" in note, note
+
+
+def test_resolver_zero_dated_falls_back_to_legacy_loudly(tmp_path):
+    import sys as _s
+    _s.path.insert(0, str(_WS / "org" / "modules" / "graph"))
+    import iam_cli
+    path, note = iam_cli._resolve_default_census(briefs_dir=tmp_path)
+    assert path.name == "cmpaws-iam-axis-census-20260603.json", "legacy is the fallback, not an error"
+    assert "LEGACY FALLBACK" in note and "refresh-census" in note, (
+        "the fallback note must say WHY and name the remedy: " + note)
