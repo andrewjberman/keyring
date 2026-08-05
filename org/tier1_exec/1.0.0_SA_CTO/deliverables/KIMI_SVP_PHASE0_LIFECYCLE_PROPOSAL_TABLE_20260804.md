@@ -7,14 +7,25 @@ UNDECLARED`). **UNDECLARED is used honestly**: where this seat's evidence is thi
 so rather than guessing — those five rows are the sitting's real work.
 **Author:** `1.0.0_SA_CTO~B`, 2026-08-04. **Roster source:** comp-estate `--matrix` v1.7
 (29 verticals — the denominator is the matrix's, re-derive at the sitting).
-**Grain note:** the value names the BUSINESS FUNCTION's life-shape at the vertical grain.
-Interior implementation churn (a route consolidating, a runner rewritten) is NOT a vertical
-lifecycle shift — it is what R2's State layer watches and proposes on; the "shift-watch" column
-seeds exactly that.
+**Grain note — RATIFIED 2026-08-05 (Andrew-direct, sitting vertical 1), no longer a proposal:**
+the value names the BUSINESS FUNCTION's life-shape at the vertical grain. Interior implementation
+churn (a route consolidating, a runner rewritten) is NOT a vertical lifecycle shift — it is what
+R2's State layer watches and proposes on; the "shift-watch" column seeds exactly that.
+VERBATIM WARRANT: *"It is a permanent project nevertheless, although underlying conventions and
+resources may shift around with migrations/consolidations/refactoring/etc."*
+⚠ This resolves a real grain tension rather than restating a preference: the rule bank's polarity
+table (`org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:405-454`) is written at ARTIFACT grain —
+`absent_at_rest` / `present_at_rest` are questions about whether a key or resource EXISTS. At
+VERTICAL grain those questions do not apply directly; the polarity table governs the vertical's
+ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
+satisfied by keeping those two statements separate, not by collapsing them.
+
+**SITTING PROGRESS: 1 of 29 ratified** (advi-bd, 2026-08-05). Record:
+`ANDREW_DIRECT_20260805_advi_bd_ratified_and_the_0833_0824_correction.md`.
 
 | # | Vertical | Proposed | Evidence (one line) | Conf | Shift-watch note (R2 seed) |
 |---|---|---|---|---|---|
-| 1 | advi-bd | PERMANENT | 49F Black Diamond medallion, daily scheduled ingest live (bd-49f-session-daily ENABLED) | HIGH | — |
+| 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **ADVI = the `0833` Schwab account** (Advisor Intelligence: an Opal data product served by the Portal, scoped PER ADVISOR — 49 Financial here). Daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` — **that is the MDPF account, not ADVI's**; corrected on Andrew-direct | HIGH | — |
 | 2 | advi-cot | PERMANENT | Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches |
 | 3 | advi-inf | PERMANENT | INF partner serving live; P0 aum-metrics work this session; MDPF_CANRTE covers its direct-silver leg | HIGH | canonical-route redesign in flight |
 | 4 | canonical-schwab | PERMANENT | Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338); six silver tables | HIGH | — |
