@@ -82,18 +82,28 @@ def cmd_freshness(a) -> int:
     if a.json != "":                                      # human render (skip when JSON->stdout)
         scope = f"{rel}/" if rel else "(whole estate)"
         print(f"=== comp-heat freshness  scope={scope}  files={summ['n']}  half_life={a.half_life}d ===")
+        # BASIS-IN-OUTPUT (Andrew-ratified CH-3 elevation, 2026-08-04): a band NEVER prints
+        # without the numbers that produced it -- the barrier definition rides every output.
+        print(f"  basis: band = age vs barriers [hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, "
+              f"cold>{p.warm_days:.0f}d]; score = exp(-ln2*age/{p.half_life_days:.0f}d half-life)"
+              + (f" + {p.freq_weight}*log1p(freq)" if p.freq_weight else ""))
         print(f"  bands: hot={summ['bands']['hot']} warm={summ['bands']['warm']} "
               f"cold={summ['bands']['cold']} (cold_frac={summ['cold_frac']:.2f})")
-        print(f"  coldest {min(a.top, len(scores))} paths:")
+        print(f"  coldest {min(a.top, len(scores))} paths (age / score / band):")
         for s in sorted(scores, key=lambda s: s.age_days, reverse=True)[:a.top]:
-            print(f"    {s.age_days:7.0f}d  {s.band:4s}  [{src.get(s.item_id, '?'):5s}]  {s.item_id}")
+            print(f"    {s.age_days:7.0f}d  score={s.score:.4f}  {s.band:4s}  "
+                  f"[{src.get(s.item_id, '?'):5s}]  {s.item_id}")
         print(f"  cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY): {len(cold_dirs)}")
         for k, v in cold_dirs[:a.top]:
             print(f"    {v['n_cold']:4d}/{v['n']:<4d} cold  oldest={v['oldest_age_days']:.0f}d  {k}/")
 
     if a.json is not None:
         import json
-        snap = {"scope": rel or None, "half_life_days": a.half_life, "summary": summ,
+        snap = {"scope": rel or None, "half_life_days": a.half_life,
+                "basis": {"half_life_days": p.half_life_days,
+                          "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
+                          "freq_weight": p.freq_weight},
+                "summary": summ,
                 "paths": [{"path": s.item_id, "age_days": round(s.age_days, 2),
                            "score": round(s.score, 6), "band": s.band,
                            "source": src.get(s.item_id, "?")} for s in scores],
@@ -161,11 +171,131 @@ def cmd_score(a) -> int:
         print(json.dumps({"item_id": s.item_id, "age_days": round(s.age_days, 2),
                           "recency_score": round(s.recency_score, 6),
                           "score": round(s.score, 6), "band": s.band,
-                          "half_life_days": a.half_life}))
+                          "basis": {"half_life_days": p.half_life_days,
+                                    "barriers": {"hot_days": p.hot_days,
+                                                 "warm_days": p.warm_days}}}))
     else:
+        # BASIS-IN-OUTPUT: the band verdict prints WITH every number that produced it.
         print(f"=== comp-heat score: {s.item_id} ===")
-        print(f"  age={s.age_days:.2f}d  half_life={a.half_life}d  "
-              f"recency={s.recency_score:.4f}  band={s.band.upper()}")
+        print(f"  band={s.band.upper()}  <- age={s.age_days:.2f}d vs barriers "
+              f"[hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, cold>{p.warm_days:.0f}d]")
+        print(f"  score={s.score:.4f}  recency={s.recency_score:.4f}  "
+              f"(= exp(-ln2*{s.age_days:.2f}/{p.half_life_days:.0f}d half-life))")
+    return 0
+
+
+def cmd_compare(a) -> int:
+    """Item-2 COMPARE mode (Andrew rounds 2-3, 2026-08-04): heat divergence/convergence
+    of TWO named resources -- the comp-blast-overlap analog on the TIME axis. Per-window
+    git-history series per side (ONE `git log` per side, windows derived in-memory --
+    extends the heat engine's own git helper, no new walker); output = current heat delta
+    (absolute + bands + basis) + a CONVERGING/DIVERGING/PARALLEL verdict + denominators
+    (windows, commits per side, shared commits)."""
+    if not os.path.isdir(HEATMAP_DIR):
+        sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
+        return 3
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import time
+        from heat_map import HeatParams, recency_score, classify_band   # noqa: E402
+        from object_freshness import _git                                # noqa: E402
+    except Exception as e:                                               # noqa: BLE001
+        sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
+        return 3
+
+    p = HeatParams(half_life_days=a.half_life)
+    now = time.time()
+    D, W = a.window_days, a.windows
+    span_start = now - W * D * 86400
+
+    def side(path):
+        raw = _git(REPO_ROOT, "log", "--format=%H|%at", "--", path)
+        commits = []
+        for line in raw.splitlines():
+            if "|" in line:
+                sha, ts = line.rsplit("|", 1)
+                try:
+                    commits.append((sha, int(ts)))
+                except ValueError:
+                    continue
+        if not commits:
+            return None
+        series = []
+        for i in range(W):                      # i=0 = the MOST RECENT window
+            end = now - i * D * 86400
+            in_win = sum(1 for _, ts in commits if end - D * 86400 <= ts < end)
+            prior = [ts for _, ts in commits if ts < end]
+            if prior:
+                age_d = (end - max(prior)) / 86400.0
+                heat = recency_score(age_d, p.half_life_days)
+            else:
+                age_d, heat = None, 0.0         # predates history: heat floor, labeled
+            series.append({"window": i, "commits": in_win,
+                           "age_days_at_end": round(age_d, 1) if age_d is not None else None,
+                           "heat": round(heat, 4)})
+        in_span = {sha for sha, ts in commits if ts >= span_start}
+        cur_age = (now - max(ts for _, ts in commits)) / 86400.0
+        return {"series": series, "shas_in_span": in_span,
+                "commits_in_span": len(in_span),
+                "current": {"age_days": round(cur_age, 2),
+                            "heat": round(recency_score(cur_age, p.half_life_days), 4),
+                            "band": classify_band(cur_age, p)}}
+
+    A, B = side(a.a), side(a.b)
+    for name, s in ((a.a, A), (a.b, B)):
+        if s is None:
+            print(f"comp-heat compare: NO git history for {name!r} "
+                  f"(path must be repo-root-relative and tracked) -- refusing a "
+                  f"one-sided comparison")
+            return 2
+
+    deltas = [abs(x["heat"] - y["heat"]) for x, y in zip(A["series"], B["series"])]
+    half = max(1, W // 2)
+    newer, older = deltas[:half], deltas[half:] or deltas[:1]
+    m_new, m_old = sum(newer) / len(newer), sum(older) / len(older)
+    if m_new < m_old * 0.8:
+        verdict = "CONVERGING"
+    elif m_new > m_old * 1.25:
+        verdict = "DIVERGING"
+    else:
+        verdict = "PARALLEL"
+    shared = len(A["shas_in_span"] & B["shas_in_span"])
+    cur_delta = round(abs(A["current"]["heat"] - B["current"]["heat"]), 4)
+
+    out = {"a": a.a, "b": a.b, "verdict": verdict,
+           "verdict_rule": "mean |heat delta| of the newer half of windows vs the older "
+                           "half: <0.8x=CONVERGING, >1.25x=DIVERGING, else PARALLEL",
+           "current_delta": cur_delta,
+           "current": {a.a: A["current"], a.b: B["current"]},
+           "series": [{"window": i,
+                       a.a: A["series"][i], a.b: B["series"][i],
+                       "abs_delta": round(deltas[i], 4)} for i in range(W)],
+           "basis": {"half_life_days": p.half_life_days,
+                     "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days}},
+           "denominators": {"windows": W, "window_days": D,
+                            "commits_a_in_span": A["commits_in_span"],
+                            "commits_b_in_span": B["commits_in_span"],
+                            "shared_commits_in_span": shared}}
+    if a.json:
+        import json
+        print(json.dumps(out, indent=2))
+        return 0
+    print(f"=== comp-heat compare: {a.a}  vs  {a.b} ===")
+    print(f"  VERDICT: {verdict}  ({out['verdict_rule']})")
+    print(f"  current heat delta: {cur_delta}")
+    for name, s in ((a.a, A), (a.b, B)):
+        c = s["current"]
+        print(f"    {name}: band={c['band'].upper()} <- age={c['age_days']}d vs barriers "
+              f"[hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d]; heat={c['heat']} "
+              f"(exp(-ln2*age/{p.half_life_days:.0f}d))")
+    print(f"  per-window series (window 0 = most recent {D}d):")
+    for i in range(W):
+        ra, rb = A["series"][i], B["series"][i]
+        print(f"    w{i}: A commits={ra['commits']:<3} heat={ra['heat']:<7} | "
+              f"B commits={rb['commits']:<3} heat={rb['heat']:<7} | |delta|={deltas[i]:.4f}")
+    d = out["denominators"]
+    print(f"  DENOMINATORS: windows={d['windows']}x{d['window_days']}d; commits in span: "
+          f"A={d['commits_a_in_span']} B={d['commits_b_in_span']}; shared={d['shared_commits_in_span']}")
     return 0
 
 
@@ -225,6 +355,16 @@ def main(argv=None) -> int:
     fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
     fed.add_argument("--sql", help="run an arbitrary federated Trino query instead")
     fed.set_defaults(fn=cmd_federated)
+
+    cp = sub.add_parser("compare",
+        help="heat CONVERGING/DIVERGING/PARALLEL between two resources (per-window series + delta + denominators)")
+    cp.add_argument("a", help="first repo-root-relative path")
+    cp.add_argument("b", help="second repo-root-relative path")
+    cp.add_argument("--windows", type=int, default=6, help="number of windows (default 6)")
+    cp.add_argument("--window-days", type=int, default=14, help="days per window (default 14)")
+    cp.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
+    _add_json(cp, with_value=False)
+    cp.set_defaults(fn=cmd_compare)
 
     args = ap.parse_args(argv)
     if not getattr(args, "cmd", None):
