@@ -653,6 +653,21 @@ RULES = [
     # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
     # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
     # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
+    # NFRA_SCRIPTGEN Part B (Andrew-direct 2026-08-05): comp-find is THE graded search SURFACE.
+    # Registered as a CURATED ROUTE deliberately -- measured this same day, adding a tool to the
+    # manifest does NOT make it discoverable, because comp-which routes from THIS list, not from
+    # graph-call-manifest.yaml. A tool registered in 8 of 9 surfaces is not 89% registered; it is
+    # UNDISCOVERABLE, which in a routing-dependent estate is indistinguishable from unbuilt.
+    (["find in the repo", "search the repo", "search the codebase", "grep the repo",
+      "where is this symbol", "where is this defined", "which file defines", "find the definition",
+      "find every mention", "find all references", "search for a string", "find a file named",
+      "which files match", "locate a file", "find the file"],
+     "graded repo search -- content or filename (comp-find)",
+     ["comp-find <pattern> [pathspec]", "comp-find --name '<glob>'", "comp-find <pattern> --band DEF"],
+     "ONE verb for content + filename search, every hit graded on a deterministic reject-first "
+     "ladder (HEAD=name match / DEF=definition line / SURFACED / CONFIG / TEST / DOC / COLD), "
+     "paginated with TRUE band totals + the scanned denominator. --band DEF goes straight to where "
+     "the thing is DEFINED rather than where it is mentioned. No SLM: the order is re-derivable."),
     (["gold script", "a gold script", "the gold script", "this gold script", "editing a gold script",
       "editing gold script", "modify a gold script", "modifying a gold script", "change a gold script",
       "running a gold script", "run a gold script", "work on a gold script", "gold-tier script",

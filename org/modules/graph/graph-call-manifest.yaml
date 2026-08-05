@@ -287,6 +287,23 @@ entries:
     status: canonical
     notes: "Firm-parameterized 2026-06-11 (NFRA 514d433). Caching LANDED via NFRA_GRAPHS D2 (graph_cache.py): routing table + per-firm gold DAG + dataflows cached, keyed by --firm; warm page is a cache read, bd cold==warm regression-clean."
 
+  - id: search.graded.find
+    # use_case phrasing is DELIBERATELY aligned to the curated comp-which keywords ("search the
+    # repo", "where is this defined"). The registration gate checks that a tool SURFACES FOR ITS
+    # OWN use_case, and it caught this: the first phrasing here was prose no route matched, so
+    # comp-which grepped instead of naming the tool. A use_case nobody can route to is a use_case
+    # nobody reaches -- the gate is right to treat that as unregistered.
+    use_case: "Search the repo / grep the codebase for a symbol, string, or filename -- and know WHICH HITS ARE WORTH OPENING: where is this defined vs merely mentioned, with definitions and filename matches sorted above test and doc noise instead of a flat list you triage by eye."
+    canonical_call: "comp-find <pattern> [pathspec ...]   # or: comp-find --name '<glob>' ; --band DEF ; --page N ; --all"
+    tool: comp-find
+    mode: rebuild
+    layer: source
+    cost: "~1-5s (repo-scoped, .gitignore-aware; scales with pathspec)"
+    freshness: "live working tree -- no cache, no snapshot"
+    anti_pattern: "reading a 0-hit run as CONFIRMED ABSENCE -- it is a MEASURED zero over the scanned denominator the tool prints, and a held-path exclusion or a BRE-shaped pattern (a backslash before | ( ) is a LITERAL in python re) both produce an honest zero over the wrong universe. Also: treating the band order as a verdict -- the bands order the DIVE, they do not decide which file is right."
+    status: canonical
+    notes: "NFRA_SCRIPTGEN Part B (Andrew-direct 2026-08-05: replace comp-grep/glob with comp-find, structured + paginated, no SLM rerank). Unifies the two primitives behind one verb and adds grading + pagination + per-page systems-context. comp-grep/comp-glob remain LIVE beneath it -- Rule 21 still names them as the sanctioned fallback and repointing that law surface is CTO's to route, so this is an ADDITION today, not yet a replacement."
+
   - id: trace.pipeline.gold_dag
     use_case: "Gold script I/O, chain membership, deployed-match, overlap."
     # CORRECTED 2026-08-05 (3.0.0_SA_CVO~B, P8 cold descent @a2be6600c): the previous value was
@@ -1607,6 +1624,7 @@ tools_index:
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
+  comp-find: { does: "THE graded search SURFACE -- content + filename in one verb, every hit on a deterministic reject-first band ladder (HEAD/DEF/SURFACED/CONFIG/TEST/DOC/COLD), paginated with TRUE band totals + the scanned denominator on every run. No SLM, no learned rerank -- ordering is re-derivable from (query, path, line)", subcommands: ["<pattern>", "--name <glob>", "-i", "--page", "--limit", "--band", "--files", "--all"], entries: [search.graded.find] }
   comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, postdeps, overlap, stats, inject, postmerge-cols, shadow-detect, skipgate], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
   comp-pulse:    { does: "The estate's VITAL SIGNS (hot/cold/evolving/danger/phantom-limbs; DANGER x TRAFFIC = the immune response) + the pre-commit risk reflex (diff mode, wired advisory into safe-commit)", subcommands: [pulse, diff, "--days", "--top", "--json", "--self-test"], entries: [org.pulse.vital_signs, org.pulse.risk_reflex] }
   comp-axes:     { does: "The ANALYTIC-AXIS DIRECTORY (all 8 axes: vintage + top-3 + drill command, one screen) + the append-only axis TIME-SERIES (dated snapshot rows) + per-axis DELTA (what got hotter/colder/staler since <date>). THIN: runs the existing readers, computes nothing new", subcommands: [directory, delta, "--axes", "--since", "--no-snapshot", "--json", "--self-test"], entries: [org.axes.directory, org.axes.delta] }

@@ -138,6 +138,9 @@ declare -A _INTERP_WIN=(
     # class as comp-which, which is already exercised live, so this adds no new failure mode.
     [comp-grep]="py.exe"
     [comp-glob]="py.exe"
+    # comp-find added 2026-08-05 (3.0.0_SA_CVO~B, NFRA_SCRIPTGEN Part B). Shebang READ, not assumed:
+    # `#!/usr/bin/env python3`, same interpreter class as comp-grep/comp-glob which it unifies.
+    [comp-find]="py.exe"
 )
 
 # --- DERIVED SET (3.0.0_SA_CVO 2026-07-28, Andrew-direct) -------------------------------------

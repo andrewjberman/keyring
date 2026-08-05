@@ -74,6 +74,33 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-find:
+    coverage: "EVERY line (content mode) or filename (name mode) in the .gitignore-aware repo file
+      set for the given pathspec, each assigned exactly one grade band. DENOMINATOR PRINTED ON EVERY
+      RUN (hits + files scanned); band counts are TRUE TOTALS, never the current page's."
+    blind_spots:
+      - "BINARY + undecodable files are skipped by the reader and are NOT in the scanned denominator
+         -- a match inside one is invisible here."
+      - "SOVEREIGN-HELD paths are excluded by the shared rail guard; the exclusion prints, so an
+         absence over a held path is NEVER 'confirmed absent'."
+      - "GRADING IS LEXICAL/STRUCTURAL, not semantic: the HEAD band tests the query against the FILE
+         NAME, and DEF tests a definition-shaped line. A file that is the true answer under a
+         different name sorts as SURFACED, not HEAD. The bands order the dive; they do not decide it."
+      - 'python `re` semantics: a backslash before | ( ) is a LITERAL, not BRE alternation/grouping.
+         A 0-hit run on a BRE-shaped pattern is warned about inline, but the warning is the only
+         guard -- the tool cannot tell a wrong pattern from a real absence.'
+      - "NO SLM / no learned rerank BY DESIGN (Andrew-direct 2026-08-05) -- ordering is re-derivable
+         from (query, path, line) alone. Recall is the caller's pathspec, not a model's judgment."
+    failure_direction: "UNDER-SURFACES rather than over-claims: an ungraded hit is impossible (every
+      match lands in exactly one band), and a zero renders as a MEASURED zero naming the scanned
+      denominator -- never as a bare 'no results' that reads as confirmed absence."
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: "n/a -- reads the working tree live at call time; no cache, no snapshot."
+    exit_codes: "0 = ran (including a measured zero) | 2 = BLOCKED (bad pathspec / unknown band) --
+      a zero-hit run is NOT an error, and a BLOCKED run is never reported as zero hits."
+
   # BORN-REGISTERED entry (ADHOC.comp-cochange-build 2026-08-04): first tool landed WITH its
   # contract + coordinate + intent_from_above in the SAME commit as the code -- the new-tool
   # normative rule (CVO's phrasing, CTO-adopted 200144Z: a regime that only backfills teaches

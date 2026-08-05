@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+"""comp-find -- the UNIFIED, GRADED, PAGINATED repo-search rail (NFRA_SCRIPTGEN Part B).
+
+ANDREW-DIRECT 2026-08-05 (~2015Z, CVO~B terminal), VERBATIM:
+    "the purpose of the corp-* tooling was helping 'AGENTS' figure out what files they needed to
+     read and what files they needed to edit... replace comp-grep/glob with comp-find (no SLM
+     rerank required, just have it structure paginated results like all the other comp-tools do)."
+
+comp-find unifies comp-grep (content) + comp-glob (filename) behind one verb, and adds the two
+things a flat match list does not give an agent:
+
+  1. A DETERMINISTIC GRADE on every hit, so dive-worthy files sort above reject-worthy ones.
+  2. STRUCTURED, PAGINATED output with the DENOMINATOR always printed, so "no more results" is
+     never confusable with "nothing else exists".
+
+NO SLM. NO LEARNED RERANK. Per Andrew's word and for a harder reason: this is a rail that gates
+Rule-21 raw-search denial. A ranking an agent cannot re-derive is not auditable, and a
+non-deterministic rail cannot be a control. Every grade below is computed from the query, the path,
+and the file's own text -- reproducible from the same inputs, forever.
+
+WHAT IS RECYCLED, AND WHAT IS NOT (anatomy-main survey, provenance pinned @575718fef):
+  RECYCLED -- the ARCHITECTURE of corp_grep/corp_hooks: one graded universe computed per query,
+    reject-first ordering, and UNCAPPED GRADING (every hit gets a grade even if the page shows 20).
+  NOT RECYCLED -- corp_write's L1 CatBoost / L2 qwen3-coder:30b rerank. That stack answers "rank
+    files a human should EDIT"; useful, but it is a RANKING and this rail must stay re-derivable.
+
+GRADE LADDER (reject-first; the tail is what you skip, not what you missed):
+    HEAD      the query matches the FILE'S OWN NAME -- usually what you meant
+    DEF       the match is on a definition line (def/class/function/const) -- the thing itself
+    SURFACED  a plain content match in first-party source
+    CONFIG    match in .json/.yaml/.toml/.ini/... -- config, not logic
+    TEST      match in a test file -- asserts behavior, rarely defines it
+    DOC       match in .md/.txt -- describes; may be STALE relative to code (read code to confirm)
+    COLD      matched, but in none of the above -- lowest signal
+
+An UNGRADED hit is impossible by construction: every match lands in exactly one band, and the band
+counts are printed whether or not the band is shown on this page.
+
+Read-only, deterministic, ASCII-only. Inherits the rail properties from _comprail:
+repo-scoped + .gitignore-aware (incl. nested repos) + sovereign-held guard + audited to
+org/mcp/comp-which-rail.log.
+"""
+from __future__ import annotations
+
+import fnmatch
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _comprail  # noqa: E402
+
+WS = _comprail.repo_root()
+RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
+
+PAGE_DEFAULT = 25
+_CONFIG_EXT = {".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".conf", ".env", ".lock", ".xml"}
+_DOC_EXT = {".md", ".txt", ".rst"}
+_DEF_RX = re.compile(r"^\s*(def |class |function |const |export (const|function|class)|[A-Z0-9_]+\s*=)")
+
+_BANDS = ("HEAD", "DEF", "SURFACED", "CONFIG", "TEST", "DOC", "COLD")
+_BAND_NOTE = {
+    "HEAD": "the query is in the FILE NAME -- usually what you meant",
+    "DEF": "match on a DEFINITION line -- the thing itself, not a mention",
+    "SURFACED": "plain content match in first-party source",
+    "CONFIG": "config/data file -- declares values, does not implement",
+    "TEST": "test file -- asserts behavior, rarely defines it",
+    "DOC": "prose -- DESCRIBES the code and may be STALE; confirm against source",
+    "COLD": "lowest signal",
+}
+
+
+def _is_test(rel):
+    b = os.path.basename(rel).lower()
+    return b.startswith("test_") or b.endswith("_test.py") or "/tests/" in rel.replace("\\", "/")
+
+
+def _band(rel, line_text, terms):
+    ext = os.path.splitext(rel)[1].lower()
+    base = os.path.basename(rel).lower()
+    if terms and any(t in base for t in terms):
+        return "HEAD"
+    if _is_test(rel):
+        return "TEST"
+    if ext in _DOC_EXT:
+        return "DOC"
+    if ext in _CONFIG_EXT:
+        return "CONFIG"
+    if line_text is not None and _DEF_RX.match(line_text):
+        return "DEF"
+    if line_text is not None:
+        return "SURFACED"
+    return "COLD"
+
+
+def _terms(pattern):
+    """Lowercased alphanumeric tokens from the query, for the HEAD (filename) test only."""
+    return [t for t in re.split(r"[^A-Za-z0-9_]+", pattern.lower()) if len(t) > 2]
+
+
+def _usage():
+    print("comp-find <pattern> [pathspec ...]     -- graded content search (replaces comp-grep)")
+    print("comp-find --name <glob> [pathspec ...] -- graded filename search (replaces comp-glob)")
+    print("  -i            ignore case")
+    print("  --page N      page number (default 1)")
+    print("  --limit N     hits per page (default %d)" % PAGE_DEFAULT)
+    print("  --band B      show only band B (HEAD|DEF|SURFACED|CONFIG|TEST|DOC|COLD)")
+    print("  --files       collapse to matching file names only")
+    print("  --all         do not paginate (every hit)")
+    print("  e.g. comp-find apply_aua_overrides data/")
+    print("       comp-find --name 'test_pipescript_*.py'")
+    return 0
+
+
+def main() -> int:
+    _comprail.harden_stdout()
+    argv = sys.argv[1:]
+    if not argv or argv[0] in ("-h", "--help"):
+        return _usage()
+
+    ignore_case = False
+    name_mode = False
+    files_only = False
+    show_all = False
+    page = 1
+    limit = PAGE_DEFAULT
+    band_filter = None
+    include_held = False
+    positional = []
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "-i":
+            ignore_case = True
+        elif a == "--name":
+            name_mode = True
+        elif a == "--files":
+            files_only = True
+        elif a == "--all":
+            show_all = True
+        elif a == "--include-held":
+            include_held = True
+        elif a in ("--page", "--limit", "--band"):
+            i += 1
+            val = argv[i] if i < len(argv) else None
+            if a == "--page":
+                page = max(1, int(val)) if (val or "").isdigit() else 1
+            elif a == "--limit":
+                limit = max(1, int(val)) if (val or "").isdigit() else PAGE_DEFAULT
+            else:
+                band_filter = (val or "").upper()
+        else:
+            positional.append(a)
+        i += 1
+
+    if not positional:
+        print("comp-find: ERROR: no pattern given.")
+        return _usage() or 2
+    pattern, pathspec = positional[0], positional[1:]
+
+    # Same BRE-vs-ERE footgun guard comp-grep carries: python `re` treats \| \( \) as LITERALS, so
+    # a BRE-muscle-memory pattern silently matches nothing and "0 hits" reads as confirmed absence.
+    if not name_mode and re.search(r"\\[|()]", pattern):
+        print("comp-find: WARNING: pattern contains '\\|' / '\\(' / '\\)' -- python re treats these "
+              "as LITERAL characters, not alternation/grouping. Use a BARE pipe: 'foo|bar'. A "
+              "0-hit result below may be this, not a real absence.")
+
+    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
+    if files is None:
+        print("comp-find: BLOCKED: %s" % err)      # never silently empty
+        _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, 'q="%s"' % err)
+        return 2
+    if held_note:
+        print("comp-find: %s" % held_note)          # sovereign-held guard: absence is NOT confirmed
+
+    terms = _terms(pattern)
+    hits = []          # (band, rel, lineno, text)
+    scanned = 0
+
+    if name_mode:
+        pat = pattern if any(c in pattern for c in "*?[") else "*%s*" % pattern
+        for rel in files:
+            scanned += 1
+            base = os.path.basename(rel)
+            hay = base.lower() if ignore_case else base
+            needle = pat.lower() if ignore_case else pat
+            if fnmatch.fnmatch(hay, needle):
+                hits.append((_band(rel, None, terms), rel, 0, ""))
+    else:
+        flags = re.IGNORECASE if ignore_case else 0
+        try:
+            rx = re.compile(pattern, flags)
+        except re.error:
+            rx = re.compile(re.escape(pattern), flags)
+        for rel in files:
+            full = os.path.join(WS, rel)
+            try:
+                with open(full, "r", encoding="utf-8", errors="replace") as fh:
+                    scanned += 1
+                    for n, line in enumerate(fh, 1):
+                        if rx.search(line):
+                            hits.append((_band(rel, line, terms), rel, n, line.rstrip()[:200]))
+            except (OSError, UnicodeDecodeError):
+                continue
+
+    # UNCAPPED GRADING: every hit is banded before any pagination. The counts below are the TRUE
+    # totals, not the page's -- which is the difference between "no more results" and "nothing else
+    # exists", and the reason pagination here cannot manufacture a false absence.
+    by_band = {b: [] for b in _BANDS}
+    for h in hits:
+        by_band[h[0]].append(h)
+    ordered = [h for b in _BANDS for h in sorted(by_band[b], key=lambda r: (r[1], r[2]))]
+
+    if band_filter:
+        if band_filter not in _BANDS:
+            print("comp-find: ERROR: unknown band %r. Valid: %s" % (band_filter, ", ".join(_BANDS)))
+            return 2
+        ordered = [h for h in ordered if h[0] == band_filter]
+
+    if files_only:
+        seen, collapsed = set(), []
+        for h in ordered:
+            if h[1] not in seen:
+                seen.add(h[1])
+                collapsed.append(h)
+        ordered = collapsed
+
+    total = len(ordered)
+    if show_all:
+        start, end, page, pages = 0, total, 1, 1
+    else:
+        pages = max(1, (total + limit - 1) // limit)
+        page = min(page, pages)
+        start, end = (page - 1) * limit, min((page - 1) * limit + limit, total)
+
+    mode = "name" if name_mode else "content"
+    print("comp-find [%s] %r" % (mode, pattern))
+    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s"
+          % (len(hits), scanned, (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
+    counts = " ".join("%s=%d" % (b, len(by_band[b])) for b in _BANDS if by_band[b])
+    print("  BANDS (true totals, not this page): %s" % (counts or "none"))
+    print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, max(0, end - start), total))
+    print()
+
+    if total == 0:
+        print("  NO HITS. This is a MEASURED zero over %d scanned file(s) in scope -- not a claim "
+              "the term is absent from the estate." % scanned)
+        print("  Widen with a pathspec, or -i, or check the pattern (see the BRE warning above if shown).")
+    else:
+        last_band = None
+        for band, rel, lineno, text in ordered[start:end]:
+            if band != last_band:
+                print("  [%s] -- %s" % (band, _BAND_NOTE[band]))
+                last_band = band
+            if name_mode or files_only:
+                print(_comprail.ascii_safe("    %s" % rel))
+            else:
+                print(_comprail.ascii_safe("    %s:%d: %s" % (rel, lineno, text.strip()[:180])))
+        if end < total:
+            print()
+            print("  MORE: %d hit(s) not shown. Next: --page %d   (or --all, or --band <B>)"
+                  % (total - end, page + 1))
+
+    # Dependency/systems context for the files on THIS page -- the "never dead-end" property that
+    # made comp-grep worth the rail in the first place.
+    page_files = []
+    for _b, rel, _n, _t in ordered[start:end]:
+        if rel not in page_files:
+            page_files.append(rel)
+    if page_files:
+        ctx = list(_comprail.systems_context(page_files))
+        if ctx:
+            print()
+            for line in ctx:
+                print(_comprail.ascii_safe(line))
+
+    _comprail.log_rail(RAIL_LOG, "RUN-FIND", "comp-find", pattern,
+                       'mode=%s hits=%d scanned=%d page=%d/%d' % (mode, len(hits), scanned, page, pages))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
