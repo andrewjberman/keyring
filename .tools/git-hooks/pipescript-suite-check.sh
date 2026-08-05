@@ -91,7 +91,17 @@ org/modules/graph/tests/test_extract_column_gaps_bd_hold.py
 org/modules/graph/tests/test_comp_secrets_bd_hold.py
 org/modules/graph/tests/test_freshness_manifest_gen_bd_hold.py
 org/modules/graph/tests/test_platinum_held_path_guard.py
+org/modules/graph/tests/test_script_io_ast.py
 "
+# test_script_io_ast.py added 2026-08-05 (3.0.0_SA_CVO~B): it is the battery for the R-1/R-2
+# generalist I/O engine that `comp-pipescript io` now falls back to (@e07b9a29a), so a change that
+# breaks it breaks a live pipescript answer path. Adding ONLY this file, deliberately: measured the
+# same day, 80 of the 90 test files in org/modules/graph/tests/ sit OUTSIDE this allowlist (the gate
+# runs 10). Widening it wholesale would immediately pull in test_adapter_audit.py, which fails
+# COLLECTION because its target module org/modules/graph/adapter_audit_cli.py does not exist -- so
+# every comp-pipescript commit would start blocking on an unrelated pre-existing break. That is a
+# scoping call for the gate's owner, not a side effect of registering one new battery. The 80/10
+# gap is routed as its own finding.
 
 STAGED="${PIPESCRIPT_SUITE_STAGED_FILES:-$(git diff --cached --name-only 2>/dev/null || true)}"
 if [ -z "$STAGED" ]; then exit 0; fi
