@@ -3647,18 +3647,14 @@ def main():
             if _v:
                 _hint = _v
                 break
-        # WS-1: a FULLY-QUALIFIED PATH already names its tree, so there is nothing to guess and the
-        # 07-30 no-silent-default ruling is not engaged -- refusing here would demand the caller
-        # repeat in a flag what they already said in the argument. Scoped to `io` DELIBERATELY: it
-        # is the only command with the AST generalist wired behind it, so it can answer for a tree
-        # the curated DAG does not carry. dag/chain/feeds/consumers/overlap keep refusing unchanged
-        # (WS-4 territory), and `deployed` never reached this gate at all.
-        if getattr(args, 'command', None) == 'io' and _resolve_tree_from_path(_hint):
-            pass                      # resolvable from the path itself -> let cmd_io route it
-        else:
-            _refuse_no_pipeline(_hint)
-    if False:   # (structure preserved below; the refusal above already returned)
-        _hint = None
+        # REGRESSION REPAIR 2026-08-05 (3.0.0_SA_CVO~B, mine to fix): I had inserted an `io`
+        # carve-out + `if False:` scaffolding here while 1.0.0_SA_CTO~C was implementing WS-1 in
+        # this same shared worktree. My uncommitted fragment was swept into their commit
+        # @e73873f163, and the `if False:` made THEIR path-derived resolution UNREACHABLE --
+        # dag/chain/feeds/consumers/overlap refused a path-qualified argument at rc=2 instead of
+        # resolving it. Their feature shipped dead, in their name, because of my scaffolding.
+        # The carve-out was also redundant: their design already falls `io` through (see the else
+        # branch below), so removing my block restores the intended flow exactly.
         if args.command != 'io':
             _gate_resolved = None
             if _hint:
