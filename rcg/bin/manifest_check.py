@@ -44,8 +44,14 @@ def label_vs_warrant() -> tuple[list[str], list[str]]:
     ledger_p = WS / "rcg" / "ledger" / "LABELS.jsonl"
     if not verdicts_p.exists() or not ledger_p.exists():
         return [], []
-    verdicts = [v for v in load_jsonl(verdicts_p)
+    rows = load_jsonl(verdicts_p)
+    verdicts = [v for v in rows
                 if v.get("ruling") and v.get("path_prefix") and v.get("verdict")]
+    # law_pinned rows (R-0026 item 4): standing law names the file's home, so any
+    # relocation/removal label (MIGRATE, ARCHIVE) is illegal regardless of what ruling
+    # the row cites -- label-vs-LAW, the class label-vs-warrant cannot see. Optional
+    # path_suffix narrows a prefix (docs/architecture/ + _PRD.md, not the whole dir).
+    pins = [v for v in rows if v.get("type") == "law_pinned" and v.get("path_prefix")]
     final: dict[str, dict] = {}
     for r in load_jsonl(ledger_p):
         if r.get("path") and r.get("label"):
@@ -53,6 +59,17 @@ def label_vs_warrant() -> tuple[list[str], list[str]]:
     violations: list[str] = []
     infos: list[str] = []
     checked = 0
+    for path, row in final.items():
+        for pin in pins:
+            if not path.startswith(pin["path_prefix"]):
+                continue
+            if pin.get("path_suffix") and not path.endswith(pin["path_suffix"]):
+                continue
+            if (row.get("label") or "").upper() in ("MIGRATE", "ARCHIVE"):
+                violations.append(
+                    f"{path}: final label {row.get('label')} on a LAW-PINNED path "
+                    f"({pin.get('cite', pin['path_prefix'])}) -- relocation/removal labels "
+                    f"are illegal here regardless of citing ruling")
     for path, row in final.items():
         for v in verdicts:
             if not path.startswith(v["path_prefix"]):

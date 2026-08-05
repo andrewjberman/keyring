@@ -24,3 +24,5 @@
 {"ruling": "CTOB-RCG-002", "path_prefix": "docs/architecture/YALP_VALUAT.md", "verdict": "KEEP", "date": "2026-08-05", "cite": "law-pinned in place: org/XXX.md closure discipline (PRDs stay in docs/architecture/); CTO~B 004346Z"}
 {"ruling": "CTOB-RCG-002", "path_prefix": "docs/architecture/INFLEC_API_ENDPOINTS_CATALOG.md", "verdict": "KEEP", "date": "2026-08-05", "cite": "law-pinned in place: org/XXX.md closure discipline (PRDs stay in docs/architecture/); CTO~B 004346Z"}
 {"ruling": "CTOB-RCG-002", "path_prefix": "docs/architecture/INFLEC_TRANSACTIONS_API_PROBE.md", "verdict": "KEEP", "date": "2026-08-05", "cite": "law-pinned in place: org/XXX.md closure discipline (PRDs stay in docs/architecture/); CTO~B 004346Z"}
+{"type": "law_pinned", "path_prefix": "docs/architecture/", "path_suffix": "_PRD.md", "date": "2026-08-05", "cite": "org/XXX.md closure discipline: 'PRDs are NOT a close step. They stay in docs/architecture/'; CTO~B 004346Z; R-0026 item 4"}
+{"type": "law_pinned", "path_prefix": "org/tier0/MISSIONS.md", "date": "2026-08-05", "cite": "LD-0341: live machine-maintained mission register (comp-missions sole writer); R-0026 items 4+6"}
