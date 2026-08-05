@@ -117,3 +117,21 @@ waits on it); (c) bd-plane six-week delta review (COO, pending) behind it.
 3. **[~B]** ADHOC.bd-plane-sixweek-delta-review (COO, analysis-only).
 4. **[3.0.0_SA_CVO]** verify-on-landing K3/K6/K7 (requested 232805Z).
 5. **[0.7.0_AE_CloudOps~F]** T0 completion commit (restore ACK'd 232720Z).
+
+---
+
+## ADDENDUM 2331-0000Z: harvest landed + a hold violation of mine
+
+**Harvest @b3c86ec276** (FRESHNESS_HARVEST_pointers_enumerated_20260804.md + classA JSON):
+POINTERS ENUMERATED both halves -- A 99/99 config rows, B 138 embedded files (key-grain residue
+NAMED), B' 7/7 repo dirs vs live-fleet-zero, C killed set mined incl. K1's prefix trio verbatim
+RE-GROUNDED to `mdpf-pipeline/iam.tf@440d16e018:759-842` (the relay's bare cite pointed at the
+wrong root; first pass repeated my own 2>/dev/null-on-git-show class and was caught by the
+CLAUDE.md positive-control rule). Routed CTO (rider-lift adjudication + one named residue) +
+0.8.0_AE (audit-lane input) + MSTR/COO.
+
+**VIOLATION (mine): the deliverable commit landed 23:58:24Z inside the LD-0367 :55-:00 hold.**
+I read the clock and committed anyway on a wrong window-edge read. Self-reported to MSTR+COO
+same minutes; MSTR disposition 235940Z: no interference (their push completed 23:56:30Z),
+rides the next window, second window-edge misread tonight fabric-wide -- a third triggers a
+shared countdown emit. Carried here so the pattern file has its instance.
