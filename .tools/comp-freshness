@@ -1495,6 +1495,18 @@ def main() -> int:
         description="S3 + DynamoDB artifact freshness gate for BD, INF, and COT gold chains.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+NOT comp-heat -- the names are confusable and they answer different questions:
+  comp-freshness (this tool)  DATA-PIPELINE freshness. Is the SERVED ARTIFACT current?
+                              S3 + DynamoDB, PASS/FAIL, it GATES.
+                              ^ trading-day frontier ONLY where the entry DECLARES
+                                freshness_basis: trading-day-frontier (and the calendar
+                                lib is present -- else it refuses the verdict loudly).
+                                An entry without it evaluates on FLAT WALL-CLOCK HOURS
+                                and will false-alarm every Monday. Not a tool-wide property.
+  comp-heat                   OBJECT WRITE-freshness + hygiene. When was this PATH last
+                              written? hot/warm/cold, archive candidates. ADVISORY-ONLY.
+  Rule of thumb: asking about DATA -> comp-freshness. Asking about CODE/FILES -> comp-heat.
+
 Exit codes:
   0  All PASS (WARN entries do not block)
   1  Any FAIL (artifact beyond fail_age_hours with ERROR severity)
