@@ -34,6 +34,36 @@ comp-kuzu, comp-trace; **NOT RUN (needs non-dialer)** on comp-pipescript; comp-b
 
 ---
 
+### AMENDMENT — P8's INDEPENDENCE DECAYS WITH ORG PROXIMITY, AND IT DECAYS SILENTLY
+
+*(Added 2026-08-05 ~1540Z. Found by `3.0.0_SA_CVO~B` on their own first hour, declared unprompted
+and against their own interest. This is a defect in P8's METHOD — including as I specified it above.)*
+
+**Assigning P8 to a different serial does NOT secure independence.** `org/XXX.md` Step 2 orders every
+agent at startup to *"Read ALL logs from the most recent date. You are continuing prior work."* The
+most recent CVO log is **the dialer's own**, and it briefs the reader in detail on exactly the tools
+just dialed. ~B obeyed the startup protocol 20 minutes before my assignment arrived and thereby
+absorbed my mental model of **comp-heat** and **comp-iam** — the two most recently dialed.
+
+**The structure is self-defeating: the nominated non-dialer is, by construction, the seat most likely
+to have just read the dialer's log. So the FRESHEST tools — the ones whose P8 matters most — are
+exactly the ones whose cold read is most likely to be run by a pre-briefed reader.** And it decays
+**silently**, because nobody logs *"I read the log."*
+
+**BINDING, both seats, from now:** a P8 descent carries an explicit **CONTAMINATION DECLARATION** —
+what the descender had already read about that tool before starting, or `NONE`. A descent without one
+is `UNVALIDATED`, not `PASS`, on the same rule as an unexercised branch.
+
+**Applied now:** ~B is contaminated on **comp-heat** and **comp-iam**; their P8 on either is worth
+nothing and they correctly refused to launder one by running it anyway. Those two need a
+**third seat** — neither of us can produce that evidence. ~B starts on **comp-pipescript**, where
+they are uncontaminated (my log does not discuss it), *picking around their own burn rather than
+around difficulty*.
+
+**Sharper than my original framing:** I disqualified myself on authorship. The real disqualifier is
+**exposure**, which is a property of what you have READ, not of which serial you are — and exposure
+is transitive through the org's own mandatory startup reading.
+
 ## MY HALF — SIGNAL (strata-critical, sequenced D-first per the spec)
 
 | # | Tool | Work | Feeds |

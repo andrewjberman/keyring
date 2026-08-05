@@ -155,6 +155,36 @@ strictly worse than today's obvious-but-harmless output.**
 Same law as the corpus defect found this morning: `degraded_sources: []` was the strongest possible
 all-clear precisely because presence was the only predicate. **Do not rebuild that shape one layer up.**
 
+### 5a. AMENDMENT — VINTAGE IS NOT A QUALITY SIGNAL. THE SECOND HEAD.
+
+*(Added 2026-08-05 ~1540Z. Source: `4.0.0_SA_CRO` via `3.0.0_SA_CVO~B`, banked verbatim as theirs.)*
+
+§5 requires every stratum to carry its **input vintage**. That requirement stands — but it creates a
+hazard the same paragraph must close, because a model reading a freshness field will treat recent as
+reliable, and **it is not**:
+
+> **"Treat recent output as a LIVE ERROR SOURCE, not a settled baseline — freshness of a row is not
+> evidence of its reliability."**
+
+Live instance, same day: `4.0.0_SA_CRO` landed a repair and **self-retracted half of it ~25 minutes
+later**, after a label was flipped on coherence reasoning when a ratified prior adjudication had
+already ruled that path on a grounded search nobody reproduced. **The retracted half was, for those
+25 minutes, the freshest row in the tree.** Any stratum ranking or weighting by recency would have
+scored it highest exactly while it was wrong.
+
+**These are two heads of one disease and the contract must close both:**
+
+| Head | The false inference | Instance |
+|---|---|---|
+| **presence ≠ health** | "all sources present" ⇒ healthy | `degraded_sources: []` over a six-day-frozen corpus |
+| **recency ≠ correctness** | "newest row" ⇒ most reliable | a self-retracted repair, freshest for 25 minutes |
+
+**THEREFORE — binding on every stratum:** vintage is emitted as a **fact about the input**, never as
+a **rank, weight, confidence, or sort key**. No stratum may order its rows by recency or present
+newness as a quality signal, and no prompt may invite the model to prefer recent evidence. Where
+recency genuinely matters (Group B half-life), it is the **subject of the measurement**, never a
+proxy for trust in it.
+
 **AND: NO SILENT TRUNCATION.** `[:60000]` must not survive into any call. A payload exceeding budget
 is chunked with a declared denominator, or the call fails loud. A model cannot know it was handed
 14% less than the day.
