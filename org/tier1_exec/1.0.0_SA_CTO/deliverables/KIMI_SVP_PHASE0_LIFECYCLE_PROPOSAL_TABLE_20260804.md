@@ -20,7 +20,20 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 4 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab -- 2026-08-05). **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
+**SITTING PROGRESS: 5 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality -- 2026-08-05)
+
+> **RETIREMENT RULING ON RECORD (row 5).** `RETIRED` carries `requires: [retirement_ruling]` --
+> *"a retirement with NO RULING is an outage with paperwork."* A teardown had occurred (June 2026)
+> and no authorizing ruling was found. **Andrew's word at this sitting IS that ruling**, VERBATIM:
+> ***"Retired completely."*** (2026-08-05, `1.0.0_SA_CTO~B` terminal, Phase-0 sitting.) The
+> requirement is therefore satisfied by this record, not by an inherited one.
+>
+> **DENOMINATOR NOTE:** the roster remains 29 verticals; **28 are live and 1 is terminal.** RETIRED
+> is a legitimate member of the ratified enum, so the row STAYS on the c3.ii matrix carrying its
+> terminal value rather than being deleted from it -- deleting it would destroy the record that a
+> decommission happened, which is the same class of loss as an un-ruled retirement. *(Stated as my
+> reading of "completely" = the retirement is total, NOT that the row is erased. Cheap to correct
+> if he meant otherwise.)*. **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
 `ANDREW_DIRECT_20260805_advi_bd_ratified_and_the_0833_0824_correction.md` (vertical 1 + the
 full-account-string ruling + the grain convention) and
 `ANDREW_DIRECT_20260805_canonical_medallion_form_and_advi_cot_ratified.md` (vertical 2 + the
@@ -119,7 +132,7 @@ than inheriting my original framing.
 | 2 | advi-cot | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/blackdiamond/cottonwood/`** (`bronze/ gold/ meta/ silver/`) — the BLACK DIAMOND vendor tree, NOT a Schwab account; 49F's sibling is `.../blackdiamond/49f/`. Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches; under the ratified grain convention this is NOT a lifecycle shift |
 | 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | **INF GOLD NOT MIGRATED** — gold still LIVE-writing to `s3://opal-data-inf/gold/` (2026-08-05 10:51Z) while its assets trees carry no `gold/`. Named OPAL_CONSOLIDATION fix. Plus canonical-route redesign in flight. Both interior — NOT lifecycle shifts |
 | 4 | canonical-schwab | **PERMANENT - RATIFIED 2026-08-05** | THE PRODUCT-AGNOSTIC INGEST SPINE for the Schwab custodial source. Two ENABLED twice-daily pulls (`canonical-schwab-si2-08335338-daily-pull` cron(45 9,21), `...-08242234-daily-pull` cron(15 10,22)) + an event-driven start accelerator (`canonical-schwab-xref-success`, legitimate - both pulls carry real crons). **20 silver tables (08335338) / 19 (08242234), 18 IDENTICAL** - divergence is 3 tables at the edge. **CORRECTION: my original row said 'six silver tables' - that was the CONVERTER count from the runbook, reported as a table count.** | HIGH | **DUAL-IDENTITY BOX - see finding below.** 08242234 has NO `gold/` (2nd instance of the INF class, different product) |
-| 5 | causality | UNDECLARED | sys-causality-engine exists; this seat holds no activity/consumption evidence either way | — | resolve at sitting |
+| 5 | causality | **RETIRED - RATIFIED 2026-08-05** (Andrew VERBATIM: *"Retired completely."*) | **APPLIED PLANE IS EMPTY, measured:** 0 live Lambdas, 0 DynamoDB tables (was causality-generations + causality-saved-analyses), 0 refs in portal/src (comp-grep 405 of 405 files - complete scope, cross-checked `find portal/src -type f` = 405), and `causality-endpoints.ts` DOES NOT EXIST though the estate model cites it. Teardown on the record: `0.5.0_AE_OpalETL` 2026-06-11 + 2026-06-16; `safe-destroy.sh:10` exists partly because of it. **MY ORIGINAL ROW CLAIMED 'no evidence either way' - the evidence was abundant, I had simply never looked.** | HIGH | **ONTOLOGY LAG:** `comp-estate causality` still returns 5 chains with producers/API-GW/frontend prose, all flagged `producers-dead-applied-plane-20260730`. The model outlived the system by ~6 weeks |
 | 6 | ceo-digest | UNDECLARED | UNASSIGNED-RESIDUE structure; no schedule/consumer evidence at hand | — | resolve at sitting — DORMANT candidate |
 | 7 | cma | PERMANENT | yang-analytics family (capital-market assumptions), yang pipeline active | MED | — |
 | 8 | correlation | PERMANENT | yang-analytics family, active engine | MED | — |
