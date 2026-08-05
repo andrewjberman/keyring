@@ -226,4 +226,42 @@ a tool question, and I am not going to assert it from the tool's shape. **It is 
 would look at after R-3 lands**, and it is the reason I rank R-3 P0 rather than folding it into the
 generalization work.
 
+---
+
+## 5. PROVENANCE OF THE RECYCLED MATERIAL (added per MSTR integrator note, `20260805T154301Z`)
+
+MSTR's point is correct and it is a real defect in §2 as first written: **the design cited an
+unversioned zip sitting in a Downloads folder outside git.** A recommendation whose evidence lives
+only on one profile's local disk is not re-derivable by the seat that has to implement it.
+
+**Source archive:** `C:\Users\AndrewBerman\Downloads\anatomy-main.zip` — 374,494,703 B,
+mtime `2026-07-20 12:30:59 -0400`. Archive internal root `anatomy-main/`; index = 31,660 entries.
+**Not in this repo and not tracked.** It is a snapshot of a separate `anatomy` project (its own
+`REPO = /Users/private-account/Desktop/anatomy` hardcoded in `.tools/fabric/corp`).
+
+**The exact artifacts this design rests on**, pinned by content so a later reader can confirm they
+read the same bytes I did (sha256, first 16 hex):
+
+| artifact (path within `anatomy-main/`) | sha256[:16] | size |
+|---|---|---:|
+| `.tools/fabric/corp` | `7057f1bf39967a10` | 3,883 B |
+| `infra/corp/corp_grep.py` | `1483add228270905` | 3,754 B |
+| `infra/corp/corp_glob.py` | `2b8ee38a382244bd` | 3,922 B |
+| `infra/corp/corp_hooks.py` | `6e9bc8c93720c5d4` | 9,689 B |
+| `infra/corp/corp_write.py` | `8503059bcc84b701` | 2,540 B |
+| `infra/aws/corpgraph/serving/falkordb/corpgraph_schema.py` | `eeb6b08487a76b90` | 5,067 B |
+
+**NOTHING FROM THE ARCHIVE HAS BEEN COPIED INTO THIS REPO, AND ON THIS DESIGN NOTHING NEEDS TO BE.**
+That is the load-bearing consequence of §2's split: the half that transfers is an **architecture**
+(derive the universe once; verbs are thin views; File/Symbol + `IMPORTS`/`CALLS`/`READS`/`WRITES`),
+and an architecture is re-implementable from the description above against our own `census_substrate`
+discipline. The half that would have required importing code — the L1 CatBoost / L2 SLM ranking
+stack — is the half §2 rules OUT.
+
+**So the residual risk MSTR named is bounded but real, and it is a documentation risk, not a
+dependency risk:** if this file's §2 description is wrong about what those six files do, the archive
+is the only way to check, and it is one disk-loss away from unverifiable. **Recommend (P2, for
+whoever implements R-2): if any anatomy code is later imported rather than re-implemented, it lands
+in-repo with these hashes in the commit message — not by reference to the zip.**
+
 — 3.0.0_SA_CVO~B
