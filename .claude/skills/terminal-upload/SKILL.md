@@ -23,15 +23,51 @@ displayed) so nothing half-lands silently.
 
 | Form | Behavior |
 |---|---|
-| `/terminal-upload` | Full run: pull both notebooks + tripwire + REAL upload + verify served. |
+| `/terminal-upload` | Full run: pull both notebooks + tripwire + REAL upload + verify served. Date variant = `tplus1`. |
+| `/terminal-upload tplus1` | Explicit prior-business-day pull. Identical to the bare form. |
+| `/terminal-upload tzero` | **Same-day** pull (`date_end = today`). See DATE VARIANT below — read it before the first real send. |
 | `/terminal-upload dry` | Pull + tripwire + `dry_run=True` upload (lands in pending/, NO pipeline fire). The safe exercise. |
 | `/terminal-upload send-only` | Skip the pull (PKLs already produced today): tripwire only (`--skip-pull`) + upload + verify. |
 | `/terminal-upload pull-only` | Pull + tripwire, stop before any upload. |
 | `--allow-stale N` | Pass through to the tripwire (post-holiday mornings where as-of is legitimately older). |
-| `--date YYYYMMDD` | Send a specific vintage instead of today's (passed to the upload tool). |
+| `--date YYYYMMDD` | Send a specific vintage instead of the variant's own (passed to the upload tool). |
+
+The variant word combines with the others: `/terminal-upload tzero dry`,
+`/terminal-upload tzero pull-only`, `/terminal-upload tplus1 send-only`.
 
 **Invoking this skill IS the send authorization** — the real upload passes `confirm=True`
 because the operator asked for exactly this. `dry` exists for everything short of that.
+
+## DATE VARIANT — which day the pull targets
+
+Both variants live in `workflows/bloomberg/<variant>/` (repo-owned copies; Yang's live
+notebooks stay untouched). They differ on exactly one line, `date_end`:
+
+| Variant | `date_end` | Vintage on a Tue |
+|---|---|---|
+| `tplus1` (default) | `today + BDay(-1)` | Monday |
+| `tzero` | `today` | Tuesday |
+
+**There is no time-of-day logic in either notebook** — `tplus1` targets `today - 1
+business day` whether you fire it at 08:00 or 23:00. It is not "yesterday because today
+isn't in yet"; it is a fixed rule, and `tzero` is the only way to reach same-day.
+
+**Two things to know before running `tzero` for real:**
+
+1. **Whether Bloomberg serves a complete same-day bar is UNTESTED.** The tripwire
+   verifies the as-of *is* today, but it cannot tell a complete same-day bar from a
+   partial one. Until that is measured, treat tzero as an experiment: compare a tzero
+   pull against the next morning's tplus1 pull of the same date before letting tzero
+   feed the portal. Prefer `tzero dry` first.
+2. **tzero leaves a file that tomorrow's tplus1 would reuse.** tzero writes
+   `data <today> v1.pkl`; tomorrow tplus1 targets that date and the notebooks are
+   idempotent by date. The runner guards this — tplus1 refuses to start on a
+   tzero-produced vintage and tells you how to proceed — but do not defeat the guard
+   without knowing the tzero run happened after the close.
+
+Because both variants write into the same live `output/` under different filenames,
+**always upload with the vintage named explicitly** (`date="<stamp>"`); do not let the
+upload tool pick "the latest".
 
 ## Step 0 — Preflight (all three gates, in order; any FAIL = stop with the reason)
 
@@ -54,14 +90,31 @@ because the operator asked for exactly this. `dry` exists for everything short o
 
 ## Step 1 — Pull + tripwire (leg 1)
 
+Run the **variant's** runner out of the repo — NOT `<project>\tools\run_daily_pull.py`
+(that is Yang's own T-1-only copy and has no variant awareness):
+
 ```
-"<cma-python>" -u "<project>\tools\run_daily_pull.py" [--skip-pull] [--allow-stale N]
+"<cma-python>" -u "<workspace>\workflows\bloomberg\<variant>\tools\run_daily_pull.py" \
+    [--skip-pull] [--allow-stale N] [--date YYYYMMDD]
 ```
 
+`<variant>` is `tplus1` (default) or `tzero`. The runner is byte-identical in both and
+reads its variant from the folder it lives in; it prints the resolved variant, date rule,
+and target stamp in its first four lines — **check those match what you asked for.**
+
+- It executes the repo's notebook copies via `nbclient` with the kernel cwd set inside
+  the LIVE project, so `input/`/`output/` still resolve to the real OneDrive project.
+  **Do not "simplify" this back to `jupyter nbconvert`:** nbconvert takes the kernel cwd
+  from the notebook file's own directory and **silently ignores**
+  `--ExecutePreprocessor.cwd`, so the notebooks would build an empty `input/`+`output/`
+  under `workflows/` and write the PKLs where nothing reads them — without failing.
+  Measured 2026-08-04; the reasoning is in `workflows/bloomberg/README.md`.
 - The notebooks take **minutes** — run under Bash `run_in_background` and act on the
   completion notification; do not poll. The `-u` is load-bearing under redirection:
   without it the parent's buffered prints land AFTER the tripwire subprocess output and
   the log reads out of order (found in the 2026-08-03 shakedown).
+- **A `BLOCKED:` exit naming a tzero vintage is the cross-variant guard, not a bug.**
+  Read it and choose deliberately; do not reflexively pass `--accept-tzero-vintage`.
 - Both notebooks are **idempotent by date** (an existing today-PKL is reused), so re-running
   after a hiccup is always safe.
 - The runner ends with the tripwire (expected keys, duplicate rows, as-of date, row-count
@@ -97,8 +150,13 @@ Gateway tool (requires the authenticated `opal` MCP; if its tools are absent, ru
 flow first — the tool listing shows `opal_data_refresh_upload` when connected):
 
 ```
-opal_data_refresh_upload(date="<YYYYMMDD if --date>", dry_run=<dry form>, confirm=<True on real send>)
+opal_data_refresh_upload(date="<the variant's target stamp>", dry_run=<dry form>, confirm=<True on real send>)
 ```
+
+**Always name `date` explicitly** — pass the stamp the runner printed in Step 1, never let
+the tool pick "the latest". Both variants write into the same live `output/` under
+different filenames, so a tzero file sitting beside a tplus1 file makes "latest" ambiguous
+in exactly the situation where getting it wrong is invisible.
 
 Server-side it: finds the two PKLs (`data/model YYYYMMDD v1.pkl`) in the SharePoint output
 folder -> uploads through the portal /data-refresh channel -> fires the Yang pipeline ->
@@ -121,12 +179,18 @@ pipeline owner's surface, not this skill's).
 
 ```
 /terminal-upload <form>
+  VARIANT:   tplus1 (today - 1 business day) | tzero (same-day) -> target <YYYYMMDD>
   PREFLIGHT: terminal OK (bbcomm :8194) | cma <path> | project OK
-  PULL:      OK in <N>s | SKIPPED (send-only) | FAILED: <verbatim reasons>
+  PULL:      OK in <N>s | SKIPPED (send-only) | BLOCKED (tzero-vintage guard) | FAILED: <verbatim>
   TRIPWIRE:  PASS | FAIL -> STOPPED, nothing sent: <reasons>
   UPLOAD:    uploaded OK / pipeline OK / displayed OK | dry-run -> pending/ only | <failed leg>
-  SERVED:    data_as_of <date> == expected frontier <date> | MISMATCH -> <detail>
+  SERVED:    data_as_of <date> == expected <date> | MISMATCH -> <detail>
 ```
+
+For `tzero`, SERVED will NOT equal the trading-day frontier that Step 4.1 describes — the
+frontier is the last *completed* trading day, and tzero deliberately serves the current
+one. Compare against the tzero target stamp instead, and say so explicitly in the report
+so the difference is never mistaken for the staleness class.
 
 ## Discipline
 
