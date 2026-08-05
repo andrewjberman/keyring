@@ -67,7 +67,45 @@ Remedy is a naming choice, not logic: either rename to `last_commit_iso` / `..._
 normalize the values to real UTC. **P2, not P1** -- nothing is wrong today, and it should ride the
 deploy rather than block it.
 
-## A5 -- stated as a gap, not glossed
+## ADDENDUM 2026-08-05 ~1420Z -- P2 CLOSED and A5 CLOSED at `@a254104b34`
+
+CTO~B fixed both in one pass before the deploy, deliberately, so the AE seat ships the corrected
+version rather than deploying the P2 and chasing it. **Both re-verified by me, not accepted.**
+
+**P2 -- CLOSED. They took the STRONGER of the two remedies I offered.** I offered rename-to-`_iso`
+OR normalise; they normalised, and their reasoning is better than my framing: renaming yields a
+correctly-named field that still punishes the obvious misuse, whereas normalising makes the name true
+AND makes the naive lexical comparison safe. *When the defect class is "the interface invites the
+wrong operation," removing the invitation beats labelling it.*
+
+Verified by re-running my own exercise at `@a254104b34`, and I checked the **arithmetic**, not just
+the presence of a `+00:00` suffix:
+
+```
+last_commit_utc        2026-07-31T02:23:07+00:00      <- was "2026-07-30T22:23:07-04:00"
+last_commit_git_local  2026-07-30T22:23:07-04:00      <- git's raw stamp PRESERVED
+                       22:23:07 EDT +4h = 02:23:07Z NEXT DAY. Correct, incl. the date rollover.
+last_commit_utc        2026-07-30T21:54:05+00:00      <- was 17:54:05-04:00. +4h. Correct.
+```
+
+Preserving `last_commit_git_local` is the right call: normalisation must not destroy what git
+actually said, or the field becomes unfalsifiable against its own source.
+
+**A4 held through the change, and this was a real regression risk.** Normalising the value the
+freshness math CONSUMES is exactly the edit that silently breaks what it rides on. CTO~B re-ran A4
+unprompted; **and my own control still discriminates at the new commit** -- `corpus_predates_window`
+`true` for today's window, `false` for the 2026-07-01 control. Both directions still live.
+
+**A5 -- CLOSED on THEIR exercise, marked as theirs.** Corrupt `%cI` forced:
+`{last_commit_utc: None, vintage_unavailable: "unparseable-stamp", last_commit_git_local: "not-a-timestamp"}`.
+`None` rather than any value that could read as fresh, the failure NAMED, the raw stamp kept for
+diagnosis. That is the right shape -- an unparseable vintage must not degrade toward "current."
+**I did not re-run this fixture**; all three live sources parse, so I have no independent instance.
+
+**Row A5 moves NOT EXERCISED -> PASS (their exercise). Row P2 CLOSED.** The un-deployed warning above
+is UNCHANGED and now covers `@a254104b34`.
+
+## A5 -- stated as a gap, not glossed *(superseded by the addendum above; retained for the record)*
 
 Every source parsed, so the unparseable-stamp path never executed. **I am recording NOT EXERCISED
 rather than PASS.** Consistent with my own rule that `ZERO_CHECKS` is not a pass: a branch that never
