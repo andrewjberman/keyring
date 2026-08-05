@@ -1342,6 +1342,53 @@ def _estate_oos_guard(raw):
         _emit_oos(raw, nt, owners or "globgrph")
 
 
+def _generalist_io_fallback(raw_id, pipeline_tried):
+    """R-2 GENERALIST FALLBACK: derive I/O by AST for a real .py the curated DAG does not carry.
+
+    Returns True if it HANDLED the request (printed a manifest), False to let the caller run its
+    normal unknown-script path. Deliberately conservative about when it fires:
+
+      - only for an argument that resolves to an EXISTING FILE on disk (a bare unknown script ID
+        is still a genuine unknown-in-tree, and saying so remains the right answer);
+      - only for .py.
+
+    WHY IT PRINTS PROVENANCE LOUDLY: this manifest is a DIFFERENT KIND OF ANSWER than the curated
+    DAG's -- no chain membership, no run order, no column gaps, no portal consumers, because AST
+    cannot see those. A reader who cannot tell which engine answered would over-trust the thinner
+    one, so the header names the engine and the limits. (Same discipline as comp-iam's DESIRED-vs-
+    APPLIED split: the instrument must say what KIND of claim it is making.)
+    """
+    cand = (raw_id or '').replace('\\', '/')
+    if not cand.endswith('.py'):
+        return False
+    path = cand if os.path.isfile(cand) else None
+    if path is None:
+        # Repo-root-relative retry, so the fallback works from a subdirectory too. Root is derived
+        # from THIS file's location (org/modules/graph/ -> up 3), not from cwd -- cwd is exactly
+        # what a caller in portal/ or data/ would have wrong.
+        alt = _THIS_DIR.parent.parent.parent / cand
+        if alt.is_file():
+            path = str(alt)
+    if path is None:
+        return False
+    try:
+        import script_io_ast as _sio
+    except ImportError:
+        try:
+            from org.modules.graph import script_io_ast as _sio      # noqa: F401
+        except ImportError:
+            return False
+    res = _sio.derive_script_io(path)
+    print(f"OUT-OF-GRAPH SCRIPT -- the [{pipeline_tried}] curated DAG does not carry this file.")
+    print("Answering from a DETERMINISTIC AST DERIVATION instead of refusing (R-2 generalist).")
+    print("  ENGINE:  AST (deterministic, source-derived) -- NOT the curated pipeline graph.")
+    print("  ABSENT:  chain membership, run order, column gaps, portal consumers. AST cannot see")
+    print("           those; do NOT read their absence here as their absence in the estate.")
+    print()
+    print(_sio.render(res, rel=cand))
+    return True
+
+
 def cmd_io(args):
     # ADHC_COMPIL_V5.002 -- Lambda-path-mode short-circuit (AC1+AC2+AC3+AC4)
     if _lambda_pipescript_io(args.script_id):
@@ -1396,6 +1443,15 @@ def cmd_io(args):
                 print(f"Multiple matches: {', '.join(matches)}")
                 sys.exit(1)
             else:
+                # GENERALIST FALLBACK (R-2, Andrew-direct 2026-08-05: "it needs to be a script io
+                # generalist, not bound to a handful of gold pipelines"). Before declaring the
+                # script unknown, check whether it is a REAL first-party .py that simply lives
+                # outside the curated DAG's roster -- 6 script trees do, incl. data/assets (77
+                # files, the OPAL_ASSETS monolith, DEPLOYABLE per Rule 13). For those, answer the
+                # question ASKED from a deterministic AST derivation rather than refusing.
+                # The DAG stays authoritative wherever it HAS the script; this only runs on a miss.
+                if _generalist_io_fallback(args.script_id, pipeline):
+                    return
                 print(f"Unknown script in tree [{pipeline}]: {script_id}")
                 print(f"  (this is the {pipeline} graph -- NOT a bd fallback; TOOL-02 provenance)")
                 print(f"Valid IDs: {', '.join(sorted(dag.scripts.keys()))}")
