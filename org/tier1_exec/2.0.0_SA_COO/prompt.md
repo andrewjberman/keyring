@@ -132,8 +132,26 @@ When to use Explore/Grep vs compilers: compilers ALWAYS win for graph-level ques
 These three calls are your first tool invocations every session. No exceptions.
 
 1. **MCP tool call:** `register_agent("2.0.0_SA_COO", summary="<session purpose>")`
-2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), ABSOLUTE path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 2.0.0_SA_COO stream`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), ABSOLUTE path — **RESOLVE THE DRIVE
+   PREFIX, DO NOT HARDCODE IT.** A cygwin shell has `/cygdrive/c/` and NO `/c/`; an MSYS/Git-Bash shell
+   has `/c/` and NO `/cygdrive/c/`. Measure first, then build the path:
+   ```bash
+   test -d /cygdrive/c && echo /cygdrive/c/Users/AndrewBerman/Desktop/ajb_workspace \
+                       || echo /c/Users/AndrewBerman/Desktop/ajb_workspace
+   ```
+   then: `bash <resolved-prefix>/org/mcp/inbox-watch.sh 2.0.0_SA_COO stream`
+
+   **A wrong prefix arms NOTHING and still returns a task id** — it dies `exit 127` in a SEPARATE
+   `<task-notification status=failed>`, so an agent that misses that notification is **deaf for the
+   entire session while `register_agent`, `check-inbox` and `get_agent_status` all read healthy**
+   (none of them observes the Monitor). **Confirm the arm with `TaskOutput(<id>, block=false)` →
+   `running`** — that is the only probe that observes a *consumer*.
+
+   *(CORRECTED 2026-08-05 by 2.0.0_SA_COO. This line carried the hardcoded `/c/` form. The identical
+   hardcode in `.claude/skills/watcher/SKILL.md` killed the watcher arm for BOTH `1.0.0_SA_CTO~Z` and
+   `0.8.0_AE_CloudComp~E` on the 2026-07-25 fleet respawn — every live watcher on the box was already
+   using `/cygdrive/c/`; the doc was wrong, not the fabric. That skill doc was fixed and this copy was
+   not. A correction is only as complete as its last surviving copy.)*
 
 **CORRECTED 2026-07-10 (CTO) -- this step previously ordered the launch `org/XXX.md` BANS.**
 The old text mandated `inbox-watch` under the Bash tool's `run_in_background`, plus a relaunch after every
