@@ -15,10 +15,22 @@ artifact 1. **Gate:** `1.0.0_SA_CTO~Z`; **verify:** `3.0.0_SA_CVO~Z`.
 > **THIS DOCUMENT** -- `MECHANISM_LAWS.md` -- holds **WHERE AN ASSERTION SITS**: the fourteen ways a
 > claim comes to be wrong about its own subject.
 >
-> **`docs/doctrine/CONTROLS_OVER_CARE.md` SECTION III** holds **HOW AN INSTRUMENT LIES** -- III-a
-> through III-g, instrument fallibility with measured instances. **The M-taxonomy does not type
-> instrument fallibility, by construction**, so section III is not a subset of this file and this
-> file is not a superset of it. Read both.
+> **`docs/doctrine/CONTROLS_OVER_CARE.md`** holds **HOW AN INSTRUMENT LIES** -- instrument
+> fallibility. **The M-taxonomy does not type instrument fallibility, by construction**, so that file
+> is not a subset of this one and this one is not a superset of it. Read both.
+>
+> ⚠ **ADDRESS REPAIRED 2026-08-05 (`4.0.0_SA_CRO`), AND THE REPAIR IS THE POINT.** This block used to
+> cite *"SECTION III -- III-a through III-g."* **Those sections no longer exist**: CONTROLS_OVER_CARE
+> was rewritten the same day on Andrew-direct instruction (1,289 -> 239 lines, retitled *GENCHI
+> GENBUTSU*), and **the rewrite -- mine -- silently dangled this pointer.** The instrument-fallibility
+> content survives, relocated: it is now that file's **principle 4** (*an instrument that could not
+> have said otherwise*), **4b** (*a result every hypothesis predicts is not a result*), **4c** (*the
+> anti-correlated verdict*), and the **three must-survive mechanisms** (comp-iam fails GREEN;
+> simulate-principal-policy's three false-deny modes; DESIRED-is-not-APPLIED).
+> **THE BOUNDARY IS UNCHANGED; ONLY THE ADDRESS MOVED.** *A cross-document boundary is a dependency,
+> and a rewrite on either side breaks it silently -- there is no gate on a prose cross-reference. Cite
+> the CLAIM ("the instrument-fallibility family"), not the SECTION NUMBER, so the next rewrite cannot
+> orphan it again.*
 >
 > **AND THERE IS A THIRD FAMILY, WHICH HAS NO HOME TODAY: HOW A RULE OR ROLE FAILS TO BE ONE.** How
 > a rule is drafted (name the PROPERTY, not the EVENT), how a procedure is drafted (a step naming no

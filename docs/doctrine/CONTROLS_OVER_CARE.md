@@ -35,6 +35,26 @@ why agents who can name a rule violate it while naming it.
 
 ---
 
+## THE BOUNDARY — this file is one of three families, and it is not a superset
+
+> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the four ways looking does not
+> produce seeing, including how an instrument lies.
+> **[`MECHANISM_LAWS.md`](MECHANISM_LAWS.md)** holds **WHERE AN ASSERTION SITS** — fourteen shapes a
+> claim comes to be wrong about its own subject, each with an EXPOSING QUESTION and a GATE-OR-TEST.
+> **It does not type instrument fallibility, by construction**, so neither file contains the other.
+> **Read both.**
+> **A THIRD FAMILY HAS NO HOME: HOW A RULE OR ROLE FAILS TO BE ONE** — a rule naming the EVENT instead
+> of the PROPERTY, a procedure step naming no actor, a role first exercised by a non-owner. Covered by
+> neither file, measured-absent with positive controls, and named here rather than quietly omitted.
+>
+> *This reciprocal half is written 2026-08-05. `MECHANISM_LAWS.md` had stated the boundary from its
+> side and pointed here; this file pointed back **zero** times, so a reader arriving here could not
+> learn the other existed. **A one-directional pointer is a reconciliation point** — and my own
+> rewrite then deleted the section its side cited, dangling it. Cite the CLAIM, never the section
+> number.*
+
+---
+
 ## THE ROOT — go and see the thing itself
 
 The recurring failure is almost never *"did not verify."* Everyone verified something. It is:
