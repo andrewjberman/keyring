@@ -73,6 +73,33 @@ check "git rebase -i"                     'git rebase -i HEAD~3'                
 check "git rebase (bare)"                 'git rebase origin/CLOUD'                           DENY
 check "git pull --rebase"                 'git pull --rebase origin CLOUD'                    DENY
 check "git -C portal rebase"              'git -C portal rebase origin/DEV'                   DENY
+
+# --- F-XXX (2026-08-05): TWO-TOKEN GIT GLOBAL OPTIONS STRAND THE _GIT OPTION-CONSUMER ---
+# Found by 2.0.0_SA_COO (hit the `-c` cell live, self-disclosed before anyone found it); CTO
+# re-derived at source and WIDENED it: `-c` was 1 of 5 cells. Every option whose value is a
+# SEPARATE argv token strands the regex before the verb, making the command invisible to ALL
+# FIVE _GIT-built gates. These arms are PROVEN-RED against the pre-fix hook:
+#     NRG_HOOK=<pre-fix build> bash tests/test_never_rules_gate.sh
+# -> the `-c` arms and the --git-dir/--work-tree/--namespace arms all render PASS(want DENY).
+# DO NOT collapse these to one representative case: they are five independent cells and a future
+# _GIT edit can reopen any one of them alone.
+check "F-XXX -c evades rebase"            'git -c core.pager=cat rebase origin/CLOUD'         DENY
+check "F-XXX -c pull.rebase one-shot"     'git -c pull.rebase=true pull origin CLOUD'         DENY
+check "F-XXX --git-dir two-token"         'git --git-dir .git rebase origin/CLOUD'            DENY
+check "F-XXX --work-tree two-token"       'git --work-tree . rebase origin/CLOUD'             DENY
+check "F-XXX --namespace two-token"       'git --namespace ns rebase origin/CLOUD'            DENY
+check "F-XXX -c repeated"                 'git -c a=1 -c b=2 rebase origin/CLOUD'             DENY
+check "F-XXX -C and -c combined"          'git -C portal -c a=1 rebase origin/DEV'            DENY
+check "F-XXX generic flag before -c"      'git --no-pager -c pull.rebase=true pull origin CLOUD' DENY
+check "F-XXX --git-dir= single-token"     'git --git-dir=.git rebase origin/CLOUD'            DENY
+# NEGATIVE CONTROLS for the widened consumer -- the fix must not start eating verbs. If the
+# option list ever gains an OPTIONAL-value flag (e.g. --exec-path, deliberately excluded), the
+# consumer swallows the verb and these go red. That is the whole reason they are here.
+check "F-XXX neg: plain rebase still denies" 'git rebase origin/CLOUD'                        DENY
+check "F-XXX neg: --exec-path not eaten"  'git --exec-path rebase origin/CLOUD'               DENY
+check "F-XXX neg: log is not a verb match" 'git log --oneline -1'                             PASS
+check "F-XXX neg: -c on a benign verb"    'git -c core.pager=cat log --oneline -1'            PASS
+check "F-XXX neg: MENTION not matched"    'git commit -m "F-XXX: do not rebase, see gate"'    PASS
 check "bare terraform apply"              'terraform apply -auto-approve'                     DENY
 check "bare terraform destroy"            'terraform destroy'                                 DENY
 check ".tools/terraform.exe apply"        './.tools/terraform.exe apply'                      DENY
@@ -88,8 +115,33 @@ check "N1 commit msg MENTIONING rebase"   'git commit -m "doc: we must never reb
 check "N2 commit -F w/ rebase in file"    'safe-commit.sh --author "x" -F /tmp/msg.txt -- a'   PASS
 check "N3 grep for the word rebase"       'grep -rn "rebase" CLAUDE.md'                        PASS
 check "N4 echo mentioning terraform apply" 'echo "never run bare terraform apply"'             PASS
-check "N5 the REMEDY: git pull (merge)"   'git pull origin CLOUD'                              PASS
-check "N6 git pull --no-rebase"           'git pull --no-rebase origin CLOUD'                  PASS
+# N5/N6 REPAIRED 2026-08-05 (CTO, found while landing F-XXX). These asserted PASS and had been
+# RED on every run since LD-0367/0368 added GATE 5 (integrator-only push/pull) -- which denies any
+# `git pull` from a NON-INTEGRATOR seat, entirely correctly. The arms were never updated, so the
+# suite printed "FAILURES PRESENT -- do NOT wire this hook" on every green build.
+# THAT IS THE REAL HAZARD HERE, not the two red lines: a permanently-red suite is a DEAD suite --
+# it trains its readers to discount the verdict, and the next genuine red arrives into an audience
+# that has already learned to ignore it. Discriminator run before repairing: these two deny
+# IDENTICALLY on the pre-F-XXX and post-F-XXX hook, so the cause is GATE 5, not the option-consumer.
+# The ORIGINAL INTENT of these arms is still worth asserting and is preserved: the sanctioned merge
+# remedy must not be denied BY THE REBASE GATE. So assert the GATE, not the bare verdict -- a
+# verdict-only assertion cannot tell "denied for the right reason" from "denied for the wrong one".
+verdict_gate() { # command -> the BLOCKED(...) tag of whichever gate denied, or PASS
+    local out
+    out=$(printf '%s' "$1" | "${JQ:-jq}" -Rs '{tool_input:{command:.}}' | bash "$HOOK" 2>/dev/null)
+    if printf '%s' "$out" | grep -q '"permissionDecision":"deny"'; then
+        printf '%s' "$out" | grep -oE 'BLOCKED \(([^)]*)\)' | head -1
+    else echo PASS; fi
+}
+check_not_rebase_gate() { # name, cmd -- must NOT be denied by the NEVER#7 rebase gate
+    local g; g=$(verdict_gate "$2")
+    case "$g" in
+        *NEVER#7*) FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "$1" "denied by the REBASE gate" ;;
+        *) PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "$1" "${g:-PASS} (not the rebase gate)" ;;
+    esac
+}
+check_not_rebase_gate "N5 the REMEDY: git pull (merge) not rebase-gated" 'git pull origin CLOUD'
+check_not_rebase_gate "N6 git pull --no-rebase not rebase-gated"        'git pull --no-rebase origin CLOUD'
 check "N7 safe-apply (the sanctioned path)" 'bash .tools/safe-apply.sh -chdir=infra/aws'       PASS
 check "N8 terraform plan"                 'terraform plan'                                     PASS
 check "N9 git commit -m, no metachar"     'git commit -m "plain message"'                      PASS
@@ -257,6 +309,37 @@ echo "  governance log is not a bug in a report -- it is a permanently corrupted
 # `grep -c` PRINTS 0 AND EXITS 1 on no-match, so `|| echo 0` emitted "0\n0" and the arithmetic blew
 # up. It is the banked retrieval defect (CLAUDE.md Git: "grep -c prints 0 -- grep counted zero
 # matches IN AN ERROR MESSAGE"). Swallow the exit status, do not add a second value.
+# ============================================================================================
+# F-XXX CLASS-LEVEL CONTROLS. The two above these lines are special cases; these two are the
+# assertions that would have caught F-XXX WITHOUT ANYONE THINKING OF `-c`. Proposed by
+# 2.0.0_SA_COO in the finding routing; adopted by CTO as the durable half of the fix.
+#
+# (1) DERIVATION CHECK -- the two-token option list is a PREDICATE OVER GIT'S OWN USAGE LINE,
+#     not a hand-drawn roster ("a predicate is not a roster"). git's `-c <name>=<value>` and
+#     `-C <path>` appear in `git --help` usage; if a git-version bump adds a value-taking global
+#     option, this goes RED and the list gets re-derived. It cannot tell us about options git
+#     omits from its usage line -- stated, not papered over.
+_gitusage="$(git --help 2>&1 | head -4)"
+_missing=""
+for _o in '-c <name>=<value>' '-C <path>'; do
+    case "$_gitusage" in *"$_o"*) ;; *) _missing="${_missing} ${_o}";; esac
+done
+if [ -z "$_missing" ]; then
+    PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "F-XXX derivation: git usage still declares -c/-C" "in sync"
+else
+    FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "F-XXX derivation: git usage drifted" "missing:${_missing} -- RE-DERIVE _O2"
+fi
+
+# (2) DENY-TEXT/MATCHER COHERENCE -- a gate's suggested remedy is part of its SURFACE. F-XXX's
+#     root was that the deny-text taught `git config pull.rebase false`, whose natural one-shot
+#     form (`git -c pull.rebase=false pull`) evaded the matcher: the guidance funnelled careful
+#     agents INTO the gap. Assert no deny-text recommends an inline `-c` one-shot.
+if grep -nE 'deny "' "$HOOK" | grep -qE "Use: git -c|try git -c|run git -c"; then
+    FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "F-XXX deny-text recommends an inline -c one-shot" "funnel into the gap"
+else
+    PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "F-XXX no deny-text recommends an inline -c one-shot" "coherent"
+fi
+
 _n_audit=$(grep -c 'NEVER-OVERRIDE' "$NEVER_GATE_AUDIT" 2>/dev/null || true)
 [ -z "$_n_audit" ] && _n_audit=0
 # The ONLY arms that legitimately override (marker on the SAME simple command as a real match):

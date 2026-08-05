@@ -299,7 +299,30 @@ BRANCH=$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null || echo UNKNOWN)
 # skipped so `if ...; then git rebase; fi` still catches.
 # =========================================================================================
 _LEAD='^[[:space:]]*(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|bash|sh|env|command|then|do|else|elif|\{|\()[[:space:]]+)*'
-_GIT="${_LEAD}"'git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
+# F-XXX (2026-08-05): the option-consumer must handle EVERY git global option that takes its
+# value as a SEPARATE ARGV TOKEN -- not just `-C <path>`. A two-token option whose value is not
+# consumed strands the regex before the verb, so the WHOLE COMMAND becomes invisible to all five
+# gates built on _GIT (rebase, bare-pull-under-pull.rebase=true, stash, clean, integrator push/pull).
+# Found by 2.0.0_SA_COO, who hit the `-c` cell live and self-disclosed; CTO re-derived at source and
+# WIDENED it -- `-c` was 1 of 5 cells. Measured: `--git-dir`, `--work-tree`, `--namespace`,
+# `--config-env` all accept a space-separated value too, and `git --git-dir .git rebase` evaded the
+# `-c`-only fix. THE LIST IS A PREDICATE OVER GIT'S OWN `git --help` USAGE LINE, not a hand-drawn
+# roster -- re-derive it against that usage on any git-version bump (see tests, DERIVATION CHECK).
+# `--exec-path` is DELIBERATELY EXCLUDED: its value is optional, and the valueless form is TERMINAL
+# (prints the path, never runs a verb) -- listing it here would let it SWALLOW a real verb and turn
+# this fix into a false-negative.
+# TWO DIFFERENT EXCLUSIONS ON TWO DIFFERENT GROUNDS -- kept apart deliberately (CVO L7, 2026-08-05:
+# folded into one sentence, the solid half lends its credibility to the half that is merely asserted):
+#   (a) ATTACHED SHORT `-cKEY=VAL` -- excluded because GIT ITSELF REFUSES IT (rc=129, "unknown
+#       option"), an EXTERNAL oracle. Re-exercised independently by CVO on git 2.55.0.windows.2.
+#       VERSION-SCOPED: rc=129 is that git's behaviour and re-opens on a git bump, which is why the
+#       probe rides the DERIVATION CHECK's trigger in the fixture rather than being tracked apart.
+#   (b) ATTACHED LONG `--git-dir=.git` -- git ACCEPTS this (rc=0); it is a real, reachable command.
+#       It is excluded from _O2 ONLY because _O1 catches it. Ground = THIS REGEX, not git's
+#       behaviour -- an assertion, so it is TESTED (fixture arm "F-XXX --git-dir= single-token").
+_O2='[[:space:]]+(-c|-C|--git-dir|--work-tree|--namespace|--config-env|--super-prefix)[[:space:]]+[^[:space:]]+'
+_O1='[[:space:]]+-[^[:space:]]+'
+_GIT="${_LEAD}"'git('"${_O2}"'|'"${_O1}"')*[[:space:]]+'
 # `git rebase`, or `git pull ... --rebase` (any flag order, up to the next command separator).
 _RE_REBASE="${_GIT}"'(rebase([[:space:]]|$)|pull[^;|&]*--rebase)'
 _RE_PULL="${_GIT}"'pull([[:space:]]|$)'
@@ -320,7 +343,7 @@ if printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES"; then
     # `git pull` BARE while pull.rebase=true silently rebases (NEVER#7; headmove-guard has pull x0).
     PR=$(git -C "$REPO" config --get pull.rebase 2>/dev/null || echo "")
     if [ "$PR" = "true" ] && [ -n "$(scan PULL_REBASE_CFG '--no-rebase' "$_RE_PULL")" ]; then
-        deny "BLOCKED (CLAUDE.md NEVER#7): 'git pull' on shared branch '$BRANCH' with pull.rebase=true SILENTLY REBASES -- this is the cell nobody types and nobody gated (headmove-guard.sh carries 'pull' x0, and the remedy for a rejected push sends you straight here). Use: git pull --no-rebase. Or fix the config: git config pull.rebase false. Audited override: '# never-override: <reason>'."
+        deny "BLOCKED (CLAUDE.md NEVER#7): 'git pull' on shared branch '$BRANCH' with pull.rebase=true SILENTLY REBASES -- this is the cell nobody types and nobody gated (headmove-guard.sh carries 'pull' x0, and the remedy for a rejected push sends you straight here). Use: git pull --no-rebase. Or fix the config by running 'git config pull.rebase false' AS ITS OWN SEPARATE COMMAND -- do NOT inline it as 'git -c pull.rebase=false pull' (F-XXX: the inline one-shot was the shape that EVADED this gate until 2026-08-05; it is gated now, but the standalone form is the one to reach for). Audited override: '# never-override: <reason>'."
     fi
 fi
 
