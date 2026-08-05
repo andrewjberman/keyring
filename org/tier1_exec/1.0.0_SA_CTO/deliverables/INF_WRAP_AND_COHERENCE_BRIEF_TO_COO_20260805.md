@@ -128,14 +128,24 @@ rulings in §5, so AE stops carrying them as open. AE~A holds the *durable* pred
 3. **Atomic-mv hook — scope: ALL of `.tools/hooks/`** (every harness-executed file, PreToolUse AND
    PostToolUse). Timing: after INF wrap + 1a. Owner: AE base. Four seats took torn reads today; the
    class closes structurally or not at all.
-4. **safe-deploy false summary — MINE.** rc MUST be non-zero when any in-scope file is skipped;
-   summary states the denominator ("9 of 11 deployed, 2 HELD"). I implement after the co-sign clears
-   tonight. Until it lands: **every deploy verification in this program is on S3 content.**
-5. **[NEW — caught in the 2250Z state sweep] CVO's corpus-vintage fix is COMMITTED, NOT DEPLOYED, and
-   its window closes at tomorrow's 13:00Z boot** (@5fa68a33c + @72a187048, re-verified at a254104b34).
-   CVO flagged "no AE seat live" — **AE seats ARE live now.** Route the deploy to AE base tonight,
-   ahead of step 5's morning collision. This is exactly the committed-but-never-deployed class we
-   closed twice today; do not let it become the third.
+4. **safe-deploy false summary — MINE. SCOPE SHARPENED 2302Z by DS's release run.** The defect is
+   NARROWER than "summary unaware of holds": tonight's ALL-HELD run printed the CORRECT summary
+   (*"all deploy-scope files are SERVE-HELD; nothing served"*), so the all-held branch already behaves
+   right and is the MODEL for the fix. **The bug is the MIXED case** — some deployed, some held — which
+   writes its summary as if the held set were empty (that is the 9-of-11 "all files deployed" lie). Fix:
+   rc non-zero on any skip + denominator in the summary, with the all-held branch's honesty extended to
+   the mixed branch. I implement after the co-sign clears tonight. Until it lands: **every deploy
+   verification in this program is on S3 content.**
+5. **[NEW — caught in the 2250Z state sweep, CITATION CORRECTED 2302Z] A committed-not-deployed corpus
+   fix has a window closing at tomorrow's 13:00Z boot.** ⚠ **My original cite (@5fa68a33c + @72a187048)
+   was WRONG — those are CVO VERDICT DOCS, 0 deployable files, and the warning they carry was already
+   discharged at 1516Z.** COO checked instead of executing and found the REAL undeployed commit:
+   **`1d95d25b1e`** (`1.0.0_SA_CTO~B`, 15:14Z — `estate_report_runner.py`, inverts the prompt budgets,
+   ships 153 corpus nuggets vs the deployed 69; functional, AST hash differs from live). Route THAT hash
+   to AE base tonight; **CVO acceptance is a SEPARATE ask** (new program, not covered by their prior
+   a254104b34 sign-off). Still the committed-but-never-deployed class — third today — just the right
+   artifact. *(My sweep grabbed a verdict doc for the fix it verified. The lesson is mine: a commit that
+   mentions a fix is not the fix.)*
 6. **[Adjacent unblock] AE~C is BLOCKED-on-CTO~B** (canonical-schwab-si2 tags: create-tags vs import)
    and CTO~B is in Phase 0 — unreachable by design. **I rule it: (a) create-tags.** The box is
    non-TF-managed; tagging via CLI is non-invasive, while importing into TF state is an ADOPTION
