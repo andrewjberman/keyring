@@ -1,9 +1,9 @@
 {
   "code": "MDPF_BASISSWITCH",
   "title": "MDPF 49F custody -> Schwab-native basis (straight RPS positions)",
-  "status": "active",
+  "status": "complete",
   "priority": "P1",
-  "current_phase": "brief-committed -> CTO arch-gate",
+  "current_phase": "COMPLETE-AS-SUPERSEDED 2026-08-05 -> MDPF_3FIRMS. The fold was DECLARED in the MDPF_3FIRMS PRD (2026-07-22, sibling dispositions: 'MDPF_BASISSWITCH fold-in ... its entire scope') and never EXECUTED as a close -- the record sat `active` for 14 days after its scope had been absorbed. Verified at close: ZERO task orders ever issued under this code; no commit references it since 2026-07-14; the JSON carried empty phase/blocking throughout. Andrew-ruled basis switch (49F custody -> Schwab-native, straight RPS positions) lives on inside 3FIRMS. Closed by 1.0.0_SA_CTO during the Andrew-directed 2026-08-05 MDPF close-out sweep.",
   "owner_primary": "0.5.0_AE_OpalETL",
   "pods": [
     0.5,
@@ -34,5 +34,8 @@
     "CTO: drop the gold/aua_certification cross-check (BD-basis, incompatible)?"
   ],
   "sovereign_excluded": true,
-  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it."
+  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it.",
+  "completed": "2026-08-05",
+  "phase": "COMPLETE-AS-SUPERSEDED 2026-08-05 -> MDPF_3FIRMS. The fold was DECLARED in the MDPF_3FIRMS PRD (2026-07-22, sibling dispositions: 'MDPF_BASISSWITCH fold-in ... its entire scope') and never EXECUTED as a close -- the record sat `active` for 14 days after its scope had been absorbed. Verified at close: ZERO task orders ever issued under this code; no commit references it since 2026-07-14; the JSON carried empty phase/blocking throughout. Andrew-ruled basis switch (49F custody -> Schwab-native, straight RPS positions) lives on inside 3FIRMS. Closed by 1.0.0_SA_CTO during the Andrew-directed 2026-08-05 MDPF close-out sweep.",
+  "blocking": "None"
 }
