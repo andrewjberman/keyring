@@ -93,7 +93,13 @@ RULES = [
       "what produces", "who produces", "what consumes", "who consumes", "produced by", "consumed by",
       "which script writes", "which script produces", "what generates", "writer of", "mdpf"],
      "S3 artifact / who-reads-writes + gold-script output keys",
-     ["comp-pipescript io <script>", "comp-pipescript io <script> --firm <bd|inf|cot|mdpf>", "comp-estate --resource <key>"],
+     # CORRECTED 2026-08-05 (3.0.0_SA_CVO~B): both prior forms were rc=2 REFUSED as printed.
+     # `io` requires --pipeline since the 07-30 no-silent-default ruling; and --firm does NOT
+     # satisfy it -- argparse ACCEPTS --firm on io (it is in `io --help`) but the gate tests
+     # args.pipeline is None, so `io <script> --firm bd` parses clean and still refuses. A flag
+     # that exists, is documented, and does not satisfy the requirement is worse than an absent
+     # one, and the router was handing it to agents as the canonical call.
+     ["comp-pipescript io <script> --pipeline <tree>", "comp-estate --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact + what KEY/artifact a gold script writes (io surfaces the _KEY constants incl FUNC-keys)"),
     # comp-dispatch = NFRA_COMPROUTE S1 #1 (~E built d804ff744; CTO-ratified). The gold-dispatch
     # orchestration-DAG grain (which scripts run / order / chain-group-flag / gate) -- ABOVE per-script
@@ -652,7 +658,9 @@ RULES = [
       "running a gold script", "run a gold script", "work on a gold script", "gold-tier script",
       "touch a gold script", "touching a gold script"],
      "gold script edit/run (comp-pipescript)",
-     ["comp-pipescript io <script>", "comp-pipescript deployed <script>"],
+     # --pipeline REQUIRED on io (2026-08-05 CVO~B); `deployed` is EXEMPT by design (its
+     # pipeline=None is the all-trees sweep / path-autodetect mode), so it stays flagless here.
+     ["comp-pipescript io <script> --pipeline <tree>", "comp-pipescript deployed <script>"],
      "one gold SCRIPT -- its I/O contract + column gaps + portal consumers (io) and whether the "
      "runner has its code (deployed). Bare 'gold script' -> comp-pipescript, tool-level"),
     (["pii", "personal data", "expose pii", "cleartext", "pseudonym", "pseudonymized",
@@ -768,7 +776,8 @@ RULES = [
     (["gold script i/o", "gold script io", "chain membership", "deployed-match", "deployed match",
       "script overlap", "column gaps", "what columns does the gold script", "io contract of"],
      "gold-script I/O + chain membership + deployed-match (comp-pipescript)",
-     ["comp-pipescript io <script>", "comp-pipescript deployed <script>", "comp-pipescript postdeps <script>"],
+     # --pipeline REQUIRED on io (2026-08-05 CVO~B); deployed/postdeps are exempt and take --firm.
+     ["comp-pipescript io <script> --pipeline <tree>", "comp-pipescript deployed <script>", "comp-pipescript postdeps <script> --firm <bd|inf|cot|mdpf>"],
      "one GOLD SCRIPT's I/O contract (column gaps + portal consumers), its chain membership, and "
      "whether the runner has its code (MATCH/STALE/MISSING)"),
     (["registry narrative", "project-json drift", "project json drift", "phase mismatch",

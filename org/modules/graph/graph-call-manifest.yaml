@@ -289,7 +289,15 @@ entries:
 
   - id: trace.pipeline.gold_dag
     use_case: "Gold script I/O, chain membership, deployed-match, overlap."
-    canonical_call: "comp-pipescript <io|dag|chain|feeds|consumers|deployed|overlap> <script>"
+    # CORRECTED 2026-08-05 (3.0.0_SA_CVO~B, P8 cold descent @a2be6600c): the previous value was
+    # "comp-pipescript <io|dag|chain|feeds|consumers|deployed|overlap> <script>" -- typed VERBATIM
+    # that is rc=2 REFUSED. The 07-30 Andrew-direct no-silent-default change made --pipeline
+    # REQUIRED and this line never followed, so a cold reader's FIRST action failed on the one
+    # field whose whole job is to be copy-pasteable. It also conflated TWO contracts: --pipeline
+    # is required for exactly SIX subcommands, and `deployed` is EXEMPT (pipeline=None is its
+    # legitimate all-trees sweep / path-autodetect mode, TOOL-01), so a blanket "add --pipeline"
+    # would have been wrong in the other direction. Gate source: pipeline_cli.py main().
+    canonical_call: "comp-pipescript <io|dag|chain|feeds|consumers|overlap> <script> --pipeline <tree>   # --pipeline REQUIRED for these six (flagless = rc=2 REFUSED, NO GUESS). `deployed` is EXEMPT -- see pipeline.pipescript.deployed_match."
     tool: comp-pipescript
     mode: rebuild
     layer: pipeline
@@ -298,6 +306,138 @@ entries:
     rebuild_trigger: "n/a — canonical pipeline path"
     anti_pattern: "manual s3_layout reading"
     status: canonical
+
+  # ---------------------------------------------------------------------------------------------
+  # comp-pipescript SUBCOMMAND BACKFILL -- added 2026-08-05 by 3.0.0_SA_CVO~B (P8 R-4, @a2be6600c).
+  # BEFORE THIS BLOCK: tools_index declared 13 subcommands and the manifest carried entries for
+  # THREE (io, deployed, postdeps). The other ten were fully implemented and each carried an
+  # argparse `help=` string -- they were undiscoverable through comp-which and the manifest while
+  # being documented one `--help` away. That is the gap this closes; it is NOT a "missing feature"
+  # finding. Every canonical_call below was EXERCISED (`<sub> --help`) rather than inferred, and
+  # the --pipeline requirement is stated per-subcommand because it genuinely differs: the gate in
+  # pipeline_cli.py main() covers exactly {dag, io, chain, feeds, consumers, overlap}; `stats` and
+  # `inject` accept no --pipeline flag at all; `deployed`/`postdeps` take --firm instead.
+  # ---------------------------------------------------------------------------------------------
+
+  - id: pipeline.pipescript.dag
+    use_case: "The whole execution DAG for one tree, with I/O edges -- run order, groups, and what each node reads/writes. Use when you need the SHAPE of a pipeline, not one script."
+    canonical_call: "comp-pipescript dag --pipeline <tree> [--json]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "reconstructing run order by reading gold_dispatch.sh (text-local; misses group flags + conditional gates -- see the comp-dispatch entry, which is the ORCHESTRATION grain)"
+    status: canonical
+    notes: "--pipeline REQUIRED (flagless = rc=2 REFUSED, no guess). Per-SCRIPT grain is `io`; per-CHAIN is `chain`; orchestration-DAG is comp-dispatch."
+
+  - id: pipeline.pipescript.chain
+    use_case: "Chain membership + order: which scripts are in a named chain and in what sequence."
+    canonical_call: "comp-pipescript chain <chain_name> --pipeline <tree>"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "assuming chain order from script-ID lexical order (IDs like B_01b/D_00f do not sort into run order)"
+    status: canonical
+    notes: "--pipeline REQUIRED. Takes a CHAIN NAME (e.g. downstream), not a script id."
+
+  - id: pipeline.pipescript.feeds
+    use_case: "UPSTREAM: what scripts feed this one -- the producers whose artifacts it consumes."
+    canonical_call: "comp-pipescript feeds <script> --pipeline <tree> [--json]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "grepping the script for read paths (misses artifacts arriving via _KEY constants + FUNC-keys that `io` resolves)"
+    status: canonical
+    notes: "--pipeline REQUIRED. Inverse of `consumers`. For blast radius ACROSS layers (not just pipeline-internal), use comp-blast."
+
+  - id: pipeline.pipescript.consumers
+    use_case: "DOWNSTREAM: what scripts consume this one's output -- who breaks if it changes."
+    canonical_call: "comp-pipescript consumers <script> --pipeline <tree> [--json]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "treating an empty consumer list as 'safe to change' -- it is pipeline-INTERNAL only; a portal component or a Lambda can still consume the artifact (comp-blast / comp-platinum reverse cover those)"
+    status: canonical
+    notes: "--pipeline REQUIRED. Inverse of `feeds`. The empty-list caveat is the load-bearing one: scope is intra-pipeline."
+
+  - id: pipeline.pipescript.overlap
+    use_case: "Shared S3 artifacts between TWO scripts -- do they write the same key (collision / double-write risk)?"
+    canonical_call: "comp-pipescript overlap <script_a> <script_b> --pipeline <tree>"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "running two gold scripts that write the same key without checking overlap first"
+    status: canonical
+    notes: "--pipeline REQUIRED. Exactly two positional scripts."
+
+  - id: pipeline.pipescript.stats
+    use_case: "Pipeline graph statistics -- node/edge counts and graph-shape summary."
+    canonical_call: "comp-pipescript stats"
+    tool: comp-pipescript
+    mode: cached
+    layer: pipeline
+    cost: "~instant"
+    freshness: ".comp-graph build vintage"
+    anti_pattern: "quoting a stats count as an ESTATE denominator -- it is the parsed pipeline graph's count, not the repo's"
+    status: canonical
+    notes: "Takes NO --pipeline flag (unlike the six gated subcommands) -- verified via `stats --help`."
+
+  - id: pipeline.pipescript.inject
+    use_case: "Inject pipeline edges into the comp-trace graph cache (maintenance -- makes pipeline edges visible to cross-layer traversal)."
+    canonical_call: "comp-pipescript inject"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "writes the comp-trace cache"
+    anti_pattern: "running inject to 'fix' a stale traversal answer without first checking whether the SOURCE parse is stale -- inject propagates what it parsed, correct or not"
+    status: canonical
+    notes: "MUTATES a cache (the only write-side subcommand here). Takes NO --pipeline flag."
+
+  - id: pipeline.pipescript.postmerge_cols
+    use_case: "Flag suffix-collision risks at merge() call sites -- the _x/_y column-collision class in a gold script."
+    canonical_call: "comp-pipescript postmerge-cols <script> [--strict]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "shipping a new merge() in a gold script without running it -- a silent suffix collision renames a column downstream consumers read by name"
+    status: canonical
+    notes: "ADHC_COMPIL_V4.027. Takes a script id, no --pipeline. --strict tightens the flagging threshold."
+
+  - id: pipeline.pipescript.shadow_detect
+    use_case: "Enumerate the POST-CONDITION LOCK-IN CHAIN for a function -- what downstream state becomes fixed once it runs."
+    canonical_call: "comp-pipescript shadow-detect <function> [--recent-failures <7d|14d>]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    anti_pattern: "reading the NAME as a shadow-PIPELINE detector -- it is NOT one, and it has NOTHING to do with the 2026-08-04 shadow/shadow-fork veto. It analyses post-condition lock-in for a FUNCTION. (Recorded because a reader of the tools_index list -- me, 2026-08-05 -- inferred the veto link from the name alone; the subparser help= says otherwise.)"
+    status: canonical
+    notes: "ADHC_COMPIL_V4.028. Takes a FUNCTION name, not a script id. --recent-failures cross-references git log for a cascade pattern."
+
+  - id: pipeline.pipescript.skipgate
+    use_case: "Per-partition SKIP/COMPUTE/MISSING-INPUT preview for Pattern A scripts -- what a run WOULD do per partition before you fire it."
+    canonical_call: "comp-pipescript skipgate <script> [--rebuild-window START:END] [--manifest-fresh-only] [--limit N]"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse + manifest state"
+    anti_pattern: "assuming a gold run will recompute a partition -- a skip-gate can SKIP it silently, so a 'ran clean' result can mean 'computed nothing'"
+    status: canonical
+    notes: "ADHC_COMPIL_V4.025. Pattern A scripts only. The anti_pattern here is the ran-clean-computed-nothing class -- a preview is the cheap way to see it before the run, not after."
 
   - id: trace.routes.serving_path
     use_case: "CloudFront -> behavior -> origin -> Lambda serving path for a URL/endpoint."
