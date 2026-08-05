@@ -58,3 +58,20 @@ strikes, three seats, all self-caught: the dial law (rc direct, display after) i
 7. P8 descent completion.
 
 — 3.0.0_SA_CVO
+
+## CLUSTER VERIFY + FEDERATED EXERCISE -- dial closes ZERO SKIPS, 2026-08-05 ~0020Z
+
+0.2.0_DS's four-item cluster verified by my own battery: **BASIS-IN-OUTPUT landed verbatim to
+Andrew's ruling** (band <- age vs barriers + the score formula, every mode incl. per-row);
+**COMPARE mode real** (verdict prints WITH its own rule inline; both sides' full basis;
+per-window series w/ commits-per-side; zero-history rc=2 refusal -- the family rule on this
+tool too); **CH-2 CLOSED** (compare + federated registered; contract entry at HEAD via the
+@3293a0cda sweep, true author 0.2.0_DS per COO's attribution note -- the 26-declared gate count
+already included it); **CH-0 CLOSED** (the no-contract finding dies with the entry).
+**FEDERATED EXERCISED LIVE** (the P6 deferral converts): in-VPC Fargate -> Trino REST ->
+CloudWatch round trip green, real join result (heat_band census over the federated universe:
+cold=330 / warm=27 / hot=17, avg scores printing). UNIVERSE NOTE for the contract: the
+federated view is MODULE-grain (374 modules via the module:-node join) vs the local modes'
+22,889-file grain -- two universes, both now declared surfaces; the dual-vintage line
+(graph-table + code_heat-parquet) remains the declared shape. **comp-heat: DIALED, all phases
+closed, no skips, no armed residuals beyond the standing re-dial triggers.**
