@@ -201,13 +201,65 @@ change detected
 
 **New-axis is the most legible C. It is NOT the definition.** The five codified orthogonal shapes:
 
+**THE SCHEMA IS TWO-TIERED AND TWO-FIELD.** Andrew-ratified 2026-08-05, closing the two questions
+`3.0.0_SA_CVO` and this desk reached **independently, by different routes** — CVO empirically from a
+13-instance census, this desk structurally from a Rule 24 audit.
+
+> ## ⚠ THE SHAPE NUMBERS ARE A CITED INTERFACE. NOTHING WAS RENUMBERED.
+> `shape #2`, `#3`, `#4`, `#5` are cited from at least six files **including code**
+> (`org/modules/graph/boundary_report.py:15`, `L0B_CHANGE_TYPE_VOCABULARY.md`,
+> `SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md`, `IMPLEMENTATION_LEVELS_AND_SEQUENCING.md`,
+> `GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md`, `ARCHETYPAL_LEARNING_LOOP.md`). **The re-tiering below keeps
+> every original number**; `#5` gains sub-members rather than being displaced. *A first draft of this
+> edit renumbered and would have silently redirected `shape #4` in live code from VOCABULARY POVERTY to
+> SPLIT — caught by checking the citations, not by care.*
+
+**TIER 1 — PRIMITIVES (MECE against each other).**
+
 | # | SHAPE | DETERMINISTIC DETECTOR |
 |---|---|---|
 | 1 | **NEW AXIS** — a kind of thing the enumerator does not traverse | unwalked structural residue GREW |
-| 2 | **GRAIN SHIFT** — same axis, finer granularity | member count explodes at constant head; child-nodes appear under leaves |
-| 3 | **SEMANTIC REDIRECT** — same members, meaning moved | members identical, pass-rate unchanged, the field's SOURCE changed |
+| 2 | **GRAIN SHIFT** — same axis, different granularity | member count moves at constant head; child-nodes appear under leaves |
 | 4 | **VOCABULARY POVERTY** — a truth has no slot in the type | an observed outcome has no expressible member → coerced to the nearest sayable value |
-| 5 | **MERGE / SPLIT** — 1 concept → 2 | one member's edges bifurcate into disjoint clusters |
+
+**TIER 2 — NAMED COMPOSITES.** Recurrent combinations of the primitives, **declared** as composites
+rather than pretended to be exclusive. *Naming a composite that occurs often enough to deserve a label
+is a feature; leaving its tier undeclared is what breaks MECE.*
+
+| # | SHAPE | DETERMINISTIC DETECTOR |
+|---|---|---|
+| **5a** | **SPLIT** — 1 concept → 2 | one member's edges **bifurcate** into disjoint clusters |
+| **5b** | **MERGE** — 2 concepts → 1 | two members' edges **converge** onto one — ⛔ **NO DETECTOR BUILT** |
+
+> **⚠ `#5` WAS ONE ROW UNTIL 2026-08-05, AND THAT ROW HID A BLIND SPOT.** Its single detector
+> (*"edges bifurcate"*) catches **SPLIT only** — so **a MERGE was undetectable under a shape named for
+> it**, and the naming asserted a coverage that did not exist (`M13`). Separated because they have
+> **opposite detectors**, and two directions cannot share a row without one being invisible.
+> **The convergence detector is a NAMED, OWNED, UNBUILT item.** *(A bare `shape #5` citation still
+> resolves — to the family; prefer `5a`/`5b` in new writing.)*
+
+**FIELD 2 — CONCEALMENT MECHANISM (`#3` lives here now).**
+
+`#3 SEMANTIC REDIRECT` is **not a peer error**. In every worked instance it is *how* the others stay
+invisible. It moves to a second field — and **the second field is not new: it is the §6 2×2, which is
+already a concealment classification** (*traversed?* × *does a predicate react?*).
+
+| Concealment | Cell | Why nothing fires |
+|---|---|---|
+| **not traversed** | C-SILENT / C-DETECTED | the sensor never emitted it |
+| **monotone predicate** | ROUTE B | the oracle cannot move under this change-type |
+| **semantic redirect** *(`#3`)* | ROUTE B | members, counts and pass-rate all hold; the field's SOURCE moved |
+| **coerced to nearest sayable** | ROUTE B | the type had no slot, so a legal-looking value was emitted |
+
+> **CONCEALMENT IS NOT UNIQUE TO `#3` — that is why it is a FIELD, not a row.** `#4` conceals too:
+> coercion to the nearest sayable value hides a truth exactly as effectively. **Every error has a
+> concealment mechanism, and naming it is what tells you whether your instrument can see it** — which
+> is precisely what the 3/2 detectability split measured.
+> **A finding is classified as `(what changed) × (why we are blind)`, and the second coordinate is the
+> detectability answer.** `#3` citations still resolve — to a field-2 member.
+>
+> ⚠ **PARTIALLY EXERCISED, STATED AS SUCH.** The mapping is worked for `#1` and `#3`; `#2` and `#4`
+> are reasoned, not exercised. **Do not build on the `#2`/`#4` rows until someone walks them.**
 
 > **GRAIN SHIFT (#2) IS A C, NOT A B** — and it is the one most often misfiled. *A guard's coverage goes
 > stale the moment the thing it guards gets more granular:* nobody edits the guard, nobody edits the law,
@@ -220,19 +272,27 @@ change detected
 > as B, go try to fix the instrument, and fail — because the instrument is fine. The thing it measures
 > stopped meaning what its name says.**
 
-> ### ⚠ THE FIVE SHAPES FAIL ALL FOUR TAXONOMY POSTULATES (CLAUDE.md Rule 24). USE THEM AS A FIELD GUIDE, NOT AS A COMPUTABLE AXIS.
-> Audited 2026-08-05, Andrew-direct: `org/tier1_exec/4.0.0_SA_CRO/deliverables/FIVE_SHAPES_TAXONOMY_AUDIT_20260805.md`.
-> **MECE** — #2 and #5 both claim the tool-vs-subcommand instance; #3 and #4 both claim `auth_api_gw`;
-> #5's detector catches SPLIT only, so a MERGE is undetectable under a shape named for it.
-> **SAME GRAIN** — five values, five grains (axis-set · granularity · meaning · type-range ·
-> cardinality), which is *why* they cannot be exclusive.
-> **INTENT COHERENCE** — #4 is a standing property of the type, not a change event; the axis mixes both.
-> **STATE COHERENCE** — ⛔ **the residue detector reaches #1, #2, #5 and CANNOT reach #3, #4.** #3 needs
-> provenance the sensor does not emit; #4 needs the type to report a truth it has no slot for — §2's own
-> sensor-bounds-oracle law, turned on this schema. **A build plan for "the residue detector" silently
-> delivers three fifths of this axis and will report itself complete.**
-> **Until re-cut (a Route-C act, owner `1.0.0_SA_CTO`): classify with the shapes, but never compute a
-> coverage claim over them, and never read "detector exists" as uniform across the five.**
+> ### THE RULE-24 AUDIT AND WHAT IT CLOSED (2026-08-05, Andrew-direct)
+> Audit: `org/tier1_exec/4.0.0_SA_CRO/deliverables/FIVE_SHAPES_TAXONOMY_AUDIT_20260805.md`. The flat
+> five failed all four postulates; the two-tier / two-field structure above is the remedy, Andrew-ratified.
+>
+> | Postulate | Was | Now |
+> |---|---|---|
+> | **MECE** | `#2`+`#5` both claimed the tool-vs-subcommand instance; `#3`+`#4` both claimed `auth_api_gw`; `#5` hid an undetectable MERGE | **CLOSED** — tiers declared (1/2/4 primitive, 5a/5b composite), `#3` moved to field 2, MERGE separated with its missing detector named |
+> | **SAME GRAIN** | five values, five grains | **CLOSED at tier 1** — the three primitives sit on the change-type grain; composites are declared as composites |
+> | **INTENT COHERENCE** | the axis mixed change-EVENTS with standing PROPERTIES | **CLOSED** — two fields: field 1 is what changed, field 2 is why we are blind |
+> | **STATE COHERENCE** | detectability split 3/2, undeclared | **DECLARED, NOT FIXED** — see below |
+>
+> ⛔ **STATE COHERENCE REMAINS A REAL SPLIT AND IS DELIBERATELY NOT SMOOTHED.** The residue detector
+> reaches `#1`, `#2`, `#5a` and **cannot** reach `#3`, `#4` (and `#5b` has no detector at all). `#3`
+> needs provenance the sensor does not emit; `#4` needs the type to report a truth it has no slot for —
+> §2's sensor-bounds-oracle law turned on this schema. **A build plan for "the residue detector"
+> silently delivers part of this axis and will report itself complete.**
+> **CTO ruling 2026-08-05:** *declare the split, do not re-cut* — **re-cutting to make the plan look
+> complete would delete the evidence of a real instrument gap.**
+>
+> **STANDING: classify with the shapes; never compute a coverage claim over them; never read "detector
+> exists" as uniform.**
 
 ### The formulation that survives all five shapes
 

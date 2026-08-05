@@ -65,17 +65,25 @@ The estate holds a **deterministic truth state** — stable, measurable. Reading
 **semantic lens**, and the lens is where it goes wrong: identifying the correct axis, or conflating
 axes, or shifting grain. These five are the recurring ways the lens misreads a stable substrate.
 
-## The five
+## The five — CITED, NOT RESTATED
 
-| # | Error | What it is |
-|---|---|---|
-| **1** | **New Axis** *(Case C)* | The thing being described belongs to a **different axis** than the one it was recorded on. Two axes occupying one field. |
-| **2** | **Grain Shift** | Values on one axis sit at **incompatible grains** — a file-level value beside a cohort-level value, same field. |
-| **3** | **Semantic Redirect** | A value is **silently re-pointed** to a different meaning; the redirect changes what the value *means* without changing the field it lands in. |
-| **4** | **Vocab Missing** | The correct term **does not exist** in the vocabulary. Two sub-shapes: **flattening conflation** (many things collapse into one available label) and **misdirected entirely** (the value lands somewhere unrelated because nothing right existed). |
-| **5** | **Merge/Split** | A compound: grain issues **and** semantics **and** potentially a new axis, wrapped together. |
+> **CANONICAL:** [`INTENT_DENOMINATOR_SYNCHRONIZATION.md`](INTENT_DENOMINATOR_SYNCHRONIZATION.md) §9.
+> **The definitions, the tier structure and the detectors live there and are not duplicated here** —
+> three copies of one taxonomy is the copy-drift class this subject exists to name, and the fold is
+> the remedy. **If this file and the law disagree, the law wins and this is the drift.**
 
-**`Case C` — PENDING.** Andrew tagged (1) with it as a pointer to something specific. Not resolved;
+**Andrew authorized the fold 2026-08-05** (*"let's make sure that some of these items which are
+effectively duplicate, where both agents arrived at the same point in different language, are properly
+consolidated and rendered canonical … yes do it"*). Structure as ratified, **all original numbers
+preserved** because `shape #2/#3/#4/#5` are cited from six files including code:
+
+| | |
+|---|---|
+| **TIER 1 — primitives** | `#1` NEW AXIS · `#2` GRAIN SHIFT · `#4` VOCABULARY POVERTY |
+| **TIER 2 — declared composites** | `#5a` SPLIT · `#5b` MERGE |
+| **FIELD 2 — concealment** | `#3` SEMANTIC REDIRECT |
+
+**`Case C` — PENDING.** Andrew tagged `#1` with it as a pointer to something specific. Not resolved;
 **do not invent a referent.**
 
 ## Worked instance — the estate-report attribution (measured, 2026-08-05)
@@ -102,24 +110,42 @@ is not description — it is that **"which error is this?" forces the diagnosis 
 the answer determines the remedy: a New Axis error needs a field split; a Vocab Missing error needs a
 term; a Grain Shift needs a re-levelling. Reaching for the wrong remedy is the common failure.
 
-## TWO QUESTIONS THE SCHEMA RAISES AGAINST ITSELF — for Andrew
+## THE TWO QUESTIONS — BOTH CLOSED 2026-08-05, ANDREW-RATIFIED
 
-Rule 24 (MECE · same grain · intent coherence) binds any classification schema at authoring time, and
-Andrew ratified that triple himself, so it applies here. Testing it honestly surfaces two things:
+Recorded here rather than deleted: **the questions were the mechanism that got the schema fixed**, and
+a file that hides its own resolved edges teaches as little as one that hides its open ones.
 
-**Q1 — (5) Merge/Split is not mutually exclusive with (1)(2)(3), by its own definition.** Andrew
-described it as *"a mix of grain issues and semantics and potentially new axis all wrapped in one."*
-**My reading:** this is fine and should be *declared* rather than fixed — (1)–(4) are **primitives**,
-(5) is a **named recurring composite**. Declaring the two tiers preserves MECE at the base layer.
-Naming a composite that occurs often enough to deserve its own label is a feature; leaving its status
-undeclared is what breaks the schema.
+**`Q1` — is `#5` Merge/Split a primitive or a composite? → DECLARED COMPOSITE, AND SPLIT IN TWO.**
+CVO's two-tier reading was adopted: `#1`/`#2`/`#4` primitives, `#5` a named composite, which restores
+MECE at the base layer. **And it did not go far enough.** `#5`'s single detector (*"edges bifurcate"*)
+catches **SPLIT only** — so **a MERGE was undetectable under a shape named for it**. Now `#5a` SPLIT
+and `#5b` MERGE, separated because they have **opposite detectors**; the convergence detector is a
+named, owned, **unbuilt** item.
 
-**Q2 — (3) Semantic Redirect may be a MECHANISM rather than a peer error.** In the worked instance it
-is not a fourth error alongside the others — it is *how* (1) and (2) stay invisible. If the axis is
-"kinds of denominator error," a mechanism sitting beside three error-types is a possible **intent
-conflation** — one axis serving two intents, which is the third postulate.
-**My reading:** (3) is real and load-bearing and must not be dropped; the question is whether it sits
-on the same axis or belongs in a second field (`error-kind` × `concealment-mechanism`). **Andrew's
-call, not mine.** Recorded rather than resolved.
+**`Q2` — is `#3` Semantic Redirect a peer error or a mechanism? → A MECHANISM, ON A SECOND FIELD.**
+CVO's `error-kind × concealment-mechanism` was adopted — **and the second field already existed**: the
+law's §6 2×2 (*traversed?* × *does a predicate react?*) is a concealment classification. No new axis
+was minted. **Concealment is not unique to `#3`** — `#4` conceals too, by coercing a truth to the
+nearest sayable value — *which is why it is a field and not a row.*
 
--- 3.0.0_SA_CVO
+> **BOTH ANSWERS WERE REACHED TWICE, INDEPENDENTLY, BY DIFFERENT DERIVATIONS** — `3.0.0_SA_CVO`
+> empirically from a 13-instance census across 5 seats, `4.0.0_SA_CRO` structurally from a Rule 24
+> audit. **A tie is evidence only when the legs differ in derivation**; these do, which makes this the
+> strongest corroboration either desk produced on the subject.
+
+## Consolidated elsewhere — where each duplicated piece now lives
+
+| Was stated here | Canonical home |
+|---|---|
+| the five definitions + detectors | law §9 (two-tier, two-field, numbers preserved) |
+| *"a zero is a CLAIM and needs a control"* | law §2 — **superseded** by the form carrying the **vacuity clause**: *if you cannot name a member you already know is in `I`, the control does not pass — it does not run. Report UNRUN, never clean.* CVO's version could be satisfied by a control that never executed; theirs was the specimen, the law had the missing half |
+| the 13-instance census | law §2, cited as **evidence for** sensor-bounds-oracle — **`3.0.0_SA_CVO`'s measurement**, and it carries something the structural derivation did not: **the failures are not randomly directed, they fail in the REASSURING direction** |
+| *"a denominator that is its own configuration"* | law §3 — **CVO had the specimens** (a frozen corpus emitting `degraded_sources:[]`; a test gate whose universe is its own 9-glob allowlist, 11 of 90 measured), **the law had the class** |
+
+**What remains uniquely this file's, and is kept whole: the operational diagnostic loop — classify
+before you remedy, because the class determines the remedy.** The law states what is true; this states
+what to do first.
+
+*Original author `3.0.0_SA_CVO`; retraction landed by `1.0.0_SA_CTO`; folded by `4.0.0_SA_CRO` on
+Andrew-direct. **Nothing of CVO's was discarded — the duplicated halves were pointed at their
+canonical home and the non-duplicative half was kept intact.***
