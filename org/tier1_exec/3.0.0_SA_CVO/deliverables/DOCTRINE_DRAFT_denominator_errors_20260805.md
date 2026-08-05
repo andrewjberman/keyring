@@ -6,10 +6,59 @@ is outside this seat's commit authority. Routed to `1.0.0_SA_CTO` to land or ame
 (*"which we historically listed as"*).
 **Andrew approved recording it as doctrine + making it operational**, same session.
 
-⚠ **NOT FOUND IN THE SEARCHABLE RECORD UNDER THESE NAMES.** `comp-grep` scanned **22,307 of 24,239
-files**; the only `Case C` hits are unrelated portal panel variants. **This is the first durable
-record.** A taxonomy treated as established that no one can search cannot bind anyone who was not in
-the room — which is why it is being written down now.
+## ⛔ RETRACTED — MY ABSENCE CLAIM WAS FALSE. THE TAXONOMY HAS EXISTED SINCE 2026-07-24.
+
+**This file originally asserted:** *"NOT FOUND IN THE SEARCHABLE RECORD UNDER THESE NAMES. `comp-grep`
+scanned 22,307 of 24,239 files... This is the first durable record."*
+
+**That is FALSE and the claim is withdrawn.** Found by `4.0.0_SA_CRO`, verified at source by me:
+
+> `infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md` §2 — created **`977e1251e9`, `1.0.0_SA_CTO~Z`,
+> 2026-07-24 10:21**, and `git log -S"SEMANTIC REDIRECT"` confirms the string entered **in that
+> creating commit**: `1 NEW AXIS · 2 GRAIN SHIFT · 3 SEMANTIC REDIRECT · 4 VOCABULARY POVERTY ·
+> 5 MERGE / SPLIT`. Same five, same order, same names but POVERTY/MISSING. **Twelve days before mine.**
+
+### The mechanism — and it is NOT the one CRO diagnosed
+
+CRO attributed the miss to searching the wrong token *(they live under "the five orthogonal shapes")*.
+**Measured, that is not it.** My pattern was `"Semantic Redirect|Grain Shift|New Axis|Vocab Missing"` —
+**mixed case. The source file is ALL CAPS: `SEMANTIC REDIRECT`.** `comp-grep` uses Python `re`,
+case-sensitive by default. **I searched the RIGHT tokens in the WRONG CASE**, and a case-sensitive
+regex over an all-caps heading returns exactly what an absent concept returns: zero.
+
+*(Control: the same mixed-case pattern now returns 24 hits in 3 files — my own artifacts and CRO's,
+written today in mixed case. The all-caps original is still invisible to it.)*
+
+### ⚠ THE PART THAT MAKES THIS THE WORST INSTANCE OF THE DAY: THE TOOL TOLD ME
+
+`comp-grep`'s own output said, verbatim:
+
+> `0 hits in the 22307 file(s) actually searched. This is NOT a confirmation of absence -- widen the
+> pattern, or check git check-ignore.`
+
+**The instrument printed the correct warning and I published the absence anyway** — and I cited the
+denominator (22,307) as if a large denominator *validated* the claim, when the tool was telling me the
+denominator was irrelevant to it. **A denominator makes a zero AUDITABLE; it does not make it TRUE.**
+Then CTO landed it into `docs/doctrine/DENOMINATOR_ERRORS.md`, so a false provenance claim reached
+doctrine — routed for correction the moment it was found.
+
+**This is instance #15 of `THE RETRIEVAL IS THE DEFECT` (@ccdaa06e7), committed inside the very
+document that catalogues the class, in its central provenance claim, after the tool warned me.**
+
+### What is TRUE, restated
+
+Three surfaces of ONE taxonomy, carrying **different intents** — which is Rule 24 (iii) failing
+*across* documents, and worse than a duplicate because each is correct about its own subject:
+
+| surface | date | intent |
+|---|---|---|
+| `ARCHETYPAL_LEARNING_LOOP.md` §2 (CTO~Z) | 07-24 | shapes of **CHANGE an enumerator cannot see** — a **DETECTION** taxonomy |
+| CRO's denominator doctrine §9 | 08-05 | the same five, carried forward + audited |
+| **this file** | 08-05 | ways a semantic **LENS misreads a substrate** — a **DIAGNOSIS** taxonomy |
+
+**This file is SUBORDINATE and cross-linked, not a peer.** Its one non-duplicative contribution is the
+**operational** half: *classify before you remedy, because the class determines the remedy.* The
+authoritative-surface decision is Andrew's; CRO is holding the fold until he rules.
 
 ## The problem it names
 
