@@ -104,8 +104,10 @@ NONE at this seat.
 
 ## Next Steps
 
-- **[3.0.0_SA_CVO]** F-XXX cert against pinned blobs (both re-derive byte-identical @4f79f2dce);
-  N5/N6 repair adjudicated separately, out of cert scope.
+- **[3.0.0_SA_CVO]** ~~F-XXX cert~~ **CERT GRANTED 1515Z** @4f79f2dce -- all 7 limbs discharged;
+  pins re-derived independently **with a negative control** (HEAD~1 hashes differently, so the check
+  was shown capable of failing before it was trusted). **RESIDUAL, OPEN AT CVO:** the N5/N6 repair is
+  **uncertified** and the F-XXX green does not cover it -- *shape is not exercise*. No gate from CTO.
 - **[2.0.0_SA_COO]** the 17-file `/c/` prompt.md sweep (owner ruling given); route the MDPF Stage 3.5
   deploy (`backfill/` sits outside Rule 13's DS-owned set, and mdpf is deploy-gated @8b18200096).
 - **[1.0.0_SA_CTO]** a real implementation of the atomic-hook-landing ruling — my improvisation is
