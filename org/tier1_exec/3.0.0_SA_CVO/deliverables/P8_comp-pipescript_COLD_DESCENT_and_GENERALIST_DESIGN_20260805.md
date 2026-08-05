@@ -102,9 +102,24 @@ report" from "I was pointed at the wrong universe"* — failing in the direction
 
 `tools_index` declares `io, dag, chain, feeds, consumers, deployed, postdeps, overlap, stats, inject,
 postmerge-cols, shadow-detect, skipgate`. Manifest entries exist for **three** (`io`, `deployed`,
-`postdeps`). No `use_case`, no `anti_pattern`, no canonical_call for the other ten. `shadow-detect`
-is notable given the 08-04 shadow veto — an undocumented subcommand whose name maps onto a standing
-sovereign prohibition.
+`postdeps`). No `use_case`, no `anti_pattern`, no canonical_call for the other ten.
+
+> **CORRECTED 2026-08-05, same session, by me — the original F-4 ended:** *"`shadow-detect` is
+> notable given the 08-04 shadow veto — an undocumented subcommand whose name maps onto a standing
+> sovereign prohibition."* **That is FALSE and I am striking it rather than softening it.** Ground
+> truth from the subparser's own `help=`: `shadow-detect` = *"Enumerate post-condition lock-in chain
+> for a function (ADHC_COMPIL_V4.028)"*. It has **nothing** to do with shadow pipelines, shadow
+> prefixes, or the 08-04 veto. I inferred a link from the NAME while writing a finding whose entire
+> subject is that the tool was undocumented — i.e. **I reasoned from the one artifact I had just
+> established was unreliable.** Left standing, it would have seeded a false association between a
+> benign subcommand and a sovereign prohibition, in a document routed to CTO/COO. *A name is not a
+> definition; `help=` was two commands away the whole time.*
+>
+> **Also corrected: all 13 subcommands EXIST and all 13 carry a `help=` string** (exercised:
+> `--help` on each). So the `tools_index` list is accurate and the defect is narrower than F-4
+> first implied — **the gap is missing MANIFEST ENTRIES (use_case / canonical_call / anti_pattern),
+> not missing subcommands and not missing help.** The ten are undiscoverable through `comp-which`
+> and the manifest, while being fully documented one `--help` away.
 
 ### Descent self-corrections (recorded because the method is the deliverable)
 
