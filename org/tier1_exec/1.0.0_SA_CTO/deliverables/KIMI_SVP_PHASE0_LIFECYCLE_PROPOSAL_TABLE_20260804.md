@@ -93,6 +93,25 @@ than inheriting my original framing.
 > the SI2 GUI channel *"exited rc=0 on ~22 consecutive cycles over 11 days while landing NOTHING
 > (delivery folder frozen at 2026-07-02 ... the vendor HAD posted). **A pipeline that grades its own
 > homework cannot report its own death.**"*
+>
+> **CLOSED OUT 2026-08-05 -- EDICT ISSUED, DISPATCHED, ACKED.** Andrew ratified the recommendation
+> VERBATIM: *"I agree with your rec, issue the edict, let's close out any necessary updates for
+> canonical-schwab item and then proceed to item 5."* Seat `0.7.0_AE_CloudOps~C` was instantiated by
+> him for this express purpose; briefed and acked (RAVC-2, watcher exercised).
+> - **STAGE 1 GO:** set the live Name tag to **`canonical-schwab-si2`** -- the name EC2_MANIFEST
+>   already carries. **Do not invent a third name: the manifest was RIGHT and the live tag was
+>   WRONG, so the fix is to make reality match the record, not to change the record.** Correct the
+>   false `reversible=true`; align manifest and tag.
+> - **STAGE 2 HELD (IAM role / profile / SG / key rename):** delivered as a JUDGEMENT to Andrew, not
+>   as work -- what risk actually remains after Stage 1, what create-new-and-migrate costs on the
+>   sole live producer for two products, and a do/don't recommendation. Not authorized on this pass.
+> - **TASK A (decommission `canonical-schwab-runner` if dead) ordered FIRST** -- read-only, zero
+>   blast radius, removes real debt; a tag edit can wait an hour.
+> - I corrected one of my own briefing defects to `~C` before they acted: I asserted "no pipeline
+>   resolves this box by Name tag" and attached a verify-it instruction, i.e. handed over a
+>   load-bearing assumption dressed as a footnote. It is Stage 1's whole safety argument and is now
+>   an explicit exercised check on their side.
+
 
 | # | Vertical | Proposed | Evidence (one line) | Conf | Shift-watch note (R2 seed) |
 |---|---|---|---|---|---|
