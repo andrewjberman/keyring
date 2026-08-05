@@ -45,7 +45,7 @@ unresolvable at `INF_D_00` (`household_id='unknown'` → `int()` raises). Set id
 | Rep-10 fix, Lambda sites (AE~A) | committed @2c0808790; **terraform apply PREPARED, NOT RUN**; AE~A holding per DS's sequencing |
 | INF chain | fails daily at `INF_C_01`, ~13:47Z; 5-account set **stable** 08-04→08-05 (AE tripwire: growth ⇒ straight to Andrew) |
 | `account_team.parquet` | frozen 08-01T14:54Z — regenerates only on a green chain |
-| comp-constants canonical | **NOT bumped** — DS's fix is committed but the canonical still reads `{3,6,11,12}`, so the gate reports drift on DS's own files. Two-agent transaction pending at you (DS is lane-refused; they correctly declined to self-override) |
+| comp-constants canonical | **ALREADY `{3,6,10,11,12}`** (corrected 2258Z — rode in on AE~A @2c08087905; COO ground-truthed, CTO re-verified: ZERO drift on DS's two files). 12 residual drift lines are pre-existing (`manual_api` + forked `inf-api-txn` AUA bounds) — known, not blocking |
 | Orion token | minted 12:05Z, ~10h TTL ⇒ **expired ~22:05Z tonight** — constrains any tonight QA run (§3 step 4) |
 
 ## §3 — THE CRITICAL PATH (numbered; owner per step; no step starts before its predecessor)
@@ -81,12 +81,17 @@ unresolvable at `INF_D_00` (`household_id='unknown'` → `int()` raises). Set id
 8. **[AE base — after 7] Close the `inf-nna` deploy ledger** — 274h "past window" doing exactly its
    job; it closes on a restored chain, legitimately, via the (fixed) tool or manually with MSTR if the
    1a fix hasn't landed yet.
-9. **[COO] Authorize the comp-constants canonical bump** to `{3,6,10,11,12}` — the two-agent
-   transaction DS correctly refused to self-execute. An exec/AE seat lands it citing Andrew @93c898445.
-   This is a RATIFIED divergence — updating the canonical is precisely correct, and it unblocks every
-   DS `.py` commit from spurious drift refusals. **Note for the record:** the constant is INT-typed in
-   silver and STRING-typed in `INF_D_04`; the canonical must express both or the check false-passes
-   (banked for the Kimi fold; do not redesign now).
+9. ~~**[COO] Authorize the comp-constants canonical bump** to `{3,6,10,11,12}`.~~ **✅ ALREADY DONE —
+   corrected 2258Z.** COO ground-truthed before executing (Rule 22, correctly refusing to take my
+   written brief at face value) and found the canonical **already carries `{3,6,10,11,12}`** — AE~A's
+   commit @2c08087905 (the Lambda rep-10 add) bumped it in the same commit. I re-verified: `comp-constants
+   check` shows **ZERO drift on DS's two files**. The 12 remaining drift lines are pre-existing/known —
+   the `manual_api` discovery scripts (different purpose) + the `inf-api-txn` forked copy carrying the
+   3×-wide AUA guard bounds DS already logged as a separate open item. **No two-agent transaction is
+   needed; nobody double-bumps it.** *(My brief carried a stale pending item; COO caught it by measuring.
+   This is the checklist working — a written brief is a claim, not ground truth.)* **STILL BANKED, not
+   for tonight:** the constant is INT-typed in silver and STRING-typed in `INF_D_04`; the Kimi-fold
+   canonical must express both or a derived check false-passes across the type boundary.
 
 ## §4 — ANTI-OVERLAP SEAT MAP (the coherence Andrew asked for)
 
@@ -168,7 +173,7 @@ rulings in §5, so AE stops carrying them as open. AE~A holds the *durable* pred
 - [ ] `accounts_v2` carries 4136/4139/4352/4356/4358 under rep 10; `account_team.parquet` advances, **zero `'unknown'`**
 - [ ] Served INF artifacts at T-1 frontier; CVO 4-check cert on the record
 - [ ] `inf-nna` ledger closed legitimately; the four log-less ledgers closable (1a landed)
-- [ ] comp-constants canonical = `{3,6,10,11,12}` (both types), DS commits unblocked
+- [x] comp-constants canonical = `{3,6,10,11,12}`, DS commits unblocked (rode in @2c08087905; verified 2258Z). **Type-parity (int/string) banked for the Kimi fold, not tonight.**
 - [ ] safe-deploy rc fix landed (no more green-over-partial)
 - [ ] The derived-rep-predicate + change-asserts (set-level AND population-level, `DERIVED_UNIVERSE.md`
       clauses 2+3) built and **mutation-proven** — the reason this class cannot recur — AE~A + DS, after restore
