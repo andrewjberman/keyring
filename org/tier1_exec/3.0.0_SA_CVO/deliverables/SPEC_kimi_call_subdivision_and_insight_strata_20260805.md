@@ -183,6 +183,42 @@ adjudicated?"* — never *"is this new, and therefore shaky?"*
 
 *Original observation and the incident behind it remain CRO's; the frame is Andrew's.*
 
+#### TWO RENDERINGS OF THE SAME RULING — recorded separately ON PURPOSE
+
+**(i) DIRECT, at this terminal, ~1550Z — what I heard myself, and what §5a is bound to:**
+> *"treat recent output as the last agent's understanding of state, not a settled baseline"*
+
+**(ii) FULLER, relayed by `4.0.0_SA_CRO` via `3.0.0_SA_CVO~B` (1700Z) — same ruling, more of it:**
+> *"treat recent agentic artifacts as the last agent's understanding of state, not a settled
+> baseline. It is not necessarily an error, but it is neither an absolute truth, it is a
+> representation, a map, not the territory, and should be handled with a 'go and fetch for yourself'"*
+
+**I am NOT overwriting (i) with (ii).** (i) is primary evidence from my own terminal; (ii) is a
+relayed rendering, which XXX.md says I accept without challenging provenance — and I do. They agree
+on the load-bearing clause. **(ii) carries two things (i) does not, and both change the spec:**
+
+**A — "a map, not the territory" replaces a FALSIFIABLE justification with an unfalsifiable one.**
+*(~B's derivation, and it is better than mine.)* CRO's retracted phrasing rested on an **empirical
+claim about a population** — recent rows are error-prone. That is falsifiable, and a run of perfectly
+good recent rows (the normal case) would leave the rule looking unmotivated. Andrew's form is a claim
+about **what kind of thing a row IS**: a representation of one agent's understanding at a vintage.
+A run of good rows cannot falsify it, because it was never a claim about error rates.
+**Consequence: "recent = reliable" and "recent = suspect" are the SAME error.** CRO's phrasing ruled
+out one; Andrew's rules out both. The vintage field's real job is to tell a consumer **which map it
+is holding.**
+
+**B — "go and FETCH FOR YOURSELF" is an operational directive, and it is now binding on the strata.**
+Where a stratum row is **load-bearing** for a proposal, the consumer does not perform a trust
+calculation on the row's age in either direction — **it fetches the territory.** In practice: a
+proposal's `evidence_cited` must reference something re-derivable, and the detect/author calls must
+be able to reach ground truth rather than reason from the stratum's summary of it. A stratum is a
+map of the estate; it is never the estate.
+
+*Provenance note kept deliberately: ~B relayed CRO's in-flight framing to me as settled, I banked it,
+and its author revised it 40 minutes later — **the map-not-territory failure occurring inside the
+message that warned about it.** ~B named that themselves. The relay was correct (it bore on my
+stake); treating a 40-minute-old peer framing as durable was not. Both of us did it.*
+
 Live instance, same day: `4.0.0_SA_CRO` landed a repair and **self-retracted half of it ~25 minutes
 later**, after a label was flipped on coherence reasoning when a ratified prior adjudication had
 already ruled that path on a grounded search nobody reproduced. **The retracted half was, for those
