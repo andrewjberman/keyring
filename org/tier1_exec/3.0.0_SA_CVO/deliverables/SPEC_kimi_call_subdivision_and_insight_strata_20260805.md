@@ -253,7 +253,19 @@ is chunked with a declared denominator, or the call fails loud. A model cannot k
 
 ---
 
-## 7. Open parameters — CVO ASSUMPTIONS, stated for Andrew's correction
+## 7. Open parameters — **ALL THREE RULED BY ANDREW 2026-08-05. No longer assumptions.**
+
+| # | Parameter | RULING |
+|---|---|---|
+| 1 | Group B trailing window | **14 days, CONFIRMED.** Plus a new requirement: the trend section must be **VISUALLY SEPARATED** in the report — a reader must not take a weekly-moving number for a daily event. That misreading is the kind that gets acted on. |
+| 2 | D-first sequencing | **CONFIRMED, AMENDED.** The **scope correction comes first** — governance records off the resource axis — *then* D. Order is load-bearing: building the two-field split first lands a vertical field **68% empty**, which reads as a broken resolver and is how a correct design gets abandoned. |
+| 3 | Cost / egress | **DEFERRED TO MEASUREMENT, not estimated.** Tomorrow's 13:00Z fire is instrumented for real token counts (input / reasoning / content / finish_reason); the subdivision is priced from those. Same instrument replaces the pre-fire live-probe question, which Andrew declined. |
+
+**Also ruled:** the corpus budget is **INVERTED** — the model gets the full corpus and a *summary* of
+resources, not the reverse. The git half is deterministic and already printed in full in the report
+body; the corpus is the one input the model cannot reconstruct.
+
+### 7a. Superseded — the original assumptions, kept for provenance
 
 1. **Trailing window for Group B = 14 days.** Divergence and half-life are meaningless in a 24h
    window. Consequence: part of the daily report becomes a slow-moving *trend* section that changes
