@@ -469,3 +469,22 @@ Rule 22's `file:line @ commit-ish` can be satisfied exactly and still not be the
 
 **This file is the authoritative LAW for denominator work. If any of the above disagrees with it, this
 file wins and the other is the drift.**
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_sensor_bounds_the_oracle_space_mutant_cannot_test_its_own_sensor` — §2 and §11, the grounded record.
+- `memory/feedback_state_the_denominator_or_the_count_is_meaningless` — §13 step 4.
+- `memory/feedback_a_predicate_is_not_a_roster` — §3: a tool's universe must be a re-derived predicate, never a hand-drawn allowlist.
+- `memory/feedback_wrong_predicate_yields_a_well_formed_answer` — §15, the malformed-probe half.
+- `memory/feedback_independent_derivations_not_shared_predicates_and_authored_inputs` — §11.
+- `memory/feedback_denominator_framing_wall_vs_ac` — the framing record.

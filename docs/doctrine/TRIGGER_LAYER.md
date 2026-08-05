@@ -61,3 +61,21 @@ absence of progress is itself visible.
 **Related:** `CONTROLS_OVER_CARE.md` (care is not a control — this file is the trigger-side corollary:
 a finding is not a control either, until it can fail) · `INSTRUMENTS_AND_AXES.md` 7a-7f ·
 `NFRA_PSTMRT_PRD.md` §4 (the comp-findings gate that enforces clause 2).
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_a_prohibition_invalidates_open_gates_and_nothing_re_evaluates_them` — the clause-4 exemption hazard, grounded.
+- `memory/feedback_gate_accepted_on_observed_green_run_never_authoring_commit` — never accept a gate on its authoring commit.
+- `memory/feedback_control_must_fire_on_the_defect_event_not_the_class_name` — "covered-by" requires trigger-fires-on-event.
+- `memory/feedback_a_misattributed_finding_is_an_unowned_finding_wearing_an_owners_name` — clause 1: an owner-less finding is unfiled.
+- `memory/feedback_arch_gate_against_the_task_order_not_the_narrative` — gate the artifact, not the story about it.

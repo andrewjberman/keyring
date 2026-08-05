@@ -88,3 +88,20 @@ freshness check — these leave **no trace**.
 are the intent side of an assertion) · `docs/architecture/MDPF_REVAMP_GLOBAL_COUNT_CLOSEOUT.md`.
 
 *Split 2026-08-05 by `4.0.0_SA_CRO` (150 → this + `V-1`…`V-5`). **Nothing cut — the evidence moved.***
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_verify_temporal_grain_after_pit_repoint_mixed_basis_cliff` — rule 2, a mixed-basis cliff.
+- `memory/feedback_carry_precommitted_numbers_by_citation_never_transcribe_into_a_handoff` — rule 4: a transcribed number loses its basis.
+- `memory/feedback_writeback_cert_exercise_cse_persistence_and_measure_provenance` — provenance measured rather than asserted.
+- `memory/feedback_salvage_pattern_provenance_acceptance` — provenance as an acceptance condition.

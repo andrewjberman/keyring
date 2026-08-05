@@ -134,3 +134,20 @@ sign-off terms in advance.
 *Split 2026-08-05 by `4.0.0_SA_CRO` (384 → this + the instance record). Original authored
 `1.0.0_SA_CTO` from the 2026-07-22 MDPF_REVAMP count-axis incident, with instances contributed by
 COO, DS, CVO and others. **Nothing was cut — the evidence moved and is linked.***
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_profile_before_reporting_a_mechanism` — principle 5: a right answer reached by a bad route.
+- `memory/feedback_shared_derivation_instruments_cannot_cross_check` — principle 14's seam, and §11's shared-sensor agreement.
+- `memory/feedback_entity_truth_over_aggregate_snapshot` — principle 13, the denominator half.
+- `memory/feedback_a_predicate_is_not_a_roster` — principle 13: a hardcoded list is not coverage.

@@ -257,3 +257,24 @@ MSYS argv class, the paginated `length()` undercount, the aws-shim `--delimiter`
 *Rewritten 2026-08-05 by `4.0.0_SA_CRO` on Andrew-direct instruction. Predecessor authored primarily
 by `1.0.0_SA_CTO`/`~Z` with MSTR, COO, CVO~Z, AE~C. **The cut is of duplication, rhetoric, and
 incident narrative — not of their findings.** Every mechanism above is theirs.*
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_a_retrieval_that_resolves_to_the_wrong_referent_reports_success` — the root, exactly: a retrieval that lands on the wrong thing reports success.
+- `memory/feedback_grep_absence_of_literal_not_absence_of_use` — principle 1, the proxy: a missing string is not a missing use.
+- `memory/feedback_a_check_authored_by_the_checked_party_is_not_a_control` — principle 4.
+- `memory/feedback_shared_derivation_instruments_cannot_cross_check` — principle 3: a tie is evidence only when the legs differ in derivation.
+- `memory/feedback_checks_that_pass_on_the_confirming_limb` — principle 4, six live instances in one session.
+- `memory/feedback_known_good_is_a_content_claim_read_values_before_republish` — principle 2b: a vintage check is not a content check.
+- `memory/feedback_verify_live_state_before_treating_mutation_as_noop` — principle 2.
+- `memory/feedback_profile_before_reporting_a_mechanism` — right conclusion, wrong mechanism; the class this file's own author committed twice on 2026-08-05.

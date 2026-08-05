@@ -88,3 +88,22 @@ is the §3 defect; SEMANTIC REDIRECT is its meaning-side twin) · CLAUDE.md NEVE
 default, the inverse error).
 
 *Split 2026-08-05 by `4.0.0_SA_CRO` (120 → this + `F-1`…`F-8`). **Nothing cut — the evidence moved.***
+
+
+---
+
+## Grounded evidence in agent memory
+
+> Citations of the form `memory/<slug>` root at the **agent memory DIRECTORY**
+> (`~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/`), **now under version
+> control** (genesis `6843c2f`, 2026-08-05). Those records are the *grounded incidents* — typically
+> 40–60 lines each with measured numbers; the law here is their compression. **Doctrine holds the
+> law; memory holds the evidence.** Wired 2026-08-05 on Andrew-direct; the two corpora had **zero**
+> links between them before that.
+
+- `memory/feedback_a_stale_arm_does_not_go_quiet_it_goes_confident` — the failure signature, in one line.
+- `memory/feedback_mtime_fresh_content_stale_trap_verify_data_as_of` — a fresh mtime over stale content.
+- `memory/feedback_f6_vintage_anchor_s3_not_local_ls` — a local `ls` that can only ever report absent.
+- `memory/feedback_ground_producer_live_state_for_deploy_strand_diagnosis` — ground APPLIED, not DESIRED.
+- `memory/feedback_cdn_cache_staleness_masquerades_as_fe_bug` — staleness wearing another defect's costume.
+- `memory/comptool_gap_comp_iam_reconcile_census_stale_06_03` — a control reading from a frozen census.

@@ -110,27 +110,41 @@ which is why the count in §4 is zero rather than four.
 memory evidence exists. `MECHANISM_LAWS.md` now carries **8** `memory/` references and a header
 explaining the root path.
 
-## 6. Index hygiene — real but minor
+## 6. Index hygiene — ⛔ THIS SECTION WAS WRONG. RETRACTED AND CORRECTED 2026-08-05.
+
+> ### THE FIRST PASS REPORTED **9 DANGLING INDEX ROWS**. THE TRUE NUMBER IS **ZERO**.
+> Both halves of the error are instructive and both are mine.
+
+**Error 1 — 6 of the 9 were a JOIN-KEY artifact.** The index links with hyphens (`[[feedback-cto-…]]`)
+while the files are named with underscores (`feedback_cto_….md`). **My extraction never normalized the
+separator**, so six present files were scored absent. Corrected join: `.replace("-","_").lower()`.
+
+**Error 2 — the remaining 3 are DELIBERATE TOMBSTONES, and the index says so on the line itself.**
+They sit under a heading reading **"Removed dead pointers (2026-06-25, CVO-adjudicated RV-verdict)"**,
+each row prefixed **`(removed)`**, under a blockquote explaining that the targets are unrecoverable and
+that *"`feedback_eastern_time_only` fact is preserved in org/XXX.md."*
+
+> **I EXTRACTED THE LINK TARGETS AND NEVER READ THE LINES THEY SAT ON.** The audit then asserted
+> *"`feedback_eastern_time_only` is a live standing rule whose index row points at nothing — a dangling
+> row on a live rule reads as 'the rule was retired'"* — when the row **says `(removed)`** and names
+> where the fact lives. **That is `M2`/`VL#12` — the parser returned link targets, which are the right
+> TYPE and the wrong THING — committed inside the audit of the corpus, by the desk that spent the day
+> consolidating the doctrine against it.** *Recorded rather than quietly fixed.*
+
+**CORRECTED FIGURES (separator-normalized, denominator = 1,012 files present):**
 
 | | |
 |---|---|
-| linked from `MEMORY.md` | 36 |
-| linked from `MEMORY_FULL.md` | 872 |
-| **union indexed** | **906 of 1,012** |
-| **ORPHANS** (present, unindexed) | **114** — recall-reachable, browse-unreachable |
-| **DANGLING** (indexed, file absent) | **9** |
+| union indexed | **900** |
+| **ORPHANS** (present, unindexed) | **114** — this figure was CORRECT first time |
+| **DANGLING** (indexed, target absent) | **0** — every one resolves or is an adjudicated tombstone |
 
-The 9 dangling rows, in full:
-`feedback-andrew-product-invariant-overrides-sequenced-gates` ·
-`feedback-anticipatory-patience-discipline` · `feedback-cto-reversal-requires-new-empirical` ·
-`feedback-empirical-state-supersedes-directive` · `feedback-loop-directive-reading-divergence-respect` ·
-`feedback-verify-hold-attestation-before-propagating` · `feedback_eastern_time_only` ·
-`feedback_serving_provenance_narrative_drifts_from_data` ·
-`project_find_insure_no_firm_match_precision_not_recall`
+**The tombstone practice is good and should be copied**: the deletions were adjudicated, recorded with
+a verdict and a date, the breadcrumb kept, and the surviving home of the fact named. That is the
+opposite of a dangling row, and my instrument could not tell the difference because it never looked.
 
-**Severity is low** because the index is a *browse* convenience and auto-recall does not use it — but
-`feedback_eastern_time_only` is a live standing rule (CLAUDE.md: *times to Andrew, US Eastern only*)
-whose index row points at nothing. **A dangling row on a live rule reads as "the rule was retired."**
+**Nothing to repair here.** The 114 orphans remain a browse-reachability gap only — auto-recall does
+not use the index, so they are addressable; they are simply not discoverable by reading `MEMORY.md`.
 
 ## 7. Recommendations, in value order
 
