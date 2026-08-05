@@ -20,11 +20,30 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 2 of 29 ratified** (advi-bd, advi-cot -- 2026-08-05). **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
+**SITTING PROGRESS: 3 of 29 ratified** (advi-bd, advi-cot, advi-inf -- 2026-08-05). **CANONICAL MEDALLION FORM ratified same sitting:** bronze (raw vendor) -> silver (parquet queryable) -> gold (processed analytics) all under `s3://opal-data-assets/{vendor}/{firm}/`; serving = `s3://opal-data-portal-v2/platinum/`. TARGET, not current state -- deltas measured in the record below. Records:
 `ANDREW_DIRECT_20260805_advi_bd_ratified_and_the_0833_0824_correction.md` (vertical 1 + the
 full-account-string ruling + the grain convention) and
 `ANDREW_DIRECT_20260805_canonical_medallion_form_and_advi_cot_ratified.md` (vertical 2 + the
 four-tier canonical form, with the measured current-state deltas).
+
+⚠ **GOLD-TIER ASYMMETRY ACROSS THE THREE ADVI SCOPES — surfaced by row 3's grounding, an
+OBSERVATION not a challenge to any ratification.** Measured 2026-08-05:
+
+| ADVI scope | source tree(s) | tiers present |
+|---|---|---|
+| 49F | `schwab/08335338/` | `bronze silver gold` |
+| Cottonwood | `blackdiamond/cottonwood/` | `bronze silver gold` |
+| **Inflection** | `orion/inflection/` **and** `eclipse/inflection/` | `bronze silver` — **NO `gold/` in EITHER** |
+
+So one product (Advisor Intelligence) is served from three scopes, two of which carry a gold tier
+in-tree and one of which carries none in either of its two vendor trees. Under the canonical form
+ratified this sitting, gold is "various type processed analytics" — so INF's ADVI analytics are
+either produced elsewhere or produced under a different grammar. **A candidate answer that would
+link two open items: the non-conforming top-level `s3://opal-data-assets/gold/` prefix flagged in
+§4(a) of the canonical-form record.** NOT verified — stated as a hypothesis to test, not a finding,
+per the standing rule that a causal claim is INFERRED until source/graph-confirmed. Worth resolving
+before v3's vertical join treats path shape as derivable, since this is exactly a tree whose
+analytics would not anchor from its own path.
 
 ⚠ **ROW-4 FLAG raised by the vertical-1 correction, not yet ruled:** row 4 (`canonical-schwab`)
 cites "Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338)". Those are now known to
@@ -36,7 +55,7 @@ than inheriting my original framing.
 |---|---|---|---|---|---|
 | 1 | advi-bd | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/schwab/08335338/`** — the 49F Black Diamond master. ADVI = "Advisor Intelligence", an Opal data product served by the Portal, scoped PER ADVISOR (49 Financial here). Layout `_ops/ bronze/ gold/ meta/ silver/`; daily scheduled ingest live. ⚠ MY ORIGINAL ROW CITED `08242234` = **`s3://opal-data-assets/schwab/08242234/`, which is MDPF "Model Portfolios"** (`_ops/ bronze/ meta/ silver/` — no `gold/`). Corrected on Andrew-direct, verified by `aws s3 ls` | HIGH | — |
 | 2 | advi-cot | **PERMANENT — RATIFIED 2026-08-05** | **`s3://opal-data-assets/blackdiamond/cottonwood/`** (`bronze/ gold/ meta/ silver/`) — the BLACK DIAMOND vendor tree, NOT a Schwab account; 49F's sibling is `.../blackdiamond/49f/`. Cottonwood BD feed live (cot-bd-session-daily ENABLED); relationship-grain ruling 08-04 active | HIGH | **Interior route consolidating legacy→canonical (Andrew's own R2 exemplar)** — State watches; under the ratified grain convention this is NOT a lifecycle shift |
-| 3 | advi-inf | PERMANENT | INF partner serving live; P0 aum-metrics work this session; MDPF_CANRTE covers its direct-silver leg | HIGH | canonical-route redesign in flight |
+| 3 | advi-inf | **PERMANENT — RATIFIED 2026-08-05** ("your understanding is correct on advi-inf, no notes") | **TWO-VENDOR SOURCE, unlike the other two advisors:** `s3://opal-data-assets/orion/inflection/` + `s3://opal-data-assets/eclipse/inflection/`. There is **NO `blackdiamond/inflection/`** — `blackdiamond/` holds only `49f/` and `cottonwood/` (ground-read). INF partner serving live; MDPF_CANRTE covers its direct-silver leg | HIGH | canonical-route redesign in flight (interior — NOT a lifecycle shift) |
 | 4 | canonical-schwab | PERMANENT | Two daily scheduled Schwab CRS pulls ENABLED (08242234 + 08335338); six silver tables | HIGH | — |
 | 5 | causality | UNDECLARED | sys-causality-engine exists; this seat holds no activity/consumption evidence either way | — | resolve at sitting |
 | 6 | ceo-digest | UNDECLARED | UNASSIGNED-RESIDUE structure; no schedule/consumer evidence at hand | — | resolve at sitting — DORMANT candidate |
