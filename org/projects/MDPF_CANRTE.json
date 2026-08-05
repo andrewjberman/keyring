@@ -11,10 +11,13 @@
     }
   ],
   "status": "active",
-  "phase": "Phase A: DESIGN -- tight scope landed (seating gate per Andrew word 6); 0.4.0_DS_ClientPlatform sole Phase-A seat, COO to issue the scoped TO; fork rulings (DDB-walk vs retired / dim-for-all vs spine-direct / Model-B vs per-firm) return to CTO on design landing",
-  "blocking": "COO Phase-A TO issuance to 0.4.0_DS_ClientPlatform (scope-cited, tightly bounded)",
+  "phase": "Phase B EXECUTING -- THE CANONICAL SPINE IS THE PRODUCTION PATH (swapped 2026-08-04 ~2050Z Andrew-direct @332ce7100c; runner-sync + route_bindings FATAL guard @e366e889c2). Phase A design COMPLETE (0.4.0_DS @ab2d2f167); three forks RULED @deliverables/MDPF_CANRTE_FORK_RULINGS_20260804.md (F-1 shape-uniform/source-parameterized + C-1 preserved-by-binding; F-2 uniformity-at-the-spine; F-3 Model-B + C-2 rider). W-1 declared bindings LANDED (33/33 tie, @8058f55233). W-2 Model-B spine port BUILT + QA-tied 4/4 zero-divergence + SWAPPED; round-1 caught an undeployed binding table (exercise-caught), round-2 green E2E. FIRST FULL SCHEDULED CYCLE VERIFIED CLEAN 2026-08-05 13:35-13:36Z (CTO read, run_id mdpf_daily_20260805_130109): '[modelb-spine] bindings asserted current', STAGE6-REVAMP rc=0 75s, cross-axis + composition gates PASS all firms, 7 keys + cycle-complete marker. OPEN: W-3 derived-producer consolidation (6b/6c/6e) NOT STARTED, unseated. W-5 serve-touching HELD behind four gates incl. Andrew's word (stage 6 stages to gold/mdpf_revamp; publisher OFF, publish HELD). GRF global T+2 roll-forward (cohort_provenance carry) SCOPED but TO still pending at 0.4.0_DS -- Andrew-direct P1 1715Z 08-04, and Andrew re-raised it 2026-08-05 asking for MDPF wrapped incl. this. TWO PRODUCERS STILL WRITE MDPF DATA (canonical spine + legacy runner partition) -- that duality is exactly what CANRTE exists to end, and it is what gates the MDPF_GLOBAL.T5 legacy kill (see blocking).",
+  "blocking": "(1) CTO C1 RULING for the T5 legacy kill -- GROUNDED 2026-08-05, verdict NOT-DROPPABLE: the runner's platinum/mdpf/aggregate_aua/{date}.json partition is the SOLE producer of MODEL-grain (7 x 49F model rows) and ETF-grain (etf_decomposition: DIVZ/IDVZ/PFOE/PFDE) cohorts; opal-assets-daily-emitter re-sources only 3 of 14 cohorts (49f_schwab_custody, 49f_smartx_platform, inflection_models) and skeleton-fills the rest, so killing the runner blanks 11 real rows. The canonical spine does NOT cover them -- it writes FIRM-grain artifacts, a different grain. Two paths at Andrew: (a) re-source the 11 at grain then kill whole, or (b) NARROW the kill and retain the partition producer as a canonical step (CTO recommends b; ~F's own census calls the partition 'the one load-bearing unique output'). (2) W-3 seating. (3) GRF TO seating at 0.4.0_DS. NOTE C2 IS DISCHARGED -- the dim_mdpf_aggregate_aua_timeseries.py:567 swallow-to-{} now re-raises (CTO gate 221736Z), source-verified.",
   "created": "2026-08-04",
-  "pods": ["0.4", "0.2"],
+  "pods": [
+    "0.4",
+    "0.2"
+  ],
   "pipeline": "mdpf",
   "thread_counter": 0,
   "threads": []
