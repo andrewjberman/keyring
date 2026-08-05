@@ -1524,7 +1524,12 @@ def cmd_io(args):
         # hint is respected literally and skips this (WS-1 acceptance: existing values keep their
         # meaning).
         if not _matched and not _firm and getattr(args, 'pipeline', None) is None:
-            if _generalist_io_fallback(args.script_id, "<no curated tree>"):
+            # Name the REAL tree via the predicate when the path carries one, instead of the
+            # "<no curated tree>" placeholder. A reader who is told which tree they are in can act;
+            # a placeholder just says the tool gave up.
+            _pred_io = _resolve_tree_from_path(args.script_id)
+            _tree_label = f"{_pred_io[0]}/{_pred_io[1]} (no curated DAG)" if _pred_io else "<no curated tree>"
+            if _generalist_io_fallback(args.script_id, _tree_label):
                 return
         # Default/shorthand: always route through resolver so disambiguation fires before any result
         hint = pipeline if pipeline in ('bd', 'inf') else None
@@ -3668,6 +3673,31 @@ def main():
             if _gate_resolved:
                 args.pipeline = _gate_resolved
             else:
+                # WS-1 COMPLETION (3.0.0_SA_CVO~B 2026-08-05, finishing the pass ~C left):
+                # the roster loop above answers only for the FOUR deploy-map trees. The PREDICATE
+                # sees SEVEN on disk, so a path in assets/etfs/demo fell through to a refusal
+                # reading "--pipeline/-p is now REQUIRED ... re-run with the one you mean".
+                #
+                # THAT MESSAGE IS FALSE FOR THOSE TREES, and falsely blames the caller: --pipeline
+                # has NO valid value for `assets` (it is not in _PIPELINE_CHOICES), so the tool
+                # demanded a flag that cannot be supplied and called it user error. An instruction
+                # the user cannot follow is worse than a refusal, because it sends them looking for
+                # a spelling that does not exist.
+                #
+                # Split the two cases HONESTLY -- the predicate is what distinguishes them:
+                _pred = _resolve_tree_from_path(_hint)
+                if _pred and not _pred[2]:          # real tree on disk, NO curated graph
+                    _ptree, _players = _pred[0], ', '.join(_discover_script_trees().get(_pred[0], []))
+                    print(f"NO CURATED GRAPH for tree '{_ptree}' (layers on disk: {_players}).",
+                          file=sys.stderr)
+                    print(f"  `{args.command}` needs a curated pipeline DAG and this tree has none, "
+                          "so there is no --pipeline value to pass -- this is NOT a missing flag.",
+                          file=sys.stderr)
+                    print(f"  WHAT WORKS TODAY: `comp-pipescript io {_hint}` answers from the "
+                          "deterministic AST generalist (reads/writes + denominator).", file=sys.stderr)
+                    print(f"  Curated trees: {', '.join(sorted(_DATADIR_TO_PIPELINE))}.",
+                          file=sys.stderr)
+                    sys.exit(2)
                 _refuse_no_pipeline(_hint)
         # else: 'io' falls through to cmd_io with args.pipeline still None -- cmd_io resolves
         # (path/auto-walk/generalist) or refuses itself; see cmd_io.
