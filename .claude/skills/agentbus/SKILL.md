@@ -93,6 +93,31 @@ bash .tools/agentbus-sqs.sh send <to-device> <your-full-serial> <body...>
   message attributes, and it is how the far side knows who to ack.
 - Body is free text. Timestamp and sender are prepended automatically.
 
+> **⚠ THE BODY IS A SHELL ARGUMENT, NOT FREE TEXT — AND IT IS AN EXECUTION VECTOR.**
+> A double-quoted body is evaluated by the shell *before* `agentbus-sqs.sh` ever sees it,
+> so a backtick or `$(` in your prose **RUNS with your permissions** and splices its output
+> — or nothing, plus an error to stderr — into the message the far side reads. This is the
+> CLAUDE.md `git commit -m` hazard generalized: it was never a *git* rule, it is a
+> **shell-argument** rule, and the bus is the same shape.
+>
+> **Measured 2026-08-05 (`0.0.0_AB_MSTR~Z`, self-caught):** a status frame quoting
+> `` `text` `` and a `` `git worktree add …` `` example sent with those segments silently
+> replaced; stderr carried `text: command not found` and a `git worktree` usage dump. The
+> message was delivered and *looked* plausible — corruption on the bus does not announce
+> itself the way a failed command does, and the far side has no way to know what you meant
+> to say. It needed an explicit supersede frame to repair.
+>
+> **Do this instead — write the body to a file and pass its contents:**
+> ```bash
+> cat > /tmp/busmsg.txt <<'EOF'
+> ...body, backticks and $( ) safe, because the quoted heredoc is inert...
+> EOF
+> bash .tools/agentbus-sqs.sh send laptop <your-serial> "$(cat /tmp/busmsg.txt)"
+> ```
+> The heredoc **must** be quoted (`<<'EOF'`), which is what makes it literal. For a short
+> body with no backticks, `$`, or `!`, inline quoting is still fine — the rule is about
+> what the body *contains*, not how long it is.
+
 **Returns a `MessageId`. That is STORED, not DELIVERED.**
 
 ## Step 4 — ACK discipline (Rule 22b — non-negotiable)
