@@ -36,6 +36,34 @@ satisfied by keeping those two statements separate, not by collapsing them.
 > `revalidate_by` defaults to the registry's 180 days -> **2027-02-02**. **NOT A GATE AND NOT A HOLD:
 > the ratification STANDS on his word. This is the field list CVO needs to land it well-formed.**
 >
+> **>> DECLARATION COMPLETED 2026-08-06. `rearm_condition` drafted by this seat and RATIFIED by
+> Andrew VERBATIM: *"yeah your understanding is correct."* All four fields, for CVO to land at the
+> RESOLVER_DEFROST seam WITHOUT re-deriving any of them:**
+>
+> ```yaml
+> lifecycle_class:  DORMANT
+> reason:           "Both sides are deliberately inactive and deliberately retained. FIND_INSURE was
+>                    closed-as-superseded 2026-06-05 (LD-0162) with its substrate explicitly
+>                    'preserved + reusable by FIND_DUALBIZ'; FIND_DUALBIZ reached its stated target
+>                    (315 firms scored / 156 disclosure-present, past the 100 target) and went quiet
+>                    2026-06-26. Andrew-direct 2026-08-06: 'I would say that both sides of this are
+>                    dormant, they are not actively being used but they will be revisited.'"
+> rearm_condition:  "Re-armed by Andrew's direction only, when dual-business prospecting is needed
+>                    again. THERE IS NO MEASURABLE OR AUTOMATIC TRIGGER -- the re-arm is a
+>                    business-development decision, not a system event."
+> annotation_cite:  "org/tier1_exec/1.0.0_SA_CTO/deliverables/KIMI_SVP_PHASE0_LIFECYCLE_PROPOSAL_TABLE_20260804.md:277 @1afec976b"
+> revalidate_by:    "2027-02-02"   # keep-dormant.yaml revalidation_default_days: 180, from 2026-08-06
+> ```
+>
+> ⚠ **`rearm_condition` HERE IS A DECLARED ABSENCE OF A TRIGGER, AND THAT IS THE HONEST FORM, NOT A
+> WEAK ONE.** The rule bank demands a STATEABLE re-arm, not a MECHANICAL one -- and "a human decides"
+> is stateable. **The failure it guards against is a belt nobody can state the re-arm for; a belt
+> whose re-arm is explicitly 'Andrew says so' is fully stated and fully auditable.** Writing a
+> plausible-sounding measurable trigger here -- a firm count, a staleness window -- would have been
+> WORSE THAN THIS: it would read as machine-checkable, invite someone to build the check the standing
+> moratorium forbids, and encode a re-arm rule Andrew never set. **A field that admits it terminates
+> in a person is a stronger record than one that hides it behind a number.**
+>
 > **(2) THE COLDNESS I MEASURED IS NOW THE DECLARED HEALTHY STATE, NOT A DEFECT.**
 > `zero_traffic_at_rest: HEALTHY` -- and the rule bank flags this as the row's unique third question:
 > *"With a declared cadence, no traffic is FROZEN (a finding); for DORMANT, NO TRAFFIC IS THE DECLARED
@@ -274,7 +302,7 @@ than inheriting my original framing.
 | 10 | etf-reports | **PERMANENT — RATIFIED 2026-08-06**, **WITH A STANDING REVIEW** (Andrew VERBATIM: *"This is Permanent, but we need to make sure that all of these are properly grouped together, that nothing is redundant, that what is actually supposed to be canonical here is, I'd say essentially that it is subject for review."*) | **NINE live schedules, all ENABLED**, spanning all three advisor firms — the row's original single-line evidence understated this by 8. Chain (UTC): `wsd-49f-partner-held-etf-daily` 03:30 **TUE-SAT** · `cot-etf-ownership-daily` 10:30 · `bd-49f-etf-ownership-daily` 10:45 · `inf-etf-ownership-daily` 15:00 · `etfs-canon-fanin` 15:45 · `etf-ownership-dashboard` 16:00 · `etfs-netassets-daily` 22:00 · `opal-assets-silver-etf` 23:30 · `etfs-reports-monthly-run` cron(0 10 1 * ? *) America/New_York -> Sep-1 14:00Z -> `etfs-reports-orchestrator`. Rule->Lambda mapping is **1:1, zero duplicate targets**. Original cited evidence VERIFIED correct | HIGH | **REVIEW OWNED, scope below the table.** ETFS CANON question still open — and a Lambda named `etfs-canon-fanin` fires DAILY while "which location is canonical" is an unresolved P0 |
 | 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | **PRODUCER: `yang-generate-factor-tilts`, an AWS LAMBDA** (python3.11, 1024MB/600s, Active), source `infra/aws/lambda/v2_portal/yang_pipeline/factor_tilts/yang-generate-factor-tilts/lambda_function.py:24-30,388`, Terraform `infra/aws/terraform/yang-pipeline/lambdas.tf`, orchestrated by Step Functions `.../stepfunctions/yang-pipeline-definition.json`. ⛔ **MY 2026-08-06 CLAIM THAT THIS LAMBDA DOES NOT EXIST AND THAT YANG RUNS ON EC2 WAS FALSE ON BOTH CLAUSES — RETRACTED, see the correction note below the table** |
 | 12 | graph-platform | **PERMANENT — RATIFIED 2026-08-06** (Andrew engaged all three sub-points; *"Ok great"* on the substrate finding) | **THE MOST HEAVILY EVIDENCED ROW IN THE SITTING.** TOOLING: `comp-manifest-check completeness` **PASSES all four invariants** — 90 tracked+committed `comp-*` executables all accounted (76 registered + 13 deliberately excluded), plus output-contract, stage-2 vocab and retired-alias. DEV: **322 commits / 14 days across 11 distinct days**, most recent same-day. INFRA: `globgrph-cse-producer-nightly` ENABLED `cron(30 3)` UTC -> **ECS cluster `opal-globgrph` ACTIVE, 2 running tasks / 2 services** (grounded on the target **ARN**, `arn:aws:ecs:...:cluster/opal-globgrph`, NOT inferred from a name — the correction from the row-11 error applied). GRAPH: **20,588 nodes / 41,197 edges**, rebuilt same-day, Nessie HEAD current. CONSUMER: **every agent** — Rule 21 makes comp-tools the mandated default for search+inspection | HIGH | **THIS VERTICAL IS THE MEASUREMENT APPARATUS FOR THE OTHER 28 ROWS.** A degradation here is not one product failing — it is the instrument every verdict in this sitting was formed with. Sub-findings resolved below |
-| 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION IS INCOMPLETE UNTIL `rearm_condition` IS SUPPLIED — see the row-13 consequences block below.** DORMANT is the enum's most demanding value (`requires: [reason, rearm_condition, annotation_cite, revalidate_by]`) and `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
+| 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION COMPLETE 2026-08-06 — all four required fields landed, `rearm_condition` ratified by Andrew (*"yeah your understanding is correct"*). See the consequences block below.** `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
 | 14 | m365-mcp | PERMANENT | Live gateway (tools active this session); ms-ingest-liveness just registry-repaired | HIGH | — |
 | 15 | macroeconomics | PERMANENT | dual-structure (macro-data engine + yang) | MED | — |
 | 16 | market-overview | PERMANENT | Portal MO live; spans 4 structures (widest with trade-submission) | HIGH | — |
@@ -307,6 +335,28 @@ still: **DORMANT and abandoned are byte-identical on every mechanical signal**, 
 grounding could have produced it. **The survey's job is to make the row ANSWERABLE; only he can
 answer it** — and a seat that had proposed values for all 29 would have been most confident exactly
 where it had least standing.
+
+> ## ⚠ ROW ORDER — CORRECTED BY ANDREW 2026-08-06. THE SITTING PROCEEDS IN ORDER; DO NOT TRIAGE.
+>
+> After row 13 this seat proposed jumping to **row 25**, following the handoff's steer at the three
+> remaining `UNDECLARED` rows (13/25/27) as *"the sitting's real work."* **Andrew caught it:** *"how
+> are we going from row 13 to row 25?"* **There was no good answer, and the reasoning was
+> self-refuting.**
+>
+> The triage rests on *"`UNDECLARED` rows need ground-reading because the label is untrustworthy."*
+> **But this sitting has already proven the `PERMANENT` labels are untrustworthy too** — rows 7, 8 and
+> 11 all had to be corrected, and rows 7/8 were explicitly *"rated off a FAMILY NAME, not on this
+> chain's evidence."* **So the triage trusts one label class while the record shows both failing.**
+> Skipping 14→24 would have skipped **row 15 (`dual-structure (macro-data engine + yang)`), row 24
+> (`yang-analytics family`) and row 29 (`yang-analytics family`)** — three MED rows whose ENTIRE
+> evidence is a family name, in the SAME yang family where the row-11 EC2 claim was false on both
+> clauses. **The rows most likely to be wrong are the ones a triage keyed on `UNDECLARED` cannot
+> see, because they are wearing the confident label.**
+>
+> **THE GENERAL FORM: A TRIAGE IS A CLAIM ABOUT WHERE THE ERRORS ARE, AND IT IS EXACTLY AS GROUNDED
+> AS ANY OTHER CLAIM.** This one was inherited from a handoff, never tested against the sitting's own
+> correction record, and would have quietly converted 11 unexamined rows into ratified ones by
+> proximity. **In order, every row ground-read, no exceptions.**
 
 **At the sitting:** (1) re-derive the 29 from `comp-estate --matrix` (the count is the
 matrix's, not this table's); (2) rule the 5 UNDECLARED; (3) confirm or amend the 24; (4) CVO
