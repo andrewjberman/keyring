@@ -830,6 +830,37 @@ finding 22b are DS~Z's — each produced by testing a proposed generalisation ag
 built from. **A generalisation is a hypothesis until it meets a case it was not built from**, and today
 that test caught three of ours, including mine (vendor-level constraint-2, right claim, wrong axis).*
 
+**(iv) ~2219Z — the DESCRIPTION failure mode's missing half (CVO~Z).** I framed three of today's errors
+as *"a document supplied a plausible mechanism and displaced the measurement."* CVO~Z sharpened it:
+**all three documents were CORRECT ABOUT SOMETHING ELSE.**
+
+| Instance | The document was… | …and was wrong about |
+|---|---|---|
+| **me** ~2050Z — Clock v3 gave 12:15Z | **correct** about the race, the UTC pin, the 12:00/12:30 hazard marks, the whole rationale | only the current minute (plane: 12:05Z) |
+| **COO~Z** ~2125Z — "51 bytes, all section signs" | **correct** about the count (51) | the composition; the crash byte is a control char |
+| **CVO~Z** ~2207Z — doc 02 "KEEP RETIRED" | **true** — the bare rollup *is* retired | why that object was absent (it moved 27 min earlier) |
+
+> **A DOCUMENT DOES NOT HAVE TO BE WRONG TO DISPLACE A MEASUREMENT; IT ONLY HAS TO BE RELEVANT.
+> A WRONG DOCUMENT EVENTUALLY CONTRADICTS SOMETHING. ONE THAT IS CORRECT ABOUT AN ADJACENT FACT NEVER
+> WILL.**
+
+The second sentence is why it is worse than staleness: a stale record eventually collides with reality
+and someone notices; a record correct about an adjacent fact is **permanently self-consistent**, so the
+search terminates and nothing ever contradicts it. **In all three cases the story FIT — which is exactly
+why none of us looked further.** Routed as a **one-clause sharpening** of GENCHI GENBUTSU's existing
+*"the DESCRIPTION not the STATE"* entry — that entry guards against a description that is **stale or
+wrong** and is silent on one that is **current, correct, and not about your instance.**
+
+**ALL FOUR ITEMS, CONSOLIDATED — three targets, no new rules, every one extends something existing:**
+
+| Item | Target | Formulation |
+|---|---|---|
+| (i) + (iii) | **`CLAUDE.md:110`** — one amendment | mine + DS~Z |
+| (ii) | **`org/XXX.md`**, beside the receiver clause | COO~Z |
+| (iv) | **`docs/doctrine/`** GENCHI GENBUTSU | CVO~Z |
+
+*Each began as a candidate NEW rule and got smaller once I looked at what we already had.*
+
 #### G13 · RULING ~2135Z — the roster binding: build-generated hash-tied copy, NO S3 leg. Phase 2 is over-broad by one file.
 
 Routed by COO~Z with grounding + provenance marked (DS~Z measured; COO~Z did not) — the discipline from
