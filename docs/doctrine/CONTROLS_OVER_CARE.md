@@ -83,8 +83,13 @@ at full confidence.
   the harm it now causes.
 - A marker FILE saying ARMED beats a hook COMMENT saying staged.
 - A doc describing a tool's behaviour loses to that tool's own source.
+- **A description does not have to be WRONG to displace a measurement — only RELEVANT.** Distinct from
+  the drift case above: these are **current, correct, and about the question next to yours.** A wrong
+  description eventually contradicts something and someone notices; **one that is correct about an
+  adjacent fact is permanently self-consistent, so the search terminates and nothing ever corrects it.**
+  The tell is that **the story FIT** — which is exactly why nobody looked further.
 - **Discharge:** read the enforcing layer — live primitive, marker file, applied config, deployed
-  bytes.
+  bytes. **A description that fits is not evidence you may stop.**
 
 **2b. The dominant case here: almost everything you read was written by another agent.** Ledgers,
 dispositions, registries, logs, handoffs, PRDs, task orders, prior findings.
