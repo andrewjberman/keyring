@@ -203,7 +203,7 @@ than inheriting my original framing.
 | 8 | correlation | **PERMANENT - RATIFIED 2026-08-05** | Chain `yang-correlation` / `sys-yang-analytics-engine`, producer `yang-generate-correlation` (ProcessDataPKLOnly). SERVED verified LIVE: `json/correlations/correlation_data.json` 152,639 B **LastMod 2026-08-05 07:30:29Z (today)** - the census claimed 2026-06-15, **stale by 7 weeks**. Frontend real + mounted: `portal-proxy.ts:1633 getCorrelationData()`, exported :2168 | HIGH (was MED - rated off a family name) | ACTIVELY PRODUCING - unlike `cma`, an old artifact here WOULD be a finding. Two chains I had lumped as one MED family read OPPOSITE on cadence |
 | 9 | data-refresh | **PERMANENT - RATIFIED 2026-08-05** | Chain `PPI-10-opal-data-refresh-api` / `sys-partner-serving-platform`, motif edge-route. Lambda `opal-data-refresh-api` LIVE (python3.11/256MB, **LastMod 2026-08-03**). Frontend MOUNTED: `App.tsx:30,32` lazy -> rendered `:466` (DataRefresh) + `:434` (SecurityScanner). Census said `reachable: unreviewed`; **resolved to mounted by this check**. Dev-only (JWT userType=Dev) - internal operator tool | HIGH | **COUPLES TO ROW 25:** the SAME Lambda serves `/security-scanner/*` and the SAME App.tsx mounts both pages - row 25's 'LEGACY candidate' note is likely inverted. **ALSO: this Lambda is the named specimen in CLAUDE.md Rule 22a** - it executes 5 real DynamoDB ops and comp-iam reports 'dynamodb' ZERO times |
 | 10 | etf-reports | **PERMANENT — RATIFIED 2026-08-06**, **WITH A STANDING REVIEW** (Andrew VERBATIM: *"This is Permanent, but we need to make sure that all of these are properly grouped together, that nothing is redundant, that what is actually supposed to be canonical here is, I'd say essentially that it is subject for review."*) | **NINE live schedules, all ENABLED**, spanning all three advisor firms — the row's original single-line evidence understated this by 8. Chain (UTC): `wsd-49f-partner-held-etf-daily` 03:30 **TUE-SAT** · `cot-etf-ownership-daily` 10:30 · `bd-49f-etf-ownership-daily` 10:45 · `inf-etf-ownership-daily` 15:00 · `etfs-canon-fanin` 15:45 · `etf-ownership-dashboard` 16:00 · `etfs-netassets-daily` 22:00 · `opal-assets-silver-etf` 23:30 · `etfs-reports-monthly-run` cron(0 10 1 * ? *) America/New_York -> Sep-1 14:00Z -> `etfs-reports-orchestrator`. Rule->Lambda mapping is **1:1, zero duplicate targets**. Original cited evidence VERIFIED correct | HIGH | **REVIEW OWNED, scope below the table.** ETFS CANON question still open — and a Lambda named `etfs-canon-fanin` fires DAILY while "which location is canonical" is an unresolved P0 |
-| 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | ⚠ **NO `yang-generate-factor-tilts` LAMBDA EXISTS** — and neither do rows 7/8's cited `yang-generate-cma` / `yang-generate-correlation`. The yang producers are **branches of the `sys-yang-analytics-engine` EC2 structure, NOT Lambdas**: a Lambda-list census of yang producers returns a FALSE ABSENCE for the whole family. Class note, not a defect in this row |
+| 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | **PRODUCER: `yang-generate-factor-tilts`, an AWS LAMBDA** (python3.11, 1024MB/600s, Active), source `infra/aws/lambda/v2_portal/yang_pipeline/factor_tilts/yang-generate-factor-tilts/lambda_function.py:24-30,388`, Terraform `infra/aws/terraform/yang-pipeline/lambdas.tf`, orchestrated by Step Functions `.../stepfunctions/yang-pipeline-definition.json`. ⛔ **MY 2026-08-06 CLAIM THAT THIS LAMBDA DOES NOT EXIST AND THAT YANG RUNS ON EC2 WAS FALSE ON BOTH CLAUSES — RETRACTED, see the correction note below the table** |
 | 12 | graph-platform | PERMANENT | comp-tools/graph substrate — the estate's own cognition layer, daily commits | HIGH | — |
 | 13 | insurance | UNDECLARED | sys-estate-ops-platform member; zero session evidence of activity or consumers | — | resolve at sitting — DORMANT candidate |
 | 14 | m365-mcp | PERMANENT | Live gateway (tools active this session); ms-ingest-liveness just registry-repaired | HIGH | — |
@@ -304,3 +304,71 @@ month-end email as MISSING on a `ResourceNotFoundException` before checking the 
 **Separately: `--query 'length(Rules)'` reported 100; the token-walked truth is 139** — the
 documented paginated-count trap, which genuinely hid `opal-assets-silver-etf-sweep-daily` from the
 first read of this very row.
+
+---
+
+## RETRACTION — "the yang producers are EC2, not Lambdas" WAS FALSE ON BOTH CLAUSES
+
+**Raised by Andrew at the CTO~B terminal 2026-08-06, VERBATIM:**
+> *"is it really an ec2? i thought this was just 26 lambdas, i do not ever remember an ec2 migration
+> for this function so that would be good to check."*
+
+**He was right and his recollection beat my measurement.** Validated by an independent subagent under
+his direction; every number below is that agent's, re-derived from live AWS, not mine.
+
+| my claim | truth |
+|---|---|
+| `yang-generate-factor-tilts` does not exist | **EXISTS** — python3.11, 1024MB/600s, **Active** |
+| nor `yang-generate-cma` / `yang-generate-correlation` | **BOTH EXIST** — python3.11, Active |
+| yang producers run on a `sys-yang-analytics-engine` **EC2** | **NO SUCH EC2.** All are **Lambdas**, Terraform-managed, Step-Functions-orchestrated |
+| (Andrew: *"i thought this was just 26 lambdas"*) | **28 yang Lambdas** — his recollection was accurate |
+
+### Cause 1 — `--no-paginate` truncation, THE SAME DEFECT I HAD DOCUMENTED 40 MINUTES EARLIER
+
+`aws lambda list-functions --no-paginate` returned **50 of 196** functions. My yang scan therefore saw
+**7 of 28**, and the 21 it could not see included all three I declared nonexistent.
+`--no-paginate` **suppresses auto-pagination and returns page one** — it does not mean "give me
+everything unpaginated," which is how I was reading it.
+
+**I had just written the row-10 note about `--query 'length(Rules)'` reporting 100 against a
+token-walked truth of 139, called it "the documented paginated-count trap," and then committed the
+identical error against a different API inside the same sitting.** Knowing a failure mode by name,
+and having just written it down, does not immunise you against committing it. The control that would
+have caught it costs one line — **print the denominator** — and I printed it for EventBridge and not
+for Lambda.
+
+### Cause 2 — I READ A TAXONOMY LABEL AS AN INFRASTRUCTURE FACT
+
+`sys-yang-analytics-engine` is **not infrastructure**. It is an ontology entry at
+`org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:109`, `kind: SHARED-ENGINE`, meaning *"the
+shared quantitative analytics refinery; ONE system serving 8 business verticals."* Confirming
+negatives: `aws ec2 describe-instances` across **32 instances** — zero yang; `EC2_MANIFEST.json`
+(the registered-EC2 source of truth, 51,522 B) — `grep -ic yang` = **0**, with a positive control on
+the same file returning non-zero so the search is known to have run. All 8 repo hits are `org/`
+markdown or ontology YAML; **zero in `infra/`, zero in Terraform, zero in any AWS API response.**
+
+**`ENGINE` IS A SEMANTIC MOTIF, NOT A COMPUTE NOUN**, and `sys-` is an ontology prefix, not a host
+prefix. I inferred a deployment topology from a *name in a C3 catalog* and reported the inference as
+a measurement — the ungrounded-causal-claim class (Rule 22), committed two messages after I wrote
+that schedules are evidence of WHEN and never of WHAT.
+
+### What this does to the surrounding record
+
+- **Row 11's ratification STANDS.** PERMANENT / in good standing was never in doubt: producer,
+  served artifacts, API and mounted route were all separately verified. Only the *compute type* was
+  wrong. The producer is a Lambda; everything else in the row holds.
+- **Rows 7 and 8 were RIGHT and my "correction" of them was the error.** They cited
+  `yang-generate-cma` and `yang-generate-correlation` as producers; both exist. Those rows need no
+  change — **my note claiming they were wrong is what was wrong.**
+- **THE "CLASS FINDING" I DERIVED FROM THIS MUST BE SPLIT, because I had merged two unrelated
+  causes under one heading.** The genuine class — *an instrument whose universe is narrower than the
+  estate, whose silence is indistinguishable from absence* — has **two** verified members, not three:
+  the EventBridge **Scheduler** gap (16 live schedules invisible to `list-rules`) and row 6's
+  **email-only** products (no artifact, no frontend, no queryable surface). **The yang case was never
+  an instrument-universe problem at all** — `list-functions` sees every Lambda perfectly well; I
+  truncated the retrieval myself. That belongs with the row-10 pagination trap, in the
+  **retrieval-denominator** class. *A false member inflates a real pattern's evidence and makes it
+  harder to falsify — which is exactly the shape of the error being catalogued.*
+
+**UNVERIFIED, named rather than assumed:** whether the deployed bytes for these three Lambdas match
+the repo source (`comp-pipescript deployed` settles it), and the Step Functions execution schedule.
