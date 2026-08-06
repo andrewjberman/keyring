@@ -187,6 +187,17 @@ over the committed authority by design.**
 - **H11/H12** as above.
 - **H13 OPEN** — S3 deletion remains on CLAUDE.md's human-confirmation list. Pre-existing law, attaches
   only to the delete step, holds no phase.
+- **A RULING IS NOT LANDED UNTIL THE DEPLOYED OBJECT CARRIES IT** (CTO~Z, standing — stated by them
+  because it was their own 08-03 ruling that nearly got lost). **Ruling in the repo does not change
+  production.** Corollaries, both measured here: **"the repo says X" is NEVER evidence about what
+  production used** — the committed roster is `_load_partner_roster()`'s *candidate 2*, the dev/QA
+  fallback reached only off-runner; and **nothing detects the divergence**, because a resolver that
+  silently prefers candidate 1 emits no signal when the two disagree. The run-manifest config hash is
+  precisely the detection that was absent for nine days.
+- **TWO INDEPENDENT ORDERINGS LIVE INSIDE PHASE 4/6 AND A NAIVE "RETIRE THE EC2" STEP VIOLATES BOTH:**
+  (i) capture → discharge → terminate (§2A″, evidence destroyed by the act it discharges);
+  (ii) `mdpf-gold-lambda` has its roster **before the sync stops** (the copy dies with the dispatch
+  route, a different event from the accrual-bridge retirement). **Sequence them explicitly.**
 
 ---
 
@@ -249,6 +260,52 @@ surface cannot re-open a row a sighted surface already closed in the safe direct
 `git show`. ⚠ **CLAUDE.md:110's own remedy clause names `--no-paginate` as the fix**; the load-bearing half
 is *"+ explicit token walking"*, and an agent who stops at the first clause implements the bug the rule
 exists to prevent. Routed to MSTR~Z by CTO~Z as a defect in the law's remedy clause.
+
+### 7a. THE NINTH — AND IT IS MINE, IN A REMEDY I WAS ROUTING
+
+I relayed to CTO~Z that `lambda-source-map.json` carries *"51 non-ASCII bytes, all U+00A7 section signs"*
+and characterised it as a **CI-blocking** defect. **I took that on report and did not measure it.** CTO~Z
+did, before routing:
+
+- The **51** is right; the composition is not. ~6 are section signs, 1 em dash — and **~14 are MOJIBAKE**
+  from a UTF-8-read-as-cp1252 round trip (`â€š` / `â‚¬` / `Ã¢`), **plus two C1 CONTROL CHARACTERS** sitting
+  inside JSON strings.
+- **THE CRASH IS NOT WHERE I SAID.** The failure is `can't decode byte 0x9d at position 30154` — the
+  control character. **`§` encodes as `0xC2 0xA7` and cp1252 decodes both bytes happily; it would never
+  crash.** So a section-sign cleanup leaves the mojibake, leaves the control characters, **and leaves the
+  crash — while looking done and passing an ASCII-count check that went 51 → 45.**
+- **"CI-blocking" is UNVERIFIED and I overstated it.** Tracked tooling is already belted with explicit
+  `utf-8` (`deploy_ledger.py:226`, `check-lambda-layer-deps:284`, `backfill-lambda-iam-mapping.py:169`).
+  What broke on this box was an **ad-hoc `json.load(open(p))`, not a tracked tool.** Only
+  `.github/workflows/lambda-deploy.yml:70` lacks an explicit encoding, and ubuntu-latest defaults to UTF-8.
+
+**This is the sixth instance of the day's shape and the first that was about to be routed AS A REMEDY.**
+The lesson is not about encodings: **I passed on a diagnosis without grounding it, to the seat whose job is
+to act on it.** AE~Z had re-derived CTO~Z's 12:05Z correction from the primitive rather than accept it on
+report; I did not extend the same discipline to a finding I was forwarding.
+**Disposition:** AE~Z's P5 edit uses explicit `utf-8` and adds no non-ASCII (binding regardless); we do NOT
+absorb the cleanup; it routes to CTO base **with the corrected diagnosis**, because a section-sign cleanup
+would close the ticket without fixing the file.
+
+### 7b. THE TOOL FINDINGS ARE NOT RANDOM — THEY CLUSTER ON RETIREMENT
+
+CTO~Z's read of the three: `comp-blast`'s false zero matters **when deleting**; `comp-estate`'s phantom
+matters **when establishing what is still there**; `comp-which`'s gap is literally *"inventory an EC2
+before you kill it."*
+
+> **THE COMP-TOOL ESTATE IS WELL COVERED FOR BUILDING AND THINLY COVERED FOR RETIRING — because the estate
+> grew by building.** This program is the first large RETIREMENT, so it is hitting the thin side
+> systematically rather than by bad luck.
+
+And the two failure modes are **opposite in risk**: a false ZERO under-reports CONSUMPTION → risk is
+**deleting something needed**; a PHANTOM over-reports EXISTENCE → risk is **working on something that is
+not there**.
+**Consequence to state plainly in the ledger: THE EC2 INVENTORY WILL BE DONE BY HAND** — and a hand-built
+denominator is exactly what §2A″'s condition exists to protect. **We do NOT build tooling inside this
+program** (one-time act; absorbing tool-building is the widening we keep refusing). The
+retirement-coverage pattern routes to CTO base as an estate-level observation.
+*Cross-check in our favour: doc 02 already records the freshness-checker as "already absent" — so here the
+PACK is right and the CENSUS is wrong, the reverse of the day's pattern.*
 
 **FIVE PACK PRESCRIPTIONS WERE THEMSELVES THE DEFECT** — the import-health check that cannot fail in the
 state it detects; an equality test that passes for the wrong reason once its dependency installs; a
