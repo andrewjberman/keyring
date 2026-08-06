@@ -31,8 +31,43 @@ He asked: *"which makes me wonder how exactly these numbers are being compiled."
 
 >> **`n_instances: 5` IS THE WHOLE FINDING. The spec KNOWS there are five occurrences and emits ONE
 > NODE FOR THE CLASS. The instance count is recorded as a PROPERTY and the instances are never
-> individuated.** The composition step was not broken — **it was never written**, and a hand-authored
-> file stamped `source: semctl-c2c3-materialize` has been standing in for it. <<
+> individuated.** <<
+
+### ⛔ CORRECTION 2026-08-06 ~2350Z — I WAS WRONG THAT "THE COMPOSITION WAS NEVER WRITTEN"
+
+**That claim rested on the 7-node debt file alone. Reading the sibling `_ab.json` falsifies it — and
+the correction makes this build SMALLER.** Measured:
+
+| | `motif_c2c3_materialize_ab.json` |
+|---|---|
+| size | **1,141,941 bytes · 16 nodes · 5,088 edges** |
+| `producer` | `NFRA_ONTOLOGY.AB-MAT-S1 (0.4.0_DS_ClientPlatform~B) — canonical A+B materialize` |
+| `grounding.recurrence` | **"MEASURED live per detector (not echoed from spec)"** |
+| `grounding.nodes_snapshot_id` | `8277340521493435453` — pinned |
+| every C2 node carries | `detector: "(S3_BUCKET)-CONTAINS->(S3Key)-OWNED_BY->(S3_BUCKET)"` — **a real graph pattern** |
+| `counts.c2_to_c1_edges` | **5,079**, e.g. `motif:a-store CONTAINS arn:aws:s3:::opal-data-bd {layer: C2->C1}` — **real estate node ids** |
+| `c3_model` | `OVERLAPPING-DOMAIN-COVER` (CTO-ruled) — anchor-defined membership, HUB types excluded |
+
+**THE DETECTORS ARE REAL, WERE EVALUATED LIVE AGAINST A PINNED SNAPSHOT, AND THE MEMBERSHIPS ARE REAL
+NODE IDS.** My "hand-authored JSON stamped with a producer name that makes it look derived" is **FALSE
+for `_ab.json`** — the file states outright that recurrence is measured and not echoed from spec.
+*(It may still hold for the 7-node debt file, `tier: gate-ready` — a different artifact, not
+re-derived here.)*
+
+### The defect, restated precisely — narrower than I claimed
+
+>> **THE COMPOSITION PRODUCES INSTANCE MEMBERSHIP BUT NOT INSTANCE IDENTITY.** One node is emitted per
+> DETECTOR, and every match is attached as a `CONTAINS` edge from that class node. You can ask *"which
+> S3 buckets participate in a-store"*; you **cannot** ask *"how many a-store instances exist, and
+> which nodes constitute instance #7."* <<
+
+Two derived counters prove the instance concept already exists and is merely unaddressable:
+`a-store` **recurrence 232** (pattern matches) vs **n_instances 236** (distinct constituents);
+`a-grant` 1553 vs 817; `b-dataflow` 956 vs 1336. **Both computed, neither individuated.**
+
+**CONSEQUENCE: Stage 1 is not authored from scratch.** The detectors exist and run. **The change is
+the OUTPUT SHAPE — emit one node per MATCH, not one per DETECTOR** — plus the grain property. §2's
+Stage 1 should be read as *"re-shape the existing composition,"* not *"write it."*
 
 **Consequence measured earlier:** `BDataflowMotif CONTAINS 1336`. `CONTAINS` became a *classification*
 edge — 1,336 nodes pointing at the category that describes them — because there was no instance layer
