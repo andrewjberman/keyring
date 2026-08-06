@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 13 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) -- 2026-08-06)
+**SITTING PROGRESS: 14 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) and **opal-mcp** (PERMANENT + RENAMED from `m365-mcp`) -- 2026-08-06)
 
 > **ROW 13 IS THE FIRST DORMANT IN THIS SITTING, AND DORMANT IS NOT A WEAKER PERMANENT -- IT IS THE
 > MOST DEMANDING VALUE IN THE ENUM.** Read at `NFRA_ONTOLOGY_RULE_BANK.yaml:425-436` AFTER the
@@ -303,7 +303,7 @@ than inheriting my original framing.
 | 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | **PRODUCER: `yang-generate-factor-tilts`, an AWS LAMBDA** (python3.11, 1024MB/600s, Active), source `infra/aws/lambda/v2_portal/yang_pipeline/factor_tilts/yang-generate-factor-tilts/lambda_function.py:24-30,388`, Terraform `infra/aws/terraform/yang-pipeline/lambdas.tf`, orchestrated by Step Functions `.../stepfunctions/yang-pipeline-definition.json`. ⛔ **MY 2026-08-06 CLAIM THAT THIS LAMBDA DOES NOT EXIST AND THAT YANG RUNS ON EC2 WAS FALSE ON BOTH CLAUSES — RETRACTED, see the correction note below the table** |
 | 12 | graph-platform | **PERMANENT — RATIFIED 2026-08-06** (Andrew engaged all three sub-points; *"Ok great"* on the substrate finding) | **THE MOST HEAVILY EVIDENCED ROW IN THE SITTING.** TOOLING: `comp-manifest-check completeness` **PASSES all four invariants** — 90 tracked+committed `comp-*` executables all accounted (76 registered + 13 deliberately excluded), plus output-contract, stage-2 vocab and retired-alias. DEV: **322 commits / 14 days across 11 distinct days**, most recent same-day. INFRA: `globgrph-cse-producer-nightly` ENABLED `cron(30 3)` UTC -> **ECS cluster `opal-globgrph` ACTIVE, 2 running tasks / 2 services** (grounded on the target **ARN**, `arn:aws:ecs:...:cluster/opal-globgrph`, NOT inferred from a name — the correction from the row-11 error applied). GRAPH: **20,588 nodes / 41,197 edges**, rebuilt same-day, Nessie HEAD current. CONSUMER: **every agent** — Rule 21 makes comp-tools the mandated default for search+inspection | HIGH | **THIS VERTICAL IS THE MEASUREMENT APPARATUS FOR THE OTHER 28 ROWS.** A degradation here is not one product failing — it is the instrument every verdict in this sitting was formed with. Sub-findings resolved below |
 | 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION COMPLETE 2026-08-06 — all four required fields landed, `rearm_condition` ratified by Andrew (*"yeah your understanding is correct"*). See the consequences block below.** `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
-| 14 | m365-mcp | PERMANENT | Live gateway (tools active this session); ms-ingest-liveness just registry-repaired | HIGH | — |
+| 14 | **opal-mcp** *(RENAMED from `m365-mcp` — Andrew-direct 2026-08-06, VERBATIM: *"i want to make sure that its named as 'opal-mcp' because it will have more than just m365 and we've already evolved that."*)* | **PERMANENT — RATIFIED 2026-08-06** (Andrew: *"This is all correct"*) | **LIVE ON EVERY LIMB, and the audit lake is checked against a BASELINE rather than one fresh timestamp.** EC2 `m365-mcp-gateway` `i-07dccb1615503ac99` **running** (t4g.nano, up since 2026-06-23); ALB **active** internet-facing -> `mcp.opalinvest.dev` (Route53 ALIAS, OIDC-gated); 2 Lambdas (`m365-otp-liveness`, `m365-ms-ingest-liveness`) + 2 EventBridge rules both **ENABLED** `rate(6 hours)`. **USE SIGNAL: `s3://opal-mcp-audit` = 63,250 objects, newest written MINUTES before the read — and the daily volume is FLAT, not a spike: 1,063 (08-06) / 1,056 (08-05) / 1,038 (08-04) / 1,013 (07-30).** A single fresh timestamp would have been the row-6 mistake in reverse; the baseline is what makes "active" a measurement. Row's own "tools active this session" claim independently RE-CONFIRMED in this seat's session — see the naming note | HIGH | **⚠ THIS IS A PRODUCTION AUTH DEPENDENCY, NOT A DEVELOPER TOOL — the original row described only `/mcp`.** The gateway also serves **`/otp/fetch`**, the one-time-password adapter for Black Diamond login (`BD_OTP_ADAPTER=gateway`, per-firm bearer secrets, its own `otp-liveness.tf`) — **so rows 1 (`advi-bd`) and 2 (`advi-cot`), both already ratified PERMANENT, authenticate their ingest through this box.** A **t4g.nano** is a single point of failure for two ratified advisor-data verticals. Same shape as the `quartz-si2-spike` finding: a label asserting less than the thing carries |
 | 15 | macroeconomics | PERMANENT | dual-structure (macro-data engine + yang) | MED | — |
 | 16 | market-overview | PERMANENT | Portal MO live; spans 4 structures (widest with trade-submission) | HIGH | — |
 | 17 | mdpf | PERMANENT | Flagship Model Portfolios product, served + verified (v2.1.148 promote arc closed 07-24) | HIGH | MDPF_CANRTE canonical-route redesign + json/mdpf/* teardown PARKED (ETFS CANON) — State watches |
@@ -336,6 +336,66 @@ grounding could have produced it. **The survey's job is to make the row ANSWERAB
 answer it** — and a seat that had proposed values for all 29 would have been most confident exactly
 where it had least standing.
 
+> ## ROW 14 — THE `opal-mcp` RENAME. ANDREW-DIRECT 2026-08-06, AND IT IS AN ALIGNMENT, NOT A RENAME.
+>
+> **VERBATIM** (`1.0.0_SA_CTO~C` terminal, on ratifying row 14): *"This is all correct but i want to
+> make sure that its named as **"opal-mcp"** because it will have more than just m365 and we've
+> already evolved that."*
+>
+> **HIS RATIONALE IS NOT FORWARD-LOOKING. IT IS ALREADY TRUE, MEASURABLY, IN FIVE PATHS TODAY** —
+> and this was tested rather than agreed with. `infra/aws/terraform/m365-mcp-gateway/` contains:
+> `taxsma_gateway_iam.tf` (**TAXSMA**) · `ycharts-iam.tf` (**YCharts**) · `opal-portal-iam.tf` (**the
+> Portal**) · `otp-liveness.tf` + `otp-alert-sqs.tf` (**the Black Diamond OTP path**) · `ms-ingest.tf`
+> (**M365/Graph**). **The name `m365-mcp` names ONE of five tenants.** It is not a name that will go
+> wrong later; it is wrong now, and "we've already evolved that" is the estate's state, not a plan.
+>
+> **AND THE EVOLVED NAME IS ALREADY LANDED IN TWO PLACES — SO THE RECORD IS RIGHT AND THE LABEL IS
+> WRONG, WHICH DECIDES THE DIRECTION OF THE FIX.** `audit-lake.tf:18,52` already provisions
+> **`s3://opal-mcp-audit`** and **`s3://opal-mcp-athena-results`**; the PRD is already
+> **`docs/architecture/NFRA_OPLMCP_PRD.md`**. **This is precisely the `canonical-schwab-si2` shape
+> from row 4 — *"the manifest was RIGHT and the live tag was WRONG, so the fix is to make reality
+> match the record, not to change the record."*** Do not invent a third name.
+>
+> ### THREE DISTINCT ACTS, DELIBERATELY SEPARATED — they carry very different risk
+>
+> **ACT 1 — THE VERTICAL LABEL (`m365-mcp` -> `opal-mcp`). HIS EXPLICIT WORD. Records-only.**
+> Canonical homes: `NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:144,253,458` (the C2/C3 ontology — the real
+> source) · `estate-coverage-manifest.yaml:834` (`named_thread`) · `estate-coverage-resolver.json:31,263,2163`
+> (**GENERATED — regenerate via `comp-estate --refresh`, never hand-edit; comp-estate reads NAMES from
+> this snapshot**). ⚠ **MUST BE A CONSUMERS-FIRST REPOINT, NOT A FIND-REPLACE: 200+ matches across
+> 44+ files (comp-grep TRUNCATED at 200, so the true total is a FLOOR, not a count), 37 carrying the
+> bare label.** A blind rename manufactures dangling citations — the class `CONTROLS_OVER_CARE.md`
+> kept its own filename to avoid (*"156 files point at that path"*) — and `comp-estate m365-mcp` would
+> stop resolving, exactly as the retired `pipescript` aliases now do. **The exercised pattern is
+> `0.8.0_AE_CloudComp`'s retired-alias work THIS WEEK: consumers first, source-of-truth last.**
+>
+> **ACT 2 — THE AWS RESOURCE NAMES (EC2 `Name` tag, ALB, target group, 2 SGs, 2 Lambdas, 2 rules, the
+> TF directory). ⛔ NOT HIS WORD, AND NOT PROPOSED AS WORK.** Surfaced to him as a JUDGEMENT, the way
+> row 4's Stage 2 correctly was. **The risk is not cosmetic: this ALB fronts the Black Diamond OTP
+> path plus YCharts, TAXSMA and portal IAM** — a careless rename breaks live advisor-data auth for two
+> ratified-PERMANENT verticals. Row 4 also banked the discriminating question that must be answered
+> BEFORE any such rename: **does anything resolve this box by NAME?** — CTO~B stated that as a
+> footnote there, it was the whole safety argument, and `~C` had to convert it into an exercised check.
+>
+> **ACT 3 — THE S3 BUCKETS. ALREADY CORRECT. NOTHING TO DO.** Recorded so nobody "fixes" them.
+>
+> ### Two smaller findings on this row
+>
+> **THE C0 ROSTER SAYS THIS VERTICAL HAS 1 FACT. IT HAS AT LEAST TEN** (EC2, ALB, listener, target
+> group, Route53 record, 2 Lambdas, 2 rules, audit bucket, per-firm secrets). `comp-estate` prints its
+> own honesty label — *"do NOT use this roster as a census denominator"* — citing an mdpf case that
+> *"dropped 3"*. **This one drops nine: a sharper instance than the one the warning is illustrated
+> with.**
+>
+> **THE MCP SERVER IS REGISTERED AS `opal-gateway`, NOT `m365`** (`.claude.json` -> `https://mcp.opalinvest.dev/mcp/`).
+> `grep -c '"m365"'` on that config returns **0**. **An agent checking "is m365 registered?" by name
+> gets a FALSE NEGATIVE on a live, connected server** — and independently, that registration is what
+> re-confirms the row's original "tools active this session" claim in a second seat's session.
+> *Note the client config had ALREADY evolved to the `opal-` name too — a third place the estate was
+> ahead of the label.*
+>
+> ---
+>
 > ## ⚠ ROW ORDER — CORRECTED BY ANDREW 2026-08-06. THE SITTING PROCEEDS IN ORDER; DO NOT TRIAGE.
 >
 > After row 13 this seat proposed jumping to **row 25**, following the handoff's steer at the three
