@@ -190,6 +190,48 @@ over the committed authority by design.**
 
 ---
 
+## 6a. ⛔ THE COMPOSITION RULE — three NOT-OBSERVABLE results do not make an observed absence
+
+**This governs P6-3's closure statement and every retirement claim in the program.**
+
+Three independent surfaces have now returned "no reader" on the five deletion candidates:
+
+| Surface | Seat | Verdict | Its named blindness |
+|---|---|---|---|
+| source-visible census | DS~Z | no source-visible reader | blind to unregistered/external readers by construction |
+| CloudTrail / access telemetry | CVO~Z | **NOT-OBSERVABLE** | data events may never have been enabled; absence cannot be created retroactively |
+| deployed **configuration** (env sweep, denominator 196, explicitly paginated) | AE~Z | **NOT-OBSERVABLE** | sees a reader ONLY if the prefix appears in CONFIG; blind to code-constructed keys |
+
+> **THREE NOT-OBSERVABLE RESULTS DO NOT COMPOSE INTO AN OBSERVED ABSENCE. THEY COMPOSE INTO A BOUNDED
+> NEGATIVE WITH THREE NAMED LIMITS.** Agreement between instruments that share a blind spot is not
+> corroboration — it is the same silence heard three times.
+
+**AE~Z DEMONSTRATED THEIR OWN INSTRUMENT BLIND RATHER THAN ASSERTING THE CAVEAT**, using the sharpest
+available case: `opal-portal-data-proxy` — comp-estate's documented `/v1/*` portal API reading
+`s3://opal-data-portal-v2/*` — has **`ENVIRONMENT VARIABLES: []`. EMPTY.** It names neither the bucket nor
+any prefix; it constructs every key in code. **So the env sweep cannot see the live portal API reading the
+very bucket that holds all five deletion candidates.** Nine other functions carry only the bucket name and
+can construct any key inside it at runtime.
+
+That is the anti-correlation shape once more: **the instrument returns its cleanest possible result
+precisely on the reader that matters most.** A zero here observes the SURFACE, not the estate.
+
+⚠ **STAKES: CVO~Z's amendment places 5 of the 8 candidates — the four OWNTS objects and the bare
+`aggregate_aua_timeseries` — in `opal-data-portal-v2`, THE LIVE SERVED BUCKET.** Deleting a
+live-served-bucket object on three bounded negatives is **H13, and H13 is Andrew's**. Nothing in any of the
+three halves moves it toward "safe to delete."
+
+**The discriminating instrument for the residual is deployed Lambda CODE, not configuration** — reading the
+packages of the nine bucket-carriers plus `opal-portal-data-proxy`. That is materially larger than P0-5
+scopes, and AE~Z flagged it rather than silently expanding into it. **The gap's shape is now named; whether
+to close it is a scoping decision, not a discovery.**
+
+*Rows 6–8 (`wsb`, `wsd`, `mdpf/feeds`) left the deletion set on DS~Z's SOURCE-VISIBLE evidence — `wsb` is
+read by `mdpf_aggregate_aua.py:239-268` and is required to calculate a PORT row. A zero from a blind
+surface cannot re-open a row a sighted surface already closed in the safe direction.*
+
+---
+
 ## 7. Instruments that lied today — all caught by controls, none by care
 
 | Instrument | The lie | Discriminating fix |
