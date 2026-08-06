@@ -264,8 +264,12 @@ It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[IN
 chat notification. **Arm once — it never exits and you never relaunch it.** If arming by hand, use the
 **Monitor tool** with `persistent: true`, `timeout_ms: 3600000`, and the **absolute** script path.
 
-> **RESOLVE THE DRIVE PREFIX — a cygwin shell has `/cygdrive/c/` and NO `/c/`; an MSYS/Git-Bash shell has
-> `/c/` and NO `/cygdrive/c/`.** `test -d /cygdrive/c && echo /cygdrive/c || echo /c`, then build the path.
+> **RESOLVE THE DRIVE PREFIX — never hardcode either form.** BOTH prefixes may be mounted at once (measured
+> 2026-08-06, CRO: `/c` and `/cygdrive/c` same device, same inode — the old "one or the other, never both"
+> mechanism sentence here was FALSE), but they are NOT equally durable: `/c` is a non-`auto` user mount that
+> has vanished at reboot before (LD-0340 class — 2026-07-29 it died and took all 186 `~/bin` forwarders that
+> had baked `/c/` into themselves, while A.3 read healthy). `/cygdrive/c` is the system-provided `auto,noumount`
+> mount. So: `test -d /cygdrive/c && echo /cygdrive/c || echo /c`, then build the path.
 > **A wrong prefix arms NOTHING and returns a task id anyway** — it dies `exit 127` in a separate
 > `<task-notification status=failed>`, so an agent that misses that notification is **deaf for the session
 > while registration, `check-inbox` and `get_agent_status` all still read healthy.** Confirm the arm with
