@@ -795,6 +795,41 @@ receiver clause it completes.
 assuming the blast radius — five citations re-verified clean, error confined to one message. "It was only
 that one place" is a claim, and they went and checked it.*
 
+**FINAL SHAPE ~2216Z — and the finding outgrew the wording fix.** DS~Z tested the class against cases it
+was not built from, twice, including testing **my** form. Result:
+
+**THE CLASS HAS AN ACCIDENTAL HALF AND A DESIGNED HALF, AND OUR LAW ALREADY LEGISLATES THE DESIGNED HALF
+TWICE WITHOUT KNOWING IT IS A CLASS** — **22a** (comp-iam models `(action)` never `(action, resource)`;
+*"treat the operation list as a FLOOR"*) and **22b** (`ps` cannot observe whether any Monitor reads a
+process's stdout; *"BANNED as delivery oracles"*). **Adjacent rules, no cross-reference, neither says it
+is an instance of anything** — which is *why* the class keeps surprising people: an agent who has
+internalised both still meets a clean zero from a graph query with no rule that reaches them.
+
+> **22b already names the property that makes the designed half dangerous, and its trailing clause is the
+> whole argument** — the verdict is *"not undiscriminating but **ANTI-CORRELATED** (it reads REACHABLE
+> because the agent is deaf, **and so PASSES the random-input control that catches undiscriminating
+> tools**)."* **The designed half DEFEATS THE STANDARD CONTROL FOR INSTRUMENT QUALITY.** Today's cases
+> carry the same inversion: the graph reports zero *because* the coupling is dynamic; import-health
+> passes *because* the fallback engaged. **An accidental frame-shift gives a wrong answer; a designed one
+> gives a wrong answer that is STRONGEST EXACTLY WHEN THE FAILURE IS TOTAL.**
+
+| | ACCIDENTAL (1–3) | DESIGNED (4–6) |
+|---|---|---|
+| Duration | per-invocation | permanent, every call |
+| Remedy | **how you call it** — whole-file grep, paginate, control the retrieval | **know the instrument's domain and corroborate OUTSIDE it** |
+| Examples | `sed\|grep -n`; `--query length()`; `grep -c` over an error message | comp-pipescript zero on `wsb`/`wsd`; import-health with the package absent; comp-iam `[GRANTED]` |
+
+**Routed amendment (one edit to :110):** fix the remedy clause · name the class + the frame reason · carry
+**one NON-SHELL instance** (import-health — because :110's existing examples are *all* shell/HTTP-shaped,
+so pagination+sed alone would **reinforce** a composition-caveat reading, and the pipe cases are the
+**cheapest** of the six) · name the accidental/designed split · **point at 22a AND 22b — one clause, two
+rule numbers, no restatement.** Six measured instances across five tool classes back it, five from today.
+
+*Credit: the class name is mine; the ACCIDENTAL/DESIGNED split, the non-shell-instance argument, and
+finding 22b are DS~Z's — each produced by testing a proposed generalisation against cases it was not
+built from. **A generalisation is a hypothesis until it meets a case it was not built from**, and today
+that test caught three of ours, including mine (vendor-level constraint-2, right claim, wrong axis).*
+
 #### G13 · RULING ~2135Z — the roster binding: build-generated hash-tied copy, NO S3 leg. Phase 2 is over-broad by one file.
 
 Routed by COO~Z with grounding + provenance marked (DS~Z measured; COO~Z did not) — the discipline from
