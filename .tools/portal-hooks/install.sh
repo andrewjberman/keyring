@@ -25,7 +25,9 @@ install_hook() {
 }
 
 install_hook pre-push
-install_hook pre-commit   # LD-0273 Stage-1: comp-surface-check gate at the submodule boundary
+# pre-commit hook REMOVED 2026-08-06 -- it existed solely to run comp-surface-check, which is
+# RETIRED (Andrew-direct). Installing a hook that calls a deleted binary would WARN-and-SKIP
+# on every portal commit -- noise that reads like a degraded gate rather than an absent one.
 install_hook commit-msg   # SURFACE_ACK auto-append (CTO gate 2026-08-04): one authoring act feeds the audit log AND the CI-parseable message line
 
 echo "OK: portal hooks installed"

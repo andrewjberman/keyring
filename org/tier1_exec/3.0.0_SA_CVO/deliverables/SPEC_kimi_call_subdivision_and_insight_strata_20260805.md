@@ -18,7 +18,58 @@ deployed 2026-08-05T14:56:59Z, md5 `a110981492b461e19fb9be7848b9ad09`).
 | **It is ONE call doing everything** | `:1072` — single `call_kimi(build_prompt(resources, window_desc), ...)` |
 | **The corpus NEVER reaches the model** | nuggets computed `:1058`, stored `:1096`, **never passed** — `build_prompt(resources, window_desc)` `:806` has no corpus parameter |
 | **The git payload is silently truncated mid-structure** | `:826` `[:60000]`. Today: 69,495 chars → **9,495 dropped (14%)**, cut mid-string at `"area:data-scripts": {\n "resource": "area` |
-| **89% of paths land in fallback labels** | today's run: 10 of 357 chain-resolved, 318 area-bucketed |
+| ~~**89% of paths land in fallback labels**~~ ⛔ **COMPOSITE — SEE §1a** | ~~today's run: 10 of 357 chain-resolved, 318 area-bucketed~~ |
+
+### 1a. CORRECTION 2026-08-06 — THE "89% FALLBACK" IS TWO DIFFERENT THINGS ADDED TOGETHER
+
+*Measured by `1.0.0_SA_CTO~B` @6a20a5d42 across two independent days. **I found the same split myself
+in `S1_attribution_denominator_finding_20260805.md` @ccef4eba5 and NEVER PROPAGATED IT INTO THIS
+DOCUMENT** — see the propagation note below.*
+
+| | 2026-08-05 | 2026-08-06 |
+|---|---|---|
+| changed paths, total | 357 | 217 |
+| **governance-class** (`org/`, `docs/`, `.claude/`) | **234 (65.5%)** | **135 (62.2%)** |
+| non-governance (the real resource axis) | 123 | 82 |
+| chain rate **AS REPORTED** | 2.8% | 7.4% |
+| chain rate **ON THE CORRECTED DENOMINATOR** | **8.1%** | **19.5%** |
+
+**The single number was hiding two populations:**
+1. **GENUINE RESOLVER MISSES** — `area:infra-other`, `area:data-scripts`, `area:tooling`,
+   `UNRESOLVED`. Real resources that should have chained and did not. **A real defect.**
+2. **STRUCTURALLY UNRESOLVABLE RECORDS** — `org/`, `docs/`, `.claude/`. **No producer emits these;
+   an agent wrote them. They can NEVER chain.** Not a resolver failure at all.
+
+**~Two thirds is category 2, and no resolver improvement can move it.** On the corrected denominator
+the resolver is ~2.4–2.6× better than this document recorded — still weak, but **weak in a fixable
+way**, which is a different engineering problem from the one §21 described.
+
+**AND IT EXPLAINS THE REJECTED PROPOSALS BETTER THAN "THE RESOLVER IS BAD" DOES.** `area:governance`
+is the **largest entry on the resource axis both days** — 118 paths on 08-06, **5.6× the next-largest
+real resource and 118× the median producer.** The model proposing against it is **not reaching for a
+fallback; it is correctly picking the biggest thing in front of it.**
+
+> ⚠ **THIS ALSO CORRECTS §D's SEQUENCING ARGUMENT BELOW.** That argument says *"if 89% of subjects are
+> named `area:*`, D sits underneath everything."* **D gives real names to RESOURCES — and ~62% of the
+> axis is not a resource to be named.** Had we gone straight to D on the uncorrected number, we would
+> have built it, watched the fallback rate barely move, and **concluded D was broken.**
+> *(This is Rule 24 postulate **(iv) STATE COHERENCE** — the remedy test names which values do NOT
+> move — catching what the other three postulates missed.)*
+
+**THE CORRECTION IS A RE-AXIS, NOT A FILTER:** two axes, one intent each. **RESOURCES**
+(`producer:*`, genuine `area:*`, `UNRESOLVED`) — chain-resolvable, and its rate finally measures the
+resolver **and only the resolver**. **RECORDS** (`org/`, `docs/`, `.claude/`) — not chain-resolvable
+**by construction**, which is not a defect. **No path is discarded**; the records axis carries its own
+declared denominator per §5. *A silently excluded path is the same defect facing the other way.*
+
+**⚠ PROPAGATION NOTE, and it is mine.** I measured this split myself on 08-05 (S1 @ccef4eba5: 243 of
+357 non-resources) and **recorded it in a separate artifact that carries ZERO references to this
+document.** This spec went on asserting the uncorrected number for a day, and the D-first argument was
+built on it. **Two of my own documents disagreed and the newer one did not know about the older.**
+Same class as §7a — *a finding that does not reach the document it corrects has not landed* — and the
+second instance today, both caught by CTO~B rather than by me.
+*(Minor: their governance-class count is 234 vs my 243; the delta is `rcg/`, which they classify
+outside governance-class. Two derivations, same shape, one directory's classification differing.)*
 
 **The causal chain, and it is not a model-quality problem:** the model is asked a *semantic* question
 (has this prose drifted?) using *mechanical* evidence (which files moved), with the semantic evidence
@@ -287,7 +338,45 @@ is chunked with a declared denominator, or the call fails loud. A model cannot k
 |---|---|---|
 | 1 | Group B trailing window | **14 days, CONFIRMED.** Plus a new requirement: the trend section must be **VISUALLY SEPARATED** in the report — a reader must not take a weekly-moving number for a daily event. That misreading is the kind that gets acted on. |
 | 2 | D-first sequencing | **CONFIRMED, AMENDED.** The **scope correction comes first** — governance records off the resource axis — *then* D. Order is load-bearing: building the two-field split first lands a vertical field **68% empty**, which reads as a broken resolver and is how a correct design gets abandoned. |
-| 3 | Cost / egress | **DEFERRED TO MEASUREMENT, not estimated.** Tomorrow's 13:00Z fire is instrumented for real token counts (input / reasoning / content / finish_reason); the subdivision is priced from those. Same instrument replaces the pre-fire live-probe question, which Andrew declined. |
+| 3 | Cost / egress | ⛔ **BASIS VOID — SEE §7a. THIS ROW'S RULING NO LONGER HOLDS.** ~~DEFERRED TO MEASUREMENT: tomorrow's 13:00Z fire is instrumented for real token counts; the subdivision is priced from those.~~ |
+
+### 7a. AMENDMENT 2026-08-06 — PARAM 3's BASIS IS VOID. THE PARAMETER IS **UNPRICED**.
+
+*Found by `1.0.0_SA_CTO~B`. Andrew-directed amendment. This corrects MY OWN document.*
+
+**What the row claimed:** cost/egress was *"no longer an assumption"* because the 2026-08-06 13:00Z
+fire would be instrumented and would yield real token counts to price the subdivision from.
+
+**What happened:** the fire **timed out** (`KIMI_TIMEOUT`, 618s against a 300×2 ceiling). **It produced
+ZERO token counts** — the instrumentation reads `usage` from the response body, so a call that never
+returns emits nothing. **The measurement the ruling rested on does not exist.**
+
+> ⚠ **SO PARAM 3 SILENTLY REVERTED FROM A RULING TO AN ASSUMPTION, AND THIS DOCUMENT WENT ON
+> ASSERTING IT WAS SETTLED.** That is §5a's map-not-territory shape occurring **inside the document
+> that legislates against it** — the second time in two days, the first being the retracted
+> "first durable record" claim. **A ruling whose basis is destroyed does not degrade to a weaker
+> ruling; it degrades to an OPEN QUESTION, and it does so SILENTLY unless someone re-reads the basis.**
+
+**STATUS: UNPRICED.** Not estimated, not deferred-to-a-scheduled-event, not carried at a lower
+confidence. **Open.**
+
+**NEW BASIS — price from the FIRST SUBDIVIDED RUN** (`CTO~B`'s recommendation, adopted):
+
+- The subdivided architecture is **the thing being priced**. Pricing it from a monolith run would
+  measure an architecture scheduled for deletion — **the same error as the vetoed bridge, one level
+  up**: a correct measurement aimed at something we are removing.
+- **Do NOT re-run the monolith to obtain counts.** That is the reflex this whole day argues against.
+- The first subdivided run yields per-call counts, which is the grain the pricing question actually
+  needs (cost scales with N calls, not with one).
+
+**THE ONE REAL NUMBER WE DO HOLD**, from the Andrew-authorised probe (2026-08-06 ~13:55Z, same
+endpoint / model / budget / ceiling, 31-char prompt): **returned 3.4s · prompt_tokens 92 ·
+completion_tokens 51 · reasoning_tokens 35.** It is a **per-call floor and a reasoning-overhead
+datum (~69% of completion on a trivial task)** — a constraint on per-call sizing. **It is NOT a
+price**, and a single point with a large constant term cannot be extrapolated to a rate.
+
+**Params 1 and 2 are UNAFFECTED** — the 14-day window and the scope-correction-first sequencing were
+ruled on their own merits and neither depended on the token measurement.
 
 **Also ruled:** the corpus budget is **INVERTED** — the model gets the full corpus and a *summary* of
 resources, not the reverse. The git half is deterministic and already printed in full in the report

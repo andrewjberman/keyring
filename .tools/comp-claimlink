@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""comp-claimlink -- does a CORRECTION reach the DOCUMENT IT CORRECTS?
+
+THE DEFECT THIS EXISTS FOR (3.0.0_SA_CVO, 2026-08-06, twice in one session):
+  I measured a thing, wrote the finding into a NEW artifact, and the OLD document that asserted the
+  now-wrong claim WENT ON ASSERTING IT. Both instances were caught by another seat, not by me:
+    * SPEC s.7 param 3 -- "RULED, priced from tomorrow's fire." The fire produced no counts. The row
+      still said RULED for ~2h. A ruling whose basis is destroyed degrades to an OPEN QUESTION, and it
+      does so SILENTLY, because nobody re-reads a row that says RULED.
+    * SPEC s.21 -- "89% of paths land in fallback labels." I had measured the correction MYSELF the
+      previous day and filed it in a separate artifact carrying ZERO references to the spec.
+  >> A FINDING THAT DOES NOT REACH THE DOCUMENT IT CORRECTS HAS NOT LANDED. <<
+  This is NOT the retrieval class (a probe returning a wrong value). The measurement was RIGHT both
+  times. The PROPAGATION failed. Different failure, needs its own control.
+
+WHY A CONTROL AND NOT A DISCIPLINE: "remember to update the other document" is care, and care is what
+you have instead of a control. It failed twice in one day at the seat that had just written the rule
+down. A control fires whether or not anyone remembers.
+
+WHAT IT IS NOT: not a gate. It blocks nothing, holds nothing, and requires nobody's approval
+(Andrew-direct 2026-08-06: no gates unless he asks). It REPORTS. Run it yourself; it is
+self-executable, which is the COO test -- the seat that needs it can run it alone.
+
+CONTRACT (declare in any markdown deliverable):
+    CORRECTS: <repo-relative-path> -- <one-line what>
+    STALE-MARKER: <literal string that must no longer stand as a LIVE assertion in the target>
+
+TWO VERDICTS, DELIBERATELY SEPARATED -- because conflating them makes the tool cry wolf, and a
+control that cries wolf gets switched off (CTO, 2026-08-05: "a permanently-red suite is a DEAD suite"):
+    SEVERE (unlanded)   the STALE-MARKER still stands in the target, unqualified by any retraction
+                        nearby. THE WRONG CLAIM IS STILL LIVE. This is the actual propagation defect.
+    TRACE  (uncited)    the target IS corrected, but does not cite the correcting artifact. The reader
+                        is not misled; the correction is merely not traceable to its source. A NOTE.
+Measured need for the split: the first real run flagged a correction that HAD landed in substance --
+CTO wrote the retraction in their own words without citing my draft. Reporting that as a failure
+alongside a genuinely-live wrong claim would have taught the reader to discount both.
+
+A STALE-MARKER found INSIDE a retraction/correction block (a line mentioning RETRACT/CORRECT/VOID/
+SUPERSEDED/WITHDRAWN within 3 lines) is NOT live -- that is the claim being quoted in order to be
+withdrawn, which is the honest form and must not be punished.
+
+DENOMINATORS ARE PRINTED. A zero is a claim: this prints files scanned, declarations found, and
+verdicts, so "no findings" can be told apart from "nothing was searched" (comp-grep's law).
+"""
+from __future__ import annotations
+
+import os
+import re
+import subprocess
+import sys
+
+DEFAULT_ROOTS = ["org/tier1_exec/3.0.0_SA_CVO/deliverables"]
+DECL = re.compile(r"^\s*(?:[-*>#\s]*)CORRECTS:\s*(\S+?)\s*(?:--|—|$)(.*)$", re.M)
+MARKER = re.compile(r"^\s*(?:[-*>#\s]*)STALE-MARKER:\s*(.+?)\s*$", re.M)
+_RETRACT = re.compile(r"RETRACT|CORRECT|VOID|SUPERSED|WITHDRAW|NO LONGER|FALSE", re.I)
+
+
+def marker_is_live(target_text: str, marker: str) -> bool:
+    """Does `marker` still stand as a LIVE assertion, or is it quoted inside a retraction?
+
+    Quoting a wrong claim in order to withdraw it is the HONEST form. Punishing it would push
+    authors to DELETE the scar, and a retraction with no scar teaches nothing (CTO, 2026-08-06).
+    """
+    if not marker:
+        return False
+    lines = target_text.splitlines()
+    for i, ln in enumerate(lines):
+        if marker in ln:
+            lo, hi = max(0, i - 3), min(len(lines), i + 4)
+            if not any(_RETRACT.search(lines[j]) for j in range(lo, hi)):
+                return True          # standing, unqualified -> the wrong claim is LIVE
+    return False
+
+
+def _repo_root() -> str:
+    try:
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                             capture_output=True, text=True, timeout=20)
+        if out.returncode == 0 and out.stdout.strip():
+            return out.stdout.strip()
+    except Exception:  # noqa: BLE001
+        pass
+    return os.getcwd()
+
+
+def _read(path: str) -> str | None:
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as fh:
+            return fh.read()
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _backlinked(target_text: str, source_path: str) -> bool:
+    """Does the TARGET reference the SOURCE? By filename stem, or by any commit that touched it."""
+    stem = os.path.splitext(os.path.basename(source_path))[0]
+    if stem and stem in target_text:
+        return True
+    try:
+        out = subprocess.run(["git", "log", "--format=%h", "--", source_path],
+                             capture_output=True, text=True, timeout=25)
+        for h in (out.stdout or "").split():
+            if len(h) >= 7 and h in target_text:
+                return True
+    except Exception:  # noqa: BLE001
+        pass
+    return False
+
+
+def scan(roots: list[str]) -> int:
+    root = _repo_root()
+    files, decls, unlanded, ok, missing_target = [], [], [], [], []
+    for r in roots:
+        base = os.path.join(root, r)
+        if not os.path.isdir(base):
+            print(f"  WARN: root not found, skipped: {r}")
+            continue
+        for dirpath, _dirs, names in os.walk(base):
+            for n in sorted(names):
+                if n.endswith(".md"):
+                    files.append(os.path.join(dirpath, n))
+
+    trace = []
+    for f in files:
+        text = _read(f)
+        if text is None:
+            continue
+        markers = MARKER.findall(text)
+        for idx, m in enumerate(DECL.finditer(text)):
+            tgt_rel, note = m.group(1).strip(), (m.group(2) or "").strip()
+            marker = markers[idx].strip() if idx < len(markers) else ""
+            decls.append((f, tgt_rel, note))
+            tgt_abs = os.path.join(root, tgt_rel)
+            ttext = _read(tgt_abs)
+            if ttext is None:
+                missing_target.append((f, tgt_rel))
+                continue
+            cited = _backlinked(ttext, os.path.relpath(f, root).replace("\\", "/"))
+            live = marker_is_live(ttext, marker) if marker else None
+            if live:                       # SEVERE -- the wrong claim still stands
+                unlanded.append((f, tgt_rel, note, marker))
+            elif cited:
+                ok.append((f, tgt_rel))
+            elif live is None:             # no marker declared: cannot judge substance
+                trace.append((f, tgt_rel, "no STALE-MARKER declared -- substance UNCHECKED, source uncited"))
+            else:                          # corrected in substance, just not cited
+                trace.append((f, tgt_rel, "corrected in substance; source not cited (traceability only)"))
+
+    rel = lambda p: os.path.relpath(p, root).replace("\\", "/")  # noqa: E731
+    print("comp-claimlink -- does a correction reach the document it corrects?")
+    print(f"  DENOMINATOR: {len(files)} markdown file(s) scanned across {len(roots)} root(s); "
+          f"{len(decls)} CORRECTS declaration(s) found")
+    if not decls:
+        print("  0 declarations. NOT a clean bill -- it means nothing DECLARED a correction.")
+        print("  A correction that declares no target cannot be checked. Add: CORRECTS: <path> -- <what>")
+        return 0
+
+    for s, t in ok:
+        print(f"  LANDED    {rel(s)}\n            -> {t}  (corrected + cited)")
+    for s, t in missing_target:
+        print(f"  BAD-PATH  {rel(s)}\n            -> {t}  TARGET NOT FOUND -- the declaration cannot be checked")
+    for s, t, why in trace:
+        print(f"  TRACE     {rel(s)}\n            -> {t}  {why}")
+    for s, t, note, marker in unlanded:
+        print(f"  SEVERE    {rel(s)}")
+        print(f"            -> {t}")
+        print(f"            ** THE STALE CLAIM IS STILL LIVE: {marker[:70]!r} **")
+        if note:
+            print(f"            {note[:96]}")
+
+    print(f"\n  SEVERE {len(unlanded)} / trace {len(trace)} / landed {len(ok)} / "
+          f"bad-path {len(missing_target)}  of {len(decls)} declaration(s)")
+    if unlanded:
+        print("  >> SEVERE = a document still asserting something you have already disproven.")
+        print("     Fix the target, in the same commit as the finding.")
+        return 1
+    if missing_target:
+        print("  >> A declaration naming a path that does not exist cannot be checked. Fix the path.")
+        return 1
+    if trace:
+        print("  >> No stale claim is live. TRACE rows are traceability only -- the reader is not")
+        print("     misled; the correction simply is not attributable to its source. Not a failure.")
+    return 0
+
+
+def self_test() -> int:
+    """Both directions. A checker that only proves it can PASS has not been shown it can FAIL."""
+    import tempfile
+    ok = True
+    with tempfile.TemporaryDirectory() as d:
+        src = os.path.join(d, "FINDING_x.md")
+        tgt = os.path.join(d, "SPEC_y.md")
+        # NEGATIVE CASE: target does NOT reference the finding -> must be detected as UNLANDED
+        open(src, "w", encoding="utf-8").write("CORRECTS: SPEC_y.md -- the 89% was a composite\n")
+        open(tgt, "w", encoding="utf-8").write("the rate is 89 percent and that is settled\n")
+        t1 = _read(tgt) or ""
+        if _backlinked(t1, "FINDING_x.md"):
+            print("  FAIL  negative case: an unreferenced target read as LANDED")
+            ok = False
+        else:
+            print("  PASS  negative case: unreferenced target correctly reads UNLANDED")
+        # POSITIVE CONTROL: target DOES reference it -> must read LANDED, or the check is undiscriminating
+        open(tgt, "w", encoding="utf-8").write("corrected -- see FINDING_x for the measurement\n")
+        t2 = _read(tgt) or ""
+        if _backlinked(t2, "FINDING_x.md"):
+            print("  PASS  positive control: referenced target correctly reads LANDED")
+        else:
+            print("  FAIL  positive control: a real backlink was not detected")
+            ok = False
+        # DECLARATION PARSER: must find the declaration at all
+        n = len(DECL.findall(open(src, encoding="utf-8").read()))
+        print(f"  {'PASS' if n == 1 else 'FAIL'}  parser: {n} declaration(s) found (want 1)")
+        ok = ok and n == 1
+    print("  self-test:", "3/3 PASS" if ok else "FAILURES PRESENT")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    args = [a for a in sys.argv[1:]]
+    if "--self-test" in args:
+        sys.exit(self_test())
+    roots = [a for a in args if not a.startswith("-")] or DEFAULT_ROOTS
+    sys.exit(scan(roots))

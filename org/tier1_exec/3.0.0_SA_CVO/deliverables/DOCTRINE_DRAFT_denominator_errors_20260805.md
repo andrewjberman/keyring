@@ -1,5 +1,9 @@
 # DOCTRINE DRAFT — THE FIVE DENOMINATOR ERRORS
 
+CORRECTS: docs/doctrine/DENOMINATOR_ERRORS.md -- the "first durable record" provenance claim is FALSE; the five existed from 2026-07-24
+STALE-MARKER: This is the first durable record
+
+
 **Status:** DRAFT for `docs/doctrine/`. **Authored in the CVO lane; NOT landed** — `docs/doctrine/`
 is outside this seat's commit authority. Routed to `1.0.0_SA_CTO` to land or amend.
 **Source:** Andrew-direct, CVO terminal, 2026-08-05 ~1615Z, stated as an EXISTING list

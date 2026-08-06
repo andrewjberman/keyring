@@ -480,14 +480,11 @@ marker (audited). Raw search is text-local and connection-blind — it misses co
 > `PASS` / `WAIVED` are safe; `ADVISORY` means read the WARNs. *A script with no validate config produces an
 > output that looks like a pass and asserts nothing.*
 
-> **`comp-surface-check` BLOCKS ON THE PORTAL SIDE — a `CRITICAL ... SEV1` is a STOP, not a note.** It sees
-> portal changes, returns **`rc=2 BLOCKED`**, and the **portal pre-commit hook REFUSES the commit**; bypass is an
-> audited `SURFACE_ACK` logged to `org/surface-check-ack-audit.log`, with portal CI as the non-bypassable
-> backstop. **Workspace-side, the `safe-commit` invocation is ADVISORY** and cannot block a workspace-only
-> commit — keep the two halves distinct. **Silence from it is not a pass**, and an unblocked *workspace* commit
-> is not a clearance. Run it by hand when touching model-portfolio / benchmark / ADVI backend surfaces.
-> *(CORRECTED 2026-07-24 — this said "CANNOT BLOCK". The LD-0273 blocking fix had landed and the text did not
-> follow, so it told agents a live gate was advisory. Exercised by 0.4.0_DE landing W-5.)*
+> **`comp-surface-check` IS RETIRED (Andrew-direct 2026-08-06).** The tool, its registry rows,
+> its comp-which route, the S3 publish leg, and BOTH portal enforcement surfaces (CI workflow +
+> pre-commit hook) were removed together. **MP/benchmark/ADVI now have no commit-time surface
+> guard.** Do not reach for the tool and do not re-add a route to it -- the retired-alias
+> invariant polices exactly that.
 
 **Archetype tag.** Every substantive log entry carries a single-line `**archetype:** TAG` header after the
 title — one of `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` /

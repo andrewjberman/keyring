@@ -1,5 +1,9 @@
 # S1 FINDING — the attribution "89% failure" is THREE errors stacked, and the top one is a New Axis error ABOVE the one everybody is looking at
 
+CORRECTS: org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_kimi_call_subdivision_and_insight_strata_20260805.md -- the "89% fallback" is a COMPOSITE; ~2/3 are records no resolver can chain
+STALE-MARKER: 89% of paths land in fallback labels
+
+
 **Seat:** `3.0.0_SA_CVO` (SIGNAL half of the comp-tool split @7a3e7117d).
 **Frame:** Andrew's denominator-error taxonomy, stated at this terminal 2026-08-05 ~1615Z —
 New Axis (Case C) · Grain Shift · Semantic Redirect · Vocab Missing · Merge/Split.
