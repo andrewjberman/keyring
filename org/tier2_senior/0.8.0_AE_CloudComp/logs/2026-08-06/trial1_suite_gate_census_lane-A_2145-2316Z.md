@@ -1,0 +1,218 @@
+# TRIAL-1 — suite-gate coverage census under a mandated comp-find / comp-read trial
+
+**archetype:** VALIDATE
+
+**Agent:** `0.8.0_AE_CloudComp~A` · **Window:** 2026-08-06 ~2145Z–2316Z · **Project:** NFRA_SCRIPTGEN (Part B acceptance)
+
+---
+
+## Andrew-direct instruction (RECORDED VERBATIM — org/XXX.md record+broadcast law)
+
+**Channel:** direct, at my terminal. **Time:** 2026-08-06 ~2145Z. **VERBATIM:**
+
+> "This is your task : @07d5e7927 — org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_SCRIPTGEN.TRIAL-1.BRIEF-PARKED.suite-gate-census-mandated-tooluse.md"
+
+This RELEASED the TRIAL-1 brief (`3.0.0_SA_CVO~B`, `@07d5e79278`), which had been parked at `staged`
+with its GO deliberately withheld under his earlier ~2115Z word (*"prepare the brief and I will
+instruct you on when it is time to issue it"*). He held the issue-timing personally and issued it
+personally.
+
+**BROADCAST same turn** to `2.0.0_SA_COO`, `1.0.0_SA_CTO`, `0.0.0_AB_MSTR` (MSTR under the XXX.md
+record+broadcast clause specifically, which names all three — not as a routine worker→MSTR message,
+which LD-0116 otherwise forbids). Delivery receipts: `20260806T224750Z`, `20260806T224803Z`,
+`20260806T224824Z`.
+
+**Scope surfaced, NOT adjudicated:** the brief's `<issued_to>` reads the BASE serial
+`0.8.0_AE_CloudComp`; Andrew directed it to the `~A` lane at my terminal. Executed as `~A` on his
+word (XXX.md Step 1 precedence #1). Base seat is separately live (PID 21840). Flagged to COO as the
+routing owner; I did not hold on the ambiguity.
+
+---
+
+## Deliverable
+
+`org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_SCRIPTGEN.TRIAL-1_suite-gate-census-79_20260806.md`
+
+**Denominator re-derived, not carried forward:** 93 test files / 14 gate-run / **79 outside** —
+matches the brief exactly. All 14 confirmed present in the 93. `WATCH_GLOBS` = 10 literals +
+`test_pipescript_*.py` → 4.
+
+| STATUS | n | | VERDICT | n |
+|---|---|---|---|---|
+| LIVE | 61 | | ENROLL | 61 |
+| RED | 15 | | LEAVE-OUT | 16 |
+| BROKEN | 1 | | RETIRE | 2 |
+| ORPHANED | 2 | | | |
+| **UNRESOLVED engines** | **0** | | | |
+
+All 79 carry all four fields, every `LIVE` exercised (`python -m pytest <file> -q`, rc + counts in
+the row), every engine derived from an **import or a call**.
+
+**Findings:** F1 `test_comp_system_metrics.py` is not a pytest file at all — 0 test defs, own
+`check()` at `:31`, `__main__` at `:169`, rc=5, **1 of 93** (isolated, I checked the whole tree).
+F2 the brief's disclosed specimen is **REFUTED** — `test_boundary_report_conformance.py` imports
+`boundary_report` at `:23`; the sole `residue` hit is `:29` `"tool": "comp-residue"`, a fixture
+string. F3 real mismatch specimens found instead (`test_blast_discrimination.py` → `compproof/
+tool_probe.py`, comp-blast stubbed by an injected lambda; 6 batteries share that engine).
+F4 my own two false positives, caught before publication (below).
+
+**Gate cost handed to the owner, decision NOT made:** enrolling all 61 = **562.9s (9.4 min)** if one
+commit touched every engine; 4 batteries carry ~7 min of it. I did not recommend a tier split,
+timeout, or subset — widening the gate is the owner's scoping call.
+
+---
+
+## TOOL TRIAL
+
+### 1. CONTAMINATION DECLARATION — **NOT `NONE`**
+
+Before starting I had read: **(a)** two `MEMORY.md` index lines — *"comp-read=HUD color, comp-find
+REPLACES grep, trial-gated"* and *"NO overfitting a scorer to its own eval cases — comp-read stays
+3/5"*; **(b)** the commit subject of `07d5e79278`; **(c)** the TRIAL-1 brief in full, during startup
+orientation, before the GO.
+
+**The material exposure is (a) + (c): I knew the expected A/B result (raw grep 0/5, find+read 3/5)
+and both disclosed BROKEN files before I ran anything.** I had NOT read either tool's source, its
+PRD, its test files, or any prior trial output. I did not tune anything and could not have — the
+brief is read-only over the tests and I hold no write route to `.tools/`.
+
+### 2. Counts
+
+| instrument | invocations |
+|---|---|
+| `comp-find` | **7** |
+| `comp-read` | **7** (+1 `--help`) |
+| **raw-search fallbacks** | **9** |
+
+### 3. THE FALLBACK LOG
+
+| # | question I asked | what the tool returned | why insufficient | what I used instead |
+|---|---|---|---|---|
+| 1 | verbatim contents of the gate's `WATCH_EXACT` block | `comp-read --at 70` PINNED the section (`score=999`) and printed its QUALIFIERS — **but rendered no excerpt of the pinned lines** | I needed the 21 literal filenames, not a pointer to them. `--help` says *"Excerpts are VERBATIM"*, and `--at` produced none | `Read` lines 60–129 |
+| 2 | what module does `test_boundary_report_conformance.py` exercise | 35 `def`/`class` sections, **zero import lines** | the answer is at `:23`; comp-read's python-ast SHAPE starts at the first `def` (`:26`), so the import block is **not a section and cannot surface** | `Read` lines 1–26 |
+| 3 | same, rephrased *"what does this file import"* | same sections, ranked differently | rephrasing cannot reach a region the sectioner never emits | — |
+| 4 | same, `--at 1` | pinned nothing (no section covers line 1) | structural, not a phrasing problem | — |
+| 5 | what executable does `test_blast_discrimination.py` invoke | 9 `def` sections, no engine | the engine is an `os.path.join` at `:21` inside the import preamble | `Read` lines 1–36 |
+| 6 | engines of 4 then 6 unresolved files | n/a — did not attempt after 2–5 | pattern established: imports/calls are outside comp-read's section model | `grep -nE "^(import\|from)\|spec_from\|_CLI"` |
+| 7 | the literal filename passed to each `_load(name, filename)` helper | n/a | needs call-site argument extraction; no tool offers it | `grep -nE "_load\(\|import_module"` |
+| 8 | **ENGINE for all 79, criterion-4 compliant** | n/a — ruled out by 2–6 | criterion 4 forbids the filename shortcut and comp-read cannot read imports, so neither the tool nor the shortcut was available | **purpose-built AST extractor**, 6 channels (import / path-literal / `os.path.join` / `pathlib`-div / bare-`.py`-literal / `import_module`), 3 positive controls, 79/79 resolved |
+| 9 | how many of the 93 have zero pytest test defs | n/a | a count over a per-file predicate; `comp-find` returns hits, not per-file aggregates | `grep -cE` loop over all 93 |
+
+**Fallback 8 is the load-bearing one.** The brief calls Field 1 *"where the trap is, and the whole
+point of the trial."* `comp-read` could not answer it on a single file, so it could not answer it 79
+times. **That is the finding, and it is adverse.**
+
+### 4. WHERE `comp-read` EARNED ITS KEEP, AND WHERE IT DID NOT
+
+**EARNED — one clear, nameable case.** `test_comp_system_metrics.py`, asked *"why does this file
+collect zero tests"*:
+- **SALIENT returned an honest measured zero** — *"NO region matched the question. That is a MEASURED
+  zero over 1 section(s) — the file may still contain the answer under different words. Do not read
+  this as 'the file does not say'."* It refused to manufacture a match. That is the single best
+  behaviour I saw from either tool.
+- **QUALIFIERS then handed me the mechanism**: line 58, *"NOT a bare `assert`: this module body runs
+  at IMPORT…"*, plus the `check()` def at `:31`. **That changed a conclusion**: without it I would
+  have read all 170 lines to work out why pytest collected nothing.
+
+**EARNED, with a caveat that matters.** On the gate, the SHAPE panel surfaced `WATCH_EXACT` (66–86)
+and `WATCH_GLOBS` (87–123) immediately — the brief's designated most-important test, **passed**. But
+**SALIENT ranked `WATCH_EXACT` 5th of 6 at `score=0.53`**, below three less relevant blocks, for a
+question that is literally *"which test files does this gate run."* **The unranked, complete SHAPE
+panel answered; the ranking did not.** The panel the tool leads with is the one that got it wrong.
+
+**DID NOT.** The **UNREAD LEDGER never changed a conclusion** for me — not once across 7 invocations.
+I never returned for a section on its prompting. It is an honest disclosure of what was withheld, and
+I read it as reassurance rather than as a pointer. **On the gate's QUALIFIERS, line 86 (*"is RETIRED
+(guard deleted @f9ddda52f), not enrolled"*) was genuinely relevant context but changed nothing** — I
+already had the enrolled list verbatim from fallback 1.
+
+### 5. THE HUD QUESTION — would automatic comp-read colour have helped here?
+
+**Mostly noise for this task, with one exception, and one active hazard.**
+
+- **The hazard, and it is the important part:** my most frequent file question by far was *what does
+  this depend on* — and that is exactly what comp-read structurally cannot show. Auto-surfacing it
+  would have put a confident, well-formatted panel next to every file I opened that **consistently
+  omitted the answer I needed**. A panel that looks like it answered is the right-file-wrong-conclusion
+  failure the tool was built to prevent, pointed at itself. On a 73-line file where I needed lines
+  1–36, it is strictly worse than reading the file.
+- **The exception:** on a large unfamiliar file (the 212-line gate, the 272-line conformance suite)
+  SHAPE is a real map and QUALIFIERS is the highest-value panel in the tool.
+- **If it is wired, wire it conditionally:** QUALIFIERS on by default; SHAPE above ~150 lines;
+  SALIENT off or last. And **fix the import blind spot before the HUD ships**, or the HUD will teach
+  agents that a file's dependencies are whatever the panel showed.
+
+### 6. VERDICT — would I keep using these if the mandate were lifted?
+
+- **`comp-find`: YES, unreservedly.** The `DENOMINATOR` line is the feature — it gave me a count I
+  could trust in one call, and the BANDS classification is what let me refute F2 in a **single
+  invocation** by separating a fixture-string hit (`[TEST]`) from a real source hit (`[SURFACED]`).
+  A raw grep would have returned the same line and left the interpretation to me.
+- **`comp-read`: PARTIALLY — not as a default reach.** I would open it on a large unfamiliar file for
+  QUALIFIERS and SHAPE. I would **not** reach for it to answer *"what does this file depend on"*,
+  which is my most common question about a file, because it cannot answer it. Today it is a
+  **skimming aid, not a dependency instrument** — and the brief framed it as the latter.
+
+---
+
+## F4 — I reproduced the author's own error class twice, and caught both (method note)
+
+Recorded because the trial is about honest measurement, and my first two numbers were not.
+
+1. My first name-vs-engine metric reported **62 of 79 mismatches** (60 after a later fix). It was a
+   crude bidirectional substring test. **Junk — discarded, never published as a finding.** Replaced
+   with the precise question criterion 4 actually asks, which yields: shortcut lands on the real
+   engine **10**, on a real-but-wrong file **0**, on **nothing at all 69 (87%)**.
+2. My extractor mis-resolved `test_comp_keys.py` to `__init__.py` because it read only `node.module`
+   on an `ImportFrom` and ignored the imported name. That single artifact **would have been published
+   as "1 actively-misleading file."** Fixed; the true count of actively-misleading names is **0**.
+
+Both were caught by opening one member of the set before publishing its count — the same discipline
+that falsified F2. **A count is not a measurement until you have looked at one of its members.**
+
+A third, in my own rendering: the two RETIRE rows initially displayed an incidental fixture path
+(`safe-commit.sh:212`) as the ENGINE, because I ranked engine references by list order rather than by
+line. The verdicts were right and the evidence cells were misleading — the exact defect this trial
+measures, in the census about it. Fixed by ranking on line number; both rows now cross-validate
+against their pytest error text (`:23` FileNotFoundError, `:40` AssertionError).
+
+---
+
+## Compiler Tools
+
+| tool | invocation | result | verdict |
+|---|---|---|---|
+| `comp-find` | `--name 'test_*.py' org/modules/graph/tests` | `DENOMINATOR: 93` | **PASS** — matched the brief; denominator in one call |
+| `comp-find` | `--name 'test_pipescript_*.py' … --all` | 4 hits | **PASS** — resolved the gate's only glob |
+| `comp-find` | `--name 'test_*.py' … --all` (×3) | full 93 list | **PASS** |
+| `comp-find` | `residue <test file>` | 1 hit, band `[TEST]`, `:29` fixture string | **PASS** — the band is what refuted F2 |
+| `comp-find` | `residue boundary_report.py` | 3 hits, band `[SURFACED]`, all comments | **PASS** |
+| `comp-read` | gate `--for "which test files does this gate run"` | SHAPE surfaced `WATCH_EXACT`+`WATCH_GLOBS` | **PASS w/ CONCERN** — SHAPE answered; SALIENT ranked the right block 5th of 6 |
+| `comp-read` | gate `--at 70` | pinned, **no excerpt** | **CONCERN** — fallback 1 |
+| `comp-read` | 3× on `test_boundary_report_conformance.py` | zero import lines, 3 phrasings | **FAIL** — cannot answer the ENGINE question |
+| `comp-read` | `test_blast_discrimination.py` | zero engine refs | **FAIL** — same class |
+| `comp-read` | `test_comp_system_metrics.py --for "why … zero tests"` | honest measured-zero SALIENT + QUALIFIERS `:58` | **PASS** — the one conclusion-changing call |
+| `python -m pytest <file> -q` | ×79 + 3 re-checks | 61 rc=0 · 15 rc=1 · 2 rc=2 · 1 rc=5 | criterion-2 exercise for every row |
+| AST extractor (scratchpad) | 6 channels, 79 files | 79/79 resolved, 0 UNRESOLVED, 3 positive controls | the criterion-4 instrument comp-read could not be |
+
+**Gap found (routed, not fixed):** `comp-read`'s python-ast sectioner emits only `def`/`class`
+regions, so a Python file's import/preamble block — lines 1 to the first `def` — is unreachable by
+`--for`, `--at`, or any phrasing. On this corpus that is where the engine lives in every single file.
+
+---
+
+## Scope discipline
+
+No edit to the gate, the tests, or `.tools/`. Nothing enrolled, nothing fixed, no gate-widening
+decision made. Writes this session: this log + the census deliverable. Analysis scripts live in the
+session scratchpad, outside the tree.
+
+## Blockers
+
+None. Both deliverables complete.
+
+## Next
+
+Awaiting Andrew's read. The rollout decision on `comp-find` / `comp-read` is his; my input is
+§TOOL TRIAL items 5 and 6. Two items sit with the gate owner (not me): the 61-battery enrollment map
+with its 9.4-min cost, and F1.
