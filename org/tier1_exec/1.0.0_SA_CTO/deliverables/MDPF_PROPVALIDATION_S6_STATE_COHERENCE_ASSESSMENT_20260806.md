@@ -945,6 +945,86 @@ ends (21 refs vs 0, `config/mdpf/` absent as a prefix, 173→230 lines of behavi
 key-removal mutant is **required, not optional**: under flat, the silent-literal-3 path is **live, not
 latent**.
 
+#### G14 · ~2205Z ANDREW-DIRECT — per-scope platinum, 12 files daily; and the TWO scope bounds it needs
+
+**Andrew-direct at my terminal ~2205Z** (record: `ANDREW_DIRECT_20260806_MDPF_PER_SCOPE_12_PLATINUM_FILES.md`
+@0caf2e907, broadcast 5 seats same turn). Answers the design call the `/exec-sum` card raised:
+**`platinum/mdpf/{scope}/` × {aggregate-aua-timeseries, aum-metrics, account-distribution} = 12 files,
+every single day.**
+
+**Why load-bearing:** per-scope pathing makes channel independence **physically enforceable** rather than
+a discipline the builder maintains — a firm's failure is confined to its own file, and absence becomes a
+missing/stale *file* rather than a quietly shorter payload. **"Every single day" is part of the ruling:**
+12 is a **daily completeness denominator**, so a cycle emitting 11 is *incomplete*, not quiet.
+
+**SURFACED, NOT ADJUDICATED:** his 12 = 3 uniform types × 4 scopes; the pack's measured live denominator
+is **14** — plus `cottonwood/account-units` and `global/non-model-assets`. **CVO~Z then measured both
+extras written in the SAME publisher cycle (13:50:50Z today)** — so they are **live, not vestigial**, and
+retiring them removes something current. Served-output change ⇒ NEVER#3 ⇒ his call. **Holding nothing:
+the 12 are identical under either reading.**
+
+##### G14-A · SCOPE BOUND ONE — `_aggregate_aua` is OUT (DS~Z, verified at source)
+
+**RULED: the per-scope ruling is bounded to the PORTAL family.** `gold/mdpf_revamp/_aggregate_aua/{date}.json`
+is **not re-pathed**: a different contract, different consumer (`opal-assets-daily-emitter`, not the
+portal). **Confirmed at source** — `"aggregate"`, `"partners"` and `"reconciliation"` in one payload, with
+genuinely cross-partner folds (`:658` `sum(p["total_aua"] for p in partners)`, `:663`, `:1171`).
+**The single-document form IS its function**, not an un-migrated shape; splitting it destroys what it
+computes. *Risk this closes:* an executor generalizing "per-scope everywhere" would break the emitter
+contract W-1a just moved — whose legs L7/L8/L9 are **still open** and whose rollback target was archived
+tonight, making a mistake there **more** expensive right now, not less.
+
+> **THE PRINCIPLE, better stated than "B is exempt":**
+> **A multi-partner document is safe only if it DECLARES which partners are present and which are
+> missing. One that does not is a silent-drop hazard.**
+> `_aggregate_aua` declares (`partners_present`, `feeders_missing`, `rolled_forward_partners`); the
+> portal family did not. **Same shape, two verdicts, and the discriminator is the DECLARATION — not the
+> file count.** This guards both over-generalizations: re-pathing B, *and* a future builder shipping a
+> new multi-partner document without the declaration because "B is fine." *(Citation correction: DS~Z
+> placed those fields at `:218`/`:225`/`:226` — those lines are `_empty_feeder`/`read_feeder_local`. They
+> live at ~`:1265` and in the `meta` block ~`:1272-1273`. Claim intact; a wrong line sends the next
+> reader to unrelated code.)*
+
+##### G14-B · SCOPE BOUND TWO — a 12/12 EXISTENCE pass is not a FRESHNESS pass (CVO~Z)
+
+CVO~Z measured the live served plane (`s3api`, 461 objects, 17 non-archive): **Andrew's 12 all present,
+all written today 13:50:49–51Z** — *his ruling describes something the pipeline already produces.*
+
+> **⚠ AND THIS LANDS ON A CRITERION I ENDORSED.** I told AE~Z per-scope pathing makes a missing scope
+> discoverable. True — **but I did not bound it.** A fixed a priori denominator makes a **pass cheap**,
+> and 12 files at 12 known paths is **byte-identical whether fresh or frozen**. *A 12/12 existence check
+> would have PASSED ON EVERY FROZEN DAY* — including the days this project exists because of. **Second
+> time today one of these has landed on a criterion of mine** (the first: G13's test scoped to one
+> resolver while the defect sat in another tree).
+
+**RULED — the acceptance criterion is TWO-PART and the parts are not interchangeable:**
+**(i) EXISTENCE** — 12 objects at 12 known paths; closes *scope-absence*, newly observable.
+**(ii) FRESHNESS** — read the served **bodies**, each artifact's data-as-of against its own roster cadence
+(`04` §3). **A 12/12 pass is an EXISTENCE verdict and may never be reported as a FRESHNESS verdict.**
+*The fixed denominator closes absence-of-scope and opens nothing on staleness — §3 does the real work and
+must not be dropped because the count got easy.*
+
+##### G14-C · H16 (NEW) — the denominator structurally cannot see name variants
+
+CVO~Z measured **three underscore twins** (`{49financial,global,inflection}/aggregate_aua_timeseries.json`,
+**2026-07-31**, six days stale, **different content** — 159031 B vs the hyphen file's 107059 B) in the
+served bucket. **Disposition already exists:** Andrew ruled *"3 scoped underscore twins TRASH"* ~2137Z
+(@1893e4f58) — CVO~Z independently re-derived, from the live plane, a set he ruled within the hour.
+**Their count also corrects CTO-base's F7**, which said *four* twins await deletion; three exist and the
+bare root object is absent at that path (bounded: one bucket, one prefix). **Not a live client-facing
+defect** — CVO~Z's own P0-6 work established the portal read-path as scoped-hyphen on three converging
+oracles.
+
+> **THE DURABLE FINDING IS NOT THE THREE FILES — THEY ARE RULED AND TRANSIENT. IT IS THAT THE
+> `(scope, artifact-type)` PAIR MODEL NORMALISES `aggregate_aua_timeseries` AND `aggregate-aua-timeseries`
+> TO THE SAME TYPE**, so the 14-pair denominator **cannot represent them as distinct rows** — both a
+> 12-of-12 and a 14-of-14 pass read fully green with them present. **If any future migration produces
+> name variants, the denominator is blind again, by construction.** Fix: assess completeness against the
+> **actual key listing**, not a normalised type model — an unrecognised key must surface as unrecognised,
+> which `04` §1 already requires of the publisher and which the pair model quietly undoes one layer up.
+> *(CVO~Z's asymmetry observation — 3 of 4 scopes, cottonwood absent, "a migration that stopped partway" —
+> is the tell a variant-aware denominator would have shown the day it appeared.)*
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
