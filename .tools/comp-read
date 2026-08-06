@@ -298,9 +298,25 @@ def _score_sections(sections, lines, question, line_toks=None):
         # asks) the title returned to rank 1: measured 2026-08-06, title 2.18 vs the answering
         # section 1.46, on a query differing from the passing one only by the word "mdpf".
         # THIS IS A DOUBLE-COUNT REMOVAL, NOT A RELEVANCE HEURISTIC. It encodes nothing about what
-        # an answer looks like -- deliberately, because the conclusion-boost that WOULD do that is
-        # held at Andrew as an open design call, and taking it here would be fitting the scorer to
-        # a five-case set.
+        # an answer looks like.
+        #
+        # >> ANDREW-DIRECT 2026-08-06 ~2041Z, VERBATIM: "No we do not tune the tool to the last 2
+        #    of the 5, i do not want to overfit like that."  THE CALL IS CLOSED, NOT OPEN. <<
+        #
+        # The conclusion-boost (rank sections whose headings look like findings) would take the
+        # neutral A/B corpus from 3/5 to 5/5 and is PROHIBITED. comp-read scores 3/5; that is its
+        # honest measured performance and it stays in the record beside its cause -- term frequency
+        # under-ranks the terse one-sentence finding. A successor must NOT re-raise this as an open
+        # design question and must NOT re-attempt the boost under another name.
+        #
+        # THE LINE BETWEEN A FIX AND A TUNE, because it is the only thing keeping this comment
+        # honest: the change on the next line is defensible WITHOUT reference to any eval case -- a
+        # title repeating its subject scored it once per repetition, a double-count with a stated
+        # mechanism. If you cannot say why a scoring change is right without pointing at your test
+        # cases, IT IS A TUNE. Widening the corpus is the legal way to move the number; a heavier
+        # thumb is not. A scorer fitted until its own eval passes has destroyed the instrument that
+        # would have told you it got worse.
+        # Record: memory/feedback_no_overfitting_a_scorer_to_its_own_eval_cases.md
         name_hit = 0.8 * len(set(_toks(s["name"])) & q)
         # SHORT-SECTION DAMPING: a heading/title with almost no body cannot hold the answer, and
         # hits/sqrt(tokens) rewards exactly that shape. Damp until a section has real content.
