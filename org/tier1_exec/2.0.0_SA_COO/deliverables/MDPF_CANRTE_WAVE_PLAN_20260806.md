@@ -177,11 +177,37 @@ log a valid key, report 11 cohorts and read GREEN while the live partition lande
 repoint: **an empty new-gold prefix fails LOUD, a pre-populated one does not** — so do not pre-populate to
 "de-risk"; that converts a loud failure into a silent one and is also a shadow.
 
-**P2-1 BEFORE P3-1.** Measured live at 21:13Z: there is **no `config/` top-level prefix in
-`opal-data-assets` at all** (positive-controlled). P2-1 CREATES a prefix, it does not populate one. And the
-deployed publisher's complete env carries **no roster variables** — the roster-completeness feature IS NOT
-DEPLOYED, so the 404 breaks nothing today *because the deployed publisher never reads it*, and **a blind
-rebuild from repo tip is what would introduce the read.**
+**P2-1 BEFORE P3-1 — GROUNDED ON BOTH ENDS, NOT ASSERTED.** Measured live at 21:13Z: there is **no
+`config/` top-level prefix in `opal-data-assets` at all** (positive-controlled). P2-1 CREATES a prefix, it
+does not populate one. And the DEPLOYED publisher package (pulled via `get-function`, 3,583 bytes,
+denominator 1 entry, 173 lines) contains **ZERO** references to `roster` / `ROSTER` / `partner_roster` /
+`EXTRA_EXPECTED` / `expected_scopes` — its only `get_object` reads the gold SOURCE key. Repo tip has 230
+lines with 21 roster refs plus a 98-line completeness test.
+**So the 404 breaks nothing today BECAUSE THE DEPLOYED PUBLISHER DOES NOT ASK THE QUESTION, and a blind
+rebuild from repo tip is what introduces the read.** Magnitude: 173 → 230 lines of behaviour change.
+⇒ **The duplicate-authority-ACROSS-components risk is CREATED BY DEPLOYING, not currently carried** — so
+CTO~Z's pending ruling is about what to BUILD, not about reconciling two live readers.
+
+### ✅ H8 RESOLVED — CTO~Z's C2 BRANCH LANDS ON ITS *FIRST* OUTCOME
+
+  `source-map artifact_sha256` == LIVE `CodeSha256` @20:45:23Z → **TIE: TRUE**
+  NEGATIVE CONTROL: `mdpf-daily-trigger`'s hash vs this live hash → False. **The comparison discriminates.**
+  `last_deployed_commit` `63eea3814` exists; its subject matches what is deployed.
+
+Deployed provenance is **RECONSTRUCTED AND VERIFIED**, not unreconstructible. The named fallback turned out
+not to be needed — which is what a pre-named branch is for: cheap either way.
+
+⚠ **AND IT CORRECTS `01` §10 IN OUR FAVOUR.** The pack frames three source-map fields as stale. Measured,
+**only ONE is**: `artifact_sha256` ACCURATE · `last_deployed_commit` ACCURATE · the "build-alongside" note
+ACCURATE *because the deployed thing IS still the build-alongside publisher* · `iam_role` **STALE**
+(map says `...-portal-publisher-role`, live is `...-egress-publisher-role`).
+
+> **THE SOURCE MAP IS NOT STALE ABOUT THE DEPLOYMENT. THE DEPLOYMENT IS STALE RELATIVE TO THE REPO, AND THE
+> MAP CORRECTLY RECORDS THAT STALE DEPLOYMENT.** The one real drift is the ROLE, changed on the live
+> function WITHOUT a code redeploy — so the code-side fields stayed correct while the role field did not.
+
+That is a different defect from "the map is unreliable," and the correction matters: **the pack's version
+invites distrusting fields that are in fact accurate**, on a file P5 must edit.
 
 **A THIRD ROSTER EXISTS, DEPLOYED, AND IT IS *THE* PRODUCTION ROSTER FOR THE ENTIRE GOLD SPINE.**
 `s3://opal-data-mdpf/code/scripts/gold/partner_roster.json`. Phase 2 says *"do not create a hand-maintained
