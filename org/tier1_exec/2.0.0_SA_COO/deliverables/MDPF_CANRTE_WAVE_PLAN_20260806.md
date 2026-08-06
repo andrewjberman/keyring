@@ -315,6 +315,44 @@ it was applied.** Where a criterion is copied from the pack, ask once: **could t
 
 ---
 
+## 7c. HELD ON A RULING THAT MUST ARRIVE — P1-1 and P2-1 both
+
+**Doc 03 Phase 2 prescribes a mechanism a CTO ruling forbids by name in the code.**
+*(Grounding: DS~Z measured this at 213220Z. Not independently re-derived by COO~Z — forwarded with its
+provenance per §7a's lesson.)*
+
+`dim_mdpf_aggregate_aua_timeseries.py:1718-1747` `_load_partner_roster()` docstring — *"ONE committed
+authority in two locations of the same file — **NEVER an S3-read fallback** and NEVER a vendored copy …
+FAIL-CLOSED when absent … (CTO ruling 230319Z: a private copy of a roster value is the sect-III-e defect
+verbatim)."* Its SystemExit message ends **"Do NOT add another resolution mechanism here."**
+Phase 2 says: manage the roster in S3 and *"give mdpf-gold-lambda exact GetObject access to those keys."*
+
+Ruling requested, narrowed to two: **(a)** build-generated hash-tied copy at zip root via the existing
+resolver, **no S3 GetObject leg granted**; or **(b)** S3 read via a new leg, which requires amending
+230319Z. DS~Z and COO~Z both recommend **(a)** — Phase 2's own second half sanctions a build-generated
+hash-tied copy, and at flat zip root `here` = `/var/task`, so **candidate 1 hits it and the existing
+mechanism works unchanged, no code edit.**
+
+⚠ **SILENCE DOES NOT PICK NOTHING — SILENCE PICKS (b)**, because P1-1 must implement something and the plan
+text says S3. **This is the class where an unstated default becomes the third copy** (the calendar is three
+copies today because nobody stated the binding, and every copy was added by someone with a defensible local
+reading). **P2-1 is held with it:** under (a) the roster GetObject leg is never written and Phase 2's config
+work covers `route_bindings.yaml` only — materially different IAM.
+
+### ✅ AND THE ESTATE IS NOT UNIFORMLY FAIL-GREEN — PRESERVE THIS ONE
+
+After eight fail-green instruments in one day it would be easy to treat fail-green as the estate's nature.
+**This resolver is FAIL-CLOSED**: it raises `SystemExit` naming both candidates and refuses the build. It
+cannot silently degrade, unlike `pandas_market_calendars` and `partner_held_etf`.
+
+> **P1-1 PRESERVES THE FAIL-CLOSED PROPERTY AND DOES NOT "IMPROVE" IT INTO A GRACEFUL FALLBACK.**
+> **Because adding a fallback is exactly the kind of change that reads as an IMPROVEMENT in review** — a
+> reviewer softening `SystemExit` to a warning would believe they were hardening the pipeline. Explicit
+> `do_not` in the TO, not a remembered property: **a preserved property living only in an agent's memory is
+> one refactor from gone, and P1-1 is a refactor of this exact module.** (DS~Z asked for it in this form.)
+
+---
+
 ## 8. Open at Andrew
 
 **Vendor per-use authorization** — read-only calls to Orion Assets, Eclipse portfolios (08:05–08:40 ET) and
