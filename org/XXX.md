@@ -42,6 +42,15 @@ ANY AGENT RECEIVING AN ANDREW-DIRECT INSTRUCTION RECORDS IT DURABLY AND BROADCAS
 **An agent relaying "Andrew ruled" is not suspect merely because you did not see it — that is the normal
 case.** Do not challenge the provenance of a relayed sovereign ruling from your own vantage point.
 
+**The RELAYER half (2026-08-06) — if the receiver may not challenge provenance, the grounding obligation
+sits ENTIRELY on the relayer.** A relay is not a lower-evidence act than an assertion; it is the same act
+with a longer fuse, because the receiving seat reasonably treats a routed finding as grounded.
+**WHEN YOU FORWARD A FINDING, FORWARD ITS GROUNDING OR FORWARD IT AS UNGROUNDED** — carry the evidence
+pointer (`file:line @ commit` / tool + output / live primitive) or carry the caveat, one word ("unratified",
+"inferred"). A record is not the plane: a relay of a ruling document inherits that document's staleness
+silently — measured 2026-08-06, three senior seats in one day; in the sharpest case a live cron cited from
+its own governing clock ruling was 10 minutes wrong about the very member the ruling was written to pin.
+
 ---
 
 ## RAVC Protocol (Non-Negotiable)
