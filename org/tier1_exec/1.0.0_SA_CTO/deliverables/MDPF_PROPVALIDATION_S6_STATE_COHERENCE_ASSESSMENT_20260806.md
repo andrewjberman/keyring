@@ -886,6 +886,65 @@ something is already wrong, and then a refused build is the wanted outcome. **Th
 seeing "removes a fallback" and reading it as a regression** — the mirror of DS~Z's point, and why the
 test matters more than the instruction.
 
+#### G13-B · RULING ~2202Z — publisher roster: SYMMETRIC. And H8 CLOSES on C2's first branch.
+
+The measurement I withheld G13's publisher half for (AE~Z 215402Z, deployed package via `get-function`;
+COO~Z relayed with provenance marked): **the deployed publisher has ZERO roster resolution** — 3,583
+bytes, denominator **1** entry, 173 lines, zero `roster`/`ROSTER`/`EXTRA_EXPECTED` references; its only
+`get_object` reads the gold source key. Repo tip has **21** roster refs across 230 lines.
+
+> **That reframes the risk: we are not reconciling an inherited divergence — WE ARE CHOOSING WHETHER TO
+> CREATE ONE.**
+
+**RULED: SYMMETRIC — build-generated hash-tied copy, NO `ROSTER_BUCKET`/`ROSTER_KEY`/GetObject leg.**
+Three arguments, the third decisive:
+
+1. **Declining to create a hazard is the cheap version.** Having measured this morning what a divergence
+   surface costs (G9: nine days stale on a live threshold, undetected), deliberately building a second
+   one is indefensible — and it is far easier to decline than to remove.
+2. **The apparent case for S3 does not survive contact.** "Update expectations without a redeploy" —
+   **that scenario does not exist here.** A roster change means a partner onboards or a cadence shifts,
+   which requires gold to build that firm's artifacts. **The roster changing is never a publisher-only
+   event.** So independence is not a benefit but a hazard: it lets the publisher's expected-scopes drift
+   ahead of or behind what gold produces, **and noticing that gap is the publisher's entire job.**
+3. **Symmetry is what makes the cross-component invariant CHECKABLE.** Both components carrying build
+   copies means **both record a roster hash in their manifests**, so `gold-hash != publisher-hash` is a
+   detectable statement that they were built from different commits. **One on S3 and one on a build copy
+   leaves nothing to compare — the divergence becomes real and invisible in the same move.**
+
+**One specification:** whatever carries the non-partner `global` scope (`02` has it as an explicit config
+row; an env var is acceptable) **must appear in the run manifest beside the roster hash** — otherwise it
+is an unhashed third input to expected-ness. **The manifest must fully determine expected scopes.**
+
+**H8 → RESOLVED, on C2's FIRST branch.** `artifact_sha256` **ties** to live `CodeSha256`, with a
+discriminating negative control (`mdpf-daily-trigger`'s hash → False); `last_deployed_commit` 63eea3814
+real, subject matching. So the close is *reconstructed and verified*, **not** "unreconstructible."
+**C2 recorded as CLOSED-UNUSED, not claimed:** a named fallback that turns out not to be needed cost one
+paragraph and meant nobody improvised an honesty caveat under deploy pressure. **That is the branch
+working, not the branch being vindicated.**
+
+**`01` §10 CORRECTED IN OUR FAVOUR — ratified, and it generalises.** Three of four fields are
+**accurate**, including the "build-alongside" note (accurate *because the deployed thing is still the
+build-alongside publisher*). Only `iam_role` is stale.
+
+> **THE SOURCE MAP IS NOT STALE ABOUT THE DEPLOYMENT. THE DEPLOYMENT IS STALE RELATIVE TO THE REPO, AND
+> THE MAP CORRECTLY RECORDS THAT STALE DEPLOYMENT.** (COO~Z's sentence.)
+>
+> **General mechanism, into P5's TO because it is not obvious: A SOURCE MAP'S FIELDS HAVE DIFFERENT
+> UPDATE TRIGGERS.** Code-side fields update on a **code deploy**; the role field changes when **IAM**
+> changes — which can happen without one, and did. **A source map is never uniformly fresh or stale; it
+> is fresh PER FIELD according to what last touched that field's subject.** Reading it as one artifact
+> with one freshness is the error the pack made.
+>
+> **P5 consequence, explicit: correct the ROLE field and do NOT "fix" the accurate code-side fields.**
+> The pack's framing invites distrusting three correct fields on a file P5 must edit — a well-meant
+> cleanup there would inject the drift the map does not currently have.
+
+**Ordering accepted as hard:** P2-1 lands config before P3-1 deploys the publisher — now grounded both
+ends (21 refs vs 0, `config/mdpf/` absent as a prefix, 173→230 lines of behaviour change). DS~Z's
+key-removal mutant is **required, not optional**: under flat, the silent-literal-3 path is **live, not
+latent**.
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
