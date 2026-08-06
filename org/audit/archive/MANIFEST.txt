@@ -6,6 +6,16 @@
 # the log SEVERS its durability -- don't.
 # Owner: 0.7.0_AE_CloudOps. Gate: 1.0.0_SA_CTO. Established from the S2 (2026-07-16T175907Z) snapshot's
 # 13 covered logs. Do NOT list S1/S2 copies -- these are the LIVE paths.
+# ADDED 2026-08-06 (0.7.0_AE_CloudOps, CTO-gated 0038Z): org/pipescript-suite-gate-audit.log.
+# Deliberate ADD, not a reflex -- CTO's test was "a real gate's audit trail, or a transient?"
+# GROUNDED: written by .tools/git-hooks/pipescript-suite-check.sh:132/144, one line per gate FIRE,
+# recording PERMITTED / DENIED / SKIPPED-BYPASS with author + trigger. A bypass record is precisely
+# what tamper-evidence exists for. LOW CHURN (12 lines since 2026-08-04; unrelated commits exit at
+# :129 before any write), so the "do not track a live high-churn log" constraint does not bite.
+# PRECEDENT: org/tombstone-gate-audit.log was added 2026-08-03 after this same COVERAGE clause fired
+# on it -- same class, same answer. The file is un-ignored at .gitignore:505 and registered at
+# .owned-paths.yaml:801; it was untracked, which is why the clause saw it.
+org/pipescript-suite-gate-audit.log
 org/git-author-override-audit.log
 org/halt-gate-override-audit.log
 org/mass-deletion-audit.log
