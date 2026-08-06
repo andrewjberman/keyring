@@ -334,8 +334,60 @@ cannot engage unnoticed. **Nothing here is a gate.**
 **Bounded:** verified by me — the absent frontier functions, the 2026 horizon, the silent-fallback
 construction, the self-declared divergent status. **Not** verified by me — the docstring's claim that the
 current-window holiday sets are byte-identical to `lib`, and whether PMC is in fact installed on the EC2.
-Both are Phase-0 measurements. *(Prior art: `0.7.0_AE_CloudOps` logged this file as a divergent third copy
-on 2026-07-24 — it is a known, unretired condition, not a new discovery.)*
+*(Prior art: `0.7.0_AE_CloudOps` logged this file as a divergent third copy on 2026-07-24 — it is a known,
+unretired condition, not a new discovery.)*
+
+#### G7-A · AMENDMENT ~2040Z — DS~Z/COO~Z measured further; my open question is ANSWERED and one framing of mine was imprecise
+
+`0.4.0_DS_ClientPlatform~Z` measured at `73ca92eb3`, routed by `2.0.0_SA_COO~Z`:
+
+1. **There are THREE copies, not two.** The third is **inlined privates** —
+   `dim_mdpf_aggregate_aua_timeseries.py:154,164` define `_expected_last_trading_day` /
+   `_trading_days_behind`, docstring: *"Inlined from lib/trading_calendar … the shim lacks the frontier fns."*
+   **⚠ This closes my own Phase-0 question and corrects its framing.** I asked "what computes the six
+   frontiers today?" — the answer is: **a third copy the law does not know about.** The frontier is not
+   uncomputed; it is computed off-canon. Phase 0 must not re-spend on this; it is now a *retirement*
+   item, not a *discovery* item.
+2. **PMC is absent from `requirements.txt`** (declares numpy/pandas/pyarrow/PyYAML==6.0.2), **zero
+   repo-wide hits** for the pip name. It is installed **only** by bash preflight —
+   `mdpf-daily-dispatch.sh:183-189` and `user-data.sh:49`, `pip install "pandas_market_calendars<5"`,
+   the `<5` pin load-bearing (`dispatch.sh:175`: 5.x changed the API). **This converts the second half
+   of H14 from my inference to measured fact**, and it is the cleanest instance in the program of
+   *"part of its runtime exists in no commit"* — guaranteed today by the exact file the port deletes.
+3. **Doc 02's prescribed remedy is FAIL-GREEN.** *"Run an import-health invocation from the built Linux
+   artifact"* **passes with the package missing**, because the import sits in `try/except ImportError`.
+   Not a weak control — an **anti-control**: it reports healthy *because* the fallback engaged.
+   Discriminating oracle (already wired): `calendar_source()` → `"NYSE/pandas_market_calendars"` vs
+   `"NYSE/hardcoded-fallback-2024-2026"`, already emitted into the artifact's `trading_day_calendar` field.
+
+#### G7-B · RULING (CTO~Z, architecture) — bind `lib/trading_calendar` via the WS-1 layer
+
+**Retire the shim and both inlined privates; bind the port to `lib/trading_calendar.py` through the WS-1
+shared Lambda Layer.**
+
+**Not scope creep, and this is the load-bearing reason: the port cannot avoid the decision.** The Lambda
+must import something; there is no null option. This is not work the cutover absorbs — it is a choice the
+cutover *forces*, and the only question is whether it is made explicitly or by default. The justification
+for all three copies is one sentence (shim `:8-9`, spine `:55-57`): *"lib/ is not on the gold-runner
+import path."* **A Lambda has no gold-runner import path** — the port does not weaken that premise, it
+deletes it. Supports: NEVER#1 names `lib/trading_calendar` as the ONE frontier definition; the shim's own
+docstring instructs keeping its surface identical *"so the eventual switch is a drop-in"* and marks itself
+for retirement; Andrew 08-06 0140 — *"the exact same pattern … the exact same design; this is what it
+means to be canonical."*
+
+**Four conditions.** (i) **Tie-out EXERCISED with a mutant** — assert set equality across the full
+in-window range with the **denominator printed**, then mutate one date and prove the comparison fails
+(`02`: *"a tie without a positive falsifier is not proof"*). (ii) **The `<5` pin ports hash-tied WITH its
+rationale** into `BUILD_MANIFEST.json` — Andrew's H4 bucket is *ported*, never *demonstrated unnecessary*.
+(iii) **`calendar_source()` assertion REPLACES doc 02's import-health check** at build time and in
+acceptance — it is an assertion inside existing scope, **not** an alarm/monitor/notification (the
+moratorium binds; route first). (iv) **SCOPE BOUND — do not widen.** Vendored copies under
+`bd-served-vintage-alarm`, `inf-etf-ownership-daily`, `opal-assets-absence-check` are **other pipelines**
+and this ruling does not touch them; that is WS-1's scope. *A ruling that dissolves a workaround is not a
+licence to sweep the estate.*
+
+**No gate.** An architectural binding, not an approval step — the TO names the binding, the tie-out
+evidence discharges it.
 
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
