@@ -489,6 +489,60 @@ decision can silently disarm it. (4) DS~Z's forced-fallback test is **pinned**, 
 
 Nothing here is a gate — assertions and spec content inside existing scope.
 
+#### G7-E · RULING ~2055Z — the calendar binding COVERS the Cottonwood producer family; and the port closure is 53% larger than the pack's
+
+Raised by `2.0.0_SA_COO~Z` off DS~Z's closure: Condition 4's scope bound had an **unstated member**.
+
+**RULED: in scope** — `build_cottonwood_mdpf_slice.py`, `build_cottonwood_mdpf_pair.py`, and any sibling
+importing the mdpf gold tree. Condition 4 excludes `bd-served-vintage-alarm` /
+`inf-etf-ownership-daily` / `opal-assets-absence-check` because they are **other pipelines**; the
+Cottonwood producers are **this pipeline's own L2 leg** (`build_mdpf_spine.py:103` emits the slice's bytes
+verbatim). Different side of the line.
+
+**⚠ CORRECTION to the relayed mechanism — it breaks LOUD, not silent.** `:87-93` reads as a swallowing
+try/except but is not: the `except ImportError` branch **re-imports the same module after a `sys.path`
+hop**, so a genuinely-absent module **raises on the second import**. It is a *path-resolution* fallback,
+not a dependency fallback. Retiring the shim breaks this consumer with a loud `ImportError` an
+import-health check will catch. *The TO must budget for a build-time import failure, not a silent
+wrong-answer hunt.* **The silent hazard is one layer down and already ruled:** the shim's own PMC
+try/except *is* fail-green and the slice inherits it through the shim (G7-D). Useful: the slice already
+imports `calendar_source` at `:88` — whether it is **emitted** into the artifact is **unmeasured by me**
+and is TO work.
+
+**A THIRD frontier derivation, which the binding improves rather than relocates.** `:793-794` computes
+`tdb = len([d for d in trading_days_between(last_measured, today) if d > last_measured])` — **not** a
+fourth copy of `trading_days_behind` (grep: only `:801`, the field name), but an ad-hoc derivation
+anchored on **wall-clock `dt.date.today()`**. **In fairness it is NOT a NEVER#1 violation as written**:
+it is explicitly labelled a non-verdict, carries its declared cadence inline (*"tdb <= 3 is WITHIN
+DECLARED CADENCE, not staleness"*), and respects the monitor moratorium in its own comment. It anchors on
+`today` **because the shim lacks `expected_last_trading_day` and there was nothing else to anchor on.**
+`lib` has it — so the binding makes this canonical, a correctness improvement falling out of the port.
+Record it in the TO as an **expected delta**, so it is not later mistaken for scope creep.
+
+**Private-symbol coupling — RULED: absorb.** `build_cottonwood_mdpf_pair.py:64` imports
+`_distribution_stats` from `dim_mdpf_account_distribution` — a **private** symbol, across trees, via
+`sys.path` hop (plus `calc_metric`/`quarter_ends` at `:65`). This is exactly the structure "one
+firm-parameterized path" dissolves; the symbols become internal to the one Lambda.
+> **⧗ ATOMICITY CONSTRAINT: P1-1 and the Cottonwood producers move TOGETHER, not sequentially.** Until
+> absorption lands, refactoring `dim_mdpf_account_distribution` **breaks Cottonwood with no signal in the
+> mdpf tree** — a leading underscore *declares* that nothing outside depends on it, so nothing there will
+> warn a refactorer that something does. Naming it in `cross_domain_coordination` is necessary and **not
+> sufficient**; the sequencing is the control.
+
+**Closure sizing — this is the most consequential item.** COO~Z/DS~Z measured the real import closure at
+**14 modules / 9,442 lines across 3 directories and 2 trees** (AST, 124 import edges, **0 unresolved**,
+10 entrypoints) against the pack's implicit **7 / 6,158** — **53% larger**. Lands on **H5** (sized against
+the wrong denominator) and, more importantly, on **Andrew's port-completeness condition**: *"any necessary
+code properly ported"* is discharged against a closure, and the closure everyone was implicitly working
+from was **missing a third of itself.** This is what the §2A′′ denominator condition exists for.
+
+**Rule-13 boundary:** `data/assets/scripts/gold` is a **SHARED repo home** deploying under the
+S3-membership guard (key-exists=update enforced, 404=loud skip, first-mints explicit) — the port crosses a
+**deploy-story** boundary, not just a directory one. Name it in the TO. Separately, the silver-tier
+`rebalancer_schemas` imported into gold is **not** a Rule 17 violation (Rule 17 governs what silver *does
+to data*, not module imports) — it is a packaging fact: a silver module vendored into a gold Lambda, which
+must appear in `BUILD_MANIFEST.json` hash-tied like everything else.
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
