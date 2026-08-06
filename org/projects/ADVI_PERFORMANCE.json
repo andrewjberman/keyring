@@ -2,11 +2,11 @@
   "project_code": "ADVI_PERFORMANCE",
   "macro_code": "ADVI",
   "name": "Advisor Intelligence Performance -- three-firm gold analytics runner completion and vendor performance migration",
-  "description": "Andrew-direct backend program to standardize Advisor Intelligence performance across 49 Financial, Inflection, and Cottonwood while preserving the existing Group D frontend input shapes. Product-facing performance must not be modeled as a residual from NNA. The canonical account-return contract is derived first from raw Schwab 0833 valuations, transactions, and fees for 49F; synthesized for Inflection from Orion account performance plus vendor-preserving activity/valuation evidence; and synthesized for Cottonwood from Black Diamond Reporting performanceSeries/performancePeriod/activitySummary plus DataMining evidence. Black Diamond role/fee data remains supplementary for 49F and never replaces Schwab as performance-number truth.",
+  "description": "Andrew-direct backend program to standardize Advisor Intelligence performance across 49 Financial, Inflection, and Cottonwood while preserving existing Group D and Portal contracts. Source evidence accumulates in opal-data-assets; one shared adapter-driven Group A/B/C process produces canonical facts and atomically exports firm-compatible Gold to opal-data-bd, opal-data-inf, and opal-data-cot; retained firm Group D processes publish the existing Platinum JSON. Product-facing performance is never an NNA residual. 49F is derived from Schwab 0833 with Black Diamond role/fee data supplementary only; Inflection synthesizes the contract from Orion; Cottonwood synthesizes it from Black Diamond Reporting plus DataMining reconciliation.",
   "status": "active",
-  "phase": "PHASE 1 DESIGN COMPLETE -- the 2026-08-06 end-to-end standardization plan audits the three source estates, ratifies the conditional daily account-return grain/columns, specifies bronze/silver/gold and Group A/B/C/D changes, and defines test, backfill, shadow, cutover, rollback, lineage, and operations gates. No implementation is authorized until the seven product/method decisions in section 15 are resolved.",
-  "current_phase": "WP-1 decision and contract pinning, followed by WP-0 reproducibility repairs. Execution order is 49F, Inflection, Cottonwood; Orion and Black Diamond credentialed endpoint probes may run in parallel with the 49F shared-contract build.",
-  "blocking": "Andrew decisions P-1 through P-7 in docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md: served return basis, classifier ownership, date-only flow timing, Group D market_growth semantics, 49F history floor, advisor role axis, and v1 scope. Execution also requires credentialed account-grain Orion and full-roster Cottonwood Black Diamond probes, repair of the Inflection duplicate-code collision and five-account NNA guard disposition, and repair of the Cottonwood dispatcher/dependency references. The NFRA M9 pre-framework baseline precondition is released per the prior registry amendment and does not block decomposition.",
+  "phase": "PHASE 1 DESIGN COMPLETE -- the field audit, method contract, centralized Gold A/B/C boundary, firm-compatible Gold handoff, retained Group D boundary, recursive scheduling design, cleanup lifecycle, and optional agentic query-index proposal are documented. Core implementation remains gated on the seven product/method decisions in section 15; the query-index build has a separate approval gate.",
+  "current_phase": "WP-1 decision/contract pinning and WP-0 reproducibility/control-graph repairs, then centralized shared-engine implementation in 49F, Inflection, Cottonwood order. Orion and Black Diamond credentialed endpoint probes may run in parallel. Replacement-ledger and resource-creation records begin before successor resources are created.",
+  "blocking": "Andrew decisions P-1 through P-7 in docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md: served return basis, classifier ownership, date-only flow timing, Group D market_growth semantics, 49F history floor, advisor role axis, and v1 scope. Execution also requires credentialed account-grain Orion and full-roster Cottonwood Black Diamond probes; Inflection code collision, performance/billing quorum, unsafe marker, source-provenance, and NNA-guard repairs; Cottonwood mirror surplus/first-fire and dispatcher repairs; and a canonical 49F dispatcher. The Platinum agentic query index is proposed but not authorized and does not block the core performance refactor.",
   "depends_on": [
     "ADVI_TWR",
     "OPAL_CONSOLIDATION",
@@ -35,8 +35,23 @@
       "date": "2026-08-06"
     },
     {
+      "path": "docs/architecture/ADVI_PERFORMANCE_SCHEDULING_ASSESSMENT_20260806.md",
+      "label": "Live scheduler and recursive trigger reconciliation with binding recovery-control correction",
+      "date": "2026-08-06"
+    },
+    {
+      "path": "docs/architecture/ADVI_PERFORMANCE_CLEANUP_AND_REPLACEMENT_PLAN_20260806.md",
+      "label": "Cleanup, replacement-ledger, drain, deletion, and cross-plane absence implementation plan",
+      "date": "2026-08-06"
+    },
+    {
+      "path": "docs/architecture/ADVI_PLATINUM_AGENTIC_QUERY_INDEX_STRATEGY_20260806.md",
+      "label": "Approval-gated Platinum artifact catalog and columnar agentic-query strategy",
+      "date": "2026-08-06"
+    },
+    {
       "path": "docs/architecture/ADVI_PERFORMANCE_PRD.md",
-      "label": "PRD v1.1 -- backend-only Advisor Intelligence performance runner completion across 49F, Inflection, Cottonwood",
+      "label": "PRD v1.2 -- backend-only Advisor Intelligence performance runner completion across 49F, Inflection, Cottonwood",
       "date": "2026-07-29"
     },
     {
@@ -46,8 +61,26 @@
     }
   ],
   "source_brief": "C:\\Users\\AndrewBerman\\Downloads\\ADVI 49 and INF Runners_3303.m4a, transcribed by 1.0.0_SA_CTO~A on 2026-07-29.",
-  "pipeline": "49F: Schwab 0833 primary bronze/silver plus scoped Black Diamond role/fee supplementary silver -> canonical daily account return and attribution -> client/advisor/firm rollups -> Group D exact-shape publishers. Inflection: raw Orion account performance/activity/method payloads -> vendor-preserving silver -> the same canonical facts and rollups -> existing D shapes. Cottonwood: raw Black Diamond Reporting performanceSeries/performancePeriod/activitySummary/method payloads plus DataMining evidence -> vendor-preserving silver -> the same canonical facts and rollups -> existing D shapes. Direct-to-monolith bronze is the end state; legacy mirror conversion is transitional.",
-  "verification_bar": "No frontend shape changes; measured net return dollars replace residual performance only after P-4; exact daily/account/client/advisor/firm reconciliation; explicit method and source provenance; complete flow classification or quarantine; invalid vendor factors never neutralized; 10-day shadow and independent firm cutovers; rollback by source selection; current Kuzu/lineage/contracts and operational completion records for all three firms.",
+  "pipeline": "Source bytes -> firm-native bronze and vendor-preserving silver in opal-data-assets -> one centralized payloadized A/B/C engine with Schwab, Orion, and Black Diamond adapters -> immutable canonical account return, attribution, reconciliation, and rollups -> validated atomic compatible-Gold promotion to opal-data-bd / opal-data-inf / opal-data-cot -> retained firm Group D exact-shape publishers -> existing Platinum and Portal publication. Ingestion has authoritative source anchors; verified completion drives downstream; one shared run-ledger reconciler provides recovery. Direct-to-monolith bronze is the end state and legacy mirrors are transitional.",
+  "verification_bar": "No frontend, Group D shape/coverage, Platinum path, or Portal publication changes; measured net return dollars replace residual performance only after P-4; exact daily/account/client/advisor/firm reconciliation; explicit method/source/run provenance; complete flow classification or quarantine; invalid vendor factors never neutralized; success-only manifests; duplicate/suppressed-event, first-fire, DST, and rollback tests; 10-day shadow and atomic independent firm cutovers; one writer per canonical artifact; replacement ledger through VERIFIED_ABSENT; current Git/AWS/S3/Kuzu/lineage/contracts and operational completion records for all three firms.",
+  "scheduling_evidence": {
+    "assessment": "docs/architecture/ADVI_PERFORMANCE_SCHEDULING_ASSESSMENT_20260806.md",
+    "baseline": "docs/briefs/TRIGGER_GRAPH_AND_RUNTIME_MAP.md",
+    "delta": "docs/briefs/TRIGGER_GRAPH_AND_RUNTIME_MAP_DELTA_20260806.md",
+    "verdict": "Partial corroboration with material correction: source ingestion anchors and verified event chains are correct; legacy per-firm Gold schedules are not valid recovery floors. Use one shared state-aware reconciler and inventory S3/direct/SSM/EC2 edges in addition to EventBridge/Scheduler."
+  },
+  "cleanup_evidence": {
+    "plan": "docs/architecture/ADVI_PERFORMANCE_CLEANUP_AND_REPLACEMENT_PLAN_20260806.md",
+    "preserve": "Raw evidence, immutable canonical generations, required 49F supplementary BD extraction, existing firm Group D, Platinum JSON, and Portal publication.",
+    "retire": "Superseded A/B/C formulas, writers, runners, triggers, unsafe markers, code copies, permissions, and stale registry/graph/runbook references after shadow, cutover, and drain.",
+    "completion_state": "VERIFIED_ABSENT across Git, live AWS, S3 writers/callers, logs, registries, and current Kuzu."
+  },
+  "agentic_query_strategy": {
+    "path": "docs/architecture/ADVI_PLATINUM_AGENTIC_QUERY_INDEX_STRATEGY_20260806.md",
+    "status": "PROPOSED_APPROVAL_REQUIRED",
+    "recommendation": "Per-firm immutable artifact/schema catalog plus materialized Parquet query projections plus unchanged Platinum JSON, promoted by atomic pointers and queried through an authorization broker. Do not make live joins across thousands of JSON objects the primary analytical path.",
+    "blocks_core_refactor": false
+  },
   "nfra_velocity_proving_ground": {
     "designation": "DESIGNATED PROVING GROUND for the NFRA_VELOCITY framework. This project is the live test of whether the framework works -- not a consumer of it, and not a beneficiary of it. Andrew-direct 2026-07-29 ~23:30Z.",
     "andrew_verbatim_20260729_2330Z": "once CVO is done with their thing and sends it to you, you will read it, but you will wait, because we are going to make a follow up program to it, where it will be run through conclusion, and then the system developed from it will be put to the test immediately on MDPF_GLOBAL and ADVI_PERFORMANCE. That needs to be persisted somewhere, likely in the PRDs and project documentation themselves. FUrthermore, I am going to leave you a voice memo so you can bring in more detail to the ADVI_PERFORMANCE and MDPF_GLOBAL projects, as I want to wrap in a lot of the current MDPF work while we're at it.",
