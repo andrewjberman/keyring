@@ -92,7 +92,7 @@ All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-ca
 ## Detailed Documentation
 
 - **Lambda / EC2 deploy protocols:** `docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`, `docs/deployment/TERRAFORM_PROTOCOL.md` (the one-document TF mechanism; law stays in this file), `docs/deployment/EC2_TELEMETRY_RIGHTSIZING_STANDARD.md`
-- **Terraform strategy:** `infra/aws/TERRAFORM_PIPELINE_STRATEGY.md`
+- **Terraform strategy:** `docs/deployment/TERRAFORM_PROTOCOL.md` *(re-pointed 2026-08-05: this line cited `infra/aws/TERRAFORM_PIPELINE_STRATEGY.md`, which Andrew ARCHIVED @a749324e7b — `TERRAFORM_PROTOCOL.md:93` records it struck-through. A law file citing a deleted path for weeks is the dangling-citation class; three live `infra/aws/lambda/*` docs still point at the dead path and are routed to CTO~B.)*
 - **Graph platform (versioned global graph, freshness/HEAD-oracle):** `docs/architecture/NFRA_GLOBGRPH_PRD.md`
 - **Critical-surfaces watch + ledger (D8):** `docs/architecture/NFRA_GRAPHS.md` §10 · `org/critical_paths/README.md`
 - **Estate scanning (NFRA_DEBTSCAN):** `docs/briefs/nfra-debtscan-prd-request-20260612.md` · ledgers `org/modules/graph/debtscan/`
