@@ -18,7 +18,58 @@ deployed 2026-08-05T14:56:59Z, md5 `a110981492b461e19fb9be7848b9ad09`).
 | **It is ONE call doing everything** | `:1072` — single `call_kimi(build_prompt(resources, window_desc), ...)` |
 | **The corpus NEVER reaches the model** | nuggets computed `:1058`, stored `:1096`, **never passed** — `build_prompt(resources, window_desc)` `:806` has no corpus parameter |
 | **The git payload is silently truncated mid-structure** | `:826` `[:60000]`. Today: 69,495 chars → **9,495 dropped (14%)**, cut mid-string at `"area:data-scripts": {\n "resource": "area` |
-| **89% of paths land in fallback labels** | today's run: 10 of 357 chain-resolved, 318 area-bucketed |
+| ~~**89% of paths land in fallback labels**~~ ⛔ **COMPOSITE — SEE §1a** | ~~today's run: 10 of 357 chain-resolved, 318 area-bucketed~~ |
+
+### 1a. CORRECTION 2026-08-06 — THE "89% FALLBACK" IS TWO DIFFERENT THINGS ADDED TOGETHER
+
+*Measured by `1.0.0_SA_CTO~B` @6a20a5d42 across two independent days. **I found the same split myself
+in `S1_attribution_denominator_finding_20260805.md` @ccef4eba5 and NEVER PROPAGATED IT INTO THIS
+DOCUMENT** — see the propagation note below.*
+
+| | 2026-08-05 | 2026-08-06 |
+|---|---|---|
+| changed paths, total | 357 | 217 |
+| **governance-class** (`org/`, `docs/`, `.claude/`) | **234 (65.5%)** | **135 (62.2%)** |
+| non-governance (the real resource axis) | 123 | 82 |
+| chain rate **AS REPORTED** | 2.8% | 7.4% |
+| chain rate **ON THE CORRECTED DENOMINATOR** | **8.1%** | **19.5%** |
+
+**The single number was hiding two populations:**
+1. **GENUINE RESOLVER MISSES** — `area:infra-other`, `area:data-scripts`, `area:tooling`,
+   `UNRESOLVED`. Real resources that should have chained and did not. **A real defect.**
+2. **STRUCTURALLY UNRESOLVABLE RECORDS** — `org/`, `docs/`, `.claude/`. **No producer emits these;
+   an agent wrote them. They can NEVER chain.** Not a resolver failure at all.
+
+**~Two thirds is category 2, and no resolver improvement can move it.** On the corrected denominator
+the resolver is ~2.4–2.6× better than this document recorded — still weak, but **weak in a fixable
+way**, which is a different engineering problem from the one §21 described.
+
+**AND IT EXPLAINS THE REJECTED PROPOSALS BETTER THAN "THE RESOLVER IS BAD" DOES.** `area:governance`
+is the **largest entry on the resource axis both days** — 118 paths on 08-06, **5.6× the next-largest
+real resource and 118× the median producer.** The model proposing against it is **not reaching for a
+fallback; it is correctly picking the biggest thing in front of it.**
+
+> ⚠ **THIS ALSO CORRECTS §D's SEQUENCING ARGUMENT BELOW.** That argument says *"if 89% of subjects are
+> named `area:*`, D sits underneath everything."* **D gives real names to RESOURCES — and ~62% of the
+> axis is not a resource to be named.** Had we gone straight to D on the uncorrected number, we would
+> have built it, watched the fallback rate barely move, and **concluded D was broken.**
+> *(This is Rule 24 postulate **(iv) STATE COHERENCE** — the remedy test names which values do NOT
+> move — catching what the other three postulates missed.)*
+
+**THE CORRECTION IS A RE-AXIS, NOT A FILTER:** two axes, one intent each. **RESOURCES**
+(`producer:*`, genuine `area:*`, `UNRESOLVED`) — chain-resolvable, and its rate finally measures the
+resolver **and only the resolver**. **RECORDS** (`org/`, `docs/`, `.claude/`) — not chain-resolvable
+**by construction**, which is not a defect. **No path is discarded**; the records axis carries its own
+declared denominator per §5. *A silently excluded path is the same defect facing the other way.*
+
+**⚠ PROPAGATION NOTE, and it is mine.** I measured this split myself on 08-05 (S1 @ccef4eba5: 243 of
+357 non-resources) and **recorded it in a separate artifact that carries ZERO references to this
+document.** This spec went on asserting the uncorrected number for a day, and the D-first argument was
+built on it. **Two of my own documents disagreed and the newer one did not know about the older.**
+Same class as §7a — *a finding that does not reach the document it corrects has not landed* — and the
+second instance today, both caught by CTO~B rather than by me.
+*(Minor: their governance-class count is 234 vs my 243; the delta is `rcg/`, which they classify
+outside governance-class. Two derivations, same shape, one directory's classification differing.)*
 
 **The causal chain, and it is not a model-quality problem:** the model is asked a *semantic* question
 (has this prose drifted?) using *mechanical* evidence (which files moved), with the semantic evidence
