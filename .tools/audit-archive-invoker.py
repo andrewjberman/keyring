@@ -70,6 +70,7 @@ WS = (Path(os.environ["AUDIT_INVOKER_WS"]).resolve()
       if os.environ.get("AUDIT_INVOKER_WS") else Path(__file__).resolve().parent.parent)
 ARCHIVE = WS / "org" / "audit" / "archive"
 MANIFEST = ARCHIVE / "MANIFEST.txt"
+DEVICES = ARCHIVE / "DEVICES.txt"     # the device-registry AUTHORITY (rv0057-f001 / NFRA_AUDITDEV)
 BASELINE_PTR = ARCHIVE / ".baseline"
 FINDINGS = ARCHIVE / "FINDINGS.md"
 HEARTBEAT = ARCHIVE / ".invoker-heartbeat.json"   # gitignored: single-host operational state
@@ -425,6 +426,80 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
             LOCKDIR.rmdir()
         except OSError:
             pass
+
+
+# ---------------- device identity: PROPOSE (heuristic) / AUTHORISE (registry) ----------------
+# rv0057-f001 / NFRA_AUDITDEV s6. The archive key gains <DEVICE> because (timestamp, logical-log)
+# stopped being unique when the fabric acquired a second machine.
+#
+# THE ROLE SPLIT IS THE RULING (CTO 2026-08-06T0112Z). The TO says "resolve from a committed registry,
+# NEVER a path heuristic" -- and the estate's ONE device mechanism (agentbus-sqs.sh this_device) IS a
+# path heuristic. That is not a contradiction once "resolve" is decomposed:
+#   PROPOSE    this_device() -> a CANDIDATE. Non-authoritative; inert until admitted.
+#   AUTHORISE  DEVICES.txt   -> ADMITS or REJECTS. The sole gate. A rejected claim never writes.
+# The clause forbids a heuristic being the SOURCE OF AUTHORITY; here it is upstream of authority, not
+# it. Reusing it is also the git_bash_resolver lesson: ONE device mechanism, never a second that could
+# DISAGREE -- on a tamper-evidence base a disagreement is a corrupted attribution.
+#
+# FAIL-CLOSED BOTH WAYS, neither silent. AN AUTHORITY THAT CANNOT BE READ MUST NOT ADMIT EVERYTHING:
+# an unreachable oracle reports UNKNOWN and fails closed, never "assume valid" (the DERIVED_UNIVERSE
+# vacuity corollary landing on the registry). Detection still RUNS in both cases -- only the WRITE is
+# refused, so a fail-closed device is never also a blind one.
+#
+# KNOWN RESIDUAL -- THREAT-2, NAMED (full text in the TO's THREAT MODEL section): this admits an
+# UNDECLARED device's claim being rejected, but does NOT catch a DECLARED id claimed by the WRONG
+# machine (a path-colliding third checkout). Closing it needs a gitignored per-device marker generated
+# at registration, making the claim unforgeable rather than inferred. CTO-deferred as out of THREAT-1's
+# model; no third-device path collision exists today.
+UNDECLARED_DEVICE = "UNDECLARED-DEVICE"
+REGISTRY_UNREADABLE = "REGISTRY-UNREADABLE"
+
+
+def registered_devices() -> list[str] | None:
+    """The admitted device ids. None ONLY when the registry cannot be read -- which is a REFUSAL
+    condition, never an empty allowlist (an absent authority must not become an open door)."""
+    try:
+        lines = DEVICES.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return None
+    out = [ln.strip() for ln in lines if ln.strip() and not ln.lstrip().startswith("#")]
+    return out or None      # a registry that admits NOBODY is unreadable-equivalent, not permissive
+
+
+def claimed_device() -> str | None:
+    """The device CANDIDATE from the estate's single device mechanism. Non-authoritative.
+    None when it cannot be resolved -- which authorise_device() turns into a refusal."""
+    bash = git_bash()   # canonical resolver; a bare 'bash' Windows-resolves to the System32 WSL stub
+    if not bash:
+        return None
+    try:
+        r = subprocess.run([bash, str(WS / ".tools" / "agentbus-sqs.sh"), "device"],
+                           cwd=str(WS), capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    for line in (r.stdout or "").splitlines():
+        if line.startswith("device:"):
+            val = line.split(":", 1)[1].strip()
+            return val or None
+    return None
+
+
+def authorise_device() -> tuple[str | None, str]:
+    """(device_id, detail). device_id is None => MINTING MUST REFUSE, and `detail` names WHY.
+    Detection callers ignore the None and keep reporting; only the write path is gated."""
+    allowed = registered_devices()
+    if allowed is None:
+        return (None, f"{REGISTRY_UNREADABLE}: cannot read {DEVICES.name} -- refusing to mint. An "
+                      f"authority that cannot be read must not admit everything.")
+    claim = claimed_device()
+    if not claim or claim == "UNKNOWN":
+        return (None, f"{UNDECLARED_DEVICE}: this device did not resolve to a candidate id "
+                      f"(registry admits {allowed}). Set AGENTBUS_DEVICE explicitly; refusing to guess.")
+    if claim not in allowed:
+        return (None, f"{UNDECLARED_DEVICE}: claim '{claim}' is not in {DEVICES.name} "
+                      f"(admits {allowed}) -- refusing to mint. A device nobody declared must not "
+                      f"enter the evidence base silently.")
+    return (claim, f"device '{claim}' admitted by {DEVICES.name}")
 
 
 def safe_commit(author_serial: str, pathspec: list[str], msg: str) -> tuple[int, str]:
