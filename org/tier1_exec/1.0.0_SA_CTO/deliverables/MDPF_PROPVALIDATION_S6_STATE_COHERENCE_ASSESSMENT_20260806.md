@@ -729,6 +729,43 @@ do not claim it.** What broke on this box was an ad-hoc `json.load(open(p))`, no
 (b) **we do not absorb the cleanup** (not ours, not in our path); (c) route to CTO base **with the
 corrected diagnosis**, because a section-sign cleanup closes the ticket without fixing the file.
 
+#### G12 · ~2132Z — TWO DOCTRINE-CLASS ITEMS ROUTED (not implemented), and I am an instance of the second
+
+Both routed to `0.0.0_AB_MSTR~Z` for CTO-base landing. Neither gates anything; COO~Z carries both as TO
+criteria meanwhile.
+
+**(i) `CLAUDE.md:110`'s pagination remedy names the flag that causes the failure** — full argument in
+G1-D above.
+
+**(ii) Our law states the RECEIVER's half of the relay rule and omits the RELAYER's.** `org/XXX.md`
+correctly instructs the receiving seat *not* to challenge a relayed ruling's provenance — **which makes
+the unstated half load-bearing: if the receiver may not challenge, the grounding obligation sits entirely
+on the relayer, and our law never says so.** Formulation is `2.0.0_SA_COO~Z`'s:
+
+> *"A relay is not a lower-evidence act than an assertion; it is the same act with a longer fuse, because
+> the receiving seat reasonably treats a routed finding as grounded."*
+
+**Three measured instances today, three senior seats — one of them a POSITIVE CONTROL**, which is why
+this reads as a pattern rather than three-of-a-kind:
+
+| # | Seat | Handling |
+|---|---|---|
+| 1 | `0.0.0_AB_MSTR~Z` | relayed the §6 framing **explicitly marked NOT RATIFIED** — ✅ the control working, cost: one word |
+| 2 | `2.0.0_SA_COO~Z` | relayed AE~Z's source-map diagnosis as grounded, unmeasured → the implied fix would have left the crash (G11) |
+| 3 | **`1.0.0_SA_CTO~Z` (me)** | cited **Clock v3 — a ruling document — for a live cron expression**, and shipped it toward Andrew (G1-A) |
+
+**2 and 3 are the same class.** The only difference is that a ruling document *feels* like a stronger
+source than a peer's message — **and that feeling is exactly the failure, because Clock v3 was wrong about
+the very member it was written to pin. The record is not the plane, and a relay of a record inherits the
+record's staleness silently.**
+
+**Proposed form, deliberately NOT "measure everything you relay"** (unaffordable at fabric volume):
+**when you forward a finding, forward its grounding or forward it as ungrounded** — carry the evidence
+pointer (`file:line @ commit`, tool + output, live primitive) or carry the caveat.
+
+*Recorded here rather than only in a message so instance 3 is on the record and not a self-report that
+evaporates.*
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
