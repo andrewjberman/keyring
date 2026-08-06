@@ -287,7 +287,45 @@ is chunked with a declared denominator, or the call fails loud. A model cannot k
 |---|---|---|
 | 1 | Group B trailing window | **14 days, CONFIRMED.** Plus a new requirement: the trend section must be **VISUALLY SEPARATED** in the report — a reader must not take a weekly-moving number for a daily event. That misreading is the kind that gets acted on. |
 | 2 | D-first sequencing | **CONFIRMED, AMENDED.** The **scope correction comes first** — governance records off the resource axis — *then* D. Order is load-bearing: building the two-field split first lands a vertical field **68% empty**, which reads as a broken resolver and is how a correct design gets abandoned. |
-| 3 | Cost / egress | **DEFERRED TO MEASUREMENT, not estimated.** Tomorrow's 13:00Z fire is instrumented for real token counts (input / reasoning / content / finish_reason); the subdivision is priced from those. Same instrument replaces the pre-fire live-probe question, which Andrew declined. |
+| 3 | Cost / egress | ⛔ **BASIS VOID — SEE §7a. THIS ROW'S RULING NO LONGER HOLDS.** ~~DEFERRED TO MEASUREMENT: tomorrow's 13:00Z fire is instrumented for real token counts; the subdivision is priced from those.~~ |
+
+### 7a. AMENDMENT 2026-08-06 — PARAM 3's BASIS IS VOID. THE PARAMETER IS **UNPRICED**.
+
+*Found by `1.0.0_SA_CTO~B`. Andrew-directed amendment. This corrects MY OWN document.*
+
+**What the row claimed:** cost/egress was *"no longer an assumption"* because the 2026-08-06 13:00Z
+fire would be instrumented and would yield real token counts to price the subdivision from.
+
+**What happened:** the fire **timed out** (`KIMI_TIMEOUT`, 618s against a 300×2 ceiling). **It produced
+ZERO token counts** — the instrumentation reads `usage` from the response body, so a call that never
+returns emits nothing. **The measurement the ruling rested on does not exist.**
+
+> ⚠ **SO PARAM 3 SILENTLY REVERTED FROM A RULING TO AN ASSUMPTION, AND THIS DOCUMENT WENT ON
+> ASSERTING IT WAS SETTLED.** That is §5a's map-not-territory shape occurring **inside the document
+> that legislates against it** — the second time in two days, the first being the retracted
+> "first durable record" claim. **A ruling whose basis is destroyed does not degrade to a weaker
+> ruling; it degrades to an OPEN QUESTION, and it does so SILENTLY unless someone re-reads the basis.**
+
+**STATUS: UNPRICED.** Not estimated, not deferred-to-a-scheduled-event, not carried at a lower
+confidence. **Open.**
+
+**NEW BASIS — price from the FIRST SUBDIVIDED RUN** (`CTO~B`'s recommendation, adopted):
+
+- The subdivided architecture is **the thing being priced**. Pricing it from a monolith run would
+  measure an architecture scheduled for deletion — **the same error as the vetoed bridge, one level
+  up**: a correct measurement aimed at something we are removing.
+- **Do NOT re-run the monolith to obtain counts.** That is the reflex this whole day argues against.
+- The first subdivided run yields per-call counts, which is the grain the pricing question actually
+  needs (cost scales with N calls, not with one).
+
+**THE ONE REAL NUMBER WE DO HOLD**, from the Andrew-authorised probe (2026-08-06 ~13:55Z, same
+endpoint / model / budget / ceiling, 31-char prompt): **returned 3.4s · prompt_tokens 92 ·
+completion_tokens 51 · reasoning_tokens 35.** It is a **per-call floor and a reasoning-overhead
+datum (~69% of completion on a trivial task)** — a constraint on per-call sizing. **It is NOT a
+price**, and a single point with a large constant term cannot be extrapolated to a rate.
+
+**Params 1 and 2 are UNAFFECTED** — the 14-day window and the scope-correction-first sequencing were
+ruled on their own merits and neither depended on the token measurement.
 
 **Also ruled:** the corpus budget is **INVERTED** — the model gets the full corpus and a *summary* of
 resources, not the reverse. The git half is deterministic and already printed in full in the report
