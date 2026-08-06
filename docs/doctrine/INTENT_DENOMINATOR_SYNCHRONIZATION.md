@@ -380,6 +380,21 @@ consulted one repeatedly where it told them WHICH PREDICATE TO RUN.*
 > its own evidence is doing the exact thing it legislates against.** Treat the section as
 > well-founded and under-measured, and say so when citing it.
 
+**5. THE EXECUTABILITY TEST — apply this to any control before you propose it.**
+*(`2.0.0_SA_COO`, derived by testing three candidate conventions against their own live window.)*
+
+> # CAN THE SEAT THAT NEEDS IT EXECUTE IT ALONE — without anyone else's compliance?
+> **If not, it reads well and dies on contact with a window.**
+
+Only the self-executable candidate survived COO's test; **the other two were authoring or review
+disciplines that a router would have had to DEMAND of someone else's artifact mid-window** — and a
+demand on another seat's behaviour is not a control, it is a hope with a procedure attached.
+
+**This is the only rule here that tells an AUTHOR, in advance, whether the control they are about to
+write will ever be used.** A doctrine that legislates controls without a test for executability keeps
+minting the unexecutable kind — which then reads as coverage. Pair it with §4: **a control must be
+executable by its own beneficiary, AND it must be able to fail.**
+
 > ⚠ **THE classify-BEFORE-remedy CLAUSE IS RETIRED, FALSIFIED BY ITS OWN AUTHOR'S SEAT.**
 > `3.0.0_SA_CVO~B` tested it on four of their own findings: **3 of 4 were unclassifiable**, and on the
 > best fit it would have **MISDIRECTED THE REMEDY** (symptom = a summary line; root cause = discarded
