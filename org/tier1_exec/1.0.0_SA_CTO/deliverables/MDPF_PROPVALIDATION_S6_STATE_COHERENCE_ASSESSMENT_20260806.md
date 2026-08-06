@@ -822,6 +822,70 @@ improvement in review** — a hardening change and a silent-degradation change l
 adds a fallback *fails* rather than reads well. Same move as `calendar_source` and
 outcome-not-intervention: **make the property assert itself.**
 
+#### G13-A · EXTENDED ~2145Z — a SECOND roster reader, opposite failure mode, and my G13 test was under-scoped
+
+Routed by COO~Z with provenance marked (DS~Z measured 214246Z). **I read `:869-887` myself.** Citation
+accurate. `build_cottonwood_mdpf_slice.py` `_cot_window()` is an **independent** roster reader in the
+**assets** tree that swallows exceptions and **`return 3`** — *"roster-declared value observed in every
+live build."* Its sibling's docstring forbids exactly this: *"it never falls back to a hardcoded number
+(CTO ruling 230319Z: a private copy of a roster value is the sect-III-e defect verbatim)."*
+**The line cites my ruling while doing what my ruling forbids.**
+
+> **⚠ MY G13 TEST WAS UNDER-SCOPED, and this is mine by DESIGN, not by sourcing.** I built a control
+> against "a property that lives only in memory" and scoped it to the resolver we happened to be
+> discussing. **A test covering only `_load_partner_roster()` passes today while the defect sits one tree
+> over** — the control-that-cannot-fail shape arriving *inside* the control built against it. **Seventh
+> instance today.** Extended: **one test per reader**, each asserting it raises when no candidate resolves.
+
+**⚠ THE PROPOSED REMEDY IS INCOMPLETE — FOUR paths reach `return 3`, and removing the bare `except`
+closes only two:**
+
+| # | Path | Closed by flat vendoring? |
+|---|---|---|
+| 1 | neither candidate exists → loop completes | ✅ |
+| 2 | candidate exists, unreadable → `except: pass` | ✅ |
+| **3** | **candidate exists, reads fine, KEY ABSENT → `w is None` → NO EXCEPTION AT ALL** | **❌ NO** |
+| 4 | `int(w)` raises on a non-numeric | ✅ |
+
+**Path 3 breaks the packaging argument.** The `or {}` guards at `:879-880` are engineered *specifically*
+so a missing key does not raise — **the fail-green is deliberate, not accidental.** So under FLAT, where
+"the hardcode never fires," a roster **schema** change (key renamed, cottonwood row dropped) still lands
+on the constant, silently, with the file sitting right there being read successfully. **The function must
+fail closed on all four paths, independent of layout.**
+
+> **THE JUSTIFICATION COMMENT IS UNFALSIFIABLE BY ITS OWN MECHANISM** — a better argument than "the ruling
+> forbids it," and it generalises. The roster declares 3; the fallback returns 3; **the output is identical
+> either way.** So *"observed in every live build"* would remain true **if the roster read had been broken
+> the entire time.** The evidence cited to justify the hardcode structurally cannot detect the hardcode
+> firing — the orphan-watcher shape, embedded in a code comment as a rationale.
+
+**UNMEASURED AND MUST BE MEASURED BEFORE P1-1: is `return 3` firing in production TODAY?** Nobody knows,
+because `_load_partner_roster()` records `_resolved_from` and **`_cot_window()` records nothing.** If the
+assets-tree script's runner directory does not carry the roster, the cottonwood carry window is **already**
+a constant rather than declared data — **a live instance, not a latent one.** Cheap to check; do not
+assume latent. **Remedy, same move as `calendar_source()`: `_cot_window()` must record which candidate
+resolved it**, as its sibling already does — then the artifact discriminates and the question never needs
+asking again.
+
+**FLAT — RATIFIED, and the meta-point is the ruling.** DS~Z mapped **all** `__file__`-relative loads
+across **14 modules** (positive-controlled) → 5 rows; **no layout works without code changes.** FLAT is
+decisive not for convenience but because **it keeps the roster ONE PHYSICAL FILE**, which is what 230319Z
+protects: **under NON-FLAT, row 2 forces a choice between a silent hardcode and a duplicate copy — and
+230319Z forbids both. A layout that leaves only forbidden options is not a layout.** Rows 4/5 are
+`__file__`-relative escapes needing rewrite regardless (row 4 exercised → `/config`, escaping the task
+root), both already in P1-1. **Row 3 — `mdpf_model_registry.json`, a third adjacency-dependent config —
+surfaced only because they mapped ALL loads rather than the two under discussion: evidence for the
+denominator discipline, not an afterthought.**
+
+**RULED, in these words for P1-2: the layout choice is a CORRECTNESS decision, not a build-convenience
+one** — recorded as convenience, it is one refactor from being changed by someone optimising a zip.
+
+**Behavioural change, stated plainly so review does not soften it:** silent-degrade → refuse-the-build is
+real and correct. **If the roster is being read successfully the change is a no-op**; it bites only when
+something is already wrong, and then a refused build is the wanted outcome. **The risk is a reviewer
+seeing "removes a fallback" and reading it as a regression** — the mirror of DS~Z's point, and why the
+test matters more than the instruction.
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
