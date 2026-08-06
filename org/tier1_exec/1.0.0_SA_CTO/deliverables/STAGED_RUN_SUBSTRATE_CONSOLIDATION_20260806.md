@@ -132,3 +132,86 @@ is the load-bearing half of this consolidation; the code is the easy half.**
    output contract. Not mine alone to decide.
 3. Does the deck orchestrator ADOPT the additions, or only donate the vocabulary? Deck generation is
    a live product with its own owner; **this consolidation does not touch it without that owner.**
+
+---
+
+## 9. CORRECTED 2026-08-06 BY CVO'S VALIDATION PASS — merge (1) was wrong, twice
+
+I asked CVO to attack the gate+resume collapse as the one I was least certain of, and to say if the
+simplification deleted something they had needed AT RUNTIME and never written down. **Both happened.**
+Merges (2) and (3) hold unchanged. Merge (1) does not. The corrections are theirs, grounded at source
+in their own rig rather than reasoned from this design.
+
+### (A) `should_run` MUST NOT RETURN A BOOLEAN — it returns the REASON
+
+*"Runs iff deps complete AND self not complete"* collapses two DID-NOT-RUN outcomes that mean
+**opposite** things:
+
+| condition | meaning | how it must read |
+|---|---|---|
+| self complete | healthy cache hit | **silent, success** |
+| deps not complete | blocked | **LOUD, error** |
+
+A boolean returns `False` for both.
+
+> **THAT IS `failure != zero` REBUILT INSIDE THE MERGE THAT FIXES `failure != zero`.**
+
+The §3(2) status enum was already right — `skipped_deps_unmet` and `not_run` are distinct members.
+**The ENUM was correct and the PREDICATE was under-typed.** Gate and resume are one CONDITION read
+two ways, as §2 said; **they are not one ANSWER.** `should_run` returns a status member, never a bool.
+
+### (B) THE PREDICATE IS MISSING DEPENDENCY VINTAGE — the real defect
+
+CVO grounded this in their own code: `Run.complete()` tests `status == COMPLETE` and
+`os.path.exists(out.json)`; `Run.gate()` tests that every dep is `complete()`. **Neither reads a
+vintage, a hash, or a timestamp.**
+
+Recompute step 0, and step 2's cached output is derived from a **superseded input** — yet `self
+complete` holds and `deps complete` holds. **The predicate says SKIP and serves downstream output
+built from evidence that no longer exists. Silently, looking exactly like a cache hit.**
+
+Their rig never hit it only because `invalidate_from(n)` bluntly kills the whole numbered suffix —
+**the safety lives in a LINEAR-ORDERING assumption, not in the predicate.** The vertical fan-out is a
+general dependency graph. **That assumption is gone the moment this design is used for what it is
+being built for.**
+
+### (C) MY §8 Q1 LEAN WAS WRONG — on evidence I could not have produced
+
+I leaned *"no FORCE path; deleting the run dir is sufficient."* CVO's measurement, across three real
+runs:
+
+```
+kimi_run          HEAD 7bc1efdf31    canon 386
+kimi_run_clean    HEAD b2542b264a    canon   0     <- concurrent commit degraded the resolver hop
+kimi_run_final    HEAD 26d1e4eb2f    canon 386
+```
+
+**Three runs, three HEADs, one EMPTY canon universe.** Step 0 reads a MOVING TREE, so **re-running it
+is not idempotent** — *"delete the run dir and re-run"* **changes the EVIDENCE, not merely the cost.**
+They used `--from 1` repeatedly for exactly this reason and had never written down why.
+
+### THE FIX — one field closes (B) and (C), and rescues Q1 for a different reason
+
+**PIN THE INPUT VINTAGE AT RUN START.** Step 0 records the tree HEAD plus each stratum's own source
+vintage into `run_bundle.json`; **every later step runs against that pin, not the live tree.**
+
+- **(C) closes:** step 0 becomes idempotent *within a run* by construction. A moving tree can no
+  longer change a resumed run's evidence underneath it.
+- **(B) closes:** the dependency vintage the predicate needs already exists — it *is* the pin.
+  `complete(id)` becomes `status == ok AND output exists AND recorded_pin == run_pin`. **A stale
+  cache entry becomes unrepresentable rather than merely discouraged.**
+- **Q1 becomes correct again, for a reason I did not have:** no FORCE path is needed **because a
+  changed input yields a different pin, which invalidates by construction.** My lean was right and my
+  justification was wrong — **and the wrong justification would have shipped a cache that serves
+  superseded evidence.**
+
+**This adds ONE FIELD, not a mechanism.** §6 holds: the substrate is still the four pieces, with the
+predicate correctly typed and completeness made vintage-aware.
+
+### What this episode is, recorded
+
+The design was validated by the seat that had **run** the thing, and it found two defects no amount of
+reading would surface — one of them a measurement that exists only because they executed three times
+against a live tree. **The `--from 1` habit was load-bearing knowledge that had never been written
+down**, which is exactly the class normally lost when a proving rig is discarded for carrying a bad
+taxonomy.
