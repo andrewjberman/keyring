@@ -27,7 +27,7 @@
     "3.0",
     "0.4"
   ],
-  "pipeline": "globgrph (Nessie/Iceberg) + comp-surface-check + pipescript",
+  "pipeline": "globgrph (Nessie/Iceberg). CORRECTED 2026-08-06 (0.8.0_AE_CloudComp, CTO retired-tool citation-integrity brief): this field read 'globgrph (Nessie/Iceberg) + comp-surface-check + pipescript' -- a machine-readable registry value composed of two names that no longer resolve. comp-surface-check RETIRED 2026-08-06 (Andrew-direct, executable + all consumers removed @1a962886be); bare pipescript RETIRED 2026-07-30 (Andrew-direct rename to comp-estate; the bare name is a prohibited rc=2 stub). Recorded, NOT re-planned -- the project stays suspended-indefinite per suspend_directive.",
   "thread_counter": 0,
   "threads": [],
   "last_drive_touch": "2026-07-17T23:30Z",
