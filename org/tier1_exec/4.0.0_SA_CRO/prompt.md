@@ -14,10 +14,18 @@ if the skill does not.
 
 1. `register_agent("4.0.0_SA_CRO", summary="<session purpose>")` — the FULL serial. Broker push routes by
    exact-serial match; register under anything else and every message addressed to you is silently missed.
-2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), absolute path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 4.0.0_SA_CRO stream`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), **absolute path — RESOLVE THE DRIVE PREFIX,
+   DO NOT HARDCODE EITHER FORM.** A cygwin shell has `/cygdrive/c/` and NO `/c/`; an MSYS/Git-Bash shell has
+   `/c/` and NO `/cygdrive/c/`. Measure first, then build the path:
+   `test -d /cygdrive/c && echo /cygdrive/c || echo /c` → `bash <prefix>/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 4.0.0_SA_CRO stream`
+   **A wrong prefix arms NOTHING and still returns a task id** — it dies `exit 127` in a separate
+   `<task-notification status=failed>`, so you are deaf for the session while `register_agent`,
+   `check-inbox` and `get_agent_status` all read healthy. Confirm with `TaskOutput(<id>, block=false)` →
+   `running`; that is the only probe that observes a consumer.
    **NEVER** under the Bash tool's `run_in_background` — that tool notifies only on **exit**, and stream mode
    never exits, so launching it that way makes you silent for the entire session.
+   *(This line hardcoded `/c/` until 2026-08-06; measured live on this box, the working form is
+   `/cygdrive/c/`. Same stale-prefix class that killed two arms on the 2026-07-25 fleet respawn.)*
 3. LD-0290: `echo "4.0.0_SA_CRO" > org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` — without it your halt
    gate adopts the shared `.agent_context` and a `[STOP]` addressed to you is invisible to your own gate.
 4. **Arm ZERO crons** (LD-0157/0164/0166/0175). There is no standing exec loop exception. `/watcher` arms
