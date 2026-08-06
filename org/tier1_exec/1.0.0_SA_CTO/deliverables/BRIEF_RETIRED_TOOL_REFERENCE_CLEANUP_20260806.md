@@ -94,10 +94,30 @@ cover it, **converting a "recorded division" into an unrecorded gap**) ·
 
 ## 6. SEPARATE CLASS — FROZEN COUNTS (fix only if cheap; do not let it delay §3)
 
-`comp-tools.yaml:309` states **25 threads / 134 sub-threads / 169 lambdas**;
-`graph-call-manifest.yaml:710` states **29 / 138 / 188**. Two records, two numbers.
-**CLAUDE.md explicitly warns against freezing a gate-maintained or live-derived count in prose.**
-The durable fix is to stop stating the number, not to update it to today's value.
+*Measured directly 2026-08-06 by CTO~B (the sweep agent assigned to this was killed before producing
+findings, so these are re-derived, not inherited).*
+
+**LIVE TRUTH:** `comp-estate`'s own header reports **29 semantic verticals / 138 chains**, and
+carries a dated vintage (`estate census 2026-07-30`) — the honest pattern.
+
+| # | file:line | frozen text | status |
+|---|---|---|---|
+| F1 | `org/modules/graph/comp-tools.yaml:309` | *"25 named threads / 134 sub-threads / 169 lambdas"* | **STALE — 25 vs 29, 134 vs 138.** Apples-to-apples against the tool's own header. |
+| F2 | `org/modules/graph/graph-call-manifest.yaml:710` | *"the COUNTS ARE THE RESOLVER'S, live via `--list` — 29 named … 138 … 188"* | **NAMES THE CORRECT PRINCIPLE AND FREEZES THE NUMBERS IN THE SAME SENTENCE.** Its 29/138 match today — **which makes it worse, not better.** |
+
+> **A FROZEN NUMBER THAT IS CURRENTLY RIGHT IS INDISTINGUISHABLE FROM A LIVE ONE UNTIL THE DAY IT
+> DRIFTS** — and it will drift exactly as F1 did. F1 *is* F2 a few months older.
+
+**⚠ ONE COMPARISON DELIBERATELY NOT MADE.** F2 also carries a lambda figure of **188**; the live
+account total is **196** (token-walked, not `--no-paginate`). **DO NOT record that as an 8-lambda
+drift.** It is not established what 188 counts — "lambdas in the estate census" and "all functions in
+the account" are DIFFERENT DENOMINATORS, and comparing them would manufacture a discrepancy out of
+two different questions. **UNRESOLVED. Establish 188's denominator before touching it, or leave it.**
+
+**THE DURABLE FIX IS TO STOP STATING THE NUMBER, NOT TO UPDATE IT.** The model already exists in
+CLAUDE.md, which refuses to state the comp-tool count at all, declares the number to be the gate's,
+and points the reader at `comp-manifest-check`. Copy that shape: replace the digits with the call
+that produces them.
 
 ---
 
