@@ -18,6 +18,13 @@ NOT `ZERO`.**
 Read-reader telemetry **was never enabled** on any bucket holding an MDPF deletion candidate. An
 observation that was never possible is not a zero, and it cannot be created retroactively.
 
+**SCOPE, POST-AMENDMENT:** DS~Z's census (@645a8759e) removed rows 6, 7 and 8 from the deletion set
+entirely — all three have source-visible readers, and row 6 is required to calculate a PORT row.
+**This declaration therefore carries real weight on ROWS 1–5 only.** On rows 6–8 it is moot in the
+useful direction: nothing is being deleted, so unobservability cannot cause a wrong deletion. The rows
+are retained rather than struck, because a candidate that was evaluated and cleared is evidence, and
+a row deleted after it came back clean is indistinguishable from one never examined.
+
 ---
 
 ## 1. Criterion 1 — the telemetry question, answered as a measurement
@@ -125,28 +132,66 @@ compensate for each other anywhere in this estate: where CloudTrail is blind, no
 
 ## 3. Criteria 2, 5, 6 — one row per candidate, own instruments, own window
 
+> ### AMENDMENT 2026-08-06 — DS~Z prefix resolution @645a8759e
+>
+> DS~Z resolved the prefixes I had left unresolved and **the NOT-OBSERVABLE verdict HOLDS on every
+> row — no row required re-measurement.** The re-open condition I registered (rows 6/7 living in
+> `opal-data-bd`/`opal-data-inf`, the only two buckets with read coverage) **did NOT fire**: every
+> candidate resolves to `opal-data-mdpf` or `opal-data-assets`. Recorded as a measured negative
+> result, which is what I asked them for.
+>
+> **Two changes that DO matter:**
+>
+> **(a) ROWS 6, 7, 8 ARE NO LONGER DELETION CANDIDATES.** DS~Z found source-visible readers for all
+> three. Row 6 (`wsb`) is read by `mdpf_aggregate_aua.py:239-268` and is REQUIRED to calculate a PORT
+> row. Row 7 (`wsd`) is **fail-green**: retiring it does not error — it silently reverts `identity_2`
+> from a MEASUREMENT to an ESTIMATE the code's own docstring records as running ~1–3% high
+> (`build_etf_decomposition:420-427`, enabled by `_empty_feeder():217` returning a correctly-columned
+> empty frame "so every downstream op is total" — **absence is silent BY DESIGN**). Row 8: 5 of 5
+> feeder artifacts resolve to a reader and a writer, 0 unresolved.
+> **Consequence for this document: the external question on rows 6–8 is moot in the useful direction
+> — they are not being deleted, so unobservability of external readers cannot cause a wrong deletion.
+> ROWS 1–5 ARE WHERE THIS DECLARATION STILL CARRIES WEIGHT.**
+>
+> **(b) A BUCKET DISCREPANCY THAT LANDS ON MY OWN ROW 5.** DS~Z found
+> `build_mdpf_etf_ownership_timeseries.py` contradicting itself: `:21` docstring says
+> `s3://opal-data-portal-v2/platinum/mdpf/etf_ownership_timeseries/{ticker}.json`, `:75` constant says
+> `PLATINUM_BUCKET = "opal-data-assets"`. **The constant executes** — corroborated live by the Aug-6
+> hard-stop writing `s3://opal-data-assets/platinum/mdpf/etf_ownership_timeseries/DIVZ.json` (01 s.5).
+> **I must apply that to myself:** I attributed row 5 to `opal-data-portal-v2` by INFERENCE from
+> CLAUDE.md Rule 17b (platinum serves from `opal-data-portal-v2/platinum/`), not from a measured
+> constant. Given `platinum/mdpf/` paths in this estate demonstrably resolve to `opal-data-assets`,
+> **row 5's bucket attribution is UNVERIFIED and may be wrong.**
+> **The verdict is unaffected — I measured BOTH buckets** (`opal-data-portal-v2` and
+> `opal-data-assets`) in §1.2 and §2, and neither has read coverage. **But I got the right answer off
+> a premise I had not measured, and that is worth saying out loud rather than letting the correct
+> conclusion launder the unverified input.** DS~Z's framing is exact: *here we got lucky; the next row
+> may not.*
+
 Every candidate gets its own row. No group verdict.
 
 | # | Deletion candidate | Bucket | CT read data events | CT write trail | S3 access log | **Row verdict** | Window |
 |---|---|---|---|---|---|---|---|
-| 1 | OWNTS output 1 | `opal-data-mdpf` | not selected | n/a (writes-only, bucket not listed) | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 2 | OWNTS output 2 | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 3 | OWNTS output 3 | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 4 | OWNTS output 4 | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 5 | `platinum/mdpf/aggregate_aua_timeseries.json` (bare product-level object) | `opal-data-portal-v2` | not selected | **selector names `platinum/firm/` but `readOnly=false` and this bucket is NOT listed — contributes nothing** | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 6 | `wsb-49f-model-aua-daily` outputs | prefix unresolved; candidate buckets uncovered | not selected | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 7 | `wsd-49f-partner-held-etf-daily` outputs | prefix unresolved; candidate buckets uncovered | not selected | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
-| 8 | `s3://opal-data-mdpf/mdpf/feeds/*` | `opal-data-mdpf` | **exercised: `comp-whoread` rc=1, 0 object-level events** | n/a | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
+| 1–4 | OWNTS — `platinum/mdpf/etf_ownership_timeseries/{ticker}.json`, per-ticker (`build_mdpf_etf_ownership_timeseries.py:77`) | **`opal-data-assets`** (`:75` constant; `:21` docstring says `opal-data-portal-v2` and is STALE — see Amendment (b)) | not selected | n/a (writes-only; bucket not listed) | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
+| 5 | `platinum/mdpf/aggregate_aua_timeseries.json` (bare product-level object) | **UNVERIFIED** — attributed `opal-data-portal-v2` by inference from Rule 17b; may be `opal-data-assets`. **Both measured, neither covered** | not selected | **selector names `platinum/firm/` but `readOnly=false` and neither candidate bucket is listed — contributes nothing** | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
+| 6 | `wsb-49f-model-aua-daily` → `mdpf/feeds/model_aua_positions/49financial/{date}.parquet` (writer `wsb_49f_smartx_model_aua.py:247`) | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** — but **NO LONGER A DELETION CANDIDATE** (source-visible reader `mdpf_aggregate_aua.py:239-268`; required to calculate a PORT row) | 2026-05-11→08-06 |
+| 7 | `wsd-49f-partner-held-etf-daily` → `mdpf/feeds/partner_held_etf/49financial/{date}.parquet` (writer `wsd_partner_held_etf.py:42`, put `:194`) | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** — but **NO LONGER A DELETION CANDIDATE**; retirement is **FAIL-GREEN** (silently downgrades `identity_2` measurement→estimate, ~1–3% high) | 2026-05-11→08-06 |
+| 8 | `s3://opal-data-mdpf/mdpf/feeds/*` | `opal-data-mdpf` | **exercised: `comp-whoread` rc=1, 0 object-level events** | n/a | not enabled | **NOT-OBSERVABLE** — but **NO LONGER A DELETION CANDIDATE** (5 of 5 feeder artifacts resolve to reader + writer, 0 unresolved) | 2026-05-11→08-06 |
 
 **Row 8 differs from its neighbours** and the difference is shown: it is the only candidate where the
 who-DID-read instrument was actually *run* against the prefix and returned a fail-closed refusal,
 rather than being resolved from selector configuration alone. Rows 1–7 rest on 1.2/1.3 + §1.5.
 
-**Rows 6 and 7 carry an additional bound:** I did not resolve their exact output prefixes. Their
-verdict is NOT-OBSERVABLE on the strength of §1.5 (no covered bucket exists among the candidates), not
-on a prefix-level measurement. If a future reader shows these outputs live in `opal-data-bd` or
-`opal-data-inf`, **those rows must be re-measured** — those two buckets DO have read coverage and a
-genuine `comp-whoread` answer would then be available. That is a live re-open condition, not a caveat.
+**RE-OPEN CONDITION — REGISTERED, THEN RESOLVED, AND IT DID NOT FIRE.** I originally left rows 1–4,
+6, 7 with unresolved prefixes and registered an explicit re-open: *if those outputs live in
+`opal-data-bd` or `opal-data-inf`, those rows MUST be re-measured*, because those two buckets DO have
+read coverage and a genuine `comp-whoread` answer would then exist. DS~Z resolved every prefix
+@645a8759e: **all resolve to `opal-data-mdpf` or `opal-data-assets`; none to `opal-data-bd` or
+`opal-data-inf`.** The condition did not fire and no row required re-measurement.
+
+**This is recorded as a discharged condition rather than deleted.** A re-open that was registered,
+tested, and cleared is evidence; a re-open silently removed once it came back clean is
+indistinguishable from one that was never written.
 
 ---
 
@@ -229,6 +274,14 @@ An instrument list without a blind-spot column reads as coverage.
 | 5 | `comp-grep` over `docs/` | Committed documentation text, with a printed denominator | Uncommitted docs, `org/` records, Slack/Teams, email, wikis, personal notes, and any runbook never written down. **3 of 1034 in-scope files were not scanned.** |
 | 6 | `s3api get-bucket-logging` | Whether server access logging is on **now** | Whether it was ever on before. Same current-state blindness as #1. |
 | 7 | *(deliberately unused)* `comp-blast` / graph edges | — | **Excluded as evidence per TO rule.** Measured false zero at `c801ec9d5`: `comp-blast mdpf_aggregate_aua` reported "No downstream consumers found" against ledger evidence of **four** real consumers. **No conclusion in this document rests on a graph edge count.** |
+| 8 | *(deliberately unused)* `comp-pipescript consumers` | — | **Excluded, and DS~Z measured WHY today.** `comp-pipescript consumers wsb_49f_smartx_model_aua --pipeline mdpf` → *"no downstream pipeline consumers (terminal or portal-only)"* — **wrong**, and the mechanism is known: neither writer nor reader contains the literal composite key; both compose it by f-string (`prefix = f"{FEEDER_PREFIX}/{artifact}/"`, artifact iterating `FEEDER_COLUMNS`). Positive-controlled: literal `mdpf/feeds/model_aua_positions` in the reader = **0**; `FEEDER_PREFIX` in the same file via the same command = **3**. **The retrieval works; the edge is structurally unextractable.** Same family as CLAUDE.md 22a's `boto3.resource()` two-hop blindness. |
+
+> **A GENERALISATION WORTH MORE THAN EITHER INSTANCE.** Rows 7 and 8 are not two flaky tools. For this
+> pipeline, **a zero-consumer graph result is not weak evidence — it is the EXPECTED output for an
+> entire class of real dependency** (runtime-composed keys, which have no literal for a static
+> extractor to find). An agent acting on DS~Z's zero would have retired a producer feeding a PORT row.
+> **Treat any graph-derived zero on this pipeline as uninformative by default, not as a weak signal to
+> be weighed.**
 
 **My own blind spot, stated plainly:** I resolved candidate coverage from *selector configuration*
 plus one exercised `comp-whoread` call. I did not run `comp-whoread` against all eight rows
