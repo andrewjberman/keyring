@@ -95,18 +95,31 @@ git merge --no-ff origin/DEV \
 # Parity gate — MUST be empty; non-empty = something is wrong with the merge
 git diff origin/DEV HEAD   # empty = OK; any output = ABORT
 
-# SEV1 HAND-CHECK ON THE MERGED TREE (COO adjudication 2026-08-04T054422Z, standing promote step):
-# when the promote touches model-portfolio / benchmark / ADVI surfaces, run comp-surface-check BY
-# HAND against the real merged result BEFORE the push and READ the output — silence is not a pass
-# (Rule 20). Extract the ack from the ACTUAL merge range with the CI's own pattern so the check
-# observes the same composition the backstop parses:
-#   ACK="$(git log --format=%B origin/PROD..HEAD | sed -n 's/^[[:space:]]*SURFACE_ACK:[[:space:]]*//p' | head -1)"
-#   SURFACE_ACK="$ACK" <workspace>/.tools/comp-surface-check check --mode blocking \
-#     --file portal/<each changed file>
-# Cite the verdict line (e.g. "SEV1 ACKNOWLEDGED ... Proceeding., rc=0") in the promote record.
-# This is the observed composition at the last reversible moment — the CI gate runs on DEV pushes
-# only, so no CI run ever evaluates the SEV1 files together with the ack for the PROD range.
-# First exercised: canonical-map promote 2d33ea2c, 2026-08-04 (ledger 20260804T0558Z).
+# SEV1 HAND-CHECK ON THE MERGED TREE — STRUCK. THE TOOL IS RETIRED AND NOTHING REPLACES IT.
+# retired-tombstone: comp-surface-check
+#   ^ marks the mentions below as a DOCUMENTED RETIREMENT, not a route. comp-manifest-check's
+#     retired-alias check text-matches the name and cannot tell the two apart; without this it
+#     would force the explanation to be deleted to satisfy the gate. Exemption is COUNTED and
+#     REPORTED by that check, never silent.
+# A standing step lived here (COO adjudication 2026-08-04T054422Z, first exercised on the
+# canonical-map promote 2d33ea2c) telling you to run `.tools/comp-surface-check check --mode
+# blocking` by hand against the merged tree whenever the promote touched model-portfolio /
+# benchmark / ADVI surfaces. comp-surface-check was RETIRED 2026-08-06 (Andrew-direct, verbatim:
+# "I want comp-surface-check retired. i do not like that tool.") — the binary is gone from disk
+# and off PATH, so the instruction was unrunnable. It is struck rather than left standing: an
+# operator following it mid-promote gets `command not found` under a step whose own text said
+# "silence is not a pass."
+#
+# ⚠ NO GUARD REPLACES IT. The model-portfolio / benchmark / ADVI surfaces now carry NO automated
+# commit-time check — CLAUDE.md Rule 20 records that as the ACCEPTED CONSEQUENCE of the
+# retirement, not as a gap to be worked around or re-filled on your own initiative. The promote
+# proceeds without it. Building a replacement guard is an Andrew call (Rule 20 + the standing
+# no-unrequested-gates rule), not a promote-time decision.
+#
+# THE PROMOTE SEQUENCE IS OTHERWISE UNCHANGED — nothing renumbered, no step reordered. Struck
+# 2026-08-06 by 0.8.0_AE_CloudComp under 1.0.0_SA_CTO~B routing 20260806T213335Z, after an
+# estate-wide retired-alias sweep found this live citation of a deleted binary. A change to the
+# promote SEQUENCE itself is the DT lane's call, not this strike's.
 
 git push origin PROD       # plain push; no MSYS_NO_PATHCONV; VALGATE + tsc gate runs here
 ```
