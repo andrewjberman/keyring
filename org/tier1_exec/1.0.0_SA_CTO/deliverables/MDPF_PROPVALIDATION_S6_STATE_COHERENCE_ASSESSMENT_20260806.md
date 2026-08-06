@@ -389,6 +389,57 @@ licence to sweep the estate.*
 **No gate.** An architectural binding, not an approval step — the TO names the binding, the tie-out
 evidence discharges it.
 
+#### G7-C · Condition 1 DISCHARGED + VALIDATED ~2045Z — the 2027 divergence is now MEASURED
+
+`0.4.0_DS_ClientPlatform~Z` exercised the tie-out; I re-derived the arithmetic before accepting it
+(RAVC step 4). **Condition 1 closed.**
+
+| Test | Denominator | Result |
+|---|---|---|
+| In-window equality 2024-01-01..2026-12-31 | **1096 dates** | **0 disagreements.** In-window sets 31/31, symmetric difference empty; both drop 2025-01-09 (Carter) and 2026-07-03. |
+| Positive falsifier | same 1096 | Removed 2026-07-03 from the shim → **1 disagreement, localized to the mutated date.** The tie is a result, not a tautology. |
+| 2027 | **365 dates** | **10 disagreements — every 2027 NYSE holiday, shim=trading-day / lib=holiday.** |
+
+Independently re-derived: 366+365+365 = 1096 ✓; 10+11+10 = 31 in-window ✓; totals 41−31 = 10 = the 2027
+list ✓; all ten 2027 observance dates check against the rules (Juneteenth Sat→Fri 06-18, Jul 4 Sun→Mon
+07-05, Christmas Sat→Fri 12-24, Good Friday 03-26 vs Easter 03-28) ✓.
+
+**⚠ RECORD UPGRADED: the 2027 exposure in G7 above was source-derived. It is now MEASURED**, ten
+enumerated dates.
+
+**DS~Z's control, and why it is now a permanent requirement.** They forced `_USE_PMC=False` on both
+modules before comparing — because with pmc importable **both defer to pmc and agree trivially**, testing
+pmc rather than the fallback sets the ruling turns on. *The naive version of this test passes for the
+wrong reason on any machine where pmc is installed.* **RULED: the fallback-vs-fallback comparison stays a
+pinned test with `_USE_PMC=False` forced.** Once Condition 2 puts pmc in the layer, the naive test passes
+everywhere and the 2027 divergence goes invisible again — on a horizon that has not moved. *A passing
+assertion never made to fail has not been tested.*
+
+#### G7-D · RULING — the QA-build backend asymmetry (H15)
+
+**Measured incidental:** `pandas_market_calendars` is **not importable on site Z** — the fallback was
+already live on a clean import (`lib` → `NYSE/hardcoded-fallback-2024-2027`, shim →
+`...-2024-2026`). Consequence for `03` Phase 5 step 2: a QA build run from site Z **does not use the
+incumbent's calendar backend.** In-window the numbers still tie (Test 1), so only the
+`trading_day_calendar` provenance string differs.
+
+> **⚠ AND THAT IS THE TRAP: doc 02 instructs the operator to compare "after stripping only explicitly
+> volatile process/provenance fields." `trading_day_calendar` IS a provenance field by name and shape —
+> so the rule points directly at discarding the ONE signal that discriminates the two runtimes.
+> The collision is STRUCTURAL, not accidental**, and an executor following doc 02 exactly deletes the
+> oracle and reports a clean tie. Third instance of one shape today, after the fail-green import check
+> and the trivially-passing equality test.
+
+**Ruled, all four:** (1) **install `pandas_market_calendars<5` in any environment producing a
+QA-comparison artifact** — production will carry it via the Condition-2 layer, so a fallback QA build
+validates a configuration that will never ship. (2) **`trading_day_calendar` goes on an EXPLICIT
+never-strip list in the comparison spec** — named in the spec, not remembered by the operator; *care will
+not survive doc 02's own instruction, an explicit list will.* **No rename — H6 binds.** (3) the
+**build-time `calendar_source()` assertion stands independent of the artifact diff**, so no stripping
+decision can silently disarm it. (4) DS~Z's forced-fallback test is **pinned**, per G7-C.
+
+Nothing here is a gate — assertions and spec content inside existing scope.
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
@@ -418,17 +469,25 @@ reading** — it averages five different kinds of closure and silently upgrades 
 class:
 
 ```text
-Class A   (durable measurement, ours):        4   H3*, H5, H8, H14
-                                                 *H3 admits NO graph-edge-count evidence (G8)
-Class A'  (vendor sample, provisional):       2   H1, H2          <- valid for days probed ONLY
-Class A'' (sovereign condition, ORDERING-     1   H4-condition    <- evidence destroyed by the act
-           CRITICAL: capture before terminate)                       it authorizes
-Class B   (sovereign word, still open):       1   H13             <- NOT empty; S3 deletion unauthorized
-Class C   (bounded negative, limitation):     2   H10, H8-fallback <- NEVER reported as "proved"
-Class D   (standing constraints, never close):5   H6, H7, H9, H11, H12
+OPEN
+  Class A   (durable measurement, ours):        3   H3*, H5, H8
+                                                    *H3 admits NO graph-edge-count evidence (G8)
+  Class A'  (vendor sample, provisional):       2   H1, H2          <- valid for days probed ONLY
+  Class A'' (sovereign condition, ORDERING-     1   H4-condition    <- evidence destroyed by the act
+             CRITICAL: capture before terminate)                       it authorizes
+  Class B   (sovereign word, still open):       1   H13             <- NOT empty; S3 deletion unauthorized
+  Class C   (bounded negative, limitation):     2   H10, H8-fallback <- NEVER reported as "proved"
+  Class D   (standing constraints, never close):7   H6, H7, H9, H11, H12, H14-neverstrip, H15-neverstrip
 
-RESOLVED: H4-authority (Andrew-direct 2026-08-06 ~2030Z @c801ec9d5)
+RESOLVED THIS SESSION
+  H4-authority   Andrew-direct 2026-08-06 ~2030Z @c801ec9d5
+  H14-binding    RULED G7-B (bind lib/ via WS-1); tie-out DISCHARGED + VALIDATED G7-C,
+                 n=1096 equal / mutant fired / 2027 divergence MEASURED at 10 dates
+  H15-backend    RULED G7-D (install pmc in QA envs; trading_day_calendar never-strip)
 ```
+
+**15 items, not 10.** Three closed in-session; the residue of each closure is a standing constraint, not
+a tick — which is the whole point of Class D.
 
 **Rank:** H3 runs **first**. It is now the discharge instrument for a sovereign condition on an
 irreversible act, not merely a deletion-safety census.
