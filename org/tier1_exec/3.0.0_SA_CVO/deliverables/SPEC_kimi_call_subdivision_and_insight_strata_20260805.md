@@ -238,6 +238,34 @@ newness as a quality signal, and no prompt may invite the model to prefer recent
 recency genuinely matters (Group B half-life), it is the **subject of the measurement**, never a
 proxy for trust in it.
 
+### 5b. APPLICABILITY CONDITION — where "go and fetch for yourself" BINDS
+
+*(Added 2026-08-06. Source: `1.0.0_SA_CTO~B`, the only seat that must consume this in running code.
+Andrew-directed convergence; full record `CONVERGENCE_..._20260806.md` @b5bcc1115.)*
+
+§5a made *"go and fetch for yourself"* binding on load-bearing rows. **It carried no applicability
+condition, and that was a defect in the contract, not in the principle.**
+
+> **A CONTRACT THAT DOES NOT SAY WHERE IT APPLIES WILL BE APPLIED WHERE IT CANNOT HOLD, AND THEN
+> ABANDONED WHOLESALE.**
+
+**Measured, not argued.** Affordable at a batch call site: the estate-report runner is a once-daily
+job on a transient box, whole run **3m24s**; a vertical join over a day's ~357 changed paths is ≈36s
+serialised, seconds parallelised. **But it is affordable because of a property of that CONTEXT — daily
+batch, transient box, no latency SLA, nobody waiting — not a property of this contract.** At a
+request-serving call site (a 256MB Lambda behind API Gateway serving a live page) per-row ground-truth
+fetch is a latency **and** cost failure, and the holder **will quietly ignore the contract.**
+
+| consumer class | how it satisfies FETCH-THE-TERRITORY |
+|---|---|
+| **BATCH / ANALYTIC** | **Fetches directly.** The obligation binds as written. |
+| **SERVING / REQUEST-PATH** | **Fetches AT PRODUCTION TIME and carries the vintage forward** — the fetch happens once, in the batch; the serving path inherits a **stamped** value rather than re-deriving it. |
+
+This keeps Andrew's ruling intact where it is affordable and **gives the serving side a way to HONOUR
+it rather than a reason to ignore it.** A rule only the comfortable half of the estate can follow is a
+rule the other half learns to route around — and a routed-around rule teaches that rules are optional,
+which corrodes the ones that bind.
+
 **AND: NO SILENT TRUNCATION.** `[:60000]` must not survive into any call. A payload exceeding budget
 is chunked with a declared denominator, or the call fails loud. A model cannot know it was handed
 14% less than the day.
