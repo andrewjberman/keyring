@@ -168,11 +168,58 @@ compensate for each other anywhere in this estate: where CloudTrail is blind, no
 > conclusion launder the unverified input.** DS~Z's framing is exact: *here we got lucky; the next row
 > may not.*
 
+> ### AMENDMENT (c) 2026-08-06 — ROWS 1–4 BUCKET CORRECTED, AND THE THREE-RECORD DISAGREEMENT RECONCILED
+>
+> MSTR~Z caught rows 1–4 attributed to the wrong bucket while pulling these names for Andrew's H13
+> answer. **Confirmed independently at my seat** (s3api, UTC — never `s3 ls`):
+>
+> ```
+> opal-data-portal-v2/platinum/mdpf/etf_ownership_timeseries/
+>   DIVZ.json 51098 · IDVZ.json 51080 · PFDE.json 38347 · PFOE.json 38231
+>   all LastModified 2026-08-05T13:34:59+00:00
+> opal-data-assets/platinum/mdpf/etf_ownership_timeseries/  -> EMPTY
+> opal-data-mdpf/platinum/mdpf/etf_ownership_timeseries/    -> EMPTY
+> ```
+>
+> **Action 2 discharged — coverage MEASURED on the corrected bucket, not inherited from row 5:**
+> `comp-whoread opal-data-portal-v2 --prefix platinum/mdpf/etf_ownership_timeseries/` → **rc=1 FAIL
+> CLOSED, 0 object-level data events since 2026-05-11.** Verdict holds, and it now rests on a
+> measurement of the right bucket rather than on §1.5 reasoning applied to the wrong one.
+>
+> #### The three records are not three errors — they answer DIFFERENT QUESTIONS IN DIFFERENT TENSES
+>
+> | Record | Says | What it actually answers |
+> |---|---|---|
+> | `:21` docstring | `opal-data-portal-v2` | **Where the objects ARE.** Called "stale" — it is the only record matching the live plane. |
+> | `:75` constant `PLATINUM_BUCKET` | `opal-data-assets` | Where the code **currently TRIES** to write. That prefix is EMPTY. |
+> | `01` s.5 | Aug-6 hard stop = failed write to `opal-data-assets/…/DIVZ.json` | **Why it is empty.** The constant's writes have been FAILING. |
+>
+> **Reconciliation: the objects at `opal-data-portal-v2` dated 2026-08-05 are the LAST SUCCESSFUL
+> write. The constant was repointed to `opal-data-assets`, where every write since has failed.**
+>
+> **⚠ THE LESSON, AND IT INVERTS THE RULE DS~Z AND I BOTH APPLIED.** "The constant executes, the
+> docstring is stale" is a correct general rule and it produced the WRONG BUCKET here — because it
+> silently assumes the write **SUCCEEDED**. *Execution is not success.* For a **deletion** question
+> "where does the code write" is the wrong question entirely; the only instrument that answers "what
+> would I be deleting" is a **live listing**. Neither of us ran one until MSTR~Z did.
+>
+> **A consequence beyond the bucket name:** OWNTS objects are dated **2026-08-05** and the Aug-6 write
+> failed — so OWNTS has been **writing nowhere since the constant was repointed**. That corroborates
+> `02`'s disposition (*Stage 5 OWNTS | RETIRE | … it was the exact August 6 blocker*) from the object
+> side rather than the source side.
+>
+> **AND THE PART ANDREW NEEDS FOR H13:** with rows 1–4 corrected, **5 of the 8 candidates (the four
+> OWNTS objects + row 5's bare aggregate) sit in `opal-data-portal-v2` — the LIVE SERVED BUCKET that
+> CloudFront reads.** Under my original table they read as sitting in an internal pipeline bucket.
+> The specific objects are not the served MDPF artifact family, but **five of eight proposed deletions
+> are inside the serving surface**, and that is a materially different question from the one my table
+> posed. It is his to answer with the true shape.
+
 Every candidate gets its own row. No group verdict.
 
 | # | Deletion candidate | Bucket | CT read data events | CT write trail | S3 access log | **Row verdict** | Window |
 |---|---|---|---|---|---|---|---|
-| 1–4 | OWNTS — `platinum/mdpf/etf_ownership_timeseries/{ticker}.json`, per-ticker (`build_mdpf_etf_ownership_timeseries.py:77`) | **`opal-data-assets`** (`:75` constant; `:21` docstring says `opal-data-portal-v2` and is STALE — see Amendment (b)) | not selected | n/a (writes-only; bucket not listed) | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
+| 1–4 | OWNTS — `platinum/mdpf/etf_ownership_timeseries/{DIVZ,IDVZ,PFDE,PFOE}.json` | **`opal-data-portal-v2`** — MEASURED, 4 objects @ `2026-08-05T13:34:59+00:00` (s3api UTC). `opal-data-assets` and `opal-data-mdpf` are EMPTY at this prefix. See Amendment (c) | **not selected — measured EXPLICITLY on this bucket+prefix: `comp-whoread` rc=1, 0 object-level events** | n/a (writes-only; bucket not listed) | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
 | 5 | `platinum/mdpf/aggregate_aua_timeseries.json` (bare product-level object) | **UNVERIFIED** — attributed `opal-data-portal-v2` by inference from Rule 17b; may be `opal-data-assets`. **Both measured, neither covered** | not selected | **selector names `platinum/firm/` but `readOnly=false` and neither candidate bucket is listed — contributes nothing** | not enabled | **NOT-OBSERVABLE** | 2026-05-11→08-06 |
 | 6 | `wsb-49f-model-aua-daily` → `mdpf/feeds/model_aua_positions/49financial/{date}.parquet` (writer `wsb_49f_smartx_model_aua.py:247`) | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** — but **NO LONGER A DELETION CANDIDATE** (source-visible reader `mdpf_aggregate_aua.py:239-268`; required to calculate a PORT row) | 2026-05-11→08-06 |
 | 7 | `wsd-49f-partner-held-etf-daily` → `mdpf/feeds/partner_held_etf/49financial/{date}.parquet` (writer `wsd_partner_held_etf.py:42`, put `:194`) | `opal-data-mdpf` | not selected | n/a | not enabled | **NOT-OBSERVABLE** — but **NO LONGER A DELETION CANDIDATE**; retirement is **FAIL-GREEN** (silently downgrades `identity_2` measurement→estimate, ~1–3% high) | 2026-05-11→08-06 |
