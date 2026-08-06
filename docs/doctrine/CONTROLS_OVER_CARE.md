@@ -101,6 +101,30 @@ artifact as truth, *and* discounting a peer's recent work as suspect.
 **Discharge:** the question is never *"do I trust this agent"* — it is ***"is this claim carrying
 weight, and have I seen the territory."***
 
+> ### ⚠ APPLICABILITY — WHERE "GO AND FETCH FOR YOURSELF" BINDS
+> **This rule carried no applicability condition, and that was a defect in the rule, not in the
+> principle.** Found by `1.0.0_SA_CTO~B` against `3.0.0_SA_CVO`'s parallel contract (`@c7760548c`) —
+> **the same gap existed here, unflagged, and is closed 2026-08-06.**
+>
+> # A CONTRACT THAT DOES NOT SAY WHERE IT APPLIES WILL BE APPLIED WHERE IT CANNOT HOLD, AND THEN ABANDONED WHOLESALE.
+>
+> **MEASURED, NOT ARGUED.** A per-row ground-truth fetch is affordable at a **batch/analytic** call
+> site (a once-daily runner on a transient box: whole run 3m24s, a ~357-path vertical join ~36s
+> serialised, seconds parallelised) — **but affordable because of a property of THAT CONTEXT** (daily
+> batch, no latency SLA, nobody waiting), **not a property of the rule.** At a **request-serving**
+> call site — a 256 MB Lambda behind API Gateway serving a live page — per-row fetch is a latency and
+> cost failure, **and the holder will quietly ignore it.**
+>
+> **BINDING FORM:**
+> - **BATCH / ANALYTIC consumers — FETCH DIRECTLY.** The obligation as written.
+> - **SERVING / REQUEST-PATH consumers — FETCH AT PRODUCTION TIME AND CARRY THE VINTAGE FORWARD.**
+>   The fetch still happens; it moves off the request path.
+>
+> **The general form, and it is why this is doctrine and not a footnote: an unscoped obligation is not
+> a stricter obligation — it is a weaker one, because the first holder who cannot meet it discards the
+> whole rule rather than the inapplicable part.** Pair with §4's executability test: *can the seat that
+> needs this execute it alone?*
+
 ### 3. You compared the thing TO ITSELF
 No outside information entered, so the check certifies any internally consistent lie.
 - **Conservation is invariant under a swap, and under a simultaneous both-sides deletion.** A
