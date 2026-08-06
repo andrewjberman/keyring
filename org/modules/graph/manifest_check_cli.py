@@ -30,6 +30,7 @@ Subcommands:
 from __future__ import annotations
 
 import argparse
+import ast
 import copy as _copy
 import datetime as _dt
 import json
@@ -1190,10 +1191,61 @@ def _retired_alias_invariant(files) -> int:
 
 
 _SUBCOMMAND_TOKEN = re.compile(r"^[a-z][a-z0-9-]*$")
-_ADD_PARSER = re.compile(r"add_parser\(\s*['\"]([a-z][a-z0-9-]*)['\"]")
 # A launcher line that runs the engine. Group 1 = engine path, group 2 = the rest of the line, which
 # for a PINNED wrapper carries a hardcoded subcommand literal before "$@" (e.g. `cli.py blast "$@"`).
 _LAUNCHER_RUN = re.compile(r"""python\s+"?\$\{?WORKSPACE\}?/([^"\s]+\.py)"?\s*(.*)$""")
+
+
+def _add_parser_names(src: str) -> set | None:
+    """The subcommand literals an engine ACTUALLY registers -- read from the AST, never from text.
+
+    Returns None when the source will not parse (the caller renders that UNKNOWN, which never
+    blocks). An EMPTY SET means "parsed fine, registers nothing" -- a different fact from "could
+    not tell", and the caller keeps them distinct.
+
+    WHY AST, AND NOT A REGEX OR A COMMENT-STRIP. This replaced
+        _ADD_PARSER = re.compile(r"add_parser\\(\\s*['\\\"]([a-z][a-z0-9-]*)['\\\"]")
+    which matched FILE TEXT and so could not tell code from prose. Measured consequence
+    2026-08-06: drift_cli.py:296 is the COMMENT
+        # reconcile is ESTATE-WIDE: iam_cli.py add_parser('reconcile') takes NO positional
+    -- a remark ABOUT A DIFFERENT TOOL. It was the ONLY match in the entire file, so comp-drift's
+    "actual exposed derivation surface" was one string harvested from a comment, and this gate
+    BLOCKED a correct commit while demanding that `reconcile` be declared into comp-which's routing
+    map. comp-drift has no subparsers at all (no add_subparsers call; only a positional `target`).
+    Writing that declaration would have pointed agents at a command that does not exist -- strictly
+    worse than the undeclared derivation the invariant exists to prevent.
+
+    A comment-strip would have fixed that ONE case and left the class open one layer down: a
+    DOCSTRING is not a comment, so `\"\"\"... add_parser('x') ...\"\"\"` survives the strip. Under AST both
+    close BY CONSTRUCTION -- a comment is not a node at all, and a string literal is a Constant, not
+    a Call. Estate precedent for the same move: extract_iam.py's AST tracer (Rule 22a).
+
+    NO REGEX FALLBACK ON A PARSE ERROR. Falling back would restore the defect precisely when the
+    file is least trustworthy, and it would do so silently. Unparseable -> UNKNOWN -> never blocks.
+
+    KNOWN AND DELIBERATE LIMIT, unchanged from the regex: a dynamically-built subparser
+    (`for n in NAMES: sub.add_parser(n)`) has no string literal to read, so neither the old regex nor
+    this sees it. That is a false NEGATIVE on a gate whose UNKNOWN branch never blocks -- the safe
+    direction -- but it is a limit, not a guarantee, and it is recorded here rather than implied.
+    """
+    try:
+        tree = ast.parse(src)
+    except (SyntaxError, ValueError, RecursionError):
+        return None
+    names = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        fn = node.func
+        if not (isinstance(fn, ast.Attribute) and fn.attr == "add_parser"):
+            continue
+        if not node.args:
+            continue                                     # argparse's form is positional; no name here
+        first = node.args[0]
+        if isinstance(first, ast.Constant) and isinstance(first.value, str):
+            if _SUBCOMMAND_TOKEN.match(first.value):      # same token grammar the regex enforced
+                names.add(first.value)
+    return names
 
 
 def _declared_subcommands(entry: dict) -> set:
@@ -1254,10 +1306,12 @@ def _established_subcommands(tool: str):
         src = engine.read_text(encoding="utf-8", errors="replace")
     except OSError as e:
         return None, False, f"engine unreadable ({type(e).__name__})"
-    subs = set(_ADD_PARSER.findall(src))
+    subs = _add_parser_names(src)
+    if subs is None:
+        return None, False, f"engine {engine_rel} does not parse as Python (AST)"
     if not subs:
         return None, False, "no subparsers found (flag-driven or single-derivation)"
-    return subs, False, "static add_parser extraction"
+    return subs, False, "static add_parser extraction (AST)"
 
 
 def _subcommand_declaration_invariant(files) -> int:
