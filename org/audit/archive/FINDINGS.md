@@ -227,3 +227,18 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/pipescript-suite-gate-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_pipescript-suite-gate-audit.log -->
 - log: org/pipescript-suite-gate-audit.log
 - detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-05T124743Z\org_pipescript-suite-gate-audit.log
+
+## 2026-08-06T173626Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/pipescript-suite-gate-audit.log|listed in manifest but no live file -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: listed in manifest but no live file
+
+## 2026-08-06T173626Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/pipescript-suite-gate-audit.log|live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\pipescript-suite-gate-audit.log -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\pipescript-suite-gate-audit.log
+
+## 2026-08-06T173626Z -- DEATH -- INVOKER-SILENT-WITH-CHURN
+<!-- sig: DEATH|INVOKER-SILENT-WITH-CHURN||last run #-#-#T#Z (#.#h ago) and covered logs grew since -- uncaptured churn -->
+- detail: last run 2026-08-03T150524Z (74.5h ago) and covered logs grew since -- uncaptured churn
+- prior_outcome: not-due: no uncaptured tail on any clean log
