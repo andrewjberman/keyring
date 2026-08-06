@@ -653,6 +653,26 @@ RULES = [
     # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
     # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
     # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
+    # THE REGISTRATION CANON ROUTE. This rule exists because its ABSENCE was specimen #1 of the
+    # problem the canon documents: "how do I register a new comp tool" returned a near-tie on
+    # comp-genesis/comp-kuzu, and TWO independent agents recorded that and moved on. The procedure
+    # lived in a gate's failure messages, reachable only by tripping them. Routing to the doc via
+    # comp-read is deliberate -- the canon is long, and the reader needs the step they are on.
+    # NOTE the first keyword: it is the EXACT string two prior agents typed and recorded as
+    # unrouted ("how do i register a new comp tool"). A near-synonym did NOT win the tie -- the
+    # canon has to be reachable by the words people actually used, not by the words I would have
+    # chosen. Verified by running that literal query, not by assuming the paraphrase covers it.
+    (["how do i register a new comp tool", "how do i register a comp tool",
+      "register a new comp tool", "registering a comp tool",
+      "comp tool registration", "registration canon", "add a new comp tool", "ship a comp tool",
+      "where do i register", "canonical locations for a tool", "is my tool registered"],
+     "the comp-tool REGISTRATION CANON (7 surfaces + verification)",
+     ["comp-read org/modules/graph/COMP_TOOL_REGISTRATION_CANON.md --for \"<the step you are on>\"",
+      "comp-manifest-check completeness"],
+     "The always-followed process: 7 canonical surfaces in order (executable+TRACKED / assets by "
+     "canonical path / output contract / coverage-map / tools_index / entries / comp-which curated "
+     "route / shim), then the verification set. A tool registered in 8 of 9 surfaces is not 89% "
+     "registered -- it is UNDISCOVERABLE, which is indistinguishable from unbuilt."),
     # comp-read: the READ half of the same Part B pair. Curated because the manifest alone does
     # not make a tool discoverable -- comp-which routes from THIS list.
     (["read a file", "what does this file say", "which part of the file", "key context",
