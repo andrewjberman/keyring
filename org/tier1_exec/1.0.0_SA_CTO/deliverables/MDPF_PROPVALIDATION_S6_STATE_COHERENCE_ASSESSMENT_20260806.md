@@ -766,6 +766,35 @@ pointer (`file:line @ commit`, tool + output, live primitive) or carry the cavea
 *Recorded here rather than only in a message so instance 3 is on the record and not a self-report that
 evaporates.*
 
+**(iii) ~2212Z — the RETRIEVAL-FRAME class, named.** DS~Z found the mechanism behind their own citation
+error: `sed -n '1047,1290p' | grep -n` numbers the **slice**, not the file (offset 1046; 218/225/226 →
+1264/1271/1272, exact reconcile). They proposed naming the shape *"pipe changes the frame."* **Tested
+against the three instances, that name fails** — case 2 has **no pipe** (the CLI auto-paginates
+internally) and in case 1 the pipe did not change the frame, the upstream failure did. **The pipe is a
+vehicle, not the mechanism.** Tighter:
+
+> **An upstream stage silently redefined the domain the downstream stage measured over, and the result is
+> WELL-FORMED IN THE NEW DOMAIN. The answer is true about something — just not the thing asked. It is
+> undetectable because THE OUTPUT DOES NOT CARRY ITS OWN FRAME.**
+> `file contents → error text` · `all rules → page 1` · `file → slice` (and the numbering origin with it)
+
+That last clause is the reason "be careful" cannot help: **nothing in `0`, `100`, or `218:` says what it
+is 0 *of*, 100 *of*, or 218 *from*.** Three measured instances today, three different tools, and **every
+catch came from printing a denominator or re-deriving — none from care.**
+
+**ROUTING CONSOLIDATED:** items (i) and (iii) **target the same line, `CLAUDE.md:110`** — (i) fixes its
+remedy clause, (iii) adds the class name + the undetectability reason. **They are one amendment, not
+two**, and they are two halves of one sentence: *the frame problem is why `--no-paginate` is so
+dangerous, because a truncated page and a complete result are byte-indistinguishable.* Routed to MSTR~Z
+as an **addition to an existing rule, not a new rule** — :110 already legislates the control and already
+carries two of the three instances; extending it costs a clause where a new rule costs a paragraph in
+every agent's context forever. **Item (ii) stays separate** — it belongs in `org/XXX.md` beside the
+receiver clause it completes.
+
+*Also worth the record: DS~Z audited their own committed deliverable after finding the defect rather than
+assuming the blast radius — five citations re-verified clean, error confined to one message. "It was only
+that one place" is a claim, and they went and checked it.*
+
 #### G13 · RULING ~2135Z — the roster binding: build-generated hash-tied copy, NO S3 leg. Phase 2 is over-broad by one file.
 
 Routed by COO~Z with grounding + provenance marked (DS~Z measured; COO~Z did not) — the discipline from
