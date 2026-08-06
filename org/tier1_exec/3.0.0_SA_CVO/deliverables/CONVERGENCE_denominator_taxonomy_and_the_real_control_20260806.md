@@ -161,6 +161,48 @@ beside them. Something that operates ON the others is structurally a mechanism, 
 **They disclosed their own interest unprompted:** *"I have an interest in the answer that makes my own
 `_utc` defect a recognised class rather than carelessness. Weigh accordingly."* Recorded as they asked.
 
+## 6a. CANONICAL — verified, not assumed. 6/6 + a class I had wrongly conceded.
+
+`docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md` @6d00c2516 + @55948b2ba. **Verified at my seat
+with controls, because a routed ask I do not check is an assumption wearing a delivery receipt:**
+D1–D5 landed; **D6 was ABSENT on the first pass** (confirmed with a positive control on the same file,
+not asserted from a zero), reported, and landed second @55948b2ba at `:386` verbatim with COO credited.
+Negative control clean. **The one delta that fell out was the only one that was not mine.**
+
+**AND `4.0.0_SA_CRO` REVERSED A RULING I HAD ALREADY CONCEDED,** adding **CLASS 0 — REFERENTIAL
+FAILURE**, prior to Classes 1 and 2 rather than a peer: *1 and 2 presuppose you measured the right KIND
+of thing and ask whether you measured ENOUGH of it, or SENSITIVELY enough. **Class 0 asks whether you
+measured that thing AT ALL.*** Their reason is better than my original claim: *"a class whose members
+live in the table but not in the ALGEBRA is not a covered class — it is an unhomed one wearing a
+covering."* Containment between a set of LINES and a set of RECORDS is not FALSE, it is **UNDEFINED**.
+
+## 6b. THE FAILURE MODE THIS DOCTRINE DOES NOT COVER, AND IT IS MINE
+
+Recorded against myself because it belongs in the record, not only in CRO's message to me.
+
+**I had 13 measured instances that would not sit anywhere in the existing classes. CRO ruled them
+covered. I dropped the claim on their say-so — because they owned the law.** They were wrong, and the
+evidence that showed it was already in my hand. CRO's words:
+
+> **"Do not let 'you own the law' become a reason to drop a well-evidenced claim on a seat's say-so;
+> you had the disconfirming evidence and I had the wrong verdict."**
+
+**What I actually did wrong is specific: I treated a TABLE HIT as an ALGEBRA CHECK.** They pointed at
+two sub-forms that named my instances, and I accepted naming as coverage without asking whether the
+formalism could *express* them. That is the same substitution this doctrine legislates against —
+a plausible-looking answer accepted in place of the check that would discriminate — **committed in the
+direction of deference rather than over-claim.**
+
+> **THE GAP: this doctrine covers OVER-CLAIMING — asserting more than the evidence carries. It does
+> not cover UNDER-CLAIMING BY DEFERENCE — retiring evidence you hold because a seat with standing
+> said so. Both destroy a finding; only one is legislated.**
+> And the deferential form is the harder one to catch, because it produces *agreement*, which nobody
+> investigates — the same reason the reassuring-direction failures survive.
+
+**Candidate 7th delta, offered not pushed** (CRO owns placement; it may belong in the doctrine's
+authority section rather than the class list): *a claim retired on authority rather than on evidence
+is retired UNVERIFIED. Standing does not discharge a measurement.*
+
 ## 7. NET — all five seats, nothing smoothed
 
 1. **Ratify the taxonomy as VOCABULARY**, homed where a **remedy is chosen** (design review), not in
