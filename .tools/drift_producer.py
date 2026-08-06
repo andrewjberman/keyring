@@ -175,43 +175,11 @@ def run_comp_leg() -> dict:
                 "pointer": "org/modules/graph/graph-call-manifest.yaml",
             })
 
-    # comp-surface-check scan -- critical-surface drift (SEV1/SEV2 CHANGED). Identity-only.
-    # NB: scan reads the .comp-graph baseline; if absent (fresh CI checkout -- .comp-graph is
-    # gitignored) it exits rc=0 but NO-OPS (0 findings). rc=0 != actually-assessed -> a no-op scan
-    # MUST NOT read clean (the false-clean class we kill). Require a loaded baseline (>0 nodes);
-    # else could-not-assess WATCH (VISIBLE, not a silent 0-findings clean).
-    rc, out, err = _run(["bash", ".tools/comp-surface-check", "scan"])
-    tools_run += 1
-    baseline_ok = bool(re.search(r"baseline:.*\(\s*([1-9]\d*)\s*nodes?\)", out))
-    if rc != 0:
-        tools_failed += 1
-        findings.append({
-            "source": "surface", "status": "watch",
-            "reason": f"comp-surface-check could not run (cannot assess): rc={rc} {err.strip()[:120]}",
-            "pointer": "org/modules/graph/critical-surfaces.yaml",
-        })
-    elif not baseline_ok:
-        tools_failed += 1
-        findings.append({
-            "source": "surface", "status": "watch",
-            "reason": "comp-surface-check scan loaded NO baseline (.comp-graph absent in CI?) -> NO-OP; cannot assess critical-surface drift (no silent-clean)",
-            "pointer": "org/modules/graph/critical-surfaces.yaml",
-        })
-    else:
-        for line in out.splitlines():
-            m = _SURFACE_RE.search(line)
-            if not m:
-                continue
-            sev, what = m.group(1), m.group(2).strip()
-            if any(a in what for a in TF_ONBOARDED_ALLOWLIST):
-                continue
-            # SEV1 critical-surface change = RED-tier; SEV2 = WATCH. (The Lambda applies the
-            # state-change-since-last-report filter; here we report the current scan.)
-            findings.append({
-                "source": "surface", "status": "red" if sev == "SEV1" else "watch",
-                "reason": f"{sev} critical-surface CHANGED: {what[:200]}",
-                "pointer": "org/modules/graph/critical-surfaces.yaml",
-            })
+    # SURFACE leg REMOVED 2026-08-06 -- comp-surface-check RETIRED (Andrew-direct: "I want
+    # comp-surface-check retired. i do not like that tool."). Removed rather than left to fail:
+    # this leg RAN the binary, so deleting the tool underneath it would have emitted a permanent
+    # rc!=0 "could not run" WATCH on every push -- a retired tool generating perpetual drift
+    # noise about its own absence.
 
     return {
         "leg": "comp",

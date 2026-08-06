@@ -640,16 +640,9 @@ RULES = [
      "confidence-graded), advisory/HYPOTHESIS, NO delete verb. DISTINCT from comp-dups (the IS axis -- NAME/body "
      "structural duplicate CENSUS), comp-describe (describe ONE resource), comp-kuzu (arbitrary Cypher). "
      "Name-EXCLUDED corpus (no comp-dups collapse)"),
-    # rule-2: comp-surface-check -- "touching MP/benchmarks/ADVI backend" routed to comp-registry.
-    # comp-surface-check is THE must-always-be-right SEV1-surface guard for MP/benchmarks/ADVI.
-    (["model portfolios", "model portfolio", "benchmarks backend", "benchmark surface",
-      "advi backend", "advisor intelligence backend", "mp backend", "sev1 surface", "critical surface",
-      "must always be right", "must-always-be-right", "surface check", "touching the model portfolios",
-      "touching mp", "benchmarks", "sev1"],
-     "SEV1 critical-surface guard (comp-surface-check)",
-     ["comp-surface-check"],
-     "the must-always-be-right SEV1 surfaces (MP / benchmarks / ADVI backend) -- run before touching "
-     "them (ADVISORY: reads its output; a commit proceeds even on CRITICAL, LD-0273)"),
+    # rule-2 (comp-surface-check SEV1-surface guard) REMOVED 2026-08-06 -- tool RETIRED
+    # (Andrew-direct). Routing an agent to a retired tool is the dead-fallback class:
+    # "the door is real, the key is not".
     # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
     # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
     # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
@@ -2063,7 +2056,7 @@ def main() -> int:
     # agent to it for the MP/benchmarks/SEV1-surface intent. So a STRONG curated hit for a deliberately
     # non-routable gate routes DIRECTLY here (a curated POINTER), like the gold-id/call-site/heat/grep
     # special-cases -- WITHOUT making it a general routable graph-query target (respects the exclusion).
-    _CURATED_POINTER_ONLY = {"comp-surface-check"}
+    _CURATED_POINTER_ONLY = set()   # was {"comp-surface-check"} -- tool RETIRED 2026-08-06
     if hits and best_score >= _STRONG_MAIN:
         _top_cap = (hits[0][2][0].strip().split()[0] if hits[0][2] else "")
         if _top_cap in _CURATED_POINTER_ONLY:

@@ -103,6 +103,16 @@ contracts:
     exit_codes: '0 = ran (including a measured zero) | 2 = ERROR (no file / unreadable). A zero-hit
       SALIENT panel is NOT an error.'
 
+  comp-claimlink:
+    coverage: "EVERY markdown file under the scanned root(s), and every CORRECTS:
+      declaration in them. DENOMINATOR PRINTED ON EVERY RUN (files scanned + declarations
+      found). ZERO declarations is reported as NOT-A-CLEAN-BILL, never as a pass."
+    verdicts: "SEVERE (the declared STALE-MARKER still stands unqualified in the target --
+      the wrong claim is LIVE) | TRACE (target corrected, source uncited -- traceability
+      only, NOT a failure) | LANDED | BAD-PATH. rc=1 only on SEVERE or BAD-PATH."
+    anti_pattern: "reading TRACE as a failure -- it means the reader is NOT misled. And
+      reading 0 declarations as clean: it means nothing DECLARED a correction, which is
+      unchecked, not verified."
   comp-find:
     coverage: "EVERY line (content mode) or filename (name mode) in the .gitignore-aware repo file
       set for the given pathspec, each assigned exactly one grade band. DENOMINATOR PRINTED ON EVERY
@@ -397,19 +407,6 @@ contracts:
       "1": {class: verdict, meaning: "a gate member fired (real violation / incompleteness found)"}
       "2": {class: verdict, meaning: "usage / could-not-evaluate (fail-closed)"}
     exit_source: "manifest_check_cli.py completeness family (gate-firing) @2026-07-23"
-
-  comp-surface-check:
-    coverage: "the critical-surfaces watch list (critical-surfaces.yaml) touched by the change"
-    blind_spots:
-      - "TWO HALVES, DO NOT CONFLATE (CLAUDE.md Rule 20, corrected 2026-07-24 when the LD-0273 blocking fix landed and this text did not follow): PORTAL-SIDE IS ENFORCED -- it returns rc=2 BLOCKED and the portal pre-commit hook REFUSES the commit; bypass is an audited SURFACE_ACK to org/surface-check-ack-audit.log, with portal CI as the non-bypassable backstop. WORKSPACE-SIDE (the safe-commit invocation) is ADVISORY and cannot block a workspace-only commit. A CRITICAL...SEV1 is a STOP, not a note. Structurally blind to portal/ submodule surfaces from the workspace side (safe-commit cannot see them). Silence is NOT a pass. >> THIS ENTRY PREVIOUSLY READ 'ADVISORY ONLY -- it cannot block', i.e. it asserted the exact claim Rule 20 exists to correct WHILE CITING RULE 20 -- carrying the citation's authority for the opposite of what the rule says. Worse here than in prose: this is a MACHINE-READ contract other tooling consumes, so the stale claim travelled as a declaration rather than as documentation. Found by 0.7.0_AE_CloudOps while declaring comp-which; routed by 2.0.0_SA_COO; corrected by 1.0.0_SA_CTO~C 2026-07-30. <<"
-    plane: desired
-    grain: artifact
-    scope: estate
-    vintage: "changed files vs critical-surfaces.yaml at HEAD"
-    exit_codes:
-      "1": {class: verdict, meaning: "a critical surface finding"}
-      "2": {class: verdict, meaning: "SEV1 critical finding (still advisory -- prints, does not block)"}
-    exit_source: "NFRA_TOOLCHECK P1 gate-firing matrix; LD-0273 (advisory-cannot-block) @2026-07-23"
 
   comp-honesty:
     coverage: "the honesty checks over the queried surface (claim-vs-implementation drift)"

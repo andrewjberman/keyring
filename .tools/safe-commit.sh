@@ -451,18 +451,10 @@ if [ "${#LOG_SWEEP[@]}" -gt 0 ]; then
   fi
 fi
 
-# Advisory surface-check gate (QUERY-only; never blocks).
-if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
-  _sc_args=()
-  while IFS= read -r _f; do
-    [ -z "$_f" ] && continue
-    _sc_args+=("--file" "$_f")
-  done <<< "$IN_SCOPE"
-  if [ ${#_sc_args[@]} -gt 0 ]; then
-    comp-surface-check check --mode advisory "${_sc_args[@]}" 2>&1 \
-      | sed 's/^/  [surface-check] /' || true
-  fi
-fi
+# surface-check gate REMOVED 2026-08-06 -- comp-surface-check RETIRED (Andrew-direct,
+# "I want comp-surface-check retired. i do not like that tool."). The invocation was
+# advisory + command-v guarded + `|| true`, so it failed OPEN; removing it changes no
+# blocking behaviour here. The ENFORCING half lived in the portal repo, retired with it.
 
 # Advisory NERVES risk reflex (NFRA_NERVES L5; QUERY-only; never blocks). Scores the staged set
 # against the danger map -- a staged file under a recorded HOLD/RISK prints its citation HERE,

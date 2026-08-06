@@ -1976,40 +1976,6 @@ tools:
     engines: []
     bounding:
     - json out
-  comp-surface-check:
-    concern: null
-    canonical_call: null
-    state: PERSISTED
-    derived: true
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: TRAVERSED
-    knows_own_denominator: false
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - gitignored paths
-    - submodule contents (gitlink only)
-    - anything not in the repo
-    - other regions
-    - other accounts
-    - resource types not queried
-    - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SECONDS
-    primitives:
-    - GIT
-    - AWS-API
-    - GRAPH-DB
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    - org/modules/graph/surface_check_cli.py
-    bounding:
-    - head slice
-    - json out
   comp-symbols:
     concern: 'file-symbol INVENTORY -- what functions/classes/constants/imports a source file DEFINES
       + where (forward AST enumeration, input=a FILE). NFRA_COMPROUTE S1 #2; fronts the previously-empty
