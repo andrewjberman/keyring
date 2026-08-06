@@ -132,15 +132,44 @@ deployed publisher's complete env carries **no roster variables** — the roster
 DEPLOYED, so the 404 breaks nothing today *because the deployed publisher never reads it*, and **a blind
 rebuild from repo tip is what would introduce the read.**
 
-**A THIRD ROSTER EXISTS, DEPLOYED.** `s3://opal-data-mdpf/code/scripts/gold/partner_roster.json`, read by
-`mdpf-accrual-trigger`. Phase 2 says *"do not create a hand-maintained second roster"* — **one already
-exists and production reads it.** Its only known reader is a component Phase 4 deletes, so it should die
-with the retirement — **to be verified by census, not assumed.**
-It diverged by sha256 from the repo authority and **the divergence is NOT operative**: 227 leaves each
-side, exactly one differing leaf, and it is a PROSE provenance string narrating an unchanged value.
-**But the mechanism is now evidenced: a hand-copied config went nine days stale against a CTO ruling and
-nothing detected it.** Non-operative by luck — had the ruling changed the lag value, production would have
-run on the old one silently. That is Phase 2's Terraform-managed-config-with-hashes argument *measured*.
+**A THIRD ROSTER EXISTS, DEPLOYED, AND IT IS *THE* PRODUCTION ROSTER FOR THE ENTIRE GOLD SPINE.**
+`s3://opal-data-mdpf/code/scripts/gold/partner_roster.json`. Phase 2 says *"do not create a hand-maintained
+second roster"* — **one already exists and production reads it.**
+
+> ⚠ **CORRECTED 2026-08-06 ~2122Z — MY FIRST READING WAS FALSIFIED, AND THE CORRECTION IS LARGER THAN THE
+> ORIGINAL FINDING.** This section previously said the copy's only known reader was `mdpf-accrual-trigger`
+> and would therefore "die with its only reader" when Phase 4 retires the accrual bridge. **THAT IS WRONG.**
+> I asked AE~Z to verify rather than confirm; they falsified it.
+> **THE MECHANISM IS A SHELL `s3 sync`, INVISIBLE TO ANY LAMBDA ENV SWEEP.** `mdpf-daily-dispatch.sh:125`
+> runs `aws s3 sync s3://opal-data-mdpf/code/scripts/ $SCRIPTS_DIR/ --delete`, and the roster lives INSIDE
+> that synced prefix — so every production run copies it onto the box next to the gold modules.
+> `dim_mdpf_aggregate_aua_timeseries.py:1718-1731` `_load_partner_roster()` — its own docstring calls it
+> **"THE ONE SOURCE OF EXPECTED-NESS"** — resolves `os.path.join(here, "partner_roster.json")` FIRST, where
+> `here` is the module's own (synced) directory. **CANDIDATE 1 WINS AND IT IS THE S3 COPY**; the repo path
+> is explicitly the dev/QA fallback, reached only off-runner.
+> Readers: the 2587-line spine at `:1203` (`gate_policy.per_partner_max_lag_trading_days`) and `:1897`,
+> `dim_mdpf_account_distribution.py:62,387`, `build_cottonwood_mdpf_slice.py:871-874`,
+> `build_portal_gold_accrual.py:51,110,114`. **That is the gold path itself, not a peripheral trigger.**
+> The env var was the copy's most VISIBLE reader, not its most important one.
+
+⛔ **ORDERING CONSEQUENCE FOR P2-1 / P4-1:** the third copy dies when the **EC2/dispatch route** dies, which
+is a DIFFERENT event on a different schedule from the accrual-bridge retirement. **`mdpf-gold-lambda` must
+have its roster BEFORE the sync stops**, or the spine loses THE ONE SOURCE OF EXPECTED-NESS mid-cutover.
+
+✅ **AND IT HELPS THE ZIP LAYOUT:** candidate 1 is `os.path.join(here, "partner_roster.json")`, so in a flat
+zip `here` is `/var/task/` and **flat-vendoring the roster at zip root satisfies the existing resolver with
+no code change.** Candidate 2 resolves to garbage but is never reached. *Opposite outcome to
+`build_dim_model_portfolio.py:66`'s rsplit hack from the same family of construct — which is exactly why
+each `sys.path`/relative-resolution site must be checked individually rather than dispositioned as a class.*
+
+The copy diverged by sha256 from the repo authority and **the divergence is NOT operative**: 227 leaves each
+side, exactly one differing leaf, a PROSE provenance string narrating an unchanged value.
+**But the near-miss is sharper than first reported.** `:1203` reads `gate_policy.per_partner_max_lag_trading_days`
+FROM THAT EXACT FILE — the very key whose provenance went nine days stale against a 2026-08-03 CTO ruling
+with nothing detecting it. **Had the ruling changed the VALUE rather than the narration, EVERY PRODUCTION
+GOLD RUN SINCE 07-28 WOULD HAVE USED THE STALE LAG, silently.** That is Phase 2's
+Terraform-managed-config-with-hashes argument *measured*, and the resolver **PREFERS the hand-uploaded copy
+over the committed authority by design.**
 
 ---
 
