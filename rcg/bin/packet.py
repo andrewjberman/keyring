@@ -67,14 +67,42 @@ def main() -> int:
             if len(referrers[dst]) < 3:
                 referrers[dst].append(e["src"])
 
-    # S4 first -- controls gate everything (deterministic selection, md5 order)
+    # S4 first -- controls gate everything (deterministic selection, md5 order).
+    # R-0027 ITEM-1 RE-CUT (Andrew-ratified 2026-08-06): control truths come from
+    # RATIFIED ledger rows (rcg/ledger/LABELS.jsonl, last-row-wins, source != seed:*),
+    # NEVER from the heuristic seed layer. Why: the 2026-08-06 quarantine -- 3/4
+    # "misgrades" were the v6 model (trained on ratified law) contradicting a seed
+    # heuristic exactly where law had departed from it (governance JSONs -> law-KEEP;
+    # vendored trees -> archive class). A CONTROL WHOSE ORACLE IS WEAKER THAN ITS
+    # SUBJECT FIRES ON THE SUBJECT SURPASSING IT, indistinguishably from a regression.
+    # Heuristic seeds remain model FEATURES and disagreement fodder (S1) -- demoted
+    # from truth, not deleted. Diagnosis + evidence: RCG_SITTING_PACKET_20260806.md.
+    ledger_truth: dict = {}
+    ledger_file = WS / "rcg" / "ledger" / "LABELS.jsonl"
+    for r in load_jsonl(ledger_file):
+        p = r.get("path")
+        if p is None:
+            continue
+        ledger_truth[p] = r  # last-row-wins, wholesale (the ledger's own semantics)
+
+    def ratified(p: str) -> bool:
+        r = ledger_truth.get(p)
+        return bool(r) and not str(r.get("source", "")).startswith("seed") \
+            and r.get("binary") in ("KEEP", "ARCHIVE_CANDIDATE")
+
     def pick(label: str, n: int) -> list[str]:
-        pool = sorted((p for p, s in seeds.items() if s == label),
+        pool = sorted((p for p, r in ledger_truth.items()
+                       if ratified(p) and r["binary"] == label and p in preds),
                       key=lambda p: hashlib.md5(p.encode()).hexdigest())
         return pool[:n]
 
     controls = [(p, "ARCHIVE_CANDIDATE") for p in pick("ARCHIVE_CANDIDATE", 2)] + \
                [(p, "KEEP") for p in pick("KEEP", 2)]
+    if len(controls) < 4:
+        print(f"[packet] QUARANTINE -- only {len(controls)}/4 ratified-row controls "
+              f"derivable; NOTHING SHIPS (a control set that cannot be filled is a "
+              f"DENY, never a thinner packet)")
+        return 2
     failures = []
     for p, truth in controls:
         p_arch = preds[p]["p_archive"]
