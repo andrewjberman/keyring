@@ -79,6 +79,44 @@ control, and it is the only check that dissents when two instruments share a sen
 ⚠ **Its failure mode is vacuity:** if you cannot name a member you already know is in `I`, the control
 **does not pass — it does not run.** Report UNRUN, never clean.
 
+### CLASS 0 — REFERENTIAL FAILURE: the sets are not commensurable
+
+**Added 2026-08-06, and it REVERSES a ruling I made on 2026-08-05.** `3.0.0_SA_CVO` proposed a third
+class from 13 measured instances; I ruled it already covered by Class 1's *"wrong artifact"* /
+*"different population"* sub-forms and they dropped the claim. **On re-examination I was half-wrong,
+and the half that was wrong is the load-bearing half.**
+
+The instances *are* filed under Class 1. **But Class 1's formalism cannot express them.** `D ⊉ I`
+presupposes `D` and `I` are sets of **the same kind of element**. When `D` is a set of **lines** and
+`I` is a set of **records**, containment is not FALSE — **it is UNDEFINED.**
+
+> ## CLASS 0 IS NOT A PEER OF CLASSES 1 AND 2. IT IS PRIOR TO THEM.
+> Classes 1 and 2 both presuppose you measured the right *kind* of thing, and ask whether you
+> measured **enough** of it (`D ⊉ I`) or **sensitively enough** (`P ⊭ Q`).
+> **Class 0 asks whether you measured THAT THING AT ALL.**
+
+| | reads | fails as | the check |
+|---|---|---|---|
+| **CLASS 0** | `D` and `I` are not commensurable | **the REFERENT** | *is the thing I measured the thing I asked about?* |
+| CLASS 1 | `D ⊉ I` | the SENSOR | *did I enumerate enough?* |
+| CLASS 2 | `P ⊭ Q` | the ORACLE | *is my predicate sensitive?* |
+
+**The family:** a line count answering a record question · `$?` after a pipe answering for the tool ·
+a `fatal:` string diffed as file content · a projection measured for its source. **Every one returns
+a well-formed value of the right TYPE about the WRONG OBJECT** — which is why neither Class 1 nor
+Class 2 fires, and why the verdict is not merely unsupported but **about something else entirely.**
+
+**Class 0's check is the root of this whole doctrine** — *go and see the thing itself* — and its
+diagnostic order extends §2's: **ask "is this the right referent?" BEFORE "does my sensor emit the
+token?" BEFORE "is my predicate sensitive?"** A referent question asked over the wrong object is
+unanswerable, and — like the others — **it will return a clean verdict.**
+
+⚠ **NAMING DEFECT IN THE NEIGHBOURING FILE, ROUTED NOT FIXED:** `DOMAIN_AND_PREDICATE_ERROR_CLASSES.md`
+files these under a class named **"DOMAIN UNDER-REACH"** glossed *"I looked at too few things"* — and
+they are not too FEW things, they are the WRONG things. **A careful reader followed the name, correctly
+concluded their instances did not fit, and proposed a third class; the name misrouted them and the
+sub-form table quietly contained the answer.** That is `M13`. Owner `1.0.0_SA_CTO~Z`.
+
 *(Taxonomy detail — orthogonality, the monotonicity test, the detection asymmetry — is owned by
 `infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md`, which defers the LAW to this file.)*
 
@@ -250,6 +288,57 @@ already a concealment classification** (*traversed?* × *does a predicate react?
 | **monotone predicate** | ROUTE B | the oracle cannot move under this change-type |
 | **semantic redirect** *(`#3`)* | ROUTE B | members, counts and pass-rate all hold; the field's SOURCE moved |
 | **coerced to nearest sayable** | ROUTE B | the type had no slot, so a legal-looking value was emitted |
+
+### THE DISCRIMINATOR — how to tell a peer error from a concealment mechanism
+
+**The ruling without this is unappliable to a new case.** Landed 2026-08-06 from the five-seat
+convergence Andrew ordered (`@b5bcc1115`, *"Ok make sure this conclusion is rendered canonical"*);
+derived by `1.0.0_SA_CTO~B` from a live instance, independently matched by `3.0.0_SA_CVO`'s S1.
+
+> # A PEER ERROR CHANGES THE VALUE. SEMANTIC REDIRECT CHANGES WHAT THE VALUE *AUTHORISES*.
+> - **value error** → fix by **RECOMPUTATION**
+> - **redirect** → fix by **RENAMING or NORMALISING**. Recomputation touches nothing, **because the
+>   value was never wrong.**
+
+**Type specimen:** `last_commit_utc` carrying `-04:00`. The comparison logic was correct, the value
+was correct, nothing downstream was wrong *yet*. **What was wrong was what the field AUTHORISED** — a
+consumer trusting the name would compare it lexically and re-create the exact bug the patch had just
+fixed. **Classing it a peer error points the remedy at a calculation that is already right.**
+
+**And the structural form:** a peer error does not conceal its peers, it sits beside them. Something
+that operates *on* the others is a **MECHANISM**, not a member.
+
+*(Attribution note carried as disclosed: CTO~B stated unprompted that they hold an interest in this
+answer — it makes their own defect a recognised class rather than carelessness. Recorded so a reader
+weighs it. The conclusion stands on two independent derivations, not on theirs alone.)*
+
+### WHAT THIS TAXONOMY IS FOR — and the three limits on it
+
+**1. A CLASS EARNS ITS KEEP WHEN IT PRODUCES A LINT.** A class steers only once it converts to a
+**mechanical check**; as prose it reads post-hoc. **A class that has not yet produced its lint is
+UNPROVEN, NOT UNFOUNDED.** *Measured on CTO~B's own two defects: the GRAIN one the vocabulary would
+NOT have caught — "it does not supply suspicion"; the REDIRECT one it WOULD have, but only as the
+runnable form* ***"does any field NAME assert a property its VALUE does not satisfy?"*** *— which is a
+query. "Semantic Redirect" as prose is not.*
+
+**2. HOME IT WHERE A REMEDY IS CHOSEN — design review. NOT a consumer contract, NOT the rule-bank.**
+> **A TRIGGERLESS ENTRY IN THE RULE-BANK LOOKS LIKE A CONTROL AND CANNOT FIRE — which is itself an
+> instance of the class this doctrine describes.**
+*At the moment of writing code, CTO~B reached for denominator + vintage and opened no taxonomy; they
+consulted one repeatedly where it told them WHICH PREDICATE TO RUN.*
+
+**3. INDEX, NOT GATE.** Classification is an **index for aggregation across findings**, never a
+**gate on the remedy**.
+- **NO CLASS MAY BE ASSIGNED WITHOUT THE EVIDENCE LINE IT IS DERIVED FROM** — Rule 22 applied to
+  classification itself.
+- **AN UNCLASSIFIABLE FINDING IS A FINDING ABOUT THE TAXONOMY, NOT A DEFECT IN THE FINDING.**
+
+> ⚠ **THE classify-BEFORE-remedy CLAUSE IS RETIRED, FALSIFIED BY ITS OWN AUTHOR'S SEAT.**
+> `3.0.0_SA_CVO~B` tested it on four of their own findings: **3 of 4 were unclassifiable**, and on the
+> best fit it would have **MISDIRECTED THE REMEDY** (symptom = a summary line; root cause = discarded
+> return values one layer up). **And the vocabulary decontaminates a cold reader NEGATIVELY** — their
+> specimen matched `shadow-detect` to a salient category without reading the `help=` two commands
+> away: ***"the category did not help me read; it gave me permission to stop reading."***
 
 > **CONCEALMENT IS NOT UNIQUE TO `#3` — that is why it is a FIELD, not a row.** `#4` conceals too:
 > coercion to the nearest sayable value hides a truth exactly as effectively. **Every error has a
