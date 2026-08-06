@@ -207,22 +207,75 @@ _COL_ST   = 6
 # AWS helpers
 # ---------------------------------------------------------------------------
 
+_AWS_EXE_CANDIDATES = (
+    r"{LOCALAPPDATA}\Programs\AWSCLIV2\Amazon\AWSCLIV2\aws.exe",
+    r"{PROGRAMFILES}\Amazon\AWSCLIV2\aws.exe",
+    r"{PROGRAMFILES(X86)}\Amazon\AWSCLIV2\aws.exe",
+)
+
+
+def _find_aws_exe() -> Optional[str]:
+    """Locate a REAL aws.exe, so we can exec it without routing through cmd.exe.
+
+    Returns None if none is found -- the caller then falls back to the .CMD
+    form, whose failures are now LOUD rather than silent (see _aws).
+    """
+    direct = shutil.which("aws.exe")
+    if direct and direct.lower().endswith(".exe"):
+        return direct
+    for tpl in _AWS_EXE_CANDIDATES:
+        try:
+            path = tpl.format(**{k.upper(): v for k, v in os.environ.items()})
+        except (KeyError, IndexError):
+            continue
+        if os.path.isfile(path):
+            return path
+    return None
+
+
 def _resolve_aws_cmd() -> list[str]:
     """Return the command prefix to invoke the aws CLI.
 
-    On Windows the aws CLI ships as aws.CMD which subprocess cannot exec
-    directly -- wrap with ['cmd', '/c', path]. On Linux/Mac aws is a binary.
+    On Windows the aws CLI is commonly reached through aws.CMD, which
+    subprocess cannot exec directly and so has to be wrapped in cmd.exe.
+    PREFER A REAL aws.exe WHENEVER ONE EXISTS -- cmd.exe re-parses the whole
+    command line and silently corrupts any argv element containing a SPACE or
+    a COMMA, and additionally mangles the command name itself when the
+    interpreter path contains a space. Both hit this tool's own JMESPath
+    arguments: `max_by(Contents, &LastModified).LastModified` carries both a
+    comma and a space.
+
+    Source-confirmed on a Windows profile whose name contains a space
+    (`C:\\Users\\Opal Bloomberg\\bin\\aws.CMD`), 2026-08-06 -- exercised A/B:
+    a query with a comma is truncated at the comma (`Bad value for --query`);
+    a query with a space makes cmd.exe strip the outer quotes and try to run
+    `C:\\Users\\Opal` as the program. A profile path with NO space does not
+    reproduce either, which is why every laptop instrument read healthy while
+    site Z was blind.
     """
+    if os.name == "nt":
+        real = _find_aws_exe()
+        if real:
+            return [real]
     exe = shutil.which("aws")
     if exe is None:
         raise AwsUnreachable("aws CLI not found in PATH")
-    if exe.lower().endswith(".cmd"):
+    if exe.lower().endswith((".cmd", ".bat")):
         return ["cmd", "/c", exe]
     return [exe]
 
 
 def _aws(*args: str, check_aws: bool = True) -> Optional[str]:
-    """Run an aws CLI command and return stdout stripped, or None on failure."""
+    """Run an aws CLI command and return stdout stripped, or None on failure.
+
+    A None return means THE QUERY FOUND NOTHING -- never that the query could
+    not be run. Any non-zero exit under check_aws raises AwsUnreachable so a
+    BROKEN RETRIEVAL can never again be rendered as an ABSENT ARTIFACT: this
+    function feeds a freshness GATE, and "prefix not found in S3" printed off
+    a command that never executed is a false finding wearing a real one's
+    clothes. Callers that legitimately treat a non-zero exit as "absent"
+    (`s3 ls`, `s3 cp` probes) opt out with check_aws=False.
+    """
     env = os.environ.copy()
     env["AWS_EC2_METADATA_DISABLED"] = "true"
     try:
@@ -235,6 +288,10 @@ def _aws(*args: str, check_aws: bool = True) -> Optional[str]:
                     raise AwsUnreachable("AWS credentials not found")
                 if "EndpointResolutionError" in stderr or "ConnectTimeoutError" in stderr or "Could not connect" in stderr:
                     raise AwsUnreachable("AWS endpoint unreachable")
+                raise AwsUnreachable(
+                    "aws CLI exited %d -- retrieval FAILED, this is not an empty result: %s"
+                    % (result.returncode, stderr[:400] or "(no stderr)")
+                )
             return None
         out = result.stdout.strip()
         return out if out and out != "None" else None
@@ -258,18 +315,26 @@ def _parse_s3_uri(s3_uri: str) -> tuple[str, str]:
 
 
 def _parse_timestamps_from_raw(raw: str) -> list[datetime.datetime]:
-    """Parse all non-null timestamps from potentially multi-line --output text result.
+    """Parse every non-null timestamp out of an --output text result.
 
-    AWS CLI v2 auto-paginates list-objects-v2 and may apply JMESPath per page,
-    producing one line per page. We parse all lines and return valid datetimes.
+    SPLIT ON ALL WHITESPACE, not just newlines. AWS CLI v2 auto-paginates
+    list-objects-v2 and applies the JMESPath PER PAGE, so the shape depends on
+    whether the query yields one value or many:
+      - a scalar query (the old max_by form) -> one value per line, one line per page
+      - a list query (`Contents[].LastModified`) -> one LINE per page carrying
+        every value on it, TAB-SEPARATED
+    A newline-only split silently parsed nothing for the second shape: a prefix
+    holding 1,590 objects returned 41KB of real timestamps across 2 lines and
+    scored N/A -- which this tool renders as "prefix not found", i.e. a fully
+    successful retrieval reported as an absent artifact. Measured 2026-08-06.
     """
     results = []
-    for line in raw.strip().splitlines():
-        line = line.strip()
-        if not line or line == "None":
+    for token in raw.split():
+        token = token.strip()
+        if not token or token == "None":
             continue
         try:
-            results.append(_parse_timestamp(line))
+            results.append(_parse_timestamp(token))
         except (ValueError, AttributeError):
             pass
     return results
@@ -319,13 +384,22 @@ def get_latest_modified(s3_key_prefix: str) -> Optional[datetime.datetime]:
         if sub_prefixes:
             target_prefix = sorted(sub_prefixes)[-1]
 
-    # Step 2: get max LastModified under target_prefix
-    # max_by(Contents, &LastModified) returns null (not error) when Contents is empty;
-    # multi-line output from auto-pagination is handled by _parse_timestamps_from_raw.
+    # Step 2: get every LastModified under target_prefix; the max is taken in
+    # Python by _parse_timestamps_from_raw + max() below.
+    #
+    # DELIBERATELY NOT `max_by(Contents, &LastModified).LastModified` (used until
+    # 2026-08-06). That query is wrong twice over. (a) On an EMPTY prefix the CLI
+    # does not return null as the old comment here claimed -- it EXITS 255 with
+    # "In function max_by(), invalid type for value: None", so "no objects" and
+    # "command failed" become the same observation. (b) It carries a comma AND a
+    # space, the two characters cmd.exe re-splits on, which silently truncated or
+    # destroyed the argument on any Windows profile reached through aws.CMD.
+    # `Contents[].LastModified` has neither problem: it exits 0 and prints nothing
+    # when the prefix is empty, and contains no cmd.exe metacharacter.
     ts_raw = _aws("s3api", "list-objects-v2",
                   "--bucket", bucket,
                   "--prefix", target_prefix,
-                  "--query", "max_by(Contents, &LastModified).LastModified",
+                  "--query", "Contents[].LastModified",
                   "--output", "text")
     if ts_raw and ts_raw.strip():
         timestamps = _parse_timestamps_from_raw(ts_raw)
@@ -337,7 +411,7 @@ def get_latest_modified(s3_key_prefix: str) -> Optional[datetime.datetime]:
         ts_raw = _aws("s3api", "list-objects-v2",
                       "--bucket", bucket,
                       "--prefix", prefix,
-                      "--query", "max_by(Contents, &LastModified).LastModified",
+                      "--query", "Contents[].LastModified",
                       "--output", "text")
         if ts_raw and ts_raw.strip():
             timestamps = _parse_timestamps_from_raw(ts_raw)
