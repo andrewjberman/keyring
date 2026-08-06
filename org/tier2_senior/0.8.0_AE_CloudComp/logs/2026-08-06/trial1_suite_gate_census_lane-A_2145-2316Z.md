@@ -207,9 +207,65 @@ No edit to the gate, the tests, or `.tools/`. Nothing enrolled, nothing fixed, n
 decision made. Writes this session: this log + the census deliverable. Analysis scripts live in the
 session scratchpad, outside the tree.
 
+## RAVC-4 AMENDMENT (2026-08-06 ~2323Z) — issuer validated, ACCEPTED IN FULL
+
+`3.0.0_SA_CVO~B` validated as issuer, re-deriving the load-bearing claims independently rather than
+accepting them. **Accepted in full, nothing returned for rework.** Two amendments belong in the
+record because they change the GROUNDING of this trial's central finding, not merely its reception.
+
+### A1 — the comp-read finding is now SOURCE-CONFIRMED, and it was mine to qualify
+
+Above, I wrote that comp-read *"structurally cannot"* reach the import block. **That was an inference
+from behaviour.** I exercised three phrasings plus `--at 1` and saw zero import lines — which
+establishes the **symptom**, not the **mechanism**. Under Rule 22 that was an EXERCISED-behavioural
+claim, and "structurally" leaned harder than my evidence carried.
+
+The issuer has now named the mechanism at source, and both defects reproduce on their side:
+
+- **Defect A — import block unreachable.** `_scan_tree` collects spans only for `FunctionDef` /
+  `AsyncFunctionDef` / `ClassDef`. Module-level imports therefore sit in **no section at all**: they
+  cannot be ranked by SALIENT, cannot be pinned by `--at`, and no rephrasing reaches them. On this
+  specimen SHAPE's first section starts at `:26`; the `import boundary_report as B` at `:23` is
+  outside every span.
+- **Defect B — pinned-but-no-excerpt.** The excerpt loop emits only lines with query-token overlap,
+  and a pinned section is by definition the case where overlap is **zero** — so the pin succeeds and
+  then renders empty, precisely when the user has told the tool where to look.
+
+**Status upgrade: EXERCISED → SOURCE-CONFIRMED.** Both defects are the author's to fix; neither is
+fixed, and they are deliberately held pending Andrew's read. **Nothing in my verdict changes** — the
+mechanism confirms the behaviour I measured.
+
+### A2 — a second instance of F1's failure mode, found by the author in their own battery
+
+Recorded here with attribution rather than left in an inbox message, because it belongs beside F1.
+
+`test_at_line_pins_the_containing_section_into_the_ranking` (authored the day before this trial)
+asserts that the section header renders and that the `PINNED` disclosure renders. **It never asserts
+that an excerpt renders.** So it passes **green against defect B** — the exact defect it covers.
+
+**This is F1's failure mode arriving from the opposite direction.** F1 (`test_comp_system_metrics.py`)
+collects **nothing**, so it cannot redden. This one collects and passes, but **asserts around** the
+defect, so it also cannot redden. Two mechanisms, one failure mode — *a battery that cannot fail on
+the thing it covers* — found in a single session on a single toolchain. Neither would be caught by
+"does the suite pass?", which is the question the gate this census is about actually asks.
+
+**Attribution:** found and disclosed unprompted by `3.0.0_SA_CVO~B`, the author of both the tool and
+the test.
+
+### A3 — F2, confirmed by the author at source
+
+`test_boundary_report_conformance.py:23` is `import boundary_report as B`; the sole `residue` hit is
+`:29` fixture data. Cause identified: an alternation `"(?:comp-|\.tools/)([\w-]+)"` scraped a fixture
+string. The author's own note on the aggravating factor — that the brief disclosed the instrument's
+unreliability and then exempted one output of it from that unreliability, unopened, because a
+specimen was needed — is theirs and I am not restating it as mine.
+
+**Ownership after validation:** F1 needs an owner and it is neither of us. Defects A and B are the
+author's. The 61-battery enrollment map and its 9.4-min cost remain the gate owner's scoping call.
+
 ## Blockers
 
-None. Both deliverables complete.
+None. Both deliverables complete; RAVC closed by the issuer.
 
 ## Next
 
