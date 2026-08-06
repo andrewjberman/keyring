@@ -1098,7 +1098,7 @@ def _stage2_vocab_invariant(files) -> int:
 _ROUTING_SURFACE_HUD = ".tools/hooks/comp-tool-hud.sh"
 
 
-def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
+def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned=0):
     """THE RETIRED-ALIAS INVARIANT, pure decision (unit-testable). (rc, lines); rc=1 blocks.
 
     NFRA_MSBEFF.R6 (2026-07-23). retired_aliases is the THIRD name-authority section (dead names).
@@ -1113,6 +1113,13 @@ def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
 
     live universe = ti | exc | entry_tools | cov. retired = {name: {successor, ...}}.
     surface_refs = {retired_name: [files]} -- declared-retired names found in committed surfaces.
+    scanned = HOW MANY routing surfaces check C actually read. PRINT THE DENOMINATOR: check C is
+    scope-predicated, so `scanned == 0` means it DID NOT RUN, and a PASS line that says "none
+    cited" in that state asserts an estate-wide fact off an empty read. Measured 2026-08-06: the
+    commit path's substrate contains no routing surface at all, so C ran on zero files on every
+    commit while this line reported clean -- and 7 live citations of a retired name sat unseen.
+    A silent false NEGATIVE outlives the loud false POSITIVE this same gate threw the same day,
+    precisely because nothing it does is visible.
     """
     live = set(ti) | set(exc) | set(entry_tools) | set(cov)
     contradiction = sorted(n for n in retired if n in ti or n in exc)
@@ -1120,9 +1127,11 @@ def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
                       if (v or {}).get("successor") and (v or {}).get("successor") not in live)
     routed = {n: fs for n, fs in surface_refs.items() if n in retired}
     if not contradiction and not dangling and not routed:
+        citation = (f"none cited across the {scanned} routing surface(s) in scope" if scanned
+                    else "citation check (C) DID NOT RUN -- no routing surface in scope")
         return 0, [f"  [manifest-check] retired-alias invariant PASS: {len(retired)} retired name(s) "
-                   f"declared, all disjoint from live+excluded ({len(live)} live), successors valid, "
-                   f"none cited in committed routing surfaces."]
+                   f"declared, all disjoint from live+excluded ({len(live)} live), successors valid; "
+                   f"{citation}."]
     lines = [f"\nBLOCKED: retired-alias invariant (retired {len(retired)}; live universe {len(live)}):"]
     for n in contradiction:
         lines.append(f"  - {n:<24} declared RETIRED but is ALSO in tools_index/excluded -- a name is in EXACTLY ONE section")
@@ -1144,10 +1153,35 @@ _RETIRED_SUBSTRATE = (
 )
 
 
+def _routing_surfaces() -> list:
+    """EVERY routing surface `_is_routing_surface` recognises, estate-wide, repo-relative.
+
+    FOR THE HUMAN-FACING SUBCOMMAND ONLY. The commit path stays commit-scoped and is NOT widened
+    here: doing that would block every skill/prompt commit fabric-wide on citations that already
+    exist, which is a new gate on work nobody asked for.
+
+    WHY THE SWEEP HAS TO EXIST SOMEWHERE. A commit-scoped citation check can only ever catch a
+    citation added AFTER a name is retired, in a file somebody happens to commit -- so at the
+    instant of retirement every EXISTING citation becomes permanently invisible to it. Retirement
+    day is exactly when the estate-wide read is needed, and it was the one read nothing performed.
+    """
+    out = [_ROUTING_SURFACE_HUD]
+    out += [str(p.relative_to(_WORKSPACE)).replace("\\", "/")
+            for p in sorted(_WORKSPACE.glob("org/**/prompt.md"))]
+    skills = _WORKSPACE / ".claude" / "skills"
+    if skills.is_dir():
+        out += [str(p.relative_to(_WORKSPACE)).replace("\\", "/")
+                for p in sorted(skills.rglob("*")) if p.is_file()]
+    return out
+
+
 def _retired_alias_invariant(files) -> int:
     """0 = holds / not applicable. 1 = BLOCK. Substrate-scoped; deterministic; fail-closed.
     Fires when the manifest / coverage-map / an operational routing surface is committed."""
-    norm = _norm(files)
+    # DEDUPE, order-preserving: `scanned` is a REPORTED DENOMINATOR now, and a file reachable by
+    # two callers (the HUD is both _RETIRED_SUBSTRATE and a routing surface) would inflate it and
+    # double-list its own citations. A denominator you did not dedupe is not a count.
+    norm = list(dict.fromkeys(_norm(files)))
 
     def _is_routing_surface(f):
         return (f.endswith(_ROUTING_SURFACE_HUD) or f.endswith("/prompt.md")
@@ -1170,6 +1204,7 @@ def _retired_alias_invariant(files) -> int:
         retired = raw.get("retired_aliases") or {}
         # Scan committed routing surfaces for DECLARED-RETIRED names (closed set -> no prose storm).
         surface_refs = {}
+        scanned = 0
         for f in norm:
             if not _is_routing_surface(f):
                 continue
@@ -1177,6 +1212,7 @@ def _retired_alias_invariant(files) -> int:
             if not p.exists():
                 continue
             txt = p.read_text(encoding="utf-8", errors="replace")
+            scanned += 1
             for name in retired:
                 if _re.search(r"(?<![A-Za-z0-9_-])" + _re.escape(name) + r"(?![A-Za-z0-9_-])", txt):
                     surface_refs.setdefault(name, []).append(f)
@@ -1184,7 +1220,7 @@ def _retired_alias_invariant(files) -> int:
         print(f"\nBLOCKED: the retired-alias invariant could not be evaluated ({e}).\n"
               f"  An unevaluable completeness gate does not read as 'passed'.")
         return 1
-    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs)
+    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned)
     for ln in lines:
         print(ln)
     return rc
@@ -1674,7 +1710,8 @@ def main() -> int:
         help="assert retired_aliases coherence (disjoint sections + valid successors) and that no "
              "committed routing surface cites a declared-retired name (NFRA_MSBEFF.R6)")
     p_retired.set_defaults(func=lambda _a: _report(
-        "retired-alias", _retired_alias_invariant(list(_RETIRED_SUBSTRATE))))
+        "retired-alias",
+        _retired_alias_invariant(list(_RETIRED_SUBSTRATE) + _routing_surfaces())))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):
