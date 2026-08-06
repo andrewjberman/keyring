@@ -949,6 +949,18 @@ paths:
     lane: CRO_WORKSPACE
     note: "OPAL_ALTRESEARCH transcript corpus -- equity research call transcripts (bronze verbatim / silver structured / index), joined to Opal ETF constituent weights to rank alt-data pipeline candidates by position materiality. Andrew-direct 2026-07-31 at the CRO terminal, incl. the project code ('You may register the project as OPAL_ALTRESEARCH') and the root location. The CRO home rule (org/tier1_exec/4.0.0_SA_CRO/**) does not reach a root path -- same enumeration gap as LD-0331, a title is not a grant. Added 2026-07-31 by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). NARROW read on the LD-0331 standing-capability question: this authorizes THIS root path, not blanket root-write; the direct-registration question stays PARKED (Andrew spoke to it once today, narrow reading applied)."
 
+  "projects/ADVI_REFACTOR/**":
+    lane: TIER0_MSTR
+    note: "Andrew's research project folder (Andrew-direct 2026-08-06 at the MSTR terminal: root /projects research folders, committed+pushed so sitez pulls them; work directed at the MSTR~Z terminal). ~Z inherits via the tilde-lane mechanism (owned-paths-validate.py:125-160). Root path needs its own rule per the enumeration principle -- /projects/* is gitignore-carved (.gitignore:285) and had no owned-paths rule at all. Added 2026-08-06 by 0.0.0_AB_MSTR executing Andrew's direct commit instruction (grantor==grantee noted; authorization is Andrew's word this session, not self-grant)."
+
+  "projects/ATOM_DECOMP/**":
+    lane: TIER0_MSTR
+    note: "Andrew's research project folder -- same Andrew-direct 2026-08-06 ruling and rationale as projects/ADVI_REFACTOR/** above."
+
+  "projects/MDPF_PROPVALIDATION/**":
+    lane: TIER0_MSTR
+    note: "Andrew's research project folder -- same Andrew-direct 2026-08-06 ruling and rationale as projects/ADVI_REFACTOR/** above."
+
   "rcg/**":
     lane: RCG_OPERATOR
     note: "Repo Coherence Graph home (NFRA_REPOCOHERENCEGRAPH) -- MANIFEST.yaml, charters, append-only rulings/ledger, grader instructions, engine, workflows; scans/ + models/ are gitignored/local. SINGLE-WRITER: 4.0.0_SA_CRO only, per PRD section 12 ('IMPERATIVE that folder is kept immaculately clean' -- Andrew). Root path needs its own rule per the enumeration principle (a title is not a grant; no wildcard reaches repo root -- same class as research_transcripts). Added 2026-08-03 by 1.0.0_SA_CTO (grantor; CRO is grantee -- SoD; Andrew-direct assignment of the grantor role at the CTO terminal same day). The lane governs WHO writes; the PRD's MANIFEST pre-commit gate (P0, wires separately) governs WHAT is writable inside."
