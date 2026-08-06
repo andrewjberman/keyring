@@ -197,3 +197,33 @@ error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/rcg-sweep-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/rcg-sweep-audit.log
 - detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-08-04T022827Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/rcg-sweep-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_rcg-sweep-audit.log -->
+- log: org/rcg-sweep-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-03T143634Z\org_rcg-sweep-audit.log
+
+## 2026-08-04T151847Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/pipescript-suite-gate-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-08-04T213358Z -- SNAPSHOT-FAILURE -- COMMIT-FAILED
+<!-- sig: SNAPSHOT-FAILURE|COMMIT-FAILED||safe-commit rc=# (non-lane): arter-hard-block-audit.log', LF will be replaced by CRLF the next time Git touches it
+BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but includes no Decision Ledger entry (org/tier#/ledger/LD-*.md). Constitution Art. V: every commitment is ledgered before it propagates.
+ -->
+- detail: safe-commit rc=1 (non-lane): arter-hard-block-audit.log', LF will be replaced by CRLF the next time Git touches it
+BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but includes no Decision Ledger entry (org/tier0/ledger/LD-*.md). Constitution Art. V: every commitment is ledgered before it propagates.
+
+- note: distinct from DEATH: the invoker RAN, the commit failed
+
+## 2026-08-05T141801Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/rcg-sweep-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/rcg-sweep-audit.log
+- detail: non-append edit: first divergence at line 1, col 118 (baseline 2376B / live-head 2400B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+
+## 2026-08-06T125117Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/pipescript-suite-gate-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_pipescript-suite-gate-audit.log -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-05T124743Z\org_pipescript-suite-gate-audit.log
