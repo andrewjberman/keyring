@@ -97,10 +97,31 @@ def fmt_ts(dt: datetime) -> str:
     return dt.strftime(TS_FMT)
 
 
-def snapshots() -> list[tuple[datetime, Path]]:
+def chain_root(device: str | None) -> Path:
+    """The snapshot chain THIS device owns. rv0057-f001: archive/<DEVICE>/<TS>/ replaces archive/<TS>/.
+
+    TRANSITION-SAFE BY CONSTRUCTION -- this is why the code change and the 238-file migration are
+    DECOUPLED and can land in either order: if archive/<device>/ exists we are post-migration and use
+    it; otherwise we fall back to the legacy flat root, which IS the laptop chain. So the same binary
+    is correct before and during the move, and a half-finished migration cannot strand the instrument.
+
+    device=None (refused claim) deliberately returns the LEGACY root for READ-ONLY detection only --
+    minting is already refused upstream by authorise_device(). It must never be used to WRITE, because
+    writing an unauthorised device's snapshot into the laptop chain is the corrupted-attribution
+    failure this whole TO exists to close.
+    """
+    if device:
+        d = ARCHIVE / device
+        if d.is_dir():
+            return d
+    return ARCHIVE
+
+
+def snapshots(root: Path | None = None) -> list[tuple[datetime, Path]]:
     out: list[tuple[datetime, Path]] = []
-    if ARCHIVE.is_dir():
-        for d in ARCHIVE.iterdir():
+    ARCHIVE_ = root or ARCHIVE
+    if ARCHIVE_.is_dir():
+        for d in ARCHIVE_.iterdir():
             if d.is_dir():
                 try:
                     out.append((parse_ts(d.name), d))
@@ -453,17 +474,26 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
 # model; no third-device path collision exists today.
 UNDECLARED_DEVICE = "UNDECLARED-DEVICE"
 REGISTRY_UNREADABLE = "REGISTRY-UNREADABLE"
+REGISTRY_EMPTY = "REGISTRY-EMPTY"
 
 
-def registered_devices() -> list[str] | None:
-    """The admitted device ids. None ONLY when the registry cannot be read -- which is a REFUSAL
-    condition, never an empty allowlist (an absent authority must not become an open door)."""
+def registered_devices() -> tuple[list[str] | None, str]:
+    """(ids, condition). condition is "" when the registry is usable.
+    THREE-WAY, NOT TWO (CTO ruling 2026-08-06T0118Z) -- both non-usable states refuse, but they are
+    DIFFERENT PROBLEMS WITH DIFFERENT REMEDIES and must not collapse:
+      REGISTRY-UNREADABLE  the FILE is the problem (missing / corrupt / permission)  -> fix the file
+      REGISTRY-EMPTY       the file is FINE and admits NOBODY                        -> add a device
+    Collapsing empty into unreadable sends a reader to debug a file that reads perfectly -- a verdict
+    naming a state ADJACENT to the real one, which is the failure class this whole instrument keeps
+    producing. Same safety either way; the NAMING discriminates."""
     try:
         lines = DEVICES.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError:
-        return None
+        return (None, REGISTRY_UNREADABLE)
     out = [ln.strip() for ln in lines if ln.strip() and not ln.lstrip().startswith("#")]
-    return out or None      # a registry that admits NOBODY is unreadable-equivalent, not permissive
+    if not out:
+        return (None, REGISTRY_EMPTY)   # NEVER permissive: an authority admitting nobody admits nobody
+    return (out, "")
 
 
 def claimed_device() -> str | None:
@@ -487,10 +517,14 @@ def claimed_device() -> str | None:
 def authorise_device() -> tuple[str | None, str]:
     """(device_id, detail). device_id is None => MINTING MUST REFUSE, and `detail` names WHY.
     Detection callers ignore the None and keep reporting; only the write path is gated."""
-    allowed = registered_devices()
-    if allowed is None:
+    allowed, cond = registered_devices()
+    if cond == REGISTRY_UNREADABLE:
         return (None, f"{REGISTRY_UNREADABLE}: cannot read {DEVICES.name} -- refusing to mint. An "
-                      f"authority that cannot be read must not admit everything.")
+                      f"authority that cannot be read must not admit everything. FIX THE FILE.")
+    if cond == REGISTRY_EMPTY:
+        return (None, f"{REGISTRY_EMPTY}: {DEVICES.name} reads fine but admits NO devices -- refusing "
+                      f"to mint. An authority that admits nobody admits nobody; it is not permissive. "
+                      f"ADD/RESTORE A DEVICE (the file itself is healthy -- do not debug it).")
     claim = claimed_device()
     if not claim or claim == "UNKNOWN":
         return (None, f"{UNDECLARED_DEVICE}: this device did not resolve to a candidate id "
