@@ -646,6 +646,36 @@ RULES = [
     # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
     # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
     # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
+    # ROUTABLE-FLIP 2026-08-06 (Andrew-approved): four tools that a LIVE LAW tells agents to type,
+    # while the router could not name them. Curated vocabulary added WITH the tools_index rows on
+    # purpose -- the excluded-list comment warned that a bare registration without vocabulary just
+    # manufactures a BLOCKED self-route finding instead of discoverability.
+    (["grep the repo on the rails", "on-rails grep", "sanctioned grep", "gate denied my grep",
+      "raw grep was blocked", "search the repo but grep is gated", "rule 21 fallback"],
+     "on-rails repo content search (comp-grep)",
+     ["comp-grep <pattern> [pathspec]", "comp-find <pattern> [pathspec]"],
+     "The sanctioned fallback when Gate-1 denies a raw Bash estate grep: repo-scoped, .gitignore-aware, "
+     "held-path guarded, audited, with dependency context per hit. comp-find is the graded successor."),
+    (["find files by name", "list files matching", "glob the repo", "on-rails file find",
+      "which files are named", "find a file by glob"],
+     "on-rails repo FILE find (comp-glob)",
+     ["comp-glob \"<glob>\" [pathspec]", "comp-find --name \"<glob>\""],
+     "Filename half of the Gate-1 fallback pair; no pattern = list everything under the pathspec."),
+    (["set my task order", "set the to id", "which task order am i on", "attribute my tool runs",
+      "comp tool logging attribution", "session task order"],
+     "set the session TO_ID for comp-tool auto-logging (comp-to)",
+     ["comp-to <TO_filename_without_.md>"],
+     "Race-free PER-SESSION file. Do NOT write TO_ID= into .comp-graph/.agent_context -- that is one "
+     "repo-global file, last-writer-wins across concurrent agents. NB it takes a TO id and parses no "
+     "flags: `comp-to --help` SETS your TO_ID to '--help'."),
+    (["is my tool registered", "check the tool registry", "registration gate", "tool registry drift",
+      "did i register my comp tool", "comp tool registry check", "registry completeness"],
+     "the comp-tool REGISTRATION GATE (comp-manifest-check)",
+     ["comp-manifest-check completeness",
+      "comp-read org/modules/graph/COMP_TOOL_REGISTRATION_CANON.md --for \"<the step you are on>\""],
+     "Enforces registration + output-contract + vocab + retired-alias + existence-as-tracked-executable "
+     "+ ROUTABILITY over the whole tool universe, and BLOCKS the commit when they fail. Its counts are "
+     "gate-maintained truth -- quote the gate, never a digit copied into prose."),
     # THE REGISTRATION CANON ROUTE. This rule exists because its ABSENCE was specimen #1 of the
     # problem the canon documents: "how do I register a new comp tool" returned a near-tie on
     # comp-genesis/comp-kuzu, and TWO independent agents recorded that and moved on. The procedure

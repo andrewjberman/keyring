@@ -74,6 +74,65 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-grep:
+    coverage: 'EVERY line of EVERY file in the .gitignore-aware repo file set for the given pathspec
+      (git ls-files cached+others --exclude-standard, RECURSED into nested repos such as portal), matched
+      with python `re`. Prints the scanned-file count and the match count on every run.'
+    blind_spots:
+      - 'BINARY and undecodable files are skipped by the reader -- a match inside one is invisible.'
+      - 'SOVEREIGN-HELD paths are excluded by the shared rail guard. The exclusion PRINTS, so an absence
+         over a held path is visible -- but it is still an absence over a REDUCED universe.'
+      - '--max CAPS THE MATCH LIST (default 200). The cap is a real truncation: a term with more hits than
+         the cap returns a PARTIAL set, so a "reviewed every hit" claim built on a capped run is false.'
+      - 'python `re` semantics: a backslash before | ( ) is a LITERAL, not BRE alternation/grouping. A
+         BRE-shaped pattern honestly matches nothing; the tool warns inline, and the warning is the only
+         guard -- it cannot distinguish a wrong pattern from a real absence.'
+      - 'TEXT-LOCAL by construction: it matches strings, not relationships. A coupled thing that never
+         names the search term is not findable here (that is what the graph tools are for).'
+    failure_direction: 'UNDER-REPORTS rather than over-claims (skips, held-path exclusions and the --max
+      cap all REMOVE hits). The dangerous reading is therefore a ZERO: it means "not found in the scanned
+      universe", never "absent from the estate".'
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: 'n/a -- reads the working tree live; no cache, no snapshot.'
+    exit_codes: '0 = ran (including a measured zero) | 2 = BLOCKED (bad pathspec / no pattern). A
+      zero-match run is NOT an error and a BLOCKED run is never reported as zero matches.'
+
+  comp-glob:
+    coverage: 'EVERY file path in the same .gitignore-aware repo file set, matched by fnmatch against the
+      glob. No pattern = every file under the pathspec. Scanned count printed on every run.'
+    blind_spots:
+      - 'SOVEREIGN-HELD paths excluded by the shared rail guard (prints).'
+      - '--max caps the returned list -- a partial result, not a complete one.'
+      - 'Matches the BASENAME/path text only: it cannot know a file is the right one, only that its name
+         matches. A correctly-named wrong file and a wrongly-named right file are indistinguishable here.'
+    failure_direction: 'UNDER-REPORTS (exclusions + cap remove rows). A zero means "no NAME matched in the
+      scanned universe", never "no such thing exists".'
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: 'n/a -- live working tree, no cache.'
+    exit_codes: '0 = ran (including a measured zero) | 2 = BLOCKED (bad pathspec).'
+
+  comp-to:
+    coverage: 'Writes ONE value -- the session TO_ID -- into a race-free per-session file keyed by
+      CLAUDE_CODE_SESSION_ID, consumed by the comp-tool auto-logger for run attribution.'
+    blind_spots:
+      - 'It does NOT validate that the TO exists. Any string is accepted, so a typo silently attributes
+         every subsequent tool run to a task order that does not exist.'
+      - 'IT PARSES NO FLAGS. `comp-to --help` SETS the TO_ID to the literal string "--help" (measured
+         2026-08-06 on the author of this contract). There is no help surface to ask.'
+      - 'Per-SESSION only: it says nothing about what other concurrent agents are attributing, which is
+         precisely why it exists instead of the repo-global .comp-graph/.agent_context.'
+    failure_direction: 'Silently ACCEPTS a wrong value rather than refusing -- the failure is
+      mis-attribution downstream, not an error here. Read back what it echoes.'
+    plane: applied
+    grain: artifact
+    scope: single-artifact
+    vintage: 'n/a -- writes at call time; the value persists for the session.'
+    exit_codes: '0 = written (echoes the value it set). It does not fail on a nonexistent TO.'
+
   comp-read:
     coverage: 'EVERY section of the target file appears in the SHAPE panel (never truncated) and every
       line is eligible for the QUALIFIER sweep. The UNREAD LEDGER states, per run, how many lines and
