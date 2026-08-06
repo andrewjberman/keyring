@@ -1623,6 +1623,10 @@ paths:
     lane: ANY
     note: "Shared .tools/ — any agent may contribute tooling (in PATH via .bashrc)"
 
+  "ajb.ps1":
+    lane: BASE_EXEC
+    note: "Root-level launcher SHIM -- a 12-line thin wrapper that dot-sources the canonical launcher at .tools/ajb.ps1 (which is lane ANY). Exists only because Andrew dot-sources from the repo root (81660e0f2a). A SHIM not a COPY: the root copy had silently gone stale (missing LD-0375 + LD-0381 rows) and MSTR~Z falsified a claim against it -- two launcher copies = DERIVED_UNIVERSE drift; the shim makes drift inexpressible (one launcher). Added 2026-08-06 by 1.0.0_SA_CTO (BASE_EXEC gate) on MSTR's ask, unblocking a commit owned-paths correctly refused as UNDEFINED. Lane = BASE_EXEC (CTO/COO/CVO/CRO -- NOT MSTR; a root-level file warrants more restriction than .tools/'s ANY). MSTR maintains launcher LOGIC in the CANONICAL .tools/ajb.ps1 (lane ANY -- they edit it there freely); the root SHIM is a stable pointer that rarely changes, and when it does it is an arch decision a BASE_EXEC seat commits. (Corrected at authoring: a negative-control check caught my own mis-memory that MSTR was in BASE_EXEC -- they are in GOVERNANCE_AUDIT, not BASE_EXEC. Verify-before-assert, on my own rule.) >> DELIBERATE NON-DECISION on MSTR's 'add a root-singleton catch-all' suggestion: NOT added, on purpose. UNDEFINED-on-an-unlisted-ROOT-file is CORRECT for a sensitive location -- it forces a deliberate lane assignment per file (this entry IS that, working as intended). A blanket root catch-all would trade a SAFE friction (BASE_EXEC assigns each root file a lane consciously) for an UNSAFE default (a future sensitive root file -- a new .gitignore/CLAUDE.md-class artifact -- silently inherits write access from the catch-all). The recurrence (.gitmodules, ajb.ps1) is the gate demanding a per-file decision, not a bug to paper over. Add the specific rule as each root file appears; that is the intended workflow."
+
   # -----------------------------------------------------------------------
   # deck_generation/ — DeckGeneration pipeline
   # -----------------------------------------------------------------------
