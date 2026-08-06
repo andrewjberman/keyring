@@ -1,0 +1,31 @@
+{
+  "project_code": "MDPF_CANPLAT",
+  "macro_code": "MDPF",
+  "name": "MDPF Canonical Platinum -- 12 canonically-shaped platinum JSONs, every single day",
+  "description": "Execution program for MDPF_CANONICAL_PLATINUM_PRD @24d3eb2f8 (Andrew-ratified vision) under the DELIVERABLE CONTRACT @a3106d585 (completion oracle, R1-R14 on one unattended scheduled cycle). ONE firm-parameterized mdpf-gold-lambda (CONTRACT sA) emits the sB canonical shape for 3 artifact types x 4 scopes in the A4 dated hyphenated grammar directly; the publisher projects an already-canonical gold to the 12 platinum objects (sD, D4 NEVER PATCHES SHAPE); CVO~Z holds Guard 2 (R7 five limbs, sB as the closed field-path list). SHAPE PROJECT, NOT A DATA-CORRECTNESS PROJECT: PRD s0 verbatim in every TO -- build what is described, do not hunt errors. Supersedes the MDPF_CANRTE P*-generation TOs as dispatch (explicit per-TO disposition in the decomposition record).",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_CANONICAL_PLATINUM_PRD.md",
+      "label": "PRD (the WHY; s0 standing instruction, s3 laws, s5 acceptance, s6 not-authorized)",
+      "date": "2026-08-06"
+    },
+    {
+      "path": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md",
+      "label": "DELIVERABLE CONTRACT + RUBRIC (the WHAT; sB = Guard 2's closed field-path list; sE R1-R14)",
+      "date": "2026-08-06"
+    }
+  ],
+  "status": "active",
+  "phase": "WAVE 1 DISPATCHED 2026-08-06 ~2359Z by 2.0.0_SA_COO~Z (fresh-reset decomposition, single live dispatch authority = deliverables/MDPF_CANPLAT_DECOMPOSITION_20260806.md): P1-1 canonical gold spine (DS~Z, pending) -- P0-2R vendor early-clock probes (AE~Z, pending, ORION WINDOW 08:05-08:40 ET 2026-08-07, egress Andrew-granted) -- P2-1 deployable config + IAM (AE~Z, pending) -- P3-1 publisher projection (AE~Z, STAGED; GO on P2-1 landed + P1-1 emitting A4) -- G2 regression comparator + acceptance instruments (CVO~Z, pending). Prior MDPF_CANRTE P*-generation: 9 open TOs flipped superseded, 5 complete TOs closed record, dispositions explicit. Deferred deliberately: 09:40 bridge retirement (consequence of A3/A4, retires second on R11 evidence), EC2 teardown, fee_scope 1->declared migration (P2-1 axis, unauthorized), extras retirement (R12 then Andrew), mdpf_revamp name retirement (SEQUESTERED, pocketed brief @76d4ba532), portal re-points (DT lane).",
+  "blocking": "None -- all five wave-1 TOs GO'd or staged with a declared GO condition. Clock item: P0-2R Orion probe window 08:05-08:40 ET 2026-08-07 (a miss slips a day; slip, not incident).",
+  "created": "2026-08-06",
+  "pods": [
+    "0.4",
+    "0.7",
+    "3.0",
+    "2.0"
+  ],
+  "pipeline": "mdpf",
+  "thread_counter": 0,
+  "threads": []
+}
