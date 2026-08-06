@@ -766,6 +766,62 @@ pointer (`file:line @ commit`, tool + output, live primitive) or carry the cavea
 *Recorded here rather than only in a message so instance 3 is on the record and not a self-report that
 evaporates.*
 
+#### G13 · RULING ~2135Z — the roster binding: build-generated hash-tied copy, NO S3 leg. Phase 2 is over-broad by one file.
+
+Routed by COO~Z with grounding + provenance marked (DS~Z measured; COO~Z did not) — the discipline from
+G12 applied on its first opportunity. **I read `_load_partner_roster()` at `:1718-1746` myself** rather
+than take the citation on report, since it is my own 230319Z ruling being invoked. **DS~Z's citation is
+accurate, verbatim, including the SystemExit text.**
+
+**The conflict:** the docstring forbids *"NEVER an S3-read fallback and NEVER a vendored copy"* and the
+error ends *"Do NOT add another resolution mechanism here."* Doc 03 Phase 2 prescribes exactly an S3
+`GetObject` leg for the roster.
+
+**RULED: build-generated, hash-tied copy at the resolving module's directory, via the EXISTING resolver,
+NO roster `GetObject` leg.** Test each option against what 230319Z actually targets — **duplicate
+authority**, i.e. more than one thing that can answer *"what is expected-ness"* and can disagree:
+
+| Option | Authorities | Verdict |
+|---|---|---|
+| build-generated, hash-tied | **one** — the zip copy is a derived artifact that **cannot drift**, regenerated + hash-recorded each build; uses candidate 1 **unchanged, zero code edit** | ✅ not a *hand-maintained* copy, not a *new mechanism* |
+| S3 `GetObject` | **two** — an object changeable out from under a deployed function without a deploy | ⛔ |
+
+> **This is not rule-lawyering — G9 is this morning's measurement of option (b)'s harm.** The deployed
+> roster diverged from the committed authority for **nine days** on `per_partner_max_lag_trading_days`
+> with nothing detecting it. Option (b) rebuilds that divergence surface inside the Lambda, with S3 as
+> the drift vector instead of a hand-upload.
+
+**Phase 2 is not wrong — it is over-broad by ONE FILE.** `partner_roster.json` → build-generated,
+no leg (230319Z applies). `route_bindings.yaml` → Terraform-managed S3 object + `GetObject` **as
+written** (230319Z does not reach it). Phase 2's own second half already states option (a):
+*"generate it during the build and hash-tie it to the committed authority."*
+
+**Packaging condition (adjacency is a build fact):** `here` is the **resolving module's** directory.
+Flat zip root gives `/var/task` and candidate 1 hits — but Phase 1 packages a thin entrypoint plus
+refactored modules, so **the build must place the roster adjacent to the module that resolves it**,
+whatever the layout, and the fixture test must exercise `_load_partner_roster()` **from the built
+artifact**. Getting it wrong fail-closes at build: loud and recoverable, but discovered rather than
+designed.
+
+**PUBLISHER — FLAGGED, NOT RULED, and the reason is stated:** Phase 2 also grants the *publisher* roster
+read access. If gold reads a build copy and the publisher reads S3, **the two can disagree** — duplicate
+authority *across* components. **Direction:** both take build-generated hash-tied copies from the same
+committed authority, each recording its roster hash in its own manifest, which makes divergence
+*detectable* — the detection absent for nine days in G9. **I am not ruling it because I measured the gold
+spine's resolver and NOT the publisher's, and ruling on an unmeasured resolver is the error I corrected
+in myself in G1-A.** Named follow-on: measure first, then rule.
+
+**FAIL-CLOSED — ratified, and upgraded from a note to a TEST.** DS~Z's point: this resolver raises
+`SystemExit` naming both candidates, and against today's two fail-**green** cases (pmc,
+`partner_held_etf`) it is the positive example — **the estate is not uniformly fail-green, so "assume it
+degrades silently" is not a safe prior either; you have to look at each one.** P1-1 **preserves** the
+property; adding a graceful fallback is forbidden, and the reason is DS~Z's: **it would read as an
+improvement in review** — a hardening change and a silent-degradation change look identical in a diff.
+**But a TO instruction is also memory, just someone else's.** The control is a **test asserting
+`SystemExit` when neither candidate exists** — then the property defends itself and the refactor that
+adds a fallback *fails* rather than reads well. Same move as `calendar_source` and
+outcome-not-intervention: **make the property assert itself.**
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
