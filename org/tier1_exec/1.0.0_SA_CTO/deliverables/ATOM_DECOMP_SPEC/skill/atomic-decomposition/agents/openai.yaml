@@ -1,0 +1,4 @@
+interface:
+  display_name: "Atomic Decomposition"
+  short_description: "Map systems completely before migration"
+  default_prompt: "Use $atomic-decomposition to map this system end to end and produce an evidence-backed migration plan."
