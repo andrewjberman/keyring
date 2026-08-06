@@ -96,7 +96,7 @@ fi
 #  (c) Bash OPERATIONAL aws (invoke/deploy/verify/TF) is NOT a relationship/inspection
 #      query -> never nudge it (only raw-aws INSPECTION + infra-grep are comp-answerable).
 if printf '%s' "$gpath" | grep -qE '\.[A-Za-z0-9]+$'; then exit 0; fi      # path ends in a file extension = single file
-if printf '%s' "$query" | grep -qE 'comp-|pipescript'; then exit 0; fi      # already a comp-tool reference
+if printf '%s' "$query" | grep -qE 'comp-'; then exit 0; fi      # already a comp-tool reference
 if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task|dynamodb (put-item|update-item|delete-item|batch-write-item|get-item|scan|query|batch-get-item)'; then exit 0; fi
 # (d) NON-ESTATE LOCAL CODE LIBRARY (the deck-generation engine deck_generation/) -- a symbol/def/
 #     signature/arg-shape lookup INSIDE a self-contained local code library has NO cross-system

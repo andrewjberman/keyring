@@ -20,7 +20,7 @@ the fan-out), `... fanout-only` (stop after persist -- produce the reports, defe
 
 Only INF is confirmed from the abstraction session; **resolve + verify** the others before fanning out
 (don't hardcode a wrong tree -- a review of the wrong dir is worse than useless). Use
-`pipescript <name>` / `comp-which "where is the <pipeline> gold runner"` / a Glob to confirm the gold
+`comp-estate --resource <name>` / `comp-which "where is the <pipeline> gold runner"` / a Glob to confirm the gold
 dir + the dispatcher + the served bucket.
 
 | pipeline | gold scripts dir | dispatcher (chain runner) | served bucket | reports root |

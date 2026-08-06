@@ -74,7 +74,7 @@ A seam you cannot name precisely you cannot QA. If the target is fuzzy ("check t
 
 **Method:** read the authoritative *record* (the claim) AND the *implementation* (the truth) and diff them. The truth side MUST be the deployed/live artifact per the grounding discipline — Axis 2's entire job is to catch map-territory drift, so reading the map twice proves nothing. Where the claim and the code disagree, the **code is the territory**; the record is what's wrong (or the code is, if the record encodes a ratified intent the code violates — then it's a mechanical/semantic break, route accordingly).
 
-**Tooling:** `comp-pipescript io` (declared consumers vs actual) · `comp-transform schema-check` (component's declared props vs the data's real shape) · `comp-kuzu` `drift_class` (declared vs observed in the estate graph) · the deployed-vs-committed diff (get-function Code.Location -> grep the signature) · the alignment cross-read (REGISTRY / JSON / TO / PRD) · `comp-surface-check` (critical-surface declared invariants).
+**Tooling:** `comp-pipescript io` (declared consumers vs actual) · `comp-transform schema-check` (component's declared props vs the data's real shape) · `comp-kuzu` `drift_class` (declared vs observed in the estate graph) · the deployed-vs-committed diff (get-function Code.Location -> grep the signature) · the alignment cross-read (REGISTRY / JSON / TO / PRD).
 
 **Verdict:** PASS = the record and the live implementation agree (knowledge parity holds). FAIL = drift — state the **delta**: "believed X (per <record:line>), actually Y (per <deployed evidence>)." A FAIL here is a knowledge-parity defect; the fix is to **correct the stale record to match reality** (the in-scope repair for alignment metadata; substantive code drift routes to the owner). Bringing the record back to parity is the deliverable, not just noting the gap.
 
@@ -95,7 +95,7 @@ A seam you cannot name precisely you cannot QA. If the target is fuzzy ("check t
 
 **Method:** validate the *content*, not the envelope. Read the served/live payload and run the sharpest applicable check: parity/reconciliation (sum-to-parent, inflows−outflows==nna to the cent, `all_pass` flags), vintage (`data_as_of` vs the firm-wide settled date, cross-checked against siblings), magnitude/sign sense (does the number make sense for the book/scale/prior?), name-vs-semantic (does the field's name match what the code computes?), units/grain, decision-usefulness for the actual consumer. The META-CHECK heuristic (magnitude / sign / naming-vs-semantic) is the SCAN; a mechanically-functional output that fails it IS NOT a success.
 
-**Tooling:** read the served object + parity-check it yourself · `comp-validate <script> --artifact <file>` (the producer's value config; PASS/WAIVED safe, NO_CONFIG/ZERO_CHECKS = UNVALIDATED) · `comp-surface-check` (SEV1 value invariants) · the value-layer contract (`period_defs` / graph_contracts value limb) · S3-version diff for content equality across a cutover.
+**Tooling:** read the served object + parity-check it yourself · `comp-validate <script> --artifact <file>` (the producer's value config; PASS/WAIVED safe, NO_CONFIG/ZERO_CHECKS = UNVALIDATED) · the value-layer contract (`period_defs` / graph_contracts value limb) · S3-version diff for content equality across a cutover.
 
 **Verdict:** PASS = the payload is the correct content with validated quality and is decision-useful to B. FAIL = wrong values / stale / semantically-off / wrong-grain / degraded — cite the sharp check that failed and the expected-vs-actual.
 
@@ -145,7 +145,7 @@ What was NOT exercised (e.g., "code deployed but not proven on a live event"), w
 
 - **MICRO (one function / object / import):** run the 3 axes directly on the single boundary. Fast, surgical. Most "is this call wired right" asks.
 - **MESO (one handoff / one chain link):** run the 3 axes on the producer->consumer pair; the boundary is the S3 key / queue / event / API route.
-- **MACRO (full pipeline):** **decompose into its constituent seams** (producer -> S3 -> dispatcher -> runner -> served -> frontend, each link a seam), then run `/seams` on each. Use `pipescript <name>` / `comp-pipescript` to enumerate the links so none is a silent Unknown. **Weakest-seam-binds:** the pipeline is SOUND iff *every* constituent seam is SOUND on all three axes; the pipeline's verdict is its weakest seam. Call `/verify-channel` for the data-delivery legs (freshness) and fold its result into that seam's SEMANTIC axis.
+- **MACRO (full pipeline):** **decompose into its constituent seams** (producer -> S3 -> dispatcher -> runner -> served -> frontend, each link a seam), then run `/seams` on each. Use `comp-estate --resource <name>` / `comp-pipescript` to enumerate the links so none is a silent Unknown. **Weakest-seam-binds:** the pipeline is SOUND iff *every* constituent seam is SOUND on all three axes; the pipeline's verdict is its weakest seam. Call `/verify-channel` for the data-delivery legs (freshness) and fold its result into that seam's SEMANTIC axis.
 
 A chain is exactly as sound as its least-sound joint — and the joints are where "everything looked fine" hides.
 
