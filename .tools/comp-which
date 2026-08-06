@@ -653,6 +653,16 @@ RULES = [
     # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
     # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
     # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
+    # comp-read: the READ half of the same Part B pair. Curated because the manifest alone does
+    # not make a tool discoverable -- comp-which routes from THIS list.
+    (["read a file", "what does this file say", "which part of the file", "key context",
+      "read the right part", "what am i missing in this file", "did i miss something",
+      "what does this function do", "understand this file", "read this file for"],
+     "key-context read of ONE file (comp-read)",
+     ["comp-read <file> --for \"<question>\"", "comp-read <file> --at <line>"],
+     "SHAPE + the regions salient to your question (AUTHORITATIVE vs DESCRIPTIVE) + the QUALIFIER "
+     "panel (the EXCEPT/NEVER/CORRECTED next to a claim -- where right-file-wrong-conclusion lives) "
+     "+ intra-file CONTRADICTIONS + an UNREAD LEDGER naming what you did not see."),
     # NFRA_SCRIPTGEN Part B (Andrew-direct 2026-08-05): comp-find is THE graded search SURFACE.
     # Registered as a CURATED ROUTE deliberately -- measured this same day, adding a tool to the
     # manifest does NOT make it discoverable, because comp-which routes from THIS list, not from

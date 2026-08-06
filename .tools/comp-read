@@ -1,0 +1,474 @@
+#!/usr/bin/env python3
+"""comp-read -- KEY-CONTEXT READ: you found the right file; this shows you the part that matters.
+
+ANDREW-DIRECT 2026-08-05, VERBATIM:
+    "numerous times now we have seen a deadly error where agents actually grep to the right file,
+     and simply don't read the information that was actually crucial to read, resulting in a
+     scenario where we are propagating errors and/or missing key context despite having hit the
+     right file. Accordingly I think a comp-read tool is essential, and needs to be designed to fix
+     this type of problem by facilitating key context reads, not just file id."
+
+THE DIAGNOSIS. "Agents don't read carefully" is not a mechanism. FOUR distinct ones, every specimen
+measured in one CVO~B session on 2026-08-05:
+
+  WRONG AUTHORITY   read a DESCRIPTION of the thing instead of the thing. (`shadow-detect`'s catalog
+                    line matched a category I was carrying; its argparse `help=` said something
+                    else entirely. Struck @aa6910d1a.) Descriptions drift. Code does not.
+  ADJACENT QUESTION the text answers a question NEARLY the one asked, and both are true so the
+                    substitution is invisible. ("64 passed" answers *did the suite pass*, not *is my
+                    file covered*. The allowlist covering 10 of 90 was 80 lines up in the same file.)
+  QUALIFIER BLIND   the claim is read; the EXCEPT / NOT / CORRECTED / deprecated beside it is not.
+                    (`.owned-paths.yaml` documents a 2-arg call; the real signature takes 4.)
+  SATISFICING       search returns something that COULD be the answer and reading stops at
+                    confirmation.
+
+THE FIRST THREE ARE TECHNICAL -- this tool fixes them. THE FOURTH IS BEHAVIORAL AND NO TOOL CAN FIX
+IT. You cannot make an agent read more; you can only change what "done reading" LOOKS LIKE. Today
+"done" = "I found a line supporting my hypothesis" -- private and unfalsifiable. Here, "done" = "I
+saw the file's SHAPE and explicitly dismissed what I did not read." That is the UNREAD LEDGER: it
+does not force reading, it removes the ability to NOT NOTICE, and makes the skip attributable.
+
+TWO HARD RULES, both anti-self-defeat:
+  1. NEVER SUMMARIZE PRIMARY TEXT. Every excerpt is verbatim with line numbers. A summary is a map,
+     and the standing ruling is to fetch the territory. The output is an INDEX INTO the file, never
+     a SUBSTITUTE for it -- otherwise comp-read becomes the next thing agents satisfice on, which is
+     failure mode 4 wearing a new coat.
+  2. NEVER TRUNCATE SILENTLY. Every panel prints its denominator.
+
+NO MODEL. NO EMBEDDINGS. NO NETWORK. NO CACHE. (Andrew-direct 2026-08-06: "We dont need an slm for
+this, it is important that it functions in milliseconds for it to be practical.") Everything is one
+file read + one AST/structure pass + compiled-regex sweeps. A cacheless tool also cannot serve a
+stale vintage -- the UNKNOWN-VINTAGE class simply does not exist here.
+
+Read-only, deterministic, ASCII-only.
+"""
+from __future__ import annotations
+
+import ast
+import os
+import re
+import sys
+import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import _comprail
+    _WS = _comprail.repo_root()
+    _RAIL = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
+except Exception:                                    # never block a read on the rail
+    _comprail, _WS, _RAIL = None, os.getcwd(), None
+
+# --------------------------------------------------------------------------- qualifier lexicon
+# The load-bearing panel. These are the shapes that INVERT, LIMIT, or RETRACT a nearby claim -- the
+# text that, unread, turns a correct file into a wrong conclusion. Compiled once; one pass.
+_QUAL = re.compile(
+    r"(?i)(?:^|[\s(\[*_`>-])("
+    r"never|not\s+a\b|not\s+the\b|does\s+not|do\s+not|cannot|can\s+not|must\s+not|no\s+longer|"
+    r"except\b|unless\b|only\s+(?:if|when|for)|but\s+not|however\b|caveat\b|warning\b|"
+    r"corrected\b|correction\b|superseded\b|supersedes\b|deprecated\b|retired\b|obsolete\b|"
+    r"prohibited\b|banned\b|forbidden\b|refus\w+|invalid\b|wrong\b|false\b|stale\b|"
+    r"out\s+of\s+scope|not\s+in\s+scope|scoped\s+to|limited\s+to|does\s+not\s+cover|"
+    r"todo\b|fixme\b|xxx\b|hack\b|known\s+issue|blind\s*spot"
+    r")")
+_STRONG = {"never", "corrected", "correction", "superseded", "supersedes", "deprecated", "retired",
+           "obsolete", "prohibited", "banned", "forbidden", "must not", "cannot", "no longer"}
+
+# argparse/CLI help strings + docstring-vs-signature are the AUTHORITATIVE behavior statements that
+# the WRONG-AUTHORITY specimens both missed.
+_HELP_RX = re.compile(r"""help\s*=\s*["'](.+?)["']""")
+_SIGREF_RX = re.compile(r"`([A-Za-z_][A-Za-z0-9_]*)\(([^`)]*)\)`")
+
+
+_TREE_CACHE = {}
+
+
+def _tree(src):
+    """ONE ast.parse per run, shared by SHAPE + docstring-authority + CONTRADICTIONS.
+
+    MEASURED, and it is the whole latency story: ast.parse costs 64.9ms on a 3,734-line module, and
+    the first cut called it THREE TIMES (once per consumer) -- ~195ms of a 225ms run, against a
+    stated millisecond requirement. Profiled rather than guessed: the first optimization I tried
+    (tokenization) was 5.1ms and made no difference, because I had assumed the bottleneck instead of
+    measuring it."""
+    key = id(src)
+    if key not in _TREE_CACHE:
+        try:
+            _TREE_CACHE[key] = ast.parse(src)
+        except SyntaxError:
+            _TREE_CACHE[key] = None
+    return _TREE_CACHE[key]
+
+
+_SCAN_CACHE = {}
+
+
+def _scan_tree(src):
+    """ONE ast.walk, three collectors: section spans + docstring ranges + def arities.
+
+    MEASURED TWICE, because I guessed wrong the first time. Round 1 I assumed tokenization was the
+    cost (it is 5.1ms) and optimized it -- no change. Round 2 profiled: ast.parse x3 = ~195ms.
+    Fixed by caching the parse; still 181ms. Round 3 profiled AGAIN: ast.walk, 66,966 calls,
+    174ms cumulative -- THREE FULL TREE WALKS, one per consumer. One walk serves all three.
+    The lesson is the tool's own: I read the symptom (slow) and twice acted before reading the
+    mechanism."""
+    key = id(src)
+    if key in _SCAN_CACHE:
+        return _SCAN_CACHE[key]
+    tree = _tree(src)
+    sections, docs, defs = [], [], {}
+    if tree is not None:
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                end = getattr(node, "end_lineno", None) or node.lineno
+                sections.append({"name": node.name,
+                                 "kind": "class" if isinstance(node, ast.ClassDef) else "def",
+                                 "start": node.lineno, "end": end})
+                if not isinstance(node, ast.ClassDef):
+                    a = node.args
+                    n = len(a.posonlyargs) + len(a.args) + len(a.kwonlyargs)
+                    defs[node.name] = (n, node.lineno, len(a.defaults) + len(a.kw_defaults or []))
+            if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                body = getattr(node, "body", None)
+                if body and isinstance(body[0], ast.Expr)                         and isinstance(body[0].value, ast.Constant)                         and isinstance(body[0].value.value, str):
+                    d = body[0]
+                    docs.append((d.lineno, getattr(d, "end_lineno", d.lineno)))
+        sections.sort(key=lambda x: x["start"])
+    _SCAN_CACHE[key] = (sections, docs, defs)
+    return _SCAN_CACHE[key]
+
+
+def _read(path):
+    with open(path, "r", encoding="utf-8", errors="replace") as fh:
+        return fh.read()
+
+
+# --------------------------------------------------------------------------- SHAPE
+def _sections_py(src, lines):
+    """def/class spans from the single shared tree scan."""
+    sections, _docs, _defs = _scan_tree(src)
+    return sections or None
+
+
+def _sections_md(lines):
+    out = []
+    for i, ln in enumerate(lines, 1):
+        m = re.match(r"^(#{1,6})\s+(.*)", ln)
+        if m:
+            out.append({"name": m.group(2).strip()[:70], "kind": "h%d" % len(m.group(1)),
+                        "start": i, "end": None})
+    for i, s in enumerate(out):
+        s["end"] = (out[i + 1]["start"] - 1) if i + 1 < len(out) else len(lines)
+    return out
+
+
+def _sections_generic(lines):
+    """Top-level keys / blank-line blocks. The fallback that keeps the SHAPE panel honest for
+    yaml/json/sh/ts -- a file we cannot parse still gets a real denominator, never a blank map."""
+    out = []
+    for i, ln in enumerate(lines, 1):
+        if re.match(r"^[A-Za-z_\"'\[][^\s:=]*\s*[:=]", ln) and not ln.startswith((" ", "\t")):
+            out.append({"name": ln.strip()[:70], "kind": "key", "start": i, "end": None})
+    for i, s in enumerate(out):
+        s["end"] = (out[i + 1]["start"] - 1) if i + 1 < len(out) else len(lines)
+    return out
+
+
+def _shape(path, src, lines):
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".py":
+        s = _sections_py(src, lines)
+        if s:
+            return s, "python-ast"
+    if ext in (".md", ".rst", ".txt"):
+        s = _sections_md(lines)
+        if s:
+            return s, "markdown-headings"
+    s = _sections_generic(lines)
+    return (s, "top-level-keys") if s else ([{"name": os.path.basename(path), "kind": "file",
+                                              "start": 1, "end": len(lines)}], "whole-file")
+
+
+# --------------------------------------------------------------------------- SALIENCE (BM25-lite)
+def _toks(s):
+    """Emit the whole identifier AND its underscore/camel parts.
+
+    WHY BOTH (measured on the first acceptance run): splitting only on non-word chars makes
+    `test_multi_pipeline` a SINGLE token, so the question "which TEST FILES does this gate run"
+    scored the WATCH_GLOBS block -- the literal answer -- at 0.66 and left it out of SALIENT. The
+    file's own vocabulary is underscore-joined; a reader's question never is. Keeping the whole
+    token preserves exact-identifier matching; adding the parts is what lets a plain-English
+    question reach code."""
+    out = []
+    for t in re.split(r"[^A-Za-z0-9_]+", s.lower()):
+        if len(t) > 2:
+            out.append(t)
+            if "_" in t:
+                out.extend(p for p in t.split("_") if len(p) > 2)
+    return out
+
+
+def _score_sections(sections, lines, question, line_toks=None):
+    """Deterministic overlap scoring, ONE tokenization pass over the file.
+
+    PERF NOTE, measured not assumed: the first cut re-tokenized each section's BODY, so a 3.7k-line
+    file with 52 defs tokenized the text ~52 times and ran 205ms -- over the millisecond bar this
+    tool exists to meet (Andrew-direct: "it is important that it functions in milliseconds for it to
+    be practical"). Tokenizing each LINE once and aggregating per section is the same arithmetic at
+    O(lines) instead of O(lines x sections)."""
+    q = set(_toks(question))
+    if not q:
+        return {}
+    if line_toks is None:
+        line_toks = [_toks(ln) for ln in lines]
+    scores = {}
+    for idx, s in enumerate(sections):
+        hits = 0
+        n = 0
+        for i in range(s["start"] - 1, min(s["end"] or s["start"], len(lines))):
+            lt = line_toks[i]
+            n += len(lt)
+            for t in lt:
+                if t in q:
+                    hits += 1
+        if not n:
+            continue
+        name_hit = 3.0 * sum(1 for t in _toks(s["name"]) if t in q)
+        scores[idx] = (hits / (n ** 0.5)) + name_hit
+    return scores
+
+
+# --------------------------------------------------------------------------- AUTHORITY
+def _doc_ranges(src):
+    """Docstring line ranges from the single shared tree scan. A docstring's BODY was tagged
+    AUTHORITATIVE because the check only looked at the OPENING quotes -- prose about the code
+    reading as the code, i.e. the WRONG-AUTHORITY failure occurring inside the tool built to
+    prevent it."""
+    _sections, docs, _defs = _scan_tree(src)
+    return docs
+
+
+def _authority(path, line_text, lineno=None, doc_ranges=()):
+    """AUTHORITATIVE = the thing itself (code, signature, help=, assertion).
+    DESCRIPTIVE = something ABOUT the thing (comment, prose, docstring) -- drifts, and both
+    WRONG-AUTHORITY specimens were exactly this."""
+    t = line_text.strip()
+    ext = os.path.splitext(path)[1].lower()
+    if lineno is not None and any(a <= lineno <= b for a, b in doc_ranges):
+        return "DESCRIPTIVE"
+    if ext == ".py":
+        if t.startswith("#"):
+            return "DESCRIPTIVE"
+        if re.match(r"^(def |class |async def )", t) or "help=" in t or t.startswith("assert"):
+            return "AUTHORITATIVE"
+        if t.startswith(('"""', "'''")):
+            return "DESCRIPTIVE"
+        return "AUTHORITATIVE"
+    if ext in (".md", ".rst", ".txt"):
+        return "DESCRIPTIVE"
+    return "AUTHORITATIVE"
+
+
+# --------------------------------------------------------------------------- CONTRADICTIONS
+def _contradictions(path, src, lines):
+    """CHEAP + INTRA-FILE ONLY (the millisecond budget forbids a repo walk).
+
+    Catches the specimen shape: PROSE DOCUMENTS A CALL, THE CODE DEFINES IT DIFFERENTLY. That is
+    `.owned-paths.yaml`'s note documenting a 2-arg `check_agent(...)` against a 4-arg def -- the
+    disproof and the claim in one place, and nobody read both.
+    """
+    out = []
+    defs = {}
+    if os.path.splitext(path)[1].lower() == ".py":
+        _sections, _docs, defs = _scan_tree(src)
+    for i, ln in enumerate(lines, 1):
+        for m in _SIGREF_RX.finditer(ln):
+            name, argstr = m.group(1), m.group(2).strip()
+            if name not in defs:
+                continue
+            claimed = 0 if not argstr else len([a for a in argstr.split(",") if a.strip()])
+            actual, dline, ndef = defs[name]
+            if claimed and not (actual - ndef <= claimed <= actual):
+                out.append({"line": i, "text": ln.strip()[:150], "name": name,
+                            "claimed": claimed, "actual": actual, "def_line": dline})
+    return out
+
+
+# --------------------------------------------------------------------------- render
+def main() -> int:
+    if _comprail:
+        _comprail.harden_stdout()
+    argv = sys.argv[1:]
+    if not argv or argv[0] in ("-h", "--help"):
+        print("comp-read <file> [--for \"<question>\"] [--at LINE] [--top N] [--all-quals]")
+        print("  Shows the file's SHAPE, the regions salient to your question (tagged")
+        print("  AUTHORITATIVE vs DESCRIPTIVE), every QUALIFIER that limits/negates/corrects a")
+        print("  nearby claim, intra-file CONTRADICTIONS, and an UNREAD LEDGER.")
+        print("  Excerpts are VERBATIM with line numbers -- this indexes the file, never replaces it.")
+        return 0
+
+    t0 = time.perf_counter()
+    question, at_line, top, all_quals = "", None, 6, False
+    positional = []
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--for":
+            i += 1
+            question = argv[i] if i < len(argv) else ""
+        elif a == "--at":
+            i += 1
+            at_line = int(argv[i]) if i < len(argv) and argv[i].isdigit() else None
+        elif a == "--top":
+            i += 1
+            top = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 6
+        elif a == "--all-quals":
+            all_quals = True
+        else:
+            positional.append(a)
+        i += 1
+
+    if not positional:
+        print("comp-read: ERROR: no file given.")
+        return 2
+    path = positional[0].replace("\\", "/")
+    full = path if os.path.isfile(path) else os.path.join(_WS, path)
+    if not os.path.isfile(full):
+        print("comp-read: ERROR: not a file: %s" % path)
+        return 2
+
+    src = _read(full)
+    lines = src.splitlines()
+    sections, how = _shape(full, src, lines)
+    doc_ranges = _doc_ranges(src) if full.endswith(".py") else []
+    _line_toks = [_toks(ln) for ln in lines]
+    scores = _score_sections(sections, lines, question, _line_toks) if question else {}
+    ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:top] if scores else []
+    if at_line:
+        for idx, s in enumerate(sections):
+            if s["start"] <= at_line <= (s["end"] or s["start"]):
+                if idx not in [r[0] for r in ranked]:
+                    ranked.insert(0, (idx, 999.0))
+                break
+
+    print("comp-read: %s" % path)
+    print("  %d lines | %d section(s) via %s | question: %s"
+          % (len(lines), len(sections), how, ("%r" % question) if question else "(none given)"))
+
+    # ---- SHAPE (the denominator; never truncated)
+    print()
+    print("  SHAPE (all %d, never truncated):" % len(sections))
+    for idx, s in enumerate(sections):
+        mark = " <<" if idx in [r[0] for r in ranked] else ""
+        print("    %5d-%-5d %-6s %s%s" % (s["start"], s["end"] or s["start"], s["kind"],
+                                          s["name"][:62], mark))
+
+    # ---- SALIENT
+    shown_lines = set()
+    print()
+    if not question:
+        print("  SALIENT: (no --for question given; pass one to rank regions)")
+    elif not ranked:
+        print("  SALIENT: NO region matched the question. That is a MEASURED zero over %d section(s)"
+              % len(sections))
+        print("    -- the file may still contain the answer under different words. Do not read this")
+        print("    as 'the file does not say'.")
+    else:
+        print("  SALIENT (top %d of %d scored):" % (len(ranked), len(scores)))
+        for idx, sc in ranked:
+            s = sections[idx]
+            print("    [%s:%d-%d] %s   score=%.2f"
+                  % (s["kind"], s["start"], s["end"] or s["start"], s["name"][:52], sc))
+            body = lines[s["start"] - 1:(s["end"] or s["start"])]
+            q = set(_toks(question))
+            # RANK lines by overlap, do NOT take the first matches.
+            # CAUGHT ON THE CLAUDE.md SPECIMEN: asked "does --force bypass a gate failure", this
+            # ranked the right SECTION first and then showed lines 24/29/31 while the answer -- the
+            # Rule 14a clause "--force does NOT bypass a gate FAILURE" -- sat at line 37. RIGHT
+            # SECTION, WRONG LINES: the tool committing, one level down, the exact failure it exists
+            # to prevent. First-match is a positional heuristic masquerading as relevance.
+            _scored = []
+            for n, ln in enumerate(body, s["start"]):
+                lt = set(_toks(ln))
+                ov = len(q & lt)
+                if ov:
+                    _scored.append((ov, -abs(len(ln) - 90), n, ln))
+            _scored.sort(key=lambda t: (-t[0], t[1]))
+            best = [(n, ln) for _o, _l, n, ln in _scored[:3]]
+            best.sort(key=lambda t: t[0])
+            for n, ln in best:
+                shown_lines.add(n)
+                print("        %-13s %d: %s"
+                      % (_authority(full, ln, n, doc_ranges), n, ln.strip()[:120]))
+
+    # ---- QUALIFIERS (the load-bearing panel)
+    quals = []
+    for n, ln in enumerate(lines, 1):
+        m = _QUAL.search(ln)
+        if m:
+            quals.append((n, m.group(1).lower(), ln.strip()))
+    near = quals
+    if ranked and not all_quals:
+        spans = [(sections[i]["start"], sections[i]["end"] or sections[i]["start"]) for i, _ in ranked]
+        near = [q for q in quals if any(a - 3 <= q[0] <= b + 3 for a, b in spans)]
+    print()
+    print("  QUALIFIERS: %d in file | %d near your regions%s"
+          % (len(quals), len(near), " (--all-quals for every one)" if not all_quals else ""))
+    print("    ^ text that LIMITS / NEGATES / RETRACTS a nearby claim. This is where the")
+    print("      right-file-wrong-conclusion lives: the claim gets read, this does not.")
+    for n, word, ln in near[:12]:
+        flag = "!!" if word in _STRONG else "  "
+        shown_lines.add(n)
+        print("    %s %d: %s" % (flag, n, ln[:130]))
+    if len(near) > 12:
+        print("    ... %d more (--all-quals)" % (len(near) - 12))
+
+    # ---- CONTRADICTIONS
+    contras = _contradictions(full, src, lines)
+    print()
+    if contras:
+        print("  CONTRADICTIONS (%d) -- this file disagrees with ITSELF:" % len(contras))
+        for c in contras:
+            shown_lines.add(c["line"])
+            print("    !! %d: %s" % (c["line"], c["text"]))
+            print("       documents %s() with %d arg(s); the def at :%d takes %d."
+                  % (c["name"], c["claimed"], c["def_line"], c["actual"]))
+    else:
+        print("  CONTRADICTIONS: none detected (intra-file signature claims only -- a doc that")
+        print("    contradicts a DIFFERENT file is out of this tool's millisecond budget).")
+
+    # ---- UNREAD LEDGER (the behavioral forcing function)
+    seen_sections = {i for i, _ in ranked}
+    for n in shown_lines:
+        for idx, s in enumerate(sections):
+            if s["start"] <= n <= (s["end"] or s["start"]):
+                seen_sections.add(idx)
+    unread = [(idx, sections[idx]) for idx in range(len(sections)) if idx not in seen_sections]
+    unread_ranked = sorted(unread, key=lambda t: -scores.get(t[0], 0.0))
+    print()
+    print("  UNREAD LEDGER: you have been shown %d of %d line(s) and %d of %d section(s)."
+          % (len(shown_lines), len(lines), len(seen_sections), len(sections)))
+    if unread_ranked:
+        print("    NOT shown (highest-salience first) -- skipping these is now YOUR stated choice:")
+        for idx, s in unread_ranked[:8]:
+            print("      %5d-%-5d %s%s" % (s["start"], s["end"] or s["start"], s["name"][:56],
+                                           ("   score=%.2f" % scores[idx]) if idx in scores else ""))
+        if len(unread_ranked) > 8:
+            print("      ... %d more section(s) unread" % (len(unread_ranked) - 8))
+    else:
+        print("    Every section was surfaced.")
+
+    ms = (time.perf_counter() - t0) * 1000.0
+    print()
+    print("  (%.1f ms | no model, no network, no cache -- so no vintage to be stale)" % ms)
+    if _comprail and _RAIL:
+        try:
+            _comprail.log_rail(_RAIL, "RUN-READ", "comp-read", path,
+                               "sections=%d quals=%d contras=%d ms=%.1f"
+                               % (len(sections), len(quals), len(contras), ms))
+        except Exception:
+            pass
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

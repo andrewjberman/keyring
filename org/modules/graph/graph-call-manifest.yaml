@@ -287,6 +287,18 @@ entries:
     status: canonical
     notes: "Firm-parameterized 2026-06-11 (NFRA 514d433). Caching LANDED via NFRA_GRAPHS D2 (graph_cache.py): routing table + per-firm gold DAG + dataflows cached, keyed by --firm; warm page is a cache read, bd cold==warm regression-clean."
 
+  - id: read.keycontext.file
+    use_case: "Read a file for a question and see WHICH PART ANSWERS IT -- plus the qualifier, exception or correction sitting next to the claim, and an explicit list of what you did NOT read. For when you already found the right file and need the crucial lines, not the whole file."
+    canonical_call: "comp-read <file> --for \"<your question>\"   # --at <line> ; --top N ; --all-quals"
+    tool: comp-read
+    mode: rebuild
+    layer: source
+    cost: "2-7ms typical; ~105ms on a 3.7k-line python module (CPython ast.parse is the floor)"
+    freshness: "live working-tree read; NO cache, so no vintage can be stale"
+    anti_pattern: "reading comp-read's output INSTEAD of the file -- it is an INDEX INTO the file, never a substitute, and treating it as one rebuilds the satisficing failure it exists to fix. Also: reading an empty SALIENT panel as 'the file does not say' -- salience is lexical, so check the UNREAD LEDGER before concluding absence."
+    status: canonical
+    notes: "NFRA_SCRIPTGEN Part B. Built against FOUR measured failure mechanisms (wrong authority / adjacent question / qualifier blindness / satisficing), all specimens from one CVO~B session 2026-08-05. Deterministic, no SLM (Andrew-direct 2026-08-06)."
+
   - id: search.graded.find
     # use_case phrasing is DELIBERATELY aligned to the curated comp-which keywords ("search the
     # repo", "where is this defined"). The registration gate checks that a tool SURFACES FOR ITS
@@ -1624,6 +1636,7 @@ tools_index:
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
+  comp-read: { does: "KEY-CONTEXT READ of ONE file -- SHAPE (all sections, never truncated), the regions salient to your question tagged AUTHORITATIVE vs DESCRIPTIVE, every QUALIFIER that limits/negates/corrects a nearby claim, intra-file CONTRADICTIONS, and an UNREAD LEDGER naming what you did NOT see. Verbatim excerpts with line numbers -- indexes the file, never replaces it", subcommands: ["<file>", "--for <question>", "--at <line>", "--top N", "--all-quals"], entries: [read.keycontext.file] }
   comp-find: { does: "THE graded search SURFACE -- content + filename in one verb, every hit on a deterministic reject-first band ladder (HEAD/DEF/SURFACED/CONFIG/TEST/DOC/COLD), paginated with TRUE band totals + the scanned denominator on every run. No SLM, no learned rerank -- ordering is re-derivable from (query, path, line)", subcommands: ["<pattern>", "--name <glob>", "-i", "--page", "--limit", "--band", "--files", "--all"], entries: [search.graded.find] }
   comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, postdeps, overlap, stats, inject, postmerge-cols, shadow-detect, skipgate], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
   comp-pulse:    { does: "The estate's VITAL SIGNS (hot/cold/evolving/danger/phantom-limbs; DANGER x TRAFFIC = the immune response) + the pre-commit risk reflex (diff mode, wired advisory into safe-commit)", subcommands: [pulse, diff, "--days", "--top", "--json", "--self-test"], entries: [org.pulse.vital_signs, org.pulse.risk_reflex] }

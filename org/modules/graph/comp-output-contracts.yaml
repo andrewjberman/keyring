@@ -74,6 +74,35 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-read:
+    coverage: 'EVERY section of the target file appears in the SHAPE panel (never truncated) and every
+      line is eligible for the QUALIFIER sweep. The UNREAD LEDGER states, per run, how many lines and
+      sections were surfaced out of the file total -- so what was NOT shown is named rather than
+      silently omitted.'
+    blind_spots:
+      - 'INTRA-FILE ONLY. A doc that contradicts a DIFFERENT file is not detected -- that is the
+         .owned-paths.yaml specimen (a note documenting a 2-arg call against a 4-arg def in another
+         file) and it is out of the millisecond budget by design.'
+      - 'SALIENCE IS LEXICAL OVERLAP, not meaning. A section that answers the question in different
+         words scores low. The UNREAD LEDGER is the compensating control: it lists high-salience
+         unshown sections so a miss is visible.'
+      - 'QUALIFIER DETECTION IS LEXICAL. A limitation expressed without any of the lexicon words is
+         not flagged. False negatives are possible and are the dangerous direction here.'
+      - 'AUTHORITY tagging is heuristic by file type: python code AUTHORITATIVE, comments/docstrings/
+         markdown DESCRIPTIVE. A generated or vendored .py reads AUTHORITATIVE and may not be.'
+      - 'It CANNOT make an agent read. It changes what "done reading" looks like by making the unread
+         set explicit and attributable; satisficing remains available to a determined reader.'
+    failure_direction: 'UNDER-SURFACES rather than over-claims: it never summarizes primary text and
+      never truncates a panel without printing the denominator. A zero in SALIENT renders as a
+      MEASURED zero over the section count, never as "the file does not say".'
+    plane: source
+    grain: field
+    scope: single-artifact
+    vintage: 'n/a -- reads the working-tree file at call time. NO CACHE, so there is no vintage that
+      can go stale (the UNKNOWN-VINTAGE class does not exist for this tool).'
+    exit_codes: '0 = ran (including a measured zero) | 2 = ERROR (no file / unreadable). A zero-hit
+      SALIENT panel is NOT an error.'
+
   comp-find:
     coverage: "EVERY line (content mode) or filename (name mode) in the .gitignore-aware repo file
       set for the given pathspec, each assigned exactly one grade band. DENOMINATOR PRINTED ON EVERY

@@ -141,6 +141,8 @@ declare -A _INTERP_WIN=(
     # comp-find added 2026-08-05 (3.0.0_SA_CVO~B, NFRA_SCRIPTGEN Part B). Shebang READ, not assumed:
     # `#!/usr/bin/env python3`, same interpreter class as comp-grep/comp-glob which it unifies.
     [comp-find]="py.exe"
+    # comp-read added 2026-08-06 (same Part B pair). Shebang READ: `#!/usr/bin/env python3`.
+    [comp-read]="py.exe"
 )
 
 # --- DERIVED SET (3.0.0_SA_CVO 2026-07-28, Andrew-direct) -------------------------------------
