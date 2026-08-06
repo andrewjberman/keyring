@@ -278,11 +278,45 @@ really make sense"**; scoped folders are the correct grammar.
 | 4 OWNTS objects | **TRASH** | zero consumers confirmed |
 | root bare `aggregate_aua_timeseries.json` | **TRASH** | sole consumer is `mdpf-freshness-checker`, itself retiring — **checker first, then object** |
 | 3 scoped UNDERSCORE twins | **TRASH** | already-ruled retired pair (cottonwood never had one) |
-| `platinum/mdpf/aggregate_aua/` (439 dated) | not portal-read; consumer is `mdpf-daily-trigger` `PLATINUM_AGG_PREFIX` — **pipeline state in the serving bucket** | dies WITH the port (option (c) re-points to gold) — **delete AFTER cutover, never before** |
+| `platinum/mdpf/aggregate_aua/` (439 dated) | not portal-read; the `PLATINUM_AGG_PREFIX` name is DEAD CONFIG | ✅ **ARCHIVED — see below** |
 | `s3://opal-data-mdpf/mdpf/feeds/*` | ⛔ **NOT DELETABLE — LIVE PRODUCER** | leaves the deletion set entirely |
-| `opal-data-mdpf` overall | `code/` + `feeds/` + `telemetry/` LIVE until the port lands | `cache/` (05-19) + `bmkaud-evidence/` (06-01) are dead weight |
+| `opal-data-mdpf` overall | `code/` + `feeds/` + `telemetry/` LIVE until the port lands | `cache/` (05-19) + `bmkaud-evidence/` (06-01) dead weight |
 
-Formal deletion execution still lands in Phase 6 under the standing confirmations.
+### ✅ EXECUTED 2026-08-06 ~2144Z — THE ROOT-GRAIN SET IS ARCHIVED, NOT PENDING
+
+**Andrew-direct, VERBATIM:** *"yeah just get it the fuck out of the root there, it can go to
+opal-data-portal-v2/platinum/mdpf/archive or something"* — executed same session by MSTR~Z personally,
+record **@4a2651063**.
+
+**444 objects → `platinum/mdpf/archive/`**: the bare `aggregate_aua_timeseries.json`,
+`etf_ownership_timeseries/` (4), and `aggregate_aua/` (439). **444/444 denominator-verified, 0 leftovers.**
+Root is now exactly `{49financial, inflection, cottonwood, global, archive}`. Served hyphen surface
+untouched at today's vintage. **An ARCHIVE-MOVE, not a deletion — reversible and versioned.**
+
+Pre-move grounding: portal proven scoped-only; `mdpf-daily-trigger`'s **DEPLOYED** env already re-points
+`PLATINUM_AGG_PREFIX` to `gold/mdpf_revamp/_aggregate_aua` (**the code default naming platinum is DEAD
+CONFIG**); and `mdpf-freshness-checker` DOES NOT EXIST as a deployed function.
+⚠ **That last one is a ninth instrument entry: the bare object's "one consumer" WAS A PHANTOM THE WHOLE
+TIME** — the retirement sequencing built around "checker first, then object" was ordering against a
+function that had already ceased to exist.
+
+⛔ **CONSEQUENCES THAT MAKE PENDING TO LANGUAGE STALE — this table was written 20 minutes before the move:**
+1. **H13 for the root-grain set is DISCHARGED BY EXECUTION.** Remove those rows from any pending
+   Andrew-ask. What REMAINS of H13: `opal-data-mdpf` `cache/` + `bmkaud-evidence/` (his word needed only
+   if we want actual *deletion* rather than leaving them), and **the scoped UNDERSCORE twins, which stay on
+   the F7 CTO-GO path — they sit inside scope folders and were DELIBERATELY NOT in this move. DO NOT LET
+   ANYONE WIDEN HIS ROOT INSTRUCTION TO COVER THEM.**
+2. **P4/P5: any step referencing `platinum/mdpf/aggregate_aua/` as a LIVE path is now stale.** The dated
+   partitions live under `archive/` and **the real contract is `gold/mdpf_revamp/_aggregate_aua`** — already
+   the trigger's deployed env. **DS~Z's port spec treats the platinum dated prefix as GONE, not as a
+   contract to preserve.**
+3. **PHASE-4 ACCEPTANCE ROW:** a successful pre-port EC2 chain run may RE-MINT one
+   `aggregate_aua/{date}.json` at the old root (Stage 6 writes by its own constant; the chain is currently
+   wedged at Stage 5). **If Phase 4's cutover acceptance sweeps the root and finds it clean, THAT IS THE
+   CHECK** — a re-minted file found there is one re-archive command, not an incident.
+4. **The per-scope re-path question is OBE FOR PLATINUM** — the dated partitions are out of the serving
+   tier entirely. **The multi-partner-single-document question now lives ONLY at the GOLD contract**, which
+   is DS~Z's port design surface.
 
 ⚠ **PHANTOM, so nobody cites it:** `platinum/mdpf/account-distribution.json` (top-level) **DOES NOT EXIST**
 — versions=0, positive control on the 49financial scoped key returns 18 versions. `comp-clobber` over the
