@@ -409,8 +409,17 @@ executable by its own beneficiary, AND it must be able to fail.**
 > **A finding is classified as `(what changed) × (why we are blind)`, and the second coordinate is the
 > detectability answer.** `#3` citations still resolve — to a field-2 member.
 >
-> ⚠ **PARTIALLY EXERCISED, STATED AS SUCH.** The mapping is worked for `#1` and `#3`; `#2` and `#4`
-> are reasoned, not exercised. **Do not build on the `#2`/`#4` rows until someone walks them.**
+> **FULLY EXERCISED as of 2026-08-06.** `#1`/`#3` were worked at authoring; `#2`/`#4` walked by
+> `4.0.0_SA_CRO` on the estate's own specimens — **both CONFIRM the reasoned rows**, and the
+> do-not-build hold is lifted. `#2` on D-7: the gate's population is 72 tool-grain keys against 324
+> live subcommand-grain members, and a mutant growing the subcommand surface leaves universe and all
+> tested queries byte-identical → **not traversed** — with one sharpening: the gate FIRES on a
+> subcommand edit (`manifest_check_cli.py:699-701` diffs `tools_index` keys) and still verifies the
+> tool-grain property — **TRIGGER-GRAIN IS NOT VERDICT-GRAIN; a gate that visibly runs on your edit
+> reads as coverage of your edit.** `#4` on `auth_api_gw`: 3/3 authorizer references in the file are
+> a field, a comment, and the origin-type assignment — zero code consults an authorizer, so `bool`
+> gets the nearest sayable `True`, and the false-secure cost is measured (MACHINEFLAG R1). Evidence +
+> denominators: `org/tier1_exec/4.0.0_SA_CRO/deliverables/FIELD2_ROWS_2_AND_4_WALKED_20260806.md`.
 
 > **GRAIN SHIFT (#2) IS A C, NOT A B** — and it is the one most often misfiled. *A guard's coverage goes
 > stale the moment the thing it guards gets more granular:* nobody edits the guard, nobody edits the law,
