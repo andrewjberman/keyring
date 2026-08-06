@@ -135,3 +135,37 @@ see is the same defect in the other direction.
   path failed to chain is a separate question I have not opened.
 
 **No code changed, nothing deployed, no gate requested.** No alert/alarm/SNS/SES/checker/monitor.
+
+---
+
+## QUALIFICATION ADDED 2026-08-06 POST-PUBLICATION — the numerator may be absent on some days
+
+*Source: `3.0.0_SA_CVO` @190752Z, found by RUNNING the subdivided pipeline locally end-to-end under
+Andrew's per-use egress word. Not a gate; recorded because it bears directly on section 1.*
+
+Section 1 corrected the DENOMINATOR — ~2/3 of the resource axis is governance records that can never
+chain-resolve. **That correction stands.** But CVO surfaced a separate question about the NUMERATOR
+that I did not consider, and it is live in the DEPLOYED runner, not only in their harness:
+
+`load_attribution_maps` fetches three registries and **degrades gracefully by design** — each hop is
+independently optional and the docstring says so. If the resolver hop fails to load (CVO reproduced
+it via a concurrent commit moving HEAD mid-run, since the loader does `git checkout <branch> -- <registry>`),
+then `prod_to_thread` returns EMPTY, **every path falls back to `area:*`, and chain-resolution
+collapses to near-zero.**
+
+> **GRACEFUL DEGRADATION IS CORRECT FOR ATTRIBUTION AND WRONG AS A SILENT INPUT TO A GATE.**
+
+**The consequence for this document: a low chain rate reads as "the resolver is bad" when it may
+mean "the resolver did not load."** Those are different findings with different remedies, and the
+artifact cannot currently tell them apart — **`maps["degraded"]` is already computed and, as far as
+CVO can see, never surfaced into the emitted artifact.**
+
+**SO THE HONEST STATUS OF SECTION 1's RATES:** the denominator correction (62-66% governance) is
+measured from the emitted resource axis and is unaffected. The CORRECTED CHAIN RATES (8.1% on 08-05,
+19.5% on 08-06) assume the resolver loaded on those days. **I did not verify that, and the artifact
+does not record it.** Whether any part of the chain-rate history is absent-measurement rather than
+poor-resolution is **OPEN and worth checking before anyone sizes resolver work off those numbers.**
+
+*Recorded rather than quietly amended: I published those rates to Andrew with more confidence than
+the artifact can support, and the qualification arrived from someone who ran the thing instead of
+reading it.*

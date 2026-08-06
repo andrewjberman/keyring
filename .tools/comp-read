@@ -223,6 +223,15 @@ def _toks(s):
             out.append(t)
             if "_" in t:
                 out.extend(p for p in t.split("_") if len(p) > 2)
+            # PLURAL FOLDING. A question is asked in the plural ("why did our DETECTORS miss the
+            # DEFECTS") and a finding is written in the singular ("every DETECTOR we own ... this
+            # DEFECT class"). Without this the overlap is literally ZERO and the answering section
+            # does not rank at all -- measured on the run-1 neutral corpus (MDPF postmortem, the
+            # one-sentence finding at line 18 went unranked). Deterministic suffix strip, no stemmer.
+            if len(t) > 3 and t.endswith("s") and not t.endswith("ss"):
+                out.append(t[:-1])
+                if t.endswith("es") and len(t) > 4:
+                    out.append(t[:-2])
     return out
 
 
@@ -251,8 +260,17 @@ def _score_sections(sections, lines, question, line_toks=None):
                     hits += 1
         if not n:
             continue
-        name_hit = 3.0 * sum(1 for t in _toks(s["name"]) if t in q)
-        scores[idx] = (hits / (n ** 0.5)) + name_hit
+        # NAME match is a WEAK hint, not the signal. A DOCUMENT TITLE is pure keywords -- "MDPF
+        # Postmortem -- OPAL_CONSOLIDATION / MDPF_REVAMP / MDPF_3FIRMS" matches "mdpf" three times in
+        # a TWO-LINE section, so a 3.0 name weight made the title outrank every section that could
+        # actually contain an answer. Found by the run-1 neutral corpus (postmortems I did not pick):
+        # the title won at 9.90 while the one-sentence finding sat unranked at line 18.
+        name_hit = 0.8 * sum(1 for t in _toks(s["name"]) if t in q)
+        # SHORT-SECTION DAMPING: a heading/title with almost no body cannot hold the answer, and
+        # hits/sqrt(tokens) rewards exactly that shape. Damp until a section has real content.
+        span = (s["end"] or s["start"]) - s["start"] + 1
+        damp = min(1.0, span / 4.0)
+        scores[idx] = ((hits / (n ** 0.5)) + name_hit) * damp
     return scores
 
 

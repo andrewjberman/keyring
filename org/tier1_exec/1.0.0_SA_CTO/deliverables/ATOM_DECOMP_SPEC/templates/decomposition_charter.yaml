@@ -1,0 +1,20 @@
+schema_version: 1.0.0
+system: "
+objective: "
+decision_enabled: "
+authority: "
+mutation_mode: read-only
+scope:
+  repositories: []
+  accounts: []
+  regions: []
+  environments: []
+  tenants_or_variants: []
+  data_roots: []
+denominator: "
+consumer_invariants: []
+constraints: []
+exclusions: []
+live_access: []
+known_questions: []
+required_phases: [P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12]
