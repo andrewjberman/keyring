@@ -112,7 +112,7 @@ populated at the generated file's SOURCE.
 served artifact being 7 weeks newer than the census claimed. **What failed:** nothing tool-side.
 **Gap found:** `comp-estate estate-report` is UNRUNNABLE -- there is no `estate-report` vertical, so
 the pipeline producing the daily report is invisible to its own vertical join. Promoted to the v3
-critical path (design §9.3).
+critical path (design s.9.3).
 
 ---
 
@@ -139,8 +139,8 @@ board item).
   input size. New `KIMI_TOKENS` log line reports both.
 - **Phase-0 table:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/KIMI_SVP_PHASE0_LIFECYCLE_PROPOSAL_TABLE_20260804.md`
   -- 9/29 ratified, resume at **row 10 `etf-reports`** (carries the open ETFS CANON question).
-- **v3 design:** `docs/architecture/OPAL_KIMIPIPELINE_STATE_FRICTION_DESIGN.md` -- §9 critical path,
-  §10a holds Andrew's axis VERBATIM (now in this lane's own record), §10c the gate ruling.
+- **v3 design:** `docs/architecture/OPAL_KIMIPIPELINE_STATE_FRICTION_DESIGN.md` -- s.9 critical path,
+  s.10a holds Andrew's axis VERBATIM (now in this lane's own record), s.10c the gate ruling.
 - **Remaining UNDECLARED rows (13 insurance, 25 security-scanner, 27 ticketing) are GROUND-READ
   BEFORE presenting.** Two of two examined so far were wrong in OPPOSITE directions. Row 25 is
   likely inverted -- its backend is the live `opal-data-refresh-api` and its page is mounted at
