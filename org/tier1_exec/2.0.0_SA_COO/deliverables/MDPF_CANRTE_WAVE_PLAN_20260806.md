@@ -58,7 +58,45 @@ TO commits: `ebaf5700a` `f50291f06` `7c7c549f7` `253e6c893` `5b4411c1e` `3c1ba6c
 | `P3-1` publisher correction + H8 | AE~Z | **ordered after P2-1**, see §5 |
 | `P4-1` Terraform route cutover | AE~Z | probe branches must be resolved first |
 | `P5-1` build + deploy order · `P5-2` un-targeted zero-diff | AE~Z · CVO~Z | — |
-| `P6-0` port-completeness discharge · `P6-1` retirement+teardown · `P6-2` negative route evidence · `P6-3` ledger | AE~Z · AE~Z · CVO~Z · COO~Z | — |
+| `P6-0` port-completeness discharge · `P6-1` retirement+teardown · `P6-2` negative route evidence · `P6-3` ledger | AE~Z · AE~Z · CVO~Z · COO~Z | see §3a |
+
+### 3a. P6-0 NEEDS A SECOND AXIS — A NECESSARY THING THAT IS NOT CODE
+
+CVO~Z's framing, relayed by AE~Z: **"THE RATIONALE IS A NECESSARY THING THAT IS NOT CODE. Andrew's
+condition is not discharged by porting the file if THE REASON dies with the box."**
+
+**P6-0's three buckets are MECE on a FILE axis** — byte-identical to a committed source / ported and
+hash-tied / demonstrated unnecessary. **A COMMENT INSIDE A FILE THAT IS ITSELF SCHEDULED FOR DELETION
+PASSES BUCKET (a) CLEANLY AND STILL VANISHES.** The buckets are sound; this sits off their axis.
+
+⛔ **RESOLUTION: THIS IS NOT A FOURTH BUCKET. IT IS A SEPARATE CRITERION ON A DIFFERENT AXIS.**
+CTO~Z made "no fourth bucket" *arithmetically checkable* via `|b1 ∪ b2 ∪ b3| == denominator`, where the
+forbidden fourth bucket is "files nobody found." **Adding a rationale bucket would break that arithmetic
+and disarm the control.** The file axis stays three-and-MECE; rationale gets its own row.
+
+**THE CRITERION:** before `infra/aws/ec2/mdpf-daily-runner/` is deleted, **any RATIONALE it uniquely
+carries is PORTED to where the constrained thing now lives — not merely confirmed present in git history.**
+
+**TIMING, measured and better than first thought:** the `<5` pin rationale is at
+`mdpf-daily-dispatch.sh:175-182`, **TRACKED IN THE REPO** (last commit `e366e889c`, positive control on an
+invented sibling returns empty), repo == deployed byte-for-byte, and `comp-grep` over 21,250 of 22,982
+files finds it nowhere else. **So it SURVIVES EC2 teardown completely and dies at PHASE 6**, when route
+retirement deletes that directory. A deletion guard on a directory we control — a far better position than
+a guard on an instance we are destroying. **Not a P0-7 capture item and not at risk tomorrow.**
+
+⚠ **"IT IS IN GIT HISTORY" IS NOT A REMEDY. GIT HISTORY IS NOT WHERE SOMEONE DOING DEPENDENCY HYGIENE
+LOOKS — THEY LOOK AT THE PIN.** The failure shape is Rule 22a's least-privilege-cleanup class arriving
+through a dependency pin: a future engineer finds `<5` on a python3.11 function, **correctly** observes
+that 3.11 has no PEP-604 problem, removes it, **and silently changes the trading calendar** — on NEVER#1.
+
+*And the pin itself is a DECISION, not a discharge: CVO~Z withdrew their original escalation once they
+grounded that the pin protects IMPORTABILITY on 3.9 rather than correctness — but were careful that
+"the reason dissolves" is NOT "5.x is safe." **Nobody has ever tested 5.x's calendar BEHAVIOUR against
+this code, because on 3.9 they could not import it to try.** So retention on 3.11 requires a calendar
+tie-out whichever way it goes.*
+
+**GENERALISES PAST THE PIN:** that directory is 688 lines of dispatch script carrying a lot of accumulated
+*why*, and the pin comment is simply the instance found because someone went looking at source.
 
 ⚠ **NEW P1 DESIGN INPUT — PENDING ANDREW'S WORD, BUT P1-1 MUST NOT BAKE THE CURRENT SHAPE FORWARD
 SILENTLY.** Grounded by content read (MSTR~Z, ~2137Z): the unscoped `aggregate_aua/{date}.json` carries
