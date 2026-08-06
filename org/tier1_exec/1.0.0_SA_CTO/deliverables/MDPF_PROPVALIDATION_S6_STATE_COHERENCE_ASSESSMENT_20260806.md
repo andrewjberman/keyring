@@ -640,6 +640,95 @@ of routing speed.
 and my censuses came from `comp-trigger`, which paginates correctly — **but I inferred that from its 139
 agreeing with AE~Z's re-derivation afterwards. That is confirmation, not verification.**
 
+#### G9 · ~2125Z — the roster resolver PREFERS the deployed copy over the committed authority, and it produced a measured near-miss on my own ruling
+
+`2.0.0_SA_COO~Z` falsified their own recorded claim (asked AE~Z to verify rather than confirm) and the
+correction is larger than the error. `mdpf-daily-dispatch.sh:125` syncs
+`s3://opal-data-mdpf/code/scripts/` into `$SCRIPTS_DIR`, the roster lives inside that prefix, and
+`dim_mdpf_aggregate_aua_timeseries.py:1718-1731` `_load_partner_roster()` — whose own docstring calls it
+*"THE ONE SOURCE OF EXPECTED-NESS"* — resolves `os.path.join(here, "partner_roster.json")` **first**.
+**Candidate 1 wins and it is the S3 copy; the committed repo authority is the dev/QA fallback, reached
+only off-runner.**
+
+> **Two consequences, into P2-1 in these words:**
+> **(a) "THE REPO SAYS X" IS NEVER EVIDENCE ABOUT WHAT PRODUCTION USED.** Any agent reasoning from the
+> repo about roster values — **including me on 2026-08-03** — is reasoning about the path production does
+> not take.
+> **(b) NOTHING DETECTS THE DIVERGENCE**, because a resolver that silently prefers candidate 1 emits no
+> signal when the two disagree.
+
+**The measured near-miss, and the half I own:** `:1203` reads
+`gate_policy.per_partner_max_lag_trading_days` from that file — the exact key whose deployed copy went
+**nine days stale** against **my own 2026-08-03 ruling**, undetected. Non-operative *only* because that
+ruling changed narration rather than the value. **Had I ruled the lag 2 → 3, every production gold run
+since 07-28 would have used 2, silently, while the repo showed 3 to anyone who checked.**
+
+**FORWARD CONTROL (standing, not a Phase-2 task): any future ruling on a roster value is NOT LANDED until
+the deployed object carries it.** Ruling in the repo does not change production.
+
+**Status change, not a redesign.** Doc 03 Phase 2 is already correct on mechanism (Terraform-managed
+objects with content hashes, no hand-maintained roster in the zip, both config hashes in every run
+manifest). What this changes is its standing: **no longer an architectural preference — the remedy for a
+measured near-miss on a live threshold**, and the run-manifest hash is exactly the detection absent for
+nine days.
+
+**⧗ SECOND ORDERING CONSTRAINT (accepted as hard):** the third roster copy dies with the **EC2/DISPATCH
+route**, a *different event* from the accrual-bridge retirement. **`mdpf-gold-lambda` must have its roster
+BEFORE the sync stops**, or the spine loses its expected-ness source mid-cutover. This composes with
+§2A′′'s capture-before-terminate: **two independent orderings inside Phase 4/6 that a naive "retire the
+EC2" step violates.**
+
+#### G10 · ~2128Z — three tool findings, and they are not random
+
+| Finding | Failure direction | Risk it creates |
+|---|---|---|
+| `comp-blast` false zero | under-reports **consumption** | **deleting something needed** |
+| `comp-estate` phantom (`mdpf-freshness-checker` listed live + cron; `get-function` → ResourceNotFound) | over-reports **existence** | working on something that isn't there |
+| `comp-which` gap ("inventory code + installed packages on an EC2") | no route at all | the act goes unassisted |
+
+> **ALL THREE CLUSTER ON THE RETIREMENT HALF OF THE PROGRAM, NOT THE BUILD HALF.** The read is not "the
+> tools are flaky" — it is that **the comp-tool estate is well covered for BUILDING and thinly covered for
+> RETIRING**, which follows from how it grew. This is the first large retirement, so it hits the thin side
+> systematically rather than by luck.
+
+**Consequence to state in the ledger:** the missing instrument is *exactly* the one Andrew's
+port-completeness condition needs — so **the EC2 inventory will be done by hand**, and a hand-built
+denominator is precisely what §2A′′'s condition protects. **We do not build tooling inside this program**
+(one-time act; absorbing tool-building is the widening we keep refusing). Routed to CTO base as an
+estate-level observation. *Cross-check in our favour: `02` already records the freshness-checker function
+as absent and scopes retirement to the residual role/policy — the pack is right and the census is wrong,
+the reverse of the day's pattern.*
+
+#### G11 · ~2128Z — `lambda-source-map.json`: the obvious fix would not have fixed it
+
+Routed as "51 non-ASCII bytes, all U+00A7 section signs." The count is right; **the composition is not.**
+Measured:
+
+| Char | Count | What it is |
+|---|---|---|
+| `§` U+00A7 | 6 | intentional section signs |
+| `—` U+2014 | 1 | em dash |
+| **`\x9d` U+009D** | **2** | **C1 CONTROL CHARACTER** |
+| `â` ×4 · `‚` ×2 · `€` ×2 · `¬` ×2 · `Ã` ×2 · `¢` ×2 | 14 | **double-encoding MOJIBAKE** (`â€š`/`â‚¬`/`Ã¢`) |
+
+> **⚠ AND THE CRASH IS NOT WHERE THE DIAGNOSIS PUT IT.** The cp1252 failure is
+> `can't decode byte 0x9d at position 30154` — **the control character, not a section sign.** `§` encodes
+> `0xC2 0xA7` and cp1252 decodes both bytes happily. **So replacing `§` with "section" leaves the
+> mojibake, leaves the control characters, and leaves the crash** — while looking done and moving an
+> ASCII count from 51 to 45. **Sixth instance of the day's shape, and the first that was about to ship as
+> a remedy.**
+
+**Severity corrected.** All three tracked local readers already belt themselves —
+`deploy_ledger.py:226`, `check-lambda-layer-deps:284`, `backfill-lambda-iam-mapping.py:169` all
+`read_text(encoding="utf-8")`. **The deploy-completion ledger is therefore safe at the cutover moment**,
+which was the real worry. The one unbelted reader is `.github/workflows/lambda-deploy.yml:70`
+(`with open(path) as f:`) — passes on an ubuntu-latest UTF-8 default; **"CI-blocking" is UNVERIFIED and I
+do not claim it.** What broke on this box was an ad-hoc `json.load(open(p))`, not a tracked tool.
+
+**RULED:** (a) AE~Z's P5 edit uses explicit utf-8 and **adds no non-ASCII** — binding regardless;
+(b) **we do not absorb the cleanup** (not ours, not in our path); (c) route to CTO base **with the
+corrected diagnosis**, because a section-sign cleanup closes the ticket without fixing the file.
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
