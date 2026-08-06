@@ -1,0 +1,41 @@
+# audit-archive-invoker -- DEVICE REGISTRY. The AUTHORITY for which machines may write the audit
+# evidence base. One device id per line; '#' begins a comment.
+#
+# WHY THIS FILE IS AN ENUMERATION AND NOT A DERIVED PREDICATE (the documented exception to
+# "derive, don't enumerate", CTO 2026-08-06T0112Z): PHYSICAL MACHINES ARE A LEGITIMATELY ENUMERABLE
+# SET. You cannot DERIVE which computers exist, and each addition is a real provisioning event, not a
+# predicate over something already known. The vacuity guard still applies -- see FAIL-CLOSED below.
+#
+# ROLE SPLIT -- the registry is the AUTHORITY, the resolver is only a PROPOSER:
+#   PROPOSE    .tools/agentbus-sqs.sh this_device()  -- the estate's ONE device-identity mechanism
+#              (AGENTBUS_DEVICE env tier, then a workspace-path fallback). NON-AUTHORITATIVE: its
+#              output is inert until this file admits it.
+#   AUTHORISE  this file. It ADMITS or REJECTS. A rejected claim NEVER enters the evidence base.
+# The heuristic cannot write past a rejection, which is why reusing it does not violate the TO's
+# "never a path heuristic" -- that clause forbids a heuristic being the SOURCE OF AUTHORITY, and here
+# it is not. (Reusing it is also the git_bash_resolver lesson: ONE device mechanism, never a second
+# that could DISAGREE -- on a tamper-evidence base a disagreement is a corrupted attribution.)
+#
+# FAIL-CLOSED, BOTH WAYS. Neither is silent:
+#   claim NOT listed here        -> minting REFUSES, outcome UNDECLARED-DEVICE
+#   this file missing/unreadable -> minting REFUSES, outcome REGISTRY-UNREADABLE
+# AN AUTHORITY THAT CANNOT BE READ MUST NOT ADMIT EVERYTHING. An unreachable oracle reports UNKNOWN
+# and fails closed -- never "assume valid". Detection still RUNS and still REPORTS in both cases;
+# only the WRITE is refused, so a fail-closed device is never also a blind one.
+#
+# ⚠ KNOWN RESIDUAL -- THREAT-2, NAMED NOT SILENT (full text: the TO's THREAT MODEL section).
+# This file gates UNDECLARED devices. It does NOT catch a DECLARED id claimed by the WRONG machine:
+# a third checkout under a path containing `AndrewBerman` would claim `laptop` and be admitted.
+# Closing it needs a gitignored per-device marker generated at registration, whose value maps to an id
+# -- making the claim unforgeable rather than inferred. DEFERRED by CTO ruling 0112Z as out of
+# THREAT-1's model; no third-device path collision exists today. Seated as follow-on hardening.
+#
+# LANE: GOVERNANCE_AUDIT (MSTR/CTO/COO/CVO). Owner 0.7.0_AE_CloudOps PROPOSES a registration;
+# a lane seat COMMITS it -- the same owner-proposes / gate-commits separation that governs MANIFEST.txt.
+# The tool's owner decides content and must not be able to unilaterally rewrite the tamper-evidence
+# it produces. Adding a line is a deliberate provisioning act, CTO-gated.
+#
+# Established 2026-08-06 (rv0057-f001, NFRA_AUDITDEV). Ids are the estate's canonical device names,
+# already in use by .tools/agentbus-sqs.sh -- do NOT mint a parallel naming scheme.
+laptop
+sitez
