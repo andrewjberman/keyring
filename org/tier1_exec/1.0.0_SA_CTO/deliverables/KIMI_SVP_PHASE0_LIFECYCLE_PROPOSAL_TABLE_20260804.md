@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 11 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) -- 2026-08-06)
+**SITTING PROGRESS: 12 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) -- 2026-08-06)
 
 > **CADENCE IS A DECLARED PROPERTY, AND IT WAS NOWHERE MACHINE-READABLE (row 7).** I proposed cma as
 > "PERMANENT with NO declared cadence" and argued the age therefore could not be a finding. **Andrew
@@ -204,7 +204,7 @@ than inheriting my original framing.
 | 9 | data-refresh | **PERMANENT - RATIFIED 2026-08-05** | Chain `PPI-10-opal-data-refresh-api` / `sys-partner-serving-platform`, motif edge-route. Lambda `opal-data-refresh-api` LIVE (python3.11/256MB, **LastMod 2026-08-03**). Frontend MOUNTED: `App.tsx:30,32` lazy -> rendered `:466` (DataRefresh) + `:434` (SecurityScanner). Census said `reachable: unreviewed`; **resolved to mounted by this check**. Dev-only (JWT userType=Dev) - internal operator tool | HIGH | **COUPLES TO ROW 25:** the SAME Lambda serves `/security-scanner/*` and the SAME App.tsx mounts both pages - row 25's 'LEGACY candidate' note is likely inverted. **ALSO: this Lambda is the named specimen in CLAUDE.md Rule 22a** - it executes 5 real DynamoDB ops and comp-iam reports 'dynamodb' ZERO times |
 | 10 | etf-reports | **PERMANENT — RATIFIED 2026-08-06**, **WITH A STANDING REVIEW** (Andrew VERBATIM: *"This is Permanent, but we need to make sure that all of these are properly grouped together, that nothing is redundant, that what is actually supposed to be canonical here is, I'd say essentially that it is subject for review."*) | **NINE live schedules, all ENABLED**, spanning all three advisor firms — the row's original single-line evidence understated this by 8. Chain (UTC): `wsd-49f-partner-held-etf-daily` 03:30 **TUE-SAT** · `cot-etf-ownership-daily` 10:30 · `bd-49f-etf-ownership-daily` 10:45 · `inf-etf-ownership-daily` 15:00 · `etfs-canon-fanin` 15:45 · `etf-ownership-dashboard` 16:00 · `etfs-netassets-daily` 22:00 · `opal-assets-silver-etf` 23:30 · `etfs-reports-monthly-run` cron(0 10 1 * ? *) America/New_York -> Sep-1 14:00Z -> `etfs-reports-orchestrator`. Rule->Lambda mapping is **1:1, zero duplicate targets**. Original cited evidence VERIFIED correct | HIGH | **REVIEW OWNED, scope below the table.** ETFS CANON question still open — and a Lambda named `etfs-canon-fanin` fires DAILY while "which location is canonical" is an unresolved P0 |
 | 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | **PRODUCER: `yang-generate-factor-tilts`, an AWS LAMBDA** (python3.11, 1024MB/600s, Active), source `infra/aws/lambda/v2_portal/yang_pipeline/factor_tilts/yang-generate-factor-tilts/lambda_function.py:24-30,388`, Terraform `infra/aws/terraform/yang-pipeline/lambdas.tf`, orchestrated by Step Functions `.../stepfunctions/yang-pipeline-definition.json`. ⛔ **MY 2026-08-06 CLAIM THAT THIS LAMBDA DOES NOT EXIST AND THAT YANG RUNS ON EC2 WAS FALSE ON BOTH CLAUSES — RETRACTED, see the correction note below the table** |
-| 12 | graph-platform | PERMANENT | comp-tools/graph substrate — the estate's own cognition layer, daily commits | HIGH | — |
+| 12 | graph-platform | **PERMANENT — RATIFIED 2026-08-06** (Andrew engaged all three sub-points; *"Ok great"* on the substrate finding) | **THE MOST HEAVILY EVIDENCED ROW IN THE SITTING.** TOOLING: `comp-manifest-check completeness` **PASSES all four invariants** — 90 tracked+committed `comp-*` executables all accounted (76 registered + 13 deliberately excluded), plus output-contract, stage-2 vocab and retired-alias. DEV: **322 commits / 14 days across 11 distinct days**, most recent same-day. INFRA: `globgrph-cse-producer-nightly` ENABLED `cron(30 3)` UTC -> **ECS cluster `opal-globgrph` ACTIVE, 2 running tasks / 2 services** (grounded on the target **ARN**, `arn:aws:ecs:...:cluster/opal-globgrph`, NOT inferred from a name — the correction from the row-11 error applied). GRAPH: **20,588 nodes / 41,197 edges**, rebuilt same-day, Nessie HEAD current. CONSUMER: **every agent** — Rule 21 makes comp-tools the mandated default for search+inspection | HIGH | **THIS VERTICAL IS THE MEASUREMENT APPARATUS FOR THE OTHER 28 ROWS.** A degradation here is not one product failing — it is the instrument every verdict in this sitting was formed with. Sub-findings resolved below |
 | 13 | insurance | UNDECLARED | sys-estate-ops-platform member; zero session evidence of activity or consumers | — | resolve at sitting — DORMANT candidate |
 | 14 | m365-mcp | PERMANENT | Live gateway (tools active this session); ms-ingest-liveness just registry-repaired | HIGH | — |
 | 15 | macroeconomics | PERMANENT | dual-structure (macro-data engine + yang) | MED | — |
@@ -372,3 +372,78 @@ that schedules are evidence of WHEN and never of WHAT.
 
 **UNVERIFIED, named rather than assumed:** whether the deployed bytes for these three Lambdas match
 the repo source (`comp-pipescript deployed` settles it), and the Step Functions execution schedule.
+
+---
+
+## ROW 12 SUB-FINDINGS — both resolved by Andrew at the sitting
+
+### (1) `graph_contracts` — ANSWERED. It serves NOTHING today, by TWO independent sovereign rulings.
+
+Andrew asked: *"We need to understand what that graph_contracts purpose is and what it is meant to
+serve, if anything. If it is a 'DORMANT' component that is in use but does not need to be updated,
+then that needs to be clarified."*
+
+**PURPOSE** (`docs/architecture/NFRA_GCONTR_PRD.md`, CTO-authored, schema RATIFIED v0.1): the
+semantic anchor that makes **never-widen machine-checkable at the VALUE layer.** Born from the
+**BMKAUD incident** (2026-06-01): a SmartX override replaced the canonical Yang-PKL benchmark numbers
+on Model Portfolios `/performance`, and SmartX's `1M = last-complete-calendar-month` differed from
+Yang's trailing-1M. **The output was STRUCTURALLY VALID — fresh, present, a valid float — so no alarm
+fired. Andrew caught it by eye, and a multi-day hand audit reconstructed who-writes-what.** The
+contract encodes `canonical_writer`, `period_defs` (column -> window definition), `forbidden_writers`,
+`ratified_by/at`, enforced across three limbs: structure (a `graph_edges` snapshot diff), policy (a
+JOIN against `graph_contracts` at commit time), value (the served column checked against `period_defs`).
+
+**WHY IT IS NOT WRITTEN — and it is NOT decay:**
+- **`NFRA_GCONTR` is `status: suspended-indefinite`, Andrew-direct SOVEREIGN 2026-07-20 ~14:35 ET**,
+  VERBATIM: *"Pause GCONTR we are not addressing htat, it should be rendered as indef[inite]."* The
+  project record itself reads *"Do not work it."*
+- **Its enforcement consumer no longer exists.** The policy limb ran inside `comp-surface-check`,
+  which was **RETIRED 2026-08-06** (Andrew-direct, *"I want comp-surface-check retired. i do not like
+  that tool."*) — executable, registry rows, comp-which route, S3 publish leg, portal CI leg and
+  portal pre-commit hook removed together.
+
+**SO THE ANSWER TO HIS QUESTION IS NOT "DORMANT BUT IN USE" — IT IS "NOT IN USE AT ALL."** The table
+holds its initial seed load and nothing since.
+
+**TIMING NUANCE, recorded because it is not what one would assume:** last write ~1,221h ago resolves
+to **~2026-06-16 — the PRD's own ratification/seed-load date — roughly FIVE WEEKS BEFORE the 07-20
+suspension.** The table did not go quiet *because* of the stand-down; it was loaded once, never
+written again, and was formally suspended later. The suspension ratified a silence that already
+existed.
+
+**THE ACTIONABLE PART — and it is exactly the row-7 lesson:** `comp-kuzu`'s provenance header prints
+`graph_contracts: last-write 1221.2h ago` with **no cadence and no status**, so every agent who reads
+that header meets an unexplained 51-day-old table and must re-derive this entire story from a
+project JSON and a retired gate. **A 51-day-old table with a declared SUSPENDED status is
+information; the same table with no declaration is a false lead that costs an investigation each
+time.** *(NO CHECK PROPOSED — standing moratorium. What is wanted is a DECLARATION, not a monitor.)*
+
+### (2) `graph_nodes` "staleness" — MY MISREAD, corrected by Andrew at the sitting
+
+I reported `graph_nodes` as STALE (10.5h against a 6h cadence). **Andrew, VERBATIM:**
+> *"graph_nodes 'staleness' sounds like a semantic misread, it is written incrementally in the cloud
+> and stitched locally on the kuzudb projection. The 10.5hrs you read is simply the time since last
+> Nessie full rebuild."*
+
+**Correct, and it is the lead NEVER-rule's shape one layer in:** I took an interval that measures a
+REBUILD CADENCE and read it as PRODUCER STALENESS. The table is written incrementally in the cloud
+and stitched locally onto the Kuzu projection — so "time since last full rebuild" is a property of
+the projection schedule, **not evidence about whether data is arriving.** The instrument even printed
+the caveat (*"'last-write' is the TABLE's write time, NOT the age of the data in it"*), and I quoted
+that caveat while still carrying the word STALE forward. **Reading the disclaimer is not the same as
+applying it.**
+
+### (3) The measurement-apparatus observation — Andrew: *"Ok great."*
+
+Recorded as accepted: graph-platform is the instrument layer every other row in this sitting was
+measured with.
+
+### Record-hygiene note
+
+While grounding (1) I generated a `0 references` result for `comp-surface-check` wiring from a
+`grep` whose TARGET FILE PATH WAS EMPTY — a retrieval failure returning a VALUE, the class this file
+keeps cataloguing. Caught by running a positive control before reporting it. **Also checked and
+found NOT stale: `CLAUDE.md` rule 20 already carries the retirement correctly** (retirement order,
+plus the accepted consequence that MP/benchmark/ADVI surfaces now carry no automated commit-time
+guard). My contrary impression came from the session-start snapshot of CLAUDE.md, not the file —
+**the record was current and my copy of it was old.**
