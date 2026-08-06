@@ -215,6 +215,73 @@ compensate for each other anywhere in this estate: where CloudTrail is blind, no
 > are inside the serving surface**, and that is a materially different question from the one my table
 > posed. It is his to answer with the true shape.
 
+> ### ⚠ AMENDMENT (d) 2026-08-06 ~21:42Z — ROWS 1–5 MOVED MID-SESSION. THE ROW PATHS ABOVE NOW 404.
+>
+> **The paths in rows 1–5 no longer resolve.** Surfaced by AE~Z, **verified independently at my seat
+> with a positive control** (not accepted on report):
+>
+> ```
+> head-object platinum/mdpf/aggregate_aua_timeseries.json          -> 404 Not Found
+> head-object platinum/mdpf/archive/aggregate_aua_timeseries.json  -> 2026-08-06T21:41:59Z, 451518 B
+> POSITIVE CONTROL platinum/mdpf/global/aum-metrics.json           -> 200, 13:50:50Z, 5894 B
+> list-object-versions platinum/mdpf/etf_ownership_timeseries/DIVZ.json
+>                                                                  -> Versions=19, DeleteMarkers=1
+> ```
+>
+> The positive control returning 200 establishes the 404 is a **real absence**, not a broken call.
+> 19 versions + 1 delete marker = **copy-then-delete-marker MOVE, fully reversible** — not a deletion.
+> New home: `platinum/mdpf/archive/…`. Byte sizes unchanged, so these are the objects I measured.
+>
+> #### ⛔ A WRONG INFERENCE OF MINE, CORRECTED — I ISSUED IT TO TWO SEATS
+>
+> On measuring no depth-1 `platinum/mdpf/aggregate_aua_timeseries.json`, I wrote that this was
+> *"consistent with 02's 'Retired Stage 4 bare aggregate rollup | KEEP RETIRED' — the row-5 deletion
+> target may already be gone."* **That is wrong. The object existed until 21:41:59Z today.** I listed
+> at ~22:07Z and attributed a **27-minute-old move** to a **months-old retirement decision**.
+>
+> **This is the session's own dominant class, landing on me: I observed an absence and reached for the
+> explanation the documents made available instead of establishing the mechanism.** The documents
+> supplied a ready-made story that fit the observation perfectly and was not its cause. Rule 22 — a
+> causal claim is a hypothesis until source-confirmed — and I offered mine as the likely reading.
+>
+> **What saved it was the bound, not the reasoning.** I wrote: *"one bucket, one prefix, no global
+> absence claim — whoever owns the deletion should confirm the target EXISTS before scheduling
+> removal."* That bound is the reason this is a correction and not a bad deletion plan.
+>
+> #### A NEW MEMBER OF THE CLEAN-ZERO CLASS (AE~Z's observation, adopted)
+>
+> The four OWNTS objects are now findable **only** at the new prefix. **Any future census run against
+> this document's original paths returns a clean, confident zero — for objects that exist.** Same
+> shape as the mangled-pattern and truncated-list zeros catalogued in §6, arriving by a third door: a
+> **correct query against a stale path**. The retrieval works perfectly. **This is the strongest
+> argument in this document for H7's re-pin obligation being a standing constraint rather than a
+> checklist item** — AE~Z's P0-1 baseline froze these keys at 21:01Z and they moved at 21:42Z.
+> **Forty-one minutes.** H7 demonstrating itself inside one session.
+>
+> #### WHAT THE MOVE DOES AND DOES NOT DO TO MY VERDICTS
+>
+> - **Does NOT resolve any NOT-OBSERVABLE row.** An archive move is not a reader census. Nothing about
+>   it says anyone did or did not read those objects. **The composition rule (§6a) is untouched** — a
+>   move upgrades no bounded negative. If anything it is the *correct* action under that rule:
+>   relocating with versioning intact is what you do when you cannot establish that nobody reads
+>   something.
+> - **Does change the H13 posture for rows 1–5.** They are out of the live served prefix with every
+>   version preserved — strictly more reversible than either deleting them or leaving them served.
+>   A later real deletion is still H13 and still Andrew's.
+>
+> #### DISPOSITION RECORD — these were already ruled, and I re-derived it independently
+>
+> CTO~Z reports Andrew ruled ~2137Z (recorded by COO~Z @1893e4f58): **"3 scoped underscore twins
+> TRASH"**, and the root bare object **"TRASH with checker-first-then-object ordering."** I measured
+> the twins at ~22:07Z without knowledge of that ruling; the independent re-derivation carries byte
+> sizes and the 3-of-4 asymmetry the ruling does not.
+> **My count corrects CTO-base's F7** (08-06 1256Z trace), which recorded **four** twins awaiting
+> deletion. I measure **three** per-scope twins plus a root bare object that has now moved. A deletion
+> plan written against four targets would hunt a fourth that does not exist.
+> **Not a live client-facing defect:** the portal read-path is confirmed scoped-**hyphen** on all four
+> scopes, so the stale underscore twins are residue, not a served bug. Stated plainly so nobody
+> escalates it as an incident on top of a ruling that already exists.
+
 Every candidate gets its own row. No group verdict.
 
 | # | Deletion candidate | Bucket | CT read data events | CT write trail | S3 access log | **Row verdict** | Window |
