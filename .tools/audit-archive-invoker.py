@@ -159,6 +159,29 @@ def prefix_test(live: Path, baseline_copy: Path) -> tuple[str, str, int, int]:
         if live_head == base_head:
             return (APPEND_OK, f"append-only OK ({base_nl} baseline lines are a byte-exact prefix of live)",
                     live_nl, base_nl)
+        # *** LINE-ENDING NORMALISATION BEFORE THE VERDICT -- and the KIND is REPORTED, never hidden.
+        # `core.autocrlf=true` on this estate, so any covered log that round-trips through git becomes
+        # CRLF while its archived baseline was written LF. Byte-comparison then fires NON-APPEND-EDIT at
+        # line 1 col N on a file whose CONTENT is untouched -- a tamper verdict on a checkout artifact.
+        # MEASURED 2026-08-05 on org/rcg-sweep-audit.log: baseline CR=0/LF=24, live CR=24/CRLF=24,
+        # 24-byte delta = exactly one \r per line, content line-wise IDENTICAL. 11 of 17 covered logs
+        # were already in this state, so the majority of the integrity surface was mis-verdicting.
+        # WHY THIS IS NOT SUPPRESSION (RV-0057 F-002's stated remedy, explicitly REFUSED at the gate):
+        # a divergence that SURVIVES normalisation still returns NON_APPEND below. Nothing is silenced;
+        # the two causes are DISCRIMINATED, which the single byte-test structurally could not do.
+        # INTERLOCK SAFE: CRLF and LF carry exactly one b"\n" per line, so base_nl/live_nl -- the growth
+        # signal sharing this read path -- are unchanged by the normalisation.
+        _crlf = b"\r\n"
+        _base_n = base_head.replace(_crlf, b"\n")
+        _live_n = live_head.replace(_crlf, b"\n")
+        if _live_n == _base_n:
+            _bc, _lc = base_head.count(_crlf), live_head.count(_crlf)
+            return (APPEND_OK,
+                    f"append-only OK ({base_nl} baseline lines) -- EOL-NORMALISED: content is a "
+                    f"line-wise prefix; baseline and live differ ONLY in line endings "
+                    f"(baseline CRLF lines={_bc}, live CRLF lines={_lc}). "
+                    f"Benign checkout artifact (core.autocrlf), NOT an edit.",
+                    live_nl, base_nl)
         lim = min(len(base_head), len(live_head))
         pos = next((i for i in range(lim) if base_head[i] != live_head[i]), lim)
         upto = base_head[:pos]
@@ -535,11 +558,20 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
     else:
         status, detail = take_snapshot(now, paths, dry, pinned=frozenset(dirty_logs), base=base)
         snapshot_outcome = f"{status}: {detail}"
-        report["snapshot"] = snapshot_outcome
         if status == "commit-fail":
             report["findings"].append({"clause": "SNAPSHOT-FAILURE", "verdict": "COMMIT-FAILED", "detail": detail,
                                        "note": "distinct from DEATH: the invoker RAN, the commit failed"})
 
+    # *** THE HONESTY FIX'S OWN HONESTY GAP, CLOSED (found 2026-08-05 by reading the printed line
+    # against the heartbeat). The :525 comment above says each non-mint branch "now names itself" --
+    # and each does, into `snapshot_outcome`. But report["snapshot"] was assigned ONLY inside the MINT
+    # branch, so every non-mint path fell through to the `report.get('snapshot', 'not-due')` DEFAULT at
+    # the summary print -- THE EXACT LITERAL THIS FIX EXISTS TO ELIMINATE. Proven both directions on
+    # the 2026-08-06T0026Z run: heartbeat carried 'not-due: baseline 11.7h < 12.0h' while the printed
+    # surface said bare 'not-due'. The computation and the persistence were right; only the ONE STRING
+    # AN AGENT READS dropped it -- so `no-baseline (cannot mint)`, the most serious state here, printed
+    # identically to a routine idle clock. Assign UNCONDITIONALLY, after every branch has spoken.
+    report["snapshot"] = snapshot_outcome
     if not dry:
         write_heartbeat(now, live_nl_map, snapshot_outcome)
     persist_findings(report, now, dry)
