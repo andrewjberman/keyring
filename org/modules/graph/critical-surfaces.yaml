@@ -45,7 +45,7 @@ surfaces:
       producers: ["mdpf-daily-runner"]
       served_buckets: ["opal-data-mdpf", "opal-data-portal-v2"]
       serving_lambdas: ["opal-portal-data-proxy"]
-      coverage_note: "C2 (CTO-ruled): the getAUMMetrics portfolio-metrics leg is a PORTAL endpoint (portal/src/api/endpoints/aum.ts) -> dev-box B5 / comp-surface-check (commit-time) domain, NOT an AWS-scan node. Recorded DIVISION, not a gap. AWS scan covers the mdpf AUA leg."
+      coverage_note: "C2 (CTO-ruled): the getAUMMetrics portfolio-metrics leg is a PORTAL endpoint (portal/src/api/endpoints/aum.ts), NOT an AWS-scan node -- the AWS scan covers the mdpf AUA leg only. >> UNCOVERED as of 2026-08-06: this leg was assigned to the comp-surface-check commit-time domain, and that tool is RETIRED (Andrew-direct; see monitor.commit_gate). What was a RECORDED DIVISION is now a RECORDED GAP -- nothing checks the portal-endpoint leg at commit. Stated, not silently re-labelled; do NOT re-add a gate to close it (the absence is the ruling)."
 
   - id: model_portfolios.benchmark
     severity: SEV1
@@ -126,24 +126,39 @@ surfaces:
       serving_lambdas: ["opal-portal-data-proxy"]
 
   # ---- SEV2: internal compiler mechanism (not a product/dashboard surface -- no firm/AWS-backend
-  # carve applies; watched purely via the carve-text path-token extraction comp-surface-check's
-  # load_surfaces() already does for any surface, product or not) ----
+  # carve applies). It WAS watched via the carve-text path-token extraction comp-surface-check's
+  # load_surfaces() did for any surface, product or not; that tool is RETIRED 2026-08-06
+  # (Andrew-direct, see monitor.commit_gate) so this entry is now a DECLARATION of a critical
+  # surface with no commit-time watcher. ----
   - id: compilerkit.promote_seam
     severity: SEV2
     firms: n/a
     carve:
       frontend_root: "N/A -- not a product surface; an internal COMPILERKIT compiler mechanism"
-      backend_chain: "the PROMOTE-materialized-recognizer -> live-COMPILERKIT hot-registration seam: org/modules/graph/comp_recognizer_sdk.py (RecognizerRegistry.register/deregister/reload; the PROMOTE_SEAM named constant) <- consumed by org/modules/graph/comp_recognizers_code.py + comp_recognizers_ticket.py. The PRODUCER half (GOV-B, 0.8.0_AE_CloudComp~D): the git-versioned promoted-recognizer STORE org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/promote_recognizer_manifest.json (R3 -- a write is a comp-surface-check'd commit) + the LIVE hot-load org/modules/graph/comp_promote_materializer.py (manifest -> running RecognizerRegistry, next-run load, no redeploy). A silent break here means a promoted recognizer fails to take effect (or a bad promotion fails to reverse) with no signal."
+      backend_chain: "the PROMOTE-materialized-recognizer -> live-COMPILERKIT hot-registration seam: org/modules/graph/comp_recognizer_sdk.py (RecognizerRegistry.register/deregister/reload; the PROMOTE_SEAM named constant) <- consumed by org/modules/graph/comp_recognizers_code.py + comp_recognizers_ticket.py. The PRODUCER half (GOV-B, 0.8.0_AE_CloudComp~D): the git-versioned promoted-recognizer STORE org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/promote_recognizer_manifest.json (R3 -- a write was a comp-surface-check'd commit; that gate is RETIRED 2026-08-06, so a write is now an UNGUARDED commit) + the LIVE hot-load org/modules/graph/comp_promote_materializer.py (manifest -> running RecognizerRegistry, next-run load, no redeploy). A silent break here means a promoted recognizer fails to take effect (or a bad promotion fails to reverse) with no signal."
       backend_depth: n/a
       frontend_depth: n/a
-    why: "NFRA_SEMCTL.GOV-B (CTO/COO 2026-07-07): comp_recognizer_sdk.py's own PROMOTE_SEAM docstring names this as a critical surface (\"a silent no-op registration... is CAUGHT\"); this entry is comp-surface-check actually watching it, per GOV-B req#2. SEV2 (warn on touch, not block-with-ack) -- an internal compiler-registry mechanism, not client-facing."
+    why: "NFRA_SEMCTL.GOV-B (CTO/COO 2026-07-07): comp_recognizer_sdk.py's own PROMOTE_SEAM docstring names this as a critical surface (\"a silent no-op registration... is CAUGHT\"); this entry WAS comp-surface-check actually watching it, per GOV-B req#2. SEV2 (the retired gate warned on touch rather than block-with-ack) -- an internal compiler-registry mechanism, not client-facing. >> AS OF 2026-08-06 THE WATCHER IS GONE: comp-surface-check is RETIRED (Andrew-direct, see monitor.commit_gate). GOV-B req#2 is therefore NO LONGER DISCHARGED BY THIS ENTRY -- the entry still DECLARES the surface, but nothing checks it at commit. Recorded as a gap, not re-closed."
 
 monitor:
   severity_resolution: "a node carved into MULTIPLE surfaces takes the MAX severity of its containing surfaces (block-with-ack wins over warn). LOAD-BEARING, not theoretical: model_portfolios.headline (SEV1) and model_portfolios.aum (SEV2) share substantially the same aum.ts backend chain -- without this rule comp-surface-check behavior on those shared nodes is ambiguous. [v0.3 CTO carve-review]"
   commit_gate:
-    tool: comp-surface-check   # sibling of comp-manifest-check (D6); maps changed files -> critical subgraph nodes via comp-diff
-    SEV1: block-with-ack       # "this change touches the <surface> backend for firm <f> -- confirm + justify"
-    SEV2: warn
+    # RETIRED 2026-08-06, Andrew-direct. VERBATIM: "I want comp-surface-check retired. i do not
+    # like that tool." The executable, its safe-commit leg, the GitHub publish workflow and the
+    # portal pre-commit hook were removed together in @1a962886be (consumers first, binary last).
+    # >> THERE IS NO COMMIT-TIME SURFACE GUARD ON THESE SURFACES. That is the ACCEPTED CONSEQUENCE
+    #    of the ruling, stated here so it is not later discovered as a gap. Do NOT re-add a
+    #    replacement gate, checker, monitor or alerter in its place.
+    # The retired_aliases: row in graph-call-manifest.yaml is the policing mechanism against any
+    # routing surface citing the dead name -- do not delete it.
+    status: RETIRED
+    tool: null
+    former_tool: comp-surface-check   # historical: mapped changed files -> critical subgraph nodes via comp-diff
+    former_SEV1: block-with-ack       # historical: what the retired gate did on a SEV1 touch
+    former_SEV2: warn                 # historical
+    # NOTE: the SEV1/SEV2 tiers on each surface above are the SEVERITY MODEL and remain live --
+    # they are read by monitor.severity_resolution and monitor.scheduled_scan. What is gone is the
+    # commit-time actuator, not the severity classification.
   scheduled_scan:
     when: "nightly graph refresh (derive -> Nessie -> kuzu_stitch_load)"
     per: surface_x_firm
