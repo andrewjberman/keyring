@@ -339,6 +339,49 @@ entailment holds and I have not adversarially tested it.**
 
 ---
 
+## 6a. ⚠ THE COMPOSITION RULE — THREE NOT-OBSERVABLE RESULTS DO NOT COMPOSE INTO AN OBSERVED ABSENCE
+
+**This is the single most likely way this document gets misused, and it belongs at the declaration
+site.** Raised by `0.7.0_AE_CloudOps~Z` (P0-5 deployed-plane half) and adopted here verbatim in
+substance.
+
+Three independent surfaces have now returned nothing on these candidates:
+
+| Surface | Owner | Result | Its named limit |
+|---|---|---|---|
+| Source-visible census | DS~Z @645a8759e | no source-visible reader | blind to unregistered external/manual readers by construction |
+| CloudTrail object data events | **this document** | **NOT-OBSERVABLE** — 0 events in range | telemetry was never enabled on these buckets |
+| Deployed Lambda env-var config | AE~Z, denominator **196 functions, explicitly paginated** | **NOT-OBSERVABLE** — 0 functions name any candidate | sees a reader only if the prefix appears in CONFIGURATION |
+
+**STACKING THREE BOUNDED NEGATIVES YIELDS A BOUNDED NEGATIVE WITH THREE NAMED LIMITS — NOT A ZERO.**
+If anyone later cites *"three independent surfaces found nothing"* as convergent evidence of no
+readers, **that is the silent upgrade this document exists to prevent, and it would then have three
+sources to launder it through.** Convergence between instruments is only evidence when the
+instruments' blind spots are independent AND at least one of them could have seen the thing.
+
+**AE~Z DEMONSTRATED THEIR BLIND SPOT RATHER THAN CONCEDING IT**, and the demonstration is the reason
+this rule is stated so strongly. Nine deployed functions carry `opal-data-portal-v2` as a bare bucket
+env var and can construct any key inside it at runtime. To test whether that blindness was real or
+theoretical they went to the sharpest case — `opal-portal-data-proxy`, documented as the `/v1/*`
+portal API reading `s3://opal-data-portal-v2/*`:
+
+```
+opal-portal-data-proxy   python3.11, role opal-portal-lambda-role
+ENVIRONMENT VARIABLES: []      <- EMPTY. Zero keys. Does not appear in the nine.
+```
+
+**The env-var surface cannot see the live portal API reading the exact bucket that holds all five
+remaining candidates.** The blindness is measured, not asserted. The discriminating instrument for
+that residual is deployed Lambda **CODE** — the packages of the nine bucket-carriers plus
+`opal-portal-data-proxy` — **not their config.** That remains OPEN and is named here as the true
+shape of what is unclosed.
+
+**A pagination note that applies to my own work.** AE~Z flagged that `--no-paginate` returns only the
+FIRST page (`lambda list-functions` → 50 of 196, a 74% shortfall). **I used that flag once**, on the
+snapshot range underpinning F4. **Self-audited three ways — CLI default, forced `--page-size 5`
+multi-page walk, and `--no-paginate` — all three returned the same count.** My denominator was not a
+paging artifact. *(The count has since moved 31→32 for a real reason: see §7a.)*
+
 ## 7. Criterion 9 — H13 attaches to the delete step
 
 **H13 is OPEN and is named here so it is not discovered AT the delete step.**
@@ -358,6 +401,43 @@ zero-reader claim now sits upstream of an irreversible act rather than a reversi
 reads NOT-OBSERVABLE and is *reported* as ZERO is the silent upgrade this seat exists to prevent.
 
 ---
+
+## 7a. CAPTURE-BEFORE-TERMINATE — VERIFIED DISCHARGED, and it closes two of my own findings
+
+My earlier F3/F5 findings (routed to MSTR~Z/COO~Z) held that the pre-teardown capture was preserved
+only *incidentally*, and that the newest daily snapshot **predated today's run by 6h40m** — leaving
+runtime-installed dependency state uncaptured. **AE~Z executed P0-7 and both are now closed.
+Verified at my seat, because "the reaper will not delete this" is an ABSENCE claim and therefore
+mine to check rather than accept:**
+
+```
+snap-0fa2186f01fbc3785   2026-08-06T20:48:38.684+00:00   State=completed
+  Desc: "MDPF_CANRTE P0-7 capture-before-terminate pre-enumeration baseline ... taken BEFORE any
+         enumeration because a snapshot does not enumerate and therefore cannot miss"
+  Tags: Purpose=capture-before-terminate · Retention=DO-NOT-DELETE-until-P6-0-discharge
+        Project=MDPF_CANRTE · TaskOrder=P0-7 · CreatedBy=0.7.0_AE_CloudOps~Z
+```
+
+**F5 CLOSED — the timing gap is gone.** Instance started `13:40:23+00:00`; this snapshot is
+`20:48:38+00:00`, **7h08m AFTER the run**, with the instance stopped. It captures post-run state
+including any runtime-installed packages. It supersedes the daily set as the evidence baseline.
+
+**F3's mechanical concern CLOSED for this snapshot, and by the correct mechanism.** MSTR~Z's F4
+source read established the reaper filters on `tag:Purpose = DailySnapshot` (`:562`) and keeps
+anything it cannot positively date (`:571-573`). This snapshot carries **`Purpose=capture-before-terminate`**
+and **no `SnapshotDate` tag** — so it is **outside the reaper's filter universe entirely**, which is
+the stronger of the two available exemptions (exiting the universe rather than relying on a
+keep-branch). AE~Z took the right one.
+
+**Residual, small but real, stated rather than left implicit:**
+1. `Retention=DO-NOT-DELETE-until-P6-0-discharge` is a **documentary** tag — it does nothing
+   mechanically. The load-bearing protection is `Purpose != DailySnapshot`. **A later tag
+   "normalization" that added `Purpose=DailySnapshot` would silently re-enter this snapshot into the
+   reaper universe.**
+2. The **31 pre-existing daily snapshots still carry `Purpose=DailySnapshot`** and remain on the
+   measured 30-day rolling cutoff. After termination no new dailies are created and the whole set
+   ages out. **That is now acceptable** — the P0-7 baseline supersedes them — but it means the daily
+   set must not be cited as long-term evidence.
 
 ## 8. Seat discipline
 
