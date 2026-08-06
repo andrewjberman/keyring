@@ -60,6 +60,19 @@ TO commits: `ebaf5700a` `f50291f06` `7c7c549f7` `253e6c893` `5b4411c1e` `3c1ba6c
 | `P5-1` build + deploy order · `P5-2` un-targeted zero-diff | AE~Z · CVO~Z | — |
 | `P6-0` port-completeness discharge · `P6-1` retirement+teardown · `P6-2` negative route evidence · `P6-3` ledger | AE~Z · AE~Z · CVO~Z · COO~Z | — |
 
+⚠ **NEW P1 DESIGN INPUT — PENDING ANDREW'S WORD, BUT P1-1 MUST NOT BAKE THE CURRENT SHAPE FORWARD
+SILENTLY.** Grounded by content read (MSTR~Z, ~2137Z): the unscoped `aggregate_aua/{date}.json` carries
+**MULTIPLE PARTNERS IN ONE DOCUMENT** (49financial + inflection present, cottonwood absent).
+
+> **A SINGLE MULTI-PARTNER FILE CANNOT BE CHANNEL-INDEPENDENT.** One writer writes every partner, so a
+> partner failure either blocks the whole file or **silently drops that partner out — WHICH IS THE GLOBAL
+> CLAMP MECHANISM.** Per-scope pathing (`{scope}/aggregate_aua/{date}.json` or equivalent at gold) makes
+> channel independence **physically enforceable** rather than a property the builder must remember to honour.
+
+This is MDPF_CHANNEL_INDEPENDENCE's contract meeting its own storage layout. The re-path-with-the-port
+question is **with Andrew**; until he rules, P1-1 designs against the requirement and **flags the shape
+rather than reproducing it unexamined.**
+
 ⛔ **P1-1 ATOMICITY (CTO~Z ruled).** `build_cottonwood_mdpf_pair.py:64` imports **`_distribution_stats`** —
 a PRIVATE symbol — from `dim_mdpf_account_distribution`, across trees, via a `sys.path` hop. A P1-1
 refactor of that module **breaks Cottonwood with no signal in the mdpf tree**: a leading underscore
@@ -231,6 +244,50 @@ precisely on the reader that matters most.** A zero here observes the SURFACE, n
 `aggregate_aua_timeseries` — in `opal-data-portal-v2`, THE LIVE SERVED BUCKET.** Deleting a
 live-served-bucket object on three bounded negatives is **H13, and H13 is Andrew's**. Nothing in any of the
 three halves moves it toward "safe to delete."
+
+> ### ✅ THE RULE WAS VALIDATED WITHIN THE HOUR, AND BY THE EXPENSIVE CASE
+> Andrew worked the deletion question directly with MSTR~Z (2026-08-06 ~2137Z). **`s3://opal-data-mdpf/mdpf/feeds/*`
+> IS NOT DELETABLE.** Traced live: `wsb-49f-model-aua-daily` WRITES it (today 09:33),
+> `opal-smartx-ingestion-pipeline` (3 modules, deployed, in the source map) READS it, and the output is the
+> served `{scope}/account-distribution.json` (today 09:50). **`wsb`/`wsd` are PRODUCERS OF A SERVED SURFACE,
+> not dead schedules.**
+> MSTR~Z's verdict on our own censuses, and it is the sentence to keep: **"The census NOT-OBSERVABLE verdict
+> was technically right and PRACTICALLY WRONG."** Three surfaces returned no reader for a prefix that a
+> live producer writes and a deployed pipeline reads into a served artifact. **Had NOT-OBSERVABLE been
+> allowed to compose into "safe to delete," this program would have deleted a live producer of a served
+> surface.** The rule above is what stood between those two outcomes.
+>
+> **AND THE CONVERSE — WHAT AFFIRMATIVE EVIDENCE ACTUALLY LOOKS LIKE.** The portal read-path is now
+> CONFIRMED SCOPED for all four scopes on **three independent oracles that converge rather than three
+> silences that agree**: MECHANISM (the DEPLOYED `opal-portal-data-proxy` package, pulled via
+> `get-function` — not repo source — constructs ZERO mdpf keys, positive-controlled against its 73 real S3
+> refs; sole MDPF route is CF `/api/general/mdpf/*` → `platinum/mdpf/*`); CONTENT SHAPE (the Global 07-30
+> clamp requires cottonwood in `cohort_provenance`; the scoped global file has it, **the root bare file
+> never mentions cottonwood** — the on-screen clamp is uncomputable from the root object); and BEHAVIOR
+> (firm scopes display 08-03, root lineage ends 07-31 with no per-firm objects).
+> **That closes "does the PORTAL read these" outright.** It does not close the unregistered-external-reader
+> residual — nothing can — and the distinction is exactly the one §6a exists to hold.
+
+### H13 — PARTIALLY ANSWERED BY ANDREW, 2026-08-06 ~2137Z
+
+His grammar point: the root-grain objects **"is trash"**, the unscoped `mdpf/` root path **"doesnt even
+really make sense"**; scoped folders are the correct grammar.
+
+| Candidate | Verdict | Sequencing |
+|---|---|---|
+| 4 OWNTS objects | **TRASH** | zero consumers confirmed |
+| root bare `aggregate_aua_timeseries.json` | **TRASH** | sole consumer is `mdpf-freshness-checker`, itself retiring — **checker first, then object** |
+| 3 scoped UNDERSCORE twins | **TRASH** | already-ruled retired pair (cottonwood never had one) |
+| `platinum/mdpf/aggregate_aua/` (439 dated) | not portal-read; consumer is `mdpf-daily-trigger` `PLATINUM_AGG_PREFIX` — **pipeline state in the serving bucket** | dies WITH the port (option (c) re-points to gold) — **delete AFTER cutover, never before** |
+| `s3://opal-data-mdpf/mdpf/feeds/*` | ⛔ **NOT DELETABLE — LIVE PRODUCER** | leaves the deletion set entirely |
+| `opal-data-mdpf` overall | `code/` + `feeds/` + `telemetry/` LIVE until the port lands | `cache/` (05-19) + `bmkaud-evidence/` (06-01) are dead weight |
+
+Formal deletion execution still lands in Phase 6 under the standing confirmations.
+
+⚠ **PHANTOM, so nobody cites it:** `platinum/mdpf/account-distribution.json` (top-level) **DOES NOT EXIST**
+— versions=0, positive control on the 49financial scoped key returns 18 versions. `comp-clobber` over the
+served prefix: 465 keys, **ZERO active clobber** — the duality is producer-duality over time, not
+interleaved-writer clobber.
 
 **The discriminating instrument for the residual is deployed Lambda CODE, not configuration** — reading the
 packages of the nine bucket-carriers plus `opal-portal-data-proxy`. That is materially larger than P0-5
