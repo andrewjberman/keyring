@@ -89,8 +89,16 @@ def _tree(src):
     the first cut called it THREE TIMES (once per consumer) -- ~195ms of a 225ms run, against a
     stated millisecond requirement. Profiled rather than guessed: the first optimization I tried
     (tokenization) was 5.1ms and made no difference, because I had assumed the bottleneck instead of
-    measuring it."""
-    key = id(src)
+    measuring it.
+
+    KEYED ON CONTENT, NEVER ON id(). The first cut used `id(src)`, and CPython reuses the id of a
+    freed object: DEMONSTRATED 2026-08-06 in 10 trials -- scan file A, drop it, scan file B, and B
+    received A's sections. In a one-shot CLI only one file is ever read, so the defect is invisible
+    in production and fires the moment anything reads two files in one process (a battery, a batch
+    mode, an import-as-library). A cache that can serve ANOTHER FILE'S SHAPE is this tool's own
+    thesis failing inside the tool: right question, wrong file, no error. Content-keying costs one
+    str hash (cached by CPython after the first)."""
+    key = src
     if key not in _TREE_CACHE:
         try:
             _TREE_CACHE[key] = ast.parse(src)
@@ -110,8 +118,10 @@ def _scan_tree(src):
     Fixed by caching the parse; still 181ms. Round 3 profiled AGAIN: ast.walk, 66,966 calls,
     174ms cumulative -- THREE FULL TREE WALKS, one per consumer. One walk serves all three.
     The lesson is the tool's own: I read the symptom (slow) and twice acted before reading the
-    mechanism."""
-    key = id(src)
+    mechanism.
+
+    CONTENT-KEYED, never id()-keyed -- see _tree() for the demonstrated cross-file collision."""
+    key = src
     if key in _SCAN_CACHE:
         return _SCAN_CACHE[key]
     tree = _tree(src)
@@ -193,11 +203,26 @@ def _sections_generic(lines):
 
 
 def _shape(path, src, lines):
+    """Returns (sections, how). `how` PREFIXED with UNPARSEABLE when a .py did not parse.
+
+    THE GAP THIS CLOSES (found by the acceptance battery, 2026-08-06): a .py with a syntax error
+    silently fell through to the generic/whole-file fallback and rendered `via whole-file` -- BYTE
+    IDENTICAL to a valid module that simply defines nothing. So a reader whose file failed to parse
+    was told the file HAS NO STRUCTURE rather than THE TOOL COULD NOT SEE IT, and every downstream
+    panel that depends on the AST (docstring AUTHORITY tagging, CONTRADICTIONS) degraded to silence
+    with no marker. Rule 2 of this tool is NEVER TRUNCATE SILENTLY; a degraded parse is a truncated
+    view of the file, so it prints its own name."""
     ext = os.path.splitext(path)[1].lower()
     if ext == ".py":
         s = _sections_py(src, lines)
         if s:
             return s, "python-ast"
+        if _tree(src) is None:
+            g = _sections_generic(lines)
+            if not g:
+                g = [{"name": os.path.basename(path), "kind": "file",
+                      "start": 1, "end": len(lines)}]
+            return g, "UNPARSEABLE-python (syntax error) -- fell back to top-level-keys"
     if ext in (".md", ".rst", ".txt"):
         s = _sections_md(lines)
         if s:
@@ -265,12 +290,30 @@ def _score_sections(sections, lines, question, line_toks=None):
         # a TWO-LINE section, so a 3.0 name weight made the title outrank every section that could
         # actually contain an answer. Found by the run-1 neutral corpus (postmortems I did not pick):
         # the title won at 9.90 while the one-sentence finding sat unranked at line 18.
-        name_hit = 0.8 * sum(1 for t in _toks(s["name"]) if t in q)
+        # DISTINCT query tokens matched, NOT occurrences. "MDPF Postmortem -- MDPF_REVAMP /
+        # MDPF_3FIRMS / MDPF_CANRTE" contains `mdpf` four times, which is ONE fact about the
+        # section, not four. Counting occurrences multiplied a title's single subject word by its
+        # own repetition, and the damping added below was sized against the un-multiplied value --
+        # so the moment a question NAMED THE DOCUMENT'S SUBJECT (the most natural thing an agent
+        # asks) the title returned to rank 1: measured 2026-08-06, title 2.18 vs the answering
+        # section 1.46, on a query differing from the passing one only by the word "mdpf".
+        # THIS IS A DOUBLE-COUNT REMOVAL, NOT A RELEVANCE HEURISTIC. It encodes nothing about what
+        # an answer looks like -- deliberately, because the conclusion-boost that WOULD do that is
+        # held at Andrew as an open design call, and taking it here would be fitting the scorer to
+        # a five-case set.
+        name_hit = 0.8 * len(set(_toks(s["name"])) & q)
         # SHORT-SECTION DAMPING: a heading/title with almost no body cannot hold the answer, and
         # hits/sqrt(tokens) rewards exactly that shape. Damp until a section has real content.
         span = (s["end"] or s["start"]) - s["start"] + 1
         damp = min(1.0, span / 4.0)
-        scores[idx] = ((hits / (n ** 0.5)) + name_hit) * damp
+        sc = ((hits / (n ** 0.5)) + name_hit) * damp
+        # A ZERO-OVERLAP SECTION IS NOT A RESULT. Keeping score-0.00 entries meant every non-empty
+        # file rendered a full SALIENT panel for a question NOTHING in it matched -- four ranked
+        # rows at score=0.00 read as findings, and the "MEASURED zero" branch below became
+        # unreachable for any file with tokens in it. An honest-zero message that can never print
+        # is the same as not having one.
+        if sc > 0:
+            scores[idx] = sc
     return scores
 
 
@@ -412,16 +455,23 @@ def main() -> int:
     _line_toks = [_toks(ln) for ln in lines]
     scores = _score_sections(sections, lines, question, _line_toks) if question else {}
     ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:top] if scores else []
+    pinned = None
     if at_line:
         for idx, s in enumerate(sections):
             if s["start"] <= at_line <= (s["end"] or s["start"]):
                 if idx not in [r[0] for r in ranked]:
                     ranked.insert(0, (idx, 999.0))
+                    pinned = idx
                 break
 
     print("comp-read: %s" % path)
     print("  %d lines | %d section(s) via %s | question: %s"
           % (len(lines), len(sections), how, ("%r" % question) if question else "(none given)"))
+    if how.startswith("UNPARSEABLE"):
+        print("  !! UNPARSEABLE: this .py did NOT parse. The SHAPE below is a TEXT fallback, not the")
+        print("     module's real structure, and the AST-backed panels are BLIND here: docstring")
+        print("     AUTHORITY tagging degrades to AUTHORITATIVE and CONTRADICTIONS reports none")
+        print("     because it could not look, NOT because there are none. Read the file directly.")
 
     # ---- SHAPE (the denominator; never truncated)
     print()
@@ -435,7 +485,7 @@ def main() -> int:
     # ---- SALIENT
     shown_lines = set()
     print()
-    if not question:
+    if not question and not ranked:
         print("  SALIENT: (no --for question given; pass one to rank regions)")
     elif not ranked:
         print("  SALIENT: NO region matched the question. That is a MEASURED zero over %d section(s)"
@@ -443,7 +493,10 @@ def main() -> int:
         print("    -- the file may still contain the answer under different words. Do not read this")
         print("    as 'the file does not say'.")
     else:
-        print("  SALIENT (top %d of %d scored):" % (len(ranked), len(scores)))
+        print("  SALIENT (top %d of %d scored)%s:"
+              % (len(ranked), len(scores),
+                 (" -- section at line %d PINNED by --at, it did NOT rank on its own"
+                  % at_line) if pinned is not None else ""))
         for idx, sc in ranked:
             s = sections[idx]
             print("    [%s:%d-%d] %s   score=%.2f"
@@ -502,6 +555,11 @@ def main() -> int:
             print("    !! %d: %s" % (c["line"], c["text"]))
             print("       documents %s() with %d arg(s); the def at :%d takes %d."
                   % (c["name"], c["claimed"], c["def_line"], c["actual"]))
+    elif how.startswith("UNPARSEABLE"):
+        # NOT "none detected" -- the detector needs the AST it never got. A clean-looking zero from
+        # a blind instrument is the anti-correlated pass this estate keeps paying for.
+        print("  CONTRADICTIONS: NOT CHECKED -- the file did not parse, so the signature detector")
+        print("    could not run. This is a BLIND zero, not a measured one.")
     else:
         print("  CONTRADICTIONS: none detected (intra-file signature claims only -- a doc that")
         print("    contradicts a DIFFERENT file is out of this tool's millisecond budget).")

@@ -176,6 +176,12 @@ def main() -> int:
     terms = _terms(pattern)
     hits = []          # (band, rel, lineno, text)
     scanned = 0
+    # SKIPPED IS PART OF THE DENOMINATOR. A file that could not be opened was never searched, so
+    # excluding it from `scanned` is correct -- but printing only `scanned` makes an in-scope file
+    # the search NEVER LOOKED AT indistinguishable from one it looked at and rejected. A zero over
+    # "24350 scanned" reads as confirmed absence while N files sat unread and unnamed. Rule 22:
+    # print the denominator of every scan you reason from, including the part you could not reach.
+    skipped = 0
 
     if name_mode:
         pat = pattern if any(c in pattern for c in "*?[") else "*%s*" % pattern
@@ -190,7 +196,15 @@ def main() -> int:
         flags = re.IGNORECASE if ignore_case else 0
         try:
             rx = re.compile(pattern, flags)
-        except re.error:
+        except re.error as exc:
+            # SAY SO. The fallback is right -- an agent typing `widget(` wants results, not a
+            # stack trace -- but it SILENTLY CHANGES WHAT WAS SEARCHED FOR, from a regex to a
+            # literal. Unannounced, the hits below answer a question the agent did not ask, and
+            # they LOOK like a successful regex search. Same class as the BRE warning above,
+            # pointed the other way: that one is a silent zero, this one is silent wrong hits.
+            print("comp-find: WARNING: %r is not a valid regex (%s). Searched for it as a LITERAL "
+                  "string instead -- the hits below are literal matches, not pattern matches."
+                  % (pattern, exc))
             rx = re.compile(re.escape(pattern), flags)
         for rel in files:
             full = os.path.join(WS, rel)
@@ -201,6 +215,7 @@ def main() -> int:
                         if rx.search(line):
                             hits.append((_band(rel, line, terms), rel, n, line.rstrip()[:200]))
             except (OSError, UnicodeDecodeError):
+                skipped += 1
                 continue
 
     # UNCAPPED GRADING: every hit is banded before any pagination. The counts below are the TRUE
@@ -235,8 +250,10 @@ def main() -> int:
 
     mode = "name" if name_mode else "content"
     print("comp-find [%s] %r" % (mode, pattern))
-    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s"
-          % (len(hits), scanned, (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
+    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s%s"
+          % (len(hits), scanned,
+             (" | %d UNREADABLE, NOT searched" % skipped) if skipped else "",
+             (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
     counts = " ".join("%s=%d" % (b, len(by_band[b])) for b in _BANDS if by_band[b])
     print("  BANDS (true totals, not this page): %s" % (counts or "none"))
     print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, max(0, end - start), total))
@@ -245,6 +262,9 @@ def main() -> int:
     if total == 0:
         print("  NO HITS. This is a MEASURED zero over %d scanned file(s) in scope -- not a claim "
               "the term is absent from the estate." % scanned)
+        if skipped:
+            print("  ^ AND %d in-scope file(s) were UNREADABLE and never searched. Your zero does "
+                  "NOT cover them." % skipped)
         print("  Widen with a pathspec, or -i, or check the pattern (see the BRE warning above if shown).")
     else:
         last_band = None

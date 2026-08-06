@@ -69,6 +69,8 @@ org/modules/graph/extract_pipeline.py
 org/modules/graph/sovereign_held.py
 .tools/safe_deploy_core.py
 .tools/comp-pipescript
+.tools/comp-find
+.tools/comp-read
 "
 
 # --- Suite files (repo-relative patterns; trigger AND invocation) ------------
@@ -92,6 +94,8 @@ org/modules/graph/tests/test_comp_secrets_bd_hold.py
 org/modules/graph/tests/test_freshness_manifest_gen_bd_hold.py
 org/modules/graph/tests/test_platinum_held_path_guard.py
 org/modules/graph/tests/test_script_io_ast.py
+org/modules/graph/tests/test_comp_read.py
+org/modules/graph/tests/test_comp_find.py
 "
 # test_script_io_ast.py added 2026-08-05 (3.0.0_SA_CVO~B): it is the battery for the R-1/R-2
 # generalist I/O engine that `comp-pipescript io` now falls back to (@e07b9a29a), so a change that
@@ -102,6 +106,20 @@ org/modules/graph/tests/test_script_io_ast.py
 # every comp-pipescript commit would start blocking on an unrelated pre-existing break. That is a
 # scoping call for the gate's owner, not a side effect of registering one new battery. The 80/10
 # gap is routed as its own finding.
+#
+# test_comp_read.py + test_comp_find.py added 2026-08-06 (3.0.0_SA_CVO~B), NFRA_SCRIPTGEN Part B,
+# WITH their engines .tools/comp-read + .tools/comp-find enrolled in WATCH_EXACT above. BOTH HALVES
+# ARE REQUIRED AND THE SECOND IS THE LOAD-BEARING ONE: a suite file listed here but whose engine is
+# not watched runs only when SOMEONE ELSE'S commit happens to trigger the gate -- which is the F9
+# decay class ("a gate no runner is wired to decays silently") reproduced inside the gate built to
+# kill it. Enrolled EXPLICITLY rather than by naming the files test_pipescript_*.py: that glob would
+# auto-register them with zero edits here and MISNAME them as pipescript suite members, buying a
+# free registration with a permanent lie about what the battery covers.
+#
+# SCOPE NOTE, stated so a later reader does not infer more than is true: this gate is comp-pipescript's,
+# and comp-find/comp-read are NOT pipescript engines. What is being borrowed is the RUNNER, because it
+# is the one wired commit-time runner in this tree. If a comp-tool suite gate is ever stood up, these
+# four lines move there; they are not an argument that these tools belong to pipescript.
 
 STAGED="${PIPESCRIPT_SUITE_STAGED_FILES:-$(git diff --cached --name-only 2>/dev/null || true)}"
 if [ -z "$STAGED" ]; then exit 0; fi
