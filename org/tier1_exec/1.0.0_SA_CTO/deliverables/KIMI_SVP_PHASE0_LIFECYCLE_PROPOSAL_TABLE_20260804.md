@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 9 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05)
+**SITTING PROGRESS: 10 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports -- 2026-08-06, PERMANENT with a standing review**)
 
 > **CADENCE IS A DECLARED PROPERTY, AND IT WAS NOWHERE MACHINE-READABLE (row 7).** I proposed cma as
 > "PERMANENT with NO declared cadence" and argued the age therefore could not be a finding. **Andrew
@@ -202,7 +202,7 @@ than inheriting my original framing.
 | 7 | cma | **PERMANENT - RATIFIED 2026-08-05**, **CADENCE = ANNUAL** (Andrew VERBATIM: *"this file gets uploaded once a year"*) | Chain `yang-cma` / `sys-yang-analytics-engine`, motif generative-publish. Producers `yang-generate-cma` (cma_excel branch) + `data/yang_pkl/scripts`. SERVED, verified LIVE: `json/capital-markets/assumptions.json` 4,146 B LastMod **2026-03-11**; `views.json` 5,992 B LastMod **2026-01-09**. Frontend REAL + mounted: `portal/src/api/portal-proxy.ts:1363 getCMAAssumptions()` (views at :1399), CVO `mounted-reachable` | HIGH (was MED - I had rated it on a FAMILY NAME, not on this chain's evidence) | **5- and 7-month-old artifacts are HEALTHY against an annual cadence.** A daily/weekly freshness check here would false-alarm forever with a real-looking number |
 | 8 | correlation | **PERMANENT - RATIFIED 2026-08-05** | Chain `yang-correlation` / `sys-yang-analytics-engine`, producer `yang-generate-correlation` (ProcessDataPKLOnly). SERVED verified LIVE: `json/correlations/correlation_data.json` 152,639 B **LastMod 2026-08-05 07:30:29Z (today)** - the census claimed 2026-06-15, **stale by 7 weeks**. Frontend real + mounted: `portal-proxy.ts:1633 getCorrelationData()`, exported :2168 | HIGH (was MED - rated off a family name) | ACTIVELY PRODUCING - unlike `cma`, an old artifact here WOULD be a finding. Two chains I had lumped as one MED family read OPPOSITE on cadence |
 | 9 | data-refresh | **PERMANENT - RATIFIED 2026-08-05** | Chain `PPI-10-opal-data-refresh-api` / `sys-partner-serving-platform`, motif edge-route. Lambda `opal-data-refresh-api` LIVE (python3.11/256MB, **LastMod 2026-08-03**). Frontend MOUNTED: `App.tsx:30,32` lazy -> rendered `:466` (DataRefresh) + `:434` (SecurityScanner). Census said `reachable: unreviewed`; **resolved to mounted by this check**. Dev-only (JWT userType=Dev) - internal operator tool | HIGH | **COUPLES TO ROW 25:** the SAME Lambda serves `/security-scanner/*` and the SAME App.tsx mounts both pages - row 25's 'LEGACY candidate' note is likely inverted. **ALSO: this Lambda is the named specimen in CLAUDE.md Rule 22a** - it executes 5 real DynamoDB ops and comp-iam reports 'dynamodb' ZERO times |
-| 10 | etf-reports | PERMANENT | ETFS month-end email armed (Sep-1 fire, cron ENABLED); ETFS canon program active | HIGH | ETFS CANON question open — parked items keyed on it |
+| 10 | etf-reports | **PERMANENT — RATIFIED 2026-08-06**, **WITH A STANDING REVIEW** (Andrew VERBATIM: *"This is Permanent, but we need to make sure that all of these are properly grouped together, that nothing is redundant, that what is actually supposed to be canonical here is, I'd say essentially that it is subject for review."*) | **NINE live schedules, all ENABLED**, spanning all three advisor firms — the row's original single-line evidence understated this by 8. Chain (UTC): `wsd-49f-partner-held-etf-daily` 03:30 **TUE-SAT** · `cot-etf-ownership-daily` 10:30 · `bd-49f-etf-ownership-daily` 10:45 · `inf-etf-ownership-daily` 15:00 · `etfs-canon-fanin` 15:45 · `etf-ownership-dashboard` 16:00 · `etfs-netassets-daily` 22:00 · `opal-assets-silver-etf` 23:30 · `etfs-reports-monthly-run` cron(0 10 1 * ? *) America/New_York -> Sep-1 14:00Z -> `etfs-reports-orchestrator`. Rule->Lambda mapping is **1:1, zero duplicate targets**. Original cited evidence VERIFIED correct | HIGH | **REVIEW OWNED, scope below the table.** ETFS CANON question still open — and a Lambda named `etfs-canon-fanin` fires DAILY while "which location is canonical" is an unresolved P0 |
 | 11 | factor-tilts | PERMANENT | yang-analytics family | MED | — |
 | 12 | graph-platform | PERMANENT | comp-tools/graph substrate — the estate's own cognition layer, daily commits | HIGH | — |
 | 13 | insurance | UNDECLARED | sys-estate-ops-platform member; zero session evidence of activity or consumers | — | resolve at sitting — DORMANT candidate |
@@ -234,3 +234,73 @@ matrix's, not this table's); (2) rule the 5 UNDECLARED; (3) confirm or amend the
 lands the ratified set in the canon at the RESOLVER_DEFROST seam — which simultaneously
 creates the per-vertical prose homes (description/enrichment) that the first fire proved
 missing, giving future R1/R2 output a real landing surface.
+
+---
+
+## ROW 10 STANDING REVIEW — ETFS grouping / redundancy / canonicality
+
+**Opened 2026-08-06 on Andrew-direct at the CTO~B terminal, VERBATIM:**
+> *"This is Permanent, but we need to make sure that all of these are properly grouped together,
+> that nothing is redundant, that what is actually supposed to be canonical here is, I'd say
+> essentially that it is subject for review."*
+
+Ratification of PERMANENT is NOT contingent on this review. The review is a separate owned item.
+
+### What the ground-read already settled
+
+**No literal redundancy.** All nine schedules map 1:1 to distinct Lambdas; no two fire the same
+target. Whatever duplication exists is SEMANTIC (two jobs computing the same thing under different
+names), not mechanical, and names cannot settle it.
+
+**The core group is coherently ordered.** Three per-firm ownership producers complete
+(cot 10:30 / bd 10:45 / inf 15:00) before the fan-in (15:45), which completes before the dashboard
+(16:00). That IS a proper group and the sequence is sound.
+
+### The four open questions, and why each is real
+
+**1. THE CHAIN IS TIME-ORDERED, NOT DEPENDENCY-ENFORCED.** `etfs-canon-fanin` fires 45 minutes after
+`inf-etf-ownership-daily` on a clock, not on its completion. If INF runs long or fails, the fan-in
+fires anyway and the dashboard publishes 15 minutes later. **The fan-in cannot distinguish "INF wrote
+nothing today" from "INF failed."** That is the presence-vs-health class (`degraded_sources: []`)
+sitting in a live partner-facing chain. *Note the CLAUDE.md ad-hoc/schedule rule cuts the OTHER way
+here — these correctly have real schedules; the gap is that nothing verifies upstream completion.
+The remedy is a precondition check, NOT converting them to event-only triggers, which would
+reintroduce the freeze-silently defect that rule exists to prevent.*
+
+**2. TWO 49F ETF JOBS ON DIFFERENT CALENDARS.** `bd-49f-etf-ownership-daily` runs 7 days/week;
+`wsd-49f-partner-held-etf-daily` runs **TUE-SAT only** (a T-1 weekday pattern). Same firm, both ETF.
+Either they are different datasets — in which case the naming makes them look redundant when they
+are not — or they overlap, and one calendar is wrong. **Not resolvable from schedules; needs the
+two Lambdas' outputs compared.**
+
+**3. TWO JOBS RUN AFTER THE DASHBOARD PUBLISHES.** `etfs-netassets-daily` (22:00) and
+`opal-assets-silver-etf` (23:30) land 6 and 7.5 hours AFTER `etf-ownership-dashboard` (16:00), so
+neither is in the dashboard a reader sees that day. Either they feed the NEXT day's run — legitimate,
+but it makes the dashboard T-1 on those inputs and nothing says so — or they belong to a different
+vertical that merely shares the `etf` name. **This is the grouping question Andrew asked, in its
+sharpest form.**
+
+**4. THE CANONICALITY QUESTION IS LIVE WHILE A JOB NAMED `canon` RUNS DAILY.** The open ETFS CANON
+question is *which DynamoDB table / S3 location is canonical for ETFS* (Andrew P0, gating the
+`ETFS_AVGCAP` `partial`-flag defect and the INF gold-floor figure as ONE cluster). Meanwhile
+`etfs-canon-fanin` has been firing every day at 15:45. **Either it has already settled canon de
+facto — which is the "it is deployed and it works" answer CLAUDE.md 17a explicitly rejects as an
+architecture — or it is fanning in to a location that is not the canonical one.** Both readings are
+findings; they are not the same finding, and no schedule read can tell them apart.
+
+### Method note
+
+Everything above is grounded on LIVE schedule + target state. **Questions 2, 3 and 4 are
+deliberately left as QUESTIONS**: each requires reading what these Lambdas actually WRITE, which I
+have not done. Naming a suspicion as a finding would be the ungrounded-causal-claim class
+(CLAUDE.md 22) — the schedules are evidence of WHEN, never of WHAT.
+
+**Instrument gap found while grounding this row, and it is wider than ETFS:** `aws events
+list-rules` **cannot see EventBridge Scheduler schedules at all** — a different API. **16 live
+schedules** sit there, including `etfs-reports-monthly-run` (this row's own cited evidence),
+`astn-wsjft-3am-run` (row 6's evidence) and `estate-report-0900et`. A `list-rules`-based census of
+"what is scheduled in this estate" silently omits all 16 and reads as complete. I nearly filed the
+month-end email as MISSING on a `ResourceNotFoundException` before checking the second API.
+**Separately: `--query 'length(Rules)'` reported 100; the token-walked truth is 139** — the
+documented paginated-count trap, which genuinely hid `opal-assets-silver-etf-sweep-daily` from the
+first read of this very row.
