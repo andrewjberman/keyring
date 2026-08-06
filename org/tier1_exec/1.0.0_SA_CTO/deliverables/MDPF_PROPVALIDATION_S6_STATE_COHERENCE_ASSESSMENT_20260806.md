@@ -223,9 +223,58 @@ EDT reads an expired token and **re-opens the exact race Amendment 1 closed.** P
 regimes" — correctly — but does not carry the JWT member into the arithmetic.
 
 **Consequence if unfixed:** the H1 probe could "PASS" at an hour production can never use, and the pass
-would be recorded as closing H1. **12:15Z is a hard floor on the H1 probe design**, not a detail for
+would be recorded as closing H1. The JWT mint is a hard floor on the H1 probe design, not a detail for
 implementation. *(Note: `02` correctly declines to PORT the Orion bronze pull into the Lambda — but the
 clock move lands in the upstream modules, which Phase 5 step 7 applies **first**.)*
+
+#### G1-A · CORRECTED ~2050Z — the figure was wrong by ten minutes, and the correction opened a bigger finding
+
+**⚠ MY ERROR, and it is the class this document catalogues.** I sourced **12:15Z from Clock v3
+Amendment 1 — a RULING DOCUMENT — for a claim about a LIVE CRON EXPRESSION.** Rule 22a: a STATE claim
+needs the live primitive; neither a record nor a comp-tool distinguishes declared from applied. Caught by
+`0.0.0_AB_MSTR~Z` on the live plane. The direction was conservative (I reported a *tighter* floor than
+exists, so a probe built to my number still satisfies reality) — **but conservative is not correct, and it
+was travelling to Andrew as a number.**
+
+**Measured, `comp-trigger` denominator 139 events-rules + 16 schedules:**
+
+| Rule | Expression | Anchor | Target |
+|---|---|---|---|
+| `opal-inf-jwt-fetch` | `cron(5 12 * * ? *)` = **12:05Z** | **UTC-fixed** (classic rule — no timezone field) | `inf-jwt-trigger` |
+| `opal-inf-export-schedule` | `cron(0 21 * * ? *)` | UTC | `inf-jwt-trigger` (Clock v3's second daily mint) |
+| `smartx-jwt-refresher-daily` | `cron(0 9 * * ? *)` | **America/New_York — DST-aware** | `smartx-jwt-refresher` |
+
+Both INF rules target the **same** lambda — one resource, two schedules, exactly as Clock v3 describes.
+**Corrected floor: 12:05Z = 08:05 ET EDT. Usable window 08:05–08:40 = 35 minutes, not 25.**
+
+> **⚡ THE CORRECTION OPENED THE REAL FINDING: THE TWO VENDORS' JWT FLOORS ARE ANCHORED IN OPPOSITE TIME
+> BASES, SO "SHIFT THE ASSOCIATED CHAINS EARLIER" IS CORRECT FOR ONE AND WRONG FOR THE OTHER.**
+> - **SmartX — ET-anchored.** Its floor moves with the wall clock, so doc 03's *"set JWT 07:45 ET and pull
+>   08:00 ET"* is already right and is **DST-safe by construction**. No new problem.
+> - **Orion — UTC-fixed, deliberately.** Clock v3 Amendment 1 pinned 12:05Z specifically to stay off the
+>   12:00/12:30 Orion hazard marks **year-round** (an ET-anchored 08:30 lands *on* 12:30Z in EDT).
+>   **Moving it earlier to make room for an early pull re-opens the exact race that amendment closed.
+>   The Orion pull adapts to the floor; the floor does not adapt to the pull.**
+>
+> Doc 03 Phase 4 already carries the governing rule — *"DST-aware Scheduler where the contract is an ET
+> wall-clock; preserve any deliberately UTC-fixed authentication hazard-avoidance clock only where its
+> recorded rationale still applies."* **What it does not do is say which resources fall on which side.**
+> Now measured: SmartX = ET side; Orion = UTC side, rationale still applying.
+
+**DST behaviour (with the mechanism, not just the caution):** Orion's floor is 08:05 ET in EDT and
+**07:05 ET in EST** — 35 minutes of window in summer, 95 in winter. **Tightest right now**, so an August
+validation is a worst-case validation, which is the safe direction — *but anyone re-confirming this in
+January reads 95 minutes and books slack that evaporates in March.* SmartX carries no equivalent exposure.
+
+**RECORD DRIFT (a finding in its own right): Clock v3 Amendment 1 records the Orion JWT at 12:15Z; the
+live plane runs 12:05Z.** Ten minutes, on the one clock member that amendment exists to pin — so the
+governing clock document is wrong about the thing it governs. Every agent reasoning about this clock move
+is reading Clock v3, including me an hour ago.
+
+*Method note, MSTR~Z's, worth keeping: their first pass used `aws events list-rules` and read **100** —
+the **page size**, not the total. Token-walked it is **139**, matching the `comp-trigger` denominator
+above. CLAUDE.md documents that exact `list-*` trap; printing the denominator is the only reason a
+truncated retrieval did not become a confident "H11 is unfounded."*
 
 ### G2 · H12 (NEW HOLE) — the probe-fail branch is missing from the pack but already ruled in Clock v3
 
