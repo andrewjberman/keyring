@@ -1098,7 +1098,8 @@ def _stage2_vocab_invariant(files) -> int:
 _ROUTING_SURFACE_HUD = ".tools/hooks/comp-tool-hud.sh"
 
 
-def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned=0):
+def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned=0,
+                            tombstoned=0):
     """THE RETIRED-ALIAS INVARIANT, pure decision (unit-testable). (rc, lines); rc=1 blocks.
 
     NFRA_MSBEFF.R6 (2026-07-23). retired_aliases is the THIRD name-authority section (dead names).
@@ -1129,9 +1130,10 @@ def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, sc
     if not contradiction and not dangling and not routed:
         citation = (f"none cited across the {scanned} routing surface(s) in scope" if scanned
                     else "citation check (C) DID NOT RUN -- no routing surface in scope")
+        tomb = f" ({tombstoned} tombstoned mention(s) exempted)" if tombstoned else ""
         return 0, [f"  [manifest-check] retired-alias invariant PASS: {len(retired)} retired name(s) "
                    f"declared, all disjoint from live+excluded ({len(live)} live), successors valid; "
-                   f"{citation}."]
+                   f"{citation}{tomb}."]
     lines = [f"\nBLOCKED: retired-alias invariant (retired {len(retired)}; live universe {len(live)}):"]
     for n in contradiction:
         lines.append(f"  - {n:<24} declared RETIRED but is ALSO in tools_index/excluded -- a name is in EXACTLY ONE section")
@@ -1205,6 +1207,7 @@ def _retired_alias_invariant(files) -> int:
         # Scan committed routing surfaces for DECLARED-RETIRED names (closed set -> no prose storm).
         surface_refs = {}
         scanned = 0
+        tombstoned = 0
         for f in norm:
             if not _is_routing_surface(f):
                 continue
@@ -1213,14 +1216,30 @@ def _retired_alias_invariant(files) -> int:
                 continue
             txt = p.read_text(encoding="utf-8", errors="replace")
             scanned += 1
+            # A TOMBSTONE IS THE CURE, NOT THE DISEASE. This check text-matches a NAME, so it
+            # cannot tell "run this tool" from "this tool is RETIRED, do not run it" -- and the
+            # second is exactly what a strike note must say. Without an exemption the invariant
+            # forbids DOCUMENTING the retirements it exists to police: the only way to satisfy it
+            # is to delete the explanation, leaving a silent hole where the reason used to be.
+            # Same shape as the comment-blind _ADD_PARSER regex this same gate threw today, one
+            # layer up; the estate's idiom for "I know, and here is why" is an audited inline
+            # marker (cf. `# never-override:`, `# rail-checked:`), so this uses one.
+            #   retired-tombstone: <name>     <- that name's mentions in THIS file are documentation
+            # NEVER SILENT: tombstones are COUNTED and REPORTED. An exemption nobody can see is a
+            # second blind spot wearing the first one's fix as a disguise.
+            tomb = set(_re.findall(r"retired-tombstone:\s*([A-Za-z0-9_-]+)", txt))
             for name in retired:
                 if _re.search(r"(?<![A-Za-z0-9_-])" + _re.escape(name) + r"(?![A-Za-z0-9_-])", txt):
+                    if name in tomb:
+                        tombstoned += 1
+                        continue
                     surface_refs.setdefault(name, []).append(f)
     except Exception as e:  # fail-closed
         print(f"\nBLOCKED: the retired-alias invariant could not be evaluated ({e}).\n"
               f"  An unevaluable completeness gate does not read as 'passed'.")
         return 1
-    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned)
+    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned,
+                                        tombstoned)
     for ln in lines:
         print(ln)
     return rc
