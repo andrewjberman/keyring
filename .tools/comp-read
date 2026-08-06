@@ -247,6 +247,38 @@ def _doc_ranges(src):
     return docs
 
 
+
+def _window(line, qtoks, width=200):
+    """Excerpt AROUND the match, not from the start of the line.
+
+    THE BREAK THIS FIXES (found by the first mechanical A/B run, 3 of 3 case studies): comp-read
+    located the RIGHT FILE and the RIGHT LINE and then truncated at a fixed offset -- so on CLAUDE.md's
+    ~1500-char rule lines the answer was cut off. Asked what goes wrong calling aws from a
+    bash-spawned PowerShell, it returned line 105 sliced BEFORE "HANG ... REPORTS SUCCESS". Asked if
+    comp-iam suffices for a new bucket, it cut at "NECES" -- one character before "NECESSARY, NOT
+    SUFFICIENT".
+    RIGHT FILE, RIGHT LINE, WRONG PART OF THE LINE: the tool committing its own thesis failure one
+    level down, and the SAME positional-heuristic class as the first-match-not-best-match bug it
+    already carries a comment about. A fixed offset is a statement about where text sits, not about
+    where meaning sits."""
+    t = line.strip()
+    if len(t) <= width or not qtoks:
+        return t[:width]
+    low = t.lower()
+    best, bestpos = -1, 0
+    step = 20
+    for start in range(0, max(1, len(t) - width + 1), step):
+        seg = low[start:start + width]
+        score = sum(seg.count(q) for q in qtoks)
+        if score > best:
+            best, bestpos = score, start
+    if best <= 0:
+        return t[:width]
+    lead = "..." if bestpos > 0 else ""
+    tail = "..." if bestpos + width < len(t) else ""
+    return lead + t[bestpos:bestpos + width] + tail
+
+
 def _authority(path, line_text, lineno=None, doc_ranges=()):
     """AUTHORITATIVE = the thing itself (code, signature, help=, assertion).
     DESCRIPTIVE = something ABOUT the thing (comment, prose, docstring) -- drifts, and both
@@ -398,7 +430,7 @@ def main() -> int:
             for n, ln in best:
                 shown_lines.add(n)
                 print("        %-13s %d: %s"
-                      % (_authority(full, ln, n, doc_ranges), n, ln.strip()[:120]))
+                      % (_authority(full, ln, n, doc_ranges), n, _window(ln, q)))
 
     # ---- QUALIFIERS (the load-bearing panel)
     quals = []
@@ -418,7 +450,7 @@ def main() -> int:
     for n, word, ln in near[:12]:
         flag = "!!" if word in _STRONG else "  "
         shown_lines.add(n)
-        print("    %s %d: %s" % (flag, n, ln[:130]))
+        print("    %s %d: %s" % (flag, n, _window(ln, set(_toks(question)) or {word})))
     if len(near) > 12:
         print("    ... %d more (--all-quals)" % (len(near) - 12))
 
