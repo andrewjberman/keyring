@@ -118,10 +118,28 @@ A label is a naming act; the model proposes from a closed set or it does not pro
 composed instances, not classes); and the *"what is this motif"* answer being read rather than
 re-derived by every consumer.
 
-**Does NOT settle, and I am not settling it:** whether F1 reads `K of <14 kinds>` or
-`K of <N composed structures>`. **Andrew's call.** I inferred this ontology's intent once today and
-was wrong, at the cost of a bad ruling to a seat that was holding correctly. **The composition makes
-both computable; choosing between them is a naming act.**
+**SETTLED — Andrew-direct 2026-08-06 ~2340Z, VERBATIM:**
+
+> *"F1 will be over the deterministic structural baseline, not the named baseline. The semantic naming
+> is just metadata on various C(N) grain elements, not a denominator. Our whole focus here is C2 and
+> C3.i. Do not worry about C3.ii just yet, that will come after we've handled these items listed
+> here."*
+
+**F1's denominator is `|composed C3.i structures|` — Stage 2's OUTPUT.** Not 14, not any count from
+the YAML.
+
+>> **THE PRINCIPLE, AND IT IS LARGER THAN F1: SEMANTIC NAMING IS METADATA ON A GRAIN ELEMENT. IT IS
+> NEVER A DENOMINATOR.** A name is an attribute of a thing that was composed; it is not the set of
+> things. **Every count in this pipeline comes from a deterministic composition; every name comes from
+> Stage 3 and can never enter an arithmetic.** That is the same law as §3's "no deterministic figure
+> may depend on a Stage-3 value," stated one level up — and it retires the entire 4-vs-14-vs-12-vs-19
+> question, which was four ways of counting a vocabulary and calling it a population. <<
+
+**SCOPE, same ruling: C2 and C3.i ONLY. C3.ii is DEFERRED** until the items in this spec are handled.
+The vertical join / per-vertical scoping is C3.ii work and is therefore **not on this critical path**.
+*(Relayed verbatim to `1.0.0_SA_CTO~B`, who is mid-build on the vertical-join walk-up on my earlier
+recommendation. **Relayed, NOT converted into a hold on them** — his word binds the addressed seat and
+adjudicating its breadth is not mine.)*
 
 ## 5. Open
 
