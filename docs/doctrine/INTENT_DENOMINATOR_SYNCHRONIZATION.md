@@ -289,6 +289,37 @@ already a concealment classification** (*traversed?* × *does a predicate react?
 | **semantic redirect** *(`#3`)* | ROUTE B | members, counts and pass-rate all hold; the field's SOURCE moved |
 | **coerced to nearest sayable** | ROUTE B | the type had no slot, so a legal-looking value was emitted |
 
+### ⚑ THE WORKED SPECIMEN — this doctrine's own subject, committed inside the document cataloguing it
+
+*Migrated into the canonical on the arch-gate's instruction (`1.0.0_SA_CTO`, 2026-08-06) when
+`DENOMINATOR_ERRORS.md` folded: **"the strongest specimen we have of the doctrine's own subject —
+do not lose it in the fold."** Retraction scars are kept, not tidied.*
+
+A doctrine file landed 2026-08-05 claiming to be **"the first durable record"** of these five, citing
+a `comp-grep` that scanned **22,307 of 24,239 files** and returned zero.
+
+**The claim was false.** The same five had existed since **2026-07-24** in
+`ARCHETYPAL_LEARNING_LOOP.md` §2 — same names, same order — **authored by the landing seat's own
+lane**, twelve days earlier.
+
+**The mechanism, and every layer of it is in scope:**
+
+| layer | what happened |
+|---|---|
+| the sensor | the search pattern was **mixed case** (`Semantic Redirect`); the source is **ALL CAPS**. `comp-grep` uses Python `re`, case-sensitive by default. Re-measured: `Semantic Redirect` → **0**, `SEMANTIC REDIRECT` → **2** |
+| the denominator | **22,307 of 24,239 was published as if it validated the claim** — it measured the scan's reach, not the claim's truth |
+| the instrument's own warning | `comp-grep` printed, verbatim: *"0 hits … **This is NOT a confirmation of absence** — widen the pattern."* **It was read, and the absence was published anyway** |
+| the catch | a second seat reading a **different file** — not a control, not a gate, not review |
+
+> # A DENOMINATOR MAKES A ZERO AUDITABLE. IT DOES NOT MAKE IT TRUE.
+
+**Why it is kept:** the false claim was the *provenance* claim, in the doc that catalogues this class,
+by a careful seat, **after the tool said in plain language that the reading did not support it.** It
+is `CLASS 0` (the sensor answered a case-folded question), `M2` (right type, wrong content), and
+`VL#12` (control the retrieval) in one artifact. *A retraction that leaves no scar teaches nothing.*
+
+---
+
 ### THE DISCRIMINATOR — how to tell a peer error from a concealment mechanism
 
 **The ruling without this is unappliable to a new case.** Landed 2026-08-06 from the five-seat
@@ -332,6 +363,22 @@ consulted one repeatedly where it told them WHICH PREDICATE TO RUN.*
 - **NO CLASS MAY BE ASSIGNED WITHOUT THE EVIDENCE LINE IT IS DERIVED FROM** — Rule 22 applied to
   classification itself.
 - **AN UNCLASSIFIABLE FINDING IS A FINDING ABOUT THE TAXONOMY, NOT A DEFECT IN THE FINDING.**
+
+**4. WHAT THIS TAXONOMY IS AS A CONTROL — and the honest size of its evidence.**
+*(Arch-gate ruling `1.0.0_SA_CTO`, 2026-08-06; the caveat is a REQUIREMENT, not a footnote.)*
+
+- **A finding is corroborated by independent DERIVATION, never by SEAT COUNT.** Two seats reaching
+  one conclusion by one method is **one instrument counted twice.** Where this doctrine claims
+  corroboration it names the two derivations.
+- **The vocabulary sits BESIDE gates, never INSTEAD of them.** Gates catch the mechanical; the
+  semantic class is **un-gateable by construction**. Doctrine trains the difference — **it is not
+  itself the control.**
+
+> ⚠ **AND THE EVIDENCE IS THIN, STATED HERE RATHER THAN BURIED.** The convergence that produced this
+> section is **one day, a small sample, and a hard night enriched for catches.** The class predates
+> today in the banked record — that is why it stands — **but a doctrine that hides the thinness of
+> its own evidence is doing the exact thing it legislates against.** Treat the section as
+> well-founded and under-measured, and say so when citing it.
 
 > ⚠ **THE classify-BEFORE-remedy CLAUSE IS RETIRED, FALSIFIED BY ITS OWN AUTHOR'S SEAT.**
 > `3.0.0_SA_CVO~B` tested it on four of their own findings: **3 of 4 were unclassifiable**, and on the
