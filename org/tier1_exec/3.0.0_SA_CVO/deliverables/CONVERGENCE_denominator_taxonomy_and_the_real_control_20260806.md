@@ -106,8 +106,70 @@ it was the least comfortable result of the night to receive. COO said so plainly
 matching on my own bad night. CTO's defence, which I accept but flag rather than lean on: the class
 predates today in the banked record, so the recommendation does not rest on tonight alone.
 
-**PENDING:** `1.0.0_SA_CTO~B`. If the contract I wrote (denominator + vintage + *fetch the territory*
-on load-bearing rows) is unaffordable at their call sites, §2's recommendation survives but the
-stratum contract does not, and that would be the one input capable of overturning this.
+## 6. `1.0.0_SA_CTO~B` — ALL FIVE SEATS IN. Refinement, not refutation, plus ONE REAL GAP.
+
+**Q-1 — THE CONSUMPTION POINT IS NOT THE CALL SITE. IT IS THE DESIGN DECISION.** Honest report: at
+the moment of writing a field they reached for denominator + vintage and **opened no taxonomy at
+all.** But they consulted one *repeatedly and decisively* elsewhere — the lifecycle polarity table —
+**because it told them which PREDICATE to run.** And they used classify-before-remedy without naming
+it: *the frozen corpus and the never-delivered corpus are DIFFERENT CLASSES with DIFFERENT REMEDIES,
+and treating them as one would have built the uploader and still shipped a model that saw nothing.*
+→ **Put denominator + vintage in the stratum contract; put the vocabulary where a REMEDY IS CHOSEN.**
+A taxonomy in the contract drifts unread; the same taxonomy in design review gets consulted, because
+that is the moment the question is live.
+
+**Q-2 — IT STEERS ONLY ONCE IT CONVERTS TO A MECHANICAL CHECK.** Tested against their own two defects
+from today, not reasoned abstractly:
+- *"six silver tables"* when the truth was 20 and 19 (a converter count from a runbook) = **Grain
+  Shift** — and the vocabulary would **NOT** have caught it: *it does not supply suspicion.*
+- `last_commit_utc` carrying `-04:00` = **Semantic Redirect** — and it **WOULD** have, but **only as a
+  mechanical question**: *"does any field NAME assert a property its VALUE does not satisfy?"*
+→ **Narrow my claim, adopted:** the vocabulary steers **once each class has produced its lint**; a
+class that has not yet produced one is **UNPROVEN, not unfounded.** Its real value is that five
+classes yield five questions a reviewer can actually run.
+
+**Q-3 — QUALIFIED YES, AND THE GAP IS MINE.** Fetch-the-territory *is* affordable for them, with real
+numbers: whole run 3m24s; a vertical join over today's 357 paths ≈36s serialised, seconds
+parallelised. **But it is affordable because of a property of their CONTEXT, not of my CONTRACT** —
+daily batch, transient box, no latency SLA, nobody waiting. At a **request-serving** call site (a
+256MB Lambda behind API Gateway) per-row ground-truth fetch is a latency and cost failure, and the
+holder **will quietly ignore the contract** — my own stated worst case.
+> **THE DISSENT: the contract is CORRECT and carries NO APPLICABILITY CONDITION — and a contract that
+> does not say WHERE IT APPLIES will be applied where it cannot hold and then abandoned wholesale.**
+**ADOPTED FIX (theirs):** fetch-the-territory binds on **BATCH / ANALYTIC** consumers; a **SERVING**
+consumer satisfies it by **fetching AT PRODUCTION TIME and carrying the vintage forward** — the fetch
+happens once, in the batch, and the serving path inherits a stamped value rather than re-deriving it.
+Keeps *"go and fetch for yourself"* intact where affordable and gives the serving side **a way to
+honour it rather than a reason to ignore it.**
+
+### The discriminator they supplied — sharper than the ratified text, and it survives ratification
+
+Andrew's Q2 is already **RATIFIED** (redirect = not a peer error). CTO~B reached the same answer
+independently, from a live instance they committed today, and supplied the *reason* — which the
+ratified text does not carry and should:
+
+> **A PEER ERROR CHANGES THE VALUE. SEMANTIC REDIRECT CHANGES WHAT THE VALUE AUTHORISES.**
+> value error → fix by **RECOMPUTATION** · redirect → fix by **RENAMING or NORMALISING**, and
+> recomputation touches nothing *because the value was never wrong.*
+
+On their `_utc` instance the comparison logic was correct, the value was correct, nothing downstream
+was wrong yet — **what was wrong was what the field AUTHORISED.** A taxonomy classing it a peer error
+would have pointed them at a calculation that was already right. This also matches my own S1, where
+redirect was *concealing* New Axis and Grain Shift: **a peer error does not conceal its peers; it sits
+beside them. Something that operates ON the others is structurally a mechanism, not a member.**
+
+**They disclosed their own interest unprompted:** *"I have an interest in the answer that makes my own
+`_utc` defect a recognised class rather than carelessness. Weigh accordingly."* Recorded as they asked.
+
+## 7. NET — all five seats, nothing smoothed
+
+1. **Ratify the taxonomy as VOCABULARY**, homed where a **remedy is chosen** (design review), not in
+   the stratum contract and not in the rule-bank.
+2. **A class earns its keep when it produces a LINT.** Classes without one are unproven, not unfounded.
+3. **The control is INDEPENDENT DERIVATION**, for the un-gateable semantic class — beside gates, not
+   instead of them.
+4. **The contract needs its applicability condition**: batch/analytic fetches; serving inherits a
+   stamped vintage from production time.
+5. **Index, not gate** — plus no class without its evidence line.
 
 -- 3.0.0_SA_CVO
