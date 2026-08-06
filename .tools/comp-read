@@ -149,15 +149,34 @@ def _sections_py(src, lines):
     return sections or None
 
 
+_MD_HEAD = re.compile(r"^(#{1,6})\s+(.*)")
+# A BOLD LINE IS A HEADING IN THIS ESTATE'S PROSE. Measured on the postmortem corpus: CLAUDE.md has
+# 10 `#` headings and 46 bold-led rule lines; docs/references/INCIDENTS_2026-07-13.md has ONE `#`
+# heading and 10 bold pseudo-headings. Recognising only `#` collapsed that incident file to a SINGLE
+# section, so SALIENT rendered "top 1 of 1" and comp-read added nothing on exactly the corpus it
+# would most be used against (found by the run-0 mechanical A/B).
+_MD_BOLD = re.compile(r"^\s{0,3}(?:[-*+]\s+|\d+[.)]\s+|>\s+)?\*\*(.{2,90}?)\*\*")
+
+
 def _sections_md(lines):
+    """Sections from `#` headings AND bold-led lines, each tagged with its own kind.
+
+    Finer granularity is the POINT, not a side effect: in this estate a numbered rule ("14a. **Commit
+    via ...**") is the semantic unit a reader wants, and lumping 46 of them under one h2 is what let a
+    query rank the right SECTION while the answering line sat 20 lines away.
+    """
     out = []
     for i, ln in enumerate(lines, 1):
-        m = re.match(r"^(#{1,6})\s+(.*)", ln)
+        m = _MD_HEAD.match(ln)
         if m:
             out.append({"name": m.group(2).strip()[:70], "kind": "h%d" % len(m.group(1)),
                         "start": i, "end": None})
-    for i, s in enumerate(out):
-        s["end"] = (out[i + 1]["start"] - 1) if i + 1 < len(out) else len(lines)
+            continue
+        b = _MD_BOLD.match(ln)
+        if b:
+            out.append({"name": b.group(1).strip()[:70], "kind": "bold", "start": i, "end": None})
+    for i, sec in enumerate(out):
+        sec["end"] = (out[i + 1]["start"] - 1) if i + 1 < len(out) else len(lines)
     return out
 
 
@@ -245,6 +264,38 @@ def _doc_ranges(src):
     prevent it."""
     _sections, docs, _defs = _scan_tree(src)
     return docs
+
+
+
+def _window(line, qtoks, width=200):
+    """Excerpt AROUND the match, not from the start of the line.
+
+    THE BREAK THIS FIXES (found by the first mechanical A/B run, 3 of 3 case studies): comp-read
+    located the RIGHT FILE and the RIGHT LINE and then truncated at a fixed offset -- so on CLAUDE.md's
+    ~1500-char rule lines the answer was cut off. Asked what goes wrong calling aws from a
+    bash-spawned PowerShell, it returned line 105 sliced BEFORE "HANG ... REPORTS SUCCESS". Asked if
+    comp-iam suffices for a new bucket, it cut at "NECES" -- one character before "NECESSARY, NOT
+    SUFFICIENT".
+    RIGHT FILE, RIGHT LINE, WRONG PART OF THE LINE: the tool committing its own thesis failure one
+    level down, and the SAME positional-heuristic class as the first-match-not-best-match bug it
+    already carries a comment about. A fixed offset is a statement about where text sits, not about
+    where meaning sits."""
+    t = line.strip()
+    if len(t) <= width or not qtoks:
+        return t[:width]
+    low = t.lower()
+    best, bestpos = -1, 0
+    step = 20
+    for start in range(0, max(1, len(t) - width + 1), step):
+        seg = low[start:start + width]
+        score = sum(seg.count(q) for q in qtoks)
+        if score > best:
+            best, bestpos = score, start
+    if best <= 0:
+        return t[:width]
+    lead = "..." if bestpos > 0 else ""
+    tail = "..." if bestpos + width < len(t) else ""
+    return lead + t[bestpos:bestpos + width] + tail
 
 
 def _authority(path, line_text, lineno=None, doc_ranges=()):
@@ -359,8 +410,9 @@ def main() -> int:
     print("  SHAPE (all %d, never truncated):" % len(sections))
     for idx, s in enumerate(sections):
         mark = " <<" if idx in [r[0] for r in ranked] else ""
-        print("    %5d-%-5d %-6s %s%s" % (s["start"], s["end"] or s["start"], s["kind"],
-                                          s["name"][:62], mark))
+        _ind = "  " if s["kind"] == "bold" else ""
+        print("    %5d-%-5d %-6s %s%s%s" % (s["start"], s["end"] or s["start"], s["kind"],
+                                            _ind, s["name"][:60], mark))
 
     # ---- SALIENT
     shown_lines = set()
@@ -398,7 +450,7 @@ def main() -> int:
             for n, ln in best:
                 shown_lines.add(n)
                 print("        %-13s %d: %s"
-                      % (_authority(full, ln, n, doc_ranges), n, ln.strip()[:120]))
+                      % (_authority(full, ln, n, doc_ranges), n, _window(ln, q)))
 
     # ---- QUALIFIERS (the load-bearing panel)
     quals = []
@@ -418,7 +470,7 @@ def main() -> int:
     for n, word, ln in near[:12]:
         flag = "!!" if word in _STRONG else "  "
         shown_lines.add(n)
-        print("    %s %d: %s" % (flag, n, ln[:130]))
+        print("    %s %d: %s" % (flag, n, _window(ln, set(_toks(question)) or {word})))
     if len(near) > 12:
         print("    ... %d more (--all-quals)" % (len(near) - 12))
 
