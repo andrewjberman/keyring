@@ -306,7 +306,7 @@ tools:
   comp-estate:   # RENAMED from pipescript 2026-07-30 (Andrew-direct; bare name prohibited + rc=2 tombstone)
     command: "comp-estate <name>   |   comp-estate --list | --resource <substr> | --tool <name> <tool> | --debt | --fe-reachability | --validate | --gate-b"
     segment_scope: estate-wide
-    segment_scope_note: "NFRA_PIPESCRIPT (Andrew-direct, COMPLETE 2026-06-15). The HUMAN ENTRY POINT over the whole estate: 'what am I looking for -- the news scanner? -> pipescript news'. 25 named threads / 134 sub-threads / 169 lambdas (CVO census 2d9a0a2a1). Reads the prebuilt estate-coverage-resolver.json (gen-estate-resolver.py joins the CVO manifest 61e91d334 + census). Read-only, ~0.3s, no AWS calls."
+    segment_scope_note: "NFRA_PIPESCRIPT (Andrew-direct, COMPLETE 2026-06-15). The HUMAN ENTRY POINT over the whole estate: 'what am I looking for -- the news scanner? -> comp-estate news'. THREAD/SUB-THREAD/LAMBDA COUNTS ARE THE RESOLVER'S, LIVE VIA `comp-estate --list` -- deliberately NOT stated here. (This note froze '25 named threads / 134 sub-threads / 169 lambdas' from the 2026-06-15 CVO census 2d9a0a2a1; the estate had moved to 29/138/188 by 2026-07-30 while this line still read the old digits, and graph-call-manifest.yaml carried the newer ones -- two records, two numbers. The durable fix is to stop stating them, per CLAUDE.md's frozen-count rule.) Reads the prebuilt estate-coverage-resolver.json (gen-estate-resolver.py joins the CVO manifest 61e91d334 + census). Read-only, ~0.3s, no AWS calls."
     when: |
       - "What's in the news / advi / market-overview / model-portfolios / trade-submission / <portal-page> pipeline?" -> comp-estate <name>
       - "What named threads exist?" -> comp-estate --list

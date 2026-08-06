@@ -340,7 +340,53 @@ is chunked with a declared denominator, or the call fails loud. A model cannot k
 | 2 | D-first sequencing | **CONFIRMED, AMENDED.** The **scope correction comes first** — governance records off the resource axis — *then* D. Order is load-bearing: building the two-field split first lands a vertical field **68% empty**, which reads as a broken resolver and is how a correct design gets abandoned. |
 | 3 | Cost / egress | ⛔ **BASIS VOID — SEE §7a. THIS ROW'S RULING NO LONGER HOLDS.** ~~DEFERRED TO MEASUREMENT: tomorrow's 13:00Z fire is instrumented for real token counts; the subdivision is priced from those.~~ |
 
+### 7b. AMENDMENT 2026-08-06 ~19:00Z — **PARAM 3 IS NOW PRICED.** Measured on a full local run.
+
+*Andrew-directed. Supersedes §7a's UNPRICED status; §7a is kept below because the reason the basis
+went void is the durable lesson, not the number.*
+
+**The new basis §7a specified — "price from the FIRST SUBDIVIDED RUN" — has been satisfied.** The
+subdivided pipeline was built and run end-to-end LOCALLY, call by call, against live estate data
+under Andrew's per-use egress word (harness: `kimi_pipeline.py`, this lane's deliverables).
+
+| | monolith | subdivided | ratio |
+|---|---|---|---|
+| calls | 1 | 23 (1 compile · 1 narrate · 4 detect · 17 author) | — |
+| input tokens | 20,614 | 64,198 | 3.1× |
+| output tokens | 8,872 | 91,060 | 10.3× |
+| wall time | 260s | 2,437s | 9.4× |
+| **adoptable candidates** | **1** | **17** | **17×** |
+| **output tokens per candidate** | **8,872** | **5,357** | **0.60×** |
+
+>> **THE RATIO THAT MATTERS IS THE LAST ROW. Gross cost rises ~10×; COST PER FINDING FALLS ~40%.**
+A subdivision priced on total spend looks 10× worse and is 1.7× better per unit of the thing we
+actually want. **Andrew accepted the gross trade explicitly before this table existed** (verbatim,
+2026-08-06: *"I'm fine with more wall clock time and better audit"*) — the per-finding figure is
+therefore a confirmation of his call, never the argument that produced it. <<
+
+**A CORRECTION I OWE, and it points the wrong way for my own case:** I told Andrew that splitting the
+call would let each call "reason over a bounded question," implying reduced reasoning overhead.
+**Measured, that is FALSE.** Per-call reasoning ran **84.9%–98.4%** of completion tokens, against the
+monolith's 90.2%. **That is how kimi-k3 behaves; it is not a symptom of bundling.** The subdivision
+buys **quality and inspectability, not efficiency** — and nothing downstream may be sized on an
+expected reasoning drop.
+
+**SIZING, derived rather than assumed** — observed reasoning spend on real DETECT calls:
+7,674 / 8,597 / 11,729 / 12,609 / **15,572**. A 12,000 ceiling **starved group B** (`finish_reason:
+length`, 11,997 of 12,000 on reasoning, content 0 bytes) and the runner recorded it as
+**`candidates_raw: 0`**. At 32,000 the same call returned `stop` with **10 candidates**.
+>> **THE STARVATION WAS NOT COSTING AN ERROR MESSAGE — IT WAS HIDING TEN FINDINGS BEHIND A NUMBER
+THAT LOOKED LIKE A CLEAN DAY.** << Set per-call ceilings generously: unused headroom is free (the
+monolith used 8,872 of 32,000 and stopped clean), and a tight ceiling fails **silently and in the
+direction of false confidence.**
+
+**Params 1 and 2 remain unaffected.**
+
+---
+
 ### 7a. AMENDMENT 2026-08-06 — PARAM 3's BASIS IS VOID. THE PARAMETER IS **UNPRICED**.
+*(SUPERSEDED by §7b above — the parameter is now priced. Retained because the failure mode it
+records is the point: a ruling whose basis is destroyed degrades to an OPEN QUESTION, silently.)*
 
 *Found by `1.0.0_SA_CTO~B`. Andrew-directed amendment. This corrects MY OWN document.*
 
