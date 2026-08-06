@@ -543,6 +543,103 @@ S3-membership guard (key-exists=update enforced, 404=loud skip, first-mints expl
 to data*, not module imports) — it is a packaging fact: a silver module vendored into a gold Lambda, which
 must appear in `BUILD_MANIFEST.json` hash-tied like everything else.
 
+#### G1-B · RE-RULED ~2110Z — Constraint 2 belongs at RESOURCE-TYPE level, not vendor level
+
+`2.0.0_SA_COO~Z`, off AE~Z's fully-paginated SmartX measurement: **the ET/UTC divide runs INSIDE the
+SmartX chain.** Its pulls are Scheduler/ET; its own backstop sweep
+(`opal-assets-silver-smartx-sweep-daily`, `cron(0 16 * * ? *)`) is a classic rule = UTC.
+**So "SmartX moves, Orion does not" is a true generalization with a false member** — and it had one
+because I generalized on the **wrong axis**.
+
+**RE-RULED — the rule is mechanical, therefore checkable without a lookup table:**
+
+| Resource type | Timezone field | Anchor |
+|---|---|---|
+| EventBridge **Scheduler** entry | carries `ScheduleExpressionTimezone` | **can be ET-anchored, DST-aware** |
+| **Classic** EventBridge rule | **none exists** | **structurally UTC-only, always** |
+
+**Measured 6/6** on everything this project has touched: Scheduler — `mdpf-scheduled-floor`,
+`smartx-jwt-refresher-daily`, `smartx-rest-pull-daily`, `smartx-assets-daily-pull-daily`, all
+`America/New_York`. Classic — `opal-inf-jwt-fetch`, `opal-assets-silver-smartx-sweep-daily`,
+`smartx-account-distribution-daily`, no tz field. **Nobody need memorize which resource is which — the
+TYPE tells you** — and it predicts the general case: *every classic rule carrying an ET wall-clock
+contract has a one-hour seasonal drift by construction, not by oversight.*
+
+**Consequence worth stating in those words:** the sweep at 12:00 ET EDT lands **two hours after the 10:00
+ET deadline**, so **it is not a backstop for the publish at all** — a next-day repair wearing a backstop's
+name.
+
+#### G1-C · H2's REMEDY TARGETS THE WRONG SCHEDULES — a remedy that cannot work while reporting success
+
+Measured on the primitive (COO~Z/AE~Z): `smartx-assets-daily-pull` carries the OnSuccess destination to
+`opal-assets-silver-smartx`; **`smartx-rest-pull` has ZERO event-invoke-configs.** The binding silver comes
+from the **09:30 assets pull**. Doc 03 Phase 0 item 4 prescribes moving the JWT and *"the pull"* — **and
+neither named schedule produces it.** Executed literally: two schedules move, the 09:30 assets pull stays,
+silver still lands ~09:40, **and the change reads as delivered.** Corroborated by a 30-day census (pull
+09:30 → OnSuccess → silver 09:37–09:41, median 09:40, 24/24 days), so the **mechanism** is confirmed, not
+just the timing.
+
+> **⚡ FIFTH INSTANCE OF THE DAY'S SHAPE, AND WORSE IN KIND. The others produced a CHECK THAT COULD NOT
+> FAIL; this produces a REMEDY THAT CANNOT WORK — and then passes the check that asks whether it was
+> applied.**
+>
+> **DURABLE CONTROL, standing across every clock TO: ACCEPTANCE ASSERTS ON THE OUTCOME, NEVER ON THE
+> INTERVENTION.** The criterion is *"canonical SmartX silver OBJECT exists by 08:40 ET"* — **not** *"the
+> schedules were moved to 07:45/08:00."* "Did the schedules move?" is exactly the check that passes while
+> the remedy fails; an outcome assertion is immune to targeting the wrong resource, because a wrong target
+> simply does not produce the outcome. Same shape as the `calendar_source` ruling: **assert the thing, not
+> the act that was supposed to cause the thing.**
+
+**OnSuccess weakness — NAME IT, DO NOT FIX IT HERE.** SmartX is the only family in `opal-data-assets` with
+**no S3 bronze notification** (all 8 configs are ObjectCreated on a bronze prefix; no `smartx/`). Every
+other family converts on **data landing**; SmartX alone on **pull success** — so a pull that succeeds
+without writing still fires a green converter, and **green is not evidence.** House anti-pattern, real
+weaker guarantee — **and out of scope**: bronze ingestion is upstream of the gold Lambda with its own
+route (`02`), so adding a notification is a new upstream route change. Record + route to the upstream
+owner. **The compensating control is already free:** G1-C's criterion asserts the silver *object* exists
+rather than that the converter ran green — strictly stronger than the guarantee in question.
+
+**`smartx-account-distribution-daily` is IN SCOPE**, short argument: `cron(30 11 * * ? *)` classic =
+07:30 ET EDT / 06:30 EST, **always before** the ET-anchored 09:00 JWT. So it either carries its own auth or
+runs on a prior-day token — either way **it is a consumer of the JWT being moved, and any JWT move must
+account for every consumer of that JWT.** If it runs on a prior-day token, moving the mint changes its
+token age: a live behavioural change nobody has modelled.
+
+#### G1-D · PROPOSED LAW CORRECTION (routed, NOT implemented) — CLAUDE.md:110's remedy names the flag that causes the failure
+
+AE~Z measured (positive + negative controls): **`aws <svc> list-* --no-paginate` returns ONLY the first
+page** — `lambda list-functions` = 196 across 4 pages, page 1 returns 50, a **74% shortfall**. It nearly
+produced a **fabricated production-outage report** ("two enabled schedules fire at non-existent Lambdas";
+all four exist).
+
+**CLAUDE.md:110, verbatim:** *"A count you did not paginate is a page size wearing a total's clothing —
+**use `--no-paginate` + explicit token walking**, or count the materialised list."*
+
+> **THE LAW'S REMEDY CLAUSE NAMES THE FLAG THAT CAUSES THE FAILURE THE RULE EXISTS TO PREVENT.**
+> `--no-paginate` *disables* auto-pagination; the "+ explicit token walking" is the entire load-bearing
+> half, and an agent who reads the first clause and stops has implemented the bug. **MSTR~Z did exactly
+> that today** — `aws events list-rules --no-paginate` → 100 against a true 139, on a number travelling to
+> Andrew inside a live sovereign ask. They caught it by printing the denominator, **not because the rule
+> protected them: the rule pointed them at the trap.**
+>
+> **Worse in kind than the `--query length()` trap on that same line:** that returns a wrong *number*;
+> this returns a wrong *set* — and a filtered `--query` over a truncated page is **indistinguishable from
+> a real absence.** Same clean-empty-result family the line already legislates. **And it is the rule whose
+> own stated subject is "put the control on the RETRIEVAL": a retrieval-control rule shipped with a broken
+> retrieval control.**
+
+**Proposed shape** (CTO base owns the text): name `--no-paginate` as a **hazard**; state the remedy
+positively as *omit the flag, let the CLI auto-paginate, count/filter the materialised set client-side*;
+keep the `--query length()` clause (correct and independent); add the discriminator that a list result you
+did not materialise **cannot distinguish "absent" from "on page 2."** **Routed to MSTR~Z, not
+implemented** — law edits go through CTO base and rule-bank increments need the STRUCTURAL-TWOPHASE
+prefix on this device. COO~Z lands it as a P0-3 criterion meanwhile so the project is covered regardless
+of routing speed.
+
+**My own exposure, stated:** my raw calls were per-resource `get-schedule --name` (no pagination surface)
+and my censuses came from `comp-trigger`, which paginates correctly — **but I inferred that from its 139
+agreeing with AE~Z's re-derivation afterwards. That is confirmation, not verification.**
+
 ### G8 · H3's Class-A status is conditional on an instrument with a **measured false zero**
 
 `2.0.0_SA_COO~Z` measured, at `c801ec9d5` on a fresh DB (age 0.0h, Nessie HEAD current):
