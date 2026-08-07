@@ -456,6 +456,43 @@ column carrier. **Held-out fence honoured — shaping corpus declared positively
   ontology README indexed no canonical docs (→ CVO, **fixed 3/3**); `comp-which` has **no curated
   rule** for field-shape questions (→ tool lane).
 
+#### Downstream append — 2026-08-07, the atom_decomp continuation
+
+**PLACEMENT RESOLVED, and it was never a placement question:** the directory already existed and was
+lane-locked `TIER0_MSTR`. Andrew: *"seems like a formality that doesn't really matter."* Grant landed
+by `1.0.0_SA_CTO~D` as grantor (SoD — the CRO did not self-land). **No project code minted** — he
+floated one and then said it was *"not really necessary at this point."*
+
+> ⚠ **THE atom_decomp WORK WAS BEGUN ON THE CRO'S OWN READING of the proceed-condition, surfaced
+> TWICE and UNANSWERED. It is not a granted authorization.** Bounded to unwind cleanly: no project
+> registered, PROPOSAL banners on every artifact, and nothing permitted to depend on it.
+
+**Produced** (`projects/ATOM_DECOMP/`): `04` precursor outcome · `05` corroboration + 3 candidate
+extensions · `06` **coherence base v0.4** · `07` retro-test (**PARTIAL**).
+
+**The method's own laws were independently re-derived FOUR TIMES, unstaged** — its spec §5 *asserts*
+generalization and proposes forward-testing; nobody staged this and it held.
+
+**The base was applied THREE times, twice by an independent seat under a rule fixed and published
+BEFORE the draw.** Results, including against it:
+- **The fires-on-everything hypothesis is DEAD** — C4 fired on a 2-segment/4-pod program and returned
+  **proportionately unremarkable** on a 1-pod one. *(Bounded at scoring: establishes NON-OVER-FIRING;
+  the predictive claim rests on the segment-independent draw.)*
+- ⛔ **The four structural rows are VERTICAL-dependent and FAIL TOGETHER.** `comp-estate` cannot be
+  entered for a **cross-cutting** project — so standards/naming/governance work is a class the base
+  **cannot reach**, and one dependency failing **looks like four independent gaps.**
+- ⛔ **An empty cell is ambiguous** across correctly-empty / unreachable / not-looked-at, **and
+  correctly-empty READS AS UNDERSTANDING.** The CRO's own v0.2 line licensed it; v0.4 requires the
+  cell to declare which — **fix untested.**
+- **It types POSITION, never INSTRUMENT HONESTY: of five errors in RCN-0006, it catches ONE.**
+
+**ROUTED 2026-08-07 to `1.0.0_SA_CTO~A`** (method owner per the spec header) **for an adoption
+decision — with the failure modes in the routing message, not appended after.** Recommended: take the
+corroboration (free, theirs); weigh the rest on merit. **Adopted: nothing.**
+
+**STILL OPEN AT ANDREW:** whether the proceed-condition reading stands, and `NFRA_PYFIELD` **Q1 —
+build or defer** (both lanes recommend **DEFER**; no named consumer, no statable acceptance bar).
+
 ### Correction stamped in-band — 2026-08-07, `4.0.0_SA_CRO`
 
 **This row was appended LATE.** All five artifacts were committed before the register was touched,
