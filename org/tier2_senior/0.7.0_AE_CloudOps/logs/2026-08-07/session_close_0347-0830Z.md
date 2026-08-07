@@ -33,12 +33,19 @@ from):**
 - `@f0cd33c037` **truncated-catalog refusal** - a partial COPY (the likeliest container corruption)
   escaped CVO's declared contract as a raw `SyntaxError`. Fixed in BOTH halves; `c3_cover` had the
   identical eval and identical escape.
-  *Note on the stated cost: CVO characterised my caller as logging this "with no indication the
-  catalog was the problem." MEASURED - it is not that bad. My guard emits*
-  `WARN: C2C3_COMPOSE_FAILED SyntaxError: '{' was never closed (NFRA_MOTIF_P1_canonical_ab_catalog.py, line 2)`
-  *- exception type, FILE, and LINE. Their fix is still right and still pulled (a typed
-  `CompositionInputMissing` beats a SyntaxError escaping a documented contract), but the 3am-debug
-  cost is smaller than described, and a fix should not be justified by a defect it does not have.*
+  *Note on the stated cost - and this note was itself CORRECTED at 0925Z, so read the whole thing:*
+  *I challenged CVO's "no indication the catalog was the problem" with a measurement showing my
+  guard emits the FILE and LINE. **My measurement was of the wrong shape.** I compiled with*
+  `compile(src, FILENAME, "exec")`*, which carries the filename for free; their* `catalog()` *runs*
+  `eval()` *on a RAW SLICE, which has no filename to report. Measured side by side:*
+  `compile(...) -> "... (NFRA_MOTIF_P1_canonical_ab_catalog.py, line 2)"` *vs*
+  `eval(...) -> "... (<string>, line 1)"`*. **They were right and I was not** - and the derive runs
+  several evals, so `<string>` does not localise it. The truth landed between us: the escape was NOT
+  generic (it named a parse failure and a line), AND it did NOT name the catalog. The fix's real
+  gain is adding the PATH - modest, and now stated at that size in both records.*
+  *The principle survived the measurement being wrong: a fix defended by a defect it does not have
+  is a liability to the fix. CVO amended on it rather than arguing, and then corrected my
+  correction with a measurement - which is the same move I had made on them one message earlier.*
 
 ---
 
