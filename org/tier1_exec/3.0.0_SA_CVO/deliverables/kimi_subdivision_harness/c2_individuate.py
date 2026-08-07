@@ -487,6 +487,39 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         "nodes_snapshot_id": (_vintage or {}).get("nodes_snapshot_id"),
         "edges_snapshot_id": (_vintage or {}).get("edges_snapshot_id"),
         "graph_vintage": _vintage,
+        # TRUE NUMBERS THAT READ AS DEFECTS. Each of these is correct and each will look like a bug
+        # to anyone meeting it without its cause -- which is most readers, most of the time, six
+        # weeks from now. The cause has been living in messages between three seats; a number whose
+        # explanation is not attached to it will eventually be "corrected" by someone acting in good
+        # faith. Carried IN the artifact, as a SIBLING of counts (not inside it -- counts holds
+        # measurements, this holds prose, and mixing them is the same grain error I just fixed one
+        # key over). Asked for by 1.0.0_SA_CTO~B, 2026-08-07.
+        "reading_notes": {
+            "KNOWLEDGE coverage 0 / 0 / 5851":
+                "CORRECT, not a gap in the layer. Zero detectors touch the `ms` layer, so X and Y "
+                "are 0 BY CONSTRUCTION while Z counts real nodes. It is a fact about DETECTOR "
+                "COVERAGE, never about the estate having no knowledge-plane structure.",
+            "substrate_side is never MULTI-VALUED on live data":
+                "STRUCTURAL, not a detector gap. The two sides are disconnected components: 28 "
+                "cross-side edges exist estate-wide, all ServedURL->S3_BUCKET_POLICY, converging on "
+                "ONE node with ZERO onward edges. A motif is a path; no spanning path exists, so no "
+                "detector however written can produce a cross-side instance. See "
+                "deliverables/SUBSTRATE_SIDES_ARE_DISCONNECTED_20260807.md.",
+            "`ms` contributes 0 to everything":
+                "The `ms` layer has ZERO cross-layer edges in either direction (5,851 nodes, 28% of "
+                "the graph, positive-controlled). Any motif needing an ms<->anything path yields "
+                "zero STRUCTURALLY. Do NOT diagnose this as a dropped layer or broken ms detectors.",
+            "a 1-node delta in on_side_Z across two runs":
+                "Check `graph_vintage.nodes_snapshot_id` BEFORE treating it as drift. The graph "
+                "moves between runs; a difference that is ATTRIBUTABLE to a snapshot is the vintage "
+                "mechanism working, not an error. Measured instance: Z=3393 at snapshot "
+                "8601547680771488785, Z=3392 at 3215784498071721115.",
+            "rows_seen below the ~6,686 originally quoted":
+                "Both loss channels are reported and were ZERO when this was checked "
+                "(rows_skipped_ragged_unparsed, rows_dropped_no_members). A lower row count with "
+                "both channels at zero is the GRAPH differing, not this composition losing rows. "
+                "Read those two counters before concluding loss.",
+        },
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",
