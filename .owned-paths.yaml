@@ -417,6 +417,11 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
     description: "Tier-0 operating artifacts -- ledger, cycle records, /mstr_review outputs. MSTR-owned. Added 2026-05-22 by COO per Andrew directive."
+  ATOM_DECOMP:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 4.0.0_SA_CRO
+    description: "Andrew's ATOM_DECOMP research folder (projects/ATOM_DECOMP/**) -- MSTR (unchanged, from the 2026-08-06 lock) PLUS the CRO as author. Added 2026-08-07 by 1.0.0_SA_CTO~D as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct ~0450Z at the CVO~C terminal, VERBATIM: \"it already lives in the /projects folder we can just have MSTR give 4.0.0_SA_CRO ownpaths to /projects/atom_decomp or whatever. I don't really understand the question seems like a formality that doesn't really matter.\" He named MSTR as one route and CTO~D as the doer (\"Have your CTO~D do it when they have a second\"); .owned-paths.yaml is ANY_EXEC_OR_AE (:1783) so either closes it. Confirmed on follow-up: \"Go ahead with your recs.\" >> WHY A DEDICATED LANE RATHER THAN ADDING CRO TO TIER0_MSTR: that lane also carries org/tier0/ledger/** -- the MSTR constitutional record -- so widening it would have granted far beyond the ask. CRO declined a comparable widening when offered (see ANY_EXEC :74). A one-path lane grants exactly what Andrew asked for and nothing else. << The 2026-08-06 LOCK RATIONALE STANDS: this is still his folder, locked deliberately; 2026-08-07 ADDS one named grantee."
   TIER0_RATIFY:
     permitted_agents:
       - 3.0.0_SA_CVO
@@ -954,8 +959,8 @@ paths:
     note: "Andrew's research project folder (Andrew-direct 2026-08-06 at the MSTR terminal: root /projects research folders, committed+pushed so sitez pulls them; work directed at the MSTR~Z terminal). ~Z inherits via the tilde-lane mechanism (owned-paths-validate.py:125-160). Root path needs its own rule per the enumeration principle -- /projects/* is gitignore-carved (.gitignore:285) and had no owned-paths rule at all. Added 2026-08-06 by 0.0.0_AB_MSTR executing Andrew's direct commit instruction (grantor==grantee noted; authorization is Andrew's word this session, not self-grant)."
 
   "projects/ATOM_DECOMP/**":
-    lane: TIER0_MSTR
-    note: "Andrew's research project folder -- same Andrew-direct 2026-08-06 ruling and rationale as projects/ADVI_REFACTOR/** above."
+    lane: ATOM_DECOMP
+    note: "Andrew's research project folder -- same Andrew-direct 2026-08-06 ruling and rationale as projects/ADVI_REFACTOR/** above. 2026-08-07: lane moved TIER0_MSTR -> ATOM_DECOMP (MSTR unchanged + 4.0.0_SA_CRO added) per Andrew-direct; full verbatim + the SoD + the why-not-widen-TIER0_MSTR reasoning are on the ATOM_DECOMP lane definition. Why a grant was needed at all: the CRO home rule (org/tier1_exec/4.0.0_SA_CRO/**) does not reach a root path -- the same enumeration gap as LD-0331 and OPAL_ALTRESEARCH above. A RULING IS NOT A GRANT, and CRO was correct not to override the lane; the defect was that it surfaced as a placement DECISION rather than as a key request. NOT INCLUDED: the project code Andrew floated (NFRA_ATOMDECOMP / ATOMDECOMP) -- he said it is 'not really necessary at this point', so the grant is the ask and no code is minted off this message."
 
   "projects/MDPF_PROPVALIDATION/**":
     lane: TIER0_MSTR
