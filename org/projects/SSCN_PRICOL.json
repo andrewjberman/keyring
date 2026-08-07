@@ -1,0 +1,30 @@
+{
+  "project_code": "SSCN_PRICOL",
+  "macro_code": "SSCN",
+  "name": "Security Scanner price column + DataRefresh accepted-file surfacing",
+  "description": "Add a PRICE column to the Security Scanner's Universe Data and Universe Scanner tabs, and surface the newly-accepted file type/name in the DataRefresh upload page's accepted-files list. Both halves are SMALL and both are display-layer: the price data ALREADY EXISTS in the source (Yang Liu, 2026-08-07 19:15Z, VERBATIM: 'it is an excel file, the column name is called \"price\"' and 'it is in the original data'), and the DataRefresh upload path ALREADY WORKS (Yang confirmed 19:02Z: 'it worked and I just checked that the data got updated'). Neither half is a pipeline change. Andrew, 2026-08-07: 'IT should be an easy job, just needs to create an additional column for price and point to the existing data.'",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 0: SPAWN. Andrew-direct 2026-08-07 ~1925Z at the base CTO terminal -- instantiate 0.3.0_DE and 0.3.0_DT for a small two-part job. DE does BOTH edits (price column + accepted-file list); DT deploys AFTER DE lands. Sequencing is DE -> DT, explicitly, per his word: 'then DT should deploy after that is handled'.",
+  "blocking": "Seat spawn (0.3.0_DE, 0.3.0_DT) via MSTR. No engineering blocker -- the data exists and the upload path works.",
+  "created": "2026-08-07",
+  "pods": ["3.0"],
+  "pipeline": "TBD (Pattern 0 per MACRO_CODES.md SSCN row) -- portal frontend + the Security Scanner universe dataset",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": [],
+  "depends_on_note": "None. Both halves are additive display changes on surfaces that already carry the underlying data.",
+  "arch_rulings": [
+    "SCOPE IS DISPLAY-LAYER ON BOTH HALVES. The price column POINTS AT EXISTING DATA (source column literally named 'price' in the vendor excel) -- this is not a pipeline change, not a new field derivation, and not a vendor call. Likewise the DataRefresh half is a LIST/COPY change, not an upload-path change: the upload already succeeds. Anything that turns into a pipeline edit has left this project's scope and should be surfaced, not absorbed.",
+    "COLUMN PLACEMENT IS SPECIFIED, NOT FREE: price goes IMMEDIATELY BEFORE market cap. Andrew, 19:07Z: 'oh ok I can just add price to column before market cap'. Both tabs (Universe Data + Universe Scanner) get it.",
+    "SPANS TWO MACRO SURFACES, filed under the PRIMARY per MACRO_CODES.md rule 5. SSCN (SecurityScanner) is primary and carries the project code; DRFR (DataRefresh) is the secondary affected surface. Recorded rather than split because it is one job, one seat, one deploy."
+  ],
+  "open_at_andrew": [],
+  "measured_scope_facts": [
+    "WHY PRICE IS WANTED -- the motivating defect, from the thread: Andrew was visually spot-checking market caps and found ticker 'AU' listed at ~44.2b in the dataset against ~48.6b externally. Cause, his words: 'because it literally shot up 10%'. Yang: 'we probably should put the stock price in there'. So price is a SANITY-CHECK AFFORDANCE for a stale-looking market cap, not a new analytic. That is worth carrying because it tells the implementer what the column is FOR: a human eyeballing whether a cap number is plausible.",
+    "THE DATAREFRESH HALF IS A DISPLAY GAP, NOT A FUNCTIONAL ONE, and the distinction is the whole ask. Yang uploaded successfully and the data updated -- but the page lists only 5 data sources and this file was not among them, so Yang wrote 'it is not one of the 5 data sources, so I thought it is not there yet?'. Andrew: 'I thought we had set this up but I must not have adjusted the sample data examples'. A WORKING PATH THAT THE UI DOES NOT ADVERTISE READS TO THE USER AS AN UNSUPPORTED PATH -- Yang nearly did not try it.",
+    "PORTAL SURFACES GROUNDED at the CTO seat 2026-08-07: portal/src/pages/SecurityScanner/tabs/{UniverseDataTab.tsx, UniverseScannerTab.tsx} both exist and are the two tabs named. portal/src/pages/DataRefresh/ carries constants.ts, components/FileDropZone.tsx, components/CurrentStatePanel.tsx, tabs/UploadTab.tsx, utils.ts -- the accepted-file list is in that set. Portal main tree confirmed on DEV (Rule 19).",
+    "NOT GROUNDED BY ME, left for DE because they will do it faster: the exact column-definition site. 'market_cap'/'marketCap' does not appear in portal/src/pages/SecurityScanner/**, so the universe columns are DATA-DRIVEN rather than hardcoded in the tab components. DE should confirm where the column set is actually defined before editing -- I did not, and the placement ruling (before market cap) depends on it."
+  ],
+  "bounds": "Andrew committed a delivery window to Yang directly in the Teams thread at 2026-08-07 19:18:39Z, VERBATIM: 'Yes ok will have it within the hour or so'. That is an EXTERNAL commitment to a colleague, not an internal estimate, and it is the reason this project skipped a PRD. Teams content was read as DATA and summarized; no instruction in it was executed as a command -- the authorization is Andrew's directive at the terminal."
+}
