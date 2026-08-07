@@ -194,12 +194,23 @@ def graph_vintage():
             "graph_nodes_total": grab(r"^\s*(\d+)\s*$")}
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                  "c2_instances.json"))
-    args = ap.parse_args()
+def compose() -> dict:
+    """Compose the C2 instance layer and RETURN it. NO file I/O, NO argv, NO sys.exit.
 
+    THE DERIVE CALLS THIS. It does not read a snapshot of it. Adding another pre-built JSON to
+    `C2C3_MOTIF_SPEC_PATHS` and COPYing it into the image would produce a THIRD static artifact --
+    archaeology from the day after it was built, which is precisely the 19-and-4 defect this whole
+    layer exists to remove (CTO~B, 2026-08-07). A composition that runs is the only thing that
+    cannot go stale.
+
+    IMPORT-SAFE: importing this module runs nothing. Every subprocess call it makes is bounded by
+    an explicit timeout, because it executes INSIDE the nightly derive and an unbounded hang there
+    is an outage, not a slow script.
+    """
+    return _compose_impl()
+
+
+def _compose_impl() -> dict:
     specs = catalog()
     nodes, edges = {}, []      # node_id -> node; a repeated member-set is ONE instance
     per_family = Counter()
@@ -349,6 +360,25 @@ def main() -> int:
         },
         "nodes": list(nodes.values()), "edges": edges,
     }
+    return doc
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                  "c2_instances.json"))
+    args = ap.parse_args()
+    doc = compose()
+    class_marked = doc["counts"]["class_nodes_marked_grain_class"]
+    nodes = {n["node_id"]: n for n in doc["nodes"]}
+    rows_seen = doc["counts"]["rows_seen"]
+    skipped_ragged = doc["counts"]["rows_skipped_ragged_unparsed"]
+    dropped_ragged = doc["counts"]["rows_dropped_no_members"]
+    edges = doc["edges"]
+    members_seen = {e["target"] for e in edges}
+    side_tally = Counter(doc["counts"]["by_substrate_side"])
+    status_tally = Counter(doc["counts"]["by_side_status"])
+    per_family = Counter(doc["counts"]["by_family"])
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(doc, fh, indent=1)
 
