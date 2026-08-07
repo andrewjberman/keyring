@@ -43,16 +43,20 @@ does not exist — a **31% overstatement of my own subject.**
 
 ## 1. COVERAGE OF THIS PASS — stated before the findings
 
-**Read in full and audited: 20 of 72 files.**
+**Read in full and audited: 21 of 72 files.**
 
 | set | n | disposition |
 |---|---|---|
 | Spine `00`, `01`, `02` | 3 | read in full |
 | `skill/atomic-decomposition/**` (SKILL, workflow, evidence-model, output-contracts, tool-adapters, openai.yaml) | 6 | read in full |
 | `templates/**` | 8 | read in full + parse-tested |
-| CRO-authored `04`, `06`, `07` | 3 | read in full |
-| **CRO-authored `05`** | 1 | ⚠ **NOT READ.** Known only through base's session log. |
+| CRO-authored `04`, `05`, `06`, `07` | 4 | read in full |
 | **`case_study/ADVI_REFACTOR/**`** | 51 | ⚠ **NOT CONTENT-AUDITED.** Path/existence verified only. |
+
+> **`05` was NOT READ when this report first landed @`0e1d847aa4` and is now read** — closed in the
+> same session, because reading it is *audit*, not refinement, and needed no new authorization. It
+> yielded **F-13** and **F-14** (§3). The figure above moved **20 → 21**; the earlier count is left
+> visible in the commit history rather than silently overwritten.
 
 **The 51 case-study files are a SCOPE CHOICE I am declaring, not coverage I achieved.** `01:73`
 scopes them as *"case-study evidence, not generic requirements"* — the reusable method is the spine +
@@ -192,7 +196,8 @@ a style note.
 
 Base-CRO's brief was explicit: *"Do not spare the 04/05/06/07 files, do not treat my PROPOSAL banners
 as endorsements, and do not route a finding about my work through me for softening."* These are filed
-accordingly. **`05` is not covered — I did not read it.**
+accordingly. **All four are now covered** — `05` was read after the first landing and produced F-13
+and F-14.
 
 ### F-7 · MEDIUM · `06` §2's "core move" mischaracterizes the method, and the error points the remedy at the wrong gap
 
@@ -253,6 +258,45 @@ nothing for it.
 
 This is the mechanical form of what `3.0.0_SA_CVO~C` found conceptually (*"cannot be handed to an
 agent as fill-this-in"*) — **and it is the cheaper half to fix**, though fixing is not this pass.
+
+### F-13 · MEDIUM · `05` claims four re-derived laws; **three** of the four are laws
+
+`05:20` — *"It independently arrived at **four** of Atomic Decomposition's own laws without consulting
+them"* — and `05:24` makes the count load-bearing: *"the laws held **four times**."*
+
+The law list is `00:46-56`, eight numbered entries. Mapping `05`'s four table rows against it:
+
+| `05` row | maps to |
+|---|---|
+| *"Static graph silence is not absence"* | **law 2** ✅ |
+| *"Trigger counts are not trigger identity parity"* | **law 3** ✅ |
+| *"A successful dispatch is not target, artifact, or consumer success"* | **law 5** ✅ |
+| *"Source systems are not semantically equal…"* | ❌ **NOT A LAW.** `01:28` — a **case-study section heading**. `semantically equal` appears in `00` **0 times**. |
+
+**Three laws re-derived, plus one case-study observation, reported as four laws.**
+
+**This does not overturn the result — it corrects its magnitude.** Three of eight non-negotiable laws
+independently re-derived by a different team on a different substrate, unstaged, is a strong finding
+and `05` is right that it *"is worth more to the method than any extension below."* But the strength
+is stated as a **ratio against the law list**, and the numerator is inflated by one — **the same
+class as the 89** (§0): a count whose population is not quite the one it names. It is filed
+specifically because `05` is the document arguing that a quoted figure must carry the instrument that
+produced it (its own **E1**).
+
+### F-14 · LOW-MEDIUM · `05:22` attributes the generalization assertion to the wrong document
+
+`05:22` — *"`00_ATOMIC_DECOMPOSITION_SPEC.md` **§5** and `02_ADOPTION_AND_EVALUATION.md` §3 both
+**assert** the method generalizes."*
+
+`00` **§5** is the *Non-negotiable laws* list: `generaliz` appears there **0 times**. The `02` §3
+citation is correct (*Evaluation suite*, "Forward-test on at least these scenarios"). The
+generalization **assertion** lives at **`01:75` — `01_ADVI_CASE_STUDY.md` §5, "Generalization test"**
+(*"The method applies beyond ADVI because…"*).
+
+**A document transposition between two files that both have a §5.** Low impact — the claim being
+supported is true and is supported elsewhere — but it is the third distinct cross-reference defect
+in the corpus (with F-11 and F-12), and the only one inside a document whose thesis is that
+attribution must survive the quote.
 
 ### F-11 · LOW · `07`'s pin held; the unpinned prose beside it decayed the same day
 
@@ -326,8 +370,10 @@ severe defects are in the GPT-authored subject.
 ## 6. WHAT THIS PASS DID NOT DO
 
 - **No refinement.** Audit-only was the ruling; nothing in the corpus was edited.
-- **`05` unread**; **51 `case_study/` files not content-audited** (§1) — and a deeper pass over them
-  needs the **held-out fence** question resolved first (`04:60-64`), which is not mine to resolve.
+- **51 `case_study/` files not content-audited** (§1) — a deeper pass over them needs the **held-out
+  fence** question resolved first (`04:60-64`), which is not mine to resolve. *(`05` WAS the other
+  gap and is now closed — reading it is audit, not refinement, so it needed no new authorization and
+  was not left sitting.)*
 - **The `comp-estate` refusal census is UNRUN.** Base named it as a high-value open target
   (all 81 active projects, count refusals, sizing `06`'s unreachable class). I declined to open with
   it: it hammers a shared tool to refine a point already made, and `06:230-235` already narrows the
