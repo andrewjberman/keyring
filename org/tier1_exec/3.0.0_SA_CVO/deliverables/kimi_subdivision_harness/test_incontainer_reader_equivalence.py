@@ -213,21 +213,32 @@ def build_db(nodes, edges):
         k = key_of(r)
         if k:
             best[k] = r
-    for k, r in best.items():
-        conn.execute(
-            "CREATE (n:CloudNode {node_id: $k, arn: $a, node_type: $t, name: $nm, "
-            "layer: $l, props: $p})",
-            {"k": k, "a": r.get("arn") or "", "t": r.get("node_type") or "",
-             "nm": r.get("name") or "", "l": r.get("layer") or "", "p": r.get("props") or ""})
-    n_edges = 0
-    for e in edges:
-        s, d = e.get("src"), e.get("dst")
-        if s in best and d in best:
-            conn.execute("MATCH (a:CloudNode {node_id: $s}), (b:CloudNode {node_id: $d}) "
-                         "CREATE (a)-[:CloudEdge {edge_type: $t}]->(b)",
-                         {"s": s, "d": d, "t": e.get("edge_type") or ""})
-            n_edges += 1
-    return conn, len(best), n_edges
+    # BULK COPY, not row-by-row. This built one execute() per node and per edge -- 61,764 of them,
+    # ~235s. 0.7.0_AE_CloudOps hit the same shape in the producer (143.3s -> 0.6s @191b8461eb) and
+    # flagged it here; I owed it and had explicitly refused to claim it done until it was.
+    # A 235s harness does not get re-run, and a test nobody re-runs stops being a control the moment
+    # the thing it guards changes -- which is precisely how the transcription in this same file went
+    # stale without anyone noticing.
+    import pyarrow as pa                                       # noqa: PLC0415 - optional dep
+    ks = list(best)
+    g = lambda k, f: (best[k].get(f) or "")                    # noqa: E731
+    ntab = pa.table({                                          # noqa: F841 - kuzu COPY reads the
+        "node_id": ks, "arn": [g(k, "arn") for k in ks],       #   caller's frame; removing this
+        "node_type": [g(k, "node_type") for k in ks],          #   assignment breaks the load while
+        "name": [g(k, "name") for k in ks],                    #   the lint goes green
+        "layer": [g(k, "layer") for k in ks],
+        "drift_class": [""] * len(ks), "source": [""] * len(ks),
+        "snapshot_ts": pa.array([0] * len(ks), pa.int64()),
+        "props": [g(k, "props") for k in ks]})
+    conn.execute("COPY CloudNode FROM ntab")
+    se = [(e["src"], e["dst"], e.get("edge_type") or "")
+          for e in edges if e.get("src") in best and e.get("dst") in best]
+    etab = pa.table({"src": [x[0] for x in se], "dst": [x[1] for x in se],   # noqa: F841 - as above
+                     "edge_type": [x[2] for x in se], "layer": [""] * len(se),
+                     "snapshot_ts": pa.array([0] * len(se), pa.int64()),
+                     "props": [""] * len(se)})
+    conn.execute("COPY CloudEdge FROM etab")
+    return conn, len(best), len(se)
 
 
 def main() -> int:
@@ -286,9 +297,14 @@ def main() -> int:
                                                              k, got[k], want))
     print()
     if ok and keying_ok:
-        print("  EQUIVALENT. AE's DDL + keying + query_fn + kuzu 0.11.3 reproduce the comp-kuzu")
-        print("  figures exactly. The ICEBERG SCAN remains unexercised (in-VPC only) -- this is the")
-        print("  callee, not the deployment.")
+        print("  EQUIVALENT. The producer's DDL + keying + query_fn + kuzu 0.11.3 reproduce the")
+        print("  comp-kuzu figures exactly.")
+        # This line used to claim the Iceberg scan was unexercised. It no longer is -- and a stale
+        # scope caveat is the same drift class this file's extraction fix exists to remove, so it
+        # points at the harness that superseded it rather than overstating what THIS one covers.
+        print("  SCOPE: this exercises the DDL/keying/Cypher chain. The Iceberg SCAN is covered by")
+        print("  test_producer_reader_executed.py, which runs the producer's OWN reader. Only the")
+        print("  Nessie REST connection and S3-as-backend remain unexercised anywhere.")
     else:
         print("  *** DIVERGENCE -- the in-container path would not reproduce the local layer ***")
     return 0 if (ok and keying_ok) else 1
