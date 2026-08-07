@@ -430,6 +430,23 @@ retrieval. It was caught by base re-deriving my claim from my cited locator — 
 this audit, against this auditor. The method's weakest layer and its own remedy for that layer met in
 one event, and the finding and its evidence are therefore the same event.**
 
+> ## ⚠ THE BOUND ON §5a, STATED BEFORE ANYONE QUOTES IT — **N=1, AND BOTH PARTIES ARE ONE SEAT**
+> **This is ONE event, and the "independent re-derivation" that demonstrates `02:47` working was
+> performed by the author of the document being examined.** We are base and lane under a single
+> serial, auditing a corpus one of us wrote. **That is weaker independence than `3.0.0_SA_CVO~C` had
+> on the coherence base** — they fixed a selection rule *before* looking and wrote outside the folder
+> (@`8170937b60`). We did neither. We happened to disagree productively.
+>
+> **At least two degrees of freedom are live**, by `07`'s own accounting: **we chose the subject, and
+> we are scoring our own exchange.** So the claim *"`02:47` is the load-bearing acceptance target"* is
+> a **claim about the method supported by a single instance its own claimants generated while
+> motivated to find something.**
+>
+> **Status: HYPOTHESIS WORTH TESTING — NOT A FINDING.** A hypothesis cannot authorize a ruling,
+> a change to the acceptance list, or a re-ordering of `02` §4. The method's own bar is **three unlike
+> systems**; this has **one**, from an interested party. If it is right it will survive a real
+> independent test, and that test is the thing to ask for — not adoption.
+
 Filed as an **observation for the method owner, not a proposed change** — refinement is not this pass.
 
 On the four CRO-authored files: they are markedly more disciplined than the corpus they sit beside —
