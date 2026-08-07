@@ -1,0 +1,76 @@
+# BUCKET_ALLOWLIST.yaml -- 0.0.3_BG_BBGTerminal serving-permission map
+# Axis: SERVING PERMISSION (one axis, one intent -- what this agent may READ to answer a
+# user query, and how a query routes to a prefix). Rule 24 discipline: bucket -> prefix ->
+# query-class, one grain per level.
+#
+# v0.1 SEED -- Andrew-directed 2026-08-07 ("start setting up a very targeted bucket
+# allowlist ... that guides them on what buckets to use based on user queries").
+# Iterates ONLY on Andrew's word; the agent never widens its own allowlist.
+#
+# DEFAULT: DENY. A bucket or prefix not named under `allow` is not servable, and the
+# quotable reason is "not on my serving allowlist -- escalate to Andrew to widen it."
+
+version: 0.1
+ratified: andrew-direct 2026-08-07 (seed; widening is Andrew-only)
+default: deny
+
+allow:
+  opal-data-portal-v2:
+    note: >
+      THE serving bucket -- the only S3 surface this agent reads. All access via
+      tools/portal_lookup.py (prints denominators; complete reads); never raw aws s3
+      for answering. READ-ONLY: this surface is live client-facing.
+    prefixes:
+      platinum/mdpf/:
+        serves: "Model Portfolios (MDPF) -- allocations, performance, composition, AUA"
+        query_routing:
+          - "model portfolio / MDPF / AUA question naming a firm -> platinum/mdpf/{49financial|inflection|cottonwood}/{aggregate-aua-timeseries|aum-metrics|account-distribution}.json"
+          - "global / firm-wide aggregate question -> platinum/mdpf/global/ (same three types)"
+          - "historical daily MDPF snapshot -> platinum/mdpf/aggregate_aua/YYYY-MM-DD.json (dated partitions)"
+        vintage_field: as_of_date
+        excluded:
+          - "platinum/mdpf/archive/** -- archived by Andrew's order 2026-08-06; NOT servable; a question only the archive answers escalates, never serves"
+          - "underscore twins ({scope}/aggregate_aua_timeseries.json) -- retired surface; serve the hyphen files only"
+      json/:
+        serves: "live portal JSON tree -- benchmarks, returns, metrics, valuation, sentiment, positioning (catalog row 1) + Pod-2 analytics (row 3)"
+        query_routing:
+          - "portal figure question -> the PORTAL_RETRIEVAL.md channel map resolves the key; portal_lookup.py channels lists them"
+        vintage_field: per-channel (PORTAL_RETRIEVAL.md)
+      market-metrics.json.gz:
+        serves: "market overview / macro dashboard figures (catalog row 4)"
+        note: single object at bucket root; gzip -- portal_lookup.py decodes
+
+deny:
+  # Named so the refusal is quotable, not discovered. Every one of these is a
+  # pre-serving pipeline tier or client raw data. The medallion law (CLAUDE.md 17b)
+  # is the reason: serving is platinum's job; this agent serves, so it reads platinum.
+  - bucket: opal-data-assets
+    reason: "pipeline bronze/silver/gold -- pre-serving tiers; answers come from platinum, never from upstream tiers that may disagree with what clients see"
+  - bucket: opal-data-bd
+    reason: "client raw/pipeline data (Black Diamond); firm-separated (NEVER#2) and not a serving surface"
+  - bucket: opal-data-inf
+    reason: "client raw/pipeline data (Inflection/Orion); firm-separated and not a serving surface"
+  - bucket: opal-data-cot
+    reason: "client raw/pipeline data (Cottonwood); firm-separated and not a serving surface"
+  - bucket: opal-data-mdpf
+    reason: "MDPF pipeline internals (feeds/code/telemetry) -- not a serving surface"
+  - bucket: opal-data-schwab
+    reason: "custody raw data -- not a serving surface"
+  - bucket: "*"
+    reason: "default-deny: not on my serving allowlist -- escalate to Andrew to widen it"
+
+frozen_surfaces:
+  # In the serving bucket but NOT servable -- stale vintage, quotable reason required.
+  - prefix: "returns/ metrics/ valuation/ sentiment/ positioning/ (top-level legacy)"
+    reason: "frozen Dec-25/Jan-26 vintages (PORTAL_RETRIEVAL.md) -- serving them as current misstates; if only a frozen surface answers, say so and escalate"
+
+non_s3_data_planes:
+  # Kept here so the allowlist is the ONE serving-permission record (same axis).
+  dynamodb_news_tables:
+    serves: "news pipeline queries (catalog row 5)"
+    mode: "read-only get/query/scan, paginate to completion or report partial (PORTAL_RETRIEVAL.md sDDB)"
+
+escalation: >
+  A query needing a bucket/prefix not allowed here is DECLINED with the quotable reason
+  and escalated per TEAMS_DUTY.md's ladder. The agent NEVER self-widens this file --
+  a widening is an Andrew ruling recorded as a version bump with his verbatim.

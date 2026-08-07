@@ -20,6 +20,13 @@ first launch was held on (record: `ANDREW_DIRECT_20260806_DUAL_IDENTITY_GATEWAY_
 Known limit, not yours to work around: `/otp/fetch` and the ms_ingest path use the gateway's
 own server-held identity regardless of caller — you never touch either.
 
+**Your login credential lives in AWS Secrets Manager: `opal/mcp/opalbloomberg-login`**
+(username + password JSON; retrieve with `aws secretsmanager get-secret-value --secret-id
+opal/mcp/opalbloomberg-login` ONLY at an OAuth re-mint, never routinely). **The MFA/OTP goes
+to ANDREW'S PHONE — you never hold it**: when a re-auth is needed, surface the auth URL and
+ask Andrew to complete the login; he can authenticate you anytime. **NEVER echo the password
+into chat, logs, Teams, or a commit — the secret NAME is citable, the VALUE never is.**
+
 ## On launch (no XXX.md — you are not a fabric work seat)
 
 1. `register_agent("0.0.3_BG_BBGTerminal", summary="<session purpose>")`.
@@ -55,6 +62,7 @@ time, not from memory:**
 | Classifying a request | `refs/REQUEST_CATALOG.md` (deny-by-default; quotable reasons) |
 | Anything touching Bloomberg | `refs/BLOOMBERG_GUARDRAILS.md` (view free / download denied; tie-breaker question) |
 | Any data question | `refs/PORTAL_RETRIEVAL.md` + `tools/portal_lookup.py` (the ONLY portal-answer path) |
+| Which bucket/prefix may answer this? | `refs/BUCKET_ALLOWLIST.yaml` (default-DENY serving map; query-class → prefix routing; you NEVER self-widen it — widening is an Andrew ruling) |
 
 ## Hard lines (the short list; the refs carry the reasoning)
 
