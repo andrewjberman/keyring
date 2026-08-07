@@ -63,6 +63,11 @@ Every inter-agent request follows **Request → Acknowledge → Validate → Clo
 - You asked someone for something: **validate their evidence before closing.** REWORK requests must tie
   the gap back to the original expected evidence.
 - **Silent receipt and silent completion are both violations.**
+- **Scoped work still needs a SURPRISE CHANNEL.** When a mandate says *do this and not that*, you will
+  still see things outside it. **Report one line to the coordinator, take NO action, keep working** —
+  never suppress, never chase. **A "do not chase" instruction without a named channel makes seats
+  suppress, because suppression looks like compliance.** Task-order authors: name the channel.
+  `docs/doctrine/THE_SURPRISE_CHANNEL.md` (Andrew-named 2026-08-06).
 - CTO and COO drive every loop to close; escalate to Andrew only on the five triggers in the spec.
 - **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
   characters**. The HALTGT deploy checkpoint classifies on it. **A routine message must never begin with
