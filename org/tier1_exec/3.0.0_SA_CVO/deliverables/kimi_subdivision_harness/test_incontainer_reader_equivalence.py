@@ -83,7 +83,12 @@ serialize. Whatever the in-VPC commit costs is S3/Nessie NETWORK AND CATALOG lat
 scale is roughly independent of these row counts.
 
 WHAT THIS LOCAL MEASUREMENT DOES NOT COVER: the S3 PUT leg and the Nessie REST commit round-trip. It
-measures serialization and write, not network. The SCAN remains in-VPC-only and unmeasured.
+measures serialization and write, not network.
+(This line previously ended "...and the SCAN remains in-VPC-only and unmeasured", which CONTRADICTED
+the update at the top of this docstring saying the scan IS exercised. I had been APPENDING
+corrections instead of RECONCILING them, and a self-contradicting record is worse than either
+statement alone: a reader cannot tell which is current, so they trust whichever they read first.
+The scan is covered by test_producer_reader_executed.py.)
 
 FOOTPRINT the landed layer adds to the graph:
     C2  6,161 nodes + 17,978 edges | C3  1,255 nodes + 8,978 edges
