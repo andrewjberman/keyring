@@ -1,8 +1,13 @@
 {
   "_meta": {
     "artifact": "Guard 2 CLOSED FIELD-PATH LIST (machine-consumed)",
-    "derived_from": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md @6c50710af section B (B1/B2/B3; B1 second amendment 2026-08-07 ~0040Z Andrew-direct: basis/source at global = null, composite STRUCK, transition absent->null)",
-    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment 1: all transitions absent->present, routed via SURPRISE 002451Z) -> @6c50710af re-derivation ~0045Z (B1 amendment 2, Andrew-direct 'no carve outs': basis/source@global absent->null, composite struck)",
+    "derived_from": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md @885aafd35 section B0+B (B0 process-time exemption class ruled ~0155Z; B1 as amended @6c50710af)",
+    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment 1: all transitions absent->present, routed via SURPRISE 002451Z) -> @6c50710af re-derivation ~0045Z (B1 amendment 2, Andrew-direct 'no carve outs': basis/source@global absent->null, composite struck) -> @885aafd35 re-derivation ~0200Z (B0: EXEMPT-PROCESS-TIME class, four constraints; each path CONFIRMED against the 011035Z fixture per records/B0_PROCESS_TIME_VERIFICATION_20260807.md)",
+    "process_time_class": {
+      "authority": "CONTRACT B0 @885aafd35, four constraints: (1) enumerated EXACT paths, no wildcards; (2) list CLOSED, additions are contract amendments; (3) data-as-of fields PERMANENTLY INELIGIBLE -- the comparator REFUSES TO RUN if this list ever touches one; (4) exempt != unchecked -- the positive assertion (process time absent from business-payload equality and data-as-of derivation) is made separately in every report.",
+      "ineligible_forever": ["as_of_last", "as_of_first", "period", "count_as_of", "source_vintage_last", "data_as_of"],
+      "verification": "Each entry confirmed against baseline_manifest_20260807T011035Z.json bodies (not adopted from the contract document): _provenance.written_at present on all 12 as publish instants 01:06:0xZ; generated_at present ONLY on account-distribution (runtime instants, microsecond precision); last_updated present ONLY on aum-metrics (runtime instants). Manifest process-time fields are OUT OF THIS COMPARATOR'S SURFACE until run/publish manifests become compared artifacts -- deliberately not listed rather than listed unverifiable."
+    },
     "governing": [
       "MDPF_CANONICAL_PLATINUM_PRD.md @24d3eb2f8 section 5.5 (Guard 2)",
       "TO MDPF_CANPLAT.G2 @f123fbf6e"
@@ -33,6 +38,7 @@
         {"path": "meta", "scopes": ["49financial"], "class": "absent_to_present", "subtree": true, "authority": "CONTRACT B1: meta canonical all 4 (W-4)"},
         {"path": "total.account_units", "scopes": ["global", "49financial", "inflection", "cottonwood"], "class": "fold_in_new", "authority": "CONTRACT B1: account-units folds in (W-5)"}
       ],
+      "process_time_exemptions": ["_provenance.written_at", "generated_at"],
       "decision_pending": [],
       "path_pending": []
     },
@@ -43,6 +49,7 @@
         "total.q0", "total.q1", "total.q2", "total.q3", "total.series_start"
       ],
       "exemptions": [],
+      "process_time_exemptions": ["_provenance.written_at", "last_updated"],
       "decision_pending": [],
       "path_pending": [
         {"name": "non-model assets detail fold-in", "scopes": ["global", "49financial", "inflection", "cottonwood"], "authority": "CONTRACT B2 (W-6): FOLDED IN, concrete field paths not yet named in section B. Excuses NOTHING until a CONTRACT amendment names the paths and this list re-derives.", "invariant": "I-1: global non_model counts 49F ONLY"}
@@ -61,6 +68,7 @@
         {"path": "source_vintage_last", "scopes": ["cottonwood"], "class": "absent_to_present", "authority": "CONTRACT B3 (W-1)"},
         {"path": "non_model_aua", "scopes": ["cottonwood"], "class": "null_to_nonzero_value_only", "authority": "PRD section 1 measured-changes + section 4 W-2: coverage 8/446 -> full as the custody leg lands. Baseline NULL elements may fill with NONZERO values; baseline NULL -> ZERO is NOT excused (B3 array invariant: null for unreached dates, NEVER 0 -- the Guard 3 else-None->else-0 one-token class must fail here, per DS~Z joint fixture request 20260807T000529Z). Baseline NON-NULL elements must remain identical. A genuine business zero, if one ever lands, surfaces as a REGRESSION report for COO~Z adjudication -- fail-closed by design."}
       ],
+      "process_time_exemptions": ["_provenance.written_at"],
       "decision_pending": [
         {"paths": ["count_as_of", "count_basis", "account_count_total_raw", "point_class", "opal_aggregate_aua"], "scopes_today": ["global"], "authority": "CONTRACT B3: DECIDE per L-1 (canonical-for-all vs non-canonical). Not a deletion decision. Until ruled and amended into section B: global values must remain value-identical; an appearance at a firm scope is an unexcused diff (REGRESSION report)."},
         {"paths": ["inflection_non_model_aua"], "scopes_today": ["global"], "authority": "CONTRACT B3: NOT a canonical shape; classification only, NOT a deletion warrant. Must remain value-identical at global vs the pinned baseline (no deletion authorized -- PRD section 6)."}

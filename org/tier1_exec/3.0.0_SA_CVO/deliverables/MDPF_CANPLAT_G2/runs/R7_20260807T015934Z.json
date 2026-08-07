@@ -1,0 +1,58 @@
+{
+  "_meta": {
+    "r7_row": "REGRESSION TEST -- all five limbs. PASS iff value-identical per JSON path . declared canonicalisation . mutation shown to FAIL and LOCALISE . baseline pinned to VersionIds at a stamped instant . absent!=null!=zero.",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "run_by": "3.0.0_SA_CVO~Z",
+    "run_instant_utc": "2026-08-07T01:59:34.613037+00:00",
+    "citability": "CITABLE",
+    "mutation_record": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANPLAT_G2/records/MUTATION_EXERCISE_20260807.md",
+    "sectionB_artifact": "sectionB_field_paths.json",
+    "sectionB_derivation_commit": "71f5c1e0e+DIRTY",
+    "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
+    "baseline_manifest": "baseline_manifest_20260807T011035Z.json",
+    "baseline_pin_instant_utc": "2026-08-07T01:10:35.164728+00:00",
+    "b0_positive_assertion": "Process-time paths (exact, enumerated, per type) were EXCLUDED from business-payload equality and reported separately; data-as-of fields (as_of_last, as_of_first, period, count_as_of, source_vintage_last, data_as_of) are structurally INELIGIBLE for that class (load guard refuses to run) and were compared as business values. CONTRACT B0 @885aafd35 constraint 4."
+  },
+  "denominator": {
+    "pairs_targeted": 1,
+    "pairs_compared": 1,
+    "could_not_verify": 0,
+    "total_regressions": 0
+  },
+  "pairs": [
+    {
+      "scope": "49financial",
+      "type": "aum-metrics",
+      "key": "platinum/mdpf/49financial/aum-metrics.json",
+      "baseline_version_id": "6aTspk49FrSYL4Ht6oACerueVxr5jX0V",
+      "candidate_source": "C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\c82c6aeb-1b4d-4f10-b017-339270592b3d\\scratchpad\\mutants\\e1\\49financial\\aum-metrics.json",
+      "baseline_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.673731+00:00\""
+      },
+      "candidate_vintage": {
+        "last_updated": "\"2026-08-07T02:29:55.123456+00:00\""
+      },
+      "paths_compared": 117,
+      "diffs": 2,
+      "excused": [],
+      "regressions": [],
+      "process_time_diffs": [
+        {
+          "path": "_provenance.written_at",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-07T01:06:00Z\"",
+          "candidate": "\"2026-08-07T02:30:00Z\""
+        },
+        {
+          "path": "last_updated",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-04T17:42:24.673731+00:00\"",
+          "candidate": "\"2026-08-07T02:29:55.123456+00:00\""
+        }
+      ],
+      "verdict": "TIE-BUSINESS (process-time only)"
+    }
+  ]
+}

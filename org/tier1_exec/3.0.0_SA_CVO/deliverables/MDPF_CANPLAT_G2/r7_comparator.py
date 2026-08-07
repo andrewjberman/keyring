@@ -115,6 +115,24 @@ def walk(base, cand, path: str, diffs: list, denom: list) -> None:
                   "baseline": _short(base), "candidate": _short(cand)})
 
 
+# CONTRACT B0 @885aafd35 constraint 3: data-as-of fields are PERMANENTLY INELIGIBLE for the
+# process-time class. The guard is structural: a list touching one refuses to run at all.
+INELIGIBLE_DATA_AS_OF = {"as_of_last", "as_of_first", "period", "count_as_of",
+                         "source_vintage_last", "data_as_of"}
+
+
+def load_process_time_paths(sectionb: dict, atype: str) -> set:
+    paths = sectionb["artifact_types"][atype].get("process_time_exemptions", [])
+    for p in paths:
+        for seg in p.replace("\\.", "\x00").split("."):
+            if seg.replace("\x00", ".") in INELIGIBLE_DATA_AS_OF:
+                raise SystemExit(
+                    "ERROR: B0 constraint-3 violation -- process_time_exemptions entry '{p}' "
+                    "({t}) touches a DATA-AS-OF field, which is PERMANENTLY INELIGIBLE "
+                    "(CONTRACT @885aafd35). REFUSING TO RUN.".format(p=p, t=atype))
+    return set(paths)  # exact paths only -- no wildcards, no prefix matching (constraint 1)
+
+
 def _path_covers(ex_path: str, diff_path: str) -> bool:
     return (
         diff_path == ex_path
@@ -219,24 +237,36 @@ def cmd_compare(args) -> int:
         cand = parse_canonical(cand_text)
         diffs, denom = [], [0]
         walk(base, cand, "", diffs, denom)
+        pt_paths = load_process_time_paths(sectionb, atype)
+        # B0 constraint 1: exact-match only. The process-time class is SEPARATED, never folded
+        # into the business verdict (constraint 4 + CTO~Z: the separation stays in every report).
+        pt_diffs = [d for d in diffs if d["path"] in pt_paths]
+        business = [d for d in diffs if d["path"] not in pt_paths]
         exemptions = sectionb["artifact_types"][atype]["exemptions"]
-        classified = [classify(d, scope, exemptions) for d in diffs]
+        classified = [classify(d, scope, exemptions) for d in business]
         regressions = [d for d in classified if d["verdict"] == "REGRESSION"]
         excused = [d for d in classified if d["verdict"] == "EXCUSED"]
         total_regressions += len(regressions)
-        verdict = "TIE" if not diffs else ("REGRESSIONS({n})".format(n=len(regressions)) if regressions else "EXCUSED-ONLY")
+        verdict = "TIE" if not business else ("REGRESSIONS({n})".format(n=len(regressions)) if regressions else "EXCUSED-ONLY")
+        if pt_diffs and not business:
+            verdict = "TIE-BUSINESS (process-time only)"
         report_pairs.append({
             "scope": scope, "type": atype, "key": e["key"], "baseline_version_id": e["version_id"],
             "candidate_source": cand_src,
             "baseline_vintage": _vintage(base), "candidate_vintage": _vintage(cand),
             "paths_compared": denom[0], "diffs": len(diffs),
-            "excused": excused, "regressions": regressions, "verdict": verdict,
+            "excused": excused, "regressions": regressions,
+            "process_time_diffs": pt_diffs, "verdict": verdict,
         })
-        print("{v}: {s}/{t}  paths_compared={n} diffs={d} excused={x} regressions={r}".format(
-            v=verdict, s=scope, t=atype, n=denom[0], d=len(diffs), x=len(excused), r=len(regressions)))
+        print("{v}: {s}/{t}  paths_compared={n} diffs={d} excused={x} regressions={r} process_time={pt}".format(
+            v=verdict, s=scope, t=atype, n=denom[0], d=len(diffs), x=len(excused), r=len(regressions),
+            pt=len(pt_diffs)))
         for r in regressions[: args.max_print]:
             print("  REGRESSION {p}: {f} -> {t}  baseline={b} candidate={c}".format(
                 p=r["path"], f=r["from"], t=r["to"], b=r["baseline"], c=r["candidate"]))
+        for r in pt_diffs[: args.max_print]:
+            print("  PROCESS-TIME (separated, exempt-by-B0) {p}: baseline={b} candidate={c}".format(
+                p=r["path"], b=r["baseline"], c=r["candidate"]))
 
     now = dt.datetime.now(dt.timezone.utc)
     report = {
@@ -252,6 +282,13 @@ def cmd_compare(args) -> int:
             "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
             "baseline_manifest": pathlib.Path(args.manifest).name,
             "baseline_pin_instant_utc": manifest["_meta"]["pin_instant_utc"],
+            "b0_positive_assertion": (
+                "Process-time paths (exact, enumerated, per type) were EXCLUDED from business-payload "
+                "equality and reported separately; data-as-of fields (as_of_last, as_of_first, period, "
+                "count_as_of, source_vintage_last, data_as_of) are structurally INELIGIBLE for that "
+                "class (load guard refuses to run) and were compared as business values. "
+                "CONTRACT B0 @885aafd35 constraint 4."
+            ),
         },
         "denominator": {
             "pairs_targeted": len(pairs),
