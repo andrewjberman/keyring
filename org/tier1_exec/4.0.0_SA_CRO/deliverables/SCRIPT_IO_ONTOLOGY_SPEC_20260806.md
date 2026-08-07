@@ -4,6 +4,8 @@
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
 **Status:** DRAFT SPEC — for `3.0.0_SA_CVO~C` review. Nothing here is ratified; nothing here is built.
 **Date:** 2026-08-06
+**Revision:** **REV 2, 2026-08-07** — §2, §6 and §10.5 corrected against a surface REV 1 missed. See
+§0.1. REV 1 (@72279a7c2) is superseded on those three sections only; §3–§5 and §7–§9 are unchanged.
 **Commissioned:** Andrew-direct 2026-08-06, this session (see §0 for the verbatim scope and its
 mid-course correction).
 **Reviewer:** `3.0.0_SA_CVO~C` (Andrew-named).
@@ -41,6 +43,41 @@ or silently dropped. §3 replaces the binary with a layer definition, and moves 
 
 ---
 
+## 0.1 REV 2 — what REV 1 got wrong, and how
+
+REV 1 §11 admitted: *"the denominator of tools I did not examine is not zero and I have not bounded
+it."* **I bounded it. It was not empty, and what it contained changes three sections.**
+
+`infra/system/sdk/gensdk/recognizer_sdk/` is a **wired FrontEnd SDK with capability tiers** —
+`python_ast.py` (LEXICAL_AST), `python_resolved.py` (RESOLVED_SEMANTIC, real since 2026-07-18,
+whole-project import resolution), `raw_text.py`, and `tree_sitter_stub.py` (RESOLVED_SEMANTIC for
+TS/JS, an **honest declared gap**, `RESOLVED_TIER_AVAILABLE = False`). Wired into `genesis_cli.py`,
+`gensdk/loop/local_loop.py`, `infra/aws/globgrph/cse_emit_promote.py`, `scaffold.py`.
+`python_ast.py`'s own docstring: *"Proven shape: the Opal code recognizers use exactly this."*
+
+**Three corrections, and the third is the one that matters:**
+
+1. **§2 undercounted.** Seven surfaces listed; the SDK is an eighth and it is *not* another private
+   pass — it is the generalized abstraction the others are ad-hoc instances of.
+2. **§6 was the wrong shape** — it specified *building* language adapters where an abstraction
+   already exists. **A build-ladder rung was skipped.** Corrected in place.
+3. **§10.5's acceptance test may be unpassable today.** Cross-language field join requires the
+   TS/JS RESOLVED_SEMANTIC tier, which is a deliberate declared gap pending P6. **I wrote an
+   acceptance test the estate cannot currently pass and did not know it.**
+
+**And a denominator error against myself.** I first measured *"75 first-party `.py` performing an AST
+parse."* That 75 **included vendored Lambda-layer dependencies** — numpy, pydantic, tqdm, rich,
+pyarrow, pygments. **True first-party count: 56.** A number published with the wrong noun on it is
+the `denominator_grain` defect the ratified vocabulary exists to name, committed inside a spec that
+cites that vocabulary.
+
+> **The method note worth keeping: §11's admitted gap is what produced the finding.** Writing *"I
+> have not bounded this"* is what made it obvious the next morning that it should be bounded. An
+> unmarked gap would have read as coverage and this would have surfaced during implementation
+> instead — after the wrong architecture had been built.
+
+---
+
 ## 1. The one-sentence claim
 
 > **A C1 edge asserts that two nodes interact. Nothing in the estate records WHERE INSIDE THE NODE
@@ -70,6 +107,7 @@ Measured this session (denominators printed; retrieval controls run):
 | `comp_honesty.py` | residual/bucket/equality-guard defect shapes | expression | **YES** |
 | `comp_legacywriter.py::removal_behaviour_for` | behaviour of a read **at a line** (guarded/dead/live) | statement | **YES** |
 | `tsgraph_spike/extractor.ts` + `cluster_extract.py` | ts-morph portal semantic graph; Page→PanelCluster→Drilldown | component / field | (TS AST — positions available) |
+| **`infra/system/sdk/gensdk/recognizer_sdk/`** *(REV 2 — missed in REV 1)* | **the generalized FrontEnd abstraction** the rows above are ad-hoc instances of: capability tiers, `artifact_class`, `lifecycle`; Python LEXICAL_AST **and** RESOLVED_SEMANTIC both real; TS/JS resolved = declared honest gap | per tier | via front-end |
 
 Live graph population supporting the field grain (rule bank `D1.grain_node_denominators` +
 `edge_grain_binding`): `Field` **4969**, `Prop` **359**, `HAS_FIELD` **4269**, `READS_FIELD`
@@ -84,6 +122,14 @@ Seven-plus tools independently parse the same first-party source, each with its 
 its **own** private notion of what counts as a read. **None of them shares a record.** No two can be
 joined, none is registered in `SYSTEM_DEFINITIONS.yaml`, and none is addressable from a C-ladder or
 D-rail query.
+
+> **REV 2 CORRECTION — the sharper and less flattering version of this finding.** *"No shared
+> abstraction exists"* would be FALSE: `recognizer_sdk` is one, and it is wired. What is true is
+> narrower and more interesting — **an extraction abstraction exists and an ONTOLOGY does not, so
+> its output is not addressable from the C-ladder or the D-rails.** The seven private passes are
+> evidence that a *wired abstraction does not get adopted by tools that do not know it is there*.
+> That is a discoverability finding as much as an ontology one, and it argues for registering the
+> vocabulary precisely so the SDK becomes reachable from the ladder every agent already reasons in.
 
 > **The estate has line-level knowledge and no line-level ONTOLOGY.** That is the gap — not the
 > parsing. Any spec that proposes to "build script I/O extraction" has misread the ground state and
@@ -304,11 +350,32 @@ exactly as `comp-iam`'s DESIRED-only view has been.
 
 ---
 
-## 6. Language adapters — Python and React/JS
+## 6. Extraction — RECOGNIZERS ON THE EXISTING FRONT-END SDK *(REV 2: rewritten)*
+
+> **REV 1 SAID "BUILD LANGUAGE ADAPTERS." THAT WAS A SKIPPED BUILD-LADDER RUNG.**
+> `infra/system/sdk/gensdk/recognizer_sdk/` already provides the `FrontEnd` abstraction, the
+> capability tiers, the `artifact_class`/`lifecycle` model, and a `genesis validate` step that WARNS
+> when a recognizer requires a tier no front-end can honestly reach. **S-layer extraction is a set
+> of RECOGNIZERS on that SDK. It is not a new adapter layer.**
 
 The two languages produce **the same S0/S1 schema**; only the recognizers differ. This mirrors the
 rule bank's existing `relations.binds_up` adapter shape, where concrete per-plane edge types bind up
-to abstract vocabulary.
+to abstract vocabulary — and the SDK already implements exactly that shape one level down.
+
+**The tier model is load-bearing and REV 1 had no equivalent of it:**
+
+| tier | meaning | S-layer consequence |
+|---|---|---|
+| `LEXICAL_AST` | single file, coarse, **no cross-file resolution** | Axis 3 can reach `literal`, `partial`, `unresolved`, `opaque` — **never `folded` across files** |
+| `RESOLVED_SEMANTIC` | whole-project resolution | Axis 3 can reach `folded` |
+
+> **THE CONSTRAINT REV 1 STATED NOWHERE, and it is a candidate axis collision:**
+> `FrontEndCapability` is a property of the **EXTRACTOR**; Axis 3 `resolution` is a property of the
+> **SITE**. They are not the same axis — but they are **not independent**: a site cannot be reported
+> `folded` if the tier serving it cannot resolve across files. **Axis 3's achievable values are
+> BOUNDED BY the front-end tier.** Whether that is a missing constraint on a sound axis, or evidence
+> that Axis 3 is partly an extractor property wearing a site property's clothes, is a live review
+> question (§4.1, §9) and is **deliberately not resolved here by the person who authored the axis.**
 
 > **If the two sides are allowed to emit different schemas, the layer has failed at birth** — the
 > single most valuable query it enables (follow a field across the serve boundary) is exactly the
@@ -330,6 +397,15 @@ achieves **119/119 page coverage with 0 silent Unknown**.
 
 **Do not parse TypeScript from Python.** The toolchain exists, is proven, and the AST positions
 needed for S0 are already available in it.
+
+> **REV 2 — the TS/JS tier ceiling, stated so nothing downstream promises past it.** The SDK's
+> TS/JS `RESOLVED_SEMANTIC` front-end is `tree_sitter_stub.py`: it **declares** the tier and yields
+> **no trees**, so a recognizer requiring resolved semantics is never dispatched against it, and
+> `genesis validate` **WARNS** rather than under-reporting silently. Real resolution is a **P6**
+> follow-on. **The React side of the S-layer is therefore LEXICAL-tier until P6 lands**, and that
+> ceiling must be carried in the layer's own `coverage_boundary` — not discovered by a consumer.
+> *The stub's discipline is the same one Axis 3 encodes: make the gap visible, never silently
+> under-report. It is a good pattern to inherit rather than re-derive.*
 
 ### 6.3 The asymmetry, stated because it will otherwise be discovered late
 
@@ -470,6 +546,14 @@ Falsification tests, not a green checklist. Each names the failure it is designe
 5. **Cross-language join:** one field followed from a Python producer through to a React consumer.
    **If this cannot be demonstrated, §6's shared-schema requirement was not actually met**, whatever
    the schemas look like on paper.
+   > ⛔ **REV 2 — THIS TEST IS NOT PASSABLE AT THE RESOLVED TIER TODAY, AND REV 1 DID NOT KNOW IT.**
+   > The TS/JS `RESOLVED_SEMANTIC` front-end is a deliberate declared gap (`tree_sitter_stub.py`,
+   > `RESOLVED_TIER_AVAILABLE = False`); real tree-sitter/ts-morph resolution is a flagged **P6**
+   > follow-on. A LEXICAL_AST-tier join may be demonstrable and is **not the same claim**.
+   > **Therefore: either scope this test to the lexical tier and say so, or mark the layer's
+   > cross-language promise as gated on P6 — and DO NOT let the S-layer promise, anywhere, a
+   > resolved-tier cross-language trace the estate cannot currently perform.** Writing an
+   > unpassable acceptance test is a cheap error; shipping a promise behind it is not.
 6. **Known-negative:** a case that **did** come out differently. Ratified vocabulary requires it
    whenever a declaration claims basis `exercised` — *"exercising proves a tool RUNS and only a
    known_negative proves it DISCRIMINATES."*
@@ -483,6 +567,10 @@ Falsification tests, not a green checklist. Each names the failure it is designe
 - **Not costed.** No estimate of extraction runtime or storage is offered; §9.4 is open.
 - **Not a build plan.** Owner, lane, and sequencing are for CTO/COO — **research proposes, it does
   not staff** (CRO charter §3).
-- **The ground-state census in §2 is a census of what I FOUND.** Seven surfaces are enumerated; the
-  denominator of tools I did not examine is not zero and I have not bounded it. *An unmarked gap
-  reads as coverage.*
+- **The ground-state census in §2 is a census of what I FOUND.** *(REV 2: the residue REV 1 left
+  unbounded HAS now been bounded on one axis — **56 first-party `.py` perform a Python AST parse**,
+  corrected down from a first measurement of 75 that wrongly included vendored Lambda-layer deps.
+  That sweep is what surfaced `recognizer_sdk`. **The bound is one-axis only:** it finds Python
+  `ast` users. It does **not** cover TS/JS parsers, regex-based extractors, or anything reading
+  source without the stdlib `ast` module — so §2 is still not a closed census, only a less open
+  one.)* *An unmarked gap reads as coverage.*
