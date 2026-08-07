@@ -39,11 +39,15 @@ four scopes gained all five: global 5/5 and every firm 0/5 on 08-03; 5/5 everywh
 fields are now uniform, therefore canonical, therefore nothing to retire. **The row described a
 condition that ended before the register was adopted as the PRD.**
 
-**3. R-12's conclusion is right and its named mechanism is not.** The row says the model *"normalises
-`_` and `-` variants to one type."* **No underscore normalisation is involved in any of the 8
-invisible keys** — `account-units` and `non-model-assets` are both already hyphenated, and I measured
-zero `_`→`-` normalisation across 57 files in `data/mdpf`.
-The operative mechanism is worse: **the model is GENERATIVE, never OBSERVATIONAL.** `a4_expected =
+**3. R-12 — TWO mechanisms, and I over-claimed that one of them was absent (AMENDED ~2135Z).**
+I first wrote that the row's `_`/`-` normalisation *"is not"* the mechanism, because both invisible
+served keys are already hyphenated and `data/mdpf` carries zero `_`→`-` normalisation (57 files).
+**The narrow measurement stands; the generalisation did not.** `0.4.0_DS_ClientPlatform` supplied the
+producer and with it the duality — re-verified at source here: the GOLD spelling is UNDERSCORED
+(`account_units.json` `:328`, `non_model_assets.json` `:86`) and the SERVED spelling HYPHENATED. The
+row was pointing at something real, **one layer above where I searched.** I searched one layer and
+generalised to the pipeline.
+The second mechanism, which remains mine and is unchanged: **the model is GENERATIVE, never OBSERVATIONAL.** `a4_expected =
 len(SCOPES) * len(ARTIFACT_TYPES)` (`:968`) is compared against `emitted` — **both derived from the
 same closed tuple.** Nothing ever lists the A4 prefix, so the check reads a clean **12/12 green**
 while 8 live keys (newest 2026-08-05, same vintage as the main body) sit outside its universe.
@@ -86,9 +90,13 @@ reference rows, not string occurrences.
    instruments (CVO layer-3 gate, DT parity baseline, `route_bindings` tie rows) — knowable and
    ordered in §2.
 3. **[CTO]** R-12: make the completeness check observational (list the prefix, compare, surface
-   unrecognised types by name). ⚠ **Do not let this become "delete the two unrecognised types"** —
-   both are live at current vintage and **their producer is unidentified**; identifying it is the
-   prerequisite and was not in this TO.
+   unrecognised types by name), and make the universe a PREDICATE over the real listing rather than a
+   hand-written tuple. ⚠ **Do not let this become "delete the two unrecognised types"** — both are
+   live at current vintage and **OWNED**: the portal publisher emits them and names them
+   `R12_EXTRA_PAIRS`. ⛔ Carry DS's hazard: a census keyed on the GOLD spelling reads the SERVED keys
+   as orphans and vice versa — **both fail toward retiring a live field.** Treat
+   `account-units`/`account_units`, `non-model-assets`/`non_model_assets` and the hyphenated
+   `account-distribution.json` portal bell as ONE GUARDED SET.
 4. **[COO]** R-11: close as resolved-by-convergence.
 
 ---
@@ -98,8 +106,13 @@ reference rows, not string occurrences.
 - `comp-transform schema-check` cannot see a React **context** file: `DataSourceContext` returns
   "Component not found" though it performs a live served-field read — a consuming surface invisible
   to the mandated Phase-2 check.
-- 8 live keys under the MDPF served prefix (`cottonwood/account-units`, `global/non-model-assets`)
-  have **no identified producer** — the consolidator does not emit them.
+- ~~8 live keys under the MDPF served prefix have no identified producer~~ **ANSWERED ~2135Z by
+  `0.4.0_DS_ClientPlatform`, verified at source at this seat: the PORTAL PUBLISHER emits them
+  (`opal-assets-mdpf-portal-publisher/lambda_function.py:84`, constant literally named
+  `R12_EXTRA_PAIRS`). The consolidator CONSUMES account-units without emitting it. Deliverable §4
+  AMENDED — I over-claimed that R-12's `_`/`-` mechanism was absent; the gold spelling is
+  UNDERSCORED and the served spelling HYPHENATED, so the row was pointing at something real one
+  layer above where I looked.**
 
 ---
 
