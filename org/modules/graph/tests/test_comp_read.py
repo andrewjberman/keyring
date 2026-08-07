@@ -334,6 +334,151 @@ def test_at_line_pins_the_containing_section_into_the_ranking(tmp_path, monkeypa
     salient = out.split("SALIENT")[1]
     assert "[bold:10-10]" in salient
     assert "PINNED by --at" in salient and "did NOT rank on its own" in salient
+    # ⚠ THIS ASSERT WAS MISSING AND ITS ABSENCE WAS A LIVE DEFECT (TRIAL-1, 0.8.0_AE_CloudComp~A,
+    # 2026-08-06). The three asserts above all passed while `--at` rendered a header with NOTHING
+    # beneath it -- the excerpt loop emitted only query-overlapping lines, and a pinned section is
+    # by definition the zero-overlap case. So this test PASSED GREEN AGAINST THE EXACT DEFECT IT
+    # COVERS: it asserted the pin was announced, never that the pin resolved to text.
+    # A test that checks the label and not the payload cannot fail on a payload defect.
+    assert "**Remedy.**" in salient, "pinned section rendered NO excerpt -- header only"
+
+
+# ------------------------------------------------------- M: module-level reachability (TRIAL-1)
+# The adverse finding TRIAL-1 was built around: comp-read's .py sectioner emitted ONLY def/class
+# spans, so every module-level line was in NO section -- unreachable by --for, by --at, by any
+# rephrasing. On a corpus where "what does this file exercise" IS the import question, the tool
+# could not answer it once. Found by 0.8.0_AE_CloudComp~A running the mandated field trial; the
+# mechanism was then source-confirmed in _scan_tree. These hold the fix shut.
+def test_M_import_block_is_reachable_and_ranks_for_an_import_question(tmp_path, monkeypatch, capsys):
+    """MUTANT this kills: `_sections_py` returning `sections` unchanged (def/class only).
+
+    Asserts the IMPORT LINE ITSELF renders -- not merely that a section exists. The engine question
+    is answered by the import text, so a section that ranks but shows no import is still a miss.
+    """
+    src = ("import os\n"
+           "import boundary_report as B\n"
+           "\n"
+           "def unrelated():\n"
+           "    return 1\n")
+    p = _write(tmp_path, "t_engine.py", src)
+    rc, out = _run(monkeypatch, capsys, p, "--for", "what module does this test exercise import")
+    assert rc == 0
+    assert "module header -- imports" in out
+    salient = out.split("SALIENT")[1]
+    first = [ln for ln in salient.splitlines() if ln.strip().startswith("[")][0]
+    assert first.strip().startswith("[module:1-"), "import block did not rank #1: %s" % first
+    assert "import boundary_report" in salient, "section ranked but the import line never rendered"
+
+
+def test_M_main_entry_block_is_reachable(tmp_path, monkeypatch, capsys):
+    """The trailing `if __name__ == "__main__":` body is module-level too, and an import-only fix
+    would have left it invisible. Their F1 specimen runs its ENTIRE body there."""
+    src = ("import sys\n"
+           "\n"
+           "def helper():\n"
+           "    return 2\n"
+           "\n"
+           'if __name__ == "__main__":\n'
+           "    print(helper())\n")
+    p = _write(tmp_path, "t_main.py", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "how does this file run its checks")
+    assert "__main__ entry" in out
+
+
+def test_M_nested_defs_do_not_carve_false_gaps(tmp_path, monkeypatch, capsys):
+    """Coverage is computed from tree.body (TOP-LEVEL), never the walked node list.
+
+    Subtracting every WALKED def/class would carve phantom 'module-level code' gaps out of the
+    inside of a class body -- inventing regions that do not exist, which is worse than the hole
+    being fixed.
+
+    ⚠ THE FIXTURE'S NON-BLANK INTER-METHOD LINE IS LOAD-BEARING, AND THIS TEST WAS VACUOUS WITHOUT
+    IT. First cut separated the two methods with a BLANK line. The phantom gap was still produced
+    by the mutants -- and then silently dropped by the whitespace-only filter, so the test passed
+    against BOTH guards removed simultaneously. It asserted a real invariant on a fixture that
+    could not violate it: a passing assertion that has never been mutated has never been tested,
+    and mine passed for 3 mutants running before I checked which one it actually discriminated.
+    The comment line is what lets the defect exist at all.
+
+    MUTATION RESULT, MEASURED on the repaired fixture -- read this before "fixing" a survivor:
+        walk-instead-of-body ALONE        -> SURVIVES
+        drop cur=max(cur,b+1) ALONE       -> SURVIVES
+        BOTH removed together             -> KILLED
+    The invariant is defended REDUNDANTLY: scoping coverage to tree.body means nested spans never
+    enter the list, and the monotonic cursor swallows them if they do. Either guard alone is
+    sufficient, so a single-mutant survival here is EVIDENCE OF DEFENCE IN DEPTH, not a hole in
+    this test. Stated because the obvious reading of a SURVIVED line is "the test is weak," and
+    acting on that reading would mean deleting a redundant guard to make a mutant score go up.
+    """
+    src = ("import os\n"
+           "\n"
+           "class Thing:\n"
+           "    def a(self):\n"
+           "        return 1\n"
+           "    # a non-blank line between methods -- see the docstring\n"
+           "    def b(self):\n"
+           "        return 2\n")
+    p = _write(tmp_path, "t_nested.py", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "thing")
+    shape = out.split("SHAPE")[1].split("SALIENT")[0]
+    # Count SECTION ROWS whose KIND is module -- not occurrences of the substring "module".
+    # (First cut asserted `shape.count("module") == 1` and failed at 3 against CORRECT output:
+    # the single row "1-2  module  module header -- imports + module-level" contains the word
+    # three times. The tool was right and the test's counting was wrong -- a denominator that
+    # counts the wrong unit, which is the class this battery exists to catch, aimed at itself.)
+    kinds = [ln.split()[1] for ln in shape.splitlines() if len(ln.split()) > 2 and "-" in ln.split()[0]]
+    assert kinds.count("module") == 1, "phantom module gap carved inside the class body: %r" % kinds
+    assert "module header -- imports" in shape
+
+
+def test_M_whitespace_only_gap_is_not_a_section(tmp_path, monkeypatch, capsys):
+    """Bound the fix: blank lines between defs must NOT become sections, or SHAPE's denominator
+    inflates with empty regions and the UNREAD LEDGER starts reporting unread whitespace."""
+    src = ("def a():\n    return 1\n\n\n\ndef b():\n    return 2\n")
+    p = _write(tmp_path, "t_blank.py", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "return")
+    shape = out.split("SHAPE")[1].split("SALIENT")[0]
+    assert "module" not in shape
+
+
+def test_M_pinned_zero_overlap_section_still_renders_verbatim_lines(tmp_path, monkeypatch, capsys):
+    """Defect B, direct form. --help promises "Excerpts are VERBATIM with line numbers"; a pinned
+    section is the zero-overlap case, so the promise broke exactly where the user was most explicit.
+
+    MUTANT this kills: removing the `if not best:` fallback -- the header still prints and the
+    other asserts still pass, which is precisely how this survived the first battery.
+    """
+    src = "# Doc\n\n**Alpha.** aaa bbb\n\n**Zeta.** qqq rrr sss\n"
+    p = _write(tmp_path, "pin.md", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "zzz_nothing_matches", "--at", "5")
+    salient = out.split("SALIENT")[1]
+    assert "PINNED by --at" in salient
+    assert "qqq rrr sss" in salient, "pin rendered a header with no excerpt beneath it"
+
+
+def test_M_pin_shows_THE_PINNED_LINE_not_the_sections_opening_prose(tmp_path, monkeypatch, capsys):
+    """--at N must show LINE N, not the section's first lines.
+
+    RESIDUAL found by TRIAL-1's post-fix re-verification (0.8.0_AE_CloudComp~A, 2026-08-07): on a
+    real file whose line 23 WAS the answer, `--at 23` pinned the right section and excerpted lines
+    1/3/4 -- the opening docstring. Sibling of defect B and arguably worse: an empty pin is visibly
+    empty, whereas wrong prose READS AS AN ANSWER.
+
+    MUTANT this kills: removing the at_line promotion block -- the zero-overlap fallback then fills
+    `best` with the section's first non-blank lines and every other assert still passes, which is
+    exactly how the original defect hid.
+    """
+    src = ("# Doc\n"
+           "\n"
+           "**Section.** opening prose alpha\n"
+           "more filler prose beta\n"
+           "yet more filler gamma\n"
+           "THE_PINNED_ANSWER_LINE delta\n")
+    p = _write(tmp_path, "pin2.md", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "zzz_no_overlap", "--at", "6")
+    salient = out.split("SALIENT")[1]
+    assert "THE_PINNED_ANSWER_LINE" in salient, "pin showed the section's opening, not line 6"
+    assert " 6: " in salient, "the pinned line number was not rendered"
 
 
 if __name__ == "__main__":

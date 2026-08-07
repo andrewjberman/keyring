@@ -154,9 +154,63 @@ def _read(path):
 
 # --------------------------------------------------------------------------- SHAPE
 def _sections_py(src, lines):
-    """def/class spans from the single shared tree scan."""
+    """def/class spans PLUS the module-level gaps between them.
+
+    DEFECT FOUND BY THE TRIAL (0.8.0_AE_CloudComp~A, 2026-08-06, TRIAL-1 @541f73019), and it is the
+    adverse finding the whole trial turned on. This returned ONLY def/class spans, so on a .py file
+    EVERY MODULE-LEVEL LINE WAS IN NO SECTION AT ALL -- the import block above the first def was
+    unreachable by --for, unreachable by --at, unreachable by any rephrasing. Measured on their
+    specimen: SHAPE's first section began at line 26 while the import naming the file's engine sat
+    at line 23, permanently invisible.
+
+    THAT IS A HOLE EXACTLY WHERE THIS TOOL IS MOST USED. "What does this file exercise / import /
+    depend on" is an IMPORT question, and comp-read could not answer it once, let alone across a
+    79-file census. The trial's verdict -- comp-find PASS, comp-read FAIL on the engine question --
+    rests on this, and the verdict was correct.
+
+    THE FIX IS THE GENERAL ONE, not a patch for imports. Any top-level span not covered by a
+    def/class becomes its own section, which reaches three distinct blind regions with one change:
+    the import/constant header, module-level code BETWEEN defs, and the trailing
+    `if __name__ == "__main__":` block -- that last one being how their F1 specimen
+    (test_comp_system_metrics.py) runs its entire body, so the narrow import-only fix would have
+    left that file just as unreadable.
+
+    Coverage is computed from tree.body (TOP-LEVEL only), never from the walked node list: nested
+    defs are emitted as their own overlapping sections by design, and subtracting them would carve
+    false gaps out of a class body.
+    """
     sections, _docs, _defs = _scan_tree(src)
-    return sections or None
+    if not sections:
+        return None
+    tree = _tree(src)
+    covered = []
+    for node in getattr(tree, "body", []) or []:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            covered.append((node.lineno, getattr(node, "end_lineno", None) or node.lineno))
+    covered.sort()
+    gaps, cur = [], 1
+    for a, b in covered:
+        if a > cur:
+            gaps.append((cur, a - 1))
+        cur = max(cur, b + 1)
+    if cur <= len(lines):
+        gaps.append((cur, len(lines)))
+
+    out = list(sections)
+    for a, b in gaps:
+        body = [lines[i - 1] for i in range(a, min(b, len(lines)) + 1)]
+        if not any(ln.strip() for ln in body):
+            continue                                  # whitespace-only gap is not a section
+        joined = "\n".join(body)
+        if re.search(r"^\s*(?:import |from \w[\w.]* import)", joined, re.M):
+            name = "module header -- imports + module-level"
+        elif re.search(r"^\s*if\s+__name__\s*==", joined, re.M):
+            name = "__main__ entry -- module-level execution"
+        else:
+            name = "module-level code"
+        out.append({"name": name, "kind": "module", "start": a, "end": b})
+    out.sort(key=lambda s: (s["start"], s["end"]))
+    return out
 
 
 _MD_HEAD = re.compile(r"^(#{1,6})\s+(.*)")
@@ -533,6 +587,37 @@ def main() -> int:
                     _scored.append((ov, -abs(len(ln) - 90), n, ln))
             _scored.sort(key=lambda t: (-t[0], t[1]))
             best = [(n, ln) for _o, _l, n, ln in _scored[:3]]
+            # ZERO-OVERLAP SECTIONS STILL RENDER THEIR OPENING LINES.
+            # DEFECT FOUND BY TRIAL-1 (0.8.0_AE_CloudComp~A, 2026-08-06): this loop emitted only
+            # lines sharing a query token, and a --at PINNED section is BY DEFINITION the case where
+            # that overlap is zero -- so the pin printed a header with NOTHING beneath it, exactly
+            # when the user had told the tool where to look. --help promises "Excerpts are VERBATIM
+            # with line numbers"; a section rendering no excerpt breaks that promise at the one
+            # moment the user was most explicit.
+            # Falling back to the section's first non-blank lines is honest: it is still verbatim,
+            # still line-numbered, and the reader can see the pin resolved to real text.
+            if not best:
+                for n in range(s["start"], (s["end"] or s["start"]) + 1):
+                    if n - 1 < len(lines) and lines[n - 1].strip():
+                        best.append((n, lines[n - 1]))
+                    if len(best) >= 3:
+                        break
+            # THE PINNED LINE ITSELF IS ALWAYS SHOWN, AND FIRST.
+            # RESIDUAL FOUND BY TRIAL-1's POST-FIX RE-VERIFICATION (0.8.0_AE_CloudComp~A,
+            # 2026-08-07): `--at 23` on a file whose line 23 IS the answer pinned the right section
+            # and then excerpted lines 1/3/4 -- the section's opening DOCSTRING. Defect B was "a pin
+            # renders nothing"; this is its sibling, "a pin renders the WRONG lines", and it is
+            # arguably worse: nothing is visibly empty, whereas wrong prose reads as an answer.
+            # --at is not a ranking hint, it is the user stating WHICH LINE THEY MEAN. Honouring the
+            # section but not the line answers a question adjacent to the one asked -- the
+            # ADJACENT-QUESTION failure in this tool's own docstring, committed by the tool.
+            # NOT a relevance heuristic and NOT scorer tuning: it encodes nothing about what an
+            # answer looks like, it obeys an explicit instruction.
+            if at_line is not None and s["start"] <= at_line <= (s["end"] or s["start"]):
+                if at_line - 1 < len(lines):
+                    best = [(n, ln) for n, ln in best if n != at_line]
+                    best.insert(0, (at_line, lines[at_line - 1]))
+                    best = best[:3]
             best.sort(key=lambda t: t[0])
             for n, ln in best:
                 shown_lines.add(n)
