@@ -96,10 +96,23 @@ the tooling does not enforce it. That gap is what nearly landed a half-deploy to
 
 **None.** TO deliverables met. Two residuals surfaced, neither blocking and neither mine:
 
-- **The Lambda package is NOT re-cut.** `mdpf-gold-lambda/build_package.py:51` packages
-  `route_bindings.yaml` with a recorded sha256. If the 09:00 path executes via Lambda rather than
-  the EC2 runner, that package carries the OLD bindings. Lambda deploys are Terraform-only (Rule 1),
-  not the DS lane. **I verified the EC2 path; I did NOT verify the Lambda path and do not claim it.**
+- **The Lambda package is NOT re-cut — RESOLVED ~2150Z, and it is NOT a failure.** MSTR confirmed
+  `scheduled-floor.tf:128` `cron(0 9 * * ? *)` America/New_York targets `aws_lambda_function.mdpf_gold`
+  — **the 09:00 fire IS the Lambda; the EC2 runner I QA'd is NOT the 09:00 path** — and escalated it
+  to CTO as a hard fail landing on `build_mdpf_spine.py:92`. I then opened the deployed package
+  (`LastModified 2026-08-07T03:51:21Z`, sha `XuLlClWT6kr...`, 648,182B) and measured all three legs:
+  bindings **OLD** (`ddb-cohort`), spine asserts **OLD** (`spine.DDB_AUA_TABLE`), aua defines
+  `DDB_AUA_TABLE` **OLD**. **All OLD => internally coherent => the C-1 assertion PASSES.** The
+  described failure needs NEW code against OLD bindings, which is structurally impossible in a
+  self-contained package (16 modules + trading_calendar + 3 configs at zip root, no runtime S3 code
+  pull) that was never re-cut. **Correct characterisation: stale-artifact hygiene** — the fix is not
+  live on the 09:00 path until a re-cut (TF-only, CTO lane, no night action); functional risk zero
+  twice over (coherent, and the delta is $0.00 anyway). Corrections sent to MSTR + CTO 2150/2152Z.
+  ⚠ NOT CLAIMED: package contents + coherence verified; the invocation was NOT traced in-process,
+  and the conclusion does not require it.
+  **This would have been the FOURTH false-outage-shaped claim in this TO's lifecycle, three sharing
+  one missing step: "a deleted table is referenced somewhere, therefore something crashes," without
+  asking whether the referencing code is REACHABLE or whether its counterpart moved WITH it.**
 - **`trading_calendar.py` is absent from `code/scripts/gold/`** (only the retired
   `_trading_day_calendar.py` shim). My QA needed the repo root on PYTHONPATH. Whether the runner
   provisions it another way is UNVERIFIED -- flagged, **not** called a break.
