@@ -136,20 +136,65 @@ manifest rows → regenerate resolver → re-baseline fixtures → gate-b green.
 
 ---
 
-## 4. The noise discriminator — the honest weak point
+## 4. The noise discriminator — **v1 FALSIFIED by CVO 2026-08-07. v2 below, also unvalidated.**
 
 **17 harvested names are NOT verticals:** `latest`, `yang`, `benchmark`, `return`, `peer`, `sentiment`,
 `trending`, `market`, `portfolio`, `semantic-trending`, … These are artifact groupings and engine
 names.
 
-**Proposed discriminator (mechanical, needs validation):** a vertical has a **producer → served →
-consumer** chain; an artifact prefix has served-and-consumer but no distinct producer, and an engine
-name (`yang`) is a C3.i structure already. **`latest/` is a signature file. `yang/` is an engine.**
-Both are separable on chain shape, not on the string.
+### v1 — PROPOSED, THEN KILLED. Recorded because the failure direction is instructive.
 
-⚠ **STATED AS THE RISK, NOT WAVED AT:** this discriminator is UNVALIDATED. If it under-filters, stage
-4 gets a noisy list and the human cost lands exactly where this spec claims to remove it. **Acceptance
-criterion 3 below exists to measure this before anyone trusts it.**
+> *v1: a vertical has a **producer → served → consumer** chain; an artifact prefix lacks a distinct
+> producer; an engine name (`yang`) is a C3.i structure already.*
+
+`3.0.0_SA_CVO` ran it against the composed C3.i instance layer (**1,255 structures / 1,255 distinct
+anchors**, live snapshot) within an hour of receiving this spec. **It fails, and it fails in the
+dangerous direction:**
+
+| token | anchors | member motifs | domains |
+|---|---|---|---|
+| **`yang`** — v1's example of a NOT-vertical | 4 | **117** | 3 (compute-orchestration, identity, object-data) |
+| **`attribution`** — a claimed vertical | 12 | **63** | 1 (pipeline) |
+| `advi` | 155 | 878 | — |
+| `mdpf` | 16 | 54 | — |
+| `globgrph` | 10 | 44 | — |
+| `trending` | 2 | 27 | — |
+| `sentiment` | 2 | 6 | — |
+
+**`yang` carries nearly TWICE the member motifs of a real vertical and spans three domains instead of
+one.** So **structural presence does not separate engine from vertical — it RANKS THE ENGINE HIGHER.**
+A filter built on v1 would have discarded verticals and kept the engine. *(CVO's phrasing: "I can
+falsify the presence proxy; I cannot settle the shape question with what I hold" — their layer groups
+by anchor, not by termination.)*
+
+### v2 — TERMINATION, not presence. The question is what the chain ENDS in.
+
+**An engine's output is consumed by another PRODUCER. A vertical's output is consumed by something
+that produces nothing.**
+
+```
+  vertical  ->  terminates in a NON-PRODUCER consumer
+                  portal route | email recipient | external API caller | analyst artifact
+  engine    ->  terminates in another chain's INPUT
+                  yang -> macro/factor-tilts/cma/correlation producers
+  artifact  ->  no distinct chain of its own (latest/ is a signature file)
+```
+
+**This is NOT a new idea imported from outside — it is the same distinction three Phase-0 rows already
+forced.** Row 6 (`ceo-digest`) terminates in a **human inbox**; row 13 (`insurance`) in an **analyst
+CSV/deck**; row 16's `MA-08` was identified as dead precisely because its chain terminated in
+**nothing** (`frontend: none`, 0 consumers, 180-byte artifact). **The consumer-kind enumeration is
+therefore load-bearing and must not collapse to "has a portal route"** — that collapse is exactly the
+row-6 class finding, where an email-only product looks nonexistent to an artifact-based instrument.
+
+⚠ **v2 IS ALSO UNVALIDATED, and it needs an instrument neither seat currently holds:** CVO's C3.i layer
+groups by anchor and does not carry served-ness; `comp-estate` prints a `frontend:` field per chain but
+it is census-vintage prose, not a typed termination. **Validating v2 means typing the termination — and
+that is the real cost in this spec, not stage 3.**
+
+⚠ **A CANDIDATE SECONDARY SIGNAL, DELIBERATELY NOT CLAIMED:** `yang` spans 3 domains, `attribution` 1 —
+so domain-spread may separate engines from verticals. **n=2 is not evidence.** Recorded so it is
+tested, not adopted.
 
 ---
 
@@ -160,9 +205,24 @@ criterion 3 below exists to measure this before anyone trusts it.**
    measuring itself.
 2. **THE CAUSALITY CONTROL:** `causality` is NOT recovered. Its absence is the discriminator that the
    harvest reads the estate rather than the model. **If it appears, the harvest is contaminated.**
+   ✅ **SURVIVED ITS FIRST OUTSIDE CONTACT, ON AN INDEPENDENTLY-DERIVED INSTRUMENT** (CVO, 2026-08-07):
+   `causality` → **ZERO C3.i anchors** in a layer composed by running motif detectors over the graph
+   and grouping by anchor — **it never reads the vertical roster or the world model.** That
+   independence is what makes it evidence: per
+   `[[feedback_shared_derivation_instruments_cannot_cross_check]]`, *a tie is evidence only when the
+   legs differ in DERIVATION.* These legs do.
 3. **PRECISION:** on the same run, ≤ N false candidates survive the §4 discriminator, N agreed with
    CVO **before** the run. Report the full unfiltered list too — a filter whose rejects are never
    shown cannot be audited.
+   ⚠ **RE-SCOPED 2026-08-07: this criterion now gates §4 v2, and v1 is already dead.** A build MUST
+   NOT start on the discriminator until v2 has a typed-termination instrument to run against —
+   otherwise AC-3 is unmeasurable and the filter ships on assertion.
+   ⛔ **DO NOT SCORE PRECISION USING CVO's C3.i LAYER'S ZEROS.** Their own honesty flag: **1,103 of
+   6,138 instances carry no catalog anchor at all**, so `benchmark`/`returns`/`peers` returning zero
+   means *"no detector reached it"* — **byte-identical to "nothing is there."** Their layer is a
+   FLOOR on structure, never a census of it. **A zero from that side is not evidence for the
+   discriminator in EITHER direction**, and reading it as confirmation would be the
+   could-not-have-said-otherwise class.
 4. **CONDENSATION:** stage 3 proposes ≥ 4 of the 5 §3 alias pairs, each with its evidence surfaces.
 5. **NO WRITES.** Read-only. Emits a proposal document. Touches no canonical file.
 6. **DENOMINATORS PRINTED** on every source (this spec's own numbers are re-derivable for that reason).
@@ -175,6 +235,11 @@ criterion 3 below exists to measure this before anyone trusts it.**
 `{ path: '/attribution', label: 'Attribution' }` and `portal/src/pages/Attribution/` exists, while the
 ontology records *"attribution RETIRED as a declared name — content lives under positioning."* Either
 the retirement was wrong, or a live nav route serves a concept the model says is gone. **CVO's call.**
+✅ **STRUCTURALLY CONFIRMED AND STRONGER THAN FIRST REPORTED** (CVO, 2026-08-07): **12 anchors, 63
+member motifs, all in the `pipeline` domain.** So this is not a stale nav entry beside a dead page dir
+— **there is live PRODUCING STRUCTURE behind a retired name.** My original evidence was two frontend
+surfaces; the structural layer says a pipeline is still serving it. **Escalated from a records
+discrepancy to a ruling-grade item.**
 
 **(b) `Advisor Intelligence` is ONE product in the portal and THREE verticals in the roster** —
 `advi-bd` / `advi-cot` / `advi-inf`. The nav and page dir present one product; the roster splits by
@@ -206,9 +271,37 @@ argument for the tool, and it is why it is written here rather than in prose.**
    (*"Our whole focus here is C2 and C3.i. Do not worry about C3.ii just yet"*) and commissioned this
    spec at mine one turn later. **Both are his; the breadth is his to state.** I am delivering the
    spec as asked and building nothing.
+   → **OPEN. CVO declined to adjudicate (correctly — that is gate-manufacture-by-scope-read, the class
+   the fabric was bitten by twice this week) and will put it to Andrew directly. No hold on me,
+   and none asked for.**
 2. **Does harvest belong in `comp-estate`, or beside `--census-drift` as a sibling?** Your call —
    you own the tool's surface.
+   → **ANSWERED: SIBLING, not inside comp-estate's main path.** CVO's reason is the load-bearing part
+   and is adopted into §7: *comp-estate is first-contact and already carries a stale-names caveat; a
+   harvest that PROPOSES names must not be reachable from the same call that serves CANONICAL ones —
+   **the failure mode is a proposal being read as canon.*** §7's `--harvest` subcommand suggestion is
+   **superseded by this answer.**
 3. **Is §4's chain-shape discriminator sound?** It is the weakest link and you have the census
    fixtures to falsify it cheaply.
+   → **ANSWERED: NO. v1 FALSIFIED within the hour** — `yang` outranks `attribution` on every presence
+   measure. See §4. **v2 (termination, not presence) replaces it and is itself unvalidated**; the
+   validating instrument does not exist at either seat, which relocates this spec's true cost from
+   stage 3 to typing the termination.
 4. **Sequencing against the `opal-mcp` repoint** — I hold that one (you handed it back 2026-08-06).
    Both touch the same canonical files; they should not land blind to each other.
+   → **ANSWERED: `opal-mcp` REPOINT LANDS FIRST.** *"Harvest is read-only and can rebase onto whatever
+   the canonical files become; the repoint cannot."* Adopted.
+
+---
+
+## 9. Revision log
+
+| when | what |
+|---|---|
+| 2026-08-07 (issue) | v1 spec @`26776051b5`, routed to `3.0.0_SA_CVO` |
+| 2026-08-07 (same session) | **§4 v1 FALSIFIED by CVO and replaced with v2**; AC-2 corroborated on an independently-derived instrument; AC-3 re-scoped and fenced against CVO's floor-not-census zeros; finding (a) escalated on structural evidence; Q2/Q3/Q4 answered, Q1 open at Andrew |
+
+**Why the falsification is logged rather than quietly patched:** the v1→v2 failure direction is the
+reusable part. **A filter built on structural presence would have discarded real verticals and kept an
+engine** — and it read as obviously correct when written. A spec that silently swaps its weakest
+section teaches nothing to whoever reads it next.
