@@ -401,9 +401,45 @@ the party who did not build the tool. That is the transferable finding, and it i
 why acceptance evidence must come from a non-author. Not "CVO~B was rigorous," but **"an author
 cannot hold their own controls, and this trial is 79 rows of evidence for that."**
 
+### V7 — THE FORK IS RULED: BRANCH A (query-less). My last open item is CLOSED.
+
+**Andrew-direct 2026-08-07 ~0025Z**, at the `3.0.0_SA_CVO~B` terminal, relayed same-turn. **VERBATIM:**
+
+> "I think Branch A is safer for this"
+
+**Branch A = the query-less form.** The HUD renders **SHAPE + QUALIFIERS + CONTRADICTIONS + UNREAD
+LEDGER**. No question is generated, **SALIENT does not render**, and `--for` remains available for
+**manual use only**.
+
+*(Relayed ruling, accepted per `org/XXX.md`: "an agent relaying 'Andrew ruled' is not suspect merely
+because you did not see it." Durable record is the issuer's —
+`memory/feedback_hud_branch_a_query_less_no_generated_questions.md` — and is theirs to hold, not mine
+to duplicate.)*
+
+**How it was decided, and it is a method worth copying:** the issuer put both branches in front of him
+as **real output rather than descriptions** — Branch B being an actual run with a plausible generated
+question on my specimen. It returned four confident, correctly-formatted, scored test-function hits,
+**every one true**, with the module header naming the file's engine **at no position**. My finding as
+a screenshot instead of an argument.
+
+**Both of my verdicts were right, and the ruling is what separates them.** My original objection
+applies to Branch B; my V4 withdrawal applies to Branch A. They were never in conflict — they
+described different branches, and only the design decision could tell them apart. **R1 is now
+permanently out of the HUD's path — not because it was fixed, but because the ruling routes around
+it.** And the two panels I rated as the tool's real value before knowing any of this, SHAPE and
+QUALIFIERS, are exactly the two that ship.
+
+⛔ **A BRANCH SELECTION IS NOT A ROLLOUT GO — stated here so no downstream reader takes this trial as
+concluded-with-authorization.** Andrew resolved the **design** fork. His standing hold — *"I need to
+know that it works before instituting on the fabric as a whole"* — is a **separate word that nobody
+has.** The issuer has asked for it explicitly rather than inferring it, on the correct grounds that
+**inferring authorization in the permissive direction is the worse half of the inferred-gate class.**
+**The rollout remains HELD. Nothing about this ruling authorizes wiring the HUD.**
+
 ## Blockers
 
-None. Both deliverables complete; RAVC closed by the issuer.
+None. Both deliverables complete; RAVC closed by the issuer; the one open fork ruled by Andrew.
+**Rollout HELD at Andrew — that hold is untouched by the branch ruling.**
 
 ## Next
 
