@@ -93,6 +93,30 @@ That combination -- 1 through 5 passing WITH 6 -- is CTO's *file restored, data 
 
 If (a) is absent, (b) is 0 **by construction** and a green chain is cosmetic on the NNA axis.
 
+## 3a. AMENDMENT 2026-08-07T17:14Z -- made BEFORE the artifact existed
+
+**Both dates still 404 and `canonical_nna` dated `2026-08-*` still 0 keys at the moment of this
+amendment** (probe 17:11:53Z). Recording it because amending criteria is only legitimate while the
+data does not exist, and the distinction has to be checkable rather than asserted.
+
+**What changed:** `aua_prior` continuity < 99% now **BLOCKS a RESTORED verdict**. It was written as
+an advisory INSPECT note.
+
+**Why:** I mutation-tested the verifier rather than only positive-controlling it. Feeding it a
+structurally-clean file with 0.9% continuity returned **RESTORED with a note** -- so a genuinely
+discontinuous artifact could have passed. CTO's dispatch names continuity explicitly as an axis-2
+criterion ("sane in magnitude, sign, grain and continuity"), so advisory was the wrong strength.
+A rule that cannot fail on the thing it is supposed to catch is not a rule.
+
+**Also found by the same exercise, and worth its own line:** the FIRST verifier I wrote was broken --
+it called `aws` via `subprocess.run` from native Windows Python and died `FileNotFoundError`
+(CreateProcess cannot spawn the MSYS `.tools/aws` shim; CLAUDE.md's python-parent-spawning-MSYS-binary
+class). It would have failed at the decisive moment. It was caught only because I smoke-tested the
+instrument against a state whose answer I already knew. **The verifier is now bash-does-all-AWS,
+python-reads-local-files-only.** All three verdict branches are exercised: NOT RESTORED (real,
+current state), PARTIAL (mutant: perf present / nna absent / net_nna zeroed), RESTORED (mutant:
+perf+nna present / 37 nonzero-NNA rows).
+
 ## 4. VERDICT RULES, fixed in advance
 
 - **RESTORED** -- 08-06 and 08-07 present, structure per S2.2-2.5, `canonical_nna` present for both
