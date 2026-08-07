@@ -77,11 +77,48 @@ CTO~C source-confirmed at `:146` that its bound token was **re-pointed to `OWNS`
 bump, which is why it sits vacant. That explains the vacancy, not the occupant; whether policy→bucket
 belongs in it is Andrew's call.
 
+## AMENDED — the finding was UNDERSTATED: `ms` is a fully isolated island
+
+Found by `0.7.0_AE_CloudOps` closing the gap this doc had explicitly flagged as *"ms excluded and
+NOT assessed"*, and **re-derived here rather than accepted**:
+
+```
+ms cross-layer edges, BOTH directions:  []      (zero rows)
+ms node count:                          5,851   (28% of the graph, 2nd-largest layer)
+
+POSITIVE CONTROL, same query shape on `portal`:
+  semctl -> portal   1512
+  portal -> aws        28
+  -> the control FIRES, so the ms zero is a MEASUREMENT, not a broken query
+```
+
+`portal` at least has a thin (dead-ended) bridge of 28. **`ms` has none at all.** Any motif requiring
+an `ms`↔anything path yields zero *structurally*.
+
+**The blast radius is larger than portal's, and the wrong diagnosis is more available.** Post-landing,
+a reader doing the obvious sanity check — *"5,851 ms nodes and zero ms motifs, something is broken"* —
+reaches the wrong conclusion with apparently excellent evidence. The discriminating question is never
+*"is the reader dropping layers"* but *"does a spanning path exist"*, and it is already measured: no.
+
+AE's reason for verifying rather than filing is worth preserving, because it applies to this whole
+document: **a pre-registered structural explanation is the right thing to publish before the evidence
+exists, and it is also the most dangerous kind of claim to accept unchecked — "that's structural" is
+unfalsifiable once everyone believes it, and would become a ready-made excuse for a REAL frontend
+defect.** It therefore needed an independent derivation. AE queried cross-LAYER connectivity rather
+than `substrate_side`, so their check does not inherit this doc's side mapping. It holds on both.
+
+*Note on `semctl`: it carries 1,512 edges to `portal` and is the layer the C2Motif/C3System nodes
+themselves occupy. It cannot bridge the sides in this model — `side_of()` returns None for `semctl`
+by ruling (`01_substrate.md:39`, semctl is not a substrate), so it contributes no side and creates no
+cross-side path. Recording it so the 1,512 is not later mistaken for a bridge.*
+
 ## Denominators and limits, stated
 
 - Connectivity is measured over the **whole graph**, not the detector scope — it is not limited by
   detector coverage. Instance counts ARE detector-scoped (1,103 of 6,138 carry no catalog anchor).
-- Scope is `aws`/`pipeline`/`portal`. `ms` excluded and NOT assessed for cross-side edges.
+- Scope of the ORIGINAL measurement was `aws`/`pipeline`/`portal`. **`ms` has since been
+  assessed (see the amendment above): ZERO cross-layer edges, positive-controlled.** The
+  limit this line originally declared is now closed rather than outstanding.
 - **One edge restores traversal for all 28 served URLs.** An earlier statement of mine —
   "28 of 28 seam edges would reach a real bucket" — counted traversals restored and reads as 28
   missing edges. It is one. Corrected to CTO~C before it reached Andrew.
