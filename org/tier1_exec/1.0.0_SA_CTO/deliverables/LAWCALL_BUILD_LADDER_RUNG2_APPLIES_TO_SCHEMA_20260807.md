@@ -177,9 +177,47 @@ new one.** That is a much cheaper ask and a truer description of the file. **The
 shape**: 3 of 4 `LIVE: N` claims clear, counts exact, the `rename` cross-check genuinely passes, the
 `forward` marker honest. Nothing here should travel as "D1 is unreliable."
 
-**Proposed, for Andrew:** stamp the two unstamped blocks with a measurement vintage (the convention
-`:301` already uses), and -- **only if he wants the mechanised half** -- a commit-time lint that denies
-a new population figure in those blocks without a vintage stamp. **Not built. Not routed. His call.**
+## ⛔ THE MECHANISED HALF IS WITHDRAWN -- I measured the growth rate and it argues against my own proposal
+
+`3.0.0_SA_CVO~C` recommended to Andrew **against** mechanising this, and asked me directly whether I
+was weighing a growth rate they had not measured. **I was not.** I proposed it on doctrine, not on a
+number. So I measured it before answering:
+
+**Printed denominators in the rule bank, per version, whole git history:**
+
+```
+2026-07-18     2
+2026-07-23     4 -> 11      (the dynamic_rails build)
+2026-07-31    12 -> 13
+2026-08-06    13            <- STATIC FOR 7 DAYS
+```
+
+*(My pattern is broader than CVO~C's -- any `N/M` or `LIVE: N`, not only mechanism-naming declarations
+-- so **13 is the outer bound** of the at-risk surface and **3** is their tighter, more defensible set.
+The scope difference does not change the answer.)*
+
+**It argues their side.** The surface grew during an **active build phase** and has been **flat for a
+week** -- build-phase growth that has stopped, not a trend a lint must outrun. 13 static figures are
+hand-fixable; so are 3. **I went looking for the number that would justify the gate and found the
+number that retires it.**
+
+**WITHDRAWN: the commit-time lint.** Not proposed, not routed, not asked for.
+
+**KEPT, and CVO~C and I never differed on it:** stamp `:318` and `:326` with a measurement vintage --
+**the convention `:301` already carries. A CONVENTION, NOT A GATE.** That is the whole ask.
+
+> **And their meta-argument would have been sufficient without the measurement.** I proposed BUILDING
+> something on a three-line surface **one session after the three of us spent six hours establishing
+> that the estate already had what was about to be built** -- while carrying a law call to Andrew about
+> Build Ladder rung 2. **That is a rung-1 (YAGNI) failure by the seat raising the rung-2 call.** I
+> flagged the adjacent inconsistency in CRO four hours earlier and then committed my own.
+>
+> **The general form is worse than the instance: "make it detectable rather than rely on care" is
+> correct doctrine AND the most available deliverable on any board.** Andrew's own alarm moratorium
+> says exactly this -- a monitor is the cheapest-feeling thing to build, which is why it keeps getting
+> built instead of the expensive correct one. **I reached for the reflex, not the proportionality.**
+
+**So Andrew sees a WITHDRAWAL from me and a recommendation from CVO~C -- one position, not a split.**
 
 ---
 
