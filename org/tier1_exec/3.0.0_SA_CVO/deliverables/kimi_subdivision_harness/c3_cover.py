@@ -67,7 +67,16 @@ def ruled_catalog():
              or re.search(r"^%s = (\{[^\n}]*\})" % name, src, re.M))
         if not m:
             raise CoverInputMissing("%s not found in %s -- REFUSING to default" % (name, catalog_path()))
-        ns[name] = eval(m.group(1))                                  # noqa: S307 - own repo, literal
+        try:
+            ns[name] = eval(m.group(1))                              # noqa: S307 - own repo, literal
+        except SyntaxError as e:
+            # Same escape as c2_individuate.catalog(): a TRUNCATED catalog raises SyntaxError past
+            # the declared contract. Fixed in both halves together -- a fix applied to one of two
+            # identical call sites is the residue that gets found months later by the half nobody
+            # touched.
+            raise CoverInputMissing(
+                "%s is CORRUPT or TRUNCATED (%s in %s) -- does not parse. In-container this usually "
+                "means a partial COPY, not a bad catalog." % (name, e, gen)) from e
     # The ruled model's own invariant, re-asserted here rather than trusted: HUB types create
     # overlap and never DEFINE a domain, so a hub anchor would merge every system into one.
     for dom, anc in ns["ANCHOR_CATALOG"].items():

@@ -146,7 +146,21 @@ def catalog():
             if depth == 0:
                 break
         i += 1
-    specs = eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    try:
+        specs = eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    except SyntaxError as e:
+        # A TRUNCATED catalog escapes as SyntaxError, NOT as a declared exception -- and truncation
+        # is the MOST LIKELY corruption in a container: a partial COPY, a truncated layer, an
+        # interrupted write. Measured 2026-08-07: of four corrupt-catalog shapes, three refused
+        # cleanly and the truncated one raised SyntaxError straight through.
+        # Same defect class as the FileNotFoundError escape fixed earlier today: a caller following
+        # the DOCUMENTED contract (`except CompositionInputMissing`) would not catch it. The derive's
+        # caller happens to catch broadly, so this would not have crashed the derive -- it would have
+        # been logged as a generic failure with no indication the CATALOG was the problem.
+        raise CompositionInputMissing(
+            "catalog is CORRUPT or TRUNCATED (%s at %s) -- the AB_CATALOG list does not parse. "
+            "In-container this usually means a partial COPY, not a bad catalog." % (e, catalog_path())
+        ) from e
     if not specs:
         # A catalog that PARSES to zero detectors composes zero instances and looks exactly like an
         # estate with no motifs. Refuse at the input, where the cause is still visible.
