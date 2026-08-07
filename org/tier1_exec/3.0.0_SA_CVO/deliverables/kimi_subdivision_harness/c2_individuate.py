@@ -268,6 +268,11 @@ def main() -> int:
                         # so Stage 2 needs types, not ids (NFRA_MOTIF_P1 ab_c3_cover).
                         "member_types": sorted({row.get(a + "__T") for a in aliases
                                                 if row.get(a + "__T")}),
+                        # (id, type) PAIRS -- the anchor-NODE cover (Andrew-ruled 2026-08-07 "B")
+                        # keys on WHICH member is the anchor, so a deduped type SET is not enough:
+                        # it cannot say which id carried which type.
+                        "member_pairs": sorted({(row[a], row.get(a + "__T"))
+                                                for a in aliases if row.get(a)}),
                         "members": sorted(mem),
                     }})
                 for nid in mem:
@@ -299,6 +304,18 @@ def main() -> int:
                       "population": "debt" if r.get("nm") in DEBT else "canon"}}
         class_marked += 1
 
+    # Re-tally sides/status over the DEDUPED instances. The per-row counters above are
+    # PRE-COLLAPSE and adjacent to a POST-COLLAPSE instance count in the same output block --
+    # two correct numbers over different populations, which a reader subtracts. Found by CTO~B.
+    side_tally = Counter()
+    status_tally = Counter()
+    for n in nodes.values():
+        pr = n["props"]
+        if pr.get("grain") != "instance":
+            continue
+        side_tally["+".join(pr.get("substrate_side") or []) or "NONE"] += 1
+        status_tally[pr.get("side_status")] += 1
+
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
         "supersedes_shape_of": ["motif_c2c3_materialize.json", "motif_c2c3_materialize_ab.json"],
@@ -317,6 +334,11 @@ def main() -> int:
             "distinct_members": len(members_seen),
             "by_family": dict(per_family.most_common()),
             "by_substrate_side": dict(side_tally.most_common()),
+            "_tally_denominator": "DISTINCT INSTANCES (post-collapse) -- same population as c2_motif_instances_distinct, NOT rows_seen",
+            "knowledge_bearing_instances": sum(1 for n in nodes.values()
+                                               if "KNOWLEDGE" in (n["props"].get("substrate_side") or [])),
+            "instances_with_any_unresolved_member": sum(1 for n in nodes.values()
+                                                        if n["props"].get("members_unresolved", 0) > 0),
             "by_side_status": dict(status_tally.most_common()),
             "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side),
             "class_nodes_marked_grain_class": class_marked,

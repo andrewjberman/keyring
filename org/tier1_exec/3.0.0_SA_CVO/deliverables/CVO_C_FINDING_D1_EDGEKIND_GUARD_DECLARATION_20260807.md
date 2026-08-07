@@ -168,6 +168,151 @@ field-grain value flow.
 complete over ONE edge type is not complete over the population, and the two are byte-identical when
 the scope noun is dropped.)*
 
+## FINAL PASS — the predicate applied, and a SECOND stale figure, drifting the OTHER way
+
+CTO~D re-aimed the open item using the discriminator above — *"the sweep worth running is not 'all
+rails' but every declaration naming a nullable field"* — a much smaller and better-aimed denominator
+than a rail-wide audit. Applied:
+
+**The whole at-risk set is THREE declarations** (`grep -c 'props\.'` = 2, plus `:303`'s named-field
+population claim). All three measured against the 961 census:
+
+| line | declaration | measured | verdict |
+|---|---|---|---|
+| `:322` | *"the graph SERIALIZES `props.kind` as `recompute/guarded` (slash)"* | live values are exactly `passthrough`/`rename`/`recompute/guarded` | **HOLDS** |
+| `:303` | *"884/961 FLOWS_TO carry a non-null `dstField`"* | **961/961** | **STALE — the gap CLOSED** |
+| `:321` | *"`props.condition` carries the guard. LIVE: 482/961."* | 23/482 (4.8%) | **FAILS** |
+
+**I audited my own predicate before claiming a ratified figure had moved**, because here I was the
+likely source of error: `dstField` key absent **0**, `None` **0**, empty string **0**, literal `"null"`
+**0**, whitespace-only **0** — **961 real values across 386 distinct strings**. And the control: **the
+same predicate on `condition` returns 23**, so it is not a predicate that always passes. The bank is
+internally consistent at its own vintage — `884 + 77 = 961`.
+
+### F-5 — A DECLARED COVERAGE GAP HAS SILENTLY CLOSED, AND THE RECORD STILL SHOWS IT OPEN
+
+`:330` `coverage_boundary` — *"**77/961 FLOWS_TO carry no dstField** — coarser-than-field flow; grain
+read as artifact."* **Measured today: 0/961. The 77-edge gap is CLOSED.**
+
+**This is a different failure from `:321`, and the direction is what makes it matter.** `:321`
+**overstates** capability. `:330` **understates** it — **a reader planning work off the bank today
+would scope a 77-edge field-grain remediation that no longer exists.** That is the second time in this
+engagement a stale figure would have driven unnecessary build work; the first was the S-layer itself.
+
+### THE SHARPER DISCRIMINATOR — **STAMPED vs UNSTAMPED**, and it beats mandatory-vs-optional
+
+| block | vintage-stamped? | outcome |
+|---|---|---|
+| `:301` `edge_grain_binding` | **YES** — `# denominators printed (comp-kuzu 2026-07-23)` | `:303` is stale **but HONEST** — it tells you when it was true. **Not a defect.** |
+| `:326` `coverage_boundary` | **NO** | `:330` has gone **FALSE** and says nothing about when it was measured |
+| `:318` `edgekind_semantic` | **NO** | `:321` **FAILS**; `:319`/`:320` happen to still hold |
+
+> **BOTH errors live in the two UNSTAMPED blocks. The one STAMPED block ages honestly.**
+>
+> **A published figure with a measurement vintage degrades into a dated fact. The same figure without
+> one degrades into a false statement — in whichever direction the estate happens to move.** Stamping
+> does not keep a number true; it keeps a number *honest about being old*, which is the only property
+> a hand-copied denominator can actually hold.
+
+**This is CLAUDE.md's own frozen-not-live class**, one rail over — the same reason that file refuses to
+print a comp-tool count and defers to the gate that maintains it.
+
+**Refinement to the gate candidate CTO~D is taking to Andrew** (theirs to propose, not mine to build):
+key it on **an unstamped population figure**, not only on a nullable-field mechanism claim. The two
+predicates catch different things and both are cheap — *nullable-field* catches a claim that was
+**never** true; *unstamped* catches a figure that has **stopped being** true. `:321` is the first,
+`:330` is the second, and only the union catches both.
+
+**And credit where the bank earns it: none of this would be checkable if it did not print its
+denominators in the first place.** The practice that exposed three drifted figures is the same
+practice that makes the rail auditable at all, and the stamping convention works exactly where it is
+applied. **The remedy is to extend an existing good habit to two blocks that lack it — not to install
+a new one.**
+
+## F-6 — THE UNSWEPT EDGE TYPES ARE CLEAN ON COUNT, AND THE SAME UNSTAMPED BLOCK HOLDS A THIRD DEFECT
+
+**Counts: all clean.** Every remaining field-grain count in the bank reproduces exactly against the
+live edge-type census I took earlier: `READS_FIELD` **2110** (`:304`), `HAS_FIELD` **4269** (`:305`),
+`RENDERS` **2447** (`:329`, `:645`), `PROP_PASSES` **1382** (`:646`). **4 of 4 exact.** Combined with
+the three `LIVE: N` claims, **every published count in the bank that I could test is correct.**
+
+**But `:329` contradicts `:138`/`:139`.**
+
+| location | says |
+|---|---|
+| `:329` `coverage_boundary` (**UNSTAMPED**) | *"PROP_PASSES (1382) + RENDERS (2447) carry field-grain flow but are **UNMAPPED relations** … not bound here."* |
+| `:138` `relations` | `consumes: { binds_up: [ …, **RENDERS**], note: "+ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): RENDERS…" }` |
+| `:139` `relations` | `derives-from: { binds_up: [FLOWS_TO, **PROP_PASSES**], … }` |
+| `:645`/`:646` verdicts | `RENDERS { binds_up: consumes, verdict: additive }` · `PROP_PASSES { binds_up: derives-from, verdict: additive }` |
+
+**Both edge types are BOUND in the relations block and declared UNBOUND in the coverage boundary.**
+
+> **RESOLVED — AND IT IS A THIRD READING NEITHER OF MINE ANTICIPATED.** I offered two —
+> **(a)** `:329` is stale, **(b)** the bindings bypassed the ratification chain — named the missing
+> evidence as the ratification record, and routed it rather than guessing. `1.0.0_SA_CTO~D` answered it
+> from git. **Both of my readings are WRONG.**
+>
+> **(c) THE CONTRADICTION WAS BORN IN ONE COMMIT.** `5d1161d70c`, 2026-07-23, author
+> `1.0.0_SA_CTO~Z` — *"canonize(NFRA_ONTOLOGY2 P1, CTO~Z ARCH-GATE PASS)… 0 new ratified vocab, NO
+> ratification decision needed… CVO~Z independently verifies."* **The commit that RESOLVED the gap also
+> carried forward, unchanged, the prose describing the gap as OPEN.**
+>
+> **Re-derived at my seat, positive control first** (a `git show` mangle prints `fatal:` to stderr and
+> returns CLEAN EMPTY stdout, so an unchecked zero here is worthless):
+>
+> | | at `5d1161d70c` | at its PARENT |
+> |---|---|---|
+> | file lines (**retrieval control**) | **365** | **165** — a real read, not an empty one |
+> | `binds_up … RENDERS` (BOUND) | **2** | **0** |
+> | `UNMAPPED` (UNBOUND) | **5** | **0** |
+>
+> **Both limbs enter the file in the SAME commit.** Not stale — *there is no time gap.* Not a bypass —
+> arch-gate PASS, additivity proven, independently verified. **(b) is out, (a) is out.**
+
+> ### THE CONSEQUENCE — AND IT IS A REAL LIMIT ON MY OWN PREDICATE
+> **A DRIFT CHECK COMPARES VINTAGES, AND BOTH LIMBS SHARE ONE VINTAGE.** There is no before-and-after
+> to diff. The file was internally inconsistent **at the moment it was ratified**, so every subsequent
+> *"has this drifted?"* check answered **NO — correctly.**
+>
+> **STAMPING DOES NOT CATCH THIS ONE, and I am recording that against my own recommendation.** The two
+> defects in that block have **different mechanisms**:
+>
+> | | mechanism | does stamping catch it? |
+> |---|---|---|
+> | `:330` (77/961) | went false over **TIME** | **YES** — it becomes a dated fact |
+> | `:329` (UNMAPPED) | was false **AT BIRTH** | **NO** — a vintage on a claim that was wrong when written only tells you *when* it was wrong |
+>
+> **So the honest ask is REFRESH *AND* STAMP — and the refresh is NOT implied by the stamp.** CTO~D
+> raised this against a remedy we had already agreed on and that I had already put to Andrew; they were
+> right to, and the correction is theirs.
+>
+> **THE THIRD PREDICATE, which completes the set:** born-wrong is invisible to a *temporal* comparator
+> but fully visible to a **REFERENTIAL** one — the file contradicts itself **within a single vintage**,
+> and `binds_up` arrays vs `coverage_boundary` prose is a same-file cross-reference. So:
+> **STAMPED-vs-UNSTAMPED catches DECAY · NULLABLE-FIELD catches NEVER-TRUE mechanism claims ·
+> SELF-CONSISTENCY (structure vs prose, same vintage) catches BORN-WRONG.** Three different questions,
+> none of which needs to be a gate — they are what a reviewer asks, and only the third would have found
+> `:329`.
+
+**What IS determinable, and it is the point:** `c1_frontend_adapter` — the section that supersedes
+`:329` — **carries a vintage** (`:642` *"comp-kuzu @2026-07-23T14:52Z, HEAD current"*). **The STAMPED
+section evolved and stayed coherent; the UNSTAMPED section still describes the world it replaced.**
+That is the stamped-vs-unstamped predicate confirming itself on an instance it was not derived from.
+
+**Block verdict — `coverage_boundary` (`:326-330`), 4 entries, UNSTAMPED:**
+
+| entry | status |
+|---|---|
+| `:327` row grain FORWARD | **likely holds** — consistent with `:299` `row: { forward: true }` |
+| `:328` partition SCHEME FORWARD | **unverified by me** |
+| `:329` PROP_PASSES + RENDERS UNMAPPED | **CONTRADICTS `:138`/`:139`** |
+| `:330` 77/961 no dstField | **FALSE — measured 0/961** |
+
+> **Two of four entries in ONE unstamped block are wrong, and it is the same block both times.** The
+> defect is **CONCENTRATED, not distributed** — which is the strongest argument yet that the remedy is
+> a **refresh-and-stamp of one section**, not a detector over the file. **Every count in the bank is
+> right; what has drifted is one block that nobody re-derives.**
+
 ## SCOPE BOUND — stated so it is not over-quoted
 
 **Edge types swept: `FLOWS_TO` (961, census) and `PROP_PASSES` (1382, census).** Both complete, not

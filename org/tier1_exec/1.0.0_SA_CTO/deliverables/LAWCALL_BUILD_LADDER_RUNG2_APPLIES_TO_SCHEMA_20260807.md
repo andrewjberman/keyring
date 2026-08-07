@@ -100,6 +100,127 @@ urgent. It is cheap.
 
 ---
 
+---
+
+# SECOND CALL (separate, independent) -- a gate candidate, and it is NOT the one I first described
+
+**Author of the predicate: `3.0.0_SA_CVO~C`.** I proposed a weaker version; they sharpened it before
+it reached Andrew. Attributing the better one.
+
+## What I was going to propose (and it was wrong)
+
+A lint keyed on **nullable fields** -- "any `LIVE: N` / 'carries' claim naming a NULLABLE field must
+publish its population, not only its typed count."
+
+## What the measurement actually shows -- the discriminator is **STAMPED vs UNSTAMPED**
+
+CVO~C applied the re-aimed sweep. The whole at-risk set in the rule bank is **three declarations**,
+all measured against the 961 census:
+
+| line | claim | verdict |
+|---|---|---|
+| `:322` | *"graph SERIALIZES `props.kind` as `recompute/guarded`"* | **HOLDS** |
+| `:303` | *"884/961 FLOWS_TO carry a non-null dstField"* | **STALE** -- measured 961/961 |
+| `:321` | *"props.condition carries the guard. LIVE: 482/961"* | **FAILS** -- 23/482 |
+
+And the block-level pattern is the finding:
+
+```
+:301  edge_grain_binding   STAMPED  -- "# denominators printed (comp-kuzu 2026-07-23)"
+                           -> :303 is STALE BUT HONEST. It says when it was true. NOT A DEFECT.
+:326  coverage_boundary    UNSTAMPED -> :330 has gone FALSE, silently
+:318  edgekind_semantic    UNSTAMPED -> :321 FAILS
+```
+
+**Both defects live in the two UNSTAMPED blocks. The one STAMPED block ages honestly.** CVO~C's
+formulation, which is the rule:
+
+> **A published figure WITH a measurement vintage degrades into a DATED FACT. The same figure WITHOUT
+> one degrades into a FALSE STATEMENT** -- in whichever direction the estate happens to move. Stamping
+> does not keep a number true; it keeps it **honest about being old**, which is the only property a
+> hand-copied denominator can actually hold.
+
+**This is CLAUDE.md's own frozen-not-live class, one rail over** -- the same reason this file refuses
+to print a comp-tool count and defers to the gate that maintains it.
+
+## F-5 -- and it drifts the OTHER way, which is why the union matters
+
+`:330` `coverage_boundary` declares *"77/961 FLOWS_TO carry no dstField -- coarser-than-field flow."*
+**Measured: 0/961. The gap has CLOSED, silently.**
+
+CVO~C audited their own predicate before claiming a ratified figure had moved -- dstField key absent 0,
+None 0, empty string 0, literal `"null"` 0, whitespace-only 0; 961 real values across 386 distinct
+strings; **control: the same predicate returns 23 on `condition`, so it is not a predicate that always
+passes.** And the bank is internally consistent at its own vintage: 884 + 77 = 961.
+
+> **`:321` OVERSTATES capability. `:330` UNDERSTATES it.** A reader planning work off the bank today
+> would scope a **77-edge field-grain remediation that no longer exists.** That is the second time in
+> this engagement a stale figure would have driven unnecessary build work -- **the first was the
+> S-layer itself.**
+
+**So the gate needs BOTH arms, and they catch different things:**
+- **nullable-field** catches a claim that was **never** true (`:321`)
+- **unstamped** catches a figure that has **stopped** being true (`:330`)
+- **Only the union catches both.**
+
+## ⚠ THE FRAMING I WAS ASKED TO CARRY, AND IT IS THE FAIREST POINT IN THE PILE
+
+CVO~C's words, and I agree with them:
+
+> *"A gate proposal that only indicts reads unfairly. **NONE OF THIS WOULD BE CHECKABLE IF THE BANK DID
+> NOT PRINT ITS DENOMINATORS IN THE FIRST PLACE.** The practice that exposed three drifted figures is
+> the same practice that makes the rail auditable at all, and the stamping convention WORKS exactly
+> where it is applied."*
+
+**The ask is therefore to EXTEND AN EXISTING GOOD HABIT to two blocks that lack it -- not to install a
+new one.** That is a much cheaper ask and a truer description of the file. **The rule bank is in good
+shape**: 3 of 4 `LIVE: N` claims clear, counts exact, the `rename` cross-check genuinely passes, the
+`forward` marker honest. Nothing here should travel as "D1 is unreliable."
+
+## ⛔ THE MECHANISED HALF IS WITHDRAWN -- I measured the growth rate and it argues against my own proposal
+
+`3.0.0_SA_CVO~C` recommended to Andrew **against** mechanising this, and asked me directly whether I
+was weighing a growth rate they had not measured. **I was not.** I proposed it on doctrine, not on a
+number. So I measured it before answering:
+
+**Printed denominators in the rule bank, per version, whole git history:**
+
+```
+2026-07-18     2
+2026-07-23     4 -> 11      (the dynamic_rails build)
+2026-07-31    12 -> 13
+2026-08-06    13            <- STATIC FOR 7 DAYS
+```
+
+*(My pattern is broader than CVO~C's -- any `N/M` or `LIVE: N`, not only mechanism-naming declarations
+-- so **13 is the outer bound** of the at-risk surface and **3** is their tighter, more defensible set.
+The scope difference does not change the answer.)*
+
+**It argues their side.** The surface grew during an **active build phase** and has been **flat for a
+week** -- build-phase growth that has stopped, not a trend a lint must outrun. 13 static figures are
+hand-fixable; so are 3. **I went looking for the number that would justify the gate and found the
+number that retires it.**
+
+**WITHDRAWN: the commit-time lint.** Not proposed, not routed, not asked for.
+
+**KEPT, and CVO~C and I never differed on it:** stamp `:318` and `:326` with a measurement vintage --
+**the convention `:301` already carries. A CONVENTION, NOT A GATE.** That is the whole ask.
+
+> **And their meta-argument would have been sufficient without the measurement.** I proposed BUILDING
+> something on a three-line surface **one session after the three of us spent six hours establishing
+> that the estate already had what was about to be built** -- while carrying a law call to Andrew about
+> Build Ladder rung 2. **That is a rung-1 (YAGNI) failure by the seat raising the rung-2 call.** I
+> flagged the adjacent inconsistency in CRO four hours earlier and then committed my own.
+>
+> **The general form is worse than the instance: "make it detectable rather than rely on care" is
+> correct doctrine AND the most available deliverable on any board.** Andrew's own alarm moratorium
+> says exactly this -- a monitor is the cheapest-feeling thing to build, which is why it keeps getting
+> built instead of the expensive correct one. **I reached for the reflex, not the proportionality.**
+
+**So Andrew sees a WITHDRAWAL from me and a recommendation from CVO~C -- one position, not a split.**
+
+---
+
 ## Provenance
 
 - Error committed and self-caught by `4.0.0_SA_CRO`; they asked that the correction go into the
