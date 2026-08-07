@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 14 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) and **opal-mcp** (PERMANENT + RENAMED from `m365-mcp`) -- 2026-08-06)
+**SITTING PROGRESS: 15 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) and **opal-mcp** (PERMANENT + RENAMED from `m365-mcp`) and **macroeconomics** (PERMANENT, MED->HIGH) -- 2026-08-06)
 
 > **ROW 13 IS THE FIRST DORMANT IN THIS SITTING, AND DORMANT IS NOT A WEAKER PERMANENT -- IT IS THE
 > MOST DEMANDING VALUE IN THE ENUM.** Read at `NFRA_ONTOLOGY_RULE_BANK.yaml:425-436` AFTER the
@@ -304,7 +304,7 @@ than inheriting my original framing.
 | 12 | graph-platform | **PERMANENT — RATIFIED 2026-08-06** (Andrew engaged all three sub-points; *"Ok great"* on the substrate finding) | **THE MOST HEAVILY EVIDENCED ROW IN THE SITTING.** TOOLING: `comp-manifest-check completeness` **PASSES all four invariants** — 90 tracked+committed `comp-*` executables all accounted (76 registered + 13 deliberately excluded), plus output-contract, stage-2 vocab and retired-alias. DEV: **322 commits / 14 days across 11 distinct days**, most recent same-day. INFRA: `globgrph-cse-producer-nightly` ENABLED `cron(30 3)` UTC -> **ECS cluster `opal-globgrph` ACTIVE, 2 running tasks / 2 services** (grounded on the target **ARN**, `arn:aws:ecs:...:cluster/opal-globgrph`, NOT inferred from a name — the correction from the row-11 error applied). GRAPH: **20,588 nodes / 41,197 edges**, rebuilt same-day, Nessie HEAD current. CONSUMER: **every agent** — Rule 21 makes comp-tools the mandated default for search+inspection | HIGH | **THIS VERTICAL IS THE MEASUREMENT APPARATUS FOR THE OTHER 28 ROWS.** A degradation here is not one product failing — it is the instrument every verdict in this sitting was formed with. Sub-findings resolved below |
 | 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION COMPLETE 2026-08-06 — all four required fields landed, `rearm_condition` ratified by Andrew (*"yeah your understanding is correct"*). See the consequences block below.** `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
 | 14 | **opal-mcp** *(RENAMED from `m365-mcp` — Andrew-direct 2026-08-06, VERBATIM: *"i want to make sure that its named as 'opal-mcp' because it will have more than just m365 and we've already evolved that."*)* | **PERMANENT — RATIFIED 2026-08-06** (Andrew: *"This is all correct"*) | **LIVE ON EVERY LIMB, and the audit lake is checked against a BASELINE rather than one fresh timestamp.** EC2 `m365-mcp-gateway` `i-07dccb1615503ac99` **running** (t4g.nano, up since 2026-06-23); ALB **active** internet-facing -> `mcp.opalinvest.dev` (Route53 ALIAS, OIDC-gated); 2 Lambdas (`m365-otp-liveness`, `m365-ms-ingest-liveness`) + 2 EventBridge rules both **ENABLED** `rate(6 hours)`. **USE SIGNAL: `s3://opal-mcp-audit` = 63,250 objects, newest written MINUTES before the read — and the daily volume is FLAT, not a spike: 1,063 (08-06) / 1,056 (08-05) / 1,038 (08-04) / 1,013 (07-30).** A single fresh timestamp would have been the row-6 mistake in reverse; the baseline is what makes "active" a measurement. Row's own "tools active this session" claim independently RE-CONFIRMED in this seat's session — see the naming note | HIGH | **⚠ THIS IS A PRODUCTION AUTH DEPENDENCY, NOT A DEVELOPER TOOL — the original row described only `/mcp`.** The gateway also serves **`/otp/fetch`**, the one-time-password adapter for Black Diamond login (`BD_OTP_ADAPTER=gateway`, per-firm bearer secrets, its own `otp-liveness.tf`) — **so rows 1 (`advi-bd`) and 2 (`advi-cot`), both already ratified PERMANENT, authenticate their ingest through this box.** A **t4g.nano** is a single point of failure for two ratified advisor-data verticals. Same shape as the `quartz-si2-spike` finding: a label asserting less than the thing carries |
-| 15 | macroeconomics | PERMANENT | dual-structure (macro-data engine + yang) | MED | — |
+| 15 | macroeconomics | **PERMANENT — RATIFIED 2026-08-06** (Andrew: *"Agreed move on"*) | **9 CHAINS, 5 LIVE LAMBDAS, 7 EventBridge RULES ALL ENABLED, PORTAL MOUNTED.** Route `/macro` behind `ProtectedRoute` (`App.tsx:25,104,421`). Producers: `fred-data-ingestion` · `fred-macro-ingestion` · `yang-refresh-fred-cache` · `yang-generate-macro` · `yang-generate-macro-timeseries`. Rules: `fred-ingestion-{daily,weekly,monthly-early,-mid,-late}` · `fred-macro-ingestion-daily` · `yang-refresh-fred-cache-weekly`. **SERVED, LIVE-READ (not census): `macro_data.json` 195,921 B @2026-08-06 13:01:38 · `vix_data.json` @13:01:38 · `macro_data_fred.json` @2026-08-06 23:31:43 (~13 min before the read) · `timeseries/*.json` @09:01:45 · `yield_curve_fred.json` @2026-08-05 23:02:30 (matches its own `cron(0 23)`).** ⛔ **THE CENSUS CLAIMED ALL OF THESE WERE 2026-06-14/15 — SEVEN WEEKS STALE. The row's entire prior evidence was the family name "dual-structure (macro-data engine + yang)"** | **HIGH (was MED — rated off a FAMILY NAME, the basis Andrew stopped me from skipping past; see the row-order block)** | ⚠ **DEAD-BUCKET LEG ON A LIVE DAILY LAMBDA — see the row-15 finding below.** Also: TWO copies of the `fred-data-ingestion` source exist (`infra/aws/lambda/...` and `portal/etl/orchestration/green/fred/...`) and they are **NOT identical** (differing md5) |
 | 16 | market-overview | PERMANENT | Portal MO live; spans 4 structures (widest with trade-submission) | HIGH | — |
 | 17 | mdpf | PERMANENT | Flagship Model Portfolios product, served + verified (v2.1.148 promote arc closed 07-24) | HIGH | MDPF_CANRTE canonical-route redesign + json/mdpf/* teardown PARKED (ETFS CANON) — State watches |
 | 18 | model-portfolios | PERMANENT | SEV1 must-always-be-right portal surface (critical-surfaces.yaml) | HIGH | — |
@@ -336,6 +336,51 @@ grounding could have produced it. **The survey's job is to make the row ANSWERAB
 answer it** — and a seat that had proposed values for all 29 would have been most confident exactly
 where it had least standing.
 
+> ## ROW 15 — A LIVE DAILY LAMBDA WRITES TO A BUCKET THAT DOES NOT EXIST
+>
+> **GROUNDED ON ALL THREE LAYERS (Rule 22a), because a config read alone would not have earned this:**
+> - **SOURCE:** `infra/aws/lambda/fred-data-ingestion/lambda_fred_ingestion.py:257 @5fd73c704b` —
+>   `s3_bucket = os.environ.get('S3_BUCKET', 'opal-market-update')`
+> - **APPLIED:** the live function config carries `Environment.Variables: null` — **no `S3_BUCKET` is
+>   set**, so it resolves to the hardcoded default.
+> - **LIVE:** `s3://opal-market-update` **DOES NOT EXIST**. Positive-controlled: **30 buckets visible,
+>   ZERO matching `market`.** (`NoSuchBucket` alone would not have been enough — an empty or
+>   permission-denied listing reads the same to a careless reader, which is why the denominator is
+>   printed.)
+>
+> **`os.environ.get(key, default)` IS WHAT MAKES THIS QUIET.** There is no missing-config error and no
+> startup failure — the call simply resolves to a dead name and fails at write time, if it fails
+> loudly at all. **And the census's own entry for this chain records that those CSVs have NO traced
+> downstream consumer** — so there is no reader whose absence would ever be noticed.
+>
+> **THE LAMBDA IS NOT DEAD, WHICH IS THE PART THAT MAKES IT HARD TO SEE.** Its other leg writes
+> `json/macro/yield_curve_fred.json`, which landed **2026-08-05 23:02:30**, exactly on its own
+> `cron(0 23)`, and IS consumed by `YieldCurveTab.tsx`. **One leg works and is watched; the other
+> points at nothing and is not.** A liveness view of this function reads healthy.
+>
+> ⚠ **UNVERIFIED AND NAMED RATHER THAN ASSUMED:** whether that write throws, is caught, or is skipped
+> entirely. **That is a BEHAVIOR claim and I did not exercise it** — reading the last invocation's
+> logs settles it. ⛔ **NO MONITOR PROPOSED** (standing moratorium): what is wanted here is a decision
+> about whether that leg should exist at all, not a detector for its failing.
+>
+> ---
+>
+> ## CLASS FINDING — THE CENSUS'S `LastModified` CLAIMS ARE PINNED AT ~2026-06-15. TWO ROWS, SAME DATE.
+>
+> Row 8 (`correlation`) recorded *"the census claimed 2026-06-15, **stale by 7 weeks**."* Row 15 hit
+> the identical pin on FIVE artifacts — census 2026-06-14/15, live **2026-08-06**, one of them written
+> ~13 minutes before the read. **Two independent rows landing on the same date is not two stale rows;
+> it is the SNAPSHOT'S VINTAGE showing through.**
+>
+> **THEREFORE, FOR EVERY REMAINING ROW: a census `LastModified` is a mid-June claim wearing a
+> timestamp's clothing.** `comp-estate` prints the disclaimer itself — *"freshness adjectives inside
+> chain prose are CENSUS-VINTAGE claims, never live reads"* — and rows 7, 8 and 15 each show that
+> **reading the disclaimer is not the same as applying it** (row 12's sub-finding (2) said exactly
+> this about a different instrument, in Andrew's own correction). **Every freshness number in this
+> table is head-object'd or it is not a number.**
+>
+> ---
+>
 > ## ROW 14 — THE `opal-mcp` RENAME. ANDREW-DIRECT 2026-08-06, AND IT IS AN ALIGNMENT, NOT A RENAME.
 >
 > **VERBATIM** (`1.0.0_SA_CTO~C` terminal, on ratifying row 14): *"This is all correct but i want to
