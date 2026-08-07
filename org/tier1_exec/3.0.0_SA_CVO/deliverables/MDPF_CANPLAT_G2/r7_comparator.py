@@ -84,19 +84,33 @@ def _short(v) -> str:
     return s if len(s) <= 60 else s[:57] + "..."
 
 
-def walk(base, cand, path: str, diffs: list, denom: list) -> None:
-    """Structural walk. Containers with a one-sided change collapse to ONE localised diff."""
+def walk(base, cand, path: str, diffs: list, denom: list, ctx=None) -> None:
+    """Structural walk. Containers with a one-sided change collapse to ONE localised diff.
+
+    ctx (date-keyed mode, CTO~Z ruling 031740Z: "it compares the DATA, not the PACKING"):
+    when both sides are lists parallel to their own bodies' dates[] (len == that side's
+    n_dates), elements are compared BY DATE over the SHARED axis; axis membership deltas
+    are reported separately in the pair's axis block, never silently. Applies at any
+    depth (nested by_model.*.model_value arrays included). Heuristic DECLARED: a list
+    whose length equals its body's dates length is treated as date-parallel.
+    """
     if isinstance(base, dict) and isinstance(cand, dict):
         for k in sorted(set(base) | set(cand)):
             sub = (path + "." if path else "") + _esc(k)
-            walk(base.get(k, _ABSENT), cand.get(k, _ABSENT), sub, diffs, denom)
+            walk(base.get(k, _ABSENT), cand.get(k, _ABSENT), sub, diffs, denom, ctx)
         return
     if isinstance(base, list) and isinstance(cand, list):
+        if (ctx and ctx["bnd"] and ctx["cnd"]
+                and len(base) == ctx["bnd"] and len(cand) == ctx["cnd"]):
+            for d in ctx["shared"]:
+                walk(base[ctx["bmap"][d]], cand[ctx["cmap"][d]],
+                     "{p}[date={d}]".format(p=path, d=d), diffs, denom, None)
+            return
         n = max(len(base), len(cand))
         for i in range(n):
             b = base[i] if i < len(base) else _ABSENT
             c = cand[i] if i < len(cand) else _ABSENT
-            walk(b, c, "{p}[{i}]".format(p=path, i=i), diffs, denom)
+            walk(b, c, "{p}[{i}]".format(p=path, i=i), diffs, denom, ctx)
         return
     denom[0] += 1
     sb, sc = state_of(base), state_of(cand)
@@ -236,7 +250,32 @@ def cmd_compare(args) -> int:
         base = parse_canonical(base_text)
         cand = parse_canonical(cand_text)
         diffs, denom = [], [0]
-        walk(base, cand, "", diffs, denom)
+        axis_block = None
+        ctx = None
+        if args.align == "date-keyed" and isinstance(base.get("dates"), list) and isinstance(cand.get("dates"), list):
+            bd, cd = base["dates"], cand["dates"]
+            bmap = {d: i for i, d in enumerate(bd)}
+            cmap = {d: i for i, d in enumerate(cd)}
+            shared = [d for d in bd if d in cmap]
+            bonly = [d for d in bd if d not in cmap]
+            conly = [d for d in cd if d not in bmap]
+            # a dropped date CARRYING DATA must stay loud -- packing never hides data loss
+            bonly_databearing = 0
+            for d in bonly:
+                i = bmap[d]
+                for k, v in base.items():
+                    if k == "dates":
+                        continue
+                    if isinstance(v, list) and len(v) == len(bd) and v[i] is not None:
+                        bonly_databearing += 1
+                        break
+            axis_block = {
+                "baseline_dates": len(bd), "candidate_dates": len(cd), "shared": len(shared),
+                "only_baseline": bonly, "only_candidate": conly,
+                "only_baseline_data_bearing": bonly_databearing,
+            }
+            ctx = {"bnd": len(bd), "cnd": len(cd), "bmap": bmap, "cmap": cmap, "shared": shared}
+        walk(base, cand, "", diffs, denom, ctx)
         pt_paths = load_process_time_paths(sectionb, atype)
         # B0 constraint 1: exact-match only. The process-time class is SEPARATED, never folded
         # into the business verdict (constraint 4 + CTO~Z: the separation stays in every report).
@@ -256,11 +295,18 @@ def cmd_compare(args) -> int:
             "baseline_vintage": _vintage(base), "candidate_vintage": _vintage(cand),
             "paths_compared": denom[0], "diffs": len(diffs),
             "excused": excused, "regressions": regressions,
-            "process_time_diffs": pt_diffs, "verdict": verdict,
+            "process_time_diffs": pt_diffs, "axis": axis_block, "verdict": verdict,
         })
         print("{v}: {s}/{t}  paths_compared={n} diffs={d} excused={x} regressions={r} process_time={pt}".format(
             v=verdict, s=scope, t=atype, n=denom[0], d=len(diffs), x=len(excused), r=len(regressions),
             pt=len(pt_diffs)))
+        if axis_block:
+            print("  AXIS (date-keyed): baseline={b} candidate={c} shared={s}; only-baseline={ob}"
+                  " (data-bearing: {db}); only-candidate={oc}".format(
+                      b=axis_block["baseline_dates"], c=axis_block["candidate_dates"],
+                      s=axis_block["shared"], ob=len(axis_block["only_baseline"]),
+                      db=axis_block["only_baseline_data_bearing"],
+                      oc=axis_block["only_candidate"]))
         for r in regressions[: args.max_print]:
             print("  REGRESSION {p}: {f} -> {t}  baseline={b} candidate={c}".format(
                 p=r["path"], f=r["from"], t=r["to"], b=r["baseline"], c=r["candidate"]))
@@ -363,6 +409,9 @@ def main() -> int:
     c.add_argument("--scope")
     c.add_argument("--type")
     c.add_argument("--mutation-record")
+    c.add_argument("--align", choices=["positional", "date-keyed"], default="positional",
+                   help="date-keyed: FIRST-CLASS mode (CTO~Z ruling 031740Z) -- parallel arrays "
+                        "compared by date over the shared axis; axis deltas reported separately")
     c.add_argument("--max-print", type=int, default=20)
     c.set_defaults(fn=cmd_compare)
     t = sub.add_parser("selftest-three-state")

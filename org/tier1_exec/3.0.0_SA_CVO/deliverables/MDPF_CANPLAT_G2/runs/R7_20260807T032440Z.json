@@ -1,0 +1,1019 @@
+{
+  "_meta": {
+    "r7_row": "REGRESSION TEST -- all five limbs. PASS iff value-identical per JSON path . declared canonicalisation . mutation shown to FAIL and LOCALISE . baseline pinned to VersionIds at a stamped instant . absent!=null!=zero.",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "run_by": "3.0.0_SA_CVO~Z",
+    "run_instant_utc": "2026-08-07T03:24:40.140989+00:00",
+    "citability": "CITABLE",
+    "mutation_record": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANPLAT_G2/records/MUTATION_EXERCISE_20260807.md",
+    "sectionB_artifact": "sectionB_field_paths.json",
+    "sectionB_derivation_commit": "2fa1a6959",
+    "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
+    "baseline_manifest": "baseline_manifest_20260807T011035Z.json",
+    "baseline_pin_instant_utc": "2026-08-07T01:10:35.164728+00:00",
+    "b0_positive_assertion": "Process-time paths (exact, enumerated, per type) were EXCLUDED from business-payload equality and reported separately; data-as-of fields (as_of_last, as_of_first, period, count_as_of, source_vintage_last, data_as_of) are structurally INELIGIBLE for that class (load guard refuses to run) and were compared as business values. CONTRACT B0 @885aafd35 constraint 4."
+  },
+  "denominator": {
+    "pairs_targeted": 1,
+    "pairs_compared": 1,
+    "could_not_verify": 0,
+    "total_regressions": 118
+  },
+  "pairs": [
+    {
+      "scope": "global",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/global/aggregate-aua-timeseries.json",
+      "baseline_version_id": "ry.GZJ9f1oIClTqCp__Fg56f6xv3XmFA",
+      "candidate_source": "C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\c82c6aeb-1b4d-4f10-b017-339270592b3d\\scratchpad\\mutants\\p12_r4\\global\\aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"455\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-05\"",
+        "n_dates": "\"448\""
+      },
+      "paths_compared": 16308,
+      "diffs": 119,
+      "excused": [],
+      "regressions": [
+        {
+          "path": "_provenance.artifact_type",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"aggregate-aua-timeseries\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.config_hashes",
+          "from": "ABSENT",
+          "to": "OBJECT",
+          "baseline": "<absent>",
+          "candidate": "{\"partner_roster_sha256\": \"e86e46312d5b00a4e143b2f8859de4...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.data_as_of",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.process_time",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"2026-08-07T02:56:11Z\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.producer",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"mdpf-gold-lambda (mdpf_gold_consolidator)\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.scope",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"global\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.source_keys",
+          "from": "ARRAY",
+          "to": "ABSENT",
+          "baseline": "[\"s3://opal-data-assets/portal/gold/mdpf/global/aggregate...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.source_vintages",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"global/aggregate-aua-timeseries\": \"2026-08-03\"}",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.trigger",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"qa-local(manual)\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "_provenance.written_by",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"opal-assets-mdpf-portal-publisher\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "as_of_last",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_intermediate.model_value[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"442644117.01\"",
+          "candidate": "\"367649948.63\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_intermediate.model_value[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"441145339.61\"",
+          "candidate": "\"366151171.23\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_intermediate.model_value[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"443593948.45\"",
+          "candidate": "\"368599780.07\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_intermediate.model_value[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"369211226.49\"",
+          "candidate": "\"444125119.83\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_intermediate.model_value[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"370591470.07\"",
+          "candidate": "\"446195753.66\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_aggressive.model_value[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"205677460.94\"",
+          "candidate": "\"204553242.9\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_aggressive.model_value[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"203512198.04\"",
+          "candidate": "\"202387980.0\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_aggressive.model_value[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"205906133.79\"",
+          "candidate": "\"204781915.75\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_aggressive.model_value[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"204425104.19\"",
+          "candidate": "\"205553267.36\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_aggressive.model_value[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"205884974.4\"",
+          "candidate": "\"207020743.56\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_conservative.model_value[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"804072189.6\"",
+          "candidate": "\"772918250.56\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_conservative.model_value[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"801259800.38\"",
+          "candidate": "\"770105861.34\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_conservative.model_value[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"813366752.31\"",
+          "candidate": "\"782212813.27\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_conservative.model_value[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"781685484.37\"",
+          "candidate": "\"812938408.11\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_long_term_conservative.model_value[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"787507277.48\"",
+          "candidate": "\"818923661.2\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_short_term.model_value[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"129596602.15\"",
+          "candidate": "\"113183849.24\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_short_term.model_value[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"129281665.54\"",
+          "candidate": "\"112868912.63\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_short_term.model_value[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"129328248.84\"",
+          "candidate": "\"112915495.93\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_short_term.model_value[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"113020068.2\"",
+          "candidate": "\"129291723.4\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_short_term.model_value[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"113339007.37\"",
+          "candidate": "\"129773741.77\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_ultra_short_term.model_value[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"52531588.64\"",
+          "candidate": "\"51092948.94\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_ultra_short_term.model_value[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"52461312.76\"",
+          "candidate": "\"51022673.06\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_ultra_short_term.model_value[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"52457037.99\"",
+          "candidate": "\"51018398.29\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_ultra_short_term.model_value[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"51019328.78\"",
+          "candidate": "\"52462614.53\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "by_model.opal_ultra_short_term.model_value[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"50987910.52\"",
+          "candidate": "\"52705145.17\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-28].as_of_by_partner.cottonwood",
+          "from": "STRING",
+          "to": "NULL",
+          "baseline": "\"2026-07-27\"",
+          "candidate": "null",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-28].cottonwood",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"carried_at_declared_cadence(as_of=2026-07-27)\"",
+          "candidate": "\"absent\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-29].as_of_by_partner.cottonwood",
+          "from": "STRING",
+          "to": "NULL",
+          "baseline": "\"2026-07-27\"",
+          "candidate": "null",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-29].cottonwood",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"carried_at_declared_cadence(as_of=2026-07-27)\"",
+          "candidate": "\"absent\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-30].as_of_by_partner.cottonwood",
+          "from": "STRING",
+          "to": "NULL",
+          "baseline": "\"2026-07-27\"",
+          "candidate": "null",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-30].cottonwood",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"carried_at_declared_cadence(as_of=2026-07-27)\"",
+          "candidate": "\"absent\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-31].as_of_by_partner.cottonwood",
+          "from": "NULL",
+          "to": "STRING",
+          "baseline": "null",
+          "candidate": "\"2026-07-31\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-07-31].cottonwood",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"absent\"",
+          "candidate": "\"measured\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-08-03].as_of_by_partner.cottonwood",
+          "from": "NULL",
+          "to": "STRING",
+          "baseline": "null",
+          "candidate": "\"2026-08-03\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "cohort_provenance[date=2026-08-03].cottonwood",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"absent\"",
+          "candidate": "\"measured\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-06-27",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-06-28",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-03",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-04",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-05",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-11",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-12",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-18",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-19",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"inflection\": {\"status\": \"absent\", \"reason\": \"no_measure...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-28",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"cottonwood\": {\"status\": \"carried\", \"as_of\": \"2026-07-27...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-29",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"cottonwood\": {\"status\": \"carried\", \"as_of\": \"2026-07-27...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-30",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"cottonwood\": {\"status\": \"carried\", \"as_of\": \"2026-07-27...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-07-31",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"cottonwood\": {\"status\": \"absent\", \"reason\": \"past_windo...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-08-03",
+          "from": "OBJECT",
+          "to": "ABSENT",
+          "baseline": "{\"cottonwood\": {\"status\": \"absent\", \"reason\": \"past_windo...",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-08-04",
+          "from": "ABSENT",
+          "to": "OBJECT",
+          "baseline": "<absent>",
+          "candidate": "{\"cottonwood\": {\"age_trading_days\": \"1\", \"as_of\": \"2026-0...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.channel_participation.exceptions.2026-08-05",
+          "from": "ABSENT",
+          "to": "OBJECT",
+          "baseline": "<absent>",
+          "candidate": "{\"cottonwood\": {\"age_trading_days\": \"2\", \"as_of\": \"2026-0...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.carried[0][0]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-28\"",
+          "candidate": "\"2026-08-04\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.carried[0][1]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-27\"",
+          "candidate": "\"2026-08-03\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.carried[1][0]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-29\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.carried[1][1]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-27\"",
+          "candidate": "\"2026-08-03\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.carried[2]",
+          "from": "ARRAY",
+          "to": "ABSENT",
+          "baseline": "[\"2026-07-30\", \"2026-07-27\"]",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.n_carried",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"3\"",
+          "candidate": "\"2\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.cottonwood_carry.policy.roster",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"/opt/mdpf/scripts/gold/partner_roster.json\"",
+          "candidate": "\"/var/task/partner_roster.json\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.firm_axis_reconciliation.n_49f",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"437\"",
+          "candidate": "\"439\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.firm_axis_reconciliation.n_cottonwood_axis",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"450\"",
+          "candidate": "\"448\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.firm_axis_reconciliation.n_cottonwood_covered",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"50\"",
+          "candidate": "\"52\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.firm_axis_reconciliation.n_dates",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"455\"",
+          "candidate": "\"448\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.firm_axis_reconciliation.n_inflection",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"437\"",
+          "candidate": "\"439\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.generated_at",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-04T16:00:58Z\"",
+          "candidate": "\"2026-08-07T02:56:31Z\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[11]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-06-27\"",
+          "candidate": "\"2026-07-01\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[12]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-06-28\"",
+          "candidate": "\"2026-07-13\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[13]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-01\"",
+          "candidate": "\"2026-07-14\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[14]",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-07-03\"",
+          "candidate": "\"2026-07-15\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[15]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-04\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[16]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-05\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[17]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-11\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[18]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-12\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[19]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-13\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[20]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-14\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[21]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-15\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[22]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-18\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.honest_none.total_none_dates[23]",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-07-19\"",
+          "candidate": "<absent>",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.inflection_non_model_aua_2b_audit",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"63409323.14\"",
+          "candidate": "\"64548982.43\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.model_aua",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1571156221.69\"",
+          "candidate": "\"1713193214.85\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.non_model_aua_49f_only",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"279032327.15\"",
+          "candidate": "\"282875423.22\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.opal_aggregate_aua",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1850188548.84\"",
+          "candidate": "\"1996068638.07\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.partner_custody_total_firmsummed",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1913597871.98\"",
+          "candidate": "\"1934309137.28\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.latest_cross_section.period",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "meta.partner_custody_total_note",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"null by HONEST ABSENCE at this scope: no ruled basis exi...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "model_aua[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1677200436.49\"",
+          "candidate": "\"1552076718.42\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "model_aua[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1670435021.95\"",
+          "candidate": "\"1545311303.88\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "model_aua[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1687095883.86\"",
+          "candidate": "\"1561972165.79\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "model_aua[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1562215513.99\"",
+          "candidate": "\"1687225435.19\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "model_aua[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1571156221.69\"",
+          "candidate": "\"1697464627.21\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "n_dates",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"455\"",
+          "candidate": "\"448\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "non_model_assets_detail",
+          "from": "ABSENT",
+          "to": "OBJECT",
+          "baseline": "<absent>",
+          "candidate": "{\"generated_at\": \"2026-08-07T02:56:32Z\", \"latest\": {\"date...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "non_model_aua[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"279032327.15\"",
+          "candidate": "\"279032404.85\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "opal_aggregate_aua[date=2026-07-28]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1957028776.17\"",
+          "candidate": "\"1831905058.1\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "opal_aggregate_aua[date=2026-07-29]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1945853074.09\"",
+          "candidate": "\"1820729356.02\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "opal_aggregate_aua[date=2026-07-30]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1963658339.15\"",
+          "candidate": "\"1838534621.08\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "opal_aggregate_aua[date=2026-07-31]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1839797990.24\"",
+          "candidate": "\"1964807911.44\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "opal_aggregate_aua[date=2026-08-03]",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1850188548.84\"",
+          "candidate": "\"1976497032.06\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "partner_custody_total",
+          "from": "ABSENT",
+          "to": "ARRAY",
+          "baseline": "<absent>",
+          "candidate": "[null, null, null, null, null, null, null, null, null, nu...",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "partner_name",
+          "from": "ABSENT",
+          "to": "STRING",
+          "baseline": "<absent>",
+          "candidate": "\"Global\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.age_hours_at_generation",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"40.0\"",
+          "candidate": "\"50.9\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.by_feeder.model_aua.49financial",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.by_feeder.model_aua.inflection",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.by_feeder.partner_custody.49financial",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.by_feeder.partner_custody.inflection",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.overall",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"2026-08-03\"",
+          "candidate": "\"2026-08-05\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.status",
+          "from": "STRING",
+          "to": "STRING",
+          "baseline": "\"current\"",
+          "candidate": "\"BEHIND\"",
+          "verdict": "REGRESSION"
+        },
+        {
+          "path": "source_vintage_last.trading_days_behind",
+          "from": "NUMBER",
+          "to": "NUMBER",
+          "baseline": "\"1\"",
+          "candidate": "\"2\"",
+          "verdict": "REGRESSION"
+        }
+      ],
+      "process_time_diffs": [
+        {
+          "path": "_provenance.written_at",
+          "from": "STRING",
+          "to": "ABSENT",
+          "baseline": "\"2026-08-07T01:06:01Z\"",
+          "candidate": "<absent>"
+        }
+      ],
+      "axis": {
+        "baseline_dates": 455,
+        "candidate_dates": 448,
+        "shared": 446,
+        "only_baseline": [
+          "2026-06-27",
+          "2026-06-28",
+          "2026-07-03",
+          "2026-07-04",
+          "2026-07-05",
+          "2026-07-11",
+          "2026-07-12",
+          "2026-07-18",
+          "2026-07-19"
+        ],
+        "only_candidate": [
+          "2026-08-04",
+          "2026-08-05"
+        ],
+        "only_baseline_data_bearing": 9
+      },
+      "verdict": "REGRESSIONS(118)"
+    }
+  ]
+}
