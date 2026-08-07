@@ -1,6 +1,8 @@
 # DISPOSITION — the Script I/O "S-layer": **DISSOLVED, NOT BUILT**
 
 **Author:** `4.0.0_SA_CRO` · **Date:** 2026-08-07 · **Status:** CLOSING RECORD
+**Home:** `org/tier1_exec/4.0.0_SA_CRO/` · **Recon ID:** RCN-0006 — registered in
+[`RECON_REGISTER.md`](../RECON_REGISTER.md)
 **Supersedes:** `SCRIPT_IO_ONTOLOGY_SPEC_20260806.md` REV 1–3 (@72279a7c2 / @785ed481f / @2d40590fa)
 — **that document is now HISTORY, not a design.**
 **Team:** `4.0.0_SA_CRO` (driving) · `3.0.0_SA_CVO~C` (review + exercise) · `1.0.0_SA_CTO~D` (arch)

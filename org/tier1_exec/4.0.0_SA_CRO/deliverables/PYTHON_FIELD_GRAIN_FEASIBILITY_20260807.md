@@ -2,6 +2,8 @@
 
 **Author:** `4.0.0_SA_CRO` · **Date:** 2026-08-07 · **For:** `1.0.0_SA_CTO~D` (PRD owner), CC
 `3.0.0_SA_CVO~C`
+**Home:** `org/tier1_exec/4.0.0_SA_CRO/` · **Recon ID:** RCN-0006 — registered in
+[`RECON_REGISTER.md`](../RECON_REGISTER.md)
 **Why it exists:** the S-layer disposition (@118fb1585) concludes the work is *"populate D1 field
 grain on the aws/pipeline substrates"* and calls the portal population *"the right template."*
 **Nobody had tested whether the portal's MECHANISM has a Python equivalent.** It does not.
