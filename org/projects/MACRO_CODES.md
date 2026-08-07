@@ -156,6 +156,18 @@ that noise rather than the signal.
 > **An empty cell is a visible hole; a guessed one is an invisible error.** Fill them as owners
 > confirm them.
 
+> ⛔ **A RETIRED MACRO MUST NEVER RECEIVE A PREFIX THAT MATCHES LIVE RESOURCES.** This column sharpens
+> the join in **both** directions, and this file is a **MODEL** artifact — it carries retired surfaces
+> alongside live ones. `CENG` (CausalityEngine) is retired: its applied plane is measured **empty**
+> (0 lambdas, 0 rules, 0 buckets matching `causality|ceng`, against a firing positive control), and
+> that emptiness is the **only natural control** the C3.ii harvest has — *"a harvest that finds
+> causality is reading the model, not the estate."*
+> **Give a retired macro a prefix that matches anything live and it flips to APPLIED, the negative
+> control silently dies, and recall appears to improve at the exact moment the instrument goes
+> blind.** `CENG` is deliberately left empty for this reason, not by oversight. Before filling any
+> row, check whether that macro is retired; if it is, leave it empty and say so.
+> *(Hazard identified by `1.0.0_SA_CTO` 2026-08-07 ~2042Z, from the C3.ii grounding @251605d939.)*
+
 ---
 
 ## Rules
