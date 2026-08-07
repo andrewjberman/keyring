@@ -68,10 +68,17 @@ live ones, and **fails SILENTLY** — unknown names are appended alphabetically 
 Join the two planes and the cells are individually meaningful. This is Rule 22a's DESIRED-vs-APPLIED
 distinction applied to a taxonomy instead of to infrastructure:
 
-| | **APPLIED** (harvest finds live resources) | **NOT APPLIED** |
-|---|---|---|
-| **DECLARED** (in MACRO_CODES.md) | a **live vertical** — the healthy cell | **retired or aspirational** — `CENG`/causality (retired 08-05, applied plane measured EMPTY), `TAXX` (TBD), `SSCN` (TBD) |
-| **NOT DECLARED** | ⭐ **AN UNDECLARED VERTICAL — the candidate list C3.ii generation EXISTS to produce** | — (invisible by construction; not a defect, a boundary) |
+| | **APPLIED** (harvest finds live resources) | **NOT APPLIED — RETIRED** | **NOT APPLIED — ASPIRATIONAL** |
+|---|---|---|---|
+| **DECLARED** (in MACRO_CODES.md) | a **live vertical** — the healthy cell | was applied, deliberately ended by a **naming act**. Correct final resting place — stays here forever. `CENG`/causality (retired 08-05, applied plane measured EMPTY) | declared **ahead of build**, never applied. **Not an end state — a WIP row.** Should MOVE to DECLARED×APPLIED when built; if it never does, *that is a finding*. `TAXX` (TBD), `SSCN` (TBD) |
+| **NOT DECLARED** | ⭐ **AN UNDECLARED VERTICAL — the candidate list C3.ii generation EXISTS to produce** | — (invisible by construction; not a defect, a boundary) | — |
+
+> **⬛ THE NOT-APPLIED COLUMN IS SPLIT ON `4.0.0_SA_CRO`'s POSTULATE-(iii) FINDING, and they were right.**
+> v1 of this table pooled RETIRED and ASPIRATIONAL into one cell. That is **STATE beside DISPOSITION**
+> on one axis — an intent-coherence break — and the two take **opposite remedies**: a retired code
+> should never move, an aspirational one should. Pooled, neither signal is readable and *the cell
+> quietly accumulates abandoned aspirations that look exactly like healthy retirements.*
+> It also sharpens the control below: **CENG's expected cell is RETIRED specifically, not the union.**
 
 **The bottom-left cell is the product.** Everything else is bookkeeping that makes it legible. Without
 the declared set you cannot compute that cell at all — you can only produce an undifferentiated name
@@ -127,8 +134,31 @@ macro had been in REGISTRY use since OPAL_ASSETS with no row here — rule 6 con
 registry as authoritative-but-lagging, not as ground truth** — which is precisely why it joins to the
 applied plane rather than replacing it.
 
+**⬛ AMENDED ON CRO'S READ (2026-08-07) — my v1 was correct and INCOMPLETE on two counts:**
+
+- **(i) MECE — I wrote "arguably fails." That is imprecise and the exact statement is worse than
+  failing.** A residual bucket makes the axis collectively-exhaustive **BY CONSTRUCTION**, so the CE
+  limb still technically holds *and carries ZERO information.* **MECE is not violated here; it is made
+  UNFALSIFIABLE** — which is the more damaging condition, because the axis now passes a check it can
+  never fail.
+- **(iv) STATE COHERENCE — I did not run it, and it FAILS.** The postulate requires naming the state
+  axis and asking whether ONE remedy moves every value together. It does not, and (iv) obliges me to
+  name which values do not move:
+
+  | value | remedy |
+  |---|---|
+  | `POSN` + page-grain siblings | **RE-GRAINING** — promote to surface-area grain |
+  | `OPAL` / `NFRA` umbrellas | **LEVEL SPLIT** — macro-vs-project is already a two-level system; these rows are the level boundary leaking onto the value axis |
+  | `ADHC` | **NEITHER.** A residual bucket is not a mis-grained member, it is *the absence of a member*. It dissolves only by modelling what is inside it — **unbounded work of a different kind** |
+
+  > **So "fix the macro registry axis" presents as ONE workstream and is THREE — and the third has no
+  > determinate size.** That is precisely what postulate (iv) exists to surface, and it must be said
+  > plainly if this ever becomes a fix proposal to Andrew.
+
 **This is CRO's instrument.** Rule 24 is their authorship; the four postulates are the right lens; and
-a taxonomy defect found at AUTHORING time is a defect, not a style note.
+a taxonomy defect found at AUTHORING time is a defect, not a style note. *They checked this document
+rather than inheriting it — which is what I asked for — and found a control of mine that could not
+fail. Both corrections above are theirs, adopted in full.*
 
 ---
 
@@ -153,8 +183,25 @@ a taxonomy defect found at AUTHORING time is a defect, not a style note.
    `org/projects/{PROJECT_CODE}.json` for the project layer beneath each macro.
 2. **Join, do not union.** Produce the 2x2 of §3. Ship the **NOT-DECLARED × APPLIED** cell as the
    candidate list into Stage 2/3.
-3. **Preserve the control.** Assert `CENG`/causality lands in DECLARED × NOT-APPLIED. If it lands
-   anywhere else, the join is reading the model.
+3. **Preserve the control — AND PAIR IT, because on its own it CANNOT FAIL.**
+   ⛔ **v1 of this item said only "assert `CENG` lands in DECLARED × NOT-APPLIED." That control is
+   UNDISCHARGEABLE and `4.0.0_SA_CRO` caught it.** Run the Rule-22a question against it — *could this
+   have said otherwise?* **No.** If the applied-plane measurement returns nothing at all — broken
+   query, wrong prefix, empty credential, a harvest that silently no-ops — then `CENG` lands in
+   NOT-APPLIED **trivially, the assertion PASSES, and it passes MORE cleanly the more completely the
+   instrument is dead.** That is the anti-correlated shape of Rule 22b, and **the control I wrote to
+   protect the harvest had the exact defect the harvest's own control had.** *(The old absence oracle
+   shared it: a harvest that finds nothing also "does not find causality." Neither version can tell a
+   healthy instrument from a dead one.)*
+   **THE FIX, one line of spec: assert a PAIR.** Name a macro code that **MUST** land in
+   DECLARED × APPLIED — `MDPF` or `ADVI`, both live with a measurable applied plane — and assert both
+   limbs **from the same measurement, in the same pass**. `CENG`-empty is informative ONLY when
+   something else is simultaneously non-empty. A dead applied plane then fails the **positive** limb
+   instead of silently satisfying the negative one.
+   *CRO's own framing of why the join beats the absence oracle, worth carrying verbatim:*
+   **"AN ABSENCE ORACLE PASSES FOR MANY REASONS AND A POSITION ORACLE FAILS FOR ONE."** Absence tells
+   you nothing about *why* a thing is missing; cell membership is a claim that can be wrong in a
+   specific, informative way.
 4. **Print the denominator on every cell** — declared N, applied M, and each cell's count with a
    measurement vintage. Two of the numbers in this space have already moved under their authors today
    (a 5.5× marker-set swing and a 3.6× resolver swing on NFRA_PYFIELD); a cell count with no frame is
