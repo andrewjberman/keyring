@@ -1,0 +1,858 @@
+{
+  "_header": {
+    "artifact": "c3ii_prd_vertical_discovery",
+    "vintage": "2026-08-07T211506Z",
+    "engine": "dup_scan.BM25 (estate canonical, REUSED -- 3rd consumer after debtscan + comp-state)",
+    "roots": [
+      "docs/architecture",
+      "docs/briefs"
+    ],
+    "denominator_grain": "MARKDOWN DOCUMENTS (not lines, not bytes)",
+    "docs_scanned": 895,
+    "docs_unreadable": 0,
+    "declared_macro_codes": 35,
+    "labelled": 762,
+    "unlabelled": 133,
+    "label_basis": {
+      "content:surface": 63,
+      "content:code": 161,
+      "filename": 489,
+      "ambiguous": 62,
+      "no-signal": 71,
+      "content:surface-top": 49
+    },
+    "macros_with_docs": 21,
+    "macros_with_NO_docs": [
+      "ATTR",
+      "BDPL",
+      "CENG",
+      "CMAS",
+      "CORR",
+      "DECK",
+      "FCTL",
+      "MACR",
+      "MKPF",
+      "NPPL",
+      "SHIF",
+      "SXPL",
+      "UIUX",
+      "VALU"
+    ]
+  },
+  "profiles": {
+    "ADHC": {
+      "n_docs": 35,
+      "terms": [
+        {
+          "term": "adhc_ownpth",
+          "in_docs": 8,
+          "out_docs": 2,
+          "concentration": 0.49,
+          "score": 2.18
+        },
+        {
+          "term": "adhc",
+          "in_docs": 17,
+          "out_docs": 13,
+          "concentration": 0.39,
+          "score": 1.32
+        }
+      ]
+    },
+    "ADVI": {
+      "n_docs": 120,
+      "terms": [
+        {
+          "term": "allowedfirmids",
+          "in_docs": 11,
+          "out_docs": 2,
+          "concentration": 0.58,
+          "score": 2.42
+        },
+        {
+          "term": "pseudonymization",
+          "in_docs": 15,
+          "out_docs": 5,
+          "concentration": 0.53,
+          "score": 2.01
+        },
+        {
+          "term": "travis",
+          "in_docs": 14,
+          "out_docs": 5,
+          "concentration": 0.51,
+          "score": 1.96
+        },
+        {
+          "term": "fee_bps",
+          "in_docs": 11,
+          "out_docs": 4,
+          "concentration": 0.48,
+          "score": 1.95
+        },
+        {
+          "term": "advisorid",
+          "in_docs": 20,
+          "out_docs": 7,
+          "concentration": 0.55,
+          "score": 1.93
+        },
+        {
+          "term": "rel_id",
+          "in_docs": 12,
+          "out_docs": 5,
+          "concentration": 0.47,
+          "score": 1.84
+        }
+      ]
+    },
+    "AUTH": {
+      "n_docs": 38,
+      "terms": []
+    },
+    "CDRS": {
+      "n_docs": 12,
+      "terms": []
+    },
+    "COMP": {
+      "n_docs": 62,
+      "terms": [
+        {
+          "term": "query_pass_rate",
+          "in_docs": 8,
+          "out_docs": 0,
+          "concentration": 0.68,
+          "score": 3.15
+        },
+        {
+          "term": "primary_metric",
+          "in_docs": 8,
+          "out_docs": 0,
+          "concentration": 0.68,
+          "score": 3.15
+        },
+        {
+          "term": "unaided",
+          "in_docs": 8,
+          "out_docs": 1,
+          "concentration": 0.56,
+          "score": 2.57
+        },
+        {
+          "term": "httpx",
+          "in_docs": 22,
+          "out_docs": 5,
+          "concentration": 0.63,
+          "score": 2.21
+        },
+        {
+          "term": "iterations",
+          "in_docs": 11,
+          "out_docs": 3,
+          "concentration": 0.52,
+          "score": 2.16
+        },
+        {
+          "term": "plateau",
+          "in_docs": 9,
+          "out_docs": 3,
+          "concentration": 0.47,
+          "score": 2.0
+        }
+      ]
+    },
+    "DASH": {
+      "n_docs": 4,
+      "terms": []
+    },
+    "DRFR": {
+      "n_docs": 2,
+      "terms": []
+    },
+    "ETFS": {
+      "n_docs": 14,
+      "terms": [
+        {
+          "term": "source_artifact",
+          "in_docs": 5,
+          "out_docs": 0,
+          "concentration": 0.57,
+          "score": 2.88
+        },
+        {
+          "term": "ownership_value",
+          "in_docs": 5,
+          "out_docs": 0,
+          "concentration": 0.57,
+          "score": 2.88
+        },
+        {
+          "term": "etfs_setup",
+          "in_docs": 4,
+          "out_docs": 1,
+          "concentration": 0.38,
+          "score": 1.91
+        },
+        {
+          "term": "avgcap",
+          "in_docs": 8,
+          "out_docs": 4,
+          "concentration": 0.39,
+          "score": 1.67
+        }
+      ]
+    },
+    "MDLP": {
+      "n_docs": 17,
+      "terms": []
+    },
+    "MDPF": {
+      "n_docs": 82,
+      "terms": [
+        {
+          "term": "v0_9",
+          "in_docs": 11,
+          "out_docs": 0,
+          "concentration": 0.74,
+          "score": 3.23
+        },
+        {
+          "term": "build_legacy_compat_emit",
+          "in_docs": 11,
+          "out_docs": 0,
+          "concentration": 0.74,
+          "score": 3.23
+        },
+        {
+          "term": "methodology_version",
+          "in_docs": 14,
+          "out_docs": 1,
+          "concentration": 0.7,
+          "score": 2.85
+        },
+        {
+          "term": "enterprise_total",
+          "in_docs": 11,
+          "out_docs": 1,
+          "concentration": 0.65,
+          "score": 2.76
+        },
+        {
+          "term": "opal_div_sma",
+          "in_docs": 10,
+          "out_docs": 1,
+          "concentration": 0.62,
+          "score": 2.71
+        },
+        {
+          "term": "non_model_assets",
+          "in_docs": 23,
+          "out_docs": 2,
+          "concentration": 0.75,
+          "score": 2.67
+        }
+      ]
+    },
+    "MKOV": {
+      "n_docs": 13,
+      "terms": []
+    },
+    "NFRA": {
+      "n_docs": 127,
+      "terms": [
+        {
+          "term": "graphuni",
+          "in_docs": 12,
+          "out_docs": 0,
+          "concentration": 0.76,
+          "score": 3.24
+        },
+        {
+          "term": "nfra_comp",
+          "in_docs": 14,
+          "out_docs": 0,
+          "concentration": 0.78,
+          "score": 3.24
+        },
+        {
+          "term": "compproof",
+          "in_docs": 15,
+          "out_docs": 0,
+          "concentration": 0.8,
+          "score": 3.23
+        },
+        {
+          "term": "compdrift",
+          "in_docs": 15,
+          "out_docs": 0,
+          "concentration": 0.8,
+          "score": 3.23
+        },
+        {
+          "term": "comproute",
+          "in_docs": 16,
+          "out_docs": 0,
+          "concentration": 0.81,
+          "score": 3.22
+        },
+        {
+          "term": "motif",
+          "in_docs": 21,
+          "out_docs": 0,
+          "concentration": 0.85,
+          "score": 3.15
+        }
+      ]
+    },
+    "OPAL": {
+      "n_docs": 108,
+      "terms": [
+        {
+          "term": "fam",
+          "in_docs": 11,
+          "out_docs": 0,
+          "concentration": 0.74,
+          "score": 3.23
+        }
+      ]
+    },
+    "PFMG": {
+      "n_docs": 3,
+      "terms": []
+    },
+    "POSN": {
+      "n_docs": 1,
+      "terms": []
+    },
+    "SSCN": {
+      "n_docs": 6,
+      "terms": [
+        {
+          "term": "r1000",
+          "in_docs": 5,
+          "out_docs": 0,
+          "concentration": 0.57,
+          "score": 2.88
+        },
+        {
+          "term": "sp400",
+          "in_docs": 4,
+          "out_docs": 0,
+          "concentration": 0.51,
+          "score": 2.7
+        },
+        {
+          "term": "rmidcap",
+          "in_docs": 4,
+          "out_docs": 0,
+          "concentration": 0.51,
+          "score": 2.7
+        },
+        {
+          "term": "r1000v",
+          "in_docs": 4,
+          "out_docs": 0,
+          "concentration": 0.51,
+          "score": 2.7
+        },
+        {
+          "term": "msciusa",
+          "in_docs": 4,
+          "out_docs": 0,
+          "concentration": 0.51,
+          "score": 2.7
+        },
+        {
+          "term": "eafev",
+          "in_docs": 4,
+          "out_docs": 0,
+          "concentration": 0.51,
+          "score": 2.7
+        }
+      ]
+    },
+    "SXIN": {
+      "n_docs": 10,
+      "terms": []
+    },
+    "TAXX": {
+      "n_docs": 10,
+      "terms": []
+    },
+    "TRSB": {
+      "n_docs": 6,
+      "terms": [
+        {
+          "term": "approvers",
+          "in_docs": 5,
+          "out_docs": 0,
+          "concentration": 0.57,
+          "score": 2.88
+        },
+        {
+          "term": "segregation",
+          "in_docs": 3,
+          "out_docs": 0,
+          "concentration": 0.44,
+          "score": 2.43
+        },
+        {
+          "term": "initiator",
+          "in_docs": 3,
+          "out_docs": 0,
+          "concentration": 0.44,
+          "score": 2.43
+        },
+        {
+          "term": "dashboard_api",
+          "in_docs": 3,
+          "out_docs": 0,
+          "concentration": 0.44,
+          "score": 2.43
+        },
+        {
+          "term": "adam",
+          "in_docs": 3,
+          "out_docs": 0,
+          "concentration": 0.44,
+          "score": 2.43
+        },
+        {
+          "term": "workflow_handler",
+          "in_docs": 4,
+          "out_docs": 1,
+          "concentration": 0.38,
+          "score": 1.91
+        }
+      ]
+    },
+    "YALP": {
+      "n_docs": 51,
+      "terms": [
+        {
+          "term": "t002",
+          "in_docs": 12,
+          "out_docs": 0,
+          "concentration": 0.76,
+          "score": 3.24
+        },
+        {
+          "term": "correl",
+          "in_docs": 11,
+          "out_docs": 0,
+          "concentration": 0.74,
+          "score": 3.23
+        },
+        {
+          "term": "d1d6fcad",
+          "in_docs": 10,
+          "out_docs": 0,
+          "concentration": 0.72,
+          "score": 3.21
+        },
+        {
+          "term": "positn",
+          "in_docs": 9,
+          "out_docs": 0,
+          "concentration": 0.7,
+          "score": 3.19
+        },
+        {
+          "term": "valuat",
+          "in_docs": 8,
+          "out_docs": 0,
+          "concentration": 0.68,
+          "score": 3.15
+        },
+        {
+          "term": "freshness_probe",
+          "in_docs": 11,
+          "out_docs": 1,
+          "concentration": 0.65,
+          "score": 2.76
+        }
+      ]
+    },
+    "YANG": {
+      "n_docs": 41,
+      "terms": []
+    }
+  },
+  "unlabelled": [
+    "docs/architecture/AGENT_SPAWN_KILL_METHODOLOGY.md",
+    "docs/architecture/ASTN_WSJFT_PRD.md",
+    "docs/architecture/BD_ASSET_DIM_PIPELINE.md",
+    "docs/architecture/CASE_FIND_SECURITY_PROTOCOL.md",
+    "docs/architecture/COTETL_METHODOLOGY_THESIS.md",
+    "docs/architecture/DATAREFRESH_ROLLBACK_INVALIDATION_FIX.md",
+    "docs/architecture/DATA_ANALYTICS_PRD.md",
+    "docs/architecture/DISTRIBUTION_TAB_OTHER_DEDUPE.md",
+    "docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md",
+    "docs/architecture/GRAPH_CODE_LOCATION_STANDARD.md",
+    "docs/architecture/GRAPH_PROVENANCE_TAXONOMY.md",
+    "docs/architecture/HALTGT_SEVERITY_CONVENTION.md",
+    "docs/architecture/INCREMENTAL_RUNS_DESIGN.md",
+    "docs/architecture/INDEX.md",
+    "docs/architecture/INFLECTION_SILVER_RETRO_DEDUP.md",
+    "docs/architecture/INFLEC_FE_BACKEND_WIRING.md",
+    "docs/architecture/INF_ETF_OWNERSHIP_SCHEDULED_FLOOR.md",
+    "docs/architecture/NNA_VARIANCE_OPTIMIZATION_PRD.md",
+    "docs/architecture/SCHWAB_SDD_DELIVERY_BRIEF.md",
+    "docs/architecture/SCTY_PREMCP_PRD.md",
+    "docs/architecture/SECURITY_SCANNER_XLSM_AUDIT.md",
+    "docs/architecture/SECURITY_SCANNER_XLSM_AUDIT_COMPACT.md",
+    "docs/architecture/SMARTX_YALIU_HAR_FINDINGS_AND_HISTORY_PLAN_20260714.md",
+    "docs/architecture/TELEMETRY_LIVENESS_IMPL.md",
+    "docs/architecture/THIRD_PARTY_DATA_INTEGRATION_STANDARD.md",
+    "docs/architecture/TWO_FABRIC_OPERATIONS_AND_GATES.md",
+    "docs/architecture/advisor_intelligence/books_tab_design_brief.md",
+    "docs/architecture/security-scanner-source/V0_SYSTEM_REFERENCE.md",
+    "docs/architecture/_drafts/INFLEC_AUDIT_AE_LAMBDA_EMIT.md",
+    "docs/architecture/_drafts/INFLEC_AUDIT_DE_MAPPING.md",
+    "docs/architecture/_drafts/INFLEC_AUDIT_DSB_IWM_GAPS.md",
+    "docs/architecture/_drafts/INFLEC_AUDIT_DSD_HISTBF_STATE.md",
+    "docs/architecture/_drafts/INFLEC_NNA_GEO_ATTRIBUTION_BRIEF.md",
+    "docs/briefs/AGENTBUS_SCHEMA_SPEC_20260717.md",
+    "docs/briefs/DATA_ANALYTICS_A1_A_04_client_dimension_briefing.md",
+    "docs/briefs/DATA_ANALYTICS_A1_B_02_canonical_lots_briefing.md",
+    "docs/briefs/DATA_ANALYTICS_A1_C_01_canonical_nna_briefing.md",
+    "docs/briefs/DATA_ANALYTICS_A1_layer_analysis.md",
+    "docs/briefs/DATA_ANALYTICS_A1_portal_field_requirements_v0.1.md",
+    "docs/briefs/DATA_ANALYTICS_A1_silver_dim_design_v0.2_keys.md",
+    "docs/briefs/DATA_ANALYTICS_fe_migration_scaffold_v0.1.md",
+    "docs/briefs/DATA_ANALYTICS_snapshot_native_positions_producer_scope.md",
+    "docs/briefs/DATA_PLATFORM_DC_CHAR_bd_own_account_api_quality.md",
+    "docs/briefs/DATA_PLATFORM_DC_CHAR_orion_own_account_api_quality.md",
+    "docs/briefs/DATA_PLATFORM_reverse_etl_chunk3_txn_nna.md",
+    "docs/briefs/DATA_PLATFORM_reverse_etl_chunk4_residuals_perf_parity_and_consumer_census.md",
+    "docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md",
+    "docs/briefs/L0B_RATIFICATION_BRIEF_20260725.md",
+    "docs/briefs/L3_OWNERSHIP_DECISION_BRIEF_20260725.md",
+    "docs/briefs/TRIGGER_GRAPH_AND_RUNTIME_MAP_DELTA_20260806.md",
+    "docs/briefs/advisor-of-record-go-live-gate-findings-20260713.md",
+    "docs/briefs/advisor-of-record-single-source-refactor-handoff-20260711.md",
+    "docs/briefs/advisor-of-record-single-source-resolver-DESIGN-20260711.md",
+    "docs/briefs/advisor_split_unattributed_224M_onepager.md",
+    "docs/briefs/ae-0.7-to-registry-reconciliation-20260629.md",
+    "docs/briefs/ae-schwab-trn-nna-coverage-gap-methodology.md",
+    "docs/briefs/ae-schwab-trn-transaction-enrichment-feasibility.md",
+    "docs/briefs/aws-cost-audit-deepverify-20260605.md",
+    "docs/briefs/bd-49f-allocations-retry-net-design-20260630.md",
+    "docs/briefs/bd-49f-auto-login-durable-hardening-audit-20260702.md",
+    "docs/briefs/bd-49f-ec2-scrape-to-datamining-api-migration-20260625.md",
+    "docs/briefs/bd-49f-interim-cookie-solution-rest-api-20260625.md",
+    "docs/briefs/bd-49f-rest-runner-cutover-plan-20260702.md",
+    "docs/briefs/bd-49f-runner-durable-hardening-findings-20260706.md",
+    "docs/briefs/bd-unrealized-export-500k-row-cap-finding-20260709.md",
+    "docs/briefs/benchmark-yang-truth-audit-20260601.md",
+    "docs/briefs/close-time-to-status-flip-durable-fix-proposal-20260629.md",
+    "docs/briefs/cmpaws-phase0-s3-iam-census-shape-20260603.md",
+    "docs/briefs/cot-advisor-office-dimension-p3prep-20260608.md",
+    "docs/briefs/cot-durable-auto-auth-parallel-of-bd-49f-20260625.md",
+    "docs/briefs/cot-s6.1-advisor-dimension-resolution-20260608.md",
+    "docs/briefs/data-scientist-inflection-cost-basis-investigation-20260514.md",
+    "docs/briefs/data-scientist-t1-cap-audit-findings.md",
+    "docs/briefs/dc2-eclipse-authed-capture-diagnostic-plan-20260625.md",
+    "docs/briefs/deploy-ledger-phantom-leg-gap-20260625.md",
+    "docs/briefs/devops-brief-advi-005-rolling-flows.md",
+    "docs/briefs/fe-driven-lambda-keep-warm-feasibility-20260603.md",
+    "docs/briefs/fe_cache_freshness_audit_design_20260514.md",
+    "docs/briefs/find-gold-g2-g5-survey-20260528.md",
+    "docs/briefs/find-insure-alias-recall-empirical-findings-20260601.md",
+    "docs/briefs/find-insure-bright-data-zone-investigation-20260528.md",
+    "docs/briefs/find-insure-bucket-structuring-implications-DSC-brief-20260527.md",
+    "docs/briefs/find-insure-case-study-chris-surrichio-20260529.md",
+    "docs/briefs/find-insure-ir-team-feedback-protocol.md",
+    "docs/briefs/find-insure-network-expansion-graph-architecture-20260529.md",
+    "docs/briefs/find-insure-person-enrichment-pipeline-canonical-20260529.md",
+    "docs/briefs/find-insure-phase2a-subset-cut-decision-framework.md",
+    "docs/briefs/find-insure-phase2b-per-board-lambda-scaffold-v0.0.md",
+    "docs/briefs/find-insure-phase3-ir-feedback-and-lambda-skeleton-20260527.md",
+    "docs/briefs/find-insure-universe-ab-decision-support-20260601.md",
+    "docs/briefs/find-silver-rule17-audit-20260528.md",
+    "docs/briefs/gldinc-bd-gold-loader-shape-nondeterminism-census-20260611.md",
+    "docs/briefs/gldinc-census-xt-cross-tree-assembly-shape-census-20260612.md",
+    "docs/briefs/gldinc-incremental-conversion-plan-7-scripts-20260611.md",
+    "docs/briefs/gldinc-p2-a03-reconcile-correctness-design-20260608.md",
+    "docs/briefs/gldinc-parity-scorecard-design-20260605.md",
+    "docs/briefs/gold-rightsizing-optimization-framework-20260605.md",
+    "docs/briefs/incident-brief-2026-05-27-wt-crash-and-commit-storm.md",
+    "docs/briefs/incident-brief-2026-05-28-broker-polling-load-root-cause.md",
+    "docs/briefs/inf-advi-staleness-p0-recovery-20260612.md",
+    "docs/briefs/inf-aua-frozen-202711894-investigation-20260629.md",
+    "docs/briefs/inf-incremental-q2-backdate-probe-20260514.md",
+    "docs/briefs/inf-infinc006-cto-validation-20260515.md",
+    "docs/briefs/inf-pattern-e-orion-rest-capability-probe-20260515.md",
+    "docs/briefs/infgro-finding-b-epsilon-coverage-diagnosis-20260518.md",
+    "docs/briefs/infgro-window-twr-aggregation-ruling-20260515.md",
+    "docs/briefs/inflection-gold.md",
+    "docs/briefs/inflection-refactor-gold.md",
+    "docs/briefs/inflection-refactor-silver.md",
+    "docs/briefs/inflection-silver.md",
+    "docs/briefs/mdsrc-c2-bloomberg-ice-crossvendor-prestage-20260521.md",
+    "docs/briefs/mdsrc-c2-input-readiness-20260521.md",
+    "docs/briefs/mdsrc-c2-ws2-correlation-leg-plan-20260522.md",
+    "docs/briefs/mdsrc-c2-ws2-ft-leg-plan-20260522.md",
+    "docs/briefs/mdsrc-c2-ws2-surface-assembly-scaffold-20260521.md",
+    "docs/briefs/mdsrc-m2-validated-macro-contract-20260522.md",
+    "docs/briefs/mdsrc-v1a-4-bond-representative-index-20260522.md",
+    "docs/briefs/mdsrc-v1b-3-band-bbg-proxy-20260522.md",
+    "docs/briefs/mdsrc-ws2-c2-input-spec-20260520.md",
+    "docs/briefs/mdsrc-ws2-portfolio-analytics-audit-20260520.md",
+    "docs/briefs/mdsrc-ycharts-endpoint-spec-20260520.md",
+    "docs/briefs/nna-1y-cross-route-divergence-20260709.md",
+    "docs/briefs/pmtrdx-001-weight-unit-regression-diagnosis-20260617.md",
+    "docs/briefs/schwab-ingest-automation-ws3-prescope-20260702.md",
+    "docs/briefs/schwab-sdd-rest-ingest-aprime-design-20260702.md",
+    "docs/briefs/scty-mcp-employee-onboarding-usertype-guardrails-advance-20260701.md",
+    "docs/briefs/scty-mcpguard-landing-diff-20260701.md",
+    "docs/briefs/scty-mcpguard-provider-check-vs-bearer-sub-seam-20260701.md",
+    "docs/briefs/scty-mcpguard-s0-tier-model-destructive-surface-spec-20260701.md",
+    "docs/briefs/secrets-in-code-scan-20260603.md",
+    "docs/briefs/txnamg-001-join-key-column-audit-20260515.md",
+    "docs/briefs/ws-commit-mutex-staging-serialization-design-20260529.md",
+    "docs/briefs/ws4-gating-table-derive-schema-proposal-20260702.md"
+  ],
+  "candidate_terms": [
+    [
+      "guarantee",
+      14
+    ],
+    [
+      "find_insure",
+      14
+    ],
+    [
+      "imo",
+      14
+    ],
+    [
+      "cleared",
+      14
+    ],
+    [
+      "account_gains",
+      12
+    ],
+    [
+      "d_00b",
+      12
+    ],
+    [
+      "lusha",
+      11
+    ],
+    [
+      "device",
+      11
+    ],
+    [
+      "late",
+      11
+    ],
+    [
+      "b_02",
+      11
+    ],
+    [
+      "b_03",
+      11
+    ],
+    [
+      "datamining",
+      11
+    ],
+    [
+      "linkedin",
+      11
+    ],
+    [
+      "license",
+      10
+    ],
+    [
+      "c_00",
+      10
+    ],
+    [
+      "pricing",
+      10
+    ],
+    [
+      "a_03",
+      10
+    ],
+    [
+      "maturity",
+      10
+    ],
+    [
+      "peter_lee",
+      10
+    ],
+    [
+      "person",
+      10
+    ],
+    [
+      "windowed",
+      10
+    ],
+    [
+      "inf_d_00c",
+      10
+    ],
+    [
+      "newly",
+      10
+    ],
+    [
+      "a_01",
+      10
+    ],
+    [
+      "a_02",
+      10
+    ],
+    [
+      "needing",
+      10
+    ],
+    [
+      "imos",
+      10
+    ],
+    [
+      "mdsrc",
+      10
+    ],
+    [
+      "broker",
+      9
+    ],
+    [
+      "kills",
+      9
+    ],
+    [
+      "liveness",
+      9
+    ],
+    [
+      "bright",
+      9
+    ],
+    [
+      "forwardfill_v2",
+      9
+    ],
+    [
+      "data_platform",
+      9
+    ],
+    [
+      "relationship_id",
+      9
+    ],
+    [
+      "data_analytics",
+      9
+    ],
+    [
+      "sell",
+      9
+    ],
+    [
+      "naive",
+      9
+    ],
+    [
+      "reliable",
+      9
+    ],
+    [
+      "propagate",
+      9
+    ],
+    [
+      "restatement",
+      9
+    ],
+    [
+      "detects",
+      9
+    ],
+    [
+      "steady",
+      9
+    ],
+    [
+      "intra",
+      9
+    ],
+    [
+      "snapshot_date",
+      9
+    ],
+    [
+      "mfa",
+      9
+    ],
+    [
+      "won",
+      9
+    ],
+    [
+      "acwi",
+      9
+    ],
+    [
+      "portal_leaderboard",
+      9
+    ],
+    [
+      "align",
+      9
+    ],
+    [
+      "trade_date",
+      9
+    ],
+    [
+      "crawl",
+      9
+    ],
+    [
+      "keepalive",
+      9
+    ],
+    [
+      "queued",
+      8
+    ],
+    [
+      "skill",
+      8
+    ],
+    [
+      "persist",
+      8
+    ],
+    [
+      "creds",
+      8
+    ],
+    [
+      "mon",
+      8
+    ],
+    [
+      "fri",
+      8
+    ],
+    [
+      "d_03",
+      8
+    ]
+  ]
+}
