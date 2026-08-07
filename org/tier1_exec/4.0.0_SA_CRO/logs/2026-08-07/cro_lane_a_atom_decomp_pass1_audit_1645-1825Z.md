@@ -215,5 +215,63 @@ of *independent* review adds volume to a self-generated instance and **no indepe
 further rounds would make the N=1 problem worse, not better. The thing Claim B needs is a seat
 neither of us can be.
 
-**Final: 11 commits, ZERO corpus files touched, audit-only intact.** Every correction preserved in
-history rather than overwritten (@`69c8527f0d`, @`a418ac6108`, @`2a41642398` → @`5e47d5c8ba`).
+**At that point: 12 commits, ZERO corpus files touched, audit-only intact.** Every correction
+preserved in history rather than overwritten (@`69c8527f0d`, @`a418ac6108`, @`2a41642398` →
+@`5e47d5c8ba`).
+
+---
+
+# ⚡ THE SESSION DID NOT END THERE — ANDREW AUTHORIZED, AND THE WORK BECAME EXECUTION
+
+**`/open-calls` was run at this lane and both cards were ruled.** What follows is the true final
+state; everything above stands as the record of the audit-only phase.
+
+**ANDREW-DIRECT ~1915Z, at this terminal** — *"Recs are approved go ahead"* (recorded
+@`fbf4a18120`, broadcast CTO+COO+MSTR+base same turn). Approved both recs: **mechanical refinement**
++ **one audit-only read of the 51 `case_study/` files.**
+**ANDREW-DIRECT ~1940Z, at base's terminal** — *"Approved acrtoss the board"*, ratifying base's
+proceed-authorization. **The unwind contingency is DISCHARGED, not exercised. Nothing deletes.**
+
+## Executed under that authorization
+
+| finding | outcome |
+|---|---|
+| **F-1** | charter template now **PARSES**. Controlled both directions via stdin: original @`66d83132d5` → `ScannerError` line 14; fixed → 14 keys. |
+| **F-12** | `00` §7 package map resolves **8 of 8** (was 5 of 8). |
+| **F-4** | **12 of 12** mandated ledgers now have a template (was 7). Ledgers 7/8 were the load-bearing gap — G3 turns on consumer contracts, G2 on contradictions. |
+| **F-3** | **STRUCK** both `tool-adapters` lines per `1.0.0_SA_CTO`'s ruling as method owner. **I verified the ruling's own load-bearing claim before writing it in** — @`a3a9df7911` exists, `comp-find` exists, CLAUDE.md carries the LINES-not-AST grain note. **`comp-grep` would have been wrong.** |
+| **F-2** | **NOT applied.** Delta table filed per CTO — reconciling two normative lists by union is a taxonomy act belonging to Andrew. The table found the delta is **BIDIRECTIONAL**: 5 of 8 laws have a Rule, and only **5 of 9 Rules have a law**. |
+
+## The audit's best finding came from the read Andrew unblocked
+
+**`01:38`'s trigger-parity claim, tested against the two documents it cites — exactly true:**
+**154 → 155 (+1 net)** concealing **−4 EventBridge Rules / +5 Scheduler schedules**, with the delta
+doc naming **13 stale registry rows** behind it and closing *"count-only parity would pass close to
+green while the route identities are wrong."*
+
+> **So LAW 3 is the BEST-EVIDENCED law in the corpus — measured on live AWS, not asserted — AND it is
+> one of the three that did not make the operative Rules list.** The corpus proves a law rigorously
+> and then drops it from the list an agent executes. **That single result makes F-2 materially
+> stronger, and it was unreachable without the CALL 2 authorization.**
+
+**CORRECTION TO MY OWN ASSESSMENT**, recorded rather than folded in silently: *"strongest in prose,
+weakest where prose becomes an artifact"* is true of the **generalized method layer** and **not** of
+the `case_study/` evidence, which practices the claim contract better than the method's own templates
+require (`N/O` for unobservable, *"associated upper bounds, not attribution"*, SHA-256 baseline pin,
+exact windows). **The defect is localized to the generalization, not to the work it generalizes
+from.**
+
+**F-15** filed: **11 of 51** `case_study/` files are duplicate copies — **45 distinct documents in 51
+files** — all byte-identical today and therefore primed to diverge silently on the first single-copy
+edit.
+
+## Final coverage
+
+**All 72 files audited at some depth.** 21 read in full; all 51 `case_study/` sized and
+content-hashed, with the trigger-map pair read substantively against a numeric claim. **I did NOT
+read all 11,880 `case_study` lines and do not claim to have.** The one gap declared this morning that
+I could not close myself is **closed**.
+
+*(Method note, kept because it is the session's own subject: the commit that was to carry this
+section **correctly refused** — I had written a commit message describing log edits I had not yet
+made. A message is not a change, and the gate caught the gap between them.)*
