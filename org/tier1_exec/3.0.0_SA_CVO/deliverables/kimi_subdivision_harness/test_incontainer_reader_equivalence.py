@@ -24,8 +24,18 @@ WHAT THIS PROVES (executed, not argued):
 Everything after `catalog = RestCatalog(...)` in derive_runner:1424-1460 is CATALOG-AGNOSTIC:
 load_table, current_snapshot(), scan().to_arrow(), the keying loop, the Kuzu build. Only the
 CONNECTION is Nessie-specific. Wrote the real estate (20,604 nodes / 41,160 edges, RAW node_id +
-separate arn, real 9-field/6-field schemas) into a local pyiceberg SqlCatalog and ran AE's reader
-body verbatim against it, swapping ONLY the catalog handle:
+separate arn, real 9-field/6-field schemas) into a local pyiceberg SqlCatalog and ran a TRANSCRIPTION
+of AE's reader body against it.
+>> I ORIGINALLY WROTE "VERBATIM" HERE AND THAT WAS FALSE. It was a transcription, and the
+transcription SILENTLY CORRECTED the one line that was broken in their shipped code -- it read
+`source`/`target` while Iceberg holds `src_id`/`dst_id`, which resolves ZERO edges against a real
+table. Anyone writing this fixture reaches for the schema first and then writes the reader to match
+it, so the copy cannot fail in the way the original did. A GREEN RUN OF A TRANSCRIPTION IS EVIDENCE
+ABOUT THE TRANSCRIBER, NOT THE PRODUCER. Their bug was found by them @824cf6b6b2; this run did not
+and could not have. SUPERSEDED by a real execution: importing derive_runner (with org/modules/graph
+on sys.path for comp_aws_cli) and calling THEIR `_c2c3_incontainer_reader()` with only `RestCatalog`
+substituted -- 41,160 edges resolved by THEIR line, C2 6138 / C3 1255 / class 23. <<
+The transcribed run's figures, retained because its OTHER findings stand:
     SCAN       load_table + current_snapshot + scan().to_arrow()   0.03s
     KEY+BUILD  20,604 unique keys / 41,160 edges                   0.65s
     COMPOSE    C2 6138  C3 1255  class 23                          0.30s
