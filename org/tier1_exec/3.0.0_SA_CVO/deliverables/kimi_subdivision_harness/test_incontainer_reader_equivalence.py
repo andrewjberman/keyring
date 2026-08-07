@@ -20,8 +20,24 @@ WHAT THIS PROVES (executed, not argued):
   * the composition returns IDENTICAL figures to the comp-kuzu path:
         6,138 instances | 6,657 rows | 23 class | 1,255 structures | 8,978 CONTAINS edges
 
+>> UPDATE 2026-08-07 -- THE ICEBERG SCAN *IS* NOW EXERCISED, and it was never VPC-blocked. <<
+Everything after `catalog = RestCatalog(...)` in derive_runner:1424-1460 is CATALOG-AGNOSTIC:
+load_table, current_snapshot(), scan().to_arrow(), the keying loop, the Kuzu build. Only the
+CONNECTION is Nessie-specific. Wrote the real estate (20,604 nodes / 41,160 edges, RAW node_id +
+separate arn, real 9-field/6-field schemas) into a local pyiceberg SqlCatalog and ran AE's reader
+body verbatim against it, swapping ONLY the catalog handle:
+    SCAN       load_table + current_snapshot + scan().to_arrow()   0.03s
+    KEY+BUILD  20,604 unique keys / 41,160 edges                   0.65s
+    COMPOSE    C2 6138  C3 1255  class 23                          0.30s
+    END-TO-END Iceberg -> Kuzu -> composition                      0.99s
+    vintage stamped from REAL Iceberg snapshot ids (7891676592218021200 / 9020091458538502682)
+    MATCHES CANONICAL 6138 / 1255 / 23
+That independently confirms AE's ~1.0s end-to-end figure, and it exercises the vintage_fn path with
+ACTUAL snapshot ids rather than injected strings.
+
 WHAT THIS DOES *NOT* PROVE -- stated so nobody reads it as full coverage of item 5:
-  * the ICEBERG SCAN itself (pyiceberg RestCatalog against Nessie) is NOT exercised. In-VPC only.
+  * the NESSIE REST CONNECTION and S3-as-storage-backend are still unexercised -- genuinely in-VPC.
+    That is now the ONLY unexercised piece of the reader, down from "the whole scan".
   * `--build the image and run it` is not done here. This is the callee, not the deployment.
   * the rows fed in are already key-normalised (the local DB's node_id IS the key), so the main
     equivalence run does not exercise the raw-Iceberg -> key derivation. `test_keying()` below
