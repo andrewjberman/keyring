@@ -168,6 +168,67 @@ field-grain value flow.
 complete over ONE edge type is not complete over the population, and the two are byte-identical when
 the scope noun is dropped.)*
 
+## FINAL PASS — the predicate applied, and a SECOND stale figure, drifting the OTHER way
+
+CTO~D re-aimed the open item using the discriminator above — *"the sweep worth running is not 'all
+rails' but every declaration naming a nullable field"* — a much smaller and better-aimed denominator
+than a rail-wide audit. Applied:
+
+**The whole at-risk set is THREE declarations** (`grep -c 'props\.'` = 2, plus `:303`'s named-field
+population claim). All three measured against the 961 census:
+
+| line | declaration | measured | verdict |
+|---|---|---|---|
+| `:322` | *"the graph SERIALIZES `props.kind` as `recompute/guarded` (slash)"* | live values are exactly `passthrough`/`rename`/`recompute/guarded` | **HOLDS** |
+| `:303` | *"884/961 FLOWS_TO carry a non-null `dstField`"* | **961/961** | **STALE — the gap CLOSED** |
+| `:321` | *"`props.condition` carries the guard. LIVE: 482/961."* | 23/482 (4.8%) | **FAILS** |
+
+**I audited my own predicate before claiming a ratified figure had moved**, because here I was the
+likely source of error: `dstField` key absent **0**, `None` **0**, empty string **0**, literal `"null"`
+**0**, whitespace-only **0** — **961 real values across 386 distinct strings**. And the control: **the
+same predicate on `condition` returns 23**, so it is not a predicate that always passes. The bank is
+internally consistent at its own vintage — `884 + 77 = 961`.
+
+### F-5 — A DECLARED COVERAGE GAP HAS SILENTLY CLOSED, AND THE RECORD STILL SHOWS IT OPEN
+
+`:330` `coverage_boundary` — *"**77/961 FLOWS_TO carry no dstField** — coarser-than-field flow; grain
+read as artifact."* **Measured today: 0/961. The 77-edge gap is CLOSED.**
+
+**This is a different failure from `:321`, and the direction is what makes it matter.** `:321`
+**overstates** capability. `:330` **understates** it — **a reader planning work off the bank today
+would scope a 77-edge field-grain remediation that no longer exists.** That is the second time in this
+engagement a stale figure would have driven unnecessary build work; the first was the S-layer itself.
+
+### THE SHARPER DISCRIMINATOR — **STAMPED vs UNSTAMPED**, and it beats mandatory-vs-optional
+
+| block | vintage-stamped? | outcome |
+|---|---|---|
+| `:301` `edge_grain_binding` | **YES** — `# denominators printed (comp-kuzu 2026-07-23)` | `:303` is stale **but HONEST** — it tells you when it was true. **Not a defect.** |
+| `:326` `coverage_boundary` | **NO** | `:330` has gone **FALSE** and says nothing about when it was measured |
+| `:318` `edgekind_semantic` | **NO** | `:321` **FAILS**; `:319`/`:320` happen to still hold |
+
+> **BOTH errors live in the two UNSTAMPED blocks. The one STAMPED block ages honestly.**
+>
+> **A published figure with a measurement vintage degrades into a dated fact. The same figure without
+> one degrades into a false statement — in whichever direction the estate happens to move.** Stamping
+> does not keep a number true; it keeps a number *honest about being old*, which is the only property
+> a hand-copied denominator can actually hold.
+
+**This is CLAUDE.md's own frozen-not-live class**, one rail over — the same reason that file refuses to
+print a comp-tool count and defers to the gate that maintains it.
+
+**Refinement to the gate candidate CTO~D is taking to Andrew** (theirs to propose, not mine to build):
+key it on **an unstamped population figure**, not only on a nullable-field mechanism claim. The two
+predicates catch different things and both are cheap — *nullable-field* catches a claim that was
+**never** true; *unstamped* catches a figure that has **stopped being** true. `:321` is the first,
+`:330` is the second, and only the union catches both.
+
+**And credit where the bank earns it: none of this would be checkable if it did not print its
+denominators in the first place.** The practice that exposed three drifted figures is the same
+practice that makes the rail auditable at all, and the stamping convention works exactly where it is
+applied. **The remedy is to extend an existing good habit to two blocks that lack it — not to install
+a new one.**
+
 ## SCOPE BOUND — stated so it is not over-quoted
 
 **Edge types swept: `FLOWS_TO` (961, census) and `PROP_PASSES` (1382, census).** Both complete, not
