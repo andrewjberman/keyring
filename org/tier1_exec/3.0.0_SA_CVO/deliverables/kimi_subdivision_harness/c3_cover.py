@@ -27,10 +27,12 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+BASH = os.path.join("C:" + os.sep, "Program Files", "Git", "bin", "bash.exe")
 REPO = r"C:\Users\AndrewBerman\Desktop\ajb_workspace"
 GEN = os.path.join(REPO, "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
                    "deliverables", "NFRA_MOTIF_P1_canonical_ab_catalog.py")
@@ -68,6 +70,27 @@ def main() -> int:
     anchors_by_domain, hub_types = ruled_catalog()
     doc = json.load(open(args.src, encoding="utf-8"))
     instances = [n for n in doc["nodes"] if n["props"].get("grain") == "instance"]
+
+    # ---- INPUT FRESHNESS. Carrying a vintage forward is honest; not CHECKING it is not. ------
+    # This whole build exists because a July artifact was consumed as if it were current. Stamping
+    # the input's snapshot on the output preserves provenance but WARNS NOBODY -- a reader sees a
+    # coherent, correctly-provenanced structure layer and no signal that it describes a graph that
+    # has since moved. The freshness verdict is therefore EMITTED, not just printed.
+    live = subprocess.run([BASH, ".tools/comp-kuzu", "MATCH (n:CloudNode) RETURN count(*) AS n"],
+                          cwd=REPO, capture_output=True, text=True, timeout=600)
+    live_out = (live.stdout or "") + "\n" + (live.stderr or "")
+    lm = re.search(r"nodes snapshot-id:\s*(\S+)", live_out)
+    live_snap = lm.group(1).strip() if lm else None
+    in_snap = (doc.get("graph_vintage") or {}).get("nodes_snapshot_id")
+    if live_snap is None or in_snap is None:
+        freshness = "UNVERIFIABLE -- a snapshot id is missing; treat this layer as UNDATED"
+    elif live_snap == in_snap:
+        freshness = "CURRENT -- input composed against the live graph snapshot"
+    else:
+        freshness = ("STALE -- input snapshot %s, live graph is now %s. These structures describe a "
+                     "graph that has MOVED. Re-run c2_individuate before trusting any count."
+                     % (in_snap, live_snap))
+    print("  INPUT FRESHNESS   : %s" % freshness)
 
     # (domain, anchor_node_id) -> {instance ids}. An instance may join SEVERAL systems: the cover is
     # many-to-many BY DESIGN (overlap-allowed), which is the property a partition cannot represent.
@@ -123,6 +146,7 @@ def main() -> int:
     out = {
         "producer": "3.0.0_SA_CVO c3_cover -- anchor-NODE overlapping-domain-cover (DONE-MEANS item 2)",
         "graph_vintage": doc.get("graph_vintage"),   # carried through: a system inherits its input's
+        "input_freshness": freshness,                # ...and the verdict rides WITH it, not just stdout
         "grounding": {                                # vintage or it is a number with no provenance
             "model": "OVERLAPPING-DOMAIN-COVER, CTO-ruled @f7f21f406; NOT connected-components "
                      "(over-merges to 1 supersystem, @fbfa06590a)",
