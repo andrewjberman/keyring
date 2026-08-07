@@ -229,6 +229,51 @@ practice that makes the rail auditable at all, and the stamping convention works
 applied. **The remedy is to extend an existing good habit to two blocks that lack it — not to install
 a new one.**
 
+## F-6 — THE UNSWEPT EDGE TYPES ARE CLEAN ON COUNT, AND THE SAME UNSTAMPED BLOCK HOLDS A THIRD DEFECT
+
+**Counts: all clean.** Every remaining field-grain count in the bank reproduces exactly against the
+live edge-type census I took earlier: `READS_FIELD` **2110** (`:304`), `HAS_FIELD` **4269** (`:305`),
+`RENDERS` **2447** (`:329`, `:645`), `PROP_PASSES` **1382** (`:646`). **4 of 4 exact.** Combined with
+the three `LIVE: N` claims, **every published count in the bank that I could test is correct.**
+
+**But `:329` contradicts `:138`/`:139`.**
+
+| location | says |
+|---|---|
+| `:329` `coverage_boundary` (**UNSTAMPED**) | *"PROP_PASSES (1382) + RENDERS (2447) carry field-grain flow but are **UNMAPPED relations** … not bound here."* |
+| `:138` `relations` | `consumes: { binds_up: [ …, **RENDERS**], note: "+ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): RENDERS…" }` |
+| `:139` `relations` | `derives-from: { binds_up: [FLOWS_TO, **PROP_PASSES**], … }` |
+| `:645`/`:646` verdicts | `RENDERS { binds_up: consumes, verdict: additive }` · `PROP_PASSES { binds_up: derives-from, verdict: additive }` |
+
+**Both edge types are BOUND in the relations block and declared UNBOUND in the coverage boundary.**
+
+> **I CANNOT DETERMINE FROM THIS FILE WHICH LIMB IS AUTHORITATIVE, and I am not going to pick.** Two
+> readings, with very different remedies:
+> **(a)** `:329` is **STALE** — the ONTOLOGY2 P1 bindings landed and the boundary was never refreshed.
+> **(b)** the bindings **bypassed the ratification chain** that `:329` itself names — a much larger
+> finding about how they landed.
+> Settling it needs the **ratification record**, which is not in this file. **COULD-NOT-VERIFY, with the
+> specific missing evidence named** — routed, not adjudicated.
+
+**What IS determinable, and it is the point:** `c1_frontend_adapter` — the section that supersedes
+`:329` — **carries a vintage** (`:642` *"comp-kuzu @2026-07-23T14:52Z, HEAD current"*). **The STAMPED
+section evolved and stayed coherent; the UNSTAMPED section still describes the world it replaced.**
+That is the stamped-vs-unstamped predicate confirming itself on an instance it was not derived from.
+
+**Block verdict — `coverage_boundary` (`:326-330`), 4 entries, UNSTAMPED:**
+
+| entry | status |
+|---|---|
+| `:327` row grain FORWARD | **likely holds** — consistent with `:299` `row: { forward: true }` |
+| `:328` partition SCHEME FORWARD | **unverified by me** |
+| `:329` PROP_PASSES + RENDERS UNMAPPED | **CONTRADICTS `:138`/`:139`** |
+| `:330` 77/961 no dstField | **FALSE — measured 0/961** |
+
+> **Two of four entries in ONE unstamped block are wrong, and it is the same block both times.** The
+> defect is **CONCENTRATED, not distributed** — which is the strongest argument yet that the remedy is
+> a **refresh-and-stamp of one section**, not a detector over the file. **Every count in the bank is
+> right; what has drifted is one block that nobody re-derives.**
+
 ## SCOPE BOUND — stated so it is not over-quoted
 
 **Edge types swept: `FLOWS_TO` (961, census) and `PROP_PASSES` (1382, census).** Both complete, not
