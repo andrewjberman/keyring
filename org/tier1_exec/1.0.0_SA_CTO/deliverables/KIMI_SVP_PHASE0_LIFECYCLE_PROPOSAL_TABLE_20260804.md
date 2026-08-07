@@ -20,7 +20,7 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 15 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) and **opal-mcp** (PERMANENT + RENAMED from `m365-mcp`) and **macroeconomics** (PERMANENT, MED->HIGH) -- 2026-08-06)
+**SITTING PROGRESS: 16 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) and **opal-mcp** (PERMANENT + RENAMED from `m365-mcp`) and **macroeconomics** (PERMANENT, MED->HIGH) and **market-overview** (PERMANENT) -- 2026-08-06)
 
 > **ROW 13 IS THE FIRST DORMANT IN THIS SITTING, AND DORMANT IS NOT A WEAKER PERMANENT -- IT IS THE
 > MOST DEMANDING VALUE IN THE ENUM.** Read at `NFRA_ONTOLOGY_RULE_BANK.yaml:425-436` AFTER the
@@ -305,7 +305,7 @@ than inheriting my original framing.
 | 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION COMPLETE 2026-08-06 — all four required fields landed, `rearm_condition` ratified by Andrew (*"yeah your understanding is correct"*). See the consequences block below.** `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
 | 14 | **opal-mcp** *(RENAMED from `m365-mcp` — Andrew-direct 2026-08-06, VERBATIM: *"i want to make sure that its named as 'opal-mcp' because it will have more than just m365 and we've already evolved that."*)* | **PERMANENT — RATIFIED 2026-08-06** (Andrew: *"This is all correct"*) | **LIVE ON EVERY LIMB, and the audit lake is checked against a BASELINE rather than one fresh timestamp.** EC2 `m365-mcp-gateway` `i-07dccb1615503ac99` **running** (t4g.nano, up since 2026-06-23); ALB **active** internet-facing -> `mcp.opalinvest.dev` (Route53 ALIAS, OIDC-gated); 2 Lambdas (`m365-otp-liveness`, `m365-ms-ingest-liveness`) + 2 EventBridge rules both **ENABLED** `rate(6 hours)`. **USE SIGNAL: `s3://opal-mcp-audit` = 63,250 objects, newest written MINUTES before the read — and the daily volume is FLAT, not a spike: 1,063 (08-06) / 1,056 (08-05) / 1,038 (08-04) / 1,013 (07-30).** A single fresh timestamp would have been the row-6 mistake in reverse; the baseline is what makes "active" a measurement. Row's own "tools active this session" claim independently RE-CONFIRMED in this seat's session — see the naming note | HIGH | **⚠ THIS IS A PRODUCTION AUTH DEPENDENCY, NOT A DEVELOPER TOOL — the original row described only `/mcp`.** The gateway also serves **`/otp/fetch`**, the one-time-password adapter for Black Diamond login (`BD_OTP_ADAPTER=gateway`, per-firm bearer secrets, its own `otp-liveness.tf`) — **so rows 1 (`advi-bd`) and 2 (`advi-cot`), both already ratified PERMANENT, authenticate their ingest through this box.** A **t4g.nano** is a single point of failure for two ratified advisor-data verticals. Same shape as the `quartz-si2-spike` finding: a label asserting less than the thing carries |
 | 15 | macroeconomics | **PERMANENT — RATIFIED 2026-08-06** (Andrew: *"Agreed move on"*) | **9 CHAINS, 5 LIVE LAMBDAS, 7 EventBridge RULES ALL ENABLED, PORTAL MOUNTED.** Route `/macro` behind `ProtectedRoute` (`App.tsx:25,104,421`). Producers: `fred-data-ingestion` · `fred-macro-ingestion` · `yang-refresh-fred-cache` · `yang-generate-macro` · `yang-generate-macro-timeseries`. Rules: `fred-ingestion-{daily,weekly,monthly-early,-mid,-late}` · `fred-macro-ingestion-daily` · `yang-refresh-fred-cache-weekly`. **SERVED, LIVE-READ (not census): `macro_data.json` 195,921 B @2026-08-06 13:01:38 · `vix_data.json` @13:01:38 · `macro_data_fred.json` @2026-08-06 23:31:43 (~13 min before the read) · `timeseries/*.json` @09:01:45 · `yield_curve_fred.json` @2026-08-05 23:02:30 (matches its own `cron(0 23)`).** ⛔ **THE CENSUS CLAIMED ALL OF THESE WERE 2026-06-14/15 — SEVEN WEEKS STALE. The row's entire prior evidence was the family name "dual-structure (macro-data engine + yang)"** | **HIGH (was MED — rated off a FAMILY NAME, the basis Andrew stopped me from skipping past; see the row-order block)** | ⚠ **DEAD-BUCKET LEG ON A LIVE DAILY LAMBDA — see the row-15 finding below.** Also: TWO copies of the `fred-data-ingestion` source exist (`infra/aws/lambda/...` and `portal/etl/orchestration/green/fred/...`) and they are **NOT identical** (differing md5) |
-| 16 | market-overview | PERMANENT | Portal MO live; spans 4 structures (widest with trade-submission) | HIGH | — |
+| 16 | market-overview | **PERMANENT — RATIFIED 2026-08-06** | **11 CHAINS, 7 LIVE LAMBDAS, MOUNTED at `/market`** (`App.tsx:89`). Producers: `opal-market-overview-tiered-generator` · `opal-market-rsi-tiered-generator` · `opal-market-regime-classifier` · `opal-portal-volatility-fetcher` · the 3 `market-update-*` authoring Lambdas (API-GW, request-driven). Rules `market-rsi-tiered-daily` cron(30 21) + `volatility-daily-update` cron(30 12 MON-FRI), both **ENABLED**. **SERVED, ALL HEAD-OBJECT'D LIVE (census claimed 2026-06-15 for every one — THIRD row confirming that pin): `all-returns.json` @2026-08-06 13:02:49 · `rsi-summary.json` @21:30:36 · `market-regime.json` @13:02:58 · `market-regime-history.json` @13:03:00 · `volatility_data.json` @12:30:34** | HIGH | Two producers (`...-tiered-generator`, `...-regime-classifier`) carry **0 EventBridge invoke statements** and are invoked by the `YangDataPipeline` state machine — **VERIFIED NOT A DEFECT, see the corrected finding below.** ⚠ My near-miss on this row is recorded there rather than here |
 | 17 | mdpf | PERMANENT | Flagship Model Portfolios product, served + verified (v2.1.148 promote arc closed 07-24) | HIGH | MDPF_CANRTE canonical-route redesign + json/mdpf/* teardown PARKED (ETFS CANON) — State watches |
 | 18 | model-portfolios | PERMANENT | SEV1 must-always-be-right portal surface (critical-surfaces.yaml) | HIGH | — |
 | 19 | news | PERMANENT | News pipeline serving; NOTE: news_scanner tree ARCHIVE'd in RCG cycle-3 (interior pruning, not vertical decline) | HIGH | interior pruning underway |
@@ -336,6 +336,68 @@ grounding could have produced it. **The survey's job is to make the row ANSWERAB
 answer it** — and a seat that had proposed values for all 29 would have been most confident exactly
 where it had least standing.
 
+> ## ⛔ ROW 16 — RETRACTED FINDING. I NEARLY FILED A FALSE DEFECT AGAINST FIVE ALREADY-RATIFIED ROWS.
+>
+> **WHAT I REPORTED:** that the `YangDataPipeline` state machine has no schedule — its only trigger
+> an S3 `ObjectCreated` on a `data.pkl` upload — and that this is CLAUDE.md's named
+> *"pipeline whose only trigger is another pipeline's success"* defect, sitting under **rows 7
+> (`cma`), 8 (`correlation`), 11 (`factor-tilts`), 15 (`macroeconomics`) and 16 (`market-overview`)**,
+> all ratified PERMANENT, all portal-served.
+>
+> **ANDREW, VERBATIM 2026-08-06:** *"No this is working properly, the way it works is there is a cron
+> on the sitez terminal device that runs the uploads. we used to have it manual, that is the best we
+> can do thus far with bloomberg restrictions. you can find more info on it by looking into the
+> /terminal-upload process"*
+>
+> **HE IS RIGHT AND THE DESIGN IS CORRECT.** `/terminal-upload` (`.claude/skills/terminal-upload/SKILL.md`)
+> gates on `bloomberg_health` at **`127.0.0.1:8194`** — the Bloomberg DAPI is a **LOCALHOST**
+> dependency on a licensed physical terminal. **The producer CANNOT run in AWS.** So the pull runs on
+> the site-Z terminal box, pushes the PKLs through the portal `/data-refresh` channel, and **that
+> upload firing the Yang pipeline IS the intended contract** — the S3 event I found is the designed
+> handoff between an off-cloud producer and the cloud, not a missing schedule. The schedule exists;
+> it is a **cron on the terminal device**, and it replaced a manual step.
+>
+> ### THE CLASS, AND IT IS THE SHARPEST MEMBER YET — THIRD OF ITS FAMILY
+>
+> | # | instrument | what it cannot see |
+> |---|---|---|
+> | 1 (row 6) | artifact/frontend/queryable-surface checks | **email-only products** — no artifact at all |
+> | 2 (row 10) | `aws events list-rules` | **EventBridge Scheduler** — 16 live schedules, a second API |
+> | 3 (**row 16**) | **BOTH schedule APIs, together** | **a schedule that is not in AWS** |
+>
+> **AND MEMBER 3 IS NOT JUST ONE MORE — IT BREAKS THE PATTERN THE FIRST TWO TAUGHT.** Members 1 and 2
+> are fixed by *reaching for the other instrument*: check the second API, look for the non-artifact
+> product. **Member 3 has no other instrument to reach for, because the boundary is not an API — it is
+> the AWS account.**
+>
+> **I DID EVERYTHING THE DOCTRINE ASKS AND STILL PRODUCED A FALSE FINDING.** Both schedule APIs
+> queried. Both denominators printed (139 rules / 16 schedules). All 16 Scheduler entries listed in
+> full rather than grepped. The state-machine listing positive-controlled — which caught my own
+> case-sensitivity false-absence (`contains(name,'yang')` vs `YangDataPipeline`) before it reached
+> him. The Step Functions definition read directly with a negative control returning 0 so the test
+> demonstrably discriminated. **Every one of those controls fired correctly, and the conclusion was
+> still wrong, because rigor inside the wrong universe cannot find its own boundary.**
+>
+> **This is Rule 23's line one turn inward** — *"THE ESTATE HAS INSTRUMENTS FOR WHAT IS DEPLOYED AND
+> ZERO FOR WHAT IS OURS"* — here: **instruments for what is IN AWS, and zero for what runs OUTSIDE
+> it.** A premise no instrument is pointed at is not a weak claim; it is an INVISIBLE one.
+>
+> ### THE DIRECTION OF THE ERROR IS THE POINT, NOT THE ERROR
+>
+> The lead NEVER-rule names this exactly: **"A FALSE OUTAGE IS NOT A SAFE ERROR: it spends
+> credibility, and it manufactures pressure to 'fix' a pipeline that is working — which is how a guard
+> gets removed."** I was one step from recommending an AWS schedule be added to a pipeline whose
+> trigger correctly lives on the terminal machine — **a duplicate trigger that would fire the Yang
+> chain with no new data behind it.** The remedy would have been the defect.
+>
+> **STANDING, FOR THE REST OF THIS SITTING AND FOR ANY SUCCESSOR: BEFORE CALLING A TRIGGER MISSING,
+> ASK WHETHER THE PRODUCER *CAN* LIVE IN AWS AT ALL.** Vendor-terminal dependencies (Bloomberg DAPI on
+> localhost), licensed desktop software, and human-in-the-loop steps all place a real, working
+> schedule permanently outside every instrument this estate owns. **`comp-estate` correctly showed
+> `yang-pipeline-trigger` as S3-driven — the model was right; my inference from it was wrong.**
+>
+> ---
+>
 > ## ROW 15 — A LIVE DAILY LAMBDA WRITES TO A BUCKET THAT DOES NOT EXIST
 >
 > **GROUNDED ON ALL THREE LAYERS (Rule 22a), because a config read alone would not have earned this:**
