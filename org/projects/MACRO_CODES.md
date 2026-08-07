@@ -124,6 +124,40 @@ cost audits, tooling improvements, and miscellaneous operational tasks.
 
 ---
 
+## Resource Prefix (the DECLARED join key)
+
+Which live-resource name-prefix belongs to each macro. **This is a DECLARATION, not an observation** —
+it is what makes a macro code joinable to the applied plane (lambdas, EventBridge rules, buckets)
+without a name-guessing heuristic. Added 2026-08-07 on Andrew-direct approval ("Approved acrtoss the
+board", ~1940Z, recorded @784e17bb66).
+
+**Why it exists, measured:** the C3.ii declared×applied join (@c4d354d714) found five macro codes
+with **no usable join key at all** — after ambiguous tokens are removed they retain only their own
+4-character code, which never appears inside a resource name. *A key that exists and can never fire
+is not a key.* Their live resources therefore landed in the "undeclared business area" candidate
+pile: **58 of 187 candidates — 31% — were false**, and every added resource type would have scaled
+that noise rather than the signal.
+
+| Code | Resource prefix | Basis |
+|------|----------------|-------|
+| `BDPL` | `bd-` | **MEASURED** — reclaims 28 resources (`bd-49f-*`, `bd-allocation-*`) |
+| `YALP` | `yang` | **MEASURED** — reclaims 22 (`yang-canon-interlock`, `yang-cleanup-uploads`, …) |
+| `SXPL` | `smartx` | **MEASURED** — reclaims 5 (`smartx-ec2-autostart`, `smartx-jwt-refresher`, …) |
+| *all others* | **TBD** | **NOT GUESSED — see below** |
+
+> ⛔ **THE REMAINING ~32 ROWS ARE DELIBERATELY EMPTY, AND THAT IS THE HONEST STATE.**
+> Only three prefixes are derivable from measurement. For the rest, the observed dominant token is
+> *misleading* rather than absent — `ADVI` reads `shared`, `MDPF` and `MKPF` and `TAXX` all read
+> `inf`, `SXIN` reads `fred`, `NPPL` reads `seeking`. Those are first-tokens of sample resources, not
+> identity prefixes, and populating the column from them would produce a **hand-drawn roster wearing
+> a predicate's clothing** — the exact defect this column exists to remove, re-introduced one layer
+> up. A prefix here must be **declared by whoever owns the surface**, not inferred by whoever is
+> measuring it.
+> **An empty cell is a visible hole; a guessed one is an invisible error.** Fill them as owners
+> confirm them.
+
+---
+
 ## Rules
 
 1. All macro codes are exactly 4 characters — no exceptions.
