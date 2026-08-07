@@ -1,6 +1,7 @@
 # DEPLOY-COMPLETION LEDGER — MDPF_CANPLAT cutover bundle (AE~Z)
 
-**Opened:** 2026-08-07 ~03:25Z by `0.7.0_AE_CloudOps~Z` · **Status: OPEN — IN FLIGHT**
+**Opened:** 2026-08-07 ~03:25Z by `0.7.0_AE_CloudOps~Z` · **Status: CLOSED 2026-08-07 ~03:54Z — ALL LEGS LANDED, zero rollbacks used, nothing half-landed.**
+**Close evidence:** emission fire 2 @0bc739e7d green 12/12 (A4 keys 03:52:16-17Z + A6 manifest); publisher first projection 14/14 all_present (D7 manifest 20260807T035246Z-560f0780); platinum served 03:52:48-50Z, global as_of_last 2026-08-05, ruled union rendering verified from the BODY (07-28..30 carried / 07-31+08-03 measured). Andrew's bar (newest data in portal + fully deployed + scheduled) MET; 09:00 ET = first unattended scheduled cycle (rubric adjudication event). Fire-1 L-1 refusal documented in row 4 (fail-closed, served plane untouched, DS one-hop fix @0bc739e7d).
 **Authority:** Andrew-direct completion bar (record @my deliverables 20260807) → COO~Z [DRIVE] GO 032046Z
 (all four legs, in order, now; never-widen embodied: COO + CTO~Z hold the same Andrew broadcast, the
 authorizing word is Andrew's own).

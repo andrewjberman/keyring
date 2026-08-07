@@ -136,3 +136,23 @@ safe-commit → safe-apply → 0-diff → parity → invoke ×2 → characterize
 
 CVO~Z consumed rounds' bodies: R7 first-candidate run @b83fd2485 (timeseries ties exactly); their
 two-clock-paths correction to my A8 read accepted.
+
+## ADDENDUM 3 ~03:55Z — THE CUTOVER: Andrew's bar MET
+
+Andrew-direct completion bar (recorded + broadcast) → COO [DRIVE] GO → all legs landed in one open
+ledger session (20260807_mdpf_canplat_cutover_bundle_AE_Z.md, CLOSED 03:54Z, zero rollbacks):
+1. A8-a redeploy @25b0bb038 (G2 comparator pair packaged, 21 entries).
+2. ATOMIC RE-POINT: floor cron(0 9 * * ? *) America/New_York ENABLED → mdpf-gold-lambda, old target
+   removed same apply (1add/2chg/1destroy). A2 oracle live.
+2b/2c. Union @470788096 (Andrew carry-forward ruling) then fix-pin @0bc739e7d.
+3. P3-1 publisher @c0902245b: D5 unchanged-no-rewrite (latest.json pointer), D7 immutable manifest,
+   D8 bidirectional roster-derived completeness, roster build-copy (S3 leg deleted), 6/6 fixtures.
+4. CUTOVER FIRST EMISSION: fire 1 FAILED CLOSED on the L-1 key-set gate (cottonwood-only
+   _leg_source_key — real shape defect caught pre-serve; DS one-hop fix). Fire 2 GREEN 12/12
+   (03:52:16Z, incl. the 12th via in-run sidecar rebuild). Publisher projected 14/14 all_present
+   (03:52:48-50Z). Served body verified: global as_of_last 2026-08-05, 07-28..30 carried /
+   07-31+08-03 measured — the ruled union, no crater.
+Riders: lever-A stood down (CTO retraction; GATE_ENFORCE untouchable); is_floor payload check
+discharged by exercise + hash-tied source; sentinel rider (d) answered positive-controlled (0/17
+consumers, control=2 hits). Tags mdpf-pipeline-v2.3.0 + opal-assets-mdpf-publisher-v2.0.0.
+09:00 ET = first unattended scheduled cycle (rubric adjudication). Probe clocks unchanged.
