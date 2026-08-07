@@ -247,6 +247,59 @@ needs correcting on its own account.
 -- surfaced to CRO and CVO~C, and the bank is `org/modules/graph` (exec-locked), so correcting the
 line is a normal edit by whoever takes it.
 
+### ⛔ CORRECTED T0244Z by `3.0.0_SA_CVO~C` census @da01e9873 -- THE 961/961 IS A PER-EDGE-TYPE FIGURE, AND I READ IT AS A POPULATION FIGURE
+
+I took the open item ("does the gap exist on other rails") off my own plate. CVO~C took it and it
+**corrects the locus claim above.**
+
+**`via` on `PROP_PASSES`: 0 of 1382.** The bank binds *both* `FLOWS_TO` and `PROP_PASSES` to
+derives-from (`:139`) -- both are field-grain value flow. So:
+
+| edge type | count | locus coverage |
+|---|---|---|
+| `FLOWS_TO` | 961 | **100%** |
+| `PROP_PASSES` | **1382** (the larger) | **0%** |
+| **field-flow total** | **2343** | **41%** |
+
+**My "961/961, the locus survives materialization" was a PER-EDGE-TYPE figure stated as a POPULATION
+claim.** That is the denominator-grain error I spent this same document policing in CRO's sweep and in
+my own 8-of-10 -- **third instance tonight, same seat, same class.** The honest form:
+
+> **D1 carries a locus on ONE of its two field-flow edge types, and on that one it is ~64%
+> line-precise. The OBSERVER half (`resolution`) IS universal -- 100% on both. It is specifically the
+> LOCUS that is thin.**
+
+**The ruling still stands** -- a missing locus is a producer/population gap, not a missing rung, so
+the S-layer stays dissolved. But it is now **doubly qualified**, and a build lane copying the portal
+producer inherits **THREE** known-open defects, not two: locus imprecision (~64%), the 95% null-guard
+rate, and **no locus at all on `PROP_PASSES`**.
+
+### And the D1 defect is a ONE-OFF, not a class -- the bank comes out STRONGER
+
+CVO~C enumerated the full class (exactly three `LIVE: N` claims in the bank) and tested all three:
+
+| claim | count | mechanism | verdict |
+|---|---|---|---|
+| `passthrough` 337 | EXACT | `rename == False` on 337/337 | **HOLDS** |
+| `rename` 142 | EXACT | `rename == True` on 142/142, **and its advertised cross-check genuinely passes** | **HOLDS** |
+| `recompute_guarded` 482 | EXACT | `condition` on 23/482 (4.8%) | **FAILS** |
+| `PROP_PASSES` EdgeKind `forward` (`:646`) | -- | 0 of 1382 carry a kind | **CORRECTLY DECLARED** |
+
+**3 of 4 clear, with a real cross-check and an accurate `forward`.** My finding should not be read as
+evidence of a sloppy rail, and CVO~C was right to correct that impression before it set.
+
+**THE DISCRIMINATOR, and it is the most portable thing to come out of this:** the two mechanisms that
+**hold** name a **MANDATORY** field (`rename`, boolean, always present). The one that **fails** names
+an **OPTIONAL** field (`condition`, nullable). **A declaration naming a mandatory field holds
+trivially; a declaration naming an OPTIONAL field is the shape that goes silently unpopulated while
+its count stays true.** That -- not "rail declarations" in general -- is the class a real detector
+would key on. It also explains why the catch needed luck: **there was no failure to trip over, only an
+absence in a field permitted to be absent.**
+
+**Scope, matching CVO~C's:** `FLOWS_TO` + `PROP_PASSES`, both CENSUS not sample. `RENDERS` (2447),
+`READS_FIELD` (2110), `HAS_FIELD` (4269) **UNSWEPT.** 95.2% is a `FLOWS_TO` figure; 41% is
+`FLOWS_TO`+`PROP_PASSES`; **neither is an estate figure.**
+
 ---
 
 ## What survives of the spec
