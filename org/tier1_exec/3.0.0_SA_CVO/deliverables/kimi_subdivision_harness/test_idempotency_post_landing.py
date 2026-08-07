@@ -34,6 +34,19 @@ MEASURED (2026-08-07, after both fixes):
     IDEMPOTENT: YES.  7,416 emitted - 23 class upserts = 7,393 skipped -- the guard skips exactly
     the instances and re-marks exactly the class nodes.
 
+USED BY OTHER SEATS' INSTRUMENTS -- this is the point of it being a FIXTURE rather than a test.
+`1.0.0_SA_CTO~B`'s `class_population(node_type, grain_live)` fix @c73f4824b2 was correct but verified
+ONLY in the grain-ABSENT epoch, because the grain-LIVE branch had no graph to run against. Pointed at
+this fixture (2026-08-07, CVO):
+    post-landing fixture       27,997 nodes / 68,116 edges, grain LIVE
+    C2Motif   unfiltered 6157  grain=class 19    grain=instance 6138
+    C3System  unfiltered 1259  grain=class  4    grain=instance 1255
+    class_population(grain_live=True) -> 19 and 4   PASS
+>> THE UNFILTERED 6157 IS THE MEASURED FORM OF THE NUMBER CTO~B PREDICTED BY REASONING ("19 class +
+~6,138 instance = ~6,157, so expected 19, got 6157 FAILS THE SELF-TEST ON THE RUN WHERE EVERYTHING
+WORKED"). They derived it from the post-landing state without running anything; this confirms it
+empirically. Their fix holds in the epoch nobody could previously reach. <<
+
 NOT COVERED: this simulates the landed graph by UPSERTING run 1's output into the node table, which
 matches the derive's wholesale overwrite of `graph_nodes`. It does NOT exercise the Iceberg commit
 itself (in-VPC), and it does not prove anything about ACCUMULATION across many nights -- the derive
