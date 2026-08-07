@@ -127,7 +127,28 @@ the tooling does not enforce it. That gap is what nearly landed a half-deploy to
   pre-state ETag `56a03a14...`, key-exists update, not a first-mint).
 - **49F custody basis is now declared and asserted as** `s3-monolith-silver` /
   `schwab/08242234/silver` / `fact_rps_s2` / `net_mv_plus_cash`.
-- **Expected at the next fire: NO CHANGE to any served 49F custody value** (0 of 439 dates differ).
+
+⛔ **CLOSE-STATE, STATED PRECISELY (amended 2026-08-07 ~2250Z on MSTR's correction): the fix is
+CORRECT AND VERIFIED, and it is NOT YET REACHING THE PRODUCTION PATH.** It is landed in git, deployed
+to the S3 scripts, deployed to the S3 config, and QA-verified — **but the 09:00 ET floor runs
+`mdpf-gold-lambda`, which carries its own EMBEDDED copies of every module and config, so the repoint
+reaches production ONLY when that package is re-cut** (Terraform-only, CTO's lane: package +
+recorded sha256). **Do NOT read this TO as complete-and-live.** MSTR first framed the re-cut as
+"hygiene / a normal item" and then corrected it: **it is the step that makes the fix REAL, and
+"unhurried" is not "optional."** Recorded here because I spent this session insisting a record must
+not run ahead of its measurement, and that standard applies to my own closure claim first.
+
+⚠ **AND WHAT MY QA ACTUALLY PROVED, re-framed by CTO's later ruling:** the EC2 leg I verified is
+**CUTOVER RESIDUE, not a production path** — `scheduled-floor.tf:128` names itself "cutover leg 2,
+same-apply atomic swap," the starter's `ScheduleExpression` is null on an INF marker dead since
+07-31, and the instance is stopped. It is being **retired, not fixed** (R-19/R-20 ordering, reader
+before object). So my QA run exercised the only path my change could actually reach — a sanctioned
+ad-hoc QA read, and still the right call — but it is **not** evidence about the 09:00 production
+path. Two different claims; I am not letting one stand in for the other.
+
+- **When the re-cut does land: NO CHANGE to any served 49F custody value** (0 of 439 dates differ,
+  comparator negative-controlled). That measured zero is what makes the timing genuinely relaxed
+  rather than merely hoped-for — but it is a statement about the DELTA, not about the fix being live.
 - **Banked, not chased** (per the make-a-plan-then-review rule): no EventBridge rule schedules the
   MDPF path -- 139 rules materialised client-side, and `mdpf-daily-refresh-trigger` carries
   `ScheduleExpression: None`. Consistent with an EC2-side cron, which is the path I verified.
