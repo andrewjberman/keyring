@@ -377,6 +377,80 @@ hours.** A pin protects the clause it is attached to and nothing else.
 
 ---
 
+## 3b. `case_study/` — the 51 files, audited under Andrew's CALL 2 authorization
+
+> **Authorized 2026-08-07 ~1915Z** (*"Recs are approved go ahead"*, recorded @`fbf4a18120`): **one
+> audit-only read.** The held-out fence is **NOT discharged** and nothing below widens it. This closes
+> the coverage gap §1 declared.
+
+**Coverage, precisely:** all **51** sized and **content-hashed**; the trigger-map pair read
+substantively against a numeric claim; the remainder surveyed structurally. **I did not read all
+11,880 lines and do not claim to have.**
+
+### F-15 · MEDIUM · 11 of 51 files are duplicate copies — byte-identical *today*
+
+Content-hash census, denominator printed: **5 distinct documents are stored at 2–3 paths each,
+accounting for 11 file-instances.** The 51-file set holds **45 distinct documents.**
+
+```
+ADVI_PERFORMANCE_SCHEDULING_ASSESSMENT_20260806.md    3 copies  (06_, 07_, root)
+ADVI_PERFORMANCE_CLEANUP_AND_REPLACEMENT_PLAN_...md   2 copies  (07_, root)
+ADVI_PLATINUM_AGENTIC_QUERY_INDEX_STRATEGY_...md      2 copies  (08_, root)
+DATA_ANALYTICS.A1_serverside_groupD_..._manifest.md   2 copies  (07_, 08_)
+PLATINUM_OUTPUT_CONTRACT_49F_20260715.md              2 copies  (07_, 08_)
+```
+
+**All five are byte-identical right now — which is the better case and also the reason this is worth
+filing.** Identical copies carry no contradiction today and **acquire one on the first edit to any
+single copy**, silently, with nothing in the tree recording that siblings exist. **4 of the 6 files
+in `01:64-71`'s "Durable ADVI source set" are among them**, so the case study's own named source list
+points a reader into the duplicated set without saying which path is canonical.
+
+*(Method note: my first census loop re-ran `find` once per hash and timed out at 2 minutes. It had
+already emitted the substantive result, but the tool call died mid-section — my inefficiency, and the
+reason the same-basename check below is derived from the hash census rather than from that loop's
+unfinished output.)*
+
+### ✅ WHAT HELD, and it is the strongest verification in this audit
+
+**`01:38`'s claim — *"The baseline and delta had near-equal trigger totals while identities and fields
+drifted"* — is exactly true, and its own evidence is better than the claim.**
+
+| | 2026-07-29 baseline | 2026-08-06 live | delta |
+|---|---:|---:|---:|
+| EventBridge Rules | 143 | 139 | **−4** |
+| Scheduler schedules | 11 | 16 | **+5** |
+| **Total triggers** | **154** | **155** | **+1** |
+
+**A +1 net conceals a −4/+5 route migration.** And the delta doc pushes further than `01` reports:
+`trigger-map.json` claims `142 + 12 = 154` against a live `139 + 16 = 155`, so *"the near-equal total
+masks **13 stale rows** — four map-only identities, five live-only identities, and four surviving
+names with stale fields"* — closing with *"count-only parity would pass close to green while the
+route identities are wrong."*
+
+> ## ⛔ AND THIS SHARPENS F-2 CONSIDERABLY
+> **Law 3 — *"trigger counts are not trigger identity parity"* — is the single best-evidenced law in
+> the entire corpus.** It is not asserted; it is measured, on live AWS, with both totals, the route
+> movement underneath them, a named stale-registry count, and an explicit statement of what a
+> count-only check would have concluded.
+> **And it is one of the three laws that did not make the operative Rules list** (F-2), surviving
+> only as half of an unnumbered prose sentence at `SKILL.md:53`.
+> **The corpus proves a law rigorously and then drops it from the list an agent executes.**
+
+**Also holding — the case-study evidence practices the discipline better than the method's own
+artifacts require.** The baseline map states its metric definitions and their limits (*"counts target
+invocations, not unique source events"*), marks per-schedule counts **`N/O` (not observable)** rather
+than allocating them from a group total, labels resource counts *"associated upper bounds, not
+attribution to one trigger"*, pins the baseline by **SHA-256**, and declares an exact measurement
+window. **That is the claim contract of `evidence-model.md`, honoured — by documents the method's own
+templates would not have compelled it from.**
+
+**This forces a correction to §5's assessment**, recorded rather than quietly folded in: my
+*"strongest in prose, weakest where prose becomes an artifact"* is true of the **generalized method
+layer** (`00`/`02`/`skill/`/`templates/`) and **not** of the `case_study/` evidence, which is strong
+in exactly the way the method asks for. **The defect is localized to the generalization, not to the
+work it generalizes from** — which is a narrower and more useful statement than the one I filed.
+
 ## 4. WHAT HELD — claims I tried to break and could not
 
 Recorded because a one-sided audit is not a measurement.
