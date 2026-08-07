@@ -72,6 +72,36 @@ INVALID_ACTION (instrument discriminates). head-object shows metadata sha256 + A
 design — COO accepted that split explicitly. P3-1 staged: GO condition half-met (config ✓; P1-1 A4
 emission pending).
 
+## ADDENDUM ~02:25Z — Andrew-direct un-park: P1-2 EXECUTED (deployed UNWIRED + QA invokes)
+
+Full arc after the park: Andrew-direct un-park (015029Z via CTO~Z/COO~Z) → P1-2 executed same hour.
+CTO qa-local ruling (015625Z) → my measured STOP on the QA step (handler had no output redirect,
+:753-766 vs :769-778) → DS~Z one-liner + re-close @4e628802f → COO wholesale-pin ruling → ONE deploy
+at the re-pin (nothing was held; the affordance landed before my first apply).
+
+- **Deployed:** mdpf-gold-lambda @a4d71e954 + IAM fix @202a8f24a, tag v2.2.0. UNWIRED proven live
+  (get-policy ResourceNotFound, event-source-mappings 0). 3-leg hash parity. Two applies, both 0-diff
+  after. 09:00 ET fires the OLD chain alone (option-a answer, COO-accepted).
+- **Package:** build_package.py assembles FROM THE PIN (19 entries; caught validate_interpolated_backfill
+  as a contract-list gap). Layer mdpf-gold-calendar-deps (pmc<5 pin; pandas/numpy excluded to protect
+  the base layer ABI). Adjacency exercise FROM the built artifact: 2/2 roster readers PASS.
+- **QA invokes (qa_local → /tmp, zero S3 writes PROVEN by listing):** run1 6/12 + 3 errors; QA CAUGHT A
+  REAL IAM GAP (mdpf_aggregate_aua reads opal-data-mdpf/mdpf/feeds/* — second bucket my grounding
+  missed) — fixed, simulate- AND exercise-verified (run2 errors reduced to [cottonwood, global]).
+  Those two are a CHARACTERIZED QA-mode seam (dry_run skips the stage write the family sequence
+  reads back — log-proven), NOT product logic; DS's module seam, reported not changed.
+- **Residuals routed (COO+CVO notified same turn):** candidate bodies/hashes cannot escape the sandbox
+  (dry_run skips conditional_put); 12/12 local emission blocked by the same seam. Options named.
+
+## Compiler Tools (addendum)
+
+| Tool | Purpose | Result |
+|---|---|---|
+| comp-blast opal-assets-mdpf-portal-publisher | P3-1 Phase-1 | ≥10 downstream (lower bound), caller = 09:50 scheduler |
+| comp-routes behaviors | P3-1 Phase-1 | no CF masking finding on the platinum path |
+| commit-gate.sh build_package.py | Rule 14 | PASS (1 non-ASCII WARN fixed) |
+| Raw aws (rail-checked): simulate ×12, head-object, get-function-configuration, get-policy, list-event-source-mappings, list-objects-v2, logs filter-log-events, lambda invoke ×2 | 22a live primitives + QA evidence | all cited in RAVC-4; comp-iam necessary-not-sufficient held |
+
 ## Next steps (clock-bound, tomorrow 2026-08-07 morning)
 
 1. **P0-2R probe, 08:05–08:40 ET** (wake Monitor `bylqhag3z` armed, fires 12:05Z): re-ground the live
