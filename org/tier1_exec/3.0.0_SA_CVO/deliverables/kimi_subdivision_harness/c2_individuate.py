@@ -113,6 +113,59 @@ def run_rows(query, aliases):
     return rows, 0
 
 
+def detector_types(specs):
+    """The node_types any detector can match -- a PREDICATE over the catalog, never a hand-list.
+
+    A hand-drawn roster silently freezes while the catalog moves, and then the coverage
+    denominator is wrong in the flattering direction ("a predicate is not a roster").
+    """
+    types = set()
+    for spec in specs:
+        for sub in (spec.get("subqueries") or [{"constituents": spec["constituents"]}]):
+            for _alias, nt in sub["constituents"]:
+                if nt:
+                    types.add(nt)
+        # polymorphic aliases carry ntype=None; recover them from the query's own type predicates
+        for q in ([spec["query"]] if spec.get("query") else
+                  [x["query"] for x in spec.get("subqueries") or []]):
+            types |= set(re.findall(r"node_type='([A-Za-z0-9_]+)'", q))
+    return types
+
+
+def coverage_triple(specs, members_seen, side_of_member):
+    """X covered / Y in detector scope / Z on the side -- per substrate_side.
+
+    THREE figures, not two. X/Y alone reports a complete-looking layer over a partial substrate:
+    individuating today's matches yields ~100% of what the detectors REACH while leaving most of
+    the frontend untouched, and without Z that reads as done (contract req 4a).
+    """
+    dtypes = sorted(detector_types(specs))
+    rows, _ = run_rows(
+        "MATCH (n:CloudNode) WHERE n.layer IN ['aws','pipeline','portal','ms'] "
+        "RETURN n.node_id AS id, n.layer AS L, n.node_type AS T", [])
+    z, y = Counter(), Counter()
+    dset = set(dtypes)
+    for r in rows:
+        side = side_of(r.get("L"))
+        if not side:
+            continue
+        z[side] += 1
+        if r.get("T") in dset:
+            y[side] += 1
+    x = Counter()
+    for nid in members_seen:
+        s = side_of_member.get(nid)
+        if s:
+            x[s] += 1
+    out = {}
+    for side in sorted(set(list(z) + list(y) + list(x))):
+        out[side] = {"covered_X": x[side], "in_detector_scope_Y": y[side], "on_side_Z": z[side],
+                     "pct_of_scope": round(100.0 * x[side] / y[side], 1) if y[side] else None,
+                     "pct_of_side": round(100.0 * x[side] / z[side], 1) if z[side] else None}
+    out["_detector_types"] = dtypes
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -125,6 +178,7 @@ def main() -> int:
     side_tally = Counter()
     status_tally = Counter()
     members_seen = set()
+    member_side = {}
     dropped_ragged = 0
     skipped_ragged = 0
     rows_seen = 0
@@ -184,9 +238,30 @@ def main() -> int:
                     edges.append({"source": mid, "target": nid, "edge_type": "CONTAINS",
                                   "props": {"layer": "C2i->C1"}})
                     members_seen.add(nid)
+                for a in aliases:
+                    if row.get(a):
+                        member_side[row[a]] = side_of(row.get(a + "__L"))
                 per_family[spec["id"]] += 1
                 side_tally["+".join(sorted(sides)) or "NONE"] += 1
                 status_tally[status] += 1
+
+    # ---- ITEM 4: mark the EXISTING class nodes grain:class ------------------------------------
+    # They are NOT deleted -- they are the VOCABULARY the classification pass writes INTO, and the
+    # canonical ontology's own population_law is `canon-first-debt-subset` (the six detector motifs
+    # are "valid AS deviation motifs", just not the primary population). Marking them makes that law
+    # QUERYABLE, which today it is not: a comp-kuzu query returns C2Motif with full provenance and
+    # nothing saying which population it belongs to.
+    DEBT = {"SilentDisplayFork", "CrossFirmAsymmetry", "HardcodedFirmLiteral",
+            "DeadComponent", "OrphanEndpoint", "RenderWithoutNullGuard"}
+    cls, _ = run_rows("MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] "
+                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm", [])
+    class_marked = 0
+    for r in cls:
+        nodes[r["id"]] = {
+            "node_id": r["id"], "node_type": r["T"],
+            "props": {"grain": "class",
+                      "population": "debt" if r.get("nm") in DEBT else "canon"}}
+        class_marked += 1
 
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
@@ -200,16 +275,18 @@ def main() -> int:
                                       "an estate fact"),
         },
         "counts": {
-            "c2_motif_instances_distinct": len(nodes),
+            "c2_motif_instances_distinct": len(nodes) - class_marked,
             "contains_edges": len(edges),
             "distinct_members": len(members_seen),
             "by_family": dict(per_family.most_common()),
             "by_substrate_side": dict(side_tally.most_common()),
             "by_side_status": dict(status_tally.most_common()),
+            "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side),
+            "class_nodes_marked_grain_class": class_marked,
             "rows_seen": rows_seen,
             "rows_skipped_ragged_unparsed": skipped_ragged,
             "rows_dropped_no_members": dropped_ragged,
-            "collapsed_duplicate_member_sets": rows_seen - len(nodes),
+            "collapsed_duplicate_member_sets": rows_seen - (len(nodes) - class_marked),
         },
         "nodes": list(nodes.values()), "edges": edges,
     }
@@ -217,14 +294,22 @@ def main() -> int:
         json.dump(doc, fh, indent=1)
 
     print("C2 INDIVIDUATION -- one node per MATCH")
-    print("  DISTINCT instances : %d   (was 19 class nodes)" % len(nodes))
+    print("  DISTINCT instances : %d" % (len(nodes) - class_marked))
+    print("  class nodes marked grain:class : %d" % class_marked)
     print("  CONTAINS edges    : %d over %d distinct members" % (len(edges), len(members_seen)))
     print("  DENOMINATOR rows seen: %d" % rows_seen)
     print("  rows SKIPPED unparsed: %d   rows dropped no-members: %d" % (skipped_ragged, dropped_ragged))
-    print("  duplicate member-sets COLLAPSED: %d" % (rows_seen - len(nodes)))
+    print("  duplicate member-sets COLLAPSED: %d" % (rows_seen - (len(nodes) - class_marked)))
     print("  by substrate_side : %s" % dict(side_tally.most_common()))
     print("  by side_status    : %s" % dict(status_tally.most_common()))
     print("  by family         : %s" % dict(per_family.most_common(5)))
+    print("  COVERAGE TRIPLE (X covered / Y in detector scope / Z on side):")
+    for side, t in doc["counts"]["coverage_triple_by_side"].items():
+        if side.startswith("_"):
+            continue
+        print("    %-10s %6d / %6d / %6d   %s%% of scope, %s%% of side"
+              % (side, t["covered_X"], t["in_detector_scope_Y"], t["on_side_Z"],
+                 t["pct_of_scope"], t["pct_of_side"]))
     print("  -> %s (%.1f KB)" % (args.out, os.path.getsize(args.out) / 1024))
     return 0
 
