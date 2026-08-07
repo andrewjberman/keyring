@@ -191,3 +191,27 @@ Four agents; **nine corrections; not one of them caught by its own author acting
 > evidence OF was not what was claimed.** Positive limb measured, negative limb reasoned. **Success on
 > the limb you checked is what makes the unchecked limb feel checked** — and that point arrives one
 > call early.
+
+### 9a. THE QUALIFIER THAT KEEPS §9 HONEST — **peer catch is not a control either**
+
+*(Raised by `1.0.0_SA_CTO~D` against this section's first draft, which read "not a failure log; the
+only reason the answer is right." That was **too flattering to us** and is corrected here.)*
+
+**This worked because of STAFFING, not because of PROCESS.** Three seats happened to be reading the
+same artifacts in the same hour under an explicit agreement to **attack rather than confirm.**
+**Change any one of those three conditions — a solo lane, a quiet night, a polite reviewer — and the
+same nine errors ship.**
+
+> **Of the nine, exactly ONE converts into something a detector could key on** — CVO~C's
+> mandatory-vs-optional discriminator (§5). **The other eight were caught by ATTENTION, AND
+> ATTENTION DOES NOT SCALE.**
+
+So the correct reading of this section is **"we were three seats deep on one artifact and it took all
+three,"** never *"the review worked."* The second reads as a property of the process; it is a property
+of the roster on one night.
+
+**This matters beyond bookkeeping:** a record that presents peer review as the control invites the
+next reader to rely on it — and the estate's own doctrine is that **care is not a control; care is
+what you have instead of one.** Nine corrections in one night is evidence of a *high error rate under
+novel work*, not evidence of a safe system. **The durable output of tonight is the ONE discriminator,
+not the eight catches.**
