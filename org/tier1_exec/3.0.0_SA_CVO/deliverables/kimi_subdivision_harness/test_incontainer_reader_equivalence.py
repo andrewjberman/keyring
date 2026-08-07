@@ -43,9 +43,21 @@ Independently reproduced here on the same graph: nodes 0.5s + edges 0.1s, and th
 figures are IDENTICAL through the bulk path (6138/6657/1255/8978) -- a speedup that changes the
 answer is not a speedup. End-to-end is now ~1.0s.
 BOTH large numbers in this path were artifacts of HOW, not costs of WHAT.
-STILL UNMEASURED: the ICEBERG SCAN (in-VPC only) and the Iceberg COMMIT of the landed layer -- and
-per the footprint below that commit is an EDGE-volume problem, which is now the largest unmeasured
-thing in the landing.
+THE ICEBERG COMMIT IS NOT AN EDGE-VOLUME PROBLEM -- I SAID IT WAS, AND I WAS WRONG. Measured
+2026-08-07 against a LOCAL pyiceberg SqlCatalog with the real 9-field/6-field derive_runner schemas:
+    nodes append ( 7,416 rows) : 0.15s
+    edges append (26,956 rows) : 0.03s
+    TOTAL                      : 0.18s
+    on-disk parquet + metadata : 0.5 MB   (the envelope JSON is ~9.8 MB -- parquet is ~20x smaller)
+    READBACK CONTROL           : 7,416 and 26,956 rows scanned back -- a fast write that lost rows
+                                 is not a fast write.
+I had published "edges dominate at 3.6x, so the commit is an edge-volume problem" to two seats. That
+was an INFERENCE FROM A ROW COUNT, and the measurement falsifies it: 26,956 edges are trivial to
+serialize. Whatever the in-VPC commit costs is S3/Nessie NETWORK AND CATALOG latency, which at this
+scale is roughly independent of these row counts.
+
+WHAT THIS LOCAL MEASUREMENT DOES NOT COVER: the S3 PUT leg and the Nessie REST commit round-trip. It
+measures serialization and write, not network. The SCAN remains in-VPC-only and unmeasured.
 
 FOOTPRINT the landed layer adds to the graph:
     C2  6,161 nodes + 17,978 edges | C3  1,255 nodes + 8,978 edges
