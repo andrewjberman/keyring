@@ -214,4 +214,128 @@ above are correct; that one printed sentence was not. Stated rather than quietly
 implements them — S1 is greenfield, per the state-coherence finding), the C1 aggregation of R1, and
 any claim about the *portal* TS toolchain outside the stub. **Those remain DESIRED-plane.**
 
+---
+
+# ADDENDUM — CRO ATTACK POINT 4: DOES THE PORTAL POPULATION ACTUALLY WORK?
+
+CRO's reframe rests on *"do for Python what portal already does."* They measured **961/961 FLOWS_TO
+carrying a `via` locus and a `resolution` observer** and correctly flagged that as a **COMPLETENESS**
+figure, not a **CORRECTNESS** one. This is the correctness audit.
+
+## F-3 — THE FIELD PAIRS ARE GOOD. THE LOCI ARE NOT. And that split is the worst possible one for this plan.
+
+**Method.** 400 FLOWS_TO edges pulled (of 961); 400/400 carried a parseable `file:line`; **35 distinct
+files**. Sample = **first edge of each distinct file, alphabetical — SYSTEMATIC, never hand-picked**
+(a hand-chosen sample measures the auditor). For each, I opened the file at the claimed line and asked
+whether it performs the claimed `srcField -> dstField`.
+
+**NEGATIVE CONTROL (mandatory, and it is what makes the number mean anything):** the same predicate run
+at 81 unrelated lines in the same files fired **2 of 81 = 2.5%**. Against a 64% hit rate, **the
+predicate discriminates.**
+
+```
+RESULT   hits=9  miss=5  file/line-missing=0   DENOMINATOR=14
+NEGATIVE CONTROL  2 of 81 unrelated lines (2.5%)
+```
+
+**WHERE THE LOCUS LANDS, THE EDGE IS RIGHT — and impressively so.** Not just trivial identity pairs:
+
+| line | claim | reality |
+|---|---|---|
+| `ticker: record.Symbol,` | `Symbol -> ticker` | **rename, correct** |
+| `articleCount: topic.article_count \|\| 0,` | `article_count -> articleCount` | **rename, correct** |
+| `color: getConfidenceColor(data.confidence),` | `confidence -> color` | **recompute through a function, correct** |
+| `timestamp: keywordData?.generated_at,` | `generated_at -> timestamp` | **rename, correct** |
+| `firmId: parseNullable(userData.firmId),` | `firmId -> firmId` | **passthrough-with-coercion, correct** |
+
+**THE FIVE MISSES ARE LOCUS-PRECISION FAILURES, NOT SEMANTIC ONES.** I walked ±6 lines around each:
+
+| locus | claim | the real mapping | offset |
+|---|---|---|---|
+| `aum.ts:368` → `return {` | `period->period` | `total_periods` L370, `latest_period` L372 | **+2 / +4 — and AMBIGUOUS between two** |
+| `BenchmarkHeatmap.tsx:546` → `key={...}` | `primary->borderLeft` | L550 `borderLeft: ...${modelColor.primary}` | **+4 — edge CORRECT, locus off** |
+| `ReturnVolatilityScatter.tsx:354` → **BLANK LINE** | `name->name` | L353 `getModelColor(model.name)` | **−1** |
+| `portal-proxy.ts:607` → **inside a JSDoc `*`** | `bullish->bullish` | **not within ±6 lines at all** | **unlocated** |
+
+**The pattern is legible:** the locus tends to point at the **enclosing construct** — the object
+literal's `return {`, the JSX element's opening — rather than the property line, and in two cases at a
+**blank line or a comment**. A locus on a blank line or inside documentation is not a judgement call;
+**no mapping occurs there.**
+
+> ### WHY THIS IS THE MOST CONSEQUENTIAL RESULT IN THE ADDENDUM
+> **The estate's one worked example of field-grain extraction is STRONG exactly where CRO's layer was
+> REDUNDANT (the field pair, already in D1) and WEAK exactly where his layer CLAIMED ITS VALUE (the
+> line).** `via` at 961/961 is a presence figure; on a discriminating, systematically-sampled,
+> negative-controlled audit it is **line-accurate in 9 of 14**.
+>
+> This does **not** rescue the S-layer — the pair is still already there, and a locus-precision defect
+> is a producer bug, not a missing ontology rung. **But it does mean "copy portal for Python" inherits
+> a locus-precision defect into the exact field the S-layer existed to provide**, and it qualifies
+> CTO~D's "`via` carries the locus, so S dissolves into a D1+D2 query": **it carries A locus, at
+> ~64% line precision in this sample.** Anyone building the Python population should treat locus
+> precision as a known-open defect of the template, not an inherited strength.
+
+**BOUND ON THIS FINDING, stated because the sample is small:** n=14 across 14 distinct files out of 35.
+It is systematic and negative-controlled, but it is **not** a census — **do not quote 64% as an estate
+figure.** It is sufficient to establish that locus precision is **materially below 100% and not
+uniformly reliable**; it is not sufficient to put a number on the population. A real figure needs the
+full 961 audited.
+
+## ⚠ HELD-OUT FENCE — SELF-DISCLOSURE, and a structural tension worth Andrew's attention
+
+**My alphabetical systematic sample put `portal/src/api/endpoints/advisor-intelligence.ts` FIRST** — an
+**ADVI** surface. I read one line at `:833`; it was a code comment, and it scored as a MISS. **I did not
+use it as a vocabulary example and nothing in this audit or my review is shaped by it.** Disclosing
+because the fence's own `obligation_on_every_author` is that an undeclared corpus is indistinguishable
+from a breached one, and this is my corpus.
+
+**Fence-clean figure, ADVI row excluded: 9 hits / 4 misses of 13 — the finding is unchanged.**
+
+**The structural tension, which is NOT mine to resolve:** the portal field population is **one
+population in one directory tree**, and ADVI endpoints sort alphabetically first in
+`portal/src/api/endpoints/`. **Any systematic audit or validation of the portal template encounters
+held-out surfaces immediately, by construction.** So "validate the portal population, then copy it for
+Python" and "do not touch ADVI_PERFORMANCE" are in mechanical conflict — not in principle, but in the
+directory listing. **Surfacing, not adjudicating: it is Andrew's fence.**
+
+## F-4 — THE PORTAL POPULATION'S OWN VALIDATOR COVERS 8 PAIRS
+
+`org/modules/graph/tsgraph_spike/field_parity_check.ts` (64 lines) is a **methodologically strong**
+instrument — it explicitly rejects name-grep (*"grep on the field NAME is ambiguous … the authoritative
+ground truth is findReferences ON THE FIELD SYMBOL"*) and validates against ts-morph symbol resolution.
+
+**But its `SAMPLE` is a HAND-WRITTEN literal of 8 type/field pairs** — `BenchmarkModelData.{name,code,
+returns}`, `ModelPortfolioData.{code,name,returns}`, `BenchmarkPeriodReturn.{spread,model}` — against
+**4,969 `Field` nodes: 0.16%**, all drawn from **two benchmark/model types**.
+
+**So the confidence anyone is entitled to in the portal field population is much narrower than
+`961/961` and `4969` suggest:** a strong method applied to an author-selected 0.16%, plus my
+independent 14-edge locus audit above. **CRO is right to have asked — nobody had checked the thing
+being proposed as the template.**
+
+## Retrieval controls that fired during this addendum (reported because they changed my answers)
+
+- **`MATCH ()-[r:READS_FIELD]->()` → `Binder exception: Table READS_FIELD does not exist`.** The graph
+  is **two generic tables** — `CloudNode` / `CloudEdge` — with the label as a **property**
+  (`edge_type`), not typed relationship tables. My first query shape was unbindable.
+- **`r.label` → `Cannot find property label for r`.** Second control failure; the property is
+  `edge_type`.
+- **Both failed LOUDLY, and that is the point.** On this schema a wrong **property name** errors, but a
+  wrong **label VALUE** in a `WHERE` clause **binds and returns 0 silently.** That is precisely the
+  hazard CRO warned me about — *"a zero from a wrong predicate is byte-identical to a true zero"* — and
+  it is live on this exact schema. **I ran the controls because CRO asked me to ground the class first;
+  I had skipped that step, and the controls caught me twice.**
+- **`CloudEdge` carries exactly 4 properties: `edge_type`, `layer`, `snapshot_ts`, `props`.** No
+  top-level `locus`/`source`/`provenance` column — the locus lives **inside the `props` JSON**, which is
+  where CRO correctly found it and where a column-level check would have falsely reported absence.
+- **Producer-side corroboration of CRO's portal-only zero, independent of the graph and of its
+  vintage:** every emitter of `READS_FIELD` / `HAS_FIELD` / `srcField` / `dstField` / `PROP_PASSES` is
+  `extractor.ts`, `extractor_full.ts`, `field_parity_check.ts`, `comp_recognizers_tsx.py`, or the
+  schema declaration `cse_schema.py`. **Zero Python/AWS/pipeline-side producers emit field grain.** So
+  the zero is not a wrong-predicate artifact — **it has a mechanism: no producer exists.**
+- **`RelationshipDelta` (`cse_schema.py:208`) carries `rtype, target, verb, kind, condition` and NO
+  provenance field.** Provenance is **CSE-scoped, not edge-scoped** — one emission event carries one
+  `Provenance` and may carry N edges. Relevant to R1: the schema supports **one site → many edges**,
+  which is the inverse of R1's **many sites → one edge**.
+
 — 3.0.0_SA_CVO~C
