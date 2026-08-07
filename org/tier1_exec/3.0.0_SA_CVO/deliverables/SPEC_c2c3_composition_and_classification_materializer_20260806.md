@@ -96,16 +96,51 @@ orchestrated-compute: shape: 'Trigger -> Router -> Producer(EC2/StepFn) -> Store
 Each **match** is one C2 motif instance: an ordered set of real node ids. Expected order of magnitude
 **~100+** (Andrew), against today's 19 class nodes.
 - Emit `node_type: C2MotifInstance`, `grain: instance`, `members: [node_id…]`, `family: <yaml key>`,
-  `shape_matched: <template>`.
+  `shape_matched: <template>`, **`substrate_side: [...]`**.
 - **`recurrence` becomes DERIVED** — `count(instances of family F)` — not a hand-written property.
   *(The YAML's `first_pass_recurrence` then becomes a CHECKABLE PRIOR: composition disagreeing with it
   is a finding about one of them, which is the point of keeping both.)*
 
+#### `substrate_side` is DERIVED PER INSTANCE, and it is multi-valued
+`SYSTEM_DEFINITIONS.yaml` v1.8 (`@dcdedf6fe`): a rollup over the substrate axis —
+**BACKEND** (`layer` ∈ {aws, pipeline}) · **FRONTEND** (`layer` = portal) · **KNOWLEDGE** (`layer` = ms).
+
+```
+substrate_side(instance) = sorted(set( side_of(m.layer) for m in members ))
+```
+**Derived from the members, never declared, never inherited from the family.** Two instances of one
+family can sit on different sides, and a family-level side would erase that.
+
+>> **AN INSTANCE WITH MORE THAN ONE SIDE IS A SERVE-SEAM CROSSING, AND THAT IS A FINDING, NOT A
+> BOOKKEEPING DETAIL.** Measured at class grain today, exactly ONE motif crosses — `AServeMotif`
+> (CloudFront → ServedURL/Endpoint/DataFetch). **At instance grain the crossings become individually
+> addressable**, which is what F1 is for: `[BACKEND, FRONTEND]` instances ARE the c3.i↔c3.ii bridge
+> the friction battery is meant to watch. **Emit the multi-side set even when it is a singleton** —
+> a one-element list and an absent field must not look alike. <<
+
+*(`semctl` never appears here: it is not a substrate, so it contributes no side. Per SYSTEM_DEFINITIONS
+the C2/C3 nodes take their side FROM THEIR MEMBERS, which is exactly the derivation above. A member
+whose `layer` is absent or unknown lands in a counted `side_unresolved` residue — it is not silently
+assigned.)*
+
 ### Stage 2 — AGGREGATE (deterministic)
-Connected components over motif instances sharing C0 members — the union-find §1 already specifies.
-Emit `node_type: C3StructureInstance`, `grain: instance`, `member_motifs: [instance ids]`.
-**This is the population F1's `structures_touched` should count**, and its size is an OUTPUT, not a
-constant. **Nothing may hard-code 14.**
+
+⛔ **NOT connected-components. That approach is KNOWN-FAILED and I specified it in error.** The
+generator's own commit (`fbfa06590a`) records: *"C3 emergence: connected-components OVER-MERGES to 1
+supersystem — SURFACED to COO… spec 3-5 = overlapping domain cover, a partition cannot represent it."*
+**A partition cannot represent overlap, and this estate's systems overlap.**
+
+**The ruled model is `OVERLAPPING-DOMAIN-COVER`** (CTO-ruled 144621Z, MSTR doctrine-blessed):
+a motif is a MEMBER of a system **iff it contains that system's ANCHOR constituent-type**;
+membership is many-to-many, so a motif may belong to several systems.
+**HUB types are NEVER anchors** — `HUB_TYPES = {LAMBDA, EC2_INSTANCE, actor}` (`:314`), because
+compute transformers touch everything and would merge every system into one. That exclusion is the
+whole reason the model works, and it is a filter on ANCHORING, never on detection.
+
+Emit `node_type: C3StructureInstance`, `grain: instance`, `member_motifs: [instance ids]`,
+**`substrate_side`** — rolled up the same way, from its member motifs' sides.
+**This is the population F1's `structures_touched` counts**, and its size is an OUTPUT.
+**Nothing may hard-code 14.**
 
 ### Stage 3 — CLASSIFY (inferential, one cheap pass)
 For each composed unit, one model call assigns a label **from the canonical vocabulary only** — the
@@ -136,10 +171,21 @@ A label is a naming act; the model proposes from a closed set or it does not pro
    The LLM pass at `temperature: 1` (mandatory for kimi-k3) is **not** reproducible, which is exactly
    why its output is fenced behind `kind: inferential` and confined to a label field. **No
    deterministic figure may ever depend on a Stage-3 value.**
-4. **DENOMINATORS ON EVERY STAGE.** `composed N instances of M candidate paths scanned`;
-   `aggregated K structures over N instances`; `classified P of K, R rejected as off-vocabulary`.
-   A stage that produces zero says so with its denominator — an empty composition and an unrun
-   composition must not look alike.
+4. **DENOMINATORS ON EVERY STAGE, AND EVERY ONE IS SIDE-SCOPED.**
+   `composed N instances of M candidate paths scanned`; `aggregated K structures over N instances`;
+   `classified P of K, R rejected as off-vocabulary`. A stage that produces zero says so with its
+   denominator — an empty composition and an unrun composition must not look alike.
+   **PLUS the coverage triple, per side, on every emission:**
+   `covered X nodes of Y in detector scope, of Z on this substrate_side`.
+   >> **A SINGLE ESTATE-WIDE COVERAGE FIGURE IS PROHIBITED.** Measured 2026-08-06: BACKEND
+   > **2,693/3,396 = 79.3%**, FRONTEND **1,495/11,338 = 13.2%**. **Their average, 38.4%, describes
+   > NEITHER population** — it is the number I reported before the split existed, and it made a
+   > 96.6%-covered pipeline and a 0%-covered ms look like one moderately-covered estate. This is
+   > `substrate_side`'s load-bearing clause in `SYSTEM_DEFINITIONS` and it binds here first. <<
+4a. **THE THIRD FIGURE IS NOT OPTIONAL.** `Y` (nodes in detector scope) and `Z` (nodes on the side)
+   are different denominators, and reporting only `X/Y` makes a complete-looking instance layer over
+   a partial substrate. **Individuating today's matches yields 100% of what the detectors reach and
+   ~13% of the frontend** — without `Z` that reads as done.
 5. **WRITE PATH.** Node properties into `graph_nodes` via the existing loader (`kuzu_nessie_load.py`
    MERGE semantics). **`comp-kuzu` auto-refreshes on HEAD advance, so a schema addition lands
    estate-wide the moment it is written — additive properties only; no re-typing of existing nodes.**
