@@ -602,6 +602,22 @@ def main() -> int:
                         best.append((n, lines[n - 1]))
                     if len(best) >= 3:
                         break
+            # THE PINNED LINE ITSELF IS ALWAYS SHOWN, AND FIRST.
+            # RESIDUAL FOUND BY TRIAL-1's POST-FIX RE-VERIFICATION (0.8.0_AE_CloudComp~A,
+            # 2026-08-07): `--at 23` on a file whose line 23 IS the answer pinned the right section
+            # and then excerpted lines 1/3/4 -- the section's opening DOCSTRING. Defect B was "a pin
+            # renders nothing"; this is its sibling, "a pin renders the WRONG lines", and it is
+            # arguably worse: nothing is visibly empty, whereas wrong prose reads as an answer.
+            # --at is not a ranking hint, it is the user stating WHICH LINE THEY MEAN. Honouring the
+            # section but not the line answers a question adjacent to the one asked -- the
+            # ADJACENT-QUESTION failure in this tool's own docstring, committed by the tool.
+            # NOT a relevance heuristic and NOT scorer tuning: it encodes nothing about what an
+            # answer looks like, it obeys an explicit instruction.
+            if at_line is not None and s["start"] <= at_line <= (s["end"] or s["start"]):
+                if at_line - 1 < len(lines):
+                    best = [(n, ln) for n, ln in best if n != at_line]
+                    best.insert(0, (at_line, lines[at_line - 1]))
+                    best = best[:3]
             best.sort(key=lambda t: t[0])
             for n, ln in best:
                 shown_lines.add(n)

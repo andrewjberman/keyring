@@ -456,5 +456,30 @@ def test_M_pinned_zero_overlap_section_still_renders_verbatim_lines(tmp_path, mo
     assert "qqq rrr sss" in salient, "pin rendered a header with no excerpt beneath it"
 
 
+def test_M_pin_shows_THE_PINNED_LINE_not_the_sections_opening_prose(tmp_path, monkeypatch, capsys):
+    """--at N must show LINE N, not the section's first lines.
+
+    RESIDUAL found by TRIAL-1's post-fix re-verification (0.8.0_AE_CloudComp~A, 2026-08-07): on a
+    real file whose line 23 WAS the answer, `--at 23` pinned the right section and excerpted lines
+    1/3/4 -- the opening docstring. Sibling of defect B and arguably worse: an empty pin is visibly
+    empty, whereas wrong prose READS AS AN ANSWER.
+
+    MUTANT this kills: removing the at_line promotion block -- the zero-overlap fallback then fills
+    `best` with the section's first non-blank lines and every other assert still passes, which is
+    exactly how the original defect hid.
+    """
+    src = ("# Doc\n"
+           "\n"
+           "**Section.** opening prose alpha\n"
+           "more filler prose beta\n"
+           "yet more filler gamma\n"
+           "THE_PINNED_ANSWER_LINE delta\n")
+    p = _write(tmp_path, "pin2.md", src)
+    _rc, out = _run(monkeypatch, capsys, p, "--for", "zzz_no_overlap", "--at", "6")
+    salient = out.split("SALIENT")[1]
+    assert "THE_PINNED_ANSWER_LINE" in salient, "pin showed the section's opening, not line 6"
+    assert " 6: " in salient, "the pinned line number was not rendered"
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
