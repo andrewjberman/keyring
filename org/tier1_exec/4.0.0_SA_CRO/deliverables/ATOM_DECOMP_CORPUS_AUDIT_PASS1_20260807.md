@@ -166,8 +166,23 @@ claim contract, frontier expansion) that the law list never elevated. **Each lis
 other's characteristic content**, which is a Rule-24 intent-coherence break rather than an oversight:
 they were built to answer different questions and are both presented as *the* rules.
 
+> ## ⚡ AMENDMENT TO THE RULING — `1.0.0_SA_CTO`, after this table was measured
+> **The method owner amended its own ruling rather than defending it, and the amendment is recorded
+> beside the original reasoning deliberately, so a future reader sees both.**
+>
+> **ORIGINAL:** *"`SKILL.md:10-21` IS THE OPERATIVE LIST"*, on executable-vs-description reasoning.
+> **AMENDED:** *"designating `SKILL.md` operative is **necessary and not sufficient** — any
+> ratification must **EXPLICITLY carry laws 3/4/5 forward or explicitly retire them by name.
+> Silence on them is not adoption, it is loss.**"*
+>
+> **Why it needed amending:** the executable-vs-description reasoning still holds, but it was formed
+> before the delta was measured **bidirectionally**. Because the two lists are not
+> list-plus-omissions, *"adopt `SKILL.md`"* on its own **silently drops three epistemic laws** —
+> including **law 3, which §3b measures as the single best-evidenced law in the corpus.**
+
 **⛔ NOT RATIFIED, NOT APPLIED, NOT MERGED.** The decision — one list, and which content survives into
 it — is Andrew's. It is cheap to rule once with this table and expensive to unpick if guessed.
+**And per the amendment, a ratification that does not name laws 3/4/5 is not a ratification of them.**
 
 ### F-3 · MEDIUM-HIGH · The method's first repository instruction is gate-DENIED in this estate
 
