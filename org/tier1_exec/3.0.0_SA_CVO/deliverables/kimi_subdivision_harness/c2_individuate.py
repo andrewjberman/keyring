@@ -146,7 +146,31 @@ def catalog():
             if depth == 0:
                 break
         i += 1
-    specs = eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    try:
+        specs = eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    except SyntaxError as e:
+        # A TRUNCATED catalog escapes as SyntaxError, NOT as a declared exception -- and truncation
+        # is the MOST LIKELY corruption in a container: a partial COPY, a truncated layer, an
+        # interrupted write. Measured 2026-08-07: of four corrupt-catalog shapes, three refused
+        # cleanly and the truncated one raised SyntaxError straight through.
+        # Same defect class as the FileNotFoundError escape fixed earlier today: a caller following
+        # the DOCUMENTED contract (`except CompositionInputMissing`) would not catch it. That is the
+        # WHOLE basis for this fix and it needs no help.
+        #
+        # WHAT THE ESCAPE ACTUALLY LOOKED LIKE, measured rather than characterised (0.7.0_AE_CloudOps
+        # challenged my first, overstated version of this comment and was right to):
+        #     SyntaxError: unterminated string literal (detected at line 6) (<string>, line 6)
+        # `eval()` here is handed a raw SLICE, not something compiled with a filename, so Python
+        # reports `<string>` -- the catalog path is NOT in it. A SyntaxError from a file-compiled
+        # source DOES carry the filename for free; this one cannot, because there is no file object
+        # in the call. So the escape was not "generic" (it named a parse failure and a line) but it
+        # did not name WHICH file, and the derive runs several evals.
+        # The fix adds the path explicitly. That is a real but MODEST gain -- stated at its true size,
+        # because a fix defended by a defect it does not have is a liability to the fix.
+        raise CompositionInputMissing(
+            "catalog is CORRUPT or TRUNCATED (%s at %s) -- the AB_CATALOG list does not parse. "
+            "In-container this usually means a partial COPY, not a bad catalog." % (e, catalog_path())
+        ) from e
     if not specs:
         # A catalog that PARSES to zero detectors composes zero instances and looks exactly like an
         # estate with no motifs. Refuse at the input, where the cause is still visible.

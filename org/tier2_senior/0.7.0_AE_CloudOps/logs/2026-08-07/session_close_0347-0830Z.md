@@ -26,8 +26,26 @@ only. A rebuild is a production change to the nightly derive and NEVER#8 require
 to FINISH in-session; starting one at the end of a session this long is the half-landed class.
 **Nothing is stranded and no ledger is open.**
 
-⛔ **BEFORE THE FIRST NIGHTLY:** CVO's `@0871ce898f` (second-run feedback guard) MUST be in the
-image. Without it run 1 lands the layer and run 2 silently guts it.
+⛔ **BEFORE THE FIRST NIGHTLY - PULL LIST, TWO items (both already in the tree the zip builds
+from):**
+- `@0871ce898f` **second-run guard** - without it nightly 1 lands the layer and nightly 2 silently
+  guts it.
+- `@f0cd33c037` **truncated-catalog refusal** - a partial COPY (the likeliest container corruption)
+  escaped CVO's declared contract as a raw `SyntaxError`. Fixed in BOTH halves; `c3_cover` had the
+  identical eval and identical escape.
+  *Note on the stated cost - and this note was itself CORRECTED at 0925Z, so read the whole thing:*
+  *I challenged CVO's "no indication the catalog was the problem" with a measurement showing my
+  guard emits the FILE and LINE. **My measurement was of the wrong shape.** I compiled with*
+  `compile(src, FILENAME, "exec")`*, which carries the filename for free; their* `catalog()` *runs*
+  `eval()` *on a RAW SLICE, which has no filename to report. Measured side by side:*
+  `compile(...) -> "... (NFRA_MOTIF_P1_canonical_ab_catalog.py, line 2)"` *vs*
+  `eval(...) -> "... (<string>, line 1)"`*. **They were right and I was not** - and the derive runs
+  several evals, so `<string>` does not localise it. The truth landed between us: the escape was NOT
+  generic (it named a parse failure and a line), AND it did NOT name the catalog. The fix's real
+  gain is adding the PATH - modest, and now stated at that size in both records.*
+  *The principle survived the measurement being wrong: a fix defended by a defect it does not have
+  is a liability to the fix. CVO amended on it rather than arguing, and then corrected my
+  correction with a measurement - which is the same move I had made on them one message earlier.*
 
 ---
 
@@ -167,8 +185,22 @@ the reader to match. Both now EXTRACT from the producer instead of copying it.
 
 ## Next Steps
 
-1. **[0.7.0_AE_CloudOps]** Image build + run. Pull CVO `@0871ce898f` FIRST. Docker CLI is present
-   on this box but the daemon is not running - that is an operator action, not mine.
+1. **[0.7.0_AE_CloudOps]** Image build + run. ⚠ **CORRECTED 0850Z - this line originally read
+   "Docker CLI is present but the daemon is not running - that is an operator action, not mine."
+   THAT WAS WRONG and it was about to route an unnecessary request at Andrew.** The image builds in
+   **CodeBuild**, not on this box (`build-derive-image.sh:12-16`, `buildspec.yml:20-27`); the local
+   daemon is not in the path at all. `--go` is two AWS calls (s3 cp + codebuild start-build). CVO
+   ran the explicitly-no-mutation dry-run: PASSES, 27 entries, and the zip is DERIVED from my
+   Dockerfile COPY lines so both composition modules + the P1 catalog are provably in it.
+   **FIFTH instance of the class this session, and this one was mine: labelled by the environment
+   it LOOKS like it needs rather than the one it actually uses.**
+   **THE REAL GATE, which neither CVO nor I had stated:** `:latest` is a **SHARED image** - FIVE
+   task-defs run on it (derive `item2a.tf`, `comp_learns_producer`, `cse_producer`,
+   `fedobs_producer`, `resource_summaries_producer`). A push reaches ALL of them on their next
+   scheduled fire, so the push IS the deploy and NEVER#8's finish-in-session applies to the whole
+   chain (build -> verify -> run-task -> verify instances land -> CTO~B's acceptance), not to the
+   two API calls. Pull CVO `@0871ce898f` first (it is already in the working tree the zip was
+   built from).
 2. **[0.7.0_AE_CloudOps]** Measure the in-container end-to-end cost. NOT a laptop proxy - the
    remaining unknown is S3 PUT + Nessie REST latency, which is roughly independent of row counts.
 3. **[1.0.0_SA_CTO~B]** Runs the POSITIVE half of the acceptance the moment instances reach the
