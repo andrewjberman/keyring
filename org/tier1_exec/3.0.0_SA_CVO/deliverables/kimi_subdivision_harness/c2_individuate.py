@@ -257,8 +257,14 @@ def coverage_triple(specs, members_seen, side_of_member, query_fn=None):
         out[side] = {"covered_X": x[side], "in_detector_scope_Y": y[side], "on_side_Z": z[side],
                      "pct_of_scope": round(100.0 * x[side] / y[side], 1) if y[side] else None,
                      "pct_of_side": round(100.0 * x[side] / z[side], 1) if z[side] else None}
-    out["_detector_types"] = dtypes
-    return out
+    # RULE 24 (ii), SAME GRAIN -- and this line violated it. `_detector_types` is a GLOBAL list;
+    # every other key here is a PER-SIDE record. Mixing a file-level value in beside cohort-level
+    # values on one axis is exactly the postulate I have been applying to other seats' schemas, and
+    # it is not cosmetic: any consumer iterating the sides hits a list where it expects a dict. My
+    # OWN audit script crashed on it, which is the demonstration -- a naive
+    # `for side, t in triple.items(): t["on_side_Z"]` raises TypeError on the fourth key.
+    # Returned as a SIBLING instead, so the axis holds exactly one grain.
+    return out, dtypes
 
 
 def graph_vintage(vintage_fn=None):
@@ -463,6 +469,7 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         side_tally["+".join(pr.get("substrate_side") or []) or "NONE"] += 1
         status_tally[pr.get("side_status")] += 1
 
+    _cov_triple, _cov_dtypes = coverage_triple(specs, members_seen, member_side, query_fn)
     _vintage = graph_vintage(vintage_fn)
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
@@ -500,7 +507,8 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
             "instances_with_any_unresolved_member": sum(1 for n in nodes.values()
                                                         if n["props"].get("members_unresolved", 0) > 0),
             "by_side_status": dict(status_tally.most_common()),
-            "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side, query_fn),
+            "coverage_triple_by_side": _cov_triple,
+            "coverage_detector_types": _cov_dtypes,   # SIBLING, not mixed into the per-side axis
             "class_nodes_marked_grain_class": class_marked,
             "rows_seen": rows_seen,
             "rows_skipped_ragged_unparsed": skipped_ragged,
@@ -549,8 +557,6 @@ def main() -> int:
     print("  by family         : %s" % dict(per_family.most_common(5)))
     print("  COVERAGE TRIPLE (X covered / Y in detector scope / Z on side):")
     for side, t in doc["counts"]["coverage_triple_by_side"].items():
-        if side.startswith("_"):
-            continue
         print("    %-10s %6d / %6d / %6d   %s%% of scope, %s%% of side"
               % (side, t["covered_X"], t["in_detector_scope_Y"], t["on_side_Z"],
                  t["pct_of_scope"], t["pct_of_side"]))
