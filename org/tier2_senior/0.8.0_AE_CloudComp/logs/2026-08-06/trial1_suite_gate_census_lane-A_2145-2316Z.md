@@ -263,6 +263,95 @@ specimen was needed — is theirs and I am not restating it as mine.
 **Ownership after validation:** F1 needs an owner and it is neither of us. Defects A and B are the
 author's. The 61-battery enrollment map and its 9.4-min cost remain the gate owner's scoping call.
 
+## POST-TRIAL VERIFICATION AMENDMENT (2026-08-07 ~0015Z) — the tool moved after the measurement
+
+**The trial deliverables above are NOT rewritten and must not be.** They measure `comp-read` at
+`@c2b6e828d`/`@fb67da754`. The tool has since changed. Two dated states, both legible, is the record;
+a trial report edited to match a tool that moved after the measurement is no longer a measurement.
+*(Issuer concurs: "Correct, and do not.")*
+
+### V1 — a position changed under an agent who was acting on it
+
+At ~2323Z the issuer wrote *"neither is fixed yet, and I am not fixing them ahead of Andrew's read."*
+At **2333Z** they landed `@1e9d2e59d2` fixing both, and sent no notice. Andrew then instructed me to
+carry the blind-spot finding to them; I checked the tool before writing and found it already fixed.
+**I nearly sent a finding about a tool state that no longer existed.**
+
+Their reasoning for changing position (Andrew's hold is on ROLLOUT; refusing to fix their own tool
+would manufacture a gate on their own work) is sound and I do not dispute it. The issuer names the
+failure precisely and owns it: **a change of position is not complete until the people acting on the
+old one are told.** Recorded here as a fabric-level lesson, not as a grievance — the cost was one
+re-run, and the only reason it was not a false report is that I checked the artifact before writing
+about it (Rule 22a: never trust a producer's self-report *or its absence*).
+
+### V2 — what the fix actually closed, measured
+
+Same corpus, 93 files / 17,300 lines.
+
+| | in NO section | share |
+|---|---|---|
+| pre-fix (my AST model of `_scan_tree`, issuer source-confirmed) | 7,159 lines | **41.4%** |
+| post-fix `@1e9d2e59d2` (parsed from the tool's own SHAPE output) | 1,189 lines | **6.9%** |
+
+**Recovered: 5,970 lines.** Pre-fix, **93 of 93** files had at least one unreachable module-level
+import; 28 had >50% of the file dark; worst 95.3%.
+
+**Caveat, unlaundered: the two figures come from two different instruments** — mine modeled the
+sectioner, the post figure reads the tool's real output. The comparison rests on the issuer's source
+confirmation that `_scan_tree` collected exactly `FunctionDef`/`AsyncFunctionDef`/`ClassDef`.
+
+**The reframe was the load-bearing part.** It was never an *import* blind spot — it was a
+**module-level code** blind spot, imports being one resident. A fix scoped to the narrow framing would
+have closed ~6 lines per file, left ~40% dark, and been declared complete.
+
+### V3 — defects verified against the live binary, not the self-report
+
+- **Defect B (pin renders nothing): CLOSED.** `--at 70` on the gate now renders `WATCH_EXACT` verbatim.
+- **R2 (pin renders the wrong lines): CLOSED `@31a646c4c`**, verified on my exact original call —
+  `--at 23` now emits `AUTHORITATIVE 23: import boundary_report as B  # noqa: E402`.
+- **R1 (engine-phrased question does not surface the import): NOT a ranking defect — REPRODUCED and
+  RE-DIAGNOSED.** The issuer built an IDF-weighting fix on a principled hypothesis, **measured it,
+  found it did not fix the case, and discarded it — nothing landed.** The real cause is **zero lexical
+  overlap**, which I re-derived independently rather than accepting: tokenising lines 1–25 and
+  checking each query token of *"what module does this test exercise"* — `what`/`module`/`does`/
+  `this`/`test`/`exercise` — **all six are absent** from the header's token set. The answering text is
+  `import boundary_report as B`. **No term-weighting scheme can rank a section with no matching
+  terms; the score is 0 by construction.**
+
+**So R1 is not fixable within the tool's ruled constraints** — bridging question-vocabulary to
+answer-vocabulary is semantic matching, and the millisecond budget rules out embeddings. That is a
+different and more useful statement than "not fixed."
+
+### V4 — the HUD conclusion REVERSES, and I am recording it because honesty is symmetric
+
+My §TOOL TRIAL item 5 said: do not wire the HUD until the import blind spot is fixed, because a panel
+that consistently omits the answer is worse than none. After V3 I narrowed that to: the *ranking*
+still misses on engine-shaped phrasing. **Both were reasoning from the `--for` path. The HUD does not
+use it.**
+
+Measured: `comp-read <file>` with **no** `--for` prints `SALIENT: (no --for question given; pass one
+to rank regions)`. **SALIENT does not render at all.** The surviving panels — SHAPE, QUALIFIERS,
+CONTRADICTIONS, UNREAD LEDGER — are **query-independent**, and are precisely the two I independently
+rated as the tool's real value.
+
+**And bare SHAPE on the F1 file prints `39-170 module __main__ entry -- module-level execution`** —
+it states the file is a script, with no question asked. **The HUD condition would have handed me F1
+directly**, which I found by counting test definitions by hand.
+
+**Therefore R1 does not bear on the HUD at all, and my objection to wiring it is withdrawn.** It
+bears on manual `--for` use, where the mitigation is that the user can rephrase — and I did: *"what
+does this file import"* ranks the header #1 at score 1.46.
+
+⚠ **The one open unknown, stated rather than papered over: this assumes the HUD renders the
+no-query form.** If it instead auto-generates a question from agent context, **R1 returns in full**,
+because a generated question is exactly the case where the user cannot rephrase. **That is an
+unmade design decision, and it is the decision that determines whether R1 matters.** It is not mine
+to make and I am not making it.
+
+**Net for the rollout call:** the question is no longer *"is comp-read broken"* but *"is a
+phrasing-dependent ranked panel worth surfacing by default"* — and if the HUD ships query-less, that
+question does not arise, because the ranked panel is not what ships.
+
 ## Blockers
 
 None. Both deliverables complete; RAVC closed by the issuer.
