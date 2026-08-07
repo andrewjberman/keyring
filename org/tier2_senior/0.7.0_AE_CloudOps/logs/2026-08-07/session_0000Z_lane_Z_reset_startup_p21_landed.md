@@ -115,3 +115,24 @@ at the re-pin (nothing was held; the affordance landed before my first apply).
 2. **P0-7R enumeration riding the 09:00 ET production cycle**: S3-pull pattern (Rule 12), hashes +
    denominators, snapshot ID cited not re-minted, cycle-no-fire = NOT-RUN. No teardown.
 3. P3-1 build-prep/reading continues as time allows; NO DEPLOY until COO GO.
+
+## ADDENDUM 2 ~03:05Z — QA rounds 2-4 (the re-pin cadence): 6/12 → 11/12
+
+Round cadence with DS~Z, each: their re-close → my one-command rebuild → upload+verify → TF env pin →
+safe-commit → safe-apply → 0-diff → parity → invoke ×2 → characterized report. Commits @87f2b7b74
+(@bd69bb150), @c84af97f5 (@17210490a), +r4 (@387da6e1a). Zero S3 writes proven after every round.
+
+- R2 (@bd69bb150, qa_return_bodies + in-memory family): 6 bodies OUT via response; A8 business-content
+  PASS 6/6 w/ localising mutant control; cottonwood NoSuchKey persisted one hop deeper (bdmp→slice S3
+  handoff) — inference corroborated by the dim partition frontier (date=2026-08-05), confirmed by DS.
+- R3 (@17210490a, vintage pin): NoSuchKey CLOSED; new terminal = cottonwood IDENTITY tie-out LOUD-fail
+  (delta 1,299,645.78 > 0.02) — my cross-vintage inference confirmed-and-sharpened by DS at source
+  (holdings leg only).
+- R4 (@387da6e1a, family rides anchor value_date): **11/12, cottonwood fully lit**, identity clean.
+  A8 11/11 business-identical; new clock path enumerated (source_vintage_last.age_hours_at_generation)
+  → CVO B0 feed. 12th = the declared-window freshness gate REFUSING HONESTLY (account_units sidecar
+  4 TD behind wall-clock frontier at 23:00 ET) — a working control, not a defect. Round-5
+  frontier-pin question with DS; 11+CNV-vs-12/12 decision with COO.
+
+CVO~Z consumed rounds' bodies: R7 first-candidate run @b83fd2485 (timeseries ties exactly); their
+two-clock-paths correction to my A8 read accepted.
