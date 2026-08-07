@@ -111,6 +111,28 @@ SYSTEM_DEFINITIONS.yaml"*) still stand, and the §1 claim stands with them.
 adapters"* → *"recognizers on the existing SDK"* (BUILD LADDER rung 2). §3.3 still says *build a new
 site record*. The correction has not reached it.
 
+> **ADDENDUM — S0 AND S1 ARE IN TWO DIFFERENT STATES, AND THE NAMING ACT SHOULD SAY SO.**
+> `1.0.0_SA_CTO~D` verified this finding at their own seat before letting it anchor a naming act, and
+> found a half neither of us had stated. **Their finding, re-derived at mine with a positive control
+> run first:**
+>
+> | sweep (`org/modules/graph` + `infra/system/sdk`) | count |
+> |---|---|
+> | `class Site` — **positive control, must be ≥1 or the sweep is broken** | **2** |
+> | `class Binding` / `class Bindings` | **0** |
+> | landed object carrying all five S1 axes | **0** (`resolution` 0, `identity` 0) |
+> | nearest landed edge object — `RelationshipDelta`, `cse_schema.py:208` | a CSE relationship, **not** an intra-node binding; carries none of the five axes |
+> | `vintage`/`commit`/`sha` in the `Site` span | **0** (control: `locus` hits 2 in the same span) |
+>
+> **So S0 is a landed dataclass needing ONE ADDITIVE FIELD; S1 is a GREENFIELD BUILD.** That is
+> **Rule 24 postulate (iv) STATE COHERENCE**, whose own instruction is to **name which values do not
+> move**: one remedy delivers S0 and structurally cannot deliver S1.
+>
+> **This strengthens the finding rather than qualifying it** — the reason S0 is well-founded is exactly
+> the reason S1 is not yet. **It is not a blocker and does not change the tokens or the ordering**; it
+> changes what Andrew is told the naming act COSTS. Naming both is still available — `forward: true` is
+> the bank's ratified way to carry a declared-but-unpopulated half, which is what S1 would be.
+
 **What is genuinely net-new, after this:** the **five axes**, the **field grain**, and **`vintage`** —
 which `Site` does **not** carry (grep for `vintage|sha|commit` returns the provenance uplift at `:142`
 noting compiler #1's Node has `file_path+sha` but **no line**; the Site itself carries no commit-ish).
