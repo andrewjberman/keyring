@@ -287,7 +287,13 @@ def graph_vintage(vintage_fn=None):
     out = (p.stdout or "") + "\n" + (p.stderr or "")
 
     def grab(pat):
-        m = re.search(pat, out)
+        # re.M IS LOAD-BEARING: `graph_nodes_total` uses a line-anchored `^\s*(\d+)\s*$`, and without
+        # MULTILINE the anchors bind to the whole string, so it NEVER matched and the field read None
+        # on every run since it was written. A provenance field that is silently null is the exact
+        # thing the docstring above warns about, in the same function -- it looks like the tool
+        # declined to answer rather than like the pattern was wrong. Caught by printing the field
+        # beside its siblings instead of reading the code.
+        m = re.search(pat, out, re.M)
         return m.group(1).strip() if m else None
     return {"nodes_snapshot_id": grab(r"nodes snapshot-id:\s*(\S+)"),
             "edges_snapshot_id": grab(r"edges snapshot-id:\s*(\S+)"),
@@ -416,14 +422,33 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
     # nothing saying which population it belongs to.
     DEBT = {"SilentDisplayFork", "CrossFirmAsymmetry", "HardcodedFirmLiteral",
             "DeadComponent", "OrphanEndpoint", "RenderWithoutNullGuard"}
+    # MARKING MUST BE NON-DESTRUCTIVE, AND `props` IS FETCHED FOR EXACTLY THAT REASON.
+    # These 23 ids ALSO come from the two baked spec files, and derive_runner folds sources into a
+    # LIST via append() (:1680) -- not a keyed merge -- with the composed source LAST. So both
+    # entries reach the same list under one node_id and the winner is decided by a downstream dedupe
+    # I have NOT verified. If mine wins and carries only {grain, population}, the baked node's
+    # detector/motif_type/n_instances/plane/recurrence/tier are gone, AND `name` degrades: the fold
+    # computes `name = props.motif_type or props.system_type or node_id` (:1681), so a props-thin
+    # node silently renames itself to its own id.
+    # Carrying the existing props through makes the marking non-destructive BY CONSTRUCTION rather
+    # than by fold order -- grain/population are ADDED to what is already there, so whichever entry
+    # wins, nothing is lost. Depending on a dedupe rule nobody has verified is how the 19/4 frozen
+    # control would have quietly lost its metadata.
     cls, _ = run_rows("MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] "
-                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm", [], query_fn)
+                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm, n.props AS props",
+                      [], query_fn)
     class_marked = 0
     for r in cls:
-        nodes[r["id"]] = {
-            "node_id": r["id"], "node_type": r["T"],
-            "props": {"grain": "class",
-                      "population": "debt" if r.get("nm") in DEBT else "canon"}}
+        existing = r.get("props")
+        if isinstance(existing, str):
+            try:
+                existing = json.loads(existing)          # kuzu stores props as a JSON STRING
+            except (ValueError, TypeError):
+                existing = None
+        base = dict(existing) if isinstance(existing, dict) else {}
+        base.update({"grain": "class",
+                     "population": "debt" if r.get("nm") in DEBT else "canon"})
+        nodes[r["id"]] = {"node_id": r["id"], "node_type": r["T"], "props": base}
         class_marked += 1
 
     # Re-tally sides/status over the DEDUPED instances. The per-row counters above are
@@ -438,10 +463,23 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         side_tally["+".join(pr.get("substrate_side") or []) or "NONE"] += 1
         status_tally[pr.get("side_status")] += 1
 
+    _vintage = graph_vintage(vintage_fn)
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
         "supersedes_shape_of": ["motif_c2c3_materialize.json", "motif_c2c3_materialize_ab.json"],
-        "graph_vintage": graph_vintage(vintage_fn),
+        # TOP-LEVEL SNAPSHOT IDS -- the key placement the derive's stamp reads.
+        # derive_runner's fold does doc.get("nodes_snapshot_id") at the ENVELOPE level
+        # (0.7.0_AE_CloudOps @596ff69a15, per CTO~B ruling 054045Z), while these lived ONLY nested
+        # under graph_vintage. That reader returned None for both, built an EMPTY stamp, and every
+        # composed instance would have landed with NO derivation provenance -- which by the derive's
+        # own comment makes the acceptance movement test fall back to wall-clock and manufacture a
+        # false NOT-LIVE. Neither side was wrong in isolation: they wrote the reader against a
+        # described envelope, I wrote the envelope before the stamp existed. ADDITIVE on purpose --
+        # graph_vintage stays the richer record (it also carries db_built_at + graph_nodes_total),
+        # so both readers work and nothing downstream has to change.
+        "nodes_snapshot_id": (_vintage or {}).get("nodes_snapshot_id"),
+        "edges_snapshot_id": (_vintage or {}).get("edges_snapshot_id"),
+        "graph_vintage": _vintage,
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",

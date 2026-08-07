@@ -172,6 +172,11 @@ def _cover_impl(doc: dict, live_snap_fn=None) -> dict:
 
     out = {
         "producer": "3.0.0_SA_CVO c3_cover -- anchor-NODE overlapping-domain-cover (DONE-MEANS item 2)",
+        # Same top-level placement as C2, for the same reason: the derive's stamp reads
+        # doc.get("nodes_snapshot_id") at the ENVELOPE level. Carried from the C2 input, so a C3
+        # structure is stamped with the snapshot its own members were composed against.
+        "nodes_snapshot_id": (doc.get("graph_vintage") or {}).get("nodes_snapshot_id"),
+        "edges_snapshot_id": (doc.get("graph_vintage") or {}).get("edges_snapshot_id"),
         "graph_vintage": doc.get("graph_vintage"),   # carried through: a system inherits its input's
         "input_freshness": freshness,                # ...and the verdict rides WITH it, not just stdout
         "grounding": {                                # vintage or it is a number with no provenance

@@ -206,12 +206,93 @@ policy node has no outbound edge to the bucket it governs.** You cannot traverse
 endpoint to the bucket that fills it. **The chain does not reach its consumer surface; it stops one hop
 short at an object that is not the thing being served.**
 
-**THIS IS A NAMING ACT, NOT A BUILD** — and it is already routed (CVO, P0-class, `@81015c354`). All 28
-edges reach a real bucket via `'arn:aws:s3:::' + node_id`; the hop is **DERIVABLE from data already
-present**, and what it needs is an edge-type name (`GOVERNS` / `POLICY_OF` / `APPLIES_TO`) pending with
-Andrew/CTO. **Therefore v2's cost estimate is HELD, not scoped** — scoping a typed-termination build
-around a severed graph would price an instrument that becomes a traversal the moment that edge is
-named.
+**NOT A BUILD — and, corrected 2026-08-07, NOT EVEN A NAMING ACT.** All 28 edges reach a real bucket
+via `'arn:aws:s3:::' + node_id`; the hop is **DERIVABLE from data already present**. CVO initially
+routed three candidate edge names and then **withdrew two of them on checking whether the estate
+already had the term** — it does:
+
+| | verified at source by this seat, 2026-08-07 |
+|---|---|
+| `NFRA_ONTOLOGY_RULE_BANK.yaml:144` | `governs: { binds_up: [GOVERNS], note: "D3: narrow policy/authority -- SPLIT from guards" }` |
+| `:656` | GOVERNS is one of *"the 9 ZERO-LIVE ratified tokens"* |
+| live graph | 53 distinct edge types; **GOVERNS present = FALSE** |
+
+**`GOVERNS` is ALREADY RATIFIED, means exactly "narrow policy/authority," and has never been emitted.**
+A bucket POLICY governing a BUCKET is the textbook instance. **`POLICY_OF` and `APPLIES_TO` are
+WITHDRAWN** — coining either beside a ratified term is the re-coining-a-duplicate class one layer up,
+and offering three options would make Andrew adjudicate a choice the rule bank already made.
+
+**So the ask is a USAGE CONFIRMATION, not a naming act:** *"GOVERNS is ratified and zero-live.
+Emitting it for `S3_BUCKET_POLICY -> S3_BUCKET` closes the served-URL traversal. Confirm that is its
+intended use?"*
+
+⭐ **AND THE ZERO-LIVE STATUS HAS A SOURCE-VISIBLE CAUSE, found while verifying the above.** The rule
+bank guesses the auth family is *"likely a PLANE-VISIBILITY gap"* — but `:146` records something
+concrete: **`OWNED_BY(custody) -> OWNS (RE-POINTED FROM GOVERNS)`** in the 0.4→0.5 bump. **GOVERNS did
+not go unused by accident; its bound token was re-pointed to `OWNS`, leaving it with no inbound
+member.** That is cited, not inferred — and it is a better answer than the plane-visibility guess *or*
+CVO's own "never emitted" hypothesis, which they correctly flagged INFERRED and told me not to carry
+as a cause. ⚠ It explains the vacancy; it does **not** by itself establish that policy→bucket is the
+right occupant. That remains the question for Andrew.
+
+**Therefore v2's cost estimate is HELD, not scoped** — scoping a typed-termination build around a
+severed graph would price an instrument that becomes a traversal the moment a ratified token is
+emitted.
+
+### 4.1a — INDEPENDENT CONFIRMATION LEG (Terraform source, differently derived)
+
+**CVO proposed and I accepted that re-running their `comp-kuzu` query would NOT be a second leg** —
+same tool, same DB, same derivation; a tie would prove the query is deterministic, not that the
+finding is true. The independent leg is the **Terraform source**. Run 2026-08-07:
+
+```
+aws_s3_bucket_policy blocks declared in infra/aws/terraform : 7 files
+of those, blocks naming their bucket                        : 7 of 7
+  bucket = aws_s3_bucket.<name>.id     <- a first-class HCL resource reference
+```
+
+**TF DECLARES the policy→bucket relationship, 7 of 7, in the strongest form the language has. The
+graph carries ZERO such edges.** Two differently-derived legs agree: **the hop is absent from the
+GRAPH, not from the ESTATE.** That is what converts this from a graph-internal oddity into a
+confirmed graph-vs-source divergence.
+
+⚠ ~~**THE COUNTS DO NOT RECONCILE: 7 TF-declared policies vs 28 ServedURL→policy edges.**~~
+✅ **RECONCILED by CVO within the hour of it being flagged, 2026-08-07:**
+
+```
+MATCH (u:ServedURL)->(t:S3_BUCKET_POLICY) RETURN t.node_id, count(u)
+  DISTINCT policy nodes targeted : 1
+  total edges                    : 28
+  opal-data-portal-v2  <- 28 ServedURL(s)
+```
+
+**There was never a discrepancy. My 7 is every `aws_s3_bucket_policy` in the estate; their 28 is the
+served path — and only ONE of those 7 sits on it.** Both numbers were right over **different
+denominators**, which is exactly why they read as a contradiction. *(The candidate I named — "several
+ServedURLs per policy" — was correct; it is 28 per policy, and the other 6 policies never appear on a
+served chain at all.)*
+
+### 4.1b — ⛔ THE REMEDY IS **ONE EDGE**, NOT 28. CVO CORRECTED THEIR OWN FRAMING.
+
+Their original phrasing — *"all 28 seam edges would reach a real bucket"* — counted **traversals
+restored** and reads as **28 missing edges**. Measured, it is **one**:
+
+```
+S3_BUCKET_POLICY  node_id 'opal-data-portal-v2'
+     --[ GOVERNS ]-->
+S3_BUCKET         node_id 'arn:aws:s3:::opal-data-portal-v2'    (EXISTS, verified)
+```
+
+**One edge, and 28 served URLs regain a path to the bucket that fills them.** ⭐ **BOTH ENDPOINT NODES
+ALREADY EXIST** — verified — so this is an **EDGE-creation act, not a NODE-creation act**, and the
+proposed derivation resolves exactly: *policy `node_id` + the `arn:aws:s3:::` prefix IS the bucket
+node's id.* Nothing is created; **one relationship is named between two nodes already in the graph.**
+
+⚠ **WHY THIS CORRECTION IS LOAD-BEARING RATHER THAN COSMETIC: a one-edge remedy and a 28-edge remedy
+are different decisions**, and the inflated phrasing erred in the direction that makes the ask sound
+bigger. It would have reached Andrew as a 28× overstatement of the work he was authorizing. **A
+count of RESTORED EFFECTS presented as a count of REQUIRED CHANGES is its own denominator defect** —
+same family as this spec's §1 `CATALOG_ORDER` row, one layer over.
 
 ⚠ **CVO's closing observation, worth more than the fix:** *"Three instruments each returned a TRUE
 answer that concealed this seam when I first looked, and none was broken — **an absent hop has no error
@@ -350,6 +431,8 @@ argument for the tool, and it is why it is written here rather than in prose.**
 | when | what |
 |---|---|
 | 2026-08-07 (issue) | v1 spec @`26776051b5`, routed to `3.0.0_SA_CVO` |
+| 2026-08-07 (same session, +3) | **7-vs-28 gap RECONCILED** (all 28 edges target ONE policy node; two right numbers over different denominators) and **the remedy corrected from 28 edges to ONE** -- both endpoints already exist, so it is an EDGE act not a NODE act |
+| 2026-08-07 (same session, +2) | **GOVERNS found ALREADY RATIFIED** (rule bank :144, zero-live :656) -- ask downgraded from a NAMING ACT to a USAGE CONFIRMATION; POLICY_OF/APPLIES_TO withdrawn; zero-live cause traced at source to the OWNED_BY re-point (:146); INDEPENDENT TF leg run (7/7 declare bucket) with the 7-vs-28 gap named as unclosed |
 | 2026-08-07 (same session, +1) | **§4.1 severed-graph cause + §4.2 Rule 24 (iv) split** -- CVO measured all 28 ServedURL edges dead-ending in S3_BUCKET_POLICY with zero onward edges; v2 cost HELD not scoped (naming act, not a build); consumer-kind axis fails the stability frame, 1 of 4 kinds moves |
 | 2026-08-07 (same session) | **§4 v1 FALSIFIED by CVO and replaced with v2**; AC-2 corroborated on an independently-derived instrument; AC-3 re-scoped and fenced against CVO's floor-not-census zeros; finding (a) escalated on structural evidence; Q2/Q3/Q4 answered, Q1 open at Andrew |
 
