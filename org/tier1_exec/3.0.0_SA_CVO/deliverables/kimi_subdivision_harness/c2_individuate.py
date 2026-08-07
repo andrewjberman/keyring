@@ -32,10 +32,55 @@ import subprocess
 import sys
 from collections import Counter
 
-REPO = r"C:\Users\AndrewBerman\Desktop\ajb_workspace"
-GEN = os.path.join(REPO, "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
-                   "deliverables", "NFRA_MOTIF_P1_canonical_ab_catalog.py")
-BASH = r"C:\Program Files\Git\bin\bash.exe"
+# ---------------------------------------------------------------------------------------------
+# NO MODULE-LEVEL HOST-ABSOLUTE PATHS. This module runs in TWO places: this Windows workstation
+# and the Linux Fargate derive container (infra/aws/globgrph/Dockerfile). It previously carried
+# REPO and BASH as hardcoded C:\ literals and shelled to comp-kuzu -- so it was a LAPTOP SCRIPT
+# that could not execute where it was meant to run. Found by 0.7.0_AE_CloudOps while wiring the
+# Dockerfile COPY, verified at source by 1.0.0_SA_CTO~B; Andrew-direct "put CVO on this now".
+#
+# WHY IT WOULD HAVE SHIPPED GREEN: the derive's caller is best-effort by design -- it catches,
+# logs C2C3_COMPOSE_FAILED, and completes normally. The image would rebuild, the deploy would go
+# green, the nightly would run clean every night, and the instance layer would simply never
+# appear. A SILENT PERMANENT NO-OP WEARING A SUCCESSFUL DEPLOY.
+# ---------------------------------------------------------------------------------------------
+
+
+def repo_root() -> str:
+    """The checkout/app root, DERIVED. OPAL_REPO_ROOT overrides (the container sets /app)."""
+    env = os.environ.get("OPAL_REPO_ROOT")
+    if env:
+        return env
+    # .../org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/<this file>
+    here = os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(here, *([os.pardir] * 5)))
+
+
+def catalog_path() -> str:
+    """The P1 catalog -- the source of BOTH the motif queries and the C3 anchor rules.
+
+    IN-CONTAINER THIS FILE MUST BE COPYed INTO THE IMAGE. It is a real runtime dependency, not a
+    dev-box convenience: catalog() reads its AB_CATALOG queries and c3_cover.ruled_catalog() reads
+    ANCHOR_CATALOG/HUB_TYPES from it. Absent, both halves raise -- they refuse to default.
+    """
+    env = os.environ.get("OPAL_MOTIF_CATALOG")
+    if env:
+        return env
+    return os.path.join(repo_root(), "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
+                        "deliverables", "NFRA_MOTIF_P1_canonical_ab_catalog.py")
+
+
+def _git_bash() -> str:
+    """LOCAL-ONLY, resolved LAZILY -- never at import, so importing this module in the container
+    (which has no Git-Bash) is safe. CLAUDE.md: use the ONE canonical resolver, never bare `bash`
+    -- a python-spawned bare `bash` Windows-resolves to the System32 WSL stub and can fail SILENTLY.
+    """
+    try:
+        sys.path.insert(0, os.path.join(repo_root(), ".tools"))
+        from git_bash_resolver import git_bash          # noqa: PLC0415 - lazy by design
+        return git_bash()
+    except Exception:
+        return os.path.join("C:" + os.sep, "Program Files", "Git", "bin", "bash.exe")
 
 # substrate_side -- SYSTEM_DEFINITIONS.yaml v1.8 @dcdedf6fe. A ROLLUP over the substrate axis.
 # KNOWLEDGE is DECLARED-BUT-UNREACHABLE: ms is 5,828 nodes and zero detectors touch any of them, so
@@ -43,6 +88,18 @@ BASH = r"C:\Program Files\Git\bin\bash.exe"
 # COVERAGE, not about the estate -- declared here so it is never read as "the knowledge plane has no
 # structure" (Rule 24 postulate (iv), run with CTO~B 011629Z).
 SIDE = {"aws": "BACKEND", "pipeline": "BACKEND", "portal": "FRONTEND", "ms": "KNOWLEDGE"}
+
+
+class CompositionInputMissing(Exception):
+    """A required input (the detector catalog) could not be read.
+
+    RAISED, NEVER sys.exit(). `compose()` runs INSIDE the nightly derive: a `sys.exit` there does not
+    fail the composition, IT KILLS THE DERIVE PROCESS -- turning "one layer could not compose" into
+    "the whole graph did not rebuild tonight". The CALLER decides whether a missing catalog is fatal;
+    a library that exits on behalf of its caller has taken that decision away.
+    (I published "compose() -- no sys.exit" to 0.7.0_AE_CloudOps while this was still reachable via
+    catalog(). The claim was false when I made it.)
+    """
 
 
 def side_of(layer):
@@ -53,10 +110,20 @@ def side_of(layer):
 
 
 def catalog():
-    src = open(GEN, encoding="utf-8").read()
+    try:
+        gen = catalog_path()
+        src = open(gen, encoding="utf-8").read()
+    except OSError as e:
+        # THE DECLARED TYPE, not OSError. The open() precedes every other check, so the MOST LIKELY
+        # failure -- the catalog file being absent -- escaped as FileNotFoundError while this module
+        # advertised CompositionInputMissing to its callers. I had already PUBLISHED that contract to
+        # 0.7.0_AE_CloudOps. A caller writing the documented `except CompositionInputMissing` would
+        # have caught the rare failure and missed the common one. Found by mutation, not by reading:
+        # the raise-site was correct in isolation and wrong in order.
+        raise CompositionInputMissing("catalog unreadable: %s (%s)" % (catalog_path(), e)) from e
     m = re.search(r"^AB_CATALOG = \[", src, re.M)
     if not m:
-        sys.exit("AB_CATALOG not found in %s" % GEN)
+        raise CompositionInputMissing("AB_CATALOG not found in %s" % catalog_path())
     depth, i = 0, m.end() - 1
     while i < len(src):
         if src[i] == "[":
@@ -86,7 +153,7 @@ def with_layers(query):
     return query[:m.start()] + "RETURN " + cols, [a for _, a in pairs]
 
 
-def run_rows(query, aliases):
+def run_rows(query, aliases, query_fn=None):
     """Return ([{alias: id, alias__L: layer}, ...], skipped). Uses comp-kuzu --json.
 
     PARSE THE FORMAT, DO NOT HARDEN A TEXT PARSE. The first cut split comp-kuzu's aligned TABLE
@@ -99,7 +166,17 @@ def run_rows(query, aliases):
     hardening against one instance of it. Verified: `--limit` defaults to None (`kuzu_cli.py:161`),
     so nothing is silently truncated.
     """
-    p = subprocess.run([BASH, ".tools/comp-kuzu", "--json", query], cwd=REPO,
+    return (query_fn or local_kuzu_query)(query)
+
+
+def local_kuzu_query(query):
+    """THE LOCAL graph reader: shell out to comp-kuzu against the workstation's Kuzu DB.
+
+    This is a LOCAL CONVENIENCE, not the only reader -- see compose(query_fn=...). It cannot run
+    in the derive container (no Git-Bash, no .tools/, no local Kuzu DB), which is exactly why the
+    reader is injectable rather than baked in.
+    """
+    p = subprocess.run([_git_bash(), ".tools/comp-kuzu", "--json", query], cwd=repo_root(),
                        capture_output=True, text=True, timeout=900)
     m = re.search(r"^\s*\[", p.stdout, re.M)
     if not m:
@@ -132,7 +209,7 @@ def detector_types(specs):
     return types
 
 
-def coverage_triple(specs, members_seen, side_of_member):
+def coverage_triple(specs, members_seen, side_of_member, query_fn=None):
     """X covered / Y in detector scope / Z on the side -- per substrate_side.
 
     THREE figures, not two. X/Y alone reports a complete-looking layer over a partial substrate:
@@ -142,7 +219,7 @@ def coverage_triple(specs, members_seen, side_of_member):
     dtypes = sorted(detector_types(specs))
     rows, _ = run_rows(
         "MATCH (n:CloudNode) WHERE n.layer IN ['aws','pipeline','portal','ms'] "
-        "RETURN n.node_id AS id, n.layer AS L, n.node_type AS T", [])
+        "RETURN n.node_id AS id, n.layer AS L, n.node_type AS T", [], query_fn)
     z, y = Counter(), Counter()
     dset = set(dtypes)
     for r in rows:
@@ -166,7 +243,7 @@ def coverage_triple(specs, members_seen, side_of_member):
     return out
 
 
-def graph_vintage():
+def graph_vintage(vintage_fn=None):
     """The snapshot this run composed AGAINST -- captured, not assumed.
 
     THE WHOLE DEFECT THIS BUILD EXISTS TO FIX IS A NUMBER WITH NO VISIBLE VINTAGE: the 19-and-4 layer
@@ -177,8 +254,14 @@ def graph_vintage():
     (20,585 -> 20,605 nodes, new snapshot), and only the vintage makes that attributable rather than
     alarming.
     """
-    p = subprocess.run([BASH, ".tools/comp-kuzu", "MATCH (n:CloudNode) RETURN count(*) AS n"],
-                       cwd=REPO, capture_output=True, text=True, timeout=600)
+    if vintage_fn is not None:
+        return vintage_fn()
+    # LOCAL reader. comp-kuzu prints its provenance header on STDERR; in-container the vintage must
+    # come from the Iceberg snapshot ids instead, which is why this is injectable. A vintage that
+    # silently reads "unknown" is worse than an absent field -- it looks like the tool declined to
+    # answer rather than like nobody asked.
+    p = subprocess.run([_git_bash(), ".tools/comp-kuzu", "MATCH (n:CloudNode) RETURN count(*) AS n"],
+                       cwd=repo_root(), capture_output=True, text=True, timeout=600)
     # BOTH streams: comp-kuzu writes its provenance header to STDERR, so reading stdout alone
     # returns None for every field -- a vintage that silently reads "unknown" is worse than no
     # vintage field at all, because it looks like the tool declined to answer rather than like
@@ -194,7 +277,7 @@ def graph_vintage():
             "graph_nodes_total": grab(r"^\s*(\d+)\s*$")}
 
 
-def compose() -> dict:
+def compose(query_fn=None, vintage_fn=None) -> dict:
     """Compose the C2 instance layer and RETURN it. NO file I/O, NO argv, NO sys.exit.
 
     THE DERIVE CALLS THIS. It does not read a snapshot of it. Adding another pre-built JSON to
@@ -207,10 +290,10 @@ def compose() -> dict:
     an explicit timeout, because it executes INSIDE the nightly derive and an unbounded hang there
     is an outage, not a slow script.
     """
-    return _compose_impl()
+    return _compose_impl(query_fn=query_fn, vintage_fn=vintage_fn)
 
 
-def _compose_impl() -> dict:
+def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
     specs = catalog()
     nodes, edges = {}, []      # node_id -> node; a repeated member-set is ONE instance
     per_family = Counter()
@@ -229,7 +312,7 @@ def _compose_impl() -> dict:
             q, aliases = with_layers(sub["query"])
             if q is None:
                 continue
-            rows, sk = run_rows(q, aliases)
+            rows, sk = run_rows(q, aliases, query_fn)
             skipped_ragged += sk
             for row in rows:
                 rows_seen += 1
@@ -306,7 +389,7 @@ def _compose_impl() -> dict:
     DEBT = {"SilentDisplayFork", "CrossFirmAsymmetry", "HardcodedFirmLiteral",
             "DeadComponent", "OrphanEndpoint", "RenderWithoutNullGuard"}
     cls, _ = run_rows("MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] "
-                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm", [])
+                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm", [], query_fn)
     class_marked = 0
     for r in cls:
         nodes[r["id"]] = {
@@ -330,7 +413,7 @@ def _compose_impl() -> dict:
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
         "supersedes_shape_of": ["motif_c2c3_materialize.json", "motif_c2c3_materialize_ab.json"],
-        "graph_vintage": graph_vintage(),
+        "graph_vintage": graph_vintage(vintage_fn),
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",
@@ -351,7 +434,7 @@ def _compose_impl() -> dict:
             "instances_with_any_unresolved_member": sum(1 for n in nodes.values()
                                                         if n["props"].get("members_unresolved", 0) > 0),
             "by_side_status": dict(status_tally.most_common()),
-            "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side),
+            "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side, query_fn),
             "class_nodes_marked_grain_class": class_marked,
             "rows_seen": rows_seen,
             "rows_skipped_ragged_unparsed": skipped_ragged,
@@ -368,7 +451,11 @@ def main() -> int:
     ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                   "c2_instances.json"))
     args = ap.parse_args()
-    doc = compose()
+    try:
+        doc = compose()
+    except CompositionInputMissing as e:      # CLI wrapper decides to exit; the library does not
+        print("FATAL: %s" % e)
+        return 2
     class_marked = doc["counts"]["class_nodes_marked_grain_class"]
     nodes = {n["node_id"]: n for n in doc["nodes"]}
     rows_seen = doc["counts"]["rows_seen"]

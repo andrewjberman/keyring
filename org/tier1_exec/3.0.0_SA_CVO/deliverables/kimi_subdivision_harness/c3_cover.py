@@ -32,16 +32,30 @@ import sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BASH = os.path.join("C:" + os.sep, "Program Files", "Git", "bin", "bash.exe")
-REPO = r"C:\Users\AndrewBerman\Desktop\ajb_workspace"
-GEN = os.path.join(REPO, "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
-                   "deliverables", "NFRA_MOTIF_P1_canonical_ab_catalog.py")
+sys.path.insert(0, HERE)
+# ONE definition of the derived accessors, imported -- never a second copy that can drift from C2's.
+# These replaced module-level hardcoded C:\ literals: this module runs BOTH on the workstation and
+# in the Linux derive container, and the container has no C: drive, no Git-Bash, no comp-kuzu.
+from c2_individuate import _git_bash, catalog_path, repo_root   # noqa: E402 - after sys.path setup
 PROMOTE_MIN = 2          # P1: "Promote a domain to a C3System only at >= 2 member motifs"
+
+
+class CoverInputMissing(Exception):
+    """Same law as c2_individuate.CompositionInputMissing: RAISE, never sys.exit() -- this runs
+    inside the nightly derive and an exit here kills the derive, not the cover."""
 
 
 def ruled_catalog():
     """ANCHOR_CATALOG + HUB_TYPES, read from the ruled implementation rather than re-typed."""
-    src = open(GEN, encoding="utf-8").read()
+    try:
+        gen = catalog_path()
+        src = open(gen, encoding="utf-8").read()
+    except OSError as e:
+        # DECLARED TYPE, not FileNotFoundError. Measured 2026-08-07: the open() precedes every
+        # other check, so an absent catalog raised OSError and a caller catching the documented
+        # exception would NOT have caught it. A contract that names the wrong exception is a
+        # contract for a failure that does not happen.
+        raise CoverInputMissing("catalog unreadable: %s (%s)" % (catalog_path(), e)) from e
     ns: dict = {}
     # Both shapes: ANCHOR_CATALOG is a multi-line dict, HUB_TYPES a single-line set with a trailing
     # comment. The first cut matched only the multi-line form and EXITED LOUD on HUB_TYPES -- the
@@ -52,7 +66,7 @@ def ruled_catalog():
         m = (re.search(r"^%s = (\{.*?\n\})" % name, src, re.S | re.M)
              or re.search(r"^%s = (\{[^\n}]*\})" % name, src, re.M))
         if not m:
-            sys.exit("%s not found in %s -- REFUSING to default" % (name, GEN))
+            raise CoverInputMissing("%s not found in %s -- REFUSING to default" % (name, catalog_path()))
         ns[name] = eval(m.group(1))                                  # noqa: S307 - own repo, literal
     # The ruled model's own invariant, re-asserted here rather than trusted: HUB types create
     # overlap and never DEFINE a domain, so a hub anchor would merge every system into one.
@@ -61,14 +75,20 @@ def ruled_catalog():
     return ns["ANCHOR_CATALOG"], ns["HUB_TYPES"]
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--in", dest="src", default=os.path.join(HERE, "c2_instances.json"))
-    ap.add_argument("--out", default=os.path.join(HERE, "c3_structures.json"))
-    args = ap.parse_args()
+def compose(c2_doc: dict, live_snap_fn=None) -> dict:
+    """Compose C3.i structures FROM AN IN-MEMORY C2 ENVELOPE. Pure: no file I/O, no argv, no exit.
 
+    THE DERIVE CALLS THIS WITH `c2_individuate.compose()`'s RETURN VALUE. It does not read a
+    snapshot of it. Making C2 pure while leaving the C2->C3 hop file-mediated moved the staleness
+    rather than removing it: measured on my own artifacts, `c3_structures.json` was written 69
+    MINUTES BEFORE the `c2_instances.json` it claims to derive from -- structures composed from a
+    PREVIOUS instance layer, which is this project's own defect at 69-minute resolution.
+    """
+    return _cover_impl(c2_doc, live_snap_fn)
+
+
+def _cover_impl(doc: dict, live_snap_fn=None) -> dict:
     anchors_by_domain, hub_types = ruled_catalog()
-    doc = json.load(open(args.src, encoding="utf-8"))
     instances = [n for n in doc["nodes"] if n["props"].get("grain") == "instance"]
 
     # ---- INPUT FRESHNESS. Carrying a vintage forward is honest; not CHECKING it is not. ------
@@ -76,11 +96,18 @@ def main() -> int:
     # the input's snapshot on the output preserves provenance but WARNS NOBODY -- a reader sees a
     # coherent, correctly-provenanced structure layer and no signal that it describes a graph that
     # has since moved. The freshness verdict is therefore EMITTED, not just printed.
-    live = subprocess.run([BASH, ".tools/comp-kuzu", "MATCH (n:CloudNode) RETURN count(*) AS n"],
-                          cwd=REPO, capture_output=True, text=True, timeout=600)
-    live_out = (live.stdout or "") + "\n" + (live.stderr or "")
-    lm = re.search(r"nodes snapshot-id:\s*(\S+)", live_out)
-    live_snap = lm.group(1).strip() if lm else None
+    if live_snap_fn is not None:
+        live_snap = live_snap_fn()      # in-container: the Iceberg snapshot id, not a comp-kuzu header
+    else:
+        # LOCAL reader. comp-kuzu prints its provenance header on STDERR -- reading stdout alone
+        # returns None for every field, and a vintage that silently reads "unknown" looks like the
+        # tool declined to answer rather than like nobody asked.
+        live = subprocess.run([_git_bash(), ".tools/comp-kuzu",
+                               "MATCH (n:CloudNode) RETURN count(*) AS n"],
+                              cwd=repo_root(), capture_output=True, text=True, timeout=600)
+        live_out = (live.stdout or "") + "\n" + (live.stderr or "")
+        lm = re.search(r"nodes snapshot-id:\s*(\S+)", live_out)
+        live_snap = lm.group(1).strip() if lm else None
     in_snap = (doc.get("graph_vintage") or {}).get("nodes_snapshot_id")
     if live_snap is None or in_snap is None:
         freshness = "UNVERIFIABLE -- a snapshot id is missing; treat this layer as UNDATED"
@@ -165,6 +192,26 @@ def main() -> int:
         },
         "nodes": nodes, "edges": edges,
     }
+    return out
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--in", dest="src", default=os.path.join(HERE, "c2_instances.json"))
+    ap.add_argument("--out", default=os.path.join(HERE, "c3_structures.json"))
+    args = ap.parse_args()
+    try:
+        out = compose(json.load(open(args.src, encoding="utf-8")))
+    except CoverInputMissing as e:
+        print("FATAL: %s" % e)
+        return 2
+    promoted = out["counts"]["c3_structures_promoted"]
+    unpromoted = out["counts"]["domains_unpromoted_single_motif"]
+    orphan = out["counts"]["instances_with_no_catalog_anchor"]
+    instances = [1] * out["counts"]["instances_considered"]
+    edges = out["edges"]
+    by_domain = Counter(out["counts"]["by_domain"])
+    by_side = Counter(out["counts"]["by_substrate_side"])
     json.dump(out, open(args.out, "w", encoding="utf-8"), indent=1)
 
     print("C3.i COVER -- anchor-NODE keyed (Andrew-ruled B)")
