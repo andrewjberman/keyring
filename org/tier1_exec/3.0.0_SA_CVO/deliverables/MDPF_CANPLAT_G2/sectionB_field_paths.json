@@ -1,8 +1,8 @@
 {
   "_meta": {
     "artifact": "Guard 2 CLOSED FIELD-PATH LIST (machine-consumed)",
-    "derived_from": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md @850075894 section B (B1/B2/B3; B1 amended 2026-08-07 ~0030Z: ALL B1 transitions absent->present, today-cells established by 'key in dict' never .get())",
-    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment, routed via SURPRISE 002451Z / COO~Z 002550Z / landed 002825Z)",
+    "derived_from": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md @6c50710af section B (B1/B2/B3; B1 second amendment 2026-08-07 ~0040Z Andrew-direct: basis/source at global = null, composite STRUCK, transition absent->null)",
+    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment 1: all transitions absent->present, routed via SURPRISE 002451Z) -> @6c50710af re-derivation ~0045Z (B1 amendment 2, Andrew-direct 'no carve outs': basis/source@global absent->null, composite struck)",
     "governing": [
       "MDPF_CANONICAL_PLATINUM_PRD.md @24d3eb2f8 section 5.5 (Guard 2)",
       "TO MDPF_CANPLAT.G2 @f123fbf6e"
@@ -26,8 +26,8 @@
         "total.account_units"
       ],
       "exemptions": [
-        {"path": "basis", "scopes": ["global"], "class": "absent_to_present", "authority": "CONTRACT B1 @850075894: ABSENT at global (corrected from 'null' -- CVO~Z pin measurement, VersionId Pka1VcXTAS8sOAV3), global = composite naming contributing legs (W-3), transition absent->present"},
-        {"path": "source", "scopes": ["global"], "class": "absent_to_present", "authority": "CONTRACT B1 @850075894: ABSENT at global (corrected from 'null'), global = composite (W-3), transition absent->present"},
+        {"path": "basis", "scopes": ["global"], "class": "absent_to_null_only", "authority": "CONTRACT B1 @6c50710af (Andrew-direct, 'no carve outs'): global = null, composite STRUCK, transition absent->null. ABSENT->any-value at global is NOT excused -- off-contract emission, REGRESSION report. Firm scopes unchanged (real values, no exemption)."},
+        {"path": "source", "scopes": ["global"], "class": "absent_to_null_only", "authority": "CONTRACT B1 @6c50710af (Andrew-direct): global = null, composite STRUCK, transition absent->null. Firm scopes unchanged."},
         {"path": "firm_id", "scopes": ["global"], "class": "absent_to_present", "authority": "CONTRACT B1 @850075894: global carries its scope identifier (W-3)"},
         {"path": "firm_name", "scopes": ["global"], "class": "absent_to_present", "authority": "CONTRACT B1 @850075894: global carries its scope identifier (W-3)"},
         {"path": "meta", "scopes": ["49financial"], "class": "absent_to_present", "subtree": true, "authority": "CONTRACT B1: meta canonical all 4 (W-4)"},

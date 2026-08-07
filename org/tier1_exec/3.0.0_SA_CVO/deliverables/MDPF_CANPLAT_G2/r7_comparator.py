@@ -135,6 +135,10 @@ def classify(diff: dict, scope: str, exemptions: list) -> dict:
             return dict(diff, verdict="EXCUSED", exemption=ex["path"], cls=cls)
         if cls == "null_to_composite" and fr == "NULL" and to in ("STRING", "OBJECT", "ARRAY", "NUMBER", "BOOL"):
             return dict(diff, verdict="EXCUSED", exemption=ex["path"], cls=cls)
+        if cls == "absent_to_null_only" and fr == "ABSENT" and to == "NULL":
+            # CONTRACT @6c50710af: the named transition is absent->null (honest absence under one
+            # schema); ABSENT -> any VALUE at such a path is NOT excused -- off-contract emission.
+            return dict(diff, verdict="EXCUSED", exemption=ex["path"], cls=cls)
         if cls == "null_to_nonzero_value_only" and fr == "NULL" and to == "NUMBER":
             return dict(diff, verdict="EXCUSED", exemption=ex["path"], cls=cls)
         # matched path but wrong transition (e.g. NULL->ZERO under null_to_nonzero_value_only):
@@ -265,6 +269,9 @@ def cmd_compare(args) -> int:
         c=report["denominator"]["pairs_compared"], t=len(pairs), r=total_regressions, ci=citability))
     print("REPORT: " + str(out.relative_to(HERE)))
     print("SECTION-B DERIVATION COMMIT: " + sectionb_commit)
+    if report["denominator"]["could_not_verify"]:
+        # a COULD-NOT-VERIFY pair must never read as a clean exit -- rc 3 keeps it loud
+        return 3
     return 0 if total_regressions == 0 else 2
 
 

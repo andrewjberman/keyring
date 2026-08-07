@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "r7_row": "REGRESSION TEST -- all five limbs. PASS iff value-identical per JSON path . declared canonicalisation . mutation shown to FAIL and LOCALISE . baseline pinned to VersionIds at a stamped instant . absent!=null!=zero.",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "run_by": "3.0.0_SA_CVO~Z",
+    "run_instant_utc": "2026-08-07T00:45:00.445028+00:00",
+    "citability": "CITABLE",
+    "mutation_record": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANPLAT_G2/records/MUTATION_EXERCISE_20260807.md",
+    "sectionB_artifact": "sectionB_field_paths.json",
+    "sectionB_derivation_commit": "a9ce42208+DIRTY",
+    "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
+    "baseline_manifest": "baseline_manifest_20260807T000753Z.json",
+    "baseline_pin_instant_utc": "2026-08-07T00:07:53.960077+00:00"
+  },
+  "denominator": {
+    "pairs_targeted": 1,
+    "pairs_compared": 0,
+    "could_not_verify": 1,
+    "total_regressions": 0
+  },
+  "pairs": [
+    {
+      "scope": "global",
+      "type": "account-distribution",
+      "verdict": "COULD-NOT-VERIFY",
+      "reason": "candidate file missing: C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\c82c6aeb-1b4d-4f10-b017-339270592b3d\\scratchpad\\mutants\\a4\\global\\account-distribution.json"
+    }
+  ]
+}
