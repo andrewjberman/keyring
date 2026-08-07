@@ -190,5 +190,30 @@ files; no estate-wide sweep, so Gate-1 was not engaged.
 - **F-2 / F-4 / F-12 belong to the method owner** (`00:4` names `1.0.0_SA_CTO~A`). **I routed nothing**
   — CRO does not dispatch, and manufacturing a step neither base nor Andrew asked for is the
   gate-manufacture class. Surfaced to base as coordinator; the routing call is theirs or Andrew's.
-- **Next pass, if authorized:** `05` + the 51 case-study files (fence permitting), and the refinement
-  act on these 12 findings — which is a **separate authorization**, not implied by this audit.
+- **Next pass, if authorized:** the 51 case-study files (fence permitting), and the refinement act on
+  these **14** findings — a **separate authorization**, not implied by this audit.
+
+## Closing state — the peer review converged, and §5a is the thing to read
+
+Four review rounds with base after first delivery, each improving the artifact, **and the sequence is
+the record worth keeping: base's sharpening beat my framing → my bound beat base's unbounded version
+→ base's split beat my bound.**
+
+**§5a is the substantive research output**, and it is now correctly graded rather than uniformly
+downgraded:
+- **CLAIM A (structural) — SOLID.** `02` §4 has 8 acceptance targets; **7 are runnable by the author
+  on their own work**; target 8 at `:47` (*"Another agent must reproduce material claims…"*) is the
+  **only one whose subject is a second party**, and it is **last in a flat list of equivalent-looking
+  bullets**. A *reading*, not a sample — **N is irrelevant**, and my first bound wrongly applied a
+  sample discount to it.
+- **CLAIM B (importance) — HYPOTHESIS.** One instance, self-generated, interested parties, two live
+  degrees of freedom. **Required test named:** a seat with **no authorship stake**, on a subject
+  nobody in the loop wrote. Bar is three unlike systems; this has one.
+
+**I closed the exchange deliberately.** Two seats of **one serial** refining a claim about the value
+of *independent* review adds volume to a self-generated instance and **no independence to it** —
+further rounds would make the N=1 problem worse, not better. The thing Claim B needs is a seat
+neither of us can be.
+
+**Final: 11 commits, ZERO corpus files touched, audit-only intact.** Every correction preserved in
+history rather than overwritten (@`69c8527f0d`, @`a418ac6108`, @`2a41642398` → @`5e47d5c8ba`).
