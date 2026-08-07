@@ -1,0 +1,143 @@
+{
+  "_meta": {
+    "artifact": "R7 baseline manifest -- pinned served platinum surface",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "pinned_by": "3.0.0_SA_CVO~Z",
+    "pin_instant_utc": "2026-08-07T01:10:35.164728+00:00",
+    "bucket": "opal-data-portal-v2",
+    "rule": "Re-pins are NEW manifests, never edits."
+  },
+  "denominator": {
+    "targets": 14,
+    "pinned": 14,
+    "missing": []
+  },
+  "entries": [
+    {
+      "key": "platinum/mdpf/global/aggregate-aua-timeseries.json",
+      "role": "canonical",
+      "version_id": "ry.GZJ9f1oIClTqCp__Fg56f6xv3XmFA",
+      "etag": "3b8be453ffc31669d72a260ef19b025d",
+      "size": 209149,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "3307600c3276bc1d75dc52a7ad3b573a0a59974739e808d76645d1f0623f6f7e"
+    },
+    {
+      "key": "platinum/mdpf/global/aum-metrics.json",
+      "role": "canonical",
+      "version_id": "_koFZI_1OAHgT_9N5jTI0mPTFcxt3aPM",
+      "etag": "7b6e7299773f6ba9451b02023de17a6b",
+      "size": 5894,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "7a73aa02f5a046263d9a7a10195e51617f4b1d05fb6a5118d7630d1f6df41dca"
+    },
+    {
+      "key": "platinum/mdpf/global/account-distribution.json",
+      "role": "canonical",
+      "version_id": "asr4.DWKhaA9eAoaiQoXtA.PPlZGhaGK",
+      "etag": "17c5db30cc10ce1e336528841d976aab",
+      "size": 7905,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "acfa71a9a385edbc0b0593fcc12594b78004a6374fb3e2438f04fa17b11ab37f"
+    },
+    {
+      "key": "platinum/mdpf/49financial/aggregate-aua-timeseries.json",
+      "role": "canonical",
+      "version_id": "w4odAQmYZK3SOV7BnZUE3s3BtEEmXcXT",
+      "etag": "b8e4e1a271c8cd414e053e6a5029dd75",
+      "size": 107059,
+      "last_modified_utc": "2026-08-07T01:06:01+00:00",
+      "sha256": "35afd4cb21b9c8914bf985ab5f0a1eb6b3b8e87e5386c788ed991ca770737884"
+    },
+    {
+      "key": "platinum/mdpf/49financial/aum-metrics.json",
+      "role": "canonical",
+      "version_id": "6aTspk49FrSYL4Ht6oACerueVxr5jX0V",
+      "etag": "da566d4bec985a96a4991a178f08ed7e",
+      "size": 4117,
+      "last_modified_utc": "2026-08-07T01:06:01+00:00",
+      "sha256": "107029923190da316c1b648b97a7ee36083280c1816f50fa36244366b5c14952"
+    },
+    {
+      "key": "platinum/mdpf/49financial/account-distribution.json",
+      "role": "canonical",
+      "version_id": "z5L1mRoFZhRpX3Gn9hT9tNqx4WfPhWrN",
+      "etag": "8e1f5941fc9175fa94d3cd8acefedae6",
+      "size": 5735,
+      "last_modified_utc": "2026-08-07T01:06:01+00:00",
+      "sha256": "b79b5fc92b43bdc84aa775ae4f81e4ceb76466eff437cfec2ad653eadf7efb69"
+    },
+    {
+      "key": "platinum/mdpf/inflection/aggregate-aua-timeseries.json",
+      "role": "canonical",
+      "version_id": "SwPM7ZlAw13w5xWHXmQCEbbM1rdiL8fm",
+      "etag": "794f917b2385e5db1ec61e9347c1a08c",
+      "size": 70687,
+      "last_modified_utc": "2026-08-07T01:06:03+00:00",
+      "sha256": "879bdca2312f07f6270e7c73c69d6694f9b945f74a00fc6da3306f11de57969e"
+    },
+    {
+      "key": "platinum/mdpf/inflection/aum-metrics.json",
+      "role": "canonical",
+      "version_id": "l.eKKvL3JJn28NWYOXNAMtlPiYoRB7eb",
+      "etag": "a81bc49a06b16026b8980109115e56d4",
+      "size": 4304,
+      "last_modified_utc": "2026-08-07T01:06:03+00:00",
+      "sha256": "e7349e7f9065016021d6db7f6b2477aeaed394b027e66e0448efb3e2fd8fe39b"
+    },
+    {
+      "key": "platinum/mdpf/inflection/account-distribution.json",
+      "role": "canonical",
+      "version_id": "OnNMq.F3LivWLGnWiGDN7g9AB.zMZN_a",
+      "etag": "f7482da853ff3faf96b740422d2db096",
+      "size": 7394,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "4536de61bf85f04805b3e732b291ac44673e552cbf545d916113d87aa7fe1fb8"
+    },
+    {
+      "key": "platinum/mdpf/cottonwood/aggregate-aua-timeseries.json",
+      "role": "canonical",
+      "version_id": "8DqRxjFYK.amlKDWzl178luaTtFlGrWX",
+      "etag": "c93c5cc8dfd053eb9cb54f565119f141",
+      "size": 83899,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "51c27849c19a68b9695988d32520448f726ddfd459496fadd0b62e06b0425a5f"
+    },
+    {
+      "key": "platinum/mdpf/cottonwood/aum-metrics.json",
+      "role": "canonical",
+      "version_id": "FKmnuwMMteFbPIhv0nfjn1MzrhX7.sxv",
+      "etag": "05b8edc530522753236ca41db7f488e9",
+      "size": 3492,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "94bfdd3534d5e2fa928656ecedc0d55e8a411c87f1c8efb82c888caeffc73e16"
+    },
+    {
+      "key": "platinum/mdpf/cottonwood/account-distribution.json",
+      "role": "canonical",
+      "version_id": "ouKyvSaS1nwlhr.ARix_k.taUidcQ0fD",
+      "etag": "5ef7f1430f4cc1ef19a7bde540af97cb",
+      "size": 7024,
+      "last_modified_utc": "2026-08-07T01:06:01+00:00",
+      "sha256": "d7b0860e9267e13af6f8357695d009022a5143a229f49521637ef48791985e33"
+    },
+    {
+      "key": "platinum/mdpf/cottonwood/account-units.json",
+      "role": "standalone_extra_R12",
+      "version_id": "rODHdf2A4FtwuDtbVy7JNsv3iaYXGpVZ",
+      "etag": "25e07508c1f6e8f1064c17546ea1b73c",
+      "size": 7702,
+      "last_modified_utc": "2026-08-07T01:06:01+00:00",
+      "sha256": "54da4eb8aa795cce758b805e8ef62c607470401b740384922aac554d01caa927"
+    },
+    {
+      "key": "platinum/mdpf/global/non-model-assets.json",
+      "role": "standalone_extra_R12",
+      "version_id": "GLpqpg.2xj4N_WiEknDQ3dXz669usMju",
+      "etag": "e499cb0b2840940e56c97c0392632260",
+      "size": 85076,
+      "last_modified_utc": "2026-08-07T01:06:02+00:00",
+      "sha256": "1d4e35fc329b20c88f0c6c35b8727d07e2c2977477a4159c7459284d1950804e"
+    }
+  ]
+}
