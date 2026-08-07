@@ -24,6 +24,7 @@ directory an engagement's artifacts live in.
 | **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
 | **RCN-0004** | 2026-08-03 | **The Opal repo itself** — Repo Coherence Graph (NFRA_REPOCOHERENCEGRAPH): knowledge-plane debt cleanout spec | 1 (implementation PRD) + project registration | Andrew's RCG proposal docx (326 paras) + the NFRA_VELOCITY record (program, 2 PRDs, type dictionary, constitution, contracts folder, 3 CVO logs) + repo census (25,273 tracked files) + 4 Andrew design rounds | `4.0.0_SA_CRO` | **DELIVERED** — spec staged for Andrew review; build HELD at CTO arch-gate + COO decomposition |
 | **RCN-0005** | 2026-08-05 | **Opal MDPF portfolio ontology** -- five-category taxonomy, Model lifecycle, Client Mandates, Sleeves, selection/advisory axes, and fee basis | 2 (research/design specification + visual ontology diagram) | MDPF_GLOBAL PRD + Andrew recording + MDPF_3FIRMS PRD + live crosswalk source + Andrew/Yang direction + 5 Andrew/CRO design rounds + exact-contract repo scan across 5 roots | 4.0.0_SA_CRO | **RATIFIED** -- Andrew-direct 2026-08-06 (CRO terminal), VERBATIM: *"it is already ratified i worked on that"* -- superseding the STAGED-FOR-REVIEW state this row carried; he worked the spec himself. Still no build/serve mutation from this row -- build authorization flows through CTO/COO as ever |
+| **RCN-0006** | 2026-08-07 | **The Opal ontology itself** — a proposed "Script I/O" (S-layer) for line-level field flow, Python + React/JS | 5 (spec REV1-3, axis field test, disposition, Python feasibility, **`LAYER_FIELD_ANATOMY.md`**) | live `comp-kuzu` graph (20,585 nodes / 41,144 edges @2026-08-07T00:32Z, HEAD current) + 8 first-party extractor surfaces read at source + 2 hand-classified code samples + an exercised SDK run (CVO~C) + 4 non-held-out tree censuses | `4.0.0_SA_CRO` | **DELIVERED — CONCLUSION IS A NEGATIVE.** The S-layer is **DISSOLVED**: all 7 specified capabilities already exist on live D1 edges. Real gap = D1 field grain has **no Python producer**. Build LEFT the CRO lane → CTO~D PRD |
 
 ---
 
@@ -370,3 +371,97 @@ files scanned, comp-grep on-rails).
   Andrew-direct; execution of the suspension record is CTO/COO's.
 - **The VELOCITY granular redesign is explicitly downstream** of the RCG hand-off (Andrew: *"we
   will cover that after"*).
+
+---
+
+## RCN-0006 — Script I/O "S-layer" → **dissolved into an existing rail** → the C/D layer field anatomy
+
+**Date:** 2026-08-07 · **Produced under:** `4.0.0_SA_CRO` · **Commissioned:** Andrew-direct 2026-08-06
+**Team:** CRO driving · `3.0.0_SA_CVO~C` (review + the only exercised evidence) · `1.0.0_SA_CTO~D` (arch)
+
+### The ask
+
+Design a "script io" ontological layer — line-level inputs/outputs for field-level dependency and
+flow, Python and React/JS — as the precursor to *project coherence*, of which `ATOM_DECOMP` is the
+base. Mid-engagement correction (Andrew, VERBATIM): *"we probably need to enhance this somehwat with
+more classifications than simply input and output. need to figure out how to reconcile this layer
+with D1 and C1."*
+
+### The result — A NEGATIVE, AND IT IS THE DELIVERABLE
+
+**There is no S-layer and there never needed to be one.** Seven capabilities were specified across
+three revisions; **seven already exist on live D1 edges** — including an `observer` field added in
+REV 3 on a reviewer's finding, which `resolution` already was.
+
+```
+identity/rename -> srcField/dstField/rename    direction -> srcField->dstField
+condition       -> condition + kind            grain     -> D1.grain_axis
+resolution      -> resolution                  S0 site   -> via  (a FILE:LINE, on the edge)
+```
+
+**The one thing absent everywhere is a Python-side producer** — and that zero has a MECHANISM (every
+field-grain emitter is a `.ts` extractor, `comp_recognizers_tsx.py`, or `cse_schema.py`), so it holds
+at any graph vintage. **Andrew's one-sentence question — "wouldn't that sit at D1 anyway?" —
+dissolved the design.** Two reviewers had been reviewing *inside the frame*; the question came from
+outside it.
+
+### Artifacts
+
+| artifact | commit | note |
+|---|---|---|
+| `deliverables/SCRIPT_IO_ONTOLOGY_SPEC_20260806.md` | REV1 `72279a7c2` · REV2 `785ed481f` · REV3 `2d40590fa` · banner `cd7edf830` | **HISTORY, NOT A DESIGN.** Superseded by the disposition |
+| `deliverables/SCRIPT_IO_AXIS_FIELD_TEST_01_20260807.md` | `2bfcc9e7e` | 8 site shapes hand-classified; 4 did not fit |
+| `deliverables/SCRIPT_IO_S_LAYER_DISPOSITION_20260807.md` | `118fb1585` · `7280b1790` · `939014043` | **THE CLOSING RECORD** |
+| `deliverables/PYTHON_FIELD_GRAIN_FEASIBILITY_20260807.md` | committed 2026-08-07 | ruled (b)+(c)-as-policy by CTO~D |
+| **`infra/system/ontology/LAYER_FIELD_ANATOMY.md`** | `015877662` → `1ee776148` | **8 layers (5 C-rungs + 3 D-rails).** Andrew-direct placement; now indexed in the ontology README |
+
+### Evidence basis + its bounds
+
+Live `comp-kuzu` (20,585 nodes / 41,144 edges, built 2026-08-07T00:32Z, Nessie HEAD current);
+8 first-party extractor surfaces read at source; the SDK **exercised** by CVO~C (engine runs, `Site`
+populates, loci verified against **re-opened source**); 4 non-held-out tree censuses.
+
+**BOUNDS:** `FLOWS_TO`+`PROP_PASSES` census, **`RENDERS`/`READS_FIELD`/`HAS_FIELD` UNSWEPT**; Python
+probes on 4 trees only, **`bd`/`cot`/`mdpf`/assets-monolith UNSWEPT**; subscripts are **not** the only
+column carrier. **Held-out fence honoured — shaping corpus declared positively (spec §8.0); no
+`ATOM_DECOMP/case_study/` file read for design input.**
+
+### Findings that outlive the engagement
+
+1. **`via` (file:line) + `resolution` (method) on 961/961 `FLOWS_TO`** — but **0 of 1,382
+   `PROP_PASSES`**, so field-flow locus is **41%**, not 100%.
+2. **Portal locus precision is 9 of 14** (negative-controlled) — strong where the S-layer was
+   redundant, weak exactly where it claimed its value.
+3. **A declaration naming a MANDATORY field holds trivially; one naming an OPTIONAL field goes
+   silently unpopulated while its COUNT stays true.** (`condition`: exact count 482, present 4.8%.)
+4. **`Coverage` measures what was DISPATCHED, never what was WANTED** — a fully-filtered run is
+   byte-identical to nothing-to-find. Gate the precondition.
+5. **The resolved tier is MODULE-grain, not VALUE-grain** — climbing tiers buys cross-file folding
+   nothing.
+6. **Python has no TypeChecker analogue.** `df["col"]` and `cfg["key"]` are the same AST node; base
+   naming discriminates **14.2%** even in a 75%-pandas tree.
+7. **THE BUILD LADDER APPLIES TO SCHEMA, NOT ONLY TO CODE** — rung 2 was run against *extraction*
+   twice and never against the *ontology slot*. Raised as a law-surface finding by CTO~D, CRO
+   co-signed.
+
+### Downstream
+
+- **PRD → `1.0.0_SA_CTO~D`** (pure build, a TO not a naming act); **TOs → COO**; **verification →
+  `3.0.0_SA_CVO~C`**. **Research proposes; it does not staff.**
+- **Held-out fence question RULED by Andrew 2026-08-07** — *"its just an obvious thing and dont need
+  more noise about it."* **The fence is NOT discharged**; he rejected expanding it.
+- **OPEN AT ANDREW:** placement of artifacts into `projects/ATOM_DECOMP/` (lane `TIER0_MSTR`), and
+  whether the atom_decomp step is authorized. **Deliberately not self-inferred.**
+- Side findings routed, not adopted: 4 `CloudNode` DDLs in 3 shapes (→ `0.7.0_AE_CloudOps`);
+  ontology README indexed no canonical docs (→ CVO, **fixed 3/3**); `comp-which` has **no curated
+  rule** for field-shape questions (→ tool lane).
+
+### Correction stamped in-band — 2026-08-07, `4.0.0_SA_CRO`
+
+**This row was appended LATE.** All five artifacts were committed before the register was touched,
+and **none carries an in-band `Recon ID:` tag** as charter §4 requires. It was found only when the
+CRO tested its own claim that a file was "referenceable" — **the same discoverability gap it had
+raised against another seat's index hours earlier, while its own register listed none of this.**
+Recorded rather than quietly backfilled: an append-only register whose rows arrive after the fact is
+a weaker instrument than one written at delivery, and saying so is the only thing that keeps the next
+row honest. **The in-band `Recon ID:` tags on the five artifacts remain OWED, not done.**

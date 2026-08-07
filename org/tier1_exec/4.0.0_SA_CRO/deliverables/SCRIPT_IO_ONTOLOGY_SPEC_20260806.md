@@ -2,6 +2,7 @@
 
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
+**Recon ID:** RCN-0006 — registered in [`RECON_REGISTER.md`](../RECON_REGISTER.md)
 **Status:** DRAFT SPEC. Nothing here is ratified; nothing here is built.
 
 > # ⛔ REV 3 IS UNDER A SUPERSEDING QUESTION — DO NOT BUILD FROM IT

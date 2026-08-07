@@ -2,6 +2,7 @@
 
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
+**Recon ID:** RCN-0006 — registered in [`RECON_REGISTER.md`](../RECON_REGISTER.md)
 **Date:** 2026-08-07
 **Companion to:** `SCRIPT_IO_ONTOLOGY_SPEC_20260806.md` REV 2 @785ed481f
 **Status:** FINDINGS. **NOT a spec amendment, and deliberately not folded into the spec** — that
