@@ -1,0 +1,3207 @@
+{
+  "run_instant_utc": "2026-08-07T03:54:50.340366+00:00",
+  "run_by": "3.0.0_SA_CVO~Z",
+  "types": {
+    "aggregate-aua-timeseries": {
+      "union": 293,
+      "intersection": 58,
+      "divergent": 235,
+      "divergent_paths": {
+        "cohort_provenance[].49financial": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "cohort_provenance[].as_of_by_partner": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "cohort_provenance[].as_of_by_partner.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "cohort_provenance[].confidence": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "cohort_provenance[].cottonwood": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "cohort_provenance[].custody": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "cohort_provenance[].date": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "cohort_provenance[].inflection": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "cohort_provenance[].model": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "cohort_provenance[].non_model": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "cohort_provenance[].window_id": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "inflection_non_model_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.account": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.authority": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.basis_definitions": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.quantity": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.absent_dates_emit": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.account_count_history": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.axis_rule": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.measured_but_excluded": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.measured_but_excluded.count": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.measured_but_excluded.dates": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.measured_but_excluded.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.padding_never_measured": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.padding_never_measured.dates": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.padding_never_measured.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.axis_rule.rule": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.basis_definitions": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_blend_5050_int_ltc": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_blend_5050_st_int": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_div_sma": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_growth_sma": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_intermediate": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_long_term_aggressive": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_long_term_conservative": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_short_term": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.by_model_channels.opal_ultra_short_term": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.candidate_new_opal_warns": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.canonical_merge": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.canonical_merge.applied": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.canonical_merge.authority": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.channel_participation.coverage.<*>.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.channel_participation.exceptions.<*>.<*>.reason": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.channel_participation.exceptions.<*>.<*>.status": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.channel_participation.exceptions.<*>.<map>": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.channel_participation.exceptions.<map>": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.channel_participation.pre_schema_note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.channel_participation.scope": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.channel_participation.vocabulary_note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.channel_participation.windows_note_49financial": {
+          "present": [
+            "global",
+            "49financial"
+          ],
+          "absent": [
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.channel_participation.windows_source": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.cohort_provenance_note": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.composed_backfill": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.authority": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.composed_at": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.first_measured_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.law": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.n_backfilled": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.source_key": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.composed_backfill.window": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_basis.join": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_basis.methodology": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_basis.model_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_basis.value_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.carried": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.law": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.n_carried": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.binding_feed": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.cadence": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.cadence_trading_day_offset": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.roster": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.window_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_carry.policy.window_trading_days": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.authority": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.composed_at": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.first_measured_date": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.law": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.n_backfilled": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.source_key": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_composed_backfill.window": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.count_axis_note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.count_basis_note": {
+          "present": [
+            "global",
+            "49financial"
+          ],
+          "absent": [
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.count_coverage_end": {
+          "present": [
+            "global",
+            "49financial"
+          ],
+          "absent": [
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.count_exempt_dates": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.count_exempt_reason": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.covered_dates": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.crosswalk": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.custody_history_gaps": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_scope": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_scope.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.cottonwood_covered_first": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.n_49f": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.n_cottonwood_axis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.n_cottonwood_covered": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.n_dates": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.n_inflection": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.only_49f": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_axis_reconciliation.only_inflection": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.first_tracked_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.frontier_count": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.date": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.source": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness.as_of": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness.frontier_date": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness.note": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness.stale_trading_days": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.frontier_count.staleness.verdict": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.generated_at": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.basis": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.by_date": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.by_date.<map>": {
+          "present": [
+            "global",
+            "inflection"
+          ],
+          "absent": [
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.custody_absent_dates": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.custody_feed_prefix": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.model_absent_dates": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.model_feed_prefix": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.model_gap_note": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.propagation": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.total_none_dates": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.honest_none.verify": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.income_non_model_residual": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.count_by_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.count_by_date.<map>": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.dollars_by_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.dollars_by_date.<map>": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.inherits": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.as_of_aum_daily": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.as_of_custody_axis_last": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.as_of_roster": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.custody_data_as_of": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.custody_source": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.delta_custody_vs_served_partial": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.delta_model_roster_vs_served_baseline": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.firm_headline": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.inflection_non_model_aua_2b_audit": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.model_aua": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.latest_cross_section.model_aua_5core_array_last": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.model_aua_5core_roster": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.non_model_aua": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.latest_cross_section.non_model_aua_49f_only": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.opal_aggregate_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.partner_custody_total": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.latest_cross_section.partner_custody_total_firmsummed": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.period": {
+          "present": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_20260718": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_20260718.model_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_20260718.non_model_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_20260718.opal_aggregate_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_5core_20260718": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_custody_20260717": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_custody_20260718": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_model_20260717": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.served_baseline_non_model_20260717": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.sma_total": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.latest_cross_section.tie_note": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam.clean_step": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam.date_pre": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam.launch": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam.model_at_launch": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.launch_seam.model_pre": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.model_history_gaps": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.named_deltas": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.non_model_aua_status": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.partner_custody_total_note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.partners_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.partners_basis.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.pending_canonical_ruling": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.serve_real_D1": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.serve_real_D2_custody": {
+          "present": [
+            "49financial"
+          ],
+          "absent": [
+            "global",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.serve_real_custody": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.serve_real_model": {
+          "present": [
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "cottonwood"
+          ]
+        },
+        "meta.source_vintage": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.declared_cadence": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.frontier_basis": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.model_leg": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.model_leg.latest_value_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.model_leg.table": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.overall": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.total_leg": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.total_leg.latest_measured_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.total_leg.table": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_vintage.trading_days_behind_settled_frontier": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.status": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.still_pending": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.strict_opal_filter": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.strict_opal_filter.applied": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.strict_opal_filter.dollars_dropped": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.strict_opal_filter.rows_dropped": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.total_covered_dates": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.total_source": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.authority": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.collisions": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.keyed_by": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.partition_to_value_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.partition_to_value_date.<map>": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date_rekey.partitions_scanned": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "non_model_assets_detail.generated_at": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.date": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.enterprise_total": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.non_model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.non_model_pct": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.axis_note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.cutover_date": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.generated_at": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.methodology": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.methodology_version": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.post_cutover_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.pre_cutover": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.trading_day_calendar": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[]._etf_public_residual_status": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].enterprise_total": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].etf_public_residual": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].inflection_non_model_aua": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].method": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].non_model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].non_model_pct": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.time_series[].period": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        }
+      }
+    },
+    "aum-metrics": {
+      "union": 99,
+      "intersection": 40,
+      "divergent": 59,
+      "divergent_paths": {
+        "meta.49financial_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.account": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.authority": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.basis_definitions": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.49financial_basis.quantity": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.as_of_basis": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.assignment_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.basis_definitions": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.cottonwood_basis": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.join": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.methodology": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.model_source": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.value_source": {
+          "present": [
+            "global",
+            "cottonwood"
+          ],
+          "absent": [
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.count_as_of": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.count_axis_note": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.count_composition": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.current_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components.<*>.as_of": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components.<*>.basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components.<*>.fee_scope": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components.<*>.value": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_basis_components.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_scope": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.fee_scope.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.firm_id": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.income_non_model_residual": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.account_count": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.dollars": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.partners_basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.partners_basis.<map>": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.purpose": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.q_semantics": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.qn_prior_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "meta.series_start": {
+          "present": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ],
+          "absent": [
+            "global"
+          ]
+        },
+        "meta.sleeves_dropped": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.dollars": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.leaf_hits": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.names": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.source_spine": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.total_series_note": {
+          "present": [
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "global",
+            "cottonwood"
+          ]
+        },
+        "meta.value_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "non_model_assets_detail.latest": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.date": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.enterprise_total": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.non_model_aum": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.latest.non_model_pct": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.axis_note": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.basis": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.cutover_date": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.generated_at": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.methodology": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.methodology_version": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.post_cutover_source": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.pre_cutover": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        },
+        "non_model_assets_detail.meta.trading_day_calendar": {
+          "present": [
+            "global"
+          ],
+          "absent": [
+            "49financial",
+            "inflection",
+            "cottonwood"
+          ]
+        }
+      }
+    },
+    "account-distribution": {
+      "union": 82,
+      "intersection": 58,
+      "divergent": 24,
+      "divergent_paths": {
+        "meta.<*>.<map>": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.<map>": {
+          "present": [
+            "global",
+            "49financial",
+            "inflection"
+          ],
+          "absent": [
+            "cottonwood"
+          ]
+        },
+        "meta.account_count_by_model_key": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.account_count_by_model_key.<map>": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.assignment_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.canonical_merge": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.join": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.methodology": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.model_source": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.cottonwood_basis.value_source": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.count_axis_note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.account_count": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.dollars": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.income_non_model_residual.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.pending_canonical_ruling": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.series_start": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.dollars": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.leaf_hits": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.names": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.sleeves_dropped.note": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        },
+        "meta.value_date": {
+          "present": [
+            "cottonwood"
+          ],
+          "absent": [
+            "global",
+            "49financial",
+            "inflection"
+          ]
+        }
+      }
+    }
+  }
+}
