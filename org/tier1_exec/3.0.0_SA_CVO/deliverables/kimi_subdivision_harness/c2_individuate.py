@@ -102,6 +102,19 @@ class CompositionInputMissing(Exception):
     """
 
 
+class CompositionUnusable(Exception):
+    """The inputs loaded but CANNOT support a verdict -- so the layer REFUSES rather than returning 0.
+
+    A ZERO AND A BROKEN READER ARE THE SAME OUTPUT SHAPE. In the derive container the graph reader is
+    injected, the catalog is a COPYed file, and either can fail while everything around them succeeds
+    -- yielding "0 motif instances", which is indistinguishable from "this estate has no motifs" and
+    strictly more believable, because it arrives inside a green run.
+    (1.0.0_SA_CTO~B, 2026-08-07: "a missing catalog must fail the derive stage visibly, never degrade
+    to 'no motifs matched', which is the identical output shape.") Same law as the DETECT `canon_usable`
+    gate: an instrument that cannot see REFUSES; it does not report absence.
+    """
+
+
 def side_of(layer):
     """None = contributes no side. semctl is NOT a substrate (01_substrate.md:39)."""
     if not layer or layer == "semctl":
@@ -133,7 +146,12 @@ def catalog():
             if depth == 0:
                 break
         i += 1
-    return eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    specs = eval(src[m.end() - 1:i + 1], {"N": "CloudNode", "E": "CloudEdge"})  # noqa: S307
+    if not specs:
+        # A catalog that PARSES to zero detectors composes zero instances and looks exactly like an
+        # estate with no motifs. Refuse at the input, where the cause is still visible.
+        raise CompositionUnusable("catalog parsed to ZERO detector specs: %s" % catalog_path())
+    return specs
 
 
 def with_layers(query):
@@ -379,6 +397,16 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
                 per_family[spec["id"]] += 1
                 side_tally["+".join(sorted(sides)) or "NONE"] += 1
                 status_tally[status] += 1
+
+    # ---- THE READER-IS-BLIND GATE. A zero here is a REFUSAL, never a finding. -------------------
+    # Every detector ran and NOT ONE row came back. On a ~20k-node estate that is a broken reader,
+    # not an estate without motifs -- and in the container the reader is INJECTED, so this is the
+    # exact shape its failure takes: green run, no exception, zero instances, permanent no-op.
+    # Refusing here converts the most believable wrong answer in the system into a loud one.
+    if rows_seen == 0:
+        raise CompositionUnusable(
+            "ALL %d detectors returned ZERO rows -- the graph reader answered nothing. This is a "
+            "blind reader, not an estate without motifs; REFUSING to emit a zero layer." % len(specs))
 
     # ---- ITEM 4: mark the EXISTING class nodes grain:class ------------------------------------
     # They are NOT deleted -- they are the VOCABULARY the classification pass writes INTO, and the
