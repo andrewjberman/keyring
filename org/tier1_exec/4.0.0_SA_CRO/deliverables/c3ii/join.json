@@ -1,0 +1,1118 @@
+{
+  "_header": {
+    "artifact": "c3ii_declared_plane_join",
+    "vintage": "2026-08-07T170110Z",
+    "join": "JOIN (declared x applied). NOT a union. The registry is never a harvest source.",
+    "declared_source": "org/projects/MACRO_CODES.md",
+    "denominator_grain": "MACRO CODES (rows), not projects and not resources",
+    "coverage_contract": "Kimi subdivision (reused, not re-derived)",
+    "codes_planned": 35,
+    "codes_measured": 35,
+    "codes_failed": [],
+    "codes_empty": [
+      "CENG",
+      "OPAL",
+      "YALP",
+      "YANG",
+      "BDPL",
+      "SXPL",
+      "SHIF",
+      "CDRS",
+      "ADHC"
+    ],
+    "applied_limbs": {
+      "portal_pages": {
+        "status": "measured",
+        "n": 17
+      },
+      "data_trees": {
+        "status": "measured",
+        "n": 17
+      },
+      "lambdas": {
+        "status": "measured",
+        "n": 197,
+        "positive_control": "opal"
+      },
+      "eventbridge_rules": {
+        "status": "measured",
+        "n": 139,
+        "positive_control": "-"
+      },
+      "s3_buckets": {
+        "status": "measured",
+        "n": 30,
+        "positive_control": "opal-data-assets"
+      }
+    },
+    "applied_resources_total": 400,
+    "matcher": "INFERRED token match, stoplist-filtered; declared_portal_dir limb is a DECLARED key and carries no inference",
+    "ambiguous_tokens_dropped": [
+      "cloud",
+      "hoc",
+      "infrastructure",
+      "market",
+      "model",
+      "platform",
+      "portfolio",
+      "portfolios",
+      "shared",
+      "smart",
+      "smartx",
+      "tsx",
+      "yang"
+    ],
+    "ambiguous_tokens_n": 13,
+    "codes_left_with_NO_identity_key": [],
+    "codes_no_key_caveat": "these codes cannot be matched at all after ambiguity removal -- their NOT-APPLIED verdict is a MATCHER LIMIT, not an estate fact",
+    "matcher_limited_codes": [
+      "ADHC",
+      "BDPL",
+      "SHIF",
+      "SXPL",
+      "YALP"
+    ],
+    "matcher_limited_caveat": "these codes retain NO key beyond their own 4-char code, which effectively never appears in a resource name -- their NOT-APPLIED verdict is a MATCHER LIMIT, not an estate fact. MEASURED live counter-example: NPPL reads empty while 34 news-* resources are live."
+  },
+  "cells": {
+    "declared_applied": [
+      "ADVI",
+      "ATTR",
+      "AUTH",
+      "CMAS",
+      "COMP",
+      "CORR",
+      "DASH",
+      "DECK",
+      "DRFR",
+      "ETFS",
+      "FCTL",
+      "MACR",
+      "MDLP",
+      "MDPF",
+      "MKOV",
+      "MKPF",
+      "NFRA",
+      "NPPL",
+      "PFMG",
+      "POSN",
+      "SSCN",
+      "SXIN",
+      "TAXX",
+      "TRSB",
+      "UIUX",
+      "VALU"
+    ],
+    "declared_not_applied": [
+      "ADHC",
+      "BDPL",
+      "CDRS",
+      "CENG",
+      "OPAL",
+      "SHIF",
+      "SXPL",
+      "YALP",
+      "YANG"
+    ],
+    "not_declared_applied_candidates": [
+      {
+        "token": "yang",
+        "n_resources": 23
+      },
+      {
+        "token": "trigger",
+        "n_resources": 19
+      },
+      {
+        "token": "assets",
+        "n_resources": 10
+      },
+      {
+        "token": "portfolio",
+        "n_resources": 10
+      },
+      {
+        "token": "session",
+        "n_resources": 9
+      },
+      {
+        "token": "generate",
+        "n_resources": 8
+      },
+      {
+        "token": "silver",
+        "n_resources": 7
+      },
+      {
+        "token": "smartx",
+        "n_resources": 6
+      },
+      {
+        "token": "runner",
+        "n_resources": 6
+      },
+      {
+        "token": "market",
+        "n_resources": 6
+      },
+      {
+        "token": "generator",
+        "n_resources": 6
+      },
+      {
+        "token": "analysis",
+        "n_resources": 5
+      },
+      {
+        "token": "find",
+        "n_resources": 5
+      },
+      {
+        "token": "seeking",
+        "n_resources": 5
+      },
+      {
+        "token": "alpha",
+        "n_resources": 5
+      },
+      {
+        "token": "trending",
+        "n_resources": 5
+      },
+      {
+        "token": "served",
+        "n_resources": 5
+      },
+      {
+        "token": "ycharts",
+        "n_resources": 5
+      },
+      {
+        "token": "allocation",
+        "n_resources": 5
+      },
+      {
+        "token": "globgrph",
+        "n_resources": 5
+      },
+      {
+        "token": "nightly",
+        "n_resources": 5
+      },
+      {
+        "token": "topics",
+        "n_resources": 4
+      },
+      {
+        "token": "publisher",
+        "n_resources": 4
+      },
+      {
+        "token": "guard",
+        "n_resources": 4
+      },
+      {
+        "token": "ingest",
+        "n_resources": 4
+      },
+      {
+        "token": "keepalive",
+        "n_resources": 4
+      },
+      {
+        "token": "update",
+        "n_resources": 4
+      },
+      {
+        "token": "insure",
+        "n_resources": 4
+      },
+      {
+        "token": "m365",
+        "n_resources": 4
+      },
+      {
+        "token": "liveness",
+        "n_resources": 4
+      },
+      {
+        "token": "pull",
+        "n_resources": 4
+      },
+      {
+        "token": "gold",
+        "n_resources": 4
+      },
+      {
+        "token": "complete",
+        "n_resources": 4
+      },
+      {
+        "token": "schwab",
+        "n_resources": 3
+      },
+      {
+        "token": "fees",
+        "n_resources": 3
+      },
+      {
+        "token": "autosave",
+        "n_resources": 3
+      },
+      {
+        "token": "summary",
+        "n_resources": 3
+      },
+      {
+        "token": "monitor",
+        "n_resources": 3
+      },
+      {
+        "token": "capture",
+        "n_resources": 3
+      },
+      {
+        "token": "schedule",
+        "n_resources": 3
+      }
+    ],
+    "not_declared_not_applied": "invisible by construction -- a boundary, not a defect"
+  },
+  "control": {
+    "negative_limb": {
+      "code": "CENG",
+      "expected": "MEASURED-EMPTY / kind=RETIRED / not matcher-limited",
+      "observed": "MEASURED-EMPTY / kind=RETIRED / matcher_limited=False",
+      "pass": true
+    },
+    "positive_limb": {
+      "code": "ADVI",
+      "expected": "APPLIED (DECLARED x APPLIED)",
+      "observed": "APPLIED",
+      "pass": true
+    },
+    "pair_pass": true,
+    "why_the_pair": "The negative limb alone is satisfied most cleanly by a DEAD measurement. Only the positive limb, from the SAME pass, discriminates 'correctly absent' from 'nothing was measured'."
+  },
+  "per_code": {
+    "MKPF": {
+      "surface_area": "MarketPerformance",
+      "section": "Pod 1 \u2014 MarketIntelligence",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 5,
+      "sample": [
+        "MarketPerformance",
+        "inf-performance-daily",
+        "yang-generate-peer-performance",
+        "inf-performance-daily",
+        "portal/src/pages/MarketPerformance/"
+      ],
+      "tokens": [
+        "mkpf",
+        "performance"
+      ],
+      "matcher_limited": false
+    },
+    "CENG": {
+      "surface_area": "CausalityEngine (+ MarketUpdate)",
+      "section": "Pod 1 \u2014 MarketIntelligence",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "RETIRED",
+      "not_applied_basis": "causality retired by Andrew 2026-08-05 (VERTHARVEST spec, applied plane measured empty; independently ground-truthed here: 0 lambdas/rules/buckets match causality|ceng, positive control 'advisor' = 3 on the same pipes)",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "causality",
+        "ceng",
+        "engine"
+      ],
+      "matcher_limited": false
+    },
+    "CMAS": {
+      "surface_area": "CapitalMarketAssumptions",
+      "section": "Pod 1 \u2014 MarketIntelligence",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 2,
+      "sample": [
+        "CapitalMarketAssumptions",
+        "portal/src/pages/CapitalMarketAssumptions/"
+      ],
+      "tokens": [
+        "assumptions",
+        "cmas"
+      ],
+      "matcher_limited": false
+    },
+    "MKOV": {
+      "surface_area": "Market Overview pipeline",
+      "section": "Pod 1 \u2014 MarketIntelligence",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 1,
+      "sample": [
+        "opal-market-overview-tiered-generator"
+      ],
+      "tokens": [
+        "context",
+        "mkov",
+        "overview",
+        "single"
+      ],
+      "matcher_limited": false
+    },
+    "POSN": {
+      "surface_area": "Positioning",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "Positioning",
+        "yang-generate-positioning",
+        "portal/src/pages/Positioning/"
+      ],
+      "tokens": [
+        "positioning",
+        "posn"
+      ],
+      "matcher_limited": false
+    },
+    "ATTR": {
+      "surface_area": "Attribution",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "Attribution",
+        "yang-generate-holdings-attribution",
+        "portal/src/pages/Attribution/"
+      ],
+      "tokens": [
+        "attr",
+        "attribution"
+      ],
+      "matcher_limited": false
+    },
+    "FCTL": {
+      "surface_area": "FactorTilts",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "FactorTilts",
+        "yang-generate-factor-tilts",
+        "portal/src/pages/FactorTilts/"
+      ],
+      "tokens": [
+        "factor",
+        "fctl",
+        "tilts"
+      ],
+      "matcher_limited": false
+    },
+    "VALU": {
+      "surface_area": "Valuation",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "Valuation",
+        "yang-generate-valuation",
+        "portal/src/pages/Valuation/"
+      ],
+      "tokens": [
+        "valu",
+        "valuation"
+      ],
+      "matcher_limited": false
+    },
+    "MACR": {
+      "surface_area": "Macroeconomics",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 2,
+      "sample": [
+        "Macroeconomics",
+        "portal/src/pages/Macroeconomics/"
+      ],
+      "tokens": [
+        "macr",
+        "macroeconomics"
+      ],
+      "matcher_limited": false
+    },
+    "CORR": {
+      "surface_area": "Correlation",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "Correlation",
+        "yang-generate-correlation",
+        "portal/src/pages/Correlation/"
+      ],
+      "tokens": [
+        "corr",
+        "correlation"
+      ],
+      "matcher_limited": false
+    },
+    "ETFS": {
+      "surface_area": "ETF Operations / ownership tracking (DIVZ, IDVZ, PFOE, PFDE) -- per-partner AUM-in-Opal-fu",
+      "section": "Pod 2 \u2014 PortfolioAnalytics",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 84,
+      "sample": [
+        "etfs",
+        "partner-etl-ops-sqs-consumer",
+        "wsb-49f-model-aua-daily",
+        "bd-49f-etf-ownership-daily",
+        "yang-generate-etf-returns",
+        "opal-assets-silver-etf"
+      ],
+      "tokens": [
+        "2026",
+        "aggregation",
+        "andrew",
+        "daily",
+        "etf",
+        "etfs",
+        "operations",
+        "ownership",
+        "partner",
+        "per",
+        "producers",
+        "tracking"
+      ],
+      "matcher_limited": false
+    },
+    "PFMG": {
+      "surface_area": "PortfolioManagement",
+      "section": "Pod 3 \u2014 TradingOperations",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 2,
+      "sample": [
+        "PortfolioManagement",
+        "portal/src/pages/PortfolioManagement/"
+      ],
+      "tokens": [
+        "management",
+        "pfmg"
+      ],
+      "matcher_limited": false
+    },
+    "TRSB": {
+      "surface_area": "TradeSubmission",
+      "section": "Pod 3 \u2014 TradingOperations",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 11,
+      "sample": [
+        "TradeSubmission",
+        "trade-identifier-cache",
+        "trade-parquet-batch-export",
+        "trade-workflow-handler",
+        "trade-auth-handler",
+        "trade-authorizer"
+      ],
+      "tokens": [
+        "submission",
+        "trade",
+        "trsb"
+      ],
+      "matcher_limited": false
+    },
+    "DRFR": {
+      "surface_area": "DataRefresh",
+      "section": "Pod 3 \u2014 TradingOperations",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 7,
+      "sample": [
+        "DataRefresh",
+        "opal-data-refresh-api",
+        "yang-refresh-fred-cache",
+        "opal-data-refresh-api-qa-scratch",
+        "mdpf-daily-refresh-trigger",
+        "yang-refresh-fred-cache-weekly"
+      ],
+      "tokens": [
+        "drfr",
+        "refresh"
+      ],
+      "matcher_limited": false
+    },
+    "SSCN": {
+      "surface_area": "SecurityScanner",
+      "section": "Pod 3 \u2014 TradingOperations",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 9,
+      "sample": [
+        "SecurityScanner",
+        "cost-anomaly-scanner",
+        "access-anomaly-scanner",
+        "opal-security-scanner-processor",
+        "security-sweep-comprehensive",
+        "access-anomaly-scanner-schedule"
+      ],
+      "tokens": [
+        "pattern",
+        "scanner",
+        "security",
+        "sscn"
+      ],
+      "matcher_limited": false
+    },
+    "TAXX": {
+      "surface_area": "Tax Strategy (Tax SMA Trade Allocation)",
+      "section": "Pod 3 \u2014 TradingOperations",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 2,
+      "sample": [
+        "inf-tax-daily",
+        "inf-tax-daily"
+      ],
+      "tokens": [
+        "strategy",
+        "tax",
+        "taxx",
+        "tbd"
+      ],
+      "matcher_limited": false
+    },
+    "MDLP": {
+      "surface_area": "ModelPortfolios (legacy page-render macro)",
+      "section": "Pod 4 \u2014 ClientPlatform",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 1,
+      "sample": [
+        "portal/src/pages/ModelPortfolios.tsx"
+      ],
+      "tokens": [
+        "mdlp"
+      ],
+      "matcher_limited": false
+    },
+    "MDPF": {
+      "surface_area": "Model Portfolios -- aggregate AUA & multi-partner asset tracking",
+      "section": "Pod 4 \u2014 ClientPlatform",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 64,
+      "sample": [
+        "inf",
+        "mdpf",
+        "inf-gold-trigger",
+        "inf-bronze-complete-emitter",
+        "opal-inf-value-parity",
+        "inf-bronze-trigger"
+      ],
+      "tokens": [
+        "inf",
+        "mdpf"
+      ],
+      "matcher_limited": false
+    },
+    "ADVI": {
+      "surface_area": "AdvisorIntelligence",
+      "section": "Pod 4 \u2014 ClientPlatform",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 7,
+      "sample": [
+        "AdvisorIntelligence",
+        "shared-advisor-router",
+        "shared-advisor-router-response",
+        "keyword-intelligence-generator",
+        "inf-portal-advisor-publisher",
+        "keyword-intelligence-generator-daily"
+      ],
+      "tokens": [
+        "advi",
+        "advisor",
+        "intelligence"
+      ],
+      "matcher_limited": false
+    },
+    "OPAL": {
+      "surface_area": "Opal firm platform (cross-pod umbrella): asset consolidation + runners + internal ops. Pro",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "firm"
+      ],
+      "matcher_limited": false
+    },
+    "UIUX": {
+      "surface_area": "Cross-platform client-facing product + design (umbrella). The Portal is the PRIMARY surfac",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 1,
+      "sample": [
+        "inf-client-detail"
+      ],
+      "tokens": [
+        "client",
+        "design",
+        "facing",
+        "product",
+        "uiux"
+      ],
+      "matcher_limited": false
+    },
+    "YALP": {
+      "surface_area": "Yang pipeline (cross-pod)",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "yalp"
+      ],
+      "matcher_limited": true
+    },
+    "YANG": {
+      "surface_area": "Yang ad-hoc portal/feature requests (distinct from YALP = the Yang data pipeline)",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "feature",
+        "requests"
+      ],
+      "matcher_limited": false
+    },
+    "BDPL": {
+      "surface_area": "BD pipeline",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "bdpl"
+      ],
+      "matcher_limited": true
+    },
+    "NPPL": {
+      "surface_area": "News pipeline",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 34,
+      "sample": [
+        "seeking-alpha-news-dedup",
+        "news-trending-analysis",
+        "semantic-news-layer3-curation",
+        "seeking-alpha-news-coordinator",
+        "opal-news-ai-sentiment",
+        "seeking-alpha-news-scraper"
+      ],
+      "tokens": [
+        "news",
+        "nppl"
+      ],
+      "matcher_limited": false
+    },
+    "SXPL": {
+      "surface_area": "SmartX pipeline",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "sxpl"
+      ],
+      "matcher_limited": true
+    },
+    "SXIN": {
+      "surface_area": "SmartX Ingestion Lambda (Schwab non-model derivation / opal-smartx-ingestion-pipeline; AE ",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 12,
+      "sample": [
+        "fred-data-ingestion",
+        "opal-smartx-ingestion-pipeline",
+        "fred-macro-ingestion",
+        "news-ingestion-scheduler",
+        "finbert-scoring-post-ingestion",
+        "finbert-scoring-post-ingestion-45min"
+      ],
+      "tokens": [
+        "ingestion",
+        "sxin"
+      ],
+      "matcher_limited": false
+    },
+    "SHIF": {
+      "surface_area": "Shared infrastructure",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "shif"
+      ],
+      "matcher_limited": true
+    },
+    "AUTH": {
+      "surface_area": "Portal Authentication, Authorization, and Identity",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 4,
+      "sample": [
+        "auth",
+        "auth-validator-edge",
+        "opalinvest-auth-handler",
+        "trade-auth-handler"
+      ],
+      "tokens": [
+        "auth",
+        "authentication",
+        "authorization",
+        "identity"
+      ],
+      "matcher_limited": false
+    },
+    "CDRS": {
+      "surface_area": "Cloud Resources (account-wide AWS inventory + Terraform-import catch-up; CF/Lambda/DynamoD",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "cdrs",
+        "resources"
+      ],
+      "matcher_limited": false
+    },
+    "COMP": {
+      "surface_area": "Compiler tools \u2014 generation, iteration, testing, generalization. Covers the `comp-*` stack",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 1,
+      "sample": [
+        "opal-globgrph-comp-learns-producer-nightly"
+      ],
+      "tokens": [
+        "comp",
+        "compiler",
+        "tools"
+      ],
+      "matcher_limited": false
+    },
+    "NFRA": {
+      "surface_area": "Cloud / shared-resource cost + infrastructure governance (standing). Projects: `NFRA_COSTA",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 2,
+      "sample": [
+        "cost-anomaly-scanner",
+        "cost-anomaly-scanner-schedule"
+      ],
+      "tokens": [
+        "cost",
+        "governance",
+        "nfra",
+        "resource"
+      ],
+      "matcher_limited": false
+    },
+    "DECK": {
+      "surface_area": "Deck-generation system \u2014 brand-compliant `.pptx` generation. **Path B (go-forward):** from",
+      "section": "Cross-Pod / Infrastructure Codes",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 1,
+      "sample": [
+        "deck-generation"
+      ],
+      "tokens": [
+        "deck",
+        "generation",
+        "system"
+      ],
+      "matcher_limited": false
+    },
+    "DASH": {
+      "surface_area": "Portal-wide dashboard primitives \u2014 shared frontend components, cross-page visual consisten",
+      "section": "Portal-Wide Primitives",
+      "state": "APPLIED",
+      "not_applied_kind": null,
+      "not_applied_basis": null,
+      "n_applied": 3,
+      "sample": [
+        "etf-ownership-dashboard",
+        "trade-dashboard-api",
+        "etf-ownership-dashboard-daily"
+      ],
+      "tokens": [
+        "dash",
+        "dashboard",
+        "primitives",
+        "wide"
+      ],
+      "matcher_limited": false
+    },
+    "ADHC": {
+      "surface_area": "Ad-hoc (no permanent surface area)",
+      "section": "Ad-Hoc / Cross-Cutting",
+      "state": "MEASURED-EMPTY",
+      "not_applied_kind": "UNCLASSIFIED",
+      "not_applied_basis": "no naming act cited and no TBD marker -- not guessed",
+      "n_applied": 0,
+      "sample": [],
+      "tokens": [
+        "adhc"
+      ],
+      "matcher_limited": true
+    }
+  },
+  "unmatched_resources": [
+    "FIRMSEP-s3-direct-access-bypass",
+    "ModelPortfolios",
+    "ModelPortfolios.tsx",
+    "TicketCenter",
+    "_contracts",
+    "analysis",
+    "assets",
+    "astn-wsjft-orchestrator",
+    "bd-49f-fees-runner",
+    "bd-49f-keepalive",
+    "bd-49f-keepalive-sched",
+    "bd-49f-runner",
+    "bd-49f-session-complete",
+    "bd-49f-session-trigger",
+    "bd-allocation-file-checker",
+    "bd-allocation-pipeline-trigger",
+    "bd-allocation-processor",
+    "bd-allocation-trigger",
+    "bd-asset-dim-pipeline-trigger",
+    "bd-asset-dim-trigger",
+    "bd-cot-keepalive",
+    "bd-cot-keepalive-sched",
+    "bd-fees-pipeline-trigger",
+    "bd-fees-trigger",
+    "bd-gold-layer-monthly-trigger",
+    "bd-gold-nightly-fallback",
+    "bd-gold-trigger",
+    "bd-incrparity-trigger",
+    "bd-price-update",
+    "bd-realized-pipeline-trigger",
+    "bd-realized-trigger",
+    "bd-silver-merge",
+    "bd-transaction-pipeline-trigger",
+    "bd-transactions-trigger",
+    "bd-unrealized-pipeline-trigger",
+    "bd-unrealized-trigger",
+    "black_diamond",
+    "cache-control-injector",
+    "canonical",
+    "consolidation-gold-runner-scheduled-start",
+    "cot",
+    "cot-bd-session-trigger",
+    "cot-bronze-complete",
+    "cot-rebalancer-runner",
+    "cot-session-complete",
+    "cot-silver-complete",
+    "demo",
+    "ec2-auto-shutdown-enforcer",
+    "ec2-auto-shutdown-enforcer-schedule",
+    "ec2-runtime-monitor",
+    "ec2-runtime-monitor-15min",
+    "estate-report-orchestrator",
+    "exec-summary-generator",
+    "exec-summary-trigger",
+    "finbert-batch-processor",
+    "find",
+    "find-insure-crawl-web",
+    "find-insure-crawl-web-scraping-browser",
+    "find-insure-parse-web",
+    "find-insure-score-web",
+    "gldinc-ss4c-canary",
+    "historical-prices-scheduler",
+    "incrparity-weekly",
+    "m365-ms-ingest-liveness",
+    "m365-ms-ingest-liveness-6h",
+    "m365-otp-liveness",
+    "m365-otp-liveness-6h",
+    "market-update-data-aggregator",
+    "market-update-exporter",
+    "market-update-generator",
+    "moltbot-ssm-sendcommand-alert",
+    "opal-313476888478-globgrph",
+    "opal-313476888478-lambda-artifacts",
+    "opal-313476888478-lambda-layers",
+    "opal-313476888478-terraform-state",
+    "opal-313476888478-yang-qa-scratch",
+    "opal-49f-served-guard",
+    "opal-49f-served-guard-on-write",
+    "opal-assets-bd49f-dim-convert",
+    "opal-assets-bd49f-reporting-pull",
+    "opal-assets-ingest-mirror",
+    "opal-assets-silver-blackdiamond",
+    "opal-assets-silver-eclipse",
+    "opal-assets-silver-orion",
+    "opal-assets-silver-schwab",
+    "opal-assets-silver-smartx",
+    "opal-bd-transaction-consolidator",
+    "opal-cloudtrail-logs-313476888478",
+    "opal-cot-served-guard",
+    "opal-cot-served-guard-on-write",
+    "opal-cot-value-parity",
+    "opal-cot-value-parity-hourly",
+    "opal-cur-313476888478",
+    "opal-data-assets",
+    "opal-data-astn",
+    "opal-data-bd",
+    "opal-data-cot",
+    "opal-data-demo",
+    "opal-data-imo",
+    "opal-data-pm",
+    "opal-data-portal-v2",
+    "opal-data-portfolio",
+    "opal-drift-producer-nightly",
+    "opal-estate-report",
+    "opal-globgrph-cloudtrail-mgmt",
+    "opal-globgrph-derive-runner-nightly",
+    "opal-globgrph-fedobs-producer-nightly",
+    "opal-globgrph-incremental-updater",
+    "opal-infrastructure-monitor",
+    "opal-infrastructure-snapshots",
+    "opal-keyword-drilldown-generator",
+    "opal-market-regime-classifier",
+    "opal-market-rsi-tiered-generator",
+    "opal-mcp-athena-results",
+    "opal-mcp-audit",
+    "opal-partners-data",
+    "opal-pm-optimization-autosave-put",
+    "opal-pm-optimization-loader",
+    "opal-pm-snapshot-handler",
+    "opal-pm-upload-urls",
+    "opal-portal-authorizer",
+    "opal-portal-data-proxy",
+    "opal-portal-fear-greed-fetcher",
+    "opal-portal-volatility-fetcher",
+    "opal-portfolio-autosave-get",
+    "opal-portfolio-autosave-put",
+    "opal-portfolio-excel-generator",
+    "opal-portfolio-export-download",
+    "opal-portfolio-funds-list",
+    "opal-portfolio-pickle-parser",
+    "opal-portfolio-version-get",
+    "opal-portfolio-versions-list",
+    "opal-runner-shared",
+    "opal-served-key-write-trail-logs",
+    "opal-session-analytics",
+    "opal-stitch-produce-nightly",
+    "opal-ticket-api",
+    "opal-trending-image-generator",
+    "opal-trending-topics-portal-publisher",
+    "opal-website-backups",
+    "opalinvest-portal",
+    "orion",
+    "portal-time-machine",
+    "public-data-router",
+    "schwab",
+    "schwab-anonymizer",
+    "seeking-alpha",
+    "seeking-alpha-analysis-coordinator",
+    "seeking-alpha-analysis-dedup",
+    "seeking-alpha-analysis-listing-parser",
+    "seeking-alpha-analysis-scraper",
+    "semantic-trending-topics-portal-publisher",
+    "sentiment_query_api",
+    "smartx",
+    "smartx-ec2-autostart",
+    "smartx-jwt-refresher",
+    "smartx-model-monthly-pull",
+    "smartx-rest-pull",
+    "trending-topics-portal-publisher-afternoon",
+    "trending-topics-portal-publisher-morning",
+    "yang-canon-interlock",
+    "yang-capture-output-versions",
+    "yang-cleanup-uploads",
+    "yang-generate-allocation-summary",
+    "yang-generate-cma",
+    "yang-generate-latest",
+    "yang-generate-macro",
+    "yang-generate-macro-timeseries",
+    "yang-generate-manifest",
+    "yang-generate-risk-premium",
+    "yang-generate-volatility",
+    "yang-get-prior-metadata",
+    "yang-ingest-dynamodb",
+    "yang-invalidate-cloudfront",
+    "yang-model-portfolio-benchmarks",
+    "yang-move-to-processed",
+    "yang-pipeline-trigger",
+    "yang-time-machine",
+    "yang-validate-files",
+    "yang-varflag-check",
+    "yang_macros_re",
+    "yang_pkl",
+    "ycharts-market-data-pull",
+    "ycharts-session-capture",
+    "ycharts-session-capture-schedule",
+    "ycharts-session-probe",
+    "ycharts-session-probe-schedule"
+  ]
+}
