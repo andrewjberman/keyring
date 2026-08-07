@@ -81,7 +81,8 @@ def with_layers(query):
     pairs = re.findall(r"(\w+)\.node_id\s+AS\s+(\w+)", m.group(1))
     if not pairs:
         return None, []
-    cols = ", ".join("%s.node_id AS %s, %s.layer AS %s__L" % (v, a, v, a) for v, a in pairs)
+    cols = ", ".join("%s.node_id AS %s, %s.layer AS %s__L, %s.node_type AS %s__T"
+                     % (v, a, v, a, v, a) for v, a in pairs)
     return query[:m.start()] + "RETURN " + cols, [a for _, a in pairs]
 
 
@@ -172,6 +173,12 @@ def main() -> int:
                         "side_status": status,
                         "members_unresolved": unresolved,
                         "members_total": len(aliases),
+                        # member NODE TYPES -- the RULED overlapping-domain-cover keys
+                        # membership on "does this motif CONTAIN the domain anchor type",
+                        # so Stage 2 needs types, not ids (NFRA_MOTIF_P1 ab_c3_cover).
+                        "member_types": sorted({row.get(a + "__T") for a in aliases
+                                                if row.get(a + "__T")}),
+                        "members": sorted(mem),
                     }})
                 for nid in mem:
                     edges.append({"source": mid, "target": nid, "edge_type": "CONTAINS",
