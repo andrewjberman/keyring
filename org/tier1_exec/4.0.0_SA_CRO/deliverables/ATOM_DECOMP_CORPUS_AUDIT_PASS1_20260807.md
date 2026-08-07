@@ -283,20 +283,39 @@ class as the 89** (§0): a count whose population is not quite the one it names.
 specifically because `05` is the document arguing that a quoted figure must carry the instrument that
 produced it (its own **E1**).
 
-### F-14 · LOW-MEDIUM · `05:22` attributes the generalization assertion to the wrong document
+### F-14 · LOW-MEDIUM · `05:22` makes two claims, cites two sources jointly, and neither source supports both
+
+> **CORRECTED 2026-08-07 after `4.0.0_SA_CRO` (base) audited this finding back and measured it.**
+> **My original framing was wrong in both directions and the corrected defect is slightly worse than
+> the one I filed.** Superseded text is in the commit history at @`69c8527f0d`; the finding is real
+> either way.
 
 `05:22` — *"`00_ATOMIC_DECOMPOSITION_SPEC.md` **§5** and `02_ADOPTION_AND_EVALUATION.md` §3 both
-**assert** the method generalizes."*
+**assert** the method generalizes and propose forward-testing it."*
 
-`00` **§5** is the *Non-negotiable laws* list: `generaliz` appears there **0 times**. The `02` §3
-citation is correct (*Evaluation suite*, "Forward-test on at least these scenarios"). The
-generalization **assertion** lives at **`01:75` — `01_ADVI_CASE_STUDY.md` §5, "Generalization test"**
-(*"The method applies beyond ADVI because…"*).
+**One sentence, two claims, two citations offered jointly — and each citation supports only one half:**
 
-**A document transposition between two files that both have a §5.** Low impact — the claim being
-supported is true and is supported elsewhere — but it is the third distinct cross-reference defect
-in the corpus (with F-11 and F-12), and the only one inside a document whose thesis is that
-attribution must survive the quote.
+```
+'generaliz' in 00, WHOLE FILE      1   -> at 00:5, the Purpose line. 00 DOES assert generalization.
+'generaliz' in 00 sec5 (46-56)     0   -> but NOT in the section cited. Wrong SECTION, right DOCUMENT.
+'generaliz' in 02, WHOLE FILE      0   -> 02 sec3 does NOT support "asserts the method generalizes".
+'forward-test' in 02               1   -> positive control: 02 sec3 supports the FORWARD-TEST half only.
+```
+
+So: `00` carries the generalization assertion **at `:5`, not `§5`**; `02 §3` carries the forward-test
+proposal and **not** the generalization claim. **A conflated pair, not a transposition** — and my
+original filing called it "the wrong document" (it is the right document, wrong section) and called
+the `02` half "correct" (it supports one of the two claims it is cited for).
+
+**Still LOW-MEDIUM: the underlying claim is true and is supported, just not by the pointers given.**
+It remains the third distinct cross-reference defect in the corpus (with F-11 and F-12) and the only
+one inside a document whose thesis is that attribution must survive the quote.
+
+> **One precision retained rather than conceded, because the correction record should itself be
+> accurate:** my original *"`00` §5 … `generaliz` appears **there** 0 times"* was **scoped to §5 and
+> is correct as written** (§5 = lines 46-56, zero hits). The defects were the two clauses **after**
+> it. **This is the fourth instance today of a scan whose scope and whose *reported* scope were not
+> the same set — and it landed inside the finding about scope defects, on both sides of the exchange.**
 
 ### F-11 · LOW · `07`'s pin held; the unpinned prose beside it decayed the same day
 
