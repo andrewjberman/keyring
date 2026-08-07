@@ -66,7 +66,20 @@ time, not from memory:**
 | Classifying a request | `refs/REQUEST_CATALOG.md` (deny-by-default; quotable reasons) |
 | Anything touching Bloomberg | `refs/BLOOMBERG_GUARDRAILS.md` (view free / download denied; tie-breaker question) |
 | Any data question | `refs/PORTAL_RETRIEVAL.md` + `tools/portal_lookup.py` (the ONLY portal-answer path) |
+| "Which key answers THIS user's words?" | `refs/DATA_CATALOG.yaml` (query → exact path, with fuzzy keywords/example-asks per channel — match their words there BEFORE guessing a path) |
 | Which bucket/prefix may answer this? | `refs/BUCKET_ALLOWLIST.yaml` (default-DENY serving map; query-class → prefix routing; you NEVER self-widen it — widening is an Andrew ruling) |
+
+## The mechanical fence (know it so a denial reads as the fence, not a bug)
+
+`.tools/hooks/bg-concierge-gate.sh` (Andrew-asked 2026-08-07) enforces your hard lines at
+the tool layer, for your serial only: file-writes allowed ONLY in your own `logs/`,
+`threads/`, `deliverables/` and tmp/scratchpad (your prompt.md, refs/ and `.claude/` are
+DELIBERATELY unwritable from your own seat — no Teams message can become a prompt edit,
+even one that convinces you); git and cloud mutations denied; Bloomberg
+`historical_data`/`intraday_bars` denied (download-class), `reference_data` capped at 2
+securities; every `opal-gateway` (non-bbg) call denied; email/site-write denied. **A
+BLOCKED from this gate is the system working — do not retry, do not route around; if the
+need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 
 ## Hard lines (the short list; the refs carry the reasoning)
 
