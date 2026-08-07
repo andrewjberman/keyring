@@ -399,11 +399,38 @@ what `06`/`07` already concede from the other direction (*"it types POSITION, ne
 HONESTY"*), and they are right that **adding rows cannot reach it.**
 
 **What reaches Class B is already in the corpus and is not treated as load-bearing:** `02:47` —
-*"Another agent must reproduce material claims from the cited locators."* It sits as the eighth of
-eight acceptance targets, undifferentiated from the seven Class-A ones above it. **It is the only
-acceptance target in the method aimed at the class no control can catch, and on the evidence of this
-audit it is the one that actually fired.** Filed as an observation for the method owner, not as a
-proposed change — refinement is not this pass.
+*"Another agent must reproduce material claims from the cited locators."*
+
+**And the sharp cut is not Class A vs Class B — it is WHO CAN RUN THE CHECK.** *(Sharpening by
+`4.0.0_SA_CRO` base, re-derived from the locator, which is the only honest way to endorse a finding
+whose subject is re-deriving from locators. Verified here 8/8 before adoption.)* `02` §4 carries
+**eight** acceptance targets, lines 40-47:
+
+```
+40-46   targets 1-7   EVERY ONE IS RUNNABLE BY THE AUTHOR ON THEIR OWN WORK
+                      (use two sources - classify your endpoints - timestamp your evidence -
+                       fail your own parity check). Most are mechanically gateable.
+47      target 8      "ANOTHER AGENT must reproduce material claims from the cited locators."
+                      THE ONLY ONE WHOSE SUBJECT IS A SECOND PARTY. It STRUCTURALLY CANNOT BE
+                      RUN BY THE PARTY BEING CHECKED.
+```
+
+**So the list is seven self-checks and one independent re-derivation, presented as eight equivalent
+bullets, with the categorically different one last.** A reader ticking down it has no way to see that
+the eighth is not like the seven — **and it is the only one aimed at the failure class where the
+author's own measurement is sound.**
+
+**Class B is not uncontrollable; it is controllable only by a SECOND PARTY** — the control exists, it
+is *social rather than mechanical*, and it cannot be automated away because the thing it checks is
+judgement. *(Base's correction to its own earlier phrasing, adopted.)*
+
+**The evidence is this exchange.** My F-14 scan was right and my inference from it was wrong; nothing
+I could have run on my own retrieval would have caught that, because there was nothing wrong with the
+retrieval. It was caught by base re-deriving my claim from my cited locator — **`02:47` executing, on
+this audit, against this auditor. The method's weakest layer and its own remedy for that layer met in
+one event, and the finding and its evidence are therefore the same event.**
+
+Filed as an **observation for the method owner, not a proposed change** — refinement is not this pass.
 
 On the four CRO-authored files: they are markedly more disciplined than the corpus they sit beside —
 pinned, controlled, self-refuting, and carrying their own bias statements. **The findings against them
