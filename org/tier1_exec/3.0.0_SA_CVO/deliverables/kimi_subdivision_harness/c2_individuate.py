@@ -287,7 +287,13 @@ def graph_vintage(vintage_fn=None):
     out = (p.stdout or "") + "\n" + (p.stderr or "")
 
     def grab(pat):
-        m = re.search(pat, out)
+        # re.M IS LOAD-BEARING: `graph_nodes_total` uses a line-anchored `^\s*(\d+)\s*$`, and without
+        # MULTILINE the anchors bind to the whole string, so it NEVER matched and the field read None
+        # on every run since it was written. A provenance field that is silently null is the exact
+        # thing the docstring above warns about, in the same function -- it looks like the tool
+        # declined to answer rather than like the pattern was wrong. Caught by printing the field
+        # beside its siblings instead of reading the code.
+        m = re.search(pat, out, re.M)
         return m.group(1).strip() if m else None
     return {"nodes_snapshot_id": grab(r"nodes snapshot-id:\s*(\S+)"),
             "edges_snapshot_id": grab(r"edges snapshot-id:\s*(\S+)"),
