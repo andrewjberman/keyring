@@ -47,6 +47,23 @@ this fixture (2026-08-07, CVO):
 WORKED"). They derived it from the post-landing state without running anything; this confirms it
 empirically. Their fix holds in the epoch nobody could previously reach. <<
 
+AND THE POSITIVE HALF OF THE ACCEPTANCE -- "the half nobody has ever proven" (CTO~B) -- is now
+EXERCISED against this fixture (2026-08-07, CVO). It was unrunnable because it needs TWO post-landing
+states with MOVING instance counts, and no post-landing state existed at all. Built both: the full
+estate, and the estate with ~8% of edges dropped.
+    state A  C2Motif[instance] 6138   C3System[instance] 1255
+    state B  C2Motif[instance] 5111   C3System[instance] 1058   <- the composition TRACKED the estate
+    verdict(A, B, estate_changed=True )  -> LIVE            POSITIVE HALF
+    verdict(A, A, estate_changed=False)  -> LIVE            NEGATIVE HALF
+    verdict(A, A, estate_changed=True )  -> NOT-LIVE        positive half correctly FAILS
+    verdict(A, B, estate_changed=False)  -> INDETERMINATE   movement unattributable
+    predicate_ok=False over a MOVING count -> INDETERMINATE (the predicate control dominates)
+All four branches, with REAL composed counts rather than hand-written fixtures.
+>> THIS DOES NOT DISCHARGE DONE-MEANS ITEM 7. It proves the verdict LOGIC behaves correctly when
+instances exist; item 7 requires the real landed graph and the real pipeline. What changed is that a
+LIVE verdict is no longer an unexercised code path -- if the harness reports NOT-LIVE post-landing,
+that is now evidence about the pipeline rather than possibly about the harness. <<
+
 NOT COVERED: this simulates the landed graph by UPSERTING run 1's output into the node table, which
 matches the derive's wholesale overwrite of `graph_nodes`. It does NOT exercise the Iceberg commit
 itself (in-VPC), and it does not prove anything about ACCUMULATION across many nights -- the derive
