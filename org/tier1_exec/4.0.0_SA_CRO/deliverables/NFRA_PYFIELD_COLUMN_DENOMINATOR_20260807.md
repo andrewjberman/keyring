@@ -254,6 +254,21 @@ Adopting the ratified vocabulary rather than re-coining beside it (`comp-estate 
 | `scripts/pyfield_denominator.py` | Wilson-interval composition |
 | `deliverables/pyfield_to0/sites_v1.jsonl` · `sites_v2.jsonl` | raw evidence, both resolvers |
 | `deliverables/pyfield_to0/verdicts_v2.jsonl` | **4,897 per-site records** — locus, verdict, one-line reason (**requirement 2**) |
+
+> **⚠ READING THE `.jsonl` FILES — line 1 is an in-band `_header`, so `wc -l` = records + 1.**
+> `verdicts_v2.jsonl` is **4,898 lines = 1 header + 4,897 site records**; of those records,
+> **4,406 are name-based and 491 are expr-base**. A count taken over the whole file therefore
+> includes the header and reports one too many, and a count taken over *all* records answers a
+> different question from the headline, which is scoped to the **name-based** domain.
+>
+> *This is a documented property, not a trap — recorded because it already cost something: COO's
+> independent re-derivation read 4,898 records / 492 expr-base, and briefly disagreed with this
+> deliverable, before their own scan tripped over the header and resolved it. The header is
+> deliberately kept IN BAND: the two designs fail in opposite directions, and a sidecar's failure is
+> the worse one for THIS artifact — a file that can be moved, copied or quoted **without** its
+> grain, corpus, resolver and vintage is exactly the frameless denominator this TO existed to
+> prevent. An off-by-one that is caught in ten minutes by the frame sitting in row 1 is the cheap
+> failure direction.*
 | `deliverables/pyfield_to0/audit_v2.jsonl` | the 262-site systematic audit sample |
 | `deliverables/pyfield_to0/hand_adjudication.json` | the 68 hand verdicts with reasons |
 
