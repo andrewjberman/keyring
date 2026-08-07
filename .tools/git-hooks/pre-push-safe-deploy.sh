@@ -50,8 +50,18 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     fi
 
     # Build commit range: remote_sha..local_sha
-    # On new branch (remote = 0000...), diff against merge-base of main
-    RANGE="${REMOTE_SHA}..${LOCAL_SHA}"
+    # On new branch (remote = 0000...), diff against merge-base with the shared trunk --
+    # the zero-sha range this comment always promised to avoid was actually being passed
+    # through, and safe-deploy scans unbounded history on it (hang, measured 2026-08-06
+    # on the first SITEZ branch push: >5min vs 2s with the merge-base range).
+    if [[ "$REMOTE_SHA" == "0000000000000000000000000000000000000000" ]]; then
+        BASE="$(git merge-base origin/CLOUD "$LOCAL_SHA" 2>/dev/null \
+             || git merge-base origin/main  "$LOCAL_SHA" 2>/dev/null \
+             || echo "$LOCAL_SHA")"
+        RANGE="${BASE}..${LOCAL_SHA}"
+    else
+        RANGE="${REMOTE_SHA}..${LOCAL_SHA}"
+    fi
 
     # Run the deploy gate for this push range.
     # --no-pipescript: hook context has limited PATH; MD5 ETag verify is the primary guard.
