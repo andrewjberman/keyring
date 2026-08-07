@@ -378,6 +378,33 @@ corpus that has never been run would look like. `02:5` proposes the remedy itsel
 skill manually on one read-only system audit."* **The corpus has not had its own stage 1.** Every
 finding in §2 except F-3 would surface in the first ten minutes of one honest attempt to run it.
 
+### 5a. One finding about the method that came out of auditing, not out of reading
+
+This audit and its review produced **four measured instrument failures across two seats in one
+afternoon** (mine: a `grep` that failed its own positive control, a pathspec that matched nothing,
+and F-14; base's: an `awk` against a wrong path). They **do not form one class, and the split is the
+finding:**
+
+- **CLASS A — RETRIEVAL** *(3 of 4)*: the scan's scope and its *reported* scope were not the same
+  set. Each returned a well-formed, confident, wrong-domain answer. **Each was caught by a control on
+  the retrieval, none by care.**
+- **CLASS B — INFERENCE** *(1 of 4, mine, F-14)*: the scan was **right** and the sentence built on it
+  was wrong. **No control on the retrieval could have caught it** — the measurement underneath was
+  sound. It was caught only by **an independent seat re-deriving the claim.**
+
+**The method's remedies are almost entirely aimed at Class A.** `05`'s **E1** (*a quoted figure
+carries the instrument that produced it*), `evidence-model.md`'s claim contract, the denominator and
+scope discipline, `06`'s COVERAGE/GRAIN/SCOPE columns — all are controls on **retrieval**. Class B is
+what `06`/`07` already concede from the other direction (*"it types POSITION, never INSTRUMENT
+HONESTY"*), and they are right that **adding rows cannot reach it.**
+
+**What reaches Class B is already in the corpus and is not treated as load-bearing:** `02:47` —
+*"Another agent must reproduce material claims from the cited locators."* It sits as the eighth of
+eight acceptance targets, undifferentiated from the seven Class-A ones above it. **It is the only
+acceptance target in the method aimed at the class no control can catch, and on the evidence of this
+audit it is the one that actually fired.** Filed as an observation for the method owner, not as a
+proposed change — refinement is not this pass.
+
 On the four CRO-authored files: they are markedly more disciplined than the corpus they sit beside —
 pinned, controlled, self-refuting, and carrying their own bias statements. **The findings against them
 are real but second-order**, and F-7 is the only one that touches an argument rather than an artifact.
