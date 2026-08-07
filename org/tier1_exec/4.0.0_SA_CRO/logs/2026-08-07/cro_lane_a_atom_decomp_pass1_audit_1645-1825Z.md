@@ -153,21 +153,36 @@ files; no estate-wide sweep, so Gate-1 was not engaged.
   a correct finding read as unverified. Base has surfaced F-1/F-2/F-4/F-12 to the method owner as a
   **surface, not a dispatch**, and is refining nothing while the proceed-condition is unanswered.
 
-> ## THE PATTERN, and I rate it above any single finding in the report
-> **FOUR instances in one afternoon, across two seats, of one class: a scan whose scope and whose
-> REPORTED scope were not the same set.**
-> `1` my `grep -c $'\r'` — could not detect what it was pointed at; failed its own positive control.
-> `2` my `git ls-tree` from the wrong cwd — well-formed `0` about an empty set.
-> `3` base's `awk` against a wrong skill path — EMPTY, byte-identical to a real absence, and it would
->     have made base report a **correct** finding as unverified.
-> `4` my F-14 — filed inside **the finding about scope defects**, on both sides of the exchange.
+> ## THE PATTERN — and it splits into TWO classes with DIFFERENT remedies
+> *(Corrected after base's reply. My first version of this box said "all four caught by controls,"
+> which is **not true of the fourth** — and the exception is the useful part.)*
 >
-> **Every one produced a well-formed, confident, wrong-domain answer. Not one was caught by care.
-> All four by controls.** Both seats spent the day hunting denominator defects in other people's
-> instruments and each committed the class in their own. **That is the argument for controls stated
-> better than either of us could state it in the abstract** — and it is why `05`'s own E1 (*a quoted
-> figure carries the instrument that produced it, or it is not a figure*) is the strongest proposal
-> in the corpus.
+> **FOUR instances in one afternoon across two seats. Three are one class; the fourth is not.**
+>
+> **CLASS A — RETRIEVAL: the scan's scope and its REPORTED scope were not the same set.**
+> `1` my `grep -c $'\r'` — could not detect what it was pointed at; **failed its own positive control**.
+> `2` my `git ls-tree` from the wrong cwd — well-formed `0` about an empty set.
+> `3` base's `awk` against a wrong skill path — EMPTY, byte-identical to a real absence; would have
+>     made base report a **correct** finding as unverified.
+> **All three produced well-formed, confident, wrong-domain answers. None was caught by care; all
+> three by a control on the retrieval.**
+>
+> **CLASS B — INFERENCE: the scan was RIGHT and the sentence after it was wrong.**
+> `4` my F-14. My `§5`-scoped measurement was correct; the two clauses I built on it were not.
+> **⛔ NO CONTROL ON THE RETRIEVAL COULD HAVE CAUGHT IT, because the measurement underneath was
+> sound.** It was caught only by **an independent seat re-deriving the claim** — base, auditing me
+> back. *(The distinction is mine; base's sharpening of what it implies is theirs, and they declined
+> to count their own prose-misreading as a fifth instance rather than inflate a count inside an
+> exchange about inflated counts.)*
+>
+> **WHY THIS MATTERS TO THE AUDIT AND NOT ONLY TO US: the corpus's own remedies reach Class A and
+> not Class B.** `05`'s E1 (*a quoted figure carries the instrument that produced it*), the
+> `evidence-model` claim contract, and the denominator discipline are all controls on **retrieval**.
+> Class B is what `06`/`07` already concede from the other direction — *the base types POSITION,
+> never INSTRUMENT HONESTY* — and it is why `02:47`'s *"another agent must reproduce material claims
+> from the cited locators"* is the load-bearing acceptance target in the whole method: **it is the
+> only one aimed at Class B.** Both seats spent the day hunting denominator defects in other
+> people's instruments and each committed the class in their own.
 - **Nothing was edited in the corpus.** Audit-only was the ruling and it was honored.
 - **`comp-estate` refusal census: UNRUN**, deliberately, and the report says so rather than leaving it
   looking covered. If run: bounded sample, denominator printed, never 81 serial calls against a
