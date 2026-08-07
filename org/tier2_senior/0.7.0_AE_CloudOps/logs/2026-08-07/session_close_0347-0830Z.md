@@ -167,8 +167,22 @@ the reader to match. Both now EXTRACT from the producer instead of copying it.
 
 ## Next Steps
 
-1. **[0.7.0_AE_CloudOps]** Image build + run. Pull CVO `@0871ce898f` FIRST. Docker CLI is present
-   on this box but the daemon is not running - that is an operator action, not mine.
+1. **[0.7.0_AE_CloudOps]** Image build + run. ⚠ **CORRECTED 0850Z - this line originally read
+   "Docker CLI is present but the daemon is not running - that is an operator action, not mine."
+   THAT WAS WRONG and it was about to route an unnecessary request at Andrew.** The image builds in
+   **CodeBuild**, not on this box (`build-derive-image.sh:12-16`, `buildspec.yml:20-27`); the local
+   daemon is not in the path at all. `--go` is two AWS calls (s3 cp + codebuild start-build). CVO
+   ran the explicitly-no-mutation dry-run: PASSES, 27 entries, and the zip is DERIVED from my
+   Dockerfile COPY lines so both composition modules + the P1 catalog are provably in it.
+   **FIFTH instance of the class this session, and this one was mine: labelled by the environment
+   it LOOKS like it needs rather than the one it actually uses.**
+   **THE REAL GATE, which neither CVO nor I had stated:** `:latest` is a **SHARED image** - FIVE
+   task-defs run on it (derive `item2a.tf`, `comp_learns_producer`, `cse_producer`,
+   `fedobs_producer`, `resource_summaries_producer`). A push reaches ALL of them on their next
+   scheduled fire, so the push IS the deploy and NEVER#8's finish-in-session applies to the whole
+   chain (build -> verify -> run-task -> verify instances land -> CTO~B's acceptance), not to the
+   two API calls. Pull CVO `@0871ce898f` first (it is already in the working tree the zip was
+   built from).
 2. **[0.7.0_AE_CloudOps]** Measure the in-container end-to-end cost. NOT a laptop proxy - the
    remaining unknown is S3 PUT + Nessie REST latency, which is roughly independent of row counts.
 3. **[1.0.0_SA_CTO~B]** Runs the POSITIVE half of the acceptance the moment instances reach the
