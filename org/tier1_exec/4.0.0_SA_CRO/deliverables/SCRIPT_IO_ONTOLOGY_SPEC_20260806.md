@@ -2,7 +2,42 @@
 
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
-**Status:** DRAFT SPEC — for `3.0.0_SA_CVO~C` review. Nothing here is ratified; nothing here is built.
+**Status:** DRAFT SPEC. Nothing here is ratified; nothing here is built.
+
+> # ⛔ REV 3 IS UNDER A SUPERSEDING QUESTION — DO NOT BUILD FROM IT
+>
+> **2026-08-07 ~0205Z. Andrew asked whether a registry of input/output fields flowing through a
+> point "would just sit at D1 anyway," and what is actually in D1. Measured, the answer may kill
+> this document's central premise.**
+>
+> ```
+> Field nodes .......................... 4969   ALL layer=portal
+> READS_FIELD edges .................... 2110   ALL layer=portal
+> field-grain edges, NON-portal source ..... 0   (explicit falsifier, 0 rows)
+> layers ....... portal 11338 | ms 5828 | aws 2059 | pipeline 1337 | semctl 23
+> D1 ALREADY carries srcField->dstField on FLOWS_TO -- 884/961 non-null dstField
+> D1 ALREADY types the transform -- EdgeKind passthrough 337 / rename 142 / recompute_guarded 482
+> (comp-kuzu, 20585 nodes / 41144 edges, built 2026-08-07T00:32Z, Nessie HEAD current)
+> ```
+>
+> **EVERY field-grain edge in the estate is portal. Zero on `aws` or `pipeline` — where all Python
+> lives.** So the gap may be **a missing POPULATION of a ratified rail, not a missing LAYER beside
+> it.** D1's field grain is built, ratified and working — for React. Nobody ever extracted field
+> grain from Python.
+>
+> **HOW THIS DOCUMENT MISSED IT:** the BUILD LADDER rung-2 check was run against **extraction**
+> twice (it caught `recognizer_sdk` the second time) and **NEVER against the ONTOLOGY SLOT.** This
+> spec proposes a new rung beside a rail that already carries the exact grain it wants. **Same rung
+> of the same ladder, one level up, third occurrence in one session.**
+>
+> **UNDER TEST, NOT DECIDED.** Routed to `3.0.0_SA_CVO~C` to ATTACK (not confirm — including an
+> independent re-derivation, because `comp-kuzu` warns that a wrong-pattern query returns 0
+> identically to a true zero, and the zero above is load-bearing) and to `1.0.0_SA_CTO~D` as the
+> arch call: **new rung, or a ratification-chain COVERAGE extension of D1?**
+>
+> **If the reframe survives**, §3–§4's axis work is NOT lost — it demotes from a new ontology to the
+> **EXTRACTION CONTRACT** for populating D1 on the Python substrate. **If it dies**, REV 3 stands.
+> **Either way, do not build from this document until that is settled.**
 **Date:** 2026-08-06
 **Revision:** **REV 3, 2026-08-07** — the axis model is RESTRUCTURED against `3.0.0_SA_CVO~C`'s
 review (@357ac6aa6), `1.0.0_SA_CTO~D`'s arch read (@56edc2738 + @fff88d612 + @a21b44580), and my own
