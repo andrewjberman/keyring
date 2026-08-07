@@ -430,22 +430,32 @@ retrieval. It was caught by base re-deriving my claim from my cited locator — 
 this audit, against this auditor. The method's weakest layer and its own remedy for that layer met in
 one event, and the finding and its evidence are therefore the same event.**
 
-> ## ⚠ THE BOUND ON §5a, STATED BEFORE ANYONE QUOTES IT — **N=1, AND BOTH PARTIES ARE ONE SEAT**
-> **This is ONE event, and the "independent re-derivation" that demonstrates `02:47` working was
-> performed by the author of the document being examined.** We are base and lane under a single
-> serial, auditing a corpus one of us wrote. **That is weaker independence than `3.0.0_SA_CVO~C` had
-> on the coherence base** — they fixed a selection rule *before* looking and wrote outside the folder
-> (@`8170937b60`). We did neither. We happened to disagree productively.
+> ## ⚠ THE BOUND ON §5a — AND IT APPLIES TO **ONE OF THE TWO CLAIMS, NOT BOTH**
+> *(My first bound downgraded both. `4.0.0_SA_CRO` base corrected it: collapsing them undersells the
+> solid half. Adopted — the split is sharper than my version and than base's original overclaim.)*
 >
-> **At least two degrees of freedom are live**, by `07`'s own accounting: **we chose the subject, and
-> we are scoring our own exchange.** So the claim *"`02:47` is the load-bearing acceptance target"* is
-> a **claim about the method supported by a single instance its own claimants generated while
-> motivated to find something.**
+> **CLAIM A — STRUCTURAL.** *`02` §4 carries 8 acceptance targets; 7 are runnable by the author on
+> their own work; target 8 at `:47` is the only one whose subject is a second party; and it is last in
+> a flat list of equivalent-looking bullets.*
+> **STATUS: SOLID.** This is **a fact about the text**, re-derived independently by both seats from
+> the locator. **It does not depend on our exchange having happened at all** — anyone can check it in
+> thirty seconds and it comes out the same. **N is irrelevant to a structural reading.**
 >
-> **Status: HYPOTHESIS WORTH TESTING — NOT A FINDING.** A hypothesis cannot authorize a ruling,
-> a change to the acceptance list, or a re-ordering of `02` §4. The method's own bar is **three unlike
-> systems**; this has **one**, from an interested party. If it is right it will survive a real
-> independent test, and that test is the thing to ask for — not adoption.
+> **CLAIM B — IMPORTANCE.** *That the asymmetry MATTERS, because target 8 catches a failure class the
+> other seven structurally cannot.*
+> **STATUS: HYPOTHESIS.** It rests on **ONE instance, self-generated, by interested parties.** We are
+> base and lane under a single serial, auditing a corpus one of us wrote, and the "independent
+> re-derivation" that demonstrates `02:47` was performed by the author of the document being examined.
+> **Weaker independence than `3.0.0_SA_CVO~C` had** (@`8170937b60` — selection rule fixed *before*
+> looking, written outside the folder; we did neither). At least **two degrees of freedom** are live by
+> `07`'s own accounting: **we chose the subject, and we are scoring our own exchange.**
+> **A hypothesis cannot authorize a ruling**, a change to the acceptance list, or a re-ordering of
+> `02` §4 — and this one will not.
+>
+> **THE TEST CLAIM B WOULD NEED, so it is not left vague:** a seat with **no authorship stake in the
+> corpus**, scoring whether target-8-class failures (**sound retrieval, wrong inference**) are caught
+> by anything other than second-party re-derivation, **on a subject nobody in the loop wrote.** The
+> method's bar is **three unlike systems.** This has **one, from an interested party.**
 
 Filed as an **observation for the method owner, not a proposed change** — refinement is not this pass.
 
