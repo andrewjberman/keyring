@@ -118,6 +118,57 @@ success is not serving success"* (law 5). **The corpus's own case study identifi
 hardest-won findings of the engagement, and they are the ones that did not make the enforceable
 list.** A method whose most expensive lessons are demoted to prose has lost them for the next reader.
 
+#### F-2 DELTA TABLE — ruled by `1.0.0_SA_CTO` (method owner, 2026-08-07 ~1945Z)
+
+> **THE TABLE IS THE DELIVERABLE — NOT A REWRITTEN LIST.** CTO's ruling, and the reasoning is the
+> load-bearing part: *"Reconciling two normative lists by union is a TAXONOMY ACT, and those are not
+> yours or mine to perform quietly on Andrew's corpus."* **Ratifying a merged normative vocabulary is
+> method authorship and goes to Andrew with this table in front of him.** So F-2 stays a **measured
+> finding**, applied to nothing. It is also **not** what Andrew's refinement approval bought — that
+> was scoped to mechanical defects, and a normative rewrite is not one.
+>
+> **Operative list ruled: `SKILL.md:10-21`.** *"It is what an agent actually executes; `00` §5 is prose
+> ABOUT the method. When a description and an executable disagree, the executable is the state and the
+> description is the claim."*
+
+**The delta is BIDIRECTIONAL — this is sharper than what I originally filed.** I reported three laws
+missing from the Rules block. Mapping both directions shows **neither list contains the other: 5 of 8
+laws have a Rule; 5 of 9 Rules have a law.**
+
+| `00` §5 law | counterpart in `SKILL.md:10-21` (the OPERATIVE list) |
+|---|---|
+| 1 separate states (declared→serving) | **Rule 3** ✅ |
+| 2 static graph silence is not absence | **Rule 4** ✅ |
+| **3 counts are not identity parity** | ⛔ **ABSENT from Rules.** Survives only as unnumbered prose at `SKILL.md:53`. |
+| **4 immediate target map ≠ recursive control graph** | ⛔ **ABSENT FROM `SKILL.md` ENTIRELY.** Nearest trace is `workflow.md:31` *"Follow targets recursively"* — a procedural step, not a binding claim. |
+| **5 dispatch success ≠ target/artifact/consumer success** | ⛔ **ABSENT from Rules.** Survives only as unnumbered prose at `SKILL.md:53`. |
+| 6 consumer contracts fixed unless migrated | **Rule 8** ✅ |
+| 7 tool errors reduce coverage, not verdicts | **Rule 6** ✅ |
+| 8 no deletion before replacement…negative proof | **Rule 9** ✅ |
+
+| `SKILL.md` Rule | counterpart in `00` §5 (the "non-negotiable laws") |
+|---|---|
+| **1 start read-only unless mutation authorized** | ⛔ **NO LAW.** |
+| **2 pin identity, environment, scope, denominator, consumer boundary** | ⛔ **NO LAW.** |
+| 3 keep the six states separate | Law 1 ✅ |
+| 4 treat static graphs as lower bounds | Law 2 ✅ |
+| **5 every claim carries source, locator, measurement time, scope, denominator, limitation** | ⛔ **NO LAW** — and this is the method's own evidence contract. |
+| 6 tool failure is a coverage limitation | Law 7 ✅ |
+| **7 expand every discovered node until classified** | ⛔ **NO LAW** — it is `00` **§6** (closure model), a different section from the law list. |
+| 8 preserve consumer contracts | Law 6 ✅ |
+| 9 delete nothing before…absence proof | Law 8 ✅ |
+
+**What the table shows that the one-directional finding did not:** the two lists are not
+*list-plus-omissions*, they are **two independently drafted normative vocabularies that overlap on
+five items.** `00` §5 carries the three *epistemic* laws (3/4/5 — the "X is not Y" cautions) that the
+executable dropped; `SKILL.md` carries four *procedural* obligations (read-only default, pinning, the
+claim contract, frontier expansion) that the law list never elevated. **Each list is missing the
+other's characteristic content**, which is a Rule-24 intent-coherence break rather than an oversight:
+they were built to answer different questions and are both presented as *the* rules.
+
+**⛔ NOT RATIFIED, NOT APPLIED, NOT MERGED.** The decision — one list, and which content survives into
+it — is Andrew's. It is cheap to rule once with this table and expensive to unpick if guessed.
+
 ### F-3 · MEDIUM-HIGH · The method's first repository instruction is gate-DENIED in this estate
 
 `tool-adapters.md:7` — *"Start with `rg --files` and `rg` for names, paths, bucket keys, ARNs…"*
