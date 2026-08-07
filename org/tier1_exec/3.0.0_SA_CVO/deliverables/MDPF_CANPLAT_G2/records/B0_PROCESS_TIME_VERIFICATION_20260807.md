@@ -52,6 +52,15 @@ A data-as-of movement is a REGRESSION, structurally unreachable by the process-t
 named); the clean list loads. The ineligibility is enforced by code that will not execute a violating
 configuration — not by care.
 
+## Dual role since A8-a (@dd09ef315, ruled ~0245Z) — the guard protects the WRITE PATH
+
+A8's unchanged-verdict compare now adopts THIS canonicalisation and THIS B0 list (one "equal" across
+both instruments). Consequence, CTO~Z verbatim: *"If a data-as-of field ever entered that list, A8
+would read a genuine DATA-VINTAGE CHANGE as `unchanged` AND REFUSE TO WRITE THE NEW DATA... a pipeline
+that silently stops updating while reporting success."* The constraint-3 SystemExit guard is therefore
+load-bearing in TWO places: R7's verdicts AND the production emitter's decision to write. A poisoned
+list stops BOTH instruments loudly rather than letting either lie quietly.
+
 ## Constraint 4 — the positive assertion, mechanised
 
 Every compare report now carries `b0_positive_assertion` in its `_meta`: process-time paths excluded
