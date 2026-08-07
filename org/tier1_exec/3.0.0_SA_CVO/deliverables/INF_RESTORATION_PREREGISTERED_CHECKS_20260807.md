@@ -136,6 +136,51 @@ scope is CTO's and Andrew's.
 
 ---
 
+## 4a. RESULT -- 2026-08-07T17:31Z. **VERDICT: PARTIAL / COSMETIC ON THE NNA AXIS** (rule S4.2)
+
+Run terminated 17:21:39Z, `exit_code 1`. Criteria above were committed @803c398573 (+ amendment
+@3a790b1b91) while both dates read 404 -- so the rule was fixed before the values existed.
+
+**AE's fix WORKED, and this belongs first.** `chain_full_20260807_161721.log:10-20` -- sync clean,
+all eight multi-homed basenames `collision OK (identical xN)`, no FATAL. The chain ran its full
+~64 minutes for the first time since 08-05 and reached `INF_C_01` for the first time in two days.
+
+**The AUA axis is genuinely restored, not cosmetically:**
+
+| | rows | cols | adv | sum_total_aua | nna identity | aua_prior continuity |
+|---|---|---|---|---|---|---|
+| 2026-08-06 | 798 | 13 | 5 | 209,445,467 | 100.0% | 100.0% |
+| 2026-08-07 | 799 | 13 | 5 | 208,325,960 | 100.0% | 100.0% |
+
+**The NNA axis is not:** `canonical_nna_2026-08-06/07.parquet` **ABSENT**; rows with
+`net_nna != 0` = **0 of 798** and **0 of 799** (historical band 1-37);
+`pipeline-complete.json` still `run_date=2026-07-31`.
+
+**Mechanism SOURCE-CONFIRMED** (`chain_full_20260807_161721.log`, 36,170 lines, file coordinates):
+`:36039` the guard error, `:36054` `nna_coverage_guard.NNACoverageRegression`, `:36066`
+`CHAIN chain:full FAILED at INF_C_01 (exit=1)`, `:36067` aborted `2026-08-07T17:21:38Z`.
+**Identical 5 accounts, identical $514,487.47, identical partitions to 08-05.** So the 08-05
+condition did **not** self-resolve -- it was masked two days by the collision and re-fired on first
+contact.
+
+**Prediction scored 6/7.** Confirmed: files created; rows in band; 13 cols; 5 advisor_keys;
+identities ~100%; continuity holds; `total_aua` in band; and clause 6, the load-bearing one --
+`net_nna == 0` for every row. **Missed:** households read **290**, the rule said exactly 288.
+**That is MY band being too tight, not a data defect** -- the series drifts 287 -> 288 -> 290,
+consistent with organic household growth. Recorded as a rule error rather than quietly widened.
+**Clause 7 corrected in the estate's favour:** I predicted a naive "chain completed / files present
+/ values sane" check would pass. Half right -- the rc and completion sentinel DID fail honestly
+(`exit=1`, sentinel not advanced). What would have passed is an **artifact-level** check: files
+present, structurally perfect, continuity 100%. I was too pessimistic about the chain-level signal.
+
+**CONSEQUENCE THAT GREW:** the served zeroed-NNA range is now **FIVE** dates, not three -- 08-01,
+08-04, 08-05, **and now 08-06 and 08-07**, written by this run before it aborted. Every future run
+past the sync step adds another, because the producer emits `0` rather than null for a date with no
+`canonical_nna`. **The backfill scope grows until the NNA leg is fixed.**
+
+⛔ **BACKFILL MUST NOT FIRE ON THIS BRANCH.** Release condition is the `INF_C_01` coverage-guard
+excusal on the 5 accounts / $514,487.47 -- Andrew's call, put to him before this verdict.
+
 ## 5. GROUNDING / LIMITS
 
 - `INF_C_01` failure is **SOURCE-CONFIRMED**: `nna_coverage_guard.py:320` raising
