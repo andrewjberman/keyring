@@ -4,7 +4,11 @@
 #        comp-kuzu --json "..."         # JSON output
 #        comp-kuzu --limit 20 "..."     # auto-append LIMIT
 #        comp-kuzu --db-path PATH "..."
-# DB is rebuilt via: python3 infra/aws/globgrph/kuzu_load.py [--force]
+# This wrapper runs kuzu_cli.py, which serves _canonical.CANONICAL_DB_PATH = kuzu_nessie_db.
+# DB is rebuilt via: comp-kuzu-full (full) / comp-kuzu-inc (incremental) -- engine
+# infra/aws/globgrph/kuzu_nessie_load.py. NOT kuzu_load.py: that builds a DIFFERENT
+# 5-column schema (PK arn, no props) into a DIFFERENT dir (kuzu_db). Aimed at the
+# canonical path it answers every props/D1 query with a silent empty result.
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 # NFRA_GLOBGRPH: prefer the INCREMENTAL local-projection refresh (local analog of the cloud
 # incremental_updater) over the full ~55K-row reload on a BEHIND query -- 92x faster (3.9s vs
