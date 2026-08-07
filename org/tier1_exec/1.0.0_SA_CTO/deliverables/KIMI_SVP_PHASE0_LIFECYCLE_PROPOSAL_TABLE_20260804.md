@@ -20,7 +20,64 @@ VERTICAL grain those questions do not apply directly; the polarity table governs
 ARTIFACTS, while the ratified value governs the FUNCTION. Rule 24's same-grain postulate is
 satisfied by keeping those two statements separate, not by collapsing them.
 
-**SITTING PROGRESS: 12 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) -- 2026-08-06)
+**SITTING PROGRESS: 13 of 29 ratified** (advi-bd, advi-cot, advi-inf, canonical-schwab, causality, ceo-digest, cma, correlation, data-refresh -- 2026-08-05; **etf-reports** (PERMANENT + standing review) and **factor-tilts** (PERMANENT, in good standing) and **graph-platform** (PERMANENT) and **insurance** (**DORMANT** -- the sitting's FIRST non-PERMANENT live value) -- 2026-08-06)
+
+> **ROW 13 IS THE FIRST DORMANT IN THIS SITTING, AND DORMANT IS NOT A WEAKER PERMANENT -- IT IS THE
+> MOST DEMANDING VALUE IN THE ENUM.** Read at `NFRA_ONTOLOGY_RULE_BANK.yaml:425-436` AFTER the
+> ratification, not before -- recording that order deliberately, because it is the reason the
+> declaration is not yet well-formed. Three consequences follow MECHANICALLY from his word:
+>
+> **(1) `requires: [reason, rearm_condition, annotation_cite, revalidate_by]` -- four fields, and
+> ONE OF THEM IS SOVEREIGN.** The rule bank names it: *"rearm_condition is the load-bearing one: A
+> BELT NOBODY CAN STATE THE RE-ARM FOR IS NOT A BELT."* His *"they will be revisited"* supplies
+> `reason` in his own words; it does NOT supply `rearm_condition` -- *that* asks WHAT would cause the
+> revisit, and only he holds it. `annotation_cite` must be `file:line @ <commit-ish>`, never bare
+> (Rule 22: a citation without a vintage resolves at every vintage, to different code).
+> `revalidate_by` defaults to the registry's 180 days -> **2027-02-02**. **NOT A GATE AND NOT A HOLD:
+> the ratification STANDS on his word. This is the field list CVO needs to land it well-formed.**
+>
+> **(2) THE COLDNESS I MEASURED IS NOW THE DECLARED HEALTHY STATE, NOT A DEFECT.**
+> `zero_traffic_at_rest: HEALTHY` -- and the rule bank flags this as the row's unique third question:
+> *"With a declared cadence, no traffic is FROZEN (a finding); for DORMANT, NO TRAFFIC IS THE DECLARED
+> HEALTHY STATE. A rollback lever being exercised is not a lever."* **So every number I gathered to
+> characterise this vertical -- 41 days idle, artifacts frozen at 2026-06-01, zero schedules -- stops
+> being evidence of decline the moment he rules DORMANT.** An existence-plus-traffic detector is still
+> wrong here; only the declaration separates belt from corpse.
+>
+> **(3) `absent_at_rest: "FINDING (a belt that vanished)"` RETRO-TYPES SOMETHING I HAD FILED AS AN
+> ODDITY.** Four Lambdas -- `find-insure-serving-{companies,consolidate,employees,scoring}` -- are
+> DECLARED in Terraform (`infra/aws/terraform/imo-pipeline/`, 5-7 `.tf` refs each, `function_name =`
+> literals; a LIVE sibling is declared identically at 9 refs, so the shape is controlled) and DO NOT
+> EXIST in AWS (token-walked, denominator 196). Before the ruling that was a curiosity. **Under
+> DORMANT it is a typed violation.** ⚠ **UNVERIFIED AND NAMED AS SUCH:** whether they were never
+> applied or applied-then-destroyed. I have not run a plan; `terraform plan` in that tree is the
+> discharging check and I did not run it unbidden.
+>
+> **AND THE HAZARD RUNS THE OTHER WAY TOO -- this is CTO~B's row-4 generalisation inverted.** There:
+> *"terraform destroy removes INFRASTRUCTURE; only deleting the DECLARATION removes the INTENT."*
+> Here the DECLARATION survived and the RESOURCE did not, so the next apply in that tree -- by any
+> agent, for any unrelated reason -- would CREATE four Lambdas for a project Andrew closed. Same seam,
+> opposite direction, and it is live in a vertical he has just ruled must be preserved.
+>
+> **THE PRESERVATION CONSEQUENCE, STATED PLAINLY BECAUSE IT IS THE ENUM'S NAMED PRIMARY FAILURE
+> MODE.** The registry's own words, quoted in the rule bank: *"A deliberate belt and a corpse are
+> IDENTICAL on every mechanical signal (both DISABLED, both 0-invocation, both 0-consumer). Only the
+> INTENT ANNOTATION separates them"* -- and *"a false-positive (decommission a deliberate belt) is THE
+> named failure mode."* **This ruling converts `s3://opal-data-imo/`, `find-insure-cost-state`, the 4
+> live Lambdas and `data/find/dualbiz/` into a PROTECTED BELT.** Any future cleanup sweep keyed on
+> cold / unused / zero-invocation would destroy precisely what he said he intends to return to. That
+> is not a hypothetical: `tier_c_never_sufficient` in the registry exists because those signals keep
+> getting read as permission.
+>
+> **UNRELATED TO THE LIFECYCLE VALUE, AND MORE URGENT BECAUSE OF IT.** Six files have sat UNTRACKED in
+> this shared worktree for 41 days (all mtime 2026-06-26), including
+> `deck_generation/prompts/ga-dualbiz-targets.deck.md`, `deck_generation/dev/scripts/ga_dualbiz_build.py`
+> and `enriched_ga_firms.json` -- unfinished Georgia-targets work. **If this vertical is to be
+> REVISITED, that uncommitted state IS the state you would want on revisit, and it is exactly the
+> state a shared worktree does not protect** -- disclosed to this seat the same session by
+> `3.0.0_SA_CVO~B`, whose parked `if False:` scaffold was swept into a peer's commit and shipped a
+> feature dead. Owner was `0.1.0_DS_MarketIntelligence` (seat not live). **Routed as a finding, not
+> acted on: committing another agent's uncommitted work is the exact act `25adf0ba0d` reverted.**
 
 > **CADENCE IS A DECLARED PROPERTY, AND IT WAS NOWHERE MACHINE-READABLE (row 7).** I proposed cma as
 > "PERMANENT with NO declared cadence" and argued the age therefore could not be a finding. **Andrew
@@ -50,6 +107,18 @@ satisfied by keeping those two statements separate, not by collapsing them.
 > DORMANT. Those rows were not honest uncertainty -- they were UNEXAMINED rows wearing the enum's
 > word for honest uncertainty. The remaining three (`insurance`, `security-scanner`, `ticketing`)
 > get ground-read BEFORE they are put in front of Andrew, not after.
+>
+> **UPDATE 2026-08-06 (`1.0.0_SA_CTO~C`) — THREE EXAMINED, THREE WRONG. The pattern held on `insurance`.**
+> Its stated basis was *"zero session evidence of activity or consumers"* — the identical phrasing that
+> was wrong on `causality` and `ceo-digest`. Ground-read found **106 commits in 90 days, a named
+> consumer, and two project records, one carrying Andrew's own prior sovereign ruling.** ⚠ **AND THE
+> NEW LESSON IS SHARPER THAN "LOOK HARDER," because on `insurance` the PROPOSED VALUE WAS RIGHT
+> (DORMANT candidate -> ratified DORMANT) WHILE ITS EVIDENCE WAS FALSE.** A row can carry the correct
+> answer on a reason that does not survive contact — and had I presented the value without grounding
+> it, the ratification would have landed on a false premise and nobody downstream could tell.
+> **A CORRECT CONCLUSION IS NOT EVIDENCE OF A SOUND METHOD, and this table is read as though it were.**
+> Two remain: `security-scanner` (row 25, likely inverted — same Lambda and same `App.tsx` as row 9)
+> and `ticketing` (row 27).
 
 > **RETIREMENT RULING ON RECORD (row 5).** `RETIRED` carries `requires: [retirement_ruling]` --
 > *"a retirement with NO RULING is an outage with paperwork."* A teardown had occurred (June 2026)
@@ -205,7 +274,7 @@ than inheriting my original framing.
 | 10 | etf-reports | **PERMANENT — RATIFIED 2026-08-06**, **WITH A STANDING REVIEW** (Andrew VERBATIM: *"This is Permanent, but we need to make sure that all of these are properly grouped together, that nothing is redundant, that what is actually supposed to be canonical here is, I'd say essentially that it is subject for review."*) | **NINE live schedules, all ENABLED**, spanning all three advisor firms — the row's original single-line evidence understated this by 8. Chain (UTC): `wsd-49f-partner-held-etf-daily` 03:30 **TUE-SAT** · `cot-etf-ownership-daily` 10:30 · `bd-49f-etf-ownership-daily` 10:45 · `inf-etf-ownership-daily` 15:00 · `etfs-canon-fanin` 15:45 · `etf-ownership-dashboard` 16:00 · `etfs-netassets-daily` 22:00 · `opal-assets-silver-etf` 23:30 · `etfs-reports-monthly-run` cron(0 10 1 * ? *) America/New_York -> Sep-1 14:00Z -> `etfs-reports-orchestrator`. Rule->Lambda mapping is **1:1, zero duplicate targets**. Original cited evidence VERIFIED correct | HIGH | **REVIEW OWNED, scope below the table.** ETFS CANON question still open — and a Lambda named `etfs-canon-fanin` fires DAILY while "which location is canonical" is an unresolved P0 |
 | 11 | factor-tilts | **PERMANENT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"row 11 is permanent and in good standing"*) | **COMPLETE CHAIN, VERIFIED LIVE TODAY — producer -> served -> API -> mounted route.** Producer: yang pipeline ran **2026-08-06T12:59:32Z**, `yang-pipeline-metadata.json` `data_as_of_date: 2026-08-05` = **T-1, the correct default, not staleness**. SERVED: three TIERED artifacts all written **2026-08-06T13:01:38Z** — `json/factor-tilts/tier1-snapshot.json` (10.4 KiB), `tier2-spreads.json` (123.0 KiB), `tier3-timeseries.json` (3.6 MiB). API: `portal-proxy.ts:1299 getFactorTiltsSnapshot()`, `:1312 getFactorTiltsSpreads()`. FRONTEND **MOUNTED**: `App.tsx:22` lazy -> `:418` `/factor-tilts` behind `ProtectedRoute`. **His "in good standing" is confirmed on evidence, not accepted on assertion** | **HIGH (was MED — rated off the FAMILY NAME, the same basis that was wrong on rows 7 and 8 in opposite directions)** | **PRODUCER: `yang-generate-factor-tilts`, an AWS LAMBDA** (python3.11, 1024MB/600s, Active), source `infra/aws/lambda/v2_portal/yang_pipeline/factor_tilts/yang-generate-factor-tilts/lambda_function.py:24-30,388`, Terraform `infra/aws/terraform/yang-pipeline/lambdas.tf`, orchestrated by Step Functions `.../stepfunctions/yang-pipeline-definition.json`. ⛔ **MY 2026-08-06 CLAIM THAT THIS LAMBDA DOES NOT EXIST AND THAT YANG RUNS ON EC2 WAS FALSE ON BOTH CLAUSES — RETRACTED, see the correction note below the table** |
 | 12 | graph-platform | **PERMANENT — RATIFIED 2026-08-06** (Andrew engaged all three sub-points; *"Ok great"* on the substrate finding) | **THE MOST HEAVILY EVIDENCED ROW IN THE SITTING.** TOOLING: `comp-manifest-check completeness` **PASSES all four invariants** — 90 tracked+committed `comp-*` executables all accounted (76 registered + 13 deliberately excluded), plus output-contract, stage-2 vocab and retired-alias. DEV: **322 commits / 14 days across 11 distinct days**, most recent same-day. INFRA: `globgrph-cse-producer-nightly` ENABLED `cron(30 3)` UTC -> **ECS cluster `opal-globgrph` ACTIVE, 2 running tasks / 2 services** (grounded on the target **ARN**, `arn:aws:ecs:...:cluster/opal-globgrph`, NOT inferred from a name — the correction from the row-11 error applied). GRAPH: **20,588 nodes / 41,197 edges**, rebuilt same-day, Nessie HEAD current. CONSUMER: **every agent** — Rule 21 makes comp-tools the mandated default for search+inspection | HIGH | **THIS VERTICAL IS THE MEASUREMENT APPARATUS FOR THE OTHER 28 ROWS.** A degradation here is not one product failing — it is the instrument every verdict in this sitting was formed with. Sub-findings resolved below |
-| 13 | insurance | UNDECLARED | sys-estate-ops-platform member; zero session evidence of activity or consumers | — | resolve at sitting — DORMANT candidate |
+| 13 | insurance | **DORMANT — RATIFIED 2026-08-06** (Andrew VERBATIM: *"I would say that both sides of this are dormant, they are not actively being used but they will be revisited."*) | **THE VERTICAL IS TWO PROJECTS, AND HIS RULING COVERS BOTH.** (a) **`FIND_INSURE`** — `status: complete`, CLOSED-AS-SUPERSEDED 2026-06-05 on his own prior sovereign ruling (LD-0162: *"close INSURE for now, **we may return to it**"*). Applied plane **INTACT AND PRESERVED**: 4 Lambdas Active (`find-insure-{crawl-web,crawl-web-scraping-browser,parse-web,score-web}`, code frozen 2026-05-28), `s3://opal-data-imo/serving/` 7 objects newest **2026-06-01**, DynamoDB `find-insure-cost-state` ACTIVE 101 items. (b) **`FIND_DUALBIZ`** — `status: active`, local pipeline `data/find/dualbiz/` (DIR), **no AWS plane**; 106 commits/90d (May 76 -> Jun 29 -> Jul 1, and that 1 is an unrelated fabric-wide rename sweep), last genuine work **2026-06-26 (41d)**; hit its stated target (*"315 firms scored / 156 disclosure-present, past Andrew 100 target"*). **SCHEDULES: ZERO — BOTH APIs, positive-controlled** (139 EventBridge rules / 16 EventBridge Scheduler schedules, 0 matches either; controls fired 3/3). **PORTAL: NO ROUTE** — the only `insurance` hit in `portal/src` is a jobless-claims macro tooltip (`Macroeconomics/constants/indicators.ts:185`), denominator 405 of 405 scanned. **MY ORIGINAL ROW SAID "zero session evidence of activity or consumers" — THERE WERE 106 COMMITS, A NAMED CONSUMER (a CSV/deck to Andrew), AND TWO PROJECT RECORDS ONE OF WHICH CARRIED HIS OWN RULING. Third UNDECLARED row examined, third one wrong.** | HIGH | **DECLARATION IS INCOMPLETE UNTIL `rearm_condition` IS SUPPLIED — see the row-13 consequences block below.** DORMANT is the enum's most demanding value (`requires: [reason, rearm_condition, annotation_cite, revalidate_by]`) and `absent_at_rest` is a FINDING, which retro-types the 4 TF-declared-but-AWS-absent `find-insure-serving-*` Lambdas as *a belt that vanished* |
 | 14 | m365-mcp | PERMANENT | Live gateway (tools active this session); ms-ingest-liveness just registry-repaired | HIGH | — |
 | 15 | macroeconomics | PERMANENT | dual-structure (macro-data engine + yang) | MED | — |
 | 16 | market-overview | PERMANENT | Portal MO live; spans 4 structures (widest with trade-submission) | HIGH | — |
@@ -228,6 +297,16 @@ insurance, security-scanner, ticketing). Zero TRANSIENT/EVENT_CREATED/DORMANT/LE
 proposed — **deliberately**: those are exactly the values that should come from Andrew's
 knowledge or from R2's Friction evidence, not from a seat's one-evening survey. If the sitting
 rules several PERMANENTs down to DORMANT/LEGACY, that is the system working.
+
+**THAT DESIGN BET HAS NOW PAID OUT TWICE, AND BOTH TIMES FROM ANDREW'S KNOWLEDGE, NOT FROM EVIDENCE**
+(`1.0.0_SA_CTO~C`, 2026-08-06): the sitting has produced **RETIRED** (row 5 `causality`, *"Retired
+completely."*) and **DORMANT** (row 13 `insurance`, *"both sides of this are dormant... they will be
+revisited"*). Neither value was reachable from the estate. `causality`'s teardown had no authorising
+ruling on record — his word at the sitting BECAME the ruling the enum requires. `insurance` is colder
+still: **DORMANT and abandoned are byte-identical on every mechanical signal**, so no amount of
+grounding could have produced it. **The survey's job is to make the row ANSWERABLE; only he can
+answer it** — and a seat that had proposed values for all 29 would have been most confident exactly
+where it had least standing.
 
 **At the sitting:** (1) re-derive the 29 from `comp-estate --matrix` (the count is the
 matrix's, not this table's); (2) rule the 5 UNDECLARED; (3) confirm or amend the 24; (4) CVO

@@ -38,7 +38,7 @@ You come pre-briefed on these:
 renders), read it, report the value + its freshness. Ground against the served file, not the
 producer's claim.
 
-**"Where does this number come from?"** — trace lineage with the comp-tools (`pipescript <name>`
+**"Where does this number come from?"** — trace lineage with the comp-tools (`comp-estate --resource <name>`
 for a named pipeline; `comp-blast <fn>` for blast radius; `comp-kuzu` for a cross-layer query).
 Report the producer -> served -> frontend chain.
 

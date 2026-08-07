@@ -277,12 +277,14 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    ```
 2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
    `timeout_ms: 3600000`:
-   - **RESOLVE THE DRIVE PREFIX FIRST — DO NOT HARDCODE EITHER FORM.** The box runs
-     **two** shell flavors and they disagree about how `C:` is spelled: a **cygwin**
-     session has `/cygdrive/c/...` and **no `/c/`**; an **MSYS/Git-Bash** session has
-     `/c/...` and **no `/cygdrive/c/`**. The Monitor needs an **absolute** path (the
-     guard hook blocks the relative form), so one of the two is always wrong. Measure,
-     then arm:
+   - **RESOLVE THE DRIVE PREFIX FIRST — DO NOT HARDCODE EITHER FORM.** BOTH prefixes
+     may be mounted at once (measured 2026-08-06, CRO: `/c` and `/cygdrive/c` resolve to
+     the same device + inode — the prior "one or the other, never both" sentence here
+     was FALSE on a live box), but they are NOT equally durable: `/c` is a non-`auto`
+     user mount that has vanished at reboot (LD-0340 class, 2026-07-29: its death killed
+     all 186 `~/bin` forwarders that baked `/c/` in, while A.3 read healthy);
+     `/cygdrive/c` is the system-provided `auto,noumount` mount. The Monitor needs an
+     **absolute** path (the guard hook blocks the relative form). Measure, then arm:
      ```bash
      test -d /cygdrive/c && echo /cygdrive/c/Users/AndrewBerman/Desktop/ajb_workspace \
                          || echo /c/Users/AndrewBerman/Desktop/ajb_workspace

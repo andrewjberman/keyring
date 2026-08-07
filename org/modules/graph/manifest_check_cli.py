@@ -30,6 +30,7 @@ Subcommands:
 from __future__ import annotations
 
 import argparse
+import ast
 import copy as _copy
 import datetime as _dt
 import json
@@ -1097,7 +1098,8 @@ def _stage2_vocab_invariant(files) -> int:
 _ROUTING_SURFACE_HUD = ".tools/hooks/comp-tool-hud.sh"
 
 
-def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
+def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned=0,
+                            tombstoned=0):
     """THE RETIRED-ALIAS INVARIANT, pure decision (unit-testable). (rc, lines); rc=1 blocks.
 
     NFRA_MSBEFF.R6 (2026-07-23). retired_aliases is the THIRD name-authority section (dead names).
@@ -1112,6 +1114,13 @@ def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
 
     live universe = ti | exc | entry_tools | cov. retired = {name: {successor, ...}}.
     surface_refs = {retired_name: [files]} -- declared-retired names found in committed surfaces.
+    scanned = HOW MANY routing surfaces check C actually read. PRINT THE DENOMINATOR: check C is
+    scope-predicated, so `scanned == 0` means it DID NOT RUN, and a PASS line that says "none
+    cited" in that state asserts an estate-wide fact off an empty read. Measured 2026-08-06: the
+    commit path's substrate contains no routing surface at all, so C ran on zero files on every
+    commit while this line reported clean -- and 7 live citations of a retired name sat unseen.
+    A silent false NEGATIVE outlives the loud false POSITIVE this same gate threw the same day,
+    precisely because nothing it does is visible.
     """
     live = set(ti) | set(exc) | set(entry_tools) | set(cov)
     contradiction = sorted(n for n in retired if n in ti or n in exc)
@@ -1119,9 +1128,12 @@ def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
                       if (v or {}).get("successor") and (v or {}).get("successor") not in live)
     routed = {n: fs for n, fs in surface_refs.items() if n in retired}
     if not contradiction and not dangling and not routed:
+        citation = (f"none cited across the {scanned} routing surface(s) in scope" if scanned
+                    else "citation check (C) DID NOT RUN -- no routing surface in scope")
+        tomb = f" ({tombstoned} tombstoned mention(s) exempted)" if tombstoned else ""
         return 0, [f"  [manifest-check] retired-alias invariant PASS: {len(retired)} retired name(s) "
-                   f"declared, all disjoint from live+excluded ({len(live)} live), successors valid, "
-                   f"none cited in committed routing surfaces."]
+                   f"declared, all disjoint from live+excluded ({len(live)} live), successors valid; "
+                   f"{citation}{tomb}."]
     lines = [f"\nBLOCKED: retired-alias invariant (retired {len(retired)}; live universe {len(live)}):"]
     for n in contradiction:
         lines.append(f"  - {n:<24} declared RETIRED but is ALSO in tools_index/excluded -- a name is in EXACTLY ONE section")
@@ -1143,10 +1155,35 @@ _RETIRED_SUBSTRATE = (
 )
 
 
+def _routing_surfaces() -> list:
+    """EVERY routing surface `_is_routing_surface` recognises, estate-wide, repo-relative.
+
+    FOR THE HUMAN-FACING SUBCOMMAND ONLY. The commit path stays commit-scoped and is NOT widened
+    here: doing that would block every skill/prompt commit fabric-wide on citations that already
+    exist, which is a new gate on work nobody asked for.
+
+    WHY THE SWEEP HAS TO EXIST SOMEWHERE. A commit-scoped citation check can only ever catch a
+    citation added AFTER a name is retired, in a file somebody happens to commit -- so at the
+    instant of retirement every EXISTING citation becomes permanently invisible to it. Retirement
+    day is exactly when the estate-wide read is needed, and it was the one read nothing performed.
+    """
+    out = [_ROUTING_SURFACE_HUD]
+    out += [str(p.relative_to(_WORKSPACE)).replace("\\", "/")
+            for p in sorted(_WORKSPACE.glob("org/**/prompt.md"))]
+    skills = _WORKSPACE / ".claude" / "skills"
+    if skills.is_dir():
+        out += [str(p.relative_to(_WORKSPACE)).replace("\\", "/")
+                for p in sorted(skills.rglob("*")) if p.is_file()]
+    return out
+
+
 def _retired_alias_invariant(files) -> int:
     """0 = holds / not applicable. 1 = BLOCK. Substrate-scoped; deterministic; fail-closed.
     Fires when the manifest / coverage-map / an operational routing surface is committed."""
-    norm = _norm(files)
+    # DEDUPE, order-preserving: `scanned` is a REPORTED DENOMINATOR now, and a file reachable by
+    # two callers (the HUD is both _RETIRED_SUBSTRATE and a routing surface) would inflate it and
+    # double-list its own citations. A denominator you did not dedupe is not a count.
+    norm = list(dict.fromkeys(_norm(files)))
 
     def _is_routing_surface(f):
         return (f.endswith(_ROUTING_SURFACE_HUD) or f.endswith("/prompt.md")
@@ -1169,6 +1206,8 @@ def _retired_alias_invariant(files) -> int:
         retired = raw.get("retired_aliases") or {}
         # Scan committed routing surfaces for DECLARED-RETIRED names (closed set -> no prose storm).
         surface_refs = {}
+        scanned = 0
+        tombstoned = 0
         for f in norm:
             if not _is_routing_surface(f):
                 continue
@@ -1176,24 +1215,92 @@ def _retired_alias_invariant(files) -> int:
             if not p.exists():
                 continue
             txt = p.read_text(encoding="utf-8", errors="replace")
+            scanned += 1
+            # A TOMBSTONE IS THE CURE, NOT THE DISEASE. This check text-matches a NAME, so it
+            # cannot tell "run this tool" from "this tool is RETIRED, do not run it" -- and the
+            # second is exactly what a strike note must say. Without an exemption the invariant
+            # forbids DOCUMENTING the retirements it exists to police: the only way to satisfy it
+            # is to delete the explanation, leaving a silent hole where the reason used to be.
+            # Same shape as the comment-blind _ADD_PARSER regex this same gate threw today, one
+            # layer up; the estate's idiom for "I know, and here is why" is an audited inline
+            # marker (cf. `# never-override:`, `# rail-checked:`), so this uses one.
+            #   retired-tombstone: <name>     <- that name's mentions in THIS file are documentation
+            # NEVER SILENT: tombstones are COUNTED and REPORTED. An exemption nobody can see is a
+            # second blind spot wearing the first one's fix as a disguise.
+            tomb = set(_re.findall(r"retired-tombstone:\s*([A-Za-z0-9_-]+)", txt))
             for name in retired:
                 if _re.search(r"(?<![A-Za-z0-9_-])" + _re.escape(name) + r"(?![A-Za-z0-9_-])", txt):
+                    if name in tomb:
+                        tombstoned += 1
+                        continue
                     surface_refs.setdefault(name, []).append(f)
     except Exception as e:  # fail-closed
         print(f"\nBLOCKED: the retired-alias invariant could not be evaluated ({e}).\n"
               f"  An unevaluable completeness gate does not read as 'passed'.")
         return 1
-    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs)
+    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs, scanned,
+                                        tombstoned)
     for ln in lines:
         print(ln)
     return rc
 
 
 _SUBCOMMAND_TOKEN = re.compile(r"^[a-z][a-z0-9-]*$")
-_ADD_PARSER = re.compile(r"add_parser\(\s*['\"]([a-z][a-z0-9-]*)['\"]")
 # A launcher line that runs the engine. Group 1 = engine path, group 2 = the rest of the line, which
 # for a PINNED wrapper carries a hardcoded subcommand literal before "$@" (e.g. `cli.py blast "$@"`).
 _LAUNCHER_RUN = re.compile(r"""python\s+"?\$\{?WORKSPACE\}?/([^"\s]+\.py)"?\s*(.*)$""")
+
+
+def _add_parser_names(src: str) -> set | None:
+    """The subcommand literals an engine ACTUALLY registers -- read from the AST, never from text.
+
+    Returns None when the source will not parse (the caller renders that UNKNOWN, which never
+    blocks). An EMPTY SET means "parsed fine, registers nothing" -- a different fact from "could
+    not tell", and the caller keeps them distinct.
+
+    WHY AST, AND NOT A REGEX OR A COMMENT-STRIP. This replaced
+        _ADD_PARSER = re.compile(r"add_parser\\(\\s*['\\\"]([a-z][a-z0-9-]*)['\\\"]")
+    which matched FILE TEXT and so could not tell code from prose. Measured consequence
+    2026-08-06: drift_cli.py:296 is the COMMENT
+        # reconcile is ESTATE-WIDE: iam_cli.py add_parser('reconcile') takes NO positional
+    -- a remark ABOUT A DIFFERENT TOOL. It was the ONLY match in the entire file, so comp-drift's
+    "actual exposed derivation surface" was one string harvested from a comment, and this gate
+    BLOCKED a correct commit while demanding that `reconcile` be declared into comp-which's routing
+    map. comp-drift has no subparsers at all (no add_subparsers call; only a positional `target`).
+    Writing that declaration would have pointed agents at a command that does not exist -- strictly
+    worse than the undeclared derivation the invariant exists to prevent.
+
+    A comment-strip would have fixed that ONE case and left the class open one layer down: a
+    DOCSTRING is not a comment, so `\"\"\"... add_parser('x') ...\"\"\"` survives the strip. Under AST both
+    close BY CONSTRUCTION -- a comment is not a node at all, and a string literal is a Constant, not
+    a Call. Estate precedent for the same move: extract_iam.py's AST tracer (Rule 22a).
+
+    NO REGEX FALLBACK ON A PARSE ERROR. Falling back would restore the defect precisely when the
+    file is least trustworthy, and it would do so silently. Unparseable -> UNKNOWN -> never blocks.
+
+    KNOWN AND DELIBERATE LIMIT, unchanged from the regex: a dynamically-built subparser
+    (`for n in NAMES: sub.add_parser(n)`) has no string literal to read, so neither the old regex nor
+    this sees it. That is a false NEGATIVE on a gate whose UNKNOWN branch never blocks -- the safe
+    direction -- but it is a limit, not a guarantee, and it is recorded here rather than implied.
+    """
+    try:
+        tree = ast.parse(src)
+    except (SyntaxError, ValueError, RecursionError):
+        return None
+    names = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        fn = node.func
+        if not (isinstance(fn, ast.Attribute) and fn.attr == "add_parser"):
+            continue
+        if not node.args:
+            continue                                     # argparse's form is positional; no name here
+        first = node.args[0]
+        if isinstance(first, ast.Constant) and isinstance(first.value, str):
+            if _SUBCOMMAND_TOKEN.match(first.value):      # same token grammar the regex enforced
+                names.add(first.value)
+    return names
 
 
 def _declared_subcommands(entry: dict) -> set:
@@ -1254,10 +1361,12 @@ def _established_subcommands(tool: str):
         src = engine.read_text(encoding="utf-8", errors="replace")
     except OSError as e:
         return None, False, f"engine unreadable ({type(e).__name__})"
-    subs = set(_ADD_PARSER.findall(src))
+    subs = _add_parser_names(src)
+    if subs is None:
+        return None, False, f"engine {engine_rel} does not parse as Python (AST)"
     if not subs:
         return None, False, "no subparsers found (flag-driven or single-derivation)"
-    return subs, False, "static add_parser extraction"
+    return subs, False, "static add_parser extraction (AST)"
 
 
 def _subcommand_declaration_invariant(files) -> int:
@@ -1620,7 +1729,8 @@ def main() -> int:
         help="assert retired_aliases coherence (disjoint sections + valid successors) and that no "
              "committed routing surface cites a declared-retired name (NFRA_MSBEFF.R6)")
     p_retired.set_defaults(func=lambda _a: _report(
-        "retired-alias", _retired_alias_invariant(list(_RETIRED_SUBSTRATE))))
+        "retired-alias",
+        _retired_alias_invariant(list(_RETIRED_SUBSTRATE) + _routing_surfaces())))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):

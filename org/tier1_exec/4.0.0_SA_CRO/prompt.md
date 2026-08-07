@@ -14,10 +14,30 @@ if the skill does not.
 
 1. `register_agent("4.0.0_SA_CRO", summary="<session purpose>")` — the FULL serial. Broker push routes by
    exact-serial match; register under anything else and every message addressed to you is silently missed.
-2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), absolute path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 4.0.0_SA_CRO stream`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), **absolute path — RESOLVE THE DRIVE PREFIX,
+   DO NOT HARDCODE EITHER FORM.** A cygwin shell has `/cygdrive/c/` and NO `/c/`; an MSYS/Git-Bash shell has
+   `/c/` and NO `/cygdrive/c/`. Measure first, then build the path:
+   `test -d /cygdrive/c && echo /cygdrive/c || echo /c` → `bash <prefix>/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 4.0.0_SA_CRO stream`
+   **A wrong prefix arms NOTHING and still returns a task id** — it dies `exit 127` in a separate
+   `<task-notification status=failed>`, so you are deaf for the session while `register_agent`,
+   `check-inbox` and `get_agent_status` all read healthy. Confirm with `TaskOutput(<id>, block=false)` →
+   `running`; that is the only probe that observes a consumer.
    **NEVER** under the Bash tool's `run_in_background` — that tool notifies only on **exit**, and stream mode
    never exits, so launching it that way makes you silent for the entire session.
+   > ⚠ **MEASURED 2026-08-06, and it corrects this file's first attempt at this note: on THIS box BOTH
+   > `/c/` AND `/cygdrive/c/` resolve, to the same device+inode, same file hash.** XXX.md's either/or prose
+   > ("cygwin has `/cygdrive/c` and NO `/c`") is **not true here** — do not derive "the other form is dead"
+   > from "my form works." I did, and the positive control refuted me one call later.
+   > **The reason to resolve anyway is DURABILITY, not existence:** `mount` shows `/c` as a **`user`** mount
+   > with no `auto` flag, while `/cygdrive/c` is **`auto,noumount`** (system-provided). A `user` mount is the
+   > non-durable class LD-0340 recorded as *"dies at reboot"* — and on 2026-07-29 exactly that vanished and
+   > silently killed all 186 `~/bin` forwarders that had baked `/c/` into themselves, while the A.3 probe
+   > read `93 of 93` healthy. **So hardcoding `/c/` is FRAGILE, not broken; it works until the next reboot
+   > that does not re-create the mount.** Resolving costs one `test -d` and does not care which is live.
+   > *(This line hardcoded `/c/` until 2026-08-06. Its first correction asserted `/c/` "does not exist here"
+   > — FALSE, inferred from XXX.md's prose rather than measured. Commit `53e8e3d8e` carries that false claim
+   > in its message; it is corrected here rather than rewritten there, per the estate's write-out-never-
+   > silently-fix rule. The fix was right; the stated reason was not.)*
 3. LD-0290: `echo "4.0.0_SA_CRO" > org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` — without it your halt
    gate adopts the shared `.agent_context` and a `[STOP]` addressed to you is invisible to your own gate.
 4. **Arm ZERO crons** (LD-0157/0164/0166/0175). There is no standing exec loop exception. `/watcher` arms

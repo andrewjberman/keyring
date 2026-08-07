@@ -152,6 +152,31 @@ _COMPLETENESS_SUBSTRATE_EXACT = (
 )
 
 
+def _is_routing_surface(n: str) -> bool:
+    """A HUD / prompt / skill -- the surfaces that ROUTE an agent to a tool.
+
+    MIRRORS manifest_check_cli._is_routing_surface EXACTLY, and the two must not drift: this
+    predicate decides what REACHES the family, that one decides what gets SCANNED. A file that
+    is substrate here but not a surface there is a wasted family run; a file that is a surface
+    there but not substrate here is INVISIBLE -- which is precisely the state that existed until
+    2026-08-06.
+
+    Until then NO routing surface was substrate at all, so the retired-alias member's citation
+    check ran on ZERO files on every commit while printing PASS. Exercised before the fix: fed a
+    citing skill file directly it returns rc=1 and names the tool; a real commit staging four
+    citing files produced substrate=[] and rc=0. It had never fired, while CLAUDE.md Rule 20
+    cites it verbatim as the thing that polices exactly this.
+
+    SCOPE, deliberately narrow: this makes a commit TOUCHING one of these files run the check on
+    THAT FILE. It is not an estate sweep and it does not gate unrelated work -- a clean skill
+    commit scans itself, finds nothing, and passes. The estate-wide read lives in the human-facing
+    `comp-manifest-check retired-alias` subcommand, which blocks nothing.
+    """
+    return (n.endswith(".tools/hooks/comp-tool-hud.sh")
+            or n.endswith("/prompt.md") or n == "prompt.md"
+            or "/.claude/skills/" in "/" + n)
+
+
 def _is_completeness_substrate(f: str) -> bool:
     """True for any staged path that can INTRODUCE a completeness defect.
 
@@ -161,6 +186,8 @@ def _is_completeness_substrate(f: str) -> bool:
     """
     n = f.replace("\\", "/")
     if any(n.endswith(s) for s in _COMPLETENESS_SUBSTRATE_EXACT):
+        return True
+    if _is_routing_surface(n):
         return True
     if n.startswith(".tools/") or "/.tools/" in n:
         tail = n.split(".tools/", 1)[-1]
