@@ -86,33 +86,30 @@ def with_layers(query):
 
 
 def run_rows(query, aliases):
-    """Return [{alias: id, alias__L: layer}, ...]. Parses comp-kuzu's table output."""
-    p = subprocess.run([BASH, ".tools/comp-kuzu", query], cwd=REPO,
+    """Return ([{alias: id, alias__L: layer}, ...], skipped). Uses comp-kuzu --json.
+
+    PARSE THE FORMAT, DO NOT HARDEN A TEXT PARSE. The first cut split comp-kuzu's aligned TABLE
+    output on whitespace and skipped any row whose token count did not match the header -- 113 rows
+    of 6,686 (1.7%), silently, until a denominator disagreed with a known-good number. Two
+    hypotheses for the raggedness were eliminated by measurement (node_ids containing spaces: 0;
+    NULL `layer`: 0), which left line-wrapping on wide results -- i.e. the WIDEST rows, the
+    MOST-CONNECTED instances, not a random 1.7%.
+    `--json` ("Output results as JSON array") removes the entire failure class rather than
+    hardening against one instance of it. Verified: `--limit` defaults to None (`kuzu_cli.py:161`),
+    so nothing is silently truncated.
+    """
+    p = subprocess.run([BASH, ".tools/comp-kuzu", "--json", query], cwd=REPO,
                        capture_output=True, text=True, timeout=900)
-    lines = p.stdout.splitlines()
-    hdr = None
-    # `-+` per column, NOT `-{2,}`: comp-kuzu sizes the rule to column width, so a 1-char column
-    # renders as a single dash. Requiring 2+ silently drops those rows (measured 2026-08-07).
-    for i, ln in enumerate(lines):
-        if re.match(r"^-+(\s+-+)*\s*$", ln) and i > 0:
-            hdr = lines[i - 1].split()
-            start = i + 1
-    if hdr is None:
-        return []
-    out, skipped = [], 0
-    for ln in lines[start:]:
-        if not ln.strip() or ln.strip().startswith("("):
-            continue
-        parts = ln.split()
-        if len(parts) != len(hdr):
-            # A ragged row is NEVER padded-and-guessed -- but it is also never dropped SILENTLY.
-            # This counter exists because the first run emitted 6,573 against a known-good 6,686
-            # and the 113 had nowhere to be reported. An unexplained delta is a finding; an
-            # uncounted skip makes it unfindable.
-            skipped += 1
-            continue
-        out.append(dict(zip(hdr, parts)))
-    return out, skipped
+    m = re.search(r"^\s*\[", p.stdout, re.M)
+    if not m:
+        return [], 0
+    try:
+        rows = json.loads(p.stdout[m.start():])
+    except json.JSONDecodeError:
+        # A parse failure is LOUD and counted, never an empty result. An unparseable response and
+        # a genuinely empty one must not look alike.
+        return [], -1
+    return rows, 0
 
 
 def main() -> int:
