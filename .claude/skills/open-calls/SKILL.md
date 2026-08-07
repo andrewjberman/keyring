@@ -1,6 +1,6 @@
 ---
 name: open-calls
-description: Enumerate the SOVEREIGN CALLS currently pending at Andrew from THIS agent's vantage -- each as one bullet (the minimal decision) with the agent's recommendation/proposal beneath it. Andrew triggers /open-calls at any agent to pull its outstanding asks without typing the question every time. Calls ONLY, no status dump; zero calls = one line and stop. Any agent.
+description: Enumerate the SOVEREIGN CALLS currently pending at Andrew from THIS agent's vantage -- each rendered as ONE CARD, the minimal decision on top and the agent's recommendation beneath it, split by an internal divider inside the card (Andrew-direct card format, 2026-08-07). Andrew triggers /open-calls at any agent to pull its outstanding asks without typing the question every time. Calls ONLY, no status dump; zero calls = one line and stop. Any agent.
 ---
 
 # /open-calls — the sovereign-decision queue, from this agent's vantage
@@ -44,23 +44,56 @@ Sources, in order of reliability:
 re-asking something he already ruled (it reads as not listening). When in doubt, cite where you
 looked for the answer.
 
-## Step 2 — Output format (exactly this shape; Andrew skims it)
+## Step 2 — Output format: ONE CARD PER CALL (exactly this shape; Andrew skims it)
+
+**Andrew-direct 2026-08-07, VERBATIM:** *"i need the calls to be in a card format and i need the
+agents recommendation beneath them in the card with a divider between the two internally in the
+card."*
+
+**Each call is ONE CARD. The card has TWO STACKED HALVES separated by an internal divider: the CALL
+on top, the REC beneath.** Never a bullet list, never a table, never REC on the same line as the call.
 
 ```
 OPEN CALLS AT ANDREW — {serial} ({n} calls, {date time})
 
-BLOCKING (something waits on the word):
-- **{The call, as the minimal decision — ideally answerable in one word/line}**
-  {≤2 lines of context: what created the call + what it gates}
-  **REC:** {the recommendation/proposal + the one-sentence why}
+BLOCKING (something waits on the word)
 
-CARRIED (nothing blocked; answer whenever):
-- **{call}**
++-- CALL 1 of {n} ---------------------------------------------------+
+  **{The call, as the minimal decision — answerable in one word/line}**
+  {<=2 lines of context: what created the call + what it gates}
+  --------------------------------------------------------------------
+  **REC —** {the recommendation/proposal}. {the one-sentence why}
++---------------------------------------------------------------------+
+
++-- CALL 2 of {n} ---------------------------------------------------+
+  ...
++---------------------------------------------------------------------+
+
+CARRIED (nothing blocked; answer whenever)
+
++-- CALL {k} of {n} -------------------------------------------------+
+  **{call}**
   {context}
-  **REC:** {recommendation}
+  --------------------------------------------------------------------
+  **REC —** {recommendation}. {why}
++---------------------------------------------------------------------+
 
 (optional, one line) NOT-MINE: {other lane known to hold calls} — run /open-calls there.
 ```
+
+**Card mechanics — get these right or the card stops reading as a card:**
+- **ASCII only** (`+`, `-`) for the frame. No box-drawing, no emoji: it must survive a terminal, a
+  grep and a paste into a message. The frame is the only decoration the card gets.
+- **The internal divider is MANDATORY and is the point of the card** — it is what separates the
+  DECISION from the ADVICE, so Andrew can read every call first and every rec second if he wants to.
+  A card without the divider is a bullet with extra characters.
+- **No right-edge alignment.** Only the top and bottom rails and the divider are fixed-width; body
+  lines just indent two spaces. Padding every line to a right border breaks the moment a call runs
+  long, and a ragged right edge costs nothing.
+- **Cards are numbered `{i} of {n}`** so a partial read is self-locating ("I answered 2 of 5").
+- **One blank line between cards.** Cards never nest and never share a frame.
+- **The call half stays SHORT** — the decision plus at most two lines of context. If the context
+  will not fit, the call is not yet reduced to a decision; reduce it, do not grow the card.
 
 Rules of the format:
 - **BLOCKING before CARRIED**; within each, highest-consequence first.
