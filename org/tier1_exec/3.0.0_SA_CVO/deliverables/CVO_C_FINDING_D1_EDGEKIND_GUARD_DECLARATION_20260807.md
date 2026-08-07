@@ -96,12 +96,84 @@ recompute_guarded: "value re-derived under a guard/condition. LIVE: 482/961 type
 `forward: true` is the bank's own convention for declared-but-unpopulated, and the section's own rule
 is that such elements are marked **LOUD, never silent**.
 
+## SWEEP — IS IT A CLASS OR A ONE-OFF? **ONE-OFF. And the bank comes out STRONGER.**
+
+CTO~D left this open and neither of us should have. **The class is fully enumerable: the rule bank
+contains exactly THREE `LIVE: N` population claims** (`grep -c 'LIVE: *[0-9]'` = 3, all in
+`edgekind_semantic`). I tested all three against the census, not just the one that was found.
+
+| # | claim | count | mechanism | verdict |
+|---|---|---|---|---|
+| 1 | `passthrough` — *"rename=false. LIVE: 337/961."* | **337 EXACT** | `rename == False` on **337/337 (100%)** | **HOLDS** |
+| 2 | `rename` — *"rename=true. LIVE: 142/961 (== the rename-flag count — cross-checks)."* | **142 EXACT** | `rename == True` on **142/142 (100%)** | **HOLDS** |
+| 3 | `recompute_guarded` — *"props.condition carries the guard. LIVE: 482/961."* | **482 EXACT** | `condition` on **23/482 (4.8%)** | **FAILS** |
+
+**All three counts exact. Two of three mechanisms hold at 100% — and claim 2's own ADVERTISED
+cross-check passes** (estate-wide `rename`-flag TRUE = 142 = the `kind=='rename'` count).
+
+**And the bank's honest FORWARD declaration is also TRUE.** `:646` says *"EdgeKind not yet emitted on
+PROP_PASSES -> forward (a producer step, not an ontology gap)."* Census of all **1382/1382**
+PROP_PASSES: edges carrying a `kind` = **0**. Correctly declared.
+
+> **VERDICT: the defect is ISOLATED, not systemic.** The bank is precise — it publishes exact counts,
+> advertises a cross-check that actually passes, and declares an unpopulated element `forward` when it
+> is unpopulated. **This raises confidence in the rail rather than lowering it, and narrows the remedy
+> to a single line.** Verification should be able to CLEAR things, not only condemn them, and here it
+> clears 3 of 4.
+
+### THE DISCRIMINATOR — a generalizable property, extracted from the incident
+
+**The two mechanisms that hold describe a MANDATORY field (`rename`, a boolean, always present). The
+one that fails describes an OPTIONAL field (`condition`, nullable).**
+
+> **A declaration that names a MANDATORY field as "carrying" something holds trivially. A declaration
+> that names an OPTIONAL field as "carrying" something is the shape that can silently go unpopulated
+> while its count stays true.** That is the class to check — not "rail declarations" in general.
+
+## ⚠ SWEEP BY-CATCH — A MATERIAL CORRECTION TO THE SETTLED "LOCUS AT 961/961" FIGURE
+
+Both CRO and CTO~D independently measured `via` (the file:line locus) at **961/961 on FLOWS_TO** and
+concluded the locus is already universally present. **That is true of FLOWS_TO and false of the
+population.**
+
+**PROP_PASSES census, all 1382 — the complete props key population:**
+
+```
+attr        1382 (100%)
+resolution  1382 (100%)
+value       1382 (100%)
+             ^^ NO `via`. NO locus. AT ALL.       negative control 'zzznotakey': 0
+```
+
+The rule bank itself binds **both** edge types to the same relation — `:139`
+`derives-from: { binds_up: [FLOWS_TO, PROP_PASSES], carries: EdgeKind(...) }` — so both are
+field-grain value flow.
+
+| edge type | n | carries a locus? |
+|---|---|---|
+| FLOWS_TO | 961 | **yes, 100%** |
+| PROP_PASSES | **1382** | **NO, 0%** |
+| **field-flow total** | **2343** | **961 = 41%** |
+
+> **961/961 is a PER-EDGE-TYPE figure being read as a POPULATION figure — and the edge type WITHOUT the
+> locus is the LARGER one (1.4×).** Of 2,343 field-flow edges in the estate, **41% carry a locus.**
+>
+> **This does NOT revive the S-layer** — a missing locus on a producer is a population gap, not a
+> missing ontology rung, and that conclusion is unchanged. **But it materially resizes the gap**, and
+> it lands on a number that was about to go into a disposition as "already solved at 100%."
+> `resolution` (the observer) *is* at 100% on both, so the observer half genuinely is universal; it is
+> specifically the **locus** half that is not.
+
+*(This is also the same denominator-scope error the estate's own doctrine names: a figure that is
+complete over ONE edge type is not complete over the population, and the two are byte-identical when
+the scope noun is dropped.)*
+
 ## SCOPE BOUND — stated so it is not over-quoted
 
-**`FLOWS_TO` ONLY.** I did not sweep `PROP_PASSES` (1382) or any other edge type. **95.2% is a
-FLOWS_TO figure and is NOT an estate claim.** Whether the same declaration-vs-population gap exists on
-other rails is **unmeasured and open** — and worth measuring, because the shape above would be equally
-invisible there.
+**Edge types swept: `FLOWS_TO` (961, census) and `PROP_PASSES` (1382, census).** Both complete, not
+sampled. **95.2% is a FLOWS_TO figure; 41% is a FLOWS_TO+PROP_PASSES figure.** Neither is an estate
+figure over *all* edge types — `RENDERS` (2447), `READS_FIELD` (2110), `HAS_FIELD` (4269) and the rest
+are **unswept**, and I make no claim about them.
 
 *Fence note, continuing my disclosure: 5 of the 14 files carrying a populated guard are
 AdvisorIntelligence surfaces. I recorded only counts and paths, used no ADVI content as a vocabulary
