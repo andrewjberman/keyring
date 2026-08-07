@@ -100,6 +100,56 @@ Andrew's to authorize; I returned the assessment he asked for and nothing more.
 
 ---
 
-*Both rulings broadcast same-turn per `org/XXX.md`. Neither creates a gate, a hold, or an approval step.*
+---
+
+## FOLLOW-ON — ~0450-0500Z, same session: BOTH ITEMS CLOSED
+
+### RULING 2 CONFIRMED — the amendment stands as landed
+
+He asked for the law's content before confirming. **VERBATIM:**
+
+> *"on 2.) need the context on what the law is first, probably is fine to land but need to know what it
+> is."*
+
+I supplied the exact before/after diff of rung 2 and recommended **keeping it**. **VERBATIM response:**
+
+> *"Go ahead with your recs"*
+
+**`@4ff692a9d0` is CONFIRMED — not reversed, not re-worded, attribution intact.** The open item I had
+raised (that MSTR landed on an *inferred* authorization) is **CLOSED by his explicit confirmation**.
+MSTR's original read — that *"I like it … maybe there is an enhancement for granularity we can bring in
+there"* authorized landing contingent on the check — was correct. Broadcast to MSTR.
+
+### THE ATOM_DECOMP "PLACEMENT CALL" — DISSOLVED, AND THE FRAMING DEFECT WAS MINE
+
+**VERBATIM:**
+
+> *"what do you mean 'where it should live', we can make a project code ATOMDECOMP underneath
+> NFRA_ATOMDECOMP and associate it there. Have your CTO~D do it when they have a second, I feel like
+> it's not really necessary at this point, it already lives in the /projects folder we can just have
+> MSTR give 4.0.0_SA_CRO ownpaths to /projects/atom_decomp or whatever. I don't really understand the
+> question seems like a formality that doesn't really matter."*
+
+**Grounded, and he is right:**
+- `projects/ATOM_DECOMP/` **already exists on disk** (beside `ADVI_REFACTOR`, `MDPF_PROPVALIDATION`).
+- `.owned-paths.yaml:956-958` locks it `lane: TIER0_MSTR`, noted *"Andrew's research project folder."*
+- **So it was never a placement question — CRO was locked out of a directory that already existed.**
+- `.owned-paths.yaml` itself is `ANY_EXEC_OR_AE` (`:1783`), so **CTO~D holds the lane; MSTR is not
+  required.** Routed there.
+
+> **THE DEFECT IN THIS ONE IS MINE.** CRO's constraint was correctly scoped — they hit a lane they did
+> not hold, refused to override it (*"a ruling is not a grant"*), and wrote in their own home. **I
+> carried that correctly-scoped constraint into Andrew's decision queue as a placement CALL when it was
+> a key request any exec could grant.** A verifier's job includes collapsing a non-decision before it
+> reaches the sovereign queue; I passed the framing through instead. Recorded as my error, not CRO's.
+
+**Carried to CTO~D with the grant:** preserve the existing note/rationale (add, don't replace — the
+lock was deliberate), and **do not mint a project code** off this; he floated `NFRA_ATOMDECOMP` and
+then said it is *"not really necessary at this point."*
+
+---
+
+*All rulings broadcast same-turn per `org/XXX.md` (MSTR, COO, CTO~D, CRO). None creates a gate, a hold,
+or an approval step.*
 
 — 3.0.0_SA_CVO~C
