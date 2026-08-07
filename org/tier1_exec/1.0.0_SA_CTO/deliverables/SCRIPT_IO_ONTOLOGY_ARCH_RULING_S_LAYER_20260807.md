@@ -167,6 +167,88 @@ blocking on.
 
 ---
 
+## ⬛ MEASURED 2026-08-07 T0223Z -- THE OPEN QUESTION IS ANSWERED. Ruling CONFIRMED on the dissolves branch; TWO of my own claims CORRECTED; one NEW defect found in D1 itself.
+
+I ran the measurement I had named as missing. `4.0.0_SA_CRO` ran it independently at the same time and
+we converged. **comp-kuzu, DB rebuilt to Nessie HEAD (pin == HEAD), 20605 nodes / 41181 edges, age 0.0h.**
+
+**First, a shape error worth recording:** my initial query was `CALL TABLE_INFO('FLOWS_TO')` and it
+returned **`FLOWS_TO does not exist in catalog`**. The schema is generic -- `CloudNode` / `CloudEdge`
+-- and `FLOWS_TO` is a **value of `edge_type`**, not a table. *It failed LOUD, which is the lucky
+case; the identical mistake inside a `MATCH` pattern would have returned `0` rows and read as a true
+zero.* That is the exact hazard CRO warned about, and it bit the person checking for it.
+
+`CloudEdge` carries exactly four properties: `edge_type`, `layer`, `snapshot_ts`, `props`.
+
+### Result -- denominators, negative-controlled
+
+| measure | value |
+|---|---|
+| `FLOWS_TO` total | **961** |
+| carrying `via` (a **file:line LOCUS**) | **961 / 961** |
+| carrying `resolution` (the **method/observer**) | **961 / 961** |
+| literal `identity` key | **0 / 961** |
+| negative control (`zzznotathing`) | **0** -- the predicate discriminates |
+
+A live edge, verbatim:
+```json
+{"srcField": "MarketTickerData.entity_type", "dstField": "entity_type",
+ "kind": "recompute/guarded", "rename": false, "condition": null,
+ "via": "mapping portal/src/api/endpoints/market.ts:249",
+ "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)"}
+```
+
+### TWO CORRECTIONS TO THIS RULING, both against me
+
+1. **"The locus lives on the CSE emission event, NOT on the materialized graph edge" -- FALSIFIED.**
+   `props.via` carries `file:line` **on the materialized edge, 961/961.** There is no
+   materialization-fidelity gap on this carrier. My hypothesised gap does not exist.
+2. **"Only `resolution` and `identity` are genuinely new" -- HALF WRONG.** `resolution` is
+   **961/961 live**. Only `identity` lacks a key. *(CRO maps identity onto `srcField`/`dstField`/
+   `rename`; that is a reasonable functional reading which my key-level measurement neither confirms
+   nor refutes. I record the measurement, not the mapping.)*
+
+**The ruling's conclusion is UNCHANGED and now STRONGER.** It lands on the *dissolves entirely into a
+query* branch: **zero new vocabulary**, not "two additive fields." The S-layer is dead, and the whole
+remaining question is the one Andrew asked at the outset -- **the Python substrate has none of it
+populated.** Pure build, a TO, out of the research lane.
+
+### ⚠ NEW FINDING -- D1's own `condition` declaration is FALSE for 95% of the edges it describes
+
+Same result set, negative-controlled, and **my pattern reproduces the bank's own published 482
+exactly**, which is what establishes the pattern is sound:
+
+| measure | value |
+|---|---|
+| `kind = recompute/guarded` | **482** -- matches the bank's declared `LIVE: 482/961` exactly |
+| `condition` **null** | **938 / 961** |
+| `condition` **non-null** | **23 / 961** |
+| negative control | **0** |
+
+The bank declares, at `dynamic_rails.D1_value_grain.edgekind_semantic`:
+
+> `recompute_guarded: "value re-derived under a guard/condition (props.condition CARRIES THE GUARD). LIVE: 482/961."`
+
+**The count is true. The mechanism claim attached to it is not.** Even if all 23 non-null conditions
+sat on `recompute_guarded` edges, that is **23 of 482 = 4.8%** -- so **at least 459 of 482 (95.2%)
+edges typed "re-derived under a guard" carry a NULL guard.**
+
+**The key is present on 961/961; the VALUE is null on 938.** A field existing is not the guard being
+carried -- the same class as an existing-field-read-as-a-cert, and the reason it survived is that the
+*number* beside the claim (482) is correct and independently reproducible. **A true denominator
+welded to a false mechanism reads as verified.**
+
+**Why it matters here rather than as trivia:** the reframe makes D1 the rail the Python build
+populates. `condition` being "LIVE" is materially weaker than it looks *on the substrate where D1 is
+best populated*. That belongs in the PRD's scope section, and the bank's `edgekind_semantic` line
+needs correcting on its own account.
+
+**Scope of this finding:** `FLOWS_TO` only. I did not sweep other edge types. **Not routed as a gate**
+-- surfaced to CRO and CVO~C, and the bank is `org/modules/graph` (exec-locked), so correcting the
+line is a normal edit by whoever takes it.
+
+---
+
 ## What survives of the spec
 
 - **Section 7's TERM -> LAW -> EXTRACTION model: STANDS.** It just has far less to thread -- CRO said
