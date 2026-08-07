@@ -444,10 +444,23 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         side_tally["+".join(pr.get("substrate_side") or []) or "NONE"] += 1
         status_tally[pr.get("side_status")] += 1
 
+    _vintage = graph_vintage(vintage_fn)
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
         "supersedes_shape_of": ["motif_c2c3_materialize.json", "motif_c2c3_materialize_ab.json"],
-        "graph_vintage": graph_vintage(vintage_fn),
+        # TOP-LEVEL SNAPSHOT IDS -- the key placement the derive's stamp reads.
+        # derive_runner's fold does doc.get("nodes_snapshot_id") at the ENVELOPE level
+        # (0.7.0_AE_CloudOps @596ff69a15, per CTO~B ruling 054045Z), while these lived ONLY nested
+        # under graph_vintage. That reader returned None for both, built an EMPTY stamp, and every
+        # composed instance would have landed with NO derivation provenance -- which by the derive's
+        # own comment makes the acceptance movement test fall back to wall-clock and manufacture a
+        # false NOT-LIVE. Neither side was wrong in isolation: they wrote the reader against a
+        # described envelope, I wrote the envelope before the stamp existed. ADDITIVE on purpose --
+        # graph_vintage stays the richer record (it also carries db_built_at + graph_nodes_total),
+        # so both readers work and nothing downstream has to change.
+        "nodes_snapshot_id": (_vintage or {}).get("nodes_snapshot_id"),
+        "edges_snapshot_id": (_vintage or {}).get("edges_snapshot_id"),
+        "graph_vintage": _vintage,
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",
