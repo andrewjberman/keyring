@@ -247,13 +247,52 @@ the three `LIVE: N` claims, **every published count in the bank that I could tes
 
 **Both edge types are BOUND in the relations block and declared UNBOUND in the coverage boundary.**
 
-> **I CANNOT DETERMINE FROM THIS FILE WHICH LIMB IS AUTHORITATIVE, and I am not going to pick.** Two
-> readings, with very different remedies:
-> **(a)** `:329` is **STALE** — the ONTOLOGY2 P1 bindings landed and the boundary was never refreshed.
-> **(b)** the bindings **bypassed the ratification chain** that `:329` itself names — a much larger
-> finding about how they landed.
-> Settling it needs the **ratification record**, which is not in this file. **COULD-NOT-VERIFY, with the
-> specific missing evidence named** — routed, not adjudicated.
+> **RESOLVED — AND IT IS A THIRD READING NEITHER OF MINE ANTICIPATED.** I offered two —
+> **(a)** `:329` is stale, **(b)** the bindings bypassed the ratification chain — named the missing
+> evidence as the ratification record, and routed it rather than guessing. `1.0.0_SA_CTO~D` answered it
+> from git. **Both of my readings are WRONG.**
+>
+> **(c) THE CONTRADICTION WAS BORN IN ONE COMMIT.** `5d1161d70c`, 2026-07-23, author
+> `1.0.0_SA_CTO~Z` — *"canonize(NFRA_ONTOLOGY2 P1, CTO~Z ARCH-GATE PASS)… 0 new ratified vocab, NO
+> ratification decision needed… CVO~Z independently verifies."* **The commit that RESOLVED the gap also
+> carried forward, unchanged, the prose describing the gap as OPEN.**
+>
+> **Re-derived at my seat, positive control first** (a `git show` mangle prints `fatal:` to stderr and
+> returns CLEAN EMPTY stdout, so an unchecked zero here is worthless):
+>
+> | | at `5d1161d70c` | at its PARENT |
+> |---|---|---|
+> | file lines (**retrieval control**) | **365** | **165** — a real read, not an empty one |
+> | `binds_up … RENDERS` (BOUND) | **2** | **0** |
+> | `UNMAPPED` (UNBOUND) | **5** | **0** |
+>
+> **Both limbs enter the file in the SAME commit.** Not stale — *there is no time gap.* Not a bypass —
+> arch-gate PASS, additivity proven, independently verified. **(b) is out, (a) is out.**
+
+> ### THE CONSEQUENCE — AND IT IS A REAL LIMIT ON MY OWN PREDICATE
+> **A DRIFT CHECK COMPARES VINTAGES, AND BOTH LIMBS SHARE ONE VINTAGE.** There is no before-and-after
+> to diff. The file was internally inconsistent **at the moment it was ratified**, so every subsequent
+> *"has this drifted?"* check answered **NO — correctly.**
+>
+> **STAMPING DOES NOT CATCH THIS ONE, and I am recording that against my own recommendation.** The two
+> defects in that block have **different mechanisms**:
+>
+> | | mechanism | does stamping catch it? |
+> |---|---|---|
+> | `:330` (77/961) | went false over **TIME** | **YES** — it becomes a dated fact |
+> | `:329` (UNMAPPED) | was false **AT BIRTH** | **NO** — a vintage on a claim that was wrong when written only tells you *when* it was wrong |
+>
+> **So the honest ask is REFRESH *AND* STAMP — and the refresh is NOT implied by the stamp.** CTO~D
+> raised this against a remedy we had already agreed on and that I had already put to Andrew; they were
+> right to, and the correction is theirs.
+>
+> **THE THIRD PREDICATE, which completes the set:** born-wrong is invisible to a *temporal* comparator
+> but fully visible to a **REFERENTIAL** one — the file contradicts itself **within a single vintage**,
+> and `binds_up` arrays vs `coverage_boundary` prose is a same-file cross-reference. So:
+> **STAMPED-vs-UNSTAMPED catches DECAY · NULLABLE-FIELD catches NEVER-TRUE mechanism claims ·
+> SELF-CONSISTENCY (structure vs prose, same vintage) catches BORN-WRONG.** Three different questions,
+> none of which needs to be a gate — they are what a reviewer asks, and only the third would have found
+> `:329`.
 
 **What IS determinable, and it is the point:** `c1_frontend_adapter` — the section that supersedes
 `:329` — **carries a vintage** (`:642` *"comp-kuzu @2026-07-23T14:52Z, HEAD current"*). **The STAMPED
