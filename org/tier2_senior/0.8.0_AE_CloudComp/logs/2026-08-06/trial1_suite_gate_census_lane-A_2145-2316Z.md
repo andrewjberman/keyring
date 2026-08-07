@@ -360,6 +360,47 @@ to make and I am not making it.
 phrasing-dependent ranked panel worth surfacing by default"* — and if the HUD ships query-less, that
 question does not arise, because the ranked panel is not what ships.
 
+### V5 — THREE retrieval-layer deceptions in one trial, one of them mine
+
+Recorded because CLAUDE.md's *"put the control on the RETRIEVAL, not the pattern"* earned three
+separate instances inside a single ~3h task, and the third nearly inverted a verdict.
+
+| # | who | the retrieval | what it produced |
+|---|---|---|---|
+| 1 | me | `pytest … \| tail -15; echo "rc=$?"` | **`rc=0` — `tail`'s rc, not pytest's.** The file actually exits **5**. Read as a clean pass on the one file in 93 that runs zero tests. Caught by re-running unpiped. |
+| 2 | issuer | `… \| head -8` over the QUALIFIERS panel | cut the panel at `:11`, hiding `:58`. **One keystroke from reporting my TRUE correction as UNREPRODUCED** — a false refutation manufactured entirely by their own retrieval, on the claim they had just said they were checking hardest. Caught by arithmetic: 16 qualifiers declared, 12 shown, 6 visible. |
+| 3 | me | comp-read `--for` returning zero import lines | **true output, but I generalised "structurally cannot" from it** — a mechanism claim from a behavioural retrieval. Corrected in V3 only because the issuer named `_scan_tree` at source. |
+
+**The generalisation, and it is the pairing that makes it useful:** #1 and #2 are the same shape from
+opposite directions — a pipe stage silently changed what we reasoned from, and in **both** cases the
+corrupted result was *plausible*. **The tell was never the content; it was arithmetic that did not
+add up.** Neither of us noticed by reading harder.
+
+**And this sits directly beside the producer-silence point as its mirror:**
+- **SILENCE** deceived me about a state that **HAD** changed (the tool moved; nobody said).
+- **TRUNCATION** nearly deceived the issuer about a state that had **NOT** changed (the panel was
+  right; the pipe hid it).
+
+**Both are the shape of the instrument, not of the subject.** *(Mirror framing: issuer's.)*
+
+**Bounded form of the producer half, adopted by both of us:** not *"consumers should re-check"* —
+unbounded, and it would have every agent re-verifying every tool before every use — but
+**"a producer who changes a state someone is acting on owes them notice,"** which puts the duty on
+the party already holding the information, at no cost.
+
+### V6 — the issuer's correction to my closing framing, which I am adopting
+
+I closed by crediting their conduct — disclosing residue, inviting refutation, discarding a fix that
+failed. They declined the framing, and their version is better for the record: **every one of those
+was a control catching them, not a virtue.** The refutation was mine; the battery hole surfaced only
+because I found the defect it missed; the IDF fix died on a measurement they nearly did not run; the
+truncation above was caught by luck plus arithmetic.
+
+**What this trial demonstrates is that the CONTROLS worked** — and the load-bearing ones were held by
+the party who did not build the tool. That is the transferable finding, and it is the argument for
+why acceptance evidence must come from a non-author. Not "CVO~B was rigorous," but **"an author
+cannot hold their own controls, and this trial is 79 rows of evidence for that."**
+
 ## Blockers
 
 None. Both deliverables complete; RAVC closed by the issuer.
