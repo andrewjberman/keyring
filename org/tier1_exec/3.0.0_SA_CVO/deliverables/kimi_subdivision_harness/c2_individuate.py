@@ -422,14 +422,33 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
     # nothing saying which population it belongs to.
     DEBT = {"SilentDisplayFork", "CrossFirmAsymmetry", "HardcodedFirmLiteral",
             "DeadComponent", "OrphanEndpoint", "RenderWithoutNullGuard"}
+    # MARKING MUST BE NON-DESTRUCTIVE, AND `props` IS FETCHED FOR EXACTLY THAT REASON.
+    # These 23 ids ALSO come from the two baked spec files, and derive_runner folds sources into a
+    # LIST via append() (:1680) -- not a keyed merge -- with the composed source LAST. So both
+    # entries reach the same list under one node_id and the winner is decided by a downstream dedupe
+    # I have NOT verified. If mine wins and carries only {grain, population}, the baked node's
+    # detector/motif_type/n_instances/plane/recurrence/tier are gone, AND `name` degrades: the fold
+    # computes `name = props.motif_type or props.system_type or node_id` (:1681), so a props-thin
+    # node silently renames itself to its own id.
+    # Carrying the existing props through makes the marking non-destructive BY CONSTRUCTION rather
+    # than by fold order -- grain/population are ADDED to what is already there, so whichever entry
+    # wins, nothing is lost. Depending on a dedupe rule nobody has verified is how the 19/4 frozen
+    # control would have quietly lost its metadata.
     cls, _ = run_rows("MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] "
-                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm", [], query_fn)
+                      "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm, n.props AS props",
+                      [], query_fn)
     class_marked = 0
     for r in cls:
-        nodes[r["id"]] = {
-            "node_id": r["id"], "node_type": r["T"],
-            "props": {"grain": "class",
-                      "population": "debt" if r.get("nm") in DEBT else "canon"}}
+        existing = r.get("props")
+        if isinstance(existing, str):
+            try:
+                existing = json.loads(existing)          # kuzu stores props as a JSON STRING
+            except (ValueError, TypeError):
+                existing = None
+        base = dict(existing) if isinstance(existing, dict) else {}
+        base.update({"grain": "class",
+                     "population": "debt" if r.get("nm") in DEBT else "canon"})
+        nodes[r["id"]] = {"node_id": r["id"], "node_type": r["T"], "props": base}
         class_marked += 1
 
     # Re-tally sides/status over the DEDUPED instances. The per-row counters above are
