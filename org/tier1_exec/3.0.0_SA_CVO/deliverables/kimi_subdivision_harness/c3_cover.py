@@ -109,6 +109,17 @@ def _cover_impl(doc: dict, live_snap_fn=None) -> dict:
         lm = re.search(r"nodes snapshot-id:\s*(\S+)", live_out)
         live_snap = lm.group(1).strip() if lm else None
     in_snap = (doc.get("graph_vintage") or {}).get("nodes_snapshot_id")
+    # NORMALISE BEFORE COMPARING. A snapshot id arrives as a STRING from the comp-kuzu header regex
+    # and as an INT from pyiceberg's `current_snapshot().snapshot_id`. Comparing them raw makes
+    # `6445636748001840083 == "6445636748001840083"` FALSE, so the verdict reads STALE on every
+    # production run WHILE PRINTING TWO IDENTICAL NUMBERS -- a self-contradicting message that would
+    # be read as a real staleness event and send someone re-running a healthy composition.
+    # Every earlier test injected strings on BOTH sides, so the mismatch was structurally unreachable
+    # until the reader was executed against a real Iceberg catalog (2026-08-07).
+    if live_snap is not None:
+        live_snap = str(live_snap)
+    if in_snap is not None:
+        in_snap = str(in_snap)
     if live_snap is None or in_snap is None:
         freshness = "UNVERIFIABLE -- a snapshot id is missing; treat this layer as UNDATED"
     elif live_snap == in_snap:
