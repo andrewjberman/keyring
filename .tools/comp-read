@@ -450,6 +450,65 @@ def _authority(path, line_text, lineno=None, doc_ranges=()):
     return "AUTHORITATIVE"
 
 
+# --------------------------------------------------------------------------- HUD (selective)
+def _hud(path, full, src, lines, sections, how, quals, contras):
+    """SELECTIVE HUD MODE -- fire only when there is something worth saying, else SILENT.
+
+    ANDREW-DIRECT 2026-08-07, choosing option 3 of three ("I like 3") after reading the MEASURED
+    crowding of the full query-less report: 35 lines / 2,265 B on a typical .py, 96 lines / 6,858 B
+    on CLAUDE.md (a 133-line file), and 917 B on an EMPTY __init__.py. That report is a CLI product
+    for someone who typed the command; as an ambient panel on every Read it taxes the reader most on
+    the files they read most.
+
+    THE FIRING SET IS DELIBERATELY NARROW -- three conditions, each one a thing that CHANGES A
+    CONCLUSION rather than describes a file:
+      1. a STRONG qualifier   -- never / deprecated / superseded / must not / corrected / retired /
+                                 prohibited. The "claim gets read, the retraction does not" class
+                                 this tool was built for.
+      2. an intra-file CONTRADICTION -- the file disagrees with itself.
+      3. an UNPARSEABLE .py   -- the tool is BLIND here and silence would be indistinguishable from
+                                 a clean read.
+    SHAPE, SALIENT, the soft qualifiers and the UNREAD LEDGER are NOT emitted: on a query-less call
+    SALIENT can only say "no question given", and SHAPE is the single largest panel by measurement.
+
+    >> THE COST OF THIS CHOICE, STATED HERE BECAUSE IT PARTLY UNDOES THIS TOOL'S OWN THESIS: the
+    UNREAD LEDGER exists to remove the ability to NOT NOTICE, making a skip attributable. A HUD that
+    stays SILENT restores exactly that invisibility on every file it declines to fire on -- and a
+    SOFT qualifier ("only if", "except", "scoped to") is load-bearing surprisingly often and does
+    NOT trigger. This mode trades RECALL for the right to be ambient. It is a floor, never a
+    substitute for a deliberate `comp-read <file> --for "<question>"`, and the fired panel says so
+    on its last line. Do not let a silent HUD be read as "this file is clean." <<
+    """
+    strong = [(n, w, ln) for (n, w, ln) in quals if w in _STRONG]
+    unparseable = how.startswith("UNPARSEABLE")
+    if not strong and not contras and not unparseable:
+        return 0                                   # SILENT -- the whole point of the mode
+
+    out = ["comp-read HUD: %s  (%d lines, %d section(s))" % (path, len(lines), len(sections))]
+    if unparseable:
+        out.append("  !! UNPARSEABLE .py -- structure is a TEXT fallback; the AST panels are BLIND,")
+        out.append("     so 'no contradictions' here would mean 'could not look', not 'none'.")
+    if contras:
+        out.append("  !! %d CONTRADICTION(S) -- this file disagrees with ITSELF:" % len(contras))
+        for c in contras[:2]:
+            out.append("     :%d documents %s() with %d arg(s); the def at :%d takes %d."
+                       % (c["line"], c["name"], c["claimed"], c["def_line"], c["actual"]))
+    if strong:
+        out.append("  !! %d STRONG qualifier(s) -- text that LIMITS / NEGATES / RETRACTS a nearby claim:"
+                   % len(strong))
+        for n, _w, ln in strong[:3]:
+            out.append("     :%d %s" % (n, _window(ln, set(), width=110)))
+        if len(strong) > 3:
+            out.append("     ... %d more" % (len(strong) - 3))
+    # THE FLOOR DISCLAIMER IS NOT OPTIONAL -- see the docstring. A fired panel that does not say
+    # what it omitted becomes the thing agents satisfice on, which is failure mode 4 in a new coat.
+    out.append("  ^ FLOOR, not a review: soft qualifiers, SHAPE and the UNREAD LEDGER are NOT shown."
+               " Full: comp-read %s --for \"<question>\"" % path)
+    for ln in out:
+        print(_comprail.ascii_safe(ln) if _comprail else ln)
+    return len(out)
+
+
 # --------------------------------------------------------------------------- CONTRADICTIONS
 def _contradictions(path, src, lines):
     """CHEAP + INTRA-FILE ONLY (the millisecond budget forbids a repo walk).
@@ -490,6 +549,7 @@ def main() -> int:
 
     t0 = time.perf_counter()
     question, at_line, top, all_quals = "", None, 6, False
+    hud_mode = False
     positional = []
     i = 0
     while i < len(argv):
@@ -505,6 +565,8 @@ def main() -> int:
             top = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 6
         elif a == "--all-quals":
             all_quals = True
+        elif a == "--hud":
+            hud_mode = True
         else:
             positional.append(a)
         i += 1
@@ -533,6 +595,20 @@ def main() -> int:
                     ranked.insert(0, (idx, 999.0))
                     pinned = idx
                 break
+
+    # ---- SELECTIVE HUD MODE: fire-or-silent, and it RETURNS -- no other panel renders.
+    # Placed before every print so the silent path costs exactly one qualifier sweep and emits
+    # ZERO bytes. An ambient panel that prints a header before deciding it has nothing to say is
+    # not silent, it is quiet, and the whole ruling turns on the difference.
+    if hud_mode:
+        _quals = []
+        for _n, _ln in enumerate(lines, 1):
+            _m = _QUAL.search(_ln)
+            if _m:
+                _quals.append((_n, _m.group(1).lower(), _ln.strip()))
+        _hud(path, full, src, lines, sections, how, _quals,
+             _contradictions(full, src, lines))
+        return 0
 
     print("comp-read: %s" % path)
     print("  %d lines | %d section(s) via %s | question: %s"

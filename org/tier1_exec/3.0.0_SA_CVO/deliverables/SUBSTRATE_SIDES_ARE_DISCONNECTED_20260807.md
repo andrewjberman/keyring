@@ -71,7 +71,30 @@ different derivation (1.0.0_SA_CTO~C): **7 of 7** `aws_s3_bucket_policy` blocks 
 their bucket via a first-class HCL resource reference, while the graph carries zero such edges — so
 the relationship is absent from the GRAPH, not from the ESTATE.
 
-Pending with Andrew as a usage confirmation (via CTO~C): `GOVERNS` is already ratified
+## ⛔ RULED 2026-08-07 — `GOVERNS` CONFIRMED. THE EDGE IS **NOT** BUILT, AND THAT IS DELIBERATE.
+
+**Andrew-direct, relayed by `1.0.0_SA_CTO~C` from their terminal, VERBATIM: *"All your recs are
+approved"*** — the rec being: *confirm `GOVERNS` (already ratified, currently zero-live) is the right
+token for `S3_BUCKET_POLICY → S3_BUCKET`.* He had two facts in front of him when he ruled: that the
+fix is **one edge between two nodes that already exist**, and that I had corrected my own 28×
+overstatement before it reached him.
+
+**SCOPE, NOT WIDENED BY INFERENCE** (CTO~C fenced this and I am keeping their fence): he confirmed
+the USE of the token. He did **not** rule on `POLICY_OF`/`APPLIES_TO` (withdrawn before presentation),
+did **not** rule on the malformed `arn` column I deliberately kept off the list, and did **not** rule
+on C3.ii scope.
+
+**RELAY, NOT WITNESSED BY ME.** I did not see the terminal; this is a relayed sovereign word recorded
+as such, with the exact call as put alongside it so the scope is auditable.
+
+>> **THE EDGE IS NOT EMITTED, AND THE RULING DOES NOT CHANGE THAT THIS PASS.** The serve-seam edge is
+on the current pass's CUT LIST. A confirmed NAME is not an instruction to BUILD — that inference is
+the gate-manufacture-in-reverse the fabric has been bitten by, and I have declined C3.ii, the
+comp-estate bridge and the classification pass all night on the same rule. The token is settled and
+the build is a one-edge act whenever it is scheduled. <<
+
+Pending-with-Andrew status above is now CLOSED. Original text retained for the record:
+`GOVERNS` is already ratified
 (`NFRA_ONTOLOGY_RULE_BANK.yaml:144`, *"D3: narrow policy/authority"*) and currently zero-live —
 CTO~C source-confirmed at `:146` that its bound token was **re-pointed to `OWNS`** in the 0.4→0.5
 bump, which is why it sits vacant. That explains the vacancy, not the occupant; whether policy→bucket

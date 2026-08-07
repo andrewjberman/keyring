@@ -460,7 +460,7 @@ RULES = [
       "list the gold", "list gold", "pipeline scripts", "scripts in the"],
      "list pipeline scripts",
      ["comp-estate --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
-      "comp-glob data/<firm>/scripts/gold/"],
+      "comp-find --name '*.py' data/<firm>/scripts/gold/"],
      "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
     # comp-graph = freshness of the GRAPHS THEMSELVES (cloud/trace/kuzu cache vintages), distinct
     # from comp-freshness (data-pipeline S3/DDB upstream readiness). Placed BEFORE the data-freshness
@@ -652,15 +652,19 @@ RULES = [
     # manufactures a BLOCKED self-route finding instead of discoverability.
     (["grep the repo on the rails", "on-rails grep", "sanctioned grep", "gate denied my grep",
       "raw grep was blocked", "search the repo but grep is gated", "rule 21 fallback"],
-     "on-rails repo content search (comp-grep)",
-     ["comp-grep <pattern> [pathspec]", "comp-find <pattern> [pathspec]"],
+     "on-rails repo content search (comp-find)",
+     ["comp-find <pattern> [pathspec]"],
      "The sanctioned fallback when Gate-1 denies a raw Bash estate grep: repo-scoped, .gitignore-aware, "
-     "held-path guarded, audited, with dependency context per hit. comp-find is the graded successor."),
+     "held-path guarded, audited, with dependency context per hit, and a DENOMINATOR line so a count "
+     "carries its own frame. comp-find REPLACES comp-grep (Rule-21 repoint 2026-08-07, Andrew-direct "
+     "\"(A) lift it\"); comp-grep still runs but nothing routes to it. NOTE: comp-find counts LINES, "
+     "not AST nodes -- do not quote its count as a node denominator."),
     (["find files by name", "list files matching", "glob the repo", "on-rails file find",
       "which files are named", "find a file by glob"],
-     "on-rails repo FILE find (comp-glob)",
-     ["comp-glob \"<glob>\" [pathspec]", "comp-find --name \"<glob>\""],
-     "Filename half of the Gate-1 fallback pair; no pattern = list everything under the pathspec."),
+     "on-rails repo FILE find (comp-find --name)",
+     ["comp-find --name \"<glob>\" [pathspec]"],
+     "Filename half of the Gate-1 fallback pair. comp-find --name REPLACES comp-glob (Rule-21 repoint "
+     "2026-08-07); comp-glob still runs but nothing routes to it."),
     (["set my task order", "set the to id", "which task order am i on", "attribute my tool runs",
       "comp tool logging attribution", "session task order"],
      "set the session TO_ID for comp-tool auto-logging (comp-to)",
@@ -1586,9 +1590,31 @@ def _handoff_route(rid: str, n: int) -> None:
 
 def _run_primitive(kind: str, term: str) -> int:
     """RUN the on-rails primitive (the never-dead-end). kind in {grep, glob}. Invokes the
-    sibling comp-grep/comp-glob via sys.executable (NOT a bash launcher -> Windows-safe)."""
-    script = os.path.join(WS, ".tools", "comp-grep" if kind == "grep" else "comp-glob")
-    call = "comp-%s %s" % (kind, term)
+    sibling comp-find via sys.executable (NOT a bash launcher -> Windows-safe).
+
+    >> RULE-21 REPOINT, 2026-08-07, 1.0.0_SA_CTO. Andrew-direct: "(A) lift it" (the rollout hold
+    on "comp-find replaces grep", discharged on TRIAL-1 -- a non-author field trial, verdict "I
+    would keep using it with the mandate lifted, unreservedly"). This shelled comp-grep/comp-glob
+    until now. comp-find replaces BOTH: content search bare, filename search behind --name.
+
+    WHY THE OLD BINARIES ARE DELIBERATELY LEFT IN PLACE: retire consumers first, binary last. A
+    gate whose binary cannot be found does not fail loudly -- `command -v` fails and the caller
+    SILENTLY SKIPS (the comp-surface-check retirement lesson, CLAUDE.md Rule 20). comp-grep and
+    comp-glob keep working; nothing routes to them.
+
+    WHY THIS FUNCTION AND THE FOOTERS MOVED IN ONE COMMIT: on 2026-07-29 the rail denied a raw
+    grep, routed the agent to its own named fallback, and the fallback did not resolve -- the gate
+    FAILED OPEN AT ITS OWN DESIGNATED FALLBACK immediately after reporting healthy. An agent who
+    obeys the law and then asks the router must not be sent to a tool the law just retired.
+
+    GRAIN NOTE, carry it if you quote a count: comp-find counts LINES, not AST nodes. Measured
+    2026-08-07 -- comp-find 4,336 vs a probe's 4,897 subscript nodes on one corpus. That is a
+    grain difference correctly reported as such, NOT a disagreement, and it matters because a
+    line count wearing a node count's clothes is a denominator defect.
+    """
+    script = os.path.join(WS, ".tools", "comp-find")
+    argv = [sys.executable, script] + (["--name", term] if kind == "glob" else [term])
+    call = "comp-find %s%s" % ("--name " if kind == "glob" else "", term)
     if _ROUTE_ONLY:
         print("comp-which-route-only: NO-ROUTE (would run: %s)" % call)
         return 0
@@ -1612,7 +1638,7 @@ def _run_primitive(kind: str, term: str) -> int:
         # an int, and _run_primitive is typed `-> int` (its value becomes an exit code) -- the explicit
         # Popen form is what lets a bounded call return an rc gracefully instead of propagating an
         # exception out of a function callers expect to always return an int.
-        proc = subprocess.Popen([sys.executable, script, term], cwd=WS, env=env)
+        proc = subprocess.Popen(argv, cwd=WS, env=env)
         try:
             return proc.wait(timeout=FALLBACK_TIMEOUT_S)
         except subprocess.TimeoutExpired:
@@ -1839,7 +1865,7 @@ def _posterior_backstop(q: str, term) -> bool:
         print("  -> %-18s [%s]" % (cap.id, getattr(cap, "concern", "")))
     print("")
     print("  (COMPROUTE posterior: a rich alternative to a bare search -- still never a dead-end;")
-    print("   comp-grep/comp-glob remain the fallback.)")
+    print("   comp-find remains the fallback.)")
     _log_rail("ROUTE-POSTERIOR-DISAMBIG", "+".join(c.id for c in cands[:4]), term, q)
     return True
 
@@ -1983,7 +2009,7 @@ def _default_router(q, qtok, hits, term, list_intent):
     spill = _spill_full_ranking(r.ranked or [], call_of, concern_of, q)
     if spill:
         print("  Not it?  ALL %d tools, ranked + described:  %s" % (len(r.ranked or []), spill))
-    print("           or search directly:  comp-grep '%s'   (or comp-glob)" % (term or q))
+    print("           or search directly:  comp-find '%s'   (or comp-find --name)" % (term or q))
     _log_rail("NOFIT-POSTERIOR" if no_fit else "ROUTE-POSTERIOR", "+".join(caps), term, q)
     # --- THE ABSTAIN, PROGRAMMATIC (MSTR directive 2026-07-13) --------------------------------------
     # The BANNER lets an AGENT see doubt. rc lets a PROGRAM see it. A tool that cannot signal "I have
@@ -2184,7 +2210,7 @@ def main() -> int:
                 print("  -> %s   [%s]" % (tool, concern))
         print("")
         print("  (comp-which routed SURFACE-FIRST from the coverage ledger -- drill within the surface.")
-        print("   No tool fit? it would have RUN comp-grep/comp-glob -- never a dead-end.)")
+        print("   No tool fit? it would have RUN comp-find -- never a dead-end.)")
         _log_rail("ROUTE-SURFACE", sid, term, q)
         return 0
 
@@ -2240,8 +2266,8 @@ def main() -> int:
         _log_rail("RUN-GLOB", "no-rich-tool", ".", q)
         return _run_primitive("glob", ".")
     print("  No rich tool fit and no clear search term. The on-rails primitives (never a bare grep):")
-    print("    comp-grep <pattern> [pathspec]   -- .gitignore-aware, logged repo search + dependency context")
-    print("    comp-glob <pattern> [pathspec]   -- .gitignore-aware file find + dependency context")
+    print("    comp-find <pattern> [pathspec]       -- graded repo content search + dependency context")
+    print("    comp-find --name <glob> [pathspec]   -- graded repo file find + dependency context")
     print("  Browse named threads: pipescript --list")
     _log_rail("NO-TERM", "none", term, q)
     return 0
@@ -2252,7 +2278,7 @@ def _route_print(hits):
         print("  -> %s" % "   |   ".join(calls))
         print("     [%s] %s" % (label, why))
         print("")
-    print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-grep/comp-glob.)")
+    print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-find.)")
 
 
 def _self_report(rc: int) -> None:
