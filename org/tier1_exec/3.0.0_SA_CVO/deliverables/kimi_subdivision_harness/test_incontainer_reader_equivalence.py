@@ -27,6 +27,22 @@ WHAT THIS DOES *NOT* PROVE -- stated so nobody reads it as full coverage of item
     equivalence run does not exercise the raw-Iceberg -> key derivation. `test_keying()` below
     covers that dimension separately, on raw-shaped rows, WITH a negative control.
 
+COST, MEASURED 2026-08-07 (0.7.0_AE_CloudOps had this as "unmeasured"; these are the composition
+half only, and the split matters more than either number):
+    composition via the local comp-kuzu SHELL path : 52.8s   (C2 50.2 + C3 2.6, 16 subprocess spawns)
+    composition via an EMBEDDED kuzu connection    :  0.2s   (C2 0.2 + C3 0.0), identical figures
+>> 250x. THE COMPOSITION IS ESSENTIALLY FREE; the 52.8s was ENTIRELY subprocess overhead, which the
+in-container path does not pay. Anyone sizing the derive off the local wall-clock would budget ~53s
+for something that costs 0.2s. <<
+The REAL in-container cost is therefore the ICEBERG SCAN plus the Kuzu DB BUILD (loading 20,604
+nodes + 41,160 edges), NEITHER of which is measured here -- the scan needs a VPC, and the build cost
+in this harness is not representative because it inserts row-by-row rather than in bulk.
+
+FOOTPRINT the landed layer adds to the graph:
+    C2  6,161 nodes + 17,978 edges | C3  1,255 nodes + 8,978 edges
+    TOTAL 7,416 nodes + 26,956 edges (~9.8 MB of envelope JSON)
+    20,604 nodes today -> 28,020 after landing = +36.0% node count; edges dominate at 3.6x nodes.
+
 Run: python test_incontainer_reader_equivalence.py [--nodes nodes.json --edges edges.json]
 Extract the inputs with:
   comp-kuzu --json "MATCH (n:CloudNode) RETURN n.node_id AS node_id, n.arn AS arn,
