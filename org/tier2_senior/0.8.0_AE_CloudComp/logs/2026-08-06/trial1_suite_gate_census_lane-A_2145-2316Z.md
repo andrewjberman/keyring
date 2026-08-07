@@ -338,6 +338,14 @@ rated as the tool's real value.
 it states the file is a script, with no question asked. **The HUD condition would have handed me F1
 directly**, which I found by counting test definitions by hand.
 
+**Stronger than I first wrote it (issuer's correction, re-verified by me on the query-less call):
+the bare form yields BOTH halves of F1.** SHAPE gives the structural tell above, and the
+query-independent QUALIFIERS panel separately surfaces `:58` *"this module body runs at IMPORT, so a
+module-level assertion that fails…"* — the exact mechanism that saved me reading 170 lines — plus
+`:63-64`, the `check(...)` calls that are the file's real assertions. **Neither half needs a
+question.** I understated this in the first pass and am correcting it in the direction that favours
+the tool, for the same reason I published the adverse findings.
+
 **Therefore R1 does not bear on the HUD at all, and my objection to wiring it is withdrawn.** It
 bears on manual `--for` use, where the mitigation is that the user can rephrase — and I did: *"what
 does this file import"* ranks the header #1 at score 1.46.
