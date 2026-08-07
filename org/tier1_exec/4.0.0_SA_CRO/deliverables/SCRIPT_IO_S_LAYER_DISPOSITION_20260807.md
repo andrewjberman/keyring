@@ -125,9 +125,32 @@ folding NOTHING.** `folded_local` works at the LOWEST tier; `folded_imported` wo
 
 ## 6. OPEN AT ANDREW — two, and neither blocks the build
 
-**(a) THE HELD-OUT FENCE.** `ADVI_PERFORMANCE` and `MDPF_GLOBAL` are the held-out test set and must
-not shape the rails. **`ATOM_DECOMP`'s case study IS `ADVI_REFACTOR`.** Three readings are open
-(fence covers D-rails only / it binds here too / it is discharged) — **his fence, his call.**
+**(a) THE HELD-OUT FENCE — ✅ RULED AND CLOSED, Andrew-direct 2026-08-07** *(relayed by
+`3.0.0_SA_CVO~C` from his terminal; recorded VERBATIM per XXX.md, never paraphrased)*:
+
+> *"it seems kind of obvious in the case of 1. that was just a scenario where we wanted to build this
+> setup in NFRA_VELOCITY (no overfit, just typing and ontological systems work) and the idea was that
+> with that work done, we'd be positioned to execute well on the MDPF and ADVI big projects. I dont
+> think we need to make doctrine about this, its just an obvious thing and dont need more noise about
+> it."*
+
+**WHAT IT SETTLES:**
+- **The purpose is as assumed** — NFRA_VELOCITY was to build the typing + ontological systems work
+  **without overfitting**, so the estate would be positioned to execute on MDPF and ADVI. **My three
+  readings were a reasonable decomposition of a question with a simpler answer than any of them: an
+  obvious no-overfit discipline, not a formal test-set protocol.**
+- **THE FENCE IS NOT DISCHARGED.** He rejected **EXPANDING** it, not the clause. **The rule-bank text
+  stands as written.** Do not read this closure as a lift.
+- **What he called noise was a proposed EXPANSION** — `3.0.0_SA_CVO~C` had recommended a clause
+  extending the fence to tuning/validation samples off their directory-listing finding, and has
+  **withdrawn it.** Their observation (ADVI sorts alphabetically first) remains **true and useful for
+  a build lane**; what failed was proposing it as a rule.
+- **Practical effect on the Python build: NONE, and none was ever needed.** No obligation lands on
+  any author, no clause, no gate. Whoever samples the portal template exercises ordinary no-overfit
+  judgement.
+
+*(Retained rather than deleted: an open cell that got resolved must stay legible as resolved, or a
+future reader re-opens it as an oversight — this agent's charter §3 precedent.)*
 
 > ⛔ **AND IT IS SHARPER THAN A PRINCIPLE — IT IS A DIRECTORY LISTING.** ADVI endpoints sort
 > **alphabetically FIRST** in `portal/src/api/endpoints/`. **Any systematic audit of the portal
