@@ -201,8 +201,18 @@ One file per feature. Never overwrite into a monolith.
 | `staged` | Assigned but no GO received — do NOT start | COO |
 | `pending` | GO received — active or queued | Agent (on receiving GO) |
 | `complete` | Work done, deliverables confirmed | Agent (self-marks) |
+| `superseded` | **The NEED WAS MET ANOTHER WAY** — done elsewhere, replaced by a newer TO, or the artifact now exists by another route. **MUST name what superseded it** (commit-ish / TO id). | COO or the ISSUER — never the assignee alone |
+| `cancelled` | **The NEED WENT AWAY** — a later ruling killed the work. **MUST cite the ruling** (verbatim + date, or commit-ish). | COO or the ISSUER — never the assignee alone |
 
 `staged` → `pending` happens when the agent receives a GO message from COO. Flip it immediately and begin. The GO message IS the authorization — do not ask Andrew.
+
+**`superseded` and `cancelled` added 2026-08-07, ANDREW-DIRECT, VERBATIM: *"yeah you need to be able to 'supersede' or 'cancel' outstanding task orders in status to clean that up when these situations arise."*** ⚠ **THE MECHANISM ALREADY EXISTED AND ONLY THE LAW WAS MISSING** — `.tools/to-check.py:47` has accepted `superseded`/`cancelled`/`dropped`/`decommissioned`/`archived` as DONE-class the whole time, and the parseable-status paragraph below lists them. **This TABLE is what an agent reads to learn what is legal, and it carried three values.** So a TO whose work a ruling had killed had nowhere honest to go: `complete` is a lie, and `pending` is the rot. *A record NARROWER than its mechanism leaves agents unable to reach a capability that exists — the mirror of the CLAUDE.md 14a `--force` correction, where the record was BROADER than its mechanism.*
+
+**KEEP THE TWO DISTINCT — they differ on RE-OPEN, which is the only time it matters.** `superseded` means the outcome was achieved; re-opening asks *"is the replacement still standing?"* `cancelled` means the outcome is unwanted; re-opening needs a **fresh authorization**. Collapsing them loses which question to ask.
+
+⛔ **A TERMINAL STATUS WITHOUT ITS POINTER IS THE ROT WITH A TIDIER LABEL.** The pointer is what makes "we knew about that" checkable. **Why the assignee does not set these alone:** an assignee who can self-cancel can bury inconvenient work under a status the board reads as closed — the authority is whoever can CITE the killing ruling, not whoever holds the task.
+
+**MEASURED INSTANCES THAT EARNED THIS (2026-08-07):** `0.5.0_AE_OpalETL` held 9 TOs of which **3 ordered work Andrew deprecated 8 days earlier** (DC1/DC2 crawls, ETFS W2 step 1) — invisible because the seat was dark and nothing was executing them to trip over the contradiction. And `MDPF_REMEDIATION_REGISTER` R-13 read *"not yet moved"* for work executed at `@46d3bf3f32`. **A ruling that kills the work does not retract the instruction; they live on different surfaces and only a deliberate sweep joins them.**
 
 **Parseable-status convention (MSTR-adopted 2026-06-29, encouraged not gated).** The board tools (to-check, registry-check) classify a TO/project by the FIRST TOKEN of its status. Lead with a clean state word — `<status>complete — <detail>...</status>`, not `<status>active — ... DONE+ACCEPTED</status>` (first-word `active` reads OPEN even though done). DONE-class first-words: complete|completed|closed|cancelled|superseded|done|merged|shipped|decommissioned|archived|dropped. Both an XML `<status>` tag and a markdown `**Status:**` line are read (markdown now backtick-robust); a TO with NEITHER renders [??]. The parsers deliberately do NOT scan for a DONE token mid-string (would false-close an active phase status like build-complete), so a stale open first-word will NOT auto-flip — keep the first word truthful.
 

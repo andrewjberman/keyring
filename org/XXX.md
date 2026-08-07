@@ -517,7 +517,7 @@ Taxonomy: `org/tier0/COMPILER_ARCHETYPES.md`. Heartbeats, watcher self-checks an
 Full template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`. Stored in the receiving agent's
 `task_orders/` folder.
 
-**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked).
+**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked) · **`superseded` = the NEED WAS MET ANOTHER WAY (name what superseded it)** · **`cancelled` = the NEED WENT AWAY, a ruling killed it (cite the ruling)**. The last two are set by **COO or the ISSUER, never the assignee alone**, and a terminal status **without its pointer is the rot with a tidier label**. (Andrew-direct 2026-08-07: *"you need to be able to 'supersede' or 'cancel' outstanding task orders in status to clean that up."* `to-check.py` already accepted both — only this line did not name them, so killed work had nowhere honest to go and stayed `pending`. Measured: 3 of one dark seat's 9 TOs ordered work deprecated 8 days earlier.)
 
 **Every TO must include:**
 - `<compiler_tools_mandate>` — three-phase (before write, before commit, after commit)
