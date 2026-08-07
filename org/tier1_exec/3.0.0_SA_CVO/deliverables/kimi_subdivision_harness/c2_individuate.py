@@ -166,6 +166,34 @@ def coverage_triple(specs, members_seen, side_of_member):
     return out
 
 
+def graph_vintage():
+    """The snapshot this run composed AGAINST -- captured, not assumed.
+
+    THE WHOLE DEFECT THIS BUILD EXISTS TO FIX IS A NUMBER WITH NO VISIBLE VINTAGE: the 19-and-4 layer
+    is a July JSON baked into an image, and nothing in the graph says so. An output of mine carrying
+    no vintage would be the same artifact one generation later -- two runs could not be compared
+    without external knowledge of which snapshot each used, which is exactly how archaeology passes
+    for a live number. Measured 2026-08-07: two runs 6,686 -> 6,657 rows because the graph rebuilt
+    (20,585 -> 20,605 nodes, new snapshot), and only the vintage makes that attributable rather than
+    alarming.
+    """
+    p = subprocess.run([BASH, ".tools/comp-kuzu", "MATCH (n:CloudNode) RETURN count(*) AS n"],
+                       cwd=REPO, capture_output=True, text=True, timeout=600)
+    # BOTH streams: comp-kuzu writes its provenance header to STDERR, so reading stdout alone
+    # returns None for every field -- a vintage that silently reads "unknown" is worse than no
+    # vintage field at all, because it looks like the tool declined to answer rather than like
+    # nobody asked. Caught on the first run of this function.
+    out = (p.stdout or "") + "\n" + (p.stderr or "")
+
+    def grab(pat):
+        m = re.search(pat, out)
+        return m.group(1).strip() if m else None
+    return {"nodes_snapshot_id": grab(r"nodes snapshot-id:\s*(\S+)"),
+            "edges_snapshot_id": grab(r"edges snapshot-id:\s*(\S+)"),
+            "db_built_at": grab(r"built:\s*(\S+)"),
+            "graph_nodes_total": grab(r"^\s*(\d+)\s*$")}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -274,6 +302,7 @@ def main() -> int:
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
         "supersedes_shape_of": ["motif_c2c3_materialize.json", "motif_c2c3_materialize_ab.json"],
+        "graph_vintage": graph_vintage(),
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",
@@ -302,6 +331,8 @@ def main() -> int:
         json.dump(doc, fh, indent=1)
 
     print("C2 INDIVIDUATION -- one node per MATCH")
+    print("  graph vintage     : snapshot %s built %s"
+          % (doc["graph_vintage"]["nodes_snapshot_id"], doc["graph_vintage"]["db_built_at"]))
     print("  DISTINCT instances : %d" % (len(nodes) - class_marked))
     print("  class nodes marked grain:class : %d" % class_marked)
     print("  CONTAINS edges    : %d over %d distinct members" % (len(edges), len(members_seen)))
