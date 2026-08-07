@@ -2,10 +2,48 @@
 
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
-**Status:** DRAFT SPEC — for `3.0.0_SA_CVO~C` review. Nothing here is ratified; nothing here is built.
+**Status:** DRAFT SPEC. Nothing here is ratified; nothing here is built.
+
+> # ⛔ REV 3 IS UNDER A SUPERSEDING QUESTION — DO NOT BUILD FROM IT
+>
+> **2026-08-07 ~0205Z. Andrew asked whether a registry of input/output fields flowing through a
+> point "would just sit at D1 anyway," and what is actually in D1. Measured, the answer may kill
+> this document's central premise.**
+>
+> ```
+> Field nodes .......................... 4969   ALL layer=portal
+> READS_FIELD edges .................... 2110   ALL layer=portal
+> field-grain edges, NON-portal source ..... 0   (explicit falsifier, 0 rows)
+> layers ....... portal 11338 | ms 5828 | aws 2059 | pipeline 1337 | semctl 23
+> D1 ALREADY carries srcField->dstField on FLOWS_TO -- 884/961 non-null dstField
+> D1 ALREADY types the transform -- EdgeKind passthrough 337 / rename 142 / recompute_guarded 482
+> (comp-kuzu, 20585 nodes / 41144 edges, built 2026-08-07T00:32Z, Nessie HEAD current)
+> ```
+>
+> **EVERY field-grain edge in the estate is portal. Zero on `aws` or `pipeline` — where all Python
+> lives.** So the gap may be **a missing POPULATION of a ratified rail, not a missing LAYER beside
+> it.** D1's field grain is built, ratified and working — for React. Nobody ever extracted field
+> grain from Python.
+>
+> **HOW THIS DOCUMENT MISSED IT:** the BUILD LADDER rung-2 check was run against **extraction**
+> twice (it caught `recognizer_sdk` the second time) and **NEVER against the ONTOLOGY SLOT.** This
+> spec proposes a new rung beside a rail that already carries the exact grain it wants. **Same rung
+> of the same ladder, one level up, third occurrence in one session.**
+>
+> **UNDER TEST, NOT DECIDED.** Routed to `3.0.0_SA_CVO~C` to ATTACK (not confirm — including an
+> independent re-derivation, because `comp-kuzu` warns that a wrong-pattern query returns 0
+> identically to a true zero, and the zero above is load-bearing) and to `1.0.0_SA_CTO~D` as the
+> arch call: **new rung, or a ratification-chain COVERAGE extension of D1?**
+>
+> **If the reframe survives**, §3–§4's axis work is NOT lost — it demotes from a new ontology to the
+> **EXTRACTION CONTRACT** for populating D1 on the Python substrate. **If it dies**, REV 3 stands.
+> **Either way, do not build from this document until that is settled.**
 **Date:** 2026-08-06
-**Revision:** **REV 2, 2026-08-07** — §2, §6 and §10.5 corrected against a surface REV 1 missed. See
-§0.1. REV 1 (@72279a7c2) is superseded on those three sections only; §3–§5 and §7–§9 are unchanged.
+**Revision:** **REV 3, 2026-08-07** — the axis model is RESTRUCTURED against `3.0.0_SA_CVO~C`'s
+review (@357ac6aa6), `1.0.0_SA_CTO~D`'s arch read (@56edc2738 + @fff88d612 + @a21b44580), and my own
+field test (@2bfcc9e7e). **Five axes became four axes + one meta-field + one site-kind axis.** See
+§0.2. REV 2 (@785ed481f) is superseded on §3.3, §4, §8.1 and §10.
+*REV 1 (@72279a7c2) → REV 2: §2, §6, §10.5 corrected against a surface REV 1 missed (§0.1).*
 **Commissioned:** Andrew-direct 2026-08-06, this session (see §0 for the verbatim scope and its
 mid-course correction).
 **Reviewer:** `3.0.0_SA_CVO~C` (Andrew-named).
@@ -187,17 +225,55 @@ The rule bank already legislates the connecting law and the S-layer inherits it 
 (`relations`, rule-bank `:147`). **A set of S1 bindings AGGREGATES UP to one C1 edge.** Many sites,
 one edge. That is the whole C1 reconciliation, and it required no new primitive.
 
-### 3.3 S0 — a site
+### 3.3 S0 — a site · **REV 3: S0 IS NOT NET-NEW. IT IS A LANDED DATACLASS PLUS TWO FIELDS.**
+
+> **REV 1/REV 2 specified S0 as a new primitive. It is not** (CVO~C P0-2, re-derived by CTO~D):
+> ```
+> comp_recognizer_sdk.py:76-81   @dataclass Site: source, locus, evidence, payload
+> header :73  "one located lexical match a recognizer found; carries the file:line provenance the CSE needs"
+> imported by 6 modules; emit_cse() :162-186 already emits CSE C0+C1, deterministic ids, fail-closed
+> ```
+> **This falsifies two of the four limbs of §2.1** (*"none shares a record"*, *"none is C-ladder
+> addressable"*) for the COMPILERKIT surface. It is **the same build-ladder rung-2 defect §6 already
+> corrected, one level deeper** — and the correction had not reached §3.3 until now.
+>
+> **The upside is larger than the defect.** The genuinely net-new contribution is the **AXES**, the
+> **FIELD GRAIN**, and the two missing fields — so S0 lands as a **two-field additive amendment to
+> live, imported, self-tested code** instead of a new ontological object. Cheaper and stronger than
+> what I specified. *Verified absent, positive-controlled: `vintage|commit|sha|rev` = 0 in the `Site`
+> span while `locus` = 2-3 in the same span, so the sweep was live.*
 
 The addressable atom. One S0 record per call/expression site that participates in any binding:
 
-| field | meaning |
-|---|---|
-| `node_id` | the owning C0 node (LAMBDA, PipelineScript, ReactComponent …) |
-| `file` | repo-relative path |
-| `line`, `end_line`, `col` | position; `end_line` because a call may span lines |
-| `symbol` | enclosing function/component |
-| `vintage` | the commit-ish the parse was taken at — **REQUIRED** |
+| field | status | meaning |
+|---|---|---|
+| `source` · `locus` · `evidence` · `payload` | **LANDED** | the existing `Site` dataclass; `locus` is `"L{n}"` or `"L{a}-{b}"` |
+| `node_id` | derived | the owning C0 node (LAMBDA, PipelineScript, ReactComponent …) |
+| **`vintage`** | **ADD** | the commit-ish the parse was taken at — **REQUIRED** |
+| **`observer`** | **ADD** | **`(recognizer, tier)`** — who measured this site and at what capability |
+
+> **`observer` is REV 3's answer to the unknown-unknown** (§4 (iii)). `file:line` without a vintage
+> resolves at every vintage to different **code**; `file:line@vintage` without an observer resolves
+> to different **grains** and different **recognition**. `comp_recognizer_sdk` already stamps
+> `recognizer` into `Provenance` (:168) because COMPILERKIT learned this the expensive way.
+
+> ⚠ **S0 AND S1 ARE IN DIFFERENT STATES — Rule 24 (iv) STATE COHERENCE, and the postulate's own
+> instruction is to NAME WHICH VALUES DO NOT MOVE** (CTO~D, re-derived by CVO~C with the positive
+> control run FIRST because *"a zero from a broken sweep is byte-identical to a zero from a true
+> absence"*):
+> ```
+> class Site (POSITIVE CONTROL) ......... 2   <- the sweep demonstrably works
+> class Binding / Bindings .............. 0
+> landed object carrying the S1 axes .... 0
+> nearest landed edge object ............ RelationshipDelta (cse_schema.py:208) -- a CSE
+>                                         RELATIONSHIP, not an intra-node binding, carrying
+>                                         none of the axes
+> ```
+> **S0 = a landed dataclass needing two additive fields. S1 = a greenfield build.** One remedy
+> delivers S0 and **structurally cannot** deliver S1. This does not change the tokens or the ordering
+> — **it changes what the naming act COSTS**, and Andrew should name the pair knowing it rather than
+> discover it at build time. `forward: true` is the bank's ratified carrier for a declared-but-
+> unpopulated half, which is exactly what S1 would be.
 
 > **`file:line` WITHOUT A VINTAGE IS NOT A CITATION** (CLAUDE.md Rule 22) — it resolves at every
 > vintage, to different code. An S0 record without `vintage` is malformed, not merely incomplete.
@@ -206,15 +282,76 @@ The addressable atom. One S0 record per call/expression site that participates i
 
 ---
 
-## 4. The five axes on an S1 binding
+## 4. The axis model *(REV 3 — RESTRUCTURED; REV 2's "five orthogonal axes" was falsified)*
 
-Andrew asked for more classifications than input/output. These are **five orthogonal axes**, not one
-richer enum — Rule 24 INTENT COHERENCE forbids one axis serving two intents, and direction,
-confidence, and reachability are three different intents. Collapsing them is precisely the RCG
-charter-v1 defect the taxonomy law cites as its type specimen.
+Andrew asked for more classifications than input/output. REV 1/REV 2 answered with **five
+orthogonal axes**. **Two of the five were not axes**, and the review found it:
 
-Each axis below states its **intent** in one line. If a proposed value does not answer that
-question, it belongs on a different axis.
+| REV 2 | REV 3 | why it moved |
+|---|---|---|
+| Axis 1 DIRECTION (6 values) | **Axis 1 DIRECTION (3 values)** | `control`/`guard` failed §4's OWN intent test; `roundtrip` decomposes |
+| — | **Axis 0 SITE KIND (new)** | the home for `control`, `guard`, and the two shapes my field test found unhoused |
+| Axis 2 GRAIN | **Axis 2 GRAIN — now two-place** | grain is OBSERVER-RELATIVE; and a site can change grain |
+| Axis 3 RESOLUTION | **RECOGNITION — a META-field, not an axis** | it is a meta-axis OVER 1/2/5, and is already landed as `Coverage` |
+| Axis 4 CONDITION | Axis 4 CONDITION *(unchanged)* | syntactic; the one axis nothing touched |
+| Axis 5 IDENTITY | Axis 5 IDENTITY *(unchanged)* | `parameter-of` `derives-from`, not co-varying |
+| — | **OBSERVER stamp (new)** | without it, grain and recognition resolve differently per reader |
+
+**The three structural findings, each from a different seat, none from me:**
+
+**(i) RECOGNITION IS A META-AXIS, NOT A PEER AXIS** (CVO~C P0-1). If a call is `opaque` — *not in the
+recognizer set at all* — you cannot assert direction, grain **or** identity for that site. Only
+CONDITION survives, because it comes from syntactic nesting rather than recognition. Under Rule 24
+(iii)/(iv): improving the recognizer set moves **every** recognition value and **no** direction
+value. Three independent legs converged, including a **landed**
+`Coverage{attempted, resolved, unresolved:[(locus, reason)]}` at `comp_recognizer_sdk.py:84-90`
+whose header says it exists so *"a weak recognizer cannot silently under-report."* **That is Axis 3's
+entire stated purpose, already built, at run/recognizer grain.** It is not a property of a site.
+
+**(ii) AXIS 1 FAILED ITS OWN TEST** (CVO~C P1-3). §4 said *"if a proposed value does not answer that
+question, it belongs on a different axis."* `control` carries no payload and `guard` acts on
+execution — **neither answers "what does this site do to the value."** Three range types were sharing
+one axis (external target / in-node value / node / site). I wrote the test and then failed it.
+
+**(iii) GRAIN IS OBSERVER-RELATIVE, AND I ASSERTED IT AS OBSERVER-INDEPENDENT** (CVO~C, the
+unknown-unknown). *"You asked whether the axes are independent of EACH OTHER. You did not ask what
+they are independent OF."* The same line reads `artifact` grain to `script_io_ast` and `field` grain
+to a column-aware recognizer. My Axis 2 headline — *"a site is where grain is actually OBSERVABLE"* —
+is the admission written as though it were the opposite, and R2 ("coarsest grain among its sites")
+silently assumes every site was measured by an equally capable observer. **Run two recognizer tiers
+over one file and R2 returns a different edge grain for identical code.**
+
+> **The remedy is the argument I already made, run one axis over.** `vintage` is mandatory because
+> `file:line` without it resolves at every vintage to different code. **`file:line@vintage` without
+> an OBSERVER resolves to different GRAINS and different RECOGNITION.** `comp_recognizer_sdk` already
+> stamps `recognizer` into `Provenance` (:168) because COMPILERKIT learned this. One additive field.
+
+Each axis states its **intent** in one line. If a proposed value does not answer that question, it
+belongs on a different axis — **and REV 3 is what happens when that test is actually applied.**
+
+### Axis 0 — SITE KIND · *what kind of act is this site?*
+
+**New in REV 3.** Determines which other axes apply. **Only `value-op` sites carry a DIRECTION.**
+
+| value | meaning | carries direction? | source |
+|---|---|---|---|
+| `value-op` | acts on a value | **yes** | REV 2 Axis 1 |
+| `control` | invokes/triggers another node, no payload | no → `binds_up: triggers` | CVO~C P1-3 |
+| `guard` | gates whether another site executes | no → `binds_up: guards` | CVO~C P1-3 |
+| `handle` | **acquires a client/resource/paginator** | no | **field test F1** |
+| `constant` | a literal participating in derivation | no | **field test F4** |
+
+**`handle` is the one that matters and it is not housekeeping.** `boto3.client(...)` and
+`s3.get_paginator(...)` fit no REV 2 direction value — under REV 2 **those sites did not exist.**
+Excluding them looks obviously correct: *a constructor makes no API call.* **CLAUDE.md Rule 22a
+records what that instinct already cost, in this exact shape** — `boto3.resource` → `.Table` →
+`put_item` is never traced, `opal-data-refresh-api` runs 5 real DynamoDB operations and comp-iam's
+output says `dynamodb` **zero** times, and *"a correct exclusion can delete the marker of a
+blindness."* `boto3.resource(` appears in **60 files** under `infra/aws/lambda`.
+**Naming `handle` is what stops the S-layer re-deriving comp-iam's blindness one layer down.**
+
+`constant` is not optional either: `comp_constants_cli.py` already treats constant sites as
+first-class, so excluding them would contradict a shipped tool.
 
 ### Axis 1 — DIRECTION · *what does this site do to the value?*
 
@@ -222,14 +359,35 @@ question, it belongs on a different axis.
 relations, using the rule bank's own `binds_up:` adapter pattern — so the S-layer speaks existing
 vocabulary rather than a parallel one.
 
+**REV 3: three values, not six.** Applies **only** to `value-op` sites (Axis 0).
+
 | value | meaning | `binds_up` (C1) |
 |---|---|---|
 | `ingress` | value enters the node from outside | `consumes` |
 | `egress` | value leaves the node to outside | `produces` |
 | `derive` | value computed from other in-node values; **crosses no boundary** | `derives-from` |
-| `roundtrip` | same target both read and written at one site or one loop | `consumes` + `produces` |
-| `control` | invokes/triggers another node, **carries no payload** | `triggers` |
-| `guard` | site gates whether another site executes | `guards` |
+
+~~`control`~~ ~~`guard`~~ → **Axis 0** (they answer a different question).
+~~`roundtrip`~~ → **a DERIVED FINDING over a set of bindings (R4 shape), not a site value.**
+
+> **Why `roundtrip` had to go, and my own cited evidence argued against me** (CVO~C P1-4). I offered
+> `ScriptIO.rolling_window_candidates` as proof it was a real primitive. Read at source, `:51-53`
+> says: *"likely rolling-window **PRIOR-RUN** reads … **Removed** from read_keys to avoid false
+> circular-dep edges."* **Three grain mismatches from a site-level binding**: *prior-run* is
+> temporal; *keys-in-both* is an artifact-key set aggregated across a whole script; *Removed* is a
+> suppression **because two distinct sites collided.** And REV 2's own definition — *"one site **or
+> one loop**"* — is self-refuting: **a loop is definitionally two sites**, so a site→target binding
+> structurally cannot carry it. I read my evidence for what it supported rather than what it said.
+
+**Axis 1b — DEPENDENCY KIND · *does this site depend on the target's CONTENT or its EXISTENCE?***
+*(New in REV 3, from field test F3.)* `content` | `existence`.
+
+`paginate(Prefix=…)` and `get_object(Key=…)` both read as `ingress`/`partition`, and **they are not
+the same act**: the lister breaks when a producer **renames**, the reader when a producer **changes
+schema**. For blast radius — which §5 claims this layer licenses — conflating them is a *wrong*
+answer, not a coarse one. The estate has a live, load-bearing case: **`gold/meta/pipeline-complete.json`
+is a marker whose EXISTENCE is the trigger signal**, which is why hand-writing that key is recorded
+as a *forged completion signal* rather than a data edit.
 
 Two of these are the direct answer to "more than input and output":
 
@@ -262,11 +420,36 @@ question has an answer**; without them, D1's grain axis is asserted with no witn
 remains `forward: true` in D1 and stays forward here — the S-layer must not silently populate a
 grain D1 declares unpopulated.
 
-### Axis 3 — RESOLUTION · *how well is the target actually known?*
+### ~~Axis 3~~ → RECOGNITION · a META-FIELD over Axes 1/2/5, **not a peer axis** *(REV 3)*
 
-The anti-fabrication axis. `script_io_ast.py` already implements this in embryo and its test battery
-is built around it (`test_rebound_constant_is_NOT_folded` — "THE ANTI-FABRICATION CONTROL").
-Promoting it to a named axis makes the discipline general.
+> **DEMOTED, not deleted.** The discipline was right; its PLACE was wrong. `opaque` means *the call
+> was not recognized at all* — and if you did not recognize the call you cannot assert its direction,
+> its grain, or its identity. A value that **invalidates three other axes** is not sitting beside
+> them; it is sitting **over** them. Only CONDITION survives an `opaque` site, because syntactic
+> nesting is readable without recognition.
+>
+> **And it is already built.** `comp_recognizer_sdk.py:84-90` carries
+> `Coverage{attempted, resolved, unresolved:[(locus, reason)]}`, whose header states it exists so
+> *"a weak recognizer cannot silently under-report."* **That is this axis's entire stated purpose,
+> landed, at RUN/RECOGNIZER grain — which is the correct grain, because recognition is a property of
+> the extractor's competence, not of the line of code.**
+
+The values survive as a recognition state carried per site *and* summarized per run:
+
+| value | meaning |
+|---|---|
+| `literal` | fully static in-place |
+| `folded` | resolved through a single-binding module constant |
+| `partial` | some segments dynamic — e.g. `s3://bucket/{?}` |
+| `unresolved` | call site recognized, target not statically derivable |
+| `opaque` | **call not recognized at all — Axes 1, 2 and 5 are UNASSERTABLE for this site** |
+
+**Achievable values are BOUNDED BY the front-end tier** (§6): a site cannot be reported `folded` if
+the tier serving it cannot resolve across files. That constraint is why this was never independent.
+
+The anti-fabrication discipline is unchanged and is the reason the field exists at all —
+`script_io_ast.py`'s battery is built around `test_rebound_constant_is_NOT_folded`, *"THE
+ANTI-FABRICATION CONTROL."*
 
 | value | meaning |
 |---|---|
@@ -462,6 +645,35 @@ bespoke tools** — which is the same consolidation argument D1 makes for itself
 
 ## 8. Constraints this spec is bound by
 
+**8.0 SHAPING CORPUS — DECLARED POSITIVELY (REV 3; discharges the fence's author obligation).**
+
+`NFRA_ONTOLOGY_RULE_BANK.yaml:271-274` places an obligation on **every rail author** that REV 1 and
+REV 2 did not discharge: ***"PUBLISH YOUR SHAPING CORPUS … AN UNNAMED SHAPING CORPUS IS
+INDISTINGUISHABLE FROM A BREACHED ONE."*** REV 1 §11 declared its corpus *unbounded*, which made its
+own §8.1 compliance claim **unverifiable by the fence's own standard**. `3.0.0_SA_CVO~C` found this
+using the fence's prescribed method — check a declared corpus against a schema, **never** against the
+fenced surface — after declining my suggested method, correctly: *to recognize an ADVI fingerprint
+you would have to know what ADVI looks like*, which the fence exists to prevent.
+
+**THE CORPUS THAT SHAPED THIS SPEC, stated positively and exhaustively:**
+
+| # | surface | what it contributed |
+|---|---|---|
+| 1 | `org/modules/graph/script_io_ast.py` | recognizer architecture, anti-fabrication discipline, denominator |
+| 2 | `org/modules/graph/extract_pipeline.py` (`ScriptIO`, `_extract_script_io`) | `roundtrip` evidence, artifact-grain IO |
+| 3 | `org/modules/graph/comp_dataflow.py` · `comp_constants_cli.py` · `comp_honesty.py` · `comp_legacywriter.py` | line-level precedent; CONDITION axis |
+| 4 | `org/modules/graph/tsgraph_spike/` (`extractor.ts`, `cluster_extract.py`) | React/TS side |
+| 5 | `infra/system/sdk/gensdk/recognizer_sdk/**` + `org/modules/graph/comp_recognizer_sdk.py` | FrontEnd tiers, `Site`, `Coverage`, `emit_cse` |
+| 6 | `infra/system/ontology/SYSTEM_DEFINITIONS.yaml` v1.8 · `NFRA_ONTOLOGY_RULE_BANK.yaml` | the vocabulary being extended |
+| 7 | `data/etfs/scripts/gold/avgcap_monthly_average.py:1-120` | the ONLY code read as a design example (field test 01) |
+| 8 | estate-wide `comp-kuzu` census @2026-07-23T14:52Z (20,398 nodes / 40,796 edges) | aggregate denominators only |
+
+**ADVI_PERFORMANCE and MDPF_GLOBAL appear NOWHERE in this list, and no file under
+`projects/ATOM_DECOMP/case_study/` was read for design input.** Row 8 is an **aggregate**, not a
+surface-as-example — the bank's own `graph_evidence` uses the same census, so if that census is a
+breach the bank breaches itself. **This declaration is falsifiable: check rows 1–7 against the
+schema.** If a vocabulary distinction in §4 cannot be traced to one of them, that is a finding.
+
 **8.1 THE HELD-OUT FENCE — and it directly touches Andrew's sequencing.**
 `NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.held_out_fence` is binding on **every rail author**
 (Andrew-direct 2026-07-29 ~2325Z): ***ADVI_PERFORMANCE and MDPF_GLOBAL are the held-out test set and
@@ -533,6 +745,28 @@ everything downstream wrong.**
 ## 10. Acceptance — how to tell if this layer is real
 
 Falsification tests, not a green checklist. Each names the failure it is designed to catch.
+
+> ⚠ **REV 3 — THREE OF THESE SIX COULD PASS WHILE THE LAYER IS BROKEN, AND THE MOST-EMPHASIZED
+> DISCIPLINE IN THIS SPEC HAD NO TEST AT ALL** (CVO~C P2-8):
+> - **#1** *"every C1 edge **over a covered node**"* — **a self-selected denominator.** Gate the
+>   PRECONDITION, not the output. A layer that covers one node passes.
+> - **#2** the negative control is **hand-chosen** — *a hand-chosen control measures the AUTHOR; a
+>   generated one measures the INSTRUMENT.* Must be generated.
+> - **#5** is **N=1**, and per §10.5 is not passable at the resolved tier today anyway.
+> - **#4** the inherited battery **may never execute a re-implemented folding path** — pass count
+>   unchanged, coverage silently zero. *(The exact "green went greener, coverage went to zero" shape.)*
+> - **#3 and #6 are sound; #6 is load-bearing.**
+>
+> **THE GAP THAT MATTERS MOST: §4's central rule — "`unresolved` and `opaque` must be EMITTED, never
+> dropped" — HAS NO TEST.** #2 catches the all-zero case; **the real failure mode is PARTIAL**
+> under-reporting, which no test above can see. **The landed `Coverage.unresolved` channel is the
+> ready-made assertion surface**, and REV 3 adds the test:
+>
+> **7. PARTIAL-SILENCE TEST (new, and it is the one to build first).** Feed a file with a **known
+> mix** of resolvable and unresolvable call sites. Assert `attempted == resolved + len(unresolved)`
+> **and** that each unresolvable site appears in `Coverage.unresolved` **with its locus**. Mutate by
+> deleting one recognizer entry: the count must move. *A layer that silently drops one call site in
+> twenty is the failure this whole spec exists to prevent, and REV 2 could not detect it.*
 
 1. **Round-trip:** every C1 edge over a covered node resolves to ≥1 S1 binding, **and every
    unresolved one is enumerated.** *Catches: silent under-extraction.*

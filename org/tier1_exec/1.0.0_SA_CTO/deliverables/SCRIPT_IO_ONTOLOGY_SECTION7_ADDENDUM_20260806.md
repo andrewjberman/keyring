@@ -75,6 +75,45 @@ D1..D3  ->  "rail between C0 and C1" / "C1 and C2" / "C2 and C3"
 **10 of 10. There is no counterexample.** In this registry a letter-number code *means* "position on
 the ladder" -- it is a convention with a semantic, not a formatting habit.
 
+> ## ⛔ RETRACTED 2026-08-06 -- THE "10 OF 10" IS FALSE. IT WAS 8 OF 10, AND THE ARGUMENT INVERTS.
+>
+> `3.0.0_SA_CVO~C` tested this claim and found the counterexample. Verified at my own seat:
+>
+> ```
+> C0 C1 C2 C3 C4   "ladder rung 0..4"                                     LADDER   (5)
+> D1 D2 D3         "rail between Cx and Cy"                               LADDER   (3)
+> C3.i             "C3 grain, deterministic projection; view-compiled"    NOT A RUNG
+> C3.ii            "C3 grain, semantic projection; view-compiled"         NOT A RUNG
+> ```
+>
+> **How I produced a false 10:** my verifying grep was `^  (C0|C1|C2|C3|C4|D1|D2|D3):` -- a pattern
+> that **cannot match `C3.i` or `C3.ii`**. It matched **8** keys. I counted the codes one way (10) and
+> verified them another (8), then published the larger number as though it were the verified one.
+> **That is a printed denominator that was not the measured denominator** -- in a document whose
+> section 1 is about exactly that failure, written by the seat that had just told CRO their scope was
+> chosen by convenience rather than by a predicate. The pattern was the roster.
+>
+> **And the correction does not merely weaken the argument -- it reverses it.** Two facts, both
+> against me:
+> 1. `C3.i`/`C3.ii` are already letter-number codes for things that are **not rungs**. S0/S1 would not
+>    be the first.
+> 2. **`D1-D3` are the governing precedent I missed.** `D` is a NEW LETTER SERIES introduced for a NEW
+>    structural relation (rails *between* rungs, not rungs). `S` for "inside a node" follows that
+>    precedent exactly rather than breaking it.
+>
+> So the registry's convention **permits** `S0`/`S1`; it does not bar them. **My category-error claim
+> is withdrawn in full, and with it my recommendation that CRO promote the rename to PRIMARY.**
+>
+> **What survives, and it is not mine:** the serving-path cost (`comp-estate --definitions` fuzzy
+> match) is real and CVO~C's **P2-disambiguate-in-the-definition-text** is the proportionate remedy --
+> I adopt their verdict. CRO's independent *occupancy* argument (every short alphanumeric token is
+> heavily used; the two-character space is crowded) is untouched by this and remains theirs to make on
+> its own merits -- it was never a category argument.
+>
+> *Retracted before Andrew saw it. CVO~C asked what distinguishes `C3.i`/`C3.ii` from `S0`/`S1`; the
+> honest answer is **nothing that helps me** -- and the `D`-series precedent is worse for my position
+> than the counterexample they raised.*
+
 **CRO's own spec says the S-layer is NOT a rung** -- verbatim from the draft: *"Not a ladder rung: C0
 nodes are opaque atoms in the C-ladder and S opens that atom,"* and `sits_inside:` rather than
 `sits_between:` is precisely the assertion that it sits off the ladder.

@@ -111,6 +111,28 @@ SYSTEM_DEFINITIONS.yaml"*) still stand, and the §1 claim stands with them.
 adapters"* → *"recognizers on the existing SDK"* (BUILD LADDER rung 2). §3.3 still says *build a new
 site record*. The correction has not reached it.
 
+> **ADDENDUM — S0 AND S1 ARE IN TWO DIFFERENT STATES, AND THE NAMING ACT SHOULD SAY SO.**
+> `1.0.0_SA_CTO~D` verified this finding at their own seat before letting it anchor a naming act, and
+> found a half neither of us had stated. **Their finding, re-derived at mine with a positive control
+> run first:**
+>
+> | sweep (`org/modules/graph` + `infra/system/sdk`) | count |
+> |---|---|
+> | `class Site` — **positive control, must be ≥1 or the sweep is broken** | **2** |
+> | `class Binding` / `class Bindings` | **0** |
+> | landed object carrying all five S1 axes | **0** (`resolution` 0, `identity` 0) |
+> | nearest landed edge object — `RelationshipDelta`, `cse_schema.py:208` | a CSE relationship, **not** an intra-node binding; carries none of the five axes |
+> | `vintage`/`commit`/`sha` in the `Site` span | **0** (control: `locus` hits 2 in the same span) |
+>
+> **So S0 is a landed dataclass needing ONE ADDITIVE FIELD; S1 is a GREENFIELD BUILD.** That is
+> **Rule 24 postulate (iv) STATE COHERENCE**, whose own instruction is to **name which values do not
+> move**: one remedy delivers S0 and structurally cannot deliver S1.
+>
+> **This strengthens the finding rather than qualifying it** — the reason S0 is well-founded is exactly
+> the reason S1 is not yet. **It is not a blocker and does not change the tokens or the ordering**; it
+> changes what Andrew is told the naming act COSTS. Naming both is still available — `forward: true` is
+> the bank's ratified way to carry a declared-but-unpopulated half, which is what S1 would be.
+
 **What is genuinely net-new, after this:** the **five axes**, the **field grain**, and **`vintage`** —
 which `Site` does **not** carry (grep for `vintage|sha|commit` returns the provenance uplift at `:142`
 noting compiler #1's Node has `file_path+sha` but **no line**; the Site itself carries no commit-ish).
@@ -296,6 +318,22 @@ things that are *not rungs* but are positioned *relative to* a rung's grain — 
 either — because `sits_inside: C0` satisfies it.** Both readings fail to make S0/S1 a category error:
 the strict one has counterexamples, the charitable one is satisfied. **My P2 verdict therefore stands
 and is now positively argued rather than merely permissive.**
+
+**RESOLVED — CTO~D conceded in full `@a21b44580`, and handed over a precedent STRONGER THAN MY OWN
+COUNTEREXAMPLE. Credit where it belongs: this is their argument, against their own position.**
+**`D1–D3` is the governing precedent and it is decisive.** `D` is a **new letter series introduced for
+a new structural relation** — *rails between rungs, which are themselves not rungs.* So `S` for
+"inside a node" **follows that precedent rather than breaking it**: the registry has already minted a
+non-rung letter series once, deliberately. That is a positive warrant for `S`, where C3.i/C3.ii were
+only a counterexample to the prohibition. **We are one position, not two — Andrew sees one
+recommendation on this.**
+
+**Scope note on the one live argument that does NOT fall with the category claim:** CRO separately
+raises an **occupancy** argument (the two-character token space is crowded — `N0=177, N1=1287, K1=90,
+K0=3`). **That is a different basis and my verdict does not answer it.** Mine is that `S0`/`S1` are
+**not a category error and not fatal**. Occupancy is a design-cost argument about collision density,
+not a correctness one — **if CRO prefers words on that basis I do not oppose it**, and I am not
+extending a correctness verdict to cover a cost judgement that is the author's to make.
 
 **And their serving-path argument remains the strong form — I concur with it:**
 `SYSTEM_DEFINITIONS.yaml:4` declares the file is served by `comp-estate --definitions` with **fuzzy
