@@ -1,0 +1,247 @@
+{
+  "_meta": {
+    "r7_row": "REGRESSION TEST -- all five limbs. PASS iff value-identical per JSON path . declared canonicalisation . mutation shown to FAIL and LOCALISE . baseline pinned to VersionIds at a stamped instant . absent!=null!=zero.",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "run_by": "3.0.0_SA_CVO~Z",
+    "run_instant_utc": "2026-08-07T00:25:10.320716+00:00",
+    "citability": "CITABLE",
+    "mutation_record": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANPLAT_G2/records/MUTATION_EXERCISE_20260807.md",
+    "sectionB_artifact": "sectionB_field_paths.json",
+    "sectionB_derivation_commit": "411e8e8a3",
+    "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
+    "baseline_manifest": "baseline_manifest_20260807T000753Z.json",
+    "baseline_pin_instant_utc": "2026-08-07T00:07:53.960077+00:00"
+  },
+  "denominator": {
+    "pairs_targeted": 12,
+    "pairs_compared": 12,
+    "could_not_verify": 0,
+    "total_regressions": 0
+  },
+  "pairs": [
+    {
+      "scope": "global",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/global/aggregate-aua-timeseries.json",
+      "baseline_version_id": "TsoF7NVahe57eiZIxeyIMZo5bi_JCFkq",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/global/aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"455\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"455\""
+      },
+      "paths_compared": 16659,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "global",
+      "type": "aum-metrics",
+      "key": "platinum/mdpf/global/aum-metrics.json",
+      "baseline_version_id": "DNYv_g2Pzd7WUXsvJBatDjOoTWZp2ZnR",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/global/aum-metrics.json",
+      "baseline_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.390730+00:00\""
+      },
+      "candidate_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.390730+00:00\""
+      },
+      "paths_compared": 165,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "global",
+      "type": "account-distribution",
+      "key": "platinum/mdpf/global/account-distribution.json",
+      "baseline_version_id": "Pka1VcXTAS8sOAV3zwoMTGW4bnh7pvlA",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/global/account-distribution.json",
+      "baseline_vintage": {
+        "generated_at": "\"2026-08-04T18:29:38.361175Z\""
+      },
+      "candidate_vintage": {
+        "generated_at": "\"2026-08-04T18:29:38.361175Z\""
+      },
+      "paths_compared": 621,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "49financial",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/49financial/aggregate-aua-timeseries.json",
+      "baseline_version_id": "TlpchQMoaykRVfcoUoYeqojg9aXsIs2A",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/49financial/aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"437\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"437\""
+      },
+      "paths_compared": 9720,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "49financial",
+      "type": "aum-metrics",
+      "key": "platinum/mdpf/49financial/aum-metrics.json",
+      "baseline_version_id": "5eJmO03aq_APHu4p0vateYFfGigia4xZ",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/49financial/aum-metrics.json",
+      "baseline_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.673731+00:00\""
+      },
+      "candidate_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.673731+00:00\""
+      },
+      "paths_compared": 117,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "49financial",
+      "type": "account-distribution",
+      "key": "platinum/mdpf/49financial/account-distribution.json",
+      "baseline_version_id": "77axjaJ_cXbKt7G35Hxu024L.fxHEoc_",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/49financial/account-distribution.json",
+      "baseline_vintage": {
+        "generated_at": "\"2026-08-04T16:01:10.935360Z\""
+      },
+      "candidate_vintage": {
+        "generated_at": "\"2026-08-04T16:01:10.935360Z\""
+      },
+      "paths_compared": 460,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "inflection",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/inflection/aggregate-aua-timeseries.json",
+      "baseline_version_id": "eEL5eyRqZ.zNh8AtydqIMfusbOMwPrMp",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/inflection/aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"437\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"437\""
+      },
+      "paths_compared": 9726,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "inflection",
+      "type": "aum-metrics",
+      "key": "platinum/mdpf/inflection/aum-metrics.json",
+      "baseline_version_id": "Uu_j_P3bz21V2vAW1SFXL0D9bh6rTwJS",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/inflection/aum-metrics.json",
+      "baseline_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.845572+00:00\""
+      },
+      "candidate_vintage": {
+        "last_updated": "\"2026-08-04T17:42:24.845572+00:00\""
+      },
+      "paths_compared": 149,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "inflection",
+      "type": "account-distribution",
+      "key": "platinum/mdpf/inflection/account-distribution.json",
+      "baseline_version_id": "IWIYog5G4m3HWXdAkMIHu06.GSXT9wgz",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/inflection/account-distribution.json",
+      "baseline_vintage": {
+        "generated_at": "\"2026-08-05T13:35:34.306362Z\""
+      },
+      "candidate_vintage": {
+        "generated_at": "\"2026-08-05T13:35:34.306362Z\""
+      },
+      "paths_compared": 617,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "cottonwood",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/cottonwood/aggregate-aua-timeseries.json",
+      "baseline_version_id": "KtplBMo1umsr81jNNMJkQRU9LmN_2N27",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/cottonwood/aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"446\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"446\""
+      },
+      "paths_compared": 8276,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "cottonwood",
+      "type": "aum-metrics",
+      "key": "platinum/mdpf/cottonwood/aum-metrics.json",
+      "baseline_version_id": "_DDX6H8f.0R83M97IZoksw9X7qMzgpGt",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/cottonwood/aum-metrics.json",
+      "baseline_vintage": {
+        "last_updated": "\"2026-08-05T13:35:42.610838Z\""
+      },
+      "candidate_vintage": {
+        "last_updated": "\"2026-08-05T13:35:42.610838Z\""
+      },
+      "paths_compared": 126,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    },
+    {
+      "scope": "cottonwood",
+      "type": "account-distribution",
+      "key": "platinum/mdpf/cottonwood/account-distribution.json",
+      "baseline_version_id": "eQHP_XwM0m28oITm0.emxDfpbuLML2Qd",
+      "candidate_source": "live:s3://opal-data-portal-v2/platinum/mdpf/cottonwood/account-distribution.json",
+      "baseline_vintage": {
+        "generated_at": "\"2026-08-05T13:35:42.610838Z\""
+      },
+      "candidate_vintage": {
+        "generated_at": "\"2026-08-05T13:35:42.610838Z\""
+      },
+      "paths_compared": 483,
+      "diffs": 0,
+      "excused": [],
+      "regressions": [],
+      "verdict": "TIE"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "r7_row": "REGRESSION TEST -- all five limbs. PASS iff value-identical per JSON path . declared canonicalisation . mutation shown to FAIL and LOCALISE . baseline pinned to VersionIds at a stamped instant . absent!=null!=zero.",
+    "to": "MDPF_CANPLAT.G2 @f123fbf6e",
+    "run_by": "3.0.0_SA_CVO~Z",
+    "run_instant_utc": "2026-08-07T00:22:47.822002+00:00",
+    "citability": "PASS-NOT-CITABLE (mutation exercise not on record)",
+    "mutation_record": null,
+    "sectionB_artifact": "sectionB_field_paths.json",
+    "sectionB_derivation_commit": "411e8e8a3",
+    "canonicalisation": "README.md 'THE DECLARED CANONICALISATION' (joint w/ 0.4.0_DS_ClientPlatform~Z msg 20260807T000529Z)",
+    "baseline_manifest": "baseline_manifest_20260807T000753Z.json",
+    "baseline_pin_instant_utc": "2026-08-07T00:07:53.960077+00:00"
+  },
+  "denominator": {
+    "pairs_targeted": 1,
+    "pairs_compared": 1,
+    "could_not_verify": 0,
+    "total_regressions": 0
+  },
+  "pairs": [
+    {
+      "scope": "cottonwood",
+      "type": "aggregate-aua-timeseries",
+      "key": "platinum/mdpf/cottonwood/aggregate-aua-timeseries.json",
+      "baseline_version_id": "KtplBMo1umsr81jNNMJkQRU9LmN_2N27",
+      "candidate_source": "C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\c82c6aeb-1b4d-4f10-b017-339270592b3d\\scratchpad\\mutants\\m3\\cottonwood\\aggregate-aua-timeseries.json",
+      "baseline_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"446\""
+      },
+      "candidate_vintage": {
+        "as_of_last": "\"2026-08-03\"",
+        "n_dates": "\"446\""
+      },
+      "paths_compared": 8276,
+      "diffs": 1,
+      "excused": [
+        {
+          "path": "non_model_aua[0]",
+          "from": "NULL",
+          "to": "NUMBER",
+          "baseline": "null",
+          "candidate": "\"123.45\"",
+          "verdict": "EXCUSED",
+          "exemption": "non_model_aua",
+          "cls": "null_to_nonzero_value_only"
+        }
+      ],
+      "regressions": [],
+      "verdict": "EXCUSED-ONLY"
+    }
+  ]
+}
