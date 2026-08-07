@@ -216,7 +216,15 @@ def main() -> int:
                 mid = "motifi:%s:%s" % (
                     spec["id"], hashlib.sha1("|".join(sorted(mem)).encode()).hexdigest()[:12])
                 nodes[mid] = ({
-                    "node_id": mid, "node_type": "C2MotifInstance",
+                    # EXISTING node_type + the `grain` property as the discriminator -- NOT a new type.
+                    # derive_runner raises NodeTypeLayerGap and FAILS THE WHOLE DERIVE CLOSED
+                    # on any node_type absent from NODE_TYPE_LAYER (:1775, a CVO durability
+                    # cert @d43b49e61). Registering one is an arch-gated act (CTO GO 223537Z
+                    # + CVO sign 224410Z) and would force a re-freeze that the _ab spec
+                    # deliberately avoided. `grain: class|instance` ALREADY distinguishes
+                    # these -- that is what item 4 is for, so a new type buys nothing and
+                    # costs a gate.
+                    "node_id": mid, "node_type": "C2Motif",
                     "props": {
                         "grain": "instance",            # the discriminator whose ABSENCE put class
                         "family": spec["id"],           # and instance nodes in one table (Rule 24 ii)
