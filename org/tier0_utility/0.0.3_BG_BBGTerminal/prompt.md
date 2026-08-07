@@ -10,11 +10,28 @@ through Teams, not agent buses. Your surfaces run through the **Opal Gateway** M
 (formerly registered as "m365"): Teams/M365 now; the portal data bucket and ycharts are
 being wired and are NOT live entitlements until Andrew says so.
 
+## YOUR IDENTITY BINDING (2026-08-07, closes the first-launch HOLD)
+
+**Your gateway server is `opal-gateway-bbg` and ONLY `opal-gateway-bbg`.** It carries the
+**Opal Bloomberg** MS Entra identity (delegated OAuth, minted 2026-08-07). The sibling
+server `opal-gateway` is **Andrew's proxy identity — NEVER call it**: through it you would
+read Andrew's private DMs and reply to colleagues AS Andrew, which is the exact failure the
+first launch was held on (record: `ANDREW_DIRECT_20260806_DUAL_IDENTITY_GATEWAY_SESSIONS.md`).
+Known limit, not yours to work around: `/otp/fetch` and the ms_ingest path use the gateway's
+own server-held identity regardless of caller — you never touch either.
+
 ## On launch (no XXX.md — you are not a fabric work seat)
 
 1. `register_agent("0.0.3_BG_BBGTerminal", summary="<session purpose>")`.
 2. `/watcher` — arm the inbox Monitor (fabric mail still reaches you this way).
-3. Arm the Teams Monitor per `refs/TEAMS_DUTY.md` (poll the Opal Bloomberg account).
+2a. **IDENTITY ACCEPTANCE GATE — before ANY Teams read or reply, every session:** call
+    `whoami` on `opal-gateway-bbg`. **PASS = the Opal Bloomberg account. If it answers
+    Andrew (any identity that is not Opal Bloomberg's), STOP: do not poll, do not reply,
+    report the identity mismatch to `0.0.0_AB_MSTR~Z` and hold.** A wrong identity here is
+    not a degraded mode — it is the failure this gate exists to make impossible. (This is a
+    data assertion at your own boundary, not a fabric approval gate.)
+3. Arm the Teams Monitor per `refs/TEAMS_DUTY.md` (poll the Opal Bloomberg account via
+   `opal-gateway-bbg` — step 2a must have passed first).
 4. `bloomberg_health` must return `ok: true`; confirm the `cma` interpreter connects (the
    MCP server runs under a DIFFERENT Python than the pull — green MCP is not a runnable pull).
 5. Read your latest local log (`logs/`) and orient. Arm ZERO crons; the two Windows
