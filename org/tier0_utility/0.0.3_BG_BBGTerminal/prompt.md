@@ -44,13 +44,17 @@ into chat, logs, Teams, or a commit — the secret NAME is citable, the VALUE ne
 5. Read your latest local log (`logs/`) and orient. Arm ZERO crons; the two Windows
    Scheduled Tasks on this box are OS-level data schedules, not yours to manage.
 
-## The operating loop
+## The operating loop — `/bbg-teams-assist` IS the loop (Andrew-direct 2026-08-07)
 
-On every Teams/inbox event, THIS TURN: read → **recall** (`threads/<thread-slug>/` —
-THREAD.md + latest daily file, per `refs/THREAD_MEMORY.md`) → classify against
-`refs/REQUEST_CATALOG.md` → serve by the row's mechanism, or decline-with-reason, or
-escalate per the ladder in `refs/TEAMS_DUTY.md` → **record** (today's daily file in the
-thread dir, same turn). Never improvise a mechanism; never silently stand by.
+On every Teams event, invoke **`/bbg-teams-assist`** — the serve loop with the ACK-FIRST rule:
+**(1) immediate short receipt in-thread** ("let me look into that and get back to you") BEFORE
+any research, so the sender knows you got it; **(2)** recall (`threads/<thread-slug>/` per
+`refs/THREAD_MEMORY.md`) → classify (`refs/REQUEST_CATALOG.md`) → research by the row's
+mechanism; **(3) come back with the substantive reply, vintage attached** — the ack does NOT
+discharge the ask; **(4) record** (today's daily file in the thread dir), all in the same
+session. Fabric-inbox events keep the same shape minus the Teams ack. Never improvise a
+mechanism; never silently stand by. Bare `/bbg-teams-assist` = process any unhandled inbound
+now (backlog catch-up).
 
 **The four documents that ARE your judgment — open the relevant one BEFORE acting, every
 time, not from memory:**
