@@ -122,6 +122,104 @@ copy.** This is the item that sets the migration's real cost.
 
 ---
 
+---
+
+# 5A · ⛔ WHAT DO WE ACTUALLY NEED? — walked prefix by prefix, the answer is PLAUSIBLY NOTHING
+
+> **ANDREW-DIRECT:** *"if we dont need the code from it, then what exactly do we need?"*
+
+**The right question, and it inverts this brief's default.** I wrote §3 as *"migrate what has value."*
+Walked honestly, **only ONE prefix has any live claim at all, and even that one is probably transitional.**
+
+| prefix | do we need it? | why not |
+|---|---|---|
+| `code/` | **NO** | Its two live dependencies BOTH terminate inside the current program — the dispatch sync dies with the EC2, and the roster resolution is superseded by the G13 build-generated hash-tied copy. |
+| `cache/` | **NO** | 1 object, cold **80 days**. Andrew: dead weight. |
+| `bmkaud-evidence/` | **NO** | 10 objects, cold **67 days**. Andrew: dead weight. |
+| `telemetry/` | **NO** | It is `telemetry/mdpf-daily-runner/` — **the EC2 dispatch runner's own status/history/logs.** The EC2 is being retired, so the writer dies. Its only consumer is a CloudWatch alarm (`alarms.tf`) that **doc 02 already marks RETIRE** and that the alarm moratorium bars replacing. |
+| `mdpf/feeds/` | **MAYBE — and this is the whole question** | See below. |
+
+## The feeds question — the one thing that decides MIGRATE vs DELETE-ENTIRELY
+
+`mdpf/feeds/` is written by **`wsb-49f-model-aua-daily`** and **`wsd-49f-partner-held-etf-daily`**
+(two separately-scheduled feeder Lambdas), and read by **`mdpf_aggregate_aua`** (now inside
+`mdpf-gold-lambda`) and by **`opal-smartx-ingestion-pipeline`**.
+
+> **AND DOC 02 ALREADY RULES THE FIRST READER OUT OF EXISTENCE:** *"If a feeder is required only to
+> calculate `_aggregate_aua`, **port the calculation into the one Lambda; do not preserve a separately
+> scheduled feeder without a consumer-level reason.**"*
+>
+> **If that porting happens — and it is the program's own stated intent — then `wsb`/`wsd` retire,
+> `mdpf/feeds/` HAS NO WRITER, and the prefix has no reason to exist.** The parquet intermediate was
+> only ever a hand-off between two things that are becoming one thing.
+
+**⇒ THE ONE UNMEASURED QUESTION THAT DECIDES EVERYTHING:** is
+**`opal-smartx-ingestion-pipeline`'s** read of `feeds/` **(a)** part of this same chain and absorbable
+into the one Lambda, or **(b)** a genuinely independent consumer with its own reason?
+
+- **If (a) → THE ENTIRE BUCKET IS DELETABLE. Nothing migrates. There is no `_feeds/` to create.**
+- **If (b) → only that consumer's slice migrates**, and it migrates because of *its* need, not ours.
+
+**MEASURE THIS FIRST.** It is a source read of three deployed modules, and it changes the work from a
+five-prefix migration to a bucket deletion. **Everything in §4's target layout is contingent on it** —
+`_feeds/` should NOT be created until (b) is proven, and `_code/`/`_outputs/` should not be created
+speculatively at all. *His permission for them was conditional — "IF you need /code", "IF there needs to
+be some kind of /outputs" — and on this evidence we probably do not need either.*
+
+---
+
+# 5B · EXTERNAL RESOURCES — THE DECOMMISSION INVENTORY
+
+> **ANDREW-DIRECT:** *"any external resources that are connected to this fucking thing because all of it
+> needs to be decommissioned and also if its in a terraform then that thing has to be modified properly
+> too so it doesnt come back."*
+
+**⛔ THE "SO IT DOESN'T COME BACK" HALF IS THE LOAD-BEARING ONE. Emptying a bucket whose
+`aws_s3_bucket` resource is still declared means the NEXT `terraform apply` RECREATES IT.** Deletion
+without the Terraform edit is not decommissioning — it is a delay.
+
+## Terraform — every declaration, measured
+
+| file | what it declares |
+|---|---|
+| **`shared-infra/s3.tf`** | **THE BUCKET ITSELF** — *"MDPF Phase-2 feeder intermediate parquet"*, versioning, lifecycle. **Remove the resource, not just its contents.** |
+| `shared-infra/CHANGELOG.json` | the bucket's creation record — annotate, do not rewrite history |
+| **`mdpf-pipeline/wp5-feeder-schedules.tf`** | **the `wsb`/`wsd` feeder SCHEDULES + their scoped IAM** to `feeds/{model_aua_positions,model_composition,partner_held_etf}/49financial/*` |
+| `mdpf-pipeline/iam.tf` | grants to `code/` and `feeds/{artifact}/*/{date}.parquet` |
+| `mdpf-pipeline/main.tf` | the EC2 that syncs `code/` and runs the 4-stage DAG |
+| `mdpf-pipeline/accrual-bridge.tf` | `code/scripts/gold/` synced set + roster |
+| `mdpf-pipeline/alarms.tf` | alarm on `telemetry/mdpf-daily-runner/status.json` — **doc 02: RETIRE** |
+| `opal-assets/router_iam.tf` | router grant to the bucket |
+| `smartx-pipeline/iam.tf` | the smartx consumer's grant — **the (a)/(b) question above lives here** |
+
+## Lambdas bound to it — 7
+
+`wsb-49f-model-aua-daily` (writes) · `wsd-49f-partner-held-etf-daily` (writes) ·
+`opal-smartx-ingestion-pipeline` (reads) · `mdpf-daily-trigger` · `mdpf-accrual-trigger` ·
+`opal-assets-mdpf-portal-publisher` · **`mdpf-gold-lambda` ← wired TONIGHT at 02:12Z**
+
+## Schedules — 2, both ENABLED
+
+`wsb-49f-model-aua-pull-daily` · `wsd-49f-partner-held-etf-pull-daily`
+*(Both die under the doc-02 porting. Retiring the prefix without retiring these leaves two scheduled
+Lambdas writing into a deleted bucket — a daily failure, not a clean decommission.)*
+
+## Decommission ORDER — reverse of the dependency chain
+
+1. **Answer 5A's (a)/(b) question.** Everything below is contingent.
+2. Port the feeder computation into `mdpf-gold-lambda` (doc 02's own instruction).
+3. **Retire `wsb`/`wsd` schedules + Lambdas** — writers first, so nothing writes into a bucket being removed.
+4. Re-point `mdpf-gold-lambda`'s 02:12Z feeds grant; drop the smartx grant if (a).
+5. Retire the EC2 → `code/` and `telemetry/` writers die; drop the telemetry alarm.
+6. **Remove every Terraform declaration above, INCLUDING the `aws_s3_bucket` resource** — full
+   un-targeted plan **zero-diff** after, or it comes back.
+7. **Delete the objects and the bucket — Andrew-confirmed at the delete step** (standing law).
+
+**⚠ Steps 6 and 7 in that order.** Deleting objects while the resource is declared invites the next
+apply to recreate an empty bucket, and an empty declared bucket is harder to notice than a full one.
+
+---
+
 ## 6 · PRECONDITIONS
 
 - [ ] `MDPF_CANONICAL_PLATINUM` rubric R1–R14 PASS on one unattended scheduled cycle
