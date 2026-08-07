@@ -268,6 +268,11 @@ def main() -> int:
                         # so Stage 2 needs types, not ids (NFRA_MOTIF_P1 ab_c3_cover).
                         "member_types": sorted({row.get(a + "__T") for a in aliases
                                                 if row.get(a + "__T")}),
+                        # (id, type) PAIRS -- the anchor-NODE cover (Andrew-ruled 2026-08-07 "B")
+                        # keys on WHICH member is the anchor, so a deduped type SET is not enough:
+                        # it cannot say which id carried which type.
+                        "member_pairs": sorted({(row[a], row.get(a + "__T"))
+                                                for a in aliases if row.get(a)}),
                         "members": sorted(mem),
                     }})
                 for nid in mem:
