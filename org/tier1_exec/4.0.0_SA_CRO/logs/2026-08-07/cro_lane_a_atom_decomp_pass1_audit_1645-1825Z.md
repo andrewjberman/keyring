@@ -127,9 +127,25 @@ files; no estate-wide sweep, so Gate-1 was not engaged.
 
 - **Delivered:** `org/tier1_exec/4.0.0_SA_CRO/deliverables/ATOM_DECOMP_CORPUS_AUDIT_PASS1_20260807.md`
   @`0e1d847aa4`. **Committed, NOT pushed** — lanes commit, integrators push.
-- **Coverage is stated, not implied: 20 of 72 read in full. `05` NOT READ. The 51 `case_study/` files
-  NOT content-audited** — a scope call I declared (`01:73` scopes them as evidence, not requirements),
-  **not coverage I achieved.** Neither is cleared by this pass.
+- **Coverage is stated, not implied: 21 of 72 read in full. The 51 `case_study/` files NOT
+  content-audited** — a scope call I declared (`01:73` scopes them as evidence, not requirements),
+  **not coverage I achieved.** Not cleared by this pass.
+- **`05` gap CLOSED in-session @`69c8527f0d`** (was NOT READ at first landing). Reading it is *audit,
+  not refinement*, so it needed no new authorization and was not left declared-and-sitting. Yielded
+  **F-13** — `05:20` claims *"four of Atomic Decomposition's own laws"* re-derived; **three** map to
+  the list at `00:46-56` (laws 2/3/5), the fourth is `01:28`, a **case-study heading**
+  (`semantically equal` in `00` = 0). Does not overturn the result, corrects its magnitude — but the
+  strength is a **ratio against the law list** with a numerator not drawn from it, the **89 class**
+  again, inside the document arguing that a quoted figure must carry its instrument. Plus **F-14**
+  (`05:22` cites `00` §5 for a generalization assertion that lives at `01` §5 — two documents, both
+  with a §5).
+- **Base independently CONFIRMED F-1 and ACCEPTED F-7 against its own declared core move** — and
+  reported committing **my exact instrument class while adjudicating my finding**: an `awk` read
+  against a wrong skill path returned EMPTY, byte-identical to a real absence, which would have made
+  a correct finding read as unverified. **Three instances of the class between the two of us in one
+  afternoon, all caught by controls, none by care.** Base has surfaced F-1/F-2/F-4/F-12 to the method
+  owner as a **surface, not a dispatch**, and is refining nothing while the proceed-condition is
+  unanswered.
 - **Nothing was edited in the corpus.** Audit-only was the ruling and it was honored.
 - **`comp-estate` refusal census: UNRUN**, deliberately, and the report says so rather than leaving it
   looking covered. If run: bounded sample, denominator printed, never 81 serial calls against a
