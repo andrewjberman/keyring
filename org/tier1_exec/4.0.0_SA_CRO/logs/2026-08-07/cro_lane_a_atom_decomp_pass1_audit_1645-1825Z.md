@@ -136,16 +136,38 @@ files; no estate-wide sweep, so Gate-1 was not engaged.
   the list at `00:46-56` (laws 2/3/5), the fourth is `01:28`, a **case-study heading**
   (`semantically equal` in `00` = 0). Does not overturn the result, corrects its magnitude — but the
   strength is a **ratio against the law list** with a numerator not drawn from it, the **89 class**
-  again, inside the document arguing that a quoted figure must carry its instrument. Plus **F-14**
-  (`05:22` cites `00` §5 for a generalization assertion that lives at `01` §5 — two documents, both
-  with a §5).
+  again, inside the document arguing that a quoted figure must carry its instrument. **Base accepted
+  F-13 unqualified.**
+- **F-14 — I FILED IT WRONG AND BASE AUDITED ME BACK. Corrected @`a418ac6108`.** I filed it as a
+  document transposition (`00` §5 → `01` §5). Measured: `generaliz` in `00` **whole file = 1** (at
+  `00:5`, the Purpose line) and in `02` **whole file = 0**. So the real defect is **a conflated
+  pair** — `05:22` makes *two* claims and cites *two* sources jointly, and each supports only one
+  half: `00` carries the generalization assertion **at `:5`, not `§5`** (right document, wrong
+  section), and `02` §3 carries only the forward-test half, which I had called "correct." **Worse
+  than what I filed.** One precision retained: my `§5`-scoped `0` was correct as written — the two
+  clauses *after* it were the defective ones, and "the scan was wrong" vs "the inference from the
+  scan was wrong" fail differently and are fixed differently.
 - **Base independently CONFIRMED F-1 and ACCEPTED F-7 against its own declared core move** — and
   reported committing **my exact instrument class while adjudicating my finding**: an `awk` read
   against a wrong skill path returned EMPTY, byte-identical to a real absence, which would have made
-  a correct finding read as unverified. **Three instances of the class between the two of us in one
-  afternoon, all caught by controls, none by care.** Base has surfaced F-1/F-2/F-4/F-12 to the method
-  owner as a **surface, not a dispatch**, and is refining nothing while the proceed-condition is
-  unanswered.
+  a correct finding read as unverified. Base has surfaced F-1/F-2/F-4/F-12 to the method owner as a
+  **surface, not a dispatch**, and is refining nothing while the proceed-condition is unanswered.
+
+> ## THE PATTERN, and I rate it above any single finding in the report
+> **FOUR instances in one afternoon, across two seats, of one class: a scan whose scope and whose
+> REPORTED scope were not the same set.**
+> `1` my `grep -c $'\r'` — could not detect what it was pointed at; failed its own positive control.
+> `2` my `git ls-tree` from the wrong cwd — well-formed `0` about an empty set.
+> `3` base's `awk` against a wrong skill path — EMPTY, byte-identical to a real absence, and it would
+>     have made base report a **correct** finding as unverified.
+> `4` my F-14 — filed inside **the finding about scope defects**, on both sides of the exchange.
+>
+> **Every one produced a well-formed, confident, wrong-domain answer. Not one was caught by care.
+> All four by controls.** Both seats spent the day hunting denominator defects in other people's
+> instruments and each committed the class in their own. **That is the argument for controls stated
+> better than either of us could state it in the abstract** — and it is why `05`'s own E1 (*a quoted
+> figure carries the instrument that produced it, or it is not a figure*) is the strongest proposal
+> in the corpus.
 - **Nothing was edited in the corpus.** Audit-only was the ruling and it was honored.
 - **`comp-estate` refusal census: UNRUN**, deliberately, and the report says so rather than leaving it
   looking covered. If run: bounded sample, denominator printed, never 81 serial calls against a
