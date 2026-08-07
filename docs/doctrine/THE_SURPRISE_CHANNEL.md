@@ -36,6 +36,33 @@ compliance. **Naming the channel is what makes "do not chase" safe to obey.**
 **The seat keeps working fail-closed on its actual task.** A surprise report is not a blocker, not a
 question, and not a request for a ruling — the coordinator decides whether it becomes any of those.
 
+## The loop is only closed when the channel has a DESTINATION
+
+**Andrew-direct 2026-08-07, VERBATIM:** *"once we have a plan, you just do the fucking plan, remediation
+suggestions go through the surprise channel and get added to a remediation doc."*
+
+Two halves, and the second is what makes the first survivable:
+
+```
+ONCE THERE IS A PLAN -> DO THE PLAN.   A remediation idea is NOT a reason to deviate from it.
+A REMEDIATION IDEA   -> SURPRISE CHANNEL -> A REMEDIATION REGISTER -> a RUBRIC, on sovereign word.
+```
+
+> **⛔ A CHANNEL WITH NO DESTINATION MOVES THE SUPPRESSION ONE SEAT UP.** The seat is saved from
+> choosing suppress-or-chase — and the coordinator inherits that exact choice, with a fuller board and
+> no more authority to act. **If the report lands in a person rather than a document, it dies in a
+> person.** The register is what makes the channel terminate somewhere rather than accumulate somewhere.
+
+**THE REGISTER IS NOT A BACKLOG ANYONE WORKS.** A row landing in it is the **END** of a seat's
+involvement, not the start. Rows leave only through a rubric the sovereign authorizes — **which is what
+stops "we should also fix X" from becoming scope by accretion.**
+
+**And it makes "we knew about that" checkable rather than claimed.** A compromise accepted knowingly and
+a compromise missed look identical six weeks later unless one of them was written down at the time.
+
+*Working instance: `docs/architecture/MDPF_REMEDIATION_REGISTER.md` — opened while its build was still
+running, with the compromises that build knowingly shipped.*
+
 ## Why the coordinator, not the owner of the surprising thing
 
 Routing to the owner invites a conversation; routing to the coordinator invites a **triage**. The
