@@ -179,6 +179,32 @@ def _cover_impl(doc: dict, live_snap_fn=None) -> dict:
         "edges_snapshot_id": (doc.get("graph_vintage") or {}).get("edges_snapshot_id"),
         "graph_vintage": doc.get("graph_vintage"),   # carried through: a system inherits its input's
         "input_freshness": freshness,                # ...and the verdict rides WITH it, not just stdout
+        # TRUE NUMBERS THAT READ AS DEFECTS -- the C3 half. `by_substrate_side` is the single most
+        # misdiagnosable figure this layer produces, and two other seats independently predicted it
+        # would be read as broken frontend detectors. Carried IN the artifact so the explanation
+        # travels with the number instead of living in messages between three agents.
+        "reading_notes": {
+            "by_substrate_side reads {BACKEND: N} with NO FRONTEND":
+                "CORRECT AND STRUCTURAL. Do NOT diagnose this as broken frontend detectors or as a "
+                "reader dropping the portal layer. A C3 structure inherits the sides of its member "
+                "motifs, and no motif is cross-side because the two sides are DISCONNECTED "
+                "COMPONENTS -- 28 cross-side edges estate-wide, all converging on ONE node with "
+                "ZERO onward edges. The discriminating question is never 'is the reader dropping "
+                "layers' but 'does a spanning path exist', and it is measured: no. See "
+                "deliverables/SUBSTRATE_SIDES_ARE_DISCONNECTED_20260807.md.",
+            "instances_with_no_catalog_anchor is large (~1,100 of ~6,100)":
+                "An HONEST COVERAGE FLAG, not a failure. These motif instances contain no node type "
+                "in the P1 ANCHOR_CATALOG, so no domain claims them. The cover REFUSES to invent an "
+                "anchor for them rather than forcing them into a system.",
+            "domains_unpromoted_single_motif is non-zero":
+                "BY DESIGN (PROMOTE_MIN=2). A domain with one member motif stays C2 and is never "
+                "promoted to a C3 structure. Not a dropped structure.",
+            "this layer is always ONE derive behind":
+                "STATED PROPERTY, not a defect. It composes from the LAST COMMITTED graph while the "
+                "current derive is still building the next one. Compare it against the estate state "
+                "of the derive that PRODUCED it -- that is what nodes_snapshot_id is for. Comparing "
+                "against 'now' manufactures a false NOT-LIVE.",
+        },
         "grounding": {                                # vintage or it is a number with no provenance
             "model": "OVERLAPPING-DOMAIN-COVER, CTO-ruled @f7f21f406; NOT connected-components "
                      "(over-merges to 1 supersystem, @fbfa06590a)",

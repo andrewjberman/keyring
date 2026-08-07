@@ -257,8 +257,14 @@ def coverage_triple(specs, members_seen, side_of_member, query_fn=None):
         out[side] = {"covered_X": x[side], "in_detector_scope_Y": y[side], "on_side_Z": z[side],
                      "pct_of_scope": round(100.0 * x[side] / y[side], 1) if y[side] else None,
                      "pct_of_side": round(100.0 * x[side] / z[side], 1) if z[side] else None}
-    out["_detector_types"] = dtypes
-    return out
+    # RULE 24 (ii), SAME GRAIN -- and this line violated it. `_detector_types` is a GLOBAL list;
+    # every other key here is a PER-SIDE record. Mixing a file-level value in beside cohort-level
+    # values on one axis is exactly the postulate I have been applying to other seats' schemas, and
+    # it is not cosmetic: any consumer iterating the sides hits a list where it expects a dict. My
+    # OWN audit script crashed on it, which is the demonstration -- a naive
+    # `for side, t in triple.items(): t["on_side_Z"]` raises TypeError on the fourth key.
+    # Returned as a SIBLING instead, so the axis holds exactly one grain.
+    return out, dtypes
 
 
 def graph_vintage(vintage_fn=None):
@@ -438,6 +444,7 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
                       "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm, n.props AS props",
                       [], query_fn)
     class_marked = 0
+    already_instance = 0
     for r in cls:
         existing = r.get("props")
         if isinstance(existing, str):
@@ -446,6 +453,22 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
             except (ValueError, TypeError):
                 existing = None
         base = dict(existing) if isinstance(existing, dict) else {}
+        # ---- THE SECOND-RUN GUARD. Without it this is a SELF-CORRUPTING FEEDBACK LOOP. ----------
+        # The query above selects on node_type ALONE, and the instances THIS COMPOSITION EMITS carry
+        # those same registered node_types (C2Motif / C3System + grain, deliberately -- a new
+        # node_type would fail the derive closed at NodeTypeLayerGap). So the moment the layer
+        # lands, every one of the ~7,400 composed instances matches this query, and WITHOUT THIS
+        # CHECK each would be rewritten grain:class -- destroying, on run 2, the layer run 1 built.
+        #
+        # RUN 1 IS CORRECT AND RUN 2 IS CATASTROPHIC, which is why it survived every test: the
+        # defect is unreachable until the thing being tested succeeds. It would have presented as
+        # "the composition stopped working" (CTO~B's harness watching C3System[instance] collapse
+        # toward zero while [class] ballooned), i.e. as a producer failure rather than as this.
+        # Measured 2026-08-07 on a simulated post-landing graph: 2 of 2 injected instances were
+        # re-marked grain:class before this guard existed.
+        if base.get("grain") == "instance":
+            already_instance += 1
+            continue
         base.update({"grain": "class",
                      "population": "debt" if r.get("nm") in DEBT else "canon"})
         nodes[r["id"]] = {"node_id": r["id"], "node_type": r["T"], "props": base}
@@ -463,6 +486,7 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         side_tally["+".join(pr.get("substrate_side") or []) or "NONE"] += 1
         status_tally[pr.get("side_status")] += 1
 
+    _cov_triple, _cov_dtypes = coverage_triple(specs, members_seen, member_side, query_fn)
     _vintage = graph_vintage(vintage_fn)
     doc = {
         "producer": "3.0.0_SA_CVO c2_individuate -- one node per MATCH (DONE-MEANS item 1)",
@@ -480,6 +504,39 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
         "nodes_snapshot_id": (_vintage or {}).get("nodes_snapshot_id"),
         "edges_snapshot_id": (_vintage or {}).get("edges_snapshot_id"),
         "graph_vintage": _vintage,
+        # TRUE NUMBERS THAT READ AS DEFECTS. Each of these is correct and each will look like a bug
+        # to anyone meeting it without its cause -- which is most readers, most of the time, six
+        # weeks from now. The cause has been living in messages between three seats; a number whose
+        # explanation is not attached to it will eventually be "corrected" by someone acting in good
+        # faith. Carried IN the artifact, as a SIBLING of counts (not inside it -- counts holds
+        # measurements, this holds prose, and mixing them is the same grain error I just fixed one
+        # key over). Asked for by 1.0.0_SA_CTO~B, 2026-08-07.
+        "reading_notes": {
+            "KNOWLEDGE coverage 0 / 0 / 5851":
+                "CORRECT, not a gap in the layer. Zero detectors touch the `ms` layer, so X and Y "
+                "are 0 BY CONSTRUCTION while Z counts real nodes. It is a fact about DETECTOR "
+                "COVERAGE, never about the estate having no knowledge-plane structure.",
+            "substrate_side is never MULTI-VALUED on live data":
+                "STRUCTURAL, not a detector gap. The two sides are disconnected components: 28 "
+                "cross-side edges exist estate-wide, all ServedURL->S3_BUCKET_POLICY, converging on "
+                "ONE node with ZERO onward edges. A motif is a path; no spanning path exists, so no "
+                "detector however written can produce a cross-side instance. See "
+                "deliverables/SUBSTRATE_SIDES_ARE_DISCONNECTED_20260807.md.",
+            "`ms` contributes 0 to everything":
+                "The `ms` layer has ZERO cross-layer edges in either direction (5,851 nodes, 28% of "
+                "the graph, positive-controlled). Any motif needing an ms<->anything path yields "
+                "zero STRUCTURALLY. Do NOT diagnose this as a dropped layer or broken ms detectors.",
+            "a 1-node delta in on_side_Z across two runs":
+                "Check `graph_vintage.nodes_snapshot_id` BEFORE treating it as drift. The graph "
+                "moves between runs; a difference that is ATTRIBUTABLE to a snapshot is the vintage "
+                "mechanism working, not an error. Measured instance: Z=3393 at snapshot "
+                "8601547680771488785, Z=3392 at 3215784498071721115.",
+            "rows_seen below the ~6,686 originally quoted":
+                "Both loss channels are reported and were ZERO when this was checked "
+                "(rows_skipped_ragged_unparsed, rows_dropped_no_members). A lower row count with "
+                "both channels at zero is the GRAPH differing, not this composition losing rows. "
+                "Read those two counters before concluding loss.",
+        },
         "grounding": {
             "detectors": "read VERBATIM from NFRA_MOTIF_P1_canonical_ab_catalog.py AB_CATALOG",
             "recurrence": "NOT echoed -- every instance is a live matched row",
@@ -500,8 +557,13 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
             "instances_with_any_unresolved_member": sum(1 for n in nodes.values()
                                                         if n["props"].get("members_unresolved", 0) > 0),
             "by_side_status": dict(status_tally.most_common()),
-            "coverage_triple_by_side": coverage_triple(specs, members_seen, member_side, query_fn),
+            "coverage_triple_by_side": _cov_triple,
+            "coverage_detector_types": _cov_dtypes,   # SIBLING, not mixed into the per-side axis
             "class_nodes_marked_grain_class": class_marked,
+            # SECOND-RUN OBSERVABILITY: 0 before the layer lands, ~7,400 on every run after.
+            # A guard whose activity is invisible cannot be distinguished from a guard that
+            # is not running, and this one only ever fires post-landing.
+            "already_instance_skipped": already_instance,
             "rows_seen": rows_seen,
             "rows_skipped_ragged_unparsed": skipped_ragged,
             "rows_dropped_no_members": dropped_ragged,
@@ -549,8 +611,6 @@ def main() -> int:
     print("  by family         : %s" % dict(per_family.most_common(5)))
     print("  COVERAGE TRIPLE (X covered / Y in detector scope / Z on side):")
     for side, t in doc["counts"]["coverage_triple_by_side"].items():
-        if side.startswith("_"):
-            continue
         print("    %-10s %6d / %6d / %6d   %s%% of scope, %s%% of side"
               % (side, t["covered_X"], t["in_detector_scope_Y"], t["on_side_Z"],
                  t["pct_of_scope"], t["pct_of_side"]))

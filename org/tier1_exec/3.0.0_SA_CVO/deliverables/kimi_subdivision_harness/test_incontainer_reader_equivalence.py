@@ -27,6 +27,31 @@ WHAT THIS DOES *NOT* PROVE -- stated so nobody reads it as full coverage of item
     equivalence run does not exercise the raw-Iceberg -> key derivation. `test_keying()` below
     covers that dimension separately, on raw-shaped rows, WITH a negative control.
 
+COST, MEASURED 2026-08-07 (0.7.0_AE_CloudOps had this as "unmeasured"; these are the composition
+half only, and the split matters more than either number):
+    composition via the local comp-kuzu SHELL path : 52.8s   (C2 50.2 + C3 2.6, 16 subprocess spawns)
+    composition via an EMBEDDED kuzu connection    :  0.2s   (C2 0.2 + C3 0.0), identical figures
+>> 250x. THE COMPOSITION IS ESSENTIALLY FREE; the 52.8s was ENTIRELY subprocess overhead, which the
+in-container path does not pay. Anyone sizing the derive off the local wall-clock would budget ~53s
+for something that costs 0.2s. <<
+THE DB BUILD WAS THE OTHER 143s, AND IT IS NOW 0.6s. My split decomposed AE's 158s and left the
+obvious question: if the composition is 0.2s, what was the other 157? Their build was row-by-row
+(one execute per node and per edge, 61,764 times). Fixed to bulk COPY @191b8461eb:
+    row-by-row   nodes 40.8s + edges 102.5s = 143.3s
+    bulk COPY    nodes  0.5s + edges   0.1s =   0.6s      225x
+Independently reproduced here on the same graph: nodes 0.5s + edges 0.1s, and the composition
+figures are IDENTICAL through the bulk path (6138/6657/1255/8978) -- a speedup that changes the
+answer is not a speedup. End-to-end is now ~1.0s.
+BOTH large numbers in this path were artifacts of HOW, not costs of WHAT.
+STILL UNMEASURED: the ICEBERG SCAN (in-VPC only) and the Iceberg COMMIT of the landed layer -- and
+per the footprint below that commit is an EDGE-volume problem, which is now the largest unmeasured
+thing in the landing.
+
+FOOTPRINT the landed layer adds to the graph:
+    C2  6,161 nodes + 17,978 edges | C3  1,255 nodes + 8,978 edges
+    TOTAL 7,416 nodes + 26,956 edges (~9.8 MB of envelope JSON)
+    20,604 nodes today -> 28,020 after landing = +36.0% node count; edges dominate at 3.6x nodes.
+
 Run: python test_incontainer_reader_equivalence.py [--nodes nodes.json --edges edges.json]
 Extract the inputs with:
   comp-kuzu --json "MATCH (n:CloudNode) RETURN n.node_id AS node_id, n.arn AS arn,
@@ -38,6 +63,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import os
 import sys
 import tempfile
@@ -84,17 +110,57 @@ def test_keying() -> bool:
     return ok and discriminates
 
 
+DERIVE_RUNNER = os.path.join("infra", "aws", "globgrph", "derive_runner.py")
+
+
+class ProducerSourceUnreadable(Exception):
+    """The DDL could not be EXTRACTED from derive_runner -- so this harness REFUSES to run.
+
+    It does NOT fall back to a transcription. A transcription is what caused the defect this
+    extraction exists to remove, and a fallback would restore it silently at exactly the moment
+    the extraction stopped working.
+    """
+
+
+def extracted_ddl(src_path=None):
+    """Pull the CloudNode/CloudEdge DDL OUT OF derive_runner AT RUNTIME.
+
+    >> WHY EXTRACT RATHER THAN TRANSCRIBE (0.7.0_AE_CloudOps, 2026-08-07): this harness previously
+    embedded a character-perfect COPY of the producer's build. It was correct when written, AE
+    changed the build to bulk COPY @191b8461eb, and the copy KEPT PASSING -- verifying a code path
+    that no longer existed anywhere. A drifted transcription does not fail; it succeeds about the
+    wrong thing, which is strictly worse than failing. Extraction makes drift IMPOSSIBLE instead of
+    merely detectable: if the producer's DDL changes, this test changes with it or refuses. <<
+    """
+    path = src_path or DERIVE_RUNNER
+    try:
+        src = open(path, encoding="utf-8").read()
+    except OSError as e:
+        raise ProducerSourceUnreadable("cannot read %s (%s)" % (path, e)) from e
+    out = []
+    for table in ("CREATE NODE TABLE CloudNode", "CREATE REL TABLE CloudEdge"):
+        # the statement is a multi-line implicitly-concatenated literal inside conn.execute(...)
+        i = src.find(table)
+        if i < 0:
+            raise ProducerSourceUnreadable(
+                "%r not found in %s -- the producer's DDL moved or was renamed; REFUSING to fall "
+                "back to a transcription" % (table, path))
+        j = src.find(")\n", i)
+        chunk = src[i - 20:j]
+        lits = re.findall(r'"([^"]*)"', chunk)
+        stmt = "".join(lits)
+        if table.split()[-1] not in stmt:
+            raise ProducerSourceUnreadable("extracted a fragment for %r, not a statement" % table)
+        out.append(stmt)
+    return out
+
+
 def build_db(nodes, edges):
     import kuzu                                              # noqa: PLC0415 - optional dep
     db_dir = os.path.join(tempfile.mkdtemp(prefix="c2c3_ae_ddl_"), "db")
     conn = kuzu.Connection(kuzu.Database(db_dir))
-    # AE'S EXACT DDL @525716a1df:195-199. `props` is load-bearing: a props-less shape (SHAPE C)
-    # returns CLEAN EMPTY results for every grain/substrate_side predicate rather than failing.
-    conn.execute("CREATE NODE TABLE CloudNode(node_id STRING, arn STRING, node_type STRING, "
-                 "name STRING, layer STRING, drift_class STRING, source STRING, "
-                 "snapshot_ts INT64, props STRING, PRIMARY KEY(node_id))")
-    conn.execute("CREATE REL TABLE CloudEdge(FROM CloudNode TO CloudNode, edge_type STRING, "
-                 "layer STRING, snapshot_ts INT64, props STRING)")
+    for stmt in extracted_ddl():
+        conn.execute(stmt)
     best = {}
     for r in nodes:
         k = key_of(r)
@@ -123,6 +189,15 @@ def main() -> int:
     ap.add_argument("--edges", required=True)
     args = ap.parse_args()
 
+    try:
+        ddl = extracted_ddl()
+    except ProducerSourceUnreadable as e:
+        print("  REFUSING: %s" % e)
+        return 2
+    print("  DDL EXTRACTED FROM THE PRODUCER (not transcribed):")
+    for stmt in ddl:
+        print("    %s..." % stmt[:88])
+    print()
     print("  KEYING BATTERY (the dimension the equivalence run cannot reach):")
     keying_ok = test_keying()
     print()
