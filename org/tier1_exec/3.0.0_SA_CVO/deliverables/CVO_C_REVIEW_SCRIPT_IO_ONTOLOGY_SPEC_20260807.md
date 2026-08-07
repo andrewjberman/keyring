@@ -20,7 +20,9 @@ and **S0 is not net-new**: the site primitive it specifies is already landed, wi
 validated in `comp_recognizer_sdk.py`. Both are structural. Both are cheap to fix *now* and expensive
 after a naming act. Everything else is P1/P2 and none of it threatens the layer's existence.
 
-**Two P0, four P1, two P2.** The ranking is real — if it were all P0 I would have failed at ranking.
+**Two P0, three P1, two P2 — plus one P1 RETRACTED (P1-5, refuted by `1.0.0_SA_CTO~D`; I was wrong,
+the second "SDK" is a re-export and the retraction is written into that section rather than deleted).**
+The ranking is real — if it were all P0 I would have failed at ranking.
 
 ---
 
@@ -178,30 +180,36 @@ shape the spec already has — not an Axis-1 value.
 
 ---
 
-## P1-5 — THERE ARE **TWO** RECOGNIZER SDKs, WITH A BYTE-IDENTICAL CAPABILITY ENUM. REV 2's fix is under-determined.
+## ~~P1-5 — THERE ARE **TWO** RECOGNIZER SDKs~~ — **RETRACTED 2026-08-07. I WAS WRONG.**
 
-CRO's mid-review find (`infra/system/sdk/gensdk/recognizer_sdk/`) is **verified at source** — four
-front-ends present, `python_resolved.py:64` really is `RESOLVED_SEMANTIC`, and
-`tree_sitter_stub.py:16` really is `RESOLVED_TIER_AVAILABLE = False` with the honest-gap docstring. All
-confirmed; I did not take it from him.
+**RETRACTED IN FULL.** `1.0.0_SA_CTO~D` refuted this and they are right. `gensdk/recognizer_sdk` is a
+**RE-EXPORT of `comp_recognizer_sdk`, not a second SDK.** Verified at source myself before accepting:
 
-**But it is the second one, and he has not seen the first.** `org/modules/graph/comp_recognizer_sdk.py`
-(landed 2026-07-07, ~11 days earlier) carries **the same three-tier enum with the same names and the
-same ordering** (`:66-69`). Both SDKs also share the `EnrichedTree` type in their `emit`/dispatch
-signatures.
+- `infra/system/sdk/gensdk/recognizer_sdk/__init__.py:18-19` — *"The engine lives with the other
+  comp-tools (exec-locked; **imported, never forked**)"*; `:28-29` `from comp_recognizer_sdk import *`
+  with `__all__ = list(_ENGINE_ALL)`.
+- **Discriminating count:** `class FrontEndCapability` is defined **exactly once estate-wide** —
+  `org/modules/graph/comp_recognizer_sdk.py:66`. Zero definitions in gensdk.
 
-**Consequence for REV 2:** §6 now says *"implement S-layer extraction as recognizers on the existing
-FrontEnd SDK"* — and does not say **which**. `comp_recognizer_sdk` is the one that already emits
-**CSE C0+C1** (i.e. already does the S1→C1 aggregation §5 R1 specifies) and already has `Site` and
-`Coverage`; `gensdk` is the one with the richer front-end lineup. **Picking wrong re-creates the exact
-duplication the BUILD LADDER exists to prevent, and the two enums silently agreeing makes the
-duplication easy to miss.** This is a **CTO~D-lane architecture call**, not mine and not CRO's — I am
-surfacing it, not resolving it.
+**So the enums are not "byte-identical" — they are THE SAME OBJECT, imported, and cannot drift by
+construction.** There is no "which SDK" architecture call; there is one exec-locked ENGINE plus one
+tenant AUTHORING SURFACE. My claim that *"gensdk has the richer front-end lineup and none of that"* was
+false on its second half: gensdk gets `Site`, `Coverage` and `emit_cse` through the star-import. This is
+not a BUILD LADDER rung-2 duplication — **it is that rule being obeyed, in writing.** REV 2 is not
+under-determined and CRO should not restructure §6 around a fork that does not exist.
 
-**Also relevant to §10.5:** `comp_recognizers_tsx.py` already exists on the COMPILERKIT SDK. Whether
-the cross-language join is blocked therefore depends on **which** SDK, which is P1-5's question — REV
-2's §10.5 stop may be correct for `gensdk` and wrong for `comp_recognizer_sdk`. **I did not exercise
-either.** DESIRED-plane source read only; a passability claim needs a run, and mine is not it.
+> **HOW I GOT IT WRONG, because the method matters more than the finding.** I compared **symbol
+> tables** — same three tier names, same ordering, shared `EnrichedTree` — and concluded *fork*. **A
+> symbol-table comparison cannot distinguish a fork from a re-export: both produce identical symbols.**
+> That is an instrument that could not have said otherwise, which is the exact failure class I applied
+> to CRO's spec in P0-1 and did not apply to my own check. The disambiguating evidence was in a
+> **docstring**, not the symbol table. Caught by CTO~D, `@fff88d612`.
+
+**WHAT SURVIVES, narrowly:** the front-end *implementations* (`python_ast.py`, `python_resolved.py`,
+`raw_text.py`, `tree_sitter_stub.py`) do live under `gensdk/frontends/` while the engine lives in
+`org/modules/graph/` — so "where do S-layer front-ends go" is still a placement question, just not a
+*which-SDK* one. And §10.5's resolved-tier passability remains open — **one** open question, not two.
+Neither CTO~D nor I has exercised it; both reads are DESIRED-plane.
 
 ---
 
@@ -266,7 +274,30 @@ a term registry**. Those are different key spaces and no mechanical resolver cro
 `SYSTEM_DEFINITIONS.yaml` currently defines **no** S-numbered term (verified: zero matches for
 `^\s*S[0-9]:`), so the registry's own space is clean.
 
-**But CTO~D's serving-path argument is the strong form and I concur with it:**
+**ADDENDUM 2026-08-07 — CTO~D's counter-argument for a rename, TESTED AND FALSIFIED at its strict
+reading.** They argued the collision count is irrelevant because the registry's term space is 51 terms
+of which 10 are letter-number codes, and *"ALL TEN CODES DECLARE A LADDER POSITION in `sits_at` —
+ten of ten, no counterexample"*, making a non-rung code a category error at any collision count. I
+re-derived it. **The parse confirms 51 terms / 10 codes / 41 words — and 8 of 10, not 10 of 10:**
+
+| code | `sits_at` | ladder position? |
+|---|---|---|
+| C0–C4 | `ladder rung 0..4` | yes (5) |
+| D1–D3 | `rail between Cx and Cy` | yes (3) |
+| **C3.i** | `C3 grain, deterministic projection; view-compiled` | **NO** |
+| **C3.ii** | `C3 grain, semantic projection; view-compiled` | **NO** |
+
+**`C3.i` and `C3.ii` are the counterexample, and they are the structurally relevant kind**: codes for
+things that are *not rungs* but are positioned *relative to* a rung's grain — which is exactly what
+`S0`/`S1` with `sits_inside: C0` would be. The registry already admits non-rung letter-number codes.
+
+**In fairness, the charitable reading of their claim survives**: all ten codes are positioned
+*relative to the ladder*, and that reading is true at 10/10. **But it does not support a rename
+either — because `sits_inside: C0` satisfies it.** Both readings fail to make S0/S1 a category error:
+the strict one has counterexamples, the charitable one is satisfied. **My P2 verdict therefore stands
+and is now positively argued rather than merely permissive.**
+
+**And their serving-path argument remains the strong form — I concur with it:**
 `SYSTEM_DEFINITIONS.yaml:4` declares the file is served by `comp-estate --definitions` with **fuzzy
 match on term + aliases**, so a post-landing query for `S0` returns the ontology term while 13 estate
 uses mean a build stage. That is a **consumer-confusion** cost, not a correctness one. **P2:
