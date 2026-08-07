@@ -192,9 +192,60 @@ groups by anchor and does not carry served-ness; `comp-estate` prints a `fronten
 it is census-vintage prose, not a typed termination. **Validating v2 means typing the termination — and
 that is the real cost in this spec, not stage 3.**
 
-⚠ **A CANDIDATE SECONDARY SIGNAL, DELIBERATELY NOT CLAIMED:** `yang` spans 3 domains, `attribution` 1 —
+### 4.1 — WHY termination cannot be typed today: the graph is SEVERED one hop short
+
+**Measured on the live graph by `3.0.0_SA_CVO`, 2026-08-07:**
+
+```
+MATCH (u:ServedURL)-[e]->(t)   ->  SERVED_FROM -> S3_BUCKET_POLICY : 28 of 28
+those S3_BUCKET_POLICY nodes, onward edges                         : 0
+```
+
+**Every served surface in the estate terminates, in the graph, at a bucket POLICY node — and that
+policy node has no outbound edge to the bucket it governs.** You cannot traverse from a live client
+endpoint to the bucket that fills it. **The chain does not reach its consumer surface; it stops one hop
+short at an object that is not the thing being served.**
+
+**THIS IS A NAMING ACT, NOT A BUILD** — and it is already routed (CVO, P0-class, `@81015c354`). All 28
+edges reach a real bucket via `'arn:aws:s3:::' + node_id`; the hop is **DERIVABLE from data already
+present**, and what it needs is an edge-type name (`GOVERNS` / `POLICY_OF` / `APPLIES_TO`) pending with
+Andrew/CTO. **Therefore v2's cost estimate is HELD, not scoped** — scoping a typed-termination build
+around a severed graph would price an instrument that becomes a traversal the moment that edge is
+named.
+
+⚠ **CVO's closing observation, worth more than the fix:** *"Three instruments each returned a TRUE
+answer that concealed this seam when I first looked, and none was broken — **an absent hop has no error
+state.**"*
+
+### 4.2 — ⛔ RULE 24 (iv) STABILITY DEFECT IN v2's OWN AXIS. NAMED, PER THE RULE.
+
+**Raised by CVO and accepted.** Rule 24 postulate (iv) requires: *name the state axis, then ask whether
+ONE remedy moves every value together; if building the obvious instrument delivers some values and
+structurally cannot reach others, **you must name which values do not move.*** v2's consumer-kind axis
+fails that test, so here is the split:
+
+| termination kind | does the §4.1 seam fix reach it? |
+|---|---|
+| **portal route / S3-served surface** | ✅ **MOVES** — this is exactly the 28 `ServedURL` edges |
+| **email recipient** | ⛔ **DOES NOT MOVE** — no S3 traversal reaches a human inbox (row 6, `ceo-digest` → SES) |
+| **analyst artifact / deck / CSV** | ⛔ **DOES NOT MOVE** — row 13, `insurance` → local analyst output |
+| **external API caller** | ⛔ **DOES NOT MOVE** — lives in API-GW/CloudFront access logs, a different plane |
+
+**ONE OF FOUR MOVES.** A plan that says "fix the seam, then type the termination" silently covers a
+quarter of its own axis — the precise failure Rule 24 (iv) was written to catch.
+
+⭐ **AND THE THREE THAT DO NOT MOVE ARE THE SAME BLIND SPOT, ONE LAYER UP.** The Phase-0 row-6 class
+finding already states it: *"any product whose delivery is an email, a report to a person, or any other
+non-artifact channel"* is structurally invisible to artifact-based instruments — *"they do not look
+neglected, they look nonexistent."* **The blindness that nearly got `ceo-digest` proposed as DORMANT is
+the same blindness that would make this discriminator drop every email-terminating vertical.** The
+defect recurs at the row level and at the tool level because it has one cause, and a seam fix cannot
+reach either instance.
+
+⚠ **A candidate secondary signal, deliberately not claimed:** `yang` spans 3 domains, `attribution` 1 —
 so domain-spread may separate engines from verticals. **n=2 is not evidence.** Recorded so it is
 tested, not adopted.
+
 
 ---
 
@@ -299,6 +350,7 @@ argument for the tool, and it is why it is written here rather than in prose.**
 | when | what |
 |---|---|
 | 2026-08-07 (issue) | v1 spec @`26776051b5`, routed to `3.0.0_SA_CVO` |
+| 2026-08-07 (same session, +1) | **§4.1 severed-graph cause + §4.2 Rule 24 (iv) split** -- CVO measured all 28 ServedURL edges dead-ending in S3_BUCKET_POLICY with zero onward edges; v2 cost HELD not scoped (naming act, not a build); consumer-kind axis fails the stability frame, 1 of 4 kinds moves |
 | 2026-08-07 (same session) | **§4 v1 FALSIFIED by CVO and replaced with v2**; AC-2 corroborated on an independently-derived instrument; AC-3 re-scoped and fenced against CVO's floor-not-census zeros; finding (a) escalated on structural evidence; Q2/Q3/Q4 answered, Q1 open at Andrew |
 
 **Why the falsification is logged rather than quietly patched:** the v1→v2 failure direction is the
