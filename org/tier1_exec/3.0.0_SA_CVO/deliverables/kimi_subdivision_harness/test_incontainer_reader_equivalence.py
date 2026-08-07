@@ -20,8 +20,34 @@ WHAT THIS PROVES (executed, not argued):
   * the composition returns IDENTICAL figures to the comp-kuzu path:
         6,138 instances | 6,657 rows | 23 class | 1,255 structures | 8,978 CONTAINS edges
 
+>> UPDATE 2026-08-07 -- THE ICEBERG SCAN *IS* NOW EXERCISED, and it was never VPC-blocked. <<
+Everything after `catalog = RestCatalog(...)` in derive_runner:1424-1460 is CATALOG-AGNOSTIC:
+load_table, current_snapshot(), scan().to_arrow(), the keying loop, the Kuzu build. Only the
+CONNECTION is Nessie-specific. Wrote the real estate (20,604 nodes / 41,160 edges, RAW node_id +
+separate arn, real 9-field/6-field schemas) into a local pyiceberg SqlCatalog and ran a TRANSCRIPTION
+of AE's reader body against it.
+>> I ORIGINALLY WROTE "VERBATIM" HERE AND THAT WAS FALSE. It was a transcription, and the
+transcription SILENTLY CORRECTED the one line that was broken in their shipped code -- it read
+`source`/`target` while Iceberg holds `src_id`/`dst_id`, which resolves ZERO edges against a real
+table. Anyone writing this fixture reaches for the schema first and then writes the reader to match
+it, so the copy cannot fail in the way the original did. A GREEN RUN OF A TRANSCRIPTION IS EVIDENCE
+ABOUT THE TRANSCRIBER, NOT THE PRODUCER. Their bug was found by them @824cf6b6b2; this run did not
+and could not have. SUPERSEDED by a real execution: importing derive_runner (with org/modules/graph
+on sys.path for comp_aws_cli) and calling THEIR `_c2c3_incontainer_reader()` with only `RestCatalog`
+substituted -- 41,160 edges resolved by THEIR line, C2 6138 / C3 1255 / class 23. <<
+The transcribed run's figures, retained because its OTHER findings stand:
+    SCAN       load_table + current_snapshot + scan().to_arrow()   0.03s
+    KEY+BUILD  20,604 unique keys / 41,160 edges                   0.65s
+    COMPOSE    C2 6138  C3 1255  class 23                          0.30s
+    END-TO-END Iceberg -> Kuzu -> composition                      0.99s
+    vintage stamped from REAL Iceberg snapshot ids (7891676592218021200 / 9020091458538502682)
+    MATCHES CANONICAL 6138 / 1255 / 23
+That independently confirms AE's ~1.0s end-to-end figure, and it exercises the vintage_fn path with
+ACTUAL snapshot ids rather than injected strings.
+
 WHAT THIS DOES *NOT* PROVE -- stated so nobody reads it as full coverage of item 5:
-  * the ICEBERG SCAN itself (pyiceberg RestCatalog against Nessie) is NOT exercised. In-VPC only.
+  * the NESSIE REST CONNECTION and S3-as-storage-backend are still unexercised -- genuinely in-VPC.
+    That is now the ONLY unexercised piece of the reader, down from "the whole scan".
   * `--build the image and run it` is not done here. This is the callee, not the deployment.
   * the rows fed in are already key-normalised (the local DB's node_id IS the key), so the main
     equivalence run does not exercise the raw-Iceberg -> key derivation. `test_keying()` below
@@ -43,9 +69,26 @@ Independently reproduced here on the same graph: nodes 0.5s + edges 0.1s, and th
 figures are IDENTICAL through the bulk path (6138/6657/1255/8978) -- a speedup that changes the
 answer is not a speedup. End-to-end is now ~1.0s.
 BOTH large numbers in this path were artifacts of HOW, not costs of WHAT.
-STILL UNMEASURED: the ICEBERG SCAN (in-VPC only) and the Iceberg COMMIT of the landed layer -- and
-per the footprint below that commit is an EDGE-volume problem, which is now the largest unmeasured
-thing in the landing.
+THE ICEBERG COMMIT IS NOT AN EDGE-VOLUME PROBLEM -- I SAID IT WAS, AND I WAS WRONG. Measured
+2026-08-07 against a LOCAL pyiceberg SqlCatalog with the real 9-field/6-field derive_runner schemas:
+    nodes append ( 7,416 rows) : 0.15s
+    edges append (26,956 rows) : 0.03s
+    TOTAL                      : 0.18s
+    on-disk parquet + metadata : 0.5 MB   (the envelope JSON is ~9.8 MB -- parquet is ~20x smaller)
+    READBACK CONTROL           : 7,416 and 26,956 rows scanned back -- a fast write that lost rows
+                                 is not a fast write.
+I had published "edges dominate at 3.6x, so the commit is an edge-volume problem" to two seats. That
+was an INFERENCE FROM A ROW COUNT, and the measurement falsifies it: 26,956 edges are trivial to
+serialize. Whatever the in-VPC commit costs is S3/Nessie NETWORK AND CATALOG latency, which at this
+scale is roughly independent of these row counts.
+
+WHAT THIS LOCAL MEASUREMENT DOES NOT COVER: the S3 PUT leg and the Nessie REST commit round-trip. It
+measures serialization and write, not network.
+(This line previously ended "...and the SCAN remains in-VPC-only and unmeasured", which CONTRADICTED
+the update at the top of this docstring saying the scan IS exercised. I had been APPENDING
+corrections instead of RECONCILING them, and a self-contradicting record is worse than either
+statement alone: a reader cannot tell which is current, so they trust whichever they read first.
+The scan is covered by test_producer_reader_executed.py.)
 
 FOOTPRINT the landed layer adds to the graph:
     C2  6,161 nodes + 17,978 edges | C3  1,255 nodes + 8,978 edges
@@ -110,7 +153,13 @@ def test_keying() -> bool:
     return ok and discriminates
 
 
-DERIVE_RUNNER = os.path.join("infra", "aws", "globgrph", "derive_runner.py")
+# Anchored to the REPO, not the CWD. This was os.path.join("infra", ...) -- CWD-relative -- so
+# running the harness from its own directory refused with "cannot read the producer", which reads as
+# THE PRODUCER IS MISSING when the truth was THE HARNESS IS STANDING IN THE WRONG PLACE. Found by
+# 0.7.0_AE_CloudOps. A refusal is only useful if it names its ACTUAL cause; misattributing sends the
+# reader at the wrong system, and this one would have sent them at derive_runner.
+_REPO = os.path.abspath(os.path.join(HERE, *([os.pardir] * 5)))
+DERIVE_RUNNER = os.path.join(_REPO, "infra", "aws", "globgrph", "derive_runner.py")
 
 
 class ProducerSourceUnreadable(Exception):
@@ -136,7 +185,10 @@ def extracted_ddl(src_path=None):
     try:
         src = open(path, encoding="utf-8").read()
     except OSError as e:
-        raise ProducerSourceUnreadable("cannot read %s (%s)" % (path, e)) from e
+        raise ProducerSourceUnreadable(
+            "cannot read the producer at %s (%s). If that path looks wrong, the HARNESS is "
+            "mislocated, not the producer -- DERIVE_RUNNER is anchored to the repo via HERE, not "
+            "to the CWD." % (path, e)) from e
     out = []
     for table in ("CREATE NODE TABLE CloudNode", "CREATE REL TABLE CloudEdge"):
         # the statement is a multi-line implicitly-concatenated literal inside conn.execute(...)
@@ -166,21 +218,32 @@ def build_db(nodes, edges):
         k = key_of(r)
         if k:
             best[k] = r
-    for k, r in best.items():
-        conn.execute(
-            "CREATE (n:CloudNode {node_id: $k, arn: $a, node_type: $t, name: $nm, "
-            "layer: $l, props: $p})",
-            {"k": k, "a": r.get("arn") or "", "t": r.get("node_type") or "",
-             "nm": r.get("name") or "", "l": r.get("layer") or "", "p": r.get("props") or ""})
-    n_edges = 0
-    for e in edges:
-        s, d = e.get("src"), e.get("dst")
-        if s in best and d in best:
-            conn.execute("MATCH (a:CloudNode {node_id: $s}), (b:CloudNode {node_id: $d}) "
-                         "CREATE (a)-[:CloudEdge {edge_type: $t}]->(b)",
-                         {"s": s, "d": d, "t": e.get("edge_type") or ""})
-            n_edges += 1
-    return conn, len(best), n_edges
+    # BULK COPY, not row-by-row. This built one execute() per node and per edge -- 61,764 of them,
+    # ~235s. 0.7.0_AE_CloudOps hit the same shape in the producer (143.3s -> 0.6s @191b8461eb) and
+    # flagged it here; I owed it and had explicitly refused to claim it done until it was.
+    # A 235s harness does not get re-run, and a test nobody re-runs stops being a control the moment
+    # the thing it guards changes -- which is precisely how the transcription in this same file went
+    # stale without anyone noticing.
+    import pyarrow as pa                                       # noqa: PLC0415 - optional dep
+    ks = list(best)
+    g = lambda k, f: (best[k].get(f) or "")                    # noqa: E731
+    ntab = pa.table({                                          # noqa: F841 - kuzu COPY reads the
+        "node_id": ks, "arn": [g(k, "arn") for k in ks],       #   caller's frame; removing this
+        "node_type": [g(k, "node_type") for k in ks],          #   assignment breaks the load while
+        "name": [g(k, "name") for k in ks],                    #   the lint goes green
+        "layer": [g(k, "layer") for k in ks],
+        "drift_class": [""] * len(ks), "source": [""] * len(ks),
+        "snapshot_ts": pa.array([0] * len(ks), pa.int64()),
+        "props": [g(k, "props") for k in ks]})
+    conn.execute("COPY CloudNode FROM ntab")
+    se = [(e["src"], e["dst"], e.get("edge_type") or "")
+          for e in edges if e.get("src") in best and e.get("dst") in best]
+    etab = pa.table({"src": [x[0] for x in se], "dst": [x[1] for x in se],   # noqa: F841 - as above
+                     "edge_type": [x[2] for x in se], "layer": [""] * len(se),
+                     "snapshot_ts": pa.array([0] * len(se), pa.int64()),
+                     "props": [""] * len(se)})
+    conn.execute("COPY CloudEdge FROM etab")
+    return conn, len(best), len(se)
 
 
 def main() -> int:
@@ -239,9 +302,14 @@ def main() -> int:
                                                              k, got[k], want))
     print()
     if ok and keying_ok:
-        print("  EQUIVALENT. AE's DDL + keying + query_fn + kuzu 0.11.3 reproduce the comp-kuzu")
-        print("  figures exactly. The ICEBERG SCAN remains unexercised (in-VPC only) -- this is the")
-        print("  callee, not the deployment.")
+        print("  EQUIVALENT. The producer's DDL + keying + query_fn + kuzu 0.11.3 reproduce the")
+        print("  comp-kuzu figures exactly.")
+        # This line used to claim the Iceberg scan was unexercised. It no longer is -- and a stale
+        # scope caveat is the same drift class this file's extraction fix exists to remove, so it
+        # points at the harness that superseded it rather than overstating what THIS one covers.
+        print("  SCOPE: this exercises the DDL/keying/Cypher chain. The Iceberg SCAN is covered by")
+        print("  test_producer_reader_executed.py, which runs the producer's OWN reader. Only the")
+        print("  Nessie REST connection and S3-as-backend remain unexercised anywhere.")
     else:
         print("  *** DIVERGENCE -- the in-container path would not reproduce the local layer ***")
     return 0 if (ok and keying_ok) else 1

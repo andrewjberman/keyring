@@ -323,8 +323,45 @@ def compose(query_fn=None, vintage_fn=None) -> dict:
     return _compose_impl(query_fn=query_fn, vintage_fn=vintage_fn)
 
 
+EMITTED_NODE_TYPES = ("C2Motif", "C3System")
+
+
+def assert_detectors_cannot_match_own_output(specs):
+    """REFUSE if any detector could match the node_types this composition EMITS.
+
+    >> THIS INVARIANT WAS IMPLICIT AND UNSTATED UNTIL 0.7.0_AE_CloudOps NAMED IT (2026-08-07), and
+    it is the weaker of the two things keeping this composition out of its own output. I had told
+    them the detectors were safe because they "filter n.layer IN [...]". THEY DO NOT -- AE extracted
+    all 17 catalog queries and ZERO carry a layer filter. My conclusion was right and my stated
+    mechanism was wrong, which is worse than being wrong outright: it points the next maintainer at
+    a guard that does not exist on that path.
+
+    THE TWO PATHS STAY SAFE UNDER DIFFERENT CONDITIONS:
+      COVERAGE  -- coverage_triple issues its OWN query, which DOES filter layer, and side_of()
+                   returns None for semctl. Two independent guards. My stated mechanism, correct here.
+      DETECTORS -- excluded by NODE_TYPE alone. They match S3_BUCKET / LAMBDA / Field / ...; the
+                   ontology types are simply not among them. Correct outcome, different invariant,
+                   AND NOTHING ENFORCED IT. Add one detector over a semantic node_type later and the
+                   layer guard does not help, because on that path there is no layer guard.
+    A guard that holds only because nobody has yet written the thing that breaks it is not a guard.
+    This makes it explicit, checked every run, and loud. <<
+    """
+    offenders = []
+    for spec in specs:
+        for sub in (spec.get("subqueries") or [{"constituents": spec.get("constituents") or []}]):
+            for c in (sub.get("constituents") or []):
+                if str(c) in EMITTED_NODE_TYPES:
+                    offenders.append((spec.get("id"), str(c)))
+    if offenders:
+        raise CompositionUnusable(
+            "DETECTOR MATCHES THIS COMPOSITION'S OWN OUTPUT -- a feedback loop, not a motif: %s. "
+            "A detector over %s would consume composed instances as estate members, and each run "
+            "would compound the last. REFUSING." % (offenders, "/".join(EMITTED_NODE_TYPES)))
+
+
 def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
     specs = catalog()
+    assert_detectors_cannot_match_own_output(specs)
     nodes, edges = {}, []      # node_id -> node; a repeated member-set is ONE instance
     per_family = Counter()
     side_tally = Counter()
