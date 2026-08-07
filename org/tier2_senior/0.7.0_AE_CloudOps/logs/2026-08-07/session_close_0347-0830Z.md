@@ -26,8 +26,19 @@ only. A rebuild is a production change to the nightly derive and NEVER#8 require
 to FINISH in-session; starting one at the end of a session this long is the half-landed class.
 **Nothing is stranded and no ledger is open.**
 
-⛔ **BEFORE THE FIRST NIGHTLY:** CVO's `@0871ce898f` (second-run feedback guard) MUST be in the
-image. Without it run 1 lands the layer and run 2 silently guts it.
+⛔ **BEFORE THE FIRST NIGHTLY - PULL LIST, TWO items (both already in the tree the zip builds
+from):**
+- `@0871ce898f` **second-run guard** - without it nightly 1 lands the layer and nightly 2 silently
+  guts it.
+- `@f0cd33c037` **truncated-catalog refusal** - a partial COPY (the likeliest container corruption)
+  escaped CVO's declared contract as a raw `SyntaxError`. Fixed in BOTH halves; `c3_cover` had the
+  identical eval and identical escape.
+  *Note on the stated cost: CVO characterised my caller as logging this "with no indication the
+  catalog was the problem." MEASURED - it is not that bad. My guard emits*
+  `WARN: C2C3_COMPOSE_FAILED SyntaxError: '{' was never closed (NFRA_MOTIF_P1_canonical_ab_catalog.py, line 2)`
+  *- exception type, FILE, and LINE. Their fix is still right and still pulled (a typed
+  `CompositionInputMissing` beats a SyntaxError escaping a documented contract), but the 3am-debug
+  cost is smaller than described, and a fix should not be justified by a defect it does not have.*
 
 ---
 
