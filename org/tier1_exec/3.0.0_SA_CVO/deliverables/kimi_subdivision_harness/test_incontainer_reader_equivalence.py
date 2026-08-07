@@ -110,7 +110,13 @@ def test_keying() -> bool:
     return ok and discriminates
 
 
-DERIVE_RUNNER = os.path.join("infra", "aws", "globgrph", "derive_runner.py")
+# Anchored to the REPO, not the CWD. This was os.path.join("infra", ...) -- CWD-relative -- so
+# running the harness from its own directory refused with "cannot read the producer", which reads as
+# THE PRODUCER IS MISSING when the truth was THE HARNESS IS STANDING IN THE WRONG PLACE. Found by
+# 0.7.0_AE_CloudOps. A refusal is only useful if it names its ACTUAL cause; misattributing sends the
+# reader at the wrong system, and this one would have sent them at derive_runner.
+_REPO = os.path.abspath(os.path.join(HERE, *([os.pardir] * 5)))
+DERIVE_RUNNER = os.path.join(_REPO, "infra", "aws", "globgrph", "derive_runner.py")
 
 
 class ProducerSourceUnreadable(Exception):
@@ -136,7 +142,10 @@ def extracted_ddl(src_path=None):
     try:
         src = open(path, encoding="utf-8").read()
     except OSError as e:
-        raise ProducerSourceUnreadable("cannot read %s (%s)" % (path, e)) from e
+        raise ProducerSourceUnreadable(
+            "cannot read the producer at %s (%s). If that path looks wrong, the HARNESS is "
+            "mislocated, not the producer -- DERIVE_RUNNER is anchored to the repo via HERE, not "
+            "to the CWD." % (path, e)) from e
     out = []
     for table in ("CREATE NODE TABLE CloudNode", "CREATE REL TABLE CloudEdge"):
         # the statement is a multi-line implicitly-concatenated literal inside conn.execute(...)
