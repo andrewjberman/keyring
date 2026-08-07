@@ -444,6 +444,7 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
                       "RETURN n.node_id AS id, n.node_type AS T, n.name AS nm, n.props AS props",
                       [], query_fn)
     class_marked = 0
+    already_instance = 0
     for r in cls:
         existing = r.get("props")
         if isinstance(existing, str):
@@ -452,6 +453,22 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
             except (ValueError, TypeError):
                 existing = None
         base = dict(existing) if isinstance(existing, dict) else {}
+        # ---- THE SECOND-RUN GUARD. Without it this is a SELF-CORRUPTING FEEDBACK LOOP. ----------
+        # The query above selects on node_type ALONE, and the instances THIS COMPOSITION EMITS carry
+        # those same registered node_types (C2Motif / C3System + grain, deliberately -- a new
+        # node_type would fail the derive closed at NodeTypeLayerGap). So the moment the layer
+        # lands, every one of the ~7,400 composed instances matches this query, and WITHOUT THIS
+        # CHECK each would be rewritten grain:class -- destroying, on run 2, the layer run 1 built.
+        #
+        # RUN 1 IS CORRECT AND RUN 2 IS CATASTROPHIC, which is why it survived every test: the
+        # defect is unreachable until the thing being tested succeeds. It would have presented as
+        # "the composition stopped working" (CTO~B's harness watching C3System[instance] collapse
+        # toward zero while [class] ballooned), i.e. as a producer failure rather than as this.
+        # Measured 2026-08-07 on a simulated post-landing graph: 2 of 2 injected instances were
+        # re-marked grain:class before this guard existed.
+        if base.get("grain") == "instance":
+            already_instance += 1
+            continue
         base.update({"grain": "class",
                      "population": "debt" if r.get("nm") in DEBT else "canon"})
         nodes[r["id"]] = {"node_id": r["id"], "node_type": r["T"], "props": base}
@@ -543,6 +560,10 @@ def _compose_impl(query_fn=None, vintage_fn=None) -> dict:
             "coverage_triple_by_side": _cov_triple,
             "coverage_detector_types": _cov_dtypes,   # SIBLING, not mixed into the per-side axis
             "class_nodes_marked_grain_class": class_marked,
+            # SECOND-RUN OBSERVABILITY: 0 before the layer lands, ~7,400 on every run after.
+            # A guard whose activity is invisible cannot be distinguished from a guard that
+            # is not running, and this one only ever fires post-landing.
+            "already_instance_skipped": already_instance,
             "rows_seen": rows_seen,
             "rows_skipped_ragged_unparsed": skipped_ragged,
             "rows_dropped_no_members": dropped_ragged,
