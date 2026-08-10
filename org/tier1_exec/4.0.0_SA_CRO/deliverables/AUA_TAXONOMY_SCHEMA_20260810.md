@@ -82,8 +82,11 @@ consistently with that, not separately.
 
 Andrew ruled **point-in-time -- history does not restate** (@e82326bdb2, on the Cottonwood AUA
 question). The schema:
-- Every classification row carries `as_of` (the day whose membership it reflects). Point-in-time =
-  historical rows never rewritten on later membership changes.
+- Every classification row carries **TWO CLOCKS** (the foundation-ledger two-clock law, Andrew-
+  ratified ~18:2xZ): `as_of` (the day whose membership it reflects -- the PROVENANCE clock) and
+  `computed_at` (when we produced the row -- the WRITE clock). **Any gate or consumer of the
+  classification declares WHICH clock it reads.** Point-in-time = historical rows never rewritten on
+  later membership changes.
 - *"History may be restated in the future"* -> **restatement is NOT foreclosed**: the mapping-row
   design (2.2) makes a future restatement a re-join, structurally cheap. **Nothing is BUILT for it.**
 - ⚠ **Scope honesty:** the ruling answered the COTTONWOOD question. Reading it estate-wide (all
