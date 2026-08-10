@@ -85,3 +85,26 @@ recommendations, restated exactly as presented and now RULED:
 - Overlay row: AE~Z lands it under TO-3 (# andrew-asked marker carrying the verbatim above).
 - Guardrail duty: COO~Z folds into decomposition — the duty text lands in the seat's refs
   (TEAMS_DUTY/prompt via the named integrator, MSTR~Z) + TO-2's runbook steady-state section.
+
+---
+
+# ADDENDUM 2 — Q6 ruling: semantic-pass timing
+
+**Channel:** 1.0.0_SA_CTO~Z terminal · **Time:** 2026-08-10 ~18:47Z · **Recorded:** same turn
+
+## VERBATIM
+
+> (a) now, starting with MP
+
+(Against the /open-calls card: per-vertical semantic pass vs batched-after-all-four.)
+
+## Operative reading
+
+Andrew's Step-3 semantic pass (field meanings / delivery form / permissible conjunctions —
+sovereign input, never inferred) runs PER-VERTICAL, starting with Model Portfolios NOW. The
+ratified MP census (@0c1dae3da, structuring approved @95b3e2852) is the input document.
+Consequences: (i) MSTR~Z queues the MP semantic-pass session at Andrew's convenience — the
+fabric receives and records verbatim; (ii) DATA_CATALOG v0.2's MP rows (incl. the `semantics:`
+layer) unblock the moment his pass lands — they do NOT wait for the Pod-2/Macro/News censuses;
+(iii) later verticals inherit the same per-vertical rhythm: census → his structuring-conformant
+review need not repeat (grammar ratified), semantic pass per vertical as each census lands.
