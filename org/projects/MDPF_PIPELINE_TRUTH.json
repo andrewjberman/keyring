@@ -181,14 +181,14 @@
           "evidence": "function stdout lists every key written; rows=4422 ties to parquet"
         },
         "trigger_type": {
-          "value": "UNIDENTIFIED",
-          "status": "UNMEASURED",
-          "evidence": "G-1a: NOT a bucket notification (8/8 configs read, smartx absent) and NOT an EventBridge rule (139 rules scanned, none targets it). Remaining candidate: direct identity-based invoke by smartx-assets-daily-pull (finished 76s earlier). Needs a code read of the pull."
+          "value": "LAMBDA ASYNC DESTINATION (OnSuccess) -- chained to smartx-assets-daily-pull's clean return",
+          "status": "MEASURED",
+          "evidence": "APPLIED TRUTH: aws lambda get-function-event-invoke-config --function-name smartx-assets-daily-pull -> DestinationConfig.OnSuccess.Destination = arn:aws:lambda:us-east-1:313476888478:function:opal-assets-silver-smartx. Declared at infra/aws/terraform/smartx-pipeline/assets-pull-onsuccess.tf:31. >> THE CONFIG LIVES ON THE *PULL*, NOT ON THE CONVERTER -- which is why every instrument aimed at the converter was STRUCTURALLY BLIND to it: not a bucket notification (8/8 configs), not an EventBridge rule (139 rules exhaustively checked BY TARGET ARN), not an event-source mapping, not a function URL, not Step Functions, and NOT a .invoke() in the pull's code -- because THE LAMBDA SERVICE DOES THE INVOKING, NOT THE CODE. Explains both observations exactly: the 2-second gap (pull ends 13:40:35Z -> converter INIT 13:40:37Z) and the ~30s daily drift (chained to a variable-duration job, not a cron). ALREADY NAMED IN THE ESTATE by 0.5.0_AE_OpalETL 2026-07-22 with the same applied-truth grounding."
         },
         "trigger_name": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-1a"
+          "value": "smartx-assets-daily-pull DestinationConfig.OnSuccess",
+          "status": "MEASURED",
+          "evidence": "APPLIED TRUTH: aws lambda get-function-event-invoke-config --function-name smartx-assets-daily-pull -> DestinationConfig.OnSuccess.Destination = arn:aws:lambda:us-east-1:313476888478:function:opal-assets-silver-smartx. Declared at infra/aws/terraform/smartx-pipeline/assets-pull-onsuccess.tf:31. >> THE CONFIG LIVES ON THE *PULL*, NOT ON THE CONVERTER -- which is why every instrument aimed at the converter was STRUCTURALLY BLIND to it: not a bucket notification (8/8 configs), not an EventBridge rule (139 rules exhaustively checked BY TARGET ARN), not an event-source mapping, not a function URL, not Step Functions, and NOT a .invoke() in the pull's code -- because THE LAMBDA SERVICE DOES THE INVOKING, NOT THE CODE. Explains both observations exactly: the 2-second gap (pull ends 13:40:35Z -> converter INIT 13:40:37Z) and the ~30s daily drift (chained to a variable-duration job, not a cron). ALREADY NAMED IN THE ESTATE by 0.5.0_AE_OpalETL 2026-07-22 with the same applied-truth grounding."
         },
         "c1_write_clock_utc": {
           "value": "13:40:47",
@@ -1689,7 +1689,9 @@
       "fill_by": "read the smartx-assets-daily-pull source for an invoke call",
       "owner": "0.7.0_AE_CloudOps",
       "blocks": "any floor/pull re-timing",
-      "status": "OPEN"
+      "status": "CLOSED - MECHANISM NAMED AND VERIFIED ON THE LIVE PRIMITIVE",
+      "answer": "Lambda async DESTINATION (OnSuccess) on smartx-assets-daily-pull. Deliberate design, chosen OVER an S3 completion key: the TF states 'a metadata completion key that something dispatches on is a back-door release' (the Door-6 lesson).",
+      "consequence_for_cadence": "THE CONVERTER IS RE-TIMEABLE BY MOVING THE PULL -- the chain follows automatically. No new trigger is required. This was the blocker on the cadence remediation and it is removed."
     },
     {
       "id": "G-2",
@@ -2023,12 +2025,12 @@
     },
     {
       "id": "D-21",
-      "summary": "THE AXIS-SOURCE INGEST FAILED ON 2026-08-10 AND ITS RETRY PASSED ONLY BY SKIPPING EVERYTHING. smartx-assets-daily-pull ran 13:30:50-13:36:42Z and ended '[ERROR] DirtyRunError: feed9 reconciliation on Opal Conservative Growth: resolver=3278 != feed5 living=3281 -- PARTIAL identity table, not clean'. The SAME RequestId retried 13:37:41-13:40:35Z and reported clean with 'fetched=0, skipped=9762'. The models_summary bronze landed on the FAILED attempt.",
+      "summary": "THE AXIS-SOURCE INGEST FAILED ON 2026-08-10 AND ITS RETRY PASSED ONLY BY SKIPPING EVERYTHING. smartx-assets-daily-pull ran 13:30:50-13:36:42Z and ended '[ERROR] DirtyRunError: feed9 reconciliation on Opal Conservative Growth: resolver=3278 != feed5 living=3281 -- PARTIAL identity table, not clean'. The SAME RequestId retried 13:37:41-13:40:35Z and reported clean with 'fetched=0, skipped=9762'. The models_summary bronze landed on the FAILED attempt. >> SHARPENED BY G-1a: the OnSuccess destination fires ONLY on a CLEAN return. The DirtyRunError attempt therefore fired NO destination, and the converter ran ONLY because the RETRY returned clean BY SKIPPING ALL 9,762 OBJECTS. THE SILVER CONVERSION THAT PRODUCED TODAY'S AXIS WAS CHAINED TO A RUN THAT DID NOTHING.",
       "pipelines": [
         "49financial.model"
       ],
       "status": "MEASURED",
-      "severity": "MED",
+      "severity": "HIGH",
       "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today.",
       "lifecycle": "OPEN",
       "owner": "0.7.0_AE_CloudOps"
@@ -2058,6 +2060,18 @@
       "note": "The four are c2_partition_meaning, c3_vintage_field, offset_label_to_vintage, known_defect -- i.e. THE ENTIRE ECLIPSE RUN-DATE RULING. It is well-evidenced and I re-verified two keystones myself, but it has not been adversarially tested and must not be treated as though it has. One number in it is already wrong: '75 prefixes' vs a measured 72 on two instruments.",
       "lifecycle": "OPEN",
       "owner": "1.0.0_SA_CTO"
+    },
+    {
+      "id": "D-24",
+      "summary": "THE AXIS SOURCE'S SILVER CONVERSION HAS NO WORKING SCHEDULED FALLBACK. Its only effective trigger is the pull's OnSuccess destination; the nominal 16:00Z sweep is a PROVEN NO-OP (668ms, zero output, wrote nothing). So a pull that never returns clean produces NO silver at all, and nothing scheduled recovers it.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps",
+      "note": "NEVER#4 SHAPE: 'a pipeline whose only trigger is another pipeline's success has no schedule and is a defect -- it freezes silently and invisibly when its upstream breaks.' A schedule EXISTS here, which is why it did not read as the classic case -- but the scheduled leg does not convert, so the protection NEVER#4 exists to provide is absent in fact. ⚠ THE DESIGN ITSELF IS SOUND AND WELL-REASONED (chosen over a completion key on the Door-6 lesson); what is missing is a working catch-up, not the destination."
     }
   ],
   "repair_sequence": {
