@@ -1,0 +1,62 @@
+{
+  "artifact": "atom_decomp_format_census",
+  "version": "1.0",
+  "vintage_utc": "2026-08-10T19:05:00Z",
+  "author": "4.0.0_SA_CRO",
+  "authority": "ANDREW_DIRECT_20260810_STRUCTURED_MEANS_XML_OR_JSON.md -- SSOT = xml/json; markdown is NOT structured; same fields for all entities",
+  "denominator": {
+    "population": "projects/ATOM_DECOMP non-case-study tracked files + skill package",
+    "counts_by_extension": { "csv": 13, "md": 12, "yaml": 2 },
+    "enumeration_instrument": "git ls-tree -r HEAD, case_study/ excluded (held-out fence)"
+  },
+  "correction_on_the_record": "This seat previously described the ledger templates as 'headers derived from the spec's field lists' in prose context implying markdown. FALSE at source: they are CSV files. The registration brief's 'templates are unfilled headers' stands (they are unfilled) but their format was better than implied. Corrected here rather than silently.",
+  "rows": [
+    {
+      "artifact": "templates/*.csv (13 ledger templates: evidence_ledger, resource_inventory, system_inventory, artifact_lineage, script_io_contract, consumer_contracts, control_edges, runtime_observations, contradictions_and_unknowns, decision_register, migration_waves, replacement_ledger, validation_matrix)",
+      "claimed_form": "structured ledgers (the method's data plane)",
+      "actual_form": "CSV -- tabular, UNENFORCED: no types, no required-field validation, no enums, no nesting; a short or malformed row parses silently; gates/dependencies-shaped nested data cannot be expressed",
+      "compiles_from_it": "the method's gates G0-G7 read ledger completeness; any future tooling over decomposition runs",
+      "verdict": "BELOW_THE_BAR",
+      "remedy": "JSON Schema per ledger (or one schema file, 13 definitions) as SOURCE OF RECORD; CSV retained only as a derived flat export where genuinely flat. foundation_ledger.schema.json is the pattern (mutant-controlled at birth)."
+    },
+    {
+      "artifact": "skill/atomic-decomposition/references/evidence-model.md -- THE CLAIM CONTRACT",
+      "claimed_form": "the method's evidence schema (every claim's required fields: source, locator, measured_at, scope, count grain, denominator, limitation...)",
+      "actual_form": "a MARKDOWN TABLE. The claim contract's source of record is prose -- THIS IS THE CENSUS'S SHARPEST FINDING: the schema that everything else derives from exists only as unenforceable documentation",
+      "compiles_from_it": "every evidence ledger row in every run; Rule 5 cites it; the CSV headers derive from it by hand",
+      "verdict": "MASQUERADE",
+      "remedy": "claim_contract.schema.json as source of record; evidence-model.md demoted to derived rationale with the subordination clause. Rides the Rule-14 package (method-owner review, CTO~A)."
+    },
+    {
+      "artifact": "templates/decomposition_charter.yaml",
+      "claimed_form": "charter template",
+      "actual_form": "YAML (parses -- the F-1 repair fixed it and controlled both directions)",
+      "compiles_from_it": "gate G0 (identity/scope/denominator pinning)",
+      "verdict": "STRUCTURED_UNVALIDATED",
+      "remedy": "add a schema (yaml carries no self-validation); low urgency -- single-document, exec-filled"
+    },
+    {
+      "artifact": "00/01/02/04/05/06/07 spec + adoption + corroboration docs, skill/SKILL.md + workflow.md + tool-adapters.md + output-contracts.md",
+      "claimed_form": "method prose: rules, workflow, rationale, corroboration",
+      "actual_form": "markdown",
+      "compiles_from_it": "agents READ them; nothing machine-compiles from them",
+      "verdict": "PROSE_LEGITIMATE",
+      "remedy": "none -- prose is the correct form for rules and rationale. The ruling bans markdown as an SSOT/deliverable carrier, not as documentation. (One boundary case: output-contracts.md's G0-G7 criteria are prose predicates a validator would need restated as checks -- that conversion belongs to whoever builds the validator, and is noted, not manufactured.)"
+    },
+    {
+      "artifact": "the foundation ledger (new, this seat)",
+      "claimed_form": "per-project SSOT",
+      "actual_form": "JSON Schema, mutant-controlled (a row missing its mover is REFUSED)",
+      "compiles_from_it": "verification claims (Rule 14: cite the row or be INFERRED); G1 completeness check",
+      "verdict": "CLEAN_PATTERN",
+      "remedy": "none -- this is the reference form"
+    }
+  ],
+  "summary": {
+    "masquerade_instances": 1,
+    "below_the_bar": 1,
+    "the_finding": "ATOM_DECOMP's data plane is CSV-tabular (better than assumed, below the ruling's bar); its one true masquerade is load-bearing: THE CLAIM CONTRACT ITSELF -- the schema all ledgers derive from -- exists only as a markdown table.",
+    "remedy_route": "claim_contract.schema.json + per-ledger schemas ride the Rule-14 package through CTO~A method-owner review; nothing lands without it",
+    "kimi_ontology_side": "referred to 3.0.0_SA_CVO per Andrew's word, same turn"
+  }
+}
