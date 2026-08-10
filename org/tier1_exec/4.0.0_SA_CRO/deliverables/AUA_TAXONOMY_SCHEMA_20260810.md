@@ -1,6 +1,10 @@
-# AUA TAXONOMY SCHEMA v0.1 -- Phase 0 of the four-month program
+# AUA TAXONOMY SCHEMA v1.0 -- Phase 0 of the four-month program
 
-**Author:** 4.0.0_SA_CRO · **Date:** 2026-08-10 · **Status:** DRAFT for Andrew's ratification.
+**Author:** 4.0.0_SA_CRO · **Date:** 2026-08-10 · **Status:** **RATIFIED (Andrew-direct ~18:4xZ,
+"Ratify taxonomy section 7 and the L-5 dispositions" -- the sec7 ask-now set: the six axis-1 values
++ residual construction, the strategy_id mapping-row rail, ETF_FLOAT on axis 2 gold-only; record:
+ANDREW_DIRECT_20260810_TAXONOMY_S7_AND_L5_RATIFIED.md). The sec7 not-asked set remains open
+exactly as stated there.**
 **Commission:** Andrew-direct 2026-08-10 (four-month record @1600047e64; rulings R-1/R-2/R-3
 @dedd7bdeab; category call: *"SMA IS a category"* per CTO @6d0a60a54d).
 **What this is:** the classification schema that item 1 (Cottonwood pull project), the frontend
