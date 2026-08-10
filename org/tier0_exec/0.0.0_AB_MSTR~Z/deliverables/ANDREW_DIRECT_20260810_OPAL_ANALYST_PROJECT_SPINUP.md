@@ -37,8 +37,14 @@
   `org/tier0_utility/0.0.3_BG_BBGTerminal/` (prompt + refs/ + tools/portal_lookup.py).
 - Completion set commit: `65d80ab37` "build(0.0.3_BG): the Teams-concierge completion set
   (Andrew-direct 2026-08-07 at the MSTR~Z terminal)".
-- Launch was HELD on the identity blocker (gateway authenticates as Andrew; second-key
-  `opal-bloomberg` auth mint was at Andrew). Current state of that blocker = CRO to assess.
+- ~~Launch was HELD on the identity blocker (gateway authenticates as Andrew; second-key
+  `opal-bloomberg` auth mint was at Andrew). Current state of that blocker = CRO to assess.~~
+  **CORRECTED 2026-08-10 ~1630Z (CRO~Z phase-1 brief @92e7020f4, live-verified):** the HELD line
+  was the 08-06 end-of-day state and was stale by three days when this record was written.
+  Launch + first live serve happened 2026-08-07 (reply DELIVERED 05:26:19Z as "Opal Bloomberg");
+  identity blocker RESOLVED and HOLDING (both gateways whoami-verified 08-10). The agent is
+  DORMANT since 08-07, and the live P0 relaunch gate is the `teams-watch.py:54` identity-blind
+  token pick (durable fix owed by 0.5.0_AE). See the brief for the full open-items register.
 - Skill: `/bbg-teams-assist` (ACK-FIRST serve loop, Andrew-direct 2026-08-07).
 
 ## Broadcast
