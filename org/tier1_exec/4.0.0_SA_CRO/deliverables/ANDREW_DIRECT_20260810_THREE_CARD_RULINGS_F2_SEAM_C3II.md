@@ -49,3 +49,34 @@ becomes a **scheduled milestone inside Item 0's landing plan**, sequenced after 
 layer lands. Its breadth is thereby set by the plan rather than needing a separate scope ruling.
 This discharges the "C3.ii scope open at Andrew" item carried in CVO's 08-07 handoff (their sec6.2)
 and in my discovery record.
+
+---
+
+## CARD 2 ADDENDUM (2026-08-10 ~22:3xZ, Andrew-direct at the CVO terminal, relayed @225906Z) --
+## THE RATIFY-AS-IMPLEMENTED PACKAGE IS WITHDRAWN; THE QUESTION RESHAPES TO HIS FORK
+
+VERBATIM (via CVO relay): *"In my opinion, there should be no hand drawn anything with pipeline. I
+don't even really believe in there being a pipeline territory here because really its just AWS
+which is already a category."*
+
+**CORRECTION OF MY OWN RECOMMENDATION, owned:** my package recommended ratifying
+territory-as-node-kind WITH pipeline as the code-artifact territory, grounded on the implemented
+twice-gated design. **v1.8's own substrate_side changelog already carried his 2026-08-06 leaning
+("pipeline is aws material, not a peer") with the separate enum retained on MIGRATION COST, not
+design agreement -- and I did not read that changelog entry before drafting the rec.** A
+ratify-the-implemented package reaching him against his recorded leaning would have been the
+stale-relay class; CVO's surface caught it before it shipped.
+
+**RESHAPED STATE:**
+- The ratify ask is WITHDRAWN. The real fork -- (A) merge pipeline into aws per his belief, with
+  the measured migration cost; (B) retain as-implemented on cost grounds, explicitly not design --
+  goes to Andrew via CVO's consequence analysis (in flight at their seat). The ruling is his.
+- **"No hand drawn anything with pipeline" binds REGARDLESS of the territory outcome**: the
+  pipeline tree walk becomes a PREDICATE over data/*/scripts/gold, never a hand-accreted call list
+  (CVO's e2e finding: the substrate frozen at July-1 behind per-tree builder calls; cot has no
+  builder at all).
+- **L-2 (the authorized GOVERNS edge) IS UNAFFECTED BY EITHER OUTCOME** -- its endpoints
+  (S3_BUCKET_POLICY -> S3_BUCKET) are aws-side nodes under both readings; the build stays
+  authorized and queued. Stated so the edge is not re-held on a fork that does not touch it.
+- The substrate-keyed definitional one-liner (the F1 re-key) survives either outcome -- it
+  classifies NODES by kind and names no specific member set.
