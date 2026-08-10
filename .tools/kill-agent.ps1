@@ -38,7 +38,10 @@ param(
     [string]$Reason = 'reallocation'
 )
 
-$ws     = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+# Resolve the workspace from this script's own location -- the previous
+# hardcoded laptop path (C:\Users\AndrewBerman\...) silently dropped every
+# KILL audit line on site Z (different profile; caught 2026-08-10, MSTR~Z).
+$ws     = Split-Path -Parent $PSScriptRoot
 $log    = Join-Path $ws 'org\mcp\agent-spawn-audit.log'
 $marker = '# OPAL_SPAWN_MARKER_v1'
 
