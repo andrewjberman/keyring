@@ -1,5 +1,64 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⚠ ADDENDUM 2 — 2026-08-10 ~1450Z. **TRACK A'S PREMISE INVERTED. THE REMEDY SHAPE IS NOW UNKNOWN.**
+>
+> **E · `cot-bd-session-daily-et` DOES NOT WAIT FOR DATA — IT PRODUCES IT.** Measured (`0.7.0_AE`):
+> ```
+> 06:00Z  cot-rebalancer-runner        -> writes assets bronze DIRECTLY (json pages)
+> 20:30Z  cot-bd-session-daily-et      -> STARTS cot-exporter EC2 (ran 20:30:17 -> 23:36Z on 08-09)
+> 20:31Z  opal-data-cot/forwardfill_v2 -> the xlsx LANDS, ~60 seconds later
+> 22:30Z  the mirror                   -> copies forwardfill_v2 -> assets bronze (xlsx)
+> ```
+> The xlsx **does not exist** until the session makes it. The diagnosis's *"18.5-hour wait for data
+> already on disk"* described the **old ~02:00Z regime**, which ended.
+> **⇒ THIS CHANGES THE KIND OF DECISION, NOT THE NUMBER.** Moving a CONSUMER earlier is cheap and
+> reversible — worst case it reads nothing and you move it back. **Moving a PRODUCER earlier changes
+> when we ask a VENDOR for data, and availability at the new hour is UNMEASURED.** That is Track B's
+> failure mode; Track A has silently acquired it.
+> **⇒ COTTONWOOD'S ONE-DAY LAG IS NOW UNEXPLAINED.** §1's "schedule ordering" attribution assumed a
+> consumer running before its inputs. **Track A RE-BLOCKED on diagnosis (CTO), not on execution.**
+> *The producer-identity block from Addendum 1(C) is LIFTED — closed by AE.*
+>
+> **F · TWO PRODUCERS ON ONE PREFIX — ESTABLISHED, not inferred. §D's hypothesis resolves.**
+> `cot-rebalancer-runner` (Lambda), sole invoker `rule/cot-rebalancer-runner-daily` `cron(0 6)` =
+> 06:00Z ENABLED; `BD_S3_BUCKET = opal-data-assets` — **it writes the monolith DIRECTLY.** Discriminator
+> is **key grammar**, DENOMINATOR 1,229 objects under `blackdiamond/cottonwood/bronze/`:
+> **687** `{table}/{date}/*.json` (rebalancer) · **368** `{table}/*.xlsx` (mirror) · 4 legacy sentinels.
+> The ALIEN SURPLUS samples were `rebalancer_accounts/2026-07-21/page_000.json` — the JSON grammar.
+> **⇒ THE GUARD IS RIGHT AND THE ESTATE UNDER IT CHANGED.** *"Fix the mirror"* is the wrong shape;
+> **the question is OWNERSHIP** — and whether a pull should write bronze directly at all, bypassing the
+> mirror's raw-bytes contract. **Routed to CTO** (their call, requested once the caller was named).
+> *Two independent derivations: AE from CloudWatch + key-grammar census; COO from `comp-trigger --list`
+> + `comp-find "rebalancer_accounts"` (64/24,959) landing on `cot-rebalancer-runner/lambda_function.py:19`.*
+>
+> **G · A FALSE NEGATIVE PROPAGATED THROUGH ME. BOTH HALVES RECORDED.**
+> AE's *"nothing fires at 06:00Z across 139 rules"* was **false** — the rule was in their materialised
+> 139-rule file the whole time; they had filtered by keyword to build the intake table, then made an
+> **absence claim** about 06:00Z **while citing the unfiltered 139**. Unfiltered, **10 rules fire
+> 05:00–07:00Z**. Self-caught, unprompted, blast quantified.
+> ⛔ **MY HALF: I RELAYED THAT COMPLETENESS CLAIM TO CTO WITHOUT RE-DERIVING IT** (§D's hypothesis
+> ordering rested on it), in the same message warning CTO about instruments that cannot fail. **The
+> relayer obligation was mine and I did not discharge it.** Nothing was applied; the outside-AWS caution
+> was still the right frame on evidence that did not deserve it.
+> > **THE LESSON, AE's formulation, register-bound — it SHARPENS the denominator rule rather than
+> > restating it:** **"A DENOMINATOR PRINTED NEXT TO A FILTERED RESULT IS MORE DANGEROUS THAN NO
+> > DENOMINATOR AT ALL."** The estate already knows to print denominators. What was unwritten is that
+> > **a CORRECT denominator attached to the WRONG DOMAIN manufactures false completeness — and defeats
+> > the reader's single best check, because the denominator is exactly what a careful reader looks for
+> > before trusting an absence.** The pagination discipline was fine; **the filter was the leak, and the
+> > frame was not re-stated when the claim moved from the table to the absence.**
+> *Second instance today of §6's instrument defect: `comp-trigger` again reported TF-DESIRED "not found"
+> for `cot-rebalancer-runner-daily`, another interpolated-name resource.*
+>
+> **H · CTO RULING (adopted): DO NOT RE-TIME INF-OWNED PULLS — MOVE OUR OWN CONSUMER.** **TRACK C
+> CLOSED** and it was never load-bearing (the floor reads correct T-1 today).
+> ⛔ **BUT THE CONSUMER-SIDE LEVER CANNOT REACH 49FINANCIAL:** SmartX silver lands **13:40–13:42Z**;
+> a floor moved to 13:30Z is still ~10–12 min early, and clearing 13:42Z collides with the accrual
+> bridge (13:40Z) and publisher (13:50Z). **49F is either a SmartX pull move (Track B, evidence-gated,
+> not INF-owned so the ruling does not block it) or a re-architecture of the whole downstream chain.**
+> Flagged to CTO; not mine to choose.
+> **Standing rule issued by CTO from this exchange: SURFACING IS DISCHARGED BY THE ACT OF SURFACING.**
+
 > ## ⚠ ADDENDUM 2026-08-10 ~1435Z — THREE THINGS BELOW MOVED WITHIN THE HOUR. READ THIS FIRST.
 >
 > **A · §2(B) AND §5 ARE RESOLVED. THE SOVEREIGN FORK IS RETRACTED — DO NOT ACT ON §5.**
