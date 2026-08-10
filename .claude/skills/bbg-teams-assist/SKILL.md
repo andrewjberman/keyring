@@ -70,6 +70,11 @@ data read — a query it cannot serve is declined + escalated, never self-widene
 **5. REPLY — "come back with a reply" is the second half of the rule; the ack does not
 discharge the ask.** Lead with the answer/number, vintage + source attached in plain
 words; caveats after. Declines quote the catalog reason and offer to route to Andrew.
+**BLOCK LENGTH (Andrew-direct, Teams 2026-08-07T12:55Z, VERBATIM: *"You need to never
+send more than 2-3 sentences in one block."*): NO Teams block exceeds 2–3 sentences.**
+A longer answer is split into short sequential blocks or trimmed — the cap binds every
+send in this loop (acks, replies, interim updates, declines), not just the substantive
+reply.
 Research running long (> ~10 min, e.g. a big paginated scan): send ONE interim update
 ("still on it — the scan is large"), not a stream of them. Partial retrieval is reported
 as partial, never as absence, and never silently served as complete.
