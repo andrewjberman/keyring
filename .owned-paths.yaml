@@ -924,25 +924,75 @@ paths:
     lane: BASE_EXEC
     note: "Base CTO home — logs, task orders, prompt, briefs"
 
+  # TILDE-LANE HOME DIRECTORIES (tier-1). Andrew-direct 2026-08-10 ("yes fix the owned-paths gap").
+  # THIS GRANTS NO NEW AUTHORITY. The AGENT side of this file already strips one tilde (see the
+  # header, ~line 43: "`1.0.0_SA_CTO~C` needs no entry to commit wherever `1.0.0_SA_CTO` may"), so a
+  # tilde seat could ALREADY write everything in its base's home. Only the PATH side lagged: every
+  # tier-1 home is a LITERAL rule, so `org/tier1_exec/1.0.0_SA_CTO~B/**` matched NOTHING and returned
+  # UNDEFINED. Each rule below carries its base's lane VERBATIM -- a tilde lane gets exactly what its
+  # base has, never more. Lane membership is still enumerated; this is a path-shape fix, not a grant.
+  #
+  # WHY TIER-1 AND NOT THE OTHER TIERS: measured 2026-08-10, tier-1 was the ONLY tier with this gap.
+  # tier-0 is covered by the broad `org/tier0_exec/**`; tier-2 homes are SERIAL-PREFIX GLOBS
+  # (`org/tier2_senior/0.4.0_*/**`), so `0.4.0_DS_ClientPlatform~A` matches incidentally -- 15 tilde
+  # directories carrying 199 tracked files exist under tier-2 today on exactly that accident. tier-1's
+  # literal rules were the odd one out, and the asymmetry was invisible because it only bites a
+  # tilde seat writing its FIRST own-home file.
+  #
+  # NOT a `org/tier1_exec/*/**` wildcard, deliberately -- LD-0331's rule stands: the registry is
+  # ENUMERATION-BASED, NOT TIER-BASED, a title is not a grant, and each exec home is still listed
+  # individually. `<serial>~*` binds to ONE named exec's lanes; it cannot reach another exec's home.
+  #
+  # Found by 1.0.0_SA_CTO~B (2026-08-10): its deliverable was refused, it relocated the file into
+  # base's home and committed there -- so the gap presented as "write it somewhere else" rather than
+  # as a broken rule, which is why it survived every prior tilde spawn. Also note the PARTIAL coverage
+  # that made it confusing: `org/tier1_exec/*/task_orders/*.md` (~line 886) IS a glob, so a tilde seat
+  # could always write task_orders and never deliverables or logs.
+  # Added 2026-08-10 by 0.0.0_AB_MSTR (grantor). Grantee seats are the tilde lanes themselves; SoD
+  # holds -- CTO~B raised it and did not author its own grant.
+  "org/tier1_exec/1.0.0_SA_CTO~*/**":
+    lane: BASE_EXEC
+    note: "CTO tilde-lane homes (~A/~B/~Z/...) — same lane as the base CTO home above."
+
   "org/tier1_exec/2.0.0_SA_COO/**":
     lane: BASE_EXEC
     note: "Base COO home — logs, task orders, prompt, briefs"
+
+  "org/tier1_exec/2.0.0_SA_COO~*/**":
+    lane: BASE_EXEC
+    note: "COO tilde-lane homes — same lane as the base COO home above. See the tilde-lane block."
 
   "org/tier1_exec/1.1.0_SA_CTO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS CTO home — PRDs, session logs, drafts (incident #3/#4 root path)"
 
+  "org/tier1_exec/1.1.0_SA_CTO~*/**":
+    lane: COMP_LEARNS
+    note: "COMP_LEARNS CTO tilde-lane homes — same lane as its base. See the tilde-lane block."
+
   "org/tier1_exec/2.1.0_SA_COO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS COO home — TOs, session logs"
+
+  "org/tier1_exec/2.1.0_SA_COO~*/**":
+    lane: COMP_LEARNS
+    note: "COMP_LEARNS COO tilde-lane homes — same lane as its base. See the tilde-lane block."
 
   "org/tier1_exec/3.0.0_SA_CVO/**":
     lane: CVO_WORKSPACE
     note: "Workspace-wide CVO home — inbox, responses, templates, AND continuous-loop cycle logs. CVO commits its own loop logs under the MCP-loop model (Andrew 2026-05-22, VALIDATION_LOOP.md). Lane changed BASE_EXEC -> CVO_WORKSPACE 2026-05-22 by COO (the old BASE_EXEC mapping blocked the CVO from committing its own logs)."
 
+  "org/tier1_exec/3.0.0_SA_CVO~*/**":
+    lane: CVO_WORKSPACE
+    note: "CVO tilde-lane homes (~Z et al) — same lane as the base CVO home above."
+
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS CVO home — responses, reviews"
+
+  "org/tier1_exec/3.1.0_SA_CVO~*/**":
+    lane: COMP_LEARNS
+    note: "COMP_LEARNS CVO tilde-lane homes — same lane as its base. See the tilde-lane block."
 
   "org/estate-reports/**":
     lane: CVO_WORKSPACE
@@ -951,6 +1001,10 @@ paths:
   "org/tier1_exec/4.0.0_SA_CRO/**":
     lane: CRO_WORKSPACE
     note: "Workspace-wide CRO home — charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED — there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD). LD-0331."
+
+  "org/tier1_exec/4.0.0_SA_CRO~*/**":
+    lane: CRO_WORKSPACE
+    note: "CRO tilde-lane homes (~A/~SWEEP/...) — same lane as the base CRO home above. See the tilde-lane block near the CTO home. NOTE the 2026-07-22 note above is UNCHANGED and still binds: this is not an org/tier1_exec/*/** wildcard, it binds one named exec's own tilde lanes only."
 
   "research_transcripts/**":
     lane: CRO_WORKSPACE
