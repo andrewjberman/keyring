@@ -80,3 +80,18 @@ stale-relay class; CVO's surface caught it before it shipped.
   authorized and queued. Stated so the edge is not re-held on a fork that does not touch it.
 - The substrate-keyed definitional one-liner (the F1 re-key) survives either outcome -- it
   classifies NODES by kind and names no specific member set.
+
+## CARD 2 RESOLUTION (2026-08-10 ~23:0xZ, Andrew-direct at the CVO terminal, VERBATIM: "Yeah of the
+## options you provided, (b) is the clear solution." Record @09355b6d93)
+
+**THE PIPELINE TERRITORY DISSOLVES INTO AWS via RECOMPILE FROM THE CLOUD**: pipelines modeled as
+what AWS itself sees (deployed S3 code objects, EC2 runners, schedules) in the same deterministic
+pass + freshness discipline as the rest of the aws substrate; the repo-AST code graph survives as
+ENRICHMENT on those aws nodes, derived by PREDICATE over data/*/scripts/gold ("no hand drawn
+anything" binds this leg). The frozen-feed class dies structurally, not by relabel.
+
+**My carries, final:** the v1.9 naming act assembles at CVO with the MERGED form (enum change +
+BACKEND collapse + status_vocabulary key + the reworded one-liner, v3 text sent to CVO). L-2 stays
+authorized-and-queued, untouched. Implementation design = CTO lane; recompile verification = CVO.
+The withdrawal-then-reshape cycle closed in under 40 minutes from his first statement to his
+ruling -- the surface-not-adjudicate chain working at speed.
