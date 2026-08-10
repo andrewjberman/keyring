@@ -1,5 +1,44 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⚠ ADDENDUM 3 — 2026-08-10 ~1500Z. **COT CENSUS CLOSED: THE SCHEDULE IS ONE OF FOUR ENTRY POINTS.**
+>
+> Run at the COO seat (`comp-blast cot-bd-session-trigger`; canonical kuzu 20,616 nodes / 41,205 edges,
+> built 2026-08-10T14:58:34Z, age 0.0h, **Nessie HEAD current, pin == marker** — provenance header read).
+> **Closes the cot-consumer-census precondition from Addendum 2; taken off AE's queue, not added to it.**
+>
+> **DIRECT (depth-1) callers of `cot-bd-session-trigger` — FOUR:**
+> `scheduler/cot-bd-session-daily-et` **[SCHEDULE — the only one a retime touches]** ·
+> `events/rule/cot-bronze-complete` · `events/rule/cot-session-complete` · `events/rule/cot-silver-complete`
+>
+> **⇒ IT IS A MULTI-MODE, MULTI-ENTRY FUNCTION.** The Scheduler target passes
+> `input = {"mode": "session-refresh"}` (`schedule-et.tf:94`) — the cron selects **one mode** of a function
+> that three event rules also invoke on their own completion triggers.
+> **A RETIME MOVES ONE ENTRY POINT OF A FOUR-ENTRY CHAIN; the event-driven siblings keep firing regardless.**
+> ⚠ `cot-bronze-complete` and `cot-silver-complete` appear **both downstream and upstream** — a
+> completion-event loop around one function. Not a defect on its face; **not a simple cron either.**
+>
+> **Downstream ≥22 nodes** — carrying comp-blast's own bound: it counts **EXTRACTED EDGES ONLY, a LOWER
+> BOUND**, blind to dynamic/FUNC-key consumers. Includes SNS `opal-critical-surface-alerts` + SQS
+> `opal-critical-surface-alerts-coo`, Lambda `opal-cot-served-guard`, both `blackdiamond/cot/*` secrets,
+> and S3Key `blackdiamond/cot/session-trigger-mode.json` (a mode-state object in this chain — **not
+> examined, NOT claimed as an R-20 sidecar**).
+>
+> ⛔ **A NUMBER DELIBERATELY NOT REPORTED: the caller chain prints 85, AND THE BLAST RADIUS IS NOT 85.**
+> Depth-1 is the four above; the depth-3 tail (`opal-portal-fear-greed-fetcher`, `finbert-batch-processor`,
+> `opal-news-ai-sentiment`, …) is **transitive shared-resource connectivity — principals, log groups,
+> motifs — NOT invocation.** Quoting 85 would be **a real number attached to the wrong question**, the
+> exact class banked twice today (§G). Recorded here so the figure cannot be picked up later as a total.
+>
+> **⇒ NET: THE LAST VERSION OF "TRACK A IS A SIMPLE CRON EDIT" IS GONE.** Between the producer inversion
+> (§E) and this, the cottonwood remedy is a **design question about a multi-entry event-chained function
+> whose delivery clock moved four days ago** — not a retime. Routed to CTO as input to the ruling they
+> hold. **No shape proposed, no number requested of any seat.**
+>
+> *Method note: the first `comp-blast` used the Terraform module name (`cot_bd_session_trigger`,
+> underscores) and returned **NOT-FOUND over a printed 20,616-node denominator**, explicitly stating
+> "This is a NOT-FOUND, not a 'nothing breaks' clear." **The tool refused to let an absence read as
+> safety** — the correct behaviour, and worth recording as a positive instrument note beside §6's defect.*
+
 > ## ⚠ ADDENDUM 2 — 2026-08-10 ~1450Z. **TRACK A'S PREMISE INVERTED. THE REMEDY SHAPE IS NOW UNKNOWN.**
 >
 > **E · `cot-bd-session-daily-et` DOES NOT WAIT FOR DATA — IT PRODUCES IT.** Measured (`0.7.0_AE`):
