@@ -10,8 +10,13 @@
 # DEFAULT: DENY. A bucket or prefix not named under `allow` is not servable, and the
 # quotable reason is "not on my serving allowlist -- escalate to Andrew to widen it."
 
-version: 0.1
+version: 0.2
 ratified: andrew-direct 2026-08-07 (seed; widening is Andrew-only)
+activation: >
+  portal-bucket READ path ACTIVATED 2026-08-10 -- Andrew Q1 ruling @bc7eb60de ("All recs
+  approved, proceed"), carrier adjudication @55d62ed46 (honesty-layer flip; mechanism is
+  box-local portal_lookup.py, no gateway tool). ycharts NOT covered: staged/held pending
+  Andrew's word. Flip landed by 0.0.0_AB_MSTR~Z as named integrator (OPAL_ANALYST.TO5 role).
 default: deny
 
 allow:
