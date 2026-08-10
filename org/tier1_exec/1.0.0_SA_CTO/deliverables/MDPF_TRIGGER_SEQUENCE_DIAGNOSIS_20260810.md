@@ -1,5 +1,50 @@
 # MDPF trigger/upload sequence — why the served scopes are split across three vintages
 
+> # ⛔⛔⛔ RESOLVED 2026-08-10 ~1525Z — **THE CAUSE IS NOT SCHEDULING. THIS ENTIRE DOCUMENT'S FRAMING IS VOID.**
+>
+> **THE FLOOR RUNS ON TIME EVERY DAY AND THREE OF FOUR SCOPES REFUSE TO EMIT INSIDE IT.**
+> Measured from `mdpf-gold-lambda`'s own log, today's 13:00Z run:
+> ```
+> 13:00:51Z  OK: cross-axis gate PASS (49financial) -- no foreign-day roster across 440 dates
+> 13:00:57Z  SCOPE FAILED (isolated): inflection -- AssertionError:
+>            CROSS-AXIS COHERENCE GATE FAILED (inflection) -- REFUSING TO EMIT
+> 13:00:58Z  SCOPE FAILED (isolated): global -- SystemExit: global fold SKIPPED:
+>            contributing leg(s) ['inflection','cottonwood'] failed this cycle
+> 13:00:59Z  cycle complete: 3/12 A4 objects built; errors=['cottonwood','inflection','global']
+> ```
+> Floor invocations confirmed daily: 08-08 13:00:57Z · 08-09 13:00:57Z · **08-10 13:00:59Z**.
+>
+> ### ⇒ NOTHING IS LATE. NOTHING IS MIS-SCHEDULED. THE SCOPES **REFUSE ON DATA COHERENCE.**
+> **No cron change moves any of them.** The publisher then fires at 13:50Z and **REPUBLISHES THE LAST
+> GOOD CONTENT** — which is why every served object's S3 mtime is **today 13:50:49–51Z** while its
+> `meta.generated_at` still reads **08-07**.
+>
+> ### ⛔ AND THAT IS **R-23's TRAP, RUN IN REVERSE, BY ME.**
+> R-23 warns: *"`aws s3 ls` mtime is a WRITE clock, never a CONTENT vintage."* I did the inverse —
+> **read the CONTENT vintage and never checked the WRITE clock.** Had I checked the write clock on
+> 08-10 before writing §1, the entire schedule investigation would not have started: four objects
+> written today, carrying 08-07 content, is a PRODUCER-REFUSAL signature and it is nothing like a
+> late-intake signature.
+>
+> ### ⚠ AND IT IS DEGRADING, WHICH THE "STABLE 6/12" CONCEALED
+> `08-07 02:17Z` → **6/12**, errors `['cottonwood','global']`, and the log reads
+> *"OK: cross-axis gate PASS (inflection)"*.
+> `08-10 13:00Z` → **3/12**, errors `['cottonwood','inflection','global']` — **inflection has since
+> JOINED the failures.** COO's warning that "the stable 6/12 is covering a MOVED defect" was right,
+> and it has moved again since they wrote it.
+>
+> ### WHAT SURVIVES FROM THIS DOCUMENT
+> §1's **ordering measurement** (four intakes sit after the floor) — a true fact about clocks, now
+> known to be **causally inert** for the observed staleness. §4's discipline (`measured_landing +
+> margin`, never an assumed hour) stands for whenever a schedule is genuinely changed.
+> **EVERYTHING ELSE — the cause column, the target shape, the remedy — IS SUPERSEDED.**
+>
+> ### THE REAL THREAD IS THE ONE ANDREW ALREADY NAMED
+> The cross-axis coherence gate — his stated next-highest priority on 08-07, carried in handoff
+> `@3aac2c3e32`. It is not adjacent to the trigger work; **it IS the work.** And that handoff's
+> do-first is **still unrun and still the cheapest next measurement**: both limbs already PRINT their
+> evidence (`pres[:5]` / `roster[:5]` at `:1590-1594`) with dates and counts. **Nobody has read them.**
+
 **Author:** `1.0.0_SA_CTO` · **2026-08-10 ~13:0xZ** · **Measured at this seat, live**
 **Origin:** Andrew-direct at the base CTO terminal, 2026-08-10, VERBATIM:
 
