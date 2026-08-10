@@ -1,0 +1,80 @@
+{
+  "artifact": "structured_form_joint_package",
+  "version": "1.0",
+  "date": "2026-08-10",
+  "for": "Andrew",
+  "assembled_by": "4.0.0_SA_CRO",
+  "independence_note": "The two censuses were produced INDEPENDENTLY and each stands alone committed. CVO declined co-authorship deliberately: 'a synthesis co-authored by the verifier would soften exactly the independence that makes the combined verdict credible.' This package quotes; it does not restate. Where it and a census disagree, the census wins.",
+  "authority": {
+    "ruling": "ANDREW_DIRECT_20260810_STRUCTURED_MEANS_XML_OR_JSON.md -- 'a structured deliverable is NOT MARKDOWN. If I say we need to qualify SSOT, that means xml or json... Markdown is NOT STRUCTURED.'",
+    "referral": "'analyze not only the atom_decomp framework for unstructured data masquerading as a structured/compilable output, but also apply that same framework to what we're doing with Kimi Semantic Pipeline and Ontology as a whole. I would refer this feedback to CVO so they can analyze that side while you proceed through the atom_decomp process.'"
+  },
+  "censuses": [
+    {
+      "side": "ATOM_DECOMP",
+      "seat": "4.0.0_SA_CRO",
+      "file": "org/tier1_exec/4.0.0_SA_CRO/deliverables/atom_decomp_format_census.v1.json",
+      "masquerade_count": 1,
+      "headline": "The data plane is CSV-tabular (below the bar, not masquerade). The ONE masquerade is load-bearing: THE CLAIM CONTRACT -- the field schema every ledger derives from -- exists only as a markdown table in evidence-model.md."
+    },
+    {
+      "side": "KIMI_PIPELINE_AND_ONTOLOGY",
+      "seat": "3.0.0_SA_CVO",
+      "file": "org/tier1_exec/3.0.0_SA_CVO/deliverables/KIMI_ONTOLOGY_STRUCTURED_FORM_CENSUS_20260810.json",
+      "commit": "abfe77a537",
+      "masquerade_count": 0,
+      "headline": "An honest, boundary-declared negative: every compiled-from source of record is JSON/YAML; every markdown member is a derived render or an honest provenance record with zero programmatic consumers (0/8060 py files, measured). The Kimi daily report is the POSITIVE pattern: absence-as-state everywhere, denominators in-band.",
+      "self_test": "the census passes its own same-fields test mechanically (12/12 rows, identical seven fields, verified pre-commit)"
+    }
+  ],
+  "combined_verdict": "THE DISEASE IS REAL BUT RARE, AND IT CONCENTRATES AT THE SCHEMA-DEFINING LAYER. Both sides' worst instances are schemas that exist only as prose or discipline -- ATOM_DECOMP's claim contract (a markdown table) and SYSTEM_DEFINITIONS' enforcement (perfect 51/51 conformance held by discipline, no control). The cure everywhere is cheap gates and declared schemas, not rewrites.",
+  "findings_and_remedies": [
+    {
+      "id": "F-A1",
+      "side": "ATOM_DECOMP",
+      "finding": "claim contract source-of-record is a markdown table (MASQUERADE); the 13 CSV ledger templates are tabular-unenforced (BELOW_THE_BAR: no types/enums/nesting, short rows parse silently)",
+      "remedy": "claim_contract.schema.json + per-ledger JSON Schemas as source of record; CSV demoted to flat export; evidence-model.md demoted to derived rationale",
+      "route": "the Rule-14 package, through 1.0.0_SA_CTO~A method-owner review (their seven pre-committed criteria)",
+      "state": "QUEUED behind the MDPF instance shape, per the ratified instance-first sequencing"
+    },
+    {
+      "id": "F-C1",
+      "side": "KIMI/ONTOLOGY",
+      "finding": "SYSTEM_DEFINITIONS.yaml STRUCTURED_UNENFORCED -- 51/51 entries conformant TODAY by discipline, not control, while comp-estate --definitions compiles from it",
+      "evidence_quoted": "mechanical parse this session: entries=51, missing-required=NONE (51/51), extras enumerated, statuses {reserved_ratified:49, deprecated:1, contested_unresolved:1}",
+      "remedy": "CVO's 15-line schema check (4 required fields + status-enum + underscore-key rule) as a commit-time lint or fail-loud in the serving tool",
+      "route": "GATE CANDIDATE -- PROPOSED, NOT BUILT. Standing law: no new gate without Andrew's explicit word. This package IS the proposal.",
+      "state": "AT ANDREW"
+    },
+    {
+      "id": "F-C2",
+      "side": "KIMI/ONTOLOGY -> RCG (routed to owner)",
+      "finding": "RULINGS.jsonl carried two field-sets (24x8, 8x5); a missing rendered_effects was indistinguishable from effects-were-none",
+      "state": "CLOSED @35e014bdd8 -- by DECLARATION, not backfill (see process_lessons); CVO validated the close"
+    },
+    {
+      "id": "F-C3",
+      "side": "KIMI/ONTOLOGY",
+      "finding": "the rule bank's catalog line names TWO carriers on one axis (NAMED_THREAD_CATALOG.md + estate-coverage-manifest.yaml) -- a live reconciliation_point by the ratified term's own definition",
+      "remedy": "one sentence in the bank: the yaml/json pair is population SSOT, the .md is naming-act provenance",
+      "route": "the rule bank is exec-locked, landed by its gate owner (CTO lane) -- routed, not landed by either census seat",
+      "state": "ROUTED"
+    }
+  ],
+  "process_lessons": [
+    {
+      "lesson": "DECLARATION OVER BACKFILL: where structured-SSOT (same fields per row) meets an append-only carrier (history is immutable bytes), the carrier's own rules outrank the format ruling -- absence in history is cured by a reading-rule DECLARATION, never by rewriting rows. Measured: the rcg manifest gate REFUSED a content-preserving backfill, and the refusal became the precedent cited inside the landed fix.",
+      "cvo_precision": "the SYSTEM_DEFINITIONS schema gate binds the PRESENT state of a versioned registry; if the file ever grows an append-only history section, that section takes the declaration pattern, not the lint"
+    },
+    {
+      "lesson": "A REFUSED COMMIT'S STAGE IS LIVE RESIDUE: safe-commit stages before the gate fires, and a bare `git checkout -- <file>` restores from the INDEX -- the 'revert' restored the refused edit while reporting success. Restore from HEAD explicitly and verify against the pre-state distribution. Kept in this package as the known_negative proving the revert check discriminates."
+    },
+    {
+      "lesson": "THE RULING'S OWN BOUNDARY, applied consistently on both sides: markdown is banned as an SSOT/compiled-from carrier, not as documentation -- prose rules, rationale and honest provenance records are legitimate; the five frozen contract-records' masquerade RISK was retired by the marker headers landed earlier the same day (live-carrier-wins + do-not-cite-numbers-as-current)."
+    }
+  ],
+  "open_at_andrew": [
+    "F-C1: the SYSTEM_DEFINITIONS schema gate -- build it? (gate candidate, proposed here)",
+    "nothing else in this package requires a ruling; F-A1 rides existing authorizations, F-C2 is closed, F-C3 is routed"
+  ]
+}
