@@ -355,8 +355,8 @@
         },
         "consumer_treats_c2_as_c3": {
           "value": true,
-          "status": "INFERRED",
-          "evidence": "same direct-mapping pattern as other legs; not read"
+          "status": "MEASURED",
+          "evidence": "SOURCE-READ load_rps_custody_history:348-371 @3679bb0353 -- axis date d passed unmodified as the partition date; 0 occurrences of any normalizer across all 2,734 lines. comp-pipescript deployed = MATCH, so the repo file IS the runtime artifact. HARMLESS on this leg only because Schwab labels are accurate -- the same code shape is defective on the orion leg."
         },
         "c4_roster_field": {
           "value": null,
@@ -376,9 +376,9 @@
       },
       "calendar_basis": {
         "basis": {
-          "value": "NYSE_TRADING_DAY",
-          "status": "INFERRED",
-          "evidence": "shares the canonical axis; leg-specific basis not read"
+          "value": "NYSE_TRADING_DAY (axis DATES from lib/_trading_day_calendar; only the FRONTIER is imported from smartx)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:832-835 -> canonical_trading_axis:378-384 trading_days_between(SERVED_AS_OF_FIRST, frontier). Served artifact meta.trading_day_calendar = NYSE/pandas_market_calendars. The CALENDAR and the FRONTIER are separable -- only the frontier is imported."
         },
         "roll_forward_policy": {
           "value": null,
@@ -423,9 +423,9 @@
           "evidence": "G-5"
         },
         "decoy_schedule": {
-          "value": "opal-assets-silver-schwab-sweep-daily cron(15 12)=12:15Z - no-op status UNVERIFIED for this firm",
-          "status": "INFERRED",
-          "evidence": "smartx sweep proven no-op; not re-proven here"
+          "value": "NOT A NO-OP. opal-assets-silver-schwab-sweep-daily 12:15Z runs 113-152 SECONDS every day (8/8), converts 0 partitions, SELF-REPORTS ok=false with a FROZEN 368-partition shortfall (pre==post), and writes 2 objects daily.",
+          "status": "MEASURED",
+          "evidence": "CloudWatch REPORT durations 113289-152039ms across 08-03..08-10. Its own manifest 20260810T121549Z: ok=false, bronze_keys 7438, silver_keys 9063, shortfall_pre 368, shortfall_post 368, holes_named [tcf,tcfx,tnn]. Byte-identical denominators on 08-08 and 08-09 = a STANDING frozen state, not a new break. DO NOT retire it as a decoy without adjudicating the 368."
         }
       },
       "gold": {
@@ -530,9 +530,9 @@
           "evidence": "S3 notification filter + aws s3 ls"
         },
         "writer": {
-          "value": "opal-assets-ingest-mirror (probable)",
-          "status": "INFERRED",
-          "evidence": "1-minute tie-out: mirror 22:30Z -> eclipse silver 22:31Z. NOT source-read. G-7"
+          "value": "opal-assets-ingest-mirror (SINGLE shared function, NOT firm-scoped -- one invocation mirrors all three firms)",
+          "status": "MEASURED",
+          "evidence": "DEPLOYED package CodeSha256 VQ3Rw79KKqPDvOQeY0blyzclC9mFthmpektm0NA5vk4=, 469 lines. MAP row2 :114-120 -> eclipse/inflection/bronze/. Handler :353 iterates MAP+PROVENANCE_RIDERS unconditionally. EXERCISED: CloudWatch 08-10 14:16:00Z prints DENOMINATOR for row eclipse/inflection enumerated=992."
         },
         "c1_write_clock_utc": {
           "value": null,
@@ -646,9 +646,9 @@
           "evidence": "0.7.0_AE_CloudOps~Z landing census"
         },
         "latency_from_bronze_min": {
-          "value": 1,
-          "status": "INFERRED",
-          "evidence": "mirror 22:30 -> silver 22:31; bronze write not directly observed"
+          "value": 0.09,
+          "status": "MEASURED",
+          "evidence": "C1-to-C1 on both artifacts, n=4: 5-6s (median 5s). The inferred value of 1 was a MINUTE-TRUNCATION artifact (22:30 vs 22:31) -- true latency is ~11x smaller."
         },
         "decoy_schedule": {
           "value": "opal-assets-silver-eclipse-sweep-daily cron(0 16)=16:00Z - fires 6h31m BEFORE the actual write; no-op status UNVERIFIED for this firm",
@@ -761,9 +761,9 @@
           "evidence": "S3 notification filter"
         },
         "writer": {
-          "value": "opal-assets-ingest-mirror (probable)",
-          "status": "INFERRED",
-          "evidence": "1-minute tie-out: mirror 14:15Z -> orion silver 14:16Z. NOT source-read. G-7"
+          "value": "opal-assets-ingest-mirror (SINGLE shared function, NOT firm-scoped)",
+          "status": "MEASURED",
+          "evidence": "Same deployed package, MAP row1 :93-113 -> orion/inflection/bronze/. EXERCISED 08-10 14:15:58Z: written=4 verified=4. CROSS-PROOF that neither schedule is firm-scoped: the -inf- 14:15Z rule wrote ECLIPSE bronze (2026-08-06T14:15:59Z) and the -cot- 22:30Z schedule wrote ORION bronze (2026-08-07T22:30:59Z)."
         },
         "c1_write_clock_utc": {
           "value": null,
@@ -818,9 +818,9 @@
           "evidence": "load_inflection_custody_history:405-411 maps axis date d -> partition d directly"
         },
         "consequence": {
-          "value": "IF orion silver is not normalised upstream, MDPF labels inflection custody ONE TRADING DAY LATE across the entire axis, on a client-facing number.",
-          "status": "INFERRED",
-          "evidence": "G-3a: the orion silver WRITER has not been read. Evidence points to not-normalised (asOfDate and _source_as_of both equal the key) but this is NOT confirmed."
+          "value": "CONFIRMED AND LIVE. Orion silver is NOT normalised anywhere, so MDPF labels inflection custody ONE NYSE TRADING DAY LATE across the entire 439-date axis on the SERVED client-facing number -- and the artifact affirmatively declares lag_vs_as_of_days: 0.",
+          "status": "MEASURED",
+          "evidence": "FOUR LEGS. (1) DEPLOYED opal-assets-silver-orion unzipped, 7 files/2408 lines: ZERO matches for normalize_as_of|prior_trading_day|orion_normalize. (2) KILL TEST: Sat 08-08 / Sun 08-09 / Mon 08-10 partitions IDENTICAL on currentPrice+currentValue across 35,262 joined rows, 0 diffs, sum 209,373,343.50 all three; Fri 08-07 vs Sat differs on 31.24% of prices. Write clock: date=2026-08-10 written 14:16:05Z = 10:16 ET, 5h44m BEFORE the 08-10 close, so it CANNOT contain it. (3) vendor pulls land 13:35-13:53Z (pre-close) 08-03..08-10, exactly the regime the SEALED normalizer describes. (4) SERVED TIE-OUT EXACT TO THE CENT: platinum inflection dates[-1]=2026-08-05, partner_custody_total[-1]=209,431,383.43 == independently recomputed sum over orion silver date=2026-08-05. 2026-08-05 is a WEDNESDAY; prior_trading_day = TUESDAY 2026-08-04."
         },
         "c4_roster_field": {
           "value": null,
@@ -877,9 +877,9 @@
           "evidence": "~Z landing census"
         },
         "latency_from_bronze_min": {
-          "value": 1,
-          "status": "INFERRED",
-          "evidence": "mirror 14:15 -> silver 14:16"
+          "value": 0.15,
+          "status": "MEASURED",
+          "evidence": "C1-to-C1, n=7, every orion assets date 08-03..08-10: 8-10s (median 10s). Same minute-truncation artifact."
         },
         "decoy_schedule": {
           "value": "opal-assets-silver-orion-sweep-daily cron(0 16)=16:00Z - fires 1h44m AFTER the actual write; no-op status UNVERIFIED for this firm",
@@ -1122,9 +1122,9 @@
           "evidence": "G-5: bronze 06:00 vs silver 02:00 implies silver PRECEDES bronze - needs resolution"
         },
         "decoy_schedule": {
-          "value": "opal-assets-silver-blackdiamond-sweep-daily cron(0 5)=05:00Z - no-op status UNVERIFIED for this firm",
-          "status": "INFERRED",
-          "evidence": "smartx sweep proven no-op; not re-proven here"
+          "value": "CONVERSION no-op CONFIRMED for this firm (0 units converted, set-identity PASS 814/814, 1.4s) -- but it WRITES a manifest AND rewrites backfill-status.json daily. NOT a wrote-nothing no-op.",
+          "status": "MEASURED",
+          "evidence": "Own manifest 20260810T050009Z: mode sweep, units_seen 0, set_identity_pre == set_identity_post == {expected 814, landed 814, matched 814, verdict PASS}. Deployed mirror_conversion.py write_manifest:831 + write_layer_status:859 are UNCONDITIONAL. Retiring it would silently retire the backfill-status producer."
         }
       },
       "gold": {
@@ -1252,9 +1252,9 @@
       },
       "date_semantics": {
         "c2_partition_meaning": {
-          "value": "DATA_DATE (filename-embedded D)",
-          "status": "INFERRED",
-          "evidence": "HOLDINGS_DAILY_{D} naming; not source-confirmed"
+          "value": "DATA_DATE",
+          "status": "MEASURED",
+          "evidence": "THREE legs, none of them the filename. (a) TEMPORAL IMPOSSIBILITY: the partition is written strictly AFTER D in every observed case (date=2026-08-07 written 2026-08-08T22:31:25Z), so D cannot be a run date. (b) WEEKEND OCCUPANCY with a same-bucket control: 0 of 34 cottonwood partitions since 2026-06-22 fall on a weekend, while orion IN THE SAME BUCKET has 18 of 60 weekend partitions on a flat weekday histogram. A daily-unmasked RUN date produces weekend partitions; a DATA date cannot. (c) the persisted BD query template: dateRangeType Custom, startDate==endDate -- a single-day snapshot on an explicit date parameter, not a run-stamped extract."
         },
         "c3_vintage_field": {
           "value": null,
@@ -1591,9 +1591,9 @@
           "evidence": "Andrew-direct 2026-08-10: 'Global dependent upon the most recent date from all underlying firms... that is the ONLY dependency that should exist'"
         },
         "compliant_with_no_cross_firm_rule": {
-          "value": true,
-          "status": "INFERRED",
-          "evidence": "G-6: PERMITTED IN PRINCIPLE, but whether global's ACTUAL dependency is limited to 'most recent date' or is wider has NOT been read. :1680-1723 pins the cottonwood leg into the headline, which may exceed 'most recent date'."
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "SOURCE-READ :2674-2686 @3679bb0353, deploy-parity MATCH: :2678 arts[FIRM_49F]=build_49f_artifact(); :2682 shared_axis = arts[FIRM_49F]['dates']; :2683 build_inflection_artifact(axis=shared_axis). BUILDING GLOBAL IMPOSES 49F's ENTIRE 439-DATE AXIS ON INFLECTION (served n_dates=439 confirmed). Exceeds Andrew's permission on BOTH counts: the whole axis rather than the most-recent date, and ONE firm's frontier rather than all firms'. >> MY EARLIER CITATION :1680-1723 WAS WRONG -- that is the cottonwood LEG PIN inside _assert_global_composition, a GATE not a data dependency, and it can neither support nor refute this cell."
         },
         "violation": {
           "value": null,
@@ -1867,6 +1867,64 @@
       "status": "MEASURED",
       "severity": "HIGH",
       "note": "Supersedes D-8. Eclipse bronze originator is the EC2 puller pull_eclipse_portfolios.py; the Lambda inf-api-eclipse is Active but INERT (writes bronze/eclipse_qa while the mirror reads bronze/eclipse)."
+    },
+    {
+      "id": "D-14",
+      "summary": "THE RENAME CANNOT PROCEED AS SPECIFIED. opal-assets-ingest-mirror has NO firm selector -- `event` appears 3x in 469 deployed lines (2 docstrings, 1 signature) and is NEVER READ; both triggers hit the same ARN; the cot scheduler passes Input {}. EXERCISED BOTH WAYS: the -inf- rule wrote ECLIPSE bronze and the -cot- schedule wrote ORION bronze. Both are ALL-FIRM passes differing only in time of day.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody",
+        "cottonwood.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "RENAMING TO A FIRM REPRODUCES THE EXACT -cot- DEFECT THE RENAME WAS MEANT TO FIX, IN TWO PLACES INSTEAD OF ONE. Rename on CADENCE (pass1/pass2 or the UTC slot), or add a firm selector to the handler FIRST. Supersedes D-13."
+    },
+    {
+      "id": "D-15",
+      "summary": "THE 2026-08-06 GAP HAS TWO UNRELATED CAUSES, ONE PER LEG. ORION: opal-data-inf/bronze/assets/ carries BOTH .jsonl.gz and .parquet for 08-01..05,07,08,09 and for 08-06 ONLY the .parquet -- the mirror's Ruling-16 guard CORRECTLY refuses .parquet under bronze (CLAUDE.md Rule 17a), so nothing mirrors. The RAW producer skipped the day while the parquet producer ran. ECLIPSE: no 2026-08-06 directory at all; the source producer simply missed it.",
+      "pipelines": [
+        "inflection.custody",
+        "inflection.model",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "BOTH LEGS LAND ON ONE DATE BY UNRELATED FAILURES -- which is exactly why every single-cause diagnosis today failed to close it."
+    },
+    {
+      "id": "D-16",
+      "summary": "THE INGEST MIRROR HAS HARD-FAILED EVERY INVOCATION FOR 14 DAYS -- 81 MirrorRaise events since 2026-07-28, 6/day. `ALIEN SURPLUS on blackdiamond/cottonwood: 687 unexpected key(s)`, because cot-rebalancer-runner writes page_%03d.json DIRECTLY into the mirror's own dst_prefix. Two producers, one prefix.",
+      "pipelines": [
+        "cottonwood.model",
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "Blast radius is narrow -- orion and eclipse precede cottonwood in MAP and complete normally; only the PROVENANCE_RIDERS row never runs (last written 2026-07-14). THE REAL COST IS SIGNAL DESTRUCTION: the mirror's raise contract is the estate's only instrument for 'the object that never arrived', and it has been stuck RED for 14 days, so a genuine NEW failure is now indistinguishable from the standing one."
+    },
+    {
+      "id": "D-17",
+      "summary": "SERVED META MISLABEL: meta.basis reads 'schwab-rps' on the INFLECTION and GLOBAL client-facing artifacts. Inflection's custody leg is orion fact_assets -- contradicted by the SAME artifact's meta.serve_real_custody. 2 of 4 served firm artifacts name the wrong vendor basis.",
+      "pipelines": [
+        "inflection.custody",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "MED"
+    },
+    {
+      "id": "D-18",
+      "summary": "REMEDY POINTER, MEASURED: _model_leg_eclipse:889-895 SELF-DERIVES an axis when axis is None (eclipse INTERSECT orion partitions), so a standalone `--firm inflection` build has NO cross-firm dependency. THE SINGLE FIX POINT FOR THE CROSS-FIRM VIOLATION IS :2682-2683, NOT the leg adapters.",
+      "pipelines": [
+        "global.composition",
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "The inflection legs' cross_firm violation is GLOBAL-INDUCED. This materially shrinks the remediation Andrew ordered."
     }
   ]
 }
