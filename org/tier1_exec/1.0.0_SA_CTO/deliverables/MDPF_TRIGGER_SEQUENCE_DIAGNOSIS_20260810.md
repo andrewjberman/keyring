@@ -123,8 +123,42 @@ records "BD xlsx lands (02:00Z nightly …)". `cot-bd-session-daily-et` fires at
 |---|---|---|---|
 | global | 2026-08-05 | 2026-08-07T03:52:12Z | **inherits inflection** — needs all three legs |
 | inflection | 2026-08-05 | 2026-08-07T03:52:12Z | **cross-axis gate REFUSED it** (not scheduling) |
-| 49financial | 2026-08-06 | 2026-08-07T22:47:09Z | **schedule ordering** (SmartX +15/+30 min) |
-| cottonwood | 2026-08-06 | *(absent)* | **schedule ordering** (+7.5 / +9.5 h) |
+| 49financial | 2026-08-06 | 2026-08-07T22:47:09Z | ~~schedule ordering (SmartX +15/+30 min)~~ **⚠ UNVERIFIED — see below** |
+| cottonwood | 2026-08-06 | *(absent)* | ~~schedule ordering (+7.5 / +9.5 h)~~ **⛔ REFUTED — see below** |
+
+> ## ⛔⛔ THE CAUSE COLUMN IS NOT ESTABLISHED. CORRECTED 2026-08-10 ~1500Z.
+> **`0.7.0_AE_CloudOps` read the source and REFUTED the cottonwood attribution outright.**
+>
+> **`cot-bd-session-trigger` IS AN OIDC SESSION-REFRESH JOB. IT PRODUCES A CREDENTIAL, NOT DATA.**
+> Its docstring (`infra/aws/lambda/cot-pipeline/cot-bd-session-trigger/lambda_function.py:1-23`):
+> *"starts cot-exporter EC2 … headless Playwright OIDC login … writes the SESSION BUNDLE to
+> `blackdiamond/cot/session` via put-secret-value."* A grep of all 330 lines for
+> `forwardfill|export|xlsx|DAILY_` returns **no reference to any data artifact**.
+>
+> **IT IS NOT A LATE INTAKE. IT IS THE PRODUCTION TRIGGER**, and production completes ~90s after it:
+> ```
+> 20:30:00Z  cot-bd-session-daily-et -> cot-bd-session-trigger  (AUTH ONLY)
+> 20:30:17Z  cot-exporter EC2 starts   (measured LaunchTime, 08-09)
+>            SSM opal-cot-bronze-run -> cot_bronze_ingest.py
+>            (:64  FORWARDFILL_PREFIX = "forwardfill_v2")     <- THE REAL PRODUCER
+> 20:31:05Z  forwardfill_v2 xlsx land
+> ```
+>
+> ### ⇒ SO "COTTONWOOD IS A TRADING DAY BEHIND" IS **NOT** EXPLAINED BY THIS SCHEDULE'S PLACEMENT.
+> The ordering FACT in §1 stands — those clocks really do sit after the floor. **What does not stand
+> is my CAUSAL ATTRIBUTION from that ordering to the observed staleness.** A clock sitting after the
+> floor is not evidence that it is *why* a scope is stale, and I wrote the table as though it were.
+> **The real cause of the cottonwood lag is UNKNOWN and is a DIAGNOSIS job, not a cron edit.**
+>
+> ⚠ **AND I AM DOWNGRADING 49FINANCIAL BY THE SAME STANDARD, unprompted.** SmartX firing at
+> 13:15/13:30Z against a 13:00Z floor is a measured ordering fact — but **I never verified that the
+> floor consumes SmartX output directly**, and that is precisely the inferential step that just failed
+> on cottonwood. It is UNVERIFIED until someone reads the floor's inputs.
+>
+> **THE GENERAL FORM, and it is mine:** *an ordering fact and a causal explanation are different
+> claims, and I published the second while having measured only the first.* Schedule times are cheap
+> to measure and causally silent; what a job actually READS AND WRITES requires opening it. Fifth
+> instance this week of reasoning from a description to a mechanism.
 
 ⚠ **THE SPLIT IS THE LOAD-BEARING PART.** Two of the four are a scheduling defect and two are not.
 `global` and `inflection` share a `generated_at` because they were written by the same run, and
