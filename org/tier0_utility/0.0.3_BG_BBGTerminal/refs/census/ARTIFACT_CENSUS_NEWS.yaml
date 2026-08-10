@@ -28,6 +28,11 @@
 #   UNRENDERED: both keyword-history families (720 keys, FROZEN 2026-04-07) -- residue section
 #   DDB: 4 active servable tables (portal_lookup catalog row 5) + 2 dormant = 6
 #   API routes: /api/general/* S3 proxy GETs + POST /v1/sentiment/keyword-intelligence (DDB)
+# CHALLENGE MARKER (CTO~Z directive 20260810T215258Z): Andrew CHALLENGED the frozen/
+# stale findings herein (@d2f2e01d9, VERBATIM "that pipeline operates twice a day every
+# day") -- every frozen/orphaned/stale state claim below is UNRATIFIED-CHALLENGED@d2f2e01d9
+# pending the MSTR~Z ground-truth fork; live-daily claims (trending/sentiment/articles)
+# are NOT challenged. Denominators are live-at-read-time by this census's own boundary.
 vertical: news
 census_vintage: 2026-08-10
 census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4d Stage 1)
@@ -135,7 +140,8 @@ pages:
                 served_route: POST /v1/sentiment/keyword-intelligence {keyword}
                   (sentiment.ts:793-798; API Gateway -> backend QUERY by keyword)
                 canonical: ddb_sources -> opal-keyword-intelligence
-                state: live-but-STALE-for-current-keywords -- EXERCISED 2026-08-10 via
+                state: live-but-STALE-for-current-keywords [UNRATIFIED-CHALLENGED@d2f2e01d9]
+                  -- EXERCISED 2026-08-10 via
                   sanctioned ddb-query on the live user path; 2 of 2 currently-trending
                   keywords ('fund commentaries', 'cyclospora salad fears') return 0 items;
                   historical keywords hold items ('ai' newest generated_date 2026-02-23,
@@ -228,7 +234,8 @@ ddb_sources:
       - {name: gpt_model, type: S, example: "gpt-4o"}
       - {name: created_at, type: S, role: vintage}
   - table: opal-keyword-intelligence
-    state: ACTIVE but NOT writing for current keywords (exercised 2026-08-10 -- see the
+    state: ACTIVE but NOT writing for current keywords [UNRATIFIED-CHALLENGED@d2f2e01d9]
+      (exercised 2026-08-10 -- see the
       KeywordSentimentModal panel row; newest item seen generated_date 2026-02-23;
       generator cron DISABLED, chained after the frozen drilldown)
     item_count_live: 2892 (2026-08-10; 17.8MB)
@@ -273,7 +280,8 @@ ddb_sources:
 # SERVED-BUT-UNRENDERED / FROZEN residue (MECE completion)
 unrendered_artifacts:
   - artifact: json/sentiment/keyword-history-summary/{kw}.json (FAMILY, 360 keys)
-    state: frozen          # LastModified range 2026-01-05 .. 2026-04-07 (COMPLETE listing,
+    state: frozen [UNRATIFIED-CHALLENGED@d2f2e01d9]
+                           # LastModified range 2026-01-05 .. 2026-04-07 (COMPLETE listing,
                            # rail-checked); producer opal-keyword-drilldown-generator cron
                            # DISABLED per comp-estate
     retrieval_evidence: portal_lookup get sentiment keyword-history-summary/ai.json
@@ -283,7 +291,8 @@ unrendered_artifacts:
       component callers (grep over src/, first-hand); current top keyword
       'fund-commentaries' has NO key in the COMPLETE 722-walk -- absence real"
   - artifact: json/sentiment/keyword-history-articles/{kw}.json (FAMILY, 360 keys)
-    state: frozen          # same range 2026-01-05 .. 2026-04-07, same producer
+    state: frozen [UNRATIFIED-CHALLENGED@d2f2e01d9]
+                           # same range 2026-01-05 .. 2026-04-07, same producer
     retrieval_evidence: portal_lookup get sentiment keyword-history-articles/ai.json
       2026-08-10 (15925 bytes; generated_at 2026-01-06T05:44:41Z; fields articles[50] of
       {title, source, url, ...}, total_count 514, showing_count 50)
