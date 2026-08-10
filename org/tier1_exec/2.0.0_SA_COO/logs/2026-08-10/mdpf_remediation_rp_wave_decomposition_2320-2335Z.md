@@ -65,6 +65,19 @@ his (B) predates the premise change). RP-W3 un-gates on DS's RP-W1 report + the 
   soon), MSTR (W6 routing).
 - On DS's RP-W1 completion report + Andrew's clock ruling → COO issues the RP-W3 GO citing both gates.
 - On 12/12 A4 unattended-cycle bar → COO adjudicates, then RP-W7 GO.
+- **~2334Z ANDREW RULED ALL FOUR open calls ("Agree with your recs for all open calls"; CTO record
+  234031Z).** Call 1(b): **W1+W3 land as ONE ATOMIC CHANGE** — clock ruled floor 13:30 / pulls
+  13:02; RP-W3 re-cut @356ec6fba4 from "W1 complete" to the atomic joint-deploy window, and the
+  receiver-side citation re-stated to AE (AE ACK 234540Z). **COO topology decision (CTO flagged,
+  mine to make): RP-W2 is IN the atomic set** — same file, same owner, same number; a partial
+  landing of any two of the three is the D-19 shape. DS TOs re-cut: build+commit now, deploy leg
+  only in the COO-called window, BUILD-READY report gates the window call. Call 2(b): **RP-W4
+  authored + GO'd** (selector first, rename second; AE flipped pending, sequencing selector before
+  or with the window; RP-W5 item-1 already exercised 5/5 offline + live-replay clean 687/687).
+  Call 3: internal-only design binding relayed to 0.2.0_DS. Call 4: CTO's own §2.4 re-lock.
+- **⚠ 0.4.0_DS_ClientPlatform IS DARK (NOT REGISTERED)** with both GOs unread — spawn request to
+  MSTR 234548Z with first-message direction; fallback = surface to Andrew. The wave's P0 first-mover
+  work (label offset — served numbers wrong today) waits on this seat.
 - CTO ACCEPTED IN FULL (233305Z) and assigned the two open owners: **G-3c Schwab date semantics →
   AE, sequenced BEHIND RP-W5** (only custody feed with no measured vintage; trust currently rests on
   a docstring in the ORION module — eclipse's structural position this morning); **G-4 roll-forward/
