@@ -1,5 +1,52 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⛔⛔ ADDENDUM 6 — 2026-08-10 ~1755Z. **"CAUSALLY INERT" IS WITHDRAWN. THE ORDERING MECHANISM IS LIVE.**
+>
+> **EVERY EARLIER STATEMENT IN THIS DOCUMENT THAT THE FOUR-INTAKES MEASUREMENT IS "CAUSALLY INERT"
+> (§H, Addendum 2, Addendum 3, the session logs) IS STRUCK.** `1.0.0_SA_CTO` ruled the mechanism
+> **LIVE** and corrected their own 1550Z stand-down. **Right about PUNCTUALITY, wrong about ORDERING:
+> the floor is NOT LATE — it is 40 MINUTES EARLY RELATIVE TO ITS OWN AXIS SOURCE.**
+> Not *"the data is too old"* but **"the floor picks the axis BEFORE the axis source lands."**
+>
+> **R · WHY THE ORDERING IS DECISIVE RATHER THAN INCIDENTAL — source-verified by CTO, who declined to
+> rule on a relayed quote:** `:833` `frontier = aum_days[-1]` over the **latest partition present at
+> read time**; `:589` *"Middle published-only gaps stay honest-None… **ONLY the frontier is set**."*
+> ⇒ **THE COUNT IS STAMPED ONLY AT THE FRONTIER, so a count/value disagreement can ONLY occur AT THE
+> FRONTIER.** The gap does not merely shift a date — **it chooses WHICH date carries the only count in
+> the series.** Three conditions coincide, and removing any one kills it: **(a)** floor 13:00Z vs
+> SmartX ~13:40Z ⇒ reads yesterday's partition daily · **(b)** it is a **MONDAY** ⇒ yesterday's is
+> **Sunday's**, carrying **Thursday 08-06** · **(c)** inflection has a genuine hole at **exactly**
+> 08-06. *(08-07 passed because the frontier was then 08-05, which inflection has.)*
+>
+> **S · THE REMEDY SPLITS, AND ONLY ONE HALF SELF-HEALS.**
+> | half | state |
+> |---|---|
+> | **1 · THE GATE FAILURE** | **PREDICTED to SELF-HEAL on Tuesday's scheduled cycle, at ZERO COST** — it reads `date=2026-08-10` (day-max **08-07**), which inflection HAS on both legs; and 08-06 stops being the frontier so it takes no count. **All seven disagreements resolve.** ⛔ **A prediction that measures itself in ~20 hours for free is NOT converted into a request that Andrew revisit a ruling.** *(PREDICTION, carrying AE's fence: other limbs could refuse.)* |
+> | **2 · A PERMANENT ONE-TRADING-DAY LAG** | **DOES NOT self-heal.** Tuesday's floor reads Monday's partition (day-max 08-07) while **Tuesday's own carries 08-10** ⇒ **the floor serves D-2 when D-1 is available, EVERY DAY.** **The weekend is why it BROKE; the ordering is why it is ALWAYS A DAY SHORT.** |
+> >> **HALF 2 IS EXACTLY WHAT ANDREW OBSERVED THIS MORNING** — *"All of them should be on August 7th at
+> > this point."* **He was right, and the 40-minute gap is why they are not.** The gate failure is the
+> > loud symptom; **the one-day lag is the thing he actually noticed, and it survives the self-heal.**
+> ⛔ **DO NOT PRESENT "MOVE THE FLOOR LATER" AS THE FIX.** The remedy space is **wider than the floor's
+> clock** (read the axis source from the day's own partition; derive the frontier differently), and
+> framing it as a floor-move **narrows his options to the one he already declined at (B).** CTO holds
+> half 2 at his terminal; **nothing is owed upward from this seat.**
+>
+> **T · 49F's "PASS" IS NOT A BILL OF HEALTH — struck at BOTH seats.** Limb **(v)** — *the exact limb
+> that fails inflection* — is **SKIPPED** for 49financial (`:1562-1567`), and the log says so:
+> *"RETAINED STRUCTURAL EXPOSURE… not a clean result."* **I used the 440-date PASS as a control in my
+> sequencing and CTO quoted it as a clean control in the diagnosis. Same error, both seats, struck in
+> both.** Also live: CONFLICT-not-overwritten on three 49F objects; `L-1 key-set assertion DEFERRED`.
+>
+> **U · A FALSE OUTAGE WAS CALLED AND SELF-CAUGHT — the control WORKING, recorded as such.** AE
+> reported 49F's axis feed *"stopped advancing 2026-08-06."* **FALSE: 08-08/08-09 are a SATURDAY and a
+> SUNDAY**, and row counts **GROW** across the window (4398 → 4422) — *a frozen feed does not add rows.*
+> **CLAUDE.md's FIRST never-rule names this exact scenario.** AE **had already computed 08-09=Sunday
+> hours earlier, held the fact, and did not apply it** — *what was missing was the CALENDAR FRAME, not
+> a measurement.* **Self-caught and unwound before it propagated; I never carried it onward.** ⚠ **CTO
+> owns the amplification** — they called it the best-grounded fact of the day and put it in front of
+> Andrew. *Recorded because a self-caught false outage is the control succeeding, and burying it would
+> teach the opposite of what today taught.*
+
 > ## ⚠ ADDENDUM 5 — 2026-08-10 ~1700Z. **PRIORITY RESET BY ANDREW; ONE DECLARED GAP WITH A NAMED OWNER.**
 >
 > **N · ANDREW-DIRECT ×3 (~1620Z) — THE REPAIR IS THE MAIN FABRIC PRIORITY.** Record @5b14d993f2,
