@@ -28,11 +28,15 @@
 #   UNRENDERED: both keyword-history families (720 keys, FROZEN 2026-04-07) -- residue section
 #   DDB: 4 active servable tables (portal_lookup catalog row 5) + 2 dormant = 6
 #   API routes: /api/general/* S3 proxy GETs + POST /v1/sentiment/keyword-intelligence (DDB)
-# CHALLENGE MARKER (CTO~Z directive 20260810T215258Z): Andrew CHALLENGED the frozen/
-# stale findings herein (@d2f2e01d9, VERBATIM "that pipeline operates twice a day every
-# day") -- every frozen/orphaned/stale state claim below is UNRATIFIED-CHALLENGED@d2f2e01d9
-# pending the MSTR~Z ground-truth fork; live-daily claims (trending/sentiment/articles)
-# are NOT challenged. Denominators are live-at-read-time by this census's own boundary.
+# CHALLENGE RESOLVED (fork verdict @c24cc4cab, 2026-08-10): Andrew's challenge
+# (@d2f2e01d9) adjudicated by the MSTR~Z ground-truth fork. F1 (frozen intelligence /
+# empty modal) REFUTED and CORRECTED below -- opal-keyword-intelligence receives ~20
+# items/day through today (2,892/2,892 scanned by the fork); this census's 2026-02-23
+# "newest" was the table's OLDEST date read at the wrong end of the sort, and the 2/2
+# empty keyword probes fell in the GPT-normalization exact-match non-overlap (5/44
+# exact on the day), not a dead generator. Surviving residual: THIN EXACT-MATCH
+# KEYWORD COVERAGE (5/44). F2 (720 history keys frozen 04-07, zero component callers)
+# CONFIRMED@c24cc4cab. F3 reduced to a producer-comment nit (latest.json fresh daily).
 vertical: news
 census_vintage: 2026-08-10
 census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4d Stage 1)
@@ -140,14 +144,15 @@ pages:
                 served_route: POST /v1/sentiment/keyword-intelligence {keyword}
                   (sentiment.ts:793-798; API Gateway -> backend QUERY by keyword)
                 canonical: ddb_sources -> opal-keyword-intelligence
-                state: live-but-STALE-for-current-keywords [UNRATIFIED-CHALLENGED@d2f2e01d9]
-                  -- EXERCISED 2026-08-10 via
-                  sanctioned ddb-query on the live user path; 2 of 2 currently-trending
-                  keywords ('fund commentaries', 'cyclospora salad fears') return 0 items;
-                  historical keywords hold items ('ai' newest generated_date 2026-02-23,
-                  'apple' 1 item) -- the modal drilldown renders EMPTY intelligence for
-                  today's Daily Cloud keywords (generator cron DISABLED, chained after the
-                  04-07-frozen drilldown; mechanism INFERRED, cron facts per comp-estate)
+                state: live -- CORRECTED@c24cc4cab (prior STALE claim REFUTED by the
+                  ground-truth fork; the table receives ~20 items/day through today).
+                  Residual finding (SURVIVING): thin exact-match keyword coverage -- only
+                  5/44 of the day's Daily Cloud keywords have an exact-key intelligence
+                  item (GPT normalization renames the rest); the modal covers the gap with
+                  a 7-day fallback + evolving card. This census's 2/2 empty probes
+                  ('fund commentaries', 'cyclospora salad fears') measured that
+                  non-overlap, not generator death; its '2026-02-23 newest' was the
+                  OLDEST end of the sort (method lesson, logged)
           - panel: "Fear & Greed"
             render_evidence: SentimentGauge.tsx:169-183 (container title :169, click opens
               FearGreedModal :172/:364-369, EmotionalIntensityMeter gauge :175-181; fetch
@@ -234,10 +239,12 @@ ddb_sources:
       - {name: gpt_model, type: S, example: "gpt-4o"}
       - {name: created_at, type: S, role: vintage}
   - table: opal-keyword-intelligence
-    state: ACTIVE but NOT writing for current keywords [UNRATIFIED-CHALLENGED@d2f2e01d9]
-      (exercised 2026-08-10 -- see the
-      KeywordSentimentModal panel row; newest item seen generated_date 2026-02-23;
-      generator cron DISABLED, chained after the frozen drilldown)
+    state: ACTIVE, live-writing ~20 items/day through today -- CORRECTED@c24cc4cab (fork
+      full-scan 2,892/2,892; prior NOT-writing claim REFUTED: 2026-02-23 was the OLDEST
+      date read at the wrong end of the sort, and this census's QUERY-only probes
+      structurally could not see the sort's far end -- constraint-vs-instrument gap.
+      Residual: thin per-day exact-match keyword coverage, 5/44 exact -- see the
+      KeywordSentimentModal panel row)
     item_count_live: 2892 (2026-08-10; 17.8MB)
     query_pattern: QUERY by keyword (hash) -- or by date via GSI date-index
     lineage: keyword-intelligence-generator (GPT, reads keyword-sentiments.json +
@@ -280,7 +287,7 @@ ddb_sources:
 # SERVED-BUT-UNRENDERED / FROZEN residue (MECE completion)
 unrendered_artifacts:
   - artifact: json/sentiment/keyword-history-summary/{kw}.json (FAMILY, 360 keys)
-    state: frozen [UNRATIFIED-CHALLENGED@d2f2e01d9]
+    state: frozen [CONFIRMED@c24cc4cab -- dead since 04-07 AND unused; low impact]
                            # LastModified range 2026-01-05 .. 2026-04-07 (COMPLETE listing,
                            # rail-checked); producer opal-keyword-drilldown-generator cron
                            # DISABLED per comp-estate
@@ -291,7 +298,7 @@ unrendered_artifacts:
       component callers (grep over src/, first-hand); current top keyword
       'fund-commentaries' has NO key in the COMPLETE 722-walk -- absence real"
   - artifact: json/sentiment/keyword-history-articles/{kw}.json (FAMILY, 360 keys)
-    state: frozen [UNRATIFIED-CHALLENGED@d2f2e01d9]
+    state: frozen [CONFIRMED@c24cc4cab -- same verdict as the summary family]
                            # same range 2026-01-05 .. 2026-04-07, same producer
     retrieval_evidence: portal_lookup get sentiment keyword-history-articles/ai.json
       2026-08-10 (15925 bytes; generated_at 2026-01-06T05:44:41Z; fields articles[50] of
