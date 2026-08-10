@@ -1,0 +1,1820 @@
+{
+  "schema_version": "1.0",
+  "artifact": "MDPF_PIPELINE_TRUTH",
+  "generated_utc": "2026-08-10T19:05:00Z",
+  "generated_by": "1.0.0_SA_CTO",
+  "commissioned_by": "Andrew-direct 2026-08-10 (CTO terminal)",
+  "purpose": "Machine-consistent ingestion-to-serving assessment. EVERY pipeline carries the IDENTICAL field set so that a null IS the hole and gaps are comparable across firms by construction. Prose companion: docs/architecture/MDPF_PIPELINE_TRUTH.md (supplementary, never authoritative over this file).",
+  "conventions": {
+    "cell_shape": "Every assessed cell is {value, status, evidence}. NO BARE VALUES. A cell with status != MEASURED must never be cited as fact.",
+    "status_enum": {
+      "MEASURED": "read from the live artifact/API/source at a stated time; evidence names the call or file:line",
+      "INFERRED": "derived from measured facts but not directly observed; NON-ACTIONABLE per CLAUDE.md Rule 22",
+      "UNMEASURED": "not yet read; evidence names the exact call that would fill it",
+      "NOT_MEASURABLE": "no instrument can answer it from this artifact; evidence says why"
+    },
+    "clock_taxonomy": {
+      "C1_write_clock": "S3 LastModified - when WE wrote it. Says nothing about content.",
+      "C2_partition_key": "the date= segment. RUN date or DATA date - VARIES BY ARTIFACT AND NOTHING DECLARES IT.",
+      "C3_data_vintage": "the as-of INSIDE the file. The only real answer to 'what day is this about'.",
+      "C4_roster_date": "which day's membership was used. Only cottonwood has one today."
+    },
+    "independence_rule": "A provenance field is EVIDENCE only if it can DISAGREE with the partition key. A field we write from the key, or a vendor field that echoes the request, is DECORATIVE - record independent=false."
+  },
+  "pipelines": [
+    {
+      "pipeline_id": "49financial.model",
+      "firm": "49financial",
+      "leg": "model",
+      "vendor": "SmartX",
+      "is_axis_source": true,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "smartx-jwt-refresher-daily",
+              "type": "scheduler",
+              "expr": "cron(0 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:00",
+              "enabled": true
+            },
+            {
+              "name": "smartx-rest-pull-daily",
+              "type": "scheduler",
+              "expr": "cron(15 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:15",
+              "enabled": true
+            },
+            {
+              "name": "smartx-assets-daily-pull-daily",
+              "type": "scheduler",
+              "expr": "cron(30 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule per name; 16 schedules materialised"
+        },
+        "observed_run_utc": {
+          "value": {
+            "smartx-rest-pull": "13:17:28",
+            "smartx-assets-daily-pull": "13:30:51"
+          },
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps CloudWatch, 2026-08-10"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/smartx/platform/bronze/",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "writer": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2: attribute the writer of smartx bronze"
+        },
+        "c1_write_clock_utc": {
+          "value": "13:36:31",
+          "status": "MEASURED",
+          "evidence": "models_summary/20260810/summary.json LastModified 2026-08-10"
+        },
+        "key_grammar": {
+          "value": "models_summary/{YYYYMMDD}/summary.json",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2: open the newest bronze file, name the vendor as-of field"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "silver date=2026-08-10 carries day-max 2026-08-07; 6-partition table read from parquet"
+        },
+        "c3_vintage_field": {
+          "value": "day",
+          "status": "MEASURED",
+          "evidence": "gold lambda log 'day 2021-09-02..2026-08-07' + parquet read"
+        },
+        "offset_label_to_vintage": {
+          "value": "T+1 (partition date=D carries prior trading day)",
+          "status": "MEASURED",
+          "evidence": "6/6 partitions 08-05..08-10, weekend-correct"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no smartx normalizer found"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero occurrences of normalize_as_of in dim_mdpf_aggregate_aua_timeseries.py"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:833 frontier=aum_days[-1] of LATEST PARTITION PRESENT"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c: column list not read for this leg"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "NYSE_TRADING_DAY",
+          "status": "MEASURED",
+          "evidence": "canonical_trading_axis(frontier)"
+        },
+        "roll_forward_policy": {
+          "value": "none",
+          "status": "MEASURED",
+          "evidence": "no carry on this leg"
+        },
+        "known_calendar_defect": {
+          "value": "aum_daily carries 1 non-canonical day ['2025-01-09']",
+          "status": "MEASURED",
+          "evidence": "producer FINDING axis diff line, 2026-08-10"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/smartx/platform/silver/",
+          "status": "MEASURED",
+          "evidence": "SMARTX_SILVER:72"
+        },
+        "writer": {
+          "value": "opal-assets-silver-smartx",
+          "status": "MEASURED",
+          "evidence": "function stdout lists every key written; rows=4422 ties to parquet"
+        },
+        "trigger_type": {
+          "value": "UNIDENTIFIED",
+          "status": "UNMEASURED",
+          "evidence": "G-1a: NOT a bucket notification (8/8 configs read, smartx absent) and NOT an EventBridge rule (139 rules scanned, none targets it). Remaining candidate: direct identity-based invoke by smartx-assets-daily-pull (finished 76s earlier). Needs a code read of the pull."
+        },
+        "trigger_name": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-1a"
+        },
+        "c1_write_clock_utc": {
+          "value": "13:41:51",
+          "status": "MEASURED",
+          "evidence": "opal-assets-silver-smartx log 2026-08-10"
+        },
+        "latency_from_bronze_min": {
+          "value": 5.3,
+          "status": "MEASURED",
+          "evidence": "bronze 13:36:31 -> silver 13:41:51"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-smartx-sweep-daily cron(0 16)=16:00Z is a NO-OP: 668ms, zero output, wrote nothing",
+          "status": "MEASURED",
+          "evidence": "full sweep invocation log 2026-08-10 16:00:12Z"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "self (smartx fact_model_aum_daily)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": "BY_COINCIDENCE",
+          "status": "MEASURED",
+          "evidence": "its own feed happens to be the shared axis; not compliant by construction"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - it is the source, not the importer"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": ":1562-1567 SKIPPED for 49financial; producer log 'RETAINED STRUCTURAL EXPOSURE ... not a clean result'"
+        },
+        "last_verdict": {
+          "value": "PASS (440 dates) - NOT A CLEAN PASS, limb (v) could not fail",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:51Z stream line 161"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "publisher summary 2026-08-10 13:50:48Z"
+        },
+        "open_defects": {
+          "value": [
+            "CONFLICT-not-overwritten on 3 objects",
+            "limb (v) skipped"
+          ],
+          "status": "MEASURED",
+          "evidence": "producer stream 2026-08-10"
+        }
+      }
+    },
+    {
+      "pipeline_id": "49financial.custody",
+      "firm": "49financial",
+      "leg": "custody",
+      "vendor": "Schwab",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "canonical-schwab-si2-08242234-daily-pull",
+              "type": "rule",
+              "expr": "cron(15 10,22 * * ? *)",
+              "tz": "UTC",
+              "utc": "10:15,22:15",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events list_rules, 139 materialised"
+        },
+        "observed_run_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/schwab/08242234/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "key_grammar": {
+          "value": "*.zip",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix filter"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c"
+        },
+        "c3_vintage_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c"
+        },
+        "offset_label_to_vintage": {
+          "value": "labels are ACCURATE (no offset)",
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof.py:133 'never call on schwab/bd -- their labels are accurate'"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "explicitly excluded by the orion normalizer"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed per above"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "INFERRED",
+          "evidence": "same direct-mapping pattern as other legs; not read"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c: column list not read for this leg"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "NYSE_TRADING_DAY",
+          "status": "INFERRED",
+          "evidence": "shares the canonical axis; leg-specific basis not read"
+        },
+        "roll_forward_policy": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-4"
+        },
+        "known_calendar_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-4"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/schwab/08242234/silver/fact_rps_s2",
+          "status": "MEASURED",
+          "evidence": "SCHWAB_SILVER:73"
+        },
+        "writer": {
+          "value": "opal-assets-silver-schwab",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on schwab/08242234/bronze/ suffix .zip"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        },
+        "latency_from_bronze_min": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-schwab-sweep-daily cron(15 12)=12:15Z - no-op status UNVERIFIED for this firm",
+          "status": "INFERRED",
+          "evidence": "smartx sweep proven no-op; not re-proven here"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (load_rps_custody_history:939)",
+          "status": "MEASURED",
+          "evidence": "source read"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx (shared)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": "BY_COINCIDENCE",
+          "status": "MEASURED",
+          "evidence": "same firm as the axis source"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "49F skipped, :1562-1567"
+        },
+        "last_verdict": {
+          "value": "n/a (folded into 49financial scope)",
+          "status": "MEASURED",
+          "evidence": "scope-level gate"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "49financial scope, publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [],
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        }
+      }
+    },
+    {
+      "pipeline_id": "inflection.model",
+      "firm": "inflection",
+      "leg": "model",
+      "vendor": "Eclipse",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "inf-api-eclipse-daily",
+              "type": "rule",
+              "expr": "cron(33 13 * * ? *)",
+              "tz": "UTC",
+              "utc": "13:33",
+              "enabled": true
+            },
+            {
+              "name": "opal-assets-ingest-mirror-cot-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 18 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "22:30",
+              "enabled": true,
+              "NAME_DEFECT": "named -cot- but performs INFLECTION intake; handler iterates MAP+PROVENANCE_RIDERS unconditionally"
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events + scheduler enumeration; name defect source-confirmed by 2.0.0_SA_COO at handler :353"
+        },
+        "observed_run_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/eclipse/inflection/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter + aws s3 ls"
+        },
+        "writer": {
+          "value": "opal-assets-ingest-mirror (probable)",
+          "status": "INFERRED",
+          "evidence": "1-minute tie-out: mirror 22:30Z -> eclipse silver 22:31Z. NOT source-read. G-7"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "key_grammar": {
+          "value": "{YYYY-MM-DD}/*.json",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls shows date-named prefixes"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "UNDETERMINED",
+          "status": "NOT_MEASURABLE",
+          "evidence": "G-3b: 62 columns, NO vendor-native as-of. Only as-of-shaped field is _source_as_of which is OUR copy of the key. MUST NOT be inferred from orion - the normalizer is explicitly Orion-only."
+        },
+        "c3_vintage_field": {
+          "value": null,
+          "status": "NOT_MEASURABLE",
+          "evidence": "no vendor as-of exists in the artifact"
+        },
+        "offset_label_to_vintage": {
+          "value": null,
+          "status": "NOT_MEASURABLE",
+          "evidence": "G-3b - needs eclipse ingest source or vendor probe"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no eclipse normalizer found"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero normalize_as_of occurrences in the gold builder"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "load_inflection_model_history:459-466 maps axis date d -> partition d directly"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "inherits 49F axis (VIOLATION)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis; route_bindings.yaml:33 forbids sibling-axis import"
+        },
+        "roll_forward_policy": {
+          "value": "NAMED GAP, no interpolation",
+          "status": "MEASURED",
+          "evidence": "load_inflection_model_history docstring"
+        },
+        "known_calendar_defect": {
+          "value": "date=2026-08-06 partition ABSENT (08-05 -> 08-07 jump, both neighbours present)",
+          "status": "MEASURED",
+          "evidence": "eclipse silver listing 2026-08-10"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/eclipse/inflection/silver/fact_portfolios_full",
+          "status": "MEASURED",
+          "evidence": "ECLIPSE_SILVER"
+        },
+        "writer": {
+          "value": "opal-assets-silver-eclipse",
+          "status": "MEASURED",
+          "evidence": "S3 notification config + time tie-out"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on eclipse/inflection/bronze/ suffix .json"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "22:31",
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps~Z landing census"
+        },
+        "latency_from_bronze_min": {
+          "value": 1,
+          "status": "INFERRED",
+          "evidence": "mirror 22:30 -> silver 22:31; bronze write not directly observed"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-eclipse-sweep-daily cron(0 16)=16:00Z - fires 6h31m BEFORE the actual write; no-op status UNVERIFIED for this firm",
+          "status": "MEASURED",
+          "evidence": "schedule vs observed landing"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - gate refused to emit"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx fact_model_aum_daily",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10 prohibits it; route_bindings.yaml:33 already forbade it"
+        },
+        "violation": {
+          "value": "IMPORTS 49F AXIS. Direct cause of the 2026-08-10 refusal: frontier landed on 08-06, a date inflection never carried.",
+          "status": "MEASURED",
+          "evidence": "gate log + axis source read"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "producer log"
+        },
+        "last_verdict": {
+          "value": "FAIL limb (v): 7 presence disagreements across 1 date (2026-08-06), 7 of 7 model keys",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:57Z stream, 437 lines"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "publisher summary 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "date=2026-08-06 absent",
+            "ROW11 frontier-stamp stale (wears 08-06, measured as of 08-04)"
+          ],
+          "status": "MEASURED",
+          "evidence": "producer stream"
+        }
+      }
+    },
+    {
+      "pipeline_id": "inflection.custody",
+      "firm": "inflection",
+      "leg": "custody",
+      "vendor": "Orion",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "inf-api-assets-v2-daily",
+              "type": "rule",
+              "expr": "cron(32 13 * * ? *)",
+              "tz": "UTC",
+              "utc": "13:32",
+              "enabled": true
+            },
+            {
+              "name": "opal-assets-ingest-mirror-inf-daily",
+              "type": "rule",
+              "expr": "cron(15 14 * * ? *)",
+              "tz": "UTC",
+              "utc": "14:15",
+              "enabled": true,
+              "NAME_DEFECT": "does not name its pull location (orion); collides conceptually with the -cot- mirror that does eclipse"
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events list_rules"
+        },
+        "observed_run_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/orion/inflection/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": "opal-assets-ingest-mirror (probable)",
+          "status": "INFERRED",
+          "evidence": "1-minute tie-out: mirror 14:15Z -> orion silver 14:16Z. NOT source-read. G-7"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "key_grammar": {
+          "value": "*.jsonl.gz",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix filter"
+        },
+        "c3_provenance_field": {
+          "value": "asOfDate",
+          "status": "MEASURED",
+          "evidence": "silver date=2026-08-07 read, distinct=1"
+        },
+        "c3_provenance_independent": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "DECORATIVE: asOfDate ECHOES THE REQUEST (~Z P0-2R: 'asking for 08-07 returns asOfDate 2026-08-07 whatever the data is'). _source_as_of is OUR copy of the partition key (mirror_conversion.py:430)."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE (forward-labeled)",
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof.py:128-138 SEALED 2026-07-02: 'Orion pre-open forward-labels the prior settled close as the run-date'"
+        },
+        "c3_vintage_field": {
+          "value": "NONE - true vintage appears nowhere in the artifact",
+          "status": "MEASURED",
+          "evidence": "recovered only by subtracting a trading day downstream"
+        },
+        "offset_label_to_vintage": {
+          "value": "MINUS 1 NYSE TRADING DAY",
+          "status": "MEASURED",
+          "evidence": "orion_normalize_as_of = prior_trading_day"
+        },
+        "normalizer_exists": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "data/inf/scripts/silver/_orion_vendor_asof.py orion_normalize_as_of"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "ZERO occurrences of orion_normalize_as_of / prior_trading_day in dim_mdpf_aggregate_aua_timeseries.py"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "load_inflection_custody_history:405-411 maps axis date d -> partition d directly"
+        },
+        "consequence": {
+          "value": "IF orion silver is not normalised upstream, MDPF labels inflection custody ONE TRADING DAY LATE across the entire axis, on a client-facing number.",
+          "status": "INFERRED",
+          "evidence": "G-3a: the orion silver WRITER has not been read. Evidence points to not-normalised (asOfDate and _source_as_of both equal the key) but this is NOT confirmed."
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "inherits 49F axis (VIOLATION)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "roll_forward_policy": {
+          "value": "None at a date with no partition (honest-None)",
+          "status": "MEASURED",
+          "evidence": "load_inflection_custody_history:397-413"
+        },
+        "known_calendar_defect": {
+          "value": "date=2026-08-06 ABSENT; 439/440 axis dates covered, 1 named gap",
+          "status": "MEASURED",
+          "evidence": "producer log 2026-08-10"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/orion/inflection/silver/fact_assets",
+          "status": "MEASURED",
+          "evidence": "ORION_SILVER:75"
+        },
+        "writer": {
+          "value": "opal-assets-silver-orion",
+          "status": "MEASURED",
+          "evidence": "S3 notification config + time tie-out"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on orion/inflection/bronze/ suffix .jsonl.gz"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "14:16",
+          "status": "MEASURED",
+          "evidence": "~Z landing census"
+        },
+        "latency_from_bronze_min": {
+          "value": 1,
+          "status": "INFERRED",
+          "evidence": "mirror 14:15 -> silver 14:16"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-orion-sweep-daily cron(0 16)=16:00Z - fires 1h44m AFTER the actual write; no-op status UNVERIFIED for this firm",
+          "status": "MEASURED",
+          "evidence": "schedule vs observed landing"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - scope refused"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx fact_model_aum_daily",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10"
+        },
+        "violation": {
+          "value": "IMPORTS 49F AXIS",
+          "status": "MEASURED",
+          "evidence": "same as inflection.model"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "producer log"
+        },
+        "last_verdict": {
+          "value": "contributes to inflection scope FAIL",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 stream"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "inflection scope, publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "date=2026-08-06 absent",
+            "orion label offset not applied by MDPF"
+          ],
+          "status": "MEASURED",
+          "evidence": "above"
+        }
+      }
+    },
+    {
+      "pipeline_id": "cottonwood.model",
+      "firm": "cottonwood",
+      "leg": "model",
+      "vendor": "BlackDiamond",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "cot-rebalancer-runner-daily",
+              "type": "rule",
+              "expr": "cron(0 6 * * ? *)",
+              "tz": "UTC",
+              "utc": "06:00",
+              "enabled": true
+            },
+            {
+              "name": "cot-bd-session-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 16 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "20:30",
+              "enabled": true
+            },
+            {
+              "name": "cot-etf-ownership-daily-schedule",
+              "type": "rule",
+              "expr": "cron(30 10 * * ? *)",
+              "tz": "UTC",
+              "utc": "10:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events + scheduler enumeration"
+        },
+        "observed_run_utc": {
+          "value": {
+            "cot-rebalancer-runner": "06:00"
+          },
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps landing census, n=1229 over 6 days"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": "cot-rebalancer-runner",
+          "status": "MEASURED",
+          "evidence": "CTO ruling 2026-08-07; key signature 'page_%03d.json' at lambda_function.py:259"
+        },
+        "c1_write_clock_utc": {
+          "value": "06:00:44",
+          "status": "MEASURED",
+          "evidence": "AE landing census"
+        },
+        "key_grammar": {
+          "value": "*.xlsx (silver trigger) + page_%03d.json",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix + producer source"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2: open the newest bronze xlsx, name the vendor as-of"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "13/13 gold partitions read: date=2026-08-08 carries value_date 2026-08-06"
+        },
+        "c3_vintage_field": {
+          "value": "value_date",
+          "status": "MEASURED",
+          "evidence": "parquet read, constant per partition"
+        },
+        "c4_roster_field": {
+          "value": "assignment_date",
+          "status": "MEASURED",
+          "evidence": "parquet read; ONLY firm with a C4"
+        },
+        "offset_label_to_vintage": {
+          "value": "VARIABLE (D+1 to D+2, and re-runs mint duplicate partitions per value_date)",
+          "status": "MEASURED",
+          "evidence": "13-partition table"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof explicitly excludes bd: 'their labels are accurate'"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice re-keys on value_date (G7 re-key) - CORRECT PATTERN"
+        },
+        "known_defect": {
+          "value": "the re-key groups on C3 alone and asserts dollar equality, collapsing C3+C4 onto one axis (Rule 24 ii). Andrew ruled POINT-IN-TIME 2026-08-10; remedy is group[-1] -> group[0].",
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice.py:269-292"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "OWN measured frontier (self_derived_axis) - ON PATTERN",
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice.py self_derived_axis, ruling @440d16e018"
+        },
+        "roll_forward_policy": {
+          "value": "CARRY WINDOW, roster-derived, D+2 measured 14/14",
+          "status": "MEASURED",
+          "evidence": ":1837-1873"
+        },
+        "known_calendar_defect": {
+          "value": "R-21: point_class asserts 'measured' on rows whose cottonwood component is CARRIED",
+          "status": "MEASURED",
+          "evidence": "MDPF_REMEDIATION_REGISTER R-21"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_model_{roster,blend,assignment}",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "writer": {
+          "value": "opal-assets-silver-blackdiamond",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on blackdiamond/cottonwood/bronze/ suffix .xlsx"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "02:00:5x",
+          "status": "MEASURED",
+          "evidence": "silver listing 08-05..08-10, constant 02:00:5x"
+        },
+        "latency_from_bronze_min": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5: bronze 06:00 vs silver 02:00 implies silver PRECEDES bronze - needs resolution"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-blackdiamond-sweep-daily cron(0 5)=05:00Z - no-op status UNVERIFIED for this firm",
+          "status": "INFERRED",
+          "evidence": "smartx sweep proven no-op; not re-proven here"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/gold/dim_model_portfolio/",
+          "status": "MEASURED",
+          "evidence": "COTTONWOOD_GOLD:98"
+        },
+        "c1_write_clock_utc": {
+          "value": "13:00:39-41 (floor-written since 08-08; irregular before)",
+          "status": "MEASURED",
+          "evidence": "13-partition write-clock table"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "SELF (own two legs)",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "ON-PATTERN; the reference implementation for the remediation"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "compliant"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "cottonwood fails at the slice builder before the cross-axis gate"
+        },
+        "last_verdict": {
+          "value": "FAIL - VALUE_DATE COLLISION at value_date=2026-08-06: {'2026-08-07': 133914199.99, '2026-08-08': 139213957.62}",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:41Z; root cause = 10 accounts re-labelled at Black Diamond from Passive 80/-- into Opal Satellite 80"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "value_date collision (remedy ruled, 1 line, DS)",
+            "R-21 point_class"
+          ],
+          "status": "MEASURED",
+          "evidence": "above"
+        }
+      }
+    },
+    {
+      "pipeline_id": "cottonwood.custody",
+      "firm": "cottonwood",
+      "leg": "custody",
+      "vendor": "BlackDiamond",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "cot-bd-session-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 16 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "20:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule"
+        },
+        "observed_run_utc": {
+          "value": {
+            "forwardfill_v2": "20:31"
+          },
+          "status": "MEASURED",
+          "evidence": "AE anchor sweep 2; moved from 02:0xZ on the 2026-08-06 ce99054e44 apply"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-cot/forwardfill_v2/holdings/",
+          "status": "MEASURED",
+          "evidence": "AE full-history census n=47"
+        },
+        "writer": {
+          "value": "cot-bd-session-trigger (OIDC auth job chain)",
+          "status": "MEASURED",
+          "evidence": "CTO correction 2026-08-10"
+        },
+        "c1_write_clock_utc": {
+          "value": "20:31 (was 02:0x pre-2026-08-06)",
+          "status": "MEASURED",
+          "evidence": "write-hour histogram 02:xx=33 14:xx=7 20:xx=4"
+        },
+        "key_grammar": {
+          "value": "HOLDINGS_DAILY_{D}.xlsx",
+          "status": "MEASURED",
+          "evidence": "AE census"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "DATA_DATE (filename-embedded D)",
+          "status": "INFERRED",
+          "evidence": "HOLDINGS_DAILY_{D} naming; not source-confirmed"
+        },
+        "c3_vintage_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-2"
+        },
+        "offset_label_to_vintage": {
+          "value": "D+2 steady-state (D+1 twice in 47)",
+          "status": "MEASURED",
+          "evidence": "AE full-history lag census"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof: 'bd labels are accurate'"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "fact_holdings partition dates feed self_derived_axis as a MEASURED leg"
+        },
+        "known_defect": {
+          "value": "MDPF_3FIRMS_PRD claimed 'D+1 ~03:30Z' at 5 sites - NEVER TRUE (03:xx occupancy 0 of 47). STRUCK @1f44450356.",
+          "status": "MEASURED",
+          "evidence": "AE anchor sweep 2 @73c979df20"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c: column list not read for this leg"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "OWN measured frontier (fact_holdings leg of self_derived_axis)",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "roll_forward_policy": {
+          "value": "CARRY WINDOW (shared with model leg)",
+          "status": "MEASURED",
+          "evidence": ":1837-1873"
+        },
+        "known_calendar_defect": {
+          "value": "relationship-grain rows double-count if summed naively; collapse_relationship_grain required",
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-04"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings",
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice holdings_available_dates"
+        },
+        "writer": {
+          "value": "opal-assets-silver-blackdiamond",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "bucket notification"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        },
+        "latency_from_bronze_min": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-blackdiamond-sweep-daily cron(0 5)=05:00Z",
+          "status": "MEASURED",
+          "evidence": "events list_rules"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (holdings_total_by_date)",
+          "status": "MEASURED",
+          "evidence": "source read"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "SELF",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "ON-PATTERN"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "compliant"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "scope fails earlier"
+        },
+        "last_verdict": {
+          "value": "contributes to cottonwood scope FAIL",
+          "status": "MEASURED",
+          "evidence": "2026-08-10"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "cottonwood scope"
+        },
+        "open_defects": {
+          "value": [],
+          "status": "UNMEASURED",
+          "evidence": "G-5"
+        }
+      }
+    },
+    {
+      "pipeline_id": "global.composition",
+      "firm": "global",
+      "leg": "composition",
+      "vendor": null,
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "mdpf-scheduled-floor",
+              "type": "scheduler",
+              "expr": "cron(0 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:00",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule"
+        },
+        "observed_run_utc": {
+          "value": {
+            "floor": "13:00:39-59"
+          },
+          "status": "MEASURED",
+          "evidence": "08-08/09/10 streams"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - global has no vendor feed"
+        },
+        "writer": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "key_grammar": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        },
+        "c3_vintage_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        },
+        "offset_label_to_vintage": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no normalizer in the builder"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero occurrences"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-3c: column list not read for this leg"
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "the shared canonical axis (49F-derived)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "roll_forward_policy": {
+          "value": "cottonwood leg carries; inflection leg named-gap",
+          "status": "MEASURED",
+          "evidence": ":2024, :2047"
+        },
+        "known_calendar_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-4"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - composes gold"
+        },
+        "writer": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "trigger_type": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "trigger_name": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "latency_from_bronze_min": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "decoy_schedule": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "s3://opal-data-assets/gold/mdpf_revamp/global/",
+          "status": "MEASURED",
+          "evidence": "producer"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - inherited the inflection+cottonwood failures"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "all firms (PERMITTED)",
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10: 'Global dependent upon the most recent date from all underlying firms... that is the ONLY dependency that should exist'"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": true,
+          "status": "INFERRED",
+          "evidence": "G-6: PERMITTED IN PRINCIPLE, but whether global's ACTUAL dependency is limited to 'most recent date' or is wider has NOT been read. :1680-1723 pins the cottonwood leg into the headline, which may exceed 'most recent date'."
+        },
+        "violation": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "G-6"
+        },
+        "last_verdict": {
+          "value": "FAIL - legs ['inflection','cottonwood'] failed",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:58Z"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "inherits every leg failure by construction"
+          ],
+          "status": "MEASURED",
+          "evidence": "cycle log"
+        }
+      }
+    }
+  ],
+  "serving_chain": {
+    "floor": {
+      "value": {
+        "name": "mdpf-scheduled-floor",
+        "utc": "13:00",
+        "target": "mdpf-gold-lambda"
+      },
+      "status": "MEASURED",
+      "evidence": "scheduler.get_schedule"
+    },
+    "accrual_bridge": {
+      "value": {
+        "name": "mdpf-accrual-bridge-daily",
+        "utc": "13:40"
+      },
+      "status": "MEASURED",
+      "evidence": "scheduler.get_schedule"
+    },
+    "publisher": {
+      "value": {
+        "name": "opal-assets-mdpf-portal-publisher-daily",
+        "utc": "13:50",
+        "last_result": "published=14 unchanged=0 failed=0 all_present=True"
+      },
+      "status": "MEASURED",
+      "evidence": "2026-08-10 13:50:48Z"
+    },
+    "ORDERING_DEFECT": {
+      "value": "THE FLOOR READS AT 13:00Z. The axis source (smartx silver) is WRITTEN AT 13:41:51Z - 41 minutes LATER. Inflection custody 14:16Z (+1h16m). Inflection model 22:31Z (+9h31m). Only cottonwood (02:00Z silver) and schwab (12:15Z) beat the floor.",
+      "status": "MEASURED",
+      "evidence": "landing census + schedule enumeration"
+    }
+  },
+  "holes": [
+    {
+      "id": "G-1a",
+      "question": "WHAT INVOKES opal-assets-silver-smartx AT 13:41Z?",
+      "why_it_matters": "It is the AXIS SOURCE for every firm. It cannot be re-timed until it is identified, and it is the single most load-bearing schedule in MDPF.",
+      "ruled_out": [
+        "bucket notification (8/8 configs read, smartx absent)",
+        "EventBridge rule (139 rules scanned, none targets it)"
+      ],
+      "remaining_candidate": "direct identity-based invoke by smartx-assets-daily-pull (ended 13:30:51Z, 11min before)",
+      "fill_by": "read the smartx-assets-daily-pull source for an invoke call",
+      "owner": "0.7.0_AE_CloudOps",
+      "blocks": "any floor/pull re-timing"
+    },
+    {
+      "id": "G-2",
+      "question": "Bronze provenance field NAME and VALUE per feed, and is it INDEPENDENT of the partition key?",
+      "why_it_matters": "Andrew: 'all these raw files have meta data of their provenance'. Two of two measured so far are DECORATIVE.",
+      "fill_by": "open the newest bronze file per feed; name the vendor as-of field; test whether it can disagree with the key",
+      "owner": "0.7.0_AE_CloudOps",
+      "rows_open": 5
+    },
+    {
+      "id": "G-3a",
+      "question": "Is orion silver already normalised upstream before MDPF reads it?",
+      "why_it_matters": "If NOT, MDPF labels inflection custody ONE TRADING DAY LATE across the whole axis, on a client-facing number.",
+      "fill_by": "read the opal-assets-silver-orion writer for a prior_trading_day call",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "HIGH"
+    },
+    {
+      "id": "G-3b",
+      "question": "Is eclipse's date= partition the RUN date or the DATA date?",
+      "why_it_matters": "Eclipse is the MODEL leg - the one that fails. If it is a run date, inflection is NOT missing 08-06 and the whole diagnosis moves.",
+      "not_measurable_from": "the artifact (62 cols, no vendor as-of; _source_as_of is our own copy of the key)",
+      "fill_by": "eclipse ingest source, or a vendor probe",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "HIGH"
+    },
+    {
+      "id": "G-3c",
+      "question": "Schwab custody date semantics",
+      "fill_by": "same method as G-3a/b",
+      "owner": "unassigned"
+    },
+    {
+      "id": "G-4",
+      "question": "Roll-forward / carry policy per firm, and which gates can trip on it",
+      "known_defect": "R-21 point_class asserts 'measured' on carried cottonwood rows",
+      "fill_by": "read each firm's carry policy + the point_class assignment",
+      "owner": "unassigned"
+    },
+    {
+      "id": "G-5",
+      "question": "Silver->gold arrival with C3 per feed; and cottonwood silver 02:00Z appears to PRECEDE its bronze 06:00Z",
+      "why_it_matters": "A silver that precedes its own bronze is either a different writer or a different day's data.",
+      "fill_by": "per-feed write-clock + C3 census",
+      "owner": "unassigned"
+    },
+    {
+      "id": "G-6",
+      "question": "Is Global's dependency actually limited to 'most recent date from all firms'?",
+      "why_it_matters": "Andrew permitted EXACTLY that and nothing wider. :1680-1723 pins the cottonwood leg into the headline, which may exceed it.",
+      "fill_by": "read the global composition path",
+      "owner": "unassigned",
+      "severity": "HIGH"
+    },
+    {
+      "id": "G-7",
+      "question": "Which mirror writes WHICH bronze prefix?",
+      "why_it_matters": "Andrew ordered the mirrors RENAMED to opal-assets-ingest-mirror-{firm}-{location}-daily. A rename before attribution would CEMENT a wrong name.",
+      "current_evidence": "1-minute time tie-outs only: mirror 14:15Z -> orion silver 14:16Z; mirror 22:30Z -> eclipse silver 22:31Z. NOT source-read. COO source-confirmed the handler iterates MAP+PROVENANCE_RIDERS UNCONDITIONALLY, so BOTH schedules may mirror ALL firms - in which case neither firm-specific name is correct.",
+      "fill_by": "read the opal-assets-ingest-mirror handler MAP and per-invocation logs",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "BLOCKS_RENAME"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D-1",
+      "summary": "Shared 49F axis handed to every firm",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "RULED - remediate",
+      "authority": "Andrew-direct 2026-08-10; route_bindings.yaml:33 already forbade it",
+      "reference_implementation": "cottonwood self_derived_axis",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-2",
+      "summary": "Floor reads 41min before its axis source is written",
+      "pipelines": [
+        "ALL"
+      ],
+      "status": "MEASURED - Andrew's call pending",
+      "blocked_by": "G-1a"
+    },
+    {
+      "id": "D-3",
+      "summary": "Cottonwood re-key collapses C3+C4",
+      "pipelines": [
+        "cottonwood.model"
+      ],
+      "status": "RULED point-in-time; remedy group[-1]->group[0]",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-4",
+      "summary": "Orion label offset not applied by MDPF",
+      "pipelines": [
+        "inflection.custody"
+      ],
+      "status": "INFERRED - blocked by G-3a",
+      "severity": "HIGH"
+    },
+    {
+      "id": "D-5",
+      "summary": "49F gate PASS is limb-(v)-SKIPPED, not a clean pass",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "note": "must not be cited as a control"
+    },
+    {
+      "id": "D-6",
+      "summary": "Provenance fields are DECORATIVE (non-independent) on 2 of 2 measured feeds",
+      "pipelines": [
+        "inflection.custody",
+        "inflection.model"
+      ],
+      "status": "MEASURED"
+    },
+    {
+      "id": "D-7",
+      "summary": "silver-*-sweep-daily rules are NO-OPS (proven on smartx: 668ms, zero output)",
+      "pipelines": [
+        "ALL"
+      ],
+      "status": "MEASURED",
+      "note": "delete rather than re-time; a remedy aimed here moves nothing"
+    },
+    {
+      "id": "D-8",
+      "summary": "Mirror schedules are MISNAMED (-cot- performs inflection intake; -inf- does not name its pull location)",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "RENAME ORDERED by Andrew 2026-08-10",
+      "blocked_by": "G-7"
+    }
+  ]
+}
