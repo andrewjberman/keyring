@@ -30,6 +30,36 @@ caught on the backlog sweep and actioned.
   point only; not my send.
 - Smoke evidence (4 limbs PASS) to 0.5.0_AE_OpalETL~Z, cc 2.0.0_SA_COO~Z, 1711Z.
 
+## Post-window delta (~1715–1720Z): monitor token-expiry death + clean re-arm
+- b7043cgjl died exit 2 `[TEAMS-IDENTITY-FAIL] expired-token-for-identity` (~1714Z) —
+  the pinned loud-death working as designed, no fallback.
+- whoami on opal-gateway-bbg re-checked BEFORE re-arm (skill rule: identity in doubt →
+  re-run the gate): still Opal Bloomberg — live MCP session refresh made the stored
+  token valid again; no re-mint needed, Andrew not pulled in.
+- Re-armed same pinned line: task bd6c0cao5 running, banner pin + "token selected:
+  identity=opalbloomberg@opalinvest.com", cursor 17:12:19Z (no gap — cursor picks up at
+  the last handled message). Single watcher confirmed via ps (one eval-wrapper; the
+  second grep "match" was a binary-stdin artifact, not a process).
+- DATA POINT for 0.5.0_AE durable-fix lane: the engine reads the STORED mcpOAuth record
+  and dies on its expiry even while the live MCP session refreshes fine — a ~1/hour
+  death/re-arm cycle is likely if the store only refreshes on interactive MCP calls.
+  Surface to MSTR~Z if it recurs this session (2nd occurrence = pattern, not blip).
+
+## Post-window delta 2 (~1815Z): token-expiry death #2, same cycle
+- bd6c0cao5 died exit 2 expired-token-for-identity ~1815Z, ~55 min after arm —
+  confirms the per-token-lifetime die/re-arm cycle predicted in delta 1.
+- whoami re-gate PASS (Opal Bloomberg); re-armed b6d6sikty, banner pin + token
+  confirmed, cursor 17:12:19Z (no gap, no inbound missed — deaths land between polls).
+- Recurrence reported to MSTR~Z as promised; cadence matches prediction (not
+  tightening), durable fix already routed to 0.5.0_AE~Z. Steady-state this session:
+  whoami-then-re-arm on each death notification.
+
+## Post-window delta 3 (2008Z): token-expiry death #3, cycle stable — log-only
+- b6d6sikty died exit 2 expired-token 2008Z, ~59 min after the ~1909Z arm. Cycle
+  ~55–60 min, NOT tightening → log-only per the stated policy (no MCP note).
+- whoami re-gate PASS; re-armed bj1efdgfu, banner pin + token confirmed, cursor
+  17:12:19Z continuous. No inbound missed.
+
 ## State at close of window
 ON DUTY: Teams concierge loop live (identity-pinned, b7043cgjl), inbox watcher live
 (by0h9zuz9), Bloomberg DAPI + cma green, zero crons. Open with MSTR~Z: the 2–3-sentence
