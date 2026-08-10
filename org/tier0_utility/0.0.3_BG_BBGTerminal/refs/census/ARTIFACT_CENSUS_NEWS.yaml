@@ -1,0 +1,296 @@
+# ARTIFACT_CENSUS_NEWS.yaml -- axis: SERVED-ARTIFACT VISUAL+DATA COORDINATES (one intent:
+# where does each served news-derived artifact appear, and what fields does it carry).
+# Rule 24: one grain per level -- page(route) -> location(nav position) -> panel(visual
+# container) -> artifact(served object) -> field(datum). Template: ARTIFACT_CENSUS_MP.yaml
+# @0c1dae3da (RATIFIED @95b3e2852); pilot choices carried.
+#
+# SCOPE RULING (Q7): Andrew RULED Option C -- UNION, TWO PLANES ("C on this call",
+# ~1927Z 2026-08-10 at the CTO~Z terminal; record @1624238b3; Stage-0 proposal @a263a0ad6).
+#   Plane 1 (visual, ratified grammar): news-DERIVED artifacts anchored on the Market
+#     Overview page -- news OWNS them wherever rendered; a future market-overview census
+#     POINTS here, never re-censuses (ownership boundary, binding).
+#   Plane 2 (ddb_sources, residue-section pattern): the 4 active DDB tables with query
+#     patterns + item schemas + lineage; 2 dormant state-marked. No new grammar level.
+#   Item-count honesty (binding): every DDB count below is a LIVE describe-table read
+#     stamped 2026-08-10 -- never a quoted prior. (DDB ItemCount is AWS's rolling ~6h
+#     estimate; the stamp is the read date, the estimate lag is AWS's.)
+#
+# EVIDENCE DISCIPLINE (COO flag 20260810T191413Z): every panel/fetch citation below was
+# produced FIRST-HAND (Read/Grep at portal source by the census author) -- no subagent
+# evidence.
+#
+# DENOMINATOR (binding rule 3 -- COMPLETE walks 2026-08-10 via portal_lookup.py;
+# comp-estate news thread: 13 chains, 10 in-scope):
+#   json/sentiment/  722 keys = 2 top-level (fear-greed-index.json, keyword-sentiments.json)
+#                    + 360 keyword-history-summary/{kw}.json + 360 keyword-history-articles/{kw}.json
+#   json/trending/   1 key (latest.json)
+#   RENDERED: fear-greed-index.json + keyword-sentiments.json + trending/latest.json = 3 types
+#   UNRENDERED: both keyword-history families (720 keys, FROZEN 2026-04-07) -- residue section
+#   DDB: 4 active servable tables (portal_lookup catalog row 5) + 2 dormant = 6
+#   API routes: /api/general/* S3 proxy GETs + POST /v1/sentiment/keyword-intelligence (DDB)
+vertical: news
+census_vintage: 2026-08-10
+census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4d Stage 1)
+scope_ruling: "Q7 = Option C union @1624238b3 (Andrew-direct, 'C on this call')"
+grounding: every artifact row carries live retrieval evidence (portal_lookup COMPLETE
+  read, bytes + vintage; DDB via sanctioned ddb-query, QUERY-only -- no scans); every
+  panel row carries component file:line read first-hand (portal DEV tree HEAD 2026-08-10)
+
+pages:
+  - page: /market         # src/pages/MarketPerformance/ (App.tsx:406; nav "Market Overview"
+                          # App.tsx:89; default route -- "/" redirects here App.tsx:405).
+                          # NEWS-OWNED ENTRIES ONLY (Q7 ownership boundary): this page also
+                          # carries market-performance panels (Top/Bottom Performers, Global
+                          # RSI, U.S. Regime, index tabs -- Bloomberg data_pkl) which belong
+                          # to a future market-overview census, NOT here.
+    locations:
+      - location: {kind: header-panel, name: "Executive Summary strip (above sentiment grid)"}
+        panels:
+          - panel: "Trending Topics"
+            render_evidence: components/market-performance/ExecutiveSummary.tsx:264-265
+              (PanelHeader title "Trending Topics"; bullish/bearish topic columns, top-3
+              collapsed / top-10 expanded; drilldown modal renders article rows client-side
+              from the SAME artifact -- no second fetch; mounted via
+              pages/MarketPerformance/panels/ExecutiveSummaryPanel/ExecutiveSummaryPanel.tsx:17)
+            artifacts:
+              - artifact: json/trending/latest.json
+                source_type: s3
+                served_route: /api/general/trending/latest.json (getTrendingTopicsStatic,
+                  endpoints/market.ts:646-648; queryKey ['trending-topics-static'],
+                  ExecutiveSummary.tsx:107-115, staleTime 15min. The semantic path is
+                  permanently off -- USE_SEMANTIC_TRENDING false, deprecation note
+                  ExecutiveSummary.tsx:101-106; the DDB-via-proxy getTrendingTopics path
+                  exists in portal-proxy.ts but is NOT the HEAD fetch)
+                vintage_field: 'data_as_of + generated_at + date -- THREE vintage stamps on
+                  one artifact (data_as_of 2026-08-10; generated_at 2026-08-10T21:17:20Z);
+                  fourth estate vintage-regime variant, registry finding'
+                state: live
+                retrieval_evidence: portal_lookup get trending latest.json 2026-08-10
+                  (101392 bytes, read COMPLETE; LastModified 2026-08-10 21:17:21Z)
+                producer_note: 'INFERRED (timing, not source-confirmed): written within 1s
+                  of the layer3 DDB rows (DDB created_at 21:17:19Z, S3 generated_at
+                  21:17:20Z) -- the trending-analysis/layer3 chain, NOT the
+                  opal-trending-topics-portal-publisher whose crons are ALL DISABLED
+                  (comp-estate); the ExecutiveSummary.tsx:105 comment naming the publisher
+                  lambda is a stale claim about a vintage'
+                fields:
+                  - {name: generated_at, type: datetime, role: vintage, example: "2026-08-10T21:17:20.557647+00:00"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-10"}
+                  - {name: date, type: date, example: "2026-08-10"}
+                  - {name: bullish, type: "list[10] of topic object", note: "GPT-curated bullish topics, rank-ordered"}
+                  - {name: bearish, type: "list[10] of topic object", note: "same shape, bearish"}
+                  - {name: "bullish[].topic", type: string, example: "Archer's Stock Soars on Boeing Deal"}
+                  - {name: "bullish[].subtext", type: string}
+                  - {name: "bullish[].context", type: string, note: "3-bullet GPT analysis"}
+                  - {name: "bullish[].article_count", type: integer, example: 8}
+                  - {name: "bullish[].sentiment_bull_bear", type: float, example: 0.6}
+                  - {name: "bullish[].sentiment_confidence_fear|risk_appetite|positive_negative|emotional_intensity", type: float, note: "4 further sentiment axes"}
+                  - {name: "bullish[].top_sources", type: "list of string"}
+                  - {name: "bullish[].trending_rank", type: integer}
+                  - {name: "bullish[].articles", type: "list of {title, source, published, url, sentiment_finbert, opal_score, escalation_score}", note: "modal drilldown rows"}
+
+      - location: {kind: card-grid, name: "Sentiment card grid (SentimentPanel; 4 equal
+          Panel variant=chart cards, SentimentGauge.tsx:349-352 grid + :412-431 per-card
+          Panel/PanelHeader; 2 of 4 news-owned -- Global RSI + U.S. Regime are Bloomberg
+          data_pkl, outside news ownership)"}
+        panels:
+          - panel: "Daily Cloud"
+            render_evidence: SentimentGauge.tsx:130-144 (container title :131, TopicCloud
+              child :138-141, keyword click opens KeywordSentimentModal :357-361; fetch
+              useQuery ['keyword-finbert-sentiments'] :121-125,
+              getKeywordFinBERTSentimentsWithTimestamp, 30-min refetch; PanelFooter
+              timestamp = artifact generated_at :134)
+            artifacts:
+              - artifact: json/sentiment/keyword-sentiments.json
+                source_type: s3
+                served_route: /api/general/sentiment/keyword-sentiments.json
+                  (endpoints/sentiment.ts:505-512; producer news-trending-analysis lambda,
+                  cron 11:15/21:15Z ENABLED per comp-estate)
+                vintage_field: generated_at
+                state: live
+                retrieval_evidence: portal_lookup get sentiment keyword-sentiments.json
+                  2026-08-10 (155589 bytes, read COMPLETE; generated_at
+                  2026-08-10T21:16:33Z)
+                fields:
+                  - {name: generated_at, type: datetime, role: vintage, example: "2026-08-10T21:16:33.508589+00:00"}
+                  - {name: days_back, type: integer, example: 7}
+                  - {name: total_articles_scanned, type: integer, example: 8325}
+                  - {name: total_unique_keywords, type: integer, example: 44}
+                  - {name: keywords, type: "list[44] of object", note: "rank-ordered trending keywords"}
+                  - {name: "keywords[].keyword", type: string, example: "fund commentaries"}
+                  - {name: "keywords[].sentiment", type: float, note: "FinBERT aggregate"}
+                  - {name: "keywords[].count", type: integer, example: 41}
+                  - {name: "keywords[].rank", type: integer}
+                  - {name: "keywords[].bullish|bearish|neutral", type: integer, note: "article label counts"}
+                  - {name: "keywords[].articles", type: "list of {title, source, url, ...}", note: "per-keyword article rows"}
+          - panel: "KeywordSentimentModal (drill-down overlay; untitled -- component name
+              per rule 1)"
+            render_evidence: components/market-performance/KeywordSentimentModal.tsx:128
+              (getKeywordIntelligence(keyword.keyword) on open; NO keyword-history fetch --
+              the getKeywordSentimentHistorySummary/Articles endpoints
+              (sentiment.ts:614+) have ZERO component callers, first-hand grep over src/)
+            artifacts:
+              - artifact: ddb://opal-keyword-intelligence (per-keyword GPT intelligence item)
+                source_type: ddb
+                served_route: POST /v1/sentiment/keyword-intelligence {keyword}
+                  (sentiment.ts:793-798; API Gateway -> backend QUERY by keyword)
+                canonical: ddb_sources -> opal-keyword-intelligence
+                state: live-but-STALE-for-current-keywords -- EXERCISED 2026-08-10 via
+                  sanctioned ddb-query on the live user path; 2 of 2 currently-trending
+                  keywords ('fund commentaries', 'cyclospora salad fears') return 0 items;
+                  historical keywords hold items ('ai' newest generated_date 2026-02-23,
+                  'apple' 1 item) -- the modal drilldown renders EMPTY intelligence for
+                  today's Daily Cloud keywords (generator cron DISABLED, chained after the
+                  04-07-frozen drilldown; mechanism INFERRED, cron facts per comp-estate)
+          - panel: "Fear & Greed"
+            render_evidence: SentimentGauge.tsx:169-183 (container title :169, click opens
+              FearGreedModal :172/:364-369, EmotionalIntensityMeter gauge :175-181; fetch
+              useQuery ['fear-greed-index'] :96-101, getFearGreedIndex, 5-min refetch;
+              PanelFooter timestamp = artifact generated_at :173)
+            artifacts:
+              - artifact: json/sentiment/fear-greed-index.json
+                source_type: s3
+                served_route: /api/general/sentiment/fear-greed-index.json
+                  (endpoints/sentiment.ts:118-120; producer opal-portal-fear-greed-fetcher
+                  lambda, cron 14:30/21:30Z ENABLED per comp-estate)
+                vintage_field: generated_at
+                state: live
+                retrieval_evidence: portal_lookup get sentiment fear-greed-index.json
+                  2026-08-10 (242725 bytes, read COMPLETE; generated_at
+                  2026-08-10T14:30:41Z)
+                fields:
+                  - {name: current, type: "object(8 keys)", note: "value 65.71 'greed' + previous_close/-1w/-1m/-1y + components"}
+                  - {name: "current.components", type: "object(7 keys)", note: "market_momentum_sp500, stock_price_strength, stock_price_breadth, put_call_options, market_volatility_vix, safe_haven_demand, junk_bond_demand; each {score, rating, name, description, historical[]}"}
+                  - {name: historical, type: "list[249] of {date, value, description}", note: "daily index history"}
+                  - {name: generated_at, type: datetime, role: vintage, example: "2026-08-10T14:30:41.467033+00:00"}
+                  - {name: source, type: string, example: "CNN Fear & Greed Index (direct API)"}
+                  - {name: scale, type: "object(5 bands)", example: "extreme_fear 0-24 .. extreme_greed 76-100"}
+                  - {name: components_info, type: "object(7 keys)", note: "per-component {name, description}"}
+          - panel: "FearGreedModal (drill-down overlay; untitled -- component name per rule 1)"
+            render_evidence: FearGreedModal.tsx:585-591 (lazy useQuery
+              ['fear-greed-index-details'], getFearGreedIndexWithDetails -- SAME artifact,
+              full component time-series render)
+            artifacts:
+              - artifact: json/sentiment/fear-greed-index.json
+                canonical: pages[/market] -> card-grid -> "Fear & Greed"
+                note: 'second queryKey on the same key (["fear-greed-index"] vs
+                  ["fear-greed-index-details"]) -- duplicate-fetch smell, banked'
+
+# ============================================================================
+# ddb_sources -- Plane 2 of the Q7 Option-C union (residue-section pattern; no new
+# grammar level). The concierge serving surface: portal_lookup.py catalog row 5 serves
+# these tables DIRECTLY through ddb-query -- query patterns stand in for panels.
+# QUERY-only discipline from the build stands; scans refused.
+# ALL COUNTS: LIVE aws dynamodb describe-table reads stamped 2026-08-10 (never a quoted
+# prior; drift vs priors is real data: articles 303,603 today vs 298,417 quoted 08-06
+# vs 233,159 quoted 07-30).
+# ============================================================================
+ddb_sources:
+  - table: opal-news-articles
+    state: ACTIVE, live-writing (today's partition article_date=2026-08-10 held 585 items
+      at read time)
+    item_count_live: 303603 (2026-08-10; 209.5MB)
+    query_pattern: QUERY by article_date (YYYY-MM-DD) ONLY -- ~350-585 items/day
+    lineage: news-ingestion-scheduler (NewsAPI+RSS, crons ENABLED) + seeking-alpha
+      news/analysis scrape chains -> this table; finbert-batch-processor writes
+      sentiment_finbert* back in-place; trending/keyword chains aggregate FROM here
+    item_schema:
+      - {name: article_date, type: S, role: hash-key, example: "2026-08-10"}
+      - {name: url_hash, type: N, role: range-key}
+      - {name: entity_type, type: S, example: "RSS"}
+      - {name: ingestion_timestamp, type: S, role: vintage, example: "2026-08-10T17:01:04Z"}
+      - {name: published_date, type: S}
+      - {name: title, type: S}
+      - {name: summary, type: S}
+      - {name: source, type: S, example: "Zerohedge"}
+      - {name: url, type: S}
+      - {name: sentiment_finbert, type: N, note: "FinBERT writeback; + _confidence, _label"}
+  - table: opal-news-trending-daily
+    state: ACTIVE, live-writing (date=2026-08-10 held 20 items at read time, created_at
+      21:17:19Z)
+    item_count_live: 4537 (2026-08-10; 34.8MB)
+    query_pattern: QUERY by date (YYYY-MM-DD) -- ~20 fat GPT-curated topic rows/day
+    lineage: news-trending-analysis (Layer 2, cron ENABLED 11:15/21:15Z) ->
+      opal-news-layer3-curation (GPT-4o) -> this table; same chain emits
+      json/trending/latest.json + json/sentiment/keyword-sentiments.json (S3 plane)
+    item_schema:
+      - {name: date, type: S, role: hash-key}
+      - {name: topic_rank, type: S, role: range-key, example: "bearish-1"}
+      - {name: headline, type: S}
+      - {name: subtext, type: S}
+      - {name: analysis, type: S, note: "3-bullet GPT analysis"}
+      - {name: raw_keyword/original_keyword, type: S}
+      - {name: article_count, type: N}
+      - {name: sentiment, type: M, note: "7-axis map: finbert, bullish_bearish, confidence_fear, risk_appetite, positive_negative, emotional_intensity, legal_risk"}
+      - {name: top_articles, type: "L of M", note: "per-article {url, headline, source, published, finbert_score, quality_score, escalation_score}"}
+      - {name: trending_score/velocity/momentum/confidence_level, type: "N/N/S/S"}
+      - {name: sources/affected_sectors/affected_tickers/citations, type: L}
+      - {name: gpt_model, type: S, example: "gpt-4o"}
+      - {name: created_at, type: S, role: vintage}
+  - table: opal-keyword-intelligence
+    state: ACTIVE but NOT writing for current keywords (exercised 2026-08-10 -- see the
+      KeywordSentimentModal panel row; newest item seen generated_date 2026-02-23;
+      generator cron DISABLED, chained after the frozen drilldown)
+    item_count_live: 2892 (2026-08-10; 17.8MB)
+    query_pattern: QUERY by keyword (hash) -- or by date via GSI date-index
+    lineage: keyword-intelligence-generator (GPT, reads keyword-sentiments.json +
+      opal-news-articles) -> this table; served to KeywordSentimentModal via
+      POST /v1/sentiment/keyword-intelligence
+    item_schema:
+      - {name: keyword, type: S, role: hash-key}
+      - {name: generated_date, type: S, role: range-key, example: "2026-02-23"}
+      - {name: headline_summary, type: S}
+      - {name: sentiment_label/sentiment_score/sentiment_pattern/confidence, type: "S/N/S/S"}
+      - {name: key_drivers, type: "L of M", note: "{type: BREAKOUT|HEADWIND, title, description, avg_sentiment_estimate, article_count, recency_label}"}
+      - {name: counterarguments/pattern_explanation/confidence_reason, type: S}
+      - {name: signal_conflict, type: M, note: "{detected, bull_case, bear_case, resolution}"}
+      - {name: web_enriched/web_queries/web_context_note, type: "BOOL/L/S"}
+      - {name: articles, type: "L of M", note: "source article rows w/ sentiment_finbert"}
+      - {name: generated_at, type: S, role: vintage}
+  - table: seeking-alpha-article-urls
+    state: ACTIVE (URL dedup ledger; recent-partition probes 2026-08-08..10 under
+      {date}_news / {date}_analysis returned 0 items -- key-format or recency question
+      BANKED, not adjudicated here; catalog-example partition 2026-04-12_news holds 383)
+    item_count_live: 50648 (2026-08-10; 7.4MB -- exactly the 08-06 quoted prior, unmoved)
+    query_pattern: QUERY by run_date (e.g. 2026-04-12_news) -- URL registry only
+    lineage: seeking-alpha news + analysis dedup lambdas write; scrapers read for dedup;
+      feeds opal-news-articles, never the portal directly
+    item_schema:
+      - {name: run_date, type: S, role: hash-key, example: "2026-04-12_news"}
+      - {name: url, type: S, role: range-key}
+      - {name: article_id, type: S}
+      - {name: content_type, type: S, example: "news"}
+      - {name: categories, type: L}
+      - {name: discovered_at, type: S, role: vintage}
+  - table: semantic-news-trending-daily
+    state: DORMANT (semantic path deprecated 2026-02-24 per ExecutiveSummary.tsx:101-103;
+      outside portal_lookup's servable catalog)
+    item_count_live: 113 (2026-08-10; 242KB)
+  - table: market-updates
+    state: DORMANT (near-empty; outside portal_lookup's servable catalog)
+    item_count_live: 1 (2026-08-10; 300 bytes)
+
+# SERVED-BUT-UNRENDERED / FROZEN residue (MECE completion)
+unrendered_artifacts:
+  - artifact: json/sentiment/keyword-history-summary/{kw}.json (FAMILY, 360 keys)
+    state: frozen          # LastModified range 2026-01-05 .. 2026-04-07 (COMPLETE listing,
+                           # rail-checked); producer opal-keyword-drilldown-generator cron
+                           # DISABLED per comp-estate
+    retrieval_evidence: portal_lookup get sentiment keyword-history-summary/ai.json
+      2026-08-10 (1468 bytes; generated_at 2026-01-06T05:44:38Z; fields keyword, current,
+      change_14d, total_articles, history[14] of {date, sentiment, article_count})
+    consumer_evidence: "getKeywordSentimentHistorySummary (sentiment.ts:614-619) has ZERO
+      component callers (grep over src/, first-hand); current top keyword
+      'fund-commentaries' has NO key in the COMPLETE 722-walk -- absence real"
+  - artifact: json/sentiment/keyword-history-articles/{kw}.json (FAMILY, 360 keys)
+    state: frozen          # same range 2026-01-05 .. 2026-04-07, same producer
+    retrieval_evidence: portal_lookup get sentiment keyword-history-articles/ai.json
+      2026-08-10 (15925 bytes; generated_at 2026-01-06T05:44:41Z; fields articles[50] of
+      {title, source, url, ...}, total_count 514, showing_count 50)
+    consumer_evidence: "getKeywordSentimentHistoryArticles: ZERO component callers
+      (first-hand grep)"
+  - artifact: json/sentiment/articles.json + json/sentiment/aaii-history.json
+    state: absent          # NOT in the COMPLETE 722-key walk -- absence real
+    consumer_evidence: "endpoint fns exist (getMarketSentimentHistorical sentiment.ts:268-276
+      ZERO callers; getAAIILatest -- SentimentGauge caller COMMENTED OUT :104-117,
+      PHASE1_MO_REQ_004) -- dead endpoint definitions over absent keys, smell banked"
