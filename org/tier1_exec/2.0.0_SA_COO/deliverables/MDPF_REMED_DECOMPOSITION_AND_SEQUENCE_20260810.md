@@ -1,5 +1,57 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⚠ ADDENDUM 2026-08-10 ~1435Z — THREE THINGS BELOW MOVED WITHIN THE HOUR. READ THIS FIRST.
+>
+> **A · §2(B) AND §5 ARE RESOLVED. THE SOVEREIGN FORK IS RETRACTED — DO NOT ACT ON §5.**
+> `date=D` is a **run-date LABEL on prior-settled content**, not same-day data. **Andrew's
+> 12:00–13:30Z window is SAFE and there is no T-1 tradeoff to adjudicate.** Two independent
+> source-confirmed mechanisms (`0.7.0_AE_CloudOps` @af224d2dd1 §4), either sufficient:
+> **(1)** `opal-assets-silver-orion/mirror_conversion.py:175` (`:181` eclipse) — the partition date is a
+> **regex capture off the source key**, i.e. the vendor file's own filename. Not `datetime.now()`, not
+> the event time. **A retime therefore CANNOT relabel a partition**; it changes only *when* a given
+> date lands. **(2)** `data/inf/scripts/silver/_orion_vendor_asof.py:126-136` —
+> `orion_normalize_as_of()` returns `prior_trading_day(labeled_max)`, walking back over weekends **and**
+> NYSE holidays; called at four sites. **⇒ T-1 IS A PROPERTY OF THE NORMALIZER, NOT OF WHEN THE JOB
+> RUNS.** Corroborated by a genuinely different derivation: P0-2R probed Orion **live on the wire** at
+> 08:10 ET and got TODAY == PRIOR, delta 0.0000%, on real settled money.
+> **Retracted at MSTR 142543Z** — a dissolved fork left standing costs Andrew a decision he does not
+> owe. *And the direction favours him: the vendor is early-valid at 12:10Z while our chain first
+> touches it at 13:37Z. His instinct was closer to the vendor's real clock than what we run today.*
+> ⚠ *Carried maintenance obligation, not a blocker: the NYSE closed-dates table is hardcoded 2025–2027;
+> outside that range holiday precision degrades to weekend-only.*
+>
+> **B · §D-2 EXECUTED.** W1-2 landed `@586d9f1d8a` (132/36, verified in git + tree clean at this seat,
+> **not** on self-report), then flipped **SUPERSEDED** `@e34422cf34`. Both carve-outs discharged in the
+> required order. **R-19 the CLASS is NOT discharged** — gates (b)–(g) live outside that Lambda.
+>
+> **C · ⛔ TRACK A'S ANCHOR IS VOID, AND THIS IS THE SHARPEST FINDING OF THE DAY.**
+> §4 below carries **BD lands 02:00Z**, and the diagnosis's §4 relieved the cottonwood move of further
+> measurement on it. **MEASURED: `blackdiamond/cottonwood/bronze/` receives its complete daily write at
+> `06:00:43-45Z`** — six consecutive days, sub-second stable, n=1,229 objects.
+> **⇒ A CRON BUILT ON 02:00Z WOULD HAVE FIRED ~3.5 HOURS BEFORE THE DATA LANDS** — manufacturing a
+> chronic empty-or-partial pull that exits clean, which is *the same defect class this workstream
+> exists to fix, introduced by the fix.* **The "needs no further measurement" clause is void.**
+> *Mechanism: a schedule encoding an ASSUMED rhythm instead of a MEASURED delivery — Andrew's own
+> framing, reproduced by us, one apply from landing, off a number nobody had re-derived.*
+> **⇒ TRACK A IS BLOCKED until the 06:00Z producer is NAMED** (W1-5 criterion 1). Blocking ratified,
+> not merely accepted.
+>
+> **D · TRACK D REFRAMED — HYPOTHESIS, EXPLICITLY NOT ESTABLISHED.** The mirror's cottonwood row has
+> not completed once in the 14-day window, yet those 06:00Z writes land anyway, and the `ALIEN SURPLUS`
+> samples are all `…/bronze/rebalancer_accounts/…`. **LIKELY: two producers on one prefix** — in which
+> case the guard is **not malfunctioning**; it is correctly reporting keys it did not put there, and
+> **the real question is ownership, not a bug.** ⚠ **NOT ESTABLISHED**: this is also consistent with one
+> producer we have misattributed. **The discriminating test is CloudTrail data events on that prefix
+> around 06:00:44Z** — the PutObject caller identity separates all hypotheses at once.
+> ⛔ **AND THE THIRD HYPOTHESIS MUST NOT LOSE BY DEFAULT: A SCHEDULE CAN LIVE OUTSIDE AWS ENTIRELY.**
+> The evidence ("not a Lambda; nothing fires at 06:00Z across 139 rules + 16 Scheduler entries") is a
+> complete AWS-side enumeration with a printed denominator **and is still blind to a non-AWS producer by
+> construction.** On 2026-08-06 this exact shape produced a false finding with **every control firing
+> correctly**, because the producer was localhost. A wider AWS sweep cannot distinguish *not-found* from
+> *not-in-AWS*, and a second clean enumeration would feel like corroboration while adding no
+> discriminating power.
+
+
 **archetype:** COORDINATE
 **Author:** `2.0.0_SA_COO` · 2026-08-10 · **Owner of decomposition + sequencing**
 **Executes:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_TRIGGER_SEQUENCE_DIAGNOSIS_20260810.md` @087938fa61
