@@ -1,5 +1,57 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⚠ ADDENDUM 4 — 2026-08-10 ~1533Z. **CTO RULED. 49F GROUNDED. AND A LIVE PRD RULE IS NOW WRONG.**
+>
+> **I · BRONZE OWNERSHIP RULED (CTO):** `cot-rebalancer-runner` **owns** `blackdiamond/cottonwood/bronze/`
+> — it writes daily and succeeds; the mirror's row has **never once completed** in the window.
+> ⛔ **THE MIRROR'S GUARD IS NOT BROKEN AND MUST NOT BE "FIXED."** Its *assertion* is scoped to the whole
+> prefix while its *writes* are scoped to its own rows. **Remedy = NARROW THE ASSERTION** — never widen an
+> allowlist, never disable the guard, never make the error go away. *A guard that correctly detects a second
+> writer is the only reason we know there is one; it said so for 14 days and was read as a broken function.*
+> ⚠ The meta-templates row (`:153`) is a **different artifact**, has never run, and **must not be silently
+> retired by the scoping fix.**
+>
+> **J · COTTONWOOD CAUSE: OPEN.** CTO **refuted their own attribution** (@9ddd6a4855 — the session trigger
+> is an OIDC auth job) and **downgraded 49financial to UNVERIFIED unprompted**. Answering it needs, in order:
+> **(a)** what data date the 06:00:44Z write *contains* (a mixed-vintage landing is already observed —
+> `ALLOCATIONS_DAILY_2026-08-07` beside `REALIZED_DAILY_2026-08-09`); **(b)** what the floor actually reads
+> for cottonwood. **Both are READS, not experiments, and either could dissolve the question.**
+>
+> **K · 49F: MY "PROVABLY" WAS NOT EARNED WHEN I WROTE IT.** I had the arithmetic and had **not** verified
+> that the floor's 49F leg consumes SmartX output — the identical inferential step CTO downgraded themselves
+> for. Withdrawn, then **grounded**: `:72` `SMARTX_SILVER="smartx/platform/silver"` → `:304`
+> `_latest_date(f"{SMARTX_SILVER}/fact_model_aum_daily")` → `:259-263` returns `dates[-1]`, **the newest
+> partition present AT READ TIME**. With SmartX silver landing 13:40–42Z (3/3 days), a floor at 13:00Z **or**
+> 13:30Z reads the **prior** partition. ⇒ **the consumer lever cannot reach 49F without moving the bridge
+> (13:40Z) and publisher (13:50Z) too — a chain re-architecture, not a retime.**
+> ⚠ **L2 of that chain (that `mdpf-gold-lambda` runs this script) is CARRIED FROM CTO, not measured by me.**
+> And this shows only that the lever *cannot reach* 49F — **not** that late SmartX is *why* it sits at 08-06.
+> **CTO's UNVERIFIED downgrade stands.**
+>
+> **L · ANCHOR SWEEPS — 1 NARROW (zero), 2 WIDE (NOT empty).** Sweep 1 @487c857665: 5 pre-apply anchors,
+> all already caught, zero new. **Sweep 2 @73c979df20** (24 files / 7,279 lines; 22 Class-2 candidates):
+> - **FINDING A — `MDPF_3FIRMS_PRD` "HOLDINGS lands D+1 ~03:30Z" was NEVER TRUE.** Full retained history
+>   n=47: write-hour histogram `02:xx=33 · 14:xx=7 · 20:xx=4`, and **03:xx OCCUPANCY = ZERO OF 47**; lag is
+>   D+2 in steady state. It was **also** moved by the 08-06 apply. **BOTH DEFECT CLASSES ON ONE FIGURE** —
+>   and it is **promoted to a MECHANISM at `:765`.** *A staleness-only sweep passes straight over it.*
+> - **FINDING B — `MDPF_DEBTCLEAN_PRD:417` "every upstream channel lands by ~16:00Z" — MOVED.** True when
+>   written; broken by the 08-06 apply. `cot forwardfill_v2` 20:31Z violates by ~4.5h, `eclipse` 22:31Z by
+>   ~6.5h. ⛔ **AND THE NEXT SENTENCE TURNS IT INTO A RULE** — *"a schedule materially later than the last
+>   channel's arrival is the only safe choice."* **THE PRD NOW INSTRUCTS A SCHEDULE INTO THE EXACT DEFECT
+>   THIS WORKSTREAM EXISTS TO REMOVE — and it needs nobody to misremember, because it will be FOLLOWED
+>   CORRECTLY AND STILL BE WRONG.** Routed to CTO as a live PRD input.
+> > **METHOD, rated above either finding (AE):** **"A SPOT CHECK ANSWERS 'IS IT STILL X.' A DISTRIBUTION
+> > ANSWERS 'WAS IT EVER X.' Only the second distinguishes the two classes."** ⇒ **Fence added: re-derive
+> > from the FULL retained history where it is free — the current value CANNOT FALSIFY "it was never true."**
+> **DECLARED GAP (not an oversight):** INF/cot's **own** documents were NOT swept. Cross-program; **put to
+> CTO to authorise**, since findings there land on owners not in this room.
+>
+> **M · MY OWN RETIRED RECOMMENDATION:** I told AE CloudTrail data events were "the single discriminating
+> test" for the 06:00Z producer. **Wrong — CloudTrail cannot attribute writes on `opal-data-assets`**
+> (selectors cover `opal-data-bd/`+`opal-data-inf/`, and are **ReadOnly**). It would have returned nothing.
+> The producer was named by **key-grammar partition**, free. *Recorded so nobody enables data events to
+> answer this class.*
+
 > ## ⚠ ADDENDUM 3 — 2026-08-10 ~1500Z. **COT CENSUS CLOSED: THE SCHEDULE IS ONE OF FOUR ENTRY POINTS.**
 >
 > Run at the COO seat (`comp-blast cot-bd-session-trigger`; canonical kuzu 20,616 nodes / 41,205 edges,
