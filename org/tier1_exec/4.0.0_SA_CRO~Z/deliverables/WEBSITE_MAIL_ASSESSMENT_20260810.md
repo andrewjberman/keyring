@@ -36,3 +36,8 @@ Explicitly NOT in plan: any bounce/complaint SNS/alarm build (moratorium, Andrew
 | comp-find | `"18.208.18.213"` | located `infra/website/` estate docs (49 hits, denominator printed) |
 | comp-find | `"wordpress" infra` | located `infra/aws/terraform/website/` |
 | live primitives | nslookup (A/NS/TXT/MX/DKIM ×2 domains), curl site, `sesv2 get-account`, `ses get-identity-verification-attributes`, SSM RunCommand ×5 (shim log, admin_email, GF notifications, wp users) | all rail-checked where inspection-class; grounded every claim above |
+
+## Addendum ~22:50Z (Andrew follow-ups)
+
+1. **"Any real people?"** — NO. All 5 entries dumped from `wp_gf_entry`: #1 is Patricia's own 07-16 test; #2–5 are bots (random-string names/firms, gmail dot-trick addresses, source IPs in the Tor exit block 185.220.x.x / anonymous VPS). Zero real leads to date; nothing has been missed.
+2. **Patricia on the distribution** — she was ALREADY SES-verified (Success). Forwarder unnecessary (and M365 tenant policy typically blocks external auto-forward anyway). Instead: GF form-1 notification "to" updated on-box to `andrew@opalinvest.com,patricia@thewhitelabelcreative.com` (1 row affected, re-read confirmed; `{admin_email}` notification untouched). EXERCISED: direct SES send from noreply@opalinvest.dev to both recipients accepted in sandbox — MessageId 0100019fedcfdd3c-99c5afb7-3ab6-4424-a6a8-cc45b9dd6c4f-000000.
