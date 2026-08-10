@@ -108,3 +108,27 @@ fabric receives and records verbatim; (ii) DATA_CATALOG v0.2's MP rows (incl. th
 layer) unblock the moment his pass lands — they do NOT wait for the Pod-2/Macro/News censuses;
 (iii) later verticals inherit the same per-vertical rhythm: census → his structuring-conformant
 review need not repeat (grammar ratified), semantic pass per vertical as each census lands.
+
+---
+
+# ADDENDUM 3 — Q7 ruling: News census scope
+
+**Channel:** 1.0.0_SA_CTO~Z terminal · **Time:** 2026-08-10 ~19:27Z · **Recorded:** same turn
+
+## VERBATIM
+
+> C on this call
+
+(Against the TO-4d Stage-0 scope card: (a) rendered-panels only / (b) catalog-serving only /
+(c) union. Proposal @a263a0ad6, AE~Z-authored, CTO grammar-endorsed.)
+
+## Operative reading
+
+News census scope = **Option C, the UNION**: visual plane per the ratified grammar for
+rendered news-derived artifacts (anchored on Market Overview) + a labeled `ddb_sources`
+section reusing the ratified residue-plane pattern for the 4 active DDB tables (2 dormant
+state-marked), each with sanctioned query pattern, item schema, lineage, and item-count
+denominators stamped LIVE at census read-time. Both proposal boundaries bind: (i) news OWNS
+news-derived artifacts wherever rendered (a future market-overview census points, never
+re-censuses); (ii) quoted-prior counts are never denominators. Stage 1 (ARTIFACT_CENSUS_NEWS
++ /draw) proceeds immediately, ruling cited in the census header.
