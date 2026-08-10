@@ -1,6 +1,6 @@
 {
   "assessment": "E2E_FUNCTIONAL_ASSESSMENT_GRAPH_KIMI",
-  "version": "1.0",
+  "version": "1.1",
   "date": "2026-08-10",
   "measured_by": "3.0.0_SA_CVO",
   "authority": {
@@ -16,11 +16,32 @@
   },
   "axis_1_graph_coverage": {
     "db_provenance": "kuzu_nessie_db rebuilt this session (age 0.0h, Nessie HEAD current), 20615 nodes / 41184 edges",
-    "nodes_by_substrate": {"portal": 11338, "ms": 5862, "aws": 2055, "pipeline": 1337, "semctl": 23},
-    "node_types_by_substrate": {"aws": 33, "portal": 15, "ms": 5, "pipeline": 3, "semctl": 2},
+    "nodes_by_substrate": {
+      "portal": 11338,
+      "ms": 5862,
+      "aws": 2055,
+      "pipeline": 1337,
+      "semctl": 23
+    },
+    "node_types_by_substrate": {
+      "aws": 33,
+      "portal": 15,
+      "ms": 5,
+      "pipeline": 3,
+      "semctl": 2
+    },
     "aws_vs_live": {
-      "LAMBDA": {"graph": 197, "live": 197, "method": "materialized full list client-side count (auto-paginate, no --query length)", "verdict": "EXACT"},
-      "S3_BUCKET": {"graph": 30, "live": 30, "verdict": "EXACT"},
+      "LAMBDA": {
+        "graph": 197,
+        "live": 197,
+        "method": "materialized full list client-side count (auto-paginate, no --query length)",
+        "verdict": "EXACT"
+      },
+      "S3_BUCKET": {
+        "graph": 30,
+        "live": 30,
+        "verdict": "EXACT"
+      },
       "note": "aws substrate is the fresh leg: CloudTrail incremental + 02:00Z full re-derive"
     },
     "pipeline_substrate": {
@@ -30,21 +51,67 @@
       "producer_declared_scope": "_FIRM = {black_diamond: bd, inf: inf, mdpf: mdpf, cot: cot} -- FOUR trees declared",
       "schedule": "NONE FOUND (zero TF references) -- a manual one-shot feeding a scheduled consumer; the unscheduled-production-pipeline defect class (CLAUDE.md ad-hoc-runs rule half (b))",
       "coverage_per_tree_graph_vs_repo_gold": {
-        "bd": {"graph": 69, "repo": 69, "delta": 0, "verdict": "EXACT as of the July-1 snapshot"},
-        "inf": {"graph": 46, "repo": 53, "delta": -7, "verdict": "scripts added since July 1 invisible"},
-        "mdpf": {"graph": 18, "repo": 21, "delta": -3, "verdict": "same"},
-        "cot": {"graph": 0, "repo": 42, "delta": -42, "verdict": "DECLARED-IN-SCOPE, WHOLLY ABSENT -- either the July-1 emission predates cot support or it emitted zero; not a declared boundary"},
-        "assets": {"graph": 0, "repo": 7, "verdict": "declared OUT (not in _FIRM)"},
-        "etfs": {"graph": 0, "repo": 2, "verdict": "declared OUT (not in _FIRM)"}
+        "bd": {
+          "graph": 69,
+          "repo": 69,
+          "delta": 0,
+          "verdict": "EXACT as of the July-1 snapshot"
+        },
+        "inf": {
+          "graph": 46,
+          "repo": 53,
+          "delta": -7,
+          "verdict": "scripts added since July 1 invisible"
+        },
+        "mdpf": {
+          "graph": 18,
+          "repo": 21,
+          "delta": -3,
+          "verdict": "same"
+        },
+        "cot": {
+          "graph": 0,
+          "repo": 42,
+          "delta": -42,
+          "verdict": "WHOLLY ABSENT -- MECHANISM CORRECTED v1.1 (source-traced 2026-08-10 ~22:2xZ): the TraceGraph's Pass-6 pipeline-DAG injection (trace_graph.py:449-493) has NO cot builder call (BD/INF/MDPF/assets each have explicit hand-added builders; cot never got one), and the TraceGraph today carries ZERO cot gold script nodes (verified: only cot-named lambdas match). The producer's _FIRM 'cot' entry is a rename-map entry that has never had anything to rename. RE-EMISSION ALONE CANNOT FIX COT -- it needs a Pass-6 builder (code) first. My v1.0 'either predates or emitted zero' was mechanism-unprofiled; this supersedes it."
+        },
+        "assets": {
+          "graph": 0,
+          "repo": 7,
+          "verdict": "declared OUT (not in _FIRM)"
+        },
+        "etfs": {
+          "graph": 0,
+          "repo": 2,
+          "verdict": "declared OUT (not in _FIRM)"
+        }
       },
       "concrete_instance": "build_cottonwood_mdpf_slice.py -- the script at the center of TODAY's MDPF repair -- lives in data/assets and is INVISIBLE to the pipeline substrate",
       "totals": "graph 133 vs repo 194 current gold scripts (69+46+18 = 133 exact)"
     },
-    "ms_substrate": {"nodes": 5862, "types_present": "5 of 7 declared (MS_FILE 4789, MS_FOLDER 1056, MS_USER 15, MS_SITE 1, MS_LIBRARY 1)", "types_zero": ["MS_DRIVE_ONEDRIVE", "MS_GROUP"], "verdict": "zero-vs-unmeasured UNDETERMINED -- needs the ms producer's denominator; a zero cannot say which zero it is"},
+    "ms_substrate": {
+      "nodes": 5862,
+      "types_present": "5 of 7 declared (MS_FILE 4789, MS_FOLDER 1056, MS_USER 15, MS_SITE 1, MS_LIBRARY 1)",
+      "types_zero": [
+        "MS_DRIVE_ONEDRIVE",
+        "MS_GROUP"
+      ],
+      "verdict": "zero-vs-unmeasured UNDETERMINED -- needs the ms producer's denominator; a zero cannot say which zero it is"
+    },
     "substrate_side_mechanics": {
       "side_derivation": "node.layer ONLY (correct per the ratified rollup: BACKEND=aws+pipeline, FRONTEND=portal, KNOWLEDGE=ms; semctl takes side from members)",
       "edge_layer_finding": "edge.layer is UNUSABLE as a substrate/side axis, now QUANTIFIED: 24401 edges carry layer='aws', of which 19741 (80.9%) have ZERO aws endpoints (portal-portal 16784 + pipeline-pipeline 2957) and 849 more are only half-aws. Only ms and semctl producers set edge layer; everything else defaults 'aws' at derive_runner.py:371-372. Anyone computing side denominators from e.layer gets FRONTEND=0.",
-      "endpoint_derived_truth": {"portal_portal": 16784, "ms_ms": 11691, "aws_aws": 3811, "pipeline_pipeline": 2957, "semctl_overlay": 5092, "pipeline_to_aws": 573, "aws_to_pipeline": 248, "portal_to_aws_serve_seam": 28, "semctl_semctl": 12},
+      "endpoint_derived_truth": {
+        "portal_portal": 16784,
+        "ms_ms": 11691,
+        "aws_aws": 3811,
+        "pipeline_pipeline": 2957,
+        "semctl_overlay": 5092,
+        "pipeline_to_aws": 573,
+        "aws_to_pipeline": 248,
+        "portal_to_aws_serve_seam": 28,
+        "semctl_semctl": 12
+      },
       "decomposition_check": "16784+3811+2957+573+248+28 = 24401 -- EXACT match to the 'aws'-labeled count; the label is write-provenance, proven arithmetically",
       "serve_seam": "still exactly 28 (ServedURL--SERVED_FROM-->S3_BUCKET_POLICY); the authorized GOVERNS edge is queued behind territory ratification, correctly unbuilt"
     }
@@ -69,13 +136,46 @@
       "grade": "genuinely hardened FOR A MONOLITH -- every parameter carries its incident history in-line"
     },
     "seven_day_outcome_census": {
-      "2026-08-04": {"ai": "PRESENT", "proposals": 2, "note": "pre-telemetry vintage"},
-      "2026-08-05": {"ai": "PRESENT", "proposals": 9},
-      "2026-08-06": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 110.2s", "prompt_chars": 72966},
-      "2026-08-07": {"ai": "ABSENT", "proposals": 0, "attempt": "KIMI_TIMEOUT 300.1s + KIMI_TIMEOUT 300.0s", "prompt_chars": 73798, "note": "THE DAY LOST -- post-rollback monolith fired the same failure the bridge was built for"},
-      "2026-08-08": {"ai": "PRESENT", "proposals": 1, "attempt": "OK 295.8s", "note": "4.2s under the ceiling -- a near-loss"},
-      "2026-08-09": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 39.7s", "prompt_chars": 67606},
-      "2026-08-10": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 64.5s", "prompt_chars": 67606},
+      "2026-08-04": {
+        "ai": "PRESENT",
+        "proposals": 2,
+        "note": "pre-telemetry vintage"
+      },
+      "2026-08-05": {
+        "ai": "PRESENT",
+        "proposals": 9
+      },
+      "2026-08-06": {
+        "ai": "PRESENT",
+        "proposals": 0,
+        "attempt": "OK 110.2s",
+        "prompt_chars": 72966
+      },
+      "2026-08-07": {
+        "ai": "ABSENT",
+        "proposals": 0,
+        "attempt": "KIMI_TIMEOUT 300.1s + KIMI_TIMEOUT 300.0s",
+        "prompt_chars": 73798,
+        "note": "THE DAY LOST -- post-rollback monolith fired the same failure the bridge was built for"
+      },
+      "2026-08-08": {
+        "ai": "PRESENT",
+        "proposals": 1,
+        "attempt": "OK 295.8s",
+        "note": "4.2s under the ceiling -- a near-loss"
+      },
+      "2026-08-09": {
+        "ai": "PRESENT",
+        "proposals": 0,
+        "attempt": "OK 39.7s",
+        "prompt_chars": 67606
+      },
+      "2026-08-10": {
+        "ai": "PRESENT",
+        "proposals": 0,
+        "attempt": "OK 64.5s",
+        "prompt_chars": 67606
+      },
       "reading": "6/7 sections landed (fail-soft held; no run failed); latency 39.7s to 300s+ on same-order prompts = generation-induced variance, the exact mechanism the in-code analysis names and the subdivision retires. Proposal yield: 11 of 12 came on 08-04/05; 08-06..08-10 yielded 1 total. Whether that is estate-quiet or prompt-under-elicitation is UNDETERMINED from outcomes alone -- the spec's DETECT calls were designed to answer precisely this."
     },
     "related_but_distinct": "the kimi_subdivision_harness at the CVO seat (c2_individuate/c3_cover -- the semantic pipeline's C2/C3 instance layer) is BUILT-UNDEPLOYED, item-5 load path with CTO~B, an Item-0 landing-shelf exhibit; it is NOT the runner subdivision, which remains unstarted"
@@ -85,16 +185,39 @@
     "grade": "INFERRED -- one link not source-traced this session; stated so it is visible, not actionable without grounding"
   },
   "remedies_proposed_not_gated": [
-    {"id": "R1", "what": "schedule the graphuni producer (or fold it into the 02:00Z derive) + one re-emission -- refreshes cot 0->42, inf +7, mdpf +3 on the current _FIRM; also rules assets/etfs IN or OUT explicitly", "owner_suggested": "CTO~B / AE lane (runner+design owner per the spec's addressee)", "authorization_state": "needs a word only for the SCHEDULE (production rule); an ad-hoc QA re-emission is already legal"},
-    {"id": "R2", "what": "implement the subdivision per @58505c291", "owner_suggested": "1.0.0_SA_CTO~B (the spec's addressee)", "authorization_state": "ALREADY ORDERED (Andrew-direct 2026-08-06 verbatim) -- this is unexecuted standing work, not a new ask"},
-    {"id": "R3", "what": "the edge.layer write-provenance clause", "authorization_state": "already riding the pending v1.9 definitional line (territory ratification)"},
-    {"id": "R4", "what": "MS_DRIVE_ONEDRIVE / MS_GROUP zero-vs-unmeasured", "owner_suggested": "ms substrate producer owner", "authorization_state": "finding routed, no action implied"}
+    {
+      "id": "R1",
+      "what": "CORRECTED v1.1 -- TWO SEPARATE REMEDIES, different sizes: (R1a) one re-emission + a schedule -- refreshes inf +7, mdpf +3 (trees WITH builders); (R1b) cot needs a Pass-6 BUILDER in trace_graph.py first (code, ~the shape of build_mdpf_dag's addition) -- re-emission alone structurally cannot reach cot. assets' TraceGraph builder exists (:490) but its nodes' presence in the producer output is UNDETERMINED (id-grammar vs 'gold:' prefix unverified)",
+      "owner_suggested": "CTO~B / AE lane (runner+design owner per the spec's addressee)",
+      "authorization_state": "R1a schedule needs a word (production rule; ad-hoc QA re-emission already legal); R1b is new code -- build-ladder + owner routing applies"
+    },
+    {
+      "id": "R2",
+      "what": "implement the subdivision per @58505c291",
+      "owner_suggested": "1.0.0_SA_CTO~B (the spec's addressee)",
+      "authorization_state": "ALREADY ORDERED (Andrew-direct 2026-08-06 verbatim) -- this is unexecuted standing work, not a new ask"
+    },
+    {
+      "id": "R3",
+      "what": "the edge.layer write-provenance clause",
+      "authorization_state": "already riding the pending v1.9 definitional line (territory ratification)"
+    },
+    {
+      "id": "R4",
+      "what": "MS_DRIVE_ONEDRIVE / MS_GROUP zero-vs-unmeasured",
+      "owner_suggested": "ms substrate producer owner",
+      "authorization_state": "finding routed, no action implied"
+    }
   ],
   "boundary_declaration": {
     "address_space": "the five graph substrates (node+edge+type counts, canonical kuzu DB HEAD-current this session), aws-vs-live on 2 node classes, pipeline-vs-repo on 6 trees, field schema + emptiness on all 20615 nodes, the estate-report runner source + 7 days of S3 report/manifest artifacts",
     "traversal_residue": "NOT measured: portal substrate vs live portal reality (tracker-internal denominator needed); ms nodes vs live SharePoint reality; per-edge-type field correctness beyond layer; the attribution bridge's chain-resolution correctness (stated as INFERRED above); C2/C3 detector coverage beyond the already-ratified BACKEND 79.3% / FRONTEND 13.2% figures",
     "presentation_residue": "none -- every measurement taken appears above",
-    "failure_direction": {"self": "under_report", "basis": "exercised", "known_negative": "the tier/id property queries returned Binder exceptions until the schema was discovered from a whole-node dump -- a wrong property name FAILS LOUD in kuzu, so absent-property conclusions in this assessment could not have passed silently"},
+    "failure_direction": {
+      "self": "under_report",
+      "basis": "exercised",
+      "known_negative": "the tier/id property queries returned Binder exceptions until the schema was discovered from a whole-node dump -- a wrong property name FAILS LOUD in kuzu, so absent-property conclusions in this assessment could not have passed silently"
+    },
     "revalidate_by": "any graphuni re-emission, runner subdivision landing, or NODE_TYPE_LAYER change"
   }
 }
