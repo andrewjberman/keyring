@@ -106,6 +106,14 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 exists. T-1 by fixed rule, not time of day; CIX indices publish 02:07–03:07 ET; never send
 on a tripwire FAIL.
 
+**Daily guardrail (Andrew-asked 2026-08-10, @e77bec6e5):** each session/day, check the
+execution records of the scheduled Bloomberg upload (system cron `OPAL_BBGTML_daily_pull`
+07:00 ET remains the PRIMARY path; CIX publish 02:07–03:07 ET) and confirm the upload ran
+as scheduled. On a missed/failed run: fallback `/terminal-upload` under its own skill gates
+(NEVER send on tripwire FAIL) or escalate. The gateway overlay allow row
+(`opal_data_refresh_upload`, `# andrew-asked`) is FALLBACK CAPABILITY ONLY, never the
+routine path.
+
 **Teams concierge** — the loop above, all day.
 
 **`49-schwab-conv`, `/bbg-daily`** — sibling pipelines on this machine; know who owns them
