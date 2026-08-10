@@ -1,0 +1,100 @@
+{
+  "assessment": "E2E_FUNCTIONAL_ASSESSMENT_GRAPH_KIMI",
+  "version": "1.0",
+  "date": "2026-08-10",
+  "measured_by": "3.0.0_SA_CVO",
+  "authority": {
+    "instruction_verbatim": "before running the estate-pull backlog, we need to assess if our system is actually functional end to end. The thing that is most important to me before even doing this is assessing graph territory/substrate_side coverage and mechanics (after coverage, are we even successfully pulling the right fields/data?) + in addition to those, I don't believe we ever finished designing the Kimi API calls and prompting.",
+    "channel": "Andrew-direct at the CVO terminal, 2026-08-10 ~21:3xZ; broadcast to COO/CTO/MSTR 213842-213929Z",
+    "vocabulary_note": "assessed on the ratified substrate axis (aws/pipeline/portal/ms + semctl overlay); 'territory' maps to 'substrate' per the pending definitional ratification"
+  },
+  "headline": {
+    "verdict": "FUNCTIONAL WITH TWO BROKEN LEGS, both now measured at source",
+    "leg_1": "the PIPELINE substrate is FROZEN AT 2026-07-01 -- its producer is an unscheduled manual one-shot feeding a nightly derive, so the graph's freshest-looking table carries 41-day-old pipeline data; cot is DECLARED in the producer's own scope and carries ZERO nodes",
+    "leg_2": "the Kimi call layer still runs the MONOLITH that Andrew ordered subdivided 2026-08-06 ('No bridge, move to the subdivision now'); it lost 1 of the last 7 days entirely to KIMI_TIMEOUT x2 and landed another 4.2s under the ceiling",
+    "everything_else": "aws substrate EXACT vs live (197/197 lambdas, 30/30 buckets); node fields populated (3 empty props of 20,615); serve seam intact at exactly 28; report/manifest artifacts structurally clean per the 08-10 masquerade census"
+  },
+  "axis_1_graph_coverage": {
+    "db_provenance": "kuzu_nessie_db rebuilt this session (age 0.0h, Nessie HEAD current), 20615 nodes / 41184 edges",
+    "nodes_by_substrate": {"portal": 11338, "ms": 5862, "aws": 2055, "pipeline": 1337, "semctl": 23},
+    "node_types_by_substrate": {"aws": 33, "portal": 15, "ms": 5, "pipeline": 3, "semctl": 2},
+    "aws_vs_live": {
+      "LAMBDA": {"graph": 197, "live": 197, "method": "materialized full list client-side count (auto-paginate, no --query length)", "verdict": "EXACT"},
+      "S3_BUCKET": {"graph": 30, "live": 30, "verdict": "EXACT"},
+      "note": "aws substrate is the fresh leg: CloudTrail incremental + 02:00Z full re-derive"
+    },
+    "pipeline_substrate": {
+      "verdict": "FROZEN + PARTIAL",
+      "snapshot_vintage": "producers/graphuni/{gold_compute,stitchers,storage_s3keys}.json last written 2026-06-30/07-01 (41 days); the nightly derive re-ingests the SAME snapshot each run -- graph_nodes 'last-write 1.0h ago' while its pipeline DATA is July 1 (the freshness illusion the provenance header warns about, one level deeper: fresh derive, frozen input)",
+      "producer": "infra/aws/globgrph/extract_gold_compute.py",
+      "producer_declared_scope": "_FIRM = {black_diamond: bd, inf: inf, mdpf: mdpf, cot: cot} -- FOUR trees declared",
+      "schedule": "NONE FOUND (zero TF references) -- a manual one-shot feeding a scheduled consumer; the unscheduled-production-pipeline defect class (CLAUDE.md ad-hoc-runs rule half (b))",
+      "coverage_per_tree_graph_vs_repo_gold": {
+        "bd": {"graph": 69, "repo": 69, "delta": 0, "verdict": "EXACT as of the July-1 snapshot"},
+        "inf": {"graph": 46, "repo": 53, "delta": -7, "verdict": "scripts added since July 1 invisible"},
+        "mdpf": {"graph": 18, "repo": 21, "delta": -3, "verdict": "same"},
+        "cot": {"graph": 0, "repo": 42, "delta": -42, "verdict": "DECLARED-IN-SCOPE, WHOLLY ABSENT -- either the July-1 emission predates cot support or it emitted zero; not a declared boundary"},
+        "assets": {"graph": 0, "repo": 7, "verdict": "declared OUT (not in _FIRM)"},
+        "etfs": {"graph": 0, "repo": 2, "verdict": "declared OUT (not in _FIRM)"}
+      },
+      "concrete_instance": "build_cottonwood_mdpf_slice.py -- the script at the center of TODAY's MDPF repair -- lives in data/assets and is INVISIBLE to the pipeline substrate",
+      "totals": "graph 133 vs repo 194 current gold scripts (69+46+18 = 133 exact)"
+    },
+    "ms_substrate": {"nodes": 5862, "types_present": "5 of 7 declared (MS_FILE 4789, MS_FOLDER 1056, MS_USER 15, MS_SITE 1, MS_LIBRARY 1)", "types_zero": ["MS_DRIVE_ONEDRIVE", "MS_GROUP"], "verdict": "zero-vs-unmeasured UNDETERMINED -- needs the ms producer's denominator; a zero cannot say which zero it is"},
+    "substrate_side_mechanics": {
+      "side_derivation": "node.layer ONLY (correct per the ratified rollup: BACKEND=aws+pipeline, FRONTEND=portal, KNOWLEDGE=ms; semctl takes side from members)",
+      "edge_layer_finding": "edge.layer is UNUSABLE as a substrate/side axis, now QUANTIFIED: 24401 edges carry layer='aws', of which 19741 (80.9%) have ZERO aws endpoints (portal-portal 16784 + pipeline-pipeline 2957) and 849 more are only half-aws. Only ms and semctl producers set edge layer; everything else defaults 'aws' at derive_runner.py:371-372. Anyone computing side denominators from e.layer gets FRONTEND=0.",
+      "endpoint_derived_truth": {"portal_portal": 16784, "ms_ms": 11691, "aws_aws": 3811, "pipeline_pipeline": 2957, "semctl_overlay": 5092, "pipeline_to_aws": 573, "aws_to_pipeline": 248, "portal_to_aws_serve_seam": 28, "semctl_semctl": 12},
+      "decomposition_check": "16784+3811+2957+573+248+28 = 24401 -- EXACT match to the 'aws'-labeled count; the label is write-provenance, proven arithmetically",
+      "serve_seam": "still exactly 28 (ServedURL--SERVED_FROM-->S3_BUCKET_POLICY); the authorized GOVERNS edge is queued behind territory ratification, correctly unbuilt"
+    }
+  },
+  "axis_2_field_pull_mechanics": {
+    "verdict": "FOR COVERED NODES, FIELDS ARE PULLED CORRECTLY -- the failure mode is coverage/vintage (axis 1), not extraction",
+    "node_schema": "node_id / arn / node_type / name / layer / drift_class / source / snapshot_ts / props(JSON string)",
+    "empty_props": "3 of 20615 nodes (all aws) -- 0.015%",
+    "tier_attribute": "PRESENT for PipelineScript but NESTED inside the props JSON string ({\"level\":\"file\",\"tier\":\"gold\"}) -- the arch-gate's 'tier as a queryable ATTRIBUTE' is queryable-with-friction (string-match, not WHERE n.tier=...), one level indirect from the ratified wording",
+    "node_id_grammar": "carries the tree (pipeline:bd:gold:A_00...) -- per-tree accounting derivable, used for this assessment"
+  },
+  "axis_3_kimi_api_and_prompting": {
+    "andrews_belief": "CONFIRMED AT SOURCE -- the design was finished as a SPEC and ordered into execution, and the deployed runner does not implement it",
+    "design_chain": {
+      "spec": "@58505c291 (2026-08-05, CVO): subdivide the Kimi call layout -- Call 0 deterministic -> Call 1 NARRATE -> Calls 2-5 DETECT -> Calls 6..N AUTHOR; addressed to CTO~B as runner+design owner; input to the v3 State/Friction work Andrew sequenced first",
+      "ruling": "Andrew-direct 2026-08-06 ~1414Z VERBATIM: 'No bridge, move to the subdivision now.' preceded by 'I thought we already established that this should be broken up into multiple calls, where I would imagine that each call would have its prompt in a step function manner.' The 1800s-timeout bridge (c176c3d9f) was deployed 14:12:43Z and ROLLED BACK 14:22:18Z on that ruling.",
+      "deployed_state": "the runner (estate_report_runner.py, 1776 lines) still runs ONE build_prompt + ONE call_kimi -- the monolith the spec retires. 4 days elapsed since the ruling."
+    },
+    "monolith_current_design": {
+      "prompt": "single 67-74KB two-part prompt: PART 1 PRIMARY = captured human rulings/operator corpus (coverage + freshness declared in-band, budget 70000 chars); PART 2 APPENDIX = deterministic changed-resources summary (sample-vs-total framed). STRICT JSON contract (exec_summary + proposals); field allowlist enforced CODE-side (PROSE_FIELDS = {description, enrichment, classification, classification_reason}; 'prompt discipline is not a control'); grounding instruction; proposing-nothing-valid.",
+      "call": "temperature=1 (model-mandated, documented), max_tokens=32000 (shared reasoning+content budget; KIMI_EMPTY mechanism documented + exercised), 300s socket timeout x2 attempts, telemetry captured PRE-call so it survives timeouts (the 08-06 CVO coverage ask, honored)",
+      "grade": "genuinely hardened FOR A MONOLITH -- every parameter carries its incident history in-line"
+    },
+    "seven_day_outcome_census": {
+      "2026-08-04": {"ai": "PRESENT", "proposals": 2, "note": "pre-telemetry vintage"},
+      "2026-08-05": {"ai": "PRESENT", "proposals": 9},
+      "2026-08-06": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 110.2s", "prompt_chars": 72966},
+      "2026-08-07": {"ai": "ABSENT", "proposals": 0, "attempt": "KIMI_TIMEOUT 300.1s + KIMI_TIMEOUT 300.0s", "prompt_chars": 73798, "note": "THE DAY LOST -- post-rollback monolith fired the same failure the bridge was built for"},
+      "2026-08-08": {"ai": "PRESENT", "proposals": 1, "attempt": "OK 295.8s", "note": "4.2s under the ceiling -- a near-loss"},
+      "2026-08-09": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 39.7s", "prompt_chars": 67606},
+      "2026-08-10": {"ai": "PRESENT", "proposals": 0, "attempt": "OK 64.5s", "prompt_chars": 67606},
+      "reading": "6/7 sections landed (fail-soft held; no run failed); latency 39.7s to 300s+ on same-order prompts = generation-induced variance, the exact mechanism the in-code analysis names and the subdivision retires. Proposal yield: 11 of 12 came on 08-04/05; 08-06..08-10 yielded 1 total. Whether that is estate-quiet or prompt-under-elicitation is UNDETERMINED from outcomes alone -- the spec's DETECT calls were designed to answer precisely this."
+    },
+    "related_but_distinct": "the kimi_subdivision_harness at the CVO seat (c2_individuate/c3_cover -- the semantic pipeline's C2/C3 instance layer) is BUILT-UNDEPLOYED, item-5 load path with CTO~B, an Item-0 landing-shelf exhibit; it is NOT the runner subdivision, which remains unstarted"
+  },
+  "downstream_inference": {
+    "claim": "the daily report's chain-attribution leg inherits the July-1 pipeline vintage (attribution resolves changed paths against graph chains)",
+    "grade": "INFERRED -- one link not source-traced this session; stated so it is visible, not actionable without grounding"
+  },
+  "remedies_proposed_not_gated": [
+    {"id": "R1", "what": "schedule the graphuni producer (or fold it into the 02:00Z derive) + one re-emission -- refreshes cot 0->42, inf +7, mdpf +3 on the current _FIRM; also rules assets/etfs IN or OUT explicitly", "owner_suggested": "CTO~B / AE lane (runner+design owner per the spec's addressee)", "authorization_state": "needs a word only for the SCHEDULE (production rule); an ad-hoc QA re-emission is already legal"},
+    {"id": "R2", "what": "implement the subdivision per @58505c291", "owner_suggested": "1.0.0_SA_CTO~B (the spec's addressee)", "authorization_state": "ALREADY ORDERED (Andrew-direct 2026-08-06 verbatim) -- this is unexecuted standing work, not a new ask"},
+    {"id": "R3", "what": "the edge.layer write-provenance clause", "authorization_state": "already riding the pending v1.9 definitional line (territory ratification)"},
+    {"id": "R4", "what": "MS_DRIVE_ONEDRIVE / MS_GROUP zero-vs-unmeasured", "owner_suggested": "ms substrate producer owner", "authorization_state": "finding routed, no action implied"}
+  ],
+  "boundary_declaration": {
+    "address_space": "the five graph substrates (node+edge+type counts, canonical kuzu DB HEAD-current this session), aws-vs-live on 2 node classes, pipeline-vs-repo on 6 trees, field schema + emptiness on all 20615 nodes, the estate-report runner source + 7 days of S3 report/manifest artifacts",
+    "traversal_residue": "NOT measured: portal substrate vs live portal reality (tracker-internal denominator needed); ms nodes vs live SharePoint reality; per-edge-type field correctness beyond layer; the attribution bridge's chain-resolution correctness (stated as INFERRED above); C2/C3 detector coverage beyond the already-ratified BACKEND 79.3% / FRONTEND 13.2% figures",
+    "presentation_residue": "none -- every measurement taken appears above",
+    "failure_direction": {"self": "under_report", "basis": "exercised", "known_negative": "the tier/id property queries returned Binder exceptions until the schema was discovered from a whole-node dump -- a wrong property name FAILS LOUD in kuzu, so absent-property conclusions in this assessment could not have passed silently"},
+    "revalidate_by": "any graphuni re-emission, runner subdivision landing, or NODE_TYPE_LAYER change"
+  }
+}
