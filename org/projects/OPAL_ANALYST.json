@@ -4,13 +4,23 @@
   "name": "ANALYST",
   "description": "Opal Analyst -- the 0.0.3_BG_BBGTerminal Teams concierge as a product: a Teams-native data concierge for the Opal team on the Bloomberg terminal box ('Opal Bloomberg' account), answering from SERVED Opal artifacts through a deny-by-default request catalog, doubling as the daily Bloomberg pipeline operator. Chartered Andrew-direct 2026-08-10 ~1330Z at the MSTR~Z terminal (@1ac23a7e1): 'register a project called ANALYST, under the OPAL macro, for project code OPAL_ANALYST which facilitates the development of that product.' Site-Z fabric exclusive to this project until further word. Build phase pre-exists the project (LD-0382 @6e0e58552a redesign + completion set @65d80ab37 + one delivered live serve 2026-08-07); this project creates the product/operations layer: P0 durable identity pin in the teams-watch engine, wrapper-free relaunch, server-side per-identity allowlist, entitlement activation path (Andrew-gated), vertical capability growth as R&D, thread-memory integration.",
   "prds": [
-    {"path": "docs/architecture/OPAL_ANALYST_PRD.md", "label": "OPAL_ANALYST PRD v1.0 (product/operations layer; P0 identity pin; TO-1..TO-5)", "date": "2026-08-10"}
+    {
+      "path": "docs/architecture/OPAL_ANALYST_PRD.md",
+      "label": "OPAL_ANALYST PRD v1.0 (product/operations layer; P0 identity pin; TO-1..TO-5)",
+      "date": "2026-08-10"
+    }
   ],
   "status": "active",
-  "phase": "Phase 3: ops layer COMPLETE, R&D surface remains. TO-1/TO-2/TO-3/TO-5 all complete-accepted (TO-2/TO-3 accepted 1735Z: relaunch verified four limbs; gateway allowlist deployed i-07dccb1615503ac99, Phase-3 denied/allowed/control/overlay all exercised PASS; deploy ledger closed). Product LIVE: 0.0.3_BG serving as Opal Bloomberg with identity-pinned monitor; server-side per-identity allowlist enforcing; portal-bucket read ACTIVATED @472e56910; upload-guardrail duty landed @81287c40a + runbook addendum @b08b13bbf; overlay row #andrew-asked fallback-only; ycharts held. TO-4 plan ruled @6c1161075 (MP -> Pod-2 -> Macro -> News; census grammar PRD s.8 @7753e1caf; registry = DATA_CATALOG extension, post-review). TO-4a COMPLETE: Andrew structuring APPROVED @95b3e2852 ('excellent work... run the others as well'), four pilot grammar choices RATIFIED. TO-4b (Pod-2) DISPATCHED pending + batch GO; TO-4c (Macro) + TO-4d (News, Stage-0 scope proposal per Andrew's own open-question design) staged sequential per ruled order, batch GO covers b->c->d.",
-  "blocking": "None at Andrew. Sequential census execution at 0.5.0_AE~Z; TO-4d Stage-1 will need the News scope word when reached. Q6 ruled @1e826e255: semantic pass runs PER-VERTICAL, MP queued now -- DATA_CATALOG v0.2 MP rows become dispatchable on his MP pass, decoupled from remaining censuses (later verticals inherit: census -> semantic pass -> registry rows).",
+  "phase": "Phase 3: ops layer COMPLETE, R&D surface remains. TO-1/TO-2/TO-3/TO-5 all complete-accepted (TO-2/TO-3 accepted 1735Z: relaunch verified four limbs; gateway allowlist deployed i-07dccb1615503ac99, Phase-3 denied/allowed/control/overlay all exercised PASS; deploy ledger closed). Product LIVE: 0.0.3_BG serving as Opal Bloomberg with identity-pinned monitor; server-side per-identity allowlist enforcing; portal-bucket read ACTIVATED @472e56910; upload-guardrail duty landed @81287c40a + runbook addendum @b08b13bbf; overlay row #andrew-asked fallback-only; ycharts held. TO-4 plan ruled @6c1161075 (MP -> Pod-2 -> Macro -> News; census grammar PRD s.8 @7753e1caf; registry = DATA_CATALOG extension, post-review). TO-4a COMPLETE: Andrew structuring APPROVED @95b3e2852 ('excellent work... run the others as well'), four pilot grammar choices RATIFIED. TO-4b (Pod-2) DISPATCHED pending + batch GO; TO-4b (Pod-2) ACCEPTED complete @74b0a10d7; TO-4c (Macro) ACCEPTED complete @028a0b3c2 (third vintage variant PRD s.8.2 @09c14b806). TO-4d Stage 0 DISCHARGED: Andrew RULED News scope Option C ('C on this call' ~1927Z, record @1624238b3; union -- visual plane + labeled ddb_sources section, no new grammar level), annotated on the TO @871e45fd3. Stage 1 (News census under scope C) in flight at 0.5.0_AE~Z. Box crash ~2022Z 2026-08-10; fabric respawned, no in-flight loss (COO log reconstructed @3c53ee00e).",
+  "blocking": "None at Andrew. TO-4d Stage 1 (News census, scope C) executing at 0.5.0_AE~Z; COO validation on delivery. Q6 ruled @1e826e255: MP semantic pass queued -- DATA_CATALOG v0.2 MP rows dispatchable on his MP pass, decoupled from the News census.",
   "created": "2026-08-10",
-  "pods": ["0.0", "0.5", "1.0", "2.0", "4.0"],
+  "pods": [
+    "0.0",
+    "0.5",
+    "1.0",
+    "2.0",
+    "4.0"
+  ],
   "pipeline": "OpalGateway / BBGTerminal concierge (no data pipeline of its own; serves opal-data-portal-v2 + news DDB read-only)",
   "thread_counter": 0,
   "threads": [],
