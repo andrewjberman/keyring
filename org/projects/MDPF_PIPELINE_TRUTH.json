@@ -80,9 +80,9 @@
           "evidence": "aws s3 ls"
         },
         "writer": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2: attribute the writer of smartx bronze"
+          "value": "smartx_assets_pull (Lambda; EventBridge Scheduler smartx-assets-daily-pull-daily 13:30Z)",
+          "status": "MEASURED",
+          "evidence": "smartx_assets_pull/lambda_function.py:107 ms_key = km.account_tier_platform_bronze_key('models_summary', run_date); sole writer across infra/aws/lambda. Key built from run_date -- source-confirms c2=RUN_DATE."
         },
         "c1_write_clock_utc": {
           "value": "13:36:31",
@@ -95,14 +95,14 @@
           "evidence": "aws s3 ls"
         },
         "c3_provenance_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2: open the newest bronze file, name the vendor as-of field"
+          "value": "NONE. Only run-varying vendor stamp is payload.{model_guid}.information.timestmap (sic) = 2026-08-10T06:15:53Z, CONSTANT across all 896 models.",
+          "status": "MEASURED",
+          "evidence": "ALL 172 distinct leaf paths enumerated in the newest bronze. Every other date-shaped field is a static reference attribute (fund inception 2001-2004, Drupal CMS 2018 epochs)."
         },
         "c3_provenance_independent": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "The timestmap stamp CAN disagree with the key (06:15:53Z vendor vs our 13:36:31Z write, 7h20m apart) but it is a batch-BUILD clock, NOT a data as-of. THE AXIS SOURCE'S BRONZE CANNOT SELF-DECLARE ITS OWN VINTAGE -- same class as eclipse, on the most load-bearing feed in MDPF."
         }
       },
       "date_semantics": {
@@ -138,8 +138,8 @@
         },
         "c4_roster_field": {
           "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c: column list not read for this leg"
+          "status": "MEASURED",
+          "evidence": "fact_model_aum_daily date=2026-08-10: rows=4422, 10 cols enumerated. No roster/assignment date. Confirms cottonwood is the only C4 holder."
         },
         "consequence": {
           "value": null,
@@ -213,9 +213,9 @@
           "evidence": ":769"
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": "2026-08-10 13:00:59Z",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/ 463-object listing, boto3 true UTC. 49F is the ONLY firm whose gold was written today; inflection last 08-07 13:00:55, cottonwood 08-07 22:46:59, global 08-07 03:52:14."
         }
       },
       "cross_firm": {
@@ -285,9 +285,11 @@
           "evidence": "events list_rules, 139 materialised"
         },
         "observed_run_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": {
+            "canonical-schwab-si2-08242234-daily-pull": "10:15:19Z and 22:15:19Z daily"
+          },
+          "status": "MEASURED",
+          "evidence": "The puller writes its OWN Z-stamped run manifest: schwab/08242234/_ops/daily_pull/runs/{RUNID}.json -- strict two-per-day cadence matching cron(15 10,22). The producer's own UTC clock, independent of S3 LastModified."
         },
         "weekday_mask": {
           "value": null,
@@ -302,14 +304,14 @@
           "evidence": "S3 notification filter"
         },
         "writer": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "sdd-daily-pull.ps1 as Windows scheduled task OpalSddDailyPull-08242234 on EC2 i-0f3d57a97f14727af, via SSM from the EventBridge rule",
+          "status": "MEASURED",
+          "evidence": "list-targets-by-rule -> SSM document on that instance pulling code/canonical-schwab-si2/sdd-daily-pull.ps1; script:481 aws s3 cp, :55 KEYROOT=schwab/$Master/bronze. NOT A LAMBDA -- the only EC2/SSM-driven bronze writer of the seven pipelines."
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "10:15:3x-10:16:4x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object on the newest rps object = 'Sat, 08 Aug 2026 10:15:59 GMT'. Per-feed newest across all 17 bronze feeds (7,438 objects) lands 10:15:29-10:16:16. MUST be read via head-object: aws s3 ls renders this same object as 06:15:59 local."
         },
         "key_grammar": {
           "value": "*.zip",
@@ -317,26 +319,26 @@
           "evidence": "S3 notification suffix filter"
         },
         "c3_provenance_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "Business Date -- Schwab CRS field 5 of the H1 header AND every D1 detail record. Value = 20260807.",
+          "status": "MEASURED",
+          "evidence": "Downloaded and unwrapped the newest bronze (outer .zip -> inner CRS20260807.RPS, 81,354,737 B). H1 verbatim: 'H1|SCHWAB  |0008242234|49 WEALTH MANAGEMENT LLC      |20260807|BDRECPOS|01.06|'. Survives to silver as column business_date."
         },
         "c3_provenance_independent": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "INDEPENDENCE TEST RUN AND PASSED. The partition key comes from the vendor FILENAME (sdd-daily-pull.ps1:420 regex); business_date is written by Schwab INSIDE the payload -- two separate vendor artifacts, so they CAN disagree. Empirical: 40 of 553 partitions sampled (25 newest + 15 seeded-random), 0 disagreements. >> SCHWAB IS THE ONLY FEED IN THE ESTATE WITH A GENUINELY INDEPENDENT, CORROBORATING VENDOR PROVENANCE FIELD."
         }
       },
       "date_semantics": {
         "c2_partition_meaning": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c"
+          "value": "DATA_DATE",
+          "status": "MEASURED",
+          "evidence": "Source-confirmed both sides: partition parsed from the vendor filename (:420) and the in-file vendor Business Date equals it 40/40. Clock cross-check: the CRS20260807 file was WRITTEN 2026-08-08 10:15:59Z -- the partition is NOT our run date."
         },
         "c3_vintage_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c"
+          "value": "business_date",
+          "status": "MEASURED",
+          "evidence": "fact_rps_s2 date=2026-08-07: rows=7,163, cols=39 enumerated; business_date distinct=1 = 2026-08-07."
         },
         "offset_label_to_vintage": {
           "value": "POLICY-EXEMPTED from normalization. Schwab LABEL ACCURACY IS NOT MEASURED.",
@@ -360,8 +362,8 @@
         },
         "c4_roster_field": {
           "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c: column list not read for this leg"
+          "status": "MEASURED",
+          "evidence": "All 39 fact_rps_s2 columns enumerated; business_date is the ONLY date column."
         },
         "consequence": {
           "value": null,
@@ -369,9 +371,9 @@
           "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
         },
         "known_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "key_grammar was recorded as '*.zip' from the S3 notification SUFFIX FILTER; the actual grammar is bronze/{feed}/{YYYYMMDD}/{master}.CRS{YYYYMMDD}.{FEED}.zip across 17 feeds. The recorded value describes the TRIGGER'S FILTER, not the layout.",
+          "status": "MEASURED",
+          "evidence": "7,438-object census across 17 feed folders. sdd-daily-pull.ps1:24 warns a naive CRS(\\d{8}) regex 'silently DROPS or MIS-DATES' the CS{mmddyy} variant, handled at :423. Low severity but it would mislead anyone writing a consumer or a census over this prefix."
         }
       },
       "calendar_basis": {
@@ -381,14 +383,14 @@
           "evidence": "derive_canonical_axis:832-835 -> canonical_trading_axis:378-384 trading_days_between(SERVED_AS_OF_FIRST, frontier). Served artifact meta.trading_day_calendar = NYSE/pandas_market_calendars. The CALENDAR and the FRONTIER are separable -- only the frontier is imported."
         },
         "roll_forward_policy": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-4"
+          "value": "NONE -- named gap, no interpolation",
+          "status": "MEASURED",
+          "evidence": "load_rps_custody_history docstring: 'A date with NO fact_rps_s2 partition is a NAMED gap ... NO interpolation (D1).' Body confirms via __missing__."
         },
         "known_calendar_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-4"
+          "value": "NONE. Coverage is trading-day-complete through the frontier: newest partition date=2026-08-07 (Fri), written Sat 10:15:59Z. No 08-08/08-09 partition is expected.",
+          "status": "MEASURED",
+          "evidence": "553 silver partitions / 645 bronze rps objects. TRADING CALENDAR RESOLVED. The puller's own manifest reads trading_frontier '2026-08-07', enumerated 227, downloaded 0, skipped 227, ok=true -- downloaded=0 on a Monday is the CORRECT result, not a stall."
         }
       },
       "silver": {
@@ -413,14 +415,14 @@
           "evidence": "get_bucket_notification_configuration"
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": "10:16:0x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object fact_rps_s2/date=2026-08-07/data.parquet = 'Sat, 08 Aug 2026 10:16:06 GMT'; corroborated by the silver-schwab log stream at 10:16:35."
         },
         "latency_from_bronze_min": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": 0.12,
+          "status": "MEASURED",
+          "evidence": "Three paired head-object reads in true UTC: 7s / 8s / 7s (mean 7.3s). FASTEST bronze->silver leg in the estate; the S3 event path works exactly as designed."
         },
         "decoy_schedule": {
           "value": "NOT A NO-OP. opal-assets-silver-schwab-sweep-daily 12:15Z runs 113-152 SECONDS every day (8/8), converts 0 partitions, SELF-REPORTS ok=false with a FROZEN 368-partition shortfall (pre==post), and writes 2 objects daily.",
@@ -435,9 +437,9 @@
           "evidence": "source read"
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": "2026-08-10 13:00:59Z (folded into the 49financial scope artifact)",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/49financial newest object, boto3 true UTC. The leg is in-run and has no separate artifact."
         }
       },
       "cross_firm": {
@@ -476,9 +478,12 @@
           "evidence": "49financial scope, publisher 2026-08-10"
         },
         "open_defects": {
-          "value": [],
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": [
+            "SPLIT SERVED VINTAGE WITHIN THE FIRM: 49financial/account-distribution served from 2026-08-07 while aum-metrics and aggregate-aua-timeseries are served from 2026-08-06",
+            "served frontier one trading day behind available silver (inherited from the floor/axis-source ordering, not leg-local)"
+          ],
+          "status": "MEASURED",
+          "evidence": "platinum/mdpf/_manifests/latest.json run_id 20260810T135046Z-fb5dfe56, 14 rows. All 3 platinum objects written 13:50:49Z. The artifact's single scalar served_as_of is UNDER-DETERMINED -- one 49F surface is a day AHEAD of the other two."
         }
       }
     },
@@ -513,9 +518,12 @@
           "evidence": "events + scheduler enumeration; name defect source-confirmed by 2.0.0_SA_COO at handler :353"
         },
         "observed_run_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": {
+            "inf-api-eclipse": "13:33:53 daily",
+            "opal-assets-ingest-mirror (cot-named schedule)": "22:30-22:34"
+          },
+          "status": "MEASURED",
+          "evidence": "describe-log-streams: inf-api-eclipse last-event 13:33:53 on 08-07..08-10 (exactly cron(33 13)). Eclipse bronze objects land 22:31:02-03Z."
         },
         "weekday_mask": {
           "value": null,
@@ -535,9 +543,9 @@
           "evidence": "DEPLOYED package CodeSha256 VQ3Rw79KKqPDvOQeY0blyzclC9mFthmpektm0NA5vk4=, 469 lines. MAP row2 :114-120 -> eclipse/inflection/bronze/. Handler :353 iterates MAP+PROVENANCE_RIDERS unconditionally. EXERCISED: CloudWatch 08-10 14:16:00Z prints DENOMINATOR for row eclipse/inflection enumerated=992."
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "22:31:0x UTC (newest 2026-08-09 22:31:03)",
+          "status": "MEASURED",
+          "evidence": "992-object listing, true UTC. No 2026-08-10 eclipse bronze at measurement time (~20:55Z) -- CORRECT, the 22:30Z mirror had not fired. NOT a gap."
         },
         "key_grammar": {
           "value": "{YYYY-MM-DD}/*.json",
@@ -545,14 +553,14 @@
           "evidence": "aws s3 ls shows date-named prefixes"
         },
         "c3_provenance_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "NONE -- no vendor as-of/snapshot-vintage field in BRONZE either.",
+          "status": "MEASURED",
+          "evidence": "Opened the 2026-08-09 bronze (856 records); ALL 57 record keys enumerated. Date-bearing keys are lastRebalancedOn/createdOn/editedOn/nextAutoRebalanceDate/fixedIncomeTradeBlockDate -- all per-portfolio EVENT dates. totalValue, the number MDPF consumes, carries no date. CORROBORATES THE ABSENCE ONE LAYER UP: it is in the vendor payload, not introduced by our silver conversion."
         },
         "c3_provenance_independent": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "No candidate vintage field exists to test (57 keys enumerated), so nothing can disagree with the key."
         }
       },
       "date_semantics": {
@@ -592,9 +600,9 @@
           "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
         },
         "consequence": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "The missing 2026-08-06 is an INGEST-SIDE absence, not a silver-conversion failure: eclipse BRONZE lacks it too. Bronze and silver agree exactly -- 72 date folders vs 72 partitions, set difference EMPTY both directions.",
+          "status": "MEASURED",
+          "evidence": "992 bronze objects -> 72 date folders; 72 silver partitions. '2026-08-06' in bronze = False, in silver = False. Both carry 08-02 (Sun), 08-08 (Sat), 08-09 (Sun). LOAD-BEARING: eclipse WRITES ON WEEKENDS, so a THURSDAY gap cannot be a calendar artifact. ANY REMEDY AIMED AT THE SILVER CONVERTER MOVES NOTHING."
         },
         "known_defect": {
           "value": "The ENTIRE inflection MODEL leg is served ONE TRADING DAY LATE. The value MDPF publishes under label 2026-08-07 is $208,111,397.12 = Thursday 2026-08-06 close. consumer_treats_c2_as_c3=true and normalizer_applied_by_mdpf=false, so nothing corrects it between silver and serving.",
@@ -744,9 +752,12 @@
           "evidence": "events list_rules"
         },
         "observed_run_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": {
+            "inf-api-assets-v2": "13:34:50-13:35:21",
+            "opal-assets-ingest-mirror-inf-daily": "14:15:55"
+          },
+          "status": "MEASURED",
+          "evidence": "describe-log-streams on both groups, 08-08..08-10. Orion bronze objects land 2026-08-10 14:15:55-56Z."
         },
         "weekday_mask": {
           "value": null,
@@ -766,9 +777,9 @@
           "evidence": "Same deployed package, MAP row1 :93-113 -> orion/inflection/bronze/. EXERCISED 08-10 14:15:58Z: written=4 verified=4. CROSS-PROOF that neither schedule is firm-scoped: the -inf- 14:15Z rule wrote ECLIPSE bronze (2026-08-06T14:15:59Z) and the -cot- 22:30Z schedule wrote ORION bronze (2026-08-07T22:30:59Z)."
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "14:15:55 UTC (2026-08-10)",
+          "status": "MEASURED",
+          "evidence": "4,748-object listing, true UTC: assets/positions 14:15:55, performance/transactions 14:15:56. Ties to the 14:15Z mirror within 55s and to the 14:16Z silver write -- the 1-minute latency inference now has a directly observed bronze clock under it."
         },
         "key_grammar": {
           "value": "*.jsonl.gz",
@@ -828,9 +839,9 @@
           "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
         },
         "known_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "Orion custody bronze IS CURRENT through 2026-08-10 (14:15:55Z) while the leg is SERVED at 2026-08-05. The leg's serving lag is DOWNSTREAM (frontier/gate), not an ingest defect.",
+          "status": "MEASURED",
+          "evidence": "4,748-object census; publisher manifest serves inflection/aum-metrics from 2026-08-05.json. DISTINGUISHES an INGEST defect from a SERVING lag -- different owners, different remedies."
         }
       },
       "calendar_basis": {
@@ -1016,14 +1027,14 @@
           "evidence": "S3 notification suffix + producer source"
         },
         "c3_provenance_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2: open the newest bronze xlsx, name the vendor as-of"
+          "value": "pagedResults[].lastUpdate -- a Black Diamond per-model timestamp; 62 distinct values 2026-05-29..2026-08-07.",
+          "status": "MEASURED",
+          "evidence": "Opened bronze/rebalancer_models/2026-08-10/page_000.json; all 18 distinct leaf paths enumerated; 62 models, totalResultCount=62. The bronze XLSX legs carry NOTHING -- this JSON leg is the only cottonwood bronze with any vendor stamp at all."
         },
         "c3_provenance_independent": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "Values range MONTHS before the 2026-08-10 key (oldest 73 days), so it demonstrably CAN and DOES disagree -- BUT IT IS A MODEL-DEFINITION EDIT CLOCK, NOT A DATA VINTAGE. Passes the can-disagree test and still answers the wrong question: it dates the MODEL, never the SNAPSHOT."
         }
       },
       "date_semantics": {
@@ -1068,9 +1079,9 @@
           "evidence": "git log -1 dadd5d64f9: '0.4.0_DS_ClientPlatform fix(MDPF repair): point-in-time wins the value_date collision -- earliest assignment_date, guard surfaces instead of refusing'. DS session log @e8f2064ea3 records 'landed + deployed ... COO-ACCEPTED 180957Z'. LISTING A DISCHARGED ITEM AS OPEN RE-DISPATCHES FINISHED WORK."
         },
         "consequence": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "NONE beyond the recorded C3/C4 collapse (now remedied). The model leg's bronze->silver lineage is clock-coherent.",
+          "status": "MEASURED",
+          "evidence": "Paired true-UTC head-object, run date 2026-08-10: bronze 06:00:43/44 -> silver 06:00:53/54/55 = 9-12s."
         }
       },
       "calendar_basis": {
@@ -1117,9 +1128,9 @@
           "evidence": "head-object fact_model_roster/date=2026-08-10 = 06:00:53 GMT; fact_model_assignment = 06:00:54 GMT. THE PRIOR '02:00:5x' WAS THE LOCAL EDT STRING `aws s3 ls` PRINTS. Bronze fires cron(0 6) UTC and writes 06:00:44Z; silver lands 06:00:53Z -- NINE SECONDS LATER. G-5's premise is DISSOLVED: there is no silver-precedes-bronze anomaly on this leg and nothing to resolve."
         },
         "latency_from_bronze_min": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5: bronze 06:00 vs silver 02:00 implies silver PRECEDES bronze - needs resolution"
+          "value": 0.17,
+          "status": "MEASURED",
+          "evidence": "CONTRADICTION RESOLVED. Paired head-object in TRUE UTC: bronze 06:00:43/44 -> silver 06:00:53/54/55 = 9-12s. The recorded '02:00:5x' silver clock came from an aws s3 ls LISTING, which renders LastModified in LOCAL time (EDT). SILVER DOES NOT PRECEDE ITS BRONZE. G-5's flagged anomaly was a timezone-rendering artifact."
         },
         "decoy_schedule": {
           "value": "CONVERSION no-op CONFIRMED for this firm (0 units converted, set-identity PASS 814/814, 1.4s) -- but it WRITES a manifest AND rewrites backfill-status.json daily. NOT a wrote-nothing no-op.",
@@ -1158,9 +1169,9 @@
       },
       "gate_state": {
         "cross_axis_limb_v_run": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "cottonwood fails at the slice builder before the cross-axis gate"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Confirmed by artifact ABSENCE: gold/mdpf_revamp/cottonwood newest object is 2026-08-07 22:46:59Z -- nothing on 08-08/09/10, consistent with the slice-builder failing before the cross-axis gate. Grounded on missing output, not only on log narrative."
         },
         "last_verdict": {
           "value": "FAIL - VALUE_DATE COLLISION at value_date=2026-08-06: {'2026-08-07': 133914199.99, '2026-08-08': 139213957.62}",
@@ -1240,14 +1251,14 @@
           "evidence": "AE census"
         },
         "c3_provenance_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "NONE -- the vendor xlsx carries no date field of any kind. The only date carrier is the FILENAME.",
+          "status": "MEASURED",
+          "evidence": "Downloaded HOLDINGS_DAILY_2026-08-07.xlsx: 8 zip members, NO docProps/core.xml (so no OOXML created/modified metadata); 19 sheet columns enumerated, ZERO date columns. >> ANDREW'S PREMISE THAT 'all these raw files have meta data of their provenance' DOES NOT HOLD FOR THIS FEED."
         },
         "c3_provenance_independent": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "No in-file field exists to disagree with the key (19 cols, 8 members, no core.xml). The filename IS the key's source, so it cannot be independent of it by construction."
         }
       },
       "date_semantics": {
@@ -1257,9 +1268,9 @@
           "evidence": "THREE legs, none of them the filename. (a) TEMPORAL IMPOSSIBILITY: the partition is written strictly AFTER D in every observed case (date=2026-08-07 written 2026-08-08T22:31:25Z), so D cannot be a run date. (b) WEEKEND OCCUPANCY with a same-bucket control: 0 of 34 cottonwood partitions since 2026-06-22 fall on a weekend, while orion IN THE SAME BUCKET has 18 of 60 weekend partitions on a flat weekday histogram. A daily-unmasked RUN date produces weekend partitions; a DATA date cannot. (c) the persisted BD query template: dateRangeType Custom, startDate==endDate -- a single-day snapshot on an explicit date parameter, not a run-stamped extract."
         },
         "c3_vintage_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-2"
+          "value": "NONE -- silver carries only _source_as_of, which is OUR copy of the filename token (DECORATIVE).",
+          "status": "MEASURED",
+          "evidence": "fact_holdings date=2026-08-07: rows=17,113, cols=24 enumerated. The only date-shaped column is _source_as_of, distinct=1, identical to the key and the filename. This leg has NO independent vintage at any layer."
         },
         "offset_label_to_vintage": {
           "value": "FRAME-DEPENDENT. UTC: D+2=25/47, D+1=8/47. America/New_York: D+1=29/47, D+2=5/47.",
@@ -1288,13 +1299,13 @@
         },
         "c4_roster_field": {
           "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c: column list not read for this leg"
+          "status": "MEASURED",
+          "evidence": "All 24 fact_holdings columns enumerated; no assignment/roster date. The C4 lives on the cottonwood MODEL leg, not here -- sharpens 'only firm with a C4' to only one LEG of that firm."
         },
         "consequence": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "REAL PRECEDENCE INVERSION ON THIS LEG (and it is NOT the one that was flagged): the silver partition for date=D is written ~24h BEFORE the bronze for that same date lands. Either the recorded bronze prefix is not this silver's actual source, or silver has a second unrecorded source.",
+          "status": "MEASURED",
+          "evidence": "Three-home true-UTC head-object table: data-date 08-05 -> cot 08-07 20:31:03 / mirror 08-07 22:31:08 / SILVER 08-06 22:31:15. 08-06 -> 08-08 20:31:03 / 08-08 22:31:06 / SILVER 08-07 22:31:28. 08-07 -> 08-10 20:31:08 / 08-09 22:31:05 / SILVER 08-08 22:31:25. Rows for 08-03 and 08-04 ARE coherent (+7s, +10s), so the inversion BEGAN between data dates 08-04 and 08-05."
         }
       },
       "calendar_basis": {
@@ -1336,14 +1347,14 @@
           "evidence": "get_bucket_notification_configuration"
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": "22:31:2x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object fact_holdings/date=2026-08-07/data.parquet = 2026-08-08 22:31:25 UTC."
         },
         "latency_from_bronze_min": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": -1439.7,
+          "status": "MEASURED",
+          "evidence": "NEGATIVE LATENCY IS THE FINDING, not a sign error. date=2026-08-07: silver 08-08 22:31:25Z vs its mirrored bronze 08-09 22:31:05Z = silver is 23h59m40s BEFORE the bronze. The recorded lineage cannot be the operative one for this leg. Distinct from the (dissolved) cottonwood.model timezone artifact."
         },
         "decoy_schedule": {
           "value": "opal-assets-silver-blackdiamond-sweep-daily cron(0 5)=05:00Z",
@@ -1358,9 +1369,9 @@
           "evidence": "source read"
         },
         "c1_write_clock_utc": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": "NOT WRITTEN 2026-08-10; last written 2026-08-07 22:46:59Z",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/cottonwood, 5 objects, boto3 true UTC."
         }
       },
       "cross_firm": {
@@ -1382,9 +1393,9 @@
       },
       "gate_state": {
         "cross_axis_limb_v_run": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "scope fails earlier"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Same artifact-absence grounding as the model leg: no cottonwood gold object since 2026-08-07 22:46:59Z."
         },
         "last_verdict": {
           "value": "contributes to cottonwood scope FAIL",
@@ -1399,9 +1410,12 @@
           "evidence": "cottonwood scope"
         },
         "open_defects": {
-          "value": [],
-          "status": "UNMEASURED",
-          "evidence": "G-5"
+          "value": [
+            "all 4 cottonwood surfaces served from 2026-08-06 gold while cottonwood gold has not been written since 2026-08-07 22:46:59Z -- the publisher is re-serving a stale source",
+            "silver/bronze clock inversion on this leg (silver precedes its recorded bronze by ~24h)"
+          ],
+          "status": "MEASURED",
+          "evidence": "platinum/mdpf/_manifests/latest.json 14 rows: all four cottonwood surfaces src=2026-08-06.json, platinum objects re-written 2026-08-10 13:50:49-50Z. THE PUBLISHER REPORTS published=14 all_present=True WHILE RE-PUBLISHING A STALE SOURCE -- A GREEN PUBLISH IS NOT A FRESH SERVE."
         }
       }
     },
@@ -1473,19 +1487,19 @@
       },
       "date_semantics": {
         "c2_partition_meaning": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/_aggregate_aua/ 442 objects. PROOF BY DISAGREEMENT: file 2026-08-05.json carries as_of_date 2026-08-04; 2026-08-06.json carries 2026-08-05. Filename != content vintage."
         },
         "c3_vintage_field": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": "as_of_date -- BUT IT DEGENERATES TO THE RUN DATE WHEN THE ARTIFACT IS EMPTY",
+          "status": "MEASURED",
+          "evidence": "11 top-level keys. Across 6 recent files: 08-04->08-04, 08-05->08-04, 08-06->08-05, 08-09->08-09, 08-10->08-10. The last two are the ZEROED ones -- when partners=0 the as_of collapses onto the run date. THE VINTAGE FIELD IS ONLY INDEPENDENT WHILE THE PAYLOAD IS NON-EMPTY: AN EMPTY ARTIFACT WEARS TODAY'S DATE, which is exactly when a reader most needs it to be honest."
         },
         "offset_label_to_vintage": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": "T+1 while populated (file date=D carries as_of D-1 trading day); ZERO offset when empty (file date=D carries as_of D)",
+          "status": "MEASURED",
+          "evidence": "08-05->08-04, 08-06->08-05 (T+1, weekend-correct). 08-09->08-09 and 08-10->08-10 -- the offset collapses to 0 exactly when partners=0."
         },
         "normalizer_exists": {
           "value": false,
@@ -1498,24 +1512,24 @@
           "evidence": "zero occurrences"
         },
         "consumer_treats_c2_as_c3": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "The publisher selects its source by DATA date, not run date: the manifest names source_key .../global/aum-metrics/2026-08-05.json while run_id is 20260810T135046Z. CORRECT PATTERN -- global does not conflate the two, unlike the 49F/inflection legs."
         },
         "c4_roster_field": {
           "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-3c: column list not read for this leg"
+          "status": "MEASURED",
+          "evidence": "11 top-level keys enumerated; as_of_by_partner is a vintage map, not a roster date."
         },
         "consequence": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "AN ALL-ZERO GLOBAL AGGREGATE IS BEING EMITTED DAILY WITH reconciliation status PASS. Started 2026-08-09 and nothing reported it.",
+          "status": "MEASURED",
+          "evidence": "_aggregate_aua/2026-08-09.json and 2026-08-10.json: opal_aggregate_aua=0, model_aua=0, non_model_aua=0, partners=[], meta.feeders_missing=['49financial','inflection'], source_vintage.status='UNKNOWN', identity_1_aggregate_sum.status='PASS' residual 0 -- BECAUSE 0 == 0+0+0. Populated controls: 08-04 $1,785,080,124.89 and 08-06 $1,786,151,746.33, partners=2, recon=PASS. THE HEADLINE IDENTITY GATE CANNOT FAIL ON AN EMPTY ARTIFACT -- it passes on the confirming limb."
         },
         "known_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "Two: (a) the zeroed-but-PASS artifact; (b) as_of_date degenerates to the run date precisely when the payload is empty, so THE EMPTIEST ARTIFACT WEARS THE FRESHEST LABEL.",
+          "status": "MEASURED",
+          "evidence": "Same 6-file read."
         }
       },
       "calendar_basis": {
@@ -1530,9 +1544,9 @@
           "evidence": ":2024, :2047"
         },
         "known_calendar_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-4"
+          "value": "_aggregate_aua has NO 2026-08-07 or 2026-08-08 file at all, so the daily series has a 2-day hole immediately before the zeroed 08-09/08-10 pair. 2026-08-07 was a FRIDAY -- a trading day -- so this is not a weekend artifact.",
+          "status": "MEASURED",
+          "evidence": "Direct get_object on 08-03..08-10: 08-03 NoSuchKey, 08-04 OK, 08-05 OK, 08-06 OK, 08-07 NoSuchKey, 08-08 NoSuchKey, 08-09 OK(zero), 08-10 OK(zero). Denominator 442 objects. The Friday absence is a real miss; the Saturday absence is not."
         }
       },
       "silver": {
@@ -1596,16 +1610,16 @@
           "evidence": "SOURCE-READ :2674-2686 @3679bb0353, deploy-parity MATCH: :2678 arts[FIRM_49F]=build_49f_artifact(); :2682 shared_axis = arts[FIRM_49F]['dates']; :2683 build_inflection_artifact(axis=shared_axis). BUILDING GLOBAL IMPOSES 49F's ENTIRE 439-DATE AXIS ON INFLECTION (served n_dates=439 confirmed). Exceeds Andrew's permission on BOTH counts: the whole axis rather than the most-recent date, and ONE firm's frontier rather than all firms'. >> MY EARLIER CITATION :1680-1723 WAS WRONG -- that is the cottonwood LEG PIN inside _assert_global_composition, a GATE not a data dependency, and it can neither support nor refute this cell."
         },
         "violation": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": "YES -- global's dependency EXCEEDS 'the most recent date from all underlying firms'. build_global_artifact unions all three firms' FULL axes (~440 dates), sums per date, PINS the cottonwood leg into the headline, and ROLLS COTTONWOOD FORWARD across every no-delivery axis date.",
+          "status": "MEASURED",
+          "evidence": "dim_mdpf_aggregate_aua_timeseries.py:1956 build_global_artifact -- the dates = sorted(set|set|set) union, cot_carry = _cot_roll_forward_map(...) ('the cottonwood value CARRIES the last MEASURED figure on EVERY axis date with no delivery'), and the COTTONWOOD LEG PIN at :1612. G-6 ANSWERED: Andrew permitted a most-recent-date dependency; the implemented dependency is a FULL-HISTORY value-and-presence coupling."
         }
       },
       "gate_state": {
         "cross_axis_limb_v_run": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "G-6"
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/global newest object 2026-08-07 03:52:14Z, 5 objects -- no global gold on 08-08/09/10. The composition gate raises SystemExit before emitting, so absence of output IS the refusal. BUT the SEPARATE _aggregate_aua channel emitted anyway, zeroed and PASSing, on both 08-09 and 08-10."
         },
         "last_verdict": {
           "value": "FAIL - legs ['inflection','cottonwood'] failed",
@@ -1674,7 +1688,8 @@
       "remaining_candidate": "direct identity-based invoke by smartx-assets-daily-pull (ended 13:30:51Z, 11min before)",
       "fill_by": "read the smartx-assets-daily-pull source for an invoke call",
       "owner": "0.7.0_AE_CloudOps",
-      "blocks": "any floor/pull re-timing"
+      "blocks": "any floor/pull re-timing",
+      "status": "OPEN"
     },
     {
       "id": "G-2",
@@ -1682,7 +1697,8 @@
       "why_it_matters": "Andrew: 'all these raw files have meta data of their provenance'. Two of two measured so far are DECORATIVE.",
       "fill_by": "open the newest bronze file per feed; name the vendor as-of field; test whether it can disagree with the key",
       "owner": "0.7.0_AE_CloudOps",
-      "rows_open": 5
+      "rows_open": 5,
+      "status": "OPEN"
     },
     {
       "id": "G-3a",
@@ -1690,7 +1706,8 @@
       "why_it_matters": "If NOT, MDPF labels inflection custody ONE TRADING DAY LATE across the whole axis, on a client-facing number.",
       "fill_by": "read the opal-assets-silver-orion writer for a prior_trading_day call",
       "owner": "0.7.0_AE_CloudOps",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "status": "OPEN"
     },
     {
       "id": "G-3b",
@@ -1706,21 +1723,26 @@
       "id": "G-3c",
       "question": "Schwab custody date semantics",
       "fill_by": "same method as G-3a/b",
-      "owner": "unassigned"
+      "owner": "unassigned",
+      "status": "OPEN - NOW HIGH PRIORITY",
+      "status_note": "Schwab is the ONLY custody feed whose date semantics rest on a docstring inside ANOTHER vendor's module. Same structural position eclipse held this morning."
     },
     {
       "id": "G-4",
       "question": "Roll-forward / carry policy per firm, and which gates can trip on it",
       "known_defect": "R-21 point_class asserts 'measured' on carried cottonwood rows",
       "fill_by": "read each firm's carry policy + the point_class assignment",
-      "owner": "unassigned"
+      "owner": "unassigned",
+      "status": "OPEN"
     },
     {
       "id": "G-5",
       "question": "Silver->gold arrival with C3 per feed; and cottonwood silver 02:00Z appears to PRECEDE its bronze 06:00Z",
       "why_it_matters": "A silver that precedes its own bronze is either a different writer or a different day's data.",
       "fill_by": "per-feed write-clock + C3 census",
-      "owner": "unassigned"
+      "owner": "unassigned",
+      "status": "CLOSED - DISSOLVED",
+      "status_note": "Premise was an aws s3 ls LOCAL-TIME rendering artifact. True clocks: bronze 06:00:44Z -> silver 06:00:53Z, 9s later. No inversion on the model leg. NOTE: a REAL inversion exists on cottonwood.custody (~24h) and is tracked separately."
     },
     {
       "id": "G-6",
@@ -1728,7 +1750,9 @@
       "why_it_matters": "Andrew permitted EXACTLY that and nothing wider. :1680-1723 pins the cottonwood leg into the headline, which may exceed it.",
       "fill_by": "read the global composition path",
       "owner": "unassigned",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "status": "CLOSED - ANSWERED",
+      "status_note": "Global's dependency EXCEEDS the permitted 'most recent date'. See global.composition.cross_firm.violation and D-18 for the fix point."
     },
     {
       "id": "G-7",
@@ -1752,7 +1776,9 @@
       "status": "RULED - remediate",
       "authority": "Andrew-direct 2026-08-10; route_bindings.yaml:33 already forbade it",
       "reference_implementation": "cottonwood self_derived_axis",
-      "owner": "0.4.0_DS_ClientPlatform"
+      "owner": "0.4.0_DS_ClientPlatform",
+      "lifecycle": "OPEN",
+      "severity": "HIGH"
     },
     {
       "id": "D-2",
@@ -1761,7 +1787,11 @@
         "ALL"
       ],
       "status": "MEASURED - Andrew's call pending",
-      "blocked_by": "G-1a"
+      "blocked_by": "G-1a",
+      "lifecycle": "OPEN",
+      "lifecycle_note": "SUBSUMED BY D-19 FOR SEQUENCING -- do not remediate independently.",
+      "severity": "HIGH",
+      "owner": "1.0.0_SA_CTO (ANDREW decision)"
     },
     {
       "id": "D-3",
@@ -1770,7 +1800,10 @@
         "cottonwood.model"
       ],
       "status": "RULED point-in-time; remedy group[-1]->group[0]",
-      "owner": "0.4.0_DS_ClientPlatform"
+      "owner": "0.4.0_DS_ClientPlatform",
+      "lifecycle": "REMEDIED",
+      "lifecycle_note": "Landed + deployed @dadd5d64f9 2026-08-10T17:54:43Z, COO-ACCEPTED 180957Z.",
+      "severity": "HIGH"
     },
     {
       "id": "D-4",
@@ -1779,7 +1812,9 @@
         "inflection.custody"
       ],
       "status": "INFERRED - blocked by G-3a",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
     },
     {
       "id": "D-5",
@@ -1788,7 +1823,11 @@
         "49financial.model"
       ],
       "status": "MEASURED",
-      "note": "must not be cited as a control"
+      "note": "must not be cited as a control",
+      "lifecycle": "OPEN",
+      "lifecycle_note": "Quantified by the verify pass: the skipped exposure is 205 per-band presence disagreements across 33 dates, printed by the gate and absent from this artifact.",
+      "severity": "MED",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-6",
@@ -1797,7 +1836,10 @@
         "inflection.custody",
         "inflection.model"
       ],
-      "status": "MEASURED"
+      "status": "MEASURED",
+      "lifecycle": "OPEN",
+      "severity": "MED",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-7",
@@ -1806,7 +1848,10 @@
         "ALL"
       ],
       "status": "MEASURED",
-      "note": "delete rather than re-time; a remedy aimed here moves nothing"
+      "note": "delete rather than re-time; a remedy aimed here moves nothing",
+      "lifecycle": "OPEN",
+      "severity": "LOW",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-8",
@@ -1816,7 +1861,10 @@
         "inflection.custody"
       ],
       "status": "RENAME ORDERED by Andrew 2026-08-10",
-      "blocked_by": "G-7"
+      "blocked_by": "G-7",
+      "lifecycle": "SUPERSEDED",
+      "lifecycle_note": "Superseded by D-14 -- the rename premise itself is refuted.",
+      "severity": "LOW"
     },
     {
       "id": "D-9",
@@ -1826,7 +1874,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "Anything remediated, re-run or escalated on \"inflection is missing 08-06\" rests on a FALSE PREMISE."
+      "note": "Anything remediated, re-run or escalated on \"inflection is missing 08-06\" rests on a FALSE PREMISE.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO"
     },
     {
       "id": "D-10",
@@ -1836,7 +1886,9 @@
         "inflection.custody"
       ],
       "status": "MEASURED",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
     },
     {
       "id": "D-11",
@@ -1845,7 +1897,9 @@
         "inflection.model"
       ],
       "status": "MEASURED",
-      "severity": "MED"
+      "severity": "MED",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-12",
@@ -1855,7 +1909,9 @@
       ],
       "status": "MEASURED",
       "severity": "MED",
-      "note": "Any remediation assuming a backfill closes the gap is UNIMPLEMENTABLE."
+      "note": "Any remediation assuming a backfill closes the gap is UNIMPLEMENTABLE.",
+      "lifecycle": "OPEN",
+      "owner": "0.2.0_DS_PortfolioAnalytics"
     },
     {
       "id": "D-13",
@@ -1866,7 +1922,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "Supersedes D-8. Eclipse bronze originator is the EC2 puller pull_eclipse_portfolios.py; the Lambda inf-api-eclipse is Active but INERT (writes bronze/eclipse_qa while the mirror reads bronze/eclipse)."
+      "note": "Supersedes D-8. Eclipse bronze originator is the EC2 puller pull_eclipse_portfolios.py; the Lambda inf-api-eclipse is Active but INERT (writes bronze/eclipse_qa while the mirror reads bronze/eclipse).",
+      "lifecycle": "SUPERSEDED",
+      "lifecycle_note": "Superseded by D-14, which measures the mechanism (no firm selector) rather than the symptom."
     },
     {
       "id": "D-14",
@@ -1878,7 +1936,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "RENAMING TO A FIRM REPRODUCES THE EXACT -cot- DEFECT THE RENAME WAS MEANT TO FIX, IN TWO PLACES INSTEAD OF ONE. Rename on CADENCE (pass1/pass2 or the UTC slot), or add a firm selector to the handler FIRST. Supersedes D-13."
+      "note": "RENAMING TO A FIRM REPRODUCES THE EXACT -cot- DEFECT THE RENAME WAS MEANT TO FIX, IN TWO PLACES INSTEAD OF ONE. Rename on CADENCE (pass1/pass2 or the UTC slot), or add a firm selector to the handler FIRST. Supersedes D-13.",
+      "lifecycle": "OPEN",
+      "owner": "ANDREW (naming decision) -> 0.7.0_AE_CloudOps"
     },
     {
       "id": "D-15",
@@ -1890,7 +1950,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "BOTH LEGS LAND ON ONE DATE BY UNRELATED FAILURES -- which is exactly why every single-cause diagnosis today failed to close it."
+      "note": "BOTH LEGS LAND ON ONE DATE BY UNRELATED FAILURES -- which is exactly why every single-cause diagnosis today failed to close it.",
+      "lifecycle": "OPEN",
+      "owner": "site-Z / INF fabric (upstream producers)"
     },
     {
       "id": "D-16",
@@ -1902,7 +1964,9 @@
       ],
       "status": "MEASURED",
       "severity": "MED",
-      "note": "Blast radius is narrow -- orion and eclipse precede cottonwood in MAP and complete normally; only the PROVENANCE_RIDERS row never runs (last written 2026-07-14). THE REAL COST IS SIGNAL DESTRUCTION: the mirror's raise contract is the estate's only instrument for 'the object that never arrived', and it has been stuck RED for 14 days, so a genuine NEW failure is now indistinguishable from the standing one."
+      "note": "Blast radius is narrow -- orion and eclipse precede cottonwood in MAP and complete normally; only the PROVENANCE_RIDERS row never runs (last written 2026-07-14). THE REAL COST IS SIGNAL DESTRUCTION: the mirror's raise contract is the estate's only instrument for 'the object that never arrived', and it has been stuck RED for 14 days, so a genuine NEW failure is now indistinguishable from the standing one.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-17",
@@ -1912,7 +1976,9 @@
         "global.composition"
       ],
       "status": "MEASURED",
-      "severity": "MED"
+      "severity": "MED",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
     },
     {
       "id": "D-18",
@@ -1924,7 +1990,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "The inflection legs' cross_firm violation is GLOBAL-INDUCED. This materially shrinks the remediation Andrew ordered."
+      "note": "The inflection legs' cross_firm violation is GLOBAL-INDUCED. This materially shrinks the remediation Andrew ordered.",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
     },
     {
       "id": "D-19",
@@ -1937,7 +2005,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "BLOCKS THE ORDERED FLOOR/PULL RE-TIMING AS A STANDALONE CHANGE. The guard is currently the only thing preventing a wrong number from being served; moving the clock removes the guard WITHOUT fixing the mislabel. The label offset must be fixed FIRST or JOINTLY."
+      "note": "BLOCKS THE ORDERED FLOOR/PULL RE-TIMING AS A STANDALONE CHANGE. The guard is currently the only thing preventing a wrong number from being served; moving the clock removes the guard WITHOUT fixing the mislabel. The label offset must be fixed FIRST or JOINTLY.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO (ANDREW decision)"
     },
     {
       "id": "D-20",
@@ -1947,7 +2017,9 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "CO-CAUSAL WITH THE ORDERING DEFECT AND INDEPENDENT OF IT: had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z. Re-timing does not fix this; only the weekend-partition semantics do."
+      "note": "CO-CAUSAL WITH THE ORDERING DEFECT AND INDEPENDENT OF IT: had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z. Re-timing does not fix this; only the weekend-partition semantics do.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-21",
@@ -1957,7 +2029,9 @@
       ],
       "status": "MEASURED",
       "severity": "MED",
-      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today."
+      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
     },
     {
       "id": "D-22",
@@ -1969,7 +2043,9 @@
       ],
       "status": "MEASURED",
       "severity": "MED",
-      "note": "A PORTAL PAGE RENDERING BOTH SHOWS TWO DIFFERENT BUSINESS DAYS SIDE BY SIDE. Also a Rule-24 grain defect in THIS artifact's own schema: served_as_of is single-valued on an axis whose members sit at different vintages. account-distribution.json is the live served portal bell."
+      "note": "A PORTAL PAGE RENDERING BOTH SHOWS TWO DIFFERENT BUSINESS DAYS SIDE BY SIDE. Also a Rule-24 grain defect in THIS artifact's own schema: served_as_of is single-valued on an axis whose members sit at different vintages. account-distribution.json is the live served portal bell.",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
     },
     {
       "id": "D-23",
@@ -1979,7 +2055,124 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "The four are c2_partition_meaning, c3_vintage_field, offset_label_to_vintage, known_defect -- i.e. THE ENTIRE ECLIPSE RUN-DATE RULING. It is well-evidenced and I re-verified two keystones myself, but it has not been adversarially tested and must not be treated as though it has. One number in it is already wrong: '75 prefixes' vs a measured 72 on two instruments."
+      "note": "The four are c2_partition_meaning, c3_vintage_field, offset_label_to_vintage, known_defect -- i.e. THE ENTIRE ECLIPSE RUN-DATE RULING. It is well-evidenced and I re-verified two keystones myself, but it has not been adversarially tested and must not be treated as though it has. One number in it is already wrong: '75 prefixes' vs a measured 72 on two instruments.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO"
     }
-  ]
+  ],
+  "repair_sequence": {
+    "purpose": "Dependency ORDER for remediation. Derived from D-19: some repairs SILENCE a guard without fixing the defect it guards, so order is not preference -- it is correctness.",
+    "PHASE_0_BLOCKING_DECISIONS_AT_ANDREW": [
+      {
+        "item": "Floor/pull re-timing",
+        "defects": [
+          "D-19",
+          "D-2",
+          "D-20"
+        ],
+        "why_blocked": "⛔ RE-TIMING ALONE CONVERTS THE INFLECTION REFUSAL INTO A SILENTLY MISLABELLED PUBLISH. The guard is the only thing keeping a wrong number off the served plane. The LABEL OFFSET (D-4/D-10) MUST LAND FIRST OR JOINTLY."
+      },
+      {
+        "item": "Mirror rename",
+        "defects": [
+          "D-14"
+        ],
+        "why_blocked": "No firm selector exists; both schedules are all-firm passes. A {firm} name would cement a falsehood in TWO places. Options: cadence-based names, or add a selector first."
+      }
+    ],
+    "PHASE_1_CORRECTNESS_SERVED_NUMBERS_ARE_WRONG": [
+      {
+        "item": "Orion + eclipse label offset -- both inflection legs served one trading day late",
+        "defects": [
+          "D-4",
+          "D-10"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "Four independent derivations. Served tie-out exact to the cent. The artifact declares lag_vs_as_of_days: 0, so it is invisible to metadata readers."
+      },
+      {
+        "item": "Cross-firm axis violation -- inflection imports 49F's axis",
+        "defects": [
+          "D-1",
+          "D-18"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "Andrew-ruled. FIX POINT IS TWO LINES (:2682-2683), not the leg adapters -- _model_leg_eclipse already self-derives."
+      },
+      {
+        "item": "Global emits an all-zero aggregate with reconciliation PASS",
+        "defects": [],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "0 == 0+0+0, so the identity gate cannot fail on an empty artifact. Started 2026-08-09, unreported."
+      },
+      {
+        "item": "Served plane not date-coherent within a firm",
+        "defects": [
+          "D-22"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform"
+      }
+    ],
+    "PHASE_2_INSTRUMENT_INTEGRITY_WE_CANNOT_SEE_FAILURES": [
+      {
+        "item": "Ingest mirror hard-failing every invocation for 14 days",
+        "defects": [
+          "D-16"
+        ],
+        "owner": "0.7.0_AE_CloudOps",
+        "note": "Signal destruction: the estate's only 'object never arrived' instrument is stuck RED, so a genuine new failure is indistinguishable."
+      },
+      {
+        "item": "49F gate PASS is limb-(v)-SKIPPED",
+        "defects": [
+          "D-5"
+        ],
+        "owner": "0.7.0_AE_CloudOps"
+      },
+      {
+        "item": "Axis-source ingest ran dirty and its retry passed by skipping everything",
+        "defects": [
+          "D-21"
+        ],
+        "owner": "0.7.0_AE_CloudOps"
+      }
+    ],
+    "PHASE_3_UPSTREAM_NOT_OURS": [
+      {
+        "item": "The 2026-08-06 gap -- TWO unrelated producer failures",
+        "defects": [
+          "D-15"
+        ],
+        "owner": "site-Z / INF fabric",
+        "note": "Orion: raw producer skipped a day while the parquet producer ran; our Rule-17a guard correctly refused. Eclipse: source producer missed the day entirely."
+      },
+      {
+        "item": "Eclipse gap rate is 12.3% (7 of 57), not one date",
+        "defects": [
+          "D-11"
+        ],
+        "owner": "site-Z / INF fabric"
+      }
+    ],
+    "PHASE_4_HYGIENE": [
+      {
+        "item": "Served meta.basis mislabel on 2 of 4 firm artifacts",
+        "defects": [
+          "D-17"
+        ]
+      },
+      {
+        "item": "Sweep schedules: smartx no-op, schwab NOT a no-op (frozen 368 shortfall)",
+        "defects": [
+          "D-7"
+        ]
+      },
+      {
+        "item": "Provenance-field census -- Schwab is the ONLY independent one",
+        "defects": [
+          "D-6"
+        ]
+      }
+    ]
+  }
 }
