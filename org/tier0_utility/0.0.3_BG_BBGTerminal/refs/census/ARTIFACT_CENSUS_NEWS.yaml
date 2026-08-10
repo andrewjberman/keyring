@@ -146,7 +146,7 @@ pages:
                 canonical: ddb_sources -> opal-keyword-intelligence
                 state: live -- CORRECTED@c24cc4cab (prior STALE claim REFUTED by the
                   ground-truth fork; the table receives ~20 items/day through today).
-                  Residual finding (SURVIVING): thin exact-match keyword coverage -- only
+                  Residual finding (SURVIVING) -- thin exact-match keyword coverage; only
                   5/44 of the day's Daily Cloud keywords have an exact-key intelligence
                   item (GPT normalization renames the rest); the modal covers the gap with
                   a 7-day fallback + evolving card. This census's 2/2 empty probes
@@ -240,10 +240,10 @@ ddb_sources:
       - {name: created_at, type: S, role: vintage}
   - table: opal-keyword-intelligence
     state: ACTIVE, live-writing ~20 items/day through today -- CORRECTED@c24cc4cab (fork
-      full-scan 2,892/2,892; prior NOT-writing claim REFUTED: 2026-02-23 was the OLDEST
+      full-scan 2,892/2,892; prior NOT-writing claim REFUTED -- 2026-02-23 was the OLDEST
       date read at the wrong end of the sort, and this census's QUERY-only probes
       structurally could not see the sort's far end -- constraint-vs-instrument gap.
-      Residual: thin per-day exact-match keyword coverage, 5/44 exact -- see the
+      Residual -- thin per-day exact-match keyword coverage, 5/44 exact -- see the
       KeywordSentimentModal panel row)
     item_count_live: 2892 (2026-08-10; 17.8MB)
     query_pattern: QUERY by keyword (hash) -- or by date via GSI date-index
