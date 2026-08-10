@@ -1,5 +1,57 @@
 # MDPF trigger/schedule remediation — DECOMPOSITION + SEQUENCE
 
+> ## ⚠ ADDENDUM 5 — 2026-08-10 ~1700Z. **PRIORITY RESET BY ANDREW; ONE DECLARED GAP WITH A NAMED OWNER.**
+>
+> **N · ANDREW-DIRECT ×3 (~1620Z) — THE REPAIR IS THE MAIN FABRIC PRIORITY.** Record @5b14d993f2,
+> amended @85fb09dddd. *"first and foremost"* → *"ahead of ANY Cottonwood work"* → *"the main fabric
+> priority."* The Cottonwood model pull is **sequenced behind repair COMPLETION**, must be **properly
+> scoped and REGISTERED AS A PROJECT**, scope **"purely backend and scheduling initially"**, basis =
+> `BRIEF_COTTONWOOD_OPAL_CONSTITUENT_ATTRIBUTION_20260807.md` (`~Z`, @924c3b669a) — **confirmed by
+> Andrew directly**, not inferred from filenames. Then ~1650Z, ordering *within* the repair:
+> **08-06 mechanism FIRST**, with Inflection-ingestion offered as **his prior belief, not an assertion.**
+> ⚠ **TWO COTTONWOODS, OPPOSITE SIDES OF THE LINE:** the **model pull** is deprioritised; the
+> **cottonwood slice build refusing inside the floor** is one of the four scopes **OF** the repair and is
+> therefore main priority. *A reader resolving "Cottonwood work is behind the repair" against the second
+> parks exactly what he put first.*
+> ⚠ **"Registered as a project" is likely a SPLIT, not a new record** — the pull is currently one half of
+> `MDPF_SLICES`. **Put to Andrew; not minted, to avoid a duplicate beside an existing project.**
+>
+> **O · SWEEP 3 — AUTHORISED IN PRINCIPLE, NOT STAFFED, OWNER NAMED, TRIGGER NAMED (CTO, 1700Z).**
+> I put it to CTO rather than commissioning it: cross-program, and findings land on owners not in this
+> room. Ruled in three parts, and the middle one expires differently from the first:
+> | | |
+> |---|---|
+> | **CAPACITY** *(expires soon)* | Andrew ordered 08-06 first; AE is the only free seat and is on it. **No second seat is manufactured by pulling AE off the stated top priority to sweep documents.** |
+> | **OWNERSHIP** *(does not expire)* | **INF is going to the site-Z fabric.** A sweep of INF's own docs run from here produces findings for a program whose seats are elsewhere. **Not a gap in our coverage — correctly outside it.** The **cot** half is genuinely ours. |
+> | **RECORD** | **DECLARED, OWNER-VISIBLE GAP.** Owner: **this seat (cot half)** · **site-Z CTO (INF half**, to ride the MSTR ferry brief rather than be discovered there later**)**. **TRIGGER: the 08-06 mechanism closes.** |
+> ⛔ **WHY IT IS NOT A BARE YES, and this is the load-bearing half: A SWEEP AUTHORISED WITH NO SEAT AND NO
+> TRIGGER READS AS COVERED IN EVERY SUBSEQUENT STATUS.** AE declared the boundary precisely so it would
+> **not** be inherited as coverage; authorising a sweep nobody runs would re-inherit it under a
+> better-sounding label. **A declared gap without an owner is a nicer word for dropped.**
+>
+> **P · SWEEP-2 FINDING A WAS WORSE THAN REPORTED — landed @1f44450356.** The `MDPF_3FIRMS_PRD`
+> "D+1 ~03:30Z" fiction was live at **FIVE** sites, not the three AE reported: `:474` **(twice)** and
+> `:739` were uncounted — **and `:474` was carrying an "ON SCHEDULE" CERTIFICATION DERIVED FROM THE
+> FICTION.** All five struck in place; the `:765` "resolved" claim withdrawn (the zero-overlap finding
+> returns to **UNRESOLVED**, because the mechanism it was resolved to did not exist).
+> > **THE LESSON, and it is recursive: A FINDING'S OWN SITE-COUNT IS A RETRIEVAL RESULT AND NEEDS ITS
+> > DENOMINATOR LIKE ANY OTHER.** We spent the day printing denominators on estate scans and then
+> > reported a defect's own citation count without one.
+> ⛔ **AND THE DIRECTION OF THE ERROR IS THE DANGEROUS ONE: a leg believed D+1 when it is really D+2 makes
+> a HEALTHY delivery look LATE BY A DAY — the false-outage class NEVER#1 exists to prevent, sitting inside
+> a clause that CITES NEVER#1.**
+>
+> **Q · CTO'S CONSTRAINT ON THE 08-06 READ — the one most likely to dissolve the question.**
+> *(i)+(ii)+(iii)* say 08-06 is **absent** from eclipse, orion, **and** orion custody history;
+> *(iv)+(v)* say something put it **on the axis WITH counts**. **BOTH CANNOT BE COMPLETE.**
+> ⇒ **THERE IS AN UNNAMED SOURCE CARRYING 08-06**, and finding it likely dissolves the question without
+> needing any of the three standing hypotheses. AE holds it.
+> *My own 08-06 lead was accepted as framed — **pattern change GROUNDED** (`ce99054e44` deleted
+> `cron(30 3)Z`=03:30Z, created `cron(30 18)ET`=22:30Z, matching AE's independently measured old/new
+> patterns exactly, coupled to inflection via the all-rows handler `:353`), **missing partition OPEN.**
+> Separating those two after having written them as one sentence is what made it usable — and MSTR's
+> challenge, correctly labelled UNVERIFIED-not-REFUTED, is what forced the separation.*
+
 > ## ⚠ ADDENDUM 4 — 2026-08-10 ~1533Z. **CTO RULED. 49F GROUNDED. AND A LIVE PRD RULE IS NOW WRONG.**
 >
 > **I · BRONZE OWNERSHIP RULED (CTO):** `cot-rebalancer-runner` **owns** `blackdiamond/cottonwood/bronze/`
