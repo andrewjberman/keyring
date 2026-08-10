@@ -6,13 +6,73 @@
 
 ---
 
-## 1 · VERBATIM. THE PHRASING IS THE RULING.
+## 1 · VERBATIM — THREE MESSAGES, ONE TURN. THE PHRASING IS THE RULING.
 
+**(1)** — the sequencing:
 > **"We need to finish this repair first and foremost, COttonwood model pull should be run following
 > that repair."**
 
-*(Transcribed exactly as received, including the capitalisation of "COttonwood". Not tidied —
-per the record law, a paraphrase is not the ruling.)*
+**(2)** — the scoping requirement:
+> **"Yes furthermore, the Cottonwood pull needs to be properly scoped and registered as a project.
+> The scope of that project is purely backend and scheduling initially, a lot of it has been
+> initially assessed in a briefing from 0.7.0_AE_CloudOps (Either Base or ~Z, from last week). I do
+> not want to run into that half-cocked, we need to make sure it is properly scoped and assess our
+> structureed deliverable as a function of the project from the outset."**
+
+**(3)** — the priority, restated and widened:
+> **"Nevertheless, rectifying and repairing the Model Portfolios scheduling/gating issues sits ahead
+> of any Cottonwood work, and is the main fabric priority."**
+
+*(Transcribed exactly as received — including "COttonwood" and "structureed". Not tidied: a
+paraphrase is not the ruling.)*
+
+---
+
+## 1a · ⛔ HE SAID IT THREE TIMES AND WIDENED IT EACH TIME. READ THE ESCALATION.
+
+**(1) "first and foremost"** → **(3) "ahead of ANY Cottonwood work"** and **"the MAIN FABRIC
+PRIORITY."** Message 3 begins *"Nevertheless"* — issued **immediately after** the scoping
+instruction, which is the tell: **he anticipated that "scope it properly" would be read as
+permission to start on it, and closed that door before anyone walked through it.**
+
+**⇒ THE SCOPING INSTRUCTION DOES NOT COMPETE WITH THE REPAIR. IT IS BOUNDED BY IT.**
+
+**My reading, stated explicitly so he can correct it rather than discover it** *(sequencing is my
+lane; the breadth of his word is not — if this reading is wrong, it is wrong out loud)*:
+
+| act | when | why |
+|---|---|---|
+| **REGISTER the project + capture its scope basis** | **NOW** | A record act costing minutes and **zero engineering capacity.** It satisfies *"registered as a project… from the outset"* and prevents the scope being reconstructed from memory later. |
+| **SCOPE it properly** (read the briefs, define the structured deliverable) | **behind the repair** — or by a seat that genuinely **cannot** help the repair | It is real work and it is *"Cottonwood work"*, which message 3 puts behind the repair. |
+| **RUN the pull** | **strictly after repair COMPLETION** | Message 1, unambiguous: *"following that repair."* |
+
+**⛔ NOBODY MAY READ "PROPERLY SCOPED" AS A REASON TO STAFF COTTONWOOD THIS WEEK.** The repair
+holds the seats.
+
+---
+
+## 1b · THE SCOPE BOUNDARY HE SET — narrower than the fabric would have assumed
+
+> **"purely backend and scheduling initially"**
+
+**That is a stated boundary, not a description.** No serving leg, no frontend, no display surface in
+this project's initial scope. *This matters because item 1's own framing — "scanning any Opal
+constituent" — reads like an analytics/reporting need, and a seat scoping it from the OUTCOME rather
+than from his words would have drawn in a serving tier he explicitly deferred.* It also aligns with
+the standing ruling that ETF Float is **collect, do not display**.
+
+**"assess our structured deliverable as a function of the project from the outset"** — the
+deliverable structure is defined **at scoping time**, not discovered during the build. That is the
+anti-half-cocked requirement, and it is the same discipline as *"we are never doing one-offs ever
+again on scripting."*
+
+**THE STATED BASIS:** a briefing from `0.7.0_AE_CloudOps` (base **or** `~Z`) from last week.
+**Candidates located at this seat, not assumed** — `0.7.0_AE_CloudOps/deliverables/`:
+- `BRIEF_COTTONWOOD_OPAL_CONSTITUENT_ATTRIBUTION_20260807.md` (11,586 B, 08-07)
+- `BD_REBALANCER_OPAL_COMPOSITION_SCAN_20260807.md` (5,901 B, 08-07)
+- `COT_REBALANCER_STRATEGY_LEVEL_OPAL_SCAN_20260724.md` (12,614 B, 07-24)
+⚠ **Which of these is "the briefing" is NOT established** — AE names it, not me. Listed so the
+scoping starts from the right document rather than the most recently-touched one.
 
 ---
 
