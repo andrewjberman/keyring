@@ -1,0 +1,23 @@
+{
+  "project_code": "OPAL_ANALYST",
+  "macro_code": "OPAL",
+  "name": "ANALYST",
+  "description": "Opal Analyst -- the 0.0.3_BG_BBGTerminal Teams concierge as a product: a Teams-native data concierge for the Opal team on the Bloomberg terminal box ('Opal Bloomberg' account), answering from SERVED Opal artifacts through a deny-by-default request catalog, doubling as the daily Bloomberg pipeline operator. Chartered Andrew-direct 2026-08-10 ~1330Z at the MSTR~Z terminal (@1ac23a7e1): 'register a project called ANALYST, under the OPAL macro, for project code OPAL_ANALYST which facilitates the development of that product.' Site-Z fabric exclusive to this project until further word. Build phase pre-exists the project (LD-0382 @6e0e58552a redesign + completion set @65d80ab37 + one delivered live serve 2026-08-07); this project creates the product/operations layer: P0 durable identity pin in the teams-watch engine, wrapper-free relaunch, server-side per-identity allowlist, entitlement activation path (Andrew-gated), vertical capability growth as R&D, thread-memory integration.",
+  "prds": [
+    {"path": "docs/architecture/OPAL_ANALYST_PRD.md", "label": "OPAL_ANALYST PRD v1.0 (product/operations layer; P0 identity pin; TO-1..TO-5)", "date": "2026-08-10"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD v1.0 complete, handed to 2.0.0_SA_COO~Z for decomposition. P0 = durable identity pin in teams-watch.py (0.5.0_AE) gating any 0.0.3_BG relaunch; agent dormant since 2026-08-07.",
+  "blocking": "COO~Z task order issuance. Entitlement activation (portal-bucket + ycharts) at Andrew (PRD s.7 Q1).",
+  "created": "2026-08-10",
+  "pods": ["0.0", "0.5", "1.0", "2.0", "4.0"],
+  "pipeline": "OpalGateway / BBGTerminal concierge (no data pipeline of its own; serves opal-data-portal-v2 + news DDB read-only)",
+  "thread_counter": 0,
+  "threads": [],
+  "references": {
+    "charter_verbatim": "org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/ANDREW_DIRECT_20260810_OPAL_ANALYST_PROJECT_SPINUP.md",
+    "state_brief": "org/tier1_exec/4.0.0_SA_CRO/deliverables/OPAL_ANALYST_STATE_BRIEF_20260810.md",
+    "redesign_ledger": "org/tier0/ledger/LD-0382.md",
+    "agent_home": "org/tier0_utility/0.0.3_BG_BBGTerminal/"
+  }
+}
