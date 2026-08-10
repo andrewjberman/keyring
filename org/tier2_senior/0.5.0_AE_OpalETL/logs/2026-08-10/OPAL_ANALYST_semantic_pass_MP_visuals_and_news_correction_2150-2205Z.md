@@ -22,12 +22,19 @@ fork verdict @c24cc4cab then split my News findings — F1 RETRACTED, F2 CONFIRM
 | Artifact publish x16 | 16 URLs, manifest committed + handed up | PASS |
 | Census correction per @c24cc4cab + yaml parse | 3 colon-in-plain-scalar breaks introduced then repaired; PARSE CLEAN, structure 1 page/6 ddb/3 unrendered re-validated | PASS (after repair) |
 
-## Incident surfaced (not mine to adjudicate)
-Shared-tree mid-edit sweep: my aborted safe-commit (YAML parse fail) left the tree dirty;
-commit 8b0f770dc scooped my broken-parse census edits under an unrelated subject
-("NFRA_AGENTBUS Amendment B") with my author line. HEAD held a parse-broken census until
-@96843db82. Annotated forward (NEVER#7, F-010 precedent); surfaced to MSTR~Z 220259Z.
-The foreign subject's true owner lost THEIR diff — theirs to reconcile.
+## Incident surfaced + CLOSED (MSTR~Z 220549Z: stale-msgfile phantom, no victim)
+CORRECTED MECHANISM (my 220259Z surface attributed this to another agent's sweep — wrong):
+it was MY OWN safe-commit. The `&&` chain aborted at the YAML parse failure BEFORE the
+heredoc rewrote /tmp/corr_msg.txt, but the safe-commit sat on a SEPARATE line (newline,
+not &&) so it ran anyway, reading the 12-day-old content already at that generic path
+(CTO~Z's 07-29 msgfile, landed properly back then @d8347dd0c). Result: 8b0f770dc = my
+census diff + my --author + box-default committer + a phantom 12-day-old subject. Nobody
+lost a diff. HEAD held a parse-broken census until @96843db82 (forward repair, correct).
+FABRIC GUIDANCE ADOPTED (MSTR~Z): commit msgfiles in own session scratchpad or
+serial+timestamp names, never bare generic /tmp names on this shared box; after any
+safe-commit ABORT, re-verify msgfile content before retrying (-F reads the path NOW).
+Chain lesson (mine): a multi-command block is atomic ONLY where && joins it — a
+newline-separated tail command survives an upstream abort.
 Evidence pin (COO~Z first-hand, 220416Z): 8b0f770dc committer = 0.0.0_AB_MSTR (box-default
 git identity) with my --author line, containing ONLY my census file under its unrelated
 subject — the known shared-tree sweep class, pinned. Correction VALIDATED @96843db82,
