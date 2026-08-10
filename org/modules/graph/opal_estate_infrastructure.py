@@ -471,6 +471,26 @@ def cmd_definitions(term: str) -> int:
     except (OSError, KeyError, yaml.YAMLError) as exc:
         print(f"{TOOL} --definitions: registry unreadable ({exc}); rc=2", file=sys.stderr)
         return 2
+    # F-C1 schema gate on the read path (Andrew-direct 2026-08-10 "build the definitions
+    # checker"; wiring = fail-loud-in-the-serving-tool, the file owner's call @abfe77a537 row 5).
+    # Violations are LOUD but conforming entries still serve -- an integrity banner, not a
+    # denial: one bad entry must not brick every agent's vocabulary lookup. There is no silent
+    # branch: the guard either runs (silent only at 0 violations) or reports itself UNAVAILABLE.
+    try:
+        import importlib.util as _ilu
+        _cs = os.path.join(_ontology_dir(), "check_system_definitions.py")
+        _spec = _ilu.spec_from_file_location("check_system_definitions", _cs)
+        _mod = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_mod)
+        _n, _bad, _msgs = _mod.check(d)
+        if _bad:
+            print(f"*** SCHEMA VIOLATIONS ({_bad}) in SYSTEM_DEFINITIONS ({_n} entries "
+                  f"checked) -- serving anyway; FIX BEFORE TRUSTING: ***")
+            for _m in _msgs:
+                print(f"  *** {_m}")
+    except Exception as _exc:  # noqa: BLE001 -- a missing/broken guard is announced, never skipped
+        print(f"{TOOL} --definitions: schema gate UNAVAILABLE ({type(_exc).__name__}: {_exc}) "
+              f"-- serving UNVALIDATED registry")
     print(f"{TOOL} | SYSTEM_DEFINITIONS v{d.get('version','?')} (STABLE canon; "
           f"changes only by naming act)")
     if term == "__ALL__":
