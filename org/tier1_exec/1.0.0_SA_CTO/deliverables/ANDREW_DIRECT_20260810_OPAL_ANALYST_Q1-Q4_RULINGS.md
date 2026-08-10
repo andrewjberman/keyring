@@ -32,6 +32,16 @@ recommendations, restated exactly as presented and now RULED:
 - Q1 activation is an entitlement STATE change at the gateway: the serving activation lands
   through TO-3's deploy (per-identity allowlist including the portal-read row-set) — activation
   by word does not retroactively authorize any call made before the mechanism lands.
+  **[CORRECTED ~17:15Z, AE~Z TO-3 derivation Finding 1 (@42444e64b thread):** the gateway
+  registers NO portal-read tool (its only portal integration is the mutating
+  `opal_data_refresh_upload`), so TO-3's allowlist STRUCTURALLY CANNOT carry the Q1 activation.
+  The concierge's portal reads are box-local boto3 via `tools/portal_lookup.py` (box IAM already
+  read-exercised 5/5 at build, LD-0382) gated by the agent-home honesty layer
+  (`refs/BUCKET_ALLOWLIST.yaml` + `PORTAL_RETRIEVAL.md` staged-not-live language). **The Q1
+  carrier is therefore a REFS honesty-layer flip to ACTIVATED** — an agent-home edit the seat's
+  own fence deliberately cannot write; owner = MSTR~Z as the named integrator (TO-5 ruling).
+  No new gateway portal-read tool is authorized by Q1 (that would be new scope, its own reviewed
+  row-set per frame clause (iv)). The prior sentence stands for what TO-3 *does* carry.]**
 
 ## Broadcast
 
