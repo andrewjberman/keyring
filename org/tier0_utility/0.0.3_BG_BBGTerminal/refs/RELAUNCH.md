@@ -104,3 +104,11 @@ cc 2.0.0_SA_COO~Z.
 **RULED (Andrew-direct 2026-08-10 ~1653Z, record @bc7eb60de): OPERATOR-STARTED.** Andrew or
 MSTR~Z brings the seat up by hand off this runbook — NO cron, NO auto-start. A session that
 dies stays down until an operator runs this procedure again.
+
+**DAILY UPLOAD GUARDRAIL DUTY (Andrew-direct Q5, record @e77bec6e5):** each session-day the
+seat CHECKS EXECUTION RECORDS that the scheduled Bloomberg upload ran — the system cron
+`OPAL_BBGTML_daily_pull` (07:00 ET) is the PRIMARY path, and the check is of records, not a
+new monitor (alarm moratorium untouched). On a missed/failed run: fallback `/terminal-upload`
+under its own skill gates (NEVER send on a tripwire FAIL), or escalate to Andrew/MSTR~Z. The
+seat's gateway allowlist carries `opal_data_refresh_upload` as a FALLBACK-ONLY row
+(# andrew-asked, same record) — fallback capability is not a license to replace the cron.
