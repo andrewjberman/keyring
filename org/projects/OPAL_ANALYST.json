@@ -7,8 +7,8 @@
     {"path": "docs/architecture/OPAL_ANALYST_PRD.md", "label": "OPAL_ANALYST PRD v1.0 (product/operations layer; P0 identity pin; TO-1..TO-5)", "date": "2026-08-10"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD v1.0 complete, handed to 2.0.0_SA_COO~Z for decomposition. P0 = durable identity pin in teams-watch.py (0.5.0_AE) gating any 0.0.3_BG relaunch; agent dormant since 2026-08-07.",
-  "blocking": "COO~Z task order issuance. Entitlement activation (portal-bucket + ycharts) at Andrew (PRD s.7 Q1).",
+  "phase": "Phase 1: decomposition dispatched @f111e7904 (TO-1 identity pin in flight at 0.5.0_AE~Z; TO-2 staged on TO-1; TO-3 fully ungated by Andrew's Q1-Q4 rulings 2026-08-10 ~1653Z 'All recs approved, proceed' -- verbatim record in CTO deliverables; TO-5 flips at :55 integration). Portal-bucket read entitlement ACTIVATED by word (lands via TO-3 deploy); ycharts HELD; bring-up ruled operator-started.",
+  "blocking": "None at Andrew. TO-2 gated on TO-1 exercised; TO-4 on TO-2 close.",
   "created": "2026-08-10",
   "pods": ["0.0", "0.5", "1.0", "2.0", "4.0"],
   "pipeline": "OpalGateway / BBGTerminal concierge (no data pipeline of its own; serves opal-data-portal-v2 + news DDB read-only)",
