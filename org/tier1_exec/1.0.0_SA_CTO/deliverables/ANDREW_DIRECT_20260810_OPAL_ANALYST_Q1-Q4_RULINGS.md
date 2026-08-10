@@ -47,3 +47,41 @@ recommendations, restated exactly as presented and now RULED:
 
 - MCP to 0.0.0_AB_MSTR~Z + 2.0.0_SA_COO~Z (same turn); COO~Z relays to 0.5.0_AE_OpalETL~Z with
   the TO-3 GO.
+
+---
+
+# ADDENDUM — Q5 ruling: upload overlay + the scheduled-upload guardrail duty
+
+**Channel:** 1.0.0_SA_CTO~Z terminal (site Z), direct response to the Finding-2 overlay card
+**Time:** 2026-08-10 ~17:15Z
+**Received by:** 1.0.0_SA_CTO~Z · **Recorded:** same turn
+
+## VERBATIM
+
+> Yes they are allowed to do that, however they generally should not need to as that should be
+> covered by the system cron. However, I would recommend having part of their responsibility
+> being a guardrail/check on that process, checking execution records and making sure that the
+> upload happened as scheduled.
+
+## Operative reading (surface-not-adjudicate; three parts)
+
+1. **Overlay ALLOWED:** `opal_data_refresh_upload` is permitted for the `opal-bloomberg`
+   identity — AE~Z's `IDENTITY_TOOL_ALLOWLIST_PATH` overlay row is the sanctioned mechanism
+   (no redeploy). The seat's upload capability is a FALLBACK, not the primary path.
+2. **Primary path stays the system cron:** the OS-level scheduled tasks (`OPAL_BBGTML_daily_pull`
+   07:00 ET per the agent README) cover the daily refresh; the seat "generally should not need"
+   to fire the upload itself.
+3. **NEW SEAT RESPONSIBILITY (Andrew-asked, his words above — moratorium-compliant by
+   explicit ask):** a **guardrail/check on the scheduled-upload process** — the seat checks
+   execution records and confirms the upload happened as scheduled. Framed as a DUTY of the
+   seat (read execution records + verify + escalate/fallback on failure), NOT new alarm/SNS/
+   monitor infrastructure — the seat itself is the instrument, consistent with the moratorium's
+   "canonical routes and schedules first" ordering (the schedule exists; this checks it).
+   Fallback chain when the check fails: run `/terminal-upload` per its own skill gates
+   (tripwire; never send on FAIL), else escalate to Andrew via Teams/fabric.
+
+## Routing
+
+- Overlay row: AE~Z lands it under TO-3 (# andrew-asked marker carrying the verbatim above).
+- Guardrail duty: COO~Z folds into decomposition — the duty text lands in the seat's refs
+  (TEAMS_DUTY/prompt via the named integrator, MSTR~Z) + TO-2's runbook steady-state section.
