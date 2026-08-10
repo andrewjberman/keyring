@@ -117,9 +117,9 @@
           "evidence": "gold lambda log 'day 2021-09-02..2026-08-07' + parquet read"
         },
         "offset_label_to_vintage": {
-          "value": "T+1 (partition date=D carries prior trading day)",
-          "status": "MEASURED",
-          "evidence": "6/6 partitions 08-05..08-10, weekend-correct"
+          "value": "T+1 on WEEKDAY partitions ONLY (4 of 6). The Sat/Sun partitions carry 2026-08-06 while the prior TRADING day of each is Friday 2026-08-07 -- one trading day further back than the label implies.",
+          "status": "INFERRED",
+          "evidence": "Day-max re-derived per partition 6/6: 08-05->08-04, 08-06->08-05, 08-07->08-06, 08-08(Sat)->08-06, 08-09(Sun)->08-06, 08-10->08-07. THE PRIOR CLAIM OF '6/6 weekend-correct' IS REFUTED -- measured 4/6. MATERIAL: the Monday floor reads the SUNDAY partition, so this is the direct upstream cause of the 08-06 frontier. Had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z."
         },
         "normalizer_exists": {
           "value": false,
@@ -191,14 +191,14 @@
           "evidence": "G-1a"
         },
         "c1_write_clock_utc": {
-          "value": "13:41:51",
+          "value": "13:40:47",
           "status": "MEASURED",
-          "evidence": "opal-assets-silver-smartx log 2026-08-10"
+          "evidence": "head-object smartx/platform/silver/fact_model_aum_daily/date=2026-08-10/data.parquet = 13:40:47 GMT. CORRECTION: the prior 13:41:51 was a LOG time for a DIFFERENT object (the run-COMPLETE line). The artifact's own taxonomy defines C1 as S3 LastModified. THE NUMBER A RE-TIMING DECISION MUST BE SET AGAINST IS 13:40:47Z -- the AXIS SOURCE itself."
         },
         "latency_from_bronze_min": {
-          "value": 5.3,
+          "value": 4.27,
           "status": "MEASURED",
-          "evidence": "bronze 13:36:31 -> silver 13:41:51"
+          "evidence": "True C1 to true C1, both head-object: bronze 13:36:31Z -> silver aum_daily 13:40:47Z = 4m16s. The prior 5.3 was computed off a run-complete LOG time rather than the object's own C1."
         },
         "decoy_schedule": {
           "value": "opal-assets-silver-smartx-sweep-daily cron(0 16)=16:00Z is a NO-OP: 668ms, zero output, wrote nothing",
@@ -339,9 +339,9 @@
           "evidence": "G-3c"
         },
         "offset_label_to_vintage": {
-          "value": "labels are ACCURATE (no offset)",
-          "status": "MEASURED",
-          "evidence": "_orion_vendor_asof.py:133 'never call on schwab/bd -- their labels are accurate'"
+          "value": "POLICY-EXEMPTED from normalization. Schwab LABEL ACCURACY IS NOT MEASURED.",
+          "status": "INFERRED",
+          "evidence": "_orion_vendor_asof.py:133@98a31f85b3 verbatim: 'LABEL-only; Orion-only (never call on schwab/bd -- their labels are accurate).' THAT IS A DOCSTRING INSIDE THE ORION MODULE. ADVERSARIAL TEST: the sentence would read IDENTICALLY whether or not Schwab's labels are accurate -- it establishes the estate's per-vendor POLICY, never a fact about Schwab DATA. With c2_partition_meaning and c3_vintage_field both UNMEASURED on this leg (G-3c, owner unassigned), SCHWAB IS THE ONE CUSTODY FEED WITH NO MEASURED VINTAGE AT ALL -- the same structural position eclipse occupied this morning, and eclipse's answer moved the entire diagnosis when it landed."
         },
         "normalizer_exists": {
           "value": false,
@@ -614,9 +614,9 @@
           "evidence": "load_inflection_model_history docstring"
         },
         "known_calendar_defect": {
-          "value": "NOT missing 2026-08-06. date=2026-08-07 CONTAINS 08-06 model state. The vintage actually LOST is 2026-08-05 (what the absent date=2026-08-06 partition would have carried). 26% of the series is weekend-redundant by construction.",
+          "value": "SEVEN post-launch axis dates have NO eclipse partition, not one: 2026-05-21, 06-01, 07-01, 07-13, 07-14, 07-15, 08-06 -- including THREE CONSECUTIVE days in July. 7 of 57 = a 12.3% gap rate.",
           "status": "MEASURED",
-          "evidence": "run-date + T-1 mapping; absence confirmed with its listing (75 prefixes, explicit probe of 2026-08-06/ returns rc=1)"
+          "evidence": "s3api list-objects-v2 --delimiter / -> CommonPrefixes=72, IsTruncated=None, span 2026-05-15..2026-08-09; explicit probe of date=2026-08-06/ returns rc=1; set-differenced against the 57 post-launch NYSE axis dates (INFLECTION_MODEL_LAUNCH='2026-05-15'). INDEPENDENTLY: gold-lambda stream line 64 @13:00:52Z 'inflection eclipse model history: 50/57 post-launch dates read; 7 NAMED gap(s)'. >> A FRONTIER LANDING ON AN ECLIPSE GAP IS ROUGHLY A 1-IN-8 EVENT. This is a RECURRING CLASS, not an incident, and a one-date remedy would be scoped against a systemic hole. (Also corrects my own '75 prefixes' -> 72, measured on two untruncated instruments.)"
         }
       },
       "silver": {
@@ -1063,9 +1063,9 @@
           "evidence": "build_cottonwood_mdpf_slice re-keys on value_date (G7 re-key) - CORRECT PATTERN"
         },
         "known_defect": {
-          "value": "the re-key groups on C3 alone and asserts dollar equality, collapsing C3+C4 onto one axis (Rule 24 ii). Andrew ruled POINT-IN-TIME 2026-08-10; remedy is group[-1] -> group[0].",
+          "value": "REMEDIED. The point-in-time fix landed @dadd5d64f9 2026-08-10T17:54:43Z -- 1h11m BEFORE this artifact was generated at 19:05Z.",
           "status": "MEASURED",
-          "evidence": "build_cottonwood_mdpf_slice.py:269-292"
+          "evidence": "git log -1 dadd5d64f9: '0.4.0_DS_ClientPlatform fix(MDPF repair): point-in-time wins the value_date collision -- earliest assignment_date, guard surfaces instead of refusing'. DS session log @e8f2064ea3 records 'landed + deployed ... COO-ACCEPTED 180957Z'. LISTING A DISCHARGED ITEM AS OPEN RE-DISPATCHES FINISHED WORK."
         },
         "consequence": {
           "value": null,
@@ -1112,9 +1112,9 @@
           "evidence": "get_bucket_notification_configuration"
         },
         "c1_write_clock_utc": {
-          "value": "02:00:5x",
+          "value": "06:00:5x UTC",
           "status": "MEASURED",
-          "evidence": "silver listing 08-05..08-10, constant 02:00:5x"
+          "evidence": "head-object fact_model_roster/date=2026-08-10 = 06:00:53 GMT; fact_model_assignment = 06:00:54 GMT. THE PRIOR '02:00:5x' WAS THE LOCAL EDT STRING `aws s3 ls` PRINTS. Bronze fires cron(0 6) UTC and writes 06:00:44Z; silver lands 06:00:53Z -- NINE SECONDS LATER. G-5's premise is DISSOLVED: there is no silver-precedes-bronze anomaly on this leg and nothing to resolve."
         },
         "latency_from_bronze_min": {
           "value": null,
@@ -1262,9 +1262,9 @@
           "evidence": "G-2"
         },
         "offset_label_to_vintage": {
-          "value": "D+2 steady-state (D+1 twice in 47)",
-          "status": "MEASURED",
-          "evidence": "AE full-history lag census"
+          "value": "FRAME-DEPENDENT. UTC: D+2=25/47, D+1=8/47. America/New_York: D+1=29/47, D+2=5/47.",
+          "status": "INFERRED",
+          "evidence": "Full 47-object lag census in NYSE trading days, both frames. THE RECORDED '(D+1 twice in 47)' REPRODUCES IN NEITHER FRAME. The 33 pre-08-06 writes at 02:0xZ are 22:0x the PREVIOUS EVENING in ET, which flips the mode. The producer schedule is declared in America/New_York, so ET is the natural frame and the historical steady state is D+1, NOT D+2. A re-timing decision taken on 'D+2' would be taken on the wrong number. BOUND: these keys are OVERWRITTEN IN PLACE, so LastModified is a LAST-WRITE clock, not an arrival clock."
         },
         "normalizer_exists": {
           "value": false,
@@ -1277,9 +1277,9 @@
           "evidence": "none needed"
         },
         "consumer_treats_c2_as_c3": {
-          "value": false,
+          "value": true,
           "status": "MEASURED",
-          "evidence": "fact_holdings partition dates feed self_derived_axis as a MEASURED leg"
+          "evidence": "REFUTED, the prior false CLAIMED A PROTECTION THE CODE DOES NOT HAVE. self_derived_axis:335-350 @98a31f85b3 unions gold value_dates with fact_holdings PARTITION KEYS, then holdings_total_by_date:356-395 reads fact_holdings/date={d} where d is an AXIS date -- the partition key used verbatim as the data date, no translation. MITIGATING: _source_file on fact_holdings/date=D is HOLDINGS_DAILY_{D}.xlsx (distinct=1, verified 2 partitions), so C2 here IS the data date today and the mapping is currently harmless. The correct re-key pattern belongs to the MODEL leg ALONE."
         },
         "known_defect": {
           "value": "MDPF_3FIRMS_PRD claimed 'D+1 ~03:30Z' at 5 sites - NEVER TRUE (03:xx occupancy 0 of 47). STRUCK @1f44450356.",
@@ -1925,6 +1925,61 @@
       "status": "MEASURED",
       "severity": "HIGH",
       "note": "The inflection legs' cross_firm violation is GLOBAL-INDUCED. This materially shrinks the remediation Andrew ordered."
+    },
+    {
+      "id": "D-19",
+      "summary": "⛔ RE-TIMING ALONE CONVERTS THE INFLECTION REFUSAL INTO A SILENTLY MISLABELLED PUBLISH. Chain measured end-to-end: floor reads the axis 13:00:39Z, before smartx silver lands 13:40:47Z, so _latest_date resolves date=2026-08-09 (day-max 08-06) -> frontier 08-06 -> trading_days_between = 440, matching the gate's own count -> eclipse has no 08-06 partition so model_value[-1]=None -> build_firm_timeseries:1046-1047 OVERWRITES account_count[-1] with the staged frontier count (a NUMBER) -> limb (v) fires. COUNTERFACTUAL: with the axis read AFTER 13:41Z the frontier is 08-07, which eclipse HAS; 08-06 becomes an INTERIOR date where BOTH legs are None and limb (v) CANNOT FIRE. Under the run-date ruling, that pass publishes ONE TRADING DAY MISLABELLED.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody",
+        "global.composition",
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "BLOCKS THE ORDERED FLOOR/PULL RE-TIMING AS A STANDALONE CHANGE. The guard is currently the only thing preventing a wrong number from being served; moving the clock removes the guard WITHOUT fixing the mislabel. The label offset must be fixed FIRST or JOINTLY."
+    },
+    {
+      "id": "D-20",
+      "summary": "SMARTX WEEKEND PARTITIONS ARE NOT T+1 -- they are one trading day further back than the label implies. date=2026-08-08 (Sat) and date=2026-08-09 (Sun) both carry day-max 2026-08-06 while the prior TRADING day of each is Friday 2026-08-07. Only 4 of 6 partitions are T+1.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "CO-CAUSAL WITH THE ORDERING DEFECT AND INDEPENDENT OF IT: had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z. Re-timing does not fix this; only the weekend-partition semantics do."
+    },
+    {
+      "id": "D-21",
+      "summary": "THE AXIS-SOURCE INGEST FAILED ON 2026-08-10 AND ITS RETRY PASSED ONLY BY SKIPPING EVERYTHING. smartx-assets-daily-pull ran 13:30:50-13:36:42Z and ended '[ERROR] DirtyRunError: feed9 reconciliation on Opal Conservative Growth: resolver=3278 != feed5 living=3281 -- PARTIAL identity table, not clean'. The SAME RequestId retried 13:37:41-13:40:35Z and reported clean with 'fetched=0, skipped=9762'. The models_summary bronze landed on the FAILED attempt.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today."
+    },
+    {
+      "id": "D-22",
+      "summary": "THE SERVED PLANE IS NOT DATE-COHERENT WITHIN A FIRM. 49financial serves account-distribution.json as-of 2026-08-07 beside aggregate-aua-timeseries.json and aum-metrics.json as-of 2026-08-06. Global serves account-distribution as-of 2026-08-06 beside a timeseries and aum-metrics as-of 2026-08-05. Cottonwood and inflection ARE uniform.",
+      "pipelines": [
+        "49financial.model",
+        "49financial.custody",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "A PORTAL PAGE RENDERING BOTH SHOWS TWO DIFFERENT BUSINESS DAYS SIDE BY SIDE. Also a Rule-24 grain defect in THIS artifact's own schema: served_as_of is single-valued on an axis whose members sit at different vintages. account-distribution.json is the live served portal bell."
+    },
+    {
+      "id": "D-23",
+      "summary": "PROCESS FAILURE, MINE: I EDITED THIS ARTIFACT WHILE THE FAN-OUT WAS VERIFYING IT, against my own rubric section 1.1 ('READ-ONLY ... Do not edit the JSON'). Commit 01fa4bba14 (21:22Z) changed 5 cells on inflection.model mid-flight. FOUR CELLS NOW CARRYING MEASURED HAVE HAD NO ADVERSARIAL PASS FROM ANYONE -- they left the NOT_MEASURABLE agent's scope and never entered the MEASURED agent's.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "The four are c2_partition_meaning, c3_vintage_field, offset_label_to_vintage, known_defect -- i.e. THE ENTIRE ECLIPSE RUN-DATE RULING. It is well-evidenced and I re-verified two keystones myself, but it has not been adversarially tested and must not be treated as though it has. One number in it is already wrong: '75 prefixes' vs a measured 72 on two instruments."
     }
   ]
 }
