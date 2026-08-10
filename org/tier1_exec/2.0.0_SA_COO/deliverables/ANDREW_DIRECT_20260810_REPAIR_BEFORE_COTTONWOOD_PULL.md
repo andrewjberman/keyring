@@ -135,6 +135,19 @@ product carries current content.** The bar, stated now so it is not negotiated l
    *The object is rewritten daily and looks fresh while carrying 08-07 content; the mtime is the
    one signal that must NOT be used to call this done.*
 4. Cottonwood's separate **VALUE_DATE COLLISION** is resolved or explicitly carved out with reasons.
+5. ✅ **INDEPENDENTLY VERIFIED BY A SEAT THAT DID NOT BUILD THE FIX.** `/verify-channel` over the
+   repair's **served** artifacts. **OWNER: `3.0.0_SA_CVO`** (Andrew-ratified employment mapping,
+   ~17:3xZ, relayed by `4.0.0_SA_CRO`: *"I agree with this recommendation, please hand it off to
+   CVO"*). **TRIGGER: the remedy lands.** CVO is **LIVE** (PID 28660) — measured, not assumed.
+
+> ⛔ **WHY THIS IS PENCILLED IN NOW RATHER THAN AT CLOSEOUT, and it is the same discipline as the
+> sweep-3 gap and the seam-edge authorisation: A VERIFIER NAMED AFTER A CLOSEOUT RATIFIES IT; A
+> VERIFIER NAMED BEFORE ONE CAN REFUSE IT.** If the verifying seat is found once the fix is already
+> serving, its only available finding is agreement — the artifact is live, the pressure is to
+> confirm, and "verification" becomes a signature. **Naming the owner and the trigger while the
+> remedy does not yet exist is what makes the verdict capable of being NO.**
+> *Build/verify separation is not ceremony here: this session produced five retracted causal claims,
+> and **four were caught by someone else's challenge, not by the author's care.***
 
 ---
 
