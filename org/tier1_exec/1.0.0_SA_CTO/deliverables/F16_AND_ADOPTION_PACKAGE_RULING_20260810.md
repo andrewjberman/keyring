@@ -84,3 +84,20 @@ Genuinely new (zero corpus coverage), measured live (declaration exact at 482; t
 - Part 3 → no corpus edit now beyond CRO recording the staged status on `06` if they wish; G-a/G-b results come back to this seat, which then re-opens the adoption decision.
 - WS-C3's three orphaned vocabulary items (CRO context note `20260810T175225Z`): **CTO BASE territory, explicitly excluded from this ruling** — not inherited by adjacency.
 - All of this is loudly surfaced to Andrew this session and cheaply reversible; nothing below builds on it yet.
+
+---
+
+## ADDENDUM 2026-08-10 ~1840Z — G-a ADJUDICATED: SATISFIED, with two conditions added (six and seven)
+
+**Input:** CRO's census `GA_ENTRY_PROBE_AND_L7_COVERAGE_CENSUS_20260810.md` Part A (delivered `20260810T183613Z`; spot-checked at this seat — controls run both ways, denominator stated, judged mapping printed as a checkable table).
+
+**The numbers:** attempted 82 · literally entered 0 (a probe-spec artifact, not a project property — see below) · subject-reaches-a-vertical ~71 of 82 · **genuinely unreachable ~11 of 82 (~13%), a COHERENT class** (estate-wide standards/taxonomy/governance/research with no business-function vertical among comp-estate's 29 entry points).
+
+**Determination: G-a is SATISFIED.** ~87% subject-reachability puts the base's valuable half within reach for the large majority; the ~13% residual is a single coherent class with one named mechanism, which makes it DECLARABLE as a boundary in the base itself rather than discoverable per-project. Moderate-low cost, boundable in-band — this does not block adoption. **The adoption decision now rests on G-b alone.**
+
+**Two conditions added to the pre-committed five:**
+
+6. **The base carries its own reachability boundary statement** — the no-vertical class named, with its mechanism, the sized figure (~13% at 2026-08-10 vintage), and the caveat that the figure derives from a JUDGED subject-to-vertical mapping, correctable in the census table. Phrased as measured-at-vintage, never eternal — if a standards/governance entry surface ever lands, the boundary shrinks and the statement must be re-derivable.
+7. **The base's entry-probe method text is corrected** — v0.4's named method (*"attempt `comp-estate <project>`... count refusals"*) measures NAME-SHAPE, not reachability (entry universe is 29 kebab-case vertical names; project codes are upper-snake; literal intersection is empty, so the literal probe refuses ~100% by construction). The corrected form is subject-resolves-to-vertical, stated with its epistemics: **reachability is a judged property, not a mechanical measurement.** Left uncorrected, the base's own named method reports a true measurement of the wrong proposition — the domain-redefinition class, inside the base's own spec.
+
+**Routed, not gated:** the remedy for the coherent class (ONE new entry surface — a standards/governance vertical, or an explicit no-vertical entry answer in comp-estate) is a comp-estate TOOLING question for CTO base when someone wants it. It is deliberately NOT a precondition of base adoption — conditioning adoption on tooling work nobody has commissioned would be a manufactured gate.
