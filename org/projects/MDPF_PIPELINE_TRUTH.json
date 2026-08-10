@@ -557,19 +557,19 @@
       },
       "date_semantics": {
         "c2_partition_meaning": {
-          "value": "UNDETERMINED",
-          "status": "NOT_MEASURABLE",
-          "evidence": "G-3b: 62 columns, NO vendor-native as-of. Only as-of-shaped field is _source_as_of which is OUR copy of the key. MUST NOT be inferred from orion - the normalizer is explicitly Orion-only."
+          "value": "RUN_DATE (UTC wall-clock date of the pull; the vendor surface carries NO date parameter at all)",
+          "status": "MEASURED",
+          "evidence": "FIVE INDEPENDENT INSTRUMENTS. (1) PRODUCER SOURCE, re-verified at CTO seat: pull_eclipse_portfolios.py:302 date_iso = args.date or datetime.now(UTC).strftime(); docstring :3-12 \"--date IS AN OUTPUT FILENAME, NOT A QUERY ... eclipse_get() HAS NO DATE PARAMETER ... 0 hits for asOf|as_of|effectiveDate|startDate|endDate (7 request call sites exist, so the search discriminates)\". A DATE THE VENDOR CANNOT RECEIVE CANNOT BE A DATA DATE. (2) sidecar pull_complete.json date==pull clock day, 6/6. (3) WEEKDAY CENSUS re-derived at CTO seat: 19 of 72 partitions are Sat/Sun (26.4%) -- A MARKET DATA DATE CANNOT BE A WEEKEND. (4) VALUE TIE-OUT, 856 portfolios: Sat/Sun 853/856 identical, Mon-vs-Sun 855/856, but Mon-vs-Fri only 147/856 (17.2%) -- three run-dates, ONE vintage. (5) consecutive non-weekend pairs differ on ~83% of rows."
         },
         "c3_vintage_field": {
-          "value": null,
-          "status": "NOT_MEASURABLE",
-          "evidence": "no vendor as-of exists in the artifact"
+          "value": "NONE - no vendor valuation as-of exists at bronze (57 keys) OR silver (62 cols); nearest independent probe is lastRebalancedOn, a LOWER BOUND only",
+          "status": "MEASURED",
+          "evidence": "Absence now carries denominators at BOTH layers. Bronze body 856 records/57 keys - the dropped-column hypothesis was TESTED AND NEGATIVE (silver 62 = bronze 57 + 5 our-side riders; conversion dropped nothing). _source_as_of CONFIRMED DECORATIVE: distinct=1 and equal to the key in 7/7 partitions. lastRebalancedOn MAX never reaches its own key in 7/7 and equals key-minus-1-trading-day in 6/7."
         },
         "offset_label_to_vintage": {
-          "value": null,
-          "status": "NOT_MEASURABLE",
-          "evidence": "G-3b - needs eclipse ingest source or vendor probe"
+          "value": "MINUS 1 NYSE TRADING DAY (weekend/holiday run-dates repeat the preceding Friday)",
+          "status": "MEASURED",
+          "evidence": "BOTH BOUNDS CLOSED on an 856-portfolio join. UPPER (not D): Monday 08-10 pulled 14:48:07Z = 10:48 ET, market open 1h18m, is 99.9% identical to Sunday - an intraday-D snapshot would have moved. LOWER (not D-2): that same Monday is only 17.2% identical to date=08-07. Both meet at D-1. SUM(totalValue): 08-08 09,157,731.11 / 08-09 09,157,697.65 / 08-10 09,157,665.40 agree to ~$66 on $209M (three run-dates, ONE Friday vintage) while date=08-07 sits $1.05M away on Thursday vintage. DERIVED FROM ECLIPSE ALONE - the Orion normalizer was never consulted (no-resemblance-transfer constraint honoured); the numeric agreement with Orion is a measured coincidence of two current-state vendors."
         },
         "normalizer_exists": {
           "value": false,
@@ -597,9 +597,9 @@
           "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
         },
         "known_defect": {
-          "value": null,
-          "status": "UNMEASURED",
-          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+          "value": "The ENTIRE inflection MODEL leg is served ONE TRADING DAY LATE. The value MDPF publishes under label 2026-08-07 is $208,111,397.12 = Thursday 2026-08-06 close. consumer_treats_c2_as_c3=true and normalizer_applied_by_mdpf=false, so nothing corrects it between silver and serving.",
+          "status": "MEASURED",
+          "evidence": "offset MEASURED at D-1; dim_mdpf_aggregate_aua_timeseries.py:450-464 applies no offset"
         }
       },
       "calendar_basis": {
@@ -614,9 +614,9 @@
           "evidence": "load_inflection_model_history docstring"
         },
         "known_calendar_defect": {
-          "value": "date=2026-08-06 partition ABSENT (08-05 -> 08-07 jump, both neighbours present)",
+          "value": "NOT missing 2026-08-06. date=2026-08-07 CONTAINS 08-06 model state. The vintage actually LOST is 2026-08-05 (what the absent date=2026-08-06 partition would have carried). 26% of the series is weekend-redundant by construction.",
           "status": "MEASURED",
-          "evidence": "eclipse silver listing 2026-08-10"
+          "evidence": "run-date + T-1 mapping; absence confirmed with its listing (75 prefixes, explicit probe of 2026-08-06/ returns rc=1)"
         }
       },
       "silver": {
@@ -1699,7 +1699,8 @@
       "not_measurable_from": "the artifact (62 cols, no vendor as-of; _source_as_of is our own copy of the key)",
       "fill_by": "eclipse ingest source, or a vendor probe",
       "owner": "0.7.0_AE_CloudOps",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "status": "CLOSED - promoted to MEASURED, all 3 cells"
     },
     {
       "id": "G-3c",
@@ -1736,7 +1737,8 @@
       "current_evidence": "1-minute time tie-outs only: mirror 14:15Z -> orion silver 14:16Z; mirror 22:30Z -> eclipse silver 22:31Z. NOT source-read. COO source-confirmed the handler iterates MAP+PROVENANCE_RIDERS UNCONDITIONALLY, so BOTH schedules may mirror ALL firms - in which case neither firm-specific name is correct.",
       "fill_by": "read the opal-assets-ingest-mirror handler MAP and per-invocation logs",
       "owner": "0.7.0_AE_CloudOps",
-      "severity": "BLOCKS_RENAME"
+      "severity": "BLOCKS_RENAME",
+      "status": "CLOSED - rename premise REFUTED; see D-13"
     }
   ],
   "defects": [
@@ -1815,6 +1817,56 @@
       ],
       "status": "RENAME ORDERED by Andrew 2026-08-10",
       "blocked_by": "G-7"
+    },
+    {
+      "id": "D-9",
+      "summary": "INFLECTION IS NOT MISSING 2026-08-06. date=2026-08-07 contains it. The LOST vintage is 2026-08-05. The gate FAIL is a LABEL-ALIGNMENT artifact over data present one partition to the right - not data absence.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "Anything remediated, re-run or escalated on \"inflection is missing 08-06\" rests on a FALSE PREMISE."
+    },
+    {
+      "id": "D-10",
+      "summary": "BOTH inflection legs served one trading day late (model leg newly proven; custody leg was D-4). D-4 is a TWO-LEG defect.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH"
+    },
+    {
+      "id": "D-11",
+      "summary": "26% of the eclipse daily series is REDUNDANT: 19 of 72 partitions are weekends re-emitting Friday under a fresh label. A C2-as-C3 consumer serves identical dollars under three date labels every weekend.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED"
+    },
+    {
+      "id": "D-12",
+      "summary": "ECLIPSE IS STRUCTURALLY UNBACKFILLABLE - --date is an output filename, not a query; a past date writes TODAY data and the sidecar stamps the false vintage. The lost 08-05 vintage is PERMANENTLY LOST and no re-run recovers it.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "Any remediation assuming a backfill closes the gap is UNIMPLEMENTABLE."
+    },
+    {
+      "id": "D-13",
+      "summary": "THE RENAME PREMISE IS REFUTED. BOTH mirror schedules mirror ALL THREE rows (handler iterates MAP+PROVENANCE_RIDERS unconditionally :353); the mirror COPIES a date, it cannot originate one. NO mirror schedule is firm-specific, so opal-assets-ingest-mirror-{firm}-{location}-daily would CEMENT A FALSEHOOD.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "Supersedes D-8. Eclipse bronze originator is the EC2 puller pull_eclipse_portfolios.py; the Lambda inf-api-eclipse is Active but INERT (writes bronze/eclipse_qa while the mirror reads bronze/eclipse)."
     }
   ]
 }
