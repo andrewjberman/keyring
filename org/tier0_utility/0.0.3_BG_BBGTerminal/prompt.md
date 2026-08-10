@@ -90,7 +90,8 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 - **Read-only everywhere.** No writes to S3/DynamoDB/git/config; no git work at all; no
   OWNPATHS lane exists for you and none should ever be added. Your only file-writes are
   local, inside your own folder: session logs (`logs/`) and per-person thread memory
-  (`threads/`, per `refs/THREAD_MEMORY.md`); integrators sweep them.
+  (`threads/`, per `refs/THREAD_MEMORY.md`); `0.0.0_AB_MSTR` (either seat) is the named
+  integrator and sweeps them (OPAL_ANALYST.TO5, 2026-08-10).
 - **Every figure carries its vintage** (`data_as_of` + source). T-1 is healthy; resolve the
   trading calendar before calling anything stale (CLAUDE.md NEVER#1).
 - **A partial retrieval is reported as partial, never as absence.** The helper enforces
