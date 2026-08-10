@@ -28,13 +28,18 @@ nobody reads -- and there are nine.
 | 01 WS-C1 lifecycle/type system | COMPLETE (P1, clause-by-clause) | INCORPORATED (rule bank v1.8 = source of record; SYSTEM_DEFINITIONS carries the terms) | **FREEZE-AS-PROVENANCE** + marker header |
 | 02 WS-C2 expressiveness | COMPLETE | INCORPORATED (`the_ceiling`, `homeless` are ratified terms) | **FREEZE-AS-PROVENANCE** + marker header |
 | 03 WS-C3 archetype census | CONTRACT ESTABLISHED; **artifact NEVER GATED, NEVER VERIFIED** (gate CTO~Z, verify CVO~Z -- both seats retired with site-Z resets) | census artifact @29b5ccacc is EVIDENCE-grade; promotion home never ratified | **FREEZE + DOWNGRADE-HONESTLY**: mark the census evidence-grade-ungated permanently, DROP the promotion path (its gate seats no longer exist) unless a live seat re-gates |
-| 04 WS-C7 recall standard | contract complete; standard's vocabulary incorporated | INCORPORATED (5+ terms) -- ⚠ CVO TO CONFIRM the standard DOCUMENT's authoritative home (my one unverified cell) | **FREEZE-AS-PROVENANCE**, pending that confirm |
+| 04 WS-C7 recall standard | contract complete; **the STANDARD as a document NEVER EXISTED anywhere** (CVO-verified 08-10: the contract says so falsifiably at its sec1/sec2; the proposed docs/architecture home was COO-named, never ratified; CVO re-ran the doc's own probe today -> zero hits, same as 07-31) | INCORPORATED at depth (CVO confirm: R-number pointers carried per entry; the contract is the only carrier of the standard's SPECIFICATION R1-R9; live residue = the 8 registry entries) | **FREEZE-AS-PROVENANCE** + ⚠ the SAME orphaned-promotion-path annotation as 03: if ever revived, its gate/verify seats (CTO~Z/CVO~Z) are retired |
 | 05 WS-C8 doctrine collapse | **NOT COMPLETE** (2 of 4 clauses; the titular operation measured IMPOSSIBLE -- M-taxonomy types assertion-position, COC-III types instrument-fallibility) | doctrine lives in docs/doctrine (correctly never moved) | **FREEZE + HARVEST** -- the incompleteness is permanent under VELOCITY suspension; its open items go to the live ledger below |
 
-**Marker header (one form, all five):** *"FROZEN DELIVERABLE-CONTRACT RECORD (NFRA_VELOCITY CORE,
-2026-07-31). Definitional content lives in SYSTEM_DEFINITIONS.yaml + NFRA_ONTOLOGY_RULE_BANK.yaml;
-where this file and a live carrier disagree, the live carrier wins. Open items harvested 2026-08-10
-to the L-6 ledger (Item 0). Do not cite this file's numbers as current."*
+**Marker header (one form, all five; F2-amended per CVO confirm):** *"FROZEN DELIVERABLE-CONTRACT
+RECORD (NFRA_VELOCITY CORE, 2026-07-31). Definitional content lives in SYSTEM_DEFINITIONS.yaml +
+NFRA_ONTOLOGY_RULE_BANK.yaml; where this file and a live carrier disagree, the live carrier wins.
+This file REMAINS the authority target of registry entries that cite it -- frozen means
+still-citable provenance, not retired (the registry deliberately holds no member lists, so this file
+carries its full law permanently). Open items harvested 2026-08-10 to the L-6 ledger (Item 0). Do
+not cite this file's numbers as current."*
+**02-specific note (CVO F2):** 02's frozen doc is itself DERIVED (its step files win), so
+`the_ceiling`'s authority chain is two-hop -- acceptable and recorded so nobody "fixes" it.
 
 ## THE NINE HARVESTED OPEN ITEMS (the census's real product -> L-6 triage)
 
@@ -49,6 +54,7 @@ to the L-6 ledger (Item 0). Do not cite this file's numbers as current."*
 | 7 | No ENUMERATOR for reconciliation points -- "a criterion that cannot be counted is a gate that cannot fail"; precondition of the collapse's artifact 3 | 05 | precondition, unmet | dies with C8 unless L-6 revives the collapse |
 | 8 | M15 (divergent-transport control) ADMISSIBLE on merit, SEALED behind the C9 gate Andrew paused -- rejection unavailable, closure unavailable | 05 | sovereign-sealed | Andrew, whenever C9's seal lifts |
 | 9 | Third doctrine family (how a RULE or ROLE fails to be one; staged laws L-7/8/9) has NO HOME -- creation unauthorized, deliberately unrushed | 05 | named absence | stays named |
+| 10 | *(CVO F3, 08-10)* WS-C7's own not-met limbs (sec6.2: 1/2/4 NOT MET) + two items that bite SILENTLY if anyone ever migrates onto the boundary contract: **discrimination unproven (1 of 9 specimens)** and the **UNRULED ordering fork** | 04 | latent, migration-triggered | none now; binds any future boundary-contract consumer |
 
 ## WHAT THIS CENSUS DID NOT DO
 
