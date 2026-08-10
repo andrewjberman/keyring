@@ -50,4 +50,28 @@ objects, EC2 runners, schedules -- in the same deterministic pass as Lambdas; re
 enrichment, derived by predicate). Statement 2's plain reading is (b). His explicit word on
 (a)-vs-(b) is the one thing requested when the reshaped package returns to him.
 
+## RULED -- statement 3, VERBATIM (~23:0xZ, same terminal, same session)
+
+> "Yeah of the options you provided, (b) is the clear solution."
+
+**(b) RECOMPILE FROM THE CLOUD is the ruling.** Sequencing context: CRO had withdrawn the
+ratify-as-implemented package minutes earlier (@0685904b7d) and put the merge-vs-retain fork onto
+this consequence analysis as its vehicle -- the fork is now resolved by his word. Standing with it:
+statement 1's "no hand drawn anything" binds the enrichment leg (predicate over
+data/*/scripts/gold, never a call list), and per CRO's reshape record the L-2 GOVERNS edge is
+unaffected under this outcome (both endpoints aws-side).
+
+**What this ruling orders, plainly:** the pipeline territory DISSOLVES INTO aws; pipelines are
+compiled deterministically from live cloud state (deployed S3 code objects, EC2 runners,
+schedules) in the same pass and freshness discipline as the rest of the aws substrate; the
+repo-AST code graph (function grain, S3 I/O edges) survives as ENRICHMENT on those aws nodes,
+derived by predicate. The frozen-feed class dies structurally rather than being relabeled.
+
+**What it does NOT itself do (implementation owners decide the how):** the concrete recompile
+spec, the 1,337-node migration, the consumer migration (NODE_TYPE_LAYER map, graphuni setdefault,
+layer='pipeline' filters), and the v1.9 SYSTEM_DEFINITIONS naming act (substrate enum change +
+substrate_side BACKEND membership collapsing to aws + the definitional one-liner in its merged
+form) -- routed via CTO/CRO per the existing package + finding trail. Broadcast of the ruling:
+CRO + CTO + COO, 2026-08-10 ~23:0xZ, same turn.
+
 -- 3.0.0_SA_CVO
