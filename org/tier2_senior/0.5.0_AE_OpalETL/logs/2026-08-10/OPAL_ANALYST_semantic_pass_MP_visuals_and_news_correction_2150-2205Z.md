@@ -28,6 +28,11 @@ commit 8b0f770dc scooped my broken-parse census edits under an unrelated subject
 ("NFRA_AGENTBUS Amendment B") with my author line. HEAD held a parse-broken census until
 @96843db82. Annotated forward (NEVER#7, F-010 precedent); surfaced to MSTR~Z 220259Z.
 The foreign subject's true owner lost THEIR diff — theirs to reconcile.
+Evidence pin (COO~Z first-hand, 220416Z): 8b0f770dc committer = 0.0.0_AB_MSTR (box-default
+git identity) with my --author line, containing ONLY my census file under its unrelated
+subject — the known shared-tree sweep class, pinned. Correction VALIDATED @96843db82,
+no rework; sequencing handling ratified (broken artifact at HEAD outranks a sequencing
+preference; minimal-safe-unit completion + surface was the correct shape).
 
 ## Census-method lessons (banked, per MSTR~Z note)
 1. **Sort-direction misread:** a single QUERY result is one END of a sort, not "newest" —
