@@ -37,8 +37,42 @@ printed; each `get-schedule` read individually and normalised to UTC at EDT = UT
 13:40Z  mdpf-accrual-bridge-daily                                +40 min
 13:50Z  opal-assets-mdpf-portal-publisher-daily    publishes what 13:00Z built
 20:30Z  cot-bd-session-daily-et                    Cottonwood    +7.5 HOURS TOO LATE
-22:30Z  opal-assets-ingest-mirror-cot-daily-et     Cottonwood    +9.5 HOURS TOO LATE
+22:30Z  opal-assets-ingest-mirror-cot-daily-et     ~~Cottonwood~~ ⛔ SEE CORRECTION — IT IS INFLECTION
 ```
+
+> ## ⛔ CORRECTION 2026-08-10 ~1419Z — THE 22:30Z ROW IS **NOT** A COTTONWOOD INTAKE.
+> **Source-confirmed by `2.0.0_SA_COO` (measured by `0.7.0_AE_CloudOps` on live CloudWatch + bucket
+> notification config), against this very file. The row name is misleading and my table repeated it.**
+>
+> ```
+> lambda_function.py:353   for row in MAP + PROVENANCE_RIDERS:      <- UNCONDITIONAL
+>                          the handler NEVER consults the event payload for row selection
+> mirror.tf:155            input = "{}"                             <- the Scheduler target
+> MAP rows: :94 orion/inflection · :115 eclipse/inflection
+>           :122 blackdiamond/cottonwood · :153 cottonwood meta-templates
+> ```
+>
+> **⇒ BOTH mirror schedules run ALL FOUR ROWS.** `-inf-daily` and `-cot-daily-et` are **two CLOCKS on
+> ONE ALL-ROWS FUNCTION** — neither is firm-scoped. The 22:30Z fire drives **eclipse/inflection**
+> bronze, and the silver lands from an S3 ObjectCreated event on that bronze write
+> (`opal-assets-silver-eclipse`, Prefix `eclipse/inflection/bronze/`, Suffix `.json`) — not from
+> either 16:00 sweep.
+>
+> **⇒ SO "MOVE THE COT MIRROR EARLIER" IS AN *INFLECTION* CHANGE, NOT A COTTONWOOD ONE** — and by
+> §3's own inversion it makes inflection **fresher** at the floor, which surfaces the cross-axis
+> refusal **MORE** often. **§4 as written moves three things and one of them is not what its name
+> says.**
+>
+> **WHY I DID NOT CATCH IT, and the general form:** §5 bounds this table honestly as a *schedule
+> read* — and **a schedule read structurally cannot see a handler's row loop.** The instrument was
+> correct within its domain and silent outside it. This is the same class already banked at R-20
+> (classify by mechanism, not filename), R-32 (a gate naming the wrong branch) and the R-18 control
+> misattribution: **the label and the referent drift apart, and the label is what a PLAN acts on.**
+> Third instance at this seat in four days.
+>
+> **DISPOSITION:** COO has split Track A to contain **only** `cot-bd-session-daily-et` (20:30Z), and
+> moved the 22:30Z mirror to its own **HELD** track — correctly, because moving it touches the
+> inflection thread, not just the schedule one.
 
 > ## ⇒ FOUR INTAKES FIRE **AFTER** THE FLOOR THEY FEED.
 > The floor cannot see them **by construction** — not intermittently, not under load. Cottonwood is
@@ -87,10 +121,30 @@ the 6/12 count look WORSE**, and that is not a regression to repair toward.
 
 ```
 02:00Z  BD lands (measured)
-~03:00-03:30Z  ALL intakes                    <- cot-bd-session, cot mirror, smartx pulls move here
+~03:00-03:30Z  intakes            <- cot-bd-session (20:30Z) + smartx pulls. NOT the 22:30Z mirror.
 13:00Z  floor — now strictly downstream of every intake
 13:50Z  publisher
 ```
+
+> ⛔ **AMENDED 2026-08-10 — the 22:30Z mirror is REMOVED from this shape** (see the §1 correction: it
+> is an inflection intake, so moving it is an inflection change and it is HELD on that thread).
+>
+> ⛔ **AND THE FLOOR TIME IN THIS SHAPE IS NOW A LIVE QUESTION AT ANDREW, NOT A SETTLED DEFAULT.**
+> His 08-07 instruction sets intakes in a **12:00–13:30Z** window with the **floor at 13:30Z**; this
+> §4 keeps the floor at **13:00Z**. *Both satisfy his stated goal that every intake precede the
+> floor* — they differ on whether the floor still reads **T-1**.
+> **The premise under the 08-07 ruling has since moved, measured by COO/AE:** it rested on
+> orion+eclipse landing T+1 at 03:30Z, but **ORION WAS NEVER ON THAT PATTERN** (same-day 14:16Z,
+> unbroken 07-20→08-09) and **ECLIPSE LEFT IT THREE DAYS AGO** (same-day 22:31Z since 08-07; cause
+> `ce99054e44` committed 07-29, **APPLIED 08-06T00:04:48Z** — and the `date=2026-08-06` gap missing
+> from both feeds **is that cutover's seam**). Routed to Andrew with the measurement attached; COO
+> correctly declined to choose between a sovereign instruction and an architectural preference, and
+> so do I.
+>
+> ⛔ **NOTHING IN THIS SHAPE EXECUTES UNTIL ONE QUESTION IS ANSWERED** (AE resolving now):
+> **does `date=D` CONTAIN day-D data, or is it a RUN-DATE LABEL on D-1 content?** If it is a label,
+> his window is safe and the conflict dissolves. **No schedule moves before that answer** — the whole
+> T-1-vs-same-day disagreement turns on it.
 
 ⚠ **STEP 1 IS MEASUREMENT, NOT EDITING.** BD's 02:00Z is measured. **SmartX / Orion / Eclipse are
 NOT** — setting those from inference would repeat the exact error that produced this defect. The
