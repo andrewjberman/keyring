@@ -82,12 +82,38 @@ printed; each `get-schedule` read individually and normalised to UTC at EDT = UT
 business-hours rhythms — a *"session"* pull at 16:30 ET, a *"mirror"* at 18:30 ET — but the paths are
 T+1: the data lands in the small hours and then sits.
 
-**MEASURED:** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_INGESTION_DRAW_VENDOR_TO_PLATINUM_20260804.md:112`
-records **"BD xlsx lands (02:00Z nightly …)"**. `cot-bd-session-daily-et` fires at **20:30Z**.
+~~**CARRIED (NOT measured):** the ingestion draw `…MDPF_INGESTION_DRAW_VENDOR_TO_PLATINUM_20260804.md:112`
+records "BD xlsx lands (02:00Z nightly …)". `cot-bd-session-daily-et` fires at 20:30Z → an 18.5-hour wait.~~
 
-> **WE WAIT 18.5 HOURS TO COLLECT DATA THAT IS ALREADY ON DISK.** Andrew's framing is exact: *"these
-> custom definitions are irrelevant now."* The schedule encodes an assumed rhythm, not the real
-> delivery.
+> ## ⛔⛔ CORRECTED 2026-08-10 ~1430Z — **BD LANDS 06:00:44Z, NOT 02:00Z.** THE ERROR RAN IN THE DANGEROUS DIRECTION.
+> **MEASURED by `0.7.0_AE_CloudOps`** — `list-objects-v2` LastModified, true UTC, **denominator 1,229
+> objects** under `blackdiamond/cottonwood/bronze/`, first landing per (data-date, feed):
+>
+> ```
+> date         rebalancer_accounts   rebalancer_model_detail   rebalancer_models
+> 2026-08-05        06:00:44               06:00:45                 06:00:43
+> 2026-08-06        06:00:45               06:00:45                 06:00:44
+> 2026-08-07        06:00:44               06:00:45                 06:00:43
+> 2026-08-08        06:00:45               06:00:45                 06:00:44
+> 2026-08-09        06:00:44               06:00:45                 06:00:43
+> 2026-08-10        06:00:44               06:00:45                 06:00:43
+> ```
+> **All three feeds, SIX CONSECUTIVE DAYS, sub-second stable.** The real gap is **14.5 hours, not
+> 18.5** — the wait is real and the direction of §4 is unchanged.
+>
+> ### ⛔ WHY THIS IS WORSE THAN A FOUR-HOUR CORRECTION — MY FIX WOULD HAVE INSTALLED THIS WORKSTREAM'S OWN DEFECT
+> A retime anchored on *"02:00Z + margin"* lands the session trigger near **02:30Z — roughly 3.5
+> HOURS BEFORE THE DATA EXISTS.** That converts a schedule which is merely **LATE** into one which is
+> **STRUCTURALLY EARLY**: it would read the prior day **forever** and **look perfectly healthy doing
+> it.** I diagnosed exactly that failure mode in §1 and then wrote an anchor that would recreate it.
+> **The safe anchor is 06:00:45Z + margin — and only after the producer is identified.**
+>
+> **PROVENANCE OF MY ERROR, undiscriminated and stated as such:** the 02:00Z figure was *carried*
+> from the ingestion draw, not measured on the cottonwood prefix. Two readings I cannot separate —
+> **(a)** it describes the **49F BD pipeline** (`opal-data-bd`), not cottonwood's, i.e. the bd/cot
+> separation; or **(b)** it moved. **Either way the number that drives a cottonwood cron must be
+> measured on the cottonwood prefix**, and that is 06:00:44Z. *§5 already labelled this figure as
+> carried-not-re-derived — the bound was honest and I then used the number as if it were not.*
 
 ## 2 · SERVED STATE — his figures confirmed, and they split into TWO causes
 
@@ -120,11 +146,29 @@ the 6/12 count look WORSE**, and that is not a regression to repair toward.
 ## 4 · PROPOSED TARGET SHAPE — floor time unchanged
 
 ```
-02:00Z  BD lands (measured)
-~03:00-03:30Z  intakes            <- cot-bd-session (20:30Z) + smartx pulls. NOT the 22:30Z mirror.
-13:00Z  floor — now strictly downstream of every intake
-13:50Z  publisher
+06:00:44Z  BD lands  (MEASURED, n=1229, 6/6 days sub-second stable)   [was wrongly 02:00Z]
+~06:15Z+   cot-bd-session          <- anchor = LANDING + margin, NEVER an assumed hour
+~03:30Z    smartx pulls            <- pending SmartX's own measured delivery
+           ⛔ NOT the 22:30Z mirror — that is an inflection intake, HELD
+13:00Z     floor — strictly downstream of every intake
+13:50Z     publisher
 ```
+
+> ⛔ **NO NUMBER IN THIS SHAPE MAY BE SET FROM AN ASSUMED HOUR.** Every intake time is
+> `measured_landing + margin` **on that feed's own prefix**, or it does not get set. The 02:00Z error
+> above is the proof of why: an anchor carried from an adjacent pipeline's documentation would have
+> fired 3.5h before the data and read the prior day forever, healthily.
+>
+> ⛔ **AND `cot-bd-session-daily-et` DOES NOT MOVE UNTIL ITS PRODUCER IS NAMED.** `0.7.0_AE_CloudOps`
+> is holding on W1-5 criterion 1 — *"an unattributed re-time is a guess with a cron expression on
+> it"* — and that is correct. **RULED OUT BY MEASUREMENT, not by name:** not
+> `opal-assets-ingest-mirror` (its cottonwood row raises before completing on **every** invocation in
+> a 14-day 100%-failure window, yet the data lands daily and sub-second stable); not a Lambda
+> `opal-cot-bronze-run` (ResourceNotFound, no log group); **not any EventBridge Rule or Scheduler
+> entry — nothing fires at 06:00Z across 139 rules (121 scheduled) + 16 Scheduler entries, all
+> materialised and counted client-side.** Remaining candidates: the cot EC2, ECS, or **a schedule
+> outside AWS entirely** — the banked precedent, and the 2026-08-06 false-finding says to ask that
+> before calling anything missing.
 
 > ⛔ **AMENDED 2026-08-10 — the 22:30Z mirror is REMOVED from this shape** (see the §1 correction: it
 > is an inflection intake, so moving it is an inflection change and it is HELD on that thread).
