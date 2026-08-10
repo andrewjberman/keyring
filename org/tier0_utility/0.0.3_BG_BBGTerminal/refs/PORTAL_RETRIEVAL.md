@@ -67,7 +67,13 @@ trust neither until reconciled.
 
 ## Wiring status (honesty layer)
 
-The Opal Gateway's structured portal wiring is STAGED, NOT LIVE (Andrew, 2026-08-06:
-"not wired yet"). Until Andrew confirms the gateway entitlement, portal reads run through
-the helper's boto3 path under this box's existing read credentials; if a read fails on
-permissions, that is the wiring status, not a data absence — report it as such.
+**PORTAL-BUCKET READ: ACTIVATED (Andrew Q1 ruling 2026-08-10 @bc7eb60de "All recs
+approved, proceed"; carrier adjudication @55d62ed46 — the activation lands here, as the
+honesty-layer flip, because no portal-read gateway tool exists: the mechanism is and
+remains box-local `tools/portal_lookup.py` under this box's existing read credentials).**
+A permissions failure on a portal read is now a FINDING to surface (box grant gap →
+reopens via AE TO-3 Phase 3), no longer an expected staged-wiring outcome.
+YCHARTS: STAGED/HELD, unchanged — activation remains an Andrew word not yet given.
+
+*(Superseded text, kept for honesty-layer history: the gateway's structured portal wiring
+was STAGED, NOT LIVE per Andrew 2026-08-06 "not wired yet".)*

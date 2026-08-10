@@ -1,0 +1,381 @@
+# ARTIFACT_CENSUS_POD2.yaml -- axis: SERVED-ARTIFACT VISUAL+DATA COORDINATES (one intent:
+# where does each served artifact appear, and what fields does it carry). Rule 24: one
+# grain per level -- page(route) -> location(nav position) -> panel(visual container)
+# -> artifact(served object) -> field(datum). Template: ARTIFACT_CENSUS_MP.yaml
+# @0c1dae3da (RATIFIED, Andrew @95b3e2852) -- pilot choices carried: residue section,
+# scope-family dedup, per-artifact vintage_field, one-panel grain.
+#
+# VERTICAL DEFINITION (grounded, not assumed): Pod-2 Portfolio Analytics = the portal
+# nav "Analysis" section (App.tsx:94-106) MINUS Macroeconomics (vertical 3, TO-4c):
+# /cma, /positioning, /attribution, /factor-tilts, /valuations, /correlations (nav order).
+#
+# DENOMINATOR (binding rule 3 -- COMPLETE token-walks 2026-08-10 via portal_lookup.py +
+# boto3 same-pattern for the two prefixes OUTSIDE the channel map; comp-estate threads
+# valuation(1)+positioning-adjacent(yalp)+correlation(1)+factor-tilts(1)+cma(1)):
+#   json/valuation/        2 keys -- both rendered
+#   json/positioning/      3 keys -- all rendered
+#   json/correlations/     1 key  -- rendered
+#   json/factor-tilts/     3 keys -- all rendered
+#   json/capital-markets/  2 keys -- both rendered  (** NOT in the portal_lookup CHANNELS
+#                          map or PORTAL_RETRIEVAL table -- channel-map gap, see notes **)
+#   VERTICAL-OWNED TOTAL: 11 keys = 11 rendered artifacts (zero owned-unrendered)
+#   FROZEN legacy top-level twins (PORTAL_RETRIEVAL rule 3): valuation/ 1 key (2026-01-04)
+#   + positioning/ 3 keys (2025-12-23) = 4 keys, residue section
+#   BORROWED cross-vertical (rendered here, owned elsewhere): json/portfolios/aum-metrics.json
+#   (AGG weighting on 3 pages) + json/latest/manifest.json (SmartPanelFooter freshness on
+#   ALL 6 pages) -- referenced with pointers, fields NOT censused here (owner verticals').
+vertical: pod2_portfolio_analytics
+census_vintage: 2026-08-10
+census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4b)
+grounding: every artifact row carries live retrieval evidence (portal_lookup / boto3
+  same-pattern COMPLETE read, bytes + vintage); every panel row carries component
+  file:line (portal DEV tree HEAD 2026-08-10)
+
+pages:
+  - page: /cma            # src/pages/CapitalMarketAssumptions/ (App.tsx:415; nav :98)
+    locations:
+      - location: {kind: header, name: "Always-on panel above tabs"}
+        panels:
+          - panel: "10-Year Assumptions"
+            render_evidence: CapitalMarketAssumptions.tsx:112-129 (AssumptionsTable child,
+              collapsible category rows; SmartPanelFooter sourceKey=cma_excel :128)
+            artifacts:
+              - artifact: json/capital-markets/assumptions.json
+                source_type: s3
+                served_route: /api/general/capital-markets/assumptions.json
+                  (getCMAAssumptions, portal-proxy.ts:1370; CF /api/general/ -> /json/)
+                vintage_field: 'data_as_of -- ANOMALY: live value is "2026", YEAR-grain not
+                  a date (see notes); generated_at 2026-03-11 (cma_excel-gated, intermittent
+                  cadence is its design per comp-estate yang-cma)'
+                state: live
+                retrieval_evidence: boto3 COMPLETE read 2026-08-10 (4146 bytes;
+                  LastModified 2026-03-11)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-03-11T00:45:52Z"}
+                  - {name: data_as_of, type: string, role: vintage, example: "2026 (year-grain)"}
+                  - {name: pipeline_execution_id, type: string, example: "059fbba1-..."}
+                  - {name: source_file, type: string, example: "uploads/CMA Official 2026.xlsx"}
+                  - {name: assumptions, type: "list[27] of object"}
+                  - {name: "assumptions[].assetClass", type: string, example: "Cash"}
+                  - {name: "assumptions[].category", type: string, example: "Cash"}
+                  - {name: "assumptions[].expectedReturn", type: "number|null", unit: pct-10y, example: null}
+                  - {name: "assumptions[].expectedVolatility", type: "number|null", unit: pct, example: null}
+      - location: {kind: tab, name: "Expectations"}
+        panels:
+          - panel: "Capital Market Expectations"
+            render_evidence: tabs/ExpectationsTab.tsx:119-207 (ComposedChart bars=return,
+              diamonds=volatility)
+            artifacts:
+              - artifact: json/capital-markets/assumptions.json
+                canonical: pages[/cma] -> header -> "10-Year Assumptions"
+      - location: {kind: tab, name: "Views"}
+        panels:
+          - panel: "Views"
+            render_evidence: tabs/OpalViewsTab.tsx:169-226 (ConvergingSlider rows when
+              combined data present, else Strategic/Tactical GradientSlider split :118-166)
+            artifacts:
+              - artifact: json/capital-markets/views.json
+                source_type: s3
+                served_route: /api/general/capital-markets/views.json
+                  (getOpalViews, portal-proxy.ts:1412)
+                vintage_field: data_as_of (live 2026-01-09; cma_excel-gated cadence)
+                state: live
+                retrieval_evidence: boto3 COMPLETE read 2026-08-10 (5992 bytes;
+                  LastModified 2026-01-09)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-01-09T18:28:24Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-01-09"}
+                  - {name: overall_views, type: object, note: "strategic[7]/tactical[7]/combined[7] of {pair, position int}", example: "strategic[0]: Equities vs Fixed Income, position 2"}
+                  - {name: fixed_income_views, type: object, note: "strategic/tactical/combined[6] of {assetClass, position}"}
+                  - {name: equity_views, type: object, note: "strategic/tactical/combined[9] of {assetClass, position}"}
+
+  - page: /positioning    # src/pages/Positioning/ (App.tsx:416; nav :99); no tabs
+    locations:
+      - location: {kind: header, name: "Single scroll (no tabs)"}
+        panels:
+          - panel: "Positioning Summary"
+            render_evidence: panels/PositioningSummary.tsx:910-1146 (4-way view toggle
+              Portfolio/Benchmark/Relative/Custom :918-957; stacked allocation bars;
+              collapsible matrix sections Asset Class / Management Style / Characteristics
+              / Asset Sub-Categories :451-478)
+            artifacts:
+              - artifact: json/positioning/positioning_data.json
+                source_type: s3
+                served_route: /api/general/positioning/positioning_data.json
+                  (getPositioningData, portal-proxy.ts:1085; GZIP ContentEncoding --
+                  decoded 7882 -> 70540 bytes)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get positioning positioning_data.json
+                  2026-08-10 (70540 bytes decoded, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:48Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: benchmarks, type: object, note: "etf + index branches; per asset class {ticker, name, yield, cost, duration, beta}", example: "etf.cash.ticker: BIL, yield 3.58"}
+                  - {name: portfolios/current_holdings/segments, type: object, note: "per-model allocations + holdings the three panels slice client-side (optimized payload per its note field)"}
+              - artifact: json/positioning/holdings_attribution_data.json
+                source_type: s3
+                served_route: /api/general/positioning/holdings_attribution_data.json
+                  (getHoldingsAttribution, portal-proxy.ts:1701 -- doc comment above it
+                  says /attribution.json, the LIVE path is holdings_attribution_data.json)
+                vintage_field: data_as_of (== as_of_date; month-end basis -- 2026-07-31 on
+                  an 08-10 read is its cadence, attribution_excel monthly)
+                state: live
+                retrieval_evidence: portal_lookup get positioning
+                  holdings_attribution_data.json 2026-08-10 (368317 bytes, read COMPLETE)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-04T22:32:55Z"}
+                  - {name: as_of_date, type: date, example: "2026-07-31"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-07-31"}
+                  - {name: portfolios, type: "object(5 models)", note: "per model {code, name, qtd/ytd/1y/...}"}
+                  - {name: "portfolios.{m}.{period}.holdings", type: "list of object", note: "ticker, name, asset_class, weights, fund/style returns, selection/allocation bps", example: "ULT.qtd.holdings[0].ticker: IEMG"}
+                  - {name: "portfolios.{m}.{period}.totals", type: "object(10 keys)", note: "period roll-up incl. fund_selection/style_allocation bps"}
+          - panel: "Portfolio Composition"
+            render_evidence: tabs/HoldingsTab.tsx:925-995 (recharts Treemap; portfolio
+              selector AGG/UST/ST/INT/LT/ULT + gold CSM custom-blend chip :934-952;
+              NOTE HoldingsTab re-fetches positioning_data via bare useEffect :544-554 --
+              a DUPLICATE fetch outside the React Query cache, smell noted)
+            artifacts:
+              - artifact: json/positioning/positioning_data.json
+                canonical: pages[/positioning] -> header -> "Positioning Summary"
+          - panel: "Holdings Breakdown"
+            render_evidence: tabs/HoldingsTab.tsx:999-1654 (dense sticky-header table;
+              Characteristics/Performance view toggle :1006-1025; Model Breakdown columns
+              AGG-only :1059-1067; period hard-pinned 'Current' :527 -- the attribution/
+              aum non-Current paths are DEAD today)
+            artifacts:
+              - artifact: json/positioning/positioning_data.json
+                canonical: pages[/positioning] -> header -> "Positioning Summary"
+              - artifact: json/portfolios/aum-metrics.json
+                borrowed: true   # cross-vertical; owned by the portfolios/AUM surface, NOT
+                                 # censused here (fields at its owner). AGG weighting only.
+                served_route: /api/general/portfolios/aum-metrics.json (getAUMSummary,
+                  portal-proxy.ts:288; also FactorTilts + Attribution AGG paths)
+                retrieval_evidence: boto3 head 2026-08-10 (7234 bytes, LastModified
+                  2026-07-23; top-level period/last_updated/dates/total/by_model/meta)
+
+  - page: /attribution    # src/pages/Attribution/ (App.tsx:417; nav :100); no tabs
+    locations:
+      - location: {kind: header, name: "Single scroll (no tabs)"}
+        panels:
+          - panel: "Style vs Benchmark Positioning"
+            render_evidence: components/StylePolicyComparison.tsx:176-374 (diverging
+              tilt bars per asset class + child AssetAllocationSummary inline table
+              "Asset Allocation Attribution" :361-370; portfolio chips AGG..ULT + period
+              QTD/YTD/1Y/SI; empty-state note "Backend currently generates QTD and YTD
+              only" :95-150)
+            artifacts:
+              - artifact: json/positioning/allocation_summary.json
+                source_type: s3
+                served_route: /api/general/positioning/allocation_summary.json
+                  (getAllocationSummary, portal-proxy.ts:1595, publicApiRequest; GZIP --
+                  decoded 949 -> 6549 bytes)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get positioning allocation_summary.json
+                  2026-08-10 (6549 bytes decoded, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:52Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: portfolios, type: "object(5 models)", note: "per model qtd/ytd/1y/si slices"}
+                  - {name: "portfolios.{m}.{p}.asset_classes", type: "list of object", note: "name, style_weight pct, policy_weight pct, tilt, allocation-effect fields", example: "UST.qtd: Fixed Income style_weight 100.0"}
+                  - {name: "portfolios.{m}.{p}.total", type: "object(4 keys)", note: "period totals"}
+              - artifact: json/positioning/holdings_attribution_data.json
+                canonical: pages[/positioning] -> header -> "Positioning Summary"
+                note: feeds the Fund Select / Style Alloc bps columns of the inline table
+                  (AssetAllocationSummary.tsx:113-139)
+          - panel: "Attribution Breakdown"
+            render_evidence: tabs/SelectionTab.tsx:345-717 (holdings-grain dense table,
+              BASIC INFO / FUND SELECTION / STYLE ALLOCATION column groups :428-480;
+              portfolio chips EXCLUDE AGG :357; fetched via bare useEffect not React
+              Query :66-117, errors silently swallowed :85 -- smell noted)
+            artifacts:
+              - artifact: json/positioning/holdings_attribution_data.json
+                canonical: pages[/positioning] -> header -> "Positioning Summary"
+              - artifact: json/portfolios/aum-metrics.json
+                borrowed: true
+                note: AGG aggregation path only (SelectionTab.tsx:89-117); P2's own chips
+                  hide AGG so reachable only via the page-level selector
+        page_note: 'the page ALSO fetches json/positioning/positioning_data.json solely
+          for its data_as_of -> vintage registry (Attribution.tsx:34-43); no panel renders
+          it here (pointer artifact, canonical at /positioning)'
+
+  - page: /factor-tilts   # src/pages/FactorTilts/ (App.tsx:418; nav :101)
+    locations:
+      - location: {kind: header, name: "Always-on panel above tabs"}
+        panels:
+          - panel: "Factor Exposure Profile"
+            render_evidence: panels/FactorTiltOverviewPanel.tsx:281-608 (Nivo radar +
+              SummaryMetricsTable child "Regression Summary" + TiltGradientBar grid;
+              Portfolio AGG..ULT + Lookback 1M..1Y selects :291-316; AGG rows computed
+              client-side AUA-weighted :599-605)
+            artifacts:
+              - artifact: json/factor-tilts/tier1-snapshot.json
+                source_type: s3
+                served_route: /api/general/factor-tilts/tier1-snapshot.json
+                  (getFactorTiltsSnapshot, portal-proxy.ts:1299-1301; eager, tiered-load
+                  design FactorTilts.tsx:15-19)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get factor-tilts tier1-snapshot.json
+                  2026-08-10 (10662 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:47Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: summary, type: "list[25] of object", note: "5 models x 5 windows"}
+                  - {name: "summary[].model", type: string, example: "UST"}
+                  - {name: "summary[].window", type: string, example: "1M"}
+                  - {name: "summary[].r2", type: number, unit: decimal, example: 0.2708}
+                  - {name: "summary[].alpha", type: number, unit: decimal-return, example: -0.00269}
+                  - {name: "summary[].factors", type: "object(6)", note: "Equity vs FI / Growth vs Value / US vs Foreign / Large vs Small / Agg vs Short / +1 -- beta per factor", example: "Agg vs Short: 0.0199"}
+              - artifact: json/portfolios/aum-metrics.json
+                borrowed: true
+                note: AUA weights for the computed AGG row (FactorTilts.tsx:83;
+                  constants.ts:190-317)
+      - location: {kind: tab, name: "Portfolio Factors (tab id: bars)"}
+        panels:
+          - panel: "Factor Tilts by Portfolio"
+            render_evidence: tabs/FactorTiltBarsTab.tsx:164-310 (Snapshot grouped bars /
+              Time Series toggle :172-196; time-series view = ModelTiltTimeSeriesView
+              child, LAZY tier3 load on toggle :95-102)
+            artifacts:
+              - artifact: json/factor-tilts/tier1-snapshot.json
+                canonical: pages[/factor-tilts] -> header -> "Factor Exposure Profile"
+              - artifact: json/factor-tilts/tier3-timeseries.json
+                source_type: s3
+                served_route: /api/general/factor-tilts/tier3-timeseries.json
+                  (getFactorTiltsTimeSeries, portal-proxy.ts:1325-1327; LAZY -- loads only
+                  when the Snapshot/Time-Series toggle flips, 3.7MB tier-3 payload)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get factor-tilts tier3-timeseries.json
+                  2026-08-10 (3762222 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:47Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: timeSeries, type: "object(6 factors)", note: "per factor list[1406] of {date, value} since 2020-12-31", example: "Equity vs FI[0]: 2020-12-31, -0.01"}
+      - location: {kind: tab, name: "Factor Spreads (tab id: timeseries)"}
+        panels:
+          - panel: "Market Factor Spreads"
+            render_evidence: tabs/FactorTiltTimeSeriesTab.tsx:268-428 (6-factor multi-
+              select card grid + rolling cumulative spread LineChart; tier2 LAZY on tab
+              entry FactorTilts.tsx:190-192)
+            artifacts:
+              - artifact: json/factor-tilts/tier2-spreads.json
+                source_type: s3
+                served_route: /api/general/factor-tilts/tier2-spreads.json
+                  (getFactorTiltsSpreads, portal-proxy.ts:1312-1314; LAZY on tab entry)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get factor-tilts tier2-spreads.json
+                  2026-08-10 (125911 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:47Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: factorSpreads, type: "object(6 factors)", note: "per factor {current, avg_30d, min_30d, max_30d, recent list[504] of {date,value}}", example: "Equity vs FI.current: 0.6625"}
+
+  - page: /valuations     # src/pages/Valuation/ (App.tsx:419; nav :102)
+    locations:
+      - location: {kind: header, name: "Two always-on panels above tabs"}
+        panels:
+          - panel: "Equity Valuation Summary - Latest Percentile"
+            render_evidence: panels/ValuationSummaryPanel.tsx:73-176 (heatmap table, 7
+              metric columns, top-5 collapsed default)
+            artifacts:
+              - artifact: json/valuation/valuation_data.json
+                source_type: s3
+                served_route: /api/general/valuation/valuation_data.json
+                  (getValuationData, portal-proxy.ts:1481; 2.2MB -- PROJECT sub-keys when
+                  serving, PORTAL_RETRIEVAL rule 4)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get valuation valuation_data.json
+                  2026-08-10 (2184084 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: summary, type: "list[39] of object", note: "one row per index; percentile ints per metric"}
+                  - {name: "summary[].index", type: string, example: "S&P 500"}
+                  - {name: "summary[].fwd_pe/trailing_pe/p_fcf/ev_sales/p_b/p_sales/div_yield", type: integer, unit: percentile, example: 79}
+                  - {name: ranges, type: "object(39 indices)", note: "per index list[7] of {metric, label, current, percentile, p10/p25/p50/p75/p90}", example: "S&P 500 Fwd P/E current 20.09, pctile 79"}
+                  - {name: time_series, type: object, note: "per index x metric daily history (feeds the Time Series tab)"}
+          - panel: "{index} Valuation Range (dynamic title, default S&P 500)"
+            render_evidence: panels/ValuationRangePanel.tsx:64-220 (grouped index select,
+              40 indices, unavailable suffixed "(pending)"; metric/percentile table)
+            artifacts:
+              - artifact: json/valuation/valuation_data.json
+                canonical: pages[/valuations] -> header -> "Equity Valuation Summary - Latest Percentile"
+      - location: {kind: tab, name: "Valuation Time Series (tab id: time-series)"}
+        panels:
+          - panel: "{index} - {metric} Time Series (dynamic; ratio mode when Index 2 set)"
+            render_evidence: tabs/ValuationTimeSeriesTab.tsx:231-426 (ComposedChart +
+              5 window-relative percentile reference lines; Index1/Index2/Metric/Period
+              selects)
+            artifacts:
+              - artifact: json/valuation/valuation_data.json
+                canonical: pages[/valuations] -> header -> "Equity Valuation Summary - Latest Percentile"
+      - location: {kind: tab, name: "Risk Premium (tab id: risk-premium)"}
+        panels:
+          - panel: "Equity Risk Premium"
+            render_evidence: tabs/RiskPremiumTab.tsx:235-375 (ERP area+line, percentile
+              reference lines; fetch mounts with the tab -- effectively lazy :154-157)
+            artifacts:
+              - artifact: json/valuation/risk_premium_data.json
+                source_type: s3
+                served_route: /api/general/valuation/risk_premium_data.json
+                  (getRiskPremiumData, portal-proxy.ts:1534)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get valuation risk_premium_data.json
+                  2026-08-10 (145369 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:46Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: data_source, type: object, note: "erp: Yang PKL (S&P 500 P/E + 10Y Treasury); credit_spreads: Yang PKL (Bloomberg OAS)"}
+                  - {name: erp, type: object, note: "data list[440] monthly since 1990 {date, value pct, earnings_yield, treasury_rate} + thresholds p10..p90", example: "1990-01-31 value -0.25"}
+                  - {name: credit, type: object, note: "ig + hy branches {data monthly, thresholds} -- 787 pts per note field"}
+          - panel: "Credit Risk Premium"
+            render_evidence: tabs/RiskPremiumTab.tsx:379-525 (IG+HY LineChart; plain
+              PanelFooter with FRED-derived timestamp, NOT SmartPanelFooter :525)
+            artifacts:
+              - artifact: json/valuation/risk_premium_data.json
+                canonical: pages[/valuations] -> tab Risk Premium -> "Equity Risk Premium"
+
+  - page: /correlations   # src/pages/Correlation/ (App.tsx:420; nav :103); no tabs
+    locations:
+      - location: {kind: header, name: "Single scroll (no tabs)"}
+        panels:
+          - panel: "Correlation Matrix"
+            render_evidence: components/CorrelationMatrix.tsx:46-172 (triangular heatmap
+              + CorrelationLegend; TickerSelector multi-select + Period select in header
+              actions, Correlation.tsx:62-91; period switching is CLIENT-side slicing,
+              no refetch)
+            artifacts:
+              - artifact: json/correlations/correlation_data.json
+                source_type: s3
+                served_route: /api/general/correlations/correlation_data.json
+                  (getCorrelationData, portal-proxy.ts:1633-1635)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get correlations correlation_data.json
+                  2026-08-10 (152631 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: metadata, type: object, note: "generated_at, ticker_count 59, periods_available[5]"}
+                  - {name: tickers, type: "list[59] of string", example: "S&P 500"}
+                  - {name: correlations, type: "object(5 periods)", note: "per period {matrix 59x59, data_points int}", example: "1M.data_points: 21"}
+
+# Cross-page shared freshness artifact (rendered in EVERY SmartPanelFooter on all 6 pages):
+# json/latest/manifest.json (pipeline-status channel; fetch useDataFreshness.ts:67).
+# BORROWED -- owned by the pipeline-status surface; fields not censused here.
+
+# SERVED-BUT-UNRENDERED / FROZEN residue (MECE completion; ratified pilot section)
+unrendered_artifacts:
+  - artifact: valuation/valuation_data.json (top-level legacy twin, 1 key)
+    state: frozen        # 2026-01-04 copy; PORTAL_RETRIEVAL rule 3 legacy prefix
+    consumer_evidence: PORTAL_RETRIEVAL.md rule 3 -- top-level prefixes are frozen
+      Dec-25/Jan-26 legacy copies; never quote as current
+  - artifact: 'positioning/** top-level legacy twins (3 keys: etf_categories.json,
+      holdings_attribution_data.json, positioning_data.json)'
+    state: frozen        # all 2025-12-23
+    consumer_evidence: same PORTAL_RETRIEVAL rule 3 class; note etf_categories.json has NO
+      live json/positioning/ twin -- it exists only in the frozen tree

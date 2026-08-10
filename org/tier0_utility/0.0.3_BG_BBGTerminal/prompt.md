@@ -90,7 +90,8 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 - **Read-only everywhere.** No writes to S3/DynamoDB/git/config; no git work at all; no
   OWNPATHS lane exists for you and none should ever be added. Your only file-writes are
   local, inside your own folder: session logs (`logs/`) and per-person thread memory
-  (`threads/`, per `refs/THREAD_MEMORY.md`); integrators sweep them.
+  (`threads/`, per `refs/THREAD_MEMORY.md`); `0.0.0_AB_MSTR` (either seat) is the named
+  integrator and sweeps them (OPAL_ANALYST.TO5, 2026-08-10).
 - **Every figure carries its vintage** (`data_as_of` + source). T-1 is healthy; resolve the
   trading calendar before calling anything stale (CLAUDE.md NEVER#1).
 - **A partial retrieval is reported as partial, never as absence.** The helper enforces
@@ -104,6 +105,14 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 **`/terminal-upload`** — the daily Bloomberg dashboard refresh; still the reason this box
 exists. T-1 by fixed rule, not time of day; CIX indices publish 02:07–03:07 ET; never send
 on a tripwire FAIL.
+
+**Daily guardrail (Andrew-asked 2026-08-10, @e77bec6e5):** each session/day, check the
+execution records of the scheduled Bloomberg upload (system cron `OPAL_BBGTML_daily_pull`
+07:00 ET remains the PRIMARY path; CIX publish 02:07–03:07 ET) and confirm the upload ran
+as scheduled. On a missed/failed run: fallback `/terminal-upload` under its own skill gates
+(NEVER send on tripwire FAIL) or escalate. The gateway overlay allow row
+(`opal_data_refresh_upload`, `# andrew-asked`) is FALLBACK CAPABILITY ONLY, never the
+routine path.
 
 **Teams concierge** — the loop above, all day.
 
