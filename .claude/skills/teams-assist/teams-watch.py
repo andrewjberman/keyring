@@ -15,6 +15,14 @@ Session-scoped, exactly like inbox-watch.sh: it dies with the Monitor / session.
 READ-ONLY: it only ever READS your own DMs/group chats via the per-user gateway. It never posts.
 STDOUT = the new-message signal (one line each). STDERR = status/diagnostics (no agent ping).
 
+IDENTITY PIN (OPAL_ANALYST PRD 4.1, 2026-08-10): optional `--server <substring>` /
+`--identity <sub/UPN substring>` flags filter the mcpOAuth records to the named server/identity
+BEFORE the freshest-expiring sort. No matching token after the filter -> LOUD exit 2 with a named
+reason ([TEAMS-IDENTITY-FAIL] on stdout so the Monitor pings the agent) -- NEVER a fallback to
+another identity. Expired-only matches and ambiguous multi-matches exit the same way (never
+sort-and-hope). BARE invocation (no flag) keeps the legacy selection behavior byte-identical --
+the engine is shared with the operator's /teams-assist; the pin is an additive argument.
+
 INCOMING ONLY (Andrew-direct 2026-06-26): the monitor fires on messages addressed TO you, never
 on your OWN outgoing messages -- triggering on outgoing is noise (you don't need to be woken by
 what you just sent). Each new message is filtered through `is_outgoing()` before it becomes an
@@ -43,12 +51,68 @@ ONCE = "--once" in sys.argv
 _SCHEMA_WARNED = False  # one-shot stderr note when a message carries no self-indicator field
 
 
+def _flag_value(flag: str) -> str | None:
+    """Value of `--flag VALUE` from argv, or None when the flag is absent. A flag present
+    with no usable value is a pin the caller INTENDED and we cannot honor -> loud exit,
+    never a silent fall-through to the identity-blind bare path."""
+    if flag not in sys.argv:
+        return None
+    i = sys.argv.index(flag)
+    if i + 1 >= len(sys.argv) or sys.argv[i + 1].startswith("--"):
+        print(f"[TEAMS-IDENTITY-FAIL] {flag} requires a value", flush=True)
+        print(f"[teams-watch] FATAL: {flag} requires a value", file=sys.stderr, flush=True)
+        sys.exit(2)
+    return sys.argv[i + 1]
+
+
+PIN_SERVER = _flag_value("--server")
+PIN_IDENTITY = _flag_value("--identity")
+
+
 def now_iso() -> str:
     return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _pin_fail(reason: str) -> None:
+    """Die LOUDLY on a pin that cannot be satisfied. Stdout line so the Monitor pings the
+    agent before the process exits; stderr for the human trace. Exit 2, never a fallback
+    (OPAL_ANALYST PRD 4.1: polling as the wrong identity is the failure this exists to stop)."""
+    print(f"[TEAMS-IDENTITY-FAIL] {reason}", flush=True)
+    print(f"[teams-watch] FATAL: {reason}", file=sys.stderr, flush=True)
+    sys.exit(2)
+
+
+def _read_pinned_token() -> str:
+    """Token selection under --server/--identity: filter the opalinvest.dev mcpOAuth records
+    to the pinned server/identity BEFORE any expiry sort. Exactly one valid match is the only
+    success; zero matches, expired-only, and ambiguous multi-matches all die loudly."""
+    pin = f"--server={PIN_SERVER} --identity={PIN_IDENTITY}"
+    try:
+        d = json.load(open(CREDS, encoding="utf-8"))
+    except Exception as exc:  # a broken creds file yields no matching token -> same loud path
+        _pin_fail(f"credentials-unreadable: {type(exc).__name__} ({pin})")
+    recs = [v for v in d.get("mcpOAuth", {}).values() if "opalinvest.dev" in v.get("serverUrl", "")]
+    if PIN_SERVER:
+        recs = [r for r in recs if PIN_SERVER.lower() in str(r.get("serverName", "")).lower()]
+    if PIN_IDENTITY:
+        recs = [r for r in recs if PIN_IDENTITY.lower() in str(self_id(r.get("accessToken")) or "").lower()]
+    if not recs:
+        _pin_fail(f"no-token-for-identity: no mcpOAuth record matches the pin ({pin})")
+    live = [r for r in recs if r.get("expiresAt", 0) / 1000 > time.time()]
+    if not live:
+        _pin_fail(f"expired-token-for-identity: {len(recs)} matching record(s), all expired ({pin})")
+    if len(live) > 1:
+        names = ", ".join(sorted(str(r.get("serverName")) for r in live))
+        _pin_fail(f"ambiguous-token-match: {len(live)} valid records match the pin ({names}) ({pin})")
+    return live[0]["accessToken"]
+
+
 def read_token() -> str | None:
-    """The freshest non-expired gateway access token for the opalinvest.dev MCP server."""
+    """The freshest non-expired gateway access token for the opalinvest.dev MCP server.
+    Pinned (--server/--identity): identity-filtered selection via _read_pinned_token(), which
+    exits non-zero rather than ever falling back. Bare: legacy selection, unchanged."""
+    if PIN_SERVER or PIN_IDENTITY:
+        return _read_pinned_token()
     try:
         d = json.load(open(CREDS, encoding="utf-8"))
         recs = [v for v in d.get("mcpOAuth", {}).values() if "opalinvest.dev" in v.get("serverUrl", "")]
@@ -179,11 +243,16 @@ def main() -> None:
         cursor = now_iso()
         open(CURSOR_FILE, "w", encoding="utf-8").write(cursor)
 
-    print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only)", file=sys.stderr, flush=True)
+    pin_note = f" pin(server={PIN_SERVER}, identity={PIN_IDENTITY})" if (PIN_SERVER or PIN_IDENTITY) else ""
+    print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only){pin_note}", file=sys.stderr, flush=True)
+    selected_logged = False
     while True:
         tok = read_token()
         if tok:
             me = self_id(tok)
+            if not selected_logged:  # evidence line: which identity this process is polling as
+                print(f"[teams-watch] token selected: identity={me}", file=sys.stderr, flush=True)
+                selected_logged = True
             me_name = self_name(tok)  # cached after first poll; the display-name self-match key
             try:
                 res = poll(tok, cursor)

@@ -24,10 +24,20 @@ runs.**
 ## Per-message procedure (every Teams Monitor event, THIS TURN)
 
 **0. Preconditions (already standing, restated as the gate):** the step-2a `whoami`
-identity gate passed this session (prompt.md On-Launch); the Teams Monitor is the
-identity-pinned wrapper. Every send goes through `opal-gateway-bbg`. If identity is in
-any doubt — a `[TEAMS-IDENTITY-FAIL]` line, a monitor death, a fresh token — re-run the
-gate BEFORE any send. **Never a send through `opal-gateway`** (Andrew's proxy identity).
+identity gate passed this session (prompt.md On-Launch); the Teams Monitor is the stock
+engine armed WITH the identity pin (no wrapper — the scratch-wrapper pattern is dead by
+design). The canonical arm line (Monitor tool, persistent):
+
+```
+python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity opalbloomberg
+```
+
+The pin is mandatory for this seat — a pin that cannot be satisfied dies loudly
+(`[TEAMS-IDENTITY-FAIL]`, exit 2) and NEVER falls back to another identity; never arm
+bare (bare selection is identity-blind, the OPAL_ANALYST P0 defect). Every send goes
+through `opal-gateway-bbg`. If identity is in any doubt — a `[TEAMS-IDENTITY-FAIL]`
+line, a monitor death, a fresh token — re-run the gate BEFORE any send. **Never a send
+through `opal-gateway`** (Andrew's proxy identity).
 
 **1. ACK — immediately, before any research, before classification finishes.**
 Send a short, human, receipt-only reply in-thread (`send_chat_message`; channels:
@@ -79,8 +89,11 @@ durable context into THREAD.md. An undelivered reply is recorded OPEN with why.
   record the reply OPEN in the thread file, deliver in-thread when the entitlement lands.
 - **Identity mismatch at any point: STOP.** No poll, no send; report to
   `0.0.0_AB_MSTR~Z` and hold (prompt.md step 2a — it binds every send, not just launch).
-- A dead Teams Monitor (task-notification failed): re-arm via the On-Launch procedure,
-  then bare `/bbg-teams-assist` to sweep anything that landed while dark.
+- A dead Teams Monitor (task-notification failed): re-arm via the On-Launch procedure
+  (the pinned arm line in step 0 above — never bare), then bare `/bbg-teams-assist` to
+  sweep anything that landed while dark. An exit-2 `[TEAMS-IDENTITY-FAIL]` death means
+  the pinned token is absent/expired/ambiguous — resolve the token (re-auth) first;
+  re-arming without fixing it just dies again, loudly, by design.
 
 ## Invocation forms
 
@@ -107,4 +120,6 @@ durable context into THREAD.md. An undelivered reply is recorded OPEN with why.
 `refs/THREAD_MEMORY.md` (continuity) · `refs/PORTAL_RETRIEVAL.md` + `tools/portal_lookup.py`
 (the data mechanism) · `refs/BUCKET_ALLOWLIST.yaml` (where data may come from) ·
 `/watcher` (fabric inbox — a different surface) · the identity-pinned Teams Monitor
-(the wake mechanism; prompt.md On-Launch step 3).
+(the wake mechanism; prompt.md On-Launch step 3; engine
+`.claude/skills/teams-assist/teams-watch.py`, armed with
+`--server opal-gateway-bbg --identity opalbloomberg` per step 0).
