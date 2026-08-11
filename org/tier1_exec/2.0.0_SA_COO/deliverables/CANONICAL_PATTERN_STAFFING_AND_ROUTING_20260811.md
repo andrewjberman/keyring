@@ -2109,3 +2109,141 @@ shadow or parallel channel to de-risk the cutover — **build correctly and port
 complete veto; a standing comparator is vetoed on the same grounds). No engineering staffed against
 the MDPF repair's priority. No spawn decisions — that is MSTR's authority. And no act above lands
 "when someone gets to it."
+
+---
+
+## §4aj — THE PARALLEL-LANE WINDOW (0924Z–1010Z): ~A LAUNCHED, B6 DELIVERED, AND TWO TEMPLATE DEFECTS THAT WERE NEVER MINE
+
+**Andrew launched `0.4.0_DS_ClientPlatform~A` directly at ~0924Z** ("Ok I'm instantiating ~A now, let COO
+know"). I dispatched the INF P1 GO by broker message at 092643Z and landed the TO file minutes later —
+**deliberately in that order, because an empty inbox at boot is worse than a TO that trails.** On the 49F
+lane I dispatched by message and never wrote the file at all; the two orderings are both defensible and the
+discriminator is the boot race, not convenience. ~A ACKed at 092840Z having **confirmed all 9 spec refs
+resolve as commits before building against them**, and confirmed the TO on disk.
+
+**Andrew reshaped Group D at ~0928Z** — verbatim: *"Have ~A run through Groups A B C and by the time
+they're done we will likely have had time to assess DS Base attempt at the emitter and will come to a
+conclusion on how ~A should proceed to that end."* My passive DECLARED-WAIT default became
+**HOLD-FOR-RULING, sovereign-explicit**: named event (~A's C-completion), named inputs (base's B-4 outcome
++ that completion), named deciders. Nobody idles and nobody freelances an emitter.
+
+**Group A + writer-format closed at 100657Z** — both instances VALID (14/14 and 4/4), coverage CHECKED,
+and both pass CTO's new per-artifact check **that B-1 fails**.
+
+### ⛔ TWO TEMPLATE DEFECTS, AND I "FIXED" MY COPIES BEFORE FINDING THE SOURCE
+
+AE caught, on first use, that `org/ref/TASK_ORDER_PROTOCOL.md:192` prescribed `--expected-criteria` —
+**a flag that does not exist.** The validator has no argparse at all; the id set is positional
+(`sys.argv[2]`). Exercised both ways before fixing: flagged → **rc=2 usage**, positional → rc=0 VALID.
+
+> **THE LOUD rc=2 IS NOT THE HARM — THE FALLBACK IS.** Hit the usage error, drop the argument, re-run the
+> 2-arg form, and receive a clean `rc=0 VALID` that also says **COVERAGE UNCHECKED**. So a wrong flag in the
+> template steers an operator off the one layer that catches a silently-omitted criterion, *while printing
+> success.* Same shape as the guarded import that answers COMPLETION and never PRESENCE.
+
+**And it was TWO defects.** The same template modelled a **single `instance_path`** per TO. I had recorded
+that an hour earlier as *my* defect in `MDPF_49F_BUILD.P1`'s own context block. **It was inherited.** I had
+already patched three copies while the source kept minting.
+
+> **A template defect is not one defect — it is one per artifact ever minted from it. Fixing the copies
+> while the source lives is not a fix; it is a divergence with better cosmetics.** The single-homing law,
+> and I violated it for an hour inside the same session that named it. Root-fixed @b67d79971f.
+> **Neither defect was caught by a gate:** the issuance lint greps for the PRESENCE of a `<proof_of_spec`
+> element on NEW files. It binds issuance PRESENCE, never issuance CORRECTNESS.
+
+### ANDREW'S CVO COMMISSION — AND THE FRAME I ASKED CVO TO ATTACK
+
+His ask: analyze base's results, what pushes it forward, generalization indications. **I sharpened one
+thing rather than passing it through:** CTO's positioning read (and my GO concurrence) rested on *"every
+spec measurement reproducing to the digit"* — but **that proves the 49F implementation matches the 49F
+spec, which is not the transposability claim.** An instrument confirming what it was derived from. I told
+CVO that *"insufficient evidence to claim transposability"* was a valid and valuable answer.
+
+CVO adopted and attacked it. Verdict: **MEDIUM-HIGH on the skeleton, LOW on the four unexercised atoms**
+(product-root · code-deploy · **SCHEDULE-FLOOR** · platinum-serve). ⚠ **The schedule-floor atom is the one
+whose absence froze INF for nine days — so the program's confidence is lowest exactly where its original
+outage lives.** P1 structurally cannot exercise it (P2 is TIMING), so the sequencing is right and the
+confidence gap is real at the same time.
+
+**⛔ A DENOMINATOR RECONCILIATION, routed before either number gets quoted as the other:** CVO reports
+**~50%** firm-adaptation (3 of **6 judgment calls**); ~A reports **9 of 14 rows** verbatim (= 64% verbatim,
+36% adapted). **Both correct, different frames.** Quoting "50% adaptation" against a row denominator
+overstates by ~14 points. A transposability figure carries its denominator or it is a bare value.
+
+### THE A_03 GAP — ONE REAL COVERAGE HOLE, AND IT PROPAGATED BEFORE IT WAS FOUND
+
+CVO's step-zero found **one** gap, **in CVO's own spec**: `A_03` (`dim_security`) was BUILT with **no
+acceptance criterion**, so the instance correctly carries no row and every instrument is blind *by
+construction*. I confirmed it from an id list I already held — **A00·A01·A02·A04·A05·A06, no A03** — and
+had not seen it. Three enlargements:
+
+1. **Already built in BOTH trees** (`runners_49f/` and `runners_inf/a03_dim_security.py`) — the unvalidated
+   artifact had already instantiated at the second firm.
+2. **The spec documents its own dependency, in its own words** (`:43`): A_03 carries the accrual inputs
+   *"for Group B's cell-4 decision"* = **B_02, whose 1.6872% verdict is AT ANDREW.**
+3. **The archetype was the LESS-covered firm** — ~A had minted `INF-A-A03-ROWCOUNT` by alert-reading.
+   *The lane that got lucky was the second one; the shape everyone transposes FROM held the gap.*
+
+⚠ **HOW IT HID — a name-vs-content specimen:** `A_03` **IS** in the spec, in the **artifact table**. A
+keyword scan finds it and reads as coverage. CVO's hand-diff was against the acceptance section
+specifically, which is why it worked and a grep would not have.
+
+CVO's amendment landed **two** rows, resolving my judgment question the right way — **rowcount is
+EXISTENCE and B_02's DERIVE rests on CORRECTNESS**: `A5-A03-ACCRUAL-PREDICATE` re-derives the rate-bearing
+set to the exact **112/2,313** B_02 consumes, from `dim_security`'s own `interest_rate`-nonzero, **and names
+the `maturity_date` sentinel shortcut FORBIDDEN** (the trap that made CRO's instrument read 100%
+rate-bearing).
+
+### THE GATE I MISCLASSIFIED TO ANDREW
+
+I told him the per-artifact coverage mechanization *"needs your word."* **It did not.** CTO landed it
+@d943f3e4bf as **22 lines in the validator + a schema enum** — no approval step, no sign-off, nobody
+waiting on a person, failing at the author's own terminal. **That is the mechanical-enforcement carve-out,
+not a new approval gate,** and I gave him a decision he did not have. Corrected in chat same turn.
+
+**I verified it against the REAL defect rather than its mutant:** B-1 → **rc=1 INVALID**, naming
+`a03_dim_security.py` (tokens tried `A03`/`DIM`/`SECURITY`); B-3 legacy-compat → rc=0 VALID. So **B-1 is
+INVALID pending DS's backfill** — I accepted it earlier as the fabric's first valid instance, true under the
+instruments of the time, and I am not leaving "ACCEPTED" standing unqualified.
+
+### B6 CORE — DELIVERED IN 16 MINUTES, AND TWO CONTROLS BETTER THAN THE TO ASKED FOR
+
+TO landed **before** dispatch (no boot race, so the honest order was available). AE delivered both pieces
+inside their pre-window. I verified rather than accepted: **both instances coverage-checked**, and
+**"extractor untouched" confirmed at the DIFF** — 109 added, **zero removed** — because a commit message is
+a claim about a diff, and I read a rename map's keys as data earlier today and told Andrew something false.
+
+Two unrequested controls worth generalizing: **an all-empty day exits rc=2 so the schedule history cannot
+read green on nothing** (fired on REAL data — 08-08/08-09, a genuinely quiet weekend — not only the
+synthetic case), and **the IAM deny-limb declared UNCOMPUTABLE** for an admin-class principal, since a
+policy allowing all `s3:PutObject` cannot discriminate and a green simulate there is an instrument that
+could not have said otherwise. **Third lane today to use UNCOMPUTABLE correctly, and a DIFFERENT cause from
+DS's** — by-construction vs cannot-discriminate. Routed as a Rule-24 grain question; **CTO split the enum**
+(`-BY-CONSTRUCTION` / `UNVERIFIABLE-BY-INSTRUMENT`, bare legacy kept do-not-mint).
+
+### THE $0.17 NEAR-MISS — THE RELAXATION PAYING OFF IN THE STRONGEST CURRENCY
+
+~A's custody-ledger finding: the txn ledger **structurally** lacks the fee payee side (**0 of 20,504**
+Management Fee rows positive), so collection detection is ABSENT-with-shape on a **measured** fact per the
+spec's own ELSE branch. ⚡ **The naive `net>0` predicate would have ejected a LIVE MANAGED CLIENT ACCOUNT
+(4320) from the performance boundary over a $0.17 fee-credit reversal.**
+
+> **The transposition divergence I praised as evidence of a real skeleton would, if transposed verbatim
+> instead, have removed a real client from the performance boundary for seventeen cents.** A relaxation is
+> not a weakening of the archetype; here it was the only thing standing between a doctrine and a wrong
+> answer.
+
+### OWNED AND ROUTED THIS WINDOW
+
+- **5 txn codes absent from the ratified cashflow taxonomy** (743 rows, 0.052%/0.050%; Remark **$1.79M abs**,
+  Reversal $273K) → CTO, with my read that it is **≥2 rulings, not one**: corporate actions with no cash
+  impact (Stock Split / Reverse Stock Split / Expired-) do not belong in a *cashflow* taxonomy at all, while
+  Remark and Reversal carry real dollars and need actual classification. ⛔ **The 0.05% must not carry the
+  decision** — $1.79M absolute is real money and what a Remark row MEANS is what is at stake.
+- **The 50%-external-by-default item — I took the owner rather than leave it in a verifier's findings list.**
+  MEASURE: DS base characterizes the 68 after B-4/B-5a (report the distribution, do not resolve).
+  RULE: CTO on that characterization. **TRIGGER: before any COT Group C work begins** — it compounds at
+  COT's BD relationship-grain, so the characterization must PRECEDE a COT lane reaching C, not merely exist.
+- **W-D point-in-time class** measurable already (16–79 off-spine closed-account ids per surface); declared
+  in-instance as a limitation, not faked. B/C carry it.
+- `runners_inf` unregistered with comp-validate/comp-pipescript — P2/P3 wiring, declared.
