@@ -143,10 +143,50 @@ CODE_TREES: dict[str, dict] = {
                 # republishes this key on ANY commit touching repo_path -- the
                 # repo copy is the ONE authority; the S3 copy is a deploy of it.
                 "republish_on_change_by": "0.7.0_AE_CloudOps",
+                # SUPERSEDED 2026-08-11 (X-iii, CTO-blessed bundle shape 060208Z):
+                # the roster now ships INSIDE bundles.accrual_bridge; this loose
+                # S3 object is DEPRECATED-IN-PLACE (frozen rollback target, never
+                # updated, never deleted) and the AE republish duty above is
+                # RETIRED with it (AE notified 062039Z). Declaration kept so the
+                # frozen object stays modelled, not rediscovered as cruft.
+                "superseded_by": "bundles.accrual_bridge",
                 "why": "canonical partner roster; gold consumers need it in the "
                        "gold runtime. Cross-tree import RAISEs, repo-relative read "
                        "fail-closes, --delete reverts a hand-placed RUNNER copy "
                        "(the S3->EC2 sync direction; the S3 object is durable).",
+            },
+        },
+        # HASH-STAMPED BUNDLES (X-iii 2026-08-11; CTO-blessed shape 060208Z;
+        # DS+AE joint act). A bundle is ONE deployable tar.gz whose members are
+        # materialized at PACKAGE TIME from their committed authorities -- a
+        # member is not independently mutable (CTO 08-06 no-S3-roster-twin
+        # ruling); mutation = republish the whole hash-stamped bundle. The
+        # packaging step lives HERE in the deploy map/flow (CTO condition 1:
+        # never a free-standing packaging script). A member script listed in a
+        # bundle EXITS the loose per-file leg: its old loose S3 objects are
+        # DEPRECATED-IN-PLACE (frozen rollback target for the AE trigger's env
+        # repoint; never updated, never deleted). NOTE the instrument
+        # consequence: comp-pipescript deployed still compares the repo script
+        # to the FROZEN loose key, so bundle-routed scripts are excluded from
+        # the per-file pipescript verify -- the mint's own sha-stamped verify
+        # (ETag + metadata) is their acceptance surface.
+        "bundles": {
+            "accrual_bridge": {
+                # {tar member name -> authority}; flat member names so the AE
+                # trigger's `tar -xzf` into /opt/mdpf/scripts/gold/ lands the
+                # roster SCRIPT-ADJACENT (the script's resolution location 1).
+                "members": {
+                    "build_portal_gold_accrual.py": {
+                        "repo_path": "data/mdpf/scripts/gold/build_portal_gold_accrual.py",
+                        "sha_metadata_key": "script-sha256",
+                    },
+                    "partner_roster.json": {
+                        "repo_path": "data/mdpf/config/partner_roster.json",
+                        "sha_metadata_key": "roster-authority-sha256",
+                    },
+                },
+                "bucket": "opal-data-assets",
+                "s3_key": "portal/gold/mdpf/_code/mdpf-accrual-bridge.tar.gz",
             },
         },
         "layers": {
@@ -352,17 +392,11 @@ def s3_prefix_keycount(bucket: str, prefix: str) -> str:
         return "?"
 
 
-def detect_script_files(
-    commit_range: Optional[str] = None,
-    explicit_files: Optional[list[str]] = None,
-) -> list[str]:
-    """Return list of repo-relative deploy-scope .py paths.
+def _changed_paths(commit_range: Optional[str]) -> list[str]:
+    """Raw changed-path list (ACMRT) for a commit range, repo-relative.
 
-    Priority: explicit_files > commit_range > git diff HEAD~1..HEAD.
-    """
-    if explicit_files:
-        return [f for f in explicit_files if file_to_s3_target(f) is not None]
-
+    Extracted from detect_script_files unchanged so the bundle-member detector
+    reads the SAME population -- two detectors over two diffs would drift."""
     if commit_range:
         old_sha = commit_range.split("..")[0] if ".." in commit_range else ""
         if old_sha.startswith("0000000"):
@@ -377,10 +411,42 @@ def detect_script_files(
         result = subprocess.run(
             cmd, capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30
         )
-        files = [f.strip() for f in result.stdout.splitlines() if f.strip()]
+        return [f.strip() for f in result.stdout.splitlines() if f.strip()]
     except Exception:
-        files = []
-    return [f for f in files if file_to_s3_target(f) is not None]
+        return []
+
+
+def detect_script_files(
+    commit_range: Optional[str] = None,
+    explicit_files: Optional[list[str]] = None,
+) -> list[str]:
+    """Return list of repo-relative deploy-scope .py paths.
+
+    Priority: explicit_files > commit_range > git diff HEAD~1..HEAD.
+    """
+    if explicit_files:
+        return [f for f in explicit_files if file_to_s3_target(f) is not None]
+    return [f for f in _changed_paths(commit_range) if file_to_s3_target(f) is not None]
+
+
+def detect_bundle_member_files(
+    commit_range: Optional[str] = None,
+    explicit_files: Optional[list[str]] = None,
+) -> list[str]:
+    """Changed paths that are BUNDLE MEMBER AUTHORITIES (any extension).
+
+    The .py member also appears in detect_script_files; the non-script member
+    (e.g. the roster json) appears ONLY here -- without this, a roster-only
+    commit would never re-mint its bundle (the exact silent-config-leg class the
+    an-atomic-commit-is-not-an-atomic-deploy incident named)."""
+    authorities = {
+        m["repo_path"]
+        for tree in CODE_TREES.values()
+        for b in tree.get("bundles", {}).values()
+        for m in b["members"].values()
+    }
+    pool = explicit_files if explicit_files else _changed_paths(commit_range)
+    return [f for f in pool if f.replace("\\", "/") in authorities]
 
 
 def _local_md5(path: pathlib.Path) -> str:
@@ -443,6 +509,118 @@ def deploy_file(
     if local_md5 == s3_etag:
         return "MATCH", ""
     return "SHA_MISMATCH", f"local:{local_md5} s3:{s3_etag}"
+
+
+# ---------------------------------------------------------------------------
+# X-iii hash-stamped bundles -- packaging INSIDE the deploy flow (CTO cond. 1).
+# ---------------------------------------------------------------------------
+
+def find_bundle(name: str) -> Optional[tuple[str, str, dict]]:
+    """Resolve a bundle by name across trees -> (tree_label, name, bundle)."""
+    for tree in CODE_TREES.values():
+        b = tree.get("bundles", {}).get(name)
+        if b is not None:
+            return tree["label"], name, b
+    return None
+
+
+def bundle_for_member(rel_path: str) -> Optional[tuple[str, str, dict]]:
+    """(tree_label, bundle_name, bundle) when rel_path is a member authority."""
+    norm = rel_path.replace("\\", "/")
+    for tree in CODE_TREES.values():
+        for bname, b in tree.get("bundles", {}).items():
+            if any(m["repo_path"] == norm for m in b["members"].values()):
+                return tree["label"], bname, b
+    return None
+
+
+def build_bundle_payload(b: dict) -> tuple[Optional[bytes], dict, str]:
+    """Deterministic tar.gz of the bundle members -> (payload, shas, err).
+
+    Deterministic on purpose: sorted member order, zeroed mtime/uid/gid, gzip
+    mtime=0 -- identical member bytes yield an identical archive, so a re-mint
+    with no content change is a byte-identical idempotent overwrite (and the
+    S3 ETag is a stable content address, not a timestamp lottery)."""
+    import gzip
+    import io
+    import tarfile
+
+    shas: dict[str, str] = {}
+    raw = io.BytesIO()
+    with tarfile.open(fileobj=raw, mode="w", format=tarfile.GNU_FORMAT) as tar:
+        for member_name in sorted(b["members"]):
+            spec = b["members"][member_name]
+            src = WORKSPACE / spec["repo_path"].replace("/", os.sep)
+            if not src.exists():
+                return None, {}, f"member authority missing: {spec['repo_path']}"
+            data = src.read_bytes()
+            shas[spec["sha_metadata_key"]] = hashlib.sha256(data).hexdigest()
+            info = tarfile.TarInfo(name=member_name)
+            info.size = len(data)
+            info.mtime = 0
+            info.uid = info.gid = 0
+            info.uname = info.gname = ""
+            tar.addfile(info, io.BytesIO(data))
+    gz = io.BytesIO()
+    with gzip.GzipFile(fileobj=gz, mode="wb", mtime=0) as fh:
+        fh.write(raw.getvalue())
+    return gz.getvalue(), shas, ""
+
+
+def mint_bundle(label: str, bname: str, b: dict) -> tuple[str, str, dict]:
+    """Build + upload + verify the bundle. Returns (status, detail, shas).
+
+    Statuses reuse deploy_file's vocabulary. Verification is two-legged:
+    ETag == local md5 (bytes landed) AND the sha metadata echoed back on
+    head-object (the stamp landed) -- an upload whose metadata was dropped is
+    a FAIL even with matching bytes."""
+    import tempfile
+
+    payload, shas, err = build_bundle_payload(b)
+    if payload is None:
+        return "LOCAL_MISSING", err, {}
+    aws_bin = _find_aws()
+    if not aws_bin:
+        return "UPLOAD_FAIL", "aws CLI not found in PATH", shas
+
+    metadata = dict(shas)
+    metadata["source-repo-paths"] = ";".join(
+        sorted(m["repo_path"] for m in b["members"].values())
+    )
+    local_md5 = hashlib.md5(payload).hexdigest()
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="safe_deploy_bundle_"))
+    local = tmp / pathlib.PurePosixPath(b["s3_key"]).name
+    local.write_bytes(payload)
+
+    env = _aws_env()
+    meta_arg = ",".join(f"{k}={v}" for k, v in sorted(metadata.items()))
+    cp = subprocess.run(
+        [aws_bin, "s3", "cp", str(local), f"s3://{b['bucket']}/{b['s3_key']}",
+         "--metadata", meta_arg],
+        capture_output=True, text=True, timeout=120, env=env,
+    )
+    if cp.returncode != 0:
+        return "UPLOAD_FAIL", cp.stderr.strip(), shas
+
+    ho = subprocess.run(
+        [aws_bin, "s3api", "head-object", "--bucket", b["bucket"],
+         "--key", b["s3_key"], "--output", "json"],
+        capture_output=True, text=True, timeout=30, env=env,
+    )
+    if ho.returncode != 0:
+        return "S3_ERROR", ho.stderr.strip(), shas
+    try:
+        head = json.loads(ho.stdout)
+    except ValueError as exc:
+        return "S3_ERROR", f"head-object unparseable: {exc}", shas
+    etag = str(head.get("ETag", "")).strip('"')
+    if etag != local_md5:
+        return "SHA_MISMATCH", f"local:{local_md5} s3:{etag}", shas
+    echoed = head.get("Metadata", {})
+    missing = [k for k in metadata if k not in echoed or echoed[k] != metadata[k]]
+    if missing:
+        return "SHA_MISMATCH", f"metadata stamp(s) absent/wrong on S3: {missing}", shas
+    return "MATCH", f"md5={local_md5}", shas
 
 
 def _find_pipeline_cli() -> Optional[str]:
@@ -704,16 +882,52 @@ def main(argv: list[str]) -> int:
                     help="Agent identity for audit log (e.g. 0.4.0_DS_ClientPlatform)")
     ap.add_argument("--no-pipescript", action="store_true",
                     help="Skip comp-pipescript verify phase (upload + SHA only)")
+    ap.add_argument("--mint-bundle", default=None, metavar="NAME",
+                    help="Mint one declared bundle now (first-mints/re-mints run "
+                         "through this same in-flow path -- Rule 13 QA-deploy, "
+                         "never a side script)")
 
     args = ap.parse_args(argv)
+
+    # ----- X-iii: explicit bundle mint (first mint / forced re-mint) -----
+    if args.mint_bundle:
+        hit = find_bundle(args.mint_bundle)
+        if hit is None:
+            declared = sorted(n for t in CODE_TREES.values() for n in t.get("bundles", {}))
+            print(f"ERROR: no bundle named {args.mint_bundle!r} declared (declared: {declared})",
+                  file=sys.stderr)
+            return 2
+        label, bname, b = hit
+        held_members = [m["repo_path"] for m in b["members"].values()
+                        if m["repo_path"].endswith(".py")
+                        and _serve_held_reason(m["repo_path"]) is not None]
+        if held_members:
+            print(f"SERVE-HELD: bundle {bname} NOT minted -- member script(s) carry the "
+                  f"sentinel: {held_members}")
+            return 1
+        status, detail, shas = mint_bundle(label, bname, b)
+        dest = f"s3://{b['bucket']}/{b['s3_key']}"
+        if status == "MATCH":
+            print(f"BUNDLE MINTED  [{label}] {bname} -> {dest}  ({detail})")
+            for k, v in sorted(shas.items()):
+                print(f"  {k}={v}")
+            return 0
+        print(f"ERROR  {status}  bundle {bname} -> {dest}")
+        if detail:
+            print(f"         {detail}")
+        return 1
 
     # Detect files
     files = detect_script_files(
         commit_range=args.commit_range,
         explicit_files=args.files if args.files else None,
     )
+    bundle_member_files = detect_bundle_member_files(
+        commit_range=args.commit_range,
+        explicit_files=args.files if args.files else None,
+    )
 
-    if not files:
+    if not files and not bundle_member_files:
         print("OK: safe-deploy -- no deploy-scope script files detected, nothing to do")
         return 0
 
@@ -818,11 +1032,62 @@ def main(argv: list[str]) -> int:
         print("OK: safe-deploy -- all deploy-scope file(s) are SERVE-HELD; nothing served.")
         return 0
 
+    # ----- X-iii bundle routing: member commits mint the bundle, never the loose leg -----
+    # A member SCRIPT exits the per-file loop here (its loose S3 objects are
+    # frozen-in-place as the rollback target); a member CONFIG (roster json)
+    # only ever arrives via detect_bundle_member_files. Each triggered bundle
+    # mints ONCE per push regardless of how many members changed.
+    triggered: dict[str, tuple[str, dict]] = {}
+    loose: list[str] = []
+    for rel_path in to_deploy:
+        hit = bundle_for_member(rel_path)
+        if hit is not None:
+            label, bname, b = hit
+            triggered[bname] = (label, b)
+            print(f"BUNDLE-ROUTED: {rel_path} -> bundle {bname} "
+                  f"(loose leg frozen 2026-08-11, X-iii)")
+        else:
+            loose.append(rel_path)
+    for rel_path in bundle_member_files:
+        if rel_path in to_deploy:
+            continue   # script member already routed above
+        hit = bundle_for_member(rel_path)
+        if hit is not None:
+            label, bname, b = hit
+            held_members = [m["repo_path"] for m in b["members"].values()
+                            if m["repo_path"].endswith(".py")
+                            and _serve_held_reason(m["repo_path"]) is not None]
+            if held_members:
+                print(f"SERVE-HELD: bundle {bname} NOT minted (config member {rel_path} "
+                      f"changed, but member script(s) hold the sentinel: {held_members})")
+                continue
+            triggered[bname] = (label, b)
+            print(f"BUNDLE-ROUTED: {rel_path} (config member) -> bundle {bname}")
+    to_deploy = loose
+    if triggered:
+        print()
+
     # Deploy phase: upload all NON-HELD files, fail fast on any error
     deployed: list[tuple[str, str, str]] = []   # (rel_path, bucket, s3_key)
     failed = False
 
+    for bname, (label, b) in sorted(triggered.items()):
+        status, detail, shas = mint_bundle(label, bname, b)
+        dest = f"s3://{b['bucket']}/{b['s3_key']}"
+        if status == "MATCH":
+            print(f"  BUNDLE MINTED  [{label}] {bname} -> {dest}  ({detail})")
+            for k, v in sorted(shas.items()):
+                print(f"    {k}={v}")
+        else:
+            print(f"  ERROR  {status}  bundle {bname} -> {dest}")
+            if detail:
+                print(f"           {detail}")
+            failed = True
+            break
+
     for rel_path in to_deploy:
+        if failed:
+            break
         target = file_to_s3_target(rel_path)
         if target is None:
             continue
