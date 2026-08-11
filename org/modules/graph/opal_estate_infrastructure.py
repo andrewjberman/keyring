@@ -247,7 +247,10 @@ _PLACEHOLDER = re.compile(r"(^|/)[A-Z][A-Z0-9_-]{2,}(\.|/|$)")
 
 
 def _snapshot_keys(blob) -> tuple:
-    """-> (concrete, patterns). Every S3-key-shaped string the snapshot asserts, at any depth.
+    """-> (concrete, patterns, buckets). Every S3-key-shaped string the snapshot asserts, at any
+    depth; buckets = {key: bucket} for keys that arrived via a full s3:// URI (instrument-fix
+    @c9be07b413: the bucket is what --verify-served needs to head-object the key -- stripping it
+    at extraction was why no render could ever check S3).
 
     SPLIT ON PURPOSE. A snapshot entry like `bronze/eclipse/*` or
     `bronze/orion-api/{date}/{transactions.csv,...}` is a GLOB or a template, not a key -- there is
@@ -258,11 +261,14 @@ def _snapshot_keys(blob) -> tuple:
     """
     concrete: set = set()
     patterns: set = set()
+    buckets: dict = {}
 
-    def add(k: str):
+    def add(k: str, bucket: str = None):
         k = k.rstrip("\"'").strip()
         if not k or k in ("/", "*"):
             return
+        if bucket:
+            buckets[k] = bucket
         # UNCOMPARABLE, in three shapes -- all of them name a SET, not an object, so "does a live
         # producer write it?" has no answer. Shipping any of these into a teardown ledger as a dead
         # key is how someone ends up hunting a phantom, which is the incident this tool exists to
@@ -287,12 +293,35 @@ def _snapshot_keys(blob) -> tuple:
         elif isinstance(o, str):
             m = _S3_URI.search(o)
             if m:
-                add(m.group(2))
+                add(m.group(2), bucket=m.group(1))
             elif re.match(r"^(bronze|silver|gold|platinum|json|served)/\S+\.(json|parquet|csv)$", o):
                 add(o)
 
     walk(blob)
-    return concrete, patterns
+    return concrete, patterns, buckets
+
+
+def _head_object(bucket: str, key: str) -> tuple:
+    """-> ('EXISTS', lastmodified) | ('404', '') | ('UNREACHABLE', stderr-head). One live
+    head-object per call; 15s timeout. Used only under --verify-served (opt-in cost)."""
+    import shutil as _shutil
+    aws_bin = _shutil.which("aws") or _shutil.which("aws.cmd") or _shutil.which("aws.exe")
+    if not aws_bin:
+        return "UNREACHABLE", "aws CLI not found"
+    try:
+        r = subprocess.run(
+            [aws_bin, "s3api", "head-object", "--bucket", bucket, "--key", key,
+             "--query", "LastModified", "--output", "text"],
+            capture_output=True, text=True, timeout=15,
+        )
+    except subprocess.TimeoutExpired:
+        return "UNREACHABLE", "timeout"
+    if r.returncode == 0:
+        return "EXISTS", (r.stdout or "").strip()
+    err = (r.stderr or "").strip()
+    if "404" in err or "Not Found" in err:
+        return "404", ""
+    return "UNREACHABLE", err.splitlines()[0] if err else "unknown error"
 
 
 # ---------------------------------------------------------------------------------------------
@@ -325,7 +354,7 @@ def cmd_list(snap: dict) -> int:
     return 0
 
 
-def cmd_thread(snap: dict, name: str) -> int:
+def cmd_thread(snap: dict, name: str, verify_served: bool = False) -> int:
     th = threads_of(snap)
     hits = {k: v for k, v in th.items() if name.lower() in k.lower()}
     print()
@@ -334,22 +363,50 @@ def cmd_thread(snap: dict, name: str) -> int:
         print("  That is a statement about the SNAPSHOT's population, not about the estate.")
         return 1
     live = live_keys()
-    snap_concrete, snap_patterns = _snapshot_keys(snap)
+    snap_concrete, snap_patterns, _snap_buckets = _snapshot_keys(snap)
+    _verified = {"EXISTS": 0, "404": 0, "UNREACHABLE": 0, "UNVERIFIABLE": 0}
     for tname, tbody in sorted(hits.items()):
         body(f"C3.ii VERTICAL: {tname}")
-        blob = json.dumps(tbody)
-        tconc, tpat = _snapshot_keys(json.loads(blob))
+        # @c9be07b413: threads_of() resolves the thin NAMING dict (resources_by_named_thread --
+        # resource-name strings, no keys), while the snapshot's RICH per-chain bodies (producers /
+        # served_artifacts, where every S3 key actually lives) sit in the top-level `threads` list
+        # keyed by `named_thread`. Without this merge the key plane extracted NOTHING for any
+        # thread ("no S3-key-shaped entries") and every verdict below was vacuously absent.
+        _rich = [e for e in snap.get("threads", [])
+                 if isinstance(e, dict)
+                 and str(e.get("named_thread", "")).lower() == str(tname).lower()]
+        blob = json.dumps([tbody] + _rich)
+        tconc, tpat, tbuckets = _snapshot_keys(json.loads(blob))
         tkeys = sorted(tconc)
         if not tkeys and not tpat:
             body("  (no S3-key-shaped entries asserted for this thread in the snapshot)")
         for k in tkeys:
             producers = live["keys"].get(k)
+            # Instrument-fix @c9be07b413: "LIVE" here was a REPO-TEXT claim -- a retired
+            # script still carrying the literal made a dead key render as live (the measured
+            # 404 platinum key). The tag now says which plane it is; --verify-served adds the
+            # S3 plane per key (head-object), which is the only EXISTS/404 oracle.
+            if verify_served:
+                _b = tbuckets.get(k)
+                if _b:
+                    _v, _vinfo = _head_object(_b, k)
+                    _verified[_v] = _verified.get(_v, 0) + 1
+                    _stamp = {"EXISTS": f"S3 EXISTS {_vinfo}",
+                              "404": "S3 404 -- THE OBJECT IS NOT THERE",
+                              "UNREACHABLE": f"S3 UNREACHABLE ({_vinfo})"}[_v]
+                else:
+                    _verified["UNVERIFIABLE"] += 1
+                    _stamp = "S3 UNVERIFIABLE (snapshot names no bucket for this key)"
+            else:
+                _stamp = "S3 NOT VERIFIED (repo-text claim; --verify-served head-objects it)"
             if producers:
-                body(f"  LIVE           {k}")
+                body(f"  LIVE-IN-REPO   {k}")
+                body(f"                     [{_stamp}]")
                 for pr in producers[:6]:
                     body(f"                     <- {pr}")
             else:
                 body(f"  STALE-IN-SNAPSHOT  {k}")
+                body(f"                     [{_stamp}]")
                 body("                     ^ asserted by the snapshot, NOT produced by any source in")
                 body("                       the scanned roots. Do NOT treat this key as served.")
         for k in sorted(tpat):
@@ -359,6 +416,13 @@ def cmd_thread(snap: dict, name: str) -> int:
     footer(f"  live key denominator: {len(live['keys'])} distinct key(s) across {live['files']} file(s)"
            + (f"; {live['errors']} unreadable/unparseable" if live["errors"] else ""))
     footer(f"  snapshot asserted {len(snap_concrete)} concrete key(s) + {len(snap_patterns)} pattern(s).")
+    if verify_served:
+        footer(f"  S3 verification: {_verified['EXISTS']} EXISTS, {_verified['404']} 404, "
+               f"{_verified['UNREACHABLE']} UNREACHABLE, {_verified['UNVERIFIABLE']} UNVERIFIABLE "
+               "(no bucket in snapshot). A 404 beside LIVE-IN-REPO = repo text defending a zombie.")
+    else:
+        footer("  S3 EXISTENCE NOT VERIFIED this run -- every verdict above is a REPO-TEXT plane "
+               "claim. --verify-served head-objects each bucketed key (the EXISTS/404 oracle).")
     return 0
 
 
@@ -380,7 +444,7 @@ def cmd_resource(snap: dict, substr: str) -> int:
 def cmd_drift(snap: dict) -> int:
     """The defect this engine exists to surface, as a first-class report."""
     live = live_keys()
-    concrete, patterns = _snapshot_keys(snap)
+    concrete, patterns, _buckets = _snapshot_keys(snap)
     gone = sorted(k for k in concrete if k not in live["keys"])
     print()
     print("SNAPSHOT-vs-LIVE DRIFT")
@@ -754,6 +818,9 @@ def main(argv=None) -> int:
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--resource", metavar="SUBSTR")
     ap.add_argument("--drift", action="store_true", help="snapshot keys with no live producer")
+    ap.add_argument("--verify-served", action="store_true", dest="verify_served",
+                    help="head-object every bucketed concrete key in the thread view -- the S3 "
+                         "EXISTS/404 oracle (repo-text LIVE is a different plane; @c9be07b413)")
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--refresh-only", action="store_true")
     ap.add_argument("--self-test", action="store_true")
@@ -839,7 +906,12 @@ def main(argv=None) -> int:
     # The live key-plane (load_snapshot's re-derivation) costs tens of seconds; the
     # flagship thread-model answers come from the resolver snapshot at ~0.3s. Only pay
     # the scan when the caller asks a key-plane question (--drift / --refresh / --keys).
-    want_keys = a.drift or a.refresh or a.refresh_only or a.keys or not (a.name or a.resource or a.list)
+    # --verify-served is a key-plane question by definition (it head-objects the thread's
+    # concrete keys), so it implies the scan the fast path skips (@c9be07b413 -- without
+    # this, the flag was accepted and silently ignored on the flagship path).
+    want_keys = (a.drift or a.refresh or a.refresh_only or a.keys
+                 or getattr(a, "verify_served", False)
+                 or not (a.name or a.resource or a.list))
 
     if a.list:
         legacy, data = _legacy()
@@ -874,7 +946,7 @@ def main(argv=None) -> int:
         legacy, data = _legacy()
         lrc = legacy.cmd_thread(data, a.name) or 0
         print()
-        cmd_thread(snap, a.name)
+        cmd_thread(snap, a.name, verify_served=getattr(a, 'verify_served', False))
         return lrc
     return cmd_list(snap)
 
@@ -900,7 +972,7 @@ def self_test() -> int:
         f"{len(lk['keys'])} live key(s) from {lk['files']} file(s) -- the frozen-key defect is closed")
 
     if snap:
-        conc, pat = _snapshot_keys(snap)
+        conc, pat, _bk = _snapshot_keys(snap)
         gone = [k for k in conc if k not in lk["keys"]]
         chk("C3 snapshot-vs-live drift is DETECTABLE (the mdpf class)",
             len(conc) > 0,

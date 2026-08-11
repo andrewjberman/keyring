@@ -2095,8 +2095,13 @@ def cmd_deployed(args):
     aws_env.setdefault("AWS_METADATA_SERVICE_NUM_ATTEMPTS", "1")
     aws_env.setdefault("AWS_PAGER", "")
 
+    # Instrument-fix @c9be07b413 (gap 1+4): every s3_key any pass probes is recorded here,
+    # so the S3-side enumeration below can tell rendered objects from invisible ones.
+    _checked_s3_keys = set()
+
     def _check_one(layer_tag, label, local_path, s3_key):
         """Returns (status, info_lines). Prints nothing -- caller does."""
+        _checked_s3_keys.add(s3_key)
         if not local_path.exists():
             return "LOCAL_MISSING", []
         local_md5 = hashlib.md5(local_path.read_bytes()).hexdigest()
@@ -2556,12 +2561,100 @@ def cmd_deployed(args):
             except subprocess.TimeoutExpired:
                 timed_out.append("[aux] (code/ prefix enumeration)")
 
+    # ---- S3-SIDE ENUMERATION (instrument-fix @c9be07b413 gaps 1+4) ----
+    # The standard-layer passes above enumerate REPO->S3 (DAG or dir-glob), so an S3
+    # object with no repo/DAG membership -- including the EXTRA homes of a MULTI-HOMED
+    # script (DS's live specimen: one script at code/gold/ + code/manual_api/, rendered
+    # as ONE aux row) -- was structurally invisible. This section lists each standard
+    # prefix S3-SIDE (same `s3 ls` instrument the aux section already uses), prints the
+    # DENOMINATOR (objects at S3 vs checked this run), renders every never-probed object
+    # as S3-ONLY (informational -- NEVER the deploy-gate STALE token), and names every
+    # basename living at 2+ prefixes. Aux prefixes join the multi-home/basename map but
+    # emit no S3-ONLY rows (the aux section already emits UNCOVERED for those).
+    s3_only = []
+    multi_home = {}
+    if pipeline == "mdpf":
+        _enum_prefixes = (
+            {} if _CODE_TREES is None
+            else {_l: _p for _l, (_rh, _p) in _CODE_TREES["mdpf"]["layers"].items()}
+        )
+        _aux_enum_names = set()
+    elif _firm_label:
+        _enum_prefixes = {p: f"code/{p}/" for p in sorted(_STANDARD_CODE_PREFIXES)}
+        _aux_enum_names = set()
+        for _ap in _AUX_CHECK_ONLY_PREFIXES.get(_firm_label, {}):
+            _enum_prefixes[_ap] = f"code/{_ap}/"
+            _aux_enum_names.add(_ap)
+    else:
+        _enum_prefixes = {}
+        _aux_enum_names = set()
+    _basename_homes = {}
+    for _ename, _eprefix in sorted(_enum_prefixes.items()):
+        try:
+            _els = subprocess.run(
+                [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/{_eprefix}"],
+                capture_output=True, text=True, timeout=20, env=aws_env,
+            )
+        except subprocess.TimeoutExpired:
+            timed_out.append(f"[s3-enum:{_ename}] (listing)")
+            print(f"  [s3-enum:{_ename}] {'(listing)':<44} TIMEOUT")
+            continue
+        if _els.returncode != 0:
+            aws_unreach.append(f"[s3-enum:{_ename}] (listing)")
+            print(f"  [s3-enum:{_ename}] {'(listing)':<44} AWS_UNREACHABLE")
+            continue
+        _objs = []
+        for _eline in _els.stdout.splitlines():
+            _ep = _eline.split()
+            if len(_ep) >= 4 and (_ep[3].endswith(".py") or _ep[3].endswith(".sh")):
+                _objs.append(_ep[3])
+        _total_at_prefix = len(_objs)
+        if script_filter_lower:
+            _objs = [o for o in _objs
+                     if script_filter_lower in o.rsplit(".", 1)[0].lower()]
+        for _o in _objs:
+            _basename_homes.setdefault(_o, set()).add(_ename)
+        _unrendered = [o for o in _objs if f"{_eprefix}{o}" not in _checked_s3_keys]
+        _denom_filter = (
+            f" (filter {script_filter_lower!r} matched {len(_objs)} of {_total_at_prefix})"
+            if script_filter_lower else ""
+        )
+        print(f"  DENOMINATOR [{_ename}]: s3://{S3_BUCKET}/{_eprefix} = "
+              f"{len(_objs)} object(s), {len(_objs) - len(_unrendered)} checked this run, "
+              f"{len(_unrendered)} unrendered{_denom_filter}")
+        if _ename in _aux_enum_names:
+            continue  # aux S3-side gaps already surfaced as UNCOVERED by the aux section
+        for _o in _unrendered:
+            s3_only.append(f"[s3-only:{_ename}] {_o}")
+            print(f"  [s3-only:{_ename}] {_o:<44} {'S3-ONLY':<14} "
+                  "at S3, never probed by the repo/DAG pass -- outside this tool's universe")
+    for _bn, _homes in sorted(_basename_homes.items()):
+        if len(_homes) >= 2:
+            multi_home[_bn] = sorted(_homes)
+            print(f"  MULTI-HOME: {_bn} deployed at {len(_homes)} prefixes: "
+                  f"{'+'.join(sorted(_homes))} -- each home is a separate deploy target; "
+                  "a single-row read undercounts it")
+
+    # ---- DECLARED BOUNDARIES (@c9be07b413 items 2+3: honest limits, distinct from gaps) ----
+    declared_unswept = []
+    if pipeline == "mdpf":
+        declared_unswept.append(
+            "bundle channel s3://opal-data-assets/portal/gold/mdpf/_code/ (X-iii delivery) "
+            "-- acceptance rides the mint's sha-verify, not this ETag sweep")
+    if _enum_prefixes:
+        declared_unswept.append(
+            "lambda-zip code channel (deployed lambda bundles) -- covered by the "
+            "deployed-AST graph leg, not this ETag sweep")
+    for _db in declared_unswept:
+        print(f"  DECLARED-UNSWEPT: {_db}")
+
     print()
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
           f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE, "
           f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT, "
-          f"{len(not_in_tree)} NOT-IN-TREE")
+          f"{len(not_in_tree)} NOT-IN-TREE, {len(s3_only)} S3-ONLY, "
+          f"{len(multi_home)} MULTI-HOME, {len(declared_unswept)} DECLARED-UNSWEPT")
     # NOTHING-VERIFIED guard (CVO~B 2026-08-05): rows were seen but not one of them was
     # actually verified against S3. The common cause is a script OUTSIDE this tool's
     # universe -- the path auto-detected into a tree it does not belong to, every file
