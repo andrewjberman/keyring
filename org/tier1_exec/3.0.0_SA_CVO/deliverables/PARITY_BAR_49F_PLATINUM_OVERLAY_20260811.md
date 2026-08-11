@@ -65,7 +65,21 @@ unless it carries a demonstrated FAILURE:
   firm_id, declared-domain mutant routed DESIGN) -- so the bar RIDES the built instrument; the
   overlay evidence is a fit_harness run, not a new comparator.
 
-## 4. THE THREE PRE-DECLARED DIVERGENCE BANDS -- registered BEFORE the run, or the run is void
+## 3a. THE THREE-STATE ADJUDICATION per field family (CTO's pre-staged D-ruling, ADOPTED 103245Z)
+
+CTO's D-ruling articulates §3+§4 more sharply than my inversion did -- adopted verbatim as the
+grammar every field family resolves to:
+- **MATCH-CLEAN** -- agrees, and NOT on a known-wrong class. The only state that counts as a pass.
+- **MATCH-KNOWN-WRONG** -- agrees WITH a served value from an enumerated defect class (the 312, or
+  any per-firm registered defect). **This is a REPRODUCED-DEFECT FLAG and NEVER counts as a pass**
+  -- it generalizes my §4.1 inversion to ANY defect class, not just the 312.
+- **DIVERGE** -- disagrees; adjudicated against the pre-registered bands (§4). In-band = DESIGN;
+  out-of-band = FALSIFIES parity.
+**A run is REFUSED as confirming-limb-shaped if it returns 100% clean with no mention of the
+registered defect classes** (the could-not-have-said-otherwise refusal). Parity is FALSIFIED when a
+family diverges outside its band OR a known-wrong class serves un-flagged.
+
+## 4. THE PRE-DECLARED DIVERGENCE BANDS -- registered BEFORE the run, or the run is void
 
 A pre-declaration written ALONGSIDE results is worthless (it rationalizes what happened). Each band
 is committed to `predeclared_divergences_49f.json` (the fit_harness registry) BEFORE the overlay
