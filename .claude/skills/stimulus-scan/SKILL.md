@@ -34,15 +34,28 @@ ajb_workspace runs the corporeal-style telemetry architecture: the PostToolUse h
 Extract the last `kind:work` ts per agent (staleness) and the last-any ts (alive-but-loop-only):
 
 ```bash
-NOW=$(date -u +%s)
-for f in org/mcp/agent_telemetry/*.jsonl; do
-  a=$(basename "$f" .jsonl)
-  w=$(jq -r 'select((.kind//"work")=="work").ts' "$f" 2>/dev/null | tail -1)
-  y=$(grep -oE '"ts":"[^"]+"' "$f" 2>/dev/null | tail -1 | sed 's/.*:"//;s/"//')
-  echo "$a work=$w any=$y"
-done
+# jq IS NOT INSTALLED (CLAUDE.md Rule 16) -- python only. NEVER 2>/dev/null this read: a
+# silent-empty read here is the direct input to a STALE/PARKED verdict on a live lane
+# (measured 2026-08-11: jq-under-2>/dev/null read all 13 agents as dead; 18,190 healthy rows).
+python - <<'PY'
+import json, pathlib
+files = sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl'))
+rows = 0
+for f in files:
+    w = y = None                     # last kind:work ts (staleness) / last-any (alive-but-loop-only)
+    for line in f.open(encoding='utf-8', errors='replace'):
+        line = line.strip()
+        if not line: continue
+        try: r = json.loads(line)
+        except Exception: continue
+        rows += 1
+        y = r.get('ts') or y
+        if r.get('kind', 'work') == 'work': w = r.get('ts') or w
+    print(f"{f.stem} work={w} any={y}")
+print(f"DENOMINATOR: {rows} telemetry rows scanned across {len(files)} files")
+PY
 ```
-Pitfall (corporeal-banked): use `jq -r | tail -1` / `grep -oE | tail -1` for the ts — never `tail -n1 | head -1` (it returns the OLDEST entry on a single-line file).
+Pitfall (corporeal-banked): the LAST entry is the newest — the python above keeps last-seen per key; if you ever shell it, never `tail -n1 | head -1` (it returns the OLDEST entry on a single-line file).
 
 Then layer the broker for what telemetry does not carry:
 - `get_live_agents()` — registration state + each agent's one-line work summary + last-seen.

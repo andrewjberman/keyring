@@ -47,14 +47,27 @@ that backs the card with real names, roles, and activity.
 Per-agent telemetry is the finest signal; broker + git are the cross-checks.
 
 ```bash
-NOW=$(date -u +%s)
-# last kind:work ts per agent (staleness) + last-any (alive-but-loop-only)
-for f in org/mcp/agent_telemetry/*.jsonl; do
-  a=$(basename "$f" .jsonl)
-  w=$(jq -r 'select((.kind//"work")=="work").ts' "$f" 2>/dev/null | tail -1)
-  y=$(grep -oE '"ts":"[^"]+"' "$f" 2>/dev/null | tail -1 | sed 's/.*:"//;s/"//')
-  echo "$a work=$w any=$y"
-done
+# jq IS NOT INSTALLED (CLAUDE.md Rule 16) -- python only. NEVER 2>/dev/null this read: a
+# silent-empty telemetry read renders "quiet fabric" out of a missing binary, and THIS card is
+# the one Andrew reads (measured 2026-08-11: jq-under-2>/dev/null read 13 agents as dead;
+# truth was 18,190 healthy rows, newest 47s old).
+python - <<'PY'
+import json, pathlib
+files = sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl'))
+rows = 0
+for f in files:
+    w = y = None                     # last kind:work ts (staleness) / last-any (alive-but-loop-only)
+    for line in f.open(encoding='utf-8', errors='replace'):
+        line = line.strip()
+        if not line: continue
+        try: r = json.loads(line)
+        except Exception: continue
+        rows += 1
+        y = r.get('ts') or y
+        if r.get('kind', 'work') == 'work': w = r.get('ts') or w
+    print(f"{f.stem} work={w} any={y}")
+print(f"DENOMINATOR: {rows} telemetry rows scanned across {len(files)} files")
+PY
 # git = GROUND TRUTH for "is this agent actually working" (heartbeat summaries are aspirational)
 git log --all --oneline --since="30 minutes ago" --pretty=format:"%aI %an %h %s"
 ```
