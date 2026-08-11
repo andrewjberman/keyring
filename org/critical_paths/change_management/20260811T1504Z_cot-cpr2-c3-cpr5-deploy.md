@@ -34,5 +34,11 @@ exclusion flagged to CTO covers this act).
   record (a deploy ledger closes on the deploy; execution-in-effect is the runner's next
   fire, owned by AE, never silently folded into this close).
 
-## CLOSURE
-(pending)
+## CLOSURE — 15:07Z, BOTH LEGS LANDED + ETAG-VERIFIED, CLEAN
+
+Fired 15:06Z via safe_deploy_core (sanctioned path). local md5
+fb5e6bad56e7ba2da3d60f6e43623cd7 == cot ETag (15:06:06Z) == bd second-target ETag
+(15:06:12Z) — byte-identical both homes, comp-pipescript VERIFY OK. Leg A CLOSED.
+Leg B (fix-in-effect on the 49F runner's ~00:11Z fire) = AE's verification, own record;
+AE notified 15:0xZ with both ETags. cot-side: the 22:30Z cot ingest executes the fixed
+bytes tonight. Nothing half-landed; no rollback taken.
