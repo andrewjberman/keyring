@@ -129,13 +129,19 @@ pattern extraction below generalizes what the truth shows working, parameterizin
 6. **Config data never lives in the code store** (partner_roster is the measured violation).
 7. **Serving only via the platinum publisher** with the per-layer spelling law (underscore in gold,
    hyphen in platinum) kept explicit.
-8. **THE ANDREW INVARIANT (045521Z, first-class): the per-product producer is a THIN ADAPTER --
-   endpoint -> raw -> silver(dedup/dtype) -> serve. Every served field traces to a raw endpoint
-   field OR a NAMED calculated exception (NNA; aggregation rollups). A fat gold tier is a pattern
+8. **THE ANDREW INVARIANT (045521Z + 045813Z correction, first-class): the per-product producer is
+   a THIN ADAPTER -- endpoint -> raw -> silver(dedup/dtype) -> serve. RAW-FROM-ENDPOINT IS THE FIRM
+   RULE; every served field traces to a raw endpoint field or a named calculated exception, and
+   **the exception LIST is PROVISIONAL pending Andrew's ratified set** (CTO's own first enumeration
+   was corrected within 30 minutes: NNA = net-new-assets, a FLOW, is DISTINCT from the non-fee-AUA
+   residual, a BALANCE -- two calculated nodes, never one). A fat gold tier is a pattern
    VIOLATION.** Measured against mdpf: the feeder tier largely conforms (feeds carry near-raw
    vendor fields + provenance cols); the chain's derivation-heavy stages (OWNTS per-ticker
    ownership timeseries, the legacy emits) are exactly the over-derived residue -- and two of them
-   are already IAM-dead. The invariant and the measured decay point the same direction.
+   are already IAM-dead. The invariant and the measured decay point the same direction. Candidate
+   calculated exceptions THIS decomp measured (feed-level, for Andrew's list, not ruled here):
+   `non_model_aua` (derived balance w/ methodology_version col) · aggregation rollups (the
+   aggregate/consolidator sums) · `etf_net_assets` passthrough is raw-conforming.
 9. **Provenance columns (`source_pipeline`, `_ingested_at`) on every intermediate** -- already
    uniform across all 5 feeds; keep as law.
 
