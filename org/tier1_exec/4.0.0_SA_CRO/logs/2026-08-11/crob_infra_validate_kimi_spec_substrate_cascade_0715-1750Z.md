@@ -84,3 +84,23 @@ substrate work by his direction-sequence).
 - OPEN AT THIS SEAT: (a) CTO~Z adjudication return (event-driven); (b) comp-kuzu latency profile in a
   quiescent window (held as SMELL); (c) semantic-scan hardening (null gate + logs corpus) then wiring
   per-vertical docs into the friction/state calls.
+
+## ~1933-1941Z -- EXERCISE 2 (NEGATIVE CONTROL) + TWO ANDREW WORDS
+- CTO~Z adjudicated specimen 1 SUPPORTED (artifact-verified) and ruled exercise 2 the NEGATIVE
+  CONTROL: row-10 does not close until the bridge surfaces a fight. 64->62 transcription: MSTR
+  logged it as relay error; artifact check showed MY delivery message originated it -- ownership
+  corrected on the record.
+- ANDREW-DIRECT ~1935Z (via MSTR): rectangle/atom_decomp workstream HOMED at this seat ("CRO~B is
+  deep on that with proper context"). ~1938Z follow-up: HANDOVER PROTOCOL -- site-Z method
+  developments merge strategically into this workstream via ATOM_DECOMP lane, per-item disposition
+  (adopt/adapt/decline-with-reason); their two APPLICATIONS keep running under their own words;
+  METHOD development consolidates here. Sequencing: exercise closed first, merge second.
+- EXERCISE 2 EXECUTED @committed: portal-page-attribution certified rectangle (mutant-program
+  consumable, binding K) vs RETIRED attribution thread. PASS every limb: collision surfaced
+  first-class w/ 07-30 retirement cited; control assertions 0/0/0; accounting 12+4+24==40 TRUE;
+  all 4 keys idempotent-confirm vs LIVE positioning thread. BONUS CATCH: B9-DEFECT-IN-CANON --
+  resolver's positioning_data.json key carries baked '(LastMod 2026-06-15 13:20Z)' prose; naive
+  match would emit a duplicate bare key (guarded-set class). NOTE: the ordered comp-estate REGEN
+  contract's zero-liveness-adjectives constraint eliminates this BY CONSTRUCTION -- this defect is
+  live evidence FOR that constraint. Schema gap reproduced (+8 vintage cells, second specimen).
+- Delivered @194125Z for CTO~Z same-turn adjudication. Row-10 close is theirs to call.
