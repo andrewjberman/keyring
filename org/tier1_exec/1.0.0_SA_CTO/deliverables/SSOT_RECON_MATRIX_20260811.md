@@ -99,8 +99,8 @@ review at CTO; ratification = Andrew's word on the whole)
 | group | state | record |
 |---|---|---|
 | A — dimensions/reference/boundary | **DELIVERED @9c294bbf15 → CTO-APPROVED 0718Z** with 3 defaults confirmed (product root MINTS portal/gold/advi/49financial/ at first build; a00/a01 extract+re-home; security-master source by measured diff, recorded in manifest) + 1 amendment (A_04 joins lib/trading_calendar.py — the single-homed frontier authority — against the observed partition tree; gap census = their diff; never a partition-derived second calendar) | SPEC_49F_GROUP_A_DIMENSIONS_20260811.md |
-| B — holdings/valuation canonicals | GO ISSUED 0718Z (dim_balance preferred-input branch + accrual cell-4) | — |
-| C — derived canonicals (GIPS TWR engine) | queued behind B | — |
+| B — holdings/valuation canonicals | **DELIVERED @d57bbf7229 → CTO-APPROVED 0722Z**, no structural amendment; defaults confirmed w/ qualifiers (1bp tolerance ex-ante-provisional, post-backfill recalibration = ruled event; accrual-if-material = named atom-8 computation; rly/rty C-side as INDEPENDENT-derivation cross-check). A_04 amendment folded @6fba62393b | SPEC_49F_GROUP_B_VALUATION_20260811.md |
+| C — derived canonicals (GIPS TWR engine, sec4-10) | AUTHORING (started 0721Z) | — |
 | D — serving emitters (SHAPE-FROZEN: opens with the deployed-FE byte-schema census as the frozen contract) | queued behind C | — |
 
 ## RULED DESIGN CONSTRAINTS (0617Z, from the night's three name-vs-content specimens + the universe finding)
