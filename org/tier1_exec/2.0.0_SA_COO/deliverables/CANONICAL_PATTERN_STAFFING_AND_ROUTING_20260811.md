@@ -631,6 +631,60 @@ a coordinator as *"blocked behind something big"* and that is now false.
 > **Build-Ladder rung 2 earning its place ahead of rung 7.** Carried into RECON-6 as a warning: *an
 > endpoint-delta census that assumes a gap will find gaps that are already filled.*
 
+## 4g · STATE AS OF 0612Z — the acts are landing; two things a successor MUST read
+
+### ⛔ FIRST: THE 13:30Z BAR INTERPRETATION IS PRE-REGISTERED AND BINDING — @029b146138
+
+In the window ledger (`org/critical_paths/change_management/20260811T0150Z_mdpf-atomic-window.md`),
+written ~7h **before** the cycle. **A successor adjudicates from that table, not from recollection.**
+Trigger: AE found both floor-written `_aggregate_aua` staging artifacts (08-09, 08-10) read
+`$0.00 / partners=0 / reconciliation=PASS` at 4.5KB vs ~10.1KB. **Calendar resolved first — 08-09 IS a
+Sunday** — but `partners=0` is a roster fact, the size drop suggests absent content, and
+**`reconciliation=PASS` on `partners=0` is `0==0`, so the instrument cannot discriminate and its PASS is
+not evidence.** CTO **endorsed** the row and **pre-committed the escalation**: if zeros are expected, the
+hold-or-let-fire call on the 13:30Z floor + 13:50Z publisher goes **to Andrew with CTO's rec BEFORE the
+fire.** That is the right owner — serving a client-facing number is a sovereign call, not a coordination
+one.
+
+### ACT / TASK LEDGER — where everything actually stands
+
+| item | state |
+|---|---|
+| **CPR-1** | ✅ CLOSED (deployed 3 prefixes, 13/13, oracle-exact). Sunday 08-16 log read remains, owner DS |
+| **CPR-2 + C-3** | ✅ **COMMITTED @ea2400401a as ONE commit** — mutant contrast on BOTH halves; 81/81 non-carry, the 4 failures proven PRE-EXISTING by re-extraction on a pristine HEAD. **Deploy armed 15:06Z, DS holds for my bar verdict.** Marker schema 1.1 adds `universe_anchor` so anchor-relative ages carry their frame |
+| **CPR-4** | ✅ serve-release steps **1-3 CLOSED same window** (lift @96334728b4 → deploy ETag-verified → **re-hold @c33d2e5260, sentinel verbatim**), **ledger @d6ae6cbd73 opened BEFORE the lift.** Step 4 republish firing; DS verifies the **SERVED** platinum artifact carries `unreconciled_aua` + the ~$128K figure. **Told DS: do NOT close the ledger on an SSM launch Success — a launch is not a completion and a completion is not a served artifact** |
+| **X-iv** | ✅ CLOSED @cf838e54d5, nothing served changed; orphaned Stage5 alarm deletion GO'd, targeted apply |
+| **X-iii** | ✅ **RULED @060208Z — the hash-stamped bundle is BLESSED**, and CTO confirms my clarified "moves house" reading is the one they ruled on. Two conditions: bundle build inside the sanctioned deploy path (with DS); **acceptance = the 13:40Z SCHEDULED leg green post-port** (SCHEDULED is the right oracle). AE building |
+| **X-ii** | ⏸ **HELD.** CTO ruled the STRUCTURE now (end state = ONE runtime) with **WHICH runtime evidence-gated** on AE's read — the right shape: the act is not blocked on a measurement and the measurement is not pre-empted by a ruling. W1a's consumer repoint **re-validates, no reuse** |
+| **RECON-6** | CRO base, FIRST and undisplaced |
+| **Sequencing precedent** | CTO: the `(iv)→(iii)→(ii)→(i)` order is **purely BLAST-ASCENDING** — X-ii may overtake a held X-iii. Moot now, **binding for any future hold** |
+| **Census unit grain** | ✅ **RULED leaf-grain-only** — partition attaches only to declared leaves; parents carry `n_extract`/`n_discard` summaries, **never a side.** Closes my Rule-24 postulate-(ii) flag, and the parent-summary form is better than what I proposed |
+
+### ⚠ SECOND: ITEM-3 IS **THREE DIFFERENTLY-SHAPED TOs**, AND THAT NARROWS MY OWN RATIONALE
+
+All three goal-3 measurements done @579d7020da: **native-key** (inflection 98.0%) · **one-hop-map** (49F
+99.8%) · **intermediary required** (cot — MEASURED-NO-DIRECT-JOIN: 11-digit spine `account_id` vs FMA
+`account_number`, no bridge at any form; `rebalancer_accounts` bronze is an at-rest-checkable candidate,
+routed into RECON-5a).
+> **I justified inflection-first as "de-risks the overlay design." CRO's measurement narrows that: it
+> de-risks the OVERLAY and NOT the IDENTITY layer, which is PER-FIRM BY MEASUREMENT.** I was implicitly
+> selling inflection-first as buying down risk for all three firms; it buys down one layer across three
+> firms and nothing on the layer that turns out to be the variable one. **Build order stands —
+> inflection is still cheapest, the overlay still needs de-risking once — but the other two firms do NOT
+> inherit a solved identity problem.** Third narrowing of one of my rationales tonight; the conclusion
+> held each time and the reason shrank each time, which is a pattern to expect rather than be surprised by.
+
+**⚠ OPEN DENOMINATOR QUESTION I RAISED, not yet answered:** ~A found **~100 prose-length values
+contaminating the `account_number` key column.** `account_number` is **the 49F join key** measured at
+99.8% (5,701/5,715). **If the contamination touches that same column family, 5,715 may be the wrong
+denominator** — prose in a key column is neither a match nor an honest miss. Cot-only ⇒ pure cleanup.
+**Not holding the 49F decomposition on it** (the join spec is sound either way), but **99.8% is already
+quoted in this register and my session log, so the figure needs to be right.**
+
+**RECON-6 now carries a per-row control that is better than the warning I gave:** every DELTA cell gets
+an **at-rest existence check BEFORE it may claim a gap.** *A habit depends on who is reading; a per-row
+precondition does not.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
