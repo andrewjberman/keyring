@@ -93,7 +93,15 @@ grammar every field family resolves to:
   out-of-band = FALSIFIES parity.
 - **DIVERGE-SOVEREIGN** (added 2026-08-11, COO's total.aua case): a STRUCTURALLY-EXPECTED divergence
   that is NEITHER pass nor fail at the technical layer because its acceptance is a BUSINESS decision
-  -- a vendor-source change or a scope change. The type specimen: 49F served bd platinum builds from
+  -- a vendor-source change or a scope change.
+  >> **RULED 2026-08-11 ~1742Z (ANDREW-DIRECT, /open-calls "Recs approved"): the 49F total.aua
+  DIVERGE-SOVEREIGN is RESOLVED -- Schwab-08335338-canonical is AUTHORITATIVE over the Black-Diamond
+  legacy serve.** So the $122.5M band is no longer a KILL BLOCKER: total.aua-bearing surfaces are
+  sovereign-CLEARED (their residual is backfill + own technical items). **RE-PIN OBLIGATION carried:
+  the pin today expects "new DIVERGES from the OLD BD serve by $122.5M"; at the serving cutover to
+  Schwab-canonical (P3/P4, never-widen) the pin re-bases to delta~0 (new==served). The pin's vintage
+  carries this; a stale pin FAILs loud, so the cutover cannot silently drift.** Record:
+  ANDREW_DIRECT_20260811_SCHWAB_CANONICAL_AUTHORITATIVE_49F.md. << The type specimen: 49F served bd platinum builds from
   the Black Diamond tree (`data/black_diamond/scripts/gold/D_00.portal_aggregates.py` writes
   opal-data-bd, names 49 Financial), the new runners build from Schwab 08335338 silver -- so
   total.aua Δ$122.5M (6.4%), account_count 6,386-vs-7,238 (funded-vs-all), client_count 3,050-vs-4,291
