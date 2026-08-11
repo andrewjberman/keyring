@@ -85,3 +85,23 @@ his (B) predates the premise change). RP-W3 un-gates on DS's RP-W1 report + the 
   point_class "measured" over CARRIED cottonwood values). COO tracks both as follow-on TOs to author
   when their gates clear. Two patterns CTO ratified for carry-forward: receiver-rejectable gates (a
   GO not citing its gates is treated as mis-sent) and negative controls on healthy legs.
+
+## Post-midnight addendum (00:0x-00:3xZ 08-11)
+
+- **RP-W5 items 2+3 forks both resolved at CTO:** item 2 stood down as covered-by-design, then
+  AE's measurement INVERTED even the re-pointed premise (no gap existed — retry OnSuccess converted
+  the day at 13:40:41Z; the 16:00Z sweep's zero-output was correct); CTO's restated D-24 wording
+  corrected before landing. Item 3 ruled SCOPE-ADD + DEFERRED (not into the window); follow-on
+  authored as **MDPF_REMED.RP-F1** (DS, staged behind window-proves, carries the 205/33 forecast).
+- **Item 4 code-complete @2ba6417fbb (4/4 exercised), deploy leg HELD** — deploying makes the daily
+  run RED correctly, and the RED must land expected, with the emitter ruling in hand.
+- **LIVE PRODUCER OUTAGE surfaced (AE) and routed to CTO:** `opal-assets-daily-emitter` DOWN since
+  08-08 — 08-09/08-10 die writing the Andrew-deleted `opal-assets-daily-aua` DDB table
+  (ResourceNotFoundException); 08-08 died separately on VintageContradiction. mdpf/feeds/* frozen →
+  the zeroed aggregate. NO serve impact (platinum frontier = 08-05 carry-forward). Fork at CTO:
+  drop-the-write / re-create (his word — contradicts the 08-07 deletion) / re-point. The dirty TF
+  plan's re-create row and this fork are the same object.
+- **Window-planning evidence, live:** 08-10 aggregate ran 13:00:58Z, before the smartx pull landed
+  13:36Z — the RP-W3 clock defect observed in the wild.
+- CTO-binding targeted-apply line committed into RP-W3/RP-W4 @d98b441cf6; RP-F1 @ its own commit.
+- AE proceeding to RP-W4 selector. DS live, driving W1/W2 to BUILD-READY.
