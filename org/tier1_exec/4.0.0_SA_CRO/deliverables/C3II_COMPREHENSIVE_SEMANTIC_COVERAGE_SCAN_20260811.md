@@ -118,3 +118,77 @@ ops-internal, ticketing, trade-submission) · TERMINAL 2 (causality RETIRED, ins
 NO-baseline 2 (security-scanner, ticketing UNDECLARED -> State proposes an initial, no shift-from).
 State baseline coverage: 26 of 28 ratified. ⚠ ROSTER DRIFT: comp-estate --matrix still lists mdpf +
 model-portfolios separately (29); the ratified roster MERGED them (28, Andrew 2026-08-07) -- flagged.
+
+## 7. V2 HARDENING EXECUTED (Andrew GO ~1953Z: "get back to the Semantic Scan and Vertical work")
+**Tool:** `scripts/c3ii_semantic_scan_v2.py` · **Artifact:** `C3II_SEMANTIC_SCAN_V2_OUTPUT_20260811.json`.
+All three s.4 hardening items landed:
+1. **NULL-ANCHORED GATE (adopted from `content_relate_prototype` iter-2/3):** pooled decoy null,
+   M=25 seeded frequency-weighted random-token queries (length-matched), family-wise threshold =
+   quantile(1 - 0.05/N) -- expected false admits per vertical stays 0.05 regardless of corpus size.
+2. **QUERY ENRICHMENT:** + resolver served-artifact leaves (baked prose STRIPPED -- the B9 defect
+   class must not enter a query) + producer names; opal-mcp aliases m365-mcp; model-portfolios pulls
+   the mdpf rows (roster drift declared, not silently absorbed).
+3. **CORPUS EXTENDED + PLANE-LABELED:** 5,865 docs = docs 1,009 / projects 307 / logs 4,549 --
+   planes reported separately (a log hit and a PRD hit mean different things).
+
+**RESULT -- 28/28 verticals COVERED through the family-wise gate on the BM25 axis**, and the admit
+COUNT is a real coverage spectrum: advi-inf 224 · model-portfolios 206 · portal-infra 134 ·
+advi-bd 127 ... down to ceo-digest 3 · ticketing 3 · etf-reports 3 · canonical-schwab 2 (the thin
+tail = exactly the RESIDUE/naming-act verticals, independently confirming s.6's coverage classes).
+
+**THE POTION AXIS IS RETIRED AT GATE SEVERITY FOR QUERY-SHAPED RETRIEVAL -- measured, both directions:**
+- Zero admits on all 28 verticals at fw AND at p999 AND at p99: real max cosine (0.66-0.87) sits
+  BELOW the decoy null's p99 (0.78-0.87) -- a random-token query cosines HIGHER than the real
+  enriched query (the 64-dim mean-pool maps generic corpus soup near every doc; centroid effect).
+- **POSITIVE CONTROL (isolated invocation): the gate itself FIRES** -- a verbatim-doc query
+  self-cosines 1.0 vs fw 0.9306, admitted rank 0, 15 total admits (self + true neighbors). So the
+  instrument discriminates; the zero is a TRUE NEGATIVE about short topical queries on this
+  embedder, not a dead gate. This is the anatomy axis-8 regime (bm25 decisively better on
+  code-adjacent prose), now measured on OUR corpus with OUR null.
+- Consequence: **the canonical per-vertical verdict rides BM25 (null-gated); Potion stays in the
+  artifact as top-display ablation only.** Ablate-don't-fuse did its job -- a fused score would have
+  buried this axis-level finding.
+
+## 8. WIRED INTO THE CALLS -- pre-registered rubric (BEFORE the validation fire; CVO rider)
+The friction call gains a `VERTICAL DOCUMENTATION CONTEXT` block: top null-gated admitted docs per
+plane (BM25 axis) from the scan artifact, with the law stated in-prompt: docs give IDENTITY context;
+friction characterization cites F-figures ONLY. New output field `doc_context_used`.
+**RUBRIC, registered before reading any response:**
+- R1 SCHEMA: JSON parses; all fields incl. `doc_context_used` present.
+- R2 NO-LEAK: friction_character/direction/summary cite only F-figures; no doc path used as
+  friction evidence.
+- R3 GROUNDED: `doc_context_used` is a SUBSET of the provided paths (no invented paths).
+- R4 BLIND SPOTS: F3 still named blind (the only UNMEASURED axis in the battery).
+PASS = all four. A response failing R2 or R3 fails the wiring, not the vertical.
+
+## 9. WIRING VALIDATED LIVE -- two fires, rubric 4/4 on the second; one harness defect caught + named
+**Tool:** `scripts/kimi_call1_friction_v2.py` (extends the established call-1 canonical form with the
+null-gated doc-context block; scan artifact -> model-portfolios entry, 11 paths across 3 planes).
+
+**FIRE 1 (R1 FAIL, defect MINE not the model's):** response omitted `doc_context_used` -- because my
+schema-extension replace MISSED and its guard `'"doc_context_used"' not in out` read the LAW-BULLET
+mention as the-field-landed, skipping the fallback; the whole-prompt assert then passed off the same
+prose mention. **The guard and the assert shared a derivation, so they could not cross-check -- the
+checks-that-pass-on-the-confirming-limb class, live in my own harness the same day I merged binding
+M.** The model saw a schema without the field and correctly followed the schema. Fix: replace on the
+exact schema anchor (asserted present), then assert the field in the SCHEMA REGION
+(`prompt[find("Return ONLY JSON"):]`), not the whole prompt.
+
+**FIRE 2 (rubric 4/4 PASS):** R1 all fields incl. `doc_context_used` -- PASS. R2 friction evidence
+cites F1/F2/F4 only, zero doc paths as friction evidence -- PASS. R3 `doc_context_used` = 5 paths,
+ALL a subset of the provided 11 (mdpf-revamp brief, MDPF_GLOBAL, MDPF_REVAMP, yang lineage map, the
+CTO wp7 seam log) -- PASS, and the field makes context-use FALSIFIABLE (fire 1 could not be scored
+on R3 at all). R4 F3 named blind with the correct silent-toward-calm framing, plus an unprompted
+honest F1-scope caveat -- PASS.
+
+**Banked observations (canonical-form notes, not defects):**
+1. **Character enum ambiguity, measured at temperature=1:** fire 1 read HEATING/DIVERGING, fire 2
+   CONSOLIDATING/DIVERGING off the identical battery -- both defensible because the vertical is hot
+   AND consolidating and the enum permits ONE value. Fire 2's resolution (consolidation subsignal
+   carries CHARACTER, volume ratio carries DIRECTION) is the sharper convention -- candidate: state
+   that precedence rule in the prompt rather than widening the enum.
+2. **Budget calibration:** the doc-context block roughly doubled reasoning tokens (3,665 -> 5,825;
+   total 8,985 of 16,000) -- headroom fine, worth tracking as context blocks grow.
+3. **Retrieval quality at top-11:** genuinely-mdpf docs dominate; the looser admits (DRFR_PTMCH,
+   MKOV_TRSRCE, ADVI_FIRMSEP) are shared-serving-spine neighbors -- consistent with the vertical
+   spanning the shared platform, and the model did not leak them into friction evidence (R2).
