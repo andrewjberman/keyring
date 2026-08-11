@@ -23,7 +23,17 @@ derivation, three served period frames). **THE TOTAL MOVES 16 -> 17** (the +1 is
 previously counted as one -- the inconsistency COO caught; base's key census is the denominator source of
 truth). I would rather 2 of 17 with a stable frame than 2 of 16 with a convention that shifts by row.
 
-## THE COUNT: BAR-CLEARED = 2 of 17. (SCOPE-VALIDATED = 6; IN FLIGHT = 1; NOT STARTED at cert = 8.)
+## THE COUNT: BAR-CLEARED = 3 of 17. (SCOPE-VALIDATED = 6; IN FLIGHT = 0; NOT STARTED at cert = 8.)
+*(~2020Z: **fee_efficiency IN FLIGHT -> BAR-CLEARED (the THIRD)** -- base fixed both blockers with measurements: the AGGREGATE window control (d03 --verify-windows, the emitter home I accepted on client_detail) which I adversarially verified on MY OWN cell (qtd.advisors[20] +$6M -> PIN-VIOLATION qtd, a different cell than base tested; my first attempt was a VACUOUS mutant that never landed -- the echo-back caught it, Rule 22b); the 66 advisor-grain zero cells classified NO-ROWS via an independent C_00 ledger walk; the Unassigned double-count discharged (144-advisor refined universe). IN FLIGHT is now 0.)*
+
+## ⚖ ZERO-CELL CONVENTION (PINNED ~2020Z, COO 201259Z + base proposal)
+**"LEGITIMATELY ZERO" := NO-ROWS against the flow ledger** (the cell's underlying accounts have zero
+external flow rows in that window, measured against the C_00 526-partition ledger -- an independent leg
+BELOW the C_01 series the emitter reads, not self-comparison). Graders TARGET POPULATED cells; the
+vacuity check (a mutant on a zero cell is vacuous) is the enforcement. **NONZERO-UNDERLYING is the real
+finding class** (a cell reading zero while its ledger rows are nonzero) -- zero instances measured today;
+the walk that finds one is written. Extends the SS 4.1 precondition-state rule: a zero-with-a-measured-
+NO-ROWS-reason is a genuine absence; a zero-as-a-shrug is not, and only the ledger walk distinguishes them.
 *(~2005Z: timeseries_overview @45672c14ec -> SCOPE-VALIDATED -- a no-pin family (index-misalignment makes leaf pins noise; discrimination via derivation-crossing build-time controls, cross-tie 38/38); cross-family tie 13,063,592.19 == d07 qtd verified against my own value.)*
 *(⚠ LABEL CORRECTION ~1936Z: the dashboard/fee_efficiency states were SWAPPED in prior versions -- I propagated COO's mis-attribution without checking my OWN verdict file, which says (line 50) "dashboard is the second surface to CLEAR technical parity" and (line 43) the IN-FLIGHT verdict is FEE_EFFICIENCY's (its Unassigned double-count). Truth: **dashboard** was technical-clear -> now BAR-CLEARED; **fee_efficiency** was and remains IN FLIGHT. The count (7 SV / 1 IF pre-grade) was numerically right; the label of which surface was IN FLIGHT was wrong. Map-vs-territory, caught by reading the file.)*
 *(Updated ~1936Z: **dashboard is BAR-CLEARED -- the SECOND** (same window-NNA calibration as header_metrics, reused by construction: windows non-zero + identical values, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins transitively grounded via the shared served-NNA source). ⚠ **fee_efficiency FINDING (stays SCOPE-VALIDATED, NOT bar-cleared): its PER-ADVISOR window plane does NOT discriminate** -- my mutant on a LIVE nonzero cell (windows.max.advisors[0].nna, +$6M on 60.38M) was ABSORBED rc=0; base's mutant hit only the pinned FIRM-level windows. A blanket exemption over live per-advisor fields (SS 5a). Flagged to base: pin the per-advisor windows or determine band-absorption-vs-not-compared before bar-clear. Prior ~1922Z: header_metrics FIRST bar-clear.)*
@@ -33,7 +43,7 @@ families"; exact roster is base DS's sweep scope).
 | # | Surface | State | Grounding (verdict file) |
 |---|---|---|---|
 | 1 | header_metrics | **⭐ BAR-CLEARED (FIRST)** | VALIDATED_49F_HEADER_METRICS ~1922Z: all planes clear incl. live windows; both gates discharged (gate 1 @745ca6d78f; gate 2 fill-2 + window discrimination DEMONSTRATED by a validator-planted mutant rc=1); pins independently grounded vs served bytes. Residual: re-pin-daily (by-design, stale-pin-fails-loud). |
-| 2 | fee_efficiency | **IN FLIGHT** | base's fix (@1071120eef) pins the DOMINANT ROW (advisors[0]) -- I re-graded ~2000Z: advisors[0] +$6M now FAILs rc=1 ✓ BUT advisors[10] +$6M (tail) ABSORBS rc=0. advisors[0] is only 10% of window-max NNA; the 90% tail ($545M) is still unguarded. A dominant-ROW pin != the client_detail AGGREGATE pin (which catches any sum-mover). REMEDY: aggregate window-NNA pin per window. Unassigned double-count discharged (refined 144-advisor universe). |
+| 2 | fee_efficiency | **⭐ BAR-CLEARED (THIRD)** | ~2020Z: base's AGGREGATE window control (d03 --verify-windows @9a157f02e5) adversarially verified on MY cell -- qtd.advisors[20] +$6M -> PIN-VIOLATION qtd (any single-advisor sum-mover fails; cancelling residual = deferred fan-out, the client_detail pattern). 66 zero cells all NO-ROWS (C_00 ledger walk). Unassigned double-count discharged. Core + windows clear; gate 1 rides ~1742Z. |
 | 3 | clients_tab | **SCOPE-VALIDATED** | VALIDATED_49F_FEE_EFFICIENCY_AMENDED_CLIENTS_TAB: technical parity clears; V8 residual named follow-on |
 | 4 | client_detail | **SCOPE-VALIDATED** | VALIDATED_49F_CLIENT_DETAIL: value CHARACTERIZED vs sovereign band; V16/17/18 backfill + harness fan-out + cutover re-pin pending |
 | 5 | mix_summary | **SCOPE-VALIDATED** | VALIDATED_49F_MIX_SUMMARY: P1-SCRIPTS; value rides the cot-bundle mix-basis band (dormant pre-cutover) |
