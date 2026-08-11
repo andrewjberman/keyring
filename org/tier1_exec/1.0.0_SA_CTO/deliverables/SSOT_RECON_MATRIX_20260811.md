@@ -126,6 +126,13 @@ engine gets a summary).
 ## STAGED POST-RECON DELIVERABLES (Andrew-direct via MSTR @f73ad4d22a, LD-0393 — TRIGGER IS HIS
 TIMING WORD, not a dispatch; routing CTO/COO at trigger)
 
+**⛔ SUBSTRATE PROGRESS ≠ TRIGGER SATISFACTION (COO precision 0714Z, adopted verbatim — my own
+"advances its readiness bar materially" was the conflation shape):** the ABCD spec being authored
+shortens the DISTANCE to A-3's trigger; the TRIGGER ITSELF is unchanged — per-product CERTIFIED
+cells necessary, ANDREW'S CONFIDENCE WORD sufficient, and a certified matrix authorizes the ASK,
+never the FIRE. Substrate progress is ours; trigger satisfaction is his. A successor reading
+"readiness advanced" as a green light is the exact early-fire failure this line forecloses.
+
 Once recon is done and certified ("really sure of themselves"): THREE /artifact-design builds —
 (1) **mdpf FINAL structure**, vendors → opal-data-assets → portal-v2 serving, EXHAUSTIVE (every
 lambda, trigger, bronze→silver event trigger, code pull, dependency); (2) **advi**, same form,
