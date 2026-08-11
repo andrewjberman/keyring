@@ -79,9 +79,23 @@ what froze). Sources, all things AWS itself sees:
 
 ### 2.2 Freshness discipline
 
-Same as aws: derived every nightly run from live listings (S3 list + manifest reads are cheap;
-the AST enrichment reads the repo the derive already clones). No intermediate snapshot artifact
+Same as aws: derived every nightly run from live listings; no intermediate snapshot artifact
 exists to freeze. `producers/graphuni/` pipeline members are decommissioned in W3 (s.4).
+
+> **DELTA D-A (2026-08-11 00:3xZ, self-found by grounding before W1 build -- supersedes this
+> section's first cut).** The first cut read "the AST enrichment reads the repo the derive already
+> clones." **FALSE AT SOURCE: the derive runs on Fargate with NO git repo**
+> (`derive_runner.py:835-836`, which is exactly why file-SHA watch is a dev-box hook there).
+> The corrected mechanism is STRONGER and more (b)-shaped than the original:
+> - **AST enrichment parses the DEPLOYED BYTES** -- the S3 `code/` objects ARE the Python sources
+>   AWS executes, so functions/CALLS/READS_S3/WRITES_S3 derive from the artifact that actually
+>   runs, not from the repo's belief about it. (The repo-AST "enrichment" of the ruling becomes
+>   deployed-AST; same facts, sourced one hop closer to the territory.)
+> - **The repo-divergence leg needs no blobs**: a deployed object's git-blob-SHA is computable
+>   from its bytes (`sha1("blob <len>\0" + bytes)`) and compares against `git ls-tree` SHAs from
+>   a blobless clone -- or, if adding a clone to the Fargate task is unwanted, against a
+>   commit-time-emitted manifest. WHICH of those two carries the divergence leg is a W1
+>   implementation decision recorded at build time; the deployed-AST half stands either way.
 
 ### 2.3 What deliberately does NOT change (the invariants, from the assessment + handoff)
 
