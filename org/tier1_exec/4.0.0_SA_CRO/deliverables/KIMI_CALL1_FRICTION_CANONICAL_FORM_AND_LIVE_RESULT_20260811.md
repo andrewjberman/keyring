@@ -91,6 +91,31 @@ identified F1 as the axis that resolves the remaining ambiguity** -- which is ex
 sequenced axis. This validates that the battery COMPOSES (mdpf-scoped axes corroborate) and that the
 model correctly reasons about which BLIND axis matters most. 0 hard fails.
 
+## 4d. F1-MEMBERSHIP FIRE (increment 3, first 3-real-axis battery) -- PASS, and it UPGRADED the character
+
+F1 MEASURED for the first time. Per CVO steer (091212Z), F1 = MEMBERSHIP not comp-blast/reachability
+(blast counts structures a change PROPAGATES to, inflating; membership = structures the changed files
+BELONG to). mdpf F1 = 2 of 14 (sys-cot-mdpf-assets 40 files + shared sys-partner-serving-platform 30
+files). Source pinned "family membership, graph-derived" so it re-homes onto B-9's mechanical half with
+zero semantic change. Prereg @KIMI_CALL1_F1_PREREG_20260811.md. Telemetry 74.3s / completion 2470.
+
+Result: **`friction_character=CONSOLIDATING` (upgraded from HEATING) · direction=DIVERGING · confidence=HIGH`.**
+- F1 did EXACTLY its job: "mdpf's in-window changed files belong to only 2 of 14 C3.i structures ... so
+  the rising activity is NOT spreading across the estate" -- resolved the HEATING-vs-SPREADING question
+  the F4 fire said only F1 could answer. Read 2-of-14 as CONTAINMENT (membership), not propagation.
+- Confidence rose MEDIUM->HIGH: "3 of 4 axes measured and all three converge on consolidation" -- exactly
+  the axis that was capping it.
+- With 3 real axes the model SYNTHESIZED a more precise character: CONSOLIDATING (F2 consolidation onto
+  live path + F4 concentrated single-owner + F1 structural containment) -- **the design's own R2 example
+  shape** ("consolidation onto the canonical route"). The battery COMPOSES.
+- Only F3 remains blind. 0 hard fails; all retained criteria held.
+
+**DESIGN FINDING (surface, not adjudicate):** the design (s.3) names F1 "blast overlap" and specifies
+comp-blast (reachability). CVO's steer -- and this live call -- establish F1 is MEMBERSHIP breadth, not
+blast. The live result confirms membership is the correct semantics (it resolved the question cleanly and
+did not inflate). **Recommend the design rename F1 to "structural membership" and change its method from
+comp-blast to the family-membership join.** Andrew/CTO~B to ratify.
+
 ## 5. OPEN FOR ANDREW
 - **Confirm the design premise:** call #1 = Kimi TRANSLATES the deterministic battery -> friction
   characterization (STATE deferred per s.13). Built on this; redirect if wrong.
