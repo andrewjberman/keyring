@@ -1,0 +1,134 @@
+# ANDREW-DIRECT — OPAL_ANALYST open-calls rulings (Q1–Q4)
+
+**Channel:** 1.0.0_SA_CTO~Z terminal (site Z), direct response to /open-calls
+**Time:** 2026-08-10 ~16:53Z
+**Received by:** 1.0.0_SA_CTO~Z
+**Recorded:** same turn, per the record+broadcast law (org/XXX.md)
+
+## VERBATIM
+
+> All recs approved, proceed.
+
+Issued against the four cards presented at 16:52Z (this seat's /open-calls). The approved
+recommendations, restated exactly as presented and now RULED:
+
+1. **Q3 (was CALL 1, BLOCKING) — allowlist set RATIFIED as proposed:** the server-enforced tool
+   list for the `opal-bloomberg` identity = Teams read/send on its own account + whoami now;
+   portal read rows added only per the Q1 activation below (as a second reviewed row-set per the
+   CTO frame, not pre-wired dormant); everything else denied server-side; Andrew's key untouched
+   (exercised control). **TO-3's last gate is CLEARED — GO is COO~Z's to send.**
+2. **Q1 (was CALL 2) — option (a):** portal-bucket READ entitlement on `opal-gateway-bbg` is
+   ACTIVATED by his word; **ycharts stays HELD** (vendor egress, per-use word regime unchanged).
+3. **Q2 (was CALL 3) — operator-started bring-up RATIFIED:** the Analyst seat is started by hand
+   (Andrew or MSTR~Z) off the TO-2 runbook; no cron, no auto-start. TO-2 acceptance wording can
+   now bind to this model.
+4. **Q4 (was CALL 4) — Alyssa machine re-key:** he runs it at next convenience on her machine;
+   nothing for this fabric; carried item CLOSED at this lane.
+
+## Scope notes (surface, not adjudication)
+
+- "Proceed" authorizes execution of the approved recs through the existing TO structure — GOs
+  remain COO~Z's to send per the standing dispatch separation; no new gates created.
+- Q1 activation is an entitlement STATE change at the gateway: the serving activation lands
+  through TO-3's deploy (per-identity allowlist including the portal-read row-set) — activation
+  by word does not retroactively authorize any call made before the mechanism lands.
+  **[CORRECTED ~17:15Z, AE~Z TO-3 derivation Finding 1 (@42444e64b thread):** the gateway
+  registers NO portal-read tool (its only portal integration is the mutating
+  `opal_data_refresh_upload`), so TO-3's allowlist STRUCTURALLY CANNOT carry the Q1 activation.
+  The concierge's portal reads are box-local boto3 via `tools/portal_lookup.py` (box IAM already
+  read-exercised 5/5 at build, LD-0382) gated by the agent-home honesty layer
+  (`refs/BUCKET_ALLOWLIST.yaml` + `PORTAL_RETRIEVAL.md` staged-not-live language). **The Q1
+  carrier is therefore a REFS honesty-layer flip to ACTIVATED** — an agent-home edit the seat's
+  own fence deliberately cannot write; owner = MSTR~Z as the named integrator (TO-5 ruling).
+  No new gateway portal-read tool is authorized by Q1 (that would be new scope, its own reviewed
+  row-set per frame clause (iv)). The prior sentence stands for what TO-3 *does* carry.]**
+
+## Broadcast
+
+- MCP to 0.0.0_AB_MSTR~Z + 2.0.0_SA_COO~Z (same turn); COO~Z relays to 0.5.0_AE_OpalETL~Z with
+  the TO-3 GO.
+
+---
+
+# ADDENDUM — Q5 ruling: upload overlay + the scheduled-upload guardrail duty
+
+**Channel:** 1.0.0_SA_CTO~Z terminal (site Z), direct response to the Finding-2 overlay card
+**Time:** 2026-08-10 ~17:15Z
+**Received by:** 1.0.0_SA_CTO~Z · **Recorded:** same turn
+
+## VERBATIM
+
+> Yes they are allowed to do that, however they generally should not need to as that should be
+> covered by the system cron. However, I would recommend having part of their responsibility
+> being a guardrail/check on that process, checking execution records and making sure that the
+> upload happened as scheduled.
+
+## Operative reading (surface-not-adjudicate; three parts)
+
+1. **Overlay ALLOWED:** `opal_data_refresh_upload` is permitted for the `opal-bloomberg`
+   identity — AE~Z's `IDENTITY_TOOL_ALLOWLIST_PATH` overlay row is the sanctioned mechanism
+   (no redeploy). The seat's upload capability is a FALLBACK, not the primary path.
+2. **Primary path stays the system cron:** the OS-level scheduled tasks (`OPAL_BBGTML_daily_pull`
+   07:00 ET per the agent README) cover the daily refresh; the seat "generally should not need"
+   to fire the upload itself.
+3. **NEW SEAT RESPONSIBILITY (Andrew-asked, his words above — moratorium-compliant by
+   explicit ask):** a **guardrail/check on the scheduled-upload process** — the seat checks
+   execution records and confirms the upload happened as scheduled. Framed as a DUTY of the
+   seat (read execution records + verify + escalate/fallback on failure), NOT new alarm/SNS/
+   monitor infrastructure — the seat itself is the instrument, consistent with the moratorium's
+   "canonical routes and schedules first" ordering (the schedule exists; this checks it).
+   Fallback chain when the check fails: run `/terminal-upload` per its own skill gates
+   (tripwire; never send on FAIL), else escalate to Andrew via Teams/fabric.
+
+## Routing
+
+- Overlay row: AE~Z lands it under TO-3 (# andrew-asked marker carrying the verbatim above).
+- Guardrail duty: COO~Z folds into decomposition — the duty text lands in the seat's refs
+  (TEAMS_DUTY/prompt via the named integrator, MSTR~Z) + TO-2's runbook steady-state section.
+
+---
+
+# ADDENDUM 2 — Q6 ruling: semantic-pass timing
+
+**Channel:** 1.0.0_SA_CTO~Z terminal · **Time:** 2026-08-10 ~18:47Z · **Recorded:** same turn
+
+## VERBATIM
+
+> (a) now, starting with MP
+
+(Against the /open-calls card: per-vertical semantic pass vs batched-after-all-four.)
+
+## Operative reading
+
+Andrew's Step-3 semantic pass (field meanings / delivery form / permissible conjunctions —
+sovereign input, never inferred) runs PER-VERTICAL, starting with Model Portfolios NOW. The
+ratified MP census (@0c1dae3da, structuring approved @95b3e2852) is the input document.
+Consequences: (i) MSTR~Z queues the MP semantic-pass session at Andrew's convenience — the
+fabric receives and records verbatim; (ii) DATA_CATALOG v0.2's MP rows (incl. the `semantics:`
+layer) unblock the moment his pass lands — they do NOT wait for the Pod-2/Macro/News censuses;
+(iii) later verticals inherit the same per-vertical rhythm: census → his structuring-conformant
+review need not repeat (grammar ratified), semantic pass per vertical as each census lands.
+
+---
+
+# ADDENDUM 3 — Q7 ruling: News census scope
+
+**Channel:** 1.0.0_SA_CTO~Z terminal · **Time:** 2026-08-10 ~19:27Z · **Recorded:** same turn
+
+## VERBATIM
+
+> C on this call
+
+(Against the TO-4d Stage-0 scope card: (a) rendered-panels only / (b) catalog-serving only /
+(c) union. Proposal @a263a0ad6, AE~Z-authored, CTO grammar-endorsed.)
+
+## Operative reading
+
+News census scope = **Option C, the UNION**: visual plane per the ratified grammar for
+rendered news-derived artifacts (anchored on Market Overview) + a labeled `ddb_sources`
+section reusing the ratified residue-plane pattern for the 4 active DDB tables (2 dormant
+state-marked), each with sanctioned query pattern, item schema, lineage, and item-count
+denominators stamped LIVE at census read-time. Both proposal boundaries bind: (i) news OWNS
+news-derived artifacts wherever rendered (a future market-overview census points, never
+re-censuses); (ii) quoted-prior counts are never denominators. Stage 1 (ARTIFACT_CENSUS_NEWS
++ /draw) proceeds immediately, ruling cited in the census header.

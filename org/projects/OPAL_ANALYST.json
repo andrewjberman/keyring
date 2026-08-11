@@ -1,0 +1,33 @@
+{
+  "project_code": "OPAL_ANALYST",
+  "macro_code": "OPAL",
+  "name": "ANALYST",
+  "description": "Opal Analyst -- the 0.0.3_BG_BBGTerminal Teams concierge as a product: a Teams-native data concierge for the Opal team on the Bloomberg terminal box ('Opal Bloomberg' account), answering from SERVED Opal artifacts through a deny-by-default request catalog, doubling as the daily Bloomberg pipeline operator. Chartered Andrew-direct 2026-08-10 ~1330Z at the MSTR~Z terminal (@1ac23a7e1): 'register a project called ANALYST, under the OPAL macro, for project code OPAL_ANALYST which facilitates the development of that product.' Site-Z fabric exclusive to this project until further word. Build phase pre-exists the project (LD-0382 @6e0e58552a redesign + completion set @65d80ab37 + one delivered live serve 2026-08-07); this project creates the product/operations layer: P0 durable identity pin in the teams-watch engine, wrapper-free relaunch, server-side per-identity allowlist, entitlement activation path (Andrew-gated), vertical capability growth as R&D, thread-memory integration.",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_ANALYST_PRD.md",
+      "label": "OPAL_ANALYST PRD v1.0 (product/operations layer; P0 identity pin; TO-1..TO-5)",
+      "date": "2026-08-10"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 3: ops layer COMPLETE, R&D surface remains. TO-1/TO-2/TO-3/TO-5 all complete-accepted (TO-2/TO-3 accepted 1735Z: relaunch verified four limbs; gateway allowlist deployed i-07dccb1615503ac99, Phase-3 denied/allowed/control/overlay all exercised PASS; deploy ledger closed). Product LIVE: 0.0.3_BG serving as Opal Bloomberg with identity-pinned monitor; server-side per-identity allowlist enforcing; portal-bucket read ACTIVATED @472e56910; upload-guardrail duty landed @81287c40a + runbook addendum @b08b13bbf; overlay row #andrew-asked fallback-only; ycharts held. TO-4 plan ruled @6c1161075 (MP -> Pod-2 -> Macro -> News; census grammar PRD s.8 @7753e1caf; registry = DATA_CATALOG extension, post-review). TO-4a COMPLETE: Andrew structuring APPROVED @95b3e2852 ('excellent work... run the others as well'), four pilot grammar choices RATIFIED. TO-4b (Pod-2) DISPATCHED pending + batch GO; TO-4b (Pod-2) ACCEPTED complete @74b0a10d7; TO-4c (Macro) ACCEPTED complete @028a0b3c2 (third vintage variant PRD s.8.2 @09c14b806). TO-4d Stage 0 DISCHARGED: Andrew RULED News scope Option C ('C on this call' ~1927Z, record @1624238b3; union -- visual plane + labeled ddb_sources section, no new grammar level), annotated on the TO @871e45fd3. Stage 1 COMPLETE: TO-4d ACCEPTED @ddd918d8c + /draw @7f35c7476 (validated first-hand ~2145Z) -- FOUR-VERTICAL CENSUS BASELINE COMPLETE (MP/Pod-2/Macro/News). News findings ADJUDICATED per fork verdict @c24cc4cab: F1 RETRACTED (intelligence pipeline live 20 items/day through 08-10; census read oldest date as newest -- evidence error; census-of-record CORRECTED @96843db82, COO-validated parse-clean at HEAD; /draw F-row correction held behind notation; sweep incident 8b0f770dc on MSTR record), F2 STANDS low-impact (history side-leg dead 04-07 + unused), F3 hygiene nit (freshness live, stale producer comment). Residual: thin per-day exact-match keyword coverage (normalization tuning). Census deliverable acceptance stands; F-row correction is a patch, not a re-open. Andrew rulings same record: NO site-Z exclusivity release (taxsma+C5 stay queued); AE~Z dispatched to ARTIFACT DESIGN for the semantic pass (GO 215204Z) -- pass proceeds on his visuals, Andrew notation follows generation; capital-markets adds approved (CTO carries). Box crash ~2022Z 2026-08-10; fabric respawned, no in-flight loss (COO log reconstructed @3c53ee00e). MP semantic-pass visuals DELIVERED: 16/16 specimen sheets (7 rendered + 9 unrendered, uniform 6-question notation block) published + links manifest to MSTR~Z for Andrew (AE~Z 215836Z); AT ANDREW FOR NOTATION.",
+  "blocking": "None at fabric. MP semantic-pass visuals at Andrew for notation (16/16 delivered 215836Z); his notation pass gates COO v0.2 MP registry TO dispatch. AE~Z on notation standby (re-emit to same URLs); census F-row correction + taxsma + C5 all queued behind his word.",
+  "created": "2026-08-10",
+  "pods": [
+    "0.0",
+    "0.5",
+    "1.0",
+    "2.0",
+    "4.0"
+  ],
+  "pipeline": "OpalGateway / BBGTerminal concierge (no data pipeline of its own; serves opal-data-portal-v2 + news DDB read-only)",
+  "thread_counter": 0,
+  "threads": [],
+  "references": {
+    "charter_verbatim": "org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/ANDREW_DIRECT_20260810_OPAL_ANALYST_PROJECT_SPINUP.md",
+    "state_brief": "org/tier1_exec/4.0.0_SA_CRO/deliverables/OPAL_ANALYST_STATE_BRIEF_20260810.md",
+    "redesign_ledger": "org/tier0/ledger/LD-0382.md",
+    "agent_home": "org/tier0_utility/0.0.3_BG_BBGTerminal/"
+  }
+}

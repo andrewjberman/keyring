@@ -1,0 +1,285 @@
+# ARTIFACT_CENSUS_MP.yaml -- axis: SERVED-ARTIFACT VISUAL+DATA COORDINATES (one intent:
+# where does each served artifact appear, and what fields does it carry). Rule 24: one
+# grain per level -- page(route) -> location(nav position) -> panel(visual container)
+# -> artifact(served object) -> field(datum).
+#
+# DENOMINATOR (binding rule 3 -- MECE frame, all COMPLETE token-walks 2026-08-10 via
+# portal_lookup.py + the comp-estate model-portfolios(8 chains)+mdpf(2 chains) threads):
+#   platinum/mdpf/  464 keys = 14 live-served (4 scopes x 3 types + cottonwood/account-units
+#                   + global/non-model-assets) + 444 archive/ (frozen, excluded-from-serving
+#                   per Andrew 2026-08-06) + 6 _manifests/ (ops metadata, not rendered)
+#   json/mdpf/      10 keys  = legacy tree; CF rewrites /api/general/mdpf/ -> platinum/mdpf/
+#                   (comp-routes rewrites, live 2026-08-10) so this tree is NOT the served origin
+#   json/benchmarks/ 6 keys  = 3 rendered on this page + 1 served-unrendered + 2 _smartx internals
+#   json/peers/      1 key   = rendered
+#   json/yang/volatility_data.json = 1 key, frontend-orphan (comp-estate MA-08, frozen)
+#   TOTAL under the MP vertical: 482 keys; VISUALLY RENDERED artifact types: 7 (below);
+#   served-but-unrendered: itemized in unrendered_artifacts (nothing silently elided).
+#
+# SCOPE-FAMILY DEDUP NOTE: the three platinum artifact types are published per-scope
+# {global, 49financial, inflection, cottonwood} by ONE publisher (opal-assets-mdpf-portal-
+# publisher; identical schema per type). The census grounds fields on the GLOBAL instance
+# and lists the sibling keys as scope_family -- one field list per TYPE (binding rule 2).
+vertical: model_portfolios
+census_vintage: 2026-08-10        # measured date; re-verify on drift, never hand-roll
+census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4a)
+grounding: every artifact row carries live retrieval evidence (portal_lookup output ref);
+  every panel row carries its render evidence (component file:line, portal DEV tree HEAD
+  2026-08-10 -- main portal worktree, submodule pointer at workspace SITEZ HEAD)
+
+pages:
+  - page: /model-portfolios        # grain: portal ROUTE (portal/src/pages/ModelPortfolios.tsx)
+    locations:
+      - location: {kind: header, name: "Page header + Portfolio Analytics summary"}
+        panels:
+          - panel: "Portfolio Analytics"
+            render_evidence: ModelPortfolios.tsx:1226-1646 (PanelHeader title :1228; left
+              partition "{AUA} by Model" donut :1241; right partition "Client Holdings"
+              histogram :1500; PanelFooter source-attribution + dataAsOf :1634-1645)
+            artifacts:
+              - artifact: platinum/mdpf/global/aum-metrics.json   # grain: SERVED OBJECT
+                source_type: s3
+                served_route: /api/general/mdpf/{scope}/aum-metrics.json (CF rewrite
+                  /api/general/mdpf/ -> platinum/mdpf/, comp-routes rewrites 2026-08-10;
+                  fetch getAUMMetricsByFirm, endpoints/aum.ts:600-612)
+                scope_family: [global, 49financial, inflection, cottonwood]  # same schema, one publisher
+                vintage_field: _provenance.source_vintages (no top-level as_of_date; live
+                  value 2026-08-05) + S3 LastModified 2026-08-10T13:50:50Z (file-time)
+                state: live
+                retrieval_evidence: portal_lookup get mdpf-platinum global/aum-metrics.json
+                  2026-08-10 (6809 bytes, read COMPLETE)
+                fields:
+                  - {name: _provenance, type: object, note: "written_by/written_at/source_keys/source_vintages -- publisher provenance", example: "written_by: opal-assets-mdpf-portal-publisher"}
+                  - {name: by_model, type: "list[7] of object", note: "one element per model cohort"}
+                  - {name: "by_model[].model_name", type: string, example: "Ultra Short-Term"}
+                  - {name: "by_model[].aum", type: number, unit: USD, example: 51737347.29}
+                  - {name: "by_model[].account_count", type: integer, unit: accounts, example: 186}
+                  - {name: "by_model[].q0..q3", type: object, note: "per-quarter {change USD, growth pct, priorLevel USD}", example: "q0.change: -412654.44"}
+                  - {name: _provenance.source_vintages, type: object, role: vintage, example: "global/aum-metrics: 2026-08-05"}
+              - artifact: platinum/mdpf/global/account-distribution.json
+                source_type: s3
+                served_route: /api/general/mdpf/{scope}/account-distribution.json
+                  (getAccountDistributionByFirm, endpoints/aum.ts:520-533; global at
+                  ModelPortfolios.tsx:521, per-firm at :446)
+                scope_family: [global, 49financial, inflection, cottonwood]
+                vintage_field: _provenance.source_vintages (live value 2026-08-06) +
+                  LastModified 2026-08-10T13:50:50Z (file-time)
+                state: live
+                retrieval_evidence: portal_lookup get mdpf-platinum global/account-distribution.json
+                  2026-08-10 (8140 bytes, read COMPLETE)
+                fields:
+                  - {name: _provenance, type: object, note: same publisher provenance block}
+                  - {name: basis, type: "string|null", example: null}
+                  - {name: by_model, type: "object(7 models)", note: "keyed by model display name"}
+                  - {name: "by_model.{m}.account_count", type: integer, unit: accounts, example: 2028}
+                  - {name: "by_model.{m}.active_accounts_count", type: integer, example: 2040}
+                  - {name: "by_model.{m}.excluded_unfunded_count", type: integer, example: 12}
+                  - {name: "by_model.{m}.histogram", type: object, note: "bin_labels[20], bins[21], counts[20]", example: "bin_labels[0]: $1K-$2K"}
+                  - {name: "by_model.{m}.min/max/mean/median", type: number, unit: USD, example: 95318.82}
+                  - {name: "by_model.{m}.percentiles", type: object, note: p10/p25/p50/p75(/p95), unit: USD, example: "p25: 32970.43"}
+                  - {name: _provenance.source_vintages, type: object, role: vintage, example: "global/account-distribution: 2026-08-06"}
+              - artifact: platinum/mdpf/global/aggregate-aua-timeseries.json
+                source_type: s3
+                served_route: /api/general/mdpf/{scope}/aggregate-aua-timeseries.json
+                  (getMdpfAggregateAUATimeSeriesByFirm, portal-proxy.ts:523-526; global fetch
+                  ModelPortfolios.tsx:392, per-firm :379; feeds the header headline value/count
+                  AND the Growth tab charts -- canonical entry HERE, first reading-order site)
+                scope_family: [global, 49financial, inflection, cottonwood]
+                vintage_field: as_of_last (live value 2026-08-05; no as_of_date field) +
+                  LastModified 2026-08-10T13:50:50Z (file-time)
+                state: live
+                retrieval_evidence: portal_lookup get mdpf-platinum global/aggregate-aua-timeseries.json
+                  2026-08-10 (293691 bytes, read COMPLETE)
+                fields:
+                  - {name: _provenance, type: object, note: same publisher provenance block}
+                  - {name: firm_id, type: string, example: "global"}
+                  - {name: partner_name, type: string, example: "Global"}
+                  - {name: dates, type: "list[448] of date", example: "2024-11-01"}
+                  - {name: n_dates, type: integer, example: 448}
+                  - {name: as_of_first, type: date, example: "2024-11-01"}
+                  - {name: as_of_last, type: date, role: vintage, example: "2026-08-05"}
+                  - {name: model_aua, type: "list[448] of number", unit: USD, example: 436842747.89}
+                  - {name: non_model_aua, type: "list[448] of number", unit: USD, example: 358546854.80}
+                  - {name: inflection_non_model_aua, type: "list[448] of number", unit: USD, example: 151546249.41}
+                  - {name: opal_aggregate_aua, type: "list[448] of number", unit: USD, example: 795389602.69}
+                  - {name: account_count_total, type: "list[448] of integer", unit: accounts, example: 2826}
+                  - {name: account_count_total_raw, type: "list[448] of integer", example: 2826}
+                  - {name: by_model, type: "object(9 cohorts)", note: "per cohort: display_name, cohort_class(model|sma), account_count[448], model_value[448] USD", example: "opal_blend_5050_int_ltc.display_name: 50/50 INT/LTC"}
+                  - {name: cohort_provenance, type: "list[448] of object", note: "per-date per-partner measured|absent + as_of_by_partner dates"}
+                  - {name: count_as_of/count_basis/count_provenance/point_class, type: "list[448]", note: "count-lineage arrays (measured|...)", example: "measured"}
+                  - {name: partner_custody_total, type: "list[448] of null", note: "present, null-valued at global scope"}
+                  - {name: non_model_assets_detail, type: object, note: "4-key detail block"}
+                  - {name: meta, type: "object(22 keys)", note: "producer metadata"}
+                  - {name: source_vintage_last, type: "object(8 keys)", note: "per-feeder vintage map"}
+
+      - location: {kind: tab, name: "Growth (label dynamic: assetLbl.short, e.g. AUA)"}
+        panels:
+          - panel: "{AUA} Trend Analysis"
+            render_evidence: ModelPortfolios.tsx:1713-1720 (h3 container; sub-charts
+              "Period End Summary" :1752 stacked bars + "Daily {AUA} Analysis" :2000 daily
+              lines; Global = since-inception, per-firm = rolling-1Y, :1674-1680)
+            artifacts:
+              - artifact: platinum/mdpf/global/aggregate-aua-timeseries.json
+                canonical: pages[/model-portfolios] -> header -> "Portfolio Analytics"
+                note: same object family, per-scope; value basis only (count toggle REMOVED
+                  Andrew-direct 2026-07-29 @72f132c5, comment at ModelPortfolios.tsx:~1730)
+
+      - location: {kind: tab, name: "Benchmark (tab id: performance)"}
+        panels:
+          - panel: "Return vs Volatility (multi-view: Rolling Sharpe / Upside-Downside Capture / Maximum Drawdown)"
+            render_evidence: components/ReturnVolatilityScatter.tsx (PANEL_CONFIG titles
+              :80-95; mounted at ModelPortfolios.tsx:2263-2269, performance tab only)
+            artifacts:
+              - artifact: json/benchmarks/model_portfolio_timeseries.json
+                source_type: s3
+                served_route: /api/general/benchmarks/model_portfolio_timeseries.json
+                  (getModelPortfolioTimeseries, portal-proxy.ts:858; fetched inside
+                  ReturnVolatilityScatter.tsx:334)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get benchmarks model_portfolio_timeseries.json
+                  2026-08-10 (718959 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:46Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: inception_date, type: date, example: "2024-04-30"}
+                  - {name: rfr_tenors, type: "object(5 models)", note: "risk-free-rate tenor per model code", example: "UST: 1Y"}
+                  - {name: series_note, type: string, note: "Yang model-DESIGN return series (model.pkl-derived)"}
+                  - {name: timeseries, type: "list[2970] of object", note: "one row per date x model_code"}
+                  - {name: "timeseries[].date", type: date, example: "2024-04-30"}
+                  - {name: "timeseries[].model_code", type: string, example: "INT"}
+                  - {name: "timeseries[].model_return", type: number, unit: decimal-return, example: -0.009261}
+                  - {name: "timeseries[].benchmark_return", type: number, unit: decimal-return, example: -0.007215}
+                  - {name: "timeseries[].index_benchmark_return", type: number, unit: decimal-return, example: -0.007215}
+                  - {name: "timeseries[].etf_benchmark_return", type: number, unit: decimal-return, example: -0.009507}
+              - artifact: json/benchmarks/model_portfolio_benchmarks.json
+                canonical: pages[/model-portfolios] -> tab Benchmark -> "Benchmark Comparison"
+                note: passed into the scatter as props (data/benchmarkCompositions,
+                  ModelPortfolios.tsx:2264-2267); field list at the canonical entry
+          - panel: "Benchmark Comparison"
+            render_evidence: ModelPortfolios.tsx:2271-2352 (PanelHeader :2273; net-of-36bps
+              spread framing in helpText; internal-only benchmark-type toggle
+              SHOW_BENCHMARK_TOGGLE :2279)
+            artifacts:
+              - artifact: json/benchmarks/model_portfolio_benchmarks.json
+                source_type: s3
+                served_route: /api/general/benchmarks/model_portfolio_benchmarks.json
+                  (getModelPortfolioBenchmarks, portal-proxy.ts:826-828; fetch
+                  ModelPortfolios.tsx:533, performance tab lazy)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get benchmarks model_portfolio_benchmarks.json
+                  2026-08-10 (19200 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:45Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: periods, type: "list[10] of string", example: "1D"}
+                  - {name: inception_date, type: date, example: "2024-04-30"}
+                  - {name: models, type: "list[5] of object", note: "one per model"}
+                  - {name: "models[].code", type: string, example: "UST"}
+                  - {name: "models[].name", type: string, example: "Ultra-Short Term"}
+                  - {name: "models[].returns.{period}", type: object, note: "9 measures per period", example: "1D.model: 0.1"}
+                  - {name: "models[].returns.{period}.model", type: number, unit: pct-return, example: 0.1}
+                  - {name: "models[].returns.{period}.model_source", type: string, example: "yang_design"}
+                  - {name: "models[].returns.{period}.index_benchmark", type: number, unit: pct-return, example: 0.11}
+                  - {name: "models[].returns.{period}.etf_benchmark", type: number, unit: pct-return, example: 0.16}
+                  - {name: "models[].returns.{period}.index_spread/etf_spread", type: number, unit: pct, example: -0.01}
+                  - {name: "models[].returns.{period}.model_volatility/index_benchmark_volatility/etf_benchmark_volatility", type: number, unit: pct-annualized, example: 0.94}
+              - artifact: json/benchmarks/etf_returns.json
+                source_type: s3
+                served_route: /api/general/benchmarks/etf_returns.json
+                  (getETFBenchmarkReturns, portal-proxy.ts:889-890; fetch ModelPortfolios.tsx:541)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get benchmarks etf_returns.json 2026-08-10
+                  (1278 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-08T11:05:46Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: periods, type: "list[9] of string", example: "1D"}
+                  - {name: etfs, type: "object(5 tickers)", note: "BIL/AGG/IVV + 2 more"}
+                  - {name: "etfs.{t}.name", type: string, example: "SPDR Bloomberg 1-3 Month T-Bill ETF"}
+                  - {name: "etfs.{t}.asset_class", type: string, example: "Cash"}
+                  - {name: "etfs.{t}.returns.{period}", type: number, unit: pct-return, example: 0.03}
+          - panel: "Data Source"
+            render_evidence: ModelPortfolios.tsx:2380-2400 (PanelHeader :2381; static SmartX
+              integration note -- renders no served artifact)
+            artifacts: []
+
+      - location: {kind: tab, name: "Peers"}
+        panels:
+          - panel: "Peer Performance Comparison"
+            render_evidence: pages/ModelPortfolios/tabs/PeersTab.tsx:403-404 (PanelHeader;
+              mounted from ModelPortfolios.tsx peers tab, fetch :548 lazy)
+            artifacts:
+              - artifact: json/peers/peer_performance.json
+                source_type: s3
+                served_route: /api/general/peers/peer_performance.json
+                  (getPeerPerformance, portal-proxy.ts:934-935)
+                vintage_field: data_as_of (month-end basis -- a month-old data_as_of is its
+                  NORMAL cadence, portal_lookup channel note)
+                state: live
+                retrieval_evidence: portal_lookup get peers peer_performance.json 2026-08-10
+                  (8548 bytes, read COMPLETE; data_as_of 2026-07-31)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-03T13:54:45Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-07-31"}
+                  - {name: periods, type: "list[6] of string", example: "1M"}
+                  - {name: models, type: "object(5 models)", note: "keyed by model code"}
+                  - {name: "models.{m}.code", type: string, example: "UST"}
+                  - {name: "models.{m}.name", type: string, example: "Ultra Short-Term"}
+                  - {name: "models.{m}.periods.{p}.model", type: number, unit: pct-return, example: 0.1654}
+                  - {name: "models.{m}.periods.{p}.benchmark", type: number, unit: pct-return, example: 0.1448}
+                  - {name: "models.{m}.periods.{p}.peer_percentiles", type: object, note: "p5/p25/p50/p75/p95 peer distribution", example: "p50: 0.316"}
+
+# SERVED-BUT-UNRENDERED (MECE completion -- rule 3: every served artifact under the
+# vertical appears; these have NO panel site on any page, evidence per row).
+# GRAMMAR NOTE FOR THE STRUCTURING REVIEW: the 8.1 skeleton has no home for a served
+# artifact with no visual site; this labeled section is the honest completion rather
+# than a silent drop -- Andrew's call whether it stays in the grammar.
+unrendered_artifacts:
+  - artifact: json/benchmarks/benchmark_returns.json
+    state: live            # refreshed daily with the rendered benchmark set
+    retrieval_evidence: portal_lookup get 2026-08-10 (12511 bytes; data_as_of 2026-08-07)
+    consumer_evidence: "zero frontend callers: grep getBenchmarkReturns over portal/src -> only its portal-proxy.ts:757 definition"
+    fields_note: 'periods[10] + benchmark_compositions(5 models, e.g. "UST: 100% Bloomberg
+      0-1 Year Treasury") + per-benchmark returns; data_as_of role vintage'
+  - artifact: json/benchmarks/_smartx_model_daily.json
+    state: live
+    consumer_evidence: underscore-prefixed internal view (feeder output beside the rendered
+      benchmarks; no portal caller found)
+  - artifact: json/benchmarks/_smartx_model_monthly.json
+    state: live
+    consumer_evidence: same class as _smartx_model_daily
+  - artifact: platinum/mdpf/global/non-model-assets.json
+    state: live            # still published 2026-08-10T13:50:50Z
+    retrieval_evidence: portal_lookup get 2026-08-10 (85641 bytes; latest.date 2026-08-05;
+      fields latest{date, enterprise_total, model_aum, non_model_aum, non_model_pct} +
+      time_series[445]{period,...})
+    consumer_evidence: "page reads non_model_aua from the canonical timeseries instead
+      (ModelPortfolios.tsx:530-532 comment: legacy non_model fetch RETIRED Andrew-direct
+      ~0340Z); portal-proxy.ts:414 fetch is commented out"
+  - artifact: platinum/mdpf/cottonwood/account-units.json
+    state: live            # published 2026-08-10T13:50:49Z
+    retrieval_evidence: portal_lookup get 2026-08-10 (7767 bytes; fields firm_id,
+      generated_at, assignment_date, value_date role=vintage, basis
+      "bd-rebalancer-models + bd-datamining-values", total_unit_values[298],
+      by_model_unit_values(5))
+    consumer_evidence: "zero portal callers (grep account-units over portal/src: none)"
+  - artifact: platinum/mdpf/_manifests/** (6 keys incl. latest.json)
+    state: live
+    consumer_evidence: publisher run-manifests (ops metadata), not a portal surface
+  - artifact: platinum/mdpf/archive/** (444 keys -- aggregate_aua/YYYY-MM-DD.json x439,
+      aggregate_aua_timeseries.json underscore twin, etf_ownership_timeseries/{4 ETFs}.json)
+    state: frozen          # archived by Andrew's order 2026-08-06; NOT servable
+    consumer_evidence: BUCKET_ALLOWLIST.yaml excluded rows ("archive/** ... NOT servable";
+      underscore twins retired -- serve the hyphen files only)
+  - artifact: 'json/mdpf/** (10 keys: per-firm account-distribution x4,
+      aggregate-aua-timeseries x5 incl. bare, cottonwood/aum-metrics)'
+    state: frozen          # legacy pre-platinum-flip tree
+    consumer_evidence: CF rewrite /api/general/mdpf/ -> platinum/mdpf/ (comp-routes rewrites,
+      live 2026-08-10) -- no route serves this tree; portal-proxy.ts:504-516 records the flip
+  - artifact: json/yang/volatility_data.json
+    state: frozen          # 180B, LastModified 2026-01-14; superseded by json/macro/volatility_data.json
+    consumer_evidence: comp-estate model-portfolios MA-08 -- DEBT orphan-candidate,
+      frontend-orphan [CVO ground-truth]; no portal/src ref

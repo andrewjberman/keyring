@@ -1,0 +1,182 @@
+# ARTIFACT_CENSUS_MACRO.yaml -- axis: SERVED-ARTIFACT VISUAL+DATA COORDINATES (one intent:
+# where does each served artifact appear, and what fields does it carry). Rule 24: one
+# grain per level -- page(route) -> location(nav position) -> panel(visual container)
+# -> artifact(served object) -> field(datum). Template: ARTIFACT_CENSUS_MP.yaml
+# @0c1dae3da (RATIFIED @95b3e2852); pilot choices carried.
+# EVIDENCE DISCIPLINE (COO flag 20260810T191413Z): every panel/fetch citation below was
+# produced FIRST-HAND (Read/Grep at portal source by the census author) -- no subagent
+# evidence.
+#
+# DENOMINATOR (binding rule 3 -- COMPLETE token-walk 2026-08-10 via portal_lookup.py;
+# comp-estate macroeconomics thread: 9 chains, 6 in-scope):
+#   json/macro/  84 keys = 5 top-level (macro_data.json, macro_data_fred.json,
+#                vix_data.json, volatility_data.json, yield_curve_fred.json)
+#                + 79 timeseries/{slug}.json (one artifact FAMILY, slug-parameterized)
+#   RENDERED: macro_data.json + yield_curve_fred.json + volatility_data.json +
+#             the timeseries/{slug} family (modal, lazy per indicator click) = 4 types
+#   UNRENDERED: macro_data_fred.json (FRED-02 staging twin, frontend-orphan) +
+#               vix_data.json (superseded; getVIXData has ZERO callers) = 2 keys
+#   FROZEN adjacent: market-metrics.json.gz (04-15 vintage legacy, PORTAL_RETRIEVAL
+#               NEVER-SERVE-as-current row) -- residue section
+#   BORROWED: json/latest/manifest.json (SmartPanelFooter freshness) -- pointer only
+vertical: macroeconomics
+census_vintage: 2026-08-10
+census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4c)
+grounding: every artifact row carries live retrieval evidence (portal_lookup COMPLETE
+  read, bytes + vintage); every panel row carries component file:line read first-hand
+  (portal DEV tree HEAD 2026-08-10)
+
+pages:
+  - page: /macro          # src/pages/Macroeconomics/ (App.tsx route; nav "Analysis")
+    locations:
+      - location: {kind: header, name: "Always-on heatmap above tabs"}
+        panels:
+          - panel: "Macroeconomic Indicators"
+            render_evidence: panels/MacroHeatmap.tsx:136-143 (hand-rolled contentPanel
+              container, h3 title :141-143; Value/Position display toggle :154+; fetched
+              via bare useEffect getMacroData() :77 -- local useState, NOT React Query;
+              SmartPanelFooter sourceKey=data_pkl :357)
+            artifacts:
+              - artifact: json/macro/macro_data.json
+                source_type: s3
+                served_route: /api/general/macro/macro_data.json (getMacroData,
+                  portal-proxy.ts:1750-1751)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get macro macro_data.json 2026-08-10
+                  (197108 bytes, read COMPLETE; data_as_of 2026-08-07)
+                fields:
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: year, type: integer, example: 2026}
+                  - {name: groups, type: "list[12] of object", note: "indicator categories: Leading Indicator, ..., Treasury Yields, Market, Currency"}
+                  - {name: "groups[].category", type: string, example: "Leading Indicator"}
+                  - {name: "groups[].count", type: integer, example: 8}
+                  - {name: "groups[].indicators", type: "list of object", note: "~73 indicators total across groups"}
+                  - {name: "groups[].indicators[].name", type: string, example: "Leading Index"}
+                  - {name: "groups[].indicators[].bbg_ticker", type: string, example: "LEI YOY  Index"}
+                  - {name: "groups[].indicators[].unit", type: string, example: "%"}
+                  - {name: "groups[].indicators[].values", type: "object(months)", note: "trailing months keyed Sep..; cell = {value, percentile}", example: "Sep: {value: -3.2, percentile: 50.0}"}
+          - panel: "MacroTimeSeriesModal (drill-down overlay; untitled -- component name per rule 1)"
+            render_evidence: components/MacroTimeSeriesModal.tsx (imported
+              MacroHeatmap.tsx:23; opens on indicator click; fetch getMacroTimeSeries
+              :227-237, LAZY per click, imported :30 from endpoints/macro.ts)
+            artifacts:
+              - artifact: json/macro/timeseries/{slug}.json (FAMILY, 79 keys)
+                source_type: s3
+                served_route: /api/general/macro/timeseries/{slug}.json
+                  (getMacroTimeSeries, endpoints/macro.ts:26-28; slug derived from
+                  indicator name; tenor slugs 1m,3m,1y..30y + indicator slugs)
+                scope_family: 79 slugs, one schema (fields grounded on timeseries/10y.json)
+                vintage_field: 'as_of -- NOTE the field is as_of here, not data_as_of
+                  (third vintage-name variant in the estate; live value 2026-08-07); GZIP
+                  ContentEncoding'
+                state: live
+                retrieval_evidence: portal_lookup get macro timeseries/10y.json 2026-08-10
+                  (16205 bytes decoded from 2611 gzip, read COMPLETE)
+                fields:
+                  - {name: indicator, type: string, example: "10Y"}
+                  - {name: as_of, type: date, role: vintage, example: "2026-08-07"}
+                  - {name: data, type: "list[440] of object", note: "monthly history since 1990", example: "{date: 1990-01-31, value: 8.418}"}
+                  - {name: stats, type: "object(5 keys)", note: "min/max/percentile stats", example: "min: 0.5282, max: 9.022"}
+
+      - location: {kind: tab, name: "Yield Curve (tab id: yield-curve, default)"}
+        panels:
+          - panel: "USD Treasury Yield Curve"
+            render_evidence: tabs/YieldCurveTab.tsx:289-290 (PanelHeader; curve
+              checkboxes Current/1M/1Y-ago -- 1Y disabled unless FRED leg loaded
+              :313-325; fetches Promise.all([getMacroData(), getYieldCurveData()])
+              :179-181, FRED leg soft-fails to null; footer :474)
+            artifacts:
+              - artifact: json/macro/macro_data.json
+                canonical: pages[/macro] -> header -> "Macroeconomic Indicators"
+                note: Treasury Yields group only (current + 1M curves); SECOND independent
+                  fetch of the same key (heatmap useEffect + this tab's useEffect, no
+                  shared cache -- duplicate-request smell, banked)
+              - artifact: json/macro/yield_curve_fred.json
+                source_type: s3
+                served_route: /api/general/macro/yield_curve_fred.json
+                  (getYieldCurveData, endpoints/yield-curve.ts:46-48; the 1Y-ago
+                  comparison leg; producer fred-data-ingestion daily cron per comp-estate
+                  FRED-01)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get macro yield_curve_fred.json
+                  2026-08-10 (675314 bytes, read COMPLETE; data_as_of 2026-08-05)
+                fields:
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-05"}
+                  - {name: generated_at, type: datetime, example: "2026-08-05T23:02:29Z"}
+                  - {name: source, type: string, example: "FRED (Federal Reserve Economic Data)"}
+                  - {name: series, type: "list[10] of string", example: "US Treasury 1M"}
+                  - {name: preserved_tenors, type: "list[0]", example: "(empty)"}
+                  - {name: "{tenor series name}", type: "list[499] of object", note: "one top-level key per tenor; daily {date, value pct, return_1d/1w/1m}", example: "US Treasury 1M[0]: 2024-08-05, 5.52"}
+          - panel: "Yield Changes (1M)"
+            render_evidence: tabs/YieldCurveTab.tsx:479-482 (PanelHeader; 10-tenor bps
+              bar grid; footer :520)
+            artifacts:
+              - artifact: json/macro/macro_data.json
+                canonical: pages[/macro] -> header -> "Macroeconomic Indicators"
+
+      - location: {kind: tab, name: "Volatility (tab id: vix)"}
+        panels:
+          - panel: "AI Analysis"
+            render_evidence: tabs/VolatilityTab.tsx:714-719 (PanelHeader :715-716 with
+              VIX|MOVE IndexToggle; data arrives as props from the PAGE-level fetch
+              Macroeconomics.tsx:30-33 -- getVolatilityData EAGER on page mount even on
+              the other tab, smell banked)
+            artifacts:
+              - artifact: json/macro/volatility_data.json
+                source_type: s3
+                served_route: /api/general/macro/volatility_data.json (getVolatilityData,
+                  portal-proxy.ts:1836-1837; the LIVE volatility surface -- supersedes
+                  both vix_data.json and the frozen json/yang/ twin)
+                vintage_field: data_as_of
+                state: live
+                retrieval_evidence: portal_lookup get macro volatility_data.json
+                  2026-08-10 (1456607 bytes, read COMPLETE; data_as_of 2026-08-06;
+                  generated_at 2026-08-10T12:30Z -- its own fetcher cadence, not the
+                  yang pipeline)
+                fields:
+                  - {name: generated_at, type: datetime, example: "2026-08-10T12:30:28Z"}
+                  - {name: data_as_of, type: date, role: vintage, example: "2026-08-06"}
+                  - {name: data_sources, type: object, note: "vix: FRED VIXCLS; move: Yahoo Finance ^MOVE"}
+                  - {name: vix, type: "object(4 keys)", note: "current{current 15.15, regime Normal, percentile 34, change1D/-1W/-1M} + history"}
+                  - {name: move, type: object, note: "same shape for the MOVE index"}
+          - panel: "{VIX|MOVE} Current Level (dynamic title)"
+            render_evidence: tabs/VolatilityTab.tsx:727-731 (PanelHeader :728-729;
+              speedometer gauge + regime pill + percentile bar)
+            artifacts:
+              - artifact: json/macro/volatility_data.json
+                canonical: pages[/macro] -> tab Volatility -> "AI Analysis"
+          - panel: "{VIX|MOVE} Historical Time Series (dynamic title)"
+            render_evidence: tabs/VolatilityTab.tsx:745-747 (PanelHeader :746-747; period
+              select 1Y..Max; percentile reference lines)
+            artifacts:
+              - artifact: json/macro/volatility_data.json
+                canonical: pages[/macro] -> tab Volatility -> "AI Analysis"
+
+# Cross-page shared freshness artifact: json/latest/manifest.json (SmartPanelFooter,
+# sourceKey=data_pkl on heatmap + both yield panels). BORROWED -- owned by
+# pipeline-status; fields not censused here.
+
+# SERVED-BUT-UNRENDERED / FROZEN residue (MECE completion)
+unrendered_artifacts:
+  - artifact: json/macro/macro_data_fred.json
+    state: live            # published daily (fred-macro-ingestion cron 23:30Z)
+    retrieval_evidence: portal_lookup get 2026-08-10 (76493 bytes; data_as_of 2026-07-01;
+      source FRED)
+    consumer_evidence: comp-estate FRED-02 -- explicitly a parallel/STAGING artifact, NOT
+      a co-writer of macro_data.json; frontend-orphan [CVO ground-truth]; the
+      FRED-vs-Bloomberg merge is a pending integration decision
+  - artifact: json/macro/vix_data.json
+    state: live            # still published (LastModified 2026-08-10 12:30)
+    retrieval_evidence: portal_lookup get 2026-08-10 (787062 bytes; data_as_of 2026-08-06,
+      source FRED VIXCLS)
+    consumer_evidence: "getVIXData (portal-proxy.ts:1860-1861) has ZERO callers outside
+      its definition (grep over src, first-hand); the Volatility tab consumes
+      volatility_data.json (vix+move combined) instead -- superseded-but-still-published"
+  - artifact: market-metrics.json.gz (bucket top level)
+    state: frozen          # 04-15 vintage per PORTAL_RETRIEVAL NEVER-SERVE-as-current row
+    consumer_evidence: BUCKET_ALLOWLIST names it for market-overview queries WITH its real
+      vintage stated; it is the Market Overview surface's key, adjacent to (not owned by)
+      the macro vertical -- listed here because the allowlist routes catalog row-4 macro
+      dashboard queries at it

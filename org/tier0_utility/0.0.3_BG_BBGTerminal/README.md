@@ -41,7 +41,8 @@ must open in-situation (never answer from memory):
 
 - **Read-only everywhere.** No OWNPATHS lane exists for this serial and none should be
   added — it does no git work. Local session logs in `logs/` are its one file-write;
-  integrators sweep them into git if wanted.
+  `0.0.0_AB_MSTR` (either seat) is the named integrator and sweeps them into git
+  (OPAL_ANALYST.TO5, accepted 2026-08-10).
 - Bloomberg: VIEW only, never downloads/exports (data-license quota — Andrew-direct).
 - Vendor egress (ycharts etc.): held behind Andrew's per-use word like everywhere else.
 
