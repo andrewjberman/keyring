@@ -15,7 +15,7 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
 | L-A code cp | 0.4.0_DS_ClientPlatform | 2-file cp to s3://opal-data-mdpf/code/scripts/gold/: dim_mdpf_aggregate_aua_timeseries.py + build_mdpf_spine.py (measured invoke set; NO trio mint) from @bf74d031c1; then comp-pipescript deployed check | **DONE** 025153-025157Z (COO-validated; see LEG CLOSES) |
 | L-B cadence apply | 0.7.0_AE_CloudOps | RP-W3: mirrors ahead of floor; floor → 13:30Z; pulls → 13:02Z; cutover-gap plan STATED pre-apply; targeted apply, plan READ (no daily-aua row possible — declaration removed by W5b); RP-W4 selector apply may ride before/with | **DONE** applied ~0210-0224Z (CTO applied-truth 0-drift; see LEG CLOSES) |
 | L-C QA read | AE fires, AE+DS read | ONE ad-hoc cycle post-L-A/L-B: (1) four scopes emit / which errored, (2) inflection legs carry corrected vintage, (3) inflection build reads zero smartx/** keys. FENCE: output never published, never the bar, discharges no acceptance | FIRED 0258Z; item-2 FAIL-as-measured (wrong-code-channel, see AMENDMENT); RE-FIRES once post-L-D |
-| **L-D code-channel remedy** (ADDED 031xZ; **SHAPE AMENDED 0318Z ANDREW-DIRECT**, see AMENDMENT II) | design 1.0.0_SA_CTO → build+deploy 0.7.0_AE_CloudOps | ~~private lambda-artifacts re-pin~~ **SUPERSEDED by Andrew-direct (via CTO 031808Z), VERBATIM: *"the remedy is handle this in a canonical bucket and colocate in a relevant place like opal-data-assets"*.** Content UNCHANGED @bf74d031c1; artifact HOME = canonical bucket colocated in opal-data-assets (attacks the 3-location code-split root). CTO finalizing exact prefix + confirming shape with Andrew → routes precise path to AE → commit → safe-apply → verify live CodeSha256 CHANGED from XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= + LastModified tonight. Rule-17b-ALIGNED but a REMEDY Andrew directly ordered, NOT a migration inferred from 17b | OPEN (AE held off the private-bucket path; COO 031158Z GO shape SUPERSEDED) |
+| **L-D code-channel remedy** (ADDED 031xZ; **SHAPE AMENDED 0318Z ANDREW-DIRECT**, see AMENDMENT II) | design 1.0.0_SA_CTO → build+deploy 0.7.0_AE_CloudOps | ~~private lambda-artifacts re-pin~~ **SUPERSEDED by Andrew-direct (via CTO 031808Z), VERBATIM: *"the remedy is handle this in a canonical bucket and colocate in a relevant place like opal-data-assets"*.** Content UNCHANGED @bf74d031c1; artifact HOME = canonical bucket colocated in opal-data-assets (attacks the 3-location code-split root). CTO finalizing exact prefix + confirming shape with Andrew → routes precise path to AE → commit → safe-apply → verify live CodeSha256 CHANGED from XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= + LastModified tonight. Rule-17b-ALIGNED but a REMEDY Andrew directly ordered, NOT a migration inferred from 17b | **DONE** two applies (0318Z code swap + 0329Z canonical re-home), CTO-VERIFIED 033621Z all discriminators |
 
 ## PRE-REGISTERED READINGS (decided before evidence)
 - QA read shows scopes emitting but FEEDERS STILL FROZEN → EXPECTED (separate WS-lambda mechanism,
@@ -202,9 +202,68 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   (their implementation, their label-grain read already in flight) — verdict lands before window
   close; restatements are TRANSPARENCY, and transparency needs a reader to be real.
 
+## L-C COMPLETE (DS item-2 re-read 033615Z, COO-validated) — window close waits ONLY on CTO
+- **ITEM-2 RE-READ: PASS, full label grain** (re-fire run 033045-033146Z, 12/12, errors=[]):
+  custody[08-07]=209,373,343.50 == oracle · model_aua[08-07]=145,329,103.38 == oracle ·
+  custody[08-04]=209,431,383.43 at its TRUE Tuesday · the old mislabeled 208,325,960.35 now at
+  EXACTLY ONE label (08-06, its true day; full 441-date vector searched, not just anchors) ·
+  label 08-05=None (orion gap at true label — the landed-code discriminator) · sv=frontier, lag=0
+  truthful, tdb=2 Monday convention · aum-metrics sums tie to the cent. APPLIED leg independently
+  re-confirmed 032924Z: sha CHANGED + env MDPF_GOLD_COMMIT=bf74d031c1 (full hash).
+- **PRECONDITION PRECISION (DS):** tonight the 13:30Z "sha changed + POST values" precondition is
+  satisfiable AS WRITTEN. **FUTURE re-pins under the runtime-pull architecture move the ENV STAMP
+  only (sha stops discriminating)** — any future window's precondition must key on env stamp +
+  behavioral discriminators. Carried forward so the next window does not inherit tonight's oracle.
+- **AUTHORITY STAMPED IN-BAND (input to the open CTO validation):** the artifact meta itself carries
+  the rekey authority chain — CTO three conditions 234639Z + **Andrew-direct pull-forward
+  2026-07-29** — and the restated delta 5,299,757.63 surfaced in-band (ties: 139,213,957.62 −
+  133,914,199.99). DS's read: real building, not error-masking.
+- **NAMED-READER DISCHARGE (COO ruling): at GLANCE grain** — authority-stamped + delta-surfaced +
+  arithmetic-consistent. The DEEP rekey adjudication (is the chosen "earliest" itself clean of the
+  CRO~A-characterized retry-net defect) is DELIBERATELY LEFT on CTO's causation thread where the
+  mechanism context lives — commissioning a parallel deep read from a crash-recovered DS seat would
+  duplicate, not verify. The serving-basis condition on the 12/12 FULL-PASS branch (Amendment III)
+  covers the risk.
+- **RESIDUE (DS → CTO, post-window):** the estate now carries TWO LIVE CODE CHANNELS for the same
+  mdpf gold scripts (runner s3://opal-data-mdpf/code/scripts/gold/ · lambda
+  s3://opal-data-assets/portal/gold/mdpf/_code/) — tonight's defect class, rebuilt; plus the
+  Rule-17b grammar observation (code under a portal/gold serving prefix). CTO routing.
+
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
   standing (lanes commit, integrators push); tags proposed at close (Deployment Rule 6).
 
+## PROVENANCE RESOLVED + SHA-CLAIM SPLIT (CTO 033621Z · AE 033659Z)
+- **CTO ANSWER to the Amendment-III validation: face 12/12 is LEGITIMATE.** @bf74d031c1 implements
+  **Andrew's 08-10 point-in-time ruling** (earliest chosen; restatements surfaced, never chosen);
+  the 0258Z refusal was the OLD pre-ruling package. CTO's open Andrew call is the SEPARATE C-1 track
+  (whether custody VALUES in the settle window should track the restatement) — does not gate this
+  window. **The 12/12 FULL-PASS branch's provenance condition is SATISFIED IN ADVANCE.**
+- **CLOSE-WORDING GUARDRAIL (CTO, adopted verbatim in the close below): 12/12 is a BUILD-success +
+  LABEL-correctness bar, NOT a value-settledness attestation** — the point-in-time choice serves the
+  earlier/less-settled value on a collision (133.9M chosen over the 139.2M restatement) BY RULING,
+  with the delta surfaced. Never read the pass as "all served values settled-correct."
+- **SHA DISCRIMINATOR = TWO CLAIMS, TWO APPLIES (AE/DS precision, for the 13:30Z reader):** apply 1
+  ~0318Z (private-bucket, pre-supersession): sha CHANGED XuLlClWT…→t0w3vTNV… = the CODE SWAP; apply 2
+  ~0329Z (canonical re-home): sha UNCHANGED = same bytes, new home. Both correct; different claims.
+  FUTURE re-pins (runtime-pull architecture): sha stops discriminating — env stamp + behavioral
+  discriminators are the frame.
+
 ## CLOSE
-- Closed: PENDING
+- **Closed: 20260811T034xZ by 2.0.0_SA_COO (window caller).** Close condition satisfied: every leg
+  landed (L-A · L-B · L-D two-apply) + the post-window QA read complete (L-C two fenced cycles;
+  item-1 read, item-2 PASS full label grain, item-3 PASS both legs). All leg evidence applied-truth
+  grounded and cross-verified (DS/AE execution, CTO independent verification, COO validation).
+- **What this close ASSERTS:** the RP-W1/W2/W3 window scope is complete — reviewed code @bf74d031c1
+  executing from the Andrew-ordered canonical home; ruled cadence live (0-drift); labels correct per
+  the 08-10 point-in-time ruling; restatements surfaced in-band. **What it does NOT assert:**
+  value-settledness (C-1, open at Andrew via CTO) and the 13:30Z unattended bar — which remains the
+  ONLY RP-W3 completion-bar evidence, adjudicated by COO against the Amendment-III table (provenance
+  condition pre-satisfied; executing-code precondition satisfiable as written tonight) and recorded
+  as an ADDENDUM to this ledger after the cycle.
+- **Residuals carried out of the window (owners named):** 13:30Z bar adjudication (COO, addendum
+  here) · C-2/C-3 producer-fix routing to DS/AE (COO, banked 032240Z) · C-1 conversion policy
+  (CTO→Andrew, live) · two-live-code-channels + 17b grammar observation (CTO, DS-flagged 033615Z) ·
+  comp-pipescript lambda-channel blindness instrument gap (CTO, COO-flagged 031216Z) · cottonwood
+  deep rekey adjudication (CTO causation thread, deliberately not parallel-read) · tags + integrator
+  push (executing at close, recorded below when done).
