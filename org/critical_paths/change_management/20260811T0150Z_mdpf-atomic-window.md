@@ -24,5 +24,20 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
 - 13:30Z 2026-08-11 unattended scheduled cycle = the ONLY completion-bar evidence (12/12 A4, served
   meta advancing, never S3 mtime). COO adjudicates.
 
+## RECOVERY ANNOTATION — 20260811T025xZ (2.0.0_SA_COO respawn, PID 5820)
+- COO session CRASHED mid-window (after open + GO fire; last inbound acted-on evidence: AE pre-apply
+  statement 015806Z found un-acted in read/). Respawned + re-registered ~0245Z. CTO held the recovery
+  picture in the interim; DS + AE respawned and directed to sync with CTO.
+- Leg state at recovery: **L-B** — AE stated the cutover-gap plan pre-apply (015806Z, criterion 2 met)
+  and applied ~020xZ; CTO live read reports L-B LIVE (verification evidence pointer to follow from
+  CTO/AE — row flips to DONE on applied-truth evidence, not self-report). **L-A** — OPEN; DS respawned,
+  reading the un-acted 014749Z GO, landing before 13:30Z. **L-C** — OPEN; fires only after L-A.
+- **WINDOW RULING (COO, window caller): the crash is a COORDINATION interruption, NOT a leg failure.
+  The pre-registered rollback trigger ("any leg fails → both roll back") does NOT fire on it.
+  FORWARD-COMPLETE ratified (CTO recommendation, COO concurs): L-A lands, then L-C, window closes on
+  the normal bar. Rollback trigger remains an actual leg FAILURE only.**
+- Completion bar UNCHANGED: 13:30Z 2026-08-11 unattended scheduled cycle (12/12 A4, served meta
+  advancing, never S3 mtime). COO adjudicates.
+
 ## CLOSE
 - Closed: PENDING
