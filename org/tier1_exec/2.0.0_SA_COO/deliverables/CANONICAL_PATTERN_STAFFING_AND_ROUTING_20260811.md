@@ -1669,6 +1669,47 @@ I carried **"platinum moves ~$606K → ~$128K"** — **both frozen-gold QA reads
 CERTIFIED — CVO cert scope. The total is arithmetic; the REASONS are not yet measured, and nobody quotes the
 split as fact.**
 
+## 4ab · ⚡ BOTH REFACTOR GATES CLEARED — **P0–P4 DECOMPOSED**. Two distinctions kept, one scope flagged
+
+**Gate 1 — Andrew ~0754Z, verbatim: *"Option A, proceed."*** `opal-data-assets/portal/gold/{product}/{scope}`
+is the canonical gold home · advi joins mdpf · portal-v2 converges **serving-only** · **zero mdpf
+migration.** Recorded @d6f48c459f; CRO~A's F-1 retired; the 17b law-line routed to CTO.
+**Gate 2 — CVO VERIFIED-WITH-AMENDMENTS @4e02646c97, ZERO dispositions refused**; all four amendments folded
+verbatim @6899fb2430.
+
+### ⛔ TWO DISTINCTIONS I AM KEEPING SEPARATE, BECAUSE CONFLATING THEM FIRES THE WRONG DECOMPOSITION
+
+1. **THE REFACTOR (P0–P4) IS GO. THE 49F BUILD DECOMPOSITION IS STILL STAGED.** Different specs, different
+   gates: the refactor's were CVO verify + the naming line (**both now clear**); the 49F build's gate is
+   **Andrew's FINAL word on the holistic tri-firm view**, and A/B/C/D is only **ratified-TENTATIVE**.
+   *Two decompositions, one authorized, one not — and they sit three paragraphs apart in my own register.*
+2. ⚠ **"ZERO MDPF MIGRATION" NEEDS ITS SCOPE NAMED — I am NOT resolving it by inference.** Read narrowly it
+   means *the gold ARTIFACTS need no migration* (mdpf gold is already at the canonical root, so advi simply
+   joins it). **Read broadly it would descope the X-i/X-ii/X-iii producer re-homes and P4's kill act —
+   acts AE is executing RIGHT NOW.** Those are **different planes**: Option A settles the **GOLD HOME**;
+   the cutover acts move **PRODUCERS AND FEEDS out of the legacy `opal-data-mdpf` bucket.**
+   **Flagged to CRO + CTO for one naming line. Until it lands I am treating the narrow reading as
+   operative** (gold artifacts only) **and X-i..X-iii continue** — because stopping in-flight acts on my own
+   broad reading of a four-word phrase is precisely the inferred-hold failure.
+
+### THE DECOMPOSITION — owner · trigger · named precondition
+
+| act | owner | TRIGGER | NAMED PRECONDITION |
+|---|---|---|---|
+| **P0** naming + Group-W wiring page | CTO (naming) + me (registry act) | ✅ **NOW — both substrates already landed** @d6f48c459f | Page carries five atoms per leg, dispatch-path census per builder, event-accelerates-clock-floors on every row. **My TO rows CITE it per the page's own acceptance clause** — not paraphrase it |
+| **P1** gold builders rebuilt parquet-writing | DS (scripts) + AE (infra) | ⏸ **remediation waves COMPLETE** (X-i..X-iv + the register) | **Tonight's cutover work is P1's gate**, not a parallel list. ⚠ **L2 no-data-day contract line is PROPOSED at CTO** (concur expected) — **binds converter TOs only**, so it gates P1's converter rows and nothing else |
+| **P2** port window: publisher input flip + smartx repoints + config re-keys | DS + AE | ⏸ after P1 | ⛔ **PER-FAMILY ATOMICITY (CVO amendment): ONE WINDOW PER SERVED FAMILY, or the interim old-writer NAMED WITH ITS END CONDITION.** 9 families ⇒ **9 windows.** ⚡ **My never-widen co-sign is required PER FAMILY** — CPR-4's five-condition set is the template. ⛔ **M7's publisher is a FAMILY OF TWO** (live + `mdpf_egress_publisher.tf` mid-wo2) — **the format flip sequences WITH that transition as ONE ORDERED ACT**, never independently |
+| **P3** deploy-plane repoint: DS map + `_code` home | DS (map) + AE (verify) | ⏸ after P2 | **CPR-5's second-target row is the precursor** — the deploy map already missed a home once tonight |
+| **P4** drains + negative probes + **T5.B `opal-data-mdpf` kill** | AE | ⏸ **LAST**, after P3 | ⛔ **HIGHEST BLAST IN THE PROGRAM.** Bucket measured **LOAD-BEARING LIVE** tonight. **Migrate-before-kill is supplied by the spec and is the only condition under which the act is legitimate.** Kill fires only after the drains **and** the negative probes read clean |
+
+**CVO AMENDMENT BINDING ON M1/M8 EQUIVALENCE CHECKS — worth its own line because it kills a method:**
+**equivalence is SAME-STATE PAIRED PULLS or EX-ANTE TOLERANCE. The at-rest method is REFUSED — CVO proved
+the same-state pair DOES NOT EXIST at rest.** *An equivalence check comparing two artifacts that were never
+in the same state is a comparison of two different moments wearing the clothes of a parity test.*
+
+**NOT YET DISPATCHED — P0's registry act is mine and fires next; P1–P4 wait on their named triggers.**
+**The 13:30Z bar keeps priority.**
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
