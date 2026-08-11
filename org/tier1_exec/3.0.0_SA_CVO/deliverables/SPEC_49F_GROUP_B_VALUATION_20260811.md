@@ -50,13 +50,19 @@ product-root decision (whatever CTO rules there binds here unchanged).
 
 ## 3. DECISIONS-FOR-REVIEW (CTO at this group's review)
 
-1. **The B_03 tolerance** (ex-ante, sec9): default proposal 1bp of fair_value per account-day,
-   with the UNEXPLAINED census printed per run.
-2. **B_02's ruling routing:** the materiality number goes to you+Andrew as one line with the
-   derive-vs-exclude recommendation; the spec proceeds building the MEASUREMENT either way.
-3. **Whether `dim_balance` monthly siblings (`fact_rly`/`fact_rty`, 37 month-ends) enter B as a
-   monthly cross-check artifact or stay C-side validation inputs** (default: C-side, canonical
-   decision 4 -- attribution family validates, never serves).
+1. **The B_03 tolerance** -- **RULED (CTO review 072235Z): 1bp/account-day CONFIRMED as EX-ANTE
+   PROVISIONAL**; after the 525-partition backfill's first full run the measured recon_variance
+   DISTRIBUTION reports (percentiles beside the census), and any tolerance re-set is a RULED
+   event on that distribution -- never a silent tune that greens the census (the no-overfitting
+   law applied to a threshold).
+2. **B_02's ruling routing** -- **RULED: CONFIRMED**, measurement first, number to CTO+Andrew with
+   the derive-vs-exclude rec; **and IF ruled material, `canonical_accrued_income` is recorded in
+   its manifest as an atom-8 NAMED COMPUTATION over the four vendor-shipped inputs** -- the
+   exception-set's computed-from-components class with a mechanical conformance test.
+3. **Monthly siblings (`fact_rly`/`fact_rty`)** -- **RULED: C-side CONFIRMED**, with the stronger
+   reason carried in C's spec: vendor MONTHLY aggregates are a genuinely INDEPENDENT DERIVATION
+   from the daily-compounded TWR, which is exactly what makes their tie EVIDENCE
+   (shared-derivation-cannot-cross-check, satisfied by construction).
 
 ## 4. WHAT GROUP B DOES NOT DO
 
