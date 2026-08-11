@@ -295,7 +295,7 @@ def cmd_close_leg(args) -> int:
         if leg["id"] == args.leg_id:
             leg["proof"] = args.proof
             leg["closed_at"] = _ts()
-            state["log"].append(f"{_ts()} LEG {args.leg_id} closed: {args.proof[:120]}")
+            state.setdefault("log", []).append(f"{_ts()} LEG {args.leg_id} closed: {args.proof[:120]}")
             _save(state)
             _write_entry(state)
             open_left = [leg["id"] for leg in state["legs"] if not leg.get("proof")]
@@ -315,7 +315,7 @@ def cmd_close(args) -> int:
         return 2
     state["status"] = "CLOSED -- nothing stranded"
     state["closed_at"] = _ts()
-    state["log"].append(f"{_ts()} CLOSED -- all {len(state['legs'])} legs proven")
+    state.setdefault("log", []).append(f"{_ts()} CLOSED -- all {len(state['legs'])} legs proven")
     _write_entry(state)
     _state_path(args.slug).unlink()
     print(f"OK: CLOSED deploy ledger '{args.slug}' -- all {len(state['legs'])} "
@@ -334,7 +334,7 @@ def cmd_hold(args) -> int:
         state.pop("held_at", None)
         state.pop("last_held_nudge_at", None)
         state["status"] = "OPEN"
-        state["log"].append(f"{_ts()} HOLD RELEASED -> OPEN" + ("" if had_gate else " (was not held)"))
+        state.setdefault("log", []).append(f"{_ts()} HOLD RELEASED -> OPEN" + ("" if had_gate else " (was not held)"))
         _save(state)
         _write_entry(state)
         print(f"OK: HOLD released on '{args.slug}' -> status OPEN "
@@ -361,7 +361,7 @@ def cmd_hold(args) -> int:
     state["gate"] = trial["gate"]
     state.setdefault("held_at", _now().isoformat())    # preserve the original hold-start on a re-hold
     state["status"] = HELD_STATUS
-    state["log"].append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
+    state.setdefault("log", []).append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
     _save(state)
     _write_entry(state)
     print(f"OK: '{args.slug}' -> {HELD_STATUS} (gate={args.gate_type}/{args.gate_ref.strip()}).\n"
@@ -475,6 +475,30 @@ def _has_close_marker(md_path: Path) -> bool:
         if re.match(r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|closed):\*\*\s*\S",
                     line, re.IGNORECASE):
             return True
+    return False
+
+
+def _has_terminal_status_anywhere(md_path: Path) -> bool:
+    """True if ANY status-grammar line in the doc leads with a terminal token --
+    the CLOSE-BLOCK-at-foot shape (CTO GO 144651Z fix b): a doc that closes itself
+    in a '## CLOSE BLOCK' while the header Status line still reads OPEN fired a
+    false gate-bypass RED every cycle (the a2-egress instance, header never
+    flipped). Matches the SAME _STATUS_LINE_PATTERNS grammar as _md_status --
+    NEVER bare prose containing the word CLOSED (the LD-0274 matcher class; a
+    mention is not a status). Used ONLY by the unindexed scanner, whose stated
+    bias is toward terminal; _md_status keeps first-line semantics everywhere
+    else (drift detection wants the DECLARED state, not the best one)."""
+    try:
+        text = md_path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    for line in text.splitlines():
+        for pat in _STATUS_LINE_PATTERNS:
+            m = pat.match(line)
+            if m:
+                val = m.group(1).strip().rstrip("*").strip()
+                if val and _is_terminal_status(val):
+                    return True
     return False
 
 
@@ -618,6 +642,9 @@ def _unindexed_open_ledgers(covered: set) -> list:
             continue  # CLOSED / COMPLETE / ROLLED-BACK status -- nothing stranded
         if _has_close_marker(md):
             continue  # explicit close-date marker (globgrph-style hand ledger)
+        if _has_terminal_status_anywhere(md):
+            continue  # CLOSE-BLOCK-at-foot shape: a terminal status line ANYWHERE
+            #           in the doc's own status grammar (fix b, CTO GO 144651Z)
         if status is None:
             reason = "no **Status:** and no close-date marker (open or malformed)"
         else:

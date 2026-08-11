@@ -1,21 +1,24 @@
-# Deploy: emitter-wo4c-cadence-acceptance
+# Deploy Completion Record
+**Date opened:** 2026-07-28T23:38:00+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260811T144754Z
+**Deploy:** WO-4c: roster-declared cadence-aware partition acceptance in opal-assets-daily-emitter (CTO ruling 223619Z). accept latest partition <= run_date within (declared cadence + 1 td slip), consumed identity stamped on the row; Group-A fix: T1_SETTLED drops only the partition's own unsettled day, never a settled max-day; smartx/core_5/model legs accept settled days in-window. Roster VENDORED verbatim (no hardcoded cadences; re-vendor on change). Heals the zero-constituent blanks (c2 @T-1, eclipse @T-1); cot_models honest-absent beyond D+2+1 stays the outage signal.
+**Authored by:** 0.7.0_AE_CloudOps
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 1.5h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
 
-**Opened:** 2026-07-28T23:38Z by 0.7.0_AE_CloudOps · **Authority:** MDPF_RESET WO-4c as ruled by
-CTO 223619Z (accept latest ≤ run_date per roster-declared cadence + 1 td slip, identity stamped;
-never same-day from a T-1 feed; never re-phase to D+1).
+---
 
-Pre-deploy live smoke (read-only, 23:31Z): c2_custody(07-28) → $1,684,259,082.58 @07-27 lag 1
-`at_declared_cadence` (was ABSENT); inf_models → $141.88mm @07-27; inf_total → @07-28 lag 0;
-smartx settled_max_day 07-27 (was T-2 via the max-day drop); cot_models honest-absent (pair
-series ends 07-22, 4 td > D+2+1 window — the bounded refusal working as the outage signal).
+## Manifest (every leg must carry proof before CLOSE)
 
-VENDORED ROSTER: cadences read from packaged `partner_roster.json` (verbatim copy of the one
-repo authority; AE-base re-vendors on change — same ownership as the runner S3 copy).
-Disclosed design residual: `vintage_state` stays derived from raw as_of (rolled_forward at T-1)
-to keep the G6 alarm/staleness contract in sync; the cadence fields
-(`cadence_state`/`cadence_normalized_lag_td`) carry the PIN-3 "T-1 IS fresh" judgment. Flipping
-the enum itself couples to the G6 checker and is flagged to CTO, not done unilaterally.
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | git | sources + vendored roster + manifests committed | hash pushed | COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 2026-08-04 under CTO split-in-time authority 044318Z -- entry 20260804T1800Z_emitter-wo4c-legb-apply reads Status CLOSED 18:04Z all-legs-proven, freeze condition VERIFIED discharged; commits @ad641d1960 + @6da43f1c6c + @bf502e3c4e, tag opal-assets-v0.37.0, live CodeSha256 EQUAL at apply, post-lineage redeploys atop it. This sentinel was a stale DUPLICATE (opened 07-28, never learned its WO completed under a successor entry -- drift class instance three). NOT superseded, NOT rolled back: COMPLETED | CLOSED 20260811T144754Z |
+| L2 | activation | build (4-module zip) + targeted safe-apply module.emitter + 0-diff + live CodeSha256 + tag | apply + 0-diff + live config | COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 2026-08-04 under CTO split-in-time authority 044318Z -- entry 20260804T1800Z_emitter-wo4c-legb-apply reads Status CLOSED 18:04Z all-legs-proven, freeze condition VERIFIED discharged; commits @ad641d1960 + @6da43f1c6c + @bf502e3c4e, tag opal-assets-v0.37.0, live CodeSha256 EQUAL at apply, post-lineage redeploys atop it. This sentinel was a stale DUPLICATE (opened 07-28, never learned its WO completed under a successor entry -- drift class instance three). NOT superseded, NOT rolled back: COMPLETED | CLOSED 20260811T144754Z |
+| L3 | exercise | re-emit 2026-07-28: _total__partner_aua transitions from zero_constituent_total-ABSENT to a MEASURED total (c2 @07-27 + inf_models @07-27), cadence fields on rows; the before/after pair vs the 4a exercise is the joint acceptance evidence | invoke result + DDB row reads | COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 2026-08-04 under CTO split-in-time authority 044318Z -- entry 20260804T1800Z_emitter-wo4c-legb-apply reads Status CLOSED 18:04Z all-legs-proven, freeze condition VERIFIED discharged; commits @ad641d1960 + @6da43f1c6c + @bf502e3c4e, tag opal-assets-v0.37.0, live CodeSha256 EQUAL at apply, post-lineage redeploys atop it. This sentinel was a stale DUPLICATE (opened 07-28, never learned its WO completed under a successor entry -- drift class instance three). NOT superseded, NOT rolled back: COMPLETED | CLOSED 20260811T144754Z |
 
-## Completion
+## Log
 
-(open)
+- 20260811T144754Z LEG L1 closed: COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 202
+- 20260811T144754Z LEG L2 closed: COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 202
+- 20260811T144754Z LEG L3 closed: COMPLETED-UNDER-20260804T1800Z (CTO ruling 144651Z): this leg's work shipped in the ONE post-17:15Z emitter apply of 202
+- 20260811T144754Z CLOSED -- all 3 legs proven
