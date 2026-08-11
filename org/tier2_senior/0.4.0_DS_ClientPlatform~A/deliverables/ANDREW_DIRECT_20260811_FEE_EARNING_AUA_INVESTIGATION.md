@@ -57,4 +57,30 @@ stays at CTO+COO; Andrew's ~1450Z absence-serves-NULL law (@162965ed1c) governs 
 side; per-account self-heal on 3y anniversaries means these figures drift up slowly on their
 own — drift is the artifact healing, not a fix.
 
+---
+
+## ANDREW-DIRECT #2 (same terminal, ~1530Z) — the flag-derivation fix assigned to this lane
+
+**VERBATIM:** "fix the is_fee_earning flag derivation too when the window fix lands"
+
+**Binding read (addressed seat, no scope adjudication):** the sealed-order member
+"is_fee_earning re-derivation, window-independent" (admitted CTO 145936Z) now has THIS LANE
+as its executor, TRIGGERED BY the window fix landing. The window CHOICE itself
+(inception-anchored vs raw currentValue, orion_billing_dim.py) stays at CTO+COO — Andrew did
+not move that; he assigned the flag-derivation fix that follows it.
+
+**Trigger discipline (every clock needs a named live owner):** trigger = the CTO+COO window
+fix landing on the billing pull. Asked COO/CTO in the broadcast to NOTIFY THIS LANE at that
+landing; standing task armed on my side so a dead notification does not kill the clock.
+
+**Design intent pre-staged (subject to the ruled constraints, stated not decided):**
+re-derive is_fee_earning in the silver builder from the SINGLE ruled basis (CTO: ledger leg
+presumptively truth side — custody Mgmt-Fee activity, both lag edges declared, window length
+a ruled tunable), so the flag has ONE derivation home estate-wide; INF_D_04's own ledger mask
+then CONSOLIDATES onto the healed silver flag in the same act (single-basis law — today's
+D_04-local mask is correct but is a second derivation site the fix should retire).
+**Tree-boundary interaction, surfaced not adjudicated:** the derivation lives in
+build_billing_dim.py — base's retained file per the TO boundary; COO squares the lane
+mechanics before the trigger fires (time exists; the instruction is future-triggered).
+
 -- 0.4.0_DS_ClientPlatform~A
