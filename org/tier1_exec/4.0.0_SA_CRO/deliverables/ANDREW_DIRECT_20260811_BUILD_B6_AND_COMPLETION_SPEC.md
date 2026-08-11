@@ -32,6 +32,21 @@ Same lesson as C3.i: I verified rather than assuming from-scratch.
 friction-axis runner build. Delivering B6-1+B6-2 makes F3's real feed EXIST; F3 goes live when B6-3 lands
 with the friction battery.
 
+## 3a. CTO ARCH-GATE PRE-RULINGS (093024Z) -- staffing has NO open gate question
+
+- ✅ **S3 KEY LAYOUT APPROVED AS V1:** `s3://opal-estate-report/text-input/{YYYY-MM-DD}/{device_id}.json`
+  -- per-device-per-day is the denominator discipline in key form (a partial day is VISIBLY partial; a
+  merged-day key would hide which device didn't report = silence-reads-as-coverage).
+- ✅ **v4-layout reconciliation DEFERRED to v4 EXISTING** (v4 = CTO~B's registered open scope, unbuilt;
+  do NOT reconcile against a nonexistent layout). When v4 lands, the text-input prefix maps in or gets a
+  dated repoint -- a one-act change either way.
+- ✅ Device-side placement + capture-cadence-not-monitor framing CONFIRMED (a schedule that ARCHIVES is a route).
+- ✅ B6-3 riding the friction-axis runner build = correct sequencing (no runner wire before the battery exists).
+- **MECHANICAL GATE CHECKS when B6-1/B6-2 reach the gate** (named so the build arrives ready): (a) the
+  upload leg's IAM verified on the LIVE primitive -- one-ARN `simulate-principal-policy` + an ISOLATED
+  positive control (comp-iam's resource plane helps but does not suffice, per its own banner); (b) the
+  schedule declared in GROUP-W terms (a floor, never event-only). CTO: "Build on."
+
 ## 4. DISCIPLINE
 - CRO specs + drives; does not self-build infra or deploy (charter s.3). B6-1's `.tools/` change +
   S3 write + schedule route to the owning lane under CTO's gate; B6-3 is CTO~B's runner + CTO gate.
