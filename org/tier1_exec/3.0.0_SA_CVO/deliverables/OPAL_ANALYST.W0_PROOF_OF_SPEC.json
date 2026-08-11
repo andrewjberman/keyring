@@ -12,23 +12,23 @@
     {
       "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/rectangle.final.json",
       "kind": "config_data",
-      "commit_or_etag": "cb4d65486f",
+      "commit_or_etag": "cb4d65486f..(this window)",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
-      "deploy_evidence": "A run artifact, not a deployable. NOT CONSUMABLE AS SSOT UNTIL THE c3-CORRECTION LANDS: it carries one deliberately planted coherence-violating cell per Rule 14(e). The consumable artifact is rectangle.final.certified.json, owed the moment the certification verdict is written."
+      "deploy_evidence": "A run artifact, not a deployable. NOT CONSUMABLE AS SSOT: mutant-1 was removed in cycle 5 as its seal required, and MUTANT-2 is now planted in cycle 6 for certification attempt 2. The consumable artifact is rectangle.final.certified.json, owed via a c7 correction patch the moment attempt 2's verdict is written. Under Rule 14(f) nothing here is citable as fact while the run is UNCERTIFIED."
     },
     {
       "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/run.json",
       "kind": "config_data",
-      "commit_or_etag": "cb4d65486f",
+      "commit_or_etag": "cb4d65486f..(this window)",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
-      "deploy_evidence": "Validates against ssot_establishment.schema.json#/$defs/run_manifest; carries the 4-cycle hole-census trajectory and method vintage d5eda6112f."
+      "deploy_evidence": "Validates against ssot_establishment.schema.json#/$defs/run_manifest -- verified by ACTUAL EXECUTION this window, after that same execution first FAILED on a custom _run_notes key (additionalProperties:false). Notes moved verbatim to a sibling RUN_NOTES.json. Carries the 6-cycle hole-census trajectory, method vintage d5eda6112f, and the certification_attempts record (attempt 1 VOID, attempt 2 pending)."
     },
     {
-      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/patches/ (c1 FILL, c2 VERIFY, c3 VERIFY, c4 VERIFY)",
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/patches/ (c1 FILL, c2 VERIFY, c3+c4 convergence, c5 CORRECTIONS + mutant-1 removal, c6 derived-figure fix + mutant-2 plant)",
       "kind": "config_data",
-      "commit_or_etag": "cb4d65486f",
+      "commit_or_etag": "cb4d65486f..(this window)",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
-      "deploy_evidence": "Every patch merged through ssot_validate; c3/c4 carry changes:[] with populated unchanged_examined, so the convergence no-op is an artifact rather than an assertion."
+      "deploy_evidence": "Every patch merged through ssot_validate; no hand-edited rectangle exists in this run. c3/c4 carry changes:[] with populated unchanged_examined, so the convergence no-ops are artifacts rather than assertions."
     },
     {
       "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/METHOD_READ.md",
@@ -42,7 +42,7 @@
       "kind": "doc",
       "commit_or_etag": "cb4d65486f",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
-      "deploy_evidence": "Sealed at PLANT time and committed in the same commit as the rectangle, so the disclosure cannot be retrofitted to whatever the certifier happens to find. Certifier instructed not to open it until their pass is signed."
+      "deploy_evidence": "Sealed at PLANT time and committed in the same commit as the rectangle, for BOTH mutants, so neither disclosure could be retrofitted to whatever the certifier found. That design is what made attempt 1's miss MEASURABLE instead of arguable -- the certifier said so themselves. Section 1 (mutant-1) is spent and now public; section 2 (mutant-2) is live and sealed."
     },
     {
       "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_ANALYST_MP_ATOM_DECOMP_CHARTER_20260811.md",
@@ -57,6 +57,13 @@
       "commit_or_etag": "cb4d65486f",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
       "deploy_evidence": "10 findings + the semantic pass summary + the two Plane-C riders carried to Andrew."
+    },
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/RUN_NOTES.json",
+      "kind": "doc",
+      "commit_or_etag": "(this window)",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "The run's narrative record -- method boundaries, instrument limits, trajectory read, certification attempts. Split out of run.json because run_manifest is additionalProperties:false and the schema has NO field for a run's narrative at all (method addendum M-7b). Nothing was dropped in the move."
     }
   ],
   "acceptance": [
@@ -65,8 +72,8 @@
       "criterion_verbatim": "Enumeration with denominator -- every route, panel, fetch and served artifact on /portfolios enumerated first-hand, each count stated WITH what it is a count OF.",
       "method": "command",
       "invocation": "aws s3 ls s3://opal-data-portal-v2/{platinum/mdpf/,json/benchmarks/,json/peers/,json/mdpf/,json/yang/,json/portfolios/} --recursive (CLI auto-paginated; counted client-side, never --query length() and never --no-paginate); plus source reads of portal/src/App.tsx:405-472 for routes and ModelPortfolios.tsx for panels.",
-      "output_evidence": "platinum/mdpf 468 (= 14 served + 444 archive + 10 _manifests) + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 487 keys. Route enumeration: /portfolios at App.tsx:408; catch-all Navigate to /market at App.tsx:470; /model-portfolios ABSENT. Served-plane membership listed key-by-key, 14 of 14 carrying publish stamp 2026-08-11T15:13:4xZ.",
-      "denominator": "487 live keys under the MP vertical, of which 16 census entities are the rectangle's entity denominator. THE CENSUS DECLARED 482 -- the 5-key delta is json/portfolios/**, absent from the census entirely (F-2), plus _manifests growing 6->10 because that family grows on every publish run (F-9).",
+      "output_evidence": "platinum/mdpf 468 (= 14 served + 444 archive + 10 _manifests) + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys. Route enumeration: /portfolios at App.tsx:408; catch-all Navigate to /market at App.tsx:470; /model-portfolios ABSENT. Served-plane membership listed key-by-key, 14 of 14 carrying publish stamp 2026-08-11T15:13:4xZ.",
+      "denominator": "491 live keys under the MP vertical (468+6+1+10+1+5, each prefix counted client-side), of which 16 census entities are the rectangle's entity denominator. THE CENSUS DECLARED 482. CORRECTED FROM A PROPAGATED 487: the per-prefix measurements were right and the SUM was wrong -- certifier-found (CTO~Z CERT-2). The delta to the census is json/portfolios/** (5 keys, absent entirely, F-2) plus _manifests growing 6->10 because that family grows on every publish run (F-9).",
       "status": "PASS"
     },
     {
@@ -94,8 +101,8 @@
       "invocation": "ssot_validate patch rectangle.final.json patches/c3__VERIFY_MEASURED... ; then patches/c4__VERIFY_MEASURED... ; then ssot_validate rectangle rectangle.final.json",
       "output_evidence": "run.json cycles: c1 {MEASURED 160} -> c2 {MEASURED 158, NOT_MEASURABLE 2} -> c3 {158/2} -> c4 {158/2}. Cycles 3 and 4 each emitted changes:[] with a populated unchanged_examined (11 and 17 rows), so each no-op is an ARTIFACT. Final: census 160 cells {MEASURED 158, NOT_MEASURABLE 2}, 0 violations.",
       "denominator": "160 of 160 cells in scope on both convergence rounds; 0 status changes on each.",
-      "status": "PASS",
-      "status_reason": "PASS, with the sequence stated honestly rather than smoothed: this run was FIRST COMMITTED AT status OPEN (cb4d65486f) with DRY explicitly NOT claimed, because cycle 2 had changed statuses and no zero-change round had been run. DRY was then EARNED by running cycles 3 and 4 -- not by relabelling. Cycle 3 swept by CONSTRAINT and cycle 4 by ENTITY ROW: a repeat of one lens would only re-run its own blind spots, so 'consecutive' is implemented as two DIFFERENT lenses. Cycle 3 was machine-checked against the rectangle rather than recited, and that check corrected two of its own first readings (an undiscriminating 'decommission' substring match reading 5 candidates where there are 2; a verdict tally of 4 where the machine count is 6 -- the latter propagated back as a correction to the findings deliverable). RESIDUAL: if the certification pass surfaces changes, DRY is falsified retroactively and the run reopens -- DRY asserts that the AUTHOR's measurement converged, not that the rectangle is correct."
+      "status": "FAIL",
+      "status_reason": "DRY WAS EARNED AT CYCLE 4 AND IS NOW FALSIFIED -- and this row is FAIL rather than PASS because the criterion asks about the run's CURRENT state, not about a state it once held. Cycles 3 and 4 were genuine consecutive zero-change rounds under different lenses (constraint sweep, then entity-row sweep), each emitting a changes:[] patch with a populated unchanged_examined. Then certification attempt 1 surfaced three real defects in my cells, exactly the outcome cycle 4's own record said would falsify DRY retroactively -- so cycles 5 (corrections + mutant-1 removal) and 6 (derived-figure fix + mutant-2 plant) both carry changes. run.json status is OPEN. DRY must be RE-EARNED by fresh zero-change cycles after attempt 2 closes and mutant-2 is removed; it is not being re-claimed here, and flipping this row back to PASS on the strength of cycles 3-4 would be citing a superseded state as the current one."
     },
     {
       "criterion_id": "C5",
@@ -111,7 +118,7 @@
       "criterion_verbatim": "Census reconciliation stated -- MP census ingested as input, every run-vs-census disagreement NAMED with the run's evidence (zero disagreements is valid and is stated explicitly).",
       "method": "manual_read_with_citation",
       "invocation": "Per-cell comparison of ARTIFACT_CENSUS_MP.yaml @0c1dae3da against this run's live and source grounding; disagreements retained in the cells and enumerated in the findings deliverable sec 1.",
-      "output_evidence": "FIVE disagreements named with evidence, NOT zero: (F-1) census page /model-portfolios vs the real route /portfolios at App.tsx:408, which led to a live defect at PipelineProgress.tsx:432; (F-2) json/portfolios/** 5 keys absent from the 482 denominator; (F-4) two state:live rows on objects frozen since 2026-06-01; (F-3) census says 'portal-proxy.ts:414 fetch is commented out' -- at source :414 is a commented-out PRIVATE variant and the live fetch at :417 is active and mispointed (right verdict, wrong mechanism); (F-8) aum-metrics census row enumerates 2 of 9 live top-level keys, omitting `total`.",
+      "output_evidence": "FIVE disagreements named with evidence, NOT zero: (F-1) census page /model-portfolios vs the real route /portfolios at App.tsx:408, which led to a live defect at PipelineProgress.tsx:432; (F-2) json/portfolios/** 5 keys absent from the 482 denominator (true live total 491, not the 487 this instance originally stated); (F-4) two state:live rows on objects frozen since 2026-06-01; (F-3) census says 'portal-proxy.ts:414 fetch is commented out' -- at source :414 is a commented-out PRIVATE variant and the live fetch at :417 is active and mispointed (right verdict, wrong mechanism); (F-8) aum-metrics census row enumerates 2 of 9 live top-level keys, omitting `total`.",
       "denominator": "16 of 16 census entries re-grounded; 5 disagreements across 4 of the 16 entries; all 5 routed to the census owner (0.5.0_AE_OpalETL~Z, ACKed 20260811T170009Z).",
       "status": "PASS"
     },
@@ -119,20 +126,21 @@
       "criterion_id": "C7",
       "criterion_verbatim": "run.json schema-valid with per-cycle hole census + method vintage.",
       "method": "schema_validation",
-      "invocation": "python -c jsonschema.validate(run.json, ssot_establishment.schema.json#/$defs/run_manifest)",
-      "output_evidence": "run_id portal-page-portfolios__20260811T1640Z matches the required pattern; status DRY (enum); 4 cycles each carrying {cycle, patches_applied, census}; package_vintage d5eda6112f = git log -1 --format=%h -- projects/ATOM_DECOMP.",
-      "denominator": "8 required run_manifest properties, 8 present.",
-      "status": "PASS"
+      "invocation": "python -c \"import json,jsonschema; s=json.load(open('projects/ATOM_DECOMP/skill/atomic-decomposition/references/ssot_establishment.schema.json')); d=json.load(open('.../run.json')); ref=dict(s); ref['$ref']='#/$defs/run_manifest'; jsonschema.validate(d,ref)\" -- ACTUALLY EXECUTED at 2026-08-11T17:2xZ, which is the point of this row's correction below.",
+      "output_evidence": "FIRST EXECUTION FAILED: jsonschema.exceptions.ValidationError: Additional properties are not allowed ('_run_notes' was unexpected) -- run_manifest is additionalProperties:false. AFTER THE FIX (notes moved verbatim to a sibling RUN_NOTES.json): 'run.json VALIDATES against #/$defs/run_manifest -- status OPEN | cycles 6 | artifacts 14'. run_id matches the required pattern; status is a valid enum member; 6 cycles each carrying {cycle, patches_applied, census}; package_vintage d5eda6112f = git log -1 --format=%h -- projects/ATOM_DECOMP.",
+      "denominator": "9 required run_manifest properties, 9 present; 0 additional properties (was 1).",
+      "status": "PASS",
+      "status_reason": "PASS ONLY AFTER A FIX, AND THE ORIGINAL ROW WAS FALSE. This row previously read PASS with an invocation string I had WRITTEN BUT NOT RUN. When I ran it, it FAILED: run.json had carried a custom '_run_notes' key since its first commit (cb4d65486f), and run_manifest is additionalProperties:false, so the file was schema-INVALID for as long as this row claimed it was valid. THIS IS THE WORST DEFECT IN THE RUN AND IT IS MINE ALONE -- not a wrong number, not a scoped test, but a RECORDED INVOCATION THAT WAS NEVER EXECUTED, in the machine-readable deliverable whose entire purpose is proving work was actually done, and in the one row a reader would least think to re-run because schema_validation reads as mechanical. It is the same class as the certifier's void pass -- a control reported as run when it was not run as reported -- and I found it only because a LATER edit to run.json forced me to execute the check for real. FIX: '_run_notes' moved verbatim to a sibling RUN_NOTES.json (nothing dropped); run.json now validates, exercised in both directions above (a real FAIL then a real PASS). METHOD ADDENDUM M-7b filed: run_manifest has no field for a run's narrative at all, which is what makes an author reach for a custom key and silently invalidate the file -- 14 more runs will each hit this."
     },
     {
       "criterion_id": "C8",
       "criterion_verbatim": "certification.json signed by 1.0.0_SA_CTO~Z, verdict NAMING ITS DISCRIMINATOR, planted mutant recorded and its detection recorded. A pass in which the mutant was not caught is VOID and is reported as void.",
       "method": "manual_read_with_citation",
       "invocation": "PENDING -- the certifier's act, not the author's. Rectangle-final notified to 1.0.0_SA_CTO~Z at 20260811T165747Z; they committed to running the pass same-turn.",
-      "output_evidence": "AUTHOR-SIDE PRECONDITIONS COMPLETE, which is the whole of my half: rectangle.final.json is DRY and validator-clean (0 violations); the mutant is PLANTED, is COHERENCE-class (the validator passes the rectangle, as it must -- no schema rule can express it), and its disclosure is SEALED AND COMMITTED AT PLANT TIME in MUTANT_SEALED.md at cb4d65486f so it cannot be retrofitted to whatever the certifier finds. Location deliberately undisclosed to the certifier per their own instruction. certification.json DOES NOT YET EXIST.",
+      "output_evidence": "ATTEMPT 1 RAN AND IS VOID. 1.0.0_SA_CTO~Z missed planted mutant-1 and self-reported the miss unsoftened (170704Z), naming the mechanism: their S1 test was scoped to zero-caller entities on the hypothesis that an S1 violation would be an unread artifact over-claiming; the plant was the opposite shape (a READ artifact over-claiming another's figure), so the test was STRUCTURALLY INCAPABLE of finding it and was still reported as a global S1 PASS over 9 of 16 entities. Their pass is retained as certification.attempt1.VOID.json; there is NO certification.json in the run package and that absence is the honest state. THE CONTROL WORKED: it detected a certification that would otherwise have been recorded as clean. ATTEMPT 2: mutant-2 planted in cycle 6, different field and different constraint class, sealed at plant time, at the certifier's explicit invitation to aim at their now-known blind spot. Attempts ACCUMULATE and do not replace one another.",
       "denominator": "N/A -- single certification act, not yet performed.",
       "status": "UNCOMPUTABLE",
-      "status_reason": "SELF-SIGNING IS AN EXPLICIT FAIL OF THIS CRITERION AND I WILL NOT MANUFACTURE A PASS FOR IT. C8 is satisfied by the CERTIFIER, and 1.0.0_SA_CTO~Z holds that pen by the MSTR~Z ruling of 20260811T163153Z and PRD v1.1 sec 9.4. Marking C8 PASS on the strength of my own preconditions would be precisely the author-certifier collapse the ruling exists to prevent. This row flips to PASS when certification.json lands signed by CTO~Z -- or is reported VOID if the mutant went uncaught, in which case the pass is re-run and recorded as a second attempt rather than replacing the first."
+      "status_reason": "STILL UNCOMPUTABLE, and now for a second reason. It remains the CERTIFIER's act and self-signing is an explicit fail of this criterion. Additionally, attempt 1 is VOID, so no valid certification exists: THE RUN IS UNCERTIFIED, and under Rule 14(f) an uncertified cell is not citable as fact -- which means nothing in this rectangle may be lifted into DATA_CATALOG v0.2 yet. This row flips to PASS only when a non-void certification.json signed by CTO~Z lands."
     },
     {
       "criterion_id": "C9",
@@ -158,7 +166,7 @@
     "mutant": {
       "description": "Rule 14(e) planted coherence-violating cell: one business_meaning cell rewritten in cycle 2 to attribute a rendered figure to an artifact the rectangle's own consumer_set cells show the portal does not read it from -- an S1 (plane coherence) violation. Chosen to be COHERENCE-class and NOT mechanically expressible: catching it requires a verifier holding the full rectangle and reading one entity against another, which is exactly the capability 14(e) tests. Disguised as an ordinary semantic enrichment with a plausible stated basis, because that is the realistic shape of a real semantic defect -- not an obvious error, but a confident sentence that promotes a supporting artifact into a central one. Sealed and committed at PLANT time (MUTANT_SEALED.md @cb4d65486f), so the disclosure cannot be retrofitted after the pass.",
       "expected": "ssot_validate passes rectangle.final.json with 0 violations (the validator structurally cannot see it) AND the human certification pass catches it by cross-entity coherence reading. A pass that misses it is VOID per Rule 14(e).",
-      "observed": "Limb 1 FIRED AS EXPECTED AND IS MEASURED: ssot_validate rectangle rectangle.final.json returns 0 violation(s) with the mutant present -- confirming the plant is genuinely coherence-class and not something the mechanical tier could have caught. Limb 2 (certifier detection) is PENDING; 1.0.0_SA_CTO~Z holds it and the location was not disclosed to them.",
+      "observed": "BOTH LIMBS NOW MEASURED, AND THE CONTROL CAUGHT A REAL FAILURE. Limb 1: ssot_validate passes rectangle.final.json with 0 violations WITH the mutant present, confirming the plant is genuinely coherence-class and beyond the mechanical tier. Limb 2: the certifier MISSED mutant-1 (mp.06.etf-returns business_meaning, S1 class) -- so attempt 1 is VOID per Rule 14(e) and the run is UNCERTIFIED. The mutant did exactly the job it exists to do: it detected a certification pass that would otherwise have been recorded as clean, and the scoped-test mechanism behind the miss (an S1 sweep over 9 of 16 entities reported as a global verdict) is now on the record instead of latent across the next fifteen runs. Mutant-1 removed in cycle 5 as its seal required. MUTANT-2 planted in cycle 6 for attempt 2, sealed at plant time, different shape.",
       "status": "FIRED-AS-EXPECTED"
     },
     "determinism": {
@@ -202,7 +210,8 @@
     "getNonModelAssets (portal-proxy.ts:417) is live uncommented code fetching /api/general/portfolios/non_model_assets.json, a key that does not exist (positive-controlled in a separate invocation). Zero callers today so it never fires -- a loaded gun, not a live bug. Routed, no action taken.",
     "json/portfolios/** is a THIRD legacy MDPF tree (beside json/mdpf/** and platinum/mdpf/archive/**) that no census or registry tracks -- 5 keys, frozen 2026-05-29..2026-07-27. Surfaced, not chased.",
     "The MDPF platinum publisher ran FOUR times on 2026-08-11 (08:42/10:25/14:20/15:13Z) against a scheduled cron(50 9 * * ? *) America/New_York and exactly one run/day on 08-07..08-10. Consistent with permitted ad-hoc QA runs during active main-fabric MDPF work; observed, not chased, no action taken.",
-    "comp-estate's model-portfolios thread reports LastModified 2026-06-15 for model_portfolio_benchmarks.json; the live object is 2026-08-11. The tool discloses its snapshot vintage, so this is its documented behaviour rather than a defect -- recorded because it was used for topology only and must not be read for freshness by the next 15 runs."
+    "comp-estate's model-portfolios thread reports LastModified 2026-06-15 for model_portfolio_benchmarks.json; the live object is 2026-08-11. The tool discloses its snapshot vintage, so this is its documented behaviour rather than a defect -- recorded because it was used for topology only and must not be read for freshness by the next 15 runs.",
+    "SELF-INFLICTED, recorded rather than quietly fixed: this instance's C7 row carried a schema_validation invocation I had WRITTEN BUT NOT RUN, reported as PASS. On actually executing it, run.json FAILED (a custom _run_notes key against additionalProperties:false) and had been schema-invalid since its first commit. Same class as the void certification -- a control reported as run when it was not run as reported. Fixed, exercised in both directions, and the C7 row now carries the failure rather than the tidy outcome."
   ],
   "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-11/OPAL_ANALYST_W0_mp_atom_decomp_1626-1715Z.md",
   "compiler_tools": [
