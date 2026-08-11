@@ -134,8 +134,10 @@ conformance test in §3 are the archetype's pattern contract; MDPF-side surfacin
 **Naming law for this program (CTO ruling 0533Z, COO-surfaced): "49F" alone is AMBIGUOUS — it
 appears against 08242234 (MDPF ingest path) and 08335338 (ADVI archetype). The full 8-digit account
 + the PRODUCT is the only unambiguous form in any dispatch, spec row, or finding.** And the C-n
-namespace is RECON-ONLY (CRO base's coverage chapters); CRO~A's scheduling-jam findings rename to
-JAM-C1..C3 (two grains were sharing one label across seats — Rule-24 hygiene one layer up).
+collision (two grains, one label, across seats — Rule-24 hygiene one layer up) is SETTLED per CRO's
+committed resolution @3833ce88d1, which supersedes this spec's 0533Z variant: recon chapters =
+RECON-1..RECON-7; the scheduling-jam findings KEEP C-1/C-2/C-3 verbatim (already in live DS/AE
+dispatches — relabeling dispatched work is the costlier direction, so the chapters moved instead).
 
 advi's INF-side work already has a measured spine: CRO~A's INF three-bucket map + refactor waves
 (03 §3). Sequence as ruled there: **W-E before Sunday 08-16 (hard date — else the 16 cancelled
