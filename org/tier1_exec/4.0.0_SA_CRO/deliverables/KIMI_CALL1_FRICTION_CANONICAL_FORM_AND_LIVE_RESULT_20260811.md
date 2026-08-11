@@ -76,6 +76,21 @@ honestly ("more work at a steady-high temperature"), flagging that the DIVERGING
 commit-volume alone. **So F2 direction should carry BOTH sub-signals and let the translation surface the
 split; a single forced verdict would have destroyed that insight.** 7/7 retained criteria held; 0 hard fails.
 
+## 4c. F4-FILE-SCOPING FIRE (increment 2, Andrew-sequenced) -- PASS
+
+F4 replaced with per-vertical file-scoped attribution (comp-cochange file data/mdpf): 38 files / 170
+touches / DS 88.8% (AE 12, SA 5, AB 2); 3 cross-type seams (the AE<->DS aggregate-AUA handoff).
+Prereg @KIMI_CALL1_F4SCOPE_PREREG_20260811.md. Telemetry 64.5s / completion 2112.
+
+Result held HEATING/DIVERGING and the model FLIPPED from discounting F4 to USING it:
+"Ownership is concentrated single-owner (DS 88.8% ...), a low cross-type contention signal with only
+minor seams on three files." **The sharpest insight of the three fires:** it noted F2 and F4 now AGREE
+(both mdpf-scoped, both consistent -> raises confidence) BUT "with F1 blind the HEATING read cannot be
+distinguished from SPREADING at estate level, capping confidence at MEDIUM." **The model itself
+identified F1 as the axis that resolves the remaining ambiguity** -- which is exactly Andrew's next
+sequenced axis. This validates that the battery COMPOSES (mdpf-scoped axes corroborate) and that the
+model correctly reasons about which BLIND axis matters most. 0 hard fails.
+
 ## 5. OPEN FOR ANDREW
 - **Confirm the design premise:** call #1 = Kimi TRANSLATES the deterministic battery -> friction
   characterization (STATE deferred per s.13). Built on this; redirect if wrong.
