@@ -1463,6 +1463,43 @@ disguise:
 > document" are different facts, and only the second one protects anybody. That is the same cross-record
 > parity I have been requiring of other seats all window.*
 
+## 4w · NEW SEAT `4.0.0_SA_CRO~B` (Andrew-launched) · and the A.2 gate: **dead in ruling, possibly live in record**
+
+**Andrew launched `4.0.0_SA_CRO~B` directly (@40ca707f6e)** for **e2e VALIDATION + FINALIZATION of the
+ontology / `comp-estate` / Kimi SVP / graph / comp-tooling** — because the coming large refactor is only
+manageable if the org is *"extremely easy to navigate and maintain on an infrastructural level"*: **"our
+tooling and graph have to be immaculate."** *That makes tooling quality a PRECONDITION ON THE REFACTOR, not
+a parallel nicety.*
+
+**SEATING MAP — no lane collision:** base CRO + `~A` on the RECON program (RECON-2..7, 49F/Inf archetype) ·
+**`~B` on the infra-finalize/validate thread.** `~B` does **not** dispatch or staff — **any TO decomposition
+a finding implies is MINE + CTO's, and I have taken that.** They coordinate around (never seize) CVO's
+SYSPARITY per-domain loop (LD-0318) and CTO's graph/tooling gates. **Surprise-channel discipline: one line,
+no chase** — *which has paid twice tonight; the two highest-value findings in this window arrived as
+one-line side notes on messages about something else.*
+
+### ⚠ THE A.2 GATE — `~B` flagged it to Andrew without adjudicating. My read: it is ALREADY DISSOLVED
+
+`~B`'s flag: *ADVI_PERFORMANCE requires NFRA_VELOCITY e2e-complete, but VELOCITY is suspended behind RCG and
+today's ordering does not reference it.*
+**`ITEM_0_LANDING_PLAN_20260810.md` §1 records it resolved:** the NFRA_VELOCITY row reads *"PENDING(on-hold)
+— both halves SUSPENDED behind RCG; **no longer gates ADVI (R-4)**."* **I am citing the record, not re-ruling
+it** — R-4 is Andrew's and `~B`'s flag to him stands on its own merits.
+
+> ⛔ **BUT THE DISCRIMINATOR IS A RECORDS QUESTION, AND IT IS THE EXPENSIVE KIND: was ADVI_PERFORMANCE's OWN
+> project record updated when R-4 landed?** If its doc still names the VELOCITY-e2e-complete dependency,
+> then we hold a gate that is **DEAD IN RULING AND LIVE IN RECORD — and the record is what a future agent
+> reads.** ** That is exactly how a dissolved gate gets re-manufactured: nobody decides to reinstate it;
+> someone reads the stale doc and holds. ** This window produced several records that outlived their
+> mechanism, and **this is the only one with a HOLD attached**, which is what makes it worth chasing.
+> **Routed to `~B` as a records check inside their own scope** — stale record ⇒ a records fix, no ruling
+> needed; genuinely-current-and-contradictory ⇒ a ruling question, where their flag already points.
+
+**Also relayed to `~B` so they cite rather than re-derive:** the three measured `comp-pipescript` blindnesses
++ the one declared boundary, `comp-estate`'s frozen census substrate, and that **`comp-iam gaps` is
+ACTION-ONLY so its silence on resource-grain changes carries no information** — **all now CVO's**, routed by
+Andrew ~0642Z (@c9be07b413).
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
