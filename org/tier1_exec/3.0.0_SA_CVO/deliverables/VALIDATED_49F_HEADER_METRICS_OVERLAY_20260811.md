@@ -5,6 +5,17 @@ Independently verified against the artifact (re-ran fit_harness --self-test myse
 
 ## VERDICT: TECHNICAL PARITY CLEARED. Kill-clear on this surface PENDING two non-technical gates.
 
+> **AMENDMENT 2026-08-11 ~1857Z (GATE 1 DISCHARGED -- this verdict was written ~1051Z, BEFORE the ruling):**
+> **Gate 1 (the $122.5M DIVERGE-SOVEREIGN scope call) is CLOSED.** Andrew ruled it ~1742Z (/open-calls
+> "Recs approved"): Schwab-08335338-canonical is AUTHORITATIVE over the BD-legacy serve, the $122.5M
+> DIVERGE-SOVEREIGN RULED-ACCEPTED, record @745ca6d78f (parity bar SS 3a carries it + the cutover re-pin
+> obligation). So of the two gates below, ONLY GATE 2 remains: the V2 window backfill (nna_qtd/ytd/12m),
+> which is RUNNING NOW (fill-2, PID 1399266). **header_metrics is therefore ONE LANDED COMPUTE from being
+> the FIRST BAR-CLEARED 49F surface** -- when fill-2 lands I re-grade the window monetary discrimination
+> (it re-arms on the live V2 windows) and, clean, this surface flips SCOPE-VALIDATED -> BAR-CLEARED.
+> Neither remaining step needs a human. The per-account composition enumeration (the "one thing to watch"
+> below) stays a live control regardless.
+
 | Axis | State | Evidence (verified) |
 |---|---|---|
 | Field parity | **CLEAR** | 35/35 both denominators, spelling-aware; mutant A (unbanded field) FAILs rc=1 -- field discrimination proven |
@@ -17,8 +28,8 @@ fix in the INSTRUMENT not the evidence (pinned-delta, evaluated BEFORE a band ex
 a STALE pin FAILs loud, forcing re-enumeration -- no silent drift) -> I verified it on the artifact.
 Monetary discrimination went from asserted to demonstrated.
 
-## TWO GATES STILL BLOCK THE KILL ON THIS SURFACE (neither is a technical parity failure)
-1. **DIVERGE-SOVEREIGN, Andrew's scope call:** total.aua serves the Schwab-canonical book, $122.5M
+## TWO GATES (as of ~1051Z) -- GATE 1 NOW DISCHARGED (see amendment above); GATE 2 remains
+1. **[DISCHARGED ~1742Z @745ca6d78f] DIVERGE-SOVEREIGN, Andrew's scope call:** total.aua serves the Schwab-canonical book, $122.5M
    SMALLER than the current BD-tree served book. The delta is now enumerated EXACTLY (identity
    residual -$0.00; mechanism source-confirmed BD=49F's arrival path). But whether to ACCEPT serving
    a $122.5M-smaller book is a BUSINESS decision, not a technical pass -- ANDREW's, via COO. The pin
