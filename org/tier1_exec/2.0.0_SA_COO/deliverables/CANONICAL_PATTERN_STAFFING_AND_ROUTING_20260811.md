@@ -1710,6 +1710,57 @@ in the same state is a comparison of two different moments wearing the clothes o
 **NOT YET DISPATCHED — P0's registry act is mine and fires next; P1–P4 wait on their named triggers.**
 **The 13:30Z bar keeps priority.**
 
+## 4ac · ⚡⚡ FINAL RATIFICATION — **THE 49F BUILD IS DECOMPOSED.** Andrew @a9c159f134: *"Final ratification granted, decompose the build"*
+
+**The staged state RELEASES.** Scope per CTO: **decompose NOW where the substrate is complete = THE 49F GOLD
+ANALYTICS RUNNER (the archetype).** INF sequences behind it per the shape-transposition doctrine; **COT's
+account-grain serving legs sit behind RECON-5a's A_06 bridge.**
+
+✅ **AND MY FLAGGED SCOPE QUESTION IS ANSWERED — my operative reading was right.** CRO's NARROW answer on
+*"zero mdpf migration"* is **confirmed at CTO's seat too: the gold tree keeps its bucket under Option A;
+M1–M12 re-homes PROCEED; X-i..X-iii CONTINUE.** *I held the narrow reading and did not stop AE mid-act; that
+was the correct call and it is now ruled rather than assumed.*
+
+### THE BUILD ROWS — owner · trigger · named precondition
+
+⛔ **ACCEPTANCE IS NOT MINE TO INVENT: per-group acceptance criteria in the five ratified specs ARE the TO
+acceptance bars.** I cite them; I do not paraphrase them.
+
+| row | what | owner | trigger | named precondition |
+|---|---|---|---|---|
+| **B-1** | **Group A** (@9c294bbf15 + @6fba62393b) | DS | ✅ **NOW** | **EXTRACT-side-only admission** — a build admitting anything from the DISCARD side is a patch by construction. Acceptance = Group A's own criteria |
+| **B-2** | **Group B** (@d57bbf7229) | DS | ✅ NOW | ⚡ **`B_02`'s MATERIALITY VERDICT ROUTES TO ANDREW + CTO ON THE MEASURED NUMBER, MID-BUILD** — not at the end. *A materiality call surfaced after the build is a call nobody can act on* |
+| **B-3** | **Group C** (@39c41163cd + @f882b91ce2) | DS | ✅ NOW | Acceptance = Group C's own criteria |
+| **B-4** | **Group D — the emitters** (@1e11389af8) | DS | ✅ NOW | ⛔ **SHAPE-FROZEN against the DEPLOYED FE's ACTUAL READS** — never docs, never the builder. *This is the L6 grounding rule living inside the spec instead of being re-argued per act* |
+| **B-5** | **GOLD OUTPUT = PARQUET**, `{table}/date={D}` | DS | ✅ NOW, cross-cutting | Andrew requirement, **first-class build row not a style note.** Rule 17a's spine: parquet is a *silver-and-onward* format, and gold adopting it is the canonical form |
+| **B-6** | **EVERY PLATINUM PUBLISHER READS PARQUET** — leaving the publisher as **the estate's ONLY JSON producer** | DS (script) + AE (deploy) | after B-5 lands its first parquet | ⛔ **This is a serve-path change ⇒ never-widen co-sign (CTO+COO) per family, CPR-4's condition set as template.** ⚡ **And the M7 format flip × wo2 publisher repoint is ONE ORDERED ACT through CTO's arch gate** (CVO amendment 1) — never two |
+| **B-7** | **PER-FIRM SILVER-COMPLETENESS EVENT TRIGGER** | AE (infra) + DS (predicate) | ✅ NOW | **A REQUIRED ACCELERATOR, with: a SINGLE-HOMED necessary-table predicate · a CLOCK FLOOR BENEATH IT · the L2 contract governing its calendar.** *Event accelerates, clock floors — atom 5 as a build row. And "single-homed predicate" is the eighth application of tonight's law* |
+
+### ⛔ THE GATE THAT IS ON THE **FIRE**, NOT THE BUILD
+
+**GROUP W stands as the PRE-FIRST-PRODUCTION-FIRE gate:** the **dispatch census closed to ONE path**, and
+**floors ruled on MEASURED distributions.** Owner **CVO**.
+> **So the build proceeds and the first production fire does not, until W closes.** *That is the
+> distance-vs-trigger distinction one more time, and it is the version that actually protects something: a
+> built runner that cannot fire is safe; a fired runner whose dispatch census is open is the
+> five-armed-paths problem in a new place.*
+
+**`A_06` IS THE ONE BUILD-BLOCKING CELL — and it blocks ONLY COT's account-grain serving legs.** The 49F
+build is unblocked. *Naming the single blocking cell, and what it does NOT block, is the difference between a
+staged program and a stalled one.*
+
+### TWO OBSERVATIONS ROUTED TO ME
+
+- **`fee_efficiency` 0.0s = a PRE-EXISTING C-chain degraded-input finding — MINE.** Distinct from CPR-4;
+  DS already proved it is INF_C_08's independent computation defaulting on `fee_data_available:false`.
+  **Recorded as its own row, not folded into a fee fix** — it is an upstream input problem wearing a fee
+  symptom.
+- **The `residual_clipped` retired-semantics block = a named W-B / refactor cleanup row.** *Retired
+  semantics left in place are the fee-INFERRED-label problem in code: they become fact by attrition.*
+
+**DS's serve-release #2 has BOTH halves** (mine 0752Z, CTO's this window). **CPR-6 (D_02 $696K) stays its own
+act — built and exercised in parallel, deployed in its own window.**
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
