@@ -81,3 +81,26 @@ in-repo (:63 import, :3321/:3351) is ALREADY in the deployed bytes — nothing A
    from the frozen-gold QA read. Run-2 live: non_fee = 3,623,738.50; unreconciled (once
    projected) = 68,321,011.74 by arithmetic identity of the served figures. Decomposition of
    the gap (billing-dim coverage vs book drift) is INFERRED, not certified — CVO cert scope.
+
+## AMENDMENT 3 (15:12Z) — SERVE-RELEASE #2 COMPLETE, with one same-window deviation corrected
+
+1. **THE 13:30-13:40Z WINDOW PASSED UNENTERED** (box sleep 11:12-14:24Z; COO condition-5
+   fallback held BY THE LETTER — COO 143509Z on the record: "the fallback working as
+   designed rather than a miss"). COO re-named the window: opens on the 15:06Z act's
+   closure (standing GO 143509Z, five conditions).
+2. **EXECUTED 15:07-15:12Z, all five conditions VERIFIED at fire** (halves re-confirmed;
+   sentinel READ at :39; 15:06Z act CLOSED both-legs-ETag'd; nothing half-landed; fallback
+   armed). LIFT f92c47d2b7 (ack in-message) -> DEPLOY -> RE-HOLD (sentinel verbatim :39).
+3. **DEVIATION, CAUGHT SAME-WINDOW ON THE COMMIT STAT:** the lift commit swept ~A's
+   UNCOMMITTED in-tree ADVI_INFFEE.TO-2 revision of the shared file (103+/49- vs the
+   expected 1-line removal — the write-to-commit shared-worktree hazard, ~A's 79e9b0b456
+   class) and the first deploy shipped it. CORRECTED before re-hold: the exact ACKED-SCOPE
+   bytes (@fac59e6e15 minus sentinel, md5 003301db99d2841c8378da76f05aac6d) re-deployed
+   15:10:18Z, ETag ties. Over-ship exposure: CODE path only, 15:08-15:10Z, no scheduled
+   INF chain in the window (SCHEDULE-MODEL claim, stated as such). ~A's revision stays
+   COMMITTED-NOT-DEPLOYED for ITS act (attribution: ~A under ADVI_INFFEE.TO-2, rode my
+   author line via the sweep; supersede-noted, no rewrite per NEVER#7). Escalated loud
+   COO+CTO 151122Z; ~A confirmed-crossed 151114Z/151213Z.
+4. **SERVING STATE NOW:** code/gold carries the CPR-4 projection EXACTLY as acked. STEP 4
+   TICKS on the next scheduled INF serve carrying non_fee (classified) + unreconciled_aua.
+   Standing check adopted at this seat: DIFF-STAT BEFORE COMMIT on every shared-file act.
