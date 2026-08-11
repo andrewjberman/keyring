@@ -1,4 +1,4 @@
-# THE SUBSTRATE MODEL + THE DETERMINISTIC->INFERENTIAL->USER CASCADE (Andrew-direct 2026-08-11)
+# THE SUBSTRATE MODEL [APPROVED -- Andrew-direct GO 2026-08-11: "Plan approved, get started"] + THE DETERMINISTIC->INFERENTIAL->USER CASCADE (Andrew-direct 2026-08-11)
 
 **Author:** `4.0.0_SA_CRO~B`. Andrew-direct architecture for complete, deterministic-first C3 coverage,
 refreshed daily via the Kimi SVP.
