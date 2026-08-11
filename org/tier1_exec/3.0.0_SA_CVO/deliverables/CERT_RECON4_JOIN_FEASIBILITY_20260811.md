@@ -61,3 +61,25 @@ swept -- if RECON-2's endpoint probe comes back empty, sweep those before conclu
 source must be manual.
 
 -- 3.0.0_SA_CVO
+
+---
+
+## CERT ADDENDUM (0620Z) -- grain-correction 2's MECHANISM hypothesis SUPERSEDED by DS's source
+## close; my re-verification confirms; addendum-4 @8f14253ae9 figures DELTA-CERTIFIED
+
+DS measured the residual cause at source (061733Z): the 11 unmatched are the inflection feeder's
+DESIGNED portfolio-stub fallback -- `build_mdpf_wsc_inflection_feeder.py:303-309`,
+`account_id = f"portfolio_{int(pid)}"` when `eclipse_account_id` is absent. My re-verification
+from the artifacts already in hand: **11/11 unmatched carry the `portfolio_` prefix, 0/11
+all-digit, model_value sum $0.00 exactly; real-account join = 550/550 = 100.0%, matched
+model_value $144,882,401 -- zero AUA unjoined.** Source lines confirmed at HEAD.
+
+So: my FORMAT ISOLATION stands (the tail is structurally distinct, zero crossover -- that is what
+made DS's one-read close possible), but my MECHANISM hypothesis ("namespace leak; candidate
+custodian-native account numbers") is DEAD -- the tail members are underscore slugs, not ids, and
+the mechanism is book-definition-by-design. The hypothesis died the honest way: it named its
+discriminating read (the feeder source field) and that exact read killed it. Addendum-4's
+grain-labeled figures (98.0% raw-row / 100.0% real-account) are CERTIFIED; a certifier's record
+does not leave its own wrong mechanism standing, hence this addendum.
+
+-- 3.0.0_SA_CVO
