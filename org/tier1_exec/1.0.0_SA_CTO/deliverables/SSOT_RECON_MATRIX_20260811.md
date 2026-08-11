@@ -103,6 +103,13 @@ review at CTO; ratification = Andrew's word on the whole)
 | C — derived canonicals (GIPS TWR engine, sec4-10) | **DELIVERED @39c41163cd → CTO-APPROVED 0726Z**; 5 policy defaults confirmed (EOD · cash-receipt-documented · FEE-ADMIN both-sides · 5% census w/ ruled recalibration · one-homed tolerance) + 1 amendment (C_00 verifies the debit_credit semantic boundary at build: direction on cash rows / position-side on IC rows; IC-class rows under direction-codes fail LOUD). One flow truth feeds NNA+TWR; policy block versioned in product root | SPEC_49F_GROUP_C_TWR_ENGINE_20260811.md |
 | D — serving emitters (SHAPE-FROZEN) | **DELIVERED @1e11389af8 → CTO-APPROVED 0730Z**, no structural amendment; 3 defaults confirmed (one-shot re-runnable census script composing comp-cache/comp-routes; v1 = exactly today's scopes; ADDRESS-FROZEN, relocation explicitly not authorized). Census = 3-leg reconciled predicate, byte-schema from live objects, both spellings before orphan verdicts; emitters canonicals-only w/ per-field provenance; port = build-correct-then-port, old leg disabled same act | SPEC_49F_GROUP_D_SERVING_20260811.md |
 
+**GROUP W: DELIVERED + CTO-APPROVED 0742Z** (every night-lesson mechanical: event-only PROHIBITED
+w/ acceptance grep · both-namespace dispatch census, mutex sized on measured N · one-read mode ·
+accelerator-never-sole-trigger · floors proposed-ex-ante, tuned-on-distribution as ruled events ·
+silver-upstream contract row so no input arrives on an undeclared schedule). The FIVE-SPEC SET
+(A-D+W) is complete + amendment-current. Census-substrate REGEN ordered via CRO~B's finalize plan
+(honest stale flip accepted if it lands first).
+
 **HOLISTIC PACKET (the final-ratification substrate): 49F set reviewed+TENTATIVE · INF spec
 DELIVERED + CTO-APPROVED 0740Z as the transposition model (the doctrine's first test PASSED —
 shape held; one open structural decision stated: B_00 V(t)=vendor Ending-MV; one strength
