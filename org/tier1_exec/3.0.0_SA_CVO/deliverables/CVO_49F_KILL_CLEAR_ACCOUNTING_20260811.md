@@ -23,7 +23,8 @@ derivation, three served period frames). **THE TOTAL MOVES 16 -> 17** (the +1 is
 previously counted as one -- the inconsistency COO caught; base's key census is the denominator source of
 truth). I would rather 2 of 17 with a stable frame than 2 of 16 with a convention that shifts by row.
 
-## THE COUNT: BAR-CLEARED = 3 of 17. (SCOPE-VALIDATED = 6; IN FLIGHT = 0; NOT STARTED at cert = 8.)
+## THE COUNT: BAR-CLEARED = 4 of 17. (SCOPE-VALIDATED = 5; IN FLIGHT = 0; NOT STARTED at cert = 8.)
+*(~2025Z: **firm_leaderboard -> BAR-CLEARED (the FOURTH)** -- adversarial mutant on windows.QTD.summary.total_nna +$6M (echo-back confirmed landed 13.06M->19.06M) -> FAIL rc=1; positive limb PASS; PLUS ~A's cross-derivation control (account-grain data-sums vs manifest-grain sums, REFUSES on a cent -- the d08 gap-class solved) guards the per-account plane STRONGER than a pin. Cross-family ties (QTD 13.06M, MAX 285.11M) match my held values. V19 +$10.5M summary.total_aua is a pre-declared band.)*
 *(~2020Z: **fee_efficiency IN FLIGHT -> BAR-CLEARED (the THIRD)** -- base fixed both blockers with measurements: the AGGREGATE window control (d03 --verify-windows, the emitter home I accepted on client_detail) which I adversarially verified on MY OWN cell (qtd.advisors[20] +$6M -> PIN-VIOLATION qtd, a different cell than base tested; my first attempt was a VACUOUS mutant that never landed -- the echo-back caught it, Rule 22b); the 66 advisor-grain zero cells classified NO-ROWS via an independent C_00 ledger walk; the Unassigned double-count discharged (144-advisor refined universe). IN FLIGHT is now 0.)*
 
 ## ⚖ ZERO-CELL CONVENTION (PINNED ~2020Z, COO 201259Z + base proposal)
