@@ -13,7 +13,17 @@ was read as BAR-DISCHARGED; the states below are each grounded on a committed ve
 - **IN FLIGHT (WINDOW-GATED)** = not even the core clears yet; gated on the window backfill / emission.
 - **NOT STARTED** = no CVO instance has reached me.
 
-## THE COUNT: BAR-CLEARED = 2 of 16. (SCOPE-VALIDATED = 5; IN FLIGHT = 1; NOT STARTED at cert = 8.)
+## ⚖ DENOMINATOR CONVENTION (PINNED ~1956Z, COO 195302Z ask -- the frame must not shift by row)
+**THE UNIT IS A SERVED PLATINUM KEY, never a family.** One emitter serving N served keys counts as N
+units, because Andrew's bar validates each SERVED SURFACE ("platinum outputs overlaid with existing
+platinum jsons") -- a served JSON is bar-cleared or it is not, per key. Consequence, reconciled to base's
+by-KEY census (195302Z): the timeseries twins (firm_timeseries_chart / gold_timeseries_chart) are TWO
+keys, clients_tab and clients_tab_slim are TWO keys, the partner-analytics trio is THREE keys (one
+derivation, three served period frames). **THE TOTAL MOVES 16 -> 17** (the +1 is the timeseries twin,
+previously counted as one -- the inconsistency COO caught; base's key census is the denominator source of
+truth). I would rather 2 of 17 with a stable frame than 2 of 16 with a convention that shifts by row.
+
+## THE COUNT: BAR-CLEARED = 2 of 17. (SCOPE-VALIDATED = 5; IN FLIGHT = 1; NOT STARTED at cert = 9.)
 *(⚠ LABEL CORRECTION ~1936Z: the dashboard/fee_efficiency states were SWAPPED in prior versions -- I propagated COO's mis-attribution without checking my OWN verdict file, which says (line 50) "dashboard is the second surface to CLEAR technical parity" and (line 43) the IN-FLIGHT verdict is FEE_EFFICIENCY's (its Unassigned double-count). Truth: **dashboard** was technical-clear -> now BAR-CLEARED; **fee_efficiency** was and remains IN FLIGHT. The count (7 SV / 1 IF pre-grade) was numerically right; the label of which surface was IN FLIGHT was wrong. Map-vs-territory, caught by reading the file.)*
 *(Updated ~1936Z: **dashboard is BAR-CLEARED -- the SECOND** (same window-NNA calibration as header_metrics, reused by construction: windows non-zero + identical values, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins transitively grounded via the shared served-NNA source). ⚠ **fee_efficiency FINDING (stays SCOPE-VALIDATED, NOT bar-cleared): its PER-ADVISOR window plane does NOT discriminate** -- my mutant on a LIVE nonzero cell (windows.max.advisors[0].nna, +$6M on 60.38M) was ABSORBED rc=0; base's mutant hit only the pinned FIRM-level windows. A blanket exemption over live per-advisor fields (SS 5a). Flagged to base: pin the per-advisor windows or determine band-absorption-vs-not-compared before bar-clear. Prior ~1922Z: header_metrics FIRST bar-clear.)*
 Denominator **16** = the 49F served-family roster (the header_metrics archetype "reused by the other 15
