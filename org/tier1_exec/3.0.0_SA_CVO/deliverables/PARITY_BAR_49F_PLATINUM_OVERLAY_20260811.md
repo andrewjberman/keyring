@@ -184,6 +184,33 @@ this id = INVALID instance)**, `-DIVERGENCE-BANDS-PREDECLARED` (§4, registry co
 timestamps preceding the overlay run). UNCOMPUTABLE rows use the CTO enum split
 (by-construction vs by-instrument), never bare.
 
+## 5a. BANDING FRACTION IS A KIND, NOT A THRESHOLD (RULED 2026-08-11, COO's fee_efficiency 94% question)
+
+**There is NO banding-fraction threshold. A 94%-banded instance can CLEAR and a 40%-banded one can
+FAIL -- the fraction is the wrong axis.** The bar rejects a BLANKET EXEMPTION (a band swallowing a
+LIVE field whose corruption would route DESIGN -- the mutant-B shape); it does not reject a high
+fraction of STRUCTURALLY-DECLARED value-exempt fields. fee_efficiency is 94% banded because its field
+mass is 5 structurally-replicated WINDOW blocks (backfill-pending zeros, V2) -- the same honest
+value-exempt class header_metrics used, just a larger fraction because the family is window-heavy.
+
+**THE TWO-PART TEST that replaces the fraction (settles the ~10 backfill-gated families at once):**
+1. **BANDED MASS is all STRUCTURALLY-EXEMPT:** every banded field is value-exempt for a DECLARED
+   reason (backfill-pending / vendor-sovereign / law-conforming absence), NOT a live field. The
+   MECHANICAL per-field test: *would a corruption of this field route DESIGN?* If YES **and the field
+   is LIVE** (not backfill-zero, not sovereign-pinned) -> BLANKET EXEMPTION -> FAIL. If the field is
+   genuinely value-exempt (zero-until-backfill -- nothing to corrupt today) -> the band is HONEST.
+2. **COMPUTABLE CORE is FULLY VERIFIED:** the non-banded core carries field-parity + monetary
+   discrimination WITH a mutant that FAILS on a LIVE core field (§3's split). A high band fraction
+   with a fully-verified, mutant-discriminated core is a PASS; a low band fraction hiding one live
+   swallowed field is a FAIL.
+
+So: **the axis is `computable-core-fully-verified AND banded-mass-structurally-declared`, never a
+percentage.** fee_efficiency's core (per-advisor aua/account_count/roles/role_breakdown/
+fee_bps_weighted/effective_split_pct from jd2 x B_00) is the LIVE core that must carry the mutant;
+its 94% window mass clears IFF every one of those fields is backfill-zero (nothing to corrupt),
+declared, with the re-arm named. A banded field that is LIVE and swallows a corruption fails
+regardless of how small the banded fraction is.
+
 ## 6. FORM CONSTRAINT -- ad-hoc run-and-read, NOTHING STANDING (the 2026-08-04 veto)
 
 The overlay is a RUN-AND-READ: fit_harness is read-only by construction (GET/LIST only, local sink,
