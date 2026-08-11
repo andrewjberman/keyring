@@ -1900,6 +1900,49 @@ unaffected — re-derived live"*) — and the **real 12-day** snapshot renders *
    gate that would otherwise pass it — which is where a precondition belongs. My register can now be wrong
    about B-8 without the harm landing.*
 
+## 4af · ⚡ ANDREW RULED THE BUILD'S ORDER OF OPERATIONS @4dbf4a0d7c — **FIVE SEQUENTIAL PHASE-GATES.** Re-grouped, and ONE of my triggers was WRONG
+
+**His *"then…then…then"* is SEQUENTIAL — each phase GATES the next.** CTO's read: the specs' group structure
+maps naturally, so **this is a RE-GROUPING, not a re-plan.** *My basis-ruling item at him is unchanged and
+orthogonal.*
+
+| phase | what | maps from | my rows |
+|---|---|---|---|
+| **P1 SCRIPTS** | update per the ratified specs with **STAGE-BY-STAGE compile verification** | A–D builds | **B-1..B-4** + **B-5's FORMAT half** (the writer emits parquet) |
+| **P2 TIMING** | per-pipeline EventBridge + event-timing assessment, **nothing wrongly-timed** | **W is P2's FRAME** | **B-7** (event trigger + clock floor) |
+| **P3 REPOINTS** | runners **READ silver from `opal-data-assets` (`{vendor}/{firm}/silver`, NOT firm buckets)** and **EXPORT gold parquet to `portal/gold/{product}/{scope}`** | M/X rows | **X-i · X-ii-a · X-ii-b · X-iii · X-iv** + M1–M12 + **B-5's DESTINATION half** |
+| **P4 PUBLISHERS** | platinum publishers pull from the correct locations (parquet; the three requirements) | D-publishers | **B-6** — and **the wo2 ONE-ORDERED-ACT constraint lives HERE** |
+| **P5 DECOMMISSION** | systematic legacy teardown | T-rows, the 19-channel disposition map | **T5.B `opal-data-mdpf` kill**, migrate-before-kill throughout |
+
+### ⛔ MY ERROR, AND IT IS A SEQUENCING ONE: I DISPATCHED **B-7 AS "NOW."** IT IS **P2**, WHICH GATES BEHIND P1
+
+I had B-1..B-5 **and B-7** all firing in parallel. **Under a sequential ruling, only P1 fires now** — B-7's
+trigger changes from **NOW** to **"P1 complete."** ** Correcting it to AE this turn before they build against
+the wrong trigger. **
+> *The five rows were right and one of the triggers was wrong — which is the ITEM_0 discipline failing in the
+> one field it exists to protect. A parallel-dispatch instinct is exactly what a sequential ruling corrects,
+> and I had no ruling either way when I wrote it, so I defaulted to parallel. **Defaulting is not neutral: it
+> made a sequencing decision that was Andrew's.***
+
+### ⚡ THE MORNING CONVERGENCE IS A **DIRECTIVE**, and it BOUNDS Group W
+
+Verbatim: ***"we very likely want to shift all of this to the morning."*** ** So Group W's proposed-ex-ante
+floors are no longer free — they are BOUNDED BY THE MORNING WINDOW. ** P2's output is **the timing map + the
+ruled morning floor values.** *Relaying to CVO, because W's floors were being ruled on measured distributions
+and now carry an additional constraint that no distribution can tell them.*
+
+### ⛔ P5's GATE IS A **VERIFICATION EVENT** — and explicitly **NOT A SELF-REPORT**
+
+**Teardown is gated on: the portal verified TAKING DATA CORRECTLY *and* DISPLAYING WHAT IT SHOULD — with the
+CERT-OF-BUILT CHAIN as the verifier, never a self-report.**
+> **That is the strongest form of the discipline this whole window has been about, and Andrew put it on the
+> highest-blast phase himself.** *The `opal-data-mdpf` kill now sits behind a verification event on a
+> client-facing surface rather than behind a checklist — which is the only gate shape that can actually stop
+> an irreversible act.*
+
+✅ **AND THE IN-FLIGHT X-ACTS ARE P3's PILOT WORK, ALREADY GO'd — THEY CONTINUE, NO RE-STAGE.** Confirms what
+I told AE at 075930Z on my own reading; it is now ruled.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
