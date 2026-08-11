@@ -19,8 +19,13 @@ Performance dim, 27 cols, LIVE; bronze `performance_dim.csv` landed 2026-08-10 1
 DATA). Meanwhile the served performance surface (`INF_C_02.client_performance` →
 `gold/timeseries/client_performance.parquet` → every D-chain publisher) computes
 `aua_change, growth` **from canonical AUA deltas net of NNA flows — performance as a residual —
-and reads the vendor TWR dim NOWHERE** (SOURCE: C_02 inputs are canonical_performance +
-canonical_nna + accounts_dimension only, docstring + import graph). Andrew's "performance is not a
+and C_02 ITSELF reads the vendor TWR dim nowhere** (SOURCE: C_02 inputs are canonical_performance +
+canonical_nna + accounts_dimension only, docstring + import graph). *(CORRECTED per CVO cert
+@08215b39a3 refusal: the original "reads it NOWHERE" swept the D-chain publishers — FALSE there:
+D_00c/D_02/D_04 have loaded silver/api_dims/performance since 04-28, and D_00c reads BOTH the
+C_02 residual base (:705) AND the TWR dim (:302). The claim is C_02-scoped only. W-B's scope
+absorbs the 3 existing readers, and its acceptance must first answer the CVO coherence question:
+does any served surface present vendor TWR beside C_02-residual growth SIMULTANEOUSLY?)* Andrew's "performance is not a
 residual" is not a future aspiration; the raw feed his refactor wants is already in silver, daily,
 unconsumed by the serving chain.
 
