@@ -456,7 +456,7 @@ def _md_status(md_path: Path) -> str | None:
         for pat in _STATUS_LINE_PATTERNS:
             m = pat.match(line)
             if m:
-                val = m.group(1).strip().rstrip("*").strip()
+                val = m.group(1).strip().strip("*_").strip()
                 if val:                      # an empty capture is not a status -- keep looking
                     return val
     return None
@@ -496,7 +496,7 @@ def _has_terminal_status_anywhere(md_path: Path) -> bool:
         for pat in _STATUS_LINE_PATTERNS:
             m = pat.match(line)
             if m:
-                val = m.group(1).strip().rstrip("*").strip()
+                val = m.group(1).strip().strip("*_").strip()
                 if val and _is_terminal_status(val):
                     return True
     return False
@@ -506,8 +506,12 @@ def _is_terminal_status(status: str) -> bool:
     """True if a ledger status LEADS with a terminal-state token (CLOSED /
     COMPLETE / ROLLBACK / ...) -- i.e. the deploy is not still open. Match on the
     leading word only, so a mid-string token (e.g. 'OPEN -- issue RESOLVED') does
-    not false-terminal an open ledger."""
-    head = status.lstrip().upper()
+    not false-terminal an open ledger. lstrip covers whitespace AND markdown
+    emphasis wrappers (*/_): a doubly-bolded '**Status:** **CLOSED ...' captures
+    a value leading with '**', and .lstrip() alone (whitespace-only) left it
+    unreadable -- the THIRD spelling variant of the :424 class (COO source-read
+    2026-08-11, 4 false REDs); the reader loosens, the records stay untouched."""
+    head = status.upper().lstrip("*_ \t")
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
 
 
