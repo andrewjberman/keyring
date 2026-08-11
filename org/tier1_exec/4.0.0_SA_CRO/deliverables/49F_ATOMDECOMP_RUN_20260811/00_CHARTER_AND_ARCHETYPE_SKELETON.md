@@ -80,8 +80,18 @@ shape; the INF audit gives the raw-sourcing discipline the fork must obey this t
 
 ## RUN STATE + NEXT
 
-Layers 1–3 enumerated live tonight (this record). NEXT (the program, in order): the note-2a
-backward walk over the ~30 production scripts (the rigid census — several sessions of work, the
-rectangle discipline applies); the perfect-runner spec (contract × Layer-1 sourcing × north-star);
-the inf/cot field maps. RECON-3's substance already exists in the INF run records; conformance to the
-recon-chapter shape follows the census. RECON-5 flag to base CRO when RECON-2+RECON-3 close.
+Layers 1–3 enumerated live tonight (this record). **CHARTER AMENDMENT (~0540Z, Andrew-direct
+oversight frame via CTO relay @3c8418e34b):** this run is the ADVI spine of the CTO-overseen SSOT
+matrix (`org/tier1_exec/1.0.0_SA_CTO/deliverables/SSOT_RECON_MATRIX_20260811.md`); deliverables
+take the **believed-vs-actual rectangle form (@41692cd3d2)** as the required shape, and the
+decomposition grounds **all SIX legs** — explicitly **L2** (what triggers bronze→silver for
+schwab/08335338-ADVI today: event/cron/absent, measured) and **L5/L6** (bd-portal-publisher + the
+deployed frontend's actual reads) — the archetype claim is empty without upstream trigger and
+downstream serve in the rectangle. CVO cross-examines; refused cells are the system working.
+
+NEXT (the program, in order): the six-leg rectangle over 49F-advi (L2 + L5/L6 first — currently
+believed-state from census prose, not measured); the note-2a backward walk over the ~30 production
+scripts (the rigid census); the perfect-runner spec (contract × Layer-1 sourcing × north-star);
+the inf/cot field maps. RECON-3's substance already exists in the INF run records (fills
+L2/L3/L4-partial per the matrix; open cells = the ~24/44 UNREVIEWED scripts + L5/L6); conformance
+to the rectangle shape follows. RECON-5 flag to base CRO when RECON-2+RECON-3 close.
