@@ -93,6 +93,25 @@ CODE_TREES: dict[str, dict] = {
             "silver": ("data/cot/scripts/silver", "code/silver/"),
             "bronze": ("data/cot/scripts/bronze", "code/bronze/"),
         },
+        # SECOND DEPLOY TARGETS (CPR-5 2026-08-11; CTO-ruled remedy, COO
+        # 063335Z staffing; DS owns, AE verifies the landing). ONE source, N
+        # declared targets -- the fan-out declared ONCE at the convergence
+        # point, closing the drift class by construction (the bd copy froze at
+        # 08-04 while running daily precisely because no deploy leg served it).
+        # WHY THE SECOND HOME EXISTS AT ALL (Model B, ADVI_BDAPIMIG P1-B,
+        # 06-25 deploy record): the bd-49f runner Lambdas execute this
+        # cot-authored single source FIRM-BOUND, and their role carries an
+        # explicit Deny on opal-data-cot -- firm separation itself forces the
+        # engine to be staged bd-side. This is a sanctioned shared-engine
+        # deploy, NOT a bd<->cot data mirror (which stays gate-banned).
+        # Semantics per Rule 13's shared-home membership guard, target-grain:
+        # key-EXISTS = update ENFORCED; 404 = LOUD SKIP (never a silent
+        # first-mint into another firm's bucket); UNDETERMINED = fail closed.
+        "second_targets": {
+            "data/cot/scripts/bronze/cot_bronze_ingest.py": [
+                ("opal-data-bd", "code/bronze/cot_bronze_ingest.py"),
+            ],
+        },
     },
     # DEPLOY-GATED since 2026-08-04 (Andrew-direct; see the flip note above).
     # Non-standard layout: preserves scripts/<layer>/ under code/, and two of its
@@ -532,6 +551,17 @@ def bundle_for_member(rel_path: str) -> Optional[tuple[str, str, dict]]:
             if any(m["repo_path"] == norm for m in b["members"].values()):
                 return tree["label"], bname, b
     return None
+
+
+def second_targets_for(rel_path: str) -> list[tuple[str, str]]:
+    """Declared (bucket, key) second deploy targets for a source file (CPR-5)."""
+    norm = rel_path.replace("\\", "/")
+    out: list[tuple[str, str]] = []
+    for tree in CODE_TREES.values():
+        for src, targets in tree.get("second_targets", {}).items():
+            if src == norm:
+                out.extend(tuple(t) for t in targets)
+    return out
 
 
 def build_bundle_payload(b: dict) -> tuple[Optional[bytes], dict, str]:
@@ -1135,6 +1165,38 @@ def main(argv: list[str]) -> int:
                 print(f"           {detail}")
             failed = True
             break   # fail fast; don't leave partial state
+
+        # ----- CPR-5 second deploy targets: the declared fan-out for a ONE-source
+        # shared engine (Model B). Membership-guard semantics at TARGET grain:
+        # key-exists = update enforced; 404 = LOUD skip (a vanished second home is
+        # never re-minted silently into another firm's bucket); UNDETERMINED =
+        # fail closed. Second targets are deliberately NOT appended to `deployed`
+        # -- comp-pipescript does not model the second home (instrument note in
+        # the declaration) and the ETag verify here is their acceptance.
+        for st_bucket, st_key in second_targets_for(rel_path):
+            st_tag = f"[{label}->2nd] {rel_path} -> s3://{st_bucket}/{st_key}"
+            exists, err = s3_key_exists(st_bucket, st_key)
+            if exists is None:
+                print(f"  ERROR  SECOND_TARGET_PROBE_FAILED  {st_tag}")
+                print(f"           {err}")
+                failed = True
+                break
+            if exists is False:
+                print(f"  SKIP-SECOND-TARGET-ABSENT  {st_tag}")
+                print("           declared second target key does not exist -- first-mints "
+                      "are explicit, never via the push gate. Surface to the owner.")
+                continue
+            st_status, st_detail = deploy_file(local_path, st_bucket, st_key)
+            if st_status == "MATCH":
+                print(f"  DEPLOYED-SECOND-TARGET  {st_tag}")
+            else:
+                print(f"  ERROR  {st_status}  {st_tag}")
+                if st_detail:
+                    print(f"           {st_detail}")
+                failed = True
+                break
+        if failed:
+            break
 
     if failed:
         print()
