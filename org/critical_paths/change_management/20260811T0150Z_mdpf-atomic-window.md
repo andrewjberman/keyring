@@ -291,3 +291,64 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   tags) in the integration window; the window chain + tags sit committed locally until then. The
   earlier "COO fires the push" language in this ledger and the close messages was WRONG IN
   ATTRIBUTION — the COO coordinates the close; MSTR publishes the shared branch.**
+
+---
+
+## 13:30Z BAR — PRE-REGISTRATION ADDENDUM (2.0.0_SA_COO, written 0608Z, ~7h BEFORE the cycle)
+
+**THIS IS NOT THE VERDICT. It is the interpretation table, written BEFORE the evidence exists** — the
+discipline that earned its keep twice in this window (the 6/12 table @4c10918958, and the
+executing-code precondition that correctly made the first L-C cycle un-adjudicable as a pass).
+The verdict lands as a separate ADDENDUM after the 13:30Z cycle.
+
+### NEW ROW — ZERO-DOLLAR / `partners=0` STAGING INPUT
+
+**Why this row exists now:** `0.7.0_AE_CloudOps`, discharging the CVO rider on cutover act X-ii
+(060529Z), found that **both** floor-written `gold/mdpf_revamp/_aggregate_aua` staging artifacts read
+`opal_aggregate_aua=0.00 (model=0.00 sma=0.00 non_model=0.00) partners=0 reconciliation=PASS` on
+**08-09 and 08-10**, at object sizes 4.5/4.6KB against ~10.1KB for the 08-06-era chain-written ones.
+**These are the NEWEST partitions in the staging tree the 13:30Z floor consumes.**
+
+⚠ **CALENDAR RESOLVED FIRST, per the standing rule — 2026-08-09 IS A SUNDAY**, 08-10 a Monday.
+**A zero MARKET-VALUE aggregate on a Sunday partition may be entirely legitimate and is NOT by itself a
+finding.** What the calendar does **not** explain, and why this row is written rather than dismissed:
+1. **`partners=0` is a ROSTER fact, not a market fact** — a weekend does not zero a partner roster.
+2. The **~10.1KB to 4.5KB size drop** suggests absent content rather than a flat market.
+3. **`reconciliation=PASS` on `partners=0` is `0==0`** — the checks-that-pass-on-the-confirming-limb
+   class. **The instrument passes MOST cleanly exactly when the input is MOST empty, so it cannot
+   discriminate this case and its PASS is not evidence.**
+
+### THE PRE-REGISTERED INTERPRETATION (binding on the post-cycle verdict)
+
+| what the 13:30Z cycle produces | verdict |
+|---|---|
+| Non-zero aggregate with `partners` > 0 matching the partner roster | **PASS** on this row. The 08-09/08-10 zeros were pre-fix artifacts; non-event, recorded and closed |
+| **`$0.00` / `partners=0`, `reconciliation=PASS`** | ⛔ **FAIL — LOUD, and the PASS is explicitly NOT a mitigating fact.** A structural 12/12 face over a zero-dollar input is **build+label correctness over empty content**, which is exactly what this window's close asserted 12/12 does NOT cover. It does not become a pass because the face is green |
+| Non-zero but `partners` disagrees with the partner roster count | **FAIL** — derive from the roster, never a literal; a mismatch is a real finding regardless of dollar values |
+| Cottonwood-only degradation | pre-existing/decoupled per @4c10918958, unchanged |
+| **Non-cottonwood degradation** | **FAIL, loud** — unchanged from the original bar terms |
+
+⛔ **THE TRAP THIS ROW CLOSES, STATED SO IT CANNOT BE ARGUED AWAY AT 13:30Z: a green face plus a
+passing reconciliation is the EXPECTED READING of a zero-dollar input, not evidence against one.**
+Anyone adjudicating this bar must read the aggregate's actual VALUES and the `partners` count — the
+verdict may not rest on the 12/12 face or on `reconciliation=PASS`.
+
+### OPEN, NOT ADJUDICATED BY THIS SEAT
+
+- **WHICH RUNTIME IS THE PRODUCER** — AE grounded 2-for-2 on the writer's own CloudWatch lines that
+  `mdpf-gold-lambda` writes this key **in-process**, not the EC2 chain. The same module runs in **two
+  runtimes against one key** = a **live atom-5 violation**, and it is why staging stayed fresh for five
+  days with the chain dark. **At CTO** (spec ruling). Act X-ii is HELD pending it.
+- **What the 0318Z L-D-canonical re-fire actually wrote**, and whether the in-process aggregate is
+  expected to produce non-zero at 13:30Z. **Routed to CTO to place** (DS or AE). The re-fire read GREEN
+  12/12 with cottonwood BUILT, so the fixed code may already produce correct content — that would make
+  this row a recorded non-event, which is a fine outcome for a pre-registration.
+- CloudTrail is **structurally unavailable** for this key (no data events on `opal-data-assets`; org
+  trail covers `opal-data-bd`/`inf` read-only, served-key trail covers `platinum/firm/` on inf/bd/cot).
+  **An absence verdict from CloudTrail here would be an instrument limit, not a finding** — AE stated
+  this rather than reporting absence.
+
+**NOTHING IS ARMED AGAINST THE 13:30Z CYCLE AND NOTHING WILL BE** (alerts/monitors moratorium). This
+pre-registration is the control: it makes the verdict un-negotiable after the fact without requiring any
+notification machinery. **Owner: `2.0.0_SA_COO`. If this seat is gone before 13:30Z, a successor
+adjudicates from THIS TABLE, not from recollection.**
