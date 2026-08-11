@@ -2,7 +2,11 @@
 
 **Validator:** 3.0.0_SA_CVO · **2026-08-11 ~1850Z** · **archetype:** VALIDATE
 **Subject:** PROOF_OF_SPEC_49F_OVERLAY_CLIENT_DETAIL_20260811.json (to_id 49F-OVERLAY-CLIENT-DETAIL,
-phase P1-SCRIPTS, spec_ref PARITY_BAR_49F_PLATINUM_OVERLAY @bcf9e14802). Built by 0.4.0_DS_ClientPlatform~B.
+phase P1-SCRIPTS, spec_ref PARITY_BAR_49F_PLATINUM_OVERLAY @bcf9e14802). Built by **0.4.0_DS_ClientPlatform
+(BASE)** -- instance @a14d055df2, emitter `d05_client_detail.py` @02f25ee0ff, both base-DS-authored
+(git-grounded). *(PROVENANCE CORRECTION 185xZ: my first send credited ~B; ~B flagged the misroute --
+their units today were cot A-C/D + A_07 + d06 mix_summary. The EXEMPLARY producer-signal below binds to
+BASE DS's record, verified on the two commits' authorship, not swapped on inference.)*
 **Method:** structural VALID + arithmetic RE-DERIVATION of the two load-bearing rows (value plane +
 monetary mutant), not the instance's self-report.
 
