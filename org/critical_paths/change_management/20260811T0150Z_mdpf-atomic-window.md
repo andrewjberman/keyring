@@ -156,6 +156,18 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   the bar to the pre-fix spine). **CTO adjudicates relocate-over vs revert; COO coordinator input
   filed = RELOCATE-OVER** (Andrew's word binds the HOME, not the un-landing of correct content; a
   home-only repoint with identical bytes is DELTA=0 on content and keeps the bar protected).
+- **RULED 032513Z (CTO): RELOCATE-OVER** — converged with the COO input, crossed in flight. Canonical
+  path ROUTED to AE 032326Z: **s3://opal-data-assets/portal/gold/mdpf/_code/mdpf-gold-lambda.zip**
+  (home-only TF data-source repoint, IDENTICAL reviewed bytes @bf74d031c1, colocated with the mdpf
+  gold output, `_code/` mirroring the existing `_manifests/` convention). Folded into the SAME apply:
+  provenance fix — env MDPF_GOLD_COMMIT bumps 0bc739e7d5 → bf74d031c1 (was stamping the old pin
+  beside new code, read live by CTO).
+- **RE-HOME DISCRIMINATORS (CTO refinement — supersedes this ledger's earlier "verify sha UNCHANGED"
+  as the oracle):** sha UNCHANGED is EXPECTED (same bytes) but discriminates nothing. The
+  discriminators: (a) TF Code source now = the canonical key + a NEW s3_object_version; (b) the ONE
+  real risk — opal-data-assets bucket policy must allow the Lambda-deploy principal GetObject on the
+  zip; a deny surfaces as a LOUD apply failure, not a silent skip. AE verifies both before calling
+  L-D-canonical done.
 
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
