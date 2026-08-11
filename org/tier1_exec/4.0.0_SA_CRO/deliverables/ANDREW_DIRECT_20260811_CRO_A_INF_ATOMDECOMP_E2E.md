@@ -96,7 +96,24 @@ and named — the opposite of a residual on derived AUA. The per-firm resolution
 raw (Orion ships it) · 49f = TWR computed from Schwab components (this grant) · cot = TBD when
 RECON-5 measures what Black Diamond ships.
 
-## Execution notes (this seat)
+## Instruction 6 — GIPS feasibility for Inflection (Orion endpoints) then Cottonwood (BD) (same terminal, ~0700Z)
+
+> "I had 4.0.0_SA_CRO base check out GIPS capability for 49 Financial performance attribution for
+> the Advisor Intelligence pipeline and it's doable. See below:
+> (org\tier1_exec\4.0.0_SA_CRO\logs\2026-08-11\gips_twr_feasibility_delivered_0630-0645Z.md). What
+> I want you to do, is run an atom_decomp on the Orion Endpoints, and assess (with as much egress
+> and endpoint testing as you need) in addition to the tables we're already pulling, if it is
+> possible to do GIPS performance attribution on Inflection, and if it is possible and we need more
+> data from the endpoints, what the shape of that data would be. After you asssess this, I want you
+> to do the same thing for Cottonwood off Black Diamond."
+
+**Scope as bound:** (a) atom_decomp run 3 = the ORION ENDPOINT SURFACE, question = GIPS performance
+attribution feasibility for INFLECTION: current pulls + what more the endpoints supply; if more is
+needed, specify the SHAPE of that data; (b) then the SAME assessment for COTTONWOOD off Black
+Diamond; (c) **egress + endpoint testing granted per-use for this work, both vendors** ("as much
+egress and endpoint testing as you need") — Orion (already lifted+granted) and cot-BD (lifted
+standing, firm-scoped to Cottonwood); (d) the 49F GIPS verdict (@e323c1cfac + the log he cites) is
+the reference standard and template — cite-don't-re-derive its deciding questions.
 
 - Fixes ride the sanctioned mechanisms only: Terraform via `safe-apply`, commits via `safe-commit`,
   deploys per the deployment rules; ORION + ECLIPSE vendor egress are on the LIFTED standing list if
