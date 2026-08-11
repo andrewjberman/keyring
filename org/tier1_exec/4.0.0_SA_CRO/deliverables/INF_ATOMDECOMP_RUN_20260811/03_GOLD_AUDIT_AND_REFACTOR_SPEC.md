@@ -46,6 +46,7 @@ unconsumed by the serving chain.
 | **NNA (net new assets)** | a FLOW net of market movement; no endpoint serves it (Andrew-named) | stays calculated — C_01's job survives the refactor; its POINT-IN-TIME form is Wave D |
 | **Cross-account/household/advisor rollups** | aggregation grain is ours, not the vendor's | provisional |
 | **The unreconciled bucket** (new, F4) | a difference is a difference by construction | deliberately a calculation — it EXPOSES cross-source drift |
+| **49F TWR/period-returns from Schwab components** | Schwab ships NO computed returns — only lot-grain gain/loss + cost-basis + flow components (measured over all 20 canonical tables) | **GRANTED Andrew-direct ~0628Z (instruction 5)**; inputs raw, computation explicit — per-firm asymmetry resolved: inf=vendor TWR raw, 49f=computed-from-components, cot=TBD (RECON-5) |
 
 ### RAW-AVAILABLE AND ALREADY CORRECTLY RAW (so the audit does not overclaim)
 `INF_B_00` canonical holdings is a **positions_mv pass-through** (its own header) — the holdings

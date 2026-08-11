@@ -80,6 +80,22 @@ each with its verdict grounded); (c) his named type specimen of the unacceptable
 (the txn-observed→interpolated price series feeding B-chain valuation) as the sovereign's own #1;
 (d) the fabric executes the extraction/removal — the recon supplies the partition it acts on.
 
+## Instruction 5 — TWR-from-Schwab GRANTED into the exception set (same terminal, ~0628Z)
+
+> "Granted
+> on TWR calculation from Schwab"
+
+**Context it answers:** the RECON-2 measurement (relayed via MSTR 062553Z) that Schwab ships NO
+computed TWR/period-return table — only the raw attribution COMPONENT family (lot-grain realized
+gain/loss in three period variants with cost-basis/wash-sale machinery, unrealized gain/loss,
+transaction income/tax) — making the archetype's performance leg per-firm asymmetric.
+**Scope as bound:** the ratified must-calculate exception set (@d272021791) gains a FIFTH member:
+**49F TWR/period-returns COMPUTED FROM the raw Schwab custody components.** This fits the
+raw-figures ethos by construction: the INPUTS are raw custodian data, the computation is explicit
+and named — the opposite of a residual on derived AUA. The per-firm resolution: inf = vendor TWR
+raw (Orion ships it) · 49f = TWR computed from Schwab components (this grant) · cot = TBD when
+RECON-5 measures what Black Diamond ships.
+
 ## Execution notes (this seat)
 
 - Fixes ride the sanctioned mechanisms only: Terraform via `safe-apply`, commits via `safe-commit`,
