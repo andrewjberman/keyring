@@ -58,6 +58,35 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   vintage 07-16) — none touched by this window; enumerated in CTO copy 025405Z.
 - L-C: UNBLOCKED as of L-A close — AE fires the one fenced ad-hoc QA cycle, AE+DS read.
 
+## L-C QA READ (AE fired 025841-025856Z, qa_local mode — fence intact, zero S3 writes)
+- 49financial EMITTED 3/3 · inflection EMITTED 3/3 (account-distribution 08-10, aggregate-aua-timeseries
+  08-07, aum-metrics 08-07 each) · **cottonwood SCOPE FAILED (isolated)** — differing-dollars guard
+  SystemExit at value_date=2026-08-06: 08-07 run 133,914,199.99 vs 08-08 run 139,213,957.62; refusal per
+  CTO condition 1 (234639Z) — **the guard working as ruled** · global fold SKIPPED honestly (I-1 leg pins
+  require cottonwood). Cycle: 6/12 A4, non-green. Log stream 2026/08/11/[$LATEST]31b81ca2a2a648528c3a5004c1e349fb.
+- **CLASSIFICATION (AE, COO-validated): NOT a window failure.** The collision is between pre-window runs
+  (08-07/08-08 valuations of the 08-06 snapshot) — the open cottonwood-causation thread (CTO). Neither
+  L-A code nor L-B cadence caused it. Near the pre-registered EXPECTED class in mechanism (pre-existing
+  feeder-side condition through a working guard); shape honestly stated as data collision, not feeder
+  freeze — recorded plainly, not force-fit.
+- Items 2+3 (inflection vintage; zero smartx/** reads): DS read PENDING (pointer delivered by AE).
+- ROUTED: the collision (which valuation of 08-06 is correct) → 1.0.0_SA_CTO (cottonwood-causation
+  owner) with the run-pair evidence. **No gate**: the CTO thread runs on its own clock; the window does
+  not hold on it.
+
+## 13:30Z BAR — INTERPRETATION PRE-REGISTERED (COO, 030xZ, BEFORE the evidence exists)
+- **12/12 A4 + served meta advancing** (collision resolved pre-cycle) → FULL PASS as originally registered.
+- **Cottonwood refuses on the SAME differing-dollars collision; every other scope emits fresh; meta
+  advances; every consumed C1 precedes the floor** → **WINDOW CHANGES PASS PER-SCOPE**; the cottonwood
+  data question stays its own routed item (CTO), not window scope; RP-W3 completion recorded with the
+  residual NAMED. 
+- **Any other degradation** (a scope that emitted in QA failing unattended · floor firing off-schedule ·
+  meta not advancing · vintage regression on 49f/inflection) → **BAR FAILURE** — escalate loud, rollback assessed.
+- Rationale: the bar exists to prove the WINDOW'S changes. A pre-existing data defect surfacing through a
+  correctly-working NEW guard is not evidence against them — but that reading is only honest if chosen
+  BEFORE the evidence, which is what this pre-registration does. (Per the pre-register-evidence-reads
+  discipline.)
+
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
   standing (lanes commit, integrators push); tags proposed at close (Deployment Rule 6).
