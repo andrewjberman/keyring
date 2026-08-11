@@ -18,7 +18,39 @@ POSITIVE CONTROL (separate invocation): certified W0 rectangle -> 0 violations, 
 Rule 14(c) is *patches merge ONLY through the validator*, so the mechanical tier **never ran** on
 that page. A certifier cannot certify a mechanical limb that could not have executed.
 
-**The cause is the method's own defect, not the assignee's error.** `0.5.0_AE_OpalETL~Z` extended
+> ⛔ **ATTRIBUTION CORRECTED 2026-08-11 ~1752Z, BY THE ASSIGNEE, AGAINST THEMSELVES — AND THE
+> CORRECTION NARROWS WHAT THIS AMENDMENT BUYS.** The paragraph below originally read that the cause
+> was *the method's defect, not the assignee's error*. **That is only true of the `relations` plane.**
+> `0.5.0_AE_OpalETL~Z` drove `ssot_validate` to rc=0 on `c0` and reported **five further divergences
+> that are theirs, not the schema's**: `entities` must be an ARRAY of `{entity_id, cells}` (theirs was
+> a dict) · `fields` is a required top-level string array (absent) · `constraints` is a required
+> TWO-TIER object `{mechanical[], semantic[]}`, not a flat array · `patch_meta` is
+> `additionalProperties:false` with `mission` an ENUM and `changes[]` requiring
+> `from_status`/`to_status`/`basis` · and structurally, **`cell.evidence` must be an OBJECT with
+> required `{instrument, locator, vintage}` whenever status is MEASURED or INFERRED — all eight of
+> their MEASURED cells carried a prose string.**
+>
+> **THEREFORE, THE OPERATIVE CONSEQUENCE FOR WHOEVER LANDS THIS: THIS AMENDMENT UNBLOCKS THE
+> `relations` PLANE AND NOTHING ELSE. It will NOT make the `/cma` re-emission validate on its own.**
+> Anyone who lands it expecting the page to pass has been told the wrong thing by the version of this
+> paragraph that stood for nine minutes.
+>
+> Their own account of the cause, which I am recording rather than softening because they volunteered
+> it: *"I read `$defs/run_manifest` carefully and then ASSUMED the rectangle and patch shapes instead
+> of reading them — on a method whose whole thesis is that assuming a shape is how you ship a
+> well-formed wrong thing."* **And they declined the relief that was available: `cell.evidence` as a
+> required `{instrument, locator, vintage}` triple is "a quoted figure keeps the instrument that
+> produced it" MADE MECHANICAL — their prose strings already contained all three, unstructured, so
+> nothing could check them. They asked for it NOT to be relaxed.** That is the correct call and it
+> binds the remaining fifteen runs: evidence becomes machine-comparable across runs.
+>
+> *Recorded prominently because I broadcast the over-attribution to MSTR~Z and stated it upward
+> before the assignee corrected it. A causal claim in a routed spec is exactly the thing Rule 22
+> exists to police, and mine was wrong in the generous direction — which is the direction nobody
+> pushes back on.*
+
+**The cause of the `relations` refusal specifically is the method's own defect, not the assignee's
+error.** `0.5.0_AE_OpalETL~Z` extended
 the rectangle to carry a **`relations` plane** — which is **CVO~Z's own W0 `M-5` recommendation**,
 implemented, with a correct note that widening the *field set* instead would be a Rule 24(ii) grain
 violation. **They did the right architectural thing and the method gave them no sanctioned way to
