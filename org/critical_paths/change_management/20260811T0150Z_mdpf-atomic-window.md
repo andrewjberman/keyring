@@ -569,3 +569,52 @@ On an 08-11 read, a **4-day-old `as_of`** will look like a stale pipeline. **It 
   legacy entries stay until P5).
 - **AE's observation order stands unchanged** and is now more important, not less: **chain telemetry FIRST →
   select the governing table → then the lambda leg.**
+
+---
+
+## AMENDMENT 5 (092730Z) — ⚠ THE `ending_mv` ABSENCE MECHANISM IS SOURCE-CONFIRMED, AND IT **SELF-HEALS UPWARD ON ITS OWN**. PRE-REGISTERED SO NOBODY READS BENIGN DRIFT AS EITHER A DEFECT *OR* A FIX
+
+**Grounding (MSTR, Andrew-granted Orion egress, record `@dbddd3fe52` / `ENDING_MV_ORION_WHY_20260811.md`):**
+the billing extract's `Activity: Ending Market Value` is Orion `Activity.Value` over the pull's
+**ROLLING-3-YEAR window** — `orion_billing_dim.py:62 DEFAULT_WINDOW='3y'` @dbddd3fe52 — and Orion's
+Activity engine returns **EMPTY** for any account whose `accountStartDate` **postdates the window start**.
+**PERFECT SEPARATION, ZERO EXCEPTIONS:** all **312** absent-with-assets started **after 2023-08-11**; all
+**485** populated started **on/before 2023-08-04**. **PREDICTIVE CONTROL:** 22/27 in-window anniversary
+accounts flipped absent→populated within ±3d of exactly `start + 3y`. Nothing is wrong at Orion or at the
+accounts (probed: reconciled, in-balance, `currentValue` correct). This is a **mechanism**, source-confirmed
+with a vintage — the reserved word is earned here.
+
+### ⛔ THE ROW THAT MATTERS AT THE BAR: **FEE-EARNING AUA DRIFTS *UPWARD* WITH NO CODE CHANGE, NO DEPLOY, AND NO FIX**
+
+~27 accounts crossed their 3-year anniversary Apr–Aug. Each crossing moves an account from
+absent-coerced-to-`$0.00` into populated **by itself**.
+
+| Observation at 13:30Z | ⛔ WHAT IT IS **NOT** | ✅ THE CORRECT READ |
+|---|---|---|
+| fee-earning AUA **higher** than a prior read | **NOT evidence a fix landed.** Nothing has been fixed — both builder defects are still queued. | Anniversary self-heal. Expected, benign. |
+| fee-earning AUA **higher** | **NOT a defect or a jump to investigate.** | Expected, benign. |
+| accounts moving `$0.00` → populated | **NOT evidence the absence class is closing.** The class is **fully live**; individual accounts age *out* of it one at a time. | Per-account aging, not remediation. |
+| an account still at `$0.00` | **NOT a new failure.** | Its `accountStartDate` is simply < 3y old. |
+
+**THE DISCRIMINATOR, pre-registered:** an **anniversary flip is per-account and dated at `start + 3y`**. A
+**fix** would move accounts whose start dates sit **nowhere near** an anniversary. So before crediting any
+change to a remedy: **check the flipped accounts' start dates against `today − 3y`.** If they cluster there,
+nothing was fixed.
+
+> **WHY THIS EARNS A PRE-REGISTRATION ROW RATHER THAN A FOOTNOTE: a metric that improves on its own is the
+> single most seductive false confirmation available tonight** — it will move in the *same direction* a real
+> remedy would move it, on a bar day, while a remedy for that exact class sits queued. **A self-healing
+> defect manufactures evidence for whatever anyone happens to have just done.** This is Amendment 4's lesson
+> generalised: the observation does not carry its own frame, so the frame is written down *first*.
+
+### P1 DESIGN CONSEQUENCE — a NAMED DECISION, owner CTO + Andrew, **NOT** a builder's call
+The window choice is now an explicit design fork: **(a)** an **inception-anchored** window, or **(b)** read
+**Portfolio-domain `currentValue`** raw — the raw-from-endpoint (atom 8) answer, and the roster endpoint
+returns it for **all 3,169 accounts in one call**. **Plus** the already-routed absent-vs-zero nullable fix
+(Rule 17: coercing absence to `0.00` in *silver* is a `fillna`, so preserving absence is law, not preference).
+⛔ **A lane does not pick (a) or (b) mid-build.**
+
+### INSTRUMENT NOTE — **FOURTH capped-stream sighting today**
+`orion_endpoint_probe.py get` caps output at `:3000` (DS-lane fix). Same class as my own `| head -12`
+ABSENT read this session. **Four in one day is not four mistakes — it is a tooling default.** ⛔ **Never
+conclude ABSENT from a capped stream**, and print the cap beside any absence verdict.
