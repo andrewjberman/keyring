@@ -1043,6 +1043,70 @@ performance-leg cell** in the three-firm matrix. **Whoever is seated on 5a inher
 in 5a's split changes. *Recorded to keep my register and CRO's map in lockstep — the two-record drift
 class is what this line exists to prevent.*
 
+## 4m · X-ii-a DISPATCHED on a CO-SIGNED history ruling · R-a gains a precondition · two timing corrections
+
+### ⚖ THE X-ii-a HISTORY DECISION — CO-SIGNED **(c)**, and it is the window's cleanest layer call
+
+AE flagged it and **refused to decide it alone**: the old tree's newest partitions are the 08-09/08-10
+ZERO artifacts, which poison the producer's roll-forward. Their options were **(a)** copy all, poison
+persists · **(b)** copy all except the two zeros. **Neither was right, and the reason is a layer
+confusion:**
+> **THE QUESTION CONFLATES *WHAT THE HISTORY CONTAINS* (archival / point-in-time) WITH *WHAT THE
+> ROLL-FORWARD READS* (producer selection). (b) SOLVES THE SECOND BY EDITING THE FIRST** — and doing a
+> later layer's job at the archive layer is **IRREVERSIBLE** (Rule 17a's spine, appearing here as
+> history-vs-selection). An archive pruned to make a selector behave **no longer answers "what did we
+> have on 08-10," and that question gets asked later by someone who does not know we pruned it.** It also
+> breaks the rollback symmetry the plan depends on.
+
+**RULED (CTO co-signed my (c) in full):**
+1. **COPY EVERYTHING, never move** — old tree freezes as the **symmetric** rollback.
+2. **FIX THE SELECTION AT THE READER, and CTO's formulation is sharper than mine — adopt theirs: the
+   roll-forward SKIPS PARTITIONS ITS OWN CURRENT CODE WOULD HAVE REFUSED TO WRITE.** Keyed on honest
+   markers (coverage flag where present; **`partners==0` is precisely the retired carve-out's signature
+   AND the current S2-ERROR condition**). **That is what makes it principled rather than special-cased —
+   not "exclude two objects we dislike" but "decline to treat as authoritative anything present code
+   would refuse to emit."** It generalizes to the NEXT incomplete partition, which is why it is the right
+   layer. AE has implementation latitude inside the shape.
+3. **FALLBACK if the selector cannot be marker-aware today: (a) WITH THE POISON NAMED AND TIME-BOXED TO
+   X-ii-b.** *Visible carried risk beats an invisible history edit.* Not (b).
+4. ⛔ **ESCALATION: if any path reaches "delete history so a producer behaves," IT GOES TO ANDREW — never
+   inferred.** And **neither exec stretched his point-in-time ruling onto this case** — he ruled it for
+   ASSIGNMENT history, a business event, and a zero-dollar intermediate staging artifact is not that. **The
+   adjacency was flagged, not claimed.** *Stretching a sovereign ruling to cover a case he did not rule is
+   its own error, and it is the more tempting one because it feels like deference.*
+
+**AE's refusal was the load-bearing act:** (b) was defensible, produced the right *outcome*, and would
+have passed unquestioned. Stopping to name it a **data-selection act** is what surfaced that the right
+outcome was being reached by an irreversible and invisible mechanism. **Third time tonight that seat
+stopped exactly where a lane should.**
+
+### R-a GAINS A NAMED PRECONDITION — from CVO's ch.01 cert (@1c6068a0a7, zero refusals)
+
+⛔ **A DISPATCH-PATH CENSUS FOR THE INF RUNNER MUST BE ENUMERATED AND CLOSED *BEFORE* THE MUTEX IS
+SIZED.** Five armed start paths are known. **Sizing a mutex against an unmeasured N is the denominator
+lesson applied to a remedy** — it yields a serializer that misses the sixth path and reads as complete.
+*Both CTO cert requests are now discharged; effectiveness + the CPR-4 serve fold together at 13:47Z —
+one read, two folds.*
+
+### TWO TIMING CORRECTIONS — one of them mine
+
+- ⚠ **MY "SAME-DAY / TODAY'S CYCLE" ON CPR-5 CARRIED TWO CLAIMS AND ONLY ONE IS TRUE. AE caught it before
+  it overpromised: THE ACT IS SAME-DAY; THE PROOF IS OVERNIGHT.** Leg (a) bd-side landing = today
+  post-15:06Z. **Leg (b) — the fix actually IN EFFECT — waits on the runner's next scheduled fire ~00:11Z
+  on 08-12** (earlier if the session-chain invokes; AE takes whichever comes first). *A landed object is
+  not a landed fix, and "same-day" let those blur.* AE has committed that if their session ends before
+  leg (b), **the two-leg bar goes into their handoff as a successor duty rather than silently
+  half-closed.**
+- **X-iii's acceptance oracle is the 14:10Z scheduled leg** (not the stale 13:40Z label I propagated).
+
+### THIRD `comp-pipescript deployed` BLINDNESS — banked as a SET, not three anecdotes
+
+**Bundle-routed scripts are excluded from `deployed` sweeps.** With the lambda-zip channel and the
+1-of-6-layers gaps, that is **three distinct blindnesses in one instrument in one window** — on CTO's
+roster together. X-iii's acceptance correctly rides **the mint's sha-stamped verify** instead.
+*AE's independent re-verification of DS's minted bundle, and their sequence CONSUMING the bar
+pre-registration as an INPUT, are both recorded by CTO as the reference standard.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
