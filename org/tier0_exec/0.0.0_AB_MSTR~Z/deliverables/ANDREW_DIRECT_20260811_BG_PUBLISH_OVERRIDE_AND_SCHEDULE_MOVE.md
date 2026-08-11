@@ -34,7 +34,13 @@ disambiguation. Whether prompt.md should carry a named exception is an open Andr
   semantics are unchanged.
 - Doc drift found by BG: register_daily_task.ps1:81 task Description still reads
   "pull + tripwire (no upload)" though the task is full end-to-end since 2026-08-06 —
-  fixed by MSTR~Z in the same sweep (description lands on the box at next re-registration).
+  fixed at source by MSTR~Z in the same sweep; the LIVE task string updates only at the
+  next re-registration. SHARPENED (BG 093050Z): until then the live string is misleading
+  in the WRONG DIRECTION — "(no upload)" read during an incident invites a manual publish,
+  i.e. a double-fire. Exposure is bounded by the publisher's own guards (backward publish
+  rc=40 refuse; same-vintage SKIP, exercised live 08-11), so the cost is operator confusion
+  and incident time, not served data. DISPOSITION: ride until the next real re-registration
+  picks it up for free; no schedule churn for a doc string.
 - Instrument lesson banked by BG (units double-scaling false alarm; settled by re-deriving
   from the price column — the reading that settles a units question avoids the suspect
   column).
