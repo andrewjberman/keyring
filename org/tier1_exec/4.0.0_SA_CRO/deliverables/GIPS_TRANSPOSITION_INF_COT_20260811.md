@@ -49,12 +49,22 @@ the build-time census runs over the union of all 64 at-rest partitions + backfil
 the INF 46-code figure (full 1.43M-row series) does NOT carry this caveat**; (4) empty-description
 codes get INFERRED partitions with specimen-verify flags, never silent force-fits. The 49F
 template's single conditional is CLEARED @a876ee6ae9 — the cited verdict is now unconditioned.
+Two later priors (@5bb3b2626d): (5) check the DIRECTION field's semantic per row-type before
+matching on it (Schwab IC rows carry LONG/SHORT in debit_credit — a direction-keyed matcher reads
+a structural 0.0%); (6) FRM-fee credit legs identify advisor collection accounts — the mechanical
+client-composite boundary discriminator.
 
 ## THE TWO PROBE SPECS (the only cells at-rest data cannot close; egress granted, time-boxed)
 
-- **P1 (Orion):** one Envision performance-dim pull with a historical Custom window (e.g. as-of
-  2026-06-30) via the persisted-template machinery; PASS = returned metrics differ from current
-  and are as-of-consistent. Upgrades decision-1-history from PLAUSIBLE-BY-PATTERN to MEASURED.
+- **P1 (Orion): EXECUTED, PASS (~0709Z).** Historical Custom window 2026-01-01→2026-06-30 on the
+  live Performance Dim: 201 → 2,988 accounts, EVERY row `Performance CalcMethod = TWR` (the method
+  disclosure in-band), and vs the current 08-10 pull **99.8% of 1,845 joined accounts DIFFER**
+  (mean |Δ| 8.44 points; 64 current-only accounts = post-06-30 openings; zero hist-only).
+  **VERDICT: Orion honors historical as-of and serves vendor-computed TWR for arbitrary periods —
+  decision-1 is FULLY available for Inflection, historical backfill included.** (Build notes: the
+  metric is percent-STRING typed ("8.74 %") — coerce; one outlier |Δ|=2004.5 → outlier-handling
+  row; artifact at scratch p1_hist_20260630.csv, counts-only here.) The INF verdict upgrades:
+  BOTH decision branches fully available.
 - **P2 (BD/cot):** queryType catalog sweep by template-create validation (the d2b §4 pattern) —
   does a performance queryType exist? **P2b:** one deep historical Custom-window pull to measure
   BD's history bottom. Both on the cot account under the standing firm-scoped lift.
