@@ -14,7 +14,8 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
 |---|---|---|---|
 | L-A code cp | 0.4.0_DS_ClientPlatform | 2-file cp to s3://opal-data-mdpf/code/scripts/gold/: dim_mdpf_aggregate_aua_timeseries.py + build_mdpf_spine.py (measured invoke set; NO trio mint) from @bf74d031c1; then comp-pipescript deployed check | **DONE** 025153-025157Z (COO-validated; see LEG CLOSES) |
 | L-B cadence apply | 0.7.0_AE_CloudOps | RP-W3: mirrors ahead of floor; floor → 13:30Z; pulls → 13:02Z; cutover-gap plan STATED pre-apply; targeted apply, plan READ (no daily-aua row possible — declaration removed by W5b); RP-W4 selector apply may ride before/with | **DONE** applied ~0210-0224Z (CTO applied-truth 0-drift; see LEG CLOSES) |
-| L-C QA read | AE fires, AE+DS read | ONE ad-hoc cycle post-L-A/L-B: (1) four scopes emit / which errored, (2) inflection legs carry corrected vintage, (3) inflection build reads zero smartx/** keys. FENCE: output never published, never the bar, discharges no acceptance | OPEN |
+| L-C QA read | AE fires, AE+DS read | ONE ad-hoc cycle post-L-A/L-B: (1) four scopes emit / which errored, (2) inflection legs carry corrected vintage, (3) inflection build reads zero smartx/** keys. FENCE: output never published, never the bar, discharges no acceptance | FIRED 0258Z; item-2 FAIL-as-measured (wrong-code-channel, see AMENDMENT); RE-FIRES once post-L-D |
+| **L-D lambda re-pin** (ADDED 031xZ, see AMENDMENT) | 0.7.0_AE_CloudOps | rebuild mdpf-gold-lambda package with pin advanced @0bc739e7d5 → @bf74d031c1 (SAME reviewed artifact as L-A — review/deploy split preserved); commit (source-map/pin update, Rule 4) → safe-apply → verify live CodeSha256 CHANGED from XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= (08-07 artifact) + LastModified tonight | OPEN |
 
 ## PRE-REGISTERED READINGS (decided before evidence)
 - QA read shows scopes emitting but FEEDERS STILL FROZEN → EXPECTED (separate WS-lambda mechanism,
@@ -86,6 +87,38 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   correctly-working NEW guard is not evidence against them — but that reading is only honest if chosen
   BEFORE the evidence, which is what this pre-registration does. (Per the pre-register-evidence-reads
   discipline.)
+
+## WINDOW-EXISTENTIAL AMENDMENT — 20260811T031xZ (DS finding 030919Z, COO-validated; L-D added)
+- **THE FINDING (3 independent derivations, Rule 22a):** the 13:30Z floor (post-L-B) fires
+  **mdpf-gold-lambda**, whose package is ASSEMBLED FROM A PINNED COMMIT (build_package.py, spine baked
+  flat at zip root) — pin @0bc739e7d5, deployed 08-07T03:52Z, **PRE-dating the fix @bf74d031c1**.
+  (1) DECLARATIVE lambda-source-map pin/last_deployed; (2) APPLIED live get-function-configuration
+  CodeSha256 XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= == the 08-07 artifact, LastModified
+  08-07T03:51:21Z, nobody redeployed tonight; (3) BEHAVIORAL the 0258Z qa_local invoke (post-L-A)
+  emitted DS's documented PRE-fix values (inflection 08-07 custody 208,325,960.35 / model_aua
+  144,545,199.97; D-4 anchor 209,431,383.43 still at the 08-05 mislabel). Consolidator calls
+  spine.build_firm_timeseries directly (mdpf_gold_consolidator.py:778-781).
+- **WHY EVERY INSTRUMENT READ GREEN:** L-A landed byte-identical on s3://opal-data-mdpf/code/scripts/gold/
+  (the mdpf-daily-runner channel); comp-pipescript deployed MATCH is TRUE for that channel and
+  **STRUCTURALLY BLIND to the Lambda zip channel**. Two code channels, one fix, landed on the one the
+  floor does not read. **Instrument-coverage gap routed to CTO** (Rule 22: a comp-tool coverage gap is
+  a DEFECT) — the gap record is post-window work, not tonight's.
+- **COO RULING: NO LEG FAILED — the window SPEC was incomplete by one leg.** L-A is correct on its
+  channel (nothing rolls back); L-B cadence is correct. The pre-registered fail-both clause does NOT
+  fire on a spec gap. **FORWARD-COMPLETE: leg L-D added** (Lambda re-pin to the SAME reviewed artifact
+  @bf74d031c1 + TF apply, AE lane per Deployment Rules 1/2/4/18). Window intent unchanged: the reviewed
+  fix, landed on the path that EXECUTES, tonight.
+- **L-C RE-FIRE AUTHORIZED (once, post-L-D):** the 0258Z cycle read the OLD code, so its item-2 purpose
+  was structurally undischargeable. Same fence, same scope; DS re-reads item 2 against the POST-fix
+  oracle. Item-1 mechanical findings (cottonwood guard refusal, global skip) stand — they are
+  code-channel-independent. Item-3 verdict pending from DS's trace on the 0258Z run; re-confirm on the
+  re-fire if the trace derives from executed code.
+- **INTERPRETATION TABLE AMENDED — EXECUTING-CODE PRECONDITION ADDED:** every PASS row of the 13:30Z
+  pre-registration now additionally requires the cycle to have EXECUTED the @bf74d031c1 code:
+  live CodeSha256 != the 08-07 value BEFORE the cycle, AND emitted bodies carry the POST-fix oracle
+  values (inflection custody 209,373,343.50 / model_aua 145,329,103.38; D-4 anchor labeled 08-04).
+  A 13:30Z cycle on the OLD sha is NOT adjudicable as a pass on any row — the original table silently
+  assumed the executing channel carried the fix; that assumption is now explicit and testable.
 
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
