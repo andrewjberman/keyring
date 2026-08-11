@@ -169,6 +169,39 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   zip; a deny surfaces as a LOUD apply failure, not a silent skip. AE verifies both before calling
   L-D-canonical done.
 
+## AMENDMENT III — L-D-CANONICAL DONE; RE-FIRE GREEN 12/12; THE BAR FRAME CHANGES (AE 033324Z)
+- **L-D-CANONICAL COMPLETE** (AE on CTO routing; commits f72495f387 + 759ef40a12; full evidence in
+  AE→CTO 033xZ, CTO to confirm discriminators in their verify pass): artifact re-homed to
+  s3://opal-data-assets/portal/gold/mdpf/_code/mdpf-gold-lambda.zip, CodeSha256 UNCHANGED (expected —
+  same bytes), env MDPF_GOLD_COMMIT stamp fixed, 0-diff re-plan, old private-bucket copy
+  DEPRECATED-in-place. L-D row: DONE pending CTO discriminator confirmation.
+- **L-C RE-FIRE (item 2): GREEN 12/12, errors=[] — AND COTTONWOOD BUILT, did NOT refuse.** Mechanism
+  (AE, from run log): the re-pin carried DS's implementation of **Andrew's 08-10 point-in-time
+  ruling** — earliest assignment 2026-08-07 CHOSEN; later assignments = RESTATEMENTS surfaced in the
+  rekey report, never chosen; differing-dollars collision now WARN, not SystemExit. Inflection POST
+  oracles PRESENT at presence-grain (209,373,343.50 / 145,329,103.38 / orion 08-05); DS pointed at
+  the label-grain formal read. Fence held (qa_local, zero writes).
+- **OPEN VALIDATION (CTO, asked 033xZ — material because 13:30Z PUBLISHES, unlike the fence):**
+  AE cites an Andrew 08-10 point-in-time RULING implemented in @bf74d031c1; CTO's 030244Z framed
+  restate-vs-point-in-time as their OPEN Andrew call. Reconcile: (a) is the point-in-time GOLD-build
+  basis Andrew-ratified (cite verbatim/record)? (b) which facet remains open (C-1 custody-plane
+  conversion policy is understood to be the open half)? The 12/12 PASS branch below is CONDITIONED
+  on (a) confirmed.
+- **13:30Z TABLE AMENDED (branches extended, none discarded; executing-code precondition UNCHANGED
+  and now doubly verified):**
+  · **FULL 12/12** + POST oracles in bodies + every consumed C1 precedes floor + meta advancing +
+    **CTO confirms the point-in-time ruling provenance** → **FULL PASS** (the original registered bar,
+    now attainable).
+  · FULL 12/12 but provenance UNCONFIRMED by adjudication time → window mechanics PASS; the
+    cottonwood/global SERVED numbers flagged LOUD same-day for sovereign confirmation — recorded,
+    never silently ratified by the pass.
+  · Cottonwood refuses (data re-collides on a NEW value_date the policy does not cover) → the
+    original per-scope branch applies unchanged.
+  · Any non-cottonwood degradation → BAR FAILURE, loud, rollback assessed.
+- **NAMED READER ASSIGNED: 0.4.0_DS_ClientPlatform reads the cottonwood rekey/restatement report**
+  (their implementation, their label-grain read already in flight) — verdict lands before window
+  close; restatements are TRANSPARENCY, and transparency needs a reader to be real.
+
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
   standing (lanes commit, integrators push); tags proposed at close (Deployment Rule 6).
