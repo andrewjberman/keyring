@@ -85,13 +85,14 @@ engine gets a summary).
    EventBridge namespaces** (`events list-rules` AND `scheduler list-schedules`) — a
    single-namespace sweep returns a clean, complete-looking absence, which is the deletion-warrant
    direction. Method line routed to ~A (scheduling-axes/tool-adapters).
-   Banked 0602Z (CRO + my own run, independent): **a TIMEOUT-BACKGROUNDED Bash task's output file
-   is not a complete render** — comp-pipescript's "1-of-6-layers" observation reproduces only under
-   that harness shape (CRO: 13 lines via task-file read; my clean `> file` redirect run: 59 rows,
-   6/6 layers healthy). For any long-running tool, redirect to an explicit file; never quote a
-   timeout-backgrounded task file's contents as the tool's full output. One deliberate repro of the
-   harness shape pends before any tool patch; DS's triple-homed rendering gap is the one
-   confirmed-live TOOL defect.
+   Banked 0602Z (CRO + my own run, independent; ATTRIBUTION CORRECTED 0743Z per CVO/COO): **a
+   TIMEOUT-BACKGROUNDED Bash task's output file is not a complete render** — the harness artifact
+   caught TWO seats (CRO~A's 1-of-6 lead + the repro design); COO's under-read was a DIFFERENT
+   class — a self-applied `| head -12` cap (the retrieval-returns-a-value class, self-inflicted
+   variant): **never conclude ABSENT from a capped stream; drop the cap or count the matches.**
+   Two classes, two remedies — filing both under one caveat would leave the next agent reading
+   output files diligently while still capping their greps. For any long-running tool, redirect to
+   an explicit file AND leave the stream uncapped when absence is the question.
 
 ## THE 49F GROUP A/B/C/D SPEC (Andrew-direct commission @5e4b8dda98; CVO authoring; sequential
 review at CTO; ratification = Andrew's word on the whole)
@@ -110,10 +111,13 @@ silver-upstream contract row so no input arrives on an undeclared schedule). The
 (A-D+W) is complete + amendment-current. Census-substrate REGEN ordered via CRO~B's finalize plan
 (honest stale flip accepted if it lands first).
 
-**HOLISTIC PACKET (the final-ratification substrate): 49F set reviewed+TENTATIVE · INF spec
-DELIVERED + CTO-APPROVED 0740Z as the transposition model (the doctrine's first test PASSED —
-shape held; one open structural decision stated: B_00 V(t)=vendor Ending-MV; one strength
-inversion: the vendor-TWR tie + C_05 verification series) · COT pending RECON-5a. Adversarial
+**HOLISTIC PACKET 3-OF-3 COMPLETE 0744Z — AT ANDREW FOR FINAL RATIFICATION: 49F set (A-D+W,
+amendment-current, TENTATIVE) · INF spec CTO-APPROVED 0740Z (the transposition model — doctrine's
+first test PASSED) · COT spec CTO-APPROVED 0744Z w/ one amendment folding (B_00 cites the
+relationship-grain collapse law in its own contract; v1 SUM = named aggregation not
+reconstruction, swap-on-inventory = a ruled amendment event) + the honest OPEN-CELL REGISTER
+(A_06 identity bridge = the one build-blocking cell, account-grain serving only; none blocks SPEC
+ratification). F-1's one-line root confirmation rides the ask. Adversarial
 verdict on the 49F set: APPROVE-WITH-FINDINGS — F-1 adjudicated (root follows Andrew's ratified
 grammar, flagged as a Rule-24 naming act in the packet) · F-2 → GROUP W commissioned
 (pre-decomposition) · F-3..F-6 remedy shapes adopted verbatim, folding at CVO · F-7 numbers
