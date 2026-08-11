@@ -35,9 +35,16 @@ DELIVERED with the cert noted pending.)
 
 **L1 KEY-ANNOTATION RULE (0546Z, from the measured three-family collision):** advi×49F/bd and
 advi×cot L1 cells land under ONE shared vendor prefix (`opal-data-assets/blackdiamond/{49f,cottonwood}`).
-Every L1 count carries the census KEY it was taken with. OPEN CHECK (CTO/CVO): does a bd-tree
-script reading `blackdiamond/cottonwood/*` trip the bd↔cot commit gate + IAM deny? (`comp-firmsep-sweep`
-is the instrument; not yet run against the shared-vendor-prefix shape.)
+Every L1 count carries the census KEY it was taken with.
+**OPEN CHECK — COMMIT-GATE HALF MEASURED 0556Z: the gate is BLIND to the shared-prefix shape.**
+`ds-precommit-check.py:61-64` matches FOREIGN BUCKET NAMES only (`data/cot/`→{opal-data-bd,
+opal-data-inf}; `data/black_diamond/`→{opal-data-cot}) — `opal-data-assets` is in neither tuple
+and key prefixes below a bucket are never inspected, so a `data/black_diamond/` script reading
+`opal-data-assets/blackdiamond/cottonwood/*` passes the commit gate TODAY. (comp-firmsep-sweep is
+credential-plane — wrong axis for this check.) **GATE CANDIDATE (proposed to Andrew, NOT
+implemented — widening a deny needs his word): extend `_CROSS_FIRM_FOREIGN_BUCKETS` to
+foreign-KEY-PREFIX tuples.** IAM half still unmeasured: one `simulate-principal-policy` per runner
+role against an exact cottonwood key, isolated positive control beside it.
 
 ## THE QUALITY PARTITION (Andrew-direct instruction 4, ~0552Z via CRO~A record + MSTR relay)
 
@@ -48,6 +55,19 @@ specimen (sovereign-confirmed, independently the audit's ILLEGITIMATELY-DERIVED 
 transaction-engine holdings valuation → DISCARD. This binds ALL recon chapters' deliverable form;
 L4 cells carry a `partition:` field from here forward. Existing certified cells are not reopened —
 the partition field back-fills on each chapter's next touch.
+
+**Axis form (CTO ruling 0555Z, Rule-24 two-field remedy):** `partition: EXTRACT|DISCARD` (binary,
+exactly-one-side) + `discard_reason: patchy|fragile|methodologically-unacceptable` (discard side
+only). Never three coordinate values on the partition axis.
+**Census UNIT (CTO-ruled 0559Z adopting CRO's leaf-grain form, closing COO's postulate-(ii)
+catch — the units "script/engine/subsystem" NEST): THE PARTITION IS LEAF-GRAIN ONLY.** Every
+census header DECLARES its leaf unit; EXTRACT|DISCARD attaches to LEAVES and nothing else; any
+parent aggregate (engine/subsystem/service) carries a **DERIVED SUMMARY** (n_extract/n_discard +
+the discard leaves enumerated), **never a partition value of its own** — binary-exactly-one-side
+holds by construction, and two censuses can only disagree at declared leaves. Declared leaves:
+RECON-6 = ENDPOINT FAMILY per vendor · code censuses (RECON-2/3/5b) = SCRIPT-LEVEL DERIVATION
+CAPABILITY (the type specimen — transaction-engine holdings valuation — IS such a leaf; the
+engine gets a summary).
 
 ## ADVERSARIAL DISCIPLINE (the mandate's word: "adversarially establish SSOT")
 
