@@ -21,7 +21,7 @@ per firm** -- measured on the newest feed partition vs the newest ADVI accounts 
 |---|---|---|---|---|
 | **08335338 ADVI (49F)** | 36-char UUID, 7,230 distinct -- **it is the SmartX `allocationId`**, mapped at `wsb_49f_smartx_model_aua.py:167`; `custodian` hardcoded `None` at `:169` with the feeder's own comment *"not exposed on the SmartX allocation row"*; `household_id` all-null | `silver/fact_acc` `account_id`: 10-digit Schwab number, 7,239 distinct (date=2026-08-07) | **0.0%** -- exact, digit-normalized, and last-8 all zero | **STRUCTURALLY IMPOSSIBLE ON THE CURRENT FEED.** Not a normalization gap -- disjoint key spaces. It is an IDENTITY-ACQUISITION problem before it is a join problem |
 | **Inflection** | short numeric ids (len 2-4), 561 distinct (feed 2026-08-06) | `gold/dimensions/accounts_dimension_latest` `account_id`, 869 distinct (written 08-10) | **98.0%** (550/561), exact, no normalization | **JOINABLE TODAY** on the native key. Rollup keys (advisor_assignments, client_dimension) already sit spine-side. Residual: 11 accounts (2.0%), cause open (closed/vintage-skew/book-definition candidates) |
-| **Cottonwood** | **NO model-holdings feed exists** -- `model_aua_positions` partitions are exactly {49financial, inflection}, full 116-object enumeration | n/a | n/a | **NO INPUT.** Goal 3 for cottonwood runs THROUGH goal 1 (the custom-model pull creates the missing plane). When it exists: BD is RELATIONSHIP-grain (Andrew 08-04) -- the account test needs the collapse discipline |
+| **Cottonwood** | **NO PIPELINE FEED exists** -- `model_aua_positions` partitions are exactly {49financial, inflection}, full 116-object enumeration. **ANDREW-DIRECT CORRECTION ~0547Z, verbatim: "Cottonwood does have a model holdings feed via the Black Diamond Rebalance endpoint" -- the VENDOR SOURCE exists; what is absent is the ingest leg.** RCN-0001 note: the rebalancer-models endpoint family was one of the teardown's five [BODY-NOT-CAPTURED] gaps -- schema capture there is the named opening move | n/a | n/a | **SOURCE EXISTS, PIPELINE ABSENT.** Goal 3 for cottonwood still sequences behind goal 1 (the custom-model pull IS the ingest leg, and the Rebalance endpoint is its scouted mechanism); cot-BD egress is standing-LIFTED so the endpoint is probeable. When the feed exists: BD is RELATIONSHIP-grain (Andrew 08-04) -- the account test needs the collapse discipline |
 
 ## THE FOUR CONSEQUENCES FOR THE PROGRAM (information, not rulings)
 
@@ -35,7 +35,9 @@ per firm** -- measured on the newest feed partition vs the newest ADVI accounts 
 2. **Inflection is the existence proof** that item 3's design is right wherever the key survives
    the feed: 98% native-key join, rollup spine already in place. It can prototype the overlay first.
 3. **The goal-1 -> goal-3 dependency is now measured, not assumed:** cottonwood's item-3 leg cannot
-   start before item 1 lands its feed.
+   start before item 1 lands its feed -- **and per Andrew's ~0547Z correction the source side is
+   already there (BD Rebalance endpoint), so item 1 is an INGEST build, not a data hunt; the
+   [BODY-NOT-CAPTURED] rebalancer-models schema gap from RCN-0001 is its first capture target.**
 4. **A naming defect worth fixing at the source:** the feed column NAMED `account_id` carries an
    allocation UUID -- name-vs-content, the exact class the field-registry discipline (2a) exists to
    kill. Plus one live trap defused: feed 7,230 rows vs spine 7,239 accounts -- near-identical
