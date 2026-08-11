@@ -126,3 +126,42 @@ DEFECTS OR BLIND SPOTS IN ROUGHLY A DOZEN OF THESE INSTRUMENTS** — `comp-iam` 
 `comp-validate`, `inbox-watch`, the HALTGT checkpoint, `comp-estate`, `comp-find`,
 `simulate-principal-policy` (3 false-deny modes), the AWS CLI pagination class, `git show` mangling.
 **The estate has written down that these lie, and has decomposed none of them.**
+
+---
+
+## ⛔ SUPERSEDING RULING (Andrew-direct 2026-08-11 ~1817Z, CTO~Z terminal) — NFRA GATED ON FABRIC INTEGRATION; SCOPE CONFINED TO COMP TOOLING
+
+VERBATIM (the phrasing IS the ruling):
+
+> *"I am intrigued in your framework for developing ontology here, however before doing any kind of
+> NFRA work, the sitez fabric (yours) and the laptop fabric respective MSTR agents will have to
+> colaborate on an integration, and the work should be formalized to some extent, as the 4.0.0
+> agents on the laptop fabric are currently engaged in some ontology work as it pertains to the
+> Kimi Semantic Vertical Pipeline. If you stay confined to comp tooling, I think it can work.
+> Please continue your efforts here with the BG agent data access work, OPAL_ANALYST, but also
+> relay to MSTR~Z that we need to pursue a joint integration between the fabrics. I will hold work
+> on the laptop fabric in the interim so that integration can be performed smoothly."*
+
+### Operative decomposition (CTO~Z read)
+
+1. **NO NFRA WORK from this fabric until the two MSTR agents (site-Z + laptop) collaborate on an
+   integration.** The instruments program recommended above is **GATED on that integration** — not
+   cancelled, gated. My earlier recommendation (atom_decomp as the method against `NFRA_TOOLCHECK`
+   P4) now waits behind it.
+2. **The integration work is to be FORMALIZED "to some extent"** — the reason is a live collision
+   surface: **laptop 4.0.0 (CRO) agents are engaged in ontology work on the Kimi Semantic Vertical
+   Pipeline**, and this fabric's rectangle/constraint/relations framework is ontology work on an
+   adjacent axis. Formalization is the MSTRs' to structure; the requirement is recorded here.
+3. **SCOPE BOUND when the instruments work runs: CONFINED TO COMP TOOLING** — his words, *"if you
+   stay confined to comp tooling, I think it can work."* Narrower than my full recommendation
+   roster: comp-* tools yes; the supervision/broker cluster and anything ontology-adjacent is NOT
+   pre-authorized by this and would need his word after the integration.
+4. **THIS FABRIC CONTINUES: OPAL_ANALYST + the BG agent data-access work.** Unchanged, explicitly
+   re-affirmed. W1 proceeds.
+5. **RELAY ORDERED to MSTR~Z**: pursue a joint integration between the fabrics. **He is HOLDING
+   laptop-fabric work in the interim** so the integration can be performed smoothly — which makes
+   the relay time-sensitive: every hour before the MSTRs engage is an hour of his deliberate hold.
+6. **This partially discharges two of my three open calls**: the instruments-program call is now
+   answered (gated + comp-tooling-confined); the site-Z exclusivity question is mooted for now
+   (this fabric's work IS OPAL_ANALYST + BG data access). `NFRA_VELOCITY`'s hold stands, now nested
+   inside the wider interim hold on laptop work.
