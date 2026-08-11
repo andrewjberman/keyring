@@ -26,7 +26,7 @@ unconsumed by the serving chain.
 
 ## 2 · THE THREE-BUCKET FIELD MAP (north-star decision rule applied)
 
-### ILLEGITIMATELY-DERIVED — an endpoint gives it raw; the gold script computes it anyway
+### ILLEGITIMATELY-DERIVED — an endpoint gives it raw; the gold script computes it anyway **(RATIFIED as a LAW verdict @d272021791 — W-A/W-B execute against it)**
 | what | where derived | the raw source | evidence |
 |---|---|---|---|
 | **Account/holding VALUATION via a price series** | `INF_build_canonical_prices` (T1 txn-observed medians → T2 yahoo → **T3 linear interpolation → T4 carry-forward**) feeding the B-chain | `GET /api/v1/Portfolio/Accounts/{aid}/Assets/{date}` + `/Clients/{cid}/Assets/{date}` — sync JSON, VALUED asset grain (catalog §Portfolio/Assets; chosen there precisely because Envision asset-grouping timed out) | SOURCE + DECLARED |
@@ -35,7 +35,7 @@ unconsumed by the serving chain.
 | **Non-fee AUA** | `INF_D_04:822` residual `total_aua − fee_earning_aua` | Orion Billing classification (`is_fee_earning` per row) — same dim, classified sum | SOURCE; **fix drafted, 02_D04_RESIDUAL_FIX_DRAFT.md** |
 | **Ending/beginning MV variants** | assorted D-chain re-additions | Envision Activity Options 1–6 (EndingMV/BeginningMV/±accrual, explicit `activityOptionId`) | DECLARED (catalog Gotcha #1 — the $140M-vs-$199.4M lesson is ITSELF a raw-field mis-pull caught and documented) |
 
-### MUST-CALCULATE — provisional, AUTHORITATIVE-FROM-ANDREW pending (CTO 045806Z correction honored)
+### MUST-CALCULATE — **RATIFIED by Andrew ~0542Z (@d272021791)**: exactly {NNA flow · non-fee residual (TRANSITIONAL — retires when the D_04 fix verifies) · cross-account rollups · the unreconciled bucket}; everything else raw. *(Was provisional at authoring; flipped on ratification per CTO relay 054315Z.)*
 | what | why it cannot be raw | note |
 |---|---|---|
 | **NNA (net new assets)** | a FLOW net of market movement; no endpoint serves it (Andrew-named) | stays calculated — C_01's job survives the refactor; its POINT-IN-TIME form is Wave D |

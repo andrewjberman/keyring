@@ -33,7 +33,12 @@ table (extraction in the run scratch; e.g. `fact_trn` 140 cols, `fact_acc` 95, `
 `dim_transaction` 44). This is what "complete fact tables" means in the estate's own terms: full
 custody depth (positions settled/unsettled, lots, realized/unrealized at daily/monthly/yearly
 grains, transactions with settle dates, balances with margin detail) delivered raw by the
-custodian — **nothing here is derived by us.**
+custodian — **nothing here is derived by us.** ⚠ KEY-FAMILY DISCIPLINE (COO 054309Z, measured):
+"bd" as a PIPELINE means 49 Financial; "blackdiamond" as a VENDOR prefix spans TWO firms (49f/ +
+cottonwood/); this completeness claim is measured over the **schwab/08335338 SDD family** — NOT
+blackdiamond/49f. Every count in this run prints its key family beside it. EGRESS BOUND: this run
+reads 49F Black-Diamond-sourced data AT REST only; a live 49F-BD endpoint call is NOT covered by
+the standing cot-BD lift and would need Andrew's per-use word first (COO scope check 054309Z).
 Early census findings: **(f1)** `fact_fam` + `fact_slm` are UNPARSED positional passthroughs
 (`col_1..col_6` + provenance) — schema never applied; **(f2)** period-end variants run their own
 cadences (`fact_rlu`/`rtu` 12 partitions → 06-05; `fact_rly`/`rty` 37 → 07-31) — the census

@@ -57,6 +57,13 @@ the VALUE of non_fee corrects (~$606K-class → ~$128K-class for Patrick's view)
 are additive JSON — no consumer breaks; the portal MAY later display the unreconciled bucket
 (routed as a suggestion to the portal lane, not required for this fix).
 
+## Acceptance bar upgrade (RATIFIED @d272021791, CTO relay 054315Z)
+
+This fix is the **retirement vehicle** for the non-fee residual's TRANSITIONAL slot in the ratified
+must-calculate exception set: on verified landing, the residual LEAVES the exception set and the raw
+Billing classified sum becomes the served source. DS's acceptance therefore proves not just
+correctness but SUCCESSION — the residual path is gone, not co-resident.
+
 ## Landing route
 
 `data/inf/scripts/gold/**` = `0.4.0_DS_ClientPlatform` lane (Rule 13); DS stood down tonight; COO
