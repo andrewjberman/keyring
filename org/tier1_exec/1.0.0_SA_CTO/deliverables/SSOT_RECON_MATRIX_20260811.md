@@ -143,6 +143,15 @@ the 49F shape itself, and nothing builds against a shape in motion.**
   defect; my "unsanctioned mirror" ruling CORRECTED 0630Z on AE's consumer read — search-FOR-the-
   path was the only reason the consumer surfaced; the delete never fired because the ruling itself
   blocked on that read).
+- **THE SEVENTH FACE (DS decode 0806Z, adopted): ONE PRODUCER + ONE BASIS per quantity.** A
+  quantity's VALUATION BASIS is itself a single-homed definition — two sites both "correct" on
+  different bases (ending_mv vs current-AUA, measured to the cent: one basis difference + one
+  residual-form defect explained a 22x disagreement) are two definitions of one number. Class
+  remedies unify producer AND basis. Registry row banked: `billing.ending_mv` zero-stale on billed
+  accounts (63/144 fee + 9/12 non-fee at 0.00 — zeros are STATE, not value; any ending_mv-valued
+  surface systematically undercounts). The ~$68.3M unreconciled serve-#2 surfaces = EXPECTED shape
+  (dominated by this measured drift), pre-registered at CVO; the D_04 re-cut is a designed future
+  act behind Andrew's basis ruling (with COO).
 - **SCOPE PREDICATES ARE SINGLE-HOMED (ruled (a), @dd93cad9a2 finding):** two independently-mutable
   scope definitions that happen to agree = two runtimes on one key, one layer up. Every consumer
   derives from ONE declared universe predicate. The 49F map/feed alignment (coincidence today)

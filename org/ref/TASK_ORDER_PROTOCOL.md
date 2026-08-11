@@ -171,6 +171,40 @@ One file per feature. Never overwrite into a monolith.
     -->
   </acceptance_criteria>
 
+  <proof_of_spec>
+    <!--
+    MANDATORY -- ANDREW-DIRECT 2026-08-11 ~0821Z at the CVO terminal, VERBATIM: "I do not want
+    TOs being issued that do not have machine-readable data contracts, where the agent
+    responsible must fill out the contract based on their efforts."
+    (Record: org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260811_PROOF_OF_SPEC_CANONIZED.md)
+
+    TWO HALVES, one per party:
+
+    ISSUANCE (the issuer, at PRD decomposition): the machine-readable criterion-id set --
+    every <acceptance_criteria> criterion gets a stable id, listed here. A TO WITHOUT THIS
+    SET IS NON-CONFORMING AND IS NOT ISSUED.
+      <expected_criteria>C1,C2,C3,...</expected_criteria>
+
+    COMPLETION (the assignee, from THEIR OWN efforts): a PROOF_OF_SPEC instance --
+    org/standards/PROOF_OF_SPEC.schema.json -- one row per criterion id carrying the
+    criterion VERBATIM + the exact re-runnable invocation + output evidence + denominator,
+    validated BEFORE the status flip:
+      python .tools/proof-of-spec-check.py {instance}.json --expected-criteria C1,C2,C3
+    The validator runs the COVERAGE diff first (a criterion with no row refuses the instance
+    before any quality check; frames printed) then the quality rules (FAIL-requires-reason,
+    thin-evidence-PASS invalid, dead mutant/determinism controls invalidate).
+      <instance_path>{assignee_folder}/deliverables/{to_id}_PROOF_OF_SPEC.json</instance_path>
+
+    THE TWO-LAYER DIVISION (on the record 2026-08-11 082045Z): the validator catches the
+    ASSIGNEE omitting against the TO's id list; CVO's cert-of-built step-zero catches the TO's
+    id list omitting against the governing SPEC. The instance is the assignee's self-report
+    made maximally checkable -- it never substitutes for independent re-derivation; it makes
+    the re-derivation mechanical and its refusals precise.
+    -->
+    <expected_criteria><!-- comma-separated ids, minted by the ISSUER --></expected_criteria>
+    <instance_path><!-- where the assignee's filled instance lands --></instance_path>
+  </proof_of_spec>
+
   <scope>
     <files>
       <file action="create | modify | reference">path/to/file</file>
@@ -256,4 +290,11 @@ When Andrew runs multiple workers for the same role:
 
 - Receiving agent edits `<status>` from `pending` to `complete` when done
 - This is the done signal — no separate notification required
+- **PROOF-OF-SPEC GATE (Andrew-direct 2026-08-11, canonized): the status flip to `complete` is
+  legal ONLY with a VALID proof-of-spec instance at the TO's `<instance_path>` — filled by the
+  assignee from their own efforts, validated by `.tools/proof-of-spec-check.py` against the TO's
+  `<expected_criteria>` set. A completion without it is the sibling of the compiler-gate rule:
+  NOT accepted as complete.** Issuers: a TO missing `<proof_of_spec>` is non-conforming — do not
+  issue it; assignees receiving one: request the criterion-id set from the issuer before starting
+  (the contract is the issuer's to mint, the instance is yours to fill).
 - Tier 1/2 agents verify completion against logs and commits, not just the status field

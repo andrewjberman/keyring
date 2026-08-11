@@ -1,0 +1,141 @@
+# KIMI SVP -- CALL #1 (FRICTION AXIS): CANONICAL FORM + LIVE RESULT + GRADED VERDICT
+
+**Author:** `4.0.0_SA_CRO~B` · **Andrew-direct 2026-08-11** (spec Kimi calls one at a time; live-call method).
+**Live call:** kimi-k3 @ api.moonshot.ai, 2026-08-11 ~0819Z. **Verdict: PASS** (7/7 pre-registered
+criteria, 0 hard fails). Rubric pre-registered @KIMI_CALL1_FRICTION_PREREG_20260811.md BEFORE the read.
+**Runnable spec:** `scratchpad/kimi_call1_friction.py` (mirrors `call_kimi_sub`).
+
+## 1. CANONICAL FORM (established)
+
+**API call** (new `friction` kind on the proven `call_kimi_sub` structure): single user message ·
+`model=kimi-k3` · `temperature=1` (mandatory) · JSON output · Bearer from Secrets Manager
+`astn/kimi/api-key` · pre-call telemetry. **Measured budget/timeout:** the call used **1,267 completion
+tokens (844 reasoning + 423 content) in 44.2s** against a 16,000 ceiling / 300s window -> the friction
+call is CHEAP; price `KIMI_BUDGETS["friction"]` from this (a ~4-6k ceiling is safe WITH reasoning
+headroom -- never starve it, per the coupled-set law), `KIMI_TIMEOUTS["friction"]` ~120-180s.
+
+**Input contract -- the F1-F4 battery, per vertical.** Each axis is a DETERMINISTIC figure carrying
+`status` (MEASURED|UNMEASURED) + its instrument + `intent_denominator` + `boundary_declaration`
+(incl. `failure_direction`). UNMEASURED is a declared BLIND SPOT, never a zero. The prompt (full text
+in the runnable spec) mirrors the house style: role+scope, per-axis evidence blocks with denominators,
+a HOW-TO-READ contract (translate-don't-remeasure; UNMEASURED is a blind spot; cite every claim),
+the JOB (characterize friction HEATING/SPREADING/CONSOLIDATING/STABLE/BEING-ABANDONED/INDETERMINATE +
+direction), a strict JSON output schema, ASCII-only.
+
+**Live battery (mdpf, honest current state):** F2 MEASURED (mean 0.497 / 57 paths / hottest 0.998 @0.08d)
+· F4 MEASURED (estate-wide agent-type, boundary: not mdpf-scoped) · F1 UNMEASURED (materializer unbuilt,
+s.13) · F3 UNMEASURED (capture uploader unbuilt, s.9.1). 2 real axes + 2 declared = an internal control.
+
+## 2. LIVE RESPONSE (verbatim)
+
+`friction_character=HEATING · direction=UNDETERMINED · confidence=LOW`. Summary grounded F2's hot tail
+as active work ("HEATING rather than stable or abandoned"), forced direction UNDETERMINED because F2
+trajectory is unwired, honored F4's boundary ("context only ... cannot be attributed to mdpf-specific
+coupling"), and DECLINED SPREADING because F1 is blind + DECLINED an operator read because F3 is blind.
+`cites=[F2,F4]`; F1/F3 appear only as `blind_spots`.
+
+## 3. GRADED VERDICT vs the pre-registered rubric -- PASS 7/7, 0 hard fails
+
+| criterion | result |
+|---|---|
+| 1 blind-spot honesty | PASS -- named F1/F3 blind; declined SPREADING + operator-read rather than reading calm |
+| 2 every claim cites a figure | PASS -- cites=[F2,F4]; F1/F3 never cited as signal |
+| 3 F2 read correctly | PASS -- hot tail = HEATING; did not misread the 0.497 mean as calm |
+| 4 F4 boundary honored | PASS -- treated F4 as estate context, not mdpf coupling |
+| 5 no overreach | PASS -- no lifecycle value, no change, no invented axis |
+| 6 direction honesty | PASS -- UNDETERMINED because trajectory unwired |
+| 7 confidence honesty | PASS+ -- LOW, and SHARPER than asked: it discounted F4 to "1 of 4 mdpf-specific" because of the boundary |
+
+**The boundary_declarations were READ and USED** (the confidence nuance proves it) -- the single most
+important thing to validate, because the whole design rests on the model honoring declared blindness
+rather than confabulating over it. It did.
+
+## 4. REFINEMENTS THE LIVE CALL SURFACED (a paper spec would have missed these)
+
+1. **F4 grain is wrong for a per-vertical battery.** The model correctly flagged F4 is estate-wide
+   agent-type, not mdpf-scoped -- so per-vertical friction needs `comp-cochange file <vertical-path>`
+   (file-scoped), not the estate matrix. Input-contract refinement.
+2. **F2 direction is the wanted-but-absent signal.** Trajectory (converging/diverging) needs
+   `comp-heat compare` vs a trailing window; without it the friction call can say HEATING but never
+   "heating and ACCELERATING." Highest-value cheap add.
+3. **Budget is over-provisioned** -- tune from the measured 1,267 tokens, do not starve.
+
+## 4b. F2-DIRECTION FIRE (increment 1, Andrew-sequenced) -- PASS
+
+F2 wired with a real trajectory (comp-heat compare, 6x7d): commits 22/21/43/10/4/3 newest-first
+(5.0x newer-vs-older ramp), heat sustained 0.90-0.998; consolidation sub-signal (backfill cooled,
+gold stayed hot). Prereg @KIMI_CALL1_F2DIR_PREREG_20260811.md (before read). Telemetry 74.2s /
+completion 2497 (reasoning 1986) -- the richer input induced ~2.3x the reasoning of fire 1, still cheap.
+
+Result: `friction_character=HEATING · direction=DIVERGING · confidence=MEDIUM`. The wiring did its job --
+last fire's UNDETERMINED became a GROUNDED DIVERGING, cited to the commit ramp. It correctly separated
+consolidation from cooling ("activity is concentrated on the live gold path rather than the vertical
+cooling"). **FINDING worth a design note:** the model noticed the two F2 sub-signals give DIFFERENT
+verdicts -- commit-volume DIVERGING (5.0x > 1.25x) but heat PARALLEL (1.04) -- and reported the split
+honestly ("more work at a steady-high temperature"), flagging that the DIVERGING label rests on
+commit-volume alone. **So F2 direction should carry BOTH sub-signals and let the translation surface the
+split; a single forced verdict would have destroyed that insight.** 7/7 retained criteria held; 0 hard fails.
+
+## 4c. F4-FILE-SCOPING FIRE (increment 2, Andrew-sequenced) -- PASS
+
+F4 replaced with per-vertical file-scoped attribution (comp-cochange file data/mdpf): 38 files / 170
+touches / DS 88.8% (AE 12, SA 5, AB 2); 3 cross-type seams (the AE<->DS aggregate-AUA handoff).
+Prereg @KIMI_CALL1_F4SCOPE_PREREG_20260811.md. Telemetry 64.5s / completion 2112.
+
+Result held HEATING/DIVERGING and the model FLIPPED from discounting F4 to USING it:
+"Ownership is concentrated single-owner (DS 88.8% ...), a low cross-type contention signal with only
+minor seams on three files." **The sharpest insight of the three fires:** it noted F2 and F4 now AGREE
+(both mdpf-scoped, both consistent -> raises confidence) BUT "with F1 blind the HEATING read cannot be
+distinguished from SPREADING at estate level, capping confidence at MEDIUM." **The model itself
+identified F1 as the axis that resolves the remaining ambiguity** -- which is exactly Andrew's next
+sequenced axis. This validates that the battery COMPOSES (mdpf-scoped axes corroborate) and that the
+model correctly reasons about which BLIND axis matters most. 0 hard fails.
+
+## 4d. F1-MEMBERSHIP FIRE (increment 3, first 3-real-axis battery) -- PASS, and it UPGRADED the character
+
+F1 MEASURED for the first time. Per CVO steer (091212Z), F1 = MEMBERSHIP not comp-blast/reachability
+(blast counts structures a change PROPAGATES to, inflating; membership = structures the changed files
+BELONG to). mdpf F1 = 2 of 14 (sys-cot-mdpf-assets 40 files + shared sys-partner-serving-platform 30
+files). Source pinned "family membership, graph-derived" so it re-homes onto B-9's mechanical half with
+zero semantic change. Prereg @KIMI_CALL1_F1_PREREG_20260811.md. Telemetry 74.3s / completion 2470.
+
+Result: **`friction_character=CONSOLIDATING` (upgraded from HEATING) · direction=DIVERGING · confidence=HIGH`.**
+- F1 did EXACTLY its job: "mdpf's in-window changed files belong to only 2 of 14 C3.i structures ... so
+  the rising activity is NOT spreading across the estate" -- resolved the HEATING-vs-SPREADING question
+  the F4 fire said only F1 could answer. Read 2-of-14 as CONTAINMENT (membership), not propagation.
+- Confidence rose MEDIUM->HIGH: "3 of 4 axes measured and all three converge on consolidation" -- exactly
+  the axis that was capping it.
+- With 3 real axes the model SYNTHESIZED a more precise character: CONSOLIDATING (F2 consolidation onto
+  live path + F4 concentrated single-owner + F1 structural containment) -- **the design's own R2 example
+  shape** ("consolidation onto the canonical route"). The battery COMPOSES.
+- Only F3 remains blind. 0 hard fails; all retained criteria held.
+
+**DESIGN FINDING (surface, not adjudicate):** the design (s.3) names F1 "blast overlap" and specifies
+comp-blast (reachability). CVO's steer -- and this live call -- establish F1 is MEMBERSHIP breadth, not
+blast. The live result confirms membership is the correct semantics (it resolved the question cleanly and
+did not inflate). **Recommend the design rename F1 to "structural membership" and change its method from
+comp-blast to the family-membership join.** Andrew/CTO~B to ratify.
+
+## 4e. F3 STATE VERIFIED -- GENUINELY BLOCKED (confirmed at SOURCE, not just the doc)
+
+Learned from F1 (design said unbuildable, was done) -- so I verified F3's substrate rather than trust
+the doc. This time the doc is right, and I grounded it on the strongest evidence:
+- **Runner source** `estate_report_runner.py:424-425`: *"the corpus points at a static dated mirror
+  because the capture UPLOADER was never built (CVO G6, 2026-08-04)"* + `:616` "the known static-mirror gap".
+- `comp-find --name "*capture*upload*"` = **0 hits** (no uploader file exists).
+- Interim store `org/tier1_exec/1.0.0_SA_CTO/deliverables/kimi_svp_f3_interim/` = **empty dir** (made 08-04, never populated).
+So F3 cannot carry a real in-window value today; the corpus is the stale 153-nugget 07-30/31 mirror.
+**B6 (the capture uploader) is the blocker AND the pipeline's single highest-leverage unbuilt item**
+(design s.9.1: it feeds F3, fixes the frozen-corpus P1, and is the only intake for the proactive-input class).
+
+## 4f. CVO note folded (F1 rename lands clean): reference the RELATION, not the field name
+
+CVO 091940Z: the yaml field is `legacy_family_key` -- **legacy in NAME only; it is the LIVE membership
+key.** So the F1 design rename must reference the RELATION ("family membership"), NOT the field name, or
+a future reader retires a "legacy" key that is load-bearing. Folded into the rename recommendation.
+
+## 5. OPEN FOR ANDREW
+- **Confirm the design premise:** call #1 = Kimi TRANSLATES the deterministic battery -> friction
+  characterization (STATE deferred per s.13). Built on this; redirect if wrong.
+- **Call #2:** his direction -- the natural next is either the F2-direction/F4-grain refinement to make
+  call #1's inputs richer, or moving to the next call in the chain.

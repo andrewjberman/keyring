@@ -237,3 +237,26 @@ trigger predicate's CALENDAR CONTRACT** (a non-trading day correctly never fires
 a trading day whose silver never lands is the catch-up floor's loud case). The 17b law amendment is
 LANDED @a9c159f134 (gold-is-parquet in the law line; migration authority = the ratified spec set +
 cutover acts, never the law line itself). Both remaining CTO items from this spec are CLOSED.
+
+## 8. WAVE-LABEL RENAME + THE FIVE-PHASE MAPPING (Andrew build order @4dbf4a0d7c, ~0810Z)
+
+**COLLISION FIXED BEFORE IT MISROUTES (the night's own namespace rule, applied to my own labels):**
+Andrew's ruled build order is **P1 SCRIPTS -> P2 TIMING -> P3 REPOINTS -> P4 PUBLISHERS -> P5
+DECOMMISSION (gated on the portal verified in-taking + displaying)** -- and this spec's waves were
+also P-numbered, with P3/P4 meaning DIFFERENT things in each. Sovereign vocabulary wins:
+**this spec's waves rename P0-P4 -> R0-R4 (refactor waves)**, and the mapping to his phases is:
+
+| Refactor wave (this spec) | Slots into Andrew's build phase |
+|---|---|
+| R0 naming + Group-W + verify | done (pre-P1 substrate) |
+| R1 gold builders rebuilt parquet | **P1 SCRIPTS** (+ ~A's Group-W pages = **P2 TIMING**'s frame) |
+| R2 the nine port windows | **P3 REPOINTS** (M-row map = P3's substrate) + **P4 PUBLISHERS** (M7's one-ordered-act) |
+| R3 deploy-plane repoint | **P3 REPOINTS** (tail) |
+| R4 drains + T5.B kill | **P5 DECOMMISSION** -- the 19-channel disposition map is P5's WORKLIST and NOTHING in it moves before the P5 gate (portal verified in-taking + displaying; cert-of-built is the verifier) |
+
+**CTO ALIGNMENT CONFIRMED 081436Z -- all four slot-claims + the R2 split, no corrections; both
+seats hold ONE order of operations.** One CTO sharpening folded: the publisher one-ordered-act's
+PRECONDITION assessment may complete inside P3's window, but its EXECUTION fires in P4 -- never
+early on a completed assessment (the distance-vs-trigger discipline at phase grain).
+In-flight X-acts continue as P3 pilot work (his record). COO reshapes the decomposition around the
+phase-gates; every R-row keeps its owner/trigger/precondition unchanged -- only the labels moved.

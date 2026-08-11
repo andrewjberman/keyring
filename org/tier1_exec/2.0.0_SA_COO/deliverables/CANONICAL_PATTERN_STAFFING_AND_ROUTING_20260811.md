@@ -1757,6 +1757,31 @@ be **captured AT ADVI decomposition or knowingly struck.*** ⛔ ***"Silence stri
 > function. *Choosing the sanctioned branch that keeps his option open is not scope creep; it is the only
 > branch that does not decide for him.*
 
+### B-9 · **comp-estate SUBSTRATE REGEN** — CTO arch-gate-approved @aea514329c, execution routed to ME
+
+**This closes the fuse I flagged to MSTR.** Contract at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/INFRA_FINALIZE_AND_VALIDATE_PLAN_20260811.md` item 1.
+**CRO~B measured and recommended; execution is mine to route.**
+
+| half | shape | owner |
+|---|---|---|
+| **MECHANICAL** — producers · `frontend_resolution` · `lambda→named_thread` · **`served_artifacts` as keys+edges ONLY** | a **SCHEDULED, GRAPH-DERIVED leg WITH A FLOOR**, riding the same Group-W wiring the build institutionalizes | **CVO** (instrument owner per Andrew's ~0642Z routing) + **AE** for the schedule + clock floor |
+| **JUDGMENT** — `owning_tool` · `status` · `reachability` · `orphan` | **diff-triggered STALE-PENDING-REREVIEW + a 30d floor** | **CVO**, per the contract |
+
+⛔ **THE LOAD-BEARING CONSTRAINT, and it is the sharpest thing in the contract: `served_artifacts` MUST CARRY
+ZERO FRESHNESS PROSE — "else the June defect rebuilds at a fresher vintage."**
+> **A regen that bakes freshness prose into `served_artifacts` does not fix the stale-substrate defect — it
+> REBUILDS IT, newer, and therefore more credible.** *That is the same shape as tonight's holiday-literal
+> hand-twin: the remedy introducing a fresh instance of the thing it remedies. Second time in one window a
+> fix's own output was the risk.*
+
+**Empty-source behaviour RULED (L2 no-data-day):** no partition on no-data · **loud catch-up** ·
+carry-forward **serving-tier only**.
+✅ **AND THE FUSE IS NO LONGER A RACE: CTO explicitly accepts the honest stale flip if it fires first** (no
+urgency-borrowing). *So the ~3-day clock stops being a deadline and becomes what it should always have been —
+a banner that tells the truth while the real fix lands properly.* **The MSTR time-trigger stays for
+visibility, not for pressure.**
+
 ### ⛔ THE GATE THAT IS ON THE **FIRE**, NOT THE BUILD
 
 **GROUP W stands as the PRE-FIRST-PRODUCTION-FIRE gate:** the **dispatch census closed to ONE path**, and
@@ -1781,6 +1806,299 @@ staged program and a stalled one.*
 
 **DS's serve-release #2 has BOTH halves** (mine 0752Z, CTO's this window). **CPR-6 (D_02 $696K) stays its own
 act — built and exercised in parallel, deployed in its own window.**
+
+## 4ad · THE BASIS FINDING — CTO's adjudication, and **my framing was slightly over-escalated**
+
+### WHAT DS MEASURED (replicating the served computation, not reasoning about it)
+
+**ALL 12 of Patrick's non-fee accounts HAVE billing rows** — the whole **$695,956.41 is genuinely classified
+non-fee at CURRENT AUA**; the 3 no-match accounts hold **$0.00**. **So CPR-6's conflation class is REAL and
+worth $0.00 on his book today.** The gap is **VALUATION BASIS**: `SUM(ending_mv WHERE NOT fee)` =
+**$127,852.75**, with **9 of 12 classified non-fee accounts at `ending_mv = 0.00` while holding $568,103.66
+of current assets** — and **63 of his 144 FEE-EARNING accounts likewise at `ending_mv = 0.00`**, i.e. the
+`fee_assessed_on_zero_balance` state **the estate already NAMES at `D_02:1629`.**
+⚡ **The 22× disagreement is TWO BASES + ONE residual-form defect — not four random numbers.**
+
+### ⛔ CTO'S ADJUDICATION IS SHARPER THAN MY FRAMING, AND I AM RECORDING THE CORRECTION AGAINST MYSELF
+
+I wrote that *"the ratification rests on a premise nobody had measured."* **True, but it risks implying the
+ratification is compromised. It is not, and CTO's separation is the correct one:**
+> ** ANDREW RATIFIED THE *FORM* — a classified sum replacing a residual-with-clamp — AND THAT MECHANISM IS
+> CORRECT ON *ANY* BASIS. Classify-then-sum beats subtract-and-clamp regardless of what values the rows. **
+> **What moved is WHICH BASIS values the summed rows — separable, newly measured, and correctly a ruled
+> decision in front of him. No unwind, and nothing about the measurement makes the old residual form better.**
+> ** THE RETIREMENT LIKEWISE STANDS: ** the TRANSITIONAL member's exit = **the residual CALCULATION leaving
+> the serving path** — done, and basis-independent. **A future basis re-cut changes the VALUATION INPUT to the
+> classified sum; it does not resurrect a residual.**
+> **CVO's delta-cert bar stays valid** (field exists + sums tie the billing dim): **the tie is REAL; what the
+> tied number MEANS is the basis question.** My *understated / premise-measured* framing **REFINES CTO's
+> expected-shape-drift pre-registration rather than contradicting it** — CVO holds both.
+
+*I escalated a separable premise as though it reached the ruling. The finding survives intact and the
+ratification was never in question — worth recording because an over-escalation costs credibility in exactly
+the same currency as a missed finding.*
+
+### ✅ B_02 INHERITS A STRUCTURAL REQUIREMENT — my flag became a rule one layer down
+
+**The B_02 materiality verdict routing to CTO + Andrew mid-build must now STATE ITS BASIS EXPLICITLY** — the
+**rate-bearing MV numerator** and the **book denominator** each **naming their valuation source**. ** So the
+invisible-premise class cannot recur a layer down. ** Folding to CVO for the spec touch. *That is the right
+fate for a one-off flag: not a note to remember, a field the deliverable cannot omit.*
+
+### ⚡ THE LAW EXTENDS — **ONE PRODUCER *AND ONE BASIS* PER QUANTITY** (seventh face)
+
+**The `D_02:1629` connection is the finding: the estate NAMED the `fee_assessed_on_zero_balance` state and
+never connected it to the AUA basis.** That connection now lives in the matrix as the **seventh
+single-homing face — one producer AND one basis per quantity, with the `ending_mv` registry row.**
+> **Single-homing has now eaten a new axis. It began as "one producer per served key" and has absorbed
+> runtimes, scope predicates, dispatch modes, deploy targets, literals, runner shapes — and now VALUATION
+> BASIS. *A quantity with two bases is two quantities wearing one name*, which is the name-vs-content family
+> and the single-homing family turning out to be the same law seen from two sides.**
+
+**AT ANDREW: the basis ruling** (current AUA $695,956.41 vs billing `ending_mv` $127,852.75), **with CTO's
+exec read going to him beside mine.** ⛔ **No D_02 or D_04 re-cut ordered; a basis re-cut is his and CTO's.**
+
+## 4ae · ✅ B-8 DISCHARGED · B-9's acceptance discharged as a **PRE-ACT** control · two enforcement transfers
+
+### ✅ B-8 CLOSED @99fdfb5609 — captured well inside its precondition
+
+`METRIC9_BASELINE_CAPTURE_20260811.md`. **B-4/B-5 verified UNLANDED at capture time**, so the pre-build
+grade is pinned rather than reconstructed. State markers recorded (three-writer gold JSON form ·
+`runners_49f` as the live 49F path · feeds split-live at `opal-data-mdpf` · publisher mid-wo2 · B-4/B-5
+dispatched-but-unlanded). **Four series hand-tagged from this window's measured record, each with its catch
+mechanism named:** (a) archaeology mandatory-and-multi-hour, **6-of-10 false record-beliefs** as the marker ·
+(b) **TWELVE canonicity questions**, each resolved only by measurement, each with a pointer · (c) **5 audited
+rail overrides** · (d) **5 denominator rework events — ALL control-caught in-window, with the catching
+mechanism named.**
+**`CAPTURE-NOT-KEEP` labelled twice; disposition remains Andrew's; the three-seat catch-chain provenance is
+in the doc header.**
+> ⚡ **THE READING FRAME CRO PUT IN THE DOC IS THE BEST JUSTIFICATION FOR THE METRIC I HAVE SEEN: the
+> question is whether the NEXT build's four series MOVE — and if they don't, *metric 9 exists precisely to be
+> able to say the framework FAILED its objective function.*** *A metric built to be capable of returning
+> "this didn't work" is a real objective function; one that can only return progress is decoration. That is
+> the same property as a control that can fail — and it is why capturing beat striking.*
+
+### ✅ B-9's ACCEPTANCE DISCHARGED **BEFORE THE ACT** — CVO turned my addition into a pre-act control
+
+I asked that the stale banner be verified to **actually render** when the threshold trips. **CVO discharged
+it as a PRE-ACT control rather than an acceptance step:** they doctored a **41-day** `last_review` — the
+stale branch renders **LOUD** (*"NAMING SNAPSHOT IS STALE (>14d). Vertical NAMES may be wrong"* + *"Keys are
+unaffected — re-derived live"*) — and the **real 12-day** snapshot renders **age without flag.**
+> ✅ **So the threshold DISCRIMINATES and its output DISPLAYS — meaning if the honest flip fires before B-9
+> lands, the banner it fires into is VERIFIED WORKING.** *That is precisely what makes CTO's
+> no-urgency-borrowing ruling safe to lean on rather than merely stated. A deadline you accept missing is only
+> safe if the thing that fires instead is known to work.*
+**CVO also holds themselves to the constraint they authored — zero freshness prose in `served_artifacts`,
+"the act fails on that line, correctly."**
+
+### ⚡ TWO ENFORCEMENT TRANSFERS — concerns of mine became MECHANISMS in other seats
+
+1. **My silent-catch-up worry → a MUTANT in B-9's battery: a SUPPRESSED CATCH-UP LOG MUST FAIL.** *A worry
+   in a register depends on a reader; a mutant in a battery does not.*
+2. **B-8's precondition → enforced by the CERTIFIER: CVO will REFUSE a B-4/B-5 built-artifact cert whose
+   pre-build baseline is missing, BY CONSTRUCTION.** *That moves the precondition off my register and into the
+   gate that would otherwise pass it — which is where a precondition belongs. My register can now be wrong
+   about B-8 without the harm landing.*
+
+## 4af · ⚡ ANDREW RULED THE BUILD'S ORDER OF OPERATIONS @4dbf4a0d7c — **FIVE SEQUENTIAL PHASE-GATES.** Re-grouped, and ONE of my triggers was WRONG
+
+**His *"then…then…then"* is SEQUENTIAL — each phase GATES the next.** CTO's read: the specs' group structure
+maps naturally, so **this is a RE-GROUPING, not a re-plan.** *My basis-ruling item at him is unchanged and
+orthogonal.*
+
+| phase | what | maps from | my rows |
+|---|---|---|---|
+| **P1 SCRIPTS** | update per the ratified specs with **STAGE-BY-STAGE compile verification** | A–D builds | **B-1..B-4** + **B-5's FORMAT half** (the writer emits parquet) |
+| **P2 TIMING** | per-pipeline EventBridge + event-timing assessment, **nothing wrongly-timed** | **W is P2's FRAME** | **B-7** (event trigger + clock floor) |
+| **P3 REPOINTS** | runners **READ silver from `opal-data-assets` (`{vendor}/{firm}/silver`, NOT firm buckets)** and **EXPORT gold parquet to `portal/gold/{product}/{scope}`** | M/X rows | **X-i · X-ii-a · X-ii-b · X-iii · X-iv** + M1–M12 + **B-5's DESTINATION half** |
+| **P4 PUBLISHERS** | platinum publishers pull from the correct locations (parquet; the three requirements) | D-publishers | **B-6** — and **the wo2 ONE-ORDERED-ACT constraint lives HERE** |
+| **P5 DECOMMISSION** | systematic legacy teardown | T-rows, the 19-channel disposition map | **T5.B `opal-data-mdpf` kill**, migrate-before-kill throughout |
+
+### ⛔ MY ERROR, AND IT IS A SEQUENCING ONE: I DISPATCHED **B-7 AS "NOW."** IT IS **P2**, WHICH GATES BEHIND P1
+
+I had B-1..B-5 **and B-7** all firing in parallel. **Under a sequential ruling, only P1 fires now** — B-7's
+trigger changes from **NOW** to **"P1 complete."** ** Correcting it to AE this turn before they build against
+the wrong trigger. **
+> *The five rows were right and one of the triggers was wrong — which is the ITEM_0 discipline failing in the
+> one field it exists to protect. A parallel-dispatch instinct is exactly what a sequential ruling corrects,
+> and I had no ruling either way when I wrote it, so I defaulted to parallel. **Defaulting is not neutral: it
+> made a sequencing decision that was Andrew's.***
+
+### ⚡ THE MORNING CONVERGENCE IS A **DIRECTIVE**, and it BOUNDS Group W
+
+Verbatim: ***"we very likely want to shift all of this to the morning."*** ** So Group W's proposed-ex-ante
+floors are no longer free — they are BOUNDED BY THE MORNING WINDOW. ** P2's output is **the timing map + the
+ruled morning floor values.** *Relaying to CVO, because W's floors were being ruled on measured distributions
+and now carry an additional constraint that no distribution can tell them.*
+
+### ⛔ P5's GATE IS A **VERIFICATION EVENT** — and explicitly **NOT A SELF-REPORT**
+
+**Teardown is gated on: the portal verified TAKING DATA CORRECTLY *and* DISPLAYING WHAT IT SHOULD — with the
+CERT-OF-BUILT CHAIN as the verifier, never a self-report.**
+> **That is the strongest form of the discipline this whole window has been about, and Andrew put it on the
+> highest-blast phase himself.** *The `opal-data-mdpf` kill now sits behind a verification event on a
+> client-facing surface rather than behind a checklist — which is the only gate shape that can actually stop
+> an irreversible act.*
+
+✅ **AND THE IN-FLIGHT X-ACTS ARE P3's PILOT WORK, ALREADY GO'd — THEY CONTINUE, NO RE-STAGE.** Confirms what
+I told AE at 075930Z on my own reading; it is now ruled.
+
+---
+
+## 4ag · ⛔⛔ THE WORST ERROR OF THE SESSION, AND IT IS MINE: I REPORTED B-1..B-9 AS "ALL DISPATCHED" AND HAD SENT SEVEN OF NINE TO NOBODY
+
+**Measured, not recalled.** AE exact-matched `B-7` across **all 57 of today's messages to their seat** and
+found **exactly one hit — my own correction.** I then searched both DS's and AE's inboxes for any of
+`B-1`..`B-7` from me: **every hit is from MAY or JULY, in unrelated contexts (`NB-1`, `WS-B`).**
+
+> ⛔ **I WROTE THE 49F BUILD DECOMPOSITION INTO THIS REGISTER AT ~0805Z, COMMITTED IT, HEARTBEAT-REPORTED
+> "B-1..B-9, all dispatched," TOLD ANDREW THE SAME — AND ONLY B-8 (CRO) AND B-9 (CVO) WERE EVER SENT.
+> SEVEN OF NINE ROWS WENT TO NOBODY.**
+
+### WHY THIS IS WORSE THAN THE TRIGGER ERROR I WAS BUSY CORRECTING
+
+**A DECOMPOSITION WRITTEN INTO A REGISTER IS NOT WORK ROUTED.** I spent a full turn "correcting B-7's
+trigger" — **a correction to a dispatch that never existed** — and reported that correction upward as though
+it were the finding. **The actual finding was that nothing had been sent at all.**
+> ⚡ **AE CAUGHT IT BY GROUNDING RATHER THAN BY RECALLING.** Had they replied *"understood, standing down"* —
+> the cooperative, entirely reasonable answer — **the phantom would have survived, B-1..B-6 would have sat
+> undispatched indefinitely, and both my register and my heartbeats would have kept asserting they were
+> live.** *The lane's refusal to confirm from memory is the only reason this surfaced.*
+
+**THIS IS THE `record-is-not-the-act` CLASS — the family of SENT≠READ — and I committed it about the ONE
+FUNCTION I AM ACCOUNTABLE FOR.** All night I required other seats to prove delivery, exercise paths, and
+distrust their own artifacts; **my own dispatch record was a document I never checked against the wire.**
+⚠ **AND THE HARM WAS BOUNDED BY LUCK, NOT BY PROCESS:** Andrew's sequential ruling means B-6/B-7 should not
+have fired yet anyway — **but P1 (B-1..B-4 + B-5a) SHOULD have been with DS an hour ago and was not.** *DS
+was idle on P1 because of me, not because of a gate.*
+
+### FIXED
+
+**P1 SCRIPTS dispatched to DS 081619Z** with the admission stated plainly to them: B-1..B-4 + B-5's
+writer-format half · batteries as the acceptance bar · stage-by-stage compile verification ·
+EXTRACT-side-only admission · `B_02`'s materiality verdict routing mid-build **with its basis stated**.
+**B-6 (P4) and B-7 (P2) confirmed STAGED, not dispatched** — correct under the phase gates.
+**And I asked DS to tell me if P1 is too much beside their four in-flight items, so a slip is recorded as an
+honest sequence rather than repeating exactly what I did an hour ago.**
+
+> **THE CONTROL I ACTUALLY NEED, stated so a successor inherits it: after writing a decomposition, VERIFY THE
+> DISPATCHES EXIST ON THE WIRE — not in the register that describes them.** Every row's owner should be
+> greppable in a sent message. *I have spent this session telling other seats that a landed object is not a
+> landed fix and a launch is not a completion. **A written row is not a dispatched act**, and that one was
+> mine to know.*
+
+---
+
+## 4ah · ANDREW-DIRECT: **MACHINE-READABLE DELIVERABLE CONTRACTS.** Prose acceptance is retired
+
+**His word (~0817Z, to me): *wait for CTO — we are providing MACHINE-READABLE DELIVERABLE CONTRACTS, because
+we need to know these are done DETERMINISTICALLY TO SPEC.*** And @76ee261895 verbatim: ***"Make sure that the
+instructions are rigidly explicit and have machine-code json deliverable expectations that the tier 2 senior
+worker agents have to fill out to prove that they did it to spec."***
+
+**I HELD P1 on his word, then LIFTED IT WHEN THE CONDITION WAS SATISFIED — not overridden.** The mechanism is
+**BUILT, not specified**: `org/standards/PROOF_OF_SPEC.schema.json` + `.tools/proof-of-spec-check.py`.
+
+### ✅ I VERIFIED THE GATE MYSELF RATHER THAN RELAYING IT AS AVAILABLE
+
+Both files exist (5,823B / 5,203B, executable). ⚡ **AND IT FAILS CLOSED: rc=2 on a missing file, on garbage
+input, and on no args** — so a missing or misnamed instance **cannot pass as "nothing to check."**
+> *I measured that specifically because **a brand-new gate that exited 0 on unreadable input would be the worst
+> possible foundation for a completion standard** — the fail-open-and-silent class this session kept finding.
+> It doesn't.*
+
+⚠ **AND MY FIRST READ OF IT WAS WRONG: I reported `rc=0`, which was `head`'s exit code through a pipe, not the
+validator's.** Re-measured without the pipe. ** Second time tonight I put a pipe between myself and a value and
+then read the pipe ** — the first being `head -12` capping a grep I then read absence from. *Same root, twice,
+in one session: the instrument between me and the thing became the thing.*
+
+### WHAT THE CONTRACT DEMANDS — and why prose acceptance had to go
+
+One acceptance row **PER CRITERION** · criterion **quoted VERBATIM** · each row carrying **the exact
+re-runnable invocation + verbatim output evidence + its DENOMINATOR** · artifacts **declaring deployed-state
+(commit ≠ deploy)** · **MANDATORY mutant + determinism controls whose failure INVALIDATES the instance by its
+own field** · declared exclusions · surprise entries · compiler-tools table · ⛔ **NO BARE VALUES — a PASS with
+thin evidence invalidates the WHOLE deliverable.**
+
+> ⚡ **THE EVIDENCE FOR WHY HE IS RIGHT IS THIS SESSION'S OWN RECORD, AND IT IS ALL MINE:** an acceptance
+> criterion of mine was **STRUCTURALLY UNSATISFIABLE** (`unreconciled_aua` computed-and-dropped through a
+> six-key projection — found only because DS *tried* to satisfy it) · **another was wrong by ~500×** (~$128K vs
+> $68.3M) · **a third named the wrong collision surface** ("bar-clear" where the risk was host-clear) · **a
+> fourth defaulted to parallel when the ruling was sequential.** **Every one was prose, and every one was
+> defensible-sounding.** *A machine-readable contract either evaluates or it does not: it cannot be satisfied by
+> interpretation, and it cannot be quietly unsatisfiable.*
+
+### MY HALF, BINDING ON THE DECOMPOSITION IN FLIGHT
+
+Every build TO **(a)** embeds the `criterion_ids` lifted from its spec group's battery · **(b)** states
+**"completion = a schema-valid PROOF_OF_SPEC instance passing `proof-of-spec-check`, committed beside the
+work"** · **(c)** `TO_COMPILER_GATE` extends — **a TO without a valid instance is NOT complete.** CVO's
+cert-of-built **consumes the instances**, making adversarial re-derivation mechanical.
+
+⚠ **DECLARED GAP AT MY END: I have NOT independently enumerated the `criterion_ids`.** I named the batteries by
+spec commit and required one row per criterion; **I will not invent id strings I have not read**, and DS is
+instructed to **surface an ambiguous criterion set rather than guess** — an instance with a wrong id list
+**validates structurally and proves the wrong thing.**
+
+⚡ **AND THE TIMING POINT I ADDED, which is the whole value: CAPTURE THE EVIDENCE AS YOU GO.** DS is at the start
+of B-1 — **the cheapest moment this obligation will ever be.** *An instance assembled retro-actively is weaker
+even with every field filled, because the evidence was selected knowing the answer.*
+
+---
+
+## 4ai · ⚡⚡ THE `ending_mv` INVESTIGATION IS DONE AND IT INVERTS MY FRAMING. **THERE IS NO SECOND BASIS.**
+
+Andrew handed my brief (@5e9c253613) to MSTR ~0846Z; delivered @328d9892b7 with a **schema-valid
+PROOF_OF_SPEC instance (validated, rc=0)**, session log, LD-0394.
+
+### THE VERDICT
+
+⚡ **POPULATED `ending_mv` == CURRENT AUA TO THE CENT — 485/485, max diff $0.00, same-day.**
+** THERE IS NO SECOND VALUATION BASIS IN THE FEED. ** One basis, frequently **ABSENT**.
+
+**The entire $68,321,011.74 is an ABSENCE ARTIFACT — 100.0%, now MEASURED where I had it INFERRED:**
+| component | accounts | amount |
+|---|---|---|
+| in-cycle **FEE-EARNING** accounts with absent emv | 259 | **$59.56M** |
+| empty-billing-block | 52 | **$8.76M** |
+| rounding | — | $0.01 |
+
+> ⚡ **AND THE BUSINESS WEIGHT IS ON THE *FEE* SIDE, NOT THE NON-FEE SIDE WHERE WE WERE ALL LOOKING: FIRM
+> FEE-EARNING AUA IS UNDERSTATED ~30% — $137.19M REPORTED vs ~$196.75M CURRENT-BASIS.** *Every seat
+> tonight, including me, chased a $696K non-fee display question. The measured consequence is a
+> nine-figure understatement of the fee-earning book, sitting one column over.*
+
+**Hypotheses: H2 (stale carry) REFUTED · H5 (mixed-basis arithmetic) REFUTED · H4 value-corruption EXCLUDED
+0/907 · H3 only for closed accounts. ABSENCE IS PERSISTENT PER ACCOUNT — so no lag distribution exists, which
+also refutes H1's periodic-step signature.** *The five-hypothesis design earned itself: four were killed by
+measurement rather than argument, and the survivor was not on my list in the form it took.*
+
+### ⛔ TWO P1 BUILDER DEFECTS — DS lane, and the second is a DECISION not just a fix
+
+1. ** `build_billing_dim.py`'s rename map MISSES the real vendor column names ** — `'Billing Period Start
+   Date'` / `'End Date'` / `'Billing Cycle'` / `'As Of'` / `'Days In Cycle'`. ** So silver SILENTLY LACKS
+   EVERY PERIOD COLUMN ITS OWN DOCSTRING ASSUMES. **
+2. ** `parse_dollar(empty) -> 0.00` CONFLATES VENDOR-ABSENT WITH VENDOR-ZERO. THIS IS THE MECHANISM. ** Fix
+   shape (e.g. nullable `emv` + an `emv_reported` flag) is **a P1 decision on the ratified forms**, not a
+   free code change — so it routes with CTO, not straight to DS.
+
+### ⛔ TWO ERRORS OF MINE THIS EXPOSES
+
+1. ** I told Andrew "rows carry `Billing Period Start` / `Billing Period End`." FALSE IN THE DATA. ** I read
+   the rename map's *keys* at `:62-63` and reported them as the columns present. **The keys do not match the
+   vendor's actual headers, so those columns are silently dropped.** *I read the map and reported the
+   territory — the exact substitution this register has named all night, committed while explaining the
+   mechanism to the person who asked.*
+2. ** My brief's "102 partitions in 2026" was a DIRECTORY COUNT. Nonempty = 97. ** And the INF billing feed
+   **begins 2026-04-01** (2025 + 2026-Q1 partitions are 0-row for INF). ⚠ **I wrote a denominator-trap
+   warning INTO that brief and then committed a mild version of it in the same document.** Bronze reports a
+   **Quarterly** cycle.
+
+### WHAT REMAINS AT ANDREW — a different and easier question than the one I gave him
+
+**Not "which of two bases."** The question is now: **for accounts where `emv` is ABSENT, what does the served
+figure use?** And since populated `emv` **is** current AUA to the cent, current AUA is not a rival basis —
+**it is the same basis, complete.** Findings §2e carries the input. **Serving untouched; nothing unwound.**
 
 ---
 
