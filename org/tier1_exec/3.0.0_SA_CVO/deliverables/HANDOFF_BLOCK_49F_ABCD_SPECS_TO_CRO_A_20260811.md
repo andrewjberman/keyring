@@ -14,7 +14,7 @@ THE FOUR SPEC FILES (all under C:\Users\AndrewBerman\Desktop\ajb_workspace\):
 - Group C (flow ledger / GIPS TWR engine / validation / lineage): org\tier1_exec\3.0.0_SA_CVO\deliverables\SPEC_49F_GROUP_C_TWR_ENGINE_20260811.md — amended @f882b91ce2 (debit_credit semantic-boundary verification at build; anomaly-threshold ruled-recalibration)
 - Group D (serving up to the emitters, SHAPE-FROZEN): org\tier1_exec\3.0.0_SA_CVO\deliverables\SPEC_49F_GROUP_D_SERVING_20260811.md — @1e11389af8
 
-CTO REVIEW RECORDS (the rulings the specs now embed): inbox messages 071857Z (A: approved + calendar amendment), 072235Z (B: approved + three qualifiers), 072553Z (C: approved + the debit_credit amendment) — in org\mcp\inbox\3.0.0_SA_CVO\read\.
+CTO REVIEW RECORDS (the rulings the specs now embed): inbox messages 071857Z (A: approved + calendar amendment), 072235Z (B: approved + three qualifiers), 072553Z (C: approved + the debit_credit amendment), 072915Z (D: approved, no amendment — the census-staleness window closed by the acceptance design) — in org\mcp\inbox\3.0.0_SA_CVO\read\. All four groups APPROVED; CTO routes the whole-sequence ratification ask to Andrew separately.
 
 GOVERNING LAW: the GIPS standard FILE C:\Users\AndrewBerman\Desktop\GIPS_TWR_Reconstruction_Standard.rtf (requirements verbatim — the spec IS this document) · pattern spec v1.0 @d272021791 (9 atoms + the 5-member must-calculate exception set) · shape-transposition @6e180df78e (MANUFACTURABLE = named computation + verified raw inputs, else refuse) · commission @5e4b8dda98.
 
