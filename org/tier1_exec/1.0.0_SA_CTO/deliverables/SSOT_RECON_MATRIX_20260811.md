@@ -95,6 +95,16 @@ engine gets a summary).
 
 ## RULED DESIGN CONSTRAINTS (0617Z, from the night's three name-vs-content specimens + the universe finding)
 
+- **THE SINGLE-HOMING LAW — four instances in one night, one principle: DECLARE THE FAN-OUT ONCE,
+  AT THE CONVERGENCE POINT.** (1) producers: two runtimes on one key → Andrew ruled the lambda
+  @727c2df067; (2) scope predicates: map/feed universes aligned by coincidence → single-homed
+  predicate; (3) dispatch modes: five caller-local mode carriers → on-host resolution + mutex;
+  (4) deploy targets: cot_bronze_ingest ONE source, TWO targets, ONE served leg → sanctioned
+  second-target declaration in safe_deploy_core (the bd-side Model-B copy froze 08-04 while
+  executing daily for 49F — the placement is SANCTIONED design, the missing redeploy leg was the
+  defect; my "unsanctioned mirror" ruling CORRECTED 0630Z on AE's consumer read — search-FOR-the-
+  path was the only reason the consumer surfaced; the delete never fired because the ruling itself
+  blocked on that read).
 - **SCOPE PREDICATES ARE SINGLE-HOMED (ruled (a), @dd93cad9a2 finding):** two independently-mutable
   scope definitions that happen to agree = two runtimes on one key, one layer up. Every consumer
   derives from ONE declared universe predicate. The 49F map/feed alignment (coincidence today)
