@@ -29,7 +29,7 @@
         "additionalProperties": false,
         "properties": {
           "path_or_key": {"type": "string"},
-          "kind": {"enum": ["script", "s3_object", "terraform", "config_data", "schedule", "iam", "test", "doc"]},
+          "kind": {"enum": ["script", "s3_object", "terraform", "config_data", "schedule", "iam", "test", "doc", "frontend_component"], "description": "artifact KIND, one grain (Rule-24 collectively-exhaustive). frontend_component ADDED 2026-08-11 (COO 215014Z, routed): a portal/frontend code artifact -- WITHOUT it a portal component mis-declares as 'script' and gets scanned by the backend DS-id-grammar coverage heuristic it cannot satisfy. The artifact-coverage heuristic is backend-script-specific and scopes to (script, s3_object) BY DESIGN; frontend_component is outside it (a frontend-appropriate coverage rule is a follow-on gate candidate, not the enum's defect)."},
           "commit_or_etag": {"type": "string", "minLength": 6},
           "deployed_state": {"enum": ["DEPLOYED-VERIFIED", "COMMITTED-NOT-DEPLOY-SCOPE", "STAGED-AWAITING-GATE"], "description": "an atomic commit is NOT an atomic deploy; state which"},
           "deploy_evidence": {"type": "string", "minLength": 1, "description": "for DEPLOYED-VERIFIED: the live read proving it (ETag match / get-role-policy / describe). For other states: the reason."}

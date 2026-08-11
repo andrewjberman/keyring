@@ -53,6 +53,12 @@ def conditional_checks(inst: dict) -> list[str]:
     ids_blob = " ".join(r.get("criterion_id", "") for r in inst.get("acceptance", [])).upper()
     excl_blob = " ".join(str(e) for e in inst.get("declared_exclusions", [])).lower()
     for a in inst.get("artifacts_produced", []):
+        # SCOPE IS BACKEND-DS-ID-GRAMMAR-SPECIFIC BY DESIGN: this stem-token heuristic keys on the
+        # {firm}-{group}-{artifact}-{check} criterion-id grammar, which is a DS/gold convention. A
+        # frontend_component (portal) does not use it -- it is INTENTIONALLY outside this heuristic
+        # (COO 215014Z: a portal component was forced to mis-declare 'script' and fail here; the fix
+        # was the kind enum, now carrying frontend_component). A frontend-appropriate coverage rule
+        # is a follow-on gate candidate; skipping frontend_component here is correct, not a gap.
         if a.get("kind") not in ("script", "s3_object"):
             continue
         stem = Path(a.get("path_or_key", "")).name.split(".")[0]
