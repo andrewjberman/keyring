@@ -67,9 +67,19 @@ certification machinery.
 
 ## CHAIN OUTCOME (filled at terminal state)
 
-- QA run 6a92d696 (dispatched 05:14:35Z after the bronze union repair): **PENDING at this
-  record's commit — watcher `bshypqsy9` armed on the terminal sentinels; outcome lands in the
-  session log + a follow-up line here.**
+- QA run 6a92d696 (05:14:35Z): the repair PROVED through the B-chain (coverage regression
+  GONE, canonical backfilled 08-08..08-11 at 06:01Z) — then FAILED at 06:18Z on a NEW event: a
+  concurrent direct-SSM gold-d republish re-stamped aor_resolution fold-OFF under the ACTIVE
+  chain, and C_01's mode guard refused ("serve stale, not garbage" — the guard correct on BOTH
+  sides of the collision, CVO-measured). Fifth-armed-path finding → CTO ruled host-mutex +
+  mode-single-homing same hour.
+- **RE-DISPATCH 4aaf9bcd (06:45:19Z): CHAIN COMPLETE 07:38:41Z — the first successful full INF
+  chain since 07-31.** Sentinel written; publisher fired +15s (platinum snapshots 07:38:58Z);
+  canonical_nna backfilled through the frozen gap (08-05/06/07 stamped 07:28Z; 08-08/09 weekend,
+  08-10 flow-sparse per the empty-partition semantics); account_team rebuilt with ZERO 'unknown'
+  households (the 08-01 D_00 crash class cleared exactly as predicted); the mdpf completion-marker
+  coupling resumed by design (CTO's explicit call). Guard-fire tally for the night: FOUR fires,
+  THREE guard classes, ZERO false refusals.
 - Production proof: the 13:47Z scheduled cycle, per the estate's own standard. Not claimable
   tonight by construction.
 
