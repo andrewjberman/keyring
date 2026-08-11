@@ -254,5 +254,9 @@ also P-numbered, with P3/P4 meaning DIFFERENT things in each. Sovereign vocabula
 | R3 deploy-plane repoint | **P3 REPOINTS** (tail) |
 | R4 drains + T5.B kill | **P5 DECOMMISSION** -- the 19-channel disposition map is P5's WORKLIST and NOTHING in it moves before the P5 gate (portal verified in-taking + displaying; cert-of-built is the verifier) |
 
+**CTO ALIGNMENT CONFIRMED 081436Z -- all four slot-claims + the R2 split, no corrections; both
+seats hold ONE order of operations.** One CTO sharpening folded: the publisher one-ordered-act's
+PRECONDITION assessment may complete inside P3's window, but its EXECUTION fires in P4 -- never
+early on a completed assessment (the distance-vs-trigger discipline at phase grain).
 In-flight X-acts continue as P3 pilot work (his record). COO reshapes the decomposition around the
 phase-gates; every R-row keeps its owner/trigger/precondition unchanged -- only the labels moved.
