@@ -148,12 +148,28 @@ strongest evidence available that the clause is right.
    way or reported as unverified; it is never inherited."* **The sweep will inherit claims from six-plus
    certified rectangles and from W3b itself — every one is a prior claim, not a fact.**
 
-**THE SEAM QUESTION, raised to CTO~Z, not decided here:** W3b produces a **news-scoped** residue
-disposition register; this spec produces a **portal-wide** sweep list. **If the two do not share schema
-and mechanism, Andrew receives two differently-shaped cleanup packets and the news register does not
-COMPOSE into the portal-wide one** — it gets re-mined instead, which is the exact cost CVO~Z's cumulative
-registers were built to avoid. **Recommendation: W3b's register is the schema prototype and the sweep
-extends it; the sweep's universe simply has a wider denominator.** CTO~Z owns that call.
+**THE SEAM QUESTION — ✅ RULED 195700Z, recommendation adopted.** W3b produces a **news-scoped** residue
+disposition register; this spec produces a **portal-wide** sweep list. Unshared, they would give Andrew
+two differently-shaped cleanup packets and force the news work to be re-mined.
+
+**RULING: W3b's residue disposition register IS THE SCHEMA PROTOTYPE; THIS SWEEP *EXTENDS* IT.** Same row
+shape, same disposition vocabulary, same file-backed denominators, **wider universe frame. One cleanup
+packet for Andrew, not two.** The timeline already agrees with the design — W3b runs now, the sweep is
+queued, so prototype-then-extend is what is happening regardless.
+
+### ⛔ DESIGN GUARD (attached by CTO~Z with the ruling) — THE DOMAIN-ASSUMPTION TRAP
+
+**A SCHEMA PROTOTYPED ON ONE DOMAIN CARRIES THAT DOMAIN'S ASSUMPTIONS SILENTLY.** Measured precedent from
+this afternoon: the W0–W1 bindings were **page-shaped** and fit an instrument subject imperfectly. **A
+register prototyped on news residue will be news-shaped in ways nobody notices until the portal-wide
+extension hits them** — and by then the shape is load-bearing.
+
+**Therefore the prototype is authored WITH THE WIDER FRAME DECLARED:**
+- an **explicit per-row `scope` field** (`news-subsystem` now, `portal-wide` later), and
+- **anything news-specific lives in a NAMESPACED EXTENSION BLOCK, never a core column.**
+
+*This changes how W3b's C4 deliverable is AUTHORED, not what it contains.* CTO~Z is instructing AE~Z
+directly; **this spec inherits the guard as a binding condition on the extension.**
 
 ## Status
 
