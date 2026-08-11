@@ -4,7 +4,7 @@
 **Commission:** the collective-recon mandate @07c6f68bf4 (RECON-4), verdict routed to CTO + COO per
 CTO's oversight frame 053919Z; feeds goal 3 of the four-month structure (@dedd7bdeab companion).
 **Run record (schema-VALID):** `workflows/atom_decomposition/runs/advi-model-holdings-account-join/20260811T0530Z/`
--- 3 entities x 8 fields, census 20 MEASURED / 2 INFERRED / 2 NOT_MEASURABLE. Read-only; DRY,
+-- 3 entities x 8 fields, census (DERIVED from cells post-amendments, CVO census-drift catch @4918e8b48f) 21 MEASURED / 1 INFERRED / 2 NOT_MEASURABLE. Read-only; DRY,
 UNCERTIFIED (CVO certifies). **No account values left scratchpad -- counts, formats, rates only.**
 
 <a name="domain-bar"></a>**Domain bar:** expected variance = per-firm key-format differences.
@@ -20,7 +20,7 @@ per firm** -- measured on the newest feed partition vs the newest ADVI accounts 
 | Firm | Feed key (measured) | Spine key (measured) | Overlap | Verdict |
 |---|---|---|---|---|
 | **08335338 ADVI (49F)** | 36-char UUID, 7,230 distinct -- **it is the SmartX `allocationId`**, mapped at `wsb_49f_smartx_model_aua.py:167`; `custodian` hardcoded `None` at `:169` with the feeder's own comment *"not exposed on the SmartX allocation row"*; `household_id` all-null | `silver/fact_acc` `account_id`: 10-digit Schwab number, 7,239 distinct (date=2026-08-07) | **0.0%** -- exact, digit-normalized, and last-8 all zero | **RESOLVED ~0551Z -- MEASURED JOIN PATH AT 99.8%** (~A, at-rest, zero egress): feed.account_id -> `fact_allocation_account_map.allocation_id` -> `.account_number` -> **zfill(10)** -> fact_acc.account_id (BOTH DENOMINATORS, per COO 055328Z: MAP side 5,701 of 5,715 distinct account_numbers matched = 99.8 percent; SPINE side 5,701 of 7,239 fact_acc accounts matched = 78.8 percent -- the spine-side remainder is accounts in NO model, an EXPECTED asymmetry, not a miss; residual on the map side = 12 nine-digit entries + 2 misses, flagged). The direct-feed verdict STANDS (0.0% without the map hop); the fix is a JOIN through the map table, never a feeder change |
-| **Inflection** | short numeric ids (len 2-4), 561 distinct (feed 2026-08-06) | `gold/dimensions/accounts_dimension_latest` `account_id`, 869 distinct (written 08-10) | **98.0%** (550/561), exact, no normalization | **JOINABLE TODAY** on the native key. Rollup keys (advisor_assignments, client_dimension) already sit spine-side. Residual: 11 accounts (2.0%), cause open (closed/vintage-skew/book-definition candidates) |
+| **Inflection** | short numeric ids, FULL RANGE len 2-14 (matched set len 2-4; the 11 unmatched ARE the len-12-14 long tail -- CVO cert recompute), 561 distinct (feed 2026-08-06) | `gold/dimensions/accounts_dimension_latest` `account_id`, 869 distinct (written 08-10) | **98.0%** (550/561), exact, no normalization | **JOINABLE TODAY** on the native key. Rollup keys (advisor_assignments, client_dimension) already sit spine-side. Residual: 11 accounts (2.0%), cause open (closed/vintage-skew/book-definition candidates) |
 | **Cottonwood** | **NO PIPELINE FEED exists** -- `model_aua_positions` partitions are exactly {49financial, inflection}, full 116-object enumeration. **ANDREW-DIRECT CORRECTION ~0547Z, verbatim: "Cottonwood does have a model holdings feed via the Black Diamond Rebalance endpoint" -- the VENDOR SOURCE exists; what is absent is the ingest leg.** RCN-0001 note: the rebalancer-models endpoint family was one of the teardown's five [BODY-NOT-CAPTURED] gaps -- schema capture there is the named opening move | n/a | n/a | **SOURCE EXISTS, PIPELINE ABSENT.** Goal 3 for cottonwood still sequences behind goal 1 (the custom-model pull IS the ingest leg, and the Rebalance endpoint is its scouted mechanism); cot-BD egress is standing-LIFTED so the endpoint is probeable. When the feed exists: BD is RELATIONSHIP-grain (Andrew 08-04) -- the account test needs the collapse discipline |
 
 ## THE FOUR CONSEQUENCES FOR THE PROGRAM (information, not rulings)
@@ -49,3 +49,27 @@ Newest-partition sampling (one per firm side); 49financial feed = the only 49F f
 inflection residual cause unmeasured; the SmartX endpoint question not yet probed (carried in RECON-2 at ~A;
 probe AUTHORIZED per the 0546Z correction -- the original egress-gated claim was WRONG); cottonwood spine cells NOT_MEASURABLE absent an input; L2 trigger-grain cells
 (CTO's oversight note 5) belong to the per-firm pipeline decomps (RECON-2/3/5), not this join run.
+
+## POST-CERT ADDENDUM (2026-08-11 ~0600Z) -- COTTONWOOD RE-GRADED A SECOND TIME: THE INGEST ALREADY EXISTS AND RUNS DAILY
+
+Certified state above said SOURCE-EXISTS-PIPELINE-ABSENT (Andrew's BD-Rebalance correction). Following
+the teardown's own July-21 note ("Opal already pulls the Cottonwood Rebalancer daily"), measured at rest:
+**the ingest EXISTS, LIVE, THREE TIERS DEEP** under `opal-data-assets/blackdiamond/cottonwood/`:
+bronze `rebalancer_models` (21) + `rebalancer_model_detail` (561) + `rebalancer_accounts` (105), newest
+2026-08-10 06:00Z, daily completion markers in `meta/` through 08-10 · silver `fact_model_roster` /
+`fact_model_definition` / **`fact_model_assignment`** / `fact_model_blend` (21 daily partitions each,
+date=2026-08-10) · gold `dim_model_portfolio` (13, newest 08-10 13:00Z) -- the SAME tables RECON-1
+measured the MDPF floor consolidator reading.
+
+**And `fact_model_assignment` is ACCOUNT-GRAIN with the join key aboard:** 921 rows / 21 cols incl.
+`account_number` (921 distinct; len 9 x662 + len 11 x86, digit-rate 0.84), `account_id` (8-digit BD
+internal), strategy/program names, SMA/UMA flags. So cottonwood's goal-3 input is not "absent" and not
+merely "source-exists" -- **the account-grain model-assignment table lands daily already.** The
+remaining cottonwood question collapses to the SAME measurement as the other two firms: `account_number`
+vs the cottonwood ADVI account spine (spine identification + overlap = the follow-up cell; BD
+relationship-grain collapse discipline still applies downstream). Goal 1's "custom model pull" is
+therefore an EXTENSION of a live puller (Custom-model scanning of Opal constituents), not a fresh
+ingest build. Believed->actual across three generations in 70 minutes: NO-INPUT -> SOURCE-EXISTS
+(Andrew) -> INGEST-EXISTS-LIVE (at-rest measurement) -- each correction smaller than the last because
+each denominator was stated. This addendum post-dates cert @4918e8b48f and is flagged to CVO for
+delta-certification; nothing certified above is contradicted -- the feeds-plane absence remains true.
