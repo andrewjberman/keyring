@@ -52,28 +52,36 @@ CVO-authored inputs, both point-in-time**:
 Tonight's render fix (@38dcbe8d9a) made the aging HONEST (live-key verify + stale banner) but does not
 stop it; the resolver crosses its own 14-day `STALE_AFTER_DAYS` in ~3 days (CTO 074227Z).
 
-### The recommendation (measure-and-recommend — CTO gate + CVO co-author, NOT executed here)
+### The recommendation — CVO-CO-AUTHORED CONTRACT (ruled 075603Z), for CTO's gate
 
-The substrate splits cleanly on a **mechanical / judgment axis** (MECE, same-grain per taxonomy law),
-and the durable fix is different on each half — which is why "just re-run the generator" is the wrong
-fix:
+The substrate splits MECE on a mechanical/judgment axis; **CVO ruled both halves + the cadence
+(075603Z)** — so this is now a specified contract, not an open question. The durable fix differs per
+half, which is why "re-run the generator" is wrong:
 
-- **MECHANICAL half** — `producers` / `served_artifacts` / `frontend_resolution` + the
-  lambda→named_thread resource enumeration. This is live pipeline topology + resource membership,
-  **re-derivable from the live graph** (comp-aws cloud-graph / comp-kuzu), not from a hand census.
-  **Recommend:** repoint the generator's census input from the frozen dated log to a graph-derived
-  producer, run as a **scheduled leg with a floor** (per CTO's Group W schedule-not-event doctrine), so
-  the stale banner becomes a backstop rather than the primary mechanism.
-- **JUDGMENT half** — `owning_tool` / `status` / `reachability_status` / orphan+superseded
-  classification. This is CVO adjudication and **must stay CVO-authoritative** — a graph query cannot
-  reproduce it. **Recommend:** a CVO **review cadence with a staleness floor** (the `adjudications_YYYYMMDD`
-  overlay pattern already exists — make it scheduled + floored so an un-re-reviewed determination
-  surfaces LOUD instead of silently aging), NOT a hard-coded dated path.
+- **MECHANICAL half — re-derive from the live graph on a scheduled leg with a floor.**
+  `producers` + `frontend_resolution` + the lambda→named_thread enumeration re-derive from the live
+  graph (comp-aws/comp-kuzu). `frontend_resolution` carries the F-6 route_class (s3-direct vs
+  apigw-lambda) whose apigw mappings need a one-time judgment ENTRY, then re-derive mechanically.
+  ⛔ **`served_artifacts` = BARE KEYS + PRODUCER EDGES ONLY, ZERO freshness prose** (CVO, measured).
+  The June-15 defect was never the key list — it was FRESHNESS PROSE baked into the rows ("LIVE fresh
+  2026-06-15 10:41" on a key that 404s today, the specimen CVO's `--verify-served` fix now renders as
+  `[S3 404]`). **If the regen re-bakes any liveness/freshness adjective it rebuilds the exact defect at
+  a newer, MORE-credible vintage.** The freshness plane lives at RENDER (the head-object stamps
+  @38dcbe8d9a) and NOWHERE in the substrate.
+- **JUDGMENT half — CVO's, diff-triggered re-review + a 30-day clock floor.**
+  `owning_tool`/`status`/`reachability_status`/orphan+superseded stay CVO-authored. The invalidating
+  trigger is the mechanical half moving under a determination: when a scheduled mechanical regen changes
+  a thread's producer/served/frontend rows, that thread's judgment rows auto-flag
+  `STALE-PENDING-REREVIEW` (loud at render, same stamp discipline), and CVO re-adjudicates on that
+  event. Clock FLOOR: 30 days per judgment row (the names' 14d floor doubled — adjudications age slower
+  than keys); un-re-reviewed-past-floor surfaces LOUD. The `adjudications_YYYYMMDD` overlay stays CVO's
+  authored artifact, now floored. **CVO owns the re-review acts on both triggers.**
 
-**One open input, and it is CVO's:** the exact boundary of mechanical-vs-judgment per field, and the
-judgment-half review cadence, are CVO's call (they own the census authority; CTO confirmed
-owning_tool routing = CVO-authoritative). Coordinated to CVO with this doc. **I do not design CVO's
-cadence for them.**
+**DESIGN RIDER (CVO @4e02646c97, binding on any scheduled leg):** the mechanical regen must RULE
+`empty-partition` vs `no-partition` vs `carry-forward` for its sources — CVO's equivalence discriminator
+died on an empty weekend partition nobody had ruled on. This ties to the T-1 trading-calendar
+discipline: **an empty partition is not absence, and not license to carry forward silently.** The
+scheduled leg declares its empty-source behavior explicitly or it reintroduces a silent-freeze class.
 
 **No urgency-borrowing** (CTO 074227Z): if the honest stale flip fires before the regen lands, it is
 ACCEPTED as the instrument telling the truth. The fuse is noted, not inflated.
