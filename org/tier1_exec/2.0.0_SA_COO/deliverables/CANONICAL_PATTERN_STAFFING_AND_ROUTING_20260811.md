@@ -1569,6 +1569,53 @@ gate.*
 
 **NOT DECOMPOSED. NOT DISPATCHED.** Waiting on both gates.
 
+## 4z · A.2 CLOSED (both carriers) · A/B/C/D **RATIFIED-TENTATIVE** — build decomposition STAYS STAGED · **GROUP W** enters first
+
+### ✅ THE A.2 DEAD GATE — my discriminator was right, and it found something worse than drift
+
+`CRO~B` checked both sides and grounded it: **R-4 IS Andrew-ratified verbatim** (*"Yes this does supersede
+NFRA_VELOCITY"*) — so the dependency was **dissolved in ruling**, their Andrew-flag retired, no escalation
+needed. **But the records had NOT followed:** `ADVI_PERFORMANCE_PRD.md:564` still asserted *"NFRA_VELOCITY
+COMPLETES FIRST … before either product project begins"* with **no struck amendment**, and
+`ADVI_PERFORMANCE.json` `"sequencing"` still listed VELOCITY-runs-to-conclusion as **step 1**.
+
+> ⛔ **AND THE PART THAT IS WORSE THAN ORDINARY DRIFT: THE RULING ITSELF HAD ALREADY ORDERED THE FIX AND
+> NOBODY EXECUTED IT.** Its **own line 135** assigned the struck-amendment (owner: CTO, PRD owner) and
+> **line 136** the registry half (**COO/CTO — so a share of it was MINE**). **Neither had landed in a day.**
+> **So this was not a record that quietly aged — it was an OWED ACTION, named with an owner inside the
+> ruling that created it, left undone.** *A ruling that specifies its own record-fix and is not followed is
+> strictly more dangerous than one that forgets to: the fix looks handled because it is written down.*
+> **I own the COO share of that: the seat is continuous, and an owed registry act sat unexecuted at it until
+> another seat went looking.**
+
+✅ **FIXED, BOTH CARRIERS, @357cdbd5aa** — PRD addendum struck with the R-4 citation (TIER0 lane override
+audited against the ruling's own owner assignment; MSTR notified) **+ the `ADVI_PERFORMANCE.json`
+supersession field.** *The 08-10 owed fix is finally on disk, so no future agent re-manufactures the
+velocity gate from a stale PRD.*
+
+### ⏸ A/B/C/D IS **RATIFIED-TENTATIVE** — and that authorizes SPEC-LAYER WORK ONLY
+
+Andrew ~0736Z, verbatim: *"I am **tentatively** ratifying it, but I want to wait and see CRO~A specs for
+Inflection and Cottonwood alongside it so we can view them all in context of one another **holistically**."*
+⛔ **BUILD DECOMPOSITION STAYS STAGED. Tentative ≠ trigger.** The holistic view **may amend the 49F shape
+itself**, so nothing becomes a build TO until his **FINAL** word.
+> **CTO's own framing, and I am recording it because the rule generalized past the seat that wrote it:
+> *"your own distance-vs-trigger rule, applied to me this time."*** *A tentative ratification is the purest
+> form of the trap — it is genuinely progress, it is genuinely his word, and it is not the trigger. Two
+> execs have now caught the same conflation in their own artifacts within an hour.*
+
+### GROUP W ENTERS THE CHAIN **BEFORE** BUILD DECOMPOSITION
+
+**A new pre-decomposition deliverable: GROUP W (scheduling atoms)** — CRO~A's adversarial F-2, accepted,
+**commissioned at CVO.** It sits **BEFORE** build decomposition in the sequence.
+**Holistic legs:** CRO~A's **INF spec is DELIVERED** and in CTO's review queue; **COT is the remaining leg.**
+
+**REVISED STAGING ORDER AT MY SEAT** (supersedes the §4i/§4y reading of "A-3 then decompose"):
+**Group W → the three holistic specs complete (49F ✓ / INF ✓ / COT pending) → Andrew's FINAL word →
+build decomposition (P0–P4, itself behind CVO verify + the naming line).** *Two sovereign words now sit in
+this chain, not one — the final A/B/C/D ratification and the gold-root naming line — and they are
+different words for different things.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
