@@ -26,6 +26,26 @@ question fabric-wide is for MSTR/CTO to read, not me. MDPF-side W1/W2 (inflectio
 cross-firm unlink, in tonight's atomic window) are the CONSUMER face of this pipeline — coordination
 with the live window owners honored; nothing here gates them.
 
+## Instruction 2 — mid-run addition (same terminal, ~0450Z)
+
+> "something else i want you to kepe in mind when you do this, is that we need to refactor the inf
+> pipeline, because the way we do performance attribution is fucking bullshit, performance is not a
+> residual, there are clear performance endpoints at the account level in orion and we need to use
+> them, i want that fixed real bad it should be raw figures straight dfrom their database. when you
+> run this analysis i want you to keep a close eye on the various gold scripts and what theyre doing
+> because a lot of it probably is trash, explicitly any account valuation (shouldnt be necessary
+> there are clear raw holdings/assets/etc endpoints no calculation or interpolation required) and
+> same with performance. we even have a whole orion eclipse endpoints api file somewhere and you
+> have egress to check out any endpoint you want."
+
+**Scope as bound:** (a) the INF pipeline needs a REFACTOR — performance from Orion's account-level
+performance endpoints as RAW figures, never a residual/derivation; (b) during this analysis, AUDIT
+the gold scripts — explicit attention to account-VALUATION logic (should not exist; raw
+holdings/assets endpoints suffice, no calculation or interpolation) and PERFORMANCE logic (same);
+(c) an Orion/Eclipse endpoints API file exists in the estate — locate and use it; (d) **vendor
+egress GRANTED for this run's endpoint verification** ("you have egress to check out any endpoint
+you want") — Orion/Eclipse endpoint exploration is his word, per-use satisfied.
+
 ## Execution notes (this seat)
 
 - Fixes ride the sanctioned mechanisms only: Terraform via `safe-apply`, commits via `safe-commit`,
