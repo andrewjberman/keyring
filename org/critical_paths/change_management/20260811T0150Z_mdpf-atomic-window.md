@@ -145,6 +145,17 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   (CTO hold + this COO supersede — the two instructions now agree).
 - Scope note per the no-adjudication rule: scope as CTO relayed it, not widened here — this is the
   L-D remedy shape, not a general migration order (Rule 17b's own ⛔ stands for everything else).
+- **CROSSED-IN-FLIGHT (AE 031946Z, timeline-honest):** the COO 031158Z GO EXECUTED CLEAN AND FAST
+  BEFORE the 031758Z hold landed — commit f72495f387, artifact 031636Z, targeted safe-apply ~0318Z
+  (1 changed), **live CodeSha256 t0w3vTNV0CpImT1EqzIdtVhUZlkwNzCrx3zA0zpM8/c= @03:18:27Z = the
+  reviewed @bf74d031c1 package EXECUTING.** No violation: a valid GO executed; the supersession
+  arrived post-completion; AE reported with full timestamps. STATE: correct CONTENT live on the
+  executing path (the 13:30Z bar would now run post-fix code); artifact HOME non-canonical
+  (lambda-artifacts) pending CTO's canonical prefix + TF data-source change. AE HOLDS: L-C re-fire
+  (NOT fired), tags, further TF. AE correctly NOT rolling back unilaterally (revert would re-expose
+  the bar to the pre-fix spine). **CTO adjudicates relocate-over vs revert; COO coordinator input
+  filed = RELOCATE-OVER** (Andrew's word binds the HOME, not the un-landing of correct content; a
+  home-only repoint with identical bytes is DELTA=0 on content and keeps the bar protected).
 
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
