@@ -196,3 +196,39 @@ client-facing; the equivalence check IS the never-widen evidence. (4) The Group-
 cell (§1a flag i). (5) Every RECON citation resolves at its commit -- the certified runs carry the
 cells. (6) The sequencing's no-shadow compliance -- each port is flip+rollback, nothing parallel;
 attack any row that smells like a standing second channel.
+
+## 7. CVO VERIFY FOLDED (VERIFIED-WITH-AMENDMENTS @4e02646c97 -- zero dispositions refused; four amendments adopted verbatim)
+
+**A1 (MEASURED, folds into M7): "the publisher" is a FAMILY OF TWO.** The live same-bucket
+publisher AND `mdpf_egress_publisher.tf` -- the cross-bucket successor reading `portal/gold/mdpf/*`,
+wo2 repoint in-flight (.open_deploys). CVO's re-derived census (417 hits / 25,251 files, 34
+non-doc files fully classified) confirms NO consumer outside the family. **M7 amends: both members
+named; the parquet format flip SEQUENCES WITH the wo2 transition as ONE ordered act** -- never two
+overlapping input changes on the publisher family.
+
+**A2 (MEASURED, replaces the M1 method): the one-at-rest-diff-each equivalence method is REFUSED AS
+STATED.** CVO ran it on the headline feed: coverage ties, totals tie 0.237 percent, row-wise 0.12
+percent -- and the SAME-STATE pair is STRUCTURALLY UNAVAILABLE at rest (weekend map partition
+EMPTY; channels pull 03:31Z Tue-Sat vs 13:55Z daily -- different clocks, never the same state).
+**M1's equivalence checks amend to: SAME-STATE PAIRED PULLS in one window, or an EX-ANTE tolerance
+frame ruled before the diff runs.** A diff whose divergence is indistinguishable from one
+trading-day of drift proves nothing either way.
+
+**A3 (folds into M8): the bell repoint's never-widen evidence inherits A2 with stakes.** A
+client-facing co-sign cannot rest on a diff that a weekend of market movement would also produce --
+M8's precondition is now the SAME-STATE paired-pull equivalence, explicitly.
+
+**A4 (folds into the P1->P2 seam): PER-FAMILY ATOMICITY.** Builder flip + publisher-input flip land
+in ONE window per served family, OR the interim old-writer continuation is NAMED with its END
+CONDITION in the wave row. CVO's words, adopted as the rule: *"an unstated overlap is how a shadow
+is born without anyone deciding to build one."*
+
+**Group-D format cell: CONFIRMED by CVO** (their clarification folds into Group B -- theirs).
+
+**The routed unknown, answered as a PROPOSED contract line (CTO concur requested -- data-semantics
+is the arch lane):** L2's no-data-day semantics: **non-trading days produce NO partition**
+(lib/trading_calendar resolves FIRST -- the T-1 law; Group W's Sunday row already states it);
+**a TRADING day with no bronze delivery produces NO partition + a LOUD catch-up-floor detection**
+-- never an empty partition, never a silent carry-forward; **carry-forward is a SERVING-tier
+decision only** (the publisher's measured re-serve-last-good), never a silver/gold fabrication.
+One line, three states, each with its owner.
