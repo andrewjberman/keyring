@@ -13,8 +13,22 @@
 #   json/benchmarks/ 6 keys  = 3 rendered on this page + 1 served-unrendered + 2 _smartx internals
 #   json/peers/      1 key   = rendered
 #   json/yang/volatility_data.json = 1 key, frontend-orphan (comp-estate MA-08, frozen)
-#   TOTAL under the MP vertical: 482 keys; VISUALLY RENDERED artifact types: 7 (below);
+#   json/portfolios/ 5 keys = MP-vertical LEGACY tree. ADDED 2026-08-11 (CVO~Z W0): it was
+#                   ABSENT from this denominator entirely. It surfaced by FOLLOWING A CONSUMER
+#                   EDGE, not by recounting -- a recount of the trees I already knew about could
+#                   never have found it, which is the whole lesson. A denominator is only as
+#                   complete as the enumeration of FAMILIES above it.
+#   TOTAL under the MP vertical: 487 keys (was stated 482 -- short by the json/portfolios/ tree).
+#   VISUALLY RENDERED artifact types: 7 (below);
 #   served-but-unrendered: itemized in unrendered_artifacts (nothing silently elided).
+#
+# ⚠ THIS TOTAL IS A VINTAGE, NOT A FIXED NUMBER, and one family inside it is UNBOUNDED.
+#   platinum/mdpf/_manifests/ GROWS ON EVERY PUBLISH RUN -- measured 6 at census time
+#   2026-08-10, 10 by 2026-08-11. Stating a growing family as a fixed count makes every later
+#   reader's recount look like a discrepancy and invites re-litigating a number that was never
+#   stable. The family is hereby DECLARED UNBOUNDED: cite it as "_manifests/ (unbounded, grows
+#   per publish; N at <date>)" and never as a constant. The remedy for an unbounded set is to
+#   declare it, not to re-count it.
 #
 # SCOPE-FAMILY DEDUP NOTE: the three platinum artifact types are published per-scope
 # {global, 49financial, inflection, cottonwood} by ONE publisher (opal-assets-mdpf-portal-
@@ -22,13 +36,49 @@
 # and lists the sibling keys as scope_family -- one field list per TYPE (binding rule 2).
 vertical: model_portfolios
 census_vintage: 2026-08-10        # measured date; re-verify on drift, never hand-roll
+# ⚠ census_vintage DELIBERATELY NOT BUMPED to 2026-08-11. Only the five cells listed in
+# corrections_20260811 were re-measured today; every other cell still carries its 2026-08-10
+# vintage. Bumping the header would assert a whole-census re-measurement that did not happen --
+# a stale cell wearing a fresh date is worse than a stale cell, because it defeats the
+# re-verify-on-drift rule this very line states.
+corrections_20260811:
+  found_by: 3.0.0_SA_CVO~Z (W0 MP atom_decomp, @cb4d65486f -- census treated as INPUT, every
+    factual cell re-grounded live or at source per PRD s9.0)
+  landed_by: 0.5.0_AE_OpalETL~Z (census author; each item re-verified at source/live by me
+    before landing rather than applied from the report)
+  items:
+    - {cell: "pages[0].page", was: "/model-portfolios", now: "/portfolios",
+       grounding: "App.tsx:408; /model-portfolios hits the catch-all :472 -> Market Overview"}
+    - {cell: "unrendered_artifacts _smartx_model_daily/_monthly .state", was: "live", now: "FROZEN",
+       grounding: "head-object 2026-06-01T13:36:11Z vs siblings 2026-08-11T09:26:02Z; ~50 trading
+       days, calendar resolved first; disposition deliberately left OPEN"}
+    - {cell: "non-model-assets .consumer_evidence", was: "mechanism: :414 fetch commented out",
+       now: "mechanism: live fetch at :417 to a non-resolving key; verdict (unconsumed) unchanged",
+       grounding: "portal-proxy.ts:412-417 re-read; 404 + separate-invocation positive control"}
+    - {cell: "aum-metrics .fields", was: "2 of 9 live top-level keys", now: "9 of 9",
+       grounding: "live object read 2026-08-11; `total` (scope-wide AUM) had been omitted"}
+    - {cell: "DENOMINATOR total", was: "482", now: "487 + _manifests/ declared unbounded",
+       grounding: "json/portfolios/ (5 keys) was absent from the family enumeration; found by
+       following a consumer edge, not by recounting"}
+  not_corrected_here:
+    - {item: "PipelineProgress.tsx:432 <Link to=\"/model-portfolios\"> delivers Market Overview
+       with no error", owner: 1.0.0_SA_CTO~Z, note: "live portal defect surfaced by the same
+       re-grounding; named, not chased, not mine to fix"}
 census_author: 0.5.0_AE_OpalETL~Z (OPAL_ANALYST.TO4a)
 grounding: every artifact row carries live retrieval evidence (portal_lookup output ref);
   every panel row carries its render evidence (component file:line, portal DEV tree HEAD
   2026-08-10 -- main portal worktree, submodule pointer at workspace SITEZ HEAD)
 
 pages:
-  - page: /model-portfolios        # grain: portal ROUTE (portal/src/pages/ModelPortfolios.tsx)
+  # CORRECTED 2026-08-11 (CVO~Z W0 re-grounding; re-verified by me at source before landing):
+  # this read `/model-portfolios`, WHICH IS NOT A ROUTE. App.tsx:408 declares `/portfolios`;
+  # `/model-portfolios` hits the catch-all at :472 and silently redirects to Market Overview.
+  # A census_ref is a POINTER -- a wrong route here does not fail, it sends a person somewhere
+  # plausible and wrong, and DATA_CATALOG v0.2 is designed to cite exactly this string.
+  # I had the CORRECT value in PORTAL_PAGE_INVENTORY_20260811.json @2dc3f0b417 the same morning;
+  # two of my own artifacts disagreed and I never cross-checked them. That check is now part of
+  # my per-page routine, not a resolution.
+  - page: /portfolios              # grain: portal ROUTE (portal/src/pages/ModelPortfolios.tsx)
     locations:
       - location: {kind: header, name: "Page header + Portfolio Analytics summary"}
         panels:
@@ -56,6 +106,19 @@ pages:
                   - {name: "by_model[].account_count", type: integer, unit: accounts, example: 186}
                   - {name: "by_model[].q0..q3", type: object, note: "per-quarter {change USD, growth pct, priorLevel USD}", example: "q0.change: -412654.44"}
                   - {name: _provenance.source_vintages, type: object, role: vintage, example: "global/aum-metrics: 2026-08-05"}
+                  # ADDED 2026-08-11 -- the row enumerated 2 of 9 live top-level keys and omitted
+                  # `total`, the SCOPE-WIDE AUM figure, i.e. the single most likely question anyone
+                  # asks this artifact. Re-derived from the live object, not extended from the old
+                  # list (the old list was the defect). Denominator: 9 of 9 top-level keys now present.
+                  # Lesson banked: a field table built by reading the RENDERED panel captures only
+                  # what the panel draws -- the artifact is the denominator, not the component.
+                  - {name: total, type: object, note: "SCOPE-WIDE rollup -- account_count, aum, model_aum, non_model_aum, q0..q3{change,growth,priorLevel}", example: "aum: 2015177866.37; account_count: 8200"}
+                  - {name: dates, type: object, role: vintage, note: "quarter-end anchors for the q0..q3 comparison keys", example: "q0: 2026-06-30; q3: 2025-09-30"}
+                  - {name: last_updated, type: string, role: vintage, note: "publisher write time (distinct from source_vintages, which is the DATA vintage)", example: "2026-08-11T15:13:37.700896+00:00"}
+                  - {name: period, type: string, role: vintage, example: "2026-08-10"}
+                  - {name: scope, type: string, note: "which scope-family member this instance is", example: "global"}
+                  - {name: meta, type: object, note: "basis definitions + count composition -- 49financial_basis, cottonwood_basis, basis_definitions, count_as_of, count_composition, current_source"}
+                  - {name: non_model_assets_detail, type: object, note: "latest{date, enterprise_total, model_aum, non_model_aum, non_model_pct} + meta. NOTE FOR THE DISPOSITION OF THE non-model-assets ARTIFACT BELOW: the non-model figures are ALREADY CARRIED HERE, which is consistent with that separate artifact's fetch having been retired. Flagging the overlap as a fact; the disposition is not mine to set.", example: "latest.non_model_pct: 14.372471"}
               - artifact: platinum/mdpf/global/account-distribution.json
                 source_type: s3
                 served_route: /api/general/mdpf/{scope}/account-distribution.json
@@ -120,7 +183,7 @@ pages:
               lines; Global = since-inception, per-firm = rolling-1Y, :1674-1680)
             artifacts:
               - artifact: platinum/mdpf/global/aggregate-aua-timeseries.json
-                canonical: pages[/model-portfolios] -> header -> "Portfolio Analytics"
+                canonical: pages[/portfolios] -> header -> "Portfolio Analytics"
                 note: same object family, per-scope; value basis only (count toggle REMOVED
                   Andrew-direct 2026-07-29 @72f132c5, comment at ModelPortfolios.tsx:~1730)
 
@@ -153,7 +216,7 @@ pages:
                   - {name: "timeseries[].index_benchmark_return", type: number, unit: decimal-return, example: -0.007215}
                   - {name: "timeseries[].etf_benchmark_return", type: number, unit: decimal-return, example: -0.009507}
               - artifact: json/benchmarks/model_portfolio_benchmarks.json
-                canonical: pages[/model-portfolios] -> tab Benchmark -> "Benchmark Comparison"
+                canonical: pages[/portfolios] -> tab Benchmark -> "Benchmark Comparison"
                 note: passed into the scatter as props (data/benchmarkCompositions,
                   ModelPortfolios.tsx:2264-2267); field list at the canonical entry
           - panel: "Benchmark Comparison"
@@ -244,21 +307,56 @@ unrendered_artifacts:
     consumer_evidence: "zero frontend callers: grep getBenchmarkReturns over portal/src -> only its portal-proxy.ts:757 definition"
     fields_note: 'periods[10] + benchmark_compositions(5 models, e.g. "UST: 100% Bloomberg
       0-1 Year Treasury") + per-benchmark returns; data_as_of role vintage'
+  # CORRECTED 2026-08-11 -- these two carried `state: live`. THEY ARE NOT LIVE, THEY ARE FROZEN.
+  # Found by CVO~Z's W0 re-grounding; I re-read S3 myself before landing it:
+  #   _smartx_model_daily.json    LastModified 2026-06-01T13:36:11Z
+  #   _smartx_model_monthly.json  LastModified 2026-06-01T13:36:11Z
+  #   prefix siblings (model_portfolio_timeseries, etf_returns)  2026-08-11T09:26:02Z
+  # TRADING CALENDAR RESOLVED FIRST (NEVER#1): this is ~50 TRADING DAYS, not a weekend and not
+  # a T-1 read -- the siblings moved this morning while these two have not moved since June.
+  # Producer is source-confirmed OPERATOR-RUN, not scheduled
+  # (data/smartx/scripts/pull_smartx_model_monthly_performance.py, OUT_KEY :98/:99), which is
+  # exactly how it stops without anything reporting it.
+  # ⚠ DISPOSITION DELIBERATELY NOT SET. "Retired on purpose" and "an operator step silently
+  # stopped" fit this evidence EQUALLY and have OPPOSITE remedies. Recording the measurement and
+  # leaving the judgment open is the honest state; guessing it here would launder a coin-flip
+  # into the census as a fact. Open call -> CVO~Z (disposition plane) / Andrew.
   - artifact: json/benchmarks/_smartx_model_daily.json
-    state: live
+    state: FROZEN          # last written 2026-06-01T13:36:11Z; siblings 2026-08-11T09:26:02Z
+    vintage_evidence: "aws s3api head-object LastModified 2026-06-01T13:36:11+00:00, read 2026-08-11"
     consumer_evidence: underscore-prefixed internal view (feeder output beside the rendered
       benchmarks; no portal caller found)
   - artifact: json/benchmarks/_smartx_model_monthly.json
-    state: live
+    state: FROZEN          # same timestamp, same producer script
+    vintage_evidence: "aws s3api head-object LastModified 2026-06-01T13:36:11+00:00, read 2026-08-11"
     consumer_evidence: same class as _smartx_model_daily
   - artifact: platinum/mdpf/global/non-model-assets.json
     state: live            # still published 2026-08-10T13:50:50Z
     retrieval_evidence: portal_lookup get 2026-08-10 (85641 bytes; latest.date 2026-08-05;
       fields latest{date, enterprise_total, model_aum, non_model_aum, non_model_pct} +
       time_series[445]{period,...})
+    # CORRECTED 2026-08-11 -- RIGHT VERDICT, WRONG MECHANISM, and the mechanism is the part the
+    # next engineer acts on. This said "portal-proxy.ts:414 fetch is commented out". At source
+    # (re-read by me before landing): the commented block at :412-416 is the PRIVATE-endpoint
+    # variant; the fetch on the line AFTER it is LIVE and active --
+    #   return apiRequest<NonModelAssetsResponse>('/api/general/portfolios/non_model_assets.json')
+    # -- targeting a DIFFERENT key (underscores, not hyphens) that does not resolve. My own
+    # head-object on the most likely S3 mapping (json/portfolios/non_model_assets.json) returns
+    # 404, positive-controlled in a SEPARATE invocation against a key I know exists
+    # (json/benchmarks/etf_returns.json -> 200). I did NOT trace the CF behavior that maps
+    # /api/general/portfolios/ to a prefix, so the exact served key is bounded by that.
+    # WHY IT MATTERS: the conclusion (unconsumed) survives, but anyone restoring this panel would
+    # wire up a function fetching a missing key -- and CF error rules can return HTML for a
+    # missing JSON key, so it fails as a PARSE error, not a clean 404.
+    # HOW I GOT IT WRONG: I read :414, saw a commented-out fetch, and stopped at the first thing
+    # consistent with the conclusion I already had. The live call was three lines below it.
     consumer_evidence: "page reads non_model_aua from the canonical timeseries instead
       (ModelPortfolios.tsx:530-532 comment: legacy non_model fetch RETIRED Andrew-direct
-      ~0340Z); portal-proxy.ts:414 fetch is commented out"
+      ~0340Z). getNonModelAssets() is NOT dead code: portal-proxy.ts:412-416 comments out only
+      the PRIVATE variant while :417 issues a LIVE request to
+      /api/general/portfolios/non_model_assets.json, a key that does not resolve (404 on the
+      json/portfolios/ mapping; CF prefix mapping untraced). Unconsumed because nothing CALLS
+      getNonModelAssets, not because the fetch is commented out."
   - artifact: platinum/mdpf/cottonwood/account-units.json
     state: live            # published 2026-08-10T13:50:49Z
     retrieval_evidence: portal_lookup get 2026-08-10 (7767 bytes; fields firm_id,
