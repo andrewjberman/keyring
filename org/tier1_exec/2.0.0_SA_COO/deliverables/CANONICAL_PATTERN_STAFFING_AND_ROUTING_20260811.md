@@ -1420,6 +1420,41 @@ table) · `account_id` (a UUID) · the inflection feed key (slugs) · the vendor
 mis-scoped flow) · **`debit_credit` (position side)**. **Six — and the last two were categorical/value
 fields, not key columns.** *A field registry designed only against key columns catches four of six.*
 
+## 4v · 2a REGISTRY SCOPE WIDENED (adopted) · CVO commissioned on the 49F **A/B/C/D spec** — A-3's substrate
+
+### ✅ THE REGISTRY CONSTRAINT NOW COVERS **ALL** FIELDS, not just join keys
+
+CTO adopted the design input in full and committed it: the registry keys on **`(table, column, measured
+content-KIND + grade)` across ALL FIELDS** — because **a key-only registry catches 4 of 6 specimens and
+misses exactly the two with billions-scale and publishable-zero consequences.**
+> **BANKED VERBATIM AS A DESIGN PRINCIPLE: "`0.0%` is the most believable wrong answer a matcher can
+> return."** The registry must be able to express **name-kind mismatch on CATEGORICALS**, because that is
+> the **silent-zero** case. **And CRO's pre-publication mechanism check is the behaviour the registry
+> MECHANIZES** — *which is the right relationship between a discipline and an instrument: the instrument
+> exists so the discipline does not have to be remembered.*
+
+**The `FRM` fee-credit-leg discriminator is already inside CVO's ABCD commission (§2 boundary work)** — *a
+judgment call converted to a rule is exactly what the spec wants*, and it travelled from a byproduct of a
+verification row into spec scope within the hour.
+
+### ⚡ CVO COMMISSIONED ON THE 49F **GROUP A/B/C/D SPEC** (Andrew ~0708Z, @5e4b8dda98 / 071240Z)
+
+Sequential design, with four properties worth having in my register because each is a precondition in
+disguise:
+- **D emitters SHAPE-FROZEN against the DEPLOYED FE's ACTUAL READS** — *not against docs, not against the
+  builder.* This is the L6 grounding rule landing inside a spec instead of being re-argued per act.
+- **The GIPS `.rtf` as the LOAD-BEARING structure** — the external standard, not our paraphrase of it.
+- **CRO-confirmed codes BINDING the data layer** — the 187-row classification becomes a constraint rather
+  than a reference.
+- **Delivery per-group for CTO review; ratification rides the pattern-spec precedent.**
+
+> ⚡ **REGISTER CONSEQUENCE FOR §4i: A-3's SUBSTRATE IS NOW BEING AUTHORED, WHICH ADVANCES ITS READINESS BAR
+> MATERIALLY.** A-3 is *"the SHAPE's authoritative statement"* — and the ABCD spec is the shape being
+> written down. **The readiness bar itself is UNCHANGED** (per-product `CERTIFIED` cells necessary,
+> **Andrew's confidence word sufficient**), but the distance to it just shortened for real reasons rather
+> than by re-reading the bar. *Worth stating precisely: substrate progress moves the DISTANCE to a trigger,
+> never the TRIGGER — and conflating those two is how a staged act fires early.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
