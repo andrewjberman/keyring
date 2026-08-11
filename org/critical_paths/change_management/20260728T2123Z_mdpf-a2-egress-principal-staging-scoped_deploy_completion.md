@@ -5,7 +5,7 @@
 **Authority:** CTO A-2 ruling (option 1) + 211356Z correction scoping the applied grant to a
 NON-SERVED staging prefix after I surfaced the NEVER#3 blocker.
 **Commit:** `a11b8e2cc3` (pushed to CLOUD before apply, Rule 2)
-**Status:** OPEN -> see CLOSE block at foot.
+**Status:** CLOSED 2026-07-28T2126Z (see CLOSE block at foot: all four conditions met, NEVER#6 discharged in-session). *Header reconciled to the doc's own CLOSE block 2026-08-11 by 0.7.0_AE_CloudOps (COO batch 103219Z UNINDEXED triage): the header said "OPEN -> see CLOSE block" and the red scanner reads only the header -- a false gate-bypass RED every cycle since. The deliberately-open sibling item (mdpf_egress_live_serve_write_cosigned=false, never-widen CTO+COO gated) is NOT part of this closure per the doc's own foot and is unchanged.*
 
 ## SCOPE OF THIS DEPLOY
 Pure-add of THREE IAM resources in `infra/aws/terraform/opal-assets/`:
