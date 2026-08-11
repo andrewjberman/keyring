@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "opal://standards/PROOF_OF_SPEC.schema.json",
+  "title": "PROOF-OF-SPEC deliverable (Andrew-direct 2026-08-11 ~0815Z): the machine-readable completion contract every Tier-2 build TO assignee fills to prove work was done TO SPEC. A TO without a schema-valid instance is NOT complete.",
+  "type": "object",
+  "required": ["schema_version", "to_id", "phase", "spec_ref", "assignee", "artifacts_produced", "acceptance", "controls", "declared_exclusions", "surprises", "session_log", "compiler_tools"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "to_id": {"type": "string", "minLength": 3},
+    "phase": {"enum": ["P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION"]},
+    "spec_ref": {
+      "type": "object",
+      "required": ["doc", "group", "vintage_commit"],
+      "additionalProperties": false,
+      "properties": {
+        "doc": {"type": "string", "description": "the governing spec file path"},
+        "group": {"enum": ["A", "B", "C", "D", "W", "M", "X", "T", "OTHER"]},
+        "vintage_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$", "description": "the spec vintage built against -- a citation without a vintage is not a citation"}
+      }
+    },
+    "assignee": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+_[A-Z]{2}_.+$"},
+    "artifacts_produced": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path_or_key", "kind", "commit_or_etag", "deployed_state", "deploy_evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "path_or_key": {"type": "string"},
+          "kind": {"enum": ["script", "s3_object", "terraform", "config_data", "schedule", "iam", "test", "doc"]},
+          "commit_or_etag": {"type": "string", "minLength": 6},
+          "deployed_state": {"enum": ["DEPLOYED-VERIFIED", "COMMITTED-NOT-DEPLOY-SCOPE", "STAGED-AWAITING-GATE"], "description": "an atomic commit is NOT an atomic deploy; state which"},
+          "deploy_evidence": {"type": "string", "minLength": 1, "description": "for DEPLOYED-VERIFIED: the live read proving it (ETag match / get-role-policy / describe). For other states: the reason."}
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "description": "ONE ROW PER CRITERION in the governing spec's acceptance battery. NO BARE VALUES: a PASS row with empty output_evidence INVALIDATES the whole deliverable.",
+      "items": {
+        "type": "object",
+        "required": ["criterion_id", "criterion_verbatim", "method", "invocation", "output_evidence", "denominator", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "criterion_id": {"type": "string"},
+          "criterion_verbatim": {"type": "string", "minLength": 10, "description": "the spec's own words -- the assignee proves against the SPEC, not a paraphrase"},
+          "method": {"enum": ["command", "test_suite", "live_read", "diff", "schema_validation", "manual_read_with_citation"]},
+          "invocation": {"type": "string", "minLength": 1, "description": "the exact command/test run -- re-runnable by a verifier"},
+          "output_evidence": {"type": "string", "minLength": 1, "description": "verbatim output excerpt carrying the deciding values"},
+          "denominator": {"type": "string", "minLength": 1, "description": "every count states what it is out of; 'N/A' only with a reason, e.g. 'N/A -- boolean check'"},
+          "status": {"enum": ["PASS", "FAIL", "UNCOMPUTABLE", "N/A-BY-CONSTRUCTION"]},
+          "status_reason": {"type": "string", "description": "REQUIRED (enforced by validator) when status != PASS"}
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "required": ["mutant", "determinism"],
+      "additionalProperties": false,
+      "description": "a passing assertion never mutated has never been tested",
+      "properties": {
+        "mutant": {
+          "type": "object",
+          "required": ["description", "expected", "observed", "status"],
+          "properties": {
+            "description": {"type": "string", "minLength": 10},
+            "expected": {"type": "string"},
+            "observed": {"type": "string", "minLength": 1},
+            "status": {"enum": ["FIRED-AS-EXPECTED", "DID-NOT-FIRE (deliverable INVALID)", "N/A-SPEC-NAMES-NONE"]}
+          }
+        },
+        "determinism": {
+          "type": "object",
+          "required": ["method", "observed", "status"],
+          "properties": {
+            "method": {"type": "string", "description": "two same-input runs compared, or reason N/A"},
+            "observed": {"type": "string"},
+            "status": {"enum": ["STABLE", "UNSTABLE (deliverable INVALID)", "N/A-WITH-REASON"]}
+          }
+        }
+      }
+    },
+    "declared_exclusions": {
+      "type": "array",
+      "description": "everything in scope NOT done, each with a reason -- an unmarked gap reads as coverage",
+      "items": {
+        "type": "object",
+        "required": ["item", "reason"],
+        "properties": {"item": {"type": "string"}, "reason": {"type": "string"}}
+      }
+    },
+    "surprises": {
+      "type": "array",
+      "description": "surprise-channel entries: one line each, observed outside mandate, NO action taken",
+      "items": {"type": "string"}
+    },
+    "session_log": {"type": "string", "description": "path to the committed session log"},
+    "compiler_tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["tool", "invocation", "result"],
+        "properties": {"tool": {"type": "string"}, "invocation": {"type": "string"}, "result": {"type": "string"}}
+      }
+    }
+  }
+}
