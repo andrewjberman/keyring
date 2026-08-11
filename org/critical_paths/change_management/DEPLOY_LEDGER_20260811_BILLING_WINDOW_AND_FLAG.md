@@ -28,7 +28,26 @@ derivation too when the window fix lands") · base stand-off ACKed 160005Z (buil
   $209,476,279.36; fee-mask sum $196,874,030.62. Silver figures move on the next scheduled
   chain fire (no ad-hoc production trigger).
 
-## LEG 2 — THE FLAG ACT (Andrew instruction #2): legs (a)+(c) **CLOSED ~1730Z**; (b)+(d) OPEN at COO
+## LEG 2 — THE FLAG ACT (Andrew instruction #2): **ALL LEGS CLOSED ~1815Z — INSTRUCTION #2 COMPLETE**
+
+**(d-extended) + (b) window executed per COO 175403Z (transfer extended, C_09 repoint ruled,
+WINDOW_DAYS held 365). Order honored: all four repoints VERIFIED ON RE-READ before (b).**
+- Repoints @9eeecd154d, deploys all md5-TIED: D_02 4a61f28c / D_00c a88c5997 / D_00f
+  d769a8f7 / C_09 faf9e9cd / lib(amended: upper date bound + asof-series) 52005d2b.
+  Verifications: D_02/D_00c/D_00f each EXACT vs lib (771 of 908); C_09 97-partition
+  longitudinal stack spot-verified 3/3 dates (606/730/771 -- real history, no flicker).
+  Surfaced: C_09 is PARKED (Path C.1 ratified 2026-05-25) -- repointed as ruled, parked
+  disposition untouched.
+- (b) retirement deployed, md5 TIE 9a25fe0dc8e0: _derive_is_fee_earning + column + fee-split
+  prints removed from silver; registry yaml grounding amended; tests unchanged by disposition
+  (they assert reader behavior on fixture columns). Window-fix outputs verified INTACT
+  post-retirement (908/908, $209,476,279.36, own-tie 1,869/1,869).
+- Rollbacks all stashed pre-first-write: 55c69984 / dfd73226 / a3029cf2 / e3932b4a / be954ebd.
+- **THE ESTATE NOW HAS EXACTLY ONE ANSWER TO "DOES THIS ACCOUNT EARN FEES"**
+  (lib/fee_classification.py). Both billing files RETURN TO BASE at this close.
+
+*(superseded header of this section preserved below for provenance)*
+Original: legs (a)+(c) CLOSED ~1730Z; (b)+(d) OPEN at COO
 
 **Legs (a)+(c) executed + deployed (commit 7c6043a883):**
 - (a) `lib/fee_classification.py` MINTED — the single gold-home derivation (ledger basis,
