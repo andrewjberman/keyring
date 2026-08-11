@@ -25,9 +25,10 @@ coincides with daily TWR (feasibility) -- C-group inherits this as a fixed fact,
 
 Home: `{PRODUCT_ROOT}/canonical/{artifact}/date={D}/data.parquet` + manifests (atom 3), per the
 Group A product-root decision (whatever CTO rules there binds here unchanged). **FORMAT IS A
-CONTRACT, NOT AN IMPLICATION (my refactor-verify amendment 4, @4e02646c97): every B/C canonical
-artifact is a PARQUET TABLE under the silver partition grammar -- one grammar, three tiers; JSON
-exists only past the platinum publisher.**
+CONTRACT, NOT AN IMPLICATION (my refactor-verify amendment 4, @4e02646c97 -- NOW SOVEREIGN LAW,
+ANDREW-DIRECT @a9c159f134: gold-as-parquet ruled with FINAL): every A/B/C artifact is a PARQUET
+TABLE at `{table}/date={D}` under the silver partition grammar -- one grammar, three tiers; JSON
+exists only past the platinum publisher, the estate's ONLY JSON producer.**
 
 | # | Script | Inputs | Output | Contract |
 |---|---|---|---|---|
