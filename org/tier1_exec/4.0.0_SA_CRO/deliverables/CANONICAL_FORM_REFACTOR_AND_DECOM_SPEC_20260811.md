@@ -69,6 +69,47 @@ that retires F-1 formally instead of leaving the two records in tension. **Vendo
 bronze+silver (17b intact); the product tree holds gold+serving-prep: ingestion is vendor-shaped,
 analytics are product-shaped -- that split is the coherent reading of both records.**
 
+### 1c. THE NAMING DECISION, REFINED (Andrew ~0750Z: "ok with product gold and silver in
+### opal-data-portal-v2, however... we should be consistent with mdpf") -- TWO COHERENT END-STATES
+
+His consistency constraint is the load-bearing one: whichever bucket holds product gold holds it
+for BOTH products. The two coherent forms, measured:
+
+**OPTION A -- product tiers in opal-data-assets (the spec's current form).**
+`opal-data-assets/portal/gold/{mdpf,advi}/{scope}/` (+ product intermediates beneath the product
+root); `opal-data-portal-v2` = SERVING ONLY (platinum + the legacy json families it already has).
+Bucket law: **assets-bucket holds ALL assets (vendor medallions + product analytics); portal-v2
+converges toward serving-only.** COSTS: zero mdpf migration (it is already there: 80 objects,
+_code, _manifests, the accrual grammar, the 08-07-simulated IAM wildcard grant, the DEBTCLEAN
+consolidation table + pocketed mdpf_revamp relocation all TARGET this root); 17b amended by one
+line (the portal/ subtree ratified as the product-gold home). ADVI simply JOINS mdpf.
+
+**OPTION B -- product tiers in opal-data-portal-v2.**
+`opal-data-portal-v2/gold/{mdpf,advi}/{scope}/` + platinum beside it. Bucket law: **assets-bucket =
+vendor-shaped tiers (bronze/silver), portal-v2 = product-shaped tiers (gold + platinum)** -- the
+bucket boundary becomes the vendor->product transformation boundary, which is conceptually clean.
+COSTS, measured: (i) the mdpf CONSISTENCY MOVE he names -- 80 objects is trivial but ~7
+writer/grant/record surfaces re-point AGAIN (consolidator A4_PREFIX, accrual grammar, aum-metrics,
+publisher read, the fresh IAM wildcard grant re-granted on portal-v2, DEBTCLEAN consolidation
+table + the pocketed brief re-targeted, CVO's A4 contract row) -- re-doing this month's landings;
+(ii) 17b's ratified "ALL assets housed in opal-data-assets" takes a larger amendment than Option
+A's; (iii) **the security-shape cost, the one that does not wash out: every gold BUILDER becomes a
+WRITER on the client-serving bucket.** Today portal-v2's write surface is publishers (plus legacy
+residue) and its IAM carries deliberate serving-protection denies (the runner explicit-deny on
+json/portfolios/* is live, measured in the 08-06 failure log). Option A keeps the serving bucket's
+writer set minimal; Option B enlarges it by the whole builder population. (iv) portal-v2 today is
+MEASURED as 27 mixed top-level prefixes (assets/, raw/, lambda-packages/, json/, platinum/...) --
+Option B cements the mixed state; Option A lets portal-v2 converge to serving-only as legacy
+retires.
+
+**RECOMMENDATION: OPTION A.** Consistency is satisfied by advi JOINING mdpf where mdpf already
+lives; zero re-migration; the serving bucket's write surface stays minimal; 17b needs the smaller
+amendment; portal-v2 gets a convergence path instead of a cemented mix. "Product silver": vendor
+silver stays in vendor trees under EITHER option (17b intact, live, conformant); product-scoped
+INTERMEDIATES (the ex-feeds class) live under the product gold root in whichever bucket wins.
+**The decision is one word from Andrew: A or B. The spec executes either; every wave, gate and
+repoint row survives both -- only the target prefix strings change.**
+
 ## 2. THE LEGACY INVENTORY + DISPOSITIONS (every row cites its measurement)
 
 **Disposition enum:** REPOINT (consumer moves to canonical read) · FOLD (artifact moves into the
