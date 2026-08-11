@@ -138,6 +138,22 @@ against itself.
 liveness reads process state; the only discriminating signal is raw `agent_telemetry` `kind:work`, which I
 had to compute by hand every tick. That gap is the direct cause of two of my seven defects.
 
+**⛔ CORRECTED 2026-08-11T2235Z — THE REMEDY NAMED BELOW IN THIS LOG WAS WRONG, AND WRONG IN THE DIRECTION
+THAT SENDS THE BUILDER AT THE WRONG PROCESS.** I recorded CPU-delta as the COMPUTING instrument's mechanism.
+**Measured at tick-37: a CPU-delta over the pids the fabric actually records reads `0` for EVERY seat,
+including one that had made a work-call 90 seconds earlier.** It failed its own positive control.
+
+**Mechanism:** `org/mcp/liveness.json` records the **python MCP daemon pid** (~64MB, flat CPU), **not the
+agent's session process.** This is a KNOWN estate finding — `ref_broker_phantom_live_pinned_to_daemon_pid`,
+recorded 2026-06-11 in this same log series — **which I re-derived instead of recalling.**
+
+**THE GAP RESTATED PRECISELY, because "no tool answers WORKING" is too vague to build against: the signal
+EXISTS and is unattributable.** 8 `claude` processes carry 1,000-1,800s accumulated CPU and would show
+real deltas; **nothing maps a `claude` pid to an agent serial.** The remedy shape is a **pid field**
+(record the harness pid beside the daemon pid at registration), not a monitor — **surfaced to CTO~Z to
+route, NOT built by me** (moratorium untouched; a pid field is not notification machinery, and I am not
+proposing one).
+
 ## Next Steps
 
 1. **[Andrew]** The dark fabric. Nothing else moves the program; MSTR~Z holds respawn and is unreachable.
