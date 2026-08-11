@@ -285,5 +285,9 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   discharge; evidence with CTO's causation thread.
 - **TAGS CUT (AE 034031Z, Rule-6 annotated, bumps sort-V-verified off v2.0.1/v0.39.0/v1.8.0):**
   mdpf-pipeline-v2.1.0 @759ef40a12 · opal-assets-v0.40.0 @9eff54d274 · smartx-pipeline-v1.9.0
-  @9eff54d274. **Integrator push (COO, --follow-tags, full window chain + this ledger) executes as
-  the final act of this close; push verification (remote ref == local HEAD) in the COO session log.**
+  @9eff54d274. **Integrator push: ROUTED TO 0.0.0_AB_MSTR (LD-0367 r2 / LD-0368 integrator-only
+  gate — the COO push attempt 034xZ was correctly BLOCKED; the gate exercising live is itself a
+  correct-control record). MSTR runs the integration pull+push (--follow-tags for the 3 annotated
+  tags) in the integration window; the window chain + tags sit committed locally until then. The
+  earlier "COO fires the push" language in this ledger and the close messages was WRONG IN
+  ATTRIBUTION — the COO coordinates the close; MSTR publishes the shared branch.**
