@@ -654,7 +654,7 @@ one.
 | **CPR-2 + C-3** | ✅ **COMMITTED @ea2400401a as ONE commit** — mutant contrast on BOTH halves; 81/81 non-carry, the 4 failures proven PRE-EXISTING by re-extraction on a pristine HEAD. **Deploy armed 15:06Z, DS holds for my bar verdict.** Marker schema 1.1 adds `universe_anchor` so anchor-relative ages carry their frame |
 | **CPR-4** | ✅ serve-release steps **1-3 CLOSED same window** (lift @96334728b4 → deploy ETag-verified → **re-hold @c33d2e5260, sentinel verbatim**), **ledger @d6ae6cbd73 opened BEFORE the lift.** Step 4 republish firing; DS verifies the **SERVED** platinum artifact carries `unreconciled_aua` + the ~$128K figure. **Told DS: do NOT close the ledger on an SSM launch Success — a launch is not a completion and a completion is not a served artifact** |
 | **X-iv** | ✅ CLOSED @cf838e54d5, nothing served changed; orphaned Stage5 alarm deletion GO'd, targeted apply |
-| **X-iii** | ✅ **RULED @060208Z — the hash-stamped bundle is BLESSED**, and CTO confirms my clarified "moves house" reading is the one they ruled on. Two conditions: bundle build inside the sanctioned deploy path (with DS); **acceptance = the 13:40Z SCHEDULED leg green post-port** (SCHEDULED is the right oracle). AE building |
+| **X-iii** | ✅ **RULED @060208Z — the hash-stamped bundle is BLESSED**, and CTO confirms my clarified "moves house" reading is the one they ruled on. Two conditions: bundle build inside the sanctioned deploy path (with DS); **acceptance = the ~~13:40Z~~ → **14:10Z** SCHEDULED leg green post-port** (SCHEDULED is the right oracle). ⛔ **"13:40Z" IS A STALE FRAME LABEL** — the accrual bridge's LIVE cron is **14:10Z UTC**; RP-W3 moved it and the older docs kept the old label. AE caught it; I had propagated it. AE building |
 | **X-ii** | ⏸ **HELD.** CTO ruled the STRUCTURE now (end state = ONE runtime) with **WHICH runtime evidence-gated** on AE's read — the right shape: the act is not blocked on a measurement and the measurement is not pre-empted by a ruling. W1a's consumer repoint **re-validates, no reuse** |
 | **RECON-6** | CRO base, FIRST and undisplaced |
 | **Sequencing precedent** | CTO: the `(iv)→(iii)→(ii)→(i)` order is **purely BLAST-ASCENDING** — X-ii may overtake a held X-iii. Moot now, **binding for any future hold** |
@@ -790,6 +790,42 @@ loud failure is not evidence of health.**
 *My 0608Z zeros row described a defect that had already been fixed hours earlier. Recorded rather than
 quietly dropped: the pre-registration cost nothing and AE's read independently confirms the fix. **A
 control that fires on an already-closed defect is cheap; the reverse is not.***
+
+### X-ii SPLITS IN TWO (CTO ruling on the consequence AE surfaced) — and one half may land NOW
+
+| row | scope | may proceed? |
+|---|---|---|
+| **X-ii-a** | Re-home the **lambda leg's WRITE target** into `_staging/` under the product root **+ W1a consumer re-validation** | ✅ **INDEPENDENT — may land NOW** under the ruled lambda-producer frame |
+| **X-ii-b** | **FEED the lambda** — its **3 starving inputs** (inflection positions, `non_model_aua`, `etf_net_assets`) are **exactly the chain-written set** | ⏸ **COUPLES to X-i's feeder re-home.** CRO~A's INF chain revival is a legitimate **ACCELERATOR** in the interim — *event accelerates, clock floors* |
+
+**The chain Stage 3 DISABLE is strictly ordered AFTER X-ii-b is verified fed** — migrate-before-kill, per
+the ruling record's own clause. *The split is what makes the zeros fix actionable: the write-target
+re-home does not have to wait on solving input starvation, and the starvation fix does not have to wait
+on the re-home.*
+
+### ⛔ A STALE CLOCK-FRAME LABEL I PROPAGATED — CORRECTED
+
+**The accrual bridge's LIVE cron is `14:10Z` UTC. The `13:40Z` in older docs is a STALE FRAME LABEL** —
+RP-W3 moved the leg and the docs kept the old label. **X-iii's acceptance oracle is the 14:10Z scheduled
+leg.** I carried `13:40Z` from the handoff into this register and into an AE dispatch; AE caught it.
+*A time in a doc is a claim about a schedule, and a schedule that moved leaves its old label behind — the
+same frozen-not-live class as a hand-copied count. Corrected at the one place it appeared.*
+
+### RESIDUALS — THE GRAIN-LABELLED PAIR (CRO @8f14253ae9), and the headline moved UP
+
+**INFLECTION: 98.0% at RAW-ROW grain / 100.0% at REAL-ACCOUNT grain.** Both true, different grains, and
+**neither may be quoted bare.** The 11 are designed `$0` feeder stubs, **zero AUA unjoined**, cause
+CLOSED as book-definition-by-design.
+> *I banked that residual so nobody would quote 98.0% as if the remainder were understood. It discharged
+> in the best available direction: **the remainder IS understood, and the honest headline number went
+> UP.*** A parked unknown is not a pessimistic estimate — it is an unknown, and measuring it can move the
+> number either way.
+
+**49F: the 14 dispositioned per-account** — 2 closed Schwab accounts (map staleness), **1 genuinely open
+single account**, and the nine-digit family concentrated in ONE model (Opal Conservative Growth) **whose
+custodian is NOT NAMEABLE AT REST.** That naming rides **RECON-2's endpoint question at CRO~A — the one
+residual thread still open.** *DS deliberately named no custodian without evidence; that restraint is the
+finding's integrity.*
 
 ---
 
