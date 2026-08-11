@@ -32,8 +32,9 @@ floor with the inferential budget untouched for genuinely-ambiguous cases and fu
   reopening the exact shortfall this extension closes. `Field` makes the ~100% real rather than nominal.
   ⛔ **THIS IS A GRAIN-CONSISTENCY CHOICE (match the existing anchor grain), NOT a fresh preference** --
   recorded so a future reader does not "simplify" it to component-grain and silently drop coverage.
-- **New DOMAIN names owed (thin user layer, correctly <=1%):** e.g. `api-serving`, `observability`,
-  `ui-dataflow` -- naming acts on deterministic clusters, exactly where the cascade puts human input.
+- ✅ **DOMAIN NAMES RATIFIED (Andrew-direct ~17:5xZ, "All approved as recommended"):** `api-serving`
+  (API_GW) · `artifact-serving` (ServedURL) · `observability` (CW_ALARM) · `ui-dataflow` (Field). The
+  <=1% naming act is CLOSED; step-0 lands with final names.
 
 ## 4. HONEST BOUNDS (what this does NOT cover)
 - The 6,138 population = where the C2 EXTRACTORS have run (aws-backend + portal-frontend). The

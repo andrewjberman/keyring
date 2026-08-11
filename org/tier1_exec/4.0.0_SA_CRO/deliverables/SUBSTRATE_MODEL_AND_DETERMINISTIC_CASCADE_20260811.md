@@ -62,3 +62,11 @@ bounded and null-gated; user input is a thin naming layer that cannot silently e
 5. **Thin user-naming (<=1%)** over the structure-clusters -> C3.ii.
 6. **All of it daily in the Kimi SVP**, so the coverage denominator is same-day and self-correcting.
 *(CRO measures + recommends; CVO owns the derive; CTO gates.)*
+
+## 6. RULINGS FOLDED (Andrew-direct ~17:5xZ: "All approved as recommended, (a), (a)")
+- **90/9/1 binds ESTATE-WIDE; per-substrate splits DECLARED** -- ms's larger inferential share is
+  legitimate-when-declared, never force-fit (ceilings-are-honesty-floors ratified as the binding reading).
+- **ms motif run = PROCEED-ONCE-CLEAN** -- when the pre-run checklist verifies (housekeeping landed
+  @9b4d484132), no further word needed; step-0/step-2 sequencing + CTO gate + the co-change
+  revive-or-declared-UNAVAILABLE gate remain in front.
+- The four extension DOMAIN NAMES ratified (see step-0 spec).
