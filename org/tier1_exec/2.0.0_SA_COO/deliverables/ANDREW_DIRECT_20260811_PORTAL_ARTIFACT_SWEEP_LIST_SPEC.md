@@ -116,7 +116,47 @@ verdict is one wrong `NOT_DISPLAYED` away from removing something live.*
 - **Stage 0 has real lead time** and is the only part that could sensibly begin before the portal is
   covered — that is a CTO~Z call, and it is the one question I am putting to them rather than deciding.
 
+---
+
+## AMENDMENT 1 (2026-08-11 ~1955Z) — ADOPT W3b's MECHANISMS; DO NOT REINVENT THEM
+
+**W3b (`OPAL_ANALYST.W3`, minted @e4623531e0) is a NEWS-SCOPED instance of this exact program**, and it
+already solved two problems this spec left open. **Build Ladder rung 2: the estate already has it.**
+
+**Convergence worth recording:** W3b arrived independently at **MARK ≠ DELETE** — its own words,
+*"DISPOSITION IS NOT DELETION (NEVER#3; the register is the deliverable, the act is Andrew's)"*, and
+*"Nothing is deleted, stopped, or disabled."* Two seats, no coordination, same clause. That is the
+strongest evidence available that the clause is right.
+
+**ADOPTED INTO THIS SPEC:**
+
+1. **`enumerate_set.py` becomes the R0 MECHANISM, replacing R0's prose.** W3b requires *"set captured to
+   a file, figures derived from the file, the printed denominator carrying its set's path."* **R0 said
+   "print the denominator"; W3b makes the denominator FILE-BACKED and re-derivable.** AE~Z built it
+   @d9c022248d as *"the MECHANICAL guard for three self-inflicted measurement defects, because the rule
+   demonstrably was not enough"* — **which is this session's whole arc: rule → not enough → mechanism.**
+   *A rule I wrote and a mechanism someone else built and exercised are not equivalent, and I should take
+   the mechanism.*
+2. **The THREE-DEAD-STATE separation replaces my binary producer test.** W3b: *"a Lambda with no event
+   source, a schedule that was deleted, and a key nothing updates are three DIFFERENT states and each
+   gets its own cell."* **My Stage-3 asked only "is the producer producing anything else active?" — a
+   single boolean over three distinct conditions.** A producer with no event source is not the same as
+   one whose schedule was deleted, and neither is the same as a key nothing updates. **Collapsing them
+   was a grain error in my spec** (Rule 24 (ii), same-grain), and it would have marked things dead that
+   are merely unscheduled.
+3. **PRIOR CLAIMS ARE RE-DERIVED, NEVER INHERITED.** W3b: *"the 720-key residue claim is re-derived this
+   way or reported as unverified; it is never inherited."* **The sweep will inherit claims from six-plus
+   certified rectangles and from W3b itself — every one is a prior claim, not a fact.**
+
+**THE SEAM QUESTION, raised to CTO~Z, not decided here:** W3b produces a **news-scoped** residue
+disposition register; this spec produces a **portal-wide** sweep list. **If the two do not share schema
+and mechanism, Andrew receives two differently-shaped cleanup packets and the news register does not
+COMPOSE into the portal-wide one** — it gets re-mined instead, which is the exact cost CVO~Z's cumulative
+registers were built to avoid. **Recommendation: W3b's register is the schema prototype and the sweep
+extends it; the sweep's universe simply has a wider denominator.** CTO~Z owns that call.
+
 ## Status
 
-**SPEC DRAFTED (this document) — NOT started, NOT staffed, NOT authorized to begin.** Broadcast same turn
-to CTO~Z (PRD + routing) and MSTR~Z (staffing + record).
+**SPEC DRAFTED + AMENDED — NOT started, NOT staffed, NOT authorized to begin.** Broadcast same turn to
+CTO~Z (PRD + routing) and MSTR~Z (staffing + record); **Amendment 1 raised to CTO~Z with the seam
+question.**
