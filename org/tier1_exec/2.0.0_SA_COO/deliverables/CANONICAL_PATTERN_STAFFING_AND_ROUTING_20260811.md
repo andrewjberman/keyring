@@ -75,7 +75,26 @@ the ADVI archetype, so the nickname alone cannot identify a substrate.
 
 ## 1 · DISPATCHABLE NOW — four landing acts (`CPR-1`..`CPR-4`)
 
-### ACT CPR-1 · INF Sunday full-pull must UNION-PRESERVE departed accounts (⏰ HARD DATE)
+### ACT CPR-1 · INF Sunday full-pull must UNION-PRESERVE departed accounts — ✅ **CLOSED 0542Z**
+
+> **✅ LANDED + DEPLOYED + ACCEPTED (DS, 054212Z).** Baseline @9b29609e42 (deployed bytes byte-exact,
+> **drift vs deployed measured ZERO**, no deploy) → fix @9196959b53 (union-preserve) → twin-sync
+> @76386cd21c. **Acceptance EXERCISED 13/13** through the real module: T1 positive, T2 negative control
+> (carried==0 no-op limb), **T3 mutant** (baseline erases the account → harness must FAIL). Live leg:
+> bronze 1,434,473 rows × accounts_v2 869 ids → carry set **26,371 rows / 16 accounts, EXACTLY**
+> CRO~A's independently-derived oracle. Sunday auto-detect limb exercised at pull-date 2026-08-16.
+> Precondition (b) discharged by measurement (edit confined to the `if full_pull:` branch; the script
+> runs in the INF chain, not the 13:02–15:05Z MDPF cadence).
+> **⚠ POST-LANDING VERIFICATION, OWNER DS, SURVIVES THIS SESSION:** the Sunday 08-16 chain log must
+> show the **UNION-PRESERVE line**. A zero-carry line **also passes** (Orion may resurrect the
+> accounts); **ABSENCE of the line is the failure.** Event-driven read after Sunday — **no monitor
+> built** (moratorium). The hard date is no longer a race; it is this one log read.
+> **DS CAUGHT A NEAR-MISS MY DISPATCH WOULD HAVE CAUSED:** the script is **TRIPLE-HOMED** on S3
+> (`code/gold/` + `code/manual_api/` + `code/bronze/`) and `orion-gold-dispatch.sh sync_scripts()`
+> **fails loud on a differing-content basename collision** — so the gold-only deploy my dispatch
+> implied would have **REFUSED the next chain sync = INF outage.** All three deployed, each
+> ETag-verified against local md5. *My dispatch named the deploy target from the one prefix I knew
+> about; the estate had three.*
 
 | field | value |
 |---|---|
@@ -154,8 +173,25 @@ Andrew — work he believes is moving sits held on an approver he does not know 
 |---|---|
 | **OWNER** | `0.4.0_DS_ClientPlatform` |
 | **DRAFTER** | `4.0.0_SA_CRO~A` — diff already committed @ec874f6a8d, *"ready-to-land diff for the DS lane via COO wake-point"* |
-| **TRIGGER** | **NOW** — lowest cost of the four; the diff exists |
-| **PRECONDITION** | none. It is a *classification + surfacing* change (`unreconciled_aua`), not a revaluation — it must not silently reopen C-1 (revaluation asymmetry, live at Andrew via CTO). DS confirms the diff changes labelling/surfacing only |
+| **TRIGGER** | **NOW** — DS started it 0542Z |
+| **PRECONDITION** | none |
+
+> ⚠ **SCOPE UPGRADED 0543Z BY ANDREW'S RATIFICATION (@d272021791), AND MY ORIGINAL CONSTRAINT ON THIS
+> ACT WAS SUPERSEDED — recorded because DS was already executing under it.** This row originally read
+> *"a classification + surfacing change, not a revaluation — DS confirms the diff changes
+> labelling/surfacing ONLY."* That was correct pre-ratification and became **WRONG**: the act is now the
+> **RETIREMENT VEHICLE** for a ratified-**TRANSITIONAL** member of the exception set — on verified
+> landing the non-fee-AUA residual **leaves the exception set and becomes a raw field**, which is
+> deliberately *more* than labelling. **A faithful application of my original constraint would have made
+> DS stop and flag it**; corrected to DS at 054425Z before the cycle was spent, not after.
+> **REVISED ACCEPTANCE (CTO-specified, verbatim):** (1) the raw Billing `is_fee_earning` **classified
+> sum ties the served figure**; (2) the **residual CALCULATION retires from the serving path**
+> (`sum(fee_aua)-balance` stops being the source of the served number); (3) the cross-source gap
+> surfaces as `unreconciled_aua` rather than being absorbed. DS states which of the two the served
+> number now comes FROM.
+> **The C-1 caution SURVIVES NARROWED:** this retires the residual from *serving*; it does **not**
+> resolve the C-1 revaluation asymmetry, which stays open at Andrew via CTO. **A green CPR-4 must not
+> read as closing C-1.**
 
 > **Why CPR-4 is dispatched and not banked:** *items that cost nothing are the ones that quietly never
 > happen* (ITEM_0's organizing principle, my own form). A ready-to-land diff with no precondition is
@@ -241,9 +277,76 @@ pass — they do not break flow.
 | 5 | C-1 revaluation asymmetry / conversion policy | CTO → Andrew | OPEN, live |
 | 6 | Estate-wide point-in-time extension census | CTO | OPEN, diagnostic |
 | 7 | Cottonwood deep-rekey adjudication | CTO (causation thread) | OPEN, deliberately not parallel-read |
-| 8 | `MISSING_IN_REPO`: deployed-only gold scripts with no repo counterpart (CPR-1's script is one; the decomp measured **4 more** in the assets_gold layer) | DS + CTO | OPEN — CPR-1 closes one instance; **the class is not closed by it** |
+| 8 | `MISSING_IN_REPO`: deployed-only gold scripts with no repo counterpart (CPR-1's script is one; the decomp measured **4 more** in the assets_gold layer) | DS + CTO | **AMENDED 0542Z: CPR-1's instance was MISHOMED, not missing** — `data/inf/manual_api/pull_inflection_transactions_rest.py` was byte-identical to the deployed artifact (md5=ETag 78f60cc7). Baseline still landed per protocol. **The class STANDS for the other 4 scripts**; this instance is reclassified, not resolved |
 | 9 | 2 unpushed local commits (audit-archive baseline + snapshot, @f639b23c1f/@8ad0d6b641) | MSTR (sole shared-branch integrator, LD-0367 r2 / LD-0368) | **CLOSED** — push landed @7f579d72b6, zero local-ahead |
 | 10 | **`C-n` NAMESPACE COLLISION**: recon chapters (CRO base @07c6f68bf4: C-1 MDPF / C-2,C-3 at ~A / C-4 join / C-5 cottonwood) vs scheduling-jam findings (CRO~A strategy §4: C-1 custody asymmetry / C-2 double-lag / C-3 sweep order). **Two meanings, one label, arrived 3 min apart; I routed the FINDINGS C-2→DS and C-3→AE, which a reader of the recon map reads as ~A's work.** Rule-24 axis hygiene one layer up | CRO base (map owner) + CTO (spec owner) | OPEN — flagged to CRO/CRO~A/CTO 0530Z. Proposal: `C-n` stays recon, findings become `JAM-C1..C3`. **Until settled every COO dispatch qualifies `(A)`/`(B)`** |
+| 11 | **TRIPLE-HOMED DEPLOY TARGETS**: `pull_inflection_transactions_rest.py` lives at 3 S3 code prefixes and `orion-gold-dispatch.sh sync_scripts()` **fails loud on a differing-content basename collision** — a single-prefix deploy REFUSES the next chain sync (INF outage). Found by DS executing CPR-1, whose dispatch (mine) named one prefix | DS (instance closed, all 3 deployed + ETag-verified) · **CTO for the CLASS** | **OPEN as a class** — how many other multi-homed scripts carry this? A deploy-map that knows one home of three is the same two-channel blindness as rows 1/2, one layer out |
+| 12 | **`comp-pipescript deployed --pipeline inf-gold`** renders ONE `aux:manual_api` row for a **triple-homed** script (reads MATCH) — corroborating only | CTO (instrument roster) | OPEN — joins rows 1/2 |
+
+---
+
+## 4b · STATE AS OF 0546Z — the deltas since 0525Z (a successor reads THIS first)
+
+**⛔ NOTHING IN THIS PROGRAM WAITS ON ANDREW ANYMORE.** He **RATIFIED** the must-calculate exception set
+**and** pattern spec **v1.0** at ~0542Z (@d272021791, *"im cool with your recs"*). **Both `AT ANDREW`
+rows in §2 are STRUCK.** The **only live gate** on cutover acts X-iii/X-ii/X-i is the **CVO verdict**,
+mid-flight. *CVO has surfaced one pulling thread worth watching: a designed clock-floor path in the
+trigger lambda **source** that does not exist as a **live rule** — the no-schedule-floor class again,
+delta-row-4 territory. Its verdict says which way it cuts.*
+
+**RECON PHASE NOW FRONTS IMPLEMENTATION** (Andrew oversight mandate @3c8418e34b, CTO oversight at
+`1.0.0_SA_CTO/deliverables/SSOT_RECON_MATRIX_20260811.md`). Implementation beyond X-iv stages on matrix
+cells reading **CERTIFIED**. **This is the mandate's own ordering, not a new gate** — his words are
+*"get all the information… so we can figure out what needs to happen."* **CARVE-OUT ON THE RECORD so
+nobody re-derives a hold over it: CPR-1..CPR-4 and X-iv/W-E are UNAFFECTED**, CPR-1's Sunday date in
+particular never waited on recon.
+
+| item | state at 0546Z |
+|---|---|
+| **CPR-1** | ✅ **CLOSED** — landed, deployed to all 3 prefixes, exercised 13/13, oracle-exact. Sunday 08-16 log read remains, owner DS |
+| **CPR-4** | IN FLIGHT at DS, **scope upgraded** to the residual's retirement vehicle (above) |
+| **CPR-2 / CPR-3** | queued (DS after CPR-4) / with AE |
+| **X-iv** | AE **WORKING** — live-primitive verify first, then delete. CTO endorsed the precondition **and added the load-bearing half: the 08-06 AccessDenied traceback is PRIOR evidence; the check must be CURRENT-state** (IAM may have moved in 5 days). Relayed to AE 053510Z |
+| **RECON-4** | ✅ **DELIVERED** @be316d868c (CRO base) — per-firm, not aggregate |
+| **RECON-6** endpoint-delta census | **ASSIGNED to CRO base** (freed by the RECON-4 delivery). **Critical path**: the one remaining input to run atom-8 conformance at scale. **My ~B spawn ask to MSTR was RETRACTED** — CRO base delivered ~30s before it arrived, so the premise was false |
+| **RECON-5** | 5a (cot endpoint inventory, rides RCN-0001) queued at CRO base; 5b after the archetype stabilizes |
+| **L5/L6 advi** | ONE sweep across all three firms after the archetype's L4 stabilizes (my call). Preconditions: L6 grounds on **what the DEPLOYED FE actually reads**, never docs or the builder; the sweep does **not** wait on RECON-5b |
+
+**ITEM-3 SEQUENCING (my call, off RECON-4's per-firm verdict):** **(1) INFLECTION FIRST** — 98.0%
+native-key join, rollup spine in place, **zero identity work** = the cheapest first TO and it de-risks
+the overlay before either harder firm. **(2) 49F SECOND**, gated on **one identity fact** (does a SmartX
+endpoint expose allocation→custodian-account); `account_id` is a SmartX allocation UUID with custodian
+deliberately `None`. **No build TO is decomposable for the 49F leg until that fact lands** — not
+manufacturing one on an assumption. **(3) COTTONWOOD LAST**, strictly after goal 1's custom-model pull —
+*"no model feed exists"* is a **measured absence**, not a gap to design around.
+Residual queued to DS behind CPR-4/CPR-2: **11 of 561 inflection accounts unmatched (2.0%), cause
+UNMEASURED** — marked so nobody quotes 98.0% as if the remainder were understood.
+
+**EGRESS QUESTION RAISED AND CLOSED (0543→0544Z), and it cut BOTH ways:**
+- **49F Black Diamond:** I flagged that the standing lift is *cot-BD only, "not bd/49f"* while the ADVI
+  field-map was recorded as *"egress granted… Orion/Eclipse/BD endpoints"* — and 49F **is** a Black
+  Diamond firm. **CRO~A answered: AT REST ONLY**, no live 49F-BD endpoint call planned or needed; it
+  will return for Andrew's per-use word **before** any such call. **No violation occurred.**
+- **The mirror error, found 20 minutes later:** CRO base recorded the 49F unlock fact as
+  *"vendor-egress-gated to verify"* — **but SmartX is ON the standing lifted list**, so that call needs
+  no new authorization. **A too-WIDE grant read risks unauthorized egress; a too-NARROW one stalls a leg
+  invisibly, presenting as a legitimate blocker.** Both are one root: **reading a grant at the wrong
+  grain.** Only the first has a rule pointed at it.
+
+**IDENTIFIER FAMILIES — MEASURED LIVE (Andrew-direct: "the existing 49F 49 Financial pipeline is known
+as 'bd pipeline' and 'opal-data-bd' and bd-gold-runner"):**
+`s3://opal-data-assets/blackdiamond/` → **`49f/` AND `cottonwood/`** · `s3://opal-data-bd/blackdiamond/`
+→ `49f/` · `s3://opal-data-assets/schwab/` → `08242234/`, `08335338/`.
+**So "bd" is ambiguous BY FAMILY: as a PIPELINE it means 49 Financial; as a vendor abbreviation it means
+Black Diamond, which serves TWO firms.** The 8-digit+PRODUCT law fixes the *account* axis and does not
+touch this one. **A census keyed `blackdiamond` reads two firms; keyed `bd` reads only 49f** — so an L1
+count without its key family has a denominator ambiguous **across the firm-separation boundary the gate
+and IAM exist to enforce.** *Open at CTO/CVO, explicitly not mine: whether a bd-tree script reading
+`blackdiamond/cottonwood/*` trips the bd↔cot gate — `blackdiamond/` is a shared-vendor prefix in the
+shared bucket, not a "cot bucket."*
+**It already produced a correction:** CRO~A's *"49F chosen for COMPLETE fact tables"* was measured over
+the **schwab/08335338 SDD family** (20 tables, 525 daily partitions), **NOT** `blackdiamond/49f` — now
+stated explicitly in the archetype record, and every RECON count prints its key family.
 
 ---
 
