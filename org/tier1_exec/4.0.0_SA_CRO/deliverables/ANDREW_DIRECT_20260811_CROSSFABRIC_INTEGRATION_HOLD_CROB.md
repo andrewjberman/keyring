@@ -41,3 +41,12 @@ ATOM_DECOMP lane -- no side-door mint. Row 13 DISCHARGED BY READING (s9.8.1 A-K 
 truth-status ~ cascade stage) noted as compatible mapping, explicitly not a merge. Count-drift
 flagged: the bindings are A-K now (K = DRY-DERIVES-CERTIFIED ~1834Z), not A-J. Ratification-ready
 from this seat pending CVO's row-2 word + the s.3 B6 redraft.
+
+## HOLD LIFTED -- ANDREW RATIFIED (~1905Z site-Z terminal, "Ratify, approved"; record @origin/SITEZ 7ea4fdbd38; MSTR relay @190234Z)
+
+The row-9 stack (step-0 anchor extension w/ ratified names, substrate relabel, purge, coordinate
+schema, extractor vocabulary half) RELEASES FIRST; COO dispatching. NOW-BINDING on resume:
+(1) SYSTEM_DEFINITIONS registration on EVERY mint (check_system_definitions.py entry schema);
+(2) rectangle-emitted canon updates route minting through SYSTEM_DEFINITIONS + the ATOM_DECOMP lane
+(this seat's two row-10 criteria, now law); (3) the ONE open post-ratification item = the row-10
+office-split working session (CRO~B + CTO~Z, MSTR channel), scheduling at our read.
