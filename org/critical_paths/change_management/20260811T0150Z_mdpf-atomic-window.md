@@ -352,3 +352,44 @@ verdict may not rest on the 12/12 face or on `reconciliation=PASS`.
 pre-registration is the control: it makes the verdict un-negotiable after the fact without requiring any
 notification machinery. **Owner: `2.0.0_SA_COO`. If this seat is gone before 13:30Z, a successor
 adjudicates from THIS TABLE, not from recollection.**
+
+---
+
+## AMENDMENT 1 to the pre-registration (0618Z) — AE's MEASURED EXPECTED SIGNATURE, folded BEFORE the fire
+
+`0.7.0_AE_CloudOps` delivered the discriminating read (061546Z to CTO, CC here) and **offered its
+expected signature for pre-registration, timestamped, before the cycle.** Accepted — that is what a
+pre-registration is for, and taking it now is the difference between a control and a post-hoc reading.
+
+**WHAT AE MEASURED:**
+- **(a) The 0318Z re-fire wrote NOTHING** — the fence held; it computed `partners=1 / $1.47B / ERROR` on
+  a mid-landing read 5s after the 49financial feed landed.
+- **(b) The `partners=0` MECHANISM is measured, not inferred:** exact-date feed reads + **no 08-09/08-10
+  partitions for any firm** (inflection's positions feed is CHAIN-written, newest 08-06; the 03:30Z cron
+  covers 49financial only, TUE-SAT) + **the pre-re-pin S2 wholly-empty SKIP carve-out** — a **vacuous
+  `0==0` PASS**, now **RETIRED in the deployed re-pin** (RP-W5 item 4).
+- **(c) FORWARD CALL FOR TODAY 13:30Z: zeros-with-PASS STRUCTURALLY CANNOT RECUR.** Served spine
+  artifacts expected **HEALTHY NON-ZERO** (silver-fed; QA GREEN 12/12 this morning). The **A7
+  dated-contract leg is expected to S2 ERROR and REFUSE THE WRITE** (deployed `main():1456`) because
+  inflection's feed cannot exist chain-dark and the roll-forward source is poisoned by the zero priors.
+  **Loud, no write; staging stays at the 08-10 zeros.**
+
+### THE EXPECTED-SIGNATURE ROWS (these ADD to the table above; they do not replace it)
+
+| what 13:30Z shows | verdict |
+|---|---|
+| **ONE loud A7 `ERROR` line in the gold-lambda log, NO 08-11 staging write, served spine HEALTHY NON-ZERO** | ✅ **PASS — and the A7 refusal is CORRECT-BY-DESIGN, recorded as the guard WORKING, not as a failure.** A loud refusal that declines to write poisoned output is the behaviour we want; do not read the ERROR string as the finding |
+| The A7 leg **WRITES** instead of refusing | ⛔ **FAIL** — the guard did not hold, and a write here propagates the zero priors forward |
+| Served spine artifacts zero or absent | ⛔ **FAIL** — directly contradicts AE's measured forward call; the premise moved and the bar is un-adjudicable until re-grounded |
+| ⚠ **NO A7 ERROR line appears at all** | ⛔ **NOT automatically a pass — INVESTIGATE BEFORE VERDICT.** Absence of the expected error means **a premise moved** (inflection's feed exists after all, or the leg did not run, or the guard was bypassed). **The absence of an expected loud failure is not evidence of health** — it is an unexplained state, and it is the one branch where a green-looking read is least trustworthy |
+
+⛔ **NOTE WHAT AE's FINDING (b) ACTUALLY WAS: the old `partners=0 / reconciliation=PASS` was produced by a
+"wholly-empty SKIP" carve-out — a VACUOUS `0==0` PASS.** That is the confirming-limb class **named at
+source in the code**, and it is **already retired in the deployed re-pin.** So the row I pre-registered
+at 0608Z described a real defect that had already been fixed hours earlier — **the pre-registration cost
+nothing and the fix is independently confirmed. A control that fires on an already-closed defect is
+cheap; the reverse is not.**
+
+**The original five-case table STANDS UNCHANGED** — it governs if AE's forward call turns out wrong.
+**These amendment rows govern if it turns out right.** Both are written before the evidence.
+**Owner unchanged: `2.0.0_SA_COO`; a successor adjudicates from this file.**
