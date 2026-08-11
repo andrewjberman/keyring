@@ -102,6 +102,7 @@
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_CORE_PRD.md",
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_ESTATE_PRD.md",
       "docs/briefs/NFRA_DEBTLOOPS_ANDREW_VOICE_MEMO_20260729.md"
-    ]
+    ],
+    "sequencing_superseded_20260811": "R-4 (Andrew-ratified 2026-08-10, verbatim 'Yes this does supersede NFRA_VELOCITY'; record ANDREW_DIRECT_20260810_TAXONOMY_RULINGS_A2_SUPERSEDE_AND_ITEM_0.md): items 1-3 of the sequencing list below are SUPERSEDED as start conditions -- ADVI_PERFORMANCE is NOT gated on NFRA_VELOCITY completion; the 08-10 four-month ordering (ADVI = item 2) governs. Items preserved verbatim per write-out-never-silently-fix. Amendment landed by 1.0.0_SA_CTO (PRD/ruling owner) on 4.0.0_SA_CRO~B's record-vs-reality finding; PRD ADDENDUM A.2 struck same commit."
   }
 }
