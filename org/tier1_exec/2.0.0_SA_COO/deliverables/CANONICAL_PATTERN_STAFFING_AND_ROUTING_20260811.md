@@ -1736,6 +1736,27 @@ acceptance bars.** I cite them; I do not paraphrase them.
 | **B-6** | **EVERY PLATINUM PUBLISHER READS PARQUET** — leaving the publisher as **the estate's ONLY JSON producer** | DS (script) + AE (deploy) | after B-5 lands its first parquet | ⛔ **This is a serve-path change ⇒ never-widen co-sign (CTO+COO) per family, CPR-4's condition set as template.** ⚡ **And the M7 format flip × wo2 publisher repoint is ONE ORDERED ACT through CTO's arch gate** (CVO amendment 1) — never two |
 | **B-7** | **PER-FIRM SILVER-COMPLETENESS EVENT TRIGGER** | AE (infra) + DS (predicate) | ✅ NOW | **A REQUIRED ACCELERATOR, with: a SINGLE-HOMED necessary-table predicate · a CLOCK FLOOR BENEATH IT · the L2 contract governing its calendar.** *Event accelerates, clock floors — atom 5 as a build row. And "single-homed predicate" is the eighth application of tonight's law* |
 
+### ⚡ B-8 · METRIC-9 BASELINE CAPTURE — folded in, because **THE DECOMPOSITION IS ITS TRIGGER**
+
+MSTR surfaced a time-bound call from CRO's L-6 triage (@bf94d7b9fa, pre-dating my reinstantiation) whose
+trigger is **exactly the event I just ran**: *program metric 9 — the product-grade baseline, VELOCITY's only
+objective-function metric — became **PERISHABLE-IMMINENT** the moment R-4 ungated ADVI_PERFORMANCE; it must
+be **captured AT ADVI decomposition or knowingly struck.*** ⛔ ***"Silence strikes it by accident."***
+
+| row | what | owner | trigger | named precondition |
+|---|---|---|---|---|
+| **B-8** | **Capture the metric-9 product-grade baseline** | **CRO base** (they authored the metric — cite them for its definition) | ✅ **NOW, and BEFORE any build row moves the product grade** | ⛔ **It must be measured against the CURRENT product state — so it PRECEDES B-4's emitter changes and B-5's parquet flip.** After those land, the pre-build grade is **unreconstructable** |
+
+> **WHY (a) CAPTURE RATHER THAN (b) STRIKE, and the reason is not that the metric is valuable — I do not know
+> that: ⚡ CAPTURING PRESERVES ANDREW'S DECISION; STRIKING FORECLOSES IT.** He can strike the **METRIC** at any
+> later time. He can **never recapture the BASELINE** once the build moves the product. **So capture-then-let-
+> him-decide strictly dominates decide-then-cannot-capture** — the asymmetry settles it without anyone needing
+> a view on the metric's worth. *A baseline is a measurement, not a build: cheap, fast, zero blast radius.*
+> **AND THE DISPOSITION OF THE METRIC ITSELF REMAINS HIS** — folding the capture is **not** a decision to keep
+> metric 9, and I am recording it that way so nobody reads B-8 as a ratification of VELOCITY's objective
+> function. *Choosing the sanctioned branch that keeps his option open is not scope creep; it is the only
+> branch that does not decide for him.*
+
 ### ⛔ THE GATE THAT IS ON THE **FIRE**, NOT THE BUILD
 
 **GROUP W stands as the PRE-FIRST-PRODUCTION-FIRE gate:** the **dispatch census closed to ONE path**, and
