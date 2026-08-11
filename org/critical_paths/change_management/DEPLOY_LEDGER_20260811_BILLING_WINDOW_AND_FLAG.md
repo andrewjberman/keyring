@@ -28,7 +28,21 @@ derivation too when the window fix lands") · base stand-off ACKed 160005Z (buil
   $209,476,279.36; fee-mask sum $196,874,030.62. Silver figures move on the next scheduled
   chain fire (no ad-hoc production trigger).
 
-## LEG 2 — THE FLAG ACT (Andrew instruction #2): **OPEN — trigger FIRED by leg 1's landing**
+## LEG 2 — THE FLAG ACT (Andrew instruction #2): legs (a)+(c) **CLOSED ~1730Z**; (b)+(d) OPEN at COO
+
+**Legs (a)+(c) executed + deployed (commit 7c6043a883):**
+- (a) `lib/fee_classification.py` MINTED — the single gold-home derivation (ledger basis,
+  both lag edges declared in-function, WINDOW_DAYS=365 ruled tunable). Deployed FIRST-MINT
+  (explicit) to `s3://opal-data-inf/code/gold/lib/fee_classification.py`, re-download md5
+  TIE **62cfa5f388762614103971ef392a7415**.
+- (c) INF_D_04's local derivation RETIRED → thin delegate. Deployed (sentinel-lifted
+  artifact; repo file keeps the sentinel — the AoR hold is untouched), re-download md5 TIE
+  **eaae8fb4a8c526ea4907c84e45875408**; rollback stash of the prior deploy = 49712671… .
+- CONTROLS: IDENTITY lib==retired-local EXACT (771 fee-active / 851 observed, both
+  derivations, same input); determinism stable; window mutant 365→30d dropped 241 accounts
+  (tunable live); edges demonstrated with live specimens (19 lag-in, 8 lag-out accounts);
+  D_04 delegate path byte-identical.
+- Served figures unchanged by construction (identity control) — no serve event in this act.
 
 **THE COUPLING, stated so no later reader lands a fraction (COO's both-halves-or-neither,
 extended to FOUR legs because INF_D_02 is base-held under live CPR-6 work):**
