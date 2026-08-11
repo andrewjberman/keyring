@@ -951,6 +951,61 @@ question correctly and my question was the wrong one.**
 > machines: **ask "clear of ANY concurrent execution on this host?" not "clear of the window I am thinking
 > about?"** — a predicate, not an enumeration.
 
+## 4k · ⛔ THE bd-MIRROR FINDING **INVERTED** — Branch A, live consumer, deletion off the table
+
+**AE searched FOR the path (denominator printed: 74 hits / 25,210 files; bands HEAD=1 SURFACED=27
+CONFIG=17 DOC=29; **3 code-plane operative refs**). BRANCH A: LIVE CONSUMER, RAN TODAY ~00:11Z.**
+
+- `bd-49f-runner/lambda_function.py:59` `SCRIPT_KEY="code/bronze/cot_bronze_ingest.py"` → `:74`
+  `download_file(opal-data-bd, …)` → `:75` `importlib` exec, firm-bound (all 4 `BD_*` envs set BEFORE
+  import; `_assert_firm_separation` as belt). **ADVI_BDAPIMIG P1-B — the DAILY 49F Black Diamond REST
+  ingest.** Newest invocation stream **2026-08-11 ~00:11Z**, daily before it.
+- **IAM `bd-49f-interim.tf:229` grants the runner `opal-data-bd/code/bronze/*` — the target is in the
+  APPLIED design.**
+- The runner's docstring declares it: *"NOT A FORK (Model B): the script is ONE source … deployed to
+  `opal-data-bd/code/bronze/` and run firm-bound via env"* — **because the runner role carries an explicit
+  DENY on `opal-data-cot`.**
+
+> ⛔ **FIRM SEPARATION IS *WHY* THE COPY EXISTS, NOT WHAT IT VIOLATES. Branch B's remedy (delete) would
+> have broken a live client-facing daily 49F ingest.** CTO's violation ruling reasoned correctly from two
+> true facts (only repo home is `data/cot/`; `safe_deploy_core` maps cot → `opal-data-cot` only) and was
+> **missing an applied, IAM-granted, documented second consumer.** ⚠ **RE-ADJUDICATION ROUTED TO CTO.**
+> *The method decided this: enumerating FROM the script returns clean-and-empty and the deletion proceeds.
+> The search-FOR-the-path instruction is the only reason the consumer surfaced — **exhaustive-and-empty was
+> the wrong axis, not an absence.*** **Second time this window a "violation/absence" finding inverted on
+> grounding** (the first: cottonwood's "no model feed exists" → a live daily pipeline).
+
+### THE DEFECT INVERTS INTO SOMETHING TRACTABLE — and it is the SINGLE-HOMING LAW's FOURTH INSTANCE
+
+**ONE source has TWO deploy targets, and `safe_deploy_core`'s cot tree serves only ONE.** Nothing
+redeploys the bd-side copy → it froze 08-04 **while executing daily for 49F.**
+⚠ **DS's C-2/C-3 deploy tonight FIXES COT AND WIDENS THE DIVERGENCE** — 49F keeps running the pre-fix
+double-lag bytes daily. The matrix's 49F `[U]` adjacency row is now **measured LIVE-EXECUTING**, not
+same-pattern-probably.
+
+| # | independently-mutable definitions of ONE thing | remedy |
+|---|---|---|
+| 4 | **ONE source, TWO deploy targets, only one served** | **declare the fan-out ONCE at the convergence point** — Rule 13's SHARED-repo-home S3-membership guard shape (key-exists=update, 404=loud-skip) |
+
+### MY CALL ON TONIGHT (CTO may override)
+
+✅ **DS FIRES THE 15:06Z DEPLOY.** *Withholding a correct fix from cot to keep two wrong copies aligned is
+strictly worse than fixing one and naming the gap.* **REQUIRED of DS:** state the gap **explicitly in the
+deploy record** (this deploy does not reach the bd-side copy the live 49F runner executes; 49F continues
+on pre-fix bytes until the second target is sanctioned). ⛔ **FORBADE hand-copying the fixed bytes to the
+bd prefix** — patching the mirror deepens the two-source defect; the sanctioned target is the fix, and it
+is CTO's to rule. **Until ruled: assume every cot-side fix does NOT reach 49F.**
+
+> **DS's ORIGINAL CATCH WAS A CLOSING ONE-LINER ON A MESSAGE ABOUT SOMETHING ELSE.** It produced an
+> architectural ruling, an exercised gate with an honest negative, a third-control-surface finding, a
+> re-adjudication, and a permanent remedy shape. **A drift they could have left unmentioned was the only
+> visible symptom of a missing deploy leg on a client-facing daily ingest.**
+
+**X-ii-a's emitter-liveness precondition also discharged:** `opal-assets-daily-emitter` ran TODAY 01:30Z
+consuming the staging tree with **honest roll-forward flags** — it read the 08-10 zero partition and
+emitted `partner_aua_total $1.88B vintage=rolled_forward coverage=incomplete`. **The zeros propagate as
+FLAGGED STALENESS, not as zeros** — the guard behaving well, and relevant to the bar's amended expectations.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
