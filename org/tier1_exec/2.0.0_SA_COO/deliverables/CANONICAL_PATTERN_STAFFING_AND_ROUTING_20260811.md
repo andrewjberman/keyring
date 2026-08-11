@@ -1542,6 +1542,33 @@ spent the night warning other seats about, arriving in a test *I* designed. **Th
 belongs to the DEPLOY-MAP instrument** (my missing-redeploy-leg finding is its real defect), not this ETag
 sweep.
 
+## 4y · STAGED — the mdpf+advi REFACTOR / LEGACY-DECOM spec @85e1d6d980 (**P0–P4**). Two gates before I decompose
+
+Andrew commissioned it at CRO's seat; delivered, **CVO verifying with six named attack hooks.**
+**19 dispositioned channels, 9 repoint families.** *No urgency claim; sequencing mine.*
+
+⛔ **TWO GATES, BOTH UPSTREAM OF ANY DECOMPOSITION BY ME:** (1) **CVO's verify clears**; (2) **Andrew's one
+naming line lands — the gold-root ratification.**
+> **AND THE NOW-FAMILIAR PRECISION: a cleared verify authorizes the ASK, never the FIRE.** The naming line
+> is HIS. *This is the fourth staged item tonight whose trigger has a sovereign half, and the pattern of
+> mistaking a certified artifact for authorization is why I keep writing it down.*
+
+| wave | what it lands | what I already know about it |
+|---|---|---|
+| **P0** | naming + the Group-W wiring page | rides the naming line itself |
+| **P1** | gold builders **rebuilt parquet-writing** | ⚠ **BEHIND the remediation waves' completion** — so **tonight's cutover acts (X-i..X-iv) and the remediation register GATE P1.** The work I staffed this session is P1's precondition |
+| **P2** | **the port window** — publisher input flip + smartx repoints + config re-keys | ⚠ **"one cutover per family" × 9 families = NINE WINDOWS, not one.** My standing one-act-per-window discipline applies (*two acts in one window is two rollback surfaces*). ⚡ **AND P2 CARRIES NEVER-WIDEN CO-SIGNS ON THE CLIENT-FACING BELLS — that half is CTO+COO, i.e. MINE.** Recorded now so the obligation is not discovered at the window |
+| **P3** | deploy-plane repoint: DS map + `_code` home | **CPR-5's second-target row is its precursor** — the deploy-map is already the instrument that missed a home once tonight |
+| **P4** | drains + negative probes + **the T5.B `opal-data-mdpf` KILL act** | ⛔ **THE HIGHEST-BLAST ACT IN THE ENTIRE PROGRAM, and correctly LAST.** `opal-data-mdpf` is **LOAD-BEARING LIVE** (3 feeds written 03:30Z tonight, both EC2 legs boot from it, DS deploys into it). **The spec supplies the migrate-before-kill half** — which is the only condition under which that act is legitimate at all |
+
+**MY EXISTING ROWS COMPOSE INTO IT** (CRO's read, and it matches mine): the **pair-matching engine** and
+**fee** rows are already **closed**; the **M1 per-feed disposition table is a named decomposition input.**
+*That is the first time tonight's tactical work has been shown to feed the strategic wave plan rather than
+sitting beside it — worth noting because it means the remediation register is not a parallel list, it is P1's
+gate.*
+
+**NOT DECOMPOSED. NOT DISPATCHED.** Waiting on both gates.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
