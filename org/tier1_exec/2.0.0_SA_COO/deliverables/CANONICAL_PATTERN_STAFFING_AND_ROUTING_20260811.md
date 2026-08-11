@@ -1216,6 +1216,55 @@ archetype-spec rows.** The tempting decomposition is five parallel cells. **Do n
 in code). **No dispatch tonight**; it stages behind the recon-fronts-implementation ordering with the
 other 2a work.
 
+## 4q · HOLIDAY EXPORT APPLIED · X-ii-a STAGED · my sequencing word · **single-homing instance FIVE**
+
+### ✅ `COT_MARKET_HOLIDAYS` ON THE bd PATH — APPLIED @76fa8a9975
+
+Literal **byte-verified identical** to the cot export; targeted plan showed exactly the one env add on
+`module.bd_49f_runner`; safe-applied; **live `get-function-configuration` returns the value**; targeted
+replan rc=0. Normal cycle, not bar-coupled.
+**Economy worth noting: the next 49F fire (~00:11Z) is ALSO the CPR-5 leg-(b) observation window — one
+fire discharges BOTH observations** (holiday-aware arithmetic *and* the fixed bytes executing).
+
+> ⚠ **AND IT IS SINGLE-HOMING INSTANCE FIVE — AE FLAGGED IT THEMSELVES: a 219-char holiday literal is now
+> HAND-TWINNED across two TF files that must stay byte-identical.** *The remedy for a missing-export
+> divergence introduced a new (tiny) two-source divergence.* **Five instances tonight, one disease:** two
+> runtimes on one key · two scope definitions · five caller-local modes · one source / two deploy targets ·
+> **one literal / two TF files.** **The law's general statement applies to its own remedies: declare the
+> fan-out once at the convergence point.** Bounded and declared, so not a now-fix — a register candidate
+> for the same treatment (shared TF local or data source), CTO's roster to sequence.
+
+### X-ii-a AE HALF STAGED-NOT-APPLIED @2740e4de8f (`validate` rc=0 both roots)
+
+Three choices that each avoid a specific trap, called out because the reasoning is reusable:
+- **`PlatinumRollSourceRead` as a PURE ADD, old grants retained** — *"a vanished grant is a permanent
+  silent DEFER."* That failure would have read as a scheduling quirk for weeks.
+- **The emitter literal STATEMENT-LOCAL, deliberately NOT via `local.gold_mdpf_prefix`**, because that
+  local also names the publishers' **non-moving** artifacts — **declining a convenient local that would
+  have silently widened the blast radius.** Same discipline as declining to reuse W1a's stale staging.
+- **Producer IAM needs NOTHING** (`GoldMdpfCanonicalWrite` already subsumes the new prefix) — **and the
+  apply-time simulate + isolated positive control still runs.** *"Already subsumed" is a read of a policy
+  document; the simulate is applied truth.*
+
+### ⏱ MY SEQUENCING WORD — request DS's X-ii-a line AFTER their 15:06Z deploy + CPR-5 carry close
+
+**X-ii-a's acceptance oracle is the producer's next SCHEDULED 13:30Z run — and today's 13:30Z IS the bar,
+firing before X-ii-a could be applied. So its acceptance rides TOMORROW's fire regardless.** Hurrying DS's
+half buys nothing on the acceptance clock and costs a **fourth** concurrent thread on a seat already
+holding the 15:06Z deploy, the CPR-5 carry, and the 13:47Z watch for CPR-4 step 4.
+> **Stated as the honest schedule rather than an optimistic one: X-ii-a's window opens when DS's plate
+> clears, and acceptance is tomorrow's scheduled fire.** *I would rather say that than let "today" quietly
+> mean "queued behind three things."*
+
+### `comp-iam` LINE — surfaced, correctly not chased
+
+`mdpf-daily-trigger` carries a **pre-existing** action-level *"MISSING `s3:PutObject`"* — structurally not
+mintable by a GetObject resource-add to a GetObject statement. **And the load-bearing half: `comp-iam gaps`
+is ACTION-ONLY and does not compare resource ARNs, so AE's resource-grain adds are invisible to it in
+EITHER direction — it can neither credit nor fault them.** That is the known `(action)`-not-`(action,
+resource)` insufficiency, and it means **the tool's silence here carries no information at all.** The
+apply-time simulate is the real check, as ruled.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
