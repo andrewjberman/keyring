@@ -7,6 +7,9 @@ the reviewed truth is $127,961.76 classified non-fee.
 > **AMENDED 0806Z — the DECOMPOSITION below INVERTS under DS's measurement (@c55e0d6fcc); the
 > STRUCTURAL finding (one quantity, four implementations) STANDS. Read the AMENDMENT section
 > before quoting any dollar split from this file.**
+> **AMENDED AGAIN 0921Z — AMENDMENT 1's "VALUATION BASIS" FRAMING IS REFUTED (MSTR measurement
+> @328d9892b7, LD-0394). There is NO second basis. Read AMENDMENT 2 last; it supersedes every
+> "two bases" / "which basis serves" sentence in this file.**
 
 ## THE ANSWER IN ONE PARAGRAPH (original ~0750Z — dollar split SUPERSEDED by the amendment)
 The figure on his screen is `platinum/advisors/patrick_scanlan/book.json` →
@@ -70,4 +73,45 @@ not self-evidently "the truth" itself.
 `unreconciled_aua = 0.00`). Which basis serves — current AUA or billing-period ending_mv — is a
 SOVEREIGN CHOICE, routed to COO/CTO for Andrew's ruling. The structural remedy (one producer per
 quantity, residual form retired everywhere incl. the Lambda) is unchanged and proceeds regardless
-of the basis ruling.
+of the basis ruling. **[SUPERSEDED BY AMENDMENT 2 — the "two bases" premise is refuted; there is
+no basis choice to rule.]**
+
+## AMENDMENT 2 (0921Z — COO-relayed MSTR measurement @328d9892b7, LD-0394, Andrew-direct;
+## 97 nonempty snapshots, schema-valid PROOF_OF_SPEC instance. SUPERSEDES Amendment 1's framing.)
+
+**THE REFUTATION:** populated `ending_mv` equals current AUA **TO THE CENT — 485/485 accounts,
+max divergence $0.00, same-day.** There is NO second valuation basis in the Orion billing feed.
+One basis, frequently ABSENT. Every "current AUA vs billing period-end" / "which basis serves" /
+"ending_mv projection of the truth" sentence in Amendment 1 is **wrong as written**: `ending_mv`
+where populated IS current AUA; where the vendor reported nothing,
+`data/inf/scripts/silver/build_billing_dim.py` `parse_dollar(empty) -> 0.00` **coerces ABSENCE to
+a ZERO** — a parse artifact, not a vendor value.
+
+**What this means for the numbers in this file:**
+- Patrick's 9 "ending_mv = 0.00" non-fee accounts are not "valued at a different basis" — their
+  emv is VENDOR-ABSENT, coerced. The $127,852.75 (= SUM populated emv WHERE NOT fee) is the sum
+  over the 3 accounts whose emv survived, i.e. an artifact of dropping the absent 9 — not a
+  reviewed-truth projection. **The $695,956.41 at current AUA is the complete figure at the ONE
+  basis.** (Whether all 12 accounts are correctly CLASSIFIED non-fee is the remaining substantive
+  question — classification, not valuation.)
+- The Lambda decode stands arithmetically but re-reads: "mixed bases" was really
+  fee = SUM(populated-or-coerced emv WHERE fee) — an ABSENCE-DEPRESSED sum — subtracted from a
+  complete total. H2 (stale carry) and H5 (mixed-basis arithmetic) both REFUTED; H4 (value
+  corruption) excluded 0/907; absence is PERSISTENT per account (no lag distribution exists).
+
+**THE HEADLINE MOVED (COO, same message):** the business weight is the FEE side — firm
+fee-earning AUA is **understated ~30%: $137.19M reported vs ~$196.75M** current-basis, the
+$68,321,011.74 gap = 259 in-cycle fee-earning accounts ($59.56M) + 52 empty-billing-block
+accounts ($8.76M) + $0.01, all vendor-absent-coerced-to-zero. Patrick's $696K display was the
+visible symptom of a nine-figure understatement one column over. This file's $696K framing is a
+SYMPTOM record, not the finding.
+
+**Inherited-error register (COO's own corrections, carried so neither propagates from here):**
+(1) 'Billing Period Start'/'End' are rename-map KEYS, not vendor columns — the vendor's real
+headers ('Billing Period Start Date'/'End Date'/'Billing Cycle'/'As Of'/'Days In Cycle') don't
+match, so silver silently DROPS every period column. (2) "102 partitions" was a directory count —
+nonempty = 97; the INF billing feed begins 2026-04-01 (bronze says Quarterly cycle).
+
+**The narrowed question at Andrew** (COO's words, carried): for absent-emv accounts, what does
+the served figure use? Since populated emv IS current AUA to the cent, current AUA is not a rival
+basis — it is the same basis, complete.
