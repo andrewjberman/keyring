@@ -50,3 +50,40 @@ schema, extractor vocabulary half) RELEASES FIRST; COO dispatching. NOW-BINDING 
 (2) rectangle-emitted canon updates route minting through SYSTEM_DEFINITIONS + the ATOM_DECOMP lane
 (this seat's two row-10 criteria, now law); (3) the ONE open post-ratification item = the row-10
 office-split working session (CRO~B + CTO~Z, MSTR channel), scheduling at our read.
+
+## ROW-10 LIVE EXERCISE EXECUTED (@db7c2bb3cd) -- the emit-bridge DRY-RUN, delivered for adjudication
+
+**Subject (per method binding A -- only the certified name):** `origin/SITEZ 7ea4fdbd38 :
+workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/rectangle.final.certified.json`
+(16 entities x 10 fields; 158 MEASURED + 2 NOT_MEASURABLE). **Canon:** `estate-coverage-resolver.json`
+(mechanical half) + the B-9 judgment/user channels. **Mode: DRY -- derived + classified, wrote NOTHING.**
+Tool: `org/tier1_exec/4.0.0_SA_CRO/scripts/emit_bridge_dryrun.py`; output:
+`deliverables/ROW10_EMIT_BRIDGE_DRYRUN_OUTPUT_20260811.json`.
+
+**The three CTO~Z conditions, discharged:**
+1. **Re-runnable + denominators:** invocation block in the output; 160 cells in -> 48 mechanical
+   updates + 16 judgment proposals + 96 named gaps; accounting 48+16+96==160 TRUE; 10 of 138
+   resolver threads touched.
+2. **Named gaps, never silent skips:** every non-emitted cell carries a class + its law --
+   64 EXCLUDED-BY-LAW (serving_state/analyst_serve_verdict/disposition/notes: freshness-at-render,
+   run-scoped verdicts, dispositions-are-adjudications, run commentary) + 32 NO-RECEIVING-SLOT
+   (vintage_semantics/vintage_grain) + 2 STATUS-EXCLUDED (the NOT_MEASURABLE cells, never cited as fact).
+3. **Direction honesty:** derived FROM the rectangle; 10 translations reported BOTH spellings
+   (`mdpf-platinum / X` -> `platinum/mdpf/X`; the underscore/hyphen guarded family explicitly flagged
+   so neither spelling reads as an orphan).
+
+**VERDICT SUPPORTED: clean absorption, ZERO same-axis fights.** Everything the rectangle knows that
+the canon can hold, the bridge emits mechanically; everything judgment-shaped routes to its channel;
+everything excluded is excluded by the bridge's OWN laws, by name. The office split holds on live
+exercise -- row-10 closes WITHOUT a fork, pending CTO~Z adjudication.
+
+**THE ONE DISCOVERY -- a canon SCHEMA GAP, routed not auto-fixed:** the rectangle carries
+`vintage_semantics` + `vintage_grain` per artifact (WHICH date a vintage means + at what grain) and
+the canon has NO receiving slot -- 32 cells of real, measured knowledge with no home. This is exactly
+the fact-class that disarms the two-date legal-but-wrong-answer hazard. Disposition: a canon-schema
+PROPOSAL (add a vintage-semantics field to the resolver's mechanical half) routed to CTO (arch) +
+CVO (ontology home) -- the bridge does NOT invent canon schema.
+
+**Proposed follow-on specimen (direction-honesty test):** `portal-page-attribution` -- a certified
+rectangle exists while the canon RETIRED `attribution` (content lives under positioning); the bridge
+must surface the retirement fight rather than silently re-minting a retired thread.
