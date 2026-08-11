@@ -121,10 +121,19 @@ decision 4: validation inputs, never return inputs) and enter at C's validation 
   EXACT count B_02 consumes (112 of 2,313 on the 49F sample) FROM dim_security's own
   `interest_rate` nonzero -- AND a FIELD-PRESENCE CENSUS of the four accrual inputs (`interest_rate`,
   `1st_cpn_date`, `dividend_interest_frequency`, `next_pay_date`), each with its populated-count
-  over the 112. **A degenerate field is a FINDING the check SURFACES, not a fail of the check** --
-  exercised 2026-08-11 (DS backfill, COO-relayed): `next_pay_date` is vendor-shipped on only 1 of
-  112 rate-bearing rows, which is exactly why B_02's DERIVE recommendation is CORRECT and not merely
-  convenient -- **this row earned itself by FAILING before the artifact ever served.** **FORBIDDEN
+  over the 112 -- **SPLIT INTO TWO CLASSES, because a tolerated degeneracy that hides an untolerated
+  one is a confirming-limb one level down (COO guard 104156Z):**
+  · **DERIVE-CRITICAL fields the accrual computation actually consumes (`interest_rate` +
+  `1st_cpn_date` + `dividend_interest_frequency`): the row FAILS if any is degenerate on the 112**
+  -- these are what B_02's DERIVE rests on; if they go null the census would otherwise report
+  "field absent, DERIVE substitutes" and PASS while the materiality rests on nothing.
+  · **TOLERATED fields (`next_pay_date`, derivable from cpn+frequency): degeneracy is a FINDING the
+  check SURFACES, not a fail** -- exercised 2026-08-11 (DS backfill, COO-relayed): `next_pay_date`
+  is vendor-shipped on only 1 of 112, which is exactly why B_02's DERIVE (using the critical three,
+  not next_pay_date) is CORRECT and not merely convenient -- **this row earned itself by FAILING on
+  the census before the artifact ever served, while PASSING the critical-field assertion.** The
+  refinement moved next_pay_date from a false-fail to an honest census line WITHOUT moving the real
+  DERIVE inputs from a loud FAIL to a quiet note. **FORBIDDEN
   SHORTCUT NAMED, with its MEASURED reason (correcting a false premise this row previously carried):
   the predicate must NOT key on `maturity_date`. My earlier prose said maturity_date is
   "sentinel-populated on ALL rows" -- MEASURED FALSE: it is non-null on 132 of 2,313. The real
