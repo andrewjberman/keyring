@@ -45,3 +45,14 @@ local_only:            # gitignored via rcg/.gitignore; measurements are ephemer
 rules:
   - no-satellite-prose: analyses/notes become ledger entries or are not committed
   - manifest-amends-in-same-commit: an addition without a manifest row in the same commit is a DENY
+schemas:
+  # Declared per the 2026-08-10 Andrew-direct structured-SSOT ruling (record:
+  # org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260810_STRUCTURED_MEANS_XML_OR_JSON.md)
+  # and CVO's format census @abfe77a537 finding #2 (two field-sets across RULINGS.jsonl, routed to
+  # the writer lane). AN APPEND-ONLY LEDGER IS NEVER BACKFILLED -- the manifest_check gate correctly
+  # refused a content-preserving normalization of the 8 short rows, and the gate's refusal is the
+  # precedent: absence in HISTORY is cured by DECLARATION, never by rewriting rows.
+  "rcg/rulings/RULINGS.jsonl":
+    row_fields: [id, date, type, scope, verbatim, rendered_effects, open_questions, model_version_applied]
+    effective: "rows appended after 2026-08-10 carry ALL eight fields; absence of a value is written explicitly (e.g. rendered_effects: NONE), never omitted"
+    historical_reading_rule: "rows R-0024..R-0031 predate three fields (rendered_effects, open_questions, model_version_applied). In those rows ABSENCE MEANS NOT_RECORDED_AT_RULING_TIME by this declaration -- it is never evidence that effects were none or questions were closed."

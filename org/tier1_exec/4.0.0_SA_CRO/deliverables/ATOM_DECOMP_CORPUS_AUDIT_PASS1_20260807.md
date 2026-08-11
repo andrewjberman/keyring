@@ -654,3 +654,19 @@ controls, neither by care. **Gap found:** none new in the tooling.
 - **At CTO (routed by base, not by me):** the `.owned-paths.yaml:425` "89 tracked files" text fix.
 - **Unresolved, and named rather than assumed:** the **held-out fence** governing any content pass
   over the 51 `case_study/` files.
+
+---
+
+## F-16 (filed 2026-08-10, LOW-MEDIUM) -- nine scoring dimensions with no scale, threshold, or pass bar
+
+`02` sec3's evaluation suite listed nine scoring dimensions with no scale, no threshold, and no pass
+bar -- "Score X" without a bar is unfalsifiable, directly beside sec4's crisp acceptance targets.
+Observed at first read (~17:0xZ 08-07), judged below the mechanical defects, and NOT filed in the
+original 15 -- named in the 08-07 state doc s.6 precisely so it could not evaporate; filed now.
+
+**REMEDY LANDED 2026-08-10 (method-owner ruling @b41f93f0a9, Andrew-authorized): promote what
+exists, manufacture nothing.** The "Score ..." sentence is replaced: the nine dimensions are the
+MEASUREMENT RECORD (each reported with instrument + denominator per the claim contract), the PASS
+BAR is sec4 + gates G0-G7, and numeric thresholds stay deliberately unset until the first stage-1
+run provides a measured baseline -- an authored threshold with no executed run behind it is a bar
+derived from nothing.

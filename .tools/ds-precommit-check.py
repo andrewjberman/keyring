@@ -63,6 +63,17 @@ _CROSS_FIRM_FOREIGN_BUCKETS = {
     'data/black_diamond/': ('opal-data-cot',),
 }
 
+# Key-prefix extension (Andrew GO 2026-08-11 ~0605Z on the CTO gate candidate, record
+# @9e1fc54623 session; measured gap: opal-data-assets/blackdiamond/ is ONE vendor prefix
+# spanning BOTH firms, so a bucket-name check cannot see a cross-firm read UNDER the
+# shared bucket). Maps a pipeline dir -> foreign KEY PREFIXES a script there may NOT
+# reference. Prefixes end with '/' deliberately: the matcher requires the trailing slash,
+# mirroring _is_real_bucket_ref's no-bare-substring design.
+_CROSS_FIRM_FOREIGN_KEY_PREFIXES = {
+    'data/cot/': ('blackdiamond/49f/',),
+    'data/black_diamond/': ('blackdiamond/cottonwood/',),
+}
+
 # AST-DEDUP: completion-order build feeding an order-sensitive dedup = CLASS-N
 # nondeterministic survivor (ADHC_GLDINC.AST-DEDUP; CTO arch-ruling 2026-06-11 230400Z).
 # A list built by `.append()` inside a `for x in as_completed(...)` (or imap_unordered)
@@ -592,6 +603,7 @@ def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[s
     if home_dir is None:
         return []
     foreign = _CROSS_FIRM_FOREIGN_BUCKETS[home_dir]
+    foreign_prefixes = _CROSS_FIRM_FOREIGN_KEY_PREFIXES.get(home_dir, ())
     skip = _docstring_constant_ids(tree)
     blocks: list[str] = []
     for node in ast.walk(tree):
@@ -606,6 +618,18 @@ def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[s
                     f"'{fb}' in a {home_dir.rstrip('/')} script -- the bd and cot pipelines "
                     f"must be COMPLETELY separate (Andrew sovereign 2026-06-10, NFRA_DTAFLP). "
                     f"A {home_dir.rstrip('/')} script may reference ONLY its own firm bucket. "
+                    f"Remove the cross-firm reference."
+                )
+        for fp in foreign_prefixes:
+            # Trailing-slash prefix in the constant = a real key reference, not prose
+            # (mirrors the f'{bucket}/' arm of _is_real_bucket_ref).
+            if fp in node.value:
+                blocks.append(
+                    f"{filepath_hint}:{node.lineno}: BLOCKED: cross-firm KEY-PREFIX reference "
+                    f"'{fp}' in a {home_dir.rstrip('/')} script -- the shared vendor prefix "
+                    f"spans both firms, and firm separation binds BELOW the bucket "
+                    f"(Andrew GO 2026-08-11 on the CTO gate candidate; NFRA_DTAFLP). "
+                    f"A {home_dir.rstrip('/')} script may reference ONLY its own firm's keys. "
                     f"Remove the cross-firm reference."
                 )
     # NFRA_DTAFLP seed-import bypass (COO GO 2026-06-10): an AUTHORIZED one-time

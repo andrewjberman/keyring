@@ -1,0 +1,149 @@
+{
+  "census": "KIMI_ONTOLOGY_STRUCTURED_FORM_CENSUS",
+  "version": "1.0",
+  "date": "2026-08-10",
+  "measured_by": "3.0.0_SA_CVO",
+  "authority": {
+    "ruling": "Andrew-direct 2026-08-10 ~18:5xZ: structured deliverable = XML/JSON (schema'd), markdown is NOT structured; SSOT qualification means same fields for all entities in structured format",
+    "ruling_record": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260810_STRUCTURED_MEANS_XML_OR_JSON.md",
+    "referral_verbatim": "apply that same framework to what we're doing with Kimi Semantic Pipeline and Ontology as a whole. I would refer this feedback to CVO so they can analyze that side",
+    "referral_relay": "4.0.0_SA_CRO inbox message 20260810T190109Z",
+    "reference_pattern": "foundation_ledger.schema.json + aua_taxonomy.v1.json (CRO deliverables)"
+  },
+  "discriminating_question": "Is the source of record a schema'd format where every entity carries the same fields and an empty field is a DETECTABLE STATE -- or prose/markdown that LOOKS structured (tables, headers) while nothing enforces completeness?",
+  "verdict_vocabulary": {
+    "STRUCTURED": "schema'd format, uniform fields, absence detectable; may include enforced or convention-held uniformity that measured 100% conformant AND has a live mechanical consumer that would fail loud",
+    "STRUCTURED_UNENFORCED": "schema'd format, measured fully conformant TODAY, but conformance is held by discipline -- no gate/lint refuses a nonconforming entry; the green is care, not a control",
+    "STRUCTURED_NONUNIFORM": "structured format (JSON/JSONL/YAML) whose entities do NOT carry the same fields; absence is NOT a detectable state (missing vs explicitly-none indistinguishable)",
+    "HONEST_PROSE_RECORD": "markdown/prose that is a RECORD (provenance, rationale, naming act) and claims no compiled-from role; nothing programmatic reads it -- fine AS a record per the ruling",
+    "DERIVED_RENDER": "prose rendering of a structured source; the structured sibling is the record and wins on disagreement",
+    "MASQUERADE": "prose/markdown functioning as a source of record that downstream work compiles from or treats as SSOT"
+  },
+  "method": "Every actual_form and compiles_from_it cell below is MEASURED this session (yaml/json parse + field-set counting, consumer grep with printed denominators, S3 object reads), not recalled. Empty-cell rule: this census's own rows all carry the same six fields; 'none' is written explicitly, never omitted.",
+  "rows": [
+    {
+      "artifact": "s3://opal-estate-report/manifest/{YYYY-MM-DD}.json (contract v2)",
+      "claimed_form": "the day-state oracle: gate whose default state is alarming; MSTR-backstop + /estate-pull census key on it",
+      "actual_form": "JSON, 16-17 fields, self-versioned (contract field); absence-as-state discipline present (ai_absent_reason explicit); measured field drift: 08-04 carries adjudication and lacks ai_call/run_bundle (lifecycle-state fields + producer evolution, version-marked)",
+      "compiles_from_it": "estate-pull Step-1 census; MSTR LD-0356 backstop; the CVO flip writes it",
+      "verdict": "STRUCTURED",
+      "remedy": "none",
+      "evidence": "manifests 2026-08-04/06/10 field-sets enumerated this session; 7/7 expected days parsed at startup census"
+    },
+    {
+      "artifact": "s3://opal-estate-report/daily/YYYY/MM/DD/estate-report-{date}.json",
+      "claimed_form": "the machine form of the daily report",
+      "actual_form": "JSON, 150,850 B (08-10): corpus_nuggets rows UNIFORM (source/id/ts/provenance/provenance_why/type/ruling/basis/quotes/superseded_rows/retraction_trail), coverage blocks carry their own denominators (nuggets_total, by_provenance incl. UNCLASSIFIED as explicit state, degraded_sources), delta block, ai block with status + dropped_proposals, run_bundle with staged coverage",
+      "compiles_from_it": "the adjudication loop's machine half; day-over-day SET-delta",
+      "verdict": "STRUCTURED",
+      "remedy": "none -- this is the POSITIVE PATTERN on the pipeline side: absence states explicit (ai_absent_reason, UNCLASSIFIED, degraded_sources), denominators in-band",
+      "evidence": "full structural walk of estate-report-2026-08-10.json this session"
+    },
+    {
+      "artifact": "s3://opal-estate-report/daily/YYYY/MM/DD/estate-report-{date}.md",
+      "claimed_form": "human render for the Andrew adjudication read",
+      "actual_form": "markdown, 1,993 B beside the 150,850 B JSON sibling -- a render, not the record",
+      "compiles_from_it": "none (human eyes only)",
+      "verdict": "DERIVED_RENDER",
+      "remedy": "OPTIONAL (P2): stamp the subordination_clause line into the .md render template ('derived; the .json sibling wins on disagreement') per the ratified subordination_clause term -- one line in the producer",
+      "evidence": "S3 listing 2026-08-10 daily/ prefix: both objects, sizes as stated"
+    },
+    {
+      "artifact": "s3://opal-estate-report/adjudicated/... + org/estate-reports/{date}.md",
+      "claimed_form": "the day's decision record (what was adopted/rejected/no-changes)",
+      "actual_form": "markdown prose; the MACHINE state of the decision travels in the manifest flip (status/by/at/repo_commit), not in this file",
+      "compiles_from_it": "none (the manifest is the machine carrier)",
+      "verdict": "HONEST_PROSE_RECORD",
+      "remedy": "none",
+      "evidence": "estate-pull SKILL Step-4 contract; manifest 2026-08-04 adjudication field observed"
+    },
+    {
+      "artifact": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml (v1.8)",
+      "claimed_form": "STABLE canon, machine-first term registry; served by comp-estate --definitions",
+      "actual_form": "YAML; 51/51 entries carry the declared 4-field schema (definition/authority/sits_at/status), status values 100% within declared enum; 14 distinct free-prose annex keys (counts 1-5 each, e.g. measured, found_five_ways, the_collision)",
+      "compiles_from_it": "org/modules/graph/opal_estate_infrastructure.py (comp-estate --definitions serving path) -- a live mechanical consumer",
+      "verdict": "STRUCTURED_UNENFORCED",
+      "remedy": "P1 of this census: (a) a schema gate -- the exact 15-line check run for this census (4 required fields + status-enum + underscore-key rule) as a commit-time lint or a fail-loud in the serving tool; conformance is PERFECT TODAY by discipline, which is the green-by-care-not-control shape; (b) declare the annex-key namespace explicitly non-vocabulary (the rule bank's own describes-field precedent at NFRA_ONTOLOGY_RULE_BANK.yaml:393) so prose annexes stay segregated from vocabulary slots by rule rather than by habit",
+      "evidence": "mechanical parse this session: entries=51, missing-required=NONE (51/51), extras enumerated, statuses {reserved_ratified:49, deprecated:1, contested_unresolved:1}"
+    },
+    {
+      "artifact": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "claimed_form": "the single vocabulary carrier / source of record (WS-C1), exec-locked",
+      "actual_form": "YAML, sectioned law (dynamic_rails, lifecycle enum + polarity table, relations, roles, variance, ...); carries its OWN prose-segregation discipline: describes field explicitly declared non-vocabulary and non-lintable",
+      "compiles_from_it": "comp_legacywriter.py (kill-list enforcement); manifest_check_cli.py (canonical-vocabulary invariant)",
+      "verdict": "STRUCTURED",
+      "remedy": "none",
+      "evidence": "yaml parse (top-level sections enumerated); describes-field declaration read at :393; consumers per WS-C1 contract obligations table"
+    },
+    {
+      "artifact": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+      "claimed_form": "canonical C2/C3/C4 catalog (motif families, verticals, segments)",
+      "actual_form": "YAML, schema_version field present, sectioned (c2_motif_families, c3_deterministic_structures, c3_ii_semantic_verticals, c4_segments, population_law, honesty_invariants, terminology_law)",
+      "compiles_from_it": "comp-estate ontology views (--segments/--matrix/--layers/--definitions); manifest_check canonical vocabulary",
+      "verdict": "STRUCTURED",
+      "remedy": "none",
+      "evidence": "yaml parse this session, top keys enumerated"
+    },
+    {
+      "artifact": "org/modules/graph/NAMED_THREAD_CATALOG.md",
+      "claimed_form": "L1 naming-act catalog (cited by the rule bank :686 as 'catalog: NAMED_THREAD_CATALOG.md + estate-coverage-manifest.yaml (population)')",
+      "actual_form": "markdown; ZERO programmatic consumers (6 references estate-wide, all yaml comments/prose -- measured, denominator 415 files scanned); the machine population lives in estate-coverage-manifest.yaml and the comp-estate name snapshot estate-coverage-resolver.json",
+      "compiles_from_it": "none (verified)",
+      "verdict": "HONEST_PROSE_RECORD",
+      "remedy": "P2: the bank's catalog: line names TWO carriers on one axis -- a ratified reconciliation_point (the term's own definition: 'a one-directional pointer IS one'). One-sentence fix in the bank: name the yaml/json pair as population SSOT and the .md as naming-act provenance. Kills the dual-carrier ambiguity before a future reader compiles from the .md",
+      "evidence": "comp-find NAMED_THREAD_CATALOG: 6 hits / 415 files (CONFIG=4 comments, DOC=2 prose), zero source-band consumers"
+    },
+    {
+      "artifact": "org/modules/graph/estate-coverage-resolver.json",
+      "claimed_form": "the thread-name snapshot comp-estate serves (self-declares stale past 14d)",
+      "actual_form": "JSON with schema_version, generated_from, last_review provenance fields; named_threads + resources_by_named_thread + threads",
+      "compiles_from_it": "comp-estate (thread NAMES)",
+      "verdict": "STRUCTURED",
+      "remedy": "none (self-declared staleness is the right discipline; Rule 21 already instructs reading its provenance header)",
+      "evidence": "json parse this session, top keys enumerated"
+    },
+    {
+      "artifact": "infra/system/ontology/core_nfra_velocity/*.md (the five frozen deliverable-contracts)",
+      "claimed_form": "FROZEN provenance records (markers landed @d9ff5b83a2, Andrew-ratified dispositions)",
+      "actual_form": "markdown prose contracts; 0 of 8,060 .py files reference the path (measured with denominator) -- NOTHING compiles from them; 10 SYSTEM_DEFINITIONS entries CITE them as authority (human-followable citation, not compilation)",
+      "compiles_from_it": "none (verified)",
+      "verdict": "HONEST_PROSE_RECORD",
+      "remedy": "none -- the masquerade RISK on this family was retired TODAY by the marker headers (live-carrier-wins + do-not-cite-numbers-as-current), which is this ruling's discipline applied before the ruling named it",
+      "evidence": "grep denominator this session: 0/8060; markers @d9ff5b83a2"
+    },
+    {
+      "artifact": "rcg/rulings/RULINGS.jsonl",
+      "claimed_form": "rulings ledger (structured JSONL)",
+      "actual_form": "JSONL, 32 rows, TWO field-sets: 24 rows x 8 fields, 8 rows x 5 fields (missing model_version_applied/open_questions/rendered_effects) -- a missing rendered_effects is INDISTINGUISHABLE from effects-were-none; absence is NOT a detectable state",
+      "compiles_from_it": "RCG tooling (owner: 4.0.0_SA_CRO)",
+      "verdict": "STRUCTURED_NONUNIFORM",
+      "remedy": "ROUTED TO OWNER (CRO, boundary artifact -- named in the starting list, owned by the RCG family): either backfill the 3 fields as explicit empties/enums on the 8 short rows, or declare the two shapes lawful by row type -- absence must be spelled either way. Measured here because named; adjudication is the owner's",
+      "evidence": "jsonl parse this session: 32 rows, 2 distinct field-sets enumerated"
+    },
+    {
+      "artifact": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/{c2_instances,c3_structures}.json",
+      "claimed_form": "C2/C3 instance-layer emission envelopes (built-undeployed; CTO~B item-5 load path pending)",
+      "actual_form": "JSON envelopes carrying counts, graph_vintage, grounding, producer, supersedes_shape_of -- vintage-stamped, producer-declared, grounding in-band",
+      "compiles_from_it": "the pending item-5 graph load path (CTO~B)",
+      "verdict": "STRUCTURED",
+      "remedy": "none (the positive pattern CRO predicted; certified here)",
+      "evidence": "json parse this session, envelope keys enumerated"
+    }
+  ],
+  "headline": {
+    "masquerade_count": 0,
+    "statement": "NO artifact in the Kimi pipeline + ontology core earns MASQUERADE: every compiled-from source of record is JSON/YAML with schema'd entities, and every markdown member is either a derived render or an honest provenance record nothing compiles from. The three real findings are one grade down: SYSTEM_DEFINITIONS is perfectly conformant but UNENFORCED (green by discipline, not control -- the one remedy worth building), RULINGS.jsonl is structured-but-nonuniform (routed to its owner), and the NAMED_THREAD_CATALOG dual-carrier line in the rule bank is a live reconciliation_point (one-sentence fix).",
+    "honest_negative_note": "A clean sweep is reported as a boundary-declared finding, not proof of estate-wide cleanliness -- see boundary_declaration below."
+  },
+  "boundary_declaration": {
+    "address_space": "the artifacts enumerated in the rows above: the estate-report S3 product family (manifest/daily/adjudicated/epoch), the ontology core (SYSTEM_DEFINITIONS, rule bank, C2C3 canonical, thread catalog + resolver), the five frozen contracts, the harness envelopes, plus the one named boundary artifact (RULINGS.jsonl)",
+    "traversal_residue": "NOT swept: the wider org/modules/graph/*.yaml population beyond the three law files; the estate-contracts registry instances; comp-tool OUTPUT formats (each tool's stdout contract); charters.yaml (CRO family, not read); ESTATE_WORLD_MODEL_PROCESS.md and other graph-side prose docs (assumed records, not verified as uncompiled-from); config/_EPOCH.json (trivially JSON, read at startup, not re-verified here)",
+    "presentation_residue": "none -- every measurement taken for this census appears in a row or in this declaration",
+    "failure_direction": {
+      "self": "under_report",
+      "basis": "exercised",
+      "known_negative": "the census's own consumer probe initially printed head's rc instead of grep's (an output not carrying its own frame -- the exact class under audit); re-run with a printed denominator (0/8060) before the row was written"
+    },
+    "revalidate_by": "any commit touching SYSTEM_DEFINITIONS.yaml schema form, the estate-report producer's emission shape, or the rule bank's catalog line"
+  }
+}

@@ -36,6 +36,12 @@ param(
     [Parameter(Mandatory = $true, Position = 0)]
     [string]$Serial,
 
+    # Optional per-session model / reasoning-effort overrides, threaded through
+    # to `ajb -Model/-Effort` -> `claude --model/--effort` (Andrew-direct
+    # 2026-08-11 per-seat model assignment). Unset = claude's default.
+    [string]$Model,
+    [string]$Effort,
+
     [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
     [string[]]$Extra
 )
@@ -184,6 +190,13 @@ if ($Extra) {
     $extraStr = ''
 }
 
+# Model/effort flags for the inner ajb invocation. Single-quoted for the same
+# metacharacter reason as $extraStr; values carry no semicolons (claude-validated
+# vocab), so the wt.exe `;`-escape pass below is unaffected.
+$moFlags = ''
+if ($Model)  { $moFlags += " -Model '$($Model.Replace("'", "''"))'" }
+if ($Effort) { $moFlags += " -Effort '$($Effort.Replace("'", "''"))'" }
+
 # New window: -NoProfile (deterministic -- does not depend on $PROFILE setup),
 # -NoExit (window persists so the session stays visible). Dot-source ajb.ps1
 # explicitly so the `ajb` function exists regardless of profile setup.
@@ -202,7 +215,7 @@ if ($Extra) {
 # last-write-wins coverage immediately before claude.exe takes over the console.
 # Backtick-escape the leading $ so the outer interpolation doesn't expand $Host;
 # the inner $Serial DOES interpolate (gets baked into the inner script string).
-$inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
+$inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
 
 # Title-setting path (Andrew direct 2026-05-26 + LD-0102): prefer wt.exe with
 # explicit --title flag when Windows Terminal is available, since wt.exe
@@ -251,7 +264,7 @@ if ($usableWt) {
     # Falls back to the long path if 8.3 generation is disabled on the volume; the
     # `-not $usableWt` guard below then routes to Start-Process, which passes the
     # payload intact as a single -ArgumentList element.
-    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . $ajbForWt; ajb -Headless $Serial$extraStr $marker`: $Serial"
+    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
     $innerForWt = $innerWtPayload -replace ';', '\;'
     # `-w new` opens a fresh WT window (preserves the one-window-per-agent UX
     # convention). `new-tab --title $Serial` sets the tab title that WT will

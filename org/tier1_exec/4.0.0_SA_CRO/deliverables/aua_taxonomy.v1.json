@@ -1,0 +1,141 @@
+{
+  "artifact": "aua_taxonomy",
+  "version": "1.0",
+  "source_of_record": true,
+  "derived_renderings": [
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/AUA_TAXONOMY_SCHEMA_20260810.md"
+  ],
+  "rendering_subordination": "The markdown is DERIVED rationale; where it and this file disagree, this file wins and the markdown is the defect.",
+  "ratification": {
+    "date": "2026-08-10",
+    "channel": "Andrew-direct at the CRO terminal, ~18:4xZ",
+    "verbatim": "Ratify taxonomy section 7 and the L-5 dispositions",
+    "record": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260810_TAXONOMY_S7_AND_L5_RATIFIED.md",
+    "ratified_set": ["axis1.values", "rails.bucket_mapping", "axis2.etf_float_posture"],
+    "not_asked_not_ruled": [
+      "estate-wide point-in-time scope (current ruling is Cottonwood-question-scoped)",
+      "ETF float day-alignment rule (resolves under ETFS CANON, never separately)",
+      "INSURANCE population (read-only BD endpoint discovery first)",
+      "frontend shape (standing word: fold-in, no new tabs -- 2026-08-10 Teams)"
+    ]
+  },
+  "root": {
+    "concept_id": "aua_composition",
+    "display_name": "Model Portfolios",
+    "display_name_provisional": true,
+    "possible_successor_display_name": "Fee-Paying Assets",
+    "rule": "No code, key, table, or column carries the display name as the root identifier; display binds at serving tier only (R-1)."
+  },
+  "axis1": {
+    "axis_id": "aua_composition",
+    "intent": "partition client-advised assets (AUA) by composition -- one axis, one intent",
+    "grain": "POSITION",
+    "grain_note": "Account-level tests are mapping rules onto position grain, never a second grain.",
+    "values": [
+      {
+        "id": "MODELS",
+        "order": 1,
+        "definition": "any client assets invested in an Opal Model (a multi-constituent allocation), Archetypal (UST/ST/INT/LT/ULT) or Custom (e.g. Opal-constituent models on Cottonwood BD)",
+        "state": "LIVE",
+        "definition_authority": "Andrew-direct R-2, 2026-08-10"
+      },
+      {
+        "id": "SMAS",
+        "order": 2,
+        "definition": "positions in accounts devoted ENTIRELY to one Opal Strategy: ETF-replica (PFOE, DIVZ -- 49F, SmartX), Tax SMA, Muni SMA",
+        "state": "LIVE_DATA_NOT_UNIFIED",
+        "flat_sibling_of_models": true,
+        "layering_rejected": "Andrew-direct R-2: 'I wouldn't try to break these into two different layers.'"
+      },
+      {
+        "id": "INSURANCE",
+        "order": 3,
+        "definition": "insurance assets (BD carries an insurance endpoint; Cottonwood and 49F believed to hold insurance client data)",
+        "state": "RESERVED_PENDING_DISCOVERY",
+        "cannot_move_until": "read-only BD insurance endpoint discovery pass"
+      },
+      {
+        "id": "ALTERNATIVES",
+        "order": 4,
+        "definition": "alternative asset portfolios (Opal entry 2027)",
+        "state": "RESERVED_NOT_BUILT",
+        "anticipated_reparents_in": ["MUNI_SMA", "TAX_SMA_possibly"],
+        "authority": "Andrew-direct R-3: establish the rails now even if the names change"
+      },
+      {
+        "id": "CLIENT",
+        "order": 5,
+        "definition": "non-discretionary advisory assets -- Non-Model but Fee-Paying. THE EXPLICIT RESIDUAL: AUA not classified into values 1-4. Computed LAST, by construction.",
+        "state": "DERIVABLE_NOW",
+        "is_residual": true
+      },
+      {
+        "id": "UNCLASSIFIED",
+        "order": 6,
+        "definition": "positions the classifier could not place. NOT a business value -- a loud error bucket.",
+        "state": "CONTROL",
+        "target_steady_state": 0,
+        "reconciled": "daily"
+      }
+    ],
+    "discriminator": {
+      "models_vs_smas": "MODEL_VS_STRATEGY",
+      "model": "a multi-constituent allocation",
+      "strategy": "a single mandate",
+      "sma_account_test": "account devoted ENTIRELY to one Opal Strategy (all-or-nothing); a mixed account can never be SMAS, so no position is claimed twice"
+    },
+    "controls": {
+      "partition_reconciles_to_total_aua": { "scope": ["per_firm", "GLOBAL"], "standing": true },
+      "naming_convention_fragility": "names FEED the classifier ('Opal' token, is_opal_name substring test) but never close it: a naming miss surfaces as reconcile break + UNCLASSIFIED residue, never a silent undercount",
+      "join_discipline": "ids, never names (measured hazard: BD strategy name with leading space, ' Anna *9238')"
+    }
+  },
+  "axis2": {
+    "axis_id": "opal_etf_product_aum",
+    "intent": "Opal ETF product AUM -- separate axis, fund grain",
+    "grain": "FUND",
+    "identity": "etf_product_aum = etf_assets_inside_aua + etf_float",
+    "values": [
+      { "id": "ETF_IN_AUA", "definition": "ETF assets held in client accounts (classified on axis1)" },
+      {
+        "id": "ETF_FLOAT",
+        "definition": "the balance of Opal public ETFs NOT held with an Opal client",
+        "outside_aua_by_construction": true,
+        "posture": { "collect": true, "display": false, "tier": "GOLD", "colocated_backend": true, "serving_leg": false },
+        "authority": "Andrew-direct R-1, 2026-08-10",
+        "open_defect_flag": "leg ordering (holdings 16:00Z before fund totals 22:00Z) INFERRED-not-reverified; day-alignment rule DECIDED at implementation under ETFS CANON"
+      }
+    ]
+  },
+  "rails": {
+    "strategy_id_registry": {
+      "rule": "every classified position carries a stable strategy_id independent of its bucket label",
+      "known_ids_seed": ["UST", "ST", "INT", "LT", "ULT", "per-Custom-model ids", "PFOE_SMA", "DIVZ_SMA", "TAX_SMA", "MUNI_SMA"]
+    },
+    "bucket_mapping": {
+      "keyed_on": "strategy_id",
+      "maps_to": "axis1.value_id",
+      "vintaged": true,
+      "reparent_is": "RE_LABEL_NEVER_RE_DERIVATION",
+      "authority": "Andrew-direct R-3"
+    }
+  },
+  "vintage": {
+    "clocks": {
+      "as_of": "PROVENANCE clock -- the day whose membership the row reflects",
+      "computed_at": "WRITE clock -- when the row was produced"
+    },
+    "clock_rule": "any gate or consumer of the classification declares WHICH clock it reads (foundation-ledger two-clock law)",
+    "point_in_time": {
+      "status": "CURRENT_RULING",
+      "scope": "the Cottonwood AUA question as asked; estate-wide reading requires its own Andrew ruling",
+      "history_restates": false,
+      "restatement": "NOT_FORECLOSED_NOT_BUILT (mapping-row design makes a future restatement a re-join)",
+      "record": "@e82326bdb2"
+    }
+  },
+  "rollup": {
+    "rule": "one classifier; per-firm artifacts (49F, Inflection, Cottonwood); GLOBAL = sum of firm partitions; reconcile control inherited at both grains",
+    "known_hazard": "Cottonwood BD fact_holdings is RELATIONSHIP grain (Relationship x Account x Asset) -- collapse via collapse_relationship_grain() before any sum"
+  }
+}

@@ -1,0 +1,2206 @@
+{
+  "schema_version": "1.0",
+  "artifact": "MDPF_PIPELINE_TRUTH",
+  "generated_utc": "2026-08-10T19:05:00Z",
+  "generated_by": "1.0.0_SA_CTO",
+  "commissioned_by": "Andrew-direct 2026-08-10 (CTO terminal)",
+  "purpose": "Machine-consistent ingestion-to-serving assessment. EVERY pipeline carries the IDENTICAL field set so that a null IS the hole and gaps are comparable across firms by construction. Prose companion: docs/architecture/MDPF_PIPELINE_TRUTH.md (supplementary, never authoritative over this file).",
+  "conventions": {
+    "cell_shape": "Every assessed cell is {value, status, evidence}. NO BARE VALUES. A cell with status != MEASURED must never be cited as fact.",
+    "status_enum": {
+      "MEASURED": "read from the live artifact/API/source at a stated time; evidence names the call or file:line",
+      "INFERRED": "derived from measured facts but not directly observed; NON-ACTIONABLE per CLAUDE.md Rule 22",
+      "UNMEASURED": "not yet read; evidence names the exact call that would fill it",
+      "NOT_MEASURABLE": "no instrument can answer it from this artifact; evidence says why"
+    },
+    "clock_taxonomy": {
+      "C1_write_clock": "S3 LastModified - when WE wrote it. Says nothing about content.",
+      "C2_partition_key": "the date= segment. RUN date or DATA date - VARIES BY ARTIFACT AND NOTHING DECLARES IT.",
+      "C3_data_vintage": "the as-of INSIDE the file. The only real answer to 'what day is this about'.",
+      "C4_roster_date": "which day's membership was used. Only cottonwood has one today."
+    },
+    "independence_rule": "A provenance field is EVIDENCE only if it can DISAGREE with the partition key. A field we write from the key, or a vendor field that echoes the request, is DECORATIVE - record independent=false."
+  },
+  "pipelines": [
+    {
+      "pipeline_id": "49financial.model",
+      "firm": "49financial",
+      "leg": "model",
+      "vendor": "SmartX",
+      "is_axis_source": true,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "smartx-jwt-refresher-daily",
+              "type": "scheduler",
+              "expr": "cron(0 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:00",
+              "enabled": true
+            },
+            {
+              "name": "smartx-rest-pull-daily",
+              "type": "scheduler",
+              "expr": "cron(15 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:15",
+              "enabled": true
+            },
+            {
+              "name": "smartx-assets-daily-pull-daily",
+              "type": "scheduler",
+              "expr": "cron(30 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule per name; 16 schedules materialised"
+        },
+        "observed_run_utc": {
+          "value": {
+            "smartx-rest-pull": "13:17:28",
+            "smartx-assets-daily-pull": "13:30:51"
+          },
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps CloudWatch, 2026-08-10"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/smartx/platform/bronze/",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "writer": {
+          "value": "smartx_assets_pull (Lambda; EventBridge Scheduler smartx-assets-daily-pull-daily 13:30Z)",
+          "status": "MEASURED",
+          "evidence": "smartx_assets_pull/lambda_function.py:107 ms_key = km.account_tier_platform_bronze_key('models_summary', run_date); sole writer across infra/aws/lambda. Key built from run_date -- source-confirms c2=RUN_DATE."
+        },
+        "c1_write_clock_utc": {
+          "value": "13:36:31",
+          "status": "MEASURED",
+          "evidence": "models_summary/20260810/summary.json LastModified 2026-08-10"
+        },
+        "key_grammar": {
+          "value": "models_summary/{YYYYMMDD}/summary.json",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "c3_provenance_field": {
+          "value": "NONE. Only run-varying vendor stamp is payload.{model_guid}.information.timestmap (sic) = 2026-08-10T06:15:53Z, CONSTANT across all 896 models.",
+          "status": "MEASURED",
+          "evidence": "ALL 172 distinct leaf paths enumerated in the newest bronze. Every other date-shaped field is a static reference attribute (fund inception 2001-2004, Drupal CMS 2018 epochs)."
+        },
+        "c3_provenance_independent": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "The timestmap stamp CAN disagree with the key (06:15:53Z vendor vs our 13:36:31Z write, 7h20m apart) but it is a batch-BUILD clock, NOT a data as-of. THE AXIS SOURCE'S BRONZE CANNOT SELF-DECLARE ITS OWN VINTAGE -- same class as eclipse, on the most load-bearing feed in MDPF."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "silver date=2026-08-10 carries day-max 2026-08-07; 6-partition table read from parquet"
+        },
+        "c3_vintage_field": {
+          "value": "day",
+          "status": "MEASURED",
+          "evidence": "gold lambda log 'day 2021-09-02..2026-08-07' + parquet read"
+        },
+        "offset_label_to_vintage": {
+          "value": "T+1 on WEEKDAY partitions ONLY (4 of 6). The Sat/Sun partitions carry 2026-08-06 while the prior TRADING day of each is Friday 2026-08-07 -- one trading day further back than the label implies.",
+          "status": "INFERRED",
+          "evidence": "Day-max re-derived per partition 6/6: 08-05->08-04, 08-06->08-05, 08-07->08-06, 08-08(Sat)->08-06, 08-09(Sun)->08-06, 08-10->08-07. THE PRIOR CLAIM OF '6/6 weekend-correct' IS REFUTED -- measured 4/6. MATERIAL: the Monday floor reads the SUNDAY partition, so this is the direct upstream cause of the 08-06 frontier. Had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z."
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no smartx normalizer found"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero occurrences of normalize_as_of in dim_mdpf_aggregate_aua_timeseries.py"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:833 frontier=aum_days[-1] of LATEST PARTITION PRESENT"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "fact_model_aum_daily date=2026-08-10: rows=4422, 10 cols enumerated. No roster/assignment date. Confirms cottonwood is the only C4 holder."
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "NYSE_TRADING_DAY",
+          "status": "MEASURED",
+          "evidence": "canonical_trading_axis(frontier)"
+        },
+        "roll_forward_policy": {
+          "value": "none",
+          "status": "MEASURED",
+          "evidence": "no carry on this leg"
+        },
+        "known_calendar_defect": {
+          "value": "aum_daily carries 1 non-canonical day ['2025-01-09']",
+          "status": "MEASURED",
+          "evidence": "producer FINDING axis diff line, 2026-08-10"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/smartx/platform/silver/",
+          "status": "MEASURED",
+          "evidence": "SMARTX_SILVER:72"
+        },
+        "writer": {
+          "value": "opal-assets-silver-smartx",
+          "status": "MEASURED",
+          "evidence": "function stdout lists every key written; rows=4422 ties to parquet"
+        },
+        "trigger_type": {
+          "value": "LAMBDA ASYNC DESTINATION (OnSuccess) -- chained to smartx-assets-daily-pull's clean return",
+          "status": "MEASURED",
+          "evidence": "APPLIED TRUTH: aws lambda get-function-event-invoke-config --function-name smartx-assets-daily-pull -> DestinationConfig.OnSuccess.Destination = arn:aws:lambda:us-east-1:313476888478:function:opal-assets-silver-smartx. Declared at infra/aws/terraform/smartx-pipeline/assets-pull-onsuccess.tf:31. >> THE CONFIG LIVES ON THE *PULL*, NOT ON THE CONVERTER -- which is why every instrument aimed at the converter was STRUCTURALLY BLIND to it: not a bucket notification (8/8 configs), not an EventBridge rule (139 rules exhaustively checked BY TARGET ARN), not an event-source mapping, not a function URL, not Step Functions, and NOT a .invoke() in the pull's code -- because THE LAMBDA SERVICE DOES THE INVOKING, NOT THE CODE. Explains both observations exactly: the 2-second gap (pull ends 13:40:35Z -> converter INIT 13:40:37Z) and the ~30s daily drift (chained to a variable-duration job, not a cron). ALREADY NAMED IN THE ESTATE by 0.5.0_AE_OpalETL 2026-07-22 with the same applied-truth grounding."
+        },
+        "trigger_name": {
+          "value": "smartx-assets-daily-pull DestinationConfig.OnSuccess",
+          "status": "MEASURED",
+          "evidence": "APPLIED TRUTH: aws lambda get-function-event-invoke-config --function-name smartx-assets-daily-pull -> DestinationConfig.OnSuccess.Destination = arn:aws:lambda:us-east-1:313476888478:function:opal-assets-silver-smartx. Declared at infra/aws/terraform/smartx-pipeline/assets-pull-onsuccess.tf:31. >> THE CONFIG LIVES ON THE *PULL*, NOT ON THE CONVERTER -- which is why every instrument aimed at the converter was STRUCTURALLY BLIND to it: not a bucket notification (8/8 configs), not an EventBridge rule (139 rules exhaustively checked BY TARGET ARN), not an event-source mapping, not a function URL, not Step Functions, and NOT a .invoke() in the pull's code -- because THE LAMBDA SERVICE DOES THE INVOKING, NOT THE CODE. Explains both observations exactly: the 2-second gap (pull ends 13:40:35Z -> converter INIT 13:40:37Z) and the ~30s daily drift (chained to a variable-duration job, not a cron). ALREADY NAMED IN THE ESTATE by 0.5.0_AE_OpalETL 2026-07-22 with the same applied-truth grounding."
+        },
+        "c1_write_clock_utc": {
+          "value": "13:40:47",
+          "status": "MEASURED",
+          "evidence": "head-object smartx/platform/silver/fact_model_aum_daily/date=2026-08-10/data.parquet = 13:40:47 GMT. CORRECTION: the prior 13:41:51 was a LOG time for a DIFFERENT object (the run-COMPLETE line). The artifact's own taxonomy defines C1 as S3 LastModified. THE NUMBER A RE-TIMING DECISION MUST BE SET AGAINST IS 13:40:47Z -- the AXIS SOURCE itself."
+        },
+        "latency_from_bronze_min": {
+          "value": 4.27,
+          "status": "MEASURED",
+          "evidence": "True C1 to true C1, both head-object: bronze 13:36:31Z -> silver aum_daily 13:40:47Z = 4m16s. The prior 5.3 was computed off a run-complete LOG time rather than the object's own C1."
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-smartx-sweep-daily cron(0 16)=16:00Z is a NO-OP: 668ms, zero output, wrote nothing",
+          "status": "MEASURED",
+          "evidence": "full sweep invocation log 2026-08-10 16:00:12Z"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": "2026-08-10 13:00:59Z",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/ 463-object listing, boto3 true UTC. 49F is the ONLY firm whose gold was written today; inflection last 08-07 13:00:55, cottonwood 08-07 22:46:59, global 08-07 03:52:14."
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "self (smartx fact_model_aum_daily)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": "BY_COINCIDENCE",
+          "status": "MEASURED",
+          "evidence": "its own feed happens to be the shared axis; not compliant by construction"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - it is the source, not the importer"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": ":1562-1567 SKIPPED for 49financial; producer log 'RETAINED STRUCTURAL EXPOSURE ... not a clean result'"
+        },
+        "last_verdict": {
+          "value": "PASS (440 dates) - NOT A CLEAN PASS, limb (v) could not fail",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:51Z stream line 161"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "publisher summary 2026-08-10 13:50:48Z"
+        },
+        "open_defects": {
+          "value": [
+            "CONFLICT-not-overwritten on 3 objects",
+            "limb (v) skipped"
+          ],
+          "status": "MEASURED",
+          "evidence": "producer stream 2026-08-10"
+        }
+      }
+    },
+    {
+      "pipeline_id": "49financial.custody",
+      "firm": "49financial",
+      "leg": "custody",
+      "vendor": "Schwab",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "canonical-schwab-si2-08242234-daily-pull",
+              "type": "rule",
+              "expr": "cron(15 10,22 * * ? *)",
+              "tz": "UTC",
+              "utc": "10:15,22:15",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events list_rules, 139 materialised"
+        },
+        "observed_run_utc": {
+          "value": {
+            "canonical-schwab-si2-08242234-daily-pull": "10:15:19Z and 22:15:19Z daily"
+          },
+          "status": "MEASURED",
+          "evidence": "The puller writes its OWN Z-stamped run manifest: schwab/08242234/_ops/daily_pull/runs/{RUNID}.json -- strict two-per-day cadence matching cron(15 10,22). The producer's own UTC clock, independent of S3 LastModified."
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/schwab/08242234/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": "sdd-daily-pull.ps1 as Windows scheduled task OpalSddDailyPull-08242234 on EC2 i-0f3d57a97f14727af, via SSM from the EventBridge rule",
+          "status": "MEASURED",
+          "evidence": "list-targets-by-rule -> SSM document on that instance pulling code/canonical-schwab-si2/sdd-daily-pull.ps1; script:481 aws s3 cp, :55 KEYROOT=schwab/$Master/bronze. NOT A LAMBDA -- the only EC2/SSM-driven bronze writer of the seven pipelines."
+        },
+        "c1_write_clock_utc": {
+          "value": "10:15:3x-10:16:4x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object on the newest rps object = 'Sat, 08 Aug 2026 10:15:59 GMT'. Per-feed newest across all 17 bronze feeds (7,438 objects) lands 10:15:29-10:16:16. MUST be read via head-object: aws s3 ls renders this same object as 06:15:59 local."
+        },
+        "key_grammar": {
+          "value": "*.zip",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix filter"
+        },
+        "c3_provenance_field": {
+          "value": "Business Date -- Schwab CRS field 5 of the H1 header AND every D1 detail record. Value = 20260807.",
+          "status": "MEASURED",
+          "evidence": "Downloaded and unwrapped the newest bronze (outer .zip -> inner CRS20260807.RPS, 81,354,737 B). H1 verbatim: 'H1|SCHWAB  |0008242234|49 WEALTH MANAGEMENT LLC      |20260807|BDRECPOS|01.06|'. Survives to silver as column business_date."
+        },
+        "c3_provenance_independent": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "INDEPENDENCE TEST RUN AND PASSED. The partition key comes from the vendor FILENAME (sdd-daily-pull.ps1:420 regex); business_date is written by Schwab INSIDE the payload -- two separate vendor artifacts, so they CAN disagree. Empirical: 40 of 553 partitions sampled (25 newest + 15 seeded-random), 0 disagreements. >> SCHWAB IS THE ONLY FEED IN THE ESTATE WITH A GENUINELY INDEPENDENT, CORROBORATING VENDOR PROVENANCE FIELD."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "DATA_DATE",
+          "status": "MEASURED",
+          "evidence": "Source-confirmed both sides: partition parsed from the vendor filename (:420) and the in-file vendor Business Date equals it 40/40. Clock cross-check: the CRS20260807 file was WRITTEN 2026-08-08 10:15:59Z -- the partition is NOT our run date."
+        },
+        "c3_vintage_field": {
+          "value": "business_date",
+          "status": "MEASURED",
+          "evidence": "fact_rps_s2 date=2026-08-07: rows=7,163, cols=39 enumerated; business_date distinct=1 = 2026-08-07."
+        },
+        "offset_label_to_vintage": {
+          "value": "POLICY-EXEMPTED from normalization. Schwab LABEL ACCURACY IS NOT MEASURED.",
+          "status": "INFERRED",
+          "evidence": "_orion_vendor_asof.py:133@98a31f85b3 verbatim: 'LABEL-only; Orion-only (never call on schwab/bd -- their labels are accurate).' THAT IS A DOCSTRING INSIDE THE ORION MODULE. ADVERSARIAL TEST: the sentence would read IDENTICALLY whether or not Schwab's labels are accurate -- it establishes the estate's per-vendor POLICY, never a fact about Schwab DATA. With c2_partition_meaning and c3_vintage_field both UNMEASURED on this leg (G-3c, owner unassigned), SCHWAB IS THE ONE CUSTODY FEED WITH NO MEASURED VINTAGE AT ALL -- the same structural position eclipse occupied this morning, and eclipse's answer moved the entire diagnosis when it landed."
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "explicitly excluded by the orion normalizer"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed per above"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "SOURCE-READ load_rps_custody_history:348-371 @3679bb0353 -- axis date d passed unmodified as the partition date; 0 occurrences of any normalizer across all 2,734 lines. comp-pipescript deployed = MATCH, so the repo file IS the runtime artifact. HARMLESS on this leg only because Schwab labels are accurate -- the same code shape is defective on the orion leg."
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "All 39 fact_rps_s2 columns enumerated; business_date is the ONLY date column."
+        },
+        "consequence": {
+          "value": null,
+          "status": "UNMEASURED",
+          "evidence": "no defect asserted for this leg yet; absence here is NOT a clean bill"
+        },
+        "known_defect": {
+          "value": "key_grammar was recorded as '*.zip' from the S3 notification SUFFIX FILTER; the actual grammar is bronze/{feed}/{YYYYMMDD}/{master}.CRS{YYYYMMDD}.{FEED}.zip across 17 feeds. The recorded value describes the TRIGGER'S FILTER, not the layout.",
+          "status": "MEASURED",
+          "evidence": "7,438-object census across 17 feed folders. sdd-daily-pull.ps1:24 warns a naive CRS(\\d{8}) regex 'silently DROPS or MIS-DATES' the CS{mmddyy} variant, handled at :423. Low severity but it would mislead anyone writing a consumer or a census over this prefix."
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "NYSE_TRADING_DAY (axis DATES from lib/_trading_day_calendar; only the FRONTIER is imported from smartx)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:832-835 -> canonical_trading_axis:378-384 trading_days_between(SERVED_AS_OF_FIRST, frontier). Served artifact meta.trading_day_calendar = NYSE/pandas_market_calendars. The CALENDAR and the FRONTIER are separable -- only the frontier is imported."
+        },
+        "roll_forward_policy": {
+          "value": "NONE -- named gap, no interpolation",
+          "status": "MEASURED",
+          "evidence": "load_rps_custody_history docstring: 'A date with NO fact_rps_s2 partition is a NAMED gap ... NO interpolation (D1).' Body confirms via __missing__."
+        },
+        "known_calendar_defect": {
+          "value": "NONE. Coverage is trading-day-complete through the frontier: newest partition date=2026-08-07 (Fri), written Sat 10:15:59Z. No 08-08/08-09 partition is expected.",
+          "status": "MEASURED",
+          "evidence": "553 silver partitions / 645 bronze rps objects. TRADING CALENDAR RESOLVED. The puller's own manifest reads trading_frontier '2026-08-07', enumerated 227, downloaded 0, skipped 227, ok=true -- downloaded=0 on a Monday is the CORRECT result, not a stall."
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/schwab/08242234/silver/fact_rps_s2",
+          "status": "MEASURED",
+          "evidence": "SCHWAB_SILVER:73"
+        },
+        "writer": {
+          "value": "opal-assets-silver-schwab",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on schwab/08242234/bronze/ suffix .zip"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "10:16:0x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object fact_rps_s2/date=2026-08-07/data.parquet = 'Sat, 08 Aug 2026 10:16:06 GMT'; corroborated by the silver-schwab log stream at 10:16:35."
+        },
+        "latency_from_bronze_min": {
+          "value": 0.12,
+          "status": "MEASURED",
+          "evidence": "Three paired head-object reads in true UTC: 7s / 8s / 7s (mean 7.3s). FASTEST bronze->silver leg in the estate; the S3 event path works exactly as designed."
+        },
+        "decoy_schedule": {
+          "value": "NOT A NO-OP. opal-assets-silver-schwab-sweep-daily 12:15Z runs 113-152 SECONDS every day (8/8), converts 0 partitions, SELF-REPORTS ok=false with a FROZEN 368-partition shortfall (pre==post), and writes 2 objects daily.",
+          "status": "MEASURED",
+          "evidence": "CloudWatch REPORT durations 113289-152039ms across 08-03..08-10. Its own manifest 20260810T121549Z: ok=false, bronze_keys 7438, silver_keys 9063, shortfall_pre 368, shortfall_post 368, holes_named [tcf,tcfx,tnn]. Byte-identical denominators on 08-08 and 08-09 = a STANDING frozen state, not a new break. DO NOT retire it as a decoy without adjudicating the 368."
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (load_rps_custody_history:939)",
+          "status": "MEASURED",
+          "evidence": "source read"
+        },
+        "c1_write_clock_utc": {
+          "value": "2026-08-10 13:00:59Z (folded into the 49financial scope artifact)",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/49financial newest object, boto3 true UTC. The leg is in-run and has no separate artifact."
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx (shared)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": "BY_COINCIDENCE",
+          "status": "MEASURED",
+          "evidence": "same firm as the axis source"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "49F skipped, :1562-1567"
+        },
+        "last_verdict": {
+          "value": "n/a (folded into 49financial scope)",
+          "status": "MEASURED",
+          "evidence": "scope-level gate"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "49financial scope, publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "SPLIT SERVED VINTAGE WITHIN THE FIRM: 49financial/account-distribution served from 2026-08-07 while aum-metrics and aggregate-aua-timeseries are served from 2026-08-06",
+            "served frontier one trading day behind available silver (inherited from the floor/axis-source ordering, not leg-local)"
+          ],
+          "status": "MEASURED",
+          "evidence": "platinum/mdpf/_manifests/latest.json run_id 20260810T135046Z-fb5dfe56, 14 rows. All 3 platinum objects written 13:50:49Z. The artifact's single scalar served_as_of is UNDER-DETERMINED -- one 49F surface is a day AHEAD of the other two."
+        }
+      }
+    },
+    {
+      "pipeline_id": "inflection.model",
+      "firm": "inflection",
+      "leg": "model",
+      "vendor": "Eclipse",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "inf-api-eclipse-daily",
+              "type": "rule",
+              "expr": "cron(33 13 * * ? *)",
+              "tz": "UTC",
+              "utc": "13:33",
+              "enabled": true
+            },
+            {
+              "name": "opal-assets-ingest-mirror-cot-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 18 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "22:30",
+              "enabled": true,
+              "NAME_DEFECT": "named -cot- but performs INFLECTION intake; handler iterates MAP+PROVENANCE_RIDERS unconditionally"
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events + scheduler enumeration; name defect source-confirmed by 2.0.0_SA_COO at handler :353"
+        },
+        "observed_run_utc": {
+          "value": {
+            "inf-api-eclipse": "13:33:53 daily",
+            "opal-assets-ingest-mirror (cot-named schedule)": "22:30-22:34"
+          },
+          "status": "MEASURED",
+          "evidence": "describe-log-streams: inf-api-eclipse last-event 13:33:53 on 08-07..08-10 (exactly cron(33 13)). Eclipse bronze objects land 22:31:02-03Z."
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/eclipse/inflection/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter + aws s3 ls"
+        },
+        "writer": {
+          "value": "opal-assets-ingest-mirror (SINGLE shared function, NOT firm-scoped -- one invocation mirrors all three firms)",
+          "status": "MEASURED",
+          "evidence": "DEPLOYED package CodeSha256 VQ3Rw79KKqPDvOQeY0blyzclC9mFthmpektm0NA5vk4=, 469 lines. MAP row2 :114-120 -> eclipse/inflection/bronze/. Handler :353 iterates MAP+PROVENANCE_RIDERS unconditionally. EXERCISED: CloudWatch 08-10 14:16:00Z prints DENOMINATOR for row eclipse/inflection enumerated=992."
+        },
+        "c1_write_clock_utc": {
+          "value": "22:31:0x UTC (newest 2026-08-09 22:31:03)",
+          "status": "MEASURED",
+          "evidence": "992-object listing, true UTC. No 2026-08-10 eclipse bronze at measurement time (~20:55Z) -- CORRECT, the 22:30Z mirror had not fired. NOT a gap."
+        },
+        "key_grammar": {
+          "value": "{YYYY-MM-DD}/*.json",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls shows date-named prefixes"
+        },
+        "c3_provenance_field": {
+          "value": "NONE -- no vendor as-of/snapshot-vintage field in BRONZE either.",
+          "status": "MEASURED",
+          "evidence": "Opened the 2026-08-09 bronze (856 records); ALL 57 record keys enumerated. Date-bearing keys are lastRebalancedOn/createdOn/editedOn/nextAutoRebalanceDate/fixedIncomeTradeBlockDate -- all per-portfolio EVENT dates. totalValue, the number MDPF consumes, carries no date. CORROBORATES THE ABSENCE ONE LAYER UP: it is in the vendor payload, not introduced by our silver conversion."
+        },
+        "c3_provenance_independent": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "No candidate vintage field exists to test (57 keys enumerated), so nothing can disagree with the key."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE (UTC wall-clock date of the pull; the vendor surface carries NO date parameter at all)",
+          "status": "MEASURED",
+          "evidence": "FIVE INDEPENDENT INSTRUMENTS. (1) PRODUCER SOURCE, re-verified at CTO seat: pull_eclipse_portfolios.py:302 date_iso = args.date or datetime.now(UTC).strftime(); docstring :3-12 \"--date IS AN OUTPUT FILENAME, NOT A QUERY ... eclipse_get() HAS NO DATE PARAMETER ... 0 hits for asOf|as_of|effectiveDate|startDate|endDate (7 request call sites exist, so the search discriminates)\". A DATE THE VENDOR CANNOT RECEIVE CANNOT BE A DATA DATE. (2) sidecar pull_complete.json date==pull clock day, 6/6. (3) WEEKDAY CENSUS re-derived at CTO seat: 19 of 72 partitions are Sat/Sun (26.4%) -- A MARKET DATA DATE CANNOT BE A WEEKEND. (4) VALUE TIE-OUT, 856 portfolios: Sat/Sun 853/856 identical, Mon-vs-Sun 855/856, but Mon-vs-Fri only 147/856 (17.2%) -- three run-dates, ONE vintage. (5) consecutive non-weekend pairs differ on ~83% of rows."
+        },
+        "c3_vintage_field": {
+          "value": "NONE - no vendor valuation as-of exists at bronze (57 keys) OR silver (62 cols); nearest independent probe is lastRebalancedOn, a LOWER BOUND only",
+          "status": "MEASURED",
+          "evidence": "Absence now carries denominators at BOTH layers. Bronze body 856 records/57 keys - the dropped-column hypothesis was TESTED AND NEGATIVE (silver 62 = bronze 57 + 5 our-side riders; conversion dropped nothing). _source_as_of CONFIRMED DECORATIVE: distinct=1 and equal to the key in 7/7 partitions. lastRebalancedOn MAX never reaches its own key in 7/7 and equals key-minus-1-trading-day in 6/7."
+        },
+        "offset_label_to_vintage": {
+          "value": "MINUS 1 NYSE TRADING DAY (weekend/holiday run-dates repeat the preceding Friday)",
+          "status": "MEASURED",
+          "evidence": "BOTH BOUNDS CLOSED on an 856-portfolio join. UPPER (not D): Monday 08-10 pulled 14:48:07Z = 10:48 ET, market open 1h18m, is 99.9% identical to Sunday - an intraday-D snapshot would have moved. LOWER (not D-2): that same Monday is only 17.2% identical to date=08-07. Both meet at D-1. SUM(totalValue): 08-08 09,157,731.11 / 08-09 09,157,697.65 / 08-10 09,157,665.40 agree to ~$66 on $209M (three run-dates, ONE Friday vintage) while date=08-07 sits $1.05M away on Thursday vintage. DERIVED FROM ECLIPSE ALONE - the Orion normalizer was never consulted (no-resemblance-transfer constraint honoured); the numeric agreement with Orion is a measured coincidence of two current-state vendors."
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no eclipse normalizer found"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero normalize_as_of occurrences in the gold builder"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "load_inflection_model_history:459-466 maps axis date d -> partition d directly"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
+        },
+        "consequence": {
+          "value": "The missing 2026-08-06 is an INGEST-SIDE absence, not a silver-conversion failure: eclipse BRONZE lacks it too. Bronze and silver agree exactly -- 72 date folders vs 72 partitions, set difference EMPTY both directions.",
+          "status": "MEASURED",
+          "evidence": "992 bronze objects -> 72 date folders; 72 silver partitions. '2026-08-06' in bronze = False, in silver = False. Both carry 08-02 (Sun), 08-08 (Sat), 08-09 (Sun). LOAD-BEARING: eclipse WRITES ON WEEKENDS, so a THURSDAY gap cannot be a calendar artifact. ANY REMEDY AIMED AT THE SILVER CONVERTER MOVES NOTHING."
+        },
+        "known_defect": {
+          "value": "The ENTIRE inflection MODEL leg is served ONE TRADING DAY LATE. The value MDPF publishes under label 2026-08-07 is $208,111,397.12 = Thursday 2026-08-06 close. consumer_treats_c2_as_c3=true and normalizer_applied_by_mdpf=false, so nothing corrects it between silver and serving.",
+          "status": "MEASURED",
+          "evidence": "offset MEASURED at D-1; dim_mdpf_aggregate_aua_timeseries.py:450-464 applies no offset"
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "inherits 49F axis (VIOLATION)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis; route_bindings.yaml:33 forbids sibling-axis import"
+        },
+        "roll_forward_policy": {
+          "value": "NAMED GAP, no interpolation",
+          "status": "MEASURED",
+          "evidence": "load_inflection_model_history docstring"
+        },
+        "known_calendar_defect": {
+          "value": "SEVEN post-launch axis dates have NO eclipse partition, not one: 2026-05-21, 06-01, 07-01, 07-13, 07-14, 07-15, 08-06 -- including THREE CONSECUTIVE days in July. 7 of 57 = a 12.3% gap rate.",
+          "status": "MEASURED",
+          "evidence": "s3api list-objects-v2 --delimiter / -> CommonPrefixes=72, IsTruncated=None, span 2026-05-15..2026-08-09; explicit probe of date=2026-08-06/ returns rc=1; set-differenced against the 57 post-launch NYSE axis dates (INFLECTION_MODEL_LAUNCH='2026-05-15'). INDEPENDENTLY: gold-lambda stream line 64 @13:00:52Z 'inflection eclipse model history: 50/57 post-launch dates read; 7 NAMED gap(s)'. >> A FRONTIER LANDING ON AN ECLIPSE GAP IS ROUGHLY A 1-IN-8 EVENT. This is a RECURRING CLASS, not an incident, and a one-date remedy would be scoped against a systemic hole. (Also corrects my own '75 prefixes' -> 72, measured on two untruncated instruments.)"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/eclipse/inflection/silver/fact_portfolios_full",
+          "status": "MEASURED",
+          "evidence": "ECLIPSE_SILVER"
+        },
+        "writer": {
+          "value": "opal-assets-silver-eclipse",
+          "status": "MEASURED",
+          "evidence": "S3 notification config + time tie-out"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on eclipse/inflection/bronze/ suffix .json"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "22:31",
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps~Z landing census"
+        },
+        "latency_from_bronze_min": {
+          "value": 0.09,
+          "status": "MEASURED",
+          "evidence": "C1-to-C1 on both artifacts, n=4: 5-6s (median 5s). The inferred value of 1 was a MINUTE-TRUNCATION artifact (22:30 vs 22:31) -- true latency is ~11x smaller."
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-eclipse-sweep-daily cron(0 16)=16:00Z - fires 6h31m BEFORE the actual write; no-op status UNVERIFIED for this firm",
+          "status": "MEASURED",
+          "evidence": "schedule vs observed landing"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - gate refused to emit"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx fact_model_aum_daily",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10 prohibits it; route_bindings.yaml:33 already forbade it"
+        },
+        "violation": {
+          "value": "IMPORTS 49F AXIS. Direct cause of the 2026-08-10 refusal: frontier landed on 08-06, a date inflection never carried.",
+          "status": "MEASURED",
+          "evidence": "gate log + axis source read"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "producer log"
+        },
+        "last_verdict": {
+          "value": "FAIL limb (v): 7 presence disagreements across 1 date (2026-08-06), 7 of 7 model keys",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:57Z stream, 437 lines"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "publisher summary 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "date=2026-08-06 absent",
+            "ROW11 frontier-stamp stale (wears 08-06, measured as of 08-04)"
+          ],
+          "status": "MEASURED",
+          "evidence": "producer stream"
+        }
+      }
+    },
+    {
+      "pipeline_id": "inflection.custody",
+      "firm": "inflection",
+      "leg": "custody",
+      "vendor": "Orion",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "inf-api-assets-v2-daily",
+              "type": "rule",
+              "expr": "cron(32 13 * * ? *)",
+              "tz": "UTC",
+              "utc": "13:32",
+              "enabled": true
+            },
+            {
+              "name": "opal-assets-ingest-mirror-inf-daily",
+              "type": "rule",
+              "expr": "cron(15 14 * * ? *)",
+              "tz": "UTC",
+              "utc": "14:15",
+              "enabled": true,
+              "NAME_DEFECT": "does not name its pull location (orion); collides conceptually with the -cot- mirror that does eclipse"
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events list_rules"
+        },
+        "observed_run_utc": {
+          "value": {
+            "inf-api-assets-v2": "13:34:50-13:35:21",
+            "opal-assets-ingest-mirror-inf-daily": "14:15:55"
+          },
+          "status": "MEASURED",
+          "evidence": "describe-log-streams on both groups, 08-08..08-10. Orion bronze objects land 2026-08-10 14:15:55-56Z."
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/orion/inflection/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": "opal-assets-ingest-mirror (SINGLE shared function, NOT firm-scoped)",
+          "status": "MEASURED",
+          "evidence": "Same deployed package, MAP row1 :93-113 -> orion/inflection/bronze/. EXERCISED 08-10 14:15:58Z: written=4 verified=4. CROSS-PROOF that neither schedule is firm-scoped: the -inf- 14:15Z rule wrote ECLIPSE bronze (2026-08-06T14:15:59Z) and the -cot- 22:30Z schedule wrote ORION bronze (2026-08-07T22:30:59Z)."
+        },
+        "c1_write_clock_utc": {
+          "value": "14:15:55 UTC (2026-08-10)",
+          "status": "MEASURED",
+          "evidence": "4,748-object listing, true UTC: assets/positions 14:15:55, performance/transactions 14:15:56. Ties to the 14:15Z mirror within 55s and to the 14:16Z silver write -- the 1-minute latency inference now has a directly observed bronze clock under it."
+        },
+        "key_grammar": {
+          "value": "*.jsonl.gz",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix filter"
+        },
+        "c3_provenance_field": {
+          "value": "asOfDate",
+          "status": "MEASURED",
+          "evidence": "silver date=2026-08-07 read, distinct=1"
+        },
+        "c3_provenance_independent": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "DECORATIVE: asOfDate ECHOES THE REQUEST (~Z P0-2R: 'asking for 08-07 returns asOfDate 2026-08-07 whatever the data is'). _source_as_of is OUR copy of the partition key (mirror_conversion.py:430)."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE (forward-labeled)",
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof.py:128-138 SEALED 2026-07-02: 'Orion pre-open forward-labels the prior settled close as the run-date'"
+        },
+        "c3_vintage_field": {
+          "value": "NONE - true vintage appears nowhere in the artifact",
+          "status": "MEASURED",
+          "evidence": "recovered only by subtracting a trading day downstream"
+        },
+        "offset_label_to_vintage": {
+          "value": "MINUS 1 NYSE TRADING DAY",
+          "status": "MEASURED",
+          "evidence": "orion_normalize_as_of = prior_trading_day"
+        },
+        "normalizer_exists": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "data/inf/scripts/silver/_orion_vendor_asof.py orion_normalize_as_of"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "ZERO occurrences of orion_normalize_as_of / prior_trading_day in dim_mdpf_aggregate_aua_timeseries.py"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "load_inflection_custody_history:405-411 maps axis date d -> partition d directly"
+        },
+        "consequence": {
+          "value": "CONFIRMED AND LIVE. Orion silver is NOT normalised anywhere, so MDPF labels inflection custody ONE NYSE TRADING DAY LATE across the entire 439-date axis on the SERVED client-facing number -- and the artifact affirmatively declares lag_vs_as_of_days: 0.",
+          "status": "MEASURED",
+          "evidence": "FOUR LEGS. (1) DEPLOYED opal-assets-silver-orion unzipped, 7 files/2408 lines: ZERO matches for normalize_as_of|prior_trading_day|orion_normalize. (2) KILL TEST: Sat 08-08 / Sun 08-09 / Mon 08-10 partitions IDENTICAL on currentPrice+currentValue across 35,262 joined rows, 0 diffs, sum 209,373,343.50 all three; Fri 08-07 vs Sat differs on 31.24% of prices. Write clock: date=2026-08-10 written 14:16:05Z = 10:16 ET, 5h44m BEFORE the 08-10 close, so it CANNOT contain it. (3) vendor pulls land 13:35-13:53Z (pre-close) 08-03..08-10, exactly the regime the SEALED normalizer describes. (4) SERVED TIE-OUT EXACT TO THE CENT: platinum inflection dates[-1]=2026-08-05, partner_custody_total[-1]=209,431,383.43 == independently recomputed sum over orion silver date=2026-08-05. 2026-08-05 is a WEDNESDAY; prior_trading_day = TUESDAY 2026-08-04."
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "no second date axis exists in this artifact (eclipse loader cols: id,modelId,model,totalValue,isDeleted; orion has no assignment_date)"
+        },
+        "known_defect": {
+          "value": "Orion custody bronze IS CURRENT through 2026-08-10 (14:15:55Z) while the leg is SERVED at 2026-08-05. The leg's serving lag is DOWNSTREAM (frontier/gate), not an ingest defect.",
+          "status": "MEASURED",
+          "evidence": "4,748-object census; publisher manifest serves inflection/aum-metrics from 2026-08-05.json. DISTINGUISHES an INGEST defect from a SERVING lag -- different owners, different remedies."
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "inherits 49F axis (VIOLATION)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "roll_forward_policy": {
+          "value": "None at a date with no partition (honest-None)",
+          "status": "MEASURED",
+          "evidence": "load_inflection_custody_history:397-413"
+        },
+        "known_calendar_defect": {
+          "value": "date=2026-08-06 ABSENT; 439/440 axis dates covered, 1 named gap",
+          "status": "MEASURED",
+          "evidence": "producer log 2026-08-10"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/orion/inflection/silver/fact_assets",
+          "status": "MEASURED",
+          "evidence": "ORION_SILVER:75"
+        },
+        "writer": {
+          "value": "opal-assets-silver-orion",
+          "status": "MEASURED",
+          "evidence": "S3 notification config + time tie-out"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on orion/inflection/bronze/ suffix .jsonl.gz"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "14:16",
+          "status": "MEASURED",
+          "evidence": "~Z landing census"
+        },
+        "latency_from_bronze_min": {
+          "value": 0.15,
+          "status": "MEASURED",
+          "evidence": "C1-to-C1, n=7, every orion assets date 08-03..08-10: 8-10s (median 10s). Same minute-truncation artifact."
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-orion-sweep-daily cron(0 16)=16:00Z - fires 1h44m AFTER the actual write; no-op status UNVERIFIED for this firm",
+          "status": "MEASURED",
+          "evidence": "schedule vs observed landing"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (build_firm_timeseries)",
+          "status": "MEASURED",
+          "evidence": ":769"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - scope refused"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "49financial smartx fact_model_aum_daily",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis:819-835"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10"
+        },
+        "violation": {
+          "value": "IMPORTS 49F AXIS",
+          "status": "MEASURED",
+          "evidence": "same as inflection.model"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "producer log"
+        },
+        "last_verdict": {
+          "value": "contributes to inflection scope FAIL",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 stream"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "inflection scope, publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "date=2026-08-06 absent",
+            "orion label offset not applied by MDPF"
+          ],
+          "status": "MEASURED",
+          "evidence": "above"
+        }
+      }
+    },
+    {
+      "pipeline_id": "cottonwood.model",
+      "firm": "cottonwood",
+      "leg": "model",
+      "vendor": "BlackDiamond",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "cot-rebalancer-runner-daily",
+              "type": "rule",
+              "expr": "cron(0 6 * * ? *)",
+              "tz": "UTC",
+              "utc": "06:00",
+              "enabled": true
+            },
+            {
+              "name": "cot-bd-session-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 16 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "20:30",
+              "enabled": true
+            },
+            {
+              "name": "cot-etf-ownership-daily-schedule",
+              "type": "rule",
+              "expr": "cron(30 10 * * ? *)",
+              "tz": "UTC",
+              "utc": "10:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "events + scheduler enumeration"
+        },
+        "observed_run_utc": {
+          "value": {
+            "cot-rebalancer-runner": "06:00"
+          },
+          "status": "MEASURED",
+          "evidence": "0.7.0_AE_CloudOps landing census, n=1229 over 6 days"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/bronze/",
+          "status": "MEASURED",
+          "evidence": "S3 notification filter"
+        },
+        "writer": {
+          "value": "cot-rebalancer-runner",
+          "status": "MEASURED",
+          "evidence": "CTO ruling 2026-08-07; key signature 'page_%03d.json' at lambda_function.py:259"
+        },
+        "c1_write_clock_utc": {
+          "value": "06:00:44",
+          "status": "MEASURED",
+          "evidence": "AE landing census"
+        },
+        "key_grammar": {
+          "value": "*.xlsx (silver trigger) + page_%03d.json",
+          "status": "MEASURED",
+          "evidence": "S3 notification suffix + producer source"
+        },
+        "c3_provenance_field": {
+          "value": "pagedResults[].lastUpdate -- a Black Diamond per-model timestamp; 62 distinct values 2026-05-29..2026-08-07.",
+          "status": "MEASURED",
+          "evidence": "Opened bronze/rebalancer_models/2026-08-10/page_000.json; all 18 distinct leaf paths enumerated; 62 models, totalResultCount=62. The bronze XLSX legs carry NOTHING -- this JSON leg is the only cottonwood bronze with any vendor stamp at all."
+        },
+        "c3_provenance_independent": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "Values range MONTHS before the 2026-08-10 key (oldest 73 days), so it demonstrably CAN and DOES disagree -- BUT IT IS A MODEL-DEFINITION EDIT CLOCK, NOT A DATA VINTAGE. Passes the can-disagree test and still answers the wrong question: it dates the MODEL, never the SNAPSHOT."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "13/13 gold partitions read: date=2026-08-08 carries value_date 2026-08-06"
+        },
+        "c3_vintage_field": {
+          "value": "value_date",
+          "status": "MEASURED",
+          "evidence": "parquet read, constant per partition"
+        },
+        "c4_roster_field": {
+          "value": "assignment_date",
+          "status": "MEASURED",
+          "evidence": "parquet read; ONLY firm with a C4"
+        },
+        "offset_label_to_vintage": {
+          "value": "VARIABLE (D+1 to D+2, and re-runs mint duplicate partitions per value_date)",
+          "status": "MEASURED",
+          "evidence": "13-partition table"
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof explicitly excludes bd: 'their labels are accurate'"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice re-keys on value_date (G7 re-key) - CORRECT PATTERN"
+        },
+        "known_defect": {
+          "value": "REMEDIED. The point-in-time fix landed @dadd5d64f9 2026-08-10T17:54:43Z -- 1h11m BEFORE this artifact was generated at 19:05Z.",
+          "status": "MEASURED",
+          "evidence": "git log -1 dadd5d64f9: '0.4.0_DS_ClientPlatform fix(MDPF repair): point-in-time wins the value_date collision -- earliest assignment_date, guard surfaces instead of refusing'. DS session log @e8f2064ea3 records 'landed + deployed ... COO-ACCEPTED 180957Z'. LISTING A DISCHARGED ITEM AS OPEN RE-DISPATCHES FINISHED WORK."
+        },
+        "consequence": {
+          "value": "NONE beyond the recorded C3/C4 collapse (now remedied). The model leg's bronze->silver lineage is clock-coherent.",
+          "status": "MEASURED",
+          "evidence": "Paired true-UTC head-object, run date 2026-08-10: bronze 06:00:43/44 -> silver 06:00:53/54/55 = 9-12s."
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "OWN measured frontier (self_derived_axis) - ON PATTERN",
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice.py self_derived_axis, ruling @440d16e018"
+        },
+        "roll_forward_policy": {
+          "value": "CARRY WINDOW, roster-derived, D+2 measured 14/14",
+          "status": "MEASURED",
+          "evidence": ":1837-1873"
+        },
+        "known_calendar_defect": {
+          "value": "R-21: point_class asserts 'measured' on rows whose cottonwood component is CARRIED",
+          "status": "MEASURED",
+          "evidence": "MDPF_REMEDIATION_REGISTER R-21"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_model_{roster,blend,assignment}",
+          "status": "MEASURED",
+          "evidence": "aws s3 ls"
+        },
+        "writer": {
+          "value": "opal-assets-silver-blackdiamond",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "s3:ObjectCreated on blackdiamond/cottonwood/bronze/ suffix .xlsx"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "06:00:5x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object fact_model_roster/date=2026-08-10 = 06:00:53 GMT; fact_model_assignment = 06:00:54 GMT. THE PRIOR '02:00:5x' WAS THE LOCAL EDT STRING `aws s3 ls` PRINTS. Bronze fires cron(0 6) UTC and writes 06:00:44Z; silver lands 06:00:53Z -- NINE SECONDS LATER. G-5's premise is DISSOLVED: there is no silver-precedes-bronze anomaly on this leg and nothing to resolve."
+        },
+        "latency_from_bronze_min": {
+          "value": 0.17,
+          "status": "MEASURED",
+          "evidence": "CONTRADICTION RESOLVED. Paired head-object in TRUE UTC: bronze 06:00:43/44 -> silver 06:00:53/54/55 = 9-12s. The recorded '02:00:5x' silver clock came from an aws s3 ls LISTING, which renders LastModified in LOCAL time (EDT). SILVER DOES NOT PRECEDE ITS BRONZE. G-5's flagged anomaly was a timezone-rendering artifact."
+        },
+        "decoy_schedule": {
+          "value": "CONVERSION no-op CONFIRMED for this firm (0 units converted, set-identity PASS 814/814, 1.4s) -- but it WRITES a manifest AND rewrites backfill-status.json daily. NOT a wrote-nothing no-op.",
+          "status": "MEASURED",
+          "evidence": "Own manifest 20260810T050009Z: mode sweep, units_seen 0, set_identity_pre == set_identity_post == {expected 814, landed 814, matched 814, verdict PASS}. Deployed mirror_conversion.py write_manifest:831 + write_layer_status:859 are UNCONDITIONAL. Retiring it would silently retire the backfill-status producer."
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/gold/dim_model_portfolio/",
+          "status": "MEASURED",
+          "evidence": "COTTONWOOD_GOLD:98"
+        },
+        "c1_write_clock_utc": {
+          "value": "13:00:39-41 (floor-written since 08-08; irregular before)",
+          "status": "MEASURED",
+          "evidence": "13-partition write-clock table"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "SELF (own two legs)",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "ON-PATTERN; the reference implementation for the remediation"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "compliant"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Confirmed by artifact ABSENCE: gold/mdpf_revamp/cottonwood newest object is 2026-08-07 22:46:59Z -- nothing on 08-08/09/10, consistent with the slice-builder failing before the cross-axis gate. Grounded on missing output, not only on log narrative."
+        },
+        "last_verdict": {
+          "value": "FAIL - VALUE_DATE COLLISION at value_date=2026-08-06: {'2026-08-07': 133914199.99, '2026-08-08': 139213957.62}",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:41Z; root cause = 10 accounts re-labelled at Black Diamond from Passive 80/-- into Opal Satellite 80"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "value_date collision (remedy ruled, 1 line, DS)",
+            "R-21 point_class"
+          ],
+          "status": "MEASURED",
+          "evidence": "above"
+        }
+      }
+    },
+    {
+      "pipeline_id": "cottonwood.custody",
+      "firm": "cottonwood",
+      "leg": "custody",
+      "vendor": "BlackDiamond",
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "cot-bd-session-daily-et",
+              "type": "scheduler",
+              "expr": "cron(30 16 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "20:30",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule"
+        },
+        "observed_run_utc": {
+          "value": {
+            "forwardfill_v2": "20:31"
+          },
+          "status": "MEASURED",
+          "evidence": "AE anchor sweep 2; moved from 02:0xZ on the 2026-08-06 ce99054e44 apply"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily; no mask"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": "s3://opal-data-cot/forwardfill_v2/holdings/",
+          "status": "MEASURED",
+          "evidence": "AE full-history census n=47"
+        },
+        "writer": {
+          "value": "cot-bd-session-trigger (OIDC auth job chain)",
+          "status": "MEASURED",
+          "evidence": "CTO correction 2026-08-10"
+        },
+        "c1_write_clock_utc": {
+          "value": "20:31 (was 02:0x pre-2026-08-06)",
+          "status": "MEASURED",
+          "evidence": "write-hour histogram 02:xx=33 14:xx=7 20:xx=4"
+        },
+        "key_grammar": {
+          "value": "HOLDINGS_DAILY_{D}.xlsx",
+          "status": "MEASURED",
+          "evidence": "AE census"
+        },
+        "c3_provenance_field": {
+          "value": "NONE -- the vendor xlsx carries no date field of any kind. The only date carrier is the FILENAME.",
+          "status": "MEASURED",
+          "evidence": "Downloaded HOLDINGS_DAILY_2026-08-07.xlsx: 8 zip members, NO docProps/core.xml (so no OOXML created/modified metadata); 19 sheet columns enumerated, ZERO date columns. >> ANDREW'S PREMISE THAT 'all these raw files have meta data of their provenance' DOES NOT HOLD FOR THIS FEED."
+        },
+        "c3_provenance_independent": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "No in-file field exists to disagree with the key (19 cols, 8 members, no core.xml). The filename IS the key's source, so it cannot be independent of it by construction."
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "DATA_DATE",
+          "status": "MEASURED",
+          "evidence": "THREE legs, none of them the filename. (a) TEMPORAL IMPOSSIBILITY: the partition is written strictly AFTER D in every observed case (date=2026-08-07 written 2026-08-08T22:31:25Z), so D cannot be a run date. (b) WEEKEND OCCUPANCY with a same-bucket control: 0 of 34 cottonwood partitions since 2026-06-22 fall on a weekend, while orion IN THE SAME BUCKET has 18 of 60 weekend partitions on a flat weekday histogram. A daily-unmasked RUN date produces weekend partitions; a DATA date cannot. (c) the persisted BD query template: dateRangeType Custom, startDate==endDate -- a single-day snapshot on an explicit date parameter, not a run-stamped extract."
+        },
+        "c3_vintage_field": {
+          "value": "NONE -- silver carries only _source_as_of, which is OUR copy of the filename token (DECORATIVE).",
+          "status": "MEASURED",
+          "evidence": "fact_holdings date=2026-08-07: rows=17,113, cols=24 enumerated. The only date-shaped column is _source_as_of, distinct=1, identical to the key and the filename. This leg has NO independent vintage at any layer."
+        },
+        "offset_label_to_vintage": {
+          "value": "FRAME-DEPENDENT. UTC: D+2=25/47, D+1=8/47. America/New_York: D+1=29/47, D+2=5/47.",
+          "status": "INFERRED",
+          "evidence": "Full 47-object lag census in NYSE trading days, both frames. THE RECORDED '(D+1 twice in 47)' REPRODUCES IN NEITHER FRAME. The 33 pre-08-06 writes at 02:0xZ are 22:0x the PREVIOUS EVENING in ET, which flips the mode. The producer schedule is declared in America/New_York, so ET is the natural frame and the historical steady state is D+1, NOT D+2. A re-timing decision taken on 'D+2' would be taken on the wrong number. BOUND: these keys are OVERWRITTEN IN PLACE, so LastModified is a LAST-WRITE clock, not an arrival clock."
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "_orion_vendor_asof: 'bd labels are accurate'"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "none needed"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "REFUTED, the prior false CLAIMED A PROTECTION THE CODE DOES NOT HAVE. self_derived_axis:335-350 @98a31f85b3 unions gold value_dates with fact_holdings PARTITION KEYS, then holdings_total_by_date:356-395 reads fact_holdings/date={d} where d is an AXIS date -- the partition key used verbatim as the data date, no translation. MITIGATING: _source_file on fact_holdings/date=D is HOLDINGS_DAILY_{D}.xlsx (distinct=1, verified 2 partitions), so C2 here IS the data date today and the mapping is currently harmless. The correct re-key pattern belongs to the MODEL leg ALONE."
+        },
+        "known_defect": {
+          "value": "MDPF_3FIRMS_PRD claimed 'D+1 ~03:30Z' at 5 sites - NEVER TRUE (03:xx occupancy 0 of 47). STRUCK @1f44450356.",
+          "status": "MEASURED",
+          "evidence": "AE anchor sweep 2 @73c979df20"
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "All 24 fact_holdings columns enumerated; no assignment/roster date. The C4 lives on the cottonwood MODEL leg, not here -- sharpens 'only firm with a C4' to only one LEG of that firm."
+        },
+        "consequence": {
+          "value": "REAL PRECEDENCE INVERSION ON THIS LEG (and it is NOT the one that was flagged): the silver partition for date=D is written ~24h BEFORE the bronze for that same date lands. Either the recorded bronze prefix is not this silver's actual source, or silver has a second unrecorded source.",
+          "status": "MEASURED",
+          "evidence": "Three-home true-UTC head-object table: data-date 08-05 -> cot 08-07 20:31:03 / mirror 08-07 22:31:08 / SILVER 08-06 22:31:15. 08-06 -> 08-08 20:31:03 / 08-08 22:31:06 / SILVER 08-07 22:31:28. 08-07 -> 08-10 20:31:08 / 08-09 22:31:05 / SILVER 08-08 22:31:25. Rows for 08-03 and 08-04 ARE coherent (+7s, +10s), so the inversion BEGAN between data dates 08-04 and 08-05."
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "OWN measured frontier (fact_holdings leg of self_derived_axis)",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "roll_forward_policy": {
+          "value": "CARRY WINDOW (shared with model leg)",
+          "status": "MEASURED",
+          "evidence": ":1837-1873"
+        },
+        "known_calendar_defect": {
+          "value": "relationship-grain rows double-count if summed naively; collapse_relationship_grain required",
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-04"
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings",
+          "status": "MEASURED",
+          "evidence": "build_cottonwood_mdpf_slice holdings_available_dates"
+        },
+        "writer": {
+          "value": "opal-assets-silver-blackdiamond",
+          "status": "MEASURED",
+          "evidence": "S3 notification config"
+        },
+        "trigger_type": {
+          "value": "S3_EVENT",
+          "status": "MEASURED",
+          "evidence": "bucket notification"
+        },
+        "trigger_name": {
+          "value": "bucket notification (opal-data-assets)",
+          "status": "MEASURED",
+          "evidence": "get_bucket_notification_configuration"
+        },
+        "c1_write_clock_utc": {
+          "value": "22:31:2x UTC",
+          "status": "MEASURED",
+          "evidence": "head-object fact_holdings/date=2026-08-07/data.parquet = 2026-08-08 22:31:25 UTC."
+        },
+        "latency_from_bronze_min": {
+          "value": -1439.7,
+          "status": "MEASURED",
+          "evidence": "NEGATIVE LATENCY IS THE FINDING, not a sign error. date=2026-08-07: silver 08-08 22:31:25Z vs its mirrored bronze 08-09 22:31:05Z = silver is 23h59m40s BEFORE the bronze. The recorded lineage cannot be the operative one for this leg. Distinct from the (dissolved) cottonwood.model timezone artifact."
+        },
+        "decoy_schedule": {
+          "value": "opal-assets-silver-blackdiamond-sweep-daily cron(0 5)=05:00Z",
+          "status": "MEASURED",
+          "evidence": "events list_rules"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "in-run (holdings_total_by_date)",
+          "status": "MEASURED",
+          "evidence": "source read"
+        },
+        "c1_write_clock_utc": {
+          "value": "NOT WRITTEN 2026-08-10; last written 2026-08-07 22:46:59Z",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/cottonwood, 5 objects, boto3 true UTC."
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "SELF",
+          "status": "MEASURED",
+          "evidence": "self_derived_axis"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": true,
+          "status": "MEASURED",
+          "evidence": "ON-PATTERN"
+        },
+        "violation": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "compliant"
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "Same artifact-absence grounding as the model leg: no cottonwood gold object since 2026-08-07 22:46:59Z."
+        },
+        "last_verdict": {
+          "value": "contributes to cottonwood scope FAIL",
+          "status": "MEASURED",
+          "evidence": "2026-08-10"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-06",
+          "status": "MEASURED",
+          "evidence": "cottonwood scope"
+        },
+        "open_defects": {
+          "value": [
+            "all 4 cottonwood surfaces served from 2026-08-06 gold while cottonwood gold has not been written since 2026-08-07 22:46:59Z -- the publisher is re-serving a stale source",
+            "silver/bronze clock inversion on this leg (silver precedes its recorded bronze by ~24h)"
+          ],
+          "status": "MEASURED",
+          "evidence": "platinum/mdpf/_manifests/latest.json 14 rows: all four cottonwood surfaces src=2026-08-06.json, platinum objects re-written 2026-08-10 13:50:49-50Z. THE PUBLISHER REPORTS published=14 all_present=True WHILE RE-PUBLISHING A STALE SOURCE -- A GREEN PUBLISH IS NOT A FRESH SERVE."
+        }
+      }
+    },
+    {
+      "pipeline_id": "global.composition",
+      "firm": "global",
+      "leg": "composition",
+      "vendor": null,
+      "is_axis_source": false,
+      "ingestion": {
+        "triggers": {
+          "value": [
+            {
+              "name": "mdpf-scheduled-floor",
+              "type": "scheduler",
+              "expr": "cron(0 9 * * ? *)",
+              "tz": "America/New_York",
+              "utc": "13:00",
+              "enabled": true
+            }
+          ],
+          "status": "MEASURED",
+          "evidence": "scheduler.get_schedule"
+        },
+        "observed_run_utc": {
+          "value": {
+            "floor": "13:00:39-59"
+          },
+          "status": "MEASURED",
+          "evidence": "08-08/09/10 streams"
+        },
+        "weekday_mask": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "daily"
+        }
+      },
+      "bronze": {
+        "prefix": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - global has no vendor feed"
+        },
+        "writer": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "key_grammar": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c3_provenance_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c3_provenance_independent": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "date_semantics": {
+        "c2_partition_meaning": {
+          "value": "RUN_DATE",
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/_aggregate_aua/ 442 objects. PROOF BY DISAGREEMENT: file 2026-08-05.json carries as_of_date 2026-08-04; 2026-08-06.json carries 2026-08-05. Filename != content vintage."
+        },
+        "c3_vintage_field": {
+          "value": "as_of_date -- BUT IT DEGENERATES TO THE RUN DATE WHEN THE ARTIFACT IS EMPTY",
+          "status": "MEASURED",
+          "evidence": "11 top-level keys. Across 6 recent files: 08-04->08-04, 08-05->08-04, 08-06->08-05, 08-09->08-09, 08-10->08-10. The last two are the ZEROED ones -- when partners=0 the as_of collapses onto the run date. THE VINTAGE FIELD IS ONLY INDEPENDENT WHILE THE PAYLOAD IS NON-EMPTY: AN EMPTY ARTIFACT WEARS TODAY'S DATE, which is exactly when a reader most needs it to be honest."
+        },
+        "offset_label_to_vintage": {
+          "value": "T+1 while populated (file date=D carries as_of D-1 trading day); ZERO offset when empty (file date=D carries as_of D)",
+          "status": "MEASURED",
+          "evidence": "08-05->08-04, 08-06->08-05 (T+1, weekend-correct). 08-09->08-09 and 08-10->08-10 -- the offset collapses to 0 exactly when partners=0."
+        },
+        "normalizer_exists": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "no normalizer in the builder"
+        },
+        "normalizer_applied_by_mdpf": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "zero occurrences"
+        },
+        "consumer_treats_c2_as_c3": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "The publisher selects its source by DATA date, not run date: the manifest names source_key .../global/aum-metrics/2026-08-05.json while run_id is 20260810T135046Z. CORRECT PATTERN -- global does not conflate the two, unlike the 49F/inflection legs."
+        },
+        "c4_roster_field": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "11 top-level keys enumerated; as_of_by_partner is a vintage map, not a roster date."
+        },
+        "consequence": {
+          "value": "AN ALL-ZERO GLOBAL AGGREGATE IS BEING EMITTED DAILY WITH reconciliation status PASS. Started 2026-08-09 and nothing reported it.",
+          "status": "MEASURED",
+          "evidence": "_aggregate_aua/2026-08-09.json and 2026-08-10.json: opal_aggregate_aua=0, model_aua=0, non_model_aua=0, partners=[], meta.feeders_missing=['49financial','inflection'], source_vintage.status='UNKNOWN', identity_1_aggregate_sum.status='PASS' residual 0 -- BECAUSE 0 == 0+0+0. Populated controls: 08-04 $1,785,080,124.89 and 08-06 $1,786,151,746.33, partners=2, recon=PASS. THE HEADLINE IDENTITY GATE CANNOT FAIL ON AN EMPTY ARTIFACT -- it passes on the confirming limb."
+        },
+        "known_defect": {
+          "value": "Two: (a) the zeroed-but-PASS artifact; (b) as_of_date degenerates to the run date precisely when the payload is empty, so THE EMPTIEST ARTIFACT WEARS THE FRESHEST LABEL.",
+          "status": "MEASURED",
+          "evidence": "Same 6-file read."
+        }
+      },
+      "calendar_basis": {
+        "basis": {
+          "value": "the shared canonical axis (49F-derived)",
+          "status": "MEASURED",
+          "evidence": "derive_canonical_axis"
+        },
+        "roll_forward_policy": {
+          "value": "cottonwood leg carries; inflection leg named-gap",
+          "status": "MEASURED",
+          "evidence": ":2024, :2047"
+        },
+        "known_calendar_defect": {
+          "value": "_aggregate_aua has NO 2026-08-07 or 2026-08-08 file at all, so the daily series has a 2-day hole immediately before the zeroed 08-09/08-10 pair. 2026-08-07 was a FRIDAY -- a trading day -- so this is not a weekend artifact.",
+          "status": "MEASURED",
+          "evidence": "Direct get_object on 08-03..08-10: 08-03 NoSuchKey, 08-04 OK, 08-05 OK, 08-06 OK, 08-07 NoSuchKey, 08-08 NoSuchKey, 08-09 OK(zero), 08-10 OK(zero). Denominator 442 objects. The Friday absence is a real miss; the Saturday absence is not."
+        }
+      },
+      "silver": {
+        "prefix": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a - composes gold"
+        },
+        "writer": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "trigger_type": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "trigger_name": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "latency_from_bronze_min": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        },
+        "decoy_schedule": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "n/a"
+        }
+      },
+      "gold": {
+        "artifact": {
+          "value": "s3://opal-data-assets/gold/mdpf_revamp/global/",
+          "status": "MEASURED",
+          "evidence": "producer"
+        },
+        "c1_write_clock_utc": {
+          "value": null,
+          "status": "MEASURED",
+          "evidence": "NOT WRITTEN 2026-08-10 - inherited the inflection+cottonwood failures"
+        }
+      },
+      "cross_firm": {
+        "axis_source_consumed": {
+          "value": "all firms (PERMITTED)",
+          "status": "MEASURED",
+          "evidence": "Andrew-direct 2026-08-10: 'Global dependent upon the most recent date from all underlying firms... that is the ONLY dependency that should exist'"
+        },
+        "compliant_with_no_cross_firm_rule": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "SOURCE-READ :2674-2686 @3679bb0353, deploy-parity MATCH: :2678 arts[FIRM_49F]=build_49f_artifact(); :2682 shared_axis = arts[FIRM_49F]['dates']; :2683 build_inflection_artifact(axis=shared_axis). BUILDING GLOBAL IMPOSES 49F's ENTIRE 439-DATE AXIS ON INFLECTION (served n_dates=439 confirmed). Exceeds Andrew's permission on BOTH counts: the whole axis rather than the most-recent date, and ONE firm's frontier rather than all firms'. >> MY EARLIER CITATION :1680-1723 WAS WRONG -- that is the cottonwood LEG PIN inside _assert_global_composition, a GATE not a data dependency, and it can neither support nor refute this cell."
+        },
+        "violation": {
+          "value": "YES -- global's dependency EXCEEDS 'the most recent date from all underlying firms'. build_global_artifact unions all three firms' FULL axes (~440 dates), sums per date, PINS the cottonwood leg into the headline, and ROLLS COTTONWOOD FORWARD across every no-delivery axis date.",
+          "status": "MEASURED",
+          "evidence": "dim_mdpf_aggregate_aua_timeseries.py:1956 build_global_artifact -- the dates = sorted(set|set|set) union, cot_carry = _cot_roll_forward_map(...) ('the cottonwood value CARRIES the last MEASURED figure on EVERY axis date with no delivery'), and the COTTONWOOD LEG PIN at :1612. G-6 ANSWERED: Andrew permitted a most-recent-date dependency; the implemented dependency is a FULL-HISTORY value-and-presence coupling."
+        }
+      },
+      "gate_state": {
+        "cross_axis_limb_v_run": {
+          "value": false,
+          "status": "MEASURED",
+          "evidence": "gold/mdpf_revamp/global newest object 2026-08-07 03:52:14Z, 5 objects -- no global gold on 08-08/09/10. The composition gate raises SystemExit before emitting, so absence of output IS the refusal. BUT the SEPARATE _aggregate_aua channel emitted anyway, zeroed and PASSing, on both 08-09 and 08-10."
+        },
+        "last_verdict": {
+          "value": "FAIL - legs ['inflection','cottonwood'] failed",
+          "status": "MEASURED",
+          "evidence": "2026-08-10 13:00:58Z"
+        }
+      },
+      "serving": {
+        "served_as_of": {
+          "value": "2026-08-05",
+          "status": "MEASURED",
+          "evidence": "publisher 2026-08-10"
+        },
+        "open_defects": {
+          "value": [
+            "inherits every leg failure by construction"
+          ],
+          "status": "MEASURED",
+          "evidence": "cycle log"
+        }
+      }
+    }
+  ],
+  "serving_chain": {
+    "floor": {
+      "value": {
+        "name": "mdpf-scheduled-floor",
+        "utc": "13:00",
+        "target": "mdpf-gold-lambda"
+      },
+      "status": "MEASURED",
+      "evidence": "scheduler.get_schedule"
+    },
+    "accrual_bridge": {
+      "value": {
+        "name": "mdpf-accrual-bridge-daily",
+        "utc": "13:40"
+      },
+      "status": "MEASURED",
+      "evidence": "scheduler.get_schedule"
+    },
+    "publisher": {
+      "value": {
+        "name": "opal-assets-mdpf-portal-publisher-daily",
+        "utc": "13:50",
+        "last_result": "published=14 unchanged=0 failed=0 all_present=True"
+      },
+      "status": "MEASURED",
+      "evidence": "2026-08-10 13:50:48Z"
+    },
+    "ORDERING_DEFECT": {
+      "value": "THE FLOOR READS AT 13:00Z. The axis source (smartx silver) is WRITTEN AT 13:41:51Z - 41 minutes LATER. Inflection custody 14:16Z (+1h16m). Inflection model 22:31Z (+9h31m). Only cottonwood (02:00Z silver) and schwab (12:15Z) beat the floor.",
+      "status": "MEASURED",
+      "evidence": "landing census + schedule enumeration"
+    }
+  },
+  "holes": [
+    {
+      "id": "G-1a",
+      "question": "WHAT INVOKES opal-assets-silver-smartx AT 13:41Z?",
+      "why_it_matters": "It is the AXIS SOURCE for every firm. It cannot be re-timed until it is identified, and it is the single most load-bearing schedule in MDPF.",
+      "ruled_out": [
+        "bucket notification (8/8 configs read, smartx absent)",
+        "EventBridge rule (139 rules scanned, none targets it)"
+      ],
+      "remaining_candidate": "direct identity-based invoke by smartx-assets-daily-pull (ended 13:30:51Z, 11min before)",
+      "fill_by": "read the smartx-assets-daily-pull source for an invoke call",
+      "owner": "0.7.0_AE_CloudOps",
+      "blocks": "any floor/pull re-timing",
+      "status": "CLOSED - MECHANISM NAMED AND VERIFIED ON THE LIVE PRIMITIVE",
+      "answer": "Lambda async DESTINATION (OnSuccess) on smartx-assets-daily-pull. Deliberate design, chosen OVER an S3 completion key: the TF states 'a metadata completion key that something dispatches on is a back-door release' (the Door-6 lesson).",
+      "consequence_for_cadence": "THE CONVERTER IS RE-TIMEABLE BY MOVING THE PULL -- the chain follows automatically. No new trigger is required. This was the blocker on the cadence remediation and it is removed."
+    },
+    {
+      "id": "G-2",
+      "question": "Bronze provenance field NAME and VALUE per feed, and is it INDEPENDENT of the partition key?",
+      "why_it_matters": "Andrew: 'all these raw files have meta data of their provenance'. Two of two measured so far are DECORATIVE.",
+      "fill_by": "open the newest bronze file per feed; name the vendor as-of field; test whether it can disagree with the key",
+      "owner": "0.7.0_AE_CloudOps",
+      "rows_open": 5,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-3a",
+      "question": "Is orion silver already normalised upstream before MDPF reads it?",
+      "why_it_matters": "If NOT, MDPF labels inflection custody ONE TRADING DAY LATE across the whole axis, on a client-facing number.",
+      "fill_by": "read the opal-assets-silver-orion writer for a prior_trading_day call",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-3b",
+      "question": "Is eclipse's date= partition the RUN date or the DATA date?",
+      "why_it_matters": "Eclipse is the MODEL leg - the one that fails. If it is a run date, inflection is NOT missing 08-06 and the whole diagnosis moves.",
+      "not_measurable_from": "the artifact (62 cols, no vendor as-of; _source_as_of is our own copy of the key)",
+      "fill_by": "eclipse ingest source, or a vendor probe",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "HIGH",
+      "status": "CLOSED - promoted to MEASURED, all 3 cells"
+    },
+    {
+      "id": "G-3c",
+      "question": "Schwab custody date semantics",
+      "fill_by": "same method as G-3a/b",
+      "owner": "unassigned",
+      "status": "OPEN - NOW HIGH PRIORITY",
+      "status_note": "Schwab is the ONLY custody feed whose date semantics rest on a docstring inside ANOTHER vendor's module. Same structural position eclipse held this morning."
+    },
+    {
+      "id": "G-4",
+      "question": "Roll-forward / carry policy per firm, and which gates can trip on it",
+      "known_defect": "R-21 point_class asserts 'measured' on carried cottonwood rows",
+      "fill_by": "read each firm's carry policy + the point_class assignment",
+      "owner": "unassigned",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-5",
+      "question": "Silver->gold arrival with C3 per feed; and cottonwood silver 02:00Z appears to PRECEDE its bronze 06:00Z",
+      "why_it_matters": "A silver that precedes its own bronze is either a different writer or a different day's data.",
+      "fill_by": "per-feed write-clock + C3 census",
+      "owner": "unassigned",
+      "status": "CLOSED - DISSOLVED",
+      "status_note": "Premise was an aws s3 ls LOCAL-TIME rendering artifact. True clocks: bronze 06:00:44Z -> silver 06:00:53Z, 9s later. No inversion on the model leg. NOTE: a REAL inversion exists on cottonwood.custody (~24h) and is tracked separately."
+    },
+    {
+      "id": "G-6",
+      "question": "Is Global's dependency actually limited to 'most recent date from all firms'?",
+      "why_it_matters": "Andrew permitted EXACTLY that and nothing wider. :1680-1723 pins the cottonwood leg into the headline, which may exceed it.",
+      "fill_by": "read the global composition path",
+      "owner": "unassigned",
+      "severity": "HIGH",
+      "status": "CLOSED - ANSWERED",
+      "status_note": "Global's dependency EXCEEDS the permitted 'most recent date'. See global.composition.cross_firm.violation and D-18 for the fix point."
+    },
+    {
+      "id": "G-7",
+      "question": "Which mirror writes WHICH bronze prefix?",
+      "why_it_matters": "Andrew ordered the mirrors RENAMED to opal-assets-ingest-mirror-{firm}-{location}-daily. A rename before attribution would CEMENT a wrong name.",
+      "current_evidence": "1-minute time tie-outs only: mirror 14:15Z -> orion silver 14:16Z; mirror 22:30Z -> eclipse silver 22:31Z. NOT source-read. COO source-confirmed the handler iterates MAP+PROVENANCE_RIDERS UNCONDITIONALLY, so BOTH schedules may mirror ALL firms - in which case neither firm-specific name is correct.",
+      "fill_by": "read the opal-assets-ingest-mirror handler MAP and per-invocation logs",
+      "owner": "0.7.0_AE_CloudOps",
+      "severity": "BLOCKS_RENAME",
+      "status": "CLOSED - rename premise REFUTED; see D-13"
+    }
+  ],
+  "defects": [
+    {
+      "id": "D-1",
+      "summary": "Shared 49F axis handed to every firm",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "RULED - remediate",
+      "authority": "Andrew-direct 2026-08-10; route_bindings.yaml:33 already forbade it",
+      "reference_implementation": "cottonwood self_derived_axis",
+      "owner": "0.4.0_DS_ClientPlatform",
+      "lifecycle": "OPEN",
+      "severity": "HIGH"
+    },
+    {
+      "id": "D-2",
+      "summary": "Floor reads 41min before its axis source is written",
+      "pipelines": [
+        "ALL"
+      ],
+      "status": "MEASURED - Andrew's call pending",
+      "blocked_by": "G-1a",
+      "lifecycle": "OPEN",
+      "lifecycle_note": "SUBSUMED BY D-19 FOR SEQUENCING -- do not remediate independently.",
+      "severity": "HIGH",
+      "owner": "1.0.0_SA_CTO (ANDREW decision)"
+    },
+    {
+      "id": "D-3",
+      "summary": "Cottonwood re-key collapses C3+C4",
+      "pipelines": [
+        "cottonwood.model"
+      ],
+      "status": "RULED point-in-time; remedy group[-1]->group[0]",
+      "owner": "0.4.0_DS_ClientPlatform",
+      "lifecycle": "REMEDIED",
+      "lifecycle_note": "Landed + deployed @dadd5d64f9 2026-08-10T17:54:43Z, COO-ACCEPTED 180957Z.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "D-4",
+      "summary": "Orion label offset not applied by MDPF",
+      "pipelines": [
+        "inflection.custody"
+      ],
+      "status": "INFERRED - blocked by G-3a",
+      "severity": "HIGH",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-5",
+      "summary": "49F gate PASS is limb-(v)-SKIPPED, not a clean pass",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "note": "must not be cited as a control",
+      "lifecycle": "OPEN",
+      "lifecycle_note": "Quantified by the verify pass: the skipped exposure is 205 per-band presence disagreements across 33 dates, printed by the gate and absent from this artifact.",
+      "severity": "MED",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-6",
+      "summary": "Provenance fields are DECORATIVE (non-independent) on 2 of 2 measured feeds",
+      "pipelines": [
+        "inflection.custody",
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "lifecycle": "OPEN",
+      "severity": "MED",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-7",
+      "summary": "silver-*-sweep-daily rules are NO-OPS (proven on smartx: 668ms, zero output)",
+      "pipelines": [
+        "ALL"
+      ],
+      "status": "MEASURED",
+      "note": "delete rather than re-time; a remedy aimed here moves nothing",
+      "lifecycle": "OPEN",
+      "severity": "LOW",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-8",
+      "summary": "Mirror schedules are MISNAMED (-cot- performs inflection intake; -inf- does not name its pull location)",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "RENAME ORDERED by Andrew 2026-08-10",
+      "blocked_by": "G-7",
+      "lifecycle": "SUPERSEDED",
+      "lifecycle_note": "Superseded by D-14 -- the rename premise itself is refuted.",
+      "severity": "LOW"
+    },
+    {
+      "id": "D-9",
+      "summary": "INFLECTION IS NOT MISSING 2026-08-06. date=2026-08-07 contains it. The LOST vintage is 2026-08-05. The gate FAIL is a LABEL-ALIGNMENT artifact over data present one partition to the right - not data absence.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "Anything remediated, re-run or escalated on \"inflection is missing 08-06\" rests on a FALSE PREMISE.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO"
+    },
+    {
+      "id": "D-10",
+      "summary": "BOTH inflection legs served one trading day late (model leg newly proven; custody leg was D-4). D-4 is a TWO-LEG defect.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-11",
+      "summary": "26% of the eclipse daily series is REDUNDANT: 19 of 72 partitions are weekends re-emitting Friday under a fresh label. A C2-as-C3 consumer serves identical dollars under three date labels every weekend.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-12",
+      "summary": "ECLIPSE IS STRUCTURALLY UNBACKFILLABLE - --date is an output filename, not a query; a past date writes TODAY data and the sidecar stamps the false vintage. The lost 08-05 vintage is PERMANENTLY LOST and no re-run recovers it.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "Any remediation assuming a backfill closes the gap is UNIMPLEMENTABLE.",
+      "lifecycle": "OPEN",
+      "owner": "0.2.0_DS_PortfolioAnalytics"
+    },
+    {
+      "id": "D-13",
+      "summary": "THE RENAME PREMISE IS REFUTED. BOTH mirror schedules mirror ALL THREE rows (handler iterates MAP+PROVENANCE_RIDERS unconditionally :353); the mirror COPIES a date, it cannot originate one. NO mirror schedule is firm-specific, so opal-assets-ingest-mirror-{firm}-{location}-daily would CEMENT A FALSEHOOD.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "Supersedes D-8. Eclipse bronze originator is the EC2 puller pull_eclipse_portfolios.py; the Lambda inf-api-eclipse is Active but INERT (writes bronze/eclipse_qa while the mirror reads bronze/eclipse).",
+      "lifecycle": "SUPERSEDED",
+      "lifecycle_note": "Superseded by D-14, which measures the mechanism (no firm selector) rather than the symptom."
+    },
+    {
+      "id": "D-14",
+      "summary": "THE RENAME CANNOT PROCEED AS SPECIFIED. opal-assets-ingest-mirror has NO firm selector -- `event` appears 3x in 469 deployed lines (2 docstrings, 1 signature) and is NEVER READ; both triggers hit the same ARN; the cot scheduler passes Input {}. EXERCISED BOTH WAYS: the -inf- rule wrote ECLIPSE bronze and the -cot- schedule wrote ORION bronze. Both are ALL-FIRM passes differing only in time of day.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody",
+        "cottonwood.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "RENAMING TO A FIRM REPRODUCES THE EXACT -cot- DEFECT THE RENAME WAS MEANT TO FIX, IN TWO PLACES INSTEAD OF ONE. Rename on CADENCE (pass1/pass2 or the UTC slot), or add a firm selector to the handler FIRST. Supersedes D-13.",
+      "lifecycle": "OPEN",
+      "owner": "ANDREW (naming decision) -> 0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-15",
+      "summary": "THE 2026-08-06 GAP HAS TWO UNRELATED CAUSES, ONE PER LEG. ORION: opal-data-inf/bronze/assets/ carries BOTH .jsonl.gz and .parquet for 08-01..05,07,08,09 and for 08-06 ONLY the .parquet -- the mirror's Ruling-16 guard CORRECTLY refuses .parquet under bronze (CLAUDE.md Rule 17a), so nothing mirrors. The RAW producer skipped the day while the parquet producer ran. ECLIPSE: no 2026-08-06 directory at all; the source producer simply missed it.",
+      "pipelines": [
+        "inflection.custody",
+        "inflection.model",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "BOTH LEGS LAND ON ONE DATE BY UNRELATED FAILURES -- which is exactly why every single-cause diagnosis today failed to close it.",
+      "lifecycle": "OPEN",
+      "owner": "site-Z / INF fabric (upstream producers)"
+    },
+    {
+      "id": "D-16",
+      "summary": "THE INGEST MIRROR HAS HARD-FAILED EVERY INVOCATION FOR 14 DAYS -- 81 MirrorRaise events since 2026-07-28, 6/day. `ALIEN SURPLUS on blackdiamond/cottonwood: 687 unexpected key(s)`, because cot-rebalancer-runner writes page_%03d.json DIRECTLY into the mirror's own dst_prefix. Two producers, one prefix.",
+      "pipelines": [
+        "cottonwood.model",
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "Blast radius is narrow -- orion and eclipse precede cottonwood in MAP and complete normally; only the PROVENANCE_RIDERS row never runs (last written 2026-07-14). THE REAL COST IS SIGNAL DESTRUCTION: the mirror's raise contract is the estate's only instrument for 'the object that never arrived', and it has been stuck RED for 14 days, so a genuine NEW failure is now indistinguishable from the standing one.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-17",
+      "summary": "SERVED META MISLABEL: meta.basis reads 'schwab-rps' on the INFLECTION and GLOBAL client-facing artifacts. Inflection's custody leg is orion fact_assets -- contradicted by the SAME artifact's meta.serve_real_custody. 2 of 4 served firm artifacts name the wrong vendor basis.",
+      "pipelines": [
+        "inflection.custody",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-18",
+      "summary": "REMEDY POINTER, MEASURED: _model_leg_eclipse:889-895 SELF-DERIVES an axis when axis is None (eclipse INTERSECT orion partitions), so a standalone `--firm inflection` build has NO cross-firm dependency. THE SINGLE FIX POINT FOR THE CROSS-FIRM VIOLATION IS :2682-2683, NOT the leg adapters.",
+      "pipelines": [
+        "global.composition",
+        "inflection.model",
+        "inflection.custody"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "The inflection legs' cross_firm violation is GLOBAL-INDUCED. This materially shrinks the remediation Andrew ordered.",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-19",
+      "summary": "⛔ RE-TIMING ALONE CONVERTS THE INFLECTION REFUSAL INTO A SILENTLY MISLABELLED PUBLISH. Chain measured end-to-end: floor reads the axis 13:00:39Z, before smartx silver lands 13:40:47Z, so _latest_date resolves date=2026-08-09 (day-max 08-06) -> frontier 08-06 -> trading_days_between = 440, matching the gate's own count -> eclipse has no 08-06 partition so model_value[-1]=None -> build_firm_timeseries:1046-1047 OVERWRITES account_count[-1] with the staged frontier count (a NUMBER) -> limb (v) fires. COUNTERFACTUAL: with the axis read AFTER 13:41Z the frontier is 08-07, which eclipse HAS; 08-06 becomes an INTERIOR date where BOTH legs are None and limb (v) CANNOT FIRE. Under the run-date ruling, that pass publishes ONE TRADING DAY MISLABELLED.",
+      "pipelines": [
+        "inflection.model",
+        "inflection.custody",
+        "global.composition",
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "BLOCKS THE ORDERED FLOOR/PULL RE-TIMING AS A STANDALONE CHANGE. The guard is currently the only thing preventing a wrong number from being served; moving the clock removes the guard WITHOUT fixing the mislabel. The label offset must be fixed FIRST or JOINTLY.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO (ANDREW decision)"
+    },
+    {
+      "id": "D-20",
+      "summary": "SMARTX WEEKEND PARTITIONS ARE NOT T+1 -- they are one trading day further back than the label implies. date=2026-08-08 (Sat) and date=2026-08-09 (Sun) both carry day-max 2026-08-06 while the prior TRADING day of each is Friday 2026-08-07. Only 4 of 6 partitions are T+1.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "CO-CAUSAL WITH THE ORDERING DEFECT AND INDEPENDENT OF IT: had the Sunday partition been genuinely T+1 it would have carried 08-07 and the frontier would have been 08-07 EVEN AT 13:00Z. Re-timing does not fix this; only the weekend-partition semantics do.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-21",
+      "summary": "THE AXIS-SOURCE INGEST FAILED ON 2026-08-10 AND ITS RETRY PASSED ONLY BY SKIPPING EVERYTHING. smartx-assets-daily-pull ran 13:30:50-13:36:42Z and ended '[ERROR] DirtyRunError: feed9 reconciliation on Opal Conservative Growth: resolver=3278 != feed5 living=3281 -- PARTIAL identity table, not clean'. The SAME RequestId retried 13:37:41-13:40:35Z and reported clean with 'fetched=0, skipped=9762'. The models_summary bronze landed on the FAILED attempt. >> SHARPENED BY G-1a: the OnSuccess destination fires ONLY on a CLEAN return. The DirtyRunError attempt therefore fired NO destination, and the converter ran ONLY because the RETRY returned clean BY SKIPPING ALL 9,762 OBJECTS. THE SILVER CONVERSION THAT PRODUCED TODAY'S AXIS WAS CHAINED TO A RUN THAT DID NOTHING.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today. >> SCOPE CORRECTED 2026-08-11: this is about THE PULL'S OWN SUCCESS CRITERION, not the conversion chain. The conversion demonstrably worked (148,044 rows, 11 tables, 13:40:41Z). The open question is narrower and unproven: did the retry RE-RUN the reconciliation that failed, or return clean having nothing left to validate? Routed to AE item-4, not asserted.",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps"
+    },
+    {
+      "id": "D-22",
+      "summary": "THE SERVED PLANE IS NOT DATE-COHERENT WITHIN A FIRM. 49financial serves account-distribution.json as-of 2026-08-07 beside aggregate-aua-timeseries.json and aum-metrics.json as-of 2026-08-06. Global serves account-distribution as-of 2026-08-06 beside a timeseries and aum-metrics as-of 2026-08-05. Cottonwood and inflection ARE uniform.",
+      "pipelines": [
+        "49financial.model",
+        "49financial.custody",
+        "global.composition"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "note": "A PORTAL PAGE RENDERING BOTH SHOWS TWO DIFFERENT BUSINESS DAYS SIDE BY SIDE. Also a Rule-24 grain defect in THIS artifact's own schema: served_as_of is single-valued on an axis whose members sit at different vintages. account-distribution.json is the live served portal bell.",
+      "lifecycle": "OPEN",
+      "owner": "0.4.0_DS_ClientPlatform"
+    },
+    {
+      "id": "D-23",
+      "summary": "PROCESS FAILURE, MINE: I EDITED THIS ARTIFACT WHILE THE FAN-OUT WAS VERIFYING IT, against my own rubric section 1.1 ('READ-ONLY ... Do not edit the JSON'). Commit 01fa4bba14 (21:22Z) changed 5 cells on inflection.model mid-flight. FOUR CELLS NOW CARRYING MEASURED HAVE HAD NO ADVERSARIAL PASS FROM ANYONE -- they left the NOT_MEASURABLE agent's scope and never entered the MEASURED agent's.",
+      "pipelines": [
+        "inflection.model"
+      ],
+      "status": "MEASURED",
+      "severity": "HIGH",
+      "note": "The four are c2_partition_meaning, c3_vintage_field, offset_label_to_vintage, known_defect -- i.e. THE ENTIRE ECLIPSE RUN-DATE RULING. It is well-evidenced and I re-verified two keystones myself, but it has not been adversarially tested and must not be treated as though it has. One number in it is already wrong: '75 prefixes' vs a measured 72 on two instruments.",
+      "lifecycle": "OPEN",
+      "owner": "1.0.0_SA_CTO"
+    },
+    {
+      "id": "D-24",
+      "summary": "WITHDRAWN. There is no defect here. The smartx bronze->silver chain behaved CORRECTLY on 2026-08-10: the dirty first invocation fired no destination (by design), the retry returned clean and its OnSuccess fired, and convert_day -- which reads the WHOLE DAY's bronze -- ran to COMPLETE at 13:40:41Z with 148,044 rows across 11 tables, 4 minutes after the 13:36:31Z landing. The 16:00Z sweep's 668ms zero-output run was THE CORRECT RESULT: bronze-days minus silver-days was empty. Nothing was unconverted at any point.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "NONE",
+      "lifecycle": "WITHDRAWN - NO DEFECT EXISTS",
+      "owner": "0.7.0_AE_CloudOps",
+      "note": "NEVER#4 SHAPE: 'a pipeline whose only trigger is another pipeline's success has no schedule and is a defect -- it freezes silently and invisibly when its upstream breaks.' A schedule EXISTS here, which is why it did not read as the classic case -- but the scheduled leg does not convert, so the protection NEVER#4 exists to provide is absent in fact. ⚠ THE DESIGN ITSELF IS SOUND AND WELL-REASONED (chosen over a completion key on the Door-6 lesson); what is missing is a working catch-up, not the destination.",
+      "lifecycle_note": "⚠ THIS CLAIM WAS WITHDRAWN THREE TIMES, EACH TIME NARROWER, AND THAT IS THE FINDING ABOUT MY OWN REASONING. (1) 'the axis source has no working scheduled fallback' -- withdrawn on Andrew's architectural read that event-driven silver IS the estate pattern. (2) 'bring smartx onto the S3-object pattern' -- withdrawn against my OWN WS-A7 ruling; smartx silver is a whole-day firm-wide aggregate and per-object triggering would race itself. (3) 'the designed sweep did not convert a real unconverted landing' -- FALSIFIED by measurement (full-day log, 34 events, unpaginated). >> A CLAIM THAT KEEPS MUTATING TO SURVIVE ITS OWN REFUTATIONS IS NOT A NARROWING DIAGNOSIS, IT IS A CONCLUSION LOOKING FOR EVIDENCE. Each restatement was better grounded than the last and every one still asserted a defect that was never there. The correct move after refutation 2 was to ask whether ANY defect existed, not to find a smaller one. Recorded against this seat.",
+      "what_survives": "The RESIDUAL CASE only, and it is designed-and-exercised: a dirty pull with NO clean retry would leave bronze unconverted until the 16:00Z sweep, which is exactly what the sweep is for. NOT a defect. >> AND ONE OPEN QUESTION, STATED AS A QUESTION BECAUSE I HAVE BEEN WRONG THREE TIMES ON THIS THREAD: the retry returned clean with 'fetched=0, skipped=9762' after the first attempt raised DirtyRunError on a RECONCILIATION check (resolver=3278 != feed5 living=3281). Skipping the fetch is CORRECT -- attempt 1 already downloaded them. Whether the retry RE-RAN the reconciliation, or returned clean because it had nothing left to validate, is NOT established. That is D-21's territory and belongs to AE's item-4 read. I am not asserting it is a defect."
+    },
+    {
+      "id": "D-25",
+      "summary": "THREE smartx silver tables emitted rows=0 on 2026-08-10: fact_account_detail, fact_account_allocations, fact_nonzerosleeve -- inside a convert_day that otherwise produced 148,044 rows across 11 tables.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
+      "lifecycle": "OPEN",
+      "owner": "0.7.0_AE_CloudOps",
+      "note": "Folded into AE's item-4 read as POSSIBLE input to the zeroed-aggregate class (global emitting opal_aggregate_aua=0 with reconciliation PASS since 08-09). ⚠ POSSIBLE, NOT ESTABLISHED -- two zero-shaped observations are a reason to look, not a mechanism. COO routes onward if it proves producer-side."
+    }
+  ],
+  "repair_sequence": {
+    "purpose": "Dependency ORDER for remediation. Derived from D-19: some repairs SILENCE a guard without fixing the defect it guards, so order is not preference -- it is correctness.",
+    "PHASE_0_BLOCKING_DECISIONS_AT_ANDREW": [
+      {
+        "item": "Floor/pull re-timing",
+        "defects": [
+          "D-19",
+          "D-2",
+          "D-20"
+        ],
+        "why_blocked": "⛔ RE-TIMING ALONE CONVERTS THE INFLECTION REFUSAL INTO A SILENTLY MISLABELLED PUBLISH. The guard is the only thing keeping a wrong number off the served plane. The LABEL OFFSET (D-4/D-10) MUST LAND FIRST OR JOINTLY."
+      },
+      {
+        "item": "Mirror rename",
+        "defects": [
+          "D-14"
+        ],
+        "why_blocked": "No firm selector exists; both schedules are all-firm passes. A {firm} name would cement a falsehood in TWO places. Options: cadence-based names, or add a selector first."
+      }
+    ],
+    "PHASE_1_CORRECTNESS_SERVED_NUMBERS_ARE_WRONG": [
+      {
+        "item": "Orion + eclipse label offset -- both inflection legs served one trading day late",
+        "defects": [
+          "D-4",
+          "D-10"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "Four independent derivations. Served tie-out exact to the cent. The artifact declares lag_vs_as_of_days: 0, so it is invisible to metadata readers."
+      },
+      {
+        "item": "Cross-firm axis violation -- inflection imports 49F's axis",
+        "defects": [
+          "D-1",
+          "D-18"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "Andrew-ruled. FIX POINT IS TWO LINES (:2682-2683), not the leg adapters -- _model_leg_eclipse already self-derives."
+      },
+      {
+        "item": "Global emits an all-zero aggregate with reconciliation PASS",
+        "defects": [],
+        "owner": "0.4.0_DS_ClientPlatform",
+        "note": "0 == 0+0+0, so the identity gate cannot fail on an empty artifact. Started 2026-08-09, unreported."
+      },
+      {
+        "item": "Served plane not date-coherent within a firm",
+        "defects": [
+          "D-22"
+        ],
+        "owner": "0.4.0_DS_ClientPlatform"
+      }
+    ],
+    "PHASE_2_INSTRUMENT_INTEGRITY_WE_CANNOT_SEE_FAILURES": [
+      {
+        "item": "Ingest mirror hard-failing every invocation for 14 days",
+        "defects": [
+          "D-16"
+        ],
+        "owner": "0.7.0_AE_CloudOps",
+        "note": "Signal destruction: the estate's only 'object never arrived' instrument is stuck RED, so a genuine new failure is indistinguishable."
+      },
+      {
+        "item": "49F gate PASS is limb-(v)-SKIPPED",
+        "defects": [
+          "D-5"
+        ],
+        "owner": "0.7.0_AE_CloudOps"
+      },
+      {
+        "item": "Axis-source ingest ran dirty and its retry passed by skipping everything",
+        "defects": [
+          "D-21"
+        ],
+        "owner": "0.7.0_AE_CloudOps"
+      }
+    ],
+    "PHASE_3_UPSTREAM_NOT_OURS": [
+      {
+        "item": "The 2026-08-06 gap -- TWO unrelated producer failures",
+        "defects": [
+          "D-15"
+        ],
+        "owner": "site-Z / INF fabric",
+        "note": "Orion: raw producer skipped a day while the parquet producer ran; our Rule-17a guard correctly refused. Eclipse: source producer missed the day entirely."
+      },
+      {
+        "item": "Eclipse gap rate is 12.3% (7 of 57), not one date",
+        "defects": [
+          "D-11"
+        ],
+        "owner": "site-Z / INF fabric"
+      }
+    ],
+    "PHASE_4_HYGIENE": [
+      {
+        "item": "Served meta.basis mislabel on 2 of 4 firm artifacts",
+        "defects": [
+          "D-17"
+        ]
+      },
+      {
+        "item": "Sweep schedules: smartx no-op, schwab NOT a no-op (frozen 368 shortfall)",
+        "defects": [
+          "D-7"
+        ]
+      },
+      {
+        "item": "Provenance-field census -- Schwab is the ONLY independent one",
+        "defects": [
+          "D-6"
+        ]
+      }
+    ]
+  }
+}
