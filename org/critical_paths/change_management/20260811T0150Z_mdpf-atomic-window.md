@@ -267,3 +267,23 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   comp-pipescript lambda-channel blindness instrument gap (CTO, COO-flagged 031216Z) · cottonwood
   deep rekey adjudication (CTO causation thread, deliberately not parallel-read) · tags + integrator
   push (executing at close, recorded below when done).
+- **POST-CLOSE CONFIRMATIONS LANDED IN THE CROSSING (034100Z/034112Z), each strengthening a close
+  premise, none reopening a leg:** (1) **CTO: branch (a) RATIFIED, Rule-22 cited** — @e82326bdb2
+  (this seat's own deliverable ANDREW_DIRECT_20260810_AUA_HISTORY_IS_POINT_IN_TIME.md, Andrew
+  VERBATIM *"Point-in-time, history does not restate"*; its ruled table = tonight's exact collision:
+  133,914,199.99 RULED / 139,213,957.62 REJECTED) — **13:30Z publishes at face 12/12 on a RATIFIED
+  basis, no loud-flag on the assignment plane**; CTO self-corrected the 030244Z "open call" as
+  overstated (open residuals = estate-wide extension census, diagnostic; C-1 revaluation asymmetry,
+  distinct) and is retracting the over-escalation to Andrew. (2) **CTO: L-D discriminators
+  independently confirmed** (canonical key re-listed; s3_object_version ppmmOYbpFISWVrjCICpIajP2VXFbiqb8
+  NEW; GetObject proven by apply success; env+sha re-read; 0-diff re-plan). (3) **DS: the rekey deep
+  read had ALREADY RUN in the crossing — source+report grain, ZERO discrepancies** (earliest-wins
+  provably correct at build_cottonwood_mdpf_slice.py:257-318 pin==HEAD; every collision reaches the
+  report by construction; census complete 13 partitions/2 collided dates both reported; 08-07
+  collision benign equal-dollar; 08-06 differing-dollar cause grounded = vendor re-labelling at
+  Black Diamond, ten accounts renamed — not same-snapshot drift). Supersedes-upward the glance-grain
+  discharge; evidence with CTO's causation thread.
+- **TAGS CUT (AE 034031Z, Rule-6 annotated, bumps sort-V-verified off v2.0.1/v0.39.0/v1.8.0):**
+  mdpf-pipeline-v2.1.0 @759ef40a12 · opal-assets-v0.40.0 @9eff54d274 · smartx-pipeline-v1.9.0
+  @9eff54d274. **Integrator push (COO, --follow-tags, full window chain + this ledger) executes as
+  the final act of this close; push verification (remote ref == local HEAD) in the COO session log.**
