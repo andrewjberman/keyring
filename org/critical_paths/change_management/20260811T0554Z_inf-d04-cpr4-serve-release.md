@@ -51,3 +51,33 @@ in-repo (:63 import, :3321/:3351) is ALREADY in the deployed bytes — nothing A
 4. **SCOPE CORRECTION (COO 062723Z):** the exception-set retirement of the residual lands on the
    **CVO CERT**, not on this ledger's close. This ledger closes ONLY the serving-path half
    (fixed + served-verified). CERT-REQUESTED at CVO; that half stays open past this close.
+
+## AMENDMENT 2 (0756Z) — run-2 verification verdict + a projection gap found and fixed
+
+1. **SUCCESSION OF THE ARITHMETIC: PROVEN** on run-2's served
+   s3://opal-data-inf/platinum/firm/header_metrics.json (LastModified 07:35:23Z, chain clean
+   07:38:41Z per CRO~A): non_fee_earning_aua = 3,623,738.50 where the retired residual form
+   would print 71,944,750.24 (209,129,912.97 total - 137,185,162.73 fee); non_fee clients 84
+   (old code: clamped 0, since 293-294 < 0); non_fee accounts 118 (old: 799-789 = 10). Three
+   served values IMPOSSIBLE under pre-CPR4 code — stronger than the ETag check (which also
+   holds: code/gold ETag 4192c665880871632f4d22ff3f150bba unchanged since 055655Z).
+2. **CRO~A's 074252Z observation discriminated (their candidates a/b/c):** (c) REFUTED by
+   output content. (a) CONFIRMED for fee_efficiency.json — it is a PASS-THROUGH of INF_C_08's
+   gold artifact (D_04:3934 build_fee_efficiency; C_08 computes fee fields independently and
+   defaulted to 0.0 under fee_data_available:false at 07:31:40Z — upstream C-chain degraded
+   input, PRE-EXISTING, not CPR-4's surface). dashboard.json carries no fee fields BY DESIGN
+   (headline block only). header_metrics_fresh.json is a 2026-06-30 fossil from a different
+   emitter, not written by this chain. **CPR-4's serving surface is header_metrics.json.**
+3. **DEFECT FOUND (mine, 0.4.0_DS): unreconciled_aua was computed-and-dropped.** @7341b27d50
+   added it to the function's return dict but the header_total consumer (:1267-1272) projects
+   six named keys only — the field never reached ANY served surface, so the step-4 bar's
+   "carries unreconciled_aua" half was structurally unsatisfiable. FIX LANDED @fac59e6e15
+   (one projection line). File remains DEPLOY-SERVE-HELD; sentinel :39 untouched.
+4. **SERVE-RELEASE #2 REQUESTED (CTO SERVE-RELEASE-ACK + COO NEVER#2 half)** for @fac59e6e15,
+   targeting lift→deploy→re-hold BEFORE the 13:47Z scheduled cycle so the ruled evidence run
+   serves complete CPR-4. If the halves do not arrive in time, 13:47Z serves the classified
+   sums (already correct) and step 4 ticks on the first scheduled serve carrying BOTH fields.
+5. **MAGNITUDE CORRECTION to the step-4 row:** the "~$128K-class" non_fee expectation came
+   from the frozen-gold QA read. Run-2 live: non_fee = 3,623,738.50; unreconciled (once
+   projected) = 68,321,011.74 by arithmetic identity of the served figures. Decomposition of
+   the gap (billing-dim coverage vs book drift) is INFERRED, not certified — CVO cert scope.
