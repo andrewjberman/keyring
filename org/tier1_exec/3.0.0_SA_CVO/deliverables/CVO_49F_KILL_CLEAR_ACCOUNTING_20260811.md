@@ -41,20 +41,38 @@ NO-ROWS-reason is a genuine absence; a zero-as-a-shrug is not, and only the ledg
 *(~2005Z: timeseries_overview @45672c14ec -> SCOPE-VALIDATED -- a no-pin family (index-misalignment makes leaf pins noise; discrimination via derivation-crossing build-time controls, cross-tie 38/38); cross-family tie 13,063,592.19 == d07 qtd verified against my own value.)*
 *(⚠ LABEL CORRECTION ~1936Z: the dashboard/fee_efficiency states were SWAPPED in prior versions -- I propagated COO's mis-attribution without checking my OWN verdict file, which says (line 50) "dashboard is the second surface to CLEAR technical parity" and (line 43) the IN-FLIGHT verdict is FEE_EFFICIENCY's (its Unassigned double-count). Truth: **dashboard** was technical-clear -> now BAR-CLEARED; **fee_efficiency** was and remains IN FLIGHT. The count (7 SV / 1 IF pre-grade) was numerically right; the label of which surface was IN FLIGHT was wrong. Map-vs-territory, caught by reading the file.)*
 *(Updated ~1936Z: **dashboard is BAR-CLEARED -- the SECOND** (same window-NNA calibration as header_metrics, reused by construction: windows non-zero + identical values, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins transitively grounded via the shared served-NNA source). ⚠ **fee_efficiency FINDING (stays SCOPE-VALIDATED, NOT bar-cleared): its PER-ADVISOR window plane does NOT discriminate** -- my mutant on a LIVE nonzero cell (windows.max.advisors[0].nna, +$6M on 60.38M) was ABSORBED rc=0; base's mutant hit only the pinned FIRM-level windows. A blanket exemption over live per-advisor fields (SS 5a). Flagged to base: pin the per-advisor windows or determine band-absorption-vs-not-compared before bar-clear. Prior ~1922Z: header_metrics FIRST bar-clear.)*
-Denominator **16** = the 49F served-family roster (the header_metrics archetype "reused by the other 15
-families"; exact roster is base DS's sweep scope).
+Denominator **17** (PINNED above, served-KEY). ⚡ **CLAUSE (a) -- ALL CODE PROVEN TO COMPILE: COMPLETE,
+GROUNDED ~2130Z.** All 14 emitters d01-d14 + the a07 dim EXIST in data/assets/scripts/gold/runners_49f/
+and `python -m py_compile d*.py a07*.py` returns rc=0 -- every one of the 17 served keys has a built,
+compiling emitter (d01-d11 = 11 singleton keys; d12 = the 2 twins; d13 = the 3-key partner trio; d14 =
+nna_canonical). This is source-grounded, NOT the arithmetic coincidence -- I ran the compile sweep.
+**FULL 17-KEY ROSTER (rebuilt ~2130Z -- the prior 8-row + "remaining (8)" table was stale and
+self-contradicted the count line; COO 212649Z caught it):**
 
-| # | Surface | State | Grounding (verdict file) |
-|---|---|---|---|
-| 1 | header_metrics | **⭐ BAR-CLEARED (FIRST)** | VALIDATED_49F_HEADER_METRICS ~1922Z: all planes clear incl. live windows; both gates discharged (gate 1 @745ca6d78f; gate 2 fill-2 + window discrimination DEMONSTRATED by a validator-planted mutant rc=1); pins independently grounded vs served bytes. Residual: re-pin-daily (by-design, stale-pin-fails-loud). |
-| 2 | fee_efficiency | **⭐ BAR-CLEARED (THIRD)** | ~2020Z: base's AGGREGATE window control (d03 --verify-windows @9a157f02e5) adversarially verified on MY cell -- qtd.advisors[20] +$6M -> PIN-VIOLATION qtd (any single-advisor sum-mover fails; cancelling residual = deferred fan-out, the client_detail pattern). 66 zero cells all NO-ROWS (C_00 ledger walk). Unassigned double-count discharged. Core + windows clear; gate 1 rides ~1742Z. |
-| 3 | clients_tab | **SCOPE-VALIDATED** | VALIDATED_49F_FEE_EFFICIENCY_AMENDED_CLIENTS_TAB: technical parity clears; V8 residual named follow-on |
-| 4 | client_detail | **SCOPE-VALIDATED** | VALIDATED_49F_CLIENT_DETAIL: value CHARACTERIZED vs sovereign band; V16/17/18 backfill + harness fan-out + cutover re-pin pending |
-| 5 | mix_summary | **SCOPE-VALIDATED** | VALIDATED_49F_MIX_SUMMARY: P1-SCRIPTS; value rides the cot-bundle mix-basis band (dormant pre-cutover) |
-| 6 | firm_leaderboard | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_LEADERBOARD: P1-SCRIPTS; window mass + serving port + V19 pinned divergence pending cutover |
-| 7 | firm_dashboard | **⭐ BAR-CLEARED (SECOND)** | ~1936Z: live windows verified, positive limb PASS, MY validator-planted mutant FAIL rc=1; same window-NNA calibration + served-NNA source as header_metrics (pins transitively grounded). Gate 1 (total.aua) rides ~1742Z. Was IN FLIGHT; now cleared. |
-| 8 | firm_ownership_map (Unit-2) | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_OWNERSHIP_MAP @fe9ffd6f30: no monetary plane (mutant transposed to id-plane tamper guard, discriminating); cross-derivation id-set parity deferred to cutover re-pin |
-| 9-16 | remaining families (8) | **NOT STARTED** (at cert) | no CVO instance reached me; production-bound (window-derivation build + emission) |
+| # | Key | Emitter | State | Grounding |
+|---|---|---|---|---|
+| 1 | header_metrics | d01 | **⭐ BAR-CLEARED** | validator-planted window mutant FAIL; pins grounded vs served bytes |
+| 2 | dashboard | d02 | **⭐ BAR-CLEARED** | same window-NNA calibration; my mutant FAIL |
+| 3 | fee_efficiency | d03 | **⭐ BAR-CLEARED** | aggregate window control (d03 --verify-windows) verified on MY cell -> PIN-VIOLATION; zero cells NO-ROWS; Unassigned discharged |
+| 4 | firm_leaderboard | d07 | **⭐ BAR-CLEARED** | my mutant QTD.summary.total_nna FAIL; ~A cross-derivation control (account vs manifest) |
+| 5 | clients_tab_slim | d11 | **⭐ BAR-CLEARED** | dashboard subset by construction; my total_aua mutant FAIL through D5 |
+| 6 | clients_tab | d04 | SCOPE-VALIDATED | technical parity clears; V8 residual named |
+| 7 | client_detail | d05 | SCOPE-VALIDATED | value characterized vs sovereign band; harness fan-out + cutover pending |
+| 8 | mix_summary | d06 | SCOPE-VALIDATED | value rides the cot-bundle mix-basis band (dormant pre-cutover) |
+| 9 | ownership_map | d08 | SCOPE-VALIDATED | no monetary plane; id-plane tamper guard discriminates; cross-derivation deferred to cutover |
+| 10 | timeseries_overview | d09 | SCOPE-VALIDATED | no-pin (index-misalignment); derivation-crossing cross-tie 38/38; cross-tie verified vs my value |
+| 11 | cumulative_chart | d10 | SCOPE-VALIDATED | additive identity 109/109 to the cent + my mutant breaks it; no-pin, cutover-deferred leaf parity |
+| 12 | firm_timeseries_chart | d12 | SCOPE-VALIDATED | twin, byte-identical (I hashed both); no-pin; derivation-crossing cross-ties 525/525 |
+| 13 | gold_timeseries_chart | d12 | SCOPE-VALIDATED | twin of #12, same bytes -- graded together by measured identity |
+| 14 | partner_analytics quarterly | d13 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | awaiting QA root for adversarial grade |
+| 15 | partner_analytics monthly | d13 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | awaiting QA root; gated on the partner-attribution declaration |
+| 16 | partner_analytics annual | d13 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | awaiting QA root |
+| 17 | advisor_nna_canonical | d14 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | awaiting QA root; I verify the GZIP-at-rest baseline reads before grading |
+
+**Reconciliation:** 5 BAR-CLEARED + 8 SCOPE-VALIDATED + 4 NOT-YET-GRADED = 17. The 4 remaining are no
+longer "NOT STARTED / no emitter" -- their emitters BUILT and COMPILE (clause a done); what remains is
+instance delivery + my adversarial grade. "NOT STARTED at cert" in the count line means not-yet-CVO-graded,
+NOT no-emitter -- the count line and this table now agree.
 
 ## WHAT ANDREW SHOULD HEAR (do not soften -- per COO)
 - **The FIRST bar-clear has landed: header_metrics, 1 of 16.** The count was 0 at ~1858Z and is 1 at
