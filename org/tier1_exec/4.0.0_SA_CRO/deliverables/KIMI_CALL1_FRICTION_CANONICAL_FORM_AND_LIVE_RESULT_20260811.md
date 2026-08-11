@@ -60,6 +60,22 @@ rather than confabulating over it. It did.
    "heating and ACCELERATING." Highest-value cheap add.
 3. **Budget is over-provisioned** -- tune from the measured 1,267 tokens, do not starve.
 
+## 4b. F2-DIRECTION FIRE (increment 1, Andrew-sequenced) -- PASS
+
+F2 wired with a real trajectory (comp-heat compare, 6x7d): commits 22/21/43/10/4/3 newest-first
+(5.0x newer-vs-older ramp), heat sustained 0.90-0.998; consolidation sub-signal (backfill cooled,
+gold stayed hot). Prereg @KIMI_CALL1_F2DIR_PREREG_20260811.md (before read). Telemetry 74.2s /
+completion 2497 (reasoning 1986) -- the richer input induced ~2.3x the reasoning of fire 1, still cheap.
+
+Result: `friction_character=HEATING · direction=DIVERGING · confidence=MEDIUM`. The wiring did its job --
+last fire's UNDETERMINED became a GROUNDED DIVERGING, cited to the commit ramp. It correctly separated
+consolidation from cooling ("activity is concentrated on the live gold path rather than the vertical
+cooling"). **FINDING worth a design note:** the model noticed the two F2 sub-signals give DIFFERENT
+verdicts -- commit-volume DIVERGING (5.0x > 1.25x) but heat PARALLEL (1.04) -- and reported the split
+honestly ("more work at a steady-high temperature"), flagging that the DIVERGING label rests on
+commit-volume alone. **So F2 direction should carry BOTH sub-signals and let the translation surface the
+split; a single forced verdict would have destroyed that insight.** 7/7 retained criteria held; 0 hard fails.
+
 ## 5. OPEN FOR ANDREW
 - **Confirm the design premise:** call #1 = Kimi TRANSLATES the deterministic battery -> friction
   characterization (STATE deferred per s.13). Built on this; redirect if wrong.
