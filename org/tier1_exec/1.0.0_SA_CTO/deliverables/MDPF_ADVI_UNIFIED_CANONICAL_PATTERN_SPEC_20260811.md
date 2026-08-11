@@ -124,7 +124,15 @@ reads, never a standing comparator); rollback = same-window revert of the single
 
 ## §6 · THE ADVI APPLICATION SHAPE (staffing input for COO — suggested, not dispatched)
 
-advi's pilot-side work already has a measured spine: CRO~A's INF three-bucket map + refactor waves
+**ANDREW-DIRECT instruction 3 (relayed by CRO~A + MSTR ~0535Z, verbatim in CRO~A's ANDREW_DIRECT
+record; folded 0530Z): the ADVI canonization runs through an ARCHETYPE — atom_decomp on the
+49 Financial gold analytics runner; the 49F/Schwab 08335338 account (complete fact tables) is the
+base for "the perfect gold analytics runner"; that shape becomes the archetype inflection +
+cottonwood replicate endpoint-by-endpoint, field-for-field.** CRO~A owns the 49F decomposition +
+archetype spec (citing this pattern's rows, not re-deriving them); the atoms in §2 and the atom-8
+conformance test in §3 are the archetype's pattern contract; MDPF-side surfacings route back here.
+
+advi's INF-side work already has a measured spine: CRO~A's INF three-bucket map + refactor waves
 (03 §3). Sequence as ruled there: **W-E before Sunday 08-16 (hard date — else the 16 cancelled
 accounts' histories re-erase)** → W-0 characterize (full 44 scripts; ~24 UNREVIEWED are marked) +
 W-C universe predicate (kills the recurring 07-31 breaker class) → W-B performance-to-raw (feed
