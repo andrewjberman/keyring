@@ -51,8 +51,8 @@
           "invocation": {"type": "string", "minLength": 1, "description": "the exact command/test run -- re-runnable by a verifier"},
           "output_evidence": {"type": "string", "minLength": 1, "description": "verbatim output excerpt carrying the deciding values"},
           "denominator": {"type": "string", "minLength": 1, "description": "every count states what it is out of; 'N/A' only with a reason, e.g. 'N/A -- boolean check'"},
-          "status": {"enum": ["PASS", "FAIL", "UNCOMPUTABLE", "N/A-BY-CONSTRUCTION"]},
-          "status_reason": {"type": "string", "description": "REQUIRED (enforced by validator) when status != PASS"}
+          "status": {"enum": ["PASS", "FAIL", "UNCOMPUTABLE-BY-CONSTRUCTION", "UNVERIFIABLE-BY-INSTRUMENT", "N/A-BY-CONSTRUCTION", "UNCOMPUTABLE"], "description": "UNCOMPUTABLE split 2026-08-11 (Rule-24 state coherence, CVO): -BY-CONSTRUCTION rides a NAMED later run (status_reason names it); UNVERIFIABLE-BY-INSTRUMENT names the SUBSTITUTE oracle in status_reason. Bare UNCOMPUTABLE is LEGACY (pre-split instances only) -- do not mint new"},
+          "status_reason": {"type": "string", "description": "REQUIRED (enforced by validator) when status != PASS; for UNCOMPUTABLE-BY-CONSTRUCTION it names the later run, for UNVERIFIABLE-BY-INSTRUMENT the substitute oracle"}
         }
       }
     },
