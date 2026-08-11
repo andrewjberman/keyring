@@ -95,7 +95,15 @@ exists to freeze. `producers/graphuni/` pipeline members are decommissioned in W
 >   from its bytes (`sha1("blob <len>\0" + bytes)`) and compares against `git ls-tree` SHAs from
 >   a blobless clone -- or, if adding a clone to the Fargate task is unwanted, against a
 >   commit-time-emitted manifest. WHICH of those two carries the divergence leg is a W1
->   implementation decision recorded at build time; the deployed-AST half stands either way.
+>   implementation decision recorded at build time (with the choice's failure direction recorded
+>   beside it); the deployed-AST half stands either way.
+> - **DESIGNED BEHAVIOR, named so it surprises nobody later (CVO, 003708Z):** under
+>   deployed-bytes enrichment, a script that is COMMITTED BUT NEVER DEPLOYED is invisible to
+>   enrichment -- CORRECT under (b): an undeployed script is not in the cloud, so the
+>   cloud-compiled graph rightly does not see it, and the DIVERGENCE LEG is precisely the
+>   instrument that surfaces it as repo-vs-deployed drift rather than silence. This closes the
+>   loop with the estate's existing committed-but-never-deployed class (the safe-deploy mdpf
+>   gate's reason) instead of opening a blind spot beside it.
 
 ### 2.3 What deliberately does NOT change (the invariants, from the assessment + handoff)
 
