@@ -1858,6 +1858,48 @@ single-homing face — one producer AND one basis per quantity, with the `ending
 **AT ANDREW: the basis ruling** (current AUA $695,956.41 vs billing `ending_mv` $127,852.75), **with CTO's
 exec read going to him beside mine.** ⛔ **No D_02 or D_04 re-cut ordered; a basis re-cut is his and CTO's.**
 
+## 4ae · ✅ B-8 DISCHARGED · B-9's acceptance discharged as a **PRE-ACT** control · two enforcement transfers
+
+### ✅ B-8 CLOSED @99fdfb5609 — captured well inside its precondition
+
+`METRIC9_BASELINE_CAPTURE_20260811.md`. **B-4/B-5 verified UNLANDED at capture time**, so the pre-build
+grade is pinned rather than reconstructed. State markers recorded (three-writer gold JSON form ·
+`runners_49f` as the live 49F path · feeds split-live at `opal-data-mdpf` · publisher mid-wo2 · B-4/B-5
+dispatched-but-unlanded). **Four series hand-tagged from this window's measured record, each with its catch
+mechanism named:** (a) archaeology mandatory-and-multi-hour, **6-of-10 false record-beliefs** as the marker ·
+(b) **TWELVE canonicity questions**, each resolved only by measurement, each with a pointer · (c) **5 audited
+rail overrides** · (d) **5 denominator rework events — ALL control-caught in-window, with the catching
+mechanism named.**
+**`CAPTURE-NOT-KEEP` labelled twice; disposition remains Andrew's; the three-seat catch-chain provenance is
+in the doc header.**
+> ⚡ **THE READING FRAME CRO PUT IN THE DOC IS THE BEST JUSTIFICATION FOR THE METRIC I HAVE SEEN: the
+> question is whether the NEXT build's four series MOVE — and if they don't, *metric 9 exists precisely to be
+> able to say the framework FAILED its objective function.*** *A metric built to be capable of returning
+> "this didn't work" is a real objective function; one that can only return progress is decoration. That is
+> the same property as a control that can fail — and it is why capturing beat striking.*
+
+### ✅ B-9's ACCEPTANCE DISCHARGED **BEFORE THE ACT** — CVO turned my addition into a pre-act control
+
+I asked that the stale banner be verified to **actually render** when the threshold trips. **CVO discharged
+it as a PRE-ACT control rather than an acceptance step:** they doctored a **41-day** `last_review` — the
+stale branch renders **LOUD** (*"NAMING SNAPSHOT IS STALE (>14d). Vertical NAMES may be wrong"* + *"Keys are
+unaffected — re-derived live"*) — and the **real 12-day** snapshot renders **age without flag.**
+> ✅ **So the threshold DISCRIMINATES and its output DISPLAYS — meaning if the honest flip fires before B-9
+> lands, the banner it fires into is VERIFIED WORKING.** *That is precisely what makes CTO's
+> no-urgency-borrowing ruling safe to lean on rather than merely stated. A deadline you accept missing is only
+> safe if the thing that fires instead is known to work.*
+**CVO also holds themselves to the constraint they authored — zero freshness prose in `served_artifacts`,
+"the act fails on that line, correctly."**
+
+### ⚡ TWO ENFORCEMENT TRANSFERS — concerns of mine became MECHANISMS in other seats
+
+1. **My silent-catch-up worry → a MUTANT in B-9's battery: a SUPPRESSED CATCH-UP LOG MUST FAIL.** *A worry
+   in a register depends on a reader; a mutant in a battery does not.*
+2. **B-8's precondition → enforced by the CERTIFIER: CVO will REFUSE a B-4/B-5 built-artifact cert whose
+   pre-build baseline is missing, BY CONSTRUCTION.** *That moves the precondition off my register and into the
+   gate that would otherwise pass it — which is where a precondition belongs. My register can now be wrong
+   about B-8 without the harm landing.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
