@@ -1500,6 +1500,48 @@ it** — R-4 is Andrew's and `~B`'s flag to him stands on its own merits.
 ACTION-ONLY so its silence on resource-grain changes carries no information** — **all now CVO's**, routed by
 Andrew ~0642Z (@c9be07b413).
 
+## 4x · INSTRUMENT-ROSTER STATUS, MEASURED (Andrew-direct ask) — and **two errors of mine inside one check**
+
+Andrew asked me to relay the roster to CVO **and identify what is still not fixed.** I measured rather than
+relaying claims. **A fix HAD landed today: @38dcbe8d9a** (Andrew-direct @c9be07b413).
+
+| item | MEASURED status |
+|---|---|
+| `comp-pipescript` **denominator / 1-of-6 layers** | ✅ **FIXED + EXERCISED** — it now indicts itself: `DENOMINATOR [bronze]: … = 12 object(s), 4 checked this run, 8 unrendered` |
+| `comp-pipescript` **deployed-only / repo-invisible channel** | ✅ **FIXED + EXERCISED** — **64 `S3-ONLY` rows** fabric-wide; incl. `pull_inflection_performance_rest.py`, `pull_inflection_assets_v2.py` ⇒ **remediation row 8's residual class is now ENUMERABLE, not hypothesised** |
+| `comp-pipescript` **MULTI-HOME + DECLARED-UNSWEPT** | ✅ **EXERCISED** (CVO's authoring run + CTO's independent acceptance read): **7 MULTI-HOME rows** — incl. `pull_inflection_transactions_rest.py` at bronze+gold+manual_api, **the exact script DS found triple-homed** — and 1 DECLARED-UNSWEPT |
+| `comp-estate` 404 key / runner conflation | ✅ addressed same commit *(CTO/CVO-reported; not COO-measured — labelled as such)* |
+| `comp-estate` **FROZEN CENSUS SUBSTRATE** | ❌ **NOT FIXED, ~3-DAY FUSE.** Resolver still `2026-07-30T13:11Z` ≈ 11d vs the engine's `STALE_AFTER_DAYS = 14`. **KEYS are re-derived live; NAMES ride the snapshot** — so the S3-plane fix improved key accuracy while name accuracy ages. **CVO's render-stamp fix makes the staleness HONEST AT THE VIEW; it does not stop the NAMES AGEING.** Regen-or-accept decision routed to CTO |
+| `comp-iam` `(action, resource)` modeling | ❌ **NOT FIXED** (engine untouched since 08-04). **Self-declares at point of use** — *"gaps — ACTION-ONLY. It does NOT compare resource ARNs"*, `DEFERRED/UNTRACED` on `generate_presigned_url`. **Mitigation, not fix: an instrument announcing its blind spot is safer and still blind.** Apply-time `simulate` stays the check |
+
+### ⛔ TWO ERRORS OF MINE INSIDE ONE CHECK — both the class I policed all night
+
+**(1) I READ THE WRAPPER, NOT THE ENGINE.** My first pass ran `git log` on `.tools/comp-pipescript|comp-estate|comp-iam` and returned **"no fix landed today"** on all three. Those are thin shims; the engines are in
+`org/modules/graph/`. **True about the file I read, false about the tool** — and I nearly relayed it.
+
+**(2) I READ *ABSENT* OUT OF A CAP I APPLIED MYSELF — and then mis-attributed it.** I reported MULTI-HOME
+and DECLARED-UNSWEPT as *source-confirmed, not exercised.* **They fired.** My command carried **`| head -12`**,
+and those markers print at the **END**, after all prefixes; my output holds **exactly 12 content lines and
+stops.** My 5 `[s3-only:]` rows were the BRONZE subset of 64.
+> **CVO attributed it to the banked harness output-truncation artifact (3 seats bitten). I corrected that: I
+> DID read the task output file — that remedy would not have saved me.** **`head -N` returned 12 TRUE lines
+> and silently withheld the rest, and I read absence into my own cap.** ⛔ **The remedy is NOT "read the
+> output file"; it is "NEVER conclude ABSENT from a capped stream — drop the cap or count the matches."**
+> *Filing mine under the harness artifact would leave the next agent reading output files diligently while
+> still capping their greps.* **I printed denominators for other seats all window and then read my own grep
+> output without one.**
+
+### ROSTER ROW — the cot exercise I suggested is WRONG, and its non-fire is a CORRECT NEGATIVE
+
+I proposed exercising MULTI-HOME on the cot tree via `cot_bronze_ingest`. **CVO's boundary kills it, rightly:
+that multi-homing is CROSS-BUCKET (`opal-data-cot` + `opal-data-bd`) and MULTI-HOME detection is
+DELIBERATELY PER-TREE/PER-BUCKET — the sweep never reads another firm's bucket, by firm separation.**
+⛔ **So a cot run will NOT fire MULTI-HOME for it, and that non-fire is a CORRECT NEGATIVE, not a miss.**
+**Recorded so nobody reads a correctly-behaving instrument as a failed exercise** — the exact misreading I
+spent the night warning other seats about, arriving in a test *I* designed. **The cross-bucket Model-B class
+belongs to the DEPLOY-MAP instrument** (my missing-redeploy-leg finding is its real defect), not this ETag
+sweep.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
