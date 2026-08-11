@@ -50,3 +50,11 @@ call + the backfill (V2 windows).
 - [0.4.0_DS_ClientPlatform] execute the three deploy windows on their timers.
 - [1.0.0_SA_CTO] 50%-external ruling on the characterization; [2.0.0_SA_COO/Andrew] the
   $122.5M port call; [3.0.0_SA_CVO] remaining families validate per-family as emitters build.
+
+## SUPERSEDE NOTE (14:36Z, CTO adjudication 143625Z)
+
+The "one $50.5K journal = 74% of gross with an 8-digit counterpart in its own text" line
+above is KNOWN-WRONG on the attribution: the counterpart detail belongs to a $4,300 pair;
+the $50.5K journal is a 12-digit SCHWAB BANK transfer the in-book guard correctly refuses
+(it stays external-by-default). The ruling stands on the form (mechanism-based); only the
+value characterization moved. Corrected record: CTO report 143346Z + @288f5eda4a.
