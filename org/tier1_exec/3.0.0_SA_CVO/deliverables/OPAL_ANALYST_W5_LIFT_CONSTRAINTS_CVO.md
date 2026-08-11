@@ -2,7 +2,7 @@
 
 **Author:** `3.0.0_SA_CVO~Z` · opened 2026-08-11 ~1910Z · **cumulative, extended per page, rows never deleted**
 **Authority:** Andrew-direct 2026-08-11 ~1020Z (delegated semantics) + PRD §9.3 (the semantics pen) — the same delegation that produces the semantic cells produces the constraints on how they may be consumed.
-**Coverage:** W0 `/portfolios` + W1 pages 1–4 (`/cma`, `/positioning`, `/attribution`, `/factor-tilts`). **Two pages outstanding** (`/valuations`, `/correlations`), then W2–W4.
+**Coverage:** W0 `/portfolios` + **W1 COMPLETE 6/6** (`/cma`, `/positioning`, `/attribution`, `/factor-tilts`, `/valuations`, `/correlations`) + **W2 `/macro`** + **W3a `/market`**. **8 portal units certified.** Outstanding: W3b (news subsystem, mid-measurement), W4's six uncensused pages. *(The two instrument runs, AD1 `comp-verdict-tools` and AD2 `freshness-deploy-verdict-tools`, are certified but produce no catalog rows — their findings bind tool consumers, not the lift. Named here so their absence is not read as a gap.)*
 
 > **WHY THIS FILE EXISTS.** Every ruling below is currently buried in the certification of the page
 > that produced it. W5 would have to re-mine five files to find them, discover them by hitting them,
@@ -53,7 +53,7 @@ date — **imports the display-vintage defect straight into the answering layer.
 
 - `vintage_field` is **per artifact** and accepts a **dotted path**.
 - An artifact with no vintage field gets its vintage field named explicitly, or the row is incomplete.
-- **The footer is never a vintage source.** 13 measured members across 5 pages say so.
+- **The footer is never a vintage source.** 17 measured members across 8 pages say so — and the register now carries a PREDICATE rather than a list: a page-level vintage key is safe exactly when the page's artifact set is homogeneous IN CADENCE, and unsafe the moment it is not. Producer identity is NOT the discriminator (falsified 2 of 6, in both directions).
 
 ## L-4 — The measured vintage-field variant set is at least EIGHT forms, not three.
 **Correction to a recorded figure.** Origin: W0 F-5.
@@ -97,7 +97,7 @@ Andrew's own recorded verbatim semantics, where they exist, **outrank a delegate
 his.** Everything I authored carries evidence class DECISION with the delegation record as locator.
 
 ## L-8 — Serve verdicts travel WITH their caveats. Several caveats are load-bearing, not decoration.
-**Binding.** Origin: all five pages.
+**Binding.** Origin: all eight certified pages.
 
 A verdict lifted without its caveat is a different verdict. The ones that change an answer's truth:
 
@@ -109,8 +109,10 @@ A verdict lifted without its caveat is a different verdict. The ones that change
 | `platinum/mdpf/cottonwood/account-units.json` | quote `value_date`, **never `assignment_date`** (4 days apart, different meanings) |
 | `json/portfolios/aum-metrics.json` | **never answer a Model-Portfolios AUM question from it** (L-1) |
 | factor-tilt tiers | **a tilt is a relative position** — not a holding, not a return |
+| `json/market/all_returns.json` | **DENY as a source** — 118 days old, self-reports fresh, no surface signal (L-13) |
+| `json/macro/volatility_data.json` | **name the key** — a frozen 180-byte twin exists at `json/yang/volatility_data.json` |
 
-## L-9 — TWO MP rows hold pending Andrew. The other fourteen lift immediately.
+## L-9 — TWO MP rows hold pending Andrew (VERIFIED-LANDED, UNANSWERED). The other fourteen lift immediately.
 **Not a defect; a routing state.** Origin: W0 §3.
 
 `json/benchmarks/benchmark_returns.json` and `platinum/mdpf/cottonwood/account-units.json` carry
@@ -125,9 +127,55 @@ not a gate** — W5 lifts 14 of 16 MP rows now and holds 2 for a one-line confir
 convention, the four agreement sub-shapes, and the members whose absence would otherwise be invisible
 (the coincidental and correlated-but-unwired agreements — nothing looks wrong at the site of them).
 
+## L-11 — An UNBOUND artifact's row must SAY it is unbound. Never infer a vintage for it.
+**Binding.** Origin: `/macro` R2 / K11, third state added to the register.
+
+Some artifacts have **no displayed vintage anywhere**. On `/macro`, the 79-member timeseries family
+renders in a modal with no footer, and `volatility_data` in a tab with none — the page *computes* and
+*registers* the latter's vintage and then displays it nowhere.
+
+- These are **not mis-bound and not correct** — they are a **third state**, and the remedy differs: you
+  repoint a mis-bound key, you have to **build** a surface for an unbound one.
+- **Catalog consequence:** the row must record that no displayed vintage exists, so the Analyst
+  *supplies* it from the artifact and never waits for the interface to corroborate. An undated answer
+  from an unbound artifact is unfalsifiable at the user's end — there is nothing on screen to check it
+  against.
+
+## L-12 — Freshness is ARTIFACT-grain. A tree-grain check is not imprecise, it is WRONG.
+**Binding.** Origin: `/market` R2 / K12, and it strictly generalises L-1's tree findings.
+
+`json/market/` holds **one key from 2026-04-15 beside two from 2026-08-11**. A tree-grain freshness
+check reads that tree **healthy**. The frozen trees found on `/positioning` and `/valuations` were
+*wholly* cold, so a coarse check would have caught them — **a mixed tree is the case where the coarser
+grain actively lies.**
+
+## L-13 — ⛔ A payload's own timestamp is NOT evidence of its age.
+**Binding, and it is the sharpest serving hazard the program has measured.** Origin: `/market` R1.
+
+`market.ts:239`'s fallback leg builds `generated_at: new Date().toISOString()`. **The response
+therefore self-reports as fresh while carrying data 118 days old**, and the response carries **no
+marker of which leg produced it**.
+
+- The catalog must never treat a payload-internal `generated_at` as a vintage where a fallback chain
+  exists; the vintage is the **artifact's** date, recoverable only from S3 metadata that no consumer reads.
+- `mkt.02` is the program's **first outright DENY-as-a-source**: 118 days old, self-reporting fresh, and
+  sitting inside a live tree. **An Analyst has no surface-level signal that would catch it**, so a
+  caveat is insufficient and only a denial is safe.
+- ⚠ **ARMED, NOT FIRED** — the primary is healthy and no user is served this today. Stating it as an
+  active outage would be the false-outage class NEVER#1 exists to prevent.
+
+## L-14 — `/market` is UNCENSUSED: `census_ref` has nothing to point at, and the run is the only source.
+**Binding.** Origin: `/market` C6, answered by absence.
+
+There is no census file for `/market`, so no reconciliation was possible and no `census_ref` can be
+populated. **This is the W4 condition arriving three waves early**, and W4's six pages will all be in
+it. What compensated here — file-backed denominators re-derivable from artifacts rather than from a
+pipeline — is the right substitute for a second description, and W5 should expect it rather than a
+census pointer on these rows.
+
 ---
 
-## What five pages of measurement have SETTLED, for whoever designs the answering layer
+## What EIGHT pages of measurement have SETTLED, for whoever designs the answering layer
 
 **The displayed vintage is not bound to the artifact it describes.** That is the whole class, and it is
 now the only surviving framing — five pages eliminated the others by measurement, not by argument:
@@ -147,5 +195,6 @@ field, the row says so explicitly (L-3).
 
 ---
 
-*Extended at each certification. Coverage line at the top is authoritative — if it does not name a
-page, this file does not cover it.*
+*Extended at each certification, and prior pages are RE-READ on each extension rather than appended blind — that practice is what caught the mp.01 member I had under-recorded when the vintage register was first built. Coverage line at the top is authoritative: if it does not name a page, this file does not cover it.*
+
+*Last extended 2026-08-11 ~2305Z, covering the six certifications that landed after the file was opened (/valuations, /correlations, /macro, /market, AD1, AD2).*
