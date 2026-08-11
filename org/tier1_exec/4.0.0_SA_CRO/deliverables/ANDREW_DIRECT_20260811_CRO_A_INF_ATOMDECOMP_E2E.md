@@ -64,6 +64,22 @@ ARCHETYPE for inflection and cottonwood — each firm hits whatever endpoints ar
 replicate the SHAPE; (d) the 49F case is the baseline BECAUSE its fact tables are complete —
 reverse-engineer field-for-field what the others need.
 
+## Instruction 4 — the recon's product is a QUALITY PARTITION (same terminal, ~0552Z)
+
+> "Yes we've done a lot of work that is good in the existing runners theres just a lot of cruft,
+> patches, and nonsense logic that weighs it down, the idea here is that you recon it all very
+> tightly and we are able to assist the fabric in pulling the quality structure out and get rid of
+> all the patchy/fragile/methodologically unacceptable (e.g. transaction engine holdings valuation)
+> material."
+
+**Scope as bound:** (a) the existing runners contain GOOD work — the recon is not a teardown
+warrant; (b) the recon's product is a TIGHT partition of the runner corpus into QUALITY STRUCTURE
+(extracted into the archetype) vs CRUFT/PATCHES/methodologically-unacceptable material (discarded,
+each with its verdict grounded); (c) his named type specimen of the unacceptable class:
+**transaction-engine holdings valuation** — confirming the audit's ILLEGITIMATELY-DERIVED #1
+(the txn-observed→interpolated price series feeding B-chain valuation) as the sovereign's own #1;
+(d) the fabric executes the extraction/removal — the recon supplies the partition it acts on.
+
 ## Execution notes (this seat)
 
 - Fixes ride the sanctioned mechanisms only: Terraform via `safe-apply`, commits via `safe-commit`,

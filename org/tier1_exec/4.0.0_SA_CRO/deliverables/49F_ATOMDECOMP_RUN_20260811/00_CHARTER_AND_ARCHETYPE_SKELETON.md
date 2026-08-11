@@ -11,6 +11,12 @@ cottonwood — *"reverse engineer field for field what we need for the others."*
 - **Objective:** extract the canonical ADVI gold-analytics SHAPE from the 49F estate; specify the
   perfect runner (canonical sourcing × preserved serving contract × north-star derivation rules);
   produce the field-for-field replication map for inf + cot.
+- **DELIVERABLE SHAPE (Andrew-direct instruction 4, ~0552Z):** the recon partitions the runner
+  corpus TIGHTLY into **QUALITY STRUCTURE** (extracted into the archetype — the existing runners
+  carry real good work: the guard machinery, working analytics, earned attribution logic) vs
+  **CRUFT/PATCHES/METHODOLOGICALLY-UNACCEPTABLE** (discarded, each with a grounded verdict — his
+  named type specimen: transaction-engine holdings valuation). Every script/engine/subsystem in
+  the census lands in exactly one side with its evidence; the fabric executes the extraction.
 - **Decision enabled:** the ADVI canonization program (CTO/COO consuming per the collective frame).
 - **Mode:** read-only recon (no mutation in this run).
 - **Scope:** `opal-data-assets/schwab/08335338/**` (canonical base) ·
