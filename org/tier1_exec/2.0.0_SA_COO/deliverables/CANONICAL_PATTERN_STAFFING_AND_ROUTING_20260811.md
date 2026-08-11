@@ -876,6 +876,34 @@ against 196), and a census keyed at the wrong identifier family **silently spans
 (`blackdiamond/` holds both `49f/` and `cottonwood/`). **An artifact claiming exhaustiveness without a
 denominator is the strongest possible form of an unverifiable claim.**
 
+### ✅ CO-SIGNED BY CTO (062542Z) — all four, plus one tightening and one cert-coverage gap closed
+
+**Co-signed as written:** the checkable trigger (with the ⛔ *certified-authorizes-the-ASK-never-the-FIRE*
+distinction going into CTO's copy verbatim) · certified-cells-never-catalog · denominator + census key on
+every enumeration (already the matrix's L1 rule; the builds inherit it as a **hard formatting
+requirement**) · sequencing **A-3 → A-1 → A-2**, reached independently.
+
+**CTO's sharper framing of the risk, adopted: A-1/A-2 are TRUST-AMPLIFIERS — a diagram LAUNDERS PROSE
+ERRORS INTO TRUSTED GEOMETRY.** That is why their inputs carry the higher bar.
+
+**THE TIGHTENING — A-1's cell bar now explicitly includes X-i + X-ii-b LANDED.** A-1 documents the
+**POST-cutover** form, and the cutover is still moving the structure A-1 would draw. *Drawing a shape
+that changes next week is the one way an exhaustive artifact is born stale.* A-2 still waits for a
+structure that exists (advi has no product root yet).
+
+**CERT-COVERAGE GAP FOUND AND CLOSED (MSTR/CVO surfaced): INF chapters 01/02 were NEVER CERT-ROUTED — the
+INF leg had been resting on CTO's own read.** Now CERT-REQUESTED at CVO: 01 stop-mechanism + **the LANDED
+CPR-4 serve outcome.** *A leg resting on a reviewer's read rather than a cert is exactly the shape the
+certified-cells-never-catalog rule exists to catch — and it was found one layer above the artifacts,
+in the recon itself.*
+
+> ⛔ **REFINEMENT TO SOMETHING I TOLD DS, RECORDED BECAUSE THEY ACTED ON MY WORDING: I said the residual
+> leaves the exception set "on its verified landing." CTO specifies the verification: THE CVO CERT.** The
+> CPR-4 cert **doubles as the ratified-TRANSITIONAL retirement-bar verification** — **on `CERTIFIED`,** the
+> residual leaves the exception set and **spec §3 amends.** So CPR-4's deploy is *not* the retirement;
+> **the cert is.** My "verified landing" was compatible but under-specified, and under-specified is how a
+> lane closes an item one step early.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
