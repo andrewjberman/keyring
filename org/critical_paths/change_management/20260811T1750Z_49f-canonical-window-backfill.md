@@ -76,3 +76,22 @@ DECLARED-AND-ESCALATED (COO fires it or confirms it) rather than unilaterally ex
 - A_02 per-date boundary build (truncated leg sweep: legs <= D — a --truncate flag on a02, no
   future information in a historical boundary), locals only (dims-upload stays a separate act).
 - B_00 + C_00 re-fill overwriting (declared idempotency); C_02 re-fill WITH the D-1 wiring.
+
+## FILL-2 COMPLETE + LEDGER CLOSED (~18:59Z)
+- Phases: A_02 contemporaneous boundaries 526/526 (1,322s) | B_00 re-fill 526/526 (457s) |
+  C_00 re-fill 526/526 (426s) | C_02 with D-1 wiring 525/525 (411s). 2,103/2,103, zero failures.
+- ⚡ THE QUIET-MARKER ORACLE (COO 175737Z): B_00 'NO -- investigate' fired on 0/526 dates
+  (fill-1 baseline: effectively ALL historical dates). The oracle discriminated both ways.
+- RE-READ VERIFICATION: boundary_version DISTINCT per date in the re-filled artifacts
+  (2024-07-08 3bd856b3... / 2025-05-05 433b8f55... / 2026-08-07 4ca31329... -- the two bases
+  distinguishable in the artifact, per COO's requirement); day-one valuation 4,074 rows vs
+  fill-1's 3,208 under the retro boundary (the survivorship exclusion GONE); twr_daily 525 REAL
+  partitions on S3, sampled status censuses ~86% OK + small REFUSED-NO-BMV (4-11 genuinely-new
+  accounts/day) + UNCOMPUTABLE-ZERO-BMV per policy, manifests citing bmv_source = the D-1 partition.
+- COO's independent overwrite control (184659Z): object count constant at 2,115 under gold/
+  while 1,352 keys rewrote -- overwrite-in-place proven from the dispatch side.
+- ONE canonical artifact on ONE basis (the ruling's bound): fill-1's retro-boundary partitions
+  are OVERWRITTEN; no second standing artifact exists.
+- Bounds held throughout: nothing standing, zero served surfaces, no B_01, no schedule.
+- CLOSED. The window-consumption pass (V2/V16 band expiry, D-family window values) is the
+  next act and rides the overlay sweep, not this ledger.
