@@ -27,8 +27,10 @@ per firm** -- measured on the newest feed partition vs the newest ADVI accounts 
 
 1. **The 49F path needs one new fact before any build:** does a SmartX surface expose
    allocation->custodian-account? The feeder's comment says the allocation row does not; whether
-   ANOTHER endpoint does is **unverified and is vendor-egress-gated to check live** (Andrew's
-   per-use word). This is a RECON-2-adjacent question -- ~A's 49F archetype run should carry it as
+   ANOTHER endpoint does is **unverified. CORRECTED 0546Z (COO caught my too-narrow read): the live probe is NOT
+   egress-gated -- SMARTX is on the standing LIFTED list, and the work is Andrew's collective-recon
+   mandate, so both wire and work are authorized. My original "vendor-egress-gated" line was the
+   too-narrow grant read whose failure mode presents as a legitimate blocker and stalls quietly**. This is a RECON-2-adjacent question -- ~A's 49F archetype run should carry it as
    a cell. If no endpoint exposes it, item 3's 49F leg needs an identity source outside SmartX.
 2. **Inflection is the existence proof** that item 3's design is right wherever the key survives
    the feed: 98% native-key join, rollup spine already in place. It can prototype the overlay first.
@@ -42,6 +44,6 @@ per firm** -- measured on the newest feed partition vs the newest ADVI accounts 
 ## BOUNDARIES
 
 Newest-partition sampling (one per firm side); 49financial feed = the only 49F firm partition;
-inflection residual cause unmeasured; the SmartX endpoint question deliberately NOT probed
-(vendor egress); cottonwood spine cells NOT_MEASURABLE absent an input; L2 trigger-grain cells
+inflection residual cause unmeasured; the SmartX endpoint question not yet probed (carried in RECON-2 at ~A;
+probe AUTHORIZED per the 0546Z correction -- the original egress-gated claim was WRONG); cottonwood spine cells NOT_MEASURABLE absent an input; L2 trigger-grain cells
 (CTO's oversight note 5) belong to the per-firm pipeline decomps (RECON-2/3/5), not this join run.
