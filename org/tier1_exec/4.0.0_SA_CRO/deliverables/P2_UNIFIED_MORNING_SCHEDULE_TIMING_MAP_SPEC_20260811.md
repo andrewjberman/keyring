@@ -3,7 +3,7 @@
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
 **Commission:** CTO, Andrew-direct ~1750Z (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260811_PHASE_FRAMEWORK_FORMALIZE_UNIFIED_MORNING_DEBT_BRIEF.md`), retargeted to CRO base ~1757Z mid-turn. **Protocol: CRO authors -> CVO reviews -> CTO ratifies -> AE implements at P2-open.**
-**Status:** DRAFT, first pass. Every claim below is traced to a captured artifact (file:line / commit) or explicitly marked NOT LOCATED. Per the commission's own framing: *"the ADVI-endpoints-morning-ready premise is VERIFIED by the spec, not assumed"* — §5 is that verification, and it does not close clean.
+**Status:** **RATIFIED** (CTO, this window) with CVO's two review conditions folded in as amendments — see §7. Every claim below is traced to a captured artifact (file:line / commit) or explicitly marked NOT LOCATED. Per the commission's own framing: *"the ADVI-endpoints-morning-ready premise is VERIFIED by the spec, not assumed"* — §5 is that verification, and it does not close clean.
 
 ---
 
@@ -30,6 +30,8 @@
 
 **Method, named per the commission's ask:** the **N-date timing sample** pattern — run the pipeline stage in question across a historical date range (ad-hoc QA, run-and-read, never standing/never production evidence — CLAUDE.md's ad-hoc-permitted rule), measure wall-clock per date, extrapolate with a stated uniform-cost assumption. Precedent: the COO-authorized 20-date sample (`org/critical_paths/change_management/20260811T1750Z_49f-canonical-window-backfill.md:8`, actually run at n=59, "59/59 rc=0; ~15 min warm extrapolation, stated as an extrapolation with uniform-cost assumption"). **This is the sanctioned measurement method for every pipeline below that does not yet have one; it is explicitly NOT a standing comparator (CLAUDE.md shadow-pipeline veto) — one bounded run, read, done.**
 
+**Every value in this section is TF-DESIRED, not confirmed-applied** (Rule 22a: a `.tf` `schedule_expression` is parsed intent, never landed-vs-planned truth) — **state as PROPOSED-FROM-TF until the §3 both-namespace live sweep confirms it per pipeline** (CTO ratification condition 1). Do not quote a value below as the live schedule without that confirmation.
+
 **Per-pipeline anchor = mdpf-floor (13:30Z) MINUS measured chain-duration**, per the commission's formula:
 
 | Pipeline | Silver/input readiness | Measured chain-duration | Anchor status |
@@ -51,6 +53,8 @@
 - **cot:** the BD-REST ruling supplies A2/A3 direction; A1/A4/A5 (write-cardinality, re-delivery, settle window) are undeclared. Named blocker for AE, same class.
 
 **Dispatch-path census (both EventBridge namespaces):** *"schedule-existence questions MUST sweep BOTH EventBridge namespaces (`events list-rules` AND `scheduler list-schedules`) — a single-namespace sweep returns a clean, complete-looking absence"* (`SSOT_RECON_MATRIX_20260811.md:84-87`). **Required for every pipeline touched in P2 before a floor is called final** — a namespace-blind sweep cannot tell "no schedule" from "schedule lives in the namespace you didn't check." I could not independently locate the specific "10:20Z same-S3-event replay" specimen the commission cited as the live example (searched by timestamp and by description across `org/` — not found; flagged in §6 rather than fabricated).
+
+**Amendment (CTO ratification condition 2): the existence sweep alone is not sufficient and must be PAIRED with trigger-characterization.** The `{events, scheduler}` roster answers *"does a schedule exist?"* — it does not say whether a pipeline absent from BOTH namespaces is **DEAD** (nothing dispatches it) or **EVENT-ONLY-TRIGGERED** (the exact NEVER#4 defect this spec exists to surface — a pipeline whose only trigger is another pipeline's success, invisible to a schedule sweep by construction). **Pair every "absent from both namespaces" result with an S3 event-notification config read + a Lambda invoke-source check** before concluding either verdict; an unpaired absence is ambiguous, not a clean finding. This generalizes the same lesson as the un-located 10:20Z specimen — the unenumerated-dispatch-path class is exactly what a namespace-only sweep misses.
 
 **Mutex + mode-homing** (carried from the 49F Group W spec, applies estate-wide per the ratified composition law): one host-level lock per runner, refuses loud under a live lock; run mode resolves once at dispatch and propagates via env to every stage.
 
@@ -86,11 +90,23 @@ Andrew's premise: *"I suspect they [rest endpoints] are probably fine for ADVI t
 
 ---
 
+## 7. RATIFICATION AMENDMENTS (CTO, this window — conditions of the ratified version)
+
+**Chain:** CRO authored -> CVO reviewed (CONCUR, `REVIEW_P2_UNIFIED_MORNING_SCHEDULE_SPEC_20260811.md`) -> CTO ratified `4e1ec757f8` with two conditions, folded in as this amendment:
+
+1. **TF-DESIRED labeling (Rule 22a):** every floor value in §2 is parsed-Terraform intent, not confirmed-applied state, until the §3 both-namespace live sweep runs per pipeline — folded into §2's lead-in.
+2. **Trigger-characterization pairing:** the dispatch-path census's namespace sweep must pair with S3-event-notification + Lambda-invoke-source characterization so an "absent from both namespaces" result resolves to DEAD or EVENT-ONLY (never left ambiguous) — folded into §3.
+
+CVO's endorsement, verbatim on the record: *"your §1 correction that '13:31Z' is a freshness-CHECK firing before Orion's own data exists (not a consolidator read) is the sharpest thing in the spec... a wrongly-timed CHECK not a wrongly-timed vendor."* The unified-vs-fork tradeoff (§5) routes to Andrew this turn as a card, CTO's rec = the unified floor with mdpf's carry-forward+accelerator-heal pattern extended to inf, CVO concurring as default. AE implements at P2-open per the framework.
+
+---
+
 ## Acceptance criteria (for CVO review)
 
 - Every vendor-timing claim above traces to a captured artifact (table in §1) — none inferred.
 - The ADVI-morning-ready premise is given a explicit VERIFIED / NOT-VERIFIED verdict per vendor (§5), not a single estate-wide yes/no.
-- Every floor proposal states its measurement method (N-date sample) and whether that method has actually been run yet, per pipeline (§2).
+- Every floor proposal states its measurement method (N-date sample) and whether that method has actually been run yet, per pipeline (§2), and is labeled TF-DESIRED vs. live-confirmed (§7 amendment 1).
+- Every dispatch-path absence verdict pairs the namespace sweep with trigger-characterization (§7 amendment 2) — no unpaired "absent" result.
 - No new alarm/monitor/comparator proposed anywhere in this document (§4 self-check).
 - Gaps are named with an owner-shaped next step, not left implicit (§6).
 
