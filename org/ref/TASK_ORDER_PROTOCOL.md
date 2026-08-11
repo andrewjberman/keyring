@@ -189,7 +189,20 @@ One file per feature. Never overwrite into a monolith.
     org/standards/PROOF_OF_SPEC.schema.json -- one row per criterion id carrying the
     criterion VERBATIM + the exact re-runnable invocation + output evidence + denominator,
     validated BEFORE the status flip:
-      python .tools/proof-of-spec-check.py {instance}.json --expected-criteria C1,C2,C3
+      python .tools/proof-of-spec-check.py {instance}.json C1,C2,C3
+    ^^ THE CRITERION SET IS POSITIONAL (argv[2]). It is NOT a --expected-criteria flag.
+    CORRECTED 2026-08-11 ~1710Z (1.0.0_SA_CTO~Z, on 0.5.0_AE_OpalETL~Z's first live use of
+    this contract). This line previously documented `--expected-criteria C1,C2,C3`, which the
+    tool does not accept -- `proof-of-spec-check.py:65` takes `len(sys.argv) in (2,3)` with
+    the criteria string at `sys.argv[2]`.
+    ⛔ WHY THIS MATTERED MORE THAN A TYPO -- IT FAILS TOWARD SILENTLY DISABLING THE COVERAGE
+    LAYER. The flag form exits 2 into HELP TEXT that contains no "INVALID" string, so a caller
+    who greps the output for INVALID reads a hard usage failure as a clean pass. And the
+    natural recovery from "my command printed help" is to drop the argument and run the BARE
+    two-arg form -- which is legal, exits 0, and SKIPS THE COVERAGE DIFF ENTIRELY. That diff
+    is the half that catches an assignee omitting a criterion row; the documented-but-broken
+    command's easiest fix is the one that turns it off. Exercised both ways on a live instance:
+    flag form rc=2 + help text; positional form `VALID`, rc=0, 6 rows, 0 violations.
     The validator runs the COVERAGE diff first (a criterion with no row refuses the instance
     before any quality check; frames printed) then the quality rules (FAIL-requires-reason,
     thin-evidence-PASS invalid, dead mutant/determinism controls invalidate).
