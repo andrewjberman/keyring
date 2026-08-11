@@ -24,7 +24,7 @@ because the staffing decision below was made under the older read.*
 - **`3.0.0_SA_CVO`** — owes the Rule-14e cert (gates cutover acts 2/3/4). **SPAWNED 0529Z (LD-0390)**
   on CTO's 052626Z surfaced need — *crossed in flight, before my ask arrived.* CTO's 052113Z cert
   request confirmed sitting in its inbox.
-- **`0.7.0_AE_CloudOps`** — owns **TWO dispatchable acts** (cutover act 1 / X-iv, and C-3/R-3).
+- **`0.7.0_AE_CloudOps`** — owns **TWO dispatchable acts** (cutover act 1 / X-iv, and C-3/CPR-3).
   **SPAWNED 0534Z (LD-0391)** with startup direction naming both acts + this register.
 
 **Seating was a capacity fact, never a gate** — spawn authority is MSTR's; I surfaced and did not hold.
@@ -37,9 +37,45 @@ zero local-ahead, carrying @f639b23c1f + @8ad0d6b641 + this register @014e7af672
 
 ---
 
-## 1 · DISPATCHABLE NOW — the three landing acts
+## 0b · NAMESPACE — SETTLED FABRIC-WIDE, AND MY OWN LABELS MOVED
 
-### ACT R-1 · INF Sunday full-pull must UNION-PRESERVE departed accounts (⏰ HARD DATE)
+**Three `C-n`/`R-n` namespaces were live in one fabric tonight. The settled state (adopt verbatim):**
+
+| namespace | form | owner / authority |
+|---|---|---|
+| CRO recon chapters | **`RECON-1`..`RECON-7`** (renamed *from* `C-n`) | CRO base @3833ce88d1 · CTO concurred @1d3875cc45 |
+| Scheduling-jam findings | **`C-1` / `C-2` / `C-3`** — **KEEP, unchanged** | CRO~A's committed brief @1b43c23765 §4 |
+| 08-10 taxonomy rulings | **`R-1`..`R-5`** — keep (oldest, most embedded) | @dedd7bdeab |
+| **This register's landing acts** | **`CPR-1`..`CPR-4`** *(was `R-1`..`R-4`)* | **this seat — renamed, see below** |
+| ITEM_0 landing acts / remediation register | `L-0`..`L-7` / `R-4b` — untouched, a third distinct thing | ITEM_0 |
+
+**⚠ CTO briefly ruled the OPPOSITE (`JAM-C1..C3`, @ef75749af4) 15 seconds after CRO's commit, then
+CORRECTED to CRO's form @1d3875cc45.** Two Tier-1 execs held contradictory conventions for ~90s. **I
+did not adjudicate** — surfaced verbatim to both, ran a convention-independent interim protocol
+(descriptive reference + `file:line`, correct under either outcome), and CTO conceded. **My live DS/AE
+dispatches needed no edit**, because they carried `file:line` beside every label — habit, not design.
+
+**>> AND I COMMITTED THE SAME DEFECT IN THIS FILE.** These acts were originally labelled `R-1`..`R-4`,
+colliding with the 08-10 taxonomy rulings `R-1`..`R-5` — **I flagged the collision in two peers'
+namespaces and created a third in my own, inside ten minutes.** Renamed to `CPR-*` by CRO's own rule:
+**the newest, least-embedded namespace moves.** Mapping for the seats already dispatched:
+`R-1 → CPR-1` (INF union-preserve) · `R-2 → CPR-2` (C-2 double-lag) · `R-3 → CPR-3` (C-3 sweep order) ·
+`R-4 → CPR-4` (F4 D_04 residual). *Knowing a failure mode by name does not immunize you against
+writing it — which is why the register is the control and care is not.*
+
+**NAMING LAW (CTO-ruled @ef75749af4/@1d3875cc45, item unchanged by the correction): the FULL 8-DIGIT
+account + the PRODUCT is the only unambiguous form.** Never the 4-digit prefix, never a bare "49F" —
+`08335338` = **ADVI** (Advisor Intelligence; **HAS `gold/`**) · `08242234` = **MDPF** (Model Portfolios;
+**no `gold/`** — incomplete, not violating). *I verified both live before the Andrew-direct ADVI
+archetype reference propagated; that grounding is now cited in the spec.* **"49F" is a FIRM, not a
+bucket** — it appears against `08242234` in the `49-schwab-conv` ingest path and against `08335338` as
+the ADVI archetype, so the nickname alone cannot identify a substrate.
+
+---
+
+## 1 · DISPATCHABLE NOW — four landing acts (`CPR-1`..`CPR-4`)
+
+### ACT CPR-1 · INF Sunday full-pull must UNION-PRESERVE departed accounts (⏰ HARD DATE)
 
 | field | value |
 |---|---|
@@ -79,7 +115,7 @@ tonight's window (instrument gap, routed to CTO).
 
 ---
 
-### ACT R-2 · C-2 retry-net double-lag (Cottonwood bronze ingest)
+### ACT CPR-2 · C-2 retry-net double-lag (Cottonwood bronze ingest)
 
 | field | value |
 |---|---|
@@ -100,7 +136,7 @@ Andrew — work he believes is moving sits held on an approver he does not know 
 
 ---
 
-### ACT R-3 · C-3 sweep/primary order (probe-day universe)
+### ACT CPR-3 · C-3 sweep/primary order (probe-day universe)
 
 | field | value |
 |---|---|
@@ -112,7 +148,7 @@ Andrew — work he believes is moving sits held on an approver he does not know 
 
 ---
 
-### ACT R-4 · F4 D_04 non-fee-AUA residual → CLASSIFICATION (ready-to-land)
+### ACT CPR-4 · F4 D_04 non-fee-AUA residual → CLASSIFICATION (ready-to-land)
 
 | field | value |
 |---|---|
@@ -121,13 +157,13 @@ Andrew — work he believes is moving sits held on an approver he does not know 
 | **TRIGGER** | **NOW** — lowest cost of the four; the diff exists |
 | **PRECONDITION** | none. It is a *classification + surfacing* change (`unreconciled_aua`), not a revaluation — it must not silently reopen C-1 (revaluation asymmetry, live at Andrew via CTO). DS confirms the diff changes labelling/surfacing only |
 
-> **Why R-4 is dispatched and not banked:** *items that cost nothing are the ones that quietly never
+> **Why CPR-4 is dispatched and not banked:** *items that cost nothing are the ones that quietly never
 > happen* (ITEM_0's organizing principle, my own form). A ready-to-land diff with no precondition is
 > the single most likely act in this register to still be sitting here in a month.
 
-**DS QUEUE ORDER: R-1 → R-4 → R-2.** R-1 first on the hard date; R-4 second because it is drafted and
-free; R-2 third — its runtime is 22:30Z tonight, so it has the most slack of the three. DS may reorder
-R-4/R-2 on its own readiness read; **R-1 stays first.**
+**DS QUEUE ORDER: CPR-1 → CPR-4 → CPR-2.** CPR-1 first on the hard date; CPR-4 second because it is drafted and
+free; CPR-2 third — its runtime is 22:30Z tonight, so it has the most slack of the three. DS may reorder
+CPR-4/CPR-2 on its own readiness read; **CPR-1 stays first.**
 
 ---
 
@@ -198,14 +234,14 @@ pass — they do not break flow.
 
 | # | Slip / residual | Owner | State |
 |---|---|---|---|
-| 1 | `comp-pipescript deployed` is structurally blind to the Lambda-zip code channel (returned MATCH while executing code was 4 days stale) | CTO (instrument roster) | OPEN — routed 031216Z. **Named in R-1's acceptance so it cannot be leaned on** |
+| 1 | `comp-pipescript deployed` is structurally blind to the Lambda-zip code channel (returned MATCH while executing code was 4 days stale) | CTO (instrument roster) | OPEN — routed 031216Z. **Named in CPR-1's acceptance so it cannot be leaned on** |
 | 2 | `comp-pipescript deployed` rendered 1 of mdpf's 6 code layers (7/49 objects, denominator unstated) | CTO | OPEN |
 | 3 | `comp-estate` served rows carried a 404 platinum key + runner conflation | CTO | OPEN |
 | 4 | Two live code channels + 17b grammar observation | CTO (DS-flagged 033615Z) | OPEN |
 | 5 | C-1 revaluation asymmetry / conversion policy | CTO → Andrew | OPEN, live |
 | 6 | Estate-wide point-in-time extension census | CTO | OPEN, diagnostic |
 | 7 | Cottonwood deep-rekey adjudication | CTO (causation thread) | OPEN, deliberately not parallel-read |
-| 8 | `MISSING_IN_REPO`: deployed-only gold scripts with no repo counterpart (R-1's script is one; the decomp measured **4 more** in the assets_gold layer) | DS + CTO | OPEN — R-1 closes one instance; **the class is not closed by it** |
+| 8 | `MISSING_IN_REPO`: deployed-only gold scripts with no repo counterpart (CPR-1's script is one; the decomp measured **4 more** in the assets_gold layer) | DS + CTO | OPEN — CPR-1 closes one instance; **the class is not closed by it** |
 | 9 | 2 unpushed local commits (audit-archive baseline + snapshot, @f639b23c1f/@8ad0d6b641) | MSTR (sole shared-branch integrator, LD-0367 r2 / LD-0368) | **CLOSED** — push landed @7f579d72b6, zero local-ahead |
 | 10 | **`C-n` NAMESPACE COLLISION**: recon chapters (CRO base @07c6f68bf4: C-1 MDPF / C-2,C-3 at ~A / C-4 join / C-5 cottonwood) vs scheduling-jam findings (CRO~A strategy §4: C-1 custody asymmetry / C-2 double-lag / C-3 sweep order). **Two meanings, one label, arrived 3 min apart; I routed the FINDINGS C-2→DS and C-3→AE, which a reader of the recon map reads as ~A's work.** Rule-24 axis hygiene one layer up | CRO base (map owner) + CTO (spec owner) | OPEN — flagged to CRO/CRO~A/CTO 0530Z. Proposal: `C-n` stays recon, findings become `JAM-C1..C3`. **Until settled every COO dispatch qualifies `(A)`/`(B)`** |
 
