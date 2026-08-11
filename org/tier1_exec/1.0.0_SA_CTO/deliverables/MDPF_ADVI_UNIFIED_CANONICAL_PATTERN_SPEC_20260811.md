@@ -131,6 +131,11 @@ base for "the perfect gold analytics runner"; that shape becomes the archetype i
 cottonwood replicate endpoint-by-endpoint, field-for-field.** CRO~A owns the 49F decomposition +
 archetype spec (citing this pattern's rows, not re-deriving them); the atoms in §2 and the atom-8
 conformance test in §3 are the archetype's pattern contract; MDPF-side surfacings route back here.
+**Naming law for this program (CTO ruling 0533Z, COO-surfaced): "49F" alone is AMBIGUOUS — it
+appears against 08242234 (MDPF ingest path) and 08335338 (ADVI archetype). The full 8-digit account
++ the PRODUCT is the only unambiguous form in any dispatch, spec row, or finding.** And the C-n
+namespace is RECON-ONLY (CRO base's coverage chapters); CRO~A's scheduling-jam findings rename to
+JAM-C1..C3 (two grains were sharing one label across seats — Rule-24 hygiene one layer up).
 
 advi's INF-side work already has a measured spine: CRO~A's INF three-bucket map + refactor waves
 (03 §3). Sequence as ruled there: **W-E before Sunday 08-16 (hard date — else the 16 cancelled
