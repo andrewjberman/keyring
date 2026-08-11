@@ -28,3 +28,19 @@ base + CRO~A.
 - **The inputs:** the CROs' research under `workflows/atom_decomposition/runs/` + their run
   records — this spec is built FROM certified/measured recon, never from the catalog (the
   certified-cells-never-catalog precondition applies in full).
+
+## RIDERS (same window, verbatim)
+
+> "This is of course to be reliant on building the GIPS-compliant performance measurement using
+> the relevant structure as defined in the GIPS .rtf file as well as any transaction codes and
+> data confirmed by 4.0.0_SA_CRO"
+
+> "C:\Users\AndrewBerman\Desktop\GIPS_TWR_Reconstruction_Standard.rtf here is the spec"
+
+The GIPS performance measurement is the spec's LOAD-BEARING core: its structure comes from
+`C:\Users\AndrewBerman\Desktop\GIPS_TWR_Reconstruction_Standard.rtf` (THE spec — requirements
+taken from it verbatim, the feasibility run's own discipline), and its data layer binds to the
+CRO-CONFIRMED transaction codes + estate truths (@a876ee6ae9 classification table,
+@5bb3b2626d pair-matching + fee-family verification, the four gross_amount/157-codes/sweep/
+reinvestment corrections, the IC-row debit_credit position-side note, the FRM fee-credit-leg
+composite discriminator).
