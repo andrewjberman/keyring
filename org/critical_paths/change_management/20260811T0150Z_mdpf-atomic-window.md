@@ -109,10 +109,22 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   @bf74d031c1 + TF apply, AE lane per Deployment Rules 1/2/4/18). Window intent unchanged: the reviewed
   fix, landed on the path that EXECUTES, tonight.
 - **L-C RE-FIRE AUTHORIZED (once, post-L-D):** the 0258Z cycle read the OLD code, so its item-2 purpose
-  was structurally undischargeable. Same fence, same scope; DS re-reads item 2 against the POST-fix
-  oracle. Item-1 mechanical findings (cottonwood guard refusal, global skip) stand — they are
-  code-channel-independent. Item-3 verdict pending from DS's trace on the 0258Z run; re-confirm on the
-  re-fire if the trace derives from executed code.
+  was structurally undischargeable. Same fence; **re-fire scope = ITEM 2 ONLY.** Item-1 mechanical
+  findings (cottonwood guard refusal, global skip) stand — code-channel-independent.
+- **L-C VERDICTS AS DELIVERED (DS 031xZ, COO-validated):** **ITEM 2 SPLIT** — (a) as-emitted by the
+  0258Z cycle FAIL (PRE-fix values; mechanism = the 08-07-pinned lambda package, i.e. the wiring
+  finding, NOT a code regression); (b) **on the LANDED code PASS** (instrumented run importing the
+  deployed-channel bytes, cmp-verified == @bf74d031c1, import path asserted): POST anchors reproduced —
+  custody 209,373,343.50 / model_aua 145,329,103.38, source_vintage 2026-08-07 == frontier,
+  lag_vs_as_of_days=0 truthful, tdb=2 = the Monday convention, orion gap at TRUE label 08-05 (old code
+  puts it at 08-06 — a second two-channel behavioral discriminator). **L-D therefore converges (a)→(b)
+  by construction — the code being re-pinned is already behaviorally proven.** **ITEM 3 PASS, CLOSED**
+  (no re-confirm needed — both code vintages agree): sharp leg = instrumented boto3 trace, DENOMINATOR
+  987 S3 read calls, smartx keys touched 0, distinct targets exactly {eclipse/inflection/silver
+  fact_portfolios_full · orion/inflection/silver fact_assets · inflection gold
+  account_distribution.json}; supportive leg = lambda log stream (139 events, positive control
+  present), smartx mentions 0. Pre-registered readings observed as expected (feeders frozen ·
+  ROW11 stale known · cottonwood collision separate). Fence intact throughout.
 - **INTERPRETATION TABLE AMENDED — EXECUTING-CODE PRECONDITION ADDED:** every PASS row of the 13:30Z
   pre-registration now additionally requires the cycle to have EXECUTED the @bf74d031c1 code:
   live CodeSha256 != the 08-07 value BEFORE the cycle, AND emitted bodies carry the POST-fix oracle
