@@ -829,6 +829,55 @@ finding's integrity.*
 
 ---
 
+## 4i · STAGED — THREE `/artifact-design` BUILDS (Andrew-direct @f73ad4d22a, LD-0393). NOTHING FIRES TONIGHT.
+
+**Andrew wants three structural artifacts built ONCE RECON COMPLETES and CONFIDENCE IS ESTABLISHED.**
+**Staffing + sequencing at trigger is THIS SEAT with CTO.** Recorded now so they are not discovered later;
+**explicitly not dispatched.**
+
+| # | build | scope as he stated it |
+|---|---|---|
+| **A-1** | **mdpf final structure** | **EXHAUSTIVE** — every lambda / trigger / event-trigger / code-pull / dependency, **vendors through `opal-data-portal-v2` serving** |
+| **A-2** | **ADVI** | the same form |
+| **A-3** | **the 49F Archetypal gold runner** | script order + **what changes under raw-figures** |
+
+**PRE-TRIGGER ADD, already routed:** the **Schwab performance fact-table assessment** → CRO~A as
+**RECON-2 input** (not part of the three builds; it feeds them).
+
+### THE TRIGGER, MADE CHECKABLE — because "once recon completes" is otherwise an act with no trigger
+
+*ITEM_0's own failure mode is an act that lands "when someone gets to it."* His words set the trigger; my
+job is to make it decidable without widening it:
+- **NECESSARY:** the `SSOT_RECON_MATRIX` cells for that product's **six pattern legs read `CERTIFIED`** —
+  **not merely `DELIVERED`.** Per-product, so A-3/A-1 can trigger before A-2 if advi's cells lag.
+- **SUFFICIENT: ANDREW'S CONFIDENCE WORD.** ⛔ **"Confidence is established" is HIS phrase and therefore
+  HIS call — I do NOT substitute the matrix for his judgment.** The matrix tells us when the *evidence* is
+  ready; it cannot tell us when *he* is confident. **A certified matrix is a green light to ASK, never a
+  green light to FIRE.**
+- **NOT gated on:** anything else. No new approval step is created here.
+
+### ⛔ THE PRECONDITION THAT MATTERS MOST, AND TONIGHT IS THE EVIDENCE FOR IT
+
+**These artifacts MUST be built from the recon's CERTIFIED cells, never from the catalog** — and his
+ordering (recon first, artifacts after) is *why* it will work. **In this one window the records were wrong
+about:** the producer of `_aggregate_aua` (an INFERRED cell — it was the lambda, not the chain) · the
+accrual bridge's clock (`13:40Z` was a stale label; live is `14:10Z`) · a "no model feed exists" cell that
+turned out to be a **live daily pipeline** · a leg rate quoted as a path rate (99.8 vs 99.65) · four
+name-vs-content column collisions · a "single-source" script that was **two drifted sources**. The decomp
+that started this program measured **6 of 10 records FALSE.**
+> **AN EXHAUSTIVE STRUCTURAL ARTIFACT BUILT FROM RECORDS WOULD LAUNDER EVERY ONE OF THOSE ERRORS INTO A
+> DIAGRAM PEOPLE TRUST.** That is the whole risk of A-1/A-2, and it is exactly what his
+> recon-completes-first ordering prevents.
+
+**SECOND PRECONDITION — "EXHAUSTIVE" NEEDS ITS DENOMINATOR AND ITS CENSUS KEY.** Any enumeration in A-1 or
+A-2 states *how many* and *keyed how*, because: a `list-*` count that was not paginated is **a page size
+wearing a total's clothing** (measured this estate: 100 rules reported against a true 142; 50 lambdas
+against 196), and a census keyed at the wrong identifier family **silently spans two firms**
+(`blackdiamond/` holds both `49f/` and `cottonwood/`). **An artifact claiming exhaustiveness without a
+denominator is the strongest possible form of an unverifiable claim.**
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
