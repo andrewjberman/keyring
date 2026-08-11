@@ -67,3 +67,20 @@ extractor + B6 staffing at COO; all builds behind CTO's gate. At Andrew: the 49F
 ratification (unchanged, from the morning); nothing new minted this session. Open smells on my list:
 comp-kuzu latency profile (quiet window), the semantic-scan null-gate hardening (queued behind the
 substrate work by his direction-sequence).
+
+## ~1900-1930Z -- ROW-10 CLOSE-OUT ARC
+- SYSTEM_DEFINITIONS v1.9 minted @ab160475d5 (60/0 validated pre-commit; YAML plain-scalar hazard
+  FIRED at the gate on my first draft -- colon-space + flow-braces -- fixed + re-validated; COO
+  independently verified both layers, unpiped rc).
+- COO [DRIVE] GO BOTH read: B6-1/B6-2 + codebase extractor dispatched at their pen; my obligations
+  confirmed; checker-path finding (bare filename vs infra/system/ontology/ path) routed to MSTR by
+  COO, nothing owed from me.
+- ROW-10 LIVE EXERCISE EXECUTED @db7c2bb3cd: emit-bridge dry-run on portal-page-portfolios certified
+  rectangle (SITEZ 7ea4fdbd38). 160 cells -> 48 mechanical / 16 judgment proposals / 96 named gaps;
+  accounting TRUE; zero same-axis fights; 3/3 CTO~Z conditions discharged. Discovery: 32-cell
+  vintage_semantics/grain NO-RECEIVING-SLOT canon schema gap -> proposal to CTO+CVO, not auto-fixed.
+  Record appended to the integration deliverable; delivered to CTO~Z via MSTR @192812Z for same-turn
+  adjudication. Follow-on specimen proposed: portal-page-attribution (retired-thread direction-honesty).
+- OPEN AT THIS SEAT: (a) CTO~Z adjudication return (event-driven); (b) comp-kuzu latency profile in a
+  quiescent window (held as SMELL); (c) semantic-scan hardening (null gate + logs corpus) then wiring
+  per-vertical docs into the friction/state calls.
