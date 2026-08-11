@@ -143,6 +143,22 @@ base for "the perfect gold analytics runner"; that shape becomes the archetype i
 cottonwood replicate endpoint-by-endpoint, field-for-field.** CRO~A owns the 49F decomposition +
 archetype spec (citing this pattern's rows, not re-deriving them); the atoms in §2 and the atom-8
 conformance test in §3 are the archetype's pattern contract; MDPF-side surfacings route back here.
+
+**THE SHAPE-TRANSPOSITION DOCTRINE (Andrew-direct ~0658Z at the CTO terminal, verbatim + full
+extraction in ANDREW_DIRECT_20260811_SHAPE_TRANSPOSITION_VISION.md — the archetype doctrine stated
+whole):** *"a perfect, immaculate, gold analytics sequence for 49. No patches, no bullshit. Then...
+take the shape of that, and find the constituent fields we'd need for Inflection and Black
+Diamond... a perfect gold runner, a foundational gold runner, that is GIPS compliant. That will
+give us the shape for all future runners, even if we have to get creative on finding the
+endpoints/fields to manufacture that shape for others with non-custodian data."*
+**THE ARCHETYPE IS A SHAPE, NOT A CODEBASE** — a GIPS-compliant field contract + script sequence.
+Replication = per-firm CONSTITUENT-FIELD SOURCING satisfying the contract: each required field is
+RAW-AVAILABLE · MANUFACTURABLE (a NAMED computation over raw inputs — sanctioned creativity, legal
+under atom 8) · or ABSENT (with the missing data's SHAPE specified). The three-bucket audit method
+is the transposition instrument; CRO~A's Orion/BD feasibility runs (instruction 6, full egress)
+deliver AS transposition maps against the 49F contract. The 49F build carries the quality
+partition's EXTRACT side only; GIPS daily-TWR (@e323c1cfac) is the shape's quality bar. The A-3
+design build is the shape's authoritative statement; this doctrine is its design brief.
 **Naming law for this program (CTO ruling 0533Z, COO-surfaced): "49F" alone is AMBIGUOUS — it
 appears against 08242234 (MDPF ingest path) and 08335338 (ADVI archetype). The full 8-digit account
 + the PRODUCT is the only unambiguous form in any dispatch, spec row, or finding.**
