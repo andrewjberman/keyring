@@ -165,3 +165,26 @@ VERBATIM (the phrasing IS the ruling):
    answered (gated + comp-tooling-confined); the site-Z exclusivity question is mooted for now
    (this fabric's work IS OPAL_ANALYST + BG data access). `NFRA_VELOCITY`'s hold stands, now nested
    inside the wider interim hold on laptop work.
+
+---
+
+## GATE DISCHARGED (2026-08-11 ~1905Z) — integration RATIFIED @7ea4fdbd38; instruments program UNBLOCKED, comp-tooling scope now LAW
+
+Andrew at the MSTR~Z terminal, verbatim per MSTR relay: **"Ratify, approved."** Joint doc on
+origin/CLOUD. Effects: the ~1817Z gate on this program is discharged; the comp-tooling boundary is
+ratified law (supervision/broker cluster still needs his word); laptop hold lifts;
+`NFRA_VELOCITY`'s separate standing hold is UNCHANGED.
+
+**SEQUENCING (CTO~Z call, stated here rather than left implicit): the instruments decomposition
+STARTS WHEN W1's WAVE COMPLETES and seats free.** OPAL_ANALYST is his explicitly re-affirmed
+priority (*"Please continue your efforts here with the BG agent data access work, OPAL_ANALYST"*),
+the wave is mid-flight at 3 of 6 with every seat engaged, and starting a second program by
+thinning the first is the kind of self-inflicted trade nobody asked for. Route: per the standing
+recommendation — atom_decomp as the METHOD against `NFRA_TOOLCHECK` P4's registered scope, first
+target the comp-* verdict tools within the ratified boundary. If Andrew wants it sooner than
+W1-complete, that is one sentence from him.
+
+**Row-10 working session (rectangle family vs ontology canon): CTO~Z + laptop CRO~B, criteria
+pre-agreed (zero-adjectives bridge, no side-door mint). Thread OPENED via the MSTR bus channel at
+scheduling discretion granted in the ratification.** Gate candidates #1 and #2 remain PROPOSED-only
+for his routing.
