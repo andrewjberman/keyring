@@ -167,12 +167,19 @@ contain one of these.
 All 16 items carry Q1–Q6 as MEASURED cells in `rectangle.final.json`, with evidence per cell and
 provenance `CVO-DELEGATED` — **never "Andrew said"**. Serve verdicts:
 
-| verdict | items |
-|---|---|
-| **SERVE** | aum-metrics · aggregate-aua-timeseries · etf_returns |
-| **SERVE-WITH-CAVEAT** | account-distribution *(quote its own vintage, not the panel's)* · model_portfolio_timeseries + model_portfolio_benchmarks *(**model-DESIGN returns, never a client's realized return** — this caveat is not optional)* · peer_performance *(month grain)* |
-| **DENY** | both `_smartx` *(frozen)* · non-model-assets *(superseded, 3 days older than the live source)* · `_manifests` *(publish times, not data dates)* · archive *(Andrew's 2026-08-06 exclusion)* · json/mdpf legacy *(superseded)* · yang volatility *(7 months stale, and its live successor has a near-identical filename)* |
-| **RIDES TO ANDREW** | **2 items — §3** |
+**Machine-counted off `rectangle.final.json`, not tallied by hand — 3 SERVE / 6 SERVE-WITH-CAVEAT / 7 DENY = 16.**
+
+| verdict | count | items |
+|---|---|---|
+| **SERVE** | 3 | aum-metrics · aggregate-aua-timeseries · etf_returns |
+| **SERVE-WITH-CAVEAT** | 6 | account-distribution *(quote its own vintage, not the panel's)* · model_portfolio_timeseries + model_portfolio_benchmarks *(**model-DESIGN returns, never a client's realized return** — this caveat is not optional)* · peer_performance *(month grain)* · **+ the 2 riders below, which are SERVE-WITH-CAVEAT verdicts awaiting a widening confirm** |
+| **DENY** | 7 | both `_smartx` *(frozen)* · non-model-assets *(superseded, 3 days older than the live source)* · `_manifests` *(publish times, not data dates)* · archive *(Andrew's 2026-08-06 exclusion)* · json/mdpf legacy *(superseded)* · yang volatility *(7 months stale, and its live successor has a near-identical filename)* |
+| **of which RIDE TO ANDREW** | 2 | benchmark_returns · account-units — **§3** |
+
+> *An earlier draft of this table put SERVE-WITH-CAVEAT at 4 by listing the two riders as a
+> separate verdict class rather than as a subset of it. Caught by machine-counting the rectangle
+> during the cycle-3 sweep. The riders are a **routing** state, not a verdict — so they are shown
+> as a subset here, and the four rows no longer sum to more than sixteen.*
 
 **Dispositions:** 9 keep-as-is · 1 consolidate (non-model-assets) · 2 decommission **candidates**
 (json/mdpf legacy — teardown already parked; yang volatility + its uninvoked producer Lambda) ·

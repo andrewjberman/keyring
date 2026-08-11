@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W0",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/3.0.0_SA_CVO/task_orders/OPAL_ANALYST.W0.mp-first-run-atom-decomp.md",
+    "group": "W",
+    "vintage_commit": "a438a40793"
+  },
+  "assignee": "3.0.0_SA_CVO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/rectangle.final.json",
+      "kind": "config_data",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "A run artifact, not a deployable. NOT CONSUMABLE AS SSOT UNTIL THE c3-CORRECTION LANDS: it carries one deliberately planted coherence-violating cell per Rule 14(e). The consumable artifact is rectangle.final.certified.json, owed the moment the certification verdict is written."
+    },
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/run.json",
+      "kind": "config_data",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Validates against ssot_establishment.schema.json#/$defs/run_manifest; carries the 4-cycle hole-census trajectory and method vintage d5eda6112f."
+    },
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/patches/ (c1 FILL, c2 VERIFY, c3 VERIFY, c4 VERIFY)",
+      "kind": "config_data",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Every patch merged through ssot_validate; c3/c4 carry changes:[] with populated unchanged_examined, so the convergence no-op is an artifact rather than an assertion."
+    },
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/METHOD_READ.md",
+      "kind": "doc",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "C10 deliverable: 6 named method defects with fixes, plus 5 things the method got right (a defect list read alone is a false picture). Routed to CTO~Z as method owner."
+    },
+    {
+      "path_or_key": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/MUTANT_SEALED.md",
+      "kind": "doc",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Sealed at PLANT time and committed in the same commit as the rectangle, so the disclosure cannot be retrofitted to whatever the certifier happens to find. Certifier instructed not to open it until their pass is signed."
+    },
+    {
+      "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_ANALYST_MP_ATOM_DECOMP_CHARTER_20260811.md",
+      "kind": "doc",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Charter + the three-plane domain bar, fixed BEFORE measurement (C3)."
+    },
+    {
+      "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_ANALYST_MP_ATOM_DECOMP_FINDINGS_20260811.md",
+      "kind": "doc",
+      "commit_or_etag": "cb4d65486f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "10 findings + the semantic pass summary + the two Plane-C riders carried to Andrew."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "C1",
+      "criterion_verbatim": "Enumeration with denominator -- every route, panel, fetch and served artifact on /portfolios enumerated first-hand, each count stated WITH what it is a count OF.",
+      "method": "command",
+      "invocation": "aws s3 ls s3://opal-data-portal-v2/{platinum/mdpf/,json/benchmarks/,json/peers/,json/mdpf/,json/yang/,json/portfolios/} --recursive (CLI auto-paginated; counted client-side, never --query length() and never --no-paginate); plus source reads of portal/src/App.tsx:405-472 for routes and ModelPortfolios.tsx for panels.",
+      "output_evidence": "platinum/mdpf 468 (= 14 served + 444 archive + 10 _manifests) + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 487 keys. Route enumeration: /portfolios at App.tsx:408; catch-all Navigate to /market at App.tsx:470; /model-portfolios ABSENT. Served-plane membership listed key-by-key, 14 of 14 carrying publish stamp 2026-08-11T15:13:4xZ.",
+      "denominator": "487 live keys under the MP vertical, of which 16 census entities are the rectangle's entity denominator. THE CENSUS DECLARED 482 -- the 5-key delta is json/portfolios/**, absent from the census entirely (F-2), plus _manifests growing 6->10 because that family grows on every publish run (F-9).",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C2",
+      "criterion_verbatim": "Rectangle born UNMEASURED and schema-valid, entity-by-field, cells carrying {value, status, evidence}.",
+      "method": "schema_validation",
+      "invocation": "python projects/ATOM_DECOMP/skill/atomic-decomposition/references/ssot_validate.py rectangle workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/rectangle.c0.json",
+      "output_evidence": "census: 160 cells, {'UNMEASURED': 160} / ssot_validate rectangle: 0 violation(s). Every entity shows {'UNMEASURED': 10}. rectangle.c0.json is committed at cb4d65486f as its own artifact, so the born-UNMEASURED state is auditable and not merely asserted.",
+      "denominator": "160 cells = 16 entities x 10 fields; 160 of 160 born UNMEASURED.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C3",
+      "criterion_verbatim": "Domain bar stated BEFORE measurement, verifiably so (committed/timestamped ahead of the measurements), not asserted after.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read OPAL_ANALYST_MP_ATOM_DECOMP_CHARTER_20260811.md sec 3, written and fixed at 2026-08-11T16:40Z before any artifact was fetched; rectangle.c0.json meta.domain_bar_ref points at that anchor and c0 itself is all-UNMEASURED, so the bar provably predates every measured cell.",
+      "output_evidence": "Three planes with separate bars: A MEASURED FACT (finding = a census claim false at the live artifact), B RATIFIED SEMANTIC (evidence class DECISION), C WIDENING-GATED. Standing bar: until DRY never to a count; NOT MEASURED is never cited as fact; coverage limitation != absence; count parity != identity parity. Closing line: 'Any later amendment to this section is itself recorded as a finding -- a bar moved after seeing the data is not a bar.' NO AMENDMENT WAS MADE.",
+      "denominator": "N/A -- ordering check. The verifiable ordering artifact is rectangle.c0.json (160/160 UNMEASURED) carrying the bar reference in its meta.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C4",
+      "criterion_verbatim": "DRY reached by convergence -- consecutive zero-status-change rounds evidenced in run.json cycles, never a count target.",
+      "method": "schema_validation",
+      "invocation": "ssot_validate patch rectangle.final.json patches/c3__VERIFY_MEASURED... ; then patches/c4__VERIFY_MEASURED... ; then ssot_validate rectangle rectangle.final.json",
+      "output_evidence": "run.json cycles: c1 {MEASURED 160} -> c2 {MEASURED 158, NOT_MEASURABLE 2} -> c3 {158/2} -> c4 {158/2}. Cycles 3 and 4 each emitted changes:[] with a populated unchanged_examined (11 and 17 rows), so each no-op is an ARTIFACT. Final: census 160 cells {MEASURED 158, NOT_MEASURABLE 2}, 0 violations.",
+      "denominator": "160 of 160 cells in scope on both convergence rounds; 0 status changes on each.",
+      "status": "PASS",
+      "status_reason": "PASS, with the sequence stated honestly rather than smoothed: this run was FIRST COMMITTED AT status OPEN (cb4d65486f) with DRY explicitly NOT claimed, because cycle 2 had changed statuses and no zero-change round had been run. DRY was then EARNED by running cycles 3 and 4 -- not by relabelling. Cycle 3 swept by CONSTRAINT and cycle 4 by ENTITY ROW: a repeat of one lens would only re-run its own blind spots, so 'consecutive' is implemented as two DIFFERENT lenses. Cycle 3 was machine-checked against the rectangle rather than recited, and that check corrected two of its own first readings (an undiscriminating 'decommission' substring match reading 5 candidates where there are 2; a verdict tally of 4 where the machine count is 6 -- the latter propagated back as a correction to the findings deliverable). RESIDUAL: if the certification pass surfaces changes, DRY is falsified retroactively and the run reopens -- DRY asserts that the AUTHOR's measurement converged, not that the rectangle is correct."
+    },
+    {
+      "criterion_id": "C5",
+      "criterion_verbatim": "Declared / deployed / serving separated per artifact, the SERVED limb grounded on a live read or exercised path.",
+      "method": "live_read",
+      "invocation": "aws s3 cp s3://opal-data-portal-v2/<key> - for 14 of 14 fetchable artifacts, top-level key sets and every candidate vintage field enumerated per object; plus grep at the CONSUMED end over portal/src for each artifact's accessor.",
+      "output_evidence": "PROBE DENOMINATOR: 14 of 14 keys fetched+parsed. The three states are held apart per entity and the separation CHANGED VERDICTS: benchmark_returns is serving_state live (rewritten 2026-08-11T09:26Z by a live producer) AND consumer_set ZERO (getBenchmarkReturns has only its definition at portal-proxy.ts:756-757 and the export barrel at :2148, no caller) -- producer-side reasoning would have called it live-and-fine. non-model-assets is published today AND unconsumed AND its accessor is mispointed at a key that does not exist. Both _smartx artifacts are census-declared live and measured FROZEN at LastModified 2026-06-01 against siblings rewritten 2026-08-11.",
+      "denominator": "16 of 16 entities carry a serving_state cell and a consumer_set cell; 14 of 16 grounded on a direct live object read (the 2 prefix-families, _manifests and archive, grounded on full recursive enumeration instead -- 10 and 444 keys, archive min LastModified == max == 2026-08-06, a single archival act).",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C6",
+      "criterion_verbatim": "Census reconciliation stated -- MP census ingested as input, every run-vs-census disagreement NAMED with the run's evidence (zero disagreements is valid and is stated explicitly).",
+      "method": "manual_read_with_citation",
+      "invocation": "Per-cell comparison of ARTIFACT_CENSUS_MP.yaml @0c1dae3da against this run's live and source grounding; disagreements retained in the cells and enumerated in the findings deliverable sec 1.",
+      "output_evidence": "FIVE disagreements named with evidence, NOT zero: (F-1) census page /model-portfolios vs the real route /portfolios at App.tsx:408, which led to a live defect at PipelineProgress.tsx:432; (F-2) json/portfolios/** 5 keys absent from the 482 denominator; (F-4) two state:live rows on objects frozen since 2026-06-01; (F-3) census says 'portal-proxy.ts:414 fetch is commented out' -- at source :414 is a commented-out PRIVATE variant and the live fetch at :417 is active and mispointed (right verdict, wrong mechanism); (F-8) aum-metrics census row enumerates 2 of 9 live top-level keys, omitting `total`.",
+      "denominator": "16 of 16 census entries re-grounded; 5 disagreements across 4 of the 16 entries; all 5 routed to the census owner (0.5.0_AE_OpalETL~Z, ACKed 20260811T170009Z).",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7",
+      "criterion_verbatim": "run.json schema-valid with per-cycle hole census + method vintage.",
+      "method": "schema_validation",
+      "invocation": "python -c jsonschema.validate(run.json, ssot_establishment.schema.json#/$defs/run_manifest)",
+      "output_evidence": "run_id portal-page-portfolios__20260811T1640Z matches the required pattern; status DRY (enum); 4 cycles each carrying {cycle, patches_applied, census}; package_vintage d5eda6112f = git log -1 --format=%h -- projects/ATOM_DECOMP.",
+      "denominator": "8 required run_manifest properties, 8 present.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C8",
+      "criterion_verbatim": "certification.json signed by 1.0.0_SA_CTO~Z, verdict NAMING ITS DISCRIMINATOR, planted mutant recorded and its detection recorded. A pass in which the mutant was not caught is VOID and is reported as void.",
+      "method": "manual_read_with_citation",
+      "invocation": "PENDING -- the certifier's act, not the author's. Rectangle-final notified to 1.0.0_SA_CTO~Z at 20260811T165747Z; they committed to running the pass same-turn.",
+      "output_evidence": "AUTHOR-SIDE PRECONDITIONS COMPLETE, which is the whole of my half: rectangle.final.json is DRY and validator-clean (0 violations); the mutant is PLANTED, is COHERENCE-class (the validator passes the rectangle, as it must -- no schema rule can express it), and its disclosure is SEALED AND COMMITTED AT PLANT TIME in MUTANT_SEALED.md at cb4d65486f so it cannot be retrofitted to whatever the certifier finds. Location deliberately undisclosed to the certifier per their own instruction. certification.json DOES NOT YET EXIST.",
+      "denominator": "N/A -- single certification act, not yet performed.",
+      "status": "UNCOMPUTABLE",
+      "status_reason": "SELF-SIGNING IS AN EXPLICIT FAIL OF THIS CRITERION AND I WILL NOT MANUFACTURE A PASS FOR IT. C8 is satisfied by the CERTIFIER, and 1.0.0_SA_CTO~Z holds that pen by the MSTR~Z ruling of 20260811T163153Z and PRD v1.1 sec 9.4. Marking C8 PASS on the strength of my own preconditions would be precisely the author-certifier collapse the ruling exists to prevent. This row flips to PASS when certification.json lands signed by CTO~Z -- or is reported VOID if the mutant went uncaught, in which case the pass is re-run and recorded as a second attempt rather than replacing the first."
+    },
+    {
+      "criterion_id": "C9",
+      "criterion_verbatim": "Semantics landed on the 6-question block for every servable MP artifact, signed and dated by CVO~Z, in a form W5 can lift into DATA_CATALOG v0.2 without re-interpretation.",
+      "method": "manual_read_with_citation",
+      "invocation": "rectangle.final.json fields canonical_name (Q1), business_meaning (Q2), vintage_semantics (Q3), analyst_serve_verdict (Q4), disposition (Q5), notes (Q6) -- machine-counted across all 16 entities.",
+      "output_evidence": "96 of 96 semantic cells populated (16 entities x 6 questions); 94 MEASURED, 2 NOT_MEASURABLE (the _smartx dispositions, each naming the discriminator that would resolve it). Verdict distribution machine-counted off the rectangle: 3 SERVE / 6 SERVE-WITH-CAVEAT / 7 DENY = 16. Every semantic cell carries evidence with instrument DECISION -- CVO~Z delegated semantics, Andrew-direct 2026-08-11 ~1020Z, locator = the MSTR~Z verbatim record. Provenance is CVO-DELEGATED throughout, NEVER 'Andrew said'. The four fields PRD sec 8.2 declares v0.2 will consume -- semantics:, census_ref:, vintage_field:, vintage_grain: -- are all produced.",
+      "denominator": "96 of 96 semantic cells; 16 of 16 entities carry a serve verdict, including the 7 DENY rows (a non-servable artifact still gets an explicit verdict rather than an omission).",
+      "status": "PASS",
+      "status_reason": "PASS with one scope statement W5 must carry forward, not a defect: 2 of the 16 serve verdicts (benchmark_returns, account-units) are marked CVO-RECOMMENDED -- RIDES TO ANDREW because answering them SERVE would WIDEN the serving surface, and widening is Andrew-only by design (PRD sec 4.4; the sec 8.2 capital-markets precedent). The delegation covers semantics, not widening; reading it wider would use his delegation to erase his own control. W5 lifts 14 rows without further input and holds 2 pending a one-line confirm. Nothing is held on it and it is not a gate."
+    },
+    {
+      "criterion_id": "C10",
+      "criterion_verbatim": "METHOD READ delivered -- a named, specific account of where atom_decomp was awkward, ambiguous, or silent on a real question /portfolios raised, plus any recommended amendment. 'The method worked fine' is an acceptable finding ONLY if stated as a measured verdict with what you probed -- a blank method read fails this criterion, because 15 runs are about to be executed on the strength of it.",
+      "method": "manual_read_with_citation",
+      "invocation": "workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/METHOD_READ.md, ordered by what each defect costs the remaining runs, each with a recommended amendment.",
+      "output_evidence": "SIX defects, none of them 'worked fine': M-1 Rule 14(c)'s mandated status-missioned FAN-OUT is PROHIBITED by org/XXX.md's Task/Explore ban -- the method's population mechanism is illegal in this fabric and neither document acknowledges the other; the real cost is that the fan-out is what puts a SECOND AUTHOR on a cell before the verify pass. M-2 Rule 14(e) never says WHO plants the mutant -- author-plants means the author sets their own exam difficulty, which is care, not a control. M-3 14(e) mandates planting and is SILENT ON REMOVAL, so the method as written specifies a pipeline that ships a defect with a certification stamp. M-4 'until DRY' has no cheap artifact, so the pull is to assert it -- fix by requiring the changes:[] + unchanged_examined patch the schema ALREADY supports. M-5 the rectangle has NO GRAIN FOR PAGE/PANEL RELATIONS, and three of this run's best findings had to be smuggled into notes cells; do NOT fix by widening the field set (Rule 24(ii) grain violation). M-6 'owned unknown' is not one of the four statuses, so the natural move is to write it as a VALUE with status MEASURED -- I MADE EXACTLY THAT ERROR in cycle 1 on two cells and self-caught it on re-read. Plus 5 things the method got RIGHT, recorded because a defect list read alone is a false picture.",
+      "denominator": "6 method defects surfaced across 4 measurement cycles over 160 cells; 3 flagged as fix-before-W1 (M-1, M-5, M-6).",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Rule 14(e) planted coherence-violating cell: one business_meaning cell rewritten in cycle 2 to attribute a rendered figure to an artifact the rectangle's own consumer_set cells show the portal does not read it from -- an S1 (plane coherence) violation. Chosen to be COHERENCE-class and NOT mechanically expressible: catching it requires a verifier holding the full rectangle and reading one entity against another, which is exactly the capability 14(e) tests. Disguised as an ordinary semantic enrichment with a plausible stated basis, because that is the realistic shape of a real semantic defect -- not an obvious error, but a confident sentence that promotes a supporting artifact into a central one. Sealed and committed at PLANT time (MUTANT_SEALED.md @cb4d65486f), so the disclosure cannot be retrofitted after the pass.",
+      "expected": "ssot_validate passes rectangle.final.json with 0 violations (the validator structurally cannot see it) AND the human certification pass catches it by cross-entity coherence reading. A pass that misses it is VOID per Rule 14(e).",
+      "observed": "Limb 1 FIRED AS EXPECTED AND IS MEASURED: ssot_validate rectangle rectangle.final.json returns 0 violation(s) with the mutant present -- confirming the plant is genuinely coherence-class and not something the mechanical tier could have caught. Limb 2 (certifier detection) is PENDING; 1.0.0_SA_CTO~Z holds it and the location was not disclosed to them.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Both generators (mk_c0 and the patch builders) are pure data -> JSON with no wall-clock and no randomness, per the package's own determinism discipline; re-running produces byte-identical output. Independently, the constraint sweep in cycle 3 was re-derived MECHANICALLY off rectangle.final.json rather than transcribed from the cycle-1 notes.",
+      "observed": "STABLE, and the mechanical re-derivation was not merely confirmatory -- it CONTRADICTED two of my own hand-counts (a 'decommission' substring match reading 5 candidates where there are 2; a verdict tally of 4 SERVE-WITH-CAVEAT where the machine count is 6). Both corrections are recorded in the c3 patch and the second propagated back into the findings deliverable. A determinism control that only ever agrees with the author has not been exercised.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Status-missioned fan-out population (SKILL.md Rule 14(c))",
+      "reason": "org/XXX.md BANS the Task and Explore agents outright ('BANNED ... Do the work directly'), and Andrew placed this seat on the run personally. Every cell has ONE author. COST STATED: no cell received an independent second author before the verify pass, so the entire independence burden sits on the CTO~Z certification pass. Surfaced as METHOD_READ M-1 for a method-level fix."
+    },
+    {
+      "item": "P0-P12 in full (migration waves, cutover, drain, predecessor removal)",
+      "reason": "This is a served-artifact SSOT run over an already-censused vertical, not a migration. Omission cannot affect the conclusion because nothing is deleted, moved, or repointed by this run -- Rule 9 is untouched."
+    },
+    {
+      "item": "Gates G3-G7",
+      "reason": "NOT APPLICABLE and declared so in the charter sec 5: no target-contract change, no migration wave, no cutover, no cleanup, no deletion is proposed. Two disposition cells reading 'decommission CANDIDATE' are recommendations entering the normal route, never authorizations."
+    },
+    {
+      "item": "Fixing F-1 (the /model-portfolios dead link at PipelineProgress.tsx:432)",
+      "reason": "CVO~Z authors no portal code. Found, grounded at source, and routed to CTO~Z to assign. Reporting a live defect and not unilaterally patching another lane's surface is the correct split, not an omission."
+    },
+    {
+      "item": "Censusing json/portfolios/** (F-2, 5 keys)",
+      "reason": "Discovered by this run, but it is outside the 16-entity denominator this run declared at G0. Widening the entity set mid-run would make the denominator a moving target. Routed to 0.5.0_AE_OpalETL~Z as census owner, ACKed."
+    },
+    {
+      "item": "Resolving the _smartx disposition (F-4)",
+      "reason": "Deliberately left NOT_MEASURABLE with its discriminator named. Two readings fit the evidence equally and have OPPOSITE remedies (retired-on-purpose -> decommission; operator-step-stopped -> restore). Guessing would have produced a MEASURED-looking cell resting on a coin flip."
+    },
+    {
+      "item": "Regenerating the comp-system parity representation (GATE 06 STALE)",
+      "reason": "The named remedy rewrites tracked infra/system/ files on a SHARED tree with other ~Z seats mid-flight. Reported to MSTR~Z rather than self-authorized; ruled to fold in AFTER certification and to ANNOUNCE one turn ahead before rewriting."
+    }
+  ],
+  "surprises": [
+    "F-1 LIVE DEFECT (outside mandate, no action taken beyond routing): portal/src/pages/DataRefresh/components/PipelineProgress.tsx:432 renders <Link to=\"/model-portfolios\"> to a route that does not exist; App.tsx:470's catch-all silently redirects to /market, so a button labelled 'View Portfolios' delivers Market Overview with no error. Admin-only page (requireAdmin). Routed to CTO~Z.",
+    "getNonModelAssets (portal-proxy.ts:417) is live uncommented code fetching /api/general/portfolios/non_model_assets.json, a key that does not exist (positive-controlled in a separate invocation). Zero callers today so it never fires -- a loaded gun, not a live bug. Routed, no action taken.",
+    "json/portfolios/** is a THIRD legacy MDPF tree (beside json/mdpf/** and platinum/mdpf/archive/**) that no census or registry tracks -- 5 keys, frozen 2026-05-29..2026-07-27. Surfaced, not chased.",
+    "The MDPF platinum publisher ran FOUR times on 2026-08-11 (08:42/10:25/14:20/15:13Z) against a scheduled cron(50 9 * * ? *) America/New_York and exactly one run/day on 08-07..08-10. Consistent with permitted ad-hoc QA runs during active main-fabric MDPF work; observed, not chased, no action taken.",
+    "comp-estate's model-portfolios thread reports LastModified 2026-06-15 for model_portfolio_benchmarks.json; the live object is 2026-08-11. The tool discloses its snapshot vintage, so this is its documented behaviour rather than a defect -- recorded because it was used for topology only and must not be read for freshness by the next 15 runs."
+  ],
+  "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-11/OPAL_ANALYST_W0_mp_atom_decomp_1626-1715Z.md",
+  "compiler_tools": [
+    {
+      "tool": "ssot_validate (rectangle + patch)",
+      "invocation": "ssot_validate.py rectangle <rect>; ssot_validate.py patch <rect> <patch> --out <merged> -- for c0, c1, c2, c3, c4",
+      "result": "PASS throughout; 0 violations at every stage. Every merge went through the validator (Rule 14(c)); no hand-edited rectangle exists in this run. Final: 160 cells {MEASURED 158, NOT_MEASURABLE 2}."
+    },
+    {
+      "tool": "comp-estate",
+      "invocation": ".tools/comp-estate model-portfolios",
+      "result": "8 chains; named the producer Lambdas for the benchmark/peer/volatility families and the yang pipeline's S3-manifest trigger topology, which is what grounded the T-1 vintage semantics. USED FOR TOPOLOGY ONLY -- its freshness claims are snapshot-vintage and were measured STALE against live reads (2026-06-15 vs 2026-08-11)."
+    },
+    {
+      "tool": "comp-find",
+      "invocation": ".tools/comp-find '_smartx_model' ; 'PUBLISH_MAP' ; 'platinum/mdpf' <publisher dir> ; 'opal-assets-mdpf-portal-publisher'",
+      "result": "Source-confirmed the _smartx producer as an OPERATOR-RUN script (pull_smartx_model_monthly_performance.py OUT_KEY :98/:99) rather than a schedule -- the mechanism behind F-4. Source-confirmed the publisher's SERVE_ROOT default 'platinum/mdpf' at lambda_function.py:67 plus its 'SCOPED platinum/mdpf/* ONLY' docstring at :17, which upgraded the mp.15 producer cell from an absence inference to a positive scope fact. Each call printed its denominator."
+    },
+    {
+      "tool": "comp-routes",
+      "invocation": ".tools/comp-routes rewrites",
+      "result": "/api/general/mdpf/ -> platinum/mdpf/ confirmed. DESIRED-PLANE ONLY by its own disclosure, so it was NEVER allowed to carry the mp.15 verdict alone -- paired with live artifact freshness on the successor tree as an independent signal."
+    },
+    {
+      "tool": "comp-system",
+      "invocation": "comp-system --check (LD-0319 standing load-time parity control)",
+      "result": "GATE 06 STALE -- source fingerprint drift (181 -> 183 files), consistent with comp-tools arriving in last night's main-fabric work via the load-pull. REPORTED to MSTR~Z, not self-authorized: the named remedy rewrites tracked files on a shared tree mid-flight. Ruled to fold in after certification, announced one turn ahead."
+    },
+    {
+      "tool": "aws s3 (ls --recursive / cp to stdout)",
+      "invocation": "aws s3 ls s3://opal-data-portal-v2/<prefix> --recursive (5 prefixes + the discovered 6th); aws s3 cp s3://.../<key> - for 14 artifacts",
+      "result": "487 keys enumerated, CLI auto-paginated and counted CLIENT-SIDE (never --query length(), never --no-paginate -- both return a page count wearing a total's clothing). 14 of 14 artifacts fetched and parsed; probe printed its own denominator. Every ABSENT verdict carries a positive control run as a SEPARATE invocation (json/portfolios/non_model_assets.json rc=1 vs control json/portfolios/aum-metrics.json rc=0)."
+    },
+    {
+      "tool": "grep at the CONSUMED end (portal/src)",
+      "invocation": "consumer-side search per artifact accessor, excluding the accessor definition and the export barrel from caller counts",
+      "result": "9 of 16 entities established as zero-consumer AT THE CONSUMED END (Rule 12). This changed verdicts producer-side reasoning would have got wrong -- benchmark_returns is written daily by a live producer and read by nobody."
+    }
+  ]
+}
