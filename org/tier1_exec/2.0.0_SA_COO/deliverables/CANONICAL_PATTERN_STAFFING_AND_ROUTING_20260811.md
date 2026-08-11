@@ -561,6 +561,76 @@ function-space, one deploy window: **C-2 is where a re-pull LANDS, C-3 is what g
 **X-iii IN PROGRESS at AE** (trigger discharged: X-iv complete). X-ii next, **producer-identity read
 FIRST**.
 
+## 4f · STATE AS OF 0605Z — the X-iii fork, and a sequencing defect of mine that three corrections missed
+
+### ⏸ ACT X-iii HELD AT CTO — a CONFLICT OF RULINGS, not a manufactured gate
+
+AE escalated 060123Z. **Pattern spec §5 act (iii)** (atom 6, Andrew-ratified: the roster leaves the code
+store) versus **`config_objects.tf:10-22`** (CTO's 08-06 ruling: `partner_roster.json` must NEVER exist
+as an S3 config object). **The live state — a loose, independently-published roster inside
+`code/scripts/gold/` fetched by a dedicated `cp` — violates BOTH, which is why act (iii) exists** (AE's
+diagnosis, matching mine independently).
+**AE's rec:** accrual deploys to `portal/gold/mdpf/_code/` as **ONE hash-stamped bundle** — script +
+build-generated roster copy from the committed authority `data/mdpf/config/partner_roster.json`, authority
+sha256 as object metadata; bootstrap pulls one bundle. No free-standing config object, one authority, no
+roster GetObject in IAM.
+**BOTH rulings are CTO's, so CTO adjudicates. I clarified MY phrase** (*"not where it moves house with the
+code"*) to CTO so it is not ruled against as a strawman: I was targeting **an independently-published
+object that can DRIFT FROM ITS AUTHORITY**, and on my reading a build artifact *derived* from one
+committed authority is a different thing — **stated as input, explicitly non-binding.**
+✅ **AE'S HOLD IS CORRECT AND ON THE RECORD AS SUCH.** Two of its gate-holder's own rulings cannot both be
+satisfied; building either shape would be *picking*. Surfaced same-turn with a recommendation, everything
+else proceeding meanwhile. **The no-inferred-gates rule bans inventing approval steps — it does not ban
+asking which of two conflicting sovereign rulings applies. Holding silently would have been the failure.**
+
+**⚡ ONE QUESTION OUT TO CTO WITH THE FORK: may X-ii OVERTAKE a held X-iii?** If the ruled order is purely
+**blast-ascending**, yes and the cutover keeps moving; if X-ii carries a **real dependency** on X-iii, no
+and it pauses cleanly. **I am not re-ordering a ruled sequence on my own inference of its rationale** —
+that is the adjudicating-scope error. AE's X-ii **precondition read is running regardless** (read-only
+grounding breaches no ordering, and it is useful under either branch).
+
+### COTTONWOOD RE-GRADED A **THIRD** TIME — and that retired the mechanism slot entirely
+
+@314689f20a: **the Cottonwood Rebalancer ingest ALREADY RUNS DAILY** — bronze
+`rebalancer_{models,model_detail,accounts}` (06:00Z, markers through 08-10), silver
+`fact_model_{roster,definition,assignment,blend}` (21 daily partitions), gold `dim_model_portfolio`; and
+**`fact_model_assignment` is ACCOUNT-GRAIN with 921 distinct `account_number`s** carrying
+strategy/program/SMA-UMA flags.
+
+| grading | mechanism claimed | status |
+|---|---|---|
+| 1 | "no model feed exists" (measured absence) | **FALSE** |
+| 2 | `SOURCE-EXISTS-PIPELINE-ABSENT` (an ingest build) | **FALSE** |
+| 3 | the ingest **already runs daily**; goal 1 is an **EXTENSION of a live puller** | current |
+
+> ⚠ **MY "COTTONWOOD LAST" CONCLUSION SURVIVED ALL THREE — THAT IS NOT ROBUSTNESS, IT IS EVIDENCE THE
+> MECHANISM WAS NEVER LOAD-BEARING.** A conclusion holding under three mutually-exclusive mechanisms is
+> **under-determined by them.** Honest restatement: **the ordering rests on ONE ground — INFLECTION IS
+> CHEAPEST** (98.0% native-key join, rollup spine in place, zero identity work). Every
+> cottonwood-difficulty rationale layered on top was **SURPLUS**, and the surplus is what generated three
+> corrections. **The fix is not a fourth mechanism; it is deleting the slot.**
+
+**⛔ AND THE REAL DEFECT, WHICH THREE MECHANISM CORRECTIONS NEVER SURFACED — I HAD MEASUREMENT AND BUILD
+ON ONE AXIS:**
+- **MEASUREMENT (spine overlap): ALL THREE FIRMS, IN PARALLEL, NOW.** Cottonwood's goal-3 input question
+  collapses to the same cheap measurement as the other two and is **no longer gated on goal 1**. There is
+  no ordering argument for measurements — cheap, independent, each sharpens a build spec.
+- **BUILD / PROTOTYPE: inflection → 49F → cottonwood, unchanged**, on prototype-risk grounds alone.
+- **This was a GRAIN error, not a mechanism error — which is exactly why correcting mechanisms three times
+  never found it.**
+**Routing:** cot spine-overlap folds into RECON-5a; **RECON-6 still goes FIRST** (critical path — a cheap
+parallel measurement does not outrank it), CRO's readiness read may run them beside each other.
+
+**PROGRAM-SIZING CORRECTION:** goal 1 is an **EXTENSION of a live puller**, not a fresh ingest. My
+register's *"cottonwood rides goal 1"* implied goal 1 was large; **it is smaller than that.** Sizing is
+CTO's and CRO's, so I am not re-sizing — but the implication is struck, because *"rides goal 1"* reads to
+a coordinator as *"blocked behind something big"* and that is now false.
+
+> **THREE TIMES IN NINETY MINUTES THE ESTATE ALREADY HAD THE THING** — the 49F identity map at rest (zero
+> egress), the BD Rebalance source, and a live daily Rebalancer pipeline no register knew was running.
+> **Build-Ladder rung 2 earning its place ahead of rung 7.** Carried into RECON-6 as a warning: *an
+> endpoint-delta census that assumes a gap will find gaps that are already filled.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
