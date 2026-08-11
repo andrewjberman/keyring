@@ -116,6 +116,24 @@ blast. The live result confirms membership is the correct semantics (it resolved
 did not inflate). **Recommend the design rename F1 to "structural membership" and change its method from
 comp-blast to the family-membership join.** Andrew/CTO~B to ratify.
 
+## 4e. F3 STATE VERIFIED -- GENUINELY BLOCKED (confirmed at SOURCE, not just the doc)
+
+Learned from F1 (design said unbuildable, was done) -- so I verified F3's substrate rather than trust
+the doc. This time the doc is right, and I grounded it on the strongest evidence:
+- **Runner source** `estate_report_runner.py:424-425`: *"the corpus points at a static dated mirror
+  because the capture UPLOADER was never built (CVO G6, 2026-08-04)"* + `:616` "the known static-mirror gap".
+- `comp-find --name "*capture*upload*"` = **0 hits** (no uploader file exists).
+- Interim store `org/tier1_exec/1.0.0_SA_CTO/deliverables/kimi_svp_f3_interim/` = **empty dir** (made 08-04, never populated).
+So F3 cannot carry a real in-window value today; the corpus is the stale 153-nugget 07-30/31 mirror.
+**B6 (the capture uploader) is the blocker AND the pipeline's single highest-leverage unbuilt item**
+(design s.9.1: it feeds F3, fixes the frozen-corpus P1, and is the only intake for the proactive-input class).
+
+## 4f. CVO note folded (F1 rename lands clean): reference the RELATION, not the field name
+
+CVO 091940Z: the yaml field is `legacy_family_key` -- **legacy in NAME only; it is the LIVE membership
+key.** So the F1 design rename must reference the RELATION ("family membership"), NOT the field name, or
+a future reader retires a "legacy" key that is load-bearing. Folded into the rename recommendation.
+
 ## 5. OPEN FOR ANDREW
 - **Confirm the design premise:** call #1 = Kimi TRANSLATES the deterministic battery -> friction
   characterization (STATE deferred per s.13). Built on this; redirect if wrong.
