@@ -1,9 +1,11 @@
-# THE UNIFIED CANONICAL PATTERN SPEC — mdpf + advi (v0.1 DRAFT)
+# THE UNIFIED CANONICAL PATTERN SPEC — mdpf + advi (v1.0 RATIFIED)
 
 **Author:** 1.0.0_SA_CTO · 2026-08-11 ~0530Z · **archetype:** IMPLEMENT (synthesis)
-**Status:** **DRAFT — PENDING ANDREW RATIFICATION** (handoff @1a518b303f LIVE GATE "Ratify the
-unified canonical pattern once CTO drafts it"). Atom 8's exception set is SEPARATELY gated on
-Andrew's ratified must-calculate list (open question below, §3).
+**Status:** **RATIFIED — Andrew-direct 2026-08-11 ~0542Z** (verbatim *"im cool with your recs"* on
+the two calls as put; record + scope:
+`ANDREW_DIRECT_20260811_RATIFICATION_EXCEPTION_SET_AND_PATTERN_SPEC.md`). The 9 atoms + grammar +
+2 advi parameters are PROGRAM LAW. Atom 8's exception set is RATIFIED (§3 — non-fee residual
+TRANSITIONAL). The mdpf cutover's live-chain acts remain gated on the CVO Rule-14e cert.
 **Authority:** Andrew-direct mission (verbatim in handoff @1a518b303f): *"everything is in pattern,
 consolidated, and colocated for gold layers inside of opal-data-assets/portal/gold ... flows rely on
 bronze/silver in opal-data-assets and the gold goes in the same scoped folders in
@@ -80,15 +82,16 @@ performance/TWR), pull it RAW. *"Performance is not a residual."* Measured proof
 vendor TWR dim is ALREADY silver-landed daily and the serving chain reads it NOWHERE
 (CRO~A 03 §1) — the raw feed the refactor wants already exists, unconsumed.
 
-**THE EXCEPTION SET IS PROVISIONAL — PENDING ANDREW'S RATIFIED LIST (the open gate, question
-standing since 0500Z):**
+**THE EXCEPTION SET — RATIFIED (Andrew-direct ~0542Z, *"im cool with your recs"*; record
+`ANDREW_DIRECT_20260811_RATIFICATION_EXCEPTION_SET_AND_PATTERN_SPEC.md`). Everything not listed
+here is pulled RAW:**
 
-| candidate exception | kind | note |
+| ratified exception | kind | membership |
 |---|---|---|
-| net-new-assets (NNA) | **FLOW** | no endpoint serves it; Andrew-named; C_01's job survives the refactor (point-in-time form = wave W-D) |
-| non-fee-AUA residual `sum(fee_aua) − balance` | **BALANCE** | the Patrick ~$606K figure. ⚠ OPEN whether it stays calculated or RETIRES for a raw pull (Orion Billing `is_fee_earning` classified sum — fix drafted, `02_D04_RESIDUAL_FIX_DRAFT.md`) |
-| cross-account/household/advisor/firm rollups | aggregation | the grain is ours, not the vendor's |
-| unreconciled bucket (F4) | difference | deliberately calculated — it EXPOSES cross-source drift |
+| net-new-assets (NNA) | **FLOW** | PERMANENT — no endpoint serves it; Andrew-named; C_01's job survives the refactor (point-in-time form = wave W-D) |
+| non-fee-AUA residual `sum(fee_aua) − balance` | **BALANCE** | **TRANSITIONAL** — the Patrick ~$606K figure. Stays calculated TODAY; RETIRES to the raw Orion Billing pull (`is_fee_earning` classified sum, fix drafted `02_D04_RESIDUAL_FIX_DRAFT.md`) once D_04 is VERIFIED; on verified retirement it leaves this set and becomes a raw field |
+| cross-account/household/advisor/firm rollups | aggregation | PERMANENT — the grain is ours, not the vendor's |
+| unreconciled bucket (F4) | difference | PERMANENT — deliberately calculated; it EXPOSES cross-source drift |
 
 **⛔ NNA (flow) ≠ non-fee-AUA residual (balance). TWO calculated nodes, never one** (CTO conflated
 them 0455Z; Andrew corrected by 0458Z; do not re-merge).
@@ -160,8 +163,8 @@ light-scan caveat. Orion/Eclipse/BD field-map work continues at CRO~A (egress gr
 
 | at | the call |
 |---|---|
-| **ANDREW** | (1) ratify the must-calculate exception set — §3 table; specifically: does the non-fee residual STAY calculated or RETIRE for the raw Billing pull? (2) ratify this pattern spec |
-| **CVO** | certify @41692cd3d2 (requested 052113Z; CVO offline — seating flagged to MSTR) — gates §5 acts touching the live chain |
+| **ANDREW** | ~~(1) exception set~~ ~~(2) pattern spec~~ — **BOTH RATIFIED ~0542Z** (*"im cool with your recs"*); no open Andrew calls in this program as of that word |
+| **CVO** | certify @41692cd3d2 (pass RUNNING, ACK 053137Z) — gates §5 acts touching the live chain |
 | **COO** | staff §5 + §6 with owner/trigger/precondition per act (ITEM_0 discipline); MDPF repair keeps engineering priority |
 | **CTO** | instrument-roster fixes: comp-pipescript 1-of-6-layers denominator blindness; comp-estate 404 platinum key + runner conflation (both routed findings from the decomp) |
 
