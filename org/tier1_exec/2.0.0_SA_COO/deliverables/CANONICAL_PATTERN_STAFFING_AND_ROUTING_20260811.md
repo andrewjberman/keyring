@@ -427,6 +427,93 @@ mine to have found — and a register that says "none" is more dangerous than on
 
 ---
 
+## 4d · STATE AS OF 0555Z — ✅ THE CUTOVER GATE IS RELEASED
+
+### CVO CERTIFIED @cc62267d89 — **ZERO cells refused.** Acts X-iii / X-ii / X-i leave staged.
+
+**The cert was the last gate** (Andrew's ratification @d272021791 already cleared the other). Order is
+unchanged and remains CTO's reverse-blast ruling: **X-iv → X-iii → X-ii → X-i.**
+
+**TWO CVO RIDERS — FOLDED IN AS BINDING, NOT ADVISORY:**
+1. **ACT X-ii GAINS A NAMED PRECONDITION: ground the staging producer IDENTITY with one CloudTrail /
+   CloudWatch read before re-homing the aggregate.** The 08-09 and 08-10 ~13:00Z `_aggregate_aua`
+   writes happened **while the main chain was dark** — so "the chain's aggregate stage writes this" is
+   the rectangle's **INFERRED** cell, not a measured one. **Re-homing a producer you have not
+   identified is re-homing the wrong thing.** One read discharges it.
+2. **REMEDIATION LINE (row 13): "consolidator carry-forward behavior on stale staging inputs —
+   verified/declared."** Its 13:30Z fire runs over `non_model_aua` **frozen since 08-06** — the
+   **process-ts-FRESH / data-as-of-STALE** shape, where every producer-side signal reads healthy while
+   the input is five days old.
+
+**CVO ALSO CORRECTED CTO'S CLOCK-FLOOR FRAMING, and the correction preserves the deliverable:**
+`mdpf-scheduled-floor` **IS** live — but in the **SCHEDULER namespace, targeting the CONSOLIDATOR.**
+**Delta row 4 STANDS: nothing clocks the EC2 chain.** So **act X-i's schedule-floor deliverable is
+UNCHANGED** (atom 5: event accelerates, clock floors). *A live floor pointed at the wrong component is
+not a floor on the component that needs one — and it reads as one in any config-level check.*
+
+### CPR-4 SERVE-RELEASE — BOTH HALVES LANDED, CHOREOGRAPHY BINDING
+
+**CTO half GIVEN 0553Z**, `SERVE-RELEASE-ACK` scoped to **@7341b27d50 only**. **My condition (2) was
+DISCHARGED BY MEASUREMENT, not assertion** — CTO verified the diff themselves: it touches exactly
+`_derive_fee_earning_aggregates` (4 hunks, `:764-848`), **ZERO AoR mentions.** My conditions (3)
+ledger-before-lift and (4) 13:30Z-bar confirmation are **restated as binding terms inside the ACK**, and
+**the sentinel returns verbatim in the same window.** Platinum moves ~$606K → ~$128K on the republish.
+
+### ITEM-3 — FINAL FIRM ORDER, AND MY 49F HOLD IS DISCHARGED
+
+**RECON-4 FINAL @83814f0e2d.** The key-form residual I held the 49F build TO on is **MEASURED**:
+`feed.account_id → fact_allocation_account_map.allocation_id → account_number → zfill(10) →
+fact_acc.account_id` at **99.8% (5,701 / 5,715 distinct)** — `fact_acc.account_id` **is** the
+zero-padded 8-digit Schwab number. **Denominator given both sides, as asked.** **HOLD DISCHARGED — the
+49F build TO is decomposable now**, join spec is three lines.
+
+| # | firm | basis | order rationale |
+|---|---|---|---|
+| 1 | **inflection** | native-key, 98.0% | **zero identity work** — cheapest, de-risks the overlay design first |
+| 2 | **49F** | one map hop + `zfill(10)`, 99.8% | identity **solved at rest, zero egress spent** |
+| 3 | **cottonwood** | **ingest build** — source EXISTS (BD Rebalance), pipeline absent | rides goal 1; schema capture at RCN-0001's rebalancer-models gap opens it |
+
+**Parked with causes UNMEASURED, deliberately marked so no one quotes the rates as fully understood:**
+14 of the 49F 5,715 (12 nine-digit map entries flagged possibly non-Schwab custodial + 2 misses) and
+11 of 561 inflection accounts (2.0%). Queued to DS as cheap closes behind CPR-2.
+**Decomposition may proceed on DELIVERED** per the matrix's own rule (non-serving design work), with
+**RECON-4's own cert noted PENDING** in CVO's queue.
+
+### CARRIED FRONT-LOAD UNDER THE SESSION EGRESS LIFT (⏳ expires with Andrew's session)
+
+CRO~A flagged **RECON-5b's rebalancer-models schema capture** as the **one probe-worthy front-load**
+while free egress is live — i.e. capture the BD Rebalance schema tonight so goal-1's opening move is not
+waiting on a per-use word later. **Sequencing note: this front-loads the SCHEMA CAPTURE only; it does
+not reorder cottonwood, which still rides goal 1.** Any artifact it produces **must carry the session
+bound inline** per §4c.
+
+### ANDREW INSTRUCTION 4 (~0552Z) — THE RECON PRODUCT IS A **QUALITY PARTITION**
+
+Not a survey: a **TIGHT PARTITION** — *extract* the quality structure, *discard* the
+methodologically-unacceptable. **Every script / engine / subsystem in the RECON census lands in EXACTLY
+ONE side, with grounded evidence.** Type specimen: **transaction-engine holdings valuation**,
+sovereign-confirmed **ILLEGITIMATELY-DERIVED #1**.
+
+**STAFFING CONSEQUENCE, and it changes what my staged acts consume:** acts staged on recon outputs now
+consume **PARTITION VERDICTS, not prose surveys.** RECON-6's endpoint-delta census and RECON-5's cot
+work both change deliverable FORM — a per-unit verdict with its evidence, not a narrative. **An act
+whose precondition is "recon delivered" must now read "the unit's partition verdict is EXTRACT (or
+DISCARD) with evidence cited."** That is a sharper and more staffable precondition than what §4b/§4d
+were written against, and I prefer it.
+
+⚠ **ONE RULE-24 CHECK I AM SURFACING TO CTO + CRO, NOT ADJUDICATING — this is a classification schema
+at AUTHORING time, so Taxonomy Law binds it.** Postulate (i) MECE is explicit and satisfied by *"exactly
+one side."* **The risk is postulate (ii), SAME GRAIN — and it is not in the two VALUES, it is in the
+UNITS.** *"Every **script** / **engine** / **subsystem**"* names **three different grains**, and they
+**NEST**. If a subsystem's verdict is EXTRACT while three of its scripts are DISCARD, that nested pair
+has no single side — **MECE fails not because the axis is wrong but because the census unit is
+undeclared.** The cheap fix at authoring time: **declare the census UNIT GRAIN** (and, if mixed grains
+are wanted deliberately, state the rollup rule — does one DISCARD child force the parent, or is the
+parent's verdict independent of its children?). **Named now because a partition is cheapest to fix
+before its first census, and this one is about to reshape every recon chapter.**
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
