@@ -90,6 +90,36 @@ finding.** The atom_decomp coverage set must **never** be used to derive its own
     mutual reference.
 - Only a producer with **zero** live outputs is marked.
 
+#### ⛔ R3 (BLOCKING) — A CONSUMPTION CLAIM FROM A COMP-TOOL IS AN INPUT, NEVER A VERDICT
+
+*Added 2026-08-11T2330Z on a MEASURED contradiction from W3b, not a hypothetical.*
+
+**`comp-estate`'s keyword-drilldown-history chain claimed two frozen families were *"consumed by
+`KeywordSentimentModal.tsx`"*. AE~Z's register said UNCONSUMED / RETIRE-CANDIDATE — on 720 keys.** They
+grounded it three ways at portal DEV `@604101df8b` before calling the tool wrong, and their read stood.
+**Their own statement of the stake is the reason this clause exists: *"HAD I TRUSTED THE TOOL, THAT ROW
+WOULD READ CONSUMED AND FLIP TO RETAIN. Opposite recommendation, 720 keys, one document, one human acting
+on it."***
+
+**This sweep is a DELETION program whose Stage-3 cascade rests entirely on consumption claims.** A tool
+that reports a dead consumer as live produces **RETAIN on dead things** — survivable. **The same defect
+inverted produces MARK on live things, and that is the direction that destroys served output.**
+
+**THEREFORE, binding on Stage 2 and Stage 3:**
+1. **No artifact or producer is marked on a comp-tool's consumption claim alone.** The tool identifies
+   *candidates*; the disposition requires **independent grounding at source**.
+2. **The grounding pattern is AE~Z's and it is the standard here** — a tool is **not refuted by one
+   negative grep**: (a) confirm the named consumer **EXISTS** (a real file is what makes a wrong claim
+   credible); (b) search for callers **with a POSITIVE CONTROL on the same search** (theirs:
+   `getKeywordSentiments -> 2`); (c) read the named consumer and confirm it never references the path.
+3. **A disagreement between tool and measurement is RECORDED IN THE REGISTER, never resolved silently** —
+   and the tool defect is **ROUTED**, not absorbed. *The register's value is that it carries the
+   disagreement to the human making the call.*
+
+**Cross-reference: this is R0's spine one layer down.** R0 says a short sweep list reads identically to a
+clean one. **R3 says a wrong consumption verdict reads identically to a right one** — and both failures are
+invisible precisely where the program acts.
+
 ### Stage 4 — REGISTRY
 - `portal-artifact-sweep-list` (his name, kept verbatim) — append-only, each row carrying: artifact id,
   universe-derivation source, displayed verdict + its grounding, disposition, producer set, producer
