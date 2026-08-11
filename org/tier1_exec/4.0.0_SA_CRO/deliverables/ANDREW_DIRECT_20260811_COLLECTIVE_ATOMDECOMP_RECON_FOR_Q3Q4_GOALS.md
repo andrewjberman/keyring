@@ -31,7 +31,10 @@ live dispatches keep their labels. Jam findings stay C-1/C-2/C-3 as authored.
 
 **C-5 SPLIT (COO sequencing call 053034Z, accepted):** RECON-5 divides -- **RECON-5a Cottonwood
 ENDPOINT INVENTORY** (parallel, now-ish, whichever seat frees; rides RCN-0001's existing 229-endpoint
-BD teardown as its base, so it is a completeness/delta pass, not a fresh teardown) and **RECON-5b
+BD teardown as its base, so it is a completeness/delta pass, not a fresh teardown; **SCOPE ADDITION
+~0628Z: carries the NAMED CELL "what does BD ship on the performance/TWR surfaces" -- per Andrew's
+instruction-5 TWR grant the cot performance leg is the LAST OPEN performance-leg cell in the
+three-firm matrix (inf=vendor-raw, 49f=computed-granted, cot=MEASURE-not-assume), ~A fold 062841Z**) and **RECON-5b
 Cottonwood PATTERN-CONFORMANCE decomp** (after the 49F archetype field-map is stable; archetype
 constrains conformance, not discovery).
 
