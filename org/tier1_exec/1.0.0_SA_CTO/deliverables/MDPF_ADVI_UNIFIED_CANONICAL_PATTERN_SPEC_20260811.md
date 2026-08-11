@@ -36,6 +36,14 @@ s3://opal-data-assets/portal/gold/{product}/_manifests/{data-as-of}/{process-ts}
 s3://opal-data-portal-v2/platinum/{product}/{scope}/...            # serving tier ONLY (Rule 17b)
 ```
 
+**The flow, Andrew-verbatim (~0535Z, ANDREW_DIRECT_20260811_CTO_OVERSIGHT_SSOT_RECON_MANDATE.md):
+ingestion → `{vendor}/{firm}/bronze` → an EVENT TRIGGER processes raw into silver parquets → gold
+(staging or full) in `portal/gold/{product}/{scope}` with code, tables, and ALL dependencies
+COLOCATED → a publisher pulls to `platinum/{product}/{scope}` — the MORNING TRIGGER PATTERN,
+end-to-end, same pattern everywhere, "established forever," never ad-hoc haphazard routes.**
+The bronze→silver leg is EVENT-TRIGGERED on raw landing; gold/publisher legs carry clock floors
+with event accelerators (atom 5) — triggers are ROUTES, not monitors (moratorium respected).
+
 - `{scope}`: `global` | `{firm}` for mdpf; `{firm}` × `{advisor}` for advi (§4).
 - **Spelling law, per layer, by construction:** underscore in gold, hyphen in platinum
   (publisher `_KEY_RE`). A census keyed on either spelling alone reads the other half as orphaned —
