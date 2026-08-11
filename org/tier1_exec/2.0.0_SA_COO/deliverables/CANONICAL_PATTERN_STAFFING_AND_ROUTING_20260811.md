@@ -722,6 +722,77 @@ precondition does not.*
 
 ---
 
+## 4h · STATE AS OF 0620Z — sovereign rulings landed, residuals CLOSED, bar amended
+
+### ANDREW RULED X-ii's RUNTIME (~0615Z, @727c2df067): *"on 2., i think the lambda should be the one"*
+
+**The LAMBDA is the producer.** Consequences, all now binding:
+- **X-ii RE-SCOPES to the lambda leg** — its inputs/outputs re-home into the product root's `_staging/`.
+- **The chain's aggregate stage becomes a DISABLE row**, executed **only after** the lambda leg is
+  verified correctly fed — **migrate-before-kill.**
+- **W1a's consumer-repoint re-validation now has a known target:** lambda-as-producer (**re-validate,
+  never reuse**).
+- **The zeros / input-resolution mechanism is PROMOTED to X-ii's FIRST work item** — the ruled producer
+  is the runtime that wrote the zeros, so its input fix **fronts** the act rather than trailing it.
+
+### CTO RULED (a) ON THE UNIVERSE QUESTION — SINGLE-HOMED BY CONSTRUCTION, and generalized it
+
+Not a monitor (agreed pre-emptively, moratorium's stated reason), and not an immediate act: **it lands as
+a NAMED ROW in the 49F join build TO (DS lane), preconditioning the SERVING leg.** Build may proceed;
+**serve may not until the predicate is single-homed** — or Andrew explicitly accepts documented
+coincidence, which CTO is **not** recommending and which would come as a ruling request, never a default.
+> **CTO'S GENERALIZATION, and it is the sharpest line of the window: TWO INDEPENDENTLY-MUTABLE SCOPE
+> DEFINITIONS THAT HAPPEN TO AGREE ARE THE SAME DISEASE AS TWO RUNTIMES ON ONE KEY, ONE LAYER UP.** The
+> remedy is the same shape: **a universe/scope predicate is SINGLE-HOMED**; every consumer derives from
+> the ONE definition. *Two things that agree by accident are not an invariant — they are a coincidence
+> with a good track record.*
+
+### ✅ BOTH PARKED RESIDUALS MEASURED AND CLOSED (DS) — neither number needs an asterisk now
+
+- **INFLECTION 11/561 — NOT ACCOUNTS, BY DESIGN.** Mechanism at source
+  (`build_mdpf_wsc_inflection_feeder.py build_model_aua_positions`): a row with no `eclipse_account_id`
+  falls back to `account_id = "portfolio_{eclipse_portfolio_id}"`, the code's own comment saying so. All
+  11 are underscore slugs, custodian/household NULL, and **`MODEL_VALUE = 0.00` for all 11.**
+  ⇒ **the real-account join is 550/550 = 100.0% and NO AUA is unjoined.**
+- **49F 14 — three causes:** **11 nine-digit** all-numeric, **fully concentrated in ONE model** (Opal
+  Conservative Growth), not Schwab under any transform (strip-first/strip-last/last-8: 0/11 each) and
+  absent from SmartX's own `fact_account_detail` ⇒ **a different numbering system, single-cohort.** *DS
+  deliberately names NO custodian without evidence — naming it needs the SmartX account surface
+  (RECON-2's endpoint question) or advisor-side confirmation.* · **2 eight-digit = CLOSED Schwab accounts
+  still in the live map** (present 2024-07-08 and 2025-01-13, absent 2025-07-23 onward) = **map staleness,
+  not a join defect** · **1 eight-digit never present** across the full 2024-07-08..2026-08-07 span —
+  **the one genuinely open item, and it is one account.**
+- **GRAIN CORRECTION:** the "12 nine-digit + 2 misses" was **row-grain**; measured is **11 nine-digit +
+  3 eight-digit over 14 DISTINCT numbers / 15 map ROWS.**
+- **QUOTABLE FORM:** inflection **100.0% on real accounts**; 49F **99.8% (map→spine leg) / 99.65%
+  end-to-end**, residual **UNDERSTOOD**.
+
+### NAME-VS-CONTENT — SPECIMEN **FOUR**, and it is now a ruled design constraint
+
+DS found the inflection feed's key column carries **slugs, not numeric ids** (0/11 all-digit, against
+RECON-4's "short numeric ids" description) — the same class RECON-4 itself flagged for the 49F UUID.
+**Four specimens in one window:** `bd` (pipeline vs vendor) · `account_number` (clean in smartx,
+contaminated in cot-BD) · `account_id` (a UUID where digits were expected, producing a clean-looking
+0.0%) · the inflection feed key (slugs where numbers were described).
+✅ **CTO BANKED IT AS A DESIGN CONSTRAINT: the 2a field registry keys on `(table, column, measured
+content-grade)` — NEVER on column NAME alone. "A name is a label to be verified, not an identity."**
+
+### 13:30Z BAR — PRE-REGISTRATION **AMENDED** @60a115e95c (see also @029b146138)
+
+AE's measured forward call folded in **before the fire**: zeros-with-PASS **structurally cannot recur**
+(the vacuous `0==0` wholly-empty SKIP carve-out was **already retired** in the deployed re-pin, RP-W5
+item 4); served spine expected **healthy non-zero**; the A7 dated-contract leg expected to **S2 ERROR and
+REFUSE the write**, loud, no write.
+⛔ **THE ROW I ADDED THAT AE DID NOT ASK FOR: if NO A7 ERROR LINE APPEARS AT ALL, that is NOT a pass —
+investigate first.** AE's read makes a **loud error the healthy signature**, which inverts the usual
+reflex, so **silence needed its own row or someone would read it as success. The absence of an expected
+loud failure is not evidence of health.**
+*My 0608Z zeros row described a defect that had already been fixed hours earlier. Recorded rather than
+quietly dropped: the pre-registration cost nothing and AE's read independently confirms the fix. **A
+control that fires on an already-closed defect is cheap; the reverse is not.***
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
