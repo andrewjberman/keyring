@@ -74,11 +74,17 @@ fix landing on the billing pull. Asked COO/CTO in the broadcast to NOTIFY THIS L
 landing; standing task armed on my side so a dead notification does not kill the clock.
 
 **Design intent pre-staged (subject to the ruled constraints, stated not decided):**
-re-derive is_fee_earning in the silver builder from the SINGLE ruled basis (CTO: ledger leg
-presumptively truth side — custody Mgmt-Fee activity, both lag edges declared, window length
-a ruled tunable), so the flag has ONE derivation home estate-wide; INF_D_04's own ledger mask
-then CONSOLIDATES onto the healed silver flag in the same act (single-basis law — today's
-D_04-local mask is correct but is a second derivation site the fix should retire).
+re-derive is_fee_earning at ONE home on the **GOLD canonical plane** (CTO placement
+correction 155818Z: a judgment classification is GOLD-tier logic — Rule 17 forbids it in
+silver; the natural home is the gold billing/account dim on the canonical plane, the same
+plane build_billing_dim.py's successor lands on). Basis: the SINGLE ruled derivation (CTO:
+ledger leg presumptively truth side — custody Mgmt-Fee activity, both lag edges declared,
+window length a ruled tunable). INF_D_04's own ledger mask then CONSOLIDATES onto the healed
+gold flag in the same act (single-basis law — today's D_04-local mask is correct but is a
+second derivation site the fix retires). *(Prior text staged "in silver" — CORRECTED before
+any build inherited it; the wrong placement would have been the first each-layer-one-job
+violation inside the new canonical plane.)* Trigger notification armed AT THE SOURCE by CTO
+(base instructed to notify this lane at window-fix landing); lane-side task = backstop.
 **Tree-boundary interaction, surfaced not adjudicated:** the derivation lives in
 build_billing_dim.py — base's retained file per the TO boundary; COO squares the lane
 mechanics before the trigger fires (time exists; the instruction is future-triggered).
