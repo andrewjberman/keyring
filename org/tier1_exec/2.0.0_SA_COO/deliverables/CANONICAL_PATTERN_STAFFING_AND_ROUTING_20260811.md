@@ -904,6 +904,53 @@ in the recon itself.*
 > **the cert is.** My "verified landing" was compatible but under-specified, and under-specified is how a
 > lane closes an item one step early.
 
+## 4j · THE WINDOW'S ORGANIZING INSIGHT — and a precondition **I** under-specified
+
+### TWO NEW ROWS (CTO ruled, DS/AE lane, NORMAL deploy cycle, nothing tonight, NOT bar-relevant)
+
+CRO~A measured a concurrency collision: **DS's CPR-4 republish via direct SSM ran mid-chain on the same
+runner.** Direct SSM is a **FIFTH armed dispatch path**, carrying **neither the trigger's env export nor
+the dispatch lock.** The **C_01 guard REFUSED** the mode-incoherent input — **no data harm**; INF
+re-dispatched 06:45Z.
+
+| row | remedy |
+|---|---|
+| **R-a** | **Host-level chain mutex inside `orion-gold-dispatch.sh`** — serialization at the **convergence point**, closing all five paths **and future ones BY CONSTRUCTION** rather than enumerating them |
+| **R-b** | **`INF_AOR_FOLD_ACTIVE` mode resolution SINGLE-HOMED on-host** — per-caller env means **independently-mutable mode definitions** |
+
+### ⛔ ONE PATTERN, THREE INSTANCES IN ONE WINDOW — this is the window's real finding
+
+| # | two-or-more independently-mutable definitions of ONE thing | remedy |
+|---|---|---|
+| 1 | **two RUNTIMES** writing one key (`mdpf_aggregate_aua` in the chain **and** in-process in the lambda) | ONE runtime (Andrew ruled: the lambda) |
+| 2 | **two SCOPE definitions** that happen to agree (map's bronze listing vs feed's registry filter) | **single-homed** universe predicate |
+| 3 | **five CALLER-LOCAL MODE definitions** (per-caller env export) | **single-homed** on-host resolution + a mutex at the convergence point |
+
+> **THE LAW THE WINDOW EARNED: INDEPENDENTLY-MUTABLE DEFINITIONS OF ONE THING ARE THE DISEASE; SINGLE-HOMING
+> IS THE REMEDY — and it does not matter whether the duplicated thing is a runtime, a scope, or a mode.**
+> Each instance presented as a different bug (a mystery freshness, a coincidental join rate, a
+> concurrency collision) and **all three are one shape.** CTO generalized 1→2; instance 3 confirms it
+> generalizes past the layer it was found at. **Enumerate-the-paths is the wrong remedy in every case —
+> R-a closes the fifth path *and the sixth nobody has built yet* precisely because it serializes at the
+> convergence point instead of listing callers.**
+
+### ⚠ AND THE COLLISION TRACES TO A PRECONDITION *I* WROTE TOO NARROWLY
+
+**DS IS NOT AT FAULT — CTO put that on the record and I am confirming it from my side, because the
+narrow part was mine.** My CPR-4 choreography condition (4) asked for confirmation of **"no intersection
+with the 13:30Z MDPF bar window."** DS answered exactly that, correctly: *"bar-clear confirmed at
+execution: republish completes ~7h before 13:02Z, INF D-chain not the MDPF cadence."*
+**The real collision surface was HOST-LEVEL CONCURRENCY on the shared runner — which my condition never
+named.** I specified the collision surface I knew about and not the one I didn't, so **DS answered my
+question correctly and my question was the wrong one.**
+> **FOURTH under-specified precondition of mine this window** (one deploy prefix of three · `PRECONDITION:
+> none` over a live serve-hold · "verified landing" where the bar is a cert · and now "bar-clear" where the
+> risk was host-clear). **The pattern is consistent enough to be a finding about me, not about the lanes:
+> I keep specifying the surface I already have in mind, and a precondition written that way is silently
+> scoped to the author's blind spot.** The generalizable fix is the same one CTO just ruled for the
+> machines: **ask "clear of ANY concurrent execution on this host?" not "clear of the window I am thinking
+> about?"** — a predicate, not an enumeration.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
