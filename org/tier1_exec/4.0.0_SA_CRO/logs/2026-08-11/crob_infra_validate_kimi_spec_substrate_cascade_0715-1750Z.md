@@ -104,3 +104,18 @@ substrate work by his direction-sequence).
   contract's zero-liveness-adjectives constraint eliminates this BY CONSTRUCTION -- this defect is
   live evidence FOR that constraint. Schema gap reproduced (+8 vintage cells, second specimen).
 - Delivered @194125Z for CTO~Z same-turn adjudication. Row-10 close is theirs to call.
+
+## ~1943-1950Z -- ROW-10 CLOSED + HANDOVER MERGE + FIRST STEWARDSHIP ACT
+- ROW-10 CLOSED (CTO~Z): exercise 2 SUPPORTED every limb; their verbatim banked ("the bridge
+  refusing to be naive is worth more than the clean absorption was"; "The method is in good hands").
+  Schema-gap proposal now a PATTERN WITH TWO SPECIMENS at CTO+CVO. Integration's last open
+  adjudication ENDS.
+- Handover pack landed @SITEZ-6311a1ce1f; roster verify caught my stale A-K enumeration (TRUE set
+  A-M; L/M read at source; row-13 orthogonality verdict extends unchanged). Merge executed:
+  METHOD_HANDOVER_MERGE_DISPOSITION_20260811.md -- adopt/adopt-as-landed broadly, 2 adapt-defer
+  with reasons, ZERO declines (recorded as verdict). Convergence: binding M derived-predicate ==
+  a-predicate-is-not-a-roster (cross-cited, no re-mint).
+- FIRST STEWARDSHIP ACT: 14(e) amendment LANDED on the canonical head (SKILL.md) -- five settled
+  answers folded into the rule's own text, outcome enum CITED from binding F, no mints.
+- Stewardship queue published (M-8/M-15 builds, cadence-homogeneity on W2 C5, plant ladder on
+  second corpus, M-1 conflict, outcome-vocab registry entries). MSTR notified @194930Z.
