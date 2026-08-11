@@ -50,6 +50,37 @@ close (CTO-sequenced 025537Z: NOT unilateral, NOT before the bar).
 - Respond to DS items 2+3 verdicts if they need the invoker again (one fenced instrument,
   re-fireable).
 
+## L-D arc (0309-0333Z appendix — the session continued past the original close)
+
+**archetype:** DEPLOY
+
+6. **DS's item-2 read exposed the wrong-channel gap:** mdpf-gold-lambda executes its BAKED
+   package (pin @0bc739e7d5, 08-07); L-A's cp landed on the S3 script channel the function
+   never reads — the 13:30Z bar would have run the pre-fix spine. COO cut leg L-D (GO 031158Z).
+7. **L-D as-drafted executed clean and FAST** — commit `f72495f387`, artifact to
+   lambda-artifacts 031636Z, targeted safe-apply complete ~0318Z, CodeSha256 flipped to
+   t0w3vTNV... — **then CTO's 031758Z HOLD landed carrying an Andrew-direct supersession of
+   the TARGET** (canonical bucket, colocate opal-data-assets). The apply and the hold CROSSED
+   IN FLIGHT; reported timeline-honest with timestamps; COO ruled NO FAULT (@9b083a39a1),
+   adopted my holds + no-unilateral-revert call (relocate-over filed).
+8. **L-D-CANONICAL executed on CTO routing 032326Z** (Andrew-direct verbatim: *"yeah just put
+   it in opal-data-assets/portal/gold/mdpf somewhere, that is the obvious thing"*): same
+   bytes (re-hashed pre-upload) → `s3://opal-data-assets/portal/gold/mdpf/_code/mdpf-gold-lambda.zip`;
+   TF data-source + function repoint + MDPF_GOLD_COMMIT env stamp fix in one apply
+   (commit `759ef40a12`, Rule-2 pre-apply). Discriminators stated BEFORE running, all PASS:
+   (a) state pointers canonical + new s3_object_version; (b) apply success = the pull from
+   opal-data-assets worked (bucket policy pre-checked — sole Deny is 17a bronze-parquet
+   PutObject); (c) env stamp live-reads bf74d031c1...; (d) CodeSha256 UNCHANGED by design +
+   0-diff re-plan; (e) qa_local re-fire emits DS's post-fix oracles. Old artifact
+   DEPRECATED-in-place (no unilateral delete); calendar-deps layer follow-on tracked, untouched.
+   ⚠ CTO's message typo'd the env target ("bf74d031c1514..."); stamped the rev-parse truth.
+9. **Re-fire SURPRISE, grounded:** GREEN 12/12 — cottonwood BUILT. The wholesale re-pin
+   carried DS's implementation of Andrew's 08-10 point-in-time ruling (log verbatim: earliest
+   assignment chosen, later = RESTATEMENTS in the rekey report; collision now WARN not
+   SystemExit). Pre-registered bar branches (@4c10918958, both assumed cottonwood refuses)
+   are MOOT — surfaced to COO with a pre-registration-amendment suggestion; DS pointed at the
+   label-grain read + the rekey report.
+
 ## Compiler Tools
 | Tool | Invocation | Result |
 |---|---|---|
