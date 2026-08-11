@@ -22,30 +22,43 @@ to CTO/COO.
 
 ## 2. RECON COVERAGE MAP (goals x targets x owner x state)
 
+**NAMESPACE RULING 2026-08-11 ~0530Z (COO collision flag, resolved same turn):** these chapters are
+**RECON-1..RECON-7** -- renamed from the original C-n minutes after first broadcast, because C-1/C-2/C-3
+already name the SCHEDULING-JAM FINDINGS in ~A's committed brief (@1b43c23765 sec4 Move 3, already
+routed to DS/AE), and COO's proposed keep-C-n-for-recon would also have collided with R-1..R-5 (the
+08-10 taxonomy rulings @dedd7bdeab). The newest, least-embedded namespace moves; committed docs and
+live dispatches keep their labels. Jam findings stay C-1/C-2/C-3 as authored.
+
+**C-5 SPLIT (COO sequencing call 053034Z, accepted):** RECON-5 divides -- **RECON-5a Cottonwood
+ENDPOINT INVENTORY** (parallel, now-ish, whichever seat frees; rides RCN-0001's existing 229-endpoint
+BD teardown as its base, so it is a completeness/delta pass, not a fresh teardown) and **RECON-5b
+Cottonwood PATTERN-CONFORMANCE decomp** (after the 49F archetype field-map is stable; archetype
+constrains conformance, not discovery).
+
 | # | Recon target | Feeds goal | Owner | State |
 |---|---|---|---|---|
-| C-1 | MDPF colocation ground truth + canonical per-product pattern + advi light cross-check | 2a (architecture), 3 (staging logic), CTO's cutover | base CRO | **DONE** @41692cd3d2 (run: opal-data-mdpf-colocation__20260811T0440Z, schema-VALID) |
-| C-2 | 49F gold advi pipeline decomp -- the ARCHETYPE substrate (2a's rigid field/staging/output/methodology census rides here) | 2a | **~A (Andrew-assigned)** | RUNNING at ~A |
-| C-3 | Inflection gold advi pipeline decomp | 2b | **~A (Andrew-assigned)** | RUNNING at ~A |
-| C-4 | **Goal-3 join feasibility: model-holdings account grain <-> ADVI account spine** -- the account_id/household key reality across smartx/orion/BD feeds vs each firm's accounts_dimension; what the account-level "consolidated staging" must carry for account->household->advisor->firm rollups to join | 3 | **base CRO** | **STARTING NOW** (run opened this session) |
-| C-5 | Cottonwood gold advi pipeline decomp (the third firm; nobody holds it) | 2b, 1-adjacent | base CRO after C-4, or ~A after C-2/C-3 -- whoever frees first; flagged to CTO/COO for sequencing preference | OPEN |
-| C-6 | Endpoint inventory delta for 2b: RCN-0001 (BD teardown, 229 endpoints/52 schemas) + RCN-0002 (Orion) already exist; the DELTA = Eclipse endpoint coverage + "every single endpoint (documented)" completeness check against both | 2b | base CRO (records exist in my register; delta census is cheap) | OPEN |
-| C-7 | Cottonwood BD custom-model pull (goal 1) | 1 | scouted/spec'd (his word); custody mechanism @562cbd444d + item-1 spec skeleton exist; ~A's proving run covered the custody leg | LARGELY COVERED -- gaps, if any, surface from C-5 |
+| RECON-1 | MDPF colocation ground truth + canonical per-product pattern + advi light cross-check | 2a (architecture), 3 (staging logic), CTO's cutover | base CRO | **DONE** @41692cd3d2 (run: opal-data-mdpf-colocation__20260811T0440Z, schema-VALID) |
+| RECON-2 | 49F gold advi pipeline decomp -- the ARCHETYPE substrate (2a's rigid field/staging/output/methodology census rides here) | 2a | **~A (Andrew-assigned)** | RUNNING at ~A |
+| RECON-3 | Inflection gold advi pipeline decomp | 2b | **~A (Andrew-assigned)** | RUNNING at ~A |
+| RECON-4 | **Goal-3 join feasibility: model-holdings account grain <-> ADVI account spine** -- the account_id/household key reality across smartx/orion/BD feeds vs each firm's accounts_dimension; what the account-level "consolidated staging" must carry for account->household->advisor->firm rollups to join | 3 | **base CRO** | **STARTING NOW** (run opened this session) |
+| RECON-5 | Cottonwood gold advi pipeline decomp (the third firm; nobody holds it) | 2b, 1-adjacent | base CRO after RECON-4, or ~A after RECON-2/RECON-3 -- whoever frees first; flagged to CTO/COO for sequencing preference | OPEN |
+| RECON-6 | Endpoint inventory delta for 2b: RCN-0001 (BD teardown, 229 endpoints/52 schemas) + RCN-0002 (Orion) already exist; the DELTA = Eclipse endpoint coverage + "every single endpoint (documented)" completeness check against both | 2b | base CRO (records exist in my register; delta census is cheap) | OPEN |
+| RECON-7 | Cottonwood BD custom-model pull (goal 1) | 1 | scouted/spec'd (his word); custody mechanism @562cbd444d + item-1 spec skeleton exist; ~A's proving run covered the custody leg | LARGELY COVERED -- gaps, if any, surface from RECON-5 |
 
 **Already-banked substrate the map rides on:** the five MDPF feed schemas (account_id + household_id
 grain measured in `model_aua_positions` -- the exact join column goal 3 needs, with household_id
-currently NULL-typed: a C-4 finding candidate before work begins), the canonical pattern's nine
+currently NULL-typed: a RECON-4 finding candidate before work begins), the canonical pattern's nine
 structural atoms + thin-adapter invariant (PROVISIONAL exception list at Andrew), the
 ADVI_REFACTOR corpus (52 files) as the held-out case study, and RCN-0001/0002 teardowns.
 
 ## 3. WHAT CTO/COO GET FROM EACH (the "information they need")
 
-- **CTO:** C-1 already unblocks the mdpf cutover decomposition; C-2 supplies 2a's field-grain
-  archetype census; C-4 answers whether goal 3's account-level join is buildable on current keys or
-  needs an identity-resolution layer (the make-or-break architectural fact for item 3); C-6 bounds
+- **CTO:** RECON-1 already unblocks the mdpf cutover decomposition; RECON-2 supplies 2a's field-grain
+  archetype census; RECON-4 answers whether goal 3's account-level join is buildable on current keys or
+  needs an identity-resolution layer (the make-or-break architectural fact for item 3); RECON-6 bounds
   2b's restructure surface with a real endpoint denominator.
 - **COO:** every run lands with owners/triggers named per edge, so decomposition into TOs starts
-  from measured cells, not beliefs; C-5's sequencing preference is explicitly theirs.
+  from measured cells, not beliefs; RECON-5's sequencing preference is explicitly theirs.
 
 ## 4. DISCIPLINE CARRIED (unchanged)
 
