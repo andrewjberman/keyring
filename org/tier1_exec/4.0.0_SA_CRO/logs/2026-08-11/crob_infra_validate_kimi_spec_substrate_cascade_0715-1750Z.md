@@ -137,3 +137,19 @@ substrate work by his direction-sequence).
   queued (CVO operational loop / COO build). Method inputs 1/3 queued at stewardship (@8cc474bfb7
   corrected vintage). Commit-gate caught my own live precedence bug in a lint-fix loop (corrupted
   file blocked pre-commit, clean re-copy landed).
+
+## ~2040-2055Z -- M-9 WRITE-ONLY CONTRACT: VERIFIED DEEPER, FIXED, ABLATION-PROVEN
+- Site-Z defect report (via MSTR): structural_changes patches validate + report merged rc=0 +
+  silently drop (engine applies changes[] only). VERIFIED ON BOTH HEADS and found DEEPER: the
+  canonical CLOUD head never received M-5/M-7b/M-9 at all -- my merge disposition 1.1
+  "already on the one canonical head" was an unverified WRONG premise (verify-dont-adopt run on
+  the roster, skipped one row over). Corrected on the record with mechanism.
+- FIX LANDED (ATOM_DECOMP lane): schema byte-port (structural diff = exactly the 3 amendments),
+  apply path built (relations/fields/constraints; TARGET-EXISTS REFUSES never quietly succeeds;
+  fields adds rectangularity-preserving born-UNMEASURED), merge report prints applied counts.
+  13/13 self-test; 5 new limbs ABLATION-PROVEN (gutted engine fails exactly those 5); real site-Z
+  specimen validates. MSTR notified @205436Z w/ the backlog-reconcile rider (already-emitted
+  relations will correctly REFUSE on duplicate id).
+- En route: caught my own live precedence bug in a lint-fix loop (gate blocked the corrupted file);
+  caught my own 2>/dev/null-on-git-show + /tmp path-mapping artifact mid-investigation and redid
+  the retrieval with denominators.
