@@ -231,4 +231,9 @@ is the arch lane):** L2's no-data-day semantics: **non-trading days produce NO p
 **a TRADING day with no bronze delivery produces NO partition + a LOUD catch-up-floor detection**
 -- never an empty partition, never a silent carry-forward; **carry-forward is a SERVING-tier
 decision only** (the publisher's measured re-serve-last-good), never a silver/gold fabrication.
-One line, three states, each with its owner.
+One line, three states, each with its owner. **CONCURRED BY CTO 080121Z as proposed -- and now
+DOUBLY LOAD-BEARING: Andrew's ~0757Z silver-completeness trigger requirement makes this line the
+trigger predicate's CALENDAR CONTRACT** (a non-trading day correctly never fires the gold runner;
+a trading day whose silver never lands is the catch-up floor's loud case). The 17b law amendment is
+LANDED @a9c159f134 (gold-is-parquet in the law line; migration authority = the ratified spec set +
+cutover acts, never the law line itself). Both remaining CTO items from this spec are CLOSED.
