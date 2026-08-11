@@ -524,6 +524,12 @@ Full template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`. Stored in
 - `<cross_domain_coordination>` — populated by COO/CTO at PRD decomposition using `comp-blast`; `<none/>`
   only if confirmed no shared files or S3 keys with other active TOs
 - `<acceptance_criteria>` — **machine-checkable output validation**, not "code runs"
+- `<proof_of_spec>` — **the machine-readable data contract (ANDREW-DIRECT 2026-08-11: "I do not
+  want TOs being issued that do not have machine-readable data contracts"): the issuer mints the
+  criterion-id set at decomposition; the ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance
+  from their own efforts, validated by `.tools/proof-of-spec-check.py` before the `complete`
+  flip. A TO without the contract is non-conforming — not issued.** Full contract:
+  `org/ref/TASK_ORDER_PROTOCOL.md` `<proof_of_spec>`
 - A session log with a Compiler Tools section as an explicit deliverable
 
 **A TO with no compiler check logged is NOT accepted as complete** (`org/standards/TO_COMPILER_GATE.md`).
