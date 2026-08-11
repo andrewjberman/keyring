@@ -9,6 +9,17 @@ V19-LB-SUMMARY-AUA band @fd72adf7d2 (band committed BEFORE first emission). Buil
 
 ## VERDICT: VALIDATED (P1-SCRIPTS scope). NOT a served-surface kill-clear -- see SCOPE.
 
+> **POST-VALIDATION DELTA, re-pin ~1910Z (~A disclosed, recorded not smoothed):** after this verdict
+> (@5c9c3b1c0f), ~A measured the SERVED slug grammar off the ownership_map keys and found their `_slug`
+> diverged from served on 3 PUNCTUATED advisor names (jackson_o_brien / neil_tjon_hing / curry_pajcic_jr
+> -- non-alnum runs collapse to ONE underscore). Fixed in BOTH emitters @b790aaca3e and **D_07
+> re-verified END-TO-END at final code state: SHAPE PASS, shape mutant rc=1, monetary mutant
+> exactly-5-pins rc=1, clean fit PASS FAIL=0 -- the SAME figures this verdict validated.** So: the
+> validated instance's structural/monetary/parity FIGURES are UNCHANGED; only 3 of 146 advisor_id string
+> VALUES are corrected. **This verdict's conclusion HOLDS and RE-PINS to the corrected artifact
+> @b790aaca3e** (the pin-the-reviewed-artifact discipline: my grade binds the fixed code, not the
+> pre-fix @5c9c3b1c0f). A slug-grammar fix measured against served keys, disclosed rather than smoothed.
+
 ## LOAD-BEARING ROWS -- re-derived
 - **SHAPE-FREEZE** PASS -- and this family is the FIRST with MAP-VALUED (KEYS-AS-DATA) nodes
   (role_breakdown / role_combination_breakdown carry an advisor's window-scoped role set as KEYS).

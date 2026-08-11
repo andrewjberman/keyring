@@ -13,7 +13,8 @@ was read as BAR-DISCHARGED; the states below are each grounded on a committed ve
 - **IN FLIGHT (WINDOW-GATED)** = not even the core clears yet; gated on the window backfill / emission.
 - **NOT STARTED** = no CVO instance has reached me.
 
-## THE COUNT: BAR-CLEARED = 0 of 16. (SCOPE-VALIDATED = 6; IN FLIGHT = 1; NOT STARTED at cert = 9.)
+## THE COUNT: BAR-CLEARED = 0 of 16. (SCOPE-VALIDATED = 7; IN FLIGHT = 1; NOT STARTED at cert = 8.)
+*(Updated ~1910Z: firm_ownership_map @fe9ffd6f30 validated -> SCOPE-VALIDATED, was NOT STARTED. header_metrics re-grade to BAR-CLEARED is pending base's window-derivation build + emit, ~30-45min, NOT a vacuous re-run of today's zero-window d01 -- base's 190837Z dependency truth, correct.)*
 Denominator **16** = the 49F served-family roster (the header_metrics archetype "reused by the other 15
 families"; exact roster is base DS's sweep scope).
 
@@ -26,8 +27,8 @@ families"; exact roster is base DS's sweep scope).
 | 5 | mix_summary | **SCOPE-VALIDATED** | VALIDATED_49F_MIX_SUMMARY: P1-SCRIPTS; value rides the cot-bundle mix-basis band (dormant pre-cutover) |
 | 6 | firm_leaderboard | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_LEADERBOARD: P1-SCRIPTS; window mass + serving port + V19 pinned divergence pending cutover |
 | 7 | firm_dashboard | **IN FLIGHT (WINDOW-GATED)** | VALIDATED_49F_DASHBOARD_FEE_EFFICIENCY: "IN FLIGHT (WINDOW-GATED) is the CORRECT classification" -- NOT cleared (COO: stop carrying it as cleared) |
-| 8 | firm_ownership_map (Unit-2) | **NOT STARTED** (at cert) | no CVO instance; ~A building |
-| 9-16 | remaining families | **NOT STARTED** (at cert) | no CVO instance reached me; production-bound (fill-2 + emission) |
+| 8 | firm_ownership_map (Unit-2) | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_OWNERSHIP_MAP @fe9ffd6f30: no monetary plane (mutant transposed to id-plane tamper guard, discriminating); cross-derivation id-set parity deferred to cutover re-pin |
+| 9-16 | remaining families (8) | **NOT STARTED** (at cert) | no CVO instance reached me; production-bound (window-derivation build + emission) |
 
 ## WHAT ANDREW SHOULD HEAR (do not soften -- per COO)
 - **Zero surfaces discharge the bar as written. Not one.** The "4 of 16 cleared" was a
