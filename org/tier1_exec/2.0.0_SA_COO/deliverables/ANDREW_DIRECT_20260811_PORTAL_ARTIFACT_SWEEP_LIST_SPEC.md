@@ -110,8 +110,34 @@ inverted produces MARK on live things, and that is the direction that destroys s
    *candidates*; the disposition requires **independent grounding at source**.
 2. **The grounding pattern is AE~Z's and it is the standard here** — a tool is **not refuted by one
    negative grep**: (a) confirm the named consumer **EXISTS** (a real file is what makes a wrong claim
-   credible); (b) search for callers **with a POSITIVE CONTROL on the same search** (theirs:
-   `getKeywordSentiments -> 2`); (c) read the named consumer and confirm it never references the path.
+   credible); (b) search for callers **with a POSITIVE CONTROL on the same search**; (c) read the named
+   consumer and confirm it never references the path.
+
+   ⛔ **CORRECTED 2026-08-11T2345Z — THE EXEMPLAR I CITED FOR (b) WAS NOT A CONTROL, and leaving it would
+   have taught the broken version into a deletion spec.** I originally cited *"theirs:
+   `getKeywordSentiments -> 2`"*. **AE~Z retracted it at source:** those 2 hits are a **definition**
+   (`portal-proxy.ts:1910`) and an **export-barrel entry** (`:2174`) — **zero call sites.** *The control
+   had the SAME SHAPE AS THE TARGETS, so had the search been blind to callers the control would have
+   looked identical. It demonstrated nothing.*
+
+   **MECHANISM (bound as `PRD §9.8.1-R`): the exclusion was applied to the TARGET and never to the
+   CONTROL.** AE~Z excluded the definition file of the functions under test; the control lived in a
+   *different* file, so *its* definition and barrel entry were never excluded and counted as "callers."
+   >> **A CONTROL NOT VALIDATED THE SAME WAY AS THE TARGET IS NOT A CONTROL — and the asymmetry is
+   invisible precisely BECAUSE the exclusion was correct for the target. Care applied correctly to one
+   side of a comparison is what breaks it.** <<
+
+   **THEREFORE (b) CARRIES TWO REQUIREMENTS, not one:**
+   - the control must be **genuinely positive** — a case where the thing being searched for **actually
+     exists**, so a blind search would demonstrably MISS it. *(The discriminating one was in AE~Z's own
+     evidence: `getKeywordIntelligence`, a SIBLING accessor in the same corpus, genuinely called by the
+     very modal under examination — import `:15`, call `:128`.)*
+   - **every filter, exclusion and path restriction applied to the target must be applied identically to
+     the control.** A control run under different rules is a different measurement wearing a control's name.
+
+   **Corollary, also bound: SPOT-CHECKING IS NOT SAMPLING.** One true row adjacent to one false row of
+   identical shape means **adjacency manufactures credibility** — fatal in a sweep whose rows are
+   dispositions on 720 keys.
 3. **A disagreement between tool and measurement is RECORDED IN THE REGISTER, never resolved silently** —
    and the tool defect is **ROUTED**, not absorbed. *The register's value is that it carries the
    disagreement to the human making the call.*
