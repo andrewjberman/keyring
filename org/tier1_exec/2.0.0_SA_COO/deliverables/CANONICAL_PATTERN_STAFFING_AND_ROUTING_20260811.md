@@ -1006,6 +1006,43 @@ consuming the staging tree with **honest roll-forward flags** — it read the 08
 emitted `partner_aua_total $1.88B vintage=rolled_forward coverage=incomplete`. **The zeros propagate as
 FLAGGED STALENESS, not as zeros** — the guard behaving well, and relevant to the bar's amended expectations.
 
+## 4l · ACT **CPR-5** DISPATCHED (same-day) + the FIFTH exception member + RECON-5a scope
+
+### CPR-5 · DECLARE THE SECOND DEPLOY TARGET — CTO ruled the remedy, I staffed it
+
+| field | value |
+|---|---|
+| **OWNER** | `0.4.0_DS_ClientPlatform` (the deploy-map change) |
+| **VERIFIER** | `0.7.0_AE_CloudOps` (the bd-side landing) |
+| **TRIGGER** | **TODAY'S CYCLE**, sequenced AFTER the 15:06Z cot deploy — the fixed bytes must exist before they can be carried. *CTO: "49F executes pre-fix double-lag bytes every day until it lands — today's cycle, please."* |
+| **SHAPE** | a `safe_deploy_core` row declaring `opal-data-bd/code/bronze/cot_bronze_ingest.py` a **second target of the cot-tree source**, under **Rule 13's SHARED-repo-home S3-membership guard** (key-exists=update enforced, 404=loud skip, first-mints explicit) |
+| **PRECONDITION** | ⚠ **stated as a PREDICATE, not a spot-check: does anything in the changed code paths read a firm-scoped env var, path, or lag constant whose value differs between the cot and bd invocations?** The fix was exercised in the **cot** context; the same source runs under the bd-49f-runner with different env (4 `BD_*` vars set before import, firm-bound). *"Should be firm-agnostic" is exactly the phrasing I have had corrected four times tonight, so it gets a predicate.* |
+| **ACCEPTANCE** | DS: the row lands and the sanctioned path puts the fixed bytes at the bd key, **ETag-verified against the fixed COT-SIDE bytes as landed** (not a local copy). AE: ⚠ **the 49F runner's NEXT SCHEDULED INVOCATION executes them** |
+
+⛔ **THE OBJECT LANDING IS NOT THE FIX TAKING EFFECT** — the runner `download_file`s at invocation (`:74`)
+and `importlib`-execs (`:75`), so a correct object proves only that the object is there. **Verify on the
+invocation.** ⛔ **Hand-copying to the bd prefix stays FORBIDDEN** — CPR-5 exists so nobody has to.
+⛔ **BLAST RADIUS: a LIVE DAILY CLIENT-FACING 49F INGEST.** Low risk (same source, exercised, 81/81
+non-carry with mutants) but it **does not inherit cot's green**, which is what the predicate above is for.
+
+### FIFTH EXCEPTION MEMBER — Andrew instruction 5 (~0628Z): *"Granted / on TWR calculation from Schwab"*
+
+The ratified exception set gains its fifth member: **49F TWR / period-returns COMPUTED FROM raw Schwab
+custody components** — raw inputs + an **explicitly named computation**, i.e. **the opposite of a
+residual.** Spec §3 amended. **Per-firm performance leg now resolves: `inf` = vendor TWR raw · `49f` =
+computed-from-components · `cot` = TBD on RECON-5.**
+*This is atom 8 working as designed rather than being eroded: the invariant was never "never compute" —
+it is "compute only what no single vendor endpoint gives, and NAME it." A named computation over raw
+components is a legal exception; a subtraction standing in for a missing field was not.*
+
+### RECON-5a SCOPE — one named cell added (CRO @4f57b27927)
+
+RECON-5a now carries **"what does BD ship on the performance/TWR surfaces"** — **the LAST open
+performance-leg cell** in the three-firm matrix. **Whoever is seated on 5a inherits it scoped**, and it
+**may close at rest** (the 561 rebalancer `model_detail` bodies + the RCN-0001 family map). Nothing else
+in 5a's split changes. *Recorded to keep my register and CRO's map in lockstep — the two-record drift
+class is what this line exists to prevent.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
