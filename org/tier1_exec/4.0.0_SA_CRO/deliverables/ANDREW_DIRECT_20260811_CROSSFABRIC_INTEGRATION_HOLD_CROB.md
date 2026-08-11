@@ -87,3 +87,52 @@ CVO (ontology home) -- the bridge does NOT invent canon schema.
 **Proposed follow-on specimen (direction-honesty test):** `portal-page-attribution` -- a certified
 rectangle exists while the canon RETIRED `attribution` (content lives under positioning); the bridge
 must surface the retirement fight rather than silently re-minting a retired thread.
+
+## EXERCISE 2 EXECUTED -- THE NEGATIVE CONTROL (retired-thread collision): PASS ON EVERY LIMB
+
+**CTO~Z ruling (via MSTR @1933Z):** specimen 1 alone cannot close row-10 -- "a bridge that has only
+absorbed cleanly has not demonstrated it can SURFACE A FIGHT." PASS = collision surfaces NAMED,
+retirement cited, nothing written; re-mint OR silent drop = the failure. **Transcription correction,
+owned here:** the specimen-1 delivery said 64 EXCLUDED-BY-LAW; the artifact says 62 (the two
+NOT_MEASURABLE cells sat in `disposition`, classing STATUS-EXCLUDED). The 64 originated in MY
+delivery message, not MSTR's relay compression -- MSTR logged it as theirs; the attribution is
+corrected here. Adjudication rode the artifact, which is condition 1 doing its job.
+
+**Subject:** `origin/SITEZ 13908cfac7 : .../portal-page-attribution/20260811T1834Z/
+rectangle.final.certified.json` -- the CONSUMABLE of site-Z's mutant-control run (the plant is
+structurally excluded per binding K; certified PASS by CVO~Z). 4 entities x 10 fields, 40/40 MEASURED.
+**Tool:** `scripts/emit_bridge_dryrun_ex2.py`; **output:**
+`deliverables/ROW10_EMIT_BRIDGE_DRYRUN_EX2_NEGCONTROL_OUTPUT_20260811.json`. **Mode: DRY.**
+
+**RESULT -- the control discriminates and the bridge passes:**
+- **Collision surfaced FIRST-CLASS:** run name implies thread `attribution`; canon status RETIRED
+  (NFRA_ONTOLOGY_C2C3_CANONICAL.yaml denominator_note, adjudication 2026-07-30 CVO Andrew-direct;
+  checksum comment '27 - attribution (retired 07-30)'); resolver live-confirm 0 rows. The
+  rectangle's own canonical_name cells INDEPENDENTLY route all 4 artifacts to positioning-thread
+  keys -- the rectangle honors the retirement; the collision exists at RUN-NAME grain only. A portal
+  PAGE named /attribution legitimately exists; a canon THREAD named attribution does not, and none
+  is created.
+- **Control assertions 0/0/0:** updates naming thread attribution = 0; threads created = 0;
+  duplicate keys emitted = 0. Accounting: 12 mechanical + 4 judgment + 24 named gaps == 40 TRUE.
+  Canon touched: 1 of 138 threads (positioning). NO-RECEIVING-SLOT reproduces on this page too
+  (8 more vintage_semantics/grain cells -- the specimen-1 schema-gap proposal gains a second specimen).
+- **Key matches -- the emissions are IDEMPOTENT CONFIRMS, not new writes:** 3 of 4 keys match the
+  positioning thread's served_artifacts EXACTLY; the 4th matches VIA NORMALIZATION, which surfaced:
+- **B9-DEFECT-IN-CANON (bonus catch, pre-existing, surfaced not fixed):** the resolver key
+  `s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastMod 2026-06-15 13:20Z)`
+  carries BAKED FRESHNESS PROSE inside the mechanical substrate -- the exact defect the B-9 law
+  names, live in the canon today. A naive string-match reads NO-MATCH and emits a duplicate bare
+  key (two spellings of one artifact -- the guarded-set class). The bridge normalized for MATCHING
+  ONLY and emitted no duplicate; the prose-strip is a canon repair for the mechanical owner's lane,
+  not a bridge write.
+- **Direction honesty:** 4 translations reported (att.03's `portfolios/` S3 prefix explicitly
+  distinguished from a THREAD -- emitting under the prefix would re-mint a phantom; 3 embedded
+  rectangle annotations split from keys with BOTH halves kept, annotations routed with the judgment
+  channel).
+
+**WORKSTREAM HOMING (Andrew-direct ~1935Z via MSTR, verbatim):** *"Let's run the rectangle/
+atom_decomp work on this fabric as 4.0.0_SA_CRO~B is deep on that with proper context"* -- the
+rectangle-family method work (decomposition runs, emit-bridge, schema-adjacent stewardship) is HOMED
+at this seat on this fabric; exercise 2 is its first act under that ownership. MSTR record:
+ANDREW_DIRECT_20260811_RECTANGLE_ATOMDECOMP_RUNS_ON_LAPTOP_AT_CROB.md. Site-Z's comp-tooling
+instruments program continues separately under its own word.
