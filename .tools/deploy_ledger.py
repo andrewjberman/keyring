@@ -441,6 +441,41 @@ _STATUS_LINE_PATTERNS = (
     re.compile(r"^\s*#{1,6}\s*status:\s*(.*)$", re.IGNORECASE),
 )
 
+# ===========================================================================================
+# COMPOUND-FIELD SEGMENTATION -- THE STRUCTURAL FIX (CTO 2026-08-11, COO's FOURTH-VARIANT find).
+# The three patterns above are ANCHORED at line start, so a Status carried as the SECOND field of
+# a compound header line is unreadable:
+#     **Opened:** 2026-08-05T23:05Z by 0.7.0_AE_CloudOps · **Status:** CLOSED 2026-08-05T23:40Z
+# Measured over the full corpus (386 files): 340 line-start, 10 COMPOUND-INLINE, 36 genuinely
+# absent -- and every one of the 10 was reporting a FALSE RED on the NO-HALF-DEPLOYS gate.
+#
+# >> WHY A SEGMENTER AND NOT A FOURTH PATTERN: the three fixes before this one each ENUMERATED
+# the spelling its author had just seen (colon-inside-span, heading form, doubly-bolded value).
+# An enumerated-spellings reader's coverage is exactly its author's sample -- it passes on every
+# file that taught it and fails on the next hand-authored one, which is why there was a second,
+# a third, and now a fourth variant. This parses the STRUCTURE instead: a markdown header line is
+# a sequence of FIELDS separated by `·`/`•`/`|`/`;`/spaced dashes, so the reader tests each FIELD,
+# not just the first. New separators extend coverage; new VALUE spellings are already covered by
+# the strip("*_") normalization. <<
+#
+# SAFETY (why this is not over-permissive): a segment still has to satisfy one of the ANCHORED
+# patterns above -- it must literally begin with `**status:` / `## status:`. A prose fragment
+# that merely mentions the word cannot match (the LD-0274 mention-is-not-a-marker discipline),
+# and a separator that splits a date or a sentence just yields fragments that match nothing.
+# Adding separators therefore only ever ADDS coverage; it cannot manufacture a false terminal.
+# ===========================================================================================
+_COMPOUND_FIELD_SEP = re.compile(r"\s*[·•|;]\s*|\s+[-–—]{1,2}\s+")
+
+
+def _status_segments(line: str):
+    """The line itself, then each of its compound-field segments (document order preserved).
+    First-status semantics are unchanged: callers stop at the first segment that yields a value."""
+    yield line
+    if _COMPOUND_FIELD_SEP.search(line):
+        for seg in _COMPOUND_FIELD_SEP.split(line):
+            if seg and seg != line:
+                yield seg
+
 
 def _md_status(md_path: Path) -> str | None:
     """First Status value in a change_management ledger, in ANY of its markdown spellings
@@ -453,12 +488,13 @@ def _md_status(md_path: Path) -> str | None:
     except OSError:
         return None
     for line in text.splitlines():
-        for pat in _STATUS_LINE_PATTERNS:
-            m = pat.match(line)
-            if m:
-                val = m.group(1).strip().strip("*_").strip()
-                if val:                      # an empty capture is not a status -- keep looking
-                    return val
+        for seg in _status_segments(line):
+            for pat in _STATUS_LINE_PATTERNS:
+                m = pat.match(seg)
+                if m:
+                    val = m.group(1).strip().strip("*_").strip()
+                    if val:                  # an empty capture is not a status -- keep looking
+                        return val
     return None
 
 
@@ -493,12 +529,13 @@ def _has_terminal_status_anywhere(md_path: Path) -> bool:
     except OSError:
         return False
     for line in text.splitlines():
-        for pat in _STATUS_LINE_PATTERNS:
-            m = pat.match(line)
-            if m:
-                val = m.group(1).strip().strip("*_").strip()
-                if val and _is_terminal_status(val):
-                    return True
+        for seg in _status_segments(line):
+            for pat in _STATUS_LINE_PATTERNS:
+                m = pat.match(seg)
+                if m:
+                    val = m.group(1).strip().strip("*_").strip()
+                    if val and _is_terminal_status(val):
+                        return True
     return False
 
 
