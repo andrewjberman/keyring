@@ -93,6 +93,20 @@ engine gets a summary).
    harness shape pends before any tool patch; DS's triple-homed rendering gap is the one
    confirmed-live TOOL defect.
 
+## RULED DESIGN CONSTRAINTS (0617Z, from the night's three name-vs-content specimens + the universe finding)
+
+- **SCOPE PREDICATES ARE SINGLE-HOMED (ruled (a), @dd93cad9a2 finding):** two independently-mutable
+  scope definitions that happen to agree = two runtimes on one key, one layer up. Every consumer
+  derives from ONE declared universe predicate. The 49F map/feed alignment (coincidence today)
+  becomes an invariant by construction — a NAMED ROW in the join build TO; serve is preconditioned
+  on it; build is not. Not a monitor (moratorium, and its stated reason).
+- **A BUILD TO CARRIES THE FULL-PATH DENOMINATOR, never a leg's** (the 99.8-leg vs 99.65-path
+  correction, COO self-caught @ad93eaa14d).
+- **The 2a FIELD REGISTRY keys on (table, column, measured content-grade), NEVER column name alone**
+  (three specimens in one night: "bd" family collision · `account_number` clean-in-smartx vs
+  prose-contaminated-in-cot · `account_id` carrying a SmartX UUID). A name is a label to be
+  verified, not an identity.
+
 ## OPEN ROUTING (CTO oversight queue)
 
 - RECON-5 (cot advi) seat assignment — with COO (5a can ride RCN-0001 now).
