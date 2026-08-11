@@ -39,6 +39,16 @@ Every L1 count carries the census KEY it was taken with. OPEN CHECK (CTO/CVO): d
 script reading `blackdiamond/cottonwood/*` trip the bd↔cot commit gate + IAM deny? (`comp-firmsep-sweep`
 is the instrument; not yet run against the shared-vendor-prefix shape.)
 
+## THE QUALITY PARTITION (Andrew-direct instruction 4, ~0552Z via CRO~A record + MSTR relay)
+
+**The recon's PRODUCT is a partition, not just a map: every script/engine/subsystem in the census
+lands in EXACTLY ONE side — EXTRACT (quality structure, carried into the canonical build) or
+DISCARD (patchy/fragile/methodologically unacceptable) — with grounded evidence per item.** Type
+specimen (sovereign-confirmed, independently the audit's ILLEGITIMATELY-DERIVED #1):
+transaction-engine holdings valuation → DISCARD. This binds ALL recon chapters' deliverable form;
+L4 cells carry a `partition:` field from here forward. Existing certified cells are not reopened —
+the partition field back-fills on each chapter's next touch.
+
 ## ADVERSARIAL DISCIPLINE (the mandate's word: "adversarially establish SSOT")
 
 1. **CVO cross-examines every recon deliverable** — independent re-derivation of load-bearing
@@ -51,6 +61,10 @@ is the instrument; not yet run against the shared-vendor-prefix shape.)
    call that would fill them (the truth-JSON convention).
 4. **Instruments are suspects too** — comp-pipescript layer blindness + comp-estate stale-snapshot
    404s are OPEN CTO fixes; until landed, any matrix cell resting on those tools carries a caveat.
+   Banked from the mdpf cert (CVO, live): **schedule-existence questions MUST sweep BOTH
+   EventBridge namespaces** (`events list-rules` AND `scheduler list-schedules`) — a
+   single-namespace sweep returns a clean, complete-looking absence, which is the deletion-warrant
+   direction. Method line routed to ~A (scheduling-axes/tool-adapters).
 
 ## OPEN ROUTING (CTO oversight queue)
 
