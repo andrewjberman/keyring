@@ -82,10 +82,24 @@ def _pin_fail(reason: str) -> None:
     sys.exit(2)
 
 
-def _read_pinned_token() -> str:
+def _read_pinned_token() -> str | None:
     """Token selection under --server/--identity: filter the opalinvest.dev mcpOAuth records
     to the pinned server/identity BEFORE any expiry sort. Exactly one valid match is the only
-    success; zero matches, expired-only, and ambiguous multi-matches all die loudly."""
+    success; zero matches and ambiguous multi-matches die loudly.
+
+    EXPIRED-ONLY IS THE ONE NON-FATAL CASE (OPAL_ANALYST.TO6, BG source-confirmed 20260811):
+    a lapsed record is SELF-HEALING -- Claude Code re-mints it on the next MCP call -- so the
+    pinned path returns None and the caller quiet-retries, exactly as the BARE path has always
+    done (:119-121) and as the 401 handler does mid-poll. Exiting on it converted a transient
+    idle lapse into an hourly process death plus a deaf window until someone re-armed.
+
+    THE PIN SURVIVES THE RETRY BY CONSTRUCTION, and that is a property of this function's
+    SHAPE, not of caller discipline: every call re-reads CREDS and re-derives `recs` from
+    scratch, so the --server/--identity filters above are re-applied on every cycle; no token
+    is cached across calls; and read_token() returns THIS function's result directly, with no
+    fallback branch to the identity-blind bare selection. A None here can never widen the
+    record set or select another identity -- it can only mean "poll as nobody this cycle."
+    Do not add caching or a fallback: that is precisely the P0 that TO-1 closed."""
     pin = f"--server={PIN_SERVER} --identity={PIN_IDENTITY}"
     try:
         d = json.load(open(CREDS, encoding="utf-8"))
@@ -100,7 +114,10 @@ def _read_pinned_token() -> str:
         _pin_fail(f"no-token-for-identity: no mcpOAuth record matches the pin ({pin})")
     live = [r for r in recs if r.get("expiresAt", 0) / 1000 > time.time()]
     if not live:
-        _pin_fail(f"expired-token-for-identity: {len(recs)} matching record(s), all expired ({pin})")
+        # QUIET RETRY, holding the pin. NOT _pin_fail: see the docstring. Deliberately no stdout
+        # line -- stdout is the Monitor's agent-ping channel, and a self-healing lapse is not an
+        # event to wake anyone for. The caller logs the lapse to stderr once and backs off.
+        return None
     if len(live) > 1:
         names = ", ".join(sorted(str(r.get("serverName")) for r in live))
         _pin_fail(f"ambiguous-token-match: {len(live)} valid records match the pin ({names}) ({pin})")
@@ -110,7 +127,8 @@ def _read_pinned_token() -> str:
 def read_token() -> str | None:
     """The freshest non-expired gateway access token for the opalinvest.dev MCP server.
     Pinned (--server/--identity): identity-filtered selection via _read_pinned_token(), which
-    exits non-zero rather than ever falling back. Bare: legacy selection, unchanged."""
+    returns None on a merely-expired pinned record (quiet retry, pin held) and exits non-zero on
+    any pin it cannot satisfy -- never a fallback. Bare: legacy selection, unchanged."""
     if PIN_SERVER or PIN_IDENTITY:
         return _read_pinned_token()
     try:
@@ -246,13 +264,26 @@ def main() -> None:
     pin_note = f" pin(server={PIN_SERVER}, identity={PIN_IDENTITY})" if (PIN_SERVER or PIN_IDENTITY) else ""
     print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only){pin_note}", file=sys.stderr, flush=True)
     selected_logged = False
+    # Pin-scoped expiry backoff (TO6 req 1). Everything below is inert when bare: PINNED is False,
+    # so lapse_cycles never leaves 0 and the sleep stays INTERVAL exactly as before (req 4).
+    PINNED = bool(PIN_SERVER or PIN_IDENTITY)
+    lapse_cycles = 0            # consecutive pinned cycles with no LIVE token; 0 == healthy
+    LAPSE_BACKOFF_CAP = 6       # multiples of INTERVAL -- bounded, so recovery is never far away
+    LAPSE_RENOTE_EVERY = 30     # a long lapse stays legible instead of looking like health (req 3)
     while True:
         tok = read_token()
         if tok:
             me = self_id(tok)
-            if not selected_logged:  # evidence line: which identity this process is polling as
-                print(f"[teams-watch] token selected: identity={me}", file=sys.stderr, flush=True)
+            if not selected_logged or lapse_cycles:
+                # Evidence line: which identity this process is polling as. RE-EMITTED after a
+                # lapse, because TO6 C2 asks who polled after the retry -- and "polling resumed"
+                # cannot answer that. Without this, a recovery is invisible in the trace and the
+                # only surviving evidence would be that the process stayed up, which is precisely
+                # the failure mode C2 exists to catch.
+                what = "re-selected after lapse" if lapse_cycles else "token selected"
+                print(f"[teams-watch] {what}: identity={me}", file=sys.stderr, flush=True)
                 selected_logged = True
+            lapse_cycles = 0
             me_name = self_name(tok)  # cached after first poll; the display-name self-match key
             try:
                 res = poll(tok, cursor)
@@ -274,9 +305,18 @@ def main() -> None:
                     print(f"[teams-watch] HTTP {e.code}", file=sys.stderr, flush=True)
             except Exception as exc:  # noqa: BLE001 -- a monitor must never die on a transient error
                 print(f"[teams-watch] {type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
+        elif PINNED:
+            # Pinned record exists but is expired -> hold the pin and wait it out. Stderr only:
+            # stdout would ping the agent for a self-healing no-op.
+            lapse_cycles += 1
+            if lapse_cycles == 1 or lapse_cycles % LAPSE_RENOTE_EVERY == 0:
+                print(f"[teams-watch] pinned token expired -- quiet retry, pin HELD "
+                      f"(cycle {lapse_cycles}, identity={PIN_IDENTITY})", file=sys.stderr, flush=True)
         if ONCE:
             return
-        time.sleep(INTERVAL)
+        # Backoff applies ONLY while a pinned token is lapsed; every other path sleeps INTERVAL.
+        sleep_for = INTERVAL * min(2 ** (lapse_cycles - 1), LAPSE_BACKOFF_CAP) if lapse_cycles else INTERVAL
+        time.sleep(sleep_for)
 
 
 if __name__ == "__main__":
