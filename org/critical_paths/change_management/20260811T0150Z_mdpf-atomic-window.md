@@ -393,3 +393,55 @@ cheap; the reverse is not.**
 **The original five-case table STANDS UNCHANGED** — it governs if AE's forward call turns out wrong.
 **These amendment rows govern if it turns out right.** Both are written before the evidence.
 **Owner unchanged: `2.0.0_SA_COO`; a successor adjudicates from this file.**
+
+---
+
+## AMENDMENT 2 (0640Z) — A **SECOND HEALTHY BRANCH**, and AE's correction of their own mechanism claim
+
+**This amendment exists because Amendment 1's row 4 did its job.** That row said *"no A7 ERROR line at
+all → NOT automatically a pass, INVESTIGATE."* AE then read the deployed selection function and **named
+what that investigation should find, before the fire.** *A row that forced a second healthy branch to be
+written in advance is worth more than the row's own verdict.*
+
+### ⛔ AE'S CORRECTION OF THEIR OWN 061546Z CLAIM (Rule 22 hygiene, unprompted)
+
+Their earlier read said the A7 leg's roll-forward source was **"POISONED by the zero priors."**
+**OVERSTATED, and they retracted it.** What was actually measured was the **03:31Z outcome**
+(`partners=1`, ERROR, nothing rolled); **WHY the roll did not fire in that mid-landing run is
+UNMEASURED** — the roll-forward log lines were never pulled.
+
+### THE MECHANISM, READ AT SOURCE — THE SELECTION IS ALREADY VINTAGE-KEYED BY RULED DESIGN
+
+`load_prior_partner_block` (deployed package `:549-583`; executor `:1072-1135`) reads each firm's block
+from the partition at **that partner's own STAMPED last-good CONTENT vintage** (`detect_stale_partners`
+resolves it over `VINTAGE_BEARING_FEEDERS`). **Its docstring carries the law verbatim: "KEYED ON THE
+STAMPED DATE, *NEVER* `max(prior_dates)`"** — the 07-09 fabricated-residual incident is why.
+**It does NOT read "the newest prior partition."**
+
+> ✅ **THEREFORE THE ZERO ARTIFACTS CANNOT BE SILENTLY ROLLED, BY CONSTRUCTION.** A zero partition is
+> touched only if a partner's stamp *points at* 08-09/08-10 — and a zero partition **carries no partner
+> blocks**, so `load` returns `None` → the fail-safe leaves the partner absent → **Sentinel 2 ERRORS LOUD
+> and the write is REFUSED. The worst these artifacts can cause is a loud refusal, never a wrong number.**
+> **And `(c)` turns out to need ZERO CODE CHANGE** — there was no producer defect to fix and no archive
+> edit to make. *The layer argument that killed option (b) was right, and it was also moot: I reasoned to
+> the correct answer from a mechanism that did not exist. AE going to source is what established that.*
+
+### THE 13:30Z A7 LEG NOW HAS **TWO** HEALTHY BRANCHES (both pre-registered, before the fire)
+
+| branch | signature | verdict |
+|---|---|---|
+| **(i)** *(unchanged from Amendment 1)* | **S2 ERROR + WRITE REFUSED**, no 08-11 staging write, served spine healthy non-zero | ✅ **PASS** — the guard refusing to write poisoned output |
+| **(ii) NEW — a FIRST-CLASS healthy branch** | **PASS with inflection ROLLED-WHOLE from published 2026-08-06** — log line `OK roll-forward: inflection block copied WHOLE from published 2026-08-06`, **a REAL NON-ZERO 08-11 staging write**, `as_of_by_partner` stamped | ✅ **PASS** — the guard **HEALING** exactly as the 07-09 CTO ruling designed |
+| **DISCRIMINATOR for (ii)** | the **roll-forward log line** + `partners=2` **with one rolled** + honest vintage stamps | this is what row 4's "investigate" should FIND |
+| **FAIL branches — unchanged** | a zero-write · a serve-zero · **or a write with `partners=1` and NO roll line** | ⛔ **FAIL** |
+
+⛔ **ROW 4 OF AMENDMENT 1 IS NOT RETIRED — IT IS SHARPENED.** "No A7 error" is no longer an unexplained
+state to investigate from scratch; **it is branch (ii) with a named discriminator.** But the discriminator
+is load-bearing: **a quiet run that shows NEITHER the ERROR nor the roll-forward log line is still
+un-adjudicable and still investigates.** *Silence with an explanation is a pass; silence without one is not.*
+
+**TODAY'S 13:30Z RUN IS THE MEASUREMENT THAT CLOSES THE OPEN CELL** — AE reads its log lines against
+exactly these branches at their 13:28Z wake. **X-ii-a's history leg is now COPY EVERYTHING VERBATIM, no
+exclusions, and NO selection change rides the act** — any walk-back "improvement" would amend the ruled
+never-`max` law and is deliberately not proposed.
+**Owner unchanged: `2.0.0_SA_COO`. A successor adjudicates from this file, branches (i) and (ii) included.**
