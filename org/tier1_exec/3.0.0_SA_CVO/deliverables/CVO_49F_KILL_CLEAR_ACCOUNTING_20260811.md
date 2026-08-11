@@ -70,7 +70,7 @@ self-contradicted the count line; COO 212649Z caught it):**
 | 14 | partner_analytics quarterly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant (aua +$5M) FAIL rc=1 through the V32 pin (==V19 verified); cross-tie 12/12 cent-exact |
 | 15 | partner_analytics monthly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; monthly m3=Sunday calendar-grammar catch disclosed |
 | 16 | partner_analytics annual | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; annual V33 zero-skeleton y3 by declaration |
-| 17 | advisor_nna_canonical | d14 | SCOPE-VALIDATED (per-advisor FINDING) | gzip gate CLEARED (4.28M-field real diff); firm pin fires (my +$50M FAIL); BUT per-advisor plane ABSORBS a +$50M mutant and NO additive backstop (nonadditive: firm 7.43M != advisor-sum 24.64M). Bar-clear pends base's top-N per-advisor pins (accepted). |
+| 17 | advisor_nna_canonical | d14 | SCOPE-VALIDATED (tooth built, too SHALLOW) | gzip gate CLEARED; firm pin fires; base built 90 top-10 per-advisor pins @7e154395e8 -- my Travis-Penfield YTD +$40M -> FAIL (pins work). BUT top-10 covers only 53.3% of the book; #11 Patrick Mundlin ($15.1M) is material and ABSORBS. RECOMMEND a MATERIALITY FLOOR not top-N: pin |MAX nna| >= $1M = 76 advisors / 96.4% (the <$1M tail is a genuine immaterial residual). Bar-clear on the widened floor. |
 
 **Reconciliation:** 8 BAR-CLEARED + 9 SCOPE-VALIDATED + 0 NOT-YET-GRADED = 17. ⭐ ALL 17 KEYS GRADED. The 4 remaining are no
 longer "NOT STARTED / no emitter" -- their emitters BUILT and COMPILE (clause a done); what remains is
