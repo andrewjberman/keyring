@@ -100,6 +100,44 @@ surfaced only because a human asked. The 07:00 ET pull carries no DAPI-liveness 
 Explicitly did NOT propose an alarm/freshness checker (standing moratorium; it is the
 cheapest-feeling wrong deliverable here) — it is a route/schedule design question for CTO/Andrew.
 
+## ~0911-0927Z — FULL END-TO-END: 20260810 pulled, content-checked, published, schedule moved
+Andrew-direct via Teams, four asks in ~15 min, all served. Detail in the thread daily file
+(`threads/2026-08-07-andrew-capability-roster/2026-08-11.md`); the load-bearing points:
+
+- **Pull:** production runner `workflows/bloomberg/tplus1/tools/run_daily_pull.py` (cma env) —
+  the entry point the Windows task drives, NOT the OneDrive `.bat` an operator would reach for.
+  Vintage **20260810** (Monday, the only genuinely outstanding trading day — Aug 8/9 were the
+  weekend and Friday's was already served). REAL pull: 123s+101s vs the ~16s idempotent load.
+  Tripwire PASS.
+- **Held the publish** until he asked for it. Ad-hoc runs are a QA instrument; production
+  numbers come from the scheduled run. Offered the override; he took it.
+- **Publish:** `publish_to_portal.py` (direct-S3, box credentials). **PUBLISHED 2026-08-10,
+  VERIFIED BY CONTENT** — served `data_as_of 2026-08-10` AND served 1D matching the PKL across
+  all five models. Not a date check, not a self-report.
+- **`.ST` content check the tripwire structurally cannot do** — the pull ran on a Terminal
+  logged in ~20 min earlier, the exact 2026-08-03 login-scoped CIX risk shape. 682 rows /
+  inception 2023-12-29 @ 100.0000 / latest 112.9312 / max daily move 0.6816%. Correct.
+- **False alarm caught before sending:** my own script printed `max|ret| = 68%` — the `return`
+  column is in PERCENT and my `%` format double-scaled it. Settled by re-deriving from `price`
+  alone (median ratio 0.999983). **The reading that settles a units question is the one that
+  does not use the suspect column.** Sending it would have manufactured a market anomaly on
+  correct data — the false-alarm harm, sourced from my instrument rather than the pipeline.
+- **Schedule 7a -> 9a ET** via the repo's `register_daily_task.ps1 -At 09:00`. Today's 7a
+  cancelled; NextRun 2026-08-12 09:00. **Verified the landed boundary is NAIVE**
+  (`2026-08-12T09:00:00`, no offset) — an offset form pins an absolute instant and silently
+  slips the job an hour at the November DST change.
+- **SCOPE EXTENSION, stated not drifted:** prompt.md step 5 says the Windows Scheduled Tasks
+  are "not yours to manage." I changed one, on Andrew's explicit word, and said so to him and
+  to MSTR~Z. **Not a standing grant** — next session reads scope as unchanged unless prompt.md
+  changes. Rationale on the record: "the principal extended it" and "the agent assumed it" look
+  identical in the artifact afterwards, so it has to be said at the time.
+- Doc drift noted to MSTR~Z (not fixed — not my paths): the task Description still says
+  "(no upload)" though it has been full end-to-end since 2026-08-06.
+
+**Daily upload guardrail for 2026-08-11 is DISCHARGED by this**, superseding the PENDING entry
+above: today's vintage is pulled, validated, published and served-verified. The 7a check I
+carried forward is moot — that run no longer exists, by Andrew's instruction.
+
 ## State
 ON DUTY, **no longer Teams-only**. Teams Monitor bex95y6cd (identity-pinned), fabric inbox
 Monitor btceyuzi2, broker LIVE, zero crons.
