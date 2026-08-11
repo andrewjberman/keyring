@@ -1757,6 +1757,31 @@ be **captured AT ADVI decomposition or knowingly struck.*** ⛔ ***"Silence stri
 > function. *Choosing the sanctioned branch that keeps his option open is not scope creep; it is the only
 > branch that does not decide for him.*
 
+### B-9 · **comp-estate SUBSTRATE REGEN** — CTO arch-gate-approved @aea514329c, execution routed to ME
+
+**This closes the fuse I flagged to MSTR.** Contract at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/INFRA_FINALIZE_AND_VALIDATE_PLAN_20260811.md` item 1.
+**CRO~B measured and recommended; execution is mine to route.**
+
+| half | shape | owner |
+|---|---|---|
+| **MECHANICAL** — producers · `frontend_resolution` · `lambda→named_thread` · **`served_artifacts` as keys+edges ONLY** | a **SCHEDULED, GRAPH-DERIVED leg WITH A FLOOR**, riding the same Group-W wiring the build institutionalizes | **CVO** (instrument owner per Andrew's ~0642Z routing) + **AE** for the schedule + clock floor |
+| **JUDGMENT** — `owning_tool` · `status` · `reachability` · `orphan` | **diff-triggered STALE-PENDING-REREVIEW + a 30d floor** | **CVO**, per the contract |
+
+⛔ **THE LOAD-BEARING CONSTRAINT, and it is the sharpest thing in the contract: `served_artifacts` MUST CARRY
+ZERO FRESHNESS PROSE — "else the June defect rebuilds at a fresher vintage."**
+> **A regen that bakes freshness prose into `served_artifacts` does not fix the stale-substrate defect — it
+> REBUILDS IT, newer, and therefore more credible.** *That is the same shape as tonight's holiday-literal
+> hand-twin: the remedy introducing a fresh instance of the thing it remedies. Second time in one window a
+> fix's own output was the risk.*
+
+**Empty-source behaviour RULED (L2 no-data-day):** no partition on no-data · **loud catch-up** ·
+carry-forward **serving-tier only**.
+✅ **AND THE FUSE IS NO LONGER A RACE: CTO explicitly accepts the honest stale flip if it fires first** (no
+urgency-borrowing). *So the ~3-day clock stops being a deadline and becomes what it should always have been —
+a banner that tells the truth while the real fix lands properly.* **The MSTR time-trigger stays for
+visibility, not for pressure.**
+
 ### ⛔ THE GATE THAT IS ON THE **FIRE**, NOT THE BUILD
 
 **GROUP W stands as the PRE-FIRST-PRODUCTION-FIRE gate:** the **dispatch census closed to ONE path**, and
