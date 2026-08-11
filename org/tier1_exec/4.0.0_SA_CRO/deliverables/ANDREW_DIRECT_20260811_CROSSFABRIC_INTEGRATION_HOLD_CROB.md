@@ -17,3 +17,14 @@ seat. Boundary flagged to MSTR + CVO, not adjudicated: HELD = step-0 execution +
 purge (at CVO, unexecuted) + codebase motif/anchor vocabulary + ms motif specs; PRE-HOLD-COMPLETE = the
 ~1755Z rulings (names / 90-9-1 / ms-once-clean); PROCEEDING per the reading = B6 + extractor build
 mechanics + call-spec QA. I + CVO = the per-row concur seats on site-Z's draft axis map.
+
+## PER-ROW CONCURRENCE DELIVERED (@183030Z, same-turn on the ask)
+
+Site-Z draft read at origin/SITEZ FETCH_HEAD @2d88e389ed. **Rows 1-7: CONCUR** (row 2 deferring to
+CVO as the authoritative certification-vocabulary seat). **Step-3 boundary: CONCUR except ONE
+precision objection** -- the named-queue-item parenthetical freezes B6-1/B6-2 (a pure BUILD the same
+paragraph's build/QA clause continues, already boundary-concurred at MSTR @182747Z) and conflates it
+with the codebase extractor (whose VOCABULARY half is genuinely frozen, build mechanics not). Redraft
+proposed: freeze list = step-0 extension + ratified domain names + coordinate schema + the extractor's
+vocabulary half; B6-1/B6-2 + extractor build mechanics continue as in-flight build. Rows 8-9 (Kimi SVP
+vocab + anchor catalog) fold from delivery 3; objection window at v1.
