@@ -376,8 +376,24 @@ it restricts nobody's authorized work): the grant ends with ANDREW'S session, an
 extend it on the strength of its own process still running.** Routed to CTO for one clarifying word
 since CTO holds the record; **nothing is blocked meanwhile** — the grant is permissive, so the only
 risk lives in over-extending it, never in under-using it.
-**A RESPAWNED SEAT DOES NOT INHERIT THIS. If you are reading this file in a later session, you do not
-have free egress.**
+**A RESPAWNED SEAT DOES NOT INHERIT THIS BLANKET LIFT.**
+
+> ⛔ **AMENDED 0658Z — AND THE LINE ABOVE WAS TOO BROAD AS ORIGINALLY WRITTEN.** It read: *"If you are
+> reading this file in a later session, you do not have free egress."* **There are now TWO grants with
+> DIFFERENT EXPIRY SEMANTICS, and that sentence would send a successor at a fresh ask they do not need:**
+>
+> | grant | scope | expiry |
+> |---|---|---|
+> | **BLANKET LIFT** (@9e1fc54623, *"for the remainder of this session"*) | all agents, all vendors | ⏳ **DIES WITH ANDREW'S SESSION.** Successors do **NOT** inherit |
+> | **WORK-SCOPED PER-USE GRANT** (instruction 6, ~0700Z: *"as much egress and endpoint testing as you need"*) | **Orion + BD**, for the **GIPS feasibility work specifically** (Inflection off Orion, then Cottonwood off BD) | **RIDES THE WORK, NOT THE SESSION — it survives on its own terms where the blanket bound does not** |
+>
+> **SO: a successor continuing the GIPS work HAS egress for it. A successor doing anything else does NOT.**
+> **THIS IS THE THIRD TIME TONIGHT THE SAME CLASS HAS BITTEN — READING A GRANT AT THE WRONG SCOPE:** a
+> too-WIDE read (BD "granted" covering a firm it never covered) · a too-NARROW read (SmartX marked
+> egress-gated when it was on the standing lift) · **and now my own record, too BROAD on an expiry, which
+> would have under-served a live grant.** *Guarding against over-extension produced a record that
+> under-extends. **A record broader than its mechanism sends an agent at the wrong tool exactly when they
+> are moving fast** — and I wrote one while warning about them.*
 
 ### RECON-4 CORRECTION — Andrew-direct ~0547Z (@a4d5147211): my *reason* was wrong, the call stands
 
@@ -1264,6 +1280,27 @@ is ACTION-ONLY and does not compare resource ARNs, so AE's resource-grain adds a
 EITHER direction — it can neither credit nor fault them.** That is the known `(action)`-not-`(action,
 resource)` insufficiency, and it means **the tool's silence here carries no information at all.** The
 apply-time simulate is the real check, as ruled.
+
+## 4r · ANDREW INSTRUCTION 6 (~0700Z) — GIPS on Orion (Inflection), then Cottonwood off BD
+
+`atom_decomp` on the **Orion endpoint surface**: GIPS feasibility for **Inflection** (current pulls +
+endpoint delta, **missing data specified by SHAPE**), then **Cottonwood off BD**. **Held by CRO~A**,
+interleaved with the INF run-2 watch. **Staffing-relevant to me as awareness only — no dispatch owed.**
+
+**⛔ THE EGRESS GRANT HERE IS WORK-SCOPED, NOT SESSION-SCOPED** — *"as much egress and endpoint testing as
+you need,"* both vendors, **for this work.** See the amended table in §4c: it **rides the work and survives
+where the blanket lift's session bound does not.** That distinction is now the load-bearing part of the
+egress record, and my original §4c line was too broad on it.
+
+**DISCIPLINE CARRIED: the 49F verdict @e323c1cfac is the TEMPLATE — cite, do not re-derive.** *Re-deriving
+a delivered verdict is how two records of one fact come to disagree; the whole single-homing law applies to
+findings as much as to producers.*
+
+**AND IT COMPLETES THE THREE-FIRM PERFORMANCE PICTURE, each leg by a different route:** `inf` = vendor TWR
+raw, now getting its own GIPS feasibility off Orion · `49f` = computed-from-components, **granted AND
+feasibility-confirmed** · `cot` = measure-not-assume, off BD. *Three firms, three mechanisms, one
+question — which is exactly the shape RECON-4 found for the join layer, arriving again at the performance
+layer.*
 
 ---
 
