@@ -59,11 +59,18 @@ Broker TTL drops an agent after ~120-300s without heartbeat; mid-cycle `heartbea
 
 Read `org/projects/*.json`. Hot list = all `status: active` + any `dormant`/`on-hold`/`needs-sovereign-call` that surface a blocker requiring routing.
 
+⛔ **`jq` IS NOT INSTALLED IN THIS SHELL (CLAUDE.md Rule 16 class) — use python. A `jq` call under `2>/dev/null` returns CLEAN EMPTY STDOUT, so the reads below would render "no active projects" / "no work rows" out of a missing binary.** → `DRIVE.md §2`
+
 ```bash
-for f in org/projects/*.json; do
-  [ "$(jq -r '.status // "unknown"' "$f")" = "active" ] || continue
-  echo "$(basename "$f" .json) | $(jq -r '.name // .title // "?"' "$f")"
-done
+python -c "
+import json,glob,os
+n=0
+for f in sorted(glob.glob('org/projects/*.json')):
+    d=json.load(open(f,encoding='utf-8'))
+    if d.get('status')!='active': continue
+    n+=1; print('%s | %s' % (os.path.basename(f)[:-5], d.get('name') or d.get('title') or '?'))
+print('DENOMINATOR: %d active of %d project files' % (n, len(glob.glob('org/projects/*.json'))))
+"
 ```
 
 > ## ⛔ SOVEREIGN EXCLUSION — never hot-list, classify, dispatch on, attest, or "just verify" these:
@@ -115,14 +122,39 @@ Andrew-authorized re-arm.)*
 
 ### 2b.1 — Read agent state
 
+**Counts `kind:work` rows SINCE THE LAST TICK — that count IS the movement check (2b.2a-A), so it must not be
+faked by a broken read. `jq` is ABSENT here; python only. Prints its own denominator.**
+
 ```bash
-for f in org/mcp/agent_telemetry/*.jsonl; do
-  a=$(basename "$f" .jsonl)
-  w=$(jq -r 'select((.kind//"work")=="work").ts' "$f" 2>/dev/null | tail -1)
-  echo "$a work=$w"
-done
+python - <<'PY'
+import json, pathlib, datetime
+now = datetime.datetime.now(datetime.timezone.utc)
+tick = int(open('org/mcp/.last-drive-2.0.0_SA_COO').read().strip() or 0)
+rows = 0
+for f in sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl')):
+    last, since = None, 0
+    for line in f.open(encoding='utf-8', errors='replace'):
+        line = line.strip()
+        if not line: continue
+        try: r = json.loads(line)
+        except Exception: continue
+        rows += 1
+        if r.get('kind') != 'work': continue
+        last = r.get('ts')
+        if r.get('ts_unix') and float(r['ts_unix']) >= tick: since += 1
+    if not last: continue
+    age = (now - datetime.datetime.fromisoformat(last.replace('Z','+00:00'))).total_seconds()/60
+    if age < 240: print('%-38s last=%s age=%.1fm since_tick=%d' % (f.stem, last, age, since))
+print('DENOMINATOR: %d telemetry rows scanned' % rows)
+PY
 ```
-**Pitfall:** use `jq -r | tail -1` — never `tail -n1 | head -1` (returns OLDEST on a single-line file).
+⛔ **NEVER `2>/dev/null` this read, and never take `$?` after a pipe (it is the PIPE's rc).** Measured
+2026-08-11: `jq … 2>/dev/null` printed nothing for all 13 agents and I read it as **telemetry dead
+fabric-wide** — a false outage one step from convicting live lanes as PARKED. The truth was
+`jq: command not found`, with **18,190 healthy work rows** and the newest 47 seconds old. The
+non-parsing `tail -2` showed it instantly. **A silent-empty retrieval reads exactly like a quiet
+fabric, and this instrument's empty answer is the input to a conviction.** → `DRIVE.md §4`
+
 Cross-check with `get_live_agents()` + `get_org_summary()`.
 
 ### 2b.2 — Classify
