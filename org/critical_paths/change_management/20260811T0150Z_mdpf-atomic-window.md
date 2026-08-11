@@ -15,7 +15,7 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
 | L-A code cp | 0.4.0_DS_ClientPlatform | 2-file cp to s3://opal-data-mdpf/code/scripts/gold/: dim_mdpf_aggregate_aua_timeseries.py + build_mdpf_spine.py (measured invoke set; NO trio mint) from @bf74d031c1; then comp-pipescript deployed check | **DONE** 025153-025157Z (COO-validated; see LEG CLOSES) |
 | L-B cadence apply | 0.7.0_AE_CloudOps | RP-W3: mirrors ahead of floor; floor → 13:30Z; pulls → 13:02Z; cutover-gap plan STATED pre-apply; targeted apply, plan READ (no daily-aua row possible — declaration removed by W5b); RP-W4 selector apply may ride before/with | **DONE** applied ~0210-0224Z (CTO applied-truth 0-drift; see LEG CLOSES) |
 | L-C QA read | AE fires, AE+DS read | ONE ad-hoc cycle post-L-A/L-B: (1) four scopes emit / which errored, (2) inflection legs carry corrected vintage, (3) inflection build reads zero smartx/** keys. FENCE: output never published, never the bar, discharges no acceptance | FIRED 0258Z; item-2 FAIL-as-measured (wrong-code-channel, see AMENDMENT); RE-FIRES once post-L-D |
-| **L-D lambda re-pin** (ADDED 031xZ, see AMENDMENT) | 0.7.0_AE_CloudOps | rebuild mdpf-gold-lambda package with pin advanced @0bc739e7d5 → @bf74d031c1 (SAME reviewed artifact as L-A — review/deploy split preserved); commit (source-map/pin update, Rule 4) → safe-apply → verify live CodeSha256 CHANGED from XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= (08-07 artifact) + LastModified tonight | OPEN |
+| **L-D code-channel remedy** (ADDED 031xZ; **SHAPE AMENDED 0318Z ANDREW-DIRECT**, see AMENDMENT II) | design 1.0.0_SA_CTO → build+deploy 0.7.0_AE_CloudOps | ~~private lambda-artifacts re-pin~~ **SUPERSEDED by Andrew-direct (via CTO 031808Z), VERBATIM: *"the remedy is handle this in a canonical bucket and colocate in a relevant place like opal-data-assets"*.** Content UNCHANGED @bf74d031c1; artifact HOME = canonical bucket colocated in opal-data-assets (attacks the 3-location code-split root). CTO finalizing exact prefix + confirming shape with Andrew → routes precise path to AE → commit → safe-apply → verify live CodeSha256 CHANGED from XuLlClWT6kr6n5TCG7keFmzVd8KEafMuAIQutJB+utQ= + LastModified tonight. Rule-17b-ALIGNED but a REMEDY Andrew directly ordered, NOT a migration inferred from 17b | OPEN (AE held off the private-bucket path; COO 031158Z GO shape SUPERSEDED) |
 
 ## PRE-REGISTERED READINGS (decided before evidence)
 - QA read shows scopes emitting but FEEDERS STILL FROZEN → EXPECTED (separate WS-lambda mechanism,
@@ -131,6 +131,20 @@ the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock
   values (inflection custody 209,373,343.50 / model_aua 145,329,103.38; D-4 anchor labeled 08-04).
   A 13:30Z cycle on the OLD sha is NOT adjudicable as a pass on any row — the original table silently
   assumed the executing channel carried the fix; that assumption is now explicit and testable.
+
+## AMENDMENT II — ANDREW-DIRECT ON L-D SHAPE (via CTO relay 031808Z; COO 031158Z GO superseded)
+- VERBATIM (recorded by CTO, carried here unparaphrased): *"the remedy is handle this in a canonical
+  bucket and colocate in a relevant place like opal-data-assets"*.
+- Binds the mdpf-gold-lambda code-channel REMEDY: artifact home = canonical bucket colocated in
+  opal-data-assets with the mdpf gold data, NOT s3://opal-313476888478-lambda-artifacts. Fix CONTENT
+  unchanged (@bf74d031c1). The 13:30Z executing-code precondition and the L-C item-2 re-fire are
+  UNCHANGED — only the artifact HOME moves.
+- Sequencing (dependency visible for the runway, ~10.1h at amendment): CTO designs canonical target +
+  confirms shape with Andrew → routes precise path to AE → AE build+deploy (commit → safe-apply →
+  sha-change verify) → L-C re-fire (item 2) → window close. AE held off the private-bucket path
+  (CTO hold + this COO supersede — the two instructions now agree).
+- Scope note per the no-adjudication rule: scope as CTO relayed it, not widened here — this is the
+  L-D remedy shape, not a general migration order (Rule 17b's own ⛔ stands for everything else).
 
 ## CLOSE-ITEMS CARRIED (not leg content)
 - @9eff54d274 (+ window ledger commits) UNPUSHED — integrator push at window close per live-regime
