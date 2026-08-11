@@ -112,10 +112,16 @@ engine gets a summary).
   on it; build is not. Not a monitor (moratorium, and its stated reason).
 - **A BUILD TO CARRIES THE FULL-PATH DENOMINATOR, never a leg's** (the 99.8-leg vs 99.65-path
   correction, COO self-caught @ad93eaa14d).
-- **The 2a FIELD REGISTRY keys on (table, column, measured content-grade), NEVER column name alone**
-  (three specimens in one night: "bd" family collision · `account_number` clean-in-smartx vs
-  prose-contaminated-in-cot · `account_id` carrying a SmartX UUID). A name is a label to be
-  verified, not an identity.
+- **The 2a FIELD REGISTRY keys on (table, column, measured content-KIND + grade), NEVER column
+  name alone — and its scope is ALL FIELDS, not join keys** (WIDENED 0713Z on COO's specimen-6
+  analysis: six name-vs-content specimens in one night, and the TWO with the largest measured
+  consequence were categorical VALUE fields — the vendor category that would have inflated
+  external flows by billions, and `debit_credit` carrying POSITION SIDE not direction, which
+  produced a structurally-unfireable matcher's clean 0.0%). Registry-design principle banked:
+  **"0.0% is the most believable wrong answer a matcher can return"** — the registry must be able
+  to say "this field's values are not the kind its name asserts" for categoricals, because that is
+  the case that silently produces a publishable zero. A name is a label to be verified, not an
+  identity.
 
 ## STAGED POST-RECON DELIVERABLES (Andrew-direct via MSTR @f73ad4d22a, LD-0393 — TRIGGER IS HIS
 TIMING WORD, not a dispatch; routing CTO/COO at trigger)
