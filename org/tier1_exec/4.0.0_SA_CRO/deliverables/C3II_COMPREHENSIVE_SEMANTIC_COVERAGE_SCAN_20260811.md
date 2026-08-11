@@ -79,6 +79,39 @@ legislation has not admitted, or residue verticals still un-placed (7 today on U
 Coverage = the ratified partition IS complete over today's 138 chains, checked at the matrix; it is not a
 discovered number and must not be quoted as one.
 
+## 5b. CORRECTION (Andrew's 2nd challenge) -- NEITHER number is deterministically discovered. Both are LEGISLATED.
+
+**My s.5a answer took the yaml's self-description at face value ("C3.i discovered, both sum to 138"). Going
+to the CONSTRUCTION (go-and-see) corrects it -- and vindicates Andrew's suspicion on BOTH numbers.**
+
+**Q1 -- how did C3.i "get down to 14" if it's deterministic?** It did NOT come from the deterministic
+construction. Measured (design s.13, line 622, Andrew's own ruling): the MATERIALIZED graph count is
+**`C3System = 4`**; the yaml's `c3_deterministic_structures = 14` is a SEPARATE hand-authored list --
+his ruling calls all these counts *"VOCABULARY, not a POPULATION."* The cited emergence script
+(`NFRA_MOTIF_P2_c3_emergence.py`) composes **C2 frontend motifs** into systems named `firm-conditional-
+display` / `cluster-X` -- NOT the estate-wide `sys-bd-medallion` / `sys-yang-analytics-engine` names the
+yaml lists. **So the 14 is a legislated vocabulary; the deterministic materialization is 4. The yaml's
+"DISCOVERED via union-find" provenance line overstates it.** I repeated that overstatement in s.5a.
+
+**Q2 -- when/how was 28/29 chosen, from what bank?** The bank is the **NAMED_THREAD_CATALOG**
+(`d33fe4aab`, 2026-06-15, author 3.0.0_SA_CVO). Its commit message is the answer, verbatim: *"Pivots the
+**134-thread inventory** into **15 NAMED THREADS at product/surface granularity** (advi / model-portfolios
+/ news / market / pm-optimizer / partners / trade-submission / graph-platform / causality / mdpf /
+fred-macro / security-scanner / insurance / portal-infra / ops)"* -- an **"Andrew-direct reframe."** So:
+- The **bank = a 134-thread estate census** (a measured resource inventory -- the closest thing to discovered).
+- **CVO aggregated 134 -> 15 named threads** on 2026-06-15; Andrew directed the REFRAME (product-surface
+  granularity, standalone named-thread project), CVO did the grouping/naming.
+- It **grew 15 -> 29** through adjudication passes (07-30 admitting ceo-digest / ticketing / etf-reports
+  by naming act); Andrew **ratified verticals one-by-one** in the Aug lifecycle sitting; merged **-> 28**
+  (08-07). **Andrew never picked "28" off a list** -- he directed the reframe + ratified members; the
+  roster SIZE is CVO's aggregation of the census, adjudicated with him.
+
+**The honest denominator, restated:** ~134-138 census threads/chains are the measured atoms; the 14
+structures and 28 verticals are BOTH legislated groupings/namings over them (CVO-aggregated,
+Andrew-directed/ratified). Coverage rigor therefore = reconcile the 28 against the ACTUAL census (are all
+census threads covered? is the census itself current?), NOT quote 14/28 as discovered. My s.5a
+"both partitions sum to 138, C3.i discovered" was the vocabulary-as-population error his s.13 ruling names.
+
 ## 6. COVERAGE CLASSES (the 28, from the deterministic backbone)
 FULL-battery 18 · RESIDUE-degraded 7 (F1 heat-only: canonical-schwab, ceo-digest, etf-reports, news,
 ops-internal, ticketing, trade-submission) · TERMINAL 2 (causality RETIRED, insurance DORMANT) ·
