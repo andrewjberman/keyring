@@ -48,7 +48,9 @@ NONE. B6-3 out of scope (CTO~B's, behind the friction-axis runner build).
   store s3://opal-estate-report/text-input/{YYYY-MM-DD}/Andrew.json carries 6 verified day
   files (08-04..08-11 minus the empty weekend).
 - Proof instances: PROOF_OF_SPEC_B6_B6-1_20260811.json + PROOF_OF_SPEC_B6_B6-2_20260811.json
-  (deliverables dir), validator-passed UNPIPED with --expected-criteria.
+  (deliverables dir), validator-passed UNPIPED with the POSITIONAL expected-ids argument
+  (the TO-template's --expected-criteria flag form exits rc=2 usage -- the banked finding,
+  template root-fixed by COO @b67d79971f).
 - F3's real feed now EXISTS; F3 goes live when CTO~B lands B6-3 with the friction battery.
 - Disable line (also pushed to Andrew): schtasks /Change /TN OpalEstateCaptureDaily /DISABLE.
 
@@ -66,7 +68,7 @@ NONE. B6-3 out of scope (CTO~B's, behind the friction-axis runner build).
 | comp-which | "upload a day-partitioned JSON capture from a device-side python tool to S3" | NO CURATED RULE (expected -- the reuse target is estate-capture.py itself; BUILD LADDER rung 2 satisfied by EXTENDING it, zero new tools minted) |
 | commit-gate | .tools/estate-capture.py | PASS (pre-existing non-ASCII WARN on the extractor's display-prefix glyph data -- load-bearing, not mine, WARN-only) |
 | (live primitive) | one-ARN simulate-principal-policy s3:PutObject exact key | allowed; deny-limb UNCOMPUTABLE for admin-class principal, declared |
-| proof-of-spec-check | both instances, UNPIPED, --expected-criteria | rc=0 both (see instances) |
+| proof-of-spec-check | both instances, UNPIPED, positional expected-ids | rc=0 both (see instances; the flagged --expected-criteria form is the template defect, rc=2) |
 | safe-commit | @8a789694dd + the instances commit | clean |
 
 What worked: the extractor's fail-closed design meant the upload leg needed zero
