@@ -37,12 +37,15 @@ post-mortem says was missing.** Pre-build blocker: build decomposition does not 
   **consumed as an ACCELERATOR only, never as any leg's ONLY trigger** (the completion-marker
   starvation class: mdpf went dark 11 days on a dead upstream sentinel).
 
-## 3. THE FLOOR VALUES (proposed; ruled at W review)
+## 3. THE FLOOR VALUES (proposed; ruled at W review -- **NOW MORNING-BOUNDED, ANDREW-DIRECT
+@4dbf4a0d7c folded 0813Z:** *"we very likely want to shift all of this to the morning"* -- the
+P2/TIMING phase's distribution assessment targets a MORNING-CONVERGED flow; the floors stay
+ruled-on-measured-distributions, with the morning bound as the ruling's constraint)
 
 Silver landing observed ~daily (AE flow, T-1). Proposed: **A+B+C on ONE dispatch, clock floor
 daily 14:30Z** (after the observed silver window with margin; TUE-SAT following the statement
-calendar -- exact hour tuned to the measured landing distribution at build, a RULED event on the
-distribution per the B_03-class qualifier). **D emitters: per-family floors from the D_00 census's
+calendar -- exact hour tuned to the measured landing distribution at build UNDER THE MORNING
+BOUND, a RULED event on the distribution per the B_03-class qualifier). **D emitters: per-family floors from the D_00 census's
 observed cadences** (defaults land with the census; each floor is a value in W's manifest, ruled).
 Backfill mode: same entry, explicit `--backfill` window, mutex-held, never scheduled.
 
