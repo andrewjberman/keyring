@@ -43,6 +43,11 @@ WINDOW_DAYS held 365). Order honored: all four repoints VERIFIED ON RE-READ befo
   (they assert reader behavior on fixture columns). Window-fix outputs verified INTACT
   post-retirement (908/908, $209,476,279.36, own-tie 1,869/1,869).
 - Rollbacks all stashed pre-first-write: 55c69984 / dfd73226 / a3029cf2 / e3932b4a / be954ebd.
+- **COMPLETION AMENDMENT ~1817Z:** the ruled `validate_api_dims.py:96` touch was MISSED in
+  the first close (caught on re-read of the window order against the executed set) --
+  billing `required_columns` still demanded the retired column and the next validation run
+  would have FAILED LOUD on the healed dim. Fixed + deployed, re-download md5 TIE
+  777c62aec667. The close report to COO carries the correction explicitly.
 - **THE ESTATE NOW HAS EXACTLY ONE ANSWER TO "DOES THIS ACCOUNT EARN FEES"**
   (lib/fee_classification.py). Both billing files RETURN TO BASE at this close.
 
