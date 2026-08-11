@@ -31,3 +31,13 @@
    cert-of-built CONSUMES the instances (re-running invocations from the rows is the adversarial
    re-derivation, made mechanical). A TO without a valid instance is NOT complete — this extends
    the existing TO_COMPILER_GATE standard, same home.
+
+## ADDENDUM — THE ISSUANCE LINT (Andrew GO ~0824Z, verbatim: "Go")
+
+The gate candidate CVO proposed with the canonization is GO'd and LANDED: pre-commit stage 8
+(`.tools/git-hooks/to-proof-of-spec-check.sh` + idempotent installer) — a NEW task-order file
+without `<proof_of_spec>` is BLOCKED at commit with the full citation; pre-existing TOs are not
+retro-gated; audited override `TO_POS_OVERRIDE="<reason>"` (org/to-pos-override-audit.log);
+FAIL-CLOSED sentinel (a new TO staged while the check script is missing = DENY, never a silent
+skip). Exercised at install: mutant BLOCKED rc=1, conforming TO rc=0, installer idempotent.
+Per the gate-acceptance law: accepted on observed live behavior going forward.
