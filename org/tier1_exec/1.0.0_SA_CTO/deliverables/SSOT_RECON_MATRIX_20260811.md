@@ -107,6 +107,17 @@ engine gets a summary).
   prose-contaminated-in-cot · `account_id` carrying a SmartX UUID). A name is a label to be
   verified, not an identity.
 
+## STAGED POST-RECON DELIVERABLES (Andrew-direct via MSTR @f73ad4d22a, LD-0393 — TRIGGER IS HIS
+TIMING WORD, not a dispatch; routing CTO/COO at trigger)
+
+Once recon is done and certified ("really sure of themselves"): THREE /artifact-design builds —
+(1) **mdpf FINAL structure**, vendors → opal-data-assets → portal-v2 serving, EXHAUSTIVE (every
+lambda, trigger, bronze→silver event trigger, code pull, dependency); (2) **advi**, same form,
+ingestion→serving; (3) **the 49F archetypal gold runner** — scripts in order + WHAT CHANGES under
+the raw-figures ethos. All three express the ratified pattern spec verbatim. PRE-TRIGGER item
+already routed: Schwab performance-focused fact table + attribution shape → CRO~A RECON-2 input
+(custodian-native performance = the rawest archetype leg, per "performance is not a residual").
+
 ## OPEN ROUTING (CTO oversight queue)
 
 - RECON-5 (cot advi) seat assignment — with COO (5a can ride RCN-0001 now).
