@@ -31,7 +31,7 @@ DELIVERED with the cert noted pending.)
 | **advi × 49F/bd (08335338)** | HELD(CRO~A) | OPEN | HELD(CRO~A) | HELD(CRO~A) — the ARCHETYPE decomp, Andrew instruction 3 | OPEN | OPEN | archetype spec forthcoming; endpoint catalog + PATH_DISCOVERY exist |
 | **advi × inf** | PARTIAL — endpoint catalog + 03 audit | PARTIAL — stop-mechanism record grounds the chain trigger | PARTIAL — silver dims read (TWR dim) | DELIVERED-UNCERT — 03 three-bucket map (5 illegit derivations; ~24/44 scripts UNREVIEWED, marked) | OPEN | OPEN | CRO~A: 01/02/03 records @INF_ATOMDECOMP_RUN_20260811 |
 | **advi × cot** | OPEN | OPEN | PARTIAL — custody inversion record @562cbd444d (fact_holdings grain) | OPEN | OPEN | OPEN | **RECON-5 — UNHELD** (5a endpoint inventory rides RCN-0001; 5b after archetype stabilizes) |
-| **cross-cutting** | RECON-4 join feasibility (CRO base, RUNNING) · RECON-6 endpoint-delta census (OPEN — fronts atom-8 conformance) · exception set (AT ANDREW) · pattern ratification (AT ANDREW) | | | | | | |
+| **cross-cutting** | RECON-4 join feasibility (CRO base, RUNNING) · RECON-6 endpoint-delta census (OPEN — fronts atom-8 conformance) · ~~exception set~~ ~~pattern ratification~~ **BOTH RATIFIED ~0542Z @d272021791** — atom-8 conformance is now testable against law | | | | | | |
 
 ## ADVERSARIAL DISCIPLINE (the mandate's word: "adversarially establish SSOT")
 
