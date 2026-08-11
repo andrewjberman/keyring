@@ -1374,6 +1374,52 @@ boundary rule).
 
 **RECON-6 resumes at CRO base; sequencing otherwise unchanged.**
 
+## 4u · ✅ BOTH REQUIRED ROWS DISCHARGED @5bb3b2626d — and the in-kind result is **specimen SIX**
+
+### T-1 — `TPFEE`/`SMFEE`: **VERIFIED BY MEASUREMENT.** The attrition risk is retired properly
+
+Stronger than the one-account specimen I required — **the WHOLE FAMILY measured:** `TPFEE` detail text
+reads **"TO ADVISOR"** on debit legs, **92 bps median implied annual rate over 4,881 accounts**; `SMFEE`
+reads **"TO SEP ACCT MGR"**, 100% debits, **34 bps** (SMA-manager scale); **`MGFEE` as an explicit control**
+shows the same TO/FRM two-leg shape. **Table re-graded `FEE-MANAGEMENT-VERIFIED`.**
+> **This is the right way for an INFERRED label to die: by MEASUREMENT, not by fading.** The row existed
+> because inference becomes fact by attrition; it closes because someone measured it instead.
+
+**BONUS THAT BECOMES A BOUNDARY-TO INPUT:** the fee **CREDIT** legs land **`FRM {client}` in advisor
+COLLECTION accounts INSIDE the book** — **a MECHANICAL discriminator for which accounts the
+client-composite boundary must EXCLUDE**, and *one groupby enumerates the roster.* **That converts a
+judgment call into a rule** — the composite boundary no longer needs an opinion per account.
+
+### T-2 — PAIR-MATCHING ENGINE: **BUILT**, re-runnable, full-series measured. The bucket DISSOLVES
+
+- **CASH: $193.7M MATCHED-INTERNAL — 48.7% by VALUE, 16.7% by ROWS, both denominators printed**, and the
+  gap is explained (fewer-larger events). **$204.3M unmatched = external-by-default**, the conservative
+  direction per the standard.
+- **IN-KIND: 99.2% of groups are ONE-SIDED in-book = EXTERNAL-dominant ACAT class.**
+- **NAMED FOLLOW-UP riding the build:** direction resolution for one-sided in-kind via **next-day position
+  delta.** Recorded so it does not become a silent default.
+
+### ⛔ SPECIMEN SIX — and CRO CAUGHT THEIR OWN INSTRUMENT BEFORE IT SHIPPED
+
+**The first in-kind run returned `0.0% matched`.** The mechanism check found why: **`IC` rows carry
+`LONG`/`SHORT` in the `debit_credit` field — POSITION SIDE, not DIRECTION — so a direction matcher
+STRUCTURALLY CANNOT FIRE.**
+> **NAME-VS-CONTENT, SIXTH SPECIMEN, and the most dangerous shape of it yet: a field named `debit_credit`
+> that does not carry debit/credit.** And note what it produced — **`0.0%`, which is the single most
+> BELIEVABLE wrong answer a matcher can return.** "No internal matching found" is an entirely plausible
+> business result; **an instrument that cannot fire returns the cleanest possible negative.** That is the
+> anti-correlation shape the estate's doctrine names: *the verdict is strongest exactly when the failure is
+> total.*
+> **CRO ran the mechanism check on their OWN instrument before shipping the number** — *could this have
+> failed? look at what actually came back* — which is the only control that catches this class. **Had it
+> shipped, `0.0%` would have entered the record as a measured business fact and nothing downstream would
+> ever have questioned it.**
+
+**Specimen tally, one window:** `bd` (pipeline vs vendor) · `account_number` (clean vs contaminated per
+table) · `account_id` (a UUID) · the inflection feed key (slugs) · the vendor CATEGORY field (billions of
+mis-scoped flow) · **`debit_credit` (position side)**. **Six — and the last two were categorical/value
+fields, not key columns.** *A field registry designed only against key columns catches four of six.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
