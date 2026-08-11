@@ -103,10 +103,13 @@ review at CTO; ratification = Andrew's word on the whole)
 | C — derived canonicals (GIPS TWR engine, sec4-10) | **DELIVERED @39c41163cd → CTO-APPROVED 0726Z**; 5 policy defaults confirmed (EOD · cash-receipt-documented · FEE-ADMIN both-sides · 5% census w/ ruled recalibration · one-homed tolerance) + 1 amendment (C_00 verifies the debit_credit semantic boundary at build: direction on cash rows / position-side on IC rows; IC-class rows under direction-codes fail LOUD). One flow truth feeds NNA+TWR; policy block versioned in product root | SPEC_49F_GROUP_C_TWR_ENGINE_20260811.md |
 | D — serving emitters (SHAPE-FROZEN) | **DELIVERED @1e11389af8 → CTO-APPROVED 0730Z**, no structural amendment; 3 defaults confirmed (one-shot re-runnable census script composing comp-cache/comp-routes; v1 = exactly today's scopes; ADDRESS-FROZEN, relocation explicitly not authorized). Census = 3-leg reconciled predicate, byte-schema from live objects, both spellings before orphan verdicts; emitters canonicals-only w/ per-field provenance; port = build-correct-then-port, old leg disabled same act | SPEC_49F_GROUP_D_SERVING_20260811.md |
 
-**SEQUENCE COMPLETE 0730Z — all four groups reviewed + amendments folded. AT ANDREW: ratification
-of the A/B/C/D spec set (the ask, per the trigger discipline). Next acts on ratification: COO
-build decomposition · CRO~A adversarial review + INF/COT derivation (Andrew-direct at CVO) · CVO
-Rule-14e cert of BUILT artifacts.**
+**SEQUENCE COMPLETE 0730Z — all four groups reviewed + amendments folded.
+RATIFIED-TENTATIVE (Andrew-direct ~0736Z, verbatim record
+ANDREW_DIRECT_20260811_ABCD_TENTATIVE_RATIFICATION.md): FINAL ratification deliberately held
+until CRO~A's Inflection + Cottonwood derived specs stand beside the 49F set for a HOLISTIC
+tri-firm view. Tentative authorizes SPEC-LAYER work (adversarial review, INF/COT derivation,
+transposition grounding); BUILD DECOMPOSITION STAYS STAGED at COO — the holistic view may amend
+the 49F shape itself, and nothing builds against a shape in motion.**
 
 ## RULED DESIGN CONSTRAINTS (0617Z, from the night's three name-vs-content specimens + the universe finding)
 
