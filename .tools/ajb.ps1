@@ -216,6 +216,14 @@ function ajb {
         # is unchanged (flag still set, Y prompt still surfaces for the human).
         [switch]$Headless,
 
+        # -Model / -Effort: optional per-session overrides passed straight to
+        # `claude --model` / `claude --effort` (Andrew-direct 2026-08-11: per-seat
+        # model assignment at reinstantiation, e.g. CTO on claude-fable-5 high,
+        # COO on claude-opus-5 high). Unset = claude's own default. Values are
+        # validated by claude itself (a bad value fails loud in the window).
+        [string]$Model,
+        [string]$Effort,
+
         [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
         [string[]]$Extra
     )
@@ -402,6 +410,8 @@ function ajb {
         if (-not $Headless) {
             $claudeArgs += @('--dangerously-load-development-channels', 'server:opal-agent-comms')
         }
+        if ($Model)  { $claudeArgs += @('--model', $Model) }
+        if ($Effort) { $claudeArgs += @('--effort', $Effort) }
         $claudeArgs += @('--', $firstMessage)
 
         # COLOR FIX (MSTR test 2026-07-20, pending CTO~A formalize): WT 1.24 (auto-updated 07-17)
