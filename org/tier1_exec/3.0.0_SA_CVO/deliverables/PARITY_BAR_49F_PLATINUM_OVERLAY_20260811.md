@@ -143,6 +143,21 @@ runs:
    a return where served fakes one; pre-declared so the diff reads DESIGN, not regression. Intended
    and unexplained divergence are byte-identical to a diff tool -- only the pre-declaration separates
    them.
+2a. **FEE-EARNING-HEAL BAND (pre-registered 2026-08-11, CTO 145946Z from ~A's fee_earning_aua
+   investigation) -- a ~$60M UPWARD JUMP EXPECTED, LAW-CONFORMING under @162965ed1c.** When the
+   ending_mv family heals, served `fee_earning_aua` $137.19M rises to ~$197.0M (billing mask) /
+   ~$203.1M (ledger mask) and the non-fee residual collapses toward ~$6.3M -- because $59.62M of the
+   prior "$60M+ non-fee" is SUPPRESSED FEE-EARNING (259/789 flagged accounts, billing ending_mv
+   coerced $0 while positions hold value; reconciliation closes <$1 same-vintage 08-10, Andrew's ~$8M
+   prior confirmed). This jump MUST sit in the bands as expected, never arrive as a surprise diff.
+   >> **INSTRUMENT CAVEAT, LOAD-BEARING for every fee_earning_aua cert (Rule-22a check-the-right-layer):
+   NULLABLE-EMV ALONE DOES NOT HEAL THIS SURFACE.** The `is_fee_earning` FLAG is itself derived from
+   window-value presence (`D_02:1373-1376`), so it inherits the artifact -- young fee-paying accounts
+   read NON-FEE on empty windows. **A cert that checks only the VALUE plane reads a HALF-HEALED surface
+   as DONE.** CTO ruled the FLAG re-derivation into the sealed order as a named member (window-independent
+   + single-basis; the $6.1M billing-vs-ledger mask gap is a two-basis condition -- one derivation wins,
+   its edge declared). So a fee_earning_aua serve/parity cert MUST verify BOTH planes: the value heals
+   (absence->null->live) AND the is_fee_earning FLAG is window-independent. Value-only = INFERRED-half. <<
 3. **THE SPELLING GUARDED SET -- NOT A DIVERGENCE, a layer construction (§1).** Registered so no
    census direction reads a live field as orphaned.
 
