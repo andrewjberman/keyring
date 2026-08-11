@@ -61,6 +61,22 @@ unless it carries a demonstrated FAILURE:
 - **REQUIRED POSITIVE CONTROL:** on a field where agreement is genuinely expected (an identity
   count untouched by any defect band), the unmodified overlay MATCHES -- so the mutant's FAIL is
   discriminating, not the tool failing everything.
+- **THE ROW SPLITS FIELD-DISCRIMINATION FROM MONETARY-DISCRIMINATION (added 2026-08-11, the
+  mutant-B finding -- CVO+COO independent):** a mutant that fires only on an IDENTITY/STRING field
+  proves the harness can tell a corrupted string from a clean one -- NOT the claim the kill rests
+  on. The monetary field class is the one the whole parity exercise exists to protect. So:
+  · **FIELD-DISCRIMINATION**: an unbanded field corruption FAILs loud (mutant A shape). Required always.
+  · **MONETARY-DISCRIMINATION**: a monetary corruption on a LIVE, NON-SOVEREIGN, NON-BACKFILL
+    monetary field, SIZED TO EXCEED the widest band covering it, FAILs. **A mutant sized BELOW the
+    band it must escape has been shown to be ABSORBED, not caught** (mutant B: +1% on total.aua
+    routed DESIGN because every monetary field in that family was band-covered on the single day).
+  · **WHERE NO SUCH FIELD EXISTS (every monetary field band-covered), the monetary sub-claim is
+    `UNVERIFIABLE-BY-INSTRUMENT`, NOT PASS** (the CTO enum value) -- with the re-arm condition named
+    (backfill exposes live V2 windows; OR a same-vintage PINNED axis where the vintage band
+    collapses to 1bp, the way ~A's INF B_01 tie discriminates to 2 accounts / $389.78 instead of
+    absorbing). **A blanket `-MUTANT-CATCHES` PASS on identity-only is REFUSED**; the split makes the
+    undemonstrated half a first-class status a reader cannot mistake for coverage, never a prose
+    caveat under a green row.
 - **The fit_harness self-test ALREADY IS this shape** (368 fields, undeclared mutant FAILED loud at
   firm_id, declared-domain mutant routed DESIGN) -- so the bar RIDES the built instrument; the
   overlay evidence is a fit_harness run, not a new comparator.
