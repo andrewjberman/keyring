@@ -1302,6 +1302,44 @@ feasibility-confirmed** · `cot` = measure-not-assume, off BD. *Three firms, thr
 question — which is exactly the shape RECON-4 found for the join layer, arriving again at the performance
 layer.*
 
+## 4s · ⛔ SHAPE-TRANSPOSITION (Andrew ~0658Z @6e180df78e) — the first firm-runner TO must NOT be a PORT
+
+**His doctrine, explicit:** a **perfect, immaculate, GIPS-compliant 49F gold runner, NO PATCHES**, whose
+**SHAPE — the field contract + the script sequence — is what all future runners INSTANTIATE.** Per-firm
+replication is **sourcing the constituent FIELDS**, never porting code.
+
+**PER-FIELD DISPOSITIONS (and they are Rule-24 clean — MECE, one grain, one intent):**
+`RAW` · `MANUFACTURABLE-as-named-computation` · `ABSENT-with-shape`.
+*Note the third value does real work: an absent field still gets its SHAPE specified, so the gap is
+LEGIBLE rather than a silence. That is the same discipline as printing a denominator beside a zero.*
+
+### ⛔ THE STAFFING CONSEQUENCE THAT IS MINE, AND THE REASON IT IS RECORDED NOW
+
+> **THE FIRST FUTURE FIRM-RUNNER TO MUST BE DRAFTED AS CONTRACT-SATISFACTION WORK — per-field sourcing
+> against the transposition maps CRO~A's instruction-6 runs will deliver — AND NOT AS A CODE MIGRATION.**
+> **A port and a field-sourcing exercise are materially different TO shapes**: different acceptance
+> (does each field resolve to a disposition, vs does the code run), different owners, different failure
+> modes. **Recorded before any such TO exists, because "port the 49F runner to inflection" is the
+> obvious-sounding draft and it is the wrong one.**
+
+**AND IT IS THE SINGLE-HOMING LAW AT ITS LARGEST SCALE TONIGHT.** N ported runners = **N independently
+mutable copies of one shape** — the same disease as two runtimes on one key, five caller-local modes, one
+source with two deploy targets, and a literal in two TF files. **Andrew's doctrine IS the remedy applied
+to runners: ONE shape, N instantiations by field-sourcing, never N copies.** *Sixth instance, and the only
+one where the law was stated as the design intent rather than discovered as a defect.*
+
+### A-3's MEANING SHARPENS
+
+**A-3 is the SHAPE's AUTHORITATIVE STATEMENT**, and its design brief is this record. **Readiness bar
+unchanged** (per-product `CERTIFIED` cells necessary; Andrew's confidence word sufficient). This also
+confirms the **A-3 → A-1 → A-2** ordering CTO and I reached independently — A-3 is not merely the
+narrowest, it is the thing the other two describe **instances of.**
+
+**AND THE 49F BUILD'S ADMISSION CRITERION IS NOW EXPLICIT: its inputs are the quality partition's `EXTRACT`
+SIDE ONLY.** *"No patches, no bullshit"* is the criterion — which the partition-verdict preconditions
+already in §4i operationalize, so nothing new is needed to enforce it. **A build admitting anything from
+the DISCARD side would be a patch by construction.**
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
