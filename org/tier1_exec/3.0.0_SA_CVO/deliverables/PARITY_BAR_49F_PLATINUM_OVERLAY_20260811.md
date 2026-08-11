@@ -75,9 +75,22 @@ grammar every field family resolves to:
   -- it generalizes my §4.1 inversion to ANY defect class, not just the 312.
 - **DIVERGE** -- disagrees; adjudicated against the pre-registered bands (§4). In-band = DESIGN;
   out-of-band = FALSIFIES parity.
+- **DIVERGE-SOVEREIGN** (added 2026-08-11, COO's total.aua case): a STRUCTURALLY-EXPECTED divergence
+  that is NEITHER pass nor fail at the technical layer because its acceptance is a BUSINESS decision
+  -- a vendor-source change or a scope change. The type specimen: 49F served bd platinum builds from
+  the Black Diamond tree (`data/black_diamond/scripts/gold/D_00.portal_aggregates.py` writes
+  opal-data-bd, names 49 Financial), the new runners build from Schwab 08335338 silver -- so
+  total.aua Δ$122.5M (6.4%), account_count 6,386-vs-7,238 (funded-vs-all), client_count 3,050-vs-4,291
+  CANNOT clean-pass and SHOULD NOT. **The overlay does NOT fail on it and does NOT pass it -- it
+  ESCALATES it to Andrew with the mechanism named and the delta's COMPOSITION enumerated per-account
+  (residual explicit, never rounded into the story).** This is the missing-third-state discipline at
+  the parity layer: "we do not know if this SHOULD match" is not the tool's call. A DIVERGE-SOVEREIGN
+  band MUST carry (a) the source mechanism grounded at file:line, (b) the per-account composition, (c)
+  the residual. Without (b)+(c) it is an un-enumerated hand-wave, not a sovereign-ready escalation.
 **A run is REFUSED as confirming-limb-shaped if it returns 100% clean with no mention of the
 registered defect classes** (the could-not-have-said-otherwise refusal). Parity is FALSIFIED when a
-family diverges outside its band OR a known-wrong class serves un-flagged.
+family diverges outside its band OR a known-wrong class serves un-flagged. A DIVERGE-SOVEREIGN band
+neither falsifies nor passes -- it blocks the KILL on that surface until Andrew rules the scope.
 
 ## 4. THE PRE-DECLARED DIVERGENCE BANDS -- registered BEFORE the run, or the run is void
 

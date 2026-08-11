@@ -119,13 +119,22 @@ decision 4: validation inputs, never return inputs) and enter at C's validation 
   (fact_sec / dim_asset per the ruled source) on the same partition; denominators printed.
   (ii) **A5-A03-ACCRUAL-PREDICATE** (the load-bearing one): the rate-bearing set re-derives to the
   EXACT count B_02 consumes (112 of 2,313 on the 49F sample) FROM dim_security's own
-  `interest_rate` nonzero -- and the four accrual-input fields (`interest_rate`, `1st_cpn_date`,
-  `dividend_interest_frequency`, `next_pay_date`) are present and non-degenerate. **FORBIDDEN
-  SHORTCUT NAMED: the predicate must NOT key on `maturity_date` (sentinel-populated on ALL rows --
-  the trap CRO's own instrument hit); a predicate that reads 100% rate-bearing has taken it.** This
-  row validates the SAME predicate B_02's materiality is computed over -- a rowcount alone would
-  pass on a dim_security whose accrual fields were all null. (~A's INF-A-A03-ROWCOUNT is the
-  existence half; this adds the correctness half both firms need -- they align at Group B's touch.)
+  `interest_rate` nonzero -- AND a FIELD-PRESENCE CENSUS of the four accrual inputs (`interest_rate`,
+  `1st_cpn_date`, `dividend_interest_frequency`, `next_pay_date`), each with its populated-count
+  over the 112. **A degenerate field is a FINDING the check SURFACES, not a fail of the check** --
+  exercised 2026-08-11 (DS backfill, COO-relayed): `next_pay_date` is vendor-shipped on only 1 of
+  112 rate-bearing rows, which is exactly why B_02's DERIVE recommendation is CORRECT and not merely
+  convenient -- **this row earned itself by FAILING before the artifact ever served.** **FORBIDDEN
+  SHORTCUT NAMED, with its MEASURED reason (correcting a false premise this row previously carried):
+  the predicate must NOT key on `maturity_date`. My earlier prose said maturity_date is
+  "sentinel-populated on ALL rows" -- MEASURED FALSE: it is non-null on 132 of 2,313. The real
+  reason maturity_date is the wrong field is that it selects a DIFFERENT POPULATION (132,
+  fixed-income-product marker) than the rate-bearing set (112, `interest_rate` nonzero) -- a
+  maturity is neither implied by nor implies a current accrual rate (a matured/zero-coupon bond
+  carries a maturity_date without a rate). A prohibition justified by a false premise is one
+  measurement from being argued away; the true reason is wrong-population, and it is measured.** This
+  row validates the SAME predicate B_02's materiality is computed over. (~A's INF-A-A03-ROWCOUNT is
+  the existence half; this adds the correctness half both firms need -- they align at Group B's touch.)
 - A_05: every fact_trn code on the freshest partition resolves through the table or lands
   UNRESOLVED-LOUD (0 silent rows); the 187-row table's census key re-derives.
 - A_06: coverage ratios printed with BOTH denominators (map-side and feed-side); the lockstep
