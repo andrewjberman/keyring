@@ -1807,6 +1807,57 @@ staged program and a stalled one.*
 **DS's serve-release #2 has BOTH halves** (mine 0752Z, CTO's this window). **CPR-6 (D_02 $696K) stays its own
 act — built and exercised in parallel, deployed in its own window.**
 
+## 4ad · THE BASIS FINDING — CTO's adjudication, and **my framing was slightly over-escalated**
+
+### WHAT DS MEASURED (replicating the served computation, not reasoning about it)
+
+**ALL 12 of Patrick's non-fee accounts HAVE billing rows** — the whole **$695,956.41 is genuinely classified
+non-fee at CURRENT AUA**; the 3 no-match accounts hold **$0.00**. **So CPR-6's conflation class is REAL and
+worth $0.00 on his book today.** The gap is **VALUATION BASIS**: `SUM(ending_mv WHERE NOT fee)` =
+**$127,852.75**, with **9 of 12 classified non-fee accounts at `ending_mv = 0.00` while holding $568,103.66
+of current assets** — and **63 of his 144 FEE-EARNING accounts likewise at `ending_mv = 0.00`**, i.e. the
+`fee_assessed_on_zero_balance` state **the estate already NAMES at `D_02:1629`.**
+⚡ **The 22× disagreement is TWO BASES + ONE residual-form defect — not four random numbers.**
+
+### ⛔ CTO'S ADJUDICATION IS SHARPER THAN MY FRAMING, AND I AM RECORDING THE CORRECTION AGAINST MYSELF
+
+I wrote that *"the ratification rests on a premise nobody had measured."* **True, but it risks implying the
+ratification is compromised. It is not, and CTO's separation is the correct one:**
+> ** ANDREW RATIFIED THE *FORM* — a classified sum replacing a residual-with-clamp — AND THAT MECHANISM IS
+> CORRECT ON *ANY* BASIS. Classify-then-sum beats subtract-and-clamp regardless of what values the rows. **
+> **What moved is WHICH BASIS values the summed rows — separable, newly measured, and correctly a ruled
+> decision in front of him. No unwind, and nothing about the measurement makes the old residual form better.**
+> ** THE RETIREMENT LIKEWISE STANDS: ** the TRANSITIONAL member's exit = **the residual CALCULATION leaving
+> the serving path** — done, and basis-independent. **A future basis re-cut changes the VALUATION INPUT to the
+> classified sum; it does not resurrect a residual.**
+> **CVO's delta-cert bar stays valid** (field exists + sums tie the billing dim): **the tie is REAL; what the
+> tied number MEANS is the basis question.** My *understated / premise-measured* framing **REFINES CTO's
+> expected-shape-drift pre-registration rather than contradicting it** — CVO holds both.
+
+*I escalated a separable premise as though it reached the ruling. The finding survives intact and the
+ratification was never in question — worth recording because an over-escalation costs credibility in exactly
+the same currency as a missed finding.*
+
+### ✅ B_02 INHERITS A STRUCTURAL REQUIREMENT — my flag became a rule one layer down
+
+**The B_02 materiality verdict routing to CTO + Andrew mid-build must now STATE ITS BASIS EXPLICITLY** — the
+**rate-bearing MV numerator** and the **book denominator** each **naming their valuation source**. ** So the
+invisible-premise class cannot recur a layer down. ** Folding to CVO for the spec touch. *That is the right
+fate for a one-off flag: not a note to remember, a field the deliverable cannot omit.*
+
+### ⚡ THE LAW EXTENDS — **ONE PRODUCER *AND ONE BASIS* PER QUANTITY** (seventh face)
+
+**The `D_02:1629` connection is the finding: the estate NAMED the `fee_assessed_on_zero_balance` state and
+never connected it to the AUA basis.** That connection now lives in the matrix as the **seventh
+single-homing face — one producer AND one basis per quantity, with the `ending_mv` registry row.**
+> **Single-homing has now eaten a new axis. It began as "one producer per served key" and has absorbed
+> runtimes, scope predicates, dispatch modes, deploy targets, literals, runner shapes — and now VALUATION
+> BASIS. *A quantity with two bases is two quantities wearing one name*, which is the name-vs-content family
+> and the single-homing family turning out to be the same law seen from two sides.**
+
+**AT ANDREW: the basis ruling** (current AUA $695,956.41 vs billing `ending_mv` $127,852.75), **with CTO's
+exec read going to him beside mine.** ⛔ **No D_02 or D_04 re-cut ordered; a basis re-cut is his and CTO's.**
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
