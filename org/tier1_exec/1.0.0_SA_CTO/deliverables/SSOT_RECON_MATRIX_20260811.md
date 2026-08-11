@@ -31,7 +31,13 @@ DELIVERED with the cert noted pending.)
 | **advi × 49F/bd (08335338)** | HELD(CRO~A) | OPEN | HELD(CRO~A) | HELD(CRO~A) — the ARCHETYPE decomp, Andrew instruction 3 | OPEN | OPEN | archetype spec forthcoming; endpoint catalog + PATH_DISCOVERY exist |
 | **advi × inf** | PARTIAL — endpoint catalog + 03 audit | PARTIAL — stop-mechanism record grounds the chain trigger | PARTIAL — silver dims read (TWR dim) | DELIVERED-UNCERT — 03 three-bucket map (5 illegit derivations; ~24/44 scripts UNREVIEWED, marked) | OPEN | OPEN | CRO~A: 01/02/03 records @INF_ATOMDECOMP_RUN_20260811 |
 | **advi × cot** | OPEN | OPEN | PARTIAL — custody inversion record @562cbd444d (fact_holdings grain) | OPEN | OPEN | OPEN | **RECON-5 — UNHELD** (5a endpoint inventory rides RCN-0001; 5b after archetype stabilizes) |
-| **cross-cutting** | RECON-4 join feasibility (CRO base, RUNNING) · RECON-6 endpoint-delta census (OPEN — fronts atom-8 conformance) · ~~exception set~~ ~~pattern ratification~~ **BOTH RATIFIED ~0542Z @d272021791** — atom-8 conformance is now testable against law | | | | | | |
+| **cross-cutting** | **RECON-4 DELIVERED @be316d868c (DRY→CVO queue)**: goal-3 join = THREE problems — 49F/bd 0.0% (identity-acquisition: feed account_id IS the SmartX allocationId, custodian hardcoded None; the allocation→custodian-account question rides ~A's RECON-2 under the standing SMARTX lift) · INF 98.0% joinable today (prototype the overlay here) · COT no model-holdings feed (goal 3 runs THROUGH goal 1 — a measured dependency edge) · RECON-6 endpoint-delta census (spawn ask at MSTR as CRO~B, critical path) · ~~exception set~~ ~~pattern ratification~~ **BOTH RATIFIED ~0542Z @d272021791** | | | | | | |
+
+**L1 KEY-ANNOTATION RULE (0546Z, from the measured three-family collision):** advi×49F/bd and
+advi×cot L1 cells land under ONE shared vendor prefix (`opal-data-assets/blackdiamond/{49f,cottonwood}`).
+Every L1 count carries the census KEY it was taken with. OPEN CHECK (CTO/CVO): does a bd-tree
+script reading `blackdiamond/cottonwood/*` trip the bd↔cot commit gate + IAM deny? (`comp-firmsep-sweep`
+is the instrument; not yet run against the shared-vendor-prefix shape.)
 
 ## ADVERSARIAL DISCIPLINE (the mandate's word: "adversarially establish SSOT")
 

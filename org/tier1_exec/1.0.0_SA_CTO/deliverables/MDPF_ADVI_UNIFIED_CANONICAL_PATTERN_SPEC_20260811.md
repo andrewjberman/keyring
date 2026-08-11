@@ -144,7 +144,15 @@ archetype spec (citing this pattern's rows, not re-deriving them); the atoms in 
 conformance test in §3 are the archetype's pattern contract; MDPF-side surfacings route back here.
 **Naming law for this program (CTO ruling 0533Z, COO-surfaced): "49F" alone is AMBIGUOUS — it
 appears against 08242234 (MDPF ingest path) and 08335338 (ADVI archetype). The full 8-digit account
-+ the PRODUCT is the only unambiguous form in any dispatch, spec row, or finding.** And the C-n
++ the PRODUCT is the only unambiguous form in any dispatch, spec row, or finding.**
+**EXTENDED 0546Z (CTO ruling on COO's measured three-family collision + Andrew-direct naming record
+at the COO terminal: the 49F pipeline is "bd pipeline"/"opal-data-bd"/"bd-gold-runner"): every
+reference names its FAMILY — FIRM (49 Financial) / PIPELINE-TREE (`bd` = opal-data-bd,
+bd-gold-runner, data/bd/scripts) / VENDOR (`blackdiamond`, which spans BOTH 49f and cottonwood
+under one prefix in opal-data-assets) / PRODUCT-ACCOUNT (08335338 ADVI · 08242234 MDPF). "BD"
+ALONE IS NEVER USED for either the pipeline or the vendor. Matrix corollary: any L1 census count
+carries the KEY it was taken with (`blackdiamond/` reads two firms; `bd` reads one) — a count
+without its key is denominator-ambiguous across the firm-separation boundary.** And the C-n
 collision (two grains, one label, across seats — Rule-24 hygiene one layer up) is SETTLED per CRO's
 committed resolution @3833ce88d1, which supersedes this spec's 0533Z variant: recon chapters =
 RECON-1..RECON-7; the scheduling-jam findings KEEP C-1/C-2/C-3 verbatim (already in live DS/AE
