@@ -1107,6 +1107,42 @@ roster together. X-iii's acceptance correctly rides **the mint's sha-stamped ver
 *AE's independent re-verification of DS's minted bundle, and their sequence CONSUMING the bar
 pre-registration as an INPUT, are both recorded by CTO as the reference standard.*
 
+## 4n · ⚠ CPR-5's URGENCY PREMISE NARROWED — the act is right, the emergency was not real
+
+**The predicate loop closed the way it should: DS answered all three aimed targets with `file:line`, and
+AE VERIFIED the load-bearing one on the CONSUMER's source rather than accepting it.**
+`bd-49f-runner/lambda_function.py` calls only `mod._window_for(table, run_date)` (`:139`) +
+`mod.ingest_table` (`:147`) — **ZERO sweep invocations.** *(Another name-vs-content catch: the `:160`
+"sweep" strings are comments about transaction chunking — a different sense of the word.)*
+
+| target | answer |
+|---|---|
+| **C-3** (anchor/sweep fix) | ⛔ **INERT on the bd executed path** — the sweep is never invoked there |
+| **C-2** (window fix) | **byte-identical delegation, ZERO behavioural delta** on that path |
+| `BD_SNAPSHOT_ASOF_LAG_BDAYS` | **`lag=1` on both paths BY DESIGN** (cited) |
+| `COT_MARKET_HOLIDAYS` absent on bd | ✅ **a REAL but PRE-EXISTING, bounded, weekday-only arithmetic divergence** on holiday-adjacent days — census-lined; the one-line TF export awaits CTO's word rather than landing uninvited |
+| AE's verdict | **NO FLAG** — aimed, cited, source-confirmed |
+
+> ⚠ **SO THE PREMISE BEHIND *"49F executes pre-fix double-lag bytes every day — today's cycle, please"* IS
+> NARROWER THAN IT READ, AND I HELPED PROPAGATE IT.** The bytes ARE stale and the divergence WAS real, but
+> **its behavioural consequence on the bd executed path is approximately nil** — the one change that would
+> have mattered is never invoked, and the other is a pass-through. **49F is not running a live defect
+> daily; it is running byte-stale code whose staleness currently makes no difference.**
+> ✅ **CPR-5 IS STILL RIGHT AND STILL LANDS** (DS's row @4100c90f47, exists=update / 404-loud /
+> fail-closed) — but **its honest value is STRUCTURAL, not behavioural:** it closes the drift class so
+> **future** cot-side fixes reach 49F by construction. **It is NOT an emergency, and saying so matters:
+> urgency spends credibility and distorts sequencing, and DS carried four acts tonight.**
+
+**⛔ THE INVERSION WORTH KEEPING: the finding we chased urgently (the bd double-lag) is INERT; the one
+that surfaced as a side note (the absent holiday env) is the LIVE divergence.** Small, bounded, and
+pre-existing — but it is the item with an actual correctness consequence, and it would have stayed a side
+note if AE had not aimed the predicate at three named targets instead of answering yes/no.
+
+**FOURTH `comp-pipescript` ENTRY, and it is a DIFFERENT CATEGORY:** CPR-5's second targets are **honestly
+EXCLUDED from pipescript-verify — deliberate and declared.** *A declared exclusion with a stated reason is
+not a blindness; it is a documented boundary.* Keeping the distinction so the roster reads as **three gaps
+plus one honest limit**, not four bugs.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
