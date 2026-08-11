@@ -93,3 +93,29 @@ needs THREE DIFFERENT identity mechanisms -- inflection NATIVE KEY (98.0%) · 49
 zfill (99.8%) · cottonwood INTERMEDIARY-REQUIRED (measured zero, candidates named). A single
 uniform join design was never available; the measurement program has now said so per-firm with
 denominators, which is exactly what the build spec needs to not discover it mid-build.
+
+## POST-CERT ADDENDUM 3 (2026-08-11 ~0615Z) -- DELTA-CERT CORRECTIONS FOLDED (@da62a742c5): END-TO-END IS 99.65%, AND THE TWO UNIVERSES ALIGN BY COINCIDENCE, NOT CONSTRUCTION
+
+**Figure correction (CVO delta-cert, adopted):** my addendum-1 "end-to-end 99.8%" mislabeled a LEG
+as the whole. Decomposed: FEED->MAP = 7,220/7,230 = **99.86%** (CVO-measured, previously unclaimed)
+x MAP->SPINE = 5,701/5,715 = **99.8%** => **TRUE END-TO-END = 7,205/7,230 = 99.65%** -- 25 feed
+allocations reach no spine account. Residual split corrected: **3 x len-8 + 11 x len-9** (my "12
+nine-digit + 2 misses" total agreed, split did not). Anyone quoting the 49F path quotes **99.65%
+end-to-end** or a LABELED leg rate, never bare "99.8%".
+
+**CVO's routed unknown, answered at source:** map-universe vs feed-universe is **COINCIDENCE-BY-
+PIPELINE-ALIGNMENT, NOT CONSTRUCTION.** The map's producer derives its rmid universe from the day's
+BRONZE LISTING (`smartx_conversion.py:260-268` -> `_list_entity_ids(s3, bucket, "model")`); the wsb
+feeder derives its universe from the REGISTRY filter (models carrying `smartx_model_id`,
+`wsb_49f_smartx_model_aua.py:125-146`). Two independent derivations that currently align because
+the upstream puller is registry-driven -- they drift independently if the puller's scope widens or
+the registry moves between pulls, and the 25-allocation FEED->MAP gap is plausibly this class (or
+intra-day pull timing; cause UNMEASURED, parked with the other residual families). **The 99.86% leg
+is stable only while puller and registry stay in lockstep -- a shared-derivation caveat the join
+spec should carry as a one-line precondition, not discover on the first drift.**
+
+**Specimen banked (CVO's own instruments bitten):** `fact_allocation_account_map` itself carries the
+name-vs-content defect -- its `account_id` column holds a SmartX UUID while `account_number` holds
+the Schwab digits; CVO's first two computation passes joined the wrong column and returned a clean
+0.0% before a length-distribution print caught it. Third live specimen for the 2a registry, and
+empirical proof that per-table key-hygiene grading (addendum-2's lesson) is not optional.
