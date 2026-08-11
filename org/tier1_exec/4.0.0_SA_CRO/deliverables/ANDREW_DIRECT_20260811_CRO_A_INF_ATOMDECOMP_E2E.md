@@ -46,6 +46,24 @@ holdings/assets endpoints suffice, no calculation or interpolation) and PERFORMA
 egress GRANTED for this run's endpoint verification** ("you have egress to check out any endpoint
 you want") — Orion/Eclipse endpoint exploration is his word, per-use satisfied.
 
+## Instruction 3 — the 49F archetype run (same terminal, ~0535Z)
+
+> "I also want you to do an atom_decomp run on 49 Financial Gold Analytics runner.  we need to
+> figure out how to get the advisor intelligence canonized. What I wanted to accomplish was using
+> the 49/Schwab 0833 account as a base to create the perfect gold analytics runner then use that as
+> the archetype for inflection and cottonwood, essentially hitting whatever endpoints need to be
+> hit in order to replicate that shape. that is why the 49 case is such a good one to use as a
+> baseline because we have complete fact tables. from there it is easy enough to reverse engineer
+> field for field what we need for the others."
+
+**Scope as bound:** (a) a SECOND atom_decomp run, target = the 49 Financial gold analytics runner;
+(b) purpose = CANONIZE Advisor Intelligence: the 49F/Schwab **08335338** account (his "0833" —
+full 8-digit per the standing two-bucket law; this is the ADVI bucket, NOT 08242234/MDPF) is the
+BASE from which the perfect gold analytics runner is created; (c) that runner becomes the
+ARCHETYPE for inflection and cottonwood — each firm hits whatever endpoints are needed to
+replicate the SHAPE; (d) the 49F case is the baseline BECAUSE its fact tables are complete —
+reverse-engineer field-for-field what the others need.
+
 ## Execution notes (this seat)
 
 - Fixes ride the sanctioned mechanisms only: Terraform via `safe-apply`, commits via `safe-commit`,
