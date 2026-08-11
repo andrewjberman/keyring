@@ -119,3 +119,21 @@ substrate work by his direction-sequence).
   answers folded into the rule's own text, outcome enum CITED from binding F, no mints.
 - Stewardship queue published (M-8/M-15 builds, cadence-homogeneity on W2 C5, plant ladder on
   second corpus, M-1 conflict, outcome-vocab registry entries). MSTR notified @194930Z.
+
+## ~1955-2030Z -- SEMANTIC SCAN v2 HARDENED + WIRED INTO BOTH CALLS (Andrew GO)
+- v2 scan: null-anchored decoy gate (content_relate_prototype pooled M=25, family-wise alpha=0.05),
+  resolver-enriched queries (baked prose stripped), plane-labeled corpus 5,865 (docs/projects/logs).
+  28/28 COVERED through the gate on BM25; admit-count spectrum real (thin tail == RESIDUE verticals).
+  POTION AXIS RETIRED at gate severity -- measured (real max < decoy p99 everywhere) + verbatim-copy
+  positive control ADMITS rank 0 (gate discriminates; zero = true negative on query-shaped retrieval).
+- Wiring: friction call fire 1 R1-FAIL was MY harness (guard+assert shared derivation, both passed on
+  the law-bullet mention -- confirming-limb class live in my own code the day binding M merged);
+  schema-region assert fixed it; fire 2 rubric 4/4. State call: 5/5 pre-registered, and the REVAMP
+  docs in context were NOT read as transition evidence (the state-layer law held under temptation).
+  Banked: character-enum ambiguity (HEATING vs CONSOLIDATING both defensible; precedence rule
+  candidate), json-fence deviation (no-code-fences line), budget calibration (~2x reasoning tokens
+  with context, ample headroom).
+- CHAIN COMPLETE: scan -> friction (4/4) -> state (5/5), all live-validated on mdpf. Runner fold-in
+  queued (CVO operational loop / COO build). Method inputs 1/3 queued at stewardship (@8cc474bfb7
+  corrected vintage). Commit-gate caught my own live precedence bug in a lint-fix loop (corrupted
+  file blocked pre-commit, clean re-copy landed).
