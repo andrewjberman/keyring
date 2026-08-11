@@ -114,6 +114,23 @@ stamp 08-07 vs count 08-04).
    read status=BEHIND tdb=2 at a Friday frontier on Monday evening. Canonical convention, unchanged by me;
    noted so the window-night reader does not mistake it for a defect.
 
+## Acceptance 3a — VintageContradiction dissolution check (CTO 003242Z; MEASURED, added post-commit @bf74d031c1)
+
+**VERDICT: the label fix does NOT dissolve the 08-08 VintageContradiction. IT STANDS.**
+Mechanism, source-grounded @bf74d031c1: the emitter (`infra/aws/lambda/opal-assets/opal-assets-daily-emitter/lambda_function.py:359-365`)
+raises when a row claims `vintage_state=fresh` while `trading_days_behind(row.as_of, run_date) > 0`. For
+`inflection_models`, `as_of` + the fresh claim come from `_partner_state(:220-248)` reading the SERVED
+body's top-level `as_of_by_partner` / `rolled_forward_partners` — and that body is produced by
+`data/mdpf/scripts/gold/mdpf_aggregate_aua.py` (`:1244-1277`, the per-day `gold/mdpf_revamp/_aggregate_aua/{date}.json`),
+whose inflection inputs are the `mdpf/feeds/*/inflection/{date}.parquet` channel written by
+`data/mdpf/scripts/gold/build_mdpf_wsc_inflection_feeder.py` off eclipse/orion (via opal-data-inf, a
+different route again). **NONE of those four links is in my diff** — RP-W1/W2 corrected the
+TIMESERIES route (`dim_mdpf_aggregate_aua_timeseries` + its two orchestrator callers), a sibling
+consumer of the same vendors. The one-trading-day shape (run-date label wearing T-1 content) therefore
+survives on the feeds→platinum→emitter chain, and a separate remedy must be scoped there (same family
+as banked finding 2 — the label offset's uncovered sibling consumers). Adjacent but distinct: AE's
+RP-W5b emitter repair (deleted-DDB write + guard repoint) does not relabel the feeds either.
+
 ## QA artifacts
 
 Scratchpad (session-local): `pre/` + `post/` full-build artifact trios (pre = clean HEAD worktree),
