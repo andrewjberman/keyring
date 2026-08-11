@@ -1340,6 +1340,40 @@ SIDE ONLY.** *"No patches, no bullshit"* is the criterion — which the partitio
 already in §4i operationalize, so nothing new is needed to enforce it. **A build admitting anything from
 the DISCARD side would be a patch by construction.**
 
+## 4t · ✅ GIPS TASK 1 COMPLETE @a876ee6ae9 — **THE CONDITIONAL CLEARS.** Four cells unblock on a premise that HELD
+
+Executed **alone**, per my task-1-first-and-alone ruling, on Andrew's direct GO. Classification table
+landed: **187 code rows over the FULL 525-partition series, 2.98M transactions.**
+**MATERIALITY VERDICT: unresolved residue = $3.18M over 25 months = 0.178% of book / 0.226% of
+external-flow magnitude**, 98 rows across 10 low-frequency adjustment codes. **THE HARD-STOP DOES NOT
+FIRE; the DAILY-TWR verdict stands UNCONDITIONED.** The four refinement cells decompose whenever the
+archetype trigger fires.
+> **The ruling did exactly what it was for: the conditional was measured ALONE and it CLEARED, so the four
+> cells now decompose on a premise that HELD — rather than four cells having been built and then
+> re-examined against a premise that moved.** *The cheap version of this ordering is indistinguishable from
+> the expensive one right up until the conditional fails.*
+
+### ⛔ TWO REQUIRED TO ROWS — recording them as ROWS, not as flags, because a flag evaporates
+
+| # | row | why it is REQUIRED, not optional |
+|---|---|---|
+| **T-1** | **`TPFEE`/`SMFEE` specimen-verify (one account vs the billing schedule) belongs IN THE FEE TO** | $55.5M, the **largest fee family**, is classified **`FEE-MANAGEMENT-INFERRED`** — empty vendor descriptions, resolved by family + adjacency + magnitude. **CRO sized the blast radius of being wrong and it is honest: even FULL refutation moves 3.9% of external magnitude — gross/net returns change, feasibility does NOT.** ⚠ **But an INFERRED classification that never carries its verification forward BECOMES FACT BY ATTRITION.** The specimen-verify is a **required row of the fee TO**, not a suggestion, and it is in this register so it survives the gap between now and that TO |
+| **T-2** | **The cross-account PAIR-MATCHING ENGINE is a REQUIRED BUILD COMPONENT** | the transfer/journal family (**$398M cash + $2.66B in-kind**) is resolution-**RULED per event**. **Recorded as scope so it cannot be descoped later as a nice-to-have** — at that magnitude, "we'll match pairs in a later phase" is a decision to publish unmatched flows |
+
+### THE DENOMINATOR LESSON, AT BUSINESS SCALE — full-series over day-sample, validated hard
+
+**The code universe is 157, not the day-sample's 21 — a 7.5× gap.** And **trusting the vendor's own
+category would have inflated external flows by BILLIONS** (680K sweep rows are **INTERNAL** by the
+boundary rule).
+> **This is "a page size wearing a total's clothing" with a nine-figure consequence.** A day-sample would
+> have covered **13% of the code universe** and reported cleanly; the vendor's own category field is a
+> NAME whose content did not match it — **the name-vs-content class again, this time on a categorical field
+> rather than a key column.** *Two of tonight's recurring lessons landing simultaneously on one
+> measurement, and the only reason either was caught is that the census ran over the full series instead of
+> a sample that would have looked sufficient.*
+
+**RECON-6 resumes at CRO base; sequencing otherwise unchanged.**
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
