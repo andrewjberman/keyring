@@ -107,8 +107,13 @@ lives; zero re-migration; the serving bucket's write surface stays minimal; 17b 
 amendment; portal-v2 gets a convergence path instead of a cemented mix. "Product silver": vendor
 silver stays in vendor trees under EITHER option (17b intact, live, conformant); product-scoped
 INTERMEDIATES (the ex-feeds class) live under the product gold root in whichever bucket wins.
-**The decision is one word from Andrew: A or B. The spec executes either; every wave, gate and
-repoint row survives both -- only the target prefix strings change.**
+**RULED ~0754Z, ANDREW-DIRECT VERBATIM: "Option A, proceed."** THE NAMING ACT IS CLOSED:
+`opal-data-assets/portal/gold/{product}/{scope}` is the canonical gold home; vendor trees keep
+bronze+silver; `opal-data-portal-v2` is the serving tier and converges toward serving-only; advi
+JOINS mdpf. ~A's F-1 is formally retired (Group A's product-root default now stands RULED, not
+defaulted). **The Rule-17b one-line amendment is a LAW-SURFACE edit and routes to CTO** (law
+surfaces land only via main CTO); the ruling recorded here is its authority. Sec1b's
+draft ratification line is superseded by this ruling.
 
 ## 2. THE LEGACY INVENTORY + DISPOSITIONS (every row cites its measurement)
 
