@@ -631,6 +631,25 @@ lanes:
       - 2.0.0_SA_COO
     description: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder. Created 2026-05-27 by COO per LD-0119 — Andrew sovereign 2026-05-27T~19:25Z + CL CVO architectural ask 19:30Z + MSTR LD-0119 materialization + ws CTO [OWNED-PATHS AMEND ASK] 19:55Z. ws CTO authors initial substrate (prompt.md + README); ws COO routes ferry-test TOs (task_orders/**); 0.8.0_AE_CloudComp self-commits ferry results + session logs + deliverables. Tilde-lane variants deferred to future per-instance amend cycles."
 
+  SYSTEM_CURRENT_REGEN:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+      - 4.0.0_SA_CRO
+      - 0.0.0_AB_MSTR
+      - 0.5.0_AE_OpalETL
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.8.0_AE_CloudComp
+      - 0.4.0_DS_ClientPlatform
+    description: "comp-system 06_current_state regen-committers: the ANY_EXEC_OR_AE effective membership (bases only -- the 2026-06-08 tilde auto-permit covers lanes) PLUS 0.4.0_DS_ClientPlatform. CTO RE-RULING 2026-08-11 ~1937Z on COO's pre-registered re-open condition FIRING (3 DS STRUCTURAL-TWOPHASE discharges in one window: 5c9c3b1c0f/fe9ffd6f30/3ced9d2e91) + the NEW measured property: HEAD moved between regen and land 3-FOR-3, so under batch conditions a handed-off vintage stamp is STALE ON ARRIVAL BY DEFAULT -- the route-to-exec path structurally manufactured the staleness it then required a re-run to repair. TRANSFERRED OBLIGATIONS (bind every member, they do not evaporate with the hand-off): (1) REGEN-AT-COMMIT IS ONE ACT -- run comp-system and commit its output at the SAME HEAD, same session; committing a regen stamped at an earlier HEAD is prohibited (the defect this grant exists to close); (2) 06_current_state is GENERATED OUTPUT -- hand-edits prohibited, every fix lands at the GENERATOR (comp_system.py; AE's 2026-08-11 GRAPHFEED park fix is the type specimen) -- THIS invariant is what makes lane-committed regens structurally safe against cross-program reverts (the park-frame hazard COO's exec reviews caught by accident is closed by design when nobody edits the output); (3) the exec discharge path REMAINS LEGAL (execs stay members) for the override-discharge flow. Grantor-landed by 1.0.0_SA_CTO (SoD: grantee DS lane does not self-land)."
+
   ANY_EXEC_OR_AE:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -1594,6 +1613,10 @@ paths:
   "infra/system/**":
     lane: ANY_EXEC_OR_AE
     note: "NFRA_SYSTEM / NFRA_LOCALROOT docs-home -- the SYSTEM CONTENT knowledge-class home + the comp-system 06_current_state runtime output. DOCS-HOMES-EXEC-COMMITTABLE carve (CTO ruling 2026-07-08 + NFRA_LOCALROOT-P2 §4, CTO arch-gate GO 225633Z c345f4038): infra/{system,project-docs} = exec/owner-committable DOCUMENTATION (distinct from infra/aws CODE = AE-owned). ANY_EXEC_OR_AE gives exec (COO~B via 2.0.0_SA_COO tilde-strip owns+commits the SYSTEM docs + the 06 output per SoD) + retains the AE set (0.8.0~D's comp-system compiler stages the 06). Longest-match (16) overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO (base), grantee COO~B commits. Added 2026-07-08 by 2.0.0_SA_COO."
+
+  "infra/system/06_current_state*":
+    lane: SYSTEM_CURRENT_REGEN
+    note: "The comp-system generated provenance pair (06_current_state.{md,json}). Longest-match over infra/system/** (ANY_EXEC_OR_AE): same membership PLUS 0.4.0_DS_ClientPlatform (tilde lanes ride the base auto-permit), so DS overlay-instance lands commit their OWN regen at their OWN HEAD -- zero staleness window. CTO re-ruling 2026-08-11 on the fired re-open condition; the three transferred obligations live in the SYSTEM_CURRENT_REGEN group description and BIND every member: regen-at-commit-one-act, generated-never-hand-edited (fix at comp_system.py), exec discharge path retained."
 
   "infra/README.md":
     lane: ANY_EXEC_OR_AE
