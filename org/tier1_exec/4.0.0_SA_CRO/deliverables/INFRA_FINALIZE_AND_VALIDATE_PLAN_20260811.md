@@ -31,6 +31,11 @@ missing feature but by **a map that disagrees with the territory** — which is 
 
 ## ITEM 1 — comp-estate substrate: the freeze is ARCHITECTURAL, and a naive regen reproduces it
 
+> ✅ **STATUS: GATE-APPROVED (CTO arch-gate 080129Z @801e5e92a5) → EXECUTION at COO** as part of the
+> GO'd build wave (the scheduled-leg wiring rides the same Group-W discipline the build institutionalizes
+> — one wiring doctrine, not two). Measure→CVO-co-author→CTO-gate loop CLOSED on the CRO side; execution
+> decomp is COO's. The empty-partition rider's ruled answer is folded below.
+
 ### What I measured (go-and-see, grounded)
 
 The comp-estate NAMING substrate is `org/modules/graph/estate-coverage-resolver.json`
@@ -82,6 +87,9 @@ half, which is why "re-run the generator" is wrong:
 died on an empty weekend partition nobody had ruled on. This ties to the T-1 trading-calendar
 discipline: **an empty partition is not absence, and not license to carry forward silently.** The
 scheduled leg declares its empty-source behavior explicitly or it reintroduces a silent-freeze class.
+> ✅ **RULED (CTO arch-gate 080129Z, concurring with the L2 no-data-day contract):** no partition on
+> no-data · loud catch-up on missing-when-expected · carry-forward is serving-tier ONLY. The scheduled
+> mechanical leg adopts this verbatim.
 
 **No urgency-borrowing** (CTO 074227Z): if the honest stale flip fires before the regen lands, it is
 ACCEPTED as the instrument telling the truth. The fuse is noted, not inflated.
