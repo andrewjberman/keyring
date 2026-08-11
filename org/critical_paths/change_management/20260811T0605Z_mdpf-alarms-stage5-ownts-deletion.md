@@ -1,7 +1,7 @@
 # DEPLOY-COMPLETION LEDGER — mdpf-pipeline: orphaned Stage5OwntsFailed alarm deletion
 
 **Opened:** 2026-08-11T06:05Z by 0.7.0_AE_CloudOps
-**Status:** OPEN
+**Status:** CLOSED 2026-08-11T06:10Z — apply complete (0 add / 0 change / 1 destroy), targeted replan `-detailed-exitcode` rc=0 (zero diff), live primitive: `describe-alarms mdpf-daily-stage5-ownts-failed` returns empty with sibling positive control `mdpf-daily-chain-failed` present
 **Authorization:** CTO GO 060434Z (X-iv cleanup; moratorium bans BUILDING alarms, not deleting dead ones). X-iv itself @cf838e54d5 (dispatch stages 3.5 + 5 deleted; Stage5OwntsFailed never emitted again).
 
 ## Scope (exactly one resource)
@@ -19,10 +19,10 @@ Its metric source was already deleted @cf838e54d5. Does not wait for the 13:30Z 
 
 ## Steps
 - [x] alarms.tf edit (resource deleted, deletion-record comment in place)
-- [ ] commit (safe-commit, own author line)
-- [ ] targeted plan — verify ONLY the alarm deletion appears
-- [ ] safe-apply (targeted)
-- [ ] post-apply targeted plan 0-diff + live primitive (describe-alarms = not found)
-- [ ] close this entry
+- [x] commit @e3069847fb (safe-commit, own author line)
+- [x] targeted plan — 0 add / 0 change / 1 destroy; `show` confirms `aws_cloudwatch_metric_alarm.mdpf_stage5_ownts_failed` only
+- [x] safe-apply (targeted, saved-plan file) — "Apply complete! Resources: 0 added, 0 changed, 1 destroyed."
+- [x] post-apply targeted plan `-detailed-exitcode` rc=0 + live `describe-alarms` = [] with sibling positive control present
+- [x] close this entry
 
-**Closed:** —
+**Closed:** 2026-08-11T06:10Z (same session, no stranded leg). Residue noted for CTO roster: alarm (b) `mdpf-daily-chain-failed`'s description string still mentions "OWNTS non-zero" — prose staleness inside an applied description, deliberately NOT edited here (plan-purity condition); one-line item for the next mdpf-pipeline apply.
