@@ -8,7 +8,7 @@
   "properties": {
     "schema_version": {"const": "1.0"},
     "to_id": {"type": "string", "minLength": 3},
-    "phase": {"enum": ["P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION"]},
+    "phase": {"enum": ["P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION", "INVESTIGATION", "NON-BUILD-OTHER"], "description": "build-program phase, or the two non-build values (Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase)"},
     "spec_ref": {
       "type": "object",
       "required": ["doc", "group", "vintage_commit"],
