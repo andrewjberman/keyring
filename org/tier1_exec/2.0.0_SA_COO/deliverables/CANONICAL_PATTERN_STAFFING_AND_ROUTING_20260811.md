@@ -1989,6 +1989,63 @@ honest sequence rather than repeating exactly what I did an hour ago.**
 
 ---
 
+## 4ah · ANDREW-DIRECT: **MACHINE-READABLE DELIVERABLE CONTRACTS.** Prose acceptance is retired
+
+**His word (~0817Z, to me): *wait for CTO — we are providing MACHINE-READABLE DELIVERABLE CONTRACTS, because
+we need to know these are done DETERMINISTICALLY TO SPEC.*** And @76ee261895 verbatim: ***"Make sure that the
+instructions are rigidly explicit and have machine-code json deliverable expectations that the tier 2 senior
+worker agents have to fill out to prove that they did it to spec."***
+
+**I HELD P1 on his word, then LIFTED IT WHEN THE CONDITION WAS SATISFIED — not overridden.** The mechanism is
+**BUILT, not specified**: `org/standards/PROOF_OF_SPEC.schema.json` + `.tools/proof-of-spec-check.py`.
+
+### ✅ I VERIFIED THE GATE MYSELF RATHER THAN RELAYING IT AS AVAILABLE
+
+Both files exist (5,823B / 5,203B, executable). ⚡ **AND IT FAILS CLOSED: rc=2 on a missing file, on garbage
+input, and on no args** — so a missing or misnamed instance **cannot pass as "nothing to check."**
+> *I measured that specifically because **a brand-new gate that exited 0 on unreadable input would be the worst
+> possible foundation for a completion standard** — the fail-open-and-silent class this session kept finding.
+> It doesn't.*
+
+⚠ **AND MY FIRST READ OF IT WAS WRONG: I reported `rc=0`, which was `head`'s exit code through a pipe, not the
+validator's.** Re-measured without the pipe. ** Second time tonight I put a pipe between myself and a value and
+then read the pipe ** — the first being `head -12` capping a grep I then read absence from. *Same root, twice,
+in one session: the instrument between me and the thing became the thing.*
+
+### WHAT THE CONTRACT DEMANDS — and why prose acceptance had to go
+
+One acceptance row **PER CRITERION** · criterion **quoted VERBATIM** · each row carrying **the exact
+re-runnable invocation + verbatim output evidence + its DENOMINATOR** · artifacts **declaring deployed-state
+(commit ≠ deploy)** · **MANDATORY mutant + determinism controls whose failure INVALIDATES the instance by its
+own field** · declared exclusions · surprise entries · compiler-tools table · ⛔ **NO BARE VALUES — a PASS with
+thin evidence invalidates the WHOLE deliverable.**
+
+> ⚡ **THE EVIDENCE FOR WHY HE IS RIGHT IS THIS SESSION'S OWN RECORD, AND IT IS ALL MINE:** an acceptance
+> criterion of mine was **STRUCTURALLY UNSATISFIABLE** (`unreconciled_aua` computed-and-dropped through a
+> six-key projection — found only because DS *tried* to satisfy it) · **another was wrong by ~500×** (~$128K vs
+> $68.3M) · **a third named the wrong collision surface** ("bar-clear" where the risk was host-clear) · **a
+> fourth defaulted to parallel when the ruling was sequential.** **Every one was prose, and every one was
+> defensible-sounding.** *A machine-readable contract either evaluates or it does not: it cannot be satisfied by
+> interpretation, and it cannot be quietly unsatisfiable.*
+
+### MY HALF, BINDING ON THE DECOMPOSITION IN FLIGHT
+
+Every build TO **(a)** embeds the `criterion_ids` lifted from its spec group's battery · **(b)** states
+**"completion = a schema-valid PROOF_OF_SPEC instance passing `proof-of-spec-check`, committed beside the
+work"** · **(c)** `TO_COMPILER_GATE` extends — **a TO without a valid instance is NOT complete.** CVO's
+cert-of-built **consumes the instances**, making adversarial re-derivation mechanical.
+
+⚠ **DECLARED GAP AT MY END: I have NOT independently enumerated the `criterion_ids`.** I named the batteries by
+spec commit and required one row per criterion; **I will not invent id strings I have not read**, and DS is
+instructed to **surface an ambiguous criterion set rather than guess** — an instance with a wrong id list
+**validates structurally and proves the wrong thing.**
+
+⚡ **AND THE TIMING POINT I ADDED, which is the whole value: CAPTURE THE EVIDENCE AS YOU GO.** DS is at the start
+of B-1 — **the cheapest moment this obligation will ever be.** *An instance assembled retro-actively is weaker
+even with every field filled, because the evidence was selected knowing the answer.*
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
