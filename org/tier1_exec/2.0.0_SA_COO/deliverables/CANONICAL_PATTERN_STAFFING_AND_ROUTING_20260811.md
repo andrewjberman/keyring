@@ -674,12 +674,47 @@ routed into RECON-5a).
 > inherit a solved identity problem.** Third narrowing of one of my rationales tonight; the conclusion
 > held each time and the reason shrank each time, which is a pattern to expect rather than be surprised by.
 
-**⚠ OPEN DENOMINATOR QUESTION I RAISED, not yet answered:** ~A found **~100 prose-length values
-contaminating the `account_number` key column.** `account_number` is **the 49F join key** measured at
-99.8% (5,701/5,715). **If the contamination touches that same column family, 5,715 may be the wrong
-denominator** — prose in a key column is neither a match nor an honest miss. Cot-only ⇒ pure cleanup.
-**Not holding the 49F decomposition on it** (the join spec is sound either way), but **99.8% is already
-quoted in this register and my session log, so the figure needs to be right.**
+**DENOMINATOR QUESTION — ANSWERED, and the contamination is COT-ONLY.** CRO re-measured independently
+rather than relaying: `fact_allocation_account_map` `account_number` is **7,262/7,262 non-null, all-digit
+rate 1.00, lengths exactly {8: 7,250, 9: 12}, zero values over 12 chars.** The ~100 prose-length values
+live **only** in `blackdiamond/cottonwood`'s `fact_model_assignment.account_number` — same column NAME,
+different table, different vendor tree, different converter.
+> **CRO'S SHARPENING IS THE BETTER FINDING, ADOPTED: grade key-column hygiene PER TABLE, NEVER PER
+> COLUMN-NAME — "or a clean table's reputation launders a dirty one's."** Same shape as tonight's
+> `bd`-family collision and the `account-distribution` per-layer spelling law: **a NAME is not a grain, a
+> grade, or a guarantee, and a registry keyed on names inherits every collision the names carry.**
+> Flagged to CTO for the 2a field-registry design (theirs to own).
+
+### ⛔ CORRECTION TO A FIGURE I COMMITTED TWICE — 99.8% WAS A **LEG**, NOT THE PATH
+
+**CVO delta-cert @da62a742c5.** I recorded the 49F join at **99.8%** in this register and in my session
+log, as the *end-to-end* rate. **It is not.**
+
+| leg | rate |
+|---|---|
+| feed → map | **99.86%** |
+| map → spine (`account_number`, 5,701/5,715 distinct) | **99.8%** ← *what I quoted* |
+| **TRUE END-TO-END** | **99.65% = 7,205 / 7,230** |
+
+**25 feed allocations reach NO spine account.** **The build TO carries the FULL-PATH denominator, never a
+leg's.** *This is precisely the class I spent the session policing — a rate that is true about a leg and
+false about the path, with nothing in "99.8%" to say which it is. I had the number from a correct
+measurement and used it at the wrong grain.*
+
+**TWO MORE FACTS THAT GO INSIDE THE 49F JOIN TO (CVO-grounded):**
+1. ⚠ **THE COLUMN TRAP: `fact_allocation_account_map.account_id` CARRIES A SmartX UUID — the Schwab
+   digits are in `account_number`.** CVO's own first two verification passes joined the wrong column and
+   got a **clean-looking 0.0%.** **The TO names the pair explicitly: `allocation_id → account_number →
+   zfill(10)`.** A column named `account_id` that is not the account id, producing a plausible zero — the
+   same name-vs-content class as the hygiene finding above, one layer down.
+2. **OPEN BEFORE THE JOIN EVER *SERVES* (not before it builds):** is `map-universe == feed-universe` **by
+   construction**? Two SmartX pulls, two scopes — **is 99.86% an invariant or this morning's
+   coincidence?** One source read of the map's puller settles it. **Recorded as a precondition on the
+   SERVING leg, explicitly NOT on the build** — CTO's distinction and it is the right one.
+
+**CVO's queue is now empty except CRO~A's 49F archetype decomp.**
+
+---
 
 **RECON-6 now carries a per-row control that is better than the warning I gave:** every DELTA cell gets
 an **at-rest existence check BEFORE it may claim a gap.** *A habit depends on who is reading; a per-row

@@ -153,7 +153,11 @@ targeting the CONSOLIDATOR — **nothing clocks the EC2 chain.**
    ⚠ **CONTINUITY: the bar is ~7.5h out and may outlive this session. A successor inherits it from the
    ledger + §3 of the register, not from recollection.**
 2. **[0.4.0_DS_ClientPlatform]** CPR-4 serve choreography (all four steps in one window or roll back);
-   CPR-2; then the two UNMEASURED residuals (14 of 5,715 49F, 11 of 561 inflection).
+   CPR-2; then the two UNMEASURED residuals (14 on the 49F **map-side leg** of 5,715 distinct;
+   11 of 561 inflection). ⛔ **CORRECTED post-log (CVO delta-cert @da62a742c5): the 49F join's
+   END-TO-END rate is 99.65% = 7,205/7,230 with 25 feed allocations reaching no spine account. The
+   99.8% (5,701/5,715) I carried is the MAP-SIDE LEG ONLY; feed→map is 99.86%. Any build TO carries
+   the FULL-PATH denominator, never a leg's** — see the register §4g correction.
    **Sunday 08-16:** the chain log must show the UNION-PRESERVE line — zero-carry also passes; ABSENCE
    is the failure.
 3. **[0.7.0_AE_CloudOps]** X-iv close → X-iii → X-ii (producer-identity read FIRST) → X-i (schedule
