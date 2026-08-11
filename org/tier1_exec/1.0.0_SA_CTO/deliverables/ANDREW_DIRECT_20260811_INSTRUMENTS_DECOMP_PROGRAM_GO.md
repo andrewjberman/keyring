@@ -188,3 +188,10 @@ W1-complete, that is one sentence from him.
 pre-agreed (zero-adjectives bridge, no side-door mint). Thread OPENED via the MSTR bus channel at
 scheduling discretion granted in the ratification.** Gate candidates #1 and #2 remain PROPOSED-only
 for his routing.
+
+### Gate-candidate #1 — design note attached before routing (CVO~Z via MSTR~Z, 2026-08-11 ~1904Z)
+
+The CERTIFIED-requires-passing-cert_ref check must carry a **DEVIATION-NO-CAPABILITY-CHANGE severity
+distinct from a capability-granting deviation** — a real-but-inert deviation reported at full
+severity is how an instrument trains its readers to ignore it (CVO~Z, from the packet guard's own
+first-run false alarm the same hour). Rides the proposal to Andrew; candidate stays PROPOSED-only.
