@@ -350,6 +350,83 @@ stated explicitly in the archetype record, and every RECON count prints its key 
 
 ---
 
+## 4c · STATE AS OF 0552Z — ⛔ ONE TIME-BOUNDED SOVEREIGN GRANT A SUCCESSOR MUST NOT INHERIT
+
+### ⏳ SESSION-SCOPED FREE EGRESS — Andrew-direct ~0549Z, @9e1fc54623
+
+**VERBATIM: *"For the remainder of this session all agents have free egress as needed."***
+
+**THE GRANT IS PERMISSIVE AND THE BOUND IS THE LOAD-BEARING HALF.** After session end the standing
+regime resumes: **ORION · SMARTX · cot-BD (Cottonwood Black Diamond ONLY, not bd/49f) · arxiv (CRO,
+cloud-Lambda-only) · ECLIPSE lifted; EVERYTHING ELSE HELD, per-use word required.**
+
+⛔ **THE HAZARD, NAMED BECAUSE IT IS INVISIBLE BY CONSTRUCTION: a TIME-BOUNDED GRANT THAT GENERATES
+DURABLE ARTIFACTS PROPAGATES AN EXPIRED AUTHORIZATION INTO THEM.** Any TO, spec row, or dispatch
+written during this session that leans on free egress will be executed by someone *after* the grant
+lapses — and the artifact will read as authorization. **Therefore: every dispatch relying on it MUST
+carry the session bound inline.** *(This is the mirror of the LD-0340 forwarder lesson: there, a
+non-durable fix propagated its expiry into 186 durable artifacts. Same mechanism, opposite sign — and
+this direction ends in an unauthorized vendor egress rather than a broken PATH.)*
+
+⚠ **SCOPE AMBIGUITY I AM SURFACING, NOT ADJUDICATING: *whose* session?** Andrew's working sitting, or
+each agent's process lifetime? These diverge sharply — an agent process can outlive Andrew's sitting by
+hours, and an agent reasoning *"my session is still live, therefore I still have egress"* at 14:00Z
+would be egressing on a grant that ended when he stood up. **The conservative operating read (mine, and
+it restricts nobody's authorized work): the grant ends with ANDREW'S session, and an agent must not
+extend it on the strength of its own process still running.** Routed to CTO for one clarifying word
+since CTO holds the record; **nothing is blocked meanwhile** — the grant is permissive, so the only
+risk lives in over-extending it, never in under-using it.
+**A RESPAWNED SEAT DOES NOT INHERIT THIS. If you are reading this file in a later session, you do not
+have free egress.**
+
+### RECON-4 CORRECTION — Andrew-direct ~0547Z (@a4d5147211): my *reason* was wrong, the call stands
+
+Cottonwood's cell is **NOT** "no model feed exists." **The BD Rebalance endpoint IS the model-holdings
+source** → cell = **`SOURCE-EXISTS-PIPELINE-ABSENT`**. Goal-1's opening move is **schema capture at
+RCN-0001's rebalancer-models gap**.
+**My §4b sequencing rationale said *"'no model feed exists' is a MEASURED ABSENCE, not a gap to design
+around."* That reason is FALSE.** The conclusion — **Cottonwood last, strictly after goal 1** — is
+unchanged, but it now rests on *cot goal-3 runs THROUGH goal-1 as an **INGEST BUILD***, not on a vendor
+absence. **Correcting it explicitly because a right conclusion resting on a wrong mechanism is exactly
+what gets copied forward into the next decision, where the mechanism is load-bearing.**
+
+### 49F ITEM-3 UNLOCK — LANDED AT REST, ZERO EGRESS SPENT (CRO~A via CRO base, 055024Z)
+
+`smartx/platform/silver/fact_allocation_account_map` (7,262 rows daily) maps `allocation_id` →
+**8-digit Schwab `account_number`** with custodial names in-row, **at rest in `opal-data-assets`,
+discovered from the converter's own test fixture.** So item-3's 49F leg is a **JOIN through the map
+table**, *not* a feeder change — the feeder's `custodian=None` stays true of its own surface.
+**ONE RESIDUAL BEFORE THE BUILD TO IS DECOMPOSABLE: KEY FORM — the map carries 8-digit, `fact_acc`
+carries 10-digit.** At-rest join test running; RECON-4 amended once with the measured overlap.
+**⚠ Do not decompose the 49F build TO until the overlap number lands** — a join on an unverified key
+form is the defect, not the plan.
+**ITEM-3 ORDER CONFIRMED UNCHANGED: INFLECTION FIRST** — zero identity work beats one join hop, even a
+cheap one. 49F has moved closer than expected but has not overtaken it.
+> **This is what the too-narrow-grant push was worth:** the unlock needed **no egress at all**. The leg
+> was unblocked by *looking at what we already hold*, not by obtaining permission — Build-Ladder rung 2
+> (the estate already has it) arriving as an egress answer.
+
+### CPR-4 · SERVE-RELEASE STATE
+
+**LANDED @7341b27d50, 12/12 exercised — and CORRECTLY NOT SERVING.** `INF_D_04` carries a live
+`# DEPLOY-SERVE-HELD` sentinel (restored @1ae1ac882b as a CTO+COO condition of the 08-05 release);
+mechanism verified at source, `safe_deploy_core.py:197-207` — sentinel-removal *is* authorizing serve,
+gated behind an in-message `SERVE-RELEASE-ACK`, **all three checks FAIL CLOSED.**
+**My COO half of the never-widen sign-off: GIVEN**, conditional on (1) CTO's half, (2) **the
+AoR-absence premise VERIFIED not asserted** — the lift's whole basis, and the sentinel's unmet condition
+is specifically the advisor-of-record fold, (3) a **deploy-completion ledger entry** with all four steps
+(lift → deploy → **re-hold SAME WINDOW** → republish) finishing in-session or rolling back, (4) no
+intersection with the 13:30Z MDPF bar window.
+**Until both halves land, platinum serves the OLD arithmetic (~$606K vs the ratified-correct ~$128K).
+That is a HELD state with named owners, not a stalled one — and it is safe, which is why the gate exists.**
+**⚠ MY REGISTER SAID `PRECONDITION: none` ON THIS ACT. IT WAS WRONG.** Second time tonight a
+precondition was understated here and caught by DS *executing* (the first: CPR-1's triple-homed deploy
+targets). **My preconditions were derived from specs and drafts; the DEPLOY MECHANISM's own
+preconditions are only visible from the lane.** Routing being right does not make the mechanism checks
+mine to have found — and a register that says "none" is more dangerous than one that says "unknown."
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
