@@ -37,10 +37,14 @@ specified adversarially, three independent derivations that must reconcile:
 **byte-schema** (field names, types, nesting, array-ordering conventions, null-encoding,
 date-format, spelling of every key -- captured from the LIVE OBJECT, machine-extracted) ·
 producing script today · cadence observed (LastModified series) · scope grain (firm / advisor /
-account) · `census_version` (content hash over the schema set). **Reconciliation:** FE-read keys
-with no live object = REACHABILITY FINDINGS; live objects no FE reads = ORPHAN-CANDIDATES
-(flagged, never deleted here -- the account-distribution lesson: a census keyed on one spelling
-reads the other half as orphaned, so BOTH spellings enumerate before any orphan verdict).
+account) · `census_version` (content hash over the schema set). **Reconciliation (ADVREVIEW F-6 ACCEPTED): at FAMILY grain, not per-key** -- the FE leg yields
+PATH TEMPLATES (`advisors/{advisor_key}/book`) while legs 2/3 yield concrete keys, so the tie is
+template x live-instance-set; **and the census row contract gains `route_class: s3-direct |
+apigw-lambda`** (the per-client detail rides API-GW->Lambda, not an S3 read -- leg 1 captures
+FETCH ROUTES, not only keys). FE-read families with no live instances = REACHABILITY FINDINGS;
+live objects no FE reads = ORPHAN-CANDIDATES (flagged, never deleted here -- the
+account-distribution lesson: a census keyed on one spelling reads the other half as orphaned, so
+BOTH spellings enumerate before any orphan verdict).
 **The census lands as a VERSIONED artifact in the product root** (`_contracts/served_shape/
 {census_version}.json`) -- config-as-data (atom 6), and THE acceptance oracle for every emitter.
 

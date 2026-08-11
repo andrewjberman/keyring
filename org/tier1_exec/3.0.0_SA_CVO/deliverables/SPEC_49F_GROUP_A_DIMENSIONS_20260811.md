@@ -38,7 +38,7 @@ Home (DECISION-FOR-REVIEW, stated in §3): `{PRODUCT_ROOT}/dimensions/{artifact}
 | # | Script | Inputs (silver) | Output artifact | The contract, in one line |
 |---|---|---|---|---|
 | A_00 | `a00_dim_account.py` (EXTRACT from existing corpus -- survives instruction-4's partition) | `fact_acc` (95 cols, 7,239 accounts at date=2026-08-07) | `dim_account` | One row per account_id (10-digit, content-verified digit-rate 1.00): registration/type/status, open/close dates, custodian branch, managed-program fields -- sec2's identity bullet, passthrough-clean |
-| A_01 | `a01_dim_relationship.py` (EXTRACT; absorb the fact_fam parse) | `fact_fam` (7,186 rows, positional: col_4 = 8-digit account -> zfill(10), col_1 = 19 grouping ids, col_5 = names -- feasibility cell 2) | `dim_relationship` | Account -> family/grouping map at HOUSEHOLD grain; the sec2 "parent, household, registration, subaccount relationships" surface; unlocks household composites (C-group consumes) |
+| A_01 | `a01_dim_relationship.py` (EXTRACT; absorb the fact_fam parse) | `fact_fam` (7,186 rows, positional: col_4 = 8-digit account -> zfill(10), col_1 = 19 grouping ids, col_5 = names -- feasibility cell 2) | `dim_relationship` | Account -> family/grouping map at HOUSEHOLD grain; the sec2 "parent, household, registration, subaccount relationships" surface; unlocks household composites (C-group consumes). **ADVREVIEW F-5 ACCEPTED: the ~53-account fact_acc-vs-fact_fam delta gets an explicit unmapped-census column + disposition enum (SELF-FAMILY default / EXCLUDED-LOUD); acceptance row: mapped + unmapped == 7,239, denominators printed -- household composites never silently exclude** |
 | A_02 | `a02_dim_boundary.py` (NEW -- the spec's center) | `dim_account` + `dim_relationship` + `fact_trn` FRM-credit legs | **`dim_boundary` (VERSIONED)** | The performance-portfolio boundary: per account -- IN_CLIENT_BOOK / COLLECTION_ACCOUNT / EXCLUDED_OTHER + effective dates + `boundary_version` (content hash). Sec10's lineage field "portfolio-boundary version" is MINTED HERE and nowhere else |
 | A_03 | `a03_dim_security.py` (NEW) | `fact_sec` (2,313 assets; 112 rate-bearing by `interest_rate` nonzero -- NEVER `maturity_date`, which is sentinel-populated on all rows) | `dim_security` | Stable security identifier (sec3): cusip/symbol/type, rate-bearing flag + accrual inputs (interest_rate, 1st_cpn_date, dividend_interest_frequency, next_pay_date) for Group B's cell-4 decision |
 | A_04 | `a04_dim_calendar.py` (NEW, tiny) | **`lib/trading_calendar.py` (the estate's ONE frontier authority) x the `dim_balance` partition tree (525 daily partitions 2024-07-08..2026-08-07, T-1)** | `dim_calendar` | **AMENDED per CTO review 071857Z: the JOIN, never a second calendar authority** -- trading_calendar supplies EXPECTED trading days, the partition tree supplies OBSERVED partitions, and the gap census = expected-minus-observed (sharper: the tree alone cannot distinguish a data gap from a holiday; the join can). Emits trading-day sequence + prev-day resolution + the measured gap census (feasibility's INFERRED-continuous cell becomes MEASURED here, once, for everyone) |
@@ -78,6 +78,15 @@ short/margin/derivative/liability accounts. Mapping to measured truth:
    (build-correct-then-port, no shadow: the old prefix gets a dated tombstone at cutover, never a
    parallel life). If CTO rules the vendor-tree home (`schwab/08335338/gold/`) canonical instead,
    only the table's Home line changes -- every contract survives.
+   **ADVREVIEW F-1 ADJUDICATED (CVO, 074xZ): PARTIALLY ACCEPTED.** The reviewer's mechanism is
+   right (a new root is a Rule-24 taxonomy act) and the Rule-17b tension is real -- but the
+   flip-the-default remedy is REFUSED on law: pattern spec v1.0 @d272021791 (LATER than 17b's
+   08-05 census, Andrew-ratified) blessed `portal/gold/{product}/{scope}` as atom 1, and Andrew's
+   08-11 colocation verbatim names `opal-data-assets/portal/gold/{advi or mdpf}/{scope}`
+   explicitly. Disposition: the default STANDS on the later sovereign word, and ONE confirmation
+   line rides the whole-sequence ratification ask already at Andrew via CTO ("the advi product
+   root mints at portal/gold/advi/ -- confirm against the 17b vendor-tree grammar"), so the root
+   is sovereign-named either way before first-artifact-build.
 2. **A_00/A_01 extraction depth.** Default: EXTRACT the existing a00/a01 (they are clean
    passthroughs with a fit harness) and re-home; rewrite only where a column name violates
    name-by-content.
@@ -86,9 +95,9 @@ short/margin/derivative/liability accounts. Mapping to measured truth:
 
 ## 4. WHAT GROUP A DOES NOT DO (boundaries, stated)
 
-No valuations (B), no flow ledger or TWR (C), no serving (D). No schedule design here beyond the
-atom-5 requirement that every leg WILL carry a clock floor -- the floor lands with the runner
-wiring, not the dims. The existing c00-c04 corpus is NOT adjudicated here (it is B/C-group input).
+No valuations (B), no flow ledger or TWR (C), no serving (D). **Schedule design: GROUP W
+(ADVREVIEW F-2 ACCEPTED -- the INF fork froze at exactly the atoms no spec carried; see
+SPEC_49F_GROUP_W_WIRING_20260811.md, a pre-build blocker for the whole sequence).** The existing c00-c04 corpus is NOT adjudicated here (it is B/C-group input).
 Advisor-grain scope (`{scope}` = firm x advisor) is D-group's projection; Group A carries the
 advisor ATTRIBUTION inputs (A_01/A_02) without projecting them. fact_slm/uln/ult/upn/upt/rl*/rt*
 are deliberately untouched by Group A -- they are attribution/validation-family inputs (canonical
