@@ -195,14 +195,27 @@ One file per feature. Never overwrite into a monolith.
     this contract). This line previously documented `--expected-criteria C1,C2,C3`, which the
     tool does not accept -- `proof-of-spec-check.py:65` takes `len(sys.argv) in (2,3)` with
     the criteria string at `sys.argv[2]`.
-    ⛔ WHY THIS MATTERED MORE THAN A TYPO -- IT FAILS TOWARD SILENTLY DISABLING THE COVERAGE
-    LAYER. The flag form exits 2 into HELP TEXT that contains no "INVALID" string, so a caller
-    who greps the output for INVALID reads a hard usage failure as a clean pass. And the
-    natural recovery from "my command printed help" is to drop the argument and run the BARE
-    two-arg form -- which is legal, exits 0, and SKIPS THE COVERAGE DIFF ENTIRELY. That diff
-    is the half that catches an assignee omitting a criterion row; the documented-but-broken
-    command's easiest fix is the one that turns it off. Exercised both ways on a live instance:
-    flag form rc=2 + help text; positional form `VALID`, rc=0, 6 rows, 0 violations.
+    ⛔ CHECK THE RC, NEVER THE OUTPUT STRING -- THE USAGE BANNER CONTAINS THE VOCABULARY OF
+    BOTH VERDICTS. The flag form is a usage error: rc=2, 19 lines of help, and line 13 reads
+    "Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error."
+    So a string-matching caller reads back whichever word it went looking for:
+      - checks rc          -> SAFE. rc=2 is loud and correct.
+      - greps "INVALID"    -> effectively safe; it MATCHES the legend and refuses. Noisy, not wrong.
+      - greps a SUCCESS string ("VALID") -> ⛔ SILENT PASS. It matches "Exit 0 = VALID" in the
+        banner of a call that validated NOTHING.
+    Second hazard, independent of the string: the natural recovery from "my command printed
+    help" is to drop the argument and run the BARE two-arg form -- which is legal, exits 0, and
+    SKIPS THE COVERAGE DIFF ENTIRELY, the half that catches an assignee omitting a criterion row.
+    Exercised: flag form rc=2 (rc taken WITHOUT a pipe) + 19 help lines; positional form `VALID`,
+    rc=0, 6 rows, 0 violations.
+    *(MECHANISM CORRECTED 2026-08-11 ~1727Z. This block first said the help text "contains no
+    INVALID string" -- FALSE, and it is the reversed reading of the same hazard. Caught and
+    ground-measured by 2.0.0_SA_COO~Z, who took the rc without a pipe after catching their own
+    first attempt reading `head`'s rc=0. The CONCLUSION -- use the positional form -- was right
+    both times; the MECHANISM was backwards, and Rule 22 exists because a wrong mechanism is
+    copied forward into the next rule where it becomes load-bearing. The general form worth
+    carrying past this tool: WHEN A FAILURE PRINTS THE VOCABULARY OF SUCCESS, ONLY THE EXIT CODE
+    DISCRIMINATES.)*
     The validator runs the COVERAGE diff first (a criterion with no row refuses the instance
     before any quality check; frames printed) then the quality rules (FAIL-requires-reason,
     thin-evidence-PASS invalid, dead mutant/determinism controls invalidate).
