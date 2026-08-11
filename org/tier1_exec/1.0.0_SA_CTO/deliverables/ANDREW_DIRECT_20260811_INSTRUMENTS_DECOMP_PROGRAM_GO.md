@@ -195,3 +195,20 @@ The CERTIFIED-requires-passing-cert_ref check must carry a **DEVIATION-NO-CAPABI
 distinct from a capability-granting deviation** — a real-but-inert deviation reported at full
 severity is how an instrument trains its readers to ignore it (CVO~Z, from the packet guard's own
 first-run false alarm the same hour). Rides the proposal to Andrew; candidate stays PROPOSED-only.
+
+---
+
+## METHOD WORKSTREAM RE-HOMED (Andrew-direct, laptop terminal ~1935Z, relayed 1939Z)
+
+VERBATIM (received by laptop MSTR; both MSTRs' shared read surfaced at Andrew for one-word
+correction): *"Let's run the rectangle/atom_decomp work on this fabric as 4.0.0_SA_CRO~B is deep on
+that with proper context."*
+
+**Operative at this seat, per the shared read — MY BREADTH READ MATCHES, no delta:** method
+EVOLUTION (schema stewardship, emit-bridge, exercise 2, the M-class proposals) homes at laptop
+CRO~B. Site-Z's APPLICATIONS of the method continue unchanged under their own Andrew words:
+OPAL_ANALYST (W2 running) and instruments (0.8.0 measuring). I remain method-owner-of-record for
+what is LANDED; the gate-#3 build stays mine per "3 yes"; row-10 exercise-2 adjudication unchanged;
+lane mechanics unchanged. **The amendment bundle I was carrying (14(e) silences · §9.8.1 classes A–M
+· METHOD_READ M-1..M-15) is now CRO~B's stewardship backlog — handed over as consolidated pointers,
+not accumulated further here.** Future method findings from site-Z runs route to CRO~B as inputs.
