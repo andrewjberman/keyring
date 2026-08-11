@@ -1143,6 +1143,52 @@ EXCLUDED from pipescript-verify — deliberate and declared.** *A declared exclu
 not a blindness; it is a documented boundary.* Keeping the distinction so the roster reads as **three gaps
 plus one honest limit**, not four bugs.
 
+## 4o · X-ii-a INTENT CONFIRMED · **"EXISTENCE IS NOT AUTHORITY"** · and twice I had to say a rule does NOT block something
+
+### X-ii-a: BUILD IT — and the selection needs ZERO code change
+
+AE gave **intent-before-build** on an act with many crossings; confirmed on all four rows. **Their
+mechanism read beat my reasoning: I argued (c) from a producer defect that does not exist.**
+`load_prior_partner_block` is **already** stamp-keyed (*"NEVER `max(prior_dates)`"*, the 07-09
+fabricated-residual law), and a `partners==0` partition carries no block → `None` → fail-safe →
+Sentinel-2 loud error → **write refused. A refused-write-class partition is structurally incapable of
+being read as authoritative.** So (c) costs zero code, and the (a)-with-named-poison fallback is
+**unneeded — there is no poison to carry.**
+**AE also refused a temptation I did not anticipate:** the only available "improvement" would be a
+walk-back past such partitions, which would **amend the ruled never-`max` law** — so it goes to CTO as a
+law amendment, never inside this act. *They applied my own escalation discipline to a case I had not
+thought to cover.*
+
+### ⛔ NEW ROW — THE ONE READER THAT GENUINELY FAILS THE PREDICATE
+
+**`mdpf-daily-trigger:413` discharges its roll-source check with `head_object` — EXISTENCE ONLY.** A
+`partners==0` partition **EXISTS**, so **the DEFER gate reads a refused-write-class artifact as a valid
+roll source.**
+> ** EXISTENCE IS NOT AUTHORITY. ** The roll-forward reader was already safe; **this consumer is not.**
+> **THIRD VARIANT OF ONE FAMILY TONIGHT:** *a name is not a grain* (four column specimens) · *a leg rate
+> is not a path rate* (99.8 vs 99.65) · **existence is not authority.** All three are **"the label
+> satisfied the check and the content did not."**
+
+**Correctly NOT built inside X-ii-a** (scope discipline; its env repoint rides as planned). **Routed to
+CTO's roster** — the gate's verdict quality is theirs.
+
+### ⚠ TWICE TONIGHT I HAD TO SAY A RULE DOES NOT BLOCK SOMETHING — that is a pattern, not a coincidence
+
+1. **The orphaned Stage5 alarm deletion:** the moratorium bans **BUILDING** notification machinery, **not
+   deleting a dead instance of it.** AE held it (correctly, for CTO's roster ownership) but flagged the
+   moratorium as the reason.
+2. **The `:413` verdict-quality fix:** AE flagged it *moratorium-adjacent*. **It is neither rule.** The
+   moratorium bans building alerts/monitors — **a landed gate returning a low-quality verdict is not
+   notification machinery.** And no-inferred-gates bans **NEW approval gates** while **explicitly
+   protecting the landed mechanical gate layer** — **improving what an existing control READS is a
+   CORRECTNESS FIX, not the creation of a gate.** It needs CTO's roster word, not Andrew's authorization.
+
+> **THE PATTERN: these rules were each written to stop a SPECIFIC harm, and a seat moving fast reads them
+> as blanket prohibitions on the whole TOPIC.** The cost is real — it freezes correct work and it routes
+> asks to Andrew that were never his. **Reading a NEVER-rule narrowly and exactly is not looking for a
+> loophole; it is reading it as written.** *Both instances were caught only because a lane surfaced the
+> hesitation instead of silently not doing the work — which is the only reason this is visible at all.*
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
