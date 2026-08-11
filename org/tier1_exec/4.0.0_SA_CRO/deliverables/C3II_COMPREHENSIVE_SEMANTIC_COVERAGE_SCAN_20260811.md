@@ -192,3 +192,29 @@ honest F1-scope caveat -- PASS.
 3. **Retrieval quality at top-11:** genuinely-mdpf docs dominate; the looser admits (DRFR_PTMCH,
    MKOV_TRSRCE, ADVI_FIRMSEP) are shared-serving-spine neighbors -- consistent with the vertical
    spanning the shared platform, and the model did not leak them into friction evidence (R2).
+
+## 10. CALL #2 (STATE) WIRING -- rubric pre-registered BEFORE the fire
+Same context block; ADDED STATE-LAYER LAW in-prompt: a doc's own lifecycle language (revamp plan,
+deprecation note, old status line) is NEVER shift evidence -- docs age; the ratified value + friction
+figures are the only live inputs. RUBRIC (registered before reading any response):
+R1 SCHEMA (all fields incl. doc_context_used) · R2 SHIFT-EVIDENCE = friction figures only (no doc
+cited as evidence OF a shift) · R3 GROUNDED (doc_context_used subset of provided paths) ·
+R4 SOVEREIGNTY (proposal framing intact; no asserted lifecycle fact) · R5 F3-dark named in
+confidence_reason. PASS = all five.
+
+**CALL #2 FIRE RESULT -- 5/5 PASS (scored against s.10's pre-registered rubric):**
+R1 all fields incl. doc_context_used -- PASS-WITH-NOTE (response arrived ```json-fenced despite
+"Return ONLY JSON"; parseable after strip; canonical form gains a "no code fences" line). R2 shift
+evidence cites F2/F1/F4 only -- PASS, and **the load-bearing result: the REVAMP docs sat in context
+and were NOT read as transition evidence** (the state-layer law held against exactly the trap it was
+written for). R3 doc_context_used = 4 paths, subset of 11 -- PASS. R4 sovereignty framing intact
+(NONE-shift / PERMANENT proposed, nothing asserted) -- PASS. R5 F3-dark named, "UNMEASURED, not
+calm, caps the read" -- PASS. Fast + cheap: 21.8s, 548 reasoning tokens (the state call stays light
+even with context).
+
+**CHAIN STATE: friction (4/4) -> state (5/5), both wired with the null-gated doc context, both
+live-validated on the mdpf specimen. The scan -> calls wiring Andrew ordered is COMPLETE for the
+established call pair.** Next on this thread (queued): fold the doc-context block + "no code fences"
+line into the estate_report_runner call builders when the new friction/state calls land in the
+deployed runner (CVO operational loop, build routes via COO), and the per-vertical daily refresh
+rides the existing 9a-ET schedule.
