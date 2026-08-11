@@ -1454,6 +1454,14 @@ disguise:
 > **Andrew's confidence word sufficient**), but the distance to it just shortened for real reasons rather
 > than by re-reading the bar. *Worth stating precisely: substrate progress moves the DISTANCE to a trigger,
 > never the TRIGGER — and conflating those two is how a staged act fires early.*
+> ✅ **FIXED AT BOTH ARTIFACTS, not just flagged here (071540Z): CTO adopted the precision VERBATIM and
+> committed it into the matrix's staged-builds section, naming their own phrase *"advances its readiness
+> bar materially"* as the specimen.** So the corrected form — *substrate progress shortens the DISTANCE; the
+> TRIGGER never moves; the matrix authorizes the ASK, never the FIRE* — now sits **in the artifact a
+> successor would actually read**, not only in my flag about it.
+> *Recording the closure rather than the flag, because "I raised it with CTO" and "it is fixed in CTO's
+> document" are different facts, and only the second one protects anybody. That is the same cross-record
+> parity I have been requiring of other seats all window.*
 
 ---
 
