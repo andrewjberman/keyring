@@ -15,10 +15,10 @@ in-repo (:63 import, :3321/:3351) is ALREADY in the deployed bytes — nothing A
 
 | step | content | state |
 |---|---|---|
-| 1 LIFT | sentinel-removal commit carrying `SERVE-RELEASE-ACK:` in-message (safe_deploy_core:197 Phase-1 serve-gate) | PENDING |
-| 2 DEPLOY | cp repo INF_D_04.client_portal_summary.py (lift state) -> s3://opal-data-inf/code/gold/ ; verify ETag == local md5. Single-homed: code/manual_api/ + code/silver/ + code/bronze/ measured ABSENT 0553Z — no flat-sync collision surface | PENDING |
-| 3 RE-HOLD | restore the sentinel VERBATIM at :39 (repo-only; the deployed artifact never carries the sentinel — 08-05 precedent @1ae1ac882b) | PENDING |
-| 4 REPUBLISH | INF D-chain republish so platinum serves the classified figure (~$606K-class -> ~$128K-class); confirm clear of the 13:30Z MDPF bar at execution | PENDING |
+| 1 LIFT | sentinel-removal commit carrying `SERVE-RELEASE-ACK:` in-message (safe_deploy_core:197 Phase-1 serve-gate) | **DONE @96334728b4** (055xZ; CVO-verified exact @e6e0fe85c6) |
+| 2 DEPLOY | cp repo INF_D_04.client_portal_summary.py (lift state) -> s3://opal-data-inf/code/gold/ ; verify ETag == local md5. Single-homed: code/manual_api/ + code/silver/ + code/bronze/ measured ABSENT 0553Z — no flat-sync collision surface | **DONE 055655Z** ETag 4192c665880871632f4d22ff3f150bba == lift-state md5 (CVO-verified) |
+| 3 RE-HOLD | restore the sentinel VERBATIM at :39 (repo-only; the deployed artifact never carries the sentinel — 08-05 precedent @1ae1ac882b) | **DONE @c33d2e5260** — 79s open window total (CVO: "textbook") |
+| 4 REPUBLISH | **TRIGGER + OWNER (per CVO P1 @e6e0fe85c6): primary = CRO~A's 0645Z `mode:full` re-dispatch via inf-gold-trigger (run owner 4.0.0_SA_CRO~A; full mode re-pulls, so D_04 computes on FRESH gold, never 08-01-frozen inputs); fallback = the 13:47Z scheduled production cycle. SERVED-READ + CLOSE OWNER: 0.4.0_DS_ClientPlatform — monitor bg7p7iu65 polls the served key; close on LastModified > 0645Z AND body carries `unreconciled_aua` + the ~$128K-class figure. First served `unreconciled_aua` may be legitimately NEGATIVE (the retired clamp's hidden debt surfacing — signal, not regression; CVO gift, asserted unclamped in the acceptance harness).** | OPEN — visibly owned (this row), not silently pending |
 
 ## PRE-REGISTERED READINGS (decided before evidence)
 - Any step fails -> restore deployed bytes from the held rollback artifact (scratchpad
@@ -31,3 +31,23 @@ in-repo (:63 import, :3321/:3351) is ALREADY in the deployed bytes — nothing A
   for the bar; steps 1-3 stand regardless (commit/sentinel acts do not touch the bar).
 - C-1 (revaluation asymmetry) is NOT closed by this release; the AoR-fold condition is NOT retired
   — the sentinel returns with its original text verbatim.
+
+## AMENDMENT (0635Z) — step-4 evidence source changed; two scope corrections
+
+1. **COLLISION (CRO~A 062632Z, zero-blame both directions):** the 0558Z direct-SSM gold-d dispatch
+   (744be729) ran beside CRO~A's in-flight 0514Z full chain on the same runner. Direct SSM carries
+   no trigger-Lambda env exports, so the gold-d chain's resolver stamped aor_resolution fold-OFF
+   (055856Z); CRO~A's C_01 correctly REFUSED the mode mismatch and their chain failed CLEAN.
+   Nothing mode-incoherent reached the served plane (measured: platinum/firm/dashboard.json is
+   still the 363-byte 07-31 object — no D_04 write landed from either chain). Steps 1-3 (lift /
+   deploy / re-hold) are UNTOUCHED by this.
+2. **STEP-4 EVIDENCE SOURCE:** the republish now rides CRO~A's 0645Z `mode:full` re-dispatch
+   (coherent fold mode, via the trigger path). This ledger closes on the SERVED read of
+   s3://opal-data-inf/platinum/firm/dashboard.json: LastModified advances past 0645Z AND the body
+   carries `unreconciled_aua` + the ~$128K-class non_fee figure. NOT on any chain/SSM exit code.
+3. **LESSON ADOPTED, standing at this seat:** ad-hoc INF chain dispatches go through
+   `inf-gold-trigger` ({mode:...}), never direct SSM — the trigger carries the env exports AND the
+   dispatch lock (serialize, don't interleave). Structural gap flagged to CTO by CRO~A.
+4. **SCOPE CORRECTION (COO 062723Z):** the exception-set retirement of the residual lands on the
+   **CVO CERT**, not on this ledger's close. This ledger closes ONLY the serving-path half
+   (fixed + served-verified). CERT-REQUESTED at CVO; that half stays open past this close.
