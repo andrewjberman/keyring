@@ -13,14 +13,14 @@ was read as BAR-DISCHARGED; the states below are each grounded on a committed ve
 - **IN FLIGHT (WINDOW-GATED)** = not even the core clears yet; gated on the window backfill / emission.
 - **NOT STARTED** = no CVO instance has reached me.
 
-## THE COUNT: BAR-CLEARED = 0 of 16. (SCOPE-VALIDATED = 7; IN FLIGHT = 1; NOT STARTED at cert = 8.)
-*(Updated ~1910Z: firm_ownership_map @fe9ffd6f30 validated -> SCOPE-VALIDATED, was NOT STARTED. header_metrics re-grade to BAR-CLEARED is pending base's window-derivation build + emit, ~30-45min, NOT a vacuous re-run of today's zero-window d01 -- base's 190837Z dependency truth, correct.)*
+## THE COUNT: BAR-CLEARED = 1 of 16. (SCOPE-VALIDATED = 6; IN FLIGHT = 1; NOT STARTED at cert = 8.)
+*(Updated ~1922Z: **header_metrics is BAR-CLEARED -- the FIRST** (window re-grade complete: live windows verified, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins independently grounded against the served bytes to exact magnitude; the V5-NNA-REBASE window divergence rides the ~1742Z wholesale Schwab-canonical ruling). Prior ~1910Z: firm_ownership_map @fe9ffd6f30 -> SCOPE-VALIDATED.)*
 Denominator **16** = the 49F served-family roster (the header_metrics archetype "reused by the other 15
 families"; exact roster is base DS's sweep scope).
 
 | # | Surface | State | Grounding (verdict file) |
 |---|---|---|---|
-| 1 | header_metrics | **SCOPE-VALIDATED** (closest to BAR-CLEAR) | VALIDATED_49F_HEADER_METRICS: technical parity CLEAR; **gate 1 ($122.5M) DISCHARGED @745ca6d78f**; gate 2 = V2 window backfill running (fill-2). ONE landed compute from BAR-CLEARED. |
+| 1 | header_metrics | **⭐ BAR-CLEARED (FIRST)** | VALIDATED_49F_HEADER_METRICS ~1922Z: all planes clear incl. live windows; both gates discharged (gate 1 @745ca6d78f; gate 2 fill-2 + window discrimination DEMONSTRATED by a validator-planted mutant rc=1); pins independently grounded vs served bytes. Residual: re-pin-daily (by-design, stale-pin-fails-loud). |
 | 2 | fee_efficiency | **SCOPE-VALIDATED** | VALIDATED_49F_DASHBOARD_FEE_EFFICIENCY: computable CORE clears; window mass pending backfill |
 | 3 | clients_tab | **SCOPE-VALIDATED** | VALIDATED_49F_FEE_EFFICIENCY_AMENDED_CLIENTS_TAB: technical parity clears; V8 residual named follow-on |
 | 4 | client_detail | **SCOPE-VALIDATED** | VALIDATED_49F_CLIENT_DETAIL: value CHARACTERIZED vs sovereign band; V16/17/18 backfill + harness fan-out + cutover re-pin pending |
@@ -31,15 +31,19 @@ families"; exact roster is base DS's sweep scope).
 | 9-16 | remaining families (8) | **NOT STARTED** (at cert) | no CVO instance reached me; production-bound (window-derivation build + emission) |
 
 ## WHAT ANDREW SHOULD HEAR (do not soften -- per COO)
-- **Zero surfaces discharge the bar as written. Not one.** The "4 of 16 cleared" was a
-  message-summary artifact; every verdict file states its scope precisely.
-- **The work is real, not vapor:** six surfaces carry genuine technical/core parity with named,
-  understood residuals, and three instrument defects were caught THIS sweep BY controls firing (the
-  shadowed pin, the 0.5pp swallowed mutant, the cash class) -- the bar is discriminating, not decorative.
-- **The path to the first BAR-CLEAR is short and human-free:** header_metrics needs only fill-2 to land;
-  gate 1 is already Andrew-ruled. When fill-2 lands I re-grade the window monetary discrimination and,
-  clean, header_metrics is the FIRST BAR-CLEARED surface.
-- **The constraint is production, not validation:** my cert queue is drained; the remaining 9 are
+- **The FIRST bar-clear has landed: header_metrics, 1 of 16.** The count was 0 at ~1858Z and is 1 at
+  ~1922Z -- earned by base building the window derivation post-fill-2 and my adversarial grade (validator-
+  planted window mutant FAILs; pins independently grounded against the served bytes to exact magnitude).
+  The remaining 6 SCOPE-VALIDATED carry genuine technical/core parity with named residuals; 1 IN FLIGHT
+  (dashboard); 8 awaiting emission.
+- **The work is real, not vapor:** and the bar is discriminating -- FOUR instrument defects were caught
+  THIS sweep BY controls firing (the shadowed pin, the 0.5pp swallowed mutant, the cash class, and base's
+  own 0.5pp-vs-0.02pp window-tolerance self-catch). The first bar-clear passed BECAUSE a validator-planted
+  mutant could fail and a pin was independently grounded, not because it looked clean.
+- **The path for the rest is the same shape:** each window family needs base's shared window-derivation
+  (runner_common.window_nna_sums, one derivation home) + a grade; the calibration header_metrics just
+  established (pinned V5-NNA-REBASE divergence + validator mutant) carries to them.
+- **The constraint is production, not validation:** my cert queue is drained; the remaining 8 are
   awaiting emission, not awaiting me.
 
 ## RE-GRADE DELTAS vs COO's prior report (the corrections)

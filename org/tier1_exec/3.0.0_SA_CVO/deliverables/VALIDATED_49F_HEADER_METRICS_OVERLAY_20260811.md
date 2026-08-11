@@ -3,7 +3,34 @@
 **3.0.0_SA_CVO 2026-08-11 ~1051Z · VALIDATE.** Instance @8993fcd090, bar @bcf9e14802 (+amendments).
 Independently verified against the artifact (re-ran fit_harness --self-test myself), not the summary.
 
-## VERDICT: TECHNICAL PARITY CLEARED. Kill-clear on this surface PENDING two non-technical gates.
+## ⭐ VERDICT (FINAL, ~1922Z): BAR-CLEARED. The FIRST 49F surface to fully discharge Andrew's bar.
+
+> **WINDOW RE-GRADE COMPLETE ~1922Z -- header_metrics is BAR-CLEARED (validated by CVO, adversarially).**
+> Base built the window derivation post-fill-2 (runner_common.window_nna_sums @87ddb840c4, C_01 series
+> 526/526) and emitted a live-window new-root with 8 mechanism-grounded pins committed PRE-evidence
+> @6a77cb57d9. MY ADVERSARIAL GRADE, all four limbs:
+> 1. **Windows LIVE (my per-field control):** 8/8 nna fields populated, 0 zero -- a mutant is not vacuous.
+> 2. **Positive limb (unperturbed):** fit_harness PASS rc=0, 84 fields, 8 window paths PINNED-OK.
+> 3. **Negative limb (MY validator-planted mutant, total.nna_ytd +$8.67M >> 1bp band):** FAIL rc=1,
+>    exactly one field flipped (DESIGN 28->27, FAIL 0->1). Window monetary discrimination DEMONSTRATED,
+>    validator-planted -- the could-not-have-said-otherwise control, on a LIVE window field.
+> 4. **Independent pin-grounding (I read the served bytes myself, guarding against a fabricated pin):**
+>    served-minus-new = qtd +57,147,936.09 / ytd +124,699,201.93 / 12m +155,494,560.73 / mtd
+>    -1,925,051.21 -- MATCHING base's pinned deltas (57.1M/124.7M/155.5M/1.9M) to the exact magnitude.
+>    The pins encode the REAL served-vs-new divergence, not a tautological self-pin.
+> **SOVEREIGN COVERAGE:** the window divergence (served NNA systematically higher; the V5-NNA-REBASE
+> designed basis fork) rides the ~1742Z WHOLESALE ruling @745ca6d78f ("Schwab-canonical is the
+> authoritative source for the served 49F NUMBERS" -- vendor-universe, not just total.aua; that record
+> states header_metrics' remaining human gate is CLOSED). NNA is part of "the served 49F numbers" -- no
+> new human gate. RESIDUAL (by-design, not a blocker): the window pins carry a RE-PIN-DAILY obligation
+> (vintage-scoped; a stale pin FAILs loud -> no silent drift). ONE-LINE SURFACE (not adjudicated): I read
+> the NNA flow-basis (F-4 matched vs served additive_account_once) as the canonical resolution covered by
+> the wholesale ruling; if Andrew intends it as a distinct scope call, flag it -- the TECHNICAL discharge
+> is complete either way.
+> **So header_metrics flips SCOPE-VALIDATED -> BAR-CLEARED. First of 16.**
+
+---
+## VERDICT (superseded ~1051Z form): TECHNICAL PARITY CLEARED. Kill-clear on this surface PENDING two non-technical gates.
 
 > **AMENDMENT 2026-08-11 ~1857Z (GATE 1 DISCHARGED -- this verdict was written ~1051Z, BEFORE the ruling):**
 > **Gate 1 (the $122.5M DIVERGE-SOVEREIGN scope call) is CLOSED.** Andrew ruled it ~1742Z (/open-calls
