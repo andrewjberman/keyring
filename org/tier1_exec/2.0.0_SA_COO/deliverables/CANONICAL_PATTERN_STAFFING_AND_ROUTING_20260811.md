@@ -15,15 +15,25 @@ NOTHING** — no act below is an approval step (CLAUDE.md no-inferred-gates).
 `get_live_agents` @0521Z — **4 live:** `0.0.0_AB_MSTR`, `0.4.0_DS_ClientPlatform` (IDLE),
 `4.0.0_SA_CRO` (idle/event-driven), `4.0.0_SA_CRO~A` (idle/event-driven).
 
-⚠ **BOTH of the program's named gate-holders are UNSEATED:** `1.0.0_SA_CTO` (owes the unified pattern
-spec + the ordered cutover sequence) and `3.0.0_SA_CVO` (owes the Rule-14e certification that gates
-the cutover). `0.7.0_AE_CloudOps` is also unseated and owns C-3. **This is a capacity fact, not a
-gate** — spawn authority is MSTR's (`/mstr-spawn`); surfaced to MSTR, not held on.
+**CORRECTED 0530Z — `1.0.0_SA_CTO` CAME LIVE mid-turn** and delivered the pattern spec @3272f3c4b0
+with the ruled cutover order. My 0521Z read that "both gate-holders are unseated" was true when
+measured and is now half-false; the CTO half is discharged. *Recorded rather than quietly overwritten,
+because the staffing decision below was made under the older read.*
 
-**Consequence for sequencing, stated plainly:** §2 (the cutover) cannot be *dispatched* tonight — it
-needs CTO's ordered sequence and CVO's cert, and neither seat exists. §1 (three DS/AE landing acts) is
-**fully dispatchable now** and does not touch the cutover. So §1 goes out this turn and §2 is staffed
-as a frame that a CTO/CVO respawn drops into.
+⚠ **SEATING GAPS — RAISED 0528Z, BOTH DISCHARGED BY 0534Z** (MSTR, LD-0390/0391):
+- **`3.0.0_SA_CVO`** — owes the Rule-14e cert (gates cutover acts 2/3/4). **SPAWNED 0529Z (LD-0390)**
+  on CTO's 052626Z surfaced need — *crossed in flight, before my ask arrived.* CTO's 052113Z cert
+  request confirmed sitting in its inbox.
+- **`0.7.0_AE_CloudOps`** — owns **TWO dispatchable acts** (cutover act 1 / X-iv, and C-3/R-3).
+  **SPAWNED 0534Z (LD-0391)** with startup direction naming both acts + this register.
+
+**Seating was a capacity fact, never a gate** — spawn authority is MSTR's; I surfaced and did not hold.
+**The program is now fully seated: CTO, CVO, AE, DS, CRO, CRO~A, MSTR all live or booting.** The
+binding constraint has moved from *seating* to *the CVO cert and Andrew's exception set* — both
+correctly held by their owners, neither by me.
+
+**Integrator push LANDED @7f579d72b6** (MSTR, sole shared-branch integrator per LD-0367 r2 / LD-0368):
+zero local-ahead, carrying @f639b23c1f + @8ad0d6b641 + this register @014e7af672 + LD-0389/0390/0391.
 
 ---
 
@@ -121,25 +131,31 @@ R-4/R-2 on its own readiness read; **R-1 stays first.**
 
 ---
 
-## 2 · THE MDPF CUTOVER — staffing frame (NOT dispatchable tonight)
+## 2 · THE MDPF CUTOVER — staffed, with CTO's ruled order
 
-Grounded on the CRO decomp Part A3 @41692cd3d2. **STATUS = DRY, UNCERTIFIED.** Per the handoff, CVO
-must certify before any act touches the live client-facing chain. **`opal-data-mdpf` is LOAD-BEARING
-LIVE — MIGRATE-BEFORE-KILL, never a delete** (3 feeds written 03:30Z tonight; per-firm bells exercised
-08-10; both EC2 legs boot from it; DS deploys into it).
+**UPDATED 0530Z:** CTO delivered the **UNIFIED CANONICAL PATTERN SPEC v0.1** @3272f3c4b0
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_ADVI_UNIFIED_CANONICAL_PATTERN_SPEC_20260811.md`) and
+handed §5/§6 to this seat to staff. **This supersedes the "not dispatchable tonight" read above it** —
+CTO ruled the act ORDER, and one act is now dispatchable.
 
-"Kill the EC2 chain" is **FOUR separable acts**, not one:
+Grounded on the CRO decomp Part A3 @41692cd3d2 + the spec §5. **Decomp status = DRY, UNCERTIFIED.**
+**`opal-data-mdpf` is LOAD-BEARING LIVE — MIGRATE-BEFORE-KILL, never a delete** (3 feeds written
+03:30Z tonight; per-firm bells exercised 08-10; both EC2 legs boot from it; DS deploys into it).
 
-| Act | What re-homes | Proposed owner | TRIGGER | NAMED PRECONDITION |
-|---|---|---|---|---|
-| **X-i** | Feeder writes (`non_model_aua`, `etf_net_assets`, inflection feeds, bronze) — **the client-facing smartx read edge migrates WITH this** | DS (scripts) + AE (infra) | CVO cert **and** CTO's ordered sequence | ⛔ **per-firm 49financial + inflection `account-distribution` bells are LIVE and client-facing — they must not break.** Cottonwood + global + the flat key are FROZEN 07-23 by CTO ruling and are *deliberately* frozen, not broken. Underscore-in-gold / hyphen-in-platinum spelling law holds per layer |
-| **X-ii** | The aggregate (`gold/mdpf_revamp/_aggregate_aua` staging → the floor consumes it) | AE | after X-i | W1a already staged the consumer-side repoint — **verify that staging is still valid before reusing it**, do not assume. The floor and the chain are **SERIES-COUPLED, not parallel** (the false fork) |
-| **X-iii** | Accrual's `partner_roster` + code sync | DS + AE | after X-i | **atom 6: config NEVER in the code store** — `partner_roster.json` is the measured violation; this act is where it is fixed, not carried over. Derive the roster from the partner roster, never a literal count |
-| **X-iv** | Delete the 2 already-IAM-dead stages (3.5 legacy-emit, 5 OWNTS) | AE | independent of X-i..X-iii | **already IAM-severed = the only genuinely low-risk act here.** Still a deletion: confirm dead on the live primitive (not the comp-tool DESIRED view) before removing |
+**⚖ CTO'S RULED ORDER IS REVERSE-BLAST, AND IT IS THE RIGHT SHAPE:** zero-risk first, highest-blast
+last — `(iv) → (iii) → (ii) → (i)`. The table is ordered as it executes, not as it was numbered.
 
-**Two program-level preconditions that sit above all four acts, and neither is mine to discharge:**
-1. **CVO Rule-14e certification** of the decomp ground truth (@41692cd3d2). *Do not cut a live
-   client-facing pipeline on an uncertified rectangle.*
+| # | Act | What re-homes | OWNER | TRIGGER | NAMED PRECONDITION |
+|---|---|---|---|---|---|
+| **1** | **X-iv** | Delete the 2 already-IAM-dead stages (3.5 legacy-emit, 5 OWNTS) | `0.7.0_AE_CloudOps` — **UNSEATED** | **NOW — CTO: "touches nothing served and can staff now."** NOT gated on CVO cert, NOT on Andrew's exception set | Still a deletion: **confirm dead on the LIVE primitive** (`get-role-policy` / an exercised call), never the comp-tool DESIRED view — a comp-tool cannot tell landed from planned (Rule 22a). Nothing served may change |
+| **2** | **X-iii** | Accrual's `partner_roster` + code sync | DS (scripts) + AE (infra) | after X-iv **and** CVO cert | **atom 6: config NEVER in the code store** — `partner_roster.json` is the measured violation; this act is where it is fixed, not carried forward. Derive counts from the roster, never a literal |
+| **3** | **X-ii** | The aggregate (`gold/mdpf_revamp/_aggregate_aua` staging → the floor consumes it) | AE | after X-iii; **producer + consumer move in the SAME window** (CTO) | W1a already staged the consumer-side repoint — **verify that staging is still valid before reusing it**, do not assume a 1-week-old stage still applies. Floor and chain are **SERIES-COUPLED, not parallel** (the false fork) |
+| **4** | **X-i** | Feeder writes (`non_model_aua`, `etf_net_assets`, inflection feeds, bronze) — **the client-facing smartx read edge migrates WITH this** | DS (scripts) + AE (infra) | LAST. after X-ii **and** CVO cert | ⛔ **highest blast. The per-firm 49financial + inflection `account-distribution` bells are LIVE and client-facing — nothing staffed may touch them pre-cert (CTO, explicit).** Cottonwood + global + the flat key are FROZEN 07-23 by CTO ruling — *deliberately* frozen, not broken. Underscore-in-gold / hyphen-in-platinum spelling law holds per layer. **The atom-5 schedule floor lands HERE** |
+
+**Two program-level preconditions, and neither is mine to discharge:**
+1. **CVO Rule-14e certification** of the decomp ground truth (@41692cd3d2) — **requested by CTO
+   052113Z; CVO is OFFLINE, seating flagged to MSTR.** Gates acts 2/3/4 (X-iii, X-ii, X-i); does **not**
+   gate act 1 (X-iv). *Do not cut a live client-facing pipeline on an uncertified rectangle.*
 2. **Andrew's ratified must-calculate exception set** for atom 8 (raw-from-endpoint). Open at him since
    0500Z: is it `{net-new-assets [FLOW] + non-fee-AUA residual [BALANCE] + cross-account rollups}`,
    everything else raw — or is the non-fee residual itself retired for a raw pull?
@@ -190,7 +206,8 @@ pass — they do not break flow.
 | 6 | Estate-wide point-in-time extension census | CTO | OPEN, diagnostic |
 | 7 | Cottonwood deep-rekey adjudication | CTO (causation thread) | OPEN, deliberately not parallel-read |
 | 8 | `MISSING_IN_REPO`: deployed-only gold scripts with no repo counterpart (R-1's script is one; the decomp measured **4 more** in the assets_gold layer) | DS + CTO | OPEN — R-1 closes one instance; **the class is not closed by it** |
-| 9 | 2 unpushed local commits (audit-archive baseline + snapshot, @f639b23c1f/@8ad0d6b641) | MSTR (sole shared-branch integrator, LD-0367 r2 / LD-0368) | surfaced this turn |
+| 9 | 2 unpushed local commits (audit-archive baseline + snapshot, @f639b23c1f/@8ad0d6b641) | MSTR (sole shared-branch integrator, LD-0367 r2 / LD-0368) | **CLOSED** — push landed @7f579d72b6, zero local-ahead |
+| 10 | **`C-n` NAMESPACE COLLISION**: recon chapters (CRO base @07c6f68bf4: C-1 MDPF / C-2,C-3 at ~A / C-4 join / C-5 cottonwood) vs scheduling-jam findings (CRO~A strategy §4: C-1 custody asymmetry / C-2 double-lag / C-3 sweep order). **Two meanings, one label, arrived 3 min apart; I routed the FINDINGS C-2→DS and C-3→AE, which a reader of the recon map reads as ~A's work.** Rule-24 axis hygiene one layer up | CRO base (map owner) + CTO (spec owner) | OPEN — flagged to CRO/CRO~A/CTO 0530Z. Proposal: `C-n` stays recon, findings become `JAM-C1..C3`. **Until settled every COO dispatch qualifies `(A)`/`(B)`** |
 
 ---
 
