@@ -111,6 +111,21 @@ decision 4: validation inputs, never return inputs) and enter at C's validation 
   across two same-input runs (determinism control); a mutated input flips it (the mutant control).
 - A_04: gap census printed with the trading-calendar frame (weekends/holidays are NOT gaps --
   the T-1 law); any true gap NAMED.
+- **A_03 (ADDED 2026-08-11, CVO step-zero gap-fix -- confirmed independently by COO + ~A's INF mint;
+  the archetype shipped with NO A_03 acceptance row while its own :43 names dim_security as feeding
+  B_02's cell-4 DERIVE):** TWO rows, because rowcount is EXISTENCE and B_02 rests on CORRECTNESS
+  (the assertion-level escalation the TO protocol mandates) --
+  (i) **A5-A03-ROWCOUNT**: dim_security row count == distinct security count in the source
+  (fact_sec / dim_asset per the ruled source) on the same partition; denominators printed.
+  (ii) **A5-A03-ACCRUAL-PREDICATE** (the load-bearing one): the rate-bearing set re-derives to the
+  EXACT count B_02 consumes (112 of 2,313 on the 49F sample) FROM dim_security's own
+  `interest_rate` nonzero -- and the four accrual-input fields (`interest_rate`, `1st_cpn_date`,
+  `dividend_interest_frequency`, `next_pay_date`) are present and non-degenerate. **FORBIDDEN
+  SHORTCUT NAMED: the predicate must NOT key on `maturity_date` (sentinel-populated on ALL rows --
+  the trap CRO's own instrument hit); a predicate that reads 100% rate-bearing has taken it.** This
+  row validates the SAME predicate B_02's materiality is computed over -- a rowcount alone would
+  pass on a dim_security whose accrual fields were all null. (~A's INF-A-A03-ROWCOUNT is the
+  existence half; this adds the correctness half both firms need -- they align at Group B's touch.)
 - A_05: every fact_trn code on the freshest partition resolves through the table or lands
   UNRESOLVED-LOUD (0 silent rows); the 187-row table's census key re-derives.
 - A_06: coverage ratios printed with BOTH denominators (map-side and feed-side); the lockstep
