@@ -513,3 +513,59 @@ fits a seat acting on CRO~A's 082623Z broadcast, or Andrew at the assessment ter
 claim it — not to assign blame (the bytes were correct and the blast was zero) but because an unattributed
 write to a code store means we cannot tell a coordinated fix from a coincidence, and the dedupe of follow-ups
 depends on knowing.**
+
+---
+
+## AMENDMENT 4 (0847Z) — ⚡ **BRANCH (iii)'s CONDITION IS MET AND EXCEEDED. (iii) GOVERNS; (i)/(ii) ARE NOW COUNTERFACTUAL**
+
+*Landed minutes after Amendment 3 was committed. **The pre-registration's STRUCTURE held; only the selected
+branch changed** — which is exactly what a conditional table is for.*
+
+**CRO~A, on Andrew's live word at their terminal, drove the FULL RECOVERY PRE-BAR:**
+
+| act | evidence |
+|---|---|
+| the 08:33:17Z upload | **CLAIMED by CRO~A** — ⚠ **the unattributed-writer question in Amendment 3 is CLOSED** |
+| `mdpf-daily-trigger` re-invoked 08:34Z with the morning's recorded S3 event | run **`mdpf_daily_20260811_083449` COMPLETE** — **WS-A ok in 2s at the exact morning failure point**, STAGE6-REVAMP ok 72s |
+| `mdpf-gold-lambda` manually invoked | **GREEN, 12/12 `a4_objects`** — against **3/12** on the 08-10 scheduled run |
+| portal publisher invoked | **14/14 published**, manifest `20260811T084216Z-2be8c1a9` |
+| platinum | serves **`as_of 2026-08-07`, all four scopes** |
+
+### ⛔ THE GOVERNING TABLE FOR 13:30Z IS NOW (iii), AND IT INVERTS (i) AND (ii)
+
+**HEALTHY = REPRODUCING THE RECOVERED-MORNING SHAPE:** green · **12/12-class objects** · real non-zero write ·
+**inflection computed FRESH** · **NO roll line** · current vintage stamps.
+
+> ⛔ **AN S2 ERROR, OR A ROLL-FROM-08-06 LINE, AT 13:30Z IS NOW A GENUINE DIVERGENCE — STRAIGHT TO THE
+> SURPRISE CHANNEL.** Both were the *healthy* signatures under the pre-recovery terrain. **Branches (i) and
+> (ii) govern only in the now-counterfactual no-recovery world.** *The same observation flipped from
+> healthy to defect in under an hour, without the criteria changing — because the terrain moved and the
+> table said which terrain it applied to. A single-branch pre-registration would now be actively
+> misleading.*
+
+### ✅ THE AD-HOC / SCHEDULED SPLIT HOLDS, AND IT IS THE POINT
+
+**The manual invokes are RECOVERY INSTRUMENTS. They are NOT the bar and NOT the production evidence.**
+** THE 13:30Z SCHEDULED LEG REMAINS BOTH. ** *A green manual run proves the fix works; only the scheduled
+fire proves the pipeline works. Those are different claims and tonight's whole discipline rests on not
+conflating them.*
+✅ **The QA re-dispatch question in Amendment 3 is MOOT** — the run happened, Andrew-directed.
+
+### ⚠ PRE-REGISTERED SO NOBODY CALLS A FALSE OUTAGE AT 13:30Z: `as_of 2026-08-07` IS **VENDOR CADENCE, NOT STALENESS**
+
+On an 08-11 read, a **4-day-old `as_of`** will look like a stale pipeline. **It is not.** The ceiling is
+**vendor delivery cadence** — cottonwood's Monday file lands ~03:30Z tomorrow, schwab's ~10:16Z today.
+> **This is the trading-calendar rule's cousin and it earns a row for the same reason: an old timestamp is
+> not a finding, and the instrument that reports it cannot tell cadence from breakage.** ⛔ **Do not raise a
+> staleness finding on the `as_of` without first resolving vendor cadence.**
+
+### HOUSEKEEPING — closures folded
+
+- **Who uploaded at 08:33:17Z: CLOSED** (CRO~A, on Andrew's live word).
+- **QA re-dispatch: MOOT.**
+- **CTO ruled both AE roster candidates (084332Z):** the **calendar second-target BATCHES with the CPR-5
+  `safe_deploy_core` row** (DS map change + AE verify — **sequences with me in P3**) · the **`comp-freshness`
+  canonical ADD** is worded to AE for **post-window** execution (**trading-day-frontier basis MANDATORY**;
+  legacy entries stay until P5).
+- **AE's observation order stands unchanged** and is now more important, not less: **chain telemetry FIRST →
+  select the governing table → then the lambda leg.**
