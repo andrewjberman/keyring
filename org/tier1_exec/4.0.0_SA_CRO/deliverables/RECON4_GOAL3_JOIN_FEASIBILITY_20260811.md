@@ -119,3 +119,29 @@ name-vs-content defect -- its `account_id` column holds a SmartX UUID while `acc
 the Schwab digits; CVO's first two computation passes joined the wrong column and returned a clean
 0.0% before a length-distribution print caught it. Third live specimen for the 2a registry, and
 empirical proof that per-table key-hygiene grading (addendum-2's lesson) is not optional.
+
+## POST-CERT ADDENDUM 4 (2026-08-11 ~0618Z) -- DS CLOSED THE PARKED RESIDUALS: INFLECTION'S REAL-ACCOUNT JOIN IS 100.0%, AND TWO OF MY CELLS TAKE CORRECTIONS
+
+**Inflection residual CAUSE CLOSED (DS 061733Z, measured):** the 11 unmatched are NOT accounts --
+they are the feeder's DESIGNED fallback rows (`build_mdpf_wsc_inflection_feeder.py`
+`build_model_aua_positions`: no eclipse_account_id -> `account_id = "portfolio_{eclipse_portfolio_id}"`,
+comment-flagged at source), all with model_value 0.00 and NULL custodian/household. **Real-account
+join = 550/550 = 100.0%; zero AUA is unjoined.** Grain-labeled figures, both true: 98.0% at
+raw-row grain (561 incl. 11 designed stubs) · **100.0% at real-account grain** -- quote with the
+grain, never bare. My parked candidates AND the cert's "namespace leak" read both resolve to
+**BOOK-DEFINITION-BY-DESIGN** -- the leak hypothesis is superseded by the source mechanism.
+
+**Two corrections to my own cells (adopted):** (1) the len-12-14 tail values are UNDERSCORE SLUGS,
+0/11 all-digit -- my amended cell described them as long-format IDS; they are portfolio-slugs in a
+column named account_id: **inflection's own name-vs-content instance (specimen four).** (2) The 49F
+map residual re-grains: **11 x nine-digit + 3 x eight-digit over 14 DISTINCT account_numbers** (15
+rows, one duplicate; my "12+2" was row-grain). DS's disposition of the 14: the nine-digit family
+concentrates entirely in ONE model (Opal Conservative Growth, 74c119db), matches no Schwab
+transform, absent from SmartX fact_account_detail -- **a different numbering system whose custodian
+is NOT NAMEABLE AT REST; RECON-2's endpoint question is the naming instrument.** Eight-digit: 2 =
+closed Schwab accounts (left the book between 2025-01-13 and 2025-07-23), 1 = genuinely open,
+never in the book across 525 partitions.
+
+**Net state of goal 3's identity layer after one night:** inflection 100.0% real-account ·
+49F 99.65% end-to-end with a 14-account named-and-dispositioned residual · cottonwood
+intermediary-required with candidates staged. Every number carries grain + denominator + label.
