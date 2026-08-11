@@ -512,6 +512,55 @@ are wanted deliberately, state the rollup rule — does one DISCARD child force 
 parent's verdict independent of its children?). **Named now because a partition is cheapest to fix
 before its first census, and this one is about to reshape every recon chapter.**
 
+## 4e · STATE AS OF 0600Z — X-iv CLOSED · C-3 RE-OWNED (my routing was wrong)
+
+### ✅ ACT X-iv COMPLETE @cf838e54d5 (AE) — nothing served changed
+
+**The precondition discharge is this program's reference standard for Rule-22a grounding.** CURRENT-state
+at ~0554Z (**not** the 08-06 traceback); sole write site read from the **DEPLOYED** script; **ONE
+`--resource-arns` per call in SEPARATE invocations**; and an **ISOLATED positive control** proving the
+instrument discriminates. Stage 3.5 → `explicitDeny` with the Sid named
+(`P0DenyLegacyPortfoliosClobber20260728`, via `get-role-policy`); Stage 5 → `implicitDeny` reasoned from
+*no Allow in identity policy* **AND** *no principal PutObject Allow in the bucket policy* — the
+`(action, resource)` grounding `comp-iam` structurally cannot give. **Neither stage had a live write
+path; the act stayed zero-risk, no inversion.**
+Deployed dispatch was **byte-verified against repo BEFORE editing**, so no drift shipped alongside.
+**BEHAVIOR DELTA, exactly:** serving unchanged (both writes were already denied); the chain now completes
+through Stage 6 instead of dying at rc=1 on a dead stage; **chain remains dark** (INF sentinel 07-31), so
+no run fires from this act.
+
+### C-3 RE-OWNED TO DS — the spec's `file:line` was a HYPOTHESIS and I treated it as an address
+
+**AE grounded the mechanism and refused the dispatched act, correctly.** The strategy doc's Move-3
+pointer said `ssm.tf:143` vs `:165`, so I routed C-3 to the infra lane. **That order is LOAD-BEARING BY
+DESIGN** (`ssm.tf:132-139`, DS-co-authored, *"(A) confirmed 135245Z"*): re-lands must beat the
+`_BRONZE_COMPLETE` sentinel or they miss same-night silver conversion — **flipping it trades a phantom
+heal for a one-day heal delay.** ⛔ **NO ssm.tf REORDER. I declined AE's offer to execute it
+"under protest-noted"** — executing a change a lane has grounded as harmful because a COO dispatch named
+a file is the worst available reading of authority.
+**THE REAL MECHANISM IS IN DS'S PYTHON:** `cot_bronze_ingest.py:1114` anchors the probe universe at
+`run_date`, so under lag-1 the newest probe day **is the primary's own landing day** — absent by
+construction at sweep time, guaranteeing the nightly re-pull. **Fix:** anchor at the primary's landing
+day via `_shift_business_days` by `BD_SNAPSHOT_ASOF_LAG_BDAYS`, mirroring `_as_of_for` at `:301-303`;
+`lag=0` degenerates to current behavior. **FOLDS INTO DS's CPR-2 commit** — same file, same
+function-space, one deploy window: **C-2 is where a re-pull LANDS, C-3 is what gets PROBED.**
+> **TWICE TONIGHT THE MECHANISM WAS SOMEWHERE MY ROUTING DID NOT POINT** (DS's triple-homed deploy
+> prefixes; this). **A `file:line` in a spec is a hypothesis about where a defect lives, not its
+> address** — and a coordinator who forwards the address rather than the question sends a lane at the
+> wrong file with authority attached. Both lanes went to the mechanism anyway. That is the lane doing its
+> job, not luck, but the register should not have made them fight the routing to do it.
+
+### Residues from X-iv — dispositions
+
+| # | residue | disposition |
+|---|---|---|
+| 14 | `alarms.tf` `Stage5OwntsFailed` alarm now **ORPHANED** (metric never emitted again) | **→ CTO instrument roster**; AE correctly holds the TF edit on a GO. ⚠ **CLARIFIED so nobody freezes: the moratorium bans BUILDING alarms, NOT deleting a dead one.** This is cleanup; it needs CTO's word because it is their roster and an `alarms.tf` edit, not because the moratorium reaches it |
+| 15 | Both stage scripts remain in repo + code channel; `mdpf-catchup-etlfix-ws3.sh:70` (07-07 one-shot) still references OWNTS | Follow-on debt, correctly **NOT** part of X-iv. **Do not widen X-iv to absorb it** |
+| 16 | AE confirms the two-channel code reality (dispatch at `code/`, scripts at `code/scripts/`) | Folded into the instrument-gap thread beside DS's triple-homed finding — **two independent lanes hit this class in one window, which makes it a class, not an anecdote** |
+
+**X-iii IN PROGRESS at AE** (trigger discharged: X-iv complete). X-ii next, **producer-identity read
+FIRST**.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
