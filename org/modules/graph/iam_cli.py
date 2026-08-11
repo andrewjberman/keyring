@@ -47,15 +47,22 @@ def _build():
 def cmd_gaps(args):
     profiles, roles, gaps = _build()
 
-    # CTO ruling 2026-07-10: `gaps` may NOT keep answering the ACTION-ONLY question
-    # in silence. Two surfaces of one binary that disagree is the weakest-copy
-    # problem inside a single tool -- `service`/`resource-sweep` now compare the
-    # RESOURCE; `gaps` still does not. Say so on the way in, not in a changelog.
+    # Andrew-direct 2026-08-11 ("fix the comp-iam tool"): `gaps` -- the DEFAULT surface --
+    # was the last ACTION-ONLY copy of a binary whose other surfaces (`service`,
+    # `resource-sweep`) already compared the RESOURCE (the CTO 2026-07-10 self-declaration
+    # made the blindness loud; this makes it FALSE). The flagship now runs the SAME
+    # resource_verdict machinery per call site and reports RESOURCE-MISMATCH as a
+    # first-class gap class. rc semantics deliberately unchanged (informational surface;
+    # `resource-sweep` remains the rc-gating form) so no existing caller breaks.
     _print_plane_banner()
-    print("SURFACE: gaps -- ACTION-ONLY. It does NOT compare resource ARNs.")
-    print("  A gap is absent here whenever the role holds the action ANYWHERE, even on")
-    print("  a bucket the call never touches. For the resource question use")
-    print("  `comp-iam resource-sweep` or `comp-iam service <fn>`.")
+    print("SURFACE: gaps -- TWO-PLANE (action + resource; Andrew-direct fix 2026-08-11).")
+    print("  Plane 1: ACTION gaps -- missing/deny-present/coverage-unknown, classes unchanged.")
+    print("  Plane 2: RESOURCE MISMATCHES -- the action is HELD, but NOT on the resource this")
+    print("  call touches (the class that previously FAILED GREEN on this surface).")
+    print("  GRANTED-BROAD (Resource:'*') is EXCLUDED, NOT CLEARED -- a wildcard cannot be")
+    print("  falsified by a resource check. Unresolvable resources are counted and named.")
+    print("  Still DESIRED-plane (parsed TF): for a fresh change ground on live get-role-policy;")
+    print("  for a NEW bucket/table/ARN the apply-time oracle stays simulate-principal-policy.")
     print("=" * 78)
     print()
 
@@ -72,13 +79,16 @@ def cmd_gaps(args):
     # Only a true "all clear" when there are NO error gaps AND coverage is full
     # (no unmodeled services) AND no Deny ambiguity. Otherwise we must NOT print
     # a confident "no gaps" -- that's the false-green this fix exists to kill.
+    # NOTE (2026-08-11 fix): NO early return here -- an action-clear run is EXACTLY the
+    # case where the resource plane matters most (action held somewhere == clear on
+    # plane 1 while the call still 403s on plane 2). The resource pass below runs always.
     if not filtered:
         if service_filter:
-            print(f"No findings for service filter: {service_filter}")
+            print(f"No ACTION-plane findings for service filter: {service_filter}")
         else:
-            print("No permission gaps detected.")
+            print("No ACTION-plane permission gaps detected.")
             print(f"  ({len(profiles)} services scanned, {len(roles)} IAM roles parsed)")
-        return
+        print()
 
     if errors:
         print(f"PERMISSION GAPS ({len(errors)} missing-permission)")
@@ -115,8 +125,79 @@ def cmd_gaps(args):
             print(f"    ?? {g.service} [{g.iam_role}] {g.iam_action}  ({g.file_path}:{g.line_number})")
         print()
 
+    # ---- PLANE 2: the RESOURCE pass (Andrew-direct fix 2026-08-11) ----
+    # Same resource_verdict machinery as `service`/`resource-sweep`, run per deduped call
+    # site across every role-mapped service. V_UNGRANTED rows are NOT re-reported here
+    # (they ARE the action gaps above -- different class, no double count). The section's
+    # product is V_UNGRANTED_RESOURCE: action held, resource not -- the fail-green class.
+    def _is_sentinel_action(a):
+        return a in ("UNMAPPED-METHOD", "UNRESOLVED-CLIENT") or a.endswith(":UNMODELED")
+
+    res_mismatch = []
+    res_tally: dict[str, int] = {}
+    res_checked = 0
+    unmapped_calls = 0
+    unmapped_services = set()
+    for profile in profiles:
+        if service_filter and service_filter not in profile.name.lower():
+            continue
+        role = roles.get(profile.iam_role) if profile.iam_role else None
+        seen = set()
+        for op in profile.operations:
+            for action in op.iam_actions:
+                if _is_sentinel_action(action):
+                    continue
+                key = (action, op.file_path, op.line_number)
+                if key in seen:
+                    continue
+                seen.add(key)
+                if role is None:
+                    unmapped_calls += 1
+                    unmapped_services.add(profile.name)
+                    continue
+                status, _stmt, note = role.resource_verdict(
+                    action, op.resource_arn, op.resource_exact)
+                res_checked += 1
+                res_tally[status] = res_tally.get(status, 0) + 1
+                if status == EI.V_UNGRANTED_RESOURCE:
+                    res_mismatch.append((profile.name, profile.iam_role, action, op, note))
+
+    if res_mismatch:
+        print(f"RESOURCE-MISMATCH ({len(res_mismatch)}) -- the action is HELD, but NOT on the "
+              "resource this call touches (previously reported [GRANTED] on this surface):")
+        by_svc: dict[str, list] = {}
+        for row in res_mismatch:
+            by_svc.setdefault(row[0], []).append(row)
+        for svc, rows in sorted(by_svc.items()):
+            print(f"  {svc}  (role: {rows[0][1]})")
+            for _svc, _role, action, op, note in rows:
+                print(f"    !! {action}  on  {op.resource_arn or '(resource unstated)'}"
+                      f"{'' if op.resource_exact else '   (pattern)'}")
+                print(f"       via: {op.source_pattern} at {op.file_path}:{op.line_number}")
+                if note:
+                    print(f"       note: {note}")
+        print()
+
+    # DENOMINATOR -- a plane that cannot state what it could not check has not checked.
+    print(f"  RESOURCE PLANE: {res_checked} call(s) verdicted across "
+          f"{len({p.iam_role for p in profiles if p.iam_role and (not service_filter or service_filter in p.name.lower())})} mapped role(s); "
+          f"{tallystr(res_tally)}")
+    if unmapped_calls:
+        print(f"    {unmapped_calls} call(s) in {len(unmapped_services)} role-UNMAPPED service(s) "
+              "NOT resource-checked (no role to verdict against -- honest hole, not a pass)")
+    _broad = res_tally.get(EI.V_GRANTED_BROAD, 0)
+    if _broad:
+        print(f"    {_broad} GRANTED-BROAD row(s) are EXCLUDED, NOT CLEARED -- a wildcard grant "
+              "cannot be falsified by a resource check")
+    print()
+
     print(f"Total: {len(errors)} missing | {len(deny_present)} deny-present | "
-          f"{len(unmodeled)} coverage-unknown  across {len({g.service for g in filtered})} service(s)")
+          f"{len(unmodeled)} coverage-unknown | {len(res_mismatch)} resource-mismatch  "
+          f"across {len({g.service for g in filtered} | {r[0] for r in res_mismatch})} service(s)")
+
+
+def tallystr(tally: dict) -> str:
+    return ", ".join(f"{v} {k}" for k, v in sorted(tally.items(), key=lambda kv: -kv[1])) or "0 verdicts"
 
 
 def cmd_roles(args):
