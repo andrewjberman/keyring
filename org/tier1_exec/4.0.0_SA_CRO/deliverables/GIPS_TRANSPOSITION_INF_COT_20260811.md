@@ -65,9 +65,18 @@ client-composite boundary discriminator.
   metric is percent-STRING typed ("8.74 %") — coerce; one outlier |Δ|=2004.5 → outlier-handling
   row; artifact at scratch p1_hist_20260630.csv, counts-only here.) The INF verdict upgrades:
   BOTH decision branches fully available.
-- **P2 (BD/cot):** queryType catalog sweep by template-create validation (the d2b §4 pattern) —
-  does a performance queryType exist? **P2b:** one deep historical Custom-window pull to measure
-  BD's history bottom. Both on the cot account under the standing firm-scoped lift.
+- **P2 (BD/cot): EXECUTED, catalog UNMEASURED — honestly.** Read-only roster (194 persisted
+  templates): SIX queryType families in use — Transactions, Allocation, Snapshot,
+  RealizedGainLoss, UnrealizedGainLoss, **BusinessIntelligence (a sixth family beyond the five we
+  pull — the "BI Billing" templates)** — NO Performance template in history, but history is not
+  the catalog (d2b §3.2). Create-validation name sweep (8 candidates + control): **UNDISCRIMINATING,
+  control-proven** — the known-valid "Snapshot" 500s identically to every candidate on a minimal
+  body (server errors before queryType validation), so pass/fail carries no signal; zero junk
+  persisted (re-counted). Named discriminating instruments for the follow-up: the query-builder
+  UI's own queryType dropdown (browser-automation enumerable) or BD vendor docs. **Verdict impact:
+  NIL** — cot is YES either way; P2 only picks raw-vs-computed for the performance leg, and the
+  computed branch is granted + GIPS-quality-barred. **P2b** (history bottom) remains one
+  deep-window pull, spec standing.
 
 ## WHAT THIS MEANS FOR THE PROGRAM (one paragraph)
 
