@@ -68,6 +68,19 @@ securities (from the positions/holdings canonicals), not bd's table alone.
 
 ## SCOPE / BOUNDARIES
 
+**SUBSTRATE-HOME TENSION -- NAMED, so it is not ratified by silence (CTO amendment 160826Z):** A_07
+is FIRM-NEUTRAL authority, but its build-time substrate is a bd-NAMED, bd-OWNED DynamoDB table
+(`bd-securities`). Left unnamed, that becomes a permanent implicit cross-firm dependency -- the shared
+canonical plane's ONE classification authority privately anchored to one firm's table, which future
+IAM/naming work would either cargo-cult or "clean up" as an apparent misgrant (the comp-iam
+deletion-warrant class: a firm-neutral producer reading a bd-named table reads, to a least-privilege
+sweep, like a grant to delete). So: **`bd-securities` is TRANSITIONAL substrate.** Its disposition
+(migration to a firm-neutral home, or explicit ratification of shared-plane ownership) is a DECLARED
+follow-on riding with the lib-copy deprecation; until then the producer's read is documented as
+shared-plane access to bd-named content, and any IAM census annotates the grant DEFERRED/REQUIRED
+(never a deletion warrant on this producer's `bd-securities` read). Changes no mechanics; closes the
+silent-ratification path.
+
 This delta adds the A-plane home; it does NOT build mix_summary (that is D-group's emitter, which now
 has a canonical input). It does NOT rule the cot/partners lib-copy DEPRECATION timing (retire-order,
 consumers-first -- a follow-on). The `_classifier_vintage` stamp exists because the DynamoDB content
