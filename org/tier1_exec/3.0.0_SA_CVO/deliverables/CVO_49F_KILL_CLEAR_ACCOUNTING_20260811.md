@@ -23,7 +23,8 @@ derivation, three served period frames). **THE TOTAL MOVES 16 -> 17** (the +1 is
 previously counted as one -- the inconsistency COO caught; base's key census is the denominator source of
 truth). I would rather 2 of 17 with a stable frame than 2 of 16 with a convention that shifts by row.
 
-## THE COUNT: BAR-CLEARED = 5 of 17. (SCOPE-VALIDATED = 11; IN FLIGHT = 0; NOT-YET-GRADED = 1.)
+## THE COUNT: BAR-CLEARED = 8 of 17. (SCOPE-VALIDATED = 8; IN FLIGHT = 0; NOT-YET-GRADED = 1.)
+*(~2140Z: **partner_analytics TRIO -> 3x BAR-CLEARED** (quarterly/monthly/annual) -- ~B sent the QA root; I graded ALL THREE adversarially: each positive limb PASS rc=0 + MY OWN mutant (views.aua.current.metrics.aua +$5M, echo-back landed 1789058516.82->1794058516.82) -> FAIL rc=1 through the V32 pin (which I verified == V19). Ran from --report-dir scratch per base's banked fit-clobber hazard. cla finding (NMNC/NMEC cohorts) disclosed+dispositioned. 16 of 17 keys BAR/SCOPE-graded; only advisor_nna_canonical (d14) ungraded, gated on its gzip baseline read.)*
 *(~2135Z: **partner_analytics TRIO @e7de551719 -> 3x SCOPE-VALIDATED** (quarterly/monthly/annual, one emitter d13) -- structural VALID, 6 rows PASS incl. a DERIVATION-CROSSING cross-tie (account data-sums == C_01 manifest-sums, 12/12 cent-exact); V32 corroboration +10,519,155.99 == V19 VERIFIED against my held firm_leaderboard value; cla FINDING disclosed (the family serves NMNC/NMEC cohorts, NOT A_07 classification -- the alias-set layer-finding's sibling, measured-before-build + disposition approved); determinism stable x2 (caught real nondeterminism). BAR-CLEAR pends ~B/base's QA root for MY OWN adversarial pin-mutant -- validated on structure + cross-checks I could do, not on ~B's reported PIN-MUTANT. Only advisor_nna_canonical (d14) now ungraded.)*
 *(~2115Z: **cumulative_chart @9853de4b84 -> SCOPE-VALIDATED** -- no-pin family (fit certifies SHAPE only), BUT I adversarially exercised its additive SUM IDENTITY DIRECTLY on the payload (not the build-time flags): adv-decomposition == geo-decomposition 109/109 to the cent (the additive dividend the nonadditive families cannot have), and my mutant (Travis Penfield +$6M on 2025-06-27) BREAKS it by exactly $6M. fit shape PASS (172,990 fields, FAIL 0); cross-tie #3 285,114,023.14 present (the cum-NET series, distinct from the 1,789,058,516.82 total AUA I hold). Leaf value-parity deferred to cutover (index-misalignment). 13 of 17 keys graded.)*
 *(~2110Z: **timeseries_chart TWINS @4faf0dd4e2 -> 2x SCOPE-VALIDATED** (firm_timeseries_chart + gold_timeseries_chart) -- I independently hashed both payloads: BYTE-IDENTICAL (platinum==gold==3715c6d64dca), so the truncation rule is vacuous at 761<1,091 days and grading one grades both. No-pin family (V27 daily index-misalignment, fit certifies SHAPE only, the timeseries_overview precedent); discrimination via derivation-crossing cross-ties 525/525 REFUSES + 761/761 additive identities. Cross-tie #4 285,114,023.14 verified against my d07-held value. Census-path finding disclosed (the d00 sampler cap hid the 2 largest artifacts through 5 vintages; frozen from live bytes @76d225de9b).)*
@@ -65,12 +66,12 @@ self-contradicted the count line; COO 212649Z caught it):**
 | 11 | cumulative_chart | d10 | SCOPE-VALIDATED | additive identity 109/109 to the cent + my mutant breaks it; no-pin, cutover-deferred leaf parity |
 | 12 | firm_timeseries_chart | d12 | SCOPE-VALIDATED | twin, byte-identical (I hashed both); no-pin; derivation-crossing cross-ties 525/525 |
 | 13 | gold_timeseries_chart | d12 | SCOPE-VALIDATED | twin of #12, same bytes -- graded together by measured identity |
-| 14 | partner_analytics quarterly | d13 | SCOPE-VALIDATED | @e7de551719 6 rows PASS; cross-tie 12/12 cent-exact; V32==V19 verified; cla=NMNC/NMEC cohorts finding disclosed. Bar-clear pends my own root-mutant. |
-| 15 | partner_analytics monthly | d13 | SCOPE-VALIDATED | same instance/emitter; monthly m3=Sunday calendar-grammar catch disclosed |
-| 16 | partner_analytics annual | d13 | SCOPE-VALIDATED | same instance/emitter; annual V33 zero-skeleton y3 by declaration |
-| 17 | advisor_nna_canonical | d14 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | awaiting QA root; I verify the GZIP-at-rest baseline reads before grading |
+| 14 | partner_analytics quarterly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant (aua +$5M) FAIL rc=1 through the V32 pin (==V19 verified); cross-tie 12/12 cent-exact |
+| 15 | partner_analytics monthly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; monthly m3=Sunday calendar-grammar catch disclosed |
+| 16 | partner_analytics annual | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; annual V33 zero-skeleton y3 by declaration |
+| 17 | advisor_nna_canonical | d14 | NOT-YET-GRADED (emitter BUILT+compiles, shape PASS) | root just delivered; I verify the GZIP-at-rest baseline READS before grading (instrument-support gate) |
 
-**Reconciliation:** 5 BAR-CLEARED + 11 SCOPE-VALIDATED + 1 NOT-YET-GRADED = 17. The 4 remaining are no
+**Reconciliation:** 8 BAR-CLEARED + 8 SCOPE-VALIDATED + 1 NOT-YET-GRADED = 17. The 4 remaining are no
 longer "NOT STARTED / no emitter" -- their emitters BUILT and COMPILE (clause a done); what remains is
 instance delivery + my adversarial grade. "NOT STARTED at cert" in the count line means not-yet-CVO-graded,
 NOT no-emitter -- the count line and this table now agree.
