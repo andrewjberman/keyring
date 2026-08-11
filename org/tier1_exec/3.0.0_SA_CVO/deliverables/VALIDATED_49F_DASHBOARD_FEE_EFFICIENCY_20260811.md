@@ -1,5 +1,21 @@
 # CVO VALIDATION -- 49F dashboard + fee_efficiency overlays + the shadowed-pin instrument catch
 
+> **WINDOW RE-GRADE AMENDMENT ~1936Z (post-fill-2, base's second root):**
+> - **dashboard -> BAR-CLEARED (the SECOND).** Live windows verified non-zero (identical to header_metrics
+>   by the shared derivation home), positive limb PASS rc=0, MY validator-planted mutant (headline.nna_ytd
+>   +$8.67M) FAIL rc=1 (one field flipped). Pins transitively grounded via the same served-NNA source I
+>   read independently for header_metrics. Gate 1 (total.aua) rides ~1742Z. dashboard had already cleared
+>   technical parity (below); the window plane now discriminates -> full bar-clear.
+> - **fee_efficiency -> STAYS IN FLIGHT, and a NEW window FINDING.** I graded its windows (in the same
+>   root) and my validator-planted mutant on a LIVE per-advisor cell (windows.max.advisors[0].nna, +$6M on
+>   60.38M) was ABSORBED rc=0 -- the PER-ADVISOR window plane does NOT discriminate (a blanket exemption
+>   over live fields, SS 5a). base's own mutant hit only the pinned FIRM-level windows. So fee_efficiency now
+>   carries TWO blockers: the Unassigned double-count (below) AND the per-advisor window plane needing pins
+>   (or a band-absorption-vs-not-compared determination). NOT bar-clear. Flagged to base.
+> - **LABEL NOTE:** COO's earlier count attributed the IN-FLIGHT verdict to dashboard; per this file
+>   (line ~50 "dashboard is the second surface to clear technical parity") it was always FEE_EFFICIENCY's.
+>   The accounting arbiter is corrected.
+
 **3.0.0_SA_CVO 2026-08-11 ~1705Z · VALIDATE.** Instances @3b945255c2; instrument fix @60cc0e1c0f.
 Verified against the artifact (re-ran fit_harness --self-test = 5/5 incl. the new shadowed-pin control).
 

@@ -13,20 +13,21 @@ was read as BAR-DISCHARGED; the states below are each grounded on a committed ve
 - **IN FLIGHT (WINDOW-GATED)** = not even the core clears yet; gated on the window backfill / emission.
 - **NOT STARTED** = no CVO instance has reached me.
 
-## THE COUNT: BAR-CLEARED = 1 of 16. (SCOPE-VALIDATED = 6; IN FLIGHT = 1; NOT STARTED at cert = 8.)
-*(Updated ~1922Z: **header_metrics is BAR-CLEARED -- the FIRST** (window re-grade complete: live windows verified, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins independently grounded against the served bytes to exact magnitude; the V5-NNA-REBASE window divergence rides the ~1742Z wholesale Schwab-canonical ruling). Prior ~1910Z: firm_ownership_map @fe9ffd6f30 -> SCOPE-VALIDATED.)*
+## THE COUNT: BAR-CLEARED = 2 of 16. (SCOPE-VALIDATED = 5; IN FLIGHT = 1; NOT STARTED at cert = 8.)
+*(⚠ LABEL CORRECTION ~1936Z: the dashboard/fee_efficiency states were SWAPPED in prior versions -- I propagated COO's mis-attribution without checking my OWN verdict file, which says (line 50) "dashboard is the second surface to CLEAR technical parity" and (line 43) the IN-FLIGHT verdict is FEE_EFFICIENCY's (its Unassigned double-count). Truth: **dashboard** was technical-clear -> now BAR-CLEARED; **fee_efficiency** was and remains IN FLIGHT. The count (7 SV / 1 IF pre-grade) was numerically right; the label of which surface was IN FLIGHT was wrong. Map-vs-territory, caught by reading the file.)*
+*(Updated ~1936Z: **dashboard is BAR-CLEARED -- the SECOND** (same window-NNA calibration as header_metrics, reused by construction: windows non-zero + identical values, positive limb PASS, MY validator-planted mutant FAIL rc=1, pins transitively grounded via the shared served-NNA source). ⚠ **fee_efficiency FINDING (stays SCOPE-VALIDATED, NOT bar-cleared): its PER-ADVISOR window plane does NOT discriminate** -- my mutant on a LIVE nonzero cell (windows.max.advisors[0].nna, +$6M on 60.38M) was ABSORBED rc=0; base's mutant hit only the pinned FIRM-level windows. A blanket exemption over live per-advisor fields (SS 5a). Flagged to base: pin the per-advisor windows or determine band-absorption-vs-not-compared before bar-clear. Prior ~1922Z: header_metrics FIRST bar-clear.)*
 Denominator **16** = the 49F served-family roster (the header_metrics archetype "reused by the other 15
 families"; exact roster is base DS's sweep scope).
 
 | # | Surface | State | Grounding (verdict file) |
 |---|---|---|---|
 | 1 | header_metrics | **⭐ BAR-CLEARED (FIRST)** | VALIDATED_49F_HEADER_METRICS ~1922Z: all planes clear incl. live windows; both gates discharged (gate 1 @745ca6d78f; gate 2 fill-2 + window discrimination DEMONSTRATED by a validator-planted mutant rc=1); pins independently grounded vs served bytes. Residual: re-pin-daily (by-design, stale-pin-fails-loud). |
-| 2 | fee_efficiency | **SCOPE-VALIDATED** | VALIDATED_49F_DASHBOARD_FEE_EFFICIENCY: computable CORE clears; window mass pending backfill |
+| 2 | fee_efficiency | **IN FLIGHT** | was IN FLIGHT (Unassigned double-count blocks value-parity, my own prior verdict). Windows now partially live (1,855 nonzero / 2,465 zero) but the PER-ADVISOR window plane FAILS the mutant control (+$6M on a live cell ABSORBED rc=0) -- a blanket exemption over live fields (SS 5a). TWO blockers now: Unassigned double-count + per-advisor window pins. Flagged to base. |
 | 3 | clients_tab | **SCOPE-VALIDATED** | VALIDATED_49F_FEE_EFFICIENCY_AMENDED_CLIENTS_TAB: technical parity clears; V8 residual named follow-on |
 | 4 | client_detail | **SCOPE-VALIDATED** | VALIDATED_49F_CLIENT_DETAIL: value CHARACTERIZED vs sovereign band; V16/17/18 backfill + harness fan-out + cutover re-pin pending |
 | 5 | mix_summary | **SCOPE-VALIDATED** | VALIDATED_49F_MIX_SUMMARY: P1-SCRIPTS; value rides the cot-bundle mix-basis band (dormant pre-cutover) |
 | 6 | firm_leaderboard | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_LEADERBOARD: P1-SCRIPTS; window mass + serving port + V19 pinned divergence pending cutover |
-| 7 | firm_dashboard | **IN FLIGHT (WINDOW-GATED)** | VALIDATED_49F_DASHBOARD_FEE_EFFICIENCY: "IN FLIGHT (WINDOW-GATED) is the CORRECT classification" -- NOT cleared (COO: stop carrying it as cleared) |
+| 7 | firm_dashboard | **⭐ BAR-CLEARED (SECOND)** | ~1936Z: live windows verified, positive limb PASS, MY validator-planted mutant FAIL rc=1; same window-NNA calibration + served-NNA source as header_metrics (pins transitively grounded). Gate 1 (total.aua) rides ~1742Z. Was IN FLIGHT; now cleared. |
 | 8 | firm_ownership_map (Unit-2) | **SCOPE-VALIDATED** | VALIDATED_49F_FIRM_OWNERSHIP_MAP @fe9ffd6f30: no monetary plane (mutant transposed to id-plane tamper guard, discriminating); cross-derivation id-set parity deferred to cutover re-pin |
 | 9-16 | remaining families (8) | **NOT STARTED** (at cert) | no CVO instance reached me; production-bound (window-derivation build + emission) |
 
