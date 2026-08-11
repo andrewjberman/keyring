@@ -1189,6 +1189,33 @@ CTO's roster** — the gate's verdict quality is theirs.
 > loophole; it is reading it as written.** *Both instances were caught only because a lane surfaced the
 > hesitation instead of silently not doing the work — which is the only reason this is visible at all.*
 
+## 4p · STAGED INPUT — GIPS-TWR feasibility @e323c1cfac (YES at DAILY tier, one conditional)
+
+Andrew tasked a GIPS-standard TWR feasibility assessment on the Schwab fact tables against his standard
+doc; CRO delivered it. **VERDICT: YES at the DAILY TWR tier, zero hard-stops** — `dim_balance` is the
+authoritative daily fair-value series, `fact_trn` the classifiable ledger. **No urgency claim**; it is
+feasibility recon feeding the four-month program's **2a performance leg**. Sequencing mine.
+
+**THIS IS THE GROUNDING UNDER THE FIFTH EXCEPTION MEMBER.** Instruction 5 granted *49F TWR computed from
+raw Schwab custody components*; this assessment establishes the components **can** carry it at daily tier.
+*Granted-and-feasible are two different facts and we now hold both — worth noting because a grant without
+a feasibility read is how a computation gets promised and then quietly can't be built.*
+
+### ⛔ MY SEQUENCING RULING FOR THE EVENTUAL BUILD TO — THE CONDITIONAL IS TASK 1, NOT TASK N
+
+CRO names five refinement cells as natural TO seams (all small), **two of which double as CRO~A's
+archetype-spec rows.** The tempting decomposition is five parallel cells. **Do not.**
+> **BUILD TASK 1 = the transaction-code classification table + the UNRESOLVED-CODE MATERIALITY
+> MEASUREMENT — because that is THE SINGLE CONDITIONAL THAT COULD RE-FIRE A HARD-STOP.** A "YES with one
+> conditional" verdict means **the conditional gates the verdict**, so it runs FIRST and alone.
+> **Parallelising it would build four cells on a feasibility that task 1 might then invalidate** — and the
+> four would look finished, which is worse than not having started them.
+
+**Two of the five cells are shared with CRO~A's archetype spec — those coordinate rather than duplicate**
+(the same one-source-two-consumers shape the single-homing law keeps surfacing, here in *work* rather than
+in code). **No dispatch tonight**; it stages behind the recon-fronts-implementation ordering with the
+other 2a work.
+
 ---
 
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
