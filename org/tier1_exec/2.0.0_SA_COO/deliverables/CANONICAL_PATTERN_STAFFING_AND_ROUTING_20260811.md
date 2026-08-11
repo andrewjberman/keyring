@@ -433,7 +433,7 @@ AoR-absence premise VERIFIED not asserted** — the lift's whole basis, and the 
 is specifically the advisor-of-record fold, (3) a **deploy-completion ledger entry** with all four steps
 (lift → deploy → **re-hold SAME WINDOW** → republish) finishing in-session or rolling back, (4) no
 intersection with the 13:30Z MDPF bar window.
-**Until both halves land, platinum serves the OLD arithmetic (~$606K vs the ratified-correct ~$128K).
+**Until both halves land, platinum serves the OLD arithmetic.** ⛔ **MAGNITUDE CORRECTED 0752Z -- THE "~$606K vs ~$128K" FIGURES WERE FROZEN-GOLD QA READS AND ARE WRONG BY ~500x. LIVE: the old residual served $71,944,750.24 AS CLASSIFIED CLIENT MONEY; the classified truth is $3,623,738.50, and the cross-source gap is `unreconciled_aua` = $68,321,011.74** (arithmetic identity 209,129,912.97 - 137,185,162.73 - 3,623,738.50).
 That is a HELD state with named owners, not a stalled one — and it is safe, which is why the gate exists.**
 **⚠ MY REGISTER SAID `PRECONDITION: none` ON THIS ACT. IT WAS WRONG.** Second time tonight a
 precondition was understated here and caught by DS *executing* (the first: CPR-1's triple-homed deploy
@@ -473,7 +473,7 @@ not a floor on the component that needs one — and it reads as one in any confi
 DISCHARGED BY MEASUREMENT, not assertion** — CTO verified the diff themselves: it touches exactly
 `_derive_fee_earning_aggregates` (4 hunks, `:764-848`), **ZERO AoR mentions.** My conditions (3)
 ledger-before-lift and (4) 13:30Z-bar confirmation are **restated as binding terms inside the ACK**, and
-**the sentinel returns verbatim in the same window.** Platinum moves ~$606K → ~$128K on the republish.
+**the sentinel returns verbatim in the same window.** ⛔ **The served `non_fee_earning_aua` moves $71,944,750.24 -> $3,623,738.50 on the republish, with the $68,321,011.74 gap surfaced as `unreconciled_aua`** (NOT the ~$606K/~$128K I first recorded -- those were frozen-gold QA reads).
 
 ### ITEM-3 — FINAL FIRM ORDER, AND MY 49F HOLD IS DISCHARGED
 
@@ -668,7 +668,7 @@ one.
 |---|---|
 | **CPR-1** | ✅ CLOSED (deployed 3 prefixes, 13/13, oracle-exact). Sunday 08-16 log read remains, owner DS |
 | **CPR-2 + C-3** | ✅ **COMMITTED @ea2400401a as ONE commit** — mutant contrast on BOTH halves; 81/81 non-carry, the 4 failures proven PRE-EXISTING by re-extraction on a pristine HEAD. **Deploy armed 15:06Z, DS holds for my bar verdict.** Marker schema 1.1 adds `universe_anchor` so anchor-relative ages carry their frame |
-| **CPR-4** | ✅ serve-release steps **1-3 CLOSED same window** (lift @96334728b4 → deploy ETag-verified → **re-hold @c33d2e5260, sentinel verbatim**), **ledger @d6ae6cbd73 opened BEFORE the lift.** Step 4 republish firing; DS verifies the **SERVED** platinum artifact carries `unreconciled_aua` + the ~$128K figure. **Told DS: do NOT close the ledger on an SSM launch Success — a launch is not a completion and a completion is not a served artifact** |
+| **CPR-4** | ✅ serve-release steps **1-3 CLOSED same window** (lift @96334728b4 → deploy ETag-verified → **re-hold @c33d2e5260, sentinel verbatim**), **ledger @d6ae6cbd73 opened BEFORE the lift.** Step 4 republish firing; DS verifies the **SERVED** platinum artifact carries `unreconciled_aua` (magnitude corrected: **$68,321,011.74**, not ~$128K). **Told DS: do NOT close the ledger on an SSM launch Success — a launch is not a completion and a completion is not a served artifact** |
 | **X-iv** | ✅ CLOSED @cf838e54d5, nothing served changed; orphaned Stage5 alarm deletion GO'd, targeted apply |
 | **X-iii** | ✅ **RULED @060208Z — the hash-stamped bundle is BLESSED**, and CTO confirms my clarified "moves house" reading is the one they ruled on. Two conditions: bundle build inside the sanctioned deploy path (with DS); **acceptance = the ~~13:40Z~~ → **14:10Z** SCHEDULED leg green post-port** (SCHEDULED is the right oracle). ⛔ **"13:40Z" IS A STALE FRAME LABEL** — the accrual bridge's LIVE cron is **14:10Z UTC**; RP-W3 moved it and the older docs kept the old label. AE caught it; I had propagated it. AE building |
 | **X-ii** | ⏸ **HELD.** CTO ruled the STRUCTURE now (end state = ONE runtime) with **WHICH runtime evidence-gated** on AE's read — the right shape: the act is not blocked on a measurement and the measurement is not pre-empted by a ruling. W1a's consumer repoint **re-validates, no reuse** |
@@ -1615,6 +1615,59 @@ itself**, so nothing becomes a build TO until his **FINAL** word.
 build decomposition (P0–P4, itself behind CVO verify + the naming line).** *Two sovereign words now sit in
 this chain, not one — the final A/B/C/D ratification and the gold-root naming line — and they are
 different words for different things.*
+
+## 4aa · CPR-4 RUN-2: succession PROVEN · serve-release **#2** half GIVEN · ⛔ **the magnitude was wrong by ~500×**
+
+### ✅ SUCCESSION PROVEN — three served values IMPOSSIBLE under the old code
+
+Served `platinum/firm/header_metrics.json` (07:35:23Z): **`non_fee_earning_aua = 3,623,738.50`** where the
+retired residual form prints **`71,944,750.24`** · **non_fee clients 84** where old code **clamps to 0** ·
+**non_fee accounts 118** where old prints **10**.
+> **That is a DISCRIMINATING proof, not a plausibility argument.** Any one value alone could be argued;
+> **three together cannot be produced by the pre-CPR4 bytes.**
+
+**CRO~A's `fee_efficiency` 0.0/0.0 observation was a real observation of a DIFFERENT artifact** —
+`fee_efficiency.json` is a pass-through of **INF_C_08's INDEPENDENT computation** (0.0s = C_08's
+`fee_data_available:false` defaulting, pre-existing and upstream); `dashboard.json` carries no fee fields by
+design. *Recorded because "the number looks wrong over there" is how a correct fix gets doubted.*
+
+### ⚡ AN ACCEPTANCE CRITERION THAT TURNED OUT **UNSATISFIABLE** — and that is why it earned its place
+
+DS found that `unreconciled_aua` was added to the function's return dict **but the consumer projects SIX
+NAMED KEYS** — so the field was **COMPUTED AND DROPPED**, reached no served surface, and **the ruled step-4
+bar's "carries `unreconciled_aua`" half was STRUCTURALLY UNSATISFIABLE.** Fixed @fac59e6e15 — **one
+projection line at `:1273`.**
+> ** DS FOUND IT BY TRYING TO SATISFY THE BAR. Had the bar been the weaker "the deploy succeeded," the
+> dropped field ships invisibly and the gap stays absorbed forever. **
+> **THE PAIR, AND BOTH HALVES ARE TONIGHT'S: a criterion that is TRIVIALLY SATISFIABLE (`0==0`) finds
+> nothing; a criterion that turns out UNSATISFIABLE HAS FOUND SOMETHING.**
+
+### SERVE-RELEASE #2 — my never-widen half **GIVEN**, five conditions
+
+Basis: one projection line, sentinel untouched, choreography proven (#1 ran in 79s, ledger-before-lift,
+re-hold same window) — **and without it the $68.3M gap is computed-and-dropped, i.e. INVISIBLE on the served
+surface, which defeats the half of the act Andrew asked for.**
+**Conditions:** (1) CTO's half — do not lift on mine alone · (2) ledger amendment before the lift
+(@599a4bea1f) · (3) re-hold same window, sentinel verbatim · (4) ⛔ **lands AFTER my 13:30Z bar, completes by
+~13:40Z — never compressed into the bar window** · (5) ⛔ **IF IT SLIPS PAST ~13:40Z, TAKE THE FALLBACK — I
+made DS's own fallback an INSTRUCTION, not an option:** 13:47Z serves the already-correct classified sums and
+step 4 ticks on the first scheduled serve carrying both fields. **A rushed never-widen serve-release is
+strictly worse than a one-cycle delay** — the arithmetic is already live and correct; only a field's
+*visibility* is waiting.
+
+### ⛔ MAGNITUDE: MY REGISTER WAS WRONG BY ~500×, CORRECTED AT ALL THREE OCCURRENCES
+
+I carried **"platinum moves ~$606K → ~$128K"** — **both frozen-gold QA reads.** Live run-2:
+**`unreconciled_aua` = $68,321,011.74** by arithmetic identity (209,129,912.97 − 137,185,162.73 −
+3,623,738.50), and **the old residual was serving $71,944,750.24 AS CLASSIFIED CLIENT MONEY.**
+> ** THIS IS NOT A ROUNDING CORRECTION — IT IS A DIFFERENT FINDING. The pre-CPR4 surface displayed a $68.3M
+> cross-source gap as "non-fee client assets." ** *A frozen-gold QA read is a different denominator from a
+> live serve, and I quoted one as the other — the same grain error as the leg-vs-path rate, three orders of
+> magnitude louder.* **DS sent it ahead specifically so the record could be right before the number
+> appeared.**
+⚠ **The DECOMPOSITION of the $68.3M (billing-dim coverage vs book drift vs date drift) is INFERRED, NOT
+CERTIFIED — CVO cert scope. The total is arithmetic; the REASONS are not yet measured, and nobody quotes the
+split as fact.**
 
 ---
 
