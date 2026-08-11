@@ -61,3 +61,28 @@ required for a citation.
 4. Seven-plant ladder formalization -- gated on a second corpus.
 5. M-1 fan-out-vs-XXX.md conflict -- adjudication owed.
 6. Outcome-vocabulary registry entries -- next SYSTEM_DEFINITIONS pass.
+
+## 4. CORRECTION TO ITEM 1.1 + THE ENGINE FIX (2026-08-11 ~2050Z)
+**Item 1.1's "ADOPT-AS-LANDED -- already on the one canonical head" was an UNVERIFIED premise and it
+was WRONG.** Measured on receipt of site-Z's M-9 defect report: the M-5/M-7b/M-9 schema amendments
+lived ONLY on origin/SITEZ's copy; the canonical CLOUD head's schema had none of the three (patch =
+{patch_meta, changes, unchanged_examined}; rectangle without relations; run_manifest without notes).
+I ran verify-don't-adopt on the A-M roster and NOT on 1.1's location claim -- same law, one row over,
+skipped. Recorded so the miss carries its mechanism.
+
+**BOTH HALVES NOW LANDED ON THE CANONICAL HEAD (this seat, ATOM_DECOMP lane):**
+1. **Schema port:** full structural diff SITEZ-vs-CLOUD = EXACTLY the three ratified amendments and
+   nothing else (top-level identical; cell/rubric/verifier_packet identical) -> byte-adopted.
+2. **The M-9 APPLY PATH built** (`ssot_validate.apply_patch`): the write-only contract is closed --
+   structural_changes now APPLY (relations: full relation object, duplicate relation_id REFUSED;
+   fields: rectangularity-preserving add, born-UNMEASURED cell on every entity, duplicate REFUSED;
+   constraints: tiered add, identical-item REFUSED). **Target-already-exists REFUSES, never quietly
+   succeeds** (site-Z's design note; the silent-add-noop was M-11's original door). Merge report now
+   prints applied cell + structural counts (denominator discipline).
+3. **Controls:** 13/13 self-test incl. 5 new limbs; the positive case asserts merged CONTENT (on the
+   pre-fix engine the same patch returned rc=0 with the relation absent -- the content assert IS the
+   discriminator). **ABLATION-PROVEN:** gutting the apply loop restores the pre-fix engine and
+   exactly the 5 new tests FAIL; restored, 0 failures. The real site-Z specimen (positioning c3,
+   R2 relation) validates against the ported schema.
+Site-Z's interim direct-emission convention can retire on their next pull of the canonical head;
+their never-applied backlog reconciles through the now-real typed path.
