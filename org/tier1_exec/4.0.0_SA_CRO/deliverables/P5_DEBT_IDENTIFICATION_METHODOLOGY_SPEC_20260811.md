@@ -104,6 +104,7 @@ FAMILY — both spellings (`_`/`-`), every nesting level, every layer-twin — v
 | `SUPERSEDED(drained \| still-read)` | named successor + migration record VERIFIED live-plane (successor fresh, shape-compatible); sub-state from tier-1 on the OLD key |
 | `SOVEREIGN-RETIRED-STILL-SERVING` | a ruling says dead + tier-0/1 says live (FP-6, certified-AUA class). Debt by ruling, live by wire |
 | `DORMANT-UNEXCEPTED` | >=90d, no declared exception, **successor-check RUN and negative** (Rule 25's mandatory link), consumer evidence absent at tiers 0-2 |
+| `INVOKED-OUTCOME-UNVERIFIED` | tier-1 positive (invocations observed) + outcome evidence NEGATIVE or absent (errors, zero output writes, downstream never moves) — **AMENDMENT per CVO review F-2: the Rule-12 blind spot gets a home.** Actively-invoked-dead is real debt (a function firing daily and serving nothing) that a LIVE-on-invocation schema structurally cannot see. This state is a CLEANUP CANDIDATE (fix-or-retire through its producer), **never a kill state** — the LIVE asymmetry stays correct for the kill bar; this state exists so the IDENTIFY bar does not silently reuse it |
 | `DEAD-EVIDENCED` | the full §4 kill chain — never fewer links |
 
 **Postulate (iv) state-coherence, run:** the axis FAILS single-remedy — deliberately — and names
@@ -127,8 +128,14 @@ notifications + EventBridge S3 rules · Lambda async destinations (caller-side s
 documents · CF behaviors + deployed edge routers · API-GW routes · IAM policies naming the ARN ·
 EC2_MANIFEST + on-host cron · safe-deploy maps + ALL code stores (GAP-3 roster) · comp-tool
 registries + freshness/cadence configs · the served-JSON estate (D_00 censuses) · portal FE
-source · external-partner contracts (enumerated from the vendor registry — the one class with no
-technical sweep).
+source · **the LAKEHOUSE QUERY LAYER — Iceberg/Nessie catalog references + Trino/pyiceberg
+consumers (AMENDMENT per CVO review F-1, CONFIRMED live hole: warehouse/ Iceberg prefixes are
+read by the graph platform + globgrph incremental_updater through the catalog, visible to NO
+other roster namespace — the snap-ingest tables are the measured specimen; an S3-side census of
+a lakehouse prefix concludes a false DEAD without this row)** · **Step Functions state machines
+(even if measured empty today — the roster is normative; omission is a false completeness
+claim)** · external-partner contracts (enumerated from the vendor registry — the one class with
+no technical sweep).
 
 ## 4. RQ4 — EVIDENCE CHAIN PER DISPOSITION (minimum set; attestor; instance form)
 
@@ -213,8 +220,13 @@ comp-find (the search-FOR instrument: bands + denominators + UNREADABLE named) �
 `partner_analytics/header_metrics.json` → family-resolve against the live `_annual/_monthly/
 _quarterly` grain-refinement siblings → SUPERSEDED pending one equivalence read; `partner_
 analytics/timeseries_chart.json` → nesting twin of a live leaf → family-resolve, likely
-SUPERSEDED; `firm_composition.json` → no live sibling → DORMANT-UNEXCEPTED → hold: enumeration +
-window, no disposition; `account_quality_tiers_2026-04-02.json` → date-stamped key → candidate
+SUPERSEDED; `firm_composition.json` → **one-line-per-link per the §4 row form (AMENDMENT per CVO
+review F-3 — the example was asserting a state while showing one link of four):** (i) age 127.0d,
+no declared exception — RUN, met (COO census) · (ii) successor-check — RUN, negative (no live
+sibling; COO census) · (iii) tier-0–2 consumer sweep over the §3 roster — NOT RUN · (iv) family
+resolution — PARTIAL (leaf-name sweep only) ⇒ state = **CANDIDATE** DORMANT-UNEXCEPTED, entry NOT
+YET EARNED; links (iii)+(iv) are the remaining work, and no disposition is reachable regardless;
+`account_quality_tiers_2026-04-02.json` → date-stamped key → candidate
 DORMANT-EXCEPTED(closed-period-immutable) pending declaration.
 
 ## 8. WHAT THIS SPEC DOES NOT DO
