@@ -227,6 +227,51 @@ comparator. My validation is a READ of the producer's proof-of-spec instance, no
 If any part of this bar seemed to need a standing parity process, the bar would be wrong, not the
 veto -- it does not; it rides one ad-hoc fit_harness run per surface per firm.
 
+## 7. COT CUTOVER -- THE FOUR-ROW SOVEREIGN BUNDLE (one pre-registered surface; DIVERGE-SOVEREIGN grammar)
+
+**SCOPE NOTE:** SS 0-6 are the 49F/INF kill instance. This SS 7 pre-registers the COT cutover bands
+under the SAME general grammar (SS 3a DIVERGE-SOVEREIGN + the two-phase pin form), because CTO ruled
+182306Z that the four characterized cot sovereign rows band TOGETHER as ONE adjudication surface and
+"your parity bar should band them." Registered BEFORE the cot overlay runs (the SS 4 law: a band
+written alongside results is worthless).
+
+**GROUNDING THAT SHAPES THIS BAND -- the diverged-copy hypothesis was FALSIFIED (CTO 182306Z, source):**
+the new cot emitters are IDENTICAL FILES to the reference; the port parity STANDS. Therefore all four
+rows are **BASIS/DEFINITION forks, NOT emitter defects** -- a legacy-basis-vs-canonical-basis
+disagreement, not a bug. Consequence for the check: a DIVERGE on any of these four is DESIGN, not a
+falsification, and a monetary mutant landing on one of these four fields would correctly route DESIGN
+(so per SS 5a they are STRUCTURALLY-EXEMPT DIVERGE-SOVEREIGN bands, not live-swallowed fields -- the
+cot COMPUTABLE CORE outside these four still MUST carry a live monetary mutant, SS 3's split).
+
+**THE FOUR ROWS (band together, one bundle, adjudicated as one by Andrew at the cutover):**
+| # | Fork | Measured delta (CTO-characterized) | Kind |
+|---|---|---|---|
+| 1 | **aua basis** | certified-AUA-override (cert basis vs recomputed) | BASIS |
+| 2 | **mix basis** | FIFO-cube vs custody, ~$24.5M alternatives + fi delta | BASIS |
+| 3 | **tax-deferred mapping** | $116.3M reclassified under the mapping definition | DEFINITION |
+| 4 | **client_count definition** | 223 vs 222 (one-client definitional edge) | DEFINITION |
+
+**THE TWO-PHASE PIN -- AND ITS PHASE RUNS OPPOSITE TO 49F, which is the load-bearing detail:**
+- **49F** emitters compute on Schwab-canonical NOW, so they DIVERGE from the old serve today
+  ($122.5M) and RE-BASE to delta~0 at the serving cutover.
+- **COT** emitters are **shape-frozen on the LEGACY basis until Andrew adjudicates the bundle** (CTO).
+  So PRE-cutover the correct pin is **new == legacy serve, delta~0** -- a PARITY MATCH vs legacy is
+  the PASS, and these four forks are **DORMANT DIVERGE-SOVEREIGN bands** (the known legacy-vs-canonical
+  gaps, not yet live). At Andrew's adjudication the pin RE-BASES: canonical basis becomes post-cutover
+  law and the four forks ACTIVATE as the EXPECTED post-cutover divergence. The pin's vintage carries
+  the phase; a stale pin FAILs loud, so neither phase can silently drift into the other.
+- Net rule the bar enforces: **pre-cutover, reproducing the LEGACY basis on these four is the PASS
+  (shape-frozen); post-cutover, reproducing the CANONICAL basis is the PASS.** The bundle is the only
+  place the flip is authorized, and only by Andrew, on all four at once.
+
+**DISCHARGE CONDITION (same as SS 3a demands of any DIVERGE-SOVEREIGN escalation):** the bundle is not
+sovereign-READY until each of the four rows carries (a) the source mechanism grounded at file:line
+@vintage, (b) the per-account composition, (c) the residual. CTO's message supplies the MAGNITUDES and
+the KIND (basis vs definition) -- rows 2/3 still owe (b)+(c) before the cutover; row 1 owes the
+override's file:line; row 4 owes the one-client identity. Until then the band is REGISTERED-but-not-
+ESCALATION-READY: it blocks the cot KILL on these surfaces (correctly) and is honest that the sovereign
+packet is incomplete. ~B's one-source-read characterization is the input that closes (b)+(c).
+
 ## KILL-CONDITION DISCHARGE (what I will validate, verbatim to Andrew's words)
 
 "all code proven to compile" = the py_compile sweep (49F: DONE, 33/33, @VERIFY_49F...20260811).
