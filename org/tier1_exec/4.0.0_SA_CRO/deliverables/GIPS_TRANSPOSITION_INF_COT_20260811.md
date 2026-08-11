@@ -36,6 +36,20 @@ exercised endpoint mechanism (BD Custom-window backfill), not creativity beyond 
 | **FX boundary** | USD-only book (no FX columns in the 49-col silver) — same boundary note as 49F. | Same (USD custody). |
 | **History floor** | **Valuations 2019-09-17 (~7y); flows ~2020-06 (~6y)** — the deepest of the three firms. | At-rest: valuations 2026-06-09, flows 2026-07-27 (rolling). **Post-backfill floor = wherever BD's Custom-window history bottoms out — PROBE P2b measures it** (one deep-window pull; the d2b probe pulled 05/09–07/08 cleanly). |
 
+## INHERITED PRIORS (base CRO's task-1 method @a876ee6ae9 — the classification FORM both firms reuse)
+
+The classification build for both firms follows the task-1 form (full-series code census →
+first-match rule list → {EXTERNAL-in/out, INTERNAL, FEE, CONDITIONAL-BY-COUNTERPARTY, UNRESOLVED}
+partition → dual materiality frames), with its generator's rule set swapped per vendor. Four
+corrections inherited as priors: (1) find the vendor's REAL money column before summing (Schwab's
+net_amount was $0.00 on 1.9M rows); (2) the vendor category axis MISCLASSIFIES at boundary — first
+cut, never final; (3) **day/window samples undercount code universes massively (21 vs 157 at
+Schwab) — ⚠ THIS MAP'S OWN COT CODE CELL (14×21) IS A WINDOW-SAMPLE COUNT and is hereby marked so;
+the build-time census runs over the union of all 64 at-rest partitions + backfilled history, and
+the INF 46-code figure (full 1.43M-row series) does NOT carry this caveat**; (4) empty-description
+codes get INFERRED partitions with specimen-verify flags, never silent force-fits. The 49F
+template's single conditional is CLEARED @a876ee6ae9 — the cited verdict is now unconditioned.
+
 ## THE TWO PROBE SPECS (the only cells at-rest data cannot close; egress granted, time-boxed)
 
 - **P1 (Orion):** one Envision performance-dim pull with a historical Custom window (e.g. as-of
