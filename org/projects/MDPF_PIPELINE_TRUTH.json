@@ -2031,7 +2031,7 @@
       ],
       "status": "MEASURED",
       "severity": "HIGH",
-      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today.",
+      "note": "The retry's green is the pass-on-the-confirming-limb shape: IT IS CLEAN BECAUSE IT DID NOTHING. Nothing in the estate recorded that the 49F axis source ran dirty today. >> SCOPE CORRECTED 2026-08-11: this is about THE PULL'S OWN SUCCESS CRITERION, not the conversion chain. The conversion demonstrably worked (148,044 rows, 11 tables, 13:40:41Z). The open question is narrower and unproven: did the retry RE-RUN the reconciliation that failed, or return clean having nothing left to validate? Routed to AE item-4, not asserted.",
       "lifecycle": "OPEN",
       "owner": "0.7.0_AE_CloudOps"
     },
@@ -2063,15 +2063,29 @@
     },
     {
       "id": "D-24",
-      "summary": "THE AXIS SOURCE'S SILVER CONVERSION HAS NO WORKING SCHEDULED FALLBACK. Its only effective trigger is the pull's OnSuccess destination; the nominal 16:00Z sweep is a PROVEN NO-OP (668ms, zero output, wrote nothing). So a pull that never returns clean produces NO silver at all, and nothing scheduled recovers it.",
+      "summary": "WITHDRAWN. There is no defect here. The smartx bronze->silver chain behaved CORRECTLY on 2026-08-10: the dirty first invocation fired no destination (by design), the retry returned clean and its OnSuccess fired, and convert_day -- which reads the WHOLE DAY's bronze -- ran to COMPLETE at 13:40:41Z with 148,044 rows across 11 tables, 4 minutes after the 13:36:31Z landing. The 16:00Z sweep's 668ms zero-output run was THE CORRECT RESULT: bronze-days minus silver-days was empty. Nothing was unconverted at any point.",
       "pipelines": [
         "49financial.model"
       ],
       "status": "MEASURED",
-      "severity": "HIGH",
+      "severity": "NONE",
+      "lifecycle": "WITHDRAWN - NO DEFECT EXISTS",
+      "owner": "0.7.0_AE_CloudOps",
+      "note": "NEVER#4 SHAPE: 'a pipeline whose only trigger is another pipeline's success has no schedule and is a defect -- it freezes silently and invisibly when its upstream breaks.' A schedule EXISTS here, which is why it did not read as the classic case -- but the scheduled leg does not convert, so the protection NEVER#4 exists to provide is absent in fact. ⚠ THE DESIGN ITSELF IS SOUND AND WELL-REASONED (chosen over a completion key on the Door-6 lesson); what is missing is a working catch-up, not the destination.",
+      "lifecycle_note": "⚠ THIS CLAIM WAS WITHDRAWN THREE TIMES, EACH TIME NARROWER, AND THAT IS THE FINDING ABOUT MY OWN REASONING. (1) 'the axis source has no working scheduled fallback' -- withdrawn on Andrew's architectural read that event-driven silver IS the estate pattern. (2) 'bring smartx onto the S3-object pattern' -- withdrawn against my OWN WS-A7 ruling; smartx silver is a whole-day firm-wide aggregate and per-object triggering would race itself. (3) 'the designed sweep did not convert a real unconverted landing' -- FALSIFIED by measurement (full-day log, 34 events, unpaginated). >> A CLAIM THAT KEEPS MUTATING TO SURVIVE ITS OWN REFUTATIONS IS NOT A NARROWING DIAGNOSIS, IT IS A CONCLUSION LOOKING FOR EVIDENCE. Each restatement was better grounded than the last and every one still asserted a defect that was never there. The correct move after refutation 2 was to ask whether ANY defect existed, not to find a smaller one. Recorded against this seat.",
+      "what_survives": "The RESIDUAL CASE only, and it is designed-and-exercised: a dirty pull with NO clean retry would leave bronze unconverted until the 16:00Z sweep, which is exactly what the sweep is for. NOT a defect. >> AND ONE OPEN QUESTION, STATED AS A QUESTION BECAUSE I HAVE BEEN WRONG THREE TIMES ON THIS THREAD: the retry returned clean with 'fetched=0, skipped=9762' after the first attempt raised DirtyRunError on a RECONCILIATION check (resolver=3278 != feed5 living=3281). Skipping the fetch is CORRECT -- attempt 1 already downloaded them. Whether the retry RE-RAN the reconciliation, or returned clean because it had nothing left to validate, is NOT established. That is D-21's territory and belongs to AE's item-4 read. I am not asserting it is a defect."
+    },
+    {
+      "id": "D-25",
+      "summary": "THREE smartx silver tables emitted rows=0 on 2026-08-10: fact_account_detail, fact_account_allocations, fact_nonzerosleeve -- inside a convert_day that otherwise produced 148,044 rows across 11 tables.",
+      "pipelines": [
+        "49financial.model"
+      ],
+      "status": "MEASURED",
+      "severity": "MED",
       "lifecycle": "OPEN",
       "owner": "0.7.0_AE_CloudOps",
-      "note": "NEVER#4 SHAPE: 'a pipeline whose only trigger is another pipeline's success has no schedule and is a defect -- it freezes silently and invisibly when its upstream breaks.' A schedule EXISTS here, which is why it did not read as the classic case -- but the scheduled leg does not convert, so the protection NEVER#4 exists to provide is absent in fact. ⚠ THE DESIGN ITSELF IS SOUND AND WELL-REASONED (chosen over a completion key on the Door-6 lesson); what is missing is a working catch-up, not the destination."
+      "note": "Folded into AE's item-4 read as POSSIBLE input to the zeroed-aggregate class (global emitting opal_aggregate_aua=0 with reconciliation PASS since 08-09). ⚠ POSSIBLE, NOT ESTABLISHED -- two zero-shaped observations are a reason to look, not a mechanism. COO routes onward if it proves producer-side."
     }
   ],
   "repair_sequence": {
