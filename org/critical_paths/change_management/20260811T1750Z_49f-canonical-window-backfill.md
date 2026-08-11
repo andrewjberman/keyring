@@ -59,3 +59,20 @@ DECLARED-AND-ESCALATED (COO fires it or confirms it) rather than unilaterally ex
 - OPENED 17:50Z, fill driver launched (background). CLOSE requires: counts + re-read verify
   printed below, zero unexplained refusals, evidence tee'd to scratchpad xwalk/.. timing/..
   fill logs.
+
+## FILL-1 COMPLETE (~18:12Z) — INTERIM; ledger stays OPEN through fill-2 (COO ruling 175737Z)
+- B_00: 526/526 rc=0 (478s) | C_00: 526/526 rc=0 (512s) | C_02: 525/525 rc=0 (82s process-grade)
+- RE-READ VERIFY: canonical_valuation 526 S3 partitions, 3/3 sampled re-reads TIE rows==manifest;
+  flow_ledger 526 partitions, 3/3 sampled re-reads content-coherent (identity_in_eq_out True).
+- ⚠ C_02 CONTENT FINDING (process count != content count): its main is still the single-partition
+  exercise — the D-1 wiring "arrives with Group W" LITERALLY; all 525 runs emitted REFUSED-NO-BMV
+  refusal records (LOCAL only; C_02 has no S3 leg). The 525/525 is process truth, not TWR content.
+  Remedy folded into fill-2: build the D-1 loading path (P1 output completion, same class).
+- SURVIVORSHIP MEASURED (reported 175426Z): day-one 867/4,075 (~21%) excluded by the retro boundary.
+  COO RULED 175737Z: re-fill on CONTEMPORANEOUS A_02-per-date boundaries, OVERWRITING; no second
+  standing artifact; positive control = the runner's 'rows==boundary NO -- investigate' marker
+  GOING QUIET on historical dates.
+## FILL-2 SCOPE (same bounds; rollback unchanged)
+- A_02 per-date boundary build (truncated leg sweep: legs <= D — a --truncate flag on a02, no
+  future information in a historical boundary), locals only (dims-upload stays a separate act).
+- B_00 + C_00 re-fill overwriting (declared idempotency); C_02 re-fill WITH the D-1 wiring.
