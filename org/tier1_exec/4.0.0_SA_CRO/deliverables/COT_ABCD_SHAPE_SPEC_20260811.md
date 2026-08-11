@@ -27,9 +27,19 @@ padded — they are exactly what RECON-5a's inventory + the two named probes clo
 `Market Value` + `Unaccrued Market Value` + **`Accrual` NATIVE** — vendor-valued positions with the
 accrual DECOMPOSED in-row (best of the three firms). No account-level authoritative total surface
 is measured yet (the BD balance query type is part of the RECON-5a inventory) — **B_00 (COT) v1:
-V(t) = SUM(custody Market Value) per account per day (RAW inputs, named aggregation), with the
-account-level BD total as the B_03 tie ONCE the inventory surfaces it (marked OPEN; if BD ships
-none, B_03's tie is the relationship-grain collapse identity instead — stated, not assumed).**
+V(t) = SUM(custody Market Value) per account per day — routed THROUGH the sanctioned
+`collapse_relationship_grain()` (AMENDED per CTO review 074437Z: custody rows are
+Relationship×Account×Asset grain and a naive per-account SUM DOUBLE-COUNTS — Andrew's 08-04
+ruling; the collapse is named IN THIS CONTRACT LINE because B_00 is the row where the
+double-count would reach a SERVED valuation). Acceptance gains the mutant control: an account
+appearing under 2+ relationships sums ONCE (one duplicated-relationship fixture must fail the
+naive sum and pass the collapsed one). CTO's framing note carried verbatim: this SUM is NOT the
+sec3-banned reconstruction — it is a NAMED AGGREGATION of vendor-valued rows with native accrual
+(the atom-8 rollup exception applied legally); and the swap-on-inventory (BD account-level total
+becomes authoritative, SUM demotes to the B_03 tie) is a RULED SPEC-AMENDMENT EVENT when it
+happens, never a silent inversion.** The account-level BD total stays the B_03 tie ONCE the
+inventory surfaces it (marked OPEN; if BD ships none, B_03's tie is the relationship-grain
+collapse identity instead — stated, not assumed).
 B_01: custody passthrough + quality flags. **B_02: RESOLVED-BY-CONSTRUCTION — accrual ships
 in-row; the artifact lands carrying the RAW verdict** (no materiality gate needed; the 49F/INF
 asymmetry table's "cot best" cell, now a spec row). B_03: tolerance + ruled-recalibration verbatim.
