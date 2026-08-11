@@ -121,3 +121,19 @@ the reference standard and template — cite-don't-re-derive its deciding questi
 - Proof bar inherited from the estate's own standard: mechanism at source, remedy landed, the
   SCHEDULED cycle emits (ad-hoc runs are QA, never production evidence) — the honest residual on an
   unattended-cycle proof will be stated, not claimed.
+
+## Instruction 7 — adversarial review of the CVO 49F A/B/C/D specs + the Inflection shape spec (same terminal, ~0720Z)
+
+> "I want you to adversarily review the CVO Handoff here and assess how to develop the same shape
+> for Inflection. Your task will essentially be to create a similar spec for Inflection Group A B C
+> and D, not porting the same scripts/fields, but modeling the same shape by using the available
+> fields for inflection from the Orion endpoints:
+> (org\tier1_exec\3.0.0_SA_CVO\deliverables\HANDOFF_BLOCK_49F_ABCD_SPECS_TO_CRO_A_20260811.md)"
+
+Followed by the CVO's full two-commission block pasted at the terminal (Commission 1: adversarial
+review of the RULED spec state against LIVE state, the author's own five attack seams offered;
+Commission 2: derive the INF (+COT per the block) specs — same A/B/C/D shape, pattern parameters
+swapped, per-field RAW/MANUFACTURABLE/ABSENT verdicts, the D-group census discipline transposed
+verbatim; certification of anything built returns to CVO by Rule 14e). **Andrew's word at this
+terminal scopes the authored deliverable to INFLECTION A/B/C/D; the COT derivation follows the
+block's protocol subsequently.**
