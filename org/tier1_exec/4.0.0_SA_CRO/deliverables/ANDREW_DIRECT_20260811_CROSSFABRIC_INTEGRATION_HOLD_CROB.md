@@ -28,3 +28,16 @@ with the codebase extractor (whose VOCABULARY half is genuinely frozen, build me
 proposed: freeze list = step-0 extension + ratified domain names + coordinate schema + the extractor's
 vocabulary half; B6-1/B6-2 + extractor build mechanics continue as in-flight build. Rows 8-9 (Kimi SVP
 vocab + anchor catalog) fold from delivery 3; objection window at v1.
+
+## TRANCHE 2 DELIVERED (@183641Z): rows 8-14 ALL CONCUR -- the full 14-row map now carries this seat's explicit verdicts
+
+Read at SITEZ head @3494ceb056 (head had moved; earlier read was an intermediate state). Row 10
+(source-of-record office split: run-stamped rectangle vs standing canon, certified-rectangles-EMIT-
+canon-updates-never-reverse) concurred AS THE WORKING-SESSION PREMISE with two adjudication criteria
+banked: (a) the emit-bridge carries facts/keys only, never baked freshness prose (the B-9 law); (b) a
+rectangle-emitted canon update that MINTS vocabulary routes through SYSTEM_DEFINITIONS + the
+ATOM_DECOMP lane -- no side-door mint. Row 13 DISCHARGED BY READING (s9.8.1 A-K in full):
+**ORTHOGONAL** -- run-conduct law vs construction-provenance taxonomy; one crosswalk (cell
+truth-status ~ cascade stage) noted as compatible mapping, explicitly not a merge. Count-drift
+flagged: the bindings are A-K now (K = DRY-DERIVES-CERTIFIED ~1834Z), not A-J. Ratification-ready
+from this seat pending CVO's row-2 word + the s.3 B6 redraft.
