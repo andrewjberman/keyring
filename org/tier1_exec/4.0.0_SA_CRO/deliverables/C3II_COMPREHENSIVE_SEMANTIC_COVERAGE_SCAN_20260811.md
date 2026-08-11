@@ -46,6 +46,39 @@ friction/state call can be given its top-K semantically-relevant PRDs/docs as co
 reasons over the vertical's real documentation, not just its git deltas. Coverage (this scan) is the
 precondition Andrew named; the calls consume it.
 
+## 5a. WHERE "28 VERTICALS" COMES FROM (Andrew's challenge -- grounded answer)
+
+**It is DECLARED (legislated), not discovered -- BY THE ONTOLOGY'S OWN DESIGN, and Andrew's "hand-drawn"
+instinct is correct AND intended.** `NFRA_ONTOLOGY_C2C3_CANONICAL.yaml` c3_ii_semantic_verticals.invariant,
+verbatim: *"DECLARED, never discovered -- membership changes only by naming act + CVO-verified row
+adjudication. Emergence proposes; legislation admits. The symmetric complement of C3.i."*
+
+**But it is NOT ungrounded -- it is a COMPLETE partition of the DISCOVERED ground set.** Measured:
+- C3.ii declared verticals = 29, their chain_counts **sum to 138**.
+- C3.i discovered structures = 14, their chain_counts **sum to 138**.
+- Design: "14 structures over 138 chains." So BOTH partition the SAME 138 chains -- C3.i by union-find
+  (discovered), C3.ii by naming act (declared). The **138 chains are the measured atoms**; the verticals
+  are legislated groupings over them. Every discovered chain is assigned to exactly one named vertical.
+
+**Provenance chain:** the 29 were declared in a CVO/Andrew-direct adjudication pass **2026-07-30**
+(`estate-coverage-manifest.yaml adjudications_20260730`), each carrying chains; 3 (etf-reports,
+ceo-digest, ticketing) ADMITTED by naming act with family=UNASSIGNED. Then mdpf+model-portfolios MERGED
+2026-08-07 (Andrew) -> ratified roster = **28**.
+
+⛔ **THE DRIFT THIS EXPOSES (real finding): the ratified 28 has NOT propagated to the structural
+instruments.** The canonical yaml still declares **29**; `comp-estate --matrix` still shows **29** (mdpf +
+model-portfolios separate). So "how many verticals" answers 29 (yaml/matrix) or 28 (ratified lifecycle
+sitting) depending on which instrument you read -- a coverage-denominator ambiguity. **The coverage
+denominator must pin to the RATIFIED 28; the stale 29 in the yaml + matrix is owed a reconcile (the merge
+propagated).** Same dead-in-ruling/live-in-record class as the A.2 finding. Routed.
+
+**Standing consequence for coverage:** because C3.ii is declared, the roster is only as complete as the
+legislation. The design's own check ("emergence PROPOSES; legislation ADMITS") means the declared roster
+should be periodically reconciled against emergence over the 138 chains -- are there candidate clusters
+legislation has not admitted, or residue verticals still un-placed (7 today on UNASSIGNED-RESIDUE)?
+Coverage = the ratified partition IS complete over today's 138 chains, checked at the matrix; it is not a
+discovered number and must not be quoted as one.
+
 ## 6. COVERAGE CLASSES (the 28, from the deterministic backbone)
 FULL-battery 18 · RESIDUE-degraded 7 (F1 heat-only: canonical-schwab, ceo-digest, etf-reports, news,
 ops-internal, ticketing, trade-submission) · TERMINAL 2 (causality RETIRED, insurance DORMANT) ·
