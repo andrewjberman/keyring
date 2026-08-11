@@ -118,6 +118,27 @@ runs:
    The parity check INVERTS on this band: the new runner MUST diverge (emit the live value), and a
    PARITY match on these accounts is a FAIL -- the defect transposed intact. **A 100% clean overlay
    with no mention of this class is itself the finding.**
+   >> **ANDREW-DIRECT @162965ed1c (~1450Z, ABSENCE = SERVE LAW) IS THIS BAND'S RULED SPECIMEN:**
+   engine-silence serves ABSENT (null), NEVER $0 -- the $68.39M is 100% absence-coerced-to-zero, so
+   the served $0 is KNOWN-WRONG BY SOVEREIGN LAW. Consequences the band encodes: (a) new-serves-NULL
+   (absence) vs legacy-serves-$0 is **LAW-CONFORMING -- counted and characterized, NEVER FAILED**
+   (the "known-defective baseline is not correctness" clause now has its sovereign ruling); (b)
+   new-serves-$0 (reproducing the coercion) is a **FAIL** -- it reproduces a law-violation; (c)
+   **pre-registered bands MUST NOT treat the zero-coerced baseline rows as the TRUTH side of any
+   diff.** SCOPE: this class lives on the ending_mv/billing-derived plane; a POSITIONS-plane
+   per-account surface (e.g. INF account_distribution, 797 rows nonzero) does NOT carry the coercion
+   -- see the precondition-state rule in §3a. <<
+   >> **PRECONDITION-STATE (added 2026-08-11, ~A's first live 312-exercise + COO's zero-vs-shrug
+   question): a `0 of 312 MATCH-KNOWN-WRONG` result is NOT automatically a clean PASS.** A count of
+   zero is indistinguishable between "the band checked and the defect did not reproduce" (real pass)
+   and "the band's precondition is FALSE so it could not fire" (measured nothing). The band's row
+   MUST carry the precondition state: **PRECONDITION-HELD** (a per-account ending_mv/billing-derived
+   surface exists) + 0 reproduced = genuine PASS; **PRECONDITION-ABSENT / N/A-BY-CONSTRUCTION** (the
+   surface rides a different plane, or no per-account billing-derived surface exists) = NOT a pass,
+   an honest "cannot fire here" WITH the measured reason and the fire-next location named (~A did
+   this correctly: served account_distribution rides the positions plane, band fires next wherever
+   the nullable-emv fix first serves per-account). A zero-with-a-measured-reason and a zero-as-a-shrug
+   are indistinguishable in a count; this status is the only place the distinction lives. <<
 2. **C_02's ZERO/ABSENT-BMV REFUSALS -- DIVERGENCE EXPECTED, DESIGN.** ~A's engine correctly REFUSES
    a return where served fakes one; pre-declared so the diff reads DESIGN, not regression. Intended
    and unexplained divergence are byte-identical to a diff tool -- only the pre-declaration separates
