@@ -73,3 +73,23 @@ ingest build. Believed->actual across three generations in 70 minutes: NO-INPUT 
 (Andrew) -> INGEST-EXISTS-LIVE (at-rest measurement) -- each correction smaller than the last because
 each denominator was stated. This addendum post-dates cert @4918e8b48f and is flagged to CVO for
 delta-certification; nothing certified above is contradicted -- the feeds-plane absence remains true.
+
+## POST-CERT ADDENDUM 2 (2026-08-11 ~0607Z) -- THE COT JOIN TEST LANDED: STRUCTURED ZERO; THE THREE-FIRM MEASUREMENT SET IS COMPLETE
+
+~A ran the cot overlap on the identified spine (grounding: their 060710Z result, both denominators
+printed): spine `accounts_dimension_latest.account_id` = 927 distinct, uniformly 11-digit; FMA
+`account_number` = 921 distinct with a MESSIER length distribution than the headline (9x662, 11x86,
+10x48, 8x30, 7x9, 6x4, 5x1, **plus ~100 prose-length values of 15-50 chars -- content contamination
+in a KEY column**, a name-vs-content finding for the 2a census beyond form-families). **Join: 0.0%
+at EVERY tested form** incl. same-length 11x11 subsets -- these are DIFFERENT NUMBERING SYSTEMS, not
+formats of one number (contrast 49F, where zfill bridged at 99.8%). **VERDICT: MEASURED-NO-DIRECT-
+JOIN; an INTERMEDIARY table is required.** Candidates in ~A's likelihood order, deliberately not
+chased (design-relevant selection belongs to RECON-5a's inventory): (a) the `rebalancer_accounts`
+bronze family (105 objects AT REST -- checkable without egress), (b) cot custody fact_holdings'
+Relationship x Account linkage, (c) the BD account-detail surface if it carries both ids.
+
+**GOAL 3's COMPLETE PER-FIRM DESIGN FACT, closing the item-3 recon input:** the account overlay
+needs THREE DIFFERENT identity mechanisms -- inflection NATIVE KEY (98.0%) · 49F ONE-HOP MAP +
+zfill (99.8%) · cottonwood INTERMEDIARY-REQUIRED (measured zero, candidates named). A single
+uniform join design was never available; the measurement program has now said so per-firm with
+denominators, which is exactly what the build spec needs to not discover it mid-build.
