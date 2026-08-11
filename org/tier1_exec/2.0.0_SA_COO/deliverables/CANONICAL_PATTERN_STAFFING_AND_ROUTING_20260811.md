@@ -2046,6 +2046,62 @@ even with every field filled, because the evidence was selected knowing the answ
 
 ---
 
+## 4ai · ⚡⚡ THE `ending_mv` INVESTIGATION IS DONE AND IT INVERTS MY FRAMING. **THERE IS NO SECOND BASIS.**
+
+Andrew handed my brief (@5e9c253613) to MSTR ~0846Z; delivered @328d9892b7 with a **schema-valid
+PROOF_OF_SPEC instance (validated, rc=0)**, session log, LD-0394.
+
+### THE VERDICT
+
+⚡ **POPULATED `ending_mv` == CURRENT AUA TO THE CENT — 485/485, max diff $0.00, same-day.**
+** THERE IS NO SECOND VALUATION BASIS IN THE FEED. ** One basis, frequently **ABSENT**.
+
+**The entire $68,321,011.74 is an ABSENCE ARTIFACT — 100.0%, now MEASURED where I had it INFERRED:**
+| component | accounts | amount |
+|---|---|---|
+| in-cycle **FEE-EARNING** accounts with absent emv | 259 | **$59.56M** |
+| empty-billing-block | 52 | **$8.76M** |
+| rounding | — | $0.01 |
+
+> ⚡ **AND THE BUSINESS WEIGHT IS ON THE *FEE* SIDE, NOT THE NON-FEE SIDE WHERE WE WERE ALL LOOKING: FIRM
+> FEE-EARNING AUA IS UNDERSTATED ~30% — $137.19M REPORTED vs ~$196.75M CURRENT-BASIS.** *Every seat
+> tonight, including me, chased a $696K non-fee display question. The measured consequence is a
+> nine-figure understatement of the fee-earning book, sitting one column over.*
+
+**Hypotheses: H2 (stale carry) REFUTED · H5 (mixed-basis arithmetic) REFUTED · H4 value-corruption EXCLUDED
+0/907 · H3 only for closed accounts. ABSENCE IS PERSISTENT PER ACCOUNT — so no lag distribution exists, which
+also refutes H1's periodic-step signature.** *The five-hypothesis design earned itself: four were killed by
+measurement rather than argument, and the survivor was not on my list in the form it took.*
+
+### ⛔ TWO P1 BUILDER DEFECTS — DS lane, and the second is a DECISION not just a fix
+
+1. ** `build_billing_dim.py`'s rename map MISSES the real vendor column names ** — `'Billing Period Start
+   Date'` / `'End Date'` / `'Billing Cycle'` / `'As Of'` / `'Days In Cycle'`. ** So silver SILENTLY LACKS
+   EVERY PERIOD COLUMN ITS OWN DOCSTRING ASSUMES. **
+2. ** `parse_dollar(empty) -> 0.00` CONFLATES VENDOR-ABSENT WITH VENDOR-ZERO. THIS IS THE MECHANISM. ** Fix
+   shape (e.g. nullable `emv` + an `emv_reported` flag) is **a P1 decision on the ratified forms**, not a
+   free code change — so it routes with CTO, not straight to DS.
+
+### ⛔ TWO ERRORS OF MINE THIS EXPOSES
+
+1. ** I told Andrew "rows carry `Billing Period Start` / `Billing Period End`." FALSE IN THE DATA. ** I read
+   the rename map's *keys* at `:62-63` and reported them as the columns present. **The keys do not match the
+   vendor's actual headers, so those columns are silently dropped.** *I read the map and reported the
+   territory — the exact substitution this register has named all night, committed while explaining the
+   mechanism to the person who asked.*
+2. ** My brief's "102 partitions in 2026" was a DIRECTORY COUNT. Nonempty = 97. ** And the INF billing feed
+   **begins 2026-04-01** (2025 + 2026-Q1 partitions are 0-row for INF). ⚠ **I wrote a denominator-trap
+   warning INTO that brief and then committed a mild version of it in the same document.** Bronze reports a
+   **Quarterly** cycle.
+
+### WHAT REMAINS AT ANDREW — a different and easier question than the one I gave him
+
+**Not "which of two bases."** The question is now: **for accounts where `emv` is ABSENT, what does the served
+figure use?** And since populated `emv` **is** current AUA to the cent, current AUA is not a rival basis —
+**it is the same basis, complete.** Findings §2e carries the input. **Serving untouched; nothing unwound.**
+
+---
+
 ## 5 · WHAT THIS REGISTER DELIBERATELY DOES NOT DO
 
 No new gates (none asked for; one dissolved). No monitors/alerts/freshness checkers (moratorium). No
