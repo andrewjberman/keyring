@@ -164,7 +164,20 @@ runs:
 ## 5. EVIDENCE FORM -- a PROOF_OF_SPEC instance, not prose (parity is the classic assert-in-a-paragraph claim)
 
 Criterion-id grammar `{firm}-OVERLAY-{surface}-{check}`, one row per (surface x check), carrying the
-criterion verbatim + the exact fit_harness invocation + output evidence + BOTH denominators. Required
+criterion verbatim + the exact fit_harness invocation + output evidence + BOTH denominators.
+**EVERY EVIDENCE ROW STATES ITS DATE FRAMING (RULED, CTO 150557Z, from the 258-account resolution):**
+the estate convention is partition=DELIVERY date / content=PRIOR-TRADING-DAY close / data_as_of
+label=CONTENT date (the ratified 49F Group-B clause, single-homed estate-wide). A row states which
+framing it used, because **a stated framing can be re-based; a silently-inherited label cannot -- and
+a one-day market-movement offset presents EXACTLY like a legitimate vintage band, so an unstated
+framing can POISON a pre-registered band while looking like divergence** (the 258-account 0.1-0.2%
+offset was this: a harness resolving partition==content-date, not a real divergence). VINTAGE-INVARIANT
+checks (the inverted-312 -- zeros are zeros on either frame; field-parity -- names do not move with
+vintage; the is_fee_earning window-independence check -- invariant by construction) state
+`framing: vintage-invariant` so the omission is DELIBERATE, not silent. VINTAGE-SENSITIVE checks
+(monetary value-parity, the pinned-delta band already vintage-stamped with stale-pin-fails-loud, the
+fee-earning-heal magnitudes) MUST state the content-date frame explicitly -- these are the rows a
+silent label poisons. Required
 ids every overlay must carry: `-FIELD-CENSUS` (§1, both denominators + spelling map),
 `-QUALITY-BAND` (§2, out-of-band census), **`-MUTANT-CATCHES` (§3, the negative control -- absence of
 this id = INVALID instance)**, `-DIVERGENCE-BANDS-PREDECLARED` (§4, registry committed pre-run with
