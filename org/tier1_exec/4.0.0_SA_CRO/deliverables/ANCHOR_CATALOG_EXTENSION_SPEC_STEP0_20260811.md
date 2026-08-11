@@ -25,10 +25,13 @@ Anchored: **5,035 of 6,138 (82.0%), all BACKEND.** Unanchored 1,103 = 1,001 FRON
 Adding {portal-side anchor for b-dataflow} + {API_GW} + {ServedURL} + {CW_ALARM} anchors takes
 deterministic anchoring **82.0% -> ~100% of the CURRENT instance population** -- clearing the >=90%
 floor with the inferential budget untouched for genuinely-ambiguous cases and future growth.
-- **One design ruling owed (CTO/CVO at spec):** the portal anchor GRAIN -- `Field` (951 fine-grain
-  structures; consistent with node-keyed scaling) vs `ReactComponent` (coarser, fewer). Recommend
-  ruling this the way the anchor-NODE ruling went: finer + scaling ("say B" precedent), but it is a
-  ruling, not mine.
+- ✅ **GRAIN RULED (CVO 173143Z): portal anchor = `Field` (fine).** Not only the say-B precedent -- the
+  substantive reason: the deterministic floor is NODE-KEYED everywhere else, and anchoring at
+  `ReactComponent` (442 nodes) would map 951 fine structures onto ~442 coarse anchors -- **UNDER-COVERING
+  BY CONSTRUCTION** (many structures share a component; the coarse anchor cannot distinguish them),
+  reopening the exact shortfall this extension closes. `Field` makes the ~100% real rather than nominal.
+  ⛔ **THIS IS A GRAIN-CONSISTENCY CHOICE (match the existing anchor grain), NOT a fresh preference** --
+  recorded so a future reader does not "simplify" it to component-grain and silently drop coverage.
 - **New DOMAIN names owed (thin user layer, correctly <=1%):** e.g. `api-serving`, `observability`,
   `ui-dataflow` -- naming acts on deterministic clusters, exactly where the cascade puts human input.
 
