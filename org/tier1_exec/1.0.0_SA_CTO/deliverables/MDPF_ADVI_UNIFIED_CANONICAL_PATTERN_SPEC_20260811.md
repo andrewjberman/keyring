@@ -92,6 +92,7 @@ here is pulled RAW:**
 | non-fee-AUA residual `sum(fee_aua) − balance` | **BALANCE** | **TRANSITIONAL** — the Patrick ~$606K figure. Stays calculated TODAY; RETIRES to the raw Orion Billing pull (`is_fee_earning` classified sum, fix drafted `02_D04_RESIDUAL_FIX_DRAFT.md`) once D_04 is VERIFIED; on verified retirement it leaves this set and becomes a raw field |
 | cross-account/household/advisor/firm rollups | aggregation | PERMANENT — the grain is ours, not the vendor's |
 | unreconciled bucket (F4) | difference | PERMANENT — deliberately calculated; it EXPOSES cross-source drift |
+| **49F TWR / period returns computed FROM raw Schwab custody components** | computation over raw inputs | **FIFTH MEMBER — Andrew-direct instruction 5 ~0628Z at the CRO~A terminal, verbatim "Granted / on TWR calculation from Schwab" (CRO~A's committed ANDREW_DIRECT record).** Schwab ships no computed returns, only raw attribution components — raw inputs + explicit named computation is the ethos by construction, the opposite of a residual on derived AUA. **Per-firm performance leg resolves: inf = vendor TWR RAW · 49f = COMPUTED-FROM-COMPONENTS (this grant) · cot = TBD on RECON-5's measurement of what BD ships** |
 
 **⛔ NNA (flow) ≠ non-fee-AUA residual (balance). TWO calculated nodes, never one** (CTO conflated
 them 0455Z; Andrew corrected by 0458Z; do not re-merge).
