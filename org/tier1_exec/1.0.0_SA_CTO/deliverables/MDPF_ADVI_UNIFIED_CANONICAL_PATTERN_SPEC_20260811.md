@@ -31,7 +31,7 @@ violation so conformance is checkable, not aspirational.
 
 ```
 s3://opal-data-assets/{vendor}/{firm}/bronze|silver/...            # raw vendor + parquet queryable (Rules 17/17a)
-s3://opal-data-assets/portal/gold/{product}/{scope}/{artifact-type}/{data-as-of}.json
+s3://opal-data-assets/portal/gold/{product}/{scope}/{table}/date={D}/   # GOLD = PARQUET (Andrew ~0757Z), mirroring silver's grammar
 s3://opal-data-assets/portal/gold/{product}/_code/                 # atom 2
 s3://opal-data-assets/portal/gold/{product}/_feeds/ | _staging/    # atom 4
 s3://opal-data-assets/portal/gold/{product}/_manifests/{data-as-of}/{process-ts}.json
@@ -45,6 +45,21 @@ COLOCATED → a publisher pulls to `platinum/{product}/{scope}` — the MORNING 
 end-to-end, same pattern everywhere, "established forever," never ad-hoc haphazard routes.**
 The bronze→silver leg is EVENT-TRIGGERED on raw landing; gold/publisher legs carry clock floors
 with event accelerators (atom 5) — triggers are ROUTES, not monitors (moratorium respected).
+
+**GOLD-AS-PARQUET + THE SILVER-COMPLETENESS TRIGGER (Andrew-direct ~0754–0757Z, "Option A,
+proceed" + the three coverage requirements; verbatim:
+ANDREW_DIRECT_20260811_GOLD_PARQUET_AND_SILVER_EVENT_TRIGGER.md):** (1) per-firm EVENT TRIGGER —
+when ALL NECESSARY silver tables for a firm appear, that firm's gold EC2 runner fires (REQUIRED
+accelerator; the clock floor remains beneath it; event-only stays prohibited; the necessary-table
+predicate is SINGLE-HOMED per firm; the L2 no-data-day contract governs its calendar — a
+non-trading day correctly never fires, a trading day whose silver never lands is the floor's loud
+catch-up case). (2) The gold runner's FINAL OUTPUT IS PARQUET — JSON leaves the gold tier
+entirely. (3) Every platinum publisher READS PARQUET, never JSON — the publisher is the estate's
+ONLY JSON producer, minting serving-shape JSON exactly once at the platinum boundary; the
+one-producer-per-served-key law becomes enforceable BY CONSTRUCTION. The D-group frozen-shape
+census contract is UNCHANGED (served bytes never move; the INPUT plane does — CVO folds the
+emitter-input-format cell + the W trigger row; the M7 format flip × wo2 repoint remain ONE ordered
+act through the CTO arch gate).
 
 - `{scope}`: `global` | `{firm}` for mdpf; `{firm}` × `{advisor}` for advi (§4).
 - **Spelling law, per layer, by construction:** underscore in gold, hyphen in platinum
