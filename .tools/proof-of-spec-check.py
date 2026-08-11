@@ -5,7 +5,12 @@ Andrew-direct 2026-08-11 ~0815Z: build TOs carry machine-readable JSON deliverab
 expectations the Tier-2 assignee fills to PROVE work was done to spec. This is the
 mechanical gate: a TO is not complete until its instance passes here.
 
-Usage: proof-of-spec-check <instance.json>
+Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
+  expected_criterion_ids: comma-separated list OR a path to a file (one id per line) --
+  the TO's embedded criterion set. When given, COVERAGE is checked BEFORE quality:
+  an instance valid on every row it carries can still silently OMIT a criterion
+  (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
+  extra criteria are violations, with both denominators printed.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
 
 Layered: jsonschema (if installed) for structure, then the conditional rules the
@@ -42,8 +47,22 @@ def conditional_checks(inst: dict) -> list[str]:
     return v
 
 
+def coverage_check(inst: dict, expected_arg: str) -> list[str]:
+    """CVO step-zero mechanized: instance criterion set vs the TO's expected set."""
+    p = Path(expected_arg)
+    raw = p.read_text(encoding="utf-8").splitlines() if p.is_file() else expected_arg.split(",")
+    expected = {s.strip() for s in raw if s.strip()}
+    carried = {r.get("criterion_id", "") for r in inst.get("acceptance", [])}
+    v = [f"coverage: criterion '{c}' in the TO's expected set has NO instance row (silent omission)"
+         for c in sorted(expected - carried)]
+    v += [f"coverage: instance row '{c}' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)"
+          for c in sorted(carried - expected)]
+    v.insert(0, f"coverage-frame: expected={len(expected)} carried={len(carried)} matched={len(expected & carried)}") if v else None
+    return v
+
+
 def main() -> int:
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         print(__doc__)
         return 2
     try:
@@ -54,6 +73,11 @@ def main() -> int:
         return 2
 
     violations: list[str] = []
+    if len(sys.argv) == 3:
+        violations.extend(coverage_check(inst, sys.argv[2]))
+    else:
+        print("NOTE: no expected_criterion_ids given -- COVERAGE UNCHECKED (row quality only; "
+              "an omitted criterion is invisible to this run). The cert consumer runs step-zero.")
     try:
         import jsonschema  # type: ignore
 
