@@ -47,6 +47,27 @@ with the friction battery.
   positive control (comp-iam's resource plane helps but does not suffice, per its own banner); (b) the
   schedule declared in GROUP-W terms (a floor, never event-only). CTO: "Build on."
 
+## 3b. CVO LAYOUT CONFIRMATION + RIDERS (093223Z, grounded on the live bucket)
+
+✅ **Key GO as proposed.** Measured on `opal-estate-report`: the bucket runs two date grammars --
+`manifest/{YYYY-MM-DD}.json` FLAT (the contract-v2 key CVO's loop reads) vs `daily/2026/08/DD/`
+NESTED. `text-input/{YYYY-MM-DD}/{device_id}.json` follows the FLAT form -- CORRECT, because on report-
+day D both `manifest/D.json` and `text-input/D/*.json` resolve off the SAME date token (capture + its
+manifest sibling stay joinable, which is what the loop wants); per-device grain fits the 2-device fabric
+(laptop + site-Z land separate objects, no collision).
+
+- **RIDER (a) BRONZE-RAW:** text-input is a bronze-tier RAW input (byte-faithful captured text). The
+  extractor's `text` vs `text_for_quote` split is character-classification = a FRICTION-TIME act,
+  correctly deferred. Upload the object RAW; name the prefix so nothing downstream reads it as processed.
+  **The no-data-day law applies (same as B-9/L2): a no-capture day is NO-PARTITION, LOUD -- never a
+  silent empty object.**
+- **RIDER (b) GRAMMAR-SPLIT FLAG (Rule-24, not a blocker):** the bucket already carries flat-date
+  (manifest, now text-input) AND nested-date (daily/adjudicated) on ONE axis = two grains, one axis.
+  The flat choice is the right side (pairs with the manifest); ONE line routed to the v4-layout owner
+  (CTO~B) so the split is a KNOWN choice, not discovered drift.
+- ✅ **Frozen-corpus P1 discharge CONFIRMED:** building B6-1/B6-2 closes CVO's static-07-30-mirror
+  ticket -- one build under three tickets (design s.9.1). The corpus half closes at the CVO seat.
+
 ## 4. DISCIPLINE
 - CRO specs + drives; does not self-build infra or deploy (charter s.3). B6-1's `.tools/` change +
   S3 write + schedule route to the owning lane under CTO's gate; B6-3 is CTO~B's runner + CTO gate.
