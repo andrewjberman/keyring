@@ -101,7 +101,12 @@ review at CTO; ratification = Andrew's word on the whole)
 | A — dimensions/reference/boundary | **DELIVERED @9c294bbf15 → CTO-APPROVED 0718Z** with 3 defaults confirmed (product root MINTS portal/gold/advi/49financial/ at first build; a00/a01 extract+re-home; security-master source by measured diff, recorded in manifest) + 1 amendment (A_04 joins lib/trading_calendar.py — the single-homed frontier authority — against the observed partition tree; gap census = their diff; never a partition-derived second calendar) | SPEC_49F_GROUP_A_DIMENSIONS_20260811.md |
 | B — holdings/valuation canonicals | **DELIVERED @d57bbf7229 → CTO-APPROVED 0722Z**, no structural amendment; defaults confirmed w/ qualifiers (1bp tolerance ex-ante-provisional, post-backfill recalibration = ruled event; accrual-if-material = named atom-8 computation; rly/rty C-side as INDEPENDENT-derivation cross-check). A_04 amendment folded @6fba62393b | SPEC_49F_GROUP_B_VALUATION_20260811.md |
 | C — derived canonicals (GIPS TWR engine, sec4-10) | **DELIVERED @39c41163cd → CTO-APPROVED 0726Z**; 5 policy defaults confirmed (EOD · cash-receipt-documented · FEE-ADMIN both-sides · 5% census w/ ruled recalibration · one-homed tolerance) + 1 amendment (C_00 verifies the debit_credit semantic boundary at build: direction on cash rows / position-side on IC rows; IC-class rows under direction-codes fail LOUD). One flow truth feeds NNA+TWR; policy block versioned in product root | SPEC_49F_GROUP_C_TWR_ENGINE_20260811.md |
-| D — serving emitters (SHAPE-FROZEN: opens with the deployed-FE byte-schema census as the frozen contract) | queued behind C | — |
+| D — serving emitters (SHAPE-FROZEN) | **DELIVERED @1e11389af8 → CTO-APPROVED 0730Z**, no structural amendment; 3 defaults confirmed (one-shot re-runnable census script composing comp-cache/comp-routes; v1 = exactly today's scopes; ADDRESS-FROZEN, relocation explicitly not authorized). Census = 3-leg reconciled predicate, byte-schema from live objects, both spellings before orphan verdicts; emitters canonicals-only w/ per-field provenance; port = build-correct-then-port, old leg disabled same act | SPEC_49F_GROUP_D_SERVING_20260811.md |
+
+**SEQUENCE COMPLETE 0730Z — all four groups reviewed + amendments folded. AT ANDREW: ratification
+of the A/B/C/D spec set (the ask, per the trigger discipline). Next acts on ratification: COO
+build decomposition · CRO~A adversarial review + INF/COT derivation (Andrew-direct at CVO) · CVO
+Rule-14e cert of BUILT artifacts.**
 
 ## RULED DESIGN CONSTRAINTS (0617Z, from the night's three name-vs-content specimens + the universe finding)
 
