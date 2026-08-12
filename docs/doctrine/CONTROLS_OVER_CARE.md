@@ -37,7 +37,7 @@ why agents who can name a rule violate it while naming it.
 
 ## THE BOUNDARY — this file is one of three families, and it is not a superset
 
-> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the four ways looking does not
+> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the five ways looking does not
 > produce seeing, including how an instrument lies.
 > **[`MECHANISM_LAWS.md`](MECHANISM_LAWS.md)** holds **WHERE AN ASSERTION SITS** — fourteen shapes a
 > claim comes to be wrong about its own subject, each with an EXPOSING QUESTION and a GATE-OR-TEST.
@@ -65,7 +65,7 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The four ways you fail to see it *even though you looked*
+## The five ways you fail to see it *even though you looked*
 
 ### 1. You looked at a PROXY, not the thing
 A digest, a count, a config, an `rc=0`, a symbol's presence. A proxy answers a neighbouring question
@@ -179,6 +179,28 @@ The least intuitive member, so it needs its mechanism:
   pass read 100% healthy precisely because the breakage was total and single-caused.**
 - **Test:** when a result is unusually clean, ask whether a *total* failure would produce exactly
   this reading. **Exercise the tool; never resolve its name.**
+
+### 5. Your WITNESS was your own OUTPUT
+The check *had* an outside source — and it was not outside. An artifact a prior run of the thing under
+test PRODUCED is not a second opinion: agreement is guaranteed by construction, and the more of it you
+gather, the more convincing the nothing becomes. Distinct from #3 because this witness *looks*
+independent — different file, format, prefix, vintage — and is not.
+- **COVERAGE IS NOT INDEPENDENCE. N self-comparisons carry the information of ZERO.** A full-history
+  green over thousands of dates whose witnesses are all the transform's own emissions is worth strictly
+  less than ONE date whose witness was produced independently. **Ask what PRODUCED the thing you are
+  checking against, never how many of them there are** — and note the exercise you were *asked* for can
+  be the worthless one.
+- **A candidate witness that matches your output PERFECTLY is evidence that it IS your output.** The
+  populations most needing a check are exactly those with no independent witness left.
+- ⚡ **THE INVERSION — a difference can be the CREDENTIAL: *the thing that made it fail byte-equality is
+  what qualifies it as a witness.*** An artifact byte-identical to what the transform emits is
+  (probably) that emission; one differing only INCIDENTALLY (record order, formatting, timestamp) while
+  agreeing on every VALUE was produced independently and can adjudicate. **So do not discard a
+  near-match as noise — interrogate the difference. Incidental difference + total value agreement is
+  the signature of a genuine second source.**
+- **Discharge:** before comparing, establish the PROVENANCE of the comparison side — what wrote it,
+  when, from which input. Where no independent witness exists and none can be manufactured, the claim
+  is **DECLARED-UNVERIFIABLE: it may be USED, never CITED as grounded.**
 
 ---
 
