@@ -32,14 +32,70 @@ produced correct login-scoped CIX data with no GUI and no agent anywhere in the 
 
 **So the two process readings are each non-discriminating, in opposite directions:**
 
-| Date | `bbcomm` | `wintrv` | `bloomberg_health` | Entitlement | Lesson |
+| When | `bbcomm` | `wintrv` | `bloomberg_health` | Entitlement | Lesson |
 |---|---|---|---|---|---|
 | 2026-08-11 | up | **dead** | `ok:false` | **DEAD** (12.5h) | a running `bbcomm` is **not sufficient** |
-| 2026-08-12 | up | **absent** | `ok:true` | **LIVE** | a running `wintrv` is **not necessary** |
+| 2026-08-12 **AM** (07:00–09:26) | up | **absent** | `ok:true` | **LIVE** | a running `wintrv` is **not necessary** |
+| 2026-08-12 **PM** (13:16→) | up | absent | `ok:false` | **DEAD** (transport) | `wintrv` absent in **both** 08-12 rows — so it explains **neither** |
 
-`bloomberg_health` read cleanly through *both* states, so **it cannot discriminate either** — it is
-an instrument that could not have said otherwise. Neither the process list nor the health check
-answers "is the entitlement live."
+**Read all three rows, not the middle one alone.** `wintrv` was absent across the whole of 08-12 —
+through a working DAPI *and* a dead one. **A variable that is constant across both outcomes explains
+neither**, which is the entire basis of this gate. The morning row is what proves `wintrv` is
+unnecessary; the afternoon row is what proves its absence is not *reassuring* either. Both halves
+are needed, and a two-row version of this table (which is what stood here until 17:30Z) invites the
+reader to conclude the day had one state when it had two.
+
+**⚠ CORRECTED 2026-08-12 — the sentence that stood here was FALSE, and it was the dangerous
+direction of false.** It read: *"`bloomberg_health` read cleanly through both states, so it cannot
+discriminate either — an instrument that could not have said otherwise."* **Read the table above:
+`ok:false` then `ok:true`. Health DISCRIMINATED CORRECTLY, 2 for 2.** I wrote that health returned
+`ok:true` in both rows; the 08-11 log records `ok:false` throughout that outage. Caught by
+`4.0.0_SA_CRO~Z` (172332Z), who noticed the prose contradicted the table directly beneath it.
+
+**Why this mattered more than an inaccuracy:** the prose half is what propagates. It reached
+MSTR~Z's standing note and CRO~Z's spawn briefing, and on 2026-08-12 CRO~Z measured a genuine
+`ok:false` **twice** and partly talked themselves down from it *on the strength of that sentence*.
+**A record that makes a WORKING instrument look useless is the mirror of the failure this file
+exists to prevent: it does not manufacture a false alarm, IT SUPPRESSES A TRUE ONE.**
+
+### What `bloomberg_health` actually answers — NECESSARY, NOT SUFFICIENT
+
+| Reading | What it establishes | What it does NOT |
+|---|---|---|
+| `ok:false` | **Real evidence the TRANSPORT is down.** Act on it. | — |
+| `ok:true` | A blpapi session opens on 8194. | Nothing about **login state** or **CIX entitlement** |
+
+**⚠ DO NOT OVER-CORRECT THIS INTO "health is unreliable." IT HAS NEVER BEEN OBSERVED TO LIE.**
+
+| When | Reading | Truth | Verdict |
+|---|---|---|---|
+| 2026-08-11 outage | `ok:false` | entitlement dead | **correct** |
+| 2026-08-12 ~09:16–09:26 | `ok:true` | entitlement live | **correct** — independently corroborated by the 3-layer probe, not assumed |
+| 2026-08-12 ~13:16 onward | `ok:false` | transport dead | **correct** — confirmed at three seats |
+
+**3 for 3.** The precise claim is that health is insufficient **in principle** — it structurally
+cannot see login state — **not** that it is unreliable in practice. The failure mode it permits
+(session opens, entitlement dead) is **UNOBSERVED, not demonstrated**; the 2026-08-03 CIX
+mis-resolution is the shape that would produce it, which is why `.ST` exists.
+
+**The reason this warning is here:** the sentence this section replaced made a *working* instrument
+look useless, and a correction that overshoots into "health tells you nothing" reproduces exactly
+the same harm with better intentions — the reader still ignores a correct `ok:false`, just for the
+opposite stated reason. **Act on `ok:false`. Treat `ok:true` as necessary-not-sufficient and
+confirm entitlement with `.ST`. Never "health is unreliable."**
+
+Source-confirmed at `.tools/bloomberg-mcp/blp_client.py:7-11` — exercised with the GUI **exited**
+and the user **logged out**: `bbcomm` kept 8194 listening and `reference_data` kept returning live
+data (USDCAD ticked across the logout). **So the dependency is `bbcomm`, not the GUI and not an
+interactive login — and health is blind to LOGIN STATE, not to transport.**
+
+Same file, `:15-17`, records what is still open: *"STILL UNPROVEN (deliberately not tested, Andrew
+2026-07-30): whether bbcomm comes up entitled from a COLD BOOT with no login at all. 'Survives
+logout' and 'never needs a login' are different claims; only the first is established."*
+
+So the correct reading of the two rows: **the process list does not discriminate (both
+directions), and health discriminates TRANSPORT only.** Neither answers "is the CIX entitlement
+live" — that is what `.ST` is for.
 
 **THE ONLY TEST THAT HAS EVER DISCRIMINATED — resolve the `.ST` custom index.** CIX resolution is
 terminal/login-scoped, so a correct series is the sole evidence that an entitled session backs
@@ -52,6 +108,38 @@ blamed on a dead transport:
 3. `.ST Index` HistoricalDataRequest — **PASS = ~683 rows, inception `2023-12-29` @ `100.0000`.**
 
 **If layer 3 passes, STOP. Do not launch `wintrv`, do not sign in. There is nothing wrong.**
+
+#### If layer 1 FAILS — added 2026-08-12, and this half was MISSING
+
+The gate above guarded only the over-reacting direction. It told you what to do when the
+discriminator PASSES and said **nothing** about a layer-1 failure, which is the same asymmetry as
+the health-prose defect one level up: **silent on the true alarm.** A transport failure is *not*
+the "absent `wintrv`" false premise — it is independent, measurable evidence of a real fault.
+
+**Work the cheap, reversible remedies first and record which you eliminated.** Exercised
+2026-08-12 in this order:
+
+1. **Re-probe 8194** — 3+ probes, seconds apart. A single read can be unlucky; a sustained absence
+   is a finding. (`Get-NetTCPConnection -LocalPort 8194 -State Listen`)
+2. **Restart `bbcomm`** — stop the pid, relaunch `C:\blp\DAPI\bbcomm.exe`. Recoverable and cheap;
+   it relaunches on demand anyway. *Result 2026-08-12: new pid, still no listener — **eliminated**.*
+3. **Test the network to Bloomberg** — `Test-NetConnection 69.187.48.83 -Port 8194`, **with an
+   unrelated control** (`8.8.8.8:53`). Do not skip the control: "the far end is down" and "this box
+   has no network" are different faults with different owners. *Result 2026-08-12:
+   `TcpTestSucceeded True`, control passed — **network eliminated**.*
+4. **Check `bbcomm`'s own outbound sockets** (`Get-NetTCPConnection -OwningProcess <pid>`). Healthy
+   looks like `…:8197 -> 69.187.48.83:8194 ESTABLISHED`. *Result 2026-08-12: **loopback only** — up
+   but not connecting, with the path provably open.*
+
+**Only after 1–4 are eliminated is the sign-in the candidate remedy** — and per `prompt.md` this
+seat **cannot complete one alone**: the credential is a person's Bloomberg login and the **MFA/OTP
+goes to Andrew's phone**. **Surface it with the eliminations attached and hold.** Do not attempt a
+login to "just try"; that is the lockout risk the P0 gate exists to prevent, and it does not stop
+being a risk because the fault is real this time.
+
+**Note the asymmetry that makes both halves necessary:** an absent `wintrv` alone → **do nothing**.
+A measured transport failure with 1–4 eliminated → **escalate**. The same file has to say both, or
+it will reliably produce one of the two errors.
 
 **Why this gate exists and is not pedantry:** a sign-in attempt is *not free*. The 08-11 recovery
 below burned a failed login attempt, and **Bloomberg locks the account on repeated failures** —
