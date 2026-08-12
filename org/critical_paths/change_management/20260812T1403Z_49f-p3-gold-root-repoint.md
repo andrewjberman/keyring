@@ -1,7 +1,7 @@
 # Deploy-completion ledger: 49F P3 gold-root re-point (copy + re-point + verified emission)
 
-**Status:** OPEN
-**Opened:** 2026-08-12T14:03Z (deploy-start) | **Closed:** —
+**Status:** CLOSED
+**Opened:** 2026-08-12T14:03Z (deploy-start) | **Closed:** 2026-08-12T14:20Z
 **Operator:** 0.4.0_DS_ClientPlatform
 
 **Authority chain:** Andrew-direct 2026-08-12 "all recs approved" (P3 authorized; relayed COO
@@ -69,3 +69,40 @@ what the veto actually describes: two roots, split series, consumers reading bot
 ## Execution log
 
 (appended below as each act completes)
+
+## Execution log — ALL THREE ACTS COMPLETE
+
+**ACT 1 — COPY (14:05Z).** 4,206/4,206 `copy_object` calls succeeded, **zero failures**; server-side,
+per-key (no `--recursive`, no `--quiet` — every object's outcome observed, never inferred from a
+process rc). **Two-sided count asserted PER TABLE on objects AND bytes, both sides materialised
+client-side:** canonical_valuation 1,052/1,052 · 148,690,690 B both · flow_ledger 1,052/1,052 ·
+42,631,532 B both · nna_canonical 1,052/1,052 · 13,256,247 B both · twr_daily 1,050/1,050 ·
+120,507,009 B both. **ALL TABLES MATCH.** **Parquet integrity sample, one partition from EACH of the
+four tables, parsed not listed:** 2024-08-21 (4,209 rows) · 2026-02-18 (1,198) · 2025-09-18 (188) ·
+2025-12-11 (6,190) — **all four frame-identical to source.**
+
+**ACT 2 — RE-POINT (14:16Z, @aa72ab5bc5).** The 1+10 surface as ONE act. Post-edit verification:
+**zero gold paths remain on the old root**; the **10 silver/meta reads still `{SCOPE}`-derived**
+(a00 3 · c00 2 · c02 2 · c03 3). `SCOPE` untouched in both knobs and now carries an inline
+DO-NOT-RE-POINT note. ⚡ *Ruff surfaced a real signal, not lint noise: `SCOPE` became an UNUSED
+import in `c01_runner` — proof that runner is purely gold with no silver reads.*
+
+**ACT 3 — FRESH VERIFIED EMISSION (14:17:42Z), all three CVO §8 legs:**
+- **LEG 1 VALUES** — re-read parses at the new root: 7,254 rows, 20 cols, fair_value sum
+  $1,790,149,499.56.
+- **LEG 2 WRITE-side location** — `head-object` at the new root: LastModified **ADVANCED
+  14:05:42Z -> 14:17:42Z**, so this is *not* an unchanged-vintage question. ⭐ **ETag
+  `c6d570d87f7120d8939c343725ffca25` IDENTICAL to the copied bytes — a fresh computation reproduced
+  the copy exactly, so the re-point changed WHERE and provably not WHAT.**
+- **DISCRIMINATING CONTROL** — the OLD root's same key is **untouched at 2026-08-11T18:43:30Z**,
+  pre-dating the re-point. Had the re-point failed, the write would have landed there and advanced
+  it. It did not. Rollback surface intact.
+- **LEG 3 READ-side** — `OUT_ROOT` resolves to `portal/gold/advi/49financial`, and a consumer's
+  series listing at it returns **526 / 526 / 526 / 525 partitions (2024-07-08 .. 2026-08-10)**.
+  ⚡ *This is exactly the leg the stranded-series defect would have broken: a forward-only re-point
+  returns 1 partition here and computes qtd/ytd/12m over a single day.*
+
+**Status:** CLOSED 2026-08-12T14:20Z — three acts complete, verified on re-reads throughout, nothing
+removed at the source, rollback available.
+⛔ **The P4 EXIT CONDITION above remains BINDING and OPEN: the old root must be decommissioned at P4,
+and P4 may not close while `schwab/08335338/gold/` exists.**
