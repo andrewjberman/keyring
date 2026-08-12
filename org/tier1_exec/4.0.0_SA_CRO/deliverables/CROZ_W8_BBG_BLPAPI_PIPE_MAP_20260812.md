@@ -299,7 +299,10 @@ Lambdas, of which 14 are portal-data generators.
 
 ### 10a. The operational answer: what goes dark if this pipe dies
 
-**12 of 17 served artifacts carry Bloomberg origin; 5 do not.** Stated as blast radius:
+⛔ **THE FRACTION ON THIS LINE WAS WRONG AND IS CORRECTED IN §15 — read that first.** It originally
+read *"12 of 17 served artifacts carry Bloomberg origin; 5 do not."* **At key grain it is 14 of 19**
+(20 counting the orphaned `json/yang/volatility_data.json`). **The blast-radius table below is
+UNCHANGED and was never affected** — the error was in the counting axis, not the finding.
 
 | Portal page | Exposure if the blpapi pipe stops |
 |---|---|
@@ -445,3 +448,91 @@ and **the BBG-origin join is derived, not traced.** None of that is a defect in 
 is a defect a reader would otherwise have to discover for themselves.
 
 *W8 map complete for the traverse+read mandate. Total Bloomberg calls made: 2, both `health`.*
+
+---
+
+# INCREMENT 4 — CORRECTION: my own denominator was mixed-grain, and the enumeration is not closed
+
+**Prompted by `2.0.0_SA_COO~Z` 172524Z**, which cautioned that if the BBG-origin join leaned on a
+served-surface enumeration, that enumeration is not closed. **It did, and it is not.** Two
+independent planes were run to test it. Both are AWS/repo reads — **no Bloomberg call.**
+
+## 15. DEFECT 1 — SAME-GRAIN VIOLATION IN MY OWN §10 TABLE (Rule 24(ii))
+
+**"12 of 17" was computed across an axis whose rows are not the same kind of thing.** In §10 I wrote:
+
+| row | what it actually counts |
+|---|---|
+| `json/benchmarks/model_portfolio_benchmarks.json` | **1 key** |
+| `json/factor-tilts/tier{1,2,3}-*.json` | **3 keys** |
+| `json/macro/timeseries/{slug}.json` | **79 files** behind a prefix |
+
+**A numerator and denominator in different units is not a fraction.** The inherited "17" compounds
+it: the lineage map's numbered rows run 1..17 but **row 14 splits into 14a/14b/14c**, so its own
+key count is 19, not 17. I adopted the row count as if it were a key count.
+
+**CORRECTED, at key grain:**
+
+| | count |
+|---|---|
+| Bloomberg-origin (PURE/DERIVED/MIXED) | **14** |
+| Not Bloomberg-origin | **5** |
+| **Total portal-served yang keys** | **19** |
+| + `json/yang/volatility_data.json` (orphan, FRED/Yahoo, no consumer) | 20 total / 14 BBG |
+
+**WHAT DOES NOT CHANGE: every blast-radius verdict in §10a.** Valuation FULL, Correlation FULL,
+FactorTilts FULL, Macroeconomics HIGH, ModelPortfolios PARTIAL, Positioning/Attribution LOW, CMA
+NONE — all unaffected, because those were derived per-page from the origin column, never from the
+fraction. **The error was in the counting axis, not the finding.** I am stating that explicitly so
+the correction is not read as a wider retraction than it is.
+
+## 16. DEFECT 2 — THE ENUMERATION IS NOT CLOSED (COO~Z was right)
+
+**Plane A** (repo): output-key constants under `infra/aws/lambda/v2_portal/yang_pipeline/` -> **20
+distinct keys.** It misses factor-tilts (concat-built) and macro-timeseries (dynamic) — *exactly
+where the lineage map said static resolution fails*, so the two planes cohere.
+
+**Plane B** (served, live): `s3 ls --recursive s3://opal-data-portal-v2/json/` -> **963 `.json`
+keys**, materialised and counted client-side, never `--query length()` on a paginated call.
+
+**Live served keys the inherited lineage map does not carry:**
+
+| Key | Last modified | Read |
+|---|---|---|
+| `json/macro/macro_data_fred.json` | **2026-08-11** | **LIVE (1d) and absent from the map** |
+| `json/macro/yield_curve_fred.json` | 2026-08-05 | live (7d), absent from the map |
+| `json/model_portfolios/views/**` (25 keys) | 2026-06-01 | 72d — under the 90d bar, **not dormant**; a whole served family absent from the map |
+
+## 17. ⚠ A LIVE SAME-LEAF-NAME TWIN — Rule 25's hazard, sitting in this bucket right now
+
+```
+json/valuation/   risk_premium_data.json  valuation_data.json   <- 2026-08-12 07:06  LIVE (this morning's pull)
+json/valuations/  risk-premium.json       valuation-data.json   <- 2025-12-26 13:56  DORMANT (~229d)
+```
+
+**Singular + underscored is LIVE. Plural + hyphenated is ~229 days old.** Positive control: the key
+I know published this morning (`model_portfolio_benchmarks.json`) carries the same `2026-08-12
+07:06:03` stamp as the singular pair, so the timestamps are discriminating and not an artifact.
+
+Per **Rule 25** this is **dormant-because-KEY-MIGRATED, not abandoned** — the successor is one
+prefix over and demonstrably live. That distinction is the whole point of the rule: the two are
+byte-identical from age alone and take **opposite** actions.
+
+⛔ **THIS IS NOT A DELETION WARRANT AND I AM PROPOSING NOTHING.** Dormant licenses
+stop-treating-as-live; moving or removing a served key is NEVER#3. Recorded because **a census
+keyed on leaf name would fail toward the wrong twin** — `valuation` vs `valuations`,
+`valuation_data` vs `valuation-data`, one live and one dead, differing by one character.
+
+## 18. WHAT THIS COSTS THE MAP, HONESTLY
+
+The §10 origin **classifications** stand — each was derived from a producer's declared source, not
+from the enumeration. What is now known-open is the **completeness** of the artifact set: at least
+one LIVE yang-adjacent served key (`macro_data_fred.json`, yesterday) is outside the inherited map,
+so **"12 of 17" was wrong twice over — wrong grain AND an unclosed denominator.**
+
+**The honest status of §10 is: correct about what it lists, and NOT PROVEN to list everything.**
+It is sound for prioritisation and blast radius. It is not a closed census, and per §11's own
+warning nothing may retire, delete, or call-unused on it.
+
+*Correction prompted by COO~Z; planes run by me; still zero Bloomberg calls (running total: 2, both
+`health`).*
