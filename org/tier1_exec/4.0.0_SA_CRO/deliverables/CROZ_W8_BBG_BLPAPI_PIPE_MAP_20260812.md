@@ -5,6 +5,15 @@
 **Egress scope:** TRAVERSE + READ ONLY. Downloads expressly forbidden. Verification pulls are a
 separate, sized ask.
 
+> ⚠ **THE TREE MOVED AFTER THIS MAP WAS WRITTEN (2026-08-12, Andrew-direct).** Every path citation
+> below is **vintage-pinned** and therefore still correct *as a record of where the code was at that
+> commit* — but a reader working today should look in the new home:
+> `.tools/bloomberg-mcp/` -> **`integrations/bloomberg/mcp/`** ·
+> `workflows/bloomberg/` -> **`integrations/bloomberg/pipeline/`** (auth split to
+> `integrations/bloomberg/auth/`). Front door: **`integrations/bloomberg/README.md`**.
+> *The citations are deliberately NOT rewritten: a vintage-pinned citation that is edited to match a
+> later tree stops being a citation.*
+
 > **METHOD DECLARATION — READ THIS BEFORE ANY NUMBER BELOW.**
 > Every increment states its own DENOMINATOR: how many of how many, **by what instrument**, and
 > what that instrument is blind to. A map that resumes cleanly but cannot say what fraction of the

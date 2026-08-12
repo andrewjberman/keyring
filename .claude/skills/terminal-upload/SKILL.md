@@ -40,7 +40,7 @@ because the operator asked for exactly this. `dry` exists for everything short o
 
 ## DATE VARIANT — which day the pull targets
 
-Both variants live in `workflows/bloomberg/<variant>/` (repo-owned copies; Yang's live
+Both variants live in `integrations/bloomberg/pipeline/<variant>/` (repo-owned copies; Yang's live
 notebooks stay untouched). They differ on exactly one line, `date_end`:
 
 | Variant | `date_end` | Vintage on a Tue |
@@ -94,7 +94,7 @@ Run the **variant's** runner out of the repo — NOT `<project>\tools\run_daily_
 (that is Yang's own T-1-only copy and has no variant awareness):
 
 ```
-"<cma-python>" -u "<workspace>\workflows\bloomberg\<variant>\tools\run_daily_pull.py" \
+"<cma-python>" -u "<workspace>\integrations\bloomberg\pipeline\<variant>\tools\run_daily_pull.py" \
     [--skip-pull] [--allow-stale N] [--date YYYYMMDD]
 ```
 
@@ -108,7 +108,7 @@ and target stamp in its first four lines — **check those match what you asked 
   from the notebook file's own directory and **silently ignores**
   `--ExecutePreprocessor.cwd`, so the notebooks would build an empty `input/`+`output/`
   under `workflows/` and write the PKLs where nothing reads them — without failing.
-  Measured 2026-08-04; the reasoning is in `workflows/bloomberg/README.md`.
+  Measured 2026-08-04; the reasoning is in `integrations/bloomberg/pipeline/README.md`.
 - The notebooks take **minutes** — run under Bash `run_in_background` and act on the
   completion notification; do not poll. The `-u` is load-bearing under redirection:
   without it the parent's buffered prints land AFTER the tripwire subprocess output and
