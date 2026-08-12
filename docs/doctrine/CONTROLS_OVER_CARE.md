@@ -191,6 +191,25 @@ query terms came FROM THE CORPUS rather than from your expectation of it — ENU
 then ask about it. Guessing the names and controlling the probe validates everything except the
 question.**
 
+⛔ **4b.2 — A UNIFORM ZERO ACROSS A SET CONTAINING ONE KNOWN-TRUE MEMBER IS A BROKEN INSTRUMENT, NOT A
+FINDING.** The cheapest discriminator in this file, and stronger than a synthetic positive control
+because the expected answer is already known: **hold out one member whose value you know, and run the
+instrument at it.** A predicate too narrow to match anything returns a clean, confident, uniform zero —
+**and uniformity across a heterogeneous set is itself the tell.** Real distributions are lumpy; an
+instrument reporting the same value for every member is far more likely to be measuring nothing than to
+have found a uniform world.
+**Discharge:** *which member's answer do I already know, and does the instrument reproduce it?* If no
+member's answer is known in advance, **the run is uncalibrated and its zeros carry no weight.**
+
+>> **THIS IS THE DOMINANT DEFECT MODE, not one of seven equals — and the frequency is measured, not
+impressionistic.** In a single session, a clean zero from an over-narrow predicate was produced by
+**five different seats**: a semantic census returning 0 for every unit including one where the runner
+had authored all 24 cells; a lint validating its own typing; a name-scoped enumeration short by 9; a
+filter matching nothing; and two enumeration planes whose blind spots intersected. **One seat logged
+four instances of it by itself.** In every case the ONLY thing that caught it was a member whose answer
+was known in advance. **A known-true case is not a nicety at the end of a run — it is the calibration
+without which the run has no verdict.** <<
+
 **4c. THE ANTI-CORRELATED VERDICT — the cleanest pass is sometimes the most complete failure.**
 The least intuitive member, so it needs its mechanism:
 - **Orphan watcher.** It `mv`s the message to `read/` **before** echoing into a dead pipe. So a probe
