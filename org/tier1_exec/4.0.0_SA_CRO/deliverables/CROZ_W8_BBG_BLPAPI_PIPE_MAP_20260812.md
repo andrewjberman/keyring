@@ -145,9 +145,43 @@ This is the single most important thing in increment 1, and it is a NEGATIVE res
 | 2026-08-11 | up | dead | `ok:false` | **DEAD** 12.5h | a running `bbcomm` is **not sufficient** |
 | 2026-08-12 | up | **absent** | `ok:true` | **LIVE** | a running `wintrv` is **not necessary** |
 
-**`bloomberg_health` read cleanly through both states, so it cannot discriminate either.** It is an
-instrument that could not have said otherwise. Neither the process list nor the health check answers
-*"is the entitlement live."*
+⛔ **CORRECTED 2026-08-12 ~1740Z — THE SENTENCE THAT STOOD HERE WAS FALSE, AND I PROPAGATED IT.**
+It read: *"`bloomberg_health` read cleanly through both states, so it cannot discriminate either — an
+instrument that could not have said otherwise."* **Look at the table directly above: `ok:false` then
+`ok:true`. It discriminated, correctly, both times.** I copied that claim from the source runbook's
+prose without checking it against the runbook's own table two lines up — the same error BG made and
+MSTR~Z relayed, carried **one layer further by me, into a reference document**.
+
+**THE MEASURED TRACK RECORD (`0.0.0_AB_MSTR~Z` 173525Z, three seats):**
+
+| When | health | Truth | Verdict |
+|---|---|---|---|
+| 2026-08-11 outage | `ok:false` | entitlement DEAD | **correct** |
+| 2026-08-12 09:16-09:26 | `ok:true` | entitlement LIVE | **correct** — corroborated by BG's 3-layer probe, not assumed |
+| 2026-08-12 13:16 onward | `ok:false` | transport DEAD | **correct** — three seats, three instrument sets |
+
+**3 for 3. `bloomberg_health` has never been observed to give a wrong answer.**
+
+**THE STANDING FORM — asymmetric, and both halves are load-bearing:**
+> **ACT ON `ok:false`.** It is real evidence transport is down. Do not talk it down.
+> **TREAT `ok:true` AS NECESSARY-NOT-SUFFICIENT** and confirm entitlement with `.ST`.
+> **NEVER "health is unreliable."**
+
+It is insufficient **in principle** — it structurally cannot see login state (`blp_client.py:7-11`:
+GUI exited AND user logged out, yet 8194 kept listening and live data kept flowing). The failure it
+permits (session opens, entitlement dead) is **UNOBSERVED, not demonstrated**; the 2026-08-03 CIX
+mis-resolution is the shape that would produce it, which is why `.ST` exists.
+
+**Neither the process list nor the health check answers *"is the entitlement live"* — but only the
+process list is non-discriminating. Health answers a different question, and answers it correctly.**
+
+> **WHY THIS CORRECTION IS ITSELF THE FINDING:** a record that makes a **working** instrument look
+> useless does not manufacture a false alarm — **it SUPPRESSES a true one**, and the instrument keeps
+> working while nobody looks at it. That is strictly worse than a confidently wrong instrument. It
+> cost me directly: I measured a true `ok:false` twice and partly talked myself down on the strength
+> of the sentence that used to sit here. **And the over-correction reproduces the same harm with
+> better intentions** — "health tells you nothing" makes a reader ignore a correct `ok:false` for the
+> opposite stated reason. Corrected in BG's runbook @`49cf3a8749`.
 
 > ### ⛔ THE ONLY DISCRIMINATING TEST IS ITSELF A PULL — AND SO I DID NOT RUN IT.
 > The runbook's sole proven discriminator is resolving the `.ST` custom index: a
