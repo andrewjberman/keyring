@@ -47,9 +47,26 @@ while IFS= read -r f; do
         BEGIN { infence = (mode == "code") ? 1 : 0 }
         mode == "md" && /^[ \t]*```/ { infence = !infence; next }
         !infence { next }
-        { s = $0; sub(/^[ \t]+/, "", s) }
-        s ~ /^#/ { next }
-        $0 ~ /(^|[ \t|&;(`]|\$\()jq([ \t]|$)/ { printf "    %s:%d: %s\n", fn, NR, $0 }
+        # A COMMENT IS NOT CODE -- strip from the first hash before ANY matching, the same way
+        # never-rules-gate.sh scan() does. Fired three times on prose during authoring (this
+        # files own echo strings, the gates guarded check, then this very comment), which is the
+        # mention-is-not-an-invocation class (LD-0274) that the ban itself exists to respect.
+        # RESIDUAL, stated: a real jq after a hash on one line (only reachable inside a quoted
+        # string) is now invisible. That is an UNDER-match in a heuristic lint, accepted
+        # deliberately -- the structural alternative is a shell parser, which is disproportionate.
+        # STRIP COMMENTS *AND* QUOTED STRINGS before matching. That is the real discriminator:
+        # all three authoring-time false fires had jq inside a STRING (this files own echo text,
+        # the gates error message, a trailing comment) -- a mention, never an invocation. A bare
+        # `jq -r ".x"` still fires because the jq TOKEN sits outside the quotes.
+        { code = $0; sub(/#.*$/, "", code); gsub(/"[^"]*"/, " ", code); gsub(/\047[^\047]*\047/, " ", code)
+          s = code; sub(/^[ \t]+/, "", s) }
+        s ~ /^[ \t]*$/ { next }
+        # --- EXCLUSIONS: the ban targets a BARE, UNGUARDED jq at COMMAND POSITION (the measured
+        # harm was `jq ... 2>/dev/null` rendering a false quiet fabric). It must NOT fire on the
+        # patterns the estate is REQUIRED to use. ---
+        code ~ /command[ \t]+-v[ \t]+jq|type[ \t]+jq|hash[ \t]+jq/ { next }   # Rule-16 GUARDED presence check
+        code ~ /jq\.exe|JQ=|\$\{?JQ\}?/                            { next }   # the VENDORED .tools/jq.exe resolution + its resolved var
+        code ~ /(^|[ \t|&;(`]|\$\()jq([ \t]|$)/ { printf "    %s:%d: %s\n", fn, NR, $0 }
     ')"
     [ -z "$hits" ] && continue
     if [ -n "${JQ_BAN_OVERRIDE:-}" ]; then

@@ -265,6 +265,18 @@ if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git[[:space:]]+-C[[:space:]
         /*) REPO="$_c" ;;
         *)  REPO="$WS/$_c" ;;
     esac
+# ALSO honour a leading `cd <path> && git ...` -- the SUBMODULE shape (MSTR/DT finding 2026-08-11:
+# `cd portal && git push origin DEV` resolved $BRANCH from the OUTER repo's HEAD, so the denial text
+# named the wrong branch. Harmless that night because BOTH branches were shared -- but the INVERSE is
+# the hazard: outer on a SCRATCH branch + a shared-branch push from inside the submodule would not
+# have fired at all. A gate that reads the wrong repo is silently absent exactly where LD-0367 needs it.
+elif printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])cd[[:space:]]+[^[:space:]]+[[:space:]]*(&&|;)'; then
+    _c=$(printf '%s' "$CMD" | sed -n 's/.*[^[:alnum:]_-]\?cd[[:space:]]\+\([^[:space:];&|]\+\).*/\1/p' | head -1)
+    case "$_c" in
+        /*) [ -d "$_c/.git" ] || [ -f "$_c/.git" ] && REPO="$_c" ;;
+        "") : ;;
+        *)  { [ -d "$WS/$_c/.git" ] || [ -f "$WS/$_c/.git" ]; } && REPO="$WS/$_c" ;;
+    esac
 fi
 BRANCH=$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null || echo UNKNOWN)
 
@@ -496,9 +508,28 @@ fi
 # push/pull is DENIED. A false-deny is loud and the integrator fixes it in one step; a false-allow
 # silently republishes the whole tree -- so UNRESOLVED FAILS TO DENY, never to allow.
 # =========================================================================================
+# TWO TRIGGERS, NOT ONE (CTO 2026-08-11, closing the wrong-repo/explicit-refspec hole):
+#   (a) HEAD is a shared branch (the original), now resolved against the TARGET repo; and
+#   (b) THE COMMAND ITSELF NAMES A SHARED BRANCH -- `git push origin DEV` / `HEAD:CLOUD` /
+#       `refs/heads/main` -- regardless of what HEAD is.
+# (b) is the structural half: HEAD is an INFERENCE about what the command will move, the refspec
+# is the command SAYING IT. It closes two silent-absence cases (a) alone cannot see: a shared-branch
+# push from inside a submodule while the outer repo sits on a scratch branch, and the plainer
+# `git push origin CLOUD` issued from any scratch branch in the workspace itself.
 _RE_PUSHPULL="${_GIT}"'(push|pull)([[:space:]]|$)'
-if printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES" \
-   && [ -n "$(scan PUSHPULL_AUTHORITY '' "$_RE_PUSHPULL")" ]; then
+_PUSHPULL_HIT="$(scan PUSHPULL_AUTHORITY '' "$_RE_PUSHPULL")"
+_REF_NAMES_SHARED=""
+if [ -n "$_PUSHPULL_HIT" ]; then
+    # A COMMENT IS NOT A REFSPEC -- strip it first, exactly as `scan` does for matching
+    # (`git push origin scratch  # rebase onto DEV later` must not read as a DEV push).
+    # Then tokenise; strip refs/heads/, origin/, and the src: half of a src:dst refspec.
+    _REF_NAMES_SHARED="$(printf '%s' "$_PUSHPULL_HIT" | sed -E 's/#.*$//' | tr ' \t' '\n\n' \
+        | sed -e 's#^refs/heads/##' -e 's#^.*:##' -e 's#^origin/##' \
+        | grep -E -- "$SHARED_BRANCHES" | head -1)"
+fi
+if [ -n "$_PUSHPULL_HIT" ] \
+   && { printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES" || [ -n "$_REF_NAMES_SHARED" ]; }; then
+    [ -n "$_REF_NAMES_SHARED" ] && BRANCH="${_REF_NAMES_SHARED}"
     _SID=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // empty' 2>/dev/null)
     _CALLER=""
     [ -n "$_SID" ] && _CALLER=$(tr -d '[:space:]' < "$WS/org/mcp/sessions/${_SID}.serial" 2>/dev/null || true)
