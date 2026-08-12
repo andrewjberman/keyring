@@ -286,8 +286,70 @@ first run: a citation sent before the integrator leg ran did not resolve on the 
 was correctly recorded as UNDISCHARGED — **a path is not a citation until it is on the remote.**
 The peer verifies against the remote, never against your report.
 
+## Step 6b — ⛔ NUDGE THE PEER, AND A QUEUED MESSAGE IS NOT A NUDGE
+
+**Andrew-direct 2026-08-12:** *"did you nudge them? that needs to be part of the skill."* — asked
+after site Z landed its leg, sent one SQS message, and reported parity as "one fast-forward away."
+
+**PARITY IS NOT DONE WHEN YOUR LEG IS DONE. Leg 2 requires the PEER to act**, and everything about
+this protocol up to here is things *you* can do alone. This step is the one that isn't.
+
+**THE FAILURE THIS CLOSES: an SQS send is fire-and-forget.** If no consumer is armed on the peer
+device, the message is **STORED, NOT READ** — indefinitely, silently, with a successful-looking
+`MessageId` returned to you. You will believe you asked and they will never have been asked.
+
+**MEASURE REACHABILITY BEFORE TRUSTING THE SEND — and know what each signal cannot say:**
+```bash
+bash .tools/agentbus-sqs.sh peek <peer-device>   # consumes nothing
+```
+| reading | what it means |
+|---|---|
+| `ApproximateNumberOfMessages` > 0 | your mail is **sitting unread** — the peer consumer is down |
+| `= 0` | **NOT proof of delivery.** Consistent with read, and with in-flight, and with drained |
+| `NotVisible` | an **instantaneous in-flight gauge, not a cumulative receipt** — `recv --keep` releases messages back, so it reads 0 for received-and-released. Never use it as a delivery oracle |
+| **an agent-side ACK** | **the only sound oracle** (Rule 22b). Check the timestamp of the peer's last one |
+
+**IF THE PEER HAS NOT ACKed RECENTLY, ESCALATE TO THE SECOND CHANNEL — DO NOT JUST RE-SEND.**
+A second SQS message has the identical failure mode as the first.
+
+**THE GIT TRUNK NEEDS NO CONSUMER** (`org/mcp/agentbus-trunk/`, README = the envelope contract).
+Write one envelope into `messages/`, commit it, and **push it to the PEER's branch** — it lands on
+their next `git fetch` whether or not any seat is alive:
+```bash
+git worktree add --detach <scratch>/wt_peer origin/<PEER-BRANCH>   # never switch the shared checkout
+# write messages/{ISO}__{from}__{to}__{KIND}__{id}.json  (see trunk README)
+git -c user.name=<your-serial> commit -q -m "trunk(<id>): ..." && cd <repo-root>
+git push origin <commit>:<PEER-BRANCH>
+git worktree remove --force <scratch>/wt_peer      # ONLY after the push is verified
+```
+⚠ **Three traps, all hit on the first run of this step:**
+1. **Push from the MAIN checkout, not the worktree** — the pre-push halt gate resolves
+   `org/mcp/sessions/<session>.serial`, which a detached worktree cannot see. It refuses, correctly.
+   Commit in the worktree, then `git push origin <sha>:<PEER-BRANCH>` from the repo root.
+2. **Do not remove the worktree until the push is verified.** Removing it first orphans the ref —
+   recoverable only because worktrees share the object store, which is luck, not design.
+3. **Native Python writing into the worktree needs an absolute WINDOWS path** (`cygpath -w`); a
+   relative path resolves against a different CWD and the write silently lands elsewhere.
+
+*Precedent, and it runs both directions: `amb-b-0012` is base MSTR reaching site Z on the trunk
+for exactly this reason when site Z's consumer was down. `amb-z-0021` is the mirror.*
+
+**Nudge content is the peer's ACTION, not your status:** their exact commands, the payload size and
+authors, the conflict count, the exposure ceiling, and an explicit *verify-do-not-trust-this-message*.
+Say plainly if it is not urgent — a nudge that manufactures false urgency gets discounted next time.
+
 ## Step 7 — Close
 
+- **PARITY IS A TWO-LEG CLAIM. Verify BOTH from the remote before saying "at parity":**
+  `is-ancestor(origin/CLOUD, origin/SITEZ)` **and** `is-ancestor(origin/SITEZ, origin/CLOUD)`.
+  One rc=0 is *your* leg, not parity. Report each leg with its own landed head and name the
+  outstanding one as OUTSTANDING.
+- ⚠ **THE SKILL ITSELF CAN BE STALE — Step 1b CHECKS THE LOCAL REF, NOT THE LOCAL SKILL.**
+  Measured 2026-08-12: site Z ran the full protocol on a bare `/integrate` (assess-only under
+  Andrew's ruling) because its copy still carried the retired table, and **the reconcile's own
+  merge is what imported the corrected skill.** A fabric can run this protocol under rules the
+  other fabric already retired, and nothing in Steps 0–6 detects it. After leg 1, re-read the
+  invocation table before acting on it.
 - Post-merge, ask each affected steward to read their artifact (auto-merged ≠ semantically right).
 - Record the run: base, both counts, overlap size + set, resolutions taken, both landed heads.
 - **Ledger it** (MSTR commits touching non-record paths need an `LD-NNNN`).
