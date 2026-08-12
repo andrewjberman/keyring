@@ -227,3 +227,73 @@ measured absence, not an unobserved one.
 
 *Increment 2 ends here. Read-only. No recursion. No content harvested — the only document bytes that
 crossed the channel were 13 cells of a low-sensitivity operational tracker.*
+
+---
+
+# ADDENDUM — the firm axis, under a ruling that POSTDATES this close
+
+**W7's acceptance is UNCHANGED: 3/3 proof-of-spec, closed.** This addendum records a consequence of
+**Andrew-direct ~2020Z (Ruling 3)**, which landed *after* W7 closed. **It is a declared bound, not a
+defect and not a re-run.** Requested by `1.0.0_SA_CTO~Z` 204142Z, deliberately bounded to two
+statements. **No new measurement was taken for it.**
+
+## 14. THE TIER — the reach is PERSON-scoped, therefore it IS the Opal-internal tier
+
+Ruling 3, VERBATIM: *"This does need to be firm-specifc and gated. Opal users should be able to see
+all of them but firms should not be able to see other firms."*
+
+**§1 of this registry already establishes the governing fact:** the gateway is OAuth'd as **Andrew
+Berman personally**, so *"the reach is a PERSON'S, and that governs everything below."*
+
+✅ **A person-scoped reach maps onto Ruling 3's UPPER tier.** For the current audience — the Opal
+internal team — **an all-firms reach is CORRECT AND SAFE, not a violation.** Nothing in this registry
+needs to change for today's use.
+
+⚠ **AND THE AUDIENCE IS A DECLARED PREMISE, NOT A PROPERTY OF THE SYSTEM.** The reach is correct
+*because of who is asking*. **If the audience changes, the reach's correctness changes with it, and
+nothing in the mechanism will announce that** — no error, no warning, no verdict flips. It is
+correct-by-audience, which is the weakest kind of correct, and it is recorded here so a future reader
+inherits the premise rather than the conclusion.
+
+## 15. THE BOUND — this registry has NO FIRM AXIS, and it cannot have one
+
+**MEASURED over this document (13,173 B), independently re-derived rather than inherited from the
+relay:**
+
+| term | hits |
+|---|---|
+| `firm` | **1** |
+| `Inflection` | **0** |
+| `isolation` | **0** |
+| `partition` | **0** |
+| `Cottonwood` | **0** |
+| `tenant` | 6 |
+
+**There is effectively no firm axis in this registry — and that is not an omission.** It follows from
+§1: **a person's SharePoint identity sees what that person can see; there is no firm scoping in the
+reach, so there was nothing for a firm axis to describe.** The registry documented the reach
+accurately.
+
+⛔ **THE CONSEQUENCE, stated as the bound: FIRM ISOLATION CANNOT BE ENFORCED DOWNSTREAM OF A
+PERSON-SCOPED REACH UNLESS THE CONCIERGE ITSELF PARTITIONS — AND THIS REGISTRY CARRIES NOTHING TO
+PARTITION ON.** If a firm user ever reaches the concierge, it would answer from an all-firms reach
+with **nothing distinguishing whose documents are whose.** `Inflection: 0` is the measurement of
+exactly that.
+
+**What would be required (NAMED, NOT MEASURED — this is W9's question and pulling it forward would
+widen a closed wave):**
+1. A **firm discriminator on the source item** — whether SharePoint document metadata, site
+   membership, or path even *carries* one recoverably. **UNMEASURED. Deliberately not investigated
+   here.**
+2. A **partition key** on every registry row derived from that discriminator.
+3. An **enforcement point** that applies it per calling identity — distinct from the ACL check, per
+   the two-axes model.
+
+⚠ **AND THE QUESTION UNDERNEATH IT MUST NOT BE ASSUMED AWAY: if firm identity is NOT recoverable from
+document metadata or path, then firm isolation over a document store is NOT IMPLEMENTABLE AS
+DESIGNED.** That is a finding a spec exists to surface *before* a build, and it is registered as an
+open question in
+`integrations/opal-gateway/docs/DOC_EXTRACT_REGISTRY_SPEC.md` §1c — **not answered here.**
+
+*Addendum ends. No calls were made for it; both statements rest on §1 and on a term census over this
+document's own text.*
