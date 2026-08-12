@@ -51,18 +51,41 @@ to zero. Pre-fix book (08-11 partition, built 14:07Z before the deploy) was $140
   that both planes now resolve to roster currentValue post-fix. Stated as inferred; grounding
   it needs the holdings-plane derivation read, which nobody has asked for.
 
-## >> RESOLVED ~15:19Z: the 109 below are the GENUINELY-EMPTY class (measured, same day)
+## >> ⛔ RETRACTED ~15:31Z -- I "RESOLVED" THIS WRONG. The 109 is NOT the empty class.
 
-The observation flagged below is closed by the B_00 scope measurement taken an hour later.
-Of the 423 accounts where the activity plane reads exactly 0.00 on today's partition:
-**312 are ZERO-CONTRADICTED** (roster holds value -- the artifact class, $68,676,658.56) and
-**109 are ZERO-CORROBORATED** (roster also zero -- genuinely empty). Same 109, both planes.
-So the 725+74=799 vs 908 gap was never a coverage defect: those accounts hold no mass, which
-is why the value identity was exact. **The 312 also re-derives the ORIGINAL investigation's
-suppressed-class count from a different plane** (the V4 band's "312-account coerced-zero
-ending_mv class") -- three independent measurements, one stable identified class.
-*Flagging an observation I could not yet call, instead of asserting or dropping it, is what
-let it resolve into a fact within the hour.*
+**At ~15:19Z I wrote here that the 109-account gap below was IDENTIFIED as the
+ZERO-CORROBORATED (genuinely-empty) class, "same 109, both planes," and I reported that
+conclusion to Andrew and to COO. IT IS WRONG.**
+
+**The empty class is 111, not 109.** Re-measured with an explicit partition check that made
+the numbers account for themselves: of the 423 accounts reading exactly 0.00 on the activity
+plane, **312 are ZERO-CONTRADICTED and 111 are ZERO-CORROBORATED (312 + 111 = 423, exactly).**
+My "109" came from a merge whose parts I never summed against their own total -- 312 + 109 =
+421, not 423, and **the two missing accounts were sitting in plain sight in my own output.**
+
+**So the "same 109 on both planes" was a COINCIDENCE OF MY OWN ARITHMETIC ERROR, not an
+identification.** The served-classification gap (725 + 74 = 799 vs 908 = **109**) and the
+genuinely-empty class (**111**) are DIFFERENT NUMBERS over DIFFERENT CRITERIA, and I matched
+them because I had miscounted one of them into agreeing with the other.
+
+**THE 109 RETURNS TO OPEN OBSERVATION STATUS** -- exactly where it was before I wrongly
+closed it. Named next step (nobody is blocked on it): D_04's valuation plane is NOT a
+`holdings` dim -- no such dim exists in `silver/api_dims/` (the set is accounts_v2 · activity
+· assets · assets_v2 · billing · household · household_rep_mapping · performance ·
+positions_mv · representatives · tax_realized), so the "valuation = holdings.market_value"
+shorthand in my own earlier ledger note is itself unverified and must be traced to the real
+source before the 109 can be explained.
+
+**WHAT STANDS, unaffected:** the 312 artifact class and its $68,676,658.56 (re-derived
+identically by the positions discriminator AND the roster basis, and matching the original
+investigation's count); every structural and value check in this file; the exact-sum identity.
+The error was confined to the count of the EMPTY class and the false match to the 109.
+
+**THE LESSON, and it is the same one this file already records once:** a partition must be
+made to account for its own total. I checked that 312 + 109 "explained" the gap I wanted
+explained, and never checked that 312 + 109 equalled 423. *An agreeable coincidence is the
+one result nobody re-derives* -- and I found it only because a later pinning act forced me to
+state the partition exactly.
 
 ## OBSERVATION (flagged, not smoothed; NOT a defect claim) -- NOW RESOLVED, see above
 
