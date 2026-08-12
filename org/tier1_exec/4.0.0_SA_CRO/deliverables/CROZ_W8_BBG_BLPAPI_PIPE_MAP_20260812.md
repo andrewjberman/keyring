@@ -536,3 +536,68 @@ warning nothing may retire, delete, or call-unused on it.
 
 *Correction prompted by COO~Z; planes run by me; still zero Bloomberg calls (running total: 2, both
 `health`).*
+
+---
+
+# INCREMENT 5 — THE REGISTRY (W8-REGISTRY-C1)
+
+## 19. SERVED ARTIFACT -> UPSTREAM REQUEST, keyed for lookup
+
+**How to use this:** find your served key in column 1; columns 2-4 tell you which Bloomberg request
+produced the data behind it, and therefore what breaks it. **This is the lookup the map exists to
+provide** — the downstream half (S3 -> CloudFront -> proxy fn -> React component) is NOT restated
+here, because `docs/reference/yang-pipeline-lineage-map.md` §2/§5c already carries it at field grain
+and duplicating it would create a second home for one fact.
+
+**Request key:** `R1` = `return_daily` (DAILY, ~6y, 2 fields) · `R2` = `return_monthly` (MONTHLY,
+1989-12-31->, 13 fields) · `R3` = `price_monthly` (MONTHLY, 1989-12-31->, `PX_LAST`) ·
+`R3b` = the conditional one-day DAILY append · `--` = no Bloomberg request.
+
+| Served key (`opal-data-portal-v2`) | Upstream request | PKL frame | Origin |
+|---|---|---|---|
+| `json/valuation/valuation_data.json` | **R3** | `price_monthly` | PURE |
+| `json/valuation/risk_premium_data.json` | **R3** + FRED CSV | `price_monthly` | MIXED |
+| `json/correlations/correlation_data.json` | **R2** | `return_monthly` | PURE |
+| `json/macro/macro_data.json` | **R3** (+R3b at month-end) | `price_monthly` | PURE |
+| `json/macro/timeseries/{slug}.json` (79) | **R3** | `price_monthly` | PURE |
+| `json/macro/vix_data.json` | **R3** | `price_monthly` | PURE (no consumer) |
+| `json/factor-tilts/tier1-snapshot.json` | **R1/R2 via model.pkl** | FACTOR_SPREADS | DERIVED |
+| `json/factor-tilts/tier2-spreads.json` | **R1/R2 via model.pkl** | FACTOR_SPREADS | DERIVED |
+| `json/factor-tilts/tier3-timeseries.json` | **R1/R2 via model.pkl** | FACTOR_SPREADS | DERIVED |
+| `json/benchmarks/etf_returns.json` | **via model.pkl** | `etf_returns` | DERIVED |
+| `json/benchmarks/model_portfolio_benchmarks.json` | **R1** + SmartX sidecars | `return_daily` | MIXED |
+| `json/benchmarks/benchmark_returns.json` (LEGACY) | **R1** + SmartX | `return_daily` | MIXED |
+| `json/benchmarks/model_portfolio_timeseries.json` | **R1 + R3** + SmartX | `return_daily`,`price_monthly` | MIXED |
+| `json/positioning/positioning_data.json` | **R3** + model.pkl + BD aum-metrics | `price_monthly` | MIXED |
+| `json/capital-markets/assumptions.json` | `--` | CMA Excel | NONE |
+| `json/capital-markets/views.json` | `--` | SAA Excel | NONE |
+| `json/peers/peer_performance.json` | `--` | peer Excel | NONE |
+| `json/positioning/holdings_attribution_data.json` | `--` | Excel + DynamoDB | NONE |
+| `json/positioning/allocation_summary.json` | `--` | reads the attribution artifact | NONE |
+
+**Denominator: 19 rows = 14 Bloomberg-origin + 5 not.** Plus `json/yang/volatility_data.json`
+(FRED/Yahoo, no portal consumer) = 20 keys known. **Per §16 this set is NOT CLOSED** — at least
+`json/macro/macro_data_fred.json` (live, 2026-08-11) is served and outside it.
+
+**Reverse lookup — if a request fails, these go stale:**
+`R1` -> the 3 benchmark keys + factor tilts (via model.pkl).
+`R2` -> correlations + factor tilts.
+`R3` -> valuation, risk premium, macro, the 79 timeseries, vix, positioning, model_portfolio_timeseries.
+**R3 has the widest blast radius of the three**, which is not obvious from the pull's own structure —
+it is the single-field `PX_LAST` request, the cheapest-looking one.
+
+## 20. UNVERIFIED PREMISES — named, not carried as fact (W8-REGISTRY-C2)
+
+| # | Premise | Status | Why it matters |
+|---|---|---|---|
+| 1 | **One producer, two homes** — repo `workflows/bloomberg/{tplus1,tzero}/src/` vs the OneDrive production notebooks | **UNVERIFIED.** README asserts a two-way difference; **prose, not a measurement.** No measurement in this run establishes it | Rule 22a two-homes shape: a filename-resolved check reads CLEAN where two copies silently diverged. §8's request universe is read off the REPO copy |
+| 2 | Service map (6 services, `//blp/emsx` absent) | **INHERITED** 2026-07-30, 13d, not re-probed | entitlements can change with nothing reporting it (the PRD says so itself) |
+| 3 | Lineage map's 17 artifacts | **INHERITED**, and §16 proves it **not closed** | a live served key sits outside it |
+| 4 | BBG-origin classification | **DERIVED** — a join of two documents, not a live trace | strong enough to prioritise; not a certification |
+| 5 | Entitlement live/dead | **UNVERIFIED BY THIS SEAT** — the discriminator is a pull | resolved independently by `0.0.3_BG_BBGTerminal` 172938Z: transport genuinely down, layer-1 `IO_ERROR` |
+| 6 | Cause of the 13:16Z DAPI loss | **UNDETERMINED** — my own probe not excluded as trigger | BG seat eliminated bbcomm-restart and network; escalated to Andrew (MFA-gated) |
+
+**None of these is a defect in the work. Every one is a thing a reader would otherwise have to
+discover for themselves**, and premise 1 is load-bearing for §8.
+
+*Registry complete. Running total of Bloomberg calls: 2, both `health`.*

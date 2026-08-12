@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W8.bbg-blpapi-pipe-map",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W8.bbg-blpapi-pipe-map.md",
+    "group": "W",
+    "vintage_commit": "f917c0786b"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W8_BBG_BLPAPI_PIPE_MAP_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "8c5d1c5674",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Increment 2 sections 8-11; corrected by increment 4 @750b3bb5d2 sections 15-18."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W8-REQUNIV-C1",
+      "criterion_verbatim": "the COMPLETE request universe with a DENOMINATOR: request count, request type, service, identifier count, and the field vocabulary enumerated (not sampled).",
+      "method": "manual_read_with_citation",
+      "invocation": "python extraction over workflows/bloomberg/tplus1/src/market_indices_data_pull.ipynb code cells @f09cbd13ef, counting dc_index/dc_macro literal dicts and the dc_fields_* definitions.",
+      "output_evidence": "THREE HistoricalDataRequests via tia.bbg.datamgr -> //blp/refdata, plus a conditional fourth: return_daily (dc_asset_return x 2 fields, date_end+YearEnd(-6)->date_end, DAILY); return_monthly (dc_asset_return x 13 fields, 1989-12-31->date_end, MONTHLY); price_monthly (dc_asset_price x PX_LAST, 1989-12-31->date_end, MONTHLY); conditional one-day DAILY append when the monthly max date != date_end. Field vocabulary ENUMERATED not sampled: PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, BEST_PE_RATIO, PE_RATIO, PX_TO_FREE_CASH_FLOW, EV_TO_T12M_SALES, PX_TO_BOOK_RATIO, PX_TO_SALES (+ dividend yield) = 13 in the all set, 2 in return, 1 in price.",
+      "denominator": "165 unique Bloomberg identifiers across 22 categories, of 165 literal dict entries; 14 code cells scanned of 14 in the notebook; 3 request specs of 3 defined in dc_download.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W8-REQUNIV-C2",
+      "criterion_verbatim": "the SERVED JOIN with a denominator: which served artifacts are Bloomberg-origin and which are not, plus per-page blast radius, each side counted.",
+      "method": "manual_read_with_citation",
+      "invocation": "Join of section 8 request universe onto docs/reference/yang-pipeline-lineage-map.md sections 1a/2/6; corroborated by two independent planes (repo output-key constants; aws s3 ls --recursive s3://opal-data-portal-v2/json/).",
+      "output_evidence": "14 Bloomberg-origin (PURE/DERIVED/MIXED) and 5 not, at KEY grain. Per-page blast radius: Valuation FULL, Correlation FULL, FactorTilts FULL, Macroeconomics HIGH (Volatility tab NOT ours -- market-overview pipeline), ModelPortfolios PARTIAL (peer performance is Excel and survives), Positioning/Attribution LOW, CMA NONE. CORRECTED IN INCREMENT 4: this originally read '12 of 17', a Rule-24 same-grain violation -- rows counting 1 key, 3 keys and 79 files on one axis, over an inherited ROW count read as a KEY count. Blast-radius verdicts were derived per-page from the origin column and are unaffected by the correction.",
+      "denominator": "19 portal-served yang keys (14 BBG-origin + 5 not); 20 counting the orphaned json/yang/volatility_data.json. Plane A: 20 repo output-key constants. Plane B: 963 served .json keys under json/, materialised and counted client-side -- never --query length() on a paginated call.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W8-REQUNIV-C3",
+      "criterion_verbatim": "the silent-failure mode is stated WITH the NEVER#1 trading-calendar counterweight in the same passage, and proposes NO monitor.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of the deliverable section 10a block quote 'THE FAILURE IS SILENT, AND THAT IS THE FINDING'.",
+      "output_evidence": "The passage states the silent-failure mode (no new PKL -> pipeline never fires -> portal serves yesterday's artifact with yesterday's data_as_of, internally consistent and stale) and carries the counterweight IN THE SAME BLOCK: 'Per CLAUDE.md NEVER#1 this is also where a reader must not over-correct: an unmoved data_as_of across a weekend is a HEALTHY T-1 pipeline, not an outage. The discriminator is the trading-day frontier, never wall-clock age.' It proposes no monitor and explicitly defers the detection gap as a route/schedule question already routed for disposition. Zero alarm/SNS/SES/freshness-checker proposals appear anywhere in the deliverable.",
+      "denominator": "1 silent-failure passage of 1 in the document; 0 monitor proposals of 0 permitted under the standing moratorium.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Two-plane corroboration as a mutant on the inherited artifact enumeration: if the inherited lineage-map count were closed and correct, an independent live served-plane listing would surface no yang-adjacent keys outside it. Ran the listing to try to break the denominator.",
+      "expected": "If the enumeration is closed, every yang-adjacent served key appears in the inherited map.",
+      "observed": "IT BROKE. json/macro/macro_data_fred.json (2026-08-11, 1 day old, LIVE) and json/macro/yield_curve_fred.json (2026-08-05) are served and absent from the inherited map, plus json/model_portfolios/views/** (25 keys, 2026-06-01). Plane A independently missed exactly factor-tilts (concat-built) and macro-timeseries (dynamic) -- precisely where the lineage map states static resolution fails, so the two planes cohere while jointly falsifying closure.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Notebook extraction re-run against the same commit; s3 ls listing counted twice from the persisted output file.",
+      "observed": "165 identifiers / 22 categories reproduced identically. 963 .json keys reproduced identically from the same listing.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Live trace of the BBG-origin classification",
+      "reason": "It is a JOIN OF TWO DOCUMENTS, not a live trace, and section 11 says so explicitly. Sound for prioritisation and blast radius; not a certification. No retirement or unused-call may rest on it."
+    },
+    {
+      "item": "Closure of the served-key enumeration",
+      "reason": "Proven NOT closed in increment 4 section 16. Recorded as an open denominator rather than presented as complete."
+    },
+    {
+      "item": "Verification that the repo notebooks match the OneDrive production copies",
+      "reason": "Named as unverified premise 1 in section 20. The README asserts a two-way difference as prose; no measurement in this run establishes it."
+    }
+  ],
+  "surprises": [
+    "json/macro/vix_data.json is produced every pipeline run and consumed by nothing -- proxy fn exported, no component imports it.",
+    "A LIVE same-leaf-name twin in the served bucket: json/valuation/ (2026-08-12 07:06, LIVE) beside json/valuations/ (2025-12-26, ~229d dormant), differing by one character. Rule 25 dormant-because-KEY-MIGRATED. Recorded, nothing proposed -- moving a served key is NEVER#3.",
+    "R3 (price_monthly, the single-field PX_LAST request) has the WIDEST blast radius of the three requests, which is not obvious from the pull's structure -- it is the cheapest-looking one."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {"tool": "comp-find", "invocation": "comp-find \"model_portfolio_benchmarks\"", "result": "565 hits / 25,666 files; bands DEF=7 SURFACED=123 CONFIG=151 TEST=3 DOC=281. Resolved the served key to producer lambda yang-model-portfolio-benchmarks."},
+    {"tool": "comp-find", "invocation": "comp-find \"yang-pipeline-trigger\" / \"YangDataPipeline\"", "result": "399 / 320 hits. Surfaced docs/reference/yang-pipeline-lineage-map.md, which made re-deriving the downstream segment unnecessary (build-ladder rung 2)."},
+    {"tool": "raw aws s3 ls (rail-checked)", "invocation": "aws s3 ls s3://opal-data-portal-v2/json/ --recursive", "result": "963 .json keys, materialised and counted client-side. GAP FOUND: no comp-tool answers 'is this served-key enumeration CLOSED' -- comp-freshness keys on registered entries (these are unregistered) and comp-estate served names carry the CLAUDE.md PC-003 accuracy warning, so neither could serve as the corroborating plane. Recorded as a comp-tool coverage gap per Rule 22."}
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W8.bbg-blpapi-pipe-map",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W8.bbg-blpapi-pipe-map.md",
+    "group": "W",
+    "vintage_commit": "f917c0786b"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W8_BBG_BLPAPI_PIPE_MAP_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "750b3bb5d2",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Increment 5 sections 19-20 (registry + unverified-premise register); increment 4 sections 15-18 (the correction the registry is built on)."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W8-REGISTRY-C1",
+      "criterion_verbatim": "a registry section recording what is served where and how, keyed so a consumer can look a served artifact up and reach its upstream request.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of the deliverable section 19 'SERVED ARTIFACT -> UPSTREAM REQUEST, keyed for lookup'.",
+      "output_evidence": "19 rows keyed on the served S3 key, each mapping to its upstream request id (R1 return_daily / R2 return_monthly / R3 price_monthly / R3b conditional append / '--' for no Bloomberg request), the PKL frame, and the origin class. A request key legend defines R1-R3b with periodicity, window and field count. A REVERSE lookup is provided (if request X fails, these keys go stale), which surfaces that R3 -- the single-field PX_LAST request -- has the widest blast radius of the three. The downstream half (S3 -> CF -> proxy fn -> React) is deliberately NOT restated: yang-pipeline-lineage-map.md sections 2/5c already carries it at field grain and duplicating it would create a second home for one fact.",
+      "denominator": "19 rows = 14 Bloomberg-origin + 5 not; 20 keys known including the orphaned json/yang/volatility_data.json. Set explicitly declared NOT CLOSED per section 16.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W8-REGISTRY-C2",
+      "criterion_verbatim": "every UNVERIFIED PREMISE is named as unverified rather than carried as fact -- explicitly including the one-producer-two-homes claim (repo notebooks vs the OneDrive production copies), which the README asserts as prose and which no measurement in this run establishes.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of the deliverable section 20 'UNVERIFIED PREMISES -- named, not carried as fact'.",
+      "output_evidence": "Six premises tabulated with status and why-it-matters. Premise 1 is the named one-producer-two-homes claim, marked UNVERIFIED with the note 'README asserts a two-way difference; prose, not a measurement. No measurement in this run establishes it', and tied to Rule 22a's two-homes shape (a filename-resolved check reads CLEAN where two copies silently diverged) plus the consequence that section 8's request universe is read off the REPO copy. Premises 2-6: service map INHERITED 13d; lineage map INHERITED and proven not closed; BBG-origin classification DERIVED not traced; entitlement UNVERIFIED BY THIS SEAT because the discriminator is a pull; DAPI-loss cause UNDETERMINED with my own probe not excluded as trigger. No reconciliation act was proposed on premise 1.",
+      "denominator": "6 unverified/inherited/derived premises named of 6 identified across the whole deliverable; 0 carried silently as fact.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Successor check as a mutant on a dormancy verdict: age alone cannot distinguish dormant-because-ABANDONED from dormant-because-KEY-MIGRATED, and the two take opposite actions (Rule 25). Tested whether the ~229d json/valuations/ pair had a live successor rather than concluding abandonment from age.",
+      "expected": "If the timestamps discriminate, a key known to have published this morning carries a fresh stamp while the suspected-dormant twin does not.",
+      "observed": "POSITIVE CONTROL: json/benchmarks/model_portfolio_benchmarks.json (published by this morning's 07:00 run, content-verified in its own log) carries 2026-08-12 07:06:03 -- identical stamp to json/valuation/{risk_premium_data,valuation_data}.json. The twin json/valuations/{risk-premium,valuation-data}.json carries 2025-12-26 13:56. The timestamps discriminate and are not a listing artifact, so the verdict is KEY-MIGRATED with a live successor one prefix over, NOT abandoned.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "s3 ls re-read of both prefixes; registry rows re-derived from section 8 and the lineage map a second time.",
+      "observed": "Identical timestamps and sizes on repeat listing. Registry row count reproduced at 19.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Restating the downstream S3 -> CloudFront -> proxy fn -> React component chain",
+      "reason": "Already carried at field grain by docs/reference/yang-pipeline-lineage-map.md sections 2/5c. Duplicating it would create a second home for one fact -- the exact two-homes defect this deliverable flags elsewhere."
+    },
+    {
+      "item": "Closing the served-key enumeration",
+      "reason": "Out of scope for traverse+read and not achievable without a producer-side census. Declared open in section 16 with the specific live keys that fall outside it."
+    },
+    {
+      "item": "Any act on the json/valuation vs json/valuations twin",
+      "reason": "Moving or removing a served key is NEVER#3 and requires never-widen sign-off. Dormancy licenses stop-treating-as-live, never rm. Recorded for CTO~Z routing only."
+    }
+  ],
+  "surprises": [
+    "The reverse lookup surfaced that R3 (price_monthly, single-field PX_LAST) has the widest downstream blast radius of the three requests -- the cheapest-looking request is the most load-bearing.",
+    "json/model_portfolios/views/** is a 25-key served family (2026-06-01, 72d -- under the 90d dormancy bar) entirely absent from the inherited lineage map."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {"tool": "raw aws s3 ls (rail-checked)", "invocation": "aws s3 ls s3://opal-data-portal-v2/json/valuation/ and .../json/valuations/", "result": "Age-discriminated the same-leaf-name twin: singular+underscored 2026-08-12 07:06 LIVE, plural+hyphenated 2025-12-26 dormant. Ran with a known-live positive control key."},
+    {"tool": "comp-find", "invocation": "grep of OUTPUT_KEY-class constants under infra/aws/lambda/v2_portal/yang_pipeline/", "result": "20 distinct output keys (Plane A), missing exactly the concat-built factor-tilts and dynamic macro-timeseries -- cohering with the lineage map's own stated static-resolution limits."},
+    {"tool": "comp-which", "invocation": "routing check before the raw aws reads", "result": "No comp-tool covers served-key enumeration closure; documented as a coverage gap and the raw calls carry inline # rail-checked: markers."}
+  ]
+}
