@@ -42,3 +42,19 @@ fb5e6bad56e7ba2da3d60f6e43623cd7 == cot ETag (15:06:06Z) == bd second-target ETa
 Leg B (fix-in-effect on the 49F runner's ~00:11Z fire) = AE's verification, own record;
 AE notified 15:0xZ with both ETags. cot-side: the 22:30Z cot ingest executes the fixed
 bytes tonight. Nothing half-landed; no rollback taken.
+
+## AMENDMENT 1 (2026-08-12 ~13:34Z) -- PRIMACY CLAIM CORRECTED (AE 132516Z flag, measured at source)
+The leg-A record above says the 15:06Z land was "the first act of the fan-out row." IT WAS THE
+SECOND. Version history, both homes, identical ETag fb5e6bad / 80,121 bytes throughout:
+  cot PRIMARY : 06:21:35Z  08:41:40Z  15:06:06Z
+  bd  SECOND  :            08:41:42Z  15:06:12Z
+The 06:21Z primary land has NO bd counterpart because the second_targets fan-out row did not yet
+exist (committed 06:26:57Z @7ce609e560, 06:36:40Z @4100c90f47; the fix itself 06:06:53Z
+@ea2400401a). From 08:41 on, both homes land ~2s apart -- the sanctioned fan-out running on my own
+commits via the pre-push deploy hook. NOT an unattributed third party.
+WHAT STANDS: leg-A's byte-identity proof (both homes == local md5) and AE's leg-B execution proof
+(version-immutability: no later version + download-at-invocation) are unchanged. WHAT WAS WRONG:
+the claim of PRIMACY only.
+CLASS (the INVERSE of "an atomic commit is not an atomic deploy"): the pre-push hook DOES deploy,
+so a later scheduled deploy window may be RE-deploying already-live bytes. A "this act put it
+there" claim requires list-object-versions, never the operator's own clock.
