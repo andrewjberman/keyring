@@ -123,10 +123,79 @@ a measurement. Monitor cursor now `2026-08-12T13:22:11Z`.
   08-11 schedule change was an explicit Andrew grant and was not a standing one; I only *read*
   task state this session.
 
+## ~1341–1517Z — TO6 quiet-retry: I REPORTED A CLOSURE, THEN FALSIFIED MY OWN REPORT
+
+**First lapse (~1341Z).** Teams monitor emitted `pinned token expired -- quiet retry, pin HELD`,
+then `re-selected after lapse` — process alive, same task id, no re-arm. Against the 08-11
+baseline (16 cycles × ~60min death + manual re-arm, deaf window widening to ~5m50s) this looked
+like a clean win, and I reported it to MSTR~Z at 141103Z as such. They updated their standing note
+to "hourly re-arm CLOSED" on my grounding.
+
+**THE CONFOUND I MISSED.** That recovery was immediately preceded by **my own `whoami` identity
+re-gate**. I read the recovery as a property of the design; it was a property of the design **plus
+my call**, and the two log lines cannot distinguish them. MSTR~Z had credited me an hour earlier
+for source-confirming rather than inferring from log lines — and I inferred from log lines, in the
+same instrument, immediately after.
+
+**Second lapse (1510Z), measured with a real negative control:**
+
+| Condition | Result |
+|---|---|
+| 243s idle, **no** gateway call | **STILL LAPSED** |
+| `whoami` → | re-selected within 30s |
+| (first instance) `whoami` → | re-selected immediately |
+
+Two-for-two on the causal link with a 243s negative control between. The docstring says it plainly
+and I read past it: *"Claude Code re-mints it on the **next MCP call**."*
+
+**WHY IT MATTERS — IT IS THE 08-11 MISMATCH AGAIN, SAME SHAPE.** An idle event-driven seat makes
+no gateway calls **by definition**. So the condition the monitor exists to cover — sitting idle
+waiting for Teams traffic — is precisely the condition in which nothing triggers its recovery.
+Structurally identical to the heartbeat finding: **per-turn action cannot cover a gap defined by
+taking no turns.**
+
+**What is closed vs what changed shape:**
+- **CLOSED** — the process no longer *dies* at token expiry. TO6 works; no manual re-arm. Real.
+- **NOT CLOSED, RESHAPED** — the *deafness*. From "dies loudly, `status=failed` notification, I
+  re-arm in ~15–40s" to "survives quietly, stops polling, recovers only when an agent call happens
+  to occur." **The new shape is harder to see:** `TaskOutput` reads `running`, `ps` shows the
+  process, task id unchanged, and the lapse re-notes only every 30 cycles (~30 min at the 60s
+  backoff cap). **Every liveness instrument reads healthy while the seat is deaf** — the 22b
+  anti-correlated shape through a different door.
+
+**The mitigating fact, source-confirmed rather than assumed:** `cursor` **cannot advance during a
+lapse** — when `tok` is falsy the entire poll block is skipped, and the `res`/`cursor`/`CURSOR_FILE`
+writes all live inside `if tok:`. So a lapse **DELAYS delivery, never DROPS a message.** That is a
+latency defect, not a loss defect, and it is what made a 243s deliberate observation window
+affordable in the first place.
+
+**Nothing built, no keepalive proposed.** A timed `whoami` is the same paper-over I declined on
+08-11 for the registration mismatch, for the same reason — it would make every instrument read
+healthy while leaving the structural mismatch intact. `teams-watch.py` is 0.5.0_AE~Z's and outside
+my write scope regardless. Observation routed (151709Z), remedy not.
+
+**Cost of the error:** MSTR~Z's note carried a slightly-too-clean closure for ~90 min. Nothing
+acted on it.
+
+## Also this session
+- **Registration swept again** (~1411Z) after ~40 min of correct idle silence, despite a heartbeat
+  at 1329Z. Re-registered same PID 26576. Same structural mismatch as 08-11, still routed to
+  CTO~Z, still **not** papered by me. Delivery impact nil — the filesystem watcher never stopped,
+  which is exactly why it stays invisible.
+- **`deliverables/` blocked at owned-paths** (lane TIER0_UTILITY permits MSTR/CTO/COO; the
+  home-folder convention self-owns `logs/` + `task_orders/` only). Routed to MSTR~Z rather than
+  reaching for `GIT_COMMIT_AUTHOR_OVERRIDE`, which would have been mechanically legal — one lane,
+  two files. Landed `f0b38bbada` **with authorship kept on this seat**. I unstaged both after the
+  block; a blocked safe-commit leaves the diff staged and a staged file on this shared tree is
+  sweep bait.
+
 ## State
 ON DUTY. Fabric inbox Monitor `bw86cyhv4`, Teams Monitor `bpf5tn8h5` (identity-pinned), broker
 LIVE, **zero crons**. Bloomberg DAPI up and entitlement exercised. Portal serving current T-1
 (`data_as_of 2026-08-11`). Next scheduled run 2026-08-13 07:00 ET.
+**Known residual, stated so it is not rediscovered as a surprise:** while idle, this seat's Teams
+polling halts at each ~hourly token expiry and resumes only on my next gateway call. Messages
+queue rather than drop.
 
 ## Compiler Tools
 None. The surfaces touched this session — a Windows Scheduled Task execution record, local PKL
