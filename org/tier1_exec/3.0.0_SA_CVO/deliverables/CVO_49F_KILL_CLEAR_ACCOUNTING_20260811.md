@@ -23,7 +23,8 @@ derivation, three served period frames). **THE TOTAL MOVES 16 -> 17** (the +1 is
 previously counted as one -- the inconsistency COO caught; base's key census is the denominator source of
 truth). I would rather 2 of 17 with a stable frame than 2 of 16 with a convention that shifts by row.
 
-## THE COUNT: BAR-CLEARED = 8 of 17. (SCOPE-VALIDATED = 9; IN FLIGHT = 0; NOT-YET-GRADED = 0.) ⭐ ALL 17 KEYS GRADED.
+## THE COUNT: BAR-CLEARED = 9 of 17. (SCOPE-VALIDATED = 8; IN FLIGHT = 0; NOT-YET-GRADED = 0.) ⭐ ALL 17 KEYS GRADED; the 8 SCOPE-VALIDATED are P1-complete, cutover-gated for full bar-clear (NOT blocked, NOT new tooling).
+*(~2210Z: **advisor_nna_canonical -> BAR-CLEARED (the NINTH, and the last tooth)** -- base replaced the shallow top-10 with ALL 1,287 intersection pins @346003b67b (143 comparable advisors x 9 windows, NO materiality line to defend -- stronger than my $1M-floor rec, correctly). I graded a MID-BOOK advisor the top-10 would have absorbed: Ava Smagacz (#40) YTD +$8M -> FAIL. positive PASS. Only residual = 24 served-only names (genuine no-oracle, MISSING under blanket, correctly declared-not-covered).)*
 *(~2145Z: **advisor_nna_canonical @58a8411dad -> SCOPE-VALIDATED (the 17th and last key graded)** -- gzip instrument-support gate CLEARED (positive limb read a real 4,277,840-field diff off the gzip legacy side, not a silent empty). Firm plane discriminates: my mutant firm.QTD.nna +$50M -> FAIL. BUT a FINDING on the per-advisor plane (base flagged it, I confirmed + grounded the mechanism): my mutant on ONE advisor's QTD.nna +$50M (Abby Horton, real value -$128,100) -> ABSORBED PASS. And UNLIKE fee_efficiency, a firm-total pin CANNOT catch it -- the attribution is NONADDITIVE (I verified: firm QTD nna 7.43M != sum of 146 advisors 24.64M, delta $17.2M from multi-advisor double-count), so there is NO additive-identity backstop. The per-advisor NNA is product content advisors SEE. NOT bar-clear until base's offered top-N per-advisor window pins land -- accepted. clause(a) grounded complete; clause(b) 8 bar-cleared + 9 scope-validated, this the last.)*
 *(~2140Z: **partner_analytics TRIO -> 3x BAR-CLEARED** (quarterly/monthly/annual) -- ~B sent the QA root; I graded ALL THREE adversarially: each positive limb PASS rc=0 + MY OWN mutant (views.aua.current.metrics.aua +$5M, echo-back landed 1789058516.82->1794058516.82) -> FAIL rc=1 through the V32 pin (which I verified == V19). Ran from --report-dir scratch per base's banked fit-clobber hazard. cla finding (NMNC/NMEC cohorts) disclosed+dispositioned. 16 of 17 keys BAR/SCOPE-graded; only advisor_nna_canonical (d14) ungraded, gated on its gzip baseline read.)*
 *(~2135Z: **partner_analytics TRIO @e7de551719 -> 3x SCOPE-VALIDATED** (quarterly/monthly/annual, one emitter d13) -- structural VALID, 6 rows PASS incl. a DERIVATION-CROSSING cross-tie (account data-sums == C_01 manifest-sums, 12/12 cent-exact); V32 corroboration +10,519,155.99 == V19 VERIFIED against my held firm_leaderboard value; cla FINDING disclosed (the family serves NMNC/NMEC cohorts, NOT A_07 classification -- the alias-set layer-finding's sibling, measured-before-build + disposition approved); determinism stable x2 (caught real nondeterminism). BAR-CLEAR pends ~B/base's QA root for MY OWN adversarial pin-mutant -- validated on structure + cross-checks I could do, not on ~B's reported PIN-MUTANT. Only advisor_nna_canonical (d14) now ungraded.)*
@@ -70,28 +71,36 @@ self-contradicted the count line; COO 212649Z caught it):**
 | 14 | partner_analytics quarterly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant (aua +$5M) FAIL rc=1 through the V32 pin (==V19 verified); cross-tie 12/12 cent-exact |
 | 15 | partner_analytics monthly | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; monthly m3=Sunday calendar-grammar catch disclosed |
 | 16 | partner_analytics annual | d13 | **⭐ BAR-CLEARED** | positive PASS + MY mutant FAIL rc=1; annual V33 zero-skeleton y3 by declaration |
-| 17 | advisor_nna_canonical | d14 | SCOPE-VALIDATED (tooth built, too SHALLOW) | gzip gate CLEARED; firm pin fires; base built 90 top-10 per-advisor pins @7e154395e8 -- my Travis-Penfield YTD +$40M -> FAIL (pins work). BUT top-10 covers only 53.3% of the book; #11 Patrick Mundlin ($15.1M) is material and ABSORBS. RECOMMEND a MATERIALITY FLOOR not top-N: pin |MAX nna| >= $1M = 76 advisors / 96.4% (the <$1M tail is a genuine immaterial residual). Bar-clear on the widened floor. |
+| 17 | advisor_nna_canonical | d14 | **⭐ BAR-CLEARED** | gzip gate CLEARED (4.28M-field real diff); firm pin fires; base's ALL-1,287-intersection per-advisor pins @346003b67b -- my mid-book mutant (Ava Smagacz #40, YTD +$8M, top-10 would absorb) -> FAIL. Only residual = 24 served-only no-oracle names, declared. |
 
-**Reconciliation:** 8 BAR-CLEARED + 9 SCOPE-VALIDATED + 0 NOT-YET-GRADED = 17. ⭐ ALL 17 KEYS GRADED. The 4 remaining are no
+**Reconciliation:** 9 BAR-CLEARED + 8 SCOPE-VALIDATED + 0 NOT-YET-GRADED = 17. ⭐ ALL 17 KEYS GRADED. The 8 SCOPE-VALIDATED are P1-SCRIPTS-complete with cutover-phase (P3/P4) residuals -- declared-and-accepted, not bar-clear blockers, and NO tooling remains to build (nna_canonical was the last tooth). The 4 remaining are no
 longer "NOT STARTED / no emitter" -- their emitters BUILT and COMPILE (clause a done); what remains is
 instance delivery + my adversarial grade. "NOT STARTED at cert" in the count line means not-yet-CVO-graded,
 NOT no-emitter -- the count line and this table now agree.
 
-## WHAT ANDREW SHOULD HEAR (do not soften -- per COO)
-- **The FIRST bar-clear has landed: header_metrics, 1 of 16.** The count was 0 at ~1858Z and is 1 at
-  ~1922Z -- earned by base building the window derivation post-fill-2 and my adversarial grade (validator-
-  planted window mutant FAILs; pins independently grounded against the served bytes to exact magnitude).
-  The remaining 6 SCOPE-VALIDATED carry genuine technical/core parity with named residuals; 1 IN FLIGHT
-  (dashboard); 8 awaiting emission.
-- **The work is real, not vapor:** and the bar is discriminating -- FOUR instrument defects were caught
-  THIS sweep BY controls firing (the shadowed pin, the 0.5pp swallowed mutant, the cash class, and base's
-  own 0.5pp-vs-0.02pp window-tolerance self-catch). The first bar-clear passed BECAUSE a validator-planted
-  mutant could fail and a pin was independently grounded, not because it looked clean.
-- **The path for the rest is the same shape:** each window family needs base's shared window-derivation
-  (runner_common.window_nna_sums, one derivation home) + a grade; the calibration header_metrics just
-  established (pinned V5-NNA-REBASE divergence + validator mutant) carries to them.
-- **The constraint is production, not validation:** my cert queue is drained; the remaining 8 are
-  awaiting emission, not awaiting me.
+## WHAT ANDREW SHOULD HEAR (do not soften -- per COO) -- CURRENT as of ~2210Z, matches the count line
+- **Clause (a) -- all code compiles -- is DONE, source-grounded** (every emitter d01-d14 + the a07 dim,
+  py_compile clean). **Clause (b) -- platinum parity as validated by CVO -- is 9 of 17 BAR-CLEARED, all
+  17 keys graded, my cert queue drained.** header_metrics, dashboard, fee_efficiency, firm_leaderboard,
+  clients_tab_slim, the three partner_analytics granularities, and advisor_nna_canonical are BAR-CLEARED;
+  the other 8 are SCOPE-VALIDATED. Nothing is IN FLIGHT and nothing is ungraded.
+- **Every bar-clear was earned adversarially, not by looking clean:** each passed BECAUSE a validator-
+  planted mutant on a live field COULD fail (and did) and a pin was independently grounded against served
+  bytes. The bar caught real instrument defects THIS sweep -- the shadowed pin, a 0.5pp tolerance that
+  swallowed a mutant, the cash class, a dominant-row pin covering only 10%, a nonadditive per-advisor
+  blanket, and two of my OWN vacuous-mutant near-misses (caught by echo-back before I misreported them).
+- **The 8 SCOPE-VALIDATED are P1-SCRIPTS-complete, NOT blocked -- their full bar-clear rides the P3/P4
+  CUTOVER, not a new control.** Their residuals are all cutover-phase and DECLARED: leaf value-parity that
+  is inexpressible pre-cutover (the no-pin timeseries families' index-misalignment), a harness fan-out and
+  cutover re-pin (client_detail), a sovereign cot-bundle band (mix_summary), a cross-derivation re-pin
+  (ownership_map). So this is NOT "one grade from done" for all 17 -- the 8 need the cutover event to make
+  their deferred parity expressible -- but it is NOT blocked either: no tooling remains to build.
+  advisor_nna_canonical was the LAST tooth (its 1,287 full-intersection per-advisor pins just bar-cleared).
+- **The $113.2M UNCLASSIFIED is a data-curation decision, not a code fix** -- proven by two carry-mechanism
+  deltas that each empirically falsified their layer (classification-mechanics NO, join-mechanics NO); the
+  mass is content the dim cannot classify. Surfaced to you via COO; the loud token is honest meanwhile.
+- **The constraint is production/cutover, not validation:** my queue is drained; what remains for the 8 is
+  the cutover phase, and for the $113.2M a curation act -- neither is awaiting me.
 
 ## RE-GRADE DELTAS vs COO's prior report (the corrections)
 - header_metrics gate 1: PENDING -> **DISCHARGED** (@745ca6d78f, ~1742Z).
