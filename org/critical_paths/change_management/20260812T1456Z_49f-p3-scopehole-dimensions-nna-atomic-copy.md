@@ -120,6 +120,27 @@ boundary should be fatal is CTO/COO's call, not a unilateral fix.
 indistinguishable from a zero-reader count. Successor-check owed before any disposition (COO
 150527Z). Not produced: producing a dim nothing consumes is build-ladder rung 1.
 
+### ⛔ CORRECT LOCATION AND PRE-PRODUCTION PROVENANCE ARE SEPARABLE FACTS (CTO 152102Z)
+Stated explicitly at CTO's instruction so nobody later reads *"they are in the gold root"* as
+*"the family is production."* **The LOCATION is settled and correct** — the deciding read shows the
+consumers' default path resolves to the gold root. **The PRODUCER is not:** these three dims were
+produced by a SESSION act, so clause (i) of the production criterion (every dim from a SCHEDULED
+producer, no session-local input anywhere in the chain) remains **UNMET**, and **P4 does not close
+until it is.** Right place, pre-production lineage — both true at once.
+
+### RULINGS DISCHARGED IN-LANE (both exercised, not config-read)
+1. **`b01:118-120` swallow -> FATAL** (CTO 152102Z + COO 152101Z). Default now REFUSES on an absent
+   `dim_boundary`; tolerance is EXPLICIT via `--allow-missing-boundary`, named at the call site
+   rather than implicit in an except block. **EXERCISED both limbs:** default -> `REFUSED: … no
+   parquet under s3://…/dim_boundary/date=2026-08-07/` rc=1; with the flag -> WARN + build 95,879
+   rows, `boundary_version EMPTY`. *Mechanism verified at source first: `runner_common.py:64-65`
+   raises `FileNotFoundError` on an empty key list, so the S3-absent case genuinely reached that
+   except — the claim was checked, not assumed.*
+   ⛔ **Historical artifacts NOT retro-stamped** (COO): their empty provenance is now MEANINGFUL —
+   it dates the pre-`dim_boundary` era, and overwriting it would destroy the only evidence of the gap.
+2. **`a03`/`a04` EMIT now NAME their destination**, matching `a02` (S3 key on upload, local paths
+   otherwise). **EXERCISED:** both print full `local=[…]` paths under `--local-out`.
+
 ### P4 EXIT CONDITION — UNCHANGED AND STILL LIVE
 ⛔ Nothing was deleted at the old root by this act. `schwab/08335338/gold/` must be decommissioned
 at P4, and **P4 may not close while it exists**. Per CTO's four-part production criterion, a
