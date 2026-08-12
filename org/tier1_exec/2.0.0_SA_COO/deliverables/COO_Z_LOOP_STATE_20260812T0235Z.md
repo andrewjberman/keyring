@@ -37,6 +37,17 @@ from a launcher copy.* Stop-condition: program completes OR Andrew stands it dow
   invent one.**
 - **CERTIFIER** (`sealed AND NOT certified`) — **10m threshold, 10–20m detection band. VALIDATED on `/market`
   (7.4m, cert landed).** This is the only clock that fires.
+  **⛔ CORRECTED 0338Z BEFORE IT FIRED, NOT AFTER — THE THRESHOLD WAS CALIBRATED ON THE WRONG QUANTITY.**
+  *The `/market` 7.4m was a **completion** time. A threshold calibrated on how long certification TOOK will
+  fire on any certification that legitimately takes longer — which is not the question the clock exists to
+  ask.* **The clock's purpose is to catch a seal NOBODY PICKED UP; `sealed AND NOT certified` cannot
+  distinguish that from CERTIFICATION IN PROGRESS.** *Same designed-instrument-domain problem as everything
+  else tonight: the instrument's domain is not the question asked.*
+  >> **GATE IT ON THE CERTIFIER, NOT THE CLOCK: fire only if `sealed AND NOT certified AND the certifier has
+  no activity since the packet landed`.** *That is the unanswered-stimulus discriminator again — the
+  certifier HAS the stimulus, so the only question is whether it turned.* **Measured live at 9.1m on W4a:
+  CVO~Z telemetry 0.1m, packet in hand since 0329Z. DID NOT FIRE. Firing would have been a false positive
+  against a seat actively doing the work.** <<
 - **DRY-EARNED** requires `dry.json` **AND** a `changes:[]` patch (protocol M-4). *A no-op patch WITH reasons
   is evidence; without them it is an empty claim.*
 
