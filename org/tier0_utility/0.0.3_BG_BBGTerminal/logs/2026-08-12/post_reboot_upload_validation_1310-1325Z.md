@@ -189,13 +189,81 @@ acted on it.
   block; a blocked safe-commit leaves the diff staged and a staged file on this shared tree is
   sweep bait.
 
+## ~1721–1730Z — DAPI WENT DOWN, AND MY OWN RUNBOOK WAS SUPPRESSING THE SIGNAL
+
+`4.0.0_SA_CRO~Z` surfaced a live DAPI failure at 172118Z while mapping the blpapi pipes under
+Andrew. **I re-measured on my own instruments rather than inheriting it. They were right.**
+
+**Measured (mine, 13:21–13:26 ET):** 8194 **NO LISTENER**, 3 probes 1.5s apart; `bloomberg_health`
+**ok:false**; the entitlement probe **fails at LAYER 1** — blpapi *"Platform failed 3 consecutive
+times"*, `code=8 IO_ERROR "connect event failed"`. **Transport, not entitlement.** Denominator: 426
+processes, exactly 2 Bloomberg ones.
+
+**Cheap remedies worked and ELIMINATED, so nobody re-runs them:**
+- **bbcomm restart** — stopped 24492, relaunched from `C:\blp\DAPI\bbcomm.exe` → pid 16412, still
+  no listener. Eliminated.
+- **Network** — `Test-NetConnection 69.187.48.83:8194` → **TcpTestSucceeded TRUE**, with
+  `8.8.8.8:53` as a passing control. Eliminated, and it genuinely surprised me.
+- **bbcomm's own sockets** — **loopback only, zero outbound.** This morning it held
+  `172.16.200.184:8197 -> 69.187.48.83:8194 ESTABLISHED`. So the path is open and bbcomm is simply
+  not connecting.
+
+**Timeline:** 04:01 cold boot → 07:00 pull SUCCEEDED (entitled CIX data) → 09:16 bbcomm 19524, 8194
+listening, ESTABLISHED → 09:26 my probe passed all layers → 13:16 bbcomm 24492 (19524 dead), not
+listening → 13:26 after restart, still not listening. **Served at least 5h25m post-cold-boot, then
+lost it.**
+
+**CAUSE UNDETERMINED — not asserting one.** The one thing today adds: `blp_client.py:15-17` flags
+*"whether bbcomm comes up entitled from a COLD BOOT with no login at all"* as **deliberately
+unproven** (Andrew 2026-07-30). Today it came up entitled and later lost it. **A data point on an
+open question, not a mechanism.**
+
+**Escalated, not acted on.** The remaining candidate is the Terminal sign-in, which `prompt.md`
+forbids me completing alone — the MFA/OTP goes to Andrew's phone. Routed to MSTR~Z 172830Z with the
+eliminations attached. **Priority stated honestly: NOT an emergency.** Today's data is published
+and served; nothing is stale; next run is ~17.5h out. It needs a human, so it needs lead time — not
+anyone's evening. No alarm proposed.
+
+### MY RUNBOOK DEFECT — it suppressed this exact signal, and it cost CRO~Z
+
+CRO~Z (172332Z) caught that my P0 prose — *"`bloomberg_health` read cleanly through BOTH states, so
+it cannot discriminate"* — **contradicts my own table two lines above it** (`ok:false` then
+`ok:true`). **On that evidence health discriminated correctly, 2 for 2, and I published the
+opposite.** I wrote that it returned `ok:true` in both rows; the 08-11 log records `ok:false`
+throughout that outage.
+
+**The propagation is the damage.** The prose half reached MSTR~Z's standing note and CRO~Z's spawn
+briefing. **CRO~Z then measured a true `ok:false` twice today and partly talked themselves down
+from it on the strength of my sentence.** They reported it anyway, which is why nothing was lost.
+
+Their framing, now IN the deliverable as the reason for the correction: **a record that makes a
+WORKING instrument look useless is the mirror of the failure this file exists to prevent — it does
+not manufacture a false alarm, IT SUPPRESSES A TRUE ONE.**
+
+Corrected to **necessary-not-sufficient**: `ok:false` is real evidence transport is down;
+`ok:true` proves only that a session opens. Source-confirmed at `blp_client.py:7-11` (GUI exited +
+user logged out, 8194 still listening, live data still flowing) — **health is blind to LOGIN STATE,
+not to transport.**
+
+**SECOND GAP, also mine, exposed by the same report:** the P0 gate said what to do when the
+discriminator PASSES and **nothing** about a layer-1 failure — it guarded the over-reacting
+direction and was silent on the under-reacting one, **the same asymmetry as the prose defect one
+level up.** Added an explicit "if layer 1 FAILS" ladder (re-probe → restart bbcomm → network test
+*with a control* → bbcomm's outbound sockets → only then escalate, never a speculative login).
+
+**Both defects came from one report by a seat that stopped at my gate and sent the contradiction
+instead of editing my file.** That is why the fix lands in my hands and carries to MSTR~Z's
+propagated copy.
+
 ## State
 ON DUTY. Fabric inbox Monitor `bw86cyhv4`, Teams Monitor `bpf5tn8h5` (identity-pinned), broker
-LIVE, **zero crons**. Bloomberg DAPI up and entitlement exercised. Portal serving current T-1
-(`data_as_of 2026-08-11`). Next scheduled run 2026-08-13 07:00 ET.
-**Known residual, stated so it is not rediscovered as a surprise:** while idle, this seat's Teams
-polling halts at each ~hourly token expiry and resumes only on my next gateway call. Messages
-queue rather than drop.
+LIVE, **zero crons**. Portal serving current T-1 (`data_as_of 2026-08-11`) — **unaffected**.
+Next scheduled run 2026-08-13 07:00 ET.
+⛔ **BLOOMBERG DAPI DOWN as of ~13:16 ET**, cheap remedies eliminated, escalated to Andrew via
+MSTR~Z. **Pull-class work is NOT available until it is restored**, and tomorrow's 07:00 run will
+fail against it unless the Terminal is signed in first.
+**Known residual:** while idle, this seat's Teams polling halts at each ~hourly token expiry and
+resumes only on my next gateway call. Messages queue rather than drop.
 
 ## Compiler Tools
 None. The surfaces touched this session — a Windows Scheduled Task execution record, local PKL
