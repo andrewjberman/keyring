@@ -309,30 +309,28 @@ bash .tools/agentbus-sqs.sh peek <peer-device>   # consumes nothing
 | `NotVisible` | an **instantaneous in-flight gauge, not a cumulative receipt** — `recv --keep` releases messages back, so it reads 0 for received-and-released. Never use it as a delivery oracle |
 | **an agent-side ACK** | **the only sound oracle** (Rule 22b). Check the timestamp of the peer's last one |
 
-**IF THE PEER HAS NOT ACKed RECENTLY, ESCALATE TO THE SECOND CHANNEL — DO NOT JUST RE-SEND.**
-A second SQS message has the identical failure mode as the first.
+⛔ **THE NUDGE GOES OVER THE AGENTBUS. DO NOT REACH FOR A SECOND CHANNEL.**
+**Andrew-direct 2026-08-12, VERBATIM: *"no you should write them via agentbus"*** — said after site
+Z, finding the peer unACKed for ~4h, escalated onto the `org/mcp/agentbus-trunk/` git transport and
+pushed an envelope to the peer's branch. **That was the wrong instinct and the reason is a standing
+rule, not a preference: a backup channel is a BACKDOOR EXTRA PATH**, and extra paths are vetoed —
+*"we do not do all these extra paths, these things never ever get decommissioned and they become
+debt."* The trunk is a **superseded git-transport MVP** ("to de-risk the real build", per its own
+README); SQS is the **delivery tier**. Building a parallel route around a quiet consumer is the
+shadow-channel anti-pattern wearing an operational excuse.
 
-**THE GIT TRUNK NEEDS NO CONSUMER** (`org/mcp/agentbus-trunk/`, README = the envelope contract).
-Write one envelope into `messages/`, commit it, and **push it to the PEER's branch** — it lands on
-their next `git fetch` whether or not any seat is alive:
-```bash
-git worktree add --detach <scratch>/wt_peer origin/<PEER-BRANCH>   # never switch the shared checkout
-# write messages/{ISO}__{from}__{to}__{KIND}__{id}.json  (see trunk README)
-git -c user.name=<your-serial> commit -q -m "trunk(<id>): ..." && cd <repo-root>
-git push origin <commit>:<PEER-BRANCH>
-git worktree remove --force <scratch>/wt_peer      # ONLY after the push is verified
-```
-⚠ **Three traps, all hit on the first run of this step:**
-1. **Push from the MAIN checkout, not the worktree** — the pre-push halt gate resolves
-   `org/mcp/sessions/<session>.serial`, which a detached worktree cannot see. It refuses, correctly.
-   Commit in the worktree, then `git push origin <sha>:<PEER-BRANCH>` from the repo root.
-2. **Do not remove the worktree until the push is verified.** Removing it first orphans the ref —
-   recoverable only because worktrees share the object store, which is luck, not design.
-3. **Native Python writing into the worktree needs an absolute WINDOWS path** (`cygpath -w`); a
-   relative path resolves against a different CWD and the write silently lands elsewhere.
+**A QUEUED BUS MESSAGE IS NOT A LOST ONE.** SQS here is FIFO with **14-day retention** and
+exactly-once delivery: an unconsumed nudge is **waiting**, not dropped, and it lands the moment the
+peer arms a consumer. So the correct handling of an unreachable peer is:
 
-*Precedent, and it runs both directions: `amb-b-0012` is base MSTR reaching site Z on the trunk
-for exactly this reason when site Z's consumer was down. `amb-z-0021` is the mirror.*
+1. **Send it on the bus, once, with everything they need to act** (below).
+2. **Record leg 2 as OUTSTANDING** — in your report and to Andrew. An unACKed nudge is a *known*
+   open item, which is a completely different thing from a silent one.
+3. **Do not re-send, do not build a route around it, do not chase silence.** A quiet bus is
+   wind-down, not fault.
+
+*Note the asymmetry that makes this safe: you are not waiting on the peer for anything you can do
+yourself. Your leg is landed and pushed; theirs is a fast-forward whenever they return.*
 
 **Nudge content is the peer's ACTION, not your status:** their exact commands, the payload size and
 authors, the conflict count, the exposure ceiling, and an explicit *verify-do-not-trust-this-message*.
