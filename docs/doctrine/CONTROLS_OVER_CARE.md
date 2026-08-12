@@ -37,7 +37,7 @@ why agents who can name a rule violate it while naming it.
 
 ## THE BOUNDARY — this file is one of three families, and it is not a superset
 
-> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the five ways looking does not
+> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the six ways looking does not
 > produce seeing, including how an instrument lies.
 > **[`MECHANISM_LAWS.md`](MECHANISM_LAWS.md)** holds **WHERE AN ASSERTION SITS** — fourteen shapes a
 > claim comes to be wrong about its own subject, each with an EXPOSING QUESTION and a GATE-OR-TEST.
@@ -65,7 +65,7 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The five ways you fail to see it *even though you looked*
+## The six ways you fail to see it *even though you looked*
 
 ### 1. You looked at a PROXY, not the thing
 A digest, a count, a config, an `rc=0`, a symbol's presence. A proxy answers a neighbouring question
@@ -201,6 +201,26 @@ independent — different file, format, prefix, vintage — and is not.
 - **Discharge:** before comparing, establish the PROVENANCE of the comparison side — what wrote it,
   when, from which input. Where no independent witness exists and none can be manufactured, the claim
   is **DECLARED-UNVERIFIABLE: it may be USED, never CITED as grounded.**
+
+### 6. The LABEL supplied a claim the CONTENT never made
+The other five are ways the INSTRUMENT fails. This one is a CORRECT measurement wearing a name that
+misdescribes it — you looked, you measured right, and you still concluded wrong, **and the number's
+correctness is exactly what made it persuasive.** **A name, title or label describes ONE axis and is
+SILENT on the others; the reader supplies the missing axis from the words without noticing. THE
+SILENCE IS NOT READ AS SILENCE — IT IS READ AS AGREEMENT.**
+- A served field whose NAME asserts a property its COMPUTATION does not carry hands every consumer a
+  right number and a wrong conclusion. No downstream check can catch it: the value is not wrong.
+- A chart title accurate on the VALUE axis and silent on the POPULATION axis reads as authoritative
+  about both, and a build derived from it inherits the presumption instead of the filter.
+- **Discharge, by whether the name can move.** Where it CAN: rename. Where it CANNOT (a served key —
+  NEVER#3): **register the divergence at the canonical term registry, so the truth is reachable where
+  the reader actually asks.** *A characterisation that lives only in a cert protects the certifier and
+  nobody downstream.* And when a BUILD is derived FROM a name, **the axis the name is silent on is
+  measured AT SOURCE, never inferred from the words** — one look settles what a presumption was holding.
+- **The family, and it reaches past labels:** *an instrument or a label answers a NARROWER question
+  than the one the reader asked, and nothing in the output says so.* Same shape as an oracle whose
+  silence means nothing until its own firing rate is known, and a value pin that cannot see a
+  population change.
 
 ---
 
