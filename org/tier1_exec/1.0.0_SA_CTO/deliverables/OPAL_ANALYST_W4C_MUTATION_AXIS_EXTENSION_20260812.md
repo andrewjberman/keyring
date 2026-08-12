@@ -22,7 +22,19 @@ data**. On today's axis its most important properties have nowhere to live.
 on one axis — Rule 24(ii) — and leaves most cells structurally unmeasurable on most rows, which is
 exactly the concealing silence the extension exists to remove.
 
-**ADD ONE FIELD, `entity_kind` ∈ {ARTIFACT, MUTATION}, and CONDITION THE FIELD SET ON IT.** Each row
+**ADD ONE FIELD, `entity_kind` ∈ {ARTIFACT, MUTATION, COMPUTED_READ}, and CONDITION THE FIELD SET ON
+IT.**
+⛔ **THIRD VALUE ADDED 2026-08-12 ON `0.1.0_DE_MarketIntelligence~Z`'s MEASUREMENT — THE TWO-VALUE ENUM
+FAILED RULE 24(i) MECE, IN THE DISCRIMINATOR BUILT TO SATISFY IT.** Three of six `/ticket-center`
+entities are **DynamoDB-backed query endpoints**: **no served object, no S3 key, no producer emitting a
+file, no vintage — and plainly not MUTATIONs.** *(Confirmed: the tickets path carries no S3/bucket/
+platinum reference at all.)* **Filing them ARTIFACT is the messy middle that proves the enum was not a
+partition — `serving_state` APPLIES while `vintage_grain` and `producer` cannot.** **The clean axis is
+WHAT THE ENTITY DOES: changes state → MUTATION · serves a STORED object → ARTIFACT · COMPUTES a
+response → COMPUTED_READ.** A `COMPUTED_READ` carries `invocation_surface`, both authority-gate fields
+and `consumer_set`; **`producer`, `vintage_grain` and `vintage_semantics` are NOT_APPLICABLE by
+construction, because freshness is query-time and there is no artifact to be stale.** *I split
+ARTIFACT from MUTATION and did not notice that READ and ARTIFACT are not the same thing.* Each row
 then carries exactly the fields its kind admits. Rule 24 check: **(i) MECE** — a row is one or the
 other, never both; **(ii) same grain** — every value on a given axis describes the same kind of
 thing; **(iii) intent coherence** — one axis, one intent, kind declared rather than inferred;
@@ -38,7 +50,8 @@ config-read, per Rule 22a):
 | `write_target` | the resource actually written — table / bucket+prefix / key / external system | `serving_state` describes a thing SERVED; this describes a thing CHANGED |
 | `invocation_surface` | every call site that can trigger it, with its UI path | the inverse of `consumer_set`: who CALLS, not who reads |
 | `authority_gate_client` | the guard at the call site — route guard, hidden control, disabled state | — |
-| `authority_gate_server` | the check **enforced server-side**: the only half that is actually an authority gate | **no analogue exists — this is the field whose absence is the whole defect** |
+| `authority_gate_server_wired` | that a gate EXISTS on the route — config-readable without invoking | — |
+| `authority_gate_server_differentiates` | that the gate DISTINGUISHES callers — i.e. whether *this* principal may perform *this* write | **the only limb that makes it an authority gate at all** |
 | `effect_scope` | blast radius: `SINGLE-RECORD` / `PER-USER` / `TENANT-WIDE` / `ESTATE-WIDE` | an artifact has no blast radius; a write does |
 
 ⚠ **TWO FIELDS, NOT ONE FIELD PLUS A CONVENTION — AMENDED on `0.1.0_DE_MarketIntelligence~Z`'s
@@ -52,6 +65,17 @@ schema-valid and invisible** — with the missing half being the only half that 
 *Structure over convention: the same argument that chose a kind discriminator over a documented rule
 in §2, applied one level down. I made it there and not here.* **A UI that hides a button is not an
 authority gate.**
+⛔ **AND THE SERVER FIELD ITSELF SPLITS AGAIN — SAME ARGUMENT, ONE MORE LEVEL DOWN, ON THE REVIEWER'S
+OWN MEASUREMENT: WIRED ≠ DIFFERENTIATING.** Measured on `/ticket-center`: **all six routes carry
+`authType=CUSTOM` via `portal-jwt-authorizer`, so PRESENCE is config-readable without invoking** —
+which falsified my own P2 and generalises to every later W4c page. **But `EnableSimpleResponses: true`
+means the authorizer returns a BARE BOOLEAN, so any per-caller differentiation lives inside a Lambda
+whose source is not in this repo (0 hits / 7,723).** >> **So the run can say a gate is WIRED TO EVERY
+WRITE and CANNOT say whether claiming another user's ticket is refused. A cell reading "CUSTOM
+authorizer on all three writes" is TRUE, SOUNDS COMPLETE, AND ANSWERS A DIFFERENT QUESTION.** <<
+**`_differentiates` is UNMEASURED with its reason when the authorizer is out-of-repo — never inferred
+from `_wired`.** *The reviewer's own words: their objection-1 split was necessary and not sufficient,
+one level down.*
 
 **PLANE B — RATIFIED SEMANTIC** (CVO~Z under the 2026-08-11 delegation): `canonical_name`,
 `business_meaning`, `disposition`, `notes` carry over unchanged, plus:
@@ -72,8 +96,14 @@ CONCEALING.**
 
 ## 4. Binding constraints on W4c runs
 
-1. **`authority_gate` is EXERCISED, never read.** The claim *"this requires admin"* is a behaviour
-   claim; a route guard in source is a config read. **Cite the exercise or mark it UNMEASURED.**
+1. **THE TWO SERVER LIMBS TAKE DIFFERENT EVIDENCE, and conflating them is what the split exists to
+   prevent.** ⚠ *This constraint read "`authority_gate` is EXERCISED, never read" in the first draft —
+   which now contradicts the field table above, since PRESENCE was measured config-readable. Third
+   self-contradiction in a spec of mine tonight (AH); fixed here rather than shipped.*
+   **`_wired` is CONFIG-READABLE** — route `authType`, authorizer binding, applied state — and needs no
+   invocation. **`_differentiates` is a BEHAVIOUR claim and is NEVER inferred from `_wired`**: cite an
+   exercise permitted under constraint 3, or record `UNMEASURED` with its reason. *"This requires
+   admin" read off a route guard is the config-read-for-a-behaviour-claim class (Rule 22a).*
 2. **`effect_scope` is grounded on the WRITE TARGET, not on the button's label.** `/data-refresh`'s
    rollback is `ESTATE-WIDE` regardless of how modestly its UI presents it.
 3. ⛔ **NOTHING IS INVOKED — AND THIS SPEC'S FIRST DRAFT CONTRADICTED ITSELF HERE, DANGEROUSLY.** It
