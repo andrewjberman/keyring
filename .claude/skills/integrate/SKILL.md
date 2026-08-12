@@ -1,6 +1,6 @@
 ---
 name: integrate
-description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. Use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
+description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. RUNS AT MSTR LAUNCH as the joint fabric parity assessment, replacing the old blind `/git-pull once` step (Andrew-direct 2026-08-12) -- and it ABSORBS that pull as Step 1b rather than dropping it, since a parity assessment off a stale local ref is wrong the same way a shallow clone is wrong. TWO MODES: bare `/integrate` is ASSESS-ONLY (the default -- measures and reports, merges nothing, pushes nothing), and `/integrate merge` is assess-and-proceed (the full reconcile incl. merge + push). Also use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
 ---
 
 # /integrate — the cross-fabric reconcile (CLOUD <-> SITEZ)
@@ -52,6 +52,41 @@ your divergence, and neither of you can see it from your own box.
 > This step is first because the failure is silent and confident: rc=1 from `merge-base` looks
 > exactly like "unrelated histories," and the counts look exactly like a real divergence.
 
+## Step 1b — ⛔ IS YOUR OWN BRANCH REF CURRENT? (the same failure, one layer over)
+
+```bash
+git fetch origin
+B=$(git rev-parse --abbrev-ref HEAD)
+echo "$B: behind $(git rev-list --count HEAD..origin/$B), ahead $(git rev-list --count origin/$B..HEAD)"
+git merge --ff-only origin/$B      # fast-forward ONLY; never a rebase, never a messy auto-merge
+```
+
+**A PARITY ASSESSMENT COMPUTED FROM A STALE LOCAL REF IS WRONG THE SAME WAY A SHALLOW CLONE IS
+WRONG** — both produce confident, well-formed divergence numbers off an incomplete graph. Step 1
+closes that for *history depth*; this closes it for *branch currency*. Do both in one breath.
+
+**This is where the old `/git-pull once` launch step LIVES NOW — it is not replaced, it is
+ABSORBED**, as the act that makes the assessment trustworthy. That framing is load-bearing: an
+integrator who skips it does not "miss a nicety," they get **wrong numbers**, which is the only
+kind of enforcement that holds.
+
+> **SEVERITY IS ASYMMETRIC BY DEVICE — the step is identical, what it BUYS is not** (Andrew-direct
+> intent, 2026-07-30). On a **NON-PRIMARY device (site Z / any `~Z` seat) this is THE SYNC
+> GUARANTEE and a failed or skipped one is a REAL FINDING** — that machine is downstream of a tree
+> that commits and pushes continuously, so a stale HEAD there silently poisons every evidence read.
+> **FAIL LOUD there.** On the **PRIMARY laptop** it is incidental hygiene ("we are effectively
+> source"), so a deferral past live uncommitted seat-work is consistent with intent — **WARN, do
+> not fail.** ⚠ **A laptop pull-deferral is NOT precedent for a site-Z one.**
+
+**WHY THIS STEP EXISTS AT ALL — a measured instance, site Z, 2026-08-12 ~1320Z.** `/git-pull once`
+ran per the launcher and printed `596254785b..91e1854258  CLOUD -> origin/CLOUD` **on screen**. The
+seat then ff'd its own branch, saw 0 behind, and moved on — **never looking at CLOUD.** The other
+fabric had advanced ~34 hours and the startup was *structurally incapable* of noticing, because the
+act performed was **same-branch currency** and the question that mattered was **cross-branch
+parity**. The information was on the screen and the procedure had no slot for it. That session then
+spent four hours discovering the divergence by hand. **This is Andrew's "not just blindly running
+git pull," and it is not hypothetical.**
+
 ## Step 2 — Measure the divergence and, above all, THE OVERLAP SET
 
 ```bash
@@ -92,6 +127,33 @@ rc=0 clean, rc=1 conflicts. Output lists conflicted paths, then the auto-merge/C
 17 modified tracked files, 125 untracked). `merge-tree` is a pure computation — it cannot strand
 you mid-merge, and it needs no `--abort`.
 
+### ⛔ FIRST, FOR EVERY CONFLICTED FILE: GET THE PER-SIDE HUNK RANGES. DO NOT READ THE CONFLICT HUNK.
+
+```bash
+git diff --unified=0 $BASE origin/CLOUD -- <file> | grep '^@@'   # BASE-side ranges, CLOUD
+git diff --unified=0 $BASE origin/SITEZ -- <file> | grep '^@@'   # BASE-side ranges, SITEZ
+```
+| the two BASE-side range sets are… | verdict |
+|---|---|
+| **disjoint** | **MECHANICAL UNION.** Both sides edited different rows; git conflicted on ADJACENCY alone. No law owner, no adjudication. |
+| **overlapping** | read the content, *then* classify with the table below |
+
+**A CONFLICT HUNK SHOWS THE WHOLE CONTESTED REGION FROM BOTH SIDES, INCLUDING LINES NEITHER SIDE
+TOUCHED.** So it answers *"what region is contested"* — it **never** answers *"which rows did each
+side change."* Those are different questions and the hunk is well-formed output to the wrong one.
+
+**This is a DESIGNED-domain mismatch, not carelessness: no amount of reading the hunk more
+carefully fixes it** (Rules 22/22a class — the remedy is knowing the instrument's domain and
+corroborating outside it, never a closer read). **And it does not fail loudly — it produces a
+plausible escalation to a law owner who is not needed, which on a quiet fabric is an unbounded
+delay.**
+
+*Measured 2026-08-12, and recorded as `0.0.0_AB_MSTR~Z`'s catch against its own analysis: rules 22
+and 22a appeared on both sides of the `=======` in CLAUDE.md, read as "both fabrics edited rules
+22/22a," and a law-owner hold was raised on it. The `--unified=0` ranges were CLOUD {27,40,49,+58}
+vs SITEZ {48,77} — **zero shared rows.** The whole conflict was 48 sitting next to 49. Hold
+withdrawn; the file took a mechanical union.*
+
 **Classify each conflict before resolving:**
 - **CONTENT on a shared-law file** (CLAUDE.md, doctrine, protocols) — usually **both sides ADDED
   rules blind to each other**, so the resolution is a **UNION, not a pick**. Only where both
@@ -128,8 +190,86 @@ git merge origin/SITEZ            # (or origin/CLOUD from the site-Z side)
 # resolve ONLY the overlap set, per the agreed resolutions
 git push origin CLOUD             # your own branch; the deploy gate may sweep for minutes
 ```
+### ⛔⛔ THE SECOND LEG'S PUSH IS A **DEPLOY EVENT**. IT WRITES LIVE PRODUCTION S3.
+
+**MEASURED 2026-08-12 on the first completed reconcile — nobody predicted this, either side.** Site
+Z's CLOUD→SITEZ push carried files under `data/*/scripts/**` new *to their branch*; the pre-push
+`safe-deploy` gate did exactly its job and **deployed them**, reporting *"all files deployed and
+verified."*
+
+**THE MEASURED NUMBER IS 28 OBJECTS, of a 396-object denominator** — re-derived independently at
+both seats and agreeing exactly:
+
+| tree | written | denominator |
+|---|---|---|
+| `opal-data-inf/code/gold/` | **24** | 170 |
+| `opal-data-inf/code/silver/` | **3** | 22 |
+| `opal-data-bd/code/gold/` | **1** | 179 |
+| `opal-data-bd/code/silver/` | 0 | 25 |
+| **total** | **28** | **396** |
+
+**ATTRIBUTION CONTROL (this is what makes 28 caused-by rather than merely concurrent-with):** every
+object written to those trees on 2026-08-12 landed between **16:55:09 and 16:56:19 GMT** — writes
+outside the push window that day: **ZERO**. The window and the whole day return the same set, so
+nothing else is mixed in. Spot-confirmed in explicit UTC via `head-object`:
+`code/silver/build_billing_dim.py` **16:56:18 GMT**, `code/gold/INF_D_02.advisor_client_detail.py`
+**16:55:45 GMT** — ~90 seconds before the leg-2 report.
+
+> ### ⛔ THE MERGE-DIFF COUNT IS NOT THE DEPLOY COUNT. It is the CEILING.
+> The first report of this finding said **"~100 files deployed."** That was the count of files under
+> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys **what
+> DIFFERS**, not what the merge carries, and the true figure was **28**. *Two different denominators,
+> and the first was labelled with the second's meaning.*
+> **So the pre-push enumeration below is the right instrument and must be read as a CEILING — never
+> reported as a deploy manifest.** (Self-corrected by `0.0.0_AB_MSTR~Z`, who measured it rather than
+> leaving it as an unverified number of their own.)
+
+> ### ⛔ TWO RETRIEVAL TRAPS THAT NEARLY BROKE THIS MEASUREMENT — both produced clean-looking, WRONG answers
+> **1. A GUESSED PREFIX RETURNS EMPTY, AND EMPTY IS BYTE-IDENTICAL TO A REAL ABSENCE.** The first
+> probe used `s3://opal-data-inf/code/scripts/silver/` — the real prefix is `code/silver/`
+> (`safe_deploy_core.py:82-84` `CODE_TREES`). Taken at face value it would have **REFUTED A TRUE
+> FINDING with a confident negative.** *Re-derive the prefix from SOURCE; print the denominator; a
+> zero from a path you guessed is UNRESOLVED, not absent.*
+> **2. `aws s3 ls` WITHOUT `--recursive` COUNTS A DIFFERENT DOMAIN THAN THE CLAIM.** The second probe
+> read inf gold as **"2 of 110"** — top-level objects only, silently excluding `runners_inf/` and
+> `lib/`, where most of the deploy landed. The truth was **24 of 170**. The output was well-formed
+> and carried no hint it had answered a narrower question. **Always `--recursive` for a
+> prefix-scoped count.**
+> **And prefer `head-object` over `s3 ls` for any timestamp you will compare:** `s3 ls` prints
+> LOCAL time, `head-object` prints explicit UTC. When the entire conclusion is a timestamp
+> comparison, do not leave a timezone inference in the chain.
+
+**THIS IS NOT A FAULT — the S3 artifacts now match the merged tree, which is correct. THE DEFECT IS
+THAT IT IS INVISIBLE IN THE PROTOCOL.** The integrator believes they are reconciling *git* and does
+not realise they are shipping *code*.
+
+**BEFORE THE SECOND LEG'S PUSH, ENUMERATE YOUR EXPOSURE CEILING** (not your deploy manifest — see above):
+```bash
+git diff --name-only HEAD@{1} HEAD -- 'data/*/scripts/**' | tee /tmp/willdeploy.txt | wc -l
+```
+**AFTER the push, if you need the ACTUAL deploy count, measure it at S3** — recursive, with the
+denominator, windowed to your push, plus the outside-the-window control that makes it attributable:
+```bash
+aws s3 ls s3://<bucket>/code/<layer>/ --recursive | grep -c '^<YYYY-MM-DD>'   # vs total = denominator
+```
+**⛔ THE SHARP EDGE: if the two fabrics hold DIFFERENT content for the same script, the second push
+silently rewrites S3 with its merged view.** The first leg is usually inert (its files already
+deployed from that fabric); **the second leg is where the shipping happens**, and it happens to
+whichever fabric merges second — an operational asymmetry the merge ORDER decision (Step 4) never
+mentioned it was making. **Weigh that when choosing the order**, and say out loud which fabric is
+taking the deploy.
+
 - The pre-push safe-deploy gate verifies deploy-scope scripts against S3 — **a slow push is the
   gate working, not a hang.** Run it backgrounded and read the result.
+- ⛔ **A PUSH TIMEOUT TELLS YOU NOTHING ABOUT WHETHER IT LANDED.** Measured same run: >2 min, first
+  attempt timed out, the ref had landed anyway. **Never retry blind — `git ls-remote origin
+  refs/heads/<branch>` is the oracle.** A blind retry after a successful-but-timed-out push is how
+  you turn a completed deploy into a confusing second one.
+- ⛔ **NEVER `git stash` to clear a dirty tree for the merge** — prohibited on this shared tree, and
+  **stash is the reflex**, which is why it is named here. Back the files up in full (patch + copies)
+  and leave open work IN-TREE. *(Site Z found 16 modified files pre-merge, 10 colliding; all 16 were
+  backed up before anything was touched, and 9 cleared as machine churn — timestamp bumps on
+  `.open_deploys` entries the peer had since closed.)*
 - **Push carries every lane's committed work, not just yours** — that is the LD-0367 rationale.
   Enumerate the payload (`git log --format='%an' origin/CLOUD..HEAD | sort | uniq -c`) so you can
   say what you carried.
@@ -160,9 +300,25 @@ The peer verifies against the remote, never against your report.
 
 | form | behavior |
 |---|---|
-| `/integrate` | full protocol, Steps 0-7, coordinated with the peer MSTR |
-| `/integrate status` | Steps 1-3 only: clone check, divergence, overlap set, conflict dry-run. Changes nothing, sends nothing. The read to run before deciding whether a reconcile is even worth it |
-| `/integrate execute` | Steps 5-6 only — **only after a peer-agreed resolution exists.** Never the first call |
+| **`/integrate`** | **ASSESSMENT — THE DEFAULT.** Steps 0→4: clone check, **local-ref currency (1b)**, divergence, overlap set, conflict dry-run + per-file classification, report. **Merges nothing, pushes nothing, resolves nothing.** May send the peer its findings. |
+| **`/integrate merge`** | **ASSESS AND PROCEED.** The full protocol, Steps 0→7 — everything the assessment does, then the peer-agreed resolution, the merge, the push, and remote verification. |
+| `/integrate status` | Alias of the default assessment, minus the peer send. Changes nothing, sends nothing. |
+| `/integrate execute` | Steps 5-6 only — **only after a peer-agreed resolution already exists.** Never the first call. |
+
+> **ANDREW-DIRECT, 2026-08-12, laptop terminal, VERBATIM:** *"something I want to bring in to the
+> mstr launch script is not just blindly running git pull, its better to run /integrate as a joint
+> fabric parity assessment and this parity can either be just an assessment (default), or it can be
+> /integrate merge, which is assess and proceed the merge."*
+>
+> ⚠ **THIS INVERTED THE PRIOR DEFAULT.** Bare `/integrate` used to run Steps 0-7 **including the
+> merge and the push**; it is now **assess-only**, and the merge requires the explicit `merge`
+> argument. An agent working from a cached memory of the old default will expect a reconcile to
+> have happened when only a report was produced — **the assessment says so explicitly in its own
+> closing line, so the state is never inferred.**
+>
+> **ASSESS-AS-DEFAULT IS THE SAFE DIRECTION FOR A LAUNCH STEP:** a startup that silently merged two
+> fabrics would be a shared-branch write nobody asked for, on a device that may have just woken with
+> stale context. Reading is always safe to do at load; writing is not.
 
 ## Discipline notes
 
