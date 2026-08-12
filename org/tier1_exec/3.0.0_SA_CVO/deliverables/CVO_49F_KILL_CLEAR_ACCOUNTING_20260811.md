@@ -96,9 +96,17 @@ NOT no-emitter -- the count line and this table now agree.
   (ownership_map). So this is NOT "one grade from done" for all 17 -- the 8 need the cutover event to make
   their deferred parity expressible -- but it is NOT blocked either: no tooling remains to build.
   advisor_nna_canonical was the LAST tooth (its 1,287 full-intersection per-advisor pins just bar-cleared).
-- **The $113.2M UNCLASSIFIED is a data-curation decision, not a code fix** -- proven by two carry-mechanism
-  deltas that each empirically falsified their layer (classification-mechanics NO, join-mechanics NO); the
-  mass is content the dim cannot classify. Surfaced to you via COO; the loud token is honest meanwhile.
+- **The $113.2M UNCLASSIFIED is MOSTLY a decision, but ~6% of it is a live classifier BUG.**
+  ⛔ **CORRECTED 2026-08-12 -- my earlier "not a code fix" was WRONG and I had briefed it.** Decomposing
+  Cottonwood security-by-security (FINDING_COT_UNCLASSIFIED_DECOMPOSITION_20260812.md): $76.1M / 15.8% of
+  their book, and it splits into a "Voya" single-line lookthrough gap $26.0M (34%), CCA private LPs
+  $20.2M (27%, plainly alternatives), HELD-AWAY PERSONAL ASSETS $20.0M (26%, houses/cars/bank accounts --
+  a TAXONOMY question, not a coverage gap), retirement fund units $5.0M, **bank CDs $3.6M blocked by a
+  REGEX BOUNDARY BUG**, and a dotted-ticker gap $0.8M. The bug is in the ORIGINAL Black Diamond
+  classifier, so **the SERVED mix under-states Cottonwood fixed income by ~$3.56M today** -- new and served
+  agree because they SHARE the defect (my own MATCH-KNOWN-WRONG class; the port-faithfulness control
+  structurally could not catch it). The two-delta conclusion (content, not carry-mechanics) still holds for
+  ~87%. At Andrew with me directly (his word, 2026-08-12); loud token sanctioned interim.
 - **The constraint is production/cutover, not validation:** my queue is drained; what remains for the 8 is
   the cutover phase, and for the $113.2M a curation act -- neither is awaiting me.
 

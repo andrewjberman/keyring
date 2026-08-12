@@ -272,6 +272,27 @@ override's file:line; row 4 owes the one-client identity. Until then the band is
 ESCALATION-READY: it blocks the cot KILL on these surfaces (correctly) and is honest that the sovereign
 packet is incomplete. ~B's one-source-read characterization is the input that closes (b)+(c).
 
+## 8. POST-CUTOVER (P3) GRADING -- THE READ-SIDE LOCATION IS PART OF THE GROUNDING, NOT JUST THE VALUES
+
+**Added 2026-08-12, P3 authorized by Andrew ("all recs approved", COO 132807Z).** P3 moves WHERE GOLD IS
+WRITTEN. **The hazard is a both-halves-succeed failure: a re-point that lands without its consumers leaves
+producers emitting where nothing reads while every consumer reads a prefix nothing writes -- NEITHER SIDE
+ERRORS, and the served surface FREEZES on a stale vintage that looks fine.** A value-parity check run
+against the OLD prefix passes perfectly while the new prefix is dark, and a freshness read of a frozen-
+but-present artifact looks healthy. This is the anti-correlated shape the whole bar exists to catch: the
+instrument is strongest exactly when the failure is total.
+**THEREFORE every post-cutover instance I grade MUST ground THREE things, not two:**
+1. **VALUES** -- the existing SS 1-2 field + quality parity (unchanged).
+2. **WRITE-SIDE LOCATION** -- the producer wrote to the NEW prefix at the graded vintage (live `head-object`
+   on the exact key, not a config read of where it INTENDS to write; Rule-22a desired-vs-applied).
+3. **READ-SIDE LOCATION** -- the CONSUMER reads that same new prefix (the served artifact's own bytes /
+   the publisher's resolved source), so producer and consumer are provably on ONE prefix. **A grade that
+   verifies (1)+(2) and assumes (3) certifies a pipeline that may be serving a frozen vintage.**
+**And the FRESHNESS corollary (NEVER#1 composed with this): a post-cutover artifact that is PRESENT and
+UNCHANGED is exactly what a stranded re-point looks like -- so on a cutover-window grade, an unchanged
+vintage is a QUESTION, never a pass, and it resolves on the trading-day frontier + the write/read pair
+above, never on wall-clock age alone.**
+
 ## KILL-CONDITION DISCHARGE (what I will validate, verbatim to Andrew's words)
 
 "all code proven to compile" = the py_compile sweep (49F: DONE, 33/33, @VERIFY_49F...20260811).
