@@ -131,11 +131,38 @@ the "absent `wintrv`" false premise — it is independent, measurable evidence o
    looks like `…:8197 -> 69.187.48.83:8194 ESTABLISHED`. *Result 2026-08-12: **loopback only** — up
    but not connecting, with the path provably open.*
 
-**Only after 1–4 are eliminated is the sign-in the candidate remedy** — and per `prompt.md` this
-seat **cannot complete one alone**: the credential is a person's Bloomberg login and the **MFA/OTP
-goes to Andrew's phone**. **Surface it with the eliminations attached and hold.** Do not attempt a
-login to "just try"; that is the lockout risk the P0 gate exists to prevent, and it does not stop
-being a risk because the fault is real this time.
+**Only after 1–4 are eliminated is the sign-in the candidate remedy**, and this seat **cannot
+complete one alone**. **Surface it with the eliminations attached and hold.** Do not attempt a login
+to "just try"; that is the lockout risk the P0 gate exists to prevent, and it does not stop being a
+risk because the fault is real this time.
+
+##### What the blocker actually is — CORRECTED 2026-08-12, and the wrong version reached Andrew
+
+**This paragraph previously read "the MFA/OTP goes to Andrew's phone," cited to `prompt.md`. That
+was an IMPORT FROM A DIFFERENT LOGIN SYSTEM.** `prompt.md:15-27` is entirely about
+**`opal-gateway-bbg` — the MS Entra delegated-OAuth identity**, whose credential is
+`opal/mcp/opalbloomberg-login` in Secrets Manager and whose "surface the auth URL" flow is a
+**browser consent**. **None of it describes the Bloomberg Terminal login.** Caught by
+`0.0.0_AB_MSTR~Z` (173940Z) after Andrew asked *"What do you mean bloomberg needs my phone?"* —
+i.e. **the error had already reached him as an action item.**
+
+**The honest epistemic position, which is more useful than either version:**
+
+| Claim | Status |
+|---|---|
+| The credential is a **person's Bloomberg login**, and this seat may not source it from a chat thread as routine | **Binding** (see CREDENTIAL HANDLING below) |
+| A second factor **MAY** fire — Bloomberg can demand B-Unit / Bloomberg Anywhere confirmation | **Possible, unquantified** |
+| The **one measured Terminal login** (2026-08-11) required **NO** second factor | **Measured** — this file's own "Observed this run" |
+| "The MFA goes to Andrew's phone" | **UNSUPPORTED for the Terminal.** True of the *gateway OAuth* identity only |
+
+**So the ask to Andrew is the CREDENTIAL — not "stand by with your phone."** Those are different
+asks with different lead times, and the wrong one was escalated on 2026-08-12.
+
+**The provenance IS the finding, not the sentence.** A true constraint on the **M365 gateway**
+identity was carried verbatim into a **Bloomberg Terminal** runbook, where it was never verified —
+and it then contradicted this file's own measured observation ~70 lines further down. **Two login
+systems, one seat, similar-sounding words: check which system a constraint was measured against
+before importing it.**
 
 **Note the asymmetry that makes both halves necessary:** an absent `wintrv` alone → **do nothing**.
 A measured transport failure with 1–4 eliminated → **escalate**. The same file has to say both, or
