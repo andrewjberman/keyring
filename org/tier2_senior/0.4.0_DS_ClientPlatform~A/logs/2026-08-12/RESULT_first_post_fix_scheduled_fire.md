@@ -51,7 +51,20 @@ to zero. Pre-fix book (08-11 partition, built 14:07Z before the deploy) was $140
   that both planes now resolve to roster currentValue post-fix. Stated as inferred; grounding
   it needs the holdings-plane derivation read, which nobody has asked for.
 
-## OBSERVATION (flagged, not smoothed; NOT a defect claim)
+## >> RESOLVED ~15:19Z: the 109 below are the GENUINELY-EMPTY class (measured, same day)
+
+The observation flagged below is closed by the B_00 scope measurement taken an hour later.
+Of the 423 accounts where the activity plane reads exactly 0.00 on today's partition:
+**312 are ZERO-CONTRADICTED** (roster holds value -- the artifact class, $68,676,658.56) and
+**109 are ZERO-CORROBORATED** (roster also zero -- genuinely empty). Same 109, both planes.
+So the 725+74=799 vs 908 gap was never a coverage defect: those accounts hold no mass, which
+is why the value identity was exact. **The 312 also re-derives the ORIGINAL investigation's
+suppressed-class count from a different plane** (the V4 band's "312-account coerced-zero
+ending_mv class") -- three independent measurements, one stable identified class.
+*Flagging an observation I could not yet call, instead of asserting or dropping it, is what
+let it resolve into a fact within the hour.*
+
+## OBSERVATION (flagged, not smoothed; NOT a defect claim) -- NOW RESOLVED, see above
 
 Classified account counts 725 (fee) + 74 (non-fee) = **799**, against **908** billing rows --
 a 109-row gap that carries **$0.00** (unclassified_aua = 0.0). Consistent with accounts having
