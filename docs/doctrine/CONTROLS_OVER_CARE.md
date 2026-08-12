@@ -65,7 +65,11 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The six ways you fail to see it *even though you looked*
+## The seven ways you fail to see it *even though you looked*
+
+*(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
+disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
+never made — and it survived a 1,289→239-line cut plus every read since.)*
 
 ### 1. You looked at a PROXY, not the thing
 A digest, a count, a config, an `rc=0`, a symbol's presence. A proxy answers a neighbouring question
@@ -74,6 +78,14 @@ at full confidence.
 - A hash is a proxy; the columns are the thing. **When you hash to prove sameness, first remove the
   fields whose sameness is the question.**
 - Applied-config is not behaviour. A guard nothing calls is a comment with parentheses.
+- **A PRODUCER-SIDE TIMER MEASURES THE ARTIFACT; ONLY A CONSUMER-GENERATED STATUS MEASURES THE
+  AGENT.** Time-since-last-output tells you about the output. To know whether a worker is alive,
+  prefer the signal **only a live worker can produce** — a current, *specific* statement of its next
+  concrete step — over any elapsed-time threshold. **A threshold derived from COMPLETED work cannot
+  classify work IN PROGRESS: any deep in-flight unit exceeds a percentile drawn from finished ones,
+  by construction.** The timer opens the look; freshness-and-specificity closes it. *(Same property as
+  §22b's ACK rule one domain over: a producer-side signal is blind to consumer death, and only a
+  round trip crosses both.)*
 - **Discharge:** exercise the path that fails if the claim is false. Read the served value.
 
 ### 2. You looked at the DESCRIPTION, not the STATE
