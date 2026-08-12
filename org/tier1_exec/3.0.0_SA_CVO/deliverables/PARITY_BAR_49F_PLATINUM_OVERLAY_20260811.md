@@ -272,6 +272,21 @@ override's file:line; row 4 owes the one-client identity. Until then the band is
 ESCALATION-READY: it blocks the cot KILL on these surfaces (correctly) and is honest that the sovereign
 packet is incomplete. ~B's one-source-read characterization is the input that closes (b)+(c).
 
+## 7a. A PORT-FIDELITY CONTROL IS NOT A CORRECTNESS CONTROL (added 2026-08-12, measured on my own cert)
+
+**A byte-identical port is the strongest parity evidence obtainable and ZERO evidence of correctness.**
+The A_07 `PARITY-VS-SERVED` control asks *does the port RECLASSIFY* -- and a FAITHFULLY-PORTED BUG answers
+NO, correctly, 3,784/3,784. Measured instance: the ported `_RE_FI` carries a trailing `\b` after `%` that
+can never match before a space, so every `<rate>% <year>` bank-CD name falls through to UNCLASSIFIED --
+**$3.56M of Cottonwood fixed income, under-stated in the SERVED mix TODAY.** New and served agree BECAUSE
+they share the defect: SS 3a's MATCH-KNOWN-WRONG class arriving through the one door the port control cannot
+watch. **THE RULE:** a port cert states WHICH question it answers (fidelity), and any claim about
+CORRECTNESS is grounded OUTSIDE the source lineage -- the classifier's RULES read on their own terms
+against real inputs (which is what the security-level decomposition did and what the port diff structurally
+could not). **A defect enumerated at the OUTPUT population is a different instrument from a diff of the
+CODE, and the estate's whole canonical-pattern program is ports -- so this generalizes past A_07.**
+Doctrine home: `docs/doctrine/CONTROLS_OVER_CARE.md` SS "You compared the thing TO ITSELF".
+
 ## 8. POST-CUTOVER (P3) GRADING -- THE READ-SIDE LOCATION IS PART OF THE GROUNDING, NOT JUST THE VALUES
 
 **Added 2026-08-12, P3 authorized by Andrew ("all recs approved", COO 132807Z).** P3 moves WHERE GOLD IS

@@ -136,6 +136,14 @@ No outside information entered, so the check certifies any internally consistent
   reconciliation that ties both sides of the same omission is not a reconciliation.
 - An aggregate is never graded on its total, nor on the series you were asked about — two offsetting
   moves produce a clean headline.
+- **A FAITHFUL PORT IS THE STRONGEST POSSIBLE PARITY EVIDENCE AND ZERO EVIDENCE OF CORRECTNESS.** A
+  byte-identical port diffed against the source it was ported FROM is self-comparison wearing a
+  migration's clothes: agreement is guaranteed by construction, so **every defect in the source arrives
+  carrying a green light.** Fidelity (*did it reclassify?*) and correctness (*was the source right?*) are
+  different questions, and a faithfully-ported bug answers the fidelity one correctly — an instrument
+  honest about its own question, answering the wrong one. New and old agree BECAUSE they share the defect.
+  **Discharge:** a port cert states WHICH question it answers, and correctness is grounded OUTSIDE the
+  source lineage — read the rule on its own terms against real inputs, never only new-vs-old.
 - **Discharge:** diff against a **prior vintage** or **a source the pipeline does not derive from**.
   Diff every constituent series, not the roll-up.
 
