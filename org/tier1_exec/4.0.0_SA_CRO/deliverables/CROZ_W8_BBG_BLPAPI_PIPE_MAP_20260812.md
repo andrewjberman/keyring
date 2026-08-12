@@ -350,3 +350,98 @@ Lambdas, of which 14 are portal-data generators.
 > deletion, retirement, or "unused" call should rest on it without a live check.
 
 *Increment 2 ends here. Still zero Bloomberg calls made.*
+
+---
+
+# INCREMENT 3 — the one live traversal, and the sized-pull menu
+
+## 12. THE ONLY BLOOMBERG CALLS MADE BY THIS MAP: two `bloomberg_health`
+
+`bloomberg_health` is explicitly on the permitted side of the directive (transport traversal, no
+data). I made **two**, deliberately, ~3 minutes apart — the second one specifically to discriminate
+a cold-start artifact from a sustained state. **No other Bloomberg call was made.**
+
+| Reading | Result |
+|---|---|
+| `bloomberg_health` @ ~17:16Z | `ok:false` — "could not start blpapi session to 127.0.0.1:8194" |
+| `bloomberg_health` @ ~17:19Z | `ok:false` — identical |
+| `Get-NetTCPConnection -LocalPort 8194` @ 17:19:09Z, **3 probes 4s apart** | **NO LISTENER**, all three |
+| `bbcomm` | pid 24492, **ALIVE**, `Responding=True`, started **13:16:55 ET** |
+| `blpcrashmon` | pid 11296, same start second |
+| `wintrv` | **absent** (consistent with all day) |
+| Denominator | **429 processes on the box, exactly 2 Bloomberg ones** |
+
+**This is the half-healthy shape the runbook names**: *"bbcomm restarts on its own after a crash —
+so the box looks half-healthy and is not."*
+
+### 12a. What this is NOT — stated first, because the wrong reading is the natural one
+
+- **NOT a data outage.** This morning's 07:00 ET run was **full end-to-end success**
+  (`bbg_tplus1_20260812_070000.log`, exit 0): published `2026-08-11`, and the publisher verified the
+  **served content against the PKL for all five models**. The portal correctly serves T-1. **Nothing
+  is stale, and per NEVER#1 the unmoved date is the CORRECT answer, not a finding.**
+- **NOT a mechanism.** `bbcomm` restarted at 13:16:55 ET — roughly when my first health probe landed
+  — so **I cannot exclude that my own probe triggered a cold `bbcomm` start.** The second failure
+  three minutes later argues against a *short* cold-start, but **the cause is UNDETERMINED** and
+  Rule 22 forbids me authorizing anything on a hypothesis.
+- **NOT a prediction** that tomorrow's 07:00 fires against a dead DAPI. That is a **risk, not a
+  fact**. Task state: `Ready`, `LastTaskResult 0`, next run 2026-08-13 07:00 ET.
+
+### 12b. What I deliberately did not do
+
+**No sign-in attempt.** The P0 gate is explicit: an absent `wintrv` is NOT evidence a sign-in is
+needed, a failed login is not free, and **Bloomberg locks the account on repeated failures.** Acting
+on the natural inference converts a non-problem into a lockout and a support call.
+**No `.ST` discriminator** — it is a `HistoricalDataRequest`, i.e. a pull, and forbidden to me
+without a sized ask. **No alarm, checker, or monitor proposed** — the standing moratorium holds, and
+the detection gap here is already routed as a route/schedule question.
+**Routed to `0.0.3_BG_BBGTerminal`** (owner of terminal health) at 172118Z, FYI to CTO~Z. Not mine
+to remediate.
+
+---
+
+## 13. SIZED-PULL MENU — offered, not requested
+
+**The map is COMPLETE WITHOUT ANY PULL.** I am not manufacturing a need for one. This section exists
+so that *if* Andrew or CTO~Z wants live verification, the ask already carries numbers rather than
+adjectives — per the directive, **sizing means a number: rows, fields, date span.**
+
+| Option | Purpose | Exact size | Class |
+|---|---|---|---|
+| **A** | Confirm the 165 literal identifiers still resolve | **165 securities x 1 field (`NAME`) x 0 date span** — 1 `ReferenceDataRequest`, no history | identifier resolution; borderline by my own call-shape rule -> **request it** |
+| **B** | Entitlement discriminator (the runbook's) | **1 security (`.ST Index`) x 1 field x ~683 rows** from 2023-12-29, + `SPX Index` positive control as a **separate** request | `HistoricalDataRequest` — a **PULL** |
+| **C** | Verify a served number end-to-end against source | **5 securities x 1 field x 1 date** | `HistoricalDataRequest` — a **PULL** |
+
+**Baseline for comparison, so nobody sizes against intuition:** the production daily pull requests
+**165 tickers x up to 13 fields x ~36 years monthly** plus ~6 years daily. Every option above is
+negligible beside the pull that already runs at 07:00 each day — **which is an argument for
+proportionality, NOT a licence.** The constraint is Andrew's to relax, not mine to reason around.
+
+**Recommendation: run NONE of them today.** Option B belongs to `0.0.3_BG_BBGTerminal`'s seat, not
+mine, and the entitlement question is theirs. Options A and C verify a map that is not currently
+disputed.
+
+---
+
+## 14. FINAL COVERAGE STATEMENT
+
+| Axis | Enumerated | Of | Confidence |
+|---|---|---|---|
+| blpapi services | 6 | 6 | high, `INHERITED` 13d |
+| refdata request types | 7 named / 3 built | 7 | high, source-read today |
+| in-repo session openers | 3 | 3 | high |
+| **out-of-repo session openers** | 1 known | **UNKNOWN** | **LOW — structurally invisible** |
+| daily-pull requests | 3 (+1 conditional) | 3 | high |
+| ticker universe | 165 | 165 literal | high for literals |
+| served yang artifacts | 17 | 17 | high, `INHERITED` |
+| BBG-origin classification | 17 | 17 | medium-high, **a document join** |
+| live transport state | measured twice | — | high for the reading, **UNDETERMINED for the cause** |
+
+**THE MAP'S OWN LIMIT, stated plainly:** this is a traversal-and-read map. It is strong on
+*structure* and deliberately weak on *live state*, because live state is what the constraint
+forbids me to buy. **Two things in it are inherited rather than measured** (the service probe, the
+lineage map), **one is structurally unmeasurable from here** (the OneDrive production notebooks),
+and **the BBG-origin join is derived, not traced.** None of that is a defect in the work; all of it
+is a defect a reader would otherwise have to discover for themselves.
+
+*W8 map complete for the traverse+read mandate. Total Bloomberg calls made: 2, both `health`.*
