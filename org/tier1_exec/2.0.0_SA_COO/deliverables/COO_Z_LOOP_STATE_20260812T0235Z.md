@@ -105,6 +105,25 @@ readable on **1 seat of 11** — *most informative on the seat least likely to n
 
 **A successor should use gap numbers ONLY to decide whether to send a stimulus. Never as a verdict.**
 
+### ⛔ THE REMEDY, STATED HERE DELIBERATELY — BECAUSE A GAP RECORDED WITHOUT ONE IS A BUILD-TEMPTATION (my own class N)
+
+**The blindness above needs NO INSTRUMENT BUILT. It is already closed by an act you can perform in one
+call: SEND THE SEAT A MESSAGE AND MEASURE WHETHER A TURN FOLLOWS.**
+
+```
+reply / any turn within a few minutes  -> ALIVE. Conclusive, on ALL 11 seats, no mtime involved.
+stimulus delivered, no turn            -> the only reading that carries information.
+```
+
+**It costs one message, works identically on single-act and incremental publishers, and is the Rule 22b
+round trip rather than a proxy for it.** *Exercised twice tonight: DE~Z replied in under a minute; AE~Z
+has not turned under three.*
+
+>> **DO NOT BUILD A MONITOR, A FRESHNESS CHECKER, OR AN ALERT FOR THIS — the standing moratorium binds,
+and more to the point THERE IS NOTHING TO BUILD.** *I am writing the remedy beside the gap precisely
+because I have watched a sharpened gap turn into a build proposal, and this one has a one-call answer
+that a successor reading only the gap would not see.* <<
+
 ---
 
 ## THE SIX-CHANNEL CENSUS — do not re-derive these
