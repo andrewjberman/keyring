@@ -116,6 +116,25 @@ readable on **1 seat of 11** — *most informative on the seat least likely to n
 
 **A successor should use gap numbers ONLY to decide whether to send a stimulus. Never as a verdict.**
 
+### ⛔ CORRECTED 0415Z — PUBLICATION SHAPE IS A PROPERTY OF A **SESSION**, NOT OF A SEAT
+
+**I characterised AE~Z as a SINGLE-ACT publisher** — measured, all 6 W3b files at one identical second,
+so dir-idle read as unreadable on that seat. **That was true of the session that DIED. It is false of the
+seat.**
+
+```
+W3b run dir NOW: 11 DISTINCT mtimes   (predecessor's 6-file block + the successor's incremental writes)
+W4b run dir:      2 files, 1.4 min apart, written as it goes
+=> the RESPAWNED AE~Z writes INCREMENTALLY.
+```
+
+>> **A successor reading my earlier line would apply the WRONG instrument to the live AE~Z — treating a
+readable dir as unreadable, which loses a real signal rather than inventing a false one.** *Re-measure
+publication shape per SESSION; never inherit it from a seat's history.* <<
+
+**AND THEREFORE: DO NOT NUDGE ON THE UNTRACKED W4b DIR AT 2 MINUTES.** *An incremental publisher commits
+as it goes; a durability nudge that early is exactly the loud-instrument-on-a-healthy-seat error.*
+
 ### ⛔ THE REMEDY, STATED HERE DELIBERATELY — BECAUSE A GAP RECORDED WITHOUT ONE IS A BUILD-TEMPTATION (my own class N)
 
 **The blindness above needs NO INSTRUMENT BUILT. It is already closed by an act you can perform in one
