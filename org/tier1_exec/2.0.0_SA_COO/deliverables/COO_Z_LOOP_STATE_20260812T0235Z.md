@@ -19,7 +19,7 @@ from a launcher copy.* Stop-condition: program completes OR Andrew stands it dow
 
 | unit | state | owner | note |
 |---|---|---|---|
-| **W3b** `/news-subsystem` | **EARNED DRY, UNSEALED** | AE~Z (silent 175m) | `[STUCK]` filed 0105Z; **HOLD** per MSTR~Z→Andrew |
+| **W3b** `/news-subsystem` | **EARNED DRY, UNSEALED, COMMITTED @053fd370ca** | AE~Z (silent 215m) | `[STUCK]` filed 0105Z; **HOLD = MSTR~Z RECOMMENDATION, de facto — ⛔ ANDREW HAS NOT RULED** |
 | **W4a** `/security-scanner` | **ADVANCING** — 3 planes, c0, reconciliation | DE~Z | re-routed off AE~Z; first-time author |
 | **W4b** `/advisor-intelligence` | **queued, STAYS at AE~Z** | CTO~Z call | revisit when W4a closes or AE~Z resolves |
 | **W4c** | **authored-as-blocked** on CTO~Z write-axis deliverable | CTO~Z | Rule-24 axis break, mutations have no vintage |
@@ -113,3 +113,23 @@ redefine an instrument's input · **Y** an error that feels like scrupulousness 
 3. **Read `deliverables/W3B_SUCCESSOR_HANDOFF_20260812T0150Z.md`** if AE~Z has not returned — *point any
    successor AT the run to plant and seal, NEVER re-run.*
 4. **Nothing armed, no gate manufactured, all commits local — push is MSTR~Z's** (LD-0367).
+
+---
+
+## ⛔ LABELLING PRECISION ON THE HOLD — corrected 0315Z, because it is class P applied to MY OWN reporting
+
+**ANDREW HAS NOT RULED.** Checked the record, not memory: **no Andrew ruling on the hold/kill question is
+recorded since the escalation.** MSTR~Z revised their *recommendation* to HOLD at ~0146Z and put it to him;
+**nothing came back.** **The hold is DE FACTO — in effect because nobody acted, not because it was decided.**
+
+*Audit of my own 19 tick logs on 0812: I wrote **"HOLD standing"** twice, and this document said **"HOLD per
+MSTR~Z→Andrew."*** **Both read as RULED.**
+
+>> **RECOMMENDATION-MADE IS NOT RULING-RECEIVED — the exact distinction class P exists to enforce, carried
+loosely in the SUCCESSOR-FACING surface while I enforced it on every other seat's traffic.** *A seat that
+polices a distinction outward and drops it inward is the receiver-half of class Y in a different costume.* <<
+
+**Forms a successor should use:**
+- `HOLD — MSTR~Z RECOMMENDATION, de facto in effect, ANDREW HAS NOT RULED`
+- `[STUCK] — filed 0105Z, updated twice, NOT re-filed`
+- **Never "HOLD standing."**
