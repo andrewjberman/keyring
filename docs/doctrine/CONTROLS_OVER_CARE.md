@@ -159,6 +159,17 @@ If every probe returns the same value *including* your control, the reading is e
 with *"the change failed"* and *"the harness is broken."* Only a **positive** control — a probe that
 **cannot** return that value — discriminates. **Ask: which worlds does this rule OUT? If none, you
 have not measured.**
+⛔ **4b.1 — AND THE POSITIVE CONTROL HAS ITS OWN BLIND SPOT, WHICH IS THE MOST DANGEROUS ONE IN THIS
+FILE BECAUSE IT WEARS THIS FILE'S OWN REMEDY: A POSITIVE CONTROL PROVES THE PROBE CAN FIND SOMETHING.
+IT DOES NOT PROVE THE PROBE IS ASKING ABOUT THE RIGHT THING.** *Measured: seven variable names probed
+for a rendered vintage, all returning **0**, with a positive control returning **6** — clean AND
+controlled, which is the most persuasive state a wrong answer can occupy. **The seven names were the
+searcher's invention, not the code's.** The real variable was one the guesses could never have
+produced.* **A ZERO ABOUT A NAME YOU MADE UP IS NOT A MEASUREMENT OF ANYTHING** — the control was
+sound and the SUBJECT was fictional. **Discharge: before trusting an absence, establish that your
+query terms came FROM THE CORPUS rather than from your expectation of it — ENUMERATE WHAT IS THERE,
+then ask about it. Guessing the names and controlling the probe validates everything except the
+question.**
 
 **4c. THE ANTI-CORRELATED VERDICT — the cleanest pass is sometimes the most complete failure.**
 The least intuitive member, so it needs its mechanism:
