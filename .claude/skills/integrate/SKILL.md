@@ -193,22 +193,64 @@ git push origin CLOUD             # your own branch; the deploy gate may sweep f
 ### ⛔⛔ THE SECOND LEG'S PUSH IS A **DEPLOY EVENT**. IT WRITES LIVE PRODUCTION S3.
 
 **MEASURED 2026-08-12 on the first completed reconcile — nobody predicted this, either side.** Site
-Z's CLOUD→SITEZ push carried ~100 files under `data/*/scripts/**` that were new *to their branch*;
-the pre-push `safe-deploy` gate did exactly its job and **deployed them**, reporting *"all files
-deployed and verified."* Independently confirmed from the laptop against the live primitive, in
-explicit UTC — `s3://opal-data-inf/code/silver/build_billing_dim.py` **LastModified
-16:56:18 GMT**, `code/gold/INF_D_02.advisor_client_detail.py` **16:55:45 GMT** — inside the push
-window, ~90 seconds before the leg-2 report. *(Mechanism CONFIRMED at the artifact. The "~100 files"
-magnitude is site Z's count and was NOT independently re-derived; 5 objects were confirmed in the
-inf tree specifically.)*
+Z's CLOUD→SITEZ push carried files under `data/*/scripts/**` new *to their branch*; the pre-push
+`safe-deploy` gate did exactly its job and **deployed them**, reporting *"all files deployed and
+verified."*
+
+**THE MEASURED NUMBER IS 28 OBJECTS, of a 396-object denominator** — re-derived independently at
+both seats and agreeing exactly:
+
+| tree | written | denominator |
+|---|---|---|
+| `opal-data-inf/code/gold/` | **24** | 170 |
+| `opal-data-inf/code/silver/` | **3** | 22 |
+| `opal-data-bd/code/gold/` | **1** | 179 |
+| `opal-data-bd/code/silver/` | 0 | 25 |
+| **total** | **28** | **396** |
+
+**ATTRIBUTION CONTROL (this is what makes 28 caused-by rather than merely concurrent-with):** every
+object written to those trees on 2026-08-12 landed between **16:55:09 and 16:56:19 GMT** — writes
+outside the push window that day: **ZERO**. The window and the whole day return the same set, so
+nothing else is mixed in. Spot-confirmed in explicit UTC via `head-object`:
+`code/silver/build_billing_dim.py` **16:56:18 GMT**, `code/gold/INF_D_02.advisor_client_detail.py`
+**16:55:45 GMT** — ~90 seconds before the leg-2 report.
+
+> ### ⛔ THE MERGE-DIFF COUNT IS NOT THE DEPLOY COUNT. It is the CEILING.
+> The first report of this finding said **"~100 files deployed."** That was the count of files under
+> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys **what
+> DIFFERS**, not what the merge carries, and the true figure was **28**. *Two different denominators,
+> and the first was labelled with the second's meaning.*
+> **So the pre-push enumeration below is the right instrument and must be read as a CEILING — never
+> reported as a deploy manifest.** (Self-corrected by `0.0.0_AB_MSTR~Z`, who measured it rather than
+> leaving it as an unverified number of their own.)
+
+> ### ⛔ TWO RETRIEVAL TRAPS THAT NEARLY BROKE THIS MEASUREMENT — both produced clean-looking, WRONG answers
+> **1. A GUESSED PREFIX RETURNS EMPTY, AND EMPTY IS BYTE-IDENTICAL TO A REAL ABSENCE.** The first
+> probe used `s3://opal-data-inf/code/scripts/silver/` — the real prefix is `code/silver/`
+> (`safe_deploy_core.py:82-84` `CODE_TREES`). Taken at face value it would have **REFUTED A TRUE
+> FINDING with a confident negative.** *Re-derive the prefix from SOURCE; print the denominator; a
+> zero from a path you guessed is UNRESOLVED, not absent.*
+> **2. `aws s3 ls` WITHOUT `--recursive` COUNTS A DIFFERENT DOMAIN THAN THE CLAIM.** The second probe
+> read inf gold as **"2 of 110"** — top-level objects only, silently excluding `runners_inf/` and
+> `lib/`, where most of the deploy landed. The truth was **24 of 170**. The output was well-formed
+> and carried no hint it had answered a narrower question. **Always `--recursive` for a
+> prefix-scoped count.**
+> **And prefer `head-object` over `s3 ls` for any timestamp you will compare:** `s3 ls` prints
+> LOCAL time, `head-object` prints explicit UTC. When the entire conclusion is a timestamp
+> comparison, do not leave a timezone inference in the chain.
 
 **THIS IS NOT A FAULT — the S3 artifacts now match the merged tree, which is correct. THE DEFECT IS
 THAT IT IS INVISIBLE IN THE PROTOCOL.** The integrator believes they are reconciling *git* and does
 not realise they are shipping *code*.
 
-**BEFORE THE SECOND LEG'S PUSH, ENUMERATE WHAT WILL DEPLOY:**
+**BEFORE THE SECOND LEG'S PUSH, ENUMERATE YOUR EXPOSURE CEILING** (not your deploy manifest — see above):
 ```bash
 git diff --name-only HEAD@{1} HEAD -- 'data/*/scripts/**' | tee /tmp/willdeploy.txt | wc -l
+```
+**AFTER the push, if you need the ACTUAL deploy count, measure it at S3** — recursive, with the
+denominator, windowed to your push, plus the outside-the-window control that makes it attributable:
+```bash
+aws s3 ls s3://<bucket>/code/<layer>/ --recursive | grep -c '^<YYYY-MM-DD>'   # vs total = denominator
 ```
 **⛔ THE SHARP EDGE: if the two fabrics hold DIFFERENT content for the same script, the second push
 silently rewrites S3 with its merged view.** The first leg is usually inert (its files already
