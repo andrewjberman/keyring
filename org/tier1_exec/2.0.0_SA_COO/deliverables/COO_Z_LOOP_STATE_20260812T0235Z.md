@@ -74,6 +74,39 @@ apply and weaker as evidence.* <<
 
 ---
 
+## ⛔⛔ SUPERSEDING ALL GAP-BASED INSTRUMENTS ABOVE — added 0322Z, and a successor should read THIS FIRST
+
+**EVERY CEILING IN THIS DOCUMENT IS A THRESHOLD I CHOSE. THIS ONE I DID NOT, AND IT IS THE ONLY ONE THAT
+SEPARATES SEATS ON A MECHANISM:**
+
+>> **DOES THE SEAT HAVE AN *UNANSWERED STIMULUS*?** <<
+
+```
+NO stimulus outstanding, silent   -> EXPLAINED. Not evidence of trouble, not evidence of work.
+STIMULUS DELIVERED, still silent  -> NOT EXPLAINED. This is the one that carries information.
+```
+
+**Event-driven seats do not compute between turns — they do not compute AT ALL.** *A gap means "NO TURN
+HAS FIRED," not "a turn is in progress," and the two are INVISIBLY DIFFERENT from outside because both
+present as "minutes since last write."*
+
+**Measured live 0319Z:** DE~Z at 48.2m, no stimulus outstanding → **nudged → replied in under a minute.**
+AE~Z at 226m **with probes, the `[STUCK]` and MSTR~Z traffic delivered → no turn.** *Same silence, opposite
+meaning, and only the round trip (Rule 22b) tells them apart.*
+
+**⛔ THE RATIO I PUBLISHED WAS A FRAME ERROR.** I read DE~Z's 13.4m (a **within-turn** compose window)
+against 48.2m (a **between-turn** interval) and called it 3.6x. **Both numbers true, different kinds of
+interval, ratio meaningless.** *DE~Z volunteered this against its own interest — "48 minutes heads-down"
+flatters it and "48 minutes idle" does not.*
+
+**⚠ AND THE DIR-IDLE INSTRUMENT IS BLIND WHERE IT MATTERS: 10 of 11 closed runs publish the whole
+rectangle set in ONE act at closure, so their dirs are silent BY CONSTRUCTION until they publish.** It is
+readable on **1 seat of 11** — *most informative on the seat least likely to need it. Class S shape.*
+
+**A successor should use gap numbers ONLY to decide whether to send a stimulus. Never as a verdict.**
+
+---
+
 ## THE SIX-CHANNEL CENSUS — do not re-derive these
 
 ```
