@@ -71,6 +71,33 @@ render component) · `notes` (the control-case framing is accurate and worth kee
 
 ---
 
+---
+
+## THE R-2 DEPTH PROBE, RUN ACROSS THE REMAINING 8 UNITS — R-2 IS ISOLATED, NOT SYSTEMATIC
+
+**150 cells → 4 cite top-level scope → 3 also make an absence claim → 1 genuine candidate → it VERIFIES TRUE.**
+
+**`att.03.portfolios-aum-metrics.vintage_semantics`** claims *"THERE IS NO `data_as_of` FIELD AT ALL"* on a
+locator citing top-level keys. **Checked at FULL DEPTH this time: `json/portfolios/aum-metrics.json`,
+7,234 B, 84 nested keys, and NO `as_of` key at any depth. The claim HOLDS.** `period` = `2026-07-22` and
+`last_updated` = `2026-07-23T20:55:19Z` both match, and the cell correctly identifies the latter as write
+time rather than data date.
+⚠ **The residue is a weaker defect than R-2: the CLAIM is true, its EVIDENCE is under-scoped relative to
+its own strength.** A cell asserting *"at all"* on evidence citing *top-level* is right by luck here — the
+fix is one word in the locator, not a correction to the value.
+✅ **NOT A STALENESS FINDING, stated explicitly:** that artifact carries `dates.{q0,q1,q2,q3}` — it is
+**quarterly**, so a 07-23 write for a 07-22 period is normal. *An old timestamp is not a defect until the
+calendar is resolved, and this one resolves clean.*
+
+### ⚠ MY PROBE HAD A 2-IN-3 FALSE-POSITIVE RATE, from lexical matching
+The two `val.01` hits (`canonical_name`, `notes`) matched on the string **"top-level"** used in a
+completely different sense — **a top-level S3 PREFIX**, not JSON key depth. **My regex matched a string,
+not a meaning**, which is the same over-broad-predicate class this pass keeps finding in others.
+**And those two cells are strong findings, not defects:** they document a **frozen twin** at
+`valuation/valuation_data.json` — 2026-01-04, 291,246 B — against the live `json/valuation/...` at
+2026-08-11, 2,184,150 B. **Seven months stale at one-seventh the size, where a wrong-tree answer would
+parse, render and read as complete.** Credit stands.
+
 ## RULINGS
 
 1. **R-1 and R-2 are CORRECTIONS OWED, routed to the author.** The certification is **not** retracted —
