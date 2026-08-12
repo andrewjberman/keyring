@@ -777,3 +777,103 @@ and the difference is exactly the gap between a finding and a census.
 absence claim, and it already carries `(opal-data-portal-v2)` in its header.
 
 *Increment 7 ends here. Zero Bloomberg calls. Running total: 2, both `health`.*
+
+---
+
+# INCREMENT 8 — LIVE TRAVERSAL EXECUTED. The response cap exists, binds, and is per-security.
+
+**Authorization:** Andrew-direct at this terminal, 2026-08-12 — *"Ok we can begin traversal, however
+we must be careful with how that traversal is managed"*, followed by **"Session budget is
+approved"** (≤10 unique securities, ≤100 data points, hard stop). Transport restored by his own
+sign-in; `bloomberg_health` `ok:true`.
+⚠ **The metering question was NOT answered**, so every probe below is minimal under **both** models
+(unique-securities and data-points) rather than optimised for one.
+
+## 27. THE SPEND LEDGER — the artifact, not a recollection
+
+| # | Act | Securities | Data points |
+|---|---|---|---|
+| T0.5 | `//blp/refdata` **service schema dump** | 0 | **0** |
+| T2a | `maxDataPoints` bind test (SPX, 6.5y window, cap 5) | 1 | 5 |
+| T2b | 4-class probe (Index/Comdty/Curncy/Equity, cap 1) | 4 | 4 |
+| T2c | capped call through the modified client (cap 2) | 1 (repeat) | 2 |
+| | **TOTAL** | **4 unique** | **11** |
+
+**Against budget: 4 of 10 securities, 11 of 100 data points.**
+
+## 28. T0.5 — THE ZERO-DATA ACT, and it paid for the whole traversal
+
+`service.toString()` after `openService`. **No `sendRequest` was called; 0 data points.**
+61,944 chars / 1,431 schema lines captured.
+
+**THE SERVICE DECLARES 11 REQUEST TYPES, NOT THE 7 THIS MAP INHERITED:**
+
+```
+ReferenceDataRequest        HistoricalDataRequest       IntradayBarRequest
+IntradayTickRequest         BeqsRequest                 PortfolioDataRequest
+ReferenceDataSlowRequest    ReferenceDataSlowMtgeRequest CustomEqsRequest
+IntradayBarDateTimeChoiceRequest                        PingRequest
+```
+
+Five were unknown to §3: `ReferenceDataSlowRequest`, `ReferenceDataSlowMtgeRequest`,
+`CustomEqsRequest`, `IntradayBarDateTimeChoiceRequest`, and **`PingRequest`** — the last a
+potential zero-data liveness probe worth evaluating against `bloomberg_health` later.
+
+> **The cheapest call available was also the most informative one.** Asking the service to describe
+> itself cost nothing and corrected a denominator the estate had carried in prose.
+
+## 29. ⭐ `maxDataPoints` — MEASURED, and it answers the sovereign's actual concern
+
+`HistoricalDataRequest` carries a direct element `maxDataPoints` (`TYPE INT32`, optional,
+single-valued). **Our client never set it, so every MCP `bloomberg_historical_data` call was
+UNCAPPED** — a wide window returned everything it matched.
+
+**Three properties, each exercised rather than read:**
+
+| Property | Test | Result |
+|---|---|---|
+| **It BINDS** | SPX × `PX_LAST` × 2020-01-01→2026-08-12 DAILY (~1650 trading days), `maxDataPoints=5` | **exactly 5 rows** |
+| **It returns the LATEST N** | same call, inspect edges | rows were **2026-08-06 → 2026-08-12**, not 2020 |
+| **It is PER-SECURITY** | 4 securities, `maxDataPoints=1` | **1 row EACH, 4 total** |
+
+**Therefore the response is bounded by `securities × fields × min(days, cap)` — a hard ceiling
+computable BEFORE the call.**
+
+> ⛔ **THIS REPLACES THE ESTIMATOR-VS-ALLOWLIST TRADE-OFF FOR THE HISTORICAL SHAPE.** §13 argued a
+> size estimator cannot be the control because it is blind to bulk. That still holds for **BDS/bulk
+> fields on `ReferenceDataRequest`**, which have no such cap and remain deferred. But for
+> `HistoricalDataRequest` — the shape carrying the date-dimension explosion, and the one behind
+> *"an entire sector's securities back to inception"* — **there is now a real server-side bound,
+> and returning the LATEST N is exactly the semantics shape-finding wants.**
+
+**Landed in the client** (`.tools/bloomberg-mcp/blp_client.py` + `server.py`): `max_data_points`
+plumbed through to the request, `>= 1` validated, **omitted preserves the previous uncapped
+behaviour** so nothing existing changes. Exercised through the client's own API (cap held at 2) and
+negative-controlled (`max_data_points=0` raises).
+⚠ **The MCP server must be restarted for the tool signature to change for agents.** Until then the
+capability exists in the client and not yet in the live tool.
+
+## 30. THE FOUR IDENTIFIER CLASSES ALL RESOLVE
+
+| Class | Identifier | Result |
+|---|---|---|
+| Index | `SPX Index` | 7754.28 @ 2026-08-12 |
+| Comdty | `CL1 Comdty` | 83.32 |
+| Curncy | `XAU BGN Curncy` | 4411.71 |
+| Equity | `AAPL US Equity` | 301.11 |
+
+4 of 4 resolved, **identical row shape** across classes, all carrying today's date — which also
+independently confirms the entitlement is live, without spending the `.ST` discriminator.
+
+## 31. WHAT REMAINS DEFERRED, AND WHY
+
+| Deferred | Reason |
+|---|---|
+| **BDS / bulk fields** | No `maxDataPoints` equivalent on `ReferenceDataRequest`. Size is unpredictable (`INDX_MEMBERS` → 503 rows measured previously). **Presumed bulk = blocked**, per §13. |
+| `.ST` entitlement discriminator | A pull, and `0.0.3_BG_BBGTerminal`'s surface. Not needed — §30 established liveness incidentally. |
+| The 5 newly-discovered request types | Enumerated, **not exercised**. Named as capability, not claimed as working. |
+| `PingRequest` evaluation | Candidate zero-data liveness probe; not yet compared against `bloomberg_health`. |
+| Breadth over the 165-identifier universe | Never needed from Bloomberg — §8 has it **from source**. |
+
+*Increment 8 ends here. Traversal total: 11 data points, 4 unique securities, 3 requests + 1 schema
+dump. Session-wide Bloomberg calls: 2 `health` + 4 traversal acts.*
