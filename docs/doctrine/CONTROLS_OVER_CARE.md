@@ -172,6 +172,39 @@ The least intuitive member, so it needs its mechanism:
 - **Test:** when a result is unusually clean, ask whether a *total* failure would produce exactly
   this reading. **Exercise the tool; never resolve its name.**
 
+## 5. Nobody sent it back — an unexercised claim survives on its DIRECTION, not its truth
+
+The four modes above explain why you failed to see. This explains why **the resulting claim was
+never challenged**, which is what lets an unlooked-at claim reach a law file, a register, or Andrew.
+
+**Review is direction-sensitive, and only one of three directions reliably draws scrutiny:**
+
+| direction of the claim | how it reads | challenged? |
+|---|---|---|
+| **unflattering to someone else** | an accusation | **YES** — the subject pushes back |
+| **generous to someone else** | fairness | no — nobody argues they deserve less credit |
+| **critical of yourself or your own tools** | rigour, humility | no — challenging it looks like defensiveness |
+
+**So an unexercised claim lives longest in exactly the two directions that feel most virtuous.** The
+same asymmetry runs one layer up: **a SELF-CORRECTION arrives pre-credentialed** — costliness-to-self
+is read as evidence of correctness, so its *direction* goes unexamined by author and reader alike.
+**Correcting your own number against your apparent interest can still push toward the outcome you
+were arguing against.**
+
+- **A claim that an instrument is WEAK reads as rigour; that it is SOUND reads as complacency** — so
+  fabricated defects in your own tooling are the least-audited claims you can make.
+- **Before reporting that a tool failed to signal something, re-run it with NOTHING between you and
+  its output.** *"The instrument was silent"* requires that you were positioned to hear it; a pipe,
+  a `tail`, a `2>/dev/null` or a swallowed rc means you were not — **and a discarded rc does not
+  merely mislead you, it MANUFACTURES a finding about the instrument whose signal you deleted.**
+- **Discharge:** *which direction does this point, and would anyone here be motivated to check it?*
+  If the answer is no, **you are the only control**, so exercise it before it is repeated.
+
+**Escalation ordering — a wrong reading dies with the turn; a BANKED finding propagates.** The cost
+of an unexercised claim is set by how far it travels, so the exercise bar rises with the audience:
+highest for anything entering a register, a doctrine file, or a message to Andrew. **Conferring
+standing on someone else's unexercised claim is itself an act requiring exercise.**
+
 ---
 
 ## The mechanism — comp-tools are foundational, not additive
