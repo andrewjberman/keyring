@@ -18,7 +18,10 @@
 
 > **A LIFT THAT READS `rectangle.final.json` COLLECTS 100 CELLS AND REPORTS SUCCESS. A LIFT THAT READS THE PAYLOAD FILES COLLECTS 168 AND REPORTS SUCCESS. NEITHER IS COMPLETE, NEITHER ERRORS, AND THE TWO SETS DO NOT INTERSECT.**
 
-**Mechanism, and it is nobody's mistake:** when *I* author a run I am both author and semanticist, so the cells go straight into the rectangle. When another seat authors, K.1 hands me a rectangle whose B/C cells are `UNMEASURED` and I return a payload **that is merged only at closure, into `rectangle.final.certified.json`** — an artifact that exists for `/portfolios` and, at the time of writing, **almost nowhere else.**
+**Mechanism, and it is nobody's mistake:** when *I* author a run I am both author and semanticist, so the cells go straight into the rectangle. When another seat authors, K.1 hands me a rectangle whose B/C cells are `UNMEASURED` and I return a payload **that is merged only at closure, into `rectangle.final.certified.json`.**
+
+> ⛔ **CORRECTED IN PLACE (CTO~Z, re-derived by me): this clause originally read *"an artifact that exists for `/portfolios` and almost nowhere else."* **THAT WAS AN ESTIMATE STATED AS FACT AND IT OVERSTATED THE EXPOSURE ~4×.** Measured: **certified consumables exist for 13 of 17 run directories**; the four without are `advi-model-holdings-account-join`, `gips-twr-schwab-feasibility`, `opal-data-mdpf-colocation` and the superseded `cma/1729Z`. So the split-substrate exposure is **4 units, not the program**, and all four are exactly the loud-refusal case this finding's own remedy covers. **The mechanism stands; the extent did not.**
+> **The defect is the FORM, not the number: it is the one clause in this document that printed no denominator, inside a file where every other finding does — and a document that measures everything else makes an unmeasured clause read as MORE credible, because the reader has been trained by the surrounding text.**
 
 **My 14 lift constraints never name which artifact the catalog reads.** L-1 legislates *key paths inside a row*; nothing legislates *where a row comes from*. **That is the L-1 defect one layer up, and it is the one that would have shipped.**
 
@@ -46,7 +49,21 @@ independent family incidence  manifest-or-footer 17 · artifact-field 17 · cade
 
 ---
 
-## F-3 SUPERSEDED AND VOID RUNS ARE **INDISTINGUISHABLE FROM CERTIFIED ONES IN THE TREE**
+## F-3 ⛔ ESCALATED (CTO~Z, re-derived by me): **`final.json` CARRIES ITS RUN'S PLANT ON *EVERY* RUN — VOID AND SUPERSEDED WERE ONE INSTANCE, NOT THE CLASS**
+
+**Measured on `news-subsystem`, a run I certified an hour earlier:**
+
+```
+rectangle.final.json            plant string x1     <-- ON A CERTIFIED RUN
+rectangle.final.certified.json  plant string x0     <-- K IS WORKING EXACTLY AS SPECIFIED
+tree-wide                       17 rectangle.final.json files
+```
+
+**`final.json` carries the plant BY CONSTRUCTION, because the consumable derives from `dry`.** So a lift globbing `*/*/rectangle.final.json` **ingests a deliberate falsehood from every unit in the program**, not merely from the void one.
+
+> **AND THE REASON THIS IS HARD TO SEE: binding A ALREADY names `final.certified.json` as the consumable. This is not a missing rule — it is A RULE WITH NO ENFORCEMENT AT THE POINT OF CONSUMPTION, which is the harder kind, because THE LAW READS AS THOUGH IT WERE CLOSED and nobody goes looking for the gap.**
+
+**The two cases below remain true and are now understood as instances of the above:**
 
 - **`portal-page-cma/20260811T1729Z`** — `entities` is a **dict, non-conforming to the schema**, verdict `PASS-WITH-REFUSAL`. It sits beside `1801Z` (`PASS`, certified, conforming) and **carries its own 12-cell semantics payload of identical shape.** *Nothing in the tree says which wins.*
 - **`portal-page-security-scanner/20260812T0158Z`** — certification **VOID** (my missed plant). Its `rectangle.final.json` is structurally identical to a certified one, **and it carries the planted cell.**
@@ -84,3 +101,20 @@ independent family incidence  manifest-or-footer 17 · artifact-field 17 · cade
 **And L-4's rewrite is mine to propose, not to land** — it is my document, but it was ratified into the PRD on my word, so amending it is CTO~Z's routing.
 
 — `3.0.0_SA_CVO~Z` · substrate: 17 run directories, 268 Plane-B/C cells, every count materialised and printed beside what it counted
+
+---
+
+## F-6 (added on correction) — **MY VERIFICATION PROBE PRODUCED THIS DOCUMENT'S OWN CLASS WHILE VERIFYING IT**
+
+Re-deriving F-3 I wrote `grep -c … || echo 'FILE ABSENT'`. **`grep -c` PRINTS `0` AND EXITS `1` on zero matches**, so the fallback fired and the output read:
+
+```
+rectangle.final.certified.json   0
+FILE ABSENT
+```
+
+**Two contradictory answers, on adjacent lines, about a file that EXISTS and is CLEAN.**
+
+**I caught it only because the output contradicted itself.** Had the count been non-zero, or had I put the fallback on the same line, **it would have reported the certified consumable as MISSING for a run I had certified an hour earlier — and "missing consumable" is precisely the finding I was primed to expect.** The zero was TRUE; the fallback was FALSE; **`rc` carried no way to tell them apart — a retrieval failure and a genuine empty result wearing the same exit code.**
+
+> **F-5's heuristic (*suspicious tidiness is free to check*) DID NOT CATCH THIS ONE. SELF-CONTRADICTION DID. So the second free check: WHEN TWO LIMBS OF ONE PROBE DISAGREE, BELIEVE NEITHER UNTIL YOU KNOW WHICH ONE LIED.**
