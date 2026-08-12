@@ -296,15 +296,18 @@ def _read_fedobs() -> dict:
 
 
 def _read_snap_realized() -> dict:
-    """Grounded read of the REALIZED co-evolution diversity -- the GRAPHFEED standing snap
-    (fedobs_coevolution_snap), the audit's #1 maturity lever (CTO ruling option-b, 2026-07-18).
-    Source = the snap's own served summary key: the R1 twin heartbeat snap_store.py OVERWRITES after
-    every nightly append, s3://{SNAPSHOT_BUCKET}/warehouse/snap_ingest/last_append/
-    fedobs_coevolution_snap.json -> {"appended": N}. The nightly producer writes the FULL current
-    pair set each run (not a delta), so 'appended' == the realized pair count of the latest
-    snapshot_date. boto3/S3 imported+called DEFENSIVELY: no creds / off-VPC / absent -> UNKNOWN, never
-    fabricated (comp-system stays runnable everywhere; the number is honest-or-absent). If the
-    producer ever moves to true-delta appends, track an explicit realized_pairs in the heartbeat."""
+    """Grounded read of the REALIZED co-evolution diversity from the fedobs_coevolution_snap
+    heartbeat -- ⛔ PARKED 2026-08-11 (CTO PARK-WITH-RECORD ruling 181041Z): the TO-7 "nightly"
+    snap convention NEVER LAUNCHED -- 5 done batches ever, all 2026-07-16/17 (the build's own
+    exercise runs), no schedule ever existed for the snap legs (139-rule census), no lifecycle
+    expiry hiding history. The heartbeat this reads is a SINGLE BUILD-DAY VINTAGE (2026-07-17),
+    not a living feed, and the vintage string below now says so on every generation -- a doc
+    citing this number must not read as citing a nightly. Park record + re-entry conditions:
+    org/tier2_senior/0.7.0_AE_CloudOps/deliverables/GRAPHFEED_TO7_SNAP_FAMILY_PARK_RECORD_20260811.md.
+    (Original framing, kept for provenance: CTO ruling option-b 2026-07-18 made this the
+    audit's #1 maturity lever; the heartbeat {"appended": N} carries the full pair count of the
+    latest snapshot_date.) boto3/S3 imported+called DEFENSIVELY: no creds / off-VPC / absent ->
+    UNKNOWN, never fabricated (comp-system stays runnable everywhere)."""
     bucket = os.environ.get("SNAPSHOT_BUCKET", "opal-313476888478-globgrph")
     key = "warehouse/snap_ingest/last_append/fedobs_coevolution_snap.json"
     try:
@@ -313,7 +316,9 @@ def _read_snap_realized() -> dict:
         hb = json.loads(body)
         realized = hb.get("appended", UNKNOWN)
         return {"realized_pairs": realized,
-                "vintage": "snap heartbeat s3://%s/%s (appended=%s @ %s)"
+                "vintage": "snap heartbeat s3://%s/%s (appended=%s @ %s) [PARKED 2026-08-11: "
+                           "single build-vintage 2026-07-17, nightly never launched -- CTO "
+                           "PARK-WITH-RECORD; not a living feed]"
                            % (bucket, key, realized, hb.get("at", "?"))}
     except Exception:  # noqa: BLE001
         return {"realized_pairs": UNKNOWN, "vintage": UNKNOWN}
@@ -589,7 +594,9 @@ def compile_model() -> dict:
                  "coevolution_pairs": snap.get("realized_pairs", UNKNOWN),
                  "coevolution_pairs_surfaced": fed.get("coevolution_pairs_surfaced", UNKNOWN),
                  "cse_measures": fed.get("cse_log_total", UNKNOWN),
-                 "note": "PRIMARY = realized diversity from the GRAPHFEED standing snap (nightly); "
+                 "note": "PRIMARY = realized diversity from the fedobs_coevolution_snap heartbeat "
+                         "[PARKED 2026-08-11 -- single build-vintage, the TO-7 nightly convention "
+                         "never launched; CTO PARK-WITH-RECORD, see the park record]; "
                          "*_surfaced = the frontend-curated subset -- label-the-basis, CTO ruling option-b",
                  "vintage": snap.get("vintage", UNKNOWN)}
     classes = []

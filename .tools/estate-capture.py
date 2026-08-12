@@ -273,13 +273,113 @@ def extract_session(path: str) -> tuple[list, dict]:
     return out, meta
 
 
+def _utc_date_of(rec: dict) -> str:
+    """UTC day token of a record's transcript timestamp, or '' when unbucketable.
+
+    Harness timestamps are ISO-8601 UTC ('...Z'), so the first 10 chars ARE the UTC
+    date -- the same token grammar as the report-day manifest key (manifest/{D}.json),
+    which is what keeps capture and manifest joinable on one date (CVO 3b)."""
+    ts = str(rec.get("ts") or "")
+    return ts[:10] if re.match(r"^\d{4}-\d{2}-\d{2}$", ts[:10]) else ""
+
+
+def upload_days(all_recs: list, bucket: str, dates: list) -> int:
+    """B6-1 upload leg (TO F3_CAPTURE_UPLOADER.B6). Writes each requested UTC day's
+    HUMAN + UNCLASSIFIED records (HARNESS never reaches the store -- extract_session
+    drops it) to s3://{bucket}/text-input/{YYYY-MM-DD}/{device_id}.json.
+
+    - PER-DEVICE key: a partial day is VISIBLY partial (CTO 3a: denominator in key form).
+    - IDEMPOTENT: re-run overwrites that day's device file.
+    - BRONZE: records upload byte-faithful, untouched -- classification is a
+      friction-time act, never an upload-time one (Rule 17a).
+    - NO-DATA-DAY LAW (CVO 3b rider a): an empty day is NO-PARTITION, LOUD -- never a
+      silent empty object. All-days-empty exits 2 so the schedule's history shows it.
+    - Every put is READ BACK and sha-compared before it is called landed -- rc=0 is
+      not evidence and neither is the put's HTTP 200 (the served artifact is).
+    Returns 0 (>=1 day landed+verified, empties loudly named), 1 (put/verify failure),
+    2 (every requested day empty)."""
+    import boto3  # lazy: print/--json modes must not require it
+
+    s3 = boto3.client("s3")
+    dev = device_id()
+    by_date: dict[str, list] = {}
+    unbucketable = 0
+    for rec in all_recs:
+        d = _utc_date_of(rec)
+        if d:
+            by_date.setdefault(d, []).append(rec)
+        else:
+            unbucketable += 1
+    if unbucketable:
+        # Excluded from every day file, but DECLARED in each uploaded object's counts --
+        # an exclusion without a printed denominator reads as coverage.
+        print("WARN: %d record(s) carry no bucketable UTC timestamp -- excluded from day files, "
+              "count declared in each uploaded object" % unbucketable, file=sys.stderr)
+
+    uploaded, empty = [], []
+    for d in dates:
+        recs = by_date.get(d, [])
+        if not recs:
+            print("NO-PARTITION %s: zero HUMAN/UNCLASSIFIED records for this device on that UTC day "
+                  "-- refusing to write an empty object (no-data-day law)" % d, file=sys.stderr)
+            empty.append(d)
+            continue
+        body_obj = {
+            "schema": "estate-text-input/v1",
+            "date": d,
+            "device": dev,
+            "uploaded_at": utcnow(),
+            "counts": {
+                "records": len(recs),
+                "by_label": {
+                    "HUMAN": sum(1 for r in recs if r["provenance"] == "HUMAN"),
+                    "UNCLASSIFIED": sum(1 for r in recs if r["provenance"] == "UNCLASSIFIED"),
+                },
+                "sessions": len({r["session_id"] for r in recs}),
+                "ts_unbucketable_excluded_corpuswide": unbucketable,
+            },
+            "records": recs,
+        }
+        body = json.dumps(body_obj, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        sha = hashlib.sha256(body).hexdigest()
+        key = "text-input/%s/%s.json" % (d, dev)
+        s3.put_object(Bucket=bucket, Key=key, Body=body,
+                      ContentType="application/json",
+                      Metadata={"content-sha256": sha, "producer": "estate-capture.py b6-1"})
+        served = s3.get_object(Bucket=bucket, Key=key)["Body"].read()
+        served_sha = hashlib.sha256(served).hexdigest()
+        if served_sha != sha:
+            print("ERROR: read-back sha mismatch for s3://%s/%s (sent %s served %s) -- upload NOT "
+                  "landed" % (bucket, key, sha[:12], served_sha[:12]), file=sys.stderr)
+            return 1
+        print("OK: s3://%s/%s -- %d records (%d sessions), read-back sha verified %s"
+              % (bucket, key, len(recs), body_obj["counts"]["sessions"], sha[:12]))
+        uploaded.append(d)
+
+    if not uploaded:
+        print("NO-PARTITION on ALL %d requested day(s) (%s) -- nothing written; a capture cadence "
+              "that captured nothing must not read green" % (len(dates), ", ".join(dates)),
+              file=sys.stderr)
+        return 2
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="ESTATE REPORT device-side text-input capture")
     ap.add_argument("--project-dir", default=os.path.expanduser(
         "~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace"))
     ap.add_argument("--session", help="single session id/file to extract (fixture mode)")
     ap.add_argument("--json", action="store_true", help="emit the extracted records as JSON")
+    ap.add_argument("--upload", action="store_true",
+                    help="B6-1: upload day-partitioned records to S3 (text-input/{date}/{device}.json)")
+    ap.add_argument("--date", help="target UTC day YYYY-MM-DD for --upload (default: today UTC)")
+    ap.add_argument("--catchup-days", type=int, default=0,
+                    help="with --upload: also (re-)upload N prior days -- the daily schedule runs 7 "
+                         "so an off/lidded laptop self-heals a week of day files idempotently")
+    ap.add_argument("--bucket", default="opal-estate-report")
     args = ap.parse_args(argv)
+    if args.date and not re.match(r"^\d{4}-\d{2}-\d{2}$", args.date):
+        ap.error("--date must be YYYY-MM-DD")
 
     if args.session:
         files = [p for p in glob.glob(os.path.join(args.project_dir, "*.jsonl"))
@@ -296,6 +396,14 @@ def main(argv=None) -> int:
         recs, meta = extract_session(p)
         all_recs.extend(recs)
         metas.append(meta)
+
+    if args.upload:
+        from datetime import timedelta
+        anchor = args.date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        base = datetime.strptime(anchor, "%Y-%m-%d")
+        dates = [(base - timedelta(days=n)).strftime("%Y-%m-%d")
+                 for n in range(args.catchup_days + 1)]
+        return upload_days(all_recs, args.bucket, dates)
 
     if args.json:
         print(json.dumps({"records": all_recs, "meta": metas}, indent=2))

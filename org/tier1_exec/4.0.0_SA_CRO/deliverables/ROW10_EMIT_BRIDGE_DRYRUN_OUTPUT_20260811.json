@@ -1,0 +1,1378 @@
+{
+ "invocation": {
+  "subject": "origin/SITEZ 7ea4fdbd38 : workflows/atom_decomposition/runs/portal-page-portfolios/20260811T1640Z/rectangle.final.certified.json",
+  "canon": "org/modules/graph/estate-coverage-resolver.json @ working tree (v1.9 registry era)",
+  "rerun": "python scratchpad/emit_bridge_dryrun.py  (from ajb_workspace root; rectangle fetched via MSYS_NO_PATHCONV=1 git show)",
+  "mode": "DRY -- derives and classifies; writes nothing"
+ },
+ "updates": [
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.01.aum-metrics",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/{scope}/aum-metrics.json",
+   "evidence": {
+    "instrument": "DATA_CATALOG/portal_lookup channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml pages[/portfolios]",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / {scope}/aum-metrics.json",
+    "canon_spelling": "platinum/mdpf/{scope}/aum-metrics.json"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.01.aum-metrics",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "live artifact read (_provenance.written_by)",
+    "locator": "aws s3 cp s3://opal-data-portal-v2/platinum/mdpf/global/aum-metrics.json - (live read, this cycle)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.01.aum-metrics",
+   "field": "consumer_set",
+   "value": "portal: getAUMMetricsByFirm (endpoints/aum.ts) -> 2 call sites outside the accessor layer; rendered on /portfolios header panel 'Portfolio Analytics'",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src, callers counted excluding the accessor definitions",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.02.account-distribution",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/{scope}/account-distribution.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / {scope}/account-distribution.json",
+    "canon_spelling": "platinum/mdpf/{scope}/account-distribution.json"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.02.account-distribution",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "live artifact read (_provenance.written_by)",
+    "locator": "aws s3 cp s3://opal-data-portal-v2/platinum/mdpf/global/account-distribution.json - (live read, this cycle)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.02.account-distribution",
+   "field": "consumer_set",
+   "value": "portal: getAccountDistributionByFirm -> 4 call sites (global + per-firm); rendered as the 'Client Holdings' histogram. THE LIVE SERVED BELL of the MP vertical.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count excluding accessors",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/{scope}/aggregate-aua-timeseries.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / {scope}/aggregate-aua-timeseries.json",
+    "canon_spelling": "platinum/mdpf/{scope}/aggregate-aua-timeseries.json"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "live artifact read (_provenance.written_by)",
+    "locator": "aws s3 cp s3://opal-data-portal-v2/platinum/mdpf/global/aggregate-aua-timeseries.json - (live read, this cycle)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "consumer_set",
+   "value": "portal: getMdpfAggregateAUATimeSeriesByFirm -> 3 call sites; feeds the header headline + account count AND the Growth tab's 'Period End Summary' and 'Daily {AUA} Analysis' charts.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count excluding accessors",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "canonical_name",
+   "value": "benchmarks / model_portfolio_timeseries.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "producer",
+   "value": "yang-model-portfolio-benchmarks (ProcessBothPKLs branch)",
+   "evidence": {
+    "instrument": "comp-estate thread traversal",
+    "locator": "comp-estate model-portfolios -> yang-benchmarks-etf-returns",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "consumer_set",
+   "value": "portal: getModelPortfolioTimeseries -> 2 call sites; fetched inside ReturnVolatilityScatter.tsx, Benchmark tab only",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "canonical_name",
+   "value": "benchmarks / model_portfolio_benchmarks.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "producer",
+   "value": "yang-model-portfolio-benchmarks (ProcessBothPKLs branch)",
+   "evidence": {
+    "instrument": "comp-estate thread traversal",
+    "locator": "comp-estate model-portfolios",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "consumer_set",
+   "value": "portal: getModelPortfolioBenchmarks -> 2 call sites; rendered in 'Benchmark Comparison' AND passed as props into the ReturnVolatilityScatter panel",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.06.etf-returns",
+   "field": "canonical_name",
+   "value": "benchmarks / etf_returns.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.06.etf-returns",
+   "field": "producer",
+   "value": "yang-generate-etf-returns (ProcessModelPKLOnly branch)",
+   "evidence": {
+    "instrument": "comp-estate thread traversal",
+    "locator": "comp-estate model-portfolios",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.06.etf-returns",
+   "field": "consumer_set",
+   "value": "portal: getETFBenchmarkReturns -> 2 call sites; Benchmark tab",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.07.peer-performance",
+   "field": "canonical_name",
+   "value": "peers / peer_performance.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.07.peer-performance",
+   "field": "producer",
+   "value": "yang-generate-peer-performance (peer_excel branch)",
+   "evidence": {
+    "instrument": "comp-estate thread traversal",
+    "locator": "comp-estate model-portfolios",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.07.peer-performance",
+   "field": "consumer_set",
+   "value": "portal: getPeerPerformance -> 2 call sites; PeersTab.tsx, lazy on the Peers tab",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src caller count",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.08.benchmark-returns",
+   "field": "canonical_name",
+   "value": "benchmarks / benchmark_returns.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.08.benchmark-returns",
+   "field": "producer",
+   "value": "yang-model-portfolio-benchmarks (ProcessBothPKLs branch)",
+   "evidence": {
+    "instrument": "comp-estate thread traversal",
+    "locator": "comp-estate model-portfolios",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.08.benchmark-returns",
+   "field": "consumer_set",
+   "value": "ZERO CALLERS. `getBenchmarkReturns` is defined at portal-proxy.ts:756-757 and re-exported at :2148; no component calls it anywhere in portal/src.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src, accessor + barrel excluded",
+    "locator": "portal/src: only the definition and the export barrel match",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.09.smartx-model-daily",
+   "field": "canonical_name",
+   "value": "benchmarks / _smartx_model_daily.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.09.smartx-model-daily",
+   "field": "producer",
+   "value": "data/smartx/scripts/pull_smartx_model_monthly_performance.py (OUT_KEY_DAILY :99 / OUT_KEY :98) -- an OPERATOR-RUN SCRIPT with an --upload flag, not a scheduled Lambda",
+   "evidence": {
+    "instrument": "comp-find '_smartx_model' + source read of the writer",
+    "locator": "data/smartx/scripts/pull_smartx_model_monthly_performance.py:45-46,98-99",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.09.smartx-model-daily",
+   "field": "consumer_set",
+   "value": "ZERO REFERENCES. No match for the key or any accessor name anywhere in portal/src.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src: zero matches",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "canonical_name",
+   "value": "benchmarks / _smartx_model_monthly.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "producer",
+   "value": "data/smartx/scripts/pull_smartx_model_monthly_performance.py (OUT_KEY_DAILY :99 / OUT_KEY :98) -- an OPERATOR-RUN SCRIPT with an --upload flag, not a scheduled Lambda",
+   "evidence": {
+    "instrument": "comp-find '_smartx_model' + source read of the writer",
+    "locator": "data/smartx/scripts/pull_smartx_model_monthly_performance.py:45-46,98-99",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "consumer_set",
+   "value": "ZERO REFERENCES. No match for the key or any accessor name anywhere in portal/src.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src: zero matches",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.11.non-model-assets",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/global/non-model-assets.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / global/non-model-assets.json",
+    "canon_spelling": "platinum/mdpf/global/non-model-assets.json"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.11.non-model-assets",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "live artifact read (_provenance.written_by)",
+    "locator": "aws s3 cp s3://opal-data-portal-v2/platinum/mdpf/global/non-model-assets.json - (live read, this cycle)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.11.non-model-assets",
+   "field": "consumer_set",
+   "value": "ZERO CALLERS, and the accessor is MISPOINTED. `getNonModelAssets` (portal-proxy.ts:410-418) is live uncommented code whose fetch targets /api/general/portfolios/non_model_assets.json -- a DIFFERENT key from this artifact (underscore, portfolios/ prefix) -- and that key DOES NOT EXIST in the bucket. No component calls the function, so it never fires.",
+   "evidence": {
+    "instrument": "source read + aws s3 ls with a separate-invocation positive control",
+    "locator": "portal/src/api/portal-proxy.ts:410-418 ; s3 ls json/portfolios/non_model_assets.json rc=1, control s3 ls json/portfolios/aum-metrics.json rc=0",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.12.account-units",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/cottonwood/account-units.json",
+   "evidence": {
+    "instrument": "channel id + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / cottonwood/account-units.json",
+    "canon_spelling": "platinum/mdpf/cottonwood/account-units.json"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.12.account-units",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "live artifact read (_provenance.written_by)",
+    "locator": "aws s3 cp s3://opal-data-portal-v2/platinum/mdpf/cottonwood/account-units.json - (live read, this cycle)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.12.account-units",
+   "field": "consumer_set",
+   "value": "ZERO CALLERS. No match for account-units in portal/src.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src: zero matches",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.13.manifests",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/_manifests/** (+ latest.json)",
+   "evidence": {
+    "instrument": "aws s3 ls --recursive",
+    "locator": "aws s3 ls --recursive (CLI auto-paginated, counted client-side): platinum/mdpf 468 + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys (468+6+1+10+1+5; ARITHMETIC CORRECTED from a propagated 487 -- the per-prefix measurements were right, the sum was not)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / _manifests/** (+ latest.json)",
+    "canon_spelling": "platinum/mdpf/_manifests/** (+ latest.json)"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.13.manifests",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher",
+   "evidence": {
+    "instrument": "aws s3 ls + the publisher's written_by on every sibling",
+    "locator": "aws s3 ls --recursive (CLI auto-paginated, counted client-side): platinum/mdpf 468 + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys (468+6+1+10+1+5; ARITHMETIC CORRECTED from a propagated 487 -- the per-prefix measurements were right, the sum was not)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.13.manifests",
+   "field": "consumer_set",
+   "value": "ZERO PORTAL CALLERS. No match for _manifests in portal/src. Ops-only surface.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src: zero matches",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.14.archive",
+   "field": "canonical_name",
+   "value": "platinum/mdpf/archive/** (excluded)",
+   "evidence": {
+    "instrument": "aws s3 ls --recursive",
+    "locator": "aws s3 ls --recursive (CLI auto-paginated, counted client-side): platinum/mdpf 468 + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys (468+6+1+10+1+5; ARITHMETIC CORRECTED from a propagated 487 -- the per-prefix measurements were right, the sum was not)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "translation": {
+    "rectangle_spelling": "mdpf-platinum / archive/** (excluded)",
+    "canon_spelling": "platinum/mdpf/archive/** (excluded)"
+   }
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.14.archive",
+   "field": "producer",
+   "value": "opal-assets-mdpf-portal-publisher (historical; no longer writes this prefix)",
+   "evidence": {
+    "instrument": "aws s3 ls: newest archive object predates the 2026-08-06 order",
+    "locator": "aws s3 ls --recursive (CLI auto-paginated, counted client-side): platinum/mdpf 468 + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys (468+6+1+10+1+5; ARITHMETIC CORRECTED from a propagated 487 -- the per-prefix measurements were right, the sum was not)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.14.archive",
+   "field": "consumer_set",
+   "value": "ZERO. No route serves it and no portal reference exists.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end + comp-routes rewrites",
+    "locator": "portal/src: zero matches; no rewrite targets archive/",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "canonical_name",
+   "value": "json/mdpf/** (legacy, pre-platinum-flip)",
+   "evidence": {
+    "instrument": "aws s3 ls --recursive",
+    "locator": "aws s3 ls --recursive (CLI auto-paginated, counted client-side): platinum/mdpf 468 + json/benchmarks 6 + json/peers 1 + json/mdpf 10 + json/yang 1 + json/portfolios 5 = 491 keys (468+6+1+10+1+5; ARITHMETIC CORRECTED from a propagated 487 -- the per-prefix measurements were right, the sum was not)",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "producer",
+   "value": "NONE ACTIVE. Source-confirmed: the live publisher is SCOPED to platinum/mdpf/* and cannot write this tree -- SERVE_ROOT defaults to 'platinum/mdpf' (lambda_function.py:67) and the module docstring states 'SCOPED platinum/mdpf/* ONLY. Role = opal-assets-mdpf-egress-publisher-role' (:17). RESIDUAL, stated: this proves THIS producer cannot write here, not that no writer anywhere does (Rule 6); the corroborating signal is that no key in the prefix carries the current publish stamp its successor tree carries on all 14 keys.",
+   "evidence": {
+    "instrument": "source read of the publisher + prefix stamp comparison",
+    "locator": "infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py:17,67",
+    "vintage": "2026-08-11T17:0xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "consumer_set",
+   "value": "ZERO via routing: /api/general/mdpf/ rewrites to platinum/mdpf/, so no portal request reaches this tree even though the portal's URLs still say /mdpf/.",
+   "evidence": {
+    "instrument": "comp-routes rewrites + portal-proxy.ts:504-516 flip record",
+    "locator": "comp-routes rewrites; portal/src/api/portal-proxy.ts:504-516",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].served_artifacts",
+   "entity": "mp.16.yang-volatility",
+   "field": "canonical_name",
+   "value": "json/yang/volatility_data.json (ORPHAN -- no catalog row warranted)",
+   "evidence": {
+    "instrument": "channel id absence + census key",
+    "locator": "ARTIFACT_CENSUS_MP.yaml unrendered_artifacts",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].producers",
+   "entity": "mp.16.yang-volatility",
+   "field": "producer",
+   "value": "yang-generate-volatility (Lambda, LastMod 2026-05-04, NO event source mapping) -- superseded by opal-portal-volatility-fetcher writing json/macro/volatility_data.json",
+   "evidence": {
+    "instrument": "comp-estate MA-08 chain traversal",
+    "locator": "comp-estate model-portfolios -> MA-08-yang-generate-volatility",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)"
+  },
+  {
+   "canon_target": "resolver.threads[named_thread in {mdpf, model-portfolios}].frontend_resolution",
+   "entity": "mp.16.yang-volatility",
+   "field": "consumer_set",
+   "value": "ZERO. The portal's volatility accessor targets /api/general/macro/volatility_data.json (portal-proxy.ts:1837) -- a different key in a different prefix. No portal/src reference to the yang path exists.",
+   "evidence": {
+    "instrument": "grep at the CONSUMED end over portal/src",
+    "locator": "portal/src: matches only json/macro/, never json/yang/",
+    "vintage": "2026-08-11T16:4xZ"
+   },
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)"
+  }
+ ],
+ "proposals": [
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.01.aum-metrics",
+   "field": "business_meaning",
+   "value_head": "Per-model AUM and account counts for one scope, with quarter-over-quarter change -- the '{AUA} by Model' donut and the p",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.02.account-distribution",
+   "field": "business_meaning",
+   "value_head": "The distribution of ACCOUNT SIZES within each model -- histogram bins, min/max/mean/median and percentiles, plus funded ",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "business_meaning",
+   "value_head": "The full daily history of Opal's assets under advisement, decomposed into model vs non-model vs Inflection non-model, wi",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "business_meaning",
+   "value_head": "The per-trading-day return series for each model against its index and ETF benchmarks -- the raw material behind the 'Re",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "business_meaning",
+   "value_head": "Period-bucketed performance for each model against its index and ETF benchmarks (1D through inception) with the spread a",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.06.etf-returns",
+   "field": "business_meaning",
+   "value_head": "Period returns for the five ETF proxies used as the investable benchmark leg (BIL/AGG/IVV and two more), each with its n",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.07.peer-performance",
+   "field": "business_meaning",
+   "value_head": "Each model's return placed against a peer-universe distribution (p5/p25/p50/p75/p95) per period -- the Peers tab. It ans",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.08.benchmark-returns",
+   "field": "business_meaning",
+   "value_head": "Period returns for the INDEX benchmark leg with each model's benchmark composition spelled out in words (e.g. 'UST: 100%",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.09.smartx-model-daily",
+   "field": "business_meaning",
+   "value_head": "SmartX-sourced model performance -- per-trading-day flow-adjusted return series (B3 sidecar). It is the VENDOR-REPORTED ",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "business_meaning",
+   "value_head": "SmartX-sourced model performance -- the 7 monthly-and-longer periods (B1). It is the VENDOR-REPORTED view of the same mo",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.11.non-model-assets",
+   "field": "business_meaning",
+   "value_head": "The enterprise-total-minus-model split: how much of Opal's book is NOT in a model, as a level, a percentage and a 445-po",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.12.account-units",
+   "field": "business_meaning",
+   "value_head": "Cottonwood-only per-account UNIT values (298 accounts) and per-model unit values -- the unitised-vehicle view of that pa",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.13.manifests",
+   "field": "business_meaning",
+   "value_head": "The publisher's own run records -- one manifest per publish run under a dated prefix, plus a `latest.json` pointer carry",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.14.archive",
+   "field": "business_meaning",
+   "value_head": "The pre-2026-08-06 history of the MDPF serving tree -- 444 objects, mostly per-date aggregate_aua snapshots plus retired",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "business_meaning",
+   "value_head": "The pre-flip copies of the MDPF serving objects -- per-firm account distributions and aggregate AUA series. They describ",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "mp.16.yang-volatility",
+   "field": "business_meaning",
+   "value_head": "A two-number volatility snapshot (VIX and MOVE) with an as-of. Superseded: the live volatility surface the portal actual",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES to CVO, never auto-writes"
+  }
+ ],
+ "gaps": [
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.04.model-portfolio-timeseries",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.05.model-portfolio-benchmarks",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.06.etf-returns",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.07.peer-performance",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.08.benchmark-returns",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "disposition",
+   "class": "STATUS-EXCLUDED",
+   "reason": "cell status NOT_MEASURABLE -- never cited as fact (cell law)"
+  },
+  {
+   "entity": "mp.09.smartx-model-daily",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "disposition",
+   "class": "STATUS-EXCLUDED",
+   "reason": "cell status NOT_MEASURABLE -- never cited as fact (cell law)"
+  },
+  {
+   "entity": "mp.10.smartx-model-monthly",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.15.json-mdpf-legacy",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field -- the rectangle knows a thing the canon cannot hold (schema-gap FINDING)"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "point-in-time liveness = freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage (lifecycle sitting), never bridge-emitted"
+  },
+  {
+   "entity": "mp.16.yang-volatility",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  }
+ ],
+ "translations": [
+  {
+   "entity": "mp.01.aum-metrics",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / {scope}/aum-metrics.json",
+   "canon": "platinum/mdpf/{scope}/aum-metrics.json"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / {scope}/account-distribution.json",
+   "canon": "platinum/mdpf/{scope}/account-distribution.json"
+  },
+  {
+   "entity": "mp.03.aggregate-aua-timeseries",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / {scope}/aggregate-aua-timeseries.json",
+   "canon": "platinum/mdpf/{scope}/aggregate-aua-timeseries.json"
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / global/non-model-assets.json",
+   "canon": "platinum/mdpf/global/non-model-assets.json"
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / cottonwood/account-units.json",
+   "canon": "platinum/mdpf/cottonwood/account-units.json"
+  },
+  {
+   "entity": "mp.13.manifests",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / _manifests/** (+ latest.json)",
+   "canon": "platinum/mdpf/_manifests/** (+ latest.json)"
+  },
+  {
+   "entity": "mp.14.archive",
+   "field": "canonical_name",
+   "rectangle": "mdpf-platinum / archive/** (excluded)",
+   "canon": "platinum/mdpf/archive/** (excluded)"
+  },
+  {
+   "entity": "mp.02.account-distribution",
+   "field": "canonical_name",
+   "note": "GUARDED SET: served spells with '-', gold spells with '_' (one spelling per LAYER by construction, publisher _KEY_RE). Both spellings are REAL; a canon update keyed on either alone reads the other half as orphaned. Emitted keys keep the SERVED spelling; the gold twin is NOT a canon absence."
+  },
+  {
+   "entity": "mp.12.account-units",
+   "field": "canonical_name",
+   "note": "GUARDED SET: served spells with '-', gold spells with '_' (one spelling per LAYER by construction, publisher _KEY_RE). Both spellings are REAL; a canon update keyed on either alone reads the other half as orphaned. Emitted keys keep the SERVED spelling; the gold twin is NOT a canon absence."
+  },
+  {
+   "entity": "mp.11.non-model-assets",
+   "field": "canonical_name",
+   "note": "GUARDED SET: served spells with '-', gold spells with '_' (one spelling per LAYER by construction, publisher _KEY_RE). Both spellings are REAL; a canon update keyed on either alone reads the other half as orphaned. Emitted keys keep the SERVED spelling; the gold twin is NOT a canon absence."
+  }
+ ],
+ "denominators": {
+  "rectangle_cells_in": 160,
+  "by_status": {
+   "MEASURED": 158,
+   "NOT_MEASURABLE": 2
+  },
+  "updates_derived_mechanical": 48,
+  "proposals_to_judgment_channel": 16,
+  "named_gaps": 96,
+  "accounting_check": "updates + proposals + gaps == cells_in -> True",
+  "canon_entries_touched": "10 of 138 resolver threads (the mdpf + model-portfolios rows)",
+  "translations_reported": 10
+ }
+}

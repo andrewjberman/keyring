@@ -1,0 +1,432 @@
+{
+ "invocation": {
+  "subject": "origin/SITEZ 13908cfac7 : workflows/atom_decomposition/runs/portal-page-attribution/20260811T1834Z/rectangle.final.certified.json",
+  "subject_note": "the CONSUMABLE of site-Z's mutant-control run (plant excluded by construction, binding K; certified PASS by CVO~Z)",
+  "canon": "org/modules/graph/estate-coverage-resolver.json + NFRA_ONTOLOGY_C2C3_CANONICAL.yaml @ working tree",
+  "rerun": "python scratchpad/emit_bridge_dryrun_ex2.py  (from ajb_workspace root; rectangle via MSYS_NO_PATHCONV=1 git show FETCH_HEAD:...)",
+  "mode": "DRY -- derives and classifies; writes nothing"
+ },
+ "collision": {
+  "class": "RETIRED-THREAD-COLLISION",
+  "surfaced": "FIRST-CLASS, ahead of all emissions",
+  "run_scope": "portal-page-attribution",
+  "implied_thread": "attribution",
+  "canon_status": "RETIRED as a declared name (2026-07-30)",
+  "citation": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml denominator_note (lines ~208-211): 'attribution RETIRED as a declared name -- content lives under positioning' (adjudication pass 2026-07-30, CVO, Andrew-direct); durable record: estate-coverage-manifest.yaml adjudications_20260730 + AUTHORITATIVE_lambda_taxonomy.json adjudication_20260730; count_checksum comment line ~323: '27 - attribution (retired 07-30)'",
+  "resolver_live_confirm": "named_thread == 'attribution' -> 0 rows (ABSENT; retirement propagated)",
+  "resolution": "The retirement's OWN successor routing governs: content lives under positioning. The rectangle's canonical_name cells INDEPENDENTLY route all 4 artifacts to positioning-thread keys -- the rectangle honors the retirement; the collision exists at RUN-NAME grain only. A portal PAGE named /attribution legitimately exists; a canon THREAD named attribution does not, and none is created.",
+  "failure_modes_checked": {
+   "re_mint": "updates naming thread 'attribution': asserted 0 below (control_assertions)",
+   "silent_drop": "this block IS the surfacing; every cell still accounted in denominators"
+  }
+ },
+ "updates": [
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "canonical_name",
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "DECISION -- CVO~Z delegated semantics",
+    "locator": "ANDREW_DIRECT_20260811_OPAL_ANALYST_ATOMDECOMP_PROGRAM.md",
+    "vintage": "2026-08-11T~1850Z"
+   },
+   "value": "s3://opal-data-portal-v2/json/positioning/allocation_summary.json",
+   "target_thread": "positioning",
+   "match": "MATCHES-EXISTING (exact; idempotent confirm)"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "producer",
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "comp-estate positioning",
+    "locator": "chain yang-positioning-attribution-allocation producers list",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "1 chain in scope",
+    "count_grain": "INSTANCE"
+   },
+   "value": "yang-generate-allocation-summary (model_pkl branch AND the after-attribution chain)",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].producers"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "consumer_set",
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "source read at the CONSUMED end (Rule 12)",
+    "locator": "portal DEV @604101df8b components/AssetAllocationSummary.tsx:62; components/StylePolicyComparison.tsx:37",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "4 api value bindings on the page, of which 4 referenced; definitions/barrel/type-imports excluded per K2",
+    "count_grain": "INSTANCE"
+   },
+   "value": "1 accessor (getAllocationSummary), 2 render components (AssetAllocationSummary, StylePolicyComparison)",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].frontend_resolution"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "canonical_name",
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "DECISION -- CVO~Z delegated semantics",
+    "locator": "ANDREW_DIRECT_20260811_OPAL_ANALYST_ATOMDECOMP_PROGRAM.md",
+    "vintage": "2026-08-11T~1850Z"
+   },
+   "value": "s3://opal-data-portal-v2/json/positioning/holdings_attribution_data.json",
+   "target_thread": "positioning",
+   "match": "MATCHES-EXISTING (exact; idempotent confirm)"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "producer",
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "comp-estate positioning",
+    "locator": "chain yang-positioning-attribution-allocation",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "1 chain",
+    "count_grain": "INSTANCE"
+   },
+   "value": "yang-generate-holdings-attribution (attribution_excel branch)",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].producers"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "consumer_set",
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "source read at the CONSUMED end",
+    "locator": "portal DEV @604101df8b tabs/SelectionTab.tsx:9",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "4 api value bindings; exclusions per K2",
+    "count_grain": "INSTANCE"
+   },
+   "value": "1 accessor (getHoldingsAttribution), consumed by the Selection tab",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].frontend_resolution"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "canonical_name",
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "DECISION -- CVO~Z delegated semantics",
+    "locator": "ANDREW_DIRECT_20260811_OPAL_ANALYST_ATOMDECOMP_PROGRAM.md",
+    "vintage": "2026-08-11T~1850Z"
+   },
+   "value": "s3://opal-data-portal-v2/json/portfolios/aum-metrics.json",
+   "target_thread": "positioning",
+   "match": "MATCHES-EXISTING (exact; idempotent confirm)"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "producer",
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "comp-estate positioning",
+    "locator": "chain prose: writes positioning_data.json plus aum-metrics.json + aum-timeseries.json",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "1 chain",
+    "count_grain": "INSTANCE"
+   },
+   "value": "yang-generate-positioning",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].producers"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "consumer_set",
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "source read at the CONSUMED end",
+    "locator": "portal DEV @604101df8b tabs/SelectionTab.tsx:9 and :55 (aumByModel state for weighting AGG aggregation)",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "4 api value bindings; exclusions per K2",
+    "count_grain": "INSTANCE"
+   },
+   "value": "1 accessor (getAUMSummary), consumed by the Selection tab for AGG weighting",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].frontend_resolution"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "canonical_name",
+   "law": "served-artifact KEY -> resolver served_artifacts (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "DECISION -- CVO~Z delegated semantics",
+    "locator": "ANDREW_DIRECT_20260811_OPAL_ANALYST_ATOMDECOMP_PROGRAM.md",
+    "vintage": "2026-08-11T~1850Z"
+   },
+   "value": "s3://opal-data-portal-v2/json/positioning/positioning_data.json",
+   "target_thread": "positioning",
+   "match": "MATCHES-EXISTING-VIA-NORMALIZATION"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "producer",
+   "law": "producer EDGE -> resolver producers (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "comp-estate positioning",
+    "locator": "chain yang-positioning-attribution-allocation",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "1 chain",
+    "count_grain": "INSTANCE"
+   },
+   "value": "yang-generate-positioning (ProcessBothPKLs branch)",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].producers"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "consumer_set",
+   "law": "consumer EDGE -> resolver frontend_resolution (B-9: keys+edges)",
+   "evidence": {
+    "instrument": "source read at the CONSUMED end, per call site (K8)",
+    "locator": "portal DEV @604101df8b Attribution.tsx:18 import, :36 queryFn, :33 data binding, :40 dataAsOf derivation, :43 useYangDataAsOf('positioning'); tabs/SelectionTab.tsx:9 import, :48 state, :68 fetch",
+    "vintage": "2026-08-11T~1834Z",
+    "denominator": "2 call sites; 1 load-bearing, 1 payload-discarding",
+    "count_grain": "INSTANCE"
+   },
+   "value": "1 accessor (getPositioningData), TWO call sites with OPPOSITE consumption profiles -- see R1",
+   "target_thread": "positioning",
+   "canon_target": "resolver.threads[positioning].frontend_resolution"
+  }
+ ],
+ "proposals": [
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "att.01.allocation-summary",
+   "field": "business_meaning",
+   "value_head": "The book's allocation broken out by asset class and by style/policy target \u2014 what Opal HOLDS versus what its policy SAYS",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "att.02.holdings-attribution",
+   "field": "business_meaning",
+   "value_head": "Performance ATTRIBUTION over the holdings \u2014 what drove returns, decomposed by holding and grouping, for the last complet",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "business_meaning",
+   "value_head": "AUM totals from the LEGACY json/portfolios/ tree, used here to weight the AGG aggregation in the Selection tab. It is a ",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES, never auto-writes"
+  },
+  {
+   "channel": "CVO judgment half (B-9)",
+   "entity": "att.04.positioning-data",
+   "field": "business_meaning",
+   "value_head": "The current shape of the book by exposure. On THIS page its role is more load-bearing than on /positioning: it SUPPLIES ",
+   "law": "thread description = CVO-authored JUDGMENT half (B-9 split); bridge PROPOSES, never auto-writes"
+  }
+ ],
+ "gaps": [
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field (schema-gap finding, specimen-1 discovery -- proposal already routed CTO+CVO)"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage, never bridge-emitted"
+  },
+  {
+   "entity": "att.01.allocation-summary",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field (schema-gap finding, specimen-1 discovery -- proposal already routed CTO+CVO)"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage, never bridge-emitted"
+  },
+  {
+   "entity": "att.02.holdings-attribution",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field (schema-gap finding, specimen-1 discovery -- proposal already routed CTO+CVO)"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage, never bridge-emitted"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "vintage_semantics",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "canon has NO vintage-semantics field (schema-gap finding, specimen-1 discovery -- proposal already routed CTO+CVO)"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "vintage_grain",
+   "class": "NO-RECEIVING-SLOT",
+   "reason": "same schema gap as vintage_semantics"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "serving_state",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "freshness prose; B-9: freshness lives at RENDER, never baked into the substrate"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "analyst_serve_verdict",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped verdict; run truth stays in the certified rectangle (row-10 office split)"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "disposition",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "a disposition is an ADJUDICATION -> user-described stage, never bridge-emitted"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "field": "notes",
+   "class": "EXCLUDED-BY-LAW",
+   "reason": "run-scoped commentary; not canon material (office split)"
+  }
+ ],
+ "translations": [
+  {
+   "entity": "att.02.holdings-attribution",
+   "kind": "ANNOTATION-SPLIT",
+   "rectangle_value": "positioning / holdings_attribution_data.json  (SAME OBJECT as pos.02 \u2014 one catalog row, two page coordinates)",
+   "emitted_key": "s3://opal-data-portal-v2/json/positioning/holdings_attribution_data.json",
+   "annotation_kept": "(SAME OBJECT as pos.02 \u2014 one catalog row, two page coordinates)",
+   "note": "rectangle commentary split from the key; BOTH halves reported, annotation routes with the judgment channel, never baked into the mechanical key"
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "kind": "PREFIX-VS-THREAD",
+   "note": "S3 path segment 'portfolios/' is a PREFIX, not a thread -- the key is a member of the POSITIONING thread's served_artifacts (resolver-confirmed). Emitting under the prefix as a thread would re-mint a phantom."
+  },
+  {
+   "entity": "att.03.portfolios-aum-metrics",
+   "kind": "ANNOTATION-SPLIT",
+   "rectangle_value": "portfolios / aum-metrics.json  \u26a0 NOT platinum/mdpf/{scope}/aum-metrics.json  (SAME OBJECT as pos.03)",
+   "emitted_key": "s3://opal-data-portal-v2/json/portfolios/aum-metrics.json",
+   "annotation_kept": "\u26a0 NOT platinum/mdpf/{scope}/aum-metrics.json  (SAME OBJECT as pos.03)",
+   "note": "rectangle commentary split from the key; BOTH halves reported, annotation routes with the judgment channel, never baked into the mechanical key"
+  },
+  {
+   "entity": "att.04.positioning-data",
+   "kind": "ANNOTATION-SPLIT",
+   "rectangle_value": "positioning / positioning_data.json  (SAME OBJECT as pos.01)",
+   "emitted_key": "s3://opal-data-portal-v2/json/positioning/positioning_data.json",
+   "annotation_kept": "(SAME OBJECT as pos.01)",
+   "note": "rectangle commentary split from the key; BOTH halves reported, annotation routes with the judgment channel, never baked into the mechanical key"
+  }
+ ],
+ "canon_defects_surfaced": [
+  {
+   "class": "B9-DEFECT-IN-CANON (pre-existing, surfaced not fixed)",
+   "canon_string": "s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastMod 2026-06-15 13:20Z)",
+   "emitted_bare_key": "s3://opal-data-portal-v2/json/positioning/positioning_data.json",
+   "finding": "the canon key carries BAKED FRESHNESS PROSE ('(LastMod 2026-06-15 13:20Z)') inside the mechanical substrate -- the exact defect the B-9 law names. A naive string-match reads NO-MATCH and emits a DUPLICATE bare key (two spellings of one artifact, the guarded-set class). The bridge matches via normalization and emits NO duplicate; the prose-strip of the canon string is a CANON REPAIR for the mechanical owner's lane, not a bridge write."
+  }
+ ],
+ "control_assertions": {
+  "updates_naming_thread_attribution": 0,
+  "threads_created": 0,
+  "duplicate_keys_emitted": 0,
+  "verdict_if_zero_zero_zero": "PASS -- collision surfaced+cited, zero re-mint, zero silent drop, zero duplicates"
+ },
+ "denominators": {
+  "rectangle_cells_in": 40,
+  "by_status": {
+   "MEASURED": 40
+  },
+  "updates_derived_mechanical": 12,
+  "proposals_to_judgment_channel": 4,
+  "named_gaps": 24,
+  "accounting_check": "updates + proposals + gaps == cells_in -> True",
+  "canon_threads_total": 138,
+  "canon_threads_touched": "1 (positioning) -- attribution NOT touched, NOT created",
+  "translations_reported": 4,
+  "canon_defects_surfaced": 1
+ }
+}

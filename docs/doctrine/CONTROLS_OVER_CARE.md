@@ -37,7 +37,7 @@ why agents who can name a rule violate it while naming it.
 
 ## THE BOUNDARY — this file is one of three families, and it is not a superset
 
-> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the four ways looking does not
+> **THIS FILE** holds **HOW YOU FAIL TO SEE THE THING** — the root plus the six ways looking does not
 > produce seeing, including how an instrument lies.
 > **[`MECHANISM_LAWS.md`](MECHANISM_LAWS.md)** holds **WHERE AN ASSERTION SITS** — fourteen shapes a
 > claim comes to be wrong about its own subject, each with an EXPOSING QUESTION and a GATE-OR-TEST.
@@ -65,7 +65,7 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The four ways you fail to see it *even though you looked*
+## The six ways you fail to see it *even though you looked*
 
 ### 1. You looked at a PROXY, not the thing
 A digest, a count, a config, an `rc=0`, a symbol's presence. A proxy answers a neighbouring question
@@ -136,6 +136,14 @@ No outside information entered, so the check certifies any internally consistent
   reconciliation that ties both sides of the same omission is not a reconciliation.
 - An aggregate is never graded on its total, nor on the series you were asked about — two offsetting
   moves produce a clean headline.
+- **A FAITHFUL PORT IS THE STRONGEST POSSIBLE PARITY EVIDENCE AND ZERO EVIDENCE OF CORRECTNESS.** A
+  byte-identical port diffed against the source it was ported FROM is self-comparison wearing a
+  migration's clothes: agreement is guaranteed by construction, so **every defect in the source arrives
+  carrying a green light.** Fidelity (*did it reclassify?*) and correctness (*was the source right?*) are
+  different questions, and a faithfully-ported bug answers the fidelity one correctly — an instrument
+  honest about its own question, answering the wrong one. New and old agree BECAUSE they share the defect.
+  **Discharge:** a port cert states WHICH question it answers, and correctness is grounded OUTSIDE the
+  source lineage — read the rule on its own terms against real inputs, never only new-vs-old.
 - **Discharge:** diff against a **prior vintage** or **a source the pipeline does not derive from**.
   Diff every constituent series, not the roll-up.
 
@@ -183,7 +191,49 @@ The least intuitive member, so it needs its mechanism:
 - **Test:** when a result is unusually clean, ask whether a *total* failure would produce exactly
   this reading. **Exercise the tool; never resolve its name.**
 
-## 5. Nobody sent it back — an unexercised claim survives on its DIRECTION, not its truth
+### 5. Your WITNESS was your own OUTPUT
+The check *had* an outside source — and it was not outside. An artifact a prior run of the thing under
+test PRODUCED is not a second opinion: agreement is guaranteed by construction, and the more of it you
+gather, the more convincing the nothing becomes. Distinct from #3 because this witness *looks*
+independent — different file, format, prefix, vintage — and is not.
+- **COVERAGE IS NOT INDEPENDENCE. N self-comparisons carry the information of ZERO.** A full-history
+  green over thousands of dates whose witnesses are all the transform's own emissions is worth strictly
+  less than ONE date whose witness was produced independently. **Ask what PRODUCED the thing you are
+  checking against, never how many of them there are** — and note the exercise you were *asked* for can
+  be the worthless one.
+- **A candidate witness that matches your output PERFECTLY is evidence that it IS your output.** The
+  populations most needing a check are exactly those with no independent witness left.
+- ⚡ **THE INVERSION — a difference can be the CREDENTIAL: *the thing that made it fail byte-equality is
+  what qualifies it as a witness.*** An artifact byte-identical to what the transform emits is
+  (probably) that emission; one differing only INCIDENTALLY (record order, formatting, timestamp) while
+  agreeing on every VALUE was produced independently and can adjudicate. **So do not discard a
+  near-match as noise — interrogate the difference. Incidental difference + total value agreement is
+  the signature of a genuine second source.**
+- **Discharge:** before comparing, establish the PROVENANCE of the comparison side — what wrote it,
+  when, from which input. Where no independent witness exists and none can be manufactured, the claim
+  is **DECLARED-UNVERIFIABLE: it may be USED, never CITED as grounded.**
+
+### 6. The LABEL supplied a claim the CONTENT never made
+The other five are ways the INSTRUMENT fails. This one is a CORRECT measurement wearing a name that
+misdescribes it — you looked, you measured right, and you still concluded wrong, **and the number's
+correctness is exactly what made it persuasive.** **A name, title or label describes ONE axis and is
+SILENT on the others; the reader supplies the missing axis from the words without noticing. THE
+SILENCE IS NOT READ AS SILENCE — IT IS READ AS AGREEMENT.**
+- A served field whose NAME asserts a property its COMPUTATION does not carry hands every consumer a
+  right number and a wrong conclusion. No downstream check can catch it: the value is not wrong.
+- A chart title accurate on the VALUE axis and silent on the POPULATION axis reads as authoritative
+  about both, and a build derived from it inherits the presumption instead of the filter.
+- **Discharge, by whether the name can move.** Where it CAN: rename. Where it CANNOT (a served key —
+  NEVER#3): **register the divergence at the canonical term registry, so the truth is reachable where
+  the reader actually asks.** *A characterisation that lives only in a cert protects the certifier and
+  nobody downstream.* And when a BUILD is derived FROM a name, **the axis the name is silent on is
+  measured AT SOURCE, never inferred from the words** — one look settles what a presumption was holding.
+- **The family, and it reaches past labels:** *an instrument or a label answers a NARROWER question
+  than the one the reader asked, and nothing in the output says so.* Same shape as an oracle whose
+  silence means nothing until its own firing rate is known, and a value pin that cannot see a
+  population change.
+
+### 7. Nobody sent it back — an unexercised claim survives on its DIRECTION, not its truth
 
 The four modes above explain why you failed to see. This explains why **the resulting claim was
 never challenged**, which is what lets an unlooked-at claim reach a law file, a register, or Andrew.

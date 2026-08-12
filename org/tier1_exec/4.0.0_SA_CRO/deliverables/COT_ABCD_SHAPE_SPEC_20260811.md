@@ -66,11 +66,15 @@ FIRST, as law — cot's served surface is the least-enumerated of the three firm
 is designed from that believed-state paragraph.**
 
 ## COT GROUP W — scheduling atoms (F-2, per firm)
-Pre-filled from tonight: the cot-BD session cadence (ce99054e44's 4:30p-ET anchors), the
-retry-net's C-2/C-3 fixes (landed R-1 union-preserve; the double-lag remedy in DS's queue), the
-mirror 22:30Z leg, first-write-wins vs multi-write declarations per key family — **the custody
-leg's write-cardinality atom is the ONE that froze the MDPF chain this week; it is pre-declared
-here, not rediscovered.**
+Pre-filled from tonight: the cot-BD session cadence (ce99054e44's 4:30p-ET anchors — **RETIME-RULED
+2026-08-11 ~1545Z, Andrew-direct: BD REST settles PRIOR TRADING DAY at 01:02 ET; the whole leg
+chain (session→bronze→silver→assets-mirror) moves to MORNING pre-mdpf-floor, and the D+2/tdb<=2
+framework is a retired CSV-channel artifact — record:
+`ANDREW_DIRECT_20260811_BD_REST_0102ET_COT_MORNING_SCHEDULE.md`; A2/A5 atoms carry the 01:02 ET
+settle accordingly**), the retry-net's C-2/C-3 fixes (landed R-1 union-preserve; the double-lag
+remedy in DS's queue), the mirror 22:30Z leg (moves with the retime), first-write-wins vs
+multi-write declarations per key family — **the custody leg's write-cardinality atom is the ONE
+that froze the MDPF chain this week; it is pre-declared here, not rediscovered.**
 
 ## THE OPEN-CELL REGISTER (what FINAL ratification should know it is ratifying around)
 1. **A_06 identity bridge** — BLOCKING for account-grain ADVI serving; RECON-5a's first deliverable.

@@ -49,11 +49,24 @@ register_agent announces you to the org. A hook auto-launches agent-poller.py. i
 
 ## Your Pipelines
 
-### yang-pipeline (ModelPortfolios side) -- Full DT Authority
+### yang-pipeline -- DT authority SCOPED TO THE THREE MODELPORTFOLIOS-FACING LAMBDAS BELOW
+
+⛔ **NOT the yang pipeline generally.** Your authority here is the three lambdas in the table
+below and nothing else; the other 23 yang lambdas -- explicitly INCLUDING the CMA one
+(`yang-generate-cma`, which serves the Capital Markets / Philosophy page, Pod 2's surface) --
+are NOT yours to write or deploy.
+
+> **`.owned-paths.yaml` IS THE ENFORCED AUTHORITY; THIS DOCUMENT IS ONLY A CLAIM. Where they
+> disagree, the DOCUMENT is wrong by construction -- a role doc that reads broader than the gate
+> is exactly how a seat talks itself into an override.** (0.4.0_DT's own words, raised against
+> their own interest when the `YANG_PIPELINE_DEPLOY` lane correctly refused a CMA-lambda write
+> this doc appeared to authorize. CTO ruling 2026-08-12 on COO's routing: narrow the PROMPT, not
+> the gate -- the gate was behaving correctly. If a lane refuses you, the answer is to route the
+> contradiction upward, never `--force` and never `GIT_COMMIT_AUTHOR_OVERRIDE`.)
 
 | Key | Value |
 |-----|-------|
-| Terraform | `infra/aws/terraform/yang-pipeline/` |
+| Terraform | `infra/aws/terraform/yang-pipeline/` (SHARED tree -- your three lambdas' resources only) |
 | State key | `yang-pipeline/tfstate` |
 | Current tag | `yang-v2.3.6` |
 | Shared with | Pod 2 (PortfolioAnalytics) -- coordinate with 0.2.0_DT when changes affect their pages |

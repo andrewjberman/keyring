@@ -295,7 +295,7 @@ def cmd_close_leg(args) -> int:
         if leg["id"] == args.leg_id:
             leg["proof"] = args.proof
             leg["closed_at"] = _ts()
-            state["log"].append(f"{_ts()} LEG {args.leg_id} closed: {args.proof[:120]}")
+            state.setdefault("log", []).append(f"{_ts()} LEG {args.leg_id} closed: {args.proof[:120]}")
             _save(state)
             _write_entry(state)
             open_left = [leg["id"] for leg in state["legs"] if not leg.get("proof")]
@@ -315,7 +315,7 @@ def cmd_close(args) -> int:
         return 2
     state["status"] = "CLOSED -- nothing stranded"
     state["closed_at"] = _ts()
-    state["log"].append(f"{_ts()} CLOSED -- all {len(state['legs'])} legs proven")
+    state.setdefault("log", []).append(f"{_ts()} CLOSED -- all {len(state['legs'])} legs proven")
     _write_entry(state)
     _state_path(args.slug).unlink()
     print(f"OK: CLOSED deploy ledger '{args.slug}' -- all {len(state['legs'])} "
@@ -334,7 +334,7 @@ def cmd_hold(args) -> int:
         state.pop("held_at", None)
         state.pop("last_held_nudge_at", None)
         state["status"] = "OPEN"
-        state["log"].append(f"{_ts()} HOLD RELEASED -> OPEN" + ("" if had_gate else " (was not held)"))
+        state.setdefault("log", []).append(f"{_ts()} HOLD RELEASED -> OPEN" + ("" if had_gate else " (was not held)"))
         _save(state)
         _write_entry(state)
         print(f"OK: HOLD released on '{args.slug}' -> status OPEN "
@@ -361,7 +361,7 @@ def cmd_hold(args) -> int:
     state["gate"] = trial["gate"]
     state.setdefault("held_at", _now().isoformat())    # preserve the original hold-start on a re-hold
     state["status"] = HELD_STATUS
-    state["log"].append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
+    state.setdefault("log", []).append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
     _save(state)
     _write_entry(state)
     print(f"OK: '{args.slug}' -> {HELD_STATUS} (gate={args.gate_type}/{args.gate_ref.strip()}).\n"
@@ -441,6 +441,41 @@ _STATUS_LINE_PATTERNS = (
     re.compile(r"^\s*#{1,6}\s*status:\s*(.*)$", re.IGNORECASE),
 )
 
+# ===========================================================================================
+# COMPOUND-FIELD SEGMENTATION -- THE STRUCTURAL FIX (CTO 2026-08-11, COO's FOURTH-VARIANT find).
+# The three patterns above are ANCHORED at line start, so a Status carried as the SECOND field of
+# a compound header line is unreadable:
+#     **Opened:** 2026-08-05T23:05Z by 0.7.0_AE_CloudOps · **Status:** CLOSED 2026-08-05T23:40Z
+# Measured over the full corpus (386 files): 340 line-start, 10 COMPOUND-INLINE, 36 genuinely
+# absent -- and every one of the 10 was reporting a FALSE RED on the NO-HALF-DEPLOYS gate.
+#
+# >> WHY A SEGMENTER AND NOT A FOURTH PATTERN: the three fixes before this one each ENUMERATED
+# the spelling its author had just seen (colon-inside-span, heading form, doubly-bolded value).
+# An enumerated-spellings reader's coverage is exactly its author's sample -- it passes on every
+# file that taught it and fails on the next hand-authored one, which is why there was a second,
+# a third, and now a fourth variant. This parses the STRUCTURE instead: a markdown header line is
+# a sequence of FIELDS separated by `·`/`•`/`|`/`;`/spaced dashes, so the reader tests each FIELD,
+# not just the first. New separators extend coverage; new VALUE spellings are already covered by
+# the strip("*_") normalization. <<
+#
+# SAFETY (why this is not over-permissive): a segment still has to satisfy one of the ANCHORED
+# patterns above -- it must literally begin with `**status:` / `## status:`. A prose fragment
+# that merely mentions the word cannot match (the LD-0274 mention-is-not-a-marker discipline),
+# and a separator that splits a date or a sentence just yields fragments that match nothing.
+# Adding separators therefore only ever ADDS coverage; it cannot manufacture a false terminal.
+# ===========================================================================================
+_COMPOUND_FIELD_SEP = re.compile(r"\s*[·•|;]\s*|\s+[-–—]{1,2}\s+")
+
+
+def _status_segments(line: str):
+    """The line itself, then each of its compound-field segments (document order preserved).
+    First-status semantics are unchanged: callers stop at the first segment that yields a value."""
+    yield line
+    if _COMPOUND_FIELD_SEP.search(line):
+        for seg in _COMPOUND_FIELD_SEP.split(line):
+            if seg and seg != line:
+                yield seg
+
 
 def _md_status(md_path: Path) -> str | None:
     """First Status value in a change_management ledger, in ANY of its markdown spellings
@@ -453,12 +488,13 @@ def _md_status(md_path: Path) -> str | None:
     except OSError:
         return None
     for line in text.splitlines():
-        for pat in _STATUS_LINE_PATTERNS:
-            m = pat.match(line)
-            if m:
-                val = m.group(1).strip().rstrip("*").strip()
-                if val:                      # an empty capture is not a status -- keep looking
-                    return val
+        for seg in _status_segments(line):
+            for pat in _STATUS_LINE_PATTERNS:
+                m = pat.match(seg)
+                if m:
+                    val = m.group(1).strip().strip("*_").strip()
+                    if val:                  # an empty capture is not a status -- keep looking
+                        return val
     return None
 
 
@@ -478,12 +514,41 @@ def _has_close_marker(md_path: Path) -> bool:
     return False
 
 
+def _has_terminal_status_anywhere(md_path: Path) -> bool:
+    """True if ANY status-grammar line in the doc leads with a terminal token --
+    the CLOSE-BLOCK-at-foot shape (CTO GO 144651Z fix b): a doc that closes itself
+    in a '## CLOSE BLOCK' while the header Status line still reads OPEN fired a
+    false gate-bypass RED every cycle (the a2-egress instance, header never
+    flipped). Matches the SAME _STATUS_LINE_PATTERNS grammar as _md_status --
+    NEVER bare prose containing the word CLOSED (the LD-0274 matcher class; a
+    mention is not a status). Used ONLY by the unindexed scanner, whose stated
+    bias is toward terminal; _md_status keeps first-line semantics everywhere
+    else (drift detection wants the DECLARED state, not the best one)."""
+    try:
+        text = md_path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    for line in text.splitlines():
+        for seg in _status_segments(line):
+            for pat in _STATUS_LINE_PATTERNS:
+                m = pat.match(seg)
+                if m:
+                    val = m.group(1).strip().strip("*_").strip()
+                    if val and _is_terminal_status(val):
+                        return True
+    return False
+
+
 def _is_terminal_status(status: str) -> bool:
     """True if a ledger status LEADS with a terminal-state token (CLOSED /
     COMPLETE / ROLLBACK / ...) -- i.e. the deploy is not still open. Match on the
     leading word only, so a mid-string token (e.g. 'OPEN -- issue RESOLVED') does
-    not false-terminal an open ledger."""
-    head = status.lstrip().upper()
+    not false-terminal an open ledger. lstrip covers whitespace AND markdown
+    emphasis wrappers (*/_): a doubly-bolded '**Status:** **CLOSED ...' captures
+    a value leading with '**', and .lstrip() alone (whitespace-only) left it
+    unreadable -- the THIRD spelling variant of the :424 class (COO source-read
+    2026-08-11, 4 false REDs); the reader loosens, the records stay untouched."""
+    head = status.upper().lstrip("*_ \t")
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
 
 
@@ -618,6 +683,9 @@ def _unindexed_open_ledgers(covered: set) -> list:
             continue  # CLOSED / COMPLETE / ROLLED-BACK status -- nothing stranded
         if _has_close_marker(md):
             continue  # explicit close-date marker (globgrph-style hand ledger)
+        if _has_terminal_status_anywhere(md):
+            continue  # CLOSE-BLOCK-at-foot shape: a terminal status line ANYWHERE
+            #           in the doc's own status grammar (fix b, CTO GO 144651Z)
         if status is None:
             reason = "no **Status:** and no close-date marker (open or malformed)"
         else:

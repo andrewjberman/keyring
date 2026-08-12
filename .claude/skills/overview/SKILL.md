@@ -89,7 +89,7 @@ Nothing before Part 1, nothing after Part 3. No tables, no extra headers, no tec
 
 Two sources, both used:
 
-- **`org/mcp/agent_telemetry/<serial>.jsonl`** — the PostToolUse-hook telemetry stream (`{ts,agent,tool,kind,session_id}`, `kind` work/loop-tagged). This CONFIRMS who is actually working — extract the last `kind:work` ts per agent (`jq -r 'select((.kind//"work")=="work").ts' <f> | tail -1`). An agent whose only recent telemetry is `kind:loop` (watcher self-pings) is NOT actively working — say so honestly.
+- **`org/mcp/agent_telemetry/<serial>.jsonl`** — the PostToolUse-hook telemetry stream (`{ts,agent,tool,kind,session_id}`, `kind` work/loop-tagged). This CONFIRMS who is actually working — extract the last `kind:work` ts per agent with PYTHON (the canonical block in `/stimulus-scan` Step 1 — `jq` IS NOT INSTALLED, and under `2>/dev/null` its absence renders a false quiet fabric; never suppress stderr on this read). An agent whose only recent telemetry is `kind:loop` (watcher self-pings) is NOT actively working — say so honestly.
 - **`get_live_agents()`** — every registered agent with its one-line work summary + last-seen. This carries the **what-they're-doing summary** the telemetry stream does not. `get_org_summary()` — active projects + pending TOs.
 
 **Include** an agent if telemetry shows recent `kind:work` OR the broker shows it LIVE with a current summary and it is clearly part of this cycle. **Exclude** any serial not seen this cycle / long-offline — do not list it.

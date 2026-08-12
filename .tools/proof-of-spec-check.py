@@ -44,6 +44,34 @@ def conditional_checks(inst: dict) -> list[str]:
         v.append("controls.determinism: UNSTABLE -- the deliverable is INVALID by its own control")
     if d.get("status") == "N/A-WITH-REASON" and len(d.get("method", "").strip()) < 8:
         v.append("controls.determinism: N/A-WITH-REASON requires the reason in method")
+    # PER-ARTIFACT ACCEPTANCE COVERAGE (CVO gate candidate 2026-08-11: A_03 shipped with ZERO
+    # battery rows, caught by eyeball twice independently -- luck-per-firm, now machinery).
+    # Heuristic linkage via the criterion-id grammar ({firm}-{group}-{artifact}-{check}): an
+    # artifact's stem token must appear in >=1 criterion_id, OR the artifact is named in
+    # declared_exclusions. Matching is printed, never silent.
+    import re as _re
+    ids_blob = " ".join(r.get("criterion_id", "") for r in inst.get("acceptance", [])).upper()
+    excl_blob = " ".join(str(e) for e in inst.get("declared_exclusions", [])).lower()
+    for a in inst.get("artifacts_produced", []):
+        # SCOPE IS BACKEND-DS-ID-GRAMMAR-SPECIFIC BY DESIGN: this stem-token heuristic keys on the
+        # {firm}-{group}-{artifact}-{check} criterion-id grammar, which is a DS/gold convention. A
+        # frontend_component (portal) does not use it -- it is INTENTIONALLY outside this heuristic
+        # (COO 215014Z: a portal component was forced to mis-declare 'script' and fail here; the fix
+        # was the kind enum, now carrying frontend_component). A frontend-appropriate coverage rule
+        # is a follow-on gate candidate; skipping frontend_component here is correct, not a gap.
+        if a.get("kind") not in ("script", "s3_object"):
+            continue
+        stem = Path(a.get("path_or_key", "")).name.split(".")[0]
+        tokens = {t.upper().replace("_", "") for t in _re.findall(r"[A-Za-z]+_?\d+|[A-Za-z]{3,}", stem)}
+        if not tokens:
+            continue
+        if any(t in ids_blob.replace("-", "").replace("_", "") for t in tokens if len(t) >= 3):
+            continue
+        if stem.lower() in excl_blob:
+            continue
+        v.append(f"artifact-coverage: '{a.get('path_or_key')}' has NO acceptance row referencing it "
+                 f"(tokens tried: {sorted(tokens)}) and is not in declared_exclusions -- "
+                 f"the A_03 zero-battery class; add rows or declare the exclusion")
     return v
 
 

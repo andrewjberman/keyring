@@ -190,11 +190,20 @@ One file per feature. Never overwrite into a monolith.
     criterion VERBATIM + the exact re-runnable invocation + output evidence + denominator,
     validated BEFORE the status flip:
       python .tools/proof-of-spec-check.py {instance}.json C1,C2,C3
-    ^^ THE CRITERION SET IS POSITIONAL (argv[2]). It is NOT a --expected-criteria flag.
+    THE ID SET IS POSITIONAL (`sys.argv[2]`) -- comma-separated ids OR a path to a file with one
+    id per line. There is NO argparse and NO `--expected-criteria` flag: the flagged form makes
+    argv length 4, trips the `len(sys.argv) not in (2,3)` usage guard, and EXITS rc=2.
+    ⛔ **CORRECTED 2026-08-11 -- this line prescribed `--expected-criteria` and every TO minted
+    from it inherited a broken invocation.** Caught by 0.7.0_AE_CloudOps on first use and
+    exercised both ways before the fix (flagged -> rc=2 usage; positional -> rc=0 VALID).
     CORRECTED 2026-08-11 ~1710Z (1.0.0_SA_CTO~Z, on 0.5.0_AE_OpalETL~Z's first live use of
     this contract). This line previously documented `--expected-criteria C1,C2,C3`, which the
     tool does not accept -- `proof-of-spec-check.py:65` takes `len(sys.argv) in (2,3)` with
     the criteria string at `sys.argv[2]`.
+    **The harm is NOT the loud rc=2 -- it is the FALLBACK it invites:** an assignee who hits the
+    usage error drops the id argument, re-runs the 2-arg form, and gets a clean `rc=0 VALID`
+    that says **COVERAGE UNCHECKED**. So a wrong flag in the template steers people off the ONE
+    layer that catches a silently-omitted criterion, and it does so while printing success.
     ⛔ CHECK THE RC, NEVER THE OUTPUT STRING -- THE USAGE BANNER CONTAINS THE VOCABULARY OF
     BOTH VERDICTS. The flag form is a usage error: rc=2, 19 lines of help, and line 13 reads
     "Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error."
@@ -203,9 +212,6 @@ One file per feature. Never overwrite into a monolith.
       - greps "INVALID"    -> effectively safe; it MATCHES the legend and refuses. Noisy, not wrong.
       - greps a SUCCESS string ("VALID") -> ⛔ SILENT PASS. It matches "Exit 0 = VALID" in the
         banner of a call that validated NOTHING.
-    Second hazard, independent of the string: the natural recovery from "my command printed
-    help" is to drop the argument and run the BARE two-arg form -- which is legal, exits 0, and
-    SKIPS THE COVERAGE DIFF ENTIRELY, the half that catches an assignee omitting a criterion row.
     Exercised: flag form rc=2 (rc taken WITHOUT a pipe) + 19 help lines; positional form `VALID`,
     rc=0, 6 rows, 0 violations.
     *(MECHANISM CORRECTED 2026-08-11 ~1727Z. This block first said the help text "contains no
@@ -218,8 +224,28 @@ One file per feature. Never overwrite into a monolith.
     DISCRIMINATES.)*
     The validator runs the COVERAGE diff first (a criterion with no row refuses the instance
     before any quality check; frames printed) then the quality rules (FAIL-requires-reason,
-    thin-evidence-PASS invalid, dead mutant/determinism controls invalidate).
+    thin-evidence-PASS invalid, dead mutant/determinism controls invalidate). The diff is
+    BIDIRECTIONAL: expected-without-row AND row-without-expected both violate.
       <instance_path>{assignee_folder}/deliverables/{to_id}_PROOF_OF_SPEC.json</instance_path>
+    ⚠ **ONE instance_path IS THE SINGLE-DELIVERABLE CASE ONLY. A MULTI-GROUP / MULTI-PIECE TO
+    DELIVERS ONE INSTANCE PER GROUP AND MUST DECLARE A GRAMMAR, NOT A PATH:**
+      <instance_path_grammar>{assignee_folder}/deliverables/PROOF_OF_SPEC_{phase}_{firm}_{group}_{YYYYMMDD}.json</instance_path_grammar>
+      <group id="..." status="NOT_YET_MINTED|MINTED|DELIVERED|HOLD_FOR_RULING" instance_path="..."/>
+    plus firm-tokened criterion ids `{firm}-{group}-{artifact}-{check}` declared BEFORE the first
+    mint (untokened ids collide across parallel firm lanes, and the cert step-zero reads ACROSS
+    instances). Adopted fabric-wide, CTO 2026-08-11 092331Z.
+    ⛔ **WHY THIS WARNING EXISTS: MDPF_49F_BUILD.P1 declared a single `instance_path` here and
+    three per-group instances landed under different names -- the declared path matched NONE of
+    them, so a completion flip acting on it would have read absence as work-not-done.** The
+    issuer believed that was their own defect; it was inherited from THIS TEMPLATE.
+    >> **BOTH corrections on this page came from one TO, in one hour, from one template. A
+    template defect is not one defect -- it is one per TO ever minted from it, and fixing the
+    copies while the source keeps minting is the single-homing failure: declare it ONCE, at the
+    convergence point.** <<
+    NOTE the issuance lint (`.tools/git-hooks/to-proof-of-spec-check.sh:29`) greps for the
+    PRESENCE of a `<proof_of_spec` element on NEW task-order files. It binds issuance PRESENCE,
+    never issuance CORRECTNESS -- it cannot resolve an `instance_path`, cannot check an id set,
+    and does not re-run on MODIFIED files. **Neither defect above was caught by any gate.**
 
     THE TWO-LAYER DIVISION (on the record 2026-08-11 082045Z): the validator catches the
     ASSIGNEE omitting against the TO's id list; CVO's cert-of-built step-zero catches the TO's

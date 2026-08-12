@@ -1,0 +1,39 @@
+{
+  "project_code": "OPAL_INVPHL",
+  "macro_code": "OPAL",
+  "name": "Investment Philosophy -- model-portfolio popup modal + Philosophy page (CMA rename + five-pillar strip)",
+  "description": "Andrew-direct portal frontend project (2026-08-11): (1) a two-pane model-portfolio modal on the /portfolios Benchmark heat map and /positioning stacked-bar model names -- prose from deck slides 17/19/21/23/25, performance block in the slide FORMAT with live portal values only; (2) rename /cma -> /philosophy (header + sidebar), add a five-pillar strip (deck slide 9) with talking-point modals (slides 10-12) above the unchanged Expectations/Views tabs. Grounded dev spec: docs/references/OPAL_INVPHL/primer.md (transcript cross-checked against the deck AND the live portal codebase at file:line). Modal primitive = catalyst/dialog.tsx, never hand-rolled overlays. AUM radial legend explicitly out of scope.",
+  "status": "active",
+  "phase": "REGISTERED, B-1 RULED (Andrew-direct 2026-08-11 ~1925Z: 'We dont need to use their selection of figures aside from target return, we can just source YTD 1Y and SI from our existing data') -- PURE FRONTEND: Target Return = per-model policy config (deck values as initial content); YTD/1Y/Since-Inception + yield/makeup from the EXISTING APIs; 3-Yr and 2025 calendar return DROPPED; no new API field, no backend leg. Build not yet staffed.",
+  "current_phase": "Staffing CARRIED at COO under a named condition (COO 192514Z): staffs when (a) header_metrics reaches BAR-CLEARED and the DS family shifts to grade-wait, or (b) a DT seat is available (better role-fit). First build acts: the two net-new click handlers + modal shell (Task 1), the route/label rename + pillar strip + Rule-25 citation amendment same-commit (Task 2, PRD acceptance 5).",
+  "blocking": "Yang/Manav editable pillar-text ask ONLY -- scope-first (no admin-editable-content precedent found; no CMS-shaped build without scoping + Andrew's word). B-1 RULED and closed; B-2 resolved-as-constraint (one alias mapping, modelPortfolioColors.ts:84-100).",
+  "depends_on": [],
+  "depends_on_note": "Frontend-only against existing APIs except the B-1 field addition, which lands under the canonical publisher law (platinum publisher emits, FE reads) and sequences with the gold-migration P4 publisher work rather than forking a side channel. The cma DATA artifact keeps its Rule-25 declared 1yr-TTL exception -- the rename moves the route/labels, not the data plane.",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-08-11",
+  "created_by": "1.0.0_SA_CTO",
+  "pods": [
+    "1.0",
+    "2.0",
+    "0.4"
+  ],
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_INVPHL_PRD.md",
+      "label": "PRD v1.0 -- the two tasks, the two build blockers (B-1 data gap at Andrew, B-2 naming resolved-as-constraint), execution rules, acceptance",
+      "date": "2026-08-11"
+    },
+    {
+      "path": "docs/references/OPAL_INVPHL/primer.md",
+      "label": "The grounded dev spec -- routes, file paths, components, line numbers, confirmed slide mapping",
+      "date": "2026-08-11"
+    },
+    {
+      "path": "docs/references/OPAL_INVPHL/reference_guide.md",
+      "label": "Slide-by-slide lookup of the confirmed deck references (17/19/21/23/25 modal; 9-14 philosophy)",
+      "date": "2026-08-11"
+    }
+  ],
+  "source_brief": "C:\\Users\\AndrewBerman\\Desktop\\fe_work\\ -- IWM Opal 20260416.pptx (45 slides, 17MB, referenced not committed) + Whisper transcript of Frontend work_3622.m4a (transcript.txt/.srt committed under docs/references/OPAL_INVPHL/).",
+  "verification_bar": "Both trigger surfaces open the modal keyed off CANONICAL model names via the EXISTING alias map (modelPortfolioColors.ts:84-100 -- a second mapping is prohibited); live values only for every performance field with a ruled source, placeholders labeled and then eliminated; /philosophy serves with no dead /cma route; Expectations/Views tabs byte-unchanged; comp-transform schema-check clean per touched component (Rule 20b); proof-of-spec instance per TO; portal worktree stays on DEV."
+}

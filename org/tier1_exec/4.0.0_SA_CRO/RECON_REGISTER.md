@@ -222,6 +222,53 @@ published rate limits · Orion's transaction-level flow classification `[UNOBSER
 remains our reference taxonomy) · **`[UNOBSERVED]` in the BD column is not absence** — the BD capture simply
 did not exercise risk-stats or after-tax screens, and BD is **not** scored as lacking them.
 
+### Downstream append — 2026-08-11, RECON-6 (`4.0.0_SA_CRO` base) — endpoint-inventory delta for goal 2b
+
+**Commission:** `ANDREW_DIRECT_20260811_COLLECTIVE_ATOMDECOMP_RECON_FOR_Q3Q4_GOALS.md` #6 — "Eclipse endpoint
+coverage + a 'every single endpoint (documented)' completeness check against RCN-0001+RCN-0002." First pass;
+bounded, read-only, no vendor credentials used throughout (public documentation pages only, same class as the
+original RCN-0002 engagement's "documentation was read as public pages, not egress").
+
+**Method note (in-band, not a silent choice):** confirmed `api.orioneclipse.com/doc/` reachable and live
+(V1 title, no `v2` link surfaced on the landing page itself), then attempted one plausible raw-spec path
+(`/doc/swagger.json`) to re-derive the full 493-path/56-tag census beyond RCN-0002's top-5-tag summary — it
+returned **401 Unauthorized**. **I deliberately did not continue guessing further candidate paths against the
+live vendor host** — one known-public page read is documentation-reading (RCN-0002's precedent); iterating
+undocumented paths against a vendor's production API starts to read as probing, which sits closer to the
+vendor-egress boundary (README §3) than this delta census needs to cross without a fresh per-use word. **This
+is a self-imposed stop, not a vendor-side finding** — the 401 on one guessed path says nothing about whether
+the actual spec URL used in RCN-0002 (never recorded verbatim — a preservation gap, noted below) is still live.
+
+**Findings:**
+1. **Eclipse doc portal CONFIRMED STILL LIVE, unauthenticated, 2026-08-11** (`api.orioneclipse.com/doc/`,
+   title "Orion Eclipse API V1") — the RCN-0002 basis has not gone dark.
+2. **Orion main/Connect API developer portal CONFIRMED STILL LOGIN-GATED** (`developers.orionadvisor.com`) —
+   RCN-0002's declared gap ("no public OpenAPI for the main API") re-verified, not stale, 20 days later.
+3. **BD/Advent has NO public API reference to reconcile RCN-0001's 229-endpoint HAR census against.** Public
+   material is marketing-only ("accessible developer platform," no endpoint list). One candidate third-party
+   source (`supergood.ai/docs/ss-c-advent-api`) fetched and **DISCARDED as evidence** — it explicitly
+   self-labels "an independent design exercise... nothing on this page describes an existing SS&C Advent
+   product," 6 hypothetical endpoints, not real. **Conclusion: RCN-0001's 229 remains the estate's only
+   denominator for BD; there is no independent total to complete the census against.** This closes half of the
+   "completeness check" ask with a real (negative) answer rather than leaving it silently open.
+
+**Still open (named, not absorbed):**
+- The exact URL/method RCN-0002 used to retrieve Eclipse's "live spec object" was **never recorded verbatim**
+  in the committed teardown or preserved scripts (`scripts/` has no Eclipse-specific fetcher) — a minor
+  provenance gap; closing it would let a future pass re-derive the full 493-path census without re-guessing.
+- **Eclipse's full 493-path / 56-tag breakdown remains at RCN-0002's original depth** (top-5 tags + 4 prefix
+  groups only, ~234-434 of 493 accounted for depending on which grouping) — not completed this pass.
+- **Eclipse v2**: still unconfirmed whether a retrievable spec exists; the `/doc/` landing page surfaced no
+  v2 link on read.
+- **Whether the original RCN-0002 Eclipse spec URL still resolves at all** is genuinely unknown — the one path
+  I tried was a guess, not a re-run of the original method.
+
+**Recommend, not ruled:** if a full Eclipse census is load-bearing for goal 2b's build (not just a nice-to-
+have denominator), the clean next step is Andrew's per-use word to re-open the standing session vendor-egress
+channel already granted for RCN-0002 (README §3 — availability is not authorization; this specific channel was
+granted once for this specific target, not standing forever) and log in to `/doc/` directly rather than
+continuing to guess unauthenticated raw-spec paths.
+
 ---
 
 ## RCN-0003 — arxiv.org CS-paper harvest surface teardown → NFRA_AKPIPE build spec

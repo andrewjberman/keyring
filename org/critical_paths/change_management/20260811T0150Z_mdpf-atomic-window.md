@@ -569,3 +569,124 @@ On an 08-11 read, a **4-day-old `as_of`** will look like a stale pipeline. **It 
   legacy entries stay until P5).
 - **AE's observation order stands unchanged** and is now more important, not less: **chain telemetry FIRST →
   select the governing table → then the lambda leg.**
+
+---
+
+## AMENDMENT 5 (092730Z) — ⚠ THE `ending_mv` ABSENCE MECHANISM IS SOURCE-CONFIRMED, AND IT **SELF-HEALS UPWARD ON ITS OWN**. PRE-REGISTERED SO NOBODY READS BENIGN DRIFT AS EITHER A DEFECT *OR* A FIX
+
+**Grounding (MSTR, Andrew-granted Orion egress, record `@dbddd3fe52` / `ENDING_MV_ORION_WHY_20260811.md`):**
+the billing extract's `Activity: Ending Market Value` is Orion `Activity.Value` over the pull's
+**ROLLING-3-YEAR window** — `orion_billing_dim.py:62 DEFAULT_WINDOW='3y'` @dbddd3fe52 — and Orion's
+Activity engine returns **EMPTY** for any account whose `accountStartDate` **postdates the window start**.
+**PERFECT SEPARATION, ZERO EXCEPTIONS:** all **312** absent-with-assets started **after 2023-08-11**; all
+**485** populated started **on/before 2023-08-04**. **PREDICTIVE CONTROL:** 22/27 in-window anniversary
+accounts flipped absent→populated within ±3d of exactly `start + 3y`. Nothing is wrong at Orion or at the
+accounts (probed: reconciled, in-balance, `currentValue` correct). This is a **mechanism**, source-confirmed
+with a vintage — the reserved word is earned here.
+
+### ⛔ THE ROW THAT MATTERS AT THE BAR: **FEE-EARNING AUA DRIFTS *UPWARD* WITH NO CODE CHANGE, NO DEPLOY, AND NO FIX**
+
+~27 accounts crossed their 3-year anniversary Apr–Aug. Each crossing moves an account from
+absent-coerced-to-`$0.00` into populated **by itself**.
+
+| Observation at 13:30Z | ⛔ WHAT IT IS **NOT** | ✅ THE CORRECT READ |
+|---|---|---|
+| fee-earning AUA **higher** than a prior read | **NOT evidence a fix landed.** Nothing has been fixed — both builder defects are still queued. | Anniversary self-heal. Expected, benign. |
+| fee-earning AUA **higher** | **NOT a defect or a jump to investigate.** | Expected, benign. |
+| accounts moving `$0.00` → populated | **NOT evidence the absence class is closing.** The class is **fully live**; individual accounts age *out* of it one at a time. | Per-account aging, not remediation. |
+| an account still at `$0.00` | **NOT a new failure.** | Its `accountStartDate` is simply < 3y old. |
+
+**THE DISCRIMINATOR, pre-registered:** an **anniversary flip is per-account and dated at `start + 3y`**. A
+**fix** would move accounts whose start dates sit **nowhere near** an anniversary. So before crediting any
+change to a remedy: **check the flipped accounts' start dates against `today − 3y`.** If they cluster there,
+nothing was fixed.
+
+> **WHY THIS EARNS A PRE-REGISTRATION ROW RATHER THAN A FOOTNOTE: a metric that improves on its own is the
+> single most seductive false confirmation available tonight** — it will move in the *same direction* a real
+> remedy would move it, on a bar day, while a remedy for that exact class sits queued. **A self-healing
+> defect manufactures evidence for whatever anyone happens to have just done.** This is Amendment 4's lesson
+> generalised: the observation does not carry its own frame, so the frame is written down *first*.
+
+### P1 DESIGN CONSEQUENCE — a NAMED DECISION, owner CTO + Andrew, **NOT** a builder's call
+The window choice is now an explicit design fork: **(a)** an **inception-anchored** window, or **(b)** read
+**Portfolio-domain `currentValue`** raw — the raw-from-endpoint (atom 8) answer, and the roster endpoint
+returns it for **all 3,169 accounts in one call**. **Plus** the already-routed absent-vs-zero nullable fix
+(Rule 17: coercing absence to `0.00` in *silver* is a `fillna`, so preserving absence is law, not preference).
+⛔ **A lane does not pick (a) or (b) mid-build.**
+
+### INSTRUMENT NOTE — **FOURTH capped-stream sighting today**
+`orion_endpoint_probe.py get` caps output at `:3000` (DS-lane fix). Same class as my own `| head -12`
+ABSENT read this session. **Four in one day is not four mistakes — it is a tooling default.** ⛔ **Never
+conclude ABSENT from a capped stream**, and print the cap beside any absence verdict.
+
+---
+
+## ✅ ADJUDICATION (2026-08-11T14:25Z) — THE BAR FIRED. VERDICT: **GUARDS WORKING.** And the two named gaps are **TWO CLASSES**, only one of which is cadence
+
+**The pre-registration did its job in the way that matters: the structure held while the observation moved.**
+AE brought the result **un-adjudicated on the SURPRISE CHANNEL** rather than forcing it into a branch — which
+is the table's own rule, exercised. The folded observation order (chain telemetry FIRST → select the table →
+then the lambda leg) is what made the divergence *legible* instead of confusing.
+
+### OBSERVED vs TABLE (iii)
+
+| limb | observation | verdict |
+|---|---|---|
+| **A7 leg** (what (iii) was written for) | `partners=2` · `reconciliation=PASS` on a **real non-zero write $1,786,341,788.10** · **NO roll line** · fresh computation | ✅ **(iii)-HEALTHY, exactly as pre-registered** |
+| **cycle shape** | `6/12 A4 objects built; errors=['inflection','global']` | ⚠ **DIVERGENCE** from (iii)'s 12/12-class signature |
+| inflection | `CROSS-AXIS COHERENCE GATE FAILED — REFUSING TO EMIT`; custody 440/442 axis dates, 2 NAMED gaps | ✅ correct refusal |
+| global fold | `SKIPPED: contributing leg(s) ['inflection'] failed` — *"an ineligible fold is recorded, never fabricated"* | ✅ correct |
+| serve | 08:42Z publish (14/14, manifest `20260811T084216Z-2be8c1a9`) stands | ✅ intact **BY CONSTRUCTION** |
+
+**So the divergence is at the CYCLE level, not the LEG level.** Branch (iii) held where it applied.
+
+**⚠ THE SERVE CLAIM'S CONFIDENCE LEVEL, recorded as AE stated it:** platinum was **NOT re-listed**, so
+"serve intact" rides the publisher's **refusal-emits-nothing MODEL**, not a read of the served plane. That is
+a model-grounded claim, not an observed one. **Do not upgrade it without the listing.**
+
+### ⛔ THE LOAD-BEARING CORRECTION — TWO GAPS, TWO CLASSES, ONE ERROR MESSAGE
+
+AE read both gaps as possible vendor cadence (*"the as_of row's cousin"*). **Resolved against the calendar
+rather than eyeballed:**
+
+| gap | day | elapsed | class |
+|---|---|---|---|
+| `2026-08-10` | **Monday** | 1 trading day | ✅ **plausibly VENDOR CADENCE** — may self-heal tomorrow, no action |
+| `2026-08-05` | **WEDNESDAY** | **4 TRADING DAYS** | ⛔ **NOT cadence. A REAL absent partition. Will NOT self-heal.** |
+
+> **WHY THIS IS THE WHOLE POINT OF THE ADJUDICATION: if both gaps are filed as cadence, tomorrow's cycle
+> refuses again with 08-05 still missing — then a third refusal, then a fourth. At that point the pressure
+> is not to fix Orion's 08-05 partition, it is to WIDEN THE COHERENCE GATE so the cycle goes green. THAT IS
+> GUARD REMOVAL**, and it is precisely the harm CLAUDE.md's first NEVER rule names: *a misread cadence
+> signal manufactures pressure to "fix" a pipeline that is working.*
+> **THE GATE IS CORRECT. THE DATA IS MISSING. Conflate those two facts and the gate gets edited.**
+
+**Disposition:** `08-10` → watch tomorrow, no action. **`08-05` → A FINDING, needs an owner today, does not
+self-heal.** Not chased pre-window (AE's call, correct).
+
+### THE THIRD CHAIN RUN — an unexplained extra run SURFACED a real defect
+
+`mdpf_daily_20260811_102045` (COMPLETE 10:23Z) processed the **SAME** 07:38:42Z sentinel event — same ETag
+`70060df4`, same sequencer. At-least-once redelivery or another manual replay; **the invoker is NOT
+distinguishable from the trigger log and is not treated as identified.** Its gate passed honestly
+(`49financial fact_rps` latest 2026-08-10, `trading_days_behind 1` = **healthy T-1**, the calendar law
+working). **What it DID: advanced the axis frontier to 442 dates — which is what exposed gaps the narrower
+08:42Z axis never required.** Mechanism INFERRED (log-grounded, not source-confirmed) and stays labelled;
+the finding it produced is real regardless of who fired the run.
+
+### AMENDMENT 5 STATUS
+The anniversary self-heal drift band did **not** fire this cycle (no `total.aua` movement attributable to it
+in the A7 leg — the write was a fresh computation, not a roll). **The band stays armed** and retires only
+when the raw-`currentValue` fix lands, per its own expiry clause.
+
+### ⛔ X-iii — PROCEEDING WAS CORRECT, AND FOR THE RIGHT REASON
+AE stated rather than asked: *"holding it on an unrelated scope's refusal would be a self-manufactured
+gate."* **That is the rule, not an exception.** Closed @a3e85d472b, 5 legs proven, `CodeSha256` **computed
+not eyeballed**, DryRun 204.
+⚠ **Process residue, AE self-surfaced:** their directory pathspec swept **~36 pre-existing uncommitted
+completion records** into the close commit — `safe-commit` commits the files you NAME, not the files you
+CHANGED, rc=0 either way. Those are likely the same records the ledger reports as **UNINDEXED**, so the
+sweep may have landed them in git — but **COMMITTING IS NOT INDEXING**, and the 21 RED alerts will keep
+firing every cycle until the index sees them.
+
+**THE WINDOW IS CLOSED. This ledger entry is discharged.**
