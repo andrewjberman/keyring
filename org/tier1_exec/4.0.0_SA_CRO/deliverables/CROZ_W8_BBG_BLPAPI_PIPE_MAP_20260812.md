@@ -20,11 +20,11 @@ separate, sized ask.
 
 | Increment | Covers | State |
 |---|---|---|
-| 1 | Ingress: services, request types, session-openers, transport | **LANDED** (this file) |
-| 2 | Served axis: BBG data -> artifact -> S3 -> pipeline -> portal surface | NOT STARTED |
+| 1 | Ingress: services, request types, session-openers, transport | **LANDED** @`52f215db0f` |
+| 2 | The request universe + the BBG-origin join over served surfaces | **LANDED** (§8-§10) |
 | 3 | Consumer/entitlement reconciliation + the sized-pull proposal (if any) | NOT STARTED |
 
-**If this session died, resume at increment 2.** Nothing below needs re-deriving.
+**If this session died, resume at increment 3.** Nothing below needs re-deriving.
 
 ---
 
@@ -204,3 +204,149 @@ where" can mean in increment 2.
 ---
 
 *Increment 1 ends here. Nothing in it required a Bloomberg call.*
+
+---
+
+# INCREMENT 2 — the request universe, and what it actually feeds
+
+## 8. WHAT THIS PIPE ASKS BLOOMBERG FOR — the whole request universe, from source
+
+Source-confirmed by direct read of `workflows/bloomberg/tplus1/src/market_indices_data_pull.ipynb`
+@`f09cbd13ef` (14 code cells; counts extracted from the notebook's own dicts).
+**No Bloomberg call was made to produce this section** — it is the *specification* of the pull,
+read off disk.
+
+**The whole daily pull is THREE `HistoricalDataRequest`s** (`tia.bbg.datamgr` ->
+`sids.get_historical(...)` -> `//blp/refdata`), plus a conditional fourth:
+
+| # | Frame | Ticker set | Fields | Window | Periodicity |
+|---|---|---|---|---|---|
+| 1 | `return_daily` | `dc_asset_return` (all 22 categories) | 2 | `date_end + YearEnd(-6)` -> `date_end` | DAILY |
+| 2 | `return_monthly` | `dc_asset_return` | 13 | **1989-12-31** -> `date_end` | MONTHLY |
+| 3 | `price_monthly` | `dc_asset_price` (macro set) | 1 (`PX_LAST`) | **1989-12-31** -> `date_end` | MONTHLY |
+| 3b | *conditional* | same as its parent | same | `date_end` -> `date_end` | DAILY |
+
+**Denominator of the ticker universe: 165 unique Bloomberg identifiers across 22 categories**
+(extracted from `dc_index` + `dc_macro` in cell 4; `dc_macro` carries ~93 macro entries feeding
+`dc_asset_price`). Instrument: regex over the notebook's own literal dicts — **blind to any ticker
+built dynamically at runtime**, and blind to the live OneDrive copy, which is the production source
+and may differ.
+
+**Field vocabulary, verbatim from the notebook:**
+`PX_LAST` · `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` · `BEST_PE_RATIO` · `PE_RATIO` ·
+`PX_TO_FREE_CASH_FLOW` · `EV_TO_T12M_SALES` · `PX_TO_BOOK_RATIO` · `PX_TO_SALES` (+ dividend yield)
+— 13 in the `all` set, 2 in `return`, 1 in `price`.
+
+> **REQUEST #3b IS THE MONTH-END HAZARD, AND IT IS IN THE PRODUCTION PATH.** When the monthly
+> frame's max date is not `date_end`, the notebook appends a **one-day DAILY snapshot onto a MONTHLY
+> frame**. Unguarded this duplicates the month-end row: `price_monthly` duplicates value-identical,
+> **`return_monthly` does NOT** — the appended row is NaN in valuation fields, so a naive `.last()`
+> dedup destroys data. Recorded here because it is a property of the *request shape*, not of the
+> downstream consumer, and every artifact in §10 inherits it.
+
+**Scale note for any future sizing conversation:** frames 2 and 3 request from **1989-12-31** —
+~36 years x monthly x 165 tickers x up to 13 fields. **This is what "large pulls will be flagged"
+is about.** The daily frame is deliberately bounded to ~6 years. Any verification pull proposed in
+increment 3 must be sized against this baseline, not against intuition.
+
+---
+
+## 9. THE IDEMPOTENCE PROPERTY THAT MAKES THE PULL CHEAP — and its one sharp edge
+
+`if os.path.exists(pkl_data): load it` (cell 7). **A re-run for a vintage already on disk makes
+ZERO Bloomberg calls.** This is the single most important operational fact for quota discipline.
+
+⛔ **The sharp edge, and it is a client-facing correctness issue, not a quota one:** `tzero` writes
+`data <today> v1.pkl`; tomorrow `tplus1` targets that same date and would **reuse today's tzero file
+rather than pull fresh**. Harmless if the tzero run captured a complete session; **silent corruption
+of a client-facing dashboard if it ran intraday and captured a partial one — and nothing downstream
+can distinguish them, because the filename is identical either way.** Guard in place: `tzero` appends
+each vintage to `output/.tzero_vintages.txt` and `tplus1` refuses to start on a collision unless
+given `--accept-tzero-vintage`. **Proceeding is possible; proceeding silently is not.**
+
+---
+
+## 10. THE JOIN — which served surfaces are Bloomberg-origin
+
+This is W8's actual contribution. The estate already carries a complete producer -> S3 ->
+CloudFront -> React lineage map (`docs/reference/yang-pipeline-lineage-map.md`, 17 portal artifacts
+at field grain, `INHERITED`). **It starts at `data.pkl` / `model.pkl`.** It does not answer the
+question Andrew asked, which is what the *Bloomberg pipe* serves. §8 supplies the missing upstream
+segment; this section joins the two.
+
+**Denominator: 17 yang portal artifacts** (the lineage map's own enumeration) + 27 TF-managed yang
+Lambdas, of which 14 are portal-data generators.
+
+| S3 key (`opal-data-portal-v2`) | BBG origin | Portal surface |
+|---|---|---|
+| `json/valuation/valuation_data.json` | **PURE** — `data.pkl -> price_monthly` | Valuation |
+| `json/correlations/correlation_data.json` | **PURE** — `data.pkl -> return_monthly` | Correlation |
+| `json/macro/macro_data.json` | **PURE** — `data.pkl -> price_monthly`, 84 macro series | Macroeconomics |
+| `json/macro/timeseries/{slug}.json` (79 files) | **PURE** — `data.pkl -> price_monthly` | Macroeconomics (modal) |
+| `json/macro/vix_data.json` | **PURE** | **NONE — orphaned export** |
+| `json/factor-tilts/tier{1,2,3}-*.json` | **DERIVED** — `model.pkl` FACTOR_SPREADS | FactorTilts (3 tabs) |
+| `json/benchmarks/etf_returns.json` | **DERIVED** — `model.pkl -> etf_returns` | ModelPortfolios |
+| `json/benchmarks/model_portfolio_benchmarks.json` | **MIXED** — `data.pkl -> return_daily` + SmartX sidecars | ModelPortfolios |
+| `json/benchmarks/benchmark_returns.json` (LEGACY) | **MIXED** — same producer | BenchmarkHeatmap |
+| `json/benchmarks/model_portfolio_timeseries.json` | **MIXED** — `return_daily` + `price_monthly` + SmartX | ReturnVolatilityScatter |
+| `json/positioning/positioning_data.json` | **MIXED** — `model.pkl` + `data.pkl` + BD `aum-metrics.json` | Positioning, Attribution |
+| `json/valuation/risk_premium_data.json` | **MIXED** — `data.pkl` ERP + **FRED** OAS CSVs | Valuation / RiskPremium |
+| `json/capital-markets/assumptions.json` | **NONE** — CMA Excel | CMA |
+| `json/capital-markets/views.json` | **NONE** — SAA Excel | CMA |
+| `json/peers/peer_performance.json` | **NONE** — peer Excel | ModelPortfolios |
+| `json/positioning/holdings_attribution_data.json` | **NONE** — attribution Excel + DynamoDB | Positioning, Attribution |
+| `json/positioning/allocation_summary.json` | **NONE** — reads the attribution artifact | Attribution |
+
+### 10a. The operational answer: what goes dark if this pipe dies
+
+**12 of 17 served artifacts carry Bloomberg origin; 5 do not.** Stated as blast radius:
+
+| Portal page | Exposure if the blpapi pipe stops |
+|---|---|
+| **Valuation** | **FULL** — both artifacts BBG (one partially FRED-backed) |
+| **Correlation** | **FULL** — single BBG artifact |
+| **Macroeconomics** | **HIGH** — macro + 79 timeseries are BBG; the Volatility tab is **NOT** (market-overview pipeline) |
+| **FactorTilts** | **FULL** — all three tiers off `model.pkl` |
+| **ModelPortfolios** | **PARTIAL** — benchmarks + ETF returns BBG; peer performance is Excel and survives |
+| **Positioning / Attribution** | **LOW** — dominated by Excel + DynamoDB; only `positioning_data` is mixed |
+| **CMA** | **NONE** — Excel end to end |
+
+> **THE FAILURE IS SILENT, AND THAT IS THE FINDING.** The pull is idempotent by filename, the
+> pipeline consumes `uploads/` on success, and the served artifact carries `data_as_of`. A dead
+> Terminal produces **no new PKL**, so the pipeline never fires and **the portal keeps serving
+> yesterday's artifact with yesterday's `data_as_of`** — correct-looking, internally consistent, and
+> stale. This is exactly the 2026-08-11 shape: 12.5h dead, found only because a human asked.
+> **Per CLAUDE.md NEVER#1 this is also where a reader must not over-correct**: an unmoved
+> `data_as_of` across a weekend is a HEALTHY T-1 pipeline, not an outage. The discriminator is the
+> trading-day frontier, never wall-clock age.
+
+### 10b. Two structural observations for CTO~Z
+
+1. **One producer, two homes.** The repo carries `workflows/bloomberg/{tplus1,tzero}/src/` while the
+   *production* notebooks live in OneDrive. The README asserts they differ in exactly two ways —
+   **that is a claim in prose, not a measurement.** This is CLAUDE.md Rule 22a's two-homes shape:
+   a filename-resolved comparison reads CLEAN where two copies have silently diverged. I am **not**
+   proposing a reconciliation act; I am recording that the map's upstream segment rests on an
+   unverified equivalence.
+2. **`json/macro/vix_data.json` is produced every run and consumed by nothing** (proxy fn exported,
+   no component imports it). Pure BBG-origin work with no served destination. Recorded as a
+   surprise-channel line item, not chased.
+
+---
+
+## 11. INCREMENT 2 COVERAGE STATEMENT
+
+| Axis | Enumerated | Of | Instrument | Confidence |
+|---|---|---|---|---|
+| daily-pull requests | 3 (+1 conditional) | 3 | notebook source read, today | high |
+| ticker universe | 165 unique | 165 literal | regex over notebook dicts | high for literals; **blind to runtime-built tickers** |
+| request categories | 22 | 22 | same | high |
+| served yang artifacts | 17 | 17 | lineage map, `INHERITED` | high, **vintage not re-verified** |
+| BBG-origin classification | 17 of 17 classified | 17 | join of §8 onto the lineage map | **medium-high — a DERIVED read** |
+
+> **THE HONEST LIMIT ON §10:** the BBG-origin column is a **join of two documents**, not a live
+> trace. It inherits the lineage map's vintage and my reading of the notebook's frames. It is strong
+> enough to prioritise and to reason about blast radius; **it is not a certification**, and no
+> deletion, retirement, or "unused" call should rest on it without a live check.
+
+*Increment 2 ends here. Still zero Bloomberg calls made.*
