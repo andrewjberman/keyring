@@ -19,6 +19,19 @@ THE THREE THINGS IT ENCODES
 3. A STATE SPACE WIDER THAN DRIFT/CLEAN (Rule 24 -- get the states right before the
    control; a two-value census forces a confident wrong answer on a third state).
 
+4. THE INPUT IS DECLARED, NEVER ASSUMED (AE 152512Z -- a defect in v1 of this file, fixed
+   here). A correct state machine on an UNDEFINED INPUT classifies confidently and wrongly.
+   "Deployed" is unambiguous for a LAMBDA (package bytes ARE executing bytes) and AMBIGUOUS
+   for EC2: per Rule 22a as amended, STAGED code is DESIRED and EXECUTING code is APPLIED,
+   and a first-boot-only S3 pull lets a staged object sit inert while the box runs a baked
+   copy. So `origin` is a REQUIRED argument and `ec2-staged` returns UNMEASURED rather than
+   a verdict -- every state below would otherwise be equally wrong, and confidently.
+   Adjacent rule, same idea one level up: resolve the deployed side through the BUILD INPUT
+   (source-map entry / package manifest), NEVER by filename -- the repo can hold more than
+   one copy of a name.
+   *This gap was my own: v1 took a bare `<deployed_file>` and let the caller's assumption in.
+   It is the §6 failure -- a label ("deployed") carrying a claim its content does not make.*
+
 DECLARED BLIND SPOT (AE): the hold marker lives in the REPO and is absent from the
 DEPLOYED copy, so the declaration travels WITH THE SOURCE and a census can read it. The
 REVERSE -- a marker present only in the deployed artifact -- is INVISIBLE to this check.
@@ -38,6 +51,16 @@ DELIBERATELY_HELD = "DELIBERATELY-HELD"    # residual is only repo-only hold-dec
 DRIFT = "DRIFT"                            # real content divergence
 LINE_ENDING_DEFECT = "LINE-ENDING-DEFECT"  # .sh with CRLF -- functional, not cosmetic
 ABSENT = "ABSENT"                          # no deployed counterpart (never-deployed / not-in-change)
+UNMEASURED = "UNMEASURED"                  # the deployed side is DESIRED, not APPLIED -- no verdict is possible
+
+# What the "deployed side" actually IS. Required: an undeclared input is how a correct
+# classifier returns a confident wrong answer (Rule 22a desired-vs-applied).
+ORIGINS = {
+    "lambda-package": True,    # package bytes ARE executing bytes -- comparable
+    "s3-code-object": True,    # the deploy target IS the read target for this pipeline
+    "ec2-executing": True,     # read off the box (SSM / on-disk) -- APPLIED
+    "ec2-staged": False,       # S3-staged for a first-boot-only pull -- DESIRED, NOT APPLIED
+}
 
 _HOLD_RE = re.compile(r"\b(HELD|HOLD|DEPLOY-SERVE-HELD|DO NOT DEPLOY|PENDING)\b", re.I)
 
@@ -85,10 +108,22 @@ def classify(deployed: bytes | None, repo: bytes, name: str) -> tuple:
 
 
 def main() -> int:
-    if len(sys.argv) != 3:
-        print("usage: ref_deployed_vs_repo_compare.py <deployed_file> <repo_file>")
+    if len(sys.argv) != 4:
+        print("usage: ref_deployed_vs_repo_compare.py <deployed_file> <repo_file> <origin>")
+        print(f"  origin (REQUIRED, never assumed): {' | '.join(sorted(ORIGINS))}")
         return 2
-    dep_p, repo_p = Path(sys.argv[1]), Path(sys.argv[2])
+    dep_p, repo_p, origin = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+    if origin not in ORIGINS:
+        print(f"REFUSED: unknown origin {origin!r}. An undeclared input is how a correct "
+              f"classifier returns a confident wrong answer. Declare one of: "
+              f"{' | '.join(sorted(ORIGINS))}")
+        return 2
+    if not ORIGINS[origin]:
+        print(f"{repo_p.name}: {UNMEASURED}\n  origin={origin} is DESIRED, not APPLIED "
+              f"(Rule 22a): an S3-staged object with a first-boot-only pull can sit inert while "
+              f"the box runs a baked copy. Read the EXECUTING copy (SSM / on-disk) or leave this "
+              f"UNMEASURED -- every verdict computed here would be equally wrong, and confidently.")
+        return 1
     deployed = dep_p.read_bytes() if dep_p.exists() else None
     repo = repo_p.read_bytes()
     state, detail = classify(deployed, repo, repo_p.name)
