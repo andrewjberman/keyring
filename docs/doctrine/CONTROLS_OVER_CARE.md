@@ -193,10 +193,10 @@ were arguing against.**
 
 - **A claim that an instrument is WEAK reads as rigour; that it is SOUND reads as complacency** — so
   fabricated defects in your own tooling are the least-audited claims you can make.
-- **Before reporting that a tool failed to signal something, re-run it with NOTHING between you and
-  its output.** *"The instrument was silent"* requires that you were positioned to hear it; a pipe,
-  a `tail`, a `2>/dev/null` or a swallowed rc means you were not — **and a discarded rc does not
-  merely mislead you, it MANUFACTURES a finding about the instrument whose signal you deleted.**
+- **A broken retrieval does not merely mislead you — it MANUFACTURES A FINDING ABOUT THE INSTRUMENT
+  whose signal it deleted**, and that finding then travels in the least-audited direction above. (The
+  retrieval mechanism itself is §4; only this consequence is new.) **So before reporting that a tool
+  failed to signal something, re-run it with nothing between you and its output.**
 - **Discharge:** *which direction does this point, and would anyone here be motivated to check it?*
   If the answer is no, **you are the only control**, so exercise it before it is repeated.
 
