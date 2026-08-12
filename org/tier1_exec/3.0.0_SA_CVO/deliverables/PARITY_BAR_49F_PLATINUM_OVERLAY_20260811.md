@@ -307,6 +307,16 @@ instrument is strongest exactly when the failure is total.
 UNCHANGED is exactly what a stranded re-point looks like -- so on a cutover-window grade, an unchanged
 vintage is a QUESTION, never a pass, and it resolves on the trading-day frontier + the write/read pair
 above, never on wall-clock age alone.**
+4. **THE MIRROR LEG -- verify the place it should NOT have gone DID NOT MOVE (credit 0.4.0_DS_ClientPlatform,
+   P3 @aa72ab5bc5, and it is stronger than the corollary above).** My corollary watches the NEW root; a
+   silently-failed re-point writes to the OLD one and ADVANCES it. So the discharge is a PAIR: new-root key
+   present AND **old-root key UNTOUCHED at its pre-cutover timestamp** (their measured leg: 2026-08-11T18:43:30Z).
+   **Presence at the new root alone can never discriminate a landed re-point from a stranded one -- only the
+   counterpart can.** Same shape as the dormant-vs-migrated prefix and the quiet-vs-deaf watcher: presence
+   never separates them.
+5. **ETag-IDENTITY where a COPY precedes the re-point (their second leg):** a fresh ETag computation
+   reproducing the copied bytes EXACTLY proves the move changed **WHERE and not WHAT** -- a strictly
+   stronger claim than "the values parse" or even "the values match," and cheap when a copy step exists.
 
 ## KILL-CONDITION DISCHARGE (what I will validate, verbatim to Andrew's words)
 
