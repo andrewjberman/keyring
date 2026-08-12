@@ -1,6 +1,6 @@
 ---
 name: integrate
-description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. Use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
+description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. RUNS AT MSTR LAUNCH as the joint fabric parity assessment, replacing the old blind `/git-pull once` step (Andrew-direct 2026-08-12) -- and it ABSORBS that pull as Step 1b rather than dropping it, since a parity assessment off a stale local ref is wrong the same way a shallow clone is wrong. TWO MODES: bare `/integrate` is ASSESS-ONLY (the default -- measures and reports, merges nothing, pushes nothing), and `/integrate merge` is assess-and-proceed (the full reconcile incl. merge + push). Also use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
 ---
 
 # /integrate — the cross-fabric reconcile (CLOUD <-> SITEZ)
@@ -52,6 +52,41 @@ your divergence, and neither of you can see it from your own box.
 > This step is first because the failure is silent and confident: rc=1 from `merge-base` looks
 > exactly like "unrelated histories," and the counts look exactly like a real divergence.
 
+## Step 1b — ⛔ IS YOUR OWN BRANCH REF CURRENT? (the same failure, one layer over)
+
+```bash
+git fetch origin
+B=$(git rev-parse --abbrev-ref HEAD)
+echo "$B: behind $(git rev-list --count HEAD..origin/$B), ahead $(git rev-list --count origin/$B..HEAD)"
+git merge --ff-only origin/$B      # fast-forward ONLY; never a rebase, never a messy auto-merge
+```
+
+**A PARITY ASSESSMENT COMPUTED FROM A STALE LOCAL REF IS WRONG THE SAME WAY A SHALLOW CLONE IS
+WRONG** — both produce confident, well-formed divergence numbers off an incomplete graph. Step 1
+closes that for *history depth*; this closes it for *branch currency*. Do both in one breath.
+
+**This is where the old `/git-pull once` launch step LIVES NOW — it is not replaced, it is
+ABSORBED**, as the act that makes the assessment trustworthy. That framing is load-bearing: an
+integrator who skips it does not "miss a nicety," they get **wrong numbers**, which is the only
+kind of enforcement that holds.
+
+> **SEVERITY IS ASYMMETRIC BY DEVICE — the step is identical, what it BUYS is not** (Andrew-direct
+> intent, 2026-07-30). On a **NON-PRIMARY device (site Z / any `~Z` seat) this is THE SYNC
+> GUARANTEE and a failed or skipped one is a REAL FINDING** — that machine is downstream of a tree
+> that commits and pushes continuously, so a stale HEAD there silently poisons every evidence read.
+> **FAIL LOUD there.** On the **PRIMARY laptop** it is incidental hygiene ("we are effectively
+> source"), so a deferral past live uncommitted seat-work is consistent with intent — **WARN, do
+> not fail.** ⚠ **A laptop pull-deferral is NOT precedent for a site-Z one.**
+
+**WHY THIS STEP EXISTS AT ALL — a measured instance, site Z, 2026-08-12 ~1320Z.** `/git-pull once`
+ran per the launcher and printed `596254785b..91e1854258  CLOUD -> origin/CLOUD` **on screen**. The
+seat then ff'd its own branch, saw 0 behind, and moved on — **never looking at CLOUD.** The other
+fabric had advanced ~34 hours and the startup was *structurally incapable* of noticing, because the
+act performed was **same-branch currency** and the question that mattered was **cross-branch
+parity**. The information was on the screen and the procedure had no slot for it. That session then
+spent four hours discovering the divergence by hand. **This is Andrew's "not just blindly running
+git pull," and it is not hypothetical.**
+
 ## Step 2 — Measure the divergence and, above all, THE OVERLAP SET
 
 ```bash
@@ -91,6 +126,33 @@ rc=0 clean, rc=1 conflicts. Output lists conflicted paths, then the auto-merge/C
 **Why not a trial `git merge`:** the working tree usually holds live lane state (on the first run:
 17 modified tracked files, 125 untracked). `merge-tree` is a pure computation — it cannot strand
 you mid-merge, and it needs no `--abort`.
+
+### ⛔ FIRST, FOR EVERY CONFLICTED FILE: GET THE PER-SIDE HUNK RANGES. DO NOT READ THE CONFLICT HUNK.
+
+```bash
+git diff --unified=0 $BASE origin/CLOUD -- <file> | grep '^@@'   # BASE-side ranges, CLOUD
+git diff --unified=0 $BASE origin/SITEZ -- <file> | grep '^@@'   # BASE-side ranges, SITEZ
+```
+| the two BASE-side range sets are… | verdict |
+|---|---|
+| **disjoint** | **MECHANICAL UNION.** Both sides edited different rows; git conflicted on ADJACENCY alone. No law owner, no adjudication. |
+| **overlapping** | read the content, *then* classify with the table below |
+
+**A CONFLICT HUNK SHOWS THE WHOLE CONTESTED REGION FROM BOTH SIDES, INCLUDING LINES NEITHER SIDE
+TOUCHED.** So it answers *"what region is contested"* — it **never** answers *"which rows did each
+side change."* Those are different questions and the hunk is well-formed output to the wrong one.
+
+**This is a DESIGNED-domain mismatch, not carelessness: no amount of reading the hunk more
+carefully fixes it** (Rules 22/22a class — the remedy is knowing the instrument's domain and
+corroborating outside it, never a closer read). **And it does not fail loudly — it produces a
+plausible escalation to a law owner who is not needed, which on a quiet fabric is an unbounded
+delay.**
+
+*Measured 2026-08-12, and recorded as `0.0.0_AB_MSTR~Z`'s catch against its own analysis: rules 22
+and 22a appeared on both sides of the `=======` in CLAUDE.md, read as "both fabrics edited rules
+22/22a," and a law-owner hold was raised on it. The `--unified=0` ranges were CLOUD {27,40,49,+58}
+vs SITEZ {48,77} — **zero shared rows.** The whole conflict was 48 sitting next to 49. Hold
+withdrawn; the file took a mechanical union.*
 
 **Classify each conflict before resolving:**
 - **CONTENT on a shared-law file** (CLAUDE.md, doctrine, protocols) — usually **both sides ADDED
@@ -160,9 +222,25 @@ The peer verifies against the remote, never against your report.
 
 | form | behavior |
 |---|---|
-| `/integrate` | full protocol, Steps 0-7, coordinated with the peer MSTR |
-| `/integrate status` | Steps 1-3 only: clone check, divergence, overlap set, conflict dry-run. Changes nothing, sends nothing. The read to run before deciding whether a reconcile is even worth it |
-| `/integrate execute` | Steps 5-6 only — **only after a peer-agreed resolution exists.** Never the first call |
+| **`/integrate`** | **ASSESSMENT — THE DEFAULT.** Steps 0→4: clone check, **local-ref currency (1b)**, divergence, overlap set, conflict dry-run + per-file classification, report. **Merges nothing, pushes nothing, resolves nothing.** May send the peer its findings. |
+| **`/integrate merge`** | **ASSESS AND PROCEED.** The full protocol, Steps 0→7 — everything the assessment does, then the peer-agreed resolution, the merge, the push, and remote verification. |
+| `/integrate status` | Alias of the default assessment, minus the peer send. Changes nothing, sends nothing. |
+| `/integrate execute` | Steps 5-6 only — **only after a peer-agreed resolution already exists.** Never the first call. |
+
+> **ANDREW-DIRECT, 2026-08-12, laptop terminal, VERBATIM:** *"something I want to bring in to the
+> mstr launch script is not just blindly running git pull, its better to run /integrate as a joint
+> fabric parity assessment and this parity can either be just an assessment (default), or it can be
+> /integrate merge, which is assess and proceed the merge."*
+>
+> ⚠ **THIS INVERTED THE PRIOR DEFAULT.** Bare `/integrate` used to run Steps 0-7 **including the
+> merge and the push**; it is now **assess-only**, and the merge requires the explicit `merge`
+> argument. An agent working from a cached memory of the old default will expect a reconcile to
+> have happened when only a report was produced — **the assessment says so explicitly in its own
+> closing line, so the state is never inferred.**
+>
+> **ASSESS-AS-DEFAULT IS THE SAFE DIRECTION FOR A LAUNCH STEP:** a startup that silently merged two
+> fabrics would be a shared-branch write nobody asked for, on a device that may have just woken with
+> stale context. Reading is always safe to do at load; writing is not.
 
 ## Discipline notes
 
