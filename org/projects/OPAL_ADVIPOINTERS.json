@@ -1,0 +1,66 @@
+{
+  "project_code": "OPAL_ADVIPOINTERS",
+  "macro_code": "OPAL",
+  "name": "ADVI/MDPF canonical repointing -- one traceable path from vendor bytes to the portal, single-homed producers, legacy routes decommissioned last",
+  "description": "Andrew-direct program (2026-08-11 oversight mandate @3c8418e34b, memorialized as a project 2026-08-12) to migrate Advisor Intelligence and Model Portfolios data for all three firms (49 Financial, Inflection, Cottonwood) onto ONE canonical path: raw vendor bytes to opal-data-assets/{vendor}/{firm}/bronze untouched -> event-triggered silver parquet -> a per-firm gold runner writing PARQUET to the colocated product root opal-data-assets/portal/gold/{product}/{scope}/{table}/date={D}/ -> ONE publisher per served key writing opal-data-portal-v2/platinum/{product}/{scope} -> the portal reads platinum. The governing invariant is ONE PRODUCER AND ONE BASIS PER QUANTITY. Executed in a fixed five-phase order Andrew ruled @4dbf4a0d7c: P1 SCRIPTS -> P2 TIMING -> P3 REPOINTS -> P4 PUBLISHERS -> P5 DECOMMISSION, where P5 is gated on the portal being verified taking data in correctly AND displaying it. The program exists because every individual defect was locally repairable and locally invisible while sharing one root -- no single-homed definition of what produces what: one puller with FIVE code homes, one S3 key written daily by TWO independently scheduled producers, a gold artifact whose input lived in a session scratchpad, a served field whose name asserted a property its computation did not carry, and instruments that reported confidently and wrongly on all of it.",
+  "status": "active",
+  "phase": "P1 SCRIPTS substantially COMPLETE (13 proof-of-spec instances, all independently verified) · P2 TIMING spec RATIFIED @9b5896793f, phase not open · P3 REPOINTS COMPLETE for 49F (@e99231aeda, copy 4,206/4,206 two-sided) · P4 PUBLISHERS is the LIVE phase under Andrew's ~1425Z 'proceed with the cutover' · P5 DECOMMISSION methodology RATIFIED @db365bb06c, gate not open.",
+  "current_phase": "P4 PUBLISHERS on the 49F leg: DS~B's population fix (the 35-advisor exposure caught pre-ship), per-key never-widen determinations against the two-phase pin, and the atomic substitution of the legacy D_04 step-8 pass-through. In parallel: closing P1 (remaining D-fleet families + the P1-native 525-partition backfill awaiting Andrew's priced fill-word + the CVO parity sweep), and resolving the two open investigations that gate correctness (writer-B on bronze/assets, and the five-home puller consolidation via build-time vendoring).",
+  "blocking": "ANDREW (5, none engineering-blocked): (1) the COTTONWOOD FOUR-ROW BUNDLE -- aua basis / mix basis (~$24.5M alternatives) / tax-deferred mapping ($116.3M served as taxable) / client_count definition (223 v 222), fully characterized as ONE sitting, gates cot's serve-flip; (2) the INF morning-floor tradeoff -- unified floor with a labeled carry (CTO+CVO recommended) vs a forked later ADVI floor; (3) the backfill fill-word, arriving as a priced card once the 20-date timing sample lands; (4) GRAPHFEED -- leave parked (recommended) or stand up the never-launched schedules; (5) serve-scope residuals behind the ruled 49F Schwab-canonical authority @745ca6d78f, non-blocking.",
+  "depends_on": [
+    "ADVI_PERFORMANCE",
+    "OPAL_CONSOLIDATION",
+    "OPAL_ASSETS"
+  ],
+  "depends_on_note": "Consumes ADVI_PERFORMANCE's three-firm field audit and OPAL_CONSOLIDATION's serving law; executes the OPAL_ASSETS medallion grammar (CLAUDE.md 17a/17b) on the ADVI/MDPF estate specifically. Does not supersede ADVI_PERFORMANCE -- that project owns the performance/TWR field contract; this one owns the ROUTES, the SCHEDULES, the PUBLISHERS and the decommission.",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-08-12",
+  "created_by": "1.0.0_SA_CTO",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "4.0",
+    "0.4",
+    "0.7"
+  ],
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_ADVIPOINTERS_PRD.md",
+      "label": "PRD v1.0 -- exec summary (why + goal), the ratified foundation, current state by phase with commit codes, the law/instruments landed, the ordered next steps, and the open decisions at Andrew",
+      "date": "2026-08-12"
+    },
+    {
+      "path": "docs/architecture/GOLD_MIGRATION_PHASE_FRAMEWORK.md",
+      "label": "The governing five-phase framework -- per-phase mechanical close criteria + the live-state ledger (@11908b1835)",
+      "date": "2026-08-11"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_ADVI_UNIFIED_CANONICAL_PATTERN_SPEC_20260811.md",
+      "label": "The governing pattern spec v1.0 -- 9 structural atoms + the ratified exception set (@d272021791)",
+      "date": "2026-08-11"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SSOT_RECON_MATRIX_20260811.md",
+      "label": "The adversarial SSOT reconciliation tracker -- 6 pattern legs x 4 pipeline/product cells, believed-vs-actual",
+      "date": "2026-08-11"
+    },
+    {
+      "path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/P5_DEBT_IDENTIFICATION_METHODOLOGY_SPEC_20260811.md",
+      "label": "The ratified P5 debt-identification methodology -- the instrument P5 picks up when its gate opens (@db365bb06c)",
+      "date": "2026-08-11"
+    }
+  ],
+  "source_brief": "Andrew-direct oversight mandate at the CTO terminal 2026-08-11 ~0535Z (record @3c8418e34b), extended by the order-of-operations ruling ~0810Z (@4dbf4a0d7c) and the gold-as-parquet + three-coverage-requirements ruling ~0757Z (@a9c159f134). Memorialized as a registered project on Andrew's 2026-08-12 instruction.",
+  "pipeline": "opal-data-assets/{vendor}/{firm}/bronze (raw, untouched) -> silver-completeness event trigger -> silver parquet -> per-firm gold runner -> opal-data-assets/portal/gold/{product}/{scope}/{table}/date={D}/ (PARQUET) -> ONE publisher per served key (the estate's only JSON producer) -> opal-data-portal-v2/platinum/{product}/{scope} -> portal. Every producer keeps a SCHEDULE FLOOR; event triggers are accelerators, never the only trigger.",
+  "verification_bar": "No served surface regresses. Every moved key carries a per-key never-widen determination AND a two-phase pin (pre-flip expects the MEASURED delta; post-flip re-bases to ~0 as an explicit recorded act; stale-pin-fails-loud). Every build TO carries a schema-valid PROOF_OF_SPEC instance. Parity is graded on the three-state bar (MATCH-CLEAN / MATCH-KNOWN-WRONG / DIVERGE-vs-pre-registered-bands) and parity against a known-defective baseline is explicitly NOT correctness. A runner family is PRODUCTION only when all four criteria hold: every dim from a scheduled producer with no session-local input in the chain, one producer per key, canonical grammar on the canonical plane, and a declared consumer reading the serving path. P5 tears down nothing until the portal is verified taking data in correctly AND displaying it.",
+  "key_commits": {
+    "foundation": "3c8418e34b (mandate) · d272021791 (pattern spec RATIFIED) · 6e180df78e (shape-transposition) · a9c159f134 (gold-as-parquet + 3 requirements) · 4dbf4a0d7c (five-phase order) · 60834da37b (one producer + one basis) · 727c2df067 (mdpf lambda survives) · 11908b1835 (framework formalized)",
+    "specs": "39c15008d9 (A) · 70c5567b1b (B) · 78feb7787c (C) · c64182de22 (D) · a72e2e5ea9 (W + set close) · 7938060f90 (INF) · 0bae2b0641 (COT) · 93f56e0417 (GIPS feasibility) · 93d12a82f2 (A_07 dim) · 23f23ea039 (A_07 alias delta) · 4e1ec757f8 + 9b5896793f (P2 spec + ratification conditions)",
+    "p1_build": "17c8faa9f5 · 827916bf56 · 5e4e196c8a · b804faca02 · 2ca0f71445 (COT D fleet) · d76402f87e + c998ff19db + b52614bbda + 0c5ff7caf5 (A_07 chain) · bd2a8f854a + 6d95fc8691 + 7a14afac96 + 532cba7dca + 70a4d4421a (classifier heal) · 0205eef992 (swallow FATAL) · c127712198 + 753aeef4f0 (dim_relationship two-writers, FILED)",
+    "p3_repoints": "08714aef32 (ledger open) · 288653999f (prep, 1+10 surface) · aa72ab5bc5 (applied) · e99231aeda (COMPLETE + closed) · 4c1219fc34 (scope hole) · b6e5cf9c2f + 5f64b97c44 (IAM leg) · 67b9fe8966 (Andrew authorization)",
+    "p4_publishers": "bec5b12387 + 889ccea071 (CPR-4 delta-cert) · 097f8c1691 (parity bar SS8) · 8b4e8d9100 (port-fidelity doctrine) · 6d9d350b58 + a326ed2ad3 + 3fcd979395 + 986c3b4757 (B_00 basis prereg/hold/correction/fee-heal PASS)",
+    "law_and_gates": "546e7cb0b5 + 9d8217cb15 (Rule 25) · 7ed7b4600b (22a CODE layer + Rule 4) · 1465c9383b (22a EC2 amendment) · 82daaa05bc + 88113704bf (Rule 16 + jq-ban + GATE 5) · 76ee261895 + d9a9ce7b80 + d943f3e4bf + 0ebc62d543 + da318438ee (proof-of-spec + stage-8 lint) · eb5a199a99 + 16b6fde1f1 (gate register + VOID-terminal) · 28c364ec55 + a6b8b1dbda (deploy_ledger reader) · 9f234a4974 (bd/cot key-prefix gate) · eabab5363e (SYSTEM_CURRENT_REGEN lane) · 826bc9b2c9 (non-crying-wolf comparator)",
+    "doctrine": "a26ecbfd7b (the SIXTH way -- the LABEL supplied a claim the CONTENT never made) · db365bb06c (P5 debt-identification methodology)"
+  }
+}
