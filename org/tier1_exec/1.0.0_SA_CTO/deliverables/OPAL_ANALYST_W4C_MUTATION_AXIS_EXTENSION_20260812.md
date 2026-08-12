@@ -37,12 +37,21 @@ config-read, per Rule 22a):
 |---|---|---|
 | `write_target` | the resource actually written — table / bucket+prefix / key / external system | `serving_state` describes a thing SERVED; this describes a thing CHANGED |
 | `invocation_surface` | every call site that can trigger it, with its UI path | the inverse of `consumer_set`: who CALLS, not who reads |
-| `authority_gate` | the authorization required, **at the call site AND enforced server-side, stated separately** | **no analogue exists — this is the field whose absence is the whole defect** |
+| `authority_gate_client` | the guard at the call site — route guard, hidden control, disabled state | — |
+| `authority_gate_server` | the check **enforced server-side**: the only half that is actually an authority gate | **no analogue exists — this is the field whose absence is the whole defect** |
 | `effect_scope` | blast radius: `SINGLE-RECORD` / `PER-USER` / `TENANT-WIDE` / `ESTATE-WIDE` | an artifact has no blast radius; a write does |
 
-⚠ **`authority_gate` IS TWO MEASUREMENTS AND A SINGLE VALUE IS A DEFECT.** A client-side guard and a
-server-side check are different claims; recording one is the config-read-for-a-behaviour-claim class
-(22a). **A UI that hides a button is not an authority gate.**
+⚠ **TWO FIELDS, NOT ONE FIELD PLUS A CONVENTION — AMENDED on `0.1.0_DE_MarketIntelligence~Z`'s
+objection, which turned my own §2 argument against me.** The first draft said *"`authority_gate` is
+two measurements and a single value is a defect."* **That is prose, and it is EXACTLY K3's failure
+shape** — the constraint W4a's author wrote and then under-implemented, where **all four cells passed
+while violating it, because a one-limb cell is fully populated and the hole census therefore reported
+ZERO holes.** A single `authority_gate` carrying only the client guard would be **populated, MEASURED,
+schema-valid and invisible** — with the missing half being the only half that *is* an authority gate.
+**Split, an unmeasured server-side check becomes a STRUCTURALLY EMPTY CELL THE HOLE CENSUS SEES.**
+*Structure over convention: the same argument that chose a kind discriminator over a documented rule
+in §2, applied one level down. I made it there and not here.* **A UI that hides a button is not an
+authority gate.**
 
 **PLANE B — RATIFIED SEMANTIC** (CVO~Z under the 2026-08-11 delegation): `canonical_name`,
 `business_meaning`, `disposition`, `notes` carry over unchanged, plus:
@@ -67,13 +76,35 @@ CONCEALING.**
    claim; a route guard in source is a config read. **Cite the exercise or mark it UNMEASURED.**
 2. **`effect_scope` is grounded on the WRITE TARGET, not on the button's label.** `/data-refresh`'s
    rollback is `ESTATE-WIDE` regardless of how modestly its UI presents it.
-3. **NOTHING IS INVOKED. This is a decomposition, not a test.** ⛔ **No mutation is fired to
-   discover its effect** — ground `write_target` and `effect_scope` at source and on served state.
-   *Exercising `authority_gate` means testing a DENIAL path (unauthorised → refused), never a
-   successful write.* **If a property can only be established by performing the write, it is
-   UNMEASURED and stays UNMEASURED.**
+3. ⛔ **NOTHING IS INVOKED — AND THIS SPEC'S FIRST DRAFT CONTRADICTED ITSELF HERE, DANGEROUSLY.** It
+   said *"nothing is invoked"* AND *"exercise the denial path"* — **the same act described twice, once
+   forbidden and once required.** The natural resolution (*invoke, but only where it must be refused*)
+   **contains the hazard:**
+   >> **THE EXERCISE THAT VERIFIES A GATE IS THE EXERCISE THAT PERFORMS THE WRITE WHEN THE GATE IS
+   ABSENT.** An unauthorised POST to the rollback endpoint returns 403 **if the gate holds — and rolls
+   back portal-wide served data if it does not.** **The probe is safe exactly when its answer is
+   "fine," and catastrophic exactly when its answer is the finding** — anti-correlation, pointed at
+   production, in a spec whose own §1 chose that endpoint as its specimen. <<
+   **BINDING RULE, adopted verbatim from `0.1.0_DE_MarketIntelligence~Z`: YOU MAY NOT EXERCISE A
+   DENIAL PATH WHERE THE CONSEQUENCE OF THE GATE BEING ABSENT IS THE VERY ACT THE RUN IS FORBIDDEN TO
+   PERFORM.** That cell is **UNMEASURED with the reason named** — strictly better than discovering a
+   missing gate by tripping it. **SANCTIONED SAFE FORMS, where they exist: a preflight/OPTIONS probe,
+   or the SAME authorizer exercised on a NON-MUTATING route.** Name the form used, or record
+   UNMEASURED. **If a property can only be established by performing the write, it stays UNMEASURED.**
 4. **Rule 9 unchanged: findings only, no acts, residue gets dispositions.**
-5. **A page mixing reads and writes carries BOTH kinds of rows** — that is what the discriminator is
+5. **THE NON-STRUCTURAL ENUMERATION PLANE FOR A MUTATION ROW IS OBSERVED PAST INVOCATION, NOT NETWORK
+   CAPTURE** — answering the objection that binding X looks unsatisfiable here. **Two of W4a's three
+   planes COLLAPSE on a mutation: there is no served key space, and network observation cannot
+   enumerate a write without firing it (forbidden by 3).** A run would then satisfy "three planes"
+   with **three STRUCTURAL ones — precisely what X exists to forbid, while looking compliant.**
+   ⚠ **THE PLANE THAT SURVIVES IS THE MUTATION'S OWN HISTORY: CloudWatch invocation records, plus the
+   WRITE TARGET's change history (S3 version history, DDB updated timestamps).** These observe what
+   the mutation **actually did**, firing nothing — genuinely behavioural, and **complementary in the
+   right direction: strongest exactly where source reading is weakest (what happens vs what the code
+   says), blind exactly where source reading is strongest (a path never yet invoked).** *And that
+   blindness is itself informative — **a write path with zero invocation history is a dead-path
+   candidate**, the mutation-side analogue of W4a's orphan finding.*
+6. **A page mixing reads and writes carries BOTH kinds of rows** — that is what the discriminator is
    for, and it is not a grain violation because each row declares its kind.
 
 ## 5. What this does NOT do
