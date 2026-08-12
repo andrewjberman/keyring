@@ -51,7 +51,49 @@ several workstreams presenting as one).
 **So the real project is ~60 files across R1–R5, not 442.** R6–R8 are 360 of the 442 and are prose or
 records.
 
-### 1a. The sequencing hazard that is not obvious
+### 1a. ⛔ AMENDED 2026-08-12 ~1940Z — SEPARATE THE **RETIRED SERVER NAME** FROM THE **INFRASTRUCTURE IDENTIFIERS**. They are two different jobs and only one of them is large.
+
+`1.0.0_SA_CTO~Z` measured `m365-gateway` surviving in **72 files including `.tools/commit_gate_runner.py`** —
+live gate code — and flagged *"72 places, at least one of which executes."* **I re-measured rather than
+inheriting it, and the escalation does not hold.**
+
+| | measured |
+|---|---|
+| files containing `m365-gateway` | **77** (not 72; **2 of the delta are my own README + this brief**, which necessarily quote the string; the rest is later commits — the gap is explained-in-part, not fully, and neither number is asserted as canonical) |
+| of those, **executable file types** | **6** |
+| of those, strings in an **EXECUTED EXPRESSION** | ⭐ **EXACTLY ONE** |
+
+**The one:** `infra/aws/ec2/m365-mcp-gateway/deploy-to-ec2.sh:106` —
+`aws secretsmanager get-secret-value --secret-id opal/mcp/m365-gateway-jwt`. A real secret id in a real
+shell expression. **That is R2, and it is already classified HIGH.**
+
+**Everything else is prose or human-facing text:** `config.py` (a comment pointing at a runbook),
+`tools.py` (three comments *explaining the rename itself*), and the two liveness Lambdas (docstrings
+plus **alert message strings a human reads** — cosmetic-but-visible, not functional).
+
+**The gate-code hit is a DOCSTRING**, inside a block describing the 2026-07-31 incident that motivated
+that check. The FILE executes; the STRING does not. Renaming it changes nothing functional.
+
+> ⚠ **THREE SUCCESSIVE CLASSIFICATIONS MISREAD THE SAME FILE, EACH BY A DIFFERENT PROXY — worth
+> carrying, because the project will be tempted to triage 77 files by exactly these heuristics.**
+> **(1)** my first pass keyed on **path prefix** → `.tools/` fell into "other", low risk.
+> **(2)** CTO~Z's keyed on **file type** → "live gate code that executes."
+> **(3)** my second keyed on **line-prefix comment markers** → flagged it LOAD-BEARING, a **false
+> positive**, because it is a docstring *continuation* line carrying no marker.
+> **The discriminator is LEXICAL POSITION — is the literal inside an evaluated expression — and none
+> of the three proxies measured it.** Only reading the surrounding block answered it.
+
+⛔ **DO NOT LET THIS DEFLATE R1–R3.** This finding is scoped to the literal string `m365-gateway`
+(the retired **server** name). The **infrastructure** identifiers — the `m365-mcp-gateway` directory,
+EC2 name tag, `/opt` remote path, systemd unit, `m365-mcp-gateway-role`, the four `opal/mcp/m365-*`
+secret ids, two `m365-*` Lambda function names — **are functional, are not the string measured here,
+and remain the real work.**
+
+**Net effect on scope:** the *retired-server-name* limb is **1 functional reference plus ~76 files of
+prose, records and human-facing message text.** The *infrastructure-rename* limb is unchanged and is
+where the risk lives.
+
+### 1b. The sequencing hazard that is not obvious
 
 **A server-side rename does NOT change what agents see.** The client-visible prefix
 (`mcp__opal-gateway__*`) comes from the **registration key in per-device `~/.claude.json`**, not from
