@@ -89,10 +89,32 @@ anywhere in the program**, because for a mutation the question is not *may the A
 **may the Analyst TRIGGER this.** *A widening answer rides to Andrew as a one-line confirm; the
 delegation answers, it does not ratify.*
 
-**NOT_APPLICABLE on a MUTATION row, declared rather than left empty:** `serving_state`,
-`vintage_grain`, `vintage_semantics`, `producer`, `consumer_set`. **Per §9.2.4 this is now INFORMATIVE
+**INAPPLICABLE FIELDS ARE `NOT_MEASURABLE`, DECLARED, NEVER EMPTY AND NEVER OMITTED.** On a MUTATION
+row: `serving_state`, `vintage_grain`, `vintage_semantics`, `producer`, `consumer_set`. On a
+`COMPUTED_READ` row: `producer`, `vintage_grain`, `vintage_semantics`. **Per §9.2.4 this is INFORMATIVE
 silence — the reader is correctly told these do not exist — where before the extension it was
 CONCEALING.**
+
+⛔ **TWO MECHANICAL CORRECTIONS, both measured with controls by `0.1.0_DE_MarketIntelligence~Z` before
+`c0`, both defects in this spec rather than in the run:**
+
+**(a) THE FIELD SET IS THE UNION OF ALL KINDS' FIELDS; `entity_kind` CONDITIONS APPLICABILITY, NOT
+PRESENCE.** My *"each row carries exactly the fields its kind admits"* is **not validatable** — the
+validator enforces rectangularity. *Exercised: a deliberately non-rectangular probe → `rc=1`,
+`RECTANGULARITY: entity 'cr.01' MISSING cells`; the control carrying the field with a declared status
+→ `rc=0`, 0 violations, so the refusal is specifically about rectangularity.* **And it is what my own
+wording already implied: a cell "DECLARED rather than left empty" must EXIST in order to carry the
+declaration.**
+
+**(b) `NOT_APPLICABLE` IS NOT A LEGAL STATUS AND I MANDATED A VALUE THE SCHEMA REFUSES.** Confirmed:
+`ssot_establishment.schema.json` `/$defs/cell/properties/status` is
+`['MEASURED','UNMEASURED','INFERRED','NOT_MEASURABLE']`. **USE `NOT_MEASURABLE`, WITH THE EVIDENCE
+NAMING THE KIND AS THE REASON** — which distinguishes *not measurable because this entity kind has no
+such property* from *not measurable because I could not reach it*, **and the distinction lives in the
+evidence rather than in an invented status.** ⚠ **The schema is NOT amended: it sits in a lane I do not
+hold, and the legal value is semantically correct — a mutation genuinely has no vintage to measure.**
+*Same refusal as the proof-of-spec enum earlier today; a spec that needs a new enum value to be
+expressible is usually a spec that has not found the right existing one.*
 
 ## 4. Binding constraints on W4c runs
 
