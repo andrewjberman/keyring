@@ -17,7 +17,26 @@ successor is pointed HERE.**
 
 ---
 
-## WHAT IS ON DISK AND VERIFIED (read at 0150Z)
+## ⛔ CORRECTED 0238Z — "ON DISK" IS NOT SAFE. THE RUN DIR IS **UNCOMMITTED**.
+
+```
+news-subsystem/20260811T2330Z/       ??  UNTRACKED -- never committed
+portal-page-market/                  COMMITTED  @859c7b2a6f
+portal-page-security-scanner/ (W4a)  COMMITTED  @07565f5d39   <- committed WHILE LIVE, incrementally
+```
+**W4a is the discriminator: a live mid-run directory IS being committed incrementally under the same
+protocol — so this is NOT K.1 staged publication. The run dir is simply uncommitted.**
+
+**IT IS THE ONLY UNCOMMITTED RUN DIR IN THE PROGRAM, and it holds the earned DRY this entire handoff
+exists to preserve — in the working tree of a SHARED CHECKOUT that our own memory records as a place
+uncommitted work is lost** (~6 agents, one checkout; scratchpad the only measured safe harbour).
+
+**A successor's FIRST act should be to confirm the run dir still exists before doing anything else.**
+*I originally wrote this section as "what is on disk and verified," which reads as durable. It is not.
+Routed to CTO~Z (method) and MSTR~Z (holds the `[STUCK]`); NOT touched by me — committing another seat's
+in-flight run dir is a method call with real objections.*
+
+## WHAT IS ON DISK AND VERIFIED (read at 0150Z) — *durability caveat above*
 
 ```
 patches/                       2 files
