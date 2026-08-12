@@ -48,6 +48,36 @@ NEVER#2 exists to prevent — ARRIVING THROUGH THE SERVING LAYER RATHER THAN A P
 enforcement (commit gate + IAM Deny) is pointed at pipeline trees crossing buckets. **Neither
 mechanism observes an authenticated HTTP caller reading another firm's row out of one shared table.** <<
 
+## ⛔ SCOPE AMENDED 2026-08-12 ~1936Z — "A GAP IN THE CONTROL MODEL" WAS TOO WIDE
+
+**This section originally read "a gap in the CONTROL MODEL, not a defect in one function," and that
+characterisation went to Andrew. It is now NARROWED by measurement.** Raised by `2.0.0_SA_COO~Z` on
+`0.1.0_DE_MarketIntelligence~Z`'s reading of the **sibling** write service.
+
+**`trade-workflow-handler` (514 lines, deployed bytes, sha256-pinned) FAILS CLOSED and does it properly:**
+- the actor is the **verified principal, never the body** — a conflicting body-asserted email → **403**
+- **no authorizer context → HARD REJECT** ("no verifiable actor")
+- **segregation of duties enforced PER-ACTION**: the initiator cannot approve/reject/execute their own
+  trade, and **the approver cannot execute the trade they approved** — the precise negation of the risk
+
+**WHAT IS UNCHANGED:** `opal-ticket-api` still stamps caller identity and never checks it. Three
+independent derivations, a rejected counter-example, no cell disputed. **THE FINDING IS NOT WEAKENED.**
+**WHAT IS CHANGED — its SCOPE:** *"a gap in the control model"* implies the estate systematically lacks
+per-caller authorization at the serving layer. **It does not.** One sibling service has it, correctly,
+including a property nobody asked for. Honest characterisation: **a DEFECT IN ONE SERVICE, against an
+estate that does this correctly elsewhere** — a different remediation conversation and a different
+severity picture.
+
+⚠ **AND IT CUTS THE OTHER WAY, UNSOFTENED (COO~Z's point, kept in its form): IF ONE SERVICE DOES THIS
+RIGHT AND ANOTHER DOES NOT, THERE IS NO ENFORCED STANDARD.** The estate contains both shapes and
+nothing that requires the good one. **That is arguably MORE actionable than a uniform gap, because it
+names a reachable fix and a working reference implementation** — the remedy is not "design an authz
+model," it is "make the other service look like this one." Andrew's call, not CTO's.
+
+*Discipline note, because the direction matters: this correction moved in the REASSURING direction and
+was carried at the same speed a worsening one would have been. A narrowing that arrives late has
+already done its damage to a severity judgement.*
+
 **The authorization model on a live client-facing surface is an architecture decision and it is Andrew's.**
 CTO is not building a remedy, not proposing a gate, and not adjudicating scope.
 
