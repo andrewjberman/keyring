@@ -17,7 +17,22 @@ successor is pointed HERE.**
 
 ---
 
-## ⛔ CORRECTED 0238Z — "ON DISK" IS NOT SAFE. THE RUN DIR IS **UNCOMMITTED**.
+## ✅ RESOLVED 0250Z — THE RUN DIR IS NOW **COMMITTED**. The flank below is CLOSED.
+
+**Preserved at `@053fd370ca`** — *"commit AE~Z's converged-but-unsealed run dir … PRESERVATION ACT by
+MSTR~Z integrator, author line AE~Z's own."* **Verified in HEAD, not taken on report:**
+```
+6 files, 2,006 insertions: rectangle.c0/c1/c2/dry.json + both patches
+c2 no-op patch read FROM HEAD:  changes: 0   unchanged_examined: 40   <- the EARNED DRY, durable
+git status on the path: CLEAN
+```
+**CTO~Z landed `§9.8.1-K.4` alongside it — a non-author MAY commit another seat's in-flight run dir** —
+so the act is a RULE rather than a one-off, and the author line stayed AE~Z's.
+
+*The section below is kept struck-not-deleted because a successor should see that the exposure existed and
+how it was closed.*
+
+## ~~⛔ CORRECTED 0238Z — "ON DISK" IS NOT SAFE. THE RUN DIR IS **UNCOMMITTED**.~~
 
 ```
 news-subsystem/20260811T2330Z/       ??  UNTRACKED -- never committed
