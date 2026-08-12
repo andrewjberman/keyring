@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W8.bbg-blpapi-pipe-map",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W8.bbg-blpapi-pipe-map.md",
+    "group": "W",
+    "vintage_commit": "f917c0786b"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W8_BBG_BLPAPI_PIPE_MAP_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "2e679c3b8c",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Increment 3 sections 12-14: the two health readings, and the sized-pull menu with its recommendation."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W8-PULLMENU-C1",
+      "criterion_verbatim": "increment 3 delivers EITHER a sized-pull menu carrying exact numbers (securities x fields x date span) per proposed pull, OR a declared \"no pull required\" with the reason. **A need for a pull is never manufactured.**",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of the deliverable section 13 'SIZED-PULL MENU -- offered, not requested'.",
+      "output_evidence": "BOTH limbs delivered. The menu carries exact numbers: Option A = 165 securities x 1 field (NAME) x 0 date span, one ReferenceDataRequest, no history; Option B = 1 security (.ST Index) x 1 field x ~683 rows from 2023-12-29, plus SPX Index as a SEPARATE positive-control request; Option C = 5 securities x 1 field x 1 date. No adjective is used as a size. AND the declared recommendation is 'run NONE of them today', with reasons: the map is complete without any pull, Option B belongs to 0.0.3_BG_BBGTerminal's seat, and Options A/C verify a map that is not currently disputed. The section opens by stating a need for a pull is not being manufactured. A baseline is printed beside the menu (the production pull already requests 165 tickers x up to 13 fields x ~36 years monthly) explicitly framed as an argument for proportionality and NOT a licence.",
+      "denominator": "3 sized options of 3 offered; 0 of 3 recommended for execution; 0 executed.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W8-PULLMENU-C2",
+      "criterion_verbatim": "NO pull was executed absent Andrew's per-pull word, evidenced.",
+      "method": "manual_read_with_citation",
+      "invocation": "Full session tool-call record reviewed for pull-class Bloomberg invocations; corroborated against the deliverable's running total.",
+      "output_evidence": "mcp__bloomberg__bloomberg_historical_data: 0 invocations. mcp__bloomberg__bloomberg_intraday_bars: 0 invocations. Total Bloomberg calls across the entire session: 2, both mcp__bloomberg__bloomberg_health, which the directive places on the permitted traversal side. Both returned ok:false. POSITIVE CONTROL FOR THE OBSERVATION CHANNEL: the two health calls and their payloads are visible in the same record, so a pull would have been equally visible -- the zero is a measured absence, not an unobserved one. No per-pull word from Andrew was sought or received, and correspondingly no pull ran. Egress-widening was explicitly reserved to go to Andrew DIRECTLY rather than as a relay summary (MSTR~Z 170828Z instruction, restated to CTO~Z 172139Z, and CTO~Z confirmed at 172536Z it would not carry it).",
+      "denominator": "0 pull-class calls of 2 pull-class tools available in the toolset; 2 traversal-class calls made of 2 traversal-class tools available.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Repeat-probe as a mutant on the single health reading: one ok:false could be a transient or a cold-start artifact, which would make a transport verdict unfalsifiable from one call. Made a SECOND health call after bbcomm had been alive 2+ minutes, plus three OS-level listener probes 4s apart, specifically to try to overturn the first reading.",
+      "expected": "If the first ok:false were a cold-start artifact, the second call after 2+ minutes of bbcomm uptime would return ok:true.",
+      "observed": "It did NOT overturn. Second health call at ~17:19Z returned ok:false identically; Get-NetTCPConnection 8194 returned NO LISTENER on all three probes; bbcomm pid 24492 alive and Responding=True throughout. Independently re-measured by 0.0.3_BG_BBGTerminal at 172938Z (layer-1 blpapi IO_ERROR code=8, bbcomm restart eliminated, network path open with a passing control) and by 0.0.0_AB_MSTR~Z at 173120Z (TcpTestSucceeded FALSE x3 with port 7800 as a passing positive control). Three seats, three instrument sets, same verdict.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Two bloomberg_health calls ~3 minutes apart; three listener probes 4s apart.",
+      "observed": "Byte-identical health payload both times ({ok:false, endpoint 127.0.0.1:8194, same error string}); all three listener probes identical.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "The .ST CIX entitlement discriminator (Option B)",
+      "reason": "It is a HistoricalDataRequest, i.e. a PULL, and forbidden without a sized ask. It is also 0.0.3_BG_BBGTerminal's seat, not this one. Deliberately NOT substituted with bloomberg_health, which is necessary-not-sufficient for entitlement."
+    },
+    {
+      "item": "Any Bloomberg Terminal sign-in attempt",
+      "reason": "P0 gate: an absent wintrv is not evidence a sign-in is needed, a failed login is not free, and Bloomberg locks on repeated failures. The remaining remedy is MFA-gated to Andrew's own device per MSTR~Z 173120Z -- never this seat's or BG's to complete."
+    },
+    {
+      "item": "Further live traversal after 17:19Z",
+      "reason": "DAPI confirmed down by three seats. MSTR~Z 173120Z: W8 traversal is BLOCKED ON TRANSPORT, not cancelled -- keep mapping from source/config/records, do NOT spend quota probing a dead socket. Increments 4 and 5 were produced entirely from source and estate records."
+    }
+  ],
+  "surprises": [
+    "The BG runbook's PROSE contradicted its own TABLE about bloomberg_health, and the prose half is what reached this seat at spawn -- so a record made a WORKING instrument look useless and partly suppressed a TRUE alarm this seat had correctly measured. Reported as a contradiction rather than by editing another seat's file; BG corrected it and source-confirmed the mechanism (health is blind to LOGIN STATE, not to transport), and MSTR~Z corrected its own propagated copy.",
+    "The corrected rule is ASYMMETRIC and worth carrying: ok:false is real evidence transport is down and is actionable; ok:true proves only that a session opens and says nothing about login state or CIX entitlement."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {"tool": "mcp bloomberg_health (traversal-class, permitted)", "invocation": "bloomberg_health x2, ~3 min apart", "result": "ok:false both times. Second call was the discriminating one -- it ruled out a short cold-start, which one call cannot."},
+    {"tool": "PowerShell Get-NetTCPConnection / Get-Process (local, no vendor egress)", "invocation": "Get-NetTCPConnection -LocalPort 8194 x3; Get-Process; Get-ScheduledTaskInfo", "result": "No listener x3; bbcomm alive Responding=True; denominator 429 processes on the box, exactly 2 Bloomberg. Scheduled task Ready, LastTaskResult 0, next run 2026-08-13 07:00 ET."},
+    {"tool": ".tools/proof-of-spec-check.py", "invocation": "python .tools/proof-of-spec-check.py <instance>.json <ids> (positional, rc captured immediately)", "result": "Validated each group instance; rc read directly rather than grepping the banner, which contains the vocabulary of both verdicts."}
+  ]
+}

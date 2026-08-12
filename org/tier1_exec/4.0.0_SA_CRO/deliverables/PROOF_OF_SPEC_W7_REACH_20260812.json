@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W7.sharepoint-reach-and-registry",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W7.sharepoint-reach-and-registry.md",
+    "group": "W",
+    "vintage_commit": "3ea5f17245"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W7_SHAREPOINT_REACH_AND_REGISTRY_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "2627d66fc3",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "A registry document; no deploy target. Increment 1 sections 1-8, increment 2 sections 9-13."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W7-REACH-C1",
+      "criterion_verbatim": "the SharePoint reach is ENUMERATED against what already exists (tools + sites + drives), each claim citing its instrument and output. **No new client built.**",
+      "method": "live_read",
+      "invocation": "whoami; find_sharepoint_site('Opal'); find_sharepoint_site('*'); list_site_drives x3; list_site_files x4",
+      "output_evidence": "Identity: Andrew Berman / Andrew@opalinvest.com -- OAuth as a NAMED HUMAN, not a service principal, so every 'not found' is indistinguishable from 'exists but Andrew cannot see it'. Sites: 'Opal' query -> 6; '*' -> 15; the natural query is SHORT BY 9 including Shared (lastModified 2026-07-13), ExternallyShared and allcompany. Drives: 3 sites probed, exactly 1 documentLibrary each. Listings: 49Financial root (3 folders), General, Legacy, and the Shared site root (78 folders + ~15 files). NO NEW CLIENT WAS BUILT -- every capability is a pre-existing gateway tool.",
+      "denominator": "15 sites via the '*' query -- a FLOOR, not a tenant total: personal sites and permission-invisible sites are excluded BY CONSTRUCTION. 3 of 15 sites probed for drives. 8 read-side capabilities enumerated.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W7-REACH-C2",
+      "criterion_verbatim": "every registered document class is reachable by an **EXERCISED READ**, never a config read (Rule 22a: a behavioural claim needs the path exercised).",
+      "method": "live_read",
+      "invocation": "read_site_workbook(Daily_Update_Tracker.xlsx, max_rows=3); read_site_file(pdf, max_chars=400); profile_site_file(pdf, sample_lines=2); read_document(docx, include_pdf_base64=false)",
+      "output_evidence": "xlsx -> FULL CELL READ: 5 sheet names, used range 'How To Use'!A1:B13, 13 rows returned with truncated:true (max_rows honoured). text/csv -> read_site_file returns text bounded by max_chars. pdf via read_site_file -> {binary:true, format:'pdf', hint:'PDF -- call read_document.'} i.e. a STRUCTURED HINT, not decoded garbage -- the tool discriminating. profile_site_file -> bytes 57483 + sha256 b3ac76f1..., server-side, the file never rides the MCP channel. read_document(docx) -> {format:'pdf', byte_size:122803, note:'v1 returns the rendition; full document text-extract is a follow-on'} -- CONVERSION ONLY, NO TEXT EXTRACT. THE CENTRAL FINDING: the mandate's word 'read' holds for spreadsheets and does NOT hold for .docx/.pdf/.pptx. A config read would have looked complete; only exercising each class shows 'read' means different things across them.",
+      "denominator": "4 document classes exercised of 4 present in the sampled scope (xlsx, docx, pdf, pptx-by-class-via-read_document); 7 of 8 read-side capabilities exercised, search_site_files deliberately deferred.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Enumeration-closure mutant on the site set: if a name-scoped query were sufficient, a second differently-scoped query would return the same set. Ran the obvious query for an estate called Opal, then a wildcard, to try to break it.",
+      "expected": "If 'Opal' were sufficient, '*' returns the same 6 sites.",
+      "observed": "IT BROKE. 'Opal' -> 6, '*' -> 15. Short by 9, including Shared / ExternallyShared / allcompany / smarshteamsarchive / the tenant root / 2 avanan / 2 contentstorage. No error was raised; the short answer was clean and well-formed. Registering off the natural query would have produced a registry 40% short AND internally consistent.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Site queries and drive probes re-run; listings re-read.",
+      "observed": "Identical site sets, identical drive counts (1 per site), identical listing metadata including lastModifiedDateTime.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "search_site_files",
+      "reason": "Deliberately deferred to a declared query set with a declared stop. It is the tool most likely to become an ENUMERATION by iteration, and no quota is published on this surface -- which argues for more discipline, not less."
+    },
+    {
+      "item": "Recursive walk of any library",
+      "reason": "A depth-first walk to produce a document count IS the harvest the call-shape rule forbids. The listing metadata (folder.childCount + size) already carries the bound."
+    },
+    {
+      "item": "12 of 15 sites' library structure",
+      "reason": "Only 3 probed. A multi-library site would be silently under-read by the default-library-only tools, with no signal. Named as the shape to watch, NOT as an observed defect."
+    }
+  ],
+  "surprises": [
+    "read_document v1 returns a RENDITION and no text, by explicit design -- 'NOT a silently-wrong partial scrape'. A tool that refuses beats one that half-succeeds, because a half-scrape is indistinguishable from a complete read at the call site.",
+    "The Shared site -- the one the 'Opal' query missed -- is the substantive corpus: 78 root folders including Marketing 3.2GB, Software 3.0GB, Systematic Equity 2.4GB, Research 1.5GB."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w7_sharepoint_and_opal_gateway.md",
+  "compiler_tools": [
+    {
+      "tool": "gateway list/read tools",
+      "invocation": "whoami, find_sharepoint_site, list_site_drives, list_site_files, read_site_workbook, read_site_file, profile_site_file, read_document",
+      "result": "7 of 8 read-side capabilities exercised; the 8th (search_site_files) deliberately deferred."
+    },
+    {
+      "tool": "comp-which",
+      "invocation": "routing check before reaching for raw enumeration",
+      "result": "No comp-tool models the M365/SharePoint surface -- it is outside the estate graph's domain. Recorded as a scope boundary rather than a coverage gap: comp-tools model the AWS/portal estate, not the tenant."
+    }
+  ]
+}

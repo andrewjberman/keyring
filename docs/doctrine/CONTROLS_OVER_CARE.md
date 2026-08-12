@@ -65,7 +65,11 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The six ways you fail to see it *even though you looked*
+## The seven ways you fail to see it *even though you looked*
+
+*(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
+disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
+never made — and it survived a 1,289→239-line cut plus every read since.)*
 
 ### 1. You looked at a PROXY, not the thing
 A digest, a count, a config, an `rc=0`, a symbol's presence. A proxy answers a neighbouring question
@@ -74,6 +78,14 @@ at full confidence.
 - A hash is a proxy; the columns are the thing. **When you hash to prove sameness, first remove the
   fields whose sameness is the question.**
 - Applied-config is not behaviour. A guard nothing calls is a comment with parentheses.
+- **A PRODUCER-SIDE TIMER MEASURES THE ARTIFACT; ONLY A CONSUMER-GENERATED STATUS MEASURES THE
+  AGENT.** Time-since-last-output tells you about the output. To know whether a worker is alive,
+  prefer the signal **only a live worker can produce** — a current, *specific* statement of its next
+  concrete step — over any elapsed-time threshold. **A threshold derived from COMPLETED work cannot
+  classify work IN PROGRESS: any deep in-flight unit exceeds a percentile drawn from finished ones,
+  by construction.** The timer opens the look; freshness-and-specificity closes it. *(Same property as
+  §22b's ACK rule one domain over: a producer-side signal is blind to consumer death, and only a
+  round trip crosses both.)*
 - **Discharge:** exercise the path that fails if the claim is false. Read the served value.
 
 ### 2. You looked at the DESCRIPTION, not the STATE
@@ -178,6 +190,25 @@ sound and the SUBJECT was fictional. **Discharge: before trusting an absence, es
 query terms came FROM THE CORPUS rather than from your expectation of it — ENUMERATE WHAT IS THERE,
 then ask about it. Guessing the names and controlling the probe validates everything except the
 question.**
+
+⛔ **4b.2 — A UNIFORM ZERO ACROSS A SET CONTAINING ONE KNOWN-TRUE MEMBER IS A BROKEN INSTRUMENT, NOT A
+FINDING.** The cheapest discriminator in this file, and stronger than a synthetic positive control
+because the expected answer is already known: **hold out one member whose value you know, and run the
+instrument at it.** A predicate too narrow to match anything returns a clean, confident, uniform zero —
+**and uniformity across a heterogeneous set is itself the tell.** Real distributions are lumpy; an
+instrument reporting the same value for every member is far more likely to be measuring nothing than to
+have found a uniform world.
+**Discharge:** *which member's answer do I already know, and does the instrument reproduce it?* If no
+member's answer is known in advance, **the run is uncalibrated and its zeros carry no weight.**
+
+>> **THIS IS THE DOMINANT DEFECT MODE, not one of seven equals — and the frequency is measured, not
+impressionistic.** In a single session, a clean zero from an over-narrow predicate was produced by
+**five different seats**: a semantic census returning 0 for every unit including one where the runner
+had authored all 24 cells; a lint validating its own typing; a name-scoped enumeration short by 9; a
+filter matching nothing; and two enumeration planes whose blind spots intersected. **One seat logged
+four instances of it by itself.** In every case the ONLY thing that caught it was a member whose answer
+was known in advance. **A known-true case is not a nicety at the end of a run — it is the calibration
+without which the run has no verdict.** <<
 
 **4c. THE ANTI-CORRELATED VERDICT — the cleanest pass is sometimes the most complete failure.**
 The least intuitive member, so it needs its mechanism:

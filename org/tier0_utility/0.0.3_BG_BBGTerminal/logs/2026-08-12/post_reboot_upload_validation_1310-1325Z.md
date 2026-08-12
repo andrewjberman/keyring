@@ -123,10 +123,205 @@ a measurement. Monitor cursor now `2026-08-12T13:22:11Z`.
   08-11 schedule change was an explicit Andrew grant and was not a standing one; I only *read*
   task state this session.
 
+## ~1341–1517Z — TO6 quiet-retry: I REPORTED A CLOSURE, THEN FALSIFIED MY OWN REPORT
+
+**First lapse (~1341Z).** Teams monitor emitted `pinned token expired -- quiet retry, pin HELD`,
+then `re-selected after lapse` — process alive, same task id, no re-arm. Against the 08-11
+baseline (16 cycles × ~60min death + manual re-arm, deaf window widening to ~5m50s) this looked
+like a clean win, and I reported it to MSTR~Z at 141103Z as such. They updated their standing note
+to "hourly re-arm CLOSED" on my grounding.
+
+**THE CONFOUND I MISSED.** That recovery was immediately preceded by **my own `whoami` identity
+re-gate**. I read the recovery as a property of the design; it was a property of the design **plus
+my call**, and the two log lines cannot distinguish them. MSTR~Z had credited me an hour earlier
+for source-confirming rather than inferring from log lines — and I inferred from log lines, in the
+same instrument, immediately after.
+
+**Second lapse (1510Z), measured with a real negative control:**
+
+| Condition | Result |
+|---|---|
+| 243s idle, **no** gateway call | **STILL LAPSED** |
+| `whoami` → | re-selected within 30s |
+| (first instance) `whoami` → | re-selected immediately |
+
+Two-for-two on the causal link with a 243s negative control between. The docstring says it plainly
+and I read past it: *"Claude Code re-mints it on the **next MCP call**."*
+
+**WHY IT MATTERS — IT IS THE 08-11 MISMATCH AGAIN, SAME SHAPE.** An idle event-driven seat makes
+no gateway calls **by definition**. So the condition the monitor exists to cover — sitting idle
+waiting for Teams traffic — is precisely the condition in which nothing triggers its recovery.
+Structurally identical to the heartbeat finding: **per-turn action cannot cover a gap defined by
+taking no turns.**
+
+**What is closed vs what changed shape:**
+- **CLOSED** — the process no longer *dies* at token expiry. TO6 works; no manual re-arm. Real.
+- **NOT CLOSED, RESHAPED** — the *deafness*. From "dies loudly, `status=failed` notification, I
+  re-arm in ~15–40s" to "survives quietly, stops polling, recovers only when an agent call happens
+  to occur." **The new shape is harder to see:** `TaskOutput` reads `running`, `ps` shows the
+  process, task id unchanged, and the lapse re-notes only every 30 cycles (~30 min at the 60s
+  backoff cap). **Every liveness instrument reads healthy while the seat is deaf** — the 22b
+  anti-correlated shape through a different door.
+
+**The mitigating fact, source-confirmed rather than assumed:** `cursor` **cannot advance during a
+lapse** — when `tok` is falsy the entire poll block is skipped, and the `res`/`cursor`/`CURSOR_FILE`
+writes all live inside `if tok:`. So a lapse **DELAYS delivery, never DROPS a message.** That is a
+latency defect, not a loss defect, and it is what made a 243s deliberate observation window
+affordable in the first place.
+
+**Nothing built, no keepalive proposed.** A timed `whoami` is the same paper-over I declined on
+08-11 for the registration mismatch, for the same reason — it would make every instrument read
+healthy while leaving the structural mismatch intact. `teams-watch.py` is 0.5.0_AE~Z's and outside
+my write scope regardless. Observation routed (151709Z), remedy not.
+
+**Cost of the error:** MSTR~Z's note carried a slightly-too-clean closure for ~90 min. Nothing
+acted on it.
+
+## Also this session
+- **Registration swept again** (~1411Z) after ~40 min of correct idle silence, despite a heartbeat
+  at 1329Z. Re-registered same PID 26576. Same structural mismatch as 08-11, still routed to
+  CTO~Z, still **not** papered by me. Delivery impact nil — the filesystem watcher never stopped,
+  which is exactly why it stays invisible.
+- **`deliverables/` blocked at owned-paths** (lane TIER0_UTILITY permits MSTR/CTO/COO; the
+  home-folder convention self-owns `logs/` + `task_orders/` only). Routed to MSTR~Z rather than
+  reaching for `GIT_COMMIT_AUTHOR_OVERRIDE`, which would have been mechanically legal — one lane,
+  two files. Landed `f0b38bbada` **with authorship kept on this seat**. I unstaged both after the
+  block; a blocked safe-commit leaves the diff staged and a staged file on this shared tree is
+  sweep bait.
+
+## ~1721–1730Z — DAPI WENT DOWN, AND MY OWN RUNBOOK WAS SUPPRESSING THE SIGNAL
+
+`4.0.0_SA_CRO~Z` surfaced a live DAPI failure at 172118Z while mapping the blpapi pipes under
+Andrew. **I re-measured on my own instruments rather than inheriting it. They were right.**
+
+**Measured (mine, 13:21–13:26 ET):** 8194 **NO LISTENER**, 3 probes 1.5s apart; `bloomberg_health`
+**ok:false**; the entitlement probe **fails at LAYER 1** — blpapi *"Platform failed 3 consecutive
+times"*, `code=8 IO_ERROR "connect event failed"`. **Transport, not entitlement.** Denominator: 426
+processes, exactly 2 Bloomberg ones.
+
+**Cheap remedies worked and ELIMINATED, so nobody re-runs them:**
+- **bbcomm restart** — stopped 24492, relaunched from `C:\blp\DAPI\bbcomm.exe` → pid 16412, still
+  no listener. Eliminated.
+- **Network** — `Test-NetConnection 69.187.48.83:8194` → **TcpTestSucceeded TRUE**, with
+  `8.8.8.8:53` as a passing control. Eliminated, and it genuinely surprised me.
+- **bbcomm's own sockets** — **loopback only, zero outbound.** This morning it held
+  `172.16.200.184:8197 -> 69.187.48.83:8194 ESTABLISHED`. So the path is open and bbcomm is simply
+  not connecting.
+
+**Timeline:** 04:01 cold boot → 07:00 pull SUCCEEDED (entitled CIX data) → 09:16 bbcomm 19524, 8194
+listening, ESTABLISHED → 09:26 my probe passed all layers → 13:16 bbcomm 24492 (19524 dead), not
+listening → 13:26 after restart, still not listening. **Served at least 5h25m post-cold-boot, then
+lost it.**
+
+**CAUSE UNDETERMINED — not asserting one.** The one thing today adds: `blp_client.py:15-17` flags
+*"whether bbcomm comes up entitled from a COLD BOOT with no login at all"* as **deliberately
+unproven** (Andrew 2026-07-30). Today it came up entitled and later lost it. **A data point on an
+open question, not a mechanism.**
+
+**Escalated, not acted on.** The remaining candidate is the Terminal sign-in, which `prompt.md`
+forbids me completing alone — the MFA/OTP goes to Andrew's phone. Routed to MSTR~Z 172830Z with the
+eliminations attached. **Priority stated honestly: NOT an emergency.** Today's data is published
+and served; nothing is stale; next run is ~17.5h out. It needs a human, so it needs lead time — not
+anyone's evening. No alarm proposed.
+
+### MY RUNBOOK DEFECT — it suppressed this exact signal, and it cost CRO~Z
+
+CRO~Z (172332Z) caught that my P0 prose — *"`bloomberg_health` read cleanly through BOTH states, so
+it cannot discriminate"* — **contradicts my own table two lines above it** (`ok:false` then
+`ok:true`). **On that evidence health discriminated correctly, 2 for 2, and I published the
+opposite.** I wrote that it returned `ok:true` in both rows; the 08-11 log records `ok:false`
+throughout that outage.
+
+**The propagation is the damage.** The prose half reached MSTR~Z's standing note and CRO~Z's spawn
+briefing. **CRO~Z then measured a true `ok:false` twice today and partly talked themselves down
+from it on the strength of my sentence.** They reported it anyway, which is why nothing was lost.
+
+Their framing, now IN the deliverable as the reason for the correction: **a record that makes a
+WORKING instrument look useless is the mirror of the failure this file exists to prevent — it does
+not manufacture a false alarm, IT SUPPRESSES A TRUE ONE.**
+
+Corrected to **necessary-not-sufficient**: `ok:false` is real evidence transport is down;
+`ok:true` proves only that a session opens. Source-confirmed at `blp_client.py:7-11` (GUI exited +
+user logged out, 8194 still listening, live data still flowing) — **health is blind to LOGIN STATE,
+not to transport.**
+
+**SECOND GAP, also mine, exposed by the same report:** the P0 gate said what to do when the
+discriminator PASSES and **nothing** about a layer-1 failure — it guarded the over-reacting
+direction and was silent on the under-reacting one, **the same asymmetry as the prose defect one
+level up.** Added an explicit "if layer 1 FAILS" ladder (re-probe → restart bbcomm → network test
+*with a control* → bbcomm's outbound sockets → only then escalate, never a speculative login).
+
+**Both defects came from one report by a seat that stopped at my gate and sent the contradiction
+instead of editing my file.** That is why the fix lands in my hands and carries to MSTR~Z's
+propagated copy.
+
+## FOURTH DEFECT (~1739Z) — and it reached ANDREW as a wrong action item
+
+`0.0.0_AB_MSTR~Z` (173940Z), after Andrew asked *"What do you mean bloomberg needs my phone?"*
+
+**My runbook asserted "the MFA/OTP goes to Andrew's phone," cited to `prompt.md`. Verified at
+source: that is an IMPORT FROM A DIFFERENT AUTHENTICATION SYSTEM.** `prompt.md:15-27` is entirely
+about **`opal-gateway-bbg`, the MS Entra delegated-OAuth identity** — credential
+`opal/mcp/opalbloomberg-login` in Secrets Manager, "surface the auth URL" = a browser consent flow.
+**None of it describes the Bloomberg Terminal login.** And this same file, ~70 lines below, records
+the only measured Terminal login (08-11): **"No second factor — username + password went straight
+through."**
+
+**Operational consequence, which is why it mattered:** the blocker is the **CREDENTIAL**, not a
+standing phone. Different asks, different lead times — and Andrew got the wrong one from my 172830Z
+escalation.
+
+Corrected as a four-row epistemic table rather than a strike (credential = binding · second factor
+= possible, unquantified · one measured login = none · "MFA to Andrew's phone" = unsupported for the
+Terminal, true of the gateway identity only), ending on **the ask is the credential**. Provenance
+named as the finding: **two login systems, one seat, similar-sounding words — check which system a
+constraint was MEASURED against before importing it.**
+
+### The honest root of all four defects — not four mistakes
+**Three are the same act:** a general claim cleaner than the evidence — health *"could not have said
+otherwise"* (it had discriminated 2/2), the two-row table implying one state (the day had two), the
+imported MFA constraint (measured on a different system). **The fourth is the inverse:** the layer-1
+branch I never wrote, because I had not hit the case yet. **Generalising past the measurement, and
+failing to cover what I had not seen.**
+
+**Both escalated errors were caught from OUTSIDE my own reasoning** — CRO~Z's contradiction, then
+Andrew's question. Neither was going to be caught by me being careful. MSTR~Z now grounds my claims
+before they reach Andrew; that is correct practice and I would have asked for it.
+
+## ~1754Z — LAW CORRECTION relayed by `2.0.0_SA_COO~Z`, and a MECHANIC a successor must know
+
+**⚠ MECHANIC, recorded here because it is invisible from inside a session:** `CLAUDE.md` loads into
+context **at session start and is NEVER re-read**. A law corrected mid-session does not reach a
+running seat, and nothing inside the session can detect that. **This applies to whoever holds this
+seat next: your operating copy of the law may already be stale on arrival.**
+
+**The correction:** Rule 21's claim that `header_metrics_fresh` *"exists in this estate ONLY AS A
+RECORD OF ITS OWN NONEXISTENCE"* is **FALSE** (fixed @ccb6d051e6). The key exists in
+`opal-data-inf` at 324 B. The original measurement (zero hits under `opal-data-bd`) was **correct**;
+the error was generalising *"absent in bd"* into *"does not exist."* It ran ~6 weeks and reached a
+GO, a config file, and the law file itself.
+
+**BINDING ON MY TEAMS REPLIES:** an absence verdict **names the tree it searched**. *"Not in bd"* is
+answerable; *"we don't have that"* requires enumerating every tree or it is not a claim — **said to
+the sender, not just in my notes.** The estate is firm-partitioned (bd/inf/cot); absent in one tree
+can be live in another. **A 404 in the wrong bucket does not error — it returns a clean, confident,
+well-formed ZERO.**
+
+**This is the general form of my own day.** Same shape in all six instances: *a true statement about
+what I looked at, promoted to a false statement about what is* — the `.ST` wrong-column empty set,
+the case-sensitive grep returning 0, the health over-generalisation, the two-row table, the imported
+MFA constraint, and this. **It did not arrive as new law; it arrived as the name of the thing that
+had already bitten me four times before lunch.**
+
 ## State
 ON DUTY. Fabric inbox Monitor `bw86cyhv4`, Teams Monitor `bpf5tn8h5` (identity-pinned), broker
-LIVE, **zero crons**. Bloomberg DAPI up and entitlement exercised. Portal serving current T-1
-(`data_as_of 2026-08-11`). Next scheduled run 2026-08-13 07:00 ET.
+LIVE, **zero crons**. Portal serving current T-1 (`data_as_of 2026-08-11`) — **unaffected**.
+Next scheduled run 2026-08-13 07:00 ET.
+⛔ **BLOOMBERG DAPI DOWN as of ~13:16 ET**, cheap remedies eliminated, escalated to Andrew via
+MSTR~Z. **Pull-class work is NOT available until it is restored**, and tomorrow's 07:00 run will
+fail against it unless the Terminal is signed in first.
+**Known residual:** while idle, this seat's Teams polling halts at each ~hourly token expiry and
+resumes only on my next gateway call. Messages queue rather than drop.
 
 ## Compiler Tools
 None. The surfaces touched this session — a Windows Scheduled Task execution record, local PKL

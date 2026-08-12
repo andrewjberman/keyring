@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W8.bbg-blpapi-pipe-map",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W8.bbg-blpapi-pipe-map.md",
+    "group": "W",
+    "vintage_commit": "f917c0786b"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W8_BBG_BLPAPI_PIPE_MAP_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "52f215db0f",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "A map document; there is no deploy target. Increment 1 sections 1-7."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W8-INGRESS-C1",
+      "criterion_verbatim": "the blpapi ingress is ENUMERATED and grounded: service endpoint(s), transport, session/request shape, with the instrument and its output cited per claim.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read .tools/bloomberg-mcp/blp_client.py + server.py @f09cbd13ef; comp-find \"blpapi\"; comp-find \"//blp/\"",
+      "output_evidence": "Endpoint: _REFDATA = \"//blp/refdata\" (blp_client.py:37), host/port 127.0.0.1:8194 (blp_client.py:35-36). Transport: DAPI loopback-only; MCP stdio default, streamable-http 127.0.0.1:8790 optional (server.py:75-81). Session shape: _open_session per call, one request, stop (blp_client.py:150,208,262). Request types built: ReferenceDataRequest :153, HistoricalDataRequest :211, IntradayBarRequest :265. Services: 6 enumerated, 1 opened by our code; //blp/emsx openService -> False (INHERITED, NFRA_BBGMCP_PRD 4.2).",
+      "denominator": "6 blpapi services of 6 probed; 3 request types built of 7 named on refdata; 3 in-repo session openers of 3 found by comp-find across 25,663 files scanned.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W8-INGRESS-C2",
+      "criterion_verbatim": "ZERO downloads occurred during increment 1, evidenced (the absence is asserted with what would have shown one).",
+      "method": "manual_read_with_citation",
+      "invocation": "Full session tool-call record reviewed for mcp__bloomberg__bloomberg_historical_data and mcp__bloomberg__bloomberg_intraday_bars invocations.",
+      "output_evidence": "Increment 1 (commit 52f215db0f) was produced with ZERO Bloomberg tool calls of ANY kind. Across the whole session the only Bloomberg calls are two mcp__bloomberg__bloomberg_health, both AFTER increment 1 landed. bloomberg_historical_data: 0 invocations. bloomberg_intraday_bars: 0 invocations. POSITIVE CONTROL FOR THE OBSERVATION CHANNEL: the two health calls ARE visible in the same record with their returned payloads, so a pull, had one occurred, would have been equally visible. The absence is a measured absence, not an unobserved one.",
+      "denominator": "0 pull-class calls of 2 pull-class tools available in the toolset (historical_data, intraday_bars); 2 traversal-class calls made, both health.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Negative control on the service-enumeration search: if comp-find could not distinguish present from absent service strings, the claim that only //blp/refdata is opened would be unfalsifiable. Searched for a service string we assert is NOT opened by our code.",
+      "expected": "//blp/refdata appears in first-party client source; //blp/emsx appears only in prose/PRD, never as an openService target in our client.",
+      "observed": "comp-find \"//blp/\" -> 35 hits, bands HEAD=3 SURFACED=6 DOC=26. The 3 HEAD + 6 SURFACED hits resolve to blp_client.py, server.py and bloomberg_entitlement_probe.py, all //blp/refdata. Every //blp/emsx occurrence is in the DOC band. The search discriminates.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Source reads re-run against the same commit f09cbd13ef; comp-find re-invoked with identical arguments.",
+      "observed": "Identical hit counts and identical band splits on repeat invocation. Source-read claims are pinned to a commit, so they resolve identically at that vintage.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Live re-probe of the 6-service openService map",
+      "reason": "INHERITED from NFRA_BBGMCP_PRD 2026-07-30 (13d) and marked stale in the map rather than re-probed. Re-probing is a live vendor call the map does not need, and the DAPI is down as of 17:16Z."
+    },
+    {
+      "item": "Enumeration of out-of-repo session openers (Yang's live OneDrive notebooks)",
+      "reason": "Structurally invisible to repo tooling. Named as a coverage hole in section 6 rather than silently omitted."
+    }
+  ],
+  "surprises": [
+    "Two interpreters are deliberately in the path (cma for the pull, Python311 for the publisher), so a green bloomberg_health from the MCP server does not prove a runnable pull -- different process, different session.",
+    "The MCP server's read-only property is an ENTITLEMENT fact as well as a code convention: //blp/emsx is not reachable from this seat at all."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {"tool": "comp-find", "invocation": "comp-find \"blpapi\"", "result": "53 hits / 25,663 files scanned, 1 UNREADABLE; bands DEF=6 SURFACED=21 DOC=26. Located all 3 in-repo session openers."},
+    {"tool": "comp-find", "invocation": "comp-find \"//blp/\"", "result": "35 hits; bands HEAD=3 SURFACED=6 DOC=26. Surfaced NFRA_BBGMCP_PRD and its openService-probed service table -- build-ladder rung 2, reused rather than re-derived."},
+    {"tool": "comp-which", "invocation": "comp-which \"how do I grep the repo\"", "result": "Forwarder RAN and produced its own banner (XXX.md A.3 EXERCISE half -- resolution is not execution). PATH: 91 of 97 comp-tools resolve bare."}
+  ]
+}
