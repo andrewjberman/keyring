@@ -384,6 +384,113 @@ first_pass_census:
 # C4" 2026-07-30; count is the resolver's, never this comment's) are listed per segment,
 # listed per segment; both entry paths land in the same registries.
 # =============================================================================================
+# =============================================================================================
+# C4 SUBJECT x FUNCTION GRID -- the MECE schema UNDERNEATH c4_segments.
+# Ratified Andrew-direct 2026-08-12 (CRO terminal). Terms Subject/Function are registered in
+# infra/system/ontology/SYSTEM_DEFINITIONS.yaml and CITE this block as their authority.
+# =============================================================================================
+c4_subject_function_grid:
+  status: RATIFIED 2026-08-12 (Andrew-direct, CRO terminal)
+  purpose: >
+    The five c4_segments are a ROUTING INDEX, not a classification. This grid is the
+    classification they index. A segment is a NAMED QUERY over this grid -- optimized for agent
+    RECALL, deliberately overlapping -- and the grid is what denominators resolve against.
+    Rationale, Andrew-direct verbatim -- "the premise of C4 is to broadly cover what the Opal
+    system does/contains". The prior single axis mixed a subject cut and a function cut on one
+    level (Rule 24(ii) grain incoherence), the same flattening that retired Territory one rung
+    down (substrate x deploy_state on one axis).
+  subject:
+    question: What world does this describe?
+    postulate_note: >
+      MECE over the three worlds Opal touches. client and market are EXTERNAL referents;
+      estate is SELF-REFERENTIAL, and that asymmetry is the normal shape of a system that
+      observes itself, not a defect. estate passes the residue-bucket test -- its contents are
+      statable POSITIVELY (graph infrastructure, the agent fabric and its ops, the ontology,
+      comp-tooling, governance records) rather than as "everything else". Contrast
+      UNASSIGNED-RESIDUE in c3_deterministic_structures, which genuinely IS a residue bucket
+      and is named as one.
+    values:
+      client: >
+        Advisor-, client- and partner-level data and the systems over it -- the business we
+        run. Andrew-direct: "advisor-level data and systems, e.g. the advisor intelligence and
+        model portfolio portal products and what they consume."
+      market: >
+        Non-client external financial data and the systems over it -- the environment we
+        operate in. Andrew-direct: "non-partner data and systems, e.g. the market overview
+        portal product and most of the data coming in from bloomberg and factset that is not
+        explicitly about clients/their data, e.g. the news scanner and news ingestion backend."
+      estate: >
+        Opal's own machinery as the subject -- the instrument we operate with. The referent is
+        the Estate itself (SYSTEM_DEFINITIONS Estate = THE COLLECTIVE SUBSTRATE, re-ruled the
+        same day). Andrew-direct: "the tools i use to build the estate, like the multiagent
+        fabric and their ops, ontology, graph infrastructure (kuzudb/trino/nessie/iceberg)."
+        ⛔ NOT named `internal` or `infra` -- Andrew floated both and they were declined WITH a
+        reason: `internal` is an AUDIENCE word (not-customer-facing), and audience is a
+        DIFFERENT discriminator already separating the experience column from this row, so
+        placing it here would re-import the exact two-principles-on-one-axis flattening this
+        grid exists to remove. `infra` implies plumbing and excludes the ontology and
+        governance records, which are not plumbing.
+  function:
+    question: What role does it play in the system?
+    postulate_note: >
+      COARSE BY DESIGN. Andrew-direct -- "Function is good and it doesnt matter if multiple
+      things are done under that; i dont think it needs to be single action, will never be the
+      case of a systems level abstraction layer." Rule 24(i) binds on values being mutually
+      EXCLUSIVE, never on values being ATOMIC; a function value covering several actions is
+      correct, not a violation.
+    values:
+      acquisition: Ingest, refine and store -- feeds, medallion pipelines, converters, bronze/silver/gold.
+      analysis: Compute and engines -- analytics, scoring, models, derived research artifacts.
+      serving: Delivery, identity and access -- serving routes, user tables, gateway, IAM.
+      experience: A tool or surface a human operates directly -- portal tools, agents, CLIs.
+      build: >
+        PROVISIONAL, NOT YET RATIFIED AS A FIFTH VALUE. Deploy/CI machinery that acts ON the
+        estate without describing it. OPEN QUESTION, deliberately left open rather than decided
+        by construction -- "the tools I use to build the estate" is already fully described by
+        subject:estate spanning the four functions above, so `build` may collapse and leave a
+        clean 3x4 grid. The 29-vertical placement pass settles it EMPIRICALLY; do not cite
+        `build` as ratified until it does.
+  segment_definitions:
+    note: >
+      Each of the five c4_segments resolves to a ROW or a COLUMN of this grid. Three rows plus
+      two columns is exactly the five segments -- which is the structural reason the segments
+      overlap at all.
+    partner-data: subject:client (ROW)
+    market-intelligence: subject:market (ROW)
+    andrew-infrastructure: subject:estate (ROW) -- renamed from estate-infrastructure, Andrew-direct 2026-08-12
+    interactive-products: function:experience (COLUMN)
+    access-delivery: function:serving (COLUMN)
+  overlap_law:
+    rule: >
+      A ROW and a COLUMN MUST intersect -- a row-x-column overlap is CORRECT BY CONSTRUCTION and
+      is never a finding. A ROW-x-ROW overlap is a DEFECT -- rows are mutually exclusive by
+      MECE, so a vertical served by two rows has an UNRESOLVED SUBJECT and requires adjudication.
+    measured_2026_08_12: >
+      38 assignment slots over 29 distinct verticals. 8 verticals are multi-segment -- 6 are
+      row-x-column (legitimate) and 2 are row-x-row (defects, named below).
+    open_adjudications:
+      model-portfolios: >
+        ROW(client) x ROW(market) -- a genuine subject ambiguity. Model portfolios carry both
+        client allocation and market construction. Subject must be adjudicated, not split.
+      ops-internal: >
+        ROW(market) x ROW(estate) x COL(serving) -- spans two rows. Behaves as a catch-all;
+        likely needs decomposition rather than a subject ruling.
+    semantically_suspect_not_a_defect:
+      portfolio-management: >
+        COL(experience) x ROW(estate) is structurally legitimate, but subject:estate for a
+        client-facing portfolio tool is semantically odd and is flagged for the placement pass.
+        Structure alone cannot catch this class -- only the semantic read can.
+  non_summable_rule:
+    rule: >
+      ⛔ C4 IS NOT SUMMABLE. Per-segment vertical counts total 38 across 29 distinct verticals,
+      so any per-segment denominator OVERSTATES BY 31 PERCENT. Report denominators against the
+      GRID (subject x function), never against segment membership.
+    why: >
+      This is the same law as SYSTEM_DEFINITIONS Substrate_Side one rung down -- a presentation
+      device that is CORRECT as a cover and WRONG as a partition. Substrate_Side pooled an
+      average across populations with no shared scale (79.3 vs 13.2 averaging to 38.4, which
+      described neither); C4 double-counts membership. Same failure, two grains, one rule.
+
 c4_segments:
   partner-data:
     display_name: Partner Firm Data
