@@ -255,6 +255,64 @@ level up.** Added an explicit "if layer 1 FAILS" ladder (re-probe → restart bb
 instead of editing my file.** That is why the fix lands in my hands and carries to MSTR~Z's
 propagated copy.
 
+## FOURTH DEFECT (~1739Z) — and it reached ANDREW as a wrong action item
+
+`0.0.0_AB_MSTR~Z` (173940Z), after Andrew asked *"What do you mean bloomberg needs my phone?"*
+
+**My runbook asserted "the MFA/OTP goes to Andrew's phone," cited to `prompt.md`. Verified at
+source: that is an IMPORT FROM A DIFFERENT AUTHENTICATION SYSTEM.** `prompt.md:15-27` is entirely
+about **`opal-gateway-bbg`, the MS Entra delegated-OAuth identity** — credential
+`opal/mcp/opalbloomberg-login` in Secrets Manager, "surface the auth URL" = a browser consent flow.
+**None of it describes the Bloomberg Terminal login.** And this same file, ~70 lines below, records
+the only measured Terminal login (08-11): **"No second factor — username + password went straight
+through."**
+
+**Operational consequence, which is why it mattered:** the blocker is the **CREDENTIAL**, not a
+standing phone. Different asks, different lead times — and Andrew got the wrong one from my 172830Z
+escalation.
+
+Corrected as a four-row epistemic table rather than a strike (credential = binding · second factor
+= possible, unquantified · one measured login = none · "MFA to Andrew's phone" = unsupported for the
+Terminal, true of the gateway identity only), ending on **the ask is the credential**. Provenance
+named as the finding: **two login systems, one seat, similar-sounding words — check which system a
+constraint was MEASURED against before importing it.**
+
+### The honest root of all four defects — not four mistakes
+**Three are the same act:** a general claim cleaner than the evidence — health *"could not have said
+otherwise"* (it had discriminated 2/2), the two-row table implying one state (the day had two), the
+imported MFA constraint (measured on a different system). **The fourth is the inverse:** the layer-1
+branch I never wrote, because I had not hit the case yet. **Generalising past the measurement, and
+failing to cover what I had not seen.**
+
+**Both escalated errors were caught from OUTSIDE my own reasoning** — CRO~Z's contradiction, then
+Andrew's question. Neither was going to be caught by me being careful. MSTR~Z now grounds my claims
+before they reach Andrew; that is correct practice and I would have asked for it.
+
+## ~1754Z — LAW CORRECTION relayed by `2.0.0_SA_COO~Z`, and a MECHANIC a successor must know
+
+**⚠ MECHANIC, recorded here because it is invisible from inside a session:** `CLAUDE.md` loads into
+context **at session start and is NEVER re-read**. A law corrected mid-session does not reach a
+running seat, and nothing inside the session can detect that. **This applies to whoever holds this
+seat next: your operating copy of the law may already be stale on arrival.**
+
+**The correction:** Rule 21's claim that `header_metrics_fresh` *"exists in this estate ONLY AS A
+RECORD OF ITS OWN NONEXISTENCE"* is **FALSE** (fixed @ccb6d051e6). The key exists in
+`opal-data-inf` at 324 B. The original measurement (zero hits under `opal-data-bd`) was **correct**;
+the error was generalising *"absent in bd"* into *"does not exist."* It ran ~6 weeks and reached a
+GO, a config file, and the law file itself.
+
+**BINDING ON MY TEAMS REPLIES:** an absence verdict **names the tree it searched**. *"Not in bd"* is
+answerable; *"we don't have that"* requires enumerating every tree or it is not a claim — **said to
+the sender, not just in my notes.** The estate is firm-partitioned (bd/inf/cot); absent in one tree
+can be live in another. **A 404 in the wrong bucket does not error — it returns a clean, confident,
+well-formed ZERO.**
+
+**This is the general form of my own day.** Same shape in all six instances: *a true statement about
+what I looked at, promoted to a false statement about what is* — the `.ST` wrong-column empty set,
+the case-sensitive grep returning 0, the health over-generalisation, the two-row table, the imported
+MFA constraint, and this. **It did not arrive as new law; it arrived as the name of the thing that
+had already bitten me four times before lunch.**
+
 ## State
 ON DUTY. Fabric inbox Monitor `bw86cyhv4`, Teams Monitor `bpf5tn8h5` (identity-pinned), broker
 LIVE, **zero crons**. Portal serving current T-1 (`data_as_of 2026-08-11`) — **unaffected**.
