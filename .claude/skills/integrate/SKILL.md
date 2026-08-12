@@ -190,8 +190,44 @@ git merge origin/SITEZ            # (or origin/CLOUD from the site-Z side)
 # resolve ONLY the overlap set, per the agreed resolutions
 git push origin CLOUD             # your own branch; the deploy gate may sweep for minutes
 ```
+### ⛔⛔ THE SECOND LEG'S PUSH IS A **DEPLOY EVENT**. IT WRITES LIVE PRODUCTION S3.
+
+**MEASURED 2026-08-12 on the first completed reconcile — nobody predicted this, either side.** Site
+Z's CLOUD→SITEZ push carried ~100 files under `data/*/scripts/**` that were new *to their branch*;
+the pre-push `safe-deploy` gate did exactly its job and **deployed them**, reporting *"all files
+deployed and verified."* Independently confirmed from the laptop against the live primitive, in
+explicit UTC — `s3://opal-data-inf/code/silver/build_billing_dim.py` **LastModified
+16:56:18 GMT**, `code/gold/INF_D_02.advisor_client_detail.py` **16:55:45 GMT** — inside the push
+window, ~90 seconds before the leg-2 report. *(Mechanism CONFIRMED at the artifact. The "~100 files"
+magnitude is site Z's count and was NOT independently re-derived; 5 objects were confirmed in the
+inf tree specifically.)*
+
+**THIS IS NOT A FAULT — the S3 artifacts now match the merged tree, which is correct. THE DEFECT IS
+THAT IT IS INVISIBLE IN THE PROTOCOL.** The integrator believes they are reconciling *git* and does
+not realise they are shipping *code*.
+
+**BEFORE THE SECOND LEG'S PUSH, ENUMERATE WHAT WILL DEPLOY:**
+```bash
+git diff --name-only HEAD@{1} HEAD -- 'data/*/scripts/**' | tee /tmp/willdeploy.txt | wc -l
+```
+**⛔ THE SHARP EDGE: if the two fabrics hold DIFFERENT content for the same script, the second push
+silently rewrites S3 with its merged view.** The first leg is usually inert (its files already
+deployed from that fabric); **the second leg is where the shipping happens**, and it happens to
+whichever fabric merges second — an operational asymmetry the merge ORDER decision (Step 4) never
+mentioned it was making. **Weigh that when choosing the order**, and say out loud which fabric is
+taking the deploy.
+
 - The pre-push safe-deploy gate verifies deploy-scope scripts against S3 — **a slow push is the
   gate working, not a hang.** Run it backgrounded and read the result.
+- ⛔ **A PUSH TIMEOUT TELLS YOU NOTHING ABOUT WHETHER IT LANDED.** Measured same run: >2 min, first
+  attempt timed out, the ref had landed anyway. **Never retry blind — `git ls-remote origin
+  refs/heads/<branch>` is the oracle.** A blind retry after a successful-but-timed-out push is how
+  you turn a completed deploy into a confusing second one.
+- ⛔ **NEVER `git stash` to clear a dirty tree for the merge** — prohibited on this shared tree, and
+  **stash is the reflex**, which is why it is named here. Back the files up in full (patch + copies)
+  and leave open work IN-TREE. *(Site Z found 16 modified files pre-merge, 10 colliding; all 16 were
+  backed up before anything was touched, and 9 cleared as machine churn — timestamp bumps on
+  `.open_deploys` entries the peer had since closed.)*
 - **Push carries every lane's committed work, not just yours** — that is the LD-0367 rationale.
   Enumerate the payload (`git log --format='%an' origin/CLOUD..HEAD | sort | uniq -c`) so you can
   say what you carried.
