@@ -635,3 +635,97 @@ it is the single-field `PX_LAST` request, the cheapest-looking one.
 discover for themselves**, and premise 1 is load-bearing for §8.
 
 *Registry complete. Running total of Bloomberg calls: 2, both `health`.*
+
+---
+
+# INCREMENT 6 — premise 1 CLOSED, and §8 was SHORT BY TWO REQUESTS
+
+Produced entirely from **local file reads** on this box (the OneDrive production project resolves
+here) per MSTR~Z 173120Z: *map from source, config and the estate's records while transport is down.*
+**No vendor egress. Running total still 2 `health` calls.**
+
+## 21. PREMISE 1 IS CLOSED — the two homes are byte-identical where it matters
+
+The load-bearing unverified premise under §8 was one-producer-two-homes: the request universe is read
+off the **repo** copy while production runs the **OneDrive** copy, and the README asserted their
+equivalence as prose.
+
+**MEASURED, cell by cell:** `market_indices_data_pull.ipynb`, live production vs repo `tplus1` —
+**14 code cells each, 0 of 14 differing.** Request universe: **170 identifier-shaped literals in
+each, symmetric difference EMPTY.**
+
+**Premise 1 status: CLOSED for the data-pull notebook.** §8's request universe is therefore a
+statement about production, not merely about the repo. *(The README's two declared deltas are
+unaffected: `date_end` is `tzero`-only, and `TEMPLATES_DIR` lives in the regression notebook.)*
+
+> **A retrieval note worth keeping:** native Python could not open the `/cygdrive/c/...` path that
+> bash `ls` had just resolved — it raised `FileNotFoundError`. **It failed LOUD, which is the lucky
+> case.** A `try/except` around that read would have returned "file absent" and I would have recorded
+> premise 1 as *unverifiable* when it was one path-form away from being closed.
+
+## 22. ⚠ I NEARLY CORRECTED A CORRECT NUMBER — 165 STANDS
+
+My re-check reported **170** identifiers against the **165** committed in §8, and the reflex was to
+correct §8 down­stream of two prior denominator errors. **I ran both instruments against the same
+cell instead, and the newer one is the contaminated one.**
+
+| Instrument | Pattern | Count |
+|---|---|---|
+| A (used in §8) | `'name': 'ticker'` **pair-shaped** | **165** |
+| B (the re-check) | any quoted literal ending `Index\|Comdty\|Curncy\|Equity` | 170 |
+
+**The 5 extra are not tickers.** They are display NAMES that happen to end in "Index" — `Bloomberg
+Financial Condition Index`, `Chicago Fed Financial Condition Index`, `Leading Index`, `NAHB Housing
+Market Index` — plus the word `Equity` from the comment `# Equity Indices`.
+
+**§8's 165 is correct and stands.** The lesson is not about regexes: **after two real denominator
+errors, the third disagreement felt like a third error, and the pull toward "correct it again" was
+strongest exactly when the number was right.** When two instruments disagree, the finding is *why*,
+never *adopt the newer one*.
+
+## 23. ⛔ CORRECTION TO §8 — THE DAILY RUN EXECUTES **TWO** NOTEBOOKS, AND I MAPPED ONE
+
+§8 states *"The whole daily pull is THREE `HistoricalDataRequest`s."* **That is the data-pull
+notebook's three, stated as the whole pull. It is not the whole pull.**
+
+`run_daily_pull.py:53-55` -> `NOTEBOOKS = ["market_indices_data_pull.ipynb",
+"model_portfolio_regression_analysis.ipynb"]`, executed in a loop at `:237-238`. **Both run every
+day, in production.** The regression notebook (23 code cells) imports `tia.bbg` and issues **two
+further requests at cell 7:**
+
+| # | Function | Request type | Securities | Fields | Window |
+|---|---|---|---|---|---|
+| **R4** | `download_bloomberg_etf_data` | **HistoricalDataRequest** | `{ticker} US Equity`, **RUNTIME-DERIVED** | factor field dict | `date_end + YearEnd(-6)` -> `date_end`, DAILY |
+| **R5** | `download_bloomberg_etf_characteristics` | **ReferenceDataRequest (BDP)** — `sids[fields]`, no date span | same runtime set | characteristics dict | n/a (point-in-time) |
+
+**Two things this changes, and the second is the sharper one:**
+
+1. **R5 is a `ReferenceDataRequest` in the daily production path.** §3's table listed
+   `ReferenceDataRequest` as built-but-unused-by-the-pull. **It is used, every day.**
+2. **R4/R5's securities are NOT literals** — `available_tickers` is filtered from
+   `holdings_pivot.columns`, i.e. **the models' actual ETF holdings at runtime.** This is precisely
+   the blind spot §8's own caveat named (*"blind to any ticker built dynamically at runtime"*).
+   **The caveat was correct and I did not then go looking for an instance; there was one, in the
+   production path, in the other notebook.** A named blind spot is not a discharged one.
+
+**Corrected shape of the daily pull: FIVE request shapes across TWO notebooks** — R1/R2/R3 (+R3b
+conditional) from the data-pull notebook, R4/R5 from the regression notebook. The §19 registry rows
+are unaffected (they map served keys to R1-R3, and `etf_returns`/`positioning` characteristics
+trace to R4/R5 via `model.pkl`, which the registry already marks DERIVED).
+
+**Sizing consequence:** any future pull estimate must count R4/R5, whose identifier count is
+**runtime-determined and therefore not knowable from source** — the honest sizing input is
+"holdings breadth at run time," not a fixed number.
+
+## 24. REVISED COVERAGE — what increment 6 moved
+
+| Axis | Before | After |
+|---|---|---|
+| One-producer-two-homes (premise 1) | **UNVERIFIED** | **CLOSED** — 0 of 14 cells differ |
+| Daily-run request shapes | 3 (+1 conditional) | **5 (+1 conditional), across 2 notebooks** |
+| Notebooks mapped | 1 of 2 | **2 of 2** |
+| Ticker universe | 165 literal | **165 literal, CONFIRMED** + a runtime-derived ETF set (count unknowable from source) |
+| `ReferenceDataRequest` in production | listed as unused by the pull | **used daily (R5)** |
+
+*Increment 6 ends here. Zero Bloomberg calls; all of it local file reads. Running total: 2, both
+`health`.*
