@@ -62,7 +62,29 @@ MECHANISM (which field carries it, its grain, its source — DURABLE) with the v
 the day of measurement — EPHEMERAL BY CONSTRUCTION).** For a catalog, **only the mechanism belongs**: a
 registry that asserts a specific date is wrong after the next producer run, and it is wrong *silently*,
 because nothing in the cell marks which half expires.
-**Measured: 20 of 26 vintage cells carry an expiring value.**
+**Measured: 20 of 26 vintage cells carry a literal date.**
+
+⛔ **R-3 AMENDED 2026-08-12 ~2048Z — "REFUSE A LITERAL DATE" WAS TOO BLUNT AND WOULD HAVE DELETED A
+FINDING. Credit `3.0.0_SA_CVO~Z`, brief `@ac8e19eac9` (Andrew-requested).**
+>> **`FROZEN 2026-04-07` IS NOT A STALE VINTAGE — IT IS THE FINDING.** It is the date a **720-key news
+family stopped being written.** My diagnosis holds for the ~25% that are genuinely ephemeral; on the rest a
+blanket strip would **delete the single most load-bearing fact in the unit.** <<
+**CORRECTED PRECONDITION: the lift CARRIES EVERY DATE WITH A DECLARED KIND AND DURABILITY** — not
+stripped, not trusted, **typed.** An ephemeral as-of is marked ephemeral (refreshable/omittable); a
+frozen-family date is marked permanent (preserved *as* a finding).
+
+⛔ **AND THE VINTAGE FIELD CANNOT BE DATE-TYPED AT ALL — FOUR KINDS CO-OCCUR:** business as-of ·
+generation time · period boundary · **CONTRACT VERSION**, and the fourth breaks the schema: **`clients-tab`
+is a Lambda route with NO FILE**, so it has neither `data_as_of` nor `generated_at` and its nearest vintage
+is **`partners-api-v1.15.6`**. **A vintage field admitting only dates cannot hold that row.** This extends
+CVO~Z's own L-4 property one axis: the field is **multi-valued AND multi-typed, or lossy by construction.**
+
+⚠ **THE ARGUMENT AGAINST AUTOMATING THE CLASSIFICATION IS MEASURED, NOT PRUDENTIAL: THREE MECHANICAL
+CLASSIFIERS WERE BUILT AND ALL THREE FAILED** — including its author's own, which tagged
+`cma_excel.data_as_of = '2026-12-31'` a **permanent period close** because `12-31` matches a quarter-end
+pattern. **That is the FOURTH over-broad predicate in one session returning a clean, well-formed wrong
+answer.** ⛔ **So kind and durability are DECLARED BY THE AUTHOR, never inferred by a matcher** — the one
+place in this program where metadata beats automation, and the choice rests on a measured **0-for-3**.
 
 ### Cells VERIFIED TRUE (3 of 6)
 `canonical_name` — key exists, live, 152,646 B · `disposition` (keep as-is; single producer/accessor/
