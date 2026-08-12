@@ -21,7 +21,52 @@ pull would have run against a dead DAPI. **A running `bbcomm` is not a running T
 |---|---|---|
 | P1 | An **interactive console session** exists | `query session` -> a `console` line, `Active`. GUI sign-in has nowhere to go without it; a services-only session cannot be driven. |
 | P2 | Credentials in hand | The Terminal login is a **person's** Bloomberg login (this box: the daily-pull user). See CREDENTIAL HANDLING below — do not source it from a chat thread as routine. |
-| P3 | Terminal not already running | `Get-Process wintrv` empty. If it IS running, you have a different problem (logged out vs not launched). |
+| P3 | Terminal not already running | `Get-Process wintrv` empty. If it IS running, you have a different problem (logged out vs not launched). **P3 IS NOT A GREEN LIGHT — P0 BELOW OVERRIDES IT.** |
+
+### ⛔ P0 — RUN THIS FIRST. An absent `wintrv.exe` is NOT evidence you need to sign in.
+
+**Added 2026-08-12, measured, after the 0752Z RMM reboot.** `wintrv.exe` was absent all morning —
+only `bbcomm.exe` + `blpcrashmon.exe` running (denominator: 316 processes on the box, exactly 2
+Bloomberg ones) — **and the entitlement was live the whole time.** The 07:00 ET scheduled pull
+produced correct login-scoped CIX data with no GUI and no agent anywhere in the path.
+
+**So the two process readings are each non-discriminating, in opposite directions:**
+
+| Date | `bbcomm` | `wintrv` | `bloomberg_health` | Entitlement | Lesson |
+|---|---|---|---|---|---|
+| 2026-08-11 | up | **dead** | `ok:false` | **DEAD** (12.5h) | a running `bbcomm` is **not sufficient** |
+| 2026-08-12 | up | **absent** | `ok:true` | **LIVE** | a running `wintrv` is **not necessary** |
+
+`bloomberg_health` read cleanly through *both* states, so **it cannot discriminate either** — it is
+an instrument that could not have said otherwise. Neither the process list nor the health check
+answers "is the entitlement live."
+
+**THE ONLY TEST THAT HAS EVER DISCRIMINATED — resolve the `.ST` custom index.** CIX resolution is
+terminal/login-scoped, so a correct series is the sole evidence that an entitled session backs
+`bbcomm`. Run it through the **pull's own interpreter** (`C:\Anaconda\envs\cma\python.exe`), three
+layers, and run the generic-ticker control as a **separate request** so a CIX failure cannot be
+blamed on a dead transport:
+
+1. `blpapi.Session` + `openService("//blp/refdata")` — transport.
+2. `SPX Index` HistoricalDataRequest returns rows — positive control.
+3. `.ST Index` HistoricalDataRequest — **PASS = ~683 rows, inception `2023-12-29` @ `100.0000`.**
+
+**If layer 3 passes, STOP. Do not launch `wintrv`, do not sign in. There is nothing wrong.**
+
+**Why this gate exists and is not pedantry:** a sign-in attempt is *not free*. The 08-11 recovery
+below burned a failed login attempt, and **Bloomberg locks the account on repeated failures** —
+so acting on the absent-`wintrv` false premise converts a non-problem into a lockout and a support
+call. The wrong inference here is the natural one, which is exactly why it needs a gate rather
+than a caution.
+
+⚠ Retrieval trap when you check the pkl instead of the wire: `.ST` lives in the **`bbg_ticker`**
+column, **not** `index_name` (which carries `Short Term`). Filtering the wrong column returns a
+clean empty set that reads as *absence* and sends you hunting a defect that does not exist. Print
+the denominator and a positive control beside any zero.
+
+*Known mis-resolution shape (2026-08-03): ~1449 rows at price ~1.9. It passes every row-band and
+shape gate the tripwire applies — which is why the tripwire structurally cannot catch it, and why
+this content check is run by hand after any pull that crossed a reboot or a fresh login.*
 
 ## Procedure
 
