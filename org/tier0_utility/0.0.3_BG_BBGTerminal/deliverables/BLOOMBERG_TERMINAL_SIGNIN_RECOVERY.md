@@ -237,10 +237,64 @@ and this procedure stops at step 5.
 The credential reached this seat as **plaintext in a Teams message** — it is now permanent,
 searchable and backed up in the chat store, and it passed through an agent transcript.
 Recommended to Andrew in-thread: **rotate it, keep the new value in AWS Secrets Manager**
-alongside `opal/mcp/opalbloomberg-login` (the pattern already used for this seat's own
-login — secret NAME citable, VALUE never), and delete the messages.
+(secret NAME citable, VALUE never), and delete the messages.
 **The value is not recorded in this document, in the session log, or in any thread file, and
 must not be.**
+
+### ✅ STATUS 2026-08-12 ~1948Z: **CLOSED BY ANDREW'S DECISION — accept the credential as-is.**
+
+Put to him by `4.0.0_SA_CRO~Z` as a two-option card (rotate / accept), with the full context: the
+value sits in a Teams thread (permanent, searchable, backed up), in Secrets Manager, and in two
+agent transcripts. CRO~Z recommended rotate, low urgency. **Andrew-direct, verbatim: *"Call 1 A,
+Call 2 B"* → (b) ACCEPT.** Durable record @4b7cc7b4c1.
+
+**The recommendation is discharged by a sovereign decision — NOT because the exposure went away and
+NOT because the finding was wrong.** The 08-11 finding stands exactly as recorded above; he has
+**accepted the residual risk** with the facts in front of him. Those are different closures and the
+distinction is the point: a future reader must not infer that the exposure was re-measured and
+found benign.
+
+**⛔ SCOPE BOUND — his word binds the addressed question, verbatim, nothing wider.** This closes the
+rotation question **for THIS credential only**. It is **not** a general ruling on credential
+handling, **not** licence to place other secrets on chat surfaces, and **not** a reversal of the
+guidance in this section for **future** credentials — which **stands unchanged**.
+
+**Where the credential now lives:** `bloomberg/terminal/login` in AWS Secrets Manager (created by
+CRO~Z 2026-08-12, round-trip verified without printing either value). Independently confirmed to
+exist from this seat by `describe-secret` — **metadata only, with a negative control**; the value
+was not read. **Deliberately named far from `opal/mcp/opalbloomberg-login`**, and its own
+description carries the disambiguation. `integrations/bloomberg/auth/bbg_credentials.py` resolves it
+into a child-process environment and has **no mode that prints it**.
+
+**This changes nothing about the daily pull:** it authenticates to nothing and rides the logged-in
+Terminal entitlement via `bbcomm`. The secret exists for the DAPI-down sign-in protocol only.
+
+### ⛔ NAME COLLISION — `opal/mcp/opalbloomberg-login` IS **NOT** THE BLOOMBERG CREDENTIAL
+
+It is the **MS Entra** login for this seat (`opal-gateway-bbg` identity, OTP-to-Andrew MFA) — a
+**Microsoft** credential that happens to be named for the Bloomberg seat. **Anyone sent to find
+"the Bloomberg credential" lands on it, and it is the wrong one.** The only other keyword match,
+`opal/portal/svc-data-refresh`, is a portal service credential whose *description* mentions
+OPAL_BBGTML — also not a Terminal login.
+
+*This section previously cited `opalbloomberg-login` as "the pattern already used for this seat's
+own login," which fed the very collision it now warns about. Removed.*
+
+**This is the same defect as the imported-MFA error above, arriving from the opposite direction** —
+that one carried an Entra *rule* into a Terminal runbook; this one is an Entra *secret name* that
+reads as Bloomberg. Found independently, from the Secrets Manager side, by someone who had not seen
+that correction. **Two directions onto one collision is evidence it is structural, not careless:
+this seat holds two authentication systems whose names do not distinguish them.**
+
+**Consequences if resolved wrongly:** a failed Bloomberg login (the P0 lockout risk), or an Entra
+secret handled as a Terminal secret. **A rename/description that disambiguates is Andrew's and
+CTO's call — named here, not proposed as work.**
+
+**Custody, not automation** (CRO~Z to Andrew, and it is right): the pull authenticates to *nothing*
+— it rides the logged-in Terminal's entitlement via `bbcomm` on `127.0.0.1:8194`
+(`blp_client.py` carries only host + port). **So storing the Terminal login automates nothing in the
+pipeline**; it would only feed a scripted GUI sign-in, which the P0 gate argues against. The value
+of rotating it is closing the plaintext exposure — not enabling anything.
 
 ## The gap this recovery does NOT close
 
