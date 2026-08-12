@@ -446,7 +446,62 @@ to remediate.
 
 ---
 
+## 12b. ⛔ THE METER IS **BYTES** — ANSWERED 2026-08-12 ~2020Z, AND IT IS NEITHER MODEL §13 BRANCHED ON
+
+**Andrew-direct, VERBATIM (relayed by CTO~Z @`e56e9e2d4c`):** *"They meter amount of data in size
+being downloaded."*
+
+**I designed §13 to be minimal under two candidate models — unique-securities and data-points.
+The real meter is a third one: DOWNLOADED PAYLOAD SIZE.**
+
+**What this changes:**
+- **The sizing unit is BYTES, not a security count.** A menu priced in securities × fields × rows is
+  denominated in the wrong currency.
+- **A byte meter is the MOST ESTIMABLE of the three** — a payload can be priced *before* the call
+  from row-shape × row-count, which a data-point meter makes much harder. **The strategy gets easier,
+  not harder.**
+- ⭐ **THE CALL-SHAPE RULE IS VINDICATED RATHER THAN SUPERSEDED.** Under a size meter,
+  schema/identifier resolution is **structurally cheap** (few bytes) and value retrieval is
+  **structurally expensive** — which is *exactly* the boundary "reference calls for resolution, not
+  for values" draws. **A tool-name rule would still read GREEN on a byte-heavy harvest conducted
+  through permitted calls.** The refinement was right for a reason I did not yet know.
+- **`maxDataPoints` becomes a BYTE control, not just a row control** (§29): capping rows caps payload,
+  per-security, deterministically.
+
+### 12c. Re-pricing the traversal already made
+
+| Act | Rows | Payload |
+|---|---|---|
+| T0.5 schema dump | 0 | **0 bytes of DATA** (service schema, not a data response) |
+| T2a cap test | 5 | ~5 rows × `{date, PX_LAST}` |
+| T2b 4-class probe | 4 | ~4 rows |
+| T2c client cap test | 2 | ~2 rows |
+| **TOTAL** | **11** | ⚠ **ESTIMATED sub-kilobyte** — see the caveat |
+
+⚠ **THESE ARE ESTIMATES, NOT MEASUREMENTS, AND THE DISTINCTION IS THIS MAP'S OWN STANDARD.** I did
+not record response byte sizes — I was counting rows, because rows were the unit I believed mattered.
+**The unit was wrong and so the instrument was pointed at the wrong quantity.** A row of
+`{"date": "2026-08-12", "PX_LAST": 7754.28}` is ~45 bytes serialised, so 11 rows plus envelopes is
+plausibly under a kilobyte — **plausibly, not measurably.**
+
+**For scale, and this is the number that matters:** the production daily pull requests
+**165 tickers × up to 13 fields × ~36 years monthly**, on the order of **10⁵–10⁶ values**. **My entire
+traversal is a rounding error against one morning's scheduled run** — which is an argument for
+proportionality in future asks, **not a licence**, since the constraint is Andrew's to relax.
+
+**PROPOSED (not built): have `blp_client` record `len(response)` per call into a spend ledger**, so
+pull pricing becomes MEASURED rather than estimated. Small, additive, and it turns §13 from an
+estimate into an instrument. **Not built here — this is a proposal, and any pull remains a separate
+sized ask.**
+
+---
+
 ## 13. SIZED-PULL MENU — offered, not requested
+> ⚠ **RE-DENOMINATE PER §12b: the options below are stated in securities × fields × date span, which
+> was the wrong currency. Their BYTE cost is what a sizing ask must carry.** Option A (165 securities
+> × 1 field, no history) is the byte-cheapest by a wide margin — no date dimension at all. Option B
+> (~683 rows) and Option C (5 rows) are both trivial in bytes. **All three remain negligible against
+> one production morning; the re-denomination changes the units, not the verdict.**
 
 **The map is COMPLETE WITHOUT ANY PULL.** I am not manufacturing a need for one. This section exists
 so that *if* Andrew or CTO~Z wants live verification, the ask already carries numbers rather than
