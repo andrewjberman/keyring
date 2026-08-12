@@ -318,6 +318,41 @@ above, never on wall-clock age alone.**
    reproducing the copied bytes EXACTLY proves the move changed **WHERE and not WHAT** -- a strictly
    stronger claim than "the values parse" or even "the values match," and cheap when a copy step exists.
 
+## 9. SHAPE IDENTITY IS BLIND TO ROW-SET IDENTITY AND TO LABEL SEMANTICS -- A GAP IN THIS BAR, CLOSED
+
+**Added 2026-08-12. Credit: `0.4.0_DS_ClientPlatform~B`, who filed it against their OWN deliverable
+unprompted and found the precedent rather than claiming novelty.** Measured on a live P4 leg already
+sequenced onto the DELTA=0 no-hold path -- **a `SHAPE-FROZEN` PASS (same fields, same nesting,
+census-identical) carried ALL of the following:**
+| axis | served | new producer |
+|---|---|---|
+| advisors | 15 (curated) | **46** -- 35 newly exposed, each with a real NAME + AUA |
+| advisors | 4 present | **ABSENT** -- overlap 11 of 15, **served is NOT a subset** |
+| client label | `("z08327149", "Chan, William & Shelley")` | `("rel_e9236546a41b7c", "rel_e9236546a41b7c")` |
+
+**THREE AXES, AND A SHAPE-FREEZE COVERS ONE.** Shape = *which FIELDS exist and how they nest*.
+Row-set = *which ENTITIES are present*. Label semantics = *what the human-facing value MEANS*. My §1
+FIELD PARITY governs the first; V28-V33 are VALUE bands; **the ENTITY-SET / CURATION / LABEL axis was
+UNBANDED, so it is invisible on every SHAPE-FROZEN row in the estate today** -- not just this family.
+
+**THEREFORE, required wherever a shape-freeze is the acceptance:**
+1. **ENTITY-SET CENSUS, BOTH DIRECTIONS, per keyed collection:** `|served|`, `|new|`, overlap,
+   **served-only**, **new-only**. ⛔ **A subset check is NOT sufficient -- the served-not-a-subset case
+   (4 served advisors absent) is the one that bites**, and a one-directional census reads it as clean.
+2. ⚠ **THE RE-KEY TRAP -- the entity-set census must be computed on a STABLE identity, never on the raw
+   key.** When the KEY GRAMMAR changes, a naive set-diff reports a SUBSTITUTION as GROWTH: 201 clients
+   re-keyed present as *"423 new clients"*. **The number is not merely wrong, it is wrong in the
+   flattering direction**, so nobody questions it. Where no stable join exists, the row is
+   **UNMEASURED**, never a pass.
+3. **LABEL-SEMANTICS CHECK:** a human-facing label must remain human-meaningful. `"Chan, William &
+   Shelley"` -> `"rel_e9236546a41b7c"` is a **REGRESSION on a live portal surface** even though every
+   field is present and the shape is identical. *(This is doctrine §6 inverted: there a NAME asserted a
+   property the CONTENT lacked; here the CONTENT lost the meaning the FIELD NAME still promises.)*
+4. ⛔ **AN ENTITY-SET EXPANSION ON A SERVED SURFACE IS A DISCLOSURE DECISION, NOT A PARITY OUTCOME.**
+   35 advisors newly exposed with names and AUA is a scope call -- **the curation that excluded them may
+   be deliberate** -- and no parity bar clears it. It ESCALATES (DIVERGE-SOVEREIGN, §3a), and the
+   escalation carries the enumerated per-entity composition, never a count.
+
 ## KILL-CONDITION DISCHARGE (what I will validate, verbatim to Andrew's words)
 
 "all code proven to compile" = the py_compile sweep (49F: DONE, 33/33, @VERIFY_49F...20260811).
