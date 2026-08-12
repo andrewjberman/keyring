@@ -83,6 +83,28 @@ extended to FOUR legs because INF_D_02 is base-held under live CPR-6 work):**
 **Controls pre-committed:** before/after flip census vs MSTR's 102/907 longitudinal baseline;
 both lag edges exercised; deploy per this ledger's pattern (rollback-first, re-download md5).
 
+## SCHEDULED-FIRE VERIFICATION: **DISCHARGED 2026-08-12 ~15:05Z -- ALL CHECKS PASS**
+
+Both standing watches read on the FIRST post-fix scheduled run (chain complete advanced
+08-11 14:59:31Z -> 08-12 15:02:12Z; serve generated_at 14:58:54Z, data_as_of 08-11 = T-1,
+calendar resolved first). Deployed code re-verified 4/4 md5 TIE BEFORE the fire.
+Interpretation table PRE-REGISTERED before the evidence existed (`PREREG_...md` @committed).
+
+- STRUCTURAL 4/4: `ending_mv_source` 908/908 roster-sourced · retired `is_fee_earning`
+  absent · **908/908 populated, ZERO source-absent** · **own tie-out 554/554 TO THE CENT**
+  (coverage changed, meaning did not -- the load-bearing control).
+- VALUE 3/3 in band: silver book **$209,225,005.59** (-0.12% vs QA pin) · served fee-earning
+  **$203,216,860.04** (+0.19%) · served **non-fee-earning $6,008,145.55** (band $6-8M).
+- Rescued class MEASURED: 354 of 908 rows, **$68,676,268.78** previously suppressed to zero
+  (pre-fix book was $140,717,260.47).
+- Cross-plane: served `total.aua` == silver book == **$209,225,005.59**, delta 0.00;
+  `unclassified_aua` 0.0. (Bucket identity is by-construction; the served/silver equality is
+  the independent fact. Mechanism INFERRED, not source-confirmed.)
+- Andrew instruction #1 + #2 now verified IN PRODUCTION on a scheduled run: non-fee-earning
+  serves at $6.01M against his ~$8M expectation and the $60M+ that started it.
+- Full record + the self-caught instrument error: `org/tier2_senior/0.4.0_DS_ClientPlatform~A/
+  logs/2026-08-12/RESULT_first_post_fix_scheduled_fire.md`.
+
 **Placement-crossing note (surfaced twice, proceeding on the architecture seat's ruling):**
 COO's letters say "re-derive in silver"; CTO twice ruled the GOLD home on Rule-17 grounds.
 Executing on CTO's placement; COO objection reopens the shape, not the mechanics.
