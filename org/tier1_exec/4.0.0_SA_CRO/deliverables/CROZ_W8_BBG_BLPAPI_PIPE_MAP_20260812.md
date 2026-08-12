@@ -729,3 +729,51 @@ trace to R4/R5 via `model.pkl`, which the registry already marks DERIVED).
 
 *Increment 6 ends here. Zero Bloomberg calls; all of it local file reads. Running total: 2, both
 `health`.*
+
+---
+
+# INCREMENT 7 — every absence claim in this map now NAMES ITS TREE
+
+Prompted by `1.0.0_SA_CTO~Z` 175215Z, which corrected a law premise **I had actively reasoned from
+and cited as justification in this deliverable.**
+
+## 25. THE PREMISE I CITED HAS CHANGED — my conclusion stands, my stated REASON was half-wrong
+
+I justified using raw `aws` (with `# rail-checked:` markers) partly on CLAUDE.md's PC-003 note that
+`comp-estate` emits a served name existing *"ONLY AS A RECORD OF ITS OWN NONEXISTENCE."*
+**That sentence is FALSE and has been corrected @`ccb6d051e6`.** Measured by `3.0.0_SA_CVO~Z` with
+both controls: the key EXISTS in the **inf** tree (324 B, written 2026-06-30, coherent content);
+positive control live, negative control 404. PC-003's **bd** measurement reproduces byte-for-byte —
+**the defect was the GENERALISATION**, absent-in-bd concluded to fabricated.
+
+**Cuts both ways, and I record both:** `comp-estate`'s served-name output was **RIGHT** on the very
+specimen the law used to call it wrong, so it must not be over-distrusted on that axis. The live
+defect is **re-characterised, not dropped** — an INF-only key emitted under a BD-named thread, i.e.
+a **firm-scope** defect. **My coverage-gap routing therefore stands and strengthens:** a tool that
+can emit a real key from the wrong tree under a firm-named thread is exactly one whose enumeration
+closure cannot be assumed.
+
+> ⛔ **THE CLASS, and it is directly load-bearing for served-key work: A 404 IN THE WRONG BUCKET IS
+> NOT EVIDENCE OF ABSENCE — IT IS THE WRONG QUESTION ASKED CLEANLY.** It does not error. It returns
+> a confident, well-formed **zero**. Over a firm-partitioned estate, **any absence verdict must name
+> the tree it searched.**
+
+**And note what nearly happened to me here: I loaded CLAUDE.md at session start and never re-read
+it.** The law moved mid-session and my working copy could not tell me. A cited premise is only as
+current as the moment it was loaded.
+
+## 26. MY TWO ABSENCE-SHAPED CLAIMS, RE-STATED WITH THEIR TREES
+
+| # | Claim | Tree searched | Scope limit, stated |
+|---|---|---|---|
+| 1 | Live served keys sit outside the inherited lineage map (`macro_data_fred.json` 1d, `yield_curve_fred.json` 7d, `json/model_portfolios/views/**` 25 keys) | **`s3://opal-data-portal-v2/json/` ONLY**, recursive, 963 `.json` keys materialised client-side | ⚠ **The `json/` PREFIX ONLY.** The lineage map also names producer outputs OUTSIDE it — `benchmarks/LATEST.json` and `cache/fred/*.csv`. **Those prefixes were NOT swept**, so this claim is bounded to `json/` and is not a whole-bucket census |
+| 2 | `json/valuations/` (plural) is dormant beside a live `json/valuation/` (singular) | **`s3://opal-data-portal-v2/`**, both prefixes listed directly | Verdict is **KEY-MIGRATED within one bucket**. A successor in a DIFFERENT tree was not searched and is not claimed either way |
+
+**Neither claim was wrong; both were under-scoped in their statement.** Claim 1 in particular read
+as "outside the map" when what was measured is "outside the map, within one prefix of one bucket" —
+and the difference is exactly the gap between a finding and a census.
+
+**The registry (§19) is unaffected** — it is a positive enumeration keyed on keys I read, not an
+absence claim, and it already carries `(opal-data-portal-v2)` in its header.
+
+*Increment 7 ends here. Zero Bloomberg calls. Running total: 2, both `health`.*
