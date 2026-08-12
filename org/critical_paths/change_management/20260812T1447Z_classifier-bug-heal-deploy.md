@@ -1,7 +1,7 @@
 # Deploy-completion ledger: classifier bug heal (BUG-1 _RE_FI \b, BUG-2 dotted ticker)
 
-**Status:** OPEN
-**Opened:** 2026-08-12T14:47Z (deploy-start) | **Closed:** —
+**Status:** CLOSED
+**Opened:** 2026-08-12T14:47Z (deploy-start) | **Closed:** 2026-08-12T14:50Z
 **Operator:** 0.4.0_DS_ClientPlatform
 
 **Authority:** ANDREW-DIRECT ~1430Z VERBATIM *"route the two classifier bugs to DS"* (record
@@ -32,3 +32,19 @@ classifying fixed_income) or any equity->fixed_income transition appearing (meas
 never the cp rc. Post-deploy: confirm MATCH on both keys.
 
 ## Execution log
+
+**DEPLOYED 14:49Z via `.tools/safe-deploy.sh` (sanctioned path, explicit-files mode):**
+- ✅ **`etf_classifier.py` -> `[bd] code/gold/lib/` DEPLOYED, `VERIFY OK` on
+  `comp-pipescript deployed` (MATCH).** This is the ORIGINAL and the one feeding the SERVED mix, so
+  **the heal is live on the path that carries the $6.78M.**
+- ⏭ **`a07_dim_asset_classification.py` SKIP-NOT-MEMBER — the S3-membership guard working, not a
+  failure.** Probe: `s3://opal-data-mdpf/code/scripts/assets_gold/runners_49f/...` -> **404**, prefix
+  carries **0 members**. Per Rule 13, a shared-home script that does not yet exist in S3
+  **first-mints EXPLICITLY, never via the push gate.** Consistent with the corpus's measured state:
+  the whole `runners_49f` P1 set has only ever run locally (S3 gold held zero P1 artifacts before
+  yesterday's fills). **The port's fix is committed and takes effect whenever A_07 next runs; no
+  first-mint is performed here because none was authorized and none is needed for the heal.**
+
+**Status:** CLOSED 2026-08-12T14:50Z — the served-mix heal is deployed and verified on the SHA, not
+the cp rc; the port is committed-not-deployed by the guard's design and that is stated rather than
+left to be discovered. No leg stranded.
