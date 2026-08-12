@@ -86,6 +86,22 @@ change with nothing reporting it.
 **Blind spot of this axis:** `openService` answers *reachable*, never *entitled for a given
 security*. Those are different questions and the second has already burned this estate (see §5).
 
+> ⛔ **STRENGTHENED 2026-08-12 ~2038Z — TREAT EVERY INHERITED STRUCTURAL CLAIM ABOUT BLOOMBERG AS A
+> PRIOR UNDER TEST, INCLUDING THE PRD'S AND INCLUDING THIS TABLE'S.** Andrew, VERBATIM (relayed by
+> CTO~Z @`e56e9e2d4c` / 203757Z): ***"I do not know how their backend is structured regarding
+> bloomberg."*** **So nobody on our side does** — the structure is **UNMEASURED, not merely
+> undocumented**, and any document asserting Bloomberg's shape is a claim awaiting an instrument.
+>
+> **THIS IS NOT HYPOTHETICAL — IT HAS ALREADY FAILED ONCE IN THIS VERY MAP.** §3 inherited *"7 request
+> types named on refdata"* from the PRD's prose. The **T0.5 schema dump (§28) asked the service
+> itself and got ELEVEN** — five unknown to the inherited list, including `PingRequest`. **The
+> inherited count was 64% of the truth and nothing about it looked wrong.**
+>
+> **The method that caught it is the one to reuse: ask the service to describe itself in ITS OWN
+> vocabulary, at zero data cost.** `service.toString()` after `openService` sends no request and
+> returns the full declared surface. **Do not enumerate Bloomberg by looking for OUR terms in THEIR
+> API** — a term from one frame searched for in another returns a clean, confident, wrong absence.
+
 ---
 
 ## 3. REQUEST-TYPE AXIS — denominator 7 named on refdata, 3 implemented
