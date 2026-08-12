@@ -1,0 +1,121 @@
+# W3b SUCCESSOR HANDOFF — `news-subsystem/20260811T2330Z`
+
+**Prepared 2026-08-12T0150Z by `2.0.0_SA_COO~Z`, BEFORE any ruling, so that either outcome costs zero time.**
+**If Andrew rules "keep waiting," this file is unused and cost nothing. If he rules kill-then-respawn, the
+successor is pointed HERE.**
+
+---
+
+## ⛔ THE ONE INSTRUCTION THAT MATTERS
+
+**POINT THE SUCCESSOR *AT* THIS RUN TO PLANT AND SEAL. NEVER TELL IT TO RE-RUN THE UNIT.**
+
+*A re-run creates a duplicate run dir and strands the completed work — that is exactly what happened to
+`/cma` (two run dirs, ~35 minutes lost). The cycles below are DONE and their evidence is on disk.*
+
+**PATH:** `workflows/atom_decomposition/runs/news-subsystem/20260811T2330Z/`
+
+---
+
+## ✅ RESOLVED 0250Z — THE RUN DIR IS NOW **COMMITTED**. The flank below is CLOSED.
+
+**Preserved at `@053fd370ca`** — *"commit AE~Z's converged-but-unsealed run dir … PRESERVATION ACT by
+MSTR~Z integrator, author line AE~Z's own."* **Verified in HEAD, not taken on report:**
+```
+6 files, 2,006 insertions: rectangle.c0/c1/c2/dry.json + both patches
+c2 no-op patch read FROM HEAD:  changes: 0   unchanged_examined: 40   <- the EARNED DRY, durable
+git status on the path: CLEAN
+```
+**CTO~Z landed `§9.8.1-K.4` alongside it — a non-author MAY commit another seat's in-flight run dir** —
+so the act is a RULE rather than a one-off, and the author line stayed AE~Z's.
+
+*The section below is kept struck-not-deleted because a successor should see that the exposure existed and
+how it was closed.*
+
+## ~~⛔ CORRECTED 0238Z — "ON DISK" IS NOT SAFE. THE RUN DIR IS **UNCOMMITTED**.~~
+
+```
+news-subsystem/20260811T2330Z/       ??  UNTRACKED -- never committed
+portal-page-market/                  COMMITTED  @859c7b2a6f
+portal-page-security-scanner/ (W4a)  COMMITTED  @07565f5d39   <- committed WHILE LIVE, incrementally
+```
+**W4a is the discriminator: a live mid-run directory IS being committed incrementally under the same
+protocol — so this is NOT K.1 staged publication. The run dir is simply uncommitted.**
+
+**IT IS THE ONLY UNCOMMITTED RUN DIR IN THE PROGRAM, and it holds the earned DRY this entire handoff
+exists to preserve — in the working tree of a SHARED CHECKOUT that our own memory records as a place
+uncommitted work is lost** (~6 agents, one checkout; scratchpad the only measured safe harbour).
+
+**A successor's FIRST act should be to confirm the run dir still exists before doing anything else.**
+*I originally wrote this section as "what is on disk and verified," which reads as durable. It is not.
+Routed to CTO~Z (method) and MSTR~Z (holds the `[STUCK]`); NOT touched by me — committing another seat's
+in-flight run dir is a method call with real objections.*
+
+## WHAT IS ON DISK AND VERIFIED (read at 0150Z) — *durability caveat above*
+
+```
+patches/                       2 files
+  c1__plane-a-measure__0.5.0_AE_OpalETL~Z.patch.json     changes=16
+  c2__cross-entity-mechanism__0.5.0_AE_OpalETL~Z.patch.json  changes=0, unchanged_examined=40
+rectangle.c0.json
+rectangle.c1.json
+rectangle.c2.json
+rectangle.dry.json
+```
+
+**STATE: `dry=YES · sealed=NO · certified=NO` — an EARNED DRY.**
+
+**"EARNED" is verified, not assumed** (protocol M-4): `rectangle.dry.json` is present **AND** the c2 patch
+carries **`changes: []` with 40 `unchanged_examined` entries, each with its own `why_unchanged`** — the
+cross-entity-mechanism lens was genuinely swept and found no cell to change, because *"the findings it
+surfaced are properties of EDGES and are recorded in the relations block, not here."*
+
+**=> The rectangle has converged. What remains is PLANT + SEAL, then hand to CVO~Z.**
+
+---
+
+## WHAT THE SUCCESSOR STILL OWES
+
+1. **PLANT + SEAL the mutant** → produces `MUTANT_SEALED.md` (+ `MUTANT_WARNING.md`).
+2. **Hand the verifier packet to `3.0.0_SA_CVO~Z`** — they are idle and waiting on exactly this.
+3. **`OPAL_ANALYST.W3` proof-of-spec covering BOTH units (W3a + W3b)** →
+   `org/tier2_senior/0.5.0_AE_OpalETL/deliverables/OPAL_ANALYST.W3_PROOF_OF_SPEC.json`, validator-clean
+   before any status flip. **This is what kept W2's TO correctly PENDING — a certified run is not a
+   completed TO.**
+
+---
+
+## KNOWN CONTEXT THE SUCCESSOR SHOULD NOT RE-DERIVE
+
+- **The residue register is COMMITTED and reconciled: 722 of 722 keys EXACTLY** (720 family + 2 live).
+- **`comp-estate` CONTRADICTED the register** on the 720-key disposition, claiming the frozen families are
+  *"consumed by `KeywordSentimentModal.tsx`."* **The register's UNCONSUMED / RETIRE-CANDIDATE read STANDS** —
+  grounded three ways at portal DEV `@604101df8b`, and **independently confirmed by `0.8.0_AE_CloudComp~Z`
+  (PC-001)**, who additionally found the deprecated wrapper at `:695` calls both tiered functions at
+  `:701-702` and has no callers itself — **so the dead set is CLOSED, not merely unreferenced.** The tool
+  defect is ROUTED, not absorbed.
+- **The prior author's own positive control was RETRACTED** (`getKeywordSentiments -> 2` was a definition +
+  barrel entry, zero call sites — same shape as the targets). **The discriminating control is
+  `getKeywordIntelligence`**, genuinely called by the modal under examination (import `:15`, call `:128`).
+- **Two self-caught defects already fixed:** a schema gap (two live keys mislabelled `FROZEN-CONSUMED` —
+  fixed the SCHEMA, not the row), and **that fix silently no-op'd on first apply** (bad anchor; validator
+  said VALID because the wrong value is a LEGAL value).
+
+---
+
+## NEXT UNITS ALREADY ON THE BOARD — no idle gap at the transition
+
+- **`OPAL_ANALYST.W4a`** — `/security-scanner`, the FIRST census-less page. **GO is IMMEDIATE on W3b's
+  proof-of-spec closing.**
+- **`OPAL_ANALYST.W4b`** — runnable, no dependency.
+- **`W4c`** — authored-as-blocked on CTO~Z's write-axis (Rule-24) deliverable.
+
+---
+
+## PROVENANCE
+
+State read directly from the run directory at 0150Z. Every claim above is either a file that exists on disk
+or a commit named in the record. **Nothing here is inferred from a seat's self-report.**
+
+*Prepared before the ruling deliberately: a handoff written after a kill is written under time pressure by
+someone who has just lost the context.*

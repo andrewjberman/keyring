@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "to_id": "DOCTRINE_RATCHET.A1",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/3.0.0_SA_CVO/task_orders/DOCTRINE_RATCHET.A1.controls-over-care-redundancy-analysis.md",
+    "group": "OTHER",
+    "vintage_commit": "27b57247b1"
+  },
+  "assignee": "3.0.0_SA_CVO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DOCTRINE_RATCHET_A1_CVO_ANALYSIS_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "(this commit)",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Analysis deliverable. Per C5 it is the ONLY output; the doctrine file is untouched."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "C1",
+      "criterion_verbatim": "Drift table re-derived independently; disagreement with my numbers named (or zero-disagreement stated explicitly).",
+      "method": "command",
+      "invocation": "for c in $(git log --format=%h -- docs/doctrine/CONTROLS_OVER_CARE.md); do git show \"$c:docs/doctrine/CONTROLS_OVER_CARE.md\" | wc -l; git log -1 --format='%an %ad' $c; done  -- run BEFORE reading any section of the file",
+      "output_evidence": "913e3365d6 (07-31, CTO) = 1289 | 4defd7ff3e (08-05 13:01, 4.0.0_SA_CRO) = 239 <- THE CUT | b51513a69b = 259 | e9d89a997b = 280 | dfc66d4dbf = 304 | 8b7b303908 = 309 | 27b57247b1 = 342. Post-cut deltas: +20, +21, +24, +5, +33.",
+      "denominator": "14 commits touching the file inspected; 5 post-cut additions across 2 seats (CRO x3, CTO~Z x2); cutter's three additions at +0h58m, +4h58m and +11h33m from their own cut.",
+      "status": "PASS",
+      "status_reason": "PASS with ONE NAMED DISAGREEMENT, which is the point of the criterion. Five of six claims re-derive exactly (1289 pre-cut; 342 current; +103 net; 5 additions; 2 seats; 3-of-5 by the cutter within 36h -- measured at ~11.5h). THE DISAGREEMENT: the cut landed at 239, NOT '~200'. The +103 figure is arithmetically correct and is computed off 239. The file has never measured ~200, which is load-bearing for C4."
+    },
+    {
+      "criterion_id": "C2",
+      "criterion_verbatim": "Per-addition verdict: ADDITIVE / REDUNDANT (with the duplicated text cited) / INCIDENT-SHAPED.",
+      "method": "manual_read_with_citation",
+      "invocation": "git show <commit> -- docs/doctrine/CONTROLS_OVER_CARE.md for each of the 5 post-cut commits, read against the surviving sections",
+      "output_evidence": "b51513a69b (+20) THE BOUNDARY reciprocal cross-reference = ADDITIVE/structural (MECHANISM_LAWS pointed here; this file pointed back ZERO times). e9d89a997b (+21) Grounded-evidence wiring = ADDITIVE/structural (estate-wide count was ZERO that morning). dfc66d4dbf (+24) APPLICABILITY CONDITION on 'go and fetch for yourself' = ADDITIVE and the most load-bearing content in the file -- the rule carried NO scope, and an unscoped obligation is not a rule. 8b7b303908 (+5) 'a description need not be WRONG to displace a measurement, only RELEVANT' = ADDITIVE, mechanism-shaped. 27b57247b1 (+33) section 5 = ADDITIVE on content with ~3 REDUNDANT lines cited under C3. NONE is INCIDENT-SHAPED: all five state a mechanism without requiring its incident.",
+      "denominator": "5 of 5 post-cut additions judged; 0 INCIDENT-SHAPED; 1 carrying a partial redundancy (~3 lines of 33).",
+      "status": "PASS",
+      "status_reason": "PASS, and it CARRIES A FINDING AGAINST THE TO's OWN FRAMING. The counts support 'three of five are the cutter's own'; THE DIFFS DO NOT SUPPORT THE RATCHET READING. All three cutter additions are STRUCTURAL REPAIRS of defects the cut exposed (navigational, evidentiary, scoping) -- they add no failure modes, no principles and no incidents. A line-count delta cannot distinguish ACCRETION from REPAIR, and the instrument measured the right number while being unable to answer the question asked of it."
+    },
+    {
+      "criterion_id": "C3",
+      "criterion_verbatim": "Section 5 judged explicitly and by name, with its author's argument quoted and tested rather than paraphrased.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read lines 175-209 (section 5) against lines 133-174 (sections 3, 4, 4b, 4c) and lines 38-57 (THE BOUNDARY), in the working tree at 27b57247b1.",
+      "output_evidence": "AUTHOR'S ARGUMENT QUOTED: 'the four modes explain why you failed to SEE; nothing explained why nobody SENT IT BACK.' TESTED AND UPHELD -- sections 1-4 concern the OBSERVER and the INSTRUMENT without exception; four section-5 mechanisms have no counterpart anywhere in the file (direction-sensitivity of review; self-correction arrives pre-credentialed; an instrument-is-WEAK claim reads as rigour so it is least audited; escalation ordering by audience). REDUNDANCY FOUND AND ITS DUPLICATED TEXT CITED: section 5's 'Before reporting that a tool failed to signal something, re-run it with NOTHING between you and its output... a pipe, a tail, a 2>/dev/null or a swallowed rc' duplicates section 4's 'A retrieval failure returns a value... Put the control on the RETRIEVAL, not the pattern.' The MECHANISM is duplicated; the CONSEQUENCE (a MANUFACTURED FINDING ABOUT THE INSTRUMENT) is not, and is reachable only via section 5's direction-asymmetry. SCOPE OBJECTION, sharper than redundancy: the file's own BOUNDARY clause declares it holds 'HOW YOU FAIL TO SEE THE THING' and names a homeless third family 'HOW A RULE OR ROLE FAILS TO BE ONE'. Section 5 is the review layer failing to challenge -- closer to the homeless family than to this file's declared subject, and the boundary clause supplies the precedent: NAME a homeless family, do not absorb it.",
+      "denominator": "33 lines judged against 42 lines of sections 3/4/4b/4c plus the 20-line boundary clause; 4 mechanisms found absent elsewhere; 1 partial duplication (~3 lines).",
+      "status": "PASS",
+      "status_reason": "VERDICT: ADDITIVE on content, NOT a restatement, with ~3 redundant lines to cut and a SCOPE objection I would act on instead. Recommendation: relocate to the named-homeless family, leave a one-line pointer, cut the duplicated mechanism. THE RATCHET MECHANISM IS NOT LINE COUNT -- it is a file absorbing adjacent families, where every absorbed section is true, useful, and in the wrong house, which is exactly why each step justifies locally."
+    },
+    {
+      "criterion_id": "C4",
+      "criterion_verbatim": "A recommendation on the ~200 target per requirement 4 — line budget vs mechanism-purity proxy.",
+      "method": "manual_read_with_citation",
+      "invocation": "Compare the measured post-cut line count (C1) against the ~200 target, and read the file's own 'Rule for editing this file' at the Incidents section.",
+      "output_evidence": "RECOMMENDATION: ~200 IS A PROXY, NOT A BUDGET. Decisive evidence: THE CUT ITSELF LANDED AT 239 -- a budget its own executor missed by 20% in the act of executing it was never administered as a budget, and the file has never measured ~200. AND THE REAL TEST IS ALREADY WRITTEN IN THE FILE, in the section Andrew's ruling produced: 'a principle earns its place by being ACTIONABLE WITHOUT ITS INCIDENT.' Scored against that test, all 5 post-cut additions PASS. CONSEQUENCE: there is no line-count remedy to apply -- cutting to 200 would remove working mechanisms to satisfy a number nobody has enforced. If the file should be smaller, the argument must be 'these mechanisms belong in another family', which is a RELOCATION, not a cut.",
+      "denominator": "5 of 5 post-cut additions scored against the actionable-without-its-incident test; 5 pass, 0 incident-shaped.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C5",
+      "criterion_verbatim": "Zero file modifications to the doctrine file. The deliverable is the analysis.",
+      "method": "command",
+      "invocation": "git status --short docs/doctrine/CONTROLS_OVER_CARE.md ; git log --oneline -1 -- docs/doctrine/CONTROLS_OVER_CARE.md",
+      "output_evidence": "git status: EMPTY (no modification, staged or unstaged). Last commit touching the file remains 27b57247b1 by 1.0.0_SA_CTO~Z -- i.e. the section-5 commit, unchanged by this pass. The only artifact I produced is the analysis deliverable.",
+      "denominator": "1 file under the constraint; 0 modifications; verified by a command whose empty output IS the pass -- and stated as such rather than left implicit.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "The TO names no mutant, and an analysis TO has no artifact to plant one in. The nearest available control was applied instead and it FIRED: I re-derived the TO author's own drift numbers BEFORE reading any section, treating them as a prior under test per their explicit instruction, rather than reading the file with their framing already installed.",
+      "expected": "Either the numbers reproduce (framing confirmed) or a disagreement surfaces (finding).",
+      "observed": "FIRED: one material disagreement found (the cut landed at 239, not ~200) AND a second, larger finding the numbers alone could not show -- the ratchet INTERPRETATION is unsupported by the diffs, because three of the three cutter additions are structural repairs rather than doctrine accretion. Reading the file first would have installed the framing before the evidence.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Every figure derives from git history over a single tracked file; re-running the line-count walk reproduces the table exactly. No wall-clock, no sampling.",
+      "observed": "STABLE.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Any edit, removal or relocation in CONTROLS_OVER_CARE.md",
+      "reason": "C5 and the TO's opening line: analysis only, I delete nothing. Removal stays the owner's call and the ~200 ruling's status is arguably Andrew's."
+    },
+    {
+      "item": "A verdict on whether the homeless family should get its own file",
+      "reason": "I recommend relocation for section 5 and note the family now has enough members to deserve a home, but MINTING a doctrine file is a taxonomy act (Rule 24) and not mine to perform inside an analysis TO."
+    },
+    {
+      "item": "Judging the pre-cut 1,289-line content",
+      "reason": "Out of scope: the TO asks about POST-CUT drift. The pre-cut body was removed by an Andrew-directed ruling I am not re-litigating."
+    }
+  ],
+  "surprises": [
+    "The TO author's framing was the thing most in need of correction, not section 5 -- and the three additions the framing cast as the damning exhibit are the three most defensible edits in the file. Reported to the author directly.",
+    "The file's own BOUNDARY clause already names a homeless family and prescribes NAMING rather than absorbing. That clause was added by the cutter, in one of the three additions the ratchet framing counted against them -- so the instrument for adjudicating section 5's scope exists BECAUSE of an edit the audit treated as evidence of the problem.",
+    "Observed outside mandate, no action taken: the file's 'What to measure' section states that what has actually caught things is 'lane gates, population-wide sweeps, peer reads, and time. Not one was the agent remembered the rule.' This TO is a peer read, and it is the mechanism that caught the framing error -- the file predicting the shape of its own audit."
+  ],
+  "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-12/DOCTRINE_RATCHET_A1_analysis_0254-0310Z.md",
+  "compiler_tools": [
+    {
+      "tool": "git history walk (line count per commit)",
+      "invocation": "for c in $(git log --format=%h -- <file>); do git show \"$c:<file>\" | wc -l; done",
+      "result": "14 commits measured; the cut identified at 4defd7ff3e = 239 lines, correcting the TO's '~200'. Run BEFORE reading the file."
+    },
+    {
+      "tool": "git show --numstat / per-commit diff read",
+      "invocation": "git show <commit> -- docs/doctrine/CONTROLS_OVER_CARE.md",
+      "result": "Established that all three cutter additions are structural repairs (boundary reciprocity, evidence wiring, applicability scoping) rather than doctrine accretion -- the finding the line counts could not show."
+    },
+    {
+      "tool": "git status (C5 verification)",
+      "invocation": "git status --short docs/doctrine/CONTROLS_OVER_CARE.md",
+      "result": "EMPTY -- zero modifications. An empty output as a PASS is stated explicitly rather than left implicit, per this program's own denominator discipline."
+    }
+  ]
+}

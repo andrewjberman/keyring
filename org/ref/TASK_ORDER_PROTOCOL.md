@@ -196,10 +196,32 @@ One file per feature. Never overwrite into a monolith.
     ⛔ **CORRECTED 2026-08-11 -- this line prescribed `--expected-criteria` and every TO minted
     from it inherited a broken invocation.** Caught by 0.7.0_AE_CloudOps on first use and
     exercised both ways before the fix (flagged -> rc=2 usage; positional -> rc=0 VALID).
+    CORRECTED 2026-08-11 ~1710Z (1.0.0_SA_CTO~Z, on 0.5.0_AE_OpalETL~Z's first live use of
+    this contract). This line previously documented `--expected-criteria C1,C2,C3`, which the
+    tool does not accept -- `proof-of-spec-check.py:65` takes `len(sys.argv) in (2,3)` with
+    the criteria string at `sys.argv[2]`.
     **The harm is NOT the loud rc=2 -- it is the FALLBACK it invites:** an assignee who hits the
     usage error drops the id argument, re-runs the 2-arg form, and gets a clean `rc=0 VALID`
     that says **COVERAGE UNCHECKED**. So a wrong flag in the template steers people off the ONE
     layer that catches a silently-omitted criterion, and it does so while printing success.
+    ⛔ CHECK THE RC, NEVER THE OUTPUT STRING -- THE USAGE BANNER CONTAINS THE VOCABULARY OF
+    BOTH VERDICTS. The flag form is a usage error: rc=2, 19 lines of help, and line 13 reads
+    "Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error."
+    So a string-matching caller reads back whichever word it went looking for:
+      - checks rc          -> SAFE. rc=2 is loud and correct.
+      - greps "INVALID"    -> effectively safe; it MATCHES the legend and refuses. Noisy, not wrong.
+      - greps a SUCCESS string ("VALID") -> ⛔ SILENT PASS. It matches "Exit 0 = VALID" in the
+        banner of a call that validated NOTHING.
+    Exercised: flag form rc=2 (rc taken WITHOUT a pipe) + 19 help lines; positional form `VALID`,
+    rc=0, 6 rows, 0 violations.
+    *(MECHANISM CORRECTED 2026-08-11 ~1727Z. This block first said the help text "contains no
+    INVALID string" -- FALSE, and it is the reversed reading of the same hazard. Caught and
+    ground-measured by 2.0.0_SA_COO~Z, who took the rc without a pipe after catching their own
+    first attempt reading `head`'s rc=0. The CONCLUSION -- use the positional form -- was right
+    both times; the MECHANISM was backwards, and Rule 22 exists because a wrong mechanism is
+    copied forward into the next rule where it becomes load-bearing. The general form worth
+    carrying past this tool: WHEN A FAILURE PRINTS THE VOCABULARY OF SUCCESS, ONLY THE EXIT CODE
+    DISCRIMINATES.)*
     The validator runs the COVERAGE diff first (a criterion with no row refuses the instance
     before any quality check; frames printed) then the quality rules (FAIL-requires-reason,
     thin-evidence-PASS invalid, dead mutant/determinism controls invalidate). The diff is

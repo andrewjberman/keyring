@@ -396,6 +396,17 @@ function ajb {
         # ignores (see org/mcp/server.py:299-300). Skipped in -Headless mode so
         # autonomous spawns never stall on the Y prompt.
         $claudeArgs = @('--dangerously-skip-permissions')
+        # Per-serial model/effort defaults (Andrew-direct 2026-08-10 at the MSTR~Z
+        # terminal: BG agent "should always be spawned as Opus 5 by default, high
+        # effort. It does not need to be Fable, but shouldnt be sonnet either.").
+        # Keyed on BASE serial so lanes inherit. Extend ONLY on Andrew's word.
+        $modelBySerial = @{
+            '0.0.3_BG_BBGTerminal' = @('--model', 'claude-opus-5', '--effort', 'high')
+        }
+        if ($modelBySerial.ContainsKey($base)) {
+            $claudeArgs += $modelBySerial[$base]
+            Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
+        }
         # HEADLESS = no user present to answer a fork -> HARD-REMOVE the user-BLOCKING tools so an
         # autonomous agent can never strand on an unanswerable prompt (the 0.6.1 2026-07-07
         # frozen-user-fork retire). --skip-permissions covers permission prompts, NOT these

@@ -167,6 +167,17 @@ If every probe returns the same value *including* your control, the reading is e
 with *"the change failed"* and *"the harness is broken."* Only a **positive** control — a probe that
 **cannot** return that value — discriminates. **Ask: which worlds does this rule OUT? If none, you
 have not measured.**
+⛔ **4b.1 — AND THE POSITIVE CONTROL HAS ITS OWN BLIND SPOT, WHICH IS THE MOST DANGEROUS ONE IN THIS
+FILE BECAUSE IT WEARS THIS FILE'S OWN REMEDY: A POSITIVE CONTROL PROVES THE PROBE CAN FIND SOMETHING.
+IT DOES NOT PROVE THE PROBE IS ASKING ABOUT THE RIGHT THING.** *Measured: seven variable names probed
+for a rendered vintage, all returning **0**, with a positive control returning **6** — clean AND
+controlled, which is the most persuasive state a wrong answer can occupy. **The seven names were the
+searcher's invention, not the code's.** The real variable was one the guesses could never have
+produced.* **A ZERO ABOUT A NAME YOU MADE UP IS NOT A MEASUREMENT OF ANYTHING** — the control was
+sound and the SUBJECT was fictional. **Discharge: before trusting an absence, establish that your
+query terms came FROM THE CORPUS rather than from your expectation of it — ENUMERATE WHAT IS THERE,
+then ask about it. Guessing the names and controlling the probe validates everything except the
+question.**
 
 **4c. THE ANTI-CORRELATED VERDICT — the cleanest pass is sometimes the most complete failure.**
 The least intuitive member, so it needs its mechanism:
@@ -221,6 +232,39 @@ SILENCE IS NOT READ AS SILENCE — IT IS READ AS AGREEMENT.**
   than the one the reader asked, and nothing in the output says so.* Same shape as an oracle whose
   silence means nothing until its own firing rate is known, and a value pin that cannot see a
   population change.
+
+### 7. Nobody sent it back — an unexercised claim survives on its DIRECTION, not its truth
+
+The four modes above explain why you failed to see. This explains why **the resulting claim was
+never challenged**, which is what lets an unlooked-at claim reach a law file, a register, or Andrew.
+
+**Review is direction-sensitive, and only one of three directions reliably draws scrutiny:**
+
+| direction of the claim | how it reads | challenged? |
+|---|---|---|
+| **unflattering to someone else** | an accusation | **YES** — the subject pushes back |
+| **generous to someone else** | fairness | no — nobody argues they deserve less credit |
+| **critical of yourself or your own tools** | rigour, humility | no — challenging it looks like defensiveness |
+
+**So an unexercised claim lives longest in exactly the two directions that feel most virtuous.** The
+same asymmetry runs one layer up: **a SELF-CORRECTION arrives pre-credentialed** — costliness-to-self
+is read as evidence of correctness, so its *direction* goes unexamined by author and reader alike.
+**Correcting your own number against your apparent interest can still push toward the outcome you
+were arguing against.**
+
+- **A claim that an instrument is WEAK reads as rigour; that it is SOUND reads as complacency** — so
+  fabricated defects in your own tooling are the least-audited claims you can make.
+- **A broken retrieval does not merely mislead you — it MANUFACTURES A FINDING ABOUT THE INSTRUMENT
+  whose signal it deleted**, and that finding then travels in the least-audited direction above. (The
+  retrieval mechanism itself is §4; only this consequence is new.) **So before reporting that a tool
+  failed to signal something, re-run it with nothing between you and its output.**
+- **Discharge:** *which direction does this point, and would anyone here be motivated to check it?*
+  If the answer is no, **you are the only control**, so exercise it before it is repeated.
+
+**Escalation ordering — a wrong reading dies with the turn; a BANKED finding propagates.** The cost
+of an unexercised claim is set by how far it travels, so the exercise bar rises with the audience:
+highest for anything entering a register, a doctrine file, or a message to Andrew. **Conferring
+standing on someone else's unexercised claim is itself an act requiring exercise.**
 
 ---
 
