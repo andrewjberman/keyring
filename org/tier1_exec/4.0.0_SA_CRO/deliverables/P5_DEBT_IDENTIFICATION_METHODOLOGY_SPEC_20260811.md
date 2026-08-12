@@ -101,7 +101,7 @@ FAMILY — both spellings (`_`/`-`), every nesting level, every layer-twin — v
 | `LIVE` | any tier-0/1 positive inside the cadence window |
 | `DORMANT-EXCEPTED(kind=long-ttl-live)` | Rule 25 declared exception; age measured against the DECLARED TTL |
 | `DORMANT-EXCEPTED(kind=closed-period-immutable)` | declared; a refresh would be the defect (23 measured instances day one) |
-| `SUPERSEDED(drained \| still-read)` | named successor + migration record VERIFIED live-plane (successor fresh, shape-compatible); sub-state from tier-1 on the OLD key |
+| `SUPERSEDED(drained \| still-read)` | named successor + migration record VERIFIED live-plane (successor fresh, shape-compatible); sub-state from tier-1 on the OLD key. **METHOD FOR THE DISCRIMINATION (POINTER folded 2026-08-12 per COO 142640Z relaying CTO's ruling 142505Z — this state DEMANDED abandoned-vs-migrated and supplied no method): the CONSUMPTION MAP is the registered instrument** (*what reads each key · what else each path does · coverage/dim parity*; AE building, the inf bronze fork its first exercise, not its purpose). Three seats named one question — my `abandoned vs migrated`, DS's `superseded vs stopped`, CTO's `what reads each key`. **No new instrument is specified here by design**; P5 inherits the map. Until it lands, a SUPERSEDED-vs-DEAD call rests on the §4 conjunction alone and an asymmetry argument (re-pointing does not foreclose retirement; retirement forecloses the answer) is a HOLDING POSITION, never the answer |
 | `SOVEREIGN-RETIRED-STILL-SERVING` | a ruling says dead + tier-0/1 says live (FP-6, certified-AUA class). Debt by ruling, live by wire |
 | `DORMANT-UNEXCEPTED` | >=90d, no declared exception, **successor-check RUN and negative** (Rule 25's mandatory link), consumer evidence absent at tiers 0-2 |
 | `INVOKED-OUTCOME-UNVERIFIED` | tier-1 positive (invocations observed) + outcome evidence NEGATIVE or absent (errors, zero output writes, downstream never moves) — **AMENDMENT per CVO review F-2: the Rule-12 blind spot gets a home.** Actively-invoked-dead is real debt (a function firing daily and serving nothing) that a LIVE-on-invocation schema structurally cannot see. This state is a CLEANUP CANDIDATE (fix-or-retire through its producer), **never a kill state** — the LIVE asymmetry stays correct for the kill bar; this state exists so the IDENTIFY bar does not silently reuse it |
@@ -174,6 +174,19 @@ spelling pair recreates the FP-4 hazard at teardown); **regenerated artifacts** 
 run re-mints) are not deletable by object-delete at all — the PRODUCER retires first or the
 delete is a no-op that reads as done (the measured account-distribution class: same filename
 family, opposite consequence per layer).
+
+⛔ **THE TIDYING HAZARD (folded 2026-08-12, generalizing CTO's ruling via COO 142640Z — it
+belongs here because this spec will be read by people whose instinct is to tidy):
+NORMALISING A REPRESENTATION WITHOUT ASSIGNING OWNERSHIP HIDES A COLLISION WITHOUT RESOLVING
+IT.** CTO's instance, verbatim: *"the format divergence is the ONLY reason this collision was
+ever visible; unifying the format without assigning ownership CONCEALS it. That is strictly
+worse than today."* The incidental thing making a two-writer collision visible is often the very
+inconsistency a cleanup targets — two FORMATS in the inf tree, two SCHEMA VERSIONS in
+`dim_relationship` (1.0 without `source_pipeline` vs 2.0 with it). **A well-intentioned
+normalisation, done to make things comparable, takes the collision DARK while leaving it LIVE —
+and P5 is exactly the phase that generates such normalisations.** Rule: where two writers share
+a key, OWNERSHIP is assigned BEFORE any representation is unified, and a normalisation proposed
+over a known collision is DECLARED-GATED on that assignment.
 
 ## 6. RQ6 — INSTRUMENT FIT + GAPS (gaps are DEFECTS; closures are candidates ROUTED, not built)
 
