@@ -218,3 +218,19 @@ established call pair.** Next on this thread (queued): fold the doc-context bloc
 line into the estate_report_runner call builders when the new friction/state calls land in the
 deployed runner (CVO operational loop, build routes via COO), and the per-vertical daily refresh
 rides the existing 9a-ET schedule.
+
+## 11. CANONICAL FORM CLOSED OUT (2026-08-12, under the standing-egress ruling)
+Two banked items from s.9 folded into BOTH call builders, then EXERCISED (a claim that a prompt
+rule works is behavioral -- a read of the prompt cannot establish it):
+1. **PRECEDENCE RULE (friction):** CHARACTER is carried by the consolidation/spread evidence (where
+   the work is GOING); DIRECTION by the instrument's own ratio bands; HEATING only when intensity
+   rises with NO consolidation/spread signal to place it. Written because two fires on an IDENTICAL
+   battery returned HEATING and CONSOLIDATING -- both defensible, the enum permitting one.
+2. **NO CODE FENCES** on both schema blocks (the state call had returned ```json-fenced).
+**Verification:** both folds asserted present in the SCHEMA REGION of the wired prompts (never the
+whole prompt -- that whole-prompt assert is the confirming-limb defect s.9 records). **LIVE FIRE
+against a pre-registered expectation (character=CONSOLIDATING, direction=DIVERGING, unfenced):
+ALL THREE MET**, and the response cites the rule by name ("per the precedence rule does not soften
+the volume divergence"), so the ambiguity is resolved BY THE RULE rather than by luck of sampling.
+Blind-spot handling stayed correct (F3 named, absence-not-calm). Canonical forms are now stable for
+the runner fold-in at CVO/COO.
