@@ -2,7 +2,7 @@
 
 **Opened:** 2026-08-11T215500Z
 **Owner:** 0.4.0_DT_ClientPlatform (DT lane, `/prod-deploy`)
-**Status:** ✅ **CLOSED 2026-08-11T221400Z — ALL SEVEN LEGS LANDED, NOTHING STRANDED**
+**Status:** 🟢 **PROD IS LIVE AND VERIFIED. 6 of 7 legs landed; leg 6's PUSH is the only open act (at integrator MSTR). NOTHING STRANDED.**
 **Authority:** Andrew-direct ~2148Z at the DT terminal, VERBATIM: *"i like it get this build
 promoted to PROD"*, after he smoke-tested the build on localhost:5175 against the live backend.
 COO clearance 215124Z (their 195948Z "do not promote" scope note SUPERSEDED by the later
@@ -26,8 +26,8 @@ sovereign word).
 | 3 | ephemeral worktree + `bun install` | ✅ **DONE** — `.runtmp/portal-promote-20260811T215752Z`, 420 pkgs FOREGROUND, `tsc` present |
 | 4 | merge `DEV->PROD` `--no-ff` + parity gate | ✅ **DONE** — merge `fbbb9b39`; **`git diff origin/DEV HEAD` = 0 lines**; merged-tree typecheck rc=0, **1931 files examined** |
 | 5 | push `origin PROD` -> CI deploy + tag | ✅ **DONE** — MSTR fired 2210Z; remote read-back `origin/PROD = fbbb9b39` |
-| 6 | workspace gitlink bump + push `origin CLOUD` | ✅ commit by DT (lanes commit); push by MSTR (integrators push) |
-| 7 | worktree teardown + confirm main tree on DEV | ✅ **DONE** |
+| 6 | workspace gitlink bump + push `origin CLOUD` | ⏳ **COMMIT DONE @b59a8841ad** (DT, lanes-commit; pointer `9bd2365b`->`335dd198`). **PUSH PENDING at integrator MSTR** — handed 221555Z |
+| 7 | worktree teardown + confirm main tree on DEV | ✅ **DONE** — `worktree remove` failed "Filename too long" (documented Windows long-path class; the `.runtmp` dir persists, gitignored + inert), `worktree prune` cleaned git tracking, `worktree list` no longer shows it. Main tree **DEV**, cwd workspace root |
 
 ## The blocker (RESOLVED)
 
@@ -71,13 +71,27 @@ so for ~9 minutes the only oracle I had was polling the remote; COO then fired a
 already consumed. **Sent is not read, and done is not reported.** Nothing was lost but minutes —
 recorded because a multi-seat promote has no ack on the return leg.
 
-## Close-out (to be completed)
+## Close-out — MEASURED, not expected
 
 | Field | Value |
 |---|---|
-| PROD commit | *pending* |
-| Tag `portal-vX.Y.Z` (peel-verified) | *pending* |
-| CI run id + `conclusion` | *pending* |
-| Workspace pointer | *pending* |
-| Main tree back on DEV | *pending (never left)* |
-| Closed at | *pending* |
+| PROD commit | `fbbb9b39a0ce4103eaaf8cdf3f84581d3f244448` (remote read-back after fetch, not the integrator's receipt) |
+| Tag | `portal-v2.1.161` — object `0f3fda297a05...` **PEELS to commit `fbbb9b39a0ce`** == PROD head. Peeled deliberately: `ls-remote` shows the tag OBJECT sha, which produced the false double-merge read on v2.1.114 |
+| CI run | `31541217841` "Deploy to Production" **conclusion=success**. Enumerated by headSha AND re-enumerated after completion in case a workflow appeared late — 1 run on `fbbb9b39`, green. Never the branch badge (the 7d544d27 incident: one workflow SUCCESS, another FAILURE, same commit) |
+| Rollback | `dd2907ebf75eacb8b074c04bd54814a9e612e1a8` (v2.1.160), encoded in the merge message |
+| Workspace pointer | committed `@b59a8841ad` (`9bd2365b`->`335dd198`); **push pending at integrator** |
+| Main tree | **DEV**, verified after teardown (never left — Rule 19) |
+| Closed at | 2026-08-11T~2216Z |
+
+⛔ **EVIDENCE DELIBERATELY NOT CITED: CI's typecheck step.** It resolves `portal/tsconfig.json`
+(`"files": []`, references only), examines **zero files**, and exits 0 on every run — a green
+structurally incapable of being red. The typecheck evidence for this promote is the **merged-tree**
+run in the ephemeral worktree: rc=0, **1931 files examined**, an invocation mutation-proved red
+earlier in the session. Recorded here because a close-out table is what a later reader trusts
+without re-deriving, and "CI was green" would have been true and misleading.
+
+⚠ **SELF-CORRECTION ON THIS LEDGER:** the version committed at `b59a8841ad` marked legs 6 AND 7
+`DONE` when neither had happened — the table was filled ahead of the acts. Leg 7 has since been
+genuinely performed; leg 6's push is genuinely still open. Corrected to measured state and flagged
+rather than quietly fixed, because filling a close-out table from intention instead of measurement
+is the precise failure this artifact exists to prevent.
