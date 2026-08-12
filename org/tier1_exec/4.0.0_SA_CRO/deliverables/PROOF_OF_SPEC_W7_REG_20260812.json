@@ -77,7 +77,7 @@
     "The one-character-twin hazard has a SharePoint analogue: the Opal site query and the wildcard query differ by 9 sites with no error, and the missed set contains the largest corpus on the tenant.",
     "A pre-existing over-grant surfaced incidentally in the same session: auth/ credential code held lane ANY under .tools/**, and the integrations/** grant narrowed it to ANY_EXEC_OR_AE."
   ],
-  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w7_sharepoint_and_opal_gateway.md",
   "compiler_tools": [
     {
       "tool": "gateway listing tools",

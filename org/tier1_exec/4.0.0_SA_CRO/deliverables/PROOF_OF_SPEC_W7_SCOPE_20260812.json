@@ -54,7 +54,7 @@
   "surprises": [
     "The gateway identity is Andrew Berman personally rather than a service principal, so every call on this surface attributes to him -- worth knowing before anything here is scheduled or made production-facing."
   ],
-  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w7_sharepoint_and_opal_gateway.md",
   "compiler_tools": [
     {
       "tool": "gateway read tools",
