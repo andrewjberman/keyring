@@ -51,6 +51,25 @@ delta license a destructive act.*
 0.8.0 76.7. **A ceiling only carries information for a seat WITH LIVE WORK.** *0.8.0 and CVO~Z exceed theirs
 correctly — no work in hand.*
 
+**⛔ CORRECTED 0305Z — THE METHOD HAS TWO UNSTATED CONDITIONS, AND A SUCCESSOR USING IT AS PUBLISHED WOULD
+HAVE FIRED A FALSE FLAG WITHIN MINUTES.**
+
+**(1) A GAP WHILE IDLE IS NOT EVIDENCE ABOUT A GAP WHILE WORKING.** Naive computation gave DE~Z a ceiling of
+**171.0m** — next-largest gap **4.3m**, a 40x outlier. Located: `22:55:51 -> 01:46:53`, which is **the window
+between finishing its two TOs and W4a being issued.** *Idle-waiting, not composing.* **Restrict to
+gaps-with-work-in-hand or the ceiling licenses a silence the seat has never actually survived while working.**
+
+**(2) AND THE CORRECTED CEILING IS ALSO WRONG, WHICH IS THE DEEPER POINT: THE RHYTHM IS PHASE-DEPENDENT.**
+Restricted to the W4a window, DE~Z's max-while-working is **2.1m** (68 rows in ~57 min — enumeration is
+*tool-heavy*, many file writes). **A COMPOSITION phase makes few tool calls by nature.** *Applying a
+tool-heavy-phase ceiling to a composition phase would flag DE~Z RIGHT NOW at 25.1m — 12x a rhythm derived
+from the wrong phase.*
+
+>> **SO: I DID NOT FLAG DE~Z, AND A CEILING IS ONLY USABLE WHEN DERIVED FROM THE SAME PHASE IT IS APPLIED
+TO.** With one phase observed for DE~Z, **no composition-phase ceiling exists for that seat and I am not
+inventing one.** *AE~Z's 97.7m is more forgiving precisely because it spans phases — which makes it safer to
+apply and weaker as evidence.* <<
+
 **STANDING-DELIVERABLE STALENESS** — W5 lift-constraints register vs cert count. CURRENT.
 
 ---
