@@ -111,6 +111,69 @@ obvious name. Surfaced to CTO, not chased.
 - One surprise-channel item open at CTO: Inflection's 08-11 ETF ownership appears carried forward from
   08-10 (identical to the cent on all 4 tickers while NAVs moved). Bounded, order $0.1M on the float.
 
+## ADDENDUM 1855Z -- ANDREW-DIRECT, T1 REOPENED AND RE-DELIVERED
+
+Andrew wrote directly to this lane ~1855Z, minutes after CTO's close. Recorded verbatim in the
+deliverable §0 and broadcast same turn to CTO + COO + MSTR per XXX.md. Three rulings, all applied.
+
+**1. 49 Financial = the ENTIRE 08242234 account, not the model slice.** He is right, and the sharpest
+part is that **his "1.74b or so" matched my own measured `partner_custody_total` to the decimal
+($1,736,948,738.65)**. The number he wanted was already in my table -- on the SECOND row, labelled
+"total custodied". **I led with the model slice and he read the top row, which is what a reader does.**
+This was not a measurement error; it was a presentation error, and it is the more embarrassing kind
+because the correct figure was sitting in the deliverable the whole time.
+
+Grounded rather than accepted: he said *"the full total from that account"*, so I tied the platinum
+aggregate to the account's OWN silver -- `sum(dim_balance.net_mv_plus_cash)` -- and got **$0.00
+difference at BOTH endpoints** across 6,683 / 7,190 rows. Two independent derivations, same figure.
+Also established that positions alone (`fact_rps`) run **$27.4M light** at the end, because they
+exclude cash and money-market balances.
+
+**2. Cottonwood start = 0.** Overrides my UNCOMPUTABLE-BY-CONSTRUCTION. Recorded precisely what did and
+did not change: the FRAMING changed, the DATA did not -- still no 2026-04-01 measurement, still 21 of
+132 days of coverage. The caveat now travels beside the number instead of withholding it.
+
+**3. ETF leg = first-available -> now.** Retires the April-1 ETF question as a requirement. Leg runs
+2026-05-18 (first date all four carry issuer data) -> 2026-08-11. Consequence worth noting: my whole
+interpolated-vs-measured finding is now **moot for the headline** -- his window starts after the
+interpolation ends. It survives as a data-quality fact, not a load-bearing one.
+
+### The finding this revision produced -- MUTANT 3, and it inverts a sign
+
+Applying "first available info" LITERALLY to the ETF Float is wrong, and wrong in the direction that
+flatters us. The float is a subtraction across three feeds, so it cannot begin until EVERY firm's feed
+is complete -- and **"exists" is not "complete"**. Cottonwood's ETF-ownership feed exists from
+2026-06-08 carrying **5 accounts / $194,520**; it reaches **293 accounts / $47.7M by 2026-07-15**. That
+is 274 accounts appearing in one week -- the feed onboarding, not Cottonwood buying $39M across 274
+newly-opened accounts -- and it coincides exactly with the producer's declared `first_tracked_date`
+of 2026-07-20.
+
+| | float delta |
+|---|---:|
+| MUTATED (start at 06-08 feed onset, as instructed literally) | **+$657,896,761.38** |
+| CORRECT (start at 07-20 completeness) | **-$5,173,664.49** |
+
+**A $5.2M decline rendered as a $658M increase.** Mutant 3 is the reading a careful person gets by
+following the instruction as written, which is exactly why it was worth building. Float start taken at
+the producer's own declared date, not at my eyeballing of the jump.
+
+### Revised figures
+
+| Segment | Start | End | Delta |
+|---|---:|---:|---:|
+| 49 Financial (ENTIRE 08242234) | $1,482,015,684.99 (04-01) | $1,736,948,738.65 (08-11) | +$254,933,053.66 |
+| Inflection model AUA | $0.00 (04-01) | $144,978,896.75 (08-10) | +$144,978,896.75 |
+| Cottonwood model AUA | $0.00 RULED (04-01) | $136,530,322.99 (08-10) | +$136,530,322.99 |
+| ETF Float | $111,150,402.25 (07-20) | $105,976,737.76 (08-11) | -$5,173,664.49 |
+
+**END TOTAL $2,124,434,696.15 · GROWTH SUM +$531,268,608.91.** Gross Opal-ETF assets (reported
+separately, NOT added -- the firm-held portion is already inside the managed segments):
+$643,330,643.00 -> $754,683,842.00, +$111,353,199.00 (+17.31%). **PFOE fell $17.6M** inside that rise.
+
+Determinism re-run on the v2 harness: IDENTICAL, 0 differing lines of 178. Proof-of-spec re-validated
+VALID, 0 violations, T1-A7 now PASS (Cottonwood counts unlocked by the ruling; ETF Float N/A by
+construction and stated, not omitted).
+
 ## Next Steps
 
 - [1.0.0_SA_CTO] Accept or rework the deliverable; three framing choices are named in section 6 and all
