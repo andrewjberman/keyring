@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W7.sharepoint-reach-and-registry",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W7.sharepoint-reach-and-registry.md",
+    "group": "W",
+    "vintage_commit": "3ea5f17245"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W7_SHAREPOINT_REACH_AND_REGISTRY_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "2627d66fc3",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Registry sections 3 and 11 (capability tables), 7 (unverified premises), 9 (per-class read matrix), 12 (declared bound + per-claim scope)."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W7-REG-C1",
+      "criterion_verbatim": "a registry section recording what is in there, keyed so a consumer can look a document class up and reach it.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of the deliverable sections 3 and 11 (capability registry) and section 9 (per-class read matrix).",
+      "output_evidence": "Section 11 keys on CAPABILITY -> tool -> exercised state. Section 9 keys on DOCUMENT CLASS -> tool -> exercised result -> readable?, so a consumer looks up their class and learns both which call to make and what they will actually get back: .xlsx -> read_site_workbook -> FULL cell text; text/csv/md -> read_site_file -> text; .pdf/.docx/.pptx -> read_document -> RENDITION ONLY, NO TEXT; any -> profile_site_file -> bytes + sha256, server-side. The readable? column is the load-bearing one: it is what distinguishes a REACHABLE class from a READABLE one.",
+      "denominator": "8 read-side capabilities registered (7 exercised, 1 deferred); 4 document classes keyed; 2 write tools registered as OUT OF SCOPE.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W7-REG-C2",
+      "criterion_verbatim": "the registry NAMES WHAT IT DOES NOT COVER, and every unverified or inherited premise is marked as such rather than carried as fact.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of sections 6 (why search is deferred), 7 (unverified premises table), 11 (capability table marking the unexercised member), 12 (declared bound + scope-of-every-absence-claim table).",
+      "output_evidence": "Five premises tabulated with status: (1) the 15-site list is FALSE AS STATED as a tenant set -- it is Andrew's VISIBLE set and a FLOOR; (2) one-library-per-site UNVERIFIED beyond 3 of 15; (3) the wildcard as an enumeration primitive UNVERIFIED -- it is a query; (4) unexercised tools NOT CLAIMED; (5) no-quota-on-this-surface UNKNOWN, not established, because absence of a published limit is not absence of a limit. Section 11 marks search_site_files STILL NOT EXERCISED rather than listing it as a capability. Section 9 records the read_document no-text boundary as a CAPABILITY BOUNDARY rather than a defect, with the tool contract quoted.",
+      "denominator": "5 premises named of 5 identified; 1 of 8 capabilities explicitly unexercised and marked; 0 carried silently as fact.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "W7-REG-C3",
+      "criterion_verbatim": "a DENOMINATOR on the document universe, or a DECLARED BOUND stating why it cannot be closed. An absence verdict NAMES THE SCOPE IT SEARCHED (site/drive/library) -- the firm-partition lesson generalises to any partitioned store, and a 404 in the wrong library is the wrong question asked cleanly.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read of section 12.",
+      "output_evidence": "DECLARED BOUND in place of a denominator, with the reason: the universe cannot be closed by this method because (a) the site set is a floor scoped to one identity's visibility, and (b) closing a document count needs a recursive walk, which is the harvest the call-shape rule forbids -- and the listing metadata already carries the bound without it. Bounded instead: Shared root = 78 folders + ~15 root files, each folder carrying childCount and size (Marketing 3.2GB, Software 3.0GB, Systematic Equity 2.4GB, Research 1.5GB, OCIO Models 1.6GB). EVERY ABSENCE CLAIM NAMES ITS SCOPE in a dedicated table: document classes -> Shared DEFAULT LIBRARY, ROOT LEVEL ONLY, plus 3 folders of 49Financial; library count -> 3 of 15 sites, default library only; site set -> queries, a floor, Andrew's visible set and never the tenant's.",
+      "denominator": "A declared bound replaces the denominator, with its reason; 3 absence-shaped claims, 3 carrying their searched scope.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Sufficiency mutant on the DEFAULT-LIBRARY limitation: the tools reach only a site's default library, so if any probed site carried a second library the registry's file-listing claims would be silently short. Probed three sites to try to find one.",
+      "expected": "If multi-library sites exist in the probed set, list_site_drives returns more than one documentLibrary for at least one.",
+      "observed": "DID NOT FIRE on the probed set -- 49Financial, Shared and OpalOCIO each returned exactly ONE documentLibrary, so default-library-only costs nothing THERE. Reported honestly as REAL IN THE TOOL and UNEXERCISED ON WHAT WAS TESTED, with 12 of 15 sites untested and the failure mode named: a multi-library site is under-read with NO signal. A non-firing mutant is reported as non-firing, never as absence of the hazard.",
+      "status": "N/A-SPEC-NAMES-NONE"
+    },
+    "determinism": {
+      "method": "Drive probes and site listings re-run against the same three sites.",
+      "observed": "Identical: one documentLibrary each, same drive ids, same webUrls, same listing metadata.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "A closed document-universe denominator",
+      "reason": "Structurally unobtainable by this method, and the criterion permits a DECLARED BOUND instead. Closing it would need a recursive walk (forbidden by the call-shape rule) over a site set that is itself only a floor."
+    },
+    {
+      "item": "Non-default libraries on any site",
+      "reason": "The list_site_files / read_site_* tools reach the DEFAULT library only. Untested on 12 of 15 sites."
+    },
+    {
+      "item": "Any claim about the TENANT rather than Andrew's visible set",
+      "reason": "The gateway is OAuth'd as a named human; an inaccessible site does not error, it simply does not appear in the result."
+    }
+  ],
+  "surprises": [
+    "The one-character-twin hazard has a SharePoint analogue: the Opal site query and the wildcard query differ by 9 sites with no error, and the missed set contains the largest corpus on the tenant.",
+    "A pre-existing over-grant surfaced incidentally in the same session: auth/ credential code held lane ANY under .tools/**, and the integrations/** grant narrowed it to ANY_EXEC_OR_AE."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {
+      "tool": "gateway listing tools",
+      "invocation": "list_site_files on 4 folder scopes; list_site_drives on 3 sites",
+      "result": "Bound obtained from listing metadata (folder.childCount + size) WITHOUT recursion -- the metadata already carried what a walk would have cost."
+    },
+    {
+      "tool": "comp-which",
+      "invocation": "routing check before reaching for raw enumeration",
+      "result": "No comp-tool models the M365/SharePoint tenant; comp-tools model the AWS/portal estate. Recorded as a SCOPE BOUNDARY, not a coverage gap."
+    }
+  ]
+}

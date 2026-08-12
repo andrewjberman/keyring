@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "to_id": "OPAL_ANALYST.W7.sharepoint-reach-and-registry",
+  "phase": "INVESTIGATION",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/OPAL_ANALYST.W7.sharepoint-reach-and-registry.md",
+    "group": "W",
+    "vintage_commit": "3ea5f17245"
+  },
+  "assignee": "4.0.0_SA_CRO~Z",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/CROZ_W7_SHAREPOINT_REACH_AND_REGISTRY_20260812.md",
+      "kind": "doc",
+      "commit_or_etag": "2627d66fc3",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Section 13 records the write-absence together with what would have shown one."
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "W7-SCOPE-C1",
+      "criterion_verbatim": "ZERO writes, uploads or site mutations occurred, evidenced (the absence asserted with what would have shown one).",
+      "method": "live_read",
+      "invocation": "Full session tool-call record reviewed for upload_text_to_site / save_email_attachment_to_site; list_site_files re-run against the Shared site after all reads and compared on lastModifiedDateTime and etag.",
+      "output_evidence": "upload_text_to_site: 0 invocations. save_email_attachment_to_site: 0 invocations. NEITHER WRITE TOOL WAS EVEN LOADED into the session tool set. Calls actually made against this surface, all read-class: 1 whoami, 2 find_sharepoint_site, 3 list_site_drives, 4 list_site_files, 1 read_site_workbook, 1 read_site_file, 1 profile_site_file, 1 read_document. WHAT WOULD HAVE SHOWN A WRITE: every call in this session appears in the record with its returned payload -- the reads are all visible, including ones that returned a structured refusal rather than content -- so a write call would have been equally visible. Independently, re-listing the Shared site after the reads returns unchanged lastModifiedDateTime and etag on every entry, so nothing under this identity moved. The absence is MEASURED, not merely unobserved.",
+      "denominator": "0 write-class calls of the 2 write-class tools that exist on this surface; 14 read-class calls made.",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Observation-channel positive control: an assertion of zero writes is worthless if a write would not have been visible in the first place. Confirmed the channel records calls of the same family by checking that the READ calls -- same tool family, same session, same transport -- are all present with their payloads.",
+      "expected": "If the record captures read calls and their payloads, it would have captured a write call and its payload.",
+      "observed": "All 14 read-class calls are present with returned payloads, including the PDF binary-hint response, which proves the channel records non-content responses too and not only successes. A write would therefore not have been silently absent.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Shared site listing re-read after all read operations and compared against the pre-read listing.",
+      "observed": "Identical lastModifiedDateTime and etag values across entries; no item mutated.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Write-capability testing",
+      "reason": "READ-ONLY wave. Andrew's readonly instruction scopes the whole access-layer program and the TO puts both write tools OUT OF SCOPE. Testing a write to prove it works would itself be the violation."
+    },
+    {
+      "item": "Any proposal to widen the bg-concierge-gate G4 identity fence",
+      "reason": "The TO fences it explicitly: report what the reach IS; an entitlement change is Andrew's, not a W7 deliverable. If the honest conclusion is that the concierge cannot reach a class, that is a FINDING and a good one."
+    }
+  ],
+  "surprises": [
+    "The gateway identity is Andrew Berman personally rather than a service principal, so every call on this surface attributes to him -- worth knowing before anything here is scheduled or made production-facing."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-12/croz_w8_bbg_blpapi_pipe_map.md",
+  "compiler_tools": [
+    {
+      "tool": "gateway read tools",
+      "invocation": "14 read-class calls; 0 write-class calls",
+      "result": "Write-absence evidenced AGAINST THE OBSERVATION CHANNEL rather than asserted -- the channel was first shown to record same-family calls."
+    }
+  ]
+}
