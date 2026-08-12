@@ -138,6 +138,122 @@ Andrew-direct via Teams, four asks in ~15 min, all served. Detail in the thread 
 above: today's vintage is pulled, validated, published and served-verified. The 7a check I
 carried forward is moot — that run no longer exists, by Andrew's instruction.
 
+## ~0930Z — FINDING: broker registration lapsed SILENTLY; filesystem delivery masked it
+Routine `heartbeat()` at close-out returned **"is not registered. Call register_agent first."**
+Registered at launch (23:48Z, PID 4684) and heartbeat once; **never heartbeat again across the
+~9.5h overnight stretch**, so the seat degraded to stale and was swept. Re-registered same PID;
+status LIVE.
+
+**Why it went unnoticed for 9.5h — and this is the recordable part.** The seat has TWO
+independent delivery paths and only one of them died:
+- **filesystem** — the inbox-watch Monitor (btceyuzi2, pid 162910, verified alive) kept
+  delivering every message the whole time. All three MSTR ACKs arrived and were acted on.
+- **broker channel push** — dead the entire window, because the registration was gone.
+**The healthy path masked the dead one.** Every mail I was actually sent arrived, so no symptom
+ever surfaced; nothing in the fabric reports "you are deregistered" to the deregistered agent.
+This is CLAUDE.md 22b's three-clocks problem showing up from the other side: I was reachable by
+one clock and unreachable by another, and the reachable one is the one that produces evidence.
+
+**Duplicate-replay consequence, handled:** on re-registration the broker replayed the 3 already-
+read ACKs as "URGENT: received while idle -- act on these NOW." **They were already discharged**
+(read via the filesystem watcher, acted on, and their commit claims independently verified).
+Correct action was NO action. Recorded because the urgent framing invites re-ACKing work that is
+already done — a queue replay is a statement about the QUEUE's state, never about whether the
+agent read the message. Discriminator that settled it: my own prior actions on each, plus the
+verified commits they referenced.
+
+**Mitigation first proposed:** heartbeat at the top of each active turn rather than once at
+launch. **SUPERSEDED ~1020Z — IT DOES NOT WORK. See the correction below.**
+
+### ~1020Z — SECOND CORRECTION: the mitigation fails, and the mechanism is structural
+Deregistered AGAIN, **<=43 min after a successful heartbeat** (09:36Z OK -> 10:19Z "not
+registered"). So the overnight case was never a slow 9.5h decay — it was **repeated sweeps I
+never noticed**, and my "I stopped calling the API" diagnosis was wrong.
+
+**The discriminator, measured in `org/mcp/liveness.json`:** MSTR~Z shows `registered_at
+2026-08-10T21:13:54Z` / `last_seen 2026-08-11T10:20:05Z` — **~13 hours continuous**. My entry had
+vanished entirely. MSTR~Z runs a LOOP and therefore heartbeats continuously; I am EVENT-DRIVEN
+and correctly silent while idle. Liveness degrades to stale after **2 minutes**; I routinely idle
+40+ min waiting for a Teams message. **Per-turn heartbeating cannot cover the gap it exists to
+cover, because the gap is precisely when I am taking no turns.**
+
+**Not a diligence difference and not a BG defect: a structural mismatch between a 2-minute
+liveness window and a seat whose CORRECT idle behaviour is silence.**
+
+**Deliberately NOT fixed by me.** No keepalive loop, cron, or monitor (zero-crons + the
+machinery moratorium), and **no defensive re-registration on a timer** — that would paper the
+symptom and make the fabric's view LOOK healthy while the mismatch persists, which is worse than
+an honest gap. Routed to CTO~Z via MSTR~Z as a design question with the options named and none
+chosen: longer stale window for UA-class, heartbeat-free registration, liveness corroborated from
+inbox-watcher/telemetry, or an explicit event-driven exemption.
+
+**Sampling caveat I owed them:** MSTR~Z's broker-vs-telemetry sweep found "0 current" at 09:35Z —
+five minutes after I re-registered, i.e. **inside one of my registered windows**. A clean result
+there is NOT evidence of absence; the discriminating test is sampling an idle event-driven seat
+MID-GAP.
+
+Practical delivery impact remains **NIL** — the filesystem watcher delivered every message across
+both gaps. The damage is confined to the fabric's VIEW of this seat.
+
+## ~0934Z — SCHEDULE CORRECTED to naive 7a ET; I MISREAD the instruction
+Andrew 09:33:43Z verbatim: *"Also, my mistake on the phrasing with 9a schedule. We should keep
+it at naive 7a ET, just not running today."*
+
+**The misread was mine.** His 09:22Z instruction — *"restart it for naive 7a ET runs safely out
+of the pull zone, say at 9a"* — genuinely admits both readings, and I resolved it to "move the
+trigger to 9a" **silently, without asking.** He has attributed it to his phrasing; the useful
+entry in the record is the opposite: **an ambiguous instruction touching a PRODUCTION SCHEDULE is
+the exact case where "unlimited budget to ask, zero to guess" binds, and I guessed.** One
+clarifying question would have cost ~30 seconds and avoided a live schedule change plus a revert.
+The cost here was ~12 minutes and no data impact — cheap, and cheap is when the lesson is
+affordable to learn.
+
+Re-registered `-At 07:00`. Verified on the LANDED task, not the script's own report:
+- StartBoundary `2026-08-12T07:00:00` — NAIVE, no offset (DST anchoring intact)
+- NextRun **Wednesday 2026-08-12 07:00**; nothing today (now 05:34 ET)
+- State Ready; principal Opal Bloomberg / Limited
+
+### Side effect: MSTR~Z's Description residual CLOSED for free
+Their @b0e7056b52 disposition was "ride until the next real re-registration." That arrived five
+minutes later for an unrelated real reason. LIVE Description now reads
+`...+ portal publish (full end-to-end since 2026-08-06)`. The live-vs-repo divergence and the
+incident-time hazard (a live string asserting the OPPOSITE of the truth, inviting a manual
+double-fire) are both gone; asked MSTR~Z to strike the residual so a closed item does not read
+as live next sweep. **The deferral was right on its merits — a fix attached to a real trigger
+costs nothing, while forcing a re-registration for a doc string would have churned a production
+schedule — and the fast resolution was luck on top, not the justification.**
+
+## Re-arm cycles 10-12 (post-recovery, consolidated — routine, no per-cycle prose)
+| # | task | armed | died | ran | inbound in dead run |
+|---|---|---|---|---|---|
+| 10 | bkm0u2532 | 0920Z | 1018:54Z | ~59m | 2 — both Andrew's (09:22 push, 09:33 7a correction), BOTH HANDLED; cursor advanced past them |
+| 11 | bo6ung3ed | 1019Z | 1119:26Z | ~60m | 0 |
+| 12 | biayzkg40 | 1120Z | 1219:57Z | ~60m | 0 |
+| 13 | b9aj1ftb8 | 1220Z | 1320:19Z | ~60m | 0 |
+| 14 | b57gp3r27 | 1320Z | 1420:36Z | ~60m | 0 |
+| 15 | bnbyufoad | 1421Z | 1521:01Z | ~60m | 0 |
+| 16 | bu1ry14a5 | 1521Z | 1621:27Z | ~60m | 0 |
+Now on **btpt3av3a** (armed 1627:17Z), banner pin + token confirmed, cursor `2026-08-11T09:34:48.861Z`.
+Terminal spot-checked at cycle 14: 8194 still LISTENING (~5.5h since recovery). Re-confirming
+the Terminal on these otherwise-identical cycles is the one check that carries information —
+a silent Terminal death is exactly what nothing on this box detects, and tomorrow's 07:00 ET
+run depends on it.
+
+### ⚠ Cycle 16 — DEAF WINDOW WIDENED ~10x (first material instance)
+Died **1621:27Z**, notification reached me **1626:29Z**, re-armed **1627:17Z** -> **~5m50s deaf**,
+against ~15-40s on every prior cycle. **Nothing lost** (0 inbound in the dead run, cursor
+unchanged). Recorded because this is the exact residual named when the token-expiry cycle was
+first characterised: the seat is deaf between death and re-arm, and re-arm depends on a
+notification reaching a live agent turn. **One instance is not a trend and I am not treating it
+as one** — but the failure mode if it grows is a real inbound landing in the gap, and the ONLY
+reason every gap so far has been harmless is that no message happened to arrive in one. That is
+luck holding, not a control. Watch: a further widening, or any cycle whose dead run shows a
+`[TEAMS]` line, is a genuine escalation rather than a routine re-arm.
+Cadence unchanged at the token lifetime; **rapid-death count still 2, tripwire untripped.**
+Consolidated as a table deliberately — a paragraph per hourly cycle would bury the two entries
+that actually carry information (cycle 10's handled inbound, and the zero-loss record) under
+identical prose.
+
 ## State
 ON DUTY, **no longer Teams-only**. Teams Monitor bex95y6cd (identity-pinned), fabric inbox
 Monitor btceyuzi2, broker LIVE, zero crons.
