@@ -1,6 +1,6 @@
 ---
 name: kill
-description: Clear recurring machine cruft in three modes without ever touching a live Claude agent session, the fabric comms infra, or a repo file. `/kill scripts` reaps orphan bash.exe / python.exe / py.exe processes that are NOT descendants of a live claude session and NOT fabric comms infra (server.py / broker.py / agent-poller.py / inbox-watch.sh) -- the leftover gold runs, dead watchers, and abandoned diagnostics that build up as memory pressure. `/kill apps` reaps bloat GUI apps (Microsoft Edge, Chrome, Teams, Tailscale, Copilot, Spotify, Slack, Discord, Zoom, ...) that are not a Claude/Playwright-automation browser and not a session host. `/kill storage` reclaims disk from KNOWN junk-accumulation areas via an allowlist-only rm -rf (dead Claude scratchpad session dirs, user + Windows temp, crash dumps; opt-in: package caches, workspace __pycache__, recycle bin, docker prune) -- never a live session's scratchpad, never a path outside the vetted junk roots. `/kill all` runs scripts+apps (NOT storage -- recursive deletion is always explicit). DRY-RUN by default -- shows exactly what it would kill/delete and how much it reclaims; append `go` (e.g. `/kill apps go`, `/kill storage go`) to apply. Engines: `.tools/kill-maint.ps1` (processes) + `.tools/kill-storage.ps1` (disk). Built for the Windows host that keeps accumulating zombie scripts, bloat apps, and temp/scratchpad junk under the multi-agent load (the Huntress/Rio memory + disk pressure class). Any agent may run a dry-run; killing/deleting is an operator action.
+description: Clear recurring machine cruft in three modes without ever touching a live Claude agent session, the fabric comms infra, or a repo file. `/kill scripts` reaps orphan bash.exe / python.exe / py.exe processes that are NOT descendants of a live claude session and NOT fabric comms infra (server.py / broker.py / agent-poller.py / inbox-watch.sh) -- the leftover gold runs, dead watchers, and abandoned diagnostics that build up as memory pressure. `/kill apps` reaps bloat GUI apps (Microsoft Edge, Chrome, Teams, Copilot, Spotify, Slack, Discord, Zoom, ...) that are not a Claude/Playwright-automation browser and not a session host. `/kill storage` reclaims disk from KNOWN junk-accumulation areas via an allowlist-only rm -rf (dead Claude scratchpad session dirs, user + Windows temp, crash dumps; opt-in: package caches, workspace __pycache__, recycle bin, docker prune) -- never a live session's scratchpad, never a path outside the vetted junk roots. `/kill all` runs scripts+apps (NOT storage -- recursive deletion is always explicit). DRY-RUN by default -- shows exactly what it would kill/delete and how much it reclaims; append `go` (e.g. `/kill apps go`, `/kill storage go`) to apply. Engines: `.tools/kill-maint.ps1` (processes) + `.tools/kill-storage.ps1` (disk). Built for the Windows host that keeps accumulating zombie scripts, bloat apps, and temp/scratchpad junk under the multi-agent load (the Huntress/Rio memory + disk pressure class). Any agent may run a dry-run; killing/deleting is an operator action.
 ---
 
 # /kill -- machine-cruft reaper (zombie scripts + bloat apps)
@@ -8,7 +8,7 @@ description: Clear recurring machine cruft in three modes without ever touching 
 The Windows host running the fabric keeps accumulating two kinds of junk that show
 up as memory pressure and CPU trudge (the same class that drove the 2026-07-07
 Huntress/Rio reboots): **orphaned bash/python scripts** left behind by dead sessions,
-and **bloat GUI apps** nobody asked for (Edge, Chrome, Teams, Tailscale, Copilot).
+and **bloat GUI apps** nobody asked for (Edge, Chrome, Teams, Copilot).
 `/kill` clears them in one shot -- while treating every live Claude agent session and
 the fabric comms infra as untouchable.
 
@@ -21,7 +21,7 @@ and the memory it reclaims, and kills nothing. You add `go` to pull the trigger.
 |---|---|
 | `/kill` or `/kill all` | Dry-run the PROCESS modes (scripts + apps) -- show the plan, kill nothing. **Does NOT include storage** (recursive deletion is always invoked explicitly). |
 | `/kill scripts` | Dry-run: orphan `bash.exe` / `python.exe` / `pythonw.exe` / `py.exe` not tied to a live claude session and not comms infra. |
-| `/kill apps` | Dry-run: bloat GUI apps (Edge, Chrome, Teams, Tailscale, Copilot, Spotify, Slack, Discord, Zoom, ...). |
+| `/kill apps` | Dry-run: bloat GUI apps (Edge, Chrome, Teams, Copilot, Spotify, Slack, Discord, Zoom, ...). |
 | `/kill storage` | Dry-run: allowlist-only disk reclaim (dead Claude scratchpad, user/Windows temp, crash dumps). See the storage section below. |
 | `/kill <mode> go` | Same selection, but **actually kills/deletes** (`go` / `force` / `--execute` are synonyms). |
 | `... --webview2` | (apps) ALSO target `msedgewebview2.exe` (embedded in Windows Search / Outlook / widgets -- respawns; off by default). |
@@ -58,7 +58,7 @@ process still resolving its parent link during spawn is never mistaken for an or
   age floor. These are orphaned gold runs, dead `inbox-watch` remnants from crashed
   sessions, abandoned diagnostic loops -- real reclaimable memory.
 - **apps**: a process whose name matches the bloat list (`msedge`, `chrome`,
-  `chromium`, `ms-teams`/`Teams`, `tailscale`/`tailscaled`/`tailscale-ipn`,
+  `chromium`, `ms-teams`/`Teams`,
   `mscopilot`/`copilot`, `Spotify`, `Slack`, `Discord`, `Zoom`, `WhatsApp`, `Skype`,
   ...), minus every protection above. `--webview2` / `--onedrive` extend the list.
 

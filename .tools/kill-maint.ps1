@@ -105,7 +105,23 @@ if ($Mode -eq 'scripts' -or $Mode -eq 'all') {
 # ============================== APPS MODE ===================================
 if ($Mode -eq 'apps' -or $Mode -eq 'all') {
   # standalone bloat apps (main + child procs all matched by name):
-  $appName = '^(msedge|chrome|chromium|ms-teams|Teams|tailscale|tailscaled|tailscale-ipn|' +
+  # TAILSCALE REMOVED FROM THIS LIST 2026-08-13 -- IT IS REMOTE-ACCESS INFRASTRUCTURE, NOT BLOAT.
+  # Andrew-direct the same evening: "i need private access to remote in to that device at any time"
+  # + "I recommend we set up a tailscale remote now so this never happens again". Tailscale is the
+  # transport for that access AND -- per the freeze-#11 investigation (LD-0409) -- the instrument
+  # that makes the site Z box's only recurring failure class attributable at all: it is how someone
+  # reaches a wedged box to force a dump.
+  # >> THE HAZARD THIS CLOSES IS SELF-INFLICTED AND WAS LIVE ON BOTH BOXES: this reaper matched
+  # tailscale/tailscaled/tailscale-ipn BY NAME, so a routine `/kill apps go` would have severed the
+  # remote path -- on the laptop TODAY (tailscaled + tailscale-ipn are running here right now), and
+  # on site Z the moment it is installed. A maintenance tool that reaps the estate's own remote
+  # access is exactly the "it never happens again" failure Andrew's instruction is aimed at. <<
+  # Caught by 0.0.0_AB_MSTR~Z while prepping the install; verified independently at this seat
+  # against both this engine and .claude/skills/kill/SKILL.md.
+  # NOTE the sibling GUI process is `tailscale-ipn`; the SERVICE is `Tailscale`/`tailscaled` and was
+  # never reachable by this process sweep anyway -- removing all three keeps the name set honest
+  # rather than leaving a partial guard that reads as protection.
+  $appName = '^(msedge|chrome|chromium|ms-teams|Teams|' +
              'mscopilot|mscopilot_proxy|copilot|Spotify|Slack|Discord|Zoom|WhatsApp|Skype|' +
              'GoogleUpdate|SpotifyWebHelper)(\.exe)?$'
   # Playwright / Claude-automation browser guard: a browser we must NOT kill.
