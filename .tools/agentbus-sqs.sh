@@ -55,6 +55,26 @@
 
 set -euo pipefail
 
+# A NON-ASCII BYTE IN A PEER'S MESSAGE MUST NOT BE ABLE TO TAKE DOWN THE CHANNEL.
+# (measured 2026-08-13, root cause of two deafness windows in one session)
+#
+# Every path in this file that prints a message body does it through a python
+# stdout -- the exec'd agentbus-consumer.py on the `watch` path, and the AWS CLI
+# (itself python) on `recv` and the aws-CLI fallback loop. On Windows that stdout
+# defaults to cp1252, so ONE U+26A0 in a body raised UnicodeEncodeError and killed
+# the reader. On `recv` it surfaced as the loud, misleading
+#   "aws sqs receive-message FAILED (rc=255) -- this is NOT an empty queue"
+# with the real cause ('charmap' codec can't encode ...) buried in the dump; on
+# `watch` it was SILENT -- the consumer died and the Monitor wrapper kept
+# reporting running.
+#
+# EXPORTED, NOT SET PER-CALL, DELIBERATELY: it must reach the exec'd consumer, the
+# CLI, and anything either of them spawns. One missed call site reopens the class.
+# Senders must still keep bodies ASCII (CLAUDE.md: "No emojis (no non-ASCII) ...
+# breaks CloudWatch/charmap") -- but that rule cannot be the control, because it
+# depends on every peer remembering. This is the control.
+export PYTHONIOENCODING=utf-8
+
 ACCOUNT=313476888478
 REGION=us-east-1
 PREFIX="https://sqs.${REGION}.amazonaws.com/${ACCOUNT}/agentbus-ajbdev"

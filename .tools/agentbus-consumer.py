@@ -30,6 +30,38 @@ import os
 import sys
 import time
 
+# ---------------------------------------------------------------------------
+# STDOUT/STDERR MUST NOT BE ABLE TO KILL THIS PROCESS. (measured 2026-08-13)
+#
+# On Windows, python's stdout defaults to the ANSI codepage (cp1252). The emit at
+# :83 prints the RAW MESSAGE BODY, so a single non-ASCII character in a peer's
+# message -- U+26A0 (warning sign) was the live one -- raised UnicodeEncodeError,
+# KILLED THE CONSUMER, and left the message in flight because the emit precedes
+# the delete.
+#
+# >> AND THE EMIT-THEN-DELETE CONTRACT TURNS THAT INTO A POISON PILL, NOT A BLIP. <<
+# The docstring above is right that a death between emit and delete redelivers
+# rather than loses. But the redelivered DUPLICATE CARRIES THE SAME BYTES, so it
+# kills the next consumer too, forever. The safety property becomes the trap: the
+# queue head is un-consumable and every re-arm dies on it within one poll.
+#
+# MEASURED COST: two deafness windows in one session (3h08m and ~29m) on the ONLY
+# live cross-device channel, while TaskOutput reported the Monitor "running" the
+# whole time -- the consumer is a separate process from the wrapper the harness
+# tracks, so its death is invisible to the check the /agentbus skill prescribes.
+#
+# CLAUDE.md already bans the INPUT ("No emojis (no non-ASCII) ... breaks
+# CloudWatch/charmap") and we still shipped it into bus bodies. A rule that needs
+# every sender to remember is not a control; THIS is the control. Senders should
+# still keep bodies ASCII -- that is the rule -- but a peer that violates it must
+# degrade one character, never take down the channel.
+# ---------------------------------------------------------------------------
+for _stream in ("stdout", "stderr"):
+    try:  # py3.7+; never let the guard itself raise
+        getattr(sys, _stream).reconfigure(encoding="utf-8", errors="backslashreplace")
+    except Exception:  # pragma: no cover - older/odd interpreters keep prior behavior
+        pass
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
