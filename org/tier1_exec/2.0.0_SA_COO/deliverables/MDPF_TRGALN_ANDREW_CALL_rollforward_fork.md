@@ -40,7 +40,14 @@ path. **→ HISTORIC-HOLES HALF DECIDED BY YOUR DIRECT ORDER, ~15:17Z at the CRO
 fresh gold run + platinum publish, refresh mechanism as a skill.** RP-W7's staging superseded; DS
 notified; CTO's execution-time serve ruling pends on the built artifact; the gold conflict-guard
 collision at existing dated keys is pre-flagged to CRO with the recommendation to take your one
-explicit dated-key word before step 4. **STILL OPEN ON THIS FORK: the STANDING rule for FUTURE
+explicit dated-key word before step 4. **EMPLOYMENT OUTCOME (16:07Z, CRO): built + employed —
+emitter D4 gate PASS (calibration explained the 136bp cell: a $202K Internal Account Journal Out
+the flow list never named; validation error now -1.17/1.17/3.99bp), 7 reconstruction artifacts
+live on the ratified prefix, orion 08-06 custody filled additively (fact_assets 445/445 — the
+surgical component of this card DONE), builder consume deployed (comp-pipescript MATCH; standalone
+build: 0 empty dates, reconstructed labels on exactly the 7), `/mdpf-refresh` skill landed +
+preflight-exercised. SOLE REMAINING GATE: your dated-key word (CRO asking at their terminal,
+folding the 4-key same-day item), then the fresh gold+platinum publish via the skill.** **STILL OPEN ON THIS FORK: the STANDING rule for FUTURE
 eclipse absences** — (B) labeled carry-forward (my rec) vs reconstruction-on-absence vs nothing;
 the next absence episode re-manufactures the hole without it.
 
