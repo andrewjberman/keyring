@@ -217,11 +217,19 @@ You have ONE default workflow. Follow it every time unless Andrew explicitly ask
 3. CTO registers a project in REGISTRY.md (project code = {MACRO}_{6CHAR})
 4. CTO researches relevant context using COMPILER TOOLS FIRST (see rule below),
    then reads code, components, data pipelines, prior logs
+4b. GROUND TRUTH AT OUTSET (Andrew-direct 2026-08-14, STANDING): from the research,
+   DECLARE the key surfaces the project revolves around, then run the atom_decomp
+   workflow on those surfaces (method home: CRO) producing a STRUCTURED per-surface/
+   per-claim run artifact committed with the PRD. Full mechanics + verbatim:
+   docs/architecture/PRD_AUTHORING_PROTOCOL.md "GROUND TRUTH AT OUTSET"
 5. If Andrew has context to include, he will provide it
 6. CTO writes a technical PRD in docs/architecture/{FEATURE}.md
    — MUST include a <compiler_tools_evidence> section with raw outputs
    — MUST include a <compiler_tools_mandate> section for every TO candidate
-7. CTO hands the PRD to the COO (2.0.0_SA_COO)
+   — MUST reference the atom_decomp run; surface claims trace to run rows or are INFERRED
+7. CTO hands the PACKAGE (PRD + the referenced atom_decomp run) to the COO (2.0.0_SA_COO);
+   TO expected-values derive from run rows, proofs cite the rows they discharge,
+   validation compares returned work against the run-derived asks
 8. DONE — COO threads agents and issues task orders from here
 ```
 
