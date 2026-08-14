@@ -1,7 +1,7 @@
 # DEPLOY LEDGER — MDPF_TRGALN.TO-1 Cottonwood retiming (§3 rows 4/5/7)
 
 **Opened:** 2026-08-14T05:20Z by 0.7.0_AE_CloudOps (deploy-start; NEVER#6)
-**Status:** OPEN
+**Status:** CLOSED 2026-08-14T05:28Z — all 3 legs applied + 0-diff verified + live-read verbatim
 **GO:** 2.0.0_SA_COO 051505Z citing proof_TO-0.json rev 1 @772787a1e1 VALIDATED
 **PRD:** docs/architecture/MDPF_TRGALN_PRD.md v1.1 @f50ee7223b §3 rows 4/5/7
 
@@ -40,7 +40,13 @@ targeted mechanics. No data mutation in this deploy — schedule strings only.
 
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] safe-commit hash: ______ ; plans READ (no daily-aua row); applies landed both roots
-- [ ] Post-apply 0-diff re-plans clean; live APPLIED reads == §3 targets verbatim (3/3)
-- [ ] Tags pushed --follow-tags: ______
-- [ ] CLOSED at: ______ with proof_TO-1.json commit: ______
+- [x] safe-commit @16fc99460c; plans READ (cot: 0/1/0 the expected row; opal-assets targeted:
+      0/2/0 the two expected rows, NO daily-aua row); applies landed both roots (safe-apply,
+      saved-plan files to1-session-retime.tfplan / to1-mirror-sweep-retime.tfplan)
+- [x] Post-apply 0-diff re-plans clean both roots ("No changes"); live APPLIED reads == §3
+      targets verbatim 3/3 (get-schedule ×2 + describe-rule ×1, 05:23Z)
+- [x] Tags created locally: cot-pipeline-v0.7.4, opal-assets-v0.41.0. Push BLOCKED by design
+      (LD-0367 integrator-only push on CLOUD) — rides MSTR's integration window; hash reported
+      to COO/MSTR. NOT a stranded leg: AWS state is live+verified; the push is record-transport.
+- [x] CLOSED 2026-08-14T05:28Z — proof_TO-1.json rev 1 (PENDING-EXERCISED; exercised appends
+      after today's ~13:50Z cycle), committed with this close.
