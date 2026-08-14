@@ -1,7 +1,7 @@
 # DEPLOY LEDGER — MDPF_TRGALN.TO-3 MDPF trio tighten (§3 rows 2, 3): accrual + publisher −30m
 
 **Opened:** 2026-08-14T05:38Z by 0.7.0_AE_CloudOps (deploy-start; NEVER#6)
-**Status:** OPEN
+**Status:** CLOSED 2026-08-14T05:39Z — both legs applied + 0-diff + live trio verified (floor untouched)
 **GO:** 2.0.0_SA_COO 051505Z citing proof_TO-0.json rev 1 @772787a1e1 VALIDATED
 **PRD:** docs/architecture/MDPF_TRGALN_PRD.md v1.1 @f50ee7223b §3 rows 2/3; §0 Andrew verbatim
 ("i dont think we need to wait until 10:10 and 10:20, seems like both of those could be pushed
@@ -30,7 +30,11 @@ Same-window cron revert to the prior strings (verbatim in the table). Schedule s
 
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] safe-commit hash: ______ ; plans READ (one expected row each, NO floor row, NO daily-aua)
-- [ ] Post-apply 0-diff re-plans clean; live APPLIED reads == §3 targets verbatim (2/2)
-- [ ] Tags created (push rides MSTR integration window): ______
-- [ ] CLOSED at: ______ with proof_TO-3.json commit: ______
+- [x] safe-commit @0484d5d0bd; plans READ (mdpf 0/1/0 accrual only; opal-assets targeted 0/1/0
+      publisher only — NO floor row, NO daily-aua row); applies via safe-apply on saved plans
+- [x] Post-apply 0-diff re-plans clean both roots; live trio read 05:36Z: floor 13:30Z UNCHANGED /
+      accrual 13:40Z / publisher 13:50Z, all UTC ENABLED (2/2 targets verbatim + floor declaration)
+- [x] Tags created locally: mdpf-pipeline-v2.1.1, opal-assets-v0.43.0 (push rides MSTR window,
+      LD-0367)
+- [x] CLOSED 2026-08-14T05:39Z — proof_TO-3.json rev 1 (PENDING-EXERCISED), committed with this
+      close. Tonight-refresh step runs next per v1.1 §8.1.
