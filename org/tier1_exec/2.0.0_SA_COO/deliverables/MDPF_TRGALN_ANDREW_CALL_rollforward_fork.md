@@ -63,14 +63,15 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
 
 ## Context
 
-- All 14 trigger retimes LIVE (landed 05:36Z, 4h ahead of your window). Tonight-refresh MEASURED
-  interim (06:02Z): COT's tonight ceiling is **as-of 08-12** — your ~01:02 ET BD refresh had
-  STARTED but exports were not baked at 01:42 ET; the ingest's own snapshot-reject guards refused
-  the partials (holdings 1.9% priced vs 50% floor — correct refusal, prior snapshot retained).
-  49F likewise rides its morning file deliveries. NOT a fork: cottonwood + 49F reach as-of 08-13
-  at today's scheduled fires (07:30 ET session = also the B1 window oracle), with the full
-  three-firm T-1 read at the 09:50 ET publish (TO-4). Inflection may reach 08-13 tonight (INF leg
-  was running at write time; readback follows).
+- All 14 trigger retimes LIVE (landed 05:36Z, 4h ahead of your window). Tonight-refresh FINAL
+  (chain GREEN end-to-end 05:41–06:20Z, publisher 14/0): **all three firm scopes now serve
+  as-of 2026-08-12, ALIGNED for the first time** (Inflection + Cottonwood lifted from 08-11).
+  As-of 08-13 tonight was unreachable from ANY vendor at this hour — measured per-vendor: BD
+  exports mid-processing at 01:42 ET (ingest guards correctly refused the partials, holdings 1.9%
+  priced vs 50% floor); Orion's freshest value-date at 02:12 ET was 08-12. A vendor
+  overnight-processing floor, not a chain defect. As-of 08-13 lands at today's scheduled fires
+  (INF 11:02–11:32Z, COT 11:30Z session = the B1 oracle) with the full three-firm T-1 read at the
+  13:50Z publish — the TO-4 acceptance, shortly after your return.
 - TO-6's executor spawn is HELD at MSTR pending your word (suggested lane on your GO:
   0.4.0_DS_ClientPlatform — they authored the offset + honest_none machinery; orion re-mirror as a
   one-line rider).
