@@ -1,7 +1,7 @@
 # DEPLOY LEDGER — MDPF_TRGALN.TO-2 Inflection retiming (§3 rows 8–15 + 6): uniform −2h15m + mirror
 
 **Opened:** 2026-08-14T05:30Z by 0.7.0_AE_CloudOps (deploy-start; NEVER#6)
-**Status:** OPEN
+**Status:** CLOSED 2026-08-14T05:37Z — 9/9 legs applied + 0-diff verified + live-read verbatim
 **GO:** 2.0.0_SA_COO 051505Z citing proof_TO-0.json rev 1 @772787a1e1 VALIDATED
 **PRD:** docs/architecture/MDPF_TRGALN_PRD.md v1.1 @f50ee7223b §3 rows 8–15 + 6
 
@@ -53,7 +53,12 @@ no data mutation.
 
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] safe-commit hash: ______ ; plans READ (9 expected rows only, no daily-aua); applies landed
-- [ ] Post-apply 0-diff re-plans clean; live APPLIED reads == §3 targets verbatim (9/9)
-- [ ] Tags created (push rides MSTR integration window): ______
-- [ ] CLOSED at: ______ with proof_TO-2.json commit: ______
+- [x] safe-commit @ab3c0ad176; plans READ (inf: 0/8/0 the eight expected rows; opal-assets
+      targeted: 0/1/0 mirror_inf only, NO daily-aua row); applies landed via safe-apply on
+      saved plans (to2-inf-family-retime.tfplan / to2-mirror-inf-retime.tfplan)
+- [x] Post-apply 0-diff re-plans clean both roots ("No changes"); live APPLIED reads == §3
+      targets verbatim 9/9 (describe-rule sweep, 05:36Z)
+- [x] Tags created locally: inf-pipeline-v1.7.100, opal-assets-v0.42.0 (push rides MSTR
+      integration window per LD-0367; hashes reported to COO)
+- [x] CLOSED 2026-08-14T05:37Z — proof_TO-2.json rev 1 (PENDING-EXERCISED), committed with
+      this close.
