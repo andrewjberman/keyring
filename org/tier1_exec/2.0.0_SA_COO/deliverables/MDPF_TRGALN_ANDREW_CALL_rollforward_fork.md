@@ -151,13 +151,16 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   you can price the permanence unhurried. TO-4's Inflection leg closes today as
   PASS-WITH-DISCLOSURE either way (delta + instrument + tomorrow's cycle as the named closing
   read; a failed closing read reopens the leg).
-- **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
+- ~~**One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
   believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
   artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
   confirmation. MSTR held it 4 minutes after execution (message crossing); state frozen since;
   serving impact measured ZERO (the re-pull proved the data was vendor-stale regardless). Full
   sequence verbatim in the proof record. Your options on the frozen state: keep as-is / revert from
-  backups / clean re-run — each on your word.
+  backups / clean re-run — each on your word.~~ **→ RULED ~18:3xZ: "REC APPROVED" at the COO
+  terminal (/open-calls CALL 1 of 1) — ACCEPTED-AS-CLOSED, state kept as-is, no remedial act.
+  Record: `ANDREW_DIRECT_20260814_A_CROSSING_ACCEPTED_AS_CLOSED.md`. THIS CARD IS NOW FULLY
+  DISCHARGED — zero open Andrew items remain.**
 - **Visibility fact, named not built** (moratorium respected): nothing in the chain detects an
   Orion late-batch day — the pull greens with stale content. Yours to weigh only if it repeats.
 
