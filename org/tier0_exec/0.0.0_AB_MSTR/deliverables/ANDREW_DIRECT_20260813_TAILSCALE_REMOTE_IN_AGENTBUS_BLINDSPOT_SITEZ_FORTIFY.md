@@ -138,7 +138,67 @@ is not counter-evidence.
 
 ---
 
-## OPEN AT ANDREW — three one-line decisions
+---
+
+# UPDATE 2026-08-14 ~0105Z — ⛔ GO RECEIVED. DECISIONS 1 AND 2 ANSWERED.
+
+**Andrew-direct, MSTR terminal, relayed `f024bd2c`, VERBATIM:**
+> *"tailscale yes we want it, full desktop would be nice but commandline is fine too if we can just
+> use powershell on the other device"*
+
+**Decision 1 — install: YES.** **Decision 2 — command-line is acceptable**, full desktop merely
+*"would be nice."* **Decision 3 — already closed elsewhere:** LD-0410 removed
+`tailscale`/`tailscaled`/`tailscale-ipn` from `/kill`'s reap list, so the lifeline is protected
+*before* the install rather than after.
+
+**His acceptance of command-line resolves the RDP hazard in our favour** — command-line access does
+not take over the console session, so the SSH leg carries none of the locked-console risk and does
+**not** need to wait until after 07:00. RDP stays prepared-not-enabled.
+
+## STATUS: BLOCKED ON ELEVATION ONLY — handed off, not stalled
+
+```
+WindowsIdentity : Opal_Bloomberg\Opal Bloomberg
+ELEVATED        : False          (the account IS in Administrators; this session is not)
+```
+Tailscale is a machine-scope MSI with a service; no user-scope path exists.
+
+⛔ **The install was NOT attempted unelevated, deliberately.** It would raise a **UAC dialog on the
+console** — a GUI prompt this session cannot answer, sitting modal on a box with nobody at it. **That
+console session is load-bearing:** the 07:00 pull runs in interactive context and tomorrow is its
+first unattended fire since the tree move. Precedent is the same folder's 2026-08-10 handoff, where
+`msiexec` was blocked in-session and Andrew ran it manually.
+
+**Handoff (elevated-ready, every command, auth boundary intact):**
+`Desktop\OPAL_BLOOMBERG_freeze_investigation_2026-07-30\HANDOFF_elevated-install-tailscale_2026-08-14.md`
+*(outside the repo — no commit hash, stated so it is not read as committed).*
+
+## ⚠ TWO SITE-Z MEASUREMENTS THAT CONTRADICT REASONABLE LAPTOP-SIDE ASSUMPTIONS
+
+| | site Z (measured) | laptop (peer-measured) |
+|---|---|---|
+| `Get-Service sshd` / `sshd.exe` | **NOT PRESENT** / **False** — only the **client** `ssh.exe` exists | RUNNING / present |
+| PowerShell 7 (`pwsh.exe`) | **ABSENT** (7 and 6); only 5.1 at `System32\WindowsPowerShell\v1.0\powershell.exe` | — |
+
+⇒ **OpenSSH Server is a SECOND INSTALL on this box, not a config change** — a separate
+authorization, not a flip of an existing service. ⇒ The proposed `DefaultShell` value would have
+pointed at a **nonexistent binary**; the handoff uses the 5.1 path.
+
+*This is the third laptop→site-Z generalization to produce a wrong premise in one evening (after the
+08-10 KP-41 correlation and the "your consumer still has the defect" claim). The axis, not the
+individual errors, is the thing worth carrying.*
+
+## ⛔ A HAZARD IN THE SSH STEP THAT NEITHER SEAT NAMED
+
+`Add-WindowsCapability -Online -Name OpenSSH.Server` **creates a firewall rule that opens port 22
+broadly.** The tailnet-only binding is therefore **not** a later hardening step — it must land in the
+same sitting, or there is a window in which this box has an internet-reachable `sshd`. That is
+strictly worse than today's posture, which is no remote access at all.
+```powershell
+Set-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -RemoteAddress 100.64.0.0/10
+```
+
+## STILL OPEN AT ANDREW (the original three, less the two now answered)
 
 1. **Install Tailscale on site Z** — yes/no. Everything else is blocked on this.
 2. **RDP-over-tailnet vs SSH-only vs both** — with the console-lock/07:00 coupling above understood.
