@@ -19,6 +19,19 @@ honored where possible (below). For the unfillable model leg, pick the fill scop
 eclipse absence makes a new hole needing a new ruling.
 **(B) STANDING** labeled carry-forward rule in the builder for absent-eclipse run-dates — no future
 holes; standing behavior.
+**(C) RECONSTRUCTION (added 15:12Z, CRO amendment @3b3adaa420, your prompt at their terminal)** —
+the ratified eclipse-vintage-reconstruction emitter (0.2.0_DS spec 08-10, CTO brief @7b76f32562)
+rebuilds the model leg from orion per-client factors + transaction flow adjustment: CRO measured
+this hour that its inputs are COMPLETE on existing S3 for ALL SEVEN hole dates (orion factors at
+309-313/314 clients per date, every hole bracketed by measured eclipse partitions, zero vendor
+calls). Staged no-GO vehicle: MDPF_REMED.RP-W7 @09b57a6278. Honest state: flow-UNadjusted accuracy
+15.78bp agg / 136bp worst-cell = gate-FAIL-not-relax; the flow-adjustment step is the one unbuilt
+piece. **Two of your words gate it: (i) the spec's own scope line excludes the six historic holes
+absent an explicit Andrew/CTO word (CRO has NOT treated today's prompt as that word); (ii) SERVING
+reconstructed values needs your internal-only ruling (08-10 ~2334Z) lifted.** (A)/(B) fill with
+labeled carry-forward VALUES; (C) fills with reconstructed values — and (B)+(C) are COMBINABLE:
+standing carry-forward for future absences + reconstruction backfill of the historic 7 on your word.
+TO-5's "unfillable" verdict stands for MEASURED values; §5a addendum records the third path.
 
 **Load-bearing fact:** the absences are RECURRING, not a closed incident — five distinct episodes
 across 2.5 months (run-dates 05-21, 06-01, 07-01, 07-13/14/15, 08-06 — the last on the platinum-
