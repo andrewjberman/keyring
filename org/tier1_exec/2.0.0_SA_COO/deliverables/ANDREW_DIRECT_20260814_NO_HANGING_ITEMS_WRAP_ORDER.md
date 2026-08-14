@@ -33,8 +33,13 @@ json/mdpf edge hit is a direct hit by construction), with two mechanics bounds: 
 guarded-set spellings + print the denominator beside the zero; (b) end the window ~24h back so all
 7 trailing days are FULLY-DELIVERED CloudFront log days (a zero must not be a delivery-lag
 artifact). Non-zero → name-the-fetcher, unchanged. Also 08-15: CTO's OPAL_BRDSEP T2
-accept-or-rework · CTO's layer→substrate re-issue with assignees · COO dates/attributes the
-2 staged-not-applied KEEP-Lambda artifacts (pointer requested from CTO).
+accept-or-rework (PULLED FORWARD — executed 08-14 ~2031Z under his own no-hanging word) · CTO's
+layer→substrate re-issue with assignees · **COO CLASSIFIES the 2 staged-not-applied KEEP-Lambda
+artifacts (pointer resolved, CTO 203114Z): `smartx-jwt-refresher` (s3_object_version drift) +
+`smartx-rest-pull` (s3_object_version + source_code_hash drift) — the Rule-22a
+staged-vs-applied class, surfaced by apply-4's full-root rejection, residual'd in proof_TO-3.
+08-15, owner COO (classification: deliberately-held / stale-by-neglect / two-homes; AE supplies
+vintage reads). THE CLASSIFY RULE BINDS: nobody deploys those artifacts off the drift alone.**
 **08-16:** ONE combined post-kill unattended read (both waves) → TO-5 + zero-dangling sweep →
 close report → CTO RAVC → **OPAL_MDPFCLEANUP CLOSED**. At TO-5 close: CTO's residual bank (now
 incl. the comp-state charmap crash) converts to REGISTERED items with owners or deliberate kills.
