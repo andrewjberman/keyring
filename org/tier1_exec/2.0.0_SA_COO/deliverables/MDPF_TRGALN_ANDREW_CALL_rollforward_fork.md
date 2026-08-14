@@ -109,10 +109,23 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   byte-identical stale values). **→ DECIDED BY YOU, 15:1xZ: "go ahead" at the AE terminal (AE
   record+broadcast 151504Z; durable record in the intervention record). The one-delete completion
   is AUTHORIZED and EXECUTING** — verify → backup → delete → converter re-converts from the healed
-  raw → floor→accrual→publisher → matched-row value tie-out. On the tie-out landing, INF serves
-  fresh TODAY and the historical 08-13 point is corrected (the permanence question dissolves).
-  Your "go ahead" was scoped to exactly this sequence — it does NOT rule the (A)-crossing
-  adjudication below, which remains yours.
+  raw → floor→accrual→publisher → matched-row value tie-out. Your "go ahead" was scoped to exactly
+  this sequence — it does NOT rule the (A)-crossing adjudication below, which remains yours.
+- **OUTCOME (15:24Z) — completed to a FOURTH guard, and the guard corrected our permanence claim.**
+  What landed: stale silver partition backed up + deleted 15:17:50Z; converter rebuilt it from the
+  healed raw 15:18:23Z (set-identity 4762/4762); the floor re-ran green and COMPUTED the fresh
+  values — then its own `conditional_put` conflict guard held them at the EXISTING dated gold keys
+  ("CONFLICT (recorded, not overwritten)" — no override exists, by design; the fourth correct
+  refusal of a silent overwrite today). **CARD CORRECTION, material:** the builder recomputes the
+  whole 445-date series every run, so tomorrow's floor writes the NEW frontier key carrying the
+  corrected 08-13 point and the publisher serves it — **the SERVED understatement SELF-HEALS in
+  ~20h with zero action; "permanent" applies ONLY to 4 frozen dated gold snapshot keys**
+  (inflection + global `aggregate-aua-timeseries/2026-08-13.json` + `aum-metrics/2026-08-13.json`),
+  which are internal history, not the serving surface. COO ruled STOP here (no widening — the
+  4-key gold delete is a NEW reserved set your "go ahead" did not name; AE concurred, refused to
+  infer it). **ONE OPTIONAL WORD, expires at tomorrow's cycle:** authorize deleting those 4
+  regenerable derivative keys (fresh replacements already computed, sha256-recorded) and INF serves
+  fresh TODAY instead of tomorrow morning. Otherwise: nothing to do, it heals itself.
   **CTO's framing (ratified PRD v1.4): this is a DATA-QUALITY decision, not an ops one — no
   operational urgency; authorize if you want the history exact.** And per MSTR: **option (i) does
   not expire** — the healed raw persists in bronze (`bronze/assets/2026-08-14.jsonl.gz`, fresh
