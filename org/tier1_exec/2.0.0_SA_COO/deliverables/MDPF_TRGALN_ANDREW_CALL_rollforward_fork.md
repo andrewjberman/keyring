@@ -47,9 +47,11 @@ live on the ratified prefix, orion 08-06 custody filled additively (fact_assets 
 surgical component of this card DONE), builder consume deployed (comp-pipescript MATCH; standalone
 build: 0 empty dates, reconstructed labels on exactly the 7), `/mdpf-refresh` skill landed +
 preflight-exercised. SOLE REMAINING GATE: your dated-key word (CRO asking at their terminal,
-folding the 4-key same-day item), then the fresh gold+platinum publish via the skill.** **STILL OPEN ON THIS FORK: the STANDING rule for FUTURE
-eclipse absences** — (B) labeled carry-forward (my rec) vs reconstruction-on-absence vs nothing;
-the next absence episode re-manufactures the hole without it.
+folding the 4-key same-day item), then the fresh gold+platinum publish via the skill.** **→ FORK FULLY CLOSED 18:0xZ: "all recs approved" at the CTO terminal (@874b52729c) — NO standing
+carry-forward rule. Policy: future Eclipse absences serve HONEST HOLES and get filled surgically
+via the proven EVR path on occurrence. (My rec (B) not taken; the ruling supersedes it.) The run
+record carries the policy line via CRO. THIS CARD'S SOLE REMAINING OPEN ITEM: the (A)-crossing
+adjudication.**
 
 **Load-bearing fact:** the absences are RECURRING, not a closed incident — five distinct episodes
 across 2.5 months (run-dates 05-21, 06-01, 07-01, 07-13/14/15, 08-06 — the last on the platinum-
