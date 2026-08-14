@@ -1,0 +1,15 @@
+{
+  "project_code": "MDPF_TRGALN",
+  "macro_code": "MDPF",
+  "name": "Model Portfolios Trigger Alignment",
+  "description": "Align every MDPF firm scope's serving vintage with 49 Financial's (all three T-1 at publish) by retiming the Cottonwood and Inflection upstream trigger chains ahead of the 13:30Z mdpf gold floor, and pulling the accrual bridge and platinum publisher 30 minutes earlier (13:40Z / 13:50Z). Root cause (measured 2026-08-13): the floor+accrual+publisher all ran before INF's monolith inputs landed (15:05Z, the inf ingest-mirror cron) and COT's (22:31Z, the cot ingest-mirror at 18:30 ET) -- structural ordering, not a failure. All changes ride Terraform; unmanaged schedules are imported before edit (no deployed/code drift). Every TO ships a machine-readable proof-of-spec JSON validated deterministically by COO against PRD section 3.",
+  "prds": [{"path": "docs/architecture/MDPF_TRGALN_PRD.md", "label": "v1.0 trigger alignment plan + deterministic target spec + proof schema", "date": "2026-08-14"}],
+  "status": "active",
+  "phase": "Phase 0: PRD complete; COO instantiation + decomposition pending (TO-0..TO-4 specced in PRD section 4)",
+  "blocking": "COO task order issuance (COO to be instantiated by MSTR); TO-0 vendor-window probes gate TO-1/TO-2",
+  "created": "2026-08-14",
+  "pods": ["0.7", "1.0", "2.0"],
+  "pipeline": "mdpf + cot-pipeline + inf-pipeline + opal-assets",
+  "thread_counter": 0,
+  "threads": []
+}
