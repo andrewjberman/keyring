@@ -34,8 +34,15 @@ is still unbuilt; the 136bp accuracy gate remains FAIL-not-relax; the point_clas
 conditions (reconstructed-never-measured, body labels, calibrate/validate split) stand untouched.
 (A)/(B) fill with labeled carry-forward VALUES; (C) fills with reconstructed values — and (B)+(C)
 are COMBINABLE: standing carry-forward for future absences + reconstruction backfill of the
-historic 7. **The fork choice is still yours**; on it, the step-3 build gets an owner and a TO.
-TO-5's "unfillable" verdict stands for MEASURED values; §5a addendum records the third path.
+historic 7. TO-5's "unfillable" verdict stands for MEASURED values; §5a addendum records the third
+path. **→ HISTORIC-HOLES HALF DECIDED BY YOUR DIRECT ORDER, ~15:17Z at the CRO terminal (record
+@CRO deliverable, committed): emitter structured + employed on inflection NOW at CRO's seat, then
+fresh gold run + platinum publish, refresh mechanism as a skill.** RP-W7's staging superseded; DS
+notified; CTO's execution-time serve ruling pends on the built artifact; the gold conflict-guard
+collision at existing dated keys is pre-flagged to CRO with the recommendation to take your one
+explicit dated-key word before step 4. **STILL OPEN ON THIS FORK: the STANDING rule for FUTURE
+eclipse absences** — (B) labeled carry-forward (my rec) vs reconstruction-on-absence vs nothing;
+the next absence episode re-manufactures the hole without it.
 
 **Load-bearing fact:** the absences are RECURRING, not a closed incident — five distinct episodes
 across 2.5 months (run-dates 05-21, 06-01, 07-01, 07-13/14/15, 08-06 — the last on the platinum-
