@@ -5,17 +5,36 @@
   "description": "The September 2026 board update. Andrew owns three annotated sections in 'September Board Update .docx' (Alyssa Keith assigned owners 2026-08-04): (1) Overview of activities in the quarter -- historical AUA growth, headcount, growth in clients/accounts served; (2) Dashboard enhancements; (3) AI roundtable. Section 1 is data-backed and is decomposed under the Andrew-direct methodology of 2026-08-12: establish the total Opal asset base over 2026-04-01 -> 2026-08-11, segmented into 49 Financial, Inflection Wealth Management, Cottonwood Capital Advisory, and ETF Float, plus client/account deltas per cohort. Sections 2 and 3 are narrative and drafted directly with Andrew.",
   "prds": [],
   "status": "active",
-  "phase": "Phase 1: T1 (asset base measurement) DISPATCHED to 0.4.0_DS_ClientPlatform~O 2026-08-12. Sections 2 (Dashboard enhancements) and 3 (AI roundtable) not yet drafted. Section 1 prose blocked on T1 figures + Andrew's growth-framing call + headcount.",
-  "blocking": "T1 measurement in flight. Two open confirms at Andrew (non-blocking to T1): which 49F Schwab account (08242234 MDPF assumed vs 08335338 ADVI), and whether the ETF April-1 baseline is reconstructed or declared as a 2026-05-15 start. One open framing call at Andrew: organic (like-for-like) vs including-Cottonwood-onboarding growth presentation. Headcount has no source in the data estate -- Andrew supplies.",
+  "phase": "Phase 2: MEASUREMENT ARC COMPLETE -- T1 accepted @7a3916acd8 (08-12); T2 accepted 2026-08-14 ~20:3xZ (CTO RAVC4 under the no-hanging wrap order; proof-of-spec VALID @49437033e8, prereg adjudication landed without tuning, terminal basis = Andrew's option (c) $190,072,187 @28155b8d97). Both board documents delivered to Andrew's Desktop 08-12. Remaining: Andrew's read of the two .docx deliverables + any section-2/3 narrative edits he directs -- his clock, not a lane's.",
+  "blocking": "None at any lane -- board documents at Andrew",
   "created": "2026-08-12",
-  "pods": ["0.4"],
+  "pods": [
+    "0.4"
+  ],
   "pipeline": "mdpf + etfs + bd + inf + cot",
   "source_document": "C:/Users/AndrewBerman/Downloads/September Board Update .docx",
   "precedent_document": "C:/Users/AndrewBerman/Downloads/Opal Board Meeting June 2026.pptx",
   "andrew_owned_sections": [
-    {"comment_id": 0, "section": "Overview of activities in the quarter", "subitems": ["Historical AUM growth", "Headcount", "Growth in clients/accounts served"], "state": "measurement dispatched (T1)"},
-    {"comment_id": 6, "section": "Dashboard enhancements", "state": "not started"},
-    {"comment_id": 11, "section": "AI roundtable", "state": "not started"}
+    {
+      "comment_id": 0,
+      "section": "Overview of activities in the quarter",
+      "subitems": [
+        "Historical AUM growth",
+        "Headcount",
+        "Growth in clients/accounts served"
+      ],
+      "state": "measurement dispatched (T1)"
+    },
+    {
+      "comment_id": 6,
+      "section": "Dashboard enhancements",
+      "state": "not started"
+    },
+    {
+      "comment_id": 11,
+      "section": "AI roundtable",
+      "state": "not started"
+    }
   ],
   "notes": [
     "June 2026 board deck reported Total OCIO AUA $1.82B as of 2026-06-12, +22.3% QoQ. CTO reconstructed its composition arithmetically: 49 Financial alone was $1,649,497,088 at 2026-06-30 (below $1.82B, so never single-firm); 49F + Inflection interpolated to 06-12 is ~$1.83B; Cottonwood at 06-30 was already $436,654,607, so including it would have put June near $2.27B. CONCLUSION: June's $1.82B = 49 Financial + Inflection, Cottonwood not yet counted. INFERRED from arithmetic, not from a document -- pending Andrew confirm.",
