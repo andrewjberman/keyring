@@ -26,11 +26,15 @@ this hour that its inputs are COMPLETE on existing S3 for ALL SEVEN hole dates (
 309-313/314 clients per date, every hole bracketed by measured eclipse partitions, zero vendor
 calls). Staged no-GO vehicle: MDPF_REMED.RP-W7 @09b57a6278. Honest state: flow-UNadjusted accuracy
 15.78bp agg / 136bp worst-cell = gate-FAIL-not-relax; the flow-adjustment step is the one unbuilt
-piece. **Two of your words gate it: (i) the spec's own scope line excludes the six historic holes
-absent an explicit Andrew/CTO word (CRO has NOT treated today's prompt as that word); (ii) SERVING
-reconstructed values needs your internal-only ruling (08-10 ~2334Z) lifted.** (A)/(B) fill with
-labeled carry-forward VALUES; (C) fills with reconstructed values — and (B)+(C) are COMBINABLE:
-standing carry-forward for future absences + reconstruction backfill of the historic 7 on your word.
+piece. **BOTH GATES DISCHARGED 15:13Z — your "yes to both" at the CRO terminal (@e4251a4567): (i)
+scope EXTENDED to the six historic holes; (ii) internal-only LIFTED, reconstructed values may
+serve.** What your word did NOT do, kept honest: it is a ruling, not a GO — RP-W7's sequencing gate
+(behind the unattended-cycle adjudication) stands pending CTO/COO read; the flow-adjustment step
+is still unbuilt; the 136bp accuracy gate remains FAIL-not-relax; the point_class honesty
+conditions (reconstructed-never-measured, body labels, calibrate/validate split) stand untouched.
+(A)/(B) fill with labeled carry-forward VALUES; (C) fills with reconstructed values — and (B)+(C)
+are COMBINABLE: standing carry-forward for future absences + reconstruction backfill of the
+historic 7. **The fork choice is still yours**; on it, the step-3 build gets an owner and a TO.
 TO-5's "unfillable" verdict stands for MEASURED values; §5a addendum records the third path.
 
 **Load-bearing fact:** the absences are RECURRING, not a closed incident — five distinct episodes
@@ -102,11 +106,13 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   sibling of the `--no-resume` gap, both with CTO as one residual class). The only remaining lever
   is deleting `orion/inflection/silver/fact_assets/date=2026-08-14/data.parquet` — **your reserved
   category; not fired, not asked-around**. Remaining legs stood down (they would re-serve
-  byte-identical stale values). **YOUR OPTIONS:** (i) authorize that one delete → converter
-  re-fires clean on the healed raw → floor→accrual→publisher → value tie-out → INF fresh today;
-  (ii) no action → tomorrow's clean cycle serves fresh marks at the new frontier, **but the
-  historical 08-13 Inflection point permanently keeps the $185,201.05 / 0.088% understatement**
-  (tomorrow moves the frontier, not the history). The permanence is the thing this decision prices.
+  byte-identical stale values). **→ DECIDED BY YOU, 15:1xZ: "go ahead" at the AE terminal (AE
+  record+broadcast 151504Z; durable record in the intervention record). The one-delete completion
+  is AUTHORIZED and EXECUTING** — verify → backup → delete → converter re-converts from the healed
+  raw → floor→accrual→publisher → matched-row value tie-out. On the tie-out landing, INF serves
+  fresh TODAY and the historical 08-13 point is corrected (the permanence question dissolves).
+  Your "go ahead" was scoped to exactly this sequence — it does NOT rule the (A)-crossing
+  adjudication below, which remains yours.
   **CTO's framing (ratified PRD v1.4): this is a DATA-QUALITY decision, not an ops one — no
   operational urgency; authorize if you want the history exact.** And per MSTR: **option (i) does
   not expire** — the healed raw persists in bronze (`bronze/assets/2026-08-14.jsonl.gz`, fresh
