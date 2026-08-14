@@ -160,3 +160,24 @@ Ratified in the same message, for execution:
   the `Capitalized_Snake_Case` v2.0 rewrite, `Territory` retirement, `Substrate_Side` demotion, and
   the `Layer` mint — sequenced behind the `layer`→`substrate` column rename.
 - **Broadcast:** MSTR + CTO + COO, same turn.
+
+## 8. W-04 / W-05 CLOSED (appended 2026-08-14 ~20:18Z — Andrew-direct via /open-calls at the MSTR terminal, MSTR relay 201712Z, VERBATIM "RECS APPROVED")
+
+The two items this record held open are RULED:
+
+- **W-04 — TIER0_EXEC membership = YES (IN the EXEC-coded classification).** The approved rec's
+  rationale, on the record: TIER0_EXEC IS the exec tier by name and mapping (`org/tier0_exec/**`);
+  excluding the literal exec tier from "EXEC-coded" would be an MECE break. It routed to Andrew
+  because MSTR was an interested party on its own tree — his word settles it. **The 9th grant (CRO
+  into TIER0_EXEC) LANDS AT A GRANTOR SEAT per SoD (§7 above: "CRO does not self-land") — flagged
+  back to MSTR as the grantor of the other 8 @97eabc3ebc; this append applies the CLASSIFICATION,
+  not the grant.**
+- **W-05 — the non-EXEC-named governance groups (ANY_CTO, TIER0_LAW, TIER0_RATIFY,
+  GOVERNANCE_AUDIT, WS_CONTRACT_AUTHORS) = OUT of the EXEC-coded classification.** Rationale:
+  governance FUNCTIONS, not exec seats — intent coherence (Rule 24) preserved. **Scope note carried
+  verbatim from the relay: this word rules them OUT of EXEC-coded ONLY; whether they warrant their
+  own governance-function axis is a SEPARATE schema decision routed via MSTR if it ever surfaces —
+  not inferred from this ruling.** Applying the OUT surfaced no such need (an OUT records itself).
+
+With these, the 2026-08-12 walk-list's section A holds only W-02 (`build` fifth Function value —
+deliberately event-gated on the W-24 placement pass). W-01 closed earlier today @71d9f06eba.
