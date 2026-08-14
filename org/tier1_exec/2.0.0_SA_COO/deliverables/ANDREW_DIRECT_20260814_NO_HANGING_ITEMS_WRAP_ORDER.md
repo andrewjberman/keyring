@@ -22,3 +22,20 @@ forgetting that multi-day hangs produce — the remedy is dated closure, not mor
    in progress) · 12 pre-existing RED deploy-ledger entries (MSTR's, adjacent).
 
 Routing: COO↔CTO collab opened same turn; MSTR copied (governs + holds adjacent items).
+
+## THE CONVERGED WRAP CALENDAR (CTO rulings 202920Z; nothing past 08-16 on the cleanup)
+
+**08-14 (tonight):** apply 4 (CTO gate) · proof_TO-2 + proof_TO-3 filed (AE) · COO validations.
+**08-15:** one-pass morning read (TRGALN B2 + TO-2 acceptance stamp + TO-5 wave-1) → K3 kill wave
+(CTO per-apply gates) → **TO-4 reserved wave SAME DAY** — the access-window condition RULED
+satisfiable on trailing history (CTO: the forward wait added zero discrimination; post-CANPLAT any
+json/mdpf edge hit is a direct hit by construction), with two mechanics bounds: (a) sweep BOTH
+guarded-set spellings + print the denominator beside the zero; (b) end the window ~24h back so all
+7 trailing days are FULLY-DELIVERED CloudFront log days (a zero must not be a delivery-lag
+artifact). Non-zero → name-the-fetcher, unchanged. Also 08-15: CTO's OPAL_BRDSEP T2
+accept-or-rework · CTO's layer→substrate re-issue with assignees · COO dates/attributes the
+2 staged-not-applied KEEP-Lambda artifacts (pointer requested from CTO).
+**08-16:** ONE combined post-kill unattended read (both waves) → TO-5 + zero-dangling sweep →
+close report → CTO RAVC → **OPAL_MDPFCLEANUP CLOSED**. At TO-5 close: CTO's residual bank (now
+incl. the comp-state charmap crash) converts to REGISTERED items with owners or deliberate kills.
+**Parallel, MSTR's:** DE FE-1 spawn-or-defer-date decision · the 12 RED deploy-ledger triage.
