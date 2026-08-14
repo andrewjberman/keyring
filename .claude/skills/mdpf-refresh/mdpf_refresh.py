@@ -210,7 +210,12 @@ def latest_run_manifest() -> "tuple[str | None, dict | None]":
 
 
 def manifest_conflicts(doc: dict) -> list:
-    rows = (doc or {}).get("objects") or (doc or {}).get("rows") or []
+    """Conflict rows from the A6 run manifest. The rows live under `writes` (measured
+    2026-08-14 on the live manifest: top keys run/scopes/writes/errors) -- this function
+    originally read `objects`/`rows` and returned a CLEAN FALSE ZERO for two passes while
+    the guard held 12 keys; the fallbacks are kept behind the real field, never instead."""
+    rows = ((doc or {}).get("writes") or (doc or {}).get("objects")
+            or (doc or {}).get("rows") or [])
     if isinstance(rows, dict):
         rows = list(rows.values())
     return [r for r in rows if isinstance(r, dict) and r.get("status") == "conflict"]
