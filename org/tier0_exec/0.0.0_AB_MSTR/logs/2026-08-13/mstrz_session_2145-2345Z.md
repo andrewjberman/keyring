@@ -120,6 +120,17 @@ Two findings surfaced with it:
    box and a powered-off box are indistinguishable if nobody comes.* This suffered the identical
    observation bias I had flagged for the business-hours cluster one message earlier and did not
    notice applied to my own reasoning.
+6. **POST-LOG RETRACTION, 2026-08-14 ~0128Z — "site Z has no remote access, so somebody was
+   PHYSICALLY at the box to launch me."** **FALSE, and I never measured it.** This box runs
+   `SplashtopRemoteService` (SRService pid 5344, SRManager pid 6488) **and** N-able `Take Control
+   Agent`, both RUNNING. I asserted the absence from the fact that we were *asking* for remote access
+   — reasoning from the ask instead of from the box, without ever running `Get-Service`. The 17:57
+   launch could have been remote. **What survives:** remote software cannot boot a dead box, so
+   something physical still happened at 17:37:11; only the launch is ambiguous. **What it adds:** if
+   WoL is enabled, an OFF box could have been woken remotely — and **a hung box cannot** — so a
+   remote wake would be positive evidence for the power-loss limb. New item for the console/BIOS trip.
+   **Verdict unchanged** (already UNRESOLVED); 07-28 attendance unaffected (rests on five serials +
+   an Andrew Berman merge). Amended in the freeze addendum too.
 
 ## Compiler Tools
 
