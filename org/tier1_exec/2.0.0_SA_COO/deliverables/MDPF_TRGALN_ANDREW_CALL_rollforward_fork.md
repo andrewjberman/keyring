@@ -69,12 +69,19 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   editedDate, which measurement showed is a bulk-stamped record-edit field, not a valuation clock).
   So the morning QA pull's date-key claim IS today's material mechanism: the scheduled 11:17Z pull
   would have caught the fresh values but for it. The re-pulled fresh data landed AFTER the 13:05Z
-  mirror and sits stranded in the inf tree; without remedy INF publishes 08-12 at 13:50Z. A
-  NON-RESERVED remedy (idempotent ad-hoc mirror + floor/accrual/publisher re-run post-13:55Z — no
-  deletes, canonical paths, §8.1's own class) is staged pending MSTR concur; its outcome also
-  answers whether the values key as 08-13 close. Vendor-window row (a) still expected; fork (b)
-  remains not-live (no structural vendor constraint survives measurement). 49F + COT serve 08-13
-  today regardless.
+  mirror and sat stranded in the inf tree.
+- **PUBLISH OUTCOME (13:50:50Z measured, supersedes the prediction above)**: the untouched schedule
+  served **all three firms labeled as-of 2026-08-13** (roster-complete, missing []) — your today-bar
+  met on labels. The vintage truth beneath the Inflection label: the builder's date keying is
+  calendar-frontier arithmetic (the same unchanged data keyed 08-12 at 06:17Z and 08-13 at 13:31Z),
+  so the label certifies the calendar, not the marks — INF's served 08-13 point equals the stale
+  02:12 ET pull exactly (210,128,341.20 vs fresh 09:09 ET marks 210,313,542.25: **understated
+  $185,201.05 / 0.088%** on the custody leg). A NON-RESERVED remedy (EC2 runner re-land → mirror →
+  floor/accrual/publisher re-run — idempotent invokes, no deletes, §8.1's own class) was GO'd on
+  explicit MSTR concur + CTO no-objection and fired 13:54:29Z; acceptance is the value tie-out (the
+  re-served point moving to the fresh total), not the key date. Vendor-window row (a) confirmed;
+  fork (b) remains not-live (no structural vendor constraint survives measurement). 49F + COT serve
+  08-13 today with fresh values regardless.
 - **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
   believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
   artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
