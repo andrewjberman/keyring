@@ -63,3 +63,31 @@ decision and was deliberately NOT fired.
 - **MDPF_TRGALN is CLOSED + /verify SOUND and fully unaffected** -- separate pipeline; its served
   artifacts correctly serve T-1 (08-13). This Bloomberg failure is orthogonal.
 - I remain live + event-driven for Andrew's ruling and MSTR~Z's ACK.
+
+## RESOLVED 2026-08-14 ~1558Z -- dashboard current, two-seat confirmed
+
+**Andrew-direct decision (~1524Z, verbatim):** *"Option B. sitez MSTR~Z has done this before. Just
+do it, if they have to retry once thats fine."* -> build + run the automated GUI typer, supervised,
+2-attempt budget.
+
+**Execution (MSTR~Z, site-Z):** the reconcile Andrew's "done before" prompted PAID OFF -- BG's
+`BLOOMBERG_TERMINAL_SIGNIN_RECOVERY.md` (@0d087760ff, exercised end-to-end 08-11) existed; MSTR~Z
+followed the proven procedure, not an invention. P0 cheap-remedy gate cleared (transport 0/0/0, NOT
+network, bbcomm loopback-only) -> sign-in WARRANTED. Two-phase typer (`C:\opal-elev\bbg_signin.ps1`):
+fill + foreground-verify + click-not-tab + **screenshot-verify (5x-zoom, password = 9 masked dots,
+username correct) BEFORE submit** -- so typing errors cost ZERO Bloomberg attempts. Submitted ONCE.
+At 18s the listener still read 0; MSTR~Z **checked state instead of blind-retrying** (login dialog
+gone, subprocesses loading = accepted, initializing) -- saving attempt 2 on an already-successful
+login. **Budget spent: 1 of 2. No 2FA.**
+
+**Outcome, grounded end-to-end:** DAPI up (8194 sustained 1/1/1, `bloomberg_health` ok:TRUE
+//blp/refdata). Ad-hoc QA pull published 08-13 content-verified (tripwire pass, served == PKL 5/5).
+`.ST` content check resolved correct (inception 2023-12-29 @ 100.0, 'Short Term', latest 08-13 @
+118.72 -- NOT the 08-03 mis-resolution shape). **Served object CONFIRMED by BOTH seats' independent
+live head-object reads:** `data_as_of 2026-08-13`, generated_at 2026-08-14T15:52:24Z, negative
+control 404. Dashboard current, no longer stale. Site-Z durable record @9ec85e4f6e.
+
+**Residual (NOT closed by today's fix):** the root -- `0.0.3_BG_BBGTerminal` dead, never respawned
+-- STANDS. Absent the standing fallback (Andrew's directive; the proven typer is its core) OR a BG
+respawn, this recurs on the next Terminal logout. Today fixed the DASHBOARD, not the RECURRENCE.
+Surfaced to Andrew; his steer pending (build fallback / respawn BG / leave for today).
