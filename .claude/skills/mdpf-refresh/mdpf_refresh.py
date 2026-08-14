@@ -157,7 +157,13 @@ def _find_ssm_ref(obj) -> "tuple[str | None, str | None]":
                 if isinstance(v, str):
                     if "command" in lk and "id" in lk:
                         cmd = v
-                    if "instance" in lk and "id" in lk:
+                    if ("instance" in lk and "id" in lk) or lk == "runner":
+                        # `runner` matched empirically 2026-08-14: the accrual
+                        # trigger returns {"runner": "i-...", "ssm_command_id":
+                        # ...} and the instance-only hunt missed it, so pass 3
+                        # published without awaiting the accrual SSM (it ended
+                        # Success; the miss cost nothing that day, but the wait
+                        # exists for the day it does).
                         inst = v
                 walk(v)
         elif isinstance(o, list):
