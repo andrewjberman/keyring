@@ -94,6 +94,13 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   (ii) no action → tomorrow's clean cycle serves fresh marks at the new frontier, **but the
   historical 08-13 Inflection point permanently keeps the $185,201.05 / 0.088% understatement**
   (tomorrow moves the frontier, not the history). The permanence is the thing this decision prices.
+  **CTO's framing (ratified PRD v1.4): this is a DATA-QUALITY decision, not an ops one — no
+  operational urgency; authorize if you want the history exact.** And per MSTR: **option (i) does
+  not expire** — the healed raw persists in bronze (`bronze/assets/2026-08-14.jsonl.gz`, fresh
+  marks), so the one-delete completion is available on your word at ANY time, not now-or-never;
+  you can price the permanence unhurried. TO-4's Inflection leg closes today as
+  PASS-WITH-DISCLOSURE either way (delta + instrument + tomorrow's cycle as the named closing
+  read; a failed closing read reopens the leg).
 - **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
   believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
   artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
