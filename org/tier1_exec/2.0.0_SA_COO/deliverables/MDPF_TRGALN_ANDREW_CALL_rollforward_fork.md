@@ -61,6 +61,24 @@ mislabeled (the offset fixed a real defect; these holes are the honest view of m
 The other 383 zero-model dates are ALL TRUE-ZERO (pre-launch history; model era = exactly 53
 nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any option.
 
+## Day-of addendum (13:17Z, measured final)
+
+- **The retime design is PROVEN SOUND for INF**: two-sample corroboration shows Orion's overnight
+  batch normally posts T-1-close values by ~03:35–04:15 CT (08:35–09:14Z), comfortably before the
+  retimed pulls. **Today was a vendor-late anomaly** — Orion's batch had not posted 08-13 values
+  even by 09:09 ET, so INF serves 08-12 today under ANY schedule; the retime neither caused nor
+  could have prevented it. Vendor-window fork row (b) is NOT live; row (a) stands; INF's clean B2
+  adjudication rides tomorrow's unattended cycle. Today's serve: 49F + COT as-of 08-13, INF 08-12.
+- **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
+  believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
+  artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
+  confirmation. MSTR held it 4 minutes after execution (message crossing); state frozen since;
+  serving impact measured ZERO (the re-pull proved the data was vendor-stale regardless). Full
+  sequence verbatim in the proof record. Your options on the frozen state: keep as-is / revert from
+  backups / clean re-run — each on your word.
+- **Visibility fact, named not built** (moratorium respected): nothing in the chain detects an
+  Orion late-batch day — the pull greens with stale content. Yours to weigh only if it repeats.
+
 ## Context
 
 - All 14 trigger retimes LIVE (landed 05:36Z, 4h ahead of your window). Tonight-refresh FINAL
