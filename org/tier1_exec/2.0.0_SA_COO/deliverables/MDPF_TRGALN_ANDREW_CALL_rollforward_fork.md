@@ -78,10 +78,22 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   02:12 ET pull exactly (210,128,341.20 vs fresh 09:09 ET marks 210,313,542.25: **understated
   $185,201.05 / 0.088%** on the custody leg). A NON-RESERVED remedy (EC2 runner re-land → mirror →
   floor/accrual/publisher re-run — idempotent invokes, no deletes, §8.1's own class) was GO'd on
-  explicit MSTR concur + CTO no-objection and fired 13:54:29Z; acceptance is the value tie-out (the
-  re-served point moving to the fresh total), not the key date. Vendor-window row (a) confirmed;
+  explicit MSTR concur + CTO no-objection and fired 13:54:29Z. Vendor-window row (a) confirmed;
   fork (b) remains not-live (no structural vendor constraint survives measurement). 49F + COT serve
   08-13 today with fresh values regardless.
+- **REMEDY TERMINAL STATE (14:20Z): blocked at YOUR reserved boundary — one word from complete.**
+  What ran: runner re-landed the raw (14:01:19Z, correct producer — the bronze hole is healed both
+  trees); mirror fired on it (14:02:19Z, fresh bytes in the monolith). What stopped it: the silver
+  converter SKIPPED-IDEMPOTENT — the stale 06:16Z partition exists, `partition_exists` guard, and
+  the deployed handler has no force path (library carries force; handler never passes it — exact
+  sibling of the `--no-resume` gap, both with CTO as one residual class). The only remaining lever
+  is deleting `orion/inflection/silver/fact_assets/date=2026-08-14/data.parquet` — **your reserved
+  category; not fired, not asked-around**. Remaining legs stood down (they would re-serve
+  byte-identical stale values). **YOUR OPTIONS:** (i) authorize that one delete → converter
+  re-fires clean on the healed raw → floor→accrual→publisher → value tie-out → INF fresh today;
+  (ii) no action → tomorrow's clean cycle serves fresh marks at the new frontier, **but the
+  historical 08-13 Inflection point permanently keeps the $185,201.05 / 0.088% understatement**
+  (tomorrow moves the frontier, not the history). The permanence is the thing this decision prices.
 - **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
   believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
   artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
