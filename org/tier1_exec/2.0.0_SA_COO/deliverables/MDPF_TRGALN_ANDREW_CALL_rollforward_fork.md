@@ -137,9 +137,11 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
   (inflection + global `aggregate-aua-timeseries/2026-08-13.json` + `aum-metrics/2026-08-13.json`),
   which are internal history, not the serving surface. COO ruled STOP here (no widening — the
   4-key gold delete is a NEW reserved set your "go ahead" did not name; AE concurred, refused to
-  infer it). **ONE OPTIONAL WORD, expires at tomorrow's cycle:** authorize deleting those 4
-  regenerable derivative keys (fresh replacements already computed, sha256-recorded) and INF serves
-  fresh TODAY instead of tomorrow morning. Otherwise: nothing to do, it heals itself.
+  infer it). **→ DECIDED 16:16Z: "recs approved" via /open-calls at the CRO terminal
+  (@9b816615f1) — the dated-key delete-and-re-land is AUTHORIZED, explicitly folding this 4-key
+  item; scope = manifest-named dated gold keys + the enumerated 4, no platinum deletes. CRO firing
+  `/mdpf-refresh` now; INF serves fresh TODAY. On the served tie-out, the TO-4 INF leg upgrades to
+  full PASS per CTO's pre-positioned ruling.**
   **CTO's framing (ratified PRD v1.4): this is a DATA-QUALITY decision, not an ops one — no
   operational urgency; authorize if you want the history exact.** And per MSTR: **option (i) does
   not expire** — the healed raw persists in bronze (`bronze/assets/2026-08-14.jsonl.gz`, fresh
