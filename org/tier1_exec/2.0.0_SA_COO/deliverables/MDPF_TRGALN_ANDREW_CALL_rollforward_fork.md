@@ -63,12 +63,18 @@ nonzero + 7 null of 60 trading days since 2026-05-15) — untouched under any op
 
 ## Day-of addendum (13:17Z, measured final)
 
-- **The retime design is PROVEN SOUND for INF**: two-sample corroboration shows Orion's overnight
-  batch normally posts T-1-close values by ~03:35–04:15 CT (08:35–09:14Z), comfortably before the
-  retimed pulls. **Today was a vendor-late anomaly** — Orion's batch had not posted 08-13 values
-  even by 09:09 ET, so INF serves 08-12 today under ANY schedule; the retime neither caused nor
-  could have prevented it. Vendor-window fork row (b) is NOT live; row (a) stands; INF's clean B2
-  adjudication rides tomorrow's unattended cycle. Today's serve: 49F + COT as-of 08-13, INF 08-12.
+- **CORRECTED (13:21Z, value-diff instrument — the story moved twice on instrument quality, full
+  sequence in the proof record)**: Orion DID post fresh valuations between 02:12 and 09:09 ET
+  (24,976 of 35,285 prices changed, matched-row diff; the earlier "vendor-late" claim rested on
+  editedDate, which measurement showed is a bulk-stamped record-edit field, not a valuation clock).
+  So the morning QA pull's date-key claim IS today's material mechanism: the scheduled 11:17Z pull
+  would have caught the fresh values but for it. The re-pulled fresh data landed AFTER the 13:05Z
+  mirror and sits stranded in the inf tree; without remedy INF publishes 08-12 at 13:50Z. A
+  NON-RESERVED remedy (idempotent ad-hoc mirror + floor/accrual/publisher re-run post-13:55Z — no
+  deletes, canonical paths, §8.1's own class) is staged pending MSTR concur; its outcome also
+  answers whether the values key as 08-13 close. Vendor-window row (a) still expected; fork (b)
+  remains not-live (no structural vendor constraint survives measurement). 49F + COT serve 08-13
+  today regardless.
 - **One adjudication for you (separate from the fill decision)**: mid-remediation of what was then
   believed a self-inflicted staleness, I authorized deleting 3 QA bronze objects (AE's own morning
   artifacts, hash-verified backups taken first) — a category your autonomy rule reserves to your
