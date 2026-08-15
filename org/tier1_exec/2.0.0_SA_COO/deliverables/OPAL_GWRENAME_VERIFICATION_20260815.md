@@ -85,6 +85,17 @@ seat killed immediately after.
   a var.name re-flip re-runs the same order). SECOND CLOCK: old role+profile destroyed
   while associated -- on-box STS creds die at lease expiry (SSM risk); apply-2's profile
   association closes it; any apply-3 is immediate, not deliberated. Ledger OPEN, NEVER#8.
+  **OVERTAKEN + CORRECTED 025455Z (MSTR live reads):** IAM plane ALREADY CONVERGED
+  (opal-gateway-profile associated; opal-gateway-role full policy set + SSM; old role
+  NoSuchEntity) -- the STS/SSM clock was dead on arrival, and COO's dependent "apply-3
+  immediate" instruction to AE was EXPLICITLY WITHDRAWN 0256Z. Governs on apply-2 failure:
+  MSTR's fork -- no third blind apply; failing resource reported, then -target SERVICE PATH
+  ONLY (a NAMED INCIDENT ACT; open item: the reconciling untargeted apply afterward, held by
+  COO so the surgery cannot silently become the end state). MSTR independently confirmed:
+  both ALBs 0 listeners at their read; new opal-gateway ALB EXISTS as of 0252Z; rollback is
+  NO LONGER a restore path (old listeners/rules/WAF-assoc gone). GW-6 bar UNMOVED -- fresh
+  listener makes H1 MORE live; post-outage field has no warm-token masking left, so the
+  cold test is cleaner than designed. Andrew being notified by MSTR.
 - S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5; after S6 the rename is one-way.
