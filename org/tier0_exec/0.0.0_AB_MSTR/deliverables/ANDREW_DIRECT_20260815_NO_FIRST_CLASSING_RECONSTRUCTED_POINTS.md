@@ -55,3 +55,63 @@ on the answer** — cancel-only is complete in itself.
 - `MDPF_EVR.FE-1` → `cancelled` by its ISSUER (COO), citing this record.
 - MSTR's carried "DE FE-1 spawn-or-defer-date" item is **DISCHARGED** — no DE spawn, no defer
   date, nothing hanging. It does not become an 08-16 item.
+
+---
+
+# ANDREW-DIRECT 2026-08-15 (follow-on) — the open question is ANSWERED: render as ordinary
+
+**Channel:** MSTR terminal, same session, immediately following the record above.
+
+## VERBATIM
+
+> *"yes they should render as ordinary points"*
+
+Answering MSTR's surfaced question: whether "at all" also meant softening today's estimate-class
+treatment so reconstructed points render without visual distinction. **It did.** Reading 2 is
+ruled. This is his call to make and it is made; the fabric executes.
+
+## GROUNDING CORRECTION — my "collides head-on" framing was too strong
+
+I told him this reading would *"collide head-on with `reconstructed-never-measured`"*. Having read
+the actual mechanism (`portal/src/lib/pairedProvenanceRead.ts`), **that is true of only ONE of the
+two possible implementations**, and the conflict largely dissolves under the right one:
+
+The FE's closed enum is `'measured' | 'interpolated_estimate' | 'absent'` — the incumbent strings,
+byte-exact. Unknown classes degrade LOUD to `interpolated_estimate` + console warn, under the
+file's own stated law (`:29`): *"Never silently 'measured'."*
+
+| | implementation | verdict |
+|---|---|---|
+| **A** | map `reconstructed` → `'measured'` in the FE | **REJECTED.** Inverts `:29` and DOES assert a reconstructed value is measured — which is exactly what `reconstructed-never-measured` forbids, and which nobody asked for. |
+| **B** | add `reconstructed` to the enum, give it **measured-identical styling**, drop the warn for this now-KNOWN class | **ADOPTED.** Renders as an ordinary point — precisely his ask — while the type and the served data both still say `reconstructed`. |
+
+**Under B, nothing is ever labelled measured, so `reconstructed-never-measured` is NOT violated.**
+The condition governs CLAIMS, not pixels. His ruling is about presentation; B delivers the
+presentation without touching the claim. *(CRO/CTO own that condition and should confirm this
+read; it is not mine to close.)*
+
+**What DOES change and must change openly:** the `:29` "never silently measured" law needs a
+carve-out for a KNOWN class carrying a deliberate presentation ruling — as distinct from an
+UNKNOWN string, which must keep degrading loud. That distinction is the whole safety property and
+it survives intact: an unrecognised class still degrades and still warns.
+
+## The property that makes this defensible, stated plainly
+
+**The honesty lives in the data layer, not the pixel layer.** `point_class: "reconstructed"`
+remains in the served provenance lattice; anyone querying provenance gets the truth. What changes
+is that the chart stops editorialising a ~10bps difference into a visual distinction the viewer is
+invited to weigh. That is a presentation-layer decision a principal is entitled to make about his
+own product, and it destroys no information.
+
+## Scope
+
+`reconstructed` ONLY. **`carried` is NOT in scope** — it is carry-forward, a different mechanism
+from reconstruction, and his words addressed the interpolated/reconstructed points in the FE-1
+context. Not widened on inference; if he wants `carried` treated the same it is one more word.
+
+## Disposition
+
+- Recorded verbatim + broadcast to COO and CTO, same turn.
+- Executed as a NEW TO (COO issues; DE lane, portal, DEV branch per Rule 19) — **not** by
+  reinstating the cancelled FE-1, which asked for the OPPOSITE outcome.
+- MSTR spawns `0.4.0_DE_ClientPlatform`.
