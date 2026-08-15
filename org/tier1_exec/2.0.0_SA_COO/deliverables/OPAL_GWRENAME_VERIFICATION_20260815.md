@@ -124,6 +124,16 @@ evidence design (MSTR's correction, COO concurred):
   live twins). Warm regression whoami: PASS, recorded non-discriminating. GW-5: AE
   modify-listener CLI act cited with ClientId cross-check (DESIRED-grade per the superseded
   table note above). MSTR end-to-end verify at 0257Z concurs. -target fork NOT needed.
-- S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
+- S4 (on-box): **INCIDENT #2 (contained, on-box only, 030611Z):** deploy #2's fresh venv
+  pulled unpinned mcp 2.0.0 (requirements `>=1.2.0`; 2.0 removed `mcp.server.fastmcp`) ->
+  import crash-loop, TG target unhealthy minutes, ALB plane untouched. AE restore-first
+  (old unit green) -> pin mcp==1.28.0 READ FROM LIVE OLD VENV @81615fbd3e -> redeploy #3.
+  COO order AMENDED on physical grounds (both units bind :8080): build-while-old-serves,
+  seconds swap gap accepted, UNIT + /opt REMOVAL only post-verify (the restore lane just
+  exercised). BANKED follow-ups: bare-jq in safe-ec2-deploy.sh + deploy-to-ec2.sh (Rule 16
+  class, masked as a manifest error); systemd ACTIVATING-rc=3 wrapper false-negative (fixed
+  in-script); unit-file /opt literals (4) caught @90b89562bc -- 4th member of tonight's
+  enumerate-some-members class. GW-10 artifact-name evidence CONFIRMED opal-named
+  (opal-gateway-90b89562bc.tar.gz + latest). Battery report pending.
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5; after S6 the rename is one-way.
