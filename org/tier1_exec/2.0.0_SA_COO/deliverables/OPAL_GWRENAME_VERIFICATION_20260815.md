@@ -46,13 +46,32 @@ seat killed immediately after.
   live-plane resource NAMES -- history blob basenames are content, not a live surface;
   (c) post-S4 they are dormant history (deploys mint opal-named artifacts). Will be surfaced
   to Andrew in the final report for an optional prune order.**
-- S2 (plan-only): PENDING -- my check: read the plan artifact myself; explicitly look for
-  `forces replacement` on aws_instance.gw (stop-condition), and for the listener + WAF + TG
-  replacement set the runbook predicts. ADDED per MSTR 020410Z (source-confirmed by me at
-  `deploy-to-ec2.sh:73,:86`): AE's S2 diff must rename the artifact-filename literals
-  (`m365-mcp-gateway-${SHA}.tar.gz` + `-latest`) -- a LIVE PRODUCER distinct from the 36
-  history blobs; census must report HISTORY (declared exception, counted) vs PRODUCERS
-  (must be zero) as a named split. Runbook amended accordingly (S2 step 9 + section 2).
+- S2 (plan-only): **VERIFIED-INDEPENDENT (COO), 0219-0222Z, against the @3e8c3522f1 tree.**
+  My own read-only plan re-derivation (`terraform plan -lock=false`, 1,769 lines captured):
+  Plan 40 add / 7 change / 35 destroy -- REPRODUCES AE's numbers exactly. STOP-CONDITION
+  CLEAR on my instrument: "aws_instance.gw will be updated in-place" (:862), zero
+  `forces replacement` lines in its block. 35 must-be-replaced 1:1 with destroys; the 5
+  taxsma creates account for the 40-vs-35 delta; `aws_lb_listener.https must be replaced`
+  (H1 exposure confirmed real); route53 alias updated in-place (follows new ALB). Diff
+  checks: ART + latest literals now DERIVE from $SERVICE (source-read at @a7312b946b);
+  producer-regression class closed. taxsma sweep-in: 5 resources enumerated at source,
+  both role names ABSENT on my own live get-role reads. COO ruling: sweep-in ACCEPTED
+  (additive-only IAM, committed CTO-gated config, -target surgery riskier).
+  RESOLVED 022546Z (MSTR ruling, converged): (a) taxsma sweep-in CONCUR -- lands with the
+  apply; (b) REVERT @3e8c3522f1 -- MSTR withdrew their 021548Z conditional on the record as
+  malformed (a plan verb is a DESIRED-state statement and does not disclose the convergence
+  mechanism; an EC2 stop is Andrew-reserved and the reservation binds on the ACT). Andrew's
+  stop/start word sought in parallel, explicitly NON-GATING. Unified S3 GO issued to AE 0227Z.
+  **CARRIED RESIDUAL (census + close report, verbatim):** "user_data still references m365
+  paths; TRIP-CONDITION: any future instance replacement first-boots against the old /opt
+  path and, post-S6, a DELETED S3 prefix -- must be fixed as part of any deliberate
+  replacement act."
+  **PRECONDITION recorded against any FUTURE approved stop act (MSTR 022546Z):** a stop/start
+  assigns a new PUBLIC egress IP (no EIP); Entra Conditional Access has NOT been verified free
+  of IP-restricted policies, so a new egress IP could break Microsoft auth in a way that
+  MIMICS H1. Checking Entra CA is a precondition of the stop, not a follow-up. Scope note:
+  tonight's reverted tree has no egress IP change, so this hazard CANNOT contaminate tonight's
+  cold-login read.
 - S3 (apply + H1 re-set): PENDING.
 - S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
