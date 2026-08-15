@@ -150,6 +150,25 @@ evidence design (MSTR's correction, COO concurred):
   the gateway is useless to its actual users. 5th member of the enumerate-some-members
   class; general remedy = define the class structurally (AE's $SERVICE pattern), not by
   listing members.
+- **SSM CONTROL-PLANE LOSS + NO-REBOOT RULING (0310-0317Z):** SSM agent ConnectionLost
+  (likely OOM during back-to-back venv builds on the t4g.nano 0.5GB); COO independent reads
+  0316Z: ConnectionLost / instance running ok-ok / TG healthy (gateway serving). MSTR RULED
+  NO REBOOT (the copy saves one interactive login; an instance state transition on the box
+  holding the only consent-state copy is not spent on a convenience; boot outcome currently
+  UNINSPECTABLE because SSM is the thing that is down). **NEW LATENT RISK, OUTRANKS THE
+  CACHE (close-report open item with owner regardless of outcome): both units bind :8080
+  and may both be systemd-enabled -- an UNPLANNED reboot brings up an UNDEFINED service,
+  and the confusing case is the OLD unit winning (it HAS the cache, so auth would appear to
+  "heal" while the accepted tree lost).** COO SEQUENCING RULING 0317Z: when SSM returns --
+  disable-old-unit FIRST, cache copy second, S6 on-box legs last; if SSM down through
+  S5-completion -- GW-12 closes HONESTLY-NOT-MIGRATED (tonight's status, NOT a
+  never-migrate decision), S6 SPLITS (cloud-side proceed post-S5 / on-box deferred to AE,
+  trip = SSM return, /opt deletion only after cache-migrated+oracle OR Andrew-re-auth).
+  **COLD-SEAT INTERPRETATION PRE-REGISTERED 0317Z (before the seat runs): mount + first
+  call returning EITHER a Graph payload OR the well-formed needs_login envelope = PASS on
+  the new-session claim (needs_login corroborates GW-12, does not fail GW-6); transport/
+  auth-plane failure = FAIL.** Banked: t4g.nano undersized for on-box venv builds (cost the
+  control plane; Deployment Rule 5 spirit); no SSM-agent restart guard; bare-jq defects.
 - S5 (verify): PENDING -- cold login per re-scoped table + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
   PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
