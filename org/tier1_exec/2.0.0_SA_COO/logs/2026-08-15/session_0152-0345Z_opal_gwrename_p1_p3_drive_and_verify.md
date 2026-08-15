@@ -136,3 +136,35 @@ schema-check/ternary-audit` (DE, per Rule 20, reported clean); `proof-of-spec-ch
 (positional, rc-checked); raw `aws s3 cp` of two served platinum keys for independent artifact
 reads (rail-checked). Gap noted: no comp-tool reads a served artifact's channel SHAPE against a
 reader's expected schema — the date-less-cohort mismatch was found by hand.
+
+---
+
+## ADDENDUM 2104Z-2140Z: Andrew "yes, do both" -- PROD promote issued/validated/closed + CI-R6R reconciled + DE stand-down cleared
+
+**archetype:** COORDINATE (secondary VALIDATE)
+
+- **MDPF_EVR.FE-2.PROMOTE** issued to DT @13ed79bc40 (payload re-verified on my own fetch:
+  exactly 684e67de + 778ea780 + e8b1fb07), GO 2107Z, VALIDATED + CLOSED @1f8a930273. PROD =
+  portal-v2.1.162 @449a6a0e (my reads: tag peel, DEV main tree, served bundle
+  `ModelPortfolios-gqyfc1FQ.js` carries `reconstructed(` x1 / control x13). DT's PROD push was
+  DENIED by the integrator gate and NOT overridden -- MSTR pushed; correct.
+- **PREMISE CORRECTION, mine to own:** the TO said "Global still renders 2 dates estimate-class,
+  visually distinct" -- FALSE at source on BOTH builds (`ModelPortfolios.tsx` ~:884
+  `if (effectiveFirmId === 'global') return s`, Andrew 07-23 materiality ruling). Inherited from
+  MSTR's framing and carried by me without a source read; DT read the source, flagged its own PNG as
+  non-discriminating (mutant relabel = pixel-identical) rather than banking the green, and built the
+  discriminating behavioral exercise on the deployed bundle (unknown-string mutant fires 1 warn, real
+  data 0) -- accepted as AC-P3. NO pixel changed on PROD tonight; what shipped is label correctness +
+  no console warn on Andrew's data. Told MSTR: say the smaller true thing.
+- **CI-R6R reconciled to CANCELLED** (not superseded, not complete): implemented @7d544d27,
+  promoted v2.1.156, then STRUCK by Andrew "kill both" 08-04 (portal @45e5843f). Read pending for
+  11 days after its deliverable was deleted. DE holds no open TO -> clean for MSTR stand-down.
+- **Routed, appended to CTO 190743Z:** DT's find -- ~3,178 `invalid point_class 'undefined' at
+  <date>.model` warns per Global load, pre-existing; served Global cohort_provenance has partner
+  slots and no `model` slot. Same producer/consumer contract-mismatch family as the per-firm
+  date-less channel. One routing, two symptoms.
+- Portal-tree hygiene surprise (13 untracked items, lingering-portal-CWD residue) logged, not chased.
+
+Compiler tools: `proof-of-spec-check.py` (positional, rc-checked, x2); `git rev-list` payload
+count; raw `curl` of the served bundle for the marker read (rail-checked). Gap unchanged: no
+comp-tool checks a served artifact's channel shape against a reader's schema.
