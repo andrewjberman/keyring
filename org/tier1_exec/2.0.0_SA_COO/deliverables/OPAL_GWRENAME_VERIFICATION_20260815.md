@@ -48,7 +48,11 @@ seat killed immediately after.
   to Andrew in the final report for an optional prune order.**
 - S2 (plan-only): PENDING -- my check: read the plan artifact myself; explicitly look for
   `forces replacement` on aws_instance.gw (stop-condition), and for the listener + WAF + TG
-  replacement set the runbook predicts.
+  replacement set the runbook predicts. ADDED per MSTR 020410Z (source-confirmed by me at
+  `deploy-to-ec2.sh:73,:86`): AE's S2 diff must rename the artifact-filename literals
+  (`m365-mcp-gateway-${SHA}.tar.gz` + `-latest`) -- a LIVE PRODUCER distinct from the 36
+  history blobs; census must report HISTORY (declared exception, counted) vs PRODUCERS
+  (must be zero) as a named split. Runbook amended accordingly (S2 step 9 + section 2).
 - S3 (apply + H1 re-set): PENDING.
 - S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
