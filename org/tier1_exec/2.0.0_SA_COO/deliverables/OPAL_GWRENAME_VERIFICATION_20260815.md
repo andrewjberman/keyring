@@ -31,6 +31,25 @@ bearer tokens minted before the flip, and H1 is exercised at LOGIN.
 (COO calls for it); the seat's cold MCP mount + first tool call is the acceptance instrument;
 seat killed immediately after.
 
+**TABLE SUPERSEDED 0300Z -- TWO INDEPENDENT DERIVATIONS OF THE SAME MECHANISM (MSTR 025946Z
+live listener-rule read; COO 0259-0300Z uvicorn-401 + alb.tf source read, made BEFORE reading
+MSTR's message):** listener rule prio-10 forwards `/mcp`,`/mcp/*`,`/authorize`,`/register`,
+`/token` with NO authenticate-oidc -- the gateway runs its OWN app-side OAuth server, and ALL
+MCP traffic bypasses the ALB OIDC action. COO's unauth GET to /mcp/ returned 401 with
+`server: uvicorn` + MCP-spec `www-authenticate: Bearer resource_metadata=...` -- the app
+answered, proving forward-without-ALB-auth; AE's 302 was a default-action path; both reads
+correct, different rules. **Therefore NO MCP call -- warm or cold -- can see H1.** Re-scoped
+evidence design (MSTR's correction, COO concurred):
+- COLD SEAT still runs at S4-complete, re-scoped to the claim it actually tests: A NEW AGENT
+  SESSION CAN MOUNT AND USE THE GATEWAY (the operational bar for every seat spawning
+  tomorrow). It is NOT H1 evidence.
+- H1 (ALB default-action client_secret): blast radius = interactive/browser access to
+  non-rule paths ONLY; no agent path uses it. NOT headlessly testable; NO config oracle
+  (describe-listeners omits ClientSecret by design, MSTR-checked). Census grade: "re-set
+  CLI act performed (DESIRED-state evidence); not independently verified; blast radius
+  named; APPLIED truth requires a real browser login." NEVER "H1 verified" off an MCP call.
+- Two claims, two evidence grades, stated separately -- never blended into one green.
+
 ## Stage verification log (COO independent reads)
 
 - S1 (additive): **VERIFIED-INDEPENDENT (COO), 0201Z.** GW-1: my own live read -- 4 of 4
@@ -96,6 +115,15 @@ seat killed immediately after.
   NO LONGER a restore path (old listeners/rules/WAF-assoc gone). GW-6 bar UNMOVED -- fresh
   listener makes H1 MORE live; post-outage field has no warm-token masking left, so the
   cold test is cleaner than designed. Andrew being notified by MSTR.
+  **RESOLVED 0255-0301Z: apply-2 rc=0, SERVICE RESTORED. Outage ~35 min (~0240Z-0255Z).**
+  COO INDEPENDENT GW-4 READS (0300-0301Z, live primitives): ALB opal-gateway ACTIVE
+  (opal-gateway-616252801...elb.amazonaws.com), 2 of 2 listeners; TG opal-gateway-tg target
+  i-07dccb1615503ac99 HEALTHY; WAF opal-gateway-waf ASSOCIATED; instance-profile
+  opal-gateway-profile ASSOCIATED; instance SG = opal-gateway-sg; old ALB
+  LoadBalancerNotFound + old role NoSuchEntity (both with passing positive controls on the
+  live twins). Warm regression whoami: PASS, recorded non-discriminating. GW-5: AE
+  modify-listener CLI act cited with ClientId cross-check (DESIRED-grade per the superseded
+  table note above). MSTR end-to-end verify at 0257Z concurs. -target fork NOT needed.
 - S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5; after S6 the rename is one-way.
