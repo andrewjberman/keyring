@@ -168,3 +168,20 @@ reader's expected schema — the date-less-cohort mismatch was found by hand.
 Compiler tools: `proof-of-spec-check.py` (positional, rc-checked, x2); `git rev-list` payload
 count; raw `curl` of the served bundle for the marker read (rail-checked). Gap unchanged: no
 comp-tool checks a served artifact's channel shape against a reader's schema.
+
+---
+
+## ADDENDUM 2138Z-2145Z: NODEGAP.7 dispositioned + the stale-TO estate measured
+
+- **NFRA_GLOBGRPH.NODEGAP.7 SUPERSEDED @68457562a7** (MSTR ask on DT stand-down; Andrew 08-14
+  no-hanging-items): staged 07-08 by COO~B on a project CLOSED COMPLETE 06-16, never GO'd, read
+  ACTIVE 38d joint AE+DT. CodeBuild half CLOSED GREEN 07-09 @6dc083d3be; residual 6 endpoints
+  RE-HOMED as an NFRA_GLOBGRPH BACKLOG.md maintenance row (owner AE 0.7, opportunistic; precedent
+  TO-Q1). Superseded-with-pointer, not cancelled (residual real), not complete (6/7 open). DT clean.
+- **STALE-TO ESTATE, measured (to-check --all, one run):** 305 non-complete TOs / 115 projects; of
+  203 aged, **139 are 30d+ (68%)**, clustered by PROJECT (ADVI_COTETL x7, DATA_PLATFORM x9,
+  ADHC_GLDINC x4, MKOV_TRSRCE x3, NFRA_AGENTBUS x3 incl. my AB-ACTIVATE 39d) -- remedy is
+  per-project disposition, not per-TO chasing. Three dispositioned today (FE-1 cancelled, CI-R6R
+  cancelled 11d after its deliverable was deleted, NODEGAP superseded on a closed project). Named
+  owner for the finding: COO. NOT on the 08-16 wrap without Andrew's word. Instrument note:
+  to-check reads "staged" as ACTIVE (inflates the live count -- what made NODEGAP look live 38d).
