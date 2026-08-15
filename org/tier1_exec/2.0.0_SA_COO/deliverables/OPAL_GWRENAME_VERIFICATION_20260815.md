@@ -135,5 +135,22 @@ evidence design (MSTR's correction, COO concurred):
   in-script); unit-file /opt literals (4) caught @90b89562bc -- 4th member of tonight's
   enumerate-some-members class. GW-10 artifact-name evidence CONFIRMED opal-named
   (opal-gateway-90b89562bc.tar.gz + latest). Battery report pending.
-- S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
-- S6 (retire): PENDING -- gated on S5; after S6 the rename is one-way.
+- **GW-12 (NEW CRITERION, minted 0310Z, MSTR 030938Z + COO corroboration): ON-BOX RUNTIME
+  STATE MIGRATED (.token_cache).** The cache holds per-user Microsoft refresh tokens
+  (Fernet-encrypted) -- a HUMAN CONSENT ACT, the one thing on the box that cannot be
+  rebuilt from Secrets Manager/S3; deploy artifacts EXCLUDE it by design, so it exists only
+  at the old /opt path until copied. MEASURED both oracles: MSTR whoami 0309Z AND COO whoami
+  0310Z both return needs_login (20 min after both returned full Graph payloads) -- and the
+  COO call REACHING the app (MCP bearer still valid) isolates the loss to the Graph-consent
+  state specifically. **S6 IS BLOCKED** until cache copied (not moved, ownership/mode
+  preserved) -> new unit restarted -> MSTR's independent whoami returns a REAL Graph payload
+  (MSTR is the named oracle; AE's copy-succeeded is not acceptance).
+  **METHOD FINDING for the close report: A NAME CENSUS CANNOT SEE A STATE MIGRATION** --
+  every name-based check passes right now (zero m365, target healthy, app answering) while
+  the gateway is useless to its actual users. 5th member of the enumerate-some-members
+  class; general remedy = define the class structurally (AE's $SERVICE pattern), not by
+  listing members.
+- S5 (verify): PENDING -- cold login per re-scoped table + section-2 census with denominators.
+- S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
+  PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
+  only copy of the consent state until GW-12 completes.
