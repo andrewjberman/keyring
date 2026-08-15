@@ -169,6 +169,15 @@ evidence design (MSTR's correction, COO concurred):
   the new-session claim (needs_login corroborates GW-12, does not fail GW-6); transport/
   auth-plane failure = FAIL.** Banked: t4g.nano undersized for on-box venv builds (cost the
   control plane; Deployment Rule 5 spirit); no SSM-agent restart guard; bare-jq defects.
+  **S4 CLOSED 0318Z:** battery members all evidenced by DIRECT on-box reads 0307-0308Z
+  (pre-ConnectionLost, not inference across the gap): opal-gateway.service ACTIVE with
+  ExecStart resolving the new venv; m365 unit INACTIVE (enable-state DESIRED-grade, is-enabled
+  read pinned as first act on SSM return); /health ok on-box + ALB checks 200 both AZs; /mcp
+  401 on-box AND through-ALB; md5 9/9 == repo @81615fbd3e; mcp==1.28.0 on-box; GW-10 artifact
+  names opal-* on first real $SERVICE run; EC2_MANIFEST manually updated (Rule 8, surgical
+  diff, wrapper bind-race fix banked). COO corroboration: TG healthy, through-ALB 401, and
+  the COO needs_login read as NEW-TREE DISCRIMINATOR (the old tree holds the cache and would
+  have returned a Graph payload). GW-12 DEFERRED-SSM. Cold seat CALLED 0318Z.
 - S5 (verify): PENDING -- cold login per re-scoped table + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
   PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
