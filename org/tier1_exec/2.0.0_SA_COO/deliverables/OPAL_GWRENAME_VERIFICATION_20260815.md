@@ -210,6 +210,18 @@ evidence design (MSTR's correction, COO concurred):
   (b) seat #1's PASS is transport/auth-plane only -- never merged with #2's. **S6 RELEASED
   0331Z** with one add: an off-path on-box .token_cache copy retained until the state-key
   migration completes and the cutover is CLOSED.
-- S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
-  PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
-  only copy of the consent state until GW-12 completes.
+- S6 (retire): **CLOUD-SIDE LEGS VERIFIED-INDEPENDENT (COO), 0337Z** -- my APPLIED reads:
+  4 old m365 secrets carry `DeletedDate` (deletion SCHEDULED with recovery window, NOT
+  forced); 4 new opal-gateway secrets present (positive control); old prefix
+  ec2/m365-mcp-gateway/ = 0 objects recursive vs new prefix 41 (positive control); both
+  liveness lambdas live as opal-*. MSTR's independent reads 033552Z concur.
+  **EXPLAINED CENSUS ROW (adjudicated at source by MSTR, re-derived by COO): /aws/lambda/
+  opal-otp-liveness EXISTS, /aws/lambda/opal-ms-ingest-liveness ABSENT while both lambdas
+  are live -- NOT an incomplete apply.** Source: neither otp-liveness.tf nor ms-ingest.tf
+  declares an aws_cloudwatch_log_group (0 of 0 in each, my grep); Lambda creates the group
+  lazily on FIRST INVOCATION; ms-ingest runs `rate(6 hours)` (ms-ingest.tf:100) and has not
+  fired since recreation. Expected resolution: appears on its own at the next scheduled
+  fire, no action. Becomes a real finding ONLY if still absent after that lambda's next
+  invocation. Recorded so "0 m365 log groups" and "the opal twin is absent" do not read as
+  contradictory. Remaining legs at AE: on-box old-tree removal (insurance copy held) +
+  state-key migration LAST (backup verified before, 0-diff plan after).
