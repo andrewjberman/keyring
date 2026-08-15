@@ -72,7 +72,19 @@ seat killed immediately after.
   MIMICS H1. Checking Entra CA is a precondition of the stop, not a follow-up. Scope note:
   tonight's reverted tree has no egress IP change, so this hazard CANNOT contaminate tonight's
   cold-login read.
-- S3 (apply + H1 re-set): PENDING.
+- S3 (apply + H1 re-set): **INCIDENT MID-WINDOW, ROLL-FORWARD IN FLIGHT (025105Z-).**
+  Apply #1 rc=1: default destroy-before-create deadlocked on the SG replacements (old SG
+  deletion blocked by the instance ENI; instance cannot swap until the new SG exists).
+  Casualty map (AE apply log): 29 creates + 31 destroys landed incl. BOTH old listeners;
+  new SGs/ALB/listeners/alias never ran. **COO INDEPENDENT CONFIRMATION 025215Z: curl to
+  /mcp/ AND /health both connection-timeout HTTP:000 -- outage total.**
+  **PRE-REGISTERED ATTRIBUTION: warm-session MCP failures during this window are THE OUTAGE,
+  NOT H1.** COO warm mount deliberately untouched until restore so its regression meaning
+  survives. AE decision CONCURRED (COO + relayed to MSTR 025227Z): roll-forward -- CBD on
+  both SGs @e0e4c62fba, re-apply running (deadlock is order-dependent, not name-dependent;
+  a var.name re-flip re-runs the same order). SECOND CLOCK: old role+profile destroyed
+  while associated -- on-box STS creds die at lease expiry (SSM risk); apply-2's profile
+  association closes it; any apply-3 is immediate, not deliberated. Ledger OPEN, NEVER#8.
 - S4 (on-box): PENDING -- on-box verification, never the wrapper rc (known charmap false-negative).
 - S5 (verify): PENDING -- cold login per table above + section-2 census with denominators.
 - S6 (retire): PENDING -- gated on S5; after S6 the rename is one-way.
