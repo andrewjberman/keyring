@@ -8,9 +8,9 @@ aws_instance.gw in-place.
 
 | Leg | Act | Proof required | State |
 |---|---|---|---|
-| S3-11 | safe-apply the rename cascade | apply rc + post-apply re-plan 0-diff | PENDING |
-| S3-12 | H1: CLI re-set OIDC client_secret on NEW listener | modify-listener applied + unauth curl 302s to login.microsoftonline.com | PENDING |
-| S3-13 | WAF re-association check | web-acl association on NEW ALB live-read | PENDING |
+| S3-11 | safe-apply the rename cascade | apply rc + post-apply re-plan 0-diff | **DONE w/ INCIDENT** -- apply-1 rc=1: SG-replacement deadlock (default destroy-first vs instance ENI; old listeners+rules+WAF-assoc destroyed, new ALB chain stranded -> ~35min full outage on mcp.opalinvest.dev, COO-confirmed HTTP:000 025215Z). Roll-forward: CBD on both SGs @e0e4c62fba (MSTR-endorsed; rollback was NO LONGER a restore path -- old listeners already gone). apply-2 rc=0; post-apply plan **"No changes" 0-diff**. -target fork pre-authorized by MSTR was NOT needed. |
+| S3-12 | H1: CLI re-set OIDC client_secret on NEW listener | modify-listener applied + unauth curl 302s to login.microsoftonline.com | **DONE** -- modify-listener on listener/app/opal-gateway/89166a68f337e5a4/2904a0140214f982, value in-memory from opal/mcp/opal-gateway-login, ClientId cross-checked (53360468-...). Unauth curl: HTTP 302 -> login.microsoftonline.com/6810043e-.../authorize, correct client_id + redirect_uri. **302 proves restore+wiring, NOT the secret** (exercised only at token exchange) -- S5-17 cold login stays the oracle. |
+| S3-13 | WAF re-association check | web-acl association on NEW ALB live-read | **DONE** -- get-web-acl-for-resource on the new ALB = opal-gateway-waf. |
 | S4-14 | safe-ec2-deploy from ec2/opal-gateway/* to /opt/opal-gateway | ON-BOX systemd active + /health + md5s (never wrapper rc) | PENDING |
 | S4-15 | opal-gateway.service live; m365 unit stopped/disabled/removed | on-box systemctl reads | PENDING |
 | S5-16 | /health on-box | curl 200 | PENDING |
