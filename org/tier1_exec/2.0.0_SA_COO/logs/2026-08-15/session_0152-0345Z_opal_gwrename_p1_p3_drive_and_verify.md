@@ -89,3 +89,50 @@ NONE at this seat. TO-2 complete; no further GWRENAME action unless Andrew/MSTR 
 1. [0.0.0_AB_MSTR] integrate + push (AE 12 commits + COO 16); Andrew close-out; cleanup rulings.
 2. [0.7.0_AE_CloudOps] IDLE post-push-ack; banked follow-ups on routing.
 3. [2.0.0_SA_COO] carried: PREMCP P2 TO still pending at this seat (pre-existing, not tonight's).
+
+---
+
+## ADDENDUM 1818Z-1930Z: MDPF_EVR FE-1 cancel + FE-2 issue/validate/close (Andrew-direct rulings)
+
+**archetype:** COORDINATE (secondary VALIDATE)
+
+Two Andrew-direct rulings relayed by MSTR (record+broadcast), both executed at this desk:
+
+1. **FE-1 CANCELLED as issuer @bc686bde7e** — Andrew ~0350Z *"i dont want to draw attention to the
+   interpolated points at all…"*. Status `cancelled` (need went away by ruling), NOT superseded;
+   record pointer + narrow scope (FE presentation only) in the TO body. Reasoning carried, not just
+   the verdict: PROMINENCE IS NOT A FREE GOOD — a provenance-surfacing deliverable can be
+   net-negative. MSTR's carried spawn-or-date item DISCHARGED.
+2. **FE-2 ISSUED @04224a5435 (+ amendments @4d72e5a701, @ae6efb9cc8, @78cb9b23e7), GO to DE,
+   VALIDATED + CLOSED @9f074450a4** — Andrew *"yes they should render as ordinary points"*.
+   Implementation A (map reconstructed→measured) REJECTED BY NAME (violates
+   reconstructed-never-measured); Implementation B ADOPTED (own enum member, measured-identical
+   pixels, label preserved). Issuance gate correctly refused the first commit for a missing
+   machine-readable `<proof_of_spec>` — fixed, not routed around.
+   - **Collapse points** — the layered-reading finding: definition + two obvious consumers gave
+     three (`slotClass`, `derivedFirmClass :294`, `ModelPortfolios.tsx:737`); DE's read of the
+     SERVED ARTIFACT gave the fourth — per-firm `cohort_provenance` is DATE-LESS (445 entries, 0
+     with a `date` key; verified on my own S3 pull), so the P1 fail-safe already labelled all 445
+     points `measured` incl. the 7 reconstructed: Implementation A, PRE-EXISTING. Each layer of
+     reading found what the layer above structurally could not.
+   - **Rulings at my desk:** option (i) per-firm `point_class[]` array read as a separate commit
+     with a 3-step fail-safe order (AC-8); AC-7 must be shown able-to-fail; two claims / two
+     instruments (a screenshot cannot see a relabel — pixel-identical by design under B); AC-7
+     split DISPLAY-ONLY vs VALUE-AFFECTING with before/after NUMBERS, any movement = STOP (Andrew
+     ruled on pixels, not numbers).
+   - **Independent validation:** proof-of-spec rc=0 8/8; DE's exercise instrument run by ME on
+     MY OWN pulls of served inflection+global = 75/75; pre-change module on same inputs = 40 FAIL
+     exit=1 (discriminates); value numbers identical (band-extent 0, ranges [], sum
+     78,209,487,100.32 / 445); AC-8 carry at exactly 7 dates; PNG read by me (no band/dash/legend).
+   - **Routed, not closed by the fix:** producer/consumer contract mismatch (dated cohort vs
+     aligned array — which is canonical?) → CTO 190743Z; DE's 49f provenance surprise
+     (count-identical class distribution to cottonwood, 411 custody-absent on ~$1.7B/455 dates)
+     → MSTR routed to CTO/CRO.
+   - **State:** portal DEV 778ea780 + e8b1fb07 UNPUSHED (integrator push = MSTR; PROD promote =
+     DT on Andrew's word).
+
+Compiler tools this addendum: `comp-find --name` (locating FE-1 TO); `comp-transform
+schema-check/ternary-audit` (DE, per Rule 20, reported clean); `proof-of-spec-check.py`
+(positional, rc-checked); raw `aws s3 cp` of two served platinum keys for independent artifact
+reads (rail-checked). Gap noted: no comp-tool reads a served artifact's channel SHAPE against a
+reader's expected schema — the date-less-cohort mismatch was found by hand.
