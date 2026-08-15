@@ -178,7 +178,24 @@ evidence design (MSTR's correction, COO concurred):
   diff, wrapper bind-race fix banked). COO corroboration: TG healthy, through-ALB 401, and
   the COO needs_login read as NEW-TREE DISCRIMINATOR (the old tree holds the cache and would
   have returned a Graph payload). GW-12 DEFERRED-SSM. Cold seat CALLED 0318Z.
-- S5 (verify): PENDING -- cold login per re-scoped table + section-2 census with denominators.
+- **GW-12 RESOLVED 0322-0324Z:** SSM self-reconnected; AE ran the sequence in ruled order --
+  enable-state read FIRST (opal enabled / m365 DISABLED, APPLIED-grade -> the reboot-
+  nondeterminism latent risk is CLOSED), cp -a 4 cache blobs (ec2-user:600 preserved),
+  restart, active + /health ok. **COO CORROBORATION 0324Z: my whoami returned the FULL
+  Graph payload (Andrew Berman / Andrew@opalinvest.com)** -- consent state migrated intact;
+  same session read needs_login 14 min earlier, so the flip is the copy. MSTR oracle read
+  pending (named oracle; COO corroborates).
+- S5 (verify): **CENSUS VALIDATED-INDEPENDENT (COO), 0325Z.** AE census @032047Z (13 cloud
+  surfaces, materialized client-side). MY OWN REPRODUCTION, every list materialized to JSON
+  and counted in python (no --query length, no --no-paginate): IAM roles 0 of 208 |
+  instance profiles 0 of 23 | secrets 4 of 88 (the 4 old m365 twins, S6-SCHEDULED) | ALBs
+  0 of 1 | SGs 0 of 23 | lambdas 0 of 195 | log groups 2 of 238 (/aws/lambda/m365-{otp,
+  ms-ingest}-liveness, S6-SCHEDULED) | EventBridge rules 0 of 136 | EC2 tags 0 of 6
+  (Name=opal-gateway, System=OpalGateway). **EVERY NUMBER REPRODUCES AE's EXACTLY,
+  DENOMINATOR FOR DENOMINATOR.** S3 split (from AE, my S1 read anchors the history count):
+  old prefix 38 objects S6-SCHEDULED; new prefix 41 = HISTORY 36 (declared exception,
+  unchanged) + 3 opal-named artifacts minted tonight + latest = PRODUCERS 0. Non-zero rows
+  are ALL S6-SCHEDULED items -- zero m365 on every LIVE surface. Cold seat (GW-6) pending.
 - S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
   PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
   only copy of the consent state until GW-12 completes.
