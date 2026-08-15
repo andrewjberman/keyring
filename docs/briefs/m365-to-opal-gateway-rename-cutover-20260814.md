@@ -1,5 +1,40 @@
 # Brief: rename `m365-mcp-gateway` -> `opal-gateway` across ALL infrastructure
 
+> ## ⛔ SUPERSEDED IN THREE PLACES BY **LD-0415** -- READ THAT BEFORE EXECUTING ANYTHING
+> **P0 was executed 2026-08-15 (`2781aac326` + `33d5690486`).** Executing P1/P2 off this page
+> UNAMENDED will produce two live defects and one unnecessary migration. The corrections, each
+> measured against the live estate:
+>
+> 1. **"P0 -- retag the instance" IS WRONG: that step is NOT zero-impact and has been MOVED TO P2.**
+>    Both tags are Terraform-owned (`Name` from `aws_instance.gw.tags`, `System` from the provider
+>    `default_tags` block). A CLI retag is instant drift, reverted by the next apply -- and it
+>    silently breaks `deploy-to-ec2.sh`'s `tag:Name` instance resolver.
+> 2. **"P1 -- build the opal-* twins" OVERSTATES THE WORK AND UNDERSTATES THE RISK.** The real lever
+>    is ONE variable: `var.name` in `terraform/opal-gateway/main.tf` drives `${var.name}-sg`,
+>    `-role`, `-profile`, the ALB, the TG, and the instance Name tag. Because AWS names are
+>    immutable that single change is a **destroy/recreate cascade**, ALB included.
+> 3. **"CLEAN (no m365): Route53/DNS" is true of the record NAME and FALSE of its TARGET.**
+>    `mcp.opalinvest.dev` is an A/ALIAS onto `m365-mcp-gateway-1854602644...elb.amazonaws.com`.
+>    The consequence is FAVOURABLE and is the plan's key de-risking fact: `dns.tf` owns that alias
+>    and points it at `aws_lb.gw`, so an ALB replacement **auto-repoints it**. The client endpoint
+>    `https://mcp.opalinvest.dev/mcp/` is **stable across the entire cutover and no agent MCP
+>    re-registration is needed.** The exposure is the flip window, not the address.
+>
+> **Open items 1-3 below are CLOSED** (endpoint-stable; WAF web-ACL = `m365-mcp-gateway-waf`
+> id `bd26daa0-7140-4407-abff-ce2a560b8122`; bucket = `opal-313476888478-lambda-artifacts`).
+> **Item 4 is answered with a recommendation, not a ruling** -- prefer the `var.name` flip on the
+> existing module with `create_before_destroy` on ALB/TG over a fresh instance: the instance
+> survives (SG + instance-profile changes are in-place, not ForceNew).
+>
+> **The inventory below is INCOMPLETE by two entries** found on re-verification: the **4 inline IAM
+> policy names** on `m365-mcp-gateway-role` (`-audit-lake-write`, `-golive`,
+> `-opal-portal-secret-read`, `-ycharts-secret-read`) and the **Terraform state key**
+> `m365-mcp-gateway/tfstate` (moving it needs `init -migrate-state` against PRODUCTION state --
+> its own P1 act with its own verification, never a side effect of the directory rename).
+>
+> *Repo paths named below are pre-P0. The code home is now `infra/aws/ec2/opal-gateway/`, the TF
+> module `infra/aws/terraform/opal-gateway/`, the runbooks `docs/runbooks/opal-gateway-*.md`.*
+
 **Authorization (Andrew-direct 2026-08-14, verbatim):** *"is the opal-gateway properly named opal
 gateway in all relevant infrastructure? i do not want it named m365 or any bullshit like that
 anywhere"* + *"scope the full rename and bring me the cutover plan."*
