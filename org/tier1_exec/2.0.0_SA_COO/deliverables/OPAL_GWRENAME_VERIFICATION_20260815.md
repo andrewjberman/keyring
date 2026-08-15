@@ -225,3 +225,49 @@ evidence design (MSTR's correction, COO concurred):
   invocation. Recorded so "0 m365 log groups" and "the opal twin is absent" do not read as
   contradictory. Remaining legs at AE: on-box old-tree removal (insurance copy held) +
   state-key migration LAST (backup verified before, 0-diff plan after).
+  **S6 COMPLETE (AE close 033943Z; TO-1 complete @0a90de81e8, ledger CLOSED 0336Z, proof-of-
+  spec VALID 12/12).** On-box: insurance copy /home/ec2-user/.token_cache.pre-s6 (4 blobs md5
+  4/4 identical to live) placed BEFORE removal; old unit file + /opt/m365-mcp-gateway (142M)
+  removed; opal-gateway.service active+enabled, /health ok. State key: source 151,843 B backed
+  up in-bucket (ETag-identical) + local pull BEFORE; init -migrate-state rc=0; AFTER plan
+  "No changes" @25202b96e1.
+
+## FINAL COO ACCEPTANCE READ, 0341-0343Z (independent, live primitives)
+
+| Surface | COO read | Denominator |
+|---|---|---|
+| whoami through mcp.opalinvest.dev | FULL Graph payload (Andrew Berman) | warm session; regression + GW-12 corroboration |
+| Secrets, live | 0 m365 | of 84 |
+| Secrets incl. planned-deletion | 4 m365, 4 of 4 carry DeletedDate (recovery window, not forced) | of 88 |
+| Log groups | 0 m365 | of 236 |
+| S3 old prefix / new prefix | 0 objects / 41 objects (HISTORY 36 declared, PRODUCERS 0) | -- |
+| TF state key | opal-gateway/tfstate 151,842 B, 77 resources (`state list`) | old key + dated pre-s6 backup present = cleanup-ruling items |
+| (earlier 0325Z, unchanged) IAM roles / profiles / ALB / SGs / lambdas / rules / EC2 tags | 0 m365 | of 208 / 23 / 1 / 23 / 195 / 136 / 6 |
+
+**VERDICT: OPAL_GWRENAME P1-P3 CUTOVER ACCEPTED at the COO desk.** Every AE number reproduces
+on independent instruments; both acceptance gates (GW-6 bracketing cold seats; GW-12 MSTR oracle
++ COO corroboration) PASSED; zero m365 on every LIVE surface with denominators; every non-zero
+row is a scheduled-deletion or declared-exception item. Two claims stay at two grades: MCP plane
+EXERCISED-PASS; H1 (ALB default-action OIDC secret) = re-set act performed, UNVERIFIABLE by any
+headless instrument, substitute oracle = an Andrew browser login, blast radius browser paths only.
+
+**OPEN ITEMS carried out of the close (owners named):**
+1. Cleanup rulings (Andrew/MSTR): old TF state key + dated backup (2 objects); on-box
+   insurance cache copy (delete once the cutover is durably accepted); the 36 history blobs
+   (optional prune -- S3 deletion is Andrew-reserved).
+2. user_data /opt literal (Andrew stop/start word; Entra-CA check is a PRECONDITION of any
+   stop; TRIP-CONDITION on any instance replacement) -- owner AE on Andrew's word.
+3. ms-ingest log group: EXPLAINED absence; real finding only if absent after next scheduled fire.
+4. Banked follow-ups (AE log): bare-jq x2 deploy scripts; t4g.nano undersized for on-box venv
+   builds + no SSM-agent restart guard; systemd ACTIVATING-rc=3 wrapper class; other unpinned
+   requirements; lambda source dirs infra/aws/lambda/m365-*; stray inbox `org` dir.
+5. Gate candidate (CTO to route): lint aws_security_group without create_before_destroy in a
+   module holding a persistent aws_instance -- no comp-tool sees replacement ORDERING.
+6. Push: 12 AE commits + COO's TO/runbook/record commits UNPUSHED; MSTR holds the push.
+
+**METHOD FINDINGS for Andrew (the enumerate-some-members class, 5 instances tonight):** SG
+create_before_destroy (cost a 35-min outage); artifact-filename producer; unit-file /opt literals;
+runbook step-9 gap; on-box STATE (token cache -- a name census cannot see a state migration).
+General remedy demonstrated by AE's `$SERVICE` derivation: define the class structurally, never
+by listing members. Two instrument-domain corrections landed mid-flight (warm-vs-cold, then
+MCP-path-bypasses-ALB-OIDC) -- both caught before a green was filed off the wrong path.
