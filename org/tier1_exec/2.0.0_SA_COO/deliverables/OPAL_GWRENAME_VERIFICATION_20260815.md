@@ -196,6 +196,20 @@ evidence design (MSTR's correction, COO concurred):
   old prefix 38 objects S6-SCHEDULED; new prefix 41 = HISTORY 36 (declared exception,
   unchanged) + 3 opal-named artifacts minted tonight + latest = PRODUCERS 0. Non-zero rows
   are ALL S6-SCHEDULED items -- zero m365 on every LIVE surface. Cold seat (GW-6) pending.
+  **GW-6 PASS + GW-12 ORACLE PASS (MSTR 033046Z):** GW-12 -- MSTR whoami 0327Z FULL Graph
+  payload (same session read needs_login 0309Z); COO 0324Z corroborates; Andrew does NOT
+  need to re-authorize. GW-6 -- TWO cold seats BRACKETING the copy: #1 `3.0.0_SA_CVO~V`
+  032201Z PRE-copy -> well-formed needs_login envelope = PASS on the transport/auth-plane
+  claim ONLY; #2 `3.0.0_SA_CVO~W` 032929Z POST-copy -> FULL Graph payload = PASS on the full
+  new-session-with-Graph claim. The pair is a before/after control across independent fresh
+  sessions: the flip is ATTRIBUTABLE to the copy, not merely concurrent. **CAVEATS (MSTR-
+  disclosed, recorded verbatim):** (a) neither seat registered with the broker -- both seat
+  messages carry "Sender-unverified"; mitigation = MSTR-spawned with process-truth checks,
+  timestamps match spawns, payloads differ exactly as the copy predicts, #2 matches MSTR's
+  own oracle -- three-instrument consistency, no claim rests on either message alone;
+  (b) seat #1's PASS is transport/auth-plane only -- never merged with #2's. **S6 RELEASED
+  0331Z** with one add: an off-path on-box .token_cache copy retained until the state-key
+  migration completes and the cutover is CLOSED.
 - S6 (retire): PENDING -- gated on S5 **AND GW-12 (token-cache migration + MSTR oracle
   PASS)**; after S6 the rename is one-way, and S6 step 15 DELETES the old tree holding the
   only copy of the consent state until GW-12 completes.
