@@ -79,3 +79,56 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
   grant read first (loud class, BP-3 says it landed).
 - **AT CTO:** the 5 routed items above; P1-close attestation once DS~A + CVO deliver.
 - **AT SEATS:** all 9 TOs pending, dated, ACKed — event-driven from here.
+
+---
+
+## ADDENDUM — 16:15Z–17:20Z (same session): ruling-wave execution + P1-close validation
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| proof-of-spec-check | x4 (DEPLOYCENSUS DC-1..6; T-A PA-1..7; P1-CLOSE P1C-1..5; all rc bare) | PASS | 0 violations each; issuer-side re-runs, never self-report |
+| deploy_ledger check --red | before/after reader fix | PASS | BYPASS 0, HELD-STALE 4/4 still fire, TRUE rc=1 (first read took tail's rc through a pipe — caught, retaken bare) |
+| custom mutant harness | pre-alignment corpus @b9df62247f~1, byte-accurate | PASS | 8/8: A/B rows flip readable, shape-C stay record-side. First run FAILED on my own harness's cp1252 mojibake of git-show output (text=True) — the instrument corrupted the input, not the reader; re-run on bytes |
+| owned-paths-validate | check_agent (0.8.0/0.7.0/COO x .tools + infra) | PASS | lanes verified before the ruling-wave TOs |
+
+## Delta
+
+1. **deploy_ledger.py reader defects A+B FIXED @0ae9d71ef5** (MSTR F-1/LD-0420 routing; instrument
+   owner): _has_close_marker segment-aware; _split_fields bold-span-parity-aware (structural, not an
+   enumerated spelling). Verified both directions (9/9 line controls; 8/8 corpus mutant; sentinels
+   discriminate).
+2. **TO-4 COO NEVER#3 half SIGNED** against manifest.tsv (10 rows, read at my desk; HELD 49financial
+   aggregate-aua key absent; exclusions grep 0; global/account-distribution reader INERT accepted).
+   bmkaud-evidence EXCLUDE upgraded to permanent evidence-class. AE holds: fixture PASS + CTO half
+   both required before delete 1.
+3. **Validations closed:** NFRA_DEPLOYCENSUS accepted (197+27 classified; ~20 more two-homes, 1
+   executes daily); MDPF_REMED.RP-F2 accepted (5/5 vs its pre-proof-contract criteria; 11 offset
+   rows); MDPF_PROVENANCE.T-A validated+closed (mutant-proven, portal edcc503e awaits MSTR).
+4. **Andrew ~1537Z approvals executed:** NFRA_DEPLOYLEDGER.HELD-STATE -> 0.8.0 (08-20) +
+   NFRA_TFSGLINT.CBD-PAIR -> AE (08-24) @3bc88957c8, both ACKed pending.
+5. **P4E-1 FROZEN @5f1076e9c1** (20 members: 12 EMIT / 5 GATED / 2 OPEN / 1 DORMANT; digit chain
+   15->17->20, enumeration is the authority). **P3-CLOSE scope PINNED @7d7e2e19f6** (canonical_positions
+   + A_07 pair persist at the root before the close attests) — independently corroborated same hour by
+   DS~A's consumption sample (emitters refuse loudly on exactly those absent inputs).
+6. **CTO queue drained (170535Z) -> ruling wave executed @dfb5fd8f48:** R-1 relayed (d13 un-gated,
+   consume canonical role_aua); R-2 BDMERGE-CONVERGE -> DS~A 08-21; R-3+J2+J3 REG-SCAN-ATOMCHECK ->
+   0.8.0 (08-19/20; J1 held at COO); R-4 P4-EDGEREAD -> AE 08-20 (flip precondition, three-way
+   discharge); J4 P4-ORACLES -> DE+CVO joint 08-21 (CVO pre-registered the OR-3 method: DELTA=0 keys
+   need mutated fixtures). R-5 convention binds; origin fix at my post-push slot. DE told their
+   absent-flat reading STANDS.
+7. **P1-CLOSE-49F: my validation DONE** — instance @8817012062 rc=0 bare 5/5; card @750a9265a8
+   (NO FILL-WORD NEEDED — Andrew open-decision #3 DISCHARGED by CTO E-1 @b828354d55). Attestation is
+   CTO's only remaining act; CVO sweep CLEAN TO ATTEST @db4ee853be; CVO's d12 structural-change line
+   banked into my TO-1 validation checklist (restore-footprint hypothesis).
+8. **Banked at COO post-push slot:** feeder-stamp origin fix + 3 leaf fixes + smartx-exporter
+   retire-or-converge (RP-F2); yang-generate-cma deploy act; deployed-member-sha comp-tool; J1
+   proof-board; stale-TO sweep + activation-TO dispositions (on Andrew's /open-calls card).
+
+## Gate-forward (updated)
+- 23:01Z fixture -> my TO-1 validation ~23:30Z vs BP-1..BP-6 (+ the d12 accounting check).
+- CTO: P1 attestation (inputs complete); TO-4 ledger gate + P2 apply gate post-fixture.
+- CTO is broker-REGISTERED as of ~17:18Z (channel push landing) — the deaf window is over.
