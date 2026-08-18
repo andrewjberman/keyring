@@ -217,6 +217,24 @@ CODE_TREES: dict[str, dict] = {
             "silver": ("data/assets/scripts/silver", "code/scripts/silver/"),
         },
     },
+    # ADVI tree (CTO RULED 2026-08-18 172006Z, on the mdpf _code/ precedent above:
+    # portal/gold/mdpf/_code/ already exists in bundles.accrual_bridge s3_key).
+    # The 49F canonical runner chain's S3 code home is the atom-2 ONE deploy target
+    # inside the already-ratified product root -- NOT the mdpf bucket (cross-product,
+    # the measured-violation class). Repo home is a SUBTREE of the shared
+    # data/assets/scripts/gold home: resolution is LONGEST-PREFIX (see
+    # file_to_s3_target), so runners_49f files land here and every OTHER assets_gold
+    # file keeps its mdpf mapping unchanged. First-mints stay EXPLICIT per the
+    # membership guard; membership at this prefix is exact (runners_49f only), so
+    # the shared-home false-MISSING class cannot arise on this row.
+    "advi": {
+        "bucket": "opal-data-assets",
+        "label": "advi",
+        "deploy_gated": True,
+        "layers": {
+            "gold": ("data/assets/scripts/gold/runners_49f", "portal/gold/advi/_code/"),
+        },
+    },
 }
 
 # Pipeline detection table: data_dir_name -> (s3_bucket, pipeline_label).
@@ -332,6 +350,13 @@ def file_to_s3_target(rel_path: str) -> Optional[tuple[str, str, str]]:
     # DERIVED from CODE_TREES -- the layout is no longer hardcoded here. Only
     # deploy_gated trees resolve; a check-only tree (mdpf) returns None exactly as
     # before, so the Rule-13 gate's behavior is unchanged.
+    # LONGEST-PREFIX resolution (2026-08-18, the advi row): the advi gold home is a
+    # SUBTREE of mdpf's shared assets_gold home, so first-match-in-dict-order would
+    # make the answer depend on insertion order -- an order-dependent gate is a trap.
+    # Longest repo_home wins: behavior-identical for every pre-existing file (no
+    # other overlaps exist) and deterministic for nested homes regardless of order.
+    best: Optional[tuple[str, str, str]] = None
+    best_len = -1
     for tree in CODE_TREES.values():
         if not tree["deploy_gated"]:
             continue
@@ -342,8 +367,10 @@ def file_to_s3_target(rel_path: str) -> Optional[tuple[str, str, str]]:
             suffix = norm[len(repo_home) + 1:]
             if not suffix:
                 continue
-            return tree["bucket"], f"{s3_prefix}{suffix}", tree["label"]
-    return None
+            if len(repo_home) > best_len:
+                best_len = len(repo_home)
+                best = (tree["bucket"], f"{s3_prefix}{suffix}", tree["label"])
+    return best
 
 
 def resolve_tree_layer(rel_path: str) -> Optional[tuple[str, dict, str]]:
@@ -351,17 +378,23 @@ def resolve_tree_layer(rel_path: str) -> Optional[tuple[str, dict, str]]:
 
     The membership-guard companion to file_to_s3_target: the caller needs to know
     WHICH layer matched to test `layer in tree["shared_repo_homes"]`. Same loop,
-    same first-match semantics; returns None exactly where file_to_s3_target does."""
+    same LONGEST-PREFIX semantics (2026-08-18, with the advi row -- the two
+    resolvers MUST agree or the guard tests a different layer than the deploy
+    targets); returns None exactly where file_to_s3_target does."""
     norm = rel_path.replace("\\", "/")
     if not norm.endswith(".py"):
         return None
+    best: Optional[tuple[str, dict, str]] = None
+    best_len = -1
     for name, tree in CODE_TREES.items():
         if not tree["deploy_gated"]:
             continue
         for layer, (repo_home, _s3_prefix) in tree["layers"].items():
             if norm.startswith(repo_home + "/") and norm[len(repo_home) + 1:]:
-                return name, tree, layer
-    return None
+                if len(repo_home) > best_len:
+                    best_len = len(repo_home)
+                    best = (name, tree, layer)
+    return best
 
 
 def s3_key_exists(bucket: str, key: str) -> tuple[Optional[bool], str]:
