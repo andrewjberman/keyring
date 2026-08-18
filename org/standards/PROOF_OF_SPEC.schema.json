@@ -8,6 +8,7 @@
   "properties": {
     "schema_version": {"const": "1.0"},
     "to_id": {"type": "string", "minLength": 3},
+    "firm": {"enum": ["49F", "INF", "COT", "MDPF"], "description": "OPTIONAL, additive (ratified with TIGHTENING J1, CTO G-C @42317a4aab): the firm this instance proves work for, stated exactly instead of derived from to_id grammar. The proof-board (to-check.py --proof-board) prefers this field; absent it, the DECLARED derivation is leading to_id token in this same enum, else UNPARSED -- never guessed. Existing instances without it remain valid."},
     "phase": {"enum": ["P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION", "INVESTIGATION", "NON-BUILD-OTHER"], "description": "build-program phase, or the two non-build values (Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase)"},
     "spec_ref": {
       "type": "object",

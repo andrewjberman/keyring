@@ -10,11 +10,15 @@ Usage:
   python .tools/to-check.py --all             # all non-complete TOs workspace-wide
   python .tools/to-check.py --project CODE    # TOs for one project (any age)
   python .tools/to-check.py --assignee SERIAL # TOs assigned to agent (partial match ok)
+  python .tools/to-check.py --proof-board     # DERIVED per-firm x per-phase board from
+                                              # PROOF_OF_SPEC instances (TIGHTENING J1
+                                              # @1dceb7d61d; read-only, run-and-read)
 """
 from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 import glob
 from datetime import datetime, timedelta, timezone
@@ -289,8 +293,167 @@ def _age(date_str: str, now: datetime) -> str:
         return "?"
 
 
+# ---- --proof-board: DERIVED per-firm x per-phase board (TIGHTENING J1 @1dceb7d61d) ---------
+# The board is an INSTRUMENT for the attestation owner; the framework's CURRENT STATE prose
+# remains the attested RECORD (a derivation, not a second home). Read-only; no S3, no writes.
+
+FIRM_SET = ("49F", "INF", "COT", "MDPF")   # the ratified firm token set (criterion-id grammar)
+BOARD_PHASES = ("P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION",
+                "INVESTIGATION", "NON-BUILD-OTHER")   # the schema's own phase enum, verbatim
+_SCHEMA_REQUIRED = ("schema_version", "to_id", "phase", "spec_ref", "assignee",
+                    "artifacts_produced", "acceptance", "controls", "declared_exclusions",
+                    "surprises", "session_log", "compiler_tools")
+
+
+def _board_last_touch_map() -> dict[str, int]:
+    """ONE streaming git-history walk -> {repo-rel path: last-commit-ts}. The
+    state_scan.py build_last_touch_map pattern (4.1s total vs 277ms/call per file).
+    encoding= is load-bearing (TIGHTENING J2, landed same session): text=True alone
+    decodes with the locale codec and a stray commit byte kills the whole read."""
+    r = subprocess.run(["git", "log", "--format=%x01%ct", "--name-only"],
+                       cwd=str(WORKSPACE), capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    raw = r.stdout if r.returncode == 0 else ""
+    last: dict[str, int] = {}
+    ts = 0
+    for ln in raw.splitlines():
+        if ln.startswith("\x01"):
+            try:
+                ts = int(ln[1:])
+            except ValueError:
+                ts = 0
+        elif ln and ts and ln not in last:   # log is newest-first: first seen = last touch
+            last[ln] = ts
+    return last
+
+
+def _derive_firm(inst: dict) -> str:
+    """DECLARED derivation, printed in the board header: the instance's own optional
+    `firm` field wins (schema-ratified, additive); else the leading to_id token
+    (split on the first -, _ or .) matched against FIRM_SET; else UNPARSED --
+    rendered as its own row, never guessed (J1.4 contract row 1)."""
+    f = inst.get("firm")
+    if isinstance(f, str) and f.upper() in FIRM_SET:
+        return f.upper()
+    lead = re.split(r"[-_.]", str(inst.get("to_id", "")), maxsplit=1)[0].upper()
+    return lead if lead in FIRM_SET else "UNPARSED"
+
+
+def proof_board() -> int:
+    now = datetime.now(tz=timezone.utc)
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(WORKSPACE),
+                          capture_output=True, text=True,
+                          encoding="utf-8", errors="replace").stdout.strip()[:12]
+    # SUBSTRING glob, deliberately wider than the spec's PROOF_OF_SPEC_* prefix: the newest
+    # instances name themselves {TO_ID}_PROOF_OF_SPEC[~lane].json (e.g. the 49F P1-CLOSE
+    # attestation instance) and a prefix glob silently drops them -- measured 20 dropped of
+    # 65 on 2026-08-18, the exact never-dropped defect J1 exists to close.
+    matched = sorted(glob.glob(str(WORKSPACE / "org" / "**" / "*PROOF_OF_SPEC*.json"),
+                               recursive=True))
+    schema_files = [f for f in matched if f.endswith(".schema.json")]
+    inst_files = [f for f in matched if not f.endswith(".schema.json")]
+
+    malformed: list[tuple[str, str]] = []   # (relpath, why) -- LISTED, never dropped
+    parsed: list[dict] = []
+    for f in inst_files:
+        rel = str(Path(f).relative_to(WORKSPACE)).replace("\\", "/")
+        try:
+            d = json.loads(Path(f).read_text(encoding="utf-8", errors="replace"))
+        except (OSError, json.JSONDecodeError) as e:
+            malformed.append((rel, f"unreadable/unparseable: {e}"))
+            continue
+        missing = [k for k in _SCHEMA_REQUIRED if k not in d]
+        if missing:
+            malformed.append((rel, f"missing required key(s): {', '.join(missing)}"))
+            continue
+        if d.get("phase") not in BOARD_PHASES:
+            malformed.append((rel, f"phase not in schema enum: {d.get('phase')!r}"))
+            continue
+        acc = d.get("acceptance") or []
+        mix = {"P": 0, "F": 0, "U": 0}
+        for row in acc:
+            s = str(row.get("status", "")) if isinstance(row, dict) else ""
+            if s == "PASS":
+                mix["P"] += 1
+            elif s == "FAIL":
+                mix["F"] += 1
+            else:
+                mix["U"] += 1   # the UNCOMPUTABLE/UNVERIFIABLE/N-A family + legacy
+        parsed.append({"rel": rel, "firm": _derive_firm(d), "phase": d["phase"],
+                       "to_id": str(d.get("to_id", "?")), "mix": mix,
+                       "vintage": str(((d.get("spec_ref") or {}).get("vintage_commit")
+                                       or "?"))[:9]})
+
+    touch = _board_last_touch_map()
+    for p in parsed:
+        p["touch"] = touch.get(p["rel"], 0)   # 0 = untracked/uncommitted (shown as such)
+
+    # ---- render -------------------------------------------------------------------------
+    print(f"PROOF-BOARD  {now.strftime('%Y-%m-%dT%H:%MZ')}  |  HEAD {head}  |  plane: "
+          f"working tree (untracked instances included; last-touch from git history)")
+    print("  derivation: firm = instance 'firm' field if declared, else leading to_id token "
+          f"in {{{','.join(FIRM_SET)}}}, else UNPARSED (own row, never guessed)")
+    print(f"  denominators: {len(parsed)} instances parsed of {len(matched)} files matched "
+          f"({len(schema_files)} schema excluded); {len(malformed)} MALFORMED (listed below)"
+          if malformed else
+          f"  denominators: {len(parsed)} instances parsed of {len(matched)} files matched "
+          f"({len(schema_files)} schema excluded); 0 MALFORMED")
+    print("  cell = instances | acceptance-row mix P(ASS)/F(AIL)/U(NCOMPUTABLE-family). "
+          "UNKNOWN(0) = no instance -- never 'not started', never blank.")
+    print()
+
+    firms = list(FIRM_SET) + ["UNPARSED"]
+    cells: dict[tuple[str, str], list[dict]] = {}
+    for p in parsed:
+        cells.setdefault((p["firm"], p["phase"]), []).append(p)
+
+    colw = 15
+    print("  " + "phase \\ firm".ljust(18) + "".join(f.ljust(colw) for f in firms))
+    for ph in BOARD_PHASES:
+        row = ["  " + ph.ljust(18)]
+        for fm in firms:
+            grp = cells.get((fm, ph))
+            if not grp:
+                row.append("UNKNOWN(0)".ljust(colw))
+            else:
+                m = {"P": 0, "F": 0, "U": 0}
+                for g in grp:
+                    for k in m:
+                        m[k] += g["mix"][k]
+                row.append(f"{len(grp)} P{m['P']}/F{m['F']}/U{m['U']}".ljust(colw))
+        print("".join(row))
+
+    print()
+    for ph in BOARD_PHASES:
+        for fm in firms:
+            grp = cells.get((fm, ph))
+            if not grp:
+                continue
+            newest = max(grp, key=lambda g: g["touch"])
+            when = (datetime.fromtimestamp(newest["touch"], tz=timezone.utc)
+                    .strftime("%m-%d %H:%M") + "Z" if newest["touch"]
+                    else "UNTRACKED/uncommitted")
+            print(f"  {fm} x {ph}: {len(grp)} instance(s) | newest touch {when} "
+                  f"{Path(newest['rel']).name} | its spec vintage @{newest['vintage']}")
+    if any(p["firm"] == "UNPARSED" for p in parsed):
+        print("\n  UNPARSED rows (no firm field, no firm token leading to_id -- re-key or "
+              "declare `firm` to place them):")
+        for p in parsed:
+            if p["firm"] == "UNPARSED":
+                print(f"    {p['to_id'][:60]:60s} {Path(p['rel']).name}")
+    if malformed:
+        print("\n  MALFORMED (counted in denominator, excluded from cells):")
+        for rel, why in malformed:
+            print(f"    MALFORMED: {rel} -- {clean(why)[:100]}")
+    print(f"\nPROOF-BOARD-RESULT files={len(matched)} instances={len(parsed)} "
+          f"malformed={len(malformed)} schema_excluded={len(schema_files)}")
+    return 0
+
+
 def main():
     args = sys.argv[1:]
+    if "--proof-board" in args:
+        sys.exit(proof_board())
     show_all = "--all" in args
     project_filter: str | None = None
     assignee_filter: str | None = None
