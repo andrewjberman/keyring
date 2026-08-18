@@ -147,3 +147,41 @@ same day if daylight, else **TO-4 slides to 08-19 with TO-5**. Whichever, record
 - 49F provenance LOOK: FALSIFIED by CTO on 3 artifact versions (wrong-firm read on the measurement
   side); relay to DE via MSTR. The real finding underneath: cohort_provenance carries THREE shapes
   across four scopes -- CTO ruling in flight; subsumes both COO-routed symptoms.
+
+### 08-18 ~1320Z: TO-4 (iii) ADJUDICATED by CTO @fc74f8f6b4 -- WITHDRAWN as unsatisfiable AND INSUFFICIENT; the hold was righter than we knew
+
+CTO ruling `docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md` §3. **The finding that
+reframes TO-4:** the CANONICAL scheduled producer `mdpf-gold-lambda` ITSELF reads
+`s3://opal-data-portal-v2/json/mdpf/49financial/aggregate-aua-timeseries.json` on EVERY 49f build
+(`dim_mdpf_aggregate_aua_timeseries.py:1131-1132` -> `load_served_account_count` `:643-663`, 49f
+`count_source='served_import'` `:1073`) and RAISES on failure (C2 fail-loud) -> the 13:30Z gold fails.
+**Verified at the EXECUTING bytes** (CTO downloaded the package, CodeSha256 GAVTyWBw…, member sha256
+ce9c0284537e == repo HEAD). Its own docstring names this "the banked json/mdpf-retire blocker … must
+be re-pointed". Second deployed reader: `opal-smartx-ingestion-pipeline` module `:482` reads
+`json/mdpf/global/…` (Active, no trigger post wave-1) -- record, not chased.
+**Consequence for the instrument question:** CloudFront standard logs could only ever prove EXTERNAL
+zero-access; the load-bearing reader is an INTERNAL Lambda SDK read that never traverses CloudFront --
+**path (b), enable logging + wait a week, would have read CLEAN and been WRONG.** So condition (iii)
+is withdrawn as unsatisfiable (no log exists) AND insufficient (the right log would still miss the
+reader that matters). CTO owns the mis-instrumentation on the record; COO's 08-15 "satisfiable" read
+shares it. **Substitute = a three-legged STRUCTURAL oracle, denominators printed:** (a) route
+negative (TO-0 comp-routes exoneration re-run); (b) principal census on LIVE policy (get-role-policy /
+bucket policy -- not comp-iam DESIRED, it fails green) for `s3:GetObject` reaching `json/mdpf/*`;
+(c) deployed-code reader census per principal at the executing package -- **leg (c) already returns
+TWO hits.**
+**TO-4 DISPOSITION:** PASS_WITH_DISCLOSURE (path a) -- producer-leg retirements + copy-manifest legs
+PROCEED; the **SERVED-KEY DELETE leg is HELD on a HARD PREREQUISITE beyond Andrew's reserved word:**
+the FLAG-2 count carry must be RE-POINTED off `json/mdpf` first (DS lane -- to a gold self-carry from
+the prior vintage of `portal/gold/mdpf/49financial/aggregate-aua-timeseries/{D-1}.json`, same tier, no
+gold-reads-platinum circularity), verified on a scheduled 13:30Z run, and the smartx-ingestion global
+read dispositioned; ONLY THEN the delete goes to Andrew with the structural oracle disclosed as the
+substitute for an access log that never existed. CF logging = his call under the moratorium; **the
+card must say it would NOT have caught the reader that mattered.**
+**Also from the ruling, at COO's desk to decompose:** §2 R-1 (DE, small, first: `point_class[i]`
+first at every grain; `carried` as a known member; kills the inflection/49f "malformed" warn AND the
+Global 3,178-warn class -- a per-firm reader misapplied at Global, NOT a producer defect) -> R-2 (DS
+lane: rename per-firm source-identity channel `cohort_source[]`, emit `cohort_provenance` per-firm in
+the §1a class shape, rename Global's `partner_provenance[]`; §B3 key-set + DT harness + read-guard in
+one change) -> DE tolerance-drop on a stated date. One two-lane contract correction, no new project,
+no shadow. Both symptoms COO routed 190743Z/213659Z are subsumed. MSTR's bd-platinum "shared root"
+FALSIFIED from the mdpf end (mdpf platinum content advanced correctly; its defect is shape/name only).
