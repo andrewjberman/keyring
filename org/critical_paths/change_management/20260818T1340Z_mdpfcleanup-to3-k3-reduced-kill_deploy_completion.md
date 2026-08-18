@@ -3,7 +3,7 @@
 **Opened:** 20260818T1340Z by 0.7.0_AE_CloudOps. **GO chain:** COO K3 GO 130956Z (unconditional 132953Z) -> consumers-first STOP 133601Z (2 rows falsified-live) -> COO ruling 133706Z (bounded kill proceeds; runner/DLQ KEEP-UNTIL-REHOMED; Andrew's runner stop word RETRACTED) -> CTO GATE-GO 133935Z (5 post-apply reads as close conditions).
 **PRD:** docs/architecture/OPAL_MDPFCLEANUP_PRD.md v1.1 @9f75dcb996 s3 row 41 (K3), s3.1 invocation-history requirement.
 **Plan:** SAVED plan file k3_reduced.tfplan **sha256 8a18ba8a45a9ed9f** -- `terraform plan -destroy` with 10 `-target` addresses (the named act, COO 130956Z), root infra/aws/terraform/mdpf-pipeline. **Plan: 0 to add, 0 to change, 10 to destroy -- expected-rows-only, 0 riders, 0 non-destroy verbs.**
-**Status: OPEN -- finishes in-session or rolls back + escalates loud (NEVER#8).**
+**Status: CLOSED 20260818T1352Z (header corrected 1508Z -- the close line below was stamped at 1352Z; header lagged).**
 
 ## Kill set (10; every row K3-only by construction)
 event_rule.mdpf_daily_refresh · event_target.mdpf_daily_refresh · lambda_permission.eventbridge_mdpf_trigger · module.mdpf_daily_trigger.aws_lambda_function.this (mdpf-daily-trigger, CodeSha256 xqTiW2Z/ETxDjILu0x0VulMvN9jVux9gG4thanF+mbo=, last invocation 2026-08-18 12:44:42Z via the rule, 1-3/day 7d, sole invoke principal = the rule) · module.mdpf_daily_trigger.aws_cloudwatch_log_group.lambda · iam_role_policy.mdpf_trigger_lambda · iam_role_policy_attachment.mdpf_trigger_basic · iam_role.mdpf_trigger_lambda · sqs_queue_policy.mdpf_trigger_dlq (POLICY only: single stmt, SourceArn = K3 rule; floor sends via its execution role) · cloudwatch_metric_alarm.mdpf_chain_failed (Service=mdpf-daily-runner).
