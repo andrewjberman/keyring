@@ -131,19 +131,36 @@ naming opinion at all.
   "ProShares Ultra Russell 2000") at **zero** hits, and a string that exists only in the new
   code present — discriminating a fresh deploy from a cached bundle.
 
-## 6. Residuals (surfaced, not chased — each is now a one-place fix, which is the point)
+## 6. Residuals — ALL CHASED DOWN (Andrew-direct, same day, ~1900-1940Z)
 
-1. **ICSH name ruling:** registry says "iShares Ultra Short-Term Bond ETF"; two estate comments
-   say "BlackRock Ultra Short-Term Bond ETF" (issuer rebrand vintage). One registry row on your
-   word.
-2. **Classification dicts:** `yang-generate-positioning` still inlines asset-class /
-   management-style / sector dicts — the same disease in a different organ (classification, not
-   naming). The registry already carries these fields; routing them through it is the same
-   pattern again, on your GO.
-3. **`tickerRegistry.ts` `description` fields** share the fabrication problem `displayName` had
-   (and are equally unread). Left as non-naming scope.
-4. Workspace commits + tags ride the integration window per lanes-commit / integrators-push
-   (MSTR executed the portal pushes for the promote already).
+1. **ICSH — RULED AND APPLIED.** Web-grounded against SEC/BlackRock ETF Trust filings: the
+   official name since Dec-2020 is **"iShares Ultra Short Duration Bond Active ETF"** — both
+   estate variants were stale ("iShares Ultra Short-Term Bond ETF" was the pre-2020 name;
+   "BlackRock Ultra Short-Term Bond ETF" confused issuer with brand). Updated in the registry,
+   `CANONICAL_SECURITIES`, `_shared` comments and overrides; regenerated artifact serves it.
+2. **Classification dicts — ROUTED THROUGH THE REGISTRY** (deploy `yang-pipeline-v1.5.8`).
+   Pre-swap census: asset_class and management_style had **zero** value disagreements between
+   the inline dicts and the registry (the allocation-math fields are behavior-identical);
+   sector/sub-asset differed only where the inline vocab had drifted off canon. Data
+   prerequisites repaired first: **55 registry rows** got back the
+   `management_style`/`sector`/`sub_asset_class` the old seeder's `put_item` had stripped;
+   `_shared`'s `'other'` asset-class values aligned to the operational `'hedge'` vocabulary
+   (7 tickers — a live reseed-regression path); and **all 116 registry names are now protected
+   in `_shared` `ETF_NAME_OVERRIDES`** (50-name sync + DIVZ/IDVZ Opal alignment — zero
+   registry↔repo name mismatches remain). Four inline dicts (259 lines) deleted; the served
+   delta was verified to decompose to exactly the predicted classes: the ICSH ruling (11
+   sites), sector/sub-asset re-keyed to the canonical taxonomy (157 sites — including
+   PFDE/PFOE gaining their proper "US Large Cap" from the drifted dict's "Other"), zero
+   active-flag changes, zero touches to weights/returns/characteristics.
+   `ETF_GEOGRAPHY_MAPPING` deliberately remains inline: the registry has no geography field —
+   widening the schema is a separate taxonomy act, surfaced for a future ruling.
+3. **`tickerRegistry.ts` descriptions — STRIPPED** (124 entries; same dead-and-wrong class as
+   `displayName`; typecheck clean; rides the next promote as a non-visual change). With a
+   recorded denominator correction: the registry holds ~124 entries, not the 54 my earlier
+   census regex under-counted — both strips ran on the full file, so no conclusion changed.
+4. **Integration — REQUESTED FROM MSTR** (17 workspace CLOUD commits + tags
+   `yang-pipeline-v1.5.4..v1.5.8` with `--follow-tags`, + 1 portal DEV commit), per
+   lanes-commit / integrators-push; verification from the remote follows the push.
 
 **Records:** deploy ledgers (closed) in DIR `org/critical_paths/change_management/`
 (`20260818T1710Z_vug-naming-*` and `20260818T1845Z_naming-centralization-*`); step-by-step
