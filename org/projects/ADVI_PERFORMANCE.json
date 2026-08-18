@@ -6,7 +6,7 @@
   "status": "active",
   "phase": "PHASE 1 DESIGN COMPLETE -- the field audit, method contract, centralized Gold A/B/C boundary, firm-compatible Gold handoff, retained Group D boundary, recursive scheduling design, cleanup lifecycle, and optional agentic query-index proposal are documented. Core implementation remains gated on the seven product/method decisions in section 15; the query-index build has a separate approval gate.",
   "current_phase": "WP-1 decision/contract pinning and WP-0 reproducibility/control-graph repairs, then centralized shared-engine implementation in 49F, Inflection, Cottonwood order. Orion and Black Diamond credentialed endpoint probes may run in parallel. Replacement-ledger and resource-creation records begin before successor resources are created.",
-  "blocking": "Andrew decisions P-1 through P-7 in docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md: served return basis, classifier ownership, date-only flow timing, Group D market_growth semantics, 49F history floor, advisor role axis, and v1 scope. Execution also requires credentialed account-grain Orion and full-roster Cottonwood Black Diamond probes; Inflection code collision, performance/billing quorum, unsafe marker, source-provenance, and NNA-guard repairs; Cottonwood mirror surplus/first-fire and dispatcher repairs; and a canonical 49F dispatcher. The Platinum agentic query index is proposed but not authorized and does not block the core performance refactor.",
+  "blocking": "[P-1..P-7 DISCHARGED 2026-08-18: P-1/P-4/P-6/P-7 CONFIRMED as written (Andrew-direct 08-18 ~1500Z, CTO terminal, 'All recs approved'); P-2/P-3/P-5 CONSUMED by the 08-11 build GOs -- ledger in docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md section 15.] Remaining execution requirements: credentialed account-grain Orion and full-roster Cottonwood Black Diamond probes; Inflection code collision, performance/billing quorum, unsafe marker, source-provenance, and NNA-guard repairs; Cottonwood mirror surplus/first-fire and dispatcher repairs; and a canonical 49F dispatcher. The Platinum agentic query index is proposed but not authorized and does not block the core performance refactor.",
   "depends_on": [
     "ADVI_TWR",
     "OPAL_CONSOLIDATION",
@@ -18,7 +18,7 @@
   "owner": "1.0.0_SA_CTO",
   "created": "2026-07-29",
   "created_by": "1.0.0_SA_CTO~A",
-  "updated": "2026-08-06",
+  "updated": "2026-08-18",
   "pods": [
     "1.0",
     "2.0",
