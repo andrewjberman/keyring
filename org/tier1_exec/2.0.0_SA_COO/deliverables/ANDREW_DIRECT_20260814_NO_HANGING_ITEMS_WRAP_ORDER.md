@@ -372,3 +372,35 @@ remedy shapes (resync bundled -> canonical + TF redeploy; OR drop billing from S
 structural fix) and the first step (one log read to name the 11:52Z writer). Alongside: DS's residual
 that 3 of 7 inf silver builders fail daily (household/activity NoSuchKey on bronze; accounts_v2 missing
 rep_map) -- pre-existing, surfaced. Both DATED at COO pending CTO owner assignment; DS + CRO cc'd.
+
+### 08-18 ~1457Z: the "12 RED" deploy-ledger item -- PREDICATE + ENUMERATION (for MSTR's 08-19 disposition)
+
+"12 RED" (08-14) was `.tools/deploy_ledger.py check --red` -- a defined instrument: RED-UNINDEXED = an
+`*_deploy_completion.md` with no `.open_deploys` sentinel that is NOT terminal (terminal = a `**Status:**` line
+whose LEADING word is closed, OR a close-date marker, OR a terminal status line anywhere). Never the substring
+"red". MSTR's 75/112 was a substring + loose first-match regex -- a different predicate; the ledger's own
+vocabulary (COO census over 501 files, 378 with a Status line): CLOSED 344 / OPEN 8 / COMPLETE 8 /
+HELD-SOVEREIGN-GATED 4 / misc 4 -- so ~100 unclosed is NOT a real population. **Re-run 1457Z: 15 RED-UNINDEXED**
+(12 on 08-14 + 3 landed OPEN since; the number moves with the estate). Shape A: 11 with NO Status line;
+Shape B: 4 with an explicit non-terminal Status. Also 4 HELD-STALE sovereign-gated holds (indexed, different
+class). Disposition = MSTR 08-19, one read each, flip to CLOSED / HELD / SUPERSEDED with pointer; #4
+(floor-row10 'deliberately not applied' -> HELD), #10 (crawl-harness-destroy, Andrew ALL-GO 07-30 -> COMPLETE),
+#12 (gateway-rename pre-cutover ledger, P1-P3 CLOSED 08-15 -> SUPERSEDED) look closable on the record.
+
+```
+20260722T1746Z_mdpf-runner-cottonwood-silver-grants_deploy_completion.md | age=491.3h -- status='OPEN' (not a terminal/closed state)
+20260722T2310Z_cot-advi-fix-silver-coerce_deploy_completion.md | age=639.8h -- no **Status:** and no close-date marker (open or malformed)
+20260723T0133Z_cottonwood-mdpf-served-publish_deploy_completion.md | age=626.9h -- no **Status:** and no close-date marker (open or malformed)
+20260724T1830Z_mdpf-scheduled-floor-row10_deploy_completion.md | age=596.4h -- status='OPEN — BUILT AND VERIFIED, DELIBERATELY NOT APPLIED' (not a terminal/closed state)
+20260724T1925Z_mdpf-code-refresh-M3-row15_deploy_completion.md | age=595.3h -- status='`OPEN`' (not a terminal/closed state)
+20260728T1341Z_mdpf-serve-restore-0723-revamp-set_deploy_completion.md | age=504.4h -- no **Status:** and no close-date marker (open or malformed)
+20260729T0101Z_wo3-mdpf-consumer-repoint-edge-flip_deploy_completion.md | age=493.0h -- no **Status:** and no close-date marker (open or malformed)
+20260729T0135Z_bd49f-etf-ownership-revival_deploy_completion.md | age=484.1h -- no **Status:** and no close-date marker (open or malformed)
+20260729T0510Z_mdpf-g7-cottonwood-valuedate-rekey-compose-migration_deploy_completion.md | age=489.8h -- no **Status:** and no close-date marker (open or malformed)
+20260730T2015Z_crawl-harness-destroy_deploy_completion.md | age=450.6h -- no **Status:** and no close-date marker (open or malformed)
+20260730T2220Z_bloomberg-tunnel-ssm-activation_deploy_completion.md | age=448.3h -- no **Status:** and no close-date marker (open or malformed)
+20260731T0145Z_gateway-rename-opal-gateway_deploy_completion.md | age=445.0h -- no **Status:** and no close-date marker (open or malformed)
+20260803T1707Z_mdlp-w8-force-publish-plumbing_deploy_completion.md | age=357.7h -- status='OPEN -- deploy in progress' (not a terminal/closed state)
+20260804T0431Z_serve-correction-event_dc1-legb_deploy_completion.md | age=346.2h -- no **Status:** and no close-date marker (open or malformed)
+20260804T1828Z_global-acctdist-cottonwood-heal_deploy_completion.md | age=332.4h -- no **Status:** and no close-date marker (open or malformed)
+```
