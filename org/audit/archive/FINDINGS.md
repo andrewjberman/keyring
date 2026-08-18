@@ -242,3 +242,8 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: DEATH|INVOKER-SILENT-WITH-CHURN||last run #-#-#T#Z (#.#h ago) and covered logs grew since -- uncaptured churn -->
 - detail: last run 2026-08-03T150524Z (74.5h ago) and covered logs grew since -- uncaptured churn
 - prior_outcome: not-due: no uncaptured tail on any clean log
+
+## 2026-08-11T191319Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/jq-ban-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/jq-ban-override-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
