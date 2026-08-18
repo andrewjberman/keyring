@@ -1,5 +1,14 @@
 # SOVEREIGN CALL — OPAL_MDPFCLEANUP TO-4: deleting the legacy `json/mdpf/*` served keys
 
+> **RULED 2026-08-18 ~1500Z (Andrew-direct at the CTO terminal, relayed 150051Z): *"All recs
+> approved, any unused mdpf artifacts should be deleted especially if no active producer."*
+> The one decision on this card (CF logging yes/no) is MOOT — rec (A) stands: no logging, the
+> structural oracle is the instrument. The DELETE is AUTHORIZED with one ordering constraint
+> (`json/mdpf/49financial/aggregate-aua-timeseries.json` waits for the FLAG-2 re-point to prove on a
+> scheduled run) and one carve-out (the runner EC2 has an active consumer — the KEEP accrual bridge —
+> so it is NOT "unused" and stays KEEP-UNTIL-REHOMED). Card DISCHARGED; execution routed to AE 1502Z.**
+
+
 **Not time-critical today. Grounded on CTO ruling @fc74f8f6b4 (`docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md` §3) + AE pre-stage 130752Z + COO's own three primitive reads 1308Z. CC: MSTR, CTO.**
 **Deleting a served S3 key is your reserved act (NEVER#3 + your reserved categories). Nothing is deleted until you say.**
 
