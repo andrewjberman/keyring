@@ -185,3 +185,28 @@ the §1a class shape, rename Global's `partner_provenance[]`; §B3 key-set + DT 
 one change) -> DE tolerance-drop on a stated date. One two-lane contract correction, no new project,
 no shadow. Both symptoms COO routed 190743Z/213659Z are subsumed. MSTR's bd-platinum "shared root"
 FALSIFIED from the mdpf end (mdpf platinum content advanced correctly; its defect is shape/name only).
+
+### 08-18 ~1330Z: FOUR TOs ISSUED @8c25748037 -- bd platinum restore (today) + MDPF_PROVENANCE T-A/T-B/T-C (dated); K3 made UNCONDITIONAL
+
+- **ADVI_BDPLAT_RESTORE.TO-1** (DS `0.4.0_DS_ClientPlatform` + AE joint, P1 client-facing, SPAWN
+  TODAY -- MSTR handshake asked 1329Z): AE mechanism 132226Z SOURCE-CONFIRMED + COO-reproduced -- **M1**
+  D_02 `merge_asof` crashes on 3 NaT `effective_date` rows since 08-16 (log line 15787) so PHASE_D4
+  never runs; **M2** B_00 reads the DORMANT legacy Schwab home (`opal-data-bd/schwab/silver/rps`, last
+  `date=20260723`) while the LIVE position-grain feed is `opal-data-assets/schwab/08335338/silver/
+  fact_rps` (`date=2026-08-17`) -> holdings frozen 08-06 -> everything downstream re-emits 08-06.
+  Independent causes; both required. **AE grain correction folded BEFORE any edit** (`fact_rps_s2` is
+  balance-grain, NOT positions -- the wrong table would have read cleanly and produced garbage). AE IAM
+  staged @7b706eec4c (separate resource from the `08242234` MDPF grant). Restore on the SCHEDULED path;
+  verify on the served key + scoped route; no alarm.
+- **MDPF_PROVENANCE T-A (DE 08-19) / T-B (DS 08-19, re-point half ships first) / T-C (DE 08-20)** --
+  DATED + OWNED awaiting MSTR's spawn trigger (bd platinum closes AND K3 GOs, whichever later), attributed
+  to `MDPF_CANPLAT` (the §B3 contract home) per CTO's "no new project"; both CTO amendments folded. Lane
+  enumeration verified in `.owned-paths.yaml` before issuing (POD4 for bd gold; `data/**` = ANY for mdpf).
+- **K3 GO made UNCONDITIONAL 1329Z**: the bd script edits are DS-lane, so AE is free until DS lands --
+  AE applies K3 now (`-target` destroy set only; CTO per-apply gate; runner EC2 row names @874b52729c);
+  if DS ACKs mid-K3, K3 finishes first (NEVER#8).
+- **The 08-18 calendar as it now stands:** K3 (today, AE) -> bd platinum DS edits + AE IAM apply + the
+  23:01Z scheduled run -> served verify (tonight/04:00Z) -> TO-4 PASS_WITH_DISCLOSURE producer legs
+  (today or 08-19) -> **08-19:** T-A + T-B (bd platinum first at DS) + combined post-kill read -> TO-5
+  -> CTO RAVC -> CLEANUP CLOSED (delete leg HELD, returns to Andrew after T-B's re-point proves on a
+  scheduled run) -> **08-20:** T-C.
