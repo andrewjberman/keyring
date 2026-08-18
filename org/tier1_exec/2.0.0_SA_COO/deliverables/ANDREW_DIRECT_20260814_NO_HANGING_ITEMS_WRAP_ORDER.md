@@ -329,3 +329,30 @@ an absence verdict must name the tree it searched -- two parents searched, a thi
   the tail is migrated into 08335338 (DS lane) OR Andrew writes it off.** Owner: 0.4.0_DS_ClientPlatform
   (migrate), AE (delete act, Andrew-reserved). Dated item. **NEVER a full `--force` B_00 rebuild** (it
   silently drops the tail); backfills range-bounded (2026-07-24..2026-08-04 tonight).
+
+### 08-18 ~1430Z: bd platinum restore FULLY STAGED -- the only remaining act is the 23:01Z scheduled chain
+
+- DS deploy LANDED @f71e767d33 (B_00 / D_02 / A_01 -> `opal-data-bd/code/gold/`), **COO-verified: the
+  three deployed members hash == f71e767d33 x3**; deployed B_00 `:82` `SCHWAB_RPS_BUCKET='opal-data-assets'`,
+  full 8-digit `08335338` with the two-buckets warning inline. Push = MSTR at the integration window
+  (LD-0367/0368); the deployed bytes are what runs.
+- AE IAM APPLIED @7b706eec4c (1/0/0 at apply, 0-diff after, live `get-role-policy` == declared);
+  BP-3 PASS on four one-arn simulate reads. **Control correction accepted + TO amended @fd3c4b692d:
+  the pinned `08242234 = implicitDeny` negative was ILL-POSED (the role legitimately holds a separate
+  CTO-routed 08242234 grant, so it reads ALLOWED and discriminates nothing -- a hand-chosen negative
+  measures the author); substituted an ungranted-account negative + firm-sep by the new grant's own
+  resource scope.** Ledger `20260818T1419Z_advi-bdplat-restore-iam-leg` OPEN to BP-5/6.
+- DS range-bounded ad-hoc backfill DONE 1426Z (QA-class, S3-staged code via SSM, log header labelled):
+  **positive reads on the ISO grammar against the new home -- 531 parsed / 8 of 8 loaded / 12 processed
+  / 4 forward-filled; 12 canonical partitions REWRITTEN with reconciled CONTENT (07-24 MV
+  1,851,154,278.49 replacing forward-filled 07-23 content); range-bounded (12 of 2,410 sealed dates),
+  the 2024-01-12..07-07 tail untouched; 08-05/06 left to the schedule.** Runner self-halted; the
+  bd-gold-trigger starts it at 23:01Z as every night.
+- **REMAINING TONIGHT (nobody's act but the schedule's):** 23:01Z `chain_full` -> A_01 baseline dates
+  fixed at source -> B_00 on 08335338 (N/M printed; sealed-through AS OBSERVED = BP-4) -> D_02 guards
+  (NaT count 3 printed = BP-2) -> D_04 publishes `platinum/firm/*` -> DS reads the log ~23:30Z -> AE
+  BP-5 served verify (as_of T-1; TWO NAMED DELTAS: T-1 refresh ~+7.35% vs master switch ~+0.96%, via the
+  scoped route) + BP-6 "D_04 done (rc=0)" -> ledger closes -> COO validates + closes TO-1. A PHASE_B1
+  rc=2 at 23:01Z = grant-did-not-land (loud class), not the script.
+- Also landed in the gap (Andrew-direct 08-18): TIER0_EXEC owned-paths lane +4.0.0_SA_CRO @9e85295b42
+  (COO grantor, SoD; cites the verbatim not W-04 -- one name, two referents).
