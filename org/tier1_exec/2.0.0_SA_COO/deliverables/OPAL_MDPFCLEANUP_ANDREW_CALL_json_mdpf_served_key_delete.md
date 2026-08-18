@@ -66,3 +66,17 @@ which read clean anyway (a plan verb hiding a stop/start; a screenshot that cann
 cold seat that cannot see H1; a warm session that cannot see a token; a log that cannot see an SDK
 read). Every one was caught by asking what the instrument could NOT have said, not by running it
 more carefully.
+
+---
+
+## CORRECTED ROW (added 2026-08-18 ~1340Z — for your awareness, NOT an ask): the mdpf runner EC2 stop/terminate
+
+Your 08-14 "all recs approved" covered a kill list whose census said the mdpf daily runner
+(`i-02448edb624a7a7cf`) was K3-only. **That premise is falsified:** the runner is the execution host of
+the KEEP accrual bridge (a scheduled Lambda starts it and SSM-runs a DS script on it, 1-8x/day incl.
+today), and the K3 DLQ is the KEEP scheduled floor's dead-letter target. **So the runner stop/terminate
+row is RETRACTED from tonight's work — your word on it was given on a wrong census, and we are not
+spending it.** The rest of K3 (the legacy producer: rule + trigger Lambda + their IAM) is being killed
+as ruled; the runner and DLQ stay until the two KEEP paths are re-homed (build acts, dated, owned).
+Nothing for you to decide here; if you WANT the runner gone sooner, that is a re-home order, and it
+comes back to you as its own card.

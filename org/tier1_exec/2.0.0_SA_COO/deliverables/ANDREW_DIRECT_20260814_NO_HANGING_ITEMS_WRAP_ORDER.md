@@ -210,3 +210,23 @@ FALSIFIED from the mdpf end (mdpf platinum content advanced correctly; its defec
   (today or 08-19) -> **08-19:** T-A + T-B (bd platinum first at DS) + combined post-kill read -> TO-5
   -> CTO RAVC -> CLEANUP CLOSED (delete leg HELD, returns to Andrew after T-B's re-point proves on a
   scheduled run) -> **08-20:** T-C.
+
+### 08-18 ~1338Z: K3 STOPPED PRE-APPLY on the disputed-row rule -- TWO K3 members FALSIFIED-LIVE; bounded 13-address kill proceeds; runner + DLQ = KEEP-UNTIL-REHOMED; a reserved-row word RETRACTED
+
+AE's consumers-first sweep (TO-3 discipline, before opening the ledger): the 17-address `-target` plan
+pulled **26** destroys. Isolated address-by-address: **the runner EC2 `i-02448edb624a7a7cf` is the
+EXECUTION HOST of the KEEP accrual bridge** (`accrual-bridge.tf:113` `RUNNER_INSTANCE_ID`, `:58-59/:76`
+ec2 grants on that instance ARN; live env confirms; the accrual Lambda fires 1-8x/day incl. today and
+start-if-stopped's the runner to SSM-run `build_portal_gold_accrual.py` ON IT); **the DLQ is the KEEP
+floor's `dead_letter_config`** (`scheduled-floor.tf:154-155`, `FloorDlqSend :101-104`). COO verified
+both edges at source + live. Same class as wave-1's bd rows: trigger-state dormancy of the K3 CHAIN
+cannot see a DIFFERENT scheduler driving the same box.
+**COO RULING 1337Z:** (a) the 13-address K3-only set (rule + target + permission + trigger Lambda + log
+group + its IAM + the DLQ POLICY row + `mdpf_chain_failed`) PROCEEDS on CTO's per-apply gate -- it
+removes THE PRODUCER, the PRD's K3 purpose; (b) runner instance + runner role + DLQ queue ->
+**KEEP-UNTIL-REHOMED** (accrual bridge off the box = a real port; floor gets its own DLQ = two BUILD
+acts outside TO-3, dated items with owners, not tonight, no shadow); (c) `mdpf_trigger_dlq_depth`
+alarm HOLDS with the queue; (d) **TO-4's "runner EC2 stop/terminate" reserved row RETRACTED from
+tonight -- Andrew's @874b52729c "all recs approved" was given on a K3-only census, that premise is
+falsified, the word does not transfer; surfaced on his card as a CORRECTED row, not spent.**
+Zero mutations; ledger unopened until CTO's gate. AE's stop was correct.
