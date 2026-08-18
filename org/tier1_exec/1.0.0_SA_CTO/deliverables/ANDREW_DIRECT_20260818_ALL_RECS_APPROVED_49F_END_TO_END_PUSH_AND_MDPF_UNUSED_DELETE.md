@@ -39,3 +39,9 @@ Direction: OPAL_ADVIPOINTERS re-opens with 49 Financial (08335338, ADVI product)
 > "I would task 4.0.0_SA_CRO~A with the tightening enumeration work. Write a text block on the subject, I will instantiate and ferry it."
 
 **Reading:** the four "joints to tighten" named in the CTO's machine answer (derived phase board from proof instances; comp-state cp1252 crash; atom-conformance runner; P4 rendered+behavioral acceptance) are ENUMERATION/SPEC work for `4.0.0_SA_CRO~A` (recon -> specs; CRO does not dispatch). Andrew instantiates the seat and ferries the block himself. Block: `CRO_A_LAUNCH_BLOCK_TIGHTENING_ENUMERATION_20260818.md` (same folder).
+
+## FOURTH INSTRUCTION, same terminal, ~1537Z (on the outgoing session's /open-calls), verbatim
+
+> "I agree with the non-blocking recs, you can relay that to COO. In the interim i will simply compact your session once that is done and repoint at the handoff."
+
+**What this rules:** (a) CARRIED CALL 2 APPROVED -- the deploy-ledger vocabulary gains a **HELD terminal state** (requires a stated hold-reason + a re-read condition; the scanner treats HELD as NOT-RED with its own age-based re-surface when the re-read date passes). A schema act on `.tools/deploy_ledger.py`'s vocabulary, not an alarm. (b) CARRIED CALL 3 APPROVED -- the Terraform **create_before_destroy lint candidate** (deny a new `aws_security_group` without `create_before_destroy` beside a persistent `aws_instance`) proceeds as a plan-time lint with the standard audited override. Both were proposals banked under the moratorium/no-gates rules; his word is the explicit ask both required. (c) CALL 1 (CTO relaunch) is answered by METHOD: this session is COMPACTED and REPOINTED AT THE HANDOFF rather than freshly relaunched -- the CTO seat continues in this session; the 08-18_1510Z handoff is the post-compact re-grounding document. Serial re-registered accordingly.
