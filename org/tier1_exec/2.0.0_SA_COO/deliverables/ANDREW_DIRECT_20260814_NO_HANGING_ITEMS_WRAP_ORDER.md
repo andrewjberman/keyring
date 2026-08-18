@@ -404,3 +404,20 @@ class). Disposition = MSTR 08-19, one read each, flip to CLOSED / HELD / SUPERSE
 20260804T0431Z_serve-correction-event_dc1-legb_deploy_completion.md | age=346.2h -- no **Status:** and no close-date marker (open or malformed)
 20260804T1828Z_global-acctdist-cottonwood-heal_deploy_completion.md | age=332.4h -- no **Status:** and no close-date marker (open or malformed)
 ```
+
+### 08-18 ~1500Z: the RED enumeration's real finding -- the deploy ledger cannot say HELD; schema proposal routed
+
+Row #4 (`mdpf-scheduled-floor-row10`, "OPEN -- BUILT AND VERIFIED, DELIBERATELY NOT APPLIED", 596h of
+RED) is a DELIBERATE HOLD wearing an OPEN status: the ledger vocabulary has OPEN + a terminal set and
+nothing for "finished deliberately short, awaiting a condition." A deliberate hold and an abandoned
+open are byte-identical to the scanner -- Rule 24(iv)'s stability-frame failure (one value, two states,
+OPPOSITE remedies), and NEVER#6's finish-or-roll-back frame has no third state. Cost: a permanent false
+RED, the way an alert class gets learned-ignored. **PROPOSED (MSTR; COO concur; routed to CTO 1500Z for
+Andrew's word; NOT built -- moratorium + no-gates): a HELD terminal state with a stated hold-reason + a
+re-read condition, scanner-recognised as NOT-RED with its own past-re-read re-surface -- the TO
+vocabulary's superseded/cancelled-with-pointer precedent (Andrew 08-07) is the shape.** Seam: 4 ledgers
+already lead "HELD-SOVEREIGN-GATED" and the tool already emits them as HELD-STALE -- a HELD family
+half-exists outside the taxonomy; the proposal formalises practice. **Interim rule: #4 stays OPEN with
+the reason in-file -- never close a live deliberate hold to quiet a scanner.** #12 gateway-rename
+pre-cutover ledger -> SUPERSEDED by MSTR (own thread; LD-0415 + the 08-15 S3->S5 ledger as pointer).
+13 remain for MSTR 08-19, one read each; "likely COMPLETE" is not a disposition.
