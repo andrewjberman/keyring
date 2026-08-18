@@ -290,3 +290,19 @@ tomorrow's 13:30Z floor mint of `dim_model_portfolio` with NO 12:4xZ legacy writ
   not chased: the appender has recorded NOTHING since 07-29 (v1.9.0) -- none of the 08-14 wave-1
   applies nor today's K3 -- a partial record wearing a complete record's description. Dated item,
   owner AE/CI.**
+
+### 08-18 ~1356Z: NO HOLD on the bd platinum publish -- MSTR ruling 135513Z, the no-manufactured-gate precedent for this thread
+
+COO asked whether to convert BP-5 (served verify) into a HOLD until Andrew reads the two deltas. **RULED
+NO -- and the reasoning is the record:** correcting a served number toward truth on the scheduled path
+is ordinary pipeline operation, in NONE of Andrew's reserved categories (recursive deletion, destructive
+git, dropping tables / deleting S3 objects, stopping EC2, anything unrecoverable). A hold on his reading
+would be an approval step he does not know exists on work he believes is moving -- the exact 08-06
+class. **And the hold is not the safe direction: the current served state is WRONG on BOTH axes
+(content frozen 08-06 AND undercounted by 17 accounts); holding CHOOSES to keep serving wrong numbers
+to 49F advisors another day.** SURFACING is mandatory, GATING is not: DS sends the two named deltas
+to MSTR DIRECTLY the moment they exist (not at deploy, not with the run), as % OF FIRM AUM + absolute,
+(i) T-1 content refresh vs (ii) master switch, separately; MSTR puts them in front of Andrew LIVE; if HE
+says hold, we hold on HIS word; else the 23:01Z scheduled run publishes as normal. **He may gate this;
+we may not.** AE's CHANGELOG false-absence corrected in place in the K3 ledger + proof (mechanism named:
+an absence verdict must name the tree it searched -- two parents searched, a third reported).
