@@ -260,3 +260,33 @@ block is a GENERATED sweep snapshot (events_rules 142 / total_triggers 154) -- N
 (frozen-not-live class), the next regeneration brings it current; CTO's condition-3 CHANGELOG.json does
 not exist under infra/aws (surfaced, not fabricated). **TO-5 consumer-exercise PRE-REGISTERED:
 tomorrow's 13:30Z floor mint of `dim_model_portfolio` with NO 12:4xZ legacy write.**
+
+### 08-18 ~1355Z: three closes on the register
+
+- **COO-owned smartx drift-pair CLASSIFY (the 08-15 item that slipped) -- CLOSED on AE's three-way
+  vintage reads (live CodeSha256 vs staged zip vs repo, per-member sha, Rule 22a):**
+  `smartx-jwt-refresher` = **CURRENT** (live == staged == repo on every axis; the source-map's stale
+  `last_deployed_at` is a config-only touch, bytes identical). `smartx-rest-pull` =
+  **STAGED-NOT-APPLIED, DOCSTRING-ONLY** (one member `smartx_jwt_reader.py`, exactly one line, a path
+  comment `data/orion/` -> `data/inf/` from the 06-11 provenance sweep @46d0b98aef; zero behavioral
+  delta). Classification: DELIBERATELY-HELD-BY-NO-CONSEQUENCE / cosmetic staged; **NO deploy off the
+  drift** (motion for a docstring); converges on the next real rest-pull deploy. Source-map row hygiene
+  = a map edit, not a deploy, dated with AE.
+- **MSTR's runner question ANSWERED (grounded, one tag read + the enforcer's predicate):** the mdpf
+  runner `i-02448edb624a7a7cf` carries **NO `AutoShutdown` tag** (Name/Owner/Pipeline/Macro/Purpose/
+  System/Project/Environment/ManagedBy only), and `ec2-auto-shutdown-enforcer/lambda_function.py:18,
+  :113-115` is **UNIVERSAL OPT-OUT** -- the ONLY exemption is `AutoShutdown=disabled`. **So the runner
+  IS in the enforcer's scope: two mechanisms with opposite intents on one box** -- the enforcer stops it
+  after a full idle window (`IDLE_CEILING_HOURS` 3.0 @ CPU<3%), the accrual bridge start-if-stopped's
+  it 1-8x/day. Not a race in the strict sense (the enforcer needs a whole idle window; the bridge starts
+  on demand), but exactly the state-churn loop MSTR named -- and it is what has been happening since
+  07-29 (launch time today 13:40Z = a fresh start). Folded into the accrual RE-HOME item's grounding
+  as required; not tonight; no tag change tonight (a conscious `AutoShutdown=disabled` is a decision
+  the re-home owner makes, not a reflex).
+- **CTO correction to AE's K3 surface (2):** `infra/aws/terraform/mdpf-pipeline/CHANGELOG.json` DOES
+  EXIST (23,446 B, last commit @20ae9c1467 07-29) -- AE's "not under infra/aws" was a shallow read,
+  false absence; but it is a CI-generated deploy record ("Appended by record-terraform-deploy.sh"), so
+  NOT hand-editing it was still correct, and CTO withdrew condition 3's naming of it. **Surfaced (CTO),
+  not chased: the appender has recorded NOTHING since 07-29 (v1.9.0) -- none of the 08-14 wave-1
+  applies nor today's K3 -- a partial record wearing a complete record's description. Dated item,
+  owner AE/CI.**
