@@ -38,8 +38,10 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from typing import Optional
 
@@ -65,7 +67,13 @@ def _tok(s: str) -> list[str]:
 
 
 def _git(*args: str) -> str:
-    r = subprocess.run(["git", *args], cwd=_WS, capture_output=True, text=True)
+    # encoding= is load-bearing (TIGHTENING J2 @1dceb7d61d): text=True alone decodes with the
+    # locale codec (cp1252 on this box); a commit body byte outside it kills the subprocess
+    # READER THREAD, communicate() returns stdout=None WITH returncode==0, and the rc guard
+    # below passes None upward -- the input-stream twin of the stdout reconfigure above.
+    # errors="replace" makes the read TOTAL: one mangled char costs one BM25 token, never the corpus.
+    r = subprocess.run(["git", *args], cwd=_WS, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     return r.stdout if r.returncode == 0 else ""
 
 
@@ -293,9 +301,35 @@ def self_test() -> int:
     v1 = assess(behind, commits, bm, floor=0.5)["verdict"]
     v2 = assess(current, commits, bm, floor=0.5)["verdict"]
     v3 = assess(quiet, commits, bm, floor=0.5)["verdict"]
-    ok = (v1 == "BEHIND") and (v2 == "CURRENT") and (v3 == "QUIET")
+    # Leg 4 (encoding; TIGHTENING J2 @1dceb7d61d): _git's decode must be TOTAL. Plant a commit
+    # whose body carries a raw 0x90 (valid in neither cp1252 nor utf-8) in a throwaway repo and
+    # read it back through _git ITSELF -- window-independent, unlike in-corpus specimen
+    # 389d604c08 which scrolls out of the 400-commit window. With the encoding= fix reverted,
+    # the subprocess reader thread dies, _git returns None, and this leg CRASHES -- the mutant
+    # contract: fix reverted -> loud failure, never a silently-empty corpus.
+    tmp = tempfile.mkdtemp(prefix="comp_state_selftest_")
+    try:
+        msg = os.path.join(tmp, "m.txt")
+        with open(msg, "wb") as f:
+            f.write(b"x90specimen subject\n\nbody carries a raw \x90 byte\n")
+        for setup in (("-C", tmp, "init", "-q"),
+                      ("-C", tmp, "-c", "user.name=t", "-c", "user.email=t@t",
+                       "commit", "--allow-empty", "-q", "-F", msg)):
+            subprocess.run(["git", *setup], cwd=_WS, capture_output=True)  # byte-mode: setup, not under test
+        raw = _git("-C", tmp, "log", "--format=%s%n%b")  # THE call site under test
+        v4 = "COMPLETE" if "x90specimen" in raw else "FAIL"
+    finally:
+        for root, _dirs, files in os.walk(tmp):  # git objects are read-only on Windows
+            for fn in files:
+                try:
+                    os.chmod(os.path.join(root, fn), 0o700)
+                except OSError:
+                    pass
+        shutil.rmtree(tmp, ignore_errors=True)
+    ok = (v1 == "BEHIND") and (v2 == "CURRENT") and (v3 == "QUIET") and (v4 == "COMPLETE")
     print(f"self-test: planted-behind={v1} planted-current={v2} planted-quiet={v3} "
-          f"-> {'PASS (3/3 -- the instrument discriminates)' if ok else 'FAIL'}")
+          f"planted-byte-read={v4} "
+          f"-> {'PASS (4/4 -- the instrument discriminates)' if ok else 'FAIL'}")
     return 0 if ok else 2
 
 
