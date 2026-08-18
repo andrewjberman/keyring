@@ -421,3 +421,36 @@ half-exists outside the taxonomy; the proposal formalises practice. **Interim ru
 the reason in-file -- never close a live deliberate hold to quiet a scanner.** #12 gateway-rename
 pre-cutover ledger -> SUPERSEDED by MSTR (own thread; LD-0415 + the 08-15 S3->S5 ledger as pointer).
 13 remain for MSTR 08-19, one read each; "likely COMPLETE" is not a disposition.
+
+### 08-18 ~1500Z: ANDREW-DIRECT at the CTO terminal (relayed CTO 150051Z; recorded here same turn per record+broadcast)
+
+**VERBATIM (as relayed):** *"All recs approved, any unused mdpf artifacts should be deleted especially if
+no active producer. I reallly want to make a major push on 49 as the test case for the end to end push
+... a dedicated session ... which will be now, so let's decide who we need on it, and put the whole
+fabric on the case with the adequate handoffs."* Record (CTO):
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260818_ALL_RECS_APPROVED_49F_END_TO_END_PUSH_AND_MDPF_UNUSED_DELETE.md`.
+
+**CONSEQUENCES AT THIS DESK:**
+- **TO-4 (OPAL_MDPFCLEANUP) -- the HELD delete leg is now AUTHORIZED** ("any unused mdpf artifacts …
+  especially if no active producer"): json/mdpf legacy keys, cache/, the reserved EC2/S3 rows -- with
+  ONE ordering constraint: **`json/mdpf/49financial/aggregate-aua-timeseries.json` is CONSUMED DAILY by the
+  canonical gold Lambda -> the FLAG-2 re-point (MDPF_PROVENANCE.T-B half 1) lands + proves on a scheduled
+  run BEFORE that key is deleted; everything else authorized now.** The Andrew card's CF-logging yes/no is
+  MOOT (no logging, structural oracle, delete). The runner EC2 stop/terminate row: his 08-14 word was on a
+  falsified census; today's word is "unused … especially if no active producer" -- the runner HAS an
+  active consumer (the KEEP accrual bridge) so it is NOT unused; it stays KEEP-UNTIL-REHOMED. **His word
+  authorizes; the reserved acts still run through safe-apply/ledger, S3 deletes still list-then-delete
+  with counts.**
+- **INF floor RULED (a)** unified floor + labeled carry -> P2 TIMING may open; AE implements @4e1ec757f8.
+- **COT bundle RULED (a)** canonical basis all four -> the cot cutover TO carries the pin re-base.
+- **Deployed-vs-built-from CENSUS pulled forward to NOW** (Lambda + EC2-staged, classify-don't-fix, one
+  bounded read) -- COO staffs; 0.8.0_AE_CloudComp alongside PREFIX-READS.
+- **`carried` -> ordinary** (folds into T-A; the pixel question on his card is answered).
+- **GRAPHFEED park** -> record only.
+- **THE PUSH: OPAL_ADVIPOINTERS re-opens -- 49F (08335338, ADVI) through ALL FIVE PHASES as the proving
+  instance, WHOLE FABRIC, dedicated session = NOW.** CTO writes the plan (roster by seat + phase +
+  reinstantiation block + dated close criteria); COO decomposes into dated TOs with proof-of-spec
+  contracts (one per seat per phase-leg); MSTR spawns; CTO attests phase closes.
+- **SEQUENCING at the DS base seat, restated:** bd platinum acceptance stays 23:01Z tonight; T-B stays
+  08-19 (it now ALSO gates the mdpf delete); INF billing two-writer + SILVER-DTYPE yield to the push
+  (dated, not dropped). New issues HELD ~10 min for CTO's plan.
