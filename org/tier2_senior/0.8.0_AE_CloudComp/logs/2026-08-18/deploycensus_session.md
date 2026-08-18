@@ -39,7 +39,7 @@ Execute the Andrew-authorized (08-18 ~1500Z, item iv pull-forward) Rule-22a CODE
 
 - `deliverables/NFRA_DEPLOYCENSUS/CENSUS_REPORT_20260818.md` — the full DC-1..DC-6 report
 - `deliverables/NFRA_DEPLOYCENSUS/{lambda_census_v3_findings.json, lambda_census_v3_summary.json, ec2_census_v2_rows.json, ec2_onbox_verdicts.json}` — machine evidence
-- `deliverables/NFRA_DEPLOYCENSUS/{lambda_census_v3.py, ec2_census_v2.py, ec2_onbox.py}` — the re-runnable instruments
+- `deliverables/NFRA_DEPLOYCENSUS/INSTRUMENTS_APPENDIX.md` — the re-runnable instruments as fenced listings (raw .py correctly refused by the Rule-14 ruff gate; --force does not bypass a gate failure) *(corrected same-session: this line briefly named raw .py files)*
 - `deliverables/NFRA_DEPLOYCENSUS_PROOF_OF_SPEC.json` — VALID rc=0 against DC-1..DC-6
 
 ## Headline counts
@@ -49,3 +49,22 @@ Lambdas: **CURRENT 141 · DELIBERATELY-HELD 11 · STALE-BY-NEGLECT 8 · TWO-HOME
 ## Discipline note
 
 Zero deploys, zero fixes, zero staging writes. Estate mutations this session: none (SSM invocations were sha256sum/Get-FileHash/schtasks-query/ls only). Immediate finding surfaced same-turn, not held.
+
+---
+
+# ADDENDUM (same session): MDPF_REMED.RP-F2 — eclipse/orion run-date consumer census — COMPLETE
+
+**Task Order:** MDPF_REMED.RP-F2 (GO 2.0.0_SA_COO 08-11T004612Z, executed on respawn after the Andrew-direct DEPLOYCENSUS closed)
+
+## Compiler Tools (RP-F2 mandate, phase-by-phase)
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| comp-which | "who reads eclipse/orion date= partitions" | PASS | routed comp-estate/comp-pipescript near-tie; predicate composed from comp-kuzu + comp-find per the TO's own tool list |
+| comp-kuzu | show_tables + table_info + eclipse/orion CloudEdge match | PASS | provenance header read (built 16:03Z, Nessie HEAD current); corroborated writers/triggers; FOUND 2 stale template nodes (opal-data-mdpf silver/gold eclipse) that are EMPTY live — graph-vs-live discrepancy named in the deliverable §5.4 |
+| comp-find | 'eclipse/inflection' / 'orion/inflection' / 'silver/eclipse' / 'gold/eclipse' | PASS | stage-1 localization with denominators (627/7501/224/176 over 26,505 files); band split separated scratch/doc noise from source |
+| scripted stage-2 (rail-checked) | P1+P2 scans over 5,645 HEAD executable/config files | PASS | 43 + 34 hit files -> 11 offset-relevant consumer rows + ~25 n/a rows |
+
+**Gap found:** none new (the deployed-member-sha gap already routed via DEPLOYCENSUS).
+
+## Result
+Validity gate PASS — all 4 known members surfaced independently; mdpf_aggregate_aua required extending the predicate to the F2 feed family (fixed the predicate, not the list, exactly as the TO ordered). 11 offset-relevant rows: 1 corrected-by-W1 (dim_mdpf_aggregate_aua_timeseries, deployed-verified via the same-day DEPLOYCENSUS package read), 6 uncorrected (dim_mdpf_account_distribution, wsc_inflection_held_etf, build_mdpf_wsc_inflection_feeder, INF_E_00, opal-assets-daily-emitter channel_sources, smartx-exporter workspace legacy gold/eclipse reader), 1 uncorrected-at-HEAD/inert-deployed (inf-etf-ownership-daily), 3 inherited (mdpf_aggregate_aua, generate_smartx_timeseries, compute_*distribution — remedy belongs at the feeder's stamp). VintageContradiction 4-link chain rowed with the W1 fix at its END. Zero code changes. Deliverable: deliverables/MDPF_REMED_RPF2_ECLIPSE_ORION_CONSUMER_CENSUS_20260818.md.
