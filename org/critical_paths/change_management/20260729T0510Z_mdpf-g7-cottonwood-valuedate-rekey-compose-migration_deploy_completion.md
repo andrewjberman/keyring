@@ -1,5 +1,8 @@
 # Deploy completion — MDPF G7 cottonwood value_date re-key + compose migration
 
+**Status:** CLOSED 2026-07-29T05:10Z (all legs landed + verified; nothing stranded)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 - **Opened:** 2026-07-29T05:05Z (deploy-start) — **Closed:** 2026-07-29T05:10Z (all legs landed + verified; nothing stranded)
 - **Owner:** 0.4.0_DS_ClientPlatform (Rule-13 lane). **Gate:** 1.0.0_SA_CTO (three conditions 234639Z; pulled forward Andrew-direct ~0337Z).
 - **Commits (origin/CLOUD confirmed, carried via merge 3920cab0f6):**

@@ -1,5 +1,8 @@
 # Deploy Completion — Cottonwood MDPF trio: staged → SERVED publish (json/mdpf/cottonwood/*)
 
+**Status:** CLOSED 2026-07-23T~01:33Z (COMPLETE, content-verified; amendments 0405Z + 1202Z closed in-doc)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Ledger opened:** 2026-07-23T~01:32Z (publish-start) · **Closed:** 2026-07-23T~01:33Z (COMPLETE, content-verified)
 **Agent:** 0.4.0_DS_ClientPlatform (executor)
 **Authorization chain (each half independently citable):**

@@ -1,5 +1,8 @@
 # Deploy Completion Ledger — MDPF SCHEDULED FLOOR (closure row 10)
 
+**Status:** SUPERSEDED 2026-08-18 (v1 rule verified never applied; floor obligation discharged by the live Scheduler-form `mdpf-scheduled-floor`)
+<!-- disposition act 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md); evidence in the CLOSE block at foot. -->
+
 **Change:** `MDPF_CHANNEL_INDEPENDENCE.CI-R3R10` — scheduled floor + retries-or-records
 **Owner:** 0.7.0_AE_CloudOps · **Opened:** 2026-07-24T18:30Z
 **Status:** **OPEN — BUILT AND VERIFIED, DELIBERATELY NOT APPLIED**
@@ -58,3 +61,20 @@ disable-the-event exercise runs → a deferral is CONSTRUCTED and shown to recor
 
 **Unclosed at session end is expected here and is not a COO alarm condition** — it is a build awaiting a gate,
 recorded so it cannot become invisible.
+
+
+---
+
+## CLOSE (2026-08-18, 0.0.0_AB_MSTR disposition act)
+
+The v1 EventBridge RULE this ledger records was never applied, and was superseded IN PLACE:
+`infra/aws/terraform/mdpf-pipeline/scheduled-floor.tf` header (current tree) states it verbatim -- superseded by the
+Scheduler form per the T2.B ruling @440d16e018. Chain: `5c3ca9e7fc` (this build, not applied) -> `4957e6050f`/`13d7d733e0`
+(clock v2/v3) -> `98d7978442` (MDPF_CANPLAT leg 2: target swapped to mdpf-gold-lambda) -> `9eff54d274` (RP-W3 ruled clock).
+LIVE 2026-08-18: `aws scheduler get-schedule --name mdpf-scheduled-floor` = cron(30 13 * * ? *) UTC, State ENABLED,
+target mdpf-gold-lambda. EXERCISED: 3 unattended cycles 08-15/16/17 (OPAL_MDPFCLEANUP TO-2 gate @9f287b5d14/@62bd311d16)
++ today's serve artifact generated_at 2026-08-18T13:31:08Z, one minute after the floor fire. Census control: `aws events
+list-rules` (auto-paginated, 135 total) = 0 mdpf-named rules (K3 destroyed the legacy set @120a822241); positive control
+'floor' pattern -> 1 hit (bd-49f), so the filter discriminates.
+NOTE: my predecessor's 08-18 handoff provisionally disposed this row HELD-NOT-CLOSED; that predated the supersession
+evidence above (measured 2026-08-18 ~16:20Z). SUPERSEDED is the true terminal state and is in the scanner's own token set.

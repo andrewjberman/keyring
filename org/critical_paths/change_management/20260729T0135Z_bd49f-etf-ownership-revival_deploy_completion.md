@@ -1,5 +1,8 @@
 # DEPLOY LEDGER: bd-49f-etf-ownership-daily REVIVAL (monolith re-source + scheduled floor)
 
+**Status:** CLOSED 2026-07-29T01:55Z (ALL LEGS COMPLETE, NOTHING STRANDED; retirement line closed 10:52Z)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Owner:** `0.7.0_AE_CloudOps~A` · opened 2026-07-29T0135Z · **STATUS: CLOSED 2026-07-29T0155Z -- ALL LEGS COMPLETE, NOTHING STRANDED**
 **Authority chain:** Andrew-direct ~0106Z/~0113Z (writer order, COO-recorded verbatim 011436Z) ->
 CTO ratification 013015Z (recommended monolith design; freeze exception granted, standard battery)

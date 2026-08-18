@@ -1,5 +1,8 @@
 # Deploy completion — THE SERVE-CORRECTION EVENT (DC1 three-site collapse + C1impl Leg B)
 
+**Status:** CLOSED 2026-08-04 (Leg B landed + deployed 0-diff same day; AE's append never happened -- record gap, not work gap)
+<!-- disposition act 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md); evidence in the CLOSE block at foot. -->
+
 **One ledger, two legs, per the JOINT GO (CTO 034247Z; CTO half 034007Z + COO co-sign 034119Z; Andrew correct-forward ruling @94f0cbef2 — disclosure dead).** Slot boundary: fired on AE's wave-ledger-close ping (0428Z → slot-open 043101Z).
 
 ---
@@ -45,3 +48,18 @@ AE lands the emitter change as its own targeted leg before today's 09:00 ET fire
 ---
 
 **Event-scope notes:** the trigger freshness-gate cut is NOT in this event (sequenced after-or-atomic-with the WS-E stale-minuend rider per CTO 042836Z + amended-grant thread — the gate stays intact today, the legacy plane stays guarded). Clock v3 live per the 0415Z wave ledger; the first corrected cycle carries BOTH legs' evidence + AE's proof-day-1 per-stage reads on ONE cycle.
+
+
+---
+
+## CLOSE (2026-08-18, 0.0.0_AB_MSTR disposition act)
+
+Leg B (emitter cot_total collapse, 0.7.0_AE_CloudOps): landed `bf502e3c4e` (2026-08-04T17:09Z -- cot_total collapses
+relationship grain before summing, vendored DC1 collapse, dual-day 07-30 delta ties DC1's 205,070.77 to the cent, tests
+59/59); deployed `4634ab4fe9` (2026-08-04T18:06Z, the ONE post-17:15Z window, targeted 0/1/0, 0-diff, live CodeSha256
+oV2seRZK EQUAL, emitter deploy ledger closed same-session). Current source (`opal-assets-daily-emitter/channel_sources.py`)
+still carries the split this ledger bound: cot_total reads raw COT_HOLDINGS then `_collapse_relationship_grain` with the
+binding equality assert; cot_models reads COT_PAIR_SERIES_KEY. `bf502e3c4e` is the last commit touching that file.
+INFERRED (marked per Rule 22): the running package was re-deployed 08-11 (CodeSha n/Tu1ns1); no later commit touched
+channel_sources.py, so Leg B's presence in the CURRENT package is inferred, not byte-verified -- that package belongs to
+the 08-11 deploy's own ledger, not this one. This ledger's scope (the 08-04 event) is fully discharged.

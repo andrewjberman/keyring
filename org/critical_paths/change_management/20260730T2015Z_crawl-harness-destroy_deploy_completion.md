@@ -1,5 +1,8 @@
 # Deploy-completion ledger — crawl-harness stack DESTROY
 
+**Status:** CLOSED 2026-07-30 ~20:2xZ (every leg finished in-session; 16 destroyed, live-plane verified)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Opened:** 2026-07-30 ~20:15Z (at deploy-start, per CLAUDE.md NEVER#6)
 **Owner:** `0.7.0_AE_CloudOps` · **Stack:** `infra/aws/terraform/crawl-harness/` (state key `crawl-harness/tfstate`)
 **Authorization:** Andrew-direct 2026-07-30 ~19:2xZ verbatim *"I dont care about any of these crawl

@@ -1,5 +1,8 @@
 # Deploy: wo3-mdpf-consumer-repoint-edge-flip
 
+**Status:** CLOSED 2026-07-29T01:56Z (FLIP ACCEPTED, CTO ratified 015416Z, RAVC closed)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Opened:** 2026-07-29T01:01Z by 0.2.0_DT_PortfolioAnalytics · **Authority:** MDPF_RESET WO-3
 (Andrew ~2334Z "do the consumer re-point" + ~2357Z "ok proceed with the DT flip, that is my GO" +
 ~0000Z "Option 1, fix then flip tonight" + ~0059Z via COO "I do not want to wait to tomorrow to

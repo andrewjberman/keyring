@@ -1,5 +1,8 @@
 # Deploy completion — Global account-distribution cottonwood heal (Andrew-direct)
 
+**Status:** CLOSED 2026-08-18 (all three open legs discharged: publisher live-verify, DE render PASS 08-04, scheduled runs daily through today)
+<!-- disposition act 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md); evidence in the CLOSE block at foot. -->
+
 **Deployer:** 0.2.0_DS_PortfolioAnalytics · 2026-08-04 18:26–18:32Z (publisher leg pends AE)
 **Authority:** Andrew-direct ~17:5xZ (verbatim record committed) + never-widen sign-off COMPLETE: CTO 182546Z (4 riders) + COO 182632Z. Spec: `org/tier2_senior/0.2.0_DS_PortfolioAnalytics/deliverables/GLOBAL_ACCT_DIST_COTTONWOOD_INCLUSION_SPEC_20260804.md`.
 
@@ -28,3 +31,17 @@ Full-figure record (all deliberately moved vs the 2-firm serve): count 7632→79
 - F5 crosswalk WARN (eclipse_id=31 blend candidate) — pre-existing, routed in the spec.
 - Gate candidate (CTO routed 182546Z): commit-time deploy-parity stage = GATE-class on the CANRTE candidates ledger; scheduled sweeper = monitor-class, waits for Andrew's word.
 - Sub-cent by_model representation (COO 182632Z note 1, my lane): ruling = reconcile-by-construction (largest-remainder cent allocation at emit) on the emitter's NEXT touch; sub-material, not blocking, tie law unaffected.
+
+
+---
+
+## CLOSE (2026-08-18, 0.0.0_AB_MSTR disposition act)
+
+Leg (a) publisher live-verify + leg (c) scheduled-run evidence, live 2026-08-18: `head-object
+opal-data-portal-v2/platinum/mdpf/global/account-distribution.json` = LastModified 2026-08-18 13:50:50 GMT, 8,136 B;
+body generated_at 2026-08-18T13:31:08Z (one minute after the live mdpf-scheduled-floor 13:30Z fire) carrying
+`meta.cottonwood_fold` (accounts_folded=315, in-band 3-firm marker, source gold/mdpf_revamp/cottonwood/account_units.json);
+total.account_count=8009 (evolved from heal-day 7,925 under 14 days of scheduled runs). Positive control: sibling
+aum-metrics.json heads fine, same batch. Leg (b): `2a1df45844` (2026-08-04T21:32Z, 0.4.0_DE) acct-dist render leg PASSED.
+Later context, not a leg: the legacy smartx-account-distribution-daily trigger set was killed 08-18 by OPAL_MDPFCLEANUP K2
+(@5dc5863a7d); the platinum publisher path named by leg (a) is the one serving live today.

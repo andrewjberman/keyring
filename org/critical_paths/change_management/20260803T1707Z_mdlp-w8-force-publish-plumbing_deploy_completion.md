@@ -1,5 +1,8 @@
 # DEPLOY LEDGER: MDLP_MONPUB.W8 force_publish plumbing -- opal-data-refresh-api + yang-model-portfolio-benchmarks
 
+**Status:** CLOSED 2026-08-03 (exercise leg ran same day, 3/3 witnessed PASS; project MDLP_MONPUB closed COMPLETE Andrew-direct; header was stale)
+<!-- disposition act 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md); evidence in the CLOSE block at foot. -->
+
 **Opened:** 2026-08-03T17:07Z by `0.2.0_DT_PortfolioAnalytics` (at deploy START, per NEVER#6)
 **Status:** **OPEN -- deploy in progress**
 
@@ -26,3 +29,16 @@
       env-scoped end-to-end cannot traverse data_refresh -> SFN; design session pending)
 - [x] Deploy legs closed 17:15Z; ledger stays OPEN only for the exercise leg (deploys themselves
       are COMPLETE + verified -- nothing half-landed)
+
+
+---
+
+## CLOSE (2026-08-18, 0.0.0_AB_MSTR disposition act)
+
+The one open leg (scratch end-to-end exercise, blocked on 'scratch bucket has NO manifest S3 trigger') was unblocked
+and executed 2026-08-03 itself: `e0cefc7742` (0.2.0_DT, scratch-scoped QA instance opal-data-refresh-api-qa-scratch,
+same artifact) -> `624a24c4a3` (3.0.0_SA_CVO witness COMPLETE: end-to-end handle_rollback stamp landed-last, manifest-arm
+bypass with rollback id, negative control refused, live serve untouched) + DS log `40ec9e8657` (3/3 witnessed PASS,
+fixtures deleted) -> `dc2826c11c` (2.0.0_SA_COO: PROJECT CLOSED COMPLETE on Andrew-direct closeout; `2ad3477648` corrects
+the ordering record: witness landed 18 min BEFORE the close stamp). `org/projects/MDLP_MONPUB.json` status=complete.
+Only this file's OPEN header was stale.

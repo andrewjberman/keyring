@@ -1,5 +1,8 @@
 # Deploy-completion ledger — Bloomberg tunnel: SSM hybrid activation + instance role
 
+**Status:** CLOSED 2026-07-30 (in-session; 3 added, live-plane verified; two BY-DESIGN residuals recorded, not stranded)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Opened:** 2026-07-30 ~22:20Z (at deploy-start, per CLAUDE.md NEVER#6)
 **Owner:** `0.7.0_AE_CloudOps~Z` (site Z) · **Stack:** `infra/aws/terraform/bloomberg-tunnel/` (state key `bloomberg-tunnel/tfstate`)
 **Code commit (pre-apply, per Deployment Rule 2):** `12920f0a4`, pushed to `origin/CLOUD`

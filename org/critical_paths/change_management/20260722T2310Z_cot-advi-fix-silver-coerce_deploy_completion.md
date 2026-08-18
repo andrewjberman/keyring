@@ -1,5 +1,8 @@
 # Deploy Completion — COT_ADVI_FIX silver coerce-numeric-first + 07-21/22 partition rewrite
 
+**Status:** CLOSED 2026-07-22T~23:10Z (COMPLETE, verified)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Ledger opened:** 2026-07-22T~23:05Z (deploy-start) · **Closed:** 2026-07-22T~23:10Z (COMPLETE, verified)
 **Agent:** 0.4.0_DS_ClientPlatform (DS lane, Rule 13 — cot silver code + QA-deploy)
 **Authorization:** CTO gate 224919Z (bounds verbatim in COO GO 225533Z) → COO GO (deadline-aware) 225533Z. TO: COT_ADVI_FIX (committed in parallel by COO).

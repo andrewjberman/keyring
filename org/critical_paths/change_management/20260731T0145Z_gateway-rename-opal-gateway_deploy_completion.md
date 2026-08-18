@@ -1,5 +1,8 @@
 # Deploy-completion ledger — gateway server rename `m365-gateway` -> `opal-gateway`
 
+**Status:** CLOSED 2026-07-31 (in-session; behaviourally verified; SUPERSEDED by the 08-15 opal-gateway cutover, LD-0414/0415)
+<!-- scanner-alignment line added 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition act, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md): mirrors this file's own close declaration below; deploy_ledger.py's unindexed scanner could not read the original form (defects A/B/shape-C, see the disposition doc). Not a new closure. -->
+
 **Opened:** 2026-07-31 ~01:45Z (at deploy-start, per CLAUDE.md NEVER#6)
 **Owner:** `0.7.0_AE_CloudOps~Z` (site Z) · **Service:** `m365-mcp-gateway`, instance `i-07dccb1615503ac99`
 **Code commit:** `042f96d44` (committed + pushed BEFORE deploy, Deployment Rule 2)

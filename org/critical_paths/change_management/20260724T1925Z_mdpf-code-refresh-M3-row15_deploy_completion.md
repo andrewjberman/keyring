@@ -1,5 +1,8 @@
 # Deploy Completion Ledger — MDPF gold code refresh (M3 / closure row 15 precursor)
 
+**Status:** VOID 2026-08-18 (never executed: held before the first byte moved; content superseded by 08-03+ per-file deploys)
+<!-- disposition act 2026-08-18 by 0.0.0_AB_MSTR (RED-disposition, org/tier0_exec/0.0.0_AB_MSTR/deliverables/DEPLOY_LEDGER_RED_DISPOSITIONS_20260818.md); evidence in the CLOSE block at foot. -->
+
 **Opened:** 2026-07-24T19:25Z — **BEFORE the first byte moved** (NEVER#6).
 **Owner:** `0.7.0_AE_CloudOps~B` · **Authorizer:** `2.0.0_SA_COO` GO @192108Z · **Verifier:** `0.4.0_DS_ClientPlatform~A`
 **Status:** `OPEN`
@@ -168,3 +171,19 @@ POSITIVE CONTROL: the producer at the same commit has count_basis 7, count_as_of
 
 Restore the prior version ID per key (table above) via `aws s3api copy-object` with `?versionId=`, then
 re-verify size + sha256 against the **pre-deploy** blob. No re-upload of an old blob, no guesswork.
+
+
+---
+
+## CLOSE (2026-08-18, 0.0.0_AB_MSTR disposition act)
+
+No bytes ever moved under this ledger. Evidence (2026-08-18 read-only pass):
+- CTO same-day record `ec07c2ec38` (2026-07-24T19:50Z, ~25 min after open): "NOTHING APPLIED TO LIVE AWS; no bytes moved
+  on the held M3 refresh"; `d191240715` (07-25) declined a source-map sha for "an artifact that WAS NEVER DEPLOYED".
+- S3 version archaeology (`list-object-versions`, bucket versioned, noncurrent-expiry 14d): `dim_mdpf_aum_metrics.py`,
+  `dim_mdpf_account_distribution.py`, `dim_mdpf_non_model_assets.py` each still carry their PRE-07-24 version as a
+  surviving noncurrent version whose next successor is 08-03/08-04 -- had a 07-24 upload landed, those pre-versions would
+  have expired ~08-07. No M3-expected sizes on 07-24 anywhere; no tripwire (CRLF) sizes anywhere.
+- The four keys now carry 08-07..08-14 vintages deployed by later acts (DC1/heal/CANPLAT era); two of the M3-expected
+  byte-sizes eventually landed via those later deploys (22,623 on 08-04; 24,634 on 08-03) -- different acts, own ledgers.
+VOID, not FAILED: the hold was deliberate (COO/CTO gate), the rollback pins were never needed, nothing stranded.
