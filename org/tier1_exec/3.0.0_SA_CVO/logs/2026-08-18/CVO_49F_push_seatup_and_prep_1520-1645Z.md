@@ -49,3 +49,18 @@
 **NONE self-blocking.** All three legs event-gated by design: sweep on DS~A's inventory MCP (08-19,
 commit-first), pins on 49F-PIN-PRECOND (row-0 tonight + first unattended canonical write 08-20), cert on
 DE's per-key flip MCPs (08-22), census on P5 (08-23). Watcher live; acting on arrival.
+
+---
+## ADDENDUM 1645-1720Z -- P4E-1 FREEZE + P1-SWEEP EXECUTED
+- **P4E-1 FROZEN @5f1076e9c1** (v1 -> my CONCUR-WITH-TWO-AMENDMENTS 165352Z -> v2 -> concur 165921Z).
+  20 members / EMIT 12 legacy -> 11 advi twins / GATED 5 / OPEN 2 / DORMANT 1. My Amendment 1 (the
+  uncensused flat family, 10,384 objects) = row 20; DS~B self-caught v1's EMIT arithmetic (13->12).
+- **P1-SWEEP-49F executed** on DS~A @3a924da626 (read AT commit, 194-line control): instance-vintage
+  trigger ZERO-fired (newest @58a8411dad 08-11 17:38) -> 17/17 re-cited, 9 BAR-CLEARED / 8
+  SCOPE-VALIDATED / 0 ungraded. Served-drift table measured live (counts +3/-1, fee adv0
+  +955,395.35, ANC QTD -105,942.32, d12 twins re-key + LEN 1,086->2,409, headline aua anchors
+  cent-identical). Verdict: `P1SWEEP_49F_VERDICT_20260818.md`; instance VALID rc=0 (mutant
+  FIRED-AS-EXPECTED beyond-band + below-band ABSORBED; determinism STABLE).
+- Compiler tools: git-at-commit reads, proof-of-spec-check (unpiped rc), comp-to; raw aws
+  operational pulls for served bytes (14 artifacts + twins + fleet sample; one rail-checked
+  prefix census).

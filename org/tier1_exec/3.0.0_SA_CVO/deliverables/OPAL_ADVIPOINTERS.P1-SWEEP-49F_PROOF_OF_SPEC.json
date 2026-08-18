@@ -1,0 +1,115 @@
+{
+ "schema_version": "1.0",
+ "to_id": "OPAL_ADVIPOINTERS.P1-SWEEP-49F",
+ "phase": "P1-SCRIPTS",
+ "spec_ref": {
+  "doc": "org/tier1_exec/3.0.0_SA_CVO/task_orders/OPAL_ADVIPOINTERS.P1-SWEEP-49F.parity-sweep-at-p1-close.md",
+  "group": "OTHER",
+  "vintage_commit": "49dd8469d1"
+ },
+ "assignee": "3.0.0_SA_CVO",
+ "artifacts_produced": [
+  {
+   "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/P1SWEEP_49F_VERDICT_20260818.md",
+   "kind": "doc",
+   "commit_or_etag": "with-this-instance",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "the sweep verdict; CTO attestation input"
+  },
+  {
+   "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/p1sweep_49f_vintage_baseline_20260818.json",
+   "kind": "config_data",
+   "commit_or_etag": "e35d560136",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "the 17-key vintage baseline the re-grade trigger diffed against (row 5 corrected at source)"
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "P1S-1",
+   "criterion_verbatim": "FRAME STATED: every count in the sweep output carries its frame (served-key vs family) and its denominator printed beside it; the served-key denominator is the P4E-1 frozen list once committed",
+   "method": "command",
+   "invocation": "frozen list @5f1076e9c1 (CVO concur 165921Z) + member-by-member join vs DS~A @3a924da626 section A",
+   "output_evidence": "denominator = frozen P4E-1 rows 1-17 (served-KEY); DS~A section A 17 families == the 17 keys 1:1 (incl. gold/entities/clients/detail + platinum/49financial/ownership_map); every count in the verdict carries frame + denominator; family grain never conflated",
+   "denominator": "17 served keys / 14 instance files / 113 inventory families",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "P1S-2",
+   "criterion_verbatim": "families with instance vintage moved since 08-11 re-graded; unchanged families re-cited with their 08-11 grade + the vintage check that proved unchanged. Zero ungraded, zero silently-carried",
+   "method": "command",
+   "invocation": "git log --since=2026-08-12T00:00 -- org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/PROOF_OF_SPEC_49F_* ; git log -1 -- (same glob)",
+   "output_evidence": "EMPTY since 08-12; newest instance @58a8411dad 2026-08-11 17:38 -> ZERO re-grade triggers; 17/17 re-cited with this check; SERVED-side drift measured separately on live bytes (counts 3050->3053/3049, fee adv0 +955,395.35, ANC QTD -105,942.32, d12 twins no longer identical: re-key + LEN 1086->2409) -- routed to 4b fresh pins, not a P1 re-open",
+   "denominator": "17/17 keys checked, 0 re-graded, 0 silently carried",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "P1S-3",
+   "criterion_verbatim": "the sweep verdict (per family: MATCH-CLEAN / MATCH-KNOWN-WRONG / DIVERGE-vs-pre-registered-bands; parity against a known-defective baseline NOT counted as correctness) delivered as the CTO attestation input, cc COO",
+   "method": "manual_read_with_citation",
+   "invocation": "P1SWEEP_49F_VERDICT_20260818.md + MCP to 1.0.0_SA_CTO cc 2.0.0_SA_COO + 0.0.0_AB_MSTR",
+   "output_evidence": "verdict: 9 BAR-CLEARED / 8 SCOPE-VALIDATED / 0 ungraded at pinned vintage; MATCH-KNOWN-WRONG scan: inverted-312 PRECONDITION-ABSENT on all 17 (V4 surface list empty; positions/valuation plane) -- no known-defective class un-flagged; delivered same session",
+   "denominator": "17 keys, 3 states",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "P1S-4",
+   "criterion_verbatim": "proof instance VALID rc=0 positional: ids P1S-1,P1S-2,P1S-3,P1S-4",
+   "method": "command",
+   "invocation": "python .tools/proof-of-spec-check.py <this file> P1S-1,P1S-2,P1S-3,P1S-4",
+   "output_evidence": "run below at commit time; rc read unpiped",
+   "denominator": "4 criteria",
+   "status": "PASS"
+  }
+ ],
+ "compiler_tools": [
+  {
+   "tool": "git (retrieval-controlled)",
+   "invocation": "git show 3a924da626:<inventory path> | wc -l",
+   "result": "194 lines (frame control: non-empty, not an error string) -- inventory read AT the cited commit"
+  },
+  {
+   "tool": "proof-of-spec-check",
+   "invocation": "python .tools/proof-of-spec-check.py <this instance> P1S-1,P1S-2,P1S-3,P1S-4",
+   "result": "VALID rc=0 (run unpiped at commit time)"
+  },
+  {
+   "tool": "comp-to",
+   "invocation": "comp-to OPAL_ADVIPOINTERS.P1-SWEEP-49F",
+   "result": "session TO context set (race-free)"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "planted +$200,000 corruption on the hm total.aua anchor (sized BEYOND its 1bp band 191,157.89), fed to the same comparator that produced the drift table",
+   "expected": "comparator flags hm_aua out-of-band",
+   "observed": "flagged (hm_aua 1,911,578,939.87 -> 1,911,778,939.87, delta +200,000.00); a second mutant sized BELOW the band (+1,000) was ABSORBED as expected (band-covered, the SS3 sizing rule) -- and the comparator's discrimination is ALSO demonstrated on live data: it fired on 3 REAL drifts (dash_cc +3, fee_adv0 +955,395.35, anc_qtd -105,942.32) while passing 4 unchanged anchors",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "the anchor comparator run twice on the same downloaded bytes, outputs compared",
+   "observed": "identical flag sets both runs",
+   "status": "STABLE"
+  }
+ },
+ "declared_exclusions": [
+  {
+   "item": "per-object value re-verification of the d05 fleet (3,751 prefixes)",
+   "reason": "grade-time per-object hashes were never held (harvest = schema contract); served rewrite 08-15 measured on a 3-object sample; fresh enumeration arrives with the gated row's release, not here"
+  },
+  {
+   "item": "mechanism investigation of the d12 twin series-length change (1,086 -> 2,409) and of the +3/-1 count drift",
+   "reason": "legacy production chain, P5-protected; surprise-channel line to COO, no chase (TO scope)"
+  },
+  {
+   "item": "re-derivation of leaderboard served QTD nna vs grade",
+   "reason": "grade-time SERVED value was never recorded (the 13.06M tie was canonical-side); anchor marked UNKNOWN-AT-GRADE rather than compared against the wrong referent"
+  }
+ ],
+ "surprises": [
+  "d12 twins no longer byte-identical: 1 client re-keyed (z08306514<->z08268895), sum-preserving office realloc ~$327, nna_ofc/nna_geo series LEN 1,086->2,409 between 08-16 and 08-18 legacy emissions under frozen as_of 08-06 -- one line to COO, no action taken",
+  "mix_summary serves data_as_of 08-07 while every sibling serves 08-06 (intra-serve as_of skew) -- observation only",
+  "gold clients_tab client_count moved OPPOSITE direction (-1) to the platinum surfaces (+3) under the same frozen as_of"
+ ],
+ "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-18/CVO_49F_push_seatup_and_prep_1520-1645Z.md (sweep addendum committed with this instance)"
+}
