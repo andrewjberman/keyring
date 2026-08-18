@@ -28,7 +28,14 @@ Ground truth: `org/tier1_exec/1.0.0_SA_CTO/deliverables/VUG_SECURITY_NAMING_ATOM
       reviewed -- no [STOP] -- HALT_ACK=1)
 - [x] L5 0-diff re-plan: "No changes"
 - [x] L6 record-terraform-deploy committed (source map + CHANGELOG, [skip ci]); tag
-      yang-pipeline-v1.5.4 created locally. PUSH DEFERRED TO THE INTEGRATION WINDOW per LD-0367/0368
+      yang-pipeline-v1.5.4 -- ⚠ CORRECTED 2026-08-18 ~1850Z: this line originally said "created
+      locally" and THAT WAS FALSE -- the tag+push compound command was blocked WHOLE by the
+      integrator-only push gate (tag never ran) and my follow-up verify was dropped; caught by
+      0.0.0_AB_MSTR's integration census (tag existed NOWHERE). Retroactively minted at d8521bfc
+      (the CHANGELOG's deployed_commit) so the version citations in this ledger/CHANGELOG/logs
+      resolve; single-tag push requested from MSTR. Also noted: CHANGELOG carries TWO v1.5.4
+      entries (the lane-blocked first record attempt left a working-tree append the override
+      re-run committed alongside its own). PUSH DEFERRED TO THE INTEGRATION WINDOW per LD-0367/0368
       (integrator-only push on CLOUD; the push gate blocked and the standing law is lanes-commit /
       integrators-push -- NOT a stranded deploy leg: the AWS deploy is landed, 0-diffed, and
       byte-verified; only the git-record publication rides the hourly window)
