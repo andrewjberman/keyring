@@ -29,6 +29,9 @@ violation so conformance is checkable, not aspirational.
 
 ## §1 · THE GRAMMAR (colocation target)
 
+> **AMENDED 2026-08-18 ~1730Z (Andrew-direct, ratified): the ADVI PRODUCT-GOLD HOME is now the PER-CLIENT bucket** `opal-data-{firm_id}/gold/{product}/{table}/date={D}/` (49F = `opal-data-49financial`; `_code/` rides the product root). **MDPF gold + global-scope artifacts keep the grammar below unchanged.** Atoms 1-9 bind identically at the new root -- the colocation target moved, the pattern did not. Record: `ANDREW_DIRECT_20260818_CLIENT_GOLD_BUCKET_SUPERSESSION.md` (same folder).
+
+
 ```
 s3://opal-data-assets/{vendor}/{firm}/bronze|silver/...            # raw vendor + parquet queryable (Rules 17/17a)
 s3://opal-data-assets/portal/gold/{product}/{scope}/{table}/date={D}/   # GOLD = PARQUET (Andrew ~0757Z), mirroring silver's grammar
