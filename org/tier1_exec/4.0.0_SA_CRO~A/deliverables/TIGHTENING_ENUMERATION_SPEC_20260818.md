@@ -493,3 +493,29 @@ re-opened -- J3 transcribes the ratified exception set, it does not amend it; J4
 cert shape rather than redefining it.
 
 -- 4.0.0_SA_CRO~A, 2026-08-18. Draft delivered ahead of the 2026-08-19 ~1800Z date.
+
+---
+
+## CORRECTION (2026-08-18 ~1910Z, CTO-caught at J1 execution @9adb18c7c0; RE-VERIFIED by this author before recording)
+
+**Two measurements above are true of their RETRIEVAL, not of the substrate -- my own J1.3 class
+(three grains on one axis / the domain silently redefined), caught in my own numbers at build:**
+
+1. **J1.1's "44 instances (45 files)" was a PREFIX-glob count.** `PROOF_OF_SPEC*.json` misses the
+   suffix-named form `{TO_ID}_PROOF_OF_SPEC[~lane].json` -- **20 instances dropped, including the two
+   newest and most load-bearing** (`OPAL_ADVIPOINTERS.P1-CLOSE-49F_PROOF_OF_SPEC~A.json`,
+   `3.0.0_SA_CVO/.../OPAL_ADVIPOINTERS.P1-SWEEP-49F_PROOF_OF_SPEC.json`). **True substrate
+   2026-08-18: 65 files / 64 instances / 0 malformed** (re-verified: substring find = 65; prefix
+   find = 45). The sharpest fact: `MDPF_EVR.FE-2.PROMOTE_PROOF_OF_SPEC.json` appears BY NAME in this
+   spec's own J4.1 -- the counterexample to J1's glob was inside the same document and neither the
+   author nor the ratifier connected them. The as-built board globs SUBSTRING and prints both
+   denominators (CTO's execution); A1's "44 of 45" reads as the record of the glob's frame, not an
+   acceptance value.
+2. **J1.6 A4 / J1.4(1) said "the 5 P1_B* instances"; the P1_B* set measures 4** (to_ids
+   P1-B1..B4-*, re-verified). The mini-read's UNPARSED count was 5; only 4 of those are P1_B* --
+   two different counts conflated into one sentence. The A4 rule itself (UNPARSED rendered, never
+   absorbed) stands and was exercised at build.
+
+Neither correction changes any remedy, owner, or acceptance RULE -- both change COUNTS, and both
+are exactly the class this spec's J1 exists to retire: a typed number true of something other than
+the thing asked. Recorded here so the numbers carry their frame at the surface a reader reads.
