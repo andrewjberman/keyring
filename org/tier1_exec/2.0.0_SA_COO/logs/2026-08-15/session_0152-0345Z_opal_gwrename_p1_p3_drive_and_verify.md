@@ -185,3 +185,66 @@ comp-tool checks a served artifact's channel shape against a reader's schema.
   cancelled 11d after its deliverable was deleted, NODEGAP superseded on a closed project). Named
   owner for the finding: COO. NOT on the 08-16 wrap without Andrew's word. Instrument note:
   to-check reads "staged" as ACTIVE (inflates the live count -- what made NODEGAP look live 38d).
+
+---
+
+## ADDENDUM 2026-08-18 1250Z-1510Z (the same COO session, day 4): MDPFCLEANUP wave-2 re-dated + K3 kill; bd platinum client-facing restore; Andrew ~1500Z rulings; RESET-AND-RELAUNCH handoff
+
+**archetype:** COORDINATE (secondary VALIDATE)
+
+Full narrative with every ruling and commit is on the wrap record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260814_NO_HANGING_ITEMS_WRAP_ORDER.md` (08-18
+entries ~1300Z through ~1500Z). Compressed:
+
+1. **MDPFCLEANUP wave-2 had NOT run on the 08-15/16 calendar** (CTO caught it; the un-re-dated record was
+   my forgetting, the displacement MSTR's allocation -- split recorded). RE-DATED @62bd311d16 to 08-18/19;
+   proof_TO-2 re-validated on my own live reads (floor minted the dim unattended 08-15/16/17 at 13:30Z to
+   the second). CTO stamped @9f287b5d14. **K3 stopped pre-apply on the disputed-row rule** (runner EC2 =
+   KEEP accrual host; DLQ = KEEP floor dead-letter -- verified at source + live) -> bounded 10-address kill
+   on CTO's gate, DONE 1352Z (ledger open-before/closed-after, 5 applied-plane reads w/ controls, root
+   converged @120a822241, tag v2.1.6); runner + DLQ KEEP-UNTIL-REHOMED; Andrew's stop/terminate word
+   RETRACTED (falsified census). TO-4 (iii) WITHDRAWN by CTO as unsatisfiable AND insufficient (the
+   canonical gold Lambda reads json/mdpf at executing bytes; CF logs could never see it) -> Andrew card ->
+   **Andrew ~1500Z AUTHORIZED the deletes** ("any unused mdpf artifacts ... especially if no active
+   producer") with the 49F consumed-key ordering constraint (after T-B's re-point) + the runner carve-out;
+   card DISCHARGED @368f65ce24.
+2. **bd platinum (SERVED to 49F advisors, 8 trading days stale -- resolved from source in 12 min):** ruled
+   it outranks the teardown; AE's two-cause mechanism source-confirmed + reproduced (D_02 NaT merge crash
+   since 08-16; B_00 on the DORMANT legacy Schwab home since ~07-24, content frozen 08-06); DS spawned;
+   grain correction folded BEFORE edit (fact_rps position-grain, not fact_rps_s2); 08335338 ruled (correct
+   master over content-identity; +17 49F accounts = disclosed correction, TWO NAMED DELTAS +0.961% /
+   +7.35%, with Andrew live, NO HOLD -- MSTR: correcting a number is not reserved); BP-1 = POSITIVE read
+   (partition-format hazard); BP-3 negative corrected (a hand-chosen negative measures the author); deploy
+   verified sha==commit x3; IAM applied; bounded backfill positive reads + content moved; **RETAIN Rule-25
+   marker written AT the legacy prefix**. **23:01Z scheduled run = the acceptance; successor validates
+   BP-1..6 cold** (handoff).
+3. **Andrew ~1500Z (CTO terminal): "All recs approved ... 49 as the test case for the end to end push ...
+   whole fabric ... now"; ~1503Z RESET-AND-RELAUNCH.** Recorded @0fc24b37dc; DEPLOYCENSUS issued to
+   0.8.0 NOW @f976c4ea79; CRO TIER0_EXEC grant landed @9e85295b42 (verbatim not W-04). Push plan landed
+   @a2f27c8d0a; **decomposition deferred to my successor by design; handoff saved
+   handoffs/2026-08-18_1507Z.md @7010c81d4a.**
+4. Also: T-A/B/C + INF-ONEWRITER + SILVER-DTYPE + PREFIX-READS issued dated; RED-ledger enumeration
+   (predicate = deploy_ledger.py check --red; 15 today; MSTR's 75/112 a different predicate) + the
+   HELD-terminal-state schema proposal routed to CTO; two-homes CLASS (3 instances/week) banked; smartx
+   drift classify CLOSED; enforcer-vs-accrual churn on the ownerless runner grounded into the re-home;
+   49F provenance falsification attached to the FE-2 record.
+
+## Compiler Tools (this addendum)
+
+| Tool | Result | Notes |
+|---|---|---|
+| `comp-find` (name + content) | located deploy scripts, enforcer, producers | denominators printed each call |
+| `comp-routes behaviors` | scoped advisor-intelligence routes -> S3-opal-data-bd | the "is bd platinum served?" discriminator, with firm-config.mjs source read |
+| `comp-estate --resource` | empty for platinum/firm/header_metrics | a coverage gap on that key -- fell back to comp-find + source |
+| `.tools/deploy_ledger.py check --red` | 15 RED-UNINDEXED of 501 | the RED predicate; enumeration @db6f6cc48b |
+| `.tools/to-check.py --all` | 305 non-complete / 139 of 203 aged 30d+ | stale-TO estate measure (carried, not opened) |
+| `comp-pipescript io` | DS: cannot see a paginated PREFIX read | -> NFRA_COMPTOOLS.PREFIX-READS issued (coverage defect) |
+| raw `aws` (rail-checked, marked) | live-primitive APPLIED reads throughout | comp-iam/comp-aws read DESIRED and cannot attest applied state |
+
+**Commits (my author line, 08-18, incl. handoff):** @62bd311d16 · @0f8e027898 · @4e5974d53d · @6ff88f96f5 ·
+@07d62ed912 · @6c1d78c357 · @91c9c534e2 · @d5d7342da4 · @1116d2fa8e · @f599e703a0 · @743b76c307 ·
+@b97073b354 · @db6f6cc48b · @9835762c1a · @0fc24b37dc · @368f65ce24 · @f976c4ea79 · @8c25748037 ·
+@f6912f9f1c · @cabf403169 · @fd3c4b692d · @68457562a7 · @9e85295b42 · @11e3204541 · @7010c81d4a.
+
+## Current State (zero-context handoff) -> handoffs/2026-08-18_1507Z.md @7010c81d4a (the RESET artifact).
+## Blockers: NONE at this seat. Successor's first act = decompose the 49F push plan.
