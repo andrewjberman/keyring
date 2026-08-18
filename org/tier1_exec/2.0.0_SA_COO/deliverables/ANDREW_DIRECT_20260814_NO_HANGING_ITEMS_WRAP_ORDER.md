@@ -306,3 +306,26 @@ to MSTR DIRECTLY the moment they exist (not at deploy, not with the run), as % O
 says hold, we hold on HIS word; else the 23:01Z scheduled run publishes as normal. **He may gate this;
 we may not.** AE's CHANGELOG false-absence corrected in place in the K3 ledger + proof (mechanism named:
 an absence verdict must name the tree it searched -- two parents searched, a third reported).
+
+### 08-18 ~1410Z: bd platinum deltas ACCEPTED + carried to Andrew; a DELETION LANDMINE registered AT THE ARTIFACT
+
+- **Deltas (DS 140642Z, MSTR-accepted 140815Z, with Andrew now, NO HOLD):** master switch **+$17.79M /
+  +0.961%** (17 accounts, 7 net-new, all in-scope open 49F under named advisors, per-account +
+  per-advisor); T-1 refresh 08-06 -> 08-14 **+$132.6M / +7.35%**; total served basis $1,803.6M ->
+  $1,953.9M (**+8.34%**). The report to Andrew states the split explicitly -- only +0.96% is the
+  correction, +7.35% is eight stale days catching up; "+8.34%" alone would read as something gone
+  wrong. DS held one variable per comparison (mapping / CUSIP bridge / prices / exclusions constant).
+  DS added two hard-fails to B_00 -- 0 partitions listed -> rc=2; listed-but-0-loaded -> rc=2 --
+  converting the original silent "Dates processed 0, rc=0" (green for a month) into a loud one:
+  **fixed the CLASS, not the instance.**
+- **DELETION LANDMINE (MSTR 140815Z; DS surfaced 140654Z) -- REGISTERED as a DECLARED RULE-25
+  EXCEPTION AT THE ARTIFACT:** after tonight the legacy `opal-data-bd/schwab/silver/rps/` has NO live
+  reader; newest partition 2026-07-23; **in ~64 days it crosses the 90-day bar and reads DORMANT to any
+  sweep** ("no reader, 90d+, successor exists at 08335338") -- but it is **SUPERSEDED-EXCEPT-FOR-A-TAIL:
+  the successor starts 2024-07-08; 2024-01-12..2024-07-07 Schwab coverage exists ONLY in the legacy
+  home** (634 vs 531 partitions). A DELETE verdict there is wrong by six months of history. **COO wrote
+  `s3://opal-data-bd/schwab/silver/rps/_RETAIN_DECLARED_EXCEPTION_RULE25.txt` 1410Z (read-back = 1;
+  control: newest partition unchanged)** stating the reason at the thing itself. **DELETE ONLY AFTER
+  the tail is migrated into 08335338 (DS lane) OR Andrew writes it off.** Owner: 0.4.0_DS_ClientPlatform
+  (migrate), AE (delete act, Andrew-reserved). Dated item. **NEVER a full `--force` B_00 rebuild** (it
+  silently drops the tail); backfills range-bounded (2026-07-24..2026-08-04 tonight).
