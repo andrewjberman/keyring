@@ -132,3 +132,12 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
 - 23:01Z fixture -> my TO-1 validation ~23:30Z vs BP-1..BP-6 (+ the d12 accounting check).
 - CTO: P1 attestation (inputs complete); TO-4 ledger gate + P2 apply gate post-fixture.
 - CTO is broker-REGISTERED as of ~17:18Z (channel push landing) — the deaf window is over.
+
+## PHASE ROW (COO ledger of dated items, plan §3)
+- **Row 1 P1-CLOSE (49F): CLOSED 2026-08-18 ~17:20Z — a day AHEAD of its 08-19 date.** CTO-attested
+  @ab7c94c470 (four legs independently derived incl. CTO's own bare rc=0 re-run); P2 formally OPEN.
+  Residual named in the attestation: the window-consumption pass (12 families) rides P2+P3, CVO
+  re-grades after. INF/COT P1 stay open at 08-11 states — close is 49F-scoped by design.
+- CTO ruling to DS~A 172006Z folds into P2D-4 contract field 3: the 49F chain S3 code home =
+  portal/gold/advi/_code/ (mdpf twin, atom-2), safe_deploy_core advi row same change, CTO gates.
+- Rows 0 (23:01Z fixture) and 2-5' unchanged, at their dates.
