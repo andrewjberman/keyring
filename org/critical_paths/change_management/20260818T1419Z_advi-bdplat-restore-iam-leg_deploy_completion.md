@@ -7,8 +7,8 @@
 
 | Leg | Act | Proof | State |
 |---|---|---|---|
-| A-1 | safe-apply @7b706eec4c | rc + 1 added; post-apply plan 0-diff | PENDING |
-| A-2 / BP-3 | simulate-principal-policy bd-exporter-ec2-role s3:GetObject on the exact fact_rps date=2026-08-17 key = allowed; ListBucket w/ prefix context = allowed; NEGATIVE control same shape under 08242234 = implicitDeny; each its own invocation | PENDING |
+| A-1 | safe-apply @7b706eec4c | rc + 1 added; post-apply plan 0-diff | **DONE 1419Z** -- plan re-read 1/0/0 at apply; `Creation complete [id=bd-exporter-ec2-role:monolith-schwab-08335338-silver-read]`; `1 added, 0 changed, 0 destroyed`; post-apply `No changes`. |
+| A-2 / BP-3 | simulate-principal-policy bd-exporter-ec2-role s3:GetObject on the exact fact_rps date=2026-08-17 key = allowed; ListBucket w/ prefix context = allowed; NEGATIVE control; each its own invocation | **PASS 1420Z** -- GetObject on arn:aws:s3:::opal-data-assets/schwab/08335338/silver/fact_rps/date=2026-08-17/data.parquet = **allowed**; ListBucket w/ s3:prefix context schwab/08335338/silver/fact_rps/ = **allowed**; NEGATIVE GetObject schwab/00000000/silver/... = implicitDeny; NEGATIVE ListBucket prefix portal/gold/zzz/ = implicitDeny. **CONTROL CORRECTION:** the proposed 08242234 negative reads ALLOWED -- correctly, the role already holds monolith-schwab-08242234-silver-read (CTO-routed 07-16); an ill-posed negative for this role, substituted with the ungranted-account negative. Firm-sep proven by the applied policy resource scoping (get-role-policy: 08335338/silver/* only) + the discriminating negatives. |
 | BP-5 | SERVED platinum/firm/header_metrics.json as_of = T-1 + mtime in the 23:01Z window; reported as TWO NAMED DELTAS (T-1 content refresh vs +17-account master switch) | PENDING (after 23:01Z scheduled run) |
 | BP-6 | chain log: PHASE_D4 reached, "D_04 done (rc=0)" | PENDING (after 23:01Z) |
 
