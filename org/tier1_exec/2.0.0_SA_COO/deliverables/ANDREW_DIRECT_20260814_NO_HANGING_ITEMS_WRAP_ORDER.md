@@ -117,3 +117,33 @@ today -> publish-step-specific. **RULING: a served 49F firm dashboard 8 trading 
 a teardown wave.** AE's 08-18 day = (1) bd platinum mechanism-grounded diagnosis + restore on the
 scheduled path (Rule 22, no fix on inference; no alarms) -> (2) K3 GO on CTO's TO-2 stamp -> (3) TO-4
 same day if daylight, else **TO-4 slides to 08-19 with TO-5**. Whichever, recorded here today.
+
+### 08-18 ~1310Z: TO-2 STAMPED (CTO @9f287b5d14) · K3 GO issued (conditional) · TO-4 HELD -- reason stated same-day
+
+- **TO-2:** CTO ACCEPT on their own reads (object-version + CW-log census; value tie 144,039,829.45
+  both producers). COO's 12:47Z timing observation RESOLVED as the K3 legacy chain itself (arrow
+  21.0.0 write, trigger 12:44:42Z) -- fired 4/4 days since 08-15, wrote the dim 2/4: the two-homes
+  defect K3 removes. Strengthens the kill; not chased.
+- **K3 GO to AE 1310Z, conditional on bd-platinum-first.** Rider ruling: `-target` the K3 destroy
+  set ONLY (named act under this GO, CTO per-apply gate sees the plan); the @2740e4de8f 0/3/0
+  staged-not-applied re-home stays untouched, named as a residual so post-K3 non-0-diff is not
+  misread as drift. Runner EC2 stop/terminate names Andrew's @874b52729c per-class word in its
+  ledger row.
+- **TO-4 HELD (not slid, not dropped):** condition (iii) -- zero json/mdpf direct hits over a
+  denominator-printed request count across 7 fully-delivered CF log days -- is **UNSATISFIABLE BY
+  CONSTRUCTION**: no access-log instrument exists on `opal-data-portal-v2`. AE found it pre-staging;
+  COO re-read all three primitives 1308Z: CF `EVTSA9VEHNZVH` Logging.Enabled=**False**;
+  `get-bucket-logging opal-data-portal-v2` = `{}`; CloudTrail `opal-organization-trail` carries S3
+  data-event selectors but **not** portal-v2 (that presence elsewhere = the control). "All
+  fully-delivered CF log days" = zero days exist. 08-15's "satisfiable on trailing history" was true
+  of the WINDOW arithmetic and false of the INSTRUMENT -- nobody checked the plane had a log. An
+  unqueried log is not evidence; there is no log. **Adjudication: CTO (their condition) rules the
+  substitute oracle; COO rec = PASS_WITH_DISCLOSURE (TRGALN v1.4 precedent) with the SERVED-KEY
+  DELETE leg HELD; producer-leg retirement + copy-manifest legs may proceed. ONE card to Andrew
+  (drafted after CTO's ruling): the served-key delete is his reserved act regardless, and the only
+  instrument that could prove zero access does not exist -- enable CF standard logging (moratorium-
+  class, ~7 days accrual) or delete on the structural argument (post-CANPLAT no route serves
+  json/mdpf, TO-0 comp-routes read).**
+- 49F provenance LOOK: FALSIFIED by CTO on 3 artifact versions (wrong-firm read on the measurement
+  side); relay to DE via MSTR. The real finding underneath: cohort_provenance carries THREE shapes
+  across four scopes -- CTO ruling in flight; subsumes both COO-routed symptoms.
