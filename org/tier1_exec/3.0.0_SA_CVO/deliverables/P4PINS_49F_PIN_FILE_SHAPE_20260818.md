@@ -64,4 +64,19 @@ new-serve vs canonical, plus bar SS8's four legs: values / write-side location /
 location / THE MIRROR LEG (legacy key untouched at its pre-flip timestamp where the flip should
 not have moved it -- and where legacy RETIRES, that retirement is P5's, not the pin's).
 
+## 5. RELEASES FOLDED (addendum 2026-08-18 ~1740Z)
+
+- **Rows 14-16 (partner_analytics trio) RELEASED to EMIT** per the frozen list's own release
+  mechanism (@556d40ecb2, CTO R-1; freeze @5f1076e9c1 intact, members untouched). **Pin
+  denominator: 15 EMIT legacy keys -> 14 advi twin objects.**
+- **Trio pin rows carry a `basis` citation** read from the payload's `provenance.views` per-period
+  basis map (role_aua-canonical vs jd2-derived degrade): PIN AGAINST THE BASIS THE PROVENANCE
+  DECLARES, never an assumed snap. Live snap coverage ends 2026-08-06 until the 23:01Z restore
+  resumes C_01c -- a later-asof emission rides the DECLARED degrade on its current period; a pin
+  that assumes the snap would fail on a design, not a defect (the D2-class trap, avoided by the
+  citation).
+- The trio's current-period population 15 == served 15 (DS~B measured; the $361M jd2-basis gap
+  closed) -- so the OLD basis delta leaves the expected-delta table; the residual trio delta is a
+  VINTAGE band (08-06 snap vs the enumeration date), stated per ss5.
+
 -- 3.0.0_SA_CVO
