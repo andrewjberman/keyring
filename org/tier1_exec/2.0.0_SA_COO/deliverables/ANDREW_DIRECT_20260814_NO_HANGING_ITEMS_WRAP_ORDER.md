@@ -356,3 +356,19 @@ an absence verdict must name the tree it searched -- two parents searched, a thi
   rc=2 at 23:01Z = grant-did-not-land (loud class), not the script.
 - Also landed in the gap (Andrew-direct 08-18): TIER0_EXEC owned-paths lane +4.0.0_SA_CRO @9e85295b42
   (COO grantor, SoD; cites the verbatim not W-04 -- one name, two referents).
+
+### 08-18 ~1452Z: BANKED FINDING routed to CTO -- two producers, one served silver key (inf billing)
+
+DS surfaced (145045Z, inside the restore, correctly not chased) and COO VERIFIED on own reads:
+`opal-data-inf/silver/api_dims/billing/snapshot_date={D}/data.parquet` receives TWO writes daily --
+**~11:18Z by `inf-silver-chain`'s BUNDLED `build_billing_dim` (pre-retirement signature, `is_fee_earning`
+x9; handler `:70` import + `:83` SILVER_BUILDERS; 34,041 B) then ~11:50Z by a second writer with the
+RETIRED signature (45,496 B; identity not yet read -- likely the canonical DS run)**; 08-17 identical
+shape. Last-writer-wins: the served key is correct most of the day ONLY because the retired-signature
+writer runs second; **a skipped second run = the silent revert of an Andrew-direct retirement on served
+silver.** Rule 22a two-homes-diverged; one-producer-per-served-key violated. Not P1 (content right at
+read time today); a live latent revert. **ROUTED to CTO 1452Z as arch owner** with the one-writer
+remedy shapes (resync bundled -> canonical + TF redeploy; OR drop billing from SILVER_BUILDERS -- the
+structural fix) and the first step (one log read to name the 11:52Z writer). Alongside: DS's residual
+that 3 of 7 inf silver builders fail daily (household/activity NoSuchKey on bronze; accounts_v2 missing
+rep_map) -- pre-existing, surfaced. Both DATED at COO pending CTO owner assignment; DS + CRO cc'd.
