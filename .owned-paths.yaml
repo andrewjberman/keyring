@@ -443,7 +443,8 @@ lanes:
       - 0.0.0_AB_MSTR
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
-    description: "Tier-0 agent home folder (org/tier0_exec/0.0.0_AB_MSTR/) -- MSTR's broker-resolvable agent directory: logs, task_orders. MSTR owns its own logs; CTO/COO maintain the control-plane plumbing. Distinct from TIER0_MSTR (org/tier0/ operating artifacts). Added 2026-05-22 by CTO per MSTR charter LD-0001 (broker activation)."
+      - 4.0.0_SA_CRO
+    description: "Tier-0 agent home folder (org/tier0_exec/0.0.0_AB_MSTR/) -- MSTR's broker-resolvable agent directory: logs, task_orders. MSTR owns its own logs; CTO/COO maintain the control-plane plumbing. Distinct from TIER0_MSTR (org/tier0/ operating artifacts). Added 2026-05-22 by CTO per MSTR charter LD-0001 (broker activation). 4.0.0_SA_CRO added 2026-08-18 by COO (grantor; SoD: grantee CRO does not self-land, interested party MSTR keeps hands off execution) on Andrew-direct at the MSTR terminal ~14:1xZ, VERBATIM: 'Yes CRO should have access to MSTR home folder.' -- record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260818_CRO_TIER0_EXEC_GRANT_APPROVED.md. This is the OWNED-PATHS LANE (commit permission on the MSTR directory), NOT the 08-12 walk-list classification axis value of the same name that W-04 ruled in -- one name, two referents; the 08-18 verbatim is the authority for THIS edit, W-04 is not."
 
   TIER0_UTILITY:
     permitted_agents:
