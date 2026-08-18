@@ -79,7 +79,7 @@ lists dozens of dead historical serials — ignore them.
 ### 1b. Record-drift (the /comp-state half)
 
 ```bash
-comp-state --self-test        # MUST print PASS 3/3 -- if not, say so and DO NOT trust the report
+comp-state --self-test        # MUST print PASS (its own N/N line; 4/4 since the J2 encoding leg) -- if not, say so and DO NOT trust the report
 comp-state                    # drift-only (BEHIND / POST-CLOSE); add --project <CODE> when scoped
 ```
 **Triage, do not auto-edit.** BM25 is a recall layer: most BEHIND rows are lexical false-positives
@@ -252,7 +252,7 @@ skill. A close is the owner's grounded state change, not a status lens's.
 - **Ground it, never recollect it.** The card's claims come from Step 1's telemetry + git + comp-state,
   not from what you remember happening this session. A fabric snapshot asserted from memory is the
   stale-record failure this skill exists to avoid.
-- **comp-state self-test is a gate.** No PASS 3/3 -> the drift half is untrusted; say so, lean on the
+- **comp-state self-test is a gate.** No PASS (its own N/N line) -> the drift half is untrusted; say so, lean on the
   activity half.
 - **Read-first; the coordinator drives.** At most one capacity-surface to COO. Never lane-dispatch,
   never manufacture backlog work to make an idle agent look busy — an honest "winding down, freed
