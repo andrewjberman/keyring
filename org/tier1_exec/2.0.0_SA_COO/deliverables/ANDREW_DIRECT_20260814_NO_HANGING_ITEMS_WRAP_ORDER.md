@@ -221,9 +221,16 @@ start-if-stopped's the runner to SSM-run `build_portal_gold_accrual.py` ON IT); 
 floor's `dead_letter_config`** (`scheduled-floor.tf:154-155`, `FloorDlqSend :101-104`). COO verified
 both edges at source + live. Same class as wave-1's bd rows: trigger-state dormancy of the K3 CHAIN
 cannot see a DIFFERENT scheduler driving the same box.
-**COO RULING 1337Z:** (a) the 13-address K3-only set (rule + target + permission + trigger Lambda + log
-group + its IAM + the DLQ POLICY row + `mdpf_chain_failed`) PROCEEDS on CTO's per-apply gate -- it
-removes THE PRODUCER, the PRD's K3 purpose; (b) runner instance + runner role + DLQ queue ->
+**COO RULING 1337Z:** (a) the K3-only set -- **10 addresses on AE's gate package 133815Z (10 targets ->
+10 destroys, 0 riders; the "13" first quoted was AE's pre-dedup listing incl. module submembers + the
+DLQ-depth alarm that (c) holds -- corrected 1339Z)**: rule + target + permission + trigger Lambda + log
+group + its IAM role/policy/attachment + the DLQ POLICY row + `mdpf_chain_failed` -- PROCEEDS on CTO's
+per-apply gate; it removes THE PRODUCER, the PRD's K3 purpose. **CTO concurs at source on the DLQ policy
+row (single statement, SourceArn = the K3 rule only; floor sends identity-based via its execution
+role) and REQUIRES two APPLIED-plane post-apply reads as ledger-close conditions: (1) the queue shows
+NO policy; (2) `simulate-principal-policy` for the FLOOR execution role, `sqs:SendMessage` on the queue
+arn, one arn + separate positive control = allowed -- the floor's DLQ path proven on the applied
+plane;** (b) runner instance + runner role + DLQ queue ->
 **KEEP-UNTIL-REHOMED** (accrual bridge off the box = a real port; floor gets its own DLQ = two BUILD
 acts outside TO-3, dated items with owners, not tonight, no shadow); (c) `mdpf_trigger_dlq_depth`
 alarm HOLDS with the queue; (d) **TO-4's "runner EC2 stop/terminate" reserved row RETRACTED from
