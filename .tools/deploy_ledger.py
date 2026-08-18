@@ -467,12 +467,35 @@ _STATUS_LINE_PATTERNS = (
 _COMPOUND_FIELD_SEP = re.compile(r"\s*[·•|;]\s*|\s+[-–—]{1,2}\s+")
 
 
+def _split_fields(line: str) -> list[str]:
+    """Split a compound header line at field separators, SKIPPING any separator candidate
+    that falls INSIDE an open bold span -- a dash (or dot) inside `**...**` is VALUE content,
+    not a field boundary. (Defect B, 2026-08-18, MSTR F-1 / LD-0420: `_COMPOUND_FIELD_SEP.split`
+    cut `**STATUS: CLOSED ... -- ALL LEGS COMPLETE...**` before its closing `**`, yielding
+    fragments that match no anchored pattern -- so the segmenter's "cannot manufacture a false
+    terminal" note stayed true while the INVERSE harm was live: a false OPEN on a CLOSED ledger.
+    Measured on 20260729T0135Z_bd49f-etf-ownership-revival line 3.) The guard is structural
+    (markdown bold parity before the split point), not an enumerated spelling."""
+    parts: list[str] = []
+    last = 0
+    for m_ in _COMPOUND_FIELD_SEP.finditer(line):
+        if line.count("**", 0, m_.start()) % 2:  # inside an open ** span -> value content
+            continue
+        parts.append(line[last:m_.start()])
+        last = m_.end()
+    parts.append(line[last:])
+    return parts
+
+
 def _status_segments(line: str):
     """The line itself, then each of its compound-field segments (document order preserved).
-    First-status semantics are unchanged: callers stop at the first segment that yields a value."""
+    First-status semantics are unchanged: callers stop at the first segment that yields a value.
+    Splitting is bold-span-aware via _split_fields (defect B fix); a truncated fragment can still
+    only ever match nothing, so segmentation remains additive-coverage-only."""
     yield line
-    if _COMPOUND_FIELD_SEP.search(line):
-        for seg in _COMPOUND_FIELD_SEP.split(line):
+    segs = _split_fields(line)
+    if len(segs) > 1:
+        for seg in segs:
             if seg and seg != line:
                 yield seg
 
@@ -498,19 +521,29 @@ def _md_status(md_path: Path) -> str | None:
     return None
 
 
+_CLOSE_MARKER_PAT = re.compile(
+    r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|closed):\*\*\s*\S", re.IGNORECASE)
+
+
 def _has_close_marker(md_path: Path) -> bool:
     """True if the ledger carries an explicit, non-empty close-date marker
     ('**Date closed:**' / '**Closed:**' / '**closed:**'). Hand-authored ledgers
     that omit a **Status:** line (globgrph-style) signal a terminal state this way
-    instead -- without this check they false-trip as 'no status line'."""
+    instead -- without this check they false-trip as 'no status line'.
+    Segment-aware since 2026-08-18 (defect A, MSTR F-1 / LD-0420): the 08-11
+    compound-field segmentation reached _md_status and _has_terminal_status_anywhere
+    but not this reader, so `**Ledger opened:** X · **Closed:** Y` was unreadable --
+    the marker sat mid-line and the anchored pattern never saw it. Same anchored
+    pattern, now tested per FIELD via _status_segments (mention-is-not-a-marker
+    discipline unchanged: prose cannot match the bold anchored form)."""
     try:
         text = md_path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return False
     for line in text.splitlines():
-        if re.match(r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|closed):\*\*\s*\S",
-                    line, re.IGNORECASE):
-            return True
+        for seg in _status_segments(line):
+            if _CLOSE_MARKER_PAT.match(seg):
+                return True
     return False
 
 
