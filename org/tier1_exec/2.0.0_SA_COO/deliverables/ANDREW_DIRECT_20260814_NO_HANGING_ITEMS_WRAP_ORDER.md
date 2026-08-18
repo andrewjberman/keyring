@@ -99,3 +99,21 @@ present. CTO's TO-2 stamp turned on ONE second unattended sample; there are now 
 Observation, not finding, for CTO's read: 08-18's single write so far is 12:47:32Z (earlier than the
 13:30Z slot) and 2 bytes smaller -- a valid daily mint exists; surfaced in case a second 13:30Z write
 is expected and its presence/absence carries meaning.
+
+### RE-SEQUENCED 2026-08-18 ~1310Z (COO ruling; stated same-day per this record's own rule)
+
+**Ownership correction (MSTR 130152Z, accepted as accurate):** the 08-15 displacement was MSTR's
+allocation call (GWRENAME + FE-1/FE-2/promote on their dispatch; wave-2 was the thing not given a
+seat). COO owns the record not being re-dated at the time. Split, not whole.
+
+**New item, ahead of K3:** MSTR's 08-18 sweep -- `s3://opal-data-bd/platinum/firm/*` (header_metrics,
+dashboard, leaderboard, cumulative_chart, partner_analytics, nna_advisor_canonical) all last written
+Sun 08-16 00:17-00:42Z, content as_of 08-06. **COO discriminator, resolved from source in 12 min:
+SERVED** -- `firm-config.mjs:30` '49financial' -> opal-data-bd; shared-advisor-router passes
+platinum/firm/* S3-direct; portal `advisor-intelligence.ts:284` reads header_metrics for the ClientsTab
+headline. COO live reads: as_of 08-06 on header_metrics/dashboard/leaderboard = **8 trading days
+behind T-1 (08-17), calendar resolved, no holiday**; INF control published today 12:41Z; bd gold ran
+today -> publish-step-specific. **RULING: a served 49F firm dashboard 8 trading days stale outranks
+a teardown wave.** AE's 08-18 day = (1) bd platinum mechanism-grounded diagnosis + restore on the
+scheduled path (Rule 22, no fix on inference; no alarms) -> (2) K3 GO on CTO's TO-2 stamp -> (3) TO-4
+same day if daylight, else **TO-4 slides to 08-19 with TO-5**. Whichever, recorded here today.
