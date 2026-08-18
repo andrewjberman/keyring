@@ -1,0 +1,186 @@
+{
+ "_meta": {
+  "author": "3.0.0_SA_CVO",
+  "written": "2026-08-18T16:12Z",
+  "purpose": "P1S-2 vintage baseline: per served key, the vintage basis my 08-11 grade rested on. The sweep's 'vintage moved?' check diffs DS~A's inventory instance vintage against THIS file, mechanically.",
+  "frame": "served-KEY, denominator 17 (working prior until P4E-1 freezes; members named)",
+  "grade_bases": {
+   "served_data_as_of_at_grade": "2026-08-06",
+   "canonical_basis_at_grade": "asof 2026-08-07 (frozen graded vintage, 526-partition C_01 series)",
+   "census_version": "caa2dc281a355ff6efaca30c20292b09-r5-463197223b33-r6-r7-r8d"
+  },
+  "live_read_at_prep": "2026-08-18 ~16:00Z: served firm keys LastModified 2026-08-15T20:xx (gold/artifacts 2026-08-18T00-01Z), data_as_of STILL 2026-08-06 (row-0 fixture territory); canonical gold frontier date=2026-08-10. Twin NOTE: platinum timeseries_chart 36,306,894B(08-15) vs gold 38,925,029B(08-18) -- twins have DIVERGED since my byte-identical grade; re-grade of the twin-identity claim REQUIRED at sweep."
+ },
+ "keys": [
+  {
+   "n": 1,
+   "served_key": "platinum/firm/header_metrics.json",
+   "emitter": "d01",
+   "census_family": "platinum/firm/header_metrics",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "af03dba751",
+   "served_lm_at_grade": "2026-08-11T05:25:17+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 2,
+   "served_key": "platinum/firm/dashboard.json",
+   "emitter": "d02",
+   "census_family": "platinum/firm/dashboard",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "d8a8029529",
+   "served_lm_at_grade": "2026-08-11T05:17:11+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 3,
+   "served_key": "platinum/firm/fee_efficiency.json",
+   "emitter": "d03",
+   "census_family": "platinum/firm/fee_efficiency",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "1962d01f51",
+   "served_lm_at_grade": "2026-08-11T05:17:11+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 4,
+   "served_key": "gold/artifacts/clients_tab.json",
+   "emitter": "d04",
+   "census_family": "gold/artifacts/clients_tab",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "(V8 residual named; accounting row 6)",
+   "served_lm_at_grade": "2026-08-11T04:58:18+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 5,
+   "served_key": "platinum/clients/{id}/summary.json",
+   "emitter": "d05",
+   "census_family": "platinum/clients/{id}/summary",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "(sovereign band; accounting row 7)",
+   "served_lm_at_grade": "2026-08-11T05:19:14+00:00",
+   "instances_at_grade": 1002
+  },
+  {
+   "n": 6,
+   "served_key": "platinum/firm/mix_summary.json",
+   "emitter": "d06",
+   "census_family": "platinum/firm/mix_summary",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "(cot-bundle mix-basis band; row 8)",
+   "served_lm_at_grade": "2026-08-11T05:17:11+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 7,
+   "served_key": "platinum/firm/leaderboard.json",
+   "emitter": "d07",
+   "census_family": "platinum/firm/leaderboard",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "c798d8eb0b",
+   "served_lm_at_grade": "2026-08-11T05:25:15+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 8,
+   "served_key": "platinum/49financial/ownership_map.json",
+   "emitter": "d08",
+   "census_family": "platinum/49financial/ownership_map",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "bf23933fa0",
+   "served_lm_at_grade": "2026-08-11T04:58:19+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 9,
+   "served_key": "platinum/firm/timeseries_overview.json",
+   "emitter": "d09",
+   "census_family": "platinum/firm/timeseries_overview",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "8922fb4bc0",
+   "served_lm_at_grade": "2026-08-11T05:25:05+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 10,
+   "served_key": "platinum/firm/cumulative_chart.json",
+   "emitter": "d10",
+   "census_family": "platinum/firm/cumulative_chart",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "2e36044d7b",
+   "served_lm_at_grade": "2026-08-11T05:25:08+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 11,
+   "served_key": "platinum/firm/clients-tab-slim.json",
+   "emitter": "d11",
+   "census_family": "platinum/firm/clients-tab-slim",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "fc8b133255",
+   "served_lm_at_grade": "2026-08-11T05:25:17+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 12,
+   "served_key": "platinum/firm/timeseries_chart.json",
+   "emitter": "d12",
+   "census_family": "platinum/firm/timeseries_chart",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "6f34fb14f1",
+   "served_lm_at_grade": "2026-08-11T05:25:17+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 13,
+   "served_key": "gold/artifacts/timeseries_chart.json",
+   "emitter": "d12",
+   "census_family": "gold/artifacts/timeseries_chart",
+   "state_0811": "SCOPE-VALIDATED",
+   "verdict_commit": "6f34fb14f1 (twin, byte-identical at grade)",
+   "served_lm_at_grade": "2026-08-11T05:03:46+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 14,
+   "served_key": "platinum/firm/partner_analytics_quarterly.json",
+   "emitter": "d13",
+   "census_family": "platinum/firm/partner_analytics_quarterly",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "d83ceafa47",
+   "served_lm_at_grade": "2026-08-11T05:25:06+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 15,
+   "served_key": "platinum/firm/partner_analytics_monthly.json",
+   "emitter": "d13",
+   "census_family": "platinum/firm/partner_analytics_monthly",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "d83ceafa47",
+   "served_lm_at_grade": "2026-08-11T05:25:06+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 16,
+   "served_key": "platinum/firm/partner_analytics_annual.json",
+   "emitter": "d13",
+   "census_family": "platinum/firm/partner_analytics_annual",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "d83ceafa47",
+   "served_lm_at_grade": "2026-08-11T05:25:06+00:00",
+   "instances_at_grade": 1
+  },
+  {
+   "n": 17,
+   "served_key": "platinum/firm/advisor_nna_canonical.json",
+   "emitter": "d14",
+   "census_family": "platinum/firm/advisor_nna_canonical",
+   "state_0811": "BAR-CLEARED",
+   "verdict_commit": "d50f080dbf",
+   "served_lm_at_grade": "2026-08-11T05:41:16+00:00",
+   "instances_at_grade": 1
+  }
+ ]
+}
