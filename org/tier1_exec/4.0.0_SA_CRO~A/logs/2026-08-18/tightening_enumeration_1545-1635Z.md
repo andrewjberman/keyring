@@ -51,3 +51,11 @@ NONE. Awaiting CTO ratify (event-driven).
 1. [1.0.0_SA_CTO] ratify/amend the spec; [2.0.0_SA_COO] staff the four remedies post-ratify.
 2. [4.0.0_SA_CRO~A] event-driven: answer ratify questions; the seat's standing base-queue items
    (M-A..M-I method-read, W-24) remain at the BASE seat's priority list, not this lane's.
+
+## CLOSE ADDENDUM (17:07Z)
+Spec RATIFIED by 1.0.0_SA_CTO 170550Z (RAVC-4), all four joints as spec'd -- record: their
+CTO_GATE_AND_RULING_SET_20260818_1700Z.md G-C. Dispositions: J2 comp-lane 08-19 (census stays
+surfaced, no sweep) · J1 board + additive schema firm field APPROVED · J3 5/9 runner + per-family
+lineage JSON at P4-EMIT (atom-5-VIOLATES-today acceptance kept verbatim) · J4 oracles runnable 08-21,
+folded into P4R-3/P4X-4. Push @6591bcdbb1 (MSTR integrator, 163340Z). Thread CLOSED at this desk;
+standing offer to building lanes on acceptance-row questions, event-driven.
