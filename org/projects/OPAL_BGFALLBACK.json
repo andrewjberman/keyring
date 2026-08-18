@@ -1,0 +1,25 @@
+{
+    "project_code": "OPAL_BGFALLBACK",
+    "macro_code": "OPAL",
+    "name": "Bloomberg Terminal Fallback -- site-Z Device Autonomy",
+    "description": "Make the site-Z Bloomberg pipeline self-healing so a Terminal logout no longer strands the client-facing OPAL_BBGTML dashboard until a human intervenes. Andrew-direct 2026-08-18: fix the autonomous fallback in BOTH trigger modes -- mid-session logout (Bloomberg session drops while the OS stays up; measured 2026-08-14..18, box up 4d18h with zero restarts yet the Terminal logged out and the 08-15/16/17 pulls failed on DAPI-down; confirmed in the Yang Liu/Alyssa Teams chronology) and device restart (MS/LDT overnight updates reboot the box into a locked login) -- then proceed through the rest of the outstanding site-Z calls. Owned + driven by 0.0.0_AB_MSTR~Z directly (CTO~Z would not instantiate -- new-session API issues 2026-08-18). Brief: org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md @caac7b3138.",
+    "prds": [
+        {
+            "path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md",
+            "label": "OPAL_BGFALLBACK Program Brief",
+            "date": "2026-08-18"
+        }
+    ],
+    "status": "in-progress",
+    "phase": "WS-1 (mid-session fill fix) IN PROGRESS -- root-caused the unattended fill failure (stale/already-running Chromium SmartClient login view does not accept synthesized input; a freshly launched dialog does) and shipped the fix: -Fresh relaunch (close a stale logged-out wintrv, relaunch clean) + a 3s input-ready settle + a fill-retry loop (re-fill until the programmatic verify passes; re-filling never submits so it costs ZERO Bloomberg attempts; submit stays fire-once). Parse-clean; DAPI-up short-circuit verified; the live Terminal is NOT logged out to force a test. WS-1 end-to-end validation awaits the next real down or a controlled test with Andrew present. WS-2 (restart auto-login+auto-launch) + WS-3 (Tailscale) staged, gated on WS-4 (one elevated in-person console session -- Andrew helping). WS-5 (freeze/UPS/AMT) + WS-6 (parity) queued.",
+    "blocking": "WS-1 validation: awaits a real Terminal-logout down-event OR a controlled logout+recover test with Andrew present (his call -- it briefly logs out the live but already-current dashboard). WS-2/WS-3: gated on WS-4, one elevated in-person console session; Andrew is helping with the human-collaborative parts (Splashtop client on his laptop / console access).",
+    "created": "2026-08-18",
+    "pods": [
+        "0.0"
+    ],
+    "pipeline": "bloomberg / OPAL_BBGTML (integrations/bloomberg)",
+    "thread_counter": 0,
+    "threads": [],
+    "depends_on": [],
+    "depends_on_note": "Builds directly on the shipped in-pull sign-in fallback @072ff64bcb (LD-0413) and the exercised sign-in runbook (0.0.3_BG_BBGTerminal). WS-2/WS-3 consume the staged C:\\opal-elev\\ artifacts (AUTORECOVERY_DESIGN.md, install-tailscale.ps1, setup-autorecovery.ps1)."
+}
