@@ -303,3 +303,25 @@ things were going ~12.5h in. The 07:00 ET pull has no precondition check on DAPI
 with the Terminal down it fails (or worse, produces nothing) on a schedule nobody is watching.
 Fixing that is a **route/schedule design question, not a monitor** — per the standing alarm
 moratorium, do NOT reach for an alarm here. Routed to MSTR~Z for CTO/Andrew disposition.
+
+## 2026-08-18 addendum (0.0.0_AB_MSTR~Z) -- unattended fallback VALIDATED; the real root cause; bbcomm auto-start
+
+- **The unattended sign-in fallback (LD-0413 / OPAL_BGFALLBACK WS-1) is PROVEN end-to-end**
+  (2026-08-18 ~1752Z, Andrew present, forced down-state): DOWN -> P0 -> fire-once -> `-Fresh`
+  full-tree kill (real 7-proc leftover dialog) -> fresh dialog -> fill -> VERIFY PASS (9/9 dots,
+  username 77%) -> submit ONCE -> DAPI UP, then the full production pull ran on the recovered
+  session: tripwire PASS vintage 20260817, published, served-content verified, wrapper exit 0.
+- **TRUE root cause of the 08-16/17 unattended failures -- the FILL always worked.**
+  `bbg_verify.ps1`'s live-mode regions sampled ~110px ABOVE the fields (the blank band over the
+  Bloomberg logo). An all-dark region reads `dots:1` (one continuous run) and OCR `''` -- so every
+  CORRECT fill was judged empty and safely aborted pre-submit. The zombie-dialog theory (WS-1b)
+  was a red herring; the tree-kill/settle/retry hardening is retained (all exercised live).
+- **`dots:1/user:''` from the verifier is NOT evidence the fill failed. READ THE SCREENSHOT** --
+  it discriminates black-band mis-aim vs filled fields vs truly-empty fields in one look.
+- **Killing bbcomm does NOT force a down-state while the workstation token lives**: blpapi
+  AUTO-STARTS bbcomm and the server re-authorizes (measured twice 2026-08-18; the token survives
+  GUI logout + wintrv exit). The genuine down is server-side token expiry (overnight/weekend).
+  The fallback still reads a freshly-killed bbcomm as DOWN long enough to exercise the path,
+  because its Step-1 check is the 8194 LISTENER (no blpapi client runs until something connects).
+- Ledger after the test: 2 entries (08-14 supervised, 08-18 this validation). Terminal left
+  LOGGED IN. The `dapi_check` SPX->.ST probe refinement remains open (post-test work).

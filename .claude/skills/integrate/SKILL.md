@@ -286,8 +286,68 @@ first run: a citation sent before the integrator leg ran did not resolve on the 
 was correctly recorded as UNDISCHARGED — **a path is not a citation until it is on the remote.**
 The peer verifies against the remote, never against your report.
 
+## Step 6b — ⛔ NUDGE THE PEER, AND A QUEUED MESSAGE IS NOT A NUDGE
+
+**Andrew-direct 2026-08-12:** *"did you nudge them? that needs to be part of the skill."* — asked
+after site Z landed its leg, sent one SQS message, and reported parity as "one fast-forward away."
+
+**PARITY IS NOT DONE WHEN YOUR LEG IS DONE. Leg 2 requires the PEER to act**, and everything about
+this protocol up to here is things *you* can do alone. This step is the one that isn't.
+
+**THE FAILURE THIS CLOSES: an SQS send is fire-and-forget.** If no consumer is armed on the peer
+device, the message is **STORED, NOT READ** — indefinitely, silently, with a successful-looking
+`MessageId` returned to you. You will believe you asked and they will never have been asked.
+
+**MEASURE REACHABILITY BEFORE TRUSTING THE SEND — and know what each signal cannot say:**
+```bash
+bash .tools/agentbus-sqs.sh peek <peer-device>   # consumes nothing
+```
+| reading | what it means |
+|---|---|
+| `ApproximateNumberOfMessages` > 0 | your mail is **sitting unread** — the peer consumer is down |
+| `= 0` | **NOT proof of delivery.** Consistent with read, and with in-flight, and with drained |
+| `NotVisible` | an **instantaneous in-flight gauge, not a cumulative receipt** — `recv --keep` releases messages back, so it reads 0 for received-and-released. Never use it as a delivery oracle |
+| **an agent-side ACK** | **the only sound oracle** (Rule 22b). Check the timestamp of the peer's last one |
+
+⛔ **THE NUDGE GOES OVER THE AGENTBUS. DO NOT REACH FOR A SECOND CHANNEL.**
+**Andrew-direct 2026-08-12, VERBATIM: *"no you should write them via agentbus"*** — said after site
+Z, finding the peer unACKed for ~4h, escalated onto the `org/mcp/agentbus-trunk/` git transport and
+pushed an envelope to the peer's branch. **That was the wrong instinct and the reason is a standing
+rule, not a preference: a backup channel is a BACKDOOR EXTRA PATH**, and extra paths are vetoed —
+*"we do not do all these extra paths, these things never ever get decommissioned and they become
+debt."* The trunk is a **superseded git-transport MVP** ("to de-risk the real build", per its own
+README); SQS is the **delivery tier**. Building a parallel route around a quiet consumer is the
+shadow-channel anti-pattern wearing an operational excuse.
+
+**A QUEUED BUS MESSAGE IS NOT A LOST ONE.** SQS here is FIFO with **14-day retention** and
+exactly-once delivery: an unconsumed nudge is **waiting**, not dropped, and it lands the moment the
+peer arms a consumer. So the correct handling of an unreachable peer is:
+
+1. **Send it on the bus, once, with everything they need to act** (below).
+2. **Record leg 2 as OUTSTANDING** — in your report and to Andrew. An unACKed nudge is a *known*
+   open item, which is a completely different thing from a silent one.
+3. **Do not re-send, do not build a route around it, do not chase silence.** A quiet bus is
+   wind-down, not fault.
+
+*Note the asymmetry that makes this safe: you are not waiting on the peer for anything you can do
+yourself. Your leg is landed and pushed; theirs is a fast-forward whenever they return.*
+
+**Nudge content is the peer's ACTION, not your status:** their exact commands, the payload size and
+authors, the conflict count, the exposure ceiling, and an explicit *verify-do-not-trust-this-message*.
+Say plainly if it is not urgent — a nudge that manufactures false urgency gets discounted next time.
+
 ## Step 7 — Close
 
+- **PARITY IS A TWO-LEG CLAIM. Verify BOTH from the remote before saying "at parity":**
+  `is-ancestor(origin/CLOUD, origin/SITEZ)` **and** `is-ancestor(origin/SITEZ, origin/CLOUD)`.
+  One rc=0 is *your* leg, not parity. Report each leg with its own landed head and name the
+  outstanding one as OUTSTANDING.
+- ⚠ **THE SKILL ITSELF CAN BE STALE — Step 1b CHECKS THE LOCAL REF, NOT THE LOCAL SKILL.**
+  Measured 2026-08-12: site Z ran the full protocol on a bare `/integrate` (assess-only under
+  Andrew's ruling) because its copy still carried the retired table, and **the reconcile's own
+  merge is what imported the corrected skill.** A fabric can run this protocol under rules the
+  other fabric already retired, and nothing in Steps 0–6 detects it. After leg 1, re-read the
+  invocation table before acting on it.
 - Post-merge, ask each affected steward to read their artifact (auto-merged ≠ semantically right).
 - Record the run: base, both counts, overlap size + set, resolutions taken, both landed heads.
 - **Ledger it** (MSTR commits touching non-record paths need an `LD-NNNN`).

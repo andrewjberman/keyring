@@ -247,3 +247,9 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/jq-ban-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/jq-ban-override-audit.log
 - detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-08-13T215811Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/safe-deploy-bypass-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/safe-deploy-bypass-audit.log
+- detail: non-append edit: first divergence at line 4, col 1 (baseline 1619B / live-head 1112B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
