@@ -237,3 +237,26 @@ alarm HOLDS with the queue; (d) **TO-4's "runner EC2 stop/terminate" reserved ro
 tonight -- Andrew's @874b52729c "all recs approved" was given on a K3-only census, that premise is
 falsified, the word does not transfer; surfaced on his card as a CORRECTED row, not spent.**
 Zero mutations; ledger unopened until CTO's gate. AE's stop was correct.
+
+### 08-18 ~1352Z: K3 KILL DONE -- 10 destroyed on the saved plan, ledger CLOSED in-session, root converges to the one named rider
+
+CTO GATE-GO 133935Z (sha 8a18ba8a45a9ed9f, 10->10, 0 riders, 4 conditions + 2 residuals). AE: ledger
+OPENED 1340Z pre-apply, `safe-apply` "0 added, 0 changed, 10 destroyed" rc=0, CLOSED 1352Z. All five
+CTO reads on the APPLIED plane with controls: absence reads (rule/lambda/role/log-group/chain-failed
+alarm gone; floor ENABLED, accrual Lambda present, runner present, dlq-depth alarm held = controls);
+DLQ shows NO Policy attribute (baseline had 1 statement, SourceArn = K3 rule); floor scheduler role
+`sqs:SendMessage` on the DLQ = allowed post-apply (also pre-apply -- the floor's DLQ path never depended
+on the removed policy), separate positive + negative controls discriminating. K3-3 @120a822241:
+10 declarations removed, lambda-source-map + trigger-map rows removed (197 / 153 remain), untargeted
+re-plan = "1 to change" = ONLY `aws_s3_object.mdpf_route_bindings` (the @2740e4de8f rider; its
+trigger-Lambda env + policy rows died with the Lambda). Tag `mdpf-pipeline-v2.1.6`. proof_TO-3 rev2.
+Rollback = revert 120a822241 + untargeted apply.
+**DATED-ITEMS REGISTER (CTO residuals, AE-surfaced, COO-held):** (i) **the mdpf runner
+`i-02448edb624a7a7cf` now has NO LIFECYCLE OWNER** -- reads RUNNING post-kill; the accrual bridge
+start-if-stopped's it and never stops it; EC2 stop is Andrew-reserved; cost hygiene -- the ACCRUAL
+RE-HOME item owns this (dated item, owner AE+DS, not tonight); (ii) DLQ + depth alarm retire together
+with the floor's OWN-DLQ re-home (dated, AE). Surfaced-not-chased: trigger-map.json `_denominators`
+block is a GENERATED sweep snapshot (events_rules 142 / total_triggers 154) -- NOT hand-adjusted
+(frozen-not-live class), the next regeneration brings it current; CTO's condition-3 CHANGELOG.json does
+not exist under infra/aws (surfaced, not fabricated). **TO-5 consumer-exercise PRE-REGISTERED:
+tomorrow's 13:30Z floor mint of `dim_model_portfolio` with NO 12:4xZ legacy write.**
