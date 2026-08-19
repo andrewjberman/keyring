@@ -34,12 +34,24 @@ never-implicit through MSTR<->MSTR.
   `updated_by` from token never body, existing auth chain (Build-Ladder rung 5), 403 exercised.
   DE~Z's binding build input is now ratified at the owning gate — the mid-build vacuum is closed,
   no amendment, no relay needed (the input they hold IS the ratified ruling).
-- **D7-U4 @c0eed182dc + caveat @51b9eb9fe6 — ADOPTED AS STANDING INPUT, UNRATIFIED-PENDING-
-  RESOLUTION.** Both commits DO NOT RESOLVE on this checkout yet (integration-lag class, same as
-  the frame @16dd353b COO~Z flagged). An input citing an unresolvable citation is recorded
-  unratified, never adopted blind. Ratify-or-amend lands at the D7 gate after the next MSTR~Z
-  integration makes them readable here; per the laptop's own rider, NOTHING EXECUTES against U4
-  meanwhile — no vacuum.
+- **D7-U4 @c0eed182dc + caveat @51b9eb9fe6 — RATIFIED UNAMENDED at this gate, 2026-08-19 ~21:2xZ.**
+  *(Disposition history, honest: recorded UNRATIFIED-PENDING-RESOLUTION at ~21:14Z because both
+  commits did not resolve on SITEZ; MSTR~Z's integration sweep @e0de7ff9f4 landed them ~21:15Z and
+  the condition discharged the same quarter-hour — an input citing an unresolvable citation is
+  recorded unratified, never adopted blind, and this one waited exactly as long as the evidence did.)*
+  **Read at ref before ratifying** (`git log/show c0eed182dc`, the 31-line ruling deliverable):
+  five binding constraints on the D7 intake service identity — dedicated service subject
+  (`svc-analyst-intake`-form, never a borrowed human token), minimal claims CREATE-only
+  (claim/complete stay human acts), same validation chain (no bespoke verification, no bypass
+  header — the same law as D8 TO-C @e697f1450e, ratified above), provenance stamped from the
+  token (requester fields are DISPLAY-grade, never masquerading as authenticated identity),
+  credential custody per the existing secrets pattern. **Internally coherent, consistent with the
+  ratified D8 family-auth standard, and constraints 1+4 keep the new caller OUT of the standing
+  ticket-API stamps-vs-checks finding's class (T-4, at Andrew).** The demotion @51b9eb9fe6 was
+  conditioned on ownership resolution — resolved by this very record, so ratification re-promotes
+  the ruling to BINDING at this gate. **TO-D's shape is unchanged: Phase-1 reads first, proposes
+  the concrete issuance mechanism (minting, lifetime/rotation) for a one-line confirm at this
+  gate; the five constraints are not reopened by the proposal.**
 
 ## Precedent by use
 
