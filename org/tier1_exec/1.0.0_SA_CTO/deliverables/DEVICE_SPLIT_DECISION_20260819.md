@@ -85,11 +85,12 @@ stays LOCAL where he reviews it):**
 | D1 Asset-category views | LAPTOP | MP primary work (his-oversight criterion); already cut all-laptop tonight |
 | D3 Account-model overlay | LAPTOP | ADVI primary work (his-oversight criterion); TO-D3.1 stays with its item |
 | D4 ETF Positioning variant | LAPTOP | MP/Positioning primary work (his-oversight criterion) + portal/deploy envelope |
-| D8 Live-edit modals | LAPTOP | portal + deploy envelope; small |
+| D8 Live-edit modals | **SITEZ (Andrew-direct ~19:37Z, overriding the CTO assessment row: "D8 Live-Edit modals can be done by sitez that is low-risk and i dont care about it particualrly")** | his word; two MECHANICAL riders from the envelope, stated not inferred: (a) the TF/Lambda apply legs execute through a laptop lane as mechanical applies of sitez-AUTHORED config (sitez is not a TF-apply site until deliberately provisioned); (b) TO-B carries the first-act portal dev-build proof (bun present, builds unexercised -- envelope's own pricing). The TO-C auth-surface ruling stays at the CTO gate regardless of device. |
 | D0 Infrastructure | LAPTOP | deploy chokepoints + builders live here; the T1/kill-fix EXERCISE legs run on BOTH fabrics as ferried verification kickoffs, never as a moved build |
 | D5 Alt research | LAPTOP (ingest = operator-located as standing) | CRO lane resident; thin; activation-gated builds deploy laptop |
 
-**Sitez capacity after this map:** MSTR~Z + 3 item workstreams (D6/D7/D9); ~2 slots SPARE --
+**Sitez capacity after this map (amended ~19:37Z for D8):** MSTR~Z + 4 item workstreams
+(D6/D7/D9/D8); ~1 slot SPARE --
 reserved for those items' own sub-legs and site velocity work, NOT force-filled (the capacity
 rule spends budget on sitez-suited work; none of the remaining items qualifies under his
 criterion). MSTR records these rows in DIRECTIVES.yaml placement fields.
