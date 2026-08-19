@@ -168,7 +168,66 @@ SMA working files.
   (pending) · Mike-call outputs -- (pending) · BD householding-template sample (egress word) --
   (pending Andrew).
 
-## S10. COMPILATION PATH (deferred by design)
+## S10. THE DELEGATION BREAKOUT (Andrew ~17:35Z: "break out each item based on the original list
+with tax added on as Item 9") -- the decomposition source for COO's unified wave
+
+**ITEM 0 -- INFRASTRUCTURE (ongoing, laptop).** Workstreams: (a) T1 broker primitives -- CTO design
+note -> 0.8.0-class build; (b) T2a stamps generalization + T2b stamp-assertion (stamps-first,
+worded); (c) T4 two-homes declarations (0.8.0 respawn); (d) REG-SCAN-ATOMCHECK w/ REG-0 founding
+fixture + J3 comp-atomcheck (08-20, REQUIRED before INF binds); (e) LD-0424 kill-instrument
+self-exclusion fix; (f) GLDRNS wrapper disambiguation (08-25); (g) infra-graph program (CRO-led,
+absorbs S0-S5; CTO S0-sequencing law binds).
+**ITEM 1 -- MDPF ASSET-CATEGORY VIEWS (~2wks, laptop).** (a) CTO taxonomy gate: Rule-24 declaration
++ composition mapping onto advisory_scope/selection_origin (prior art S3); (b) category registry
+artifact; (c) DE-class portal build on the MDPF global view; (d) Cottonwood display acceptance
+(~$7M Custom + ~$30M Client Advised/Residual) = part of DONE. Independent of R and of Friday.
+**ITEM 2 -- ADVI 49F E2E (Fri PM, laptop).** (a) DONE TODAY: floor ENABLED on the 107.1s pin
+(@647c432a7d), corrected chain proven, IAM complete; (b) THU: first green 12:45Z (AE reads),
+DS~B emit 15 twins + shell activation (CTO-gated), CVO pins + oracle table; (c) FRI: second green,
+DE repoint -> DT PROD promote, rendered+behavioral acceptance = E2E COMPLETE; (d) parity program:
+probe THU-FRI (DS-class + CRO), full census MON-TUE, drive-to-EXACT loop after (conventions
+pre-registered rev-2: calendar-vs-trading-day basis, quarterly non-amortized fees, IDC pricing,
+BD-vs-Schwab source deltas -- Mitch Johnson case); (e) then INF binds (after J3 + A3-green), COT
+third. FAM heal = R-WATCH + the BD-sample probe (fires at AE's convenience, no clock).
+**ITEM 3 -- ACCOUNT-LEVEL MODEL OVERLAY (pends 1+2; ~6-7wks, laptop).** (a) CTO writes the PRD NOW
+(user story from the Mike call verbatim: "what models a given account is in... without having to
+dig"); (b) precondition workstream startable EARLY: the SmartX<->BD/Schwab EXACT-JOIN spec (models
+live in SmartX, not BD -- rev-2 fact); (c) build launches the day 1+2 clear.
+**ITEM 4 -- ETFS FOLD-IN TO POSITIONING (3-8wks, behind Item 1, laptop).** (a) CTO rules the
+ETFS_CANON design gate THIS WEEK (5 open items, DE-defaulted); (b) build sequences behind Item 1's
+lane; ETFS strategies also appear as SMA-category members in Item 1's taxonomy -- one registry
+serves both.
+**ITEM 5 -- ALT RESEARCH (ongoing, laptop).** Continue ingest (CRO lane); build queue activates on
+Andrew's prioritization word. No change.
+**ITEM 6 -- OPAL ANALYST + PARTNER GRAPHQL (v0 ~2wks; SITEZ box legs + laptop cloud).** (a) SITEZ:
+SharePoint access build + BBG pipe build (off the proven W7/W8 investigations) -- MSTR coordinates;
+(b) laptop: the GraphQL query layer (SPEC FILE STILL PENDING from Andrew -- the one open input);
+(c) the Analyst's ticketing duty (Item 7) lands as a named responsibility.
+**ITEM 7 -- TICKETING INTAKE (THIS WEEK; SITEZ intake + laptop serve).** (a) Graph DL discovery ->
+one-liner confirm with Andrew (addresses = the open input); (b) Graph subscription/poll leg
+(m365 gateway, laptop); (c) Analyst-agent intake + analysis + Teams-thread buzz w/ portal link
+(SITEZ); (d) portal accept/in-progress/complete already LIVE (P0); (e) SLA log
+(receipt->acceptance->execution) in the agent's persistent memory; (f) cutoff 2PM-ET stands;
+bobby@ later per Andrew.
+**ITEM 8 -- PHILOSOPHY + BENCHMARK MODAL LIVE-EDIT (this week, laptop).** (a) server-side content
+store (small AE leg); (b) edit surface on both modal families (DE-class); (c) CTO gates the auth
+surface (Opal-employee scope). Days of work.
+**ITEM 9 -- TAX SMA OPS (NEW; assess-first, laptop + m365).** (a) STATE ASSESSMENT deliverable
+(recon-class): repo prior-art census (OPAL_TAXSMA/_PT2/_REGISTRY + skills + the stalled 08-04 TO
+seat-or-supersede), workflow-as-designed map, SharePoint doc sync review (Yang+Alyssa), hole list;
+(b) -> Andrew review -> Yang/Alyssa meeting; (c) -> pipeline build TOs: opal-data-assets home,
+daily asset tracking, consistent partition scheme, SMA-category taxonomy wiring, MDPF-page
+roll-in. Extra recordings pair + SMARTX CSVs pend Andrew's ingest word.
+
+**RESPAWN/SEAT NEEDS (COO cuts, MSTR spawns):** THU AM latest -- DS~B (emit), CVO (pins), DE + DT
+(Fri flip), 0.8.0 (REG/J3 + tightening), DS base (R-WATCH + dated items). SITEZ issuance (Items
+6/7 legs) via MSTR now that they are ready-and-waiting. The BD-sample probe + parity P1 ride
+existing live seats.
+**WEEK SHAPE:** THU = first green + emit + pins + ticketing intake water + parity probe; FRI =
+flip (E2E) + Item-8 edit surface + Item-4 design gate ruled; MON-TUE = parity census + Item-1
+taxonomy gate + Item-9 assessment; behind = Item-3 PRD (now) + exact-join spec.
+
+## S11. COMPILATION PATH (deferred by design)
 
 Later act per Andrew: fold this document into the /missions compiled state (comp-missions /
 org/tier0/missions.yaml). NOT done in v0 -- missions surgery is a taxonomy act with its own gate;
