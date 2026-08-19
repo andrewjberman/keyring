@@ -97,3 +97,56 @@ Finding 3's 13.
 
 **Stated plainly so the authorization is not read as discharged:** the sweep is AUTHORIZED and
 STARTED, not FINISHED.
+
+---
+
+# ⛔ CORRECTION — PASS 1's DIAGNOSIS WAS WRONG. THE REMEDY IS A PARSER FIX, NOT A DATE BACKFILL.
+
+**Finding 1 above concluded: *"That is a CORPUS DEFECT (missing `Issued:` dates)… the remedy is a
+date backfill."* THAT DIAGNOSIS IS FALSE.** The *measurement* (44% age-unresolvable) was real; the
+*cause* was not.
+
+## HOW IT WAS CAUGHT
+The undated list contained **task orders I had cut myself two hours earlier** — `ADVI_49F.c00-FIX`,
+`ADVI_BDPARITY.P2-CENSUS`, `T1-ORACLE`. Those unambiguously carry issue dates. **A corpus-defect
+diagnosis that indicts your own just-written files is refuting itself.**
+
+## THE ACTUAL MECHANISM — TWO INDEPENDENT PARSER MISMATCHES, BOTH IN `to-check.py`
+1. **WRONG TAG.** `:142` read `<issued_date>` and `<date>` — **not `<issued>`**. Older TOs write
+   `<date>2026-07-07</date>` (parses); newer ones write `<issued>2026-08-19T20:05Z</issued>` (invisible).
+2. **WRONG FORMAT.** `:177` validated with `strptime(…, "%Y-%m-%d")`, so even once read, an ISO
+   timestamp with a time component **fails and is silently blanked to `""`** at `:179`.
+
+**Either alone would have hidden the date. Both together made 44% of the board read as
+age-UNKNOWN — which presents as "no dormancy signal" rather than "the instrument could not see it."**
+
+## THE FIX (applied, exercised, regression-controlled)
+`.tools/to-check.py`: read `<issued>` as a third accepted tag; truncate to the date part before
+validating. Validation itself unchanged.
+
+| | before | after |
+|---|---|---|
+| rows | 359 | 363 *(+4 = the identity-spine TOs I committed between runs)* |
+| dated | 201 | **252** |
+| dated-today (`(today)`) | 0 | **41** |
+| **age-UNKNOWN `(?)`** | **158** | **70** |
+
+**88 TASK ORDERS RECOVERED from age-unknown to age-known.** Accounting reconciles exactly:
+`158 − 70 = 88` fewer unknown; `(252+41) − 201 = 92` more dated; the 4-row difference is the new TOs.
+
+**REGRESSION CONTROL: 0.** Not one previously-dated row changed age or vanished — the fix is
+purely additive.
+
+**AND THE DORMANCY VERDICT SURVIVES, NOW ON A BIGGER DENOMINATOR: 0 newly-visible rows at or over
+the 90-day bar.** The "nothing is dormant" reading now rests on **293 of 363** rather than 201 of 359.
+
+## WHAT HONESTLY REMAINS
+**70 rows are still age-unknown.** That residue *may* be a genuine corpus gap — but **pass 1 already
+guessed a cause once and was wrong, so it is recorded as UNDIAGNOSED**, not as a backfill task.
+Whoever runs pass 2 reads those 70 files before concluding anything about them.
+
+## THE CLASS, FOR THE RECORD
+An instrument returned a **clean, well-formed, confident** answer over a domain silently narrowed by
+its own parsing, and I converted that into a claim about **the corpus** rather than about **the
+instrument.** Same shape as the 200-of-359 parse this document already records one section above —
+**twice in one sweep, the second time inside the correction for the first.**

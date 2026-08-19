@@ -140,7 +140,48 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
   Iceberg column holding SUBSTRATE values," measured and naming-act-recorded 08-12. Execution
   routed to CTO (the S0 layer→substrate migration their 08-12 arch-call already sequences; this
   is lock-down work — the ruled fold executing — not post-lock-down graph work).
-- 2026-08-19 (later): **evidence home moved** — Andrew-direct fold @6096e11d95 lands the
+- 2026-08-19 ~2101Z (CVO contradiction pass, terms 2–5 — ADOPTED): **THE COLLAPSE: O1's 8
+  non-agreeing rows are NOT 8 defects** — Substrate (term 1, real) + Domain (term 4, NEW) are the
+  only independent findings; Estate INHERITS Substrate (no remedy of its own — counting it invites
+  one); Segment SPLIT + Contract_Record `describes` = the checker's named fixtures 1+2 (cite,
+  never re-adjudicate); C0/C1/Estate_Contracts UNDECLARED-b per the pre-registered frame. **A
+  remediation plan sized off 8 would be sized off double the real count.** DOMAIN (term 4): the 4
+  missing values are EXACTLY the v2.0 "term-keys-only, on-disk unchanged" four; `Ui_Dataflow` is
+  Andrew-ratified w/ a CVO grain ruling and ZERO materialized anchors; mechanism VERIFIED distinct
+  from Substrate's (anchor-catalog materialization gap — `domain` is not a graph property at all;
+  different mechanism, different owner). **RIDER ACCEPTED (program-lead call): Domain's
+  legislated-vs-materialized reconcile RIDES the A5 C3.i 14-vs-4 reconcile — one act, two grains,
+  the method already designed.** Segment bonus: THREE surfaces of ONE rename found by THREE
+  instruments (term sweep :422/:438, hand read T4, resolver c4_segments) — the claim-sets rule
+  measured, not asserted. Smoke set exhausted at term 5; terms 6+ run unprioritized.
+- 2026-08-19 ~2106Z (CVO contradiction pass, 11 of 46 — ADOPTED): **the VINTAGE-ASYMMETRY SCREEN**
+  (git-blame the definition line vs git-log the authority: authority older than definition ⇒ drift
+  IMPOSSIBLE from that direction) clears 22 of 62 terms WITH A STATED BASIS, no read needed; 40
+  drift-possible, 1 undetermined. Its first cluster (the six boundary-vocabulary terms on the
+  frozen WS-C7 standard) = SIX NON-FINDINGS, killed two ways — the +9d commit was a marker header
+  not content, AND **the header carries an IN-AUTHORITY PRECEDENCE DECLARATION ("where this file
+  and a live carrier disagree, the live carrier wins... frozen means still-citable provenance, not
+  retired") — A NEW CATEGORY: registry-vs-authority divergence can be GOVERNED, not defective, and
+  a pass (or a checker) without that notion MANUFACTURES findings against documents that already
+  conceded.** Routed to CTO as checker-design input (the verdict enum needs the governed case).
+  Screen refinements adopted: discount header-only commits; check for in-authority precedence
+  BEFORE treating disagreement as a finding. Also banked: CVO's frozen-digit attack on O2 was a
+  RE-DERIVATION (WS-C7 §4.4 already legislates it) — novel-vs-re-found now tracked; and their
+  fifth same-shape instrument artifact (spelling-transform false absence, caught pre-filing) — the
+  RATE (five artifacts / five catches / zero shipped) is a T11 signal: the discipline holds, the
+  instruments do not improve on their own. Running: 2 new findings, 7 non-defects, 22 cleared
+  unread, 13 risky terms left (minus held C3-family).
+- 2026-08-19 (RESTORED ~2107Z — the ~2101Z edit dropped this line instead of appending above it;
+  caught on the next edit's failed anchor, recovered byte-identical from @e7a2024): **evidence home
+  moved** — Andrew-direct fold @6096e11d95 lands the OPAL_WORLD_MODEL content at
+  `infra/system/ontology/worldmodel/`; `10_census/` is this census's declared SEED + DIFF BASE
+  (07-31 vintage snapshot, marked so — never a live read). Observed vintage delta at fold-verify:
+  `20_rulings/RULINGS_LEDGER.jsonl` = **121 rows live vs 118 declared in PRD v0.1** — the census
+  predicate applied to its own seed (FAILS-b shape, almost certainly 3 rulings landed after v0.1
+  was written; adjudicate the 3-row provenance at the first Limb-A-adjacent scoring pass, do not
+  silently re-declare). Fold-verify counts: subtree find = **68 files** vs the relay's "62" —
+  classify at the same pass (dir-grain vs file-grain or post-fold additions; both counts recorded
+  so the delta cannot vanish). — Andrew-direct fold @6096e11d95 lands the
   OPAL_WORLD_MODEL content at `infra/system/ontology/worldmodel/`; `10_census/` is this census's
   declared SEED + DIFF BASE (07-31 vintage snapshot, marked so — never a live read). Observed
   vintage delta at fold-verify: `20_rulings/RULINGS_LEDGER.jsonl` = **121 rows live vs 118
