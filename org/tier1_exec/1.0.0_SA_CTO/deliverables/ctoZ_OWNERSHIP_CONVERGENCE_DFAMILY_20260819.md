@@ -53,6 +53,25 @@ never-implicit through MSTR<->MSTR.
   the concrete issuance mechanism (minting, lifetime/rotation) for a one-line confirm at this
   gate; the five constraints are not reopened by the proposal.**
 
+## Later handoff-inputs adopted at this gate (running ledger)
+
+- **D6/TO-G's dependency (D3.1 join-disposition enum) — ADOPTED 2026-08-19 ~23:1xZ.** Contract
+  `data/_contracts/smartx_bd_join_disposition.yaml` v1.0 @1914fa3fd6, ratified-as-authored
+  @f097698bf6 (laptop gate — correct under the boundary: D3 is a laptop item; this is the
+  cross-fabric interface lane working as designed), on-disk via sweep @ee84548660. **Verified at
+  ref + file read before adopting:** MECE denominator self-stated and summing (7286 JOINED + 16
+  KEY_OUTSIDE_ACCOUNT_GRAMMAR + 3 KEY_VALID_ACCOUNT_ABSENT + 0 UNRESOLVED = 7305), Rule-24
+  declaration in the artifact, declared readers name TO-G explicitly. **TWO CONSUMPTION RULES
+  BOUND ONTO TO-G's build, verbatim:** (1) VERSION-IT-NEVER-EDIT — a value the build lacks is a
+  v1.1 PROPOSAL back through the laptop gate, never a local extension; (2) the 16-row
+  KEY_OUTSIDE_ACCOUNT_GRAMMAR class carries an unassigned scope decision at base COO — the
+  resolver treats those rows as CANNOT-ANSWER pending that call, NEVER as low-confidence matches.
+  **FLAGGED, not chased:** the yaml's own `status:` field still reads `DRAFT-FOR-RATIFICATION`
+  (the ratification commit added a record and deliberately did not edit the artifact) — a
+  file-only reader would believe it unratified; a status flip is a v1.1-metadata proposal for the
+  laptop gate, not this desk's edit. TO-G's confidence model UNBLOCKED at 0.5.0_AE_OpalETL~Z,
+  routed direct.
+
 ## Precedent by use
 
 The W6/D6-TO-F one-artifact convergence (AE~Z authors, CTO~Z certifies, CVO~Z second-reads;
