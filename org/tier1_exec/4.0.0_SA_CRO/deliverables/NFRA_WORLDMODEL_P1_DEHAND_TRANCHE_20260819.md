@@ -106,10 +106,28 @@ theirs to sequence; the COMPLEARNS stack is the substrate, not a fresh build):
   T0 = every universe term carries one and they all run green. This is the runtime-system frame
   made mechanical, and it is what "locked down" will be MEASURED by.
 
-## 4. EXIT (= the lock-down bar, per @1044c49f2e)
+## 4. EXIT (= the lock-down bar, per @1044c49f2e) — **BAR MADE FALSIFIABLE 2026-08-19 ~20:0xZ
+(CVO conflicting-half pass 1: the registry SELF-DECLARES 3 deprecated + 2 contested of 68, so the
+bar as first written could be declared met or unmet at will — the one property an exit bar must
+not have. Adjudicated at this seat, reading (B), presented to Andrew, his word overturns.)**
 
 Tranche 1 closes when: every T-row above is landed-or-formally-owned-with-date · §3's mechanism set
 is routed and (a)+(c) are live · the P0 census A-rows re-score with zero FAILS of the hand-drawn
-class · and **no conflicting or deprecated documentation remains in the ontology tree** (CVO's
-verification axis, per their assist role). That bar is what releases the estate backlog and the
-return to comp-estate/graph work — his gate, his word.
+class · and **no UNDECLARED conflicting or deprecated documentation remains in the ontology tree.**
+**A SELF-DECLARED cell is exit-COMPATIBLE iff it carries its status, an owner, and a disposition
+path — a registry that marks its own unresolved cells is doing its job, and forcing them to
+ratified to clear a gate would be the fake-green worst case.** The five currently-declared cells,
+listed so the bar has a denominator: `Substrate_Side` [deprecated; **its reporting rule survives,
+binding**] · `Territory` [deprecated; **map-vs-territory sense survives** — T15] ·
+`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; owner CVO (claimed
+2026-08-19), resolution = Andrew naming act, banked] · `Unreconciled_Aua` [contested; owner CVO
+(claimed), re-read against deployed bytes]. An UNDECLARED conflict found by the census remains a
+bar-blocker until declared-with-owner or resolved. CVO's verification axis runs the hunt; his
+gate, his word.
+
+### Rows added ~20:0xZ (conflicting-half pass 1)
+
+| # | Surface | Nature → remedy | Owner / vehicle |
+|---|---|---|---|
+| T16 | **The registry `status` field conflates TERM-LIFECYCLE with CONTENT-VALIDITY** (Rule-24(iii) in the schema itself: 2 of 3 deprecated entries carry LIVE BINDING content — a consumer filtering `status != deprecated` DROPS the Substrate_Side reporting rule). Remedy candidate: additive `binding_residue:` field on deprecated entries whose content survives (checker-lawful — extra fields legal; machine-filterable; no enum change) | SCHEMA naming act — REC to Andrew with this spec; CVO slot executes on his word | CRO rec → Andrew word → CVO |
+| — | The 63 prose-vs-authority comparisons (the deep conflicting check) | CVO runs, prose claims only; numeric claims ride O1's results file at the seam | CVO, timing theirs (post-O1 seam available) |
