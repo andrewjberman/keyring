@@ -19,7 +19,10 @@
  data/assets/scripts/gold/runners_49f/  a00..a07 dims -> b00..b03 valuation -> c00..c04 flows/NNA/TWR -> (P1 built)
         |  writes PARQUET + manifest per table per date  (P3 root, live 08-12 copy, 526 partitions to 08-10)
         v
- opal-data-assets/portal/gold/advi/49financial/{canonical,dimensions}/{table}/date={D}/data.parquet
+ opal-data-49financial/gold/advi/{canonical,dimensions,reference}/{table}/date={D}/data.parquet
+        |      [SS1 CELL SUPERSEDED 08-19: gold home = opal-data-49financial per the 08-19T0106Z
+        |       bucket mint; the old opal-data-assets/portal/gold/advi/49financial root lists EMPTY
+        |       (D2 run R1/R2, measured). Rows below citing the old root are historical records.]
         |  P4: the D fleet (d01..d14 + d_publisher_base) is THE ADVI PUBLISHER -- parquet in, served-shape JSON out,
         |      the estate's only JSON producer for these keys; two-phase pin per key vs the legacy serve
         v
