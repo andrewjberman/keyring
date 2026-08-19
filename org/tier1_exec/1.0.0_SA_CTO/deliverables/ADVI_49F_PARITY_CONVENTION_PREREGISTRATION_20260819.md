@@ -63,6 +63,35 @@ within 1%, and the residual tail is UNIFORMLY POSITIVE, median +$1,281/account -
   class members inside BD's own group totals (bears on the denominator ruling, open-call 3);
   one $6.9M single-account REAL delta + one $5.64M absent-member outlier are OPEN CELLS at CRO~A.
 
+## ADDENDUM A3 -- 2026-08-19 ~19:15Z (STILL PRE-PROBE; corrects + UPGRADES A1 per CRO~A's
+closure addendum on TRAVIS_GROUP_DECOMPOSITION_HOW_BD_BUILDS_456M_20260819.md)
+
+1. **A1's tail signature carried an INSTRUMENT-DOMAIN error, owned by its source and corrected
+   here:** the $6.9M "REAL delta" was CASH (BD carries free cash as a position; fact_rps is
+   securities-only). On the correct our-side basis (b00's own law, `dim_balance.net_mv_plus_cash`)
+   the tie is **309/312 accounts within 0.1%, net +$146K on $420M**.
+2. **C5 UPGRADED from inferred-tail to MEASURED MECHANISM:** `qt6 EMV - net_mv_plus_cash ==
+   accrued interest TO THE PENNY` on every income-bearing account tested; firm-wide magnitude
+   $88.0K across 155 positions today. qt6 EMV is proven accrual-inclusive + cash-inclusive
+   (qt1 MV == Unaccrued + Accrual identity holds on 100.0% of 120,215 rows; qt6 EMV == qt1 MV
+   per account); Schwab `net_mv_plus_cash` is accrual-EXCLUSIVE (measured). C5's classifier is
+   therefore EXACT-form, not distributional: delta == accrued-interest, penny-level.
+3. **HARNESS BASIS RULE (binds 4a):** our comparison leg values on `net_mv_plus_cash`
+   (cash-inclusive) so the residual vs BD EMV is the ACCRUAL component alone -- comparing on a
+   securities-only basis manufactures a false C5-shaped delta out of cash (the exact error A1's
+   source made and corrected).
+4. **C5 RIDER SPECIMEN SELECTED (discharges the A1 selection ask):** account ...2917 (largest
+   accrual, $22.47K, clean separation) -- CRO~A's selection, probe rider-4 satisfied for C5.
+5. **Denominator enrichment (open-call 3 at Andrew, evidence sharpened):** ~$36.3M of the Travis
+   book alone is STRUCTURALLY invisible to Schwab-only feeds -- held-away class (Brighthouse
+   8.69M, Lincoln 3.70M, Merrill 401k 1.09M, Fidelity 0.99M, NCF DAF 5.64M, Schwab strays
+   0.07M) + 12 non-8-digit members. Out-of-oracle is not one class; the census prints these
+   subclasses separately.
+6. **PARKED DESIGN CELL (P3, CTO-gated, NOT ruled here):** our canonical sits accrual-EXCLUSIVE
+   by B_02's PENDING-RULING zero, and the accrued source exists in BD qt1, not in our Schwab
+   feed -- whether the canonical chain ever becomes accrual-inclusive (and from what source) is
+   a drive-to-EXACT convention decision at P3, never a comparison-layer side effect.
+
 ## ADDENDUM A2 -- 2026-08-19 ~19:03Z (STILL PRE-PROBE; per CVO P0-2 @cc223ee3b6)
 
 **C4's THIRD LEG, NAMED (the pre-registered row said "Schwab custodial" without naming the
