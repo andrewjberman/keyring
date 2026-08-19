@@ -12,3 +12,5 @@
 | 2 | 22a CODE close: deployed CodeSha256 == built artifact | PASS: both = dcw7rpR6eKfldEU6Ed/iO/YLqKRCpsjIxDo63U3Aeq4= (LastModified 01:37:27Z) |
 | 3 | ledger carries discriminator outputs + both riders | THIS FILE |
 | 4 | nothing else rides (no trigger/schedule; INERT stands) | PASS: census above |
+
+**BELT READ (11:55Z 08-19):** CW Invocations 01:28Z->11:55Z at 1h grain = ZERO datapoints, incl. the old 11:0xZ window -- no emission occurred; discriminator confirmed on the day itself. PB-3 fully closed.
