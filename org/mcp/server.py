@@ -1960,13 +1960,29 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
             read_dir = src / "read"
             read_dir.mkdir(exist_ok=True)
             msg.rename(read_dir / msg.name)
+        _ack_res = None
         if _read_ids and _broker_available:
-            _broker_fetch("/ack-messages", {"serial": _my_serial or agent_serial,
-                                            "ids": _read_ids})
+            _ack_res = _broker_fetch("/ack-messages",
+                                     {"serial": _my_serial or agent_serial,
+                                      "ids": _read_ids})
         parts.append(f"\n--- Archived {len(pairs)} messages to read/")
         if _read_ids:
-            parts.append(f"--- READ ack recorded for message id(s): "
-                         f"{', '.join(str(i) for i in _read_ids)}")
+            # REPORT THE ACTUAL OUTCOME. This block previously announced "READ ack recorded"
+            # UNCONDITIONALLY -- it claimed the READ clock had been written even when the
+            # broker call FAILED. That is exactly the class this primitive exists to retire:
+            # a delivery claim resting on something other than a consumption act.
+            # Measured live 2026-08-19: a post-T1 server against the still-pre-T1 broker gets
+            # 404 on /ack-messages, so the unconditional message would have asserted READ for
+            # every drained message across the entire version-skew window.
+            if _ack_res is not None:
+                parts.append(f"--- READ ack recorded for message id(s): "
+                             f"{', '.join(str(i) for i in _read_ids)}")
+            else:
+                parts.append(
+                    "--- READ ack NOT recorded: the broker did not accept /ack-messages "
+                    f"(ids {', '.join(str(i) for i in _read_ids)}). You read these messages, "
+                    "but the READ CLOCK IS UNWRITTEN -- do not cite them as acked. A pre-T1 "
+                    "broker has no /ack-messages route until it restarts.")
 
     return "\n".join(parts)
 
