@@ -1,8 +1,14 @@
 # comp-tools.yaml — Agent directive for compiler tools
 #
-# SCOPE DECLARATION (NFRA_COMPCLOSE 2026-07-14): this file is a CURATED DIRECTIVE SUBSET --
-# rich when/cost/output prose for the high-traffic tools -- NOT a registry and NOT a census.
-# It carries ~24 of the 62 on-disk tools BY DESIGN. The authoritative registries are:
+# SCOPE DECLARATION (NFRA_COMPCLOSE 2026-07-14; T6 v3.3-conformance edit 2026-08-19): this file
+# is a CURATED DIRECTIVE SUBSET -- rich when/cost/output prose for the high-traffic tools --
+# NOT a registry and NOT a census. It carries a curated subset BY DESIGN; **the subset size and
+# the on-disk total are DELIBERATELY NOT STATED HERE** (compile-or-cite, never hand-copy: this
+# line once froze "~24 of the 62" while the curated rows grew to 36 and the registered total
+# moved past 79 -- the exact frozen-digit drift the counts warning below documents). Live
+# numbers: `comp-manifest-check completeness` (gate-maintained). The GENERATE half of T6
+# (deriving this file's tool LIST from the registry, prose retained) routes with the s3
+# checker builds. The authoritative registries are:
 #   comp-coverage-map.yaml   (the router's universe: every tool, one home, explicit routable:)
 #   graph-call-manifest.yaml (tools_index + entries -- the fuzzy-routing vocabulary)
 # both enforced by comp-manifest-check's completeness family (incl. the DISK-IMPLIES-REGISTERED

@@ -106,3 +106,15 @@ T12 comp-adversary, the worldmodel/CRO program work) is pinned LOCAL as a class 
 ferries; D0's laptop basis upgrades from envelope-default to CRITERION; sitez's lane remains
 operational/mechanical workstreams (the D6/D7/D9 class) plus box-resident capabilities.
 "Generally" is his word -- exceptions are his to grant per case, never inferred.
+
+**OWNERSHIP BOUNDARY RESOLVED ~21:16Z (Andrew-direct trigger at the CTO terminal, VERBATIM:
+"Converse with MSTR on that, i do not think D7 is owned by this fabric"; CTO framing routed via
+MSTR 210814Z; CTO~Z + COO~Z CONCUR IN FULL @550b20ec5b, their trunk @e0de7ff9f4):** for the four
+SITEZ-placed items (D6/D7/D8/D9), **ITEM OWNERSHIP INCLUDING GATES = the sitez exec pair**
+(CTO~Z rules, COO~Z decomposes). Laptop legs are EXECUTION PLACEMENT under their ownership;
+laptop-CTO narrows to CROSS-FABRIC INTERFACES only. Envelope refinement concurred: the
+apply-through-laptop-lane riders are an EXECUTION mechanism (laptop apply-time mechanics --
+HALTGT/safe-apply -- still govern the applies), never a gate transfer; item ACCEPTANCE sits at
+CTO~Z. MSTR's 192422Z "per-item gates unchanged" line is WITHDRAWN as superseded. Laptop-CTO
+rulings made before this resolution (D7-U4 @c0eed182dc, D8-TO-C @e697f1450e) stand as
+HANDOFF-INPUTS at CTO~Z's gate -- adopt/amend/supersede is theirs.

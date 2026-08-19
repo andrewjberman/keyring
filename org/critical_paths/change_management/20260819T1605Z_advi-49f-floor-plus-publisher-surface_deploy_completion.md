@@ -2,7 +2,15 @@
 
 **Opened:** 2026-08-19T16:05Z (BEFORE apply, per the half-landed-deploy NEVER rule)
 **Operator:** 0.7.0_AE_CloudOps
-**Status:** OPEN -- applies pending DS~A's P2D-3 confirming measured number (CTO GATE-GO 160151Z received, conditional on the pin; surprise-number path pre-approved: amend the one cron line + re-plan + re-cite)
+**Status:** CLOSED 2026-08-19T17:35Z -- every close condition discharged (see the CLOSED section at foot).
+DS~A's P2D-3 pin condition WAS met and is cited in-body at 17:31Z: CHAIN OK date=2026-08-18 wall=107.1s rc=0,
+16 stages + c04, tables-not-labels acceptance verified live against S3. The CTO GATE-GO 160151Z condition is
+therefore satisfied, not pending; the surprise-number path was never needed (cron pinned at the candidate value).
+*(Header-vs-body drift corrected 2026-08-19T2135Z by 0.4.0_DS_ClientPlatform~A on COO's [DRIVE] RED-gate ask:
+the body recorded the close at 17:35Z but this Status field still read OPEN, so every ledger scanner keyed on the
+header reported a stranded leg that did not exist. Re-verified on the APPLIED plane before editing, not off the
+ledger's own self-report: `scheduler get-schedule advi-49f-gold-floor` = cron(45 12 * * ? *) ENABLED -> target
+advi-49f-gold-dispatch, and advi-49f-publisher = cron(15 13 * * ? *) DISABLED -- both exactly as the body claims.)*
 **Commit (build, pre-apply):** 1abc54fa4c
 **Plans staged:** opal-assets/advi-floor-p2.tfplan (11 add / 0 change / 0 destroy) + bd-pipeline/advi-pub-put.tfplan (1 add / 0 / 0)
 
