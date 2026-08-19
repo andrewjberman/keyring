@@ -3,7 +3,7 @@
 **Opened:** 20260818T1419Z by 0.7.0_AE_CloudOps. **GO chain:** COO re-sequence 130725Z -> AE mechanism 132226Z (COO-validated 132953Z) -> joint TO @8c25748037 -> DS deploy LANDED 141842Z (B_00/D_02/A_01 sha256==HEAD f71e767d33) = implicit GO (COO 135054Z) + DS explicit GO 141854Z.
 **Change:** infra/aws/terraform/bd-pipeline/iam.tf @7b706eec4c -- NEW aws_iam_role_policy.bd_exporter_monolith_schwab_advi_read (monolith-schwab-08335338-silver-read): s3:GetObject on arn:aws:s3:::opal-data-assets/schwab/08335338/silver/* + s3:ListBucket on the bucket prefix-conditioned schwab/08335338/silver/*. SEPARATE from the 08242234 (MDPF) grant -- two-buckets law. Plan 1 add / 0 change / 0 destroy.
 **Why:** deployed B_00.canonical_holdings now reads the LIVE ADVI Schwab RPS home (fact_rps) and FAILS LOUD (rc=2 AccessDenied) without it -- must land before the 23:01Z scheduled chain.
-**Status: OPEN.**
+**Status: CLOSED 2026-08-19T01:16Z by 2.0.0_SA_COO (fixture-verdict owner).** All legs DONE/PASS/CLOSED above; COO cold-read verdict 005714Z (chain PASS; TO-4 + mint released); DS fold @e4a83d1ebb resolved both residuals (R1 = schedule-vs-export ordering, source-confirmed, routed COO/CTO -- not a restore defect; R2 = header-vs-canonical basis offset, cent-exact tie refutes intra-vintage movement); TO-1 proof instance VALID rc=0 at COO desk. Nothing stranded.
 
 | Leg | Act | Proof | State |
 |---|---|---|---|
@@ -13,4 +13,4 @@
 | BP-6 | chain log: PHASE_D4 reached, "D_04 done (rc=0)" | CLOSED-PASS 00:48Z 08-19: chain_full_20260818_230100.log (1,195,766 B, landed 00:44:46Z, read in full 13,428 lines): :13374 "D_04 done (rc=0)" (PHASE_D4 complete 544s); :13426 "PARALLEL CHAIN COMPLETE"; all 25 stages rc=0; B_00 positive reads :398-428 (531/531 partitions parsed, range 2024-07-08..2026-08-17, 11 of 11 loaded, Dates processed 15); D_02 rc=0 with ZERO NaT WARN (grep NaT = 0 over 13,428 lines; control WARN=469 discriminates) -- A_01 source-fix consistent. Code vintage: mtimes 20:27Z reconcile-moved, bytes ETag-identical to 14:16/14:29Z deploys (MSTR 203827Z). |
 
 **Rollback:** git revert @7b706eec4c + safe-apply (pure-add policy; removing it re-breaks B_00 loud, not silent).
-**Closed:** {CLOSE}
+**Closed:** 2026-08-19T01:16Z (COO, on the joint proof instance @e4a83d1ebb + verdict 005714Z)
