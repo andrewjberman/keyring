@@ -1,5 +1,9 @@
 # THE 49F END-TO-END PUSH -- staffing, phase plan, handoffs (CTO, 2026-08-18 ~1505Z)
 
+> **⚠ AMENDED 2026-08-19 ~15:3xZ (Andrew-direct): §3's R-anchored calendar is SUPERSEDED by §6
+> (the FRIDAY COMPRESSION -- fam declared-stale decouple, Wed/Thu/Fri dates) and §7 (the BLACK
+> DIAMOND PARITY PROGRAM) below. Read §6/§7 before acting on any §3 date.**
+
 **Authority:** Andrew-direct ~1500Z at the CTO terminal (verbatim record: `ANDREW_DIRECT_20260818_ALL_RECS_APPROVED_49F_END_TO_END_PUSH_AND_MDPF_UNUSED_DELETE.md`, same folder): *"I reallly want to make a major push on 49 as the test case for the end to end push ... a dedicated session ... which will be now, so let's decide who we need on it, and put the whole fabric on the case with the adequate handoffs."* Program: `OPAL_ADVIPOINTERS` (owner CTO). Product/account: **Advisor Intelligence, 49 Financial, Schwab 08335338** -- never "49F" alone (naming law, pattern spec §6).
 **Roles (unchanged law):** CTO = architecture + phase-close ATTESTATION + per-apply gates · COO = decomposition into DATED TOs with proof-of-spec contracts, validation · MSTR = spawn/seat, integrate/push, carries Andrew · CVO = certs (two-phase pins, parity bar SS8, Rule 14e) · CRO = the GIPS field contract owner (`ADVI_PERFORMANCE`) + P5 methodology, consulted · lanes execute.
 **Spawn constraint (MSTR 150129Z, adopted):** `0.4.0_DS_ClientPlatform` base is DOUBLE-BOOKED (bd platinum acceptance 23:01Z tonight; MDPF_PROVENANCE T-B 08-19) and takes NO third thread; the 23:01Z restore verify is a HARD FIXTURE and is *phase zero of this same product*.
@@ -100,3 +104,62 @@ Every TO carries: `<proof_of_spec>` criterion-ids, the surprise channel (one ban
 | COO/MSTR "HELD terminal state" schema proposal (deploy ledger) | CTO residual bank | BANKED; goes on Andrew's next card as a schema act -- not built |
 
 **Rollback posture, every act:** same-window revert of the single moved edge; migrate-before-kill; no shadow channels; the legacy bd chain keeps running until P5 attests the flipped keys served correctly for the agreed window.
+
+---
+
+## §6 AMENDMENT 2026-08-19 -- THE FRIDAY COMPRESSION (supersedes §3's calendar for rows 2-4c)
+
+**Authority:** Andrew-direct at the CTO terminal 2026-08-19: *"we need to get that not only sorted
+out end to end architecturally and mechanically operable, and I want that planned for end to end
+completion by Friday afternoon"* + *"make sure that this schedule and parity check are worked into
+whatever plan document is governing the process here for 49."* Context: the FAM feed stoppage is
+ENDPOINT-CONFIRMED vendor-side (Schwab SDD lists /fam n=15 ending AsOfDATE 2026-08-07 vs siblings
+n=22 through 08-18; enumerate under Andrew's one-shot egress word 08-19); no pull-side act
+accelerates it; the Schwab human contact is the single feed accelerator.
+
+**THE DECOUPLE RULING (CTO):** the chain runs with FAM as a DECLARED-STALE input -- every
+fam-consuming table's manifest declares `fam_as_of=2026-08-07`; the declaration carries through
+the publisher to the affected keys (the d13-trio declared-degrade pattern); declarations LIFT
+AUTOMATICALLY when the feed heals (manifest-driven, no session act). Valuation/TWR/flows do not
+depend on family groupings; what degrades is grouping/rollup display, declared never silent.
+**Principle attached: one vendor feed must never freeze the whole product** -- the schedule-floor
+law one layer up. R remains ONLY the fam-heal event, no longer the chain anchor.
+
+**BAR COMPRESSIONS (stated, Andrew's Friday word is the authority):** (1) flip fires on TWO
+unattended greens (Thu+Fri) with the legacy chain as the live parallel net (it runs until P5
+regardless); the third green accrues Sat and closes P2 formally. (2) The floor cron pins on
+TODAY'S declared-stale measured run.
+
+| when | act | owner | close |
+|---|---|---|---|
+| WED 08-19 (perishable, ~2-3h) | fam declared-stale mode + P2D-3 QA on 08-18 -> MEASURED DURATION | DS~A | duration in writing |
+| WED 08-19 | P2-FLOOR TF apply (12:45Z cron, DLQ) on the measured pin; P4-PUBIAM + publisher schedule; P3 dims (a07 home, a06 xwalk) | AE + DS~A; CTO gates | applies ledgered |
+| THU 08-20 | 12:45Z FIRST green; P4 emit all 15 twins; CVO pins per key + the per-key oracle table (both serves exist) | DS~B + AE + CVO | 15/15 emitted, pins filed |
+| FRI 08-21 | 12:45Z SECOND green; DE repoint -> flip -> DT PROD promote; rendered + behavioral acceptance | DE + DT; CVO certs | **E2E COMPLETE FRIDAY PM** |
+| SAT+ | third green closes P2; legacy parallel until P5; FAM heal -> declarations lift + affected-key pin re-base (CVO, declared act) | standing | -- |
+
+## §7 AMENDMENT 2026-08-19 -- THE BLACK DIAMOND PARITY PROGRAM ("check our work"; a core feature of this product)
+
+**Authority (same Andrew-direct):** *"we need to 'check our work' as it pertains to GIPS and
+performance attribution and various reporting features against Black Diamond's calculated outputs.
+We need to check at account level and confirm over every account that we are getting to the same
+figures as Black Diamond is serving... We need to get to a point where our logic is EXACT."* His
+word here IS the scope authorization to extend the standing bd49f REST pull with BD's per-account
+performance/reporting endpoints (samples already in hand from the reporting_performance endpoint).
+
+**Design:** per account x period, classify our computed figures vs BD's OWN calculated outputs:
+`EXACT` · `EXACT-SHIFTED` (identical, +/-1d timing -- lag-correlation detected) · `TIGHT` (within
+N bp, WITH the distribution -- tight-but-never-exact fingerprints a convention mismatch: cash-flow
+timing, fee accrual timing, daily-TWR vs Modified Dietz) · `LARGE` · plus the per-account MIX
+PROFILE (perfect-for-some/off-for-others fingerprints cohort causes). Census prints its
+denominator (accounts covered / total); every non-EXACT class needs a NAMED mechanism -- no
+smoothing. The census becomes a STANDING TEMPLATE FEATURE inherited by INF and COT at their binds.
+
+| phase | when | act | owner |
+|---|---|---|---|
+| P1 probe | THU-FRI 08-20/21 | bd49f pull + performance endpoints; 3-5 accounts hand-checked vs the new chain's Thu output | DS-class + CRO methodology |
+| P2 census | MON-TUE 08-24/25 | full-population account-level census + first classification report to Andrew | DS-class harness, CVO grades |
+| P3 drive-to-EXACT | from 08-25 | fix largest class -> re-census -> repeat until EXACT across the board | DS + CRO; CTO gates convention changes |
+
+**Owners:** CRO holds the GIPS/methodology contract (ADVI_PERFORMANCE Phase-1 field audit is the
+input); DS-class builds the harness; CVO grades every census. All laptop-fabric.
