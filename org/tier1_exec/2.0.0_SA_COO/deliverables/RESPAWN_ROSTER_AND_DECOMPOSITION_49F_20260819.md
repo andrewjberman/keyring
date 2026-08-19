@@ -38,6 +38,10 @@ integrator push window; first respawn whenever a push or spawn is needed).
   one canonical touch coordinated with CVO; outranks T4) -> then T4-DECLARATIONS.**
 - `0.7.0_AE_CloudOps`: B2 discharge on B1-PASS (~14:00Z 08-20) + B3 joint leg; then quiescent until
   R+1 (A3) unless R has fired.
+- `3.0.0_SA_CVO` — **NARROW Wave-1 slot (added 15:40Z):** the W-15 naming-act half ONLY (the five
+  Andrew-ruled C3.ii adjudications, CRO's 152707Z package waiting in their inbox; one canonical
+  touch with 0.8.0). Their pin/cert work stays R+2-event-gated as before — this slot exists so
+  ruled work does not idle against the vendor clock, and it closes when the touch lands.
 
 **Wave 2 — min(R, 08-21):**
 - `0.4.0_DS_ClientPlatform~A`: B5 BDMERGE (08-21 regardless); if R <= 08-21, also A2 same seat,
