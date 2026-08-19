@@ -135,8 +135,14 @@ path — a registry that marks its own unresolved cells is doing its job, and fo
 ratified to clear a gate would be the fake-green worst case.** The five currently-declared cells,
 listed so the bar has a denominator: `Substrate_Side` [deprecated; **its reporting rule survives,
 binding**] · `Territory` [deprecated; **map-vs-territory sense survives** — T15] ·
-`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; owner CVO (claimed
-2026-08-19); disposition: Andrew naming act + CVO~Z fence + CTO arch, banked] · `Unreconciled_Aua`
+`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; **resolution_owner = 3.0.0_SA_CVO~Z per the cell's own field**
+(CVO-base's claim CORRECTED by its author 201517Z — their second ownership over-claim tonight,
+self-reported; the authority DOCUMENT is base-CVO's, the FENCE is ~Z's); disposition: Andrew
+naming act + ~Z fence + CTO arch; **STATE: OPEN, NOT DECAYING — the cell's own do_not test PASSES
+as of 2026-08-19 (the C3 walk's subject grain = contract_record, matching Lifecycle_Class's
+declared sits_at, so the contest is NOT being resolved-by-usage; re-runnable: parse
+c3-walk-agenda.py's subject grain vs the registry sits_at); result routes to ~Z via MSTR relay
+per the LD-0325 comms confinement**] · `Unreconciled_Aua`
 [contested; owner CVO; **disposition RE-SCOPED 2026-08-19 ~20:09Z on CVO's own deployed-bytes
 re-read: the defect is a VOCABULARY COLLISION ACROSS TWO PRODUCERS on the live served plane
 (INF_D_04's ~0.00 subtraction vs INF_D_02's unbilled-AUA accumulator, third-bucket names inverted,
@@ -147,7 +153,11 @@ census remains a bar-blocker until declared-with-owner or resolved. **AND THE SC
 path is SCOPED TO THE ACTUAL DEFECT — status + owner + a path that solves a smaller problem than
 the one present is the same failure as no path, wearing completion. The listing therefore carries
 each cell's disposition in one line, so a reader checks the scope rather than trusts the
-presence.** CVO's verification axis runs the hunt; his
+presence. AND EACH CELL DECLARES ITS DECAY STATE (CVO 201517Z): OPEN-NOT-DECAYING vs DECAYING —
+a contested cell being silently resolved in one direction by a tool populating one sense is
+MATERIALLY WORSE than an open one, because the resolution lands without a naming act and nobody
+sees it; where a decay test exists it is NAMED and re-runnable, converting "is this cell
+rotting?" from a judgement into a test.** CVO's verification axis runs the hunt; his
 gate, his word.
 
 ### Rows added ~20:0xZ (conflicting-half pass 1)
