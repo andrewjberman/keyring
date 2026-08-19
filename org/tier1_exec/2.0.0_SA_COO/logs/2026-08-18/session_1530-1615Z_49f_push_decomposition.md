@@ -256,3 +256,56 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
   most lanes idle until FAM resumes — economy is the point).
 - Standing: T-B 13:30Z proof (DS base, in flight at this minute); AE B-grant apply at CTO gate;
   R-clock on the standing pulls; my banked allocation stack unchanged.
+
+---
+
+## ADDENDUM 4 — 13:31Z–17:36Z 08-19: the SS6 Friday compression, executed same-day
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 4)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| proof-of-spec-check | T3-VENDORCLOCK 5/5 rc bare | PASS | zero retimes = the good null; accepted+closed |
+| spawn-agent.ps1 | 0.4.0_DS_ClientPlatform~A + SS6 direction | PASS | COO-spawn mechanism proven under Andrew's discretion grant |
+| (lanes' own batteries) | validated at reports | PASS | 22a member verifies, tables-not-labels live checks, IAM batteries |
+
+## Delta
+
+1. **Post-fleet-order absorptions:** brief decomposed (@54aec6df84: disposition map + R-WATCH TO +
+   3-wave roster); wind-down executed (7 kills, 3 spares; broker restarted by my registration);
+   TIGHTENING brief Andrew-ratified → T3 GO'd (AE; PASS-COMPLETE same-day, zero retimes, accepted),
+   T4 staged, T1/T2 deferred on CTO's design note; CRO~A triage hooks 4/4 dispositioned (R-WATCH
+   generalized to the vendor-frontier roster); W-15 staffed (@0.8.0 + narrow-CVO); FAM endpoint
+   enumerate under Andrew's one-shot grant → vendor-side CONFIRMED (15-vs-22), notice addendum.
+2. **SS6 FRIDAY COMPRESSION (Andrew: E2E complete Friday PM; CTO decouple ruling — fam
+   DECLARED-STALE, R demotes to heal event):** executed same hour — DS~A spawned 15:33Z with the
+   perishable dispatch; AE dispatched; roster superseded-for-A2-A7 with the Wed/Thu/Fri table;
+   ADVI_BDPARITY.P1-PROBE cut (§7, DS base Thu-Fri, CRO methodology); Friday-feasibility flags
+   1-5 stated in-doc same day per Andrew's instruction.
+3. **THE TWO SEVERE QA CATCHES (both pre-schedule, both by the exercised-path criterion):**
+   (a) 5 repo-root assumptions that IndexError on the bundle path (would have aborted fire 1);
+   (b) the cross-project casebook collision — c00-c02 wired to OPAL_GLDRNS modules under this
+   product's labels: CHAIN OK while never writing flow_ledger/nna_canonical/twr_daily. Floor pin
+   HELD for the corrected number (issuer word; P2D-3's own criterion); CTO's tables-not-labels bar;
+   incident converted to REG-0 (the registry's founding fixture: collision = REFUSAL) + the GLDRNS
+   disambiguation banked 08-25.
+4. **WEDNESDAY CLOSED COMPLETE:** corrected chain CLEAN E2E 107.1s (16 stages + battery;
+   tables-not-labels live-verified both directions); P3 dims landed in the same run (a07 pair
+   90.90% tri-firm, a06 7,305 rows); floor ENABLED cron(45 12) on the pin; grant live; shell
+   DISABLED-by-design (feasibility flag 4 accepted); B8 + a07 union grants (Andrew "Yes, approved")
+   gated+applied+proven; AE ledger closed 5/5 CTO conditions. **My tonight re-date clock dissolved
+   unused.**
+5. **Andrew's four positions:** powder HELD for the unified structure wave at transcript 3 (live
+   threads excepted); MSTR ready-and-waiting; BD householding sample approved (fam-retirement gate
+   1/2; probe queued no-clock at AE); ticketing positions logged. cc-defect lesson propagating
+   fabric-wide (real sends everywhere, incl. by others).
+
+## Gate-forward (17:36Z 08-19)
+- **THU 08-20:** COO spawns the wave at morning (DS base [R-WATCH roster-read + B1 13:35Z proof-READ
+  + B3 + BDPARITY probe], 0.8.0 [REG w/ REG-0 fixture → J3 → HELD-STATE → W-15 → T4], DS~B [15-twin
+  emit on the live grant], CVO-full [pins + OR-3 + W-15 naming + adjudications], DE [oracle rows +
+  repoint prep]). Events: 12:45Z FIRST green; 13:30Z PB-1 → B2 discharge.
+- **FRI:** second green → repoint → flip → DT promote → E2E COMPLETE.
+- Pending: transcript 3 → the unified structure/delegation wave (MSTR returns, integrator push).
