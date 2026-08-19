@@ -1,5 +1,12 @@
 # D7 U4 -- SERVICE-IDENTITY RULING (the Analyst's ticket-creation caller), 1.0.0_SA_CTO, 2026-08-19 ~21:1xZ
 
+**⛔ OWNERSHIP CAVEAT, added minutes after commit (Andrew-direct at the CTO terminal, VERBATIM:
+"Converse with MSTR on that, i do not think D7 is owned by this fabric"):** D7 is a
+SITEZ-placed item, and per his word its ownership -- including this gate -- may sit with the
+sitez exec pair (CTO~Z), not this seat. **This document is therefore a HANDOFF-INPUT, not a
+binding ruling, until the ownership conversation with MSTR resolves:** CTO~Z may adopt, amend,
+or supersede it at their gate. Nothing executes against it meanwhile.
+
 **Pulled forward under Andrew's drive word ("do not delay unnecessarily") so TO-D is not
 waiting on this gate at its seat's respawn.** Scope: the shape CONSTRAINTS any implementation
 must satisfy; the TO's Phase-1 grounding proposes the concrete mechanism for a one-line CTO
