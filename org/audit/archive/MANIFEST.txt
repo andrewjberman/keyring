@@ -31,3 +31,9 @@ org/mcp/sovereign-registry-override-audit.log
 org/tier0/audit/ledger-hook-audit.log
 org/tombstone-gate-audit.log
 org/rcg-sweep-audit.log
+# ADDED 2026-08-19 (0.7.0_AE_CloudOps, CTO-gated GO 115652Z): org/jq-ban-override-audit.log.
+# COVERAGE clause fired at two seats' startups (08-18/08-19); GROUNDED: the jq-ban gate's
+# override/exercise audit trail -- its single line IS Andrew's 08-11T190811Z gate-GO acceptance
+# exercise; a gate's bypass record is precisely the tamper-evidence class. LOW CHURN (1 line/8d).
+# PRECEDENT: pipescript-suite-gate-audit (08-06) + tombstone-gate-audit (08-03), same class same answer.
+org/jq-ban-override-audit.log
