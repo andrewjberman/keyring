@@ -47,3 +47,12 @@ grain, not AST — declared honestly in its own banner); comp-iam (models `(acti
 
 - 2026-08-19: skeleton opened; rows A1–A10 pre-seeded from session-grounded evidence (each count
   carries its source in-row; A2/A3 figures are 08-12-build vintage — re-derive live at scoring).
+- 2026-08-19 (later): **evidence home moved** — Andrew-direct fold @6096e11d95 lands the
+  OPAL_WORLD_MODEL content at `infra/system/ontology/worldmodel/`; `10_census/` is this census's
+  declared SEED + DIFF BASE (07-31 vintage snapshot, marked so — never a live read). Observed
+  vintage delta at fold-verify: `20_rulings/RULINGS_LEDGER.jsonl` = **121 rows live vs 118
+  declared in PRD v0.1** — the census predicate applied to its own seed (FAILS-b shape, almost
+  certainly 3 rulings landed after v0.1 was written; adjudicate the 3-row provenance at the first
+  Limb-A-adjacent scoring pass, do not silently re-declare). Fold-verify counts: subtree find =
+  **68 files** vs the relay's "62" — classify at the same pass (dir-grain vs file-grain or
+  post-fold additions; both counts recorded so the delta cannot vanish).
