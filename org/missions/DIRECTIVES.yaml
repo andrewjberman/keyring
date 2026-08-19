@@ -1,0 +1,112 @@
+# org/missions/DIRECTIVES.yaml -- Andrew's Items 0-9 as a rollup over the mission register.
+#
+# >> DERIVED VIEW ONLY. TRIPWIRE (CTO, verbatim): "recomputable from missions.yaml alone or it is
+#    rejected." A row here carries NO paths, NO attach, NO holes -- attribution lives in
+#    org/tier0/missions.yaml and nowhere else. A member is a REFERENCE to an existing sub-group id
+#    (or a project code, which is itself a register-external label, never a glob). If a row here
+#    ever needs its own glob to be true, the row is wrong, not the taxonomy. <<
+#
+# Source of the item list: org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_MASTER_DIRECTIVES_DRAFT_20260819.md
+# S10 (the delegation breakout, Andrew ~17:35Z) + S11 (this rollup layer, Andrew ~17:4xZ).
+# directive: cells cite the D{N} PRDs directly (committed @375c874a9e/@8d662d5f1f, the
+# 185302Z PRDs-done trigger landed before this mint committed -- no S10-anchor round trip needed).
+# stance: is HUMAN (register contract: the machine cannot write a stance). as_of per the README TTL note.
+# Minted 2026-08-19 (missions-revival step 4, LD-0425). Owner: 0.0.0_AB_MSTR per .register-owner.
+
+version: 1
+as_of: "2026-08-19"
+
+directives:
+  D0:
+    title: "Infrastructure (ongoing)"
+    directive: "docs/architecture/D0_INFRA_TIGHTENING_PRD.md"
+    members:
+      subgroups: [INFRASTRUCTURE.TOOLS, INFRASTRUCTURE.GRAPH, INFRASTRUCTURE.DEBT]
+      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS]
+    stance: "Ongoing, laptop. Live legs: T1 broker primitives (design->0.8.0 build), T2 stamps,
+      T4 two-homes declarations, REG-SCAN-ATOMCHECK + J3 (08-20, REQUIRED before INF binds),
+      LD-0424 kill-instrument self-exclusion fix, GLDRNS wrapper disambiguation (08-25),
+      the CRO-led infra-graph program."
+  D1:
+    title: "MDPF asset-category views (~2wks)"
+    directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: []
+    stance: "Laptop. CTO taxonomy gate (Rule-24 declaration) -> category registry -> DE portal
+      build -> Cottonwood display acceptance (~$7M Custom + ~$30M Client Advised/Residual) = DONE.
+      Independent of R and of Friday."
+  D2:
+    title: "ADVI 49F end-to-end (Fri PM target)"
+    directive: "docs/architecture/D2_ADVI_49F_E2E_PRD.md"
+    members:
+      subgroups: [PORTAL.ADVISOR_INTELLIGENCE, EXTERNAL.49FINANCIAL]
+      projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE]
+    stance: "Floor ENABLED on the 107.1s pin (@647c432a7d); THU first green 12:45Z + emit + pins;
+      FRI second green + repoint + PROD promote = E2E COMPLETE; then the parity program
+      (probe THU-FRI, census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green, COT third.
+      FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
+  D3:
+    title: "Account-level model overlay (~6-7wks, pends D1+D2)"
+    directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: []
+    stance: "CTO writes the PRD now (Mike-call user story verbatim); the SmartX<->BD/Schwab
+      EXACT-JOIN spec is the early-startable precondition; build launches the day D1+D2 clear."
+  D4:
+    title: "ETF positioning variant (3-8wks, behind D1)"
+    directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: [ETFS_CANON]
+    stance: "SCOPE CORRECTED by Andrew ~17:4xZ: an ETF VERSION of the Positioning page (flip
+      ETFs DIVZ/IDVZ/PFDE/PFOE vs Models), FULL-STACK -- first act is a state assessment of the
+      ETF data plane (canonical home opal-data-etfs, build-out honestly UNKNOWN); CTO rules the
+      ETFS_CANON design gate this week; the four ETFs also join D1's taxonomy as SMA-category
+      members -- one registry serves both."
+  D5:
+    title: "Alt research (ongoing)"
+    directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
+    members:
+      subgroups: []
+      projects: []
+    stance: "CRO ingest lane continues; the build queue activates on Andrew's prioritization word.
+      No register home yet -- an empty member set is honest where a plausible one is not."
+  D6:
+    title: "Opal Analyst + partner GraphQL (v0 ~2wks; SITEZ box legs + laptop cloud)"
+    directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
+    members:
+      subgroups: [EXTERNAL.49FINANCIAL]
+      projects: [OPAL_ANALYST]
+    stance: "SITEZ: SharePoint access + BBG pipe builds (off proven W7/W8) -- MSTR coordinates,
+      cross-fabric issuance never-implicit; laptop: the GraphQL query layer (Andrew's spec file =
+      the one open input); the Analyst's ticketing duty (D7) lands as a named responsibility."
+  D7:
+    title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
+    directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
+    members:
+      subgroups: []
+      projects: []
+    stance: "Portal accept/in-progress/complete already LIVE (P0). Open legs: Graph DL discovery
+      (addresses = the open input, one-liner confirm with Andrew), Graph subscription/poll
+      (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
+      2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
+  D8:
+    title: "Philosophy + benchmark modal live-edit (this week)"
+    directive: "docs/architecture/D8_LIVE_EDIT_MODALS_PRD.md"
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: [OPAL_INVPHL]
+    stance: "Days of work: server-side content store (small AE leg) + edit surface on both modal
+      families (DE-class) + CTO gates the auth surface (Opal-employee scope)."
+  D9:
+    title: "Tax SMA ops (NEW; assess-first)"
+    directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
+    members:
+      subgroups: []
+      projects: [PFMG_TAXSMA]
+    stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
+      08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
+      -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs pend Andrew's
+      ingest word."

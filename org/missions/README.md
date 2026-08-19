@@ -30,6 +30,16 @@ worst kind of erasure.
 
 **`state.yaml` is the machine's hard boundary.**
 
+**Stances carry `as_of` and age against a TTL (schema note, 2026-08-19 revival, LD-0425).** A stance
+block SHOULD carry `as_of: YYYY-MM-DD` (the date its evidence was read) and MAY carry `ttl_days`
+(default 14). The compile SELF-LABELS any stance older than its TTL as **`STALE-DECLARED`** in
+MISSIONS.md — the `prose_stale` pattern generalized to stances: the register never deletes an aged
+judgment, it labels it, because a summary that silently ages is how a register starts lying. *(The
+labeling itself is a `comp-missions` code change — an 0.8.0-class build row COO cuts; until it
+lands, `as_of` is written by hand per this contract and read by humans.)* This is the CLASS fix for
+how the register died: a refresh that was nobody's job produced stances that were 21 days
+stale-wrong with nothing in the compiled view saying so.
+
 > **The machine cannot write a stance.** `BUILT` anchors on an **exercised run**, and a commit scanner
 > structurally cannot see a run. This was proven on 2026-07-28: a `BUILT` scored off a producer
 > *landing* was two hours stale and had to be corrected off the run. **Commit activity is not
