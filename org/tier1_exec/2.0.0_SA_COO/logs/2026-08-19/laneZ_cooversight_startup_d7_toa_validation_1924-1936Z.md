@@ -203,3 +203,41 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
 - **At me, event-driven:** TO-B index validation vs the W5 C1-C9 bar (needs the CVO~Z co-sign —
   next-slot); D8 seat coordination joins the pattern; census at any next spawn event.
 - **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6 at ceiling, zero spare.
+
+---
+
+## ADDENDUM 4 — 21:01–21:15Z: D9 arc closed, the positional-citation bar, the ownership boundary
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 4)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @1113a2b984 (via relay), @550b20ec5b, @e697f1450e | PASS | boundary record + D8 TO-C ruling verified resolving + content-read; @16dd353b does NOT resolve on SITEZ (integration lag — flagged, not assumed) |
+
+## Delta
+
+1. **D9 ARC CLOSED:** base-COO ACCEPT 7/7 (mutation-tested validation), TO complete @1113a2b984;
+   the 7th-seat respawn contingency DISCHARGED; CVO~Z sole next-slot claimant on both fabrics.
+2. **POSITIONAL-CITATION BAR ADOPTED** (base-COO carry-forward, then landed at PROTOCOL level in
+   @e697f1450e): a bare rc=0 is not positional coverage — the citation NAMES the expected-id set
+   it ran against; an rc=0 without its id set reads positionally UNVALIDATED at this desk.
+3. **D-FAMILY OWNERSHIP CONVERGED** (Andrew's word at the laptop CTO terminal; joint answer
+   @550b20ec5b): site-Z owns D7/D9/D6/D8 incl. gates — CTO~Z rules + COO~Z decomposes, laptop
+   legs = execution placement, laptop-CTO narrowed to cross-fabric interfaces. **My three seams
+   adopted verbatim:** (1) no new gates in the transfer — the transferring gate set is the one
+   already in the TOs/PRDs; (2) CVO certification verdicts stay constitutional — we own gates
+   AROUND them, never verdicts; (3) seat/census plumbing unchanged (MSTR~Z spawn/kill/integrate,
+   my census measurement). Concur-on-summary caveat carried: the joint answer re-opens on any
+   material delta in the full frame @16dd353b once it integrates.
+4. **Gate acts under the boundary (CTO~Z):** D8 TO-C @e697f1450e RATIFIED unamended (resolves
+   on SITEZ, read before ratifying); D7-U4 ADOPTED-AS-STANDING-INPUT UNRATIFIED-PENDING-RESOLUTION
+   — pinned at BOTH desks: nothing executes against it until its commits resolve post-integration.
+
+## Gate-forward (21:15Z)
+- **At Andrew:** D7 one-line-back; #48/uiux one-card; DAPI-liveness implementation owner routing.
+- **At my pair (post-boundary):** D7 TO-C gate structure, D6 row gates, D8 acceptance — held w/
+  existing pins (TO-B vs C1-C9 + named-id-set; TAC-3 schedule-exit law). CVO~Z next-slot fires
+  the cert chain. D7-U4 ratify-or-amend at the D7 gate post-integration.
+- **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6, zero spare.
