@@ -60,15 +60,24 @@ stack. Everything in that post-Friday list EXCEPT the builds touching laptop-pin
 split-session material.
 
 ---
-## ADDENDUM 18:45Z — MEASURED ENVELOPE (MSTR partial, CTO relay 184148Z; MSTR~Z consolidates after)
+## ADDENDUM 18:47Z — CONSOLIDATED ENVELOPE (MSTR 184400Z, every cell MEASURED by MSTR~Z; supersedes the 18:45Z partial)
 
-Principle 4's conditional now has a measured floor: **data-bucket deploy legs are UNBLOCKED on
-sitez** (safe-deploy PROVEN — 10 objects / 3 buckets, yesterday's leg-2) and **safe-commit +
-comp-tools PROVEN**. Still CONDITIONAL: m365 gateway (headless-auth caveat — D7 Graph poll + D9
-SharePoint legs; S10 already slots the Graph leg laptop-side, consistent) and portal dev-build
-(any DE-class frontend export). BBG-box strengths are real (terminal + DAPI + pull pipeline +
-box SharePoint + Analyst runtime) but the **WDAC freeze holds until 08-20 07:00 acceptance** —
-nothing loading unsigned binaries lands there before it clears. **Concurrency ceiling ~4-5 seats**
-(pending MSTR~Z's own word) — this IS the session's capacity constraint, as §2 predicted. The
-cross-fabric /integrate merge fires on CTO's PRDs-done word, so sitez sits at parity vintage
-before any issuance.
+**PROVEN sitez:** same AWS principal as laptop (sts-verified); safe-deploy data-bucket writes +
+portal-v2 publisher writes EXERCISED; safe-commit 4x today full gates; comp-tools 91/97; full
+checkout parity; **m365 gateway REACHABLE + EXERCISED (whoami) — the headless-auth conditional is
+RETIRED** — plus `opal-gateway-bbg` (the Bloomberg identity) lives ONLY at the BG seat: BBG-identity
+legs are **SITEZ-ONLY**, an affirmative export class the laptop cannot hold.
+**HARD CAVEAT:** `.tools/terraform.exe` ABSENT — **SITE Z IS NOT A TF-APPLY SITE** until
+deliberately provisioned; safe-apply unexercised; ALL infra applies route laptop. (Data-bucket
+safe-deploy stands proven; the TF distinction is the placement line.)
+**CHEAP-PROOF class:** portal dev-build (bun installed, submodule one fetch behind) — price a
+first-act proof into any DE-class sitez TO, never assume.
+**AFFIRMATIVE sitez advantages:** sole Bloomberg terminal + DAPI + entitlements + the tplus1
+pipeline; SharePoint library OneDrive-synced to LOCAL DISK (doc-heavy work is FASTER there);
+RDP-over-tailnet; a resident heavy ML/graph stack (torch/faiss/kuzu/duckdb/pyarrow) — making sitez
+the natural home for graph/world-model COMPUTE, not just reads.
+**CONCURRENCY (their word):** the binding constraint is the ONE SHARED CHECKOUT — 6 sustained /
+8 burst; keep 07:00 ET ±30m light (BBG window); the uncommitted-work-loss hazard is live at high
+concurrency → prefer FEW SEATS x WHOLE PROGRAMS (principle 2 reinforced by the machine itself).
+**WDAC freeze until 08-20 07:00 acceptance** (unsigned-binary-loading work exposed until then).
+Parity: sitez pushed+clean through 0a6cf6dc78; their merge leg fires fast on CTO's PRDs-done word.
