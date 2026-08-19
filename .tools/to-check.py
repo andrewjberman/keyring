@@ -139,7 +139,7 @@ def parse_to_file(path: str) -> dict:
         title = _extract_tag_multi(text, "title") or ""
         assigned_to = _extract_tag_multi(text, "assigned_to", "issued_to") or ""
         issued_by = _extract_tag_multi(text, "issued_by") or ""
-        issued_date = _extract_tag_multi(text, "issued_date", "date") or ""
+        issued_date = _extract_tag_multi(text, "issued_date", "date", "issued") or ""
         status_raw = _extract_tag_multi(text, "status") or ""
         priority = (_extract_tag_multi(text, "priority") or "")[:80]
 
@@ -172,7 +172,15 @@ def parse_to_file(path: str) -> dict:
             m = re.match(r"^([A-Z][A-Z0-9_]{2,})", fname.upper())
             project_code = m.group(1) if m else "UNKNOWN"
 
-        # Validate issued_date format
+        # Validate issued_date format.
+        # ACCEPT ISO-8601 WITH TIME as well as a bare date: TOs authored with
+        # <issued>2026-08-19T20:05Z</issued> are as dated as ones carrying
+        # <date>2026-07-07</date>, and blanking them made 156 of 359 open TOs
+        # read as age-UNKNOWN -- which reads as "no dormancy signal" rather than
+        # "the parser could not see the date". Truncate to the date part, then
+        # validate exactly as before.
+        if issued_date and len(issued_date) >= 10:
+            issued_date = issued_date[:10]
         try:
             datetime.strptime(issued_date, "%Y-%m-%d")
         except (ValueError, TypeError):
