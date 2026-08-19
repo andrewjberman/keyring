@@ -104,6 +104,14 @@ what the record now teaches.
 - **D-family oversight** — D7 live at AE~Z (COO~Z validates deliverables per split); D9/D6 arrive
   via ferry; D3 spec-leg conditional unchanged. Nothing due at this desk tonight.
 - **Standing:** event-driven; zero crons; Monitor b4jhotqda is the wake mechanism.
+- **LEDGERED (MSTR~Z ferry 220956Z, 0.8.0-measured, no action):** the laptop listener design note
+  (frame 1c84a470 part 3) is UNDER-CORRECTION — `DETACHED_PROCESS` structurally cannot close the
+  listener-death class (it detaches the CONSOLE, not the parent-child RECORD; kill-agent reaps by
+  recursive ParentProcessId descent), and this fabric carries the same listener lifecycle
+  (inbox-watch.sh children + broker listeners). **TRIPWIRE at this desk: no listener-lifecycle
+  machinery gets built from that note — binds the DAPI-precondition implementation routing (its
+  recovery-path design must not lean on DETACHED_PROCESS) and any future watcher hardening —
+  until the laptop CTO's corrected version lands.**
 - **BANKED, no action tonight (COO~Z surprise-channel 194208Z, VERIFIED at this desk 194x Z):**
   `0.1.0_DE_MarketIntelligence` has TWO agent folders — `org/tier2_senior/` (pre-program TOs:
   ADHC_DESIGN/DEBT/YANG) and `org/tier3_junior/` (the OPAL_ANALYST program home: W4a, W4c-1, EXP1,
