@@ -14,3 +14,8 @@
 
 **Apply record:** safe-apply apply (HALTGT passed), TARGETED 5 resources: "Apply complete! Resources: 5 added, 0 changed, 0 destroyed" 01:08Z. The staged global_graph ms_heat row NOT ratified (deliberate targeting; COO-banked).
 **CLOSED 2026-08-19T01:13Z by 0.7.0_AE_CloudOps. CTO validation requested same-window.**
+
+## SPINE ADDENDUM (01:44Z 08-19)
+- **RP-SPINE-1 COMPLETE:** independent recursive counts new==old EXACT (4,222 objects / 327,275,368 B; fourth derivation beside DS~A manifests + CVO 012430Z); stage-input resolution exercised through the FLIPPED runner_common (_bucket_for -> opal-data-49financial; real partition READ date=2026-07-02, 7,095 rows x 20 cols; negative control: silver key -> opal-data-assets). 1000-key listing truncation disclosed (page, not total).
+- **PRE-ACT CONSUMER RE-CHECK (fresh, denominators):** platinum/advi = 0 objects; 0 of 7 CF origins name opal-data-assets; comp-find 'portal/gold/advi' = 0 hits / 6,887 files (lambda + edge + portal sources).
+- **RP-SPINE-2 HELD-FOR-ANDREW-MORNING (CTO ruling 014221Z):** the harness permission layer DENIED the recursive-rm form; re-shaping the identical bulk act around a human-confirmation control on agent authority alone is the side-door shape (CTO, verbatim-in-substance). Hold costs zero: nothing writes the old prefix (runners flipped; no scheduled producer until P2); static overnight. Morning act on Andrew's word, either form he blesses; consumer re-check re-derives at act time. Surfaced on Andrew's card by CTO same turn.
