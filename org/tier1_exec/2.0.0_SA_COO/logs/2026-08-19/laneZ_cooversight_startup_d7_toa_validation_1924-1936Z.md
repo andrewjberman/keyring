@@ -66,3 +66,43 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   when it opens (TAC-3 schedule-decision exit is law: a schedule, never an alert).
 - **Bounds standing:** 08-20 07:00 WDAC acceptance gates all landings; 07:00 ET ±30m light;
   commit-own-lane-never-push; cma pip-owned pins.
+
+---
+
+## ADDENDUM — 19:37–19:43Z: §6a amendment, the alias-asymmetry flag, W5/W6 cut verified
+
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @88db84f6c2, @548b5c6afa, @56b5ae8796, @f6eb5134dc | PASS | every cited commit verified resolving + content-read before acting on it |
+| to-check | --all --assignee 0.1.0_DE_MarketIntelligence~Z (re-run) | PASS | 0 -> 1 active TO after the W5 cut: the instrument sees the new TO (staged, correct assignee) |
+
+## Delta
+
+1. **§6a amendment absorbed** (Andrew-direct 1936Z via MSTR~Z console, @88db84f6c2 verified):
+   intake identity presents as opalsupport@opalinvest.com, never opalbloomberg@ externally.
+   My TO-A verdict UNAFFECTED under the alias shape (mechanism I corroborated survives).
+2. **Alias-asymmetry hazard surfaced** (INFERRED class, seat + MSTR~Z, 1939xxZ): inbound alias
+   delivery is free, but outbound presentation needs tenant SendFromAliasEnabled (M365 default
+   OFF) — with it off, Graph sends present the primary (opalbloomberg@), the exact broadcast
+   Andrew ruled against, surfacing only at the first real reply. Discharging check named; the
+   invert-primary remedy (opalsupport@ primary, opalbloomberg@ alias) flagged as the cleaner
+   shape. Seat folded it durably into §6a @56b5ae8796 with attribution + caveat; routes to
+   laptop AE for TO-B pricing via MSTR~Z's ferry (pointer requested in their next send).
+3. **W5/W6 cut VERIFIED @548b5c6afa** (CTO~Z adopted the census rec whole): W5 staged at
+   0.1.0_DE_MarketIntelligence~Z spawn-on-GO w/ fresh-spawn context; W6 staged at CTO~Z+CVO~Z;
+   both GO-gated on the 08-20 07:00 WDAC acceptance. My validation lane at GO agreed.
+4. **Two-homes finding banked with an owner:** 0.1.0_DE_MarketIntelligence has BOTH
+   org/tier2_senior/ (pre-program TOs) and org/tier3_junior/ (OPAL_ANALYST program home:
+   W4a/W4c-1/EXP1/W5) folders — one-logical-seat-two-homes class vs XXX.md's DE=tier2 mapping.
+   CTO~Z independently verified and owns it durably @f6eb5134dc; no action until it earns a slot.
+   Discoverability unaffected tonight (issued_to is the truth; to-check indexes workspace-wide).
+
+## Gate-forward (19:43Z) — unchanged from 19:36Z except:
+- TO-A fully closed BOTH directions (seat RAVC-4 + my close); TO-B pricing now carries the
+  @56b5ae8796 asymmetry pointer.
+- W5 GO-time acts at me: measured census at the spawn event; 7-vs-6 overlap adjudication vs
+  D9 timing / D7 wind-down; RAVC validation of W5+W6 deliverables.
