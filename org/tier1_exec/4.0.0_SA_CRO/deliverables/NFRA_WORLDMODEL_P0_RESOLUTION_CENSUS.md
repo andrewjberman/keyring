@@ -140,7 +140,20 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
   Iceberg column holding SUBSTRATE values," measured and naming-act-recorded 08-12. Execution
   routed to CTO (the S0 layer→substrate migration their 08-12 arch-call already sequences; this
   is lock-down work — the ruled fold executing — not post-lock-down graph work).
-- 2026-08-19 (later): **evidence home moved** — Andrew-direct fold @6096e11d95 lands the
+- 2026-08-19 ~2101Z (CVO contradiction pass, terms 2–5 — ADOPTED): **THE COLLAPSE: O1's 8
+  non-agreeing rows are NOT 8 defects** — Substrate (term 1, real) + Domain (term 4, NEW) are the
+  only independent findings; Estate INHERITS Substrate (no remedy of its own — counting it invites
+  one); Segment SPLIT + Contract_Record `describes` = the checker's named fixtures 1+2 (cite,
+  never re-adjudicate); C0/C1/Estate_Contracts UNDECLARED-b per the pre-registered frame. **A
+  remediation plan sized off 8 would be sized off double the real count.** DOMAIN (term 4): the 4
+  missing values are EXACTLY the v2.0 "term-keys-only, on-disk unchanged" four; `Ui_Dataflow` is
+  Andrew-ratified w/ a CVO grain ruling and ZERO materialized anchors; mechanism VERIFIED distinct
+  from Substrate's (anchor-catalog materialization gap — `domain` is not a graph property at all;
+  different mechanism, different owner). **RIDER ACCEPTED (program-lead call): Domain's
+  legislated-vs-materialized reconcile RIDES the A5 C3.i 14-vs-4 reconcile — one act, two grains,
+  the method already designed.** Segment bonus: THREE surfaces of ONE rename found by THREE
+  instruments (term sweep :422/:438, hand read T4, resolver c4_segments) — the claim-sets rule
+  measured, not asserted. Smoke set exhausted at term 5; terms 6+ run unprioritized. — Andrew-direct fold @6096e11d95 lands the
   OPAL_WORLD_MODEL content at `infra/system/ontology/worldmodel/`; `10_census/` is this census's
   declared SEED + DIFF BASE (07-31 vintage snapshot, marked so — never a live read). Observed
   vintage delta at fold-verify: `20_rulings/RULINGS_LEDGER.jsonl` = **121 rows live vs 118
