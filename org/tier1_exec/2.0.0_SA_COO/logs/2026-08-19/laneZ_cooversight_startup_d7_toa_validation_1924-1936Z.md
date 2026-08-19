@@ -283,3 +283,45 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   delivery; D7 TO-C/TO-D gates at their windows.
 - **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6 at ceiling. All D-family stale
   sovereign rows TERMINAL with pointer chains; boundary live at four desks.
+
+---
+
+## ADDENDUM 6 — 21:28–22:16Z: the CVO~Z queue grows to 4; the T1-4 both-fabrics leg run + ferried
+
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum 6)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @b86a0bbb23/@cafbd851da (lifecycle); @456d38d4c6 (batteries); d547f109fe == current trunk broker.py vintage; e7858adf52:org/mcp/broker.py resolves w/ content | PASS | every pin verified before allocation/accept; batteries confirmed on-disk pre-dispatch |
+| sed (battery header) | delivery_clocks:1-6 | PASS | "Runs against a SCRATCH broker" — the seat's frame correction source-confirmed at MY desk before ferrying |
+| ps (instrument note) | broker.py grep | (blind) | MSYS ps returned EMPTY on a broker serving :7800 — the known detached-native blindness; native-enumeration instruction carried into the dispatch, and the seat measured pid 4152 / StartTime natively |
+
+## Delta
+
+1. **CVO~Z opening work-list = FOUR** (Andrew's lifecycle ruling @b86a0bbb23: Lifecycle_Stage
+   minted two-objects, CVO~Z certifies + proposes the enum; package parked at its inbox).
+   Next-slot priority STRENGTHENED (largest single hold on the board); spawn at morning re-form.
+2. **T1-4 BOTH-FABRICS LEG (routed ask, base COO via ferry): allocated to the idle D8 seat**
+   (bounded run-and-report; vintage caveat + stop-before-restart bound + positional-citation bar
+   + the MSYS-ps instrument note all priced IN the dispatch). **RESULT: 3/3 rc=0, 22/22 PASS —
+   VALIDATED-ACCEPTED at my desk and ferried** with TWO frame corrections: (a) the batteries
+   certify the TRUNK T1 code on this platform via SCRATCH brokers (post-T1 d547f109fe + pinned
+   pre-T1 mutant e7858adf52) — they do NOT measure the running :7800 broker, so my own dispatch
+   frame ("against the running broker") was wrong and is owned; the seat read the source and
+   surfaced the truth instead of executing the error. (b) boot-vintage measured natively:
+   2026-08-18T19:12:32Z (yesterday, not the frame's today-19:11Z) — running bytes predate the
+   T1 landing by >24h.
+3. **SHARPENED OPERATIONAL FACT (evidence-backed by E7-MUTANT's deterministic reproduction):**
+   on this device's LIVE broker, a message to a seat that dies between poll and drain is
+   PERMANENTLY LOST until the reserved, announced restart picks up d547f109fe — the morning
+   restart is a CORRECTNESS act, not hygiene. My blip-window ownership stands; laptop broker
+   restarts pre-THU-12:45Z (non-response there = restart-window, never seat death).
+
+## Gate-forward (22:16Z — final posture)
+- **RESERVED AT ANDREW:** D7 one-liner answers + market-returns allowlist.
+- **MORNING RE-FORM (post 07:00 acceptance), in my frame:** CVO~Z spawn (4-item list pointed in
+  first message) · ~A inherit line to 0.5.0~Z · the announced broker restart (correctness act,
+  blip window mine) · staged GO chain un-gates · census measured at each event.
+- Census 6/6. All loops closed; event-driven on the Monitor.
