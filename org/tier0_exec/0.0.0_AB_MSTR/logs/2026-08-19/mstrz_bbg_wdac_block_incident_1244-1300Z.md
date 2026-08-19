@@ -51,6 +51,28 @@ understand why and rectify it immedaitely."* Relayed over agentbus 64210a8e, ACK
   proves repair, not the schedule). This seat reads it at the served object.
 - BG seat briefed (env change + class recognition + no-silent-workaround routing), 12:56Z.
 
+## Addendum 13:10Z — BG independent re-derivation (record: org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-08-19/daily_guardrail_1300Z_wdac_pull_failure_verified.md)
+
+BG reproduced every limb independently (task state, served artifact by exact key, trading
+calendar resolved FIRST, .ST CIX content check with positive+negative controls, the fix
+EXERCISED — psutil cpu_count executed under cma; zero CodeIntegrity blocks after 08:49:27).
+Three additions, all validated and carried into the Andrew frame:
+
+1. **The class has TWO members, not one:** conda-owned `win32\pywintypes313.dll` (pywin32
+   307) took the same 3077/3033 pair at 07:00:07, same policy ID. Fired once, in the failing
+   run only; imports currently resolve to a DIFFERENT copy (`pywin32_system32\`). Honest
+   bound: possibly a fallback probe of a dying kernel — not claimed to break tomorrow;
+   measured as a second unsigned, policy-known, unremediated binary in the run path.
+2. **The resurrection path is OPEN, not hypothetical:** `conda-meta/psutil-7.0.0-...json`
+   still records 7.0.0 while disk carries the pip 7.2.2 wheel — record and disk actively
+   disagree, so ANY conda operation touching this env silently restores the blocked .pyd
+   (a dependency pull suffices; nobody has to reinstall psutil deliberately).
+   **Deliberate no-action until the 08-20 07:00 acceptance** — the test must run on the
+   repaired state, and conda-meta edits are their own risk class; the durable close is
+   Andrew's policy call or a deliberately authorized env migration.
+3. **Instrument note (banked):** `NumberOfMissedRuns` read **0** on a run that FAILED — it
+   counts runs that never STARTED and is blind to rc=1. Never read it as a health field.
+
 ## Compiler Tools
 
 No comp-tools run: single-box incident grounded on the failing run's own log, the
