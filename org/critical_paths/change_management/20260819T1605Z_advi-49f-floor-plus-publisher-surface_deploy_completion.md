@@ -79,5 +79,34 @@
   discriminating negatives (inf silver/assets_v2 sibling implicitDeny; cot fact_transactions
   sibling implicitDeny). Citation chain in-Sid: SPEC @93d12a82f2 + CTO 160826Z amendment
   @64c11ae4c2 + Andrew 08-19.
-- **Status: OPEN -- Root B + a07 legs complete+verified; Root A held on the full corrected
-  measured number (DS~A re-fire now fully unblocked). This ledger closes at the Root A apply.**
+- **17:31Z -- THE PIN INPUTS LANDED (DS~A 173109Z): CLEAN E2E on the corrected chain --
+  CHAIN OK date=2026-08-18 wall=107.1s rc=0, all 16 stages + c04; a07 three-firm union live
+  (49f 2,329 + inf 1,658 + cot 1,066 = 3,869 distinct securities, 90.90% classified).
+  TABLES-NOT-LABELS ACCEPTANCE verified live against S3, not the run's self-report: PRESENCE by
+  direct read (flow_ledger 25,004 in/out; nna_canonical 5,351 accounts; twr_daily 7,315 rows) +
+  ABSENCE by direct listing (zero objects under the three cross-project names) + c02 date
+  derivation clean. CRON PIN BASIS: 107.1s full-chain measured vs the 45-min window to the mdpf
+  floor -- cron(45 12 * * ? *) CONFIRMED with enormous margin.**
+- **17:33Z -- ROOT A APPLIED (safe-apply, staged plan advi-floor-p2.tfplan): 11 added, 0
+  changed, 0 destroyed == the staged plan exactly. 0-diff-on-target re-plan: No changes.**
+- **17:34Z -- CLOSE-CONDITION-3 APPLIED-PLANE READS, all exact:** get-schedule
+  advi-49f-gold-floor = cron(45 12 * * ? *) ENABLED; advi-49f-publisher = cron(15 13 * * ? *)
+  DISABLED; dispatcher CodeSha256 == fEMCZ4usqXuIC1GhklcClwOn/O6vR+uV+xgbk+oj8lk= (T2a stamp
+  lookup, byte-exact) w/ 256MB/900s/python3.12; SSM doc advi-49f-chain-dispatch Active v1; DLQ
+  advi-49f-floor-dlq exists.
+- **TAGS (Rule 6, post-0-diff):** opal-assets-v0.44.0 + bd-v2.54.0 (annotated, local; push rides
+  the integrator per the lanes-commit-integrators-push regime).
+- **DLQ/timeout margin note (DS~A per-stage breakdown):** a02 dominates at 66.6s (fact_trn
+  532-partition sweep); total 107.1s vs the dispatcher's 300s poll budget + the doc's 3600s
+  executionTimeout -- ample, no tuning needed at first green.
+
+## CLOSED 2026-08-19T17:35Z
+Every close condition discharged: (1) applies matched staged plans exactly (11/0/0 + 1/1/0
+amended + 0/1/0 a07 legs; drag-ins + foreign source-map edits untouched); (2) 0-diff both roots
+(x3 applies); (3) applied-plane reads exact incl. the CodeSha256 stamp lookup; (4) full sim
+batteries on every new grant surface (8 allows / 4 discriminating negatives / accessanalyzer 0
+findings across the day's three grant acts); (5) this ledger carries the measured number as the
+cron's cited basis + the _logs declaration + the fail-closed shell posture + Andrew's CALL-1
+verbatim. FIRST GREEN: tomorrow (THU 08-20) 12:45Z. Publisher shell activation = DS~B's Thursday
+contract (doc mint + allowlist append + ENABLE, CTO-gated; exercise the dispatcher's
+unlisted-document refusal at that activation per CTO word).
