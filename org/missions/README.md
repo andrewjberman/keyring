@@ -10,7 +10,9 @@ org/missions/{GROUP}/{SUB_GROUP}/
     execsum.yaml     MSTR      prose + the commit it was written against
 ```
 
-Groups: `PORTAL` · `INFRASTRUCTURE` · `DEBT` · `EXTERNAL`.
+Groups: `PORTAL` · `INFRASTRUCTURE` · `EXTERNAL`. (DEBT is not a top-level group — it exists as
+the `PORTAL/DEBT` and `INFRASTRUCTURE/DEBT` sub-groups; this line said otherwise until the
+2026-08-19 revival and was the README lying about its own tree.)
 
 ---
 

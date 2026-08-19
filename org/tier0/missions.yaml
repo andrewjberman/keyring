@@ -25,12 +25,14 @@ version: 1
 
 # Attribution precedence. First hit wins; the rest is recorded, never guessed.
 attribution:
-  # 1. DECLARED -- a `Mission: <ID>` git trailer. Authoritative.
-  #    Written automatically by the prepare-commit-msg hook from the spawning session's
-  #    mission file; NO agent is asked to remember it.
-  declared_trailer: "Mission"
-  # 2. DERIVED -- path globs below. Advisory.
-  # 3. UNMAPPED -- a first-class outcome. Counted, printed, never silently dropped.
+  # 1. DERIVED -- path globs below. Advisory.
+  # 2. UNMAPPED -- a first-class outcome. Counted, printed, never silently dropped.
+  #
+  # (A DECLARED `Mission:` git-trailer tier was defined here 07-28..08-19 and DELETED 2026-08-19
+  #  (missions-revival, CTO+COO converged): the prepare-commit-msg hook that was to write it never
+  #  landed -- 0 trailers in 30 commits -- and a dead mechanism left defined resurrects. If a trailer
+  #  tier returns, it returns WITH its hook in the same commit. comp_missions.py's hardcoded
+  #  `mission:` match is the 0.8.0-class labeling build row, not this file's concern.)
   #
   # AMBIGUOUS (a commit whose paths derive to >1 sub-group) is REPORTED, not tie-broken.
   # Manufacturing a winner would invent precision the evidence does not carry.
@@ -140,18 +142,15 @@ groups:
     # the estate. A per-firm PREFIX is not the same thing as non-portal client work. Globs removed
     # rather than narrowed -- a container for work that does not exist yet should match nothing, and
     # an empty match set is honest where a plausible one is not.
+    #
+    # THE BOUNDARY IS THE POINT (kept from the deleted EXTERNAL.ALONGSIDE row, 2026-08-19 revival):
+    # work belongs in EXTERNAL when it serves an advisor ALONGSIDE the portal rather than THROUGH it
+    # (Andrew-direct 2026-07-28: "very prospective, e.g. building out salesforce integrations for 49
+    # and so on, EXPLICITLY NOT portal data analytics"). The moment something becomes portal data
+    # analytics it leaves this group -- that migration is the signal, not an inconsistency.
+    # ALONGSIDE itself was deleted truly-empty (0 attributed commits, 21 days dark) per Andrew's
+    # "delete anything unused/stale"; the partner-template arc made 49FINANCIAL real, so it stays.
     subgroups:
-      EXTERNAL.ALONGSIDE:
-        title: "Alongside -- scoped adjacent work that is explicitly NOT portal data analytics"
-        # ANDREW-DIRECT 2026-07-28: "scoped work that may eventually tie into the portal, but it is
-        # very prospective, e.g. building out salesforce integrations for 49 and so on, EXPLICITLY NOT
-        # portal data analytics."
-        # THE BOUNDARY IS THE POINT: work belongs here when it serves an advisor ALONGSIDE the portal
-        # rather than THROUGH it. The moment something becomes portal data analytics it leaves this
-        # sub-group -- that migration is the signal, not an inconsistency.
-        paths: []
-        attach: []
-        holes: []
       EXTERNAL.49FINANCIAL:
         title: 49 Financial
         paths: []
