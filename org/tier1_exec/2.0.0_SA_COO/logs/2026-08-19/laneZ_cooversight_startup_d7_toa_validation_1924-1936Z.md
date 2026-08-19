@@ -325,3 +325,32 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   first message) · ~A inherit line to 0.5.0~Z · the announced broker restart (correctness act,
   blip window mine) · staged GO chain un-gates · census measured at each event.
 - Census 6/6. All loops closed; event-driven on the Monitor.
+
+---
+
+## ADDENDUM 7 — 23:19–23:23Z: D6 TO-G row-gate ACCEPTED by exercise
+
+**archetype:** VALIDATE
+
+## Compiler Tools (addendum 7)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| own exercise matrix | classify_candidate x10 (id-set V1-V10, denominator printed) | PASS 10/10 | superset of the seat's 7/7: both band floors INCLUSIVE + just-below cells, disposition-beats-1.0, residual class, bogus-disposition loud refusal, resolve() data-gate raise |
+| exercise_disposition_contract.py | bare re-run at my desk | PASS 11/11 rc=0 | 3 contract mutants + unknown-disposition refuse loud w/ drift named; denominators clean (JOINED 7286 / grammar 16) — THIRD independent desk on the bound rules |
+| Grep/Read (native) | resolver_skeleton.py band ladder | PASS | the Bash grep was rail-gated (infra path) — correctly re-routed to native tools |
+
+## Delta
+
+1. **D6 TO-G row-gate ACCEPTED** (CTO~Z handoff 231903Z; their gate-side cells verified, the
+   7/7 bands deliberately left to my lane): enum consumption + confidence-model design
+   certified BY EXERCISE at my desk (evidence above). Honest remaining gate = identity-plane
+   DATA BINDING (a06 crosswalk / bridge / household nesting — laptop-deploy, client surfaces);
+   resolve() raises loudly until then (exercised, V10). Tracked as SEQUENCING at this ledger.
+2. **Routing act:** the base-COO 16-row KEY_OUTSIDE_ACCOUNT_GRAMMAR scope decision is now
+   LOAD-BEARING for resolver completeness — ferried via MSTR~Z with the consumer pointer
+   (@3fb8563d1f, vintage-pinned v1.0) and the landing shape (version bump + consumer move
+   together; version-never-edit refuses a silent edit by construction). No urgency claim.
+3. D6 sitez set now: B built+validated (co-sign pending) · C+D bound · E authored+exercised ·
+   F authored (proof rc=0) · **G enum-certified w/ the data-binding gate** — the whole
+   six-half set complete at seats, converging on the CVO~Z cert slot + laptop legs.
