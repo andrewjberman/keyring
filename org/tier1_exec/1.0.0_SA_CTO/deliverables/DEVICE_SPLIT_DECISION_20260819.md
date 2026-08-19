@@ -55,3 +55,54 @@ broker makes it EITHER with exercise-on-both -- COO conceded on the PRD's row. B
 on evidence; neither position survived intact, which is what the adversarial form is for.
 
 -- converged by exchange: 2.0.0_SA_COO 185530Z position + this CTO acceptance; COO cuts the wave.
+
+---
+
+## SUPERSESSION + ITEM-LEVEL PLACEMENT RULING -- 2026-08-19 ~19:35Z (Andrew-direct x2; CTO drives)
+
+**Andrew's words:** (1) via MSTR ~19:3xZ, VERBATIM: *"I am find with them having D7 D9 D6. D2 is
+certainly laptop fabric. We need to then assess the rest, let CTO know, they should be the one
+driving this."* (2) at the CTO terminal minutes later, VERBATIM: *"we need to identify which
+Directive Items will be handled by each fabric. So far D6 D7 D9 are all on sitez and in progress.
+D2 definitely needs to be on this device. I want to assess what else we should claim for the
+local device versus outsource to the MSTR~Z SiteZ terminal device. In essence, if it is more
+invovled where i need to look over it, e.g. all the model portfolios/advisor intelligence primary
+work, that should be there."*
+
+**What supersedes:** the converged map's D2-analytics sitez workstream is RETIRED (D2 =
+whole-laptop, his word); the TO-D3.1 slot-frees export exception is RETIRED (item-level clarity
+per his frame beats leg-level optimization). The capacity rule stands for future intra-item legs.
+
+**THE ITEM-LEVEL MAP (CTO assessment under his criterion -- oversight-heavy MP/ADVI primary work
+stays LOCAL where he reviews it):**
+
+| Item | Fabric | Basis |
+|---|---|---|
+| D6 Opal Analyst | SITEZ | Andrew-ratified; in progress |
+| D7 Ticketing intake | SITEZ | Andrew-ratified; kickoff #1 running |
+| D9 Tax SMA ops | SITEZ | Andrew-ratified |
+| D2 ADVI 49F E2E + parity | LAPTOP | Andrew: "certainly laptop fabric" -- whole item, incl. parity harness/analytics |
+| D1 Asset-category views | LAPTOP | MP primary work (his-oversight criterion); already cut all-laptop tonight |
+| D3 Account-model overlay | LAPTOP | ADVI primary work (his-oversight criterion); TO-D3.1 stays with its item |
+| D4 ETF Positioning variant | LAPTOP | MP/Positioning primary work (his-oversight criterion) + portal/deploy envelope |
+| D8 Live-edit modals | **SITEZ (Andrew-direct ~19:37Z, overriding the CTO assessment row: "D8 Live-Edit modals can be done by sitez that is low-risk and i dont care about it particualrly")** | his word; two MECHANICAL riders from the envelope, stated not inferred: (a) the TF/Lambda apply legs execute through a laptop lane as mechanical applies of sitez-AUTHORED config (sitez is not a TF-apply site until deliberately provisioned); (b) TO-B carries the first-act portal dev-build proof (bun present, builds unexercised -- envelope's own pricing). The TO-C auth-surface ruling stays at the CTO gate regardless of device. |
+| D0 Infrastructure | LAPTOP | deploy chokepoints + builders live here; the T1/kill-fix EXERCISE legs run on BOTH fabrics as ferried verification kickoffs, never as a moved build |
+| D5 Alt research | LAPTOP (ingest = operator-located as standing) | CRO lane resident; thin; activation-gated builds deploy laptop |
+
+**Sitez capacity after this map (amended ~19:37Z for D8):** MSTR~Z + 4 item workstreams
+(D6/D7/D9/D8); ~1 slot SPARE --
+reserved for those items' own sub-legs and site velocity work, NOT force-filled (the capacity
+rule spends budget on sitez-suited work; none of the remaining items qualifies under his
+criterion). MSTR records these rows in DIRECTIVES.yaml placement fields.
+
+**STANDING PLACEMENT CRITERIA (Andrew-direct, same window, THIRD delivery -- these govern FUTURE
+placement decisions, not just tonight's map):**
+> (a) *"if it is more invovled where i need to look over it, e.g. all the model portfolios/
+> advisor intelligence primary work, that should be there [= the local device]"*
+> (b) *"Also ontology/infra work should generally always be on this device. Anything that is
+> really nuanced and high-risk/high-leverage should generally be on this device."*
+Effects beyond the item map: the ONTOLOGY LOCK-DOWN TRANCHE (T6/T7/T8, the s3 never-again set,
+T12 comp-adversary, the worldmodel/CRO program work) is pinned LOCAL as a class -- none of it
+ferries; D0's laptop basis upgrades from envelope-default to CRITERION; sitez's lane remains
+operational/mechanical workstreams (the D6/D7/D9 class) plus box-resident capabilities.
+"Generally" is his word -- exceptions are his to grant per case, never inferred.

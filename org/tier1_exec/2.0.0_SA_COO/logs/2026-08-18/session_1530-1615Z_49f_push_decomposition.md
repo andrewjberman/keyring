@@ -365,3 +365,51 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
   SILVER-DTYPE w/ the Travis Decimal specimen pointer), 0.8.0 (REG→J3→HELD-STATE→W-15→T1-DEFROST→T4),
   DS~B (15-twin emit), CVO-full, DE. Events: 12:45Z FIRST green; 13:30Z PB-1 → B2.
 - FRI: second green → flip → promote → E2E COMPLETE. CTO's D1/D4 rulings tomorrow AM gate their TOs.
+
+---
+
+## ADDENDUM 6 — 19:07Z–19:12Z 08-19: wave-cut tranche 2 (D7, the flagship) + first sitez kickoff
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 6)
+
+Doc/TO-issuance window — no code or infra change at this seat; Rule-20 checks ride the implementing
+TOs (TO-B carries the R7 behavior-exercise battery; TO-AC carries the on-box SSM reads). The PRD's
+TO definitions were read at the dispatch vintage @36a7fbd70e, not from recollection.
+
+## Delta
+
+1. **D7 CLEARED at CVO** (@36a7fbd70e: verdict + 2 protocol rulings): three dispatch effects folded
+   at the cut — TO-A carries the CVO-P0 on-box capability grep (the §6 fourth-form existence check;
+   the gateway app is not repo-resident); TO-C exits on a PRODUCTION-SCHEDULE decision (a schedule,
+   never an alert); TO-B gains durable off-box cursor persistence. The protocol's run-verdict
+   vocabulary (expected-values cite MEASURED/RULED rows only; INFERRED mechanically ineligible)
+   now binds my TO validation — written into both new TOs.
+2. **WAVE-CUT TRANCHE 2 @c201247ef8:** D7_TICKETING.TO-AC-SITEZ (TO-A discovery + TO-C intake duty
+   as ONE box workstream per converged adjustment A; filed at MSTR's folder as the kickoff
+   contract) + D7_TICKETING.TO-B at AE (staged-on-TO-A; scope-collapse rule live). TO-D
+   deferred-with-owner (DE, gated on CTO's U4 auth ruling); TO-E deferred (the DONE bar, cut at
+   water-test, MSTR coordinates).
+3. **FIRST SITEZ KICKOFF SENT** (MSTR 191129Z): the never-implicit package — (prd=
+   D7_TICKETING_INTAKE_PRD.md, workstream=TO-AC, head_version=@36a7fbd70e) — routes to MSTR~Z for
+   the first seat off the placement map; D9/D6/D2-analytics kickoffs follow their CVO clearances.
+   AE's staged GO sent 191141Z (nothing at their seat tonight).
+4. CRO FYI absorbed: the Andrew-ordered CRO x CVO adversarial exchange over the four next-step
+   options may refine O2/O3 FORMS pre-cut; owners/vehicles unchanged — nothing blocks.
+
+## Current State (handoff-grade)
+
+Wave: tranches 1+2 cut (@63ff3198d8 probe amendment + T1-DEFROST; @c201247ef8 D7 pair); D1 cuts on
+CVO's next clearance; sitez flagship at MSTR~Z assignment. 49F: floor ENABLED cron(45 12) on the
+107.1s pin; THU 12:45Z first green + 13:30Z PB-1 -> B2 (AE); THU AM spawn wave is COO's (DS base w/
+R-WATCH roster read + probe + Travis-specimen pointer; 0.8.0 queue REG->J3->HELD-STATE->W-15->
+T1-DEFROST->T4; DS~B 15-twin emit; CVO-full; DE). FRI: second green -> flip -> promote -> E2E.
+Standing: the DEHAND tranche = critical path; ontology lock-down gates estate backlog + graph
+return; powder rule discharged into the rolling per-clearance cut.
+
+## Next Steps
+
+- [3.0.0_SA_CVO] D1 clearance -> COO cuts D1's TOs (registry laptop-by-capacity per @a02f9ff5a4).
+- [0.0.0_AB_MSTR -> MSTR~Z] TO-AC seat assignment; report TO-A's one-liner when sent.
+- [2.0.0_SA_COO] THU AM: the spawn wave; then per-clearance cuts continue.

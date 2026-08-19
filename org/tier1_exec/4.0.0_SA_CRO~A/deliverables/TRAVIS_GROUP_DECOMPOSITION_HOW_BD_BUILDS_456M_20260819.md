@@ -63,3 +63,49 @@ view, and it is internally consistent (member sum ties to the group total to the
 
 PII: account-level work in scratch (deleted); only aggregates + masked shapes printed/committed.
 Probe templates persisted in BD (517678, 517685) -- precedent-matched, deletable on word.
+
+---
+
+## CLOSURE ADDENDUM (2026-08-19 ~1930Z, Andrew-direct: "go through these still open items one at a time") -- ALL FOUR CELLS CLOSED
+
+### CELL 1 -- the +$6.9M outlier: CLOSED. It was CASH, and it corrects this document's own +2.48% claim.
+Account ...8541: every SECURITY position ties to the penny between BD and our positions file; the
+entire delta is ONE line -- **CASH $6,924.6K** (BD carries free cash as a position; fact_rps is a
+securities file and carries ~none: 1 cash-like row in 102,797). One BD internal account, valued
+identically across its 4 groups -- no multi-mapping. **The corrected tie, on the RIGHT basis (our
+canonical valuation law `V(t) = dim_balance.net_mv_plus_cash`): 309 of 312 matched Travis members
+tie within 0.1%; net +$146K on $420M (+0.03%); the outlier ties to $0.0K exactly.** The earlier
+"+$10.4M REAL (+2.48%)" was TRUE OF THE POSITIONS TABLE and WRONG AS A BD-VS-US CLAIM -- an
+instrument-domain error by this author, caught by continuing the drill-down. BD firm-wide CASH:
+$35.2M across 7,201 accounts.
+
+### CELL 2 -- the $5.64M absent member: CLOSED. It is a National Christian Foundation account (donor-advised fund), and the 23-account missing set is the HELD-AWAY class.
+Custodian dimension (id 31561), read live per account: the 23 both-master-missing accounts =
+Brighthouse annuities 6/$8.69M · **NCF (the $5.64M)** · Lincoln annuity 1/$3.70M · Merrill 401(k)
+3/$1.09M · **Fidelity 8/$0.99M** (Mike's "recently added") · Citi 1/~$0 · Charles Schwab 3/$0.07M
+(trivial strays -- new/empty, outside both masters). With the 12 non-8-digit members ($16.1M, same
+class): **~$36.3M of the Travis book is held-away/other-custody -- structurally invisible to any
+Schwab-only pipeline, by construction.**
+
+### CELL 3 -- the accrual tail: CLOSED, in corrected form.
+The earlier "+$1,281 median accrual-shaped tail" was CASH (it vanishes on the nmpc basis). The TRUE
+accrual effect is real but surgical: on income-bearing accounts, **BD EMV minus our nmpc equals the
+accrued interest to the penny, every account tested** (e.g. ...2917: EMV 814.60K, nmpc 792.13K,
+Accrual 22.47K -- delta == accrual exactly). Firm-wide magnitude TODAY: **$88.0K across 155
+positions** (equity-heavy book; DEBT rows: 157 firm-wide). **C5 rider specimen for CVO/CTO
+(selection made, per the pre-registration ask): account ...2917** -- largest accrual, clean
+single-effect separation.
+
+### CELL 4 -- qt6 EMV semantics: CLOSED, mechanically (stronger than a doc read).
+**qt1's identity `Market Value == Unaccrued Market Value + Accrual` holds on 100.0% of 120,215
+rows (max residual $0.00), and qt6 EMV == qt1 Market Value on every accrual-bearing account
+tested.** Therefore: **qt6 EMV = accrual-inclusive market value, cash-inclusive** (= securities MV
++ free cash + accrued income). Correspondingly: **Schwab's `net_mv_plus_cash` = cash-inclusive,
+accrual-EXCLUSIVE** -- measured, not documented.
+
+### THE ESTATE CONSEQUENCE (one line for B_02)
+b00's `accrued_income = 0.0, ACCRUAL_STATUS = PENDING-RULING` means our canonical fair_value sits on
+the accrual-EXCLUSIVE basis today; the accrued figure exists in BD's qt1 Accrual measure but NOT in
+Schwab's dim_balance -- when Andrew+CTO rule B_02, the source question is now measured ($88K
+magnitude today; BD-derivable per account; Schwab-side source TBD). The pre-registered parity band
+(C5/A1) gets its signature: BD-vs-canonical on income accounts = +accrual exactly.
