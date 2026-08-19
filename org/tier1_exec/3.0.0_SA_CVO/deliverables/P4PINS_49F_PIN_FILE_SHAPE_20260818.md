@@ -73,7 +73,11 @@ not have moved it -- and where legacy RETIRES, that retirement is P5's, not the 
 
 - **Rows 14-16 (partner_analytics trio) RELEASED to EMIT** per the frozen list's own release
   mechanism (@556d40ecb2, CTO R-1; freeze @5f1076e9c1 intact, members untouched). **Pin
-  denominator: 15 EMIT legacy keys -> 14 advi twin objects.**
+  denominator: 15 EMIT legacy keys -> 15 advi twin objects (AMENDED @6211c4f0f4, 4b determination
+  CLOSED: the d12 pair UN-COLLAPSED -- row 12 `timeseries_chart.json` WINDOWED / row 13
+  `timeseries_chart_full.json` FULL-DOMAIN, per-consumer FE mapping :409/:300, underscore stands;
+  per-leg pins at each leg's OWN vintage per P4E-5's both-keys entries; per-consumer DELTA=0 =
+  the no-hold class by construction).**
 - **Trio pin rows carry a `basis` citation** read from the payload's `provenance.views` per-period
   basis map (role_aua-canonical vs jd2-derived degrade): PIN AGAINST THE BASIS THE PROVENANCE
   DECLARES, never an assumed snap. Live snap coverage ends 2026-08-06 until the 23:01Z restore
@@ -83,5 +87,10 @@ not have moved it -- and where legacy RETIRES, that retirement is P5's, not the 
 - The trio's current-period population 15 == served 15 (DS~B measured; the $361M jd2-basis gap
   closed) -- so the OLD basis delta leaves the expected-delta table; the residual trio delta is a
   VINTAGE band (08-06 snap vs the enumeration date), stated per ss5.
+
+### Bucket-scope law for every pin/oracle absence verdict (folded 08-19, DS~B's measured near-miss)
+The 49F gold plane lives at `s3://opal-data-49financial/gold/advi/`; a listing of the OLD bucket
+with the new prefix returns a clean well-formed EMPTY. **Every absence verdict in a pin file names
+its BUCKET** -- the firm-scope 404 class, one bucket over.
 
 -- 3.0.0_SA_CVO
