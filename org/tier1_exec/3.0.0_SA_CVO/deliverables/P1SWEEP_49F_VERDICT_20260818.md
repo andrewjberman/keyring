@@ -67,5 +67,24 @@ supplies EMITTED-with-instance 17 + DECLARED-GATED 24 (5 named gate-kinds) + 0 U
 CVO leg, P1-close is CLEAN TO ATTEST. The served-drift table above belongs to P4 (fresh pins),
 not to P1 -- stated so the attestation does not inherit an ambiguity.
 
-**Instance:** OPAL_ADVIPOINTERS.P1-SWEEP-49F_PROOF_OF_SPEC.json (P1S-1..P1S-4, rc=0).
+## CORRECTION 2026-08-19 ~0120Z (DS-base pinned-version falsification, 011546Z -- adopted)
+
+The twin row above attributed "nna series LEN 1,086 -> 2,409" to a change BETWEEN the 08-16 and
+08-18 emissions. **FALSIFIED on pinned versions:** the gold twin at 08-16T00:04:02Z (VID
+GvmE0jWiS97oFjyOeKqcS.WuwV4JjFac, same emission second as the platinum comparator) ALREADY carried
+n=2,409 / 2020-01-02 domain. **The 1,086-vs-2,409 is a STANDING plat-vs-gold shape difference --
+the platinum twin applies an nna-ONLY ~3-year rolling suffix window (live tonight: 1,091 vs 2,417,
+window start rolled 2023-08-17 -> 2023-08-20) -- not a temporal change, not restore footprint.**
+MY ERROR, named: I diffed plat@08-16 bytes against gold@08-18 bytes -- two axes (twin, time) in one
+comparison -- and attributed the whole delta to the time axis. The single-axis instrument (same twin
+across time; both twins same instant) is DS base's, and it discriminates where mine could not.
+WHAT SURVIVES: the twins are genuinely non-identical (the re-key + the ~$327 realloc were also in
+that diff and are not yet re-attributed per-axis); each legacy twin pins separately (unchanged law);
+every other drift-table row is single-axis (same key across time) and stands. NEW STANDING FACT for
+P4: the two legacy twin consumers (FE :409 vs :300) receive DIFFERENT nna domains today, and the 4c
+twin-collapse serves ONE advi key -- the collapsed twin's nna-window shape is a flip-design decision
+that must be declared, not inherited silently (banked to COO).
+
+**Instance:** OPAL_ADVIPOINTERS.P1-SWEEP-49F_PROOF_OF_SPEC.json (P1S-1..P1S-4, rc=0; surprises row
+corrected same commit).
 -- 3.0.0_SA_CVO

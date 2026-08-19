@@ -107,7 +107,7 @@
   }
  ],
  "surprises": [
-  "d12 twins no longer byte-identical: 1 client re-keyed (z08306514<->z08268895), sum-preserving office realloc ~$327, nna_ofc/nna_geo series LEN 1,086->2,409 between 08-16 and 08-18 legacy emissions under frozen as_of 08-06 -- one line to COO, no action taken",
+  "CORRECTED 2026-08-19 (DS-base pinned-version read 011546Z): the d12 'nna LEN 1,086->2,409 between emissions' line was a CROSS-TWIN comparison read as a time change -- actual fact is a STANDING plat-vs-gold nna-only suffix window (1,091 vs 2,417 live tonight); NOT restore footprint, NO length change across the outage beyond frontier advance. Consequence banked: the 4c twin-collapse must DECLARE the collapsed twin's nna-window shape (two FE consumers receive different domains today).",
   "mix_summary serves data_as_of 08-07 while every sibling serves 08-06 (intra-serve as_of skew) -- observation only",
   "gold clients_tab client_count moved OPPOSITE direction (-1) to the platinum surfaces (+3) under the same frozen as_of"
  ],
