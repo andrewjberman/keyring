@@ -51,7 +51,9 @@ def conditional_checks(inst: dict) -> list[str]:
     # declared_exclusions. Matching is printed, never silent.
     import re as _re
     ids_blob = " ".join(r.get("criterion_id", "") for r in inst.get("acceptance", [])).upper()
-    excl_blob = " ".join(str(e) for e in inst.get("declared_exclusions", [])).lower()
+    # (excl_blob removed 2026-08-19: the blob substring match it fed was the SILENT FALSE
+    #  PASS -- any incidental mention of an artifact stem anywhere in any exclusion text
+    #  satisfied coverage. Exclusions are now matched precisely, on their own `item`.)
     for a in inst.get("artifacts_produced", []):
         # SCOPE IS BACKEND-DS-ID-GRAMMAR-SPECIFIC BY DESIGN: this stem-token heuristic keys on the
         # {firm}-{group}-{artifact}-{check} criterion-id grammar, which is a DS/gold convention. A
@@ -61,17 +63,63 @@ def conditional_checks(inst: dict) -> list[str]:
         # is a follow-on gate candidate; skipping frontend_component here is correct, not a gap.
         if a.get("kind") not in ("script", "s3_object"):
             continue
-        stem = Path(a.get("path_or_key", "")).name.split(".")[0]
+        path = a.get("path_or_key", "")
+        stem = Path(path).name.split(".")[0]
         tokens = {t.upper().replace("_", "") for t in _re.findall(r"[A-Za-z]+_?\d+|[A-Za-z]{3,}", stem)}
         if not tokens:
             continue
+        # (1) NAMING, the original DS `{firm}-{group}-{artifact}-{check}` grammar. KEPT so every
+        #     instance that passes today still passes -- this fix must not read as "the rule was
+        #     disabled".
         if any(t in ids_blob.replace("-", "").replace("_", "") for t in tokens if len(t) >= 3):
             continue
-        if stem.lower() in excl_blob:
+        # (2) COVERAGE, which is what the rule was always FOR. An acceptance row that INVOKES the
+        #     artifact, or whose verbatim output names it, is direct evidence the artifact was
+        #     exercised -- strictly better evidence than its name appearing in an id.
+        #     WHY THIS IS NOT A LOOSENING: the previous rule tested NAMING and called it coverage,
+        #     so any TO whose issuer minted ids in another grammar (WP1-N, D1b-N, D3.1-N) FAILED no
+        #     matter how complete the work was, and the only route to green was declaring the
+        #     central deliverable "excluded" -- a FALSE STATEMENT. A rule whose sole escape is a lie
+        #     is not enforcing anything; it is teaching the record to be wrong. (DS base declined
+        #     that escape twice on 2026-08-19 and characterised the gap instead, at their own cost.)
+        rows_blob = " ".join(
+            f"{r.get('invocation', '')} {r.get('output_evidence', '')}"
+            for r in inst.get("acceptance", [])).lower()
+        if path.lower() in rows_blob or (len(stem) >= 4 and stem.lower() in rows_blob):
             continue
-        v.append(f"artifact-coverage: '{a.get('path_or_key')}' has NO acceptance row referencing it "
-                 f"(tokens tried: {sorted(tokens)}) and is not in declared_exclusions -- "
-                 f"the A_03 zero-battery class; add rows or declare the exclusion")
+        # (3) EXPLICIT declaration, per COO + DS base's recommendation: the assignee names the rows
+        #     that cover this artifact. Makes the link stateable when neither heuristic can see it.
+        covered_by = a.get("artifact_covered_by")
+        if covered_by:
+            named = {str(c).strip().upper() for c in (
+                covered_by if isinstance(covered_by, list) else [covered_by])}
+            known = {str(r.get("criterion_id", "")).strip().upper()
+                     for r in inst.get("acceptance", [])}
+            unknown = named - known
+            if unknown:
+                v.append(f"artifact-coverage: '{path}' artifact_covered_by names criterion id(s) "
+                         f"{sorted(unknown)} that do not exist in this instance -- a citation to a "
+                         f"row that is not there is worse than no citation")
+            continue
+        # (4) EXCLUSION -- now PRECISE. This previously substring-matched the stem against a blob
+        #     of ALL declared_exclusions text, so ANY incidental mention anywhere silently
+        #     satisfied coverage. MEASURED 2026-08-19 on this seat's own ACCEPTED TO-1 instance:
+        #     `broker.py` passed because an exclusion about the site-Z FABRIC LEG happens to
+        #     contain the word "broker", and `server.py` passed because an exclusion about
+        #     _ensure_commit_worker cites "server.py:~592". NEITHER declared either artifact
+        #     excluded. That is a SILENT FALSE PASS of the very A_03 zero-battery class this rule
+        #     exists to catch -- the opposite and more dangerous failure from the reported one,
+        #     because a false FAIL is loud and argued with while a false PASS is believed.
+        #     The exclusion must now name the artifact in its OWN `item` field.
+        if any(stem.lower() in str(e.get("item", "")).lower() or
+               path.lower() in str(e.get("item", "")).lower()
+               for e in inst.get("declared_exclusions", []) if isinstance(e, dict)):
+            continue
+        v.append(f"artifact-coverage: '{path}' has NO acceptance row referencing it "
+                 f"(tokens tried: {sorted(tokens)}; searched criterion ids, row invocations and "
+                 f"output_evidence, artifact_covered_by, and exclusion ITEMS) -- "
+                 f"the A_03 zero-battery class; add rows, set artifact_covered_by, or declare "
+                 f"the exclusion by naming this artifact in the exclusion's item")
     return v
 
 
