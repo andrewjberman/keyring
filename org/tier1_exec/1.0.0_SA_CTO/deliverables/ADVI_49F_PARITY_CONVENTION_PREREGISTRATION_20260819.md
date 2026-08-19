@@ -131,6 +131,23 @@ The measurement was done right; this fixes the rule that generalizes it. (If the
 decomposition's field name differs at contract time, the comparand is named at the harness's
 contract, never derived from the residual itself.)
 
+## ADDENDUM A6 -- 2026-08-19 ~22:5xZ (STILL PRE-PROBE; source: 0.4.0_DS_ClientPlatform~B T2-DIMS
+record 224230Z + ADVI_BDPARITY_T2_DIMS_PORTFOLIO_GROUP_20260819.md)
+
+**SUPERVISION-SLEEVE GRAIN (a fourth BD-surface convention, and it is a GRAIN convention, not a
+valuation one):** BD's `Account Supervised` column splits a single account into Supervised /
+Unsupervised SLEEVES, each carrying its own market value; the sleeves divide the same portfolio
+total (allocation identity proven to the cent, positive-controlled, key soundness 29,926/29,926).
+**Rule this adds to the name-your-BD-surface rider: a compare row that does not name its
+SUPERVISION TREATMENT (sleeve-summed vs single-sleeve vs whole-account) is under-specified even
+when it names its surface.** Measured cost of getting it wrong: 12 of 201 group books understated
+by $24,605,360.68 total when one sleeve was silently kept (DS~B's own T1 oracle, caught by
+cross-implementation disagreement between two non-shared-derivation tools, corrected in place,
+T1 proof re-validated rc=0; Travis Penfield unaffected). **Classifier consequence:** a delta that
+decomposes as exactly one sleeve's value on affected accounts is a SLEEVE-TREATMENT mismatch in
+the COMPARISON LAYER, never a C1-C5 mechanism -- check sleeve treatment BEFORE the C-ladder, or a
+grain error launders itself as a convention delta.
+
 ## ADDENDUM A2 -- 2026-08-19 ~19:03Z (STILL PRE-PROBE; per CVO P0-2 @cc223ee3b6)
 
 **C4's THIRD LEG, NAMED (the pre-registered row said "Schwab custodial" without naming the
