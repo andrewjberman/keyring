@@ -9,7 +9,8 @@
    "canonical_basis_at_grade": "asof 2026-08-07 (frozen graded vintage, 526-partition C_01 series)",
    "census_version": "caa2dc281a355ff6efaca30c20292b09-r5-463197223b33-r6-r7-r8d"
   },
-  "live_read_at_prep": "2026-08-18 ~16:00Z: served firm keys LastModified 2026-08-15T20:xx (gold/artifacts 2026-08-18T00-01Z), data_as_of STILL 2026-08-06 (row-0 fixture territory); canonical gold frontier date=2026-08-10. Twin NOTE: platinum timeseries_chart 36,306,894B(08-15) vs gold 38,925,029B(08-18) -- twins have DIVERGED since my byte-identical grade; re-grade of the twin-identity claim REQUIRED at sweep."
+  "live_read_at_prep": "2026-08-18 ~16:00Z: served firm keys LastModified 2026-08-15T20:xx (gold/artifacts 2026-08-18T00-01Z), data_as_of STILL 2026-08-06 (row-0 fixture territory); canonical gold frontier date=2026-08-10. Twin NOTE: platinum timeseries_chart 36,306,894B(08-15) vs gold 38,925,029B(08-18) -- twins have DIVERGED since my byte-identical grade; re-grade of the twin-identity claim REQUIRED at sweep.",
+  "goldhome_reanchor_20260819": "RP-CVO-1: the canonical gold root cited in live_read_at_prep ('gold canonical frontier date=2026-08-10') now resolves at s3://opal-data-49financial/gold/advi/ (GOLDHOME-REPOINT @1b2ee34db7; sync 4,222/4,222 objects + 327,275,368 bytes verified two-sided by DS~A @d62b47cc44 AND independently re-counted by CVO 012430Z). Grade-time reads were against the old root -- historically correct, not rewritten."
  },
  "keys": [
   {

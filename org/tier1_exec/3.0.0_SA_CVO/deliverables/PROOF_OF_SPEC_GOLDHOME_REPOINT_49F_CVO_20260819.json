@@ -1,0 +1,80 @@
+{
+ "schema_version": "1.0",
+ "to_id": "OPAL_ADVIPOINTERS.GOLDHOME-REPOINT-49F",
+ "phase": "P3-REPOINTS",
+ "spec_ref": {
+  "doc": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/OPAL_ADVIPOINTERS.GOLDHOME-REPOINT-49F.per-client-bucket-one-act.md",
+  "group": "OTHER",
+  "vintage_commit": "1b2ee34db7"
+ },
+ "assignee": "3.0.0_SA_CVO",
+ "artifacts_produced": [
+  {
+   "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/P4PINS_49F_PIN_FILE_SHAPE_20260818.md",
+   "kind": "doc",
+   "commit_or_etag": "with-this-instance",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "limb (b) re-cited to s3://opal-data-49financial/gold/advi/ (the ONE live-instrument old-root citation in my tree)"
+  },
+  {
+   "path_or_key": "org/tier1_exec/3.0.0_SA_CVO/deliverables/p1sweep_49f_vintage_baseline_20260818.json",
+   "kind": "config_data",
+   "commit_or_etag": "with-this-instance",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "_meta re-anchor note added; grade-time old-root reads kept as history, not rewritten"
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "RP-CVO-1",
+   "criterion_verbatim": "RE-ANCHOR: pin files / baselines / sweep artifacts re-cite the new root (frame is key-names so members are untouched; roots re-cite; one-line statement per artifact touched)",
+   "method": "command",
+   "invocation": "comp-find 'portal/gold/advi' org/tier1_exec/3.0.0_SA_CVO (pre-staged enumeration 174145Z) + edits this commit + independent live count: aws s3 ls --recursive --summarize both roots",
+   "output_evidence": "Denominator 4 old-root citations / 1,305 files scanned. TOUCHED (one line each): (1) P4PINS_49F_PIN_FILE_SHAPE limb (b) -> s3://opal-data-49financial/gold/advi/canonical/*/date={T-1}; (2) vintage baseline _meta re-anchor note (history preserved). DECLARED-NOT-REWRITTEN (dated records; amending history falsifies provenance): SPEC_49F_GROUP_A_DIMENSIONS_20260811.md:74,88 + HANDOFF_BLOCK_49F_ABCD_SPECS_TO_CRO_A_20260811.md:31. Sweep verdict + proof instance carry no root paths (checked). Independent ground: new root 4,222 objects / 327,275,368 bytes == old root exactly (my own recursive count, not DS~A's report). Pin files themselves: ZERO exist yet (pins fire on the precondition, which now reads the new root) -- nothing to re-cite there by construction.",
+   "denominator": "4 citations found; 2 re-cited, 2+1 declared-not-rewritten (3 files); 0 pin files extant",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "RP-VAL",
+   "criterion_verbatim": "proof instance per group, rc=0 positional",
+   "method": "command",
+   "invocation": "python .tools/proof-of-spec-check.py <this file> RP-CVO-1,RP-VAL",
+   "output_evidence": "VALID rc=0 run unpiped at commit time",
+   "denominator": "2 criteria",
+   "status": "PASS"
+  }
+ ],
+ "compiler_tools": [
+  {
+   "tool": "comp-find",
+   "invocation": "comp-find 'portal/gold/advi' org/tier1_exec/3.0.0_SA_CVO",
+   "result": "4 hits / 1,305 files -- the re-anchor enumeration (pre-staged before the leg fired)"
+  },
+  {
+   "tool": "proof-of-spec-check",
+   "invocation": "positional RP-CVO-1,RP-VAL",
+   "result": "VALID rc=0"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "post-edit re-run of the same comp-find enumeration, checked against the pre-declared expectation of what may still match the old-root pattern",
+   "expected": "the OPERATIVE limb-(b) path resolves to the NEW root; old-root text survives ONLY as (i) the named-superseded clause inside the re-anchor annotation itself, (ii) this instance's own quoted invocations, (iii) the 3 declared historical citations",
+   "observed": "6 hits / 1,306 files: pin-shape :54 line now BEGINS with s3://opal-data-49financial/gold/advi/ (old root present only in its supersession clause), 2 hits are this instance's own text, 3 are the declared historical citations (SPEC :74,:88 + HANDOFF :31) -- exactly the pre-declared residue, nothing else",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "N/A -- file edits, not a measurement pipeline; the two-sided object count is a single live read cross-checked against DS~A's independent count (4,222/327,275,368 both)",
+   "observed": "my count == DS~A's count",
+   "status": "N/A-WITH-REASON"
+  }
+ },
+ "declared_exclusions": [
+  {
+   "item": "SPEC_49F_GROUP_A_DIMENSIONS_20260811.md:74,88 + HANDOFF_BLOCK_49F_ABCD_SPECS_TO_CRO_A_20260811.md:31",
+   "reason": "dated records; amending history would falsify provenance -- the supersession is carried by the Andrew record + this instance, not by rewriting 08-11 documents"
+  }
+ ],
+ "surprises": [],
+ "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-18/CVO_49F_push_seatup_and_prep_1520-1645Z.md (addendum 2 with this commit)"
+}

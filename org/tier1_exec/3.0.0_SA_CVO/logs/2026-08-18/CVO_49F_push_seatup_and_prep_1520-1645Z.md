@@ -64,3 +64,17 @@ DE's per-key flip MCPs (08-22), census on P5 (08-23). Watcher live; acting on ar
 - Compiler tools: git-at-commit reads, proof-of-spec-check (unpiped rc), comp-to; raw aws
   operational pulls for served bytes (14 artifacts + twins + fleet sample; one rail-checked
   prefix census).
+
+---
+## ADDENDUM 2 (2026-08-19 0110-0130Z) -- d12 CORRECTION CYCLE + GOLDHOME RP-CVO-1
+- **d12 line falsified + corrected @86cf3ce1eb:** DS base's pinned-version read proved the
+  1,086->2,409 was a STANDING plat-vs-gold nna window (d12:41 PLATINUM_NNA_TRUNC_DAYS=1091,
+  source-verified; vacuous at my 08-11 grade, 761<1,091), NOT a temporal change. My error named on
+  the record: cross-twin diff read as a time change (two axes, one comparison). Twin re-grade =
+  DESIGN-DIVERGED. Input FOR DS~B's un-collapse proposal sent (per-consumer DELTA=0 = mechanical
+  certs); adjudication with CTO/COO.
+- **GOLDHOME RP-CVO-1 executed** on DS~A's MCP (@d62b47cc44): limb (b) re-cited to
+  s3://opal-data-49financial/gold/advi/ + baseline _meta re-anchor; 3 dated records
+  declared-not-rewritten; new root INDEPENDENTLY counted 4,222 objects / 327,275,368 bytes == old
+  root exactly. Instance PROOF_OF_SPEC_GOLDHOME_REPOINT_49F_CVO_20260819.json VALID rc=0
+  (post-edit enumeration mutant fired to its pre-declared residue).

@@ -51,7 +51,7 @@ composition moved), reported before any flip.
 - Limb (a): served `data_as_of` == T-1 per the trading calendar (`expected_last_trading_day`),
   read from served BYTES, never from LastModified (LastModified moves on every rewrite of frozen
   content -- measured: 08-15 writes still carrying data_as_of 08-06).
-- Limb (b): `portal/gold/advi/49financial/canonical/*/date={T-1}` written BY THE SCHEDULED STAGE --
+- Limb (b): `s3://opal-data-49financial/gold/advi/canonical/*/date={T-1}` written BY THE SCHEDULED STAGE (RE-ANCHORED 2026-08-19 @RP-CVO-1, GOLDHOME-REPOINT: the old opal-data-assets/portal/gold/advi/49financial root is superseded per Andrew ~1730Z; the precondition reads the NEW root's first unattended write) --
   evidence is the run log of the schedule (AE's P2 TF names the rule), not key existence; a
   session-act write satisfies key-existence and fails this limb by construction.
 - Both limbs cited in every pin file verbatim. Precondition FALSE on 08-21 => 4b re-dates IN
