@@ -193,10 +193,17 @@ third. FAM heal = R-WATCH + the BD-sample probe (fires at AE's convenience, no c
 (user story from the Mike call verbatim: "what models a given account is in... without having to
 dig"); (b) precondition workstream startable EARLY: the SmartX<->BD/Schwab EXACT-JOIN spec (models
 live in SmartX, not BD -- rev-2 fact); (c) build launches the day 1+2 clear.
-**ITEM 4 -- ETFS FOLD-IN TO POSITIONING (3-8wks, behind Item 1, laptop).** (a) CTO rules the
-ETFS_CANON design gate THIS WEEK (5 open items, DE-defaulted); (b) build sequences behind Item 1's
-lane; ETFS strategies also appear as SMA-category members in Item 1's taxonomy -- one registry
-serves both.
+**ITEM 4 -- ETF POSITIONING VARIANT (3-8wks, behind Item 1, laptop; SCOPE CORRECTED by Andrew
+~17:4xZ).** NOT a simple fold-in: an **"ETF" VERSION OF THE POSITIONING PAGE** -- the portal
+Positioning surface gains a FLIP between **ETFs (DIVZ / IDVZ / PFDE / PFOE)** and **Models
+(UST / LT / INT / ST / ULT, what exists today)**. FULL-STACK by his word: (a) BACKEND -- "figure
+out how to get all the commensurate data for the ETFs": the ETF-side equivalent of everything the
+Models positioning page consumes (canonical home = opal-data-etfs per the 08-12 ruling; framework
+build-out state = honestly UNKNOWN, Andrew flagged it -- the first act is a state assessment of
+what ETF data plane exists vs what Positioning requires); (b) FRONTEND -- the variant/flip UI on
+the portal Positioning page (DE-class); (c) CTO rules the ETFS_CANON design gate THIS WEEK (the
+5 open items now read against THIS scope); (d) the four ETFs also appear as SMA-category members
+in Item 1's taxonomy -- one registry serves both.
 **ITEM 5 -- ALT RESEARCH (ongoing, laptop).** Continue ingest (CRO lane); build queue activates on
 Andrew's prioritization word. No change.
 **ITEM 6 -- OPAL ANALYST + PARTNER GRAPHQL (v0 ~2wks; SITEZ box legs + laptop cloud).** (a) SITEZ:
@@ -227,7 +234,43 @@ existing live seats.
 flip (E2E) + Item-8 edit surface + Item-4 design gate ruled; MON-TUE = parity census + Item-1
 taxonomy gate + Item-9 assessment; behind = Item-3 PRD (now) + exact-join spec.
 
-## S11. COMPILATION PATH (deferred by design)
+## S11. THE DIRECTIVES ROLLUP LAYER -- Items 0-9 into the MISSIONS framework (Andrew ~17:4xZ;
+DESIGN, for his nod then MSTR lands)
+
+**His problem statement (verbatim-faithful):** macro_project codes thrash -- "items are being
+superseded and merged and moved around, it is easy to not have a clear pointer to a larger scale
+directive" -- and he needs to "track progress against these 9 items on a daily basis... so every
+single day we can advance the large scale work."
+
+**The design (athletic form -- a MAPPING + a COMPILED VIEW, deliberately NOT a second attribution
+axis):** the mission register (LD-0341: org/missions/, comp-missions, compiled MISSIONS.md) already
+separates MACHINE facts-of-motion from HUMAN stance (DECIDED/BUILT/SERVING) and holds the law
+"COMMIT ACTIVITY IS NOT PROGRESS." We add ONE thin artifact:
+
+- **`org/missions/DIRECTIVES.yaml`** -- ten rows, D0..D9 = Items 0..9, each carrying: the
+  directive pointer (this document's S-section, the supersession-STABLE anchor), the CURRENT
+  member set (macro_project codes and/or existing mission sub-groups), the human stance line, and
+  FRONTIER/BLOCKED-ON. **When projects merge/supersede/thrash, ONE member line moves; the D-row
+  never does** -- that is the clear pointer he is missing.
+- **Attribution stays single-axis** (the register's own retirement note is the warning: two
+  records of one subject with no gate = guaranteed drift). D-rows do NOT attribute commits; they
+  ROLL UP the existing attributions of their members. `comp-missions compile` gains a
+  directives-rollup section in the compiled MISSIONS.md: per D-item, yesterday's motion (commits/
+  contributors/recency from member attributions), the human stance, and a DIVERGENCE FLAG when
+  motion and stance disagree -- the daily view, machine-refreshed.
+- **The daily ritual (the actual "every single day" mechanism):** one morning compile + one human
+  stance pass over the ten rows (COO's morning act, ~minutes; stances stay human per the
+  register's own law). /exec-sum --macro and the /open-calls aggregate read the same rows.
+- **Governance:** MSTR owns the register (lands the mint); the D-axis is Rule-24 clean by
+  construction (one grain = Andrew-directive items, MECE because HE enumerated them); CTO gates
+  the design (this section IS the design record); member-set edits are one-line acts any exec can
+  route through MSTR.
+
+**Migration note:** OPAL_ANALYST / OPAL_TAXSMA-class items that map ~1:1 to a macro code get a
+one-member D-row (his own observation that those are easier) -- same mechanism, no special case.
+
+## S12. COMPILATION PATH (superseded by S11 -- the compilation is now DESIGNED; minting rides
+Andrew's nod + MSTR's landing)
 
 Later act per Andrew: fold this document into the /missions compiled state (comp-missions /
 org/tier0/missions.yaml). NOT done in v0 -- missions surgery is a taxonomy act with its own gate;
