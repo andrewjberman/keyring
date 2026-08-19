@@ -156,3 +156,126 @@ retrieval-frame class the estate keeps paying for.
 
 TO-2 (T2a BUILD_MANIFEST, both builder homes) then TO-5 (T4 declarations census,
 denominator-relative).
+
+---
+
+# TO-1 CLOSURE + TO-2 + TO-5 (same session)
+
+## TO-1 closed
+
+COO RAVC-4 ACCEPTED with a named partial, then **CLOSED at 22:29Z** once T1-4's named later run
+landed: the site-Z leg ran 3/3 batteries rc=0, **22/22 PASS**, validated-accepted at COO~Z and
+ferried by MSTR (bus 368f34a6). **Both fabrics: 44/44.** Proof instance amended to PASS with the
+site-Z evidence and `firm: FABRIC` added (`b95a3d535e`).
+
+**Frame kept precise, and MSTR corrected their own ferry frame to match mine:** the batteries spawn
+SCRATCH brokers from the trunk vintage and do **not** measure either device's running `:7800`
+broker. 44/44 certifies *the trunk T1 code exercised green on both platforms* -- the both-fabrics
+read T1-4 asks for -- while **both fabrics' running brokers remain pre-T1 until restart.** COO holds
+the laptop cycle before THU 12:45Z. MSTR's sharpened fact for both boards: on a live pre-T1 broker
+the loss is **deterministic, not probabilistic**, so both restarts are correctness acts, not hygiene.
+
+CTO landed all four of my routed items @64114c5511 -- Appendix A(iii) corrected with my measured
+mechanism (the original flag-prescription retained as the record of a wrong design), a sibling TO
+cut for `_ensure_commit_worker`, **`FABRIC` added to the PROOF_OF_SPEC firm enum**, and a
+`D0_T1_BROKER` window lane granted with the lane-vs-placement ruling (one-off = the audited escape I
+used, correct; recurring = a window-scoped enumeration). COO ruled the owned-paths collision **their
+placement error, not my workaround.**
+
+## TO-2 -- T2a BUILD_MANIFEST stamps (`1bd55740e9`, proof VALID rc=0 `1670e3e729`)
+
+**Measuring first changed the work.** Both homes *already* emitted an in-zip manifest at HEAD, so
+the criterion's headline was satisfied before I started. The real gap was the section-4b field
+contract:
+
+| | HEAD | now |
+|---|---|---|
+| homes emitting in-zip manifest | 2/2 | 2/2 |
+| homes emitting a sidecar | 1/2 | 2/2 |
+| **homes SECTION-4b COMPLETE** | **0/2** | **2/2** |
+
+**Two of the four contract fields cannot live in-zip**, and forcing them there would each break
+something real: `zip_sha256` is self-referential (adding the hash changes the hash), and `built_at`
+is wall-clock -- and this builder deliberately pins zip entries to a fixed timestamp so
+byte-identical rebuilds stay byte-identical. So in-zip carries **content identity** and stays
+deterministic; the sidecar carries the **build event**. The Rule-22a read is served entirely by the
+in-zip copy, which is the leg that has to survive the trip to AWS.
+
+**Determinism control is two-sided, because a field can be present and dead:** zip hash must be
+IDENTICAL (falsifies "reproducibility survived") *and* sidecar `built_at` must DIFFER (falsifies
+"the field is live"). 4/4 held.
+
+**It fired a real fail first, and I isolated it rather than explaining it away:** the publisher's
+rebuild hashes differed -- because `--pin HEAD` resolved to two *different* commits
+(`4a2b34df76 -> 609aca9b0e`) in ~2 minutes in this shared tree. **`--pin HEAD` is not a pin**, and
+that builder's own docstring promises "FROM A PINNED COMMIT ... never the working tree." Banked.
+
+**T2a-3 stated with its measured gap:** the stamp rides the BUILDER, so any EC2 service adopting a
+bundling builder inherits it -- but **0 of 27** EC2 services bundle (0 hits across 347 files);
+EC2 ships loose objects behind `safe-ec2-deploy.sh:155`. Correct mechanism, inert today.
+
+## TO-5 -- T4 declarations (`b1cd375c32`, proof VALID rc=0 `84b9097f76`)
+
+**The denominator is 22, not the 16+3 prior** (19 Lambda + 3 EC2, +1 declared boundary case).
+**+3 Lambda rows the prior would have left undeclared** -- precisely the failure CVO P0-1's
+denominator-relative amendment was written to prevent. It earned its keep.
+
+The census's own artifacts carry **four different numbers**: summary 15, prose + both TOs 16,
+axis-class sum 19, actual rows 19. I take 19 -- the only figure that is a direct *count* of the
+evidence rather than a summary of it. **That census is my own 08-18 delivery, so this is my defect**,
+reported rather than silently patched.
+
+**The EC2 axis has no TWO-HOMES class at all** (`UNREAD 14 / STALE-BY-NEGLECT 6 / CURRENT 5 /
+STAGED-ORPHAN-ONLY 2`). A scan keyed on that string returned a clean, confident **0** against a
+report claiming 3 -- the wrong question asked cleanly, caught only because a 0 against a documented
+3 was too tidy to accept. Re-enumerated by shape across both EC2 axes.
+
+**The one FORK-DELIBERATE is the most load-bearing row.** `opal-partners-data`'s two canonical homes
+are `data/black_diamond/` and `data/cot/` -- and bd<->cot separation is **law**, gate- and
+IAM-enforced. 18 of 19 Lambda rows share the subkind `BUNDLED-COPY-DIVERGED-FROM-CANONICAL` and this
+one shares it **while meaning the opposite**. Any subkind-driven pass would have routed a
+consolidation the estate forbids at two independent layers. That is why every row is declared from
+its evidence, never from its class name.
+
+## Instrument misses I caught in my own work (this session, all four)
+
+1. **`last_insert_rowid()` would have named the wrong row** -- `_log_event` inserts between the
+   message INSERT and the read, so every later ACK would have marked the wrong message READ.
+2. **A test assertion that failed against correct code** -- naive substring counting matched the
+   summary line too (3+3 against a true 2+1). The instrument was wrong, not the fabric.
+3. **A ruff "baseline" measured outside the repo** -- so it never loaded the repo's ruff config.
+   Re-measured in-frame under the gate's own invocation: zero new lint introduced.
+4. **`resolve_lane()` returning `None` for everything, including the positive control** -- I was
+   passing the whole config instead of `config['paths']`. Without the control this would have become
+   19 rows of false "UNRESOLVED" presented as a finding about the estate rather than a bug in my call.
+
+Plus one near-miss on absence: `.tools/safe-ec2-deploy.sh` is not there, and I nearly reported it
+missing -- it lives at `infra/aws/ec2/safe-ec2-deploy.sh`. **A 404 in the wrong directory is the
+wrong question asked cleanly.** Caught by re-searching repo-wide with a positive control.
+
+**The through-line: every one of these was caught by a control or a printed denominator, not by
+care.** The census's own `0/0` from a bad `parents[]` depth is the cleanest example -- a bare
+"0 complete" would have read as a real measurement.
+
+## Compiler Tools (TO-2 + TO-5)
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-find` | `--name "build_package.py"` | 2 hits / 26,988 scanned -- established "both homes" as a checkable denominator |
+| `comp-find` | `"build_package" infra/aws/ec2` + `--name "safe-ec2-deploy*"` | 0 hits / 347 (no EC2 bundling); located the wrapper outside `.tools/`, correcting a clean-but-wrong absence |
+| `comp-find` | `--name "*DEPLOYCENSUS*"` | 4 hits -- and surfaced the duplicate T4 dispatch in the same call |
+| `stamp_coverage_census.py` (built here) | `--builders --vintage HEAD` / `--builders` / `--deployed` | 0/2 -> 2/2 complete, denominators both sides; deployed plane reported separately |
+| `owned-paths-validate.py` | `resolve_lane(...)` w/ positive + negative controls | POD4 9 / ANY 7 / UNRESOLVED 2 / SHARED_OPAL_ETL 1; controls caught the wrong-argument call |
+| `proof-of-spec-check.py` | 3 instances, comma-separated id sets | all VALID, true rc=0 (read **without** a pipe -- `\| tail` reports the tail's status) |
+| `commit-gate.sh` | all touched `.py` | PASS; one non-ASCII section sign of my own fixed |
+
+## Open at COO
+
+Duplicate T4 dispatch (which TO survives) - my own census's 15/16/19 inconsistency (when to cut the
+correction) - E4 `canonical-schwab-si2` taxonomy call - the held broker restart before THU 12:45Z.
+
+## Next
+
+Standing queue: REG w/ REG-0 fixture -> J3 (comp-atomcheck v1, 08-20, load-bearing) -> HELD-STATE ->
+W-15 -> T1-DEFROST. CTO's routed comp-pipescript assets-tree universe defect + the H8 conditional
+sit in the same queue; COO sequences.
