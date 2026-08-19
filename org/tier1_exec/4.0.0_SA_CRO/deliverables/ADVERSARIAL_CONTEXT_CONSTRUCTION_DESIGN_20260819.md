@@ -80,6 +80,38 @@ coverage. Enforcement shape mirrors the plant: an inadmissible pass voids nothin
 simply does not count. Companion: the contested-cell step (case/counter-case before certification
 where a cell admits rival readings), with the CRO×CVO four-options exchange as its first specimen.
 
+## 6a. INSTANTIATION — SPAWN-SEEDED, BY CONSTRUCTION (Andrew-direct instinct, ratified into the design 2026-08-19 ~19:4xZ: *"does it spawn a subagent that is seeded with that context? that would be the easiest way to manage it i think"*)
+
+**The validator is a FRESH INSTANCE whose entire context window IS the packet.** Not easiest only —
+**the only form where the delta declaration is TRUE by construction**: isolation-by-instruction
+leaks (the M-C shared-tree lesson at the session layer); isolation-by-instantiation cannot. The
+validator's context = packet + model priors, exactly, provably.
+
+**The flow:** (1) author finishes the artifact → runs the composer → it emits the packet + an
+auto-generated LAUNCH PROMPT (deterministic template: "your context is this packet ONLY;
+verify-or-refute per claim; name your discriminator; report in [structured form]") — **the author's
+hands never touch the brief**, killing the author-briefing leak. (2) Instantiation, two weights:
+**FULL-SEAT** (certification-grade — MSTR-spawn a lane whose launch message IS the prompt; the
+existing certifier pattern with the packet replacing ad-hoc context) or **SUBAGENT** (in-run
+contested cells — a harness subagent seeded with the prompt). (3) Verdict returns structured:
+per-claim verify/refute/cannot-assess + discriminator + what-was-used; admissibility is checkable
+(citations ⊆ packet + listed-instrument runs). (4) Certification-grade passes carry the sealed
+plant — **the plant is the validator-reliability gate**, which is the answer to subagent
+unreliability: a validator that misses the plant voids the pass by the method's own control.
+
+**Consequences that fall out free:** `--open` vs constructed becomes a PACKET-SIZE DIAL on one
+mechanism (open = claim contract only). The pass is REPRODUCIBLE (same packet → re-run), which
+enables **MODEL-DIVERSITY as a sixth delta axis** — the same packet through a different model is a
+cheap independent second opinion. Packet token-cost is measured at composition (printed, bounded).
+For multi-cell fan-out, the harness Workflow form runs N packet-seeded validators with structured
+outputs — the batch shape, not the default.
+
+**ONE STANDING-LAW CAVEAT, surfaced not adjudicated:** org/XXX.md bans the generic Task/Explore
+agents (fabricated-output class). A packet-seeded validator is a different animal — bounded
+context, structured verdict, plant-gated reliability — but whether it sits OUTSIDE the ban's
+intent is Andrew's word or a CTO arch-call, wanted before the subagent weight ships. The full-seat
+weight violates nothing today.
+
 ## 6. TRANCHE ROWS ADDED
 
 - **T11** — the adversarial-admissibility + contested-cell method amendment (CRO steward; drafts
