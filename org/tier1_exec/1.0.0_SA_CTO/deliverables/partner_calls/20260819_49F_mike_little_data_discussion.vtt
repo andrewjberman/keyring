@@ -1,0 +1,5160 @@
+WEBVTT
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/6-0
+00:00:15.495 --> 00:00:16.375
+<v Andrew Berman>OK, thank you.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/7-0
+00:00:16.855 --> 00:00:17.575
+<v Mike Little>Hey, Andrew.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/8-0
+00:00:18.655 --> 00:00:19.815
+<v Andrew Berman>Hey, Mike, how's it going?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/9-0
+00:00:20.375 --> 00:00:21.655
+<v Mike Little>Doing well, how are you?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/11-0
+00:00:22.695 --> 00:00:23.575
+<v Andrew Berman>Doing well.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/14-0
+00:00:26.935 --> 00:00:29.036
+<v Andrew Berman>Yeah,
+I've been looking forward to talking with</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/13-0
+00:00:27.015 --> 00:00:27.735
+<v Mike Little>So...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/14-1
+00:00:29.036 --> 00:00:31.968
+<v Andrew Berman>you. This should be fun.
+I'm sure you're probably going through it</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/14-2
+00:00:31.968 --> 00:00:33.981
+<v Andrew Berman>over there,
+like trying to put all the pieces</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/14-3
+00:00:33.981 --> 00:00:34.375
+<v Andrew Berman>together.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-0
+00:00:34.935 --> 00:00:38.590
+<v Mike Little>Yeah, yeah, a little bit.
+I just to preference the conversation</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-1
+00:00:38.590 --> 00:00:41.046
+<v Mike Little>with this,
+I have not yet gotten access to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-2
+00:00:41.046 --> 00:00:43.958
+<v Mike Little>Databricks.
+There's been some complications there,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-3
+00:00:43.958 --> 00:00:47.670
+<v Mike Little>so digging into the actual data structure
+might not be possible,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-4
+00:00:47.670 --> 00:00:51.268
+<v Mike Little>but I figure it still was at least worth
+meeting to, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/15-5
+00:00:51.268 --> 00:00:53.895
+<v Mike Little>maybe look at Black Diamond. I've kind of.
+..</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/18-0
+00:00:54.615 --> 00:01:00.169
+<v Mike Little>done some surveying of some of our
+advisors and seeing how they're using the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/18-1
+00:01:00.169 --> 00:01:05.795
+<v Mike Little>platform and try to understand that
+better. So I think that might be helpful.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/17-0
+00:01:03.095 --> 00:01:03.975
+<v Andrew Berman>Okay, great.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/18-2
+00:01:05.795 --> 00:01:10.844
+<v Mike Little>And then, yeah, and you know,
+obviously any other questions you have,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/18-3
+00:01:10.844 --> 00:01:12.935
+<v Mike Little>glad to answer as best I can.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/19-0
+00:01:13.895 --> 00:01:16.669
+<v Mike Little>And then once I have Databricks access,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/19-1
+00:01:16.669 --> 00:01:19.165
+<v Mike Little>we can probably do a follow-up or
+something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/19-2
+00:01:19.165 --> 00:01:22.715
+<v Mike Little>Or if you have like specific questions on
+that, send them over,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/19-3
+00:01:22.715 --> 00:01:25.655
+<v Mike Little>and then once I have access,
+I can find the answers.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/20-0
+00:01:26.455 --> 00:01:31.157
+<v Andrew Berman>Sure, yeah, that sounds great. Yeah,
+the I've been working on my side to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/20-1
+00:01:31.157 --> 00:01:35.344
+<v Andrew Berman>really figure out the,
+I'd say like a **** compliant performance</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/20-2
+00:01:35.344 --> 00:01:40.625
+<v Andrew Berman>attribution and and it's the next step is
+I put together all of the scripting for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/20-3
+00:01:40.625 --> 00:01:43.395
+<v Andrew Berman>it.
+I just have to kind of cross-reference</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/20-4
+00:01:43.395 --> 00:01:46.615
+<v Andrew Berman>and make sure that we're like at parity
+with the.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/21-0
+00:01:46.975 --> 00:01:50.839
+<v Andrew Berman>total weighted return and like wherever
+that reporting is coming from.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/21-1
+00:01:50.839 --> 00:01:54.430
+<v Andrew Berman>So when you're talking to the advisors,
+it's like that's, I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/21-2
+00:01:54.430 --> 00:01:58.565
+<v Andrew Berman>I imagine that like some of it is
+sensitivity analysis stuff that they need</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/21-3
+00:01:58.565 --> 00:02:02.918
+<v Andrew Berman>to be able to show and then some of it is
+maybe quarterly performance and stuff</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/21-4
+00:02:02.918 --> 00:02:06.455
+<v Andrew Berman>like that. Like what is,
+how do people really use Black Diamond?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-0
+00:02:07.495 --> 00:02:10.177
+<v Mike Little>Yeah,
+so it definitely in line with what you're</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-1
+00:02:10.177 --> 00:02:13.584
+<v Mike Little>saying there. Yeah,
+and I think really the time we return is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-2
+00:02:13.584 --> 00:02:16.489
+<v Mike Little>kind of the standard across all of these
+platforms.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-3
+00:02:16.489 --> 00:02:20.679
+<v Mike Little>Most of them do have the capability to do
+internal rate of return as well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-4
+00:02:20.679 --> 00:02:24.030
+<v Mike Little>which is more like this simple,
+simple return or, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/22-5
+00:02:24.030 --> 00:02:26.935
+<v Mike Little>kind of a more straight,
+but I think when when non.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-0
+00:02:27.095 --> 00:02:30.092
+<v Mike Little>Investment people think of return
+internal rates,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-1
+00:02:30.092 --> 00:02:33.748
+<v Mike Little>really what they're thinking of,
+but time weighted, I think,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-2
+00:02:33.748 --> 00:02:37.524
+<v Mike Little>is a little more accurate,
+and that's the the **** preference,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-3
+00:02:37.524 --> 00:02:41.720
+<v Mike Little>if I'm if I remember correctly,
+but you know what I've found and what</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/23-0
+00:02:39.975 --> 00:02:40.455
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-4
+00:02:41.720 --> 00:02:45.136
+<v Mike Little>I've, you know,
+for the sake of this project was kind of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/24-5
+00:02:45.136 --> 00:02:45.975
+<v Mike Little>happy to find.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/25-0
+00:02:46.775 --> 00:02:52.184
+<v Mike Little>is there's no specific report that goes
+out like every quarter to our clients out</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/25-1
+00:02:52.184 --> 00:02:55.680
+<v Mike Little>of Black Diamond.
+Our advisors rely on the custodian</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/25-2
+00:02:55.680 --> 00:02:59.241
+<v Mike Little>statement,
+which up until this point has been Schwab.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/25-3
+00:02:59.241 --> 00:03:03.858
+<v Mike Little>We've recently added Fidelity,
+so those statements will go out to the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/25-4
+00:03:03.858 --> 00:03:05.375
+<v Mike Little>few clients we have on.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/26-0
+00:03:05.495 --> 00:03:06.055
+<v Mike Little>Fidelity.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/28-0
+00:03:08.415 --> 00:03:13.186
+<v Mike Little>There are some PDF templates in there,
+and from what I gathered,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/28-1
+00:03:13.186 --> 00:03:18.544
+<v Mike Little>those are used more as one-offs.
+Like some advisors might print that off</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/28-2
+00:03:18.544 --> 00:03:23.608
+<v Mike Little>and hand it out in a meeting.
+Some advisors like to run that one for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/28-3
+00:03:23.608 --> 00:03:29.406
+<v Mike Little>themselves to prepare for a meeting.
+But I think the most used page across the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/28-4
+00:03:29.406 --> 00:03:31.975
+<v Mike Little>advisor base is just the dashboard.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/29-0
+00:03:33.255 --> 00:03:36.656
+<v Mike Little>And that's more of a look at their entire
+book.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/27-0
+00:03:33.495 --> 00:03:34.055
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/29-1
+00:03:36.656 --> 00:03:42.254
+<v Mike Little>So it's more for their informational
+purposes. It's not necessarily something,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/29-2
+00:03:42.254 --> 00:03:45.584
+<v Mike Little>you know,
+that they're honing down to a single</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/29-3
+00:03:45.584 --> 00:03:51.040
+<v Mike Little>client and showing that in meetings.
+It sounds like they rely more on either</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/29-4
+00:03:51.040 --> 00:03:53.095
+<v Mike Little>individual advisor reviews or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/31-0
+00:03:53.815 --> 00:03:57.924
+<v Mike Little>Or again, those PDF reports,
+so they might either print off or you</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/31-1
+00:03:57.924 --> 00:04:02.768
+<v Mike Little>they might pull certain pages out and use
+those in like a greater presentation</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/31-2
+00:04:02.768 --> 00:04:04.055
+<v Mike Little>they've put together.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/30-0
+00:04:05.895 --> 00:04:06.295
+<v Andrew Berman>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/32-0
+00:04:06.935 --> 00:04:09.815
+<v Mike Little>So have you, I mean,
+have you seen Black Diamond at all?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/35-0
+00:04:10.615 --> 00:04:16.319
+<v Andrew Berman>Yeah, yeah, I've gone in. I've seen,
+because there's so many different views.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/34-0
+00:04:11.415 --> 00:04:11.935
+<v Mike Little>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/35-1
+00:04:16.319 --> 00:04:20.999
+<v Andrew Berman>It's like I've gone through the
+rebalancer and the data mining,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/35-2
+00:04:20.999 --> 00:04:24.948
+<v Andrew Berman>like the query section. The,
+I've seen the dashboard.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/35-3
+00:04:24.948 --> 00:04:29.335
+<v Andrew Berman>I don't remember much about it.
+Like I know they have some.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/37-0
+00:04:29.815 --> 00:04:33.959
+<v Andrew Berman>chart visuals and stuff like that. And,
+um, but it seemed very high level.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/37-1
+00:04:33.959 --> 00:04:36.888
+<v Andrew Berman>Like it didn't seem like a particularly
+niche. Like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/36-0
+00:04:35.735 --> 00:04:36.055
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/37-2
+00:04:36.888 --> 00:04:39.595
+<v Andrew Berman>so you're saying it's like they do it at
+like a,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/37-3
+00:04:39.595 --> 00:04:42.855
+<v Andrew Berman>like a book grain or like relationship
+grain or something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-0
+00:04:45.455 --> 00:04:48.207
+<v Mike Little>Yep, so this one in particular,
+showing now,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-1
+00:04:48.207 --> 00:04:51.999
+<v Mike Little>I've been working with his advisor,
+Mitch Johnson, on making,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-2
+00:04:51.999 --> 00:04:57.014
+<v Mike Little>there are some just discrepancies between
+his total value here versus what he was</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-3
+00:04:57.014 --> 00:05:01.540
+<v Mike Little>seeing at Schwab, and you know,
+we were determining the reasons for that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-4
+00:05:01.540 --> 00:05:04.964
+<v Mike Little>so that, I mean,
+that is a nice feature that, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/39-5
+00:05:04.964 --> 00:05:07.655
+<v Mike Little>we would want to account for as being
+able.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/40-0
+00:05:08.775 --> 00:05:12.197
+<v Mike Little>from the administrative side,
+so from my side,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/40-1
+00:05:12.197 --> 00:05:16.855
+<v Mike Little>being able to filter down to specific
+advisors or GOs or teams.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/41-0
+00:05:18.215 --> 00:05:22.344
+<v Mike Little>And then on the other side of that is
+obviously having, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/41-1
+00:05:22.344 --> 00:05:26.535
+<v Mike Little>an advisor only see his or her book when
+they go to the dashboard.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-0
+00:05:27.575 --> 00:05:30.014
+<v Andrew Berman>Yeah, so yeah,
+this is through that business</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/42-0
+00:05:27.975 --> 00:05:28.375
+<v Mike Little>Um...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-1
+00:05:30.014 --> 00:05:33.048
+<v Andrew Berman>intelligence view.
+I've gone through here a little bit.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-2
+00:05:33.048 --> 00:05:36.841
+<v Andrew Berman>I didn't realize that this is how the
+advisors use it. So it's, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-3
+00:05:36.841 --> 00:05:40.093
+<v Andrew Berman>it's effectively advisor specific on
+business intelligence.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-4
+00:05:40.093 --> 00:05:44.590
+<v Andrew Berman>I'm announcing it because I'm recording a
+transcript as well, and it's helpful to,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/43-0
+00:05:44.135 --> 00:05:44.455
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-5
+00:05:44.590 --> 00:05:49.142
+<v Andrew Berman>yeah, to lock that in. Yeah, because see,
+there's all of these things have separate</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/44-6
+00:05:49.142 --> 00:05:49.575
+<v Andrew Berman>domains.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/45-0
+00:05:50.615 --> 00:05:53.980
+<v Andrew Berman>So there are,
+it's like the back end architectures,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/45-1
+00:05:53.980 --> 00:05:58.122
+<v Andrew Berman>like Orion, for example,
+is all just one series of like all the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/45-2
+00:05:58.122 --> 00:06:01.551
+<v Andrew Berman>endpoints are from one domain.
+But these ones, it's,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/45-3
+00:06:01.551 --> 00:06:05.757
+<v Andrew Berman>I think there's like 15 different ones.
+And then on top of that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/45-4
+00:06:05.757 --> 00:06:09.575
+<v Andrew Berman>some of the data that is served in
+various domains is not.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/46-0
+00:06:09.735 --> 00:06:13.935
+<v Andrew Berman>I can either overlap or can slightly vary.
+Like I think there's different</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/46-1
+00:06:13.935 --> 00:06:17.794
+<v Andrew Berman>assumptions that are involved.
+So it's like kind of like Easter egg</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/46-2
+00:06:17.794 --> 00:06:21.255
+<v Andrew Berman>hunting through here to find which
+numbers to serve and how.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/47-0
+00:06:22.535 --> 00:06:26.209
+<v Mike Little>Gotcha.
+I think it may be helpful for you to see.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/47-1
+00:06:26.209 --> 00:06:30.177
+<v Mike Little>I can, again,
+from the administrative side, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/47-2
+00:06:30.177 --> 00:06:35.173
+<v Mike Little>we control user permissions and
+entitlements, things like that. So,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/47-3
+00:06:35.173 --> 00:06:38.847
+<v Mike Little>you know,
+what Mitch would see when he logs in is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/47-4
+00:06:38.847 --> 00:06:43.255
+<v Mike Little>based on the accounts and or
+relationships assigned to him.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/48-0
+00:06:43.655 --> 00:06:46.725
+<v Mike Little>Um,
+which it happens in a different space</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/48-1
+00:06:46.725 --> 00:06:50.014
+<v Mike Little>than than here,
+but if we I log in as Mitch,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/48-2
+00:06:50.014 --> 00:06:53.815
+<v Mike Little>you can see you know he has a much more
+restricted.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/49-0
+00:06:55.415 --> 00:06:56.855
+<v Mike Little>Menu here.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/50-0
+00:06:58.015 --> 00:07:04.055
+<v Mike Little>But if we go to dashboard, right,
+his default is going to just be his book.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/52-0
+00:07:06.855 --> 00:07:11.335
+<v Mike Little>Even though you can see more of these
+teams.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/51-0
+00:07:07.495 --> 00:07:07.975
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/54-0
+00:07:14.615 --> 00:07:18.824
+<v Mike Little>Yeah, it's not actually,
+it's just because he shares some clients</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/54-1
+00:07:18.824 --> 00:07:21.630
+<v Mike Little>with these advisors. So he's not,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/53-0
+00:07:20.375 --> 00:07:21.015
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/54-2
+00:07:21.630 --> 00:07:24.500
+<v Mike Little>he doesn't see their entire book.
+The again,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/54-3
+00:07:24.500 --> 00:07:28.135
+<v Mike Little>this is just based on the relationships
+assigned to him.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/56-0
+00:07:31.255 --> 00:07:35.625
+<v Andrew Berman>Yeah, how do they use the portfolio group?
+Because I always wondered, like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/55-0
+00:07:31.415 --> 00:07:31.855
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/56-1
+00:07:35.625 --> 00:07:39.880
+<v Andrew Berman>what is like the best primary keys to use?
+And I've always done it by the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/56-2
+00:07:39.880 --> 00:07:44.135
+<v Andrew Berman>relationship ID and the account ID,
+but I've seen that portfolio group in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/56-3
+00:07:44.135 --> 00:07:45.975
+<v Andrew Berman>there. I was curious about that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/58-0
+00:07:47.735 --> 00:07:55.099
+<v Mike Little>Yeah, so that's where I've seen,
+I've only tomorrow's one month for me.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/57-0
+00:07:53.775 --> 00:07:54.295
+<v Andrew Berman>Oh, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/58-1
+00:07:55.099 --> 00:07:57.655
+<v Mike Little>What I've seen so far is.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/59-0
+00:07:58.735 --> 00:08:03.451
+<v Mike Little>From the administrative side,
+like when we do exports or when I was</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/59-1
+00:08:03.451 --> 00:08:06.849
+<v Mike Little>doing kind of researching things for
+Mitch here,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/59-2
+00:08:06.849 --> 00:08:10.594
+<v Mike Little>it usually comes out divided up by a
+portfolio group.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/59-3
+00:08:10.594 --> 00:08:12.535
+<v Mike Little>So if I ran it from my side.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/61-0
+00:08:13.575 --> 00:08:17.882
+<v Mike Little>You know, I could see the entire firm,
+so portfolio group is like it is specific</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/61-1
+00:08:17.882 --> 00:08:20.860
+<v Mike Little>for the advisor,
+so this is the Mitch Johnson portfolio</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/61-2
+00:08:20.860 --> 00:08:22.455
+<v Mike Little>group, right? It's all of his.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/60-0
+00:08:22.695 --> 00:08:23.735
+<v Andrew Berman>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/62-0
+00:08:23.655 --> 00:08:30.055
+<v Mike Little>His book, essentially,
+but let me let me switch back to my user.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/63-0
+00:08:31.575 --> 00:08:34.560
+<v Andrew Berman>Okay, that's good to know.
+So the portfolio group is really like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/63-1
+00:08:34.560 --> 00:08:36.994
+<v Andrew Berman>advisor key.
+It's like that's how they break out the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/63-2
+00:08:36.994 --> 00:08:39.382
+<v Andrew Berman>advisors.
+It's not like it's based on a strategy or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/63-3
+00:08:39.382 --> 00:08:41.815
+<v Andrew Berman>based on a type of portfolio or something
+like that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/64-0
+00:08:42.615 --> 00:08:47.739
+<v Mike Little>Right. Yes, I mean, of course,
+you could do that, right?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/64-1
+00:08:47.739 --> 00:08:50.615
+<v Mike Little>But it's not how 49 is using it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/66-0
+00:08:51.575 --> 00:08:54.232
+<v Andrew Berman>Well, that's exactly it,
+because some of those things,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/66-1
+00:08:54.232 --> 00:08:57.854
+<v Andrew Berman>it's like in a vacuum. It's just,
+since you could use some of these fields</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/66-2
+00:08:57.854 --> 00:09:01.910
+<v Andrew Berman>in different ways, it's like it's unclear.
+So it's good to know that's how they use</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/66-3
+00:09:01.910 --> 00:09:02.055
+<v Andrew Berman>it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/65-0
+00:09:04.455 --> 00:09:04.655
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/67-0
+00:09:06.135 --> 00:09:09.015
+<v Mike Little>Yeah, it looks like if we come back,
+like there's a...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/68-0
+00:09:10.495 --> 00:09:15.175
+<v Mike Little>like a private wealth portfolio group.
+So if I switch back there.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/69-0
+00:09:16.695 --> 00:09:17.735
+<v Mike Little>Move merch.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/70-0
+00:09:21.895 --> 00:09:25.655
+<v Mike Little>It's essentially the same thing,
+but like our private wealth division has.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/71-0
+00:09:27.175 --> 00:09:32.241
+<v Mike Little>two or three advisors and a few other
+support folks that would be that would</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/71-1
+00:09:32.241 --> 00:09:35.135
+<v Mike Little>have access to this on their Black
+Diamond.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/72-0
+00:09:36.455 --> 00:09:36.855
+<v Mike Little>Um...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/73-0
+00:09:36.535 --> 00:09:37.015
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/76-0
+00:09:39.175 --> 00:09:45.847
+<v Mike Little>I'm not sure exactly how it's done on the
+on the back end. I haven't looked into it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/76-1
+00:09:45.847 --> 00:09:49.222
+<v Mike Little>but,
+and that one's that's kind of a niche</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/76-2
+00:09:49.222 --> 00:09:53.226
+<v Mike Little>case. You know,
+that's not even 10% of assets. No,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/74-0
+00:09:52.215 --> 00:09:53.335
+<v Andrew Berman>Sure, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/76-3
+00:09:53.226 --> 00:09:57.935
+<v Mike Little>most of it's going to be very specific to
+an advising team.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/75-0
+00:09:54.615 --> 00:09:55.015
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/77-0
+00:09:58.135 --> 00:09:59.735
+<v Mike Little>in their portfolio group.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/78-0
+00:10:02.135 --> 00:10:03.175
+<v Andrew Berman>So, really, every...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/79-0
+00:10:03.215 --> 00:10:04.375
+<v Mike Little>No, go ahead.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/80-0
+00:10:05.815 --> 00:10:08.878
+<v Andrew Berman>Oh, sorry. Oh yeah,
+I was just going to say it seems like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/80-1
+00:10:08.878 --> 00:10:12.891
+<v Andrew Berman>everything is really done through this
+business intelligence segment. Like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/80-2
+00:10:12.891 --> 00:10:16.007
+<v Andrew Berman>it's like the dashboard stuff that is
+built in. It's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/80-3
+00:10:16.007 --> 00:10:19.861
+<v Andrew Berman>is there anything like kind of their
+whole use case just between advisor</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/80-4
+00:10:19.861 --> 00:10:21.815
+<v Andrew Berman>reports, advisor view, and dashboard?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/81-0
+00:10:23.655 --> 00:10:28.573
+<v Mike Little>I think that's most of it.
+There's also the client report section</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/81-1
+00:10:28.573 --> 00:10:34.534
+<v Mike Little>that I think is used, but not as much.
+And then there's the client view that is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/81-2
+00:10:34.534 --> 00:10:38.855
+<v Mike Little>used a little bit more.
+So that's where you can click in.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/82-0
+00:10:41.095 --> 00:10:45.335
+<v Mike Little>to a specific relationship and get this
+dashboard for the relationship.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/85-0
+00:10:46.775 --> 00:10:49.723
+<v Mike Little>So this was something that sounds like,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/84-0
+00:10:47.495 --> 00:10:48.295
+<v Andrew Berman>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/85-1
+00:10:49.723 --> 00:10:53.849
+<v Mike Little>it is something you can do that's client
+facing if you want it to be,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/85-2
+00:10:53.849 --> 00:10:57.975
+<v Mike Little>but most advisors use this as meeting
+prep as like a quick reference.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/86-0
+00:10:58.855 --> 00:11:00.775
+<v Andrew Berman>Okay, alright.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/89-0
+00:11:05.495 --> 00:11:09.069
+<v Mike Little>look at reports and statements.
+So you can see, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/89-1
+00:11:09.069 --> 00:11:13.875
+<v Mike Little>for this relationship that they're not
+receiving anything from Black Diamond.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/89-2
+00:11:13.875 --> 00:11:18.434
+<v Mike Little>This is all part of the integration
+through Schwab Open Gateway that just</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/88-0
+00:11:14.055 --> 00:11:14.455
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/89-3
+00:11:18.434 --> 00:11:23.055
+<v Mike Little>keeps it updated whenever a custodial
+statement is sent out. So, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/89-4
+00:11:23.055 --> 00:11:26.135
+<v Mike Little>they're just getting Schwab statements
+basically.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/90-0
+00:11:29.175 --> 00:11:30.455
+<v Mike Little>Trying to see.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-0
+00:11:29.575 --> 00:11:32.167
+<v Andrew Berman>Yeah,
+so that's what I've been doing on our</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-1
+00:11:32.167 --> 00:11:36.878
+<v Andrew Berman>side is to go through and use Schwab's
+REST API and just do everything straight</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-2
+00:11:36.878 --> 00:11:41.413
+<v Andrew Berman>from Schwab because that way it's like
+there's stable tables for everything.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-3
+00:11:41.413 --> 00:11:45.829
+<v Andrew Berman>So like for the account tables or the
+transaction tables or like whatever.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-4
+00:11:45.829 --> 00:11:49.481
+<v Andrew Berman>So it's like we just know exactly where
+it is. It's complete.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/91-5
+00:11:49.481 --> 00:11:51.895
+<v Andrew Berman>It's going to be consistent day over day.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-0
+00:11:52.175 --> 00:11:55.618
+<v Andrew Berman>Whereas like getting stuff from Black
+Diamond, it's like, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-1
+00:11:55.618 --> 00:11:59.169
+<v Andrew Berman>15 different underlying domains,
+hundreds of different tables and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-2
+00:11:59.169 --> 00:12:02.074
+<v Andrew Berman>dimensionalized keys and stuff. It's like,
+it's very,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-3
+00:12:02.074 --> 00:12:06.270
+<v Andrew Berman>very hard to track that way if you want
+to like build it out cleanly and then</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-4
+00:12:06.270 --> 00:12:09.820
+<v Andrew Berman>comprehensively. And so, yeah,
+but this is good because it's like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-5
+00:12:09.820 --> 00:12:13.694
+<v Andrew Berman>something that I was curious about is
+where the high traffic areas are.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/93-6
+00:12:13.694 --> 00:12:16.975
+<v Andrew Berman>So we'd know how to cross reference to
+make sure that we're.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-0
+00:12:17.055 --> 00:12:20.233
+<v Andrew Berman>of displaying the same kind of stuff that
+you want to see.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-1
+00:12:20.233 --> 00:12:24.595
+<v Andrew Berman>Because I think the goal really is to be
+able to do essentially a better version</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-2
+00:12:24.595 --> 00:12:27.718
+<v Andrew Berman>of all of these views.
+And then because we would have the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-3
+00:12:27.718 --> 00:12:30.411
+<v Andrew Berman>infrastructure set up, if you say like,
+oh, well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-4
+00:12:30.411 --> 00:12:33.535
+<v Andrew Berman>we really want like a very specific type
+of billing view,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/95-5
+00:12:33.535 --> 00:12:37.735
+<v Andrew Berman>or we want to be able to do something
+bespoke, then we can just toss that on.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/97-0
+00:12:37.895 --> 00:12:41.773
+<v Andrew Berman>rather than having to like piece it
+together or ad hoc like every single time</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/94-0
+00:12:38.415 --> 00:12:38.975
+<v Mike Little>Mhm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/97-1
+00:12:41.773 --> 00:12:43.015
+<v Andrew Berman>you want to do something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/96-0
+00:12:43.495 --> 00:12:43.975
+<v Mike Little>Yep.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/98-0
+00:12:45.655 --> 00:12:46.375
+<v Mike Little>The.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/99-0
+00:12:47.575 --> 00:12:49.495
+<v Mike Little>So, with that Schwab set up.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/101-0
+00:12:50.455 --> 00:12:54.875
+<v Mike Little>Yeah, traditionally,
+these platforms receive like data files</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/101-1
+00:12:54.875 --> 00:12:59.078
+<v Mike Little>from Schwab, right, overnight,
+and they're all, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/100-0
+00:12:57.175 --> 00:12:57.655
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/101-2
+00:12:59.078 --> 00:13:04.512
+<v Mike Little>specific format to the custodian
+typically, but they're more or less like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/101-3
+00:13:04.512 --> 00:13:08.135
+<v Mike Little>you know, notes files or text files,
+essentially.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/102-0
+00:13:10.215 --> 00:13:11.095
+<v Mike Little>So, you're saying that?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/104-0
+00:13:12.695 --> 00:13:17.086
+<v Mike Little>With that set up,
+you're not relying on that as much?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/104-1
+00:13:17.086 --> 00:13:22.615
+<v Mike Little>You're kind of plugged straight in?
+Or is it still... No, go ahead.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/103-0
+00:13:19.735 --> 00:13:21.495
+<v Andrew Berman>Yeah, so I get them all.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/106-0
+00:13:23.415 --> 00:13:27.118
+<v Andrew Berman>Oh, so yeah,
+so they all send in CSV for the most part.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/106-1
+00:13:27.118 --> 00:13:32.144
+<v Andrew Berman>So just like a spreadsheet of all
+transactions or all account holdings or I</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/105-0
+00:13:27.495 --> 00:13:27.895
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/106-2
+00:13:32.144 --> 00:13:35.648
+<v Andrew Berman>think they might,
+I don't actually they don't have a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/106-3
+00:13:35.648 --> 00:13:39.484
+<v Andrew Berman>performance table,
+but they have a tax table for like all</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/106-4
+00:13:39.484 --> 00:13:41.335
+<v Andrew Berman>the K1s and stuff like that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-0
+00:13:41.895 --> 00:13:44.748
+<v Andrew Berman>And so from there,
+because it all comes in CSV,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-1
+00:13:44.748 --> 00:13:49.205
+<v Andrew Berman>we'll convert it to like parquet just to,
+yeah, get rid of any duplicates,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-2
+00:13:49.205 --> 00:13:53.543
+<v Andrew Berman>like make sure it's all like cleanly
+typed and organized and that, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-3
+00:13:53.543 --> 00:13:57.762
+<v Andrew Berman>columnar instead of instead of in the
+spreadsheets. And then that way,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-4
+00:13:57.762 --> 00:14:01.506
+<v Andrew Berman>then it's like if we,
+because ultimately we want to be able to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-5
+00:14:01.506 --> 00:14:04.655
+<v Andrew Berman>build out,
+like something that we've done internally</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/107-6
+00:14:04.655 --> 00:14:06.735
+<v Andrew Berman>here is build out agents that have.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-0
+00:14:06.735 --> 00:14:11.104
+<v Andrew Berman>have access to those columnar databases.
+So that way, if you want to run analysis,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-1
+00:14:11.104 --> 00:14:14.419
+<v Andrew Berman>instead of getting it all in JSON or
+something, which is good,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-2
+00:14:14.419 --> 00:14:17.630
+<v Andrew Berman>like if you want like,
+like for an advisor who maybe wants a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-3
+00:14:17.630 --> 00:14:20.998
+<v Andrew Berman>specific fact about a client,
+like then having an agent like do</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-4
+00:14:20.998 --> 00:14:24.104
+<v Andrew Berman>something with that is like very
+straightforward and easy.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/108-5
+00:14:24.104 --> 00:14:25.735
+<v Andrew Berman>But if you wanted to say, well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-0
+00:14:25.975 --> 00:14:30.184
+<v Andrew Berman>Like it's essentially it's like if
+there's a SQL query that you would make</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-1
+00:14:30.184 --> 00:14:33.887
+<v Andrew Berman>that would require like 5 different joins
+or something like that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/109-0
+00:14:33.495 --> 00:14:33.815
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-2
+00:14:33.887 --> 00:14:37.815
+<v Andrew Berman>that would not be good to have in CSV or
+JSON or something like that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-3
+00:14:37.815 --> 00:14:41.294
+<v Andrew Berman>It's like you'd want it to be, yeah, fast,
+so or performance.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-4
+00:14:41.294 --> 00:14:45.446
+<v Andrew Berman>So that's the basis for like why we've
+been like setting everything up in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/110-5
+00:14:45.446 --> 00:14:45.895
+<v Andrew Berman>Parquet.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/111-0
+00:14:46.535 --> 00:14:51.248
+<v Andrew Berman>But yeah, the hope is to like,
+or like we built out the data</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/111-1
+00:14:51.248 --> 00:14:57.505
+<v Andrew Berman>infrastructure side of having everything
+like for our like portal and dashboard,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/111-2
+00:14:57.505 --> 00:15:01.831
+<v Andrew Berman>it's all in a,
+it's just JSON reads like from from AWS,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/111-3
+00:15:01.831 --> 00:15:06.775
+<v Andrew Berman>but but having a like a gold layer that's
+all in Parquet where.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/113-0
+00:15:07.015 --> 00:15:11.352
+<v Andrew Berman>if you wanted to, yeah, get, I guess,
+like deeper analysis and like no code</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/113-1
+00:15:11.352 --> 00:15:15.460
+<v Andrew Berman>analysis, so you don't have to be, yeah,
+in some kind of, I don't know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/113-2
+00:15:15.460 --> 00:15:19.910
+<v Andrew Berman>in Snowflake or in Databricks or, yeah,
+having to run around and do SQL every</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/113-3
+00:15:19.910 --> 00:15:22.135
+<v Andrew Berman>single time you want to know something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/112-0
+00:15:22.615 --> 00:15:23.015
+<v Mike Little>Yep.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/115-0
+00:15:24.535 --> 00:15:27.975
+<v Andrew Berman>But, um, but yeah, so that's like,
+like right now,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/114-0
+00:15:25.215 --> 00:15:25.415
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/115-1
+00:15:27.975 --> 00:15:32.695
+<v Andrew Berman>the shapes are pretty good. I mean,
+everything I see here, like we...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/117-0
+00:15:33.655 --> 00:15:38.647
+<v Andrew Berman>pretty much have all of this. I don't,
+yeah, I don't see anything like new.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/117-1
+00:15:38.647 --> 00:15:43.704
+<v Andrew Berman>It's the main thing I think is just
+getting like the high level stuff, like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/117-2
+00:15:43.704 --> 00:15:46.856
+<v Andrew Berman>or like the most important things just
+perfect.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/117-3
+00:15:46.856 --> 00:15:52.176
+<v Andrew Berman>And then that's why I think of like that
+performance attribution and like, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/116-0
+00:15:50.295 --> 00:15:50.695
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/117-4
+00:15:52.176 --> 00:15:53.095
+<v Andrew Berman>like the, the.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/118-0
+00:15:53.895 --> 00:16:00.318
+<v Andrew Berman>I think Black Diamond does say like a 365
+calendar day total return as opposed to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/118-1
+00:16:00.318 --> 00:16:05.174
+<v Andrew Berman>the price. And as far as billing goes,
+I don't know for sure.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/118-2
+00:16:05.174 --> 00:16:11.205
+<v Andrew Berman>I think they just market quarterly or
+they just pull fees quarterly and they</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/118-3
+00:16:11.205 --> 00:16:12.615
+<v Andrew Berman>don't amortize it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-0
+00:16:13.015 --> 00:16:17.045
+<v Andrew Berman>So when they show those like net of
+performance numbers or net performance</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-1
+00:16:17.045 --> 00:16:19.463
+<v Andrew Berman>numbers, I don't,
+I think like historically,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-2
+00:16:19.463 --> 00:16:22.902
+<v Andrew Berman>like after they take out the fees,
+you can, it'll be like that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-3
+00:16:22.902 --> 00:16:26.556
+<v Andrew Berman>But if you're like looking like in the
+current quarter or whatever,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-4
+00:16:26.556 --> 00:16:30.532
+<v Andrew Berman>like if it's not like they're like
+pulling out of some prorated amount of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/119-5
+00:16:30.532 --> 00:16:32.735
+<v Andrew Berman>basis points for, you know, however time.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/121-0
+00:16:32.815 --> 00:16:36.010
+<v Andrew Berman>much time has elapsed.
+I don't think they're doing that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/120-0
+00:16:35.255 --> 00:16:35.655
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/121-1
+00:16:36.010 --> 00:16:39.093
+<v Andrew Berman>or that's the impression that I got.
+But yeah, I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/121-2
+00:16:39.093 --> 00:16:41.895
+<v Andrew Berman>this is really useful because it's like
+that's...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-0
+00:16:42.855 --> 00:16:45.161
+<v Andrew Berman>Yeah,
+it's like what you're saying about the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-1
+00:16:45.161 --> 00:16:47.979
+<v Andrew Berman>portfolio group,
+that it's like when there's different</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-2
+00:16:47.979 --> 00:16:50.900
+<v Andrew Berman>ways to kind of organize with these
+things and it's not,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-3
+00:16:50.900 --> 00:16:54.589
+<v Andrew Berman>it's tribal knowledge effectively and
+it's not necessarily clear. It's,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/122-0
+00:16:53.735 --> 00:16:54.215
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-4
+00:16:54.589 --> 00:16:57.254
+<v Andrew Berman>that's good,
+because then we can kind of fit around</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-5
+00:16:57.254 --> 00:17:00.072
+<v Andrew Berman>that. And yeah,
+or even using it as like a validation,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/123-6
+00:17:00.072 --> 00:17:03.095
+<v Andrew Berman>being like, okay,
+if we're doing everything account level.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/124-0
+00:17:03.375 --> 00:17:05.768
+<v Andrew Berman>do our account levels for this advisor
+view,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/124-1
+00:17:05.768 --> 00:17:07.895
+<v Andrew Berman>like add up to the portfolio group view.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/125-0
+00:17:11.495 --> 00:17:15.318
+<v Mike Little>Yeah, the,
+I was just thinking of one thing one</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/125-1
+00:17:15.318 --> 00:17:21.689
+<v Mike Little>person specifically mentioned is like,
+would be this would be nice to have that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/125-2
+00:17:21.689 --> 00:17:28.299
+<v Mike Little>Black Diamond doesn't have that I think
+with Smart X specifically being, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/125-3
+00:17:28.299 --> 00:17:29.095
+<v Mike Little>available.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/127-0
+00:17:29.735 --> 00:17:33.946
+<v Mike Little>to you and your team was,
+if think of how he worded it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/127-1
+00:17:33.946 --> 00:17:38.985
+<v Mike Little>I would like a quick way to see what
+models a given account is in,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/127-2
+00:17:38.985 --> 00:17:43.647
+<v Mike Little>without having to dig or go to another
+platform or, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/126-0
+00:17:41.495 --> 00:17:41.975
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/127-3
+00:17:43.647 --> 00:17:48.535
+<v Mike Little>go to rebalance or whatever,
+which I only think these guys have.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-0
+00:17:49.415 --> 00:17:53.725
+<v Mike Little>access to any of the trading tools.
+And I don't know that our models live in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-1
+00:17:53.725 --> 00:17:56.636
+<v Mike Little>Black Diamond at all.
+So you really like the, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-2
+00:17:56.636 --> 00:17:59.435
+<v Mike Little>so you can see current allocation,
+but obviously,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/128-0
+00:17:57.175 --> 00:17:59.015
+<v Andrew Berman>I don't think so, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-3
+00:17:59.435 --> 00:18:03.745
+<v Mike Little>unless you know the model in and out,
+you're not going to be able to look at</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-4
+00:18:03.745 --> 00:18:07.327
+<v Mike Little>that and say, oh yeah,
+that's our standard 60-40 or whatever it</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/129-5
+00:18:07.327 --> 00:18:07.495
+<v Mike Little>is.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/130-0
+00:18:08.375 --> 00:18:10.934
+<v Mike Little>Um, so yeah,
+something that just put on the radar is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/130-1
+00:18:10.934 --> 00:18:11.175
+<v Mike Little>uh...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-0
+00:18:12.775 --> 00:18:15.278
+<v Mike Little>Yeah,
+one of the more prominent local ops folks</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-1
+00:18:15.278 --> 00:18:17.521
+<v Mike Little>who work,
+they work with a lot of advisors</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-2
+00:18:17.521 --> 00:18:20.180
+<v Mike Little>mentioned that is like,
+that would be really nice,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-3
+00:18:20.180 --> 00:18:22.683
+<v Mike Little>really make our our day-to-day a little
+easier,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-4
+00:18:22.683 --> 00:18:26.855
+<v Mike Little>because now obviously they're meeting
+with who knows how many clients on a on a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-5
+00:18:26.855 --> 00:18:29.462
+<v Mike Little>given day,
+they're not gonna be able to remember,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-6
+00:18:29.462 --> 00:18:31.652
+<v Mike Little>oh yeah,
+Betty is Betty is supposed to be</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/131-7
+00:18:31.652 --> 00:18:32.695
+<v Mike Little>seventy-thirty or...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/132-0
+00:18:32.935 --> 00:18:34.935
+<v Mike Little>You know, whatever model that she's in.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/134-0
+00:18:36.215 --> 00:18:39.702
+<v Andrew Berman>Yeah,
+so that that's something that's on in our</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/134-1
+00:18:39.702 --> 00:18:43.480
+<v Andrew Berman>queue to to put together,
+because it is it is yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/134-2
+00:18:43.480 --> 00:18:49.147
+<v Andrew Berman>a join effectively from Smart X to a
+Schwab or Black Diamond and it's doable,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/134-3
+00:18:49.147 --> 00:18:49.655
+<v Andrew Berman>it's...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/135-0
+00:18:51.175 --> 00:18:55.955
+<v Andrew Berman>I don't think it will be that difficult.
+I think we hopefully it's like I wanted</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/135-1
+00:18:55.955 --> 00:19:00.912
+<v Andrew Berman>to like knock out the just the brass tack
+stuff like with the performance and stuff</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/135-2
+00:19:00.912 --> 00:19:05.455
+<v Andrew Berman>like that and like by the end of like
+this week or maybe early next and then</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/135-3
+00:19:05.455 --> 00:19:09.645
+<v Andrew Berman>from there start transcribing.
+I've got it like specked out and and we</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/135-4
+00:19:09.645 --> 00:19:11.415
+<v Andrew Berman>have all of the data. There's.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/136-0
+00:19:11.575 --> 00:19:14.441
+<v Andrew Berman>There is some overlap, I think,
+in the accounts.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/136-1
+00:19:14.441 --> 00:19:17.775
+<v Andrew Berman>I think that that might have been the
+biggest issue was,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/136-2
+00:19:17.775 --> 00:19:21.694
+<v Andrew Berman>because I don't remember,
+because we were looking into this like a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/136-3
+00:19:21.694 --> 00:19:23.975
+<v Andrew Berman>month ago or something. I think that...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/137-0
+00:19:25.655 --> 00:19:26.695
+<v Andrew Berman>Like Smart X.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/138-0
+00:19:25.735 --> 00:19:29.335
+<v Mike Little>One account can be in multiple models,
+yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-0
+00:19:28.375 --> 00:19:30.841
+<v Andrew Berman>Yeah,
+well it's on one accounts in multiple</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-1
+00:19:30.841 --> 00:19:35.213
+<v Andrew Berman>models and I think Smart X does some
+anonymization of the accounts or there's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/139-0
+00:19:34.855 --> 00:19:35.335
+<v Mike Little>Ah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-2
+00:19:35.213 --> 00:19:38.352
+<v Andrew Berman>some hashing.
+There was something like where they like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-3
+00:19:38.352 --> 00:19:42.331
+<v Andrew Berman>like I can't remember if I found the join
+key or not. I thought I did,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-4
+00:19:42.331 --> 00:19:46.815
+<v Andrew Berman>but it's like, but even if you can't,
+it's like the fingerprint of the accounts</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/140-5
+00:19:46.815 --> 00:19:47.655
+<v Andrew Berman>is so specific.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/141-0
+00:19:47.895 --> 00:19:51.000
+<v Andrew Berman>that it's like that even if it's
+technically not a match,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/141-1
+00:19:51.000 --> 00:19:54.105
+<v Andrew Berman>it's like you can match it within like 99.
+99% certainty.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/141-2
+00:19:54.105 --> 00:19:58.174
+<v Andrew Berman>So it's just like obviously don't want to
+be inexact, but at the same time,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/141-3
+00:19:58.174 --> 00:20:02.403
+<v Andrew Berman>it's like if an advisor just wants to see
+like the model breakdown high level,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/141-4
+00:20:02.403 --> 00:20:05.615
+<v Andrew Berman>and it's like that's not going out on a
+report to a client.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/143-0
+00:20:06.815 --> 00:20:10.564
+<v Andrew Berman>It's like you can definitely, that's like,
+that's definitely good to go.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/143-1
+00:20:10.564 --> 00:20:14.107
+<v Andrew Berman>It's just like kind of wanted to find
+like a deterministic solution.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/143-2
+00:20:14.107 --> 00:20:17.085
+<v Andrew Berman>So we just know it's perfect rather than,
+than, yeah. No,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/143-3
+00:20:17.085 --> 00:20:21.295
+<v Andrew Berman>I don't want to say an estimate because
+it's essentially like 100%, but you know.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/142-0
+00:20:21.055 --> 00:20:21.375
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/145-0
+00:20:23.135 --> 00:20:27.700
+<v Mike Little>Yeah, I think that that, I mean,
+that would be a big a big value add for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/145-1
+00:20:27.700 --> 00:20:28.575
+<v Mike Little>them, I think.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/146-0
+00:20:30.575 --> 00:20:35.598
+<v Mike Little>Yeah, we talked about this a little bit,
+maybe on the not the meeting we had</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/146-1
+00:20:35.598 --> 00:20:38.794
+<v Mike Little>before we met with Luke last week,
+but you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/146-2
+00:20:38.794 --> 00:20:43.752
+<v Mike Little>eventually having some some like
+client-facing capability built in here. I,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/146-3
+00:20:43.752 --> 00:20:47.535
+<v Mike Little>you know, Black Diamond,
+actually I think I can show you.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/147-0
+00:20:50.815 --> 00:20:53.281
+<v Mike Little>So yeah,
+this client experience section is the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/147-1
+00:20:53.281 --> 00:20:54.015
+<v Mike Little>client portal.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/150-0
+00:20:57.055 --> 00:21:02.960
+<v Mike Little>And it shows you like login trend and
+overall utilization. So you can see,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/148-0
+00:21:00.895 --> 00:21:01.615
+<v Andrew Berman>Ohh, cool.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/150-1
+00:21:02.960 --> 00:21:06.739
+<v Mike Little>I mean,
+like only just shy of 11% of our client</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/150-2
+00:21:06.739 --> 00:21:11.935
+<v Mike Little>base have actually ever logged in to the
+portal, right? So, so a.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/149-0
+00:21:10.455 --> 00:21:10.895
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-0
+00:21:12.895 --> 00:21:15.657
+<v Mike Little>You know,
+asking them if we get to a place where</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-1
+00:21:15.657 --> 00:21:18.137
+<v Mike Little>we're like, hey,
+we have this new platform,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-2
+00:21:18.137 --> 00:21:22.307
+<v Mike Little>we'd really like you to utilize it.
+It's not a big ask because, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-3
+00:21:22.307 --> 00:21:25.125
+<v Mike Little>90% of them have never used any platform
+with us.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-4
+00:21:25.125 --> 00:21:29.352
+<v Mike Little>So it's not like they're leaving
+something they're used to and then having</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/151-0
+00:21:26.095 --> 00:21:26.655
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/152-5
+00:21:29.352 --> 00:21:33.015
+<v Mike Little>to learn something new.
+It's just trying to adopt something new.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/153-0
+00:21:34.975 --> 00:21:40.575
+<v Mike Little>And honestly, I mean,
+just from my perspective.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/154-0
+00:21:41.935 --> 00:21:44.980
+<v Mike Little>Trying to think if I can find when we can
+log into.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/154-1
+00:21:44.980 --> 00:21:47.615
+<v Mike Little>I think Black Diamonds portal kind of
+sucks.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-0
+00:21:50.015 --> 00:21:52.920
+<v Mike Little>And so, yeah,
+even the 10% who have used it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-1
+00:21:52.920 --> 00:21:56.728
+<v Mike Little>and it didn't look,
+even even those two 10% are logging in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-2
+00:21:56.728 --> 00:22:00.084
+<v Mike Little>consistently,
+probably be pretty easy to to impress</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-3
+00:22:00.084 --> 00:22:02.988
+<v Mike Little>them compared to what Blight Diamond
+offers.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/155-0
+00:22:02.255 --> 00:22:03.375
+<v Andrew Berman>Oh, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-4
+00:22:02.988 --> 00:22:06.151
+<v Mike Little>I don't know if you've ever seen Orion's
+portal,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/156-5
+00:22:06.151 --> 00:22:09.055
+<v Mike Little>I think it's kind of the standard right
+now.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/158-0
+00:22:10.175 --> 00:22:14.063
+<v Mike Little>It just looks more modern.
+It has a lot more capabilities.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/158-1
+00:22:14.063 --> 00:22:17.754
+<v Mike Little>It uses Plaid to integrate with the
+external providers.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/158-2
+00:22:17.754 --> 00:22:22.433
+<v Mike Little>So you can add your 401k, your mortgage,
+your bank accounts, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/157-0
+00:22:21.215 --> 00:22:22.815
+<v Andrew Berman>Okay, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/158-3
+00:22:22.433 --> 00:22:27.243
+<v Mike Little>so you have that full financial picture.
+That's not 100% necessary here,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/158-4
+00:22:27.243 --> 00:22:28.495
+<v Mike Little>but it's just nice.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/160-0
+00:22:29.775 --> 00:22:33.290
+<v Mike Little>But, you know,
+having something that's really clean to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/160-1
+00:22:33.290 --> 00:22:37.571
+<v Mike Little>look at and say, you know,
+you can see transactions possibly or at</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/160-2
+00:22:37.571 --> 00:22:40.511
+<v Mike Little>the very least see performance and,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/160-3
+00:22:40.511 --> 00:22:45.559
+<v Mike Little>kind of those big bullet points we were
+looking at on that advisor dashboard a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/160-4
+00:22:45.559 --> 00:22:50.735
+<v Mike Little>few minutes ago would be pretty cool to
+eventually develop and be able to offer.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/159-0
+00:22:46.095 --> 00:22:46.575
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/162-0
+00:22:51.695 --> 00:22:54.286
+<v Andrew Berman>Yeah,
+the I think the biggest hurdle with the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/161-0
+00:22:51.775 --> 00:22:52.415
+<v Mike Little>Um...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/162-1
+00:22:54.286 --> 00:22:58.566
+<v Andrew Berman>client stuff is not even putting it
+together because I mean even even doing</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/162-2
+00:22:58.566 --> 00:23:03.296
+<v Andrew Berman>like a plaid integration or or or setting
+up a yeah some client facing thing is not</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/162-3
+00:23:03.296 --> 00:23:07.069
+<v Andrew Berman>it could be done really fast.
+It's I it's just that the regulatory</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/162-4
+00:23:07.069 --> 00:23:10.335
+<v Andrew Berman>hurdle is kind of the black box or like
+unknown like how.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-0
+00:23:10.655 --> 00:23:14.496
+<v Andrew Berman>how much, like now we're using,
+I think it's a green board for compliance</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-1
+00:23:14.496 --> 00:23:18.234
+<v Andrew Berman>and like I don't know like how many steps
+they have to or what they're,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-2
+00:23:18.234 --> 00:23:22.438
+<v Andrew Berman>because they're relatively new with us.
+So like I don't know if that's something</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-3
+00:23:22.438 --> 00:23:26.746
+<v Andrew Berman>that they would want to like go back and
+forth over for six months or something or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-4
+00:23:26.746 --> 00:23:30.484
+<v Andrew Berman>so it's like I've always been like
+gearing us towards like B2B and like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/163-5
+00:23:30.484 --> 00:23:32.975
+<v Andrew Berman>staying like at the advisor level just
+because.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/165-0
+00:23:33.175 --> 00:23:37.379
+<v Andrew Berman>then if it's not directly shown to the
+client, then we can just move really fast.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/165-1
+00:23:37.379 --> 00:23:41.327
+<v Andrew Berman>And it's like it's used internally.
+If something has to be like exported for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/165-2
+00:23:41.327 --> 00:23:44.761
+<v Andrew Berman>like a client or something,
+it's like then it's like that's just a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/165-3
+00:23:44.761 --> 00:23:47.325
+<v Andrew Berman>document.
+You just like get the document approved</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/164-0
+00:23:46.095 --> 00:23:46.495
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/165-4
+00:23:47.325 --> 00:23:49.375
+<v Andrew Berman>through compliance and that's easy. But.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/167-0
+00:23:50.335 --> 00:23:55.082
+<v Andrew Berman>Yeah, but it's good to know because, yeah,
+I've gone through Orion extensively and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/167-1
+00:23:55.082 --> 00:23:58.856
+<v Andrew Berman>it's definitely better than Black Diamond,
+like in a lot of ways.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/167-2
+00:23:58.856 --> 00:24:02.058
+<v Andrew Berman>And that's interesting that they can like
+tag in, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/167-3
+00:24:02.058 --> 00:24:05.775
+<v Andrew Berman>the mortgage and the 401k and stuff like
+that. It's a good idea.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/166-0
+00:24:04.735 --> 00:24:05.215
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/168-0
+00:24:06.575 --> 00:24:09.315
+<v Mike Little>Yeah,
+I think if you're if you're using Orion</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/168-1
+00:24:09.315 --> 00:24:11.995
+<v Mike Little>planning,
+it makes it makes it a lot easier.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/168-2
+00:24:11.995 --> 00:24:15.449
+<v Mike Little>Other standalone planning softwares have
+that capability,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/168-3
+00:24:15.449 --> 00:24:20.035
+<v Mike Little>like eMoney and Right Capital, and I mean,
+I'm sure MoneyGuide Pro does too,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/168-4
+00:24:20.035 --> 00:24:22.655
+<v Mike Little>but it's kind of falling behind the
+others.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/170-0
+00:24:24.415 --> 00:24:27.684
+<v Mike Little>But yeah,
+Ryan having that capability natively</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/170-1
+00:24:27.684 --> 00:24:31.788
+<v Mike Little>gives them the opportunity to tell the
+advisors like, hey,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/170-2
+00:24:31.788 --> 00:24:36.448
+<v Mike Little>you don't have to pay for that extra
+standalone planning software.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/170-3
+00:24:36.448 --> 00:24:40.343
+<v Mike Little>We can do that here. Again,
+that's not a high priority.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/169-0
+00:24:37.935 --> 00:24:38.415
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/170-4
+00:24:40.343 --> 00:24:43.055
+<v Mike Little>It's just a thought like down the road.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/172-0
+00:24:43.175 --> 00:24:46.675
+<v Mike Little>Yeah,
+it would be cool to offer something like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/172-1
+00:24:46.675 --> 00:24:52.632
+<v Mike Little>that, but yeah, the, yeah, I guess the,
+as far as like anything client specific</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/171-0
+00:24:46.735 --> 00:24:47.455
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/172-2
+00:24:52.632 --> 00:24:57.249
+<v Mike Little>or client prep-wise,
+something like this page is probably the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/172-3
+00:24:57.249 --> 00:25:02.089
+<v Mike Little>big priority, so you know,
+somewhere an advisor can land and get</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/172-4
+00:25:02.089 --> 00:25:02.535
+<v Mike Little>these.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/174-0
+00:25:02.975 --> 00:25:06.599
+<v Mike Little>You know,
+I'd like to say these guys are like four</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/174-1
+00:25:06.599 --> 00:25:12.213
+<v Mike Little>or five days ahead on their meetings,
+right? And they get prepped, but really,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/174-2
+00:25:12.213 --> 00:25:17.969
+<v Mike Little>they could be, they could have 15 minutes,
+you know. So, you know, so, yeah. So,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/173-0
+00:25:13.135 --> 00:25:17.121
+<v Andrew Berman>Oh, for sure. Yeah, yeah.
+I'm sure that's how it goes every single</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/173-1
+00:25:17.121 --> 00:25:17.775
+<v Andrew Berman>time. Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/174-3
+00:25:17.969 --> 00:25:21.380
+<v Mike Little>yeah,
+having something like this would be a big</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/174-4
+00:25:21.380 --> 00:25:22.375
+<v Mike Little>help for them.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/175-0
+00:25:22.455 --> 00:25:27.589
+<v Mike Little>And then similarly, the other dashboard,
+just somewhere they can go and look at</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/175-1
+00:25:27.589 --> 00:25:32.850
+<v Mike Little>their book from a global perspective and
+be able to track AUM and management fees</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/175-2
+00:25:32.850 --> 00:25:36.893
+<v Mike Little>that are coming in and things like that,
+I think are probably,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/175-3
+00:25:36.893 --> 00:25:40.935
+<v Mike Little>those are probably the biggest use cases
+of Black Diamond and.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/176-0
+00:25:41.855 --> 00:25:42.735
+<v Mike Little>As you know.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/178-0
+00:25:44.095 --> 00:25:50.646
+<v Mike Little>Many platforms can do that, right?
+And whether we can do it better in-house,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/178-1
+00:25:50.646 --> 00:25:57.793
+<v Mike Little>and I mean, I would guess cheaper as well.
+I have no idea how that works, but yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/177-0
+00:25:57.615 --> 00:25:59.295
+<v Andrew Berman>Oh yeah, yeah, I mean...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/178-2
+00:25:57.793 --> 00:26:00.175
+<v Mike Little>would be would be very cool.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/179-0
+00:26:01.375 --> 00:26:06.134
+<v Andrew Berman>Did I show you what the advisor profiles
+look like and like how we've kind of set</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/179-1
+00:26:06.134 --> 00:26:07.295
+<v Andrew Berman>it up for the views?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/180-0
+00:26:06.815 --> 00:26:09.055
+<v Mike Little>Ohh, no, no, I haven't seen anything yet.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/181-0
+00:26:09.215 --> 00:26:12.263
+<v Andrew Berman>Oh, okay. Yeah,
+because I remember we were on that call,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/181-1
+00:26:12.263 --> 00:26:15.686
+<v Andrew Berman>but I knew you had to go,
+so I don't remember if I pulled it up</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/181-2
+00:26:15.686 --> 00:26:19.375
+<v Andrew Berman>like after the fact or how that worked.
+Yeah, I can share my screen.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/182-0
+00:26:22.695 --> 00:26:25.148
+<v Andrew Berman>So this is kind of like the homepage and
+we,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/182-1
+00:26:25.148 --> 00:26:29.510
+<v Andrew Berman>there's a lot of features like in the
+side here where we kind of break out like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/182-2
+00:26:29.510 --> 00:26:33.816
+<v Andrew Berman>a lot of the portfolio analytics stuff,
+but then there's also like advisor and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/182-3
+00:26:33.816 --> 00:26:35.615
+<v Andrew Berman>kind of firm level stuff in here.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/184-0
+00:26:36.015 --> 00:26:42.600
+<v Mike Little>Oh, I just lost your screen share. Well,
+it just went blank. Sorry. Let's see. Oh,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/184-1
+00:26:42.600 --> 00:26:45.535
+<v Mike Little>there it is. Okay, we're good. Sorry.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/183-0
+00:26:43.455 --> 00:26:43.935
+<v Andrew Berman>Allen.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-0
+00:26:46.135 --> 00:26:49.551
+<v Andrew Berman>Oh yeah, no worries. Yeah, it's like,
+and this stuff is kind of just,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-1
+00:26:49.551 --> 00:26:52.478
+<v Andrew Berman>like I think it's really useful if like
+ahead of a meeting.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-2
+00:26:52.478 --> 00:26:56.138
+<v Andrew Berman>There's a lot of ways to get kind of
+ideas and like stuff that's going on.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-3
+00:26:56.138 --> 00:26:58.675
+<v Andrew Berman>Like you can,
+this is like we do a lot of like news</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-4
+00:26:58.675 --> 00:27:01.212
+<v Andrew Berman>scanning.
+So it's like people are talking about the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-5
+00:27:01.212 --> 00:27:03.652
+<v Andrew Berman>anthropic IPO.
+We can talk about what the bullish</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/185-6
+00:27:03.652 --> 00:27:06.335
+<v Andrew Berman>articles are saying,
+what the bearish ones are saying.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/186-0
+00:27:07.375 --> 00:27:12.481
+<v Andrew Berman>can pull up and we like score them all
+for sentiments and they can actually pull</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/186-1
+00:27:12.481 --> 00:27:16.263
+<v Andrew Berman>up the articles here so you can like
+actually go read them.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/186-2
+00:27:16.263 --> 00:27:20.864
+<v Andrew Berman>And then we have stuff, yeah,
+like all kinds of analytics on the market.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/186-3
+00:27:20.864 --> 00:27:25.717
+<v Andrew Berman>So it's like being able to pull RSI,
+like where are the rotations happening,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/186-4
+00:27:25.717 --> 00:27:28.175
+<v Andrew Berman>can break it out by sector, by country.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/188-0
+00:27:28.815 --> 00:27:33.052
+<v Andrew Berman>a lot of time series on like,
+where is the S&amp;P at?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/188-1
+00:27:33.052 --> 00:27:38.906
+<v Andrew Berman>What does that look like on whatever
+interval? So this is kind of like the,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/188-2
+00:27:38.906 --> 00:27:42.988
+<v Andrew Berman>I'd say, like main homepage.
+And then we've started,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/187-0
+00:27:41.855 --> 00:27:42.175
+<v Mike Little>Yep.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/188-3
+00:27:42.988 --> 00:27:47.455
+<v Andrew Berman>we're working on expanding the model
+portfolio stuff. So.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/189-0
+00:27:47.615 --> 00:27:53.820
+<v Andrew Berman>These are kind of our like primary models,
+but I understand that like as we develop,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/189-1
+00:27:53.820 --> 00:27:59.659
+<v Andrew Berman>it's like there's going to be SMAs and
+sometimes people have more custom stuff.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/189-2
+00:27:59.659 --> 00:28:05.061
+<v Andrew Berman>So we're working on splitting these out,
+but this is the basis for going,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/189-3
+00:28:05.061 --> 00:28:07.615
+<v Andrew Berman>like if we go to 49, the basis for.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/191-0
+00:28:07.655 --> 00:28:12.449
+<v Andrew Berman>like what you were saying, like, well,
+what clients are like in a 60-40 versus a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/191-1
+00:28:12.449 --> 00:28:16.710
+<v Andrew Berman>90-10 or so on and so forth,
+and can kind of like break it out here or,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/190-0
+00:28:14.255 --> 00:28:14.735
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/191-2
+00:28:16.710 --> 00:28:20.734
+<v Andrew Berman>yeah, and kind of see like, well,
+what was what was in any of these</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/191-3
+00:28:20.734 --> 00:28:24.640
+<v Andrew Berman>accounts on a given day?
+And so this is kind of like the all this</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/191-4
+00:28:24.640 --> 00:28:26.415
+<v Andrew Berman>stuff is the firm level views.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/192-0
+00:28:26.815 --> 00:28:31.281
+<v Andrew Berman>But then in here,
+and this is connected now to the,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/192-1
+00:28:31.281 --> 00:28:35.575
+<v Andrew Berman>what is it, to the,
+it's the 0833 Schwab account.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/193-0
+00:28:37.055 --> 00:28:37.855
+<v Andrew Berman>It's like, sorry.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/194-0
+00:28:38.815 --> 00:28:42.968
+<v Andrew Berman>And so, it's yeah,
+we break it up by net new assets and and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/194-1
+00:28:42.968 --> 00:28:48.022
+<v Andrew Berman>this is still a work in progress,
+like hence the the beta, but but yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/194-2
+00:28:48.022 --> 00:28:52.521
+<v Andrew Berman>being able to see like how did NNA shift
+on a on a given period,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/194-3
+00:28:52.521 --> 00:28:57.851
+<v Andrew Berman>how much of that was from the market
+performance line versus the those flows</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/194-4
+00:28:57.851 --> 00:28:58.335
+<v Andrew Berman>assets.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/195-0
+00:28:59.055 --> 00:29:03.654
+<v Andrew Berman>And then going into the, yeah,
+like leader boards for the advisors can</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/195-1
+00:29:03.654 --> 00:29:07.346
+<v Andrew Berman>like filter based on the type.
+Like say we go to Travis.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/195-2
+00:29:07.346 --> 00:29:10.974
+<v Andrew Berman>And then there's a lot of like logic
+questions in here,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/195-3
+00:29:10.974 --> 00:29:16.415
+<v Andrew Berman>which is kind of why I've been keeping it
+as a beta because it's like, for example,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/195-4
+00:29:16.415 --> 00:29:20.495
+<v Andrew Berman>like how you were showing that those two
+accounts, it was the.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-0
+00:29:20.735 --> 00:29:24.026
+<v Andrew Berman>private wealth,
+and I think there was like a 49F house.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/196-0
+00:29:23.935 --> 00:29:24.415
+<v Mike Little>Mhm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-1
+00:29:24.026 --> 00:29:27.551
+<v Andrew Berman>It's like, so yeah,
+it's like sometimes some of the assets,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-2
+00:29:27.551 --> 00:29:30.959
+<v Andrew Berman>it's like, they're,
+it's like finding the attribution key</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-3
+00:29:30.959 --> 00:29:35.425
+<v Andrew Berman>where it's like, well, which are these,
+like there's assets like I can like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-4
+00:29:35.425 --> 00:29:39.773
+<v Andrew Berman>easily tag to an advisor because it's
+like they're on the same account or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/197-5
+00:29:39.773 --> 00:29:41.535
+<v Andrew Berman>they're listed on the account.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/199-0
+00:29:41.815 --> 00:29:45.796
+<v Andrew Berman>But then there's cases where maybe
+they're listed to private wealth or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/199-1
+00:29:45.796 --> 00:29:49.497
+<v Andrew Berman>listed to 49F house or listed to
+something else. And they're not,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/199-2
+00:29:49.497 --> 00:29:53.142
+<v Andrew Berman>that advisor is not explicitly listed on
+that account, but like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/199-3
+00:29:53.142 --> 00:29:57.627
+<v Andrew Berman>but maybe that client has six accounts
+and they're listed on every single other</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/198-0
+00:29:57.455 --> 00:29:58.255
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/199-4
+00:29:57.627 --> 00:30:00.655
+<v Andrew Berman>one. So it's like, so the, so,
+so in cases like that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/200-0
+00:30:00.855 --> 00:30:05.707
+<v Andrew Berman>It's like when we were, I think,
+on the call with Sarah and Kristin about</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/200-1
+00:30:05.707 --> 00:30:08.789
+<v Andrew Berman>the,
+about how like 80% of the data is covered</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/200-2
+00:30:08.789 --> 00:30:13.444
+<v Andrew Berman>or so or something like that.
+So I was trying to figure out like rules</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/200-3
+00:30:13.444 --> 00:30:18.690
+<v Andrew Berman>where we could kind of like bridge the
+gap where maybe even if everything isn't</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/200-4
+00:30:18.690 --> 00:30:19.935
+<v Andrew Berman>covered, it's like.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/201-0
+00:30:20.375 --> 00:30:25.563
+<v Andrew Berman>If we essentially know that like this is
+like that's why I was bringing it up like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/201-1
+00:30:25.563 --> 00:30:30.252
+<v Andrew Berman>in the case of Travis, for example,
+it's like if we like we know that he's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/201-2
+00:30:30.252 --> 00:30:35.190
+<v Andrew Berman>tagged as an architect to 373 million and
+as to a lesser extent in these ones,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/201-3
+00:30:35.190 --> 00:30:38.315
+<v Andrew Berman>but it's like,
+but we I logically have him at 460</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/201-4
+00:30:38.315 --> 00:30:38.815
+<v Andrew Berman>because.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-0
+00:30:39.375 --> 00:30:43.656
+<v Andrew Berman>he might be tagged to like clients in
+private world or clients in wherever and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-1
+00:30:43.656 --> 00:30:47.232
+<v Andrew Berman>then he's right doing every other account
+for them. So it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-2
+00:30:47.232 --> 00:30:51.513
+<v Andrew Berman>so stuff like that is stuff where it's
+like, it's, we'd have to kind of agree.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-3
+00:30:51.513 --> 00:30:55.360
+<v Andrew Berman>It's like, was that business useful?
+Does that even really make sense?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-4
+00:30:55.360 --> 00:30:58.774
+<v Andrew Berman>It's yeah, like here,
+it's like we have stuff that's tagged as</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/203-5
+00:30:58.774 --> 00:30:59.695
+<v Andrew Berman>fees and non-fee.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/204-0
+00:30:59.935 --> 00:31:04.304
+<v Andrew Berman>But there is more stuff that we
+effectively we know is there,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/204-1
+00:31:04.304 --> 00:31:08.955
+<v Andrew Berman>but it's kind of have to, yeah,
+figure out the rule to assess it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/204-2
+00:31:08.955 --> 00:31:14.381
+<v Andrew Berman>But so this would be like a general page
+or any end split by fee and no fee.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/204-3
+00:31:14.381 --> 00:31:19.455
+<v Andrew Berman>And then there's a book page,
+which is kind of more like the dashboard.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/205-0
+00:31:20.575 --> 00:31:24.607
+<v Andrew Berman>that Black Diamond has,
+but it's like we break it out a little</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/205-1
+00:31:24.607 --> 00:31:28.767
+<v Andrew Berman>more, like in terms of the securities,
+last quarters of results.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/205-2
+00:31:28.767 --> 00:31:32.543
+<v Andrew Berman>This was something that Luke and Hunter
+were asking about,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/205-3
+00:31:32.543 --> 00:31:37.919
+<v Andrew Berman>because they're saying that all of these,
+a big issue for the firm's bottom line is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/205-4
+00:31:37.919 --> 00:31:39.135
+<v Andrew Berman>just so much admin.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/206-0
+00:31:39.295 --> 00:31:43.211
+<v Andrew Berman>for like a potentially like tiny accounts.
+So saying like, oh, well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/206-1
+00:31:43.211 --> 00:31:47.581
+<v Andrew Berman>maybe we can do something where we like
+scan for every single account that's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/206-2
+00:31:47.581 --> 00:31:50.362
+<v Andrew Berman>under 40K.
+And then at least you would know that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/206-3
+00:31:50.362 --> 00:31:52.575
+<v Andrew Berman>actually ties into something over here.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/210-0
+00:31:55.015 --> 00:31:59.384
+<v Andrew Berman>Where it's we can see, like,
+what these are like clusters of small</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/210-1
+00:31:59.384 --> 00:32:02.644
+<v Andrew Berman>accounts, so we could see, like,
+it's like, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/207-0
+00:31:59.495 --> 00:32:00.095
+<v Mike Little>Mm-hmm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/210-2
+00:32:02.644 --> 00:32:07.273
+<v Andrew Berman>like if if orange is the additional
+advisor, green is the implementer,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/210-3
+00:32:07.273 --> 00:32:12.554
+<v Andrew Berman>you can see which people at 49 are, like,
+I think Alex is maybe is an additional</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/210-4
+00:32:12.554 --> 00:32:14.575
+<v Andrew Berman>advisor or local ops on a on a.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/208-0
+00:32:13.535 --> 00:32:14.575
+<v Mike Little>Yeah, his local ops.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-0
+00:32:15.135 --> 00:32:18.259
+<v Andrew Berman>Yeah, so it's like,
+so of course he's going to be tagged to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/209-0
+00:32:15.775 --> 00:32:16.095
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-1
+00:32:18.259 --> 00:32:21.330
+<v Andrew Berman>like a ton of stuff.
+But the premise behind this was to be</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-2
+00:32:21.330 --> 00:32:24.609
+<v Andrew Berman>able to say like, okay, well,
+we can like break it out only by</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-3
+00:32:24.609 --> 00:32:27.628
+<v Andrew Berman>architects, for example.
+And then you can see like, okay,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/211-0
+00:32:25.375 --> 00:32:26.015
+<v Mike Little>Wow.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-4
+00:32:27.628 --> 00:32:31.585
+<v Andrew Berman>like who would you be your highest
+profile guys to talk to if you wanted to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-5
+00:32:31.585 --> 00:32:34.135
+<v Andrew Berman>clear out these local or these smaller
+accounts?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/212-6
+00:32:34.135 --> 00:32:37.935
+<v Andrew Berman>So it's like we can see like Tim is like
+attached to like a ton of them.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-0
+00:32:38.815 --> 00:32:41.382
+<v Andrew Berman>And so,
+so then you can kind of break it out in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-1
+00:32:41.382 --> 00:32:44.859
+<v Andrew Berman>any kind of which way or to see like,
+so this is kind of like a,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-2
+00:32:44.859 --> 00:32:48.709
+<v Andrew Berman>I guess like a little, whoops,
+basis for like kind of the BI stuff that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-3
+00:32:48.709 --> 00:32:51.490
+<v Andrew Berman>we can do because we can build out custom
+BI views.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-4
+00:32:51.490 --> 00:32:55.822
+<v Andrew Berman>If there's something you really want to
+see or something that you just can't get</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/213-5
+00:32:55.822 --> 00:32:58.175
+<v Andrew Berman>on black diamonds,
+we can just create that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/214-0
+00:32:58.455 --> 00:33:02.941
+<v Andrew Berman>Like this is like another one where,
+and this is like just an idea I thought</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/214-1
+00:33:02.941 --> 00:33:06.378
+<v Andrew Berman>might be useful,
+like in the sense of when moving from the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/214-2
+00:33:06.378 --> 00:33:08.942
+<v Andrew Berman>insurance to the asset management
+business,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/214-3
+00:33:08.942 --> 00:33:13.195
+<v Andrew Berman>it's like before everybody's just working
+on the commission of the deal,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/214-4
+00:33:13.195 --> 00:33:17.855
+<v Andrew Berman>but as you start to do more and more with
+asset management, maybe you have a...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/215-0
+00:33:19.455 --> 00:33:23.846
+<v Andrew Berman>advisors who are still like pulling a lot
+of fees, like off an existing book,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/215-1
+00:33:23.846 --> 00:33:27.729
+<v Andrew Berman>but aren't necessarily like bringing new
+assets to the firm. And so,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/215-2
+00:33:27.729 --> 00:33:31.838
+<v Andrew Berman>so that way you can see like, oh, well,
+who in here is like really like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/215-3
+00:33:31.838 --> 00:33:35.497
+<v Andrew Berman>like Ella is, uh, yeah,
+bringing in a lot or is it attached to a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/215-4
+00:33:35.497 --> 00:33:36.735
+<v Andrew Berman>lot of net new assets.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-0
+00:33:36.895 --> 00:33:41.318
+<v Andrew Berman>but is really taking like no fees.
+And so you can then you can see like, oh,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-1
+00:33:41.318 --> 00:33:44.018
+<v Andrew Berman>well,
+maybe Derek is like proportionally like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-2
+00:33:44.018 --> 00:33:46.660
+<v Andrew Berman>yeah,
+taking in like way less assets and more</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-3
+00:33:46.660 --> 00:33:49.417
+<v Andrew Berman>fees.
+And so there's stuff like that where it's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-4
+00:33:49.417 --> 00:33:52.060
+<v Andrew Berman>just like,
+like an internal consulting thing.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-5
+00:33:52.060 --> 00:33:55.793
+<v Andrew Berman>If there's like, yeah,
+stuff that you'd want to view, of course,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-6
+00:33:55.793 --> 00:34:00.274
+<v Andrew Berman>you can break it out by table and you can
+organize it by small accounts or by</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/216-7
+00:34:00.274 --> 00:34:01.135
+<v Andrew Berman>efficiency. And</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/217-0
+00:34:01.455 --> 00:34:05.535
+<v Andrew Berman>Kind of see where everyone sits with this
+kind of stuff, but...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/218-0
+00:34:07.375 --> 00:34:10.929
+<v Andrew Berman>So, yes, that's, yeah,
+I kind of like hopped into, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/218-1
+00:34:10.929 --> 00:34:14.295
+<v Andrew Berman>meant to kind of stay in here, but,
+but that's, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/219-0
+00:34:12.295 --> 00:34:16.762
+<v Mike Little>No, no, that's fine. Where,
+where's it pulling the data points for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/219-1
+00:34:16.762 --> 00:34:19.695
+<v Mike Little>who's the architect,
+who's the implementer,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/219-2
+00:34:19.695 --> 00:34:21.095
+<v Mike Little>who's the consultant?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/221-0
+00:34:21.535 --> 00:34:25.125
+<v Andrew Berman>So that's from Black Diamond.
+So I tried to like keep everything,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/220-0
+00:34:23.695 --> 00:34:24.095
+<v Mike Little>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/221-1
+00:34:25.125 --> 00:34:29.368
+<v Andrew Berman>like really would like prefer to like
+stay as much as possible in Schwab just</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/221-2
+00:34:29.368 --> 00:34:32.794
+<v Andrew Berman>because it's clean and like super
+organized and it's complete.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/221-3
+00:34:32.794 --> 00:34:36.438
+<v Andrew Berman>But certain things like that,
+like a firm specific business logic,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/221-4
+00:34:36.438 --> 00:34:40.735
+<v Andrew Berman>it's like that's probably going to be in
+Black Diamond or in Orion or Smart X.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/222-0
+00:34:41.215 --> 00:34:45.195
+<v Andrew Berman>So, like, we do like centralize it,
+and this is why I was like making the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/222-1
+00:34:45.195 --> 00:34:49.176
+<v Andrew Berman>case for going into data bricks,
+because we've done a lot of work on the,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/222-2
+00:34:49.176 --> 00:34:52.940
+<v Andrew Berman>like, I guess centralization,
+so like we can like bring some of that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/222-3
+00:34:52.940 --> 00:34:56.598
+<v Andrew Berman>or I can give you some of those scripts
+and like bring some of that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/222-4
+00:34:56.598 --> 00:35:00.255
+<v Andrew Berman>infrastructure in or or establish like a
+pipeline into our buckets.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/224-0
+00:35:00.495 --> 00:35:05.428
+<v Andrew Berman>so that you can pull stuff into data
+bricks from our cloud and vice versa.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/224-1
+00:35:05.428 --> 00:35:10.164
+<v Andrew Berman>Because that way it's like you don't have
+to do like a lot of the work.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/224-2
+00:35:10.164 --> 00:35:14.044
+<v Andrew Berman>Like if it's already done,
+like why do it twice? But yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/223-0
+00:35:10.895 --> 00:35:11.295
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/224-3
+00:35:14.044 --> 00:35:18.122
+<v Andrew Berman>so there's that aspect.
+And in terms of like centralizing it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/224-4
+00:35:18.122 --> 00:35:20.095
+<v Andrew Berman>that's why I kept pushing for.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-0
+00:35:21.015 --> 00:35:24.749
+<v Andrew Berman>what's it called, Salesforce,
+or just figuring out like what random</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-1
+00:35:24.749 --> 00:35:27.660
+<v Andrew Berman>external,
+maybe some are more important than others,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-2
+00:35:27.660 --> 00:35:31.229
+<v Andrew Berman>but external tech stack,
+because it's like as we do this process</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-3
+00:35:31.229 --> 00:35:35.293
+<v Andrew Berman>of trying to centralize and pull
+everything together, it's like when you,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-4
+00:35:35.293 --> 00:35:37.599
+<v Andrew Berman>like,
+so we already have like Smart X and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/225-5
+00:35:37.599 --> 00:35:40.015
+<v Andrew Berman>Schwab slash Black Diamond pulled
+together.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-0
+00:35:40.295 --> 00:35:45.025
+<v Andrew Berman>So the next thing on the roadmap,
+like after just really locking in on that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-1
+00:35:45.025 --> 00:35:47.764
+<v Andrew Berman>performance,
+is to do those model overlays.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-2
+00:35:47.764 --> 00:35:51.560
+<v Andrew Berman>So it's like if we were to go through
+Travis's book and say,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-3
+00:35:51.560 --> 00:35:56.725
+<v Andrew Berman>clicking like on the chance, it's like,
+and we can see like the relationship page.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-4
+00:35:56.725 --> 00:36:00.024
+<v Andrew Berman>So that's like, well,
+how much is fee versus no fee?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/226-5
+00:36:00.024 --> 00:36:00.895
+<v Andrew Berman>Are there any?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-0
+00:36:01.175 --> 00:36:05.203
+<v Andrew Berman>like small accounts in here,
+like how much flows have happened on</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-1
+00:36:05.203 --> 00:36:08.681
+<v Andrew Berman>these accounts in the quarter or like on
+the year. Yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-2
+00:36:08.681 --> 00:36:13.440
+<v Andrew Berman>and then there are various positions.
+And if we were to click on one of these</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-3
+00:36:13.440 --> 00:36:16.430
+<v Andrew Berman>accounts,
+it's like then we can kind of just see</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-4
+00:36:16.430 --> 00:36:20.091
+<v Andrew Berman>like, well, okay,
+so there was some deposit clearly in here</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/227-5
+00:36:20.091 --> 00:36:20.335
+<v Andrew Berman>and.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/228-0
+00:36:20.535 --> 00:36:25.375
+<v Andrew Berman>what really was happening.
+Let me pull this.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/229-0
+00:36:26.975 --> 00:36:30.143
+<v Andrew Berman>And, but yeah,
+so this is this is like the gist of like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/229-1
+00:36:30.143 --> 00:36:33.877
+<v Andrew Berman>the the current state,
+and but I was thinking, like, for example,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/229-2
+00:36:33.877 --> 00:36:38.007
+<v Andrew Berman>like if you go to like their and like
+this would be like a private page,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/229-3
+00:36:38.007 --> 00:36:41.684
+<v Andrew Berman>but maybe it's like the profiles are like
+public to some extent,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/229-4
+00:36:41.684 --> 00:36:42.815
+<v Andrew Berman>or you can like see.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-0
+00:36:43.895 --> 00:36:47.647
+<v Andrew Berman>I had like work to put together like a
+like a role-based access control thing</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-1
+00:36:47.647 --> 00:36:49.908
+<v Andrew Berman>where if you were like listed as an
+architect,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-2
+00:36:49.908 --> 00:36:53.852
+<v Andrew Berman>you would have like a pretty wide view.
+Like you couldn't go into somebody's like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-3
+00:36:53.852 --> 00:36:56.354
+<v Andrew Berman>client level book,
+but you could see like the other</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-4
+00:36:56.354 --> 00:37:00.105
+<v Andrew Berman>architects because I figured it's like
+people who are really like running the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-5
+00:37:00.105 --> 00:37:02.222
+<v Andrew Berman>firm.
+They probably are effectively admins,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/231-6
+00:37:02.222 --> 00:37:02.895
+<v Andrew Berman>I would think.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/230-0
+00:37:03.935 --> 00:37:04.335
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-0
+00:37:04.895 --> 00:37:07.249
+<v Andrew Berman>And so yes,
+and that's and all that stuff is like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-1
+00:37:07.249 --> 00:37:10.169
+<v Andrew Berman>very modular and it's like if you find
+you're like, oh, well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-2
+00:37:10.169 --> 00:37:13.700
+<v Andrew Berman>we really need like additional advisors
+to have like global view or sorry,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-3
+00:37:13.700 --> 00:37:17.372
+<v Andrew Berman>local ops to have global view because
+they're running ops for everything they</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-4
+00:37:17.372 --> 00:37:19.632
+<v Andrew Berman>really need to see account level on
+everything.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-5
+00:37:19.632 --> 00:37:23.257
+<v Andrew Berman>It's like we can kind of customize
+permissions to help you like scope all of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/232-6
+00:37:23.257 --> 00:37:23.775
+<v Andrew Berman>that stuff.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/233-0
+00:37:25.775 --> 00:37:29.841
+<v Andrew Berman>But, but yeah, so the, yeah,
+the idea was it's like that eventually</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/233-1
+00:37:29.841 --> 00:37:34.445
+<v Andrew Berman>we'd roll out some kind of executive
+summary thing that would be like tagged</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/233-2
+00:37:34.445 --> 00:37:38.211
+<v Andrew Berman>into either calendar or Salesforce,
+like if you have meetings,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/233-3
+00:37:38.211 --> 00:37:42.457
+<v Andrew Berman>instead of having to be like, oh,
+let me like go look through all this</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/233-4
+00:37:42.457 --> 00:37:42.815
+<v Andrew Berman>stuff.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-0
+00:37:43.215 --> 00:37:47.650
+<v Andrew Berman>It's like you could just be linked right
+here to what accounts you have or have a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-1
+00:37:47.650 --> 00:37:51.652
+<v Andrew Berman>calendar function or something.
+So you can just like click to that client</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-2
+00:37:51.652 --> 00:37:55.978
+<v Andrew Berman>and then you would in that client's view,
+like once we like do all the overview</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-3
+00:37:55.978 --> 00:38:00.304
+<v Andrew Berman>stuff, it's like you'd be able to say,
+click here and it's like you'd see their</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-4
+00:38:00.304 --> 00:38:03.279
+<v Andrew Berman>model breakdown.
+You'd see like any notes that you had</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/234-5
+00:38:03.279 --> 00:38:06.415
+<v Andrew Berman>taken in Salesforce.
+You'd see any recent communications.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/235-0
+00:38:06.735 --> 00:38:11.636
+<v Andrew Berman>So it's like in that in line of what you
+were saying to centralize everything in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/235-1
+00:38:11.636 --> 00:38:14.540
+<v Andrew Berman>one place.
+So even if the advisors only have 15</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/235-2
+00:38:14.540 --> 00:38:17.565
+<v Andrew Berman>minutes,
+everything they need to see is just like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/235-3
+00:38:17.565 --> 00:38:22.526
+<v Andrew Berman>in that one view. It's like do the models,
+do the account performance, any notes,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/235-4
+00:38:22.526 --> 00:38:26.095
+<v Andrew Berman>any historical meetings,
+like what those conclusions were.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/237-0
+00:38:26.575 --> 00:38:29.386
+<v Andrew Berman>And, and that's why it seems like,
+like that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/237-1
+00:38:29.386 --> 00:38:33.786
+<v Andrew Berman>that's why I've been like very focused
+like on the infrastructure side,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/237-2
+00:38:33.786 --> 00:38:36.841
+<v Andrew Berman>because I feel like if we can unlock that
+aspect,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/237-3
+00:38:36.841 --> 00:38:41.791
+<v Andrew Berman>then any kind of view or or AI product or
+whatever the case may be is like super</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/237-4
+00:38:41.791 --> 00:38:45.335
+<v Andrew Berman>fluid to create,
+but but it's like if you start on the...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/236-0
+00:38:43.335 --> 00:38:43.815
+<v Mike Little>Mhm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-0
+00:38:46.175 --> 00:38:49.479
+<v Andrew Berman>like on the product side as opposed to
+the data side, then it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-1
+00:38:49.479 --> 00:38:52.829
+<v Andrew Berman>we'll always be kind of working backwards.
+And it's because it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-2
+00:38:52.829 --> 00:38:56.604
+<v Andrew Berman>maybe you think you have enough data,
+but then you really need like some random</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-3
+00:38:56.604 --> 00:39:00.474
+<v Andrew Berman>integration and then now have to like go
+back to the engineering side and then go</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/238-0
+00:38:59.935 --> 00:39:00.495
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-4
+00:39:00.474 --> 00:39:03.777
+<v Andrew Berman>back to product. And it's like,
+so then it just becomes like a, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/239-5
+00:39:03.777 --> 00:39:04.815
+<v Andrew Berman>just more of a hassle.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/240-0
+00:39:05.015 --> 00:39:07.840
+<v Andrew Berman>So that's why I was thinking, I was like,
+oh,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/240-1
+00:39:07.840 --> 00:39:12.385
+<v Andrew Berman>maybe if we can team up on the
+infrastructure side and like set up pipes,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/240-2
+00:39:12.385 --> 00:39:17.175
+<v Andrew Berman>like I can like give you API access to
+like the all of our buckets for 49 and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/240-3
+00:39:17.175 --> 00:39:21.412
+<v Andrew Berman>stuff like that. So it just,
+you can just pull it or do some kind of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/240-4
+00:39:21.412 --> 00:39:24.175
+<v Andrew Berman>refresh schedule so it like duplicates
+into.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/242-0
+00:39:24.815 --> 00:39:29.990
+<v Andrew Berman>data bricks or just call by API when you
+need it or however makes the most sense.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/241-0
+00:39:28.255 --> 00:39:28.735
+<v Mike Little>Right.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/242-1
+00:39:29.990 --> 00:39:33.082
+<v Andrew Berman>But then that way it's like we centralize
+there.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/242-2
+00:39:33.082 --> 00:39:36.679
+<v Andrew Berman>It's like if there needs to be some kind
+of development,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/242-3
+00:39:36.679 --> 00:39:41.917
+<v Andrew Berman>we can just move on it real fast as yeah,
+as opposed to just going back and forth.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/242-4
+00:39:41.917 --> 00:39:45.135
+<v Andrew Berman>But yeah,
+so this is kind of like the client view.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/243-0
+00:39:45.295 --> 00:39:48.758
+<v Andrew Berman>or sorry,
+like the relationship view for the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/243-1
+00:39:48.758 --> 00:39:53.530
+<v Andrew Berman>advisor. We can, yeah,
+break it down by locations and some of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/243-2
+00:39:53.530 --> 00:39:59.917
+<v Andrew Berman>this stuff is less developed because it's
+like we just don't have the data for it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/243-3
+00:39:59.917 --> 00:40:05.535
+<v Andrew Berman>Like we can see like AUM and also net new
+assets by city or by location.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/244-0
+00:40:06.655 --> 00:40:11.733
+<v Andrew Berman>can do the same thing for on the advisor
+level, like which I think, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/244-1
+00:40:11.733 --> 00:40:17.565
+<v Andrew Berman>this is over the last few quarters. Yeah,
+where the net new assets were coming from,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/244-2
+00:40:17.565 --> 00:40:20.721
+<v Andrew Berman>or like the top performers on net new
+assets.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/244-3
+00:40:20.721 --> 00:40:24.495
+<v Andrew Berman>I wanted to do it for Office so that we
+could actually</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-0
+00:40:25.655 --> 00:40:29.197
+<v Andrew Berman>like see like, and this,
+I just did this kind of in like an ad hoc</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-1
+00:40:29.197 --> 00:40:33.110
+<v Andrew Berman>way. I was just like, all right,
+we'll just like scan everyone's LinkedIn</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-2
+00:40:33.110 --> 00:40:36.546
+<v Andrew Berman>and I kind of piece it together that way
+by location. It's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/245-0
+00:40:35.455 --> 00:40:35.695
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-3
+00:40:36.546 --> 00:40:39.612
+<v Andrew Berman>that's what I mean,
+like with some of the estimate stuff.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-4
+00:40:39.612 --> 00:40:42.150
+<v Andrew Berman>It's like, it's good high level,
+but if it was,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-5
+00:40:42.150 --> 00:40:46.009
+<v Andrew Berman>if it had to be client facing,
+like then we would have to like make sure</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/246-6
+00:40:46.009 --> 00:40:48.335
+<v Andrew Berman>it's 100% like deterministically locked
+in.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/248-0
+00:40:49.295 --> 00:40:52.217
+<v Andrew Berman>But yeah,
+and you can kind of like do a couple</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/248-1
+00:40:52.217 --> 00:40:57.377
+<v Andrew Berman>different views and see like what's where
+and you could do it on the advisor level</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/248-2
+00:40:57.377 --> 00:40:59.055
+<v Andrew Berman>or on the geographic level.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/250-0
+00:40:59.695 --> 00:41:03.781
+<v Mike Little>You gotta feel like,
+I feel like that stuff has to live in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/250-1
+00:41:03.781 --> 00:41:06.896
+<v Mike Little>Databricks somewhere, right? Like,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/250-2
+00:41:06.896 --> 00:41:12.367
+<v Mike Little>what's the point of building out a data
+warehouse if it's not going to have an</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/250-3
+00:41:12.367 --> 00:41:17.975
+<v Mike Little>advisor's location or even the architect
+data, right? Because if the ultimate...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/249-0
+00:41:13.215 --> 00:41:14.575
+<v Andrew Berman>Oh yeah, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/253-0
+00:41:18.655 --> 00:41:22.458
+<v Mike Little>Move is to to get away from Black Diamond,
+then yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/253-1
+00:41:22.458 --> 00:41:27.175
+<v Mike Little>obviously that's that data has to come
+from somewhere else, so um.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/252-0
+00:41:26.335 --> 00:41:27.615
+<v Andrew Berman>Well, exactly.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/254-0
+00:41:28.335 --> 00:41:33.375
+<v Mike Little>Yeah, I think, yeah,
+Amber was managing that, that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/255-0
+00:41:34.655 --> 00:41:38.229
+<v Mike Little>project and we have,
+I think we have two third party folks who</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/255-1
+00:41:38.229 --> 00:41:42.880
+<v Mike Little>were really in the weeds actually doing
+the work on that side and they were just,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/255-2
+00:41:42.880 --> 00:41:47.418
+<v Mike Little>they were literally just contractors or I
+guess they still are. They're trying,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/255-3
+00:41:47.418 --> 00:41:51.729
+<v Mike Little>they're the ones trying to get me access
+and it's when I get a log in with,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/255-4
+00:41:51.729 --> 00:41:54.735
+<v Mike Little>you know,
+doing single sign on with Microsoft Intra.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-0
+00:41:55.135 --> 00:41:58.452
+<v Mike Little>It's telling me I need,
+I have to request permission.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-1
+00:41:58.452 --> 00:42:01.339
+<v Mike Little>So I've done that twice and then they're
+like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-2
+00:42:01.339 --> 00:42:06.314
+<v Mike Little>we don't know where the request is going.
+So we're trying to track down like who</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/256-0
+00:42:04.175 --> 00:42:05.215
+<v Andrew Berman>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-3
+00:42:06.314 --> 00:42:09.508
+<v Mike Little>should actually be responding and giving
+me access,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/257-0
+00:42:08.895 --> 00:42:10.175
+<v Andrew Berman>Okay, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-4
+00:42:09.508 --> 00:42:14.544
+<v Mike Little>which I think it's going to be Fulton May
+or somebody at Fulton May who should be</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/258-5
+00:42:14.544 --> 00:42:15.895
+<v Mike Little>giving me access. But.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-0
+00:42:16.175 --> 00:42:19.092
+<v Mike Little>Yeah, I mean,
+once I have that and I can actually get</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-1
+00:42:19.092 --> 00:42:22.603
+<v Mike Little>in there and see stuff,
+I definitely want to set up more time to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-2
+00:42:22.603 --> 00:42:26.763
+<v Mike Little>have you check it out and just to start
+getting an idea of the structure and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-3
+00:42:26.763 --> 00:42:31.138
+<v Mike Little>what's actually living in there. I mean,
+it sounds like they're pretty far along</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-4
+00:42:31.138 --> 00:42:34.217
+<v Mike Little>on the 49 side.
+I know they have started to do some work</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/259-5
+00:42:34.217 --> 00:42:35.135
+<v Mike Little>on the alongside.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/261-0
+00:42:37.215 --> 00:42:41.474
+<v Mike Little>warehouse or lake house,
+I think is what they're calling it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/260-0
+00:42:39.295 --> 00:42:39.775
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/261-1
+00:42:41.474 --> 00:42:45.662
+<v Mike Little>but the, you know,
+that one's just still in the beginnings.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/261-2
+00:42:45.662 --> 00:42:50.967
+<v Mike Little>And obviously I think 49 is really the
+focus here. The long term, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/261-3
+00:42:50.967 --> 00:42:55.295
+<v Mike Little>Luke wants to have a solution that goes
+across 3 strands. So.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-0
+00:42:55.295 --> 00:42:59.327
+<v Andrew Berman>Yeah, well, that's what I see.
+I think like there's a huge opportunity</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/262-0
+00:42:55.455 --> 00:42:55.855
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-1
+00:42:59.327 --> 00:43:02.451
+<v Andrew Berman>there where it's like if we can build
+that system out,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-2
+00:43:02.451 --> 00:43:05.403
+<v Andrew Berman>it's like it will be so much easier if we
+template.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-3
+00:43:05.403 --> 00:43:09.549
+<v Andrew Berman>Like I view it almost as like whatever we
+build for 49 can be templated.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-4
+00:43:09.549 --> 00:43:12.786
+<v Andrew Berman>And then that way,
+it's like if you want to like onboard</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/263-5
+00:43:12.786 --> 00:43:17.215
+<v Andrew Berman>people for three strands or onboard
+people from the fractional family office.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/265-0
+00:43:17.535 --> 00:43:21.665
+<v Andrew Berman>It's like the cloud resources and all
+that infrastructure is templated.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/265-1
+00:43:21.665 --> 00:43:25.450
+<v Andrew Berman>We know what those pipelines look like,
+know how to build it out.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/265-2
+00:43:25.450 --> 00:43:30.210
+<v Andrew Berman>And so then it's instead of being like a
+mad rush and like not really knowing like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/265-3
+00:43:30.210 --> 00:43:33.881
+<v Andrew Berman>how to put it together,
+it can actually just put it together in</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/265-4
+00:43:33.881 --> 00:43:36.175
+<v Andrew Berman>like days to a couple weeks rather than.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/264-0
+00:43:35.935 --> 00:43:36.415
+<v Mike Little>Mhm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/266-0
+00:43:36.495 --> 00:43:42.175
+<v Andrew Berman>The six-month lead time or something, but,
+but yeah, the what was it?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/267-0
+00:43:44.975 --> 00:43:47.934
+<v Andrew Berman>Yeah,
+with regard to because a lot of the stuff</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/267-1
+00:43:47.934 --> 00:43:52.371
+<v Andrew Berman>I have already like put together.
+It's what you're saying with the with</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/267-2
+00:43:52.371 --> 00:43:53.295
+<v Andrew Berman>data bricks for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/268-0
+00:43:54.335 --> 00:43:58.060
+<v Andrew Berman>Kind of, I would say,
+like these firm specific or like business</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/268-1
+00:43:58.060 --> 00:44:02.659
+<v Andrew Berman>logic specific tables that currently live
+on Black Diamond. Yeah, it would be,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/268-2
+00:44:02.659 --> 00:44:05.569
+<v Andrew Berman>that was something I wanted to talk to
+you about.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/268-3
+00:44:05.569 --> 00:44:10.225
+<v Andrew Berman>It makes way more sense to just like host
+that in Databricks because it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/268-4
+00:44:10.225 --> 00:44:13.135
+<v Andrew Berman>because what do you really pay Black
+Diamond for?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-0
+00:44:13.495 --> 00:44:17.788
+<v Andrew Berman>like just to like upload a few tables and
+like see a few graphs and have to pay</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-1
+00:44:17.788 --> 00:44:21.383
+<v Andrew Berman>like 400K a year for that.
+Like that's just crazy. Yeah, and it's,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/269-0
+00:44:20.055 --> 00:44:20.255
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-2
+00:44:21.383 --> 00:44:24.871
+<v Andrew Berman>and then also just the hassle of having
+to do it. And it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-3
+00:44:24.871 --> 00:44:28.950
+<v Andrew Berman>I've talked to the reps over there and
+it's like they don't even know where</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-4
+00:44:28.950 --> 00:44:32.330
+<v Andrew Berman>anything is. And it's like,
+nobody seems to know how it works.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/270-0
+00:44:29.615 --> 00:44:29.895
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/272-5
+00:44:32.330 --> 00:44:33.135
+<v Andrew Berman>And yeah, it's.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/273-0
+00:44:33.335 --> 00:44:34.895
+<v Andrew Berman>Yeah, that's why.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/271-0
+00:44:34.255 --> 00:44:34.815
+<v Mike Little>The.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/275-0
+00:44:35.935 --> 00:44:41.148
+<v Mike Little>The people who actually know where stuff
+lives are like behind closed doors there.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/275-1
+00:44:41.148 --> 00:44:44.727
+<v Mike Little>It's, you know,
+the service team couldn't write a select</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/275-2
+00:44:44.727 --> 00:44:48.495
+<v Mike Little>statement in SQL if their life depended
+on it. It's just...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/274-0
+00:44:47.215 --> 00:44:49.215
+<v Andrew Berman>Yeah, yeah, no, exactly.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/276-0
+00:44:49.935 --> 00:44:53.292
+<v Mike Little>And I mean, the team I was on at TanRack,
+we were, I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/276-1
+00:44:53.292 --> 00:44:57.218
+<v Mike Little>they probably have a team like this,
+but we were both client-facing,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/276-2
+00:44:57.218 --> 00:45:01.145
+<v Mike Little>but also like the internal escalation
+point for more complex issues.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/276-3
+00:45:01.145 --> 00:45:04.046
+<v Mike Little>So we weren't like answering phones,
+but you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/276-4
+00:45:04.046 --> 00:45:08.655
+<v Mike Little>a service team had something going on
+they couldn't figure out, they came to us.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/278-0
+00:45:09.015 --> 00:45:11.191
+<v Andrew Berman>Yeah,
+it'd be like a solutions architect or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/277-0
+00:45:09.775 --> 00:45:10.095
+<v Mike Little>But...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/279-0
+00:45:11.135 --> 00:45:13.781
+<v Mike Little>Yeah, yeah, yeah. Basically, we were,
+yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/278-1
+00:45:11.191 --> 00:45:12.575
+<v Andrew Berman>something effectively, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/279-1
+00:45:13.781 --> 00:45:18.351
+<v Mike Little>we were there to interface with those
+teams and then the teams in India who</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/279-2
+00:45:18.351 --> 00:45:22.680
+<v Mike Little>were processing the files that came in
+overnight and actually doing the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/279-3
+00:45:22.680 --> 00:45:26.288
+<v Mike Little>reconciliation on the back end.
+So if they ran into issues,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/279-4
+00:45:26.288 --> 00:45:29.655
+<v Mike Little>they reached out to us and then the,
+you know, the, the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/281-0
+00:45:30.255 --> 00:45:33.757
+<v Mike Little>US-based server team that was the same.
+But all that to say, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/281-1
+00:45:33.757 --> 00:45:36.840
+<v Mike Little>if you just call in,
+you're not going to get somebody like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/281-2
+00:45:36.840 --> 00:45:39.663
+<v Mike Little>that, right?
+You're going to get somebody who's first</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/280-0
+00:45:38.335 --> 00:45:38.975
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/281-3
+00:45:39.663 --> 00:45:42.171
+<v Mike Little>year,
+went behind the ears and probably have no</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/281-4
+00:45:42.171 --> 00:45:44.575
+<v Mike Little>idea what's going on underneath the
+platform.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-0
+00:45:45.215 --> 00:45:48.779
+<v Andrew Berman>Well, no, that's the case.
+And I've found that like with a lot of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-1
+00:45:48.779 --> 00:45:53.206
+<v Andrew Berman>clients where they maybe they like pair
+them with some or they have a consultant,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-2
+00:45:53.206 --> 00:45:55.689
+<v Andrew Berman>an outside consultant who used to work
+there,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-3
+00:45:55.689 --> 00:45:59.199
+<v Andrew Berman>or they maybe they have a sales rep or
+something, but it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-4
+00:45:59.199 --> 00:46:02.006
+<v Andrew Berman>but they never know,
+like they never know anything.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-5
+00:46:02.006 --> 00:46:05.354
+<v Andrew Berman>And so it's almost like pointless to even
+set the call. Like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/282-6
+00:46:05.354 --> 00:46:07.135
+<v Andrew Berman>and that's why it just seems like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/284-0
+00:46:07.455 --> 00:46:11.713
+<v Andrew Berman>to get in front of all of it, to just,
+yeah, aggregate the data. And most of it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/284-1
+00:46:11.713 --> 00:46:16.076
+<v Andrew Berman>and this is why it was like over the last
+few months is making a huge push to kind</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/284-2
+00:46:16.076 --> 00:46:19.913
+<v Andrew Berman>of redesign this around Schwab,
+is because then it's like you get rid of</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/284-3
+00:46:19.913 --> 00:46:24.171
+<v Andrew Berman>the middleman entirely with Black Diamond.
+And maybe there's a couple tables you</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/283-0
+00:46:22.015 --> 00:46:22.335
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/284-4
+00:46:24.171 --> 00:46:25.695
+<v Andrew Berman>have to put together like for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/285-0
+00:46:26.735 --> 00:46:30.522
+<v Andrew Berman>like architect implementer,
+like role specific fee splits and billing,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/285-1
+00:46:30.522 --> 00:46:33.722
+<v Andrew Berman>stuff like that.
+And maybe there's a handful of other ones.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/285-2
+00:46:33.722 --> 00:46:37.669
+<v Andrew Berman>But aside from that, it's like,
+so you have a few DIN tables or something</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/285-3
+00:46:37.669 --> 00:46:40.975
+<v Andrew Berman>for stuff like that.
+And then everything else is just Schwab.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/285-4
+00:46:40.975 --> 00:46:45.295
+<v Andrew Berman>It's, you'll know exactly how it works.
+Their structure's never going to change.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/286-0
+00:46:45.695 --> 00:46:49.055
+<v Andrew Berman>And it's, yeah, it's way,
+way easier to do it that way.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/288-0
+00:46:51.055 --> 00:46:55.488
+<v Mike Little>I'm curious, you know,
+one of the one of the widgets or card or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/288-1
+00:46:55.488 --> 00:47:01.029
+<v Mike Little>whatever Black Diamond calls it on that
+dashboard was projected income. And so,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/288-2
+00:47:01.029 --> 00:47:04.423
+<v Mike Little>you know,
+I imagine Black Diamond's getting that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/287-0
+00:47:01.535 --> 00:47:02.095
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/288-3
+00:47:04.423 --> 00:47:08.855
+<v Mike Little>from like Ruffendiv or IDC or one of
+those, you know, security.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/291-0
+00:47:09.135 --> 00:47:13.340
+<v Mike Little>or a market data providers.
+And you mentioned having a tie in with</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/291-1
+00:47:13.340 --> 00:47:17.230
+<v Mike Little>Bloomberg to some degree.
+Do you envision being able to build</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/289-0
+00:47:16.975 --> 00:47:17.615
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/291-2
+00:47:17.230 --> 00:47:20.932
+<v Mike Little>something like that?
+And maybe it's not through Bloomberg,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/291-3
+00:47:20.932 --> 00:47:24.384
+<v Mike Little>but you know,
+I would imagine that's not something you</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/290-0
+00:47:22.575 --> 00:47:23.295
+<v Andrew Berman>Ohh yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/291-4
+00:47:24.384 --> 00:47:26.015
+<v Mike Little>can just grab from Schwab.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-0
+00:47:26.615 --> 00:47:29.579
+<v Andrew Berman>Well, that actually,
+I had built it like maybe 3,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-1
+00:47:29.579 --> 00:47:33.135
+<v Andrew Berman>four months ago.
+And because it's really like mathematical.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-2
+00:47:33.135 --> 00:47:36.336
+<v Andrew Berman>And I mean,
+it depends like what level of granularity</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-3
+00:47:36.336 --> 00:47:40.070
+<v Andrew Berman>you want to get into.
+Like you can do it on a machine learning</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-4
+00:47:40.070 --> 00:47:44.574
+<v Andrew Berman>basis if you really want to go like high
+grain. Or you can do it like very,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-5
+00:47:44.574 --> 00:47:48.308
+<v Andrew Berman>it depends, I guess,
+like the explainability that you need for</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/292-6
+00:47:48.308 --> 00:47:49.375
+<v Andrew Berman>those projections.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-0
+00:47:49.655 --> 00:47:52.338
+<v Andrew Berman>Like, it's like,
+it could be as simple as like, well,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-1
+00:47:52.338 --> 00:47:56.014
+<v Andrew Berman>what was the growth last quarter or last
+period? And how many days, like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-2
+00:47:56.014 --> 00:47:58.597
+<v Andrew Berman>fractionally are you through this period?
+And like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-3
+00:47:58.597 --> 00:48:00.882
+<v Andrew Berman>you should be like at this level. Or,
+and so,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-4
+00:48:00.882 --> 00:48:05.006
+<v Andrew Berman>or this is what you can kind of expect by
+the end of the period if it's similar to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-5
+00:48:05.006 --> 00:48:08.384
+<v Andrew Berman>the last or some average of the last
+three or something. It's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/293-6
+00:48:08.384 --> 00:48:11.215
+<v Andrew Berman>so there's like simple like ways to do it.
+There's more.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-0
+00:48:11.455 --> 00:48:15.705
+<v Andrew Berman>complex annual ways to do it,
+but neither are difficult to put together</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-1
+00:48:15.705 --> 00:48:19.423
+<v Andrew Berman>and you can just use the existing data to
+do it. So it's very,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-2
+00:48:19.423 --> 00:48:23.613
+<v Andrew Berman>the reason we pulled it off was because
+the feedback from on our side,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-3
+00:48:23.613 --> 00:48:26.328
+<v Andrew Berman>I think Austin was saying that he's like,
+oh,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-4
+00:48:26.328 --> 00:48:31.227
+<v Andrew Berman>we don't want to like take responsibility
+for their projections or have to explain</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/294-5
+00:48:31.227 --> 00:48:31.935
+<v Andrew Berman>projections.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/295-0
+00:48:32.255 --> 00:48:34.332
+<v Andrew Berman>So,
+but it's like if you wanted to build out</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/295-1
+00:48:34.332 --> 00:48:38.161
+<v Andrew Berman>a like a projection function and you knew
+the like the way that you want to put it</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/295-2
+00:48:38.161 --> 00:48:40.607
+<v Andrew Berman>together that makes the most sense,
+it's like, yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/295-3
+00:48:40.607 --> 00:48:42.175
+<v Andrew Berman>we can definitely run projections.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-0
+00:48:42.935 --> 00:48:45.714
+<v Mike Little>Yeah, I think the logic at Tamarack was,
+you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-1
+00:48:45.714 --> 00:48:49.963
+<v Mike Little>if you're backward looking and saying,
+what was my dividend income this year?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-2
+00:48:49.963 --> 00:48:52.524
+<v Mike Little>Well,
+you can pull that from the transactions,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-3
+00:48:52.524 --> 00:48:55.956
+<v Mike Little>right? It's just coming as pure dividends.
+But if you want to,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/296-0
+00:48:52.895 --> 00:48:53.695
+<v Andrew Berman>Yeah, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-4
+00:48:55.956 --> 00:49:00.096
+<v Mike Little>if you're in halfway through the year,
+you've received 2 dividends from the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-5
+00:49:00.096 --> 00:49:02.929
+<v Mike Little>security,
+but you want to have a projection for the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/297-6
+00:49:02.929 --> 00:49:03.855
+<v Mike Little>rest of the year.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/298-0
+00:49:05.375 --> 00:49:10.001
+<v Mike Little>So, you know, like you said,
+you could either look back and say, OK,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/298-1
+00:49:10.001 --> 00:49:14.894
+<v Mike Little>this is what we received so far.
+Let's just use that to project the rest</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/298-2
+00:49:14.894 --> 00:49:18.514
+<v Mike Little>of the year.
+Or so that was the backup methodology at</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/298-3
+00:49:18.514 --> 00:49:21.531
+<v Mike Little>Tamarack.
+The primary was using the security</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/298-4
+00:49:21.531 --> 00:49:22.335
+<v Mike Little>details that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-0
+00:49:23.455 --> 00:49:27.126
+<v Mike Little>They were getting, when I worked there,
+it was coming from Refinitive.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-1
+00:49:27.126 --> 00:49:30.951
+<v Mike Little>I think they may have changed to IDC,
+but either way, it would, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-2
+00:49:30.951 --> 00:49:35.139
+<v Mike Little>they give the update every quarter when
+they announce whatever the dividend rate</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-3
+00:49:35.139 --> 00:49:37.620
+<v Mike Little>is going to be for the next round of
+dividends.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-4
+00:49:37.620 --> 00:49:41.653
+<v Mike Little>And so they would use that versus the
+market value on that day and say, okay,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/299-0
+00:49:38.495 --> 00:49:39.055
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/300-5
+00:49:41.653 --> 00:49:43.255
+<v Mike Little>what's paying out this percent?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-0
+00:49:43.535 --> 00:49:47.398
+<v Mike Little>you hold this many shares,
+here's what we're projecting for the next</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-1
+00:49:47.398 --> 00:49:50.085
+<v Mike Little>dividend on, you know,
+whatever the X date was,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-2
+00:49:50.085 --> 00:49:53.052
+<v Mike Little>usually a couple days before the end of
+the quarter.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-3
+00:49:53.052 --> 00:49:57.698
+<v Mike Little>So I guess that's what I was getting at
+with the Bloomberg feed is like, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-4
+00:49:57.698 --> 00:50:01.393
+<v Mike Little>if we click in, eventually,
+is there going to be an area or maybe</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/302-5
+00:50:01.393 --> 00:50:04.975
+<v Mike Little>like that security scanner tool?
+I don't know what that is, but</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/301-0
+00:50:05.295 --> 00:50:06.015
+<v Andrew Berman>Oh yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/304-0
+00:50:05.335 --> 00:50:08.658
+<v Mike Little>where you can go and see like, you know,
+security level data.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/304-1
+00:50:08.658 --> 00:50:11.714
+<v Mike Little>Here's like Apple's dividend,
+what they paid, last time,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/303-0
+00:50:11.455 --> 00:50:12.175
+<v Andrew Berman>We, we.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/304-2
+00:50:11.714 --> 00:50:13.375
+<v Mike Little>where they're paying next, etc.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/305-0
+00:50:13.855 --> 00:50:18.687
+<v Andrew Berman>Yeah, we could do stuff like that.
+Like I haven't set it up like to do that,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/305-1
+00:50:18.687 --> 00:50:21.887
+<v Andrew Berman>but I mean,
+it's definitely doable because I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/305-2
+00:50:21.887 --> 00:50:26.343
+<v Andrew Berman>all it would require is to like scan
+through all the current holdings.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/305-3
+00:50:26.343 --> 00:50:29.480
+<v Andrew Berman>Essentially,
+I cross reference it with Bloomberg,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/305-4
+00:50:29.480 --> 00:50:33.935
+<v Andrew Berman>see which ones are dividend payers.
+And especially it's like if a, if.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/307-0
+00:50:34.015 --> 00:50:37.845
+<v Andrew Berman>substantial holdings are in our models,
+like in, let me see,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/307-1
+00:50:37.845 --> 00:50:41.674
+<v Andrew Berman>it's like most of that,
+like I'd say like 70% of the book or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/307-2
+00:50:41.674 --> 00:50:46.759
+<v Andrew Berman>something is like in effectively in these.
+So this is the ag view. So it's like,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/306-0
+00:50:45.215 --> 00:50:45.535
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/307-3
+00:50:46.759 --> 00:50:49.898
+<v Andrew Berman>so we know,
+obviously it's like just pulling up a</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/307-4
+00:50:49.898 --> 00:50:52.095
+<v Andrew Berman>list of 30 securities or something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/309-0
+00:50:53.375 --> 00:50:58.604
+<v Andrew Berman>Yeah, and assessing their dividends.
+It's like that would be extremely easy.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/309-1
+00:50:58.604 --> 00:51:04.240
+<v Andrew Berman>Like that would take all 5 minutes to be
+able to pull that in and maybe refresh it</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/309-2
+00:51:04.240 --> 00:51:09.672
+<v Andrew Berman>every week or something if numbers change
+or dividend amounts change. But yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/309-3
+00:51:09.672 --> 00:51:13.135
+<v Andrew Berman>it's yeah, because that's the thing.
+It's like we.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/310-0
+00:51:13.695 --> 00:51:19.775
+<v Andrew Berman>Have, let me see. I think it was like 1.4,
+maybe 1.5.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/314-0
+00:51:21.135 --> 00:51:25.782
+<v Andrew Berman>Yeah, so 300, yeah, it's a little,
+it's like 1.46 or something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/314-1
+00:51:25.782 --> 00:51:31.372
+<v Andrew Berman>B is in these models. And so that's,
+so pretty much everything has a div and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/314-2
+00:51:31.372 --> 00:51:36.744
+<v Andrew Berman>is going to be in there. Yeah, so yeah,
+we could put that together. Yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/311-0
+00:51:32.935 --> 00:51:33.215
+<v Mike Little>Yep.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/312-0
+00:51:35.975 --> 00:51:36.415
+<v Mike Little>Nice.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/314-3
+00:51:36.744 --> 00:51:37.615
+<v Andrew Berman>pretty fast.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/315-0
+00:51:38.175 --> 00:51:41.670
+<v Mike Little>Yeah, I think, I mean,
+especially for older clients who are,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/315-1
+00:51:41.670 --> 00:51:45.796
+<v Mike Little>you know, more income focused,
+I can see that being a sticking point if</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/315-2
+00:51:45.796 --> 00:51:46.655
+<v Mike Little>it's not there.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/316-0
+00:51:48.015 --> 00:51:51.518
+<v Andrew Berman>Yeah, I didn't think about that. Yeah,
+because it's like when you were talking</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/316-1
+00:51:51.518 --> 00:51:54.931
+<v Andrew Berman>about that fallback projection method,
+it's like, that's how I was thinking.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/316-2
+00:51:54.931 --> 00:51:57.459
+<v Andrew Berman>I was like, well,
+that's the most simple and explainable</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/316-3
+00:51:57.459 --> 00:52:00.695
+<v Andrew Berman>way to do it. But yeah, I mean,
+if it's like running it off the dividend</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/316-4
+00:52:00.695 --> 00:52:02.335
+<v Andrew Berman>makes a lot of sense, but for income.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/317-0
+00:52:04.015 --> 00:52:05.375
+<v Mike Little>Yep, yep, yeah, I think.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/318-0
+00:52:07.615 --> 00:52:12.155
+<v Mike Little>Yeah, again, for all your clients,
+or maybe if it's in a taxable portfolio</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/318-1
+00:52:12.155 --> 00:52:14.758
+<v Mike Little>too,
+having that projection toward to look</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/318-2
+00:52:14.758 --> 00:52:19.601
+<v Mike Little>ahead is certainly nice to have. Again,
+I don't know that it's necessarily high</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/318-3
+00:52:19.601 --> 00:52:22.506
+<v Mike Little>priority,
+but certainly something that we could</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/318-4
+00:52:22.506 --> 00:52:23.535
+<v Mike Little>have on the list.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-0
+00:52:24.415 --> 00:52:27.119
+<v Andrew Berman>Oh yeah, yeah,
+I mean that that wouldn't take all that</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-1
+00:52:27.119 --> 00:52:30.264
+<v Andrew Berman>much time to build in,
+like just just particularly because it's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-2
+00:52:30.264 --> 00:52:34.098
+<v Andrew Berman>like it really is so few securities that
+are that ultimately would need to be</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-3
+00:52:34.098 --> 00:52:36.359
+<v Andrew Berman>viewed.
+The issue with Bloomberg is that they</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-4
+00:52:36.359 --> 00:52:40.291
+<v Andrew Berman>just have their data quota and it's like
+if you start pulling a bunch of stuff,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/320-5
+00:52:40.291 --> 00:52:43.535
+<v Andrew Berman>like sometimes like a sales rep will just
+call you up and be mad.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/319-0
+00:52:41.375 --> 00:52:42.095
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/322-0
+00:52:44.175 --> 00:52:47.502
+<v Andrew Berman>But yeah, it's like,
+but I'm always very sensitive about that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/322-1
+00:52:47.502 --> 00:52:50.195
+<v Andrew Berman>It's like,
+I think what happens is it's like if an</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/322-2
+00:52:50.195 --> 00:52:53.944
+<v Andrew Berman>analyst gets on there and like
+accidentally pulls 10,000 mutual funds,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/322-3
+00:52:53.944 --> 00:52:57.535
+<v Andrew Berman>it's like then they you get the call.
+But usually it's no big deal.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/321-0
+00:52:55.215 --> 00:52:55.375
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/324-0
+00:52:58.175 --> 00:53:01.479
+<v Mike Little>Gotcha. Yeah,
+I remember when we switched to AWS from</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/323-0
+00:53:00.175 --> 00:53:00.335
+<v Andrew Berman>Mm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/324-1
+00:53:01.479 --> 00:53:04.660
+<v Mike Little>user Rackspace as our server provider at
+InvestNet,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/324-2
+00:53:04.660 --> 00:53:08.575
+<v Mike Little>they told us there would be that we
+needed to start being more.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-0
+00:53:10.175 --> 00:53:12.886
+<v Mike Little>Kind of conscious of how many queries we
+were gonna run,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-1
+00:53:12.886 --> 00:53:15.453
+<v Mike Little>'cause there was a certain,
+and we like in Rackspace,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/325-0
+00:53:14.335 --> 00:53:15.295
+<v Andrew Berman>Yeah, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-2
+00:53:15.453 --> 00:53:19.210
+<v Mike Little>maybe they had a limit and it was just so
+high we never had to worry about it,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-3
+00:53:19.210 --> 00:53:21.683
+<v Mike Little>but yeah,
+they we made that switch and it was right</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-4
+00:53:21.683 --> 00:53:25.059
+<v Mike Little>before I left, so I didn't get,
+I don't know how it's going, but yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/326-5
+00:53:25.059 --> 00:53:28.815
+<v Mike Little>they told us, "Hey, just be aware, like,
+are you really sure you need to run?"</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/328-0
+00:53:28.935 --> 00:53:31.952
+<v Mike Little>On that query,
+'cause AWS is gonna be throttling</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/327-0
+00:53:30.415 --> 00:53:31.695
+<v Andrew Berman>Yeah, yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/328-1
+00:53:31.952 --> 00:53:36.015
+<v Mike Little>throttling that bandwidth or whatever,
+if you, if you ever do it.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-0
+00:53:37.375 --> 00:53:39.893
+<v Andrew Berman>Oh yeah, yeah,
+it's funny because I always wondered how</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-1
+00:53:39.893 --> 00:53:42.636
+<v Andrew Berman>that works with Black Diamond because it
+seems like, I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-2
+00:53:42.636 --> 00:53:45.738
+<v Andrew Berman>there must be some limits.
+It's like if you try to run something too</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-3
+00:53:45.738 --> 00:53:47.806
+<v Andrew Berman>big,
+it'll give you like partial results like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/329-0
+00:53:46.415 --> 00:53:46.895
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-4
+00:53:47.806 --> 00:53:50.324
+<v Andrew Berman>in the data mining.
+But what I found was if you just go</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-5
+00:53:50.324 --> 00:53:53.471
+<v Andrew Berman>straight to those endpoints,
+you can query whatever you want and just</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-6
+00:53:53.471 --> 00:53:56.439
+<v Andrew Berman>pull it, pull it straight.
+It's like it only has an issue if you,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/330-0
+00:53:54.415 --> 00:53:54.975
+<v Mike Little>Not really.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/331-0
+00:53:56.175 --> 00:53:56.335
+<v Mike Little>No.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-7
+00:53:56.439 --> 00:53:59.901
+<v Andrew Berman>yeah, it has an issue if you do it.
+Like I never use the UI for any of these</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/332-8
+00:53:59.901 --> 00:54:00.575
+<v Andrew Berman>things because.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/333-0
+00:54:01.295 --> 00:54:04.507
+<v Andrew Berman>Mostly just for speed,
+like it's like it's a it's just too</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/333-1
+00:54:04.507 --> 00:54:08.153
+<v Andrew Berman>complicated to like figure out like where
+in the UI everything is,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/333-2
+00:54:08.153 --> 00:54:12.453
+<v Andrew Berman>so like I like kind of crawled all of
+their platforms and just like found like</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/333-3
+00:54:12.453 --> 00:54:16.971
+<v Andrew Berman>like made like a map of all the endpoints
+and and found that's just like an easier</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/333-4
+00:54:16.971 --> 00:54:19.855
+<v Andrew Berman>way to like rapidly like pull whatever
+because it's.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-0
+00:54:19.975 --> 00:54:23.081
+<v Andrew Berman>And that's the thing. It's like for Orion,
+for example,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-1
+00:54:23.081 --> 00:54:27.795
+<v Andrew Berman>they publish like all of their endpoints.
+It's like, I don't think they intended to.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/334-0
+00:54:26.455 --> 00:54:27.055
+<v Mike Little>Not really.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-2
+00:54:27.795 --> 00:54:32.231
+<v Andrew Berman>I think they left like a swagger doc up.
+I found it one day and I was like, oh,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/335-0
+00:54:28.015 --> 00:54:28.815
+<v Mike Little>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-3
+00:54:32.231 --> 00:54:35.670
+<v Andrew Berman>that's convenient.
+And but Black Diamond doesn't. And I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/336-0
+00:54:33.455 --> 00:54:33.855
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-4
+00:54:35.670 --> 00:54:38.553
+<v Andrew Berman>I think they might for like some
+enterprise client,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/337-5
+00:54:38.553 --> 00:54:41.215
+<v Andrew Berman>I'm sure they probably want to charge you
+like.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-0
+00:54:41.255 --> 00:54:43.955
+<v Andrew Berman>$1,000,000 to look at it or something.
+But yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-1
+00:54:43.955 --> 00:54:48.309
+<v Andrew Berman>the reason it's just really frustrating
+with them is for that reason that it's</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-2
+00:54:48.309 --> 00:54:51.725
+<v Andrew Berman>all, it's like 15 micro products.
+It's like it's not and not,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-3
+00:54:51.725 --> 00:54:55.748
+<v Andrew Berman>and there's not a lot of overlap and it's
+not very obvious or intuitive.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/338-0
+00:54:52.335 --> 00:54:52.815
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-4
+00:54:55.748 --> 00:55:00.211
+<v Andrew Berman>So I think that's what I was thinking if
+we can, like, that's what I was saying.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/339-5
+00:55:00.211 --> 00:55:04.895
+<v Andrew Berman>It's like kind of like set the groundwork
+or set the infrastructural groundwork for.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-0
+00:55:05.415 --> 00:55:09.907
+<v Andrew Berman>for 49 and like how we like move data
+back and forth and and yeah like build up</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-1
+00:55:09.907 --> 00:55:14.623
+<v Andrew Berman>those kind of templates because then that
+way it's like all like all future work is</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-2
+00:55:14.623 --> 00:55:18.329
+<v Andrew Berman>just going to be so much easier.
+It's like we establish like data</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-3
+00:55:18.329 --> 00:55:22.540
+<v Andrew Berman>dictionaries right from the start,
+like try try to focus on like custodian</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-4
+00:55:22.540 --> 00:55:27.031
+<v Andrew Berman>level for like pretty much everything and
+yeah and then yeah it's like you just</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/340-0
+00:55:26.095 --> 00:55:26.575
+<v Mike Little>Mhm.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/341-5
+00:55:27.031 --> 00:55:30.175
+<v Andrew Berman>make some tables for for like the
+business logic stuff.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/342-0
+00:55:30.575 --> 00:55:34.847
+<v Andrew Berman>And yeah, it's just being organized.
+Like I tried to work with Amber on it and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/342-1
+00:55:34.847 --> 00:55:38.633
+<v Andrew Berman>she really did not want to. So it's,
+I think it was maybe it was too,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/342-2
+00:55:38.633 --> 00:55:41.823
+<v Andrew Berman>like you were saying,
+like maybe it was like really on the</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/342-3
+00:55:41.823 --> 00:55:46.095
+<v Andrew Berman>consultant side and it's like she was
+like more separate from it or something.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/343-0
+00:55:46.335 --> 00:55:51.898
+<v Mike Little>Yeah, yeah. So again,
+I probably won't know the answer to this</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/343-1
+00:55:51.898 --> 00:55:57.107
+<v Mike Little>until I have access,
+but I'm envisioning that there's some</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/343-2
+00:55:57.107 --> 00:56:01.081
+<v Mike Little>type of Salesforce connection at play
+there.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/343-3
+00:56:01.081 --> 00:56:05.495
+<v Mike Little>And maybe stuff like advisor location,
+architect.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/345-0
+00:56:05.615 --> 00:56:09.649
+<v Mike Little>implementer, et cetera,
+is being input there. I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/345-1
+00:56:09.649 --> 00:56:13.010
+<v Mike Little>does that sound possible or logical?
+I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/345-2
+00:56:13.010 --> 00:56:18.015
+<v Mike Little>I think that would be the source of
+record or the source of truth.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/344-0
+00:56:14.095 --> 00:56:17.455
+<v Andrew Berman>That I, I think so, but that...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-0
+00:56:18.415 --> 00:56:21.520
+<v Andrew Berman>Well, that's the thing.
+It's I feel like the most high quality or</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-1
+00:56:21.520 --> 00:56:24.672
+<v Andrew Berman>like high signal data is going to be
+wherever the most traffic is.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-2
+00:56:24.672 --> 00:56:26.929
+<v Andrew Berman>So if all the advisors are heavy on
+Salesforce,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-3
+00:56:26.929 --> 00:56:29.940
+<v Andrew Berman>it's like they're probably like keeping
+like that's their book.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-4
+00:56:29.940 --> 00:56:33.656
+<v Andrew Berman>I'm sure they're keeping it updated.
+And so that that is probably it's like if</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-5
+00:56:33.656 --> 00:56:36.620
+<v Andrew Berman>you were to think, well,
+where's the data going to be fresher?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-6
+00:56:36.620 --> 00:56:40.430
+<v Andrew Berman>Like is it them managing their book or is
+it like the two consultants like doing</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/347-7
+00:56:40.430 --> 00:56:41.135
+<v Andrew Berman>who knows what?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/346-0
+00:56:41.455 --> 00:56:41.935
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/348-0
+00:56:41.615 --> 00:56:42.335
+<v Andrew Berman>Like, uh...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/349-0
+00:56:43.535 --> 00:56:47.906
+<v Andrew Berman>So that's why I was thinking it's like
+because Salesforce has like of course has</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/349-1
+00:56:47.906 --> 00:56:51.682
+<v Andrew Berman>a native API and it's like they,
+I don't think they're going to be as</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/349-2
+00:56:51.682 --> 00:56:55.783
+<v Andrew Berman>obnoxious about it as like a Bloomberg or
+like some of these other vendors.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/349-3
+00:56:55.783 --> 00:57:00.099
+<v Andrew Berman>So it's like, well it depends. I mean,
+if they want to charge you like crazy to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/349-4
+00:57:00.099 --> 00:57:04.415
+<v Andrew Berman>use it or something, that's one thing.
+But if it's relatively low impact, then.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/350-0
+00:57:04.455 --> 00:57:06.415
+<v Andrew Berman>then that would probably be the way to go
+for that.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/351-0
+00:57:07.215 --> 00:57:11.827
+<v Mike Little>Okay, yep. Okay, well, yeah,
+let's point it on as soon as I get access</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/351-1
+00:57:11.827 --> 00:57:15.594
+<v Mike Little>and can get in,
+we'll get some more time on the books and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/351-2
+00:57:15.594 --> 00:57:20.660
+<v Mike Little>kind of look through that together,
+see what it looks like. You know, I mean,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/351-3
+00:57:20.660 --> 00:57:25.791
+<v Mike Little>I can't speak for Luke, but you know,
+I got the vibe on the call when you kind</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/351-4
+00:57:25.791 --> 00:57:26.375
+<v Mike Little>of set...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/353-0
+00:57:26.735 --> 00:57:30.925
+<v Mike Little>The AWS is the standard and we're kind of
+paying, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/353-1
+00:57:30.925 --> 00:57:36.720
+<v Mike Little>Databricks are already uses AWS to some
+extent, it sounds like. So like, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/352-0
+00:57:34.815 --> 00:57:35.455
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/353-2
+00:57:36.720 --> 00:57:41.328
+<v Mike Little>we're kind of using the middleman to some
+degree. So he, it just,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/353-3
+00:57:41.328 --> 00:57:46.215
+<v Mike Little>his reaction to me suggested he's open to
+whatever is more efficient.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/354-0
+00:57:47.455 --> 00:57:52.220
+<v Mike Little>So maybe once we get in there and get a
+feel for it, if it feels like long term,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/354-1
+00:57:52.220 --> 00:57:56.867
+<v Mike Little>that's a better option to just to move
+everything to AD directly through ADWS.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/354-2
+00:57:56.867 --> 00:58:01.161
+<v Mike Little>We can bring that to him later on.
+So just keep that in the back of your</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/354-3
+00:58:01.161 --> 00:58:01.455
+<v Mike Little>mind.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-0
+00:58:01.855 --> 00:58:04.700
+<v Andrew Berman>Oh, for sure. And yeah,
+and I can show you through our,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-1
+00:58:04.700 --> 00:58:08.053
+<v Andrew Berman>like maybe another call,
+like through our like AWS console so you</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-2
+00:58:08.053 --> 00:58:11.304
+<v Andrew Berman>can get a feel for it and kind of see
+what resources they have.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-3
+00:58:11.304 --> 00:58:13.946
+<v Andrew Berman>I think it's great.
+Like I used Azure a little bit.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-4
+00:58:13.946 --> 00:58:16.892
+<v Andrew Berman>I have used Snowflake before.
+I've never used Databricks.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-5
+00:58:16.892 --> 00:58:19.584
+<v Andrew Berman>I at one point it was like,
+I was at my old company,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/355-6
+00:58:19.584 --> 00:58:22.175
+<v Andrew Berman>we were deciding between Databricks and
+Snowflake.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/357-0
+00:58:22.535 --> 00:58:27.157
+<v Andrew Berman>And we're using Snowflake and like I was
+thinking about like maybe we use it here,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/357-1
+00:58:27.157 --> 00:58:30.833
+<v Andrew Berman>but AWS is just so much cheaper.
+And it's like the, yeah, the UI,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/357-2
+00:58:30.833 --> 00:58:34.675
+<v Andrew Berman>because I'm sure Databricks is probably
+pretty similar to Snowflake.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/357-3
+00:58:34.675 --> 00:58:37.738
+<v Andrew Berman>And it's like, it looks really good.
+It's nice to use,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/357-4
+00:58:37.738 --> 00:58:41.135
+<v Andrew Berman>but it's a margin like more expensive and
+AWS costs nothing.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/359-0
+00:58:42.735 --> 00:58:46.891
+<v Andrew Berman>And then their CLI is really good and
+it's like it's really easy to shell</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/356-0
+00:58:43.375 --> 00:58:43.775
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/359-1
+00:58:46.891 --> 00:58:51.215
+<v Andrew Berman>script and it's like it's very fast and
+light. So it's just very convenient.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/358-0
+00:58:47.375 --> 00:58:47.855
+<v Mike Little>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/361-0
+00:58:51.935 --> 00:58:54.690
+<v Mike Little>Yeah,
+I'm already a little confused because</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/361-1
+00:58:54.690 --> 00:58:59.071
+<v Mike Little>when I try to log in and I click, like,
+they send me the direct link,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/361-2
+00:58:59.071 --> 00:59:03.578
+<v Mike Little>it goes to Azure and then it's like,
+go to the resources page and go to</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/361-3
+00:59:03.578 --> 00:59:08.398
+<v Mike Little>Databricks from there. And I'm like, well,
+is there no direct way, you know,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/360-0
+00:59:05.375 --> 00:59:05.855
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/361-4
+00:59:08.398 --> 00:59:09.775
+<v Mike Little>maybe it's just the...</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/363-0
+00:59:11.055 --> 00:59:15.098
+<v Mike Little>The kind of security layer of going
+through everything here goes through</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/363-1
+00:59:15.098 --> 00:59:17.868
+<v Mike Little>Microsoft, right?
+Why don't we use SharePoint and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/362-0
+00:59:17.455 --> 00:59:18.015
+<v Andrew Berman>Yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/363-2
+00:59:17.868 --> 00:59:21.135
+<v Mike Little>everything that they offer,
+so that might be it, but yeah.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/364-0
+00:59:20.495 --> 00:59:22.986
+<v Andrew Berman>Yeah,
+do you guys have an in-house IT or do you</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/364-1
+00:59:22.986 --> 00:59:24.335
+<v Andrew Berman>do you contract it out or?</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/366-0
+00:59:24.655 --> 00:59:28.649
+<v Mike Little>Yeah, Fulton May is a third party. Yeah,
+yeah, so that's, again,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/365-0
+00:59:26.175 --> 00:59:27.695
+<v Andrew Berman>Oh, Fulton May, okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/366-1
+00:59:28.649 --> 00:59:32.335
+<v Mike Little>I think that's who I'm waiting on to get
+me approvals here.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/367-0
+00:59:31.215 --> 00:59:33.349
+<v Andrew Berman>Okay, okay,
+that that makes way more sense. Yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/367-1
+00:59:33.349 --> 00:59:36.122
+<v Andrew Berman>because I was wondering,
+I was like that like a consultant firm,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/367-2
+00:59:36.122 --> 00:59:37.615
+<v Andrew Berman>but that that makes way more sense.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/369-0
+00:59:37.215 --> 00:59:40.161
+<v Mike Little>Yeah, yeah, yeah,
+they're they're our third-party IT</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/369-1
+00:59:40.161 --> 00:59:42.884
+<v Mike Little>consultant,
+and then they're help they they help</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/369-2
+00:59:42.884 --> 00:59:46.497
+<v Mike Little>across the organization,
+so they're with alongside and three and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/369-3
+00:59:46.497 --> 00:59:47.775
+<v Mike Little>the collective as well.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/368-0
+00:59:48.655 --> 00:59:49.135
+<v Andrew Berman>Okay.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-0
+00:59:50.415 --> 00:59:53.433
+<v Andrew Berman>Well, awesome. Yeah,
+I don't want to keep you too long.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-1
+00:59:53.433 --> 00:59:55.804
+<v Andrew Berman>I know we're running out of time,
+but yeah,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-2
+00:59:55.804 --> 01:00:00.168
+<v Andrew Berman>I guess let me keep me in the loop with
+how things go and we can figure out some</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-3
+01:00:00.168 --> 01:00:04.155
+<v Andrew Berman>time to meet up again. And yeah,
+I can show you through the AWS stuff and</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-4
+01:00:04.155 --> 01:00:08.466
+<v Andrew Berman>kind of like what we've got on the back
+end for 49 and like what all that looks</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/370-5
+01:00:08.466 --> 01:00:08.735
+<v Andrew Berman>like.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/371-0
+01:00:09.375 --> 01:00:13.114
+<v Mike Little>Yeah, sounds great. Yeah, I'll um, yeah,
+I'll reach out as soon as I get access,</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/371-1
+01:00:13.114 --> 01:00:16.575
+<v Mike Little>hopefully, hopefully this week. I mean,
+it should definitely be this week.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/372-0
+01:00:17.215 --> 01:00:19.675
+<v Andrew Berman>Yeah, yeah, no,
+I'm sure they're probably like in a rush</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/372-1
+01:00:19.675 --> 01:00:23.042
+<v Andrew Berman>to like get started and everything I can
+imagine. They hold you up on access.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/372-2
+01:00:23.042 --> 01:00:23.775
+<v Andrew Berman>That seems crazy.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/374-0
+01:00:23.375 --> 01:00:26.953
+<v Mike Little>Yeah, yeah, for sure. Well, yeah,
+I appreciate you taking the time.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/374-1
+01:00:26.953 --> 01:00:30.584
+<v Mike Little>It was very informative and yeah,
+the dashboard and everything looks</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/374-2
+01:00:30.584 --> 01:00:33.215
+<v Mike Little>awesome. So yeah,
+excited to keep moving forward.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/373-0
+01:00:32.335 --> 01:00:32.895
+<v Andrew Berman>Thank you.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/375-0
+01:00:34.015 --> 01:00:37.935
+<v Andrew Berman>100%. You know, you have a good day. Yeah,
+keep me in the loop and we'll talk soon.</v>
+
+4b2bacbe-b334-4a26-8ca2-de6d74539a57/378-0
+01:00:38.575 --> 01:00:39.615
+<v Mike Little>Sounds good. Thanks.</v>
