@@ -1,5 +1,6 @@
 # Deploy-completion ledger -- PB-3: smartx :482 reader re-point (TO-4 smartx-disposition completion)
 **Opened+closed same window 2026-08-19 01:36-01:38Z by 0.7.0_AE_CloudOps.** COO routing 012836Z; CTO GATE-GO 013607Z ("now, not morning").
+**Status:** CLOSED 2026-08-19T01:38Z by 0.7.0_AE_CloudOps -- all 4 CTO close conditions PASS; belt read 11:55Z confirmed zero emission on the day itself. Applied-plane re-verified 2026-08-19T2147Z by 0.7.0_AE_CloudOps (live primitives, Rule 22a): opal-smartx-ingestion-pipeline CodeSha256 == dcw7rpR6eKfldEU6Ed/iO/YLqKRCpsjIxDo63U3Aeq4= (byte-exact to the record) LastModified 2026-08-19T01:37:27Z.
 
 **Act:** generate_smartx_timeseries_and_metrics.py Key 'json/mdpf/global/aggregate-aua-timeseries.json' (DELETED by TO-4) -> 'platinum/mdpf/global/aggregate-aua-timeseries.json' (live producer home, verified 13:50:50Z 08-18 / 300,714 B; DS schema-compat PB-3; role grant covers via portal-v2/* wildcard). Commit-gate clean; artifact rebuilt (0 legacy refs / 1 platinum ref at :487).
 

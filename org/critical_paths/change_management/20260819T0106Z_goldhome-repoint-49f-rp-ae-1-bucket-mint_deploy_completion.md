@@ -3,6 +3,7 @@
 **Authority:** Andrew-direct ~1730Z ratified ("proceed with the re-point before the P2 apply"), record ANDREW_DIRECT_20260818_CLIENT_GOLD_BUCKET_SUPERSESSION.md; COO TO @1b2ee34db7 (Deny literal amended in place 175200Z); CTO GATE-GO 175124Z (bd-* exclusion CONFIRMED, mdpf widening RULED). Released by COO fixture verdict 005714Z.
 **TF:** infra/aws/terraform/shared-infra/s3-49financial.tf @bbf1cadd4f. **Plan file sha256:** 3e2e09cbe20c9bd8a0b12bd0512914bd (targeted, 5 to add / 0 change / 0 destroy).
 **Apply mode:** safe-apply, TARGETED to the 5 mint resources -- deliberately NOT the untargeted root, so the pre-existing staged global_graph ms_heat lifecycle row (@4cd024c5c6, 0.8.0~Z, COO-banked) is not ratified as a side effect.
+**Status:** CLOSED 2026-08-19T01:13Z by 0.7.0_AE_CloudOps; spine CLOSED END-TO-END (RP-SPINE-2 executed 12:50Z under Andrew-direct release, batched form). Applied-plane re-verified 2026-08-19T2147Z by 0.7.0_AE_CloudOps (live primitives, Rule 22a): versioning=Enabled, BPA all four TRUE, SSE=AES256, DenyForeignFirmPrincipals Deny s3:* live; OLD prefix opal-data-assets/portal/gold/advi == 0 objects; NEW root opal-data-49financial/gold/advi == 4,255 = the 4,222 migrated (date=2026-08-18, EXACT to the record) + 33 written 08-19 by the corrected chain's own QA run -- growth on a live producer, not drift; control portal/gold/mdpf SURVIVES.
 
 ## CTO ledger-close conditions (filled at execution)
 | # | condition | result |
