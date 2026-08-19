@@ -444,12 +444,20 @@ c4_subject_function_grid:
       serving: Delivery, identity and access -- serving routes, user tables, gateway, IAM.
       experience: A tool or surface a human operates directly -- portal tools, agents, CLIs.
       build: >
-        PROVISIONAL, NOT YET RATIFIED AS A FIFTH VALUE. Deploy/CI machinery that acts ON the
-        estate without describing it. OPEN QUESTION, deliberately left open rather than decided
-        by construction -- "the tools I use to build the estate" is already fully described by
-        subject:estate spanning the four functions above, so `build` may collapse and leave a
-        clean 3x4 grid. The 29-vertical placement pass settles it EMPIRICALLY; do not cite
-        `build` as ratified until it does.
+        COLLAPSED 2026-08-19 (Andrew-direct at the CRO terminal, /open-calls card 2, VERBATIM
+        "All recs approved, go ahead and implement as necessary" -- ruling on the W-24
+        placement-pass report @19f3d59ebd). NEVER RATIFIED; the provisional question this value
+        carried is ANSWERED EMPIRICALLY: zero of the 138 ground-set chains are deploy/CI
+        machinery, and every estate-row chain placed cleanly in the four ratified values --
+        exactly the collapse the provisional text hypothesized ("the tools I use to build the
+        estate" is already fully described by subject:estate spanning the four functions).
+        THE GRID IS THE CLEAN 3x4. Ground-set caveat carried with the ruling, so the collapse
+        is never over-read: deploy/CI tooling sits OUTSIDE the C4 chain ground set by
+        construction (operator-gated deploy tools land estate x experience; standing law
+        permits no autonomous deploy machinery for a build column to hold). Records:
+        org/tier1_exec/4.0.0_SA_CRO/deliverables/W24_29VERTICAL_PLACEMENT_PASS_20260819.md s6 +
+        ANDREW_DIRECT_20260819_W24_RULINGS_ALL_RECS_APPROVED.md. Retained as a TOMBSTONE so the
+        question stays legible as asked-and-answered, never re-opened as an oversight.
   segment_definitions:
     note: >
       Each of the five c4_segments resolves to a ROW or a COLUMN of this grid. Three rows plus
