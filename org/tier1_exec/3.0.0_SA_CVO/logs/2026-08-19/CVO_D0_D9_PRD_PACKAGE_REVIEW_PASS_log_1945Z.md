@@ -98,11 +98,106 @@ rank-4 to 2 on a **decay-rate** axis they had not argued.
 **Gap found:** `prd-evidence-check.sh` cannot see the ground-truth chain it is supposed to lint —
 a WARN-mode instrument whose domain predates the rule by 3.5 months. Routed, not fixed (not my lane).
 
+---
+
+# CONTINUATION 19:45Z → 20:20Z — the ontology lock-down assist
+
+**archetype:** VALIDATE
+
+## 6. Adversarial exchange — CLOSED at full convergence (3 rounds)
+
+Round 1: attacked all four options, **three explicit refusals**. Round 2: CRO conceded all three; I
+conceded their full-matrix beat my substrate-keying, then attacked their counters. Round 3: five more,
+all conceded. **The decisive catch — their chase-audit policed only ONE LEG of a two-leg comparison**:
+it stopped editing a *declaration* to match a failing resolver but left open editing the *resolver* to
+match the declaration — *the identical rationalization, and the easier one to commit innocently,
+because "I fixed the resolver" reads as engineering.*
+
+**I also attacked my own round-1 fix:** I had killed a frozen tool-count denominator; the fix hardened
+one axis and left the **substrate** axis unguarded. My own instrument, same defect, one axis over.
+
+**Yield beyond the ranking:** my self-caveat — that catches landing where my context is deepest is a
+*selection effect*, predicting blindness where context is thin — was taken into T11 as the
+**BLINDNESS MAP**: multi-validator coverage composes as the union of deltas, uncovered region stated
+as residual.
+
+## 7. §4 exit-bar census — 3 passes
+
+**Pass 1 (deprecated axis, recalled terms):** 89 files, 6 terms, **96 raw occurrences → 3 findings.**
+Two outside the tranche's target list. Sharpest: `L0B_CHANGE_TYPE_VOCABULARY.md` **defines two live
+change-type terms by the behavior of `comp-surface-check`, retired 08-06** — a definitional anchor to
+a nonexistent instrument. Also: `10_census/` had **no in-tree vintage**, and the 08-19 fold gave a
+07-31 seed a same-day git date — *a staleness signal that now read FRESH*, which **invalidated the
+confident half of my own census** (80 occurrences classified on a date I knew from memory, not from
+the artifact). CRO landed the README between passes.
+
+**Pass 2 (derived list — the fix applied to my own instrument):** term list derived from the registry
+changelog. **136 occurrences, ZERO new defects** — all AWS physical names, retirement records, or a
+different live sense. **The yield was the falsification:** every retired term has a live homonym;
+`territory` alone would fire ~30 false positives against a load-bearing concept. **Killed the naive
+term-lint before it was built** — reshaped to a diff-time advisory on added lines only.
+
+**Conflicting-half pass 1:** denominator by *parsing* — 68 terms, all 68 with file-citing authority,
+6 commit-pinned; **63 ratified / 3 deprecated / 2 contested.** **The bar was UNFALSIFIABLE** (the
+canon self-declares five cells in the two states the bar forbids) → rewritten to *no UNDECLARED*
+conflict, with the five cells listed in-bar. My addition: **a disposition path scoped to LESS than the
+actual defect is the same failure as no path — it just looks complete.**
+
+## 8. My two cells — one worked, one corrected
+
+**`Unreconciled_Aua`:** claiming it is what surfaced the defect. **One field name, two computations,
+both served** — `INF_D_02` accumulates (`+=` AUA of accounts with no billing record), `INF_D_04`
+subtracts (`total_aua − holdings_total`). Read both served keys live: `book.json` ships
+`unreconciled_aua: 0.0` **beside `unreconciled_account_count: 4`**; `header_metrics.json` ships
+`-0.0` (the negative zero is the subtraction's tell). CTO's 08-12 finding **re-scoped** from a field
+rename to a three-bucket vocabulary unification riding the INF bind.
+
+⚠ **`Lifecycle_Value` — I OVER-CLAIMED IT.** Its `resolution_owner` names `3.0.0_SA_CVO~Z`, not base
+me. **Second ownership over-claim of the night** (the sitez envelope was the first) — both in areas
+where my context was thin, both with the correct form sitting in a record I had not read. Banked as a
+T11 specimen: **"who owns X" claims cost more scrutiny precisely because they read as cheap to make.**
+Positive result: ran the cell's own `do_not` test — the C3 walk's subjects are contract records,
+matching `lifecycle_class`'s declared grain, so **the conflation is NOT being ratified by usage. Open,
+not decaying** — a distinction now in the bar.
+
+**Near-miss recorded:** I nearly took the cell's counterexample as settling the contest — it is one
+side's argument against a live opposing MSTR ruling, both carrying an Andrew verbatim. Taking my own
+side as settled, in a cell I had just claimed, would have been the self-grading error I attacked in O1.
+
+## 9. Scope — asked rather than assumed
+
+T4/T5 are canon edits outside my chartered commit scope. I had a plausible grant and **asked anyway**,
+on separation-of-duties grounds: *the seat that audits scope deciding its own scope is the
+self-grading pattern.* CRO ruled **option (c)** — CRO executes T2–T5, **my role converts to exit-bar
+certification of their edits.**
+
+## 10. Prereg re-read (owed, not a re-score)
+
+A2 closed my C4 P0-2 verbatim. **New finding one convention over:** A3's harness basis rule said the
+residual *"IS the accrual component alone"* — **defining the residual to be accrual instead of testing
+it against accrual**, making C5's classifier collapse to zero by construction. *A permanent
+classification class whose test cannot fail is the smoothing, wearing a mechanism's name.* **The sound
+form was already in their own evidence** (BD publishes accrual separately; the qt1 identity holds on
+120,215 rows) — one-clause fix, adopted as A5: residual compared **against** the published field,
+non-matching residuals stay in the census.
+
+## Compiler Tools (continuation)
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-find` | `unreconciled_aua` (62/26,920, banded); `lifecycle_class` (276/26,920) | located the two-producer collision and the C3 walk; bands separated source from doc |
+| `python` (parsing, not reading) | registry changelog → naming-act term list; term/authority/status triples | **derived** denominators for passes 2 and 3 — the house method CRO ratified |
+| `aws s3 cp` (operational) | both served keys read live | the `0.0` beside `count: 4` trap, and the `-0.0` subtraction tell |
+| `grep`/`sed` (scoped reads) | both computations, walk subject grain, prereg addenda | grain match that cleared the `do_not` |
+
+**Gap:** none new. Pass 2's finding is that a *proposed* instrument would have been defective.
+
 ## Blockers
 
-NONE self-blocking. Open loops, each with an owner: the D2 prereg addenda A1/A2/A4 postdate my scoring
-and I owe a **re-read, not a re-score** (A4's NET/REAL ruling touches my C4/C5 shared-derivation
-finding); CRO adversarial round 2 is with them; T2/T3 ride the W-15 touch, T4/T5 await my arrival at
-the tranche. Estate-pull stays parked by sovereign word.
+NONE self-blocking; every remaining item is event-anchored with a named owner. **63 prose-vs-authority
+comparisons** → O1 seam (CRO building tonight). **Certification of CRO's T2–T5** → when they land.
+**`Unreconciled_Aua` first act** (the D_02 deployed-bytes read) → rides the INF bind. **`Lifecycle_Value`**
+→ not mine; ~Z's fence, routed via MSTR per LD-0325 confinement. Estate-pull stays parked by sovereign
+word. Prereg is closed pre-probe and does not move before Thursday absent a new Andrew word.
 
 — 3.0.0_SA_CVO
