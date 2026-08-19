@@ -45,10 +45,21 @@ MODELS / SMAs.**
 - **SMAs** = the strategies: Muni SMA, Tax SMA, the ETF strategies (PFOE SMA + DIVZ SMA -- both on
   49 Financial through SmartX).
 - **CLIENT** = client advisory assets (advised / fee-earning) vs e.g. client residual.
-**Build shape (CTO):** this is a Rule-24 taxonomy act BEFORE it is a portal build -- the axis needs
-MECE/grain/intent/state declaration and (pending S9-Q1) likely a SYSTEM_DEFINITIONS ratification so
-one canon serves every surface that later slices by it. Then: category registry -> global-view
-portal components. Owner-classes: CTO taxonomy gate + DE portal build; COO decomposes.
+**ANSWERED (Andrew, 08-19 ~15:5xZ):** hierarchy PINNED -- top level = Models / SMA / Alternatives /
+Insurance / Client (peers); under Models: Primary + Custom (peers). **Client splits into Advised +
+Residual, where Client->Residual is effectively today's "Non-Model."** Home: ENTIRELY in Model
+Portfolios for now; the eventual ADVI home is downstream of the Item-3 overlay work. **Indelibly
+tied to displaying Model Portfolios for COTTONWOOD correctly: ~$7M of Custom models + ~$30M of
+Client assets we advise.**
+**PRIOR ART (Andrew's pointer, located):** CRO's
+`MDPF_PORTFOLIO_ONTOLOGY_AND_SLEEVE_ATTRIBUTION_SPEC_20260805.md` -- the three independent axes
+`selection_origin` (opal/client/external_manager/unknown) / `advisory_scope` (advised/excluded/
+null) / `fee_basis`. The view taxonomy COMPOSES from these ratified axes rather than minting a
+parallel vocabulary: Client->Advised = advisory_scope=advised; Client->Residual = the
+excluded/residual class; Models Primary/Custom rides selection_origin + model identity. Rule-24
+declaration + the composition mapping are the CTO taxonomy gate's content; then category registry
+-> MDPF global-view portal components. Owner-classes: CTO gate + DE build; COO decomposes;
+Cottonwood display acceptance is part of DONE.
 
 ## S4. DIRECTIVE: ACCOUNT-LEVEL MODEL OVERLAY (Item 3, scope CONFIRMED)
 
@@ -66,9 +77,10 @@ access layer. Andrew holds a spec file to be dropped -- slot open.
 ## S6. DIRECTIVE: LIVE-EDITABLE MODALS (Item 8 widened)
 
 BOTH the Philosophy-page modal pop-ups AND the model modal pop-ups in the Benchmark tab of Model
-Portfolios become **editable live by Opal employees** ("saved or editable client side, so that our
-employees can edit those"). Mechanics pend S9-Q2 (persistence + audience). Owner-class: DE + a
-small storage/auth leg (AE); CTO gates the auth surface.
+Portfolios become **editable live by Opal employees**. **ANSWERED (Andrew, 08-19 ~15:5xZ):**
+edits persist FOR ALL VIEWERS -> server-side store required. Audience: Opal employees (editor-set
+granularity = implementation detail at the auth surface). Owner-class: DE + a small storage/auth
+leg (AE); CTO gates the auth surface.
 
 ## S7. VENDOR/CONTACT FRAME (transcript 1)
 
@@ -86,15 +98,12 @@ before any sitez issuance.** Cross-fabric kickoff is never implicit.
 
 ## S9. OPEN -- AMBIGUITY QUESTIONS TO ANDREW (block only their own items)
 
-- **Q1 (S3 taxonomy):** Is insurance/client/alternatives/models/SMAs the complete v1 top level,
-  and is two levels (category -> primary|custom / strategy list) the full depth -- or do customs
-  nest further (constituent-model chains)? And: page-local view config for the MDPF global view,
-  or a ratified portal-wide asset-category CANON (SYSTEM_DEFINITIONS) that ADVI/positioning
-  surfaces later reuse? (Build shape + home depend on this.)
-- **Q2 (S6 edits):** employee modal edits persist FOR ALL VIEWERS (server-side store), correct --
-  and editable by ANY authenticated Opal employee, or a named editor set?
+- **Q1: ANSWERED** (folded into S3 -- hierarchy pinned, MDPF-only home for now, advisory_scope
+  prior art composes, Cottonwood tie-in + Client Advised/Residual split).
+- **Q2: ANSWERED** (folded into S6 -- all-viewers persistence, server-side store).
 - **SLOTS:** transcript 2 -- (pending) · transcript 3 -- (pending) · partner GraphQL spec file --
-  (pending) · Mike-call outputs -- (pending).
+  (pending) · Mike-call outputs -- (pending) · BD householding-template sample (egress word) --
+  (pending Andrew).
 
 ## S10. COMPILATION PATH (deferred by design)
 
