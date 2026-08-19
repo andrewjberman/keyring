@@ -241,3 +241,45 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   existing pins (TO-B vs C1-C9 + named-id-set; TAC-3 schedule-exit law). CVO~Z next-slot fires
   the cert chain. D7-U4 ratify-or-amend at the D7 gate post-integration.
 - **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6, zero spare.
+
+---
+
+## ADDENDUM 5 — 21:17–21:23Z: the #48 flip, U4 unpinned, the residue allocation — evening close
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 5)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @f7f1c4e683, @e0de7ff9f4 resolve; f69344ce does NOT (post-dates the sweep ~90s) | PASS | U4 ratification grounded; the unresolved frame cited honestly IN the flip text + integration ask sent |
+| to-check | --all --assignee 0.5.0_AE_OpalETL~A (post-flip) | PASS | 0 active TOs — the dead lane's phantom-pending census reads ZERO |
+
+## Delta
+
+1. **#48 SPLIT SUPERSEDE EXECUTED @28f53561d6** (MSTR~Z fire order under LD-0090 /govern
+   discretion, laptop frame f69344ce 21:16:43Z, same shape as the #42 ruling): the #7+#8 row
+   flipped superseded with the split stated in-text (#8 TAXSMA half -> D9(c1), build arc closed
+   by "Yes B now"; #7 UIUX half -> UIUX_DESIGN, substance delivered per the dbfe8c3a94 trail),
+   ANDREW'S-COUNTERMAND-REVERTS stated per precedent. Instrument-confirmed: ~A lane = 0 active.
+2. **D7-U4 UNPINNED:** MSTR~Z's sweep @e0de7ff9f4 integrated the citations; CTO~Z RATIFIED
+   UNAMENDED @f7f1c4e683 (verified at my desk). TO-D fully unblocked at its window,
+   one-line-confirm shape intact, constraints 1+4's T-4 separation carried into my TO-D read.
+3. **~A RESIDUE ALLOCATION (routed to me under the boundary): QUEUE-until-post-acceptance,
+   PRE-ASSIGNED to 0.5.0_AE_OpalETL~Z** — a scheduled inherit with owner + trigger, not an open
+   question. Grounds: queue is free (WDAC bound blocks any landing tonight); urgent substance
+   already re-housed by the split itself; the inheritor is mid-flight on D6 TO-C w/ a real queue;
+   post-acceptance re-forms the board for sequencing against a fresh census. Execution: at
+   acceptance-clear I send the seat its inherit line (survives / re-housed-where / carry-vs-
+   custody), cc MSTR~Z.
+4. Cross-desk law convergence noted: base COO absorbed the absence-names-its-tree rule;
+   positional-citation (named-id-set) already protocol-level @e697f1450e.
+
+## Gate-forward (21:23Z — evening close posture)
+- **RESERVED AT ANDREW (the only two):** the D7 one-liner answers (Cottonwood DL /
+  membership-add-vs-invert-primary / Ticketing Center channel) + the market-returns allowlist.
+- **At me, on triggers:** acceptance-clear -> the ~A inherit line + census at any CVO~Z spawn;
+  TO-B index validation on the CVO~Z co-sign (C1-C9 + named-id-set bar); D8 acceptance at its
+  delivery; D7 TO-C/TO-D gates at their windows.
+- **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6 at ceiling. All D-family stale
+  sovereign rows TERMINAL with pointer chains; boundary live at four desks.
