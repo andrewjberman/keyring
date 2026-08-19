@@ -33,7 +33,9 @@ integrator push window; first respawn whenever a push or spawn is needed).
 **Wave 1 — 2026-08-20 morning (dated obligations, R-independent):**
 - `0.4.0_DS_ClientPlatform` (base): R-WATCH TO (A1 daily + B1 13:35Z proof-READ) + B3 INF-ONEWRITER
   + B4 on 08-21. Reinstantiates from its own 08-19 log/handoff.
-- `0.8.0_AE_CloudComp`: REG residue + J3 (08-20; REQUIRED before INF binds) + HELD-STATE (08-20).
+- `0.8.0_AE_CloudComp`: REG residue + J3 (08-20; REQUIRED before INF binds) + HELD-STATE (08-20)
+  **-> then NFRA_ONTOLOGY.W-15 (added 15:35Z: the pacing item for five Andrew-ruled adjudications,
+  one canonical touch coordinated with CVO; outranks T4) -> then T4-DECLARATIONS.**
 - `0.7.0_AE_CloudOps`: B2 discharge on B1-PASS (~14:00Z 08-20) + B3 joint leg; then quiescent until
   R+1 (A3) unless R has fired.
 
