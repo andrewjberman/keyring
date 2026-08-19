@@ -143,4 +143,68 @@ derive its term list from a source rather than from me — the naming-act entrie
 list **derivable instead of recalled.** That is the same *gate-derived-denominator* fix I pressed on
 O2, applied to my own instrument.
 
+---
+
+# PASS 2 — derived term list (CRO-approved 195537Z)
+
+**Method:** 17 changelog entries parsed from `SYSTEM_DEFINITIONS.yaml`; **5** carry a
+RENAME / RETIRE / DEPRECATE / SUPERSEDE token; the retired-CONCEPT list falls out of them —
+`Territory` (retired v2.0), `attribution` (retired vertical v1.4), `find-insure-serving` → `insurance`,
+`value-parity` → `ops-internal`, `contract_record` (retired sense v1.7).
+**Swept: 136 raw occurrences. Result: ZERO NEW DEFECTS.**
+
+All 136 fall into three correct classes:
+
+- **(a) AWS PHYSICAL resource names** in `10_census/instruments/` — IAM roles `opal-cot-value-parity`,
+  `opal-inf-value-parity`; Lambda `yang-generate-holdings-attribution`. *(Pass 1's F3 fix landed
+  between passes and made this class **derivable by the next reader** instead of trusted from my
+  memory — the fix paying off on the very next pass.)*
+- **(b) Entries RECORDING the retirement** — best specimen `LAYER_FIELD_ANATOMY.md:391`:
+  `count_checksum: 29 # 27 - attribution (RETIRED 07-30) + etf-reports + ceo-digest + ticketing`,
+  the retirement shown as arithmetic.
+- **(c) A DIFFERENT LIVE SENSE of the same word** — `SYSTEM_DEFINITIONS.yaml:459` uses *attribution*
+  for an INF served-field definition, unrelated to the retired vertical.
+
+## The yield: recall improved, and PRECISION is the binding constraint
+
+Deriving the list made the sweep **complete**. It did nothing for the thing that decides each verdict,
+which is **SENSE** — and measured across the derived list, **every retired term has at least one live,
+unrelated sense in the same tree.**
+
+**`territory` is the specimen.** Retired as a classification axis at v2.0. **34 occurrences: one is
+the doctrine phrase "map, not the territory"; ~30 are a live, load-bearing GRAPHLEARNS concept** —
+*"territory predicate"*, *"residue = declared territory − produced nodes, derived not guessed"*,
+*"territory=0 read as a measurement"*. Current, valuable, unrelated to the retired enum.
+
+⛔ **THEREFORE THE §4 BAR IS NOT TERM-CHECKABLE.** *"No conflicting or deprecated documentation"*
+requires per-occurrence sense adjudication, and **no completeness improvement to the term list changes
+that.**
+
+## Finding against a PROPOSED mechanism (§3 candidate (b), the digit/term lint)
+
+**A naive deprecated-term lint would fire ~30 false positives on `territory` alone**, against a
+concept the tree depends on. **A lint at that false-positive rate does not get tightened — it gets
+ignored**, and an ignored gate is worse than none because it reads as coverage. If (b) proceeds it
+must be **sense-aware**, or scope-limited to terms with no live homonym — which on this evidence may
+be an empty set. *Not a design proposal: a measurement that falsifies the naive form before it is
+built.*
+
+## One adjudication question — surfaced, not decided
+
+`territory` was **retired as a term** at v2.0 and is **simultaneously the core noun of a live concept**
+in the same tree. Either (i) a one-word-two-things collision needing adjudication, or (ii) two
+legitimately distinct senses where the retirement bound only the classification axis. **The changelog
+retired a term and did not say which SENSES it bound** — which is what leaves it open. A Rule-24
+naming call at CRO's seat or Andrew's, not mine. If (i), the GRAPHLEARNS material needs a different
+noun; if (ii), the retirement entry should say so, so the next sweep — human or lint — does not
+re-raise it.
+
+## Both passes: what remains
+
+The **CONFLICTING** half of the bar (two live docs asserting different things — the F-A/union-find
+class) is **untouched by both passes**. It needs claim-level comparison, not term sweeping, and it is
+where the bar actually lives. Proposed cut, for CRO: key it off the registry's **CITED-source pairs**
+— where a doc restates a value a named source computes, compare them — so the pass has a derivable
+denominator the way pass 2 did, rather than resting on free-text reading.
+
 — 3.0.0_SA_CVO

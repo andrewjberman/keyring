@@ -49,6 +49,30 @@ For every surface in the class, classify → remedy:
 | T14 | 10_census in-tree vintage declaration (F3 — the fold made a 07-31 seed read same-day fresh from git metadata) | **DONE same-turn** — `10_census/README.md` landed (capture date + SEED/DIFF-BASE + never-a-live-read + the git-date-lies mechanism stated) | CRO (program home) ✅ |
 | — | F1 (LAYER_FIELD_ANATOMY :422/:438 estate-infrastructure as live field values) | **DONE same-turn** — dated amendment carrying BOTH truths: the segment is renamed AND the on-disk c4_segments key itself still lags (the canonical is internally split; re-renders at T3/T4 propagation) | CRO (own file) ✅ |
 
+### Pass-2 adjudications (CVO census 195833Z — zero new defects; the yield is mechanism-shaping)
+
+- **THE (b)-LINT'S NAIVE TERM HALF IS FALSIFIED BY MEASUREMENT, pre-build** (CVO: every retired
+  term has a live homonym; `territory` alone = ~30 false positives against a load-bearing
+  GRAPHLEARNS concept; a lint at that rate gets ignored, and an ignored gate reads as coverage).
+  **REFINED SCOPE for CTO's routing brief:** the DIGIT half of (b) stands unfalsified (counts/
+  version pins have no homonym senses); the TERM half becomes a **DIFF-TIME ADVISORY on ADDED
+  lines only** — a NEW occurrence of a retired term flags for human read (tiny volume, real
+  signal), never a tree-wide blocker. Cascade-conformant: deterministic flag → human adjudicates
+  the few.
+- **T15 — the `territory` sense-scoping (adjudicated at this seat, answer (ii)):** the v2.0
+  retirement bound the CLASSIFICATION-AXIS sense ONLY. Grounding: the Territory entry's own text
+  ("the territory-cannot-drift/map-can asymmetry SURVIVES this retirement and is preserved on
+  Map") and the ratified `Map`/`Federation` entries still cite territory-the-concept. The
+  GRAPHLEARNS "territory predicate" usage IS the surviving map-vs-territory sense. **Remedy: one
+  scoping sentence on the Territory entry saying which senses the retirement bound** — rides the
+  CVO naming-act slot with this adjudication attached; presented to Andrew with this spec (his
+  word overturns).
+- **The CONFLICTING-half cut APPROVED as CVO proposed** (key off the registry's cited-source
+  pairs — doc restates a value ↔ a named source computes it — derivable denominator), **with one
+  sequencing addition:** count-class comparisons ride O1's results file once it exists (the same
+  comparison, mechanized) so the pass duplicates nothing; prose-claim comparisons run as their
+  own pass.
+
 **SEQUENCING RULE ADOPTED FROM F1 (binds T3 and every sweep in this tranche): CLAIM-SETS, NOT
 FILE-SETS.** A file corrected on one axis is not a corrected file — a sweep keyed on which FILES
 are fixed skips exactly the files already on the fixed list. T3's four lagged files are a
@@ -82,10 +106,28 @@ theirs to sequence; the COMPLEARNS stack is the substrate, not a fresh build):
   T0 = every universe term carries one and they all run green. This is the runtime-system frame
   made mechanical, and it is what "locked down" will be MEASURED by.
 
-## 4. EXIT (= the lock-down bar, per @1044c49f2e)
+## 4. EXIT (= the lock-down bar, per @1044c49f2e) — **BAR MADE FALSIFIABLE 2026-08-19 ~20:0xZ
+(CVO conflicting-half pass 1: the registry SELF-DECLARES 3 deprecated + 2 contested of 68, so the
+bar as first written could be declared met or unmet at will — the one property an exit bar must
+not have. Adjudicated at this seat, reading (B), presented to Andrew, his word overturns.)**
 
 Tranche 1 closes when: every T-row above is landed-or-formally-owned-with-date · §3's mechanism set
 is routed and (a)+(c) are live · the P0 census A-rows re-score with zero FAILS of the hand-drawn
-class · and **no conflicting or deprecated documentation remains in the ontology tree** (CVO's
-verification axis, per their assist role). That bar is what releases the estate backlog and the
-return to comp-estate/graph work — his gate, his word.
+class · and **no UNDECLARED conflicting or deprecated documentation remains in the ontology tree.**
+**A SELF-DECLARED cell is exit-COMPATIBLE iff it carries its status, an owner, and a disposition
+path — a registry that marks its own unresolved cells is doing its job, and forcing them to
+ratified to clear a gate would be the fake-green worst case.** The five currently-declared cells,
+listed so the bar has a denominator: `Substrate_Side` [deprecated; **its reporting rule survives,
+binding**] · `Territory` [deprecated; **map-vs-territory sense survives** — T15] ·
+`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; owner CVO (claimed
+2026-08-19), resolution = Andrew naming act, banked] · `Unreconciled_Aua` [contested; owner CVO
+(claimed), re-read against deployed bytes]. An UNDECLARED conflict found by the census remains a
+bar-blocker until declared-with-owner or resolved. CVO's verification axis runs the hunt; his
+gate, his word.
+
+### Rows added ~20:0xZ (conflicting-half pass 1)
+
+| # | Surface | Nature → remedy | Owner / vehicle |
+|---|---|---|---|
+| T16 | **The registry `status` field conflates TERM-LIFECYCLE with CONTENT-VALIDITY** (Rule-24(iii) in the schema itself: 2 of 3 deprecated entries carry LIVE BINDING content — a consumer filtering `status != deprecated` DROPS the Substrate_Side reporting rule). Remedy candidate: additive `binding_residue:` field on deprecated entries whose content survives (checker-lawful — extra fields legal; machine-filterable; no enum change) | SCHEMA naming act — REC to Andrew with this spec; CVO slot executes on his word | CRO rec → Andrew word → CVO |
+| — | The 63 prose-vs-authority comparisons (the deep conflicting check) | CVO runs, prose claims only; numeric claims ride O1's results file at the seam | CVO, timing theirs (post-O1 seam available) |
