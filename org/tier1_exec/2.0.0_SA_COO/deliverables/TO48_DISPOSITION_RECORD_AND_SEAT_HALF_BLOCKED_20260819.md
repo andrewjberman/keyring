@@ -62,3 +62,47 @@ seat authored it, MSTR ferried it, and it arrived at me as an executable instruc
 those hands checked that the named seat existed.** It was caught only at the point of execution, by
 looking for the folder before writing to it. Nothing in the recommendation's own form would have
 revealed it: a serial is a plausible-looking string whether or not anything answers to it.
+
+---
+
+# CORRECTION 2026-08-19 ~21:21Z -- ANDREW-DIRECT: "that agent is active on sitez fabric"
+
+**PART 2 ABOVE IS WRONG. `0.5.0_AE_OpalETL~Z` EXISTS AND IS ACTIVE -- ON THE SITE-Z FABRIC.**
+The seat half is NOT blocked. Strike the blocker; the recommendation was sound.
+
+## WHY MY PROBES SAID OTHERWISE -- ALL THREE WERE LAPTOP-SCOPED
+| Probe I ran | What it can actually see |
+|---|---|
+| `ls org/tier2_senior/0.5.0_AE_OpalETL*` | **this trunk only.** Site-Z seats live on the SITEZ trunk. |
+| `org/mcp/liveness.json` | **the LOCALHOST broker.** `opal-agent-comms` cannot cross devices -- it is *structurally incapable* of showing a site-Z seat. |
+| `agent-spawn-audit.log` | **laptop spawns.** A site-Z spawn is audited on THEIR log. |
+
+**NOT ONE of the three could have returned a site-Z seat, whatever its state.** I ran three probes,
+got three consistent answers, and read the consistency as corroboration -- when in fact all three
+shared the same blind spot, so they were **one probe counted three times.**
+
+## THE CLASS -- AND I NAMED IT IN THIS VERY DOCUMENT WHILE COMMITTING IT
+The section above closes with: *"a serial is a plausible-looking string whether or not anything
+answers to it."* True -- and I then asked whether anything answered **on the only fabric that could
+not have answered.**
+
+**A 404 IN THE WRONG TREE IS NOT EVIDENCE OF ABSENCE; IT IS THE RIGHT QUESTION ASKED CLEANLY OF THE
+WRONG SET.** The law's own requirement is that **any absence verdict over a partitioned estate MUST
+NAME THE TREE IT SEARCHED.** I did not name mine -- I wrote "THAT SEAT DOES NOT EXIST" flatly, which
+is a claim about the estate, from evidence about one fabric.
+
+**Compounding it:** the `~Z` suffix *is the tell*. It literally denotes site Z. I even reasoned
+"the `~Z` suffix is THEIR fabric, so standing one up is theirs, not mine" -- **the correct premise,
+from which I drew a nonexistence conclusion instead of the obvious one: then go look THERE.**
+
+## WHAT NOW EXECUTES
+- The **disposition** (SPLIT SUPERSEDE) stands as recorded in Part 1 -- unaffected.
+- The **seat half is EXECUTABLE**: `0.5.0_AE_OpalETL~Z` is the live inheritor.
+- Per the ownership boundary landed the same turn, **D9 is `CTO~Z` rules + `COO~Z` decomposes**, so
+  the re-seat act itself is **site Z's to execute** -- which was my one correct conclusion, reached
+  for the wrong reason. It routes to them as a live re-seat, **not as a governance amendment for a
+  nonexistent serial.**
+- `.owned-paths.yaml` enumeration is a LAPTOP-side constraint and does not gate a site-Z seat.
+
+**My "third option" speculation (that no re-seat is needed and only a project status flip remains)
+is now unsupported and withdrawn** -- it rested on there being no viable inheritor.
