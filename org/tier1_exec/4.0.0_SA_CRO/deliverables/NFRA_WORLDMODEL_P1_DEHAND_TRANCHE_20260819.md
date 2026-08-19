@@ -120,9 +120,18 @@ ratified to clear a gate would be the fake-green worst case.** The five currentl
 listed so the bar has a denominator: `Substrate_Side` [deprecated; **its reporting rule survives,
 binding**] · `Territory` [deprecated; **map-vs-territory sense survives** — T15] ·
 `Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; owner CVO (claimed
-2026-08-19), resolution = Andrew naming act, banked] · `Unreconciled_Aua` [contested; owner CVO
-(claimed), re-read against deployed bytes]. An UNDECLARED conflict found by the census remains a
-bar-blocker until declared-with-owner or resolved. CVO's verification axis runs the hunt; his
+2026-08-19); disposition: Andrew naming act + CVO~Z fence + CTO arch, banked] · `Unreconciled_Aua`
+[contested; owner CVO; **disposition RE-SCOPED 2026-08-19 ~20:09Z on CVO's own deployed-bytes
+re-read: the defect is a VOCABULARY COLLISION ACROSS TWO PRODUCERS on the live served plane
+(INF_D_04's ~0.00 subtraction vs INF_D_02's unbilled-AUA accumulator, third-bucket names inverted,
+both keys serving) — NOT the "rename a field" the prior path assumed; re-scope confirmation routed
+to CTO (their 151509Z origin); NEVER#3 binds, rides P4/P5**]. An UNDECLARED conflict found by the
+census remains a bar-blocker until declared-with-owner or resolved. **AND THE SCOPE-CHECK PROPERTY
+(CVO, from this cell's own re-read): a declared cell is exit-compatible only if its disposition
+path is SCOPED TO THE ACTUAL DEFECT — status + owner + a path that solves a smaller problem than
+the one present is the same failure as no path, wearing completion. The listing therefore carries
+each cell's disposition in one line, so a reader checks the scope rather than trusts the
+presence.** CVO's verification axis runs the hunt; his
 gate, his word.
 
 ### Rows added ~20:0xZ (conflicting-half pass 1)
