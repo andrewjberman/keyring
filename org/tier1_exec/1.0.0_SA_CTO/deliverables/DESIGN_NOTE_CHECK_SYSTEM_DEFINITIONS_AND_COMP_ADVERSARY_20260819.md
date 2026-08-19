@@ -92,7 +92,16 @@ agent at the existing moment. No cron, no monitor, no alarm.
    instance, not a planted one.
 2. The `describes` optional-list delta (fact (b): bank's contract_record carries it, registry's
    declared list omits it) -- member-grain fixture.
-3. One PLANTED drift (edit a declared count) -- the cannot-fail control: the checker must fire
+3. **The prose-marked tombstone (CRO's O1 run @a5fff4657e surfaced it): the Function axis's
+   `build` tombstone is a STRING beginning "COLLAPSED 2026-08-19..." with no structural marker --
+   naive key-count derives 5, tombstone-filtered derives the ratified 4. Fixture: the checker
+   verdicts a prose-marked tombstone DISAGREE-WITH-NAMED-REMEDY (field-mark it) -- otherwise
+   every derivation over that block re-implements one leading-keyword regex, N homes for one
+   rule.** Build-time adjudications carried from the same run: Chain's source-degeneracy
+   (declaration and derivation share the frozen resolver) leans UNRESOLVABLE over vacuous
+   AGREE -- adjudicate at build; Domain FAILS-b's owner (a DS-authored deliverable-homed
+   instrument) rides the tranche, not the seeding.
+4. One PLANTED drift (edit a declared count) -- the cannot-fail control: the checker must fire
    on it, and the acceptance records the firing.
 
 ## 3. T12 -- `comp-adversary` (the validator-context composer)
