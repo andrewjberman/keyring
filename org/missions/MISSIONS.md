@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   3fdc7176cc
-    ANCHOR TIME     2026-07-29T04:19:41-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   Andrew Berman
+    ANCHOR COMMIT   31358819a4
+    ANCHOR TIME     2026-08-19T14:55:57-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   0.0.0_AB_MSTR
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -24,18 +24,17 @@
 
 | # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `INFRASTRUCTURE.GRAPH` | **361** | 1097 | 36 | PARTIAL | PARTIAL | PARTIAL | — |
-| 2 | `INFRASTRUCTURE.DEBT` | **165** | 1688 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **163** | 414 | 17 | YES | YES | NO | — |
-| 4 | `INFRASTRUCTURE.TOOLS` | **125** | 739 | 38 | YES | YES | UNASSESSED | 0.8.0_AE_CloudComp -- IMPLEMENTATION of the  |
-| 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
-| 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
+| 1 | `INFRASTRUCTURE.GRAPH` | **106** | 1327 | 43 | PARTIAL | PARTIAL | PARTIAL | — |
+| 2 | `PORTAL.MODEL_PORTFOLIOS` | **101** | 562 | 28 | YES | YES | YES | — |
+| 3 | `INFRASTRUCTURE.DEBT` | **80** | 1847 | 53 | YES | PARTIAL | PARTIAL | — |
+| 4 | `PORTAL.ADVISOR_INTELLIGENCE` | **55** | 1797 | 42 | PARTIAL | UNASSESSED | UNASSESSED | — |
+| 5 | `INFRASTRUCTURE.TOOLS` | **30** | 823 | 43 | YES | YES | UNASSESSED | 0.8.0_AE_CloudComp -- IMPLEMENTATION of the  |
+| 6 | `PORTAL.DEBT` | **0** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
-| 8 | `EXTERNAL.ALONGSIDE` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | — |
-| 9 | `EXTERNAL.COTTONWOOD` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
-| 10 | `EXTERNAL.INFLECTION` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
+| 8 | `EXTERNAL.COTTONWOOD` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
+| 9 | `EXTERNAL.INFLECTION` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
 
-**PROSE STALE (a commit landed after the summary was written):** `PORTAL.MODEL_PORTFOLIOS`, `PORTAL.DEBT`, `PORTAL.ADVISOR_INTELLIGENCE`, `INFRASTRUCTURE.TOOLS`, `INFRASTRUCTURE.DEBT`, `INFRASTRUCTURE.GRAPH`, `EXTERNAL.ALONGSIDE`, `EXTERNAL.49FINANCIAL`, `EXTERNAL.INFLECTION`, `EXTERNAL.COTTONWOOD`
+**PROSE STALE (a commit landed after the summary was written):** `PORTAL.MODEL_PORTFOLIOS`, `PORTAL.DEBT`, `PORTAL.ADVISOR_INTELLIGENCE`, `INFRASTRUCTURE.TOOLS`, `INFRASTRUCTURE.DEBT`, `INFRASTRUCTURE.GRAPH`, `EXTERNAL.49FINANCIAL`, `EXTERNAL.INFLECTION`, `EXTERNAL.COTTONWOOD`
 
 ---
 
@@ -45,12 +44,13 @@
 
 > Lock in a canonical taxonomy and canonical resource design patterns, and unify the system on that basis in earnest; and track the enumeration of that coverage as the universe grows, so that related grants and permissions in IAM do not silently break.
 
-    activity   361 commit(s) in the last 14 days · 1097 total · 36 author(s)
-    newest     2026-07-29T01:16:26-04:00
+    activity   106 commit(s) in the last 14 days · 1327 total · 43 author(s)
+    newest     2026-08-19T14:51:22-04:00
     stance     DECIDED PARTIAL · BUILT PARTIAL · SERVING PARTIAL
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
 
 
 
@@ -213,192 +213,19 @@ the CLASS.
 
 ---
 
-## INFRASTRUCTURE.DEBT — AWS resource and system debt
-
-**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
-
-> Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
-
-    activity   165 commit(s) in the last 14 days · 1688 total · 42 author(s)
-    newest     2026-07-29T04:11:12-04:00
-    stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
-    version    v1.1
-
-**FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Second on activity, 157 recent across 42 authors, and the enacted-not-recorded character held: this
-window was applied infrastructure, not documentation.
-
-MOVED SINCE THE LAST SUMMARY. A SEPARATE EGRESS PRINCIPAL was built and APPLIED, scoped to a
-NON-SERVED staging location and verified on live primitives rather than on a config read. And a PHANTOM
-SCHEDULE was deleted from EC2_MANIFEST.json -- notable because that file is the Rule-8 source of truth,
-so a phantom entry there is not clutter, it is the source of truth asserting a thing that does not
-exist.
-
-DECIDED stays YES. The stated cost remains agent-facing rather than financial: multiple pipelines,
-paths and buckets that clobber each other are confusing to agents and very problematic.
-
-SERVING stays PARTIAL for the structural reason, unchanged: there is NO standing mechanism tying a
-migration to the retirement of what it replaced. Nothing prevents a replacement shipping while its
-predecessor keeps running, and making retirement a CONDITION of migration rather than a follow-up is
-still the frontier.
-
-The holes are unchanged and still unowned: OPAL_SCHEDULE and OPAL_ALERTS briefed and MEASURED against
-live AWS four days ago with project creation handed to CTO, and neither code exists. The alarm-map
-census is still absent while its trigger twin exists complete with a CI drift gate.
-
-**HOLES — live work no project code covers (4):**
-- OPAL_SCHEDULE and OPAL_ALERTS -- BRIEFED, MEASURED, NEVER REGISTERED. CVO's preempting brief (org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_SCHEDULE_AND_ALERTS_PREEMPTING_BRIEF_20260724.md @6543fd12ef) enumerated 151 live triggers and 51 live alarms against live AWS on 07-24 and handed project creation to CTO. Four days on, neither code exists. POSITIVE CONTROLS: the project glob returns 16 OPAL_* files; the doc glob finds STNDRD/TAXONOMY/CONSOLIDATION but 0 for alert|monitor|notif|alarm across 378 architecture docs.
-- alarm-map.json -- deliverable #1 of that brief. The TRIGGER twin exists (trigger-map.json + trigger-census.py + a CI drift workflow); the ALARM one does not.
-- The GitHub Actions EC2 runner decommission has no project carrier -- it is carried by a ledger (LD-0339), a handoff deliverable and live TF, but no project JSON.
-- NFRA_DEBTSCAN's own phase declares two follow-ons NOT closed under a 'complete' status, incl. the nightly trend/burn-down, with its own warning: 'a debt-scanner ROTS if never re-run.'
-
-*grounded: 2026-07-28 -- subagent registry sweep + live-AWS figures from the CVO brief.*
-
----
-
 ## PORTAL.MODEL_PORTFOLIOS — Model Portfolios
 
 **GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
 
 > Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
 
-    activity   163 commit(s) in the last 14 days · 414 total · 17 author(s)
-    newest     2026-07-29T03:55:31-04:00
-    stance     DECIDED YES · BUILT YES · SERVING NO
+    activity   101 commit(s) in the last 14 days · 562 total · 28 author(s)
+    newest     2026-08-18T21:25:00-04:00
+    stance     DECIDED YES · BUILT YES · SERVING YES
     version    v1.2
 
 **FRONTIER —** One panel family (per-model quarterly cells) on LABELED LEGACY until the aum-metrics x3 producers deploy (built, QA'd, validate-config green @001a3374b4, deploy word held post-16:15Z). The publisher is no longer the frontier -- it is defined, scheduled (16:15Z) and fed by a scheduled accrual bridge (cron(45 15)Z, tag mdpf-pipeline-v1.9.0). Updated 2026-07-29T0812Z.
+
 
 
 
@@ -576,20 +403,366 @@ deploy word held post-16:15Z).
 
 ---
 
+## INFRASTRUCTURE.DEBT — AWS resource and system debt
+
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
+
+    activity   80 commit(s) in the last 14 days · 1847 total · 53 author(s)
+    newest     2026-08-19T13:23:26-04:00
+    stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
+    version    v1.1
+
+**FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Second on activity, 157 recent across 42 authors, and the enacted-not-recorded character held: this
+window was applied infrastructure, not documentation.
+
+MOVED SINCE THE LAST SUMMARY. A SEPARATE EGRESS PRINCIPAL was built and APPLIED, scoped to a
+NON-SERVED staging location and verified on live primitives rather than on a config read. And a PHANTOM
+SCHEDULE was deleted from EC2_MANIFEST.json -- notable because that file is the Rule-8 source of truth,
+so a phantom entry there is not clutter, it is the source of truth asserting a thing that does not
+exist.
+
+DECIDED stays YES. The stated cost remains agent-facing rather than financial: multiple pipelines,
+paths and buckets that clobber each other are confusing to agents and very problematic.
+
+SERVING stays PARTIAL for the structural reason, unchanged: there is NO standing mechanism tying a
+migration to the retirement of what it replaced. Nothing prevents a replacement shipping while its
+predecessor keeps running, and making retirement a CONDITION of migration rather than a follow-up is
+still the frontier.
+
+The holes are unchanged and still unowned: OPAL_SCHEDULE and OPAL_ALERTS briefed and MEASURED against
+live AWS four days ago with project creation handed to CTO, and neither code exists. The alarm-map
+census is still absent while its trigger twin exists complete with a CI drift gate.
+
+**HOLES — live work no project code covers (4):**
+- OPAL_SCHEDULE and OPAL_ALERTS -- BRIEFED, MEASURED, NEVER REGISTERED. CVO's preempting brief (org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_SCHEDULE_AND_ALERTS_PREEMPTING_BRIEF_20260724.md @6543fd12ef) enumerated 151 live triggers and 51 live alarms against live AWS on 07-24 and handed project creation to CTO. Four days on, neither code exists. POSITIVE CONTROLS: the project glob returns 16 OPAL_* files; the doc glob finds STNDRD/TAXONOMY/CONSOLIDATION but 0 for alert|monitor|notif|alarm across 378 architecture docs.
+- alarm-map.json -- deliverable #1 of that brief. The TRIGGER twin exists (trigger-map.json + trigger-census.py + a CI drift workflow); the ALARM one does not.
+- The GitHub Actions EC2 runner decommission has no project carrier -- it is carried by a ledger (LD-0339), a handoff deliverable and live TF, but no project JSON.
+- NFRA_DEBTSCAN's own phase declares two follow-ons NOT closed under a 'complete' status, incl. the nightly trend/burn-down, with its own warning: 'a debt-scanner ROTS if never re-run.'
+
+*grounded: 2026-07-28 -- subagent registry sweep + live-AWS figures from the CVO brief.*
+
+---
+
+## PORTAL.ADVISOR_INTELLIGENCE — Advisor Intelligence
+
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Complete the migration whereby the Gold Runners source from the opal-data-assets silver buckets relevant to their channel; then canonize the logic across the various data shapes -- above all performance reporting and attribution on a 365-day calendar Total Weighted Return basis, gross and net, reliably every single day -- so that Opal supplants Black Diamond and Orion rather than depending on them.
+
+    activity   55 commit(s) in the last 14 days · 1797 total · 42 author(s)
+    newest     2026-08-18T14:28:36-04:00
+    stance     DECIDED PARTIAL · BUILT UNASSESSED · SERVING UNASSESSED
+    version    v1.1
+
+**FRONTIER —** Enumerate, per gold runner, which silver source it actually reads today. The artifact does not exist. SHARED with PORTAL.MODEL_PORTFOLIOS.O3 -- CTO confirmed it is ONE piece of work, not two, and COO is building it. ADVI MUST NOT COMMISSION A SECOND ONE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
+against 34 recent, BUILT and SERVING both UNASSESSED.
+
+Nothing landed against this sub-group in the window since the last summary. That is itself the
+finding -- it sits fifth on activity while carrying the most accumulated work and the least
+assessment, and the two Infrastructure sub-groups above it absorbed the session.
+
+DECIDED stays PARTIAL. The basis is set -- 365-day calendar TWR, gross and net, daily, Account365
+pinned. The METHOD PER SOURCE is not, and the per-source data-availability analysis has still not been
+done. That analysis remains the frontier and everything downstream is unanswerable until it exists.
+
+The hole is unchanged and remains the largest in the register: THE BD-REPLACEMENT TOTAL-RETURN BUILD
+HAS NO PROJECT CODE. CRO's research is delivered, the build is held at registration, and a TWR search
+across all 281 project JSONs returns five hits of which every one is terminal -- zero active projects.
+
+The shared frontier with MODEL_PORTFOLIOS.O3 still stands: ONE per-channel source-and-schedule
+artifact, not two. COO is building it. This sub-group must not commission a second.
+
+**HOLES — live work no project code covers (2):**
+- THE BD-REPLACEMENT TOTAL-RETURN BUILD (fact_account_return) -- NO PROJECT JSON. CRO research is DELIVERED (RCN-0001, org/tier1_exec/4.0.0_SA_CRO/briefs/MASTER_BLACK_DIAMOND_ANALYSIS.md); the build is HELD at CTO registration. RECON_REGISTER.md:105-106 states it verbatim: 'no project JSON registered under any BDX/total-return code'. POSITIVE CONTROL: a TWR/time-weighted keyword search across ALL 281 project JSONs returns 5 hits, ALL TERMINAL -- ZERO ACTIVE PROJECTS mention TWR. This is scope clause (c) with no registry carrier.
+- The per-runner silver-source enumeration (the frontier above) has no owner code. Nearest is OPAL_GLDRNS, whose phase names Wave-3 TO cuts and closed backfill -- it does not claim this.
+
+*grounded: 2026-07-28 -- subagent registry sweep, 281 JSONs parsed, 0 parse failures.*
+
+---
+
 ## INFRASTRUCTURE.TOOLS — Enumerated coverage universe per tool
 
 **GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
 
 > Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
 
-    activity   125 commit(s) in the last 14 days · 739 total · 38 author(s)
-    newest     2026-07-29T01:16:26-04:00
+    activity   30 commit(s) in the last 14 days · 823 total · 43 author(s)
+    newest     2026-08-12T10:48:36-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
 
 **FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
 
 **BLOCKED ON —** 0.8.0_AE_CloudComp -- IMPLEMENTATION of the comp-which wiring. BOTH calls this line used to name were RULED by CTO at 20260728T212335Z, ~4h before the register was first compiled: (a) wiring -> owner is 0.8.0_AE_CloudComp, CTO routing it; (b) placement -> NEITHER fold NOR peer. comp-coverage-map.yaml is SOLE POPULATION AUTHORITY; TOOL_MASTER.yaml may remain a separate ATTRIBUTE STORE only if it DERIVES population from the map and FAILS LOUD on divergence in BOTH directions, with the parity check run at COMMIT time via comp-manifest-check's registration invariant -- CTO: 'a hand-run generator is not a mechanism.' >> WHY THIS LINE IS WORTH READING TWICE: the register said BLOCKED-ON-CTO, CTO's own record said ROUTED, and the owner's inbox was EMPTY. Every record was locally consistent and the work was owned by NOBODY. That is SENT-IS-NOT-READ one step earlier -- not even SENT -- and a routing that lives only in the router's record is invisible from every side except the recipient's empty inbox. A `blocked_on` naming an AGENT is a CLAIM ABOUT THAT AGENT'S STATE, and nothing reconciles it against whether they were ever told. Deliberately NOT building a checker (Andrew's standing alert moratorium, and CVO agrees it is not worth machinery): the control is a HABIT -- when blocked_on names someone, read THEIR inbox. Caught by 3.0.0_SA_CVO 20260729T015007Z; corrected 0200Z.
+
 
 
 
@@ -765,188 +938,20 @@ Until that lands it is a fast artifact nobody reads.
 
 ---
 
-## PORTAL.ADVISOR_INTELLIGENCE — Advisor Intelligence
-
-**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
-
-> Complete the migration whereby the Gold Runners source from the opal-data-assets silver buckets relevant to their channel; then canonize the logic across the various data shapes -- above all performance reporting and attribution on a 365-day calendar Total Weighted Return basis, gross and net, reliably every single day -- so that Opal supplants Black Diamond and Orion rather than depending on them.
-
-    activity   34 commit(s) in the last 14 days · 1726 total · 36 author(s)
-    newest     2026-07-24T13:05:07-04:00
-    stance     DECIDED PARTIAL · BUILT UNASSESSED · SERVING UNASSESSED
-    version    v1.1
-
-**FRONTIER —** Enumerate, per gold runner, which silver source it actually reads today. The artifact does not exist. SHARED with PORTAL.MODEL_PORTFOLIOS.O3 -- CTO confirmed it is ONE piece of work, not two, and COO is building it. ADVI MUST NOT COMMISSION A SECOND ONE.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
-against 34 recent, BUILT and SERVING both UNASSESSED.
-
-Nothing landed against this sub-group in the window since the last summary. That is itself the
-finding -- it sits fifth on activity while carrying the most accumulated work and the least
-assessment, and the two Infrastructure sub-groups above it absorbed the session.
-
-DECIDED stays PARTIAL. The basis is set -- 365-day calendar TWR, gross and net, daily, Account365
-pinned. The METHOD PER SOURCE is not, and the per-source data-availability analysis has still not been
-done. That analysis remains the frontier and everything downstream is unanswerable until it exists.
-
-The hole is unchanged and remains the largest in the register: THE BD-REPLACEMENT TOTAL-RETURN BUILD
-HAS NO PROJECT CODE. CRO's research is delivered, the build is held at registration, and a TWR search
-across all 281 project JSONs returns five hits of which every one is terminal -- zero active projects.
-
-The shared frontier with MODEL_PORTFOLIOS.O3 still stands: ONE per-channel source-and-schedule
-artifact, not two. COO is building it. This sub-group must not commission a second.
-
-**HOLES — live work no project code covers (2):**
-- THE BD-REPLACEMENT TOTAL-RETURN BUILD (fact_account_return) -- NO PROJECT JSON. CRO research is DELIVERED (RCN-0001, org/tier1_exec/4.0.0_SA_CRO/briefs/MASTER_BLACK_DIAMOND_ANALYSIS.md); the build is HELD at CTO registration. RECON_REGISTER.md:105-106 states it verbatim: 'no project JSON registered under any BDX/total-return code'. POSITIVE CONTROL: a TWR/time-weighted keyword search across ALL 281 project JSONs returns 5 hits, ALL TERMINAL -- ZERO ACTIVE PROJECTS mention TWR. This is scope clause (c) with no registry carrier.
-- The per-runner silver-source enumeration (the frontier above) has no owner code. Nearest is OPAL_GLDRNS, whose phase names Wave-3 TO cuts and closed backfill -- it does not claim this.
-
-*grounded: 2026-07-28 -- subagent registry sweep, 281 JSONs parsed, 0 parse failures.*
-
----
-
 ## PORTAL.DEBT — Portal-level debt
 
 **GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
 
 > Retire portal-level debt: establish which non-canonical API routes are actually displayed rather than merely generated, then deprecate what is dead and migrate only what is live, leaving /api/general/ and /api/scoped/ as the canonical namespaces. LOW priority by standing instruction.
 
-    activity   2 commit(s) in the last 14 days · 2 total · 2 author(s)
+    activity   0 commit(s) in the last 14 days · 2 total · 2 author(s)
     newest     2026-07-28T14:43:39-04:00
     stance     DECIDED PARTIAL · BUILT NO · SERVING NO
     version    v1.1
     priority   LOW -- Andrew-direct 2026-07-28. Recorded so the deprioritization is a DECISION, not an accident of attention. Do not open work here without Andrew.
 
 **FRONTIER —** Answer Andrew's own hypothesis -- GENERATED != DISPLAYED. Early evidence supports it, and if it holds most of this debt can be deleted rather than migrated.
+
 
 
 
@@ -1236,6 +1241,7 @@ investigation precedes migration and why staying at zero activity is the right p
 
 
 
+
 PROSPECTIVE. Zero commits, and zero is the CORRECT reading rather than a gap.
 
 Nothing landed in the window and nothing was expected to. The path globs are deliberately EMPTY: a
@@ -1256,162 +1262,6 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 ---
 
-## EXTERNAL.ALONGSIDE — Alongside -- scoped adjacent work that is explicitly NOT portal data analytics
-
-**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
-
-> Scoped adjacent work that may eventually tie into the portal but is not portal work today -- for example building out Salesforce integrations for 49 Financial. EXPLICITLY NOT portal data analytics: work graduates OUT of this sub-group the moment it becomes that.
-
-    activity   0 commit(s) in the last 14 days · 0 total · 0 author(s)
-    newest     — no activity —
-    stance     DECIDED UNASSESSED · BUILT UNASSESSED · SERVING UNASSESSED
-    version    v1.0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
-
-Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
-example is building out Salesforce integrations for 49 Financial -- and EXPLICITLY NOT portal data
-analytics.
-
-The boundary is the entire point of the sub-group. Work belongs here when it serves an advisor
-ALONGSIDE the portal rather than THROUGH it, and the moment something becomes portal data analytics it
-LEAVES and moves to PORTAL. That migration is the signal that it graduated, not an inconsistency to be
-tidied away.
-
-Nothing registered, nothing blocked, no paths claimed.
-
----
-
 ## EXTERNAL.COTTONWOOD — Cottonwood Capital Advisors
 
 **GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
@@ -1424,6 +1274,7 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
 
 
 
@@ -1585,6 +1436,7 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
 
 
 
