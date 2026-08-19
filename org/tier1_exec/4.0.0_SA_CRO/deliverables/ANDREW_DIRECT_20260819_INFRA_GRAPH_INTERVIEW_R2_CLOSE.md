@@ -24,6 +24,19 @@
 - **Q8 — T3 rehearsal target: Inflection FIRST, 49F second** — two rehearsals at rising blast
   radius beat one; Inflection is the cleaner medallion while the model is young.
 
+## R3 APPENDED ~17:5xZ — THE MERGE RULING (after the code-collision disclosure). VERBATIM:
+
+> **"Merge is good go ahead"**
+
+Given against the three options presented after the @ef191fa collision with the 2026-07-31
+sovereign-parked NFRA_WORLDMODEL (restore @f0b48b39b6). Binding content: option (a) MERGE —
+today's ruled program becomes NFRA_WORLDMODEL v1.1, the master frame; the 07-31 limbs fold as
+workstreams **with parks preserved per-limb** (Limb A capture walk and Limb C "The Story" stay
+PARKED until he names them — the merge is NOT authorization; his 07-31 word stands); Limb B
+(resolver defrost) folds into the ACTIVE P0/P1 track because it IS the resolution work today's
+rulings activated. CTO's capture-walk assets and stewardship carry over. One program, one name,
+no twin canon. Executed same turn: merged PRD v1.1 + JSON + REGISTRY row + broadcast.
+
 ## The settled program frame (all three records together)
 Endpoint = ONBOARD-ZERO, the crown-jewel benchmark (zero additional SPECIFICATION; sovereign GO +
 gates retained). Ladder T0–T5 (terms-compile → aws square-inch → dark substrates → reconstruction
