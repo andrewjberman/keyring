@@ -66,5 +66,18 @@
   wiring's clean E2E; Root A applies TONIGHT or EARLY TOMORROW pre-12:45Z on the corrected number
   (CTO gate re-opens on the number + tables-not-labels acceptance). THU 12:45Z first green stands;
   Friday re-dates only by COO word in writing if QA slips past tonight.
-- **Status: OPEN -- Root B complete+verified; Root A held on the corrected pin. This ledger closes
-  at the Root A apply.**
+- **17:22-17:25Z -- a07 ASSET-TRUTH-UNION LEGS 2+3 (ANDREW-RULED, verbatim "Yes, approved" on
+  CALL 1 of the open-calls aggregate; CTO terminal relay 172208Z; CTO rec grant-both-scoped
+  adopted):** committed @ca430c01a6, applied via safe-apply (0 add / 1 change / 0 destroy),
+  0-diff re-plan clean. Sids self-documenting: leg 2 (opal-data-inf/silver/api_dims/
+  positions_mv/*) marked **TRANSITIONAL-UNTIL-17B-MIGRATION** -- the NEVER#2 letter granted by
+  sovereign word for the firm-neutral dim's union population, dies at the neutral-plane
+  migration; leg 3 (opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/*) =
+  shared-bucket read. Pre-grant belt check: opal-data-inf bucket policy carries NO Deny
+  (2 CloudFront allows only) -- nothing widened, per the ruling's own stop-condition.
+  Battery: 3 allows (leg2 Get + leg2 List-w/-context + leg3 Get, one arn each) + 2 SEPARATE
+  discriminating negatives (inf silver/assets_v2 sibling implicitDeny; cot fact_transactions
+  sibling implicitDeny). Citation chain in-Sid: SPEC @93d12a82f2 + CTO 160826Z amendment
+  @64c11ae4c2 + Andrew 08-19.
+- **Status: OPEN -- Root B + a07 legs complete+verified; Root A held on the full corrected
+  measured number (DS~A re-fire now fully unblocked). This ledger closes at the Root A apply.**
