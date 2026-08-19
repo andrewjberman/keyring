@@ -200,3 +200,59 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
   allocation stack (vocab fix, ms_heat, 228 entries, feeder-stamp origin fix, yang-cma,
   member-sha tool, J1 proof-board).
 - Standing: 13 TOs in flight at 6 seats, all dated; P1 CLOSED; P2 opens on today's build.
+
+---
+
+## ADDENDUM 3 — 01:20Z–13:31Z 08-19: morning chain, GOLDHOME close, the FAM vendor gate
+
+**archetype:** COORDINATE
+*(Written on Andrew's ~13:16Z fleet /log order.)*
+
+## Compiler Tools (addendum 3)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| proof-of-spec-check | GOLDHOME x3 groups (AE 6/6, DSA, CVO) rc bare | PASS | first DSA/CVO runs INVALID on MY frame (omitted per-group RP-VAL); checker discriminated its operator; re-run clean |
+| proof-of-spec-check | (issuer re-runs continue standard) | PASS | terminal flips only on my own rc=0 |
+| comp tools (via lanes) | comp-find (CVO 4-citation denominator), lanes' own batteries | PASS | validated at reports, not re-run |
+
+## Delta
+
+1. **R1 CLOSED end-to-end:** 04:00Z run extended the cube 08-14→08-17 exactly as the source-confirmed
+   mechanism predicted (exercised both ways); CTO ruled (a) ACCEPT-WITH-RECORD @9988b2dd66 adopting my
+   rec + a serve-plane bracketing upgrade + the RIDER (pins/oracles frame vs the 04:00Z T-1 serve,
+   never the 23:01Z preview) — folded into both TOs at criterion level; CVO carried it into the
+   pin-file instrument (emission field + data_as_of discriminator: right-emission-by-construction).
+2. **4b twin-collapse determination CLOSED:** DS~B's source-grounded un-collapse proposal (the domain
+   split is d12's own DESIGNED rule, dormant till the backfill made history long enough) — my CONCUR
+   half + 4 conditions; CTO CONCUR + naming word; DS~B executed @6211c4f0f4 (13→15 twins would-publish
+   after absorbing the overnight gold-home move, incl. a caught wrong-bucket clean-zero).
+3. **THE CC DEFECT OWNED:** CTO flagged a cc that never arrived — confirmed at my send log as
+   WRITTEN-is-not-SENT (an in-body "cc" on the single-recipient broker copies nobody). Practice
+   corrected (real sends or "cc by reference — not sent"), memory-filed
+   (feedback_broker_cc_is_a_body_line_that_copies_nobody), MEMORY.md compacted back under its load cap.
+4. **GOLDHOME-REPOINT-49F COMPLETE + terminal-flipped:** SPINE-2 on Andrew's verbatim ~12:46Z word
+   (batched form blessed), CTO-validated @f82a95db4e; all 3 group instances re-run VALID rc=0 at my
+   desk; sovereign supersession → executed-verified in <20h, zero served regressions. MSTR pushed
+   @9f3a30d9e1; second-LD offer correctly declined (two-homes on the decision ledger).
+5. **THE FAM VENDOR GATE (the day's finding chain, ~75 min, zero fixes on hypotheses):** DS~A
+   differential frontier (fact_fam 6 TD behind 4 siblings) → DS base bronze discriminator (feed-side;
+   converter clean) → AE fork verdict (VENDOR-side: lane structurally manifest-less + ~16 healthy
+   sweeps; egress rule honored — no agent vendor call; enumerate-mode offered on Andrew's word) →
+   **RE-DATE NOTICE @f79760179a**: P2→P4 chain anchored to R = FAM-resumption day (catch-up/QA=R,
+   floor+first-green=R+1, pins=R+2, flips=R+3); fam-independent work explicitly not moved; 8 real
+   sends, 7 ACKs within minutes; CVO annotated R-anchoring into their TO for cold readers.
+6. **Andrew card items:** FAM outage + schedule consequence + the two accelerators (enumerate word,
+   Schwab contact) via MSTR; /open-calls rendered 3 cards (enumerate yes/no BLOCKING; stale-TO sweep +
+   activation-TO disposition CARRIED).
+7. Smaller closes: TIGHTENING J1+J2 validated 3/3 (J2 superseded in the 0.8.0 TO with pointer; J3
+   carries the INF-bind constraint); PB-3 discriminator (no live trigger — INERT stood; re-point staged
+   at CTO gate); DT promote v2.1.163 with the T-A rider declared (my stale-premise own); parity
+   @f970ea785d absorbed (vocab-fix + 228-entries banked at my allocation).
+
+## Gate-forward (13:31Z 08-19)
+- **Andrew fleet order ~13:16Z executing:** this log = my (1); CTO's brief lands next → joint
+  decomposition; wind-down to COO/CTO/CRO~A; **respawn roster = my discretion** (R-anchor implies
+  most lanes idle until FAM resumes — economy is the point).
+- Standing: T-B 13:30Z proof (DS base, in flight at this minute); AE B-grant apply at CTO gate;
+  R-clock on the standing pulls; my banked allocation stack unchanged.
