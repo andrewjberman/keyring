@@ -74,6 +74,23 @@ term carrying `resolves_via`, EXECUTE the rule at HEAD, compare derived vs decla
   unresolvable rule is itself drift (the T13 class: a definition anchored to something gone).
 - `NO-RULE` -- term has no resolves_via yet. Printed in the denominator, never silently skipped
   (coverage is a number in the report, not an assumption).
+**THE MODIFIER AXIS (added per CRO's CVO-pass-11 input @be9ccf0b5e -- the governed-disagreement
+case): the verdict enum stays CLOSED AT FOUR; a separate per-row MODIFIER carries handling --
+`governed(<precedence-pin>)` | `named-remedy(<remedy>)` | `none`. Mechanism = the authority-side
+option (c): the checker reads an IN-AUTHORITY PRECEDENCE DECLARATION (itself block-addressable
+content) BEFORE verdicting; where one covers the divergence, the row emits
+DISAGREE+governed(<pin>) -- NON-BLOCKING BY LAW, not a finding, with both values and the
+precedence pin still printed (the divergence is visible, never erased). This is Rule-24's own
+split applied to the report: the VERDICT axis states the comparison outcome, the MODIFIER axis
+states the handling policy -- collapsing them into a fifth value would put two intents on one
+axis. Measured motivating instance: WS-C7's frozen-marker header pre-concedes to live carriers;
+six boundary-vocabulary terms cite it; a modifier-less checker would manufacture six findings
+per run, forever, against a document that already conceded. Fixture 3's DISAGREE-with-named-
+remedy is the same axis, now formalized.**
+**PRE-PASS (same input, adopted): the vintage-asymmetry screen -- where the definition line
+postdates the authority's last change, drift is TEMPORALLY IMPOSSIBLE; skip rule execution,
+print `drift-impossible: N (basis: vintage comparison)` in the denominators. Cheap,
+deterministic, and it keeps the executed-rule count honest.**
 Report denominators: `attempted / writable / comparable / agreeing` (CRO's three-number frame
 plus the verdict split). **"LOCKED DOWN," measurably: every coverage-universe term is AGREE or
 carries a DECLARED exception with its ruling pointer -- that line in the report is what the
