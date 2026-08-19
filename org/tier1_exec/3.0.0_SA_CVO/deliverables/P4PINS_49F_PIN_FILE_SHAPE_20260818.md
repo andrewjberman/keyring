@@ -22,7 +22,12 @@ per served key; a projection of `predeclared_divergences_49f.json` -- NO new ins
     "first_unattended_canonical_write": {"read": "<canonical date={T-1} partition>", "evidence": "<head-object + the SCHEDULED run's own log id -- an ad-hoc write does NOT discharge this limb (NEVER#4: ad-hoc is never production evidence)>"}
   },
   "enumeration": {
-    "served":    {"vintage_lm": "...", "content_date": "...", "sha256": "...", "framing": "content-date"},
+    "served":    {"vintage_lm": "...", "content_date": "...", "sha256": "...", "framing": "content-date",
+                  "emission": "04:00Z-T1-serve"},   // R1 RIDER @9988b2dd66: ALWAYS the 04:00Z T-1 serve
+                                                    // (true landing ~05:27Z); the 23:01Z run is the
+                                                    // T-2-evening preview and is NEVER a pin reference.
+                                                    // Discriminator = the payload's own data_as_of vs the
+                                                    // trading calendar, not the mtime clock.
     "canonical": {"vintage_partition": "date=...", "content_date": "...", "framing": "content-date"},
     "same_content_date": true                  // FALSE => the file is INVALID, enumeration refused
   },
