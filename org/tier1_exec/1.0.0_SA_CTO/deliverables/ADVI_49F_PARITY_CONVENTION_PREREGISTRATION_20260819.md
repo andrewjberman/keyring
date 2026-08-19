@@ -39,3 +39,26 @@ remain CTO-gated (SS7 P3).
    if in the 49F population -- a Mitch-Johnson-case account (C4). Selection at CRO methodology.
 5. This file is referenced by D2's PRD; amendments after the first probe read are ADDENDA (dated,
    below the line), never edits to the pre-registered rows.
+
+---
+
+## ADDENDUM A1 -- 2026-08-19 ~19:00Z (STILL PRE-PROBE; the probe has not fired)
+
+**C5 -- VALUATION ACCRUAL BASIS** (source: CRO~A `TRAVIS_GROUP_DECOMPOSITION_HOW_BD_BUILDS_456M_20260819.md`,
+exercised same-content-date tie of qt6 group members vs our fact_rps: 276 matched accounts, 223
+within 1%, and the residual tail is UNIFORMLY POSITIVE, median +$1,281/account -- "accrual-shaped").
+- **Convention:** BD EMV appears to INCLUDE accrued income (interest/dividends) where our
+  Schwab-custodial valuation basis may not. Status: INFERRED at registration (CRO~A's own caveat:
+  one per-holding check confirms) -- registered as a pre-stated hypothesis, not a confirmed mechanism.
+- **Expected signature:** small positive per-account value deltas, concentrated in income-bearing
+  holdings (fixed income especially), uniform in SIGN across accounts; distinct from C3 (which
+  concentrates per-security and is sign-mixed).
+- **Classifier recognition:** add accrued-interest/dividend estimate to our valuation for the
+  tested date; if the tail collapses toward 0, C5 is the mechanism. Per-holding accrual check on
+  one bond position is the cheap confirm.
+- **Verdict licensed:** TIGHT -> named-convention C5 (valuation accrual basis). Comparison-layer
+  accrual add-back is CTO-gated like every convention mirror; our canonical chain unchanged.
+- **Also carried from the same deliverable (parity-relevant, not conventions):** 12 of 347 Travis
+  group members are non-Schwab (16.1M) -- structurally invisible to our feeds = OUT-OF-ORACLE
+  class members inside BD's own group totals (bears on the denominator ruling, open-call 3);
+  one $6.9M single-account REAL delta + one $5.64M absent-member outlier are OPEN CELLS at CRO~A.

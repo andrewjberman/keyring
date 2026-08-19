@@ -72,7 +72,11 @@ launches the day dependencies clear.
 ## S5. DIRECTIVE: PARTNER GRAPHQL -> FOLDS INTO OPAL_ANALYST
 
 Confirmed: the Teams-based queryable-agent layer for clients folds into OPAL_ANALYST as its query
-access layer. Andrew holds a spec file to be dropped -- slot open.
+access layer. **SLOT CLOSED 08-19 ~18:57Z:** the spec file LANDED (Andrew-direct: "THIS IS GOING
+TO BE A CRUCIAL COMPONENT OF OPAL_ANALYST PROJECT") -- `client_data_access_schema_brief`, stored +
+analyzed at `deliverables/CLIENT_DATA_ACCESS_SCHEMA_BRIEF_INGEST_20260819.md`; D6 PRD addendum
+carries the effects (schema half unblocked; entity-resolution service; constrained 5-tool agent
+surface; server-side-authz guardrails).
 
 ## S6. DIRECTIVE: LIVE-EDITABLE MODALS (Item 8 widened)
 
@@ -165,8 +169,9 @@ SMA working files.
   placement (your transcript reasons to yes; binding ticketing intake to that box's uptime, which
   the autologin+fallback work just hardened)?
 - **SLOTS:** transcript 2 -- INGESTED (S8b) · transcript 3 -- INGESTED (S8c Tax SMA) · partner GraphQL spec file --
-  (pending) · Mike-call outputs -- (pending) · BD householding-template sample (egress word) --
-  (pending Andrew).
+  **INGESTED 08-19 (S5 closure; CLIENT_DATA_ACCESS_SCHEMA_BRIEF)** · Mike-call outputs -- INGESTED
+  (partner_calls, rev 2) · BD householding-template sample (egress word) -- APPROVED (fires at AE
+  convenience).
 
 ## S10. THE DELEGATION BREAKOUT (Andrew ~17:35Z: "break out each item based on the original list
 with tax added on as Item 9") -- the decomposition source for COO's unified wave
