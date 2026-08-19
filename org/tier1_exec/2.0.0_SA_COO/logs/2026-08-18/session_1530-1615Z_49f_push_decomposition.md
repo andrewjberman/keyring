@@ -309,3 +309,59 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
   repoint prep]). Events: 12:45Z FIRST green; 13:30Z PB-1 → B2 discharge.
 - **FRI:** second green → repoint → flip → DT promote → E2E COMPLETE.
 - Pending: transcript 3 → the unified structure/delegation wave (MSTR returns, integrator push).
+
+---
+
+## ADDENDUM 5 — 17:36Z–19:07Z 08-19: missions convergence, the PRD package, the split session, the wave cut opens
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 5)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| own ground reads | missions tree/vintages/trailers/EXTERNAL/stances/missions.yaml refs | PASS | the adversarial review ran on MY reads, not CTO's re-read; caught the missions.yaml consumer rows C5 missed |
+| grep/extract | 10 PRD DEVICE-SPLIT tables | PASS | the three-question test run against every row |
+| proof-of-spec-check | (P2-DISPATCH close, earlier) | PASS | rc=0 5/5 |
+
+## Delta
+
+1. **MISSIONS adversarial review CONVERGED** (Andrew's word): my independent read + challenges —
+   C3 rejected on its own design contradiction (counter: compile-at-integrator-push + as_of/TTL
+   self-labeling — CTO adopted in full as "my own governing test applied better than I applied
+   it"); C5's delete order caught missing the missions.yaml consumer rows; COT/INF flipped to KEEP
+   on falsified premises ("churn wearing hygiene's clothing"); DEBT kept+refreshed with today's
+   law as the closing citations; A1 (staleness-not-error → TTL is the class fix) adopted.
+   **Revival executed by MSTR under LD-0425** — first fresh MISSIONS.md since 07-29, D-rows citing
+   the PRD paths directly; comp-missions build rows banked to my wave list.
+2. **THE PRD PACKAGE** (Andrew: PRDs → split → dispatch): all ten D0-D9 + runs landed
+   (@375c874a9e/@8d662d5f1f); sitez envelope MEASURED + consolidated (m365 conditional RETIRED;
+   NOT-a-TF-apply-site; bbg identity SITEZ-ONLY; one-shared-checkout ceiling 6/8); parity complete
+   both fabrics @8c00e90421.
+3. **THE SPLIT SESSION (tonight, by exchange) CONVERGED @a02f9ff5a4:** my capacity rule recorded as
+   the binding form (budget on SITEZ-ONLY/PREFER first; EITHER defaults laptop); A+B conceded to
+   me, C accepted with the exception named, both upgrades adopted; my T1-broker prior conceded to
+   the PRD's row with both movements recorded. Placement map to MSTR (D9 whole / D7 A+C / D6 C+D /
+   D2 analytics = 5 of 6 seats; one spare).
+4. **ANDREW'S ONTOLOGY-LOCKDOWN RULING @1044c49f2e:** gates the estate backlog + the comp-estate/
+   graph return; CVO's elapsed-time backstop RETIRED at the shared memory index by my edit (STATE
+   gate never a duration; the three producer classes stay instant-fire); dispatch cross-check
+   clean (W-15/P0-census ARE the lock-down work).
+5. **THE DEHAND TRANCHE decomposition-ready** (@df64992815, ground-truth law satisfied) = the
+   fabric's critical path; T1-behind-W-15 confirmed program-correct (stale-membership bake
+   otherwise), CRO's split-build alternative recorded.
+6. **WAVE CUT OPENED (tranche 1, @63ff3198d8):** probe TO amended to the D2 dispatch vintage
+   (@c379cb6521; C5 accrual rider; C4 hand-adjudication; C1-C5 prereg); NFRA_WORLDMODEL.T1-DEFROST
+   issued at 0.8.0 behind W-15 with the stale-roster mutant bar. D7/D1 TOs cut as CVO clears each
+   package (D2 1-of-10 done). Sitez TOs route through MSTR~Z, never-implicit.
+7. Ledger absorptions: infra-graph registration merge-ruled FINAL (NFRA_WORLDMODEL v1.1, CRO lead);
+   BD group-keying scan (T3 book-definition worked example; the Travis $456.8M-to-the-dollar
+   decomposition feeding SILVER-DTYPE + the parity bands); D6 GraphQL phasing (operational-plane
+   v0, parquet-resolver distant-second internal-first).
+
+## Gate-forward (19:07Z 08-19)
+- Tonight/Thu: CVO clears D7 → D1 → the rest; each clearance cuts its TOs (sitez via MSTR~Z).
+- THU AM (mine): the spawn wave — DS base (R-WATCH roster read + B1 proof-READ + B3 + probe +
+  SILVER-DTYPE w/ the Travis Decimal specimen pointer), 0.8.0 (REG→J3→HELD-STATE→W-15→T1-DEFROST→T4),
+  DS~B (15-twin emit), CVO-full, DE. Events: 12:45Z FIRST green; 13:30Z PB-1 → B2.
+- FRI: second green → flip → promote → E2E COMPLETE. CTO's D1/D4 rulings tomorrow AM gate their TOs.
