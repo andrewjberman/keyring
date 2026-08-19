@@ -105,3 +105,11 @@ entrypoint exists; pinning a guessed name = building on inference). Everything e
 today (floor stack on the pin; grant; schedule shell applied DISABLED with the concrete 13:15Z
 expression, failing closed on unlisted docs). Friday NOT threatened — the body rides DS~B's
 existing Thursday window; activation = one TF change at deploy-ready.**
+**(5) The SEVERE wiring find (DS~A 161301Z; CTO rulings 161345/52Z): Root-A schedule HELD until a
+tables-not-labels clean E2E (three never-written prefixes PRESENT + no new account_gains-family
+writes from this chain). Friday-clock rule: holds IF fix+QA complete TODAY; otherwise the re-date
+is COO's to issue IN WRITING TONIGHT — never discovered Friday.** BANKED (routing taken from CTO):
+the GLDRNS name-collision disambiguation (their c00/c01/c02_runner.py wrappers re-homed or renamed
+out of the shared runners_49f/ dir) = a small dated act at the GLDRNS/DS-class lane, 08-25
+post-Friday; the incident is a ready-made FIXTURE for REG-SCAN-ATOMCHECK (a registry that binds
+label->module would have caught it) + J3's atom runner — noted in that TO.
