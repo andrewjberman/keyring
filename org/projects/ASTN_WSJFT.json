@@ -31,5 +31,12 @@
   "recipient": "Austin (CEO)",
   "sovereign": "Andrew",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "owner": "0.7.0_AE_CloudOps",
+  "owner_assigned": {
+    "date": "2026-08-19",
+    "by": "0.0.0_AB_MSTR",
+    "authority": "LD-0090 /govern (Tier-0 registry act routed by 2.0.0_SA_COO 224143Z; empty owner field measured as the DRIFT GENERATOR)",
+    "grounds": "The seat holding the project's two active TOs (ASTN_WSJFT.B at AE~C, B1 at AE base, to-check census) and the operational owner of its runtime (3am-ET one-shot, SES leg). Assignment is a registry declaration, not a path grant (.owned-paths enumeration governs edit lanes). The 6-author sprawl on tools/news_scanner -- including retired 2.1.0_SA_COO -- is the measured cost of the empty field; new contributions route through the owner from here. The L1/L2 bundled-copy drift rows stay at 0.8.0_AE_CloudComp's D0/T4 declarations program (already routed)."
+  }
 }
