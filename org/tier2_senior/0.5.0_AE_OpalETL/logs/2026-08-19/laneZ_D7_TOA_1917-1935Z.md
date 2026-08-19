@@ -27,8 +27,17 @@
 - CATCHES: (1) correlations' certified rectangle carries 2 cells its CORRECTION sidecar proved FALSE — correction-supersede clause added (rides the CVO~Z co-sign, requested 201927Z, amended 202622Z); (2) NO SERVABLE MARKET-RETURNS SOURCE (primary not allowlisted, fallback DENY 126d) — at Andrew via COO; (3) "never-merged sidecars" premise stale on live tree (156 duplicate-echoes); (4) ticket-center actually CERTIFIED 08-12 (project JSON stale, U2 proven) but no final.certified → refused correctly.
 - Sovereign rulings banked: v0=PLUMBING-ONLY @1e0ec3b079 (TO-E cite); #42 SUPERSEDED-INTO-D7+D9 @3c8c3f1035 (D7 close cite).
 
+## D6 rows TO-C/D/E/G (2043–2057Z)
+- **TO-C + TO-D BOUND** @fef7e1449b: sharepoint_documents (W7 mounted; firm_axis=NONE + REFUSE-pending-W9 per §10.8; manual/on-ask refresh) + bloomberg_standing_read (shape (a)-primary; BG's ≤2-security measured fence in the channel's own rules; bytes-meter sizing; stop-and-route) channels in the staged catalog. Battery 39/39 (5 new structural assertions).
+- **TO-E AUTHOR PACKAGE** landed: graphql_plumbing/catalog_gate.py (deny-by-default, 5 predicates, member-key expansion, floor belt-check) EXERCISED 13/13 — opal=36 keys vs firm=3 own-scope keys, strict subset; DESIGN.md apply checklist for the laptop lane (D6-5); D6-3 asserted w/ @1e0ec3b079. Two gate-exercise defects found+fixed at author time (family template off-catalog miss → member-key expansion).
+- **TO-G SCAFFOLD** @04e27aa824: gated paths raise naming the D3.1 gate; no placeholder vocabulary by design (D6-4 duty at the trip point).
+- **TO-F**: coordination opener at CTO~Z 205631Z (input set incl. F6/F7/F10 + the identity_scope denial specimen; one artifact for both TOs; staged-vs-port GO question asked). Nothing W6-shaped authored until their word.
+
 ## Blockers
-None on D7 TO-A (closed clean). D7 TO-C gated: laptop TO-B + U3/U4 + MSTR~Z's 08-20 07:00 WDAC acceptance; Q3 gate-out at Andrew. D6 TO-B: build done; CVO~Z co-sign pending (counts provisional); port gated on W5 certification. D6 TO-G confidence model gated on D3.1 enum (cross-fabric).
+None on D7 TO-A (closed clean). D7 TO-C gated: laptop TO-B + U3/U4 + MSTR~Z's 08-20 07:00 WDAC acceptance; Q3 gate-out at Andrew. D6: TO-B/C/D built+validated staged (port rides CVO~Z W5 cert — staffing gap surfaced upstream, not waited on); TO-E authored+exercised (apply = laptop lane); TO-F at CTO~Z's word; TO-G confidence model gated on D3.1 enum (cross-fabric).
+
+## Compiler Tools (D6 addendum)
+comp-find (name+content modes, denominators printed) for tooling/census location; the lift/emit/validate/battery suite (this session's own instruments, all denominator-printing); raw grep x3 under rail-checked markers (doc-internal navigation + Graph-consent doc — no comp-tool route); aws s3api head-object/list-objects-v2 (operational reads, materialized client-side per the pagination law). Gap noted: no comp-tool models M365/Graph consent or SharePoint reach — the W7/W8 registries are the instruments there.
 
 ## Compiler Tools
 | Tool + command | Result | Note |
