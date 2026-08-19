@@ -18,7 +18,7 @@ status until transcripts 2-3 land and the ambiguity questions (S9) are answered.
 | 4 | ETFS fold-in to Positioning | ETFS_CANON phase-0; CTO design-gate this week unsticks it | 3-8 wks, behind 1 | laptop |
 | 5 | Alt Research Pipeline | phase 1 complete (28/28 ingested); interim = ingest | ongoing | laptop |
 | 6 | Opal Analyst (+ partner GraphQL, S5) | runtime legs done (autologin, fallback); SharePoint+BBG builds + GraphQL = v0 gap | v0 in ~2 wks | SITEZ box legs + laptop cloud |
-| 7 | Opal Ticketing | P0 shipped; MS-integration half remains | queued; dated TO post-Wave-1 | laptop |
+| 7 | Opal Ticketing (S8b) | P0 shipped; intake workflow DIRECTED -- **HIGH PRIORITY THIS WEEK** | this week (intake leg) | SITEZ intake + laptop portal/API |
 | 8 | Philosophy Dashboard -- LIVE EDIT (S6) | B-1 ruled; edit-surface directive new | this week | laptop |
 
 ## S2. RATIFIED SUB-PROGRAMS OF RECORD (pointers, not restatements)
@@ -96,12 +96,51 @@ Bloomberg-terminal box-resident legs of Item 6 (BBG pipe, box SharePoint) + its 
 **MSTR = sole sitez coordinator (standing law); MSTR seat currently DOWN -- respawn required
 before any sitez issuance.** Cross-fabric kickoff is never implicit.
 
+## S8b. DIRECTIVE: THE OPAL TICKETING SYSTEM -- INTAKE WORKFLOW (transcript 2; HIGH PRIORITY THIS WEEK)
+
+**Andrew's workflow (voice memo 08-19):** client partners (49 Financial / Inflection WM /
+Cottonwood CA) email their Outlook DISTRIBUTION GROUPS with requests (sensitivity analyses, ad-hoc
+account questions). As emails hit the groups: pull deterministically via **Graph API** -> the
+**Opal Analyst agent (the Bloomberg-box Teams concierge) manages the ticketing center** as a named
+responsibility -- analyzes content, keeps LOGS/persistent memory, tracks
+receipt -> acceptance -> execution timing -- and **"buzzes" a ticketing-center Teams thread** with
+a structured, concise summary + a LINK -> the link opens the **portal ticket page, where the Opal
+user ACCEPTS, moves in-progress, and marks COMPLETE**. Smooth + frictionless is the bar; "largely
+deterministic"; "start putting water through the pipes."
+
+**PRIOR ART (assessed, grounded):** the transcript RATIFIES-AND-SHARPENS the existing OPAL_TICKET
+plan rather than replacing it. P0 SHIPPED 07-14: backend LIVE (opal-tickets + opal-ticket-api,
+e2e lifecycle green incl. claim-race), portal /ticket-center LIVE on DEV (board/create/claim/
+complete/metrics), CF auth chain independently exercise-verified. The prior plan's P1 (Teams claim
+links -- ruled TEAMS-ONLY 07-14) and P2 (AI intake via a Teams shared channel, "pending
+Andrew/team channel setup") are exactly what this directive now specifies concretely: intake
+source = the client DLs; intake agent = Opal Analyst; the Teams channel = the ticketing-center
+thread. The m365 gateway (NFRA_OPLMCP, build-complete) already carries the Graph surface
+(read/search email, channel messages). Prior open human items resurface in S9.
+**Device split:** intake watcher + analysis + Teams buzz = SITEZ (the Analyst's box -- newly
+hardened by autologin + remote fallback); ticket API/portal/storage = laptop-cloud (live).
+**Sequencing vs Friday:** disjoint seats from the 49F flip (no DE/DT/CVO dependency) -- the
+intake leg can carry water this week without touching the critical path. MSTR respawn is the
+sitez-coordination precondition (second reason now).
+
 ## S9. OPEN -- AMBIGUITY QUESTIONS TO ANDREW (block only their own items)
 
 - **Q1: ANSWERED** (folded into S3 -- hierarchy pinned, MDPF-only home for now, advisory_scope
   prior art composes, Cottonwood tie-in + Client Advised/Residual split).
 - **Q2: ANSWERED** (folded into S6 -- all-viewers persistence, server-side store).
-- **SLOTS:** transcript 2 -- (pending) · transcript 3 -- (pending) · partner GraphQL spec file --
+- **Q3 (S8b ticketing):** the v1 distribution-group SET -- exact DL addresses (49F / Inflection WM /
+  Cottonwood CA; others? internal groups?), and does a monitorable mailbox already sit in each
+  group or do we add one for the Graph subscription?
+- **Q4 (S8b):** v1 = INTERNAL-ONLY confirmed (clients keep emailing as today; client-facing
+  visibility stays P3 per the prior ruling)?
+- **Q5 (S8b, prior plan's open human items):** the 2PM-ET interim cutoff config (07-14) -- stands,
+  or replaced by the AJ-agreement number? And the bobby@ address confirm (parked ~08) -- still
+  relevant to the notification set?
+- **Q6 (S8b):** Opal Analyst on the Bloomberg box as the intake manager = CONFIRMED as the decided
+  placement (your transcript reasons to yes; binding ticketing intake to that box's uptime, which
+  the autologin+fallback work just hardened)?
+- **SLOTS:** transcript 2 -- INGESTED (S8b) · transcript 3 -- (pending; "two projects... the first
+  of which, and the larger" implies the second arrives next) · partner GraphQL spec file --
   (pending) · Mike-call outputs -- (pending) · BD householding-template sample (egress word) --
   (pending Andrew).
 
