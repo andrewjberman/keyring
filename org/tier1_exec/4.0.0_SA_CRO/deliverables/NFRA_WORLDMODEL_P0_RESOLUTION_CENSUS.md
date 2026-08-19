@@ -120,6 +120,12 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
 
 - 2026-08-19: skeleton opened; rows A1–A10 pre-seeded from session-grounded evidence (each count
   carries its source in-row; A2/A3 figures are 08-12-build vintage — re-derive live at scoring).
+- 2026-08-19 (pass 1 + tie-out): **A2/A3 LIVE RE-DERIVED** (comp-kuzu): portal 11,338 · ms 5,958 ·
+  aws 2,043 · pipeline 1,337 · semctl 23 · codebase ABSENT (total 20,699) — A2 FAILS-b CONFIRMED
+  LIVE; S0 half-landing live (retired `pipeline` on 1,337 nodes, dropped `semctl` on 23). **Both
+  fold-verify deltas ADJUDICATED** (WORLDMODEL_FOLD_TIEOUT_20260819.md): 68-vs-62 = 62 content +
+  1 rewritten README + 5 never-tracked pyc (removed); 121-vs-118 = vintage-at-authoring, ledgers
+  byte-identical across the fold, no integrity loss.
 - 2026-08-19 (later): **evidence home moved** — Andrew-direct fold @6096e11d95 lands the
   OPAL_WORLD_MODEL content at `infra/system/ontology/worldmodel/`; `10_census/` is this census's
   declared SEED + DIFF BASE (07-31 vintage snapshot, marked so — never a live read). Observed
