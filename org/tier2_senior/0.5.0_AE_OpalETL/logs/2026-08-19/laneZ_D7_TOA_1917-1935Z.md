@@ -20,8 +20,15 @@
 - 1940Z CTO~Z FYI: §9.8.1 absorbed W-29 M-C/M-I @548b5c6 — binds my W4b certification window (no withheld K.1 artifacts in run dir or quoted in prose until verdict). W5 rerouted to DE~Z.
 - **1947Z VINTAGE RE-PIN (MSTR~Z, grounded at ref): D7 close bar @36a7fbd70e → @fac13ccc3a** — verified on-disk: one PRD row added (8+/1-), D7 EXPLICITLY ACCEPTS the ticketing half of sovereign TO #42 (07-14 TAXSMA+ticketing scoping, 36d pending at dead 0.5.0_AE_OpalETL~A — the "taxsma scoping" item in my stale list). TO-A verdict unchanged; **TO-AC CLOSE (TAC-4 proof instance) must cite @fac13ccc3a and run the #42-tie check** — never the stale kickoff pin. #42's disposition (seat-or-supersede) routes to Andrew via D9/COO, NOT this seat.
 
+## D6 second kickoff + TO-B build (2007–2042Z)
+- 200657Z KICKOFF D6_ANALYST.TO-CDBFG-SITEZ (hands seat, rows TO-B/C/D/E-author/F/G-scaffold; @030b55b295). Acked with row plan + first gate reads. TO-D shape declared: (a)-primary served-from-artifacts, (b) bounded <=2-security fallback per BG's measured fence (MSTR~Z 200844Z).
+- SEAT CONFLICT surfaced pre-bytes (PRD:521 had re-routed W5 to DE~Z ~1935Z): resolved TO-B MINE, supersede @9c7b59f9df; CTO~Z rider = the spec rides the artifact (§9.6/§10.1/§9.11, merged-definition WITH CVO~Z co-sign, firm-first-class, 3 widenings only, battery w/ negatives).
+- **TO-B BUILT** @8ba21b0ace + @fdd34ca737: lift_catalog_v02.py (16-unit declared denominator; 11 liftable, 5 refused loudly; §10.1(c) markers written) → emit_catalog_v02.py → catalog_v02/DATA_CATALOG.v0.2.staged.yaml (13 channels, 36 rows, F4 correction, firm key, resolver floor D6-2 = 0 ticket rows) → validate 36/36 live + 10/10 families exact → battery 30/30 (found + fixed stray-token routing). LIVE catalog untouched; port rides CVO~Z W5 certification.
+- CATCHES: (1) correlations' certified rectangle carries 2 cells its CORRECTION sidecar proved FALSE — correction-supersede clause added (rides the CVO~Z co-sign, requested 201927Z, amended 202622Z); (2) NO SERVABLE MARKET-RETURNS SOURCE (primary not allowlisted, fallback DENY 126d) — at Andrew via COO; (3) "never-merged sidecars" premise stale on live tree (156 duplicate-echoes); (4) ticket-center actually CERTIFIED 08-12 (project JSON stale, U2 proven) but no final.certified → refused correctly.
+- Sovereign rulings banked: v0=PLUMBING-ONLY @1e0ec3b079 (TO-E cite); #42 SUPERSEDED-INTO-D7+D9 @3c8c3f1035 (D7 close cite).
+
 ## Blockers
-None on TO-A. TO-C gated: TO-B + U3/U4 + MSTR~Z's 08-20 07:00 WDAC acceptance. Q3 gate-out at Andrew (via MSTR~Z routing).
+None on D7 TO-A (closed clean). D7 TO-C gated: laptop TO-B + U3/U4 + MSTR~Z's 08-20 07:00 WDAC acceptance; Q3 gate-out at Andrew. D6 TO-B: build done; CVO~Z co-sign pending (counts provisional); port gated on W5 certification. D6 TO-G confidence model gated on D3.1 enum (cross-fabric).
 
 ## Compiler Tools
 | Tool + command | Result | Note |
