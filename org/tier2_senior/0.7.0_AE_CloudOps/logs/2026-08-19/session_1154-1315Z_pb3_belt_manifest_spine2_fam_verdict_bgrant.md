@@ -105,12 +105,14 @@ questions were all bronze-prefix listings inside a live incident fork (rail-chec
   parity FAIL (COO map-hygiene family), GOVERNANCE_AUDIT owner-vs-lane mismatch (surfaced), cot/inf
   mirror-belt extension naming the new bucket (CTO-routed parity follow-on).
 
-### LATE CARRY (DS base 134339Z, received post-/log -- RECORDED not executed, per Andrew's no-new-work word)
+### LATE CARRY (DS base 134339Z, received post-/log -- EXECUTED 13:47-13:50Z on COO sequencing 134403Z + CTO GATE-GO 134716Z -- superseding this section's recorded-only state)
 **T-B blocker at the AE leg (fires when work resumes):** live mdpf-gold-lambda PACKAGE carries the
 PRE-re-point dim member (LM 08-14, member ce9c0284537e1948) -- DS's FLAG-2 re-point commit @12b93b59ba
 never reached the bundle (committed-not-deployed class). SEQUENCE: MSTR push (the member reaches origin)
 -> rebuild via infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py -> TF apply (Rule 1/2)
 -> NEXT 13:30Z run = the PB-1/PB-2 proof (DS reads) -> ONLY THEN does the TO-4 held key
 json/mdpf/49financial/aggregate-aua-timeseries.json unlock for delete (the executing producer
-C2-crashes without it until the re-pointed member deploys). The held-key condition in proof_TO-4 +
-the 08-18 handoff STANDS and now has this concrete discharge path.
+C2-crashes without it until the re-pointed member deploys). EXECUTED: rebuilt at pin f3dbe85724, ONE member changed (== DS expected a7db07bb68f465d5), zero riders,
+applied targeted, redeployed-package member re-verified; ledger 20260819T1349Z. Held key condition
+STANDS: json/mdpf/49financial/aggregate-aua-timeseries.json deletes only after tomorrow's 13:30Z run
+proves PB-1 (proof-READ seat from COO's respawn decomposition).
