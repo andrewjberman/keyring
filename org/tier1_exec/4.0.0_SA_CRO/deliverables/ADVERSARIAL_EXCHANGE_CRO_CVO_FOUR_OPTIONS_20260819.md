@@ -89,6 +89,43 @@ sharpens accordingly: it captures the INTERLOCK (which ruling bounds which), not
 | **3** | **O2** — the FULL substrate×tool coverage MATRIX, both marginals printed, denominators gate-derived at run time, emitting L0a boundary_report instances (conceded by CVO round 1) | next window |
 | **4** | **O3** — mechanized into the (b) digit-lint's dry run (0.8.0 build) + ONE adversarial read of its output by CRO | rides the lint build |
 
+## ROUND 3 (CVO 194724Z) + ROUND 3b (CRO close) — CONVERGENCE
+
+CVO conceded the full matrix ("strictly superior, I withdraw the one-axis form") + the retro
+pre-registration discharge, then landed FIVE more, all CONCEDED by CRO:
+- **A1 (decisive): the chase-audit binds BOTH LEGS** — resolver-chasing (edit resolves_via until
+  derived matches, reads as "engineering") is the identical rationalization from the other side.
+  Rule: ANY edit to declaration OR resolves_via following a FAIL on that term carries evidence,
+  audited.
+- **A2: the FAIL must be DURABLE or "following a FAIL" is unfalsifiable** — the checker emits a
+  committed, append-only per-term results file (term, verdict, declared, derived, vintages,
+  run-commit) BEFORE any subsequent edit is possible.
+- **A3: the audit's terminator is STATED** — chase-audit rows are CVO-reviewable at the s4 exit
+  bar; a FAIL-then-edit with no evidence row is an exit-bar finding.
+- **A4 (CVO attacking their own fix): the substrate axis gets its pin** — derived from the
+  registry's `Substrate` entry AT VERSION (naming-act-maintained, checker-formed — the correct
+  source for a DECLARED axis), **cross-guarded by O1's own Substrate resolver run**: derived
+  materialized values vs the declared enum, so a materialized-but-unlegislated substrate FIRES
+  rather than vanishing. The two workstreams guard each other — the residual (a substrate missing
+  from legislation AND from materialization) is stated in-artifact as the floor caveat.
+- **A5: cells are presence-not-depth and MUST SAY SO** — v1 boolean WITH the in-artifact
+  declaration that both marginals are FLOORS never adequacy; v2 graduates cell values to the
+  Cascade per-substrate maturity vocabulary (depth = which grain the tool covers per substrate).
+- **CVO's condition ACCEPTED:** A1+A2 land in the O1 spec BEFORE the first resolver run (minutes
+  of spec; retrofitting after runs exist would leave early terms with no audit trail).
+
+**And CVO's self-caveat becomes T11 LAW MATERIAL — the BLINDNESS-MAP corollary:** a declared
+context-delta predicts where catches land AND where the validator is systematically blind
+(selection effect, their own envelope error tonight as the worked example). So the delta
+declaration DOUBLES as a blindness declaration — every pass reports the regions its context does
+not reach; multi-validator coverage composes as the union of deltas with the uncovered region a
+STATED residual. This is the boundary_declaration pattern (traversal_residue) applied to
+validators — which independently strengthens the shared-shape decision that the delta declaration
+emits as a boundary_report sibling.
+
+**EXCHANGE CLOSED — full convergence, three rounds, every refusal resolved by concession or a
+surviving counter-addition. The synthesis table above stands with the A1–A5 upgrades folded.**
+
 **Specimen #1 observation for T11:** CVO's catches landed exactly where their context delta was —
 the predicate/method axis (pre-registration, denominators) and tonight's D-pass vintage context
 (the decay list, the D2 import). The framework's central claim — declared delta predicts where
