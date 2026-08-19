@@ -72,6 +72,30 @@ Zero cost: no GO fired, no spawn happened. Lesson banked in-line: a routing call
 capacity snapshot inherits that snapshot's expiry — the reconciliation, not the original call, is
 what the record now teaches.
 
+## Delta 20:20–21:15Z — rulings recorded, D8 unblocked, W6 author-half validated, ownership converged
+
+1. **ANDREW-DIRECT (my terminal, ~20:2xZ) recorded @f45e5db124 + broadcast:** 3 /open-calls recs
+   accepted (liveness remedy ratified-for-when-cluster-opens, fence stands; DAPI precondition +
+   BG runbook RULED YES, §9.9-1 discharged to routing; ycharts deny-by-default stands, §1e closed)
+   + the D8 word ("this is the fabric that needs to be working on that") — read WITH accept-7 NO
+   @1e0ec3b079 → swap path; relayed to MSTR~Z with fire-now rec. D8 answered to Andrew: not held
+   on him (he ruled it); swap was ripe; DE~Z spawned ~2101Z, D8 building.
+2. **W6/D6-TO-F convergence @a6a3cd8b2c:** one artifact, AE~Z authors, I certify, CVO~Z second-reads;
+   4 input-set amendments; authored-on-staged/certified-on-shipped. Author-half DELIVERED
+   @22b800c1c3 + self-amended @de57e559c2; my PRELIMINARY PASS: accepted, no re-author asks.
+   **Self-review mitigation DISCHARGED at this desk: 9/9 independent gate probes (failure states
+   pre-named, incl. scope-substituted family cells) + 13/13 battery replicated rc=0 + the row-4
+   identity_scope pair re-run from THIS seat (search_email → identity_scope_denied + separate
+   list_teams 200) — the deny now has two independent non-BG exercisers same-day.** Certification
+   still gates on CVO~Z co-sign + 0-diff port. Home: POINT at their lane path, no move.
+3. **D-family OWNERSHIP CONVERGENCE @550b20ec5b** (Andrew at the laptop CTO: "i do not think D7 is
+   owned by this fabric"): joint CONCUR w/ COO~Z — ownership incl. gates = CTO~Z rules + COO~Z
+   decomposes; laptop legs = execution placement; laptop CTO = cross-fabric interfaces; three
+   seams bound (no new gates in the transfer / CVO cert rows constitutional / plumbing unchanged).
+   **Gate acts: D8 TO-C @e697f1450e RATIFIED unamended (resolves+read here). D7-U4 ADOPTED AS
+   STANDING INPUT, UNRATIFIED-PENDING-RESOLUTION — its commits do not resolve on SITEZ yet;
+   ratify-or-amend at the D7 gate post-integration; nothing executes against it meanwhile.**
+
 ## Open at this seat
 
 - **W5 GO** — gated: 08-20 07:00 WDAC acceptance + census sequencing at spawn (COO~Z surfaces;
