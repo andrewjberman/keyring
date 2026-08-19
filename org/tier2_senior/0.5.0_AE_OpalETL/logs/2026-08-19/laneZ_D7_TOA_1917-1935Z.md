@@ -14,6 +14,12 @@
 - Surprise channel (banked to MSTR~Z, no action): audit-archive-invoker printed 3 integrity findings at startup (2 non-append edits + jq-ban-override-audit.log missing) — plausibly device-axis baseline class.
 - R8 hygiene note surfaced: gateway app IS repo-resident now (`infra/aws/ec2/opal-gateway/` tracked at deployed commit) — PRD's "not repo-resident" predates OPAL_GWRENAME.
 
+## Post-close addenda (1936–1947Z)
+- 1936Z Andrew-direct via MSTR~Z: intake identity = opalsupport@opalinvest.com, never opalbloomberg@ externally → deliverable §6a @88db84f6c2.
+- 1936–1942Z COO~Z RAVC-4: CONFIRMED 3/3, TO-A closed clean both sides; their SendFromAliasEnabled asymmetry note (INFERRED) folded @56b5ae8796; routing rides MSTR~Z's ferry with the commit pointer.
+- 1940Z CTO~Z FYI: §9.8.1 absorbed W-29 M-C/M-I @548b5c6 — binds my W4b certification window (no withheld K.1 artifacts in run dir or quoted in prose until verdict). W5 rerouted to DE~Z.
+- **1947Z VINTAGE RE-PIN (MSTR~Z, grounded at ref): D7 close bar @36a7fbd70e → @fac13ccc3a** — verified on-disk: one PRD row added (8+/1-), D7 EXPLICITLY ACCEPTS the ticketing half of sovereign TO #42 (07-14 TAXSMA+ticketing scoping, 36d pending at dead 0.5.0_AE_OpalETL~A — the "taxsma scoping" item in my stale list). TO-A verdict unchanged; **TO-AC CLOSE (TAC-4 proof instance) must cite @fac13ccc3a and run the #42-tie check** — never the stale kickoff pin. #42's disposition (seat-or-supersede) routes to Andrew via D9/COO, NOT this seat.
+
 ## Blockers
 None on TO-A. TO-C gated: TO-B + U3/U4 + MSTR~Z's 08-20 07:00 WDAC acceptance. Q3 gate-out at Andrew (via MSTR~Z routing).
 
