@@ -58,6 +58,20 @@ No comp-estate/comp-blast run this session: no code, infra, or serving surface w
 commit is PRD prose + two TO documents + a record; the TOs themselves mandate the comp calls their
 executors need (comp-cache/comp-estate in W5, comp-iam/comp-routes in W6).
 
+## Delta 20:12–20:16Z — W5 seat reconciliation (MSTR~Z adjudication accepted)
+
+MSTR~Z 201242Z: my ~1935Z W5 re-route and their 2006Z D6 kickoff held the SAME artifact — D6
+TO-B IS the W5 index build (collision surfaced by 0.5.0~Z PRE-BYTES, 201138Z). My capacity premise
+died the hour it was made (D7 TO-A closed 1931Z); no METHOD ground for DE~Z exists (original wave
+owner WAS 0.5.0~Z; SoD sits at certification). **Executed @9c7b59f9df:** W5 TO → superseded with
+`<superseded_by>` D6_ANALYST.TO-CDBFG-SITEZ row TO-B; PRD §9.2 row + §9.11 dated annotations
+(routing half superseded, shape half stands); W6 GO gate re-pointed to the ARTIFACT. Binding note
+delivered to MSTR~Z + COO~Z: **the §9.6/§10.1/§9.11 spec rides the artifact, not the TO shell** —
+COO~Z validates the index against W5's C1–C9 bar regardless of the D6 row's own acceptance text.
+Zero cost: no GO fired, no spawn happened. Lesson banked in-line: a routing call grounded on a
+capacity snapshot inherits that snapshot's expiry — the reconciliation, not the original call, is
+what the record now teaches.
+
 ## Open at this seat
 
 - **W5 GO** — gated: 08-20 07:00 WDAC acceptance + census sequencing at spawn (COO~Z surfaces;
