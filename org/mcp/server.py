@@ -514,13 +514,51 @@ def _ensure_broker() -> bool:
         if sys.platform == "win32":
             CREATE_NEW_PROCESS_GROUP = 0x00000200
             DETACHED_PROCESS = 0x00000008
-            subprocess.Popen(
-                [sys.executable, str(BROKER_SCRIPT)],
+            # --- D0_TIGHTENING T1 primitive (iii): DOUBLE-SPAWN.
+            #
+            # DETACHED_PROCESS alone does NOT survive a seat kill, and this is measured,
+            # not reasoned: it detaches the CONSOLE, never the parent-child RECORD.
+            # Win32_Process.ParentProcessId is stamped at creation and persists, and
+            # `.tools/kill-agent.ps1:126-133` (Stop-ProcessTree) reaps by RECURSIVE
+            # ParentProcessId descent from the seat's claude.exe. So the "detached"
+            # broker was still enumerable as a descendant and still died -- R4's measured
+            # fabric-wide listener death on 2026-08-19.
+            #
+            # Measured 2026-08-19 on this box, live broker pid 25428:
+            #     25428:python.exe <- 4644:python.exe <- 26272:claude.exe   [REAPABLE]
+            #
+            # The fix is to SEVER the link: spawn an intermediate that immediately exits.
+            # The broker's ParentProcessId then names a dead pid, so a tree walk from any
+            # seat never enumerates it. Measured chains for the three candidates:
+            #     A  Popen+DETACHED_PROCESS ->  child <- spawner <- ...   REAPABLE
+            #     B  double-spawn           ->  child (dead-ends)        SURVIVES
+            #     C  WMI Win32_Process.Create -> child <- WmiPrvSE <- ... SURVIVES
+            # B is chosen over C on the build ladder: stdlib only, no PowerShell/WMI
+            # dependency and no extra privileges. The port bind remains the singleton
+            # mutex, so severing parentage cannot produce a second broker.
+            # Rollback = restore the single Popen below.
+            _launcher = (
+                "import subprocess,sys;"
+                "subprocess.Popen([sys.executable, {brk!r}],"
+                "creationflags=0x00000200|0x00000008,"
+                "stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,"
+                "stdin=subprocess.DEVNULL)"
+            ).format(brk=str(BROKER_SCRIPT))
+            _mid = subprocess.Popen(
+                [sys.executable, "-c", _launcher],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 stdin=subprocess.DEVNULL,
                 creationflags=CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS,
             )
+            try:
+                # The intermediate must EXIT for the link to be severed. Waiting on it is
+                # the whole mechanism, not hygiene -- a still-live intermediate keeps the
+                # broker inside the seat's tree.
+                _mid.wait(timeout=15)
+            except Exception:
+                log.warning("broker launcher did not exit within 15s; the broker may "
+                            "still be parented to this seat and reapable by a tree kill")
         else:
             subprocess.Popen(
                 [sys.executable, str(BROKER_SCRIPT)],
@@ -644,6 +682,22 @@ def _drain_piggyback() -> str:
         return ""
     msgs = _piggyback_queue[:]
     _piggyback_queue = []
+
+    # --- D0_TIGHTENING T1 (EMITTED clock). Tell the broker these ids left the volatile
+    # queue and entered a tool response; the broker flips delivered=1 HERE, not at poll.
+    # Until this call lands, the rows stay re-offerable -- which is exactly what makes a
+    # seat killed between poll and drain recover its mail instead of losing it forever.
+    # This is EMITTED, never READ: the clear precedes the response reaching a model
+    # (the orphan-watcher mv-before-echo shape), so no agent-side claim may rest on it.
+    _emit_ids = [m["id"] for m in msgs if m.get("id") is not None]
+    if _emit_ids and _broker_available:
+        _broker_fetch("/mark-emitted", {"serial": _my_serial or "", "ids": _emit_ids})
+    # The ids are surfaced to the agent so a genuine agent-side ACK can name them.
+    _ack_hint = ""
+    if _emit_ids:
+        _ack_hint = ("\n(delivery-state: these are EMITTED, not READ. To record READ -- the "
+                     "only clock an orphan cannot forge -- call "
+                     f"ack_messages(\"{','.join(str(i) for i in _emit_ids)}\").)\n")
     _mine = _my_serial or "this session (serial unset)"
     lines = [f"URGENT: {len(msgs)} message(s) received while idle -- queued for **{_mine}** "
              "(this session's OWN broker mail, NOT the queried agent's):\n"]
@@ -654,6 +708,7 @@ def _drain_piggyback() -> str:
         lines.append(f"Subject: {subj}")
         lines.append(msg.get("body", ""))
         lines.append("---\n")
+    lines.append(_ack_hint)
     lines.append("Act on these messages NOW before proceeding with your response.\n\n")
     return "\n".join(lines)
 
@@ -704,9 +759,17 @@ async def _poll_broker_loop():
             result = _broker_fetch("/poll-messages", {"serial": _my_serial})
             if not result or not result.get("messages"):
                 continue
+            _queued_ids = {m.get("id") for m in _piggyback_queue}
             for msg in result["messages"]:
+                # D0_TIGHTENING T1: dedupe on the broker's row id. A reclaimed message
+                # (polled once, never drained, re-offered after T1_RECLAIM_S) must not
+                # stack a second copy onto a session that is merely idle.
+                if msg.get("id") is not None and msg["id"] in _queued_ids:
+                    continue
+                _queued_ids.add(msg.get("id"))
                 # Primary: queue for piggyback on next tool response
                 _piggyback_queue.append({
+                    "id": msg.get("id"),
                     "from_serial": msg["from_serial"],
                     "to_serial": msg["to_serial"],
                     "subject": msg.get("subject", ""),
@@ -1558,10 +1621,11 @@ async def query_project(project_code: str, ctx: Context = None) -> str:
 @mcp.tool()
 async def send_message(
     from_agent: str,
-    to_agent: str,
-    subject: str,
-    body: str,
+    to_agent: str = "",
+    subject: str = "",
+    body: str = "",
     identity_override: str = "",
+    to_agents: list[str] | None = None,
     ctx: Context = None,
 ) -> str:
     """Send an async message to another agent. The message is stored in their
@@ -1575,6 +1639,13 @@ async def send_message(
     YOUR registered serial -- a mismatch is refused (audited). Pass from_agent=""
     to auto-fill it. identity_override="<reason>" permits a relay send; the true
     author is then stamped into the delivered message.
+
+    RECIPIENT LIST (D0_TIGHTENING T1): pass to_agents=["A","B","C"] to address several
+    seats in ONE act and get a PER-RECIPIENT result map -- {DELIVERED | QUEUED | REFUSED}
+    per serial, never a silent aggregate. A dead seat returns QUEUED (written + waiting),
+    an unresolvable serial returns REFUSED (nothing written). Writing "cc: X" in the BODY
+    copies NOBODY -- that is the measured LD-0424 class this parameter exists to make
+    inexpressible. to_agent (single) keeps its exact legacy call shape and receipt.
 
     Use this for status updates, questions, or handoff notes."""
     global _active_ctx
@@ -1618,9 +1689,66 @@ async def send_message(
             _sender_note = " [sender unverified -- register_agent to send verified]"
     from_agent = claimed
 
+    # --- D0_TIGHTENING T1 primitive (i): recipient-LIST send.
+    # The body-cc class is measured (LD-0424: DT's freeze release lost to an in-body
+    # "cc" that copied nobody). A list parameter makes that class INEXPRESSIBLE: you
+    # either name a recipient and get a per-recipient verdict, or you did not send.
+    # Backward compatible by construction -- `to_agent: str` is untouched and a
+    # single-recipient call returns the exact legacy receipt string.
+    _recipients: list[str] = []
+    for _r in (to_agents or []):
+        _r = (_r or "").strip()
+        if _r and _r not in _recipients:
+            _recipients.append(_r)
+    _single = (to_agent or "").strip()
+    if _single and _single not in _recipients:
+        _recipients.insert(0, _single)
+    if not _recipients:
+        return ("SEND REFUSED: no recipient. Pass to_agent=\"<serial>\" or "
+                "to_agents=[\"<serial>\", ...]. (Nothing was sent.)")
+
+    _results = []
+    for _rcpt in _recipients:
+        _results.append(await _deliver_to_one(
+            from_agent, _rcpt, subject, body, _sender_stamp, _sender_note))
+
+    # Single-recipient call -> the legacy receipt string, byte-for-byte shape.
+    if len(_results) == 1 and not to_agents:
+        return _results[0]["receipt"]
+
+    # Multi-recipient -> a PER-RECIPIENT map. Never a silent aggregate: an aggregate
+    # is what let a body-cc read as delivery.
+    _lines = [f"send_message -> {len(_results)} recipient(s). PER-RECIPIENT RESULT:"]
+    for _r in _results:
+        _lines.append(f"  {_r['state']:<9} {_r['to']}   {_r['detail']}")
+    _n_ref = sum(1 for _r in _results if _r["state"] == "REFUSED")
+    _n_q = sum(1 for _r in _results if _r["state"] == "QUEUED")
+    _n_d = sum(1 for _r in _results if _r["state"] == "DELIVERED")
+    _lines.append(f"  -- {_n_d} DELIVERED / {_n_q} QUEUED / {_n_ref} REFUSED "
+                  f"(denominator {len(_results)})")
+    if _n_q:
+        _lines.append("  QUEUED = written to inbox + broker, no LIVE session to push to. "
+                      "Not a failure, and NOT a delivery -- it waits for the seat.")
+    if _n_ref:
+        _lines.append("  REFUSED = serial does not resolve in org. NOTHING was written "
+                      "for that recipient.")
+    return "\n".join(_lines) + _sender_note
+
+
+async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: str,
+                          _sender_stamp: str = "", _sender_note: str = "") -> dict:
+    """One recipient's delivery -- the pre-T1 send path, unchanged in behavior.
+
+    Returns {to, state, detail, receipt} where state is DELIVERED | QUEUED | REFUSED.
+    DELIVERED means a live session was pushed to; QUEUED means the message is durably
+    written and waiting; REFUSED means the serial does not resolve and nothing was
+    written. A caller may never collapse these three into a success boolean.
+    """
     to_folder = _resolve_agent_folder(to_agent)
     if not to_folder:
-        return f"Recipient '{to_agent}' not found in org."
+        return {"to": to_agent, "state": "REFUSED",
+                "detail": "serial does not resolve in org -- nothing written",
+                "receipt": f"Recipient '{to_agent}' not found in org."}
 
     # Inbox routing (per-tilde filesystem isolation, 2026-04-20):
     # - to_agent has ~suffix -> nested inbox/{base}/~{suffix}/ (strictly private)
@@ -1662,6 +1790,7 @@ async def send_message(
     delivery_methods = ["filesystem"]
     broker_target = to_agent if _instance_suffix(to_agent) else to_folder.name
 
+    _msg_id = None
     if _broker_available:
         result = _broker_fetch("/send-message", {
             "from_serial": from_agent,
@@ -1671,6 +1800,15 @@ async def send_message(
         })
         if result and result.get("ok"):
             delivery_methods.append("broker")
+            _msg_id = result.get("message_id")
+
+    # D0_TIGHTENING T1: stamp the broker row id into the FILE. Without it a
+    # consumption-side ack has to guess which row it just read (by subject/timestamp),
+    # and a guessing ACK is worse than none -- it would mark the wrong message READ.
+    if _msg_id is not None:
+        msg_path.write_text(
+            msg_content.replace("**Subject:**", f"**Msg-ID:** {_msg_id}\n**Subject:**", 1),
+            encoding="utf-8")
 
     # Attempt direct channel push to all live instances of this agent
     with _locked_liveness() as data:
@@ -1713,7 +1851,16 @@ async def send_message(
     # Andrew-direct 2026-06-17 (LD-0195).
     delivered_to = to_agent if to_suffix else to_folder.name
     inbox_label = f"{to_folder.name}/~{to_suffix}" if to_suffix else to_folder.name
-    return f"Message delivered to {delivered_to} (inbox {inbox_label}): {filename} ({' + '.join(delivery_methods)}){_sender_note}"
+    receipt = (f"Message delivered to {delivered_to} (inbox {inbox_label}): {filename} "
+               f"({' + '.join(delivery_methods)}){_sender_note}")
+
+    # DELIVERED vs QUEUED turns on whether a LIVE session existed to push to. A dead
+    # seat yields QUEUED -- written and waiting -- never a silent success.
+    state = "DELIVERED" if live_targets else "QUEUED"
+    detail = (f"id={_msg_id} via {'+'.join(delivery_methods)}"
+              if live_targets else
+              f"id={_msg_id} written to inbox {inbox_label}; no live session")
+    return {"to": to_agent, "state": state, "detail": detail, "receipt": receipt}
 
 
 @mcp.tool()
@@ -1796,13 +1943,148 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
         parts.append(msg.read_text(encoding="utf-8", errors="replace"))
 
     if mark_read and pairs:
+        # D0_TIGHTENING T1 (READ clock). Collect Msg-IDs BEFORE the move, then ack them.
+        # This is one of exactly two sound READ oracles; the other is an agent-side
+        # ack_messages call. `read/` mtime, ps, and an empty inbox remain BANNED (22b) --
+        # they observe the watcher, not the agent.
+        _read_ids = []
+        for msg, _src in pairs:
+            try:
+                _head = msg.read_text(encoding="utf-8", errors="replace")[:400]
+                _m = re.search(r"^\*\*Msg-ID:\*\*\s*(\d+)\s*$", _head, re.MULTILINE)
+                if _m:
+                    _read_ids.append(int(_m.group(1)))
+            except Exception:
+                pass
         for msg, src in pairs:
             read_dir = src / "read"
             read_dir.mkdir(exist_ok=True)
             msg.rename(read_dir / msg.name)
+        if _read_ids and _broker_available:
+            _broker_fetch("/ack-messages", {"serial": _my_serial or agent_serial,
+                                            "ids": _read_ids})
         parts.append(f"\n--- Archived {len(pairs)} messages to read/")
+        if _read_ids:
+            parts.append(f"--- READ ack recorded for message id(s): "
+                         f"{', '.join(str(i) for i in _read_ids)}")
 
     return "\n".join(parts)
+
+
+@mcp.tool()
+async def ack_messages(message_ids: str, ctx: Context = None) -> str:
+    """Record that YOU READ specific broker messages -- the READ clock (D0_TIGHTENING T1).
+
+    This is the ONLY delivery signal an orphan cannot forge, and the only one that
+    claims an AGENT saw a message. Call it after a piggyback drain surfaces message ids
+    to you. Pass a comma-separated id list, e.g. ack_messages("41,42").
+
+    Why this exists: the fabric has THREE clocks and used to conflate them. A broker
+    poll (SENT) means a client process took handoff. A piggyback drain (EMITTED) means
+    the volatile queue cleared -- and that clear precedes the response ever reaching a
+    model, structurally the orphan-watcher mv-before-echo shape. Neither is evidence an
+    agent read anything. An ACK placed at either transport act would inherit exactly the
+    conflation this primitive exists to retire."""
+    global _active_ctx
+    _active_ctx = ctx
+
+    ids = []
+    for tok in str(message_ids).replace(" ", ",").split(","):
+        tok = tok.strip()
+        if tok.isdigit():
+            ids.append(int(tok))
+    if not ids:
+        return ("ack_messages: no numeric ids parsed from "
+                f"{message_ids!r}. Nothing acked.")
+    if not _my_serial:
+        return ("ack_messages REFUSED: this session never registered, so the ACK could "
+                "not name an agent -- and an unattributed ACK is exactly the kind of "
+                "producer-side signal this primitive replaces. Call register_agent first.")
+    if not _broker_available:
+        return "ack_messages: broker unavailable. Nothing acked (reported, not swallowed)."
+    res = _broker_fetch("/ack-messages", {"serial": _my_serial, "ids": ids})
+    if res is None:
+        return "ack_messages: broker call FAILED. Nothing acked (reported, not swallowed)."
+    n = res.get("acked", 0)
+    skipped = len(ids) - n
+    out = f"READ ack recorded by {_my_serial} for {n} message(s): {ids}"
+    if skipped > 0:
+        out += (f"\n  ({skipped} already carried an ACK -- an ACK is write-once, so the "
+                f"FIRST reader's timestamp is preserved rather than overwritten.)")
+    return out
+
+
+@mcp.tool()
+async def get_delivery_state(agent_serial: str = "", message_id: int = 0,
+                             since: str = "", limit: int = 50,
+                             ctx: Context = None) -> str:
+    """Per-message delivery state: SENT / EMITTED / READ -- never an aggregate.
+
+    The receipt query for D0_TIGHTENING T1. Use it instead of filesystem heuristics
+    (`read/` mtime, ps, an empty inbox) -- those observe the WATCHER, not the agent,
+    and an orphan watcher drives them to REACHABLE precisely when the agent is deaf.
+
+    States:
+      QUEUED          written; no client has polled it yet
+      SENT            a client process took handoff (says NOTHING about an agent)
+      EMITTED         drained into a tool response (no agent-side evidence)
+      READ            an agent acked it -- the only state that claims an agent saw it
+      UNKNOWN-PRE-T1  delivered under the pre-T1 code; its fate is unknowable, and
+                      saying so is the point. Never reported as READ."""
+    global _active_ctx
+    _active_ctx = ctx
+
+    if not _broker_available:
+        return "get_delivery_state: broker unavailable (reported, not swallowed)."
+    payload: dict = {"limit": limit}
+    if message_id:
+        payload["message_id"] = message_id
+    if agent_serial:
+        payload["serial"] = agent_serial
+    if since:
+        payload["since"] = since
+    if not message_id and not agent_serial:
+        return ("get_delivery_state: pass message_id=<id> or agent_serial=\"<serial>\" "
+                "(optionally since=\"<iso8601>\").")
+
+    res = _broker_fetch("/delivery-state", payload)
+    if res is None:
+        return "get_delivery_state: broker call FAILED (reported, not swallowed)."
+    if "error" in res:
+        return f"get_delivery_state: {res['error']}"
+
+    msgs = res.get("messages", [])
+    if not msgs:
+        # Print the frame with the zero. A bare 0 does not say what it is 0 OF.
+        scope = f"message_id={message_id}" if message_id else f"to_serial={agent_serial}"
+        return (f"get_delivery_state: 0 rows for {scope}"
+                f"{' since ' + since if since else ''} (limit {limit}). "
+                f"Zero ROWS MATCHED -- not zero delivered.")
+
+    lines = [f"# Delivery state -- {len(msgs)} message(s) "
+             f"[{'message_id=' + str(message_id) if message_id else 'to ' + agent_serial}"
+             f"{', since ' + since if since else ''}, limit {limit}]", ""]
+    counts: dict = {}
+    for m in msgs:
+        counts[m["state"]] = counts.get(m["state"], 0) + 1
+        lines.append(f"  [{m['state']:<14}] id={m['id']:<6} {m['sent_at']}  "
+                     f"{m['from_serial']} -> {m['to_serial']}")
+        lines.append(f"                   subj: {m['subject'][:70]}")
+        stamps = []
+        if m.get("polled_at"):
+            stamps.append(f"SENT@{m['polled_at']}")
+        if m.get("emitted_at"):
+            stamps.append(f"EMITTED@{m['emitted_at']}")
+        if m.get("acked_at"):
+            stamps.append(f"READ@{m['acked_at']} by {m.get('acked_by') or '?'}")
+        lines.append(f"                   {' | '.join(stamps) if stamps else 'no clock stamps yet'}")
+    lines.append("")
+    lines.append("  TOTALS: " + ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+                 + f"  (denominator {len(msgs)})")
+    if counts.get("UNKNOWN-PRE-T1"):
+        lines.append("  NOTE: UNKNOWN-PRE-T1 rows predate the T1 clocks. Their fate is "
+                     "genuinely unknowable -- do not read them as READ.")
+    return "\n".join(lines)
 
 
 @mcp.tool()

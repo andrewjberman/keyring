@@ -3,6 +3,7 @@
 **Authority:** Andrew-direct verbatim (recorded @807c3c9190): BD refreshes prior-day API data ~01:02 ET (~05:00Z) -> pull 06:30Z / convert 07:05Z / reattempt 08:30Z. Consistent with ANDREW_DIRECT_20260811_BD_REST_0102ET. Executor = CTO (AE seats wound down 1405Z; two audited lane-override commits @807c3c9190 + @ee18a14e09, one lane each per Rule 14a).
 **Targets (3, all in-place):** aws_cloudwatch_event_rule.bd49f_pull["pull"] (cron 30 2 -> 30 6) · aws_cloudwatch_event_rule.bd49f_pull["reattempt"] (cron 30 4 -> 30 8) · aws_scheduler_schedule.bd49f_convert_daily (cron 5 3 -> 5 7). No IAM, no data movement, no new resources.
 **Expected plan:** 0 add / 3 change / 0 destroy, TARGETED (the opal-assets root is shared; targeting avoids ratifying unrelated staged rows).
+**Status:** CLOSED 2026-08-19T14:33Z by 1.0.0_SA_CTO -- all legs landed, nothing stranded (targeted plan 0/3/0 as expected, safe-apply PASS, 0-diff re-plan clean). Applied-plane re-verified 2026-08-19T2147Z by 0.7.0_AE_CloudOps (live primitives, Rule 22a) (record-form stamp added by 0.7.0_AE_CloudOps; the CLOSE verdict is CTO's, unchanged): opal-assets-bd49f-daily-pull-pull-daily = cron(30 6 * * ? *) ENABLED; opal-assets-bd49f-daily-pull-reattempt-daily = cron(30 8 * * ? *) ENABLED; opal-assets-bd49f-dim-convert-daily = cron(5 7 * * ? *) ENABLED -- all three exact to the record.
 
 | step | result |
 |---|---|

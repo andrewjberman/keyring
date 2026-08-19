@@ -113,6 +113,13 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
       - 0.0.0_AB_MSTR~Z
+
+  D0_T1_BROKER:
+    permitted_agents:
+      - 0.8.0_AE_CloudComp
+      - 1.0.0_SA_CTO
+      - 0.0.0_AB_MSTR
+    description: "D0-T1 broker-build window grant (2026-08-19, grantor 1.0.0_SA_CTO on 0.8.0's 220017Z lane-vs-placement surface; SoD: grantee is 0.8.0, grantor CTO). RULING RECORDED WITH THE GRANT: a ONE-OFF cross-lane commit uses the audited GIT_COMMIT_AUTHOR_OVERRIDE escape exactly as 0.8.0 did tonight (correct, not a violation); RECURRING work-within-a-program on another lane's path gets a NARROW WINDOW-SCOPED enumeration amendment -- this lane. Scope: server.py + the T1 battery file ONLY (org/mcp/** stays BASE_EXEC everywhere else, longest-match-wins per the MSTR_TRUNK precedent). REMOVE AT D0-T1 CLOSE (the T1 acceptance trio + sibling commit-worker fix landing) -- a window grant that outlives its window is the standing-channel debt class."
     description: "Cross-device MSTR AGENTBUS trunk (org/mcp/agentbus-trunk/**) -- Andrew stood the trunk up 2026-07-28 late-night so the two MSTR devices (base + site Z) can coordinate; the trunk's own law is unacked == undelivered, and base was BLOCKED from ACKing (org/mcp/** BASE_EXEC catch-all). NARROW grant to the trunk subtree ONLY -- org/mcp/** stays BASE_EXEC; overrides per longest-match-wins (MSTR_ARTIFACT_PATHS precedent, line ~68). SoD: grantee is MSTR, grantor ws CTO (this commit), on MSTR's 20260729T003241Z request. ~~KNOWN OPEN HAZARD recorded with the grant, not fixed by it: site Z has ZERO git hooks (fresh clone installs none; 8 installers exist, no single entry point) -- site-Z commits are currently ungated for owned-paths et al.~~ **STRUCK + CORRECTED 2026-07-29 ~2340Z by 1.0.0_SA_CTO~Z, measured on site Z (this is my own line, corrected against myself): SITE Z HAS 7 OF 8 INSTALLERS WIRED, NOT ZERO.** Live: pre-commit = branch-content-isolation + owned-paths-check + mstr-ledger-check; commit-msg = mass-deletion-check; post-commit = closeout-comp-state + missions-refresh + stitch-refresh; pre-push = safe-deploy. Only `install-headmove-guard.sh` is unwired -- THAT is the residual, and it is one hook, not eight. Exercised, not read: `owned-paths-check.sh` was run per-path with the audit log redirected to scratch, and it BLOCKED `infra/aws/lambda/data_refresh/**` and `org/tier0/ledger/**` for `1.0.0_SA_CTO~Z` while ALLOWING `docs/architecture/**` -- a firing negative control, so the gate is live here, not merely present. **WHY THE ERROR MATTERS MORE THAN THE FACT: an \"ungated device\" claim makes site Z's audit logs read as an ARTIFACT OF ABSENT GATES -- i.e. safely empty. The opposite is true: the gates run, so site Z's ~23KB of override records are REAL evidence that is durable NOWHERE (gitignored + the audit archive has no device dimension). This line was pointing readers away from RV-0057 F-001, which is the live finding.** Mechanism + fix: `docs/architecture/NFRA_AUDITDEV_PRD.md` (@e05fad4f3). The install-all entry point remains a real, named, unbuilt item (CTO to route) -- narrowed from eight hooks to one. Added 2026-07-29 by 1.0.0_SA_CTO."
 
   COMP_LEARNS:
@@ -1224,6 +1231,14 @@ paths:
   "org/XXX.md":
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
+
+  # D0-T1 broker-build window (more-specific paths; override org/mcp/** BASE_EXEC per longest-match-wins; REMOVE at D0-T1 close):
+  "org/mcp/server.py":
+    lane: D0_T1_BROKER
+    note: "T1 broker primitives build window (double-spawn listener landed @d547f109fe; primitives i/ii + the commit-worker sibling fix remain). Window grant per the lane description's own removal condition."
+  "org/mcp/test_d0_t1_listener_survival.py":
+    lane: D0_T1_BROKER
+    note: "The T1 survival battery (mutant-controlled). Same window, same removal condition."
 
   # MSTR-published ground-truth artifact (more-specific path; overrides org/mcp/** below per longest-match-wins):
   "org/mcp/agentbus-trunk/**":

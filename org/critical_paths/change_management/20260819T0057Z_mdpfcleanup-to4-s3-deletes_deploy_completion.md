@@ -5,6 +5,7 @@
 **Copy-manifest:** .scratch-ae/to4_manifest/manifest.tsv -- 10 rows, sha256 + bytes per object, local rollback copies sha-verified. ROLLBACK = same-window aws s3 cp from the local copies.
 **HELD (not in scope tonight):** json/mdpf/49financial/aggregate-aua-timeseries.json (mdpf-gold-lambda FLAG-2 daily reader; deletes only after MDPF_PROVENANCE T-B proves on a scheduled 13:30Z run, >=08-20).
 **EXCLUDED (grounds in exec plan):** mdpf/feeds/ + telemetry/ (LIVE today); bmkaud-evidence/ (PERMANENT declared evidence-class exception, COO 163649Z).
+**Status:** CLOSED 2026-08-19T01:05Z by 0.7.0_AE_CloudOps -- 10/10 deleted-and-absent (per-row pre-head==manifest, post-head 404); PASS_WITH_DISCLOSURE (structural oracle in lieu of the nonexistent access log) -> PASS. Applied-plane re-verified 2026-08-19T2147Z by 0.7.0_AE_CloudOps (live primitives, Rule 22a): json/mdpf/ recursive == 1 == EXACTLY the HELD key (183,004 B); opal-data-mdpf cache/ == 0; positive control telemetry/ SURVIVES (instrument discriminates). [Close time grounded on 18c3846cbd 'ledger + proof' @2026-08-19T01:05:41Z; this line replaces the unresolved '01:0xZ' placeholder the body carried.]
 
 ## Structural oracle (PASS_WITH_DISCLOSURE basis -- no access-log instrument exists; Andrew's word made the CF-logging question MOOT)
 1. ROUTE NEGATIVE (applied): no CF path resolves json/mdpf/* (default behavior -> S3-opalinvest-portal; /json-tiered/* only /json* behavior; /api/general/mdpf/* -> /platinum/mdpf/* in deployed public-data-router :6 sha==HEAD-built-07-29). Read 160xZ 08-18.
@@ -26,10 +27,10 @@
 | 9 | s3://opal-data-portal-v2/json/mdpf/inflection/account-distribution.json | pre=[Fri, 14 Aug 2026 11:30:39 GMT	6865]==manifest 6865B | delete-object OK | post=404-ABSENT | bytes per manifest |
 | 10 | s3://opal-data-mdpf/cache/custody_crosswalk.json | pre=[Tue, 19 May 2026 15:54:14 GMT	317362]==manifest 317362B | delete-object OK | post=404-ABSENT | bytes per manifest |
 
-## Execution record (00:57-01:0xZ 08-19)
+## Execution record (00:57-01:05Z 08-19)
 - FIRST ATTEMPT: 0 of 10 -- my head-object parser read awk $2 of an HTTP-date line (= day-of-month) as ContentLength; the size guard STOPPED every row (fail-closed on the author's own bug, zero mutations). Re-run with $NF: 10/10.
 - 10 of 10 DELETED-AND-ABSENT (per-row pre-head==manifest, post-head 404). DELTA: 10 objects / 1,281,642 B, fully manifest-accounted; local sha256 copies retained (.scratch-ae/to4_manifest/objects/) = rollback instrument (same-window aws s3 cp).
 - POST-DELETE LISTINGS: json/mdpf/ recursive count = 1 = EXACTLY the HELD key (49financial/aggregate-aua-timeseries.json, positive control head 183,004 B == its manifest-era bytes, SURVIVES); opal-data-mdpf cache/ = 0; positive control telemetry/ survives (status.json 08-18).
 - AT-EXEC RE-CONFIRMS: smartx-ingestion Invocations 08-14T15Z..08-19T00:55Z = ZERO datapoints (metric window re-pulled at exec); live principal census (denominator: 4 roles read) -- mdpf-daily-runner-ec2-role: JsonMdpfServingRW Allow Get/Put json/mdpf/* AND P0DenyJsonMdpfClobber20260728 Deny PutObject json/mdpf/* APPLIED (writer barred since 07-28); mdpf-gold-lambda-role: GoldServedPreserveRead GetObject json/mdpf/* (the FLAG-2 reader -- HELD key only at deployed bytes); smartx-ingestion-lambda-role: ZERO json/mdpf references inline, only AWSLambdaBasicExecutionRole attached; opal-assets publisher json/mdpf prefixes are on opal-data-ASSETS (different tree, not a portal-v2 principal).
 - NEVER#3: COO half 163649Z + CTO half 170518Z, both vs manifest.tsv sha-set, no rows added since.
-**CLOSED 2026-08-19T01:0xZ by 0.7.0_AE_CloudOps. PASS_WITH_DISCLOSURE (structural oracle in lieu of the nonexistent access log) -> PASS. CTO validation requested same-window.**
+**CLOSED 2026-08-19T01:05Z by 0.7.0_AE_CloudOps (time grounded on 18c3846cbd @01:05:41Z; was an unresolved "01:0xZ" placeholder). PASS_WITH_DISCLOSURE (structural oracle in lieu of the nonexistent access log) -> PASS. CTO validation requested same-window.**

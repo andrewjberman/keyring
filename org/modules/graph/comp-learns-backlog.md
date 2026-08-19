@@ -47,21 +47,21 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 123, "cold_start_routes": 123, "total_routes": 130}
 - top demand terms: 'List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles)' x130
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated comp-which rule -> comp-aws (the cloud-resource list/inspect surface). Rides the 0.8.0 curated-vocabulary batch.
 
 ## [OPEN] routing-friction -- routing: canonical pipeline ready  (filed 2026-07-14, value 69.0)
 <!-- key: routing-friction|routing: canonical pipeline ready -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 69, "cold_start_routes": 131, "total_routes": 138}
 - top demand terms: 'Is a canonical pipeline ready to STAND IN for the BD-served surfaces (a never-widen cutover)? The daily, tolerance-aware, dual-gated DATA/served parity proof, firm-by-firm -- the multi-day CLEAN streak IS the cutover gate' x137, 'is the canonical pipeline ready to stand in for served' x1
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated rule -> comp-incrparity NOW (the parity/cutover-readiness surface), with the D2 BD-parity harness as the named successor route when it lands. Rides the vocabulary batch.
 
 ## [OPEN] routing-friction -- routing: gold script chain  (filed 2026-07-14, value 67.0)
 <!-- key: routing-friction|routing: gold script chain -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 67, "cold_start_routes": 128, "total_routes": 135}
 - top demand terms: 'Gold script I/O, chain membership, deployed-match, overlap' x135
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated rule -> comp-pipescript (io + deployed cover the demanded intent verbatim). Rides the vocabulary batch.
 
 ## [BUILT comp-state @ c7aca9200] routing-friction -- routing: registry narrative project  (filed 2026-07-14, value 66.0)
 <!-- key: routing-friction|routing: registry narrative project -->
@@ -81,21 +81,21 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 66, "cold_start_routes": 127, "total_routes": 134}
 - top demand terms: 'Tooltip migration audit (portal tooltip coverage)' x134
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated rule -> comp-transform (component-audit surface; the screenshot primitive ui-smoke.mjs stays the exercised-path oracle, stated in the route text). Rides the vocabulary batch.
 
 ## [OPEN] routing-friction -- routing: components consume typescript  (filed 2026-07-14, value 66.0)
 <!-- key: routing-friction|routing: components consume typescript -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 66, "cold_start_routes": 128, "total_routes": 135}
 - top demand terms: 'Which components consume this TypeScript type (before editing an interface)' x134, 'which components consume this typescript type' x1
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated rule -> comp-blast (type/function consumer surface; comp-xref named as sibling in the route text). Rides the vocabulary batch.
 
 ## [OPEN] routing-friction -- routing: rebuild trace graph  (filed 2026-07-14, value 63.0)
 <!-- key: routing-friction|routing: rebuild trace graph -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 63, "cold_start_routes": 131, "total_routes": 138}
 - top demand terms: 'Rebuild the trace graph cache (WRITE-PATH — after adding files)' x137, 'rebuild the trace graph cache' x1
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- curated rule -> comp-build (the WRITE-PATH rebuild verb). Rides the vocabulary batch.
 
 ## [BUILT] coverage-gap -- comp-trigger (EventBridge/Scheduler dispatch forensics)  (filed 2026-07-14, retro)
 <!-- key: coverage-gap|comp-trigger-eventbridge-forensics -->
@@ -131,7 +131,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - deliberately NOT landed same-pass: node_type taxonomy is the gate-checked 52-type SSOT
   (NFRA_GRAPHS; comp-coverage-check node_type_grain bridge) -- adding a node domain is a
   CTO-arch-gate change with consumers, not a side-effect edit.
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- AND THE ARCH GATE IS HEREBY PASSED for the node-domain addition (compiler-tools domain: .tools/* shims + org/modules/graph/*.py engines + import edges) via the gate-checked 52-type SSOT path -- the entry correctly refused to land it as a side-effect; this ratification IS the CTO-arch-gate word it waited on. Build: 0.8.0 queue, after the vocabulary batch.
 
 ## [OPEN] tooling-gap -- backlog citation-less-closure DETECTOR  (filed 2026-07-14, from CVO~Z /verify verdict 3d816c650)
 <!-- key: tooling-gap|backlog-citationless-closure-detector -->
@@ -142,7 +142,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   is PROSE-ONLY -- nothing detects a violation. The verifier who found this had just re-taken six
   claims precisely because prose rules without detectors are how records drift (CVO~Z, verdict
   cvoz_verify_nfra_compclose_verdict.md).
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- BUILD-CHEAP confirmed; FOLDED INTO the header/body deploy-ledger lint build (routed 0.8.0 tonight, 213906Z): same record-integrity family, one instrument, two scan targets (ledgers + this file).
 
 ## [OPEN] instrument-integrity -- comp-freshness ddb FALSE-EMPTY on populated tables (CF-1)  (filed 2026-07-14, CTO-routed)
 <!-- key: instrument-integrity|comp-freshness-ddb-false-empty-cf1 -->
@@ -171,7 +171,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   blackdiamond/schwab/smartx/etf channels; the monolith is now the estate's primary data plane.
 - DESIGN NOTE (not binding): the cheapest first cut is comp-freshness family entries per channel with
   freshness_basis: trading-day-frontier + the manifest listing as the sweep-health oracle.
-- resolution: OPEN -- registry-owner lane to scope; base-CTO files, does not build (07-14 scope directive).
+- resolution: OPEN -- **BUILD RATIFIED** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- the entry's own design note IS the scope: comp-freshness family entries per monolith channel with freshness_basis: trading-day-frontier + the sweep-manifest listing as the health oracle. Scoping+build: 0.8.0 with DS-lane input; NOTE the estate moved since filing (gold homes now per-firm buckets per the 08-11 ruling) -- the builder grounds the channel list at build time, never from this 07-14 text.
 
 ## [OPEN] instrument-integrity -- comp-state REGROW touch-dating blind to in-row edits + record-keeping corpus noise  (filed 2026-07-14, CTO)
 <!-- key: instrument-integrity|comp-state-regrow-s-dating-and-fold-noise -->
@@ -189,8 +189,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - value evidence: 07-14 21:0xZ convergence re-run: hot set verified CURRENT by direct read of the
   fold commits, yet instrument read BEHIND 14/1/2 across three projects; the false-BEHIND cost one
   full re-run + manual diff to diagnose.
-- resolution: OPEN -- design ruled at filing; build routes to ~Z-group/0.8.0-class capacity via MSTR
-  (base-CTO instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- ONE build covers the whole pickaxe family (this entry + the two 07-15/07-16 same-count-blind twins below): -G regex-diff or row-line blame + the --exclude-recordkeeping corpus filter. 0.8.0 queue.
 
 ## [OPEN] coverage-gap -- lambda deployed-artifact drift check (comp-pipescript-deployed for the lambda estate)  (filed 2026-07-14, CTO)
 <!-- key: coverage-gap|lambda-artifact-drift-check -->
@@ -210,8 +209,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   and whole-file churn destroys blame utility on the estate's deploy-truth record.
 - value evidence: C4 half-landed 20+ hours undetected across two sessions + a ratified-then-falsified
   'APPLIED' claim (config-read-for-behavioral, 22a); found only when the scheduled fire exercised it.
-- resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
-  instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+- resolution: OPEN -- **ABSORBED-INTO-T2** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit): the D0 tightening program's T2a BUILD_MANIFEST stamps + T2b stamp-comparison chokepoint (TIGHTENING brief @094df1d132; D0 PRD s4b) cover this class BY DESIGN (per-member shas vs built-from, classified verdicts) -- one control, one home; a parallel per-lambda checker would be the two-homes defect. Flips to BUILT-via-T2b at that landing; the source-map canonical-formatter amendment rides the same TO.
 
 ## [OPEN] coverage-gap -- portal light-fg silver-canvas commit-time nudge (WARN-level, announce-then-enforce)  (filed 2026-07-15, CTO; routed from 0.5.0~A CC of Andrew-direct #6)
 <!-- key: coverage-gap|portal-light-fg-silver-canvas-nudge -->
@@ -226,8 +224,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   (the root design/ canonical repository, UIUX macro) as the color law, not portal/CLAUDE.md alone.
 - extension point noted: comp-transform schema-check has no color/contrast dimension; ui-smoke.mjs
   is the primitive a COMP lane would build on.
-- resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
-  instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- WARN-only as specced (announce-then-enforce; the screenshot stays the oracle). 0.8.0 queue, small.
 
 ## [OPEN] coverage-gap -- design/ tree missing from doc-globbing comp-tool scan roots  (filed 2026-07-15, CTO; routed from 0.5.0~A CC of Andrew-direct #7)
 <!-- key: coverage-gap|design-tree-scan-roots -->
@@ -236,14 +233,14 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   automatically; ANY comp tool with HARDCODED doc scan roots (surface maps, graph doc-derives,
   systems-context doc indexing) needs design/ added or it silently omits the canonical design law
   from every answer. Audit which registries hardcode roots, then add.
-- resolution: OPEN -- rides the same ~Z/0.8.0 registry-touch wave; small.
+- resolution: OPEN -- **BUILD RATIFIED** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- audit-then-add exactly as filed; rides the 0.8.0 registry-touch wave, small.
 
 ## [OPEN] tool-defect -- comp-blast cp1252 crash on non-ASCII in corpus quotes  (filed 2026-07-15, CTO; found by 0.4.0_DS~A on the A1 sweep)
 <!-- key: tool-defect|comp-blast-cp1252-print-crash -->
 - disposition: comp-blast crashes under cp1252 console encoding when a corpus quote carries U+2192
   (and any non-ASCII); utf-8 retry works. Fix: cli.py _p() encode-safe (errors=replace or
   reconfigure stdout utf-8). Workaround in use: utf-8 env retry.
-- resolution: OPEN -- small; rides the next comp-tool touch or the ~Z/0.8.0 wave.
+- resolution: OPEN -- **BUILD RATIFIED** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- encode-safe _p() as filed; rides the next comp-blast touch or the 0.8.0 wave, small.
 
 ## [OPEN] tool-defect -- comp-state REGROW convergence structurally unclosable (pickaxe blind to count-neutral row edits)  (filed 2026-07-15, COO; found on the OPAL macro sweep)
 <!-- key: tool-defect|comp-state-regrow-pickaxe-count-neutral -->
@@ -256,8 +253,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   last commit touching REGISTRY.md that changed that row's line. Second cost item, same engine:
   load_records computes per-record git last-touch for ALL ~1,700 TOs BEFORE the --project filter
   (~5-8 min per invocation on this host); filter-first would make --project seconds.
-- resolution: OPEN -- rides the next comp-state touch; sweep results remain valid (agent = precision
-  layer; the gap is the convergence loop, not the recall).
+- resolution: OPEN -- **BUILD RATIFIED (family)** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- covered by the ONE pickaxe-family build ratified on the 07-14 twin above (-G/blame dating + filter-first --project perf item folded in). 0.8.0 queue.
 
 ## [OPEN] instrument-gap -- the .013 freshness gate is VACUOUS on the orion gold runner  (filed 2026-07-16, CTO)
 <!-- key: instrument-gap|comp-freshness absent on orion-gold-runner PATH -->
@@ -273,8 +269,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - fix shape: stage comp-freshness (+ its trading-calendar lib dep) into the runner's code/ closure per
   Rule-12, OR delete the .013 call from the dispatch and route freshness to the container-side sweep --
   DECIDE, don't leave the WARN-skip. check_freshness: retire or re-point its reference artifacts.
-- resolution: OPEN -- CTO-filed post-incident 2026-07-16 ~00:21Z; NOT touched mid-window (guard-state
-  change rule). Route: DS~B refactor lane (the dispatch is theirs under B1) or the STNDRD deploy standard.
+- resolution: OPEN -- **DECIDED + BUILD RATIFIED** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- the DECIDE the entry demanded: STAGE comp-freshness (+ trading-calendar dep) into the runner's code/ closure per Rule-12 (never delete the gate -- a vacuous gate is retired by making it FIREABLE, not by removing the only named control); check_freshness's dead references RE-POINT or retire in the same touch. Route: DS-lane at the runner's next touch; not mid-window.
 
 ## [OPEN] instrument-gap -- comp-state REGROW row dating is blind to same-count edits  (filed 2026-07-16, CTO)
 <!-- key: instrument-gap|comp-state regrow pickaxe same-count blind -->
@@ -287,7 +282,7 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   check dies as a control.
 - fix shape: date REGROW rows by the REGISTRY.md file's last commit intersected with a line-range blame
   for the row, or fall back to blame on the row's first cell; pickaxe stays as the fast path.
-- resolution: OPEN -- CTO-filed 2026-07-16 ~12:15Z.
+- resolution: OPEN -- **BUILD RATIFIED (family)** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- same pickaxe-family build as the two siblings above; one fix, three entries flip together (CLAIM-SETS discipline: each closes on its own verified claim at build time).
 
 ## [OPEN] tool-defect -- deploy_ledger _md_status regex misses colon-inside-bold Status variants (Layer-3 drift detector blind on its own hunting quadrant)  (filed 2026-07-16, COO; found by 0.6.2 on the v22b close)
 <!-- key: tool-defect|deploy-ledger-md-status-colon-inside-bold -->
@@ -297,11 +292,11 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   cosmetic variant. Layer 1 caught that instance (nothing lost), but the detector's coverage is narrower than its
   docstring implies. Fix candidate: tolerant regex (\*\*Status:?\*\*:? / colon either side) + a self-test planting
   the colon-inside variant. Evidence: 0.6.2 131410Z + 291a28fc8.
-- resolution: OPEN -- CTO ratification per the gap->build routing; rides the next deploy_ledger touch. **RE-HIT 2026-07-23 (DT, on the MDPF v2.1.145-148 promote-ledger closes): the same colon-inside-bold variant scanned unindexed; DT re-grounded it @deploy_ledger.py:427 (reproduce-then-kill) and worked around by reformatting to the exact `**Status:** VALUE` form. 0.8.0's evidence-based backlog reconcile + regex-loosen is scheduled (CTO ruling 20260723, tomorrow-class). A filed-but-unbuilt gap bit again un-built -- the record worked, the build lagged 7 days.**
+- resolution: OPEN -- **BUILD RATIFIED** (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit) -- FOLDED INTO the header/body agreement lint build (0.8.0, routed 213906Z): tolerant Status regex + the planted colon-inside self-test are that lint's own parser requirements; a filed gap that bit twice un-built goes first in the batch. **RE-HIT 2026-07-23 (DT, on the MDPF v2.1.145-148 promote-ledger closes): the same colon-inside-bold variant scanned unindexed; DT re-grounded it @deploy_ledger.py:427 (reproduce-then-kill) and worked around by reformatting to the exact `**Status:** VALUE` form. 0.8.0's evidence-based backlog reconcile + regex-loosen is scheduled (CTO ruling 20260723, tomorrow-class). A filed-but-unbuilt gap bit again un-built -- the record worked, the build lagged 7 days.**
 
 ## [OPEN] gate-design -- a control inherits the scope it was written in; scope-coverage control per axis  (filed 2026-07-23, COO per CTO ruling 20260723T222919Z)
 <!-- key: gate-design|scope-coverage-control-per-axis -->
 - disposition: a change touching a SHARED COMPONENT or CROSSING SCOPES must carry a control AT EVERY SCOPE it can reach. The acceptance battery ENUMERATES the scopes/axes a change touches (shared component -> every view it renders; contract -> every scope that applies it; producer -> every tier that serves it) and requires a control per scope; an un-exercised scope is named UNCOVERED in the evidence, NEVER silently passed. Invariant: **A CONTROL INHERITS THE SCOPE IT WAS WRITTEN IN; a change does not.** The scope-analog of "print the denominator of every scan."
 - value evidence: three escapes of ONE class in one night (2026-07-23): (a) the v2.1.147 W-3b anchor mutant was per-firm-scoped and structurally could not falsify the GLOBAL mis-application (it exercised the contract at the scope where the anchor is correct) -> shipped a $275M-low broken Total, caught by Andrew, fixed in 148; (b) the producer/consumer parity gap -- a control blind to the serve-tier axis (the W-7 count published to a non-consumed key, caught pre-wiring by the parity check); (c) the count co-sign -- the per-firm mutant reproduced 0 cliffs while the global had 22, the cliff living only in aggregation.
 - fix shape: scope-enumeration-then-control-per-scope as a STANDING GATE (CTO ruling: condition-4 generalized to scope-coverage) on the DE/DT/DS render+serve acceptance batteries; a design requirement in the P2 parity-instrument spec; a doctrine line in the verification-law list.
-- resolution: OPEN -- STANDING GATE binding now (CTO ruling 20260723T222919Z); the P2-spec requirement + the doctrine line ride the synthesis architecture doc (COO landing-3). Flips to BUILT when scope-enumeration lands in the batteries + the P2 instrument.
+- resolution: OPEN -- STANDING GATE binding now (CTO ruling 20260723T222919Z); **RE-AFFIRMED + WIRED (CTO ratification pass 2026-08-19 ~21:5xZ; drive-cycle-2 ask COO 214336Z; citation = this commit): the P2 instrument named then IS the D2 BD-parity harness now spec'd (D2 PRD s4a + the pre-registration file) -- its scope-enumeration requirement carries there; flips BUILT when the harness ships with per-scope controls + the battery scope-enumeration lands.**
