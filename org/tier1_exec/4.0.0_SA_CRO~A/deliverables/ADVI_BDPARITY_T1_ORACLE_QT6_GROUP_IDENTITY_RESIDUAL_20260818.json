@@ -1,0 +1,1746 @@
+{
+  "artifact": "qt6 group-grain identity residual, Aug 2026 -- BMV + NetFlows(excl fees) - Fees vs EMV",
+  "produced_by": "4.0.0_SA_CRO~A",
+  "requested_by": "0.4.0_DS_ClientPlatform~B (232407Z)",
+  "source": "ADVI_BDPARITY_T1_ORACLE_QT6_GROUP_GRAIN_20260818.csv, persisted template 517678 / run 517753",
+  "INTERPRETATION_READ_THIS_FIRST": "residual = EMV - (BMV + NetFlows_excl_fees - Fees) = IMPLIED MARKET APPRECIATION. The identity does NOT close by construction: it omits market return. A near-zero residual is the ANOMALY, not the goal. This is a returns quantity, not an error term.",
+  "ANSWER_TO_THE_QUESTION_ASKED": "FLAT, not concentrated. 181 of 215 Aug groups (84.2 pct) sit in a 1.0-2.0 pct band with median 1.469 and IQR 1.325-1.589 -- a common market factor across the population, NOT tracking the wide-L1/L2 roster groups. Per DS~B framing that makes it a convention/basis term rather than the roster mechanism a second time. The two instruments therefore do NOT agree on one mechanism here: the residual is independent of the membership gap.",
+  "month_medians_pct_bmv": {
+    "6": -0.099,
+    "7": 0.064,
+    "8": 1.469
+  },
+  "MONTH_VARIATION_IS_THE_CORROBORATION": "Jun -0.099, Jul +0.064, Aug +1.469 -- three different periods, three different market returns, each tight. A basis/convention error would not re-price itself monthly.",
+  "denominators": {
+    "aug_groups": 215,
+    "in_band": 181,
+    "outliers": 30,
+    "outliers_under_1m_bmv": 6,
+    "exact_zero_residual": 1,
+    "median_bmv_in_band": 10456549,
+    "median_bmv_outliers": 5661399
+  },
+  "OUTLIER_CAVEAT": "CORRECTED before publication -- my first draft said outliers are DOMINATED by small-denominator artifacts. The data does not support that. TRUE: the extreme tail is a small-denominator artifact (top outlier Jacob Villarreal +77.6 pct on BMV 8,925.91 against a -10,200.58 outflow -- a percentage of a tiny base). NOT TRUE: that this explains the 30 outliers as a class. Only 6 of 30 sit under 1M BMV, and median outlier BMV (5,661,399) is roughly HALF the in-band median (10,456,549), not far below it. So 24 of 30 outliers are NOT explained by a small base and remain UNEXPLAINED. Do not read this field as having dispositioned them.",
+  "per_group": {
+    "49 Private Wealth": {
+      "bmv": 386947747.21,
+      "emv": 393041798.49,
+      "net_flows_excl_fees": 666024.61,
+      "fees": 6558.62,
+      "resid": 5434585.29,
+      "resid_pct_bmv": 1.4045
+    },
+    "49 Solutions": {
+      "bmv": 1703904.01,
+      "emv": 1865964.94,
+      "net_flows_excl_fees": 140807.38,
+      "fees": 0.0,
+      "resid": 21253.55,
+      "resid_pct_bmv": 1.2473
+    },
+    "49F Schwab AUM": {
+      "bmv": 816401183.11,
+      "emv": 835796499.32,
+      "net_flows_excl_fees": 7267867.81,
+      "fees": 22235.77,
+      "resid": 12149684.17,
+      "resid_pct_bmv": 1.4882
+    },
+    "Abby Horton": {
+      "bmv": 4905947.1,
+      "emv": 4976447.06,
+      "net_flows_excl_fees": 552.57,
+      "fees": 2556.33,
+      "resid": 72503.72,
+      "resid_pct_bmv": 1.4779
+    },
+    "Abigail Hall": {
+      "bmv": 88132.81,
+      "emv": 89515.37,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 1382.56,
+      "resid_pct_bmv": 1.5687
+    },
+    "Adam Dahlstrom": {
+      "bmv": 8929137.93,
+      "emv": 9144163.78,
+      "net_flows_excl_fees": 99222.41,
+      "fees": 38.36,
+      "resid": 115841.8,
+      "resid_pct_bmv": 1.2973
+    },
+    "AJ Lenartowicz": {
+      "bmv": 4441930.02,
+      "emv": 4556220.42,
+      "net_flows_excl_fees": 49933.09,
+      "fees": 132.07,
+      "resid": 64489.38,
+      "resid_pct_bmv": 1.4518
+    },
+    "Alex Bright": {
+      "bmv": 30204896.94,
+      "emv": 30618560.58,
+      "net_flows_excl_fees": 8273.46,
+      "fees": 1331.57,
+      "resid": 406721.75,
+      "resid_pct_bmv": 1.3465
+    },
+    "Alex Bright - Local Ops": {
+      "bmv": 613033678.72,
+      "emv": 624374051.78,
+      "net_flows_excl_fees": 2442017.26,
+      "fees": 18954.12,
+      "resid": 8917309.93,
+      "resid_pct_bmv": 1.4546
+    },
+    "Alex Coggins": {
+      "bmv": 2912479.08,
+      "emv": 2919681.0,
+      "net_flows_excl_fees": 4000.0,
+      "fees": 0.0,
+      "resid": 3201.92,
+      "resid_pct_bmv": 0.1099
+    },
+    "Alex Dawkins": {
+      "bmv": 1323307.94,
+      "emv": 1330786.9,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 7478.96,
+      "resid_pct_bmv": 0.5652
+    },
+    "Andrew  Stafford": {
+      "bmv": 1645562.04,
+      "emv": 1670493.6,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 24931.56,
+      "resid_pct_bmv": 1.5151
+    },
+    "Andrew Horton": {
+      "bmv": 11687413.83,
+      "emv": 12045864.2,
+      "net_flows_excl_fees": 161912.82,
+      "fees": 55.92,
+      "resid": 196593.47,
+      "resid_pct_bmv": 1.6821
+    },
+    "Andrew Rose": {
+      "bmv": 1842283.16,
+      "emv": 1926664.49,
+      "net_flows_excl_fees": 61781.49,
+      "fees": 0.0,
+      "resid": 22599.84,
+      "resid_pct_bmv": 1.2267
+    },
+    "Andrew Wilson": {
+      "bmv": 1804042.51,
+      "emv": 2263736.42,
+      "net_flows_excl_fees": 434913.73,
+      "fees": 0.0,
+      "resid": 24780.18,
+      "resid_pct_bmv": 1.3736
+    },
+    "Ashley Bourland": {
+      "bmv": 32038946.51,
+      "emv": 35578497.89,
+      "net_flows_excl_fees": 3084694.03,
+      "fees": 6239.45,
+      "resid": 461096.8,
+      "resid_pct_bmv": 1.4392
+    },
+    "August Vordenbaum": {
+      "bmv": 1181134.86,
+      "emv": 1204560.95,
+      "net_flows_excl_fees": 2280.78,
+      "fees": 0.0,
+      "resid": 21145.31,
+      "resid_pct_bmv": 1.7903
+    },
+    "Austin Bost": {
+      "bmv": 10779157.38,
+      "emv": 11297754.59,
+      "net_flows_excl_fees": 355914.82,
+      "fees": 0.0,
+      "resid": 162682.38,
+      "resid_pct_bmv": 1.5092
+    },
+    "Austin Thompson": {
+      "bmv": 27847673.11,
+      "emv": 28331987.99,
+      "net_flows_excl_fees": -48943.29,
+      "fees": 0.0,
+      "resid": 533258.17,
+      "resid_pct_bmv": 1.9149
+    },
+    "Ava Smagacz": {
+      "bmv": 27049398.66,
+      "emv": 29547327.21,
+      "net_flows_excl_fees": 2134331.85,
+      "fees": 1800.08,
+      "resid": 365396.79,
+      "resid_pct_bmv": 1.3508
+    },
+    "Banks Wilson": {
+      "bmv": 13683419.57,
+      "emv": 14031515.76,
+      "net_flows_excl_fees": 131563.67,
+      "fees": 3124.82,
+      "resid": 219657.34,
+      "resid_pct_bmv": 1.6053
+    },
+    "Baylor Wedge": {
+      "bmv": 10270807.83,
+      "emv": 10526400.55,
+      "net_flows_excl_fees": -22500.0,
+      "fees": 0.0,
+      "resid": 278092.72,
+      "resid_pct_bmv": 2.7076
+    },
+    "Beaux Brashear": {
+      "bmv": 4134393.54,
+      "emv": 4235816.93,
+      "net_flows_excl_fees": 45576.34,
+      "fees": 374.86,
+      "resid": 56221.91,
+      "resid_pct_bmv": 1.3599
+    },
+    "Ben Long": {
+      "bmv": 49737302.77,
+      "emv": 50752623.53,
+      "net_flows_excl_fees": -624010.79,
+      "fees": 1213.52,
+      "resid": 1640545.07,
+      "resid_pct_bmv": 3.2984
+    },
+    "Boston Prachyl": {
+      "bmv": 44001892.68,
+      "emv": 45288110.78,
+      "net_flows_excl_fees": 638110.09,
+      "fees": 1930.77,
+      "resid": 650038.78,
+      "resid_pct_bmv": 1.4773
+    },
+    "Brandon Lanz": {
+      "bmv": 120497662.4,
+      "emv": 123018471.82,
+      "net_flows_excl_fees": 798766.15,
+      "fees": 4389.91,
+      "resid": 1726433.18,
+      "resid_pct_bmv": 1.4328
+    },
+    "Brock Martin": {
+      "bmv": 44271405.51,
+      "emv": 44979829.54,
+      "net_flows_excl_fees": 183714.9,
+      "fees": 20341.89,
+      "resid": 545051.02,
+      "resid_pct_bmv": 1.2312
+    },
+    "Brooke Smith": {
+      "bmv": 6755589.83,
+      "emv": 7379591.52,
+      "net_flows_excl_fees": 543683.55,
+      "fees": 0.0,
+      "resid": 80318.14,
+      "resid_pct_bmv": 1.1889
+    },
+    "Bryan Guzman": {
+      "bmv": 1980821.05,
+      "emv": 2024005.69,
+      "net_flows_excl_fees": 18275.92,
+      "fees": 591.58,
+      "resid": 25500.3,
+      "resid_pct_bmv": 1.2874
+    },
+    "Caleb  Borders": {
+      "bmv": 18335230.77,
+      "emv": 19589616.75,
+      "net_flows_excl_fees": 925079.99,
+      "fees": 1980.3,
+      "resid": 331286.29,
+      "resid_pct_bmv": 1.8068
+    },
+    "Caleb Kuhn": {
+      "bmv": 13880809.03,
+      "emv": 14088393.96,
+      "net_flows_excl_fees": 1106.53,
+      "fees": 1088.83,
+      "resid": 207567.23,
+      "resid_pct_bmv": 1.4954
+    },
+    "Cameron McIlhenny": {
+      "bmv": 2039292.97,
+      "emv": 2066295.81,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 27002.84,
+      "resid_pct_bmv": 1.3241
+    },
+    "Cami Engelbert": {
+      "bmv": 6696842.08,
+      "emv": 6794182.96,
+      "net_flows_excl_fees": -7750.0,
+      "fees": 136.3,
+      "resid": 105227.18,
+      "resid_pct_bmv": 1.5713
+    },
+    "Campbell Huber": {
+      "bmv": 12398780.45,
+      "emv": 12720883.69,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 322103.24,
+      "resid_pct_bmv": 2.5979
+    },
+    "Cassady Frey": {
+      "bmv": 3008471.63,
+      "emv": 3086477.63,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 78006.0,
+      "resid_pct_bmv": 2.5929
+    },
+    "Centralized Client Ops": {
+      "bmv": 20549585.01,
+      "emv": 21023913.77,
+      "net_flows_excl_fees": 237949.94,
+      "fees": 0.0,
+      "resid": 236378.82,
+      "resid_pct_bmv": 1.1503
+    },
+    "Chad Crabill": {
+      "bmv": 0.01,
+      "emv": 0.01,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 0.0,
+      "resid_pct_bmv": 0.0
+    },
+    "Charles Bourquin": {
+      "bmv": 1946241.74,
+      "emv": 1970920.37,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 24678.63,
+      "resid_pct_bmv": 1.268
+    },
+    "Chase Bertrand": {
+      "bmv": 125691510.91,
+      "emv": 130661217.25,
+      "net_flows_excl_fees": 2826287.21,
+      "fees": 7010.1,
+      "resid": 2150429.23,
+      "resid_pct_bmv": 1.7109
+    },
+    "Chase Carlson": {
+      "bmv": 4510832.36,
+      "emv": 4557267.84,
+      "net_flows_excl_fees": -11714.71,
+      "fees": 0.0,
+      "resid": 58150.19,
+      "resid_pct_bmv": 1.2891
+    },
+    "Chris Johnson": {
+      "bmv": 8808846.31,
+      "emv": 9352692.57,
+      "net_flows_excl_fees": 435640.82,
+      "fees": 0.0,
+      "resid": 108205.44,
+      "resid_pct_bmv": 1.2284
+    },
+    "Christian Cancello": {
+      "bmv": 0.0,
+      "emv": 1021597.51,
+      "net_flows_excl_fees": 1021622.8,
+      "fees": 0.0,
+      "resid": -25.29,
+      "resid_pct_bmv": null
+    },
+    "Christopher Spalthoff": {
+      "bmv": 59240881.42,
+      "emv": 59520723.99,
+      "net_flows_excl_fees": -600441.96,
+      "fees": 126.58,
+      "resid": 880411.11,
+      "resid_pct_bmv": 1.4862
+    },
+    "Christopher Spalthoff - Local Ops": {
+      "bmv": 348457030.9,
+      "emv": 356010746.79,
+      "net_flows_excl_fees": 2538260.07,
+      "fees": 8405.52,
+      "resid": 5023861.34,
+      "resid_pct_bmv": 1.4417
+    },
+    "Clarke Poss": {
+      "bmv": 770832.36,
+      "emv": 777021.95,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 6189.59,
+      "resid_pct_bmv": 0.803
+    },
+    "Clayton Anderson": {
+      "bmv": 21001621.01,
+      "emv": 24936118.12,
+      "net_flows_excl_fees": 3371474.88,
+      "fees": 2108.68,
+      "resid": 565130.91,
+      "resid_pct_bmv": 2.6909
+    },
+    "Clayton Cross": {
+      "bmv": 12422643.27,
+      "emv": 12865696.08,
+      "net_flows_excl_fees": 309740.89,
+      "fees": 1800.08,
+      "resid": 135112.0,
+      "resid_pct_bmv": 1.0876
+    },
+    "Cole Dunn": {
+      "bmv": 1260988.66,
+      "emv": 1276513.7,
+      "net_flows_excl_fees": -200.0,
+      "fees": 0.0,
+      "resid": 15725.04,
+      "resid_pct_bmv": 1.247
+    },
+    "Cole Kershner": {
+      "bmv": 13554398.86,
+      "emv": 13787323.73,
+      "net_flows_excl_fees": 1585.48,
+      "fees": 6904.11,
+      "resid": 238243.5,
+      "resid_pct_bmv": 1.7577
+    },
+    "Cole Pettis": {
+      "bmv": 23694010.83,
+      "emv": 24909483.73,
+      "net_flows_excl_fees": 796200.0,
+      "fees": 550.41,
+      "resid": 419823.31,
+      "resid_pct_bmv": 1.7719
+    },
+    "Collin Plotts": {
+      "bmv": 504766947.03,
+      "emv": 523369247.21,
+      "net_flows_excl_fees": 10878061.34,
+      "fees": 16009.48,
+      "resid": 7740248.32,
+      "resid_pct_bmv": 1.5334
+    },
+    "Conner Haney": {
+      "bmv": 18149786.86,
+      "emv": 18610407.75,
+      "net_flows_excl_fees": 203794.1,
+      "fees": 828.32,
+      "resid": 257655.11,
+      "resid_pct_bmv": 1.4196
+    },
+    "Connor Bradley": {
+      "bmv": 43956412.88,
+      "emv": 44578495.56,
+      "net_flows_excl_fees": -24184.49,
+      "fees": 1180.95,
+      "resid": 647448.12,
+      "resid_pct_bmv": 1.4729
+    },
+    "Conrad Simpson": {
+      "bmv": 5589409.75,
+      "emv": 8888201.61,
+      "net_flows_excl_fees": 3138046.2,
+      "fees": 0.0,
+      "resid": 160745.66,
+      "resid_pct_bmv": 2.8759
+    },
+    "Cooper Krudwig": {
+      "bmv": 376535.01,
+      "emv": 385014.78,
+      "net_flows_excl_fees": 3000.0,
+      "fees": 0.0,
+      "resid": 5479.77,
+      "resid_pct_bmv": 1.4553
+    },
+    "Corbin Tandy": {
+      "bmv": 7978592.1,
+      "emv": 7992868.53,
+      "net_flows_excl_fees": -98646.66,
+      "fees": 194.52,
+      "resid": 113117.61,
+      "resid_pct_bmv": 1.4178
+    },
+    "Curry Pajcic": {
+      "bmv": 4772183.44,
+      "emv": 4794569.93,
+      "net_flows_excl_fees": -50531.25,
+      "fees": 0.0,
+      "resid": 72917.74,
+      "resid_pct_bmv": 1.528
+    },
+    "Dallas Support": {
+      "bmv": 495701619.82,
+      "emv": 506224873.47,
+      "net_flows_excl_fees": 2577967.0,
+      "fees": 6053.23,
+      "resid": 7951339.88,
+      "resid_pct_bmv": 1.6041
+    },
+    "Dana Cabela": {
+      "bmv": 31492480.85,
+      "emv": 33905996.73,
+      "net_flows_excl_fees": 1966359.07,
+      "fees": 1197.39,
+      "resid": 448354.21,
+      "resid_pct_bmv": 1.4237
+    },
+    "Dane Bower": {
+      "bmv": 1286611.47,
+      "emv": 1307212.92,
+      "net_flows_excl_fees": 1502.08,
+      "fees": 0.0,
+      "resid": 19099.37,
+      "resid_pct_bmv": 1.4845
+    },
+    "Daniel  Hensarling": {
+      "bmv": 2120226.23,
+      "emv": 2147728.67,
+      "net_flows_excl_fees": -3792.68,
+      "fees": 0.0,
+      "resid": 31295.12,
+      "resid_pct_bmv": 1.476
+    },
+    "Darby Daniel": {
+      "bmv": 10628613.78,
+      "emv": 10141129.88,
+      "net_flows_excl_fees": -619761.75,
+      "fees": 0.0,
+      "resid": 132277.85,
+      "resid_pct_bmv": 1.2445
+    },
+    "David Farrell": {
+      "bmv": 145945852.24,
+      "emv": 147144704.15,
+      "net_flows_excl_fees": -841064.01,
+      "fees": 12560.85,
+      "resid": 2052476.77,
+      "resid_pct_bmv": 1.4063
+    },
+    "Dawson Moses": {
+      "bmv": 11397505.25,
+      "emv": 12008764.35,
+      "net_flows_excl_fees": 432674.98,
+      "fees": 0.0,
+      "resid": 178584.12,
+      "resid_pct_bmv": 1.5669
+    },
+    "Dawson Moses - Local Ops": {
+      "bmv": 311149052.63,
+      "emv": 316160160.92,
+      "net_flows_excl_fees": -243071.94,
+      "fees": 4743.61,
+      "resid": 5258923.83,
+      "resid_pct_bmv": 1.6902
+    },
+    "Dean Dillenberg": {
+      "bmv": 121087825.53,
+      "emv": 125581805.74,
+      "net_flows_excl_fees": 2767482.68,
+      "fees": 7328.7,
+      "resid": 1733826.22,
+      "resid_pct_bmv": 1.4319
+    },
+    "Dean Herndon": {
+      "bmv": 9838071.45,
+      "emv": 10195790.62,
+      "net_flows_excl_fees": 214867.67,
+      "fees": 4092.22,
+      "resid": 146943.72,
+      "resid_pct_bmv": 1.4936
+    },
+    "Denver Horn": {
+      "bmv": 852043.03,
+      "emv": 864931.93,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 12888.9,
+      "resid_pct_bmv": 1.5127
+    },
+    "Derek Pfister": {
+      "bmv": 2800646.63,
+      "emv": 2846218.68,
+      "net_flows_excl_fees": 1000.0,
+      "fees": 0.0,
+      "resid": 44572.05,
+      "resid_pct_bmv": 1.5915
+    },
+    "Derrik Naegelin": {
+      "bmv": 39183961.01,
+      "emv": 41457977.48,
+      "net_flows_excl_fees": 1721413.92,
+      "fees": 5836.16,
+      "resid": 558438.71,
+      "resid_pct_bmv": 1.4252
+    },
+    "DJ Catherman": {
+      "bmv": 13381814.5,
+      "emv": 13090301.07,
+      "net_flows_excl_fees": -488546.32,
+      "fees": 0.0,
+      "resid": 197032.89,
+      "resid_pct_bmv": 1.4724
+    },
+    "Ella Boswell": {
+      "bmv": 15079136.49,
+      "emv": 15814426.98,
+      "net_flows_excl_fees": 555729.91,
+      "fees": 0.0,
+      "resid": 179560.58,
+      "resid_pct_bmv": 1.1908
+    },
+    "Ellie  Gaunt": {
+      "bmv": 24127102.21,
+      "emv": 24872396.92,
+      "net_flows_excl_fees": 1356362.47,
+      "fees": 2688.2,
+      "resid": -608379.56,
+      "resid_pct_bmv": -2.5216
+    },
+    "Erick Webb": {
+      "bmv": 3674231.14,
+      "emv": 3723008.29,
+      "net_flows_excl_fees": 200.0,
+      "fees": 277.55,
+      "resid": 48854.7,
+      "resid_pct_bmv": 1.3297
+    },
+    "Erick Webb - Local Ops": {
+      "bmv": 397798009.53,
+      "emv": 409284740.58,
+      "net_flows_excl_fees": 6485355.91,
+      "fees": 9107.84,
+      "resid": 5010482.99,
+      "resid_pct_bmv": 1.2596
+    },
+    "Ethan Schwab": {
+      "bmv": 142974.89,
+      "emv": 145097.84,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 2122.95,
+      "resid_pct_bmv": 1.4848
+    },
+    "Faith Austin": {
+      "bmv": 6108309.76,
+      "emv": 6225910.5,
+      "net_flows_excl_fees": 27666.64,
+      "fees": 0.23,
+      "resid": 89934.33,
+      "resid_pct_bmv": 1.4723
+    },
+    "Frates Newsom": {
+      "bmv": 8635324.24,
+      "emv": 7876659.3,
+      "net_flows_excl_fees": -856638.84,
+      "fees": 0.0,
+      "resid": 97973.9,
+      "resid_pct_bmv": 1.1346
+    },
+    "Gage Oefinger": {
+      "bmv": 4322126.28,
+      "emv": 4403852.77,
+      "net_flows_excl_fees": 500.0,
+      "fees": 0.0,
+      "resid": 81226.49,
+      "resid_pct_bmv": 1.8793
+    },
+    "Garrett Newberry": {
+      "bmv": 22713989.18,
+      "emv": 23226983.97,
+      "net_flows_excl_fees": 184478.04,
+      "fees": 0.0,
+      "resid": 328516.75,
+      "resid_pct_bmv": 1.4463
+    },
+    "Garrison Bradley": {
+      "bmv": 1506244.92,
+      "emv": 1540915.28,
+      "net_flows_excl_fees": -2000.0,
+      "fees": 0.0,
+      "resid": 36670.36,
+      "resid_pct_bmv": 2.4346
+    },
+    "Gavin Ward": {
+      "bmv": 480835.5,
+      "emv": 488102.29,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 7266.79,
+      "resid_pct_bmv": 1.5113
+    },
+    "Grace McCasland": {
+      "bmv": 50944383.94,
+      "emv": 52278454.63,
+      "net_flows_excl_fees": 562689.1,
+      "fees": 301.41,
+      "resid": 771683.01,
+      "resid_pct_bmv": 1.5148
+    },
+    "Grant Boren": {
+      "bmv": 72646842.63,
+      "emv": 73597801.81,
+      "net_flows_excl_fees": 93627.48,
+      "fees": 1552.25,
+      "resid": 858883.95,
+      "resid_pct_bmv": 1.1823
+    },
+    "Grayson Downs": {
+      "bmv": 5989848.18,
+      "emv": 6054301.09,
+      "net_flows_excl_fees": -19859.6,
+      "fees": 293.75,
+      "resid": 84606.26,
+      "resid_pct_bmv": 1.4125
+    },
+    "Greg Rosner": {
+      "bmv": 212738165.91,
+      "emv": 217931539.11,
+      "net_flows_excl_fees": 2270100.33,
+      "fees": 740.79,
+      "resid": 2924013.66,
+      "resid_pct_bmv": 1.3745
+    },
+    "Griffin  Rea": {
+      "bmv": 1560775.15,
+      "emv": 1852031.86,
+      "net_flows_excl_fees": 269877.98,
+      "fees": 80.16,
+      "resid": 21458.89,
+      "resid_pct_bmv": 1.3749
+    },
+    "Hanna Wroblewski": {
+      "bmv": 6961770.8,
+      "emv": 7168848.78,
+      "net_flows_excl_fees": 114520.38,
+      "fees": 619.17,
+      "resid": 93176.77,
+      "resid_pct_bmv": 1.3384
+    },
+    "Hanna Zeitz": {
+      "bmv": 55561.38,
+      "emv": 56403.4,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 842.02,
+      "resid_pct_bmv": 1.5155
+    },
+    "Hayden Baker": {
+      "bmv": 65814494.45,
+      "emv": 70560564.09,
+      "net_flows_excl_fees": 3677358.39,
+      "fees": 5993.5,
+      "resid": 1074704.76,
+      "resid_pct_bmv": 1.6329
+    },
+    "Heath  Siebel": {
+      "bmv": 1135351.03,
+      "emv": 1186273.81,
+      "net_flows_excl_fees": 39700.0,
+      "fees": 0.0,
+      "resid": 11222.78,
+      "resid_pct_bmv": 0.9885
+    },
+    "Hunter Favorite": {
+      "bmv": 2697578.83,
+      "emv": 2729774.52,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 32195.69,
+      "resid_pct_bmv": 1.1935
+    },
+    "Hunter Lloyd": {
+      "bmv": 287822446.96,
+      "emv": 299317465.33,
+      "net_flows_excl_fees": 7409677.92,
+      "fees": 1530.64,
+      "resid": 4086871.09,
+      "resid_pct_bmv": 1.4199
+    },
+    "Isaac Crow": {
+      "bmv": 283448.63,
+      "emv": 287901.09,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 4452.46,
+      "resid_pct_bmv": 1.5708
+    },
+    "Jace Engel": {
+      "bmv": 6248964.55,
+      "emv": 6943556.1,
+      "net_flows_excl_fees": 432528.42,
+      "fees": 87.67,
+      "resid": 262150.8,
+      "resid_pct_bmv": 4.1951
+    },
+    "Jack  Burgess": {
+      "bmv": 125356.76,
+      "emv": 127216.98,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 1860.22,
+      "resid_pct_bmv": 1.4839
+    },
+    "Jack  Stulack": {
+      "bmv": 3073460.83,
+      "emv": 3125663.64,
+      "net_flows_excl_fees": 7684.75,
+      "fees": 0.0,
+      "resid": 44518.06,
+      "resid_pct_bmv": 1.4485
+    },
+    "Jack Breen": {
+      "bmv": 9084885.29,
+      "emv": 9172213.31,
+      "net_flows_excl_fees": -56248.36,
+      "fees": 0.0,
+      "resid": 143576.38,
+      "resid_pct_bmv": 1.5804
+    },
+    "Jackson O'Brien": {
+      "bmv": 38415278.78,
+      "emv": 39277969.0,
+      "net_flows_excl_fees": 253980.24,
+      "fees": 776.12,
+      "resid": 609486.1,
+      "resid_pct_bmv": 1.5866
+    },
+    "Jackson Smith": {
+      "bmv": 1682908.49,
+      "emv": 1710529.85,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 27621.36,
+      "resid_pct_bmv": 1.6413
+    },
+    "Jacob Roos": {
+      "bmv": 41017273.41,
+      "emv": 41505679.55,
+      "net_flows_excl_fees": -28471.4,
+      "fees": 0.0,
+      "resid": 516877.55,
+      "resid_pct_bmv": 1.2601
+    },
+    "Jacob Villarreal": {
+      "bmv": 8925.91,
+      "emv": 5651.9,
+      "net_flows_excl_fees": -10200.58,
+      "fees": 0.0,
+      "resid": 6926.57,
+      "resid_pct_bmv": 77.6007
+    },
+    "Jaelyn Grimm": {
+      "bmv": 5748349.88,
+      "emv": 6027358.07,
+      "net_flows_excl_fees": 186122.73,
+      "fees": 310.49,
+      "resid": 93195.95,
+      "resid_pct_bmv": 1.6213
+    },
+    "Jake Daigle": {
+      "bmv": 2083421.64,
+      "emv": 2110565.01,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 27143.37,
+      "resid_pct_bmv": 1.3028
+    },
+    "Jake Fetchen": {
+      "bmv": 852548.07,
+      "emv": 864490.57,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 11942.5,
+      "resid_pct_bmv": 1.4008
+    },
+    "Jimmy Evans": {
+      "bmv": 542004.38,
+      "emv": 551449.64,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 9445.26,
+      "resid_pct_bmv": 1.7427
+    },
+    "Jimmy Henry": {
+      "bmv": 43030970.16,
+      "emv": 44361826.09,
+      "net_flows_excl_fees": 737130.87,
+      "fees": 2587.93,
+      "resid": 596312.99,
+      "resid_pct_bmv": 1.3858
+    },
+    "John Follett": {
+      "bmv": 2196661.25,
+      "emv": 2264539.93,
+      "net_flows_excl_fees": 37154.09,
+      "fees": 455.56,
+      "resid": 31180.15,
+      "resid_pct_bmv": 1.4194
+    },
+    "John Helmers": {
+      "bmv": 5389590.15,
+      "emv": 5636730.59,
+      "net_flows_excl_fees": -1642.45,
+      "fees": 9.97,
+      "resid": 248792.86,
+      "resid_pct_bmv": 4.6162
+    },
+    "Jon-Michael Chadwick": {
+      "bmv": 156904.67,
+      "emv": 159257.02,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 2352.35,
+      "resid_pct_bmv": 1.4992
+    },
+    "Jordan Binkley": {
+      "bmv": 7536947.09,
+      "emv": 7289478.37,
+      "net_flows_excl_fees": -269308.15,
+      "fees": 1545.56,
+      "resid": 23384.99,
+      "resid_pct_bmv": 0.3103
+    },
+    "Joseph Bolling": {
+      "bmv": 18771682.62,
+      "emv": 19322029.68,
+      "net_flows_excl_fees": 247128.44,
+      "fees": 680.43,
+      "resid": 303899.05,
+      "resid_pct_bmv": 1.6189
+    },
+    "Joseph Bolling - Local Ops": {
+      "bmv": 297309418.23,
+      "emv": 305606289.44,
+      "net_flows_excl_fees": 3829339.96,
+      "fees": 7281.32,
+      "resid": 4474812.57,
+      "resid_pct_bmv": 1.5051
+    },
+    "Josh Henson": {
+      "bmv": 93545990.86,
+      "emv": 95907103.07,
+      "net_flows_excl_fees": 966017.76,
+      "fees": 3504.58,
+      "resid": 1398599.03,
+      "resid_pct_bmv": 1.4951
+    },
+    "Justin Jones": {
+      "bmv": 1378693.44,
+      "emv": 1395814.02,
+      "net_flows_excl_fees": 37.7,
+      "fees": 20.38,
+      "resid": 17103.26,
+      "resid_pct_bmv": 1.2405
+    },
+    "Justin Lopez": {
+      "bmv": 38807682.01,
+      "emv": 39244118.39,
+      "net_flows_excl_fees": -245680.01,
+      "fees": 400.0,
+      "resid": 682516.38,
+      "resid_pct_bmv": 1.7587
+    },
+    "Justin Sanchez": {
+      "bmv": 132782.37,
+      "emv": 134772.93,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 1990.56,
+      "resid_pct_bmv": 1.4991
+    },
+    "Katherine Vlasek": {
+      "bmv": 313028.28,
+      "emv": 317742.66,
+      "net_flows_excl_fees": 300.6,
+      "fees": 0.0,
+      "resid": 4413.78,
+      "resid_pct_bmv": 1.41
+    },
+    "Keegan Caveney": {
+      "bmv": 2107387.13,
+      "emv": 1668296.65,
+      "net_flows_excl_fees": -483221.32,
+      "fees": 0.0,
+      "resid": 44130.84,
+      "resid_pct_bmv": 2.0941
+    },
+    "Kendall Scott": {
+      "bmv": 59629.48,
+      "emv": 60324.51,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 695.03,
+      "resid_pct_bmv": 1.1656
+    },
+    "Kris Blasl": {
+      "bmv": 1114606.49,
+      "emv": 1149242.75,
+      "net_flows_excl_fees": 24304.56,
+      "fees": 0.0,
+      "resid": 10331.7,
+      "resid_pct_bmv": 0.9269
+    },
+    "Kristian Mtetwa": {
+      "bmv": 10646740.41,
+      "emv": 11671721.61,
+      "net_flows_excl_fees": 879086.19,
+      "fees": 0.0,
+      "resid": 145895.01,
+      "resid_pct_bmv": 1.3703
+    },
+    "Kristin Griffin": {
+      "bmv": 3081144.24,
+      "emv": 3114540.58,
+      "net_flows_excl_fees": -4274.37,
+      "fees": 75.41,
+      "resid": 37746.12,
+      "resid_pct_bmv": 1.2251
+    },
+    "Kyle Sims": {
+      "bmv": 205765478.63,
+      "emv": 211400932.43,
+      "net_flows_excl_fees": 2409172.5,
+      "fees": 21601.67,
+      "resid": 3247882.96,
+      "resid_pct_bmv": 1.5784
+    },
+    "Kyle Sweeney": {
+      "bmv": 29940954.08,
+      "emv": 30395566.09,
+      "net_flows_excl_fees": 26665.25,
+      "fees": 748.82,
+      "resid": 428695.58,
+      "resid_pct_bmv": 1.4318
+    },
+    "Lane Curry": {
+      "bmv": 11487757.86,
+      "emv": 12520689.72,
+      "net_flows_excl_fees": 895202.86,
+      "fees": 0.0,
+      "resid": 137729.0,
+      "resid_pct_bmv": 1.1989
+    },
+    "Lane Curry - Local Ops": {
+      "bmv": 420849031.36,
+      "emv": 431069861.3,
+      "net_flows_excl_fees": 3740584.27,
+      "fees": 11269.35,
+      "resid": 6491515.02,
+      "resid_pct_bmv": 1.5425
+    },
+    "Lauren Matheu": {
+      "bmv": 61952464.75,
+      "emv": 65918083.43,
+      "net_flows_excl_fees": 2944433.28,
+      "fees": 5087.88,
+      "resid": 1026273.29,
+      "resid_pct_bmv": 1.6565
+    },
+    "Layden Baldwin": {
+      "bmv": 344881.35,
+      "emv": 348126.32,
+      "net_flows_excl_fees": 0.0,
+      "fees": 748.82,
+      "resid": 3993.79,
+      "resid_pct_bmv": 1.158
+    },
+    "Leighton Becker": {
+      "bmv": 10807626.31,
+      "emv": 10210709.93,
+      "net_flows_excl_fees": -773436.25,
+      "fees": 1930.77,
+      "resid": 178450.64,
+      "resid_pct_bmv": 1.6512
+    },
+    "Lincoln Rock": {
+      "bmv": 91422742.61,
+      "emv": 92742524.66,
+      "net_flows_excl_fees": 1030970.13,
+      "fees": 2543.09,
+      "resid": 291355.02,
+      "resid_pct_bmv": 0.3187
+    },
+    "Liv Shin": {
+      "bmv": 67128510.19,
+      "emv": 68252979.35,
+      "net_flows_excl_fees": 189016.08,
+      "fees": 7571.02,
+      "resid": 943024.1,
+      "resid_pct_bmv": 1.4048
+    },
+    "Logan Manson": {
+      "bmv": 95114.19,
+      "emv": 96511.31,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 1397.12,
+      "resid_pct_bmv": 1.4689
+    },
+    "Logan Parrott": {
+      "bmv": 723498.34,
+      "emv": 734467.84,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 10969.5,
+      "resid_pct_bmv": 1.5162
+    },
+    "Logan Tingley": {
+      "bmv": 5395496.09,
+      "emv": 6495350.46,
+      "net_flows_excl_fees": 1019925.6,
+      "fees": 604.24,
+      "resid": 80533.01,
+      "resid_pct_bmv": 1.4926
+    },
+    "Louis Aquino": {
+      "bmv": 18740357.3,
+      "emv": 18996803.79,
+      "net_flows_excl_fees": -15658.55,
+      "fees": 0.0,
+      "resid": 272105.03,
+      "resid_pct_bmv": 1.452
+    },
+    "Luke  Heiligenthal": {
+      "bmv": 31408102.62,
+      "emv": 31981079.99,
+      "net_flows_excl_fees": 83267.67,
+      "fees": 2588.49,
+      "resid": 492298.19,
+      "resid_pct_bmv": 1.5674
+    },
+    "Luke  Scheper": {
+      "bmv": 2498785.78,
+      "emv": 2537254.43,
+      "net_flows_excl_fees": 0.03,
+      "fees": 0.0,
+      "resid": 38468.62,
+      "resid_pct_bmv": 1.5395
+    },
+    "Madeline Blok": {
+      "bmv": 3892132.47,
+      "emv": 3962915.76,
+      "net_flows_excl_fees": 500.0,
+      "fees": 132.83,
+      "resid": 70416.12,
+      "resid_pct_bmv": 1.8092
+    },
+    "Madeline Mason": {
+      "bmv": 14612797.21,
+      "emv": 15149848.86,
+      "net_flows_excl_fees": 302140.33,
+      "fees": 0.0,
+      "resid": 234911.32,
+      "resid_pct_bmv": 1.6076
+    },
+    "Mary Grace Cooper": {
+      "bmv": 19978461.9,
+      "emv": 20865524.38,
+      "net_flows_excl_fees": 601351.48,
+      "fees": 698.99,
+      "resid": 286409.99,
+      "resid_pct_bmv": 1.4336
+    },
+    "Matthew Foxhall": {
+      "bmv": 53203407.89,
+      "emv": 53880052.81,
+      "net_flows_excl_fees": -239479.86,
+      "fees": 3354.86,
+      "resid": 919479.64,
+      "resid_pct_bmv": 1.7282
+    },
+    "Matthew Gooch": {
+      "bmv": 6769250.28,
+      "emv": 6853408.69,
+      "net_flows_excl_fees": -5000.0,
+      "fees": 0.0,
+      "resid": 89158.41,
+      "resid_pct_bmv": 1.3171
+    },
+    "Max Hillerbrand": {
+      "bmv": 24854277.43,
+      "emv": 25468823.1,
+      "net_flows_excl_fees": 110521.19,
+      "fees": 1790.6,
+      "resid": 505815.08,
+      "resid_pct_bmv": 2.0351
+    },
+    "Max Modica": {
+      "bmv": 5884377.28,
+      "emv": 5499037.47,
+      "net_flows_excl_fees": -390000.0,
+      "fees": 0.0,
+      "resid": 4660.19,
+      "resid_pct_bmv": 0.0792
+    },
+    "Maxwell Meyers": {
+      "bmv": 119740.34,
+      "emv": 121740.66,
+      "net_flows_excl_fees": 725.0,
+      "fees": 0.0,
+      "resid": 1275.32,
+      "resid_pct_bmv": 1.0651
+    },
+    "Meredith Lipps": {
+      "bmv": 8693596.33,
+      "emv": 8789911.39,
+      "net_flows_excl_fees": -28522.22,
+      "fees": 0.0,
+      "resid": 124837.28,
+      "resid_pct_bmv": 1.436
+    },
+    "Meredith Lipps - Local Ops": {
+      "bmv": 29739449.23,
+      "emv": 30807540.18,
+      "net_flows_excl_fees": 622020.8,
+      "fees": 40.6,
+      "resid": 446110.76,
+      "resid_pct_bmv": 1.5001
+    },
+    "Micah Damrow": {
+      "bmv": 33604190.37,
+      "emv": 33516235.71,
+      "net_flows_excl_fees": -497510.62,
+      "fees": 0.0,
+      "resid": 409555.96,
+      "resid_pct_bmv": 1.2188
+    },
+    "Michael Hruby": {
+      "bmv": 123310.46,
+      "emv": 125102.06,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 1791.6,
+      "resid_pct_bmv": 1.4529
+    },
+    "Michael Ihlenfeldt": {
+      "bmv": 48232071.14,
+      "emv": 49548858.36,
+      "net_flows_excl_fees": 614679.58,
+      "fees": 7655.58,
+      "resid": 709763.21,
+      "resid_pct_bmv": 1.4716
+    },
+    "Michael Wuest": {
+      "bmv": 14931099.53,
+      "emv": 15281580.61,
+      "net_flows_excl_fees": 109272.39,
+      "fees": 294.82,
+      "resid": 241503.51,
+      "resid_pct_bmv": 1.6175
+    },
+    "Mike DeFreese": {
+      "bmv": 2587535.98,
+      "emv": 2625914.99,
+      "net_flows_excl_fees": 960.95,
+      "fees": 0.0,
+      "resid": 37418.06,
+      "resid_pct_bmv": 1.4461
+    },
+    "Mike Kipniss": {
+      "bmv": 2293982.56,
+      "emv": 2525985.21,
+      "net_flows_excl_fees": 202824.18,
+      "fees": 1555.72,
+      "resid": 30734.19,
+      "resid_pct_bmv": 1.3398
+    },
+    "Mitch Johnson": {
+      "bmv": 41052417.55,
+      "emv": 43063041.36,
+      "net_flows_excl_fees": 1370869.0,
+      "fees": 550.41,
+      "resid": 640305.22,
+      "resid_pct_bmv": 1.5597
+    },
+    "Mitch Roper": {
+      "bmv": 29884499.02,
+      "emv": 30542810.65,
+      "net_flows_excl_fees": 185444.73,
+      "fees": 3854.35,
+      "resid": 476721.26,
+      "resid_pct_bmv": 1.5952
+    },
+    "Morgan Masso": {
+      "bmv": 393223.01,
+      "emv": 399185.79,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 5962.78,
+      "resid_pct_bmv": 1.5164
+    },
+    "Myles Thomas": {
+      "bmv": 60153731.79,
+      "emv": 61789150.31,
+      "net_flows_excl_fees": 723156.48,
+      "fees": 25356.62,
+      "resid": 937618.66,
+      "resid_pct_bmv": 1.5587
+    },
+    "Nate  Gabris": {
+      "bmv": 410412.6,
+      "emv": 416595.62,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 6183.02,
+      "resid_pct_bmv": 1.5065
+    },
+    "Nate Watson": {
+      "bmv": 2009728.11,
+      "emv": 2047324.51,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 37596.4,
+      "resid_pct_bmv": 1.8707
+    },
+    "Nathan Allen": {
+      "bmv": 24475392.32,
+      "emv": 24826039.18,
+      "net_flows_excl_fees": 25888.96,
+      "fees": 1932.75,
+      "resid": 326690.65,
+      "resid_pct_bmv": 1.3348
+    },
+    "Nathan Fontenot": {
+      "bmv": 2172954.87,
+      "emv": 2208834.77,
+      "net_flows_excl_fees": 942.37,
+      "fees": 0.0,
+      "resid": 34937.53,
+      "resid_pct_bmv": 1.6078
+    },
+    "Nathan Grande": {
+      "bmv": 477564.14,
+      "emv": 484627.26,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 7063.12,
+      "resid_pct_bmv": 1.479
+    },
+    "Neil Tjon-Hing": {
+      "bmv": 25449939.32,
+      "emv": 25861274.74,
+      "net_flows_excl_fees": 27415.33,
+      "fees": 4552.04,
+      "resid": 388472.13,
+      "resid_pct_bmv": 1.5264
+    },
+    "Nick Bishop": {
+      "bmv": 48612163.82,
+      "emv": 50868311.32,
+      "net_flows_excl_fees": 1374509.68,
+      "fees": 60.4,
+      "resid": 881698.23,
+      "resid_pct_bmv": 1.8137
+    },
+    "Nick Ryan": {
+      "bmv": 6677003.43,
+      "emv": 6889248.81,
+      "net_flows_excl_fees": -28700.0,
+      "fees": 1189.92,
+      "resid": 242135.3,
+      "resid_pct_bmv": 3.6264
+    },
+    "Nick Skudlarick": {
+      "bmv": 3482523.27,
+      "emv": 3528395.67,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 45872.4,
+      "resid_pct_bmv": 1.3172
+    },
+    "No Advisor": {
+      "bmv": 178229211.56,
+      "emv": 195156241.95,
+      "net_flows_excl_fees": 12727747.61,
+      "fees": 14527.7,
+      "resid": 4213810.49,
+      "resid_pct_bmv": 2.3643
+    },
+    "Noah Plotkin": {
+      "bmv": 962987.84,
+      "emv": 978358.17,
+      "net_flows_excl_fees": 0.0,
+      "fees": 86.45,
+      "resid": 15456.78,
+      "resid_pct_bmv": 1.6051
+    },
+    "Owen Freese": {
+      "bmv": 3368380.21,
+      "emv": 3373838.1,
+      "net_flows_excl_fees": -42626.84,
+      "fees": 0.0,
+      "resid": 48084.73,
+      "resid_pct_bmv": 1.4275
+    },
+    "Owen Johnson": {
+      "bmv": 0.0,
+      "emv": 658898.64,
+      "net_flows_excl_fees": 658897.92,
+      "fees": 0.0,
+      "resid": 0.72,
+      "resid_pct_bmv": null
+    },
+    "Parker Crane": {
+      "bmv": 0.0,
+      "emv": 11306.85,
+      "net_flows_excl_fees": 11315.0,
+      "fees": 0.0,
+      "resid": -8.15,
+      "resid_pct_bmv": null
+    },
+    "Parker Teague": {
+      "bmv": 16800021.31,
+      "emv": 17629375.24,
+      "net_flows_excl_fees": 593242.62,
+      "fees": 935.12,
+      "resid": 237046.43,
+      "resid_pct_bmv": 1.411
+    },
+    "Parker Worley": {
+      "bmv": 21574817.98,
+      "emv": 21896405.04,
+      "net_flows_excl_fees": 40489.09,
+      "fees": 68.49,
+      "resid": 281166.46,
+      "resid_pct_bmv": 1.3032
+    },
+    "Patrick Fenton": {
+      "bmv": 1650271.98,
+      "emv": 1667035.47,
+      "net_flows_excl_fees": -10000.0,
+      "fees": 0.0,
+      "resid": 26763.49,
+      "resid_pct_bmv": 1.6218
+    },
+    "Patrick Hawkins": {
+      "bmv": 2238170.06,
+      "emv": 2265786.49,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 27616.43,
+      "resid_pct_bmv": 1.2339
+    },
+    "Patrick Mundlin": {
+      "bmv": 142114209.61,
+      "emv": 148619132.02,
+      "net_flows_excl_fees": 4299504.15,
+      "fees": 4341.42,
+      "resid": 2209759.67,
+      "resid_pct_bmv": 1.5549
+    },
+    "Payton Merrill": {
+      "bmv": 228243.36,
+      "emv": 237046.03,
+      "net_flows_excl_fees": 1923.43,
+      "fees": 433.5,
+      "resid": 7312.74,
+      "resid_pct_bmv": 3.2039
+    },
+    "Presley Lawson": {
+      "bmv": 5733387.84,
+      "emv": 5921579.89,
+      "net_flows_excl_fees": 57405.8,
+      "fees": 0.0,
+      "resid": 130786.25,
+      "resid_pct_bmv": 2.2811
+    },
+    "Quinn Davis": {
+      "bmv": 391203.51,
+      "emv": 396949.97,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 5746.46,
+      "resid_pct_bmv": 1.4689
+    },
+    "Riley Reynolds": {
+      "bmv": 2960168.94,
+      "emv": 3006435.61,
+      "net_flows_excl_fees": -9000.0,
+      "fees": 0.0,
+      "resid": 55266.67,
+      "resid_pct_bmv": 1.867
+    },
+    "RJ Drucker": {
+      "bmv": 21770184.57,
+      "emv": 21959926.53,
+      "net_flows_excl_fees": -104343.87,
+      "fees": 84.47,
+      "resid": 294170.3,
+      "resid_pct_bmv": 1.3513
+    },
+    "Ryan Botzong": {
+      "bmv": 25129767.18,
+      "emv": 25758567.44,
+      "net_flows_excl_fees": 150625.42,
+      "fees": 2940.39,
+      "resid": 481115.23,
+      "resid_pct_bmv": 1.9145
+    },
+    "Ryan Fidler": {
+      "bmv": 2841077.78,
+      "emv": 2879591.15,
+      "net_flows_excl_fees": 537.08,
+      "fees": 0.0,
+      "resid": 37976.29,
+      "resid_pct_bmv": 1.3367
+    },
+    "Ryan Rattay": {
+      "bmv": 17375702.55,
+      "emv": 17649644.44,
+      "net_flows_excl_fees": 44311.85,
+      "fees": 0.0,
+      "resid": 229630.04,
+      "resid_pct_bmv": 1.3216
+    },
+    "Ryan Witte": {
+      "bmv": 229860.47,
+      "emv": 233280.25,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 3419.78,
+      "resid_pct_bmv": 1.4878
+    },
+    "Sam Owens - Local Ops": {
+      "bmv": 295280135.67,
+      "emv": 298981827.41,
+      "net_flows_excl_fees": -756673.48,
+      "fees": 14262.23,
+      "resid": 4472627.44,
+      "resid_pct_bmv": 1.5147
+    },
+    "Samantha Owens": {
+      "bmv": 5023670.48,
+      "emv": 4931941.82,
+      "net_flows_excl_fees": -149833.71,
+      "fees": 370.1,
+      "resid": 58475.15,
+      "resid_pct_bmv": 1.164
+    },
+    "Shea Likes": {
+      "bmv": 23837648.77,
+      "emv": 24164056.66,
+      "net_flows_excl_fees": -11476.22,
+      "fees": 0.0,
+      "resid": 337884.11,
+      "resid_pct_bmv": 1.4174
+    },
+    "Shea Likes - local ops": {
+      "bmv": 12057647.82,
+      "emv": 12255027.13,
+      "net_flows_excl_fees": -7750.0,
+      "fees": 0.0,
+      "resid": 205129.31,
+      "resid_pct_bmv": 1.7012
+    },
+    "Shelby Smith": {
+      "bmv": 6750611.43,
+      "emv": 6825060.57,
+      "net_flows_excl_fees": -15000.0,
+      "fees": 0.0,
+      "resid": 89449.14,
+      "resid_pct_bmv": 1.3251
+    },
+    "Stephen Davis": {
+      "bmv": 20567053.0,
+      "emv": 21110096.7,
+      "net_flows_excl_fees": 218058.2,
+      "fees": 0.0,
+      "resid": 324985.5,
+      "resid_pct_bmv": 1.5801
+    },
+    "Stephen Rao": {
+      "bmv": 16927302.23,
+      "emv": 17573571.2,
+      "net_flows_excl_fees": 424582.0,
+      "fees": 0.0,
+      "resid": 221686.97,
+      "resid_pct_bmv": 1.3096
+    },
+    "Sydney  Ramos": {
+      "bmv": 0.0,
+      "emv": 510869.52,
+      "net_flows_excl_fees": 512053.17,
+      "fees": 0.0,
+      "resid": -1183.65,
+      "resid_pct_bmv": null
+    },
+    "Sydney Cobb": {
+      "bmv": 61551971.38,
+      "emv": 67779776.18,
+      "net_flows_excl_fees": 5331112.78,
+      "fees": 9771.32,
+      "resid": 906463.35,
+      "resid_pct_bmv": 1.4727
+    },
+    "Tarpley Herlihy": {
+      "bmv": 4861176.99,
+      "emv": 4920711.63,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 59534.64,
+      "resid_pct_bmv": 1.2247
+    },
+    "Taylor Funke": {
+      "bmv": 1251025.66,
+      "emv": 1315241.53,
+      "net_flows_excl_fees": 50227.52,
+      "fees": 0.0,
+      "resid": 13988.35,
+      "resid_pct_bmv": 1.1182
+    },
+    "Ted  Grant": {
+      "bmv": 55664310.91,
+      "emv": 57253386.7,
+      "net_flows_excl_fees": 644251.52,
+      "fees": 40.72,
+      "resid": 944864.99,
+      "resid_pct_bmv": 1.6974
+    },
+    "Thomas Campbell": {
+      "bmv": 2625445.61,
+      "emv": 2816473.97,
+      "net_flows_excl_fees": 156230.54,
+      "fees": 0.0,
+      "resid": 34797.82,
+      "resid_pct_bmv": 1.3254
+    },
+    "Tim Rodgers": {
+      "bmv": 241940103.44,
+      "emv": 246156235.75,
+      "net_flows_excl_fees": 1368115.84,
+      "fees": 3218.21,
+      "resid": 2851234.69,
+      "resid_pct_bmv": 1.1785
+    },
+    "Timothy \"Dean\"  Herndon": {
+      "bmv": 3690883.47,
+      "emv": 3756114.04,
+      "net_flows_excl_fees": 5043.49,
+      "fees": 2536.5,
+      "resid": 62723.58,
+      "resid_pct_bmv": 1.6994
+    },
+    "Torrey Patrie": {
+      "bmv": 40617487.18,
+      "emv": 43207043.42,
+      "net_flows_excl_fees": 2220227.6,
+      "fees": 19045.03,
+      "resid": 388373.66,
+      "resid_pct_bmv": 0.9562
+    },
+    "Trace Riley": {
+      "bmv": 7843491.01,
+      "emv": 8076200.23,
+      "net_flows_excl_fees": 81125.0,
+      "fees": 0.0,
+      "resid": 151584.22,
+      "resid_pct_bmv": 1.9326
+    },
+    "Travis Penfield": {
+      "bmv": 444806235.47,
+      "emv": 456773323.4,
+      "net_flows_excl_fees": 6016823.43,
+      "fees": 29445.27,
+      "resid": 5979709.76,
+      "resid_pct_bmv": 1.3443
+    },
+    "Trenton Milner": {
+      "bmv": 17045367.06,
+      "emv": 17242919.83,
+      "net_flows_excl_fees": -21516.22,
+      "fees": 1112.04,
+      "resid": 220181.03,
+      "resid_pct_bmv": 1.2917
+    },
+    "Tyler Dodson": {
+      "bmv": 10456548.53,
+      "emv": 10576988.63,
+      "net_flows_excl_fees": -22575.27,
+      "fees": 0.0,
+      "resid": 143015.37,
+      "resid_pct_bmv": 1.3677
+    },
+    "Tyler Dudycha": {
+      "bmv": 8825522.05,
+      "emv": 8951869.72,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 126347.67,
+      "resid_pct_bmv": 1.4316
+    },
+    "Tyler Pace": {
+      "bmv": 982072.82,
+      "emv": 1020294.59,
+      "net_flows_excl_fees": 2186.89,
+      "fees": 1213.52,
+      "resid": 37248.4,
+      "resid_pct_bmv": 3.7928
+    },
+    "Tyler Staniford": {
+      "bmv": 27938631.66,
+      "emv": 28121362.15,
+      "net_flows_excl_fees": -1782.2,
+      "fees": 0.0,
+      "resid": 184512.69,
+      "resid_pct_bmv": 0.6604
+    },
+    "Walker Smith": {
+      "bmv": 535317.11,
+      "emv": 590840.24,
+      "net_flows_excl_fees": 48774.33,
+      "fees": 0.0,
+      "resid": 6748.8,
+      "resid_pct_bmv": 1.2607
+    },
+    "Weston Kammer": {
+      "bmv": 92341.12,
+      "emv": 93121.44,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 780.32,
+      "resid_pct_bmv": 0.845
+    },
+    "Will Harvey": {
+      "bmv": 7475284.91,
+      "emv": 7653015.56,
+      "net_flows_excl_fees": 69647.87,
+      "fees": 1150.4,
+      "resid": 109233.17,
+      "resid_pct_bmv": 1.4613
+    },
+    "William Crawford": {
+      "bmv": 196875.54,
+      "emv": 199820.67,
+      "net_flows_excl_fees": 0.0,
+      "fees": 0.0,
+      "resid": 2945.13,
+      "resid_pct_bmv": 1.4959
+    },
+    "Wills Crenshaw": {
+      "bmv": 14432258.7,
+      "emv": 14655628.03,
+      "net_flows_excl_fees": 9368.57,
+      "fees": 415.92,
+      "resid": 214416.68,
+      "resid_pct_bmv": 1.4857
+    },
+    "Zach Hawkins": {
+      "bmv": 37652652.29,
+      "emv": 37550133.19,
+      "net_flows_excl_fees": -638323.79,
+      "fees": 0.0,
+      "resid": 535804.69,
+      "resid_pct_bmv": 1.423
+    }
+  }
+}
