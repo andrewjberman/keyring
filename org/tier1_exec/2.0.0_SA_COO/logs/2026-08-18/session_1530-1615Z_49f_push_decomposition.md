@@ -141,3 +141,62 @@ phase-leg — amend the two named TOs, GO every seat, hand MSTR the id list.
 - CTO ruling to DS~A 172006Z folds into P2D-4 contract field 3: the 49F chain S3 code home =
   portal/gold/advi/_code/ (mdpf twin, atom-2), safe_deploy_core advi row same change, CTO gates.
 - Rows 0 (23:01Z fixture) and 2-5' unchanged, at their dates.
+
+---
+
+## ADDENDUM 2 — 17:20Z–01:20Z (08-19): supersession, fixture verdict, TO-1 CLOSED
+
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum 2)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| proof-of-spec-check | TO-1 instance BP-1..6 (rc bare) | PASS | rc=0, 6 rows, 0 violations — the issuer half of the joint validation |
+| aws (operational) | head/get header_metrics + chain log fetch + canonical listings (rail-checked where raw ls) | PASS | my OWN cold reads for the verdict; 20:27Z timestamps pre-registered benign (MSTR ETag proof) held |
+| python byte-safe log read | NaT scan over 13,428 lines | PASS | literal NaT = 0 fabric-wide; BP-2's "expected 3" traced to its pre-A_01-fix vintage, stated not waved |
+| TRGALN mechanical validation | proof_TO-4 vs manifest.tsv | PASS (2nd run) | FIRST RUN FALSE-PASSED on None==None (my field-name guess) — confirming-limb class at my own desk, caught via the contradictory coverage line; corrected run: 10/10 claims x 10/10 keys, sha-by-reference conforming to accepted TO-3 rev2 |
+| comp-state --self-test / to-check --proof-board | J1/J2 validation | PASS | 4/4 no-env; board 64/65 w/ denominators |
+
+## Delta
+
+1. **Andrew ~1730Z gold-bucket supersession** decomposed within the hour: GOLDHOME-REPOINT-49F
+   @1b2ee34db7 (one act, 3 lanes, spine-ordered) + 5 TOs amended by reference; RP-AE-1 Deny literal
+   CORRECTED @my commit on AE's catch (bd-* is the product's own executor — the original "bd/cot/inf"
+   would sever the chain). LD-0422 minted (MSTR).
+2. **TIGHTENING J1+J2** (CTO solo on Andrew's quiet-window word) validated 3/3 at my desk; J2
+   SUPERSEDED in REG-SCAN-ATOMCHECK with pointer; J3 carries the INF-bind constraint.
+3. **DT's out-of-band promote** (Andrew via CTO~X): PROD e27dd5fa / v2.1.163, payload 3 DECLARED —
+   my 180324Z freeze note ran on a 96-min-stale premise (owned); the rider resolution converged
+   independently (declare, never strip). T-A now SERVES in PROD.
+4. **/integrate merge** (Andrew-invoked): full cross-fabric parity @f970ea785d, first since 08-12;
+   site-Z DEPLOYED question closed on version-ETag identity; 228 pre-staged entries + the
+   DEPLOYED/MATCH vocabulary fix banked at my allocation (vocab fix = mine, dated post-push,
+   pre-compare form).
+5. **THE FIXTURE (23:01Z run, read 00:49–01:16Z): CHAIN PASS on my own cold reads** — BP-1 (531/531,
+   range ends T-1, both counts printed, sealed-history consistent), BP-2 (D_02 rc=0, zero NaT,
+   vintage stated), BP-4 limbs (holdings→08-14 in-window; account_performance 227,442,037 B changed;
+   sealed 15), BP-5 mechanics (3 artifacts rewritten 00:01–00:28Z; as_of 08-14), BP-6 (D_04 rc=0,
+   COMPLETE, zero nonzero rc). **TO-4 + MINT RELEASED on the verdict; TO-1 held open on two NAMED
+   residuals.**
+6. **DS base's fold @e4a83d1ebb resolved both residuals at source:** R1 = the 23:01Z schedule
+   structurally precedes the ~00:17Z BD evening silver export (NOT a cube defect; 04:00Z sibling
+   extends to T-1, DS verifies ~04:45Z; routed COO/CTO as a P2 timing-map item); R2 = header-vs-
+   canonical basis offset (108.0M→28.5M across the restore), cent-exact canonical tie
+   (1,953,892,156.44 == dry-run) refuting intra-vintage movement; composition rides CVO's P4 pins.
+7. **TO-1 CLOSED** (instance VALID rc=0 both desks; AE ledger 1419Z closed, nothing stranded);
+   **TO-4 EXECUTED 10/10 + proof ACCEPTED** (fail-closed first attempt recorded IN the proof);
+   **opal-data-49financial MINTED** (5 adds targeted, Deny exercised 3-way, ms_heat row NOT ratified);
+   DS~A sync unblocked; tag shared-infra-v1.46.0 rides MSTR's window. **Andrew line sent via MSTR
+   011724Z** with the cent-exact decomposition, deltas never blended.
+8. **d12: my restore-footprint hypothesis was WRONG** — DS falsified it on pinned versions
+   (NO-CHANGE-OCCURRED; 1,086-vs-2,409 was a cross-twin frame difference read as a time change);
+   correction absorbed, window-intendedness rides the P4 pins.
+
+## Gate-forward (01:20Z 08-19)
+- DS base: 04:45Z read of the 04:00Z run (as_of → 08-17); T-B Half 1 OPEN (13:30Z proof gates the
+  last json/mdpf key delete). DS~A: sync leg in flight → P2D-3 QA + P2D-4 re-cut → P2-FLOOR apply.
+- My 08-19 routing list: R1 schedule-vs-export alignment (w/ CTO, timing-map frame); the banked
+  allocation stack (vocab fix, ms_heat, 228 entries, feeder-stamp origin fix, yang-cma,
+  member-sha tool, J1 proof-board).
+- Standing: 13 TOs in flight at 6 seats, all dated; P1 CLOSED; P2 opens on today's build.
