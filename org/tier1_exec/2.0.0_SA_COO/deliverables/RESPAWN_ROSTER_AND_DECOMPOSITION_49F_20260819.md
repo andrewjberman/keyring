@@ -99,4 +99,9 @@ greens w/ legacy parallel net; floor cron pins on today's declared-stale measure
 (mix_summary, advisor_nna_canonical) need DS~A's a07 home + a06 xwalk landing today/Thu-early —
 tracked, not yet a slip; (2) the Thu pins require BOTH serves at the same content-date under the
 declared-stale frame — CVO's SAME-CONTENT-DATE precondition now reads the declared-stale manifest
-per their own emission-field instrument; (3) nothing else is structurally unable to make Friday.
+per their own emission-field instrument; (3) nothing else is structurally unable to make Friday. **(4) AE 155308Z (accepted): the
+publisher SSM doc BODY cannot pin today — it needs DS~B's Thursday invocation contract (no fleet
+entrypoint exists; pinning a guessed name = building on inference). Everything else of AE's lands
+today (floor stack on the pin; grant; schedule shell applied DISABLED with the concrete 13:15Z
+expression, failing closed on unlisted docs). Friday NOT threatened — the body rides DS~B's
+existing Thursday window; activation = one TF change at deploy-ready.**
