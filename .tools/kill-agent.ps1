@@ -98,6 +98,38 @@ if ($All -and $Serial) {
     # SINGLE TILDE-PRECISE match: serial must NOT be continued by a ~lane suffix or
     # word char. A suffixed serial (~B) was already precise; this makes bare-base
     # precise too. To kill base + all tildes, use `<serial> -All`.
+    #
+    # SELF-EXCLUSION (D0_TIGHTENING.TO-4): a seat must never kill ITSELF on a
+    # single-serial match -- a self-inflicted outage, and the expensive shape is
+    # mid-reap (the seat dies holding the work it was reaping for). `-All` alone
+    # has excluded self since it was written (see $selfRe above); the single-serial
+    # path did not, so the one form an agent actually types at itself was the one
+    # form unguarded.
+    #
+    # The comparison IS the whole check, and that is a property of tilde-precision
+    # rather than an assumption: the needle regex below is bounded (?<![\w~]) /
+    # (?![~\w]), so a bare base needle cannot match its own ~lane and a ~lane
+    # needle cannot match its base. Therefore in THIS branch the only commandline
+    # that can be the caller's own is one whose serial equals the needle exactly.
+    #
+    # BOTH LIMBS ARE LOAD-BEARING (K-1): suppress the kill AND print the exclusion.
+    # A silent no-kill is indistinguishable from a broken matcher -- the caller
+    # would read "nothing happened" identically in both worlds.
+    #
+    # Returns early rather than emptying $targets: falling through to the
+    # zero-targets branch would run the orphan-watcher reaper against $Serial and
+    # sweep the CALLER'S OWN live inbox watcher -- deafening the seat this guard
+    # exists to protect, while printing "nothing to kill".
+    if ($by -ne 'unknown' -and $Serial -eq $by) {
+        Write-Host "[kill-agent] SELF-EXCLUDED: '$Serial' is the caller's own serial (OPAL_AGENT_SERIAL) -- refusing to kill self. Nothing killed, no watcher reaped." -ForegroundColor Yellow
+        Add-Content -Path $log -Value "$ts  KILL-SELF-EXCLUDED  $Serial  by $by  reason=$Reason  found=0  watchers_reaped=0"
+        exit 0
+    }
+    if ($by -eq 'unknown') {
+        # Not evaluable is NOT the same as not-self. Say so out loud rather than
+        # proceeding under a silent assumption the guard held.
+        Write-Host "[kill-agent] WARN: OPAL_AGENT_SERIAL is unset -- self-exclusion could NOT be evaluated for '$Serial'. Proceeding; verify you are not killing yourself." -ForegroundColor Yellow
+    }
     $needleRe = '(?<![\w~])' + [regex]::Escape($Serial) + '(?![~\w])'
     $targets = @($allClaude | Where-Object { $_.CommandLine -match $needleRe })
 }
