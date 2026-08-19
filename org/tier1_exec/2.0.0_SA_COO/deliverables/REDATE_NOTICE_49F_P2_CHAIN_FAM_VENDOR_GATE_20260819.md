@@ -40,3 +40,14 @@ scheduled fires and this notice self-executes.
 **Rule 24 note:** one axis (calendar date → event-anchored date), one intent (sequencing), all
 members move together on R — the re-date is a stability frame, not per-TO surgery; the five TOs'
 existing slip clauses reference this notice rather than being individually rewritten.
+
+---
+**ADDENDUM 14:58Z (COO): ENDPOINT CONFIRMATION + accelerator reduction.** Andrew's ~1450Z one-shot
+egress grant executed by CRO~A (record in their deliverables; grant consumed): Schwab's SDD API
+itself lists /fam n=15 ending AsOfDATE 2026-08-07 while every daily sibling lists n=22 ending
+2026-08-18 — same single wide search, so the differential IS the endpoint proof. The hole is
+**7 trading days at content grain (last AsOf Fri 08-07) / 6 at delivery grain** — state the frame
+when quoting. Consequence: the enumerate accelerator is CONSUMED; **the Schwab-side contact is now
+the ONLY path to R** (no pull mode exists for an unlisted file). Detection unchanged: the standing
+21:45Z/09:45Z fires + the R-WATCH daily read remain the trigger; this notice self-executes on R
+exactly as written.
