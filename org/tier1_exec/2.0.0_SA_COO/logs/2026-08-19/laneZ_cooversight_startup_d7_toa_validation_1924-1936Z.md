@@ -106,3 +106,55 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   @56b5ae8796 asymmetry pointer.
 - W5 GO-time acts at me: measured census at the spawn event; 7-vs-6 overlap adjudication vs
   D9 timing / D7 wind-down; RAVC validation of W5+W6 deliverables.
+
+---
+
+## ADDENDUM 2 — 19:49–20:17Z: the #42 linkage, D9 live, the TO-B reconciliation, W5 flip validated
+
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum 2)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @5d6c97bfc9, @fac13ccc3a, @9c7b59f9df | PASS | every cited commit content-read before acting; @fac13ccc3a itself carries the D7-accepts-#42 line |
+| get_live_agents + ps | census re-measure | PASS | 5 broker-LIVE + BG-by-process = 6/6 — after adopting a stale number of my own (owned, below) |
+
+## Delta
+
+1. **#42/taxsma linkage BANKED** (MSTR~Z 194942Z, grounded at my desk): sovereign TO #42's
+   ticketing half == ANDREW_DIRECT_20260714_taxsma_ticket_system_scoping.md (36d pending, dead
+   ~A lane; corroborated in my own 19:26Z read of the ~Z seat's pending list). Mechanics pinned:
+   Andrew's seat-or-supersede lands -> I flip superseded-with-pointer or it re-seats; issuer is
+   Andrew, flip is mine, never silent, never duplicated.
+2. **CENSUS CORRECTION OWNED:** my 201400Z frame said "5 now, peak 6 at D9" while D9's seat had
+   spawned 20:01Z — I adopted my own earlier measurement instead of re-measuring (MSTR~Z applied
+   my posture back at me, correctly). Re-measured at my desk: 6/6 sustained (5 broker-LIVE + BG
+   watcher PID 1213 by process). D8's seat = the only remaining census-crossing event.
+3. **D9 seat briefed on the linkage** (201546Z): its read-only recon classifies the taxsma row
+   DISPOSITION-PENDING-INHERIT w/ the @fac13ccc3a citation — never an independent stale finding
+   (a faithful recon would otherwise manufacture the duplicate the linkage kills). Seat ACKed
+   201657Z: classification adopted, four bounds bound. Recon headline preview: pt1 feed alive,
+   operator cadence ran ONCE ever; PT2 producer NEVER-SCHEDULED, 1 lifetime invocation (the
+   production-schedule law's class); full read rides MSTR ferry per the TO.
+4. **TO-B reconciliation absorbed** (MSTR~Z adjudication, collision surfaced pre-bytes by the
+   seat): D6 TO-B == the W5 index; builds at 0.5.0_AE_OpalETL~Z effective now; the DE~Z spawn
+   EVAPORATES (no post-acceptance W5 GO). One load fact carried frame-level: W4b (7d, largest
+   unit) still sits under that seat beneath TO-B + future TO-C — a TO-B slip reads seat-load first.
+5. **W5 supersede flip VALIDATED @9c7b59f9df** (my pinned ledger item, closed zero-corrections):
+   same-commit pointer discipline PASS on all four surfaces — TO flipped w/ pointer (issuer flip,
+   interim annotation preserved), PRD §9.2 reconciliation trail, F1 fold row stays
+   DISCHARGED-by-the-D6-route, W6 GO gate re-pointed to the ARTIFACT.
+6. **BANKED validation frame for TO-B:** the index validates against W5's C1-C9 substance bar
+   via §9.6+§10.1+§9.11 (spec rides the artifact, not the TO shell) — NOT the D6 row's thinner
+   shell acceptance; a conflict between bars at validation time is a finding to CTO~Z, never a
+   silent pick.
+
+## Gate-forward (20:17Z)
+- **At Andrew:** D7 one-line-back (Cottonwood DL / membership-add-or-invert-primary / channel);
+  the #42/taxsma seat-or-supersede word.
+- **At me, event-driven:** TO-B deliverable validation vs the C1-C9 bar; taxsma flip on Andrew's
+  word; measured census at D8's seat event; D9 recon validation when it lands via ferry.
+- **Fixed read:** 08-20 07:00 WDAC acceptance — un-gates TO-B-dependent GOs and W6's chain.
+- Census: 6/6 sustained at the ceiling, by design, zero spare — any burst need routes through
+  MSTR~Z first.
