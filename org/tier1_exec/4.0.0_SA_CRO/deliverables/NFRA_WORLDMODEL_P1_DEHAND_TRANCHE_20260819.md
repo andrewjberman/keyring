@@ -41,6 +41,20 @@ For every surface in the class, classify → remedy:
 | T11 | The adversarial-admissibility + contested-cell METHOD AMENDMENT (declared context-delta or the pass is a recorded re-read; case/counter-case on rival-reading cells) | LEGISLATIVE → steward draft off the live CRO×CVO exchange (specimen #1), per the 14(e.1) precedent | CRO (method steward) |
 | T12 | **`comp-adversary`** — the deterministic validator-context COMPOSER (design: `ADVERSARIAL_CONTEXT_CONSTRUCTION_DESIGN_20260819.md` — author-profile parse → neighborhood → complement → packet → auto delta-declaration; `--open` mode for the model-prior validator; every stage rides an existing tool) | BUILD → CTO routing (COMPLEARNS/P2 adjacency; tool NAME to ratification; comp-axes snapshot-consumption constraint carried) | CTO route |
 
+### Rows added 2026-08-19 ~19:5xZ (CVO exit-bar census pass 1 @92d129dee5)
+
+| # | Surface | Nature → remedy | Owner / vehicle |
+|---|---|---|---|
+| T13 | **L0B_CHANGE_TYPE_VOCABULARY.md :118/:150 — a LIVE vocabulary defines EMPTY/ABSENT by the RETIRED comp-surface-check** (F2, the census's sharpest). Remedy = **RE-ANCHOR not delete**: the distinction is load-bearing; comp-find's MEASURED-ZERO semantics are live and equivalent. +:86 optional "(now comp-find)" annotation (F5) | LEGISLATIVE re-anchor in ratified vocabulary | CTO (L0b owner) |
+| T14 | 10_census in-tree vintage declaration (F3 — the fold made a 07-31 seed read same-day fresh from git metadata) | **DONE same-turn** — `10_census/README.md` landed (capture date + SEED/DIFF-BASE + never-a-live-read + the git-date-lies mechanism stated) | CRO (program home) ✅ |
+| — | F1 (LAYER_FIELD_ANATOMY :422/:438 estate-infrastructure as live field values) | **DONE same-turn** — dated amendment carrying BOTH truths: the segment is renamed AND the on-disk c4_segments key itself still lags (the canonical is internally split; re-renders at T3/T4 propagation) | CRO (own file) ✅ |
+
+**SEQUENCING RULE ADOPTED FROM F1 (binds T3 and every sweep in this tranche): CLAIM-SETS, NOT
+FILE-SETS.** A file corrected on one axis is not a corrected file — a sweep keyed on which FILES
+are fixed skips exactly the files already on the fixed list. T3's four lagged files are a
+claim-set; the propagation verifies per-claim. **Pass-2 of CVO's census derives its term list from
+the registry changelog's naming-act entries (gate-derived, never recalled) — approved as proposed.**
+
 ## 2. THE F-A AUTHORIZATION QUESTION — answered as a stated read (one word overturns)
 
 CVO asked: new naming act, or propagation? **Stated read: PROPAGATION.** The cover model was ruled
