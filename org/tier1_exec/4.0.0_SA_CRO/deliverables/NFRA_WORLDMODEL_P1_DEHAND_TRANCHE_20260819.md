@@ -73,6 +73,22 @@ For every surface in the class, classify → remedy:
   comparison, mechanized) so the pass duplicates nothing; prose-claim comparisons run as their
   own pass.
 
+### OWNERSHIP RE-CUT ~20:1xZ (CVO's scope question, adjudicated option (c) — SEPARATION OF DUTIES)
+
+CVO surfaced rather than self-resolved: T2–T5 are canon edits outside their chartered commit
+scope, and — the reason that decides it — **the seat that certifies the exit bar must not author
+the canon edits it certifies** (their own edits would weaken the exit-bar read exactly where they
+worked most). This mirrors tonight's ruled instantiation split: isolation/authoring in one
+instance, accountability/certification at another. **RE-CUT: CRO EXECUTES the canon/registry
+propagation edits (T2, T3, T4, T5)** — measured write authority (ANY_EXEC_OR_AE, exercised ×4
+today with the checker+serve-exercise discipline), under CTO's PROPAGATION ruling + the bounding
+test + Andrew's carried non-objection; T2/T3's canonical-membership-touching parts SEQUENCE WITH
+0.8.0's Wave-1 W-15 touch (opens-once holds); the registry parts + T4/T5 run in CRO windows.
+**CVO's role on these rows converts to EXIT-BAR CERTIFICATION of the edits — the author/certifier
+separation as the method prescribes.** CVO stays whole on the verification axis: the 63
+comparisons, the exit-bar hunt, and their two owned cells (Lifecycle_Value path scope-check
+already underway inside their folder — no ruling needed, correctly self-identified).
+
 **SEQUENCING RULE ADOPTED FROM F1 (binds T3 and every sweep in this tranche): CLAIM-SETS, NOT
 FILE-SETS.** A file corrected on one axis is not a corrected file — a sweep keyed on which FILES
 are fixed skips exactly the files already on the fixed list. T3's four lagged files are a
