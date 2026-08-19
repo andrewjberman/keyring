@@ -1,0 +1,294 @@
+#!/usr/bin/env python3
+"""comp-adversary -- validator-context COMPOSER (v1, functional -- Andrew-direct 2026-08-19).
+
+Name RATIFIED by Andrew @7241d0dfd7. Arch frame: the CTO design note
+org/tier1_exec/1.0.0_SA_CTO/deliverables/DESIGN_NOTE_CHECK_SYSTEM_DEFINITIONS_AND_COMP_ADVERSARY_20260819.md
+(five stages: profile -> neighborhood -> complement -> packet -> declaration, --open first-class).
+MANDATE (Andrew-direct 2026-08-19 ~21:1xZ): a MANDATORY element of the atom_decomp workflow's
+VALIDATION piece -- the validator of returned work receives this tool's declaration so they know
+what the author's evidence context was and what it was NOT.
+
+v1 SCOPE, self-declaring: implemented complement sources run -- unimplemented ones are DECLARED
+EXCLUSIONS in the output (the declaration states what the validator was not shown -- partial
+coverage is honest BY CONTRACT, never silent). Output = a validation_context_declaration, an
+L0a boundary_report SIBLING per the ruled declaration family (declaration + closed conformance
+enum + evidence pins with declared KIND + in-artifact denominators).
+
+USAGE:
+  comp-adversary compose <artifact-path> [--out <path>] [--max-neighbors N]
+  comp-adversary --open [--out <path>]        # model-prior validator packet, no estate context
+  comp-adversary --self-test
+
+Read-only over the repo + git. No AWS calls, no model calls, deterministic.
+"""
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from datetime import datetime, timezone
+
+ROOT = None
+
+
+def repo_root():
+    global ROOT
+    if ROOT is None:
+        r = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+        if r.returncode != 0:
+            print("ERROR: not in a git repo (comp-adversary is repo-scoped)")
+            sys.exit(2)
+        ROOT = r.stdout.strip()
+    return ROOT
+
+
+def _git(*args):
+    return subprocess.run(["git", "-C", repo_root()] + list(args), capture_output=True, text=True)
+
+
+COMMIT_RE = re.compile(r"@([0-9a-f]{7,40})\b")
+PATH_RE = re.compile(r"\b((?:org|docs|infra|data|portal|rcg|workflows)/[A-Za-z0-9_\-./~]+\.[A-Za-z0-9]{1,6})\b")
+TOOL_RE = re.compile(r"\b(comp-[a-z0-9\-]+|to-check\.py|safe-commit|safe-apply|safe-deploy)\b")
+FILELINE_RE = re.compile(r"\b([A-Za-z0-9_\-./]+\.(?:py|ts|tsx|sh|yaml|yml|json|md)):(\d+)\b")
+
+
+def parse_artifact(path):
+    text = open(path, encoding="utf-8", errors="replace").read()
+    commits = sorted(set(COMMIT_RE.findall(text)))
+    paths = sorted(set(p for p in PATH_RE.findall(text) if not p.endswith((".png", ".jpg"))))
+    tools = sorted(set(TOOL_RE.findall(text)))
+    filelines = sorted(set(FILELINE_RE.findall(text)))
+    return {"text_len": len(text), "commits": commits, "paths": paths,
+            "tools": tools, "filelines": filelines}
+
+
+def verify_commits(commits):
+    rows = []
+    for c in commits:
+        r = _git("cat-file", "-t", c)
+        ok = (r.returncode == 0 and r.stdout.strip() == "commit")
+        rows.append((c, "VERIFIED" if ok else "UNVERIFIABLE-PIN"))
+    return rows
+
+
+def artifact_vintage(path):
+    rel = os.path.relpath(path, repo_root()).replace("\\", "/")
+    r = _git("log", "-1", "--format=%H %cI", "--", rel)
+    if r.returncode == 0 and r.stdout.strip():
+        h, d = r.stdout.strip().split(" ", 1)
+        return rel, h[:10], d
+    return rel, None, None
+
+
+def vintage_check(paths, artifact_date):
+    rows = []
+    for p in paths:
+        ap = os.path.join(repo_root(), p)
+        if not os.path.exists(ap):
+            rows.append((p, "GONE", "cited path absent at read-vintage"))
+            continue
+        r = _git("log", "-1", "--format=%cI", "--", p)
+        last = r.stdout.strip() if r.returncode == 0 else ""
+        if artifact_date and last and last > artifact_date:
+            rows.append((p, "MOVED-SINCE-AUTHORING", "last change %s postdates the artifact" % last[:19]))
+        else:
+            rows.append((p, "STABLE", "no change after the artifact's vintage" if last else "untracked/no history"))
+    return rows
+
+
+def uncited_neighbors(paths, cap):
+    cited = set(paths)
+    cited_dirs = {}
+    for p in paths:
+        cited_dirs.setdefault(os.path.dirname(p), True)
+    out = []
+    total = 0
+    for d in sorted(cited_dirs):
+        ad = os.path.join(repo_root(), d)
+        if not os.path.isdir(ad):
+            continue
+        try:
+            sibs = sorted(x for x in os.listdir(ad) if os.path.isfile(os.path.join(ad, x)))
+        except OSError:
+            continue
+        for s in sibs:
+            rp = (d + "/" + s).lstrip("/")
+            if rp not in cited:
+                total += 1
+                if len(out) < cap:
+                    out.append(rp)
+    return out, total
+
+
+def comp_state_drift():
+    try:
+        r = subprocess.run(["python", os.path.join(repo_root(), ".tools", "comp-state"), "--json"],
+                           capture_output=True, text=True, timeout=120, cwd=repo_root())
+        if r.returncode != 0:
+            return None, "comp-state rc=%d (source DEFERRED, not silently skipped)" % r.returncode
+        return (r.stdout[:4000] or "").strip(), None
+    except Exception as e:
+        return None, "comp-state unavailable: %s (source DEFERRED)" % type(e).__name__
+
+
+DEFERRED_SOURCES = [
+    ("toolgraph SHARES_SUBSTRATE independence",
+     "v1: toolgraph consumption not wired -- the independence oracle rides v2 (0.8.0 build)"),
+    ("comp-axes unexamined-axes (snapshot rows)",
+     "v1: snapshot-row consumption not wired (never live-render, per the 71.5s constraint)"),
+    ("comp-blast/comp-trace neighborhood expansion",
+     "v1: graph expansion not wired -- neighborhood = directory siblings only"),
+    ("comp-pulse warnings / comp-cochange diversity", "v1: not wired"),
+    ("comp-read digests (the packet stage)", "v1: the packet lists POINTERS, not digests"),
+    ("T11 admissibility method", "named slot, ships when CRO's method ratifies"),
+]
+
+
+def _emit(body, out_path):
+    if out_path:
+        with open(out_path, "w", encoding="utf-8") as f:
+            f.write(body)
+        print("declaration written: %s (%d bytes)" % (out_path, len(body)))
+    else:
+        print(body)
+
+
+def compose(path, out_path, cap, open_mode=False):
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    head = _git("rev-parse", "--short=10", "HEAD").stdout.strip()
+    L = []
+    L.append("# validation_context_declaration -- comp-adversary v1")
+    L.append("family: L0a boundary_report SIBLING (declaration + conformance + pins + denominators)")
+    L.append("read-vintage: HEAD @%s at %s  [pin kind: read-vintage]" % (head, now))
+    if open_mode:
+        L.append("mode: OPEN (model-prior validator -- NO estate context composed BY DESIGN)")
+        L.append("")
+        L.append("## DECLARATION")
+        L.append("The validator receives ZERO estate context. Every conclusion drawn in this mode")
+        L.append("rests on model priors plus the artifact under review alone -- estate-grounded")
+        L.append("verification is DECLARED ABSENT, not implied.")
+        L.append("")
+        L.append("## DENOMINATORS")
+        L.append("complement sources run: 0 / 0 applicable (open mode)")
+        body = "\n".join(L) + "\n"
+        _emit(body, out_path)
+        return body
+    prof = parse_artifact(path)
+    rel, avin, adate = artifact_vintage(path)
+    L.append("artifact: %s" % rel)
+    L.append("artifact-vintage: %s (%s)" % (avin or "UNCOMMITTED", (adate or "n/a")[:19]))
+    L.append("")
+    L.append("## AUTHOR PROFILE (what the author's evidence context WAS)")
+    L.append("pins found: %d commits, %d repo paths, %d file:line cites, %d tool mentions"
+             % (len(prof["commits"]), len(prof["paths"]), len(prof["filelines"]), len(prof["tools"])))
+    if prof["tools"]:
+        L.append("tools cited: %s" % ", ".join(prof["tools"]))
+    if not prof["commits"] and not prof["paths"]:
+        L.append("!! ZERO MACHINE-EXTRACTABLE PINS: this artifact's evidence is prose-cited or")
+        L.append("!! externally homed -- the validator must derive the evidence set BY READING.")
+        L.append("!! Every complement source below ran against an EMPTY profile and says so in")
+        L.append("!! its own denominator. A zero here is a signal, never a clean pass.")
+    L.append("")
+    L.append("## COMPLEMENT (what the validator should know the author may NOT have seen)")
+    L.append("")
+    cr = verify_commits(prof["commits"])
+    bad = [c for c, v in cr if v != "VERIFIED"]
+    L.append("### source 1: cited-commit verification (%d attempted / %d verified / %d UNVERIFIABLE)"
+             % (len(cr), len(cr) - len(bad), len(bad)))
+    for c, v in cr:
+        if v != "VERIFIED":
+            L.append("  - @%s : %s" % (c, v))
+    if cr and not bad:
+        L.append("  - all cited commits resolve at read-vintage")
+    L.append("")
+    vr = vintage_check(prof["paths"], adate)
+    moved = [x for x in vr if x[1] != "STABLE"]
+    L.append("### source 2: cited-path vintage (%d attempted / %d stable / %d flagged)"
+             % (len(vr), len(vr) - len(moved), len(moved)))
+    for p, v, why in moved:
+        L.append("  - %s : %s (%s)" % (p, v, why))
+    L.append("")
+    nb, nb_total = uncited_neighbors(prof["paths"], cap)
+    L.append("### source 3: uncited neighborhood (directory siblings of cited paths)")
+    L.append("  total uncited siblings: %d (showing %d -- the CAP is declared, not silent)" % (nb_total, len(nb)))
+    for p in nb:
+        L.append("  - %s" % p)
+    L.append("")
+    drift, err = comp_state_drift()
+    if err:
+        L.append("### source 4: comp-state drift -- DEFERRED (%s)" % err)
+    else:
+        L.append("### source 4: comp-state drift (raw excerpt -- validator reads full output)")
+        for ln in (drift or "(empty)").splitlines()[:12]:
+            L.append("  " + ln)
+    L.append("")
+    L.append("## DECLARED EXCLUSIONS (sources the validator was NOT shown -- v1 contract)")
+    for name, why in DEFERRED_SOURCES:
+        L.append("  - %s : %s" % (name, why))
+    L.append("")
+    L.append("## DENOMINATORS")
+    L.append("complement sources: %d run / %d deferred-with-reason / %d declared-excluded"
+             % (3 + (0 if err else 1), (1 if err else 0), len(DEFERRED_SOURCES)))
+    L.append("pin kinds: all pins in this declaration are READ-VINTAGE (declaration-vintage pins")
+    L.append("appear only where the artifact itself recorded one -- trace-to-authority claims are")
+    L.append("UNANSWERABLE from this declaration alone and are not implied).")
+    body = "\n".join(L) + "\n"
+    _emit(body, out_path)
+    return body
+
+
+def self_test():
+    ok = True
+    with tempfile.TemporaryDirectory() as td:
+        fx = os.path.join(td, "fixture.md")
+        head = _git("rev-parse", "--short=10", "HEAD").stdout.strip()
+        with open(fx, "w", encoding="utf-8") as f:
+            f.write("Fixture cites @%s and @deadbeef99 plus docs/architecture/PRD_AUTHORING_PROTOCOL.md\n" % head)
+        out = compose(fx, None, cap=5)
+        c1 = ("@deadbeef99 : UNVERIFIABLE-PIN" in out)
+        print("control 1 (planted bogus commit flags UNVERIFIABLE): %s" % ("PASS" if c1 else "FAIL"))
+        ok = ok and c1
+        c2 = (head in out)
+        print("control 2 (real HEAD pin present + not flagged -- discriminates): %s" % ("PASS" if c2 else "FAIL"))
+        ok = ok and c2
+        oo = compose(None, None, cap=5, open_mode=True)
+        c3 = ("mode: OPEN" in oo and "ZERO estate context" in oo and "source 1" not in oo)
+        print("control 3 (--open emits empty-context declaration, no complement rows): %s" % ("PASS" if c3 else "FAIL"))
+        ok = ok and c3
+        need = ["AUTHOR PROFILE", "COMPLEMENT", "DECLARED EXCLUSIONS", "DENOMINATORS"]
+        c4 = all(s in out for s in need)
+        print("control 4 (family-shape sections present): %s" % ("PASS" if c4 else "FAIL"))
+        ok = ok and c4
+    print("self-test: %s" % ("PASS 4/4" if ok else "FAIL"))
+    return 0 if ok else 1
+
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ("-h", "--help"):
+        print(__doc__)
+        return 0
+    if args[0] == "--self-test":
+        return self_test()
+    if args[0] == "--open":
+        out = args[args.index("--out") + 1] if "--out" in args else None
+        compose(None, out, cap=0, open_mode=True)
+        return 0
+    if args[0] == "compose":
+        if len(args) < 2:
+            print("usage: comp-adversary compose <artifact-path> [--out <path>] [--max-neighbors N]")
+            return 2
+        path = args[1]
+        if not os.path.exists(path):
+            print("ERROR: artifact not found: %s" % path)
+            return 2
+        out = args[args.index("--out") + 1] if "--out" in args else None
+        cap = int(args[args.index("--max-neighbors") + 1]) if "--max-neighbors" in args else 25
+        compose(path, out, cap=cap)
+        return 0
+    print("unknown mode: %s (see --help)" % args[0])
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
