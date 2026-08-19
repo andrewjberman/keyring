@@ -1,8 +1,32 @@
-# 49F DATA CALL -- Andrew Berman x Mike Little, 2026-08-19 (~60 min) -- ANALYSIS
-**Raw:** `20260819_49F_mike_little_data_discussion.vtt` (same folder, byte-faithful).
-**Caveat:** the VTT capture is LOSSY (many cues truncated mid-sentence); characterizations below
-carry that; timestamps cite the condensed turn positions. Andrew's ask: analyze + store, directly
-relevant to MDPF + ADVI.
+# 49F DATA CALL -- Andrew Berman x Mike Little, 2026-08-19 (~60 min) -- ANALYSIS (rev 2)
+**Raw:** `20260819_49F_mike_little_data_discussion.docx` (HIGH-FIDELITY, the governing capture) +
+`.vtt` (lossy first capture, retained). **REV 2 (same day):** re-grounded on the docx; the VTT-era
+errors corrected in place -- notably the RETURN-METHOD direction (sec 2a) which the VTT had
+BACKWARDS. Andrew's ask: analyze + store, directly relevant to MDPF + ADVI.
+
+**REV-2 KEY CORRECTIONS + NAMED SPECIFICS (docx):** TWR IS the platform standard AND the GIPS
+preference; IRR is the "simple" alternative (VTT had this inverted). BD's convention per Andrew:
+"365 CALENDAR day total return." The BD-vs-Schwab discrepancy advisor = MITCH JOHNSON (total value
+BD vs Schwab, cause under investigation). Portfolio group = ADVISOR KEY definitively ("the Mitch
+Johnson portfolio group... his book"; private-wealth group = niche, <10% of assets). MODELS DO NOT
+LIVE IN BD AT ALL -- they live in SmartX (sharpens the overlay join). Client portal: ~11% of
+clients have EVER logged in. FIDELITY recently added as a second custodian (few clients) --
+a future ingest lane. Schwab Open Gateway = the statement integration. Databricks state: managed
+by AMBER + two third-party contractors; access via FULTON MAY (third-party IT serving 49F +
+alongside + three strands + the collective); the "alongside" lakehouse is early; LUKE wants a
+cross-3-strands solution and "his reaction suggested he's open" to AWS-direct (Mike: bring to
+Luke later). Andrew's BD endpoint map from the earlier crawl = in-estate prior art. Dividend
+projections: BUILT 3-4 months ago, pulled on Austin's responsibility concern; Tamarack method =
+Refinitiv/IDC declared rates primary + actuals fallback; ~$1.46B sits in models (~30 securities)
+so a scanner is cheap; BANKED pending Andrew's word. Sarah + Kristin = the ~80% attribution
+coverage call; Travis architect-tagged at 373M vs 460M logical. RBAC vision: architect = wide
+view; executive-summary view tied to calendar/Salesforce. Salesforce as roles/location source:
+Mike proposes as source-of-record; Andrew's freshness heuristic -- "high-signal data is where the
+traffic is" -- leans YES if advisors actively manage their book there; native API, likely
+low-friction. Andrew's offer: API access to the 49 buckets / scheduled duplication into
+Databricks; templates so partner onboarding = "days to a couple weeks rather than the six-month
+lead time" -- named partner targets: THREE STRANDS, the FRACTIONAL FAMILY OFFICE, alongside, the
+collective.
 
 ## 1. WHO/WHAT
 Mike Little = 49F-side data lead (ex-Tamarack/Black Diamond service team -- knows BD internals).
@@ -16,8 +40,10 @@ data solution; "his reaction suggested he's open" to moving toward AWS (~57:36).
 - **BD-vs-Schwab discrepancies EXIST AT THE SOURCE** (~04:45): Mike has a live advisor case with
   "discrepancies between [BD and] Schwab." Our parity census compares three-way in effect --
   our figures vs BD's vs Schwab's own -- and a BD-vs-Schwab delta is NOT our defect. Pre-register.
-- **Return method** (~02:07): BD's standard is the "simple" return; the more-accurate method is
-  what investment people mean by return -- a named convention fork (the TIGHT-class candidate).
+- **Return method** (~02:07, CORRECTED rev 2): TWR is the standard across platforms AND the GIPS
+  preference; IRR is the "simple" alternative non-investment people think of. BD's specific
+  convention per Andrew (~15:53): "365 CALENDAR day total return" -- calendar-vs-trading-day basis
+  is the named convention fork (the TIGHT-class candidate). [VTT rev-1 had this inverted.]
 - **Fee timing** (~15:52, Andrew's impression): BD marks fees QUARTERLY, does not amortize --
   net-of-fee comparisons off-quarter will diverge by construction. Pre-register.
 - **Market data** (~46:51-49:41): BD prices/dividends come from IDC-class vendors; dividend rates

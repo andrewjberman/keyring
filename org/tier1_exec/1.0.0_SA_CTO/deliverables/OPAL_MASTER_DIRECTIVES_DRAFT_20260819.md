@@ -123,6 +123,31 @@ hardened by autologin + remote fallback); ticket API/portal/storage = laptop-clo
 intake leg can carry water this week without touching the critical path. MSTR respawn is the
 sitez-coordination precondition (second reason now).
 
+## S8c. DIRECTIVE: TAX SMA OPS -- CLOSE IT OUT, ASSESS-FIRST (transcript 3)
+
+**Andrew (voice memo 08-19, archived at partner_calls/):** the Tax SMA process needs "a lot better
+job... a lot of prior art in the repo... we need to close it out." Requirements: (1) sync with the
+existing SHAREPOINT documentation from Yang + Alyssa; (2) TRACK THE ASSETS DAILY; (3) PARTITION
+the assets somewhere CONSISTENT as it grows -- per his cover note, designed **within
+opal-data-assets** and threaded into the whole pipeline process; (4) TAXONOMY: Tax SMA slots into
+the **SMA category** of the S3 view taxonomy (and Client=Advised/Residual gets some semantic/
+ad-hoc input from Andrew); (5) the assets ultimately roll into the **Model Portfolios page**;
+(6) **ASSESS-FIRST, his exact sequencing:** "we need to know what we've done thus far in order to
+have that meeting" -- a state assessment (workflow-as-designed, holes, remaining work) BEFORE
+setting the Yang/Alyssa meeting.
+**PRIOR ART (known):** OPAL_TAXSMA + OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY projects; the
+/taxsma-step1 skill (PFMG_TAXSMA Short Sale intake) + tax-newacc/tax-pt1/2/3 skills; ⚠ the 08-04
+memory row: a TAXSMA TO sat PENDING ~3wks at a DEAD seat (0.5.0_AE_OpalETL~A) -- the stall Andrew
+is naming is real and already flagged; the assessment supersedes-or-seats it.
+**Shape for the delegation pass:** one recon-class assessment deliverable (repo census + workflow
+map + SharePoint-doc sync review + hole list) -> Andrew reviews -> Yang/Alyssa meeting -> then
+the pipeline build TOs (opal-data-assets home, daily tracking, SMA-category wiring, MDPF page
+roll-in). Laptop fabric; SharePoint leg may ride the m365 gateway.
+**Adjacent recordings spotted in Downloads (NOT yet ingested, Andrew's call):** "Dashboard Update
+and Tax SMA Reporting" .docx+.vtt pair -- looks like the ops-detail call for exactly this
+assessment; plus two SMARTX_ADVISORY activity-ledger CSVs (WILLIAM_CHAN...) that look like Tax
+SMA working files.
+
 ## S9. OPEN -- AMBIGUITY QUESTIONS TO ANDREW (block only their own items)
 
 - **Q1: ANSWERED** (folded into S3 -- hierarchy pinned, MDPF-only home for now, advisory_scope
@@ -139,8 +164,7 @@ sitez-coordination precondition (second reason now).
 - **Q6 (S8b):** Opal Analyst on the Bloomberg box as the intake manager = CONFIRMED as the decided
   placement (your transcript reasons to yes; binding ticketing intake to that box's uptime, which
   the autologin+fallback work just hardened)?
-- **SLOTS:** transcript 2 -- INGESTED (S8b) · transcript 3 -- (pending; "two projects... the first
-  of which, and the larger" implies the second arrives next) · partner GraphQL spec file --
+- **SLOTS:** transcript 2 -- INGESTED (S8b) · transcript 3 -- INGESTED (S8c Tax SMA) · partner GraphQL spec file --
   (pending) · Mike-call outputs -- (pending) · BD householding-template sample (egress word) --
   (pending Andrew).
 

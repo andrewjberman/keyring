@@ -1,0 +1,24 @@
+Lastly, I want to talk about the tax SMA process.
+So there's a handful of items in here that we need to do a lot better job.
+We started a lot of work on this.
+There's a lot of prior art in the repo on this, but we need to close it out.
+And so what that entails is that we need to not only be able to adequately sink in with
+the existing SharePoint documentation from Young and Alyssa.
+We need to be able to effectively track the assets on a daily basis.
+We need to partition these assets somewhere on a consistent basis as it grows.
+So that, like as I was saying in the other voice memo about the account model overlay
+and more specifically the new nomenclature that sits above this, which is the models,
+SMAs, Alternatives, Insurance, Client, where Client is kind of a residual of advised or
+not advised accounts, which I will have to input semantically or input on an ad hoc basis.
+It's like, so this fits into that.
+So the tax SMA would fit into that SMA category.
+So we need to be able to know how much assets are in there.
+That ultimately is going to have to be incorporated into model portfolios, the page.
+And yeah, so we kind of just need to assess where we stand on that, what the workflow was
+designed as, where the holes are, what we have yet to do.
+Maybe we need to sync up with Alyssa and ask her some questions, ask Young some questions,
+have a meeting.
+In essence, I think if we can kind of assess our state there, then we can go through and
+maybe set a meeting with Young and Alyssa to assess what needs to happen there or what
+our next steps.
+But we need to know what we've done thus far in order to have that meeting.
