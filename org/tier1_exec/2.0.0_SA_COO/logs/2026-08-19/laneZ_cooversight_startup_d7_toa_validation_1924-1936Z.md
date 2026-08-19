@@ -158,3 +158,48 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
 - **Fixed read:** 08-20 07:00 WDAC acceptance — un-gates TO-B-dependent GOs and W6's chain.
 - Census: 6/6 sustained at the ceiling, by design, zero spare — any burst need routes through
   MSTR~Z first.
+
+---
+
+## ADDENDUM 3 — 20:27–20:57Z: the #42 flip, the allocation call + sovereign yield, the D8 swap
+
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum 3)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log/merge-base | @3c8c3f1035, @e8b2c300b3, @fdd34ca737, @f45e5db124, @1e0ec3b079 | PASS | every ruling/record content-read before acting; case (a2) MEASURED not assumed (taxsma file still pending on trunk; merge stat carried no taxsma/#42 file) |
+| to-check | --all --assignee 0.5.0_AE_OpalETL~A (before+after) | PASS | flip confirmed by the instrument: 2 TAXSMA-adjacent rows -> 1 |
+| get_agent_status + ps | DS~Z dead-verify pre-deregister | PASS | NO watcher process + heartbeat frozen at pre-kill IDLE + work pushed = dead; broker "LIVE 91s" was the named ghost window |
+| get_live_agents + ps | census at the swap event | PASS | 5 broker-LIVE + BG-by-process (PID 1213) = 6/6, 1-for-1 held |
+
+## Delta
+
+1. **#42 TRIGGER FIRED — taxsma flip EXECUTED @709917f918** (Andrew ruling @3c8c3f1035 card 10:
+   "COO/MSTR mark #42 superseded citing this record"). Case (a2) measured: the laptop's flip did
+   not cover the file. Same-commit pointer quotes card 10 verbatim + @fac13ccc3a + the dead-~A
+   inherit rationale. D9 recon consumed the pair as SUPERSEDED-cite.
+2. **SURPRISE find routed to MSTR~Z untouched:** a SECOND stale sovereign row at the dead ~A lane
+   (ANDREW_DIRECT_20260715 #7+#8 UIUX/TAXSMA, "executing" 35d) — NOT covered by card 10 on its
+   face; converged with the D9 recon's own #48 rec into ONE card at Andrew.
+3. **D9 TO-A DELIVERED** (7/7 + proof VALID @990cfc061b); validation at base COO (issuer).
+4. **ALLOCATION CALL (delegated by MSTR~Z, two claimants for the D9-freed seat):** ruled CVO~Z
+   first (unblock-in-flight: TO-B v0.2 staged @fdd34ca737 w/ 36/36+30/30, port+W6+co-signs all
+   blocked on the unstaffed cert seat) with a pre-carried override clause — **which FIRED within
+   the hour:** Andrew's D8 word @f45e5db124 ("this is the fabric that needs to be working on
+   that"; CTO~Z recorded reading: swap-path-not-census-override). YIELDED per my own clause:
+   D8 takes the seat, CVO~Z = next-slot claimant, cert-hold cost stated priced-not-hidden
+   (acute-post-WDAC -> card to Andrew, never a unilateral burst). No exec divergence.
+5. **SWAP EXECUTED:** DS~Z deregistered by me (CTO/COO-restricted primitive; dead-VERIFIED first
+   at my desk, discriminators above); D8 seat 0.4.0_DE_ClientPlatform~Z LIVE (PID 20640) on TOs
+   @7416fb46d0 — one seat, TO-A AE-class AUTHOR-ONLY (applies laptop's) then TO-B DE-class.
+   **Census at the event, measured: 6/6, 1-for-1 held, zero ghosts.** Respawn-on-REWORK (base-COO
+   D9 validation) flagged as a would-be-7th needing the same allocation discipline.
+
+## Gate-forward (20:57Z)
+- **At Andrew:** D7 one-line-back; the #48/uiux one-card disposition; (via CTO~Z+MSTR~Z routing)
+  the DAPI-liveness implementation owner.
+- **At me, event-driven:** TO-B index validation vs the W5 C1-C9 bar (needs the CVO~Z co-sign —
+  next-slot); D8 seat coordination joins the pattern; census at any next spawn event.
+- **Fixed read:** 08-20 07:00 WDAC acceptance. Census 6/6 at ceiling, zero spare.
