@@ -91,3 +91,28 @@ not taken.**
    would change SOURCE, a P2/P3-class act, not a quiet swap).
 
 **Routes:** 1.0.0_SA_CTO (frame) · 2.0.0_SA_COO (ledger) · Andrew's card (items 1/4).
+
+---
+
+## ADDENDUM (2026-08-19 ~1750Z, Andrew-direct at this terminal): the VALUE-LEVEL cross-reference -- last fam (as-of 08-10) x BD allocation identity plane (08-18), joint 5,277 accounts
+
+**Method:** account-grain join on fam col_4 = BD Original Account Number; BD deduped to account grain
+(138 of 6,145 accounts vary an identity column across group-rows -- 2.2%, surfaced not chased).
+Aggregates only; scratch deleted. **Instrument honesty applied:** every mapping-consistency score is
+reported AGAINST its majority-class baseline -- two first-pass "alignments" were DISCOUNTED as
+baseline artifacts (the cannot-fail-instrument class, caught in-pass).
+
+| comparison | result | verdict |
+|---|---|---|
+| **fam household (col_6) vs BD Relationship ID** | 96.8% of fam households sit fully inside ONE BD relationship; BD relationships are COARSER: 589 of 2,689 span 2+ fam households; 41.6% of joint accounts sit in a multi-household relationship | **REAL, structural: fam-household NESTS inside BD-relationship.** BD's grouping is the client-relationship super-grouping (multi-TIN: spouses/trusts/entities); fam's is per-taxpayer. Consistent hierarchies, not conflicting ones |
+| **fam holder (col_5) vs BD name columns** | best = **Client Name**: 55.8% identical token-set, 92.1% at >=50% token overlap (registration-string variants explain the tail); Account Owner: 0% (different thing entirely) | **REAL: col_5 = the client name.** Baseline ~0 with thousands of distinct names |
+| **fam rep/grouping (col_1/2/3) vs BD Rep Code / role columns** | Rep Code "consistency" 82.3% vs majority-class baseline **82.1%** -> NO signal; SEC Client Type 98.5% vs baseline 98.5% -> NO signal (both DISCOUNTED) | **NOT ESTABLISHED.** fam's rep layer and BD's role model (Architect/Consultant/Implementor/Local Ops + splits) are different vocabularies; the correspondence is exactly what the queued Firm User Account Assignment probe target answers |
+| universe | 2 of fam's 9 reps have books ENTIRELY outside the BD export; 1,925 fam-only accounts | fam's irreplaceable content is UNIVERSE, not fields |
+
+**RICHER: BD, decisively, at account grain** -- 36 registration types + 15 account types (vs fam's
+one free-text string), the four-role advisor model with split %s (vs one rep name), relationship
+names + SEC type + inception/termination dates + open/closed + fee plane (fam: none of these), and a
+household super-grouping that cleanly CONTAINS fam's. **What fam alone still carries:** the full
+Schwab custodial universe (1,925 accounts + 2 rep books) and the TIN-keyed per-taxpayer grain (which
+BD's synthetic nesting reproduces at 96.8% without exposing a TIN). The rep-layer mapping is the one
+open cell; it rides the already-queued probe.
