@@ -171,6 +171,13 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
   RATE (five artifacts / five catches / zero shipped) is a T11 signal: the discipline holds, the
   instruments do not improve on their own. Running: 2 new findings, 7 non-defects, 22 cleared
   unread, 13 risky terms left (minus held C3-family).
+- 2026-08-19 ~212xZ (ANDREW-RULED, v3.7 @b86a0bbb23): **the lifecycle contest resolved TWO OBJECTS**
+  — `Lifecycle_Stage` minted (C3.ii vertical grain), `Lifecycle_Value` → deprecated alias. **A1a
+  PARITY UPDATE: the registry is now 69 terms** — Lifecycle_Stage classifies NOT-a-universe (a
+  state axis on verticals, like Deploy_State on code copies), so the classification reads
+  26 + 4 + 1 + 38 = 69; the NOT-list's Lifecycle_Value row annotates deprecated-alias. Every
+  denominator in this doc that reads "68" is vintage-correct for its own pass and re-derives at
+  the next (the derive-don't-recall method absorbs the bump by construction).
 - 2026-08-19 (RESTORED ~2107Z — the ~2101Z edit dropped this line instead of appending above it;
   caught on the next edit's failed anchor, recovered byte-identical from @e7a2024): **evidence home
   moved** — Andrew-direct fold @6096e11d95 lands the OPAL_WORLD_MODEL content at
