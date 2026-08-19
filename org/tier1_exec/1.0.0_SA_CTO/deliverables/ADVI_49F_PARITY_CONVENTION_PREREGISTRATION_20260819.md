@@ -87,10 +87,32 @@ closure addendum on TRAVIS_GROUP_DECOMPOSITION_HOW_BD_BUILDS_456M_20260819.md)
    8.69M, Lincoln 3.70M, Merrill 401k 1.09M, Fidelity 0.99M, NCF DAF 5.64M, Schwab strays
    0.07M) + 12 non-8-digit members. Out-of-oracle is not one class; the census prints these
    subclasses separately.
-6. **PARKED DESIGN CELL (P3, CTO-gated, NOT ruled here):** our canonical sits accrual-EXCLUSIVE
-   by B_02's PENDING-RULING zero, and the accrued source exists in BD qt1, not in our Schwab
-   feed -- whether the canonical chain ever becomes accrual-inclusive (and from what source) is
-   a drive-to-EXACT convention decision at P3, never a comparison-layer side effect.
+6. **PARKED DESIGN CELL -- DISCHARGED BY RULING ~1935Z (see A4):** our canonical sits
+   accrual-EXCLUSIVE by B_02's PENDING-RULING zero. [Original park text retained: whether the
+   canonical chain ever becomes accrual-inclusive was a P3 decision -- Andrew answered it
+   same-evening.]
+
+## ADDENDUM A4 -- 2026-08-19 ~19:27Z (STILL PRE-PROBE; ANDREW-RULED, closes A3 item 6)
+
+**VALUATION BASIS RULED NET/REAL (Andrew-direct ~1935Z at the CRO~A terminal, VERBATIM: "if the
+cash is not received it shouldnt be counted... the schwab approach is better here" -- record at
+org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20260819_VALUATION_BASIS_CASH_NET_REAL_SCHWAB_APPROACH.md).**
+- **Effect on the canonical chain:** B_02's zero is no longer PENDING-RULING -- accrual-EXCLUSIVE
+  is the RULED basis. The chain does not change; the pending flag retires. Flip mechanics
+  (b00 ACCRUAL_STATUS stamp, convention registry entry) execute at the CTO gate + DS lane as
+  record-keeping of the ruling, not as a behavior change.
+- **Effect on C5:** C5 is now a PERMANENT NAMED-CONVENTION class, resolved at the COMPARISON
+  LAYER ONLY (accrual add-back in the harness for classification) -- never by canonical change.
+  A C5-classified delta is BD-includes-accrual-we-do-not-by-ruling: explained, expected, and
+  carried with its account list.
+- **BANKED, surfaced-not-adjudicated (CRO~A as ADVI_PERFORMANCE field-contract owner):** GIPS
+  requires accrual accounting for interest income in PERFORMANCE calcs; book-wide impact <1bp
+  today, but a bond-heavy single account's cash-basis return series saws at coupon dates
+  (specimen stub 2.8% of account value). The layer-split option (SERVE on the ruled net/real
+  basis; the perf engine accrues internally where GIPS-grade per-account returns are claimed)
+  is the design frame IF that claim is ever served -- a future CTO design cell, activated by a
+  served-claim decision, not by this ruling. CRO~A is Andrew-tasked with the parity-findings
+  brief + BD performance-endpoint comparison vs our GIPS scripting; results route here.
 
 ## ADDENDUM A2 -- 2026-08-19 ~19:03Z (STILL PRE-PROBE; per CVO P0-2 @cc223ee3b6)
 
