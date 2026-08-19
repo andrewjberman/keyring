@@ -75,9 +75,31 @@ For each PROCEED-classed open subject:
 
 If execution fails or hits a structural block (e.g., HARD-BLOCK class-5), surface to Andrew as a fresh open subject + classify as RESERVED for next cycle.
 
+## Step 3b — CROSS-FABRIC COMPONENT (Andrew-direct 2026-08-19 ~21:16Z at the MSTR terminal, VERBATIM)
+
+> "I also want you to update your govern loop so that it has a component of staying in touch with
+> the sitez MSTR~Z. I have tried to keep the fabrics relatively quarantined by assigning them
+> directives that do not overlap, but you should stay in touch and make sure that you are on track
+> with your fabric and they are on track with theirs and the two of you /integrate merge in quiet
+> periods."
+
+Every cycle, after Step 3:
+
+1. **STATUS EXCHANGE** — one bus frame to `0.0.0_AB_MSTR~Z`: this fabric's on-track read (per
+   laptop-placed directive: on-schedule / slipped-with-redate / blocked-named) + ask theirs for the
+   sitez-placed set. Terse; measured beats complete. Their answer folds into the next cycle report.
+2. **ON-TRACK CHECK, both sides** — a slip with a written re-date is HEALTHY; a slip WITHOUT one is
+   the finding (route to the owning COO). Directive overlap appearing between the fabrics is itself
+   a finding for Andrew (his quarantine premise — same law as /integrate Step 2's overlap band).
+3. **QUIET-PERIOD MERGE** — if BOTH fabrics read quiet (no seat mid-commit their side per MSTR~Z's
+   word; no unswept lane commits mine) and divergence is nonzero, run **`/integrate merge`** (the
+   full protocol, both legs coordinated over the bus). Not quiet = assess-only and carry to the
+   next cycle. The 08-19 evening precedent: overlap ~0 is the healthy shape; a large overlap stops
+   the merge and surfaces to Andrew.
+
 ## Step 4 — Cycle report
 
-Print fixed format:
+Print fixed format (CROSS-FABRIC line added per the 2026-08-19 amendment):
 
 ```
 /govern cycle {N}
@@ -90,6 +112,7 @@ Print fixed format:
                  - ...
   PRE-1-TURN:    {N} too fresh
   RESPONDED:     {N} closed
+  CROSS-FABRIC:  status exchanged | on-track both / finding: ... | merge: ran (heads) / assess-only / not-quiet
   LOOP:          cron-driven (next cycle in {interval})
 ```
 
