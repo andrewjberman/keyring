@@ -26,7 +26,7 @@
 # Minted 2026-08-19 (missions-revival step 4, LD-0425). Owner: 0.0.0_AB_MSTR per .register-owner.
 
 version: 1
-as_of: "2026-08-19"
+as_of: "2026-08-19"  # stance cells D4/D7/D9 event-refreshed 20:3xZ per CTO validation 202850Z
 
 directives:
   D0:
@@ -79,8 +79,8 @@ directives:
       projects: [ETFS_CANON]
     stance: "SCOPE CORRECTED by Andrew ~17:4xZ: an ETF VERSION of the Positioning page (flip
       ETFs DIVZ/IDVZ/PFDE/PFOE vs Models), FULL-STACK -- first act is a state assessment of the
-      ETF data plane (canonical home opal-data-etfs, build-out honestly UNKNOWN); CTO rules the
-      ETFS_CANON design gate this week; the four ETFs also join D1's taxonomy as SMA-category
+      ETF data plane (canonical home opal-data-etfs, build-out honestly UNKNOWN); the ETFS_CANON design gate
+      RULED @6d62143d2d; the four ETFs also join D1's taxonomy as SMA-category
       members -- one registry serves both."
   D5:
     title: "Alt research (ongoing)"
@@ -109,7 +109,8 @@ directives:
       subgroups: []
       projects: []
     stance: "Portal accept/in-progress/complete already LIVE (P0). Open legs: Graph DL discovery
-      (addresses = the open input, one-liner confirm with Andrew), Graph subscription/poll
+      RESULTS IN (49@opalinvest.com + inflection@opalinvest.com FOUND; Cottonwood NONE -- at Andrew;
+      intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
       (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
       2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
   D8:
@@ -130,5 +131,6 @@ directives:
       projects: [PFMG_TAXSMA]
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
-      -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs pend Andrew's
-      ingest word."
+      -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427
+      (Andrew's ruling-8 YES executed 08-19; workflow-as-designed source now in-tree, ferried to the
+      sitez assessment seat)."

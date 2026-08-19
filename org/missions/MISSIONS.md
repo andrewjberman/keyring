@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   31358819a4
-    ANCHOR TIME     2026-08-19T14:55:57-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.0.0_AB_MSTR
+    ANCHOR COMMIT   94bea91081
+    ANCHOR TIME     2026-08-19T16:28:53-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   3.0.0_SA_CVO
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
