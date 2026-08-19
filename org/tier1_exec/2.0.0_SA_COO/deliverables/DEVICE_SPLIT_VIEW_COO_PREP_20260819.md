@@ -58,3 +58,17 @@ DT, 0.8.0. Standing load through Friday: the 49F close. Post-Friday laptop capac
 parity P2/P3, GLDRNS disambiguation, T1/T2 tightening builds, W-15 aftermath, the allocation
 stack. Everything in that post-Friday list EXCEPT the builds touching laptop-pinned planes is
 split-session material.
+
+---
+## ADDENDUM 18:45Z — MEASURED ENVELOPE (MSTR partial, CTO relay 184148Z; MSTR~Z consolidates after)
+
+Principle 4's conditional now has a measured floor: **data-bucket deploy legs are UNBLOCKED on
+sitez** (safe-deploy PROVEN — 10 objects / 3 buckets, yesterday's leg-2) and **safe-commit +
+comp-tools PROVEN**. Still CONDITIONAL: m365 gateway (headless-auth caveat — D7 Graph poll + D9
+SharePoint legs; S10 already slots the Graph leg laptop-side, consistent) and portal dev-build
+(any DE-class frontend export). BBG-box strengths are real (terminal + DAPI + pull pipeline +
+box SharePoint + Analyst runtime) but the **WDAC freeze holds until 08-20 07:00 acceptance** —
+nothing loading unsigned binaries lands there before it clears. **Concurrency ceiling ~4-5 seats**
+(pending MSTR~Z's own word) — this IS the session's capacity constraint, as §2 predicted. The
+cross-fabric /integrate merge fires on CTO's PRDs-done word, so sitez sits at parity vintage
+before any issuance.
