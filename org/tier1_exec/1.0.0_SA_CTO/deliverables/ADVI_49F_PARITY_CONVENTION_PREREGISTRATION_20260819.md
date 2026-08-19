@@ -62,3 +62,15 @@ within 1%, and the residual tail is UNIFORMLY POSITIVE, median +$1,281/account -
   group members are non-Schwab (16.1M) -- structurally invisible to our feeds = OUT-OF-ORACLE
   class members inside BD's own group totals (bears on the denominator ruling, open-call 3);
   one $6.9M single-account REAL delta + one $5.64M absent-member outlier are OPEN CELLS at CRO~A.
+
+## ADDENDUM A2 -- 2026-08-19 ~19:03Z (STILL PRE-PROBE; per CVO P0-2 @cc223ee3b6)
+
+**C4's THIRD LEG, NAMED (the pre-registered row said "Schwab custodial" without naming the
+artifact):** the third leg is **Schwab-PUBLISHED figures (client-statement-class artifacts)** --
+explicitly NOT our own Schwab bronze/silver, because our canonical gold DERIVES from that feed:
+on the VALUE plane "ours == Schwab-bronze" is a derivation chain agreeing with its own input
+(shared-derivation, not corroboration). Computed-return compares (our TWR vs a Schwab-published
+return) are genuinely independent. **C4 adjudication mode: HAND-ADJUDICATED at P1/P2 (statements
+pulled manually for affected accounts); automated at P3 only if a scalable statement source
+lands** (Schwab Open Gateway statement integration = the named candidate). The pre-registered
+C4 row's signature and verdict are unchanged; this addendum names the instrument that runs it.
