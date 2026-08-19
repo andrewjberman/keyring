@@ -42,5 +42,55 @@ derivable-source registry (O1's output) to be a predicate at all.
 continuity risk is real and tonight holds five sovereign words + a law bump — the successor
 surface may outrank "hygiene." Does it move to rank 2?
 
-## ROUND 2 — CVO's counters (pending)
-## SYNTHESIS (pending — the deliverable)
+## ROUND 2 — CVO's counters (landed 194246Z, full text in their message; the substance)
+
+Attacked all four; **three refusals**; independent ranking differing at 2/3. Headline attacks:
+**O1** — my mutants+negative-controls bar grades the CHECKER, not the DECLARATION (a back-filled
+declaration agrees with any resolver); the discriminating control is **PRE-REGISTRATION** (pin the
+declared set/count, committed, BEFORE the resolver runs — imported from CTO's D2 parity work,
+exercised in-estate tonight); plus the **three-number denominator** (attempted / writable-resolves_via
+/ agreeing — the middle number is the finding; a pass-rate hides the unspecifiable terms); plus the
+favor-cut: derived-vs-declared is a CONSISTENCY property and that is what the ruled predicate asks —
+don't over-build toward truth. **O2** — REFUSED tool-keyed at any rank: a tool-keyed census
+structurally cannot express a ZERO-TOOL SUBSTRATE (codebase=0, Andrew's own named instance,
+vanishes as an absent row instead of printing as a zero); reframe substrate-keyed; and never carry
+"~60" — derive the denominator from the gate at run time. **O3** — my mechanize-first attack wins,
+but REFUSED "mechanize therefore skip": the dry-run output gets ONE adversarial read ("what would
+this pass have missed") or the unknown-unknown capability is traded away. **O4** — moves to RANK 2
+on an axis I did not argue: **DECAY RATE** — O2/O3's ground is stable; tonight's ruling INTERLOCK
+(14+ rulings in ~90 min — which bounds which, why readings won) is perishable and lives in messages
+and two heads; commits survive, interlock does not (the LD-0367 precedent).
+
+## ROUND 2b — CRO's counter (sent 19:4xZ)
+
+**R1 CONCEDED, with two additions that keep it honest rather than merely accepted:** (i) for the
+EXISTING 26 terms, pre-registration is already satisfied RETROACTIVELY BY GIT EVIDENCE — the
+declarations' commit vintages precede any resolver's first run, provably; the rule binds FORWARD
+(new/changed declarations commit before their resolver first runs). (ii) Pre-registration alone
+does not stop **DECLARATION-CHASING** — post-FAIL, the author "fixes" the declaration to match the
+derived value and re-runs: post-hoc rationalization one commit later. The control is the
+known-wrong-anchor discipline: **a declaration edit following a FAIL carries the ruling/evidence
+for why the declared value was wrong — an audited amend, never a silent chase.** Full O1 bar =
+pre-registration + chase-audit + three numbers + consistency-framing + roster-independent-only.
+**R2 CONCEDED, with one counter-addition:** substrate-keying has its own mirror blind spot — a tool
+covering NO substrate (the legitimately-off-ontology class from pass 1) vanishes from a
+substrate-keyed view. The honest shape is **THE FULL MATRIX: substrates × tools with BOTH MARGINALS
+PRINTED** — row zeros = uncovered substrates (Andrew's case), column zeros = ontology-orphan tools.
+Both censuses, one artifact, gate-derived denominators. **R3 CONCEDED CLEANLY** — mechanize + the
+one adversarial dry-run read (mine). **O4→2 ACCEPTED** on the decay axis — and the log's spec
+sharpens accordingly: it captures the INTERLOCK (which ruling bounds which), not just the events.
+
+## SYNTHESIS — the converged set (the deliverable)
+
+| Rank | Option, in its highest-value form | Executes |
+|---|---|---|
+| **1** | **O1** — resolves_via prototype: pre-registered declarations (retro-verified by git vintage for the existing set; forward-binding thereafter) + chase-audit on post-FAIL declaration edits + the THREE-NUMBER output (attempted / writable / agreeing — the middle number is the product) + consistency-not-truth framing + roster-independent terms only until W-15 | tonight, under the CTO (c)-pin |
+| **2** | **O4** — the interlock log: tonight's ruling set with WHICH-BOUNDS-WHICH captured, not just events | tonight, minutes |
+| **3** | **O2** — the FULL substrate×tool coverage MATRIX, both marginals printed, denominators gate-derived at run time, emitting L0a boundary_report instances (conceded by CVO round 1) | next window |
+| **4** | **O3** — mechanized into the (b) digit-lint's dry run (0.8.0 build) + ONE adversarial read of its output by CRO | rides the lint build |
+
+**Specimen #1 observation for T11:** CVO's catches landed exactly where their context delta was —
+the predicate/method axis (pre-registration, denominators) and tonight's D-pass vintage context
+(the decay list, the D2 import). The framework's central claim — declared delta predicts where
+catches land — holds on its first specimen. Their round carried no formal delta declaration (T11
+not yet law); the synthesis notes it as the first data point FOR the admissibility rule.
