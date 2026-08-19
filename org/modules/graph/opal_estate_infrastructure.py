@@ -559,7 +559,16 @@ def cmd_definitions(term: str) -> int:
           f"changes only by naming act)")
     if term == "__ALL__":
         for k, v in terms.items():
-            body(f"  {k:22} [{v.get('status','?'):10}] {str(v.get('definition',''))[:90]}")
+            # Annex-field NAMES surface in the list line, generically -- the filtering decision
+            # is made FROM the list, and a [deprecated] with an invisible binding_residue is the
+            # exact harm the field exists to prevent (CVO certification residual 2026-08-19).
+            # Names not a count, all extras not one field: a special-cased "+residue" marker
+            # would recreate the fixed-trio defect one layer up.
+            _extras = [xk for xk in v
+                       if xk not in ("definition", "authority", "sits_at", "status")]
+            _mark = (" +" + ",".join(_extras)) if _extras else ""
+            body(f"  {k:22} [{v.get('status','?'):10}]{_mark} "
+                 f"{str(v.get('definition',''))[:90]}")
         footer(f"  denominator: {len(terms)} terms")
         return 0
     tl = term.lower()
