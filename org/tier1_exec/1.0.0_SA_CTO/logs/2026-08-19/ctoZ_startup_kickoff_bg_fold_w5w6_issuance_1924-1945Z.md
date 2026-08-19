@@ -66,3 +66,9 @@ executors need (comp-cache/comp-estate in W5, comp-iam/comp-routes in W6).
 - **D-family oversight** — D7 live at AE~Z (COO~Z validates deliverables per split); D9/D6 arrive
   via ferry; D3 spec-leg conditional unchanged. Nothing due at this desk tonight.
 - **Standing:** event-driven; zero crons; Monitor b4jhotqda is the wake mechanism.
+- **BANKED, no action tonight (COO~Z surprise-channel 194208Z, VERIFIED at this desk 194x Z):**
+  `0.1.0_DE_MarketIntelligence` has TWO agent folders — `org/tier2_senior/` (pre-program TOs:
+  ADHC_DESIGN/DEBT/YANG) and `org/tier3_junior/` (the OPAL_ANALYST program home: W4a, W4c-1, EXP1,
+  now W5). One-logical-seat-two-homes class (the Rule-22a shape); XXX.md maps DE to tier2_senior.
+  Discoverability unaffected (`issued_to` is truth; to-check indexes workspace-wide). Needs an
+  eventual convergence ruling — MINE to route when it earns a slot; pre-existing, not tonight's.
