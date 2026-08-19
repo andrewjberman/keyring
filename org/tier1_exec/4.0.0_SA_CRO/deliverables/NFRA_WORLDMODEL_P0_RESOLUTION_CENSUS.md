@@ -126,6 +126,20 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
   fold-verify deltas ADJUDICATED** (WORLDMODEL_FOLD_TIEOUT_20260819.md): 68-vs-62 = 62 content +
   1 rewritten README + 5 never-tracked pyc (removed); 121-vs-118 = vintage-at-authoring, ledgers
   byte-identical across the fold, no integrity loss.
+- 2026-08-19 ~2056Z (CVO contradiction pass, term 1 of 46 — ADJUDICATION ADOPTED): **A2's
+  `codebase = 0` is an UNEXECUTED RULED FOLD, not a no-coverage gap.** The 1,337 `pipeline`-labelled
+  nodes ARE codebase population under the v1.9 ruled value map (ESTATE_AXIS pipeline→ajb_workspace);
+  the relabel, not a build, is the owed act — and the two reads take OPPOSITE-SIZED remedies (the
+  wrong read sends someone to build what exists; the Rule-25 abandoned-vs-key-migrated shape at
+  substrate grain). REFINEMENT CARRIED WITH IT: the 1,337 are the PIPELINE-SCRIPT slice of the
+  repo — post-relabel, codebase completeness (the repo's non-pipeline code) RE-MEASURES from an
+  honest baseline instead of a false zero; the interview's codebase-then-MS build order stands,
+  re-scoped. SECOND FINDING same row: `semctl` 23 = a FIFTH live value undeclared on a 4-member
+  axis (its drop is also in the ruled map — same migration). CVO's stated residual (producer
+  intent of `layer`) CLOSED by the registry's own v2.0 STAGED record — "`layer` is TODAY the live
+  Iceberg column holding SUBSTRATE values," measured and naming-act-recorded 08-12. Execution
+  routed to CTO (the S0 layer→substrate migration their 08-12 arch-call already sequences; this
+  is lock-down work — the ruled fold executing — not post-lock-down graph work).
 - 2026-08-19 (later): **evidence home moved** — Andrew-direct fold @6096e11d95 lands the
   OPAL_WORLD_MODEL content at `infra/system/ontology/worldmodel/`; `10_census/` is this census's
   declared SEED + DIFF BASE (07-31 vintage snapshot, marked so — never a live read). Observed
