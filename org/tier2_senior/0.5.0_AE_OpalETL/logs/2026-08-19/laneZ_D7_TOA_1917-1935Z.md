@@ -45,6 +45,11 @@ None on D7 TO-A (closed clean). D7 TO-C gated: laptop TO-B + U3/U4 + MSTR~Z's 08
 ## TO-G enum consumption (2310–2316Z)
 - **Gate discharged @2ff219b592** (CTO~Z): D3.1 enum adopted. **CONSUMED @3fb8563d1f**: disposition_contract.py cites the contract path+vintage @1914fa3fd6 + ratification record @f097698bf6; rule 1 (version-never-edit) MECHANIZED — 3 contract mutants refuse loud (insert/rename/version-bump), unknown-disposition refuses; rule 2 HARD — grammar class → CANNOT-ANSWER-PENDING-SCOPE-DECISION and the disposition WINS over a perfect score (classify_candidate(1.0, grammar)=CANNOT-ANSWER, exercised). Battery 11/11 + resolver matrix 7/7. Confidence-model design fixed (band ladder ≥0.75/0.5). Remaining gate = identity-plane DATA binding (laptop-deploy, client surfaces); resolve() raises loudly. Mutant-construction lesson: the first append-mutant broke YAML and tested the parser, not the guard — rebuilt inside the values list.
 
+## TO-G validation chain closed (2318–2323Z)
+- CTO~Z gate-side VALIDATED (own 4/4 exercise incl. perfect-score-loses-to-disposition + controls; gate closed, handed to COO row-gate). Their caller-error note (load_contract takes REPO ROOT) banked as DESIGN.md checklist item 0 @c0ec99a280 same turn.
+- COO~Z row-gate ACCEPTED (10-cell SUPERSET: both band floors inclusive + just-below — boundary cells my 7 lacked; battery re-run 11/11 rc=0 — THIRD independent desk). **Lesson banked: boundary-inclusive testing beats representative-member testing; next battery composes floors±ε by default.** The 16-row scope decision rides the ferry to base COO with load-bearing status named.
+- TO-G stands ENUM-CERTIFIED; residual gate = identity-plane data binding (laptop-deploy sequencing fact).
+
 ## Compiler Tools (D6 addendum)
 comp-find (name+content modes, denominators printed) for tooling/census location; the lift/emit/validate/battery suite (this session's own instruments, all denominator-printing); raw grep x3 under rail-checked markers (doc-internal navigation + Graph-consent doc — no comp-tool route); aws s3api head-object/list-objects-v2 (operational reads, materialized client-side per the pagination law). Gap noted: no comp-tool models M365/Graph consent or SharePoint reach — the W7/W8 registries are the instruments there.
 
