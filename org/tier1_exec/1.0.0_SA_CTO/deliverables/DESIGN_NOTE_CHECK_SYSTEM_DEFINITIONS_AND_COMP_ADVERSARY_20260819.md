@@ -25,10 +25,22 @@ documents are recompilable views). Placement: LOCAL as a class per Andrew's stan
 | T12 delta-declaration | `validation_context_declaration` | what the validator was and was not shown | packet-vs-author-context complement |
 
 **The family contract (what "sibling" means, exactly):** each is (i) a DECLARATION (typed claims,
-one grain per artifact), (ii) a CONFORMANCE VERDICT per claim from a closed enum, (iii) EVIDENCE
-PINS per claim (source pointer + vintage), (iv) DENOMINATORS in the artifact itself (the
-three-number frame: attempted / writable-or-applicable / comparable -- adopted from CRO's
-pre-registration, generalized). **Why one family:** the lock-down's exit bar, future gates, and
+one grain per artifact), (ii) a CONFORMANCE VERDICT per claim from a closed enum -- **and verdicts
+are VINTAGE-INDEXED STATEMENTS, non-monotone by family definition (amended per CVO's L0a answer
+@204337Z): a verdict asserts a comparison AT a stated read-vintage; a new run at a new vintage is
+a NEW statement, so nothing "un-passes" -- the drift gate compares the latest statement against
+the known-rulings set. If L0a's boundary_report as-built assumed monotone semantics anywhere,
+that assumption is scoped to that member, never inherited by the family** -- (iii) EVIDENCE PINS
+per claim, **each pin carrying its DECLARED KIND (CVO's measured amendment: 62 of 68 registry
+authorities carry no commit pin, so an undifferentiated vintage requirement is unsatisfiable on
+91% of the checker's own rows): `read-vintage` (what the instrument saw when it looked --
+available always, and SUFFICIENT for drift detection, which compares current-against-current) vs
+`declaration-vintage` (what the definition was written against -- available where recorded).
+A trace-to-authority claim REQUIRES declaration-vintage and is UNANSWERABLE where absent -- the
+report states that, never implies otherwise; stamping a read-vintage where the contract means
+declaration-vintage is the false-provenance failure the clause exists to prevent** -- (iv)
+DENOMINATORS in the artifact itself (the three-number frame: attempted / writable-or-applicable /
+comparable -- adopted from CRO's pre-registration, generalized). **Why one family:** the lock-down's exit bar, future gates, and
 any downstream consumer then parse ONE grammar; a second declaration grammar would be the
 two-vocabularies defect at the meta layer. (CRO named this as the decide-once question; L0a is
 the natural parent because it already carries declaration+conformance+pins and survived its own
