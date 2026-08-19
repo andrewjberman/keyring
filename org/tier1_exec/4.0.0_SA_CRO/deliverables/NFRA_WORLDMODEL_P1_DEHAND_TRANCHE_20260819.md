@@ -34,6 +34,13 @@ For every surface in the class, classify → remedy:
 | T9 | CONTENT_MODULE §0 cascade mapping | F-G | LEGISLATIVE → one-line v3.3/NLP re-reconcile | CRO/CVO housekeeping class (with CVO's arrival) |
 | T10 | Doc-header version pins as a CLASS (LAYER_FIELD_ANATOMY done; sweep for the rest) | F-H pattern | RULE going forward (v3.3) + **the never-again mechanism, §3** | CRO sweep + CTO gate routing |
 
+### Rows added 2026-08-19 ~19:2xZ (Andrew-direct "Do it" on the adversarial-context framework)
+
+| # | Surface | Nature → remedy | Owner / vehicle |
+|---|---|---|---|
+| T11 | The adversarial-admissibility + contested-cell METHOD AMENDMENT (declared context-delta or the pass is a recorded re-read; case/counter-case on rival-reading cells) | LEGISLATIVE → steward draft off the live CRO×CVO exchange (specimen #1), per the 14(e.1) precedent | CRO (method steward) |
+| T12 | **`comp-adversary`** — the deterministic validator-context COMPOSER (design: `ADVERSARIAL_CONTEXT_CONSTRUCTION_DESIGN_20260819.md` — author-profile parse → neighborhood → complement → packet → auto delta-declaration; `--open` mode for the model-prior validator; every stage rides an existing tool) | BUILD → CTO routing (COMPLEARNS/P2 adjacency; tool NAME to ratification; comp-axes snapshot-consumption constraint carried) | CTO route |
+
 ## 2. THE F-A AUTHORIZATION QUESTION — answered as a stated read (one word overturns)
 
 CVO asked: new naming act, or propagation? **Stated read: PROPAGATION.** The cover model was ruled
