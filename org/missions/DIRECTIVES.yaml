@@ -11,6 +11,14 @@
 # directive: cells cite the D{N} PRDs directly (committed @375c874a9e/@8d662d5f1f, the
 # 185302Z PRDs-done trigger landed before this mint committed -- no S10-anchor round trip needed).
 # stance: is HUMAN (register contract: the machine cannot write a stance). as_of per the README TTL note.
+# placement: is the DEVICE assignment. AUTHORITY: Andrew-direct 2026-08-19 ~19:3xZ, BOTH consoles
+# independently -- laptop terminal: "I am find with them having D7 D9 D6. D2 is certainly laptop
+# fabric. We need to then assess the rest, let CTO know, they should be the one driving this.";
+# MSTR~Z console: "ok yeah sitez does not work on advi, D2, you can take the rest though" + "i am
+# going to have mstr base run the assignments on the directives.yaml" (record
+# ANDREW_DIRECT_20260819_MSTRZ_D2_OFF_SITEZ.md, sitez trunk). RULED rows say RULED; the rest carry
+# the @a02f9ff5a4 EITHER-defaults-laptop reading pending the CTO-driven assessment. MSTR base
+# writes these rows (register owner); CTO drives what fills the under-assessment cells.
 # Minted 2026-08-19 (missions-revival step 4, LD-0425). Owner: 0.0.0_AB_MSTR per .register-owner.
 
 version: 1
@@ -20,6 +28,7 @@ directives:
   D0:
     title: "Infrastructure (ongoing)"
     directive: "docs/architecture/D0_INFRA_TIGHTENING_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP: ongoing infra; applies are laptop-only -- sitez is not a TF-apply site)"
     members:
       subgroups: [INFRASTRUCTURE.TOOLS, INFRASTRUCTURE.GRAPH, INFRASTRUCTURE.DEBT]
       projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS]
@@ -30,6 +39,7 @@ directives:
   D1:
     title: "MDPF asset-category views (~2wks)"
     directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP per @a02f9ff5a4 EITHER-default)"
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: []
@@ -39,6 +49,7 @@ directives:
   D2:
     title: "ADVI 49F end-to-end (Fri PM target)"
     directive: "docs/architecture/D2_ADVI_49F_E2E_PRD.md"
+    placement: "LAPTOP -- RULED (Andrew, both consoles: 'D2 is certainly laptop fabric' / 'sitez does not work on advi, D2'). The @a02f9ff5a4 D2-analytics-sitez workstream is SUPERSEDED; sitez 0.8.0~Z spawn cancelled."
     members:
       subgroups: [PORTAL.ADVISOR_INTELLIGENCE, EXTERNAL.49FINANCIAL]
       projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE]
@@ -49,6 +60,7 @@ directives:
   D3:
     title: "Account-level model overlay (~6-7wks, pends D1+D2)"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP; converged-C spare-slot clause now moot for D2, may still apply to the spec leg)"
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: []
@@ -57,6 +69,7 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP per EITHER-default)"
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON]
@@ -68,6 +81,7 @@ directives:
   D5:
     title: "Alt research (ongoing)"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP, CRO lane)"
     members:
       subgroups: []
       projects: []
@@ -76,6 +90,7 @@ directives:
   D6:
     title: "Opal Analyst + partner GraphQL (v0 ~2wks; SITEZ box legs + laptop cloud)"
     directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
+    placement: "SITEZ SPLIT -- RULED (Andrew: 'them having... D6'): TO-C SharePoint binding + TO-D BBG standing read (sitez-only identity opal-gateway-bbg); LAPTOP: the GraphQL query layer. Kickoff ferries on CVO clearance."
     members:
       subgroups: [EXTERNAL.49FINANCIAL]
       projects: [OPAL_ANALYST]
@@ -85,6 +100,7 @@ directives:
   D7:
     title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
+    placement: "SITEZ SPLIT -- RULED (Andrew: 'them having D7'): TO-A + TO-C one workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A running); LAPTOP: TO-B (staged at AE) + TO-D."
     members:
       subgroups: []
       projects: []
@@ -95,6 +111,7 @@ directives:
   D8:
     title: "Philosophy + benchmark modal live-edit (this week)"
     directive: "docs/architecture/D8_LIVE_EDIT_MODALS_PRD.md"
+    placement: "UNDER-CTO-ASSESSMENT (reads LAPTOP per EITHER-default)"
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [OPAL_INVPHL]
@@ -103,6 +120,7 @@ directives:
   D9:
     title: "Tax SMA ops (NEW; assess-first)"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
+    placement: "SITEZ WHOLE -- RULED (Andrew: 'them having... D9'): one seat, assess-first recon + SharePoint local-disk leg, zero applies. Kickoff ferries on CVO clearance."
     members:
       subgroups: []
       projects: [PFMG_TAXSMA]
