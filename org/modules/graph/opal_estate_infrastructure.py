@@ -573,6 +573,13 @@ def cmd_definitions(term: str) -> int:
         print(f"  definition: {v.get('definition')}")
         print(f"  authority:  {v.get('authority')}")
         print(f"  sits_at:    {v.get('sits_at')}")
+        # Serve EVERY extra field the entry carries (binding_residue, resolves, measured,
+        # do_not, ...). The registry's annex fields are canon content; a renderer printing a
+        # fixed trio silently hid them from every consumer (caught 2026-08-19 when T16's
+        # binding_residue landed and the serve-exercise showed zero -- the half-served class).
+        for xk, xv in v.items():
+            if xk not in ("definition", "authority", "sits_at", "status"):
+                print(f"  {xk}: {xv}")
     return 0
 
 

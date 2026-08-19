@@ -207,4 +207,68 @@ where the bar actually lives. Proposed cut, for CRO: key it off the registry's *
 — where a doc restates a value a named source computes, compare them — so the pass has a derivable
 denominator the way pass 2 did, rather than resting on free-text reading.
 
+---
+
+# CONFLICTING-HALF PASS 1 — and the disposition of the cells I own
+
+**Denominator established by parsing, not reading:** `SYSTEM_DEFINITIONS.yaml` carries **68 terms**,
+**all 68** with a file-citing `authority`, **6** commit-pinned. Status distribution: **63
+reserved_ratified · 3 deprecated · 2 contested_unresolved.**
+
+## The bar was unfalsifiable; it has been rewritten
+
+§4 read *"no conflicting or deprecated documentation remains"* while the canonical registry
+**self-declares five entries in exactly those two states.** That admits two readings which close the
+tranche differently, so the bar could be declared met or unmet at will — the one property an exit bar
+must not have. **Adjudicated by CRO to reading (B) (`@3f6ce3f6fe`):** *no **UNDECLARED** conflicting or
+deprecated documentation*; a self-declared cell is exit-compatible **iff** it carries status + owner +
+disposition path; **the five current cells are listed in the bar itself** so the bar has a denominator.
+
+⛔ **My addition after working my own cell: a disposition path scoped to LESS than the actual defect is
+the same failure as no path — it just looks complete.** The in-bar listing should carry each
+disposition in one line so a reader can check its *scope*, not merely its *presence*.
+
+## Finding — `status` conflates term-lifecycle with content-validity (schema, NOT drift)
+
+2 of 3 `deprecated` entries carry **live binding content**: `Substrate_Side`'s own text says the
+per-substrate never-pool reporting rule **survives** the demotion; `Territory`'s map-vs-territory sense
+survives (CRO-adjudicated). Only `Semantic_Estates` is a clean retirement. **A consumer filtering
+`status != deprecated` drops a binding reporting rule** — a program problem, not a reader problem.
+Tree usage is correctly annotated in prose (`LAYER_FIELD_ANATOMY.md:167` carries a dated demotion
+note), so this is a **schema** finding and I report it at that size. **Minted T16**; CRO's rec to
+Andrew is an additive `binding_residue` field (checker-lawful, no enum change).
+
+## Both contested cells are MINE — claimed, and one is now discharged to a scoped disposition
+
+`Lifecycle_Value` and `Unreconciled_Aua` both cite CVO deliverables as authority. **The registry's only
+two self-declared unresolved conflicts were authored by my seat.** Claimed both rather than let them
+surface as an exit-bar surprise from the census author.
+
+### `Unreconciled_Aua` — worked, and claiming it is what surfaced the defect
+
+**One field name, two computations, both served** (source read both, **both served keys read live**):
+
+| | `INF_D_02` → `platinum/advisors/{key}/book.json` | `INF_D_04` → `platinum/firm/header_metrics.json` |
+|---|---|---|
+| computation | **accumulator** — `+=` AUA of accounts with no billing record | **subtraction** — `total_aua − holdings_total` |
+| third bucket named | `unreconciled_aua` | `unclassified_aua` |
+| served value | `0.0` **beside `unreconciled_account_count: 4`** | `-0.0` *(negative zero — the subtraction's tell)* |
+| a non-zero means | real unbilled money | a framing divergence, *"never client money to display"* |
+
+`unclassified_aua` is served by **neither** — so the collision **is** the live serving vocabulary.
+**The reader trap ships today:** `0.0` beside a count of `4` reads as self-contradictory unless you
+already know those four accounts carry zero AUA. And the registry's own warning (*"a reader who takes a
+0.0 here as nothing-is-unreconciled has drawn an ATTRIBUTION conclusion the CONTENT does not carry"*)
+is **true of both fields for different mechanisms**, while the definition claims to describe one.
+
+**CTO's 151509Z finding was the narrow read** and has been **re-scoped on this evidence** (200928Z):
+the P4/P5 work is a **three-bucket VOCABULARY UNIFICATION across two producers**, not a field rename,
+composing with the ratified `fee_basis`/`advisory_scope` axes rather than minting a third billing
+vocabulary. **Rides the INF bind of the D2 template** — no separate served-key act, no NEVER#3 event
+outside a gate that already exists. Nothing touched; the not-touching posture is now the ruling.
+
+**Cell recorded as:** owner = **CVO** · disposition = **P4/P5 vocabulary unification** (CTO-confirmed
+200928Z) · design-gate = **CTO, pre-INF-bind** · **owed first act of the disposition: the D_02
+deployed-bytes read** — the one leg I did not run, declared rather than implied.
+
 — 3.0.0_SA_CVO

@@ -76,10 +76,10 @@ closure addendum on TRAVIS_GROUP_DECOMPOSITION_HOW_BD_BUILDS_456M_20260819.md)
    (qt1 MV == Unaccrued + Accrual identity holds on 100.0% of 120,215 rows; qt6 EMV == qt1 MV
    per account); Schwab `net_mv_plus_cash` is accrual-EXCLUSIVE (measured). C5's classifier is
    therefore EXACT-form, not distributional: delta == accrued-interest, penny-level.
-3. **HARNESS BASIS RULE (binds 4a):** our comparison leg values on `net_mv_plus_cash`
-   (cash-inclusive) so the residual vs BD EMV is the ACCRUAL component alone -- comparing on a
-   securities-only basis manufactures a false C5-shaped delta out of cash (the exact error A1's
-   source made and corrected).
+3. **HARNESS BASIS RULE (binds 4a) [WORDING CORRECTED BY A5 BELOW -- as originally phrased,
+   "the residual IS the accrual component" made C5 circular]:** our comparison leg values on
+   `net_mv_plus_cash` (cash-inclusive) -- comparing on a securities-only basis manufactures a
+   false C5-shaped delta out of cash (the exact error A1's source made and corrected).
 4. **C5 RIDER SPECIMEN SELECTED (discharges the A1 selection ask):** account ...2917 (largest
    accrual, $22.47K, clean separation) -- CRO~A's selection, probe rider-4 satisfied for C5.
 5. **Denominator enrichment (open-call 3 at Andrew, evidence sharpened):** ~$36.3M of the Travis
@@ -113,6 +113,23 @@ org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20260819_VALUATION_BASI
   is the design frame IF that claim is ever served -- a future CTO design cell, activated by a
   served-claim decision, not by this ruling. CRO~A is Andrew-tasked with the parity-findings
   brief + BD performance-endpoint comparison vs our GIPS scripting; results route here.
+
+## ADDENDUM A5 -- 2026-08-19 ~20:19Z (STILL PRE-PROBE; corrects A3 item 3's wording per CVO's
+delta re-read 201752Z -- the same shared-derivation class as their C4 catch, one convention over)
+
+**THE C5 CLASSIFIER MUST BE FALSIFIABLE, so the residual is tested AGAINST an independent
+comparand, never DEFINED as the mechanism:** the harness computes `residual = qt6 EMV -
+net_mv_plus_cash` and **compares it against BD's OWN PUBLISHED accrual component -- qt1's
+Accrual field** (whose independence A3 item 2 itself proved: the MV == Unaccrued + Accrual
+identity holds on 100.0% of 120,215 rows, and the to-the-penny measurement was made against
+exactly that field). `residual == qt1.Accrual` (in-band) -> C5. **`residual != qt1.Accrual` ->
+NOT C5 -- the delta stays in the census as unexplained until a mechanism is named.** The
+original A3 wording ("the residual ... IS the accrual component alone") would have collapsed
+the tail to zero BY CONSTRUCTION -- an instrument that cannot fail, absorbing every unexplained
+valuation delta into "C5, explained" forever, which is smoothing wearing a mechanism's name.
+The measurement was done right; this fixes the rule that generalizes it. (If the published
+decomposition's field name differs at contract time, the comparand is named at the harness's
+contract, never derived from the residual itself.)
 
 ## ADDENDUM A2 -- 2026-08-19 ~19:03Z (STILL PRE-PROBE; per CVO P0-2 @cc223ee3b6)
 

@@ -73,6 +73,22 @@ For every surface in the class, classify → remedy:
   comparison, mechanized) so the pass duplicates nothing; prose-claim comparisons run as their
   own pass.
 
+### OWNERSHIP RE-CUT ~20:1xZ (CVO's scope question, adjudicated option (c) — SEPARATION OF DUTIES)
+
+CVO surfaced rather than self-resolved: T2–T5 are canon edits outside their chartered commit
+scope, and — the reason that decides it — **the seat that certifies the exit bar must not author
+the canon edits it certifies** (their own edits would weaken the exit-bar read exactly where they
+worked most). This mirrors tonight's ruled instantiation split: isolation/authoring in one
+instance, accountability/certification at another. **RE-CUT: CRO EXECUTES the canon/registry
+propagation edits (T2, T3, T4, T5)** — measured write authority (ANY_EXEC_OR_AE, exercised ×4
+today with the checker+serve-exercise discipline), under CTO's PROPAGATION ruling + the bounding
+test + Andrew's carried non-objection; T2/T3's canonical-membership-touching parts SEQUENCE WITH
+0.8.0's Wave-1 W-15 touch (opens-once holds); the registry parts + T4/T5 run in CRO windows.
+**CVO's role on these rows converts to EXIT-BAR CERTIFICATION of the edits — the author/certifier
+separation as the method prescribes.** CVO stays whole on the verification axis: the 63
+comparisons, the exit-bar hunt, and their two owned cells (Lifecycle_Value path scope-check
+already underway inside their folder — no ruling needed, correctly self-identified).
+
 **SEQUENCING RULE ADOPTED FROM F1 (binds T3 and every sweep in this tranche): CLAIM-SETS, NOT
 FILE-SETS.** A file corrected on one axis is not a corrected file — a sweep keyed on which FILES
 are fixed skips exactly the files already on the fixed list. T3's four lagged files are a
@@ -119,10 +135,29 @@ path — a registry that marks its own unresolved cells is doing its job, and fo
 ratified to clear a gate would be the fake-green worst case.** The five currently-declared cells,
 listed so the bar has a denominator: `Substrate_Side` [deprecated; **its reporting rule survives,
 binding**] · `Territory` [deprecated; **map-vs-territory sense survives** — T15] ·
-`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; owner CVO (claimed
-2026-08-19), resolution = Andrew naming act, banked] · `Unreconciled_Aua` [contested; owner CVO
-(claimed), re-read against deployed bytes]. An UNDECLARED conflict found by the census remains a
-bar-blocker until declared-with-owner or resolved. CVO's verification axis runs the hunt; his
+`Semantic_Estates` [deprecated, clean] · `Lifecycle_Value` [contested; **resolution_owner = 3.0.0_SA_CVO~Z per the cell's own field**
+(CVO-base's claim CORRECTED by its author 201517Z — their second ownership over-claim tonight,
+self-reported; the authority DOCUMENT is base-CVO's, the FENCE is ~Z's); disposition: Andrew
+naming act + ~Z fence + CTO arch; **STATE: OPEN, NOT DECAYING — the cell's own do_not test PASSES
+as of 2026-08-19 (the C3 walk's subject grain = contract_record, matching Lifecycle_Class's
+declared sits_at, so the contest is NOT being resolved-by-usage; re-runnable: parse
+c3-walk-agenda.py's subject grain vs the registry sits_at); result routes to ~Z via MSTR relay
+per the LD-0325 comms confinement**] · `Unreconciled_Aua`
+[contested; owner CVO; **disposition RE-SCOPED 2026-08-19 ~20:09Z on CVO's own deployed-bytes
+re-read: the defect is a VOCABULARY COLLISION ACROSS TWO PRODUCERS on the live served plane
+(INF_D_04's ~0.00 subtraction vs INF_D_02's unbilled-AUA accumulator, third-bucket names inverted,
+both keys serving) — NOT the "rename a field" the prior path assumed; re-scope confirmation routed
+to CTO (their 151509Z origin); NEVER#3 binds, rides P4/P5**]. An UNDECLARED conflict found by the
+census remains a bar-blocker until declared-with-owner or resolved. **AND THE SCOPE-CHECK PROPERTY
+(CVO, from this cell's own re-read): a declared cell is exit-compatible only if its disposition
+path is SCOPED TO THE ACTUAL DEFECT — status + owner + a path that solves a smaller problem than
+the one present is the same failure as no path, wearing completion. The listing therefore carries
+each cell's disposition in one line, so a reader checks the scope rather than trusts the
+presence. AND EACH CELL DECLARES ITS DECAY STATE (CVO 201517Z): OPEN-NOT-DECAYING vs DECAYING —
+a contested cell being silently resolved in one direction by a tool populating one sense is
+MATERIALLY WORSE than an open one, because the resolution lands without a naming act and nobody
+sees it; where a decay test exists it is NAMED and re-runnable, converting "is this cell
+rotting?" from a judgement into a test.** CVO's verification axis runs the hunt; his
 gate, his word.
 
 ### Rows added ~20:0xZ (conflicting-half pass 1)
