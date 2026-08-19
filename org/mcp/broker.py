@@ -17,9 +17,10 @@ Auto-launched:   server.py calls _ensure_broker() on register_agent
 Monitor:         python org/mcp/monitor.py
 """
 
+from __future__ import annotations
+
 import json
 import os
-import signal
 import sqlite3
 import sys
 import time
@@ -29,7 +30,12 @@ from pathlib import Path
 from threading import Timer
 
 PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
-DB_PATH = Path(__file__).resolve().parent / "broker.db"
+# OPAL_BROKER_DB lets the T1 exercise battery run against a scratch DB on a scratch port.
+# Exercising delivery semantics requires killing clients mid-flight; doing that against the
+# live fabric DB would be an outage, and asserting the behavior instead of exercising it is
+# exactly what this build exists to stop.
+DB_PATH = (Path(os.environ["OPAL_BROKER_DB"]) if os.environ.get("OPAL_BROKER_DB")
+           else Path(__file__).resolve().parent / "broker.db")
 
 # Max events to retain (older are pruned on cleanup cycle)
 MAX_EVENTS = 500
@@ -51,6 +57,21 @@ _ARCHIVE_MARKER = DB_PATH.parent / ".last_message_archive"
 # which fires the weekly archive catch-up. Guarantees the offload runs >=weekly
 # regardless of session churn (belt to the startup-catch-up suspenders).
 BROKER_MAX_UPTIME_S = ARCHIVE_INTERVAL_DAYS * 86400
+
+# --- D0_TIGHTENING T1: three-clock delivery accounting -------------------------
+# SENT    = polled_at   (a CLIENT PROCESS took handoff -- says NOTHING about an agent)
+# EMITTED = emitted_at  (piggyback drain: the volatile queue cleared -- the clear
+#                        precedes the response reaching a model; orphan-watcher shape)
+# READ    = acked_at    (ONLY check_inbox(mark_read=True) or a genuine AGENT-side ack)
+# Before T1, `delivered` was flipped AT POLL (broker.py:474) and the message then lived
+# only in the server's in-memory _piggyback_queue. A client dying between poll and drain
+# lost the message PERMANENTLY: re-delivery filters delivered=0 and the row was already 1,
+# while the event log recorded "deliver" for a message no agent ever saw.
+# Fix: poll stamps polled_at and leaves delivered=0; DRAIN flips delivered=1. An undrained
+# message becomes re-offerable after T1_RECLAIM_S so a dead-before-drain client recovers it.
+# T1_RECLAIM_S must exceed the server's POLL_INTERVAL_S (10s) by a wide margin so a healthy
+# session is never re-offered mail it is about to drain; the server also dedupes by id.
+T1_RECLAIM_S = 90
 
 # ---------------------------------------------------------------------------
 # Database setup
@@ -95,6 +116,28 @@ def _init_db() -> sqlite3.Connection:
             detail      TEXT NOT NULL DEFAULT ''
         )
     """)
+
+    # --- D0_TIGHTENING T1 migration: additive columns for the three clocks.
+    # Additive + idempotent: an older broker binary ignores unknown columns, so a
+    # mixed-version fabric degrades to present behavior rather than breaking.
+    _cols = {r["name"] for r in conn.execute("PRAGMA table_info(messages)").fetchall()}
+    for _col in ("polled_at", "emitted_at", "acked_at", "acked_by"):
+        if _col not in _cols:
+            conn.execute(f"ALTER TABLE messages ADD COLUMN {_col} TEXT")
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS schema_meta (
+            key   TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+    """)
+    # The pre-T1 boundary. A row delivered under the old code carries delivered=1 with
+    # polled_at NULL -- that pair is the mechanical discriminator get_delivery_state uses
+    # to answer UNKNOWN-PRE-T1 (honest) instead of READ (a lie about an agent).
+    conn.execute(
+        "INSERT OR IGNORE INTO schema_meta (key, value) VALUES ('t1_migrated_at', ?)",
+        (datetime.now(timezone.utc).isoformat(),),
+    )
 
     conn.commit()
     return conn
@@ -352,6 +395,12 @@ class BrokerHandler(BaseHTTPRequestHandler):
                 self._handle_send_message(body)
             elif path == "/poll-messages":
                 self._handle_poll_messages(body)
+            elif path == "/mark-emitted":
+                self._handle_mark_emitted(body)
+            elif path == "/ack-messages":
+                self._handle_ack_messages(body)
+            elif path == "/delivery-state":
+                self._handle_delivery_state(body)
             elif path == "/unregister":
                 self._handle_unregister(body)
             else:
@@ -440,11 +489,15 @@ class BrokerHandler(BaseHTTPRequestHandler):
         ).fetchone()
         recipient_state = "registered" if target else "pre-register"
 
-        db.execute(
+        _cur = db.execute(
             "INSERT INTO messages (from_serial, to_serial, subject, body, sent_at, delivered) "
             "VALUES (?, ?, ?, ?, ?, 0)",
             (from_serial, to_serial, subject, text, now),
         )
+        # Read the id from the INSERT's own cursor, NOT last_insert_rowid(): _log_event
+        # below inserts into `events` on the same connection, so a deferred rowid read
+        # returns the EVENT row and every later ACK would name the wrong message.
+        message_id = _cur.lastrowid
         preview = text[:80] + "..." if len(text) > 80 else text
         _log_event(
             "message",
@@ -452,17 +505,39 @@ class BrokerHandler(BaseHTTPRequestHandler):
             f"-> {to_serial} [{recipient_state}] [{subject}] {preview}",
         )
         db.commit()
-        self._json_response({"ok": True, "recipient_state": recipient_state})
+        self._json_response({"ok": True, "recipient_state": recipient_state,
+                             "message_id": message_id})
 
     def _handle_poll_messages(self, body: dict):
+        """SENT clock. A poll means a CLIENT PROCESS took handoff -- nothing more.
+
+        D0_TIGHTENING T1: this handler used to set delivered=1 here (the old line 474).
+        That was the message-loss window: the message then lived only in the polling
+        server's in-memory _piggyback_queue, and re-delivery filters delivered=0, so a
+        client dying before it drained lost the message PERMANENTLY while the event log
+        recorded a "deliver". Now the poll stamps polled_at ONLY; delivered flips at the
+        DRAIN (/mark-emitted). An undrained message is re-offered after T1_RECLAIM_S, so
+        a seat killed between poll and drain gets its mail on respawn. The server dedupes
+        by id, so a re-offer to a still-live session is a no-op rather than a duplicate.
+        """
         serial = body["serial"]
+        now = datetime.now(timezone.utc)
+        reclaim_cutoff = (now - timedelta(seconds=T1_RECLAIM_S)).isoformat()
+
+        # Re-delivery predicate: never-polled, OR polled long enough ago that the polling
+        # client is presumed dead before it drained. This is the half that makes a
+        # polled-but-undrained message recoverable instead of lost.
         rows = db.execute(
-            "SELECT * FROM messages WHERE to_serial = ? AND delivered = 0 ORDER BY sent_at ASC",
-            (serial,),
+            "SELECT * FROM messages WHERE to_serial = ? AND delivered = 0 "
+            "AND (polled_at IS NULL OR polled_at <= ?) ORDER BY sent_at ASC",
+            (serial, reclaim_cutoff),
         ).fetchall()
 
         messages = []
+        reclaimed = 0
         for row in rows:
+            if row["polled_at"] is not None:
+                reclaimed += 1
             messages.append({
                 "id": row["id"],
                 "from_serial": row["from_serial"],
@@ -471,12 +546,127 @@ class BrokerHandler(BaseHTTPRequestHandler):
                 "body": row["body"],
                 "sent_at": row["sent_at"],
             })
-            db.execute("UPDATE messages SET delivered = 1 WHERE id = ?", (row["id"],))
+            db.execute("UPDATE messages SET polled_at = ? WHERE id = ?",
+                       (now.isoformat(), row["id"]))
 
         if messages:
-            _log_event("deliver", serial, f"{len(messages)} message(s) polled")
+            # SENT, stated as SENT. The old text said "polled" and was read as delivery.
+            detail = f"{len(messages)} message(s) SENT (polled; not yet emitted)"
+            if reclaimed:
+                detail += f" -- {reclaimed} RECLAIMED (polled earlier, never drained)"
+            _log_event("sent", serial, detail)
         db.commit()
         self._json_response({"messages": messages})
+
+    def _handle_mark_emitted(self, body: dict):
+        """EMITTED clock. The piggyback drain cleared the volatile queue.
+
+        This is where delivered flips to 1 -- the message has left the broker's
+        responsibility and entered a tool response. It is EMITTED, not READ: the clear
+        precedes the response ever reaching a model (structurally the orphan-watcher
+        mv-before-echo shape), so nothing here may be reported as an agent having seen it.
+        """
+        serial = body.get("serial", "")
+        ids = [int(i) for i in body.get("ids", [])]
+        if not ids:
+            self._json_response({"ok": True, "emitted": 0})
+            return
+        now = datetime.now(timezone.utc).isoformat()
+        qmarks = ",".join("?" for _ in ids)
+        cur = db.execute(
+            f"UPDATE messages SET delivered = 1, emitted_at = ? "
+            f"WHERE id IN ({qmarks}) AND delivered = 0",
+            (now, *ids),
+        )
+        _log_event("emitted", serial,
+                   f"{cur.rowcount} message(s) EMITTED (drained to tool response)")
+        db.commit()
+        self._json_response({"ok": True, "emitted": cur.rowcount})
+
+    def _handle_ack_messages(self, body: dict):
+        """READ clock -- the ONLY sound one, and the only one an orphan cannot forge.
+
+        Written exclusively at a CONSUMPTION act: check_inbox(mark_read=True), or an
+        agent-side ack naming the ids it possessed. An ACK placed at a transport act
+        would inherit the exact conflation this primitive exists to retire.
+        """
+        serial = body.get("serial", "")
+        ids = [int(i) for i in body.get("ids", [])]
+        if not ids:
+            self._json_response({"ok": True, "acked": 0})
+            return
+        now = datetime.now(timezone.utc).isoformat()
+        qmarks = ",".join("?" for _ in ids)
+        # An ACK also settles the earlier clocks: a message an agent demonstrably read was
+        # necessarily emitted. Never the reverse.
+        cur = db.execute(
+            f"UPDATE messages SET acked_at = ?, acked_by = ?, delivered = 1, "
+            f"emitted_at = COALESCE(emitted_at, ?) "
+            f"WHERE id IN ({qmarks}) AND acked_at IS NULL",
+            (now, serial, now, *ids),
+        )
+        _log_event("read", serial, f"{cur.rowcount} message(s) READ (agent-side ack)")
+        db.commit()
+        self._json_response({"ok": True, "acked": cur.rowcount})
+
+    def _handle_delivery_state(self, body: dict):
+        """Primitive (ii): per-message SENT / EMITTED / READ -- never an aggregate.
+
+        States, in the fabric's own vocabulary:
+          QUEUED          row exists, no client has polled it
+          SENT            polled (a client process took handoff; says nothing about an agent)
+          EMITTED         drained into a tool response (no agent-side evidence)
+          READ            agent-side ack -- the only state that claims an agent saw it
+          UNKNOWN-PRE-T1  delivered under the pre-T1 code (delivered=1, polled_at NULL).
+                          Honest: that row's fate is unknowable. Never reported as READ.
+        """
+        serial = body.get("serial", "")
+        message_id = body.get("message_id")
+        since = body.get("since", "")
+        limit = int(body.get("limit", 200))
+
+        if message_id is not None:
+            rows = db.execute("SELECT * FROM messages WHERE id = ?",
+                              (int(message_id),)).fetchall()
+        elif serial and since:
+            rows = db.execute(
+                "SELECT * FROM messages WHERE to_serial = ? AND sent_at >= ? "
+                "ORDER BY sent_at ASC LIMIT ?", (serial, since, limit)).fetchall()
+        elif serial:
+            rows = db.execute(
+                "SELECT * FROM messages WHERE to_serial = ? ORDER BY sent_at DESC LIMIT ?",
+                (serial, limit)).fetchall()
+        else:
+            self._json_response({"error": "delivery-state needs message_id or serial"}, 400)
+            return
+
+        out = []
+        for r in rows:
+            keys = r.keys()
+            polled = r["polled_at"] if "polled_at" in keys else None
+            emitted = r["emitted_at"] if "emitted_at" in keys else None
+            acked = r["acked_at"] if "acked_at" in keys else None
+            if acked:
+                state = "READ"
+            elif r["delivered"] and polled is None and emitted is None:
+                # Pre-T1 row: flipped by the old poll handler. Unknowable, and saying so
+                # is the whole point -- this is the state that must never read as READ.
+                state = "UNKNOWN-PRE-T1"
+            elif emitted:
+                state = "EMITTED"
+            elif polled:
+                state = "SENT"
+            else:
+                state = "QUEUED"
+            out.append({
+                "id": r["id"], "from_serial": r["from_serial"],
+                "to_serial": r["to_serial"],
+                "subject": r["subject"], "sent_at": r["sent_at"], "state": state,
+                "polled_at": polled, "emitted_at": emitted,
+                "acked_at": acked,
+                "acked_by": (r["acked_by"] if "acked_by" in keys else None),
+            })
+        self._json_response({"messages": out, "count": len(out)})
 
     def _handle_unregister(self, body: dict):
         serial = body["serial"]
