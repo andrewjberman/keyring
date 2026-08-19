@@ -22,7 +22,7 @@ brief names is ALREADY a standing TO bound to the R-anchor by the re-date notice
 | B5 | BDMERGE-CONVERGE (DS~A, 08-21) | PENDING, date holds |
 | B6 | REG-SCAN-ATOMCHECK (0.8.0; REG residue + J3 08-20, INF-bind REQUIRED) | PENDING at seat |
 | B7 | HELD-STATE (0.8.0, 08-20) + CBD-PAIR (AE, 08-24) + MSTR deploy-ledger dispositions | PENDING; MSTR rows go to the MSTR-successor at its respawn |
-| C residuals | brief §C + my banked allocation stack (vocab fix, ms_heat, 228 entries, feeder-stamp, yang-cma, member-sha tool, J1 proof-board, stale-TO sweep + activation TOs on Andrew's card) | carried in this doc + my log; nothing orphans |
+| C residuals | brief §C + my banked allocation stack (vocab fix, ms_heat, 228 entries, feeder-stamp, yang-cma, member-sha tool, J1 proof-board, stale-TO sweep + activation TOs on Andrew's card; worldmodel 409MB deleted-bucket archives -> S3 archive bucket + README manifest, AE-class no-clock, CTO 181549Z) | carried in this doc + my log; nothing orphans |
 | D4 (INF/COT binding) | opens at P2-open post-A3 — sequenced, not staffed pre-R | deferred-with-owner (COO sequences at A3-green) |
 
 ## 2. THE RESPAWN ROSTER (recipe; respawns execute via a MSTR-successor respawn or Andrew's own launches — spawning is a MSTR function)
