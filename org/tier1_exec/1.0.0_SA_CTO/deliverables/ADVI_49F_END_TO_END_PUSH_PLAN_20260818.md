@@ -124,6 +124,12 @@ AUTOMATICALLY when the feed heals (manifest-driven, no session act). Valuation/T
 depend on family groupings; what degrades is grouping/rollup display, declared never silent.
 **Principle attached: one vendor feed must never freeze the whole product** -- the schedule-floor
 law one layer up. R remains ONLY the fam-heal event, no longer the chain anchor.
+**MEASURED COST OF THE CARRY (CRO~A finding, Andrew-commissioned, crossed-in-flight with this
+ruling and adopted as its quantified basis -- `FINDING_FAM_IS_A_SLOW_DIM_20260819.md`):** fam is a
+slow-moving identity dim -- consecutive publishes 99.75% byte-identical with ZERO value changes on
+shared accounts; 2 of 7,050 accounts changed any value over a full month; churn is purely
+membership at ~5 new accounts/business day. The 08-07 snapshot is >=99.7% true today; the declared
+error term is new-accounts-since-08-07 absent from grouping/scoping until heal.
 
 **BAR COMPRESSIONS (stated, Andrew's Friday word is the authority):** (1) flip fires on TWO
 unattended greens (Thu+Fri) with the legacy chain as the live parallel net (it runs until P5
