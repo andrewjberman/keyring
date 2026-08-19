@@ -227,12 +227,16 @@ CODE_TREES: dict[str, dict] = {
     # file keeps its mdpf mapping unchanged. First-mints stay EXPLICIT per the
     # membership guard; membership at this prefix is exact (runners_49f only), so
     # the shared-home false-MISSING class cannot arise on this row.
+    # GOLDHOME re-point 2026-08-18 (Andrew ~1730Z, TO @1b2ee34db7; CTO pin 174449Z): the
+    # 49F chain's code home is the PER-CLIENT bucket's BUCKET-ROOT _code/ (NOT under gold/ --
+    # gold/ is the parquet data tree and the agentic-query root; _code stays FLAT until a
+    # second product joins the bucket, and THAT act adds the product level).
     "advi": {
-        "bucket": "opal-data-assets",
+        "bucket": "opal-data-49financial",
         "label": "advi",
         "deploy_gated": True,
         "layers": {
-            "gold": ("data/assets/scripts/gold/runners_49f", "portal/gold/advi/_code/"),
+            "gold": ("data/assets/scripts/gold/runners_49f", "_code/"),
         },
     },
 }
