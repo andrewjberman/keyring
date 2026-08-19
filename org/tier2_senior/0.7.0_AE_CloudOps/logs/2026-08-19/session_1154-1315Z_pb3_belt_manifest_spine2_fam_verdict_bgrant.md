@@ -54,3 +54,53 @@
 | simulate-principal-policy | B-grant battery | 6 allows + 2 implicitDeny controls, one arn per call |
 Note carried: comp-estate/comp-freshness not run this window -- no first-contact estate question; freshness
 questions were all bronze-prefix listings inside a live incident fork (rail-checked markers on each).
+
+---
+
+## CURRENT STATE -- SUCCESSOR HANDOFF (appended 13:3xZ on Andrew's /log word; fleet wind-down follows)
+
+**Seat identity:** 0.7.0_AE_CloudOps. Everything below is ledgered/validated -- CITE, do not re-derive.
+
+### The load-bearing carries (in firing order)
+1. **P2-FLOOR schedule TF apply = R+1**, where R = the day Schwab RESUMES publishing the FAM file for
+   master 08335338 (vendor outage verdicted 130754Z, at Andrew via MSTR; COO re-date @f79760179a).
+   DETECTION OF R: bronze fam partition NEWER than 20260810 appears at
+   s3://opal-data-assets/schwab/08335338/bronze/fam/ -- the standing 09:45/21:45Z pulls land it
+   AUTOMATICALLY (30-day lookback self-heal; the lane is healthy and manifest-less, ledger-grade evidence
+   in the 130754Z message + SSM run records). On R: DS~A fires catch-up (08-11..T-1) + P2D-3, MCPs the
+   measured duration SAME-TURN -> pin the cron (candidate cron(45 12 * * ? *), CTO G-A approved-as-
+   candidate) -> re-gate at CTO -> safe-apply the schedule per P2_FLOOR_49F_TF_DRAFT_20260818.md REV 2/3
+   (opal-assets root, 9 rows: schedule + scheduler role/policy + DEDICATED advi_49f_floor_dlq + dispatcher
+   lambda w/ ENSURE-RUNNING duty (host i-01003b035d2988dfb is STOPPED at fire time) + role/policy + log
+   group + permission + NEW SSM doc w/ the P2D-4 command body verbatim, _code sync line from the FIELD-3
+   RE-ISSUE: s3://opal-data-49financial/_code/). Proof bar: THREE unattended daily writes (TO-2 precedent).
+2. **The chain's IAM surface is COMPLETE** -- advi-49f-chain-access applied+validated (ledger
+   20260819T1314Z; B1 pre-existing @7b706eec4c). NOTHING IAM-side blocks the first fire.
+3. **P4-PUBIAM (08-20):** publisher Put scoped to opal-data-portal-v2/platinum/advi/49financial/* ONLY
+   (platinum half UNCHANGED by the GOLDHOME supersession); publisher READ side = the NEW bucket
+   (opal-data-49financial/gold/advi/*, seam 3: per-client-bucket read only). Role = DS~B's contract
+   (not yet issued). Three-invocation live proof per the TO. Publisher schedule AFTER the runner stage.
+4. **P4-EDGEREAD (08-20, flip precondition; flip itself = R+3):** Rule-22a member-level diff of deployed
+   shared-advisor-router :23 + public-data-router :6 vs built-from source (head start: sha identities
+   verified 08-18; the member diff is the remaining act). Three-way discharge in writing; DS/DE get the
+   classification (their flip commits cite the router vintage).
+5. **R-4d (08-20):** EC2_MANIFEST.json -- remove/correct 2 phantom instance ids (orion-crawl-harness,
+   estate-report-runner). Small.
+6. **P5-TEARDOWN: event-gated** on the framework P5 gate (CVO cert + DT rendered read post-flip);
+   earliest 08-23, moves with the flip (now R+3). Riders: accrual re-home (runner EC2
+   i-02448edb624a7a7cf KEEP-UNTIL-REHOMED; do NOT set AutoShutdown by reflex) + legacy-rps history tail
+   (RETAIN exception at the artifact; Andrew word before any rps delete).
+7. **TFSGLINT.CBD-PAIR (08-24):** plan-time SG/CBD pair lint, behind everything above.
+
+### Standing facts a successor must not re-litigate
+- GOLDHOME-REPOINT-49F is COMPLETE (COO terminal flip 125622Z). The ADVI gold home IS
+  s3://opal-data-49financial/gold/advi/ (Deny: cot/inf/mdpf patterns, bd-* excluded BY DESIGN);
+  _code at BUCKET ROOT; old portal/gold/advi/ prefix DELETED on Andrew's verbatim word.
+- OPAL_MDPFCLEANUP TO-4 COMPLETE; held key json/mdpf/49financial/aggregate-aua-timeseries.json deletes
+  only after MDPF_PROVENANCE T-B proves on a scheduled 13:30Z run. Rollback copies in .scratch-ae/
+  to4_manifest/ (session-scratch -- copies die with the scratchpad; the versioned buckets + DS~A
+  manifests are the durable rollback).
+- PB-3 smartx re-point deployed (reader INERT, no trigger); bd platinum restore ACCEPTED (TO-1 closed).
+- Banked at other seats: ms_heat staged TF row (COO/0.8.0~Z), smartx-model-monthly-pull source-map
+  parity FAIL (COO map-hygiene family), GOVERNANCE_AUDIT owner-vs-lane mismatch (surfaced), cot/inf
+  mirror-belt extension naming the new bucket (CTO-routed parity follow-on).
