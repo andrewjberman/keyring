@@ -67,3 +67,36 @@ is R+2/R+3-gated; pre-R respawns burn context against a vendor clock (brief D2, 
   neither is a precondition.
 - All 13+1 standing TOs carry their proof-of-spec contracts; no criterion moved in this
   decomposition; the re-date notice remains the single date authority.
+
+
+---
+## ADDENDUM 15:45Z 08-19 — SS6 FRIDAY COMPRESSION SUPERSEDES THE R-ANCHOR (Andrew-direct; plan @762b06ca84 §6/§7)
+
+**The R-anchored wave table above is SUPERSEDED for rows A2-A7:** CTO's DECOUPLE RULING runs the
+chain with fam DECLARED-STALE (`fam_as_of=2026-08-07` carried through the publisher, auto-lift at
+heal); **R demotes to the fam-heal event only.** The re-date notice @f79760179a is likewise
+superseded for those rows (its detection facts + the held-delete rule stand; R-WATCH continues as
+the HEAL watch, unchanged instrument).
+
+**COMPRESSED SCHEDULE (Andrew: E2E COMPLETE FRIDAY PM; two stated bar compressions — flip on TWO
+greens w/ legacy parallel net; floor cron pins on today's declared-stale measured run):**
+- **WED 08-19 (executed this hour):** DS~A RESPAWNED (COO spawn 15:33Z, SS6 direction: declared-stale
+  mode + P2D-3 on 08-18 → measured duration) · AE dispatched (floor apply on the pin + P4-PUBIAM +
+  publisher schedule TODAY; CTO gates armed).
+- **THU 08-20 morning respawns (all via COO spawn — mechanism proven 15:33Z):** DS base (B1
+  proof-READ → B3 → ADVI_BDPARITY.P1-PROBE + heal-watch) · 0.8.0 (dated rows → W-15 → T4) · DS~B
+  (emit ALL 15 twins on the grant; declared-stale manifests) · CVO (FULL respawn, no longer narrow:
+  A6 pins + oracle OR-3 + the W-15 naming half + the five adjudications) · DE (oracle rows +
+  repoint prep). THU close: first green + 15/15 emitted + pins filed.
+- **FRI 08-21:** second green → DE repoint → flip → DT respawn + PROD promote → rendered acceptance
+  → **E2E COMPLETE**. BDMERGE (DS~A) rides 08-21 unchanged.
+- **SAT+:** third green closes P2; FAM heal → declarations lift + affected-key pin re-base (CVO
+  declared act); §7 parity census MON-TUE.
+- **§7 BD PARITY:** probe TO cut (ADVI_BDPARITY.P1-PROBE @ DS base, THU-FRI, CRO methodology);
+  census TO cut on the probe's design.
+
+**Friday-feasibility flags (stated today per Andrew's instruction):** (1) the two P3-gated twins
+(mix_summary, advisor_nna_canonical) need DS~A's a07 home + a06 xwalk landing today/Thu-early —
+tracked, not yet a slip; (2) the Thu pins require BOTH serves at the same content-date under the
+declared-stale frame — CVO's SAME-CONTENT-DATE precondition now reads the declared-stale manifest
+per their own emission-field instrument; (3) nothing else is structurally unable to make Friday.
