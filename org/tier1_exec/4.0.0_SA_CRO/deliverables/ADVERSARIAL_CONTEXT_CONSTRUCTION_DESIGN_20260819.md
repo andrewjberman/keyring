@@ -106,11 +106,20 @@ cheap independent second opinion. Packet token-cost is measured at composition (
 For multi-cell fan-out, the harness Workflow form runs N packet-seeded validators with structured
 outputs — the batch shape, not the default.
 
-**ONE STANDING-LAW CAVEAT, surfaced not adjudicated:** org/XXX.md bans the generic Task/Explore
-agents (fabricated-output class). A packet-seeded validator is a different animal — bounded
-context, structured verdict, plant-gated reliability — but whether it sits OUTSIDE the ban's
-intent is Andrew's word or a CTO arch-call, wanted before the subagent weight ships. The full-seat
-weight violates nothing today.
+**INSTANTIATION FORM RULED (Andrew-direct 2026-08-19 ~19:4xZ, THREE VERBATIMS — the ruling: "This
+should be a subagent for sure"; the rationale, his own: "but its like you said, its a
+packet-seeded validator with very specific parameters"; the category boundary: "i would not put
+this in the same conversation as a basic, unbounded task.explore agent"):** **THE SUBAGENT IS THE
+FORM — and the XXX.md ban question is not resolved-by-carve-out, it is INAPPLICABLE BY CATEGORY,
+his word.** The ban targets basic, UNBOUNDED delegation (the fabricated-output class); the
+packet-seeded validator is a bounded, parameterized INSTRUMENT — context fixed by construction,
+verdict structured, reliability plant-gated. The two do not share a conversation, so the ban's
+text stands untouched and simply does not reach this. **The clean split that falls out: ISOLATION lives in the subagent (the
+validator instance — fresh, packet-seeded, disposable); ACCOUNTABILITY lives at the registered
+seat (the certifier SEAT still signs certification outcomes — a subagent verdict is INPUT to a
+signed certification, never itself the signature).** Full-seat validator spawns are retired from
+the design as the default; the composer's launch-prompt output targets the harness subagent form,
+and the Workflow fan-out remains the batch shape.
 
 ## 6. TRANCHE ROWS ADDED
 

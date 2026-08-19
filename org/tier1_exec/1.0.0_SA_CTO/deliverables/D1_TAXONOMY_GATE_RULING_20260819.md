@@ -33,7 +33,14 @@ incomplete-not-wrong, both absorbed before this ruling); prior art
    day (D2 R17). **SOVEREIGN-VETO NOTE: this is my gate's read of his word, stated here so it
    is vetoable in one line -- if Andrew wants VIEW-Residual to display the UNSUBTRACTED
    non_model figure (overlap-declared, never-sum in-frame), the D2-R17 form is the fallback
-   and TO-D1c/D1d acceptances flip accordingly. Building proceeds on the partition ruling.**
+   and TO-D1c/D1d acceptances flip accordingly. Building proceeds on the partition ruling.
+   **FALLBACK ACCEPTANCE PRE-REGISTERED (added ~19:44Z per CVO close-out -- so the veto is
+   cheap to exercise, never a re-design): under the overlap-declared form, TO-D1d would assert
+   (i) NO cross-node total is expressible in the UI (no rendered sum of the five), (ii) each
+   node states its own basis in-frame, (iii) the never-sum caveat renders IN the view's own
+   frame (the D2-4b oracle form), and (iv) union coverage of the five nodes == total_aua with
+   each node's overlap membership explicitly declared. Machine-checkable either way; the veto
+   swaps one acceptance set for the other, nothing else.**
 4. **Registry mechanism:** extend the crosswalk pattern (F5 raise-on-unknown, cohort_class) --
    build-ladder rung 2, one registry serving D1 + D4. RATIFIED.
 5. **Bounds carried:** Q1 (the four-vs-two ETF member set) stays an open call at Andrew --
