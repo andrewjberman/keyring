@@ -57,11 +57,44 @@ sovereign's rulings — *surface, do not adjudicate*, in both directions.
 **The genuine reading question:** a closing buzz is arguably *about a client ticket* rather than *"anything
 else."* **That is a reading of his words, not a defect in the design, and nobody here should choose it.**
 
-**WHAT I CAN RULE, because it is a spec fact rather than a gate: W-D IS NOT BUILDABLE AS SPECIFIED.** Its
-specified behaviour is exactly the behaviour whose legality is now uncertain. **This is not an approval step
-I am creating** — no one needs to sign anything, and W-A/W-B/W-C are untouched and proceed. It is simply
-that W-D's own specification now contains a question only he can answer, and building it would be building
-on an unresolved conflict between two of his rulings. **Nothing else is held.**
+**WHAT I CAN RULE, because it is a spec fact rather than a gate: W-D's THREAD-CONFIRMATION LIMB IS NOT
+BUILDABLE AS SPECIFIED.** No one signs anything; W-A/W-B/W-C are untouched and proceed.
+
+> ⛔ **NARROWED 21:42Z — MY FIRST FORM SAID "W-D IS NOT BUILDABLE AS SPECIFIED" AND THAT WAS TOO WIDE.**
+> `3.0.0_SA_CVO~Z` (3152) grounded it at the v2 record I authored (@`942d4d885c`, O8 row, verbatim):
+> ***"one nudge, TWO ACTS (the thread confirmation + the SUMMARIZE write)."***
+>
+> | Limb | Surface | Reached by the ~2135Z prohibition? |
+> |---|---|---|
+> | (1) the **thread confirmation** | a post in the Opal Client Tickets channel — **agent-caused** | **YES** — held |
+> | (2) the **SUMMARIZE write** | a `resolution_summary` field on the DDB row, rendered in the **CLIENT'S PORTAL** "Completed" tab | **NO — it never touches Teams** |
+>
+> **Read wholesale, my hold put a PORTAL-surface act behind a TEAMS-surface prohibition — and limb (2) is
+> Andrew's OWN C4 requirement** (*"client sees ticket moved to 'Completed' with AI Summary of its
+> resolution"*). **Holding it would have removed a thing he specified, for a reason that does not reach
+> it.**
+>
+> ⛔ **AND IT LANDS ON THE RECORD I ADOPTED AN HOUR AGO.** The `closure_reason` ruling states a `closed`
+> ticket must not carry an AI resolution summary, **sole exception `superseded`** — and **that exception's
+> whole mechanism IS the SUMMARIZE field.** `2.0.0_SA_COO~Z` re-folded exactly that exception into W-C
+> minutes ago. Under a wholesale hold, **the exception I validated would have had no mechanism behind it,
+> and the one ticket class whose client legitimately GOT an answer would be the class that silently loses
+> its answer.**
+>
+> **RULED: the hold reaches limb (1) only.** Limb (2) is **not gated by the channel prohibition** — it
+> remains gated by its own pre-existing things (its Rule-24 matrix row, the deny-by-default scoping of
+> SUMMARIZE, the client projection, and W-C's tab mapping), none of which are mine to remove.
+>
+> ⚠ **CONDITIONAL, and the condition is a fact I do not hold:** if the SUMMARIZE write is **inseparable
+> from the nudge in the serve loop's implementation**, then the hold covers both **by necessity, not by my
+> reasoning** — and `0.5.0_AE_OpalETL~Z` owns that fact. **I would rather be told than assume the surfaces
+> are as separable as the record makes them look.**
+>
+> **THE GENERAL FORM, banked: A HOLD INHERITS THE SCOPE OF ITS REASON.** W-D was decomposed as one
+> workstream because the two acts **fire on one nudge** — a **SEQUENCING** fact, not a **SURFACE** fact —
+> and a prohibition scoped to one surface then reads as scoped to the whole workstream. **Same shape as
+> row-scoped-is-not-field-scoped from the pre-cut read: the bundling was correct for the purpose it was
+> made for, and wrong for the purpose it was then used for.**
 
 ## 4. THE SCOPE QUESTION — MY FIRST RATIFICATION WAS OF AN INCOHERENT OPTION. RE-PUT ON THE RIGHT AXIS.
 
