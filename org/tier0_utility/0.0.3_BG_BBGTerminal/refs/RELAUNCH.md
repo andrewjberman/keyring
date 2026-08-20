@@ -1,12 +1,10 @@
 # RELAUNCH.md — bringing the 0.0.3_BG_BBGTerminal seat up (wrapper-free)
 
-**Authority:** OPAL_ANALYST PRD §4.2 (v1.0 @d179643ca) · OPAL_ANALYST.TO2 · authored by
-0.5.0_AE_OpalETL~Z 2026-08-10. Any operator or 0.0.0_AB_MSTR~Z can run this — the box
-launcher holds execution; this document holds the procedure.
-
-Steps map 1:1 onto `prompt.md` "On launch" (1, 2, 2a, 3, 4, 5) — the prompt is the
-authority; this runbook adds the exercised mechanics (pin flags, TMPDIR, evidence
-capture). If they ever diverge, the prompt wins and this file is the defect.
+**Authority:** OPAL_ANALYST PRD §4.2 (v1.0 @d179643ca) · OPAL_ANALYST.TO2. Any operator or
+0.0.0_AB_MSTR~Z can run this — the box launcher holds execution; this document holds the
+procedure. Steps map 1:1 onto `prompt.md` "On launch" — the prompt is the authority; this
+runbook adds the exercised mechanics. If they diverge, the prompt wins and this file is the
+defect (the §0b standing order is the one ruled exception, carried on its own record).
 
 ---
 
@@ -14,30 +12,25 @@ capture). If they ever diverge, the prompt wins and this file is the defect.
 
 | # | Prerequisite | How to verify |
 |---|---|---|
-| P1 | TO-1 identity pin LANDED + EXERCISED | `git log --oneline -1 -- .claude/skills/teams-assist/teams-watch.py` shows `0f1bbcf0e` (or a descendant). Exercised record: 0.5.0_AE log 2026-08-10 (negative control rc=2, positive 3/3). Do NOT relaunch on a committed-but-unexercised pin. |
-| P2 | `opal-gateway-bbg` token minted for **Opal Bloomberg** | `whoami` on `opal-gateway-bbg` → "Opal Bloomberg". If no valid token: the login secret is `opal/mcp/opalbloomberg-login` (Secrets Manager — NAME citable, VALUE never); OTP goes to Andrew's phone; surface the auth URL and Andrew completes the mint. If whoami answers Andrew or any non-Opal-Bloomberg identity → HOLD (see Error paths). |
-| P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired at `.claude/settings.json:145` (@65d80ab37). **The fence loads PER-SESSION at session start (PRD App C): a stale/prior session's fence is NEVER assumed active — a fresh launch is what arms it.** |
-| P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` will FAIL at step 4 — surface, don't work around). |
+| P1 | TO-1 identity pin LANDED + EXERCISED | `git log --oneline -1 -- .claude/skills/teams-assist/teams-watch.py` shows `0f1bbcf0e` or a descendant (exercised record: 0.5.0_AE log 2026-08-10). Never relaunch on a committed-but-unexercised pin. |
+| P2 | `opal-gateway-bbg` token minted for **Opal Bloomberg** | `whoami` on `opal-gateway-bbg` → "Opal Bloomberg". No valid token: login secret `opal/mcp/opalbloomberg-login` (Secrets Manager — NAME citable, VALUE never); OTP goes to Andrew's phone — surface the auth URL, he completes the mint. Any non-Opal-Bloomberg answer → HOLD (Error paths). |
+| P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. |
+| P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` FAILS at step 4 — surface, don't work around). |
 
 ## 0b. STANDING ORDER — re-arm the 07:15 daily backstop cron EVERY session (Andrew-direct 2026-08-20)
 
-**A relaunching successor ARMS `CronCreate("15 7 * * *", <the backstop check>)` at startup
-while this ruling stands** — full firing procedure, both Andrew verbatims, the authorization
-scope fence, and the re-arm warning live in
-`../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` (BG-authored 2026-08-20; ruling
-record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260820_MSTRZ_LET_THE_FALLBACK_TRY_SELF_HEAL_UNTOUCHED.md`
-@eede873a2f). **This row is the EXPLICIT exception to the "Tier-0 UA arms ZERO crons"
-default** — without it, that law points a successor away from a live sovereign instruction
-(the silent-drop shape the COO `/drive` and CVO~Z SYSPARITY rows record). The cron is
-session-only; this pointer is what makes the order survive a relaunch. *(Row placed by
-0.0.0_AB_MSTR~Z as named integrator — the seat's G1 fence correctly cannot write refs/.)*
+A relaunching successor ARMS `CronCreate("15 7 * * *", <the backstop check>)` at startup
+while this ruling stands. Firing procedure, both verbatims, authorization scope fence, and
+the re-arm warning: `../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` (ruling record
+@eede873a2f). **This row is the EXPLICIT exception to the seat's arm-ZERO-crons default**;
+the cron is session-only — this pointer is what makes the order survive a relaunch. *(Row
+maintained by 0.0.0_AB_MSTR~Z as named integrator; the seat's fence cannot write refs/.)*
 
 ## 1. Launch
 
-`ajb 0.0.3_BG_BBGTerminal` (box launcher — MSTR~Z or the operator at the terminal).
-
-The seat then executes its own prompt.md On-Launch sequence. The launch-runner verifies
-each step's evidence below.
+`ajb 0.0.3_BG_BBGTerminal` (box launcher — MSTR~Z or the operator at the terminal). The
+seat executes its prompt.md On-Launch sequence; the launch-runner verifies each step's
+evidence below.
 
 ## 2. On-Launch sequence (prompt.md steps, with exercised mechanics)
 
@@ -45,15 +38,12 @@ each step's evidence below.
 2. **`/watcher`:** fabric inbox Monitor armed; confirm `TaskOutput(<id>, block=false)` → running.
    **2a. IDENTITY ACCEPTANCE GATE (before ANY Teams read or reply):** `whoami` on
    `opal-gateway-bbg`. PASS = the Opal Bloomberg account. **Anything else → STOP: no poll,
-   no reply; report the mismatch to `0.0.0_AB_MSTR~Z` and hold.** (First launch 08-07: this
-   gate correctly caught an andrew@ mint once. It is a data assertion at the seat's own
-   boundary, not a fabric approval gate.)
-3. **Arm the Teams Monitor WITH the identity pin** (per `refs/TEAMS_DUTY.md`; TO-1's landed
-   form @0f1bbcf0e — cited, not restated):
+   no reply; report the mismatch to `0.0.0_AB_MSTR~Z` and hold.**
+3. **Arm the Teams Monitor WITH the identity pin** (per `refs/TEAMS_DUTY.md`; pin form
+   @0f1bbcf0e — cited, not restated):
 
-   - **TMPDIR first (TO-1 finding 2026-08-10):** under native Windows python with no TMPDIR,
-     the engine's cursor default `/tmp/teams-watch.cursor` is unwritable and the engine dies
-     `FileNotFoundError` before any poll. The arm command MUST carry a valid TMPDIR.
+   - **TMPDIR must be set:** under native-Windows python with no TMPDIR the engine's cursor
+     default `/tmp/teams-watch.cursor` is unwritable and it dies before any poll.
    - Arm via the **Monitor tool** (persistent; NEVER Bash run_in_background — stream mode
      never exits), command:
 
@@ -61,27 +51,24 @@ each step's evidence below.
      TMPDIR="$(cygpath -w "$HOME/AppData/Local/Temp")" python .claude/skills/teams-assist/teams-watch.py 15 --server opal-gateway-bbg --identity opalbloomberg
      ```
 
-     (`15` = poll interval seconds, the 08-07 operating value; omit for the default 10.)
-   - **The pin is mandatory for this seat. Pin arg absent → do not arm.** Bare arming is the
-     identity-blind P0 defect TO-1 closed.
+     (`15` = poll interval seconds, the operating value; omit for the default 10.)
+   - **The pin is mandatory for this seat. Pin arg absent → do not arm.**
    - Confirm `TaskOutput(<monitor id>, block=false)` → running, and the stderr banner shows
      `pin(server=opal-gateway-bbg, identity=opalbloomberg)` + `token selected:
      identity=opalbloomberg@opalinvest.com`.
-   - **ZERO scratchpad scaffolding:** no wrapper script, no `teams-watch-bbg.py` — that
-     pattern is dead by design (no-shadow veto). The stock engine + flags is the whole arm.
+   - **ZERO scratchpad scaffolding:** no wrapper script — the stock engine + flags is the
+     whole arm (no-shadow veto).
    - An exit-2 `[TEAMS-IDENTITY-FAIL]` at/after arm = the pinned token is absent, expired,
-     or ambiguous. Resolve the token (P2 re-mint path), then re-arm. It will never fall back
-     to another identity — that loud death is the fix working.
-4. **`bloomberg_health`** → `ok: true`; confirm the `cma` interpreter connects (green MCP is
-   not a runnable pull — exercise the interpreter).
-5. **Orient:** read latest `logs/`; arm ZERO crons (the two Windows Scheduled Tasks are
-   OS-level, not the seat's).
+     or ambiguous. Resolve the token (P2 re-mint path), re-arm. It never falls back to
+     another identity — that loud death is the fix working.
+4. **`bloomberg_health`** → `ok: true`; exercise the `cma` interpreter (green MCP is not a
+   runnable pull).
+5. **Orient:** read latest `logs/`; arm the §0b standing-order cron and NOTHING else (the
+   two Windows Scheduled Tasks are OS-level, not the seat's).
 
 ## 3. First-session obligations
 
-- **Action the pending fabric inbox message:**
-  `org/mcp/inbox/0.0.3_BG_BBGTerminal/20260807T182104Z_0.0.0_AB_MSTR_Z_Concierge_completion_set_landed_--_mecha.md`
-  (MSTR~Z completion-set notification, unread since 08-07) — read + act/ack per its content.
+- **Inbox pull:** `/watcher` Step 4 covers it — act on anything found, same turn.
 - **First-serve smoke (ACK-FIRST, per `/bbg-teams-assist`):** on the first inbound Teams
   message (or the backlog sweep `/bbg-teams-assist` if anything landed while dark), run the
   full serve loop; the reply must deliver AS "Opal Bloomberg" with vintage attached.
@@ -93,7 +80,7 @@ each step's evidence below.
 | Identity | step-2a `whoami` output == Opal Bloomberg |
 | Monitor | pinned arm `TaskOutput(<id>)` → running + the `token selected: identity=opalbloomberg@...` line |
 | Serve | one ACK-FIRST serve delivered as "Opal Bloomberg" (vintage attached) |
-| Fabric | broker registration LIVE + the 08-07 inbox message actioned |
+| Fabric | broker registration LIVE + inbox pulled/actioned |
 
 Any limb failing → **HOLD the relaunch (never leave it half-landed); surface to COO~Z +
 CTO~Z with the failing limb.** Return the evidence to 0.5.0_AE_OpalETL~Z (TO-2 verifier),
@@ -114,14 +101,13 @@ cc 2.0.0_SA_COO~Z.
 
 ## Steady state
 
-**RULED (Andrew-direct 2026-08-10 ~1653Z, record @bc7eb60de): OPERATOR-STARTED.** Andrew or
-MSTR~Z brings the seat up by hand off this runbook — NO cron, NO auto-start. A session that
-dies stays down until an operator runs this procedure again.
+**OPERATOR-STARTED (ruled, record @bc7eb60de):** Andrew or MSTR~Z brings the seat up by
+hand off this runbook — NO cron, NO auto-start. A session that dies stays down until an
+operator runs this procedure again.
 
-**DAILY UPLOAD GUARDRAIL DUTY (Andrew-direct Q5, record @e77bec6e5):** each session-day the
-seat CHECKS EXECUTION RECORDS that the scheduled Bloomberg upload ran — the system cron
-`OPAL_BBGTML_daily_pull` (07:00 ET) is the PRIMARY path, and the check is of records, not a
-new monitor (alarm moratorium untouched). On a missed/failed run: fallback `/terminal-upload`
-under its own skill gates (NEVER send on a tripwire FAIL), or escalate to Andrew/MSTR~Z. The
-seat's gateway allowlist carries `opal_data_refresh_upload` as a FALLBACK-ONLY row
-(# andrew-asked, same record) — fallback capability is not a license to replace the cron.
+**DAILY UPLOAD GUARDRAIL DUTY (record @e77bec6e5):** each session-day, check the execution
+records that the scheduled Bloomberg upload ran (system cron `OPAL_BBGTML_daily_pull`,
+07:00 ET, the PRIMARY path) — a records check, not a new monitor. On a missed/failed run:
+fallback `/terminal-upload` under its own skill gates (NEVER send on a tripwire FAIL), or
+escalate to Andrew/MSTR~Z. The seat's `opal_data_refresh_upload` allowlist row is
+FALLBACK-ONLY — capability is not a license to replace the cron.
