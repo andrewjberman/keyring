@@ -15,7 +15,8 @@ import os
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-CENSUS = os.path.join(ROOT, "org", "tier1_exec", "3.0.0_SA_CVO", "logs", "2026-06-15", "estate_census")
+CENSUS = os.path.join(ROOT, "org", "modules", "graph", "estate_census")  # RE-POINTED 2026-08-20: the census-regen landing (CVO-named successor home, adjudication @d7a660b69c);
+# the 06-15 originals remain at org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/ as the dated record -- nothing reads them.
 # Routing source = the COMMITTED canonical manifest (CVO-authoritative, reproducible from a
 # fresh checkout). Each manifest entry: {family(=thread_id), named_thread, owning_tool, status,
 # tool_pointer, reason?, last_reviewed, debtscan_flags}.

@@ -759,8 +759,7 @@ def cmd_census_drift(plane: str) -> int:
     import sys
     here = os.path.dirname(os.path.abspath(__file__))
     root = os.path.dirname(os.path.dirname(os.path.dirname(here)))
-    taxo_path = os.path.join(root, "org", "tier1_exec", "3.0.0_SA_CVO", "logs",
-                             "2026-06-15", "estate_census", "AUTHORITATIVE_lambda_taxonomy.json")
+    taxo_path = os.path.join(root, "org", "modules", "graph", "estate_census", "AUTHORITATIVE_lambda_taxonomy.json")  # RE-POINTED 2026-08-20 census-regen landing
     try:
         with open(taxo_path, encoding="utf-8") as f:
             census = set(json.load(f)["lambda_to_named_thread"].keys())
@@ -796,7 +795,7 @@ def cmd_census_drift(plane: str) -> int:
     added = sorted(live - census)
     gone = sorted(census - live)
     print(f"CENSUS-DRIFT | plane: {plane_note}")
-    print(f"  census (taxonomy 26b32687a, frozen 2026-06-15): {len(census)} lambdas")
+    print(f"  census (regen 2026-08-20, live home estate_census/): {len(census)} lambdas")
     print(f"  live: {len(live)} | UNMODELED (live, not in census): {len(added)} | "
           f"CENSUS-ONLY (gone or unmanaged-on-this-plane): {len(gone)}")
     print("  >> a SET diff -- equal counts prove nothing (66 changes once cancelled to zero net)")
