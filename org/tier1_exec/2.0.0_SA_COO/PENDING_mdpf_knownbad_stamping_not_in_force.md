@@ -34,6 +34,32 @@ disproportionate; losing the item would not be acceptable. Hence: carried, not c
 (Rule 22a: the deployed package's own bytes must contain `KNOWN_BAD_INPUT_DATES`; a plan 0-diff and
 a green run both pass on the old code). Then delete this file.
 
+## ⛔ THE CLASS IS NOW FOUR MEMBERS, AND ITS SEVERITY IS NOT FLAT (added 2026-08-20 ~0130Z)
+Tonight produced four committed-not-deployed instances. **Three were RECOVERABLE** -- code sitting
+undeployed, found later, deployed later, nothing lost in the interval:
+1. this one (`mdpf_aggregate_aua` known-bad stamping, bundled in `mdpf-gold-lambda`)
+2. `build_fact_taxsma_report.py` + `build_dim_taxsma_report.py` (silver/gold, since minted)
+3. WS-R3's registry read in `opal-assets-bd49f-reporting-pull` (~29 days, since deployed)
+
+**THE FOURTH IS NOT RECOVERABLE AND IT NEARLY SHIPPED.** `TS_HOLDINGS_ENABLED` read **2 in repo, 0 in
+the deployed package**. COO sequenced the TrueShares enable as *"a ONE-LINE env flip"* (DS relayed it
+identically -- both readings taken from the repo plane). **A flag-only apply would have succeeded:
+clean apply, 0-diff, variable visible in console, GREEN run at 22:00Z -- fetching NOTHING.** On a
+**current-day-only, forward-only source** that is not "not working yet"; it is **PERMANENT DAILY DATA
+LOSS BEHIND A HEALTHY GREEN.** Caught by `0.7.0_AE_CloudOps` reading the deployed package before
+arming; landed instead as **one atomic apply** (code + flag together), verified on both planes.
+
+> **THE DISCRIMINATOR THIS ADDS, AND IT IS THE POINT OF THE ENTRY: A COMMITTED-NOT-DEPLOYED ITEM'S
+> SEVERITY IS SET BY WHETHER ITS UNDERLYING SOURCE IS REPLAYABLE.** Against a replayable source the
+> gap costs latency. Against a **forward-only** source it costs data that cannot be re-fetched, one
+> day per day, while every instrument reads healthy. **Triage this class by source replayability
+> FIRST, not by how stale the artifact is** -- the freshest instance here was the dangerous one.
+
+**AND THE URGENCY WAS THE HAZARD'S CARRIER, NOT ITS COUNTERWEIGHT.** The reason the TrueShares ask
+reached Andrew at all is that the feed loses unrecoverable history daily -- and that same urgency is
+what justified jumping it ahead of the TAXSMA chain and would have pushed a flag-only apply out the
+door unread. **A correct priority and a plane-wrong instruction compose into a fast mistake.**
+
 ## Why this file exists at all
 I told DS, in the same turn, that **a gap that lives only in a message evaporates; a gap in the
 close is inherited.** This is me holding to that on my own side rather than trusting a drive log I
