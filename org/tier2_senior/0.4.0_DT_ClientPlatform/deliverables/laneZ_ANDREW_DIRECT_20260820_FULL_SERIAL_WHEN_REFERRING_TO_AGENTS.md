@@ -113,7 +113,23 @@ Per the standing NEVER rule, I implement no gate without Andrew's explicit word,
 
 **Why this is a grounding defect and not an etiquette one:** a misattributed *credit* is an ego matter; **a misattributed BOUND corrupts the grounding chain.** Had `3.0.0_SA_CVO~Z` accepted para-1, they would have become the cited SOURCE for an unmeasured-exposure claim they never measured — and per the XXX.md relayer half a receiving seat reasonably treats a routed finding as grounded, so it propagates under the wrong name **with the real measurer's caveat detached from the only person who can qualify it.**
 
-**Cheap authoring habit** (offered by `3.0.0_SA_CVO~Z`, not proposed as a gate, nothing implemented): a per-seat paragraph **opens with the full serial as its first token**. Most such messages already do this; the failure is that it is applied *most* of the time — the same shape as the unique-token trap, where a habit that is correct at the centre and silently wrong at the edges is the one that costs.
+### The bounding predicate: MULTI-RECIPIENT — and it is the one conditional that cannot rot
+
+`3.0.0_SA_CVO~Z` checked the specimens and found the property none of us had named: **every pronoun failure occurred in a MULTI-RECIPIENT message. A single-recipient body is structurally immune** — there is exactly one candidate for "you", so the pronoun resolves correctly with no discipline at all.
+
+**This turns an unbounded ask into a bounded one, which is why it is recorded as mechanism rather than as a nicety.** *"Use full serials in all prose"* competes with every other authoring instinct and decays under load — measured at that seat the same day: **addressing 100% clean, prose carrying 34 bare forms.** *"When a message has more than one recipient, address every seat explicitly"* binds on a condition the author already knows **at send time, from the recipient list they just typed.**
+
+⚠ **AND IT IS NOT THE "WHERE AMBIGUOUS" CONDITIONAL THIS RECORD REJECTS ABOVE — the distinction is load-bearing.** Ambiguity is *population-dependent*: it changes silently as seats register, so a habit built on it rots. **Multi-recipient-ness is a property of the message itself** — fixed at authoring, knowable without consulting any registry, and it **cannot degrade underneath a habit built on it.** That is the difference between a conditional that rots and one that holds.
+
+**Two sub-shapes, and the second is worse:** (a) per-seat paragraphs, where the structure at least signals that some paragraphs are not yours; (b) **a whole body addressed to ONE recipient but sent to several**, where nothing signals that the entire message may be about someone else's work — the shape most likely to be read as self-addressed end to end.
+
+### The sufficient form — because "open with the full serial" was FALSIFIED BY ITS OWN AUTHOR APPLYING IT
+
+`0.0.3_BG_BBGTerminal` adopted that habit, applied it correctly on the opening line of the next message — and the body then ran **entirely in second person to a four-recipient send.** The fix held for one line and failed for the remaining forty. **Opening with a full serial resolves the FIRST reference and does nothing for every subsequent "you".**
+
+> **In any MULTI-recipient message: either (a) SECTION IT PER SEAT, each section opening with the full serial, or (b) WRITE IN THE THIRD PERSON THROUGHOUT. Second person is safe only in a SINGLE-recipient message.**
+
+*(Recorded as mechanism, deliberately without its third specimen. The specimen exists in the message traffic and is not needed here — a principle earns its place by being actionable without its incident, and a third instance would turn this record into an incident log.)*
 
 ## Related
 
