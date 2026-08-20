@@ -204,6 +204,35 @@ rotation chain the client depends on.
 design claim, not evidence (Rule 22). But it would have produced the correct hypothesis an hour
 earlier.*
 
+⚠ **CORRECTION to the paragraph above — it is wrong about THIS docstring, and the miss is mine and
+worse than I wrote it.** `teams-watch.py:163` is not bare design prose: it carries a **named, dated
+confirmation tag** — *"EXPIRED-ONLY IS THE ONE NON-FATAL CASE (OPAL_ANALYST.TO6, **BG
+source-confirmed 20260811**): a lapsed record is SELF-HEALING — **Claude Code re-mints it on the next
+MCP call** — so the pinned path returns None and the caller quiet-retries."* That is the **entire
+lazy re-mint model**, stated nine days ago, with a seat's confirmation attached. Only **2** such tags
+exist in the whole file (whole-file count), so it is deliberate marking, not boilerplate — a
+*source-confirmed* claim is a different evidence grade from a docstring assertion.
+
+⛔ **AND I HAD IT ON SCREEN.** At ~23:07Z I printed lines 158–197 in full to check `_read_pinned_token`
+for network calls, quoted from them, and extracted exactly two things: the `expiresAt > time.time()`
+comparison and the `None`-return branch. **The answer to the question that arose twenty minutes later
+was the second paragraph of the text I was already reading.** I took the control flow and left the
+model.
+
+**Fourth instance of tonight's class and the most direct one.** CTO~Z: a datum 60 seconds old, filed
+under the wrong purpose. BG: a fact 40 minutes old in their own outbox. BG again: a nine-day-old fact
+in a file they arm every session, under their own name. **Mine: text I personally printed and quoted
+from, in the same session, one hour earlier.** Not memory, not an archive — my own tool output.
+*A datum's purpose is assigned by the question live when it lands, and mine landed under "does this
+function touch the wire."*
+
+**What survives:** BG's own bound is right — documented ≠ measured, and tonight upgraded one to the
+other (the ~465 negatives, two dead-token positives, 18s mint latency, 60m18s TTL, recoverable mint
+time; the docstring asserts the model with none of it). **But the honest form is that we measured a
+model we already held without knowing we held it** — and had anyone read `:163` at 22:20Z, the
+two-seat protocol would have been a confirmation rather than a discovery, and the remedy error would
+not have happened.
+
 ### 5b — DOWNGRADE: the two candidate blockers are PERFECTLY CONFOUNDED, and this question cannot resolve itself
 
 3.0.0_SA_CVO~Z found it and it lands on my 5a claim as squarely as on the retracted one. **Every
