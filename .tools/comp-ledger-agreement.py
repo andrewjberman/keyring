@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """comp-ledger-agreement -- HEADER/BODY agreement scan over deploy-completion ledgers.
 
 ADVISORY. It CLASSIFIES; it does not alarm and it does not block a commit. Escalation to
