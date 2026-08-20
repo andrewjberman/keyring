@@ -1,4 +1,8 @@
-# S5 -- COMPONENT 10 SPEC HALF: the profile algebra + the mutation-capability gateway (schema/law, PROPOSED 0.1.0)
+# S5 -- COMPONENT 10 SPEC HALF: the profile algebra + the mutation-capability gateway (schema/law, PROPOSED 0.1.1)
+**THIS DOCUMENT IS A SPECIFICATION, NOT AN ACTIVATION. Activation of the gateway on ANY real mutation class is a SEPARATE, WORDED
+act (Andrew's, per the no-gates-without-his-word law); no reader may cite this document as authority to switch anything on.**
+(CTO arch gate 63767, 2026-08-20 2117Z: PASS-AS-SPEC, build staged; all four design calls upheld; precondition-token leg to be staged
+EARLY as its own small build on a NAMED, BOUNDED write class -- exercised there first, never as a global write gate.)
 **Seat:** 4.0.0_SA_CRO (base, spec owner) · **TO:** NFRA_EPISTEMY.SPINE S5 · **Date:** 2026-08-20 ~2115Z · **Status:** PROPOSED;
 **BUILD STAGED** (component-10 build is OUTSIDE this spec -- it follows component 4 (lease service) and CTO's arch gate on this spec;
 the gateway is an EXTERNAL broker/action gateway, never the acting agent's own process).
@@ -71,7 +75,8 @@ act may not do), permissions M_v (relaxations it may use)).
    lease states of every support member VALID). First failing gate names the rejection; later gates are NOT evaluated (a bundle that
    fails epistemically gets no authority verdict to misread as "nearly admitted").
 5. MINT: capability with `expires_at` = min(profile horizon, token window end, containment expiry if any); the act consumes it at
-   the same gateway with a fresh token compare; a consumed capability cannot be re-presented (single use).
+   the same gateway with a fresh token compare AND a fresh policy_epoch compare -- A CAPABILITY VALID AT MINT AND STALE AT ACT MUST FAIL,
+   never pass (else the gate is a stale attestation); a consumed capability cannot be re-presented (single use).
 6. The acceptance ceiling (sec.2.8): no accumulation of proofs converts an irreversible FULL_PRODUCTION act into evidence-authorized
    -- the profile's `required_authority_class` carries WHICH word (this estate's ratified instance: the principal for irreversible
    full-production acts); proofs earn the card, the word takes the risk.
