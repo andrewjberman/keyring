@@ -1,0 +1,657 @@
+{
+  "run_id": "AL0-SCRATCH-CONTROL-NOT-EXERCISABLE",
+  "method_version": "0.1.0-proposed",
+  "status": "PROPOSED",
+  "vintage": {
+    "repo_commit": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+    "observed_at_utc": "2026-08-20T20:49:41Z"
+  },
+  "subject": {
+    "concept": "SCRATCH_CONTROL_NOT_EXERCISABLE",
+    "definition": "PLANTED CONTROL (C9-RIDE Phase 2): a mutant of the Scope bundle whose S2 challenge could not be exercised -- never a real subject, never in the ledger.",
+    "claimed_layer": "axis in (rail, grain, plane, scope)",
+    "declared_grain": "one denominator-boundary axis",
+    "scope": "scratch copy only"
+  },
+  "source_census_row": null,
+  "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_NOT_ASSESSED",
+    "s4": "STAGE_NOT_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+  },
+  "s0_pin": {
+    "authorities": [
+      {
+        "pointer": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml#terms.Scope @ 9b602428581aeafafec7ee180aca8815a9a52e9b (blob 43b50adf54, v3.11)",
+        "claimed_content": "The entry: the type_tuple sense only, the 7-value enum (quoted from the bank, not rewritten), the KEYED (section, field) discipline, the locality/prohibition note on the contract_record sense.",
+        "live": true
+      },
+      {
+        "pointer": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#type_tuple.scope @ 9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "claimed_content": "Parsed this run: enum [estate, tree, firm, pipeline, motif, partition-window, single-artifact]; means = the DENOMINATOR boundary the assertion is complete-OVER (INTENT_DENOMINATOR_SYNCHRONIZATION s.1); an assertion must NAME its scope or its coverage claim is unfalsifiable.",
+        "live": true
+      }
+    ],
+    "consumers": [
+      {
+        "surface": "org/modules/graph/comp_output_contract.py:391-419 (census R032)",
+        "binding_layer": "code reading the canon enum FROM the bank -- the healthy cite-not-copy form (shared with Plane, Run 19)",
+        "is_code": true
+      },
+      {
+        "surface": "the Estate concept (Run 15) -- the ratified ALL-value of this enum",
+        "binding_layer": "the estate value's referent (Run 15's B-SCOPE-ALLVALUE read the other side)",
+        "is_code": false
+      },
+      {
+        "surface": "the contract_record's locality field (R015) -- the OTHER sense, keyed separately",
+        "binding_layer": "the homonym disambiguated by (section, field) keying",
+        "is_code": false
+      },
+      {
+        "surface": "docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md s.1",
+        "binding_layer": "the doctrine the axis serves (the DENOMINATOR half)",
+        "is_code": false
+      }
+    ],
+    "molecule_dimensions": {
+      "composition": "One axis, seven values naming denominator boundaries; a homonym (the contract_record sense) disambiguated BY KEYING to a different field (locality) with a prohibition on carrying this sense there.",
+      "state": "reserved_ratified; census-RESOLVED at its code consumer (R032); the enum quoted from the bank, never rewritten.",
+      "position": "The scope slot of the type tuple; the DENOMINATOR half's axis (the intent half is D3's rail, Run 17); Estate is its ALL-value.",
+      "behavior": "Forces every assertion to NAME what it is complete over -- 'complete over FIRM' != 'complete over ESTATE'; unnamed scope = unfalsifiable coverage claim.",
+      "semantic": "What set does this claim range over."
+    },
+    "evidence": [
+      {
+        "file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+        "locator": "Scope entry",
+        "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "claim": "Directly read; blob 43b50adf54 v3.11 unchanged across all twenty-three runs -- REGISTRY_VINTAGE per 63430 (now carried in the certificate's own field; the schema extension landed in the working tree, see residue)."
+      },
+      {
+        "file": "yaml-parse (this seat)",
+        "locator": "type_tuple.scope.enum = 7 values; means = the denominator boundary",
+        "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "claim": "The bank home carries exactly the entry's quoted enum -- 7/7."
+      },
+      {
+        "file": "census R032 + Run 15's B-SCOPE-ALLVALUE + Run 19's B-OUTPUT-CONTRACT-CODE",
+        "locator": "cross-references",
+        "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "claim": "The code consumer reads the canon enum from the bank (R032 RESOLVED, same reader as Plane's); the Estate ALL-value seam read from Estate's side at Run 15 -- this run reads it from Scope's."
+      }
+    ]
+  },
+  "s1_sweep": {
+    "generators": [
+      {
+        "generator_id": "G-DEF",
+        "description": "Definition analysis over the entry and the bank's type_tuple.scope.",
+        "derivation_dependencies": [
+          "the entry",
+          "type_tuple.scope"
+        ],
+        "positive_control": "The keyed-homonym structure (scope vs locality) is a real two-senses case this analysis SEES and the registry already disambiguates by keying -- the generator's target answered in canon."
+      },
+      {
+        "generator_id": "G-USAGE",
+        "description": "Usage via the S0 consumers (the code reader, Estate, the locality field, the doctrine).",
+        "derivation_dependencies": [
+          "S0 population"
+        ],
+        "positive_control": "Sensitivity demonstrated across the sequence."
+      },
+      {
+        "generator_id": "G-CROSS",
+        "description": "Cross-derivation from Estate (Run 15), Plane (Run 19, the same type tuple), D3 (Run 17, the intent half), Contract_Record (R015, the locality sense).",
+        "derivation_dependencies": [
+          "Runs 15, 17, 19 + R015"
+        ],
+        "positive_control": "Four adjacent records constrain the axis."
+      },
+      {
+        "generator_id": "G-INCIDENT",
+        "description": "Incident-record generator: the keyed-homonym discipline (a scope field on a contract_record is a PROHIBITION -- the denominator-is-its-own-configuration defect), the unfalsifiable-coverage rule.",
+        "derivation_dependencies": [
+          "the entry's prohibition note",
+          "the doctrine s.1"
+        ],
+        "positive_control": "The generator distinguishes a keyed homonym (governed) from a collision."
+      }
+    ],
+    "normalization_rule": "Normalize to the axis grain; values, the ALL-value role, the keyed homonym (a different field), and the doctrine relation normalize below or beside it.",
+    "raw_candidates": [
+      {
+        "candidate_id": "C-VALUES",
+        "label": "axis -> its seven boundary values",
+        "normalized_grain": "values below the axis grain",
+        "operator": "DISJUNCTIVE_DECOMPOSITION",
+        "children": [
+          "estate",
+          "tree",
+          "firm",
+          "pipeline",
+          "motif",
+          "partition-window",
+          "single-artifact"
+        ],
+        "generator_ids": [
+          "G-DEF"
+        ],
+        "reconstruction_rule": "Hypothesis: the axis is its values.",
+        "consequence": "Would give each boundary axis-level authority.",
+        "evidence": [
+          {
+            "file": "yaml-parse",
+            "locator": "the enum",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "Seven values, one home."
+          }
+        ]
+      },
+      {
+        "candidate_id": "C-SCOPE-LOCALITY",
+        "label": "the type_tuple scope sense OR the contract_record locality sense",
+        "normalized_grain": "a keyed homonym",
+        "operator": "DISJUNCTIVE_DECOMPOSITION",
+        "children": [
+          "Scope (type_tuple, denominator boundary)",
+          "locality (contract_record, the record's sense)"
+        ],
+        "generator_ids": [
+          "G-DEF",
+          "G-INCIDENT"
+        ],
+        "reconstruction_rule": "Hypothesis: two senses flatten in the word scope.",
+        "consequence": "Would demand one entry carry both.",
+        "evidence": [
+          {
+            "file": "the entry",
+            "locator": "KEYED (section, field), never field alone; the contract_record sense is locality; a contract_record MUST NOT carry a population scope field",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "The homonym is ALREADY DISAMBIGUATED by keying to a different field (locality) with a prohibition -- governed."
+          }
+        ]
+      },
+      {
+        "candidate_id": "C-ALL-VALUE",
+        "label": "the axis AND its ALL-value (Estate) as a second concept",
+        "normalized_grain": "axis plus one value's dual role",
+        "operator": "CONJUNCTIVE_DECOMPOSITION",
+        "children": [
+          "the six bounded values",
+          "Estate as the ALL-value"
+        ],
+        "generator_ids": [
+          "G-CROSS"
+        ],
+        "reconstruction_rule": "Hypothesis: the ALL-value is structurally different.",
+        "consequence": "Would split the enum by value semantics.",
+        "evidence": [
+          {
+            "file": "Run 15's record",
+            "locator": "B-SCOPE-ALLVALUE",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "Estate's dual ROLE (totality; ALL-value) is declared at Estate -- a member property here."
+          }
+        ]
+      }
+    ],
+    "normalized_candidates": [],
+    "excluded_candidates": [
+      {
+        "label": "axis -> its seven boundary values",
+        "failed_admissibility_test": "Grain",
+        "reason": "The values-of-axis exclusion.",
+        "evidence": [
+          {
+            "file": "type_tuple.scope",
+            "locator": "one home",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "One enum, one meaning."
+          }
+        ]
+      },
+      {
+        "label": "the type_tuple scope sense OR the contract_record locality sense",
+        "failed_admissibility_test": "Independence and incident-history (the keyed homonym, already disambiguated)",
+        "reason": "The two senses are ALREADY separate: this axis is the type_tuple sense ONLY; the record's sense lives in a differently-named field (locality) and carrying a scope field on a record is a declared PROHIBITION -- the registry's keying discipline (section, field) is the remedy already applied; nothing flattens.",
+        "evidence": [
+          {
+            "file": "the entry + the Intent_Source neighbor note",
+            "locator": "that absence is a PROHIBITION, not a gap",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "Governed by keying + prohibition."
+          }
+        ]
+      },
+      {
+        "label": "the axis AND its ALL-value as a second concept",
+        "failed_admissibility_test": "Non-triviality (a member's role)",
+        "reason": "Estate's ALL-value status is a ROLE of one member, declared at the member's own entry (Run 15) -- a property, not a second axis concept.",
+        "evidence": [
+          {
+            "file": "Run 15",
+            "locator": "governed dual role",
+            "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+            "claim": "Read from the member's side already."
+          }
+        ]
+      }
+    ],
+    "generator_residue": [
+      "The doctrine (INTENT_DENOMINATOR_SYNCHRONIZATION s.1) was cited via the bank's means text, not re-read in full.",
+      "No claim of global generator exhaustiveness."
+    ]
+  },
+  "s2_challenge": {
+    "grammar_name": "decomposition_grammar",
+    "grammar_version": "1.0.0",
+    "grammar_commit": "462ac78311a3d5f1310a8da3f4f7638127d449bd",
+    "grammar_adequacy": {
+      "battery": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json",
+      "specimens_total": 6,
+      "specimens_expressible": 6,
+      "demonstrated": true
+    },
+    "splitter": {
+      "identity": "PLANTED CONTROL: no differently-derived splitter could be run against this subject (the challenge is un-runnable by construction); the control must read NOT_EXERCISABLE, never as a run.",
+      "differently_derived": false,
+      "shared_dependencies": [
+        "repository text at 9b602428581aeafafec7ee180aca8815a9a52e9b"
+      ]
+    },
+    "frontier": {
+      "cell_ids": [
+        "G-DEFxCONJxAUTH",
+        "G-DEFxCONJxVALUES",
+        "G-DEFxCONJxCONSUMERS",
+        "G-DEFxDISJxAUTH",
+        "G-DEFxDISJxVALUES",
+        "G-DEFxDISJxCONSUMERS",
+        "G-USAGExCONJxAUTH",
+        "G-USAGExCONJxVALUES",
+        "G-USAGExCONJxCONSUMERS",
+        "G-USAGExDISJxAUTH",
+        "G-USAGExDISJxVALUES",
+        "G-USAGExDISJxCONSUMERS",
+        "G-CROSSxCONJxAUTH",
+        "G-CROSSxCONJxVALUES",
+        "G-CROSSxCONJxCONSUMERS",
+        "G-CROSSxDISJxAUTH",
+        "G-CROSSxDISJxVALUES",
+        "G-CROSSxDISJxCONSUMERS",
+        "G-INCIDENTxCONJxAUTH",
+        "G-INCIDENTxCONJxVALUES",
+        "G-INCIDENTxCONJxCONSUMERS",
+        "G-INCIDENTxDISJxAUTH",
+        "G-INCIDENTxDISJxVALUES",
+        "G-INCIDENTxDISJxCONSUMERS"
+      ],
+      "assessed_cell_ids": [],
+      "open_cell_ids": [],
+      "unreachable_cell_ids": [
+        "G-DEFxCONJxAUTH",
+        "G-DEFxCONJxVALUES",
+        "G-DEFxCONJxCONSUMERS",
+        "G-DEFxDISJxAUTH",
+        "G-DEFxDISJxVALUES",
+        "G-DEFxDISJxCONSUMERS",
+        "G-USAGExCONJxAUTH",
+        "G-USAGExCONJxVALUES",
+        "G-USAGExCONJxCONSUMERS",
+        "G-USAGExDISJxAUTH",
+        "G-USAGExDISJxVALUES",
+        "G-USAGExDISJxCONSUMERS",
+        "G-CROSSxCONJxAUTH",
+        "G-CROSSxCONJxVALUES",
+        "G-CROSSxCONJxCONSUMERS",
+        "G-CROSSxDISJxAUTH",
+        "G-CROSSxDISJxVALUES",
+        "G-CROSSxDISJxCONSUMERS",
+        "G-INCIDENTxCONJxAUTH",
+        "G-INCIDENTxCONJxVALUES",
+        "G-INCIDENTxCONJxCONSUMERS",
+        "G-INCIDENTxDISJxAUTH",
+        "G-INCIDENTxDISJxVALUES",
+        "G-INCIDENTxDISJxCONSUMERS"
+      ]
+    },
+    "result": "NOT_EXERCISABLE",
+    "result_evidence": [
+      {
+        "file": "this control",
+        "locator": "planted",
+        "vintage": "5ac358270f515da16629c6b39cf890797bac680d",
+        "claim": "The splitter could not be exercised; no cell was assessed; every cell is unreachable."
+      }
+    ],
+    "certificate_state": "CERTIFICATE_WITHHELD",
+    "atomicity_certificate": null
+  },
+  "s3_legislation": {
+    "concept_rule24_record_ids": [
+      "R24-SEQ23-SC-001",
+      "R24-SEQ23-SC-002",
+      "R24-SEQ23-SC-003"
+    ],
+    "population_predicate": "the enum at the bank's type_tuple.scope (7 values), quoted by the entry, read by the code consumer",
+    "denominator_process": "yaml-parse type_tuple.scope.enum; count 7; compare against the entry's quoted list -- 7/7.",
+    "authority_home": "PROPOSED_UNCHANGED: the bank's type_tuple.scope; the entry quotes (never rewrites); the keying discipline stays",
+    "token_census_record_id": "R24-SEQ23-SC-003"
+  },
+  "s4_resolution": {
+    "binding_population": [
+      "B-BANK-ENUM",
+      "B-OUTPUT-CONTRACT-CODE",
+      "B-ESTATE-ALLVALUE",
+      "B-KEYED-HOMONYM"
+    ],
+    "contracts": [
+      {
+        "binding_id": "B-BANK-ENUM",
+        "binding_form": "RESOLVES_VIA_POINTER",
+        "source_surface": "the entry's authority + quoted enum",
+        "source_layer": "abstract concept registry",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#type_tuple.scope",
+        "declared_grain": "the seven-value enum",
+        "authority_grain": "the seven-value enum",
+        "claimed_content": "[estate, tree, firm, pipeline, motif, partition-window, single-artifact]",
+        "head_vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {
+            "axis": "MECHANICAL",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "yaml-parse",
+                "locator": "7 values",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "Resolves; enum parsed."
+              }
+            ]
+          },
+          {
+            "axis": "DECLARATIVE",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the entry",
+                "locator": "enum values quoted from the bank, not rewritten",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The entry DECLARES its quoting discipline -- a copied list that says it is a quote with its source is the honest form of the copied-member class."
+              }
+            ]
+          },
+          {
+            "axis": "SEMANTIC",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the bank's means text",
+                "locator": "the denominator boundary the assertion is complete-OVER",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "Registry and bank agree on meaning."
+              }
+            ]
+          }
+        ],
+        "resolved": true,
+        "failure_direction": {
+          "fails_loud": false,
+          "loud_condition": "",
+          "loud_detector": "",
+          "fails_clean": true,
+          "clean_condition": "A bank enum change without the entry's quoted list moving -- the quote is a copy, declared as such, so it CAN drift.",
+          "clean_detector": "The per-term re-run; the quote's declared source makes the drift diagnosable in one read."
+        },
+        "candidate_owner": "4.0.0_SA_CRO"
+      },
+      {
+        "binding_id": "B-OUTPUT-CONTRACT-CODE",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "org/modules/graph/comp_output_contract.py:391-419",
+        "source_layer": "consumer code",
+        "target_authority": "the bank's canon enum",
+        "declared_grain": "the scope values at read time",
+        "authority_grain": "the scope values at read time",
+        "claimed_content": "read from the bank, never copied",
+        "head_vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": true,
+        "code_cites_authority": true,
+        "code_redeclares_vocabulary": false,
+        "seam_axes": [
+          {
+            "axis": "MECHANICAL",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "census R032",
+                "locator": "comp_output_contract.py:391-419",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The reader exists and loads the enum."
+              }
+            ]
+          },
+          {
+            "axis": "DECLARATIVE",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "census R032 + Run 19's B-OUTPUT-CONTRACT-CODE",
+                "locator": "the same reader for Plane and Scope",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "One healthy reader, two type-tuple axes -- the cite-not-copy form, read twice."
+              }
+            ]
+          },
+          {
+            "axis": "SEMANTIC",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "census R032 note",
+                "locator": "canon enum read from rule bank",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "Content resolved at read time."
+              }
+            ]
+          }
+        ],
+        "resolved": true,
+        "failure_direction": {
+          "fails_loud": true,
+          "loud_condition": "The bank is unreadable or the enum key moves.",
+          "loud_detector": "The reader fails at load.",
+          "fails_clean": false,
+          "clean_condition": "",
+          "clean_detector": ""
+        },
+        "candidate_owner": "1.0.0_SA_CTO"
+      },
+      {
+        "binding_id": "B-ESTATE-ALLVALUE",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "the estate value of this enum",
+        "source_layer": "the axis's ALL-value",
+        "target_authority": "the Estate concept (Run 15)",
+        "declared_grain": "one value's declared dual role",
+        "authority_grain": "one value's declared dual role",
+        "claimed_content": "Estate is the ratified ALL-value",
+        "head_vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {
+            "axis": "MECHANICAL",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the Estate entry",
+                "locator": "sits_at: Scope enum member",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The member's entry declares the role."
+              }
+            ]
+          },
+          {
+            "axis": "DECLARATIVE",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "Run 15's B-SCOPE-ALLVALUE",
+                "locator": "the other side",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "TWO-SIDED: consistent from Estate (Run 15) and Scope (this run)."
+              }
+            ]
+          },
+          {
+            "axis": "SEMANTIC",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the bank's means",
+                "locator": "complete over ESTATE != complete over FIRM",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The ALL-value is the widest boundary, by the axis's own semantics."
+              }
+            ]
+          }
+        ],
+        "resolved": true,
+        "failure_direction": {
+          "fails_loud": false,
+          "loud_condition": "",
+          "loud_detector": "",
+          "fails_clean": true,
+          "clean_condition": "The Estate concept's inherited defect (R001) does not touch this role binding -- but a future Estate redefinition would.",
+          "clean_detector": "The per-term re-runs, both sides."
+        },
+        "candidate_owner": "4.0.0_SA_CRO"
+      },
+      {
+        "binding_id": "B-KEYED-HOMONYM",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "the entry's keying discipline + the contract_record prohibition",
+        "source_layer": "the registry's disambiguation rule",
+        "target_authority": "the contract_record's locality field (R015) + the prohibition (no population scope field on a record)",
+        "declared_grain": "a keyed homonym",
+        "authority_grain": "a keyed homonym",
+        "claimed_content": "scope = type_tuple sense only; the record sense is locality; a record MUST NOT carry a scope field",
+        "head_vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {
+            "axis": "MECHANICAL",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the entry + the Intent_Source neighbor note",
+                "locator": "KEYED (section, field), never field alone",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The keying rule is in canon."
+              }
+            ]
+          },
+          {
+            "axis": "DECLARATIVE",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "R015's record",
+                "locator": "locality in the contract_record schema (retired scope -> locality per the README finding)",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The record's sense lives in its own field; ~A's R015 run found the README still saying the OLD name (scope) where the authority says locality -- that README row is R015's, cross-referenced: the homonym's retirement on the record side is exactly what R015's B-README flagged as stale."
+              }
+            ]
+          },
+          {
+            "axis": "SEMANTIC",
+            "passed": true,
+            "evidence": [
+              {
+                "file": "the prohibition",
+                "locator": "that absence is a PROHIBITION, not a gap",
+                "vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+                "claim": "The denominator-is-its-own-configuration defect is named as the reason -- the homonym is governed with its rationale."
+              }
+            ]
+          }
+        ],
+        "resolved": true,
+        "failure_direction": {
+          "fails_loud": false,
+          "loud_condition": "",
+          "loud_detector": "",
+          "fails_clean": true,
+          "clean_condition": "A record author adding a scope field (the prohibited shape) because a stale README still shows the old name -- R015's B-README row is exactly this risk.",
+          "clean_detector": "R015's routed owner act (WS-02); the C9 battery's shape checks at load."
+        },
+        "candidate_owner": "1.0.0_SA_CTO"
+      }
+    ],
+    "residue": [
+      "NOT EXERCISED: s4 not assessed (control); contracts retained from the source bundle as inert structure, not as findings."
+    ]
+  },
+  "s5_proving": {
+    "subject_selected_by": "the program manifest (rank 23, fan_in 3); census row R032 (RESOLVED) is the census provenance",
+    "method_defect": {
+      "found": false,
+      "description": "",
+      "evidence": [],
+      "repair": ""
+    },
+    "regression_check": "",
+    "acceptance_satisfied": false
+  },
+  "rule24_record_ids": [
+    "R24-AL0-001",
+    "R24-AL0-002",
+    "R24-AL0-003",
+    "R24-AL0-004",
+    "R24-AL0-005",
+    "R24-AL0-006",
+    "R24-AL0-007",
+    "R24-AL0-008",
+    "R24-AL0-009",
+    "R24-AL0-010",
+    "R24-AL0-011",
+    "R24-AL0-012"
+  ],
+  "residue": {
+    "stage_not_assessed": [
+      "s3",
+      "s4",
+      "s5"
+    ],
+    "unreachable": [],
+    "unknowns": [
+      "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+      "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+      "VALIDATOR BASIS: the working-tree package (12 records, registry_vintage field) -- ~A's extension uncommitted at this pin; the basis hash will be stated at batch close once ~A commits, or the batch close says working-tree."
+    ]
+  }
+}
