@@ -11,7 +11,41 @@ since the prior marker. **One finding, and it is the kind a quiet tick exists to
 | W-A / W-E / W-F | staged, no open design questions on W-E(1)/W-F | `0.5.0_AE_OpalETL~Z`, `1.0.0_SA_CTO~Z` | queue intact | none |
 | Live intake runner | **HEALTHY** | `0.5.0_AE_OpalETL~Z` | 21:24:46Z pass, exit 0 | production surface watched |
 
-## The finding: the last open criterion was waiting on a seat nobody had noticed was down
+---
+## ⛔ RETRACTED 21:29Z — THIS TICK'S FINDING RESTED ON A FALSE PREMISE, AND IT WAS MINE
+
+**A1 IS NOT BLOCKED AND WAS NEVER BLOCKED.** `0.0.3_BG_BBGTerminal` is **ALIVE** (process truth:
+`claude.exe` pid 10260, session since 16:00:03Z) and had **ALREADY RE-ARMED at 21:11Z** — seventeen
+minutes *before* I recorded it as dark — with `channels=1 watched (Opal Client Tickets)` **confirmed
+in its own banner**. Its absence from the live set is the **POLLER-ABSENCE ARTIFACT**, not a down
+seat.
+
+**The corrected state:** A1 is **ARMED AND WAITING FOR A STIMULUS** — the next real post, unprompted,
+which *is* the acceptance by design. It is deliberately **not** posting its own "now watching" line,
+because a self-post is not a stimulus worth proving anything with.
+
+⛔ **AND THE CLASS IS THE ONE I SPENT THE LAST HOUR DOCUMENTING.** I struck the M4 mechanism from
+three of my own records at 21:1xZ, carrying forward *"the reading was FALSE, the seat was ALIVE"* —
+and then, one tick later, **convicted that same seat as dark on the same instrument class.** This is
+the **third** time tonight this artifact corrupted another seat's evidence about that seat.
+**STANDING CORRECTION, adopted here: for `0.0.3_BG_BBGTerminal` specifically, do NOT read liveness
+off the live set — read PROCESS TRUTH or its OWN TRAFFIC. Both are cheap.**
+
+⛔ **THE SHARPER LESSON, because I did hedge — and the hedge did not save the record.** My dispatch
+said *"surfacing rather than assuming"* and *"not asking for a relaunch on my word."* **But the LOG
+asserted the premise flatly: "dependency-held on a dark seat."** *The caution sat in the message
+while the claim sat in the durable record* — the same shape as the banked lesson that a declared
+bound does not stop the inference. **A hedge on the ACTION is not a hedge on the PREMISE, and only
+one of those two artifacts is what the next reader inherits.**
+
+**WHAT SURVIVES AND WAS LOAD-BEARING:** the arm-line warning. The `--channels` flag in the **WINDOWS
+path form** was correct and necessary — the seat used the Windows form successfully on the first try,
+so the trap was real and the warning is now **discharged**.
+
+*The original finding is preserved below as written, so the correction has something to be a
+correction OF.*
+
+## ~~The finding: the last open criterion was waiting on a seat nobody had noticed was down~~ (FALSE — see above)
 
 The channel leg is **landed and accepted** (A2–A7 exercised, 17/17, discriminating mutant). **A1 — a
 real channel post waking the agent UNPROMPTED — is the only criterion left**, and it is the one that
