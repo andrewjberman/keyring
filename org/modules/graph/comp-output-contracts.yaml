@@ -74,6 +74,40 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-directives:
+    coverage: 'EVERY top-level `directives:` row of the live register (org/missions/DIRECTIVES.yaml,
+      path = the register owner MSTR''s word) + EVERY row of the retired view (DIRECTIVES_RETIRED.yaml),
+      parsed text-surgically by the `  D<n>:` row opener. `retire` scans every live row for a COMPLETE
+      human-written `retired: {at, by, authority}` record; `check` evaluates PARTITION + CONSERVATION +
+      FORM + FREEZE over both views. Live/retired/ever_minted row counts print on every run.'
+    blind_spots:
+      - 'A row that does not open with the `  D<n>:` shape (a differently-keyed id, a row at another
+         indent) is INVISIBLE to the scan -- the tool counts rows it recognizes, and prints that count,
+         so a roster drift shows as a count drop, not as silence.'
+      - 'CONSERVATION is EMIT-MAINTAINED: ever_minted learns a new live id only at the next successful
+         `retire` emit. A live row added and then deleted BETWEEN two emits is not a conservation
+         failure here -- git history is the oracle for that class, not this check.'
+      - 'FORM checks the tripwire mechanically (reference-only members, no globs/attach, complete
+         records); it does NOT judge whether a referenced sub-group/project id actually EXISTS -- that
+         is the register owner''s reading protocol, not this tool''s.'
+      - 'FREEZE proves the retired BYTES are unchanged (per-row sha256 + whole-file emit_hash); it
+         cannot know whether the FACT that put a row there was correct -- the fact is human/sovereign,
+         cited, and outside the machine''s competence by design.'
+      - 'The hook fires only on commits that touch a register view; a register edited but not committed
+         is checked only by a manual `check`.'
+    failure_direction: 'FAILS CLOSED toward refusal: a PARTIAL record cuts nothing (rc 2, loud); a
+      violated invariant is rc 2 with every violation printed; a tool error is rc 1, never a silent
+      green. The dangerous misreading is a CLEAN check after a row was hand-deleted from BOTH views
+      before any emit recorded it (see conservation blind spot) -- a count drop, not an absence.'
+    plane: source          # reads/writes the working-tree register files (canon token; the register is a source-plane artifact)
+    grain: artifact
+    scope: single-artifact # ONE register (live view + its retired partition) -- never the estate
+    vintage: 'reads both views live at call time; a retired row is FROZEN at its stamped
+      retired_vintage (closed-period-immutable -- no TTL aging on a closed judgment).'
+    exit_codes: '0 = invariants hold / emit done (including a measured no-op) | 2 = VIOLATION or
+      REFUSAL (partial record, partition breach, unknown argument -- every one printed, nothing
+      written on refusal) | 1 = tool error (cannot evaluate; never reported as clean).'
+
   comp-grep:
     coverage: 'EVERY line of EVERY file in the .gitignore-aware repo file set for the given pathspec
       (git ls-files cached+others --exclude-standard, RECURSED into nested repos such as portal), matched

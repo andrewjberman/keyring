@@ -1,0 +1,19 @@
+#!/bin/bash
+# comp-directives -- the DIRECTIVES-NATIVE retirement compiler + mechanical check (LD-0433).
+# FACT (human, register owner) + MOVE (machine cut -> DIRECTIVES_RETIRED.yaml) + CHECK
+# (partition/conservation/form/freeze; a hand edit in the retired view FAILS it).
+#
+#   comp-directives retire [--dry-run]   # the MOVE (idempotent; refuses partial records)
+#   comp-directives check                # 0 = invariants hold | 2 = violation | 1 = error
+#   comp-directives --self-test          # scratch battery incl. both ruling-named mutants
+#   comp-directives --help               # usage, never writes; unknown flags REFUSE
+#
+# Fences (verbatim by ruling, in the engine header): directives-native NOT a comp_missions
+# extension (zero missions dependency either direction, CTO 63580); NO attribution leg ever
+# absent Andrew's fresh word (@52db6f2835 ruling c). Register home = MSTR's word (63620).
+# Rule-16 clean: cd / dirname / pwd / python only.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_directives.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-directives" "$*" $_exit 2>/dev/null
+exit $_exit
