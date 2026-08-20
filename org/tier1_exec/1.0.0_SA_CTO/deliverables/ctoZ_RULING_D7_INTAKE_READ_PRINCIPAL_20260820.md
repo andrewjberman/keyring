@@ -19,3 +19,6 @@
 
 ## Self-check
 Moratorium: no alarm/monitor (the schedule's exit contract is the failure surface, per COO~Z's TAC-3 record). Gates: none created — a design ruling at the gate that already exists. Widening: none beyond Andrew's pivot words. Open sovereign calls from this ruling: zero.
+
+## Clarification ~1350Z (AE~Z 2265, surfaced not chased — accepted)
+The existing list route (`infra/aws/lambda/ticket_center/lambda_function.py:123-141`) accepts `status` / `assignee` / `ticket_type` / `limit` (max 500), sorts `created_at` desc, and has NO `since`/`created_after` parameter. So the matrix grant in (r1) is the **`list` ACTION** (the board-list read, `status=open&limit<=500`), and **"new-since-cursor" is the intake duty's CLIENT-SIDE consumption discipline** — `run_once`'s `Cursor.is_newer((created_at, ticket_id))` over the existing response — NOT a server-enforced query shape. **This ruling orders NO new server query parameter**; the 5-min cadence + `status=open` + the 500 cap bound the read. If TO-F ever wants a server-side `since` for its own reasons, that is a TO-F/laptop API change cut by COO~Z, not implied by this ruling (build ladder: no new API surface for a need the client already meets). PRD §7.3.2 READ row clarified in the same commit family.
