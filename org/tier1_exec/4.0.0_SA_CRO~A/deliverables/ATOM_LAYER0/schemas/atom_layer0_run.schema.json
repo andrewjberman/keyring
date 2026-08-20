@@ -10,6 +10,7 @@
     "status",
     "vintage",
     "subject",
+    "source_census_row",
     "stage_states",
     "s0_pin",
     "s1_sweep",
@@ -39,11 +40,17 @@
       "required": ["concept", "definition", "claimed_layer", "declared_grain", "scope"],
       "properties": {
         "concept": {"type": "string", "minLength": 1},
-        "definition": {"type": "string", "minLength": 1},
-        "claimed_layer": {"type": "string", "minLength": 1},
-        "declared_grain": {"type": "string", "minLength": 1},
+        "definition": {"type": ["string", "null"], "minLength": 1},
+        "claimed_layer": {"type": ["string", "null"], "minLength": 1},
+        "declared_grain": {"type": ["string", "null"], "minLength": 1},
         "scope": {"type": "string", "minLength": 1}
       }
+    },
+    "source_census_row": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/resolution_census_row"}
+      ]
     },
     "stage_states": {
       "type": "object",
@@ -244,6 +251,25 @@
     }
   },
   "$defs": {
+    "resolution_census_row": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["row_id", "surface", "concept", "verdict", "verdict_schema", "evidence_pointer", "candidate_owner", "vintage"],
+      "properties": {
+        "row_id": {"type": "string", "minLength": 1},
+        "surface": {"type": "string", "minLength": 1},
+        "concept": {"type": "string", "minLength": 1},
+        "verdict": {"type": "string", "minLength": 1},
+        "verdict_schema": {"type": "string", "minLength": 1},
+        "evidence_pointer": {"type": "string", "minLength": 1},
+        "candidate_owner": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "minLength": 7},
+        "claimed_content": {"type": "string"},
+        "declared_layer": {"type": "string"},
+        "declared_grain": {"type": "string"},
+        "scope": {"type": "string"}
+      }
+    },
     "stage_state": {
       "type": "string",
       "enum": ["STAGE_ASSESSED", "STAGE_CORRECTLY_EMPTY", "STAGE_UNREACHABLE", "STAGE_NOT_ASSESSED"]

@@ -1,0 +1,8 @@
+atom-layer0: add census-row integration interface
+
+Compile a resolution-census row directly into an unassessed run bundle,
+preserve the external verdict schema without re-declaration, and enforce
+the field mappings needed by the later CRO~C integration seat.
+
+Also incorporate Base DRIVE 1 requirements for grammar vintage,
+certificate state, binding forms, and explicit failure directions.

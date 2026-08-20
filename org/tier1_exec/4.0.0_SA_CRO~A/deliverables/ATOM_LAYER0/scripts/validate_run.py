@@ -11,6 +11,7 @@ import argparse
 import copy
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -82,6 +83,28 @@ def semantic_errors(bundle: dict[str, Any], require_proving_defect: bool = False
     result = challenge["result"]
     certificate = challenge["atomicity_certificate"]
     certificate_state = challenge["certificate_state"]
+
+    if bundle["stage_states"]["s0"] in {"STAGE_ASSESSED", "STAGE_CORRECTLY_EMPTY"}:
+        for field in ("definition", "claimed_layer", "declared_grain"):
+            if not bundle["subject"][field]:
+                errors.append(f"completed S0 requires subject.{field}")
+
+    source_row = bundle["source_census_row"]
+    if source_row is not None:
+        if source_row["concept"] != bundle["subject"]["concept"]:
+            errors.append("source_census_row.concept must equal subject.concept")
+        mapped_fields = {
+            "claimed_content": "definition",
+            "declared_layer": "claimed_layer",
+            "declared_grain": "declared_grain",
+            "scope": "scope",
+        }
+        for row_field, subject_field in mapped_fields.items():
+            if row_field in source_row and source_row[row_field]:
+                if source_row[row_field] != bundle["subject"][subject_field]:
+                    errors.append(
+                        f"source_census_row.{row_field} must equal subject.{subject_field}"
+                    )
 
     cells = set(frontier["cell_ids"])
     assessed = set(frontier["assessed_cell_ids"])
@@ -212,6 +235,42 @@ def validate(bundle: dict[str, Any], require_proving_defect: bool = False) -> li
     return errors
 
 
+def compile_census_row(row: dict[str, Any]) -> dict[str, Any]:
+    required = {
+        "row_id",
+        "surface",
+        "concept",
+        "verdict",
+        "verdict_schema",
+        "evidence_pointer",
+        "candidate_owner",
+        "vintage",
+    }
+    missing = sorted(required - set(row))
+    if missing:
+        raise ValueError(f"census row missing required fields: {missing}")
+
+    bundle = _load(TEMPLATE_PATH)
+    bundle["run_id"] = f"AL0-FROM-{row['row_id']}"
+    bundle["vintage"] = {
+        "repo_commit": row["vintage"],
+        "observed_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    bundle["subject"] = {
+        "concept": row["concept"],
+        "definition": row.get("claimed_content") or None,
+        "claimed_layer": row.get("declared_layer") or None,
+        "declared_grain": row.get("declared_grain") or None,
+        "scope": row.get("scope") or f"{row['surface']} x {row['concept']}",
+    }
+    bundle["source_census_row"] = copy.deepcopy(row)
+    bundle["s5_proving"]["subject_selected_by"] = "4.0.0_SA_CRO~B via 4.0.0_SA_CRO"
+    bundle["residue"]["unknowns"] = [
+        f"S0 must assess fields not supplied by census row {row['row_id']}"
+    ]
+    return bundle
+
+
 def self_test() -> int:
     base = _load(TEMPLATE_PATH)
     cases: list[tuple[str, dict[str, Any], bool, bool]] = []
@@ -248,6 +307,20 @@ def self_test() -> int:
     bad_result = copy.deepcopy(base)
     bad_result["s2_challenge"]["result"] = "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN"
     cases.append(("budget-with-no-open-frontier", bad_result, False, False))
+
+    compiled = compile_census_row(
+        {
+            "row_id": "ROW-1",
+            "surface": "example/file.yaml",
+            "concept": "Example_Concept",
+            "verdict": "EXTERNAL_TYPED_VALUE",
+            "verdict_schema": "resolution_census@external",
+            "evidence_pointer": "example/file.yaml:1 @ deadbee",
+            "candidate_owner": "example-owner",
+            "vintage": "deadbee",
+        }
+    )
+    cases.append(("census-row-compiler", compiled, False, True))
 
     passed = 0
     for name, bundle, require_defect, should_pass in cases:
@@ -294,12 +367,33 @@ def main() -> int:
     parser.add_argument("--require-proving-defect", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--check-package", action="store_true")
+    parser.add_argument("--compile-census-row", type=Path)
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
     if args.self_test:
         return self_test()
     if args.check_package:
         return check_package()
+    if args.compile_census_row is not None:
+        if args.output is None:
+            parser.error("--output is required with --compile-census-row")
+        try:
+            row = _load(args.compile_census_row)
+            bundle = compile_census_row(row)
+        except (OSError, json.JSONDecodeError, ValueError) as exc:
+            print(f"ERROR: INSTRUMENT_UNKNOWN: cannot compile census row: {exc}")
+            return 3
+        errors = validate(bundle)
+        if errors:
+            for error in errors:
+                print(f"ERROR: {error}")
+            return 1
+        with args.output.open("w", encoding="utf-8", newline="\n") as handle:
+            json.dump(bundle, handle, indent=2, ensure_ascii=True)
+            handle.write("\n")
+        print(f"OK: census row compiled to {args.output}")
+        return 0
     if args.run is None:
         parser.error("run is required unless --self-test is used")
 

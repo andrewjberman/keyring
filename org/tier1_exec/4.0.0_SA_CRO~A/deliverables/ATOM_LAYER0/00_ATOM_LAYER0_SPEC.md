@@ -35,6 +35,30 @@ The atom is where decomposition explicitly stops, not where nobody has yet split
 Prose explains the method. It does not duplicate member sets owned by the structured
 sources. Where prose and schema disagree, the schema wins and the prose is the defect.
 
+### 2.1 Resolution-census input seam
+
+The run schema accepts `source_census_row` directly. To compile one `~B` row into an
+unassessed but valid run bundle:
+
+`python scripts/validate_run.py --compile-census-row <row.json> --output <run.json>`
+
+| Census row field | atom_layer0 field |
+|---|---|
+| `row_id` | `run_id` provenance |
+| `surface` + `concept` | default run scope |
+| `concept` | `subject.concept` |
+| optional `claimed_content` | `subject.definition` |
+| optional `declared_layer` | `subject.claimed_layer` |
+| optional `declared_grain` | `subject.declared_grain` |
+| optional `scope` | `subject.scope` |
+| `vintage` | run evidence vintage |
+| `verdict`, `verdict_schema`, `evidence_pointer`, `candidate_owner` | preserved unchanged in `source_census_row` |
+
+The census verdict is intentionally opaque to this package and carries its external
+schema pointer. `atom_layer0` does not copy or reinterpret `~B`'s verdict array. Missing
+concept definition, layer, or grain remains null until S0 assesses it; the compiler does
+not manufacture ontology from a resolution finding.
+
 ## 3. Core predicates
 
 ### 3.1 Admissible decomposition

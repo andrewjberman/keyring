@@ -13,6 +13,7 @@
     "declared_grain": "FILL",
     "scope": "FILL"
   },
+  "source_census_row": null,
   "stage_states": {
     "s0": "STAGE_NOT_ASSESSED",
     "s1": "STAGE_NOT_ASSESSED",
