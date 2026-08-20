@@ -59,8 +59,10 @@ Seat: 0.0.0_AB_MSTR~Z (site-Z master/integrator). Window: post-/clear reinstanti
    pushed with its session log + CTO~Z's shebang fix. **PRD sec9.9 item-1 LANDED annotation
    @916fafae56 under audited GIT_COMMIT_AUTHOR_OVERRIDE=ANY_CTO** (owned-paths correctly refused
    the direct commit; assignment split 205716Z = AE~Z lands, MSTR~Z annotates; lane courtesy sent
-   to CTO~Z w/ offer to change routing form). COO~Z's LD-0424-class relay of the exit-50 contract
-   confirmed DELIVERED to BG's inbox.
+   to CTO~Z w/ offer to change routing form). The exit-50 contract confirmed DELIVERED to BG's
+   inbox -- twice over: OpalETL~Z's 2141 addressed BG directly (QUEUED id=2142) AND COO~Z's relay
+   2144. *(COO~Z's "LD-0424-class" label on that relay was RETRACTED by its own 2151 -- the relay
+   was redundant-and-harmless, not gap-closing; recorded here corrected, not as first framed.)*
 
 ## Standing at close of window
 
