@@ -164,6 +164,41 @@ loop of a file I own. And my process scan returned **four** `teams-watch.py` mat
 `bash.exe` wrappers around the one real `python.exe`: *a command-line regex counts invocations, not
 processes*, and it produced a clean plausible 4.
 
+### 5a — NO GUARD REMOVAL CAN MAKE THIS SELF-HEAL, and I stopped a re-card that said otherwise
+
+A "cheap fix" reached the point of being carried to Andrew: *self-reauth already works, our own
+defensive pre-checks block it, so let one component attempt the call it declines.* **The premise is
+false and I own the component.**
+
+The ~18s re-mint was caused by an **agent MCP call through the Claude Code client**, not by "a call
+on a dead token" generically. **The monitor is not a client of Claude Code — it is a PEER READER of
+Claude Code's credential file.** It lifts the bearer from `~/.claude/.credentials.json` and issues
+its own direct HTTPS request; when that 401s, **Claude Code never learns it happened.** There is
+nothing to trigger. Removing the pre-check buys one extra failed request per 15s and heals nothing.
+
+`teams-watch.py:36-39` says this already, in the sentence after the one being quoted: *"Claude Code
+owns the refresh (rotating tokens), so this never refreshes itself -> no refresh-token fight. **On a
+401 … it stays quiet and retries; the next agent MCP call re-freshens it.**"* The 401 path is
+documented and already does not heal — **the pre-check is an optimisation over that path, not the
+thing that creates it.**
+
+**So the correct statement is not "our guards prevent auto-recovery" but "no automated component on
+this box is the client."** The dependency is not on an agent being *awake*; it is on the call passing
+**through the minting client**. CTO~Z's component reasoning survives for whenever a minting path
+exists — monitor, not runner, since its poll is idempotent and the runner's refuse-before-fetch is
+load-bearing on delivered-never-dropped.
+
+**Third remedy path, measured and unexercised:** every `mcpOAuth` record carries `refreshToken` +
+`clientId` + `redirectUri` + `scope` — the full material for a standard refresh-token grant. It is
+deliberately unused, and the docstring gives the reason in four words: *"no refresh-token fight"* — a
+rotation race with the client. So the open question is **scoping a named engineering problem, not
+funding a capability**. ⛔ Nobody has attempted that grant; a failed attempt could disturb the
+rotation chain the client depends on.
+
+*The docstring was right all along and reading it would still not have settled it — a docstring is a
+design claim, not evidence (Rule 22). But it would have produced the correct hypothesis an hour
+earlier.*
+
 ## Blockers
 
 None at this lane. W-B's transport is dropped on CTO~Z's recommendation (semantics kept, re-cut is
