@@ -827,7 +827,7 @@ threads:
 
   # ---- comp-estate ops-internal (6) ----
   - family: PPI-13-schwab-anonymizer
-    named_thread: ops-internal
+    named_thread: canonical-schwab
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
@@ -852,7 +852,7 @@ threads:
     last_reviewed: '2026-06-23'
     debtscan_flags: []
   - family: ops-ec2-governance-lambdas
-    named_thread: ops-internal
+    named_thread: observability
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
@@ -958,7 +958,7 @@ threads:
 
   # ---- comp-estate portfolio-management (9) ----
   - family: ops-infrastructure-monitors
-    named_thread: portfolio-management
+    named_thread: observability
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
@@ -1051,7 +1051,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: ops-anomaly-scanners
-    named_thread: security-scanner
+    named_thread: observability
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan

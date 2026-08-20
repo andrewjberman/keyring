@@ -280,9 +280,15 @@ c3_ii_semantic_verticals:
     # ops-ec2-governance-lambdas (from ops-internal), ops-infrastructure-monitors (from
     # portfolio-management, a measured incoherent home), ops-anomaly-scanners (from security-scanner,
     # across the declared discriminator per the @51285984d6 adjudication). Stage: UNASSERTED.
+    # MEMBERSHIP MATERIALIZED 2026-08-20 (the W-15 grain-3 landing TO, 0.8.0_AE_CloudComp): the three
+    # founding members moved in estate-coverage-manifest.yaml (ops-ec2-governance-lambdas from
+    # ops-internal; ops-infrastructure-monitors from portfolio-management; ops-anomaly-scanners from
+    # security-scanner). systems is INSTRUMENT-TRUE to the matrix arithmetic (fam2sys via
+    # legacy_family_key, opal_estate_infrastructure.py --matrix): all three chains carry structure
+    # key graph-and-ops-and-casefind -> sys-estate-ops-platform -- one structure, three chains.
     observability:
-      systems: [UNASSIGNED-RESIDUE]
-      chain_count: 0
+      systems: [sys-estate-ops-platform]
+      chain_count: 3
     ops-internal:
       systems: [UNASSIGNED-RESIDUE, sys-estate-ops-platform, sys-news-intelligence-engine, sys-partner-serving-platform]
       chain_count: 5
