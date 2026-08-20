@@ -1,0 +1,72 @@
+# Cottonwood "Supervised vs Unsupervised" — the field trace (Andrew-direct task, 2026-08-20 ~1555Z)
+
+**Task (Andrew-direct at the CTO terminal, VERBATIM):** *"check the teams thread with Me, Manav, and
+Yang... I have also recorded a HAR where i check out the Black diamond dashboard to see if i can
+identify where this 'supervised' vs 'unsupervised' field might be. It seems to me that we should be
+able to toggle this somehow, im just not sure in what data table in the Cottonwood process it would
+appear that would facilitate that, but that is your task to go figure out."*
+**Business ask (Teams, group 19:3a715f69...):** Manav 1452Z: Stephen says dashboard AUM looks off —
+shift to BD's "Supervised assets/all billable" (~$455M). Manav 1458Z: the current figure includes
+AUM outside Cottonwood that clients inputted into BD (~$30-40M). Andrew: BD aggregate ~487M, our
+dashboard ~480M — find the ~30M that should NOT be covered.
+
+## 1. The BD mechanism (from the HAR, 59 entries, bd3.bdreporting.com)
+
+- **The toggle is a first-class BD filter**: `supervisedFilterType` in every Dashboard API body —
+  enum from BD's own JS: **1 = All Assets, 2 = Supervised, 3 = Unsupervised** (advisor-view module,
+  `pe=[{text:"All Assets",id:1},{text:"Supervised",id:2},{text:"Unsupervised",id:3}]`). It persists
+  server-side via `POST /advisor/api/v1/Dashboard/{id}/experiencesettings`.
+- **Every API row carries the split regardless of filter**: `bmv/supervisedBmv/unsupervisedBmv` and
+  `emv/supervisedEmv/unsupervisedEmv`, at PortfolioGroup, Relationship, AND Account grain — i.e. BD
+  decomposes a single ACCOUNT into supervised/unsupervised SLEEVES (one account can carry both).
+- **Numbers reconcile with Manav**: the HAR's firm-wide totals read All=$2.903B / Supervised=$2.745B
+  / Unsupervised=$158.2M; one PortfolioGroup row carries **supervisedEmv $458.35M ≈ Manav's ~$455M**;
+  the drilled relationship scope shows $48.5M unsupervised across 102 account rows.
+
+## 2. The Cottonwood pipeline answer (the actual task)
+
+**Today the field does not exist anywhere in the cot pipeline — measured, not inferred:**
+- `comp-find -i supervised data/` → 50 hits, **every SURFACED hit is 49F-side** (bd49f silver/gold),
+  zero in `data/cot/`.
+- The live holdings extract (`s3://opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-08-19.xlsx`,
+  written this morning, T-1-healthy) carries **19 columns; supervised columns: NONE** (header read).
+- So every downstream AUM sum (silver merge → gold canonical holdings → AUA/serving) counts
+  supervised + unsupervised alike — the ~$30M of client-inputted outside assets is IN our figure by
+  construction, matching 487-455 ≈ 32M.
+
+**Where the field is AVAILABLE, one config away:** BD's DataMining dimension catalog (embedded in our
+own captured `realized.json`/`unrealized.json` template bodies) exposes:
+- **`Account Supervised`** (mappedColumn `accountSupervised`, enum {Supervised, Unsupervised}) — the
+  Account-level dimension catalog (81 dims);
+- **`Holding Supervised`** (`holdingSupervised`, same enum) — the Holding-level catalog (51 dims).
+The cot ingest's own design says templates are CONFIG: *"a template updates by re-uploading its
+JSON — no code change"* (`cot_bronze_ingest.py:21-24`). `holdings.json` is a THIN reference (persisted
+templateId, body stored BD-side), so the act is: amend the persisted holdings template to select the
+two columns (re-capture/re-provision), and the extract gains them the next scheduled run.
+
+**Which table the toggle lives in (the direct answer to the question):**
+| layer | table/home | field |
+|---|---|---|
+| bronze | `forwardfill_v2/holdings/HOLDINGS_DAILY_*.xlsx` | `Holding Supervised` (+ `Account Supervised`) — added at the template |
+| silver | `cot_silver_merge` fact holdings (schema-tolerant: snake_cases whatever arrives → `holding_supervised`/`account_supervised` flow through) | same, snake_cased |
+| gold | `B_00.canonical_holdings` (fact grain — **the primary toggle home**: filter/aggregate by `holding_supervised`) + `A_00.accounts_dimension` (`account_supervised` as an account attribute) | the toggle = supervised-only sum vs all-assets sum |
+| serving | the AUM/AUA gold consumers (C_01 canonical_nna / C_01c role_aua / C_04 validate_aua chain) emit BOTH figures (`aum_supervised`, `aum_all`) so the dashboard can toggle — mirroring BD's own always-carry-the-split design | |
+
+**HOLDING grain is the correct primary field, not Account** — the HAR proves accounts carry BOTH
+supervised and unsupervised sleeves simultaneously, and the estate already learned this on 49F:
+`bd49f_dim_portfolio_group.py:197-209` — *"`account_supervised` splits an account into Supervised and
+Unsupervised sleeves"*, book key (group, account, supervised), 29,926/29,926 keys clean. The 49F
+silver (`bd49f_fact_allocation.py:112`) already ingests "Account Supervised" — the in-estate
+precedent for both naming and handling.
+
+## 3. Caveats + routing
+
+- **History**: the supervised flag is a CURRENT attribute in BD; a backfill re-pull applies today's
+  flags to past dates. Fine for the dashboard-AUM purpose; named so nobody reads a backfilled split
+  as point-in-time truth.
+- **Verification against BD**: after the template change, one tie-out — our supervised-only sum vs
+  BD's `supervisedFilterType=2` total on the same date (the HAR gives the exact API shape).
+- **Execution routing** (Andrew's/COO's call, not taken here): template amendment + silver/gold legs
+  sit in the cot lane (bronze fetch owner `0.6.2_AE_PartnerETL`; gold/silver per Rule 13). The change
+  is small: one BD template amendment (config), zero silver code (schema-tolerant), one gold leg
+  (carry the split + emit both AUM figures).
