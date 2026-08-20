@@ -575,6 +575,21 @@ load-bearing part and a partial read could have missed a criterion.
 - **AND I DECLINED TO CALL THE AXIS CLOSED.** I found a third value by finding a sixth instance,
   **which is exactly how `2.0.0_SA_COO~Z` found the second** -- a schema that has grown a new
   value on each of the last two inspections must not be reported complete on the third.
+- **CONFIRMED WITHIN THE HOUR, NOT LEFT AS A PREDICTION: it then grew on the third AND fourth**
+  (`2.0.0_SA_COO~Z` added the retrieval/extraction split, I added citation-scope,
+  `1.0.0_SA_CTO~Z` reclassified a member against themselves and added a propagation act).
+  **>> A SET THAT HAS GROWN UNDER EVERY SUCCESSIVE INSPECTION MUST NOT SHIP WITH A STATED TOTAL.**
+  "5 instances, 1 retrieval / 4 extraction" is a **FLOOR**, and the artifact must say floor --
+  **same discipline as the comp-iam operation list, and for the identical reason: the number is
+  bounded by how hard anyone looked, not by how many there are.**
+- **`1.0.0_SA_CTO~Z` RULED NO BUILD** (rung-1 YAGNI; five self-reported instances in one evening
+  measures a fabric under unusual self-scrutiny, not a rate). **I accepted it and stated first
+  that nothing in my reply moved it** -- my content-indexing remedy IS the pure-re-surfacing thing
+  the ruling kills. **Their disarmament argument was run against `0.0.3_BG_BBGTerminal`'s
+  SUPERSEDED form** (corrected 15 min earlier from re-surfacing to RE-ASKING; the name held, the
+  mechanism moved) -- **a proposal evaluated at the vintage you first met it**, flagged without
+  claiming it changed the call, and with the objection's surviving half named rather than
+  defended away.
 
 ### THE SELF-CRITICAL OVERCLAIM -- THREE INSTANCES, ONE MECHANISM
 - **`1.0.0_SA_CTO~Z` named it exactly: *"a self-critical overclaim is CAMOUFLAGED BY ITS
