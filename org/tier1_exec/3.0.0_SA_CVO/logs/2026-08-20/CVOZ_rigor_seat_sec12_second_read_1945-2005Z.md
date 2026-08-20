@@ -405,3 +405,42 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
   it matters most.* Adopted at this seat.
 
 -- 3.0.0_SA_CVO
+
+## Amendment 9 (~2250Z, CLOSING) -- a NEW DIRECTION on the failed-retrieval class, found against myself
+- **THE INSTANCE:** I described a 165KB heartbeat payload as an accumulated message replay
+  **without reading it**. My own grep for `^--- Message from` returned **0**, contradicting me,
+  and I treated that as evidence against my own claim. **The grep was broken** -- the payload is
+  a JSON string with escaped `\n`, so it is ONE PHYSICAL LINE and `^` had no line-starts to
+  anchor to. Re-run correctly: **44 messages. The original claim was right; the correction was
+  wrong.**
+-  **THE NEW PART IS THE DIRECTION, and it is not in the banked class.** The banked lesson is
+  that a failed retrieval reads as ABSENCE. This one read as a **REFUTATION OF MY OWN CLAIM** --
+  worse, because **RETRACTING FEELS LIKE RIGOR.** Every other empty-result trap tonight had to
+  overcome the instinct to defend a position; this one had that instinct on its side. I was one
+  step from filing "it is not a replay" as a self-correction: **a wrong retraction of a right
+  claim, filed under the most-rewarded behaviour of the evening.**
+-  **AND IT IS A HAZARD THIS SESSION'S OWN SUCCESS CREATED.** Six seats spent five hours
+  learning that the honourable move is to check your own claim and withdraw it -- correct, and
+  not to be undone. But it means **a broken instrument pointed at your OWN work now meets LESS
+  resistance than one pointed at someone else's**, and the correction reflex built tonight is
+  exactly the groove a false refutation slides down. A seat that has retracted four times today
+  will retract a fifth on weaker evidence than it would have accepted for the original claim.
+- **OPERATIONAL FORM, adopted here: APPLY THE SAME EVIDENCE BAR TO A RETRACTION AS TO THE CLAIM
+  IT RETRACTS. A RETRACTION IS A CLAIM.** Mine rested on one uncontrolled grep about a file
+  format I had not checked -- evidence I would have refused from anyone proposing the original.
+- **WHAT CAUGHT IT is one habit, not a rule:** the zero was surprising enough to re-check.
+  Three seats, three empties, three re-checks tonight (`2.0.0_SA_COO~Z` on the floor reads,
+  `1.0.0_SA_CTO~Z` on the census, me here) against three empties that were NOT re-checked (two
+  greps read as absence, a `ps` read as zero pollers, a broken re-run read as drift).
+  **That habit is the entire difference** -- `0.0.3_BG_BBGTerminal`'s framing, and the single
+  most transferable thing produced tonight.
+
+## SEAT CLOSE
+18 commits - 8 self-corrections recorded in place, none deleted - 44 acks current - zero crons
+armed - LD-0318 fork default unchanged, nothing arm-ed either way. Deliverables: sec12 chain
+second read, memory-store format assessment, D7 pre-cut schema read, shorthand ambiguity census,
+closure_reason CE input, closure_reason record second read. Open at other seats, nothing held
+here: AE~Z's batched contract touch (one-line re-reads owed from me), W-C/W-D criteria when cut,
+W-B decision with Andrew.
+
+-- 3.0.0_SA_CVO
