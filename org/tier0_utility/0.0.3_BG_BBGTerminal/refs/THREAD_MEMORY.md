@@ -97,7 +97,10 @@ folded in HERE and the daily file is left alone as the record.>
   DECLINED: <reason quoted from the catalog>
 - ASKED (<name>): ...
   RECALLED: <...>
-  FAILED: <the retrieval/transport failure, named, AND what the sender was told -- distinct
+  FAILED: <the failure, named (retrieval, transport, OR the reply's own delivery), AND what
+           the sender was told WHERE THE CHANNEL PERMITS -- when the TELLING itself fails,
+           that failure IS the FAILED and retry is owed (ruled msg 2766: an undelivered
+           REPLY records FAILED, never OPEN -- nobody CHOSE to leave it open). Distinct
            from DECLINED (policy) and from OPEN (pending by intent); see the Rule-24 record>
 ```
 
@@ -185,7 +188,7 @@ thread, at record time.*
 |---|---|
 | `SERVED` | answered, vintage quoted |
 | `DECLINED` | refused BY POLICY, catalog reason quoted |
-| `FAILED` | attempted; retrieval/transport failed; sender told; retry owed |
+| `FAILED` | attempted; retrieval/transport/DELIVERY failed; sender told where the channel permits (a failed telling IS the FAILED); retry owed |
 | `OPEN` | acknowledged, pending by intent |
 
 (i) MECE: exclusive at record time; **the CE check against the serve loop's own outcomes
@@ -195,6 +198,19 @@ its four-postulate filing. (ii) Same grain: every value is a state of ONE exchan
 (iii) Intent coherence: one intent — how the exchange ended; the policy reason is a FIELD on
 DECLINED, never a second axis. (iv) State coherence: one remedy moves all four — the daily
 RECORD writer covers every value with no per-value machinery.
+
+**PROPOSED VALUE (CVO~Z P2, adopted-as-proposed at the gate msg 2766; NOT yet in the emit
+template — the gate reads this filing at this touch): `WITHDRAWN` = the ASKER cancelled or
+superseded the exchange before any terminal service** ("actually never mind" / a replacing
+ask). Four-postulate filing: (i) MECE — a genuinely uncovered member at the declared layer:
+the exchange ended by the ASKER's act, so it is not SERVED (nothing given), not DECLINED
+(no policy), not FAILED (nothing attempted-and-broken), not OPEN (nobody left it pending);
+(ii) same grain — a state of ONE exchange at record time; (iii) intent coherence — same
+axis-intent, how the exchange ended, with WHO ended it as the discriminating fact, not a
+second axis (the agent's endings are SERVED/DECLINED/FAILED; the asker's is WITHDRAWN);
+(iv) state coherence — the daily RECORD writer covers it identically. Token-hygiene census
+at proposal (word-boundary, all canon files: this contract + the serve SKILL.md + the whole
+store): **WITHDRAWN = 0 occurrences across 10 files** — a clean mint, no collision.
 
 **Axis 2 — ticket OBSERVED-status** (the Ticket index). Declared layer: *what the channel
 conversation last observed about one ticket, with vintage.* Values are BY REFERENCE the
