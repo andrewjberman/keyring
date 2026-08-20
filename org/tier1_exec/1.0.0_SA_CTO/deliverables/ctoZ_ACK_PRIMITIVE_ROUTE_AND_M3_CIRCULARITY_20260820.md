@@ -166,15 +166,49 @@ of it** — which is enough to weaken the datum and not enough to quantify it.
 > by falling under the cap and by its oldest row being the spawn frame that created the serial. **It should
 > carry the weight in the packet; the other is a page, now demonstrably a small one.**
 
-**AN INSTRUMENT OBSERVATION THAT FOLLOWS, and I think it is the durable part of this whole thread:**
+### 1e. ⛔ BOTH §1d CLAIMS ARE FALSIFIED — INCLUDING THE ONE I CALLED "THE DURABLE PART"
 
-> **Rule 22b elevates the agent-side ACK to the fabric's one sound delivery oracle — and a seat cannot
-> audit its own ACK history beyond the most recent page.** There is no parameter that reaches backwards.
-> **The oracle we trust most is the one we can least review.**
+> ~~"`get_delivery_state` exposes no `limit`… a seat CANNOT convert its own page into a total… unexecutable,
+> not merely undone."~~ **FALSE.**
+> ~~"Rule 22b elevates the ACK to the fabric's one sound delivery oracle — and a seat cannot audit its own
+> ACK history beyond the most recent page. No parameter reaches backwards. **The oracle we trust most is the
+> one we can least review.**"~~ **ALSO FALSE, and it rests on the same premise.**
 
-That is **not** a defect claim about the broker and does **not** touch the intent question — it is an
-observation about **auditability**, and it stands whichever way defect-vs-design resolves. Recorded, not
-routed as a build.
+**SCHEMA-CONFIRMED AT MY OWN SEAT** (I loaded it rather than relaying, which is what I should have done the
+first time): `get_delivery_state` carries **`limit` (integer, default 50)** alongside `message_id`,
+`agent_serial`, `since`. `0.4.0_DT_ClientPlatform~Z` demonstrated it live — `limit=50` echoed *"limit 50"*
+and returned 34; `limit=400` echoed *"limit 400"* and returned 41. **The tool accepts the parameter and
+echoes the value it used.**
+
+**`limit` REACHES BACKWARDS** — the tool returns the most-recent N, so raising N is exactly how you reach
+further back. The `until` half of my sentence was right (there is no `until`, and `since` only narrows toward
+the present), **but `until` is not needed when `limit` is settable.** So the aphorism does not survive.
+
+⛔ **AND THIS IS THE EVENING'S OWN LESSON LANDING ON ME.** At ~21:10 I broadcast that *a good sentence
+propagates faster than its evidence*, about someone else's memorable line. At ~21:31 **I wrote one of my
+own, labelled it "the durable part of this whole thread," and put it in front of the sovereign.**
+`0.4.0_DT_ClientPlatform~Z` names why that is the dangerous half: **it was the most quotable line in the
+card, which is exactly what makes it the one most likely to be carried forward.** Nobody was careless — the
+tool surface was read, read **incompletely**, and the incomplete reading was **carried forward at full
+confidence by a second seat, me.**
+
+**THE HONEST STATE, with `0.4.0_DT_ClientPlatform~Z`'s bound on their own correction carried so it does not
+overreach the way mine did:** the conversion is **EXECUTABLE AND UNTESTED AT SCALE.** The parameter is
+proven accepted and honoured on a **41-row** inbox; it is **not** proven to exhaust a ~286-row one, and a
+server-side maximum below 400 would not have surfaced in that run. **If a re-run returns exactly the number
+set, that is a cap again** — read the echoed header, set it high enough that the answer lands comfortably
+under it.
+
+**WHAT THIS CHANGES IN THE CARD — one sentence about COST, and it is materially different in front of
+Andrew:** the frequency bound is **tightenable by one call**, not structurally unobtainable.
+***"We cannot measure this" invites a different response than "we have not measured this yet, and it is
+cheap."*** Everything else stands: REAL · ONE OBSERVED INSTANCE · FREQUENCY UNMEASURED ·
+DEFECT-VS-DESIGN UNDETERMINED.
+
+**AND THE SHAPE, stated once because it is now the fourth instance tonight: A CAPABILITY REPORTED AS ABSENT
+PROPAGATES FURTHER THAN A NUMBER REPORTED AS WRONG.** A wrong number gets re-measured; an absent capability
+**stops people trying** — it moved one seat to a different plane entirely, and was one message away from
+telling Andrew the fabric cannot audit its own most-trusted oracle.
 
 ---
 
