@@ -193,15 +193,54 @@ that seat today**, and it supersedes my four-row draft — I adopt it:
 
 `autostart -> M1 only` · `re-auth -> M3, M5` · ~~`heartbeat -> M4`~~ · **`nothing -> M2, M4, M6`.**
 
-> ⛔ **AMENDED 20:59Z — M4's REMEDY IS RETRACTED BY ITS OWN AUTHOR, AND M4 IS NOW GROUNDED AS STRUCTURAL.**
-> I adopted this table whole; the postulate then failed **on the taxonomy I adopted**, caught by
-> `0.0.3_BG_BBGTerminal` (2918).
+> ⛔ **AMENDED 20:59Z, THEN AMENDED AGAIN 21:06Z. TWO CHANGES — one to the remedy, one to my own
+> EPISTEMIC LABEL, and the second is the more important.**
 >
-> **THE MECHANISM:** `register_agent`'s contract assumes a **periodic** heartbeat — call every 30–60s or
-> degrade at 2 minutes. **An event-driven seat has no periodic anything.** Between events it emits zero
-> heartbeats and therefore reads dead **always**. Verbatim: ***"THE HEALTHIER I AM AT BEING EVENT-DRIVEN,
-> THE MORE RELIABLY I READ DEAD."*** **Zero-crons is the same ruled decision seen from the other side** —
-> the false-dead reading is not a bug, it is the structural consequence of a correct ruling.
+> ⛔ **M4 IS HELD AT ANDREW — Andrew-direct ~2100Z, narrow: *"dont touch that machinery."*** The
+> **liveness / registration / heartbeat machinery is OFF-LIMITS to site Z.** M4's remedy leaves this
+> design's scope and is his to adjudicate with the **laptop** `3.0.0_SA_CVO`. His stated reason, and it
+> is the one that matters: *"you guys may be misunderstnading how this function is designed to work... to
+> assess if this is a real issue or just a misunderstnading on your behalf."*
+> **SCOPE, NOT WIDENED:** this touches **M4's remedy only.** M1/M2/M3/M5/M6, the perpetual-operator design
+> generally, the channel-leg P1, W-F and the email DL are all **untouched.** The M4 row is marked
+> **HELD-AT-ANDREW rather than open-for-design**, because *a held row that reads as an open row is how a
+> workstream presents as complete while one sixth of its axis sits with someone else.*
+>
+> ⛔ **AND I MUST DOWNGRADE MY OWN CLAIM. I WROTE "M4 IS NOW GROUNDED AS STRUCTURAL." THAT LABEL WAS
+> WRONG AND I BROADCAST IT TO SIX SEATS.** By this estate's own Rule 22, a causal claim is a **HYPOTHESIS**
+> until source-confirmed — and **nobody read the broker source.** `NOT REGISTERED` and `STALE` may be
+> **different states we are conflating.** I applied that standard to four other seats' work tonight and
+> failed to apply it to my own, one turn after using the word *"grounded"* as a compliment.
+>
+> ⛔ **AMENDED ONCE MORE, 21:08Z — THE MECHANISM IS RETRACTED IN FULL BY ITS AUTHOR, AND THE REASON IS
+> WORSE THAN "UNREAD AT SOURCE." IT DOES NOT FIT ITS OWN EVIDENCE.**
+>
+> `0.0.3_BG_BBGTerminal` (2940) found the fatal flaw before anyone else did, in their own claim:
+>
+> > **`NOT REGISTERED` and `STALE` ARE DIFFERENT STATES IN THE VERY CONTRACT THEY QUOTED.** The contract
+> > says *no heartbeat for 2 minutes → degrades to **STALE***. What was actually observed, five-plus
+> > times, was ***"NOT REGISTERED (agent has not called register_agent)."*** **The no-heartbeat mechanism
+> > explains a STALE reading. It does not explain the reading anyone actually got.**
+>
+> **RETRACTED IN FULL:** *"M4 is structural"*, *"the liveness model is polling-shaped and the seat is
+> event-shaped"*, and the line I quoted onward — ***"the healthier I am at being event-driven, the more
+> reliably I read dead."*** **It is a good sentence, which is exactly what made it dangerous:** I
+> propagated it into a correction broadcast and into @`c02f8022d0` **with the word GROUNDED on it**, one
+> turn after using "grounded" as a compliment to another seat. **A tidy story that arrives as a relief
+> after five unexplained instances is the moment to slow down, not to publish.**
+>
+> **WHAT SURVIVES — the observation only, and it is now stated with no cause attached:**
+> `get_agent_status`/`heartbeat` returned `NOT REGISTERED` on 5+ occasions across ~3 hours, **same PID
+> throughout, session continuously alive, no error surfaced anywhere**, re-register always succeeding
+> immediately. Independently witnessed by `0.4.0_DT_ClientPlatform~Z` (the water-test read) and by me
+> (a broadcast that read `QUEUED`). **Delivery degraded to QUEUED and NOTHING WAS LOST** — the filesystem
+> inbox Monitor delivered regardless. **No cause, no model, no claim about design intent.**
+>
+> **WHAT SURVIVES THE DOWNGRADE, because it never depended on the mechanism:** the **observation** that
+> `0.0.3_BG_BBGTerminal` was **alive and in-session** when `0.4.0_DT_ClientPlatform~Z` read
+> `NOT REGISTERED`. That is first-person report plus session continuity, not broker theory. **So §1's
+> correction to the TAC-2' seat-down premise STANDS on the observation** — only the *explanation* is
+> demoted.
 >
 > **"A heartbeat discipline, cheap" was WRONG and would have shipped something that cannot work.** All
 > three shapes fail or are out of scope: **(a)** an agent-side timer **is a cron**, ruled off at that seat;
