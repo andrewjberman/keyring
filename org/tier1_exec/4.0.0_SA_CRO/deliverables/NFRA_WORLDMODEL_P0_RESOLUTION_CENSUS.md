@@ -187,6 +187,15 @@ existence; output contracts 32 declared + 44 pending; stage-2 vocab 34 declared 
   under it (the Alias family ×3, Name_Variant, Unreconciled_Aua) — disposition put to Andrew as
   a card, NOT moved on inference; Name_Variant's row in the A1a UNIVERSE list may relocate with
   it if ruled out (its resolver was already deferred to the instrument pass).
+- 2026-08-20 ~005xZ (ANDREW-RULED "rec apprved", v3.10): **THE RESIDENCY PASS EXECUTED** — the four
+  A_07 entries relocate to their producer specs (@23f23ea039/@8a15fbecd9); Unreconciled_Aua stays
+  with its ruled disposition annotated in-entry (relocates at P4/P5 resolution, never mid-bar).
+  **A1a parity: 69 → 65; Name_Variant LEAVES THE UNIVERSE LIST (26 → 25 universes — the
+  classification follows the term's home; the underlying data surface remains real and its
+  resolver was already instrument-pass-deferred); the three Alias entries leave the NOT list
+  (38 → 35). New parity: 25 + 4 + 1 + 35 = 65.** O1's committed results file stays at its own
+  vintage (attempted-21 frame un-rewritten); future passes re-derive with attempted 20.
+  Moved-vs-stranded discharge routed to CVO (the specs are their deliverables).
 - 2026-08-19 (RESTORED ~2107Z — the ~2101Z edit dropped this line instead of appending above it;
   caught on the next edit's failed anchor, recovered byte-identical from @e7a2024): **evidence home
   moved** — Andrew-direct fold @6096e11d95 lands the OPAL_WORLD_MODEL content at
