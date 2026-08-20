@@ -57,10 +57,13 @@ directives:
     members:
       subgroups: [PORTAL.ADVISOR_INTELLIGENCE, EXTERNAL.49FINANCIAL]
       projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE]
-    stance: "Floor ENABLED on the 107.1s pin (@647c432a7d); THU first green 12:45Z + emit + pins;
-      FRI second green + repoint + PROD promote = E2E COMPLETE; then the parity program
-      (probe THU-FRI, census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green, COT third.
-      FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
+    stance: "Floor ENABLED on the 107.1s pin (@647c432a7d). RE-CUT per Andrew-direct 08-20 ~1553Z
+      'Better do do it now (a)' (record ANDREW_DIRECT_20260820_D2_PROMOTE_SINGLE_GREEN_FRIDAY_A.md;
+      THU 08-20 12:45Z fire ABORTED on the R14 T-1 derivation defect, fix pre-ruled, DS~B spawned):
+      DS~B fix deploys before FRI 08-21 12:45Z; FIRST green FRI 12:45Z -> flip -> PROD promote
+      SAME DAY on ONE green (his-word one-run compression of two-green; miss -> MON 08-24 slide);
+      then the parity program (census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green,
+      COT third. FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
   D3:
     title: "Account-level model overlay (~6-7wks, pends D1+D2)"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
