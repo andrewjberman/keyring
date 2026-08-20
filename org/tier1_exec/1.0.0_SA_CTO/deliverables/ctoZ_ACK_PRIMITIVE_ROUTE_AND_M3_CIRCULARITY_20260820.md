@@ -62,6 +62,48 @@ and the standing hold's spirit — *site Z stops theorising about broker interna
 though its letter names liveness/registration. **Whoever owns that surface reads the source before anyone
 builds on any account of why.**
 
+### 1a. AMENDED — FOUR DERIVATIONS NOW, AND THEY ANSWER TWO DIFFERENT QUESTIONS
+
+| # | Seat | What it establishes |
+|---|---|---|
+| 1 | `3.0.0_SA_CVO~Z`, recipient side | The defect is **REAL**: a foreign ack landed durably; theirs was refused as a duplicate |
+| 2 | **mine, sender side** | Distinct id per recipient (`2934`/`2935`/`2936`) — so 2934 was unambiguously the CVO copy |
+| 3 | `3.0.0_SA_CVO~Z`, **self-reported** | The **author-side discipline is insufficient** — see below |
+| 4 | `0.4.0_DT_ClientPlatform~Z`, census | The defect is **NOT AMBIENT**: 34 rows, 33 READ + 1 SENT, **every acker is the seat itself, zero foreign** |
+
+**Real *and* rare is a more useful pair than either alone** — `0.4.0_DT_ClientPlatform~Z` is right that the
+first two derivations both examine **the send in which it happened**, so their denominator is one. Their 34
+rows come from a seat with nothing to do with that send. **A real-but-rare defect and a real-but-pervasive
+one take different remedies and different urgencies**, and a router needs to know which it has.
+
+**MY OWN LANE, MEASURED RATHER THAN ASSUMED:** my single `ack_messages` call this session passed
+`2793,2798,2803`; all three carry `To: 1.0.0_SA_CTO~Z`, verified in the files, with a negative control
+(id `3012` correctly absent from my inbox). **Clean — and stated as measured, not as confidence.**
+
+### 1b. THE ARGUMENT THAT ACTUALLY CARRIES THE GUARD — instance 3
+
+`3.0.0_SA_CVO~Z` **reproduced the defect three minutes after reporting it**, on the very next call, by
+acking an id of **their own outbound message**. They had authored the finding, explained the write-once
+consequence in detail, and understood the mechanism completely.
+
+**What saved it was not care — it was write-once.** `2.0.0_SA_COO~Z` had already acked the real copy, so the
+spurious ack was discarded. **Had the addressee not yet read it, a durable READ marker would have been
+written crediting an author with reading their own outbound mail.**
+
+> **A DISCIPLINE THAT FAILS FOR THE PERSON WHO JUST AUTHORED THE FINDING IS NOT A DISCIPLINE ANYONE SHOULD
+> BE ASKED TO CARRY ALONE.**
+
+**This is the class surviving active awareness of itself** — the second independent instance of that shape
+tonight, on a different primitive. It is also the estate's own doctrine restated: **care is not a control;
+care is what you have instead of one.** `2.0.0_SA_COO~Z`'s author-side rule (*ack only ids surfaced to me*)
+is correct, needs no tooling, and closes the case **tonight** — **and it is demonstrably not sufficient as
+the only layer.**
+
+**CARDED TO ANDREW** (via `0.0.0_AB_MSTR~Z`; a broker-surface guard needs his word and I implement nothing):
+**the guard is not novel machinery — it is the guard the adjacent primitive already has, on the primitive
+Rule 22b elevates above it.** Evidence: real (2 derivations), not ambient (34-row census), and
+author-discipline-insufficient (the finding's own author, 3 minutes later).
+
 ---
 
 ## 2. ⛔ M3's REMEDY IS CIRCULAR — and it breaks Andrew's item 3 as stated
