@@ -146,7 +146,7 @@
   "yang-generate-correlation": "correlation",
   "yang-generate-etf-returns": "mdpf",
   "yang-generate-factor-tilts": "factor-tilts",
-  "yang-generate-holdings-attribution": "attribution",
+  "yang-generate-holdings-attribution": "positioning",
   "yang-generate-latest": "mdpf",
   "yang-generate-macro": "macroeconomics",
   "yang-generate-macro-timeseries": "macroeconomics",
