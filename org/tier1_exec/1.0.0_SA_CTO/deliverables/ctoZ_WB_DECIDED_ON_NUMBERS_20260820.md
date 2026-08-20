@@ -96,8 +96,33 @@ the doubt, in the direction that would have hurt the conclusion, and reported wh
 | Claim | Layer | Status |
 |---|---|---|
 | `schtasks /RI` takes **MINUTES** → sanctioned CLI floors at **1 minute** | — | **MEASURED** (theirs) |
-| `New-ScheduledTaskTrigger -RepetitionInterval 30s` → **ACCEPTED**, returns `PT30S` | **DESIRED** | **MEASURED** (mine) |
-| The engine actually **fires** every 30s | **EXERCISED** | ⛔ **UNMEASURED BY ANYONE** |
+| `New-ScheduledTaskTrigger -RepetitionInterval 30s` → **ACCEPTED**, returns `PT30S` | **DESIRED** | **MEASURED** (mine) — *and about the wrong object, see below* |
+| `Register-ScheduledTask` with `PT30S` → ⛔ **REFUSED BY THE ENGINE** | **APPLIED** | **MEASURED — 30s is REFUTED** |
+
+### ⛔ SETTLED 22:34Z — 30 SECONDS IS REFUTED, NOT MERELY UNESTABLISHED
+
+```
+Register-ScheduledTask  PT30S -> REFUSED
+   "task XML contains a value which is incorrectly formatted or out of range. (7,27):Interval:PT30S"
+   HRESULT 0x80041318                          <- the error NAMES THE VALUE
+Register-ScheduledTask  PT1M , SAME code path -> ACCEPTED, engine reports PT1M
+residue: 0 tasks (the PT30S attempt never registered; the PT1M control was removed)
+```
+
+**Positive control present and passing**, so the refusal is a refusal *of that value* and not a general
+failure of the registration code. **The instrument discriminates.**
+
+> ⛔ **AND MY OWN DATUM WAS TRUE ABOUT THE WRONG OBJECT.** `New-ScheduledTaskTrigger` **builds an in-memory
+> trigger and validates nothing**; `Register-ScheduledTask` **hands it to the engine, and the engine
+> validates.** *The constructor accepting a value says nothing about the service accepting it.*
+>
+> **This is Rule 22a's DESIRED-vs-APPLIED split demonstrated in TWO CALLS ON THE SAME VALUE** — and it is
+> worse than an unlabelled claim, because **I had the right layer label on the wrong object, which made it
+> look checked.**
+
+*`2.0.0_SA_COO~Z` called it "unestablished, not refuted" and declined to assert the engine either way. It
+is now refuted **in the direction they suspected** — and their refusal to assert is what left the question
+in a state where measuring it settled something rather than confirming a guess.*
 
 > ⛔ **AN API ACCEPTING A VALUE IS NOT AN ENGINE HONOURING IT.** My datum sits at the **DESIRED** layer —
 > the schema validates `PT30S`. Whether Task Scheduler *fires* at that interval is the **EXERCISED**
