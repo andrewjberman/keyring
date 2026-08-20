@@ -31,18 +31,18 @@ NOT-RUNNABLE (precondition limb (b) FALSE).
 | PB-1 proof | 2026-08-21 13:30Z | FRIDAY | rides FIRST-green day |
 | END-GAME | **FORKED -- see below** | | |
 
-**THE FORK (carded at Andrew via MSTR 63241, his terminal, this hour -- calendar cut on his
-word; (c) is the DEFAULT absent it):**
-- **(a) FRIDAY PROMOTE PRESERVED = single-green compression** -- flip + PROD-promote FRI on
-  ONE green. The ONLY Friday-preserving form, and it relaxes the two-green discipline against
-  a just-fixed derivation -- precisely the run a second look exists for. **ANDREW'S WORD ONLY**
-  (a protocol compression against his own dated target is not a calendar edit).
-- **(c) DEFAULT -- two-green discipline held:** FIRST green FRI 08-21; SECOND green at the
-  next fire (SAT 08-22 if the schedule fires weekends -- a non-trading day whose run derives
-  FRI's frontier, a clean live exercise of the just-fixed branch; else MON 08-24, exercising
-  the weekend-crossing branch); **flip -> PROD-promote MON 2026-08-24.** Either sequencing
-  gives the fix a boundary-case live proof the battery only simulates (CVO's verify note).
-- (b) Saturday-promote: REJECTED -- weekend ops spend, nothing sovereign gained.
+**THE FORK -- RESOLVED ~1553Z: ANDREW RULED (a), VERBATIM "Better do do it now (a)"
+(at the MSTR terminal; record ANDREW_DIRECT_20260820_D2_PROMOTE_SINGLE_GREEN_FRIDAY_A.md +
+the DIRECTIVES.yaml D2 stance refresh, MSTR-pushed).**
+- **OPERATIVE (a): SINGLE-GREEN FRIDAY** -- FIRST green FRI 08-21 12:45Z -> flip -> PROD
+  promote SAME DAY on ONE green. Named readers stand: DS reads FRI's log by 13:15Z (abort =
+  same-hour surface); CVO's pin act + flip verification compress into the same day (CVO
+  pre-staging the pin-file mechanics so compression costs nothing). Miss Friday's fire ->
+  the MON 08-24 slide stands.
+- **SCOPE, surfaced not adjudicated (MSTR's relay carries it): a THIS-RUN compression of
+  the two-green discipline on his word -- NO PRECEDENT for the next promote.**
+- (c) two-green default: SUPERSEDED by his word on arrival, as this record pre-committed.
+  (b) Saturday-promote: rejected, unchanged.
 
 **SLIDE RULE (corrected):** miss FRIDAY's 12:45Z fire and every row slides
 trading-day-for-trading-day from there; weekends never count (NEVER#1).
