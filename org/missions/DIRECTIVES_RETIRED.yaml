@@ -1,0 +1,40 @@
+# org/missions/DIRECTIVES_RETIRED.yaml -- the RETIRED partition of the directives register.
+#
+# >> 100% MACHINE-WRITTEN (comp-directives retire). NEVER EDIT BY HAND -- every row is
+#    byte-FROZEN at its cut vintage (closed-period-immutable: no TTL aging on a closed judgment)
+#    and sealed by per-row + whole-file hashes; ANY hand edit FAILS `comp-directives check`.
+#    The FACT (`retired: {at, by, authority}`) is the opposite pole: HUMAN/SOVEREIGN-written by
+#    the register owner on the live row, with citation -- the machine only reacts to it.
+#    TRIPWIRE (directives-native, per AMENDMENT 1): recomputable from the directives source of
+#    record alone or it is rejected. <<
+#
+# Mechanism: LD-0433 (CVO proposal + amendments, Andrew-approved 2026-08-20). Owner of the LIVE
+# register + all facts: 0.0.0_AB_MSTR per org/missions/.register-owner. This file's writer:
+# comp-directives (0.8.0_AE_CloudComp lane).
+
+version: 1
+tripwire: "recomputable from the directives source of record alone"
+ever_minted: [D0, D1, D2, D3, D4, D5, D6, D7, D8, D9]
+emit_log:
+  - {"at": "2026-08-20T20:32:35Z", "cut": ["D8"], "tool": "comp-directives"}
+directives:
+  D8:
+    frozen_row: |
+      D8:
+        title: "Philosophy + benchmark modal live-edit (this week)"
+        directive: "docs/architecture/D8_LIVE_EDIT_MODALS_PRD.md"
+        placement: "SITEZ -- RULED (Andrew ~19:37Z: 'D8 Live-Edit modals can be done by sitez that is low-risk and i dont care about it particualrly' @7416fb46d0). TWO MECHANICAL RIDERS: (a) TF/Lambda apply legs execute through a laptop lane as mechanical applies of sitez-AUTHORED config (sitez is not a TF-apply site); (b) the portal leg prices the first-act dev-build proof. The TO-C auth-surface ruling stays at the CTO gate regardless of device."
+        members:
+          subgroups: [PORTAL.MODEL_PORTFOLIOS]
+          projects: [OPAL_INVPHL]
+        stance: "Days of work: server-side content store (small AE leg) + edit surface on both modal
+          families (DE-class) + CTO gates the auth surface (Opal-employee scope)."
+        retired:
+          at: "2026-08-20"
+          by: 0.0.0_AB_MSTR
+          authority: 'Andrew-direct "they work perfectly" + site-Z acceptance record @393211922e + PROD v2.1.164 serving'
+    retired_vintage:
+      cut_at: "2026-08-20T20:32:35Z"
+      stances_as_of: "2026-08-19"
+      row_sha256: "1f33c639e7df1c9698e6b8c5d9a94669af58b9bbdff5e925455792221a1a410f"
+emit_hash: 23e0908b1c9fa6f11f67681b62efe91fe0333deb43d52007948aa51d9e72ff30
