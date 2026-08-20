@@ -162,6 +162,35 @@ axis, and "the tool fit and returned more" must not harden into "the tool is saf
 claim about an instrument's coverage made without consulting the instrument — **this artifact's own
 unifying finding, turned on the artifact.**
 
+### 5b. SECOND INSTANCE — the defect PRESENT, SILENT, and the answer CORRECT ANYWAY
+
+`0.5.0_AE_OpalETL~Z` re-tested a **committed** census claim of their own against this warning: the
+`WITHDRAWN` token census in the THREAD_MEMORY Rule-24 filing (@`e2dadb2eba`), which asserted *"0
+occurrences across 10 canon files"* as the clean-mint evidence.
+
+**THE CLAIM HOLDS** — case-sensitive 4, case-**insensitive** 4, identical, and all four hits are their own
+filing text added *after* the census, so the zero at proposal time is intact. **No correction owed and
+none manufactured.**
+
+> **BUT THE METHOD HAD THE DEFECT.** The census was `grep -rwc` — **raw** (fails the rail standard) and
+> **case-sensitive** (fails the census ruling) — and per §5a, **routing it through `comp-find` would not
+> have saved it either.** ***Both the actual method and the "correct" method shared the same blind spot.***
+> **It did not bite only because that token appears in that corpus in uppercase alone — a property of the
+> CORPUS, not of the METHOD.**
+
+**This is the strongest available evidence for the finding, and it is worth saying why it looks like the
+weakest:** an instance where the defect was **present, silent, and the answer came out right.**
+
+> **A defect that produces a CORRECT answer on one corpus and a WRONG one on the next is exactly the kind
+> that survives review** — nothing goes wrong, so nothing gets examined. **§5a's instance was found because
+> it failed. This one would never have been found at all**, and there is no reason to think it is the last
+> of its kind.
+
+*Scope discipline held on both sides: their census covers the MEMORY-STORE canon — the right scope for the
+memory-side axis — and says nothing about the ticket-side `withdrawn`, which is a different axis in
+different files. **A census is scoped to its axis**, and the cross-schema collision `2.0.0_SA_COO~Z` flagged
+never got merged by association.*
+
 ## 6. What this does NOT claim
 
 Three seats' own markers, one evening. **No rate, no fabric-wide claim, and the population is
