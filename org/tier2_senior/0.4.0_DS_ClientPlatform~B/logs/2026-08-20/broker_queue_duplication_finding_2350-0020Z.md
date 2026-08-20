@@ -111,3 +111,36 @@ scanning grant does not cover it. Nothing I built depends on it arriving.
 2. [`2.0.0_SA_COO`] `dim 436` at Andrew; the AE publisher invocation contract still unanswered.
 3. [`0.4.0_DS_ClientPlatform~B`] Nothing owed. Event-driven; T2-3 closes with no further build the
    moment 436 lands.
+
+---
+
+## ADDENDUM 0100Z -- SECOND OBSERVATION FALSIFIES AGE-MONOTONICITY
+
+A `/log`-triggered heartbeat 15 minutes later spilled again, giving a second snapshot.
+
+| | obs 1 (000531Z) | obs 2 (002015Z) |
+|---|---|---|
+| stated count | 46 | **175** |
+| distinct messages | 4 | 5 |
+| copies | 15, 15, 15, **1** | 36, 36, 36, **36**, 31 |
+| payload | 164,319 chars | **645,787 chars** |
+
+**THE FALSIFIER:** the message that arrived 000411Z and carried **1 copy** at obs 1 now carries **36**
+-- identical to a message 26 minutes older. **Age does not determine copy count; copies CONVERGE
+rather than descend.** COO's monotonic-with-age reading (correctly labelled INFERRED, and which my
+first observation was merely *silent* on) does not survive this. The only outlier is the newest
+arrival at 31, five below the pack, consistent with joining late and accumulating at the same rate.
+
+**WHAT DOES NOT FIT, left unresolved rather than smoothed:** the older three gained +21 (15->36) while
+the 000411Z message gained +35 (1->36). A flat +1-per-event for everything present would make those
+increments equal. They are not, so "uniform per-event increment" is also not quite right. **I have two
+output snapshots and no mechanism that explains both the convergence and the unequal increments** --
+`0.8.0` will have source. Recorded as a feature of the data, not resolved into the tidiest story.
+
+**Operational:** payload +3.9x and stated count +3.8x in ~15 minutes; both heartbeats returned OVER
+the tool limit and spilled. The heartbeat WRITE lands fine each time (summary updates, liveness
+correct) -- this is the RETURN payload only. At this growth rate every heartbeating seat gets a
+*broken* tool call rather than a degraded one.
+
+Routed to COO for `0.8.0` at 010055Z. Spill files preserved (`...-1787184331886.txt`,
+`...-1787187549349.txt`).
