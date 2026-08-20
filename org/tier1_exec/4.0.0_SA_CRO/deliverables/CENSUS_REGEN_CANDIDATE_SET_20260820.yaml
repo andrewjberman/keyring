@@ -1,0 +1,101 @@
+# CENSUS_REGEN candidate set -- MECHANICAL LEG (base CRO), adjudication-ready per CVO 63431 grammar
+generated_utc: '2026-08-20T18:21:30Z'
+head: 4cd7915880
+plane: DESIRED (infra/aws TF function_name declarations); APPLIED spot-checks ride adjudication where dead-vs-migrated needs them
+denominators: {tf_declared: 178, census_model: 188, unmodeled: 21, census_only: 31}
+layer_note: unmodeled/census_only rows are SET-DIFF MEMBERSHIP (MECE by construction, one grain); hazard verifications are a SEPARATE section, different layer, deliberately not in the row array
+
+unmodeled_rows:  # live-declared, absent from the census model -> CVO assigns to ratified threads; no-fit routes to legislature per the observability precedent
+  - {lambda: bd-49f-fees-runner, evidence: 'infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:458'}
+  - {lambda: bd-49f-keepalive, evidence: 'infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:126'}
+  - {lambda: bd-49f-runner, evidence: 'infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:278'}
+  - {lambda: bd-49f-session-trigger, evidence: 'infra/aws/terraform/bd-pipeline/bd-49f-session-chain.tf:161'}
+  - {lambda: bd-cot-keepalive, evidence: 'infra/aws/terraform/cot-pipeline/cot-detection-layer.tf:134'}
+  - {lambda: bd-silver-merge, evidence: 'infra/aws/terraform/bd-pipeline/bd-silver-merge.tf:99'}
+  - {lambda: estate-report-orchestrator, evidence: 'infra/aws/terraform/estate-report/orchestrator.tf:16'}
+  - {lambda: gldinc-ss4c-canary, evidence: 'infra/aws/terraform/bd-pipeline/gldinc-ss4c.tf:87'}
+  - {lambda: inf-api-eclipse, evidence: 'infra/aws/terraform/inf-pipeline/br1-eclipse-rehome.tf:96'}
+  - {lambda: inf-bronze-complete-emitter, evidence: 'infra/aws/terraform/inf-pipeline/br1-eclipse-rehome.tf:199'}
+  - {lambda: mdpf-feeder-trigger, evidence: 'infra/aws/terraform/mdpf-pipeline/feeder-trigger.tf:171'}
+  - {lambda: mdpf-gold-lambda, evidence: 'infra/aws/terraform/mdpf-pipeline/gold-lambda.tf:66'}
+  - {lambda: opal-assets-absence-check, evidence: 'infra/aws/terraform/opal-assets-absence/main.tf:47'}
+  - {lambda: opal-assets-silver-smartx, evidence: 'infra/aws/terraform/smartx-pipeline/assets-pull-onsuccess.tf:31'}
+  - {lambda: opal-data-refresh-api-qa-scratch, evidence: 'infra/aws/terraform/data-refresh/qa-scratch-instance.tf:17'}
+  - {lambda: opal-ms-ingest-liveness, evidence: 'infra/aws/terraform/opal-gateway/ms-ingest.tf:75'}
+  - {lambda: opal-otp-liveness, evidence: 'infra/aws/terraform/opal-gateway/otp-liveness.tf:72'}
+  - {lambda: opal-portal-content-api, evidence: 'infra/aws/terraform/portal-content/main.tf:118'}
+  - {lambda: partner-etl-ops-sqs-consumer, evidence: 'infra/aws/terraform/shared-infra/partner-etl-ops-sqs-consumer.tf:109'}
+  - {lambda: smartx-assets-daily-pull, evidence: 'infra/aws/terraform/smartx-pipeline/assets-pull-lambda.tf:36'}
+  - {lambda: yang-varflag-check, evidence: 'infra/aws/terraform/yang-pipeline/varflag.tf:84'}
+
+census_only_rows:  # in the census model, no TF declaration -> CVO dead-vs-migrated w/ Rule-25 successor check per row
+  - {lambda: bd-capture-output-versions, census_thread: advi-bd}
+  - {lambda: bd-client-detail, census_thread: advi-bd}
+  - {lambda: bd-gold-detail-checker, census_thread: advi-bd}
+  - {lambda: bd-gold-foundation, census_thread: advi-bd}
+  - {lambda: bd-gold-layer, census_thread: advi-bd}
+  - {lambda: bd-portal-publisher, census_thread: advi-bd}
+  - {lambda: bd-time-machine, census_thread: advi-bd}
+  - {lambda: causality-ai-query-handler, census_thread: causality}
+  - {lambda: causality-analysis-generator, census_thread: causality}
+  - {lambda: causality-data-enrichment, census_thread: causality}
+  - {lambda: causality-history-manager, census_thread: market-overview}
+  - {lambda: causality-market-update-generator, census_thread: market-overview}
+  - {lambda: causality-thematic-signals-generator, census_thread: causality}
+  - {lambda: causality-themes-fetcher, census_thread: causality}
+  - {lambda: causality-trade-idea-generator, census_thread: causality}
+  - {lambda: daily-agenda-generator, census_thread: macroeconomics}
+  - {lambda: ec2-runtime-monitor, census_thread: ops-internal}
+  - {lambda: market-update-data-aggregator, census_thread: market-overview}
+  - {lambda: market-update-exporter, census_thread: market-overview}
+  - {lambda: market-update-generator, census_thread: market-overview}
+  - {lambda: mdpf-daily-trigger, census_thread: mdpf}
+  - {lambda: mdpf-freshness-checker, census_thread: mdpf}
+  - {lambda: opal-bd-transaction-consolidator, census_thread: advi-bd}
+  - {lambda: opal-session-analytics, census_thread: portal-infra}
+  - {lambda: opal-trending-image-generator, census_thread: news}
+  - {lambda: sentiment_query_api, census_thread: news}
+  - {lambda: smartx-ec2-autostart, census_thread: smartx}
+  - {lambda: smartx-model-monthly-pull, census_thread: smartx}
+  - {lambda: test-seeking-alpha-unauth-simple, census_thread: news}
+  - {lambda: test-yfinance-simple, census_thread: ops-internal}
+  - {lambda: yfinance-aapl-test, census_thread: ops-internal}
+
+hazard_verifications:
+  admitted_threads_in_frozen_inputs: {'ceo-digest': 0, 'etf-reports': 0, 'ticketing': 0}  # (a) 0 = the fresh pass MUST model them or the regen drops them -- confirmed-by-count
+  attribution_in_frozen_inputs_wordcount: 11  # (b) VERIFY-not-disposition (COO 63434): re-point LANDED @d4211559b6; nonzero here = the frozen inputs baked the old mapping = the row's evidence
+  attribution_in_CURRENT_taxonomy: 0  # 0 expected post re-point
+
+reader_set:  # every reader of the census path -- the successor-home landing commit updates these, enumerated not guessed
+  - docs/references/CHECK_LIVE_NOT_FROZEN_INSTANCES_20260718.md
+  - infra/system/ontology/worldmodel/00_framework/RESOLVER_DEFROST_DESIGN.md
+  - infra/system/ontology/worldmodel/20_rulings/RULINGS_LEDGER.jsonl
+  - org/audit/archive/2026-08-12T162059Z/org_mcp_comp-which-rail.log
+  - org/audit/archive/2026-08-14T035607Z/org_mcp_comp-which-rail.log
+  - org/audit/archive/2026-08-15T002129Z/org_mcp_comp-which-rail.log
+  - org/audit/archive/2026-08-18T125017Z/org_mcp_comp-which-rail.log
+  - org/audit/archive/2026-08-19T115926Z/org_mcp_comp-which-rail.log
+  - org/audit/archive/2026-08-20T042433Z/org_mcp_comp-which-rail.log
+  - org/missions/INFRASTRUCTURE/GRAPH/commits.jsonl
+  - org/missions/INFRASTRUCTURE/TOOLS/commits.jsonl
+  - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml
+  - org/modules/graph/estate_infrastructure_cli.py
+  - org/modules/graph/gen-estate-resolver.py
+  - org/modules/graph/opal_estate_infrastructure.py
+  - org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260811_CVO_TAKES_INSTRUMENT_FIXES.md
+  - org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730/RESOLVER_DEFROST_DESIGN.md
+  - org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730/RULINGS_LEDGER.jsonl
+  - org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/D.raw_evidence.json
+  - org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-30/world_model_ddb_triggers_project_1835-0155Z.md
+  - org/tier1_exec/3.0.0_SA_CVO/deliverables/B9_SUBSTRATE_REGEN_MECHANICAL_LEG_DESIGN_20260811.md
+  - org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoz_NFRA_TOOLARCH_CANON_REGROUND_20260724.md
+  - org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_thread_inventory_BRIEF_0615.md
+  - org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/session_close_1300-2230Z.md
+  - org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-20/session_2020-0120Z.md
+  - org/tier1_exec/4.0.0_SA_CRO/deliverables/C3II_SEMANTIC_SCAN_V2_OUTPUT_20260811.json
+  - org/tier1_exec/4.0.0_SA_CRO/deliverables/INFRA_FINALIZE_AND_VALIDATE_PLAN_20260811.md
+  - org/tier1_exec/4.0.0_SA_CRO/deliverables/KIMI_ESTATE_FANOUT_20260812/03_COMPTOOLS_IMPACT.md
+  - org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml
+  - org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_POPULATION_20260820.yaml
+
+successor_home: org/modules/graph/estate_census/  # CVO-named 63431; 06-15 originals stay in place as the dated record
