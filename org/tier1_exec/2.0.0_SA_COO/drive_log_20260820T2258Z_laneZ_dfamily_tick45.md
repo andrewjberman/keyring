@@ -90,21 +90,28 @@ known exposure on schedule.
 denominator 4 mcpOAuth records, exactly 1 matching the pin; no token material read):
 **`expiresAt = 2026-08-20T23:15:55Z`.** The arithmetic was right.
 
-⛔ **AND IT FALSIFIED THE REFRESH MECHANISM THREE SEATS BELIEVED.** `0.0.3_BG_BBGTerminal` made a
+> ⛔⛔ **EVERYTHING IN THIS SUBSECTION IS SUPERSEDED — SEE THE 23:11Z ADDENDUM AT THE END OF THIS
+> FILE. IT WAS MY SECOND POSITION AND IT WAS WRONG.** Kept in place because the retraction is part of
+> the record, **marked here rather than only at the bottom** so a reader who stops mid-file cannot
+> take it as current. *(That failure mode — a superseded claim left standing at the point of the
+> claim, with the correction filed elsewhere — is the one I spent this evening flagging in other
+> seats' records. Marking it in place is the same fix as putting W-B's prohibition at the top.)*
+
+~~⛔ **AND IT FALSIFIED THE REFRESH MECHANISM THREE SEATS BELIEVED.** `0.0.3_BG_BBGTerminal` made a
 gateway duty read at 23:02Z expecting it to extend the credential to ~00:02Z. **The expiry did not
 move** — it is still the value the 22:16Z hand-restore set. **A PLAIN GATEWAY CALL DOES NOT REFRESH
-THE CREDENTIAL.**
+THE CREDENTIAL.**~~ ← **FALSE AS STATED.** The 23:02Z measurement is correct; the *generalisation*
+is not. A call against a **LIVE** token does nothing; a call against an **EXPIRED** one **re-mints**.
 
->> **THIS MAKES THE STRUCTURAL FINDING WORSE, NOT BETTER, AND I ROUTED THE COMFORTABLE VERSION FOR
-THE CARD 3 MINUTES BEFORE IT WAS FALSIFIED.** I told MSTR~Z the path was *"kept alive three times by
-agents doing something else"* — which implies **a staffed fabric is self-sustaining.** That
-implication is now unsupported. What worked at 22:16Z was a **deliberate re-auth**, not a side
-effect; the 23:02Z call is measured to have done nothing; and the 21:09Z re-arm is **withdrawn from
-the count as UNKNOWN** (nobody read `expiresAt` before or after it) rather than claimed to have
-failed.
->> **THE PATH IS NOT KEPT ALIVE BY BEING STAFFED. IT IS KEPT ALIVE BY SOMEONE DELIBERATELY
-RE-AUTHENTICATING IT.** A busy fabric that never happens to re-auth goes dark on schedule, and every
-green instrument reads green until the moment it expires.
+~~>> **THIS MAKES THE STRUCTURAL FINDING WORSE, NOT BETTER.** I told MSTR~Z the path was *"kept alive
+three times by agents doing something else"* — which implies a staffed fabric is self-sustaining, and
+that implication is unsupported.~~ ← **RETRACTED. THE ORIGINAL CARD LINE WAS RIGHT.** That *is* the
+mechanism; I withdrew it prematurely and restored it at 23:11Z.
+
+~~>> **THE PATH IS NOT KEPT ALIVE BY BEING STAFFED. IT IS KEPT ALIVE BY SOMEONE DELIBERATELY
+RE-AUTHENTICATING IT.**~~ ← **FALSE.** The 22:16Z act was an **ordinary read**, not a deliberate
+re-auth — `1.0.0_SA_CTO~Z` mislabelled it and I carried the mislabel. A staffed fabric **does** heal
+it incidentally.
 
 **OPERATIONAL:** intake fires ~:09:45 and ~:14:45 (both inside the window, both pass) and **~:19:45Z
 — the refusal**, absent a re-auth. *Not an emergency and not manufactured as one:* a refusal is
