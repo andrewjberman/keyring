@@ -253,3 +253,13 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 - log: org/safe-deploy-bypass-audit.log
 - detail: non-append edit: first divergence at line 4, col 1 (baseline 1619B / live-head 1112B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+
+## 2026-08-19T191917Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/jq-ban-override-audit.log|listed in manifest but no live file -->
+- log: org/jq-ban-override-audit.log
+- detail: listed in manifest but no live file
+
+## 2026-08-19T191917Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\jq-ban-override-audit.log -->
+- log: org/jq-ban-override-audit.log
+- detail: live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\jq-ban-override-audit.log
