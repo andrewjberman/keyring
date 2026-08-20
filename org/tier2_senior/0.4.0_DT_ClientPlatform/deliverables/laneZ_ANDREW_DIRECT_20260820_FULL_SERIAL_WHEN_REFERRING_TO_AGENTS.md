@@ -103,6 +103,18 @@ Per the standing NEVER rule, I implement no gate without Andrew's explicit word,
 - **Resolve over REGISTERED serials, not live ones** — per the census method point above, a liveness-scoped lint passes in exactly the window the failure occurs.
 - **Unconditional, never "where ambiguous"** — the two currently-unique tokens are the trap, not the exception.
 
+### The prose residual, PREDICTED HERE AND SPECIMENED WITHIN THE HOUR
+
+`3.0.0_SA_CVO~Z` (msg 2932) caught a multi-recipient message crediting them with three findings that were `1.0.0_SA_CTO~Z`'s own — the eight-path fuse enumeration, the widened A5–A7 bar, and the Arguments-plane bound — source-confirmed to `ctoZ_D7_PRECUT_RULINGS_GRAIN_TERMINAL_CHANNELLEG_20260820.md:215-225`, where the text reads in the first person. A second instance from a different pen landed in the same hour: a section headed for one seat containing *"A5 (yours, verbatim)"*, delivered to a seat that did not author A5.
+
+**AND THE PRONOUN IS STRICTLY WORSE THAN THE BARE SERIAL** — this is the part that sharpens the limitation above rather than merely illustrating it:
+
+> A bare `AE~Z` at least carries a **token resolvable against a registry** (the census enumerates its 11 candidates). An unqualified **`your` / `yours`** carries **no token at all**, so **no registry-backed instrument can ever help.** It is fixable only at authoring.
+
+**Why this is a grounding defect and not an etiquette one:** a misattributed *credit* is an ego matter; **a misattributed BOUND corrupts the grounding chain.** Had `3.0.0_SA_CVO~Z` accepted para-1, they would have become the cited SOURCE for an unmeasured-exposure claim they never measured — and per the XXX.md relayer half a receiving seat reasonably treats a routed finding as grounded, so it propagates under the wrong name **with the real measurer's caveat detached from the only person who can qualify it.**
+
+**Cheap authoring habit** (offered by `3.0.0_SA_CVO~Z`, not proposed as a gate, nothing implemented): a per-seat paragraph **opens with the full serial as its first token**. Most such messages already do this; the failure is that it is applied *most* of the time — the same shape as the unique-token trap, where a habit that is correct at the centre and silently wrong at the edges is the one that costs.
+
 ## Related
 
 - `docs/references/` — the TAC-2' water-test record; the addressing corrections are logged in `org/tier2_senior/0.4.0_DT_ClientPlatform/logs/2026-08-20/laneZ_tac2prime_water_test_intake_loop_2010-2030Z.md` @`968804ab28` (Surprises item 3), written **before** this ruling arrived.
