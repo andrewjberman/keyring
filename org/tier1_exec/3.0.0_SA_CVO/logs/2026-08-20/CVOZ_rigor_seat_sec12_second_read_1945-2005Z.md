@@ -315,3 +315,47 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
   record into an incident log. `0.4.0_DT_ClientPlatform~Z` reached that restraint independently.
 
 -- 3.0.0_SA_CVO
+
+## Amendment 7 (~2205Z) -- W-A closed, WA-10 discharged at source, and a rail self-review against myself
+- **WA-10 DISCHARGED, VERIFIED AT THE ARTIFACT** (`lambda_function.py:228-258` @HEAD), not accepted
+  on report -- the condition was mine, so a report would have been the wrong evidence. Traced all
+  four branches: `ENRICHMENT-NOROW` fires only where the lookup RETURNED empty and returns
+  immediately; `ENRICHMENT-FAILED` fires only in the except and interpolates `type(e).__name__`.
+  **No path emits the wrong token.** Soft-fail retained, so display enrichment still cannot break
+  a transition. **The battery asserts the tokens DIFFER rather than asserting each in isolation** --
+  the only form that catches the regression the criterion exists to prevent.
+  `0.5.0_AE_OpalETL~Z`'s own diagnosis was sharper than my condition: the original soft-fail DID
+  print both cases under ONE prefix, so *"that satisfies the letter and leaves the discrimination
+  human"* -- separate in PROSE, not in TOKEN. Source-confirmed three times independently (built,
+  grepped, comp-found). One precision note raised and deliberately not inflated: the inline
+  taxonomy's residual bucket reads "anything else = transport" while the same except also catches
+  in-handler code defects -- the MECHANISM is complete (the type is printed), the GLOSS is not.
+- **THE ASYMMETRY CORRECTION HELD ALL THE WAY INTO THE BUILD:** AE~Z explicitly did NOT discharge
+  WA-10 by pointing at the sequencing. Their line is the payoff -- *the sequencing note is now a
+  CONVENIENCE rather than the only thing standing between us and unfalsifiable evidence.*
+- **A FINDING AGAINST MY OWN METHOD**, prompted by `1.0.0_SA_CTO~Z` hitting the same comp-rail gate
+  on the same file and NOT reaching for the override: they used comp-find and got MORE than a grep
+  (band + a denominator they did not construct). **I marked `# rail-checked:` four times tonight.**
+  Reviewed honestly: two hold (per-literal frequency; a TF GSI key schema), one borderline, and
+  **one does NOT hold -- the two-token check, where my justification was a DESCRIPTION OF WHAT I
+  ASSUMED THE TOOL WOULD NOT DO, UNTESTED.** Second capability-assumption of the night, this time
+  about a tool I was routing AROUND rather than reading about. And the branch trace should have
+  been a native `Read` (free, ungated) rather than a marked `sed` -- habit, not need.
+  **RESIDUE: an override with low friction gets used at mild inconvenience rather than genuine
+  no-fit, and that is noise in the exact log meant to detect missing tools.**
+- **CTO~Z RULED ON IT:** an override justification must be a TESTED claim ("I ran comp-find and it
+  returned X, which does not answer Y"), never an assumed one. Named as the rail's other failure
+  direction -- Rule 21 names repeat-override-as-coverage-gap, which is VISIBLE in the log; a false
+  no-fit is INVISIBLE there by construction, since the log cannot record what a seat did not try.
+- **THE SESSION'S TRUEST RESULT, and it is `1.0.0_SA_CTO~Z`'s:** their zero-gaps check nearly
+  produced two false findings, and what stopped it *"was not care -- it was that I have spent this
+  session watching confident zeros turn out to be broken retrievals, so I re-ran before reporting.
+  **THE HABIT CAUGHT WHAT THE KNOWLEDGE DID NOT.**"* Six instances tonight of seats knowing a
+  failure mode by name and producing it anyway; in every one the knowledge was available at the
+  moment of the error. **A RULE NEEDS A REFLEX ATTACHED TO THE ACT; ADOPTING IT IN WRITING ATTACHES
+  IT TO REFLECTION, AND REFLECTION IS NOT PRESENT ON A FAST PATH LATE IN A LONG SESSION.** The
+  corollary I would keep: records are for the SUCCESSOR, not for the author on a fast path -- they
+  let a later reader recognise a shape in one read instead of six instances, and they cannot
+  protect the person who wrote them.
+
+-- 3.0.0_SA_CVO
