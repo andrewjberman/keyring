@@ -1,0 +1,655 @@
+{
+  "artifact": "ATOM_LAYER0_INTEGRATION_VINTAGE_GUARD",
+  "seat": "4.0.0_SA_CRO~C",
+  "head_at_run": "25ccb053012e0a3f022377265d7e0e34ac4f83a6",
+  "denominator": {
+    "unresolved_rows": 30,
+    "compiled": 30,
+    "compile_failed": 0
+  },
+  "rows": [
+    {
+      "row": "R015",
+      "concept": "Contract_Record",
+      "display_verdict": "AMBIGUOUS_TWO_HOMES",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        },
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "d5974c43ff2911d4a8df27a51bf474f46523717c",
+          "blob_head": "d5974c43ff2911d4a8df27a51bf474f46523717c"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R010",
+      "concept": "Segment",
+      "display_verdict": "GOVERNED_DUAL_CARRIER",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        },
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/O1_RESOLVES_VIA_RESULTS_20260819.jsonl",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "15f02d2b86ba62d12e3ef29310b7e399026f5814",
+          "blob_head": "15f02d2b86ba62d12e3ef29310b7e399026f5814"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R027",
+      "concept": "Lifecycle_Class",
+      "display_verdict": "CODE_REDECLARATION",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/comp_legacywriter.py",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "aadc75565875da5d5204e500be0d350e3666d428",
+          "blob_head": "aadc75565875da5d5204e500be0d350e3666d428"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R028",
+      "concept": "Contract_Record",
+      "display_verdict": "CODE_REDECLARATION",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/comp_legacywriter.py",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "aadc75565875da5d5204e500be0d350e3666d428",
+          "blob_head": "aadc75565875da5d5204e500be0d350e3666d428"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R001",
+      "concept": "Estate",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R002",
+      "concept": "Substrate",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R018",
+      "concept": "Domain",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "0.4.0_DS_ClientPlatform",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R021",
+      "concept": "ops-internal.chain_count",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "2.0.0_SA_COO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/modules/graph/estate-coverage-manifest.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "339cc09e39fe6cbb2193551f00a6a812e0654845",
+          "blob_head": "339cc09e39fe6cbb2193551f00a6a812e0654845"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R022",
+      "concept": "portfolio-management.chain_count",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "2.0.0_SA_COO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/modules/graph/estate-coverage-manifest.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "339cc09e39fe6cbb2193551f00a6a812e0654845",
+          "blob_head": "339cc09e39fe6cbb2193551f00a6a812e0654845"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R023",
+      "concept": "security-scanner.chain_count",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "2.0.0_SA_COO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/modules/graph/estate-coverage-manifest.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "339cc09e39fe6cbb2193551f00a6a812e0654845",
+          "blob_head": "339cc09e39fe6cbb2193551f00a6a812e0654845"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R024",
+      "concept": "canonical-schwab.chain_count",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "2.0.0_SA_COO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/modules/graph/estate-coverage-manifest.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "339cc09e39fe6cbb2193551f00a6a812e0654845",
+          "blob_head": "339cc09e39fe6cbb2193551f00a6a812e0654845"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R025",
+      "concept": "sys-estate-ops-platform.spans_verticals",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "2.0.0_SA_COO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        },
+        {
+          "path": "org/modules/graph/estate-coverage-manifest.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "339cc09e39fe6cbb2193551f00a6a812e0654845",
+          "blob_head": "339cc09e39fe6cbb2193551f00a6a812e0654845"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R026",
+      "concept": "W15_routing_snapshot",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "0.8.0_AE_CloudComp",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/estate-coverage-resolver.json",
+          "pin": "82aa27590a",
+          "state": "UNMOVED",
+          "blob_pin": "113c045f236cd71629a505500e519eae53ed1798",
+          "blob_head": "113c045f236cd71629a505500e519eae53ed1798"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R047",
+      "concept": "code_content_design_status",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "7d147955c8736f3d05ebfff053972caaca771e48",
+          "blob_head": "7d147955c8736f3d05ebfff053972caaca771e48"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R051",
+      "concept": "implementation_status_claim_set",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "9acd04573bcfff89e4fca0cd40fb3e8661da1638",
+          "blob_head": "9acd04573bcfff89e4fca0cd40fb3e8661da1638"
+        },
+        {
+          "path": "infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "84242e84b77169b94ff0320c793a97c4032b0446",
+          "blob_head": "84242e84b77169b94ff0320c793a97c4032b0446"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R052",
+      "concept": "l1b_status_claim_set",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "84242e84b77169b94ff0320c793a97c4032b0446",
+          "blob_head": "84242e84b77169b94ff0320c793a97c4032b0446"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R056",
+      "concept": "boundary_report_status",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "ba4d07bb308e4b7969948711ff4d855043887795",
+          "blob_head": "ba4d07bb308e4b7969948711ff4d855043887795"
+        },
+        {
+          "path": "org/modules/graph/boundary_report.py",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "d6e75ae2e3c4a8d1c757b1dffe48474164b0f232",
+          "blob_head": "d6e75ae2e3c4a8d1c757b1dffe48474164b0f232"
+        },
+        {
+          "path": "org/modules/graph/tests/test_boundary_report_conformance.py",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "095656b1d90c5a798be1c5e531446266262664e6",
+          "blob_head": "095656b1d90c5a798be1c5e531446266262664e6"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R059",
+      "concept": "subcommand_declaration_bindings",
+      "display_verdict": "CONTENT_MISMATCH",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/graph-call-manifest.yaml",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "7c2bed69f3eeaa03169cfc2594cf492693533bf8",
+          "blob_head": "7c2bed69f3eeaa03169cfc2594cf492693533bf8"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R020",
+      "concept": "Lifecycle_Value",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/LAYER_FIELD_ANATOMY.md",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "c03247e768665c8d235806c972728c372a2e77ef",
+          "blob_head": "c03247e768665c8d235806c972728c372a2e77ef"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R042",
+      "concept": "curated_tool_directive_set",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "org/modules/graph/comp-tools.yaml",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "c2b53320e97e7e5e987fac1c2638014e37027e5e",
+          "blob_head": "c2b53320e97e7e5e987fac1c2638014e37027e5e"
+        },
+        {
+          "path": "org/modules/graph/graph-call-manifest.yaml",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "7c2bed69f3eeaa03169cfc2594cf492693533bf8",
+          "blob_head": "7c2bed69f3eeaa03169cfc2594cf492693533bf8"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R046",
+      "concept": "version_pin_remedy_status",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "69c00c61efc6571bbac89db93b0b46df98962816",
+          "blob_head": "69c00c61efc6571bbac89db93b0b46df98962816"
+        },
+        {
+          "path": "infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "9acd04573bcfff89e4fca0cd40fb3e8661da1638",
+          "blob_head": "9acd04573bcfff89e4fca0cd40fb3e8661da1638"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R048",
+      "concept": "content_prototype_build_status",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "3.0.0_SA_CVO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/CONTENT_MODULE_DESIGN.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "9aa9dbab932830c2a71139f3de87ca5138922ae1",
+          "blob_head": "9aa9dbab932830c2a71139f3de87ca5138922ae1"
+        },
+        {
+          "path": "infra/system/ontology/content_relate_prototype.py",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "72c8dc94c91f4ff0eb3cbe5595d197d618ee7067",
+          "blob_head": "72c8dc94c91f4ff0eb3cbe5595d197d618ee7067"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R049",
+      "concept": "version_pin_remedy_status",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "caf31da3cec5efc0208f41adfaa42c55838a9d93",
+          "blob_head": "caf31da3cec5efc0208f41adfaa42c55838a9d93"
+        },
+        {
+          "path": "infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "9acd04573bcfff89e4fca0cd40fb3e8661da1638",
+          "blob_head": "9acd04573bcfff89e4fca0cd40fb3e8661da1638"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R054",
+      "concept": "directory_status_index",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/README.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "f56170e5c13c0ce34efdac3bf8387d1d47fa7594",
+          "blob_head": "f56170e5c13c0ce34efdac3bf8387d1d47fa7594"
+        },
+        {
+          "path": "infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "84242e84b77169b94ff0320c793a97c4032b0446",
+          "blob_head": "84242e84b77169b94ff0320c793a97c4032b0446"
+        },
+        {
+          "path": "infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "db6bf3152082a566580fec63ea1d0d2dac1b0bb4",
+          "blob_head": "db6bf3152082a566580fec63ea1d0d2dac1b0bb4"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R058",
+      "concept": "Lifecycle_Stage_prose_token",
+      "display_verdict": "SUPERSEDED_UNBANNERED",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/LAYER_FIELD_ANATOMY.md",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "c03247e768665c8d235806c972728c372a2e77ef",
+          "blob_head": "c03247e768665c8d235806c972728c372a2e77ef"
+        },
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        },
+        {
+          "path": "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+          "pin": "6b48695dfab4c69f6c53b6beacd6947189b2d418",
+          "state": "UNMOVED",
+          "blob_pin": "4a4398109052a0ca4b9048b14558041fddc0b773",
+          "blob_head": "4a4398109052a0ca4b9048b14558041fddc0b773"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R006",
+      "concept": "C0",
+      "display_verdict": "NO_DECLARED_TARGET_CONTENT",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R007",
+      "concept": "C1",
+      "display_verdict": "NO_DECLARED_TARGET_CONTENT",
+      "owner": "4.0.0_SA_CRO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R016",
+      "concept": "Estate_Contracts",
+      "display_verdict": "NO_DECLARED_TARGET_CONTENT",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R012",
+      "concept": "Chain",
+      "display_verdict": "NON_INDEPENDENT_RESOLUTION",
+      "owner": "0.8.0_AE_CloudComp",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "43b50adf5421f0a442c4db0acabff4f6f0ced083",
+          "blob_head": "43b50adf5421f0a442c4db0acabff4f6f0ced083"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    },
+    {
+      "row": "R045",
+      "concept": "resolves_via_execution",
+      "display_verdict": "NOT_EXERCISABLE",
+      "owner": "1.0.0_SA_CTO",
+      "surfaces": [
+        {
+          "path": "infra/system/ontology/check_system_definitions.py",
+          "pin": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+          "state": "UNMOVED",
+          "blob_pin": "06adf7c5bc0e60b89811f59673a5aaf5b2dd8a64",
+          "blob_head": "06adf7c5bc0e60b89811f59673a5aaf5b2dd8a64"
+        }
+      ],
+      "guard_state": "ALL_UNMOVED",
+      "moved_surfaces": []
+    }
+  ]
+}

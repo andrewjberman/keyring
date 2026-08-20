@@ -1,0 +1,121 @@
+{
+  "artifact": "ATOM_LAYER0_INTEGRATION_DISPOSITION_SCHEMA_RULE24_RECORD",
+  "seat": "4.0.0_SA_CRO~C",
+  "date": "2026-08-20",
+  "status": "PROPOSED",
+  "law": "CLAUDE.md Rule 24 as widened (all schema enumeration) and scoped (outcome arrays; CE against the declared layer) 2026-08-20",
+  "authoring_act": "mint",
+  "declared_layer": "per-(unresolved census row) integration disposition -- how one ATOM_LAYER0_RESOLUTION_CENSUS_20260820 row with resolution_state UNRESOLVED closes through the atom_layer0 framework",
+  "note_on_starting_taxonomy": "The founding direction's parenthetical (decomposes / atomic-but-unbound / finding-routed-to-owner) flattens three intents on one axis: concept-composition verdict, binding state, and the routing act (which is true of EVERY census row by census law -- 'every row routes'). Retained only as the derived display mapping after splitting, mirroring ~B's precedent correction of their own starting taxonomy.",
+  "axes": {
+    "census_currency": {
+      "intent": "whether the row's recorded defect is still live at HEAD (the base-CRO-mandated vintage-drift guard verdict, msg 63335)",
+      "grain": "one unresolved census row",
+      "values": [
+        "CURRENT_AT_HEAD",
+        "MOVED_DEFECT_PERSISTS",
+        "ALREADY_RESOLVED_SINCE_CENSUS",
+        "SURFACE_RETIRED_AT_HEAD",
+        "GUARD_UNVERIFIABLE"
+      ],
+      "value_semantics": {
+        "CURRENT_AT_HEAD": "every evidence surface blob-identical between the row's pinned vintage and HEAD; the defect persists as recorded",
+        "MOVED_DEFECT_PERSISTS": "a surface moved since the pin; direct re-read of HEAD confirms the defect still present",
+        "ALREADY_RESOLVED_SINCE_CENSUS": "a surface moved since the pin; direct re-read of HEAD shows the recorded defect gone (base-mandated value; never a silent skip, never a stale finding filed as fresh)",
+        "SURFACE_RETIRED_AT_HEAD": "an evidence surface no longer exists at HEAD; the row needs owner adjudication of successor-vs-abandoned before any act (90-day-dormancy law's successor check, applied at row grain)",
+        "GUARD_UNVERIFIABLE": "the guard could not read the pinned object; the row's currency is UNKNOWN and is never promoted to any other value"
+      },
+      "postulates": {
+        "mece": "PASS -- exactly one value per row; values are the product of (guard blob-compare outcome) x (direct re-read outcome), which cannot co-occur",
+        "same_grain": "PASS -- every value describes one row's recorded-defect currency",
+        "intent_coherence": "PASS -- currency of the recorded defect only; no routing, no mechanism, no stage content",
+        "state_coherence": "PASS -- all values re-derive together from one re-run of guard + re-read at a new HEAD",
+        "collective_exhaustion_vs_layer": "PASS -- unmoved / moved-persists / moved-gone / surface-gone / unreadable exhausts the observable states of (pinned evidence vs HEAD); occupancy 2026-08-20: 30/0/0/0/0 with all zeros retained for layer coverage"
+      }
+    },
+    "framework_closing_stage": {
+      "intent": "which atom_layer0 stage owns the act that closes the row",
+      "grain": "one unresolved census row",
+      "values": [
+        "S0_NOT_CONCEPT_GRAIN",
+        "S2_CHALLENGE_REQUIRED",
+        "S3_LEGISLATION_GAP",
+        "S4_BINDING_REPAIR",
+        "INSTRUMENT_GAP"
+      ],
+      "value_semantics": {
+        "S0_NOT_CONCEPT_GRAIN": "the row's defect is a self-standing status/progress claim with NO declared-authority binding (record-vs-reality drift); atom_layer0 terminates at S0 -- the census evidence is complete grounds and the owner reconciles + banners",
+        "S2_CHALLENGE_REQUIRED": "the row cannot close without an atomicity challenge (S1/S2 run) on its concept; scheduled as a framework run",
+        "S3_LEGISLATION_GAP": "the concept's authority declares no target population/content to resolve against (NO_DECLARED_TARGET_CONTENT class); the closing act is S3-shaped legislation by the owner",
+        "S4_BINDING_REPAIR": "the row's surface binds (cites / derives from / mirrors / synchronizes with) a DECLARED authority and that binding fails the resolution predicate; the closing act is S4-contract-shaped repair by the owner",
+        "INSTRUMENT_GAP": "the closing act is blocked on a missing or incapable instrument (NOT_EXERCISABLE / INSTRUMENT_UNKNOWN); instrument status dominates any co-present repairable defect, mirroring the framework's own precedence law"
+      },
+      "discriminators": {
+        "s0_vs_s4": "measurable per row: does the census evidence name a DECLARED authority the surface binds to (registry entry, rule-bank block, canonical block, manifest declaration)? Present and failing -> S4. Absent (peer-prose or intra-doc status contradiction) -> S0.",
+        "s3_vs_s4": "S3 = no target declared at all; S4 = target declared, binding fails the predicate.",
+        "instrument_precedence": "a row carrying both a repairable defect and an instrument incapacity classifies INSTRUMENT_GAP; the repairable half is listed in the owner act."
+      },
+      "postulates": {
+        "mece": "PASS -- exactly one value per row via the three discriminators above",
+        "same_grain": "PASS -- one closing act per row",
+        "intent_coherence": "PASS -- stage placement of the closing act only; owner and act text live in routing fields, not on this axis",
+        "state_coherence": "NAMED PARTIAL FAILURE per Rule 24(iv): the values do NOT move under one remedy -- S0/S4 close by owner edits, S3 by a legislation act, S2 by a framework run, INSTRUMENT_GAP by a tool build. This is the axis's PURPOSE (it partitions remedies), stated here so the frame is explicit: one remedy does not move all values, by design.",
+        "collective_exhaustion_vs_layer": "PASS -- evaluated against all 30 unresolved rows: every row lands in exactly one value. Occupancy 2026-08-20: S0=8, S2=0, S3=3, S4=17, INSTRUMENT_GAP=2. S2's zero is a finding in itself: the census's unresolved set contains no atomicity failure -- it is binding/legislation/instrument/status repair."
+      }
+    },
+    "display_disposition": {
+      "intent": "single derived display value per row for the founding direction's vocabulary; derived by fixed precedence, never hand-authored",
+      "grain": "one unresolved census row",
+      "values": [
+        "ALREADY_RESOLVED_SINCE_CENSUS",
+        "DECOMPOSES",
+        "ATOMIC_BUT_UNBOUND",
+        "FULL_RUN_SCHEDULED",
+        "FINDING_ROUTED_TO_OWNER"
+      ],
+      "derivation": [
+        "1. census_currency == ALREADY_RESOLVED_SINCE_CENSUS -> ALREADY_RESOLVED_SINCE_CENSUS",
+        "2. a completed S2 run on the row's concept rendered DECOMPOSITION_FOUND -> DECOMPOSES",
+        "3. framework_closing_stage == S4_BINDING_REPAIR AND atomicity_certificate == EXISTS -> ATOMIC_BUT_UNBOUND",
+        "4. framework_closing_stage == S2_CHALLENGE_REQUIRED -> FULL_RUN_SCHEDULED",
+        "5. otherwise -> FINDING_ROUTED_TO_OWNER"
+      ],
+      "postulates": {
+        "mece": "PASS -- first-match precedence yields exactly one value",
+        "same_grain": "PASS",
+        "intent_coherence": "PASS -- display projection only; carries no information absent from the two source axes plus certificate state",
+        "state_coherence": "PASS -- re-derives wholly from source axes",
+        "collective_exhaustion_vs_layer": "PASS by construction (rule 5 is total). Occupancy 2026-08-20: ATOMIC_BUT_UNBOUND=1 (R015), FINDING_ROUTED_TO_OWNER=29, others 0."
+      }
+    },
+    "atomicity_certificate": {
+      "intent": "whether a bounded ATOMIC_WITHIN certificate exists for the row's concept at a matching grammar and scope",
+      "grain": "one unresolved census row",
+      "values": ["EXISTS", "NONE", "NOT_APPLICABLE"],
+      "value_semantics": {
+        "EXISTS": "a validated atom_layer0 run holds ATOMIC_WITHIN(grammar@version x scope) covering the row's concept at the row's scope",
+        "NONE": "concept-grain subject, no certificate at any matching scope",
+        "NOT_APPLICABLE": "S0_NOT_CONCEPT_GRAIN subjects -- no concept whose atomicity could be certificated"
+      },
+      "postulates": {
+        "mece": "PASS", "same_grain": "PASS", "intent_coherence": "PASS",
+        "state_coherence": "PASS -- moves only on a new validated run or a grammar-version invalidation",
+        "collective_exhaustion_vs_layer": "PASS -- exists / absent / inapplicable is total over the layer"
+      }
+    }
+  },
+  "workstream_grouping_note": "The roadmap's workstreams are a DELIVERY grouping (one owner act closing N rows), not a classification axis: intent = one dispatchable unit of owner work; grain = one owner x one mechanism; every row maps to exactly one primary workstream (cross-links recorded where one act also discharges another row's sub-part). Declared here per the widened law because grouping is an enumeration act.",
+  "token_hygiene": {
+    "corpus": "infra/system/ontology/** plus org/modules/graph/**",
+    "method": "grep -rowE word-boundary occurrence count, 2026-08-20 working tree",
+    "counts": {
+      "ALREADY_RESOLVED_SINCE_CENSUS": 0, "CURRENT_AT_HEAD": 0, "MOVED_DEFECT_PERSISTS": 0,
+      "SURFACE_RETIRED_AT_HEAD": 0, "GUARD_UNVERIFIABLE": 0, "S0_NOT_CONCEPT_GRAIN": 0,
+      "S2_CHALLENGE_REQUIRED": 0, "S3_LEGISLATION_GAP": 0, "S4_BINDING_REPAIR": 0,
+      "INSTRUMENT_GAP": 0, "ATOMIC_BUT_UNBOUND": 0, "FULL_RUN_SCHEDULED": 0,
+      "FINDING_ROUTED_TO_OWNER": 0, "DECOMPOSES": 0
+    },
+    "positive_control": {"token": "RESOLVED", "count": 218, "verdict": "instrument discriminates"},
+    "adjudication": "All fourteen minted tokens are unoccupied in the canon corpus. DECOMPOSES is a plain-English verb but has zero word-boundary occurrences as a token; its schema sense is fixed by this record. No collision to adjudicate."
+  }
+}

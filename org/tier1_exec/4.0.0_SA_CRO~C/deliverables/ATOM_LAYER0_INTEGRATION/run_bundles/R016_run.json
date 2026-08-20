@@ -1,0 +1,133 @@
+{
+  "run_id": "AL0-FROM-R016",
+  "method_version": "0.1.0-proposed",
+  "status": "PROPOSED",
+  "vintage": {
+    "repo_commit": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+    "observed_at_utc": "2026-08-20T17:40:13Z"
+  },
+  "subject": {
+    "concept": "Estate_Contracts",
+    "definition": null,
+    "claimed_layer": null,
+    "declared_grain": null,
+    "scope": "O01 x Estate_Contracts"
+  },
+  "source_census_row": {
+    "id": "R016",
+    "surface": "O01",
+    "concept": "Estate_Contracts",
+    "assessment_state": "ASSESSED",
+    "resolution_state": "UNRESOLVED",
+    "failure_classes": [
+      "NO_DECLARED_TARGET_CONTENT"
+    ],
+    "display_verdict": "NO_DECLARED_TARGET_CONTENT",
+    "evidence": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml:449 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 15",
+    "owner": "1.0.0_SA_CTO"
+  },
+  "stage_states": {
+    "s0": "STAGE_NOT_ASSESSED",
+    "s1": "STAGE_NOT_ASSESSED",
+    "s2": "STAGE_NOT_ASSESSED",
+    "s3": "STAGE_NOT_ASSESSED",
+    "s4": "STAGE_NOT_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+  },
+  "s0_pin": {
+    "authorities": [],
+    "consumers": [],
+    "molecule_dimensions": {
+      "composition": "",
+      "state": "",
+      "position": "",
+      "behavior": "",
+      "semantic": ""
+    },
+    "evidence": []
+  },
+  "s1_sweep": {
+    "generators": [],
+    "normalization_rule": "",
+    "raw_candidates": [],
+    "normalized_candidates": [],
+    "excluded_candidates": [],
+    "generator_residue": []
+  },
+  "s2_challenge": {
+    "grammar_name": "decomposition_grammar",
+    "grammar_version": "1.0.0",
+    "grammar_commit": "FILL000",
+    "grammar_adequacy": {
+      "battery": null,
+      "specimens_total": 0,
+      "specimens_expressible": 0,
+      "demonstrated": false
+    },
+    "splitter": {
+      "identity": "",
+      "differently_derived": null,
+      "shared_dependencies": []
+    },
+    "frontier": {
+      "cell_ids": [],
+      "assessed_cell_ids": [],
+      "open_cell_ids": [],
+      "unreachable_cell_ids": []
+    },
+    "result": null,
+    "result_evidence": [],
+    "certificate_state": "CERTIFICATE_WITHHELD",
+    "atomicity_certificate": null
+  },
+  "s3_legislation": {
+    "concept_rule24_record_ids": [],
+    "population_predicate": null,
+    "denominator_process": null,
+    "authority_home": null,
+    "token_census_record_id": null
+  },
+  "s4_resolution": {
+    "binding_population": [],
+    "contracts": [],
+    "residue": []
+  },
+  "s5_proving": {
+    "subject_selected_by": "4.0.0_SA_CRO~B via 4.0.0_SA_CRO",
+    "method_defect": {
+      "found": false,
+      "description": "",
+      "evidence": [],
+      "repair": ""
+    },
+    "regression_check": "",
+    "acceptance_satisfied": false
+  },
+  "rule24_record_ids": [
+    "R24-AL0-001",
+    "R24-AL0-002",
+    "R24-AL0-003",
+    "R24-AL0-004",
+    "R24-AL0-005",
+    "R24-AL0-006",
+    "R24-AL0-007",
+    "R24-AL0-008",
+    "R24-AL0-009",
+    "R24-AL0-010",
+    "R24-AL0-011"
+  ],
+  "residue": {
+    "stage_not_assessed": [
+      "s0",
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5"
+    ],
+    "unreachable": [],
+    "unknowns": [
+      "S0 must assess fields not supplied by census row R016"
+    ]
+  }
+}
