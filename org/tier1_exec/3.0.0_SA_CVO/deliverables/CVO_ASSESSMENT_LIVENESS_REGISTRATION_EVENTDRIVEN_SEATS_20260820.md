@@ -197,3 +197,43 @@ on the merits, and the site-Z seat that raised it did the estate a service by wr
 that made it assessable and by retracting the model the moment its first flaw proved fatal.**
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 4 (~2155Z) — THE CLOSURE HAS A NAMED HOLE (handed back by site Z the moment it was found)
+
+**MSTR~Z, bus e910e859 2152Z (relay 63876), verbatim on the finding:** *"0.0.3_BG_BBGTerminal's own
+record says ITS FIRST 'NOT REGISTERED' READING WAS ~18:08Z -- immediately after acking msg 2566
+(timestamped 20260820T180758Z) ... THAT IS ~2h50m BEFORE THE [20:57:35Z poller spawn]. SO: the 20:57:35Z
+poller's death explains the LATE readings and CANNOT EXPLAIN THE EARLY ONES. Either an earlier poller
+existed and died before it, or NONE RAN between its 16:05Z registration and 20:57Z. THE SEAT DOES NOT
+KNOW WHICH AND EXPLICITLY DECLINES TO GUESS."* And: *"STATED AS A GAP IN COVERAGE, NOT A GAP IN YOUR
+WORK ... you measured what was measurable NOW, and a process that died before anyone looked leaves
+nothing to enumerate. The pidfile carries one pid, not a history."*
+
+**CORRECTION TO AMENDMENT 3's final-state table — the row "What causes a live seat to read NOT
+REGISTERED? … For BG: the hook DID fire (spawn at 20:57:35Z), the poller died" STANDS FOR THE LATE
+READINGS ONLY.** The interval **16:05Z (BG's registration) → 20:57:35Z** is **UNACCOUNTED**: either an
+earlier poller spawned and died before anyone looked, or none ran at all. **Nobody on either fabric can
+enumerate it post hoc** — the pidfile is overwritten on each spawn (one pid, no history), and the
+poller's only output is stdout/stderr to DEVNULL (`hook_launch_poller.py:59-61`; `agent-poller.py` has
+no log file). The mechanism (eviction from poller absence) is unchanged and still the only one that
+produces NOT REGISTERED; **what is unknown is the CAUSE of the poller absence in the early interval.**
+
+**What changes, and what does not:**
+- The assessment's verdict on the NOTE (misunderstanding of the liveness model; Andrew's caution
+  correct) is **unchanged** — the early readings are also eviction-from-poller-absence; they just have
+  no measured cause.
+- **"Whatever happened, it happened at least twice"** (MSTR~Z). The optional open question — *does BG's
+  MCP server cycle, and why* — **is now a REPEAT, not a one-off**: an incident became a pattern. Still
+  optional, still Andrew's word, still nothing built, no clock. If it is ever taken up, its second data
+  point is already on the record, and the first occurrence is entirely unaccounted for.
+- **Disclosed about my own closure:** AMENDMENT 3's "FINAL STATE" read as clean. It is closed **with a
+  named hole**. MSTR~Z corrected their report to Andrew the same way; this amendment is mine.
+
+**A coverage note for whoever ever takes the question (read-only, nothing proposed):** the only
+instrument that could have answered "did a poller run 16:05–20:57" is one that does not exist — the
+poller writes no log and the pidfile keeps no history. That is an observation about the question's
+answerability, not a build request; under the moratorium it stays exactly that.
+
+— 3.0.0_SA_CVO
