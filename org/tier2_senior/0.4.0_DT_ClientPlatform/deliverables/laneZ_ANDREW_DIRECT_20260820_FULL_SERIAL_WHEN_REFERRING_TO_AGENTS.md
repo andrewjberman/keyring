@@ -62,6 +62,36 @@ Andrew's "almost certainly" is warranted from his vantage. From mine it is **dec
 
 That is positive evidence of ownership, not inference from a naming convention. **The AE~Z of the D7 intake runner is `0.5.0_AE_OpalETL~Z`, confirmed by artifact.**
 
+## The degradation argument, MEASURED (`3.0.0_SA_CVO~Z`, census @`174e6bda49`)
+
+This record argued the shorthand "degrades silently." `3.0.0_SA_CVO~Z` measured it over the **65 registered serials**, grouped by the token a writer would actually type:
+
+- **10 of 12 shorthand tokens are AMBIGUOUS. 63 of 65 serials sit under one.**
+- The safe bare set is exactly **two** — `BG` and `CVO` — **and only by current population.**
+- Most ambiguous token: `RD` at 16. `AE`, the one that misrouted today, is 11.
+
+### The method point is the finding: census REGISTERED serials, never LIVE ones
+
+**Liveness is not the resolution domain.** A registered-but-dark serial still *accepts* mail — it returns `QUEUED`, which is as silent a success as `DELIVERED`. So a liveness-scoped check **would have PASSED in the exact window today's misroute happened**: `0.7.0_AE_CloudOps~Z` was dark and received msg 2795 anyway.
+
+⚠ **This corrects guidance I had written.** My own "resolve it against the live registry" was unsound for precisely this reason — it happened to work today only because the correct seat was the live one. Corrected at the memory entry; recorded here because the wrong method was mine and briefly stood in a record other seats read.
+
+### The unique tokens are the TRAP, not the exception
+
+`BG` and `CVO` are unambiguous **today**. A habit built on them is correct, and will **silently stop being correct** the moment a second such seat registers — with no signal to anyone. Therefore:
+
+> **Any rule phrased "use full serials WHERE AMBIGUOUS" re-creates the defect it closes.**
+
+The unconditional form is the only one that survives population change — which is how Andrew phrased it. Recorded because the conditional softening is the obvious, reasonable-sounding amendment someone will eventually propose.
+
+### `3.0.0_SA_CVO~Z`'s own instrument discipline, worth carrying
+
+Their FIRST census run covered **49 of 65** rows (a dropped tier-3 block in transcription) and printed **"RD: unique" — FALSE**, when `RD` is in fact the *most* ambiguous token at 16. Caught only by printing the denominator against the tool's own `65 total`. The wrong number was well-formed and confident, and would have told `1.0.0_SA_CTO~Z` that the junior tier was the safe one.
+
+### The split, measured at a second seat
+
+`3.0.0_SA_CVO~Z` audited their own output: addressing **100% full-serial** (the lintable half), prose carrying **34 bare forms** (the half no lint reaches). Of those 34, **two functioned as an ADDRESS** — bracketed owner assignments in a next-steps list that other seats read as routing — both corrected in place; the other 32 are referential mentions and were **not** retro-swept, per the surface-it-not-chase-it default and the same-day in-estate precedent. Independent confirmation that the prose half is where this actually lives.
+
 ## Gate candidate — PROPOSED ONLY, not implemented
 
 Per the standing NEVER rule, I implement no gate without Andrew's explicit word, and none is implemented here. Offered to `1.0.0_SA_CTO~Z` to route or discard:
@@ -69,6 +99,9 @@ Per the standing NEVER rule, I implement no gate without Andrew's explicit word,
 - A send-time lint on `send_message` recipients: a `to_agent`/`to_agents` value that is not a **full registered serial** is refused with the candidate matches named, rather than delivered to a guess.
 - The broker already holds the registry that makes this decidable, so it needs no new source of truth.
 - ⚠ The routing-PROSE half (`"AE~Z: your runner is the W-B substrate"` inside a message BODY) is **not** reachable by a recipient-field lint. A body-text matcher would fire on every legitimate mention — the LD-0274 class this estate has already been bitten by. **Naming that limitation is part of the proposal**; a gate that closes the addressable half while reading as if it closed both is worse than no gate.
+- **The refusal must ENUMERATE** (`3.0.0_SA_CVO~Z`): the broker holds the registry, so a refusal on `"AE~Z"` can name all 11 candidates. **A refusal that only says "use a full serial" sends the author back to the same guess** — it converts a silent wrong answer into a loud one without supplying the information needed to get it right.
+- **Resolve over REGISTERED serials, not live ones** — per the census method point above, a liveness-scoped lint passes in exactly the window the failure occurs.
+- **Unconditional, never "where ambiguous"** — the two currently-unique tokens are the trap, not the exception.
 
 ## Related
 

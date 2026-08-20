@@ -94,6 +94,46 @@ the remedy for a dead operator is **the mechanism that brings it back**, never *
 reports it down**. The standing moratorium is untouched by this directive — he authorized
 capability (re-auth, escalation, email first-line), not monitoring machinery.
 
+## AMENDMENT — ANDREW-DIRECT ~20:50Z: BOTH ITEM-2 FORKS RESOLVED AT THE CONSOLE
+
+**VERBATIM:**
+
+> "No it is fine to escalate saturday tickets or sunday tickets, if we get a ticket and we're
+> delaying on it, we need to know about it. If a user has already accepted it, then we dont need
+> to buzz it again, the issue is simply making sure that tickets are not left open without anyone
+> accepting them"
+
+### FORK (c) — TRADING CALENDAR: **RULED, NO CALENDAR QUALIFICATION.** The sweep is deliberately
+**wall-clock, every day, weekends included.** His stated reason is the design principle: *"if we
+get a ticket and we're delaying on it, we need to know about it."*
+⛔ **THIS IS NOT A NEVER#1 VIOLATION AND THE RECORD SHOULD SAY WHY, so a future reader does not
+"fix" it:** NEVER#1 governs calling a DATA PIPELINE stale on wall-clock age. This is an
+**internal-awareness escalation on WORK SITTING UNACCEPTED**, and a client waiting over a weekend
+is exactly the thing he wants surfaced, not suppressed. The client-facing "expect it on the next
+trading day" ack is a **DIFFERENT AUDIENCE and is unaffected** — internal awareness of a delay
+does not alter the client's stated SLA. `lib/trading_calendar.py` does **not** enter this feature.
+
+### FORK (d) — "ADDRESSED" = **ACCEPTED/CLAIMED**, not replied-to. **RULED.**
+*"the issue is simply making sure that tickets are not left open without anyone accepting them"*
+and *"If a user has already accepted it, then we dont need to buzz it again."*
+**CONSEQUENCES, and they SIMPLIFY the build:**
+- The predicate is **`status == open`** on today's DEPLOYED row. **ZERO W-A DEPENDENCY** — the
+  feature ships on data that exists now.
+- `0.5.0_AE_OpalETL~Z`'s recommendation to sequence the sweep AFTER W-A (msg 2863 item 6, on the
+  grounds that a status predicate misses claimed-but-unanswered) is **SUPERSEDED BY HIS WORD**:
+  the claimed-but-unanswered population is **explicitly OUT OF SCOPE** for this feature. Its
+  finding was correct and its inference from it is simply not what he wants — recorded that way,
+  not softened, because the analysis was right and the scope call was his.
+- `first_response_at` remains a valid W-A field for other purposes; it is **not** this feature's
+  definition.
+
+### RESIDUAL NAMED, NOT INVENTED (design's to state, small)
+His word settles ACCEPTED as the stop condition but does not state the **re-escalation cadence**
+for a ticket that remains unaccepted across successive days. This seat's lean, offered for
+correction: **escalate again each day it is still unaccepted** — it is still the problem he
+described, and silence after day one would re-create the invisibility the feature exists to
+remove. The design should STATE the choice rather than let it emerge.
+
 ## ROUTING (same turn)
 - `1.0.0_SA_CTO~Z` — design + scoping owner for all four; the perpetual-operator frame likely wants
   its own PRD section under the rigor mandate (ATOM_DECOMP + full PRD/TO decomposition + registry).
