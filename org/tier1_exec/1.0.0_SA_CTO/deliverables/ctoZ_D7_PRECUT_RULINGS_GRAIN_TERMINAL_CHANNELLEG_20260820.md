@@ -186,6 +186,53 @@ import-time side effect — is a runner-breaking change even when every function
 
 ---
 
+### RULING 3a — AMENDMENT: **THE FUSE IS A PROPERTY OF THE PATH, NOT OF THE WORK.** A5–A7 rebind.
+
+**I scoped A5–A7 to "the channel-leg P1." That was too narrow, and the narrowing is the same defect
+CLAUDE.md names about the alarm moratorium — *"the narrow scoping is why it recurred."*** Prompted by
+`0.0.3_BG_BBGTerminal` (2898) calling the fuse the most operationally dangerous thing ruled today, I
+measured the actual surface instead of the one file I had named.
+
+**The scheduled Task executes `run_intake.cmd` FROM THE WORKING TREE**, which runs
+`python -m integrations.ticketing.intake.runner`. **Every module that fire loads is a live production
+artifact edited in place with no deploy step:**
+
+```
+DENOMINATOR: 8 live production artifacts under a <=5-minute schedule
+
+  run_intake.cmd          <- the Task's Execute target
+  runner.py               <- entry; imports the four below + teams-watch.py
+  intake_pass.py          <- run_once; owns the abort/stop control flow
+  buzz.py                 <- the composer
+  receipt.py              <- Cursor / FileStore (the write-after-emit discipline)
+  row_contract.py         <- the D7F-3 contract validator
+  runner_config.json      <- read at runtime
+  .claude/skills/teams-assist/teams-watch.py   <- importlib-loaded at every fire
+```
+
+> **RULED: A5, A6 and A7 bind on ANY edit to ANY of these paths, for ANY reason — not on the channel-leg
+> P1.** A typo fix, a docstring, a comment, a config value. **The hazard is not a property of the work
+> being done; it is a property of the file being saved.** A bar scoped to one work item leaves seven files
+> and every future task uncovered, and the next editor will not be the one who read this ruling.
+
+*This retroactively vindicates `0.5.0_AE_OpalETL~Z` reverting a premature docstring edit and sha-verifying
+against HEAD. At the time that read as scrupulousness; it was the correct response to a live fuse nobody
+had named yet — a docstring edit is inside the fuse exactly as much as a logic change.*
+
+⚠ **STATED BOUND ON MY OWN MEASUREMENT:** I fully resolved **`OPAL_D7_ticket_intake`** only. The other
+three scheduled tasks (`OPAL_BBGTML_daily_pull`, `OPAL_BLOOMBERG-FreezeTripwire`, `OPAL_vendor_watch`)
+execute through `cmd.exe` / `wscript.exe`, and **I read `Execute` without `Arguments`** — so **their
+working-tree exposure is UNMEASURED, not absent.** Anyone extending this ruling reads the args plane
+first; I am not claiming a clean result I did not obtain.
+
+**RECOMMENDATION, not a gate** (routed to `0.5.0_AE_OpalETL~Z` as the tree's owner): **nothing in the tree
+marks these files as live production.** A reader opening `buzz.py` sees an ordinary module. A one-line
+header on each — *"LIVE PRODUCTION: executed by scheduled task `OPAL_D7_ticket_intake` every 5 minutes from
+this working tree. An edit is a deploy."* — costs nothing, needs no approval step, and puts the warning
+where the hazard is. **A gate on this would need Andrew's word; a comment does not.**
+
+---
+
 ## Standing scope pin (restated so the speed conversation cannot erode it)
 
 **Complements, not substitutes.** No emission-transport change — email, DDB stream, or queue — hears a
