@@ -136,6 +136,19 @@ C11 (next Bloomberg login), W-15 activation (census-regen + respawn), COT G-clos
 - Arming unchanged: zero crons, /drive OFF (both COO-row edits leave laptop base at
   arm-nothing), Monitor bv81b83vd the standing mechanism.
 
+## CORRECTION ADDENDUM (2026-08-20 ~2047Z, on 0.6.2_AE_PartnerETL's load-bearing self-correction 63706)
+This log's Current State and the COT_SUPERVISED messages of the afternoon carried "tonight's
+COT scheduled run (~02:00Z)" as G4/G4b's real acceptance fire. THAT CLOCK WAS WRONG -- the cot
+chain was re-anchored to 7:30 AM ET (11:30Z) on Andrew-direct 2026-08-14 (MDPF_TRGALN;
+infra/aws/terraform/cot-pipeline/schedule-et.tf:90 DESIRED + `aws scheduler get-schedule`
+APPLIED, both read by 0.6.2). I inherited the stale 02:00Z from the assignee's own messages
+without checking the schedule -- the map-vs-territory class, held at three seats (0.6.2, CTO,
+me). G4/G4b's acceptance fire is FRIDAY 2026-08-21 11:30Z, ~15h out; today's 11:31Z fire
+pre-dated the template amendment by six hours, so today's 19-col extract is NOT a G4 failure.
+Nothing about G4's correctness changes -- only WHEN it is provable. Baseline measured on served
+08-19 bytes (19 cols / 18,051 rows); tomorrow's landing (HOLDINGS_DAILY_2026-08-20.xlsx, absent
+now) is the unambiguous oracle: +2 cols, rows unchanged.
+
 ## Next Steps
 
 1. [0.4.0_DS_ClientPlatform~B] FRI 12:45Z fire -> log read by 13:15Z -> report (T5).
