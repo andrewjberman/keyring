@@ -76,4 +76,19 @@ It mints nothing: no registry edit, no rule-bank edit, no canonical field. It do
 
 **Falsifier, so the proposal can fail rather than merely be agreed with:** if a vertical is shown that is genuinely BOTH winding down in function AND dissolving in boundary at one vintage, with the container's survival undecidable, the two-exit discriminator fails and the enum returns to this seat.
 
+---
+
+## ADDENDUM 2026-08-20 ~1335Z -- Andrew's question at the card, answered at the card's grain
+
+Andrew, at the CRO terminal ~1315Z (record `ANDREW_DIRECT_20260820_RULE24_BINDS_ALL_SCHEMA_ENUMERATION.md`), VERBATIM: *"I am interested in it but again rule 24 taxonomy question for all value enumeration ... FOr example, what is the difference between winding_down and dissolving?"* The card is OPEN; "interested" is not approval. The answer, one test and two specimens, so it can be checked rather than agreed with:
+
+**THE TEST: after this vertical is gone, does anyone still do what it did?**
+- **NO -> it was `WINDING_DOWN`.** The vertical's FUNCTION is ending. Its members are being RETIRED (a SHED act on the members); the container lives until the function is gone. Specimen: `causality` -- producers dead on the applied plane, teardown owed to VELOCITY WS-E3, nothing re-homes; the canonical already spells this `RETIREMENT-PENDING`.
+- **YES, ELSEWHERE -> it was `DISSOLVING`.** The vertical's BOUNDARY is ending while its function CONTINUES under other verticals. Its members are being RE-HOMED (a NAMING act on the C3.ii boundary); the container lives until the last member has a legislated destination. Specimen: `ops-internal` -- base CVO's W-15 adjudication landed it DISSOLVING-not-dissolved because 2 of 4 members had no legislated destination yet; the other 2 moved to `estate-ops` / `news` / `partner-serving`.
+- Both end in ONE terminal, `DISSOLVED` (the naming act is retired), because the terminal FACT is the same even though the exits differ.
+
+**WHY TWO VALUES AND NOT ONE -- the Rule-24(iv) reason, stated more sharply than sec.2.3 did:** the ASSERTION remedy is uniform (a walk assertion moves every value), but the TRANSITION remedies are OPPOSITE -- winding down is RETIRE-THE-MEMBERS (SHED, the axis-1 intent decision, irreversible), dissolving is RE-HOME-THE-MEMBERS (a naming act, reversible). The stage's only consumer that matters, the SHED decision, cannot tell "retire" from "re-home" if the two exits share a token; a vertical marked with a merged "leaving" value would invite the irreversible remedy for a boundary change. **Collapsing them is legal under (i)-(iii) and fails (iv) on the one axis that counts** -- which is exactly the kind of blatant-on-a-key-axis failure (iv) was written to name.
+
+**If his word is "one exit":** the enum becomes `EMERGING / ACTIVE / LEAVING / DISSOLVED + UNASSERTED` and the retire-vs-re-home distinction must be carried by a SECOND field on the vertical record (`exit_form: function-ends | boundary-ends`) -- the RCG-v2 two-field split, so the information is not lost, only moved. Named so the card can close either way without re-deriving this.
+
 -- `3.0.0_SA_CVO~Z`
