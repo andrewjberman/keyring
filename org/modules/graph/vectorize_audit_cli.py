@@ -14,18 +14,24 @@ _VECTORIZE_DIR = _WORKSPACE / 'org' / 'modules' / 'graph' / 'vectorize-audit'
 
 
 def _resolve_gold_script(script_id: str) -> Path | None:
-    """Resolve script_id (e.g. INF_D_06.cash_drag) to full Path."""
+    """Resolve script_id (e.g. INF_D_06.cash_drag) to full Path.
+
+    ORDER IS LOAD-BEARING (TRUNCLASS FIX12 F4, census @e141eb5f30 CONFIRMED-MEDIUM): the stem
+    glob used to run BEFORE the full-id glob with an UNSORTED matches[0], so a dotted id whose
+    exact file was absent resolved to a SIBLING script -- a well-formed audit verdict about the
+    wrong artifact. Now: exact file, then FULL-ID glob, then the stem glob LAST as the widest
+    fallback; every glob sorted so first-match is deterministic, never filesystem order."""
     # Direct match
     p = _GOLD_ROOT / f'{script_id}.py'
     if p.exists():
         return p
-    # Glob with prefix
-    stem = script_id.split('.')[0] if '.' in script_id else script_id
-    matches = list(_GOLD_ROOT.glob(f'{stem}*.py'))
+    # Full-id glob (the most specific pattern wins before any truncation)
+    matches = sorted(_GOLD_ROOT.glob(f'{script_id}*.py'))
     if matches:
         return matches[0]
-    # Try full glob
-    matches = list(_GOLD_ROOT.glob(f'{script_id}*.py'))
+    # Stem glob LAST -- the deliberate coarsening, reached only when the full id matched nothing
+    stem = script_id.split('.')[0] if '.' in script_id else script_id
+    matches = sorted(_GOLD_ROOT.glob(f'{stem}*.py'))
     return matches[0] if matches else None
 
 

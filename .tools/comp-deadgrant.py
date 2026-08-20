@@ -200,10 +200,13 @@ def all_live_secret_names(regions):
 
     Empty is not a clean sweep.
     """
+    # TRUNCLASS FIX12 F2 (census @e141eb5f30 Tier-1): `--max-items 500` capped the universe at one
+    # page -- secret #501+ would have escaped the sweep as a clean "no dead grants". --max-items
+    # ABSENT = the CLI auto-paginates and concatenates the list projection; count client-side.
     names = set()
     for r in regions:
         for extra in (["--include-planned-deletion"], []):
-            rc, out, _ = aws("secretsmanager", "list-secrets", *extra, "--max-items", "500",
+            rc, out, _ = aws("secretsmanager", "list-secrets", *extra,
                              "--query", "SecretList[].Name", "--output", "text", region=r)
             if rc == 0:
                 names |= {n for n in out.replace("\t", "\n").split("\n") if n.strip()}
@@ -330,7 +333,8 @@ def main() -> int:
         fns = fns[:a.limit]
         print(f"NOTE: --limit {a.limit} -> inspecting {len(fns)} of {full_n} lambdas "
               f"(BOUNDED sweep, not the full fleet -- coverage is partial by request).")
-    print(f"live secret names (both regions): {len(live_names)}")
+    print(f"live secret names (both regions): {len(live_names)} (FULL auto-paginated walk, "
+          f"counted client-side -- never a --max-items page)")
     print(f"lambdas in account: {full_n}"
           f"{' (inspecting %d)' % len(fns) if len(fns) != full_n else ''}\n")
     _t_start = time.time()
