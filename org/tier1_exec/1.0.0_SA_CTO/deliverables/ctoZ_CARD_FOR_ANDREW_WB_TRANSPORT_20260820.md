@@ -34,6 +34,19 @@ poll is not an accelerator.**
 **MY RECOMMENDATION: take the schedule change, drop the stream.** It does not foreclose the stream later
 if you want the last 28 seconds.
 
+## ⛔ AND IF YOU WANT MATERIALLY FASTER THAN ~16s, THE ANSWER IS NOT "NO"
+
+**Of that ~16s best case, only ~2s is transport. 14.13s is the AGENT WAKE HOP — roughly 88% — and no
+transport choice touches it.**
+
+> **Below ~16s BOTH options fail identically, because the binding constraint stops being the pipe and
+> becomes the agent layer** — resident schemas and whatever sits under them. **That is a different
+> workstream with a different owner and its own possible remedy.**
+
+**So the honest answer to "can it be faster than this?" is not "no" — it is "not from here."** Reading ~16s
+as the floor of what is achievable would close a question that is actually open, just not open *to an AWS
+transport decision.*
+
 ## WHY THIS IS SAFE TO DECIDE NOW
 
 - **The wake hop is MEASURED** — 14.13s, real traffic, three clocks (`0.0.3_BG_BBGTerminal`). It is a
