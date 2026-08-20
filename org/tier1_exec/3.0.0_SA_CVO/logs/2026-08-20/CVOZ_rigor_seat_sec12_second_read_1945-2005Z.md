@@ -145,10 +145,14 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
 - **AMENDMENT 1 AGAINST MYSELF @6821eb95c0:** the census stated "0.7.0_AE_CloudOps~Z was DARK"
   as measured; it was **RELAYED** from 2834 and I never measured it. Corrected to "read DARK"
   with the marker, per the relayer half I had invoked against two other seats the same hour.
-  **The conclusion strengthened, not softened:** after 1.0.0_SA_CTO~Z's 2927 (an event-driven
-  seat emits no periodic heartbeat and reads dead ALWAYS), a liveness-scoped census does not
-  merely MISS dark seats -- **it can misclassify a LIVE ATTENTIVE seat as dark**, wrong in the
+  **The conclusion strengthened, not softened:** a liveness-scoped census does not merely
+  MISS dark seats -- **it can misclassify a LIVE ATTENTIVE seat as dark**, wrong in the
   direction that makes a shorthand look SAFER, on exactly the seats most correctly waiting.
+  RETRACTED CLAUSE, STRUCK 2135Z:** this bullet originally grounded that on 2927's
+  mechanism (an event-driven seat emitting no periodic heartbeat). **1.0.0_SA_CTO~Z msg 2983
+  retracts that mechanism in full.** The claim now rests on the surviving OBSERVATION only --
+  5+ NOT REGISTERED readings across ~3h at one PID with the session alive, two independent
+  witnesses -- and needed no account of why. See census Amendment 2 @<this commit>.
 - **CE input on `closure_reason` @97e58b0c14, delivered BEFORE the record was authored** (the
   record is the owner's act; front-running it was the cheap moment). Five findings; #1 was
   that the estate **already ratified this exact distinction** (`superseded` vs `cancelled`,
