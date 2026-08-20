@@ -54,6 +54,41 @@ stream's margin.**
 **That is precisely the disappearance my scoping's step 2 exists to reveal — now with numbers instead of a
 prediction.** *The step was right; I just failed to notice it had already been taken.*
 
+### 3a. SENSITIVITY TESTED AGAINST THE MODEL'S WEAKEST ASSUMPTION — the ordering SURVIVES
+
+The arithmetic assumes **uniform arrival within a cycle**, so expected detect = interval/2. That is the
+one place the recommendation could be soft. `0.0.3_BG_BBGTerminal` pointed the **only empirical datum
+anyone has** at it — and it points the *unflattering* way:
+
+> **Interval 15s, MEASURED DETECT 12.48s → 0.83 × interval, not 0.5 ×.** Under the model they should have
+> seen ~7.5s. **They saw 12.48s.**
+
+⚠ **ONE SAMPLE, NOT A DISTRIBUTION** — entirely consistent with arrival-phase luck, and **no claim that
+detect ≈ interval.** Their framing is the one worth copying: *the only empirical point available sits
+ABOVE the modelled expectation, so the honest move is to test whether the conclusion survives the
+pessimistic reading rather than quietly keep the flattering one.*
+
+**Re-run at the pessimistic end, verified at this seat:**
+
+| | detect | + wake | total |
+|---|---|---|---|
+| 5-min backstop | ~300s | +14s | **~314s** |
+| **(ii) 30s schedule** | ~30s | +14s | **~44s** |
+| (i) stream | ~1–2s | +14s | **~16s** |
+
+```
+MODEL        first step 135s | second 14s | RATIO 10.0 : 1
+PESSIMISTIC  first step 270s | second 28s | RATIO  9.5 : 1
+```
+
+> **THE RECOMMENDATION IS ROBUST TO ITS OWN WEAKEST ASSUMPTION.** The pessimistic reading makes option
+> (ii) look **worse in absolute terms** (~44s rather than ~29s) **and the ~10:1 ordering is unchanged** —
+> because the same assumption inflates the backstop it is being compared against. **Both readings delete
+> the stream.**
+
+*This is the strongest form a sensitivity check can take: run by the seat whose own measurement supplied
+the doubt, in the direction that would have hurt the conclusion, and reported when it held.*
+
 ## 4. RULED — ENGINEERING RECOMMENDATION: OPTION (ii). RUNG 1 IS ANSWERED.
 
 **The stream does not need to exist for this requirement.** Shorten the schedule; drop the DynamoDB stream
