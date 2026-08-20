@@ -53,7 +53,9 @@ the oracle for a just-made change (Rule 20).
 None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
 
 ## Next steps
-1. **[CTO~Z]** adjudicate F1/F2/F4 (+F3 flag) -- I second-read whatever lands, one line each.
+1. **[1.0.0_SA_CTO~Z]** adjudicate F1/F2/F4 (+F3 flag) -- I second-read whatever lands, one
+   line each. *(Full serial per the Andrew-direct ~2036Z ruling, msg 2834 -- this line is an
+   ADDRESS, so it is corrected in place rather than left to the going-forward habit.)*
 2. **[event-held]** lane 3 (D7 acceptance chains: dep-2 mint 6/7, dep-3 registration in
    flight) + lane 4 (Lifecycle v2 W-A..W-D as COO~Z decomposes) -- read on close signals.
 3. Standing waits (CRO scope-registry item, canonical-ten ferry) unchanged, event-held,
