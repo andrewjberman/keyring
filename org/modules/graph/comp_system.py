@@ -1201,13 +1201,70 @@ def self_test() -> int:
         and (lambda r: r[0] is True and r[1].startswith("age "))
             (_staleness(dict(_h_aged, graph_carried_since=None))))
 
+    # 29-32. INSTANCE 3 (content-hash fingerprint, CTO ruling addendum @6ae67e724f) + the --help
+    #        write-bearing guard (MSTR relay @f5155c2aba, site-Z incident). The gate's three named
+    #        controls + both guard directions -- scratch-only, never the real sources.
+    import graph_cache as _gc2
+    _fx = _tempfile.mkdtemp(prefix="cs_fp_selftest_")
+    try:
+        for _nm, _body in (("a.yaml", "alpha: 1\n"), ("b.yaml", "beta: 2\n"), ("c.yaml", "gamma: 3\n")):
+            with open(os.path.join(_fx, _nm), "w", encoding="utf-8") as _fh:
+                _fh.write(_body)
+        _srcs = [(_fx, "*.yaml")]
+        _fp1 = _gc2.content_fingerprint(_srcs, rel_root=_fx)
+        _mt1 = _gc2.source_fingerprint(_srcs)
+        _future = time.time() + 3600
+        for _nm in os.listdir(_fx):
+            os.utime(os.path.join(_fx, _nm), (_future, _future))   # the checkout re-stamp, simulated
+        _fp2 = _gc2.content_fingerprint(_srcs, rel_root=_fx)
+        _mt2 = _gc2.source_fingerprint(_srcs)
+        chk("29 checkout-invariance BOTH directions: an mtime re-stamp on a content-identical tree "
+            "leaves the CONTENT fingerprint UNCHANGED while the retired stat fingerprint MOVES -- "
+            "the site-Z reproduction, proving the fix targets the measured mechanism",
+            _fp1 == _fp2 and _mt1 != _mt2)
+        with open(os.path.join(_fx, "a.yaml"), "a", encoding="utf-8") as _fh:
+            _fh.write("#x")
+        _fp3 = _gc2.content_fingerprint(_srcs, rel_root=_fx)
+        chk("30 sensitivity: a one-edit source change MOVES the content fingerprint; shape holds "
+            "(64-hex sha256, count 3)",
+            _fp3 != _fp2 and _fp3[1] == 3 and len(_fp3[0]) == 64)
+    finally:
+        _shutil.rmtree(_fx, ignore_errors=True)
+    chk("31 the age anchor SURVIVES the re-home: an OLD-but-content-identical record still fires "
+        "the age WARN from its recorded timestamp (a hash has no age -- the addendum's pin), gate "
+        "reads it as WARN rc 0",
+        (lambda r: r[0] is True and r[1].startswith("age ")
+         and _gate_verdict(True, r[1], [], dirty=[])[0] == 0)
+        (_staleness({"source_fingerprint": _source_fingerprint(),
+                     "emitted_at": time.time() - _TTL_SECONDS - 60})))
+    import contextlib as _ctx
+    import io as _io
+    _out_mtime_before = os.stat(OUT_JSON).st_mtime if os.path.exists(OUT_JSON) else None
+    _buf_out, _buf_err = _io.StringIO(), _io.StringIO()
+    with _ctx.redirect_stdout(_buf_out):
+        _rc_help = main(["--help"])
+    with _ctx.redirect_stderr(_buf_err):
+        _rc_bad = main(["--frobnicate"])
+    _out_mtime_after = os.stat(OUT_JSON).st_mtime if os.path.exists(OUT_JSON) else None
+    chk("32 write-bearing-flag guard, BOTH directions: --help prints usage rc 0 and WRITES NOTHING; "
+        "an unknown flag REFUSES rc 2 and WRITES NOTHING (never falls through to the compile -- "
+        "the site-Z --help incident)",
+        _rc_help == 0 and "Usage" in _buf_out.getvalue() and _rc_bad == 2
+        and "REFUSED" in _buf_err.getvalue() and _out_mtime_before == _out_mtime_after)
+
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
     return 0 if n == len(ok) else 1
 
 
-#: The repo substrate 06 summarizes. The fingerprint half of the predicate. Stat-only
-#: (max-mtime, file-count) via graph_cache -- one implementation, shared with the caches.
+#: The repo substrate 06 summarizes. The fingerprint half of the predicate. CONTENT-HASHED
+#: (sha256-over-content, file-count) via graph_cache.content_fingerprint -- one implementation,
+#: one shared enumerator with the caches' stat-only sibling. RE-HOMED off max_mtime 2026-08-20
+#: (CTO ruling addendum @6ae67e724f, instance 3 of the device-axis pair @4484d55608): the 06
+#: record is ONE estate truth, and a fresh checkout/pull re-stamps every mtime BY CONSTRUCTION,
+#: so the stat fingerprint manufactured STALE on a content-identical tree at site-Z. The hash
+#: replaces ONLY the change-detection half -- the AGE anchor stays on recorded timestamps
+#: (emitted_at / graph_carried_since); a hash has no age.
 _SOURCES = [
     (os.path.join(WS, ".tools"), "comp-*"),
     (os.path.join(WS, "org", "modules", "graph"), "*.yaml"),
@@ -1222,9 +1279,13 @@ _TTL_SECONDS = 86400
 
 
 def _source_fingerprint():
-    """The enforcing expression, imported not forked (graph_cache is the one implementation)."""
+    """The enforcing expression, imported not forked (graph_cache is the one implementation).
+    content_fingerprint with rel_root=WS: checkout-invariant AND device-invariant (relative
+    paths -- the two checkouts live under different absolute prefixes). An older committed 06
+    carrying the retired (max_mtime, count) shape reads as source drift ONCE and self-heals at
+    the adopting regen -- the same one-time adoption path the predicate's own header documents."""
     import graph_cache as _gc
-    return list(_gc.source_fingerprint(_SOURCES))
+    return list(_gc.content_fingerprint(_SOURCES, rel_root=WS))
 
 
 def _dirty_sources():
@@ -1373,7 +1434,7 @@ def _staleness(header: dict):
         return True, "emitted before the fingerprint predicate existed; regenerate once to adopt it"
 
     if list(emitted_fp) != cur_fp:
-        return True, ("source drift: fingerprint (max_mtime, file_count) %s -> %s"
+        return True, ("source drift: fingerprint (content-sha256, file_count) %s -> %s"
                       % (tuple(emitted_fp), tuple(cur_fp)))
 
     # FORM (a) x the CTO pin (Msg 63063): carried graph rows age from their ORIGINAL derivation --
@@ -1623,13 +1684,37 @@ def gate(changed=None) -> int:
     return rc
 
 
-def main() -> int:
+_KNOWN_ARGS = {"--self-test", "--check", "--gate", "--changed", "--json", "--stdout", "--help", "-h"}
+_USAGE = """comp-system -- the NFRA_SYSTEM current-state COMPILER. Usage:
+  comp-system              compile -> WRITE infra/system/06_current_state.{md,json} + refresh managed spans
+  comp-system --stdout     compile -> print the markdown (no write)
+  comp-system --json       compile -> print the json model (no write)
+  comp-system --check      staleness probe (0=fresh 2=stale 1=error; never writes)
+  comp-system --gate [--changed <files...>]   fail-closed genuine-drift gate (never writes)
+  comp-system --self-test  the invariant battery (scratch-only writes)
+  comp-system --help | -h  this usage (never compiles, never writes)
+An UNKNOWN flag REFUSES (rc 2) -- it must never fall through to the default COMPILE, which
+writes the SHARED estate record (measured at site-Z 2026-08-20: '--help' fell through, ran the
+compile, and wrote 06 -- the device-axis class through a UX door; MSTR relay @f5155c2aba)."""
+
+
+def main(argv=None) -> int:
     for _s in (sys.stdout, sys.stderr):
         try:
             _s.reconfigure(errors="replace")
         except Exception:  # noqa: BLE001
             pass
-    args = sys.argv[1:]
+    args = list(sys.argv[1:] if argv is None else argv)
+    if "--help" in args or "-h" in args:
+        print(_USAGE)
+        return 0
+    # Everything AFTER --changed is its file list; every argument BEFORE it must be a known flag.
+    flagspan = args[:args.index("--changed")] if "--changed" in args else args
+    unknown = [a for a in flagspan if a not in _KNOWN_ARGS]
+    if unknown:
+        print("comp-system: UNKNOWN argument(s): %s -- REFUSED (rc 2), nothing written.\n%s"
+              % (", ".join(unknown), _USAGE), file=sys.stderr)
+        return 2
     if "--self-test" in args:
         return self_test()
     if "--check" in args:
