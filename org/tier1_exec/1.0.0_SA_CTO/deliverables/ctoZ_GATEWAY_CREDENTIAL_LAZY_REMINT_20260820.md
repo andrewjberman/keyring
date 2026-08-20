@@ -63,18 +63,52 @@ trigger a re-mint.**
 not. **Not because agents are special — because the agent path does not pre-check and the automated paths
 do.**
 
-⚠ **THE MONITOR'S PRE-CHECK IS NOT MEASURED. `0.5.0_AE_OpalETL~Z` owns that read.** Asserting it is the
-move that cost this fabric five retractions tonight, and it is not being made here.
+> ⛔ **AMENDED 23:21Z — THE LINK IS MEASURED, AND IT WAS ALREADY IN MY INBOX WHEN I WROTE THAT IT WAS NOT.**
+>
+> ```
+> teams-watch.py:477-479
+>     while True:
+>         tok = read_token()
+>         if tok:            <- THE ENTIRE POLL BODY IS INSIDE THIS BRANCH
+> ```
+>
+> On a dead token `tok` is falsy and **the monitor does nothing — it never reaches the gateway.**
+> **Measured twice, independently:** by `0.5.0_AE_OpalETL~Z` at **23:16:16Z**, and re-read at source by
+> `0.0.3_BG_BBGTerminal` at ~23:19Z.
+>
+> **SO THE TENSION IS ESTABLISHED, NOT HYPOTHESISED. Our own defensive pre-checks are what prevent
+> auto-recovery** — the runner refuses before fetching, the monitor gates its whole body on a live token,
+> and **no automated component on this box can make the call that would heal it.**
+
+⚠ **AND THE WAY I MISSED IT IS A NEW SHAPE WORTH MORE THAN THE FINDING.** The measurement did not arrive
+late — **it arrived at 23:16:16Z, inside a retraction of a test-contamination alarm, in the same minute as
+the test result itself.** I read it as being about **test hygiene** and filed it there. When the question
+changed sixty seconds later — *"does the monitor pre-check?"* — **I did not re-read the datum I already
+had, because in my head it was answered filed under a different heading.**
+
+> **NOT A MISSING MEASUREMENT. A MEASUREMENT PRESENT AND FILED UNDER THE WRONG PURPOSE.** Every
+> not-measured verdict tonight was reached by looking; **this one was reached by remembering what a datum
+> had been about.** *A datum's purpose is assigned by the question live when it lands, and it does not
+> re-file itself when the question moves.*
 
 ## 4. IF IT HOLDS, IT CHANGES ANDREW'S ITEM 3
 
 His ask: *"a means to reauthenticate itself when the MCP connection dies."*
 
-**If the above is right, the mechanism ALREADY EXISTS** — a call on a dead token re-mints in ~18 seconds —
-**and what blocks it is our own fail-safe.** The remedy would not be new machinery; it would be **letting
-one component attempt the call it currently declines to make.** That is a materially different and cheaper
-answer than the one carded. **NOT re-carded until the link is measured** — better carded once correct than
-a fifth time.
+**The mechanism ALREADY EXISTS** — a call on a dead token re-mints in ~18 seconds — **and what blocks it is
+our own fail-safe.** The remedy is not new machinery; it is **letting one component attempt the call it
+currently declines to make.**
+
+> ✅ **THE LINK IS NOW MEASURED TWICE INDEPENDENTLY (§3), SO THIS IS RE-CARDABLE.** It is a materially
+> different and cheaper answer than the one in front of him: not *"build self-reauth,"* but **"the
+> self-reauth already works; remove one guard from one component and let it fire."**
+>
+> ⚠ **AND THE GUARD EXISTS FOR A REASON — this is a trade, not a free win.** The runner's refuse-before-
+> fetch protects the cursor (it is why tickets are DELAYED, NEVER DROPPED). Whatever component is allowed
+> to attempt the call must not be the one whose failure costs a ticket. **The obvious candidate is the
+> monitor, not the runner** — its poll is idempotent and losing one poll costs nothing, whereas the
+> runner's guard is load-bearing on the delivery contract. **That is a design call for the lane owner, and
+> naming it is the point: the cheap fix has a wrong version.**
 
 ## 5. HOW THE MEASUREMENT WAS PROTECTED
 
