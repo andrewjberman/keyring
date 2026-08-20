@@ -115,3 +115,56 @@ satisfy a probe is not a read I am willing to take** -- it risks the account for
 **NEXT (unfired, needs no new word but does need a cool-off):** one spaced probe of
 `api.bdreporting.com` for an exportType-keyed route. If that is also negative, the human channel
 (CALL 2, approved) is the route, and browser observation remains its own scoped ask.
+
+---
+
+# ROUND 3 -- REST PURSUIT EXHAUSTED. Human channel is the route.
+
+## ⛔ CORRECTION TO MY OWN ROUND-2 LINE: `api.bdreporting.com` IS NOT A VALIDATED LEAD
+
+Round 2 recorded it as *"a genuinely distinct service"* and *"the only live lead."* **Half of that
+was wrong and I am correcting it before it travels.**
+
+| request | result |
+|---|---|
+| `GET /` (first ever request to this host) | 429 `{"message":"You have reached the rate limit for this request."}` |
+| `GET /` (after cool-off) | **identical 429**, byte-for-byte |
+| **`GET /zzz_negctl_9999_no_such_route`** (INVENTED) | **identical 429**, byte-for-byte |
+
+**An invented route returns the same 63 bytes as the root.** So 429 is this host's answer to
+EVERYTHING -- it is a **third non-discriminating oracle**, and it can say nothing about whether an
+exportType route exists there.
+
+**What survives:** it is distinct from the wildcard catch-all (429/JSON vs 200/HTML), so *something*
+is there. **What does NOT survive:** any inference about its routes. "Distinct from the catch-all"
+and "a lead I can pursue" are different claims and I collapsed them.
+
+**Also worth flagging: a 429 on the FIRST-EVER request to a host is not a rate limit in any ordinary
+sense** -- nothing had been spent. It is a default deny wearing a throttle's message, which is
+precisely why it looked like a live-but-busy service.
+
+## THE PATTERN, AND IT IS THE REAL DELIVERABLE OF THIS DOCUMENT
+
+**Three apparent leads tonight, three killed by an invented-input control:**
+
+| apparent lead | what made it look real | killed by |
+|---|---|---|
+| `/Api/DataMining/ExportSystemTemplate/5` -> 200, 5,534 B | a plausible route name returning content | invented PATH also 200 |
+| `bi.bdreporting.com` -> 200 | **matched Andrew's own "Business Intelligence" brief** | invented SUBDOMAIN, byte-identical |
+| `api.bdreporting.com` -> 429 JSON | differed from the catch-all, looked live-but-throttled | invented ROUTE, byte-identical |
+
+**Not one was caught by care, inspection, or plausibility. Each needed a deliberately absurd input
+run BEFORE the finding was composed.** The middle one is the sharpest: it agreed with the sovereign's
+own words, which is exactly when a finding stops being checked.
+
+## VERDICT: REST PURSUIT EXHAUSTED
+
+The datamining plane refuses by name (`404 "Template Not Found, SourceId=5"`), `exportType` is not a
+key it accepts (`400`), no `/v1` path serves system templates, and **all three alternate surfaces are
+non-discriminating** -- so no probe against them can produce evidence, however many I run. Continuing
+would be egress spent on oracles that cannot answer.
+
+**THE ROUTE IS THE HUMAN CHANNEL -- CALL 2, already approved by Andrew.** The question to his 49F
+contact, made precise by tonight's mechanism finding: *these are exports keyed 1:1 by `exportType`
+(Firm Householding = `FirmHouseholding`), not datamining templates -- which endpoint serves them?*
+Browser observation remains its own scoped ask if the human channel does not answer.
