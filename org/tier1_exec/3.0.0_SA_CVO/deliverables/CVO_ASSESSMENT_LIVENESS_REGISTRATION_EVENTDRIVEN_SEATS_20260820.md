@@ -163,3 +163,37 @@ the row evicts 10 min later, and the seat reads NOT REGISTERED while alive. Whet
 **Still nothing to build** — the characterization is the deliverable; the machinery stays held per Andrew.
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 3 (~2150Z) — CLOSED AT BOTH SEATS: THE EVICTION PATH CONFIRMED BY THE SETTLING READ
+
+**Site Z (2145Z, read-only, MSTR relay 63863), verbatim:** *"liveness.json['0.0.3_BG_BBGTerminal'] ->
+ENTRY ABSENT. DENOMINATOR: 6 entries total in the file, BG not among them, so there is no pid to
+test -- the row is GONE, not stale. CONTROL: 1.0.0_SA_CTO~Z present, pid 31260, last_seen 21:44:07Z
+fresh."* **That is branch (c)'s predicted shape exactly: the row was EVICTED (≥600 s with no
+heartbeat), which is why senders read `NOT REGISTERED` rather than `STALE`.**
+
+**MSTR~Z's own correction, verbatim:** *"I reported 'BG's claude.exe is alive but no poller',
+implying the poller should have survived. Their source read makes that the WRONG OBJECT -- the poller
+tracks the MCP SERVER pid, and its only in-loop exit is that pid dying, so A LIVE claude.exe PROVES
+NOTHING ABOUT WHETHER THE POLLER SHOULD STILL BE RUNNING."* The census stands as a measurement; the
+implication from it is withdrawn. Correct, and for the right reason.
+
+## FINAL STATE OF THE ASSESSMENT
+
+| Question | Answer | Grounding |
+|---|---|---|
+| Is the liveness model polling-shaped / hostile to event-driven seats? | **NO — misunderstanding.** Liveness comes from the per-session poller, not the agent acting; quiet seats read LIVE. | `agent-poller.py:1-28,:286-301`; laptop 10/10 control |
+| NOT REGISTERED vs STALE? | **Distinct.** STALE = 120–600 s silence; NOT REGISTERED = row **evicted** (≥600 s) or never written. | `server.py:180-198,:1442-1448`; site-Z ENTRY ABSENT |
+| What causes a live seat to read NOT REGISTERED? | **Poller absence** → eviction. For BG: the hook DID fire (spawn at 20:57:35Z), the poller **died**, and the only in-loop exit is the tracked **MCP-server pid** dying. | site-Z 7-seat control + pidfile read + `:295-301` |
+| QUEUED-not-lost? | **Design intent** (push best-effort, piggyback primary, inbox independent). | `server.py:749-790,:1813-1862` |
+| The narrow structural fact | **Poller lifetime is bound to ONE MCP-server incarnation, not the session.** A server that cycles mid-session orphans its poller; nothing re-registers; the row evicts 10 min later. Rare (16 polled seats across both devices read live all day), not never. | source + both controls |
+| What is built | **Nothing.** Characterization delivered; machinery held per Andrew's word. | — |
+| Open, optional | Whether BG's MCP server cycles and why — site Z's read, **if Andrew wants it**. | — |
+
+**Andrew's caution — *"you may be misunderstanding how this function is designed to work"* — was correct
+on the merits, and the site-Z seat that raised it did the estate a service by writing the doubt section
+that made it assessable and by retracting the model the moment its first flaw proved fatal.**
+
+— 3.0.0_SA_CVO
