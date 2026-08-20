@@ -1,0 +1,21 @@
+#!/bin/bash
+# comp-closure -- NFRA_EPISTEMY C3: the IDENTITY + SUPPORT-CLOSURE compiler (COO GO 63813;
+# object shape per 4.0.0_SA_CRO cert 63859 + 1.0.0_SA_CTO gate 63865).
+# Compiles, for a logical fact ("Lambda F runs code C@v"), the typed hop chain
+# {build input -> package manifest -> deployed bytes -> repo bytes -> (execution)} and stops
+# HONESTLY where the evidence stops: reach {NONE,PRESENCE_ONLY,BEHAVIOR} per member (closure = MIN),
+# standing {BROKEN,AMBIGUOUS,CURRENT,INVALIDATED} per closure; the equivalence verdict lives on the
+# Identity_Bundle. Every acquisition is an Observation_Record built by the C1 envelope.
+#
+#   comp-closure compile <lambda-name> [--out DIR]   # read-only AWS (get-function + package download)
+#   comp-closure verify <closure.json>               # re-read the sides; any change -> INVALIDATED
+#   comp-closure --self-test                         # offline battery m1-m5 + controls (never AWS)
+#   comp-closure --help                              # usage, never writes; unknown flags REFUSE (rc 2)
+#
+# Bounds: read-only live AWS; the lambda source map is a BUILD INPUT read and never rewritten;
+# nothing armed; `plane` carried opaque (CTO 63744). Rule-16 clean: cd / dirname / pwd / python only.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_closure.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-closure" "$*" $_exit 2>/dev/null
+exit $_exit
