@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-07T07:50:18.072165+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / read-only-tier MS identity token via Andrew/IT interactive-MS-login provision (L4 live-403 exercise; mechanism-certed CVO~B) (held since 2026-07-09T06:41:04.789158+00:00)
+**Status:** CLOSED -- nothing stranded -- closed 20260820T155701Z -- gate: external / read-only-tier MS identity token via Andrew/IT interactive-MS-login provision (L4 live-403 exercise; mechanism-certed CVO~B) (held since 2026-07-09T06:41:04.789158+00:00)
 **Deploy:** SCTY_PREMCP P1 Layer-2 phase-1: READ_ONLY Graph-token scope-reduction (grant-level, m365-mcp-gateway)
 **Authored by:** 0.7.0_AE_CloudOps~A
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -15,7 +15,7 @@
 | L1 | git | CLOUD commit: config.READ_ONLY_GRAPH_SCOPES + token_broker tier-scope + runbook | hash pushed | 7a59c10ef pushed to CLOUD | CLOSED 20260707T075110Z |
 | L2 | ec2-baked-asset | m365-mcp-gateway app/ on-instance via safe-ec2-deploy | SSM md5 of running config.py+token_broker.py | SSM i-07dccb1615503ac99: /opt/m365-mcp-gateway/app/config.py=4b44462bc7f7ef1c3dd8f3ced6ec8b3a token_broker.py=13d042aa7d9c03264abad3b6ef88f2c8 -- md5-IDENTICAL to local (baked copy matches) | CLOSED 20260707T075422Z |
 | L3 | activation | gateway service restart picks up the new app code | SSM systemctl status + a live get_token path | SSM systemctl is-active m365-mcp-gateway=active; deploy /health={ok:true} + /mcp unauth 401 (hard gate unchanged); READ_ONLY_GRAPH_SCOPES x4 + force_refresh x2 present on-box | CLOSED 20260707T075422Z |
-| L4 | verify | CVO live-cert: read-only token -> write 403s AT GRAPH by-permission + read tools work + broker-error degrades to read-only | CVO cert msg |  | OPEN |
+| L4 | verify | CVO live-cert: read-only token -> write 403s AT GRAPH by-permission + read tools work + broker-error degrades to read-only | CVO cert msg | L4 CLOSED -- CVO cert 20260820 (msg 63249): read-only-tier MS identity provision VERIFIED on the applied plane. Chain: live triple (delegated mint ok / reads 200 / no-bearer 401 discriminates) + DEPLOYED mint-site bytes via SSM on i-07dccb1615503ac99 (config.py:85-90 all-.Read* scope list, token_broker.py:80-95 fail-closed tier floor, :117-119 mint-from-list w/ force_refresh narrow-scope guard) + CVO cross-check instance sha256==repo HEAD both files (executing==reviewed bytes). Write refusal enforced one layer before Graph by scope-absence-at-mint; Graph-403 refused as wrong-plane; mechanism half = CVO~B prior cert. RESIDUAL CLOSED (0.7.0 SSM 1554Z): READ_ONLY_GRAPH_SCOPES env var UNSET in running-process env AND .env (count 0/0) -- the all-.Read* DEFAULT is what executes, no adversarial-config substitution. | CLOSED 20260820T155701Z |
 
 ## Log
 
@@ -24,3 +24,5 @@
 - 20260707T075422Z LEG L2 closed: SSM i-07dccb1615503ac99: /opt/m365-mcp-gateway/app/config.py=4b44462bc7f7ef1c3dd8f3ced6ec8b3a token_broker.py=13d042aa7d
 - 20260707T075422Z LEG L3 closed: SSM systemctl is-active m365-mcp-gateway=active; deploy /health={ok:true} + /mcp unauth 401 (hard gate unchanged); READ_
 - 20260709T064104Z HELD-SOVEREIGN-GATED gate=external/read-only-tier MS identity token via Andrew/IT interactive-MS-login provision (L
+- 20260820T155701Z LEG L4 closed: L4 CLOSED -- CVO cert 20260820 (msg 63249): read-only-tier MS identity provision VERIFIED on the applied plane. Chain: l
+- 20260820T155701Z CLOSED -- all 4 legs proven
