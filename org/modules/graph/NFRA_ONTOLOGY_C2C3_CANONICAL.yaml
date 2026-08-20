@@ -509,11 +509,14 @@ c4_subject_function_grid:
         org/tier1_exec/4.0.0_SA_CRO/deliverables/W24_29VERTICAL_PLACEMENT_PASS_20260819.md s6 +
         ANDREW_DIRECT_20260819_W24_RULINGS_ALL_RECS_APPROVED.md. Retained as a TOMBSTONE so the
         question stays legible as asked-and-answered, never re-opened as an oversight.
+  segment_definitions_note: >
+    Each of the five c4_segments resolves to a ROW or a COLUMN of this grid. Three rows plus
+    two columns is exactly the five segments -- which is the structural reason the segments
+    overlap at all. (Moved OUT of segment_definitions 2026-08-20 so that block's keys ARE the
+    member set -- 5 keys = 5 segments -- and a keys-based count never reads 6 != 5 as a false
+    membership mismatch; CRO 63878 / census R010 namespace-mixing finding. The grid's member
+    predicate is now "keys of segment_definitions", no exclusion clause needed.)
   segment_definitions:
-    note: >
-      Each of the five c4_segments resolves to a ROW or a COLUMN of this grid. Three rows plus
-      two columns is exactly the five segments -- which is the structural reason the segments
-      overlap at all.
     partner-data: subject:client (ROW)
     market-intelligence: subject:market (ROW)
     andrew-infrastructure: subject:estate (ROW) -- renamed from estate-infrastructure, Andrew-direct 2026-08-12
@@ -631,8 +634,8 @@ c4_segments:
       from CDN cache; an endpoint 404s or returns HTML instead of JSON; or the question is who
       is allowed to see what, through which route. If the data is right in the bucket but
       wrong in the browser, the answer is in this segment.
-  estate-infrastructure:
-    display_name: Estate Infrastructure   # renamed from global-infrastructure (Andrew 2026-07-30): the segment that maintains the Estate itself -- coherent under the reservation, not colliding with it
+  andrew-infrastructure:   # RENAMED 2026-08-20 from estate-infrastructure at THIS key (the c4_segments home) under the Andrew-direct 2026-08-12 naming act (registry v2.1: "the audience is the discriminator; naming it makes explicit what 'estate' left implied") -- segment_definitions (:519) and the registry already carried the new name; this key was the intra-file second home (CRO 63878, atom_layer0 Segment run B-C4-SEGMENTS-CARRIER). Engine reads keys generically (opal_estate_infrastructure.py:676); no consumer indexed the old literal.
+    display_name: Andrew Infrastructure   # lineage: global-infrastructure (Andrew 2026-07-30) -> estate-infrastructure -> andrew-infrastructure (Andrew 2026-08-12): the segment that maintains the Estate itself -- coherent under the reservation, not colliding with it
     registry: [sys-estate-ops-platform]
     note: observation chains (watchdog-observe motif) route here even when the observed thing
       lives in another segment -- the observed belongs to its segment, the observing belongs here.
