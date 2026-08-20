@@ -174,3 +174,29 @@ severable, and not needed for D8. If Andrew wants it, it is its own Rule-24 act 
   exactly the kind of compiled retirement being proposed here.
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 2 — ANDREW-RULED (at the CVO seat, 2026-08-20 ~2000Z): BOTH RECS APPROVED
+
+**VERBATIM:** *"recs approved, proceed"* — answering the two-card /open-calls set at this seat:
+
+1. **ATTRIBUTION: ruled (c) — dropped as a register function.** No directives-side attribution
+   leg is built; the missions attribution index (`org/tier0/missions.yaml` commits→sub-groups map)
+   retires WITH the missions machinery on its own dormancy track. The CONCEPT survives estate-wide
+   in the three live derived instruments (registry-check's `git log --grep` ascription; the
+   estate-report daily path→chain/area attribution, sovereign-adjudicated; agent telemetry).
+   If a directive-grain activity view is ever wanted, it is DERIVED then (the registry-check
+   predicate pattern over D-ids) — a decision recorded, not a function carried.
+2. **THE MECHANISM: APPROVED as proposed+amended** (§1 FACT/MOVE/CHECK, directives-native per
+   AMENDMENT 1, Rule-24 record §2, LD-0428 semantics §3, freeze law §4). **D8's pull proceeds as
+   the acceptance test (§5)** with both planted mutants; the missions disposition stays fenced off
+   as a non-dependency (CTO 63578, confirmed 63579-class ACK).
+
+**Execution routing on this ruling (per §6, unchanged):** COO cuts the directives-native
+compiler+check build row (0.8.0-class lane; the Rule-24 record and CTO's fence sentence ride the
+TO verbatim; CTO gates the schema act). MSTR writes D8's `retired:` fact citing @393211922e +
+PROD v2.1.164 once the compiler exists. CVO runs the §5 acceptance verify — the SoD triangle
+(fact-writer / compiler-builder / verifier) held by construction.
+
+— 3.0.0_SA_CVO
