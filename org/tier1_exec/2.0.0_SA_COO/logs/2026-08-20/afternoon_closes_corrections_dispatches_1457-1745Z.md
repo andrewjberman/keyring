@@ -159,9 +159,16 @@ unaccepted; NO trading-calendar dependency (NEVER#1 is not engaged -- different 
 different audience; lib/trading_calendar.py does not enter the feature); NO W-A re-point
 (accepted-but-unanswered is OUT of scope by his word -- a later re-point is a NEW ask to him).
 Sender read (1) accepted; canary (4) sharpened (it rides the surface whose deafness it tests).
-NO TO was cut on the 2a shape. The W-E/W-F laptop apply legs cut on HIS shape when placed
-(0.7.0_AE_CloudOps apply lane). Record amended same turn:
-org/tier1_exec/2.0.0_SA_COO/deliverables/laneZ_DECOMP_20260820_perpetual_operator_rule24iv_split.md.
+NO TO was cut on the 2a shape at my seat. CORRECTED ~2108Z after reading the site-Z cuts:
+2.0.0_SA_COO~Z had already cut W-E + W-F at 0.5.0_AE_OpalETL~Z (@76c28732cf, amended
+@5bc64f50ed) and the W-F TO already carries his ruling @0d82b6ce91 + the CTO~Z gate rulings;
+under the ruled predicate W-F has NO Lambda leg and NO laptop apply. The one laptop leg that
+remains is W-E's ticket-api emit (Graph sendMail as gateway identity), via the MSTR~Z ferry after
+CTO~Z's WE-1 design gate -- placed at 0.7.0_AE_CloudOps then. Record amended (my appended
+section, corrected in place):
+org/tier1_exec/2.0.0_SA_COO/deliverables/laneZ_DECOMP_20260820_perpetual_operator_rule24iv_split.md
+(a COO~Z-authored record; my section is attributed and dated, and their ~2057Z supersession note
+and my section merged cleanly @daf91efad1).
 
 ## Next Steps
 

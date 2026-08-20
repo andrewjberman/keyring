@@ -168,9 +168,17 @@ SURFACE whose deafness it tests (an inbox canary passing while the channel is de
 wrong-plane pass -- how the deafness hid twice today). Canary-vs-moratorium tension is the
 site-Z gate's to carry.
 
-**TO CONSEQUENCE (mine):** NO laptop TO had been cut on the 2a shape when the ruling arrived --
-nothing to retract on the laptop side. The two laptop apply legs cut on HIS shape when placed,
-both in the 0.7.0_AE_CloudOps apply lane: W-E emit (ticket-api Lambda, Graph-as-mailbox sender)
-and W-F (wall-clock daily 2pm ET sweep, UNACCEPTED-labelled, no W-A re-point, no
-trading-calendar dependency). STILL OPEN at `1.0.0_SA_CTO~Z`: the terminal-state enum (P1-4),
-the reopen/timing grain, the registry naming act.
+**TO CONSEQUENCE (mine, laptop COO):** NO laptop TO had been cut on the 2a shape when the ruling
+arrived -- nothing to retract on the laptop side. ⚠ CORRECTED ~2108Z after reading the site-Z
+cuts: `2.0.0_SA_COO~Z` had ALREADY cut both TOs at `0.5.0_AE_OpalETL~Z` (@76c28732cf, amended
+@5bc64f50ed) and the W-F TO (`D7_TICKETING.WF-SITEZ.2pm-et-unaddressed-escalation.md`) ALREADY
+CARRIES HIS RULING @0d82b6ce91 plus the `1.0.0_SA_CTO~Z` gate rulings (internal thread by
+default; one config `CUTOFF_ET`; the `limit=500` cap assertion; ONE digest per sweep) -- and under
+the ruled predicate (`status == open` on the deployed row) **W-F HAS NO LAMBDA LEG AND NO LAPTOP
+APPLY** (its own cross_domain_coordination, verbatim). The earlier sentence here naming a W-F
+laptop leg was written before that read and is withdrawn. The ONE laptop leg that remains is
+W-E's emit (ticket-api Lambda send from the CREATE write path, Graph sendMail as the gateway
+identity per the accepted sender read) -- it comes through the `0.0.0_AB_MSTR~Z` ferry AFTER
+`1.0.0_SA_CTO~Z`'s WE-1 design gate discharges, and I place it at `0.7.0_AE_CloudOps` then.
+STILL OPEN at `1.0.0_SA_CTO~Z`: the terminal-state enum (P1-4), the reopen/timing grain, the
+registry naming act.
