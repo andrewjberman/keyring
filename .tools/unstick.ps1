@@ -12,6 +12,9 @@
 #   .tools\unstick.ps1 -Serial <full-serial>            # locate + send (default '1'+Enter)
 #   .tools\unstick.ps1 -Serial <full-serial> -DryRun    # locate + report only, no keystrokes
 #   .tools\unstick.ps1 -Serial <s> -Keys '2{ENTER}'     # a different prompt answer
+#   .tools\unstick.ps1 -Serial <s> -Keys '<prompt text>{ENTER}'   # NUDGE an idle-at-input lane:
+#                                     # body is typed, PAUSE, then Enter as a separate act (see
+#                                     # Send-ToActiveTab -- an Enter inside the burst never submits)
 #
 # Exit codes: 0 = keys sent (or dry-run located) | 2 = serial's tab NOT FOUND
 #             3 = focus lost/steal-aborted        | 4 = bad serial argument
@@ -22,8 +25,12 @@
 # SUCCESS ORACLE IS CONSUMER-SIDE: this tool proves keys were DELIVERED to the
 # identified tab, never that the lane RESUMED -- resumption is the lane consuming
 # its queued inbox / messaging its base. A lane not at a prompt receives the keys
-# into its input buffer (submits as chat input) -- operator invokes this knowing
-# the seat is prompt-stuck.
+# into its input buffer (submits as chat input) -- for an IDLE-AT-INPUT lane that IS
+# the remedy (the nudge: a short prompt naming the work waiting in its inbox); for a
+# prompt-stuck lane the answer key is. PEEK FIRST to tell the two apart. And verify
+# the submit on a SECOND peek: two identical peeks a minute apart after a send = the
+# text is sitting in the composer, not running (no 'Working' line, no transcript
+# movement beyond the composer growing) -- a lone '{ENTER}' submits it.
 
 param(
     [Parameter(Mandatory = $true, Position = 0)]
@@ -81,6 +88,19 @@ function Focus-Verified([IntPtr]$h) {
 
 function Send-ToActiveTab([IntPtr]$h, [string]$k) {
     if ([UnstickWin]::GetForegroundWindow() -ne $h) { return $false }   # abort-on-steal
+    # PASTE-BURST SPLIT (measured 2026-08-20 2202Z on 4.0.0_SA_CRO~A/~B): the Codex TUI treats
+    # a fast keystroke stream as a PASTE, and an Enter INSIDE that burst becomes a NEWLINE --
+    # a nudge prompt sat UNSUBMITTED in the composer through three peeks while the operator
+    # reported it submitted. So a trailing {ENTER} on a body longer than ONE character is sent
+    # as a SEPARATE act after a pause, foreground re-verified in between. '1{ENTER}' / 'y{ENTER}'
+    # (approval answers) are unaffected: two keys sit under the burst threshold.
+    if ($k -match '^(.+)\{ENTER\}$' -and $Matches[1].Length -gt 1) {
+        $body = $Matches[1]
+        $wsh.SendKeys($body); Start-Sleep -Milliseconds 900
+        if ([UnstickWin]::GetForegroundWindow() -ne $h) { return $false }   # re-verify before the submit
+        $wsh.SendKeys('{ENTER}'); Start-Sleep -Milliseconds 400
+        return $true
+    }
     $wsh.SendKeys($k); Start-Sleep -Milliseconds 400
     return $true
 }
