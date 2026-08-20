@@ -359,3 +359,49 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
   protect the person who wrote them.
 
 -- 3.0.0_SA_CVO
+
+## Amendment 8 (~2245Z) -- the W-B arc, an error of mine that reached a sovereign card, and the coverage rule
+- **W-B's STREAM RECOMMENDED FOR DELETION on measured numbers**, carded to Andrew. Chain:
+  `0.5.0_AE_OpalETL~Z` stopped a BUILD they had been cleared for, on finding the accelerator has
+  **no defined AWS-to-local hop** (a Lambda cannot write a local inbox and can never hold the
+  gateway credential -- an interactive OAuth refresh only a Claude Code client answers). My
+  contribution: **WB-1 was UNFALSIFIABLE as cut** -- it asked for the stream path's latency, and
+  as cut that number IS the backstop's, so the criterion would have CERTIFIED the accelerator
+  while measuring the poll it was built to bypass. WA-10's shape, third instance.
+- **MY OWN ERROR, and it reached a card going to the sovereign.** I proposed a reopening trigger:
+  *"if anyone asks for under ~15s the transport question is open again."* **It fires in the one
+  region where the stream ALSO fails** (stream = 2s + 14.13s wake = ~16s). `0.0.3_BG_BBGTerminal`
+  caught it and diagnosed it exactly: I observed correctly that the wake hop CANCELS from the
+  comparison, then carried the cancellation into a FEASIBILITY claim where it does not.
+  **A TERM THAT CANCELS IN A RATIO CAN STILL BIND AN ABSOLUTE.** Their characterisation is the
+  useful one -- *a correct step applied one question too far*, with no defective step anywhere,
+  which is why there was nothing to notice. Third surface for CORRECT WORK / WRONG AXIS.
+- **WHAT I ADDED AFTER BEING CORRECTED:** the band is not well-defined until someone names the
+  statistic (measured: **every tail framing lands within 1.5s of worst case; only TYPICAL sits
+  15s below** -- so the question is BINARY, answerable by Andrew in one line); the **floor
+  sensitivity** (right-side-up at every floor below ~180s, three times the settled 60s value --
+  which **closes** the question rather than merely answering it); and the card's missing clause:
+  **~88% of the stream's ~16s best case is the AGENT WAKE HOP, not transport**, so *"can it be
+  faster?"* is **not NO, it is NOT FROM HERE** -- different layer, different owner. Amended into
+  the card before the ferry.
+- **A MERGE HAZARD NAMED (`0.0.3_BG_BBGTerminal`):** the floor update (30s->60s, refuted by
+  `0.5.0_AE_OpalETL~Z`) was applied to the PRE-BAND threshold, so the structural fix silently did
+  not carry -- **a numeric correction applied to an uncorrected shape restores the original
+  defect.** My addition: **prose broadcast over messages has NO MERGE BASE.** Git would conflict;
+  a thread silently clobbers. **That is the mechanism behind `1.0.0_SA_CTO~Z`'s land-it-in-the-
+  artifact rule** -- one artifact gives concurrent editors a shared lineage, not just durability.
+-  **THE COVERAGE RULE, AND IT LANDS ON ME.** `1.0.0_SA_CTO~Z` in passing: *a verification that
+  finds nothing is still a verification and usually goes unsaid.* **By that standard every second
+  read I filed tonight was incomplete** -- I published findings and never coverage, so no reader
+  could tell whether I checked two things or twenty. **The finding count is a numerator I have
+  been publishing without its denominator**, having spent the evening telling other seats not to.
+  **`0.0.3_BG_BBGTerminal` completed it with the diagnostic half:** they carried coverage when
+  they EXPECTED TO PASS and dropped it when they EXPECTED TO FAIL -- in a sweep the coverage IS
+  the result, in a correction the finding feels like the whole point and the sound parts feel like
+  padding. **COVERAGE DISCIPLINE IS EASIEST EXACTLY WHERE IT IS LEAST NEEDED**, and the mechanism
+  is that **a strong natural headline crowds it out** -- missing in my CLEAN reads, missing in
+  their CORRECTING ones, both cases with a headline. That names the trigger condition, which is
+  what makes it actionable rather than aspirational: *it will feel most like padding exactly when
+  it matters most.* Adopted at this seat.
+
+-- 3.0.0_SA_CVO
