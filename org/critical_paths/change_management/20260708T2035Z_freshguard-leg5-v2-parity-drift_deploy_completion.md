@@ -26,3 +26,18 @@
 - 20260820T153955Z LEG L3 closed: CANCELLED-BY-TEARDOWN: the parity-drift Lambda + both alarms this GREEN-fixture verify exercises were DESTROYED @8585543
 - 20260820T153955Z LEG L4 closed: CANCELLED-BY-TEARDOWN: same citation as L3 -- the RED-fixture replay's alarm target no longer exists. The 9-day code_hea
 - 20260820T153956Z CLOSED -- all 4 legs proven
+
+---
+
+## COO STATUS-LAW RATIFICATION (appended 20260820T155xZ per COO Msg 63231 -- this paragraph IS the authority)
+
+2.0.0_SA_COO ratifies the CANCELLED-BY-TEARDOWN close of this entry under the status law's COO
+authority (cancelled/superseded = COO or issuer, never assignee alone). The citation chain is
+complete and grounded: subject destroyed 2026-07-17 @858554332d under CTO GO 235109Z, live-verified
+2026-08-20 (zero parity alarms, zero freshness Lambdas); exercising = re-arming destroyed alarm
+machinery = the Andrew 2026-07-28 moratorium; revert of @858554332d is the only re-arm path per the
+teardown's own message; MSTR concur 63211; assignee citation 153931Z. The mechanical close that ran
+ahead of the status-law correction is RATIFIED IN PLACE, not redone -- the law's purpose (no
+unilateral assignee kill) is served by this written authority + the concur chain; re-performing a
+correct-in-substance close would be form without content. The Andrew-verbatim divergence ('exercise
+and close' vs cancel) stands surfaced at MSTR's terminal, not silent.
