@@ -1,185 +1,188 @@
-# RULE-24 RECORD — `closure_reason` (D7 ticket terminal dispositions)
+# RULE-24 RECORD — `closure_reason` (D7 ticket terminal dispositions) — **ADOPTED**
 
-**Author:** 1.0.0_SA_CTO~Z · **Date:** 2026-08-20 ~21:05Z · **Status:** AUTHORED, awaiting `3.0.0_SA_CVO~Z` second read
-**Shape ruling:** @`21bd23d943` §2a (two-field split) · **CE input consumed:** `3.0.0_SA_CVO~Z` 2905 @`97e58b0c14`
-**Plane:** canonical tree @`123071c5cd`. Source citations verified at HEAD with positive + negative controls (below).
-
----
-
-## 0. A CORRECTION TO MY OWN SHAPE RULING, forced by CE finding (3)
-
-§2a said `status` gains *"exactly ONE new terminal value for **ended without fulfillment**."* **That name is
-wrong, and adopting `superseded` is what exposes it** — a superseded ticket **was** fulfilled, just not
-through this ticket. Naming the status for *unfulfilled* would have made the ratified value unrepresentable
-on the axis built to hold it.
-
-> **CORRECTED: the new `status` value is `closed` — terminal, NOT completed *through this ticket*.**
-> `closure_reason` then explains why it closed without going through completion. The two-field split is
-> unchanged; only my name for the new value was wrong.
+**Author:** 1.0.0_SA_CTO~Z · **Date:** 2026-08-20 · **Status:** **ADOPTED 21:14Z**
+**Second read:** `3.0.0_SA_CVO~Z` @`d600f64266` — **VERDICT: PASS, ADOPT**, with one correction required *in* the adopting act (F-A). All of it is folded below.
+**Shape ruling:** @`21bd23d943` §2a (two-field split) · **CE input:** @`97e58b0c14` · **v1 authored:** @`1abe7dcba2`
 
 ---
 
-## 1. DECLARED LAYER (CE finding 3 — declared BEFORE the members, because the layer decides the list)
+## 0. TWO CORRECTIONS TO MY OWN PRIOR RULINGS, folded here
+
+**(a) The `status` value is `closed`, not "ended without fulfillment."** §2a's name was wrong: a
+`superseded` ticket **was** fulfilled, just not through this ticket, so naming the status for *unfulfilled*
+would have made the ratified value unrepresentable on the axis built to hold it. The split is unchanged;
+only my name for the new value was.
+
+**(b) My token census was CASE-SENSITIVE and that hid a third sense of the very token it existed to check.**
+I reported `superseded` = 11; `3.0.0_SA_CVO~Z` re-ran it and got **12**. Not an error — a **method defect**.
+The extra is **`SUPERSEDED` at `org/XXX.md:403`**, the law-file convention for a **struck clause** — neither
+the TO status nor this value, a **genuine third sense**.
+
+> **RULED as method, going forward: a token-hygiene census is CASE-INSENSITIVE. The hazard is SEMANTIC
+> occupancy, not string occupancy.** No enum collision; verdict unchanged.
+
+---
+
+## 1. DECLARED LAYER
 
 > **Every reason a ticket reaches a terminal state OTHER THAN completion through this ticket.**
 
-`3.0.0_SA_CVO~Z` named three candidate layers and was right that they enumerate differently. I am choosing
-this one over *"ended without the requester getting what they asked for"* precisely **because** that
-alternative would exclude `superseded` — and excluding it is the gap CE finding (1) exists to close. The
-layer is chosen to match what `status` actually partitions.
+Chosen over *"ended without the requester getting what they asked for"* **because** that alternative would
+exclude `superseded` — and that exclusion is the gap CE finding (1) exists to close.
 
----
-
-## 2. THE MEMBERS
+## 2. THE MEMBERS — six, all pointer-bearing values pointered
 
 | Value | Meaning | Mandatory pointer |
 |---|---|---|
-| `superseded` | **The need was MET ANOTHER WAY** — answered in-thread, resolved by an adjacent ticket, artifact appeared by another route | **YES — name what met it** |
-| `duplicate` | **The SAME request** is already tracked by another ticket | **YES — the canonical ticket id** |
-| `withdrawn` | The requester ended it; **the need went away** | no |
+| `superseded` | **The need was MET ANOTHER WAY** — answered in-thread, artifact appeared by another route | **YES** — name what met it |
+| `duplicate` | The need was **RELOCATED** to another ticket | **YES** — the canonical ticket id |
+| `withdrawn` | The requester ended it; the need went away | no |
 | `out_of_scope` | Opal declines the work | no |
-| `expired` | The requester never responded and it aged out | no |
-| `disputed` | Opal did the work, the requester rejects the outcome, **and Opal will not continue** | no |
+| **`requester_unresponsive`** | The requester never responded and it aged out | no |
+| `disputed` | Opal did the work, the requester rejects the outcome, **and Opal will not continue** | **YES** — the rejection (message / event id) |
 
-### 2a. `superseded` is REUSED, NOT RE-COINED — and that is the strongest finding in the set
+### 2a. ⛔ F-A — `expired` IS RENAMED TO `requester_unresponsive`, AND Opal-side ageout is NOT TERMINAL
 
-**Verified at source, not relayed** (`org/XXX.md:520` and `org/ref/TASK_ORDER_PROTOCOL.md:290-291,297`,
-Andrew-direct 2026-08-07; positive control = 4 occurrences in the protocol, negative control = 0):
+**`3.0.0_SA_CVO~Z` ran my own sharper either-actor test on the one value I failed to run it on.** I applied
+it to `withdrawn` and `out_of_scope` and stopped. `expired`'s **definition is requester-bound** ("the
+requester never responded") but its **NAME is actor-neutral** — and **the escalation sweep I ruled in this
+same wave is about OPAL-side ageout.**
 
-> `superseded` = **the NEED WAS MET ANOTHER WAY** (name what superseded it)
-> `cancelled` = **the NEED WENT AWAY** (cite the ruling)
-> *"**KEEP THE TWO DISTINCT — they differ on RE-OPEN, which is the only time it matters.** `superseded`
-> means the outcome was achieved; re-opening asks 'is the replacement still standing?' `cancelled` means
-> the outcome is unwanted; re-opening needs a **fresh authorization**."*
+> **THE CONCRETE FAILURE:** whoever wires the sweep's terminal handling reaches for `expired` **exactly as
+> its name invites**, and the row then says **THE CLIENT WENT SILENT WHEN IN FACT OPAL DID** — an Opal SLA
+> failure recorded as client non-response, **on a client-visible axis.**
 
-**My original four covered client-withdrew, timed-out and Opal-declines, and had NO member for *"the request
-was satisfied, just not through this ticket."*** On live-beta traffic where the same analyst answers in the
-Teams thread **and** on the board, that is not an edge case — it is likely the **common** ending.
+This is the banked CRO class: **Rule 24(iii) applies INSIDE a value's wording** — the same shape as
+*"ACTIVE = operating AS INTENDED"* smuggling a health axis into a life-position enum.
 
-**And the ratified rationale is load-bearing in this schema specifically, not merely applicable:** the
-distinction matters *only* on re-open — and §3 of @`21bd23d943` rules **REOPEN into this very wave.** The one
-condition under which the distinction pays is being built alongside it. Re-coining beside a ratified term
-would also be the build-ladder rung-2 duplicate the Rule-24 granularity amendment names.
+**RULED — BOTH remedies, not one.** `3.0.0_SA_CVO~Z` offered them as alternatives; they close the hole in
+independent ways and the second costs one sentence:
+1. **RENAMED `expired` → `requester_unresponsive`.** The name now carries the actor its definition always
+   had. This is the cheap moment — **nothing has encoded it yet**, which is exactly why the second read was
+   timed same-act rather than as a follow-up.
+2. **STATED, because the record is what the implementer reads: OPAL-SIDE AGEOUT IS NOT TERMINAL.** Nobody
+   picked it up → it **stays open** and is the escalation sweep's subject. My NOBODY-FORCE-COMPLETES interim
+   already implied this; **implying is not saying.**
 
-**`withdrawn` is the `cancelled` half**, named for this domain's actor. The ratified pair maps cleanly:
-`superseded` transfers verbatim; `cancelled` splits by *who* the need went away for (`withdrawn` = requester,
-`out_of_scope` = Opal declines).
+### 2b. THE TIE-BREAKER — REPLACED. Mine mixed dimensions.
 
-### 2b. The self-named gap SPLITS, and only one half is terminal (CE finding 2)
+> ~~If another TICKET carries the same request → `duplicate`; if the need was met with no ticket carrying it
+> → `superseded`.~~ **— MINE. REPLACED.**
 
-My §2a flagged *"Opal did the work and the requester rejects the outcome."* It is two things:
+**It keyed a STRUCTURAL fact (does another ticket exist) against two values that differ SEMANTICALLY (was
+the need met).** Decidable, never deadlocks — **and it misfires on the case this record handles best**: an
+analyst answers in-thread **and** an adjacent ticket exists → both conditions fire → ticket-identity wins →
+marked `duplicate` → and its **mandatory CLIENT-FACING pointer sends the client to a ticket that will itself
+close as `superseded`.** **A pointer chain to nothing, on the one value whose pointer the client sees.** It
+also works against the ratified rationale the adoption rests on, since the pair differs **on re-open** and a
+structural key routes to the wrong re-open question.
 
-- **(a) rejects and wants more → NOT TERMINAL.** That is the **REOPEN trigger**, and it belongs on §3's
-  requester-class MATRIX action, not here.
-- **(b) rejects and Opal will not continue → TERMINAL, genuinely uncovered.** Adopted as **`disputed`**.
+> **ADOPTED — same dimension for both: was the need SATISFIED (`superseded`) or merely RELOCATED to another
+> ticket (`duplicate`)?**
 
-**Adopting it undifferentiated would have put a NON-TERMINAL state on a TERMINAL axis** — the same flattening
-the split was ruled to prevent, arriving as a *"known gap"* rather than as a value. Naming the split was the
-whole remedy.
+Tested against my own cases: duplicate-of-still-open-TCK-B → same answer; answered-in-thread-with-no-other-
+ticket → same answer; **answered-in-thread-WITH-an-adjacent-ticket → differs, and gives the better answer**,
+because *"is the replacement still standing?"* is the question worth asking there. Both pointer requirements
+survive unchanged.
+
+### 2c. `disputed` GAINS A MANDATORY POINTER — the unknown-unknown, adopted
+
+**`disputed` is the only member that asserts a claim about the CLIENT'S STATE OF MIND, and it was the only
+evidence-bearing value with no mandatory pointer.** `superseded` and `duplicate` must name their referent
+because **a claim about the world needs one**; `disputed` is **a claim about a PERSON**, is client-visible
+under W-C, and was assertable with nothing cited. **It now carries a pointer to the rejection (message or
+event id)** — same reason as the other two and a stronger one: **it is the one value a client could read and
+disagree with.**
+
+### 2d. `created_in_error` — NOT ADOPTED, and the fork recorded so nobody re-derives it
+
+**Not a coverage question — a postulate (iii) question.** Every other member answers *"why did this REQUEST
+end without completion here"*; this answers *"was there a request at all."* **The six are statements Opal
+makes about A CLIENT'S REQUEST; this is a statement Opal makes about ITS OWN DATA.** A data-quality event
+does not belong on a lifecycle-outcome axis.
+
+**Reachability supports it:** `requester` is **server-derived**, so an internal test row's requester is the
+internal actor, and **W-C's READ-OWN filter makes such a row structurally invisible to any client.**
+
+⚠ **THE HONEST BOUND, recorded rather than hidden:** that covers test rows and mis-clicks. It does **not**
+cover **an analyst mis-filing ON BEHALF OF a client via CREATE**, which **is** client-visible. Read: that
+case is `withdrawn` or `out_of_scope` on its merits — **and if it is neither, it is the single case that
+would justify a seventh value.** Recorded as a fork, not a gap.
 
 ---
 
 ## 3. FOUR-POSTULATE TEST
 
-**(i) MECE — against the declared layer.**
-*Mutual exclusion:* one value applies at the moment of termination. **The one real seam is `duplicate` vs
-`superseded`**, and I am naming it rather than hoping: both can describe "resolved elsewhere."
-**TIE-BREAKER, which makes it decidable:** if **another TICKET carries the same request** → `duplicate`
-(ticket identity). If the **need was met without a ticket carrying that request** → `superseded` (need
-satisfaction). Two different questions; the tie-breaker picks one.
-*Collective exhaustion — hunting the uncovered member, per the CE half:* **`created_in_error`** (a row
-created by mistake — internal test rows, mis-clicks) has **no home**. A requester's mistake is `withdrawn`;
-**Opal's own mistaken row is uncovered.** ⚠ **NAMED, NOT ADOPTED** — I am flagging it for the second read
-rather than silently adding a seventh value, because whether an erroneous row should be a *closure reason*
-or should never reach a terminal state at all is a genuine design question I have not settled.
+**(i) MECE.** Mutual exclusion holds on the §2b dimension (satisfied vs relocated vs the four non-delivery
+reasons). Collective exhaustion against the declared layer: the CE hunt produced one candidate
+(`created_in_error`), adjudicated **off-axis** at §2d, with its one surviving fork named.
 
-**(ii) SAME GRAIN.** Every value is a reason at the grain of **one ticket's termination**. No cohort-level or
-program-level value sits on the axis.
+**(ii) SAME GRAIN.** Every value is a reason at the grain of **one ticket's termination**.
 
-**(iii) INTENT COHERENCE — one axis, one intent: WHY.**
-The actor is deliberately **absent from every value**, per §1 of @`21bd23d943` (actor derives from
-`events[]`). ⚠ **I applied the sharper test — is a second axis hiding inside a value's WORDING?** `withdrawn`
-implies the requester; `out_of_scope` implies Opal. **The discriminating question is whether either value
-could be reached by EITHER actor** — because if so, the wording would be encoding actor as a hidden
-dimension. It cannot: Opal cannot `withdraw` (that is `out_of_scope`), and a requester cannot declare
-`out_of_scope`. **The actor is a FUNCTION of the reason, not an independent axis**, so intent coherence
-holds and the actor stays derived.
+**(iii) INTENT COHERENCE — one intent: WHY.** Actor is absent from every value and derives from `events[]`.
+**The either-actor test is now run on ALL SIX**, not four: `withdrawn` (requester only — Opal cannot
+withdraw; that is `out_of_scope`), `out_of_scope` (Opal only), **`requester_unresponsive` (requester only —
+fixed by F-A; Opal-side ageout is not terminal at all)**, `superseded`/`duplicate`/`disputed` (Opal records
+the disposition). **The actor is a FUNCTION of the reason, not an independent axis.**
 
-**(iv) STATE COHERENCE — the stability frame.** Every value is an attribute on a **non-key** field, so adding
-any later is the identical cheap act: **one remedy moves them all.** ⚠ **This postulate passes *because of*
-the shape ruling** — on a single-axis design where these were `status` values, they would sit on the **GSI
-hash key** and adding one later would be a partition-key migration. **The split is what makes (iv) pass.**
+**(iv) STATE COHERENCE.** Every value is an attribute on a **non-key** field, so one remedy moves them all.
+⚠ **Passes BECAUSE OF the shape ruling** — on a single-axis design these would sit on the **GSI hash key**
+and adding one later would be a partition-key migration.
 
 ---
 
-## 4. TOKEN-HYGIENE CENSUS — run, not claimed
+## 4. WHY `superseded` IS IMPORTABLE AND THE MEMORY SET'S `WITHDRAWN` WAS NOT
 
-Word-boundary occupancy over the canon (`CLAUDE.md`, `org/XXX.md`, `org/ref/TASK_ORDER_PROTOCOL.md`,
-`docs/doctrine/CONTROLS_OVER_CARE.md`; denominator = 4 files, all present; negative control = 0):
+I asked `3.0.0_SA_CVO~Z` directly whether adopt-here / warn-there holds. **It holds — but my stated reason
+was wrong in a way that would license a wrong move, and the reason is what gets carried forward.**
 
-```
-superseded        11      <- COLLISION, deliberate (see below)
-duplicate          5      <- collision, benign (generic English usage, no ratified enum)
-expired            1      <- benign
-withdrawn          0
-out_of_scope       0
-disputed           0
-closure_reason     0
-created_in_error   0
-```
+> ~~My test: "ratified + declared different grain = rung 2."~~ **INSUFFICIENT.** `TO-pending` is equally
+> ratified, and adopting it for a ticket at a declared different grain would be wrong — **my test as stated
+> passes it.**
 
-⚠ **THE `superseded` COLLISION IS THE POINT OF THE CENSUS, AND IT IS HANDLED DELIBERATELY.** Eleven hits,
-and they are the **ratified TASK-ORDER status** — the same word on two schemas, in the same week that
-`WITHDRAWN` landing on two schemas drew a warning from both `2.0.0_SA_COO~Z` and `3.0.0_SA_CVO~Z`.
+> **THE ACTUAL DISCRIMINATOR — WHAT PROPERTY YOU IMPORT:**
+> **A term's MEANING can transfer across axes. A term-set's COMPLETENESS never can.**
 
-**Applying my own banked test — NAME THE REMEDY:** TO-`superseded` is fixed by a COO/issuer **status flip on
-a task order**; ticket-`superseded` is fixed by an **API state transition on a ticket row**. Different acts,
-different surfaces → **different axes wearing one word.**
+**Cheap test for the first — state the definition without naming its home axis.** *"The need was met another
+way"* survives with no axis named → **portable**. *"Active, GO given"* cannot be stated without the TO
+lifecycle → **not portable**.
 
-**So why adopt it here when we warned against copying `WITHDRAWN`?** Because the two cases differ on the
-thing that matters: **`WITHDRAWN` was warned against because copying it would have caused the ticket axis to
-UNDER-COVER** (the memory axis had no "Opal withdrew" counterpart, for a reason that does not hold here).
-**`superseded` is the opposite — its SEMANTICS transfer exactly**, Andrew ratified that meaning, and
-declining to reuse it would be re-coining beside a ratified term. **Reusing a ratified term with its ratified
-meaning at a declared different grain is rung 2; copying a term whose singularity was axis-specific is the
-defect.** The grain is declared here so a future reader cannot cross-cite the two filings.
+**And the `WITHDRAWN` warning was never about copying a TERM.** It was against importing the memory set's
+**CE property** — *"these four cover it there, so they cover it here"* — and **CE is evaluated against the
+DECLARED LAYER by construction, so it is axis-bound and can never transfer.**
+
+**The two were never in tension: one imports MEANING, the other would have imported COMPLETENESS.** This is
+the companion to the banked **NAME-THE-REMEDY** test, and it is the formulation that generalizes.
 
 ---
 
-## 5. THE POINTER IS PART OF THE VOCABULARY (CE finding 4)
+## 5. THE POINTER IS PART OF THE VOCABULARY
 
 `org/XXX.md:520`, verbatim: ***"a terminal status without its pointer is the rot with a tidier label."***
+Per-value field requirement enforced at the transition write, and **the client projection carries the
+pointer for any value that has one** — a pointerless `duplicate` means the client sees their request marked
+duplicate **with no path to where it actually lives.**
 
-**RULED: the pointer is a PER-VALUE FIELD REQUIREMENT**, enforced at the transition write — `superseded` MUST
-name what met the need; `duplicate` MUST carry the canonical ticket id. A pointerless `duplicate` is that rot
-**and W-C makes it client-facing**: the client sees their request marked duplicate **with no path to where it
-actually lives.** **The client projection MUST carry the pointer for any value that has one.**
+## 6. INTERNAL-RECORDED IS NOT CLIENT-RENDERED
 
----
+**My split fixed the internal record and left the client-facing defect where it was.** Client tabs are
+Open / In Progress / Completed; a second terminal `status` has **no tab**, and rendered under Completed a
+`withdrawn` ticket **still reads to the client as resolved** — the original P0 with better internal data
+behind it.
 
-## 6. INTERNAL-RECORDED IS NOT CLIENT-RENDERED (CE finding 5) — the sharpest catch in the set
+**RULED (correctness, mine):** a `status=closed` ticket **MUST NOT render under Completed**, and **MUST NOT
+carry an AI resolution summary** — an AI summary of a resolution that never happened is precisely the P0's
+harm. **Sole exception `superseded`**, where an outcome genuinely was delivered and the summary + pointer
+are truthful.
 
-**My split fixed the INTERNAL record and left the CLIENT-FACING defect exactly where it was.** The client
-tabs are Open / In Progress / Completed, and **a second terminal `status` value has no tab.** Rendered under
-Completed, a `withdrawn` or `out_of_scope` ticket **still reads to the client as resolved** — the original
-P0, now with better internal data behind it.
-
-**RULED — the CORRECTNESS constraint, which is mine:**
-1. **A `status=closed` ticket MUST NOT render under Completed.**
-2. **It MUST NOT carry an AI resolution summary** — an AI summary of a resolution that never happened is
-   precisely the P0's harm. **The single exception is `superseded`**, where an outcome genuinely was
-   delivered: there the summary **and its pointer** are truthful and useful.
-
-**CARDED TO ANDREW — the PRODUCT decision, which is his:** the client-facing **tab label** for the closed
-state, and whether a client sees `closure_reason` at all or only the tab. Per @`21bd23d943` §2, what a client
-sees is his enumeration (C2/C3/C4) and I do not widen it. **I rule that it must not read as resolved; I do
-not rule what it reads as.**
+**CARDED (product, Andrew's):** the client-facing **tab label**, and whether a client sees `closure_reason`
+at all. **I rule that it must not read as resolved; I do not rule what it reads as.**
 
 ---
 
-## 7. WHAT THIS RECORD DOES NOT DO
+## 7. ADOPTION
 
-It does not adopt. **`3.0.0_SA_CVO~Z` holds the second read**, and their boundary is right: the record is my
-authoring act, the verification is theirs. Two items are flagged **for** that read rather than settled:
-**`created_in_error`** (§3(i)) and the **`duplicate`/`superseded` tie-breaker** (§3(i)) — both are places
-where I would rather be checked than be confident.
+**ADOPTED** on `3.0.0_SA_CVO~Z`'s PASS, with F-A landed as **both** remedies, the tie-breaker replaced, the
+`disputed` pointer added, `created_in_error` adjudicated off-axis, and the census method corrected.
+`2.0.0_SA_COO~Z` and `0.5.0_AE_OpalETL~Z`: **the hold lifts — W-C's tab mapping and W-D's filing may now
+encode these six.** The interim **NOBODY FORCE-COMPLETES** continues to bind until the values are live.
