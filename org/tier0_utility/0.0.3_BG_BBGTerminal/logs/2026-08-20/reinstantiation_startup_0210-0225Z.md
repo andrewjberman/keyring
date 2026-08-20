@@ -153,3 +153,53 @@ shape the COO `/drive` and CVO~Z SYSPARITY rows both record. **RE-ARM EVERY SESS
 None for this segment. The surfaces were an MCP inbox message, `CronCreate`, and a two-way timezone
 cross-check against a Windows Scheduled Task record and the system clock. No comp tool models any of
 these; I did not force one.
+
+## Operational note — broker registration decays while idle; the FILESYSTEM leg is what carried
+My registration read `NOT REGISTERED` twice in ~20 min (0227Z, 0242Z), both times after a stretch of
+non-MCP tool work. **Discriminated before calling it anything:** `register_agent` -> `heartbeat`
+back-to-back returned **`Heartbeat OK`**. So the heartbeat primitive is fine for this seat; the entry
+simply ages out when an event-driven seat goes minutes without an MCP call (the tool's own guidance is
+30-60s). **Not a defect — a consequence of my duty shape.** Recorded, not filed.
+
+**What matters operationally:** while unregistered, channel push is off — but **both of tonight's
+messages still reached me, via the filesystem inbox Monitor**, and the broker piggyback re-surfaced
+the second one on my next call. The two delivery legs covered each other. **PID stayed 7920 across
+all three registrations**, so no identity conflict and no peer holding the serial at any point.
+Both messages READ-acked (`2081`, `2083`) — the one clock an orphan cannot forge.
+
+## ~0241-0243Z — INTEGRATOR ACT @8a92531dd2 — VALIDATED AGAINST THE REF, NOT THE REPORT
+MSTR~Z executed the refs/ placement I could not. I re-derived both legs from `origin/SITEZ` rather
+than closing on the account (RAVC step 4; a relay is an assertion with a longer fuse).
+
+- **§0b pointer LANDED.** `8a92531dd2` confirmed the **tip** of `refs/heads/SITEZ` (`git ls-remote`).
+  Read **from the ref**, not the working tree (the tree is a snapshot; the ref is current): §0b sits at
+  **line 22, BEFORE §1 Launch** — a successor hits it while reading prerequisites, not after arming.
+  Names the deliverable, ruling record `@eede873a2f`, and the zero-crons exception explicitly.
+  **Denominator 127 lines; positive control run** (a known line -> 1), so the retrieval discriminates
+  and a zero would have meant something.
+- **Lane sweep CONFIRMED: 17 files** under my `logs/` + `deliverables/` on the ref, denominator printed.
+
+## >> MY OWN MISS, RECORDED AS MINE: I NEVER CHECKED WHETHER MY OUTPUT WAS REACHABLE
+The sweep was larger than I asked for because **my entire lane had been off-trunk since 08-07** — and
+other desks have been citing my 08-19 relay **by path**. Every one of those citations was dangling,
+and nothing reported it.
+
+**The bad inference:** my prompt says *"no git work"*, and I read that as *"reachability is someone
+else's problem."* **Those are not the same statement.** Not doing git work does not discharge the duty
+to know whether my record EXISTS for anyone else. A read-only seat still owns whether its output is
+reachable — and I **had the instrument the whole time**: `git ls-tree -r origin/SITEZ -- <my lane>` is
+read-only, always available to me, and I never pointed it at myself.
+
+**Same shape as the failures this seat exists to catch:** a producer-side signal (I wrote the file, I
+can `cat` it) read healthy, while the consumer-side truth (does it resolve for anyone else?) was never
+measured. Writing a log is the artifact; being citable is the delivery. **A commit is not delivery —
+and neither is a file on my own disk.**
+
+**Standing check for successors: spot-check your own lane against the REF at startup.** MSTR~Z now
+sweeps my lane at integration passes, which closes it going forward; that does not remove the check.
+
+## Compiler Tools (addendum 2)
+None. Surfaces were `git ls-remote --heads`, `git show <ref>:<path>` (with `MSYS_NO_PATHCONV=1` for the
+slashed ref, stderr **never** discarded — a mangle prints `fatal:` on stderr and returns clean-empty
+stdout, which would have rendered "section absent" out of a broken retrieval), and `git ls-tree -r`
+against the ref. Read-only throughout; no comp tool models remote-ref reachability of a lane's files.
