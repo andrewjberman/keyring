@@ -390,8 +390,26 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
     serial = running_serial()
     if governance_permitted(serial) is False:                         # non-exec: defer, no snapshot I/O
         return ("deferred", f"lane: {serial} not GOVERNANCE_AUDIT-permitted -- an exec startup will archive")
-    snaps = snapshots()
-    if snaps and age_hours(snaps[-1][0], now) < SNAPSHOT_INTERVAL_H:   # guard 1: pre-commit age re-check
+    # DEVICE-CHAIN GUARD (CTO ruling @4484d55608, 2026-08-20 -- the INTERIM half of the device-axis
+    # fix). The shared tracked .baseline pins UNTRACKED device-local subjects, so a mint on either
+    # device manufactures ~18 false findings on the other (measured both directions, MSTR Msg 63017).
+    # A mint therefore REQUIRES (a) an ADMITTED device (DEVICES.txt, fail-closed both ways) AND
+    # (b) that device's OWN chain root carrying its OWN baseline pointer. Pre-migration (b) exists on
+    # neither device -> DEVICE-CHAIN-PENDING, and DETECTION IS DELIBERATELY UNTOUCHED (self-test,
+    # clauses 1/2/4, findings all still run against the legacy chain). The mint below is wired to the
+    # per-device root IN THE SAME EDIT so this guard cannot clear into a SHARED write: creating
+    # archive/<device>/ + its .baseline (the CTO-gated migration act) is exactly what redirects the
+    # mint; it can never re-enable the shared one.
+    device, dev_detail = authorise_device()
+    if device is None:
+        return ("deferred", f"DEVICE-CHAIN-PENDING -- per-device wiring not landed "
+                            f"(mint refused upstream: {dev_detail}); detection unaffected")
+    droot = ARCHIVE / device
+    if not (droot.is_dir() and (droot / ".baseline").is_file()):
+        return ("deferred", f"DEVICE-CHAIN-PENDING -- per-device wiring not landed "
+                            f"(no archive/{device}/ chain with its own .baseline); detection unaffected")
+    snaps = snapshots(droot)
+    if snaps and age_hours(snaps[-1][0], now) < SNAPSHOT_INTERVAL_H:   # guard 1: pre-commit age re-check (per-device chain)
         return ("skip", f"newest {snaps[-1][1].name} is < {SNAPSHOT_INTERVAL_H}h old")
     if dry:
         pin_note = f"; {len(pinned)} PINNED (baseline carried forward): {sorted(pinned)}" if pinned else ""
@@ -414,7 +432,7 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
         except OSError:
             return ("skip", "lock contended")
     ts = fmt_ts(now)
-    dest = ARCHIVE / ts
+    dest = droot / ts                                                 # per-device chain (guard above proved it exists)
     try:
         if dest.exists():                                             # guard 3: unique-second collision
             return ("skip", f"{ts} already exists (concurrent)")
@@ -430,12 +448,13 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
                 shutil.copy2(WS / rel, dest / flatten(rel))
                 copied.append(rel)
         pin_msg = f" + {len(carried)} PINNED at prior baseline (adjudicated non-append)" if carried else ""
-        rc, out = safe_commit(serial, [f"org/audit/archive/{ts}"],
-                              f"snapshot({ts}): audit-archive-invoker automated snapshot "
+        rc, out = safe_commit(serial, [f"org/audit/archive/{device}/{ts}"],
+                              f"snapshot({device}/{ts}): audit-archive-invoker automated snapshot "
                               f"({len(copied)} logs refreshed{pin_msg})")
         if rc == 0:
-            BASELINE_PTR.write_text(ts + "\n", encoding="utf-8")
-            safe_commit(serial, ["org/audit/archive/.baseline"], f"baseline({ts}): advance clean baseline pointer")
+            (droot / ".baseline").write_text(ts + "\n", encoding="utf-8")
+            safe_commit(serial, [f"org/audit/archive/{device}/.baseline"],
+                        f"baseline({device}/{ts}): advance clean per-device baseline pointer")
             return ("minted", f"{ts} minted + baseline advanced ({len(copied)} refreshed"
                               f"{', ' + str(len(carried)) + ' pinned: ' + ','.join(sorted(carried)) if carried else ''}) by {serial}")
         shutil.rmtree(dest, ignore_errors=True)                       # roll back the created dir
