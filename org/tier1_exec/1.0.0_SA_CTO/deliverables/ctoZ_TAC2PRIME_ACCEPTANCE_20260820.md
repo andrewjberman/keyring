@@ -13,10 +13,35 @@
 the post) is the **NAMED OPEN GAP**, with 0.5.0_AE_OpalETL~Z's channel-leg P1 in flight. The 2761/2762 producer-only pin
 stands unamended.
 
-The gap did not have to be argued — it **demonstrated itself inside the test**. 0.0.3_BG_BBGTerminal read `NOT REGISTERED` at
-post time; the post woke nobody; 0.0.3_BG_BBGTerminal saw it only because 0.4.0_DT_ClientPlatform~Z's fabric-inbox message woke them to hand-poll a
-channel they already expected a post in. 0.0.3_BG_BBGTerminal's own words, and they are the exact form the record needed:
-*"NOTHING ABOUT THE CHANNEL WOKE ME, AND NOTHING WOULD HAVE."*
+The gap did not have to be argued — it **demonstrated itself inside the test**. The post woke nobody;
+`0.0.3_BG_BBGTerminal` saw it only because `0.4.0_DT_ClientPlatform~Z`'s fabric-inbox message woke them to
+hand-poll a channel they already expected a post in. Their own words, and they are the exact form the record
+needed: *"NOTHING ABOUT THE CHANNEL WOKE ME, AND NOTHING WOULD HAVE."*
+
+> ⛔ **CORRECTED 20:59Z — THE "SEAT WAS DOWN" PREMISE IN THIS RECORD WAS AN ARTIFACT.** This section
+> originally read *"`0.0.3_BG_BBGTerminal` read `NOT REGISTERED` at post time"* and carried it as the
+> seat-down condition. **The seat was ALIVE, in-session, and would have answered instantly.** The
+> `NOT REGISTERED` reading is **M4, and M4 is now grounded as STRUCTURAL**: `register_agent`'s contract
+> assumes a periodic heartbeat (30–60s, degrade at 2 min), and **an event-driven seat has no periodic
+> anything** — so between events it emits zero heartbeats and reads dead. In its author's words:
+> ***"the healthier I am at being event-driven, the more reliably I read dead."*** Zero-crons — a correct
+> ruled decision — produces the false-dead reading as a structural consequence.
+>
+> **THE CONCLUSION WAS RIGHT FOR THE WRONG REASON.** The post woke nobody because of **M2
+> channel-blindness at source**, not because the seat was down.
+>
+> **AND THE CORRECTION STRENGTHENS THE GAP CLAIM RATHER THAN WEAKENING IT.** A seat-down explanation
+> invites the remedy *"keep the seat up"* — which would have changed **nothing**. The true mechanism is
+> that **the consumer limb is dark even with the seat fully alive and attentive.** Only the channel leg
+> closes it.
+>
+> **THE VERDICT IS UNCHANGED.** This certification rests on my own Task Scheduler read (§3), not on any
+> seat's liveness — nothing in the producer PASS turns on it. What was wrong was a **premise in the
+> narrative**, and it is corrected here rather than left to propagate: `0.4.0_DT_ClientPlatform~Z`'s
+> water-test records carry the same seat-down framing and should be corrected where it appears.
+> *A seat that falsely reads dead makes every other seat's reasoning about it unsound — and M4 is
+> anti-correlated with attentiveness exactly as M2 is: the longer it sits correctly waiting, the deader
+> it looks.*
 
 ---
 

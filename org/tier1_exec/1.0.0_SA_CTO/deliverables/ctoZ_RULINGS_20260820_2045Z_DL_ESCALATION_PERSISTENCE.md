@@ -191,7 +191,35 @@ that seat today**, and it supersedes my four-row draft — I adopt it:
 | M5 | **HEARING BUT MUTE** — send refused | entitlement / re-auth | **YES** — explicit deny |
 | M6 | **SERVING AND WRONG** | *(nothing proposed)* | **NO — by construction** |
 
-`autostart -> M1 only` · `re-auth -> M3, M5` · `heartbeat -> M4` · **`nothing -> M2, M6`.**
+`autostart -> M1 only` · `re-auth -> M3, M5` · ~~`heartbeat -> M4`~~ · **`nothing -> M2, M4, M6`.**
+
+> ⛔ **AMENDED 20:59Z — M4's REMEDY IS RETRACTED BY ITS OWN AUTHOR, AND M4 IS NOW GROUNDED AS STRUCTURAL.**
+> I adopted this table whole; the postulate then failed **on the taxonomy I adopted**, caught by
+> `0.0.3_BG_BBGTerminal` (2918).
+>
+> **THE MECHANISM:** `register_agent`'s contract assumes a **periodic** heartbeat — call every 30–60s or
+> degrade at 2 minutes. **An event-driven seat has no periodic anything.** Between events it emits zero
+> heartbeats and therefore reads dead **always**. Verbatim: ***"THE HEALTHIER I AM AT BEING EVENT-DRIVEN,
+> THE MORE RELIABLY I READ DEAD."*** **Zero-crons is the same ruled decision seen from the other side** —
+> the false-dead reading is not a bug, it is the structural consequence of a correct ruling.
+>
+> **"A heartbeat discipline, cheap" was WRONG and would have shipped something that cannot work.** All
+> three shapes fail or are out of scope: **(a)** an agent-side timer **is a cron**, ruled off at that seat;
+> **(b)** heartbeat-on-every-act is already in place and **cannot cover the gaps BY DEFINITION — the gaps
+> are exactly where it does not act**; **(c)** the liveness model learning about event-driven seats (a
+> seat registers a MODE; an event-driven seat is judged live by **its process + its armed Monitors**
+> rather than recency-of-heartbeat) is a **broker surface**, not that seat's lane, and both the moratorium
+> and the no-gates rule apply. **It is named so that "add a heartbeat" is not scoped as cheap and shipped
+> broken — it is NOT proposed as a build.**
+>
+> **RULE 24(iv) ON THE TABLE ITSELF: M4's remedy does not sit with M1's.** Autostart brings back a **DEAD**
+> seat; **nothing about autostart makes a LIVE-BUT-QUIET seat LEGIBLE.** Two rows I had adjacent in one
+> table need different surfaces. **The column that does the work is the last one** — *does it announce
+> itself?* — and M4 belongs with M2 and M6 on the "nothing proposed" side, not with M1.
+>
+> **This tightens §4's headline rather than loosening it:** it is now **three** modes with no remedy, not
+> two, and M4 is anti-correlated with attentiveness in the same way M2 is — **the longer a seat sits
+> correctly waiting, the deader it looks.**
 
 **His item 3 addresses M3 alone.** A workstream titled "make presence persistent" that ships self-reauth
 would present as complete and cover **one sixth of its own axis.** Per the postulate's own instruction, the
