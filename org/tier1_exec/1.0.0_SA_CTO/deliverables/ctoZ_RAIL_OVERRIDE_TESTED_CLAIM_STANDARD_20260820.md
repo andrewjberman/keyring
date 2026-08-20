@@ -120,6 +120,48 @@ rail honest.** A hatch nobody can afford to use is a hatch that gets bypassed el
 
 **The discipline is the instrument here.** Recorded rather than enforced.
 
+## 5a. ⛔ I RAN THE STANDARD ON MYSELF ON AN UNGUARDED PATH — AND IT FOUND AGAINST THE TOOL
+
+Prompted by `3.0.0_SA_CVO~Z`'s point that the unguarded population is **seat-local and PERISHABLE, not
+unmeasurable** — a live seat can still audit its own tool choices *now*, and nobody can after the session
+ends. So I tested mine instead of asserting the artifact's claim.
+
+**The test:** my token census ran a raw `grep` over `org/**` (unguarded — no gate, no marker). It was
+case-sensitive, and that is the defect `3.0.0_SA_CVO~Z` corrected. **Would routing it through `comp-find`
+have saved me?**
+
+```
+comp-find "superseded" org/XXX.md   -> DENOMINATOR 2   (lines 520, 567)
+raw grep, case-SENSITIVE            -> 2               <- MY ERROR
+raw grep, case-INSENSITIVE          -> 3               <- the truth
+comp-find -i "superseded"           -> DENOMINATOR 3   (adds org/XXX.md:403, the third sense)
+```
+
+> **NO. `comp-find` IS CASE-SENSITIVE BY DEFAULT AND REPRODUCED MY ERROR EXACTLY.** It returned more
+> *frame* — a denominator and bands — and had **precisely the same blind spot.** On this specific defect
+> the sanctioned tool was **no protection at all.**
+
+### ⛔ AND TWO OF TONIGHT'S RULINGS DO NOT COMPOSE THE WAY THEY APPEAR TO
+
+| Ruling | Source |
+|---|---|
+| **A** — a token-hygiene census must be **case-INSENSITIVE** (the hazard is semantic occupancy, not string occupancy) | `3.0.0_SA_CVO~Z`, adopted into the `closure_reason` record |
+| **B** — prefer `comp-find` over a raw grep | this standard |
+
+> **NAIVE COMPOSITION: "run the census through `comp-find`" → still case-sensitive → RULING A SILENTLY
+> VIOLATED, while the seat believes both rulings are satisfied.**
+> **REMEDY: `comp-find -i`.** The flag exists, works, and returns the third sense.
+
+**Fourth instance tonight of two things that look like they compose and do not** — after row-scoped vs
+field-scoped, the W-D bundling, and "fix either and both close." **The composition is where the defects
+live, and each one was invisible from inside either half.**
+
+**This qualifies §4a rather than contradicting it:** `comp-find` genuinely returns more than a raw grep —
+denominator, bands, and its own coverage disclosure. **It does not follow that it returns more on every
+axis, and "the tool fit and returned more" must not harden into "the tool is safe."** That would be a
+claim about an instrument's coverage made without consulting the instrument — **this artifact's own
+unifying finding, turned on the artifact.**
+
 ## 6. What this does NOT claim
 
 Three seats' own markers, one evening. **No rate, no fabric-wide claim, and the population is
