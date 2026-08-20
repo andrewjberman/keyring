@@ -89,6 +89,53 @@ PESSIMISTIC  first step 270s | second 28s | RATIO  9.5 : 1
 *This is the strongest form a sensitivity check can take: run by the seat whose own measurement supplied
 the doubt, in the direction that would have hurt the conclusion, and reported when it held.*
 
+### 3b. ⛔ THE "30s SCHEDULE" WAS AN UNVERIFIED PREMISE, AND MY DECISIVE SENTENCE DEPENDS ON IT
+
+`2.0.0_SA_COO~Z` (3407) challenged the floor. **They are right, and it was live in front of Andrew.**
+
+| Claim | Layer | Status |
+|---|---|---|
+| `schtasks /RI` takes **MINUTES** → sanctioned CLI floors at **1 minute** | — | **MEASURED** (theirs) |
+| `New-ScheduledTaskTrigger -RepetitionInterval 30s` → **ACCEPTED**, returns `PT30S` | **DESIRED** | **MEASURED** (mine) |
+| The engine actually **fires** every 30s | **EXERCISED** | ⛔ **UNMEASURED BY ANYONE** |
+
+> ⛔ **AN API ACCEPTING A VALUE IS NOT AN ENGINE HONOURING IT.** My datum sits at the **DESIRED** layer —
+> the schema validates `PT30S`. Whether Task Scheduler *fires* at that interval is the **EXERCISED**
+> layer and nobody has measured it. **1 minute is established-reachable; 30 seconds is schema-accepted
+> and engine-unmeasured.** *`2.0.0_SA_COO~Z` called it "unestablished, not refuted" and declined to assert
+> the engine either way — the correct bound, and the reason this got caught as a premise rather than
+> shipped as a fact.*
+
+**THE SENTENCE I CARDED TO ANDREW BREAKS AT A 1-MINUTE FLOOR:**
+
+```
+"the remaining ~13s is SMALLER than the wake hop we cannot remove (14.13s)"
+   at 30s schedule -> margin ~13s  <  14.13s   TRUE
+   at 60s schedule -> margin ~28s  >  14.13s   FALSE
+```
+
+**Corrected arithmetic at the ESTABLISHED floor:**
+
+```
+today 5-min ~164s | 1-min ~44s | stream ~16s
+   first step 120s | second 28s | RATIO 4.3 : 1
+```
+
+**THE RECOMMENDATION IS UNCHANGED — 4:1 still decisively favours (ii).** What changes is the argument's
+**shape, not its direction**: at a 1-minute floor the stream's margin (~28s) is **larger** than the wake
+hop, so *"the margin disappears into a floor we cannot remove"* is no longer available.
+
+> **THE HONEST FORM: the stream buys ~28s for the estate's first DynamoDB stream plus a new standing
+> local process. A schedule change buys ~120s for nothing.**
+
+**The deciding test is EXERCISED-layer and cheap** — register a scratch task at `PT30S`, read
+`LastRunTime` deltas, delete it. **Routed, not run:** it is a system change on a box carrying live
+production schedules, and **it changes a SENTENCE, not the RECOMMENDATION.**
+
+*My error: I built a decisive-sounding sentence on an unverified premise about a scheduling floor and put
+it in front of the sovereign — **a claim about a mechanism's capability made without consulting the
+mechanism**, the ninth instance tonight of that shape.*
+
 ## 4. RULED — ENGINEERING RECOMMENDATION: OPTION (ii). RUNG 1 IS ANSWERED.
 
 **The stream does not need to exist for this requirement.** Shorten the schedule; drop the DynamoDB stream
