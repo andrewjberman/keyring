@@ -54,16 +54,42 @@ sentinel + silver consuming).
 
 ## Blockers
 
-**NONE.** One external gate, stated plainly: tonight's scheduled cot nightly (~02:00Z window)
-is the G4 belt acceptance + (once DS's G4b commit lands) the G4b behavioral acceptance. Not
-deferrable-by-choice -- the acceptance is DEFINED as the scheduled run's output. My proof
-instance (bronze group G1-G4) mints after that verification, then RAVC close to COO cc CTO.
+**NONE.** One external gate, stated plainly: the next SCHEDULED cot chain fire is the G4 belt
+acceptance + the G4b behavioral acceptance. Not deferrable-by-choice -- the acceptance is
+DEFINED as the scheduled run's output. My proof instance (bronze group G1-G4) mints after that
+verification, then RAVC close to COO cc CTO.
+
+> ⛔ **CLOCK CORRECTION 2026-08-20 ~2045Z, MINE, load-bearing.** This section originally read
+> *"tonight's scheduled cot nightly (~02:00Z window)"*. **THAT IS WRONG AND I CARRIED IT INTO
+> FOUR MESSAGES (63366/63367/63368 + the G4 landing report).** The cot chain was re-anchored to
+> **7:30 AM America/New_York = 11:30Z** (Andrew-direct 2026-08-14, MDPF_TRGALN §3 row 4); the
+> `cron(0 2)Z` Rule I was reasoning from was **DELETED in that same change**
+> (`eventbridge.tf:43-45`). Read at BOTH planes: DESIRED `schedule-et.tf:90` cron(30 7)
+> America/New_York; APPLIED `aws scheduler get-schedule cot-bd-session-daily-et` -> State
+> **ENABLED**, same expression. **So the acceptance fire is FRIDAY 2026-08-21 11:30Z**, not
+> "tonight". CTO (63716) and COO (63713) held the same stale fact from my reports and have
+> corrected their own boards -- four seats, one unverified fact, propagated by citation.
+> **THE CONSEQUENCE THAT MATTERS: today's fire ran 11:31Z, SIX HOURS BEFORE the 17:50Z template
+> amendment, so today's 19-column extract is NOT a G4 failure** -- a stale clock does not merely
+> delay a verification, it frames a correct artifact as a defect.
 
 ## Next Steps
 
-1. **[me, on the nightly's fire]** Verify HOLDINGS_DAILY_{next-bday}.xlsx carries 21 cols incl
-   both supervised columns (served bytes, not the QA read); then mint
+1. **[me, on the FRIDAY 2026-08-21 11:30Z fire -- watch armed, Monitor bgx6dde2b on the exact
+   key]** Run `verify_g4_belt_acceptance.py`: served-bytes verify of
+   `HOLDINGS_DAILY_2026-08-20.xlsx` (expect 21 cols vs the MEASURED 19-col baseline, 18,051 rows
+   unchanged), the belt's FIRST REAL TEST (per-row Holding-vs-Account supervised disagreement
+   with its denominator), both sidecars, the bronze sentinel, and G4b's schedule-landed proof
+   (a landing timestamp INSIDE the 11:3xZ window -- the G1 bootstrap was a 17:36Z hand-run, and
+   the verifier discriminates the two). Then mint
    `COT_SUPERVISED_PROOF_OF_SPEC_062_20260820.json`, validate rc=0, RAVC close to COO cc CTO.
+   *Pre-fire negative control RUN 2026-08-20 20:49Z: 8/12 PASS, failing on exactly the four
+   not-yet-true cells -- the instrument can fail, and fails in the right places.*
+   *Runtime prerequisites for G4b VERIFIED DEPLOYED (not merely committed): the deployed
+   `code/bronze/cot_bronze_ingest.py` @18:06:50Z carries the account_attributes dict entries +
+   SNAPSHOT_TABLES membership, and `code/bronze/templates/account_attributes.json` is live
+   @18:06:01Z -- the S3 template is what `load_template` actually reads, and its absence would
+   have failed the table and SUPPRESSED THE WHOLE CHAIN'S SENTINEL.*
 2. **[0.2.0_DS]** G3 tie-out (HAR oracle, grain-collapsed) + G2 served-dim re-read + G4b
    one-commit + G5/G6. All inputs from my side are delivered.
 3. **[0.6.0/CTO]** the endpoints/README.md:59 one-line doc fix (routed finding 2).
