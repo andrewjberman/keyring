@@ -270,6 +270,21 @@ taking the deploy.
   and leave open work IN-TREE. *(Site Z found 16 modified files pre-merge, 10 colliding; all 16 were
   backed up before anything was touched, and 9 cleared as machine churn — timestamp bumps on
   `.open_deploys` entries the peer had since closed.)*
+- ⛔ **THE MERGE WINDOW IS A SHARED-INDEX HAZARD: ANNOUNCE IT OPEN, AND INSPECT THE INDEX BEFORE
+  CONCLUDING.** On one shared worktree, a lane running `safe-commit` while your `MERGE_HEAD` exists
+  **stages its files into YOUR merge index, silently** — the lane's commit is then refused loud
+  ("cannot do a partial commit during a merge"), but the staging has already happened, so the
+  refusal lands on the WRONG seat while the sweep hazard sits with the integrator. **Measured
+  THREE times in one night (2026-08-20):** CVO's staged log swept into @a206dfba9c under the
+  integrator's subject; AE's staged TrueShares work swept the same way; 0.8.0's comp-adversary
+  work staged mid-merge and self-rescued (`git reset HEAD -- <own files>`) minutes before the
+  commit. This is the CLAUDE.md @6d14f2d15 "test subject" class, structural to
+  LANES-COMMIT-INTEGRATORS-PUSH on one tree. **Therefore, both halves mandatory:** (a) BEFORE
+  `git merge` — one-line broadcast to live seats: *"MERGE WINDOW OPEN — hold safe-commits until my
+  close"* (and a matching CLOSE line after); (b) BEFORE the merge-conclusion commit — run
+  `git diff --cached --stat`, and any path outside your resolution set gets `git reset HEAD -- <path>`
+  and a note to its owner. **A gate candidate rides with this (CTO to route): safe-commit refusing
+  to STAGE — not just to commit — while `.git/MERGE_HEAD` exists.**
 - **Push carries every lane's committed work, not just yours** — that is the LD-0367 rationale.
   Enumerate the payload (`git log --format='%an' origin/CLOUD..HEAD | sort | uniq -c`) so you can
   say what you carried.
