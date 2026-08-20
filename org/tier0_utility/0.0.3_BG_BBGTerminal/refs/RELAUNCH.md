@@ -75,6 +75,14 @@ evidence below.
 
 ## 3. First-session obligations
 
+- **S2 ACCEPTANCE, ONE-TIME, first launch after @e23b879dad (retire this row once reported):**
+  the launcher now sets `ENABLE_TOOL_SEARCH auto:25` for this seat (sec11 S2, CTO~Z ruling
+  msg 2618). Confirm your six hot gateway tools (send_chat_message, read_chat_messages,
+  poll_addressed_teams_messages, whoami, ack_messages, opal_data_refresh_upload) are
+  RESIDENT — i.e. you reached your first Teams ACK with **ZERO ToolSearch calls**. Report to
+  MSTR~Z + CTO~Z. Any tool still deferring at auto:25 → say so; the line drops to `false`.
+  Baseline: the 2026-08-20 session made FIVE ToolSearch schema loads before its first
+  outbound act (see `logs/2026-08-20/`) — zero is only checkable against that prior.
 - **Inbox pull:** `/watcher` Step 4 covers it — act on anything found, same turn.
 - **First-serve smoke (ACK-FIRST, per `/bbg-teams-assist`):** on the first inbound Teams
   message (or the backlog sweep `/bbg-teams-assist` if anything landed while dark), run the
