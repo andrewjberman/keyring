@@ -10,31 +10,151 @@
   },
   "assignee": "4.0.0_SA_CRO",
   "artifacts_produced": [
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md", "kind": "doc", "commit_or_etag": "bcc9c46014", "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE", "deploy_evidence": "spine ledger: S1 harm-surface tracker + S2 schema-act index + S3-S7 status; appended at every act"},
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md", "kind": "doc", "commit_or_etag": "8a60f96758", "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE", "deploy_evidence": "S3 spec certification of the Observation_Record envelope against PRD sec.2.1 (CERTIFIED-WITH-CONDITION, D1 = rider R1)"},
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S5_PROFILE_ALGEBRA_AND_MUTATION_GATEWAY_SPEC_20260820.md", "kind": "doc", "commit_or_etag": "4c023d5725", "deployed_state": "STAGED-AWAITING-GATE", "deploy_evidence": "S5 component-10 spec half, PROPOSED 0.1.1, BUILD STAGED; CTO arch gate 211747Z PASS-AS-SPEC (build staged)"},
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT.schema.json", "kind": "config_data", "commit_or_etag": "85f64c7142", "deployed_state": "STAGED-AWAITING-GATE", "deploy_evidence": "S6 schema 0.1.1; CTO gate 63695 PASS-TO-EXERCISE applied, ACCEPTED 63743; final acceptance after 4.0.0_SA_CRO~C Phase-1 instance + CVO verify"},
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT_RULE24_RECORD.md", "kind": "doc", "commit_or_etag": "85f64c7142", "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE", "deploy_evidence": "S6 Rule-24 record + token census + gate-applied honest-populability table"},
-    {"path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/C2_RARITY_COORDINATE_RIDER_SPEC_20260820.md", "kind": "doc", "commit_or_etag": "cc3defbef2", "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE", "deploy_evidence": "S2 schema-act: rarity rider spec (rides R1), three enums Rule-24 recorded, census run; COO routes the owner act"}
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "8e1599f0ea",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "spine ledger: S1 harm-surface tracker + S2 schema-act index + S3-S7 status; appended at every act"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "8a60f96758",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S3 spec certification of the Observation_Record envelope against PRD sec.2.1 (CERTIFIED-WITH-CONDITION, D1 = rider R1)"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S5_PROFILE_ALGEBRA_AND_MUTATION_GATEWAY_SPEC_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "4c023d5725",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "S5 component-10 spec half, PROPOSED 0.1.1, BUILD STAGED; CTO arch gate 211747Z PASS-AS-SPEC (build staged)"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT.schema.json",
+      "kind": "config_data",
+      "commit_or_etag": "85f64c7142",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "S6 schema 0.1.1; CTO gate 63695 PASS-TO-EXERCISE applied, ACCEPTED 63743; final acceptance after 4.0.0_SA_CRO~C Phase-1 instance + CVO verify"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT_RULE24_RECORD.md",
+      "kind": "doc",
+      "commit_or_etag": "85f64c7142",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S6 Rule-24 record + token census + gate-applied honest-populability table"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/C2_RARITY_COORDINATE_RIDER_SPEC_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "cc3defbef2",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S2 schema-act: rarity rider spec (rides R1), three enums Rule-24 recorded, census run; COO routes the owner act"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C3_IDENTITY_OBJECTS_SPEC_CERT_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "8ab037f1b1",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S3 spec certification of the C3-IDENTITY objects (Support_Closure / Identity_Bundle / terminal axis) CERTIFIED-WITH-AMENDMENTS -> re-stated -> base CONFIRMED + CTO gate CONFIRMED 2156Z"
+    }
   ],
   "acceptance": [
-    {"criterion_id": "S1", "criterion_verbatim": "THE FOUR HARM SURFACES (sec.4b) tracked as OPEN REQUIREMENTS -- each carrying an owner-or-declared-deferral and the condition that would close it; NEVER built against (rider a: sec.2.9 is not buildable spec); re-stated in each program review.", "method": "manual_read_with_citation", "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md sec. S1 @bcc9c46014", "output_evidence": "4 surfaces x {status OPEN, owner-or-deferral (DEFERRED with dependency chain 1->2->3->4), close condition} all populated; S5 spec cites sec.2.9 as a STAMP only; no lane TO cites sec.2.9 as buildable (zero findings at the base gate).", "denominator": "4 of 4 sec.4b surfaces carried; 0 builds against sec.2.9 across 3 lane TOs + 2 base specs", "status": "PASS"},
-    {"criterion_id": "S2", "criterion_verbatim": "THE RULE-24 SCHEMA-ACT PROGRAM: every component vocabulary that reaches schema form gets its four-postulate record + token census through your seat; each act CTO-gated; an index of executed acts maintained in your deliverables.", "method": "manual_read_with_citation", "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md sec. S2 @bcc9c46014", "output_evidence": "S2 index carries 13 dated act rows (Lifecycle_Stage enum, observability vertical, Rule 24 widened/scoped, ~B verdict axes, ~A package records, ~C disposition, rarity rider spec, registry_vintage, Observation_Record act, S6 0.1.1, S5 spec), each with record pointer + gate column; 0 PENDING rows remain", "denominator": "13 executed act rows indexed; 0 schema-form vocabularies known to base without a record (every lane schema act routed through base this session)", "status": "PASS"},
-    {"criterion_id": "S3", "criterion_verbatim": "PER-COMPONENT SPEC CERTIFICATION as lanes deliver -- envelope FIRST (its cert unblocks every downstream ingest); each cert reads the deliverable against the PRD section of record and names any cite-not-copy deviation as a finding.", "method": "manual_read_with_citation", "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md @8a60f96758", "output_evidence": "Envelope cert ISSUED: 11 PRD sec.2.1 rows read field-for-field, governing rule CONFORMS (structural allOf), ONE cite-not-copy deviation named (D1: plane x substrate fused) = CTO bind-time condition 63743 / COO rider R1", "denominator": "1 of 1 delivered component certified (Component 1); 11 of 11 sec.2.1 rows read; 1 deviation named", "status": "PASS"},
-    {"criterion_id": "S4", "criterion_verbatim": "LANE ADMINISTRATION + CODEX DELIVERY: the three lane TOs relayed (~A/~B over the Codex channel, ~C normally); GOs for ~A/~B GATE ON THEIR ACKS (SENT is not READ -- a missing ack within a reasonable window is a FINDING of channel or seat, never a reason to proceed on relay receipt); review gates administered under your existing drive loop; lane surprises routed to COO.", "method": "live_read", "invocation": "ls org/mcp/inbox/4.0.0_SA_CRO/read/ filtered to 203151Z_4.0.0_SA_CRO~A__ack and 203255Z_4.0.0_SA_CRO~B_ACK_63650", "output_evidence": "3 of 3 lane TOs relayed ~2026Z; agent-side acks landed 4.0.0_SA_CRO~A 203151Z (C1, GO triggered) and 4.0.0_SA_CRO~B 203255Z (C7, GO triggered/held by Pass-3 clause), both returned to COO 203438Z/203739Z; surprises routed to COO same hour (12th-record retroactive invalidation 63721 -> ruled; comp-estate header absence -> routed)", "denominator": "2 of 2 Codex acks received before any GO; 3 of 3 TOs relayed; 2 of 2 surprises routed", "status": "PASS"},
-    {"criterion_id": "S5", "criterion_verbatim": "COMPONENT 10 SPEC HALF: the profile algebra + mutation-capability gateway SPECIFIED as schema/law (Rule-24 recorded); build staged, named as such.", "method": "manual_read_with_citation", "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S5_PROFILE_ALGEBRA_AND_MUTATION_GATEWAY_SPEC_20260820.md @4c023d5725", "output_evidence": "Spec carries schema table (18 fields with produce-time honesty), 8 Rule-24-recorded axes/enums, the compilation algorithm (6 steps), estate correspondence, census (21 new tokens 0/0/0, no collision), BUILD STAGED named in header + sec.6; CTO arch gate 211747Z PASS-AS-SPEC", "denominator": "8 of 8 enumerations recorded; 21 of 21 new tokens censused", "status": "PASS"},
-    {"criterion_id": "S6", "criterion_verbatim": "COMPONENT 9 SCHEMA: the causal-assessment object's schema authored as source of record alongside ~C's exercise (their findings route to you); recovery/reachability edges cite Response IX's exercised-witness floor (rider d).", "method": "schema_validation", "invocation": "python json.load parse of org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT.schema.json (run 2052Z: parses; properties=16 required=15)", "output_evidence": "0.1.1 parses; 16 properties / 15 required / additionalProperties:false; 11 declared absence semantics; CTO 63695 PASS-TO-EXERCISE applied + 63743 ACCEPTED; record states recovery/reachability edges cite Response IX exercised-witness floor when grown (rider d); ~C findings route to base (two ruled today: 63721, 63725)", "denominator": "16 of 16 properties read; 6 new tokens 0/0/0", "status": "PASS"},
-    {"criterion_id": "S7", "criterion_verbatim": "Proof instance VALID rc=0 positional S1-S7 at the program's first review milestone (envelope cert), re-validated at each subsequent cert; RAVC to COO, cc CTO.", "method": "command", "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY.SPINE_PROOF_OF_SPEC.json S1,S2,S3,S4,S5,S6,S7", "output_evidence": "see commit body: VALID rc=0 at the envelope-cert milestone (S3 issued @8a60f96758), run twice byte-identical", "denominator": "7 of 7 expected criteria carried; 0 extra", "status": "PASS"}
+    {
+      "criterion_id": "S1",
+      "criterion_verbatim": "THE FOUR HARM SURFACES (sec.4b) tracked as OPEN REQUIREMENTS -- each carrying an owner-or-declared-deferral and the condition that would close it; NEVER built against (rider a: sec.2.9 is not buildable spec); re-stated in each program review.",
+      "method": "manual_read_with_citation",
+      "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md sec. S1 @8e1599f0ea",
+      "output_evidence": "4 surfaces x {status OPEN, owner-or-deferral (DEFERRED with dependency chain 1->2->3->4), close condition} all populated; S5 spec cites sec.2.9 as a STAMP only; no lane TO cites sec.2.9 as buildable (zero findings at the base gate).",
+      "denominator": "4 of 4 sec.4b surfaces carried; 0 builds against sec.2.9 across 3 lane TOs + 2 base specs",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S2",
+      "criterion_verbatim": "THE RULE-24 SCHEMA-ACT PROGRAM: every component vocabulary that reaches schema form gets its four-postulate record + token census through your seat; each act CTO-gated; an index of executed acts maintained in your deliverables.",
+      "method": "manual_read_with_citation",
+      "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY_SPINE_LEDGER_20260820.md sec. S2 @8e1599f0ea",
+      "output_evidence": "S2 index carries 19 dated act rows (Lifecycle_Stage enum, observability vertical, Rule 24 widened/scoped, ~B verdict axes, ~A package records, ~C disposition, rarity rider spec, registry_vintage, Observation_Record act, S6 0.1.1, S5 spec, C9-RIDE Phase 1, A5 stage_class ruling, registry v3.12/3.13/3.14, C3-IDENTITY cert), each with record pointer + gate column; 0 PENDING rows remain",
+      "denominator": "19 executed act rows indexed; 0 schema-form vocabularies known to base without a record (every lane schema act routed through base this session)",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S3",
+      "criterion_verbatim": "PER-COMPONENT SPEC CERTIFICATION as lanes deliver -- envelope FIRST (its cert unblocks every downstream ingest); each cert reads the deliverable against the PRD section of record and names any cite-not-copy deviation as a finding.",
+      "method": "manual_read_with_citation",
+      "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md @8a60f96758 + org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C3_IDENTITY_OBJECTS_SPEC_CERT_20260820.md @8ab037f1b1",
+      "output_evidence": "TWO certs ISSUED: (1) envelope -- 11 PRD sec.2.1 rows read field-for-field, governing rule CONFORMS (structural allOf), ONE cite-not-copy deviation named (D1: plane x substrate fused) = CTO bind-time condition 63743 / COO rider R1; (2) C3-IDENTITY objects -- 7 spec-of-record claims read, CERTIFIED-WITH-AMENDMENTS (A1 terminal axis split reach x standing, precedence rule removed; A2 canon-surface census), amendments ABSORBED in the re-statement, base CONFIRMED + CTO gate CONFIRMED 2156Z",
+      "denominator": "2 of 2 delivered component schema acts certified (Component 1 envelope; Component 3 objects); 11 + 7 spec rows read; 1 deviation + 2 amendments named",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S4",
+      "criterion_verbatim": "LANE ADMINISTRATION + CODEX DELIVERY: the three lane TOs relayed (~A/~B over the Codex channel, ~C normally); GOs for ~A/~B GATE ON THEIR ACKS (SENT is not READ -- a missing ack within a reasonable window is a FINDING of channel or seat, never a reason to proceed on relay receipt); review gates administered under your existing drive loop; lane surprises routed to COO.",
+      "method": "live_read",
+      "invocation": "ls org/mcp/inbox/4.0.0_SA_CRO/read/ filtered to 203151Z_4.0.0_SA_CRO~A__ack and 203255Z_4.0.0_SA_CRO~B_ACK_63650",
+      "output_evidence": "3 of 3 lane TOs relayed ~2026Z; agent-side acks landed 4.0.0_SA_CRO~A 203151Z (C1, GO triggered) and 4.0.0_SA_CRO~B 203255Z (C7, GO triggered/held by Pass-3 clause), both returned to COO 203438Z/203739Z; surprises routed to COO same hour (12th-record retroactive invalidation 63721 -> ruled; comp-estate header absence -> routed)",
+      "denominator": "2 of 2 Codex acks received before any GO; 3 of 3 TOs relayed; 2 of 2 surprises routed",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S5",
+      "criterion_verbatim": "COMPONENT 10 SPEC HALF: the profile algebra + mutation-capability gateway SPECIFIED as schema/law (Rule-24 recorded); build staged, named as such.",
+      "method": "manual_read_with_citation",
+      "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S5_PROFILE_ALGEBRA_AND_MUTATION_GATEWAY_SPEC_20260820.md @4c023d5725",
+      "output_evidence": "Spec carries schema table (18 fields with produce-time honesty), 8 Rule-24-recorded axes/enums, the compilation algorithm (6 steps), estate correspondence, census (21 new tokens 0/0/0, no collision), BUILD STAGED named in header + sec.6; CTO arch gate 211747Z PASS-AS-SPEC",
+      "denominator": "8 of 8 enumerations recorded; 21 of 21 new tokens censused",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S6",
+      "criterion_verbatim": "COMPONENT 9 SCHEMA: the causal-assessment object's schema authored as source of record alongside ~C's exercise (their findings route to you); recovery/reachability edges cite Response IX's exercised-witness floor (rider d).",
+      "method": "schema_validation",
+      "invocation": "python json.load parse of org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT.schema.json (run 2052Z: parses; properties=16 required=15)",
+      "output_evidence": "0.1.1 parses; 16 properties / 15 required / additionalProperties:false; 11 declared absence semantics; CTO 63695 PASS-TO-EXERCISE applied + 63743 ACCEPTED; record states recovery/reachability edges cite Response IX exercised-witness floor when grown (rider d); ~C findings route to base (two ruled today: 63721, 63725)",
+      "denominator": "16 of 16 properties read; 6 new tokens 0/0/0",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "S7",
+      "criterion_verbatim": "Proof instance VALID rc=0 positional S1-S7 at the program's first review milestone (envelope cert), re-validated at each subsequent cert; RAVC to COO, cc CTO.",
+      "method": "command",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY.SPINE_PROOF_OF_SPEC.json S1,S2,S3,S4,S5,S6,S7",
+      "output_evidence": "VALID rc=0 at the envelope-cert milestone (S3 issued @8a60f96758; first instance @26a5158732) and RE-VALIDATED at the second cert (C3-IDENTITY objects, 2158Z) per the criterion; each run twice byte-identical (see commit bodies)",
+      "denominator": "7 of 7 expected criteria carried; 0 extra",
+      "status": "PASS"
+    }
   ],
   "controls": {
-    "mutant": {"description": "The SPINE TO names no mutant battery (its deliverables are specs/certs/ledger, not code); the component-level mutants live in the lane proofs (C1: 8/8 fired, base-verified 2056Z).", "expected": "n/a -- spec names none", "observed": "n/a; lane-level mutant batteries exercised at base: C1 run_acceptance 8/8 FIRED", "status": "N/A-SPEC-NAMES-NONE"},
-    "determinism": {"method": "proof-of-spec-check run twice on the same instance, stdout sha256 compared; instance sha256 recorded in the commit body", "observed": "two runs byte-identical (see commit body)", "status": "STABLE"}
+    "mutant": {
+      "description": "The SPINE TO names no mutant battery (its deliverables are specs/certs/ledger, not code); the component-level mutants live in the lane proofs (C1: 8/8 fired, base-verified 2056Z).",
+      "expected": "n/a -- spec names none",
+      "observed": "n/a; lane-level mutant batteries exercised at base: C1 run_acceptance 8/8 FIRED",
+      "status": "N/A-SPEC-NAMES-NONE"
+    },
+    "determinism": {
+      "method": "proof-of-spec-check run twice on the same instance, stdout sha256 compared; instance sha256 recorded in the commit body",
+      "observed": "two runs byte-identical (see commit body)",
+      "status": "STABLE"
+    }
   },
   "declared_exclusions": [
-    {"item": "component builds 2/3/4/5/6/8/10 (attestation harness, identity+support closure, lease service, capability/transition objects, sterility-cut certs, gateway build)", "reason": "builds are OUTSIDE the spine by the TO layer declaration; COO cuts wave 2"},
-    {"item": "PRD sec.2.9 harm surfaces (S1 tracks them as OPEN REQUIREMENTS only)", "reason": "rider a: not buildable spec"},
-    {"item": "lane deliverables of 4.0.0_SA_CRO~A / ~B / ~C (C1 package, census, atom_layer0 runs)", "reason": "their own TOs and proof instances; base certifies/gates, does not author them"},
-    {"item": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md relocation", "reason": "CTO-owned move; base cites the path"}
+    {
+      "item": "component builds 2/3/4/5/6/8/10 (attestation harness, identity+support closure, lease service, capability/transition objects, sterility-cut certs, gateway build)",
+      "reason": "builds are OUTSIDE the spine by the TO layer declaration; COO cuts wave 2"
+    },
+    {
+      "item": "PRD sec.2.9 harm surfaces (S1 tracks them as OPEN REQUIREMENTS only)",
+      "reason": "rider a: not buildable spec"
+    },
+    {
+      "item": "lane deliverables of 4.0.0_SA_CRO~A / ~B / ~C (C1 package, census, atom_layer0 runs)",
+      "reason": "their own TOs and proof instances; base certifies/gates, does not author them"
+    },
+    {
+      "item": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md relocation",
+      "reason": "CTO-owned move; base cites the path"
+    }
   ],
   "surprises": [
     "4.0.0_SA_CRO~A 12th package record + registry_vintage field retroactively FAILED 22 committed bundles under the validator cross-field law (additive-optional was false at that law) -- measured by ~C, ruled VINTAGE-AWARE (63721), CTO-endorsed, COO rider R2",
@@ -44,8 +164,20 @@
   ],
   "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-20/session_0242-1845Z.md",
   "compiler_tools": [
-    {"tool": "proof-of-spec-check", "invocation": "python .tools/proof-of-spec-check.py <instance> S1,S2,S3,S4,S5,S6,S7", "result": "VALID rc=0 (this instance)"},
-    {"tool": "token census (grep -c -w over the 3 canon files, per schema act)", "invocation": "grep -c -w <token> infra/system/ontology/SYSTEM_DEFINITIONS.yaml org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml", "result": "S6: 6 new tokens 0/0/0; rider: 10 new 0/0/0 + recurrence reused 1/2/1; S5: 21 new 0/0/0, 4 prose-only hits classified, no collision"},
-    {"tool": "safe-commit", "invocation": ".tools/safe-commit.sh --author 4.0.0_SA_CRO -F <msg> -- <paths>", "result": "every spine act committed under the seat author; rc captured directly since 2050Z"}
+    {
+      "tool": "proof-of-spec-check",
+      "invocation": "python .tools/proof-of-spec-check.py <instance> S1,S2,S3,S4,S5,S6,S7",
+      "result": "VALID rc=0 (this instance)"
+    },
+    {
+      "tool": "token census (grep -c -w over the 3 canon files, per schema act)",
+      "invocation": "grep -c -w <token> infra/system/ontology/SYSTEM_DEFINITIONS.yaml org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+      "result": "S6: 6 new tokens 0/0/0; rider: 10 new 0/0/0 + recurrence reused 1/2/1; S5: 21 new 0/0/0, 4 prose-only hits classified, no collision"
+    },
+    {
+      "tool": "safe-commit",
+      "invocation": ".tools/safe-commit.sh --author 4.0.0_SA_CRO -F <msg> -- <paths>",
+      "result": "every spine act committed under the seat author; rc captured directly since 2050Z"
+    }
   ]
 }
