@@ -9,6 +9,45 @@ to bloomberg, it needs to be able to render its presence persistent."*
 
 ---
 
+---
+## ⛔ SUPERSEDED IN ITS TABLE, UPHELD IN ITS METHOD — read this first (added ~20:57Z)
+
+**The four-row table below is superseded by `0.0.3_BG_BBGTerminal`'s SIX-mode taxonomy, adopted
+whole at the `1.0.0_SA_CTO~Z` gate @c9459dfa2f §7.** I am recording that plainly rather than
+defending my draft: the seat that *is* the subject of the frame enumerated its own failure modes
+better than I could from outside it, and a decomposition's job is to be replaced by a truer one.
+**What survives — and it is the load-bearing half — is the Rule-24(iv) FINDING itself:** this is not
+one workstream, and the axis is under-covered by any single mechanism. The gate's own numbers make
+the point harder than mine did: **autostart moves M1 only; re-auth moves M3+M5; a heartbeat moves
+M4; NOTHING moves M2 or M6** — so *"his item 3 addresses M3 ALONE, and a workstream titled 'make
+presence persistent' shipping self-reauth would present as complete and cover one sixth of its own
+axis."*
+
+**THE SHARPEST FORMULATION IS `0.0.3_BG_BBGTerminal`'S, NOT MINE, AND IT INVERTS THE ASYMMETRY I
+WROTE:** *every class a persistence layer CAN fix announces itself; the two it CANNOT fix have no
+signal by construction* — **so the layer reports 100% health while the serving failures continue.**
+My "(d) produces the strongest healthy reading" was the same insight in weaker form, stated about
+one row instead of about the axis. Their honest bound also stands and I had missed it: **M2 is a
+FAMILY, not an item**, so any "handle the known deafness modes" scope is *a fixed list against an
+open set.*
+
+**TWO GATE RULINGS THAT FOLLOW, both binding and neither previously stated by me:**
+1. **KEY THE CHECK ON THE WORK, NOT ON THE AGENT.** The escalation must run **independent of the
+   agent whose deafness it catches** — as an agent duty it inherits that deafness, and **a check
+   that fails in the same mode as the thing it checks is not a check.** It runs on the scheduled
+   runner.
+2. **IT MUST DELIVER ON A PATH THAT IS NOT THE DEAF SURFACE.** Detection survives deafness;
+   **delivery does not.** >> **THE ESCALATION DETECTS, THE EMAIL DL DELIVERS — the two mechanisms
+   Andrew named in one breath are ONE mechanism**, which is why W-E and W-F are coupled by design
+   rather than merely adjacent.
+
+*My registry recommendation below (a third ADDENDUM program, not a new code) is unaffected by the
+taxonomy supersession and remains at the gate.*
+
+---
+
+## THE ORIGINAL FOUR-ROW FINDING (superseded table; method and conclusion upheld)
+
 ## THE FINDING: "presence persistent" IS NOT ONE WORKSTREAM, AND ONE MECHANISM FITS NONE OF THEM
 
 Rule 24(iv) asks: **name the state axis, then ask whether ONE remedy moves every value together.**
