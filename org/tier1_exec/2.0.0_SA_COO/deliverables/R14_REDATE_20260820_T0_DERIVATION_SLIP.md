@@ -34,11 +34,15 @@ NOT-RUNNABLE (precondition limb (b) FALSE).
 **THE FORK -- RESOLVED ~1553Z: ANDREW RULED (a), VERBATIM "Better do do it now (a)"
 (at the MSTR terminal; record ANDREW_DIRECT_20260820_D2_PROMOTE_SINGLE_GREEN_FRIDAY_A.md +
 the DIRECTIVES.yaml D2 stance refresh, MSTR-pushed).**
-- **OPERATIVE (a): SINGLE-GREEN FRIDAY** -- FIRST green FRI 08-21 12:45Z -> flip -> PROD
-  promote SAME DAY on ONE green. Named readers stand: DS reads FRI's log by 13:15Z (abort =
-  same-hour surface); CVO's pin act + flip verification compress into the same day (CVO
-  pre-staging the pin-file mechanics so compression costs nothing). Miss Friday's fire ->
-  the MON 08-24 slide stands.
+- **OPERATIVE (a): SINGLE-GREEN FRIDAY** -- the full Friday sequence, EVERY READER NAMED
+  (CTO 63260: under (a) there is no second GREEN but there IS a second READ):
+  FRI 12:45Z fire -> **DS~B log read by 13:15Z** (abort = same-hour surface to COO) ->
+  **CTO PB-1 proof-read 13:30Z** (materialised-artifact reads, not the chain's own rc --
+  the one control standing between the just-fixed derivation's first live run and the
+  promote) -> **CVO pin act + flip verification** (pre-staged mechanics, same day) ->
+  flip -> **PROD promote SAME DAY**. MONDAY's scheduled run = the first post-promote
+  boundary exercise, pinned in CVO's table as EXPECTED-confirmation, not an anomaly to
+  chase. Miss Friday's fire -> the MON 08-24 slide stands.
 - **SCOPE, surfaced not adjudicated (MSTR's relay carries it): a THIS-RUN compression of
   the two-green discipline on his word -- NO PRECEDENT for the next promote.**
 - (c) two-green default: SUPERSEDED by his word on arrival, as this record pre-committed.
