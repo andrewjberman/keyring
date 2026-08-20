@@ -925,7 +925,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: semantic-pipeline-parallel-set
-    named_thread: ops-internal
+    named_thread: news
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
@@ -938,7 +938,9 @@ threads:
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
-    reason: test/diagnostic lambda, no consumer; teardown candidate
+    reason: 'test/diagnostic lambda, no consumer; teardown candidate. RETIRED per W-26 @51285984d6
+      (Andrew-approved); dropped from the fresh census @cef8e071e2; row retained as the routing
+      record of the retirement.'
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -947,7 +949,9 @@ threads:
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
-    reason: test/diagnostic lambda, no consumer; teardown candidate
+    reason: 'test/diagnostic lambda, no consumer; teardown candidate. RETIRED per W-26 @51285984d6
+      (Andrew-approved); dropped from the fresh census @cef8e071e2; row retained as the routing
+      record of the retirement.'
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []

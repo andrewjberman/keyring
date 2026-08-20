@@ -109,9 +109,9 @@ c3_deterministic_structures:
   sys-yang-analytics-engine:
     kind: SHARED-ENGINE
     legacy_family_key: yang-datapipeline
-    meaning: 'The shared quantitative analytics refinery; ONE system serving 8 business verticals (cma, correlation, factor-tilts, macro, market-overview, model-portfolios, positioning, valuation) -- the proof case that C3 systems and C4 verticals are different layers.'
+    meaning: 'The shared quantitative analytics refinery; ONE system serving 8 business verticals (cma, correlation, factor-tilts, macro, market-overview, mdpf (merged, incl. model-portfolios), positioning, valuation) -- the proof case that C3 systems and C4 verticals are different layers.'
     chain_count: 14
-    spans_verticals: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation]
+    spans_verticals: [cma, correlation, factor-tilts, macroeconomics, market-overview, mdpf, positioning, valuation]
   sys-partner-serving-platform:
     kind: SERVING-PLATFORM
     legacy_family_key: partners-portal-infra
@@ -141,13 +141,13 @@ c3_deterministic_structures:
     legacy_family_key: graph-and-ops-and-casefind
     meaning: 'Internal estate operations: graph platform, case-find, security scanning, m365 gateway, ops utilities -- serves 6 internal verticals.'
     chain_count: 11
-    spans_verticals: [graph-platform, insurance, m365-mcp, ops-internal, portfolio-management, security-scanner]
+    spans_verticals: [graph-platform, insurance, m365-mcp, observability, ops-internal, portfolio-management, security-scanner]
   sys-market-intelligence-engine:
     kind: SHARED-ENGINE
     legacy_family_key: market-analytics
-    meaning: 'Market data + sentiment analytics serving market-overview, model-portfolios, news, trade-submission.'
+    meaning: 'Market data + sentiment analytics serving market-overview, mdpf (merged, incl. model-portfolios), news, trade-submission.'
     chain_count: 9
-    spans_verticals: [market-overview, model-portfolios, news, trade-submission]
+    spans_verticals: [market-overview, mdpf, news, trade-submission]
   sys-causality-engine:
     kind: SHARED-ENGINE
     legacy_family_key: causality-ai
@@ -205,11 +205,15 @@ c3_ii_semantic_verticals:
   reconciliation: 'the CROSS-PARTITION MATRIX (comp-estate --matrix, view-compiled) is the
     standing instrument: per-system vertical span x per-vertical system span. A CHANGE in the
     matrix is an adjudication event recorded with its reason.'
-  denominator_note: '29 verticals carry chains (adjudication pass 2026-07-30, CVO, Andrew-direct:
-    attribution RETIRED as a declared name -- content lives under positioning; etf-reports,
-    ceo-digest, ticketing ADMITTED by naming act, 1 chain each, family=UNASSIGNED until census
-    regeneration). Durable record: estate-coverage-manifest.yaml adjudications_20260730 +
-    AUTHORITATIVE_lambda_taxonomy.json adjudication_20260730.'
+  denominator_note: 'ROSTER = 29 as of the W-15 one-touch 2026-08-20 (the 2026-08-07 Andrew merge
+    of model-portfolios INTO mdpf MATERIALIZED -- one row, both name-halves, W-24 ratified form
+    @19f3d59ebd; observability MINTED 2026-08-20 @340cf964fa and populated with 3 chains at
+    @eb58b97bc7). Prior vintage, retained: 2026-07-30 adjudication pass (CVO, Andrew-direct) --
+    attribution RETIRED as a declared name (content lives under positioning; its last taxonomy
+    mapping re-pointed @d4211559b6); etf-reports, ceo-digest, ticketing ADMITTED by naming act,
+    MODELED in the fresh census @cef8e071e2 (families no longer UNASSIGNED). Durable records:
+    estate-coverage-manifest.yaml adjudications_20260730 + the fresh census
+    org/modules/graph/estate_census/ + the W-15 touch commit.'
   verticals:
     advi-bd:
       systems: [sys-bd-medallion]
@@ -220,9 +224,12 @@ c3_ii_semantic_verticals:
     advi-inf:
       systems: [sys-inf-medallion, sys-partner-serving-platform]
       chain_count: 14
+    # systems gains sys-partner-serving-platform with PPI-13's arrival (@eb58b97bc7): the matrix
+    # arithmetic (fam2sys) maps PPI-13's structure key partners-portal-infra -> that platform;
+    # declared==computed is the sync law, same as the observability materialization.
     canonical-schwab:
-      systems: [UNASSIGNED-RESIDUE]
-      chain_count: 1
+      systems: [UNASSIGNED-RESIDUE, sys-partner-serving-platform]
+      chain_count: 2
     causality:
       systems: [sys-causality-engine]
       chain_count: 5
@@ -259,15 +266,22 @@ c3_ii_semantic_verticals:
     market-overview:
       systems: [sys-causality-engine, sys-market-intelligence-engine, sys-portfolio-management-suite, sys-yang-analytics-engine]
       chain_count: 11
+    # mdpf -- MERGED ROW (the 2026-08-07 Andrew merge of model-portfolios INTO mdpf, materialized
+    # at the W-15 one-touch 2026-08-20 per the W-24 ratified form @19f3d59ebd row 8: "mdpf (merged,
+    # incl. model-portfolios)" -- ONE row carrying both name-halves; chains 10 = 2 mdpf + 8
+    # model-portfolios; systems = the union of both former entries). Subject: client (W-27,
+    # vertical_subject_assignments below -- applies to the MERGED row per its own rider).
+    # The former model-portfolios entry is deliberately ABSENT: the retired extra-name must not
+    # resolve as its own row (the W15-1 negative control).
     mdpf:
-      systems: [sys-cot-mdpf-assets, sys-partner-serving-platform]
-      chain_count: 2
-    model-portfolios:
-      systems: [sys-market-intelligence-engine, sys-yang-analytics-engine]
-      chain_count: 8
+      systems: [sys-cot-mdpf-assets, sys-market-intelligence-engine, sys-partner-serving-platform, sys-yang-analytics-engine]
+      chain_count: 10
+    # chain_count 13->14 at the W-15 touch: semantic-pipeline-parallel-set re-homed here from
+    # ops-internal (W-26 ruled destination @51285984d6) IN this touch -- the recipient half of the
+    # same post-touch-truth arithmetic disclosed on ops-internal above.
     news:
       systems: [UNASSIGNED-RESIDUE, sys-market-intelligence-engine, sys-news-intelligence-engine]
-      chain_count: 13
+      chain_count: 14
     # observability -- MINTED 2026-08-20 (Andrew-direct at the CRO terminal, VERBATIM "approved, mint it";
     # record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260820_OBSERVABILITY_VERTICAL_MINT.md).
     # SENSE: the estate's self-observation function -- watch/alarm-anchored machinery over EXISTING
@@ -289,9 +303,21 @@ c3_ii_semantic_verticals:
     observability:
       systems: [sys-estate-ops-platform]
       chain_count: 3
+    # DISSOLVING (W-26 adjudication @51285984d6, Andrew-approved; prose/flag per AMENDMENT-C --
+    # NOT a Stage assertion): boundary retiring, members re-homing; container survives until every
+    # member has a legislated destination. As of 2026-08-20: ops-ec2 + anomaly-scanners ->
+    # observability, PPI-13 -> canonical-schwab (@eb58b97bc7), parallel-set -> news (this touch),
+    # yfinance pair retired -- the dissolve-completion preconditions (estate receiving vertical +
+    # canonical-schwab word) BOTH closed today; the completion act remains CRO-gated and is NOT
+    # taken here. [content authored 3.0.0_SA_CVO per @51285984d6, placed by 0.8.0 at the W-15 touch]
+    # chain_count NOTE: AMENDMENT-B's ruled figure was 5->3, vintage-pinned to the @82aa27590a
+    # baseline (after the GRAIN3 moves, BEFORE this touch); the SAME touch moves
+    # semantic-pipeline-parallel-set -> news, so post-touch manifest truth is 2 (the retained
+    # yfinance retirement-record rows). Writing the baseline-vintage 3 would mint instant drift --
+    # the sync law is declared==manifest-true AT LANDING. Arithmetic disclosed in the W-15 RAVC.
     ops-internal:
       systems: [UNASSIGNED-RESIDUE, sys-estate-ops-platform, sys-news-intelligence-engine, sys-partner-serving-platform]
-      chain_count: 5
+      chain_count: 2
     partners:
       systems: [sys-partner-serving-platform]
       chain_count: 2
@@ -300,13 +326,17 @@ c3_ii_semantic_verticals:
       chain_count: 6
     portfolio-management:
       systems: [sys-estate-ops-platform, sys-portfolio-management-suite]
-      chain_count: 9
+      chain_count: 8
     positioning:
       systems: [sys-yang-analytics-engine]
       chain_count: 1
+    # F-2 ruled split @51285984d6: the live factor-scanner chain carries subject market; the
+    # estate-half member (ops-anomaly-scanners) re-homed to observability @eb58b97bc7, completing
+    # the split's deferred half. The vertical itself retains its security-posture intent.
+    # [content authored 3.0.0_SA_CVO per @51285984d6, placed by 0.8.0 at the W-15 touch]
     security-scanner:
       systems: [sys-estate-ops-platform]
-      chain_count: 2
+      chain_count: 1
     smartx:
       systems: [sys-smartx-feed]
       chain_count: 3
@@ -497,18 +527,33 @@ c4_subject_function_grid:
     measured_2026_08_12: >
       38 assignment slots over 29 distinct verticals. 8 verticals are multi-segment -- 6 are
       row-x-column (legitimate) and 2 are row-x-row (defects, named below).
+    # Cells below RESOLVED at the W-15 one-touch 2026-08-20 [content authored 3.0.0_SA_CVO per
+    # @51285984d6, placed by 0.8.0]; prior texts in git history.
     open_adjudications:
       model-portfolios: >
-        ROW(client) x ROW(market) -- a genuine subject ambiguity. Model portfolios carry both
-        client allocation and market construction. Subject must be adjudicated, not split.
+        RESOLVED 2026-08-20: entry merged into mdpf (W-24 ratified form); subject adjudicated
+        client (W-27). The ambiguity dissolved with the duplicate entry.
       ops-internal: >
-        ROW(market) x ROW(estate) x COL(serving) -- spans two rows. Behaves as a catch-all;
-        likely needs decomposition rather than a subject ruling.
+        RESOLVED-BY-DECOMPOSITION 2026-08-20: the catch-all read was correct -- members re-homed
+        (ops-ec2-governance-lambdas + ops-anomaly-scanners -> observability @eb58b97bc7;
+        PPI-13 -> canonical-schwab; semantic-pipeline-parallel-set -> news at this touch;
+        yfinance scaffolds retired per W-26), container DISSOLVING, see the vertical entry note.
     semantically_suspect_not_a_defect:
       portfolio-management: >
-        COL(experience) x ROW(estate) is structurally legitimate, but subject:estate for a
-        client-facing portfolio tool is semantically odd and is flagged for the placement pass.
-        Structure alone cannot catch this class -- only the semantic read can.
+        RESOLVED 2026-08-20 by W-28: subject is CLIENT, not estate -- the flagged oddity was
+        real and the assignment answers it; COL(experience) x ROW(client) is row-x-column
+        legitimate.
+  # vertical_subject_assignments -- ruled values on the RATIFIED subject axis (Andrew "All recs
+  # approved" @27f941ede5; adjudication @51285984d6; placed at the W-15 one-touch 2026-08-20).
+  # [content authored 3.0.0_SA_CVO, placed by 0.8.0] Rule-24 note (CVO's, carried verbatim): this
+  # extends the RATIFIED grid section at its own grain and intent (subject mapping); no new axis
+  # and no new schema field on the verticals roster is minted; the Stage precedent (per-entry
+  # fields need their own declared population act) is deliberately not repeated here.
+  vertical_subject_assignments:
+    mdpf: client                    # W-27 -- applies to the MERGED row, same pass as the merge, per its own rider
+    portfolio-management: client    # W-28 -- ALSO RESOLVES the grid's semantically_suspect cell above
+    trade-submission: client        # F-1
+    security-scanner: 'market (live factor-scanner chain); split ruled F-2 -- see the split note at the vertical entry'
   non_summable_rule:
     rule: >
       ⛔ C4 IS NOT SUMMABLE. Per-segment vertical counts total 38 across 29 distinct verticals,
@@ -525,7 +570,7 @@ c4_segments:
     display_name: Partner Firm Data
     registry: [sys-bd-medallion, sys-inf-medallion, sys-cot-mdpf-assets, sys-smartx-feed]
     residue_inbound: [canonical-schwab chains]
-    verticals_served: [advi-bd, advi-inf, advi-cot, mdpf, smartx, model-portfolios, canonical-schwab, partners, etf-reports]
+    verticals_served: [advi-bd, advi-inf, advi-cot, mdpf, smartx, canonical-schwab, partners, etf-reports]  # model-portfolios folded into the already-listed mdpf (merged row, W-15 touch)
     high_signal: >
       Everything that ingests, refines, and stores partner firm financial data: the per-firm
       medallion pipelines (bronze, silver, gold, platinum) for 49 Financial / 49F / Black
@@ -544,7 +589,7 @@ c4_segments:
     display_name: Market & Research Intelligence
     registry: [sys-yang-analytics-engine, sys-market-intelligence-engine, sys-news-intelligence-engine, sys-macro-data-engine, sys-causality-engine]
     flags: [sys-causality-engine ADJUDICATED WINDING_DOWN 2026-07-30 (then-prose RETIREMENT-PENDING, respelled at the 2026-08-20 Stage-enum ratification) -- producers DEAD on applied plane; teardown owed to VELOCITY WS-E3 (keep-dormant), never map-side]
-    verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal, ceo-digest]
+    verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, mdpf, positioning, valuation, news, causality, trade-submission, ops-internal, ceo-digest]  # model-portfolios -> mdpf (merged row, W-15 touch); segment recall-listing is legitimate overlap
     high_signal: >
       The shared quantitative analytics and research-generation engines that compute what the
       portal knows about markets -- one engine serves many products by design. Look here for

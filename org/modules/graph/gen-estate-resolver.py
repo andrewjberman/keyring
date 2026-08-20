@@ -125,7 +125,9 @@ def main():
     # `canonical-schwab` + `observability` ADDED same landing (the TO's optional act, taken): both are
     # populated verticals post-landing; a populated vertical absent from the deliberate order falls to
     # the sorted tail, which reads as an afterthought rather than a placement.
-    CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "model-portfolios", "news", "market-overview",
+    # `model-portfolios` REMOVED at the W-15 one-touch 2026-08-20: the 08-07 Andrew merge into
+    # mdpf MATERIALIZED (W-24 ratified form -- one row, both name-halves); mdpf carries the slot.
+    CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "news", "market-overview",
                      "macroeconomics", "factor-tilts", "valuation", "correlation", "positioning", "cma",
                      "portfolio-management", "trade-submission", "causality",
                      "security-scanner", "smartx", "canonical-schwab", "mdpf", "partners",
