@@ -2248,7 +2248,14 @@ def cmd_deployed(args):
                 # deploy. Reclassified as informational and NOT counted as a
                 # defect. STALE/MATCH still bind -- those are real membership.
                 if status == "MISSING_ON_S3" and _layer in _mdpf_shared:
-                    print(f"  [mdpf:{_layer}] {p.name:<44} {'not-in-tree':<14}")
+                    # TOKEN RENAMED 2026-08-19 (CTO ruling, H8): `not-in-tree` read as
+                    # "the tool does not cover this tree" -- which is how it reached CTO as a
+                    # routed coverage defect -- when it means "this file is not a MEMBER of
+                    # THIS shared home's deploy set". The NOTHING-VERIFIED banner below already
+                    # says the right thing, but A ROW TOKEN TRAVELS IN REPORTS WITHOUT ITS
+                    # BANNER, so the token had to carry its own frame. "(no verdict)" is the
+                    # load-bearing half: it states that nothing was concluded about this file.
+                    print(f"  [mdpf:{_layer}] {p.name:<44} {'NOT-A-MEMBER (no verdict)':<26}")
                     not_in_tree.append(label)
                     continue
                 print(f"  [mdpf:{_layer}] {p.name:<44} {status:<14}")
@@ -2653,7 +2660,7 @@ def cmd_deployed(args):
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
           f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE, "
           f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT, "
-          f"{len(not_in_tree)} NOT-IN-TREE, {len(s3_only)} S3-ONLY, "
+          f"{len(not_in_tree)} NOT-A-MEMBER(no-verdict), {len(s3_only)} S3-ONLY, "
           f"{len(multi_home)} MULTI-HOME, {len(declared_unswept)} DECLARED-UNSWEPT")
     # NOTHING-VERIFIED guard (CVO~B 2026-08-05): rows were seen but not one of them was
     # actually verified against S3. The common cause is a script OUTSIDE this tool's
