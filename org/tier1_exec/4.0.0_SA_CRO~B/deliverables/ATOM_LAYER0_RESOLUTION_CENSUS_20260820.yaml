@@ -113,6 +113,7 @@ rule_24_record:
       values:
         - UNRESOLVED_NO_AUTHORITY
         - DANGLING
+        - GOVERNED_DUAL_CARRIER
         - AMBIGUOUS_TWO_HOMES
         - CONTENT_MISMATCH
         - GRAIN_MISMATCH
@@ -127,8 +128,25 @@ rule_24_record:
         same_grain: PASS_each_label_is_one_failed_binding_property
         intent_coherence: PASS_failure_mechanism_only
         state_coherence: PASS_all_exist_post_assessment_and_clear_only_on_reassessment
+      two_home_discriminator:
+        GOVERNED_DUAL_CARRIER: >-
+          Multiple carriers are authorized by ruled design, authority or
+          precedence is explicit, and a live comparison instrument covers the
+          carriers. On an unresolved row this class means that instrument has
+          detected extant drift; it does not mean the carriers are ambiguous.
+        AMBIGUOUS_TWO_HOMES: >-
+          Multiple independently editable authority claims lack the ruled
+          dual-carry relation, precedence, or covering comparison instrument.
+          An unauthorized member-list copy is not made governed merely because
+          the same entry also contains a healthy authority citation.
+        postulates:
+          mece: PASS_one_and_only_one_class_for_every_observed_two_home_row
+          same_grain: PASS_one_surface_x_concept_binding
+          intent_coherence: PASS_governance_discriminator_only
+          state_coherence: PASS_reclassification_requires_new_binding_evidence
   display_verdict_precedence:
     - AMBIGUOUS_TWO_HOMES
+    - GOVERNED_DUAL_CARRIER
     - CODE_REDECLARATION
     - DANGLING
     - UNRESOLVED_NO_AUTHORITY
@@ -143,6 +161,7 @@ rule_24_record:
     NOT_ASSESSED when assessment_state is NOT_ASSESSED; RESOLVED when assessed
     and resolved; otherwise the first present failure class in precedence order.
   layer_coverage_additions_to_starting_taxonomy:
+    - GOVERNED_DUAL_CARRIER
     - NO_DECLARED_TARGET_CONTENT
     - NON_INDEPENDENT_RESOLUTION
     - INSTRUMENT_UNKNOWN
@@ -153,6 +172,7 @@ rule_24_record:
       RESOLVED: 113
       UNRESOLVED_NO_AUTHORITY: 0
       DANGLING: 1
+      GOVERNED_DUAL_CARRIER: 0
       AMBIGUOUS_TWO_HOMES: 0
       CONTENT_MISMATCH: 0
       GRAIN_MISMATCH: 0
@@ -163,6 +183,8 @@ rule_24_record:
       RESOLVED is an existing ordinary result token and is intentionally reused
       at the same outcome sense. The sole DANGLING hit is a DATA-EDGE-DANGLING
       comment in comp_aws_cli.py and is not this binding-failure enum.
+      GOVERNED_DUAL_CARRIER is unoccupied and minted here for Base's adjudicated
+      governed-versus-ungoverned discriminator.
 
 instrument_qualification:
   - instrument: comp-state
@@ -194,13 +216,17 @@ controls:
       re-declares the same enum and is correctly classified independently below.
   author_selected_negative:
     concept: Segment
-    expected: AMBIGUOUS_TWO_HOMES
-    observed: AMBIGUOUS_TWO_HOMES
+    expected: GOVERNED_DUAL_CARRIER
+    observed: GOVERNED_DUAL_CARRIER
     direct_read: true
     evidence:
       - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:482 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
       - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:523 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
       - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:589 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    drift_instrument_coverage: >-
+      COVERED. The block-addressed resolves_via selects segment_definitions as
+      precedent, and O1 compares both candidate blocks and reports the one-name
+      split. The drift persists, but it is governed and detected, not ambiguous.
   independent_o1_annex_negative:
     concept: Contract_Record
     external_baseline: O1_RESOLVES_VIA_RESULTS_20260819.jsonl_row_12
@@ -227,6 +253,36 @@ surface_coverage:
   not_assessed: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
   tie_out: 16_plus_3_plus_12_equals_31
 
+surface_read_receipts:
+  read_vintage: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+  receipt_rule: >-
+    A receipt means the named surface blob was directly read at this Git object;
+    rows list the finding records that depend on it. An empty row list means the
+    surface was read as a supporting authority or binding surface and produced
+    no surface-owned finding row.
+  receipts:
+    - {surface: O01, path: infra/system/ontology/SYSTEM_DEFINITIONS.yaml, rows: [R001, R002, R003, R004, R005, R006, R007, R008, R009, R010, R011, R012, R013, R014, R015, R016, R017, R018, R019]}
+    - {surface: O03, path: infra/system/ontology/C0_C1_C2_C3_C4_SYSTEM_LAYERS.md, rows: [R044]}
+    - {surface: O11, path: infra/system/ontology/LAYER_FIELD_ANATOMY.md, rows: [R020]}
+    - {surface: O15, path: infra/system/ontology/check_system_definitions.py, rows: [R045]}
+    - {surface: G01, path: org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml, rows: []}
+    - {surface: G02, path: org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml, rows: [R021, R022, R023, R024, R025, R036]}
+    - {surface: G03, path: org/modules/graph/estate-coverage-manifest.yaml, rows: []}
+    - {surface: G04, path: org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/AUTHORITATIVE_lambda_taxonomy.json, rows: [R037]}
+    - {surface: G05, path: org/modules/graph/estate-coverage-resolver.json, rows: [R026]}
+    - {surface: G06, path: org/modules/graph/gen-estate-resolver.py, rows: [R038]}
+    - {surface: G07, path: org/modules/graph/opal_estate_infrastructure.py, rows: [R039]}
+    - {surface: G08, path: org/modules/graph/estate_infrastructure_cli.py, rows: [R040]}
+    - {surface: G09, path: org/modules/graph/manifest_check_cli.py, rows: [R041]}
+    - {surface: G10, path: org/modules/graph/comp-tools.yaml, rows: [R042]}
+    - {surface: G11, path: org/modules/graph/graph-call-manifest.yaml, rows: [R043]}
+    - {surface: G12, path: org/modules/graph/comp_legacywriter.py, rows: [R027, R028]}
+    - {surface: G13, path: org/modules/graph/comp_ontolint.py, rows: [R029, R030]}
+    - {surface: G14, path: org/modules/graph/comp_output_contract.py, rows: [R031, R032]}
+    - {surface: G15, path: org/modules/graph/comp_system.py, rows: [R033, R034, R035]}
+  count: 19
+  tie_out: 16_fully_assessed_plus_3_partially_assessed_equals_19
+
 rows:
   - {id: R001, surface: O01, concept: Estate, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:50 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 2', owner: 1.0.0_SA_CTO, note: inherits Substrate failure; not an independent defect}
   - {id: R002, surface: O01, concept: Substrate, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:58 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 1', owner: 1.0.0_SA_CTO, note: declared codebase absent while retired pipeline and semctl remain materialized}
@@ -237,7 +293,7 @@ rows:
   - {id: R007, surface: O01, concept: C1, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NO_DECLARED_TARGET_CONTENT], display_verdict: NO_DECLARED_TARGET_CONTENT, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:159 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 14', owner: 4.0.0_SA_CRO}
   - {id: R008, surface: O01, concept: C2, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:169 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 10', owner: 4.0.0_SA_CRO}
   - {id: R009, surface: O01, concept: C4, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:192 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 5', owner: 4.0.0_SA_CRO}
-  - {id: R010, surface: O01, concept: Segment, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [AMBIGUOUS_TWO_HOMES], display_verdict: AMBIGUOUS_TWO_HOMES, direct_read: true, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:202; org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:482,523,589 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO}
+  - {id: R010, surface: O01, concept: Segment, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [GOVERNED_DUAL_CARRIER], display_verdict: GOVERNED_DUAL_CARRIER, direct_read: true, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:202-214; org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:482,523,589; org/tier1_exec/4.0.0_SA_CRO/deliverables/O1_RESOLVES_VIA_RESULTS_20260819.jsonl:6 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: block precedence and O1 both-block comparison govern and detect the extant one-member drift}
   - {id: R011, surface: O01, concept: Motif, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:225 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 11', owner: 4.0.0_SA_CRO}
   - {id: R012, surface: O01, concept: Chain, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NON_INDEPENDENT_RESOLUTION], display_verdict: NON_INDEPENDENT_RESOLUTION, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:234 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 16', owner: 0.8.0_AE_CloudComp, note: frozen resolver is both declaration and derivation}
   - {id: R013, surface: O01, concept: Role, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:247 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; comp-ontolint live 14-role order', owner: 1.0.0_SA_CTO}
@@ -281,7 +337,8 @@ counts:
   resolved: 24
   unresolved: 19
   failure_class_occurrences:
-    AMBIGUOUS_TWO_HOMES: 2
+    GOVERNED_DUAL_CARRIER: 1
+    AMBIGUOUS_TWO_HOMES: 1
     CODE_REDECLARATION: 2
     DANGLING: 0
     UNRESOLVED_NO_AUTHORITY: 0
@@ -294,9 +351,10 @@ counts:
     NOT_EXERCISABLE: 1
 
 direct_read_reverification:
-  ambiguous_rows: [R010, R015]
+  governed_dual_carrier_rows: [R010]
+  ambiguous_rows: [R015]
   dangling_rows: []
-  result: PASS_ALL_AMBIGUOUS_AND_DANGLING_DIRECT_READ
+  result: PASS_ALL_TWO_HOME_AND_DANGLING_ROWS_DIRECT_READ
 
 tool_coverage_findings:
   - id: TC01

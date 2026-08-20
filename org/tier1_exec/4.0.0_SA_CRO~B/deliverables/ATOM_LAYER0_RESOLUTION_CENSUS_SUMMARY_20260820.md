@@ -17,10 +17,12 @@ in the structured artifact. The registry annex denominator is **18 terms carryin
 
 ## Worst first
 
-1. **AMBIGUOUS_TWO_HOMES - 2 rows.** `Segment` has two live blocks in one canonical file that
-   disagree on `andrew-infrastructure` vs `estate-infrastructure`. `Contract_Record` has two live
-   schema homes that disagree on optional `describes`. Both were re-read directly, not accepted from
-   tool output. Owners: CRO and CTO respectively.
+1. **Two-home findings - 2 rows, now discriminated.** `Segment` is a
+   `GOVERNED_DUAL_CARRIER`: block precedence is declared and O1 compares both blocks, detecting the
+   `andrew-infrastructure` vs `estate-infrastructure` drift. `Contract_Record` remains
+   `AMBIGUOUS_TWO_HOMES` with `CONTENT_MISMATCH`: its prohibited copied member list is an
+   unauthorized second declaration, not legitimized by the adjacent healthy authority citation.
+   Both were re-read directly. Owners: CRO and CTO respectively.
 2. **CODE_REDECLARATION - 2 rows, one engine.** `comp_legacywriter.py` copies the Lifecycle_Class
    enum and Contract_Record required-field vocabulary into code. Its conformance test can detect a
    drift, but the code still has a second home. Owner: CTO.
@@ -46,8 +48,8 @@ set. That zero is bounded by the printed residue; it is not a repo-wide metaphys
 
 - Positive control: `Lifecycle_Class` resolves from the registry to exactly one rule-bank lifecycle
   home. A separate consumer's code copy correctly fails independently.
-- Author-selected negative: `Segment` classifies `AMBIGUOUS_TWO_HOMES` by direct reads of both
-  canonical blocks.
+- Author-selected negative: `Segment` classifies `GOVERNED_DUAL_CARRIER` by direct reads of both
+  canonical blocks. Its block precedence and O1 detector cover the still-extant one-member drift.
 - Independent O1-annex negative: `Contract_Record` was externally established as one of O1's five
   non-agreements. Direct read classifies it `AMBIGUOUS_TWO_HOMES` with secondary
   `CONTENT_MISMATCH`, not RESOLVED; the false-green check therefore passes.
@@ -62,6 +64,11 @@ a healthy citation, but the registry `definition` separately copies both field l
 `describes`. That copied stable-canon declaration and the rule-bank declaration are independently
 editable; the citation itself is not counted as a home.
 
+The discriminator is also explicit for `Segment`: its dual carry is ratified, block precedence is
+declared, and O1 exercises both blocks. The remaining mismatch is governed and detected; it is not
+an authority ambiguity. The structured artifact includes direct-read receipts for all 19 surfaces
+claimed fully or partially assessed at the Pass-1 vintage.
+
 Three rows were rerun from their exact pinned file+anchor pairs after Base's adversarial challenge:
 R010 Segment, R015 Contract_Record, and R027 comp_legacywriter Lifecycle_Class. All three reproduced
 their committed verdicts. The structured artifact gives the exact reads and defines how every O1 row
@@ -72,8 +79,9 @@ shorthand expands to a pinned JSONL line.
 The brief's starting list mixed three intents on one axis. The structured artifact separates
 `assessment_state`, binary `resolution_state`, and multi-label `failure_classes`, then derives the
 requested display verdict by fixed precedence. The layer-coverage test added four missing mechanisms:
-`NO_DECLARED_TARGET_CONTENT`, `NON_INDEPENDENT_RESOLUTION`, `INSTRUMENT_UNKNOWN`, and
-`NOT_EXERCISABLE`. The attached record gives all four postulates and the token-hygiene census.
+`GOVERNED_DUAL_CARRIER`, `NO_DECLARED_TARGET_CONTENT`, `NON_INDEPENDENT_RESOLUTION`,
+`INSTRUMENT_UNKNOWN`, and `NOT_EXERCISABLE`. The attached record gives all four postulates, the
+two-home discriminator postulates, and the token-hygiene census.
 
 ## Residue
 
