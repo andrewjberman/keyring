@@ -226,6 +226,22 @@ function ajb {
             $claudeArgs += $modelBySerial[$base]
             Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
         }
+        # F8 (Andrew-direct 2026-08-20 "rec approved" @ad2585793c, OPAL_ANALYST.W6-T1): the BG seat's
+        # identity is BOUND AT LAUNCH. Its own fence (bg-concierge-gate G1) forbids it the XXX.md A.1
+        # session-serial write, so the launcher mints the session id, writes the launch-path MARKER
+        # first and the serial file SECOND (a failure between leaves marker-without-serial, which the
+        # fence reads as LOUD-CLOSED -- the correct failure), and pins claude to that session id.
+        # BG-scoped on purpose: every other seat writes its own serial at A.1.
+        if ($base -eq '0.0.3_BG_BBGTerminal') {
+            $bgSid   = [guid]::NewGuid().ToString()
+            $sessDir = Join-Path $ws 'org\mcp\sessions'
+            New-Item -ItemType Directory -Force -Path $sessDir | Out-Null
+            $stamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+            [System.IO.File]::WriteAllText((Join-Path $sessDir "$bgSid.launch-path"), "bg-concierge $stamp launcher=ajb.ps1 host=$env:COMPUTERNAME`n")
+            [System.IO.File]::WriteAllText((Join-Path $sessDir "$bgSid.serial"), "0.0.3_BG_BBGTerminal`n")
+            $claudeArgs += @('--session-id', $bgSid)
+            Write-Host "[ajb] F8: BG identity bound at launch -- session $bgSid -> 0.0.3_BG_BBGTerminal (launch-path marker + serial file written)" -ForegroundColor Cyan
+        }
         # Headless = no user present to answer a fork -> hard-remove the
         # user-BLOCKING tools so an autonomous agent can never strand on an
         # unanswerable prompt. Exempt by INTERACTIVITY, not identity. The

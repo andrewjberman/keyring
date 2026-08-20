@@ -11,8 +11,13 @@
 # SCOPE: fires ONLY when the calling session's serial is 0.0.3_BG_BBGTerminal. For every
 # other seat this hook is a fast no-op (exit 0) -- the workspace is shared and this fence
 # is one seat's, not the fabric's. Identity resolves the never-rules-gate way: hook-input
-# session_id -> org/mcp/sessions/<sid>.serial, then $OPAL_AGENT_SERIAL. UNRESOLVED = NOT
-# BG = pass (fail-open on identity; the fence is for a known seat, not a dragnet).
+# session_id -> org/mcp/sessions/<sid>.serial, then $OPAL_AGENT_SERIAL.
+# F8 (Andrew-direct 2026-08-20 "rec approved" @ad2585793c, OPAL_ANALYST.W6-T1): an UNRESOLVABLE
+# identity is NEVER silent. On the BG seat's OWN launch path (org/mcp/sessions/<sid>.launch-path,
+# written by ajb.ps1 at the BG launch, first line "bg-concierge ...") it FAILS CLOSED AND LOUD --
+# every classed call denied with a named line; on any other seat it is LOUD and NOT blocked.
+# (Before F8 this read "UNRESOLVED = NOT BG = pass (fail-open on identity)" -- the silent
+# stand-down of all four classes that W6 T-1 measured.)
 #
 # WHAT IT DENIES for the BG seat (each maps to a line of Andrew's ask):
 #   G1  Write/Edit/NotebookEdit outside the allowlist:
@@ -47,8 +52,8 @@
 # Block mechanism: JSON permissionDecision="deny", exit 0 (bare exit-2 is a hook ERROR,
 # not a block -- see never-rules-gate.sh:53). Missing jq: FAIL CLOSED for BG only.
 #
-# Exercise record: tests run at build (2026-08-07, MSTR~Z) -- see
-# .tools/hooks/tests/test_bg_concierge_gate.sh (positive controls for pass AND deny).
+# Exercise record: tests run at build (2026-08-07, MSTR~Z) + the F8 cells/mutants (2026-08-20,
+# 0.5.0_AE_OpalETL~Z) -- see .tools/hooks/tests/test_bg_concierge_gate.sh (pass AND deny controls).
 
 set -uo pipefail
 
@@ -67,16 +72,42 @@ else
 fi
 
 # ---- identity: is this the BG seat? (never-rules-gate pattern, :493-505) ----
-_CALLER=""
+# F8 OUTCOME SET over (serial state x BG-launch-path signal) -- every cell LOUD except the one
+# that is not ours (Rule-24 record: the W6-T1 deliverable):
+#   resolves to BG                 -> ACTIVE-ENFORCE  (the four classes, as always)
+#   resolves to another seat       -> SILENT-PASS     (fast no-op; the fence is one seat's)
+#   unresolvable + BG-path marker  -> LOUD-CLOSED     (every classed call DENIED with a named line)
+#   unresolvable, no marker        -> LOUD-PASS       (permitted, a named line on every call)
+# The marker is org/mcp/sessions/<sid>.launch-path, written by ajb.ps1 at the BG launch BEFORE
+# the session-serial file (the seat itself may write neither -- G1), so "marker without serial"
+# is exactly the F8 shape W6 measured -- now refusing instead of standing down.
+_SID=""; _CALLER=""
 if [ -n "$JQ" ]; then
     _SID=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // empty' 2>/dev/null || true)
-    [ -n "$_SID" ] && _CALLER=$(tr -d '[:space:]' < "$WS/org/mcp/sessions/${_SID}.serial" 2>/dev/null || true)
+    [ -n "$_SID" ] && [ -r "$WS/org/mcp/sessions/${_SID}.serial" ] && _CALLER=$(tr -d '[:space:]' < "$WS/org/mcp/sessions/${_SID}.serial" 2>/dev/null || true)
 fi
 [ -z "$_CALLER" ] && _CALLER="${OPAL_AGENT_SERIAL:-}"
-[ "$_CALLER" = "0.0.3_BG_BBGTerminal" ] || exit 0
+F8_MODE="active"
+if [ "$_CALLER" != "0.0.3_BG_BBGTerminal" ]; then
+    [ -n "$_CALLER" ] && exit 0                 # SILENT-PASS: another seat, positively resolved
+    # UNRESOLVABLE. Without jq the session id is unreadable, so the BG path is indistinguishable
+    # from any other -- the never-rules-gate already FAILS CLOSED fabric-wide without jq; so do we.
+    if [ -z "$JQ" ]; then
+        echo "BLOCKED (bg-concierge-gate F8): caller identity UNRESOLVABLE and jq not found -- cannot tell the BG seat's path; FAIL CLOSED. Fix: git checkout .tools/jq.exe; then set your serial (org/XXX.md A.1) or relaunch via ajb." >&2
+        exit 2
+    fi
+    _MARK="$WS/org/mcp/sessions/${_SID}.launch-path"
+    if [ -n "$_SID" ] && [ -r "$_MARK" ] && head -1 "$_MARK" 2>/dev/null | grep -q '^bg-concierge'; then
+        F8_MODE="closed"
+    else
+        _MSG="bg-concierge-gate (F8, LOUD-PASS): caller identity UNRESOLVABLE -- no org/mcp/sessions/${_SID:-<no session_id>}.serial and OPAL_AGENT_SERIAL unset; no BG launch-path marker, so NOT the BG seat: call permitted. If you ARE 0.0.3_BG_BBGTerminal you were launched outside 'ajb 0.0.3_BG_BBGTerminal' -- stop and have MSTR~Z relaunch you via ajb. Otherwise run org/XXX.md A.1 now (write your session serial) so every gate can see you."
+        "$JQ" -nc --arg m "$_MSG" '{systemMessage:$m, hookSpecificOutput:{hookEventName:"PreToolUse", additionalContext:$m}}'
+        exit 0
+    fi
+fi
 
-# From here on we ARE the BG seat. Missing jq now fails CLOSED (the fence must not
-# silently stand down for the one seat it exists for).
+# From here on we ARE the BG seat (or an unresolvable caller ON its launch path -- closed).
+# Missing jq fails CLOSED (the fence must not silently stand down for the one seat it exists for).
 if [ -z "$JQ" ]; then
     echo "BLOCKED: bg-concierge-gate cannot run -- jq not found. This fence FAILS CLOSED for 0.0.3_BG_BBGTerminal. Fix: git checkout .tools/jq.exe, then retry." >&2
     exit 2
@@ -90,6 +121,21 @@ deny() {
       '{hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"deny",permissionDecisionReason:$r}}'
     exit 0
 }
+
+# F8 LOUD-CLOSED: identity unresolvable ON the BG launch path -> every classed call denied, named;
+# unclassed calls (Read/Glob/Grep/comms/...) permitted WITH the named line -- nothing is silent.
+if [ "$F8_MODE" = "closed" ]; then
+    case "$TOOL" in
+      Write|Edit|NotebookEdit|Bash|PowerShell|mcp__bloomberg__*|mcp__opal-gateway__*|mcp__opal-gateway-bbg__*)
+        deny "BLOCKED (bg-concierge-gate F8): identity UNRESOLVABLE on the BG seat's launch path (org/mcp/sessions/${_SID}.launch-path says bg-concierge, but no ${_SID}.serial and OPAL_AGENT_SERIAL unset) -- the fence FAILS CLOSED for every classed call ('$TOOL'). Fix: relaunch via 'ajb 0.0.3_BG_BBGTerminal' (ajb writes the session serial at launch); never write the serial from this seat (G1)."
+        ;;
+      *)
+        _MSG="bg-concierge-gate (F8, LOUD-CLOSED): identity UNRESOLVABLE on the BG seat's launch path -- every classed call (Write/Edit/NotebookEdit/Bash/PowerShell/Bloomberg/gateway) is DENIED until identity resolves; '$TOOL' is unclassed and permitted. Fix: relaunch via 'ajb 0.0.3_BG_BBGTerminal'."
+        "$JQ" -nc --arg m "$_MSG" '{systemMessage:$m, hookSpecificOutput:{hookEventName:"PreToolUse", additionalContext:$m}}'
+        exit 0
+        ;;
+    esac
+fi
 
 BG_HOME='org/tier0_utility/0\.0\.3_BG_BBGTerminal'
 
