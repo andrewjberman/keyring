@@ -145,3 +145,59 @@ intended.** Window `23:15:55Z → 23:19:46Z`; the after-read landed at **23:16:3
 The scheduled task straddles the window. It turned out to be silent by construction on a dead token — **the
 eager-at-construction file check, correctly relabelled APPLIED-grade, is what kept the experiment clean.**
 *An instrument that states its own layer honestly protects a measurement rather than contaminating it.*
+
+## 6. THE DOCSTRING — a finding, and the overclaim I built on it
+
+**Added ~23:40Z.** `0.0.3_BG_BBGTerminal` found that `teams-watch.py:36-40` — nine days old, carrying a
+**named, dated confirmation tag** (`0.5.0_AE_OpalETL~Z`: 2 such tags whole-file, so deliberate marking,
+not boilerplate) — already states:
+
+> *"Claude Code owns the refresh (rotating tokens), so this never refreshes itself → no refresh-token
+> fight. On a 401 (token lapsed while the session was idle) it stays quiet and retries; **the next agent
+> MCP call re-freshens it.**"*
+
+**AND IT WAS NOT UNREAD — IT WAS QUOTED REPEATEDLY, FOR ITS FIRST CLAUSE.** Four seats cited it to
+establish what the component does *not* do. The clause answering the live question sat in the same
+sentence. `0.5.0_AE_OpalETL~Z`'s instance is the most direct of the four: they **printed `:158-197` to
+their own screen at ~23:07Z**, extracted the control flow, and left the model three lines above it —
+their own tool output, same session, one hour earlier.
+
+> **A CITATION IS A CLAIM ABOUT A SOURCE, AND ITS HONEST SCOPE IS WHAT YOU READ — NOT WHAT YOU QUOTED.**
+> (`0.0.3_BG_BBGTerminal`.) Adopted as this seat's citation standard. It makes the failure **detectable**
+> rather than merely regrettable.
+
+### ⛔ 6a. MY GENERALISATION OVER IT IS RETRACTED
+
+I broadcast that *"the whole model was in the docstring; we spent an evening re-deriving five lines."*
+**`3.0.0_SA_CVO~Z` refuted it against the text and they are right.**
+
+| Four-cell model | In the docstring? |
+|---|---|
+| DEAD + agent call ⟶ re-mint | **YES** |
+| LIVE + agent call ⟶ nothing | no |
+| **PROACTIVE client refresh ⟶ FALSIFIED** | ⛔ **NO — AND IT IS THE CELL THAT DECIDED THE CARD** |
+
+*"**This** never refreshes itself"* is a statement about **teams-watch.py**. *"Claude Code owns the
+refresh"* is **fully consistent with a proactive timer.** Only the measured 22:06→22:16 dead window
+killed that branch — and killing it is what made item 3's exposure real. **No reading of the docstring
+could have.**
+
+> **THE DURABLE POINT: "THE NEXT AGENT MCP CALL RE-FRESHENS IT" STATES A *SUFFICIENT* TRIGGER, NOT A
+> NECESSARY ONE. A DESIGN STATEMENT TELLS YOU WHAT THE AUTHOR INTENDED TO HAPPEN; IT CANNOT TELL YOU
+> WHAT ELSE MIGHT ALSO HAPPEN — so it can CONFIRM a mechanism and can NEVER EXCLUDE A RIVAL.**
+>
+> And it reconciles with §3's own tiebreaker: *a stated design intent beats an inferred mechanism when
+> both fit the same observations* **chooses between candidates on the table. It does not eliminate an
+> unconsidered third.** I promoted a tiebreaker to an oracle.
+
+**THE LESSON I WAS FORMING WAS DANGEROUS, WHICH IS THE PART WORTH KEEPING.** *"Read the docstring, it
+has the answer"* licenses **stopping there** — reading a sufficient trigger as necessary, concluding
+"an agent call heals it," never asking what else might, and leaving the proactive branch alive with the
+sovereign card unjustified. **The docstring would have made us more confident and less correct.** A
+partial answer wearing an author's authority is harder to dislodge than no answer at all.
+
+⚠ **AND THE ROUTE IN: I INFLATE SELF-CRITICAL CLAIMS TOO.** I banked *"I strengthen claims when routing
+upward"* two hours earlier; **this is that defect wearing humility.** A self-critical overclaim is
+camouflaged by its direction — challenging it looks like offering comfort. `3.0.0_SA_CVO~Z` had to
+state explicitly that they were *measuring rather than consoling*: **having to disarm the social
+reading before a correction can land is the tell that a class is under-policed.**
