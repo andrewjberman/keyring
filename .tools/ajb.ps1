@@ -233,6 +233,12 @@ function ajb {
         # fence reads as LOUD-CLOSED -- the correct failure), and pins claude to that session id.
         # BG-scoped on purpose: every other seat writes its own serial at A.1.
         if ($base -eq '0.0.3_BG_BBGTerminal') {
+            # sec11 S2 (CTO~Z ruling msg 2618, Andrew-direct speed addendum @208a4f3b57): the BG
+            # seat's MCP tool schemas load RESIDENT, not deferred -- process-scoped so only the
+            # BG child inherits it. auto:25 = defer only past 25% of context (safety valve if a
+            # future server bloats the seat); acceptance = a real exchange with zero ToolSearch
+            # calls before the ACK. Takes effect at the NEXT BG launch, not the live session.
+            $env:ENABLE_TOOL_SEARCH = 'auto:25'
             $bgSid   = [guid]::NewGuid().ToString()
             $sessDir = Join-Path $ws 'org\mcp\sessions'
             New-Item -ItemType Directory -Force -Path $sessDir | Out-Null

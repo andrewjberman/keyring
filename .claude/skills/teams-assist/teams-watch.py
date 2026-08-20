@@ -1,10 +1,29 @@
 #!/usr/bin/env python3
 """teams-watch.py -- the /teams-assist monitor ENGINE (like org/mcp/inbox-watch.sh, but for Teams).
 
-Run under the Monitor tool. Polls the Opal M365 gateway's `poll_addressed_teams_messages` via a
-single stateless MCP `tools/call` to /mcp/ (the ALB-bypassed, gateway-Bearer-gated path) every
-INTERVAL seconds, and prints ONE `[TEAMS] ...` line to STDOUT per NEW addressed message -- so the
-Monitor wakes the agent ONLY when a real message lands (event-driven, not an LLM self-poll).
+Run under the Monitor tool. Every INTERVAL seconds: polls the Opal M365 gateway's
+`poll_addressed_teams_messages` via a single stateless MCP `tools/call` to /mcp/ (the
+ALB-bypassed, gateway-Bearer-gated path), then prints ONE `[TEAMS] ...` line to STDOUT per NEW
+addressed message -- so the Monitor wakes the agent ONLY when a real message lands (event-driven,
+not an LLM self-poll).
+
+MESSAGE-GRAIN INTAKE (P1 fix, CTO~Z ruling msg 2571 adopting BG's spec msg 2567, 2026-08-20 --
+an Andrew message was LOST to the old shape that day):
+`poll_addressed_teams_messages` is a CHAT-grain instrument -- its contract is latest-per-chat,
+so reading its payload as the message stream silently drops every message but the newest per
+chat per poll window, at ANY interval. Therefore:
+  1. The poll is the CHANGE SIGNAL ONLY. Its result contributes touched chat ids (+ chat_type),
+     never the message payload.
+  2. The INTAKE is `read_chat_messages` per touched chat (bounded top): every message STRICTLY
+     newer than the cursor is emitted, oldest-first.
+  3. The cursor advances on MESSAGE timestamp -- the max PROCESSED (emitted or
+     deliberately-skipped-outgoing) message's own createdDateTime -- never on poll time and
+     never on the gateway poll's cursor. A crash between read and emit re-delivers rather than
+     drops (duplicate-on-retry is the safe direction; the serve loop tolerates a re-ack).
+  4. Frame discipline: when >1 message is emitted for one chat in one cycle, each [TEAMS] line
+     carries its per-chat denominator ("2 of 2 since cursor") -- the output carries its own
+     frame. A read page FULL to the bound, or a failed chat read, is reported loudly (the
+     cursor is HELD on a failed read so nothing is skipped past).
 
 Auth: PASSIVE token reader. Reads the gateway access token from Claude Code's
 ~/.claude/.credentials.json (mcpOAuth.m365.accessToken) on each poll; Claude Code owns the refresh
@@ -37,6 +56,7 @@ import base64
 import datetime
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -251,7 +271,78 @@ def _gateway_call(token: str, name: str, arguments: dict) -> dict | None:
 
 
 def poll(token: str, since: str) -> dict | None:
+    """CHANGE SIGNAL ONLY (msg-2571 ruling 1): the result's contract is latest-per-chat, so the
+    caller takes touched chat ids from it and NEVER the message payload -- see the intake below."""
     return _gateway_call(token, "poll_addressed_teams_messages", {"since_iso": since})
+
+
+READ_TOP = 25  # bounded per-chat intake read (the gateway tool's own default page)
+
+
+def read_chat(token: str, chat_id: str) -> dict | None:
+    """THE INTAKE (msg-2571 ruling 2): one bounded message-grain read of a touched chat. Returns
+    the gateway's raw Graph page {"value": [...newest-first...]} or an error-shaped dict/None."""
+    return _gateway_call(token, "read_chat_messages", {"chat_id": chat_id, "top": READ_TOP})
+
+
+def _parse_ts(ts: str | None) -> datetime.datetime | None:
+    """Graph createdDateTime -> aware datetime; None when unparseable."""
+    if not ts:
+        return None
+    t = str(ts).strip()
+    if t.endswith("Z"):
+        t = t[:-1] + "+00:00"
+    try:
+        d = datetime.datetime.fromisoformat(t)
+    except ValueError:
+        return None
+    return d if d.tzinfo else d.replace(tzinfo=datetime.timezone.utc)
+
+
+def _newer(ts: str | None, cursor: str) -> bool:
+    """STRICT parsed compare -- never lexical: the seed cursor is second-grain while Graph carries
+    milliseconds, and '...12.095Z' < '...12Z' lexically. An unparseable side reads NEWER (fail
+    toward a duplicate emit, never toward a silent drop)."""
+    a, b = _parse_ts(ts), _parse_ts(cursor)
+    if a is None or b is None:
+        return True
+    return a > b
+
+
+def _advance(max_ts: str, ts: str | None) -> str:
+    """The newer of two timestamps by PARSED compare. An unparseable candidate never becomes the
+    cursor (a corrupt cursor would re-emit forever), unlike _newer's emit-side fail-open."""
+    p = _parse_ts(ts)
+    if p is None:
+        return max_ts
+    q = _parse_ts(max_ts)
+    return str(ts) if (q is None or p > q) else max_ts
+
+
+def fresh_messages(page: dict | None, chat_id: str, chat_type: str | None, cursor: str) -> list[dict] | None:
+    """Normalize ONE chat's read page to the poll's flat message shape -- {chat_id, chat_type,
+    from_name, preview, timestamp_utc} with the gateway's own HTML-strip + 400-cap -- filtered to
+    messages STRICTLY newer than the cursor, oldest-first (ruling 2: ordering preserved for the
+    ACK-FIRST serve loop). Returns None on an error/absent page: the chat was NOT read, and the
+    caller must HOLD the cursor (retry-not-drop)."""
+    if not isinstance(page, dict) or "value" not in page:
+        return None
+    out = []
+    for m in page.get("value", []):
+        ts = m.get("createdDateTime")
+        if not _newer(ts, cursor):
+            continue
+        usr = ((m.get("from") or {}).get("user")) or {}
+        raw = (m.get("body") or {}).get("content") or ""
+        out.append({
+            "chat_id": chat_id,
+            "chat_type": chat_type,
+            "from_name": usr.get("displayName"),
+            "preview": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw)).strip()[:400],
+            "timestamp_utc": ts,
+        })
+    out.sort(key=lambda m: str(m.get("timestamp_utc") or ""))  # one Graph page = one ts format
+    return out
 
 
 def main() -> None:
@@ -288,17 +379,55 @@ def main() -> None:
             try:
                 res = poll(tok, cursor)
                 if res:
+                    # MESSAGE-GRAIN INTAKE (msg-2571): the poll payload contributes TOUCHED CHAT
+                    # IDS only -- its latest-per-chat contract drops every earlier message in the
+                    # window, which is the exact loss this intake closes (BG msg 2567, measured).
+                    touched = {}
                     for m in res.get("new_messages", []):
-                        # INCOMING ONLY: skip my own outgoing messages (Andrew-direct 2026-06-26)
-                        if is_outgoing(m, me, me_name):
+                        cid = m.get("chat_id")
+                        if cid and cid not in touched:
+                            touched[cid] = m.get("chat_type")
+                    max_seen = cursor
+                    all_read = True
+                    for cid, ctype in touched.items():
+                        fresh = fresh_messages(read_chat(tok, cid), cid, ctype, cursor)
+                        if fresh is None:
+                            # this chat was NOT read: hold the cursor for the WHOLE cycle (the
+                            # cursor is global, so advancing on a sibling chat's messages would
+                            # skip past this one's forever). Duplicates on retry are the safe side.
+                            all_read = False
+                            print(f"[teams-watch] read failed for chat {cid} -- cursor HELD, "
+                                  "retry next cycle", file=sys.stderr, flush=True)
                             continue
-                        # one STDOUT line per new INCOMING message = one agent ping (work-intake signal)
-                        print(f"[TEAMS] {m.get('chat_type')} from {m.get('from_name')}: "
-                              f"{m.get('preview')} | chat_id={m.get('chat_id')} ts={m.get('timestamp_utc')}",
-                              flush=True)
-                    nc = res.get("cursor")
-                    if nc and nc != cursor:
-                        cursor = nc
+                        if len(fresh) >= READ_TOP:
+                            # window FULL to the bound: messages since the cursor may exist BELOW
+                            # the read page. A possible loss is never silent -- loud on stdout so
+                            # the agent backfills with a manual read_chat_messages.
+                            print(f"[TEAMS] note: chat {cid} read window FULL ({len(fresh)} of "
+                                  f">={READ_TOP} since cursor) -- backfill via read_chat_messages",
+                                  flush=True)
+                        emit = []
+                        for m2 in fresh:
+                            # cursor advances over PROCESSED messages: emitted OR deliberately
+                            # outgoing-skipped (else my own reply leaves the chat perma-touched);
+                            # never past an unemitted incoming -- the write is after the emits.
+                            max_seen = _advance(max_seen, m2.get("timestamp_utc"))
+                            # INCOMING ONLY: skip my own outgoing messages (Andrew-direct 2026-06-26)
+                            if not is_outgoing(m2, me, me_name):
+                                emit.append(m2)
+                        k = len(emit)
+                        for i, m2 in enumerate(emit, 1):
+                            frame = f" ({i} of {k} since cursor)" if k > 1 else ""
+                            # one STDOUT line per new INCOMING message = one agent ping (work-intake signal)
+                            print(f"[TEAMS] {m2.get('chat_type')} from {m2.get('from_name')}: "
+                                  f"{m2.get('preview')} | chat_id={m2.get('chat_id')} ts={m2.get('timestamp_utc')}{frame}",
+                                  flush=True)
+                    # cursor advance: MESSAGE timestamp only (max processed), single write per
+                    # cycle AFTER all emits, and only when every touched chat was actually read.
+                    # The gateway poll's own cursor is deliberately ignored -- a poll-time cursor
+                    # advancing past unemitted messages IS the loss vector (msg-2571 ruling 3).
+                    if all_read and max_seen != cursor:
+                        cursor = max_seen
                         open(CURSOR_FILE, "w", encoding="utf-8").write(cursor)
             except urllib.error.HTTPError as e:
                 if e.code != 401:  # 401 = token lapsed; quiet retry (Claude Code refreshes on next use)

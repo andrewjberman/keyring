@@ -41,3 +41,8 @@ approval steps for catalog rows — a matching row is served without asking anyo
    offer to route to Andrew, and surface the demand (TEAMS_DUTY.md escalation ladder).
 4. A request that is PART approved, PART not (e.g., "get me the returns AND email them to
    an outside address"): serve the approved part, decline the rest explicitly.
+5. **Positional-path projection (CTO~Z serve rule, msg 2638):** any served answer that reads
+   a POSITIONAL path (`models.1`, `rows.0`, ...) projects the entity's IDENTIFYING field(s)
+   (code + name) beside the value IN THE SAME `--project` call — the answer proves which
+   entity it read. Positional order is an accident of the artifact; nothing in the bare
+   number says so.

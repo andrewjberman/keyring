@@ -1987,7 +1987,8 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
     return "\n".join(parts)
 
 
-@mcp.tool()
+@mcp.tool(meta={"anthropic/alwaysLoad": True})  # OPAL_ANALYST sec11 S2: schema RESIDENT at session
+# start (no ToolSearch hop) -- the READ-clock primitive every seat calls; ruled CTO~Z msg 2617.
 async def ack_messages(message_ids: str, ctx: Context = None) -> str:
     """Record that YOU READ specific broker messages -- the READ clock (D0_TIGHTENING T1).
 

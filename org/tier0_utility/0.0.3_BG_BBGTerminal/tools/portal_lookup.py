@@ -15,10 +15,16 @@ built so the truncation-misread class is structurally impossible:
 Usage:
   python portal_lookup.py channels
   python portal_lookup.py list <channel> [--match SUB]
-  python portal_lookup.py get <channel> <key-or-suffix> [--project a.b.0.c] [--full]
+  python portal_lookup.py get <channel> <key-or-suffix> [--project a.b.0.c]... [--find SUB] [--full]
   python portal_lookup.py ddb-tables
   python portal_lookup.py ddb-query <table> <key-value> [--limit N]
   python portal_lookup.py ddb-scan <table> [--limit N]        # small tables only
+
+ONE-CALL RETRIEVAL+EXTRACTION (OPAL_ANALYST sec11 S5): `get` extracts in-process --
+  --find SUB      case-insensitive KEY-substring walk of the retrieved object: prints every
+                  matching field's dot-path + value, with the walk's denominator. The path it
+                  prints is --project's input, so unknown-path lookups are ONE subprocess.
+  --project PATH  repeatable: each path prints its own PROJECTION (several fields, one call).
 
 This tool performs NO writes. It has no put/delete/update code path.
 ASCII-only output (CLAUDE.md code-quality rule). Requires boto3 + stdlib.
@@ -151,6 +157,40 @@ def project(doc, path: str):
     return cur, None
 
 
+def find_fields(doc, sub: str, path: str = ""):
+    """Recursive KEY-substring walk (sec11 S5 one-call extraction). Returns (matches, walked):
+    matches = [(dot-path, value)] for every dict key containing sub case-insensitively;
+    walked = every dict key visited -- the denominator, so a 0 arrives with the frame that
+    makes it evidence of absence rather than a bare zero."""
+    matches, walked = [], 0
+    if isinstance(doc, dict):
+        for k, v in doc.items():
+            walked += 1
+            p = f"{path}.{k}" if path else str(k)
+            if sub.lower() in str(k).lower():
+                matches.append((p, v))
+            m, w = find_fields(v, sub, p)
+            matches.extend(m)
+            walked += w
+    elif isinstance(doc, list):
+        for i, v in enumerate(doc):
+            m, w = find_fields(v, sub, f"{path}.{i}" if path else str(i))
+            matches.extend(m)
+            walked += w
+    return matches, walked
+
+
+def render_value(v) -> str:
+    """One-line value render for --find output: scalars whole (capped, cap stated), containers
+    as shape -- drill a container with --project <its printed path>."""
+    if isinstance(v, dict):
+        return f"dict({len(v)} keys)"
+    if isinstance(v, list):
+        return f"list[{len(v)}]"
+    s = json.dumps(v, default=str)
+    return s if len(s) <= 200 else s[:200] + f"... ({len(s)} chars total)"
+
+
 def summarize(doc, indent: str = "  ") -> None:
     if isinstance(doc, dict):
         for k, v in doc.items():
@@ -226,19 +266,34 @@ def cmd_get(args) -> None:
     else:
         print(f"VINTAGE: field '{df}' not present -- quote LastModified and say it is "
               f"file-time, not data-time")
-    if args.project:
-        sub, err = project(doc, args.project)
+    extracted = False
+    for path in (args.project or []):
+        sub, err = project(doc, path)
         if err:
-            print(f"PROJECT FAILED at '{args.project}': {err}")
+            print(f"PROJECT FAILED at '{path}': {err}")
             sys.exit(1)
-        print(f"PROJECTION {args.project}:")
+        print(f"PROJECTION {path}:")
         print(json.dumps(sub, indent=2, default=str))
-    elif len(body) > SUMMARY_BYTES and not args.full:
-        print(f"LARGE OBJECT ({len(body)} bytes > {SUMMARY_BYTES}): schema summary below; "
-              f"use --project a.b.c for the piece you need (--full to force a dump).")
-        summarize(doc)
-    else:
-        print(json.dumps(doc, indent=2, default=str))
+        extracted = True
+    if args.find:
+        matches, walked = find_fields(doc, args.find)
+        print(f"FIND '{args.find}': {len(matches)} match(es) across {walked} keys walked "
+              f"(COMPLETE walk of the retrieved object).")
+        for p, v in matches[:200]:
+            print(f"  {p} = {render_value(v)}")
+        if len(matches) > 200:
+            print(f"  ... ({len(matches) - 200} more matched keys not printed -- narrow the "
+                  f"term or --project one of the paths above)")
+        if not matches:
+            print("  0 matches in a COMPLETE walk -- absence of the field is real here.")
+        extracted = True
+    if not extracted:
+        if len(body) > SUMMARY_BYTES and not args.full:
+            print(f"LARGE OBJECT ({len(body)} bytes > {SUMMARY_BYTES}): schema summary below; "
+                  f"use --project a.b.c for the piece you need (--full to force a dump).")
+            summarize(doc)
+        else:
+            print(json.dumps(doc, indent=2, default=str))
 
 
 def cmd_ddb_tables(_args) -> None:
@@ -307,7 +362,13 @@ def main() -> None:
     gp = sub.add_parser("get")
     gp.add_argument("channel")
     gp.add_argument("key")
-    gp.add_argument("--project", help="dot-path into the JSON, e.g. total.histogram or groups.0")
+    gp.add_argument("--project", action="append",
+                    help="dot-path into the JSON, e.g. total.histogram or groups.0 "
+                         "(repeatable -- each prints its own PROJECTION)")
+    gp.add_argument("--find",
+                    help="case-insensitive KEY-substring walk: every matching field's "
+                         "dot-path + value, with the walk denominator (one-call "
+                         "retrieval+extraction, sec11 S5)")
     gp.add_argument("--full", action="store_true", help="force full dump of a large object")
     gp.set_defaults(fn=cmd_get)
     sub.add_parser("ddb-tables").set_defaults(fn=cmd_ddb_tables)
