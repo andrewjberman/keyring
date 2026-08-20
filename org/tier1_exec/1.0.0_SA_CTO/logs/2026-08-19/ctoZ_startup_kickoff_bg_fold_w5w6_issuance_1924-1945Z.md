@@ -126,6 +126,26 @@ what the record now teaches.
    on this box (rc=127); a `2>/dev/null` on comp-find rendered clean-empty from command-not-found
    — caught by positive control (the jq class, live at this desk). `.tools/` prefix works for both.
 
+## Delta 00:40–01:05Z — adversary-on-options, D7 pivot executed, §7.3 authored
+
+1. **/next-steps + Andrew's "run comp-adversary on these options":** compose over the card set →
+   TWO findings: (a) **comp-adversary v1 DEFECT, positive-controlled** — path-pin extractor
+   truncates dotted serial dirs → false GONEs; routed to 0.8.0 via MSTR~Z; **ANDREW-PRIORITIZED
+   within the hour** (verbatim: *"truncated outputs is a very risky error type"*) — my case is the
+   regression fixture, truncation named a recurring CLASS with a sweep row, and the interim
+   direct-check rule is STANDING LAW both fabrics (bound into the W6 TO's certification element);
+   (b) one off-axis drift row (NFRA_COMPLEARN, other lane). Option set survived; ranking held.
+2. **D7 PIVOT (Andrew-direct @c7aa4bb03a) EXECUTED at this gate @d374872d8c:** TO-C re-scoped to
+   client-facing dashboard-form intake (TAC-2 content replaced, id stable; TO-B dead as gate;
+   §7.3 promoted to NAMED GATE; U4 stands as caller-shape law; internal-only read
+   latest-word-per-element). Decomposition frame → COO~Z; they disposed 3 legs (leg-1 mine).
+3. **LEG-1 DELIVERED @a765d66f82: D7 §7.3 authorization design AUTHORED** — and the discovery
+   that "sec.7.3" was a forward reference all along (77 citations incl. catalog_gate's own floor
+   comments; no design section existed). Landed AT the anchor: U4 caller shapes (svc-subject
+   indirection; client tokens never write directly in v1), per-action deny-by-default matrix,
+   tenant axis server-derived-never-body, 3-condition floor retirement (consumers first),
+   exercisable acceptance incl. mutant. COO~Z validates against their pre-stated (a)-(d) bar.
+
 ## Open at this seat
 
 - **W5 GO** — gated: 08-20 07:00 WDAC acceptance + census sequencing at spawn (COO~Z surfaces;
