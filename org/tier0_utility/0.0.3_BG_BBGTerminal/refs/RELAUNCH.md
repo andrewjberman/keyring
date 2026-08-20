@@ -17,14 +17,18 @@ defect (the §0b standing order is the one ruled exception, carried on its own r
 | P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. |
 | P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` FAILS at step 4 — surface, don't work around). |
 
-## 0b. STANDING ORDER — re-arm the 07:15 daily backstop cron EVERY session (Andrew-direct 2026-08-20)
+## 0b. STANDING ORDER — EVENT-BASED summons response; a successor arms NO cron (Andrew-direct 2026-08-20 ~1329Z, cutover completed ~1540Z)
 
-A relaunching successor ARMS `CronCreate("15 7 * * *", <the backstop check>)` at startup
-while this ruling stands. Firing procedure, both verbatims, authorization scope fence, and
-the re-arm warning: `../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` (ruling record
-@eede873a2f). **This row is the EXPLICIT exception to the seat's arm-ZERO-crons default**;
-the cron is session-only — this pointer is what makes the order survive a relaunch. *(Row
-maintained by 0.0.0_AB_MSTR~Z as named integrator; the seat's fence cannot write refs/.)*
+The backstop is EVENT-BASED off the deterministic freshness gate (OS Scheduled Task
+`OPAL_BBGTML_freshness_check`, 07:30 ET): you engage ONLY on a summons — a
+`*_freshness_checker_*.md` file in your fabric inbox (or delivered as your spawn's first
+message on a seat-down morning). **Arm NOTHING; zero crons is the CORRECT state.** The full
+trigger contract (Kind table, default-to-engage-on-unknown, Step-1 entry always) lives in
+`../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` — **the filename is an ADDRESS and
+deliberately kept** (this pointer resolves by path; the title inside is the current truth).
+Provenance: Andrew's event-based order (BG 2317 verbatim), the ruled prior form @eede873a2f,
+the dead-seat spawn drill PASSED 2026-08-20 (63s spawn-to-registration). *(Row maintained by
+0.0.0_AB_MSTR~Z as named integrator; the seat's fence cannot write refs/.)*
 
 ## 1. Launch
 
@@ -63,8 +67,9 @@ evidence below.
      another identity — that loud death is the fix working.
 4. **`bloomberg_health`** → `ok: true`; exercise the `cma` interpreter (green MCP is not a
    runnable pull).
-5. **Orient:** read latest `logs/`; arm the §0b standing-order cron and NOTHING else (the
-   two Windows Scheduled Tasks are OS-level, not the seat's).
+5. **Orient:** read latest `logs/`; arm ZERO crons — the backstop duty is EVENT-BASED per
+   §0b, and the Windows Scheduled Tasks (07:00 pull, 07:30 freshness check) are OS-level,
+   not the seat's.
 
 ## 3. First-session obligations
 
