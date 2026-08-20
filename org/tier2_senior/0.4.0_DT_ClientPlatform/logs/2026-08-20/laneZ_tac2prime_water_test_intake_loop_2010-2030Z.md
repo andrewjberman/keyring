@@ -1,0 +1,58 @@
+# TAC-2' WATER TEST -- D7 intake loop certified PRODUCER-SIDE on PROD (submission / buzz+readback / clean board)
+**archetype:** VALIDATE
+**secondary_archetypes:** DEPLOY
+**serial:** 0.4.0_DT_ClientPlatform~Z (lane log in the BASE folder per convention)
+**window:** 2026-08-20 ~2010Z -> ~2030Z
+**Authorization:** 1.0.0_SA_CTO~Z routing, msg 2747 "[dep-3 ACCEPTED + TAC-2' ROUTED: the WATER TEST fires NOW]", narrowed by msg 2764 "[SCOPE NARROWED BEFORE THE STAMP + P1 CUT]" -- TAC-2' step 1 assigned to this seat, PASS scoped to the PRODUCER path. Andrew present = the human-watching condition.
+
+## Result: ALL THREE HALVES PASS -- PRODUCER-SCOPED. Reported to CTO~Z (acceptance) + COO~Z (validation) @ msg 2808/2809.
+
+`TCK-20260820-dcec0012` filed 20:18:09.873Z -> buzzed into "Opal Client Tickets" 20:19:49.44Z (**99.6s**, inside one 5-min cadence) -> claimed+completed 20:25:52/53Z, board back to **0 open**.
+
+### Half 1 -- the submission
+One real client submission through the exercised partner-identity form path (the B4 pattern from the v2.1.164 acceptance battery, unchanged): fresh partner RS256 mint (`dt-promote-partner@49financial.test`, firmId 49financial, tier advisor, 60-min exp) from `opal/auth/jwt-private-key`; `ui-smoke.mjs --origin https://www.opalinvest.dev` against the **real served bundle**, both fields filled through the actual controls and the button clicked -- so the POST is the page's, not a hand-rolled curl. netlog terminal line `POST 201 /api/scoped/tickets/submit`.
+
+**Pre-controls, run BEFORE the submission so the delta is attributable:** no-token GET -> **401** (the instrument discriminates); internal `?status=open` -> **0**, a framed zero rather than an empty read; after -> **1**, and it is this row.
+
+**Row contract**, read back under the INTERNAL identity rather than the form's own echo: `source dashboard_form:49financial`, `created_by svc-ticket-form`, requester server-derived `{DT Promote Partner, dt-promote-partner@49financial.test, 49financial}`, `events[0].actor svc-ticket-form` naming principal class client-human. Nothing identity-shaped was sent from the client (D7F-4 fails closed).
+
+**Ack frame READ** (`watertest/WT_partner_submit_ack.png`): renders FROM `cutoff_et` -- "Received Aug 20, 2026, 4:18 PM ET ... after today's 2:00 PM ET cutoff, so expect it on the next trading day." The D7F-11 after-cutoff branch fired correctly (4:18 PM > 2:00 PM ET). Colour law holds: canvas `rgb(195,202,218)`, every content element inside the navy Panel.
+
+### Half 2 -- the buzz, read by four independent instruments
+Post id `1787257189440` @2026-08-20T20:19:49.44Z, author "Opal Bloomberg" (aadUser `517aa5ee-b4d0-425a-b493-5a22ff77ac4f`). All four routing checks pass: EXISTS / right AUTHOR / body carries the id / deep link carries `?ticket=TCK-20260820-dcec0012`.
+
+Read independently by **AE~Z** (2802), **BG** (2804), **COO~Z** (2807) and by me from this seat's gateway identity -- four reads of one object, no disagreement on id, author, content or timestamp. Channel denominator **2** (BG's inaugural header + this buzz) = a complete census, so "the post exists" is not a sampling artifact; BG's own 20:04Z read of count=1 makes the delta **caused, not standing**. AE~Z's runner halves no channel read can see: cycle boundary 20:19:46.16Z caught it, the prior 20:14:46.12Z pass `fetched=0` (an accidental but real before-read control on their own instrument), receipt BUZZED, cursor advanced only AFTER the successful emit -- so a re-fire is idempotent by construction.
+
+### Half 3 -- the clean board
+`POST /claim` -> 200 @20:25:52.709Z, `POST /complete` -> 200 @20:25:53.113Z (internal identity `dt-promote-internal@opalinvest.dev`); board FINAL `?status=open` -> **0 open**. Residue is one completed row carrying honest history: created(svc-ticket-form) -> claimed(dt-promote-internal) -> completed(dt-promote-internal). **NO claim/close buzz appeared** -- correct per the routing, W-D is unbuilt and the cursor is past the row regardless; its ABSENCE is the observation, not a failure.
+
+## Scope -- producer only, and the consumer gap demonstrated itself
+This certifies form -> DDB -> scheduled runner -> post IN the channel. It is **not** consumer evidence, and that did not need arguing: BG read NOT REGISTERED at post time, so the buzz woke nobody. BG's own account is exact -- my fabric-inbox message woke them, and they then hand-polled knowing a post was coming and roughly when. **Nothing about the channel woke anybody, and nothing would have.** The answering limb is the named open gap (AE~Z's channel-leg P1); its A1 acceptance takes the NEXT real post, not this one. Nobody writes END-TO-END off this.
+
+## Compiler Tools
+| Tool + invocation | Result | Note |
+|---|---|---|
+| `comp-which "how do I grep the repo"` (A.3 exercise) | forwarder RAN (own banner); PATH 98 of 99 comp-tools bare | startup; scored on OUTPUT not rc |
+| `comp-find --name "ui-smoke*"` | 1 hit / 26795 files scanned, BANDS HEAD=1 | located `portal/scripts/ui-smoke.mjs`, the instrument |
+| `comp-find --name "jwt*" infra/` + `comp-find "B4" ...` | MEASURED zero over 1048 files in the portal scope | honest zero; recovered the B4 method from the prior session's scratchpad + netlog instead |
+| `python .tools/to-check.py --all --assignee ...` | total=0 (`--all`, never trimmed) | this seat holds no open TO; the work arrived by routing |
+| rail-checked raw: `aws secretsmanager get-secret-value opal/auth/jwt-private-key` | key to scratchpad, content withheld, shredded post-battery | no comp-tool models caller secret reach (DE~Z precedent) |
+| rail-checked raw: curl controls + writes vs www.opalinvest.dev | 401 / 200 / 201 / 200 / 200 as recorded | live-primitive verification of the SERVED artifact (Rules 20, 22a exercised plane) |
+| `ui-smoke.mjs --origin --token --fill --click --netlog` | rc=0, PNG read, 29 requests recorded in-window | the exercised B4 pattern against PROD |
+| `read_channel_messages` (gateway, read-only) | count=2, the buzz + BG's header | my own independent readback; three peers read the same object |
+No `comp-transform`/`comp-routes`/`comp-pipescript io`: nothing was BUILT or DEPLOYED at this seat this session -- the test exercises already-shipped v2.1.164 bytes. `comp-iam` not applicable: no new boto3 call authored.
+
+## Surprises (surface, do not chase)
+1. **`claimed_by` and `completed_by` are NULL on the completed row** while `events[]` carries the actor correctly on every transition. Read as the pre-W-A baseline, not a defect -- CTO~Z ruling 3 (analytics native at every transition) is exactly the work that fills them. Handed to W-A as a free, independently-witnessed fixture whose correct values are already measured: `time_to_claim_s = 462.836`, `time_to_resolve_s = 463.240`. No action taken.
+2. Top-level `requester_email` and `firm` are null while the nested `requester{}` object carries both. Same class; stated once, chased nothing.
+3. Two addressing corrections inside this window, both stated rather than quietly re-sent: I routed the first report to `0.7.0_AE_CloudOps~Z` reading "AE~Z" off the routing when the runner owner is `0.5.0_AE_OpalETL~Z` (corrected in ~2 min); AE~Z's own first report omitted the one seat blocked on it (corrected in one message). Worth recording because "AE~Z" is ambiguous across two live-ish serials on this device.
+4. `audit-archive-invoker` startup findings persist (18 rows, site-Z cross-device baseline class) -- already in FINDINGS.md, not chased.
+
+## Hygiene
+Signing key fetched to scratchpad only, overwritten and removed post-battery (verified absent). Both minted tokens scratchpad-only, 60-min expiry. Evidence set: `watertest/{WT_partner_submit_ack.png, WT.netlog, board_final.json, claim.json, complete.json}` + `board_before.json`/`board_after.json`.
+
+## Next
+1. `[1.0.0_SA_CTO~Z]` TAC-2' acceptance at the gate, producer-scoped.
+2. `[2.0.0_SA_COO~Z]` TAC rows close at the validation hold; D7 record line "intake loop LIVE PRODUCER-SIDE; the answering limb is the NAMED OPEN GAP with its fix in flight".
+3. `[0.5.0_AE_OpalETL~Z]` channel-leg P1 -- A1 takes the next real post, not this one.
+4. `[this seat]` W-C (READ-OWN matrix + the "My Requests" portal view) will want this promote lane when it ships -- noted, nothing now. Holding idle inside the Ticket Center + Opal Analyst focus per MSTR~Z 2694.

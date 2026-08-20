@@ -81,7 +81,61 @@ folded in HERE and the daily file is left alone as the record.>
 - 2026-08-07 -- <one line>
 ```
 
-## Daily file format (`<YYYY-MM-DD>.md` — the day's delta)
+## Daily file format — JSONL from 2026-08-21 (CVO~Z verdict @07988f39fb, adopted in full msg 2790)
+
+**Dailies created from the NEXT DAY BOUNDARY after 2026-08-20 are `<YYYY-MM-DD>.jsonl` — one
+JSON object per exchange, appended same-turn.** Existing MD dailies are immutable records and
+are NEVER migrated (A1: a date boundary, not a rewrite — the MD template below remains the
+format of record for pre-boundary files). Why JSONL: the MD machine path fails to a CLEAN
+EMPTY (the measured silent-recall class); a malformed JSONL line fails LOUD and NAMED at
+parse, and a torn line loses locally, never the document (exercised exhibits E1–E4).
+
+**THE ENTRY SCHEMA (one stable key order — exactly this order, every entry; Andrew reads
+these raw and diff stability depends on it):**
+
+```
+{"schema_version": 1, "ts": "...", "thread": "...", "who": "...", "ask": "...",
+ "recalled": [...], "outcome": "...", "served": ..., "vintage": ..., "catalog_row": ...,
+ "reason": ..., "told": ..., "open": "...", "off_record": false}
+```
+
+- `schema_version` 1 (THIS entry schema's version — distinct from any other schema's).
+- `ts` ISO-8601Z. **RECORD metadata, never the latency instrument** (named unknown 1, ruled:
+  the S3 wake-hop clocks remain the ONLY latency oracle; a latency claim quoted from entry
+  timestamps is a plane error wearing a denominator).
+- `who` the sender; `ask` VERBATIM (the invariant — the phrasing is the record).
+- `recalled` the denominator AS A LIST of the reads performed (e.g. `["STANDING(upn)",
+  "THREAD.md", "2026-08-19.jsonl"]`; `[]` = new thread) — count derivable, never asserted.
+- `outcome` exactly the ruled enum: `SERVED` / `DECLINED` / `FAILED` (as amended) / `OPEN`
+  (+ `WITHDRAWN` on its filing's adoption — filed PROPOSED, not yet emitted).
+- `served` + `vintage` + `catalog_row` on SERVED (null otherwise); `reason` on
+  DECLINED/FAILED; `told` on FAILED (what the sender was told where the channel permits —
+  a failed telling IS the FAILED); `open` the residual ("none" or text); `off_record` bool.
+- **Writer emits ASCII-escaped JSON** (A2, ensure_ascii semantics): non-ASCII content becomes
+  a VISIBLE `\uXXXX`, never a silent grep-miss. The ASCII-only rule still binds the composed
+  TEXT; the encoder is the backstop, not the license.
+- **Grep discipline (A4, measured E2): token-grep or parse over JSONL content — NEVER a
+  quoted-phrase grep** (a quoted phrase is stored escaped and a naive grep misses it). The
+  <=3-read budget and the no-scan law are unchanged (parse cost measured 0.40ms/200 entries).
+- Recurrence mining stays WITHIN the STANDING-block fold discipline (named unknown 2, ruled:
+  consumption lives IN the serve loop; no miner/dashboard/analytics machinery without
+  Andrew's word — build ladder + moratorium, pre-adjudicated).
+
+**Rule-24 filing for this key set (a schema-enumeration act, filed with its authoring):**
+declared layer = everything the MD daily format recorded. CE, checked member-for-member:
+ASKED→`who`+`ask` · RECALLED→`recalled` · SERVED/vintage/catalog→`served`+`vintage`+
+`catalog_row` · DECLINED reason→`reason` · FAILED told→`told` · OPEN residual→`open` ·
+off-record→`off_record` — full coverage, nothing dropped. (ii) one grain: every key is a
+property of ONE exchange at record time. (iii) one intent per key; the outcome value and its
+reason stay separate fields (the FAILED filing's own discipline). (iv) one writer (the RECORD
+step) moves every field together.
+
+**Rigid one-line grammars, NAMED (A5 — already de-facto structured; naming prevents drift):**
+the INDEX.md map row is `<id> -> <dir>/`, one per thread, each id exactly once; the Ticket
+index row is the `TCK-<id> -- ... -- days-mentioned <n>` line as templated above. Neither is
+prose; a sweep may anchor on these grammars.
+
+## Legacy daily file format (`<YYYY-MM-DD>.md` — pre-2026-08-21 files, immutable record)
 
 ```markdown
 # <thread-slug> -- 2026-08-06

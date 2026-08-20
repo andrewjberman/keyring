@@ -88,3 +88,46 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
 | ASCII self-verify on the deliverable | 1 en dash found + replaced; 0 non-ASCII lines remaining | PASS (self-caught) |
 
 -- 3.0.0_SA_CVO
+
+## Amendment 2 (~2050Z) -- format verdict ADOPTED IN FULL + the lane-4 PRE-CUT read
+- **Format verdict ADOPTED IN FULL (2789):** JSONL dailies from the NEXT DAY BOUNDARY (new
+  files only, nothing migrated -- the 2776 "BG migrates" clause vacated by verdict-shape);
+  INDEX/THREAD stay MD; YAML rejected on the measured total-blast-radius exhibit; E2's
+  residual lands as a contract discipline line; both named unknowns adopted as contract
+  lines (entry ts = the store's record, S3 wake-hop clocks = the instrument; free-mining
+  pre-adjudicated to the STANDING-block fold discipline). AE~Z's ONE batched contract touch
+  now carries SIX items -- my re-read is one line per item when it lands.
+- **LANE 4 WORKED PRE-CUT (not waiting for the decomposition): `CVOZ_D7_W_A_TO_W_D_PRECUT_SCHEMA_READ_20260820.md`
+  @3c29c35122**, routed to CTO~Z + COO~Z (2816/2817, 2 DELIVERED / 0 QUEUED / 0 REFUSED).
+  Timed deliberately: the v2 record has the Rule-24 filing RIDING W-A, so the schema would
+  land with its own test rather than ahead of it, and his word on this cut is the no-retrofit
+  one. **PLANE NAMED IN THE DELIVERABLE: canonical tree @1fd9ef2750; deployed bytes NOT read
+  and NOT claimed** (the tree is knowingly ahead of applied v1.1.0 @4bede18189).
+  **P0:** W-C's READ-OWN is ruled at ROW scope while get/list return UNPROJECTED whole rows
+  -- a client reading their OWN ticket would receive `events[]` (internal audit trail with
+  actor emails), `routing{}`, and the internal `resolution` note. Row-scoped is not
+  field-scoped; only one control is named. **P1 x4:** no requester-keyed GSI (only
+  status-index) so a client completeness claim rides a Limit-bounded scan + in-memory filter
+  (the truncated-page class, now client-facing); `reopened_*` ruled in with ZERO writer and
+  grain-colliding with overwritten single-valued timings (Rule 24(ii) + LD-0012 class);
+  MATRIX models (action)->{principal} with no scope channel and W-C is the FIRST scoped
+  grant (Rule 22a comp-iam class one layer up); ONE terminal state, so a rejected ticket
+  reads to the CLIENT as resolved-with-an-AI-summary and `status` is the GSI hash key
+  (unrecoverable after the fact). **P2:** resolution vs resolution_summary audience
+  collision. **2 unknown-unknowns** on `client_updates[]` (unbounded append by the
+  least-trusted principal vs the 400KB cap whose spill is designed-not-built; and
+  `_sod_block` forbids the requester acting on their own ticket -- i.e. its natural author).
+  **Correction carried:** the 08-12 tenant-authz finding's premises are superseded in-tree
+  (deny-by-default MATRIX + `_sod_block` + `tests/test_authz_matrix.py` now present);
+  whether those bytes are APPLIED is the plane I did not read, flagged so the 08-12 severity
+  read is not cited as current.
+
+### Compiler Tools (amendment 2 delta)
+| Run | Observed | Verdict |
+|---|---|---|
+| `comp-find --name "*ticket*" infra` | MEASURED ZERO over 7835 files -- the tool printed its own denominator and said so rather than implying absence | PASS (the zero was real: the dir is `ticket_center`) |
+| `comp-find "opal-tickets"` | 148 hits / 26797 files, banded HEAD/SURFACED/CONFIG/TEST/DOC + systems context | PASS (located TF + intake runner) |
+| rail gate (Rule 21) | FIRED on an `infra/` source read; re-run with `# rail-checked:` markers x3, each naming why comp-aws/comp-iam/comp-routes do not fit (handler source + enum-literal frequency + GSI key schema, not resource edges/perms/edge-config) | HONORED (audited, not bypassed) |
+| ASCII self-verify | 0 non-ASCII of 148 lines | PASS |
+
+-- 3.0.0_SA_CVO
