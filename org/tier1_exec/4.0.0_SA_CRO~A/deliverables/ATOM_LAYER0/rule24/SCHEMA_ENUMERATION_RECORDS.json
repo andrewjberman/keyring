@@ -1,0 +1,265 @@
+{
+  "artifact": "atom_layer0 Rule 24 schema-enumeration records",
+  "version": "1.0.0",
+  "status": "PROPOSED",
+  "author": "4.0.0_SA_CRO~A",
+  "vintage": {
+    "repo_commit": "bc03be2524f1",
+    "observed_at_utc": "2026-08-20T15:53:48Z"
+  },
+  "token_hygiene": {
+    "instrument": "PowerShell .NET regex with explicit non-word boundaries; counts occurrences, not matching lines",
+    "canon_files": [
+      "CLAUDE.md",
+      "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+      "docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md"
+    ],
+    "positive_control": {
+      "token": "Rule",
+      "occurrences": 38,
+      "result": "PASS"
+    },
+    "counts": {
+      "DECOMPOSITION_FOUND": 0,
+      "DECLARED_FRONTIER_EXHAUSTED": 0,
+      "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN": 0,
+      "INSTRUMENT_UNKNOWN": 0,
+      "NOT_EXERCISABLE": 0,
+      "CONJUNCTIVE_DECOMPOSITION": 0,
+      "DISJUNCTIVE_DECOMPOSITION": 0,
+      "STAGE_ASSESSED": 0,
+      "STAGE_CORRECTLY_EMPTY": 0,
+      "STAGE_UNREACHABLE": 0,
+      "STAGE_NOT_ASSESSED": 0,
+      "MECHANICAL": 4,
+      "DECLARATIVE": 1,
+      "SEMANTIC": 16,
+      "atom_layer0_admissible_decomposition_v1": 0,
+      "atom_layer0_atomicity_certificate_v1": 0,
+      "atom_layer0_resolution_v1": 0,
+      "S0": 1,
+      "S1": 1,
+      "S2": 0,
+      "S3": 15,
+      "S4": 0,
+      "S5": 0,
+      "CERTIFICATE_ISSUED": 0,
+      "CERTIFICATE_WITHHELD": 0,
+      "RESOLVES_VIA_POINTER": 0,
+      "VIEW_TIME_COMPILED": 0,
+      "CITED_ENUM": 0,
+      "atom_layer0_proving_acceptance_v1": 0
+    },
+    "collision_disposition": "The seam-axis tokens pre-exist and are adopted with their established meanings. S0, S1, and S3 are generic local stage labels with canon collisions, so every use remains qualified by atom_layer0 stage context and none is proposed as a canonical term. Other atom_layer0-authored tokens have zero canon occupancy at the pinned vintage."
+  },
+  "records": [
+    {
+      "record_id": "R24-AL0-001",
+      "surface": "splitter_result_v1",
+      "act": "ADOPTED_AND_SCOPED",
+      "declared_layer": "terminal result of one differently-derived splitter challenge over one versioned frontier",
+      "axis_intent": "state why the splitter challenge terminated",
+      "grain": "one challenge run",
+      "members": [
+        "DECOMPOSITION_FOUND",
+        "DECLARED_FRONTIER_EXHAUSTED",
+        "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN",
+        "INSTRUMENT_UNKNOWN",
+        "NOT_EXERCISABLE"
+      ],
+      "precedence": [
+        "NOT_EXERCISABLE applies only before a challenge begins when no differently-derived splitter exists",
+        "INSTRUMENT_UNKNOWN dominates every partial run state",
+        "DECOMPOSITION_FOUND dominates remaining frontier because one witness defeats the universal claim",
+        "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN applies when instruments worked but frontier remains",
+        "DECLARED_FRONTIER_EXHAUSTED applies only when every declared cell closes"
+      ],
+      "postulates": {
+        "mece": "PASS: the precedence rule makes concurrent operational facts resolve to exactly one terminal; NOT_EXERCISABLE closes the no-run member that the four-value array omitted.",
+        "same_grain": "PASS: every member describes one challenge run, never a concept or work item.",
+        "intent_coherence": "PASS: every member answers only why the challenge terminated.",
+        "state_coherence": "PASS: every member is re-evaluated by the same operation, rerun the challenge against the same declared frontier and current instruments; none is a hidden remediation class."
+      },
+      "layer_coverage_probe": "No-run, broken-instrument, witness, open-frontier, and closed-frontier terminals are all expressible.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-002",
+      "surface": "decomposition_operator_v1",
+      "act": "AUTHORED",
+      "declared_layer": "operator that reconstructs one parent from independently meaningful children",
+      "axis_intent": "classify the reconstruction operator, not the discovery method",
+      "grain": "one normalized candidate decomposition",
+      "members": ["CONJUNCTIVE_DECOMPOSITION", "DISJUNCTIVE_DECOMPOSITION"],
+      "postulates": {
+        "mece": "PASS: normalized children reconstruct either jointly (AND) or as alternatives (OR). A mixed expression is normalized into nested candidate nodes before classification.",
+        "same_grain": "PASS: both members type one candidate's reconstruction operator.",
+        "intent_coherence": "PASS: both answer only how children reconstruct the parent.",
+        "state_coherence": "PASS: both are declarative operators with identical evidence and review lifecycle; neither is instrument-owned while the other is judgment-owned."
+      },
+      "layer_coverage_probe": "Products, bundles, alternative realizations, unions, and mixed expressions after normalization are covered.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-003",
+      "surface": "stage_state_v1",
+      "act": "AUTHORED",
+      "declared_layer": "evidence state of one S0-S5 stage at one run vintage",
+      "axis_intent": "distinguish assessed evidence from empty, unreachable, and unattempted work",
+      "grain": "one stage in one run",
+      "members": ["STAGE_ASSESSED", "STAGE_CORRECTLY_EMPTY", "STAGE_UNREACHABLE", "STAGE_NOT_ASSESSED"],
+      "postulates": {
+        "mece": "PASS: a stage was completed with content, completed after a discriminating empty enumeration, attempted but unreachable, or not attempted.",
+        "same_grain": "PASS: every member describes one stage in one run.",
+        "intent_coherence": "PASS: every member answers the stage's evidence state, not its substantive verdict.",
+        "state_coherence": "PASS: all members move under the same stage re-execution at a new evidence vintage; no value embeds an owner-specific remedy."
+      },
+      "layer_coverage_probe": "The correctly-empty/unreachable/not-looked distinction is explicit; no blank state remains.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-004",
+      "surface": "seam_axis_v1",
+      "act": "ADOPTED",
+      "declared_layer": "diagnostic coordinate for one layer binding",
+      "axis_intent": "separate physical traversal, map-to-territory agreement, and payload meaning",
+      "grain": "one axis check on one binding",
+      "members": ["MECHANICAL", "DECLARATIVE", "SEMANTIC"],
+      "postulates": {
+        "mece": "PASS: connection, recorded claim, and carried meaning are disjoint questions and jointly cover whether the binding is sound.",
+        "same_grain": "PASS: each member is one coordinate check on the same binding.",
+        "intent_coherence": "PASS: all three serve binding soundness; none encodes disposition or owner.",
+        "state_coherence": "PASS: each coordinate carries the same PASS/FAIL/UNKNOWN evaluation lifecycle and is exercised in the same binding run; no axis is structurally unassessable by definition."
+      },
+      "layer_coverage_probe": "A binding that connects, is recorded, and carries meaning has no fourth soundness dimension in the adopted /seams contract.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-005",
+      "surface": "atom_layer0_admissible_decomposition_v1",
+      "act": "AUTHORED_PREDICATE",
+      "declared_layer": "admissibility of one normalized proposed split",
+      "axis_intent": "decide whether the split enters the challenge frontier",
+      "grain": "one normalized proposed split",
+      "outcomes": ["true", "false", "unknown"],
+      "postulates": {
+        "mece": "PASS: all required tests pass, at least one test fails, or required evidence is unavailable.",
+        "same_grain": "PASS: each outcome binds one normalized split.",
+        "intent_coherence": "PASS: outcomes answer frontier admission only.",
+        "state_coherence": "PASS: all outcomes are recomputed by the same five-test predicate on evidence refresh."
+      },
+      "layer_coverage_probe": "Missing evidence remains unknown and cannot be silently coerced to inadmissible.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-006",
+      "surface": "atom_layer0_atomicity_certificate_v1",
+      "act": "AUTHORED_PREDICATE",
+      "declared_layer": "certificate eligibility for one concept run",
+      "axis_intent": "decide whether the bounded atomicity certificate may exist",
+      "grain": "one concept x grammar version x scope run",
+      "outcomes": ["true", "false"],
+      "postulates": {
+        "mece": "PASS: every run either satisfies every issuance operand or the certificate is withheld with typed cause.",
+        "same_grain": "PASS: both outcomes bind one run tuple.",
+        "intent_coherence": "PASS: outcomes answer issuance only and do not assert that false means decomposable.",
+        "state_coherence": "PASS: both outcomes are recomputed from the same frontier and instrument operands."
+      },
+      "layer_coverage_probe": "Every non-closed splitter result maps to false; only declared frontier exhaustion can map to true.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-007",
+      "surface": "atom_layer0_resolution_v1",
+      "act": "AUTHORED_PREDICATE",
+      "declared_layer": "resolution state of one binding at one declared grain and HEAD vintage",
+      "axis_intent": "decide whether the binding resolves exactly",
+      "grain": "one binding",
+      "outcomes": ["true", "false", "unknown"],
+      "postulates": {
+        "mece": "PASS: every operand passes, at least one known operand fails, or at least one required operand is unknown.",
+        "same_grain": "PASS: each outcome binds one binding.",
+        "intent_coherence": "PASS: outcomes answer exact resolution only.",
+        "state_coherence": "PASS: all outcomes re-derive from the same binding operands and HEAD vintage."
+      },
+      "layer_coverage_probe": "Cardinality, pointer, content, grain, three seam axes, and code re-declaration are all operands; an unassessed operand cannot produce true.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-008",
+      "surface": "workflow_stage_identifier_v1",
+      "act": "AUTHORED",
+      "declared_layer": "ordered method stages in one atom_layer0 run",
+      "axis_intent": "identify which transformation of the run bundle is executing",
+      "grain": "one workflow stage",
+      "members": ["S0", "S1", "S2", "S3", "S4", "S5"],
+      "postulates": {
+        "mece": "PASS: pin, sweep, challenge, legislate, resolve, and prove are non-overlapping transformations and cover the method lifecycle.",
+        "same_grain": "PASS: every member is one workflow stage.",
+        "intent_coherence": "PASS: members identify execution position only, not result or evidence state.",
+        "state_coherence": "PASS: every stage is governed by the same not-assessed/assessed/correctly-empty/unreachable state axis and the same re-entry rule."
+      },
+      "layer_coverage_probe": "Intake, decomposition generation, universal challenge, Rule 24 declaration, binding resolution, and live proving are all represented.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-009",
+      "surface": "certificate_state_v1",
+      "act": "AUTHORED",
+      "declared_layer": "certificate existence for one concept x grammar version x scope run",
+      "axis_intent": "state whether an atomicity certificate exists",
+      "grain": "one run tuple",
+      "members": ["CERTIFICATE_ISSUED", "CERTIFICATE_WITHHELD"],
+      "postulates": {
+        "mece": "PASS: the certificate object either exists after all issuance operands pass or it does not.",
+        "same_grain": "PASS: both values bind one run tuple.",
+        "intent_coherence": "PASS: values state certificate existence only; WITHHELD does not assert decomposition.",
+        "state_coherence": "PASS: both derive from the same issuance predicate on every validation."
+      },
+      "layer_coverage_probe": "No blank or pending certificate state exists; pending evidence is expressed by WITHHELD plus the typed splitter result.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-010",
+      "surface": "resolution_binding_form_v1",
+      "act": "ADOPTED_AND_SCOPED",
+      "declared_layer": "primary mechanism by which one consumer binding reaches its authority",
+      "axis_intent": "select the primary resolution mechanism for failure analysis",
+      "grain": "one binding",
+      "members": ["RESOLVES_VIA_POINTER", "VIEW_TIME_COMPILED", "CITED_ENUM"],
+      "postulates": {
+        "mece": "PASS: each row declares one primary mechanism; compound implementations split into one row per binding leg rather than multi-labeling a row.",
+        "same_grain": "PASS: all members type one binding leg.",
+        "intent_coherence": "PASS: members state mechanism only; failure result and seam verdict stay separate.",
+        "state_coherence": "PASS: all forms carry the same HEAD/content/grain/seam evaluation lifecycle and explicit loud/clean failure analysis."
+      },
+      "layer_coverage_probe": "Direct pointers, runtime/view compilation, and code or prose enum citation cover the three binding forms named by the founding brief.",
+      "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-011",
+      "surface": "atom_layer0_proving_acceptance_v1",
+      "act": "AUTHORED_PREDICATE",
+      "declared_layer": "method proving acceptance for one externally selected S5 run",
+      "axis_intent": "decide whether the founding proving-run bar is satisfied",
+      "grain": "one S5 run",
+      "outcomes": ["true", "false"],
+      "postulates": {
+        "mece": "PASS: all acceptance operands pass or acceptance is false with failed operands retained.",
+        "same_grain": "PASS: both outcomes bind one S5 run.",
+        "intent_coherence": "PASS: the predicate measures method proving acceptance only, not subject atomicity.",
+        "state_coherence": "PASS: both outcomes derive from the same external-selection, defect, repair, and regression operands."
+      },
+      "layer_coverage_probe": "External subject selection, assessed S5, observed method defect, repair, and regression check are all required operands.",
+      "verdict": "PASS"
+    }
+  ],
+  "summary": {
+    "records": 11,
+    "passed": 11,
+    "failed": 0,
+    "unassessed": 0
+  }
+}

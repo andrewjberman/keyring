@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/schemas/atom_layer0_run.schema.json",
+  "title": "atom_layer0 run bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "method_version",
+    "status",
+    "vintage",
+    "subject",
+    "stage_states",
+    "s0_pin",
+    "s1_sweep",
+    "s2_challenge",
+    "s3_legislation",
+    "s4_resolution",
+    "s5_proving",
+    "rule24_record_ids",
+    "residue"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "method_version": {"const": "0.1.0-proposed"},
+    "status": {"const": "PROPOSED"},
+    "vintage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_commit", "observed_at_utc"],
+      "properties": {
+        "repo_commit": {"type": "string", "minLength": 7},
+        "observed_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept", "definition", "claimed_layer", "declared_grain", "scope"],
+      "properties": {
+        "concept": {"type": "string", "minLength": 1},
+        "definition": {"type": "string", "minLength": 1},
+        "claimed_layer": {"type": "string", "minLength": 1},
+        "declared_grain": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "stage_states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["s0", "s1", "s2", "s3", "s4", "s5"],
+      "properties": {
+        "s0": {"$ref": "#/$defs/stage_state"},
+        "s1": {"$ref": "#/$defs/stage_state"},
+        "s2": {"$ref": "#/$defs/stage_state"},
+        "s3": {"$ref": "#/$defs/stage_state"},
+        "s4": {"$ref": "#/$defs/stage_state"},
+        "s5": {"$ref": "#/$defs/stage_state"}
+      }
+    },
+    "s0_pin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorities", "consumers", "molecule_dimensions", "evidence"],
+      "properties": {
+        "authorities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["pointer", "claimed_content", "live"],
+            "properties": {
+              "pointer": {"type": "string", "minLength": 1},
+              "claimed_content": {"type": "string", "minLength": 1},
+              "live": {"type": ["boolean", "null"]}
+            }
+          }
+        },
+        "consumers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["surface", "binding_layer", "is_code"],
+            "properties": {
+              "surface": {"type": "string", "minLength": 1},
+              "binding_layer": {"type": "string", "minLength": 1},
+              "is_code": {"type": "boolean"}
+            }
+          }
+        },
+        "molecule_dimensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["composition", "state", "position", "behavior", "semantic"],
+          "properties": {
+            "composition": {"type": "string"},
+            "state": {"type": "string"},
+            "position": {"type": "string"},
+            "behavior": {"type": "string"},
+            "semantic": {"type": "string"}
+          }
+        },
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/citation"}}
+      }
+    },
+    "s1_sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generators", "normalization_rule", "raw_candidates", "normalized_candidates", "excluded_candidates", "generator_residue"],
+      "properties": {
+        "generators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["generator_id", "description", "derivation_dependencies", "positive_control"],
+            "properties": {
+              "generator_id": {"type": "string", "minLength": 1},
+              "description": {"type": "string", "minLength": 1},
+              "derivation_dependencies": {"type": "array", "items": {"type": "string"}},
+              "positive_control": {"type": "string"}
+            }
+          }
+        },
+        "normalization_rule": {"type": "string"},
+        "raw_candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+        "normalized_candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+        "excluded_candidates": {"type": "array", "items": {"$ref": "#/$defs/excluded_candidate"}},
+        "generator_residue": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "s2_challenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grammar_name", "grammar_version", "grammar_commit", "splitter", "frontier", "result", "result_evidence", "certificate_state", "atomicity_certificate"],
+      "properties": {
+        "grammar_name": {"const": "decomposition_grammar"},
+        "grammar_version": {"const": "1.0.0"},
+        "grammar_commit": {"type": "string", "minLength": 7},
+        "splitter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "differently_derived", "shared_dependencies"],
+          "properties": {
+            "identity": {"type": "string"},
+            "differently_derived": {"type": ["boolean", "null"]},
+            "shared_dependencies": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "frontier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cell_ids", "assessed_cell_ids", "open_cell_ids", "unreachable_cell_ids"],
+          "properties": {
+            "cell_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "assessed_cell_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "open_cell_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "unreachable_cell_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          }
+        },
+        "result": {
+          "type": ["string", "null"],
+          "enum": [null, "DECOMPOSITION_FOUND", "DECLARED_FRONTIER_EXHAUSTED", "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN", "INSTRUMENT_UNKNOWN", "NOT_EXERCISABLE"]
+        },
+        "result_evidence": {"type": "array", "items": {"$ref": "#/$defs/citation"}},
+        "certificate_state": {
+          "type": "string",
+          "enum": ["CERTIFICATE_ISSUED", "CERTIFICATE_WITHHELD"]
+        },
+        "atomicity_certificate": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["claim", "grammar", "scope", "grain", "frontier_denominator", "evidence_vintage"],
+              "properties": {
+                "claim": {"type": "string", "pattern": "^ATOMIC_WITHIN\\(decomposition_grammar@1\\.0\\.0 x .+\\)$"},
+                "grammar": {"const": "decomposition_grammar@1.0.0"},
+                "scope": {"type": "string", "minLength": 1},
+                "grain": {"type": "string", "minLength": 1},
+                "frontier_denominator": {"type": "integer", "minimum": 1},
+                "evidence_vintage": {"type": "string", "minLength": 7}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "s3_legislation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept_rule24_record_ids", "population_predicate", "denominator_process", "authority_home", "token_census_record_id"],
+      "properties": {
+        "concept_rule24_record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "population_predicate": {"type": ["string", "null"]},
+        "denominator_process": {"type": ["string", "null"]},
+        "authority_home": {"type": ["string", "null"]},
+        "token_census_record_id": {"type": ["string", "null"]}
+      }
+    },
+    "s4_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding_population", "contracts", "residue"],
+      "properties": {
+        "binding_population": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "contracts": {"type": "array", "items": {"$ref": "#/$defs/resolution_contract"}},
+        "residue": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "s5_proving": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_selected_by", "method_defect", "regression_check", "acceptance_satisfied"],
+      "properties": {
+        "subject_selected_by": {"type": ["string", "null"]},
+        "method_defect": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["found", "description", "evidence", "repair"],
+          "properties": {
+            "found": {"type": "boolean"},
+            "description": {"type": "string"},
+            "evidence": {"type": "array", "items": {"$ref": "#/$defs/citation"}},
+            "repair": {"type": "string"}
+          }
+        },
+        "regression_check": {"type": "string"},
+        "acceptance_satisfied": {"type": "boolean"}
+      }
+    },
+    "rule24_record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "residue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage_not_assessed", "unreachable", "unknowns"],
+      "properties": {
+        "stage_not_assessed": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "unreachable": {"type": "array", "items": {"type": "string"}},
+        "unknowns": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "stage_state": {
+      "type": "string",
+      "enum": ["STAGE_ASSESSED", "STAGE_CORRECTLY_EMPTY", "STAGE_UNREACHABLE", "STAGE_NOT_ASSESSED"]
+    },
+    "citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "locator", "vintage", "claim"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "minLength": 7},
+        "claim": {"type": "string", "minLength": 1}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "label", "normalized_grain", "operator", "children", "generator_ids", "reconstruction_rule", "consequence", "evidence"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "normalized_grain": {"type": "string", "minLength": 1},
+        "operator": {"type": "string", "enum": ["CONJUNCTIVE_DECOMPOSITION", "DISJUNCTIVE_DECOMPOSITION"]},
+        "children": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "generator_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "reconstruction_rule": {"type": "string", "minLength": 1},
+        "consequence": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/citation"}}
+      }
+    },
+    "excluded_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "failed_admissibility_test", "reason", "evidence"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "failed_admissibility_test": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/citation"}}
+      }
+    },
+    "axis_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "passed", "evidence"],
+      "properties": {
+        "axis": {"type": "string", "enum": ["MECHANICAL", "DECLARATIVE", "SEMANTIC"]},
+        "passed": {"type": ["boolean", "null"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/citation"}}
+      }
+    },
+    "resolution_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding_id",
+        "binding_form",
+        "source_surface",
+        "source_layer",
+        "target_authority",
+        "declared_grain",
+        "authority_grain",
+        "claimed_content",
+        "head_vintage",
+        "live_authority_target_count",
+        "pointer_resolves_at_head",
+        "target_carries_claimed_content",
+        "is_code_binding",
+        "code_cites_authority",
+        "code_redeclares_vocabulary",
+        "seam_axes",
+        "resolved",
+        "failure_direction",
+        "candidate_owner"
+      ],
+      "properties": {
+        "binding_id": {"type": "string", "minLength": 1},
+        "binding_form": {
+          "type": "string",
+          "enum": ["RESOLVES_VIA_POINTER", "VIEW_TIME_COMPILED", "CITED_ENUM"]
+        },
+        "source_surface": {"type": "string", "minLength": 1},
+        "source_layer": {"type": "string", "minLength": 1},
+        "target_authority": {"type": "string", "minLength": 1},
+        "declared_grain": {"type": "string", "minLength": 1},
+        "authority_grain": {"type": "string", "minLength": 1},
+        "claimed_content": {"type": "string", "minLength": 1},
+        "head_vintage": {"type": "string", "minLength": 7},
+        "live_authority_target_count": {"type": ["integer", "null"], "minimum": 0},
+        "pointer_resolves_at_head": {"type": ["boolean", "null"]},
+        "target_carries_claimed_content": {"type": ["boolean", "null"]},
+        "is_code_binding": {"type": "boolean"},
+        "code_cites_authority": {"type": ["boolean", "null"]},
+        "code_redeclares_vocabulary": {"type": ["boolean", "null"]},
+        "seam_axes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"$ref": "#/$defs/axis_check"}
+        },
+        "resolved": {"type": ["boolean", "null"]},
+        "failure_direction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fails_loud", "loud_condition", "loud_detector", "fails_clean", "clean_condition", "clean_detector"],
+          "properties": {
+            "fails_loud": {"type": "boolean"},
+            "loud_condition": {"type": "string"},
+            "loud_detector": {"type": "string"},
+            "fails_clean": {"type": "boolean"},
+            "clean_condition": {"type": "string"},
+            "clean_detector": {"type": "string"}
+          }
+        },
+        "candidate_owner": {"type": "string"}
+      }
+    }
+  }
+}

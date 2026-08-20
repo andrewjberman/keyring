@@ -1,0 +1,323 @@
+#!/usr/bin/env python3
+"""Validate an atom_layer0 run bundle.
+
+The JSON Schema is the shape source of record. This script adds cross-field laws that
+JSON Schema alone does not express economically. It writes nothing.
+"""
+
+from __future__ import annotations
+
+import argparse
+import copy
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+try:
+    import jsonschema
+except ImportError as exc:  # pragma: no cover - environment failure path
+    print("ERROR: INSTRUMENT_UNKNOWN: jsonschema>=4 is required", file=sys.stderr)
+    raise SystemExit(3) from exc
+
+
+PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "atom_layer0_run.schema.json"
+TEMPLATE_PATH = PACKAGE_ROOT / "templates" / "atom_layer0_run.template.json"
+MANIFEST_PATH = PACKAGE_ROOT / "PACKAGE_MANIFEST.json"
+
+REQUIRED_RULE24 = {
+    "R24-AL0-001",
+    "R24-AL0-002",
+    "R24-AL0-003",
+    "R24-AL0-004",
+    "R24-AL0-005",
+    "R24-AL0-006",
+    "R24-AL0-007",
+    "R24-AL0-008",
+    "R24-AL0-009",
+    "R24-AL0-010",
+    "R24-AL0-011",
+}
+STAGES = ("s0", "s1", "s2", "s3", "s4", "s5")
+SEAM_AXES = {"MECHANICAL", "DECLARATIVE", "SEMANTIC"}
+
+
+def _load(path: Path) -> Any:
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def _resolution_expected(contract: dict[str, Any]) -> bool | None:
+    operands: list[bool | None] = []
+    count = contract["live_authority_target_count"]
+    operands.append(None if count is None else count == 1)
+    operands.append(contract["pointer_resolves_at_head"])
+    operands.append(contract["target_carries_claimed_content"])
+    operands.append(contract["declared_grain"] == contract["authority_grain"])
+
+    axes = contract["seam_axes"]
+    axis_names = {row["axis"] for row in axes}
+    if axis_names != SEAM_AXES:
+        return None
+    operands.extend(row["passed"] for row in axes)
+
+    if contract["is_code_binding"]:
+        cite = contract["code_cites_authority"]
+        redeclare = contract["code_redeclares_vocabulary"]
+        operands.append(cite)
+        operands.append(None if redeclare is None else not redeclare)
+
+    if any(value is False for value in operands):
+        return False
+    if any(value is None for value in operands):
+        return None
+    return True
+
+
+def semantic_errors(bundle: dict[str, Any], require_proving_defect: bool = False) -> list[str]:
+    errors: list[str] = []
+    challenge = bundle["s2_challenge"]
+    frontier = challenge["frontier"]
+    result = challenge["result"]
+    certificate = challenge["atomicity_certificate"]
+    certificate_state = challenge["certificate_state"]
+
+    cells = set(frontier["cell_ids"])
+    assessed = set(frontier["assessed_cell_ids"])
+    opened = set(frontier["open_cell_ids"])
+    unreachable = set(frontier["unreachable_cell_ids"])
+
+    for label, subset in (
+        ("assessed", assessed),
+        ("open", opened),
+        ("unreachable", unreachable),
+    ):
+        if not subset.issubset(cells):
+            errors.append(f"frontier {label} cell is not in cell_ids")
+
+    if assessed & opened or assessed & unreachable or opened & unreachable:
+        errors.append("frontier assessed/open/unreachable partitions overlap")
+
+    if result == "DECLARED_FRONTIER_EXHAUSTED":
+        if not cells:
+            errors.append("frontier exhaustion requires a non-empty declared frontier")
+        if assessed != cells or opened or unreachable:
+            errors.append("frontier exhaustion requires every cell assessed and no open/unreachable cells")
+        if challenge["splitter"]["differently_derived"] is not True:
+            errors.append("frontier exhaustion requires a differently-derived splitter")
+        if certificate is None:
+            errors.append("frontier exhaustion requires an atomicity certificate")
+        elif certificate["frontier_denominator"] != len(cells):
+            errors.append("certificate frontier_denominator must equal len(cell_ids)")
+    elif certificate is not None:
+        errors.append("atomicity certificate is forbidden unless result is DECLARED_FRONTIER_EXHAUSTED")
+
+    expected_certificate_state = (
+        "CERTIFICATE_ISSUED"
+        if result == "DECLARED_FRONTIER_EXHAUSTED" and certificate is not None
+        else "CERTIFICATE_WITHHELD"
+    )
+    if certificate_state != expected_certificate_state:
+        errors.append(
+            f"certificate_state={certificate_state} but operands derive {expected_certificate_state}"
+        )
+
+    if result == "DECOMPOSITION_FOUND" and not bundle["s1_sweep"]["normalized_candidates"]:
+        errors.append("DECOMPOSITION_FOUND requires at least one normalized candidate")
+    if result == "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN" and not opened:
+        errors.append("budget exhaustion requires at least one open frontier cell")
+    if result == "NOT_EXERCISABLE" and challenge["splitter"]["differently_derived"] is not False:
+        errors.append("NOT_EXERCISABLE requires differently_derived=false")
+
+    if bundle["stage_states"]["s3"] == "STAGE_ASSESSED" and certificate is None:
+        errors.append("S3 cannot be assessed without an atomicity certificate")
+
+    for contract in bundle["s4_resolution"]["contracts"]:
+        axes = [row["axis"] for row in contract["seam_axes"]]
+        if len(set(axes)) != 3 or set(axes) != SEAM_AXES:
+            errors.append(f"{contract['binding_id']}: seam_axes must contain each axis exactly once")
+            continue
+        expected = _resolution_expected(contract)
+        if contract["resolved"] is not expected:
+            errors.append(
+                f"{contract['binding_id']}: resolved={contract['resolved']!r} "
+                f"but operands derive {expected!r}"
+            )
+        direction = contract["failure_direction"]
+        if not direction["fails_loud"] and not direction["fails_clean"]:
+            errors.append(f"{contract['binding_id']}: failure direction cannot be empty")
+        for prefix in ("loud", "clean"):
+            if direction[f"fails_{prefix}"]:
+                if not direction[f"{prefix}_condition"] or not direction[f"{prefix}_detector"]:
+                    errors.append(
+                        f"{contract['binding_id']}: {prefix} failure requires condition and detector"
+                    )
+
+    expected_not_assessed = {
+        stage for stage in STAGES if bundle["stage_states"][stage] == "STAGE_NOT_ASSESSED"
+    }
+    recorded_not_assessed = set(bundle["residue"]["stage_not_assessed"])
+    if expected_not_assessed != recorded_not_assessed:
+        errors.append(
+            "residue.stage_not_assessed must exactly match stages marked STAGE_NOT_ASSESSED"
+        )
+
+    missing_rule24 = REQUIRED_RULE24 - set(bundle["rule24_record_ids"])
+    if missing_rule24:
+        errors.append(f"missing package Rule 24 records: {sorted(missing_rule24)}")
+
+    proving = bundle["s5_proving"]
+    expected_acceptance = bool(
+        bundle["stage_states"]["s5"] == "STAGE_ASSESSED"
+        and proving["subject_selected_by"] not in (None, "", "4.0.0_SA_CRO~A")
+        and proving["method_defect"]["found"] is True
+        and proving["method_defect"]["repair"]
+        and proving["regression_check"]
+    )
+    if proving["acceptance_satisfied"] is not expected_acceptance:
+        errors.append(
+            f"s5 acceptance_satisfied={proving['acceptance_satisfied']!r} "
+            f"but operands derive {expected_acceptance!r}"
+        )
+
+    if require_proving_defect:
+        if bundle["stage_states"]["s5"] != "STAGE_ASSESSED":
+            errors.append("proving acceptance requires S5 STAGE_ASSESSED")
+        if proving["subject_selected_by"] in (None, "", "4.0.0_SA_CRO~A"):
+            errors.append("proving subject must be selected outside the method-authoring seat")
+        if proving["method_defect"]["found"] is not True:
+            errors.append("proving acceptance requires method_defect.found=true")
+        if not proving["method_defect"]["repair"]:
+            errors.append("proving acceptance requires a recorded repair")
+        if not proving["regression_check"]:
+            errors.append("proving acceptance requires a regression check")
+        if proving["acceptance_satisfied"] is not True:
+            errors.append("proving acceptance requires acceptance_satisfied=true")
+
+    return errors
+
+
+def validate(bundle: dict[str, Any], require_proving_defect: bool = False) -> list[str]:
+    schema = _load(SCHEMA_PATH)
+    validator = jsonschema.Draft202012Validator(
+        schema, format_checker=jsonschema.FormatChecker()
+    )
+    errors = [
+        f"schema {'.'.join(str(part) for part in error.absolute_path) or '<root>'}: {error.message}"
+        for error in sorted(validator.iter_errors(bundle), key=lambda item: list(item.absolute_path))
+    ]
+    if not errors:
+        errors.extend(semantic_errors(bundle, require_proving_defect=require_proving_defect))
+    return errors
+
+
+def self_test() -> int:
+    base = _load(TEMPLATE_PATH)
+    cases: list[tuple[str, dict[str, Any], bool, bool]] = []
+    cases.append(("template", copy.deepcopy(base), False, True))
+
+    wrong_cert = copy.deepcopy(base)
+    wrong_cert["s2_challenge"]["atomicity_certificate"] = {
+        "claim": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x test)",
+        "grammar": "decomposition_grammar@1.0.0",
+        "scope": "test",
+        "grain": "concept",
+        "frontier_denominator": 1,
+        "evidence_vintage": "dae378a",
+    }
+    cases.append(("certificate-without-closure", wrong_cert, False, False))
+
+    false_exhaustion = copy.deepcopy(base)
+    false_exhaustion["s2_challenge"]["result"] = "DECLARED_FRONTIER_EXHAUSTED"
+    false_exhaustion["s2_challenge"]["frontier"] = {
+        "cell_ids": ["c1"],
+        "assessed_cell_ids": [],
+        "open_cell_ids": ["c1"],
+        "unreachable_cell_ids": [],
+    }
+    cases.append(("open-frontier-closure", false_exhaustion, False, False))
+
+    bad_residue = copy.deepcopy(base)
+    bad_residue["residue"]["stage_not_assessed"] = []
+    cases.append(("silent-not-assessed", bad_residue, False, False))
+
+    bad_proving = copy.deepcopy(base)
+    cases.append(("proving-without-defect", bad_proving, True, False))
+
+    bad_result = copy.deepcopy(base)
+    bad_result["s2_challenge"]["result"] = "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN"
+    cases.append(("budget-with-no-open-frontier", bad_result, False, False))
+
+    passed = 0
+    for name, bundle, require_defect, should_pass in cases:
+        errors = validate(bundle, require_proving_defect=require_defect)
+        actual_pass = not errors
+        if actual_pass != should_pass:
+            print(f"ERROR: self-test {name} expected {should_pass} got {actual_pass}")
+            for error in errors:
+                print(f"ERROR: {error}")
+            return 1
+        passed += 1
+    print(f"OK: self-test PASS ({passed}/{len(cases)}; failure limbs discriminate)")
+    return 0
+
+
+def check_package() -> int:
+    try:
+        manifest = _load(MANIFEST_PATH)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"ERROR: INSTRUMENT_UNKNOWN: cannot load package manifest: {exc}")
+        return 3
+
+    declared = set(manifest.get("members", []))
+    actual = {
+        path.relative_to(PACKAGE_ROOT).as_posix()
+        for path in PACKAGE_ROOT.rglob("*")
+        if path.is_file() and "__pycache__" not in path.parts
+    }
+    missing = sorted(declared - actual)
+    undeclared = sorted(actual - declared)
+    if missing or undeclared:
+        for path in missing:
+            print(f"ERROR: manifest member missing from tree: {path}")
+        for path in undeclared:
+            print(f"ERROR: tree member absent from manifest: {path}")
+        return 1
+    print(f"OK: package manifest PASS ({len(actual)} member(s), exact set match)")
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("run", nargs="?", type=Path)
+    parser.add_argument("--require-proving-defect", action="store_true")
+    parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--check-package", action="store_true")
+    args = parser.parse_args()
+
+    if args.self_test:
+        return self_test()
+    if args.check_package:
+        return check_package()
+    if args.run is None:
+        parser.error("run is required unless --self-test is used")
+
+    try:
+        bundle = _load(args.run)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"ERROR: INSTRUMENT_UNKNOWN: cannot load run: {exc}", file=sys.stderr)
+        return 3
+
+    errors = validate(bundle, require_proving_defect=args.require_proving_defect)
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}")
+        print(f"ERROR: validation FAIL ({len(errors)} finding(s))")
+        return 1
+    print("OK: validation PASS")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
