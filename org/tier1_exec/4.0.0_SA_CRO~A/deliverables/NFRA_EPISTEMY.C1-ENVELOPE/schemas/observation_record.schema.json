@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opal://nfra_epistemy/observation_record/0.1.0-proposed",
+  "title": "Observation_Record envelope (NFRA_EPISTEMY Component 1)",
+  "$comment": "Source of record: docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.1 @ bf88ff55c6. Field changes route through 4.0.0_SA_CRO base; this implementation does not become a competing source of record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "instrument",
+    "request_hash",
+    "status",
+    "plane",
+    "population_predicate",
+    "denominator",
+    "traversal_residue",
+    "substantive_result",
+    "control_references",
+    "discrimination_certificate_ref",
+    "observed_at",
+    "support_pointers",
+    "invalidation_predicates"
+  ],
+  "properties": {
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "request_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acquisition", "transport", "enumeration", "parse"],
+      "properties": {
+        "acquisition": {"type": "string", "enum": ["PRESENT", "ABSENT", "FAILED", "UNKNOWN"]},
+        "transport": {"type": "string", "enum": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"]},
+        "enumeration": {"type": "string", "enum": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"]},
+        "parse": {"type": "string", "enum": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"]}
+      }
+    },
+    "plane": {"type": "string", "minLength": 1},
+    "population_predicate": {"type": "string", "minLength": 1},
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "grain", "generated_by"],
+      "properties": {
+        "count": {"type": ["integer", "null"], "minimum": 0},
+        "grain": {"type": "string", "minLength": 1},
+        "generated_by": {"type": "string", "minLength": 1}
+      }
+    },
+    "traversal_residue": {"type": "array", "items": {"type": "string"}},
+    "substantive_result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "value", "reason"],
+          "properties": {
+            "state": {"const": "KNOWN"},
+            "value": {},
+            "reason": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "value", "reason"],
+          "properties": {
+            "state": {"const": "UNKNOWN"},
+            "value": {"type": "null"},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "control_references": {"type": "array", "items": {"type": "string"}},
+    "discrimination_certificate_ref": {"type": ["string", "null"]},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "support_pointers": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "invalidation_predicates": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "allOf": [
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "status": {
+              "properties": {
+                "acquisition": {"const": "PRESENT"},
+                "transport": {"const": "SUCCEEDED"},
+                "enumeration": {"const": "SUCCEEDED"},
+                "parse": {"const": "SUCCEEDED"}
+              },
+              "required": ["acquisition", "transport", "enumeration", "parse"]
+            }
+          },
+          "required": ["status"]
+        }
+      },
+      "then": {
+        "properties": {
+          "substantive_result": {
+            "properties": {
+              "state": {"const": "UNKNOWN"},
+              "value": {"type": "null"}
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -46,6 +46,7 @@ REQUIRED_RULE24 = {
     "R24-AL0-009",
     "R24-AL0-010",
     "R24-AL0-011",
+    "R24-AL0-012",
 }
 STAGES = ("s0", "s1", "s2", "s3", "s4", "s5")
 SEAM_AXES = {"MECHANICAL", "DECLARATIVE", "SEMANTIC"}

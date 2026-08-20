@@ -199,7 +199,8 @@
                 "scope": {"type": "string", "minLength": 1},
                 "grain": {"type": "string", "minLength": 1},
                 "frontier_denominator": {"type": "integer", "minimum": 1},
-                "evidence_vintage": {"type": "string", "minLength": 7}
+                "evidence_vintage": {"type": "string", "minLength": 7},
+                "registry_vintage": {"type": "string", "minLength": 7}
               }
             }
           ]

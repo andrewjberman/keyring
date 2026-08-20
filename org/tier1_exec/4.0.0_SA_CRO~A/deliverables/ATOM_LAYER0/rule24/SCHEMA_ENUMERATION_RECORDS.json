@@ -50,7 +50,8 @@
       "RESOLVES_VIA_POINTER": 0,
       "VIEW_TIME_COMPILED": 0,
       "CITED_ENUM": 0,
-      "atom_layer0_proving_acceptance_v1": 0
+      "atom_layer0_proving_acceptance_v1": 0,
+      "registry_vintage": 0
     },
     "collision_disposition": "The seam-axis tokens pre-exist and are adopted with their established meanings. S0, S1, and S3 are generic local stage labels with canon collisions, so every use remains qualified by atom_layer0 stage context and none is proposed as a canonical term. Other atom_layer0-authored tokens have zero canon occupancy at the pinned vintage."
   },
@@ -254,11 +255,28 @@
       },
       "layer_coverage_probe": "External subject selection, assessed S5, observed method defect, repair, and regression check are all required operands.",
       "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-012",
+      "surface": "atom_layer0_atomicity_certificate_v1.registry_vintage",
+      "act": "AUTHORED_OPTIONAL_FIELD",
+      "declared_layer": "version coordinates on one issued atomicity certificate face",
+      "axis_intent": "distinguish the registry authority vintage from the evidence population vintage",
+      "grain": "one issued certificate",
+      "members": ["registry_vintage present", "registry_vintage absent for backward-compatible pre-extension certificates"],
+      "postulates": {
+        "mece": "PASS: an issued certificate either carries the optional registry coordinate or remains a valid pre-extension certificate.",
+        "same_grain": "PASS: both cases concern one certificate face.",
+        "intent_coherence": "PASS: the field states only the registry authority vintage; evidence_vintage retains the measured population coordinate.",
+        "state_coherence": "PASS: presence is additive and optional, so existing bundles retain their prior validity while newly coordinated runs can name both vintages."
+      },
+      "layer_coverage_probe": "The certificate face can now distinguish registry authority bytes from evidence bytes without overloading evidence_vintage.",
+      "verdict": "PASS"
     }
   ],
   "summary": {
-    "records": 11,
-    "passed": 11,
+    "records": 12,
+    "passed": 12,
     "failed": 0,
     "unassessed": 0
   }

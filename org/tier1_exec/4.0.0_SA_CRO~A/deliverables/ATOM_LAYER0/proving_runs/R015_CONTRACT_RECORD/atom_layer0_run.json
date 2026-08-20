@@ -272,7 +272,8 @@
       "scope": "repo-only Contract_Record authorities, schema enumeration, and enumerated consumers",
       "grain": "one abstract contract record type",
       "frontier_denominator": 24,
-      "evidence_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56"
+      "evidence_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+      "registry_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56"
     }
   },
   "s3_legislation": {
@@ -432,7 +433,7 @@
     "regression_check": "Exact R015 row preservation passes; retrodiction battery passes 6/6; a closed-frontier certificate with grammar_adequacy.demonstrated=false is rejected by self-test; all adapter schema paths validate.",
     "acceptance_satisfied": true
   },
-  "rule24_record_ids": ["R24-AL0-001", "R24-AL0-002", "R24-AL0-003", "R24-AL0-004", "R24-AL0-005", "R24-AL0-006", "R24-AL0-007", "R24-AL0-008", "R24-AL0-009", "R24-AL0-010", "R24-AL0-011"],
+  "rule24_record_ids": ["R24-AL0-001", "R24-AL0-002", "R24-AL0-003", "R24-AL0-004", "R24-AL0-005", "R24-AL0-006", "R24-AL0-007", "R24-AL0-008", "R24-AL0-009", "R24-AL0-010", "R24-AL0-011", "R24-AL0-012"],
   "residue": {
     "stage_not_assessed": [],
     "unreachable": [],

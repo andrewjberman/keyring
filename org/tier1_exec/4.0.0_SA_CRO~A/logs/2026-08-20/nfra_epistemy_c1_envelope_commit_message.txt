@@ -1,0 +1,11 @@
+feat(nfra-epistemy): add typed observation envelope
+
+Implement PRD section 2.1 UNKNOWN-not-zero construction, schema validation,
+three precursor wrappers, the eight-mutant evaluator, Rule-24 records, and
+the positional E1-E6 proof instance.
+
+Add the separately routed optional atomicity-certificate registry_vintage
+coordinate and its Rule-24 record in the same commit.
+
+No owner engine, cloud state, enforcement surface, or PRD section 2.9 harm
+surface is changed.

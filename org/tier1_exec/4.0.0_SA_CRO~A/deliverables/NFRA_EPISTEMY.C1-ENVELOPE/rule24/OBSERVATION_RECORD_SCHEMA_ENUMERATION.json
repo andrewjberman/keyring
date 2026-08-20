@@ -1,0 +1,45 @@
+{
+  "record_id": "R24-NFRA-EPISTEMY-C1-OBSERVATION-RECORD",
+  "source_of_record": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.1 @ bf88ff55c6",
+  "declared_layer": "NFRA_EPISTEMY Component 1 Observation_Record",
+  "owner_route": "4.0.0_SA_CRO base registry-executes; 1.0.0_SA_CTO architecture-gates field changes",
+  "schema_field_set": [
+    "instrument",
+    "request_hash",
+    "status",
+    "plane",
+    "population_predicate",
+    "denominator",
+    "traversal_residue",
+    "substantive_result",
+    "control_references",
+    "discrimination_certificate_ref",
+    "observed_at",
+    "support_pointers",
+    "invalidation_predicates"
+  ],
+  "axes": {
+    "acquisition": ["PRESENT", "ABSENT", "FAILED", "UNKNOWN"],
+    "transport": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
+    "enumeration": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
+    "parse": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
+    "substantive_result": ["KNOWN", "UNKNOWN"]
+  },
+  "mece_claim": "Exhaustive over each declared pipeline-stage terminal outcome, not over provider-specific error causes. UNKNOWN is explicit; no status defaults to success.",
+  "construction_rule": "KNOWN is constructible only for PRESENT/SUCCEEDED/SUCCEEDED/SUCCEEDED; every other status tuple constructs UNKNOWN with null value.",
+  "token_census_at_vintage": {
+    "vintage_commit": "16a15842e24a3817d36eb5fb40e25b1cb2afed01",
+    "scope": "repository text tokens before this schema act",
+    "PRESENT": 3,
+    "ABSENT": 8,
+    "FAILED": 0,
+    "UNKNOWN": 22,
+    "SUCCEEDED": 0,
+    "NOT_ATTEMPTED": 0,
+    "KNOWN": 0,
+    "registry_vintage": 0,
+    "interpretation": "Existing generic spellings are adopted only for these field-scoped axes; this act does not mint a repository-global ontology."
+  },
+  "component_acceptance_positions": ["E1", "E2", "E3", "E4", "E5", "E6"],
+  "outside_component": ["Component 2 attestation harness", "PRD sec.2.9 open harm surfaces"]
+}
