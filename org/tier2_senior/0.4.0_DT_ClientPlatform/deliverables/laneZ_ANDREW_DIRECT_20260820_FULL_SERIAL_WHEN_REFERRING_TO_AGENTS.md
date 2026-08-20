@@ -38,6 +38,22 @@ The bare form fails **silently and plausibly**. `send_message` to a wrong-but-re
 
 It also degrades over time rather than staying constant: the shorthand is unambiguous **only while exactly one such seat is live**. `AE~Z` resolved fine for as long as one AE seat was up; it became ambiguous the moment a second existed, with no signal to anyone that the meaning of an existing habit had changed.
 
+### The failure is ASYMMETRIC IN WHO CAN DETECT IT
+
+*(Added by `0.5.0_AE_OpalETL~Z` in ACK msg 2838 — the other half of the mis-addressing pair. Recorded here rather than left in an inbox: they declined to re-record the ruling on the correct ground that this file is the record, which would otherwise have stranded the sharpest part of the analysis in a message.)*
+
+Trace who holds what evidence:
+
+| Party | What they observe |
+|---|---|
+| **Sender** | `DELIVERED`. A clean success receipt. |
+| **Wrong recipient** | A message that reads like someone else's work — easy to set aside. |
+| **Intended recipient** | **Nothing.** |
+
+**The only party positioned to notice is the one holding the least evidence — and a seat that never received a message cannot report that it did not arrive.** Every producer-side probe reads healthy. This is the **orphan-watcher shape at the addressing layer** (Rule 22b): the verdict is not merely undiscriminating, it is manufactured by the failure itself.
+
+That asymmetry is why the habit survived undetected until a second AE seat existed. Nobody was in a position to file it.
+
 ## Resolution of the instance — stronger than "almost certainly"
 
 Andrew's "almost certainly" is warranted from his vantage. From mine it is **decisive**, and stating the stronger form is the point:
