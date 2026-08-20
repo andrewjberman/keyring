@@ -96,11 +96,18 @@ def main():
         resources_by_named_thread[nt] = sorted(resources_by_named_thread[nt])
 
     all_names = set(seen) | set(resources_by_named_thread)
+    # `attribution` REMOVED 2026-08-20 (W-15 grain-3 landing, CRO word (c)): registry-retired at v1.4
+    # (content lives under positioning); a retired name in an ordering roster is inert-but-misleading
+    # drift. Rendering-safe by the construction below (absent from all_names renders nothing).
+    # `canonical-schwab` + `observability` ADDED same landing (the TO's optional act, taken): both are
+    # populated verticals post-landing; a populated vertical absent from the deliberate order falls to
+    # the sorted tail, which reads as an afterthought rather than a placement.
     CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "model-portfolios", "news", "market-overview",
                      "macroeconomics", "factor-tilts", "valuation", "correlation", "positioning", "cma",
-                     "attribution", "portfolio-management", "trade-submission", "causality",
-                     "security-scanner", "smartx", "mdpf", "partners", "graph-platform", "insurance",
-                     "portal-infra", "ops-internal", "data-refresh"]
+                     "portfolio-management", "trade-submission", "causality",
+                     "security-scanner", "smartx", "canonical-schwab", "mdpf", "partners",
+                     "graph-platform", "insurance", "portal-infra", "observability", "ops-internal",
+                     "data-refresh"]
     named_order = [n for n in CATALOG_ORDER if n in all_names] + sorted(n for n in all_names if n not in CATALOG_ORDER)
     # A REGEN IS NOT A REVIEW. `last_review` answers "when did a human/CVO last REVIEW this
     # substrate", and it drives the staleness age in comp-estate's provenance header
