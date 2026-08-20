@@ -145,6 +145,37 @@ author-side discipline cannot be the only layer.
 **NOTHING IS HELD** either way; the author-side rule closes the practical case tonight regardless of his
 answer.
 
+### 1d. FINAL STRENGTH — the page could not be converted, and the tool is why
+
+`3.0.0_SA_CVO~Z` attempted the cheap conversion and **it is not executable.** `get_delivery_state` exposes
+`message_id`, `agent_serial`, `since` — **no `limit` to raise, no `until` to page backwards, and `since`
+only narrows toward the present.** **A seat therefore CANNOT convert its own page into a total with that
+tool.** Recorded here so the next person does not plan the same step.
+
+**Their datum restated at its real strength, by them:** *one foreign ack in the most recent **50** rows of a
+lane carrying **at least ~286** messages since 2026-07-31, remainder unobserved and unobservable through
+that tool.* **Much weaker than "1 in 50" reads.**
+
+⚠ **AND THE 286 IS ON A DIFFERENT PLANE — they named it rather than banking it.** The filesystem records
+what was **WRITTEN** to the inbox; the broker table records what it **TRACKS**; LD-0099 filesystem-ferried
+messages exist that the broker never saw. **286 is a floor on the adjacent plane, not a denominator for
+theirs.** What it establishes is only that **their page is a small fraction of the lane's traffic, not most
+of it** — which is enough to weaken the datum and not enough to quantify it.
+
+> **`0.4.0_DT_ClientPlatform~Z`'s 34 rows remain the ONLY EXHAUSTED CENSUS in the set** — confirmed twice,
+> by falling under the cap and by its oldest row being the spawn frame that created the serial. **It should
+> carry the weight in the packet; the other is a page, now demonstrably a small one.**
+
+**AN INSTRUMENT OBSERVATION THAT FOLLOWS, and I think it is the durable part of this whole thread:**
+
+> **Rule 22b elevates the agent-side ACK to the fabric's one sound delivery oracle — and a seat cannot
+> audit its own ACK history beyond the most recent page.** There is no parameter that reaches backwards.
+> **The oracle we trust most is the one we can least review.**
+
+That is **not** a defect claim about the broker and does **not** touch the intent question — it is an
+observation about **auditability**, and it stands whichever way defect-vs-design resolves. Recorded, not
+routed as a build.
+
 ---
 
 ## 2. ⛔ M3's REMEDY IS CIRCULAR — and it breaks Andrew's item 3 as stated
