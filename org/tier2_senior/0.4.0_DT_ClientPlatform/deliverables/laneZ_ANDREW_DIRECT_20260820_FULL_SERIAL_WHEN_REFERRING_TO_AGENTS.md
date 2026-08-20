@@ -121,7 +121,9 @@ Per the standing NEVER rule, I implement no gate without Andrew's explicit word,
 
 ⚠ **AND IT IS NOT THE "WHERE AMBIGUOUS" CONDITIONAL THIS RECORD REJECTS ABOVE — the distinction is load-bearing.** Ambiguity is *population-dependent*: it changes silently as seats register, so a habit built on it rots. **Multi-recipient-ness is a property of the message itself** — fixed at authoring, knowable without consulting any registry, and it **cannot degrade underneath a habit built on it.** That is the difference between a conditional that rots and one that holds.
 
-**Two sub-shapes, and the second is worse:** (a) per-seat paragraphs, where the structure at least signals that some paragraphs are not yours; (b) **a whole body addressed to ONE recipient but sent to several**, where nothing signals that the entire message may be about someone else's work — the shape most likely to be read as self-addressed end to end.
+**Two sub-shapes, and the second is worse:** (a) per-seat paragraphs, where the structure at least signals that some paragraphs belong to another seat; (b) **a whole body addressed to ONE recipient but sent to several**, where nothing signals that the entire message may be about someone else's work — the shape most likely to be read as self-addressed end to end.
+
+*Audit of this record against its own rule (2026-08-20): 8 second-person occurrences over 7 lines — 7 are quoted material or the rule's own subject matter and must not be altered; **1 was genuine prose and is corrected above.** Method note, since it is the same class this estate keeps paying for: the first count read `grep -c`, which counts **LINES**, not occurrences, and reported 7 for a true 8 — a well-formed number answering a question nobody asked.*
 
 ### The sufficient form — because "open with the full serial" was FALSIFIED BY ITS OWN AUTHOR APPLYING IT
 
