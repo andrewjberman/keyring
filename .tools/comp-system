@@ -12,6 +12,9 @@
 #                              #   GENUINE drift (source-fingerprint/managed-region), WARN (rc 0) on
 #                              #   age>=TTL alone (no false-Monday). Distinct from --check.
 #   comp-system --self-test    # prove the no-fabrication invariant (grounded|UNKNOWN, shape-locked)
+#   comp-system --help | -h    # usage, EXITS -- never compiles, never writes; an UNKNOWN flag
+#                              #   REFUSES (rc 2) rather than falling through to the write-bearing
+#                              #   default compile (site-Z --help incident 2026-08-20, @f5155c2aba)
 #
 # Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"

@@ -117,6 +117,28 @@ _PRUNE_DIRS = frozenset({
 })
 
 
+def _iter_source_files(sources):
+    """The ONE file enumeration both fingerprints below ride (same `_PRUNE_DIRS`
+    pruning, same glob semantics). Two walks that could disagree would make the
+    two fingerprints answer different questions about different file SETS -- the
+    shared-derivation discipline, applied to the enumerator."""
+    import fnmatch
+
+    for base, pattern in sources:
+        base = Path(base)
+        if not base.exists():
+            continue
+        if base.is_file():
+            yield base
+            continue
+        for root, dirs, filenames in os.walk(base):
+            # Prune heavy irrelevant subtrees in place (os.walk respects this).
+            dirs[:] = [d for d in dirs if d not in _PRUNE_DIRS]
+            for fn in filenames:
+                if fnmatch.fnmatch(fn, pattern):
+                    yield Path(os.path.join(root, fn))
+
+
 def source_fingerprint(sources) -> tuple:
     """Cheap staleness signal over source (dir, glob-pattern) pairs.
 
@@ -124,37 +146,77 @@ def source_fingerprint(sources) -> tuple:
     contents, and prunes vendored/build/cache dirs (`_PRUNE_DIRS`) mid-walk so it
     stays far cheaper than the parse/AST rebuild it guards. A changed/added/removed
     source file moves either the max mtime or the count.
-    """
-    import fnmatch
 
+    KNOW THE INSTRUMENT'S DOMAIN: this answers "did anything get TOUCHED on this
+    machine" -- the right question for a DEVICE-LOCAL cache. It is the WRONG
+    question for a SHARED artifact's predicate, because a fresh checkout/pull
+    re-stamps every mtime BY CONSTRUCTION on a content-identical tree (measured
+    at site-Z, CTO ruling addendum @6ae67e724f). Shared predicates use
+    `content_fingerprint` below.
+    """
     max_mtime = 0.0
     count = 0
-    for base, pattern in sources:
-        base = Path(base)
-        if not base.exists():
+    for p in _iter_source_files(sources):
+        try:
+            st = p.stat()
+        except OSError:
             continue
-        if base.is_file():
-            try:
-                st = base.stat()
-                count += 1
-                if st.st_mtime > max_mtime:
-                    max_mtime = st.st_mtime
-            except OSError:
-                pass
-            continue
-        for root, dirs, filenames in os.walk(base):
-            # Prune heavy irrelevant subtrees in place (os.walk respects this).
-            dirs[:] = [d for d in dirs if d not in _PRUNE_DIRS]
-            for fn in filenames:
-                if fnmatch.fnmatch(fn, pattern):
-                    try:
-                        st = os.stat(os.path.join(root, fn))
-                    except OSError:
-                        continue
-                    count += 1
-                    if st.st_mtime > max_mtime:
-                        max_mtime = st.st_mtime
+        count += 1
+        if st.st_mtime > max_mtime:
+            max_mtime = st.st_mtime
     return (round(max_mtime, 3), count)
+
+
+def content_fingerprint(sources, rel_root=None) -> tuple:
+    """CHECKOUT-INVARIANT staleness signal: (sha256-hex-over-content, file_count).
+
+    Answers "did source CONTENT change" -- the question a SHARED tracked
+    artifact's predicate must ask (CTO ruling addendum @6ae67e724f, instance 3 of
+    the device-axis pair @4484d55608): a fresh checkout/pull re-stamps every
+    mtime while bytes stay identical, so the stat-only sibling above manufactures
+    staleness on a content-identical tree.
+
+    Hash = sha256 over each file's REL_ROOT-relative posix path + normalized size
+    + normalized bytes, in sorted-path order. Properties, each load-bearing:
+      - path RELATIVE to `rel_root` (pass the workspace root): two devices'
+        checkouts live under different absolute prefixes, and hashing absolute
+        paths would break the exact cross-device equality this exists to provide;
+      - CRLF normalized to LF before hashing: line-ending materialization is a
+        CHECKOUT property (autocrlf), not a content change -- a diff that is
+        ONLY line endings is the mtime class one layer down;
+      - sorted order: os.walk order is filesystem-dependent;
+      - unreadable files SKIPPED like the sibling's failed stat (count excludes
+        them) -- absence surfaces as a count change, never a crash.
+    Costs one read of every source file; the CACHES deliberately keep the
+    stat-only sibling (cache invalidation wants cheap-and-device-local; a shared
+    predicate wants checkout-invariant)."""
+    import hashlib
+
+    h = hashlib.sha256()
+    count = 0
+
+    def _key(p):
+        s = str(p)
+        if rel_root:
+            try:
+                s = os.path.relpath(s, rel_root)
+            except ValueError:
+                pass
+        return s.replace(os.sep, "/")
+
+    for p in sorted(_iter_source_files(sources), key=_key):
+        try:
+            data = p.read_bytes()
+        except OSError:
+            continue
+        data = data.replace(b"\r\n", b"\n")
+        h.update(_key(p).encode("utf-8", "replace"))
+        h.update(b"\0")
+        h.update(str(len(data)).encode("ascii"))
+        h.update(b"\0")
+        h.update(data)
+        count += 1
+    return (h.hexdigest(), count)
 
 
 @dataclass
