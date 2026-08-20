@@ -29,10 +29,12 @@ Re-stated at each program review. A lane TO citing §2.9 as buildable spec is a 
 | 08-20 ~1945 | Rarity coordinates: BOTH populations (per-firm + estate-wide) — ruled, rider spec pending | ANDREW_DIRECT_20260820_RARITY_DENOMINATOR_AND_DEVICE_AXIS.md | Andrew word |
 | PENDING | registry_vintage optional slot on atomicity_certificate (schema extension, ~A) | requested 63451 | base → CTO |
 | PENDING | Envelope schema (component 1, ~A) — Observation_Record per PRD §2.1 | C1-ENVELOPE TO | base → CTO |
-| PENDING | Causal-assessment object schema (S6, base alongside ~C) | this spine | base → CTO |
+| 08-20 ~2034 | Causal_Assessment_Object schema 0.1.0 (S6) + Rule-24 record: six declared axes, interim_status declared over the MANIFEST (CTO 63664), 6 new tokens census-RUN 0/0/0 | NFRA_EPISTEMY/S6_CAUSAL_ASSESSMENT_OBJECT.schema.json + _RULE24_RECORD.md @16a15842e2 | base → CTO arch gate (requested 2038Z); ~C exercises (C9-RIDE Ph.1) |
 | PENDING | Profile algebra + gateway spec (S5, base) | this spine | base → CTO |
 
 ## S3–S7 — status at open
-S3 certs: none yet (envelope first). S4: three lane TOs relayed/delivered 2026-08-20 ~2026Z; ~A/~B
-acks pending on their next fed turn (ack-gated GOs; a missing ack after a fed turn = finding). S5/S6:
-spec authoring queued behind lane ramp. S7: proof at the envelope-cert milestone.
+S3 certs: none yet (envelope first). S4: DISCHARGED 2038Z -- three lane TOs relayed/delivered ~2026Z;
+agent-side acks landed ~A 203151Z (C1-ENVELOPE, "GO triggered", S0 ground-read started) and ~B 203255Z
+(C7-CLOSURE, GO triggered, execution held by the TO's own clause until Pass 3 completes); both returned
+to COO same turn; zero scope questions at either lane. S6: AUTHORED @16a15842e2 (row above), CTO gate
+requested. S5: next base act after the rarity rider. S7: proof at the envelope-cert milestone.
