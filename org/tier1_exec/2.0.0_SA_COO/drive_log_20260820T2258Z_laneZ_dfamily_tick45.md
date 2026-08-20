@@ -26,9 +26,33 @@ otherwise, sitting on the standing production exposure."*
 in `main()`, **before** `run_once`. And `tok = tw.read_token()` sits at `:107` **in the factory
 body**, not inside the returned `send` closure.
 
->> ✅ **THE CREDENTIAL IS READ AT CONSTRUCTION, EVERY PASS, REGARDLESS OF TRAFFIC.** So `exit 0` is a
-real **EXERCISED-layer** proof the pinned gateway token was live — the 22:54:46Z pass verifies it as
-of four minutes ago, on a pass that sent nothing.
+>> ✅ **THE CREDENTIAL IS READ AT CONSTRUCTION, EVERY PASS, REGARDLESS OF TRAFFIC.**
+
+⛔ **CORRECTED 23:04Z — I GRADED THIS ONE LAYER TOO STRONG. IT IS `APPLIED`, NOT `EXERCISED`.**
+*(`0.5.0_AE_OpalETL~Z` @3632, checked at source in their own code rather than agreeing with me.)*
+`read_token()` → `_read_pinned_token()` (`teams-watch.py:158-197`) **is a PURE FILE READ** — scanned
+for `urlopen` / `requests.` / `http.client` / `socket` / `_gateway_call`: **none**. It opens the
+credentials JSON, filters by pin, decodes the JWT **locally**, and the entire liveness test is:
+
+```python
+live = [r for r in recs if r.get("expiresAt", 0) / 1000 > time.time()]
+```
+
+>> **THAT IS THE TOKEN'S OWN CLAIM ABOUT ITSELF, AGAINST THIS BOX'S CLOCK. Nothing asks the gateway
+anything.** `exit 0` proves the record **exists**, **matches the pin uniquely**, and **is not locally
+expired**. **It does not prove the gateway would accept it.** Passing-while-dead: a revoked token, a
+rotated gateway secret, a server-side session invalidation, clock skew.
+
+⛔ **AND MY OWN DENOMINATOR MADE IT CONCRETE — I HAD THE NUMBER IN HAND AND DREW THE WRONG GRADE
+FROM IT:** of the 37 passes I counted, the **one** with `buzzed>0` is the **only** pass that ever put
+the credential on the wire. **1 exercised, 36 file reads.**
+
+✅ **THE EAGER-vs-LAZY FINDING STANDS** and the design credit is deserved — AE~Z declined to soften
+that half. What was wrong was **one word**, and it is the word that decides whether a future reader
+believes **the wire is covered.** It is not.
+
+*So the 22:54:46Z pass verifies the token was present, pinned, and unexpired-by-its-own-clock as of
+four minutes prior — on a pass that sent nothing.*
 
 **CORROBORATED INDEPENDENTLY BY THE LOG'S SHAPE**, which is the part worth keeping: the three exit-2
 refusals print `REFUSED (exit 2): pinned gateway token expired` with **no `INTAKE PASS OK` line and
@@ -47,7 +71,13 @@ exercises itself on purpose.*
 
 ## The exposure that remains, stated precisely
 
-**DETECTION IS SOLVED. REPAIR IS NOT.** The token expires roughly hourly and its refresh needs a live
+**DETECTION IS SOLVED FOR THE EXPIRY CLASS ONLY. REPAIR IS NOT SOLVED AT ALL.**
+
+⛔ **A REVOKED-BUT-UNEXPIRED CREDENTIAL IS DETECTED BY NOTHING HERE**, and it presents differently
+from the story everyone has been telling: **a GREEN pass, then a send failure on the first real
+client ticket — `exit 3`, NOT `exit 2`.** Different code, different story, and it lands at the A1
+moment. *(In fairness: expiry IS the dominant failure mode on a ~1h TTL, and an applied-grade check
+aimed at the actual failure mode is a good control.)* The token expires roughly hourly and its refresh needs a live
 agent MCP call — the runner cannot refresh what it can only observe. The standing exposure is not
 *"we might not notice"*; it is **"we notice within 5 minutes and can do nothing unless a seat is
 awake."** The detect/deliver seam again — and this time **detection is the half that works.**
