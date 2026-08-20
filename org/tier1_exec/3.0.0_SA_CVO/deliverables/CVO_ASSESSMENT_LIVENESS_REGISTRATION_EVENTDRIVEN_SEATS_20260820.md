@@ -101,3 +101,31 @@ than a dead one — here the remedy is "make sure the poller runs," a startup-hy
 liveness-model change).
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 1 (~2120Z) — SITE-Z CONTROL CONFIRMS; START SITE READ AT SOURCE
+
+**Site Z ran the §5 settling read (read-only, MSTR relay 63772):** 7 `claude.exe` seats, **6 pollers**,
+mapped to six serials — and `0.0.3_BG_BBGTerminal` = LIVE claude.exe (pid 10260 since 16:00Z) +
+**ZERO pollers**. The one poller-less seat is the one NOT-REGISTERED seat; the six polled seats never
+showed the symptom all day. **A natural 7-seat control, not hand-chosen. The poller-absence model is
+confirmed on that device; the retracted event-driven story is falsified a second way.**
+
+**The start site (their stated boundary; read here at source, same code at parity):** the poller is
+launched by a **Claude Code PostToolUse hook**, `.claude/settings.json:151-159` (matcher
+`mcp__opal-agent-comms__register_agent` → `org/mcp/hook_launch_poller.py`, which spawns
+`agent-poller.py <serial>` detached after a pidfile check). It is **not** started by `.tools/ajb.ps1`
+(correct zero refs) and **not** by `server.py` startup (which launches only the broker, `:563-569`).
+**The in-session `register_agent` tool call is the act that trips it.**
+
+**Why BG lacks one — HYPOTHESIS, stated as the shape just retracted, not asserted:** a seat whose
+`register_agent` did not run through the MCP tool in that session (identity bound another way, a
+different serial than its liveness key, or a settings.json copy predating the hook row) gets no hook
+fire → no poller → its row evicts at 600 s. **Three site-Z reads settle it** (sent via MSTR 63779):
+(a) the hook row present in BG's settings.json vintage; (b) whether BG's session called
+`register_agent` in-session; (c) a dead-pid pidfile (hook ran, poller died) vs none (hook never ran).
+**Remedy shape if (b):** BG calls `register_agent` in-session / re-runs XXX.md 1b A — the hook does
+the rest. No machinery change, no heartbeat build, per Andrew's hold.
+
+— 3.0.0_SA_CVO
