@@ -1,0 +1,25 @@
+# CTO~Z — W5-V03 re-cert DELTA (W6 rows 4/7) + ACCEPTANCE-PRE-PORT — the v0.3 axis reshapes WITH the gate, exercised before the port
+
+**Gate owner:** 1.0.0_SA_CTO~Z · **Date:** 2026-08-20 ~16:20Z · **Builder:** 0.5.0_AE_OpalETL~Z, THE ONE COMMIT @96dcb4a66a (10 files, +1615/−2715: v0.3 catalog at the ONE home + gate rules 2/5 + battery/validate/exercise re-pointed + emitter single-output + V03 records addendum + DESIGN.md home rule + the v0.2 staged file DELETED) · **Proof:** `OPAL_ANALYST.W5-V03_PROOF_OF_SPEC.json` @a7af086019 · **TO:** @6c09e75d54 amended @43a17864a8 · **Sequencing ruling:** my 2269 item 4 (one versioned commit, consumers-first, exercise BEFORE the port, re-cert DELTA at this gate).
+
+## VERDICT — ACCEPTED-PRE-PORT; W6 rows 4/7 re-certification DELTA ISSUED
+The W6 certification's exercised rows (row 7 catalog_gate; row 4 unchanged by this commit) **hold on the v0.3 axes**. The EC2 port (deploy @96dcb4a66a's gateway tree; rollback pinned: v0.2 artifact @e52a039d64 body-hash c43d56c5… + v0.2 gate @67a9e615ae deployed sha f31c61f4…) rides MSTR~Z's ferry to the laptop apply lane; on its landing the on-instance read (the W6-close pattern) confirms and this acceptance upgrades to CLOSED. CVO~Z's second read of the reshaped labels fires at the landing (its re-entry trigger).
+
+## Verified at this seat (independent, not from the report)
+- **Committed instruments RE-RUN here:** `battery_catalog_v02.py` → **41/41** (incl. the new v03-one-home case: emitter output == the home AND the staged file gone); `exercise_catalog_gate.py` → **16/16** (surface 36/3/48, strict subset). Validator on the proof → **rc=0, 8 rows, 0 violations** (positional V03-1..8, no pipe).
+- **ELEVEN fresh probes of my own (not the author's file), 11/11 PASS, real catalog hash-untouched:** Q1 `version: 0.3` · Q2 `verdict_class` = {serve, serve-with-caveat, deny} by VALUE over all rows · Q3 `verdict_state` ⊆ {ruled, pending-andrew} · Q4 firm values tier-or-firm ONLY (no per-scope, no global) · Q5 exactly 4 `firm_resolution: key-scope-segment` families carrying NO firm label (the record's "omitted" branch — a rule does not sit on the value axis) · Q6 `family.axis` ⊆ {slug, scope, keyword, key-path, key-list} · Q7 firm surfaces 3/3/3 pairwise DISJOINT · Q8 own-member ALLOWED / Q9 cross-member DENIED · **Q10 MUTANT: `firm_resolution` stripped in scratch → the firm's own member read DENIED (fail closed — the new predicate is load-bearing in the safe direction)** · Q11 the 2 held rows are deny+pending-andrew and still REFUSE.
+- **Rule-24 arrival:** the V03 records addendum is IN the commit (axes re-tabled PASS; the four outcome arrays MECE + layer per the second widening; token census 0/67 ×5). The `scope` third-sense collision stays the registry item (CVO~Z/CRO), correctly not renamed here.
+- **Surprise dispositioned:** the emitter was itself a consumer of the deleted BG refs copy that the home-commit census missed — loud-crash class, no run in the window, re-pointed in the same commit. The census lesson (a consumer census must include the EMITTER'S OWN reads) is banked in the builder's record; nothing further.
+
+## What closes what
+- This DELTA discharges the "port-time rows 4/7 re-exercise" condition of the W6 certification for v0.3.
+- W5-V03 → CLOSED on the laptop port landing + my on-instance confirm; then the **OPAL_ANALYST PROJECT record closes** per my sequencing ruling (W5-V03 + W6-T1 both closed; W6-T1 closed @8460648ef9; W4b closes on its declared terminal) — COO~Z holds the 2-step, I declare.
+Monitors 0, gates 0.
+
+---
+
+## CLOSED ~16:26Z -- the v0.3 PORT CONFIRMED ON-INSTANCE at this seat: W5-V03 CLOSED; the OPAL_ANALYST PROJECT close condition is MET
+
+**On-instance confirm (SSM read-only, the W6-close pattern, `opal-gateway` i-07dccb1615503ac99):** deployed `catalog_gate.py` sha256 `6323007...` == repo @96dcb4a66a **byte-identical**; deployed `refs/DATA_CATALOG.yaml` sha256 `29079a8fda...` == repo @96dcb4a66a byte-identical AND == the emit-byte-identical hash the builder pre-registered; header reads `version: 0.3 / supersedes: v0.2`; `POST /query/v0` -> 401 (alive, denying unauthenticated); service active, restarted 16:19:32Z at the port. The gate and its catalog shipped TOGETHER from one commit -- the ship-together pin honored by construction.
+
+**W5-V03 -> CLOSED.** With W6-T1 CLOSED @8460648ef9, **the OPAL_ANALYST project-record close condition is MET** per the sequencing ruling: COO~Z runs the 2-step (project JSON + REGISTRY) same turn; I declare on its record act; W4b closes simultaneously on its DECLARED terminal (NOT CONVERGED; 20 cells governance-held under @e56e9e2d4c). CVO~Z's second read of the reshaped labels runs against both planes (re-seated, pid 38360) -- a read on a closed, deployed state, not a gate on the close.
