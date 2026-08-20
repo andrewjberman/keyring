@@ -1,6 +1,6 @@
 ---
 name: unstick
-description: Unstick an agent whose terminal tab is turn-starved at a numbered approval prompt (Codex CLI permission prompts are the recurring case) by locating that tab BY TITLE and sending the approval keystroke. Bare `/unstick <serial>` locates the serial-titled tab across all terminal windows and sends "1"+Enter with foreground-verify + abort-on-steal; `/unstick <serial> --dry-run` locates and reports only; `--keys '<seq>'` sends a different answer. Operator-initiated (it briefly steals desktop focus). Engine `.tools/unstick.ps1`; runbook org/ref/RUNBOOK_CODEX_TAB_UNSTICK.md.
+description: Unstick an agent whose terminal tab is turn-starved at a numbered approval prompt (Codex CLI permission prompts are the recurring case) by locating that tab BY TITLE and sending the approval keystroke. Bare `/unstick <serial>` locates the serial-titled tab across all terminal windows and sends "1"+Enter with foreground-verify + abort-on-steal; `/unstick <serial> --peek` captures the located tab's window to a PNG and sends NOTHING -- the invoking seat READS the image and reports the exact prompt (look first, then key the right answer); `--dry-run` locates and reports only; `--keys '<seq>'` sends a different answer. Operator-initiated (it briefly steals desktop focus). Engine `.tools/unstick.ps1`; runbook org/ref/RUNBOOK_CODEX_TAB_UNSTICK.md.
 ---
 
 # /unstick — answer a stuck terminal tab's approval prompt, by serial
@@ -18,11 +18,13 @@ re-verified before every send.
 | Form | Behavior |
 |---|---|
 | `/unstick <serial>` | Locate the serial-titled tab, send `1`+Enter. |
-| `/unstick <serial> --dry-run` | Locate + report the tab; send nothing. |
+| `/unstick <serial> --peek` | Locate + focus the tab, **capture the window to a PNG, send NOTHING** — then the invoking seat READS the image and reports what the tab actually shows (the exact prompt text, or proof the seat is not stuck at all). **Peek before keying when the prompt shape is unknown.** |
+| `/unstick <serial> --dry-run` | Locate + report the tab position only; no capture, no keystrokes. |
 | `/unstick <serial> --keys '<seq>'` | Send a different answer (SendKeys syntax, e.g. `'2{ENTER}'`, `'y{ENTER}'`). |
 
-Execute: `powershell -NoProfile -ExecutionPolicy Bypass -File .tools\unstick.ps1 -Serial <serial> [-DryRun] [-Keys '<seq>']`
-Exit codes: 0 sent/located · 2 not found · 3 focus-steal abort · 4 bad serial.
+Execute: `powershell -NoProfile -ExecutionPolicy Bypass -File .tools\unstick.ps1 -Serial <serial> [-Peek] [-DryRun] [-Keys '<seq>'] [-OutFile <png>]`
+Exit codes: 0 sent/located/peeked · 2 not found · 3 focus-steal/capture abort · 4 bad serial.
+Peek default output: `$env:TEMP\unstick_peek_<serial>_<utc>.png` (path printed) — **Read the PNG in the same turn**; a peek nobody reads answered nothing. First peek exercise (2026-08-20): resolved a watched lane as COMPLETE-not-stuck, retiring a pending second-look.
 
 ## Before invoking (diagnosis — do not key a healthy seat)
 

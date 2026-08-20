@@ -29,7 +29,11 @@ param(
     [Parameter(Mandatory = $true, Position = 0)]
     [string]$Serial,
     [string]$Keys = '1{ENTER}',
-    [switch]$DryRun
+    [switch]$DryRun,
+    # -Peek: locate + focus the tab, capture the WINDOW to a PNG, send NOTHING.
+    # The image is the "what is it stuck on" answer -- a multimodal seat reads it.
+    [switch]$Peek,
+    [string]$OutFile = ''
 )
 
 if ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$') {
@@ -47,6 +51,8 @@ public class UnstickWin {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
   [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int cmd);
+  [StructLayout(LayoutKind.Sequential)] public struct RECT { public int L, T, R, B; }
+  [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r);
   delegate bool EnumWindowsProc(IntPtr h, IntPtr lp);
   public static string Title(IntPtr h) { var sb = new StringBuilder(512); GetWindowText(h, sb, 512); return sb.ToString(); }
   public static List<long[]> Windows() {                     // [hwnd, pid]
@@ -79,6 +85,31 @@ function Send-ToActiveTab([IntPtr]$h, [string]$k) {
     return $true
 }
 
+Add-Type -AssemblyName System.Drawing
+function Capture-Window([IntPtr]$h, [string]$path) {
+    # Screen-scrape the focused window's rect. Requires the window foreground+visible
+    # (the caller just focus-verified it); WT is GPU-rendered, so CopyFromScreen of the
+    # live pixels is the reliable capture (PrintWindow can render black for it).
+    Start-Sleep -Milliseconds 300                       # let the tab finish painting
+    $r = New-Object UnstickWin+RECT
+    if (-not [UnstickWin]::GetWindowRect($h, [ref]$r)) { return $null }
+    $w = $r.R - $r.L; $ht = $r.B - $r.T
+    if ($w -le 0 -or $ht -le 0) { return $null }
+    $bmp = New-Object System.Drawing.Bitmap($w, $ht)
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L, $r.T, 0, 0, (New-Object System.Drawing.Size($w, $ht)))
+    $g.Dispose()
+    $bmp.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
+    $bmp.Dispose()
+    return $path
+}
+
+if ($Peek -and -not $OutFile) {
+    $ts = [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')
+    $safe = $Serial -replace '[^A-Za-z0-9._~-]', '_'
+    $OutFile = Join-Path $env:TEMP "unstick_peek_${safe}_${ts}.png"
+}
+
 # Candidate windows: any process that hosts terminal tabs.
 $termNames = @('WindowsTerminal', 'OpenConsole', 'conhost', 'cmd', 'powershell', 'pwsh')
 $wins = [UnstickWin]::Windows() | ForEach-Object {
@@ -91,8 +122,13 @@ $wins = [UnstickWin]::Windows() | ForEach-Object {
 $direct = @($wins | Where-Object { $_.Title -eq $Serial })
 if ($direct.Count -ge 1) {
     $w = $direct[0]
-    if ($DryRun) { Write-Host "[unstick] DRY-RUN: '$Serial' is the ACTIVE tab of window $($w.Hwnd) ($($w.PName)). Would focus + send '$Keys'."; exit 0 }
+    if ($DryRun -and -not $Peek) { Write-Host "[unstick] DRY-RUN: '$Serial' is the ACTIVE tab of window $($w.Hwnd) ($($w.PName)). Would focus + send '$Keys'."; exit 0 }
     if (-not (Focus-Verified $w.Hwnd)) { Write-Host "[unstick] FOCUS FAILED on window $($w.Hwnd) -- nothing sent" -ForegroundColor Red; exit 3 }
+    if ($Peek) {
+        $p = Capture-Window $w.Hwnd $OutFile
+        if ($p) { Write-Host "[unstick] PEEKED '$Serial' (active tab, window $($w.Hwnd)) -> $p  [no keystrokes sent]" -ForegroundColor Cyan; exit 0 }
+        Write-Host "[unstick] capture failed on window $($w.Hwnd) -- nothing saved, nothing sent" -ForegroundColor Red; exit 3
+    }
     if (-not (Send-ToActiveTab $w.Hwnd $Keys)) { Write-Host "[unstick] focus stolen pre-send -- nothing sent" -ForegroundColor Red; exit 3 }
     Write-Host "[unstick] SENT '$Keys' to '$Serial' (active tab, window $($w.Hwnd))" -ForegroundColor Green
     exit 0
@@ -110,7 +146,12 @@ foreach ($w in $hosts) {
         $wsh.SendKeys('^({TAB})'); Start-Sleep -Milliseconds 600
         $t = [UnstickWin]::Title($w.Hwnd)
         if ($t -eq $Serial -and -not $sent) {
-            if ($DryRun) { Write-Host "[unstick] DRY-RUN: located '$Serial' as tab $($i+1) of window $($w.Hwnd) ('$start'). Would send '$Keys'."; $sent = $true }
+            if ($Peek) {
+                $p = Capture-Window $w.Hwnd $OutFile
+                if ($p) { Write-Host "[unstick] PEEKED '$Serial' (tab $($i+1) of window $($w.Hwnd)) -> $p  [no keystrokes sent]" -ForegroundColor Cyan; $sent = $true }
+                else { Write-Host "[unstick] capture failed -- nothing saved, nothing sent" -ForegroundColor Red; exit 3 }
+            }
+            elseif ($DryRun) { Write-Host "[unstick] DRY-RUN: located '$Serial' as tab $($i+1) of window $($w.Hwnd) ('$start'). Would send '$Keys'."; $sent = $true }
             elseif (Send-ToActiveTab $w.Hwnd $Keys) { Write-Host "[unstick] SENT '$Keys' to '$Serial' (tab $($i+1) of window $($w.Hwnd))" -ForegroundColor Green; $sent = $true }
             else { Write-Host "[unstick] focus stolen pre-send -- nothing sent" -ForegroundColor Red; exit 3 }
         }
