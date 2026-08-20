@@ -1,0 +1,29 @@
+2026-08-04T14:38:23Z  PERMITTED        author=Andrew Berman  files=5 result='[32m[32m[1m46 passed[0m[32m in 23.03s[0m[0m' trigger=org/modules/graph/pipeline_cli.py
+2026-08-04T14:47:09Z  DENIED           author=0.8.0_AE_CloudComp~D  files=5 trigger=org/modules/graph/pipeline_cli.py out=C:/Users/AndrewBerman/Desktop/ajb_workspace/.git/pipescript-suite-last-run.out
+2026-08-04T15:47:24Z  PERMITTED        author=0.8.0_AE_CloudComp~D  files=6 result='51 passed in 24.45s' trigger=org/modules/graph/pipeline_cli.py org/modules/graph/tests/test_pipescript_postdeps_guard.py
+2026-08-04T17:27:22Z  PERMITTED        author=0.8.0_AE_CloudComp~D  files=7 result='54 passed in 30.32s' trigger=org/modules/graph/tests/test_extract_column_gaps_bd_hold.py
+2026-08-04T18:20:37Z  PERMITTED        author=0.8.0_AE_CloudComp~D  files=10 result='64 passed in 28.77s' trigger=org/modules/graph/tests/test_comp_secrets_bd_hold.py org/modules/graph/tests/test_freshness_manifest_gen_bd_hold.py org/modules/graph/tests/test_platinum_held_path_guard.py
+2026-08-04T19:06:48Z  PERMITTED        author=0.2.0_DS_PortfolioAnalytics  files=10 result='64 passed in 24.28s' trigger=.tools/safe_deploy_core.py
+2026-08-05T17:36:11Z  PERMITTED        author=3.0.0_SA_CVO~B  files=10 result='64 passed in 23.70s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-05T19:24:21Z  PERMITTED        author=3.0.0_SA_CVO~B  files=10 result='64 passed in 29.58s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-05T19:43:25Z  PERMITTED        author=Andrew Berman  files=11 result='77 passed in 19.86s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-05T21:50:21Z  PERMITTED        author=1.0.0_SA_CTO~C  files=11 result='77 passed in 33.53s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-05T22:08:35Z  PERMITTED        author=3.0.0_SA_CVO~B  files=11 result='77 passed in 21.78s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-05T22:50:44Z  PERMITTED        author=3.0.0_SA_CVO~B  files=12 result='87 passed in 54.53s' trigger=org/modules/graph/pipeline_cli.py org/modules/graph/tests/test_pipescript_ws1_predicate.py
+2026-08-06T20:00:17Z  PERMITTED        author=Andrew Berman  files=14 result='134 passed in 51.84s' trigger=.tools/comp-read
+2026-08-06T20:01:12Z  PERMITTED        author=Andrew Berman  files=14 result='134 passed in 47.02s' trigger=org/modules/graph/tests/test_comp_find.py
+2026-08-06T20:09:19Z  DENIED           author=3.0.0_SA_CVO~B  files=14 trigger=.tools/comp-find .tools/comp-read org/modules/graph/tests/test_comp_find.py org/modules/graph/tests/test_comp_read.py out=C:/Users/AndrewBerman/Desktop/ajb_workspace/.git/pipescript-suite-last-run.out
+2026-08-06T20:21:00Z  PERMITTED        author=3.0.0_SA_CVO~B  files=14 result='134 passed in 45.35s' trigger=.tools/comp-find .tools/comp-read org/modules/graph/tests/test_comp_find.py org/modules/graph/tests/test_comp_read.py
+2026-08-06T20:46:33Z  PERMITTED        author=Andrew Berman  files=14 result='134 passed in 49.98s' trigger=.tools/comp-read
+2026-08-06T20:47:28Z  PERMITTED        author=Andrew Berman  files=14 result='134 passed in 48.41s' trigger=org/modules/graph/tests/test_comp_find.py
+2026-08-06T20:51:40Z  PERMITTED        author=3.0.0_SA_CVO~B  files=14 result='134 passed in 44.98s' trigger=.tools/comp-read
+2026-08-06T23:33:44Z  PERMITTED        author=3.0.0_SA_CVO~B  files=14 result='139 passed in 34.98s' trigger=.tools/comp-read org/modules/graph/tests/test_comp_read.py
+2026-08-07T00:07:32Z  PERMITTED        author=3.0.0_SA_CVO~B  files=14 result='140 passed in 35.02s' trigger=.tools/comp-read org/modules/graph/tests/test_comp_read.py
+2026-08-07T16:20:07Z  PERMITTED        author=3.0.0_SA_CVO~B  files=14 result='140 passed in 47.98s' trigger=.tools/comp-read
+2026-08-11T06:26:59Z  PERMITTED        author=0.4.0_DS_ClientPlatform  files=14 result='140 passed in 45.19s' trigger=.tools/safe_deploy_core.py
+2026-08-11T06:36:42Z  PERMITTED        author=0.4.0_DS_ClientPlatform  files=14 result='140 passed in 45.41s' trigger=.tools/safe_deploy_core.py
+2026-08-11T07:00:15Z  PERMITTED        author=3.0.0_SA_CVO  files=14 result='140 passed in 43.33s' trigger=org/modules/graph/pipeline_cli.py
+2026-08-18T17:34:17Z  PERMITTED        author=0.4.0_DS_ClientPlatform~A  files=14 result='140 passed in 40.07s' trigger=.tools/safe_deploy_core.py
+2026-08-19T01:21:07Z  PERMITTED        author=0.4.0_DS_ClientPlatform~A  files=14 result='140 passed in 52.40s' trigger=.tools/safe_deploy_core.py
+2026-08-20T00:12:16Z  PERMITTED        author=0.8.0_AE_CloudComp  files=14 result='140 passed in 65.78s (0:01:05)' trigger=org/modules/graph/pipeline_cli.py
+2026-08-20T00:23:04Z  PERMITTED        author=0.8.0_AE_CloudComp  files=14 result='140 passed in 42.25s' trigger=.tools/safe_deploy_core.py
