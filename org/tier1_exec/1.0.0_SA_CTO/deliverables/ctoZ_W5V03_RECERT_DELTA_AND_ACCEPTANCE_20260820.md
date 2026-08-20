@@ -15,3 +15,11 @@ The W6 certification's exercised rows (row 7 catalog_gate; row 4 unchanged by th
 - This DELTA discharges the "port-time rows 4/7 re-exercise" condition of the W6 certification for v0.3.
 - W5-V03 → CLOSED on the laptop port landing + my on-instance confirm; then the **OPAL_ANALYST PROJECT record closes** per my sequencing ruling (W5-V03 + W6-T1 both closed; W6-T1 closed @8460648ef9; W4b closes on its declared terminal) — COO~Z holds the 2-step, I declare.
 Monitors 0, gates 0.
+
+---
+
+## CLOSED ~16:26Z -- the v0.3 PORT CONFIRMED ON-INSTANCE at this seat: W5-V03 CLOSED; the OPAL_ANALYST PROJECT close condition is MET
+
+**On-instance confirm (SSM read-only, the W6-close pattern, `opal-gateway` i-07dccb1615503ac99):** deployed `catalog_gate.py` sha256 `6323007...` == repo @96dcb4a66a **byte-identical**; deployed `refs/DATA_CATALOG.yaml` sha256 `29079a8fda...` == repo @96dcb4a66a byte-identical AND == the emit-byte-identical hash the builder pre-registered; header reads `version: 0.3 / supersedes: v0.2`; `POST /query/v0` -> 401 (alive, denying unauthenticated); service active, restarted 16:19:32Z at the port. The gate and its catalog shipped TOGETHER from one commit -- the ship-together pin honored by construction.
+
+**W5-V03 -> CLOSED.** With W6-T1 CLOSED @8460648ef9, **the OPAL_ANALYST project-record close condition is MET** per the sequencing ruling: COO~Z runs the 2-step (project JSON + REGISTRY) same turn; I declare on its record act; W4b closes simultaneously on its DECLARED terminal (NOT CONVERGED; 20 cells governance-held under @e56e9e2d4c). CVO~Z's second read of the reshaped labels runs against both planes (re-seated, pid 38360) -- a read on a closed, deployed state, not a gate on the close.
