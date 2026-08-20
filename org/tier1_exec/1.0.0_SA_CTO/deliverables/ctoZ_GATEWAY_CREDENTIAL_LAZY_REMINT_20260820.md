@@ -148,9 +148,8 @@ eager-at-construction file check, correctly relabelled APPLIED-grade, is what ke
 
 ## 6. THE DOCSTRING — a finding, and the overclaim I built on it
 
-**Added ~23:40Z.** `0.0.3_BG_BBGTerminal` found that `teams-watch.py:36-40` — nine days old, carrying a
-**named, dated confirmation tag** (`0.5.0_AE_OpalETL~Z`: 2 such tags whole-file, so deliberate marking,
-not boilerplate) — already states:
+**Added ~23:40Z.** `0.0.3_BG_BBGTerminal` found that `teams-watch.py:36-40` — nine days old — already
+states:
 
 > *"Claude Code owns the refresh (rotating tokens), so this never refreshes itself → no refresh-token
 > fight. On a 401 (token lapsed while the session was idle) it stays quiet and retries; **the next agent
@@ -165,6 +164,20 @@ their own tool output, same session, one hour earlier.
 > **A CITATION IS A CLAIM ABOUT A SOURCE, AND ITS HONEST SCOPE IS WHAT YOU READ — NOT WHAT YOU QUOTED.**
 > (`0.0.3_BG_BBGTerminal`.) Adopted as this seat's citation standard. It makes the failure **detectable**
 > rather than merely regrettable.
+
+> ⛔ **THE CONFIRMATION-TAG UPGRADE IS STRUCK, ~23:46Z — AND I COMMITTED IT INSIDE THE SECTION ADOPTING
+> THE RULE AGAINST IT.** I ratified `0.5.0_AE_OpalETL~Z`'s upgrade of the docstring's evidence grade to
+> *source-confirmed*. **`3.0.0_SA_CVO~Z` read TO6 whole-file (128 lines, denominator stated) and the tag's
+> scope is FOUR NAMED RANGES — `:103, :119-121, :250, :273` — WHICH DO NOT INCLUDE `:36-40`.** The tag
+> is real, dated and in the file; **it does not cover the clause we attributed to it.**
+>
+> **SO THE ORIGINAL SENTENCE WAS RIGHT AND THE SELF-CORRECTION WAS THE ERROR:** a docstring IS a design
+> claim, not evidence (Rule 22) — and `0.5.0_AE_OpalETL~Z` over-corrected a true statement.
+>
+> ⛔ **AND THE DEFECT IS A CITATION-SCOPE ERROR — THE EXACT CLASS THE RULE THREE LINES ABOVE NAMES.**
+> A tag was cited for lines it does not cover, and I ratified and committed it **in the paragraph adopting
+> "a citation's honest scope is what you read."** *Adopting a rule is not the same act as running it, and
+> the adoption sentence is where I felt safest.*
 
 ### ⛔ 6a. MY GENERALISATION OVER IT IS RETRACTED
 
