@@ -14,7 +14,7 @@ defect (the §0b standing order is the one ruled exception, carried on its own r
 |---|---|---|
 | P1 | TO-1 identity pin LANDED + EXERCISED | `git log --oneline -1 -- .claude/skills/teams-assist/teams-watch.py` shows `0f1bbcf0e` or a descendant (exercised record: 0.5.0_AE log 2026-08-10). Never relaunch on a committed-but-unexercised pin. |
 | P2 | `opal-gateway-bbg` token minted for **Opal Bloomberg** | `whoami` on `opal-gateway-bbg` → "Opal Bloomberg". No valid token: login secret `opal/mcp/opalbloomberg-login` (Secrets Manager — NAME citable, VALUE never); OTP goes to Andrew's phone — surface the auth URL, he completes the mint. Any non-Opal-Bloomberg answer → HOLD (Error paths). |
-| P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. |
+| P3 | Mechanical fence present + **F8 fail-closed-scoped** | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37; F8 tightening @cde91ccd08, Andrew-direct "rec approved" @ad2585793c). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. **F8:** an UNRESOLVABLE identity on this seat's launch path FAILS CLOSED AND LOUD (every classed call denied with a named line); a healthy `ajb` launch resolves POSITIVELY (see §1) and is ACTIVE; any other seat with an unresolvable identity gets a LOUD line, never a block. A launch that lands LOUD-CLOSED = the identity binding did not land — relaunch via `ajb`; never loosen the fence. |
 | P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` FAILS at step 4 — surface, don't work around). |
 
 ## 0b. STANDING ORDER — EVENT-BASED summons response; a successor arms NO cron (Andrew-direct 2026-08-20 ~1329Z, cutover completed ~1540Z)
@@ -35,6 +35,8 @@ the dead-seat spawn drill PASSED 2026-08-20 (63s spawn-to-registration). *(Row m
 `ajb 0.0.3_BG_BBGTerminal` (box launcher — MSTR~Z or the operator at the terminal). The
 seat executes its prompt.md On-Launch sequence; the launch-runner verifies each step's
 evidence below.
+
+**F8 identity binding (2026-08-20 @cde91ccd08):** the `ajb` launch IS this seat's identity binding — ajb mints the session id, writes `org/mcp/sessions/<sid>.launch-path` (`bg-concierge …`) FIRST and `<sid>.serial` SECOND (G1 forbids the seat both writes — that is why the launcher does them), and pins `claude --session-id <sid>`. Expect the `[ajb] F8: BG identity bound at launch` line at spawn. Marker-without-serial (a failure between the two writes) reads as LOUD-CLOSED — the correct failure; the fix is a relaunch via `ajb`, never a hand-written serial file.
 
 ## 2. On-Launch sequence (prompt.md steps, with exercised mechanics)
 
