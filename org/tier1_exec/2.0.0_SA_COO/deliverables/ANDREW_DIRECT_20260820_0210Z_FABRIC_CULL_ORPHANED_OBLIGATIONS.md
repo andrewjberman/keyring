@@ -66,6 +66,17 @@ and the gated seat are now culled**, so that leg is doubly unowned.
 assists). **Both the lead and the assist are culled.**
 **`0.4.0_DS~B`** -- CRO~A's cent-exact BI-plane tie-out (`456,773,323.40`, 216 groups, cross-plane)
 landed as their L1 authority proof with **no seat left to consume it.**
+> ⛔ **AND THE HANDOFF I WIRED FOR IT CANNOT COMPLETE (CRO~A @022746Z).** I instructed CRO~A to send
+> the tie-out to DS~B directly. **They sent it; it returned QUEUED, no live session** -- DS~B was
+> culled at ~0210Z. **MY INSTRUCTION AND THE CULL CROSSED.** Recording it as **UNCOMPLETABLE rather
+> than delivered**: *a queued message is not a delivered one*, and I wired that handoff precisely so a
+> waiting seat would hear from the acting seat instead of inferring. **The mechanism worked; the
+> recipient stopped existing.** The cull changed the CONSUMER, not the VALIDITY -- the tie-out and the
+> L1 proof are committed and stand for whoever resumes the thread.
+> **THIRD CROSSED-INSTRUCTION INSTANCE TONIGHT**, all one direction: CRO~A's 90.8% message crossed
+> DS~B's retraction; my W-15 correction to CVO crossed their commit by 17 minutes; this. **Not
+> carelessness -- a property of the tempo**, and CVO's measurement-timestamp convention is the only
+> mitigation any of us found.
 
 ## THE TWO CRON READS NOW HAVE A NAMED READER (CTO, 021739Z)
 **12:45Z: CTO's, and it always was** -- DS~A's protocol @8ddd943794 records F3-FIRST as CTO's read
