@@ -84,3 +84,18 @@ Seat LIVE PID 37712, Monitor `b4b76sy8j`, zero crons, inbox drained + acked. W5 
 **Rate series, honest:** 1 shipped miss this window (vintage_grain field-presence-as-value), self-caught 40 minutes after filing, corrected in-record and in-fabric before the port moved. **Next:** OpalETL~Z ping on condition 7 + the records -> one line each -> port; Andrew's word on the cron card; the canonical-ten residual ferry.
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+# AMENDMENT 1345-1355Z -- port released, enum ratified, one fresh parity finding
+
+**archetype:** VALIDATE
+
+1. **W5 re-read of @f8b50e8760 (OpalETL~Z's condition 7 + five axis Rule-24 records), every line at my seat:** condition 7 PASS by VALUE (date 29 / month 2 / year 1 / NONE--L-11 2 / NOT_MEASURABLE-- 2 = 36/36; 19 vintage_grain_notes); 1-6 unchanged; five records present with the four postulates tabled + consumers named AT SOURCE -- verified by me in catalog_gate.py (:70-71 family.axis, :90-93 verdict_class, :94-95 allowlist, :96-115 firm; 4 of 5 consumed, vintage_grain concierge-only); verdict_class FAIL(iii), firm FAIL(ii)(iii)(iv), family.axis FAIL(iii) NAMED with remedies; allowlist PASS after the split; CTO~Z RULING 2268 sequences the three reshapes to v0.3 in ONE versioned change WITH the gate (P1-P8 + 40/40 + 12/12 before that port; I second-read the reshaped labels then). Exercise set at my seat: TO-B proof rc=0, battery 40/40, synthetic 12/12, lift counters identical (MERGED COUNT 89/276), LIVE validate 36/36 byte-identical, runs/ untouched. **PORT RELEASED from the certifier's seat @c368d66d98** (2284-2287). `scope` 2-hit census collision = a THIRD ratified sense of one token (registry Scope type_tuple vs 17b path-grammar {scope}) -- registry-level, routed to my lane + CRO via MSTR~Z with two remedy candidates; not a port blocker.
+2. **Lifecycle enum RATIFIED** (Andrew ~1340Z "approved with the amendment"; v3.11 @510a616350 + 06 recompile @ff58d8e687, verified at HEAD: version 3.11, checker 65/0, rule-bank stage block :408-422). The amendment is a postulate-(iii) catch on MY ACTIVE wording (a health clause inside a life-position axis) -- accepted, recorded as ADDENDUM 2, banked as a feedback memory. Convergent discriminator recorded at CRO; falsifier retained here; exit-bar on the MINT is CVO BASE's act; arch-leg slot spec @d6b8da0578 noted.
+3. **LD-0319 fresh finding (MSTR~Z asked either way):** after the laptop landing-regen @ff58d8e687 imported here, comp-system --check STILL reads 06 STALE (max_mtime 1787232733 -> 1787233337, file_count 222 unchanged) -- the new max_mtime is the import's checkout time on this device: the fingerprint is filesystem-mtime-based, so any site-Z checkout re-stamps it after any laptop regen. An instrument-domain artifact on this device, not a parity defect; corroborates CTO~Z's 2137 design gap (device-scoped fingerprint / content hash). Surfaced (2289/2290), not chased, not regenerated.
+
+**Commits:** @c368d66d98. **Messages:** 2284-2287 (port released), 2289/2290 (Lifecycle + finding). **Rate series:** no new shipped miss this window; the ACTIVE health-clause miss was shipped in the 1250-1305Z proposal and caught at CRO before ratification -- counted: 2 shipped this session (vintage_grain field-presence; ACTIVE wording), both corrected in-record.
+**Next:** event-driven -- the v0.3 second read when COO~Z cuts it; Andrew's word on the cron card; the canonical-ten ferry; CRO's call on the `scope` item.
+
+-- `3.0.0_SA_CVO~Z`
