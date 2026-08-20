@@ -1,0 +1,102 @@
+# CENSUS_REGEN delta adjudication -- CVO leg (census authority), consuming CRO's candidate set
+# Adjudicator: 3.0.0_SA_CVO -- 2026-08-20 ~1835Z, vintage HEAD-era post-4cd7915880
+# Input: org/tier1_exec/4.0.0_SA_CRO/deliverables/CENSUS_REGEN_CANDIDATE_SET_20260820.yaml (63445)
+# Authority: CVO census authority (the 06-15 census was this seat's act); split confirmed 63431,
+#   Andrew blanket approval on CRO's /next-steps set. Thread ASSIGNMENTS are value assignments on
+#   ratified axis values (W-15 precedent); NO new threads are minted here (zero legislature routes
+#   turned out to be needed -- every unmodeled row found a ratified home).
+#
+# OUTCOME VOCABULARY (declared per the 2026-08-20 outcome-arrays widening):
+#   unmodeled layer -- terminal set: ASSIGNED(thread) | LEGISLATURE-ROUTED. All 21 = ASSIGNED.
+#   census_only layer -- terminal set:
+#     DEAD-CONFIRMED        applied-plane evidence already exists (cited)
+#     DEAD-AT-DESIRED       TF-absent, no ruling; fresh pass drops it AFTER the applied spot-check
+#     DEAD-PENDING-TEARDOWN a staged teardown ruling covers it (cited); drops with that teardown
+#     RETIRE-RULED          a standing Andrew-approved ruling already retires it (cited); drop now
+#     RETAIN-LIVE-UNMANAGED live-but-unmanaged-by-TF; census RETAINS it; TF-adoption flagged
+#     MIGRATED / MIGRATED-SUSPECT  successor named / successor candidate named + applied check
+#   Every terminal is exercised below except LEGISLATURE-ROUTED (0 -- stated, not silent).
+# Rule-25 discipline: no DEAD verdict doubles as a deletion warrant; every drop names its
+#   evidence or its required applied check; same-leaf-name twins flagged where they exist.
+
+unmodeled_assignments:   # 21/21 ASSIGNED; grounding = sibling mappings in AUTHORITATIVE_lambda_taxonomy + TF-home residency
+  - {lambda: bd-49f-fees-runner,            thread: advi-bd,      why: 'BD-49F custody ingest interim family; BD/ADVI ingest home'}
+  - {lambda: bd-49f-keepalive,              thread: advi-bd,      why: 'same interim family (keepalive for the session chain)'}
+  - {lambda: bd-49f-runner,                 thread: advi-bd,      why: 'same interim family'}
+  - {lambda: bd-49f-session-trigger,        thread: advi-bd,      why: 'bd-49f session chain trigger'}
+  - {lambda: bd-cot-keepalive,              thread: advi-cot,     why: 'cot detection-layer family; sibling cot-bd-session-trigger=advi-cot'}
+  - {lambda: bd-silver-merge,               thread: advi-bd,      why: 'BD silver-layer merge; see MIGRATED-SUSPECT pairing below'}
+  - {lambda: estate-report-orchestrator,    thread: observability, why: 'estate self-observation (the semantic-evolution loop producer) -- fits the ratified sense verbatim (observes existing instruments, builds nothing); tiebreaker: ops-internal is DISSOLVING and takes no new members per the W-26 rider'}
+  - {lambda: gldinc-ss4c-canary,            thread: advi-bd,      why: 'canary rides the chain it canaries (bd-pipeline gldinc)'}
+  - {lambda: inf-api-eclipse,               thread: advi-inf,     why: 'inf-api-* siblings all advi-inf'}
+  - {lambda: inf-bronze-complete-emitter,   thread: advi-inf,     why: 'inf bronze chain; sibling inf-bronze-trigger=advi-inf'}
+  - {lambda: mdpf-feeder-trigger,           thread: mdpf,         why: 'sibling mdpf-daily-trigger=mdpf; the restored sole invoker'}
+  - {lambda: mdpf-gold-lambda,              thread: mdpf,         why: 'the mdpf gold producer itself'}
+  - {lambda: opal-assets-absence-check,     thread: observability, why: 'operational-health observation instrument over the assets monolith; produces no data product; security-scanner discriminator does not bind'}
+  - {lambda: opal-assets-silver-smartx,     thread: smartx,       why: 'smartx-pipeline on-success silver conversion; sibling opal-smartx-ingestion-pipeline=smartx'}
+  - {lambda: opal-data-refresh-api-qa-scratch, thread: data-refresh, why: 'QA scratch twin of opal-data-refresh-api=data-refresh'}
+  - {lambda: opal-ms-ingest-liveness,       thread: m365-mcp,     why: 'gateway /ms ingest liveness; TF home opal-gateway/, chain m365-mcp-gateway-ec2 (manifest :891-892)'}
+  - {lambda: opal-otp-liveness,             thread: m365-mcp,     why: 'same TF home (opal-gateway/otp-liveness.tf); gateway surface liveness pair'}
+  - {lambda: opal-portal-content-api,       thread: portal-infra, why: 'D8_LIVEEDIT content store API; portal serving infra; sibling opal-session-analytics=portal-infra'}
+  - {lambda: partner-etl-ops-sqs-consumer,  thread: partners,     why: 'partner ETL ops consumer; sibling opal-partners-data=partners'}
+  - {lambda: smartx-assets-daily-pull,      thread: smartx,       why: 'smartx-pipeline daily pull'}
+  - {lambda: yang-varflag-check,            thread: mdpf,         why: 'yang portfolio-analytics family home (MA-08 precedent row = mdpf); a check instrument rides its family'}
+
+census_only_dispositions:  # 31/31
+  # -- BD legacy lambda-gold family (the EC2-runner supersession the manifest already records) --
+  - {lambda: bd-capture-output-versions, disposition: DEAD-AT-DESIRED, note: 'TWIN HAZARD flagged: yang-capture-output-versions (mdpf) is a live-modeled same-leaf twin -- census must not confuse them (Rule 25 twin class)'}
+  - {lambda: bd-client-detail,           disposition: MIGRATED-SUSPECT, successor: bd-client-detail-api, note: 'successor in-scope mounted-reachable in manifest; applied check pairs them'}
+  - {lambda: bd-gold-detail-checker,     disposition: DEAD-AT-DESIRED, note: 'checker for the superseded in-Lambda gold'}
+  - {lambda: bd-gold-foundation,         disposition: MIGRATED, successor: 'EC2 bd-gold-layer-runner', note: 'manifest bd-gold-layer-legacy row records the supersession verbatim'}
+  - {lambda: bd-gold-layer,              disposition: MIGRATED, successor: 'EC2 bd-gold-layer-runner', note: 'same recorded supersession'}
+  - {lambda: bd-portal-publisher,        disposition: MIGRATED-SUSPECT, successor: 'platinum publisher path', note: 'applied check names the exact successor before the census drops it'}
+  - {lambda: bd-time-machine,            disposition: DEAD-CONFIRMED, evidence: 'Andrew: both Time Machine = phantom (manifest reachability header note)'}
+  # -- causality family: DEAD on the applied plane, measured 2026-07-30, whole family --
+  - {lambda: causality-ai-query-handler,          disposition: DEAD-CONFIRMED, evidence: &caus 'adjudications_20260730 (manifest): family absent from AWS, retirement-pending, teardown=VELOCITY WS-E3; sys-causality-engine WINDING_DOWN'}
+  - {lambda: causality-analysis-generator,        disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-data-enrichment,           disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-history-manager,           disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-market-update-generator,   disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-thematic-signals-generator, disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-themes-fetcher,            disposition: DEAD-CONFIRMED, evidence: *caus}
+  - {lambda: causality-trade-idea-generator,      disposition: DEAD-CONFIRMED, evidence: *caus}
+  # -- market-update family: staged teardown covers it --
+  - {lambda: market-update-data-aggregator, disposition: DEAD-PENDING-TEARDOWN, evidence: &mu '07-30 staged teardown packages (news-av + market-update); execution-state unresolved -- consistent with the FRED-01 description adjudicated today'}
+  - {lambda: market-update-exporter,        disposition: DEAD-PENDING-TEARDOWN, evidence: *mu}
+  - {lambda: market-update-generator,       disposition: DEAD-PENDING-TEARDOWN, evidence: *mu}
+  # -- LIVE-but-unmanaged (the Rule-25 catches: census-only NEVER equals dead) --
+  - {lambda: ec2-runtime-monitor,   disposition: RETAIN-LIVE-UNMANAGED, thread: observability, note: 'member of ops-ec2-governance-lambdas, moved to observability TODAY @eb58b97bc7; thread follows its chain; TF-adoption flagged'}
+  - {lambda: mdpf-daily-trigger,    disposition: RETAIN-LIVE-UNMANAGED, thread: mdpf, note: 'LIVE -- running source read at this seat today (caller audit); fires daily; TF-adoption flagged'}
+  - {lambda: mdpf-freshness-checker, disposition: RETAIN-PENDING-CTO, thread: mdpf, note: 'exists; whether it SHOULD exist is the moratorium-class question carried visibly at W-15 (CTO surface); census models reality while the question pends'}
+  - {lambda: opal-session-analytics, disposition: RETAIN-LIVE-UNMANAGED, thread: portal-infra, note: 'PPI-12 chain live in manifest; applied check confirms'}
+  - {lambda: smartx-ec2-autostart,   disposition: RETAIN-LIVE-UNMANAGED, thread: smartx, note: 'smartx EC2 autostart path; applied check confirms'}
+  - {lambda: smartx-model-monthly-pull, disposition: RETAIN-LIVE-UNMANAGED, thread: smartx, note: 'MONTHLY cadence -- quiet 29 days by design; NEVER read monthly-quiet as dead (Rule 25 declared-cadence class); applied check confirms existence'}
+  # -- possible migration pair opened by this very delta --
+  - {lambda: opal-bd-transaction-consolidator, disposition: MIGRATED-SUSPECT, successor: bd-silver-merge, note: 'successor candidate is NEW in TF this window (unmodeled row above) -- the delta itself suggests the pair; applied check confirms'}
+  # -- remaining singletons --
+  - {lambda: daily-agenda-generator,          disposition: DEAD-AT-DESIRED, note: 'no ruling found; applied spot-check before the drop'}
+  - {lambda: opal-trending-image-generator,   disposition: DEAD-AT-DESIRED, note: 'applied spot-check before the drop'}
+  - {lambda: sentiment_query_api,             disposition: DEAD-AT-DESIRED, note: 'underscore-named legacy shape; applied spot-check before the drop'}
+  - {lambda: test-seeking-alpha-unauth-simple, disposition: DEAD-AT-DESIRED, note: 'test scaffold; not covered by the W-26 ruling (that ruling named the two yfinance scaffolds only) -- its own row, same class'}
+  - {lambda: test-yfinance-simple,  disposition: RETIRE-RULED, evidence: &w26 'W-26 adjudication @51285984d6 (Andrew "All recs approved"): yfinance scaffolds -> retirement; retirement needs no receiving vertical'}
+  - {lambda: yfinance-aapl-test,    disposition: RETIRE-RULED, evidence: *w26}
+
+tallies:
+  unmodeled: {ASSIGNED: 21, LEGISLATURE-ROUTED: 0}
+  census_only: {DEAD-CONFIRMED: 9, DEAD-AT-DESIRED: 6, DEAD-PENDING-TEARDOWN: 3, RETIRE-RULED: 2,
+                RETAIN-LIVE-UNMANAGED: 5, RETAIN-PENDING-CTO: 1, MIGRATED: 2, MIGRATED-SUSPECT: 3}
+  # 9+6+3+2+5+1+2+3 = 31; 21 + 31 = 52 = the candidate set's delta, conserved.
+
+execution_notes_for_leg_3:  # CRO base lands fresh pass1/pass2 at org/modules/graph/estate_census/
+  - 'RETAIN rows stay IN the fresh census with their threads as adjudicated here (5 + 1 pending-CTO).'
+  - 'DEAD-AT-DESIRED rows (6): run the applied spot-check (ListFunctions membership) BEFORE the drop;
+     any that turn up LIVE flip to RETAIN-LIVE-UNMANAGED and come back to me as one line each.'
+  - 'MIGRATED-SUSPECT rows (3): the applied check that names the successor rides the landing; the
+     census records the successor pointer so Rule-25 future reads have it.'
+  - 'Hazard (a): the fresh pass MUST model ceo-digest / etf-reports / ticketing (confirmed 0/0/0 in
+     frozen inputs). Hazard (b): closed (63437/63438); expected-zero confirmation only.'
+  - 'The three admitted threads + the 21 assignments + the retained rows change the resolver
+     topology -- the W-15 one-touch (W15-1..W15-5) consumes the FRESH census; my L7 baseline diff
+     expectations extend accordingly and I re-derive them at that verify, not before.'
+
+# -- 3.0.0_SA_CVO
