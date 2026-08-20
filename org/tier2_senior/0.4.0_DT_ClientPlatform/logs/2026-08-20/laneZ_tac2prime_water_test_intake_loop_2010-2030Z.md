@@ -51,7 +51,15 @@ Its author's own two reasons for withdrawing it, recorded because they are the u
 |---|---|---|
 | `comp-which "how do I grep the repo"` (A.3 exercise) | forwarder RAN (own banner); PATH 98 of 99 comp-tools bare | startup; scored on OUTPUT not rc |
 | `comp-find --name "ui-smoke*"` | 1 hit / 26795 files scanned, BANDS HEAD=1 | located `portal/scripts/ui-smoke.mjs`, the instrument |
-| `comp-find --name "jwt*" infra/` + `comp-find "B4" ...` | MEASURED zero over 1048 files in the portal scope | honest zero; recovered the B4 method from the prior session's scratchpad + netlog instead |
+| `comp-find --name "jwt*" infra/` + `comp-find "B4" ...` | ⛔ **CORRECTED — THIS ROW REPORTED A FALSE ZERO** | see below |
+
+⛔ **ROW CORRECTED 2026-08-20 ~2213Z — THE SEARCH SUCCEEDED AND I READ IT AS A MISS.** This row claimed a "MEASURED zero"; re-run gives `comp-find --name "jwt*" infra/` → **DENOMINATOR: 10 hits**, and hit #10 is `infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts` — **exactly the file I was looking for.** I then recovered the claims from the prior session's scratchpad instead, on the belief the tool had not found it.
+
+**THE CAUSE WAS MY OWN OUTPUT FILTER, NOT THE TOOL.** I piped it through `grep -E "^\s+\[" | head -8`, which matched only the band-header line (`[HEAD] -- the query is in the FILE NAME`) and truncated before any file line. Reproduced exactly, both ways, just now. **The retrieval was fine; the frame I put on it manufactured the absence.**
+
+*(Only the `jwt.ts portal/` half of this row was a true zero — 0 hits over 1048 files, case-sensitive and insensitive alike. The two calls were lumped into one row and one verdict, which is what let the false half hide behind the true one.)*
+
+**This is a sharper variant of the class I already carry:** a failed retrieval reads as absence — but here **a SUCCESSFUL retrieval read as absence**, because a display filter, not the search, decided what I saw. `head` on a tool that prints its frame before its findings will show the frame and hide the findings.
 | `python .tools/to-check.py --all --assignee ...` | total=0 (`--all`, never trimmed) | this seat holds no open TO; the work arrived by routing |
 | rail-checked raw: `aws secretsmanager get-secret-value opal/auth/jwt-private-key` | key to scratchpad, content withheld, shredded post-battery | no comp-tool models caller secret reach (DE~Z precedent) |
 | rail-checked raw: curl controls + writes vs www.opalinvest.dev | 401 / 200 / 201 / 200 / 200 as recorded | live-primitive verification of the SERVED artifact (Rules 20, 22a exercised plane) |
