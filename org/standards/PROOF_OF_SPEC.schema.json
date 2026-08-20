@@ -3,37 +3,143 @@
   "$id": "opal://standards/PROOF_OF_SPEC.schema.json",
   "title": "PROOF-OF-SPEC deliverable (Andrew-direct 2026-08-11 ~0815Z): the machine-readable completion contract every Tier-2 build TO assignee fills to prove work was done TO SPEC. A TO without a schema-valid instance is NOT complete.",
   "type": "object",
-  "required": ["schema_version", "to_id", "phase", "spec_ref", "assignee", "artifacts_produced", "acceptance", "controls", "declared_exclusions", "surprises", "session_log", "compiler_tools"],
+  "required": [
+    "schema_version",
+    "to_id",
+    "phase",
+    "spec_ref",
+    "assignee",
+    "artifacts_produced",
+    "acceptance",
+    "controls",
+    "declared_exclusions",
+    "surprises",
+    "session_log",
+    "compiler_tools"
+  ],
   "additionalProperties": false,
   "properties": {
-    "schema_version": {"const": "1.0"},
-    "to_id": {"type": "string", "minLength": 3},
-    "firm": {"enum": ["49F", "INF", "COT", "MDPF", "FABRIC"], "description": "OPTIONAL, additive (ratified with TIGHTENING J1, CTO G-C @42317a4aab): the firm this instance proves work for, stated exactly instead of derived from to_id grammar. The proof-board (to-check.py --proof-board) prefers this field; absent it, the DECLARED derivation is leading to_id token in this same enum, else UNPARSED -- never guessed. Existing instances without it remain valid. FABRIC added 2026-08-19 (CTO, on 0.8.0's Rule-24 exhaustiveness finding 220017Z): fabric-infrastructure work (D0-class -- broker, comp-tools, gates) proves work for NO client firm, and the J1 declare-on-next-touch instruction was unsatisfiable without a value for it -- an inexhaustive enum on a ratified schema forces either a false firm or a permanent violation."},
-    "phase": {"enum": ["P1-SCRIPTS", "P2-TIMING", "P3-REPOINTS", "P4-PUBLISHERS", "P5-DECOMMISSION", "INVESTIGATION", "NON-BUILD-OTHER"], "description": "build-program phase, or the two non-build values (Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase)"},
+    "schema_version": {
+      "const": "1.0"
+    },
+    "to_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "firm": {
+      "enum": [
+        "49F",
+        "INF",
+        "COT",
+        "MDPF",
+        "FABRIC"
+      ],
+      "description": "OPTIONAL, additive (ratified with TIGHTENING J1, CTO G-C @42317a4aab): the firm this instance proves work for, stated exactly instead of derived from to_id grammar. The proof-board (to-check.py --proof-board) prefers this field; absent it, the DECLARED derivation is leading to_id token in this same enum, else UNPARSED -- never guessed. Existing instances without it remain valid. FABRIC added 2026-08-19 (CTO, on 0.8.0's Rule-24 exhaustiveness finding 220017Z): fabric-infrastructure work (D0-class -- broker, comp-tools, gates) proves work for NO client firm, and the J1 declare-on-next-touch instruction was unsatisfiable without a value for it -- an inexhaustive enum on a ratified schema forces either a false firm or a permanent violation."
+    },
+    "phase": {
+      "enum": [
+        "P1-SCRIPTS",
+        "P2-TIMING",
+        "P3-REPOINTS",
+        "P4-PUBLISHERS",
+        "P5-DECOMMISSION",
+        "INVESTIGATION",
+        "NON-BUILD-OTHER"
+      ],
+      "description": "build-program phase, or the two non-build values (Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase)"
+    },
     "spec_ref": {
       "type": "object",
-      "required": ["doc", "group", "vintage_commit"],
+      "required": [
+        "doc",
+        "group",
+        "vintage_commit"
+      ],
       "additionalProperties": false,
       "properties": {
-        "doc": {"type": "string", "description": "the governing spec file path"},
-        "group": {"enum": ["A", "B", "C", "D", "W", "M", "X", "T", "OTHER"]},
-        "vintage_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$", "description": "the spec vintage built against -- a citation without a vintage is not a citation"}
+        "doc": {
+          "type": "string",
+          "description": "the governing spec file path"
+        },
+        "group": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "W",
+            "M",
+            "X",
+            "T",
+            "OTHER"
+          ]
+        },
+        "vintage_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$",
+          "description": "the spec vintage built against -- a citation without a vintage is not a citation"
+        }
       }
     },
-    "assignee": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+_[A-Z]{2}_.+$"},
+    "assignee": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+_[A-Z]{2}_.+$"
+    },
     "artifacts_produced": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["path_or_key", "kind", "commit_or_etag", "deployed_state", "deploy_evidence"],
+        "required": [
+          "path_or_key",
+          "kind",
+          "commit_or_etag",
+          "deployed_state",
+          "deploy_evidence"
+        ],
         "additionalProperties": false,
         "properties": {
-          "path_or_key": {"type": "string"},
-          "kind": {"enum": ["script", "s3_object", "terraform", "config_data", "schedule", "iam", "test", "doc", "frontend_component"], "description": "artifact KIND, one grain (Rule-24 collectively-exhaustive). frontend_component ADDED 2026-08-11 (COO 215014Z, routed): a portal/frontend code artifact -- WITHOUT it a portal component mis-declares as 'script' and gets scanned by the backend DS-id-grammar coverage heuristic it cannot satisfy. The artifact-coverage heuristic is backend-script-specific and scopes to (script, s3_object) BY DESIGN; frontend_component is outside it (a frontend-appropriate coverage rule is a follow-on gate candidate, not the enum's defect)."},
-          "commit_or_etag": {"type": "string", "minLength": 6},
-          "deployed_state": {"enum": ["DEPLOYED-VERIFIED", "COMMITTED-NOT-DEPLOY-SCOPE", "STAGED-AWAITING-GATE"], "description": "an atomic commit is NOT an atomic deploy; state which"},
-          "deploy_evidence": {"type": "string", "minLength": 1, "description": "for DEPLOYED-VERIFIED: the live read proving it (ETag match / get-role-policy / describe). For other states: the reason."}
+          "path_or_key": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "script",
+              "s3_object",
+              "terraform",
+              "config_data",
+              "schedule",
+              "iam",
+              "test",
+              "doc",
+              "frontend_component"
+            ],
+            "description": "artifact KIND, one grain (Rule-24 collectively-exhaustive). frontend_component ADDED 2026-08-11 (COO 215014Z, routed): a portal/frontend code artifact -- WITHOUT it a portal component mis-declares as 'script' and gets scanned by the backend DS-id-grammar coverage heuristic it cannot satisfy. The artifact-coverage heuristic is backend-script-specific and scopes to (script, s3_object) BY DESIGN; frontend_component is outside it (a frontend-appropriate coverage rule is a follow-on gate candidate, not the enum's defect)."
+          },
+          "commit_or_etag": {
+            "type": "string",
+            "minLength": 6
+          },
+          "deployed_state": {
+            "enum": [
+              "DEPLOYED-VERIFIED",
+              "COMMITTED-NOT-DEPLOY-SCOPE",
+              "STAGED-AWAITING-GATE"
+            ],
+            "description": "an atomic commit is NOT an atomic deploy; state which"
+          },
+          "deploy_evidence": {
+            "type": "string",
+            "minLength": 1,
+            "description": "for DEPLOYED-VERIFIED: the live read proving it (ETag match / get-role-policy / describe). For other states: the reason."
+          },
+          "artifact_covered_by": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "OPTIONAL, additive (added 2026-08-19 by 0.8.0_AE_CloudComp per COO + DS base recommendation, instrument-repair batch): the criterion_id(s) whose rows cover this artifact, stated EXPLICITLY instead of inferred from the id grammar. The artifact-coverage rule previously keyed ONLY on the DS {firm}-{group}-{artifact}-{check} grammar, so a TO whose issuer minted ids in another grammar (WP1-N, D1b-N, D3.1-N) could not pass coverage no matter how complete the work was -- and the only available escape was declaring the CENTRAL DELIVERABLE 'excluded', i.e. a false statement. A rule whose sole route to green is a lie is not enforcing anything. Every id named here MUST exist in this instance's acceptance rows; a citation to a row that is not there is worse than no citation and is a violation. Existing instances without this field remain valid -- the checker now also accepts an artifact referenced by a row's invocation or output_evidence, which is COVERAGE evidence rather than NAMING evidence."
+          }
         }
       }
     },
@@ -43,43 +149,128 @@
       "description": "ONE ROW PER CRITERION in the governing spec's acceptance battery. NO BARE VALUES: a PASS row with empty output_evidence INVALIDATES the whole deliverable.",
       "items": {
         "type": "object",
-        "required": ["criterion_id", "criterion_verbatim", "method", "invocation", "output_evidence", "denominator", "status"],
+        "required": [
+          "criterion_id",
+          "criterion_verbatim",
+          "method",
+          "invocation",
+          "output_evidence",
+          "denominator",
+          "status"
+        ],
         "additionalProperties": false,
         "properties": {
-          "criterion_id": {"type": "string"},
-          "criterion_verbatim": {"type": "string", "minLength": 10, "description": "the spec's own words -- the assignee proves against the SPEC, not a paraphrase"},
-          "method": {"enum": ["command", "test_suite", "live_read", "diff", "schema_validation", "manual_read_with_citation"]},
-          "invocation": {"type": "string", "minLength": 1, "description": "the exact command/test run -- re-runnable by a verifier"},
-          "output_evidence": {"type": "string", "minLength": 1, "description": "verbatim output excerpt carrying the deciding values"},
-          "denominator": {"type": "string", "minLength": 1, "description": "every count states what it is out of; 'N/A' only with a reason, e.g. 'N/A -- boolean check'"},
-          "status": {"enum": ["PASS", "FAIL", "UNCOMPUTABLE-BY-CONSTRUCTION", "UNVERIFIABLE-BY-INSTRUMENT", "N/A-BY-CONSTRUCTION", "UNCOMPUTABLE"], "description": "UNCOMPUTABLE split 2026-08-11 (Rule-24 state coherence, CVO): -BY-CONSTRUCTION rides a NAMED later run (status_reason names it); UNVERIFIABLE-BY-INSTRUMENT names the SUBSTITUTE oracle in status_reason. Bare UNCOMPUTABLE is LEGACY (pre-split instances only) -- do not mint new"},
-          "status_reason": {"type": "string", "description": "REQUIRED (enforced by validator) when status != PASS; for UNCOMPUTABLE-BY-CONSTRUCTION it names the later run, for UNVERIFIABLE-BY-INSTRUMENT the substitute oracle"}
+          "criterion_id": {
+            "type": "string"
+          },
+          "criterion_verbatim": {
+            "type": "string",
+            "minLength": 10,
+            "description": "the spec's own words -- the assignee proves against the SPEC, not a paraphrase"
+          },
+          "method": {
+            "enum": [
+              "command",
+              "test_suite",
+              "live_read",
+              "diff",
+              "schema_validation",
+              "manual_read_with_citation"
+            ]
+          },
+          "invocation": {
+            "type": "string",
+            "minLength": 1,
+            "description": "the exact command/test run -- re-runnable by a verifier"
+          },
+          "output_evidence": {
+            "type": "string",
+            "minLength": 1,
+            "description": "verbatim output excerpt carrying the deciding values"
+          },
+          "denominator": {
+            "type": "string",
+            "minLength": 1,
+            "description": "every count states what it is out of; 'N/A' only with a reason, e.g. 'N/A -- boolean check'"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNCOMPUTABLE-BY-CONSTRUCTION",
+              "UNVERIFIABLE-BY-INSTRUMENT",
+              "N/A-BY-CONSTRUCTION",
+              "UNCOMPUTABLE"
+            ],
+            "description": "UNCOMPUTABLE split 2026-08-11 (Rule-24 state coherence, CVO): -BY-CONSTRUCTION rides a NAMED later run (status_reason names it); UNVERIFIABLE-BY-INSTRUMENT names the SUBSTITUTE oracle in status_reason. Bare UNCOMPUTABLE is LEGACY (pre-split instances only) -- do not mint new"
+          },
+          "status_reason": {
+            "type": "string",
+            "description": "REQUIRED (enforced by validator) when status != PASS; for UNCOMPUTABLE-BY-CONSTRUCTION it names the later run, for UNVERIFIABLE-BY-INSTRUMENT the substitute oracle"
+          }
         }
       }
     },
     "controls": {
       "type": "object",
-      "required": ["mutant", "determinism"],
+      "required": [
+        "mutant",
+        "determinism"
+      ],
       "additionalProperties": false,
       "description": "a passing assertion never mutated has never been tested",
       "properties": {
         "mutant": {
           "type": "object",
-          "required": ["description", "expected", "observed", "status"],
+          "required": [
+            "description",
+            "expected",
+            "observed",
+            "status"
+          ],
           "properties": {
-            "description": {"type": "string", "minLength": 10},
-            "expected": {"type": "string"},
-            "observed": {"type": "string", "minLength": 1},
-            "status": {"enum": ["FIRED-AS-EXPECTED", "DID-NOT-FIRE (deliverable INVALID)", "N/A-SPEC-NAMES-NONE"]}
+            "description": {
+              "type": "string",
+              "minLength": 10
+            },
+            "expected": {
+              "type": "string"
+            },
+            "observed": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "FIRED-AS-EXPECTED",
+                "DID-NOT-FIRE (deliverable INVALID)",
+                "N/A-SPEC-NAMES-NONE"
+              ]
+            }
           }
         },
         "determinism": {
           "type": "object",
-          "required": ["method", "observed", "status"],
+          "required": [
+            "method",
+            "observed",
+            "status"
+          ],
           "properties": {
-            "method": {"type": "string", "description": "two same-input runs compared, or reason N/A"},
-            "observed": {"type": "string"},
-            "status": {"enum": ["STABLE", "UNSTABLE (deliverable INVALID)", "N/A-WITH-REASON"]}
+            "method": {
+              "type": "string",
+              "description": "two same-input runs compared, or reason N/A"
+            },
+            "observed": {
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "STABLE",
+                "UNSTABLE (deliverable INVALID)",
+                "N/A-WITH-REASON"
+              ]
+            }
           }
         }
       }
@@ -89,23 +280,52 @@
       "description": "everything in scope NOT done, each with a reason -- an unmarked gap reads as coverage",
       "items": {
         "type": "object",
-        "required": ["item", "reason"],
-        "properties": {"item": {"type": "string"}, "reason": {"type": "string"}}
+        "required": [
+          "item",
+          "reason"
+        ],
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
       }
     },
     "surprises": {
       "type": "array",
       "description": "surprise-channel entries: one line each, observed outside mandate, NO action taken",
-      "items": {"type": "string"}
+      "items": {
+        "type": "string"
+      }
     },
-    "session_log": {"type": "string", "description": "path to the committed session log"},
+    "session_log": {
+      "type": "string",
+      "description": "path to the committed session log"
+    },
     "compiler_tools": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["tool", "invocation", "result"],
-        "properties": {"tool": {"type": "string"}, "invocation": {"type": "string"}, "result": {"type": "string"}}
+        "required": [
+          "tool",
+          "invocation",
+          "result"
+        ],
+        "properties": {
+          "tool": {
+            "type": "string"
+          },
+          "invocation": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          }
+        }
       }
     }
   }
