@@ -1,0 +1,389 @@
+artifact: ATOM_LAYER0_RESOLUTION_CENSUS
+status: PROPOSED
+seat: 4.0.0_SA_CRO~B
+path: B_RESOLUTION_CENSUS
+population_artifact: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_POPULATION_20260820.yaml
+population_commit: ee9431a49b
+read_vintage: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+scope: repo_only
+cloud_execution_space: OUT_OF_SCOPE_BY_ANDREW_SEQUENCE
+
+resolution_predicate: >-
+  A binding resolves iff it points to exactly one live authority member at the
+  declared grain, the pointer resolves at the pinned Git object, the target
+  carries the claimed content, and code cites rather than re-declares the
+  vocabulary.
+
+rerun_contract:
+  row_rule: >-
+    Every row's evidence field is its exact file+anchor pair at read_vintage.
+    A stranger re-runs a file read with git show
+    602b73a1f99d889dabbc884525b10dd8e7bf2e56:<path> and selects the stated
+    line or line range. Multiple anchors are read together and compared.
+  o1_shorthand_expansion: >-
+    O1 results row N means line N of
+    org/tier1_exec/4.0.0_SA_CRO/deliverables/
+    O1_RESOLVES_VIA_RESULTS_20260819.jsonl as present at read_vintage.
+  instrument_commands:
+    comp_state_control: python .tools/comp-state --self-test
+    registry_control: python infra/system/ontology/check_system_definitions.py --self-test
+    registry_live: python infra/system/ontology/check_system_definitions.py
+    ontology_lint_control: python org/modules/graph/comp_ontolint.py self-test
+    ontology_lint_live: python org/modules/graph/comp_ontolint.py
+  spot_checks:
+    - row: R010
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:infra/system/ontology/SYSTEM_DEFINITIONS.yaml
+        lines 202-213 plus git show
+        602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml
+        lines 482-489 and 523-591
+      observed: PASS_two_live_segment_names_disagree
+    - row: R015
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:infra/system/ontology/SYSTEM_DEFINITIONS.yaml
+        lines 437-448 plus git show
+        602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml
+        lines 382-385
+      observed: PASS_registry_copy_omits_describes_rule_bank_includes_it
+    - row: R027
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/comp_legacywriter.py
+        lines 761-770
+      observed: PASS_code_carries_lifecycle_enum_copy
+
+integration_interface:
+  consumer: future_4.0.0_SA_CRO_tilde_C
+  input_selector: rows[] where assessment_state equals ASSESSED
+  mapping_to_atom_layer0_run:
+    concept_name: row.concept
+    claimed_layer: population_artifact.surfaces[row.surface].role
+    authority_and_binding_reads: row.evidence under rerun_contract
+    resolution_start_state: row.resolution_state plus row.failure_classes
+    routing_candidate: row.owner
+    observation_vintage: read_vintage
+    proving_priority: display_verdict precedence then smallest evidence span
+  no_hand_translation: >-
+    The consumer parses this YAML and selects a row object directly. Unknown
+    consumers of the concept are discovered by atom_layer0 S0; they are not
+    guessed into the census row.
+  row_schema_rule_24:
+    declared_layer: one machine-consumable census finding row
+    required_fields: [id, surface, concept, assessment_state, resolution_state, failure_classes, display_verdict, evidence, owner]
+    optional_fields: [direct_read, known_residual, note]
+    mece: PASS_each_field_has_one_non_overlapping_record_purpose
+    same_grain: PASS_all_fields_describe_one_surface_x_concept_binding
+    intent_coherence: PASS_one_rerunnable_and_routable_finding_record
+    state_coherence: PASS_fields_version_and_rerun_as_one_row
+    token_hygiene_at_read_vintage:
+      corpus: infra/system/ontology/** plus org/modules/graph/**
+      word_boundary_counts: {id: 2459, surface: 1097, concept: 111, assessment_state: 0, resolution_state: 0, failure_classes: 0, display_verdict: 0, evidence: 658, owner: 204}
+      adjudication: >-
+        The four compound field names are unoccupied. Generic record words are
+        intentionally reused as local YAML keys, not minted as ontology terms;
+        their row-schema meanings are fixed by this interface.
+
+rule_24_record:
+  finding: >-
+    The supplied starting taxonomy flattened three axes: traversal/assessment
+    state, binary resolution state, and failure mechanism. It is retained only
+    as a deterministic display mapping after splitting those axes.
+  axes:
+    assessment_state:
+      intent: whether the row received an evidence-bearing evaluation
+      grain: one surface_x_concept binding
+      values: [ASSESSED, NOT_ASSESSED]
+      postulates:
+        mece: PASS_exactly_one
+        same_grain: PASS
+        intent_coherence: PASS
+        state_coherence: PASS_same_evaluation_stage
+    resolution_state:
+      intent: whether an assessed binding satisfies the resolution predicate
+      grain: one assessed surface_x_concept binding
+      values: [RESOLVED, UNRESOLVED]
+      postulates:
+        mece: PASS_exactly_one_for_every_assessed_row
+        same_grain: PASS
+        intent_coherence: PASS
+        state_coherence: PASS_re_evaluation_moves_either_state
+    failure_classes:
+      intent: mechanism by which an assessed unresolved binding fails
+      grain: one failed property on one surface_x_concept binding
+      cardinality: zero_or_more; multi_label_not_an_outcome_array
+      values:
+        - UNRESOLVED_NO_AUTHORITY
+        - DANGLING
+        - GOVERNED_DUAL_CARRIER
+        - AMBIGUOUS_TWO_HOMES
+        - CONTENT_MISMATCH
+        - GRAIN_MISMATCH
+        - CODE_REDECLARATION
+        - SUPERSEDED_UNBANNERED
+        - NO_DECLARED_TARGET_CONTENT
+        - NON_INDEPENDENT_RESOLUTION
+        - INSTRUMENT_UNKNOWN
+        - NOT_EXERCISABLE
+      postulates:
+        mece: NOT_APPLICABLE_multi_label; precedence_produces_one_display_verdict
+        same_grain: PASS_each_label_is_one_failed_binding_property
+        intent_coherence: PASS_failure_mechanism_only
+        state_coherence: PASS_all_exist_post_assessment_and_clear_only_on_reassessment
+      two_home_discriminator:
+        GOVERNED_DUAL_CARRIER: >-
+          Multiple carriers are authorized by ruled design, authority or
+          precedence is explicit, and a live comparison instrument covers the
+          carriers. On an unresolved row this class means that instrument has
+          detected extant drift; it does not mean the carriers are ambiguous.
+        AMBIGUOUS_TWO_HOMES: >-
+          Multiple independently editable authority claims lack the ruled
+          dual-carry relation, precedence, or covering comparison instrument.
+          An unauthorized member-list copy is not made governed merely because
+          the same entry also contains a healthy authority citation.
+        postulates:
+          mece: PASS_one_and_only_one_class_for_every_observed_two_home_row
+          same_grain: PASS_one_surface_x_concept_binding
+          intent_coherence: PASS_governance_discriminator_only
+          state_coherence: PASS_reclassification_requires_new_binding_evidence
+  display_verdict_precedence:
+    - AMBIGUOUS_TWO_HOMES
+    - GOVERNED_DUAL_CARRIER
+    - CODE_REDECLARATION
+    - DANGLING
+    - UNRESOLVED_NO_AUTHORITY
+    - GRAIN_MISMATCH
+    - CONTENT_MISMATCH
+    - SUPERSEDED_UNBANNERED
+    - NO_DECLARED_TARGET_CONTENT
+    - NON_INDEPENDENT_RESOLUTION
+    - INSTRUMENT_UNKNOWN
+    - NOT_EXERCISABLE
+  display_mapping: >-
+    NOT_ASSESSED when assessment_state is NOT_ASSESSED; RESOLVED when assessed
+    and resolved; otherwise the first present failure class in precedence order.
+  layer_coverage_additions_to_starting_taxonomy:
+    - GOVERNED_DUAL_CARRIER
+    - NO_DECLARED_TARGET_CONTENT
+    - NON_INDEPENDENT_RESOLUTION
+    - INSTRUMENT_UNKNOWN
+    - NOT_EXERCISABLE
+  token_hygiene_at_read_vintage:
+    corpus: infra/system/ontology/** plus org/modules/graph/**
+    word_boundary_counts:
+      RESOLVED: 113
+      UNRESOLVED_NO_AUTHORITY: 0
+      DANGLING: 1
+      GOVERNED_DUAL_CARRIER: 0
+      AMBIGUOUS_TWO_HOMES: 0
+      CONTENT_MISMATCH: 0
+      GRAIN_MISMATCH: 0
+      CODE_REDECLARATION: 0
+      SUPERSEDED_UNBANNERED: 0
+      NOT_ASSESSED: 0
+    collision_adjudication: >-
+      RESOLVED is an existing ordinary result token and is intentionally reused
+      at the same outcome sense. The sole DANGLING hit is a DATA-EDGE-DANGLING
+      comment in comp_aws_cli.py and is not this binding-failure enum.
+      GOVERNED_DUAL_CARRIER is unoccupied and minted here for Base's adjudicated
+      governed-versus-ungoverned discriminator.
+
+instrument_qualification:
+  - instrument: comp-state
+    self_test: PASS_4_OF_4
+    live_run: PARTIAL_925_BEHIND_OF_2538_RECORDS
+    use: advisory_drift_screen_only
+  - instrument: check_system_definitions.py
+    self_test: PASS_10_OF_10
+    live_run: PASS_65_ENTRIES_0_VIOLATIONS
+    use: registry_form_not_resolution_content
+  - instrument: comp-ontolint
+    self_test: PASS
+    live_run: PASS_10_RELATIONS_3_COMPOSITES_14_ROLE_TOTAL_ORDER
+    use: Role_and_Relation_resolution
+  - instrument: O1_RESOLVES_VIA_RESULTS_20260819.jsonl
+    baseline: 21_attempted_17_writable_7_of_12_comparable_agree
+    use: frozen_baseline_rechecked_by_direct_repo_reads
+
+controls:
+  positive:
+    concept: Lifecycle_Class
+    expected: RESOLVED
+    observed: RESOLVED
+    evidence:
+      - infra/system/ontology/SYSTEM_DEFINITIONS.yaml:464 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+      - org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:397 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    note: >-
+      The control covers the registry-to-home binding. A separate code consumer
+      re-declares the same enum and is correctly classified independently below.
+  author_selected_negative:
+    concept: Segment
+    expected: GOVERNED_DUAL_CARRIER
+    observed: GOVERNED_DUAL_CARRIER
+    direct_read: true
+    evidence:
+      - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:482 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+      - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:523 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+      - org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:589 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    drift_instrument_coverage: >-
+      COVERED. The block-addressed resolves_via selects segment_definitions as
+      precedent, and O1 compares both candidate blocks and reports the one-name
+      split. The drift persists, but it is governed and detected, not ambiguous.
+  independent_o1_annex_negative:
+    concept: Contract_Record
+    external_baseline: O1_RESOLVES_VIA_RESULTS_20260819.jsonl_row_12
+    expected: NON_AGREEMENT
+    observed: AMBIGUOUS_TWO_HOMES
+    secondary_failure: CONTENT_MISMATCH
+    direct_read: true
+    false_green: false
+    evidence:
+      - infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+      - org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:382 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+      - org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:385 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    two_homes_discriminator: >-
+      SYSTEM_DEFINITIONS authority at line 439 is a healthy citation, but its
+      definition at line 438 separately copies both field lists. That stable
+      canonical declaration is independently editable and omits describes.
+      The rule bank at lines 382-385 is the second independently editable
+      authority and includes describes. The verdict rests on the copied member
+      declaration, not on counting the authority citation as a second home.
+
+surface_coverage:
+  fully_assessed: [O01, O03, O15, G01, G02, G03, G04, G05, G06, G07, G08, G09, G12, G13, G14, G15]
+  partially_assessed: [O11, G10, G11]
+  not_assessed: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
+  tie_out: 16_plus_3_plus_12_equals_31
+
+surface_read_receipts:
+  read_vintage: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+  receipt_rule: >-
+    A receipt means the named surface blob was directly read at this Git object;
+    rows list the finding records that depend on it. An empty row list means the
+    surface was read as a supporting authority or binding surface and produced
+    no surface-owned finding row.
+  receipts:
+    - {surface: O01, path: infra/system/ontology/SYSTEM_DEFINITIONS.yaml, rows: [R001, R002, R003, R004, R005, R006, R007, R008, R009, R010, R011, R012, R013, R014, R015, R016, R017, R018, R019]}
+    - {surface: O03, path: infra/system/ontology/C0_C1_C2_C3_C4_SYSTEM_LAYERS.md, rows: [R044]}
+    - {surface: O11, path: infra/system/ontology/LAYER_FIELD_ANATOMY.md, rows: [R020]}
+    - {surface: O15, path: infra/system/ontology/check_system_definitions.py, rows: [R045]}
+    - {surface: G01, path: org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml, rows: []}
+    - {surface: G02, path: org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml, rows: [R021, R022, R023, R024, R025, R036]}
+    - {surface: G03, path: org/modules/graph/estate-coverage-manifest.yaml, rows: []}
+    - {surface: G04, path: org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/AUTHORITATIVE_lambda_taxonomy.json, rows: [R037]}
+    - {surface: G05, path: org/modules/graph/estate-coverage-resolver.json, rows: [R026]}
+    - {surface: G06, path: org/modules/graph/gen-estate-resolver.py, rows: [R038]}
+    - {surface: G07, path: org/modules/graph/opal_estate_infrastructure.py, rows: [R039]}
+    - {surface: G08, path: org/modules/graph/estate_infrastructure_cli.py, rows: [R040]}
+    - {surface: G09, path: org/modules/graph/manifest_check_cli.py, rows: [R041]}
+    - {surface: G10, path: org/modules/graph/comp-tools.yaml, rows: [R042]}
+    - {surface: G11, path: org/modules/graph/graph-call-manifest.yaml, rows: [R043]}
+    - {surface: G12, path: org/modules/graph/comp_legacywriter.py, rows: [R027, R028]}
+    - {surface: G13, path: org/modules/graph/comp_ontolint.py, rows: [R029, R030]}
+    - {surface: G14, path: org/modules/graph/comp_output_contract.py, rows: [R031, R032]}
+    - {surface: G15, path: org/modules/graph/comp_system.py, rows: [R033, R034, R035]}
+  count: 19
+  tie_out: 16_fully_assessed_plus_3_partially_assessed_equals_19
+
+rows:
+  - {id: R001, surface: O01, concept: Estate, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:50 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 2', owner: 1.0.0_SA_CTO, note: inherits Substrate failure; not an independent defect}
+  - {id: R002, surface: O01, concept: Substrate, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:58 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 1', owner: 1.0.0_SA_CTO, note: declared codebase absent while retired pipeline and semctl remain materialized}
+  - {id: R003, surface: O01, concept: Deploy_State, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:70 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 17', owner: 4.0.0_SA_CRO}
+  - {id: R004, surface: O01, concept: Subject, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:80 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 3', owner: 4.0.0_SA_CRO}
+  - {id: R005, surface: O01, concept: Function, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:89 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 4', owner: 4.0.0_SA_CRO, note: resolved only with tombstone filter; prose marker remains a tool-design finding}
+  - {id: R006, surface: O01, concept: C0, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NO_DECLARED_TARGET_CONTENT], display_verdict: NO_DECLARED_TARGET_CONTENT, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:150 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 13', owner: 4.0.0_SA_CRO}
+  - {id: R007, surface: O01, concept: C1, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NO_DECLARED_TARGET_CONTENT], display_verdict: NO_DECLARED_TARGET_CONTENT, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:159 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 14', owner: 4.0.0_SA_CRO}
+  - {id: R008, surface: O01, concept: C2, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:169 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 10', owner: 4.0.0_SA_CRO}
+  - {id: R009, surface: O01, concept: C4, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:192 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 5', owner: 4.0.0_SA_CRO}
+  - {id: R010, surface: O01, concept: Segment, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [GOVERNED_DUAL_CARRIER], display_verdict: GOVERNED_DUAL_CARRIER, direct_read: true, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:202-214; org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:482,523,589; org/tier1_exec/4.0.0_SA_CRO/deliverables/O1_RESOLVES_VIA_RESULTS_20260819.jsonl:6 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: block precedence and O1 both-block comparison govern and detect the extant one-member drift}
+  - {id: R011, surface: O01, concept: Motif, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:225 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 11', owner: 4.0.0_SA_CRO}
+  - {id: R012, surface: O01, concept: Chain, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NON_INDEPENDENT_RESOLUTION], display_verdict: NON_INDEPENDENT_RESOLUTION, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:234 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 16', owner: 0.8.0_AE_CloudComp, note: frozen resolver is both declaration and derivation}
+  - {id: R013, surface: O01, concept: Role, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:247 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; comp-ontolint live 14-role order', owner: 1.0.0_SA_CTO}
+  - {id: R014, surface: O01, concept: Relation, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:255 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; comp-ontolint live 10 relations', owner: 1.0.0_SA_CTO}
+  - {id: R015, surface: O01, concept: Contract_Record, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [AMBIGUOUS_TWO_HOMES, CONTENT_MISMATCH], display_verdict: AMBIGUOUS_TWO_HOMES, direct_read: true, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:382-385 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: registry omits optional describes while rule bank includes it}
+  - {id: R016, surface: O01, concept: Estate_Contracts, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NO_DECLARED_TARGET_CONTENT], display_verdict: NO_DECLARED_TARGET_CONTENT, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:449 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 15', owner: 1.0.0_SA_CTO}
+  - {id: R017, surface: O01, concept: Lifecycle_Stage, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:470; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:408-422 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO}
+  - {id: R018, surface: O01, concept: Domain, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:491 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 7', owner: 0.4.0_DS_ClientPlatform, note: 9 declared versus 5 materialized anchors}
+  - {id: R019, surface: O01, concept: Lifecycle_Class, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:464; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:397-405 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: positive control}
+  - {id: R020, surface: O11, concept: Lifecycle_Value, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, evidence: 'infra/system/ontology/LAYER_FIELD_ANATOMY.md:760 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: derived doc still says contested after registry resolved it to deprecated alias}
+  - {id: R021, surface: G02, concept: ops-internal.chain_count, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:293-294; org/modules/graph/estate-coverage-manifest.yaml:854-882 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 2.0.0_SA_COO, known_residual: CVO_L7_R1_82aa27590a}
+  - {id: R022, surface: G02, concept: portfolio-management.chain_count, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:302-303; org/modules/graph/estate-coverage-manifest.yaml:960-1026 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 2.0.0_SA_COO, known_residual: CVO_L7_R1_82aa27590a}
+  - {id: R023, surface: G02, concept: security-scanner.chain_count, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:308-309; org/modules/graph/estate-coverage-manifest.yaml:1046-1054 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 2.0.0_SA_COO, known_residual: CVO_L7_R1_82aa27590a}
+  - {id: R024, surface: G02, concept: canonical-schwab.chain_count, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:216-219; org/modules/graph/estate-coverage-manifest.yaml:829-830,1207 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 2.0.0_SA_COO, known_residual: CVO_L7_R1_82aa27590a}
+  - {id: R025, surface: G02, concept: sys-estate-ops-platform.spans_verticals, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:139-144; org/modules/graph/estate-coverage-manifest.yaml:854-1054 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 2.0.0_SA_COO, known_residual: CVO_L7_R1_82aa27590a}
+  - {id: R026, surface: G05, concept: W15_routing_snapshot, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'org/modules/graph/estate-coverage-resolver.json:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; CVO L7 @82aa27590a', owner: 0.8.0_AE_CloudComp, known_residual: resolver_commit_held_by_COO, note: HEAD blob remains pre-landing while manifest and canonical moved}
+  - {id: R027, surface: G12, concept: Lifecycle_Class, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CODE_REDECLARATION], display_verdict: CODE_REDECLARATION, evidence: 'org/modules/graph/comp_legacywriter.py:761-770 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: GATED_CLASSES and _LIFECYCLE_ENUM copy the rule-bank vocabulary}
+  - {id: R028, surface: G12, concept: Contract_Record, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CODE_REDECLARATION], display_verdict: CODE_REDECLARATION, evidence: 'org/modules/graph/comp_legacywriter.py:762-766,1421-1431 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: _UNIVERSAL_REQUIRED is explicitly a mirror; a test detects drift but code still re-declares}
+  - {id: R029, surface: G13, concept: Role, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_ontolint.py:39,54-88 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: values load from rule bank}
+  - {id: R030, surface: G13, concept: Relation, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_ontolint.py:39,54-88 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: values load from rule bank}
+  - {id: R031, surface: G14, concept: Plane, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_output_contract.py:391-419 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: canon enum read from rule bank}
+  - {id: R032, surface: G14, concept: Scope, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_output_contract.py:391-419 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: canon enum read from rule bank}
+  - {id: R033, surface: G15, concept: Role, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_system.py:559,591,639 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO}
+  - {id: R034, surface: G15, concept: Relation, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_system.py:559,592,642 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO}
+  - {id: R035, surface: G15, concept: Variance, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/comp_system.py:559,593,645 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO}
+  - {id: R036, surface: G02, concept: c4_verticals_legacy_section, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:328-337 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: retained old claim is explicitly bannered and excluded from live authority}
+  - {id: R037, surface: G04, concept: lambda_to_named_thread_assignment, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/gen-estate-resolver.py:90; org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/AUTHORITATIVE_lambda_taxonomy.json:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 3.0.0_SA_CVO, note: shorthand basename resolves to exactly one path used by generator}
+  - {id: R038, surface: G06, concept: resolver_source_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/gen-estate-resolver.py:90,131 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 0.8.0_AE_CloudComp}
+  - {id: R039, surface: G07, concept: taxonomy_source_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/opal_estate_infrastructure.py:763 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 0.8.0_AE_CloudComp}
+  - {id: R040, surface: G08, concept: estate_resolver_cli_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/estate_infrastructure_cli.py:25-26,54 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 0.8.0_AE_CloudComp}
+  - {id: R041, surface: G09, concept: graph_call_manifest_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/manifest_check_cli.py:50,287 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO}
+  - {id: R042, surface: G10, concept: tool_vocabulary_claim_set, assessment_state: NOT_ASSESSED, resolution_state: null, failure_classes: [], display_verdict: NOT_ASSESSED, evidence: 'org/modules/graph/comp-tools.yaml:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: full reference-row concept expansion deferred}
+  - {id: R043, surface: G11, concept: graph_call_type_tuple_claim_set, assessment_state: NOT_ASSESSED, resolution_state: null, failure_classes: [], display_verdict: NOT_ASSESSED, evidence: 'org/modules/graph/graph-call-manifest.yaml:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: 76-entry manifest requires a dedicated row-grain pass; not inferred from stage-2 subset}
+  - {id: R044, surface: O03, concept: C4, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/C0_C1_C2_C3_C4_SYSTEM_LAYERS.md:1-42 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: cite-not-restate and points at block-addressed canonical}
+  - {id: R045, surface: O15, concept: resolves_via_execution, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NOT_EXERCISABLE], display_verdict: NOT_EXERCISABLE, evidence: 'infra/system/ontology/check_system_definitions.py:1-126 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: checker validates form/status/key only; no run-mode executes resolves_via}
+
+counts:
+  rows_total: 45
+  assessed: 43
+  not_assessed_rows: 2
+  resolved: 24
+  unresolved: 19
+  failure_class_occurrences:
+    GOVERNED_DUAL_CARRIER: 1
+    AMBIGUOUS_TWO_HOMES: 1
+    CODE_REDECLARATION: 2
+    DANGLING: 0
+    UNRESOLVED_NO_AUTHORITY: 0
+    GRAIN_MISMATCH: 0
+    CONTENT_MISMATCH: 10
+    SUPERSEDED_UNBANNERED: 1
+    NO_DECLARED_TARGET_CONTENT: 3
+    NON_INDEPENDENT_RESOLUTION: 1
+    INSTRUMENT_UNKNOWN: 0
+    NOT_EXERCISABLE: 1
+
+direct_read_reverification:
+  governed_dual_carrier_rows: [R010]
+  ambiguous_rows: [R015]
+  dangling_rows: []
+  result: PASS_ALL_TWO_HOME_AND_DANGLING_ROWS_DIRECT_READ
+
+tool_coverage_findings:
+  - id: TC01
+    finding: >-
+      check_system_definitions.py has no resolution run-mode: it validates four
+      required fields, status, and key shape but never parses or executes
+      resolves_via. The design note specifies that run-mode, so resolution
+      verdicts still require manual/O1 evidence.
+    evidence: infra/system/ontology/check_system_definitions.py:1-126 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    owner: 1.0.0_SA_CTO
+  - id: TC02
+    finding: >-
+      No existing instrument emits the census's separated assessment_state,
+      resolution_state, and failure_classes schema over arbitrary repo surfaces.
+      This pass therefore cites existing specialist instruments and direct reads;
+      no new gate or tool was manufactured.
+    owner: 1.0.0_SA_CTO
+
+traversal_residue:
+  not_assessed_surface_ids: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
+  partial_surface_rows: [R020, R042, R043]
+  comp_engines_not_eligible_by_signature: 59
+  worldmodel_nested_corpus: OUT_OF_DECLARED_LAYER
+  other_graph_subtrees: OUT_OF_DECLARED_LAYER
+  cloud_execution_space: OUT_OF_SCOPE_BY_ANDREW_SEQUENCE
+  working_tree_delta:
+    path: org/modules/graph/estate-coverage-resolver.json
+    state: modified_before_CRO_B_arrival
+    assessed_object: HEAD_blob_at_602b73a1f9
+    disposition: not_read_as_census_truth; not_touched
+
+no_fixes: true

@@ -1267,6 +1267,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool implementations (Python). AE owns build per ADHC_COMPIL_V4 family (003 comp-constants 2026-05-08; 008/009/010/011 pending). More specific than org/modules/** ANY_EXEC."
 
+  "org/modules/graph/*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "GRAPH ENGINE HOME .py surfaces -- the narrow form CTO RULED 2026-08-20 (msg 63234, on COO's 3-overrides-in-one-session carry): 0.8.0_AE_CloudComp's dispatched comp-plane work constantly lands here (their own census corpus predicate names org/modules/graph/*.py as the 125-file engine home), and the enumeration lagged ruled dispatch reality -- 3 audited ANY_EXEC overrides in one session, each on COO/CTO-dispatched work (@eb58b97bc7 W15-GRAIN3 landing, @d4211559b6 CRO-ruled re-point, @59347e4d9e FIX12). DELIBERATELY NOT a whole-directory grant: the directory also carries CRO/CVO-authored registry surfaces (SYSTEM_DEFINITIONS / RULE_BANK / canonical yamls) -- all non-.py, so this glob structurally cannot reach them; a whole-lane grant would put another seat's registry inside an AE's writable enumeration (the two-homes hazard one level up, CTO's words). Lane REUSED not minted (build ladder rung 2): ANY_EXEC_OR_AE is the same lane the comp_*.py precedent row above uses for the same file class ('AE owns build'), so the exec set is preserved by construction and no membership list forks. The hyphen-named engines (comp-firmsep-sweep.py) and non-comp engines (clobber_scan.py -- the measured BLOCK 2026-08-20T15:39:56Z) fall outside comp_*.py; this row closes exactly that class. Landed by 2.0.0_SA_COO as grantor (SoD: 0.8.0 is grantee, does not self-land); CTO ruling is the arch gate. Longest-match overrides org/modules/** ANY_EXEC; comp_*.py row above retained (same lane, more specific, harmless)."
+
   "org/modules/graph/*_cli.py":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool CLI entrypoints (validate_cli.py, pipeline_cli.py, transform_cli.py, etc.). AE owns extensions per ADHC_COMPIL_V4 family (009 comp-validate config flag 2026-05-08; 008/010/011 pending). More specific than org/modules/** ANY_EXEC."

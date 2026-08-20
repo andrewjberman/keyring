@@ -1,0 +1,5 @@
+interface:
+  display_name: "Atom Layer 0"
+  short_description: "Test conceptual atoms and resolution contracts"
+  default_prompt: "Use $atom-layer0 to test this concept within a declared decomposition grammar and build its resolution contract."
+

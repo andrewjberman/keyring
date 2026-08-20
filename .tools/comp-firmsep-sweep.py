@@ -69,9 +69,19 @@ def _aws(*args: str) -> tuple[int, str, str]:
     return p.returncode, p.stdout.replace("\r", "").strip(), p.stderr.strip()
 
 
-def all_roles() -> list[str]:
-    rc, out, err = _aws("iam", "list-roles", "--max-items", "1000",
-                        "--query", "Roles[].RoleName", "--output", "text")
+def all_roles(page_size: int | None = None) -> list[str]:
+    """The FULL role universe -- auto-paginated walk, never a --max-items page (TRUNCLASS FIX12
+    F1, census @e141eb5f30 Tier-1: `--max-items 1000` silently dropped the NextToken, so the
+    firm-separation sweep's UNIVERSE was one page wearing a total's clothing -- at >1000 roles
+    the sweep would read healthy precisely when the estate grew into the blindness). The CLI
+    auto-paginates when --max-items is ABSENT and concatenates the list projection across pages;
+    the count is taken client-side off the MATERIALISED set. `page_size` forces small server
+    pages so the page-boundary crossing is exercisable against the real estate (a boundary test
+    that never crosses a boundary tests nothing)."""
+    args = ["iam", "list-roles", "--query", "Roles[].RoleName", "--output", "text"]
+    if page_size:
+        args += ["--page-size", str(page_size)]
+    rc, out, err = _aws(*args)
     if rc != 0:
         sys.exit(f"comp-firmsep-sweep: list-roles failed: {err[:160]}")
     names = sorted({n for n in out.replace("\t", "\n").split("\n") if n.strip()})
@@ -114,17 +124,23 @@ def main() -> int:
                         "on read and still overwrite the secret.")
     p.add_argument("--account", default="313476888478")
     p.add_argument("--json", metavar="PATH", help="write the full per-role verdict table")
+    p.add_argument("--page-size", type=int, default=None,
+                   help="force small server pages (exercises the page-boundary walk against the "
+                        "real estate; the universe is identical with or without it -- that "
+                        "equality IS the F1 boundary test)")
     a = p.parse_args()
 
     arn = secret_arn(a.secret)
-    roles = all_roles()
+    roles = all_roles(page_size=a.page_size)
     owners = set(a.owner)
     if a.write_only:
         actions = [WRITE]
     else:
         actions = [READ] + ([WRITE] if a.write else [])
     print(f"secret : {a.secret}\n         {arn}")
-    print(f"roles  : {len(roles)} in account   owners: {sorted(owners) or 'NONE DECLARED'}")
+    print(f"roles  : {len(roles)} in account (FULL auto-paginated walk, counted client-side"
+          f"{', page-size %d forced' % a.page_size if a.page_size else ''})"
+          f"   owners: {sorted(owners) or 'NONE DECLARED'}")
     print(f"actions: {actions}\n")
 
     table: dict[str, dict[str, str]] = {}

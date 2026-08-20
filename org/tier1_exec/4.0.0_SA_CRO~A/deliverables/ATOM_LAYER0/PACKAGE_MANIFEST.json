@@ -1,0 +1,63 @@
+{
+  "artifact": "atom_layer0 proposed method package",
+  "version": "0.1.0-proposed",
+  "status": "PROPOSED",
+  "author": "4.0.0_SA_CRO~A",
+  "authority": "Andrew-direct 2026-08-20 ATOM_LAYER0 founding record",
+  "purpose": "Reach and challenge a conceptual base, certify only bounded frontier closure, legislate through Rule 24, and compile exact resolution contracts for bindings.",
+  "portable_unit": "the whole ATOM_LAYER0 directory",
+  "members": [
+    "00_ATOM_LAYER0_SPEC.md",
+    "PACKAGE_MANIFEST.json",
+    "rule24/SCHEMA_ENUMERATION_RECORDS.json",
+    "schemas/atom_layer0_run.schema.json",
+    "scripts/validate_run.py",
+    "skill/atom-layer0/SKILL.md",
+    "skill/atom-layer0/agents/openai.yaml",
+    "skill/atom-layer0/references/decomposition-grammar.md",
+    "skill/atom-layer0/references/resolution-contract.md",
+    "skill/atom-layer0/references/workflow.md",
+    "templates/atom_layer0_run.template.json"
+  ],
+  "sources_of_record": {
+    "run_shape": "schemas/atom_layer0_run.schema.json",
+    "schema_governance": "rule24/SCHEMA_ENUMERATION_RECORDS.json",
+    "portable_entrypoint": "skill/atom-layer0/SKILL.md",
+    "package_boundary": "PACKAGE_MANIFEST.json"
+  },
+  "runtime": {
+    "python": ">=3.10",
+    "dependencies": ["jsonschema>=4"],
+    "validator": "scripts/validate_run.py",
+    "self_test": "python scripts/validate_run.py --self-test",
+    "package_check": "python scripts/validate_run.py --check-package"
+  },
+  "external_couplings": [
+    "CLAUDE.md Rule 24",
+    "infra/system/ontology/SYSTEM_DEFINITIONS.yaml entry bar and View_Time_Compiled",
+    "docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md",
+    ".claude/skills/molecule/SKILL.md",
+    ".claude/skills/seams/SKILL.md",
+    "projects/ATOM_DECOMP/** mechanical precedent",
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_IV_HYPOTHESIS_SET_GOVERNANCE_20260820.md",
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_V_INVALIDATION_INDEX_AND_BUILD_ORDER_20260820.md",
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_VI_RETIREMENT_GOVERNANCE_20260820.md",
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_VII_RELIANCE_RESTRICTIONS_20260820.md"
+  ],
+  "execution_state": {
+    "s0_to_s4_package": "BUILT_AND_SELF_TESTED",
+    "s5_proving_run": "PENDING_EXTERNAL_SUBJECT",
+    "method_acceptance": "OPEN"
+  },
+  "registration_state": {
+    "project_registration": "NOT_PERFORMED",
+    "root_project_placement": "NOT_PERFORMED",
+    "route": "CTO via CRO Base after proving-run acceptance"
+  },
+  "bounds": [
+    "No canon or owner surface is modified by this package.",
+    "No estate gate is created.",
+    "All outputs remain proposed until ratified.",
+    "The proving subject must be selected outside the method-authoring seat."
+  ]
+}

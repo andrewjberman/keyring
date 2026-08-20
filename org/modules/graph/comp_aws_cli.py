@@ -454,10 +454,36 @@ def classify_event_source(rule):
         return ("AWS_SERVICE", src, detail_type, [])
     return ("CUSTOM", src or "custom", detail_type, [])
 
+def _paged(client, op, result_key, frame=None, **kw):
+    """FULL token walk via the service paginator -- the TRUNCLASS FIX12 F5 pattern (census
+    @e141eb5f30 Tier-2: a single-page list_* makes resource #101+ read as NONEXISTENT to every
+    graph consumer -- the deletion-warrant shape, an absent edge in the estate graph). ONE
+    pattern for all eight fixed sites; result_key may be a tuple for nested shapes (CloudFront's
+    DistributionList.Items). `frame` prints the denominator beside the count (stderr, one line
+    per walk) so the retrieval carries its own frame (F6). Ops without a paginator fall back to
+    one direct call -- none of the eight fixed sites hits that branch."""
+    def _pluck(page):
+        d = page
+        for k in (result_key if isinstance(result_key, tuple) else (result_key,)):
+            d = (d or {}).get(k)
+        return d or []
+    items, pages = [], 0
+    try:
+        for page in client.get_paginator(op).paginate(**kw):
+            pages += 1
+            items.extend(_pluck(page))
+    except Exception:  # noqa: BLE001  -- OperationNotPageableError etc.: one honest direct call
+        items, pages = list(_pluck(getattr(client, op)(**kw))), 1
+    if frame:
+        print("[frame] %s: %d item(s) over %d page(s), full walk" % (frame, len(items), pages),
+              file=sys.stderr)
+    return items
+
+
 def live_sns():
     nodes = []
     c = _boto("sns")
-    for t in c.list_topics().get("Topics", []):
+    for t in _paged(c, "list_topics", "Topics", frame="sns.list_topics"):
         arn = t["TopicArn"]
         name = arn.split(":")[-1]
         node = {"id": name, "type": "SNS_TOPIC", "arn": arn}
@@ -469,7 +495,7 @@ def live_sns():
         except Exception:
             node["kms_encrypted"] = None
         try:
-            subs = c.list_subscriptions_by_topic(TopicArn=arn).get("Subscriptions", [])
+            subs = _paged(c, "list_subscriptions_by_topic", "Subscriptions", TopicArn=arn)
             node["subscriptions"] = sorted(f'{s["Protocol"]}:{s["Endpoint"]}' for s in subs)
         except Exception:
             node["subscriptions"] = []
@@ -479,7 +505,7 @@ def live_sns():
 def live_sqs():
     nodes = []
     c = _boto("sqs")
-    for url in c.list_queues().get("QueueUrls", []):
+    for url in _paged(c, "list_queues", "QueueUrls", frame="sqs.list_queues"):
         name = url.split("/")[-1]
         node = {"id": name, "type": "SQS_QUEUE"}
         try:
@@ -528,7 +554,8 @@ def live_cloudfront():
     nodes = []
     c = _boto("cloudfront")
     try:
-        dl = c.list_distributions().get("DistributionList", {}).get("Items", [])
+        dl = _paged(c, "list_distributions", ("DistributionList", "Items"),
+                    frame="cloudfront.list_distributions")
     except Exception:
         dl = []
     for d in dl:
@@ -836,7 +863,7 @@ def live_ecs_clusters():
     c = _boto("ecs")
     nodes = []
     try:
-        arns = c.list_clusters().get("clusterArns", [])
+        arns = _paged(c, "list_clusters", "clusterArns", frame="ecs.list_clusters")
         for i in range(0, len(arns), 100):
             for cl in c.describe_clusters(clusters=arns[i:i + 100]).get("clusters", []):
                 nodes.append({
@@ -1402,7 +1429,8 @@ def derive_edges():
             pass
     # event-source-mapping OnFailure destinations -> DLQ
     try:
-        for esm in lc.list_event_source_mappings().get("EventSourceMappings", []):
+        for esm in _paged(lc, "list_event_source_mappings", "EventSourceMappings",
+                          frame="lambda.list_event_source_mappings(dlq)"):
             onf = ((esm.get("DestinationConfig") or {}).get("OnFailure") or {}).get("Destination")
             if onf and esm.get("FunctionArn"):
                 E(esm["FunctionArn"], onf, "DEAD_LETTERS_TO")
@@ -1451,7 +1479,8 @@ def derive_edges():
     # CLOUDFRONT -[ORIGIN]-> S3
     cf = _boto("cloudfront")
     try:
-        for d in cf.list_distributions().get("DistributionList", {}).get("Items", []):
+        for d in _paged(cf, "list_distributions", ("DistributionList", "Items"),
+                        frame="cloudfront.list_distributions(origins)"):
             darn = f"arn:aws:cloudfront::{ACCOUNT}:distribution/{d['Id']}"
             for o in d.get("Origins", {}).get("Items", []):
                 dn = o.get("DomainName", "")
@@ -1629,7 +1658,8 @@ def derive_edges():
     # event-source-mapping SOURCE -[TRIGGERS]-> LAMBDA (SQS / DynamoDB-stream -- the cert
     # modeled only the ESM DLQ/OnFailure side; this adds the actual trigger source)
     try:
-        for esm in lc.list_event_source_mappings().get("EventSourceMappings", []):
+        for esm in _paged(lc, "list_event_source_mappings", "EventSourceMappings",
+                          frame="lambda.list_event_source_mappings(triggers)"):
             src, fn = esm.get("EventSourceArn"), esm.get("FunctionArn")
             if not (src and fn):
                 continue

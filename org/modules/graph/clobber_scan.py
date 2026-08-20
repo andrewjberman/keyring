@@ -176,15 +176,19 @@ def static_scan(roots, min_writers=2, include_held=False, include_partitioned=Fa
 
 
 def live_confirm(bucket, key):
+    # TRUNCLASS FIX12 F3 (census @e141eb5f30 Tier-1): the single-page list_object_versions cut
+    # version history at 1000 -- a clobber older than the newest page read as no-clobber. The
+    # paginator walks KeyMarker+VersionIdMarker to the FULL history; pages_walked is the frame.
     import boto3
     s3 = boto3.client("s3")
-    vers = sorted(
-        (v for v in s3.list_object_versions(Bucket=bucket, Prefix=key).get("Versions", []) if v["Key"] == key),
-        key=lambda x: x["LastModified"],
-    )
+    vers, pages = [], 0
+    for page in s3.get_paginator("list_object_versions").paginate(Bucket=bucket, Prefix=key):
+        pages += 1
+        vers.extend(v for v in page.get("Versions", []) if v["Key"] == key)
+    vers.sort(key=lambda x: x["LastModified"])
     rows = [{"ts": v["LastModified"].isoformat(), "etag": v["ETag"].strip('"')[:8], "size": v["Size"]} for v in vers]
     interleaved = detect_interleave([r["etag"] for r in rows])
-    return {"bucket": bucket, "key": key, "n_versions": len(rows),
+    return {"bucket": bucket, "key": key, "n_versions": len(rows), "pages_walked": pages,
             "distinct_etags": len({r["etag"] for r in rows}),
             "interleaved_etags": sorted(interleaved), "active_clobber": bool(interleaved),
             "recent": rows[-14:]}
