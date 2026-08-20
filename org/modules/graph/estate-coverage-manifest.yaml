@@ -465,6 +465,18 @@ threads:
     owning_tool: portal-consumer-tools
     status: in-scope
     reachability_status: mounted-reachable
+    # description ADJUDICATED 2026-08-20 (estate-report loop, Andrew "approved"; decision record
+    # org/estate-reports/2026-08-20.md). Manifest description wins over census at regen.
+    description: >-
+      Daily ingestion of FRED (Federal Reserve Economic Data) yield curve data feeding the
+      opal-market-update pipeline, characterized in pre-window corpus captures as the live FRED
+      daily flow. A 0.7.0 teardown package covering news-av and market-update was staged 2026-07-30
+      and orders the fred-data-ingestion daily write stopped FIRST, but whether that producer
+      surgery was executed is not determinable from the corpus (newest source capture 2026-07-31,
+      pre-window; zero change paths in-window). Current operational state (still writing vs.
+      stopped) is therefore unresolved as of 2026-08-20; downstream consumers of the FRED yield
+      curve data should treat this producer as unverified until a scheduler or live-writer check
+      confirms its state.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -654,6 +666,23 @@ threads:
     status: explicit-out
     reachability_status: frontend-orphan
     reason: Lambda but artifact frozen 2026-01-14, superseded by opal-portal-volatility-fetcher; no consumer reads json/yang/volatility_data.json
+    # description ADJUDICATED 2026-08-20 (estate-report loop, Andrew "approved"; decision record
+    # org/estate-reports/2026-08-20.md). Manifest description wins over census at regen
+    # (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Volatility-generation stage of the yang pipeline; its pickled artifacts are expected under
+      data/yang_pkl. Measured write leg (2026-08-20 window): that subtree received no writes inside
+      the scan window (0 changed paths) and was last touched >= 90 days ago, so any prior claim that
+      this stage regenerates or refreshes its pickles on a schedule is contradicted on the evidence
+      available and is withdrawn. Two explanations remain open and unresolved: (1) the pipeline now
+      writes to S3 rather than git, in which case a cold git subtree is expected and is not drift;
+      (2) the artifact store is genuinely frozen, which would be drift given that the 2026-07-30
+      etf-classifications ruling (as relayed in the flag narrative) still describes yang-pipeline
+      portfolio analytics as the widest-read surface at 42 readers. The read/citation leg is
+      unmeasured. It also cannot be determined from the visible entity list whether data/yang_pkl
+      belongs to this volatility stage or to the macro records FRED-04-yang-macro-canonical /
+      FRED-05-yang-macro-timeseries. Until an S3 write target is confirmed or ruled out, the refresh
+      cadence of this stage is unverified.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
