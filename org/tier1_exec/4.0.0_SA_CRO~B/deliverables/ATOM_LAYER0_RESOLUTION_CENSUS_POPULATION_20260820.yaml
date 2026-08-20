@@ -1,0 +1,134 @@
+artifact: ATOM_LAYER0_RESOLUTION_CENSUS_POPULATION
+status: PROPOSED_POPULATION_ONLY
+seat: 4.0.0_SA_CRO~B
+path: B_RESOLUTION_CENSUS
+opened: 2026-08-20
+
+vintage:
+  read_basis: git_object_at_HEAD
+  commit: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+  rule: >-
+    Every census read is against the named file's blob at this commit, not an
+    uncommitted working-tree copy. Evidence rows in the verdict artifact must
+    repeat file:line @ commit.
+  working_tree_exceptions_at_enumeration:
+    - path: org/modules/graph/estate-coverage-resolver.json
+      state: modified_before_CRO_B_arrival
+      treatment: assess_HEAD_blob; list_worktree_delta_as_residue; do_not_touch
+
+grain:
+  primary: one repository file surface
+  binding_row: one surface_x_concept claim
+  registry_annex: one SYSTEM_DEFINITIONS term carrying resolves_via
+
+population_generation:
+  ontology_rule: >-
+    Every top-level regular file in infra/system/ontology at HEAD. This is the
+    registry, the design/canon views, and the checkers named by the brief.
+  graph_named_rule: >-
+    The authority, registry-adjacent, resolver/generator, manifest, catalog,
+    and checker surfaces named by the brief, following the live catalog path
+    used by the resolver where the brief's shorthand basename is not rooted in
+    org/modules/graph.
+  comp_binding_rule: >-
+    A top-level org/modules/graph/comp_*.py engine enters when its HEAD blob
+    contains at least one explicit ontology-binding signature: a registry or
+    NFRA ontology authority basename; estate-coverage; registry status values;
+    Lifecycle_Class/Lifecycle_Stage (or snake-case field forms); named canonical
+    blocks c4_segments/c4_subject_function_grid/c2_motif_families; contract_record;
+    intent_source; domain_axis; or resolves_via. Incidental English matches to
+    broad terms such as Map, Role, Function, Relation, Surface, Subject, Chain,
+    Estate, and Scope do not establish a vocabulary binding.
+
+denominators:
+  ontology_top_level_files: 16
+  graph_named_and_binding_files: 15
+  file_surfaces_total: 31
+  registry_terms: 65
+  registry_terms_with_resolves_via: 18
+  top_level_comp_python_files_considered: 63
+  comp_binding_engines_included: 4
+  comp_binding_engines_without_signature: 59
+
+surfaces:
+  - {id: O01, path: infra/system/ontology/SYSTEM_DEFINITIONS.yaml, role: registry_and_resolves_via_annex}
+  - {id: O02, path: infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md, role: design_view}
+  - {id: O03, path: infra/system/ontology/C0_C1_C2_C3_C4_SYSTEM_LAYERS.md, role: design_view}
+  - {id: O04, path: infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md, role: design_view}
+  - {id: O05, path: infra/system/ontology/CONTENT_MODULE_DESIGN.md, role: design_view}
+  - {id: O06, path: infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md, role: design_view}
+  - {id: O07, path: infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md, role: design_view}
+  - {id: O08, path: infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md, role: design_view}
+  - {id: O09, path: infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md, role: design_view}
+  - {id: O10, path: infra/system/ontology/L0B_CHANGE_TYPE_VOCABULARY.md, role: design_view}
+  - {id: O11, path: infra/system/ontology/LAYER_FIELD_ANATOMY.md, role: design_view}
+  - {id: O12, path: infra/system/ontology/README.md, role: directory_contract_view}
+  - {id: O13, path: infra/system/ontology/ROUTE_LOGIC_AND_THE_SEMANTIC_BOUNDARY.md, role: design_view}
+  - {id: O14, path: infra/system/ontology/SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md, role: design_view}
+  - {id: O15, path: infra/system/ontology/check_system_definitions.py, role: registry_shape_checker}
+  - {id: O16, path: infra/system/ontology/content_relate_prototype.py, role: ontology_prototype_code}
+  - {id: G01, path: org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml, role: vocabulary_authority}
+  - {id: G02, path: org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml, role: layer_authority}
+  - {id: G03, path: org/modules/graph/estate-coverage-manifest.yaml, role: chain_membership_manifest}
+  - {id: G04, path: org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/AUTHORITATIVE_lambda_taxonomy.json, role: resolver_catalog_authority}
+  - {id: G05, path: org/modules/graph/estate-coverage-resolver.json, role: generated_resolver}
+  - {id: G06, path: org/modules/graph/gen-estate-resolver.py, role: resolver_generator}
+  - {id: G07, path: org/modules/graph/opal_estate_infrastructure.py, role: resolver_consumer}
+  - {id: G08, path: org/modules/graph/estate_infrastructure_cli.py, role: resolver_cli}
+  - {id: G09, path: org/modules/graph/manifest_check_cli.py, role: manifest_checker}
+  - {id: G10, path: org/modules/graph/comp-tools.yaml, role: tool_vocabulary_reference}
+  - {id: G11, path: org/modules/graph/graph-call-manifest.yaml, role: graph_call_registry}
+  - {id: G12, path: org/modules/graph/comp_legacywriter.py, role: comp_vocabulary_binding_engine}
+  - {id: G13, path: org/modules/graph/comp_ontolint.py, role: comp_vocabulary_binding_engine}
+  - {id: G14, path: org/modules/graph/comp_output_contract.py, role: comp_vocabulary_binding_engine}
+  - {id: G15, path: org/modules/graph/comp_system.py, role: comp_vocabulary_binding_engine}
+
+registry_resolves_via_population:
+  count: 18
+  terms:
+    - Estate
+    - Substrate
+    - Deploy_State
+    - Subject
+    - Function
+    - C0
+    - C1
+    - C2
+    - C4
+    - Segment
+    - Motif
+    - Chain
+    - Role
+    - Relation
+    - Contract_Record
+    - Estate_Contracts
+    - Lifecycle_Stage
+    - Domain
+
+traversal_residue:
+  - population: infra/system/ontology/worldmodel/**
+    disposition: OUT_OF_DECLARED_LAYER
+    reason: >-
+      Nested historical framework, rulings, census instruments, snapshots, and
+      evidence corpus; not one of the top-level lock-down registry/design/checker
+      surfaces named by the brief. It requires its own corpus-grain census.
+  - population: org/modules/graph/comp_*.py without a binding signature
+    count: 59
+    disposition: NOT_ELIGIBLE_BY_DECLARED_PREDICATE
+    reason: no explicit ontology-binding signature at HEAD
+  - population: other org/modules/graph/** files
+    disposition: OUT_OF_DECLARED_LAYER
+    reason: >-
+      Tests, fixtures, models, debt scans, gold-nan manifests, and unrelated graph
+      engines are not silently treated as assessed. They enter only through a
+      named authority/resolver role or the explicit comp binding predicate above.
+  - population: cloud_execution_space
+    disposition: OUT_OF_SCOPE_BY_ANDREW_SEQUENCE
+    reason: repo-first pass; execution space deferred
+
+acceptance_state:
+  population_committed_before_verdicts: false
+  verdict_rows_authored: 0
+  positive_control_run: false
+  negative_control_run: false
+  not_assessed_residue_printed: true
