@@ -1,0 +1,117 @@
+{
+ "schema_version": "1.0",
+ "to_id": "OPAL_ANALYST.W6.guardrails-review",
+ "phase": "NON-BUILD-OTHER",
+ "spec_ref": {
+  "doc": "org/tier1_exec/1.0.0_SA_CTO/task_orders/OPAL_ANALYST.W6.guardrails-review.md",
+  "group": "W",
+  "vintage_commit": "de57e559c2"
+ },
+ "assignee": "1.0.0_SA_CTO~Z",
+ "artifacts_produced": [
+  {
+   "path_or_key": "org/tier2_senior/0.5.0_AE_OpalETL/deliverables/laneZ_D6_TOF_W6_GUARDRAILS_REVIEW_20260819.md",
+   "kind": "doc",
+   "commit_or_etag": "de57e559c2",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "AUTHOR-HALF (0.5.0_AE_OpalETL~Z) of the converged W6/TO-F artifact per the 205631Z/205801Z agreement; this is the artifact CERTIFIED by this instance."
+  },
+  {
+   "path_or_key": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_OPAL_ANALYST_W6_CERTIFICATION_20260820.md",
+   "kind": "doc",
+   "commit_or_etag": "lane commit of 2026-08-20 (hash recorded in the session log; this instance and the certification land in the same commit)",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "CERTIFIER-HALF: comp-adversary compose dispositions, the self-review mitigation (author battery 13/13 at HEAD + 8/8 independent probes incl. 3 mutants), F10 re-exercised from this seat, C1-C6 matrix, observations O-1..O-3. Verdict CERTIFIED-ON-STAGED; CLOSE gates on (a) CVO~Z index co-sign + (b) the 0-diff laptop-lane port; TO status flipped staged -> pending, NOT complete."
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "C1",
+   "criterion_verbatim": "Control census complete: denominator = the scope list above, every row present or DECLARED-excluded; every GATED claim carries its exercised block + separate positive control.",
+   "method": "manual_read_with_citation",
+   "invocation": "author census (10 rows + 2 declared exclusions) checked against the W6 TO scope list at this seat; GATED rows re-exercised here: row 7 via exercise_catalog_gate.py at HEAD (13/13) + 8 independent probes (scratch script, 3 mutants on scratch catalog copies); row 4 via opal-gateway-bbg search_email (deny) + list_teams (separate positive control) 2026-08-20 12:4xZ",
+   "output_evidence": "10/10 scope rows present, 2/2 known exclusions declared; rows 2+4 MECHANICALLY-GATED with block + separate positive control; row 7 split gated-at-author-time/absent-in-production re-proven at the certifier seat (13/13; P1-P8 8/8, mutants P4/P6/P7 FIRED); rows 1/3/5/8 PROSE-DISCIPLINE, row 6 PROSE, row 9 MIXED, row 10 ABSENT-declared. Layer classifications are CVO~Z's second read at co-sign (not re-adjudicated by the certifier).",
+   "denominator": "10 census rows of the 10-item scope list; 2 exclusions of 2; GATED rows re-exercised 2 of 2 (rows 4 and 7)",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "C2",
+   "criterion_verbatim": "BG's G1-G4 probes inherited WITH VINTAGE or re-derived; the F9 do-not-refile note carried.",
+   "method": "manual_read_with_citation",
+   "invocation": "artifact section C2 read; cited BG record org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-08-19/andrew_direct_1900Z_relay_findings_to_mstrz.md DIRECT-CHECKED after comp-adversary flagged it MOVED-SINCE-AUTHORING (test -f + git log: exists 4,315 B, single first-landing commit @8a92531dd2 22:41Z by the integrator sweep, content = the 1900Z relay verbatim)",
+   "output_evidence": "6 probe results inherited at vintage 2026-08-19 (G4 gateway BLOCKED, G3 historical BLOCKED, G3 3-security BLOCKED, G3 1-security PASSED positive control, G2 write BLOCKED, 34/34 under env -u); F9 carried (33/34 = test shell leaking $OPAL_AGENT_SERIAL; 34/34 under env -u). MOVED flag dispositioned benign: first landing postdated authoring because the BG seat does no git.",
+   "denominator": "6 probe results of 6; 1 F9 note of 1; 1 cited record direct-checked of 1 flagged",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "C3",
+   "criterion_verbatim": "F10 denial exercise executed from a non-BG seat: live denial observed, positive control in a separate invocation.",
+   "method": "live_read",
+   "invocation": "opal-gateway-bbg: whoami (identity = Opal Bloomberg), then search_email query='W6 certification probe 1.0.0_SA_CTO~Z' top=1 (TARGET), then list_teams (POSITIVE CONTROL, separate invocation) -- seat 1.0.0_SA_CTO~Z, 2026-08-20 ~12:42-12:43Z; author's own pair 2026-08-19 20:59Z/21:00Z stands as the first exercise",
+   "output_evidence": "Deny: {error: identity 'opalbloomberg@opalinvest.com' is scoped to a server-side tool allowlist and 'search_email' is not on it (OPAL_ANALYST PRD 4.3; widening is an Andrew ruling -- route via 0.0.0_AB_MSTR~Z), guard_denied: true, code: identity_scope_denied}. Positive control: 200-class, @odata.count 1, team Opal Capital 9c4ab816-548f-47af-913c-ad5d5086f5ad. Two non-BG seats on two days now hold the pair.",
+   "denominator": "2 invocations of the 2 required (1 deny + 1 separate positive control) at the certifier seat; 2 of 2 at the author seat",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "C4",
+   "criterion_verbatim": "Firm-isolation findings recorded per surface (W5 catalog, W7 registry, serving routes).",
+   "method": "manual_read_with_citation",
+   "invocation": "W5: P1 (cottonwood->inflection member DENY), P2 (49financial->opal-internal row DENY), P7 (firm-label mutant flips), P8 (firm surfaces 3/3/3 pairwise disjoint, 0 opal rows) + battery firm matrix 13/13; W7: artifact C4 (no firm axis downstream of person-scoped reach; REFUSE-pending-W9 in-channel) read as stated; routes: artifact C4 (comp-routes behaviors DESIRED plane, blind-spot disclosure quoted; ticket-API authz gap AT ANDREW since 08-12 per ctoZ_SECURITY_FINDING_20260812; trade-workflow-handler proven-in-source/unproven-in-use stated)",
+   "output_evidence": "3 surfaces recorded; W5 isolation re-proven independently at the certifier seat; W7 + routes accepted as stated per the TO's own instruction (the tool's DESIRED-plane limit is quoted, not papered). Observation O-1 recorded: the firm rule keys on the row's firm label -- guard = catalog-authoring integrity; one battery case recommended at port (owner AE~Z), no gate.",
+   "denominator": "3 surfaces of the 3 the criterion names; W5 probes 4 of 4 PASS (P1,P2,P7,P8)",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "C5",
+   "criterion_verbatim": "Every tightening classified {gate-candidate-to-Andrew | owned-blocking-item}; monitors proposed = ZERO.",
+   "method": "manual_read_with_citation",
+   "invocation": "artifact section C5 table read against the TO's class set; grep of the artifact for any implemented gate/hook/monitor language",
+   "output_evidence": "5 tightenings: T-1 gate-candidate (F8 fail-closed-and-loud), T-2 gate-candidate riding the existing sec.10.8 sovereign request, T-3 owned-blocking-item (MCP restart activating max_data_points; owner laptop AE lane; capped-call verification), T-4 already-at-Andrew (carried, not re-proposed), T-5 gate-candidate-as-widening (market-returns allowlist, before Andrew via MSTR~Z 204310Z). Monitors proposed: ZERO. Gates implemented by the artifact or this certification: ZERO.",
+   "denominator": "5 tightenings classified of 5 raised; 0 monitors of a required 0; 0 gates implemented of a required 0",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "C6",
+   "criterion_verbatim": "Proof-of-spec instance validator-clean BEFORE any status flip; session log with Compiler Tools section.",
+   "method": "command",
+   "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_ANALYST.W6_PROOF_OF_SPEC.json C1,C2,C3,C4,C5,C6   (rc taken WITHOUT a pipe; positional id set)",
+   "output_evidence": "Run at the certifier seat before the staged->pending flip; rc and coverage line recorded in the session log named below (schema-clean required before the flip; any violation fixed against the schema, never waived). The flip performed is staged -> pending (certified-on-staged); the CLOSE flip waits on CVO~Z co-sign + the laptop port.",
+   "denominator": "6 criteria covered of the TO's 6; validator: 1 clean run of 1 required before the flip",
+   "status": "PASS"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "Three scratch-copy mutations of the staged catalog (DATA_CATALOG.v0.2.staged.yaml untouched, scratch files deleted after the run): P4 adds a servable+ALLOWLISTED row whose key contains 'ticket'; P6 flips json/benchmarks/benchmark_returns.json verdict_class held-at-andrew -> serve; P7 relabels the {scope} family row firm per-scope -> 49financial.",
+   "expected": "P4: still DENIED by the floor (floor precedes lookup). P6: verdict flips DENY -> ALLOW (verdict_class predicate load-bearing). P7: inflection loses its own member key, 49financial gains it (firm-scope predicate load-bearing).",
+   "observed": "P4 DENIED 'RESOLVER FLOOR' with the row present in the index; P6 real=False mutant=True (row ALLOWLISTED); P7 inflection DENIED 'row firm=49financial is not visible', 49financial ALLOWED 'SERVE'. All three FIRED as expected.",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "author battery re-run at the certifier seat at HEAD vs the author's recorded run: same 13 cases, same surface counts (opal 36 / firm:inflection 3 / 48 rows); independent probe script run once end-to-end (8/8) with its denominator printed",
+   "observed": "13/13 and 36/3/48 reproduce exactly; probes 8/8 rc=0",
+   "status": "STABLE"
+  }
+ },
+ "declared_exclusions": [
+  {"item": "re-adjudication of the C1 layer classifications", "reason": "CVO~Z's second read at the index co-sign per the 205801Z agreement -- the certifier verified evidence-per-label, the classification call is the joint reviewer's"},
+  {"item": "ticket surface", "reason": "resolver floor (CTO ruling @7ea13aa4ed) -- reviewed as an EXCLUSION; its authorization finding is AT ANDREW (ctoZ_SECURITY_FINDING_20260812); P3/P4 prove the floor refuses, incl. against a catalog edit"},
+  {"item": "cma env / WDAC reputation policy", "reason": "MSTR~Z's 08-20 07:00 acceptance domain; acceptance PASSED 08-20 (BG 2089 leg c, 0 blocks vs 10/3d positive control) -- the comp-adversary-surfaced sibling log (08-19 1300Z WDAC pull failure) is the pre-acceptance state of this exclusion, condition now cleared; not an access surface in the W6 scope list"},
+  {"item": "re-derivation of BG's G1-G4 wiring-layer probes", "reason": "seat-local to BG; inherited WITH VINTAGE per C2; the server-side layer is what C3 covers and it was re-exercised here"},
+  {"item": "CLOSE flip to complete", "reason": "gates on (a) CVO~Z index co-sign + (b) the 0-diff laptop-lane port -- authored-on-staged, certified-on-staged, closed-on-shipped; port-time deltas re-exercise rows 4/7 (battery + P1-P8 are re-runnable from any seat)"}
+ ],
+ "surprises": [
+  "comp-adversary source 2 flagged the cited BG relay log MOVED-SINCE-AUTHORING: direct-checked, it was the file's FIRST landing (integrator sweep @8a92531dd2 22:41Z, +51 lines) after the artifact's 21:11Z authoring -- benign; recorded so the next reader does not re-chase it.",
+  "comp-adversary source 3 surfaced the uncited sibling daily_guardrail_1300Z_wdac_pull_failure_verified.md -- the pre-acceptance state of a declared exclusion whose condition (08-20 07:00 WDAC acceptance) has since PASSED; no census change.",
+  "P7 exposed that firm isolation keys on the catalog row's firm label (O-1): a per-scope family row mislabeled to one firm would grant that firm cross-scope member reads inside the family -- gate correct, catalog-authoring integrity is the guard; one battery case recommended at port (owner 0.5.0_AE_OpalETL~Z), no gate, no monitor."
+ ],
+ "session_log": "org/tier1_exec/1.0.0_SA_CTO/logs/2026-08-20/ctoZ_respawn_routing_rulings_w6_certification_1209-13xxZ.md",
+ "compiler_tools": [
+  {"tool": "comp-adversary", "invocation": "python .tools/comp-adversary compose org/tier2_senior/0.5.0_AE_OpalETL/deliverables/laneZ_D6_TOF_W6_GUARDRAILS_REVIEW_20260819.md", "result": "rc=0; read-vintage @0e95185935; 4 sources run / 6 declared-excluded; 1 MOVED path (benign, direct-checked), 1 uncited sibling (dispositioned), 0 GONE rows"},
+  {"tool": "comp-find", "invocation": "comp-find --name 'catalog_gate*' ; comp-find 'catalog_gate' infra/aws/ec2/opal-gateway", "result": "gate at infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py; battery exercise_catalog_gate.py beside it (DESIGN.md:21); 12 hits / 68 files"},
+  {"tool": "exercise_catalog_gate.py", "invocation": "cd infra/aws/ec2/opal-gateway/app/graphql_plumbing && python exercise_catalog_gate.py", "result": "13/13 pass; opal-internal=36 keys; firm:inflection=3 keys (of 48 rows); firm surface strict subset"},
+  {"tool": "independent probe script", "invocation": "python <scratchpad>/ctoZ_w6_independent_probes.py (imports catalog_gate + the battery's STAGED path; 3 scratch mutants)", "result": "8/8 PASS, denominator 8; mutants P4/P6/P7 FIRED-AS-EXPECTED; firm surfaces 3/3/3 pairwise disjoint, 0 opal rows"},
+  {"tool": "opal-gateway-bbg (F10 instruments)", "invocation": "whoami; search_email (target); list_teams (separate positive control)", "result": "Opal Bloomberg; identity_scope_denied guard_denied=true PRD 4.3; 200 with 1 team"},
+  {"tool": "proof-of-spec-check", "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_ANALYST.W6_PROOF_OF_SPEC.json C1,C2,C3,C4,C5,C6", "result": "rc recorded in the session log (run before the staged->pending flip)"}
+ ]
+}
