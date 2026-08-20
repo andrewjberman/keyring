@@ -394,3 +394,62 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
   D7 cut added to the post-acceptance board (form = portal build, DE~Z hands precedent,
   CTO~Z routes).
 - Census 6/6; :7800 404s expected-shape till the restart; event-driven on the Monitor.
+
+---
+
+## ADDENDUM 9 — FINAL (00:51–01:05Z): leg-1 validated, WIND-DOWN — the morning respawn reads THIS section
+
+**archetype:** COORDINATE + VALIDATE + SCRIBE
+*(Written on Andrew's wind-down order via CTO~Z 010427Z: logs land -> MSTR~Z reaps all but CTO~Z.)*
+
+## Compiler Tools (addendum 9)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show + Grep (native) | @a765d66f82 diff read full; catalog_gate.py:21/41/85 anchor spot-check | PASS | leg-1 §7.3 validated 4/4 against the pre-stated (a)-(d) bar; the 77-reference forward-anchor claim grounded at the floor's own comments |
+
+## Delta since addendum 8
+
+1. **D7 3-leg decomposition DISPOSED** (CTO~Z re-scope @d374872d8c verified; TAC-2' adopted
+   verbatim, id stable): leg-1 CTO~Z authors / I validate (bar pre-stated); leg-2 form TO staged
+   at the morning board; leg-3 = the amended TO-C's own duty leg.
+2. **LEG-1 DELIVERED @a765d66f82 + VALIDATED-ACCEPTED 4/4** — §7.3 authored AT its citation
+   anchor (zero repoints), U4-1..5 mapped, client-tokens-never-write-in-v1, deny-by-default
+   matrix, 3-condition floor retirement (consumers-first versioned change), 5 tests + mutant.
+
+## >> MORNING-RESPAWN HANDOFF (the successor COO~Z reads this first) <<
+
+**IDENTITY/MECHANICS:** register 2.0.0_SA_COO~Z, /watcher once (fresh Monitor — this session's
+was reaped at wind-down; if an inbox-watch child survived the reap, dead-serial rules apply),
+zero crons. This file is the session record; the broker summary carries the compressed frame.
+
+**THE RE-FORM AGENDA (fires on Andrew's 08-20 07:00 WDAC acceptance — the BBG pull's first
+post-remediation scheduled fire, MSTR~Z reads it), SIX ITEMS ORDERED + the D7 cut:**
+1. BROKER RESTART first (ours lacks the 3 T1 routes; 404s till then = EXPECTED-SHAPE, cite
+   MSTR~Z 233936Z): announce -> ~4min quiesce -> cycle -> exercise routes 404->200 +
+   /poll-messages positive control + write-once re-ack -> record native StartTime. Blip mine.
+2. FORWARDER RE-PROVISION (bash .tools/provision-path-shims.sh once) + verify by EXERCISE
+   per tool (6-gap set incl. comp-find/comp-adversary), never command -v.
+3. CVO~Z SPAWN into the freed frame — FOUR-item opening list pointed in the first message
+   (v0.2/W5 cert vs the C1-C9 bar; merged-definition co-sign + sidecar; TO-F cert input;
+   lifecycle enum @b86a0bbb23) + WDAC census pointer + pins note + LD-0325 confinement.
+4. ~A INHERIT line to 0.5.0_AE_OpalETL~Z (survives / re-housed-where / carry-vs-custody), cc MSTR~Z.
+5. STAGED GO CHAIN un-gates (W6 rides the v0.2 landing per its re-pointed gate).
+6. MEASURED census at each spawn/kill event vs the 6-sustained/8-burst ceiling.
++ **D7 LEG-2 FORM TO** — cut STAGED citing §7.3 (@a765d66f82) as backend contract; hands =
+  DE~Z-class (D8 edit-surface precedent, CTO~Z routes); portal DEV; color law + /frontend-dev
+  binding in the TO text.
+
+**STANDING VALIDATION FRAMES AT THIS DESK:** TO-B/v0.2 index vs the W5 C1-C9 substance bar
+(spec rides the artifact; conflict with the D6 shell = finding to CTO~Z) + the named-id-set
+rule (rc=0 without its expected-id set = positionally UNVALIDATED); D8 acceptance w/ Q2/Q3
+riders as PASS/FAIL ruling components (@a2b93df332); D7 TAC-3 = production-SCHEDULE exit,
+never an alert; §7.3's floor retirement = its own 3 conditions, nothing else retires it.
+
+**RESERVED AT ANDREW (only these):** market-returns allowlist widening + the two 41.6d
+credential provisions (per @c7aa4bb03a's own mapping).
+
+**KNOWN-AND-DATED CONDITIONS:** laptop broker restarted clean 23:32Z (post-T1); ours pre-T1
+until agenda item 1 (message-to-dying-seat loss REAL till then — E7-MUTANT evidence); laptop
+non-response pre-THU-12:45Z = their restart window, never seat death; f69344ce (the #48
+laptop frame) unintegrated at last check — resolves at the next MSTR~Z sweep.
