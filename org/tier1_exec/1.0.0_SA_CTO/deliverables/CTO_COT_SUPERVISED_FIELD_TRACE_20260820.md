@@ -75,7 +75,16 @@ held-away/client-inputted entries — the names say it: "Greenbrier - Joseph Cla
 current account→`Account Supervised` mapping, joined onto ALL existing historical holdings by
 `AccountID` (already one of the extract's 19 columns), reproduces BD's split for every historical
 date. Tie-out oracle from the HAR (2026-08-19): firm $488,753,694 all / **$458,351,400 supervised /
-$30,402,295 unsupervised**; named-books subtotal $455,532,550 = Manav's "$455M" exactly.
+$30,402,295 unsupervised**. **SEMANTIC PIN, corrected ~1758Z (0.2.0's JSON-path read, 63360):** the
+$455,532,550 figure this trace called "named-books subtotal" is actually
+`activeRelationshipAggregateResult.supervisedEmv` — ACTIVE-RELATIONSHIP supervised; the true
+named-books supervised sum is $451,918,881.59. My label came from arithmetic coincidence
+(451.9+3.8 ≈ 455.5), not from reading the JSON path — the figure is carried INFORMATIONAL in the G3
+battery since no "active relationship" definition exists estate-side. **PLANE NOTE (measured at G3):**
+BD's own DataMining exports agree internally at $480,056,488.78 (penny-exact across two exports)
+while its Dashboard plane reads $488.75M — the -$8.70M gap is BD-internal, ~99% supervised-side,
+declared not absorbed; the accrual self-test (this extract's own Accrual column vs Andrew's "BD does
+accrued coupons" Teams line) is the first diagnostic before any vendor question.
 **Caveats, named:** (1) the join applies TODAY'S flags to history — an account that flipped
 supervision status in the past misclassifies before its flip (acceptable for dashboard AUM; BD's own
 dashboard history behaves the same way); (2) the 0/102 measurement is one-sided (the HAR has no
