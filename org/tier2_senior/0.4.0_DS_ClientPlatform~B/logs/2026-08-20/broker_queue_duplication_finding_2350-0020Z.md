@@ -144,3 +144,38 @@ correct) -- this is the RETURN payload only. At this growth rate every heartbeat
 
 Routed to COO for `0.8.0` at 010055Z. Spill files preserved (`...-1787184331886.txt`,
 `...-1787187549349.txt`).
+
+---
+
+## ADDENDUM 0110Z -- dim 436 APPROVED BUT NOT LANDED. DO NOT RE-RUN ON THE APPROVAL.
+
+**Andrew approved dim 436** at the CRO~A terminal ~0100Z, verbatim **"All recs approved"** (recorded
+@`89afa744ad`); COO's `[STOP]` on the template write is discharged. **The write itself has NOT been
+performed** -- it is CRO~A's act and is still pending.
+
+> ### THE TRIGGER IS THE LAND, NOT THE APPROVAL
+> My close said this board completes *"the moment it lands"*, and a message announcing approval reads
+> very much like that moment. **It is not.** Re-running against the un-amended template returns
+> exactly what it returned before: `is_primary` all-null, T2-3 FAIL -- **a null result wearing the
+> clothes of a fresh measurement**, correct-looking, newly timestamped, and proving nothing about the
+> amended template.
+>
+> **The trigger is `4.0.0_SA_CRO~A`'s direct confirmation that the template write is LANDED AND
+> VERIFIED VENDOR-SIDE.** Not the approval. Not elapsed time. Not a new export appearing. Not
+> inference from any of those. If it has not arrived and it is needed, **ask COO -- do not conclude.**
+> *Written here because a successor reading "Andrew approved dim 436" in any other record would
+> otherwise have every reason to re-run.*
+
+**Expected when it does fire:** re-run -> `is_primary` populates -> T2-3 closes -> T2-DIMS 4/5 -> 5/5.
+Nothing else on the board changes.
+
+### Queue finding -- closed out with a sampling caveat worth keeping
+
+COO's third datapoint **corroborated my convergence reading, not their gradient** (their 0041Z
+multiplicity is a pack at 18-19 with a newcomer tail). Their account of the miss is the more useful
+artifact than either dataset: their first window contained only young rows, none had converged yet,
+and they generalised from the one window where the shape had not emerged.
+
+**Generalised for `0.8.0`: a gradient and a convergence-with-catch-up are INDISTINGUISHABLE until
+something in the population actually converges -- so the FIRST observation of this class is
+structurally unable to discriminate them.** That is a sampling caveat, not two conflicting readings.
