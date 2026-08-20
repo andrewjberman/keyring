@@ -31,8 +31,31 @@ Auth: PASSIVE token reader. Reads the gateway access token from Claude Code's
 while the session was idle) it stays quiet and retries; the next agent MCP call re-freshens it.
 Session-scoped, exactly like inbox-watch.sh: it dies with the Monitor / session.
 
-READ-ONLY: it only ever READS your own DMs/group chats via the per-user gateway. It never posts.
+READ-ONLY: it only ever READS your own DMs/group chats -- and, with --channels, the CONFIGURED
+Team channels -- via the per-user gateway. It never posts.
 STDOUT = the new-message signal (one line each). STDERR = status/diagnostics (no agent ping).
+
+CHANNEL WATCH (P1, CTO~Z ruling msg 2761/2888; BG source-confirmed the blindness in msg 2752 --
+this engine had ZERO channel code while the estate's client-ticket buzzes post to a CHANNEL, so a
+correct buzz woke nobody and every liveness probe read healthy). `--channels <config.json>` arms
+it. Shape, and every clause is the S1 discipline re-aimed at a second surface:
+  1. NO CHANGE SIGNAL EXISTS FOR CHANNELS -- poll_addressed_teams_messages is chats-only by its own
+     contract -- so the channel leg is a DIRECT BOUNDED READ of each configured channel per cycle.
+     That is honest about its own domain rather than pretending a poll covers it.
+  2. Every message STRICTLY newer than that channel's cursor emits as its own [TEAMS-CHANNEL] line,
+     oldest-first, with the "(i of k since cursor)" frame when a cycle carries more than one.
+  3. PER-CHANNEL CURSOR IN ITS OWN FILE, never shared with the chat cursor: one shared cursor would
+     let either surface's advance eat the other's window -- the S1 loss class rebuilt by accident.
+     Cursor on MESSAGE timestamp, written AFTER the emits; a failed read HOLDS ONLY THAT CHANNEL's
+     cursor (channels are independent keys, so one bad read cannot skip another channel's mail).
+  4. Config is IDS, NEVER NAMES (a rename cannot break a watch), refuse-if-unset when the flag is
+     present. FLAG ABSENT = zero channel code paths active and the bare engine byte-identical --
+     which is load-bearing beyond tidiness: the D7 intake runner imports this module at every
+     scheduled fire, so the import-time contract IS a production contract.
+  5. DELIBERATELY NO SELF-IDENTITY FILTER ON THE CHANNEL PATH. The ticket buzz is posted AS the very
+     identity this watcher pins, and that buzz is THE primary signal -- filtering own-authored posts
+     would recreate the exact deafness this leg exists to close. Own-reply echoes are the accepted,
+     bounded cost; the emit line carries from_name and the serve loop no-ops on them.
 
 IDENTITY PIN (OPAL_ANALYST PRD 4.1, 2026-08-10): optional `--server <substring>` /
 `--identity <sub/UPN substring>` flags filter the mcpOAuth records to the named server/identity
@@ -65,6 +88,9 @@ import urllib.request
 GATEWAY = "https://mcp.opalinvest.dev/mcp/"
 CREDS = os.path.expanduser("~/.claude/.credentials.json")
 CURSOR_FILE = os.path.join(os.environ.get("TMPDIR", "/tmp"), "teams-watch.cursor")
+# SEPARATE FILE, deliberately (see the CHANNEL WATCH note): a shared cursor would let one
+# surface's advance eat the other's window. JSON {channel_id: max_processed_message_ts}.
+CHANNEL_CURSOR_FILE = os.path.join(os.environ.get("TMPDIR", "/tmp"), "teams-watch-channels.cursor")
 _nums = [a for a in sys.argv[1:] if a.isdigit()]
 INTERVAL = max(3, int(_nums[0]) if _nums else 10)
 ONCE = "--once" in sys.argv
@@ -87,6 +113,25 @@ def _flag_value(flag: str) -> str | None:
 
 PIN_SERVER = _flag_value("--server")
 PIN_IDENTITY = _flag_value("--identity")
+
+
+def _channels_flag() -> str | None:
+    """argv-only capture of `--channels <path>`; NO file IO at import time (the D7 intake runner
+    imports this module at every scheduled fire, so import-time work is production work). A flag
+    present with no value is a watch the caller INTENDED and we cannot honor -> loud exit, never a
+    silent fall-through to an unwatched channel set. Separate from _flag_value only so the failure
+    text names CHANNELS rather than IDENTITY; that function stays byte-unchanged."""
+    if "--channels" not in sys.argv:
+        return None
+    i = sys.argv.index("--channels")
+    if i + 1 >= len(sys.argv) or sys.argv[i + 1].startswith("--"):
+        print("[TEAMS-CHANNEL-FAIL] --channels requires a config path", flush=True)
+        print("[teams-watch] FATAL: --channels requires a config path", file=sys.stderr, flush=True)
+        sys.exit(2)
+    return sys.argv[i + 1]
+
+
+CHANNELS_FLAG = _channels_flag()
 
 
 def now_iso() -> str:
@@ -345,6 +390,52 @@ def fresh_messages(page: dict | None, chat_id: str, chat_type: str | None, curso
     return out
 
 
+def _channel_fail(reason: str) -> None:
+    """Die LOUDLY on a channel config the caller intended and we cannot honor. Stdout so the
+    Monitor pings the agent before exit; exit 2, never a silent unwatched set."""
+    print(f"[TEAMS-CHANNEL-FAIL] {reason}", flush=True)
+    print(f"[teams-watch] FATAL: {reason}", file=sys.stderr, flush=True)
+    sys.exit(2)
+
+
+def load_channels(path: str) -> list[dict]:
+    """The watched-channel set: [{team_id, channel_id, label}]. IDS NEVER NAMES. refuse-if-unset --
+    an unreadable file, a non-list, an empty list or a row missing either id is a REFUSAL, because
+    a watcher that silently watches nothing is the deafness this leg exists to close."""
+    try:
+        doc = json.load(open(path, encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001 -- loud named reason beats a stack trace here
+        _channel_fail(f"channels config unreadable: {type(exc).__name__} ({path})")
+    rows = doc.get("channels") if isinstance(doc, dict) else doc
+    if not isinstance(rows, list) or not rows:
+        _channel_fail(f"channels config carries no channel rows ({path})")
+    for r in rows:
+        if not (isinstance(r, dict) and r.get("team_id") and r.get("channel_id")):
+            _channel_fail(f"channels config row missing team_id/channel_id: {r!r} ({path})")
+    return rows
+
+
+def load_channel_cursors() -> dict:
+    """{channel_id: max_processed_ts}. Absent file = first arm (the caller seeds each watched
+    channel at NOW, exactly as the chat cursor seeds -- no history backfill, no flood)."""
+    try:
+        d = json.load(open(CHANNEL_CURSOR_FILE, encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except Exception:  # noqa: BLE001 -- absent or corrupt reads as "nothing processed yet"
+        return {}
+
+
+def save_channel_cursors(cursors: dict) -> None:
+    open(CHANNEL_CURSOR_FILE, "w", encoding="utf-8").write(json.dumps(cursors, sort_keys=True))
+
+
+def read_channel(token: str, team_id: str, channel_id: str) -> dict | None:
+    """THE CHANNEL INTAKE: one bounded message-grain read. No change-signal exists for channels,
+    so this runs every cycle rather than on a poll hint."""
+    return _gateway_call(token, "read_channel_messages",
+                         {"team_id": team_id, "channel_id": channel_id, "top": READ_TOP})
+
+
 def main() -> None:
     if os.path.exists(CURSOR_FILE):
         cursor = open(CURSOR_FILE, encoding="utf-8").read().strip() or now_iso()
@@ -352,8 +443,22 @@ def main() -> None:
         cursor = now_iso()
         open(CURSOR_FILE, "w", encoding="utf-8").write(cursor)
 
+    # CHANNEL WATCH init -- entirely inert when --channels is absent (the import-time/bare contract
+    # the D7 runner depends on). A newly watched channel SEEDS AT NOW, exactly as the chat cursor
+    # does: arming a watch is not a request to replay history.
+    channels = load_channels(CHANNELS_FLAG) if CHANNELS_FLAG else []
+    chan_cursors = load_channel_cursors() if channels else {}
+    if channels:
+        seeded = [c["channel_id"] for c in channels if c["channel_id"] not in chan_cursors]
+        for cid in seeded:
+            chan_cursors[cid] = now_iso()
+        if seeded:
+            save_channel_cursors(chan_cursors)
+
     pin_note = f" pin(server={PIN_SERVER}, identity={PIN_IDENTITY})" if (PIN_SERVER or PIN_IDENTITY) else ""
-    print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only){pin_note}", file=sys.stderr, flush=True)
+    chan_note = (f" channels={len(channels)} watched ({', '.join(c.get('label') or c['channel_id'][:24] for c in channels)})"
+                 if channels else "")
+    print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only){pin_note}{chan_note}", file=sys.stderr, flush=True)
     selected_logged = False
     # Pin-scoped expiry backoff (TO6 req 1). Everything below is inert when bare: PINNED is False,
     # so lapse_cycles never leaves 0 and the sleep stays INTERVAL exactly as before (req 4).
@@ -434,6 +539,45 @@ def main() -> None:
                     print(f"[teams-watch] HTTP {e.code}", file=sys.stderr, flush=True)
             except Exception as exc:  # noqa: BLE001 -- a monitor must never die on a transient error
                 print(f"[teams-watch] {type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
+            # ---- CHANNEL INTAKE: its OWN try, deliberately AFTER the chat work. A channel-side
+            # failure must never be able to take down the chat intake (the failure-isolation
+            # discipline the D7 sweep ruling makes binding, applied to this engine's two duties).
+            try:
+                dirty = False
+                for ch in channels:
+                    cid, tid = ch["channel_id"], ch["team_id"]
+                    ccur = chan_cursors.get(cid, "")
+                    # fresh_messages is REUSED byte-unchanged (chat_id slot carries the channel id,
+                    # chat_type "channel") -- same strict-newer, same parsed compare, same
+                    # oldest-first ordering, so the two surfaces cannot drift apart in semantics.
+                    fresh = fresh_messages(read_channel(tok, tid, cid), cid, "channel", ccur)
+                    if fresh is None:
+                        # HOLD ONLY THIS CHANNEL's cursor -- keys are independent, so a bad read
+                        # here can never skip another channel's mail (the S1 global-hold, narrowed
+                        # correctly because the state is per-key rather than shared).
+                        print(f"[teams-watch] channel read failed for {ch.get('label') or cid} "
+                              "-- that channel's cursor HELD, retry next cycle",
+                              file=sys.stderr, flush=True)
+                        continue
+                    if len(fresh) >= READ_TOP:
+                        print(f"[TEAMS-CHANNEL] note: {ch.get('label') or cid} read window FULL "
+                              f"({len(fresh)} of >={READ_TOP} since cursor) -- backfill via "
+                              "read_channel_messages", flush=True)
+                    k = len(fresh)
+                    for i, m2 in enumerate(fresh, 1):
+                        frame = f" ({i} of {k} since cursor)" if k > 1 else ""
+                        # NO is_outgoing filter here, by design: the ticket buzz is posted AS the
+                        # pinned identity and IS the signal (see the CHANNEL WATCH note).
+                        print(f"[TEAMS-CHANNEL] {ch.get('label') or 'channel'} from "
+                              f"{m2.get('from_name')}: {m2.get('preview')} | channel_id={cid} "
+                              f"ts={m2.get('timestamp_utc')}{frame}", flush=True)
+                        chan_cursors[cid] = _advance(chan_cursors.get(cid, ""), m2.get("timestamp_utc"))
+                        dirty = True
+                if dirty:
+                    save_channel_cursors(chan_cursors)   # AFTER the emits, same as the chat path
+            except Exception as exc:  # noqa: BLE001 -- never let the channel leg kill the monitor
+                print(f"[teams-watch] channel intake {type(exc).__name__}: {exc}",
+                      file=sys.stderr, flush=True)
         elif PINNED:
             # Pinned record exists but is expired -> hold the pin and wait it out. Stderr only:
             # stdout would ping the agent for a self-healing no-op.
