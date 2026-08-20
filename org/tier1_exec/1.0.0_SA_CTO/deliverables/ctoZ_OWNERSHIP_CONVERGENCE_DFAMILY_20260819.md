@@ -86,13 +86,18 @@ never-implicit through MSTR<->MSTR.
   what you gave it") — the deploy set is empty, matching 0.8.0's positive-controlled 3-home
   zeros. The failure the rider prevents, carried verbatim: *a production chain whose deploy set
   is empty is verified by NOTHING — every green it produces is a green about bytes nobody can
-  place.* ⚠ **H8 SOURCE-RECORD-PENDING-AT-AUTHOR (resolved 20260820T0023Z, one layer deeper than
-  the flag):** the ferried hash @c411c6a9e9 is FORMALLY RETRACTED as an H8 citation (it was the
-  laptop's sweep head; relay artifact, owned by MSTR~Z) — and the true state is that **NO citable
-  H8 commit exists anywhere yet: the grounding traveled as ferry text only.** 0.8.0 (its author)
-  is tasked to commit the record; the hash ferries back when it lands and this line repoints then.
-  **Until then this desk's independent corroboration above is the rider's ONLY grounding, and it
-  is sufficient — the rider binds on what was measured here, not on what was ferried.**
+  place.* ✅ **H8 SOURCE RECORD LANDED + REPOINTED (20260820T003xZ):**
+  `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/H8_TAXSMA_DEPLOY_HOME_GROUNDING_20260820.md`
+  @3b7a06b8b3 (on trunk via @f35f75f563; commit + file VERIFIED at this desk before repointing).
+  The author RE-MEASURED at commit vintage rather than committing ferry text — *"a record committed
+  at one vintage must state THAT vintage's numbers"* — and the re-measure ADDED A FOURTH HOME:
+  `opal-data-49financial/_code/` (55 objects, 0 taxsma). **Deployed-nowhere HOLDS across all FOUR
+  homes, positive control intact — strengthened, not merely confirmed** — and the author names the
+  fourth home the strongest (c1) deploy-home CANDIDATE if TAXSMA lands as a 49F-scoped product row
+  (a candidate for the seat cutting (c1), not a declaration). *Citation history preserved above
+  this line deliberately: the ferried hash was wrong, then no hash existed, then the author
+  committed at fresh vintage — the trail is the lesson.* This desk's independent corroboration
+  stands beside the record as second-instrument evidence.
 
 ## Precedent by use
 
