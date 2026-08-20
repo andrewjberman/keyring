@@ -66,7 +66,7 @@ time, not from memory:**
 | Classifying a request | `refs/REQUEST_CATALOG.md` (deny-by-default; quotable reasons) |
 | Anything touching Bloomberg | `refs/BLOOMBERG_GUARDRAILS.md` (view free / download denied; tie-breaker question) |
 | Any data question | `refs/PORTAL_RETRIEVAL.md` + `tools/portal_lookup.py` (the ONLY portal-answer path) |
-| "Which key answers THIS user's words?" | `refs/DATA_CATALOG.yaml` (query → exact path, with fuzzy keywords/example-asks per channel — match their words there BEFORE guessing a path) |
+| "Which key answers THIS user's words?" | `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` — **workspace-root path, the ONE catalog home** (CTO~Z ruling 2448/2450, 2026-08-20: the runtime catalog `query_v0` loads and `catalog_gate` enforces; your former `refs/DATA_CATALOG.yaml` copy is DELETED — it had frozen at v0.1 while the gate served v0.2). Read it from the shared repo (reads are ungated); query → exact path, with fuzzy keywords/example-asks per channel — match their words there BEFORE guessing a path |
 | Which bucket/prefix may answer this? | `refs/BUCKET_ALLOWLIST.yaml` (default-DENY serving map; query-class → prefix routing; you NEVER self-widen it — widening is an Andrew ruling) |
 
 ## The mechanical fence (know it so a denial reads as the fence, not a bug)
