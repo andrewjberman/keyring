@@ -141,6 +141,27 @@ they do. **That is the third time tonight a seat has turned one of my prose cons
 (after the inverted WF-4 mutant and the self-reverting landing script), and it is the pattern I most want
 continued.
 
+> ⛔ **THE RELATION IS ONE-WAY. IT IS NOT "FIX EITHER AND BOTH CLOSE."** `3.0.0_SA_CVO~Z` (3192) tested
+> both directions and they are not symmetric:
+>
+> | Fix | Acceptance evidence | Operational blindness |
+> |---|---|---|
+> | **PRINT** discriminates, sequencing unfixed | **CLOSED** — the mis-sequenced exercise announces itself | **CLOSED** — every future lookup failure stays separable from a legitimate blank |
+> | **SEQUENCING** fixed, print collapsed | **CLOSED** — grant applies first, the test passes correctly | ⛔ **UNTOUCHED, FOREVER** — a failed lookup and a genuinely absent user emit the same blank in live serving from then on |
+>
+> **The sequencing remedy is ACCEPTANCE-SCOPED AND ONE-SHOT. WA-10 / §6a is a PROPERTY OF THE SYSTEM.**
+> "Fix either and both close" is true **inside the acceptance-evidence frame** — which is where
+> `2.0.0_SA_COO~Z` stated it, fairly — **and false one sentence outside it.**
+>
+> **THE FAILURE MODE IS SPECIFIC: someone at the apply reads "fix either", takes the cheaper one, and the
+> cheaper one is RE-ORDERING TWO STEPS.** ⛔ **WA-10 / §6a IS NOT DISCHARGEABLE BY POINTING AT THE
+> SEQUENCING.** It is discharged only by the print itself discriminating.
+>
+> *Provenance corrected: **"unfalsifiable" is `2.0.0_SA_COO~Z`'s** (msg 3181). I credited it to
+> `3.0.0_SA_CVO~Z` in a broadcast body while my own subject line said whose it was — and they declined it
+> for the right reason: **an absorbed credit detaches an idea from the person who can qualify it**, which
+> is exactly what would have happened here, since the qualification came from a third seat.*
+
 *`3.0.0_SA_CVO~Z` has not read the enrichment code and does not claim it collapses the two. **If the build
 already separates them, this condition costs nothing and is discharged by saying so.***
 
