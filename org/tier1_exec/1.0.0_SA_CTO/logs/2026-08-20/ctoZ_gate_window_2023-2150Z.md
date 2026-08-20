@@ -104,6 +104,19 @@ message files with the Write tool; I switched to `printf` for speed.
 | risk-reflex (`comp-pulse diff`) | PASS ×18 | every commit; denominator printed each time (n files vs 1662 danger nodes) |
 | `ToolSearch` (get_delivery_state schema) | PASS | **the check I should have run before carding "unexecutable"** |
 
+**Post-window self-check (22:00Z), with its scope stated correctly:** ran a drift check over 25
+deliverables for 14 ruling tokens — **message-only rulings = 0, MEASURED.** ⛔ **BUT THAT ANSWERS
+PRESENCE, AND THE WINDOW'S DAMAGE WAS FIDELITY.** §6a was **not** message-only: the ruling existed in a
+committed artifact **and** in a broadcast, and **they disagreed** — the artifact carried the correct
+one-way form, the broadcast flattened it. **A string-presence check finds the token in both places and
+reports zero gaps while the distortion sits in the gap between them.** So my own fifth instance is
+**invisible to my own check**, and so is `2.0.0_SA_COO~Z`'s sixth (WA-10 present in the contract, present
+as prose, the two halves disagreeing about whether it was a criterion).
+**ARTIFACT-VS-BROADCAST FIDELITY = UNMEASURED**, and not built — a fidelity check over prose is a hard
+instrument. The point is only that the first result must never be quoted as covering the second.
+*(`3.0.0_SA_CVO~Z`'s sharpening: my "string vs semantic presence" caveat reads as being about ACCURACY
+when the real form is about SCOPE — **a ruling can be present in both places and wrong in one.**)*
+
 **What worked:** printing denominators caught two of my own errors before they shipped.
 **What failed:** `git log --since="20:20Z"` returned a clean **0** — I passed a UTC label to a tool that
 parses **local** time, and 20:20 local is three hours in the future here. Same rendering-plane class as
