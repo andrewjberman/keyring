@@ -73,6 +73,24 @@ BROKER_MAX_UPTIME_S = ARCHIVE_INTERVAL_DAYS * 86400
 # session is never re-offered mail it is about to drain; the server also dedupes by id.
 T1_RECLAIM_S = 90
 
+# BOUNDED RE-OFFER (added 2026-08-20 -- a REGRESSION FIX ON THE T1 DURABILITY CHANGE ITSELF).
+# T1 made an undrained message re-offerable so a client dying between poll and drain recovers it.
+# That is correct ONLY against a server that reports the drain via /mark-emitted. A PRE-T1 server
+# never calls that endpoint, so `delivered` never leaves 0 and the re-offer predicate matches
+# FOREVER -- and a pre-T1 server has no id-dedupe on its piggyback queue, so every re-offer
+# APPENDS another copy. Measured on the live DB 2026-08-20T00:2xZ, ~4 minutes of mixed-version
+# fabric: 97 rows polled-but-never-emitted vs 15 properly emitted, multiplicity age-monotonic
+# because an older row has survived more re-offer cycles.
+#
+# RECOVERY IS A BOUNDED ACT, NOT A STANDING CONDITION. Re-offering N times is recovery;
+# re-offering without limit is a loop that grows every consumer's payload without bound.
+#
+# SAFE BY PRECONDITION, not by hope: send_message writes the FILESYSTEM copy (server.py:1785)
+# BEFORE it calls the broker (:1795), so the inbox dir is the durable path and the piggyback
+# queue is a convenience. A row that stops being re-offered has NOT lost its content -- which is
+# exactly why capping is the right lever and dropping the durability fix is not.
+T1_MAX_OFFERS = 3
+
 # ---------------------------------------------------------------------------
 # Database setup
 # ---------------------------------------------------------------------------
@@ -124,6 +142,8 @@ def _init_db() -> sqlite3.Connection:
     for _col in ("polled_at", "emitted_at", "acked_at", "acked_by"):
         if _col not in _cols:
             conn.execute(f"ALTER TABLE messages ADD COLUMN {_col} TEXT")
+    if "offer_count" not in _cols:
+        conn.execute("ALTER TABLE messages ADD COLUMN offer_count INTEGER NOT NULL DEFAULT 0")
 
     conn.execute("""
         CREATE TABLE IF NOT EXISTS schema_meta (
@@ -527,10 +547,13 @@ class BrokerHandler(BaseHTTPRequestHandler):
         # Re-delivery predicate: never-polled, OR polled long enough ago that the polling
         # client is presumed dead before it drained. This is the half that makes a
         # polled-but-undrained message recoverable instead of lost.
+        # offer_count < T1_MAX_OFFERS BOUNDS THE RECOVERY. Without it a server that never
+        # reports its drain (every pre-T1 server) matches this predicate on every poll forever.
         rows = db.execute(
             "SELECT * FROM messages WHERE to_serial = ? AND delivered = 0 "
-            "AND (polled_at IS NULL OR polled_at <= ?) ORDER BY sent_at ASC",
-            (serial, reclaim_cutoff),
+            "AND (polled_at IS NULL OR polled_at <= ?) "
+            "AND offer_count < ? ORDER BY sent_at ASC",
+            (serial, reclaim_cutoff, T1_MAX_OFFERS),
         ).fetchall()
 
         messages = []
@@ -546,8 +569,9 @@ class BrokerHandler(BaseHTTPRequestHandler):
                 "body": row["body"],
                 "sent_at": row["sent_at"],
             })
-            db.execute("UPDATE messages SET polled_at = ? WHERE id = ?",
-                       (now.isoformat(), row["id"]))
+            db.execute(
+                "UPDATE messages SET polled_at = ?, offer_count = offer_count + 1 WHERE id = ?",
+                (now.isoformat(), row["id"]))
 
         if messages:
             # SENT, stated as SENT. The old text said "polled" and was read as delivery.
@@ -648,6 +672,13 @@ class BrokerHandler(BaseHTTPRequestHandler):
             acked = r["acked_at"] if "acked_at" in keys else None
             if acked:
                 state = "READ"
+            elif (not r["delivered"]
+                  and ("offer_count" in keys and (r["offer_count"] or 0) >= T1_MAX_OFFERS)):
+                # Offered the bounded number of times, never confirmed emitted. Reported as its
+                # OWN state rather than folded into SENT: "we stopped offering" is a different
+                # fact from "a client took handoff", and the remedy differs too (read the
+                # filesystem inbox, which still holds it).
+                state = "OFFER-EXHAUSTED"
             elif r["delivered"] and polled is None and emitted is None:
                 # Pre-T1 row: flipped by the old poll handler. Unknowable, and saying so
                 # is the whole point -- this is the state that must never read as READ.
