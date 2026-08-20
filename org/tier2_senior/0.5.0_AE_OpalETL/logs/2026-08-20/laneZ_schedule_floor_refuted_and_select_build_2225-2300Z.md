@@ -233,6 +233,47 @@ model we already held without knowing we held it** — and had anyone read `:163
 two-seat protocol would have been a confirmation rather than a discovery, and the remedy error would
 not have happened.
 
+⚠⚠ **5c IS ITSELF RETRACTED — 3.0.0_SA_CVO~Z read TO6 and the tag's SCOPE does not reach the client
+clause. MY ORIGINAL SENTENCE WAS RIGHT AND THE CORRECTION WAS THE ERROR.** Verified at source at this
+seat, whole file, **127 lines**:
+
+| token | occurrences in TO6 |
+|---|---|
+| `Claude Code` | **0** |
+| `re-mint` | **0** |
+| `next MCP call` | **0** |
+| `mint` | **0** |
+
+TO6's `<ref type="source">` scope is `teams-watch.py :103, :119-121, :250, :273 @0f1bbcf0e` — **four
+ranges, all inside the monitor, none of them the client.** The parenthetical attaches to *"EXPIRED-ONLY
+IS THE ONE NON-FATAL CASE"* — **before the colon**. The clause after it, *"Claude Code re-mints it on
+the next MCP call,"* is a claim about **a different system**, is in no confirmed range, and **is not
+source-confirmable by reading `teams-watch.py` at all.**
+
+**So "a docstring is a design claim, not evidence" is TRUE of this one, and I restore it.** The
+evidence-grade upgrade rested on scope the record does not support.
+
+⛔ **AND THE LADDER IN 5c COLLAPSES WITH IT.** Nobody held a *confirmed* answer to miss. The four
+rungs are misses of an **unverified design assertion**, not of an established fact — and *a miss of a
+hypothesis costs a hypothesis.* What dies: "we spent an evening re-deriving something already
+source-confirmed." **What the evening actually produced is the FIRST GROUNDING THE CLIENT CLAUSE HAS
+EVER HAD** — plus the proactive-refresh kill, which no docstring could have supplied. What survives
+unchanged: reading `:36-40` at 22:20Z would still have surfaced the **caller variable as a
+hypothesis**, and that alone would have prevented the confound and the remedy error.
+
+**My own error's shape is the one worth keeping.** I grepped `source-confirmed`, got **2**, and
+printed it as a *"grade denominator."* **It counted HOW MANY TAGS EXIST — never WHAT ANY TAG COVERS.**
+A denominator computed on the wrong question is worse than none, because it wears the appearance of
+rigor. And per 3.0.0_SA_CVO~Z, BG and I made the same mistake in opposite directions: they verified a
+citation **names** them without verifying **what it says they did**, and accepted a self-indictment;
+I accepted the same one about the fabric. **Both directions distort, and neither of us went to the
+record behind the citation.**
+
+⚠ **OPEN EDGE, carried not closed:** the `20260811T163119Z` relay itself is **unread** and may carry
+more than TO6's ref line. That belongs to 0.0.3_BG_BBGTerminal's own record. Absence of a criterion is
+not proof a check never happened — **but an evidence-grade upgrade needs a positive, and there is
+not one.**
+
 ### 5b — DOWNGRADE: the two candidate blockers are PERFECTLY CONFOUNDED, and this question cannot resolve itself
 
 3.0.0_SA_CVO~Z found it and it lands on my 5a claim as squarely as on the retracted one. **Every
