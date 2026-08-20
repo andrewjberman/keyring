@@ -1003,14 +1003,36 @@ def main(argv: list[str]) -> int:
     # (transparency, not a gate); the S3 target prefix comes from file_to_s3_target
     # (scope logic untouched).
     author_range = args.commit_range or "HEAD~1..HEAD"
-    print(f"safe-deploy: {len(files)} script file(s) to deploy")
+    # THE RECEIPT ENUMERATES THE ACTUAL UPLOAD SET, EACH LEG NAMED (CTO GO 2026-08-20T0020Z).
+    # It previously printed `len(files)` and iterated `files` alone -- while :997 gates the
+    # nothing-to-do exit on files OR bundle_member_files, and the bundle leg below deploys the
+    # bundle members. So a change touching ONLY a bundle member printed a receipt saying
+    # "0 script file(s) to deploy" and then deployed one. EXERCISED before the fix:
+    #     input ['data/mdpf/config/partner_roster.json']
+    #       detect_script_files   -> []   (what the receipt counted)
+    #       detect_bundle_members -> [that path]  (what also deployed)
+    # That is the roster-only case this leg was BUILT for -- its own docstring names the
+    # an-atomic-commit-is-not-an-atomic-deploy incident -- so the one path most likely to use it
+    # was the one the receipt could not see. A receipt that under-reports its own act is the
+    # records-that-read-authoritative-while-wrong family: the deploy was correct, the RECORD of it
+    # was not, and the record is what the next reader trusts.
+    _bundle_only = [f for f in bundle_member_files if f not in files]
+    _total = len(files) + len(_bundle_only)
+    print(f"safe-deploy: {_total} path(s) to deploy "
+          f"({len(files)} script, {len(_bundle_only)} bundle-member)")
     for f in files:
         target = file_to_s3_target(f)
         # Full destination prefix, not code/<segment>/ -- mdpf's non-standard
         # layout (code/scripts/<layer>/) truncated wrong under the old split.
         dest = target[1].rsplit("/", 1)[0] + "/" if target else "?"
         author = _file_author(author_range, f)
-        print(f"  {f}  (authored by {author}) -> {dest}")
+        print(f"  [script]        {f}  (authored by {author}) -> {dest}")
+    for f in _bundle_only:
+        # No file_to_s3_target: a bundle member's destination is the BUNDLE's, resolved at the
+        # mint below. Naming the leg honestly beats printing a '?' destination that reads as a
+        # broken lookup rather than a different mechanism.
+        author = _file_author(author_range, f)
+        print(f"  [bundle-member] {f}  (authored by {author}) -> bundle mint (leg below)")
     print()
 
     # --allow-stale bypass (unchanged: no S3 upload happens, so nothing SERVES;
