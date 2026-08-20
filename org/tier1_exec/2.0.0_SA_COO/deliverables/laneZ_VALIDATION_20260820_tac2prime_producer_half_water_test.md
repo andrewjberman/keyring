@@ -51,7 +51,7 @@ on DT~Z to obtain it).
 
 A real client-facing ticket posted correctly into the channel and **woke nobody**.
 
-⛔ **CORRECTED 21:0xZ (@c02f8022d0) -- THIS PARAGRAPH ORIGINALLY SAID THE SEAT WAS DOWN, AND THAT PREMISE WAS AN ARTIFACT.** It read *"At post time BG read NOT REGISTERED on the broker"*. The seat was **ALIVE, in-session, and would have answered instantly**; the Analyst seat's broker reading was an **M4 ARTIFACT, corrected @c02f8022d0**: an event-driven zero-crons seat emits no periodic heartbeat, so it reads NOT REGISTERED while fully alive -- *the healthier it is at being event-driven, the more reliably it reads dead*. **THE CONCLUSION WAS RIGHT FOR THE WRONG REASON, and the correction STRENGTHENS this finding rather than weakening it:** the post woke nobody because of **M2 channel-blindness at source**, not because a seat was down. A seat-down story invites *"keep the seat up"* -- which would have changed nothing. **The consumer limb is dark even with the seat fully alive and attentive.** That is the exact shape BG's pre-stamp stop described. It is
+⛔ **CORRECTED 21:0xZ (@c02f8022d0) -- THIS PARAGRAPH ORIGINALLY SAID THE SEAT WAS DOWN, AND THAT PREMISE WAS AN ARTIFACT.** It read *"At post time BG read NOT REGISTERED on the broker"*. The reading was **FALSE — the seat was ALIVE, in-session, and would have answered instantly.** ⛔ **THE MECHANISM I GAVE FOR IT IS RETRACTED IN FULL @07b0063f34 — I REPUBLISHED IT AND AM STRIKING IT HERE.** This clause previously carried an explanation (an event-driven zero-crons seat emitting no periodic heartbeat, and a 'reads dead' line). **DO NOT CARRY THAT ONWARD.** Its fatal flaw, found by its own author: the OBSERVED state was `NOT REGISTERED`, while the contract it quoted describes degradation to `STALE` -- **different states, and nothing says one becomes the other.** The broker source was never read, so it was always a HYPOTHESIS (Rule 22). **WHAT SURVIVES IS OBSERVATION ONLY, NO CAUSE:** NOT REGISTERED returned 5+ times across ~3h on the SAME PID with the session continuously alive, no error surfaced, re-register always immediate, witnessed by two seats; delivery degraded to QUEUED and **nothing was lost**. **THE CORRECTION ITSELF STANDS** -- it rests on that observation plus M2 channel-blindness, which IS source-confirmed. **THE CONCLUSION WAS RIGHT FOR THE WRONG REASON, and the correction STRENGTHENS this finding rather than weakening it:** the post woke nobody because of **M2 channel-blindness at source**, not because a seat was down. A seat-down story invites *"keep the seat up"* -- which would have changed nothing. **The consumer limb is dark even with the seat fully alive and attentive.** That is the exact shape BG's pre-stamp stop described. It is
 CORRECT scope for this test (producer PASS) and it is the strongest available argument for the
 channel-leg P1 — **recorded as evidence for that build, never as a failure of this one.**
 
@@ -86,8 +86,10 @@ DT~Z from its own gateway identity — no disagreement on id, author, content, o
 the post at all was a *fabric-inbox* message waking them, after which they hand-polled a channel
 they already knew to expect a post in. **Nothing about the channel woke anyone, and nothing would
 have.** *(This paragraph also originally carried the "BG was NOT REGISTERED at post time" premise —
-corrected per @c02f8022d0 as above: an M4 artifact, the seat was alive, and the mechanism is M2
-channel-blindness at source. The demonstration is unaffected; if anything it is sharper, because
+corrected as above: the reading was FALSE and the seat was alive (**cause UNKNOWN — the explanation
+once given here is retracted in full @07b0063f34; do not carry it onward**), and the mechanism that
+IS source-confirmed is M2 channel-blindness at source. The demonstration is unaffected; if anything
+it is sharper, because
 the seat being ALIVE is what makes "nothing would have woken it" the finding.)*
 
 ## SECOND FINDING ROUTED — the pre-W-A analytics baseline (DT~Z surprise channel, folded to build input)
