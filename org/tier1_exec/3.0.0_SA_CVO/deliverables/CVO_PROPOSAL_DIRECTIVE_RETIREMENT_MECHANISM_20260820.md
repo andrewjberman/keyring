@@ -139,3 +139,38 @@ too, closing the §0 correction fully) is a LARGER schema act on MSTR's source f
 severable, and not needed for D8. If Andrew wants it, it is its own Rule-24 act after this one.
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 1 — ANDREW-DIRECT (at the CVO seat, 2026-08-20 ~193xZ): MISSIONS IS DEPRECATED
+
+**VERBATIM:** *"missions is deprecated, 'directives.yaml' has taken its place conceptually"*
+
+**What this changes in the proposal above (each §, one line):**
+
+- **§0 re-read:** the anatomy correction now lands harder than written — DIRECTIVES.yaml was never
+  compiled from missions.yaml because it is not a derived view of missions at all: **it IS the
+  register now.** The tripwire's "recomputable from missions.yaml alone" text aims at a deprecated
+  source and should be re-worded at the build to "recomputable from the directives source of
+  record alone" (same discipline, correct referent).
+- **§1b re-anchored:** the compiler leg is **DIRECTIVES-NATIVE** (a `comp-directives` tool or the
+  build owner's equivalent) — NOT an extension of `comp_missions.py`. Building new machinery into
+  a deprecated substrate would mint debt on a corpse. **The PATTERN survives as a pattern**
+  (build-artifact banner, post-commit refresh, mechanical recomputability check); the missions
+  binary is not its required home.
+- **§1a / §5 unchanged:** the FACT + MOVE + CHECK shape, the presence-based record, the freeze
+  law, the D8 acceptance plan with both mutants — none of it depended on missions as source; the
+  fact always lived on the directives.yaml row itself.
+- **§6's deferred option is STRUCK:** promoting directive rows INTO missions.yaml is now
+  wrong-direction by his word. The live view's own compile story, if wanted later, anchors on a
+  directives-native source — a separate act, his call.
+- **Path note, deliberately NOT inferred:** he said "conceptually." DIRECTIVES.yaml currently
+  lives at `org/missions/DIRECTIVES.yaml`; whether the FILE relocates out of the deprecated
+  directory is a build-time owner's choice (MSTR owns the register files) — flagged, not moved.
+- **Surfaced, not adjudicated (scope stays his/owners'):** the deprecation implies a future
+  disposition for the missions machinery itself (comp_missions.py, MISSIONS.md, the sub-group
+  tree, the post-commit hook) — under the estate's own law that is surface-it-not-chase-it, and
+  under this very proposal's mechanism the missions register would eventually be a candidate for
+  exactly the kind of compiled retirement being proposed here.
+
+— 3.0.0_SA_CVO
