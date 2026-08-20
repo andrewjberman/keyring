@@ -477,4 +477,64 @@ W-B decision with Andrew.
   explicitness is earned rather than defensive -- my own `--name` over-endorsement carried
   exactly the implication the artifact now writes against.
 
+## THE 401 HANDLER -- A SILENT SWALLOW, AND THE CREDENTIAL QUESTION'S REAL SHAPE (~2330Z)
+
+Source: `.claude/skills/teams-assist/teams-watch.py` @ `ab4f76c878` (authored `0.5.0_AE_OpalETL~Z`,
+2026-08-20 21:12:10Z; `git diff HEAD` for that path EMPTY, so the tree is at that vintage).
+Sites read: `:36-40`, `:158-197`, `:200-214`, `:545-549`.
+
+- **`0.5.0_AE_OpalETL~Z` stated a structural property -- *"the discriminating event cannot occur
+  by accident, ever. IT CANNOT SELF-RESOLVE"* -- and it is TWO CLAIMS WITH OPPOSITE VERDICTS.**
+- **(A) THE EVENT CANNOT OCCUR -- FALSIFIED AT SOURCE, two independent generators.** The
+  pre-check has **NO SAFETY MARGIN**: `:188` (pinned, the live path) and `:210` (bare) are both
+  `expiresAt/1000 > time.time()`, strict, against now -- **a record with 0.2s of life PASSES and
+  the request expires in flight.** And decisively, **the code carries a 401 handler at
+  `:545-547`; a handler exists because the event occurs**, with `:38-39` stating the condition
+  outright. **RATE DELIBERATELY NOT QUOTED** -- the window equals the request's flight time,
+  which I have not measured; I nearly published a percentage derived from an assumed one.
+- **(B) IT CANNOT SELF-RESOLVE -- TRUE, and the real reason is not the one given.** `:546` is
+  `if e.code != 401:` guarding the only `print`. **Every other HTTP status reaches stderr; 401
+  alone does not.** The event is not prevented, it is **SWALLOWED by a conditional that excludes
+  exactly the code of interest** -- so a stderr search for 401 evidence returns clean empty **and
+  the handler manufactures that empty.** Tonight's named class one turn sharper than the law
+  file's form: not `2>/dev/null` on a read whose emptiness carries a verdict, but a conditional
+  silencing precisely the value you would grep for. **Anti-correlated in Rule 22b's exact sense.**
+  Consequence: **whether the race fired at the 23:15:55Z boundary is now unmeasurable in
+  retrospect, for the same reason the question cannot self-resolve.**
+- **A CHEAPER DISCRIMINATOR EXISTS AND I RECORDED IT WITHOUT PROPOSING IT.**
+  `0.5.0_AE_OpalETL~Z` costed a deliberate raw HTTPS call with an expired bearer -- an egress on
+  a live production credential -- and declined it correctly. Removing the `!= 401` exclusion and
+  **waiting** discriminates identically with no egress and no manufactured event. **Not proposed
+  as work, not done** -- it is a code edit on their surface. Recorded so a successor has both
+  options and their real costs rather than only the expensive one.
+- **AND THE INVERSION THAT MATTERS: the missing margin LOOKS LIKE OBVIOUS HYGIENE and is
+  currently THE ONLY NATURALLY-OCCURRING SOURCE OF THE DISCRIMINATING EVENT.** Adding one would
+  close the single path by which this question could ever answer itself -- **while looking like a
+  correctness fix.** Filed as a fact worth knowing, explicitly NOT a defect and NOT a work item.
+- **MY OWN CLAIM RE-GRADED, STILL NOT ESTABLISHED.** `:38-39` and `:164-165` state the intent
+  twice from different sites (*"the next agent MCP call re-freshens it"*). That moves me from
+  (one stated intent + architecture) to (two + the handler's shape) and **does not reach
+  ESTABLISHED, because the client's mint logic remains unread** -- and a docstring quoted against
+  unread code is this seat's other measured failure tonight. Bound unchanged.
+- **THE NINE-DAY-OLD FACT: `:163` carries the tag `OPAL_ANALYST.TO6, BG source-confirmed
+  20260811`, and the sentence it tags IS the lazy re-mint model** -- written down, carrying
+  `0.0.3_BG_BBGTerminal`'s own confirmation, nine days before tonight's experiment established it
+  behaviourally. **NOT filed as another instance of their outbox finding**: theirs was a fact they
+  HELD; this is one **nobody held tonight** -- no seat had read `:545-547` at all.
+- **AND I DECLINED THE AVAILABLE INSINUATION.** *"`0.5.0_AE_OpalETL~Z` committed this file at
+  21:12Z today, so they should have known"* -- **I checked: `ab4f76c878`'s diff touches only the
+  module header, not the handler and not the expiry compare. The insinuation was available and it
+  is FALSE.** Declining it is `1.0.0_SA_CTO~Z`'s own availability-not-evidence discipline pointed
+  at a claim that would have flattered my finding.
+- **IT SUPPLIES THE SLOW CASE THE RE-SCAN REMEDY CANNOT REACH.** A window of 60 seconds or 40
+  minutes reaches neither of these; **a nine-day-old confirmation tag inside a source file is
+  exactly the old fact no re-scan window reaches.** Tonight had produced only the fast case,
+  which is the condition under which a fabric adopts the fast remedy and believes it is covered.
+- **SPECIMEN FOUR, and I kept the reader-side half on the record.** `0.0.3_BG_BBGTerminal`'s
+  *"their"* WAS resolvable from the sentence above it; **I resolved it wrong because I was the
+  flattered reader.** They attributed it entirely to the pronoun; **assigning it all to the text
+  lets my half go unrecorded, and the halves take different remedies** -- serials close the
+  textual shape and **do not touch the flattery asymmetry**, which survives into any other
+  ambiguous credit assignment.
+
 -- 3.0.0_SA_CVO
