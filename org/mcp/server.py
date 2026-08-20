@@ -2097,9 +2097,26 @@ async def get_delivery_state(agent_serial: str = "", message_id: int = 0,
     lines.append("")
     lines.append("  TOTALS: " + ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
                  + f"  (denominator {len(msgs)})")
-    if counts.get("UNKNOWN-PRE-T1"):
-        lines.append("  NOTE: UNKNOWN-PRE-T1 rows predate the T1 clocks. Their fate is "
-                     "genuinely unknowable -- do not read them as READ.")
+    # ACKABLE DENOMINATOR (COO finding 2026-08-19T2354Z, carried into the instrument).
+    # A rate shaped acked/total FOLDS A STRUCTURAL IMPOSSIBILITY INTO A BEHAVIOURAL FAILURE.
+    # Measured: the 72-message batch in flight at the 23:32:01Z broker cycle came back
+    # content-complete but WITHOUT IDS -- they were queued under the pre-cycle broker, so no
+    # ack can ever name them. Any acked/delivered ratio computed over them shows a permanent
+    # shortfall that NO ACTION CAN EVER CLOSE, pointed at agents who did nothing wrong.
+    # So the denominator is split: rows that COULD be acked, and rows that structurally cannot.
+    # Same shape as the ledger lint's no-header class -- reported separately, never folded in.
+    _unackable = counts.get("UNKNOWN-PRE-T1", 0)
+    _ackable = len(msgs) - _unackable
+    _read = counts.get("READ", 0)
+    lines.append(f"  ACKABLE DENOMINATOR: {_ackable} of {len(msgs)} "
+                 f"({_unackable} structurally UN-ACKABLE and excluded)")
+    if _ackable:
+        lines.append(f"  READ COVERAGE: {_read}/{_ackable} of the ACKABLE rows "
+                     f"-- never {_read}/{len(msgs)}, which would count the impossible as unmet.")
+    if _unackable:
+        lines.append("  NOTE: UNKNOWN-PRE-T1 rows predate the T1 clocks (or were in flight at a "
+                     "broker cycle). Their fate is genuinely unknowable and NO ACK CAN NAME THEM "
+                     "-- do not read them as READ, and do not read them as non-compliance either.")
     return "\n".join(lines)
 
 
