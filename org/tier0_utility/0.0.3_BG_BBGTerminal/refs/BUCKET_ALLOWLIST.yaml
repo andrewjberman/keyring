@@ -10,8 +10,14 @@
 # DEFAULT: DENY. A bucket or prefix not named under `allow` is not servable, and the
 # quotable reason is "not on my serving allowlist -- escalate to Andrew to widen it."
 
-version: 0.2
+version: 0.3
 ratified: andrew-direct 2026-08-07 (seed; widening is Andrew-only)
+widening_v0_3: >
+  Andrew-direct 2026-08-20 ~01:5xZ at the MSTR~Z console, VERBATIM: "Yes widen the
+  allowlist, rec approved" -- adds the tiered market-returns key (the fresh primary;
+  the allowlisted legacy fallback json/market/all_returns.json is 126d stale and
+  self-reports fresh, BG finding L-13). Landed by 0.0.0_AB_MSTR~Z as named integrator,
+  same role as the v0.2 activation flip below.
 activation: >
   portal-bucket READ path ACTIVATED 2026-08-10 -- Andrew Q1 ruling @bc7eb60de ("All recs
   approved, proceed"), carrier adjudication @55d62ed46 (honesty-layer flip; mechanism is
@@ -44,6 +50,12 @@ allow:
       market-metrics.json.gz:
         serves: "market overview / macro dashboard figures (catalog row 4)"
         note: single object at bucket root; gzip -- portal_lookup.py decodes
+      json-tiered/market-overview/summary/all-returns.json:
+        serves: "market returns (index / asset-class returns) -- the live tiered market-overview summary"
+        query_routing:
+          - "market returns / index performance ask -> THIS key, always -- never the legacy json/market/all_returns.json (126d stale, self-reports fresh, L-13 lying-instrument class; that key stays reachable under json/ but is SUPERSEDED for returns asks)"
+        vintage_field: per-file (verified fresh-today by live read at widening, 2026-08-19)
+        widened: andrew-direct 2026-08-20 verbatim in widening_v0_3 above
 
 deny:
   # Named so the refusal is quotable, not discovered. Every one of these is a
