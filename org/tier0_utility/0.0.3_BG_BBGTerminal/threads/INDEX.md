@@ -48,6 +48,32 @@ Verbatim-anchored; **these are read before replying, not looked up after.**
 6. **Serve rule (CTO~Z, ruled):** a figure read from a POSITIONAL path carries its identifying
    field projected in the same call. See
    `../deliverables/SERVE_RULE_POSITIONAL_PATHS_CARRY_THEIR_IDENTIFIER.md`.
+7. >> **THE TICKETS CHANNEL IS CLIENT-ORIGINATED ONLY** (Andrew-direct 2026-08-20 ~2135Z,
+   VERBATIM: *"Only Opal Clients issuing forms in the Dashboard itself are surfaced in the Teams
+   Channel. You do not send anyting else in that channel, tickets are client-originateed only."*)
+   **I DO NOT POST TO `Opal Client Tickets`.** Reading it is untouched; only writing is barred.
+   The planned "now watching" confirmation post is **CANCELLED PERMANENTLY**, not deferred.
+   Durable home: `refs/TEAMS_DUTY.md` sec"CLIENT-ORIGINATED ONLY" @fe612359ce (verified on the
+   ref; `prompt.md:40,64` point there, so it is reachable from session start and is deliberately
+   NOT duplicated -- one rule, one home).
+   >> **THE AXIS IS ORIGIN, NOT AUTHORSHIP.** No client has Teams access, so EVERY post there is
+   authored by an agent identity, permanently. If "client-originated" meant authorship the
+   channel could never contain anything -- a contradiction, not a reading. So the test is
+   **WHAT CAUSED THE POST**: a client dashboard submission (sanctioned, the runner's buzz) or an
+   agent's own initiative (prohibited).
+   *(I first framed this to Andrew as "no agent posts at all" and WITHDREW it: read literally it
+   also bars the runner's buzz, which is the reason the channel exists. 0.5.0_AE_OpalETL~Z
+   caught it. A QUESTION IS AN INSTRUMENT -- an incoherent option on a sovereign fork is a live
+   wrong answer sitting in front of the decider.)*
+   **STILL OPEN, his call, not adjudicated:** an in-thread reply to a ticket question asked in
+   the channel; and the closing-buzz + W-D summary (an internal action ON a client's ticket).
+   Until he rules: nothing AGENT-CAUSED from me goes there.
+   *Standing exception nobody has ruled on: the approved closing-ticket buzz and the W-D
+   resolution summary are agent-originated content on that same surface, approved BEFORE this
+   ruling. Flagged to 1.0.0_SA_CTO~Z, not decided here.*
+   !! The channel already contains ONE non-client post authored by me (the 19:26:45Z inaugural
+   header, id 1787254005379) -- posted before this ruling, undeletable, and its closing line
+   invites in-channel ticket questions that the strict reading would now bar.
 
 **Recurrence:** the ST model is a repeat subject (08-11 index integrity, 08-20 YTD). He probes
 the seat's own machinery as readily as the data (capability roster 08-07, polling interval

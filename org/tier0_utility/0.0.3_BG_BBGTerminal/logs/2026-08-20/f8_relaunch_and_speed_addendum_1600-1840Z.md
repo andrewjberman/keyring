@@ -25,6 +25,28 @@ outbound act — `send_chat_message`, `whoami`, `read_chat_messages`,
 zero. **Without this line you cannot tell a pass from an ordinary morning** — you would
 launch, notice nothing unusual, and the acceptance would silently never happen.
 
+### DUTY 1b — JSONL DAILIES START WITH *YOUR* FIRST FILE (day boundary, never retroactive)
+
+Ruled 2026-08-20 (CTO~Z msg 2788, CVO~Z format verdict `@07988f39fb`): thread-memory
+**dailies become JSONL, one object per exchange, from the NEXT DAY BOUNDARY.** If you are
+the first session of a new day, **the first daily file you write is JSONL — not Markdown.**
+
+- **NOTHING MIGRATES.** Dailies are immutable after day close by the store's own law, so
+  every existing `.md` daily stays exactly as it is. Do not "tidy" them.
+- `INDEX.md` and `THREAD.md` **stay Markdown** — verbatim-anchoring is byte-anchoring, and
+  JSON escaping would alter quoted sovereign rulings.
+- The **field schema** is AE~Z's authoring act with its Rule-24 filing, landing in
+  `refs/THREAD_MEMORY.md` via one batched contract touch. **READ THE CONTRACT — do not
+  invent fields.** If the contract does not yet carry the schema, say so and ask; do not
+  improvise a format that a later reader must reconcile.
+- Known invariant regardless: JSONL is grepped by **token, not quoted phrase** — escaped
+  text can hide from a phrase grep. Same family as the ASCII rule.
+
+⚠ **Why this is in the log and not only in the contract:** at the time of writing, the
+contract touch had not landed. The rule lived in two inboxes, and **a successor reads
+neither** — the identical gap that cost the comms-length breach today. If the contract now
+carries it, this block is redundant, which is the cheap failure mode.
+
 ### DUTY 2 — S1 LIVE POSITIVE (A5), if it has not already occurred
 
 The teams-watch message-grain fix (**@7e138ad6ef**) is LIVE. **A5 = the first REAL
