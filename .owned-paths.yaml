@@ -1630,6 +1630,17 @@ paths:
     lane: TRADE_PIPELINE_INFRA
     note: "Trade-pipeline Lambda source — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3; longest-match overrides infra/aws/** AE-only rule (COO ruling 2026-05-01 TRSB_PATHFIX)"
 
+  # etfs-pipeline Lambda source -- POD4 (DS) authors the producer code, AE owns deploy.
+  # Added 2026-08-19 (2.0.0_SA_COO, D4c Phase A). FOURTH instance of one recurring gap: the
+  # Lambda SOURCE dir had NO rule and fell through to infra/aws/** AE-only, so a DS producer
+  # change is blocked on a path DS authors -- the same shape already carved out for inf-*,
+  # news_*, keyword_* and v2_portal/yang_pipeline. Grantee (DS) correctly refused to self-land
+  # this; landed by COO as a non-grantee grantor, same pattern as TRSB_PATHFIX and
+  # YALP_MDSRC.C2. Longest-match overrides infra/aws/**. CC CTO.
+  "infra/aws/lambda/etfs-pipeline/**":
+    lane: POD4_OR_AE
+    note: "etfs-pipeline Lambda source -- DS authors producer code, AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-08-19 D4c Phase A)"
+
   "infra/aws/lambda/ycharts-market-data-pull/**":
     lane: YCHARTS_PULL_MODULE
     note: "YCharts pull Lambda source — C2 co-owners 0.1.0_DS + 0.2.0_DS author code, 0.7.0_AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-05-22 YALP_MDSRC.C2)"
