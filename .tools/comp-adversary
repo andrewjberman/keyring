@@ -47,7 +47,20 @@ def _git(*args):
 
 
 COMMIT_RE = re.compile(r"@([0-9a-f]{7,40})\b")
-PATH_RE = re.compile(r"\b((?:org|docs|infra|data|portal|rcg|workflows)/[A-Za-z0-9_\-./~]+\.[A-Za-z0-9]{1,6})\b")
+# TRUNCATION FIX (Andrew-PRIORITIZED 2026-08-20, VERBATIM: "truncated outputs is a very risky
+# error type and one we've seen crop up many times").
+# The trailing \b was satisfied by the FIRST dot-segment that could pass as an extension, so a
+# BARE SERIAL-NAMED DIRECTORY truncated instead of not matching:
+#     "org/tier2_senior/0.8.0_AE_CloudComp"   ->  extracted  "org/tier2_senior/0.8"
+# `.8` reads as a one-char extension and the NEXT character is `.`, a non-word char, so \b HOLDS.
+# The truncated path does not exist, so source 2 then reported a confident GONE about a path
+# NOBODY CITED -- a well-formed answer about a TRUNCATED input, which is exactly the class Andrew
+# named. Measured 4/4 false GONEs across serial-named dirs before this fix; every seat folder in
+# org/ carries dots, so the blast radius was every citation of a seat directory.
+# The lookahead requires the match to END at a real token boundary -- a path may not be followed
+# by another path character. A bare directory now yields NO MATCH (correct: it is not a file
+# citation) rather than a truncated one, and every real file path extracts byte-identically.
+PATH_RE = re.compile(r"\b((?:org|docs|infra|data|portal|rcg|workflows)/[A-Za-z0-9_\-./~]+\.[A-Za-z0-9]{1,6})(?![A-Za-z0-9_\-./~])")
 TOOL_RE = re.compile(r"\b(comp-[a-z0-9\-]+|to-check\.py|safe-commit|safe-apply|safe-deploy)\b")
 FILELINE_RE = re.compile(r"\b([A-Za-z0-9_\-./]+\.(?:py|ts|tsx|sh|yaml|yml|json|md)):(\d+)\b")
 
