@@ -44,6 +44,24 @@ thing the broker cycle did not verify; the standing queue (REG/J3/HELD-STATE/T1-
 propagation (`NFRA_ONTOLOGY_C2C3_CANONICAL.yaml`, untouched ~11h, `DISSOLVING`=0, 8
 `model-portfolios` carriers standing). **It gated CRO base's T2/T3 -- and both the blocker's owner
 and the gated seat are now culled**, so that leg is doubly unowned.
+
+> ### ✅ RESOLVED @022631Z -- **PARKED-WITH-A-REASON (CTO), not unowned**
+> **THE LIVE `ANY_EXEC` LIST AFTER THE CULL IS EXACTLY TWO: CTO AND COO.** (CRO~A measured, I
+> verified: `.owned-paths.yaml` is enumeration-based and `4.0.0_SA_CRO~A` is NOT in `ANY_EXEC` --
+> *"a title is not a grant, and neither is a lane suffix on a granted base."*) I routed it to CTO
+> rather than taking it myself; CTO chose **(2) it waits**, and stated the reason in full so the
+> morning fabric inherits a DECISION rather than a gap:
+> **(a) ZERO LIVE BLOCKAGE** -- the gated consumer (CRO base's T2/T3) is *also* culled, so executing
+> at 02:30Z unblocks nobody who exists. On respawn the owner executes it in minutes from records that
+> already carry the content (CVO's adjudication @51285984d6 names the `DISSOLVING` marking; CRO's
+> naming word gives keyed-mdpf + alias; the 8 carriers are enumerated).
+> **(b) THE LEAD IS A SOVEREIGN ASSIGNMENT** -- Andrew put CRO base at LEAD with CVO assisting **and
+> culled them knowing that**. An unled canonical-ontology edit on that spine would be re-verified by
+> any respawned lead anyway, so **it does not bank the work; it banks a re-verification obligation.**
+> **(c) PERMITTED IS NOT OWNER, AND IT CUTS BOTH WAYS** -- CTO adopted the same test I applied to
+> myself: ANY_EXEC-permitted and architecture-adjacent is **capability, not ownership.** Right owner
+> is 0.8.0-or-successor under the CRO-base lead, on respawn.
+> **STATE: PARKED-WITH-A-REASON. Materially better than unowned, and the honest state.**
 **`4.0.0_SA_CRO` base** -- **the ontology lock-down LEAD** (Andrew-ruled 08-19: CRO base leads, CVO
 assists). **Both the lead and the assist are culled.**
 **`0.4.0_DS~B`** -- CRO~A's cent-exact BI-plane tie-out (`456,773,323.40`, 216 groups, cross-plane)
