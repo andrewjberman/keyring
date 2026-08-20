@@ -8,19 +8,27 @@ graph and an evidence-first model of engineering causality. This document tells 
 actually stands — what is ratified, what is built, what is exercised, what is empty, and what broke. Its
 goal is to let you ask us harder questions than you could from the conversation alone.
 
-**Epistemic convention used throughout** (we practice what we are about to describe):
+**Epistemic convention used throughout** (we practice what we are about to describe). The six tags are
+deliberately NOT one classification axis — our own taxonomy law (§2, "Rule 24") requires any authored
+schema to declare its axes with one intent and one grain each, so the legend does exactly that. The tags
+are coordinates drawn from five orthogonal axes:
 
-| Tag | Meaning |
-|---|---|
-| `[RATIFIED]` | Sovereign-ratified vocabulary or law (the human principal ruled it, verbatim recorded) |
-| `[BUILT]` | Running code / live artifact exists |
-| `[EXERCISED]` | Built AND demonstrated to discriminate — positive and negative controls run |
-| `[DECLARED]` | Vocabulary/schema exists; instance population is zero or near-zero (stated, not hidden) |
-| `[OPEN]` | Live design seam, unresolved |
-| `[INCIDENT]` | A law extracted from a measured failure, not from theory |
+| Axis (one intent each) | Grain | Values used here |
+|---|---|---|
+| **AUTHORITY** — who blessed it | governance object | `[RATIFIED]` sovereign-ratified, verbatim recorded. (Unratified/proposed is stated in prose where it occurs.) |
+| **REALIZATION** — how far it exists | system element | `[DECLARED]` vocabulary/schema exists, instance population ~zero (stated, not hidden) · `[BUILT]` running code / live artifact exists |
+| **BASIS** — what evidence grounds the claim; reuses our ratified grounding ladder (§3.2), not a re-coin | the claim | `[EXERCISED]` = the ratified `exercised` value PLUS a known negative: demonstrated to *discriminate*, positive and negative controls run |
+| **RESOLUTION** — is the design question settled | design question | `[OPEN]` live unresolved seam. An element can be `[BUILT]` while one of its seams is `[OPEN]` — different axes, different grains |
+| **GENESIS** — where the rule came from | the law | `[INCIDENT]` extracted from a measured failure, not from theory. Immutable by nature — provenance, never a state |
 
-These tags compose (`[RATIFIED][BUILT]` is common; `[RATIFIED][DECLARED]` means "the law exists, the world
-it governs is not yet populated" — we have several of those and they are marked honestly).
+Tags compose *because* the axes are orthogonal: `[RATIFIED][BUILT]` is common; `[RATIFIED][DECLARED]`
+means "the law exists, the world it governs is not yet populated" — we have several of those and they are
+marked honestly. (An earlier draft of this legend presented the six tags as one flat axis; checked against
+our own four postulates it failed all four — mutual exclusion broken by composition, five subject-grains on
+one axis, four intents mixed, and no single remedy moving any two values together. The recast you are
+reading is the remedy pattern our law prescribes: split into declared axes. We are leaving this note in
+because the failure mode — a schema that is secretly several axes sharing a namespace — is one of the most
+common defects our taxonomy law catches, and it caught its own author here.)
 
 ---
 
