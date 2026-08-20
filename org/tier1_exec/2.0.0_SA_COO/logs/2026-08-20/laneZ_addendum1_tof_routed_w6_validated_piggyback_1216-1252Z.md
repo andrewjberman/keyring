@@ -1,0 +1,34 @@
+# ADDENDUM 1 — 12:16–12:52Z: TO-F routed + GO queued + the census call; law edit verified; ruling-2 landing; the piggyback mechanism; W6 VALIDATED; D8 accepted at the gate — 2.0.0_SA_COO~Z
+
+**Date:** 2026-08-20 (12:16–12:52Z) — continues `laneZ_morning_reform_acts1-4_tof_cut_1151-1216Z.md` (@896a220b17)
+**archetype:** COORDINATE + VALIDATE + DIAGNOSE
+
+## Compiler Tools (addendum 1)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log/merge-base | @2790d31d2d (law edit), @7284baa5c7 (ruling-2), @bf0a2c30f9 / @de57e559c2 / @0e95185935 (W6), @05689f222d (D8) | PASS | every cited commit resolved + content-read before acting; the law edit verified AT THE REF (`MSYS_NO_PATHCONV=1 git show HEAD:org/XXX.md`, struck-marker count 1 positive control; REARM_HISTORY cycle #6 present) |
+| proof-of-spec-check | `OPAL_ANALYST.W6_PROOF_OF_SPEC.json C1,...,C6` rc without pipe | rc=0 VALID, 6 rows, 0 violations | + NEGATIVE CONTROL wrong id set C1..C7 → rc=1 (the coverage diff fires — the pass is measured, not an instrument that could not have said otherwise) |
+| exercise_catalog_gate.py (author battery) | bare, repo root | rc=0, 13/13 | third independent run (author, certifier, validator); surface 36/3 of 48; `git status` on the staged catalog empty — untouched |
+| curl /delivery-state | ids 2116/2145/2151 (to MSTR~Z) vs 2117 (CTO~Z) / 2118 (me) | OFFER-EXHAUSTED ×3 vs READ ×2 | the discriminating measurement for the piggyback surface (below) |
+| git log -S | `mark-emitted`, `_queued_ids`, `def ack_messages` → d547f109fe; `offer_count` → 68c14f9a84 | PASS | when each T1 primitive entered server.py/broker.py |
+| Get-CimInstance (native) | `org/mcp/server.py` processes | PASS | per-seat MCP server vintages: MSTR~Z 20760 = 2026-08-18 19:11Z (pre-T1); all others post-T1 |
+| native Read | broker.py :525-700 (poll/emit/ack/delivery-state handlers); bbg cmd diff; W6 cert record; D8 acceptance record | PASS | mechanism read at source before any claim |
+
+## Delta
+
+1. **TO-F ROUTED by CTO~Z (122102Z, Msg-ID 2108): hands 0.4.0_DE_ClientPlatform~Z; implementation shape RULED (one route on the EXISTING opal-ticket-api Lambda; second Lambda "NOT GIVEN"); zero amendments.** Routing record appended @cf5a0dc3a7; GO PRE-QUEUED to the seat (122346Z; proof path + head_version @91fe6afbca pinned) so it fires at registration; status stays `staged` → `pending` at the seat's RAVC-2 ack (my flip).
+2. **CENSUS CALL (mine): 6/6 with ZERO idle measured (each seat's in-flight item named) → NO in-flight preemption; DE~Z = first claimant of the next freed slot; the 7th-seat question carded to Andrew via MSTR~Z** (A wait / B time-boxed burst within the 8-burst bound, recommended if "today" / C COO~Z yields — offered not recommended; default-if-silent = A). MSTR~Z executing A: slot-freed watcher `bl5nvf8g8` armed, spawn fires on first session end; B/C at the console.
+3. **Law edit verified at the ref:** CTO~Z struck the 08-11 `/drive` re-arm @2790d31d2d with the honest discharging authority (Tier-0 directive, not the row's own stop-condition) + same-turn broadcast; my item 2 closed RAVC-4.
+4. **BG backstop ruling (CTO~Z @008135604e):** session cron stands (n=1); the load-bearing soft-ness is the seat's OPERATOR-STARTED existence; card (a)/(b) at Andrew, default (a). **R5 cut-frame PRE-STAGED at my desk** (OS-task Step-1-only TO at OpalETL~Z behind ruling-2; record + inbox message, no alarm; exercise-grade acceptance with the seat down) — nothing cut.
+5. **Ruling-2 LANDED @7284baa5c7 (OpalETL~Z):** DAPI-liveness precondition, exit 50 distinct, label fix same pass. Verified at my desk (6 files, record + adversary declaration). rc=50 relayed to BG + MSTR~Z — **then RETRACTED as a label**: BG WAS addressed on the seat's 2141 (to_agents, QUEUED 2142); my per-recipient inbox copy's `To:` line names only me and cannot evidence the recipient list → redundant-harmless relay, no LD-0424 instance against the seat. Lesson appended to memory `an-inbox-cannot-evidence-another-seats-actions`. PRD §9.9 item-1 annotation was already done by MSTR~Z at integration (my "routed to CTO~Z" line corrected same minute). BG added the 50 row + two qualifiers + Step 2a (ledger = the discriminator, fire-once per-WINDOW) and self-corrected a credential-name collision (structural; reported, not proposed).
+6. **PIGGYBACK RE-OFFER SURFACE (MSTR~Z 124344Z) — MECHANISM SOURCE-CONFIRMED + MEASURED, no build:** the reclaim predicate (`delivered=0 AND polled_at<=now-90s AND offer_count<3`) re-offers until the server's `/mark-emitted` drain or a READ-ack flips `delivered`; MSTR~Z's MCP server (pid 20760, 2026-08-18 19:11Z) predates d547f109fe (which introduced mark-emitted, the piggyback dedupe AND `ack_messages`) — the ONE pre-T1 server on this box; its ids read OFFER-EXHAUSTED (never emitted/acked) while CTO~Z's/mine read READ. The 3-bound HOLDS (MSTR~Z re-counted: max 3/id, mean 2.85; its 3.4x was a subject-truncation counting artifact — withdrawn). Not message loss (filesystem inbox + Monitor are primary). Remedy = clean session restart of that seat (per-session server cannot be upgraded in place) — ADOPTED by MSTR~Z for the first quiet moment after the DE~Z spawn; laptop one-liner (pre-21:55Z servers) on the bus.
+7. **W6 CERTIFIED-ON-STAGED @bf0a2c30f9 (CTO~Z) → VALIDATED-ACCEPTED at my desk (2167/2168), zero corrections:** validator rc=0 positional + discriminating negative control + battery 13/13 re-run here; rows complete (verbatim/invocation/evidence/denominator/PASS), 3 mutants fired, exclusions reasoned; CLOSE stays (a) CVO~Z v0.2 co-sign + (b) laptop 0-diff port — CTO~Z's flip, = the OPAL_ANALYST program close.
+8. **D8 ACCEPTED-ON-SITE-Z-LEGS @05689f222d (CTO~Z):** D8-1/2/8/9 PASS, riders Q1/Q2/Q3 PASS(source), D8-3..7 honestly UNCOMPUTABLE (live: table + Lambda ResourceNotFound = not applied). Closes my "D8 acceptance with riders" board item at the site-Z-legs level; live halves = the post-apply battery (DE~Z behind TO-F if live, else CTO~Z), then my validation. Queue note sent to DE~Z.
+
+## Gate-forward (12:52Z)
+- **At Andrew (via MSTR~Z console):** the DE~Z slot card (A/B/C, default A); the backstop card (a/b, default a). Reserved unchanged: market-returns allowlist + the two credential provisions.
+- **At MSTR~Z:** spawn DE~Z on the first freed slot (watcher armed) or on Andrew's B; integrate @7284baa5c7 before the 08-21 07:00 fire; its own clean session restart at the first quiet moment; the D8 laptop-apply ferry.
+- **At CVO~Z:** the four cert items — v0.2 co-sign = first domino (W6 close (a), D6 TO-B landing).
+- **At me, event-driven:** DE~Z registration → `pending` flip + RAVC-2; v0.2 index RAVC-4 vs C1-C9 + named-id-set on CVO~Z's co-sign; D8 live halves after the battery; R5 cut on Andrew's (b); census at the next spawn/kill.
+- Fabric 6/6, zero crons, all broker mail READ-acked through 2163.
