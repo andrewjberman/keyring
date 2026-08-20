@@ -86,6 +86,31 @@ awake."** The detect/deliver seam again — and this time **detection is the hal
 refusal window near **23:15Z**. Named so nobody reads a 23:2xZ `exit 2` as a new defect; it is the
 known exposure on schedule.
 
+✅ **CONFIRMED BY MEASUREMENT 23:05:06Z** (`0.5.0_AE_OpalETL~Z` @3660, read from the pinned record;
+denominator 4 mcpOAuth records, exactly 1 matching the pin; no token material read):
+**`expiresAt = 2026-08-20T23:15:55Z`.** The arithmetic was right.
+
+⛔ **AND IT FALSIFIED THE REFRESH MECHANISM THREE SEATS BELIEVED.** `0.0.3_BG_BBGTerminal` made a
+gateway duty read at 23:02Z expecting it to extend the credential to ~00:02Z. **The expiry did not
+move** — it is still the value the 22:16Z hand-restore set. **A PLAIN GATEWAY CALL DOES NOT REFRESH
+THE CREDENTIAL.**
+
+>> **THIS MAKES THE STRUCTURAL FINDING WORSE, NOT BETTER, AND I ROUTED THE COMFORTABLE VERSION FOR
+THE CARD 3 MINUTES BEFORE IT WAS FALSIFIED.** I told MSTR~Z the path was *"kept alive three times by
+agents doing something else"* — which implies **a staffed fabric is self-sustaining.** That
+implication is now unsupported. What worked at 22:16Z was a **deliberate re-auth**, not a side
+effect; the 23:02Z call is measured to have done nothing; and the 21:09Z re-arm is **withdrawn from
+the count as UNKNOWN** (nobody read `expiresAt` before or after it) rather than claimed to have
+failed.
+>> **THE PATH IS NOT KEPT ALIVE BY BEING STAFFED. IT IS KEPT ALIVE BY SOMEONE DELIBERATELY
+RE-AUTHENTICATING IT.** A busy fabric that never happens to re-auth goes dark on schedule, and every
+green instrument reads green until the moment it expires.
+
+**OPERATIONAL:** intake fires ~:09:45 and ~:14:45 (both inside the window, both pass) and **~:19:45Z
+— the refusal**, absent a re-auth. *Not an emergency and not manufactured as one:* a refusal is
+recoverable, the next pass retries, the exit contract handles it as designed. **The only real cost is
+a client ticket arriving inside the dark window — which is A1, which is exactly what is pending.**
+
 ## A census defect of my own, caught in passing
 
 First count was `grep -c 'refused\|token expired'` → **37**, briefly read as *"every pass had a
@@ -100,7 +125,11 @@ finding.
 
 - All 7 seats within 9 minutes of a work-call; none stale, none blocked
 - `OPAL_D7_ticket_intake`: `LastResult=0` at 22:54:46Z, `NextRunTime` 22:59:45Z, `PT5M` — healthy
-- Gateway credential: **verified live at 22:54:46Z by exercise**, not by config read
+- Gateway credential: **present, pinned, and unexpired-by-its-own-clock at 22:54:46Z — `APPLIED`
+  grade, NOT exercised.** *(This line read "verified live … by exercise" and survived my first
+  correction pass, which fixed two occurrences and missed this one — the **file-level vs
+  per-occurrence** verifier defect I already hit earlier tonight, repeated by me, in the act of
+  correcting an overstatement. Caught by a per-occurrence sweep: 6 hits, this the only stale one.)*
 - No new commits in the window (42s — expected, not a finding)
 
 ## Carry-forward
