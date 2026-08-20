@@ -8,6 +8,7 @@ NOT a heuristic. An earlier heuristic over-assigned comp-pipescript (79 vs corre
 CVO caught it (seed-of-record 61e91d334). This regenerates the resolver from CVO's rows."""
 from __future__ import annotations
 
+import datetime
 import json
 import os
 
@@ -19,7 +20,11 @@ CENSUS = os.path.join(ROOT, "org", "tier1_exec", "3.0.0_SA_CVO", "logs", "2026-0
 # fresh checkout). Each manifest entry: {family(=thread_id), named_thread, owning_tool, status,
 # tool_pointer, reason?, last_reviewed, debtscan_flags}.
 MANIFEST = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-manifest.yaml")
-RESOLVER = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-resolver.json")
+# OPAL_RESOLVER_OUT lets the last_review-preservation behaviour be EXERCISED without
+# regenerating the live substrate -- that regen is deliberately parked (CTO 2026-08-14),
+# and a fix whose only test is "run it in production" is not tested, it is deployed.
+RESOLVER = os.environ.get("OPAL_RESOLVER_OUT") or os.path.join(
+    ROOT, "org", "modules", "graph", "estate-coverage-resolver.json")
 
 
 def load_routing():
@@ -97,9 +102,29 @@ def main():
                      "security-scanner", "smartx", "mdpf", "partners", "graph-platform", "insurance",
                      "portal-infra", "ops-internal", "data-refresh"]
     named_order = [n for n in CATALOG_ORDER if n in all_names] + sorted(n for n in all_names if n not in CATALOG_ORDER)
+    # A REGEN IS NOT A REVIEW. `last_review` answers "when did a human/CVO last REVIEW this
+    # substrate", and it drives the staleness age in comp-estate's provenance header
+    # (opal_estate_infrastructure.py:138-144). It was a FROZEN LITERAL here, so every regen
+    # OVERWROTE the real review date with a hardcoded one -- and by 2026-08-20 the literal had
+    # fallen BEHIND the live artifact, so a refresh would have moved the review vintage BACKWARDS
+    # six weeks (live 2026-07-30 -> written 2026-06-15) and asserted a review nobody performed.
+    # That is why CTO's 2026-08-14 substrate-fuse decision PARKED the regen: honest staleness beats
+    # a false freshness stamp. Preserving the prior value fixes the direction AND the lie -- a
+    # regen now leaves the review clock exactly where the last real review left it.
+    # `generated_at` carries the fact the literal was pretending to carry, separately, so the two
+    # questions ("when reviewed" / "when regenerated") stop sharing one field.
+    _prior_review = "2026-06-15"          # floor: only used when no prior artifact exists
+    try:
+        with open(RESOLVER, encoding="utf-8") as _f:
+            _prior_review = json.load(_f).get("last_review") or _prior_review
+    except (OSError, ValueError):
+        pass                              # first mint: the floor stands, and it is honest
+
     resolver = {"schema_version": 1,
                 "generated_from": "CVO census 2d9a0a2a1 + manifest (named_thread) + AUTHORITATIVE_lambda_taxonomy 26b32687a (resource-level, single source w/ fixtures)",
-                "last_review": "2026-06-15", "named_threads": named_order,
+                "last_review": _prior_review,
+                "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "named_threads": named_order,
                 "resources_by_named_thread": dict(resources_by_named_thread), "threads": threads}
     json.dump(resolver, open(RESOLVER, "w", encoding="utf-8"), indent=1)
     print("resource-level named threads:", len(resources_by_named_thread), "| total lambdas mapped:", len(l2nt))

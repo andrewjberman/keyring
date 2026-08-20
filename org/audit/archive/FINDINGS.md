@@ -254,6 +254,11 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 - detail: non-append edit: first divergence at line 4, col 1 (baseline 1619B / live-head 1112B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
 
+## 2026-08-19T115721Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_jq-ban-override-audit.log -->
+- log: org/jq-ban-override-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-18T125017Z\org_jq-ban-override-audit.log
+
 ## 2026-08-19T191917Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
 <!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/jq-ban-override-audit.log|listed in manifest but no live file -->
 - log: org/jq-ban-override-audit.log

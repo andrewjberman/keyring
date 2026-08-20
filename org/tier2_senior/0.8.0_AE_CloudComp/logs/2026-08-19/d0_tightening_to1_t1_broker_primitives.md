@@ -279,3 +279,76 @@ correction) - E4 `canonical-schwab-si2` taxonomy call - the held broker restart 
 Standing queue: REG w/ REG-0 fixture -> J3 (comp-atomcheck v1, 08-20, load-bearing) -> HELD-STATE ->
 W-15 -> T1-DEFROST. CTO's routed comp-pipescript assets-tree universe defect + the H8 conditional
 sit in the same queue; COO sequences.
+
+---
+
+# INSTRUMENT-REPAIR BATCH (COO [DRIVE] 2303Z -> complete)
+
+COO redirected an idle-reading seat onto the batch. CTO's family framing: **records that read
+authoritative while being wrong.** COO then re-prioritised it on DS base's better discriminator --
+**PERMIT-class** (a careful operator can still get it right; a lint is the correct instrument) vs
+**FORCE-class** (no correct declaration is available; the wrong record is produced every time,
+regardless of who is at the seat). Force outranks permit. Order taken as revised.
+
+| item | commit | result |
+|---|---|---|
+| artifact-coverage (FORCE) | `9bb070231e` + standards | 6/6 both grammars, both directions |
+| `--pin` refuses moving refs | `af74185904` | 24/24, both builder homes |
+| header/body ledger lint | `845ede65fb` | six-RED reproduced **6/6 = 100% false-RED** |
+| H8 row-token rename | `94cc0620e7` | exercised both ways |
+| safe-deploy receipt | `130a3ef324` | 4/4 incl. CTO's named control |
+| delivery-state ackable denominator | `ded91deb55` | from COO's 72-un-idded-row finding |
+| H8 grounding, committed | `3b7a06b8b3` | MSTR caught it had no source |
+
+## The two findings I did not go looking for
+
+**1. The coverage rule was broken in BOTH directions, and only the loud half had been noticed.**
+It was too strict to satisfy honestly (forcing a false "excluded" declaration) *and* too loose to
+catch what it was built for: the exclusion check substring-matched a stem against a blob of ALL
+exclusion text, so **my own accepted TO-1 instance false-passed twice** -- `broker.py` because an
+exclusion about the site-Z leg contains "broker", `server.py` because one about
+`_ensure_commit_worker` cites `server.py:~592`. A false FAIL is loud and gets argued with. **A false
+PASS is believed.**
+
+**2. `safe-deploy`'s receipt under-named its own act.** `:997` gates the nothing-to-do exit on two
+file sets, `:1118` deploys both, `:1006` reported one. Exercised: a roster-only change printed
+`0 script file(s) to deploy` and deployed one -- and roster-only is precisely the case that leg was
+BUILT for, its docstring naming the an-atomic-commit-is-not-an-atomic-deploy incident. The one path
+most likely to use it was the one the receipt could not see.
+
+## Where I refused to build
+
+**H8.** I profiled the mechanism before building to it and the premise was stale: CVO~B's 2026-08-05
+NOTHING-VERIFIED guard already closes the instrument-silence half (rc=2 + an explicit
+not-a-clean-result banner). Building it again would have been duplicate work. CTO accepted the
+correction in full and took the stale premise as theirs. What was real was the **row token** --
+because a token travels in reports without its banner, which is the path the error actually took.
+
+I also declined to invent a `CODE_TREES` row for the TAXSMA deploy home. That turns on a
+product-naming question owned by the seat cutting D9-(c1); CTO ruled it a required first atom there.
+**Manufacturing an answer to an ownership question inside a tool patch is how a wrong home becomes
+load-bearing.**
+
+## What I got wrong
+
+The ledger lint's detector was too narrow **three times** -- 346/382 false "stranded legs" on a
+heading-only match; an adjacency miss that would have contradicted COO with 3/6 instead of 6/6; and
+a `--since` filter that string-compared filename prefixes so July ledgers joined an 08-19 scan.
+**Each time the estate was fine and my instrument was wrong, and the printed denominator caught all
+three.** Had I shipped any of them I would have produced exactly the false-alarm class the tool
+exists to kill.
+
+And I produced a record-gap on my own finding: the H8 grounding underpinned a production gate at
+CTO~Z while existing only as message text. MSTR caught it. Committed at `3b7a06b8b3`, re-measured at
+commit vintage rather than copying the ferried text -- which added a fourth home and surfaced a
+55-vs-57 delta with DS~A that I flagged rather than smoothed.
+
+## Compiler Tools (batch)
+
+| tool | result |
+|---|---|
+| `comp-find` | consumer check before the token rename: 1 emit site, 0 parsers (12 DOC/comment hits) -- rename safe by measurement |
+| `comp-pipescript deployed` | reproduced the H8 defect and verified the rename both ways (TAXSMA reframed, real STALE row intact) |
+| `comp-ledger-agreement` (built) | 511 scanned; 9 FINDINGS, 8 CANDIDATES, 123 no-header reported as their own class |
+| `proof-of-spec-check` | 6/6 battery; my 3 instances re-validated under the tightened rule |
+| `commit-gate` / `safe-commit` | every commit; rule-bank two-phase override taken with the reserved prefix and **discharged in-session** @`722e33fe64` |

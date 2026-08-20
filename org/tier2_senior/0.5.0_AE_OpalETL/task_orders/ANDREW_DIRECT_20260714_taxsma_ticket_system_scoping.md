@@ -5,6 +5,16 @@
 <channel>direct terminal prompt, session 8841a0df-4e0d-4190-9d2e-96fc825f9f23</channel>
 <received>2026-07-14 ~18:52Z</received>
 <status>superseded</status>
+<!-- SUPERSEDED 2026-08-19 by ANDREW'S WORD (CTO /open-calls card 10, "All approved", record
+     @3c8c3f1035): the D7 + D9 PRDs absorb this TO's two halves -- the ticketing half via D7's
+     explicit #42 ticketing-half acceptance (@fac13ccc3a), the TAXSMA half via D9's assess-first
+     program (D9_TAX_SMA_OPS_PRD.md). The 36-day PENDING at the dead ~A seat was the CVO-measured
+     ownership gap (a handoff declared in one document does not create ownership in another);
+     both successors now carry the halves explicitly. Flip by 0.0.0_AB_MSTR per CTO ferry 202310Z;
+     the D9 TO-A part-6 recommendation INHERITS this answer (cite, do not re-ask). -->
+<!-- (Both fabrics flipped this record to superseded independently within minutes of Andrew's
+     card-10 ruling; both annotations kept at the wind-down merge 2026-08-20 -- same disposition,
+     complementary detail. Laptop flip above; sitez flip below. -->
 <!-- SUPERSEDED 2026-08-19 ~2030Z by 2.0.0_SA_COO~Z (COO flip per the TO-status law; issuer is Andrew, sovereign).
      POINTER: Andrew ruling 2026-08-19 (record @3c8c3f1035, CTO open-calls card 10, verbatim): "TO #42 |
      SUPERSEDED by the D7 + D9 PRDs (each half explicitly owned) | COO/MSTR mark #42 superseded citing this
@@ -13,7 +23,6 @@
      D7_TICKETING.TO-AC-SITEZ at 0.5.0_AE_OpalETL~Z), the taxsma half is D9's (D9_TAXSMA assessment at
      0.4.0_DS_ClientPlatform~Z). Linkage + inherit mechanics: MSTR~Z 194942Z + COO~Z 195042Z ack; the assignee
      lane (~A) is dead — this row inherits the ruling rather than duplicating into the D9 census. -->
-
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
 ## ADDENDUM 5 — SIXTH ANDREW-DIRECT (2026-07-15 ~14:0xZ): TICKET-CENTER UI + THE UI-DESIGN PROCESS (verbatim)

@@ -1,0 +1,50 @@
+{
+  "artifact": "ADVI_BDPARITY roster reconciliation -- qt6 215 vs export 201, ADJUDICATED",
+  "produced_by": "4.0.0_SA_CRO~A",
+  "date": "2026-08-20",
+  "inputs": {
+    "qt6": "persisted template 517678 / run 517753, as_of 08/18/2026",
+    "export": "s3://opal-data-assets/blackdiamond/49f/bronze/allocation_390224/2026-08-18/data.xlsx (as_of 2026-08-18, pulled 2026-08-19T02:30:33Z, run 516962, 30,577 rows / 92 cols)"
+  },
+  "denominators": {
+    "export_distinct_groups": 201,
+    "qt6_distinct_groups": 215,
+    "qt6_only": 15,
+    "export_only": 1
+  },
+  "RESULT_THE_ROSTER_GAP_IS_IMMATERIAL": {
+    "qt6_only_total_aug_emv": 8557079.7,
+    "all_group_aug_emv": 10155890671.91,
+    "qt6_only_share_pct": 0.0843,
+    "verdict": "The 15 qt6-only groups total 8,557,079.70 = 0.08 pct of all-group Aug EMV. They are all person-named groups, largest 2,525,985.21, smallest 11,306.85 -- no house/ops bucket among them. THEREFORE the 215-vs-201 group-roster difference CANNOT explain the ~2.09B L1-L3 gap. The gap is WITHIN the 200 shared groups -- missing ACCOUNTS beneath groups the export already has, not missing groups. This SHARPENS the membership finding rather than competing with it."
+  },
+  "qt6_only_groups": {
+    "Mike Kipniss": 2525985.21,
+    "Christian Cancello": 1021597.51,
+    "Tyler Pace": 1020294.59,
+    "Noah Plotkin": 978358.17,
+    "Owen Johnson": 658898.64,
+    "Sydney  Ramos": 510869.52,
+    "Gavin Ward": 488102.29,
+    "Layden Baldwin": 348126.32,
+    "Payton Merrill": 237046.03,
+    "William Crawford": 199820.67,
+    "Jon-Michael Chadwick": 159257.02,
+    "Ethan Schwab": 145097.84,
+    "Jack  Burgess": 127216.98,
+    "Michael Hruby": 125102.06,
+    "Parker Crane": 11306.85
+  },
+  "export_only_groups": {
+    "Kate Gotta": {
+      "rows": 3,
+      "account_mv_sum": 612921.73
+    }
+  },
+  "HAZARD_PORTFOLIO_GROUP_MARKET_VALUE": {
+    "observation": "The export column named 'Portfolio Group Market Value' is NOT a group-level total. It is single-valued in only 22 of 201 groups; specimen group Boston Prachyl carries 109 DISTINCT values across 211 rows. Even on the 21-group clean subset where it IS single-valued, it ties qt6 EMV 0 of 21 times (spread -27.42 pct to +48.58 pct).",
+    "what_I_do_NOT_claim": "I have NOT established what grain it is at. Reported as an observation, not a mechanism.",
+    "why_it_matters": "A column whose NAME asserts a group total while its VALUES vary 109 ways inside one group is a name-vs-computation trap. Do not aggregate it with first()/max() as a group MV -- I did exactly that in a first pass and it produced a median +2,627 pct difference that was pure artifact of my own aggregation. That comparison is WITHDRAWN."
+  },
+  "AUTHORING_NOTE_F010": "This file was first written from a python -c string inside a double-quoted bash command. Backticks in the text were SHELL-EVALUATED before python saw them, silently deleting the column name from two fields and leaving grammatical sentences with the subject missing ('The export column named  is NOT...'). Caught by a stray 'Portfolio: command not found' on stderr. CLAUDE.md F-010 records this for commit messages; the mechanism is the SHELL, so it binds any double-quoted string carrying content -- python -c, jq, curl bodies. Rewritten via a quoted heredoc, which the shell does not expand."
+}
