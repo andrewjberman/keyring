@@ -72,6 +72,25 @@ never-implicit through MSTR<->MSTR.
   laptop gate, not this desk's edit. TO-G's confidence model UNBLOCKED at 0.5.0_AE_OpalETL~Z,
   routed direct.
 
+- **D9-(c1) RIDER (laptop-CTO architecture-side, ferried 20260820T0014Z) — LEDGERED at this gate,
+  binding WHEN (c1) CUTS, not before** ((c1) is WAIVED-AHEAD of the Yang/Alyssa meeting
+  @1e0ec3b079; its TAXSMA half carries the #48 supersession pointer). **THE RIDER: (c1)'s FIRST
+  ATOM = a DEPLOY-HOME DECLARATION** — a `portal/gold/{product}/{scope}/` CODE_TREES row per Rule
+  17b's product-gold grammar (shape precedent @4dadd1354c, VERIFIED resolving: the advi
+  CODE_TREES row, CTO-ruled home) or a DECLARED exemption with reason; the product-naming half
+  belongs to the seat cutting (c1). Once declared, deploy-verify coverage follows CODE_TREES for
+  free. **H8's SUBSTANCE INDEPENDENTLY CORROBORATED AT THIS DESK before ledgering** — different
+  instrument, same verdict: `build_dim_taxsma_report.py` lives at `data/assets/scripts/gold/`
+  (the SHARED repo home) and `comp-pipescript deployed --pipeline mdpf` resolves it as a
+  shared-home NON-MEMBER, 0 scripts checked against S3 ("NOTHING VERIFIED... could not place
+  what you gave it") — the deploy set is empty, matching 0.8.0's positive-controlled 3-home
+  zeros. The failure the rider prevents, carried verbatim: *a production chain whose deploy set
+  is empty is verified by NOTHING — every green it produces is a green about bytes nobody can
+  place.* ⚠ **CITATION MISMATCH FLAGGED BACK, not adopted: the ferried H8-grounding hash
+  @c411c6a9e9 resolves to an etfs owned-paths grant touching only `.owned-paths.yaml` — zero
+  taxsma content. The H8 record's true commit is unidentified at this desk; the rider's substance
+  stands on the corroboration above, not on that hash.**
+
 ## Precedent by use
 
 The W6/D6-TO-F one-artifact convergence (AE~Z authors, CTO~Z certifies, CVO~Z second-reads;
