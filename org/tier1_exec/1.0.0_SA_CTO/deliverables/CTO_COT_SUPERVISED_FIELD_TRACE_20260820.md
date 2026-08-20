@@ -94,10 +94,13 @@ unsupervised — the strays and the held-aways overlap heavily). Same BD firm co
 in its output columns (:95, :591) — and the served dim (943 rows, 23 cols, read live) DOES NOT
 CARRY IT. The drop is `:599`: `available = [c for c in output_cols if c in accts.columns]` — a
 SILENT-DROP filter; the transactions extract never carries "Portfolio Group", so the silver never
-has it, so the gold drops it without a word (also dropped the same way: implementor, consultant,
-local_ops, manager, investment_strategy_name). A declared output column silently missing from the
-served artifact is its own small defect class — the fix TO should add a loud print for dropped
-declared columns.
+has it, so the gold drops it without a word. **CORRECTED ~1735Z (0.2.0's Phase-1 enumeration via COO 63331 —
+my count was an undercount):** the measured drop set is **10 of 30 declared columns**, not this
+trace's 6 — my 6 (portfolio_group, implementor, consultant, local_ops, manager,
+investment_strategy_name) plus closed_date, account_is_open, relationship_sec_client_type,
+additional_advisor. Conclusions unaffected; the count is the only delta, corrected so nobody
+re-derives the 6 as complete. The loud-print class fix landed @386a3f6d94 (all three narrowing
+sites, print-only); the extra 4 stay dropped BY DESIGN — G1 restores only its sanctioned five.
 
 ### C. ONE FIX SERVES BOTH LEGS
 
