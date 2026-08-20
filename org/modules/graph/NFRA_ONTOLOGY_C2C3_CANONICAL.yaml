@@ -151,7 +151,7 @@ c3_deterministic_structures:
   sys-causality-engine:
     kind: SHARED-ENGINE
     legacy_family_key: causality-ai
-    meaning: 'Causality/thematic generation engine. ADJUDICATED 2026-07-30 (CVO pass, Andrew-direct): RETIREMENT-PENDING -- producer lambdas DEAD on applied plane; teardown routes to the debt retirement engine (VELOCITY WS-E3, keep-dormant), never map-side; the map serves its June shape until teardown lands.'
+    meaning: 'Causality/thematic generation engine. ADJUDICATED 2026-07-30 (CVO pass, Andrew-direct): WINDING_DOWN (recorded then as RETIREMENT-PENDING prose; respelled at the 2026-08-20 Stage-enum ratification -- vocabulary hygiene, not a walk assertion) -- producer lambdas DEAD on applied plane; teardown routes to the debt retirement engine (VELOCITY WS-E3, keep-dormant), never map-side; the map serves its June shape until teardown lands.'
     chain_count: 8
     spans_verticals: [causality, market-overview, trade-submission]
   sys-macro-data-engine:
@@ -522,7 +522,7 @@ c4_segments:
   market-intelligence:
     display_name: Market & Research Intelligence
     registry: [sys-yang-analytics-engine, sys-market-intelligence-engine, sys-news-intelligence-engine, sys-macro-data-engine, sys-causality-engine]
-    flags: [sys-causality-engine ADJUDICATED RETIREMENT-PENDING 2026-07-30 -- producers DEAD on applied plane; teardown owed to VELOCITY WS-E3 (keep-dormant), never map-side]
+    flags: [sys-causality-engine ADJUDICATED WINDING_DOWN 2026-07-30 (then-prose RETIREMENT-PENDING, respelled at the 2026-08-20 Stage-enum ratification) -- producers DEAD on applied plane; teardown owed to VELOCITY WS-E3 (keep-dormant), never map-side]
     verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal, ceo-digest]
     high_signal: >
       The shared quantitative analytics and research-generation engines that compute what the
