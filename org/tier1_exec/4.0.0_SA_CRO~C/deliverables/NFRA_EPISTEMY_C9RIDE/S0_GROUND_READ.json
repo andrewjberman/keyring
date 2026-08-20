@@ -1,0 +1,1232 @@
+{
+ "artifact": "NFRA_EPISTEMY C9-RIDE Phase 1 -- S0 ground-read of landed atom_layer0 bundles",
+ "seat": "4.0.0_SA_CRO~C",
+ "status": "PROPOSED",
+ "read_vintage": {
+  "repo_commit": "958f505aa72bdb2271471c1a9291bc688104ee77",
+  "validator_commit": "45a2892ed24f84356e6e50e16ba6e543f50c5169",
+  "validator_working_tree_dirty": false,
+  "manifest_commit": "958f505aa72bdb2271471c1a9291bc688104ee77"
+ },
+ "denominators": {
+  "bundles_found": 26,
+  "subject_dirs": 26,
+  "manifest_terms_total": 65,
+  "manifest_completed": 26,
+  "manifest_queued": 39,
+  "interim_DERIVED_FROM_BUNDLE": 26,
+  "interim_ACQUISITION_FAILED_NO_BUNDLE": 39,
+  "completed_terms_without_bundle": [],
+  "validator_rc0_at_read": 5,
+  "validator_nonzero_at_read": 21,
+  "contracts_total": 117,
+  "unresolved_total": 30,
+  "terminal_counts": {
+   "DECOMPOSITION_FOUND": 2,
+   "DECLARED_FRONTIER_EXHAUSTED": 24,
+   "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN": 0,
+   "INSTRUMENT_UNKNOWN": 0,
+   "NOT_EXERCISABLE": 0
+  },
+  "terminals_unseen_in_ledger": [
+   "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN",
+   "INSTRUMENT_UNKNOWN",
+   "NOT_EXERCISABLE"
+  ]
+ },
+ "bundles": [
+  {
+   "concept": "C0",
+   "run_dir": "c0/20260820T183345Z/",
+   "run_id": "AL0-SEQ2-R006-C0",
+   "evidence_vintage": "731cecbf8693df9f8388c76a9fd78f1f61563112",
+   "observed_at_utc": "2026-08-20T18:33:45Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R006",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c0/20260820T183345Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "C1",
+   "run_dir": "c1/20260820T184144Z/",
+   "run_id": "AL0-SEQ3-R007-C1",
+   "evidence_vintage": "83e01fe6862c72c0946e6bae524106496bc5e11d",
+   "observed_at_utc": "2026-08-20T18:41:44Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R007",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c1/20260820T184144Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "C2",
+   "run_dir": "c2/20260820T193247Z/",
+   "run_id": "AL0-SEQ9-R008-C2",
+   "evidence_vintage": "2f772b459059789e49bbfc59f15d85490d21ca82",
+   "observed_at_utc": "2026-08-20T19:32:47Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R008",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c2/20260820T193247Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "C3",
+   "run_dir": "c3/20260820T191726Z/",
+   "run_id": "AL0-SEQ7-MANIFEST-C3",
+   "evidence_vintage": "087dca0ecfadbeb1bd3a00917ac7f5037598b5a6",
+   "observed_at_utc": "2026-08-20T19:17:26Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_NOT_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECOMPOSITION_FOUND",
+   "certificate_state": "CERTIFICATE_WITHHELD",
+   "contracts": 5,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c3/20260820T191726Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECOMPOSITION_FOUND"
+    }
+   }
+  },
+  {
+   "concept": "C3.i",
+   "run_dir": "c3_i/20260820T194446Z/",
+   "run_id": "AL0-SEQ11-MANIFEST-C3I",
+   "evidence_vintage": "80da0a6cca45e7ae8f1dc7555661dfba100e6292",
+   "observed_at_utc": "2026-08-20T19:44:46Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c3_i/20260820T194446Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "C3.ii",
+   "run_dir": "c3_ii/20260820T193915Z/",
+   "run_id": "AL0-SEQ10-MANIFEST-C3II",
+   "evidence_vintage": "d83646a76b15c2aca1a73f7ab839e68a168f6644",
+   "observed_at_utc": "2026-08-20T19:39:15Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c3_ii/20260820T193915Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "C4",
+   "run_dir": "c4/20260820T192629Z/",
+   "run_id": "AL0-SEQ8-R009-C4",
+   "evidence_vintage": "6ac276b65c2624917c13731bf3f30f67fdbec7e0",
+   "observed_at_utc": "2026-08-20T19:26:29Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": "R009",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/c4/20260820T192629Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "D2",
+   "run_dir": "d2/20260820T211415Z/",
+   "run_id": "AL0-SEQ26-MANIFEST-D2",
+   "evidence_vintage": "fb4d8589709074717dfa3fc74b262995be2bbdcb",
+   "observed_at_utc": "2026-08-20T21:14:15Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 7,
+   "unresolved": 2,
+   "rule24_record_ids": 12,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 0,
+    "errors": []
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "D3",
+   "run_dir": "d3/20260820T202419Z/",
+   "run_id": "AL0-SEQ17-MANIFEST-D3",
+   "evidence_vintage": "ebb1eeb96257d834d5273ecdb4e7bff01ebeaae6",
+   "observed_at_utc": "2026-08-20T20:24:19Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/d3/20260820T202419Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Deploy_State",
+   "run_dir": "deploy_state/20260820T195557Z/",
+   "run_id": "AL0-SEQ13-R003-DEPLOY-STATE",
+   "evidence_vintage": "a5051d54c96eb7771c5776348346622ac955a66e",
+   "observed_at_utc": "2026-08-20T19:55:57Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 3,
+   "unresolved": 0,
+   "rule24_record_ids": 11,
+   "source_census_row": "R003",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/deploy_state/20260820T195557Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Domain",
+   "run_dir": "domain/20260820T184921Z/",
+   "run_id": "AL0-SEQ4-R018-DOMAIN",
+   "evidence_vintage": "91a05ebacb28e06cc08d4e87f50f379793615d6e",
+   "observed_at_utc": "2026-08-20T18:49:21Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 2,
+   "rule24_record_ids": 11,
+   "source_census_row": "R018",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/domain/20260820T184921Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Estate",
+   "run_dir": "estate/20260820T200347Z/",
+   "run_id": "AL0-SEQ15-R001-ESTATE",
+   "evidence_vintage": "f5b0c3d771e79f1dfe457ce54f1c9fb629396bf9",
+   "observed_at_utc": "2026-08-20T20:03:47Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 3,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R001",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/estate/20260820T200347Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Estate_Contracts",
+   "run_dir": "estate_contracts/20260820T185657Z/",
+   "run_id": "AL0-SEQ5-R016-ESTATE-CONTRACTS",
+   "evidence_vintage": "1ed947baa7896c2cf41414dc14129ecaa0925190",
+   "observed_at_utc": "2026-08-20T18:56:57Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R016",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/estate_contracts/20260820T185657Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Function",
+   "run_dir": "function/20260820T200014Z/",
+   "run_id": "AL0-SEQ14-R005-FUNCTION",
+   "evidence_vintage": "67a9b8caf66bd64d62c4068ed837628518db9bf5",
+   "observed_at_utc": "2026-08-20T20:00:14Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 3,
+   "unresolved": 0,
+   "rule24_record_ids": 11,
+   "source_census_row": "R005",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/function/20260820T200014Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Lifecycle_Class",
+   "run_dir": "lifecycle_class/20260820T203503Z/",
+   "run_id": "AL0-SEQ20-R019-LIFECYCLE-CLASS",
+   "evidence_vintage": "e90cec7e44e098c1e5193a05454180b78264a387",
+   "observed_at_utc": "2026-08-20T20:35:03Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R019",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/lifecycle_class/20260820T203503Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Lifecycle_Stage",
+   "run_dir": "lifecycle_stage/20260820T200739Z/",
+   "run_id": "AL0-SEQ16-R017-LIFECYCLE-STAGE",
+   "evidence_vintage": "4cace85cd33966d69591070e7300a7900a8dc30c",
+   "observed_at_utc": "2026-08-20T20:07:39Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 3,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": "R017",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/lifecycle_stage/20260820T200739Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Plane",
+   "run_dir": "plane/20260820T203210Z/",
+   "run_id": "AL0-SEQ19-R031-PLANE",
+   "evidence_vintage": "54f3329c300465ad208d4a7735e3aa93af9d3ce0",
+   "observed_at_utc": "2026-08-20T20:32:10Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 0,
+   "rule24_record_ids": 11,
+   "source_census_row": "R031",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/plane/20260820T203210Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Relation",
+   "run_dir": "relation/20260820T210549Z/",
+   "run_id": "AL0-SEQ25-R014-RELATION",
+   "evidence_vintage": "32fc9e447d23b2996edab763c82e6b4067a664fa",
+   "observed_at_utc": "2026-08-20T21:05:49Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 6,
+   "unresolved": 0,
+   "rule24_record_ids": 12,
+   "source_census_row": "R014",
+   "validator_at_read": {
+    "rc": 0,
+    "errors": []
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/relation/20260820T210549Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Role",
+   "run_dir": "role/20260820T205530Z/",
+   "run_id": "AL0-SEQ24-R013-ROLE",
+   "evidence_vintage": "f2ed5d5b12449d3849caa182d5a798b936244ff7",
+   "observed_at_utc": "2026-08-20T20:55:30Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 6,
+   "unresolved": 0,
+   "rule24_record_ids": 12,
+   "source_census_row": "R013",
+   "validator_at_read": {
+    "rc": 0,
+    "errors": []
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Scope",
+   "run_dir": "scope/20260820T204941Z/",
+   "run_id": "AL0-SEQ23-R032-SCOPE",
+   "evidence_vintage": "9b602428581aeafafec7ee180aca8815a9a52e9b",
+   "observed_at_utc": "2026-08-20T20:49:41Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 0,
+   "rule24_record_ids": 12,
+   "source_census_row": "R032",
+   "validator_at_read": {
+    "rc": 0,
+    "errors": []
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/scope/20260820T204941Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Segment",
+   "run_dir": "segment/20260820T190437Z/",
+   "run_id": "AL0-SEQ6-R010-SEGMENT",
+   "evidence_vintage": "632e4483ea893031b205c4ade8c900a933aeaac6",
+   "observed_at_utc": "2026-08-20T19:04:37Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 5,
+   "unresolved": 3,
+   "rule24_record_ids": 11,
+   "source_census_row": "R010",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/segment/20260820T190437Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Subject",
+   "run_dir": "subject/20260820T195112Z/",
+   "run_id": "AL0-SEQ12-R004-SUBJECT",
+   "evidence_vintage": "527cd926438581e9b382911a42a94304e6310839",
+   "observed_at_utc": "2026-08-20T19:51:12Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 0,
+   "rule24_record_ids": 11,
+   "source_census_row": "R004",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/subject/20260820T195112Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Substrate",
+   "run_dir": "substrate/20260820T181521Z/",
+   "run_id": "AL0-SEQ1-R002-SUBSTRATE",
+   "evidence_vintage": "4b6a61b08f62fb9d38ef4eb5b85167dbefac1690",
+   "observed_at_utc": "2026-08-20T18:15:21Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 7,
+   "unresolved": 4,
+   "rule24_record_ids": 11,
+   "source_census_row": "R002",
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/substrate/20260820T181521Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Substrate_Side",
+   "run_dir": "substrate_side/20260820T202821Z/",
+   "run_id": "AL0-SEQ18-MANIFEST-SUBSTRATE-SIDE",
+   "evidence_vintage": "4fbbd5218ba640d2cab046f1ad40f3222373e5cb",
+   "observed_at_utc": "2026-08-20T20:28:21Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 0,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/substrate_side/20260820T202821Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  },
+  {
+   "concept": "Territory",
+   "run_dir": "territory/20260820T204241Z/",
+   "run_id": "AL0-SEQ22-MANIFEST-TERRITORY",
+   "evidence_vintage": "f45cae7ac29db97336cfb6c7ecce3ba011a839d4",
+   "observed_at_utc": "2026-08-20T20:42:41Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_NOT_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECOMPOSITION_FOUND",
+   "certificate_state": "CERTIFICATE_WITHHELD",
+   "contracts": 3,
+   "unresolved": 1,
+   "rule24_record_ids": 12,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 0,
+    "errors": []
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECOMPOSITION_FOUND"
+    }
+   }
+  },
+  {
+   "concept": "UNDECLARED",
+   "run_dir": "undeclared/20260820T203836Z/",
+   "run_id": "AL0-SEQ21-MANIFEST-UNDECLARED",
+   "evidence_vintage": "8c6c809607a76812eaa80620b81cffae7bdd88f9",
+   "observed_at_utc": "2026-08-20T20:38:36Z",
+   "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_NOT_ASSESSED"
+   },
+   "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+   "certificate_state": "CERTIFICATE_ISSUED",
+   "contracts": 4,
+   "unresolved": 1,
+   "rule24_record_ids": 11,
+   "source_census_row": null,
+   "validator_at_read": {
+    "rc": 1,
+    "errors": [
+     "ERROR: missing package Rule 24 records: ['R24-AL0-012']"
+    ]
+   },
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/undeclared/20260820T203836Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    }
+   }
+  }
+ ],
+ "absent_by_manifest_predicate": [
+  {
+   "term": "Lifecycle_Value",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 27)"
+   }
+  },
+  {
+   "term": "Unreconciled_Aua",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 28)"
+   }
+  },
+  {
+   "term": "Map",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 29)"
+   }
+  },
+  {
+   "term": "Contract_Record",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 30)"
+   }
+  },
+  {
+   "term": "Cascade",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 31)"
+   }
+  },
+  {
+   "term": "Motif",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 32)"
+   }
+  },
+  {
+   "term": "Chain",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 33)"
+   }
+  },
+  {
+   "term": "Variance",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 34)"
+   }
+  },
+  {
+   "term": "D1",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 35)"
+   }
+  },
+  {
+   "term": "View_Time_Compiled",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 36)"
+   }
+  },
+  {
+   "term": "Observation_Not_Assertion",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 37)"
+   }
+  },
+  {
+   "term": "Api_Serving",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 38)"
+   }
+  },
+  {
+   "term": "Artifact_Serving",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 39)"
+   }
+  },
+  {
+   "term": "Observability",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 40)"
+   }
+  },
+  {
+   "term": "Ui_Dataflow",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 41)"
+   }
+  },
+  {
+   "term": "Federation",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 42)"
+   }
+  },
+  {
+   "term": "Surface",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 43)"
+   }
+  },
+  {
+   "term": "Vertical",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 44)"
+   }
+  },
+  {
+   "term": "System",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 45)"
+   }
+  },
+  {
+   "term": "World_Model",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 46)"
+   }
+  },
+  {
+   "term": "Intent_Denominator",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 47)"
+   }
+  },
+  {
+   "term": "Semantic_Estates",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 48)"
+   }
+  },
+  {
+   "term": "The_Ceiling",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 49)"
+   }
+  },
+  {
+   "term": "Boundary_Declaration",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 50)"
+   }
+  },
+  {
+   "term": "Address_Space",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 51)"
+   }
+  },
+  {
+   "term": "Traversal_Residue",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 52)"
+   }
+  },
+  {
+   "term": "Presentation_Residue",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 53)"
+   }
+  },
+  {
+   "term": "Failure_Direction",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 54)"
+   }
+  },
+  {
+   "term": "Known_Negative",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 55)"
+   }
+  },
+  {
+   "term": "Denominator_Grain",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 56)"
+   }
+  },
+  {
+   "term": "Honesty_Read_As_Completeness",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 57)"
+   }
+  },
+  {
+   "term": "Reconciliation_Point",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 58)"
+   }
+  },
+  {
+   "term": "Subordination_Clause",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 59)"
+   }
+  },
+  {
+   "term": "Limitation_Class_Form",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 60)"
+   }
+  },
+  {
+   "term": "Homeless",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 61)"
+   }
+  },
+  {
+   "term": "Intent_Source",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 62)"
+   }
+  },
+  {
+   "term": "Atom",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 63)"
+   }
+  },
+  {
+   "term": "Canon",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 64)"
+   }
+  },
+  {
+   "term": "Cross_Fabric_Term_Ownership",
+   "interim_status": {
+    "value": "ACQUISITION_FAILED_NO_BUNDLE",
+    "derivation": null,
+    "manifest_ref": "PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (QUEUED rank 65)"
+   }
+  }
+ ],
+ "notes": [
+  "A bundle that exists but fails the validator AT READ VINTAGE is still DERIVED_FROM_BUNDLE: validity is vintage-relative (ruling 63721, vintage-aware law pending) and is carried as validator_at_read, an ATTRIBUTE of the row, not a third member of the interim axis.",
+  "The absence member's denominator is the MANIFEST's (queued terms without a bundle), never the run set's -- the run set cannot enumerate its own absences.",
+  "terminals_unseen_in_ledger is printed so that an unexercised terminal (e.g. NOT_EXERCISABLE) is never read as impossible; Phase 2 plants a control for it on a scratch copy."
+ ]
+}
