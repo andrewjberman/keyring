@@ -624,7 +624,14 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- comp-estate mdpf (2) ----
+  # ---- comp-estate mdpf (10) ----
+  # MERGED 2026-08-20 (W-15): model-portfolios (8) MERGED INTO mdpf per
+  # Andrew-direct 2026-08-07; KEY=mdpf per CRO ruling 20260820T010614Z
+  # (mdpf is the spelling at the serving prefix, the deploy tree, and the
+  # Schwab master nickname -- a composite key would mint a third name).
+  # model-portfolios is a DECLARED ALIAS, carried in
+  # AUTHORITATIVE_lambda_taxonomy.json aliases_by_named_thread @064f578dd1.
+  # THREAD grain here (10 families); RESOURCE grain there (20 lambdas).
   - family: PPI-05-opal-portal-data-proxy
     named_thread: mdpf
     owning_tool: portal-consumer-tools
@@ -641,10 +648,8 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-
-  # ---- comp-estate model-portfolios (8) ----
   - family: MA-08-yang-generate-volatility
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
@@ -653,7 +658,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-benchmarks-etf-returns
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: in-scope
     reachability_status: mounted-reachable
@@ -661,7 +666,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-canon-interlock
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: explicit-out
     reachability_status: unreviewed
@@ -670,7 +675,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-ingest-dynamodb-market-data
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: in-scope
     reachability_status: unreviewed
@@ -678,7 +683,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-peer-performance
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: in-scope
     reachability_status: mounted-reachable
@@ -686,7 +691,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-pipeline-orchestration
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: in-scope
     reachability_status: unreviewed
@@ -694,7 +699,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-time-machine-rollback
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: explicit-out
     reachability_status: unreviewed
@@ -703,7 +708,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-volatility-orphan
-    named_thread: model-portfolios
+    named_thread: mdpf
     owning_tool: globgrph
     status: explicit-out
     reachability_status: frontend-orphan
