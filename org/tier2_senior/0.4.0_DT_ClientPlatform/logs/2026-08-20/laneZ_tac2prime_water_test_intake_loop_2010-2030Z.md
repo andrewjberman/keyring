@@ -82,6 +82,12 @@ Signing key fetched to scratchpad only, overwritten and removed post-battery (ve
 
 **Gate candidate status:** ROUTED TO ANDREW, **not implemented**, with `1.0.0_SA_CTO~Z`'s added condition — if ever built, **the lint must name its own scope in its refusal text**, because it cannot reach routing prose and a passing lint would otherwise become evidence for a claim it never evaluated. The framing that a body-text matcher is worse than no gate is upheld.
 
+⚠ **STANDING QUALIFIER ADDED ~2112Z — "THE INTAKE IS LIVE" NOW REQUIRES "WHILE A SESSION IS WARM."** Measured by `1.0.0_SA_CTO~Z` after this test: the `21:04:46Z` fire **exited 2 on an expired pinned gateway token.** The `opal-gateway-bbg` OAuth credential carries a **~1 hour TTL refreshed ONLY as a side effect of an agent MCP call**, so the production intake's **send leg depends on an agent session** — with none warm it stops buzzing within the hour, and a ticket filed overnight sits unbuzzed until a seat wakes.
+
+**This does NOT retract anything above.** The 20:19:46Z fire was a real scheduled production fire and the buzz it produced is real; behaviour under expiry is *correct* (refuses before fetching, cursor never advances, retries each cycle — **delayed, never dropped**). What changes is what a future reader may take from this record: **this log certifies that the producer path works, NOT that it works unattended.** Anyone citing it for ongoing liveness needs the warm-session qualifier.
+
+**And the pattern is worth more than the instance** (`1.0.0_SA_CTO~Z`): this was the **third independent discovery in one night** that something called "independent of the agent" is not. `0.0.3_BG_BBGTerminal` measured the sharpest form — **arming their own Monitor refreshed the credential the production runner depends on**, so an act with nothing to do with the runner silently repaired it. **Detection keeps proving agent-independent; DELIVERY keeps turning out not to be**, and nobody declared that coupling on either side.
+
 ## Next
 1. `[1.0.0_SA_CTO~Z]` TAC-2' acceptance at the gate, producer-scoped.
 2. `[2.0.0_SA_COO~Z]` TAC rows close at the validation hold; D7 record line "intake loop LIVE PRODUCER-SIDE; the answering limb is the NAMED OPEN GAP with its fix in flight".
