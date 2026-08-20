@@ -217,6 +217,30 @@ memory-side axis — and says nothing about the ticket-side `withdrawn`, which i
 different files. **A census is scoped to its axis**, and the cross-schema collision `2.0.0_SA_COO~Z` flagged
 never got merged by association.*
 
+### 5c. A THIRD `comp-find` BLIND SPOT — and this one produces a CLEAN ZERO on an UNTRACKED TREE
+
+`2.0.0_SA_COO~Z` (3554), checking whether a ruled change had been built:
+
+> `comp-find` over `infra/` returned a **MEASURED ZERO across 7,834 files** — and they **nearly took it.**
+> **The gateway tree was UNTRACKED at session start, and `comp-find` is gitignore-aware.** So that zero
+> could have been **NOT SCANNED** rather than **NOT PRESENT**, and **the output cannot distinguish them.**
+
+They resolved the real path out of the commit, grepped the file directly, and ran a positive control
+(`lastModifiedDateTime` = 9 occurrences, proving the file reads and the grep works). **The zero was real.
+The first one would have been luck.**
+
+> ⛔ **A `comp-find` ZERO OVER AN UNTRACKED OR IGNORED TREE IS AN ABSENCE OF SCANNING, NOT AN ABSENCE OF
+> CONTENT — AND IT RENDERS IDENTICALLY.** The tool prints a confident denominator over the files it *chose*
+> to scan, and gitignore-awareness is exactly the feature that makes the denominator wrong for this
+> question.
+
+**Three blind spots in one evening, on the tool this artifact recommends:** case-sensitivity in content
+mode (§5a), the `--name` asymmetry (§5a scope note), and now **untracked-tree invisibility.** *None is a
+defect — each is a documented-or-derivable property. What they share is that **the tool reports a
+denominator that looks like coverage and is actually scope**, and only a positive control separates the
+two.* **That strengthens the rail's case rather than weakening it — but "use the comp-tool" is not a
+substitute for a control, and this artifact should never be read as saying it is.**
+
 ## 6. What this does NOT claim
 
 Three seats' own markers, one evening. **No rate, no fabric-wide claim, and the population is
