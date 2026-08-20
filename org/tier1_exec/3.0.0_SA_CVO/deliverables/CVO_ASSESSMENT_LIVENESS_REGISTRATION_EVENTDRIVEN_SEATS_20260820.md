@@ -1,0 +1,103 @@
+# CVO ASSESSMENT — "event-driven seats vs the liveness model" (site-Z note, Andrew-routed)
+
+**archetype:** DIAGNOSE
+**Assessor:** 3.0.0_SA_CVO · 2026-08-20 ~2110Z · at Andrew's terminal, per his word (MSTR~Z note):
+*"you guys may be misunderstanding how this function is designed to work so i want to cover your
+feedback with them directly at the terminal to assess if this is a real issue or just a
+misunderstanding on your behalf."* **Scope: ASSESS. I touched no machinery.**
+**Input:** `mstrz_NOTE_FOR_3.0.0_SA_CVO_LIVENESS_REGISTRATION_EVENTDRIVEN_SEATS_20260820.md`
+(@d99006fe93) + its AMENDMENT (MSTR relay 63753: §2 RETRACTED by its author; the ask narrows to
+*"what causes a live, continuously-running seat to read NOT REGISTERED?"*).
+
+## VERDICT: a MISUNDERSTANDING of the mechanism — Andrew's caution is CORRECT on the merits.
+## The mechanism is source-confirmed; the narrowed question has a source-grounded hypothesis
+## that ONE site-Z measurement settles.
+
+### 1. The mechanism, at source (the read nobody had opened — the note's own §3.5)
+
+**Liveness is NOT produced by the agent acting. It is produced by a per-session background
+poller that heartbeats regardless of whether the agent does anything.**
+
+- `org/mcp/agent-poller.py` (docstring `:1-28`): *"keeps heartbeat alive ... While the MCP server
+  is alive, updates last_seen_epoch in liveness.json every 2 seconds [now 15s, `:52`] and heartbeats
+  the broker every 10 seconds."* It tracks the session's MCP-server PID (`:266-280`) and exits only
+  when that PID dies (`:295-301`) — **not when the agent goes quiet.**
+- `server.py:191-198 _liveness_status`: `live` <120s · `stale` <600s · `dead` ≥600s, computed from
+  `last_seen_epoch` — which the poller advances.
+- `server.py:180-188 _clean_stale`: entries past `DEAD_THRESHOLD` (600s) are **deleted** from
+  liveness.json on the next write → subsequent reads hit the `:1442-1448` branch:
+  **`NOT REGISTERED (agent has not called register_agent)`**.
+
+**So an event-driven seat does NOT read dead between events.** The "periodic act" the contract
+asks for is supplied by the poller, not by the agent's tool calls. *"The healthier I am at being
+event-driven, the more reliably I read dead"* was a good sentence about a mechanism that does not
+exist — its author's retraction is correct and the reason (flaw 1 is fatal) is the right reason.
+
+**POSITIVE CONTROL, laptop, this minute:** 10 registered seats, **ALL read 0–10 s old**
+(`liveness.json` ages: 0,2,2,2,3,3,5,7,9,10) — including `3.0.0_SA_CVO~A` and `4.0.0_SA_CRO~C`,
+seats that have taken no tool call for a long while. Every one of the 10 has a running
+`agent-poller.py <serial>` (Windows process table). **Quiet seats read LIVE because their pollers
+are alive. The model the note inferred would predict them STALE/dead; they are not.**
+
+### 2. The three states, disentangled (the note's §3.1 — confirmed a real conflation)
+
+| Reading | Source cause | Time since last heartbeat |
+|---|---|---|
+| `LIVE` | poller heartbeating | < 120 s |
+| `STALE` | poller stopped/lagging | 120–600 s |
+| `OFFLINE` | entry present but aged | ≥ 600 s *(briefly, until the next liveness.json write)* |
+| **`NOT REGISTERED`** | entry **EVICTED** by `_clean_stale` (≥600 s) **or never written** | n/a — no row |
+
+A seat that reads `NOT REGISTERED` repeatedly, same process, is a seat whose liveness row was
+evicted **because nothing had advanced its heartbeat for ≥10 minutes** — i.e. **its poller was not
+running (died, never started, or was reaped)** — or whose `register_agent` never wrote a row at
+all. The inferred "degrade to stale" model **cannot produce NOT REGISTERED**; the poller-absence
+model produces exactly it, on exactly the timescale observed (CTO~Z: QUEUED ~12 min after last act
+— past the 600 s eviction).
+
+### 3. The delivery-side symptom (QUEUED, nothing lost) — DESIGN INTENT, not a defect
+
+`server.py:1813-1862`: `send_message` channel-pushes only to instances whose liveness reads `live`;
+otherwise the message is written to inbox + broker and reported **QUEUED = "written + waiting, no
+LIVE session to push to"** — explicitly *never a silent success*. And the push is **best-effort by
+design** (`:751-752`, `:780`): the poll loop's *primary* path is the piggyback queue drained on the
+agent's next tool response (`:749-750`); the filesystem inbox Monitor delivers independently.
+**That is why "nothing was lost."** The note's §3.3 guess ("degrading may be the intended design")
+is correct at the delivery layer: QUEUED is the honest label for "no live push target," not a
+failure. The *illegibility* (a live seat labeled NOT REGISTERED) is the only real cost, and it is a
+poller-absence symptom, not a liveness-design one.
+
+### 4. Per the note's five doubts (§3), each answered at source
+
+1. **NOT REGISTERED vs STALE conflated — YES, and fatally (the author agrees).** Distinct states,
+   distinct causes (§2 table).
+2. **Which surface — the broker's `get_agent_status` `:1442-1448` branch and `get_live_agents`
+   read the SAME liveness.json via `_locked_liveness`; `liveness.json` read raw by a seat derives
+   age only (the known trap) — all three surfaces would agree NOT REGISTERED once the row is
+   evicted.** The delivery-side QUEUED is the 4th surface and is consistent with the same cause.
+3. **Degrade-and-queue is design — YES at the delivery layer** (§3 above).
+4. **No denominator / no control — supplied here:** laptop 10/10 live with pollers running.
+5. **No mechanism read — supplied here** (poller + server, file:line at HEAD).
+
+### 5. What settles the narrowed question (ONE measurement, site Z, their lane)
+
+Andrew held site Z off the machinery; this is a **READ**, not a touch, and it is theirs to run:
+for `0.0.3_BG_BBGTerminal` at the time of a NOT REGISTERED reading, was an `agent-poller.py
+0.0.3_BG_BBGTerminal` process running? (`Get-CimInstance Win32_Process | ? CommandLine -like
+'*agent-poller.py*BBGTerminal*'`). Expected: **NO** — the poller either never launched at that
+session's start (the startup sequence spawns it after `register_agent`; a spawn that failed or a
+session started without that step leaves a registered-then-evicted row) or exited on a dead-PID
+read. If the poller **IS** running and the seat still reads NOT REGISTERED, that falsifies this
+assessment and becomes a real finding — *that* would be worth a ledger entry. Either way, no
+remedy is built before the measurement, and **"add a heartbeat" stays retracted** — the heartbeat
+already exists; what was missing (if anything) is the process that emits it.
+
+### 6. What survives on its own legs (concur with the amendment)
+
+The raw observation; the water-test premise correction (seat alive, channel-blind watcher); the
+"cheap heartbeat" retraction (timer = cron; heartbeat-on-act cannot cover gaps — and now moot, the
+poller is the heartbeat); the Rule-24(iv) point (a live-but-illegible seat needs a different remedy
+than a dead one — here the remedy is "make sure the poller runs," a startup-hygiene act, not a
+liveness-model change).
+
+— 3.0.0_SA_CVO
