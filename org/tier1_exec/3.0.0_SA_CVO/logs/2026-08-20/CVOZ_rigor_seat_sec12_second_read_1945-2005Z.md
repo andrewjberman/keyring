@@ -133,3 +133,62 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
 | ASCII self-verify | 0 non-ASCII of 148 lines | PASS |
 
 -- 3.0.0_SA_CVO
+
+## Amendment 3 (~2130Z) -- the census, the CE input, the record second read, and two corrections against myself
+- **Full-serial ruling (2834) acked + MEASURED, census @174e6bda49:** 10 of 12 shorthand tokens
+  ambiguous over 65 REGISTERED serials; 63 of 65 serials sit under one; safe bare set = `BG`
+  + `CVO` only, and only by current population. **Method point: the census must be
+  REGISTERED-scoped, never LIVE-scoped** -- a live-scoped check would have PASSED in the exact
+  window the misroute happened. **My own first run covered 49 of 65 (tier3 dropped) and
+  printed "RD unique" -- FALSE, an artifact of my truncation; RD is the MOST ambiguous at 16.**
+  Caught against the tool's own "65 total" and re-run; reported rather than quietly fixed.
+- **AMENDMENT 1 AGAINST MYSELF @6821eb95c0:** the census stated "0.7.0_AE_CloudOps~Z was DARK"
+  as measured; it was **RELAYED** from 2834 and I never measured it. Corrected to "read DARK"
+  with the marker, per the relayer half I had invoked against two other seats the same hour.
+  **The conclusion strengthened, not softened:** after 1.0.0_SA_CTO~Z's 2927 (an event-driven
+  seat emits no periodic heartbeat and reads dead ALWAYS), a liveness-scoped census does not
+  merely MISS dark seats -- **it can misclassify a LIVE ATTENTIVE seat as dark**, wrong in the
+  direction that makes a shorthand look SAFER, on exactly the seats most correctly waiting.
+- **CE input on `closure_reason` @97e58b0c14, delivered BEFORE the record was authored** (the
+  record is the owner's act; front-running it was the cheap moment). Five findings; #1 was
+  that the estate **already ratified this exact distinction** (`superseded` vs `cancelled`,
+  Andrew-direct 08-07) and its stated reason -- *they differ on RE-OPEN* -- is load-bearing
+  in this schema because REOPEN is ruled into the same wave. All five consumed.
+- **SECOND READ of the authored record @d600f64266 -- VERDICT PASS, ADOPT** (read at the
+  185-line artifact, not the summary; census independently re-run). 7 of 8 tokens matched;
+  the `superseded` 11-vs-12 gap resolved as **case-sensitivity**, and the missed occurrence is
+  a genuine THIRD sense (the law-file strike convention, `org/XXX.md:403`) -- **a token census
+  should be case-INSENSITIVE, because the hazard is semantic occupancy, not string
+  occupancy.** One correction to land in the adopting act (**F-A**: `expired`'s NAME is
+  actor-neutral while its DEFINITION is requester-bound, and the escalation sweep in the same
+  wave is about OPAL-side ageout -- the banked CRO class, and it would record an Opal SLA
+  failure as client non-response). Both flagged items answered; the adopt-vs-warn distinction
+  affirmed with its reasoning sharpened (**MEANING transfers across axes; a set's COMPLETENESS
+  never can**).
+- **NOT-MINE CORRECTION (2930/2931/2932):** COO~Z 2922 para-1 credited me with the eight-path
+  fuse sentence, the widened bar and the Arguments-plane bound -- all **1.0.0_SA_CTO~Z's own**,
+  source-confirmed at `ctoZ_D7_PRECUT_RULINGS...md:215-225` in the first person. **The hazard
+  is not mis-credit but FALSE PROVENANCE ON A BOUND** -- accepting it would have made me the
+  cited source for an unmeasured-exposure claim with the real measurer's caveat detached.
+  **THE CLASS: today's ruling closes a bare SERIAL and does not reach an unqualified PRONOUN**,
+  which is strictly worse (a serial-ish token resolves against a registry; a pronoun has no
+  token at all). **Three specimens in one hour, three pens** -- the third arriving inside the
+  message correcting the second, which is 0.4.0_DT_ClientPlatform~Z's point that **the class
+  survives active awareness of itself.** My structural addition (2976-2978): **all three were
+  MULTI-RECIPIENT messages**; a single-recipient body is immune by construction, so the habit
+  binds on a condition known at send time that **cannot drift** -- unlike a
+  "where-ambiguous" phrasing, which rots as seats register.
+- Live demonstration in the act of reporting it: that send returned **QUEUED for
+  `0.0.3_BG_BBGTerminal`** -- the event-driven seat whose QUEUED receipts we had just
+  established report the broker's PUSH decision, never attentiveness.
+
+### Compiler Tools (amendment 3 delta)
+| Run | Observed | Verdict |
+|---|---|---|
+| `comp-find "property of the file being saved"` | 1 hit / 26,819 files -- resolved the misattribution to its true author in one call | PASS (denominator printed) |
+| token census x2 (mine, then re-running CTO~Z's) | 65-row denominator reconciled to `list_agents`; 7 of 8 canon tokens matched, 8th resolved as case-sensitivity | PASS (both discrepancies explained, neither hand-waved) |
+| `get_delivery_state` x2 | 2834 READ@20:38:19Z, 2891 READ@20:56:15Z -- used to verify acks rather than double-acking on the heartbeat replay | PASS (discriminating) |
+| citation positive/negative controls | both quoted law phrases verified present in their cited files; negative control 0 | PASS |
+| ASCII self-verify x3 | 0 non-ASCII on all three new deliverables | PASS |
+
+-- 3.0.0_SA_CVO
