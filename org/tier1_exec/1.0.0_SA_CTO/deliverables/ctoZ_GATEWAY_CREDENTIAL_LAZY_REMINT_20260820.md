@@ -76,9 +76,29 @@ do.**
 > **Measured twice, independently:** by `0.5.0_AE_OpalETL~Z` at **23:16:16Z**, and re-read at source by
 > `0.0.3_BG_BBGTerminal` at ~23:19Z.
 >
-> **SO THE TENSION IS ESTABLISHED, NOT HYPOTHESISED. Our own defensive pre-checks are what prevent
-> auto-recovery** — the runner refuses before fetching, the monitor gates its whole body on a live token,
-> and **no automated component on this box can make the call that would heal it.**
+> ⛔ **RETRACTED 23:23Z — THE PRE-CHECKS ARE MEASURED; MY CAUSAL CLAIM ABOUT THEM IS WRONG.**
+>
+> ~~"Our own defensive pre-checks are what prevent auto-recovery."~~ **`3.0.0_SA_CVO~Z` refuted it and my
+> own data agrees with them:** the monitor and runner **read a stored token from a file and use it
+> directly — NEITHER CAN MINT.** Only the Claude Code client mints, and teams-watch's docstring says so
+> deliberately: *"Claude Code owns the refresh (rotating tokens), so this never refreshes itself."*
+> **A de-pre-checked poller calling with a dead token gets a 401 and stays dead** — it burns a request and
+> heals nothing.
+>
+> ⛔ **THE CONFOUND IS TOTAL, AND IT IS WHY I WAS ABLE TO BELIEVE THIS:**
+> **every automated component both PRE-CHECKS and IS A RAW POLLER; every healing call both SKIPPED A
+> PRE-CHECK and WENT THROUGH A MINTING CLIENT.** All five observations carry both variables together, and
+> **the data cannot distinguish them.** I picked one, `3.0.0_SA_CVO~Z` picked the other, and only their
+> prior is independently supported — **a STATED DESIGN INTENT beats an INFERRED MECHANISM when both fit
+> the same observations.**
+>
+> **Why I picked the wrong variable: I had spent the preceding hour on refuse-before-calling** — the exit
+> 2s, the silent-by-construction property, the protocol gap. **The pre-check was the variable in hand and
+> I never generated the alternative. AVAILABILITY, NOT EVIDENCE.**
+>
+> **WHAT SURVIVES:** the pre-checks are real and measured — runner refuses before fetching, monitor gates
+> its whole body on `if tok:`. **That is an observation. The claim that this is WHAT PREVENTS RECOVERY is
+> withdrawn.**
 
 ⚠ **AND THE WAY I MISSED IT IS A NEW SHAPE WORTH MORE THAN THE FINDING.** The measurement did not arrive
 late — **it arrived at 23:16:16Z, inside a retraction of a test-contamination alarm, in the same minute as
@@ -95,20 +115,24 @@ had, because in my head it was answered filed under a different heading.**
 
 His ask: *"a means to reauthenticate itself when the MCP connection dies."*
 
-**The mechanism ALREADY EXISTS** — a call on a dead token re-mints in ~18 seconds — **and what blocks it is
-our own fail-safe.** The remedy is not new machinery; it is **letting one component attempt the call it
-currently declines to make.**
-
-> ✅ **THE LINK IS NOW MEASURED TWICE INDEPENDENTLY (§3), SO THIS IS RE-CARDABLE.** It is a materially
-> different and cheaper answer than the one in front of him: not *"build self-reauth,"* but **"the
-> self-reauth already works; remove one guard from one component and let it fire."**
+> ⛔ **THIS SECTION IS RETRACTED IN FULL. `0.0.0_AB_MSTR~Z` HELD IT AT THE FERRY BOUNDARY AND NEVER
+> CARRIED IT.**
 >
-> ⚠ **AND THE GUARD EXISTS FOR A REASON — this is a trade, not a free win.** The runner's refuse-before-
-> fetch protects the cursor (it is why tickets are DELAYED, NEVER DROPPED). Whatever component is allowed
-> to attempt the call must not be the one whose failure costs a ticket. **The obvious candidate is the
-> monitor, not the runner** — its poll is idempotent and losing one poll costs nothing, whereas the
-> runner's guard is load-bearing on the delivery contract. **That is a design call for the lane owner, and
-> naming it is the point: the cheap fix has a wrong version.**
+> ~~"The mechanism already exists and what blocks it is our own fail-safe — the remedy is letting one
+> component attempt the call it currently declines."~~ **WRONG, per §3's retraction: a raw poller cannot
+> mint, so removing the guard produces A CALL, NOT A RECOVERY.**
+
+**THE REMEDY SPACE IS `3.0.0_SA_CVO~Z`'s, and Andrew already has it:** **route through a minting client**,
+or **carry your own credential.** No correction to him is required — the version he holds is the
+better-supported one.
+
+⚠ **AND THE FAILURE MODE OF MY VERSION IS THE ONE WORTH RECORDING** (`0.0.0_AB_MSTR~Z`): it would have put
+a *remove-one-guard* ask in front of the sovereign whose effect is **a failed request rather than a
+recovery** — and **it would have looked cheap and safe, which is worse than looking wrong.** *A
+wrong-and-expensive ask gets scrutinised. A wrong-and-cheap one gets approved.*
+
+**THE HONEST OPEN EDGE:** nobody has read the client's mint logic, and `3.0.0_SA_CVO~Z` explicitly does not
+assert there is no third path. That surface belongs to whoever owns it.
 
 ## 5. HOW THE MEASUREMENT WAS PROTECTED
 
