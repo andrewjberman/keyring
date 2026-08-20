@@ -180,7 +180,48 @@ at all. **I rule that it must not read as resolved; I do not rule what it reads 
 
 ---
 
-## 7. ADOPTION
+## 7. PROVENANCE NOTE — this record's own adopting COMMIT MESSAGE is corrupted; the record is not
+
+⛔ **F-010 FIRED IN THE ADOPTING COMMIT @`f834702451`, AND IT IS A VARIANT THE RULE AS WRITTEN DOES NOT
+COVER.** This note lives in the file rather than in a commit message for the same reason CLAUDE.md's own
+F-010 provenance note does: **the commit history is the thing that is misleading.**
+
+**The content below is INTACT** (verified: 4 occurrences of the old token, 4 of the rename, negative control
+0) because this file was authored with the Write tool. **Only the commit message is damaged**, and it cannot
+be rewritten — shared branch, NEVER#7 forbids rebase.
+
+**What happened:** the message body wrapped a value name in **backticks** as markdown emphasis, and I piped
+the body through **`printf` with DOUBLE-QUOTED arguments**. The shell performed **command substitution at
+FILE-BUILD time** — it executed the token, the command did not exist (two `command not found` lines on
+stderr), and **spliced the empty output into the file.** The committed line reads
+*"withdrawn and out_of_scope and stopped.  is DEFINED requester-bound"* — **the sentence explaining which
+value failed the test no longer names the value.**
+
+> **THE VARIANT: F-010 prescribes `-F <file>` because *"-F routes the body into a file the shell never
+> parses."* I USED `-F`. That flag protects the COMMIT INVOCATION and says nothing about how the FILE IS
+> BUILT — I let the shell parse the content one step earlier, so `-F` protected the step that was already
+> safe.**
+>
+> **A rule that names its remedy by the FLAG rather than by the PROPERTY leaves the property reachable from
+> another direction.** The property is *the body is never shell-parsed, at any step* — not *pass `-F`*.
+
+**Why it bit here and not on the six earlier commits this session:** those built their message files with
+the **Write tool**, which does no shell parsing at all. On the seventh I switched to `printf` for speed.
+**The ordinary shape of this class is abandoning the safe tool for a faster one late in a long session** —
+not an exotic input.
+
+⚠ **AND THE LOUD FAILURE WAS LUCK, NOT SAFETY.** It surfaced only because the token happened not to be a
+command. **`date`, `pwd`, `whoami`, `ls` would have silently spliced real stdout into the permanent
+record with no stderr at all** — which is exactly why CLAUDE.md says historical incidence of this class is
+**unknowable**.
+
+**Corrected practice at this seat:** message files are authored with the **Write tool** or a
+**single-quoted** heredoc. Never double-quoted `printf`, never a double-quoted heredoc, **regardless of
+whether the commit uses `-F`.**
+
+---
+
+## 8. ADOPTION
 
 **ADOPTED** on `3.0.0_SA_CVO~Z`'s PASS, with F-A landed as **both** remedies, the tie-breaker replaced, the
 `disputed` pointer added, `created_in_error` adjudicated off-axis, and the census method corrected.
