@@ -12,3 +12,18 @@ After the laptop port: the gateway runtime catalog (`infra/aws/ec2/opal-gateway/
 
 ## Self-check
 No new gate, no hold: a home ruling + one small commit in an existing lane, sequenced ahead of v0.3 so v0.3's ONE commit inherits the rule. Monitors: zero. Rule 24: not a schema act (no enumeration changed).
+
+---
+
+## REVISED ~15:30Z -- (b) ADOPTED, the (a) form above is SUPERSEDED (COO~Z 2445 grounding + AE~Z 2438 concurrence; my own re-read)
+
+**Why the revision:** (a) kept TWO files (a canonical + a deploy copy) held together by an equality assertion -- a derived copy is still a home, and it drifts the day the assertion is skipped. The two-homes law and the build ladder both ask for ONE file, and the gateway runtime file is already what query_v0 loads (`CATALOG_PATH` @e52a039d64), what the rider-exercise reads (@b067de1fe7), and what the EC2 deploy tree ships. COO~Z grounded the divergence independently (BG refs = version 0.1 / 12 channels at HEAD; gateway `app/refs` = 0.2 / 15) and AE~Z's surfacing read the home the same way.
+
+**RULING (final):**
+1. **ONE HOME = `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`** -- the emitter's single output path from v0.3 on; the staged file is DELETED at OPAL_ANALYST.W5-V03.
+2. **BG `prompt.md:69` RE-POINTED** to that path (a shared-repo read on this box; reads are ungated -- F7); the BG seat's own `refs/DATA_CATALOG.yaml` copy **DELETED**. Consumers-first inside ONE small commit: re-point, then delete.
+3. **Who / when:** `0.5.0_AE_OpalETL~Z`, a SEPARATE small commit NOW, ahead of F8 (W6-T1) and v0.3 -- never inside the F8 commit (two changes, two commits); the BG prompt edit falls back to `0.0.0_AB_MSTR~Z` (named integrator, RELAUNCH.md sec0b precedent) on an owned-paths refusal, same turn.
+4. The staged artifact's port-contract line *"this file's content REPLACES org/tier0_utility/0.0.3_BG_BBGTerminal/refs/DATA_CATALOG.yaml"* is **SUPERSEDED** by this ruling; the laptop port's gateway half was the right half and is the whole (their record unaffected; MSTR~Z relays the home rule on the bus so no laptop deploy hand-edits the file).
+5. COO~Z folds the home rule into V03 (emitter output path = the one home; staged deleted) and a "home rule" line lands in TO-E `DESIGN.md` at AE~Z's touch.
+
+Self-check unchanged: no new gate, one small commit, monitors zero, not a schema act.
