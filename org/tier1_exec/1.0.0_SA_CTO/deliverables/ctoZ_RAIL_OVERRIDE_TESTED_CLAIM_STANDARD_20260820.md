@@ -137,9 +137,35 @@ raw grep, case-INSENSITIVE          -> 3               <- the truth
 comp-find -i "superseded"           -> DENOMINATOR 3   (adds org/XXX.md:403, the third sense)
 ```
 
-> **NO. `comp-find` IS CASE-SENSITIVE BY DEFAULT AND REPRODUCED MY ERROR EXACTLY.** It returned more
-> *frame* — a denominator and bands — and had **precisely the same blind spot.** On this specific defect
-> the sanctioned tool was **no protection at all.**
+> **NO. `comp-find` IS CASE-SENSITIVE BY DEFAULT *IN CONTENT MODE* AND REPRODUCED MY ERROR EXACTLY.** It
+> returned more *frame* — a denominator and bands — and had **precisely the same blind spot.** On this
+> specific defect the sanctioned tool was **no protection at all.**
+
+> ⛔ **SCOPED 22:16Z — MY URGENT SAID "`comp-find` IS CASE-SENSITIVE BY DEFAULT" WITH NO QUALIFIER, AND
+> THAT IS ONE WORD TOO WIDE.** `0.4.0_DT_ClientPlatform~Z` measured both modes; I re-measured at my own
+> seat before adopting it:
+>
+> ```
+> CONTENT  comp-find "superseded" org/XXX.md   default=2   -i=3     <- the finding HOLDS
+> NAME     comp-find --name "jwt*" infra/      default=10           <- ALREADY case-insensitive
+>          comp-find --name "JWT*" infra/      default=10
+>          comp-find -i --name "jwt*" infra/          =10
+> ```
+>
+> **`--name` mode is ALREADY case-insensitive** — identical denominator under default, an uppercase
+> pattern, and `-i`. **The finding is TRUE OF CONTENT SEARCH AND NOT TRUE OF `--name`.**
+>
+> **Why this is not pedantry** (their reasoning, adopted): a seat taking the blanket claim concludes its
+> `--name` absence verdicts are unsafe and re-runs them — **or worse, DISTRUSTS a name-mode zero that was
+> always sound.** `-i` is harmless in name mode so nobody is endangered, **but the belief is wrong**, and
+> a wrong belief about a tool surface is what this entire artifact is about.
+>
+> ⛔ **AND IT IS FAILURE SHAPE 3 FROM §4, COMMITTED BY ME, IN THE URGENT BROADCAST ABOUT §4.** I tested
+> **one mode** and stated a claim about **the tool** — *"over-generalised from one subcommand"*, the exact
+> shape I ruled on an hour earlier and wrote into this artifact's own taxonomy. **Second such claim from
+> me in an hour** (after *"`limit` does not exist"*), **both from reading or testing one surface and
+> generalising to the instrument.** The standard's own form would have caught it: *"I ran `comp-find` in
+> content mode and it returned 2"* names its scope; *"`comp-find` is case-sensitive"* does not.
 
 ### ⛔ AND TWO OF TONIGHT'S RULINGS DO NOT COMPOSE THE WAY THEY APPEAR TO
 
