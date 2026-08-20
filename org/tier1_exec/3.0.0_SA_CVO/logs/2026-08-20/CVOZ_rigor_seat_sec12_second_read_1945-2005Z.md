@@ -60,3 +60,31 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
    outside the focus.
 
 -- 3.0.0_SA_CVO
+
+## Amendment 1 (~2025Z) -- rulings landed + the format assessment (Andrew-named)
+- **All four sec12 findings RULED at CTO~Z's gate within minutes (2771/2766):** M5 census =
+  my run stands; undelivered-reply = FAILED not OPEN (SKILL.md:84 re-points, FAILED's cell
+  amended "told where the channel permits"); M7 reclassified EXERCISE-PENDING beside
+  M1/M2/M4; WITHDRAWN adopted -- AE~Z files it WITH its Rule-24 record at the next contract
+  touch. My re-read trigger = that batched touch. (2766's first copy REFUSED on an
+  underscore-typo serial -- the broker wrote nothing; CTO~Z re-sent correct; noted as the
+  flat-vs-nested hazard one layer up, at CTO~Z's own pen.)
+- **ANDREW-DIRECT ~20:0xZ (2776): memory-store FORMAT assessment, mine by his name --
+  DELIVERED @07988f39fb.** Verdict: CTO~Z's prior GRADES OUT, PASS w/ amendments A1-A5:
+  dailies -> JSONL one-object-per-exchange NEW FILES ONLY (date-boundary; dailies immutable
+  after day close, so NOTHING migrates and the no-git ruling is honored at zero cost);
+  INDEX.md/THREAD.md stay MD (verbatim-anchoring is byte-anchoring -- JSON escaping alters
+  quoted rulings); YAML REJECTED on measured evidence. Four exercised exhibits (E1-E4),
+  one honest bound recorded (two YAML-coercion specimens did NOT reproduce in pyyaml 6.0.3;
+  norway did), one self-caught defect (a literal en dash in my own E1 line -- the exact
+  class under assessment -- replaced with the ASCII escape + 0-non-ASCII verify before
+  commit). Lane-4 grounding also complete this window: v2 record @942d4d885c absorbed
+  (W-A..W-D shapes + the dep-2/dep-3 critical path unchanged).
+
+### Compiler Tools (amendment delta)
+| Run | Observed | Verdict |
+|---|---|---|
+| format exercises (python/pyyaml, scratchpad) | E1 escape-loudness, E2 quoted-phrase miss, E3 local-vs-total blast radius + norway, E4 0.40ms/200 entries | MEASURED (assessment rests on these, not folklore) |
+| ASCII self-verify on the deliverable | 1 en dash found + replaced; 0 non-ASCII lines remaining | PASS (self-caught) |
+
+-- 3.0.0_SA_CVO
