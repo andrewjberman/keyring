@@ -36,7 +36,14 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
 5. **Cross-fabric:** site-Z landings come from ferried records at parity (cite the record/commit);
    the packet's `--all` git census already covers both branches.
 6. **Commit** the day's file under your author line (`safe-commit`), then **print the text** in
-   the terminal — Andrew pastes it onward.
+   the terminal — Andrew copies it into the Opal Teams channel.
+
+**TEXT ONLY, by design (Andrew-direct ~2105Z, VERBATIM):** *"there are two skills involved here.
+/directives-check which is for me internally and shows the current state of directives + creates a
+render for visible analysis. Then there should also be /daily-sprint which essentially is just a
+formatted text version i can copy/paste of directives-check for the Opal teams channel."* The
+visual render lives in `/directives-check`; this skill produces the copy/paste text and nothing
+else.
 
 ## Forms
 

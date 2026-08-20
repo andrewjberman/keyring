@@ -102,9 +102,15 @@ directives:
     members:
       subgroups: [EXTERNAL.49FINANCIAL]
       projects: [OPAL_ANALYST]
-    stance: "SITEZ: SharePoint access + BBG pipe builds (off proven W7/W8) -- MSTR coordinates,
-      cross-fabric issuance never-implicit; laptop: the GraphQL query layer (Andrew's spec file =
-      the one open input); the Analyst's ticketing duty (D7) lands as a named responsibility."
+    stance: "RE-SCOPED per Andrew-direct 08-20 ~2100Z (CTO terminal, VERBATIM): 'the D6 item is simply
+      proceeding past partner GraphQL, the current initiative has developed into the mechanics of the
+      agent and its interfacing with various tooling, particularly so in the capacity of the Ticket
+      Center. There is also much more work to be done in the case of the Opal Analyst so there is
+      certainly not going to be any retiring of that for some time.' v0 delivered + OPAL_ANALYST project
+      CLOSED 08-20 (/query/v0 live, catalog v0.3 on-instance); the directive CONTINUES: agent mechanics +
+      tooling interfaces (Ticket Center foremost), speed addendum (sec11, ingestion speed mechanics-first),
+      memory/thread persistence, perpetual-operator frame. NOT a retire candidate. Member set to be
+      refreshed as successor projects register (the closed member is the v0 project only)."
   D7:
     title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
