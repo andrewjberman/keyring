@@ -1,0 +1,50 @@
+# ctoZ — respawn 1209Z: D-family routing + three rulings + W6 certification + D8 acceptance (window 12:09Z → ~12:50Z, running)
+
+**archetype:** COORDINATE
+**secondary_archetypes:** VALIDATE, SCRIBE
+**serial:** 1.0.0_SA_CTO~Z (lane ~Z, base-folder log per convention) · **PID 39888** · respawned per COO~Z priority-2 (MSTR~Z spawn 121008Z) as the D-family ruler/router. Prior CTO~Z record: `ctoZ_sitez_closing_state_log_0115Z.md` @0b31f4066b-era (the night's closing state; this session continues it, not a fresh start).
+
+## Startup (XXX.md, all steps)
+/watcher: serial NOT REGISTERED at load, no orphan `inbox-watch.sh` for my serial (ps NONE), registered PID 39888, Monitor `b6umm2dqz` armed with the resolved `/cygdrive/c` prefix (path quoted — this profile carries a space) and TaskOutput-confirmed running; CronList empty, ZERO crons armed. A.1 serial file written; **A.2 audit-archive-invoker rc=1 / 18 findings = the DEVICE-AXIS class MSTR~Z adjudicated at 1211Z (8 NON-APPEND + 5 MISSING + 5 FAILCLOSED; shared `.baseline` advanced by the laptop vs device-local logs) — cited, not re-investigated**; A.3 98 of 99 comp-tools resolve bare + EXERCISE PASS; B both probes; **B.1 `to-check --all`: 2 TOs held (D7 TO-F-SITEZ staged-at-cut, OPAL_ANALYST.W6 staged)**; D hook wired; E agent_context. Inbox at load: BG 2089 (07:15 backstop, 4/4 GREEN, the soft-timer defect) + MSTR~Z 2091 (design-question routing); COO~Z 2100 (routings) landed 1216Z.
+
+## What happened (in order, each grounded)
+1. **D7 TO-F-SITEZ ROUTED** (2108, record appended by COO~Z @cf5a0dc3a7): hands = **0.4.0_DE_ClientPlatform~Z** (precedent seat, next-slot claimant); **SHAPE RULED = one route on the EXISTING opal-ticket-api Lambda behind the existing authorizer chain — no second Lambda / write path (the word the TO reserves to me is NOT given)**; zero amendments; leg-3 at 0.5.0_AE_OpalETL~Z sequenced BEHIND D7F-3 first PASS as a dependency (2110; AE~Z ACK 2115 — authors the submission-free parts). COO~Z census call 2117: ZERO idle seats → no preemption; DE~Z = first claimant of the next freed slot; burst card (B) at Andrew via MSTR~Z, default A; MSTR~Z spawn STAGED, GO pre-queued by COO~Z.
+2. **BG backstop-timing RULING** @008135604e (2124): session cron STANDS (n=1, no redesign off one lag); **R2 — the load-bearing soft-ness is the seat's OPERATOR-STARTED existence, not the jitter** (today's fire was CONDITIONAL on the 0210Z relaunch; BG NOT REGISTERED at 1220Z); R3 — schedule-class Step-1 CHECK (four deterministic leg reads → verdict file + ONE inbox message) is the only form that survives seat-down, Step 2 STAYS an agent act; R4 one word at Andrew (card a/b, rec (b) iff seat-down or 15-min is load-bearing; default a); R5 nothing built. MSTR~Z put the card at Andrew's console (2126); COO~Z pre-staged the (b) TO frame (2128); **BG implemented R1 same-turn** (lag record line, swept @4d271b55e3; cron re-armed f9681e0c).
+3. **XXX.md COO-row STRIKE** @2790d31d2d + **same-turn broadcast to all 4 live seats** (2129-2132) + MSTR~Z carried it to the laptop on the bus: the site-Z COO~Z `/loop 10m /drive` scoped re-arm (08-11) struck in place, discharging authority stated HONESTLY (Tier-0 directive — MSTR~Z kickoff 192420Z *"every scoped /drive re-arm in the XXX.md COO row is DISCHARGED"* — NOT the row's own stop-condition; program still active); verbatim clause relocated as cycle #6 in `docs/references/COO_DRIVE_REARM_HISTORY.md`. COO~Z verified at the ref (2133).
+4. **Provisioner chmod-EINVAL durable fix** @e57f3acb9c (both chmod sites guarded with a printed WARN; device-agnostic) and **comp-ledger-agreement.py shebang** @19a31bc475. The shebang touched a comp-system _SOURCE → 06-stale gate; **the regen at site Z REWRITES every graph row to UNKNOWN-VINTAGE (comp-kuzu unreachable here — hung >120s) → REVERTED unstaged, landed on one AUDITED `system-current-override: DEVICE-AXIS/06-regen-degrades-on-site-Z`**, surfaced to CVO~Z (parity owner) + MSTR~Z (2137/2138) as instance 2 of the A.2 device-axis class; MSTR~Z carried it to the laptop paired with A.2 (one owner conversation).
+5. **OPAL_ANALYST.W6 CERTIFIED-ON-STAGED** @bf0a2c30f9 (2153-2156): comp-adversary compose FIRST (read-vintage @0e95185935; source-2 MOVED = the BG relay log's first landing by the integrator sweep, direct-checked benign; source-3 uncited sibling = pre-acceptance state of the declared WDAC exclusion, acceptance PASSED 08-20; 0 GONE rows); **self-review mitigation DISCHARGED: author battery 13/13 at HEAD (36/3/48) + 8/8 INDEPENDENT probes — P4 floor-precedes-lookup MUTANT, P6 held-at-andrew MUTANT, P7 firm-label MUTANT all FIRED; P8 firm surfaces 3/3/3 pairwise disjoint, 0 opal rows**; F10 re-exercised from this seat (whoami Opal Bloomberg; search_email → identity_scope_denied PRD 4.3; list_teams → 200 separate invocation). Certifier's proof instance at the TO path, validator rc=0 positional C1-C6 (no pipe); TO staged→pending. **CLOSE gates (a) CVO~Z index co-sign + (b) 0-diff laptop port** — MSTR~Z carried (b) to the laptop (2157). O-1 recorded: firm isolation keys on the row's `firm` label → one battery case at port (owner AE~Z), no gate.
+6. **D8_LIVEEDIT ACCEPTED-ON-SITE-Z-LEGS** @05689f222d (2163/2164): D8-1/2/8/9 PASS as filed; all three riders (Q1 chokepoint / Q2 Key-Notes-only / Q3 store-wins + visibility) VERIFIED IN SOURCE at @4c8fe9d006 + portal @ccda8711; **D8-3/4/5/6/7 UNCOMPUTABLE because NOT APPLIED — rail-checked live primitives: table `opal-portal-content` + Lambda `opal-portal-content-api` both ResourceNotFound** (comp-aws would have read DESIRED = present); close = laptop apply (MSTR~Z ferry, WDAC bound cleared) + any-seat battery.
+7. Acks/relays handled: AE~Z ruling-2 LANDED @7284baa5c7 (exit-50 precondition contract; complementary to R3); MSTR~Z's PRD §9.9 annotation under audited ANY_CTO override @916fafae56 — **standing form confirmed** (mechanical annotations verbatim-in-substance may land at the integrator under the audited override; rulings route through me).
+
+## Compiler Tools
+| tool | invocation | result |
+|---|---|---|
+| to-check | `--all --assignee 1.0.0_SA_CTO~Z` | 2 TOs / 2 projects (D7 TO-F staged, W6 staged) — re-derived, not inherited |
+| comp-find | `'Scheduled Task'` in BG folder; `'every scoped /drive re-arm'` org; `--name catalog_gate*`; `'catalog_gate'` gateway tree; `'STRUCTURAL-TWOPHASE'` | 20/39 (two OS tasks: daily_pull + vendor_watch); 1/14,066 (COO~Z log line → kickoff record); gate + battery located; 2 hits (prefix only documented for rule-bank) |
+| comp-adversary | `compose` on the W6 review artifact | rc=0; 4 sources run / 6 declared-excluded; 1 MOVED (benign, direct-checked), 1 uncited sibling (dispositioned), 0 GONE |
+| exercise_catalog_gate.py | author battery at HEAD | 13/13; opal 36 / firm 3 / 48 rows |
+| independent probe script (scratch) | 8 cases incl. 3 scratch mutants | 8/8, denominator printed; mutants FIRED |
+| opal-gateway-bbg | whoami / search_email / list_teams | Opal Bloomberg; identity_scope_denied; 200 (separate invocation) |
+| proof-of-spec-check | W6 instance, positional C1-C6, rc without pipe | rc=0 VALID, 6 rows, 0 violations |
+| comp-system | ran once (no `--help` flag — it regenerates) | 06 degraded to UNKNOWN-VINTAGE on this box → reverted; audited override used; device-axis gap surfaced |
+| audit-archive-invoker | A.2 | rc=1/18 = device-axis class, cited per MSTR~Z 1211Z verdict |
+| aws (rail-checked, applied-vs-desired) | `dynamodb describe-table`, `lambda get-function-configuration` on the D8 resources | both ResourceNotFound → NOT APPLIED (the reason the five D8 rows stay UNCOMPUTABLE) |
+| safe-commit | 7 commits (`-F` scratchpad msgfiles, serial+timestamp names) | all rc=0 after the .tools split; risk-reflex CLEAN on each |
+
+Gap: `comp-kuzu` is effectively unreachable on this box at compile time (hung >120s on a trivial count) — the root of the 06-regen device-axis hazard. Surfaced, not chased.
+
+## MCP traffic
+~22 handled, all READ-acked. Significant sent: 2108 D7 routing; 2110 leg-3 sequencing; 2124 BG ruling; 2129-2132 law-edit broadcast; 2137 device-axis surface; 2153-2156 W6 cert; 2163/2164 D8 acceptance; 2165 standing-form confirmation. Significant received: COO~Z 2100 routings, 2117 census call, 2128 R5 pre-stage; MSTR~Z 2098 A.2 verdict, 2126 card-at-Andrew, 2139 BG R1 relay, 2148 annotation courtesy, 2157 W6 integrated; AE~Z 2115/2119/2143 (ruling-2 landed).
+
+## Blockers
+None at my seat. Event-gated: (1) DE~Z spawn for D7 TO-F waits on a freed slot or Andrew's burst word (card B at his console); (2) W6 close waits on CVO~Z co-sign + the laptop port; (3) D8 close waits on the laptop apply, then the any-seat battery (mine if no DE~Z by then); (4) BG backstop card (a)/(b) at Andrew; default (a) operating.
+
+## Current State (zero-context reader)
+Site-Z fabric at 6/6 (MSTR~Z, COO~Z, CTO~Z, CVO~Z, OpalETL~Z + BG by process). Every D-family item I hold is either RULED, ROUTED, CERTIFIED-ON-STAGED, or ACCEPTED-ON-SITE-Z-LEGS with its close dependency NAMED and its owner named; no inferred gate anywhere; zero crons at this seat; ZERO open sovereign calls originated at this lane (the two cards at Andrew — D7 burst, BG backstop — are COO~Z's and mine respectively and both default-if-silent to no-act). Law file XXX.md is current at the ref; every live seat was told. Records are lane commits integrated by MSTR~Z (strike, ruling, provisioner, W6 cert confirmed on origin/SITEZ).
+
+## Next Steps
+- [1.0.0_SA_CTO~Z] event-driven: DE~Z GO-time support (shape fence restated), W6 close flip on (a)+(b), D8 battery on apply confirmation, BG (b) TO acceptance frame if Andrew picks it.
+- [2.0.0_SA_COO~Z] swap name when a slot frees; RAVC-4 on W6 + D8 riders' live halves at the battery.
+- [3.0.0_SA_CVO~Z] v0.2 index co-sign (W6 close domino a) incl. the O-1 read; cite-not-regen on the 06 drift.
+- [0.0.0_AB_MSTR~Z] DE~Z spawn on the swap; laptop ferry for the D8 apply + W6 port (b); Andrew cards.
+- [ANDREW] D7 burst (A/B/C, default A); BG backstop (a)/(b), default (a).
