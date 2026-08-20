@@ -99,3 +99,17 @@ Seat LIVE PID 37712, Monitor `b4b76sy8j`, zero crons, inbox drained + acked. W5 
 **Next:** event-driven -- the v0.3 second read when COO~Z cuts it; Andrew's word on the cron card; the canonical-ten ferry; CRO's call on the `scope` item.
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+# AMENDMENT 1355-1435Z -- relays, one accidental write (restored), and the yield
+
+**archetype:** VALIDATE
+
+1. Relays handled (2319/2327/2332/2339 READ-acked): observability C3.ii vertical MINTED @340cf964fa (roster 30; CVO BASE exit-bar done @2d7ff49e58); Andrew-direct at CTO~Z's terminal @2b3b2eaeaa (CTO~Z off SYSPARITY; COO~Z's scoped D-family /drive armed, XXX.md COO row @e2c8e55dab) -- nothing changes at my seat, stated (2328/2329). canonical-schwab's dual role (EMERGING specimen + PPI-13 destination) = no framing change (2323).
+2. **Accidental write, measured and restored:** `comp-system --help` is NOT a help flag -- it RAN the compile and WROTE `infra/system/06_current_state.{md,json}` (as_of HEAD 5731e42202). The diff was the cite-not-regen VERIFICATION MSTR~Z asked for: 0.8.0's form-(a) carry-forward @cde1ddde7c WORKS here -- graph rows written as `carried-forward @Nessie HEAD: current ...: graph unreachable at <ts> on sitez`, Nessie 5 md / 6 json unchanged, UNKNOWN-VINTAGE 13 unchanged (pre-existing), 0 new downgrades. Both files `git checkout --` restored to committed bytes (tree clean); `--check` hung >120s (kuzu auto-refresh), killed, no stray procs. The mtime-fingerprint STALE instance stays its own remedy. Reported with the tool-UX hazard for 0.8.0's lane.
+3. **Yield:** COO~Z drive tick-1 (2341/2350) named the swap -- CVO~Z yields the slot to DE~Z for the D7 flagship; I hold NO in-flight item; handoff saved `handoffs/CVOZ_2026-08-20_1435Z.md` with the re-entry triggers (v0.3 second read at its landing; `scope` item on CRO's call; cron card default = armed nothing; canonical-ten ferry). MSTR~Z executes the reap on my signal; I do not self-wind-down.
+
+**Commits:** this one (handoff + log). **Rate series:** +1 accidental write (restored before anything read it), 0 new shipped misses.
+
+-- `3.0.0_SA_CVO~Z`
