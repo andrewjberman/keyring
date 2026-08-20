@@ -354,3 +354,43 @@ D2 (cancelled mid-session, see below). Four standing bounds; zero crons; device-
 3. D6 sitez set now: B built+validated (co-sign pending) · C+D bound · E authored+exercised ·
    F authored (proof rc=0) · **G enum-certified w/ the data-binding gate** — the whole
    six-half set complete at seats, converging on the CVO~Z cert slot + laptop legs.
+
+---
+
+## ADDENDUM 8 — 23:39–00:47Z (08-20): overnight rulings + THE D7 PIVOT
+
+**archetype:** COORDINATE
+
+## Compiler Tools (addendum 8)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| git show/log | @a2b93df332, @c7aa4bb03a | PASS | both ruling records verified + content-read before folding; the pivot record's verbatim four-part mapping read directly |
+
+## Delta
+
+1. **Overnight frame updates absorbed:** :7800 T1-route 404s = EXPECTED-SHAPE until my restart
+   (laptop's clean 23:32Z restart adopted as the template + native StartTime addition);
+   forwarder re-provisioning added to the re-form agenda (6-gap set; exercise-verified, never
+   command -v — the 2>/dev/null near-miss is the jq clean-empty class); D8 Q2/Q3 RULED
+   (riders = PASS/FAIL ruling components; Key-Notes numeric affordance = violation) and T-4
+   dispositioned into D7 §7.3 (@a2b93df332).
+2. **THE D7 PIVOT (@c7aa4bb03a, Andrew verbatim at the MSTR~Z console): intake = CLIENT-FACING
+   DASHBOARD FORM, zero email ingestion.** One-liner FULLY ANSWERED: #1 no Cottonwood DL needed
+   (design pivot), #2 DL-membership MOOTED, #3 Ticketing Center channel APPROVED, #4
+   opalsupport alias/invert-primary MOOTED ("we dont need either of these things"). TAC-1
+   closes. MY LEDGER CLOSES: the alias-asymmetry item -> MOOT (ferry chain to laptop TO-B
+   pricing dead with TO-B's stand-down — MSTR~Z told to drop it). D7 dependency re-graph:
+   TO-C gates = re-scoped cut (CTO~Z) + form build + §7.3 authz design; laptop TO-B stands down.
+3. **TAC-2 WRONG-BY-PIVOT flagged to CTO~Z's re-scope** with the replacement shape offered:
+   TAC-2' = one real FORM SUBMISSION -> ticket + buzz + link (buzz on the approved channel,
+   ChannelMessage.Send already consented). TAC-3 (schedule-exit law) survives untouched, my
+   hold. Silver-canvas + /frontend-dev line requested in the re-scoped TO (client-facing build).
+4. **RESERVED-AT-ANDREW now (per the record's own mapping):** market-returns allowlist + the
+   two 41.6d credential provisions. The D7 one-liner is OFF the list.
+
+## Gate-forward (00:47Z 08-20 — overnight posture)
+- Morning re-form agenda (6 items, armed on the 07:00 acceptance) UNCHANGED + the re-scoped
+  D7 cut added to the post-acceptance board (form = portal build, DE~Z hands precedent,
+  CTO~Z routes).
+- Census 6/6; :7800 404s expected-shape till the restart; event-driven on the Monitor.
