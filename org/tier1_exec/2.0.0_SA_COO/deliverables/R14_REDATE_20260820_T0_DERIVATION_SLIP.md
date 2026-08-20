@@ -14,17 +14,38 @@ the pipeline is fine, the derivation is off by one trading day at exactly one ca
 Downstream today: 15 twins NOT emitted, canonical date=2026-08-19 ABSENT, pins/oracle table
 NOT-RUNNABLE (precondition limb (b) FALSE).
 
-## THE RE-DATED CALENDAR (binding form; slide rule below)
-| Row | Was | NOW | Condition |
-|---|---|---|---|
-| FIRST green (D2/R14) | 2026-08-20 12:45Z | **2026-08-21 12:45Z** | DS-lane fix LANDED + DEPLOYED before the fire |
-| PB-1 proof | 2026-08-20 13:30Z | **2026-08-21 13:30Z** | rides FIRST-green day |
-| SECOND green -> flip -> PROD-promote | FRI 2026-08-22 | **FRI 2026-08-22, UNCHANGED** | Thursday greens (the slip consumed today's slack, not Friday's) |
+## ⛔ CORRECTED ~1552Z (CTO 63236/63238, verified INDEPENDENTLY at three seats incl. mine:
+## python weekday 08-20=THURSDAY, 08-21=FRI, 08-22=SATURDAY, 08-24=MON; CVO's partition-triple
+## and git-header proofs concur). THE ORIGINAL TABLE BELOW CARRIED WEEKDAY LABELS OFF BY ONE,
+## AND ITS CENTRAL CLAIM INVERTED: "FRI 08-22 promote UNCHANGED" named a SATURDAY, so the
+## sovereign Friday target was NOT preserved as written -- the ruled THU-first slot is the one
+## that fired and failed TODAY (Thursday). Original table preserved struck for provenance;
+## the CORRECTED CALENDAR + FORK below binds.
 
-**SLIDE RULE (stated now so nobody re-derives it under pressure):** if the fix misses
-Thursday's 12:45Z fire, every row slides trading-day-for-trading-day; SECOND green -> flip
-then falls MON 2026-08-24 (next trading day after a Friday FIRST green). Weekend days never
-count (NEVER#1).
+~~| FIRST green | 08-20 -> 08-21 ("THU") | PB-1 rides | SECOND green -> flip "FRI 08-22 UNCHANGED" |~~
+
+## THE CORRECTED CALENDAR (binding)
+| Row | Instant | Day | Condition |
+|---|---|---|---|
+| FIRST green (D2/R14) | 2026-08-21 12:45Z | **FRIDAY** | DS-lane fix LANDED + DEPLOYED before the fire (instant unchanged from the first cut -- only the day-name moved) |
+| PB-1 proof | 2026-08-21 13:30Z | FRIDAY | rides FIRST-green day |
+| END-GAME | **FORKED -- see below** | | |
+
+**THE FORK (carded at Andrew via MSTR 63241, his terminal, this hour -- calendar cut on his
+word; (c) is the DEFAULT absent it):**
+- **(a) FRIDAY PROMOTE PRESERVED = single-green compression** -- flip + PROD-promote FRI on
+  ONE green. The ONLY Friday-preserving form, and it relaxes the two-green discipline against
+  a just-fixed derivation -- precisely the run a second look exists for. **ANDREW'S WORD ONLY**
+  (a protocol compression against his own dated target is not a calendar edit).
+- **(c) DEFAULT -- two-green discipline held:** FIRST green FRI 08-21; SECOND green at the
+  next fire (SAT 08-22 if the schedule fires weekends -- a non-trading day whose run derives
+  FRI's frontier, a clean live exercise of the just-fixed branch; else MON 08-24, exercising
+  the weekend-crossing branch); **flip -> PROD-promote MON 2026-08-24.** Either sequencing
+  gives the fix a boundary-case live proof the battery only simulates (CVO's verify note).
+- (b) Saturday-promote: REJECTED -- weekend ops spend, nothing sovereign gained.
+
+**SLIDE RULE (corrected):** miss FRIDAY's 12:45Z fire and every row slides
+trading-day-for-trading-day from there; weekends never count (NEVER#1).
 
 ## NAMED READER PER GREEN (adopted from CVO's closing finding; moratorium-conforming --
 ## an owned read in the calendar, not notification machinery)
@@ -36,11 +57,14 @@ Adopted into the calendar, same as each row names whose act it is:
 - SECOND green FRI 12:45Z -> **CVO reads** (their pins/oracle table is the consumer).
 - A read that finds ABORT is a same-hour surface to COO -- an owned blocking item, not an alarm.
 
-## DIRECTIVE ALIGNMENT (strengthens FRI-UNCHANGED)
-The D2 row's own ruled stance (org/missions/DIRECTIVES.yaml:60-61) already reads "THU first
-green 12:45Z + emit + pins; FRI second green + repoint + PROD promote = E2E COMPLETE" -- the
-re-dated calendar above lands EXACTLY on the ruled shape. The slip consumed spare slack ahead
-of the directive's own THU slot; the Friday sovereign target is intact, not rescued.
+## DIRECTIVE ALIGNMENT -- ⛔ CORRECTED ~1552Z: THE ORIGINAL READ OF THIS SECTION WAS THE
+## ERROR'S MECHANISM. The D2 stance's "THU first green" names TODAY (08-20 IS Thursday) --
+## the ruled THU slot is the one that fired and failed at 12:45Z. The original text below
+## claimed alignment by shifting every label one day late; preserved struck for provenance.
+~~The re-dated calendar lands EXACTLY on the ruled shape... the Friday sovereign target is
+intact, not rescued.~~
+TRUE STATE: the slip broke the ruled THU-first/FRI-second shape on its first row. The
+directive's FRI-promote target survives ONLY via fork option (a), which is Andrew's word.
 
 ## FIX SHAPE -- RULED (CTO 63213, ~1541Z, superseding this record's earlier "design call" line)
 (1) CALL-SITE FIX ONLY: production branch derives date = prev_trading_day(now).
