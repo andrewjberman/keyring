@@ -12,6 +12,17 @@
      ownership gap (a handoff declared in one document does not create ownership in another);
      both successors now carry the halves explicitly. Flip by 0.0.0_AB_MSTR per CTO ferry 202310Z;
      the D9 TO-A part-6 recommendation INHERITS this answer (cite, do not re-ask). -->
+<!-- (Both fabrics flipped this record to superseded independently within minutes of Andrew's
+     card-10 ruling; both annotations kept at the wind-down merge 2026-08-20 -- same disposition,
+     complementary detail. Laptop flip above; sitez flip below. -->
+<!-- SUPERSEDED 2026-08-19 ~2030Z by 2.0.0_SA_COO~Z (COO flip per the TO-status law; issuer is Andrew, sovereign).
+     POINTER: Andrew ruling 2026-08-19 (record @3c8c3f1035, CTO open-calls card 10, verbatim): "TO #42 |
+     SUPERSEDED by the D7 + D9 PRDs (each half explicitly owned) | COO/MSTR mark #42 superseded citing this
+     record; the D9 assessment's seat-or-supersede act inherits the answer." This TO's scope IS sovereign TO
+     #42's two halves: the ticketing half is D7's (explicitly accepted @fac13ccc3a, executing as
+     D7_TICKETING.TO-AC-SITEZ at 0.5.0_AE_OpalETL~Z), the taxsma half is D9's (D9_TAXSMA assessment at
+     0.4.0_DS_ClientPlatform~Z). Linkage + inherit mechanics: MSTR~Z 194942Z + COO~Z 195042Z ack; the assignee
+     lane (~A) is dead — this row inherits the ruling rather than duplicating into the D9 census. -->
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
 ## ADDENDUM 5 — SIXTH ANDREW-DIRECT (2026-07-15 ~14:0xZ): TICKET-CENTER UI + THE UI-DESIGN PROCESS (verbatim)

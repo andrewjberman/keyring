@@ -39,7 +39,20 @@ cadence ruled. Remaining under #8: Yang words (07-01 swap; backfill ack) -- park
 <issued_by>Andrew (sovereign, direct terminal prompt to the ~A lane session, appended to a /log order)</issued_by>
 <channel>direct terminal prompt, session 8841a0df-4e0d-4190-9d2e-96fc825f9f23</channel>
 <received>2026-07-15 ~15:4xZ</received>
-<status>executing</status>
+<status>superseded</status>
+<!-- SUPERSEDED 2026-08-19 ~2119Z by 2.0.0_SA_COO~Z (COO flip; SPLIT SUPERSEDE covering BOTH records in
+     this file, executed under LD-0090 MSTR /govern discretion — laptop MSTR frame f69344ce 21:16:43Z
+     (laptop-side commit, not yet integrated on SITEZ at flip time — cited per the MSTR~Z relay 211725Z),
+     S2 class, dispositioned rec, Andrew silent across multiple ruling turns; SAME SHAPE as his #42 ruling
+     @3c8c3f1035 card 10. ANDREW'S COUNTERMAND REVERTS THIS FLIP — stated per the precedents.
+     THE SPLIT: the #8 TAXSMA-guardrails half supersedes INTO D9(c1) — the daily-tracking leg whose build
+     arc closed under the "Yes B now" ruling (accept-8 waived it ahead; D9_TAXSMA program carries it);
+     the #7 UIUX-centralization half supersedes TO the UIUX_DESIGN macro (its substance already
+     substantially delivered: silver-canvas law + /frontend-dev fabric-wide per dbfe8c3a94 trail).
+     Evidence chain: D9 TO-A part-6 #48 rec (delivered @990cfc061b) + COO~Z 203200Z surfacing (measured:
+     "executing" 35d at a dead lane) + MSTR~Z 211725Z fire order. Assignee lane ~A is dead; this closes
+     the LAST stale sovereign row at that lane (phantom-pending census -> 0). -->
+
 
 ## VERBATIM (the phrasing IS the ruling)
 
