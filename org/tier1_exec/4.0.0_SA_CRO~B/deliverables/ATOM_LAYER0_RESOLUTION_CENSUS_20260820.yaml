@@ -134,7 +134,7 @@ rule_24_record:
       two_home_discriminator:
         GOVERNED_DUAL_CARRIER: >-
           Multiple carriers are authorized by ruled design, authority or
-          precedence is explicit, and a live comparison instrument covers the
+          precedence is explicit, and a re-runnable comparison instrument covers the
           carriers. On an unresolved row this class means that instrument has
           detected extant drift; it does not mean the carriers are ambiguous.
         AMBIGUOUS_TWO_HOMES: >-
