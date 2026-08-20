@@ -19,6 +19,19 @@ capture). If they ever diverge, the prompt wins and this file is the defect.
 | P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired at `.claude/settings.json:145` (@65d80ab37). **The fence loads PER-SESSION at session start (PRD App C): a stale/prior session's fence is NEVER assumed active — a fresh launch is what arms it.** |
 | P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` will FAIL at step 4 — surface, don't work around). |
 
+## 0b. STANDING ORDER — re-arm the 07:15 daily backstop cron EVERY session (Andrew-direct 2026-08-20)
+
+**A relaunching successor ARMS `CronCreate("15 7 * * *", <the backstop check>)` at startup
+while this ruling stands** — full firing procedure, both Andrew verbatims, the authorization
+scope fence, and the re-arm warning live in
+`../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` (BG-authored 2026-08-20; ruling
+record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260820_MSTRZ_LET_THE_FALLBACK_TRY_SELF_HEAL_UNTOUCHED.md`
+@eede873a2f). **This row is the EXPLICIT exception to the "Tier-0 UA arms ZERO crons"
+default** — without it, that law points a successor away from a live sovereign instruction
+(the silent-drop shape the COO `/drive` and CVO~Z SYSPARITY rows record). The cron is
+session-only; this pointer is what makes the order survive a relaunch. *(Row placed by
+0.0.0_AB_MSTR~Z as named integrator — the seat's G1 fence correctly cannot write refs/.)*
+
 ## 1. Launch
 
 `ajb 0.0.3_BG_BBGTerminal` (box launcher — MSTR~Z or the operator at the terminal).
