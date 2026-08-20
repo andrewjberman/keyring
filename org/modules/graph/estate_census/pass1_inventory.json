@@ -76,8 +76,8 @@
         "s3://opal-data-bd/silver/bd_nna_by_architect.parquet"
       ],
       "frontend_resolution": "none directly; NNA/txn silver feeds gold C_01 canonical_nna -> portal partner_analytics / leaderboard",
-      "classification": "IN_SCOPE",
-      "classification_reason": "cloud-deploy (Lambda, S3 trigger + S3 output) AND pipeline consumer (NNA gold scripts -> AdvisorIntelligence)",
+      "classification": "deployed-dormant (successor canonical)",
+      "classification_reason": "CTO PRODUCER RULING 2026-08-20 (msg 63485, executing-plane measurement at the CTO seat): opal-bd-transaction-consolidator = 0 invocations over 90 days; successor bd-silver-merge = 47 over the same window (1 in last 7d). bd-silver-merge is CANONICAL. Class corrected from the spot-check's RETAIN-LIVE-UNMANAGED: that was a DEPLOYED-plane read (ListFunctions membership) -- PRESENCE IS NOT EXECUTION; a lambda's State=Active says nothing about whether anything calls it. This is an ordinary decommission-backlog item (Rule 25 dormancy default, successor found), NOT the Andrew-vetoed standing-parallel-path class -- no path exists because nothing invokes the predecessor. Teardown: stop-first + deploy-completion ledger at the owning AE lane, COO cadence; re-run the invocation-denominator check before firing (tear down on execution evidence, never on presence). Census interim state (CENSUS_REGEN_ADJUDICATION_20260820 + spot-check flip) was correct at its plane and is superseded-in-place by this executing-plane ruling.",
       "current_coverage": "globgrph-graph(comp-kuzu) for lambda; silver parquet partly in comp-pipescript medallion",
       "enrichment": "dedup by TransactionID, new/existing client classification, NNA inflow/outflow flags, attribution parsing",
       "family": "bd-medallion"
