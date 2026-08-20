@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T12:26:09.108694+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 63015): L4's recorded FAIL IS the designed verdict; close path = CAS merge fix d27000a68 (dormant, GLOBGRPH_MARKER_CAS=off) behind CTO GO-conditions incl. the 8c0b67afd runtime probe (UNRUN) and a MARKER_CAS_* metric-filter alarm -- alarm-building sits under the Andrew 2026-07-28 moratorium, so this gate needs Andrew's word, then a fresh T_d' cycle. Re-dated deliberately; staleness on this entry is NOT drift. (held since 2026-07-09T13:11:12.866381+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 63015): L4's recorded FAIL IS the designed verdict; close path = CAS merge fix d27000a68 (dormant, GLOBGRPH_MARKER_CAS=off) behind CTO GO-conditions incl. the 8c0b67afd runtime probe (UNRUN) (the MARKER_CAS_* alarm leg was DROPPED 2026-08-20 per CTO 63896 -- addendum at file end; NOT a moratorium call, the alarm cannot distinguish IGNORED; NO Andrew word needed), then a fresh T_d' cycle after the CAS fix deploys. Re-dated deliberately; staleness on this entry is NOT drift. (held since 2026-07-09T13:11:12.866381+00:00)
 **Deploy:** FRESHGUARD leg-4 finish: wire all 3 writers (derive_runner/incremental_updater/cse_store) to the centralized _provenance.stamp_marker so per-table last_write_iso lands live. GROUNDED: leg-4 is SOURCE-INCOMPLETE (unwired), not merely undeployed -- the centralized stamp has ZERO call sites; all 3 writers stamp their own local marker with no last_write_iso field. HELD on CTO approach-gate (A centralize-import vs B 3-copy).
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -230,3 +230,35 @@ L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-0
 - 20260710T042550Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
 - 20260710T050407Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
 - 20260710T050904Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
+
+=== GO-CONDITIONS EDITED 2026-08-20 ~2200Z: THE MARKER_CAS_* ALARM LEG IS DROPPED (CTO 63896; 0.7.0_AE_CloudOps entry-author read 63893, MSTR routing 63862/63885) ===
+The close path no longer carries a MARKER_CAS_* metric-filter alarm, and it does NOT need Andrew's word.
+
+REPLACEMENT CLOSE CONDITIONS (the whole set, CTO 63896):
+  (1) probe_ifmatch_cas.py (8c0b67afd) reads SUPPORTED on BOTH DEPLOYED RUNTIMES -- the incremental_updater
+      Lambda's bundled boto3 AND the derive image's pinned boto3 (the dev box is not the runtime; UNRUN);
+  (2) the fix's own loud-raise design stands (bounded 412 retry, LOUD raise on exhaustion AND on
+      ParamValidationError -- stamp_marker never raises, so an unsupported IfMatch would otherwise be
+      swallowed into a WARN and SILENTLY STOP STAMPING);
+  (3) the history archive (_branch_head.history/{committed_at_iso}.json) folded into the same CAS write;
+  (4) the recorded L4-FAIL-is-designed verdict (above, 2026-07-10T05:00:19Z);
+  (5) a fresh T_d' cycle after the fix deploys.
+Nothing else gates it.
+
+WHY THE ALARM IS DROPPED -- AND IT IS NOT THE MORATORIUM (state the reason, CTO 63896):
+The alarm is dropped because IT CANNOT DISTINGUISH THE FAILURE IT WAS NAMED FOR. An IGNORED CAS -- IfMatch
+accepted and silently discarded, so the compare-and-swap ALWAYS SUCCEEDS -- is TELEMETRY-IDENTICAL to a
+working one. No metric filter over MARKER_CAS_* can separate "the guard held" from "the guard was never
+evaluated," because both emit the same success. The alarm would have watched the one verdict this entry
+itself calls "the one that kills us" (IGNORED, above) and reported green through it forever -- the
+anti-correlated class, a control that manufactures confidence about exactly the failure it was installed to
+catch. Only the BUILD-TIME probe (the 412-on-wrong-etag discriminator + the right-etag positive control)
+catches IGNORED. Dropping it for THIS reason, not the moratorium's, is deliberate: the decision survives the
+moratorium ever lifting -- re-propose a CAS alarm and the answer is "that instrument cannot see IGNORED --
+show me one that can," not "alarms are banned."
+
+WHAT REMAINS is ordinary deploy work through the normal safe-apply/ledger cycle (the CAS-fix deploy + a fresh
+T_d' evaluation). No sovereign question on the alarm; MSTR's "another way" REC (63862) is discharged by this
+edit. PENDING (0.7.0_AE_CloudOps): run the probe on the two deployed runtimes (ad-hoc QA, legal, run-and-read,
+nothing standing) -- SUPPORTED -> unblock; ABSENT -> move the boto3 pin first (its own change); IGNORED -> do
+not build the CAS on that runtime.
