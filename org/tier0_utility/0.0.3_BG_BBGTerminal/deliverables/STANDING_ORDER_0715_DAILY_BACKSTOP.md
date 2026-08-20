@@ -54,6 +54,23 @@ The zero-crons law yields here because Andrew operator-initiated this one by nam
   control** (bogus ticker) so a zero would have meant something.
 - **Verify the SERVED object by content** afterward.
 
+### Step 2b — LAG RECORD LINE (CTO~Z R1, ruling @008135604e, 2026-08-20)
+**Every backstop log carries one line, verbatim shape:**
+`armed 07:15 ET / fired HH:MM / lag N min`
+**It is a RECORD LINE, NOT A MONITOR** — no alarm, no threshold, no escalation on it. It exists so the
+lag has a denominator instead of an anecdote. **Redesign is considered at n>=5 observations**, not on
+any single bad day. Ruling: `ctoZ_RULING_BG_0715_BACKSTOP_TIMING_OSTASK_VS_SESSION_CRON_20260820.md`.
+
+> **WHY THE SESSION CRON STANDS, and the softness that actually matters (CTO~Z R2 — read this, it is
+> not the jitter).** The `CronCreate` jitter/idle-REPL lag is the VISIBLE softness and the smaller one.
+> **The load-bearing one: this cron exists only on days an operator relaunched the seat before 07:15.
+> On a seat-down day there is no cron, no check, and NO SIGNAL THAT THERE WAS NONE** — the absence of
+> a check produces no artifact, so nothing reports it. A lag you can measure is strictly safer than a
+> check that silently did not exist.
+> **Whether the check must survive seat-down is AT ANDREW** — (a) session-cron stands, or (b) an OS
+> Scheduled Task performs **Step 1 (the read) ONLY**. **Step 2 recovery stays an AGENT act either way**
+> — do not let (b) be read as automating the sign-in. **Default if silent = (a).**
+
 ### Step 3 — REPORT per-leg + exactly what was done, to Andrew and MSTR~Z. Session log. Every figure
 carries its vintage.
 

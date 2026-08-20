@@ -80,3 +80,69 @@ No comp tool fits the rest and I did not force one. The surfaces were a Windows 
 record, the CodeIntegrity event log, a live process/port enumeration, PKL contents through a
 specific interpreter, and ONE served object read by exact key + body. `comp-freshness` answers "is
 the object old", which is not "does the body carry the right `data_as_of`" — the question I asked.
+
+## ~1218-1220Z — my launch runbook slimmed under LD-0427 @f05cf32053 — VERIFIED, not received
+Integrator slimmed `refs/RELAUNCH.md`. I read it **from `origin/SITEZ`** rather than filing the FYI:
+this file is my successor's launch path, and **a slimming edit is precisely the operation that drops
+what it claims to preserve.**
+
+- 127 -> 113 lines. **Positive control** (a known line -> 1) so the retrieval discriminates.
+- **§0b INTACT** at the same pre-launch position — re-arm order, `CronCreate("15 7 * * *", ...)`,
+  deliverable pointer, ruling record `@eede873a2f`, and the explicit arm-ZERO-crons exception.
+- **Step-5 contradiction genuinely fixed:** now *"arm the §0b standing-order cron and NOTHING else"*.
+  The old *"arm ZERO crons"* would have pointed a successor **away from a live sovereign order two
+  sections up**. That was a real defect and **I did not spot it when I requested the row** — I asked
+  for a pointer and never checked whether the surrounding text contradicted it.
+- P1–P4: all four rows present.
+- **Pointer chain resolves end-to-end** (checked, not assumed): the deliverable resolves on the ref,
+  64 lines, carrying both the cron expression and the fire-once discipline; `@eede873a2f` resolves
+  and is on `origin/SITEZ`. **Nothing dangling.**
+
+### Stated property of the new shape — recorded so it is known, not discovered
+§0b's body is now the placeholder `<the backstop check>`; the firing procedure lives entirely in the
+deliverable. **The order is 2 hops instead of 1.** Correct under LD-0427 and I would not reverse it —
+but **the failure mode moved**: if the deliverable were swept, renamed or slimmed away, **§0b would
+still READ perfectly correct and arm a cron with no procedure behind it.** A successor gets a green
+launch and an empty order.
+
+**No gate, check or monitor proposed for it** — one line of awareness for the row's maintainer.
+**My half is cheap and mine anyway: spot-check the chain from the ref at each relaunch.**
+
+## LAG RECORD (CTO~Z R1, ruling @008135604e) — n=1
+```
+armed 07:15 ET / fired <=07:45 / lag ~30 min
+```
+**Honest bound on "fired":** I did not capture the fire instant. What is measured is that my FIRST tool
+call of the fire returned `07:45:23 ET`, so the fire was **at or slightly before 07:45:23** and the lag
+is **~30 min, not exactly 30**. Recorded as an observation, **not a monitor** — no alarm, no threshold,
+no escalation. **Redesign considered at n>=5**, never off one day.
+
+## ~1229Z — CTO~Z RULED ON MY TIMING SURFACING, AND THE REFRAME IS SHARPER THAN MY FINDING
+Ruling `@008135604e`. **(R1)** session cron STANDS as the carrier; keep re-arming per §0b; add the lag
+record line above. **(R2)** the load-bearing softness is **not the jitter I found**.
+
+> **THE REFRAME:** my finding was about the **LATENCY of a check that ran.** Theirs is about the
+> **EXISTENCE of the check at all** — *the session cron exists only on days an operator relaunched this
+> seat before 07:15. On a seat-down day there is no cron, no check, and NO SIGNAL THAT THERE WAS NONE.*
+> **The absence of a check produces no artifact, so nothing reports it.** A lag you can measure is
+> strictly safer than a check that silently did not exist.
+
+**MY SECOND INSTANCE OF ONE BLIND SPOT TODAY, and I want it recorded as a pattern, not two incidents.**
+This morning I never asked whether my own logs were REACHABLE — I measured the artifact in front of me
+(I wrote it, I can `cat` it) and not the case where it isn't there. Here I measured the lag of the fire
+in front of me and not the day the fire never happens. **Both times: I instrumented the present object
+and not its absence.** Absence is the case with no artifact to look at, which is exactly why it needs
+to be asked about deliberately rather than noticed.
+
+**AT ANDREW (card):** does the check need to survive seat-down — (a) session cron stands, or (b) an OS
+Scheduled Task performs **Step 1, the READ, only**. **Step 2 recovery stays an AGENT act under either**
+— (b) must not be read as automating the sign-in. **Default if silent = (a).** Not mine to decide.
+
+## Actions taken on the ruling (this turn)
+1. **Deliverable updated** — `STANDING_ORDER_0715_DAILY_BACKSTOP.md` gains **Step 2b** (the lag record
+   line, explicitly not-a-monitor, n>=5 redesign bar) + the R2 softness note with the Andrew card.
+   **This is the durable half** — given §0b is two-hop, the deliverable IS the procedure a successor reads.
+2. **Cron re-armed carrying R1** — old `8b5d18cb` cancelled, new **`f9681e0c`** (`15 7 * * *`), body now
+   opens with "note the CURRENT time" and closes with Step 2b + the R2 softness. A cron body that does
+   not carry the ruling would have produced a compliant-looking fire with no lag line.
+3. Lag record line for n=1 written above.
