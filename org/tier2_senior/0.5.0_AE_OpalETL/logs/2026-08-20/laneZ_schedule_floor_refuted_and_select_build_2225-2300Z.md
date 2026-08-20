@@ -123,6 +123,47 @@ here authorizes changing the runner's cadence**; option (ii) remains a recommend
 `MEMORY.md` lines 51/52 are a near-duplicate pair from two seats on the same lesson (the record-snapshot
 trap) — flagged, not folded, since both were written minutes ago and may still be in flight.
 
+## 5 — ADDENDUM 2300–2320Z: the gateway credential refresh model, MEASURED
+
+The intake's send leg depends on this, so it belongs in the record and not in an inbox.
+
+**RESULT — a designed measurement on a naturally-scheduled event, nothing manufactured:**
+
+| time | act | token state | expiry after |
+|---|---|---|---|
+| 21:09:59Z→ | teams-watch monitor, gateway poll every **15s** | LIVE | **unchanged, ~464 polls** |
+| 23:02Z | agent MCP call (BG, 200 + expected payload) | LIVE | **unchanged** (measured) |
+| 22:16Z | agent MCP call (mine, ordinary read) | **DEAD** | → 23:15:55Z |
+| 23:16:0xZ | agent MCP call (BG, on the dead token) | **DEAD** | → **2026-08-21T00:16:13Z** |
+
+Before-anchors at 23:05:06 / 23:07:43 / 23:08:09 / 23:15:35Z all read 23:15:55Z; after-read 23:16:31Z.
+Re-mint recoverable from the value: `00:16:13 − 60:00` = **23:16:13Z, 18s after expiry**. All three refreshes
+land on call-time + exactly 60:00.
+
+**MODEL (behavioural, well-supported — NOT a source read of the client):** the credential re-mints only
+when it is **already dead** and an **agent MCP call** occurs. The discriminating variable is the token's
+state, not the call type. Processes that read the stored token from the file — the runner and the monitor
+— **can never mint**, so they cannot self-heal.
+
+**The rival hypothesis, killed with data already in hand:** an 18-second recovery looks automatic, so
+*proactive client refresh on expiry* was the reading most worth attacking. It is falsified by the
+22:06:05Z lapse, which stayed dead ~10 minutes across two failed runner passes (22:09, 22:14) until an
+agent called at 22:16Z. A client refreshing in 18s cannot leave a token dead for ten minutes.
+
+**So the carded exposure stands unchanged:** an unattended lapse persists until a seat acts. What is new
+is that the *condition* and the *agent* are now measured rather than assumed.
+
+**Experiment hygiene:** single-caller protocol held — this seat made **zero** gateway calls all session
+(every observation a file read of `~/.claude/.credentials.json`, expiry and counts only, no token
+material). The monitor was excluded **by source** (`teams-watch.py:479` — the whole poll body sits inside
+`if tok:`, so a dead token means no call), and the runner by the same property one file over.
+
+**Two retractions of mine inside three minutes, both worth the record.** I alarmed that the monitor would
+contaminate the measurement — wrong, it is silent by construction, and I raised it without reading the
+loop of a file I own. And my process scan returned **four** `teams-watch.py` matches when three were
+`bash.exe` wrappers around the one real `python.exe`: *a command-line regex counts invocations, not
+processes*, and it produced a clean plausible 4.
+
 ## Blockers
 
 None at this lane. W-B's transport is dropped on CTO~Z's recommendation (semantics kept, re-cut is
