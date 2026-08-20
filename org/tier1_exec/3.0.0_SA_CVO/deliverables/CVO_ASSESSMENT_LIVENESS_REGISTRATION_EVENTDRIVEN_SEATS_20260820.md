@@ -129,3 +129,37 @@ fire → no poller → its row evicts at 600 s. **Three site-Z reads settle it**
 the rest. No machinery change, no heartbeat build, per Andrew's hold.
 
 — 3.0.0_SA_CVO
+
+---
+
+# AMENDMENT 2 (~2135Z) — BRANCH (c): THE POLLER SPAWNED AND DIED; THE MECHANISM AT SOURCE
+
+**Site Z's three reads (MSTR relay 63805):** hook row PRESENT (vintage not the problem); pidfile
+`0.0.3_BG_BBGTerminal.pid` EXISTS (pid 40532, mtime 20:57:35Z) and that pid is GONE ~29 min later
+while BG's `claude.exe` (10260) lives; control: `1.0.0_SA_CTO~Z`'s older pidfile tracks a poller that
+IS running. **Not branch (b) — the hook DID fire. The poller spawned and died.**
+
+**At source (parity):** `hook_launch_poller.py:106-123` writes the pidfile ONLY on the spawn path
+(the skip path returns without writing) → the 20:57:35Z mtime IS a spawn. `agent-poller.py:186-203`
++ `:266-276`: at start the poller reads **`liveness.json[serial]["pid"]` — the MCP SERVER's pid** as
+`register_agent` recorded it (`server.py` writes its own `os.getpid()`), **not `claude.exe`'s**; absent
+after 5 retries → `sys.exit(0)` before any heartbeat. `:286-301`: the ONLY in-loop exit is
+`if not _pid_alive(mcp_pid): sys.exit(0)`.
+
+**So the poller died for exactly one of two reasons:** (a) no liveness pid at start → instant exit
+(artifact-vs-execution, as site Z named); or **(b) the MCP-server pid it tracked DIED while
+`claude.exe` lived on** — the server is a child process the session spawns; an MCP disconnect/reconnect
+respawns it under a NEW pid, and only a fresh `register_agent` re-records that pid. **A live
+`claude.exe` is not evidence the MCP server is alive.** ONE read settles it (site Z, read-only):
+`liveness.json["0.0.3_BG_BBGTerminal"]` — entry present? its pid alive? Expected: evicted, or pid dead.
+
+**The remedy shape, corrected (site Z's caution was right):** re-running `register_agent` spawns a new
+poller that tracks the CURRENT server pid and lives exactly as long as that server incarnation. **The
+narrow structural fact: POLLER LIFETIME IS BOUND TO ONE MCP-SERVER INCARNATION, NOT TO THE SESSION.**
+If a seat's MCP server cycles mid-session, its poller exits clean on the dead pid, nothing re-registers,
+the row evicts 10 min later, and the seat reads NOT REGISTERED while alive. Whether BG's server cycles
+(and why) is the read that decides "one odd session" vs "any seat whose server restarts goes illegible"
+— and 6 polled site-Z seats + 10 laptop seats reading live all day says cycling is rare, not never.
+**Still nothing to build** — the characterization is the deliverable; the machinery stays held per Andrew.
+
+— 3.0.0_SA_CVO
