@@ -80,8 +80,10 @@ Research running long (> ~10 min, e.g. a big paginated scan): send ONE interim u
 as partial, never as absence, and never silently served as complete.
 
 **6. RECORD — same turn, per `refs/THREAD_MEMORY.md`:** append ASKED/ACKED/SERVED (or
-DECLINED) with vintage + catalog row to today's daily file; refresh the Day index; fold
-durable context into THREAD.md. An undelivered reply is recorded OPEN with why.
+DECLINED, or FAILED) with vintage + catalog row to today's daily file; refresh the Day
+index; fold durable context into THREAD.md. An undelivered reply is recorded **FAILED**,
+never OPEN — nobody CHOSE to leave it pending, and the failed telling IS the failure
+(ruled msg 2766; retry owed; the contract's Rule-24 record carries the definition).
 
 ## Send mechanics + failure modes (all loud, none silent)
 
