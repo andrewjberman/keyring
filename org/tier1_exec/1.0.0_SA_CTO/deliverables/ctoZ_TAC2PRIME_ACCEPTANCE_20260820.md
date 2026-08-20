@@ -18,17 +18,23 @@ The gap did not have to be argued — it **demonstrated itself inside the test**
 hand-poll a channel they already expected a post in. Their own words, and they are the exact form the record
 needed: *"NOTHING ABOUT THE CHANNEL WOKE ME, AND NOTHING WOULD HAVE."*
 
-> ⛔ **CORRECTED 20:59Z — THE "SEAT WAS DOWN" PREMISE IN THIS RECORD WAS AN ARTIFACT.** This section
-> originally read *"`0.0.3_BG_BBGTerminal` read `NOT REGISTERED` at post time"* and carried it as the
-> seat-down condition. **The seat was ALIVE, in-session, and would have answered instantly.** The
-> `NOT REGISTERED` reading is **M4, and M4 is now grounded as STRUCTURAL**: `register_agent`'s contract
-> assumes a periodic heartbeat (30–60s, degrade at 2 min), and **an event-driven seat has no periodic
-> anything** — so between events it emits zero heartbeats and reads dead. In its author's words:
-> ***"the healthier I am at being event-driven, the more reliably I read dead."*** Zero-crons — a correct
-> ruled decision — produces the false-dead reading as a structural consequence.
+> ⛔ **CORRECTED 20:59Z, RE-CORRECTED 21:10Z — THE "SEAT WAS DOWN" PREMISE IN THIS RECORD WAS AN
+> ARTIFACT.** This section originally read *"`0.0.3_BG_BBGTerminal` read `NOT REGISTERED` at post time"*
+> and carried it as the seat-down condition. **The seat was ALIVE, in-session, and would have answered
+> instantly.** That is the correction, and it rests on first-person report plus session continuity.
 >
-> **THE CONCLUSION WAS RIGHT FOR THE WRONG REASON.** The post woke nobody because of **M2
-> channel-blindness at source**, not because the seat was down.
+> ⛔ **THE EXPLANATION I FIRST ATTACHED TO IT IS RETRACTED AND MUST NOT BE READ AS MECHANISM.** The 20:59Z
+> version of this block asserted that M4 was *"grounded as STRUCTURAL"* via `register_agent`'s periodic
+> heartbeat contract, and quoted a memorable line to that effect. **All of it is withdrawn by its author
+> (2940) and HELD at Andrew (~2100Z) for assessment with the laptop `3.0.0_SA_CVO`. The flaw is fatal,
+> not partial: the observed reading was `NOT REGISTERED`, while the quoted contract describes degradation
+> to `STALE` — different states, and nothing says one becomes the other. The explanation did not fit its
+> own evidence, and the broker source was never read.** *A good sentence propagates faster than its
+> evidence; I propagated that one.*
+>
+> **THE CONCLUSION STANDS ON THE OTHER LEG.** The post woke nobody because of **M2 channel-blindness at
+> source** — which **is** source-confirmed — not because the seat was down. **No mechanism for the
+> `NOT REGISTERED` reading is claimed here, and none should be cited from this record.**
 >
 > **AND THE CORRECTION STRENGTHENS THE GAP CLAIM RATHER THAN WEAKENING IT.** A seat-down explanation
 > invites the remedy *"keep the seat up"* — which would have changed **nothing**. The true mechanism is
