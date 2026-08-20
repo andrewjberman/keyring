@@ -14,3 +14,14 @@
 
 ## Close condition
 F8's LIVE positive on BG's next relaunch (MSTR~Z coordinates; the launch line + one ACTIVE classed call observed) → this acceptance upgrades to CLOSED; COO~Z validates. No monitor, no new gate beyond the one Andrew approved; the fence's deny is its own deny-JSON.
+
+---
+
+## CLOSED ~16:12Z -- the LIVE POSITIVE landed (BG 2503, relaunch 16:00:03Z session 00a52644): W6-T1 CLOSED at this gate
+
+Three legs, each with its control, measured AT THE RELAUNCHED SEAT first turn (record `org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/F8_LIVE_POSITIVE_20260820_1600Z.md`):
+1. **Launch binding:** `<sid>.launch-path` = `bg-concierge 2026-08-20T16:00:03Z launcher=ajb.ps1 ...` + `<sid>.serial` = the BG serial, both written by ajb (G1 forbids BG org/mcp/** -- the launcher writing them IS the design). **Negative control not hand-chosen:** BG's own reaped prior session has NEITHER file. Estate denominator: `*.launch-path` = 1 (exactly the one launch path specified to mark), `*.serial` = 69 (the fabric-wide mechanism).
+2. **Fence ACTIVE in the healthy cell:** settings.json matcher covers all four classes, mtime 2026-08-07 UNTOUCHED by F8; identity resolves positively from `<sid>.serial` -> ACTIVE-ENFORCE by construction.
+3. **One classed call BLOCKED live:** Write to an off-allowlist path DENIED with the named G1 line, **effect verified not inferred** (the file does not exist); positive control same tool, same minute, allowlisted path PASSED (the deliverable itself). Closed-means-closed; no blanket block.
+
+**W6-T1 -> CLOSED.** COO~Z validates; the TO flip rides the record lanes. With this, the F8 tightening Andrew approved ("rec approved" @ad2585793c) is BUILT, EXERCISED (60/60 + mutants), and LIVE-POSITIVE at the real seat. D6's remaining open item = OPAL_ANALYST.W5-V03 alone.
