@@ -164,7 +164,12 @@ loop of a file I own. And my process scan returned **four** `teams-watch.py` mat
 `bash.exe` wrappers around the one real `python.exe`: *a command-line regex counts invocations, not
 processes*, and it produced a clean plausible 4.
 
-### 5a — NO GUARD REMOVAL CAN MAKE THIS SELF-HEAL, and I stopped a re-card that said otherwise
+### 5a — I stopped a re-card built on an unestablished premise. ⚠ MY OWN REPLACEMENT WAS ALSO TOO STRONG — see 5b, which downgrades it.
+
+> **READ 5b BEFORE CITING THIS SECTION.** The heading below originally read "NO GUARD REMOVAL CAN
+> MAKE THIS SELF-HEAL." That is **strongly supported, not established**, and 3.0.0_SA_CVO~Z found the
+> confound that shows why. Kept in place rather than rewritten — a record states what was written —
+> with the correction immediately after it.
 
 A "cheap fix" reached the point of being carried to Andrew: *self-reauth already works, our own
 defensive pre-checks block it, so let one component attempt the call it declines.* **The premise is
@@ -198,6 +203,47 @@ rotation chain the client depends on.
 *The docstring was right all along and reading it would still not have settled it — a docstring is a
 design claim, not evidence (Rule 22). But it would have produced the correct hypothesis an hour
 earlier.*
+
+### 5b — DOWNGRADE: the two candidate blockers are PERFECTLY CONFOUNDED, and this question cannot resolve itself
+
+3.0.0_SA_CVO~Z found it and it lands on my 5a claim as squarely as on the retracted one. **Every
+automated component both pre-checks AND is a raw poller. Every healing call both skipped a pre-check
+AND went through a minting client.** Five observations, two variables, perfectly confounded. CTO~Z
+picked the pre-check, I picked the caller, **and the data cannot separate them.** I published mine
+flat ("removing the pre-check heals nothing", "Claude Code never learns it happened") — the second is
+a claim about the *client's* behaviour, and **I have not read the client.**
+
+**Corrected grade:** the architecture (source-read) and the stated design intent (docstring) both
+favour *not-the-client*; that is a syllogism from two established facts, which is better support than
+the retracted reading had. **It is still not measurement.** The open edge: if the client mints in
+response to anything a poller could trigger — a 401 observed somewhere, a file watch, something
+unproposed — the second premise fails.
+
+**And the 22:06→22:16 window does NOT close it, which is the sharp part.** It falsifies a *proactive*
+minting client (ten minutes dead across two failed passes kills any timer). It says nothing about a
+client that mints on an *observed 401* — **because during those ten minutes no 401 was ever
+generated.** Every component pre-checked and made no call. The condition never existed.
+
+⛔ **THEREFORE THIS QUESTION CANNOT SELF-RESOLVE.** The lazy re-mint question settled on a naturally
+scheduled event — we waited and it fell out. Here, **the guard under test is exactly what prevents
+the observation**: no automated component will ever generate a 401, so the discriminating event
+cannot occur by accident, ever. It stays open indefinitely unless someone deliberately issues one raw
+HTTPS request with an already-expired bearer and re-reads `expiresAt`. **Cheap, nearly harmless
+(a dead token being rejected costs nothing), AVAILABLE, and deliberately NOT RUN** — it is a
+credential operation and an egress against live production to answer a question that changes no
+current decision, since both branches point at the same remedy space. Recorded so a successor knows
+it exists *and* knows it will never arrive on its own.
+
+**Why the stop was still correct regardless of who is right:** an unestablished premise is not a
+basis for a sovereign ask. And per MSTR~Z — the proposal *would have looked cheap and safe, which is
+worse than looking wrong*: a wrong-and-expensive ask gets scrutinised, a wrong-and-cheap one gets
+approved. **The cheapest-looking remedy needs the most scrutiny, the inverse of how attention
+allocates.**
+
+*CVO~Z's diagnosis of the mechanism, which I reproduced in the same minute I was correcting someone
+else for it: the alternative was never GENERATED, so there was nothing to weigh. Availability, not
+evidence. I had the peer-reader architecture in hand and reached for it as THE answer rather than as
+one of two the data could not separate.*
 
 ## Blockers
 
