@@ -8,6 +8,7 @@
     "request_hash",
     "status",
     "plane",
+    "substrate",
     "population_predicate",
     "denominator",
     "traversal_residue",
@@ -23,9 +24,11 @@
     "transport": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
     "enumeration": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
     "parse": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"],
+    "plane": ["DESIRED", "APPLIED", "EXERCISED"],
+    "substrate": ["aws", "portal", "codebase", "ms"],
     "substantive_result": ["KNOWN", "UNKNOWN"]
   },
-  "mece_claim": "Exhaustive over each declared pipeline-stage terminal outcome, not over provider-specific error causes. UNKNOWN is explicit; no status defaults to success.",
+  "mece_claim": "Exhaustive over each declared pipeline-stage terminal outcome, not over provider-specific error causes. UNKNOWN is explicit; no status defaults to success. Plane types verification state and substrate types physical platform; neither field carries the other's intent.",
   "construction_rule": "KNOWN is constructible only for PRESENT/SUCCEEDED/SUCCEEDED/SUCCEEDED; every other status tuple constructs UNKNOWN with null value.",
   "token_census_at_vintage": {
     "vintage_commit": "16a15842e24a3817d36eb5fb40e25b1cb2afed01",
@@ -41,5 +44,36 @@
     "interpretation": "Existing generic spellings are adopted only for these field-scoped axes; this act does not mint a repository-global ontology."
   },
   "component_acceptance_positions": ["E1", "E2", "E3", "E4", "E5", "E6"],
+  "binding_amendment": {
+    "ruling": "CTO 63744; Base 63740/63745",
+    "ratified_sources": [
+      "infra/system/ontology/SYSTEM_DEFINITIONS.yaml#Plane",
+      "infra/system/ontology/SYSTEM_DEFINITIONS.yaml#Substrate"
+    ],
+    "pre_amendment_vintage": "f36d572be864e56b9175caac06b01f62fc141e2a",
+    "token_census_scope": [
+      "CLAUDE.md",
+      "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml",
+      "docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md"
+    ],
+    "token_counts": {
+      "DESIRED": 20,
+      "APPLIED": 29,
+      "EXERCISED": 32,
+      "aws": 64,
+      "portal": 67,
+      "codebase": 16,
+      "ms": 19,
+      "substrate": 75
+    },
+    "four_postulates": {
+      "mece": "PASS: the three verification planes close declared/configured, landed/live-state, and path-exercised claims; the four substrates close the ratified physical platform partition.",
+      "same_grain": "PASS: plane members each type one verification assertion; substrate members each type one physical platform partition.",
+      "intent_coherence": "PASS: the former DESIRED_REPOSITORY fusion is removed; plane and substrate answer separate questions in separate fields.",
+      "state_coherence": "PASS: each axis is re-evaluated from its own declared provenance rule; neither embeds a remedy or a value from the other axis."
+    }
+  },
   "outside_component": ["Component 2 attestation harness", "PRD sec.2.9 open harm surfaces"]
 }

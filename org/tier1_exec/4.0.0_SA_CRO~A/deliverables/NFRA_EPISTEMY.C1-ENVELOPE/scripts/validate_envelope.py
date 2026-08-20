@@ -19,7 +19,8 @@ def self_test() -> int:
         instrument_id="control",
         instrument_version="v1",
         request={"q": "control"},
-        plane="TEST",
+        plane="DESIRED",
+        substrate="codebase",
         population_predicate="one planted control",
         denominator_count=1,
         denominator_grain="control",
@@ -41,6 +42,10 @@ def self_test() -> int:
     contaminated = copy.deepcopy(unknown)
     contaminated["substantive_result"] = {"state": "KNOWN", "value": 0, "reason": None}
     cases.append(("failed-cannot-be-zero", contaminated, False))
+    fused_axes = copy.deepcopy(known)
+    fused_axes["plane"] = "DESIRED_REPOSITORY"
+    fused_axes.pop("substrate")
+    cases.append(("plane-substrate-fusion-rejected", fused_axes, False))
     passed = 0
     for name, record, should_pass in cases:
         actual = not validate_record(record)
@@ -52,7 +57,7 @@ def self_test() -> int:
         print("ERROR: deterministic serialization control failed")
         return 1
     passed += 1
-    print(f"OK: envelope self-test PASS ({passed}/4; false-clean limb discriminates)")
+    print(f"OK: envelope self-test PASS ({passed}/5; false-clean and fused-axis limbs discriminate)")
     return 0
 
 

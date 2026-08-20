@@ -57,8 +57,8 @@
       "criterion_verbatim": "The Observation_Record envelope implemented schema-native per PRD sec.2 (cited, not copied); its status axis Rule-24-recorded (MECE over the declared acquisition-outcome layer, UNKNOWN an explicit terminal).",
       "method": "schema_validation",
       "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/validate_envelope.py --self-test",
-      "output_evidence": "OK: envelope self-test PASS (4/4; false-clean limb discriminates)",
-      "denominator": "13 of 13 required top-level Observation_Record fields and 5 of 5 declared Rule-24 axes represented",
+      "output_evidence": "OK: envelope self-test PASS (5/5; false-clean and fused-axis limbs discriminate)",
+      "denominator": "14 of 14 required top-level Observation_Record fields and 7 of 7 declared Rule-24 axes represented",
       "status": "PASS"
     },
     {
@@ -75,7 +75,7 @@
       "criterion_verbatim": "The sec.5c eight-mutant evaluator battery: all eight FIRE; determinism stable.",
       "method": "test_suite",
       "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
-      "output_evidence": "mutants=8/8; determinism=STABLE; run digests b1a55049010d12d4c5263d8451c0d03ead449c4c023be84e0024d84246fa5e87 equal",
+      "output_evidence": "mutants=8/8; determinism=STABLE; run digests b55e7ce8cab9d0927a43ec21dc5fae73bb7e9b95f7ca6c6b40d270f694bc98bb equal",
       "denominator": "8 named mutants and 2 same-input serializations",
       "status": "PASS"
     },
@@ -116,7 +116,7 @@
     },
     "determinism": {
       "method": "Serialize two same-input copies of all eight mutant records with canonical sorted-key JSON and compare bytes.",
-      "observed": "Both runs produced sha256 b1a55049010d12d4c5263d8451c0d03ead449c4c023be84e0024d84246fa5e87.",
+      "observed": "Both runs produced sha256 b55e7ce8cab9d0927a43ec21dc5fae73bb7e9b95f7ca6c6b40d270f694bc98bb.",
       "status": "STABLE"
     }
   },

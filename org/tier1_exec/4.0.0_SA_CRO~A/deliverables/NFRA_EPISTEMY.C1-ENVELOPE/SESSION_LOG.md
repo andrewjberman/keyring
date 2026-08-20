@@ -7,3 +7,4 @@
 - Exercised the eight named section 5c mutants and successful/absent paths for all three wrapper idioms.
 - Kept PRD section 2.9 open harm surfaces and Component 2 outside the build.
 - Routed the proposed schema act to 4.0.0_SA_CRO base for registry execution and CTO architecture gate.
+- Applied CTO binding amendment 63744: split fused `DESIRED_REPOSITORY` into ratified `plane=DESIRED` and `substrate=codebase`, then regenerated all six observations rather than hand-editing them.

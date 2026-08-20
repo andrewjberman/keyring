@@ -4,7 +4,7 @@ Status: proposed for 4.0.0_SA_CRO registry execution and 1.0.0_SA_CTO architectu
 
 Source of record: `docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md` section 2.1 at `bf88ff55c6`. This package implements and cites that shared object; it does not independently own its field set.
 
-The schema and constructor enforce one boundary: only an acquisition pipeline with `PRESENT / SUCCEEDED / SUCCEEDED / SUCCEEDED` may carry a `KNOWN` substantive result. Every other terminal tuple carries `UNKNOWN` and a null value. Denominators state their grain and generating process.
+The schema and constructor enforce one boundary: only an acquisition pipeline with `PRESENT / SUCCEEDED / SUCCEEDED / SUCCEEDED` may carry a `KNOWN` substantive result. Every other terminal tuple carries `UNKNOWN` and a null value. Denominators state their grain and generating process. CTO condition 63744 is discharged by keeping the ratified verification `plane` (`DESIRED`, `APPLIED`, `EXERCISED`) separate from physical `substrate` (`aws`, `portal`, `codebase`, `ms`).
 
 Run:
 

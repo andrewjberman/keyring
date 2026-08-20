@@ -10,8 +10,11 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import subprocess
 import sys
+from collections import Counter
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -33,21 +36,14 @@ SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "atom_layer0_run.schema.json"
 TEMPLATE_PATH = PACKAGE_ROOT / "templates" / "atom_layer0_run.template.json"
 MANIFEST_PATH = PACKAGE_ROOT / "PACKAGE_MANIFEST.json"
 RETRODICTION_SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "retrodiction_battery.schema.json"
-
-REQUIRED_RULE24 = {
-    "R24-AL0-001",
-    "R24-AL0-002",
-    "R24-AL0-003",
-    "R24-AL0-004",
-    "R24-AL0-005",
-    "R24-AL0-006",
-    "R24-AL0-007",
-    "R24-AL0-008",
-    "R24-AL0-009",
-    "R24-AL0-010",
-    "R24-AL0-011",
-    "R24-AL0-012",
-}
+REPO_ROOT = PACKAGE_ROOT.parents[4]
+RULE24_RECORDS_RELPATH = (
+    "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/"
+    "rule24/SCHEMA_ENUMERATION_RECORDS.json"
+)
+POST_12_VINTAGE = "45a2892ed24f84356e6e50e16ba6e543f50c5169"
+PRE_12_VINTAGE = "602b73a1f99d889dabbc884525b10dd8e7bf2e56"
+INITIAL_RULE24_VINTAGE = "462ac78311a3d5f1310a8da3f4f7638127d449bd"
 STAGES = ("s0", "s1", "s2", "s3", "s4", "s5")
 SEAM_AXES = {"MECHANICAL", "DECLARATIVE", "SEMANTIC"}
 
@@ -63,6 +59,90 @@ def _load_structured(path: Path) -> Any:
         if path.suffix.lower() == ".json":
             return json.load(handle)
         return yaml.safe_load(handle)
+
+
+def _bundle_registry_vintage(bundle: dict[str, Any]) -> str | None:
+    """Resolve coverage vintage in the ruled order: certificate pin, then bundle pin."""
+    challenge = bundle.get("s2_challenge")
+    if isinstance(challenge, dict):
+        certificate = challenge.get("atomicity_certificate")
+        if isinstance(certificate, dict) and certificate.get("registry_vintage"):
+            return str(certificate["registry_vintage"])
+    vintage = bundle.get("vintage")
+    if isinstance(vintage, dict) and vintage.get("repo_commit"):
+        return str(vintage["repo_commit"])
+    return None
+
+
+@lru_cache(maxsize=128)
+def _rule24_records_at_vintage(vintage: str) -> tuple[frozenset[str] | None, str | None]:
+    proc = subprocess.run(
+        ["git", "show", f"{vintage}:{RULE24_RECORDS_RELPATH}"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        commit_exists = subprocess.run(
+            ["git", "cat-file", "-e", f"{vintage}^{{commit}}"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+        ).returncode == 0
+        predates_package = commit_exists and subprocess.run(
+            ["git", "merge-base", "--is-ancestor", vintage, INITIAL_RULE24_VINTAGE],
+            cwd=REPO_ROOT,
+            capture_output=True,
+        ).returncode == 0
+        if predates_package:
+            proc = subprocess.run(
+                ["git", "show", f"{INITIAL_RULE24_VINTAGE}:{RULE24_RECORDS_RELPATH}"],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            )
+        if proc.returncode != 0:
+            detail = (proc.stderr or proc.stdout).strip().splitlines()
+            suffix = detail[0] if detail else "git show returned no diagnostic"
+            return None, f"VINTAGE_UNRESOLVABLE: {vintage}: {suffix}"
+    try:
+        document = json.loads(proc.stdout)
+        rows = document["records"]
+        record_ids = [row["record_id"] for row in rows]
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        return None, f"VINTAGE_UNRESOLVABLE: {vintage}: malformed Rule-24 registry: {exc}"
+    if len(record_ids) != len(set(record_ids)):
+        return None, f"VINTAGE_UNRESOLVABLE: {vintage}: duplicate Rule-24 record ids"
+    return frozenset(record_ids), None
+
+
+def _rule24_coverage_frame(
+    bundle: dict[str, Any],
+) -> tuple[str | None, frozenset[str] | None, list[str]]:
+    vintage = _bundle_registry_vintage(bundle)
+    if not vintage:
+        return None, None, ["VINTAGE_UNRESOLVABLE: bundle carries no registry or package vintage"]
+    required, resolution_error = _rule24_records_at_vintage(vintage)
+    if resolution_error or required is None:
+        return vintage, None, [resolution_error or "VINTAGE_UNRESOLVABLE"]
+    carried = set(bundle.get("rule24_record_ids", []))
+    errors: list[str] = []
+    missing = sorted(required - carried)
+    unexpected = sorted(carried - required)
+    if missing:
+        errors.append(
+            f"Rule-24 coverage at vintage {vintage} missing {len(missing)} of "
+            f"{len(required)} record(s): {missing}"
+        )
+    if unexpected:
+        errors.append(
+            f"Rule-24 coverage at vintage {vintage} carries {len(unexpected)} "
+            f"record(s) absent at that vintage: {unexpected}"
+        )
+    return vintage, required, errors
 
 
 def _select_census_row(document: Any, row_id: str | None) -> tuple[dict[str, Any], str | None]:
@@ -234,9 +314,8 @@ def semantic_errors(bundle: dict[str, Any], require_proving_defect: bool = False
             "residue.stage_not_assessed must exactly match stages marked STAGE_NOT_ASSESSED"
         )
 
-    missing_rule24 = REQUIRED_RULE24 - set(bundle["rule24_record_ids"])
-    if missing_rule24:
-        errors.append(f"missing package Rule 24 records: {sorted(missing_rule24)}")
+    _, _, coverage_errors = _rule24_coverage_frame(bundle)
+    errors.extend(coverage_errors)
 
     proving = bundle["s5_proving"]
     expected_acceptance = bool(
@@ -365,6 +444,10 @@ def compile_census_row(row: dict[str, Any], document_vintage: str | None = None)
         "scope": row.get("scope") or f"{row['surface']} x {row['concept']}",
     }
     bundle["source_census_row"] = copy.deepcopy(row)
+    required_records, resolution_error = _rule24_records_at_vintage(vintage)
+    if resolution_error or required_records is None:
+        raise ValueError(resolution_error or "VINTAGE_UNRESOLVABLE")
+    bundle["rule24_record_ids"] = sorted(required_records)
     bundle["s5_proving"]["subject_selected_by"] = "4.0.0_SA_CRO~B via 4.0.0_SA_CRO"
     bundle["residue"]["unknowns"] = [
         f"S0 must assess fields not supplied by census row {row_id}"
@@ -374,8 +457,23 @@ def compile_census_row(row: dict[str, Any], document_vintage: str | None = None)
 
 def self_test() -> int:
     base = _load(TEMPLATE_PATH)
+    base["vintage"]["repo_commit"] = POST_12_VINTAGE
+    post_records, post_error = _rule24_records_at_vintage(POST_12_VINTAGE)
+    if post_error or post_records is None:
+        print(f"ERROR: self-test post-12 control cannot resolve: {post_error}")
+        return 1
+    base["rule24_record_ids"] = sorted(post_records)
     cases: list[tuple[str, dict[str, Any], bool, bool]] = []
     cases.append(("template", copy.deepcopy(base), False, True))
+
+    pre_12 = copy.deepcopy(base)
+    pre_12["vintage"]["repo_commit"] = PRE_12_VINTAGE
+    pre_12["rule24_record_ids"] = [f"R24-AL0-{number:03d}" for number in range(1, 12)]
+    cases.append(("pre-12-valid-at-vintage", pre_12, False, True))
+
+    no_pin = copy.deepcopy(base)
+    no_pin["vintage"]["repo_commit"] = "UNRESOLVED"
+    cases.append(("vintage-unresolvable", no_pin, False, False))
 
     wrong_cert = copy.deepcopy(base)
     wrong_cert["s2_challenge"]["atomicity_certificate"] = {
@@ -438,7 +536,7 @@ def self_test() -> int:
             "verdict_schema": "resolution_census@external",
             "evidence_pointer": "example/file.yaml:1 @ deadbee",
             "candidate_owner": "example-owner",
-            "vintage": "deadbee",
+            "vintage": PRE_12_VINTAGE,
         }
     )
     cases.append(("census-row-compiler", compiled, False, True))
@@ -469,6 +567,11 @@ def self_test() -> int:
     passed += 1
 
     total = len(cases) + 2
+    pre_records, _ = _rule24_records_at_vintage(PRE_12_VINTAGE)
+    post_records, _ = _rule24_records_at_vintage(POST_12_VINTAGE)
+    print(f"OK: 1 bundle validated at vintage {PRE_12_VINTAGE} ({len(pre_records or [])} records)")
+    print(f"OK: 1 bundle validated at vintage {POST_12_VINTAGE} ({len(post_records or [])} records)")
+    print("OK: 1 bundle rejected VINTAGE_UNRESOLVABLE")
     print(f"OK: self-test PASS ({passed}/{total}; failure limbs discriminate)")
     return 0
 
@@ -500,7 +603,7 @@ def check_package() -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("run", nargs="?", type=Path)
+    parser.add_argument("run", nargs="*", type=Path)
     parser.add_argument("--require-proving-defect", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--check-package", action="store_true")
@@ -549,22 +652,37 @@ def main() -> int:
             handle.write("\n")
         print(f"OK: census row compiled to {args.output}")
         return 0
-    if args.run is None:
+    if not args.run:
         parser.error("run is required unless --self-test is used")
 
-    try:
-        bundle = _load(args.run)
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f"ERROR: INSTRUMENT_UNKNOWN: cannot load run: {exc}", file=sys.stderr)
-        return 3
-
-    errors = validate(bundle, require_proving_defect=args.require_proving_defect)
-    if errors:
-        for error in errors:
-            print(f"ERROR: {error}")
-        print(f"ERROR: validation FAIL ({len(errors)} finding(s))")
+    partitions: Counter[tuple[str, int]] = Counter()
+    unresolved = 0
+    total_errors = 0
+    for run_path in args.run:
+        try:
+            bundle = _load(run_path)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"ERROR: INSTRUMENT_UNKNOWN: cannot load {run_path}: {exc}", file=sys.stderr)
+            return 3
+        errors = validate(bundle, require_proving_defect=args.require_proving_defect)
+        vintage, required, _ = _rule24_coverage_frame(bundle)
+        if vintage and required is not None:
+            partitions[(vintage, len(required))] += 1
+        else:
+            unresolved += 1
+        if errors:
+            for error in errors:
+                print(f"ERROR: {run_path}: {error}")
+            total_errors += len(errors)
+    for (vintage, record_count), count in sorted(partitions.items()):
+        noun = "bundle" if count == 1 else "bundles"
+        print(f"OK: {count} {noun} validated at vintage {vintage} ({record_count} records)")
+    if unresolved:
+        print(f"ERROR: VINTAGE_UNRESOLVABLE: {unresolved} bundle(s)")
+    if total_errors:
+        print(f"ERROR: validation FAIL ({total_errors} finding(s) across {len(args.run)} bundle(s))")
         return 1
-    print("OK: validation PASS")
+    print(f"OK: validation PASS ({len(args.run)}/{len(args.run)} bundle(s))")
     return 0
 
 

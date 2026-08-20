@@ -10,6 +10,7 @@
     "request_hash",
     "status",
     "plane",
+    "substrate",
     "population_predicate",
     "denominator",
     "traversal_residue",
@@ -42,7 +43,14 @@
         "parse": {"type": "string", "enum": ["SUCCEEDED", "FAILED", "NOT_ATTEMPTED", "UNKNOWN"]}
       }
     },
-    "plane": {"type": "string", "minLength": 1},
+    "plane": {
+      "type": "string",
+      "enum": ["DESIRED", "APPLIED", "EXERCISED"]
+    },
+    "substrate": {
+      "type": "string",
+      "enum": ["aws", "portal", "codebase", "ms"]
+    },
     "population_predicate": {"type": "string", "minLength": 1},
     "denominator": {
       "type": "object",

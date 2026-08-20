@@ -272,11 +272,42 @@
       },
       "layer_coverage_probe": "The certificate face can now distinguish registry authority bytes from evidence bytes without overloading evidence_vintage.",
       "verdict": "PASS"
+    },
+    {
+      "record_id": "R24-AL0-013",
+      "surface": "atom_layer0_rule24_coverage_at_vintage_v1",
+      "act": "AUTHORED_PREDICATE",
+      "declared_layer": "Rule-24 package-record coverage of one run bundle at its resolved registry/package vintage",
+      "axis_intent": "decide coverage against the historical record set without rewriting committed provenance",
+      "grain": "one run bundle x one resolved vintage",
+      "members": ["COVERAGE_VALID", "COVERAGE_INVALID", "VINTAGE_UNRESOLVABLE"],
+      "precedence": [
+        "VINTAGE_UNRESOLVABLE when neither the certificate registry_vintage nor bundle repo vintage resolves to a known repository/package basis",
+        "COVERAGE_INVALID when the vintage resolves and carried ids differ from that vintage's package record set",
+        "COVERAGE_VALID only when the vintage resolves and the record sets agree exactly"
+      ],
+      "token_hygiene": {
+        "vintage": "f36d572be864e56b9175caac06b01f62fc141e2a before this predicate act",
+        "scope": "CLAUDE.md, SYSTEM_DEFINITIONS, rule bank, C2C3 canonical, intent-denominator doctrine",
+        "counts": {
+          "COVERAGE_VALID": 0,
+          "COVERAGE_INVALID": 0,
+          "VINTAGE_UNRESOLVABLE": 0
+        }
+      },
+      "postulates": {
+        "mece": "PASS: the vintage cannot resolve, or it resolves and exact record coverage either agrees or differs.",
+        "same_grain": "PASS: every member types one bundle at one attempted vintage resolution.",
+        "intent_coherence": "PASS: members answer historical package-record coverage only; grammar eligibility remains a separate invalidation law.",
+        "state_coherence": "PASS: all members re-evaluate through the same certificate-pin then bundle-pin resolution order and exact-set comparison."
+      },
+      "layer_coverage_probe": "Pre-12 11-record, post-12 12-record, and nonexistent-pin controls exercise every member; additions partition the population instead of turning historical bundles red.",
+      "verdict": "PASS"
     }
   ],
   "summary": {
-    "records": 12,
-    "passed": 12,
+    "records": 13,
+    "passed": 13,
     "failed": 0,
     "unassessed": 0
   }
