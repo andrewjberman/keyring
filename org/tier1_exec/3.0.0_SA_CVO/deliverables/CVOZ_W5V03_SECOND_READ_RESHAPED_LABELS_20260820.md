@@ -1,0 +1,29 @@
+# CVO~Z SECOND READ — the v0.3 reshaped labels {verdict_state, firm_resolution, key-path, key-list, all-firms-aggregate}
+
+**Seat:** `3.0.0_SA_CVO~Z` · **Date:** 2026-08-20 ~16:4xZ · **Trigger:** re-entry trigger #1 (handoff @f5155c2aba row 2) fired at the V03 landing @96dcb4a66a; MSTR~Z delivery 162514Z; runs POST-CLOSE (W5-V03 CLOSED @7a56b3bcf0, project CLOSED @a9bfeac9da) — a Rule-24 classification act on the LABELS, finding-channel at the CTO~Z gate, never a hold on the closed state.
+**Text:** the repo home `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` + `catalog_gate.py` at the PINNED hash `96dcb4a66a` (applied plane = CTO~Z's on-instance confirm @7a56b3bcf0, byte-identical to the same hash — cited, not re-derived; LD-0428 SoD).
+**Method:** independent census derived FROM THE ARTIFACT (my own parse, scratchpad `census_v03.py`), not from the author's record; every count below is my derivation, then compared to the V03 addendum (`laneZ_W5_CATALOG_AXES_RULE24_RECORDS_20260820.md` @96dcb4a66a) and the proof (`OPAL_ANALYST.W5-V03_PROOF_OF_SPEC.json` @a7af086019). Law: Rule 24 as widened (@44266af516; 24(iii) applied INSIDE each value's wording per my banked lesson).
+
+## The one-line-per-axis verdicts (denominator: 36 rows / 15 channels / 10 family rows, my parse)
+
+1. **verdict_class {serve 4, serve-with-caveat 21, deny 11} + verdict_state {ruled 34, pending-andrew 2} — STANDS.** My census matches the addendum exactly; both pending-andrew rows are deny (0 violations) and are precisely the two `held_at_andrew:` keys (mp.08 `json/benchmarks/benchmark_returns.json`, mp.12 `platinum/mdpf/cottonwood/account-units.json`) — the L-9 coupling holds; no `held-at-andrew` value survives anywhere (0/36 out-of-set on either field). (i)–(iv) PASS per field; the split isolates the one non-moving pair, which is the stability frame working as designed.
+
+2. **firm {opal-internal 31, cottonwood 1} ⊕ firm_resolution {key-scope-segment ×4} — STANDS, and the partition is TOTAL AND DISJOINT** (my strongest-form measurement: 32 rows carry `firm`, 4 carry `firm_resolution`, 0 carry both, 0 carry neither — 32+4=36). `per-scope` 0, `global` 0 as axis values. The 4 = the 3 `{scope}`-templated serving families + `json/mdpf/**` (key-path, deny+ruled — its firm_resolution is defense-in-depth BEHIND the deny; member keys are not expanded into the gate index, so they stay off-catalog fail-closed: correct shape). `firm:` omitted on the 4 per the record's stated choice (a `per-member` value would re-import the (ii) defect).
+
+3. **scope {all-firms-aggregate} on exactly 1 row (mp.11 `platinum/mdpf/global/non-model-assets.json`, firm: opal-internal, deny+ruled) — STANDS.** The `global` token now lives ONLY in the KEY (path grammar, unrenameable — NEVER#3) and in the gate's pre-existing key-segment enumeration (`catalog_gate.py:72`, byte-identical to v0.2); the AXIS label is retired. Audience is carried by `firm`, breadth by `scope` — no double-carry, one intent per field.
+
+4. **family.axis {slug 1, scope 3, keyword 2, key-path 3, key-list 1} = 10/10 — STANDS.** 0 out-of-set (manifest/archive/legacy/singleton all gone as axis values); one intent (member enumeration/matching form) with the content class riding the key prefix + verdict where it always lived. The axis still carries one gate-consumed value (`scope` → :70-71 expansion) beside non-consumed values — the v0.2 record's NAMED split, unchanged and declared, not a new defect.
+
+5. **Consumers co-moved, verified at source at the pinned hash:** rule 2 `catalog_gate.py:91-95` — `SERVABLE_CLASSES` UNCHANGED at `:38` (`serve`,`serve-with-caveat`); `verdict_state` surfaces ONLY as a reason-string note (behavior-identical deny). Rule 5 `:105-113` — branches on `firm_resolution == "key-scope-segment"`; the `per-scope` BRANCH LITERAL IS GONE (the token survives once, `:106`, as the retirement COMMENT — a mention, not a mechanism). `:70-71` expansion byte-identical to v0.2 (my diff: lines 66-75 IDENTICAL). The full v0.2→v0.3 gate diff is exactly the three declared hunks and nothing else. Battery/validate anchors resolve as cited (`battery_catalog_v02.py:139-155` VERDICT-GATE two-field held shape at `:149`; `w6-scope-family-firm` `:213-219` asserts fr present AND firm absent; `v03-one-home` `:232`; `validate_catalog_v02.py:85+` reads `declared_members` + template, never the axis token).
+
+## Exercise evidence (cited, ran at other seats — not re-run here)
+Battery 41/41 incl. v03-one-home; exercise 16/16; proof rc=0 positional V03-1..8 with 4 mutants FIRED (@a7af086019); CTO~Z eleven independent probes 11/11 + emit BYTE-IDENTICAL ×2 (@33024cb134); live validate rc=0 — report at the pinned hash READ BY ME: 36 rows, 26 concrete OK / 0 missing, 10 family OK / 0 mismatch; COO~Z validation 2520; deployed plane BYTE-IDENTICAL confirm @7a56b3bcf0.
+
+## Observations (notes, not findings — nothing rises to the CTO~Z gate)
+- **(24(iii)-inside-wording, all five labels read):** `key-scope-segment`, `key-path`, `key-list`, `all-firms-aggregate` each carry one intent. `pending-andrew` names the awaited decider inside a state value — coherent under the axis's declared intent (WHO must still speak); the asymmetry (`ruled` names no ruler) is safe at this vintage (one ratifier) and is a STABILITY note: if a second decider ever exists, the enum returns for a value-add record per Rule 24 as widened. Not a defect today.
+- **`scope` third-sense registry item:** carried, standing at CRO (my re-entry trigger #2, unchanged by this read).
+- The v0.2 record's three (iii)-FAIL tables + the V03 addendum form a clean defect→remedy→re-test chain; the addendum's claims were INDEPENDENTLY REPRODUCED here, every number, before this verdict.
+
+**VERDICT: the five reshaped labels STAND — 5/5, zero amendments.** W5-V03's label reshape is Rule-24 conformant at the pinned hash on my independent read; anything above marked "note" requires no action.
+
+— `3.0.0_SA_CVO~Z`
