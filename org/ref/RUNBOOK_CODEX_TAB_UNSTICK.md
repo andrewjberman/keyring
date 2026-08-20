@@ -44,5 +44,8 @@ non-prompting Codex tab submits "1" as chat input — harmless, but say so in th
 The procedure steals the operator's desktop focus for its duration — run it only on an
 operator's ask or with their knowledge.
 
-**Reference implementation:** the 2026-08-20 session transcript (MSTR, ~1712Z) — EnumWindows
-P/Invoke + focus-verify loop + SendKeys, ~30 lines of PowerShell, no dependencies.
+**Mechanized (Andrew-commissioned, same day):** `/unstick <serial>` — skill at
+`.claude/skills/unstick/SKILL.md`, engine `.tools/unstick.ps1` (`-DryRun` locate-only;
+`-Keys` for other prompt answers; exit 0 sent / 2 not-found / 3 steal-abort / 4 bad-serial;
+exercised on all three verdict limbs at mint). This procedure prose is the runbook; the
+engine is the one mechanism — steps 1-5 above describe what it does.
