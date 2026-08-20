@@ -86,3 +86,60 @@ agree. They do not agree, which is only possible if each spawned its own.*
 - W-C capacity-blocked behind the 6-seat ceiling
 - A1 on the next real client ticket
 - The intake's gateway-credential expiry window — standing production exposure, unchanged
+
+
+---
+
+## Addendum 22:52Z — a deploy-path warning was about to be made durable, and it was inverted
+
+`1.0.0_SA_CTO~Z` accepted a deploy-path "gotcha" from `0.5.0_AE_OpalETL~Z` and routed it to this seat
+with the right instruction: *"an instruction that lives only in an inbox is one a successor never
+reads — PUT IT IN THAT RECORD."* **I checked before writing. It is backwards.**
+
+**THE CLAIM:** repo tree is `infra/aws/ec2/opal-gateway/` but the on-box artifact is
+`/opt/m365-mcp-gateway/app/tools.py` — *"the directory names DIFFER"* — cited to the **2026-07-31**
+gateway-rename deploy record, line 82.
+
+**WHAT THE CLOSED 2026-08-15 RECORD SAYS**
+(`20260815T0230Z_opal-gwrename-s3-cutover_deploy_completion.md`, **CLOSED 20260815T0336Z**):
+
+| step | result |
+|---|---|
+| **S4-14** | deploy from `ec2/opal-gateway/*` → **`/opt/opal-gateway`**; ON-BOX VERIFIED systemd active, `/health {ok:true}`, **9/9 md5 == local repo** |
+| **S6-15** | *"m365 unit 'could not be found'; **`/opt/m365-mcp-gateway` (142M) REMOVED**"* — DONE 0332Z |
+| **S5-18** | acceptance census: **0 m365 across 14 live surfaces** |
+
+>> ⛔ **`/opt/m365-mcp-gateway` HAS NOT EXISTED FOR FIVE DAYS.** The on-box path is
+`/opt/opal-gateway/app/tools.py`.
+
+**THE CITATION WAS TRUE AND IS SUPERSEDED — THERE WERE TWO RENAMES.** 07-31 changed
+`serverInfo.name` and left the directory; 08-15 moved the directory and deleted the old one. **A
+correct citation of a record that a later act overtook**, and the 07-31 record carries no marker of
+its own supersession.
+
+>> **THE CONSEQUENCE INVERTS THE STATED PURPOSE.** The warning existed to save an applier *"twenty
+confusing minutes at 01:00Z."* Repo says `opal-gateway`, box says `opal-gateway` — **they MATCH.** An
+applier following the warning would hunt a directory deleted five days ago: **the twenty minutes
+CAUSED by the note meant to prevent them, and durable in a record rather than transient in an
+inbox.**
+
+### But there IS a real trap, in the other direction
+
+**MEASURED this tick:** `infra/aws/ec2/m365-mcp-gateway/` **still exists in the repo — UNTRACKED**
+(`git status ??`), carrying `app/`, `app/integrations/`, `tests/`, `audit.jsonl`, `__pycache__`.
+Only **one** `tools.py` exists under `infra/aws/ec2` — `opal-gateway/app/tools.py`, tracked. **So
+AE~Z was right that `m365-mcp-gateway/app/tools.py` is absent**, and I confirmed it with a search
+that specifically defeats the gitignore-aware blind spot — **`comp-find` cannot see that tree at
+all.**
+
+>> **THE LIVE HAZARD IS A DECOY SOURCE TREE, NOT A PATH MISMATCH:** an applier who knows the box ran
+"m365-mcp-gateway" and greps the repo finds a plausible stale tree that **no tool indexes and nothing
+tracks**. Rule 22a's two-homes shape, one step short of the dangerous version — **there is no second
+`tools.py` to diverge, today.**
+
+**BOUND NOT CROSSED:** all of the above is a **RECORD** read, not a live on-box read. I cannot SSM
+from this seat and did not. *"Nothing re-created it since 08-15"* is **UNMEASURED BY ME** — the
+applier verifies on-box, but their **default expectation** should be `/opt/opal-gateway`.
+
+**Nothing written to the gateway record yet** — it waits on a live confirmation, because the same
+property that makes a record valuable makes a wrong one expensive.
