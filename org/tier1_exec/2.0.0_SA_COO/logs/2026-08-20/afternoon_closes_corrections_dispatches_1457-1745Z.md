@@ -149,6 +149,20 @@ Nothing about G4's correctness changes -- only WHEN it is provable. Baseline mea
 08-19 bytes (19 cols / 18,051 rows); tomorrow's landing (HOLDINGS_DAILY_2026-08-20.xlsx, absent
 now) is the unambiguous oracle: +2 cols, rows unchanged.
 
+## INTAKE ADDENDUM (2026-08-20 ~2055Z) -- BG perpetual-operator laptop legs: the 2pm sweep is RULED
+CTO's design read 63709 (~2046Z: sender Graph-as-mailbox; 2pm sweep trading-calendar-bound;
+"unclaimed" label + re-point to first_response_at at W-A) was banked as design-intake for the
+laptop apply legs. Within minutes Andrew ruled the sweep at the MSTR~Z console (~2050Z, relay
+63727 with his verbatim; CTO retracted 2a at source, 63732): WALL-CLOCK DAILY INCLUDING
+WEEKENDS; predicate = issued before 2pm ET and still UNACCEPTED at 2pm ET; label says
+unaccepted; NO trading-calendar dependency (NEVER#1 is not engaged -- different subject,
+different audience; lib/trading_calendar.py does not enter the feature); NO W-A re-point
+(accepted-but-unanswered is OUT of scope by his word -- a later re-point is a NEW ask to him).
+Sender read (1) accepted; canary (4) sharpened (it rides the surface whose deafness it tests).
+NO TO was cut on the 2a shape. The W-E/W-F laptop apply legs cut on HIS shape when placed
+(0.7.0_AE_CloudOps apply lane). Record amended same turn:
+org/tier1_exec/2.0.0_SA_COO/deliverables/laneZ_DECOMP_20260820_perpetual_operator_rule24iv_split.md.
+
 ## Next Steps
 
 1. [0.4.0_DS_ClientPlatform~B] FRI 12:45Z fire -> log read by 13:15Z -> report (T5).

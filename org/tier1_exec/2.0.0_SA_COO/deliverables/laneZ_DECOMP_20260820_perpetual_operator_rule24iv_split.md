@@ -89,3 +89,49 @@ The transport/sender fork (W-E), the trading-calendar behavior and the definitio
 (W-F), the terminal-state enum (the carried P1-4), the reopen/timing grain, and the registry naming
 act. Every one is named with its dependency and routed to `1.0.0_SA_CTO~Z`. **Decomposition names
 the forks; it does not resolve the ones that carry a standing law or a schema act.**
+
+---
+
+## RULED SAME HOUR -- W-E AND W-F ARE NO LONGER OPEN FORKS
+(appended ~2055Z by 2.0.0_SA_COO so this record does not carry resolved forks as live.
+Sources: CTO design read 63709 ~2046Z; Andrew-direct at the MSTR~Z console ~2050Z, relayed by
+0.0.0_AB_MSTR 63727 with his verbatim; CTO concurrence + retraction-at-source 63732. The 2045Z
+intake record is @11d274f8c2 on remote; the 2050Z ruling is on MSTR's site-Z record -- parity
+after MSTR's next integration.)
+
+**W-F (the 2pm sweep) -- HIS VERBATIM (via 63727): "No it is fine to escalate saturday tickets
+or sunday tickets, if we get a ticket and we're delaying on it, we need to know about it. If a
+user has already accepted it, then we dont need to buzz it again, the issue is simply making
+sure that tickets are not left open without anyone accepting them"**
+- SWEEP IS WALL-CLOCK, EVERY DAY, WEEKENDS INCLUDED. CTO's 2a (trading-calendar-bound) was
+  RETRACTED AT SOURCE by CTO (63732). NEVER#1 IS NOT ENGAGED -- it governs calling a DATA
+  PIPELINE stale on wall-clock age; this feature is internal awareness of work sitting
+  UNACCEPTED, a different subject for a different audience. CTO's scope note, the sentence that
+  stops the re-fix: "a law that prevents a FALSE alarm about one subject can, applied to a
+  different subject, suppress a TRUE one." lib/trading_calendar.py does not enter this feature.
+  The client-facing "next trading day" ack is untouched.
+- PREDICATE = issued before 2pm ET and still UNACCEPTED at 2pm ET. The feature measures
+  UNCLAIMED (CTO 2b, first half -- ADOPTED) and its post text + acceptance criterion SAY SO.
+  It is NOT a v1 approximation of "addressed": UNACCEPTED IS the ruled predicate.
+- NO RE-POINT to first_response_at when W-A lands (CTO 2b, second half -- SUPERSEDED by his
+  word): accepted-but-unanswered is OUT OF SCOPE explicitly; surfacing it later is a NEW ask to
+  him, never a planned follow-on. Ships on today's deployed status field; no W-A dependency.
+
+**W-E (sender identity) -- CTO 63709 ACCEPTED (63727) and carried to 1.0.0_SA_CTO~Z:** Graph
+sendMail as the gateway identity (opalbloomberg@opalinvest.com), NOT an SES leg. NEVER#23 is
+SATISFIED, not evaded -- the rule is about authentication posture, not the domain string
+(Exchange Online is opalinvest.com's own authenticated path; SES from that domain is the
+unauthenticated claim the rule bans). A monitored reply path is decisive for client-facing mail.
+Creating the Exchange DL is Andrew's own hand (tenant-admin act) -- never a TO line.
+
+**(4) canary -- sharpened at site Z (63727/63732):** an ACK-shaped canary must ride THE SAME
+SURFACE whose deafness it tests (an inbox canary passing while the channel is deaf is a
+wrong-plane pass -- how the deafness hid twice today). Canary-vs-moratorium tension is the
+site-Z gate's to carry.
+
+**TO CONSEQUENCE (mine):** NO laptop TO had been cut on the 2a shape when the ruling arrived --
+nothing to retract on the laptop side. The two laptop apply legs cut on HIS shape when placed,
+both in the 0.7.0_AE_CloudOps apply lane: W-E emit (ticket-api Lambda, Graph-as-mailbox sender)
+and W-F (wall-clock daily 2pm ET sweep, UNACCEPTED-labelled, no W-A re-point, no
+trading-calendar dependency). STILL OPEN at `1.0.0_SA_CTO~Z`: the terminal-state enum (P1-4),
+the reopen/timing grain, the registry naming act.
