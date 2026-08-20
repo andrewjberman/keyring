@@ -59,6 +59,59 @@ Unsupervised sleeves"*, book key (group, account, supervised), 29,926/29,926 key
 silver (`bd49f_fact_allocation.py:112`) already ingests "Account Supervised" — the in-estate
 precedent for both naming and handling.
 
+## ADDENDUM ~1635Z — Andrew's two follow-up legs, investigated (VERBATIM: *"there should be a way to
+do this retroactively through some kind of filter, also it appears that cottonwood uses the
+'portfolio_group' key to split advisors, i need CTO to investigate these"*)
+
+### A. RETROACTIVE — Andrew's intuition is CORRECT, and the HAR proves the design
+
+**The decisive measurement:** at Account grain, **0 of 102 accounts** in the HAR's unsupervised drill
+carry both supervised and unsupervised value — in the Cottonwood book, supervised/unsupervised is
+CLEAN AT THE ACCOUNT LEVEL (unlike 49F's sleeve-split book). The unsupervised accounts are dedicated
+held-away/client-inputted entries — the names say it: "Greenbrier - Joseph Clark", "19 Watertree Dr",
+"Richwoods Home" (properties, not custodied positions).
+
+**Therefore the retroactive filter is a DIMENSION JOIN, not a history re-pull:** one pull of the
+current account→`Account Supervised` mapping, joined onto ALL existing historical holdings by
+`AccountID` (already one of the extract's 19 columns), reproduces BD's split for every historical
+date. Tie-out oracle from the HAR (2026-08-19): firm $488,753,694 all / **$458,351,400 supervised /
+$30,402,295 unsupervised**; named-books subtotal $455,532,550 = Manav's "$455M" exactly.
+**Caveats, named:** (1) the join applies TODAY'S flags to history — an account that flipped
+supervision status in the past misclassifies before its flip (acceptable for dashboard AUM; BD's own
+dashboard history behaves the same way); (2) the 0/102 measurement is one-sided (the HAR has no
+supervised-side account drill) — closed going forward by adding `Holding Supervised` to the daily
+holdings template, which makes the account-clean assumption a DAILY-TESTED invariant instead of a
+one-shot observation.
+
+### B. PORTFOLIO_GROUP = THE ADVISOR BOOKS — confirmed, and the pipeline gap located to one line
+
+**Confirmed from the HAR:** the PortfolioGroup rows ARE the advisor books — Jay Rubottom $289.9M /
+Stephen Shipley $135.2M / Christa Bass $45.0M / "No Portfolio Group" $18.8M (of which $12.1M
+unsupervised — the strays and the held-aways overlap heavily). Same BD firm convention as 49F's
+`dim_portfolio_group`.
+
+**The pipeline gap, mechanism at source:** `A_00.accounts_dimension.py` DECLARES `portfolio_group`
+in its output columns (:95, :591) — and the served dim (943 rows, 23 cols, read live) DOES NOT
+CARRY IT. The drop is `:599`: `available = [c for c in output_cols if c in accts.columns]` — a
+SILENT-DROP filter; the transactions extract never carries "Portfolio Group", so the silver never
+has it, so the gold drops it without a word (also dropped the same way: implementor, consultant,
+local_ops, manager, investment_strategy_name). A declared output column silently missing from the
+served artifact is its own small defect class — the fix TO should add a loud print for dropped
+declared columns.
+
+### C. ONE FIX SERVES BOTH LEGS
+
+**A single account-attributes pull** (small DataMining template at Account level, or the holdings
+template extended): `AccountID, Account Supervised, Account Billable, Position Only, Portfolio
+Group` → lands as/joins into `A_00` accounts dimension →
+1. retroactive supervised filter = the dim join above, tie-out against the HAR oracle;
+2. `portfolio_group` populates the declared-but-dropped column — advisor books keyed the BD-native
+   way (complementary to A_01's transaction-role fee-split model: roles = fee economics, group =
+   book membership);
+3. `Holding Supervised` added to the daily holdings template as the forward belt.
+**Data-hygiene finding for Manav/Cottonwood:** the "No Portfolio Group" bucket ($18.8M, 12.1M of it
+unsupervised) is real book-assignment hygiene on their side — worth a line back to them.
+
 ## 3. Caveats + routing
 
 - **History**: the supervised flag is a CURRENT attribute in BD; a backfill re-pull applies today's
