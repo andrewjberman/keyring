@@ -259,6 +259,17 @@ threads:
     owning_tool: stitch
     status: in-scope
     reachability_status: mounted-reachable
+    # enrichment ADJUDICATED 2026-08-20 (estate-report loop, Andrew "approved"; decision record
+    # org/estate-reports/2026-08-20.md sec.6; FIELDHOME port 63456)
+    enrichment: >-
+      inf-gold-dispatch-ec2 carries a single KEEP grounding: the bootstrap kit for this host was
+      pulled by orion-gold-dispatch.sh lines 95-96 during the inf gold dispatch run captured on
+      2026-07-30 in s3://opal-runner-shared. That grounding recorded 'ran today' at capture time,
+      but the corpus is under a STALE banner with newest source 2026-07-31T02:23:07Z, roughly 20
+      days before the 2026-08-19 window, and zero paths changed for this entity in-window. The
+      dependency must therefore be read as last-confirmed 2026-07-30, not as verified current
+      liveness: the static mirror cannot refresh the 'ran today' claim, and any keep or delete
+      decision that leans on it requires a fresh dispatch-run check before it is actionable.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -517,6 +528,18 @@ threads:
     owning_tool: portal-consumer-tools
     status: in-scope
     reachability_status: mounted-reachable
+    # classification ADJUDICATED 2026-08-20 (Andrew "approved" with the Rule-24 respell -- no enum
+    # token minted; decision record org/estate-reports/2026-08-20.md sec.3; FIELDHOME port 63456)
+    classification: >-
+      Dormant-suspect, unverified (weak signal, measurement-gated): the only measured surface for
+      FRED-06-exec-summary-generator is its test subtree tests/exec_summary, untouched for >= 90
+      days (outside the scan window), and zero paths under this entity changed in the window, so
+      there is no evidence of a maintained or exercised test surface and no recent change activity
+      that could support an active or maintained classification. The signal is weaker than
+      deck_generation's because only the test subtree is measured cold while the runtime and
+      citation leg is unmeasured; the generator itself therefore cannot be classified dead, parked,
+      or delete-ready on this evidence. Classification stands at dormant-suspect/unverified pending
+      a runtime/citation-leg check.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -525,6 +548,18 @@ threads:
     owning_tool: none
     status: unreviewed
     reachability_status: frontend-orphan
+    # classification ADJUDICATED 2026-08-20 (estate-report loop, Andrew "approved"; decision record
+    # org/estate-reports/2026-08-20.md sec.2; FIELDHOME port per 0.7.0 F3 signal 63456)
+    classification: >-
+      dormant. Every depth-2 subtree under deck_generation/ (lambda_api, mcp_server, scripts, specs,
+      tests) sits in the cold set, each last touched >= 90 days ago at vintage 05689f22, and zero
+      paths under the entity changed during the scan window. On the commit record, no classification
+      warmer than dormant (active, maintained, iterating) is supportable; if a warmer label is
+      recorded it has drifted from the commit history and should be corrected. This label describes
+      the development-activity stratum only: the citation leg is unmeasured, so deployed runtime use
+      of the deck-generation service cannot be excluded, and a runtime citation check is required
+      before any archive or decommission action. Consistent with Rule 25: dormant is not a deletion
+      warrant; successor check applies before any action.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1162,6 +1197,18 @@ threads:
     owning_tool: none
     status: in-scope
     reachability_status: unreviewed
+    # classification ADJUDICATED 2026-08-20 (Andrew "approved" with the Rule-24 respell -- no enum
+    # token minted; decision record org/estate-reports/2026-08-20.md sec.5; FIELDHOME port 63456)
+    classification: >-
+      Deprecated-pending-review (review-gated, teardown-coupled): TS-5 can no longer be classified
+      as a live production leg of the trade pipeline. Its test subtree (tests/trade_pipeline) has
+      been cold for >= 90 days with zero path activity in the current scan window, and two sovereign
+      rulings converge on deprecated: the opal-data-trade-submissions semantic note flags the
+      parquet batch-export leg as deprecated-looking and orders a REVIEW, and the ddb trade-users
+      TEARDOWN ruling is explicitly coupled to the Q-7 deprecated parquet-batch-export leg.
+      Classification should read deprecated-pending-review rather than live; full teardown remains
+      gated on the ordered review closing, so this is a classification correction, not a delete
+      authorization.
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
