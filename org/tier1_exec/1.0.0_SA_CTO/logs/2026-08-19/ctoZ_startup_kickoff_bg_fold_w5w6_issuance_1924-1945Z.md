@@ -96,6 +96,36 @@ what the record now teaches.
    STANDING INPUT, UNRATIFIED-PENDING-RESOLUTION — its commits do not resolve on SITEZ yet;
    ratify-or-amend at the D7 gate post-integration; nothing executes against it meanwhile.**
 
+## Delta 21:38Z–00:35Z — mandate adopted, TO-G chain closed 3-desk, D9 rider + H8 saga, second /open-calls all-ruled
+
+1. **comp-adversary mandate** (PRD_AUTHORING_PROTOCOL @060cb1b130, verified at ref): adopted +
+   EXERCISED (self-test 4/4; real compose on the W6 artifact rc=0) + bound into the W6 TO
+   @15636c285e. Its first compose surfaced BG's 1300Z WDAC pull-failure log → routed as context to
+   the DAPI-precondition owner (the 07:00 schedule has TWO measured failure classes; the ruling
+   covers the DAPI limb only).
+2. **DETACHED_PROCESS tripwire ledgered** @c430cc9532 (laptop listener note UNDER-CORRECTION;
+   binds DAPI-precondition recovery design + watcher hardening).
+3. **TO-G closed through three desks:** enum contract adopted @2ff219b592 (verified at ref;
+   status-field-vs-record mismatch flagged as v1.1-metadata proposal) → AE~Z mechanized both
+   consumption rules @3fb8563d1f → my independent cells (disposition-beats-1.0 + controls) →
+   COO~Z row-gate ACCEPTED (10/10 superset matrix incl. band boundaries). 16-row scope decision
+   routed to base COO as load-bearing.
+4. **D9-(c1) rider ledgered** @a4afb27ff2: first atom = deploy-home declaration (Rule 17b
+   CODE_TREES row or declared exemption), binds when (c1) cuts. H8 substance corroborated at this
+   desk FIRST (shared-home non-member via comp-pipescript; deploy set empty). **Citation saga,
+   preserved as the lesson:** ferried hash wrong (@c411c6a9e9 = etfs grant) → NO citable commit
+   existed (ferry-text-only grounding) → author committed at fresh vintage @3b7a06b8b3 (fourth
+   home added, deployed-nowhere holds 4/4) → repointed @d78db24499. *A relayed finding with no
+   committed record has no hash to check the relay against — the relayer's label IS the citation
+   until the author commits.*
+5. **Second /open-calls (00:2xZ) — "All recs accepted" @a2b93df332:** D8 Q3 RULED store-wins with
+   BINDING visibility riders (workbook-wins rejected); D8 Q2 RULED Key-Notes-prose-only; T-4
+   ticket-API DISPOSITIONED-BY-RULING into D7 §7.3 (deferral stands, floor guards). D8 PRD §7
+   annotated ALL-RULED; DE~Z relayed direct; COO~Z folded both bars. **Open-calls ledger: ZERO.**
+6. **Tool-forwarding gaps surfaced (not chased):** comp-adversary + comp-find do NOT forward bare
+   on this box (rc=127); a `2>/dev/null` on comp-find rendered clean-empty from command-not-found
+   — caught by positive control (the jq class, live at this desk). `.tools/` prefix works for both.
+
 ## Open at this seat
 
 - **W5 GO** — gated: 08-20 07:00 WDAC acceptance + census sequencing at spawn (COO~Z surfaces;
