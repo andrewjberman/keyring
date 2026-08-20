@@ -252,23 +252,43 @@
   },
   "$defs": {
     "resolution_census_row": {
-      "type": "object",
-      "additionalProperties": true,
-      "required": ["row_id", "surface", "concept", "verdict", "verdict_schema", "evidence_pointer", "candidate_owner", "vintage"],
-      "properties": {
-        "row_id": {"type": "string", "minLength": 1},
-        "surface": {"type": "string", "minLength": 1},
-        "concept": {"type": "string", "minLength": 1},
-        "verdict": {"type": "string", "minLength": 1},
-        "verdict_schema": {"type": "string", "minLength": 1},
-        "evidence_pointer": {"type": "string", "minLength": 1},
-        "candidate_owner": {"type": "string", "minLength": 1},
-        "vintage": {"type": "string", "minLength": 7},
-        "claimed_content": {"type": "string"},
-        "declared_layer": {"type": "string"},
-        "declared_grain": {"type": "string"},
-        "scope": {"type": "string"}
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["row_id", "surface", "concept", "verdict", "verdict_schema", "evidence_pointer", "candidate_owner", "vintage"],
+          "properties": {
+            "row_id": {"type": "string", "minLength": 1},
+            "surface": {"type": "string", "minLength": 1},
+            "concept": {"type": "string", "minLength": 1},
+            "verdict": {"type": "string", "minLength": 1},
+            "verdict_schema": {"type": "string", "minLength": 1},
+            "evidence_pointer": {"type": "string", "minLength": 1},
+            "candidate_owner": {"type": "string", "minLength": 1},
+            "vintage": {"type": "string", "minLength": 7},
+            "claimed_content": {"type": "string"},
+            "declared_layer": {"type": "string"},
+            "declared_grain": {"type": "string"},
+            "scope": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["id", "surface", "concept", "assessment_state", "resolution_state", "failure_classes", "display_verdict", "evidence", "owner"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "surface": {"type": "string", "minLength": 1},
+            "concept": {"type": "string", "minLength": 1},
+            "assessment_state": {"type": "string", "minLength": 1},
+            "resolution_state": {"type": ["string", "null"]},
+            "failure_classes": {"type": "array", "items": {"type": "string"}},
+            "display_verdict": {"type": "string", "minLength": 1},
+            "evidence": {"type": "string", "minLength": 1},
+            "owner": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
     },
     "stage_state": {
       "type": "string",

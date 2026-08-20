@@ -25,7 +25,9 @@ layer that binds to the candidate base.
 
 1. Copy `templates/atom_layer0_run.template.json` to the run location.
    For a resolution-census proving subject, compile the row directly instead:
-   `python scripts/validate_run.py --compile-census-row <row.json> --output <run.json>`.
+   `python scripts/validate_run.py --compile-census-row <census.yaml> --census-row-id <id> --output <run.json>`.
+   A standalone normalized JSON row remains accepted for compatibility. Preserve the selected
+   external row unchanged in `source_census_row`; complete missing ontology fields during S0.
 2. Read [workflow.md](references/workflow.md) and complete S0-S5 in order.
 3. During S1-S2 read
    [decomposition-grammar.md](references/decomposition-grammar.md).

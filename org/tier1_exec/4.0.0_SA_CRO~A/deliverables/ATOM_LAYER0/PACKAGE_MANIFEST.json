@@ -8,7 +8,14 @@
   "portable_unit": "the whole ATOM_LAYER0 directory",
   "members": [
     "00_ATOM_LAYER0_SPEC.md",
+    "ATOM_LAYER0_REGISTRATION_BRIEF_20260820.md",
     "PACKAGE_MANIFEST.json",
+    "proving_runs/R015_CONTRACT_RECORD/PROVING_RUN_REPORT.md",
+    "proving_runs/R015_CONTRACT_RECORD/atom_layer0_run.json",
+    "proving_runs/R015_CONTRACT_RECORD/compiled_stub.json",
+    "proving_runs/R015_CONTRACT_RECORD/concept_rule24_records.json",
+    "proving_runs/R015_CONTRACT_RECORD/method_defects.json",
+    "proving_runs/R015_CONTRACT_RECORD/pre_repair_failure.txt",
     "rule24/SCHEMA_ENUMERATION_RECORDS.json",
     "schemas/atom_layer0_run.schema.json",
     "scripts/validate_run.py",
@@ -27,7 +34,7 @@
   },
   "runtime": {
     "python": ">=3.10",
-    "dependencies": ["jsonschema>=4"],
+    "dependencies": ["jsonschema>=4", "PyYAML>=6"],
     "validator": "scripts/validate_run.py",
     "self_test": "python scripts/validate_run.py --self-test",
     "package_check": "python scripts/validate_run.py --check-package"
@@ -46,8 +53,8 @@
   ],
   "execution_state": {
     "s0_to_s4_package": "BUILT_AND_SELF_TESTED",
-    "s5_proving_run": "PENDING_EXTERNAL_SUBJECT",
-    "method_acceptance": "OPEN"
+    "s5_proving_run": "PASS_R015",
+    "method_acceptance": "PROPOSED_ACCEPTANCE_BAR_SATISFIED"
   },
   "registration_state": {
     "project_registration": "NOT_PERFORMED",

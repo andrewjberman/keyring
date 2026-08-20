@@ -1,0 +1,14 @@
+COMMAND
+python org\tier1_exec\4.0.0_SA_CRO~A\deliverables\ATOM_LAYER0\scripts\validate_run.py --compile-census-row org\tier1_exec\4.0.0_SA_CRO~B\deliverables\ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml --output org\tier1_exec\4.0.0_SA_CRO~A\deliverables\ATOM_LAYER0\proving_runs\R015_CONTRACT_RECORD\pre_repair_attempt.json
+
+OBSERVED
+ERROR: INSTRUMENT_UNKNOWN: cannot compile census row: Expecting value: line 1 column 1 (char 0)
+
+EXIT CODE
+1
+
+INTERPRETATION
+The pre-repair adapter accepted only one JSON row using its local normalized keys. The released
+external interface is a YAML document whose exact rows live under rows[] and use the Rule-24
+field names declared by 4.0.0_SA_CRO~B. This is a method-interface defect, not a finding about
+Contract_Record.

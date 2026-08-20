@@ -21,6 +21,12 @@ except ImportError as exc:  # pragma: no cover - environment failure path
     print("ERROR: INSTRUMENT_UNKNOWN: jsonschema>=4 is required", file=sys.stderr)
     raise SystemExit(3) from exc
 
+try:
+    import yaml
+except ImportError as exc:  # pragma: no cover - environment failure path
+    print("ERROR: INSTRUMENT_UNKNOWN: PyYAML>=6 is required", file=sys.stderr)
+    raise SystemExit(3) from exc
+
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "atom_layer0_run.schema.json"
@@ -47,6 +53,30 @@ SEAM_AXES = {"MECHANICAL", "DECLARATIVE", "SEMANTIC"}
 def _load(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def _load_structured(path: Path) -> Any:
+    """Load a JSON or YAML interface artifact without changing its row objects."""
+    with path.open("r", encoding="utf-8") as handle:
+        if path.suffix.lower() == ".json":
+            return json.load(handle)
+        return yaml.safe_load(handle)
+
+
+def _select_census_row(document: Any, row_id: str | None) -> tuple[dict[str, Any], str | None]:
+    if not isinstance(document, dict):
+        raise ValueError("census input must be a row object or a document object")
+    rows = document.get("rows")
+    if rows is None:
+        return document, document.get("vintage")
+    if not isinstance(rows, list):
+        raise ValueError("census document rows must be an array")
+    if not row_id:
+        raise ValueError("--census-row-id is required for a document containing rows[]")
+    matches = [row for row in rows if isinstance(row, dict) and row.get("id") == row_id]
+    if len(matches) != 1:
+        raise ValueError(f"census row selector {row_id!r} matched {len(matches)} rows")
+    return matches[0], document.get("read_vintage")
 
 
 def _resolution_expected(contract: dict[str, Any]) -> bool | None:
@@ -235,25 +265,45 @@ def validate(bundle: dict[str, Any], require_proving_defect: bool = False) -> li
     return errors
 
 
-def compile_census_row(row: dict[str, Any]) -> dict[str, Any]:
-    required = {
-        "row_id",
-        "surface",
-        "concept",
-        "verdict",
-        "verdict_schema",
-        "evidence_pointer",
-        "candidate_owner",
-        "vintage",
-    }
+def compile_census_row(row: dict[str, Any], document_vintage: str | None = None) -> dict[str, Any]:
+    external = "id" in row
+    required = (
+        {
+            "id",
+            "surface",
+            "concept",
+            "assessment_state",
+            "resolution_state",
+            "failure_classes",
+            "display_verdict",
+            "evidence",
+            "owner",
+        }
+        if external
+        else {
+            "row_id",
+            "surface",
+            "concept",
+            "verdict",
+            "verdict_schema",
+            "evidence_pointer",
+            "candidate_owner",
+            "vintage",
+        }
+    )
     missing = sorted(required - set(row))
     if missing:
         raise ValueError(f"census row missing required fields: {missing}")
 
+    row_id = row["id"] if external else row["row_id"]
+    vintage = document_vintage if external else row["vintage"]
+    if not vintage:
+        raise ValueError("external census row requires document read_vintage")
+
     bundle = _load(TEMPLATE_PATH)
-    bundle["run_id"] = f"AL0-FROM-{row['row_id']}"
+    bundle["run_id"] = f"AL0-FROM-{row_id}"
     bundle["vintage"] = {
-        "repo_commit": row["vintage"],
+        "repo_commit": vintage,
         "observed_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
     bundle["subject"] = {
@@ -266,7 +316,7 @@ def compile_census_row(row: dict[str, Any]) -> dict[str, Any]:
     bundle["source_census_row"] = copy.deepcopy(row)
     bundle["s5_proving"]["subject_selected_by"] = "4.0.0_SA_CRO~B via 4.0.0_SA_CRO"
     bundle["residue"]["unknowns"] = [
-        f"S0 must assess fields not supplied by census row {row['row_id']}"
+        f"S0 must assess fields not supplied by census row {row_id}"
     ]
     return bundle
 
@@ -368,6 +418,7 @@ def main() -> int:
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--check-package", action="store_true")
     parser.add_argument("--compile-census-row", type=Path)
+    parser.add_argument("--census-row-id")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
@@ -379,9 +430,10 @@ def main() -> int:
         if args.output is None:
             parser.error("--output is required with --compile-census-row")
         try:
-            row = _load(args.compile_census_row)
-            bundle = compile_census_row(row)
-        except (OSError, json.JSONDecodeError, ValueError) as exc:
+            document = _load_structured(args.compile_census_row)
+            row, document_vintage = _select_census_row(document, args.census_row_id)
+            bundle = compile_census_row(row, document_vintage=document_vintage)
+        except (OSError, json.JSONDecodeError, yaml.YAMLError, ValueError) as exc:
             print(f"ERROR: INSTRUMENT_UNKNOWN: cannot compile census row: {exc}")
             return 3
         errors = validate(bundle)
@@ -389,6 +441,7 @@ def main() -> int:
             for error in errors:
                 print(f"ERROR: {error}")
             return 1
+        args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open("w", encoding="utf-8", newline="\n") as handle:
             json.dump(bundle, handle, indent=2, ensure_ascii=True)
             handle.write("\n")

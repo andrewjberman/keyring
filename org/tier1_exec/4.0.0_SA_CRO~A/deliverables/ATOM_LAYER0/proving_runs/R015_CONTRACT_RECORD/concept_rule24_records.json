@@ -1,0 +1,47 @@
+{
+  "artifact": "Contract_Record S3 proposed Rule 24 records",
+  "status": "PROPOSED_OWNER_REVIEW",
+  "owner": "1.0.0_SA_CTO",
+  "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+  "records": [
+    {
+      "id": "R24-S5-CR-001",
+      "subject": "Contract_Record field-set schema",
+      "grain": "one contract_record schema",
+      "population": "required and optional members at the rule-bank authority home",
+      "mece": "PASS: every field is required or optional at this schema version, never both",
+      "same_grain": "PASS: every member is a field on one contract_record",
+      "intent_coherence": "PASS at the rule-bank home: the fields jointly declare a subject-carried D3 obligation record",
+      "state_coherence": "FAIL across live projections: registry, anatomy guide, and estate-contracts README omit describes; README also retains scope where authority uses locality",
+      "disposition": "Route reconciliation to 1.0.0_SA_CTO; this proving run does not edit or ratify owner surfaces"
+    },
+    {
+      "id": "R24-S5-CR-002",
+      "subject": "Contract_Record population binding",
+      "grain": "one contract_record instance keyed by subject identity",
+      "population_predicate": "each mapping member under contracts in org/modules/graph/estate-contracts/*.contracts.yaml",
+      "generation_process": "enumerate the two pinned *.contracts.yaml files and count their contracts mappings",
+      "denominator": 14,
+      "observed_split": {
+        "files": 2,
+        "subject_records": 14,
+        "joinable_artifact_subjects": 2,
+        "process_subjects_not_s3_addressable": 9,
+        "templated_subjects_not_exact_matchable": 3
+      },
+      "state_coherence": "PASS for the pinned instance population; comp_legacywriter --self-test C9g/C9h exercises the denominator",
+      "disposition": "Evidence only; no gate or owner change"
+    },
+    {
+      "id": "R24-S5-CR-003",
+      "subject": "Contract_Record token hygiene",
+      "corpus": "infra/system/ontology/** plus org/modules/graph/** at pinned vintage",
+      "positive_control": "contract_record",
+      "counts": {
+        "Contract_Record": 1,
+        "contract_record": 29
+      },
+      "interpretation": "The abstract registry key and machine-schema token are established spellings at differentiated homes; no new concept token is minted by this run."
+    }
+  ]
+}

@@ -37,25 +37,26 @@ sources. Where prose and schema disagree, the schema wins and the prose is the d
 
 ### 2.1 Resolution-census input seam
 
-The run schema accepts `source_census_row` directly. To compile one `~B` row into an
-unassessed but valid run bundle:
+The run schema accepts `source_census_row` directly. To select one `~B` row from its
+released YAML document and compile an unassessed but valid run bundle:
 
-`python scripts/validate_run.py --compile-census-row <row.json> --output <run.json>`
+`python scripts/validate_run.py --compile-census-row <census.yaml> --census-row-id <id> --output <run.json>`
 
-| Census row field | atom_layer0 field |
+The exact selected mapping is preserved in `source_census_row`; the compiler does not
+rename its fields. A standalone normalized JSON row remains supported as a compatibility
+form.
+
+| External census field | atom_layer0 field |
 |---|---|
-| `row_id` | `run_id` provenance |
+| `id` | `run_id` provenance |
 | `surface` + `concept` | default run scope |
 | `concept` | `subject.concept` |
-| optional `claimed_content` | `subject.definition` |
-| optional `declared_layer` | `subject.claimed_layer` |
-| optional `declared_grain` | `subject.declared_grain` |
-| optional `scope` | `subject.scope` |
-| `vintage` | run evidence vintage |
-| `verdict`, `verdict_schema`, `evidence_pointer`, `candidate_owner` | preserved unchanged in `source_census_row` |
+| enclosing document `read_vintage` | run evidence vintage |
+| `assessment_state`, `resolution_state`, `failure_classes`, `display_verdict`, `evidence`, `owner` | preserved unchanged in `source_census_row` |
 
-The census verdict is intentionally opaque to this package and carries its external
-schema pointer. `atom_layer0` does not copy or reinterpret `~B`'s verdict array. Missing
+The census verdict is intentionally opaque to this package and remains governed by the
+external document's Rule 24 interface. `atom_layer0` does not copy or reinterpret `~B`'s
+verdict arrays. Missing
 concept definition, layer, or grain remains null until S0 assesses it; the compiler does
 not manufacture ontology from a resolution finding.
 

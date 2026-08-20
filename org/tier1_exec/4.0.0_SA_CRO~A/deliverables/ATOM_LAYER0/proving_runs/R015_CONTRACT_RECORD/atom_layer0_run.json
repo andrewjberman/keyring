@@ -1,0 +1,438 @@
+{
+  "run_id": "AL0-S5-R015-CONTRACT-RECORD",
+  "method_version": "0.1.0-proposed",
+  "status": "PROPOSED",
+  "vintage": {
+    "repo_commit": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+    "observed_at_utc": "2026-08-20T17:14:24Z"
+  },
+  "subject": {
+    "concept": "Contract_Record",
+    "definition": "The abstract concept for one subject-carried D3 contract_record: one record, two views, never two schemas.",
+    "claimed_layer": "D3 contract-obligation concept at the C2/C3 seam",
+    "declared_grain": "one abstract contract record type",
+    "scope": "repo-only authority, documentation, code, and instance bindings enumerated for Contract_Record at 602b73a1f99d889dabbc884525b10dd8e7bf2e56"
+  },
+  "source_census_row": {
+    "id": "R015",
+    "surface": "O01",
+    "concept": "Contract_Record",
+    "assessment_state": "ASSESSED",
+    "resolution_state": "UNRESOLVED",
+    "failure_classes": ["AMBIGUOUS_TWO_HOMES", "CONTENT_MISMATCH"],
+    "display_verdict": "AMBIGUOUS_TWO_HOMES",
+    "direct_read": true,
+    "evidence": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:382-385 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+    "owner": "1.0.0_SA_CTO",
+    "note": "registry omits optional describes while rule bank includes it"
+  },
+  "stage_states": {
+    "s0": "STAGE_ASSESSED",
+    "s1": "STAGE_ASSESSED",
+    "s2": "STAGE_ASSESSED",
+    "s3": "STAGE_ASSESSED",
+    "s4": "STAGE_ASSESSED",
+    "s5": "STAGE_ASSESSED"
+  },
+  "s0_pin": {
+    "authorities": [
+      {
+        "pointer": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437-448 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "claimed_content": "Abstract Contract_Record definition plus an in-definition required/optional member list and resolves_via pointer.",
+        "live": true
+      },
+      {
+        "pointer": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:382-399 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "claimed_content": "D3 contract_record schema, fields, prohibitions, and required/optional member lists.",
+        "live": true
+      }
+    ],
+    "consumers": [
+      {
+        "surface": "infra/system/ontology/LAYER_FIELD_ANATOMY.md:737-742",
+        "binding_layer": "derived anatomy documentation",
+        "is_code": false
+      },
+      {
+        "surface": "org/modules/graph/estate-contracts/README.md:8-16",
+        "binding_layer": "instance-registry declaration contract",
+        "is_code": false
+      },
+      {
+        "surface": "org/modules/graph/estate-contracts/*.contracts.yaml",
+        "binding_layer": "14 subject-keyed record instances across two files",
+        "is_code": false
+      },
+      {
+        "surface": "org/modules/graph/comp_legacywriter.py:760-766,1421-1435",
+        "binding_layer": "runtime validator and drift-control code",
+        "is_code": true
+      }
+    ],
+    "molecule_dimensions": {
+      "composition": "One record schema with required and optional field attributes; its two views are projections, not two schemas.",
+      "state": "The concept is reserved_ratified; its live projections disagree at the pinned vintage.",
+      "position": "D3 between C2 and C3, carried by a resource or process and keyed by subject identity.",
+      "behavior": "Declares obligations and lifecycle/locality bindings; the estate instance registry itself fires nothing.",
+      "semantic": "Separates intent sourced above the artifact from observations and subject-local configuration."
+    },
+    "evidence": [
+      {
+        "file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+        "locator": "437-448",
+        "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "claim": "Registry definition, authority pointer, D3 position, and explicit one-field mismatch."
+      },
+      {
+        "file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+        "locator": "382-399",
+        "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "claim": "Machine schema contains five required and five optional fields including describes."
+      },
+      {
+        "file": "org/modules/graph/comp_legacywriter.py",
+        "locator": "760-766,1421-1435",
+        "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "claim": "Code mirrors universal required fields and tests the mirror against the rule bank."
+      }
+    ]
+  },
+  "s1_sweep": {
+    "generators": [
+      {
+        "generator_id": "G-DEF",
+        "description": "Definition analysis over the registry and rule-bank names statement.",
+        "derivation_dependencies": ["SYSTEM_DEFINITIONS Contract_Record", "RULE_BANK contract_record.names"],
+        "positive_control": "Territory is explicitly losslessly decomposed into Substrate x Deploy_State in registry history."
+      },
+      {
+        "generator_id": "G-USAGE",
+        "description": "Usage census over live documentation, instance, and code consumers.",
+        "derivation_dependencies": ["git grep contract_record", "consumer population enumerated in S0"],
+        "positive_control": "Lifecycle_Class and Lifecycle_Stage separate by artifact versus vertical grain in the same corpus."
+      },
+      {
+        "generator_id": "G-CROSS",
+        "description": "Cross-derivation from molecule dimensions and D3 intent-denominator doctrine.",
+        "derivation_dependencies": ["molecule five dimensions", "INTENT_DENOMINATOR_SYNCHRONIZATION"],
+        "positive_control": "A record schema and its subject-keyed instances discriminate as type versus instance grains."
+      },
+      {
+        "generator_id": "G-INCIDENT",
+        "description": "Incident-variance generator using external R015 plus the independently observed code mirror.",
+        "derivation_dependencies": ["CRO~B R015", "O1 FAILS-b", "comp_legacywriter C9l"],
+        "positive_control": "The registry-versus-bank optional-field mismatch is detected as a real resolution defect."
+      }
+    ],
+    "normalization_rule": "Normalize every hypothesis to one abstract contract record type; field groups, views, carriers, instances, and consumers remain candidates only if independently meaningful children reconstruct that same parent grain.",
+    "raw_candidates": [
+      {
+        "candidate_id": "C-REQ-OPT",
+        "label": "required-fields AND optional-fields",
+        "normalized_grain": "field-group below the record-type grain",
+        "operator": "CONJUNCTIVE_DECOMPOSITION",
+        "children": ["required field group", "optional field group"],
+        "generator_ids": ["G-DEF", "G-INCIDENT"],
+        "reconstruction_rule": "Hypothesis: the two groups jointly reconstruct Contract_Record.",
+        "consequence": "Would give required and optional evolution separate change obligations.",
+        "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "382-385", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The authority presents required and optional member groups."}]
+      },
+      {
+        "candidate_id": "C-TWO-VIEWS",
+        "label": "CORE vocabulary view AND ESTATE instance view",
+        "normalized_grain": "view of one schema",
+        "operator": "CONJUNCTIVE_DECOMPOSITION",
+        "children": ["CORE vocabulary view", "ESTATE instance view"],
+        "generator_ids": ["G-DEF", "G-USAGE"],
+        "reconstruction_rule": "Hypothesis: the two views jointly reconstruct Contract_Record.",
+        "consequence": "Would permit separate authority or lifecycle for each view.",
+        "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "382-383", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The authority says one record, two views, never two schemas."}]
+      },
+      {
+        "candidate_id": "C-CARRIER",
+        "label": "resource-carried OR process-carried record",
+        "normalized_grain": "carrier subtype",
+        "operator": "DISJUNCTIVE_DECOMPOSITION",
+        "children": ["resource-carried contract record", "process-carried contract record"],
+        "generator_ids": ["G-DEF", "G-USAGE", "G-CROSS"],
+        "reconstruction_rule": "Hypothesis: carrier-type alternatives union to Contract_Record.",
+        "consequence": "Would allow carrier-specific schema or validation remedies.",
+        "evidence": [{"file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml", "locator": "438-440", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The definition admits a resource or process carrier while specifying one record type."}]
+      },
+      {
+        "candidate_id": "C-HOMES",
+        "label": "registry concept OR rule-bank schema",
+        "normalized_grain": "two authority projections",
+        "operator": "DISJUNCTIVE_DECOMPOSITION",
+        "children": ["registry abstract concept", "rule-bank machine schema"],
+        "generator_ids": ["G-INCIDENT", "G-USAGE"],
+        "reconstruction_rule": "Hypothesis: the two disagreeing homes are alternative child concepts.",
+        "consequence": "Would legitimize the current content mismatch as separate semantics.",
+        "evidence": [{"file": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml", "locator": "rows[R015]", "vintage": "3265c08100", "claim": "External census reports AMBIGUOUS_TWO_HOMES and CONTENT_MISMATCH."}]
+      },
+      {
+        "candidate_id": "C-TYPE-INSTANCE",
+        "label": "record type AND record instances",
+        "normalized_grain": "type plus instance population",
+        "operator": "CONJUNCTIVE_DECOMPOSITION",
+        "children": ["contract record type", "contract record instance"],
+        "generator_ids": ["G-CROSS", "G-USAGE"],
+        "reconstruction_rule": "Hypothesis: type and instance jointly reconstruct the abstract concept.",
+        "consequence": "Would combine legislation and population state into one object.",
+        "evidence": [{"file": "org/modules/graph/estate-contracts/README.md", "locator": "8-16", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "README distinguishes ratified schema from subject-keyed instances."}]
+      }
+    ],
+    "normalized_candidates": [],
+    "excluded_candidates": [
+      {
+        "label": "required-fields AND optional-fields",
+        "failed_admissibility_test": "Grain and non-triviality",
+        "reason": "The children are field-set attributes below the declared record-type grain; optional absence also means AND does not reconstruct every valid record.",
+        "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "382-385", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Required and optional are member classifications within one schema."}]
+      },
+      {
+        "label": "CORE vocabulary view AND ESTATE instance view",
+        "failed_admissibility_test": "Independence",
+        "reason": "The authority explicitly declares two views of one record and prohibits two schemas; a view cannot be independently instantiated as Contract_Record.",
+        "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "382-383", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "One record, two views, never two schemas."}]
+      },
+      {
+        "label": "resource-carried OR process-carried record",
+        "failed_admissibility_test": "Consequence and non-triviality",
+        "reason": "Carrier identity is an instance attribute; both variants obey the same schema and resolution obligation.",
+        "evidence": [{"file": "org/modules/graph/estate-contracts/README.md", "locator": "11-16", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Subject identity is the key and values use one ratified field schema."}]
+      },
+      {
+        "label": "registry concept OR rule-bank schema",
+        "failed_admissibility_test": "Reconstruction and consequence",
+        "reason": "The registry is required to cite the rule-bank schema. Treating projection drift as two valid child concepts would legalize the defect and violate the one-home entry bar.",
+        "evidence": [{"file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml", "locator": "1-13,437-448", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Registry form says cite, never copy; Contract_Record copies and disagrees."}]
+      },
+      {
+        "label": "record type AND record instances",
+        "failed_admissibility_test": "Grain",
+        "reason": "A schema type and a subject-keyed instance are distinct abstraction grains, not children at the declared concept grain.",
+        "evidence": [{"file": "org/modules/graph/estate-contracts/README.md", "locator": "8-16", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The README explicitly names entries as instances of the ratified record type."}]
+      }
+    ],
+    "generator_residue": [
+      "No production incident corpus was declared for Contract_Record; G-INCIDENT used the bounded R015/O1 resolution incident and R028 code-mirror evidence only.",
+      "No claim is made that the open generator family is globally exhaustive."
+    ]
+  },
+  "s2_challenge": {
+    "grammar_name": "decomposition_grammar",
+    "grammar_version": "1.0.0",
+    "grammar_commit": "462ac78311a3d5f1310a8da3f4f7638127d449bd",
+    "splitter": {
+      "identity": "4.0.0_SA_CRO~B R015 source-divergence splitter, released through 4.0.0_SA_CRO after grammar pin",
+      "differently_derived": true,
+      "shared_dependencies": ["repository text at 602b73a1f99d889dabbc884525b10dd8e7bf2e56"]
+    },
+    "frontier": {
+      "cell_ids": [
+        "G-DEFxCONJxAUTH", "G-DEFxCONJxSCHEMA", "G-DEFxCONJxCONSUMERS",
+        "G-DEFxDISJxAUTH", "G-DEFxDISJxSCHEMA", "G-DEFxDISJxCONSUMERS",
+        "G-USAGExCONJxAUTH", "G-USAGExCONJxSCHEMA", "G-USAGExCONJxCONSUMERS",
+        "G-USAGExDISJxAUTH", "G-USAGExDISJxSCHEMA", "G-USAGExDISJxCONSUMERS",
+        "G-CROSSxCONJxAUTH", "G-CROSSxCONJxSCHEMA", "G-CROSSxCONJxCONSUMERS",
+        "G-CROSSxDISJxAUTH", "G-CROSSxDISJxSCHEMA", "G-CROSSxDISJxCONSUMERS",
+        "G-INCIDENTxCONJxAUTH", "G-INCIDENTxCONJxSCHEMA", "G-INCIDENTxCONJxCONSUMERS",
+        "G-INCIDENTxDISJxAUTH", "G-INCIDENTxDISJxSCHEMA", "G-INCIDENTxDISJxCONSUMERS"
+      ],
+      "assessed_cell_ids": [
+        "G-DEFxCONJxAUTH", "G-DEFxCONJxSCHEMA", "G-DEFxCONJxCONSUMERS",
+        "G-DEFxDISJxAUTH", "G-DEFxDISJxSCHEMA", "G-DEFxDISJxCONSUMERS",
+        "G-USAGExCONJxAUTH", "G-USAGExCONJxSCHEMA", "G-USAGExCONJxCONSUMERS",
+        "G-USAGExDISJxAUTH", "G-USAGExDISJxSCHEMA", "G-USAGExDISJxCONSUMERS",
+        "G-CROSSxCONJxAUTH", "G-CROSSxCONJxSCHEMA", "G-CROSSxCONJxCONSUMERS",
+        "G-CROSSxDISJxAUTH", "G-CROSSxDISJxSCHEMA", "G-CROSSxDISJxCONSUMERS",
+        "G-INCIDENTxCONJxAUTH", "G-INCIDENTxCONJxSCHEMA", "G-INCIDENTxCONJxCONSUMERS",
+        "G-INCIDENTxDISJxAUTH", "G-INCIDENTxDISJxSCHEMA", "G-INCIDENTxDISJxCONSUMERS"
+      ],
+      "open_cell_ids": [],
+      "unreachable_cell_ids": []
+    },
+    "result": "DECLARED_FRONTIER_EXHAUSTED",
+    "result_evidence": [
+      {"file": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/skill/atom-layer0/references/decomposition-grammar.md", "locator": "grammar v1 committed before subject disclosure", "vintage": "462ac78311a3d5f1310a8da3f4f7638127d449bd", "claim": "Target-blind grammar fixes two reconstruction operators and five admissibility tests."},
+      {"file": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml", "locator": "rows[R015]", "vintage": "3265c08100", "claim": "External selector supplied the strongest two-home challenge only after the grammar commit."},
+      {"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "382-399", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Direct read rejects field groups, views, carriers, homes, and instances as same-grain independently meaningful children."}
+    ],
+    "certificate_state": "CERTIFICATE_ISSUED",
+    "atomicity_certificate": {
+      "claim": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Contract_Record authorities/schema/consumers at 602b73a1f99d889dabbc884525b10dd8e7bf2e56)",
+      "grammar": "decomposition_grammar@1.0.0",
+      "scope": "repo-only Contract_Record authorities, schema enumeration, and enumerated consumers",
+      "grain": "one abstract contract record type",
+      "frontier_denominator": 24,
+      "evidence_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56"
+    }
+  },
+  "s3_legislation": {
+    "concept_rule24_record_ids": ["R24-S5-CR-001", "R24-S5-CR-002", "R24-S5-CR-003"],
+    "population_predicate": "each mapping member under contracts in the two pinned org/modules/graph/estate-contracts/*.contracts.yaml files",
+    "denominator_process": "Enumerate pinned *.contracts.yaml files, parse contracts mappings, print files/subjects/joinability residue; observed 2 files and 14 subjects.",
+    "authority_home": "PROPOSED_UNCHANGED: org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record; registry and consumers cite/compile it without member copies",
+    "token_census_record_id": "R24-S5-CR-003"
+  },
+  "s4_resolution": {
+    "binding_population": ["B-REGISTRY", "B-ANATOMY", "B-README", "B-INSTANCES", "B-LEGACYWRITER"],
+    "contracts": [
+      {
+        "binding_id": "B-REGISTRY",
+        "binding_form": "RESOLVES_VIA_POINTER",
+        "source_surface": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437-448",
+        "source_layer": "abstract concept registry",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record",
+        "declared_grain": "one contract record type",
+        "authority_grain": "one contract record type",
+        "claimed_content": "required five fields; optional successor, expiry_condition, cadence, vintage_probe",
+        "head_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "live_authority_target_count": 2,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": false,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {"axis": "MECHANICAL", "passed": true, "evidence": [{"file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml", "locator": "443-448", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Pointer resolves and O1 direct comparison executes."}]},
+          {"axis": "DECLARATIVE", "passed": false, "evidence": [{"file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml", "locator": "1-6,438", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Registry header forbids copied member lists, but the definition copies them."}]},
+          {"axis": "SEMANTIC", "passed": false, "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "384-385", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Authority adds describes, so source content differs."}]}
+        ],
+        "resolved": false,
+        "failure_direction": {"fails_loud": true, "loud_condition": "Direct resolution comparison observes member mismatch.", "loud_detector": "O1 resolves_via comparison or ATOM_LAYER0 S4 direct read emits CONTENT_MISMATCH.", "fails_clean": false, "clean_condition": "", "clean_detector": ""},
+        "candidate_owner": "1.0.0_SA_CTO"
+      },
+      {
+        "binding_id": "B-ANATOMY",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "infra/system/ontology/LAYER_FIELD_ANATOMY.md:737-742",
+        "source_layer": "derived anatomy documentation",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record",
+        "declared_grain": "one contract record type",
+        "authority_grain": "one contract record type",
+        "claimed_content": "required five fields; optional successor, expiry_condition, cadence, vintage_probe",
+        "head_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": false,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {"axis": "MECHANICAL", "passed": true, "evidence": [{"file": "infra/system/ontology/LAYER_FIELD_ANATOMY.md", "locator": "737-742", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The copied list and authority block are directly readable."}]},
+          {"axis": "DECLARATIVE", "passed": false, "evidence": [{"file": "infra/system/ontology/LAYER_FIELD_ANATOMY.md", "locator": "737-742", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Derived surface re-declares a member list instead of resolving it."}]},
+          {"axis": "SEMANTIC", "passed": false, "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "384-385", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Authority includes describes; anatomy copy does not."}]}
+        ],
+        "resolved": false,
+        "failure_direction": {"fails_loud": true, "loud_condition": "Pinned direct comparison is invoked.", "loud_detector": "ATOM_LAYER0 S4 reports CONTENT_MISMATCH.", "fails_clean": false, "clean_condition": "", "clean_detector": ""},
+        "candidate_owner": "1.0.0_SA_CTO"
+      },
+      {
+        "binding_id": "B-README",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "org/modules/graph/estate-contracts/README.md:8-16",
+        "source_layer": "instance registry declaration contract",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record",
+        "declared_grain": "one contract record type",
+        "authority_grain": "one contract record type",
+        "claimed_content": "required uses scope and optional omits describes",
+        "head_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": false,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {"axis": "MECHANICAL", "passed": false, "evidence": [{"file": "org/modules/graph/estate-contracts/README.md", "locator": "8-16", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Citation says rule-bank v1.8 lines 349-357, while the pinned block is at 382 onward."}]},
+          {"axis": "DECLARATIVE", "passed": false, "evidence": [{"file": "org/modules/graph/estate-contracts/README.md", "locator": "11-16", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "README copies the schema and retains retired scope instead of locality."}]},
+          {"axis": "SEMANTIC", "passed": false, "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "384-385,393-399", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Authority requires locality and permits describes; README claims another shape."}]}
+        ],
+        "resolved": false,
+        "failure_direction": {"fails_loud": true, "loud_condition": "Pinned citation and member comparison is invoked.", "loud_detector": "ATOM_LAYER0 S4 reports stale anchor and CONTENT_MISMATCH.", "fails_clean": false, "clean_condition": "", "clean_detector": ""},
+        "candidate_owner": "1.0.0_SA_CTO"
+      },
+      {
+        "binding_id": "B-INSTANCES",
+        "binding_form": "VIEW_TIME_COMPILED",
+        "source_surface": "org/modules/graph/estate-contracts/*.contracts.yaml (2 files, 14 records)",
+        "source_layer": "subject-keyed estate contract instances",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record",
+        "declared_grain": "one record instance using the authority field vocabulary",
+        "authority_grain": "one record instance using the authority field vocabulary",
+        "claimed_content": "Instance keys are limited to the rule-bank record fields and resolve values at read time.",
+        "head_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": false,
+        "code_cites_authority": null,
+        "code_redeclares_vocabulary": null,
+        "seam_axes": [
+          {"axis": "MECHANICAL", "passed": true, "evidence": [{"file": "org/modules/graph/comp_legacywriter.py", "locator": "self-test C9g/C9h", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Live self-test loads 2 files and prints 14 subjects with joinability residue."}]},
+          {"axis": "DECLARATIVE", "passed": true, "evidence": [{"file": "org/modules/graph/estate-contracts/mdpf.contracts.yaml", "locator": "1-35", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Instances identify the rule bank and use current locality/describes fields."}]},
+          {"axis": "SEMANTIC", "passed": true, "evidence": [{"file": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml", "locator": "386,393-399", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Semantic exercise declares all seven describes values legitimate subject descriptions."}]}
+        ],
+        "resolved": true,
+        "failure_direction": {"fails_loud": true, "loud_condition": "Rule bank is unavailable or an instance loses a universal required field.", "loud_detector": "comp_legacywriter C9d/C9l and registry-load controls emit failure or UNKNOWN LOUD.", "fails_clean": true, "clean_condition": "A process subject cannot join to an S3 location.", "clean_detector": "comp_legacywriter C9k returns None and labels the decline as correct."},
+        "candidate_owner": "1.0.0_SA_CTO"
+      },
+      {
+        "binding_id": "B-LEGACYWRITER",
+        "binding_form": "CITED_ENUM",
+        "source_surface": "org/modules/graph/comp_legacywriter.py:760-766,1421-1435",
+        "source_layer": "runtime validator and self-test",
+        "target_authority": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#dynamic_rails.D3_contract_obligation.contract_record.required",
+        "declared_grain": "universal required-field subset for one contract record",
+        "authority_grain": "universal required-field subset for one contract record",
+        "claimed_content": "revalidate_by and locality are the universal required fields after class-scoped fields are removed",
+        "head_vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
+        "live_authority_target_count": 1,
+        "pointer_resolves_at_head": true,
+        "target_carries_claimed_content": true,
+        "is_code_binding": true,
+        "code_cites_authority": true,
+        "code_redeclares_vocabulary": true,
+        "seam_axes": [
+          {"axis": "MECHANICAL", "passed": true, "evidence": [{"file": "org/modules/graph/comp_legacywriter.py", "locator": "1421-1435; self-test C9l 22/22 PASS", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Drift control dynamically reads the rule bank and presently agrees."}]},
+          {"axis": "DECLARATIVE", "passed": false, "evidence": [{"file": "org/modules/graph/comp_legacywriter.py", "locator": "762-766", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "Runtime tuple explicitly says it mirrors the rule bank, violating code-cites-not-copies."}]},
+          {"axis": "SEMANTIC", "passed": true, "evidence": [{"file": "org/modules/graph/comp_legacywriter.py", "locator": "1427-1435", "vintage": "602b73a1f99d889dabbc884525b10dd8e7bf2e56", "claim": "The subtraction of class-scoped fields derives exactly the current universal pair."}]}
+        ],
+        "resolved": false,
+        "failure_direction": {"fails_loud": true, "loud_condition": "The copied tuple drifts from the authority.", "loud_detector": "comp_legacywriter --self-test C9l fails with both field sets.", "fails_clean": false, "clean_condition": "", "clean_detector": ""},
+        "candidate_owner": "1.0.0_SA_CTO"
+      }
+    ],
+    "residue": [
+      "Four of five enumerated bindings are unresolved; only the pinned instance population resolves.",
+      "The method reports owner candidates and makes no registry, rule-bank, documentation, or code edit.",
+      "Cloud execution space remains out of scope."
+    ]
+  },
+  "s5_proving": {
+    "subject_selected_by": "4.0.0_SA_CRO~B via 4.0.0_SA_CRO",
+    "method_defect": {
+      "found": true,
+      "description": "The advertised census adapter could not ingest the released YAML rows[] interface and assumed a non-existent normalized field schema.",
+      "evidence": [
+        {"file": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/R015_CONTRACT_RECORD/pre_repair_failure.txt", "locator": "OBSERVED", "vintage": "af9387cb40", "claim": "Pre-repair exact command terminated as INSTRUMENT_UNKNOWN on YAML decoding."},
+        {"file": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml", "locator": "integration_interface and rows[R015]", "vintage": "3265c08100", "claim": "Released contract requires parsing YAML and selecting a row object directly."}
+      ],
+      "repair": "Added JSON/YAML loading, exact rows[] selection by --census-row-id, external row-schema validation, document-vintage carry, and source-row preservation without hand translation."
+    },
+    "regression_check": "The exact R015 external row compiles to compiled_stub.json with all original fields preserved, and both normalized compatibility and external schema paths validate.",
+    "acceptance_satisfied": true
+  },
+  "rule24_record_ids": ["R24-AL0-001", "R24-AL0-002", "R24-AL0-003", "R24-AL0-004", "R24-AL0-005", "R24-AL0-006", "R24-AL0-007", "R24-AL0-008", "R24-AL0-009", "R24-AL0-010", "R24-AL0-011"],
+  "residue": {
+    "stage_not_assessed": [],
+    "unreachable": [],
+    "unknowns": [
+      "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage; it is not a global indivisibility claim.",
+      "Owner disposition for copied or stale bindings remains with 1.0.0_SA_CTO.",
+      "No cloud or deployed-state evidence was gathered."
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+cro(atom-layer0): complete external R015 proving run
+
+Run Contract_Record through the pre-registered grammar, repair the real YAML census
+adapter seam, issue the bounded 24-cell certificate, enumerate five resolution
+bindings, and route four owner findings without changing owner surfaces.
+
+Validation:
+- validator self-test PASS 7/7
+- exact external R015 row preservation PASS
+- proving run --require-proving-defect PASS
+- comp_legacywriter self-test PASS 22/22
+- package manifest exact set PASS 18/18
+- portable skill quick validation PASS
