@@ -268,6 +268,21 @@ c3_ii_semantic_verticals:
     news:
       systems: [UNASSIGNED-RESIDUE, sys-market-intelligence-engine, sys-news-intelligence-engine]
       chain_count: 13
+    # observability -- MINTED 2026-08-20 (Andrew-direct at the CRO terminal, VERBATIM "approved, mint it";
+    # record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260820_OBSERVABILITY_VERTICAL_MINT.md).
+    # SENSE: the estate's self-observation function -- watch/alarm-anchored machinery over EXISTING
+    # instruments. SAME SENSE as the Andrew-ratified 2026-08-11 Observability DOMAIN VALUE (registry),
+    # reused at C3.ii grain -- reuse, not re-coin; the ratified definition's own words bind here too:
+    # "models existing alarms; builds nothing -- the moratorium is untouched."
+    # DISCRIMINATOR vs security-scanner (declared, Rule-24(i)): SECURITY-POSTURE verdicts belong to
+    # security-scanner; OPERATIONAL-HEALTH observation of estate machinery belongs here.
+    # FOUNDING MEMBERS (land via the W-15 grain-3 TO, not this mint -- counts update at that landing):
+    # ops-ec2-governance-lambdas (from ops-internal), ops-infrastructure-monitors (from
+    # portfolio-management, a measured incoherent home), ops-anomaly-scanners (from security-scanner,
+    # across the declared discriminator per the @51285984d6 adjudication). Stage: UNASSERTED.
+    observability:
+      systems: [UNASSIGNED-RESIDUE]
+      chain_count: 0
     ops-internal:
       systems: [UNASSIGNED-RESIDUE, sys-estate-ops-platform, sys-news-intelligence-engine, sys-partner-serving-platform]
       chain_count: 5

@@ -12,6 +12,10 @@ NEVER self-reported or hand-fabricated -- a fabricated current-state number is a
 comp-tools cannot ground carries an honest UNKNOWN-VINTAGE / no-live-producer anchor (the roster-is-a-floor
 discipline: name what is not grounded, never silently omit -- it also SURFACES "no live producer" as a
 finding). Auto-refreshes on HEAD-advance (the marker-oracle pattern, like comp-kuzu re-finalize-on-advance).
+FORM (a) CARRY-FORWARD (CTO ruling @4484d55608): a device that cannot reach comp-kuzu at compile time NEVER
+downgrades a graph row it cannot re-derive -- it carries the committed row forward, MARKED in the vintage
+field (value verbatim), excluded from the genuine-drift predicate, and aging from the ORIGINAL derivation
+(a carry never resets the age clock). See the CARRY-FORWARD section above _this_device().
 
 LOCKED SHAPE (base COO LOCALROOT-P3 + COO~B P4-maturity, 2026-07-08): one per-class object keyed by the
 NFRA_LOCALROOT_P2 SS2 knowledge-class taxonomy (kebab slugs, 1:1 with the infra/README index anchors):
@@ -111,6 +115,131 @@ def _kuzu_marker() -> str:
 
 
 # ---------------------------------------------------------------------------
+# FORM (a) CARRY-FORWARD (CTO ruling @4484d55608, 2026-08-20 -- the device-axis instrument pair;
+# pre-gate pin Msg 63063). The 06 record is ONE estate truth; a device that cannot reach comp-kuzu
+# at compile time (site-Z: hangs >120s) NEVER downgrades a graph row it cannot re-derive -- it
+# carries the row FORWARD from the committed 06, MARKED, provenance honest, never silent freshness.
+# Two load-bearing invariants:
+#   1. The mark lives ONLY in the vintage/provenance field; the VALUE/current_state carries
+#      VERBATIM. That is what makes the --check/--gate exclusion hold BY CONSTRUCTION: the
+#      managed-region compare is value-vs-span, and a verbatim-carried value equals its own
+#      last-refreshed span -- a capability-conditioned carry can never read as region drift (the
+#      ruling's (b)-kernel: carried rows are excluded from the genuine-drift predicate).
+#   2. A carry defeats the DRIFT verdict, NEVER the age clock (the CTO pin): compile_model chains
+#      `graph_carried_since` to the ORIGINAL derivation's emit time (a re-carry preserves it), and
+#      _staleness ages carried rows from THAT anchor -- a device dark for 3 weeks still ages past
+#      TTL exactly as if no carry existed; laundering freshness through repetition is the same
+#      defect one axis over.
+# Prior-is-UNKNOWN carries nothing: UNKNOWN over UNKNOWN is not a downgrade, and carrying it would
+# be fabricated provenance.
+# ---------------------------------------------------------------------------
+CARRY_PREFIX = "carried-forward @"
+_CARRY_SUFFIX_KEY = ": graph unreachable at "     # the mark's own suffix; rfind() key for unwrap
+_PRIOR_CACHE = {}
+_DEVICE_CACHE = {}
+
+
+def _this_device() -> str:
+    """The estate's ONE device-identity mechanism, reused not re-minted (DEVICES.txt: ids are the
+    canonical device names already in use by .tools/agentbus-sqs.sh -- do NOT mint a parallel
+    naming scheme): AGENTBUS_DEVICE env tier first (the same laptop|sitez validation the script
+    applies), then the script's own `device` subcommand via git_bash_resolver (a bare "bash" from
+    python Windows-resolves to the WSL stub -- the trap _KUZU_CMD's comment names). Unresolvable
+    -> "UNKNOWN-device": the mark stays honest, and provenance must never fail a compile."""
+    if "d" in _DEVICE_CACHE:
+        return _DEVICE_CACHE["d"]
+    dev = os.environ.get("AGENTBUS_DEVICE", "").strip()
+    if dev not in ("laptop", "sitez"):
+        dev = ""
+        try:
+            _tools = os.path.join(WS, ".tools")
+            if _tools not in sys.path:
+                sys.path.insert(0, _tools)
+            from git_bash_resolver import bash_argv  # noqa: PLC0415  -- lazy: only needed on a carry
+            out, _err, _rc = _run(bash_argv(os.path.join(_tools, "agentbus-sqs.sh"), "device"), timeout=20)
+            first = ((out or "").strip().splitlines() or [""])[0]      # "device: laptop"
+            cand = first.split(":", 1)[1].strip() if ":" in first else ""
+            if cand in ("laptop", "sitez"):
+                dev = cand
+        except Exception:  # noqa: BLE001  -- provenance resolution must never fail the compile
+            dev = ""
+    _DEVICE_CACHE["d"] = dev or "UNKNOWN-device"
+    return _DEVICE_CACHE["d"]
+
+
+def _unwrap_carry(vintage) -> str:
+    """The ORIGINAL fresh vintage inside a carry mark (identity on an unmarked vintage). rfind on
+    the mark's own suffix so an original vintage containing ':' survives intact."""
+    s = str(vintage)
+    if s.startswith(CARRY_PREFIX):
+        core = s[len(CARRY_PREFIX):]
+        cut = core.rfind(_CARRY_SUFFIX_KEY)
+        if cut != -1:
+            return core[:cut]
+    return s
+
+
+def _carry_mark(prior_vintage) -> str:
+    """The ruling's mark, verbatim form: 'carried-forward @<prior-vintage>: graph unreachable at
+    <ts> on <device>'. A re-carry keeps ONE level -- an already-marked vintage is unwrapped to the
+    ORIGINAL fresh vintage first (never nests, never loses the real provenance)."""
+    return "%s%s%s%s on %s" % (CARRY_PREFIX, _unwrap_carry(prior_vintage), _CARRY_SUFFIX_KEY,
+                               time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), _this_device())
+
+
+def _prior_06():
+    """The committed 06 record a carry reads from: on-disk OUT_JSON first (== the committed record
+    on a clean tree, and lets a re-carry see the newest chain anchor), `git show HEAD:` fallback
+    when the on-disk copy is absent/unparseable. None => no prior -- nothing to carry. Deliberately
+    NO deeper history walk: the carry source is THE committed 06 (ruling wording), not an
+    archaeology of past vintages."""
+    if "m" in _PRIOR_CACHE:
+        return _PRIOR_CACHE["m"]
+    model = None
+    try:
+        with open(OUT_JSON, encoding="utf-8") as fh:
+            model = json.load(fh)
+    except Exception:  # noqa: BLE001  -- fall through to the committed copy
+        out, _err, rc = _run(["git", "show", "HEAD:%s" % os.path.relpath(OUT_JSON, WS).replace(os.sep, "/")],
+                             timeout=15)
+        if out and rc == 0:
+            try:
+                model = json.loads(out)
+            except Exception:  # noqa: BLE001
+                model = None
+    _PRIOR_CACHE["m"] = model
+    return model
+
+
+def _prior_class(slug):
+    for c in (_prior_06() or {}).get("classes", []):
+        if c.get("slug") == slug:
+            return c
+    return None
+
+
+def _carriable(text) -> bool:
+    """Real prior content worth carrying: non-empty, not the UNKNOWN sentinel, not a collector
+    error. (A prior CARRIED row keeps its original current_state verbatim, so it stays carriable --
+    re-carry is the normal steady state on a graph-less device.)"""
+    s = str(text or "")
+    return bool(s) and UNKNOWN not in s and "collector error" not in s
+
+
+def _carry_class(slug, static_home, prior_cls):
+    """The form (a) decision for a graph-grounded CLASS row (offline-testable: no live graph
+    needed). Returns the carried class-obj -- current_state VERBATIM, mark in the vintage field
+    ONLY -- or None when there is nothing real to carry (the caller keeps its honest UNKNOWN row:
+    writing UNKNOWN over UNKNOWN is not a downgrade, and fabricating a carry would be worse)."""
+    if not prior_cls or not _carriable(prior_cls.get("current_state")):
+        return None
+    return _class_obj(slug, static_home, prior_cls["current_state"],
+                      prior_cls.get("components", []) or [],
+                      prior_cls.get("source", UNKNOWN),
+                      _carry_mark(prior_cls.get("vintage", UNKNOWN)))
+
+
+# ---------------------------------------------------------------------------
 # maturity_evidence: {cert_status, works_broken, freshness, exercised} per component (COO~B P4 need). Every
 # field GROUNDED from a live source or UNKNOWN-VINTAGE. maturity_rollup derives the [BP]/[BU]/[F]/[D] grade.
 # ---------------------------------------------------------------------------
@@ -175,6 +304,11 @@ def collect_cloud_resources() -> dict:
                 marker = line.strip()[:160]
                 break
     if out is None or rc not in (0, None) or not (out or "").strip():
+        # FORM (a): carry the committed row forward, marked -- never downgrade what this device
+        # cannot re-derive. Falls through to the honest UNKNOWN only when there is nothing real to carry.
+        carried = _carry_class("cloud-resources", "infra/aws/", _prior_class("cloud-resources"))
+        if carried is not None:
+            return carried
         return _class_obj("cloud-resources", "infra/aws/",
                           current_state="%s: comp-kuzu graph unreachable/empty at compile time" % UNKNOWN,
                           components=[], source="comp-kuzu (unreachable)", vintage=UNKNOWN)
@@ -254,12 +388,21 @@ def collect_system_content() -> dict:
                       exercised="exercised-live (manifest read + registry dispatch)" if recs.get("count") not in (None, UNKNOWN) else UNKNOWN)})
 
     # graph-infra: FRESHGUARD/vintage -- grounded lightly here via the marker (comp-freshness full-run is
-    # heavy/live-AWS; a bounded marker read is the honest light-grounding, else UNKNOWN).
+    # heavy/live-AWS; a bounded marker read is the honest light-grounding, else UNKNOWN). Marker
+    # unreachable -> FORM (a) carry of the prior component's freshness (here the mark WRAPS the value:
+    # this field is its own vintage, feeds no drift compare and no grade -- see _grade()).
+    gi_fresh = _kuzu_marker()
+    if gi_fresh == UNKNOWN:
+        for pc in (_prior_class("system-content") or {}).get("components", []):
+            pf = pc.get("maturity_evidence", {}).get("freshness")
+            if str(pc.get("name", "")).startswith("graph-infra") and _carriable(pf):
+                gi_fresh = _carry_mark(pf)
+                break
     comps.append({"name": "graph-infra: Nessie/Iceberg/Kuzu + marker-oracle + FRESHGUARD",
                   "maturity_evidence": _evidence(
                       cert_status=UNKNOWN,
                       works_broken="works (comp-kuzu/comp-freshness canonical; TOOLCHECK-verified)",
-                      freshness=_kuzu_marker(),
+                      freshness=gi_fresh,
                       exercised="exercised-live (comp-kuzu provenance header)")})
 
     cs = "the compiler-SYSTEM's 5 scope classes; grades derive the P4 rollup below"
@@ -269,8 +412,14 @@ def collect_system_content() -> dict:
 
 
 def collect_runtime_compilation() -> dict:
-    """The live graph runtime vintage via the marker-oracle (current/BEHIND/UNKNOWN)."""
+    """The live graph runtime vintage via the marker-oracle (current/BEHIND/UNKNOWN); marker
+    unreachable -> FORM (a) carry of the committed row (never a downgrade)."""
     marker = _kuzu_marker()
+    if marker == UNKNOWN:
+        carried = _carry_class("runtime-compilation", "the live graph + .comp-graph",
+                               _prior_class("runtime-compilation"))
+        if carried is not None:
+            return carried
     return _class_obj("runtime-compilation", "the live graph + .comp-graph",
                       current_state="graph marker (comp-kuzu provenance-oracle): %s" % marker,
                       components=[], source="comp-kuzu provenance header (marker-oracle)", vintage=marker)
@@ -443,6 +592,16 @@ def compute_metrics() -> dict:
     rulebank_relations = _yaml_len(_RULEBANK_PATH, "relations")
     rulebank_variance = _yaml_nested_len(_RULEBANK_PATH, "variance", "labels")
 
+    graph_marker = _metric(_kuzu_marker(), "comp-kuzu provenance header (marker-oracle)", _kuzu_marker())
+    if graph_marker["value"] == UNKNOWN:
+        # FORM (a): VALUE verbatim from the committed metric (the by-construction drift exclusion --
+        # a carried value equals its own last-refreshed managed-region span); the mark rides the
+        # vintage field ONLY. Nothing real committed -> the honest UNKNOWN stands.
+        pm = (_prior_06() or {}).get("metrics", {}).get("graph_marker") or {}
+        if _carriable(pm.get("value")):
+            graph_marker = _metric(pm["value"], "comp-kuzu provenance header (marker-oracle)",
+                                   _carry_mark(pm.get("vintage") or pm["value"]))
+
     return {
         "tools_index_count": _metric(
             tools_index, "graph-call-manifest.yaml:tools_index (mapping length)",
@@ -485,8 +644,7 @@ def compute_metrics() -> dict:
         "rulebank_variance_count": _metric(
             rulebank_variance, "NFRA_ONTOLOGY_RULE_BANK.yaml: len(variance.labels) (axis VARIANCE)",
             "rulebank (%s variance verdicts)" % rulebank_variance),
-        "graph_marker": _metric(
-            _kuzu_marker(), "comp-kuzu provenance header (marker-oracle)", _kuzu_marker()),
+        "graph_marker": graph_marker,
     }
 
 
@@ -609,7 +767,27 @@ def compile_model() -> dict:
         except Exception as e:  # noqa: BLE001  -- a collector failure -> UNKNOWN class, never a fabricated one
             classes.append(_class_obj(slug, home, "%s: collector error (%s)" % (UNKNOWN, type(e).__name__),
                                       [], "collector-error", UNKNOWN))
-    return {"header": header, "metrics": compute_metrics(), "diversity_metric": diversity, "classes": classes}
+    metrics = compute_metrics()
+    # FORM (a) header anchor (the CTO pin, Msg 63063): a carry defeats the DRIFT verdict, NEVER the
+    # age clock. graph_carried_since chains to the ORIGINAL derivation's emit time -- a re-carry
+    # preserves the prior chain anchor, never this compile's own timestamp -- so _staleness ages
+    # carried graph rows from the real derivation. A fresh (graph-capable) compile writes neither
+    # key, which is what ends the chain.
+    carried_rows = [c["slug"] for c in classes if str(c.get("vintage", "")).startswith(CARRY_PREFIX)]
+    for c in classes:
+        if c.get("slug") == "system-content":
+            carried_rows += ["system-content.components.%s" % str(pc.get("name", "")).split(":")[0]
+                             for pc in c.get("components", [])
+                             if str(pc.get("maturity_evidence", {}).get("freshness", "")).startswith(CARRY_PREFIX)]
+    if str(metrics.get("graph_marker", {}).get("vintage", "")).startswith(CARRY_PREFIX):
+        carried_rows.append("metrics.graph_marker")
+    if carried_rows:
+        header["graph_carried_rows"] = carried_rows
+        prior_h = (_prior_06() or {}).get("header", {})
+        since = prior_h.get("graph_carried_since") or prior_h.get("emitted_at")
+        if since:
+            header["graph_carried_since"] = float(since)
+    return {"header": header, "metrics": metrics, "diversity_metric": diversity, "classes": classes}
 
 
 # ---------------------------------------------------------------------------
@@ -959,6 +1137,70 @@ def self_test() -> int:
         "from a real 'compared, 0 drifted' pass (check_stale renders this as CURRENT-BUT-UNWATCHED, "
         "never as an ordinary clean CURRENT)", zero_region_ok)
 
+    # 23-28. FORM (a) CARRY-FORWARD (CTO ruling @4484d55608 + pre-gate pin Msg 63063): a device
+    #        that cannot reach comp-kuzu NEVER downgrades a graph row it cannot re-derive -- it
+    #        carries the committed row forward, value VERBATIM, mark in the vintage field ONLY;
+    #        a marked carry is excluded from the genuine-drift predicate BY CONSTRUCTION (value ==
+    #        its own last-refreshed span), and it NEVER resets the age clock (ages from the
+    #        ORIGINAL derivation). All offline/synthetic -- no live-graph state assumed either way.
+    _prior_real = _class_obj("cloud-resources", "infra/aws/",
+                             "graph-derived CloudNode counts by type: Lambda=196, S3Bucket=41", [],
+                             'comp-kuzu "MATCH (n:CloudNode) RETURN node_type, count(*)"',
+                             "marker: current @abc1234")
+    _c23 = _carry_class("cloud-resources", "infra/aws/", _prior_real)
+    chk("23 carry: real prior + unreachable graph -> current_state VERBATIM, mark in vintage ONLY "
+        "(embeds prior vintage + ts + device), never a downgrade",
+        _c23 is not None and _c23["current_state"] == _prior_real["current_state"]
+        and _c23["vintage"].startswith(CARRY_PREFIX)
+        and "marker: current @abc1234" in _c23["vintage"]
+        and _CARRY_SUFFIX_KEY in _c23["vintage"] and " on " in _c23["vintage"]
+        and CARRY_PREFIX not in _c23["current_state"])
+    _c24 = _carry_class("cloud-resources", "infra/aws/", _c23)
+    chk("24 re-carry (steady state on a graph-less device): ONE mark, ORIGINAL vintage embedded -- "
+        "never nests, value still verbatim",
+        _c24 is not None and _c24["vintage"].count(CARRY_PREFIX) == 1
+        and "marker: current @abc1234" in _c24["vintage"]
+        and _c24["current_state"] == _prior_real["current_state"])
+    chk("25 no-fabrication: an UNKNOWN/absent prior carries NOTHING (UNKNOWN over UNKNOWN is not a "
+        "downgrade; a fabricated carry would be worse)",
+        _carry_class("cloud-resources", "infra/aws/",
+                     dict(_prior_real, current_state="%s: comp-kuzu graph unreachable/empty at "
+                                                     "compile time" % UNKNOWN)) is None
+        and _carry_class("cloud-resources", "infra/aws/", None) is None)
+    # 26. the drift-exclusion, EXERCISED at the region layer (scratch dir, never the real files):
+    #     a carried metric's verbatim value equals its own last-refreshed span -> 0 drift.
+    _scratch3 = _tempfile.mkdtemp(prefix="cs_carry_selftest_")
+    try:
+        with open(os.path.join(_scratch3, "x.md"), "w", encoding="utf-8") as _fh:
+            _fh.write("marker: <!--cs:graph_marker-->marker: current @abc1234<!--/cs-->\n")
+        globals()["_MANAGED_DOCS_DIR"] = _scratch3
+        _carried_m = {"graph_marker": _metric("marker: current @abc1234",
+                                              "comp-kuzu provenance header (marker-oracle)",
+                                              _carry_mark("marker: current @abc1234"))}
+        _cc3, _pp3, _sc3 = refresh_managed_regions(_carried_m, write=False)
+        carry_no_drift = (_cc3 == [] and _pp3 == [] and _sc3["regions"] == 1)
+    finally:
+        globals()["_MANAGED_DOCS_DIR"] = _real_dir
+        _shutil.rmtree(_scratch3, ignore_errors=True)
+    chk("26 drift-exclusion: a carried metric (value verbatim) -> 0 span drift + 0 problems over 1 "
+        "scanned region (a capability-conditioned carry is not drift -- the (b)-kernel inside (a))",
+        carry_no_drift)
+    # 27-28. the CTO pin, BOTH directions (the mirror of the false-Monday guard: here the WARN MUST fire).
+    _h_aged = {"source_fingerprint": _source_fingerprint(), "emitted_at": time.time(),
+               "graph_carried_rows": ["cloud-resources"],
+               "graph_carried_since": time.time() - _TTL_SECONDS - 60}
+    _st27, _r27 = _staleness(_h_aged)
+    chk("27 age clock: carried rows aged past TTL -> STALE fires from the ORIGINAL derivation "
+        "(a fresh emitted_at cannot mask it), reason is the 'age ' class, gate reads it as WARN "
+        "rc 0 never fail-closed DRIFT",
+        _st27 is True and _r27.startswith("age ")
+        and _gate_verdict(True, _r27, [], dirty=[])[0] == 0)
+    chk("28 age clock mirror: carried + YOUNG original -> not stale (a carry alone is never a "
+        "staleness verdict); an UNDATED carry chain fails toward the age WARN, never silent-fresh",
+        _staleness(dict(_h_aged, graph_carried_since=time.time() - 60))[0] is False
+        and (lambda r: r[0] is True and r[1].startswith("age "))
+            (_staleness(dict(_h_aged, graph_carried_since=None))))
+
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
     return 0 if n == len(ok) else 1
@@ -1133,6 +1375,24 @@ def _staleness(header: dict):
     if list(emitted_fp) != cur_fp:
         return True, ("source drift: fingerprint (max_mtime, file_count) %s -> %s"
                       % (tuple(emitted_fp), tuple(cur_fp)))
+
+    # FORM (a) x the CTO pin (Msg 63063): carried graph rows age from their ORIGINAL derivation --
+    # a carry (or a chain of re-carries) never resets the clock; a device dark past TTL must read
+    # exactly as stale as if no carry existed. The reason MUST start with "age " so --gate
+    # classifies it as the WARN limb, never fail-closed DRIFT: the graph-less device cannot regen
+    # its way out, and the remedy is a graph-capable device's compile, not a block.
+    if header.get("graph_carried_rows"):
+        since = header.get("graph_carried_since")
+        if since is None:
+            return True, ("age of carried graph rows UNVERIFIABLE (no dated original derivation in "
+                          "the carry chain) -- treat as past-TTL; regenerate on a graph-capable device")
+        carried_age = time.time() - float(since)
+        if carried_age >= _TTL_SECONDS:
+            return True, ("age of carried graph rows %dh exceeds TTL %dh (original derivation "
+                          "%s -- a carry never resets the age clock; regenerate on a "
+                          "graph-capable device)"
+                          % (carried_age // 3600, _TTL_SECONDS // 3600,
+                             time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(float(since)))))
 
     age = time.time() - float(emitted_at)
     if age >= _TTL_SECONDS:
