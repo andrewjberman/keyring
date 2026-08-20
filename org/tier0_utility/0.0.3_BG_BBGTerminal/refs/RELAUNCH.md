@@ -14,23 +14,29 @@ defect (the §0b standing order is the one ruled exception, carried on its own r
 |---|---|---|
 | P1 | TO-1 identity pin LANDED + EXERCISED | `git log --oneline -1 -- .claude/skills/teams-assist/teams-watch.py` shows `0f1bbcf0e` or a descendant (exercised record: 0.5.0_AE log 2026-08-10). Never relaunch on a committed-but-unexercised pin. |
 | P2 | `opal-gateway-bbg` token minted for **Opal Bloomberg** | `whoami` on `opal-gateway-bbg` → "Opal Bloomberg". No valid token: login secret `opal/mcp/opalbloomberg-login` (Secrets Manager — NAME citable, VALUE never); OTP goes to Andrew's phone — surface the auth URL, he completes the mint. Any non-Opal-Bloomberg answer → HOLD (Error paths). |
-| P3 | Mechanical fence present | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. |
+| P3 | Mechanical fence present + **F8 fail-closed-scoped** | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37; F8 tightening @cde91ccd08, Andrew-direct "rec approved" @ad2585793c). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. **F8:** an UNRESOLVABLE identity on this seat's launch path FAILS CLOSED AND LOUD (every classed call denied with a named line); a healthy `ajb` launch resolves POSITIVELY (see §1) and is ACTIVE; any other seat with an unresolvable identity gets a LOUD line, never a block. A launch that lands LOUD-CLOSED = the identity binding did not land — relaunch via `ajb`; never loosen the fence. |
 | P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` FAILS at step 4 — surface, don't work around). |
 
-## 0b. STANDING ORDER — re-arm the 07:15 daily backstop cron EVERY session (Andrew-direct 2026-08-20)
+## 0b. STANDING ORDER — EVENT-BASED summons response; a successor arms NO cron (Andrew-direct 2026-08-20 ~1329Z, cutover completed ~1540Z)
 
-A relaunching successor ARMS `CronCreate("15 7 * * *", <the backstop check>)` at startup
-while this ruling stands. Firing procedure, both verbatims, authorization scope fence, and
-the re-arm warning: `../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` (ruling record
-@eede873a2f). **This row is the EXPLICIT exception to the seat's arm-ZERO-crons default**;
-the cron is session-only — this pointer is what makes the order survive a relaunch. *(Row
-maintained by 0.0.0_AB_MSTR~Z as named integrator; the seat's fence cannot write refs/.)*
+The backstop is EVENT-BASED off the deterministic freshness gate (OS Scheduled Task
+`OPAL_BBGTML_freshness_check`, 07:30 ET): you engage ONLY on a summons — a
+`*_freshness_checker_*.md` file in your fabric inbox (or delivered as your spawn's first
+message on a seat-down morning). **Arm NOTHING; zero crons is the CORRECT state.** The full
+trigger contract (Kind table, default-to-engage-on-unknown, Step-1 entry always) lives in
+`../deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md` — **the filename is an ADDRESS and
+deliberately kept** (this pointer resolves by path; the title inside is the current truth).
+Provenance: Andrew's event-based order (BG 2317 verbatim), the ruled prior form @eede873a2f,
+the dead-seat spawn drill PASSED 2026-08-20 (63s spawn-to-registration). *(Row maintained by
+0.0.0_AB_MSTR~Z as named integrator; the seat's fence cannot write refs/.)*
 
 ## 1. Launch
 
 `ajb 0.0.3_BG_BBGTerminal` (box launcher — MSTR~Z or the operator at the terminal). The
 seat executes its prompt.md On-Launch sequence; the launch-runner verifies each step's
 evidence below.
+
+**F8 identity binding (2026-08-20 @cde91ccd08):** the `ajb` launch IS this seat's identity binding — ajb mints the session id, writes `org/mcp/sessions/<sid>.launch-path` (`bg-concierge …`) FIRST and `<sid>.serial` SECOND (G1 forbids the seat both writes — that is why the launcher does them), and pins `claude --session-id <sid>`. Expect the `[ajb] F8: BG identity bound at launch` line at spawn. Marker-without-serial (a failure between the two writes) reads as LOUD-CLOSED — the correct failure; the fix is a relaunch via `ajb`, never a hand-written serial file.
 
 ## 2. On-Launch sequence (prompt.md steps, with exercised mechanics)
 
@@ -63,8 +69,9 @@ evidence below.
      another identity — that loud death is the fix working.
 4. **`bloomberg_health`** → `ok: true`; exercise the `cma` interpreter (green MCP is not a
    runnable pull).
-5. **Orient:** read latest `logs/`; arm the §0b standing-order cron and NOTHING else (the
-   two Windows Scheduled Tasks are OS-level, not the seat's).
+5. **Orient:** read latest `logs/`; arm ZERO crons — the backstop duty is EVENT-BASED per
+   §0b, and the Windows Scheduled Tasks (07:00 pull, 07:30 freshness check) are OS-level,
+   not the seat's.
 
 ## 3. First-session obligations
 
