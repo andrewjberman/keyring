@@ -52,3 +52,18 @@ comp-adversary compose (rc=0, read above) · comp-find --name catalog_gate* + co
 
 ## 7. What closes W6 (§9.0 program close rides this)
 (a) CVO~Z index co-sign — request stands at CVO~Z (first domino per COO~Z 2100 item 6); layer classifications in C1 are theirs to second-read. (b) 0-diff laptop-lane port per TO-E DESIGN.md — port-time deltas re-exercise rows 4/7 (battery + P1–P8 are re-runnable from any seat with python + the staged file). On (a)+(b): status → complete, program-close declaration per §9.0 at this seat.
+
+---
+
+## CLOSE ~15:20Z -- (b) LANDED on the applied plane (on-instance read at this seat): W6 -> COMPLETE; OPAL_ANALYST PROGRAM CLOSE declared per sec9.0
+
+**Trigger:** 0.7.0_AE_CloudOps' 1510Z frame (laptop port + apply landed; /query/v0 live; on-box battery 13/13 vs the deployed v0.2; zero-mint exercised), relayed by MSTR~Z 1512Z with the caveat "ground the flip on the landed state, not this relay". **Grounded at this seat, Rule 22a EC2 form (applied truth = an on-instance read), read-only via SSM on `opal-gateway` (`i-07dccb1615503ac99`, EC2_MANIFEST):**
+- `/opt/opal-gateway/app/graphql_plumbing/catalog_gate.py` sha256 `f31c61f4aa57813d...` == repo HEAD `infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py` -- **BYTE-IDENTICAL** (the gate certified at 13/13 + P1-P8 is the gate running).
+- `/opt/opal-gateway/app/refs/DATA_CATALOG.yaml` (1299 lines) vs the released staged v0.2 artifact @f8b50e8760 (1296 lines): **CONTENT-IDENTICAL** -- body hash from the first `channels:` line to EOF `c43d56c577530f6a` on BOTH sides; 36 rows / 15 channels on both; the only deltas are the PORTED header line (3 comment lines) and `version: 0.2-staged -> 0.2`, exactly the two deltas the port header declares. The certified catalog is the catalog the gate reads.
+- `POST /query/v0` on the box (127.0.0.1:8080) -> **401** -- the route EXISTS and denies an unauthenticated caller (deny-by-default live; not 404). Service `opal-gateway` active, `ActiveEnterTimestamp 2026-08-20 15:05:30 UTC` (restarted at the port). `exercise_catalog_gate.py` present on-box (the applying seat's 13/13 ran there).
+- **Row 4 re-exercised post-port from this seat:** `search_email` -> `identity_scope_denied` / `guard_denied: true` (PRD 4.3); separate invocation `list_teams` -> 200 (Opal Capital). Row 7: production enforcement is now PRESENT -- the deployed gate + catalog ARE the certified bytes (identity, above), so the certification's exercised rows (13/13, P1-P8 incl. the three fired mutants, 40/40 battery) hold on the deployed plane; the live 401 is the deployed deny path.
+- CLOSE domino (a) was DONE at CVO~Z (second read 10/10 labels stand; v0.2 co-signed with amendments; conditions 1-7 discharged; PORT RELEASED @c368d66d98).
+
+**Caveat, stated:** the applying seat's RECORD commit was not yet on origin/CLOUD at this read (tip @a13fa2c006 14:50Z); the flip grounds on the applied plane, not the record. LD-0428: nothing on the laptop was measured or verified -- the EC2 is estate infrastructure and the read was on-instance.
+
+**VERDICT: OPAL_ANALYST.W6 -> COMPLETE. The OPAL_ANALYST program CLOSES per sec9.0** (W6 = the terminal wave; its close = the program close). Successor work is the sequenced v0.3 (OPAL_ANALYST.W5-V03, GO fired at COO~Z on this landing; my re-cert delta on rows 4/7 at its port) and the approved F8 fence tightening (Andrew-direct "rec approved" @ad2585793c, owner AE~Z). Monitors: ZERO. Gates created: ZERO.
