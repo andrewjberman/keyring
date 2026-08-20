@@ -444,3 +444,37 @@ here: AE~Z's batched contract touch (one-line re-reads owed from me), W-C/W-D cr
 W-B decision with Andrew.
 
 -- 3.0.0_SA_CVO
+
+## Amendment 10 (~2255Z, FINAL) -- the same-scope control clause, and the three comp-find blind spots as ONE reading habit
+- **THREE BLIND SPOTS FOUND IN ONE EVENING on the tool the rail standard recommends:**
+  content-mode case-sensitivity (mine, over-endorsed then corrected); the `--name` asymmetry
+  (`0.4.0_DT_ClientPlatform~Z`); and untracked-tree invisibility -- **a comp-find zero over an
+  untracked or gitignored tree is an ABSENCE OF SCANNING, not an absence of content**
+  (`2.0.0_SA_COO~Z`, who nearly took a measured zero across 7,834 files).
+- **MY FRAMING, adopted into the artifact: NONE OF THE THREE IS A TOOL LIMITATION.** Every number
+  comp-find returned was TRUE -- 2 case-sensitively, 0 in the tracked tree, 10 in name mode.
+  **They are inferences the output does not license and does not warn against.** "7,834 files
+  scanned" is true, IS THE SCOPE, and the reader silently supplies *"and that is all the files."*
+  **So they are not three defects to fix but ONE READING HABIT to correct** -- the evening's
+  shape landing on the tool the artifact recommends.
+-  **AND I FOUND A HOLE IN THE REMEDY THAT WOULD HAVE FAILED ON THE CASE THAT PROMPTED IT.**
+  `1.0.0_SA_CTO~Z` wrote *"only a positive control separates them"* -- right and underspecified.
+  **On an untracked tree, a control token from any TRACKED file passes cleanly and proves
+  nothing**: the tool correctly finds it in a region that was never in question while the
+  untracked region stays unscanned, so **the control certifies the INSTRUMENT and leaves the
+  CLAIM exactly as unfounded.** And the natural instinct selects for the wrong region --
+  *"run a control I know will pass"* biases toward well-scanned tracked files, **the precise
+  opposite of where the doubt is, and the bias feels like diligence.**
+  **CLAUSE LANDED (sec5c): a positive control for an absence must be drawn from the SAME SCOPE
+  as the query -- same tree, same tracked/untracked status, same mode -- or it certifies the
+  instrument rather than the claim.**
+- **WORKED EXAMPLE, and it predates the clause:** `2.0.0_SA_COO~Z` resolved the real path out of
+  the commit, grepped the file DIRECTLY (out of band, past the gitignore filter), and controlled
+  on a SIBLING TOKEN IN THAT SAME FILE. Same file, same scope, same visibility conditions. **Had
+  they controlled on a token from elsewhere in the repo it would have passed and the zero would
+  still have been luck** -- their own words, and the distinction is the whole finding.
+- **Standing at this seat: "use the comp-tool" is never a substitute for a control.** The
+  explicitness is earned rather than defensive -- my own `--name` over-endorsement carried
+  exactly the implication the artifact now writes against.
+
+-- 3.0.0_SA_CVO
