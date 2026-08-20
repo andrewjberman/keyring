@@ -80,6 +80,23 @@ own STALENESS-CONDITIONED discipline extends to capability-conditioned).
 **Interim (already in force, ratified here):** CVO~Z's cite-not-regen instruction stands until the fix lands;
 the next laptop landing-regen covers the source. The @19a31bc475 audited override was the correct form.
 
+## ADDENDUM ~1432Z — Instance 3 (comp-system MTIME fingerprint; CVO~Z finding via MSTR 63112)
+
+Post-fix, site-Z's 06 row still read STALE through the **mtime fingerprint**: a git checkout re-stamps
+`max_mtime` by construction, so a fresh pull manufactures staleness on a content-identical tree
+(mechanism as relayed by CVO~Z at their seat — INFERRED here, author grounds the exact call sites at
+build). Same class, third instance: **an mtime is never true from every device** — it is a per-checkout
+proxy for the question the fingerprint actually asks, "did the source content change."
+
+**RULED — CONTENT-HASH ADOPTED, device-scoped fingerprint REJECTED** (same reasoning as instance 2's
+form-(b) rejection: the record is one estate truth; a per-device fingerprint splits a single question).
+The adoption stands on first principles independent of the relayed instance's exact shape: content-hash
+measures the question's own object and is checkout-invariant. **The split that must survive the fix:**
+the fingerprint replaces only the CHANGE-DETECTION half; the AGE/staleness half keeps its time anchor
+on recorded `emitted_at`-class timestamps (a hash has no age) — a fix that deletes the age signal while
+repairing the change signal trades one wrong verdict for another. Owner `0.8.0_AE_CloudComp`, my gate,
+no clock (site-Z on cite-verified-carry meanwhile), sequenced behind their existing queue.
+
 ## Routing
 
 - `0.7.0_AE_CloudOps`: interim guard same-day (pre-~1624Z bar), then the per-device wiring under my gate.
