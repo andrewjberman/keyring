@@ -11,7 +11,20 @@ is the correct disposition rather than a gap.**
 |---|---|
 | proof instance | `proof-of-spec-check.py <inst> WA-1..WA-10` **positional, rc UNPIPED** → `rows=10, violations=0, VALID, rc=0` |
 | **the validator can fail** | my OWN control (same instance + a criterion it lacks) → **rc=1**. The PASS is **discriminated** |
-| ⛔ **the load-bearing claim, checked AT SOURCE** | `ENRICHMENT-NOROW` / `ENRICHMENT-FAILED` **exist in `infra/aws/lambda/ticket_center/lambda_function.py` — 3 occurrences.** The tokens are **in the code**, not merely claimed in a report |
+| ⛔ **the load-bearing claim, checked AT SOURCE** | `ENRICHMENT-NOROW` / `ENRICHMENT-FAILED` **exist in `infra/aws/lambda/ticket_center/lambda_function.py`.** The tokens are **in the code**, not merely claimed in a report |
+
+⚠ **CORRECTED 22:0xZ — MY OWN COUNT CARRIED THE WRONG GRAIN, AND MY TOOL WAS THE LESSER ONE.**
+This row originally read **"3 occurrences."** I ran `grep -c` over one file, which counts **MATCHING
+LINES, not occurrences** — the exact grain confusion CLAUDE.md warns about for line-counting
+searches. Re-run on the rail's own tool: `comp-find "ENRICHMENT-NOROW"` returns **DENOMINATOR 6 hits
+across 26,846 files**, banded **SURFACED=1 / CONFIG=1 / DOC=4**, with the one first-party source hit
+at **`lambda_function.py:237`** — *and it discloses **"1 UNREADABLE, NOT searched"**, a coverage
+limit my grep never reported.*
+**THE VERDICT IS UNCHANGED AND IS NOW STRONGER:** one real `print` statement in first-party source,
+confirmed independently by three seats. **What was wrong was the COUNT'S LABEL and the TOOL CHOICE**
+— my grep answered the question correctly while returning less and disclosing nothing about its own
+coverage. *The rail's point, measured on my own work rather than argued: the sanctioned tool
+returned MORE.*
 
 *That third check is the one that mattered: WA-10's whole value is that the discrimination is
 mechanical. A claim that it is mechanical, unverified at source, would have been the same shape as
