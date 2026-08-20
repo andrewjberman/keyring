@@ -32,10 +32,13 @@ on a positive control.
 
 1. Freeze `decomposition_grammar@version`, its pre-subject commit, scope partitions,
    and the frontier matrix. Confirm the layer declares this binding grammar.
-2. Appoint a differently-derived splitter. Record shared dependencies.
-3. Charge it to produce a concrete admissible decomposition, not to approve the author.
-4. Exercise every declared frontier cell until a witness is found or the frontier closes.
-5. Render exactly one typed terminal result using the Rule 24 precedence record.
+2. Validate that grammar version's retrodiction battery. Every known specimen must be
+   expressible as children, one declared operator, and a reconstruction rule. An
+   inexpressible specimen requires a new grammar version and re-run, not a waiver.
+3. Appoint a differently-derived splitter. Record shared dependencies.
+4. Charge it to produce a concrete admissible decomposition, not to approve the author.
+5. Exercise every declared frontier cell until a witness is found or the frontier closes.
+6. Render exactly one typed terminal result using the Rule 24 precedence record.
 
 Consequences:
 

@@ -11,6 +11,8 @@
 
 The 24-cell declared frontier closed. Five raw hypotheses were rejected by the
 same-grain, independence, reconstruction, consequence, and non-triviality tests.
+Grammar adequacy was separately demonstrated against all six prescribed historical
+decompositions before the certificate was revalidated.
 The bounded result is:
 
 `ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Contract_Record authorities/schema/consumers at 602b73a1f99d889dabbc884525b10dd8e7bf2e56)`
@@ -30,6 +32,24 @@ enclosing-document vintage carry, and unchanged preservation of the selected sou
 The earlier normalized JSON shape remains an explicit compatibility alternative. The
 pre-repair failure and both defect records are preserved beside the run.
 
+The pre-repair certificate predicate also trusted whatever productions the grammar
+happened to expose. A schema-valid retrodiction battery now exercises six real
+decompositions, and the validator refuses frontier exhaustion unless the battery is
+present and every specimen is expressible.
+
+## Grammar-v1 retrodiction battery
+
+| Specimen | Expressible? | Operator and reconstruction rule |
+|---|---:|---|
+| Territory -> Substrate x Deploy_State | yes | CONJUNCTIVE; constrained Cartesian coordinate over the two independent axes |
+| six-tag epistemic legend -> five axes | yes | CONJUNCTIVE; product of Authority, Realization, Basis, Resolution, and Genesis coordinates |
+| mutation_purpose -> five-axis act tuple | yes | CONJUNCTIVE; five-axis Cartesian tuple, with Gate_Profile derived by constraint join |
+| trust-base membership -> proof role x empirical status | yes | CONJUNCTIVE; independent two-axis coordinate jointly scopes reliance |
+| census verdict taxonomy -> three axes | yes | CONJUNCTIVE; constrained product with null/empty limbs for NOT_ASSESSED |
+| Lifecycle contest -> Class + Stage | yes | DISJUNCTIVE; exhaustive partition of the ambiguous semantic-sense set while retaining distinct governed grains |
+
+Result: 6/6 expressible; no grammar-v2 operator is required by this battery.
+
 ## Concept findings routed, not fixed
 
 - Registry `Contract_Record` copies the member list despite the registry header's
@@ -48,7 +68,8 @@ documentation, code-owner, cloud, or deployed surface was changed.
 ## Verification
 
 - exact R015 source-row preservation: PASS
-- adapter self-test: PASS 7/7
+- adapter and adequacy self-test: PASS 10/10
+- grammar-v1 retrodiction battery: PASS 6/6
 - proving validation with `--require-proving-defect`: PASS
 - comp_legacywriter live-fixture self-test: PASS 22/22
 - package manifest exact-set check: see package handoff

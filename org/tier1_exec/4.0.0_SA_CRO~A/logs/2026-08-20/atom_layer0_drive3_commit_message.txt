@@ -1,0 +1,13 @@
+cro(atom-layer0): add grammar retrodiction adequacy gate
+
+Exercise grammar v1 against six measured estate decompositions and make full battery
+expressibility a validator precondition for frontier exhaustion. The battery retrodicts
+five conjunctive axis products and one disjunctive semantic-sense partition, so no v2
+operator is required.
+
+Validation:
+- grammar retrodiction PASS 6/6
+- validator self-test PASS 10/10 including missing-adequacy mutant
+- R015 proving run PASS with required method defect
+- package manifest exact set PASS 20/20
+- portable skill validation PASS

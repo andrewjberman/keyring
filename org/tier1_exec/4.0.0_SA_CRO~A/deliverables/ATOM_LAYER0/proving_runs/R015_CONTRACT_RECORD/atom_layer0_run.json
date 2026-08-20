@@ -224,6 +224,12 @@
     "grammar_name": "decomposition_grammar",
     "grammar_version": "1.0.0",
     "grammar_commit": "462ac78311a3d5f1310a8da3f4f7638127d449bd",
+    "grammar_adequacy": {
+      "battery": "proving_runs/RETRODICTION_BATTERY_20260820.json",
+      "specimens_total": 6,
+      "specimens_expressible": 6,
+      "demonstrated": true
+    },
     "splitter": {
       "identity": "4.0.0_SA_CRO~B R015 source-divergence splitter, released through 4.0.0_SA_CRO after grammar pin",
       "differently_derived": true,
@@ -415,14 +421,15 @@
     "subject_selected_by": "4.0.0_SA_CRO~B via 4.0.0_SA_CRO",
     "method_defect": {
       "found": true,
-      "description": "The advertised census adapter could not ingest the released YAML rows[] interface and assumed a non-existent normalized field schema.",
+      "description": "The advertised census adapter could not ingest the released YAML rows[] interface, and certificates had no load-bearing control against an under-generative grammar.",
       "evidence": [
         {"file": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/R015_CONTRACT_RECORD/pre_repair_failure.txt", "locator": "OBSERVED", "vintage": "af9387cb40", "claim": "Pre-repair exact command terminated as INSTRUMENT_UNKNOWN on YAML decoding."},
         {"file": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml", "locator": "integration_interface and rows[R015]", "vintage": "3265c08100", "claim": "Released contract requires parsing YAML and selecting a row object directly."}
+        ,{"file": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json", "locator": "specimens[RB-01..RB-06]", "vintage": "90120de83f", "claim": "Six known decompositions were not previously required as a grammar adequacy control; the repaired validator requires a fully expressible battery before frontier closure."}
       ],
-      "repair": "Added JSON/YAML loading, exact rows[] selection by --census-row-id, external row-schema validation, document-vintage carry, and source-row preservation without hand translation."
+      "repair": "Added exact YAML row ingestion and a schema-valid six-specimen retrodiction battery; frontier exhaustion now requires demonstrated grammar adequacy."
     },
-    "regression_check": "The exact R015 external row compiles to compiled_stub.json with all original fields preserved, and both normalized compatibility and external schema paths validate.",
+    "regression_check": "Exact R015 row preservation passes; retrodiction battery passes 6/6; a closed-frontier certificate with grammar_adequacy.demonstrated=false is rejected by self-test; all adapter schema paths validate.",
     "acceptance_satisfied": true
   },
   "rule24_record_ids": ["R24-AL0-001", "R24-AL0-002", "R24-AL0-003", "R24-AL0-004", "R24-AL0-005", "R24-AL0-006", "R24-AL0-007", "R24-AL0-008", "R24-AL0-009", "R24-AL0-010", "R24-AL0-011"],

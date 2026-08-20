@@ -32,6 +32,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "atom_layer0_run.schema.json"
 TEMPLATE_PATH = PACKAGE_ROOT / "templates" / "atom_layer0_run.template.json"
 MANIFEST_PATH = PACKAGE_ROOT / "PACKAGE_MANIFEST.json"
+RETRODICTION_SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "retrodiction_battery.schema.json"
 
 REQUIRED_RULE24 = {
     "R24-AL0-001",
@@ -113,6 +114,20 @@ def semantic_errors(bundle: dict[str, Any], require_proving_defect: bool = False
     result = challenge["result"]
     certificate = challenge["atomicity_certificate"]
     certificate_state = challenge["certificate_state"]
+    adequacy = challenge["grammar_adequacy"]
+
+    expected_adequacy = bool(
+        adequacy["battery"]
+        and adequacy["specimens_total"] > 0
+        and adequacy["specimens_expressible"] == adequacy["specimens_total"]
+    )
+    if adequacy["specimens_expressible"] > adequacy["specimens_total"]:
+        errors.append("grammar adequacy expressible count cannot exceed total")
+    if adequacy["demonstrated"] is not expected_adequacy:
+        errors.append(
+            f"grammar_adequacy.demonstrated={adequacy['demonstrated']!r} "
+            f"but operands derive {expected_adequacy!r}"
+        )
 
     if bundle["stage_states"]["s0"] in {"STAGE_ASSESSED", "STAGE_CORRECTLY_EMPTY"}:
         for field in ("definition", "claimed_layer", "declared_grain"):
@@ -159,6 +174,8 @@ def semantic_errors(bundle: dict[str, Any], require_proving_defect: bool = False
             errors.append("frontier exhaustion requires every cell assessed and no open/unreachable cells")
         if challenge["splitter"]["differently_derived"] is not True:
             errors.append("frontier exhaustion requires a differently-derived splitter")
+        if adequacy["demonstrated"] is not True:
+            errors.append("frontier exhaustion requires demonstrated grammar adequacy")
         if certificate is None:
             errors.append("frontier exhaustion requires an atomicity certificate")
         elif certificate["frontier_denominator"] != len(cells):
@@ -265,6 +282,39 @@ def validate(bundle: dict[str, Any], require_proving_defect: bool = False) -> li
     return errors
 
 
+def validate_retrodiction_battery(battery: dict[str, Any]) -> list[str]:
+    schema = _load(RETRODICTION_SCHEMA_PATH)
+    validator = jsonschema.Draft202012Validator(schema)
+    errors = [
+        f"schema {'.'.join(str(part) for part in error.absolute_path) or '<root>'}: {error.message}"
+        for error in sorted(validator.iter_errors(battery), key=lambda item: list(item.absolute_path))
+    ]
+    if errors:
+        return errors
+
+    ids = [row["id"] for row in battery["specimens"]]
+    if len(set(ids)) != len(ids):
+        errors.append("retrodiction specimen ids must be unique")
+    all_expressible = all(row["expressible"] for row in battery["specimens"])
+    if battery["all_expressible"] is not all_expressible:
+        errors.append("all_expressible must derive from every specimen expressible flag")
+    if battery["grammar_v2_required"] is not (not all_expressible):
+        errors.append("grammar_v2_required must be the inverse of all_expressible")
+
+    for row in battery["specimens"]:
+        if row["expressible"]:
+            if row["operator"] is None or len(row["children"]) < 2 or not row["reconstruction_rule"]:
+                errors.append(f"{row['id']}: expressible specimen requires operator, 2+ children, and reconstruction_rule")
+            if not all(row["admissibility"].values()):
+                errors.append(f"{row['id']}: expressible specimen must pass every admissibility test")
+            if row["inexpressibility_reason"] is not None or row["v2_operator_proposal"] is not None:
+                errors.append(f"{row['id']}: expressible specimen cannot carry a v2 defect proposal")
+        else:
+            if row["inexpressibility_reason"] is None or row["v2_operator_proposal"] is None:
+                errors.append(f"{row['id']}: inexpressible specimen requires reason and v2 operator proposal")
+    return errors
+
+
 def compile_census_row(row: dict[str, Any], document_vintage: str | None = None) -> dict[str, Any]:
     external = "id" in row
     required = (
@@ -358,6 +408,26 @@ def self_test() -> int:
     bad_result["s2_challenge"]["result"] = "BUDGET_EXHAUSTED_WITH_FRONTIER_OPEN"
     cases.append(("budget-with-no-open-frontier", bad_result, False, False))
 
+    unretrodicted = copy.deepcopy(base)
+    unretrodicted["s2_challenge"]["result"] = "DECLARED_FRONTIER_EXHAUSTED"
+    unretrodicted["s2_challenge"]["certificate_state"] = "CERTIFICATE_ISSUED"
+    unretrodicted["s2_challenge"]["splitter"]["differently_derived"] = True
+    unretrodicted["s2_challenge"]["frontier"] = {
+        "cell_ids": ["c1"],
+        "assessed_cell_ids": ["c1"],
+        "open_cell_ids": [],
+        "unreachable_cell_ids": [],
+    }
+    unretrodicted["s2_challenge"]["atomicity_certificate"] = {
+        "claim": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x test)",
+        "grammar": "decomposition_grammar@1.0.0",
+        "scope": "test",
+        "grain": "concept",
+        "frontier_denominator": 1,
+        "evidence_vintage": "dae378a",
+    }
+    cases.append(("certificate-without-grammar-adequacy", unretrodicted, False, False))
+
     compiled = compile_census_row(
         {
             "row_id": "ROW-1",
@@ -382,7 +452,23 @@ def self_test() -> int:
                 print(f"ERROR: {error}")
             return 1
         passed += 1
-    print(f"OK: self-test PASS ({passed}/{len(cases)}; failure limbs discriminate)")
+    battery = _load(PACKAGE_ROOT / "proving_runs" / "RETRODICTION_BATTERY_20260820.json")
+    battery_errors = validate_retrodiction_battery(battery)
+    if battery_errors:
+        for error in battery_errors:
+            print(f"ERROR: retrodiction battery self-test: {error}")
+        return 1
+    passed += 1
+
+    bad_battery = copy.deepcopy(battery)
+    bad_battery["grammar_v2_required"] = True
+    if not validate_retrodiction_battery(bad_battery):
+        print("ERROR: retrodiction battery mutant was not rejected")
+        return 1
+    passed += 1
+
+    total = len(cases) + 2
+    print(f"OK: self-test PASS ({passed}/{total}; failure limbs discriminate)")
     return 0
 
 
@@ -417,6 +503,7 @@ def main() -> int:
     parser.add_argument("--require-proving-defect", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--check-package", action="store_true")
+    parser.add_argument("--retrodiction-battery", type=Path)
     parser.add_argument("--compile-census-row", type=Path)
     parser.add_argument("--census-row-id")
     parser.add_argument("--output", type=Path)
@@ -426,6 +513,20 @@ def main() -> int:
         return self_test()
     if args.check_package:
         return check_package()
+    if args.retrodiction_battery is not None:
+        try:
+            battery = _load(args.retrodiction_battery)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"ERROR: INSTRUMENT_UNKNOWN: cannot load retrodiction battery: {exc}")
+            return 3
+        errors = validate_retrodiction_battery(battery)
+        if errors:
+            for error in errors:
+                print(f"ERROR: {error}")
+            print(f"ERROR: retrodiction battery FAIL ({len(errors)} finding(s))")
+            return 1
+        print(f"OK: retrodiction battery PASS ({len(battery['specimens'])}/6 expressible)")
+        return 0
     if args.compile_census_row is not None:
         if args.output is None:
             parser.error("--output is required with --compile-census-row")

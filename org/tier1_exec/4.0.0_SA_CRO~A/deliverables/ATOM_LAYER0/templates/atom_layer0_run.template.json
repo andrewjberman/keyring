@@ -46,6 +46,12 @@
     "grammar_name": "decomposition_grammar",
     "grammar_version": "1.0.0",
     "grammar_commit": "FILL000",
+    "grammar_adequacy": {
+      "battery": null,
+      "specimens_total": 0,
+      "specimens_expressible": 0,
+      "demonstrated": false
+    },
     "splitter": {
       "identity": "",
       "differently_derived": null,

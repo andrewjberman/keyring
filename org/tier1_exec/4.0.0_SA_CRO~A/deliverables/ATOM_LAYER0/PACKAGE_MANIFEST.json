@@ -16,8 +16,10 @@
     "proving_runs/R015_CONTRACT_RECORD/concept_rule24_records.json",
     "proving_runs/R015_CONTRACT_RECORD/method_defects.json",
     "proving_runs/R015_CONTRACT_RECORD/pre_repair_failure.txt",
+    "proving_runs/RETRODICTION_BATTERY_20260820.json",
     "rule24/SCHEMA_ENUMERATION_RECORDS.json",
     "schemas/atom_layer0_run.schema.json",
+    "schemas/retrodiction_battery.schema.json",
     "scripts/validate_run.py",
     "skill/atom-layer0/SKILL.md",
     "skill/atom-layer0/agents/openai.yaml",
@@ -28,6 +30,8 @@
   ],
   "sources_of_record": {
     "run_shape": "schemas/atom_layer0_run.schema.json",
+    "grammar_adequacy_shape": "schemas/retrodiction_battery.schema.json",
+    "grammar_v1_adequacy_record": "proving_runs/RETRODICTION_BATTERY_20260820.json",
     "schema_governance": "rule24/SCHEMA_ENUMERATION_RECORDS.json",
     "portable_entrypoint": "skill/atom-layer0/SKILL.md",
     "package_boundary": "PACKAGE_MANIFEST.json"
@@ -54,6 +58,7 @@
   "execution_state": {
     "s0_to_s4_package": "BUILT_AND_SELF_TESTED",
     "s5_proving_run": "PASS_R015",
+    "grammar_v1_retrodiction": "PASS_6_OF_6",
     "method_acceptance": "PROPOSED_ACCEPTANCE_BAR_SATISFIED"
   },
   "registration_state": {

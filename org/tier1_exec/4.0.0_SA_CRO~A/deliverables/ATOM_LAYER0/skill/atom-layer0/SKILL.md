@@ -15,6 +15,8 @@ layer that binds to the candidate base.
 - Normalize candidate sub-concepts to one grain before union or counting.
 - Use a target-blind grammar commit that predates subject selection; one layer declares
   one binding grammar version and rivals run only as challenges.
+- Require that grammar version to pass its schema-valid retrodiction battery before it
+  can support frontier exhaustion; a weak grammar must not manufacture atomicity.
 - Use a differently-derived splitter as a challenge control.
 - Budget exhaustion, instrument failure, and an unavailable splitter route to UNKNOWN.
 - Rule 24 applies to every authored or adopted enum, array, and predicate.
@@ -31,6 +33,8 @@ layer that binds to the candidate base.
 2. Read [workflow.md](references/workflow.md) and complete S0-S5 in order.
 3. During S1-S2 read
    [decomposition-grammar.md](references/decomposition-grammar.md).
+   Validate the grammar control with
+   `python scripts/validate_run.py --retrodiction-battery <battery.json>`.
 4. During S4 read [resolution-contract.md](references/resolution-contract.md).
 5. Validate after every stage:
 

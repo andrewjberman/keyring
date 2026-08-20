@@ -85,12 +85,23 @@ An atomicity certificate exists if and only if:
 - the splitter result is `DECLARED_FRONTIER_EXHAUSTED`;
 - every production in the versioned grammar was exercised by a differently-derived
   splitter over the declared scope;
+- the grammar itself passed its declared retrodiction battery against known real
+  decompositions, so an under-generative production set cannot make closure cheap;
 - the normalized candidate frontier is empty;
 - no required instrument is unknown or unreachable;
 - the run prints its grammar version, scope, grain, evidence vintage, and residue.
 
 Failure to find is not frontier closure. Budget exhaustion, instrument failure, and an
 unavailable independent splitter all terminate in an honest lesser state.
+
+### 3.2.1 Grammar adequacy control
+
+Before any grammar version can support `DECLARED_FRONTIER_EXHAUSTED`, it must express
+every specimen in its committed retrodiction battery as schema-valid children plus one
+declared operator and a reconstruction rule. An inexpressible specimen is a method
+defect: propose a new grammar version, re-run affected current uses, and never grandfather
+the prior certificate. `schemas/retrodiction_battery.schema.json` and the validator make
+this precondition executable.
 
 ### 3.3 Resolution
 

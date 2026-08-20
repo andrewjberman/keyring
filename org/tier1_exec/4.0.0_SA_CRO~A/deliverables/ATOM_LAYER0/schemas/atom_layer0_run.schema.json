@@ -140,11 +140,22 @@
     "s2_challenge": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["grammar_name", "grammar_version", "grammar_commit", "splitter", "frontier", "result", "result_evidence", "certificate_state", "atomicity_certificate"],
+      "required": ["grammar_name", "grammar_version", "grammar_commit", "grammar_adequacy", "splitter", "frontier", "result", "result_evidence", "certificate_state", "atomicity_certificate"],
       "properties": {
         "grammar_name": {"const": "decomposition_grammar"},
         "grammar_version": {"const": "1.0.0"},
         "grammar_commit": {"type": "string", "minLength": 7},
+        "grammar_adequacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["battery", "specimens_total", "specimens_expressible", "demonstrated"],
+          "properties": {
+            "battery": {"type": ["string", "null"]},
+            "specimens_total": {"type": "integer", "minimum": 0},
+            "specimens_expressible": {"type": "integer", "minimum": 0},
+            "demonstrated": {"type": "boolean"}
+          }
+        },
         "splitter": {
           "type": "object",
           "additionalProperties": false,

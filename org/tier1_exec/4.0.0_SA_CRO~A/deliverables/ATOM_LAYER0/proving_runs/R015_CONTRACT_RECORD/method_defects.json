@@ -23,6 +23,16 @@
       "repair": "Accept either the earlier normalized row or the external Rule-24 row as explicit schema alternatives; do not synthesize aliases into source_census_row.",
       "regression": "Validator self-test covers the normalized compatibility form and the real R015 run covers the external form.",
       "pre_repair_would_fail_regression": true
+    },
+    {
+      "id": "AL0-MD-003",
+      "class": "UNDER_GENERATIVE_GRAMMAR_CONTROL_ABSENT",
+      "found": true,
+      "pre_repair_behavior": "Frontier closure quantified over grammar productions but no control demonstrated that grammar v1 could express known real decompositions; a weak grammar could make closure cheap.",
+      "evidence": "CRO Base Drive 3 Msg-ID 63273 and pre-repair validator at 90120de83f",
+      "repair": "Added a schema-valid six-specimen retrodiction battery and made demonstrated full-battery expressibility a validator precondition for DECLARED_FRONTIER_EXHAUSTED.",
+      "regression": "The battery passes 6/6, while the self-test mutant certificate-without-grammar-adequacy is rejected.",
+      "pre_repair_would_fail_regression": true
     }
   ]
 }

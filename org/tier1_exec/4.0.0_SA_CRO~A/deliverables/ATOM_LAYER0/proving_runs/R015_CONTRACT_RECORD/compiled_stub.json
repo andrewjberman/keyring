@@ -4,7 +4,7 @@
   "status": "PROPOSED",
   "vintage": {
     "repo_commit": "602b73a1f99d889dabbc884525b10dd8e7bf2e56",
-    "observed_at_utc": "2026-08-20T16:05:39Z"
+    "observed_at_utc": "2026-08-20T17:26:27Z"
   },
   "subject": {
     "concept": "Contract_Record",
@@ -61,6 +61,12 @@
     "grammar_name": "decomposition_grammar",
     "grammar_version": "1.0.0",
     "grammar_commit": "FILL000",
+    "grammar_adequacy": {
+      "battery": null,
+      "specimens_total": 0,
+      "specimens_expressible": 0,
+      "demonstrated": false
+    },
     "splitter": {
       "identity": "",
       "differently_derived": null,

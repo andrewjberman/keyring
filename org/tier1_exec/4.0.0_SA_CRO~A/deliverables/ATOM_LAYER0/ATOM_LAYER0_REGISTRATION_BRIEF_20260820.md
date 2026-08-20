@@ -23,6 +23,8 @@ Method version: `0.1.0-proposed`
 - proving terminal result: `DECLARED_FRONTIER_EXHAUSTED`
 - certificate: bounded `ATOMIC_WITHIN` over 24/24 assessed frontier cells
 - method defects: two interface-shape defects found, repaired, and regression-covered
+- grammar adequacy: six prescribed measured decompositions retrodicted 6/6; validator
+  now rejects frontier exhaustion when this control is absent or incomplete
 - final proving validator: PASS with `--require-proving-defect`
 - no owner or canon surfaces modified
 
