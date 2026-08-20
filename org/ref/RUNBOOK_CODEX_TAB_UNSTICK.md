@@ -49,3 +49,13 @@ operator's ask or with their knowledge.
 `-Keys` for other prompt answers; exit 0 sent / 2 not-found / 3 steal-abort / 4 bad-serial;
 exercised on all three verdict limbs at mint). This procedure prose is the runbook; the
 engine is the one mechanism — steps 1-5 above describe what it does.
+
+**Second stall shape + paste-burst (2026-08-20 ~2200Z, both CRO Codex lanes; LD-0431 addendum):**
+the dominant stall is not a prompt at all — it is IDLE-AT-INPUT after a clean completion, with
+mail that landed AFTER the lane's last inbox read (a Codex lane takes no turn to notice new
+mail). Peek first; if the composer is empty and the last turn is finished, the remedy is a
+NUDGE prompt (`-Keys '<prompt>{ENTER}'`), never "1". And the Codex TUI treats a fast keystroke
+stream as a PASTE: an Enter inside the burst is a NEWLINE, so the engine now types the body,
+pauses, and sends Enter as a separate act. Verify on a SECOND peek — a submitted prompt shows
+as a transcript turn above an empty composer with a `Working (Ns)` line; two identical peeks
+mean it is sitting in the composer, and a lone `-Keys '{ENTER}'` submits it.
