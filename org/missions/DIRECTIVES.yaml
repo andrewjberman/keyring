@@ -125,6 +125,10 @@ directives:
       projects: [OPAL_INVPHL]
     stance: "Days of work: server-side content store (small AE leg) + edit surface on both modal
       families (DE-class) + CTO gates the auth surface (Opal-employee scope)."
+    retired:
+      at: "2026-08-20"
+      by: 0.0.0_AB_MSTR
+      authority: 'Andrew-direct "they work perfectly" + site-Z acceptance record @393211922e + PROD v2.1.164 serving'
   D9:
     title: "Tax SMA ops (NEW; assess-first)"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
