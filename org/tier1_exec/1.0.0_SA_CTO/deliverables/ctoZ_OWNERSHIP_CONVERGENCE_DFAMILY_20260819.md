@@ -86,10 +86,13 @@ never-implicit through MSTR<->MSTR.
   what you gave it") — the deploy set is empty, matching 0.8.0's positive-controlled 3-home
   zeros. The failure the rider prevents, carried verbatim: *a production chain whose deploy set
   is empty is verified by NOTHING — every green it produces is a green about bytes nobody can
-  place.* ⚠ **CITATION MISMATCH FLAGGED BACK, not adopted: the ferried H8-grounding hash
-  @c411c6a9e9 resolves to an etfs owned-paths grant touching only `.owned-paths.yaml` — zero
-  taxsma content. The H8 record's true commit is unidentified at this desk; the rider's substance
-  stands on the corroboration above, not on that hash.**
+  place.* ⚠ **H8 SOURCE-RECORD-PENDING-AT-AUTHOR (resolved 20260820T0023Z, one layer deeper than
+  the flag):** the ferried hash @c411c6a9e9 is FORMALLY RETRACTED as an H8 citation (it was the
+  laptop's sweep head; relay artifact, owned by MSTR~Z) — and the true state is that **NO citable
+  H8 commit exists anywhere yet: the grounding traveled as ferry text only.** 0.8.0 (its author)
+  is tasked to commit the record; the hash ferries back when it lands and this line repoints then.
+  **Until then this desk's independent corroboration above is the rider's ONLY grounding, and it
+  is sufficient — the rider binds on what was measured here, not on what was ferried.**
 
 ## Precedent by use
 
