@@ -57,3 +57,61 @@ sequencing instruction). **Asking which endpoint serves Firm Householding costs 
 guesses, and converts the ask from undecidable to one-word.** The technical alternative -- observing
 the BD web app's own network calls during a Firm Householding export -- is a different KIND of act
 (browser observation, not REST probing) and should be scoped as such rather than improvised.
+
+---
+
+# ROUND 2 (under Andrew's ~0135Z egress line; CTO bound 013236Z)
+
+## THE PRE-REGISTERED REFUSAL IS FINALLY OBTAINED -- BD WAS ASKED AND SAID NO
+
+Round 1 established the four ids 404 on `GET /template/{id}` -- an ADDRESSING result. But the design's
+branch fires when **the RUN FLOW is asked and refuses**, and nobody had ever asked it. Now asked:
+
+| call | result |
+|---|---|
+| `POST /v1/run {"templateId": 5}` | **404 `"Template Not Found, StatusCode=NotFound, SourceId=5"`** |
+| `POST /v1/run {"exportType": "FirmHouseholding"}` | **400 `"Request does not have a valid TemplateId or Template provided."`** |
+| `POST /v1/zzz_negctl_9999` (NEG-CTL) | 404 |
+| `GET /v1/template` (POS-CTL) | 200 JSON 15,378 B |
+
+**The run endpoint EXISTS, PARSES the body, and answers specifically**: it accepts only `TemplateId`
+or `Template` (the 400 states it), and asked for id 5 it says **Template Not Found by name**. That is
+the pre-registered refusal, in BD's own words -- not a prior, not an addressing inference.
+`?exportType=` as a query param is IGNORED (returns the unfiltered roster).
+
+**So: system templates are not on the datamining plane by ANY verb, and `exportType` is not a key
+this plane accepts.** The thread's mechanism question is closed on measurement.
+
+## ⛔ SECOND FALSE-POSITIVE TRAP, AND IT WOULD HAVE BEEN A HEADLINE: `*.bdreporting.com` IS A WILDCARD CATCH-ALL
+
+Andrew's brief names a **"Business Intelligence" endpoint**, so `bi.bdreporting.com` returning
+**200** looked like the find of the night.
+
+| host | status | bytes |
+|---|---|---|
+| `bi.bdreporting.com` | 200 | 242,826 |
+| `reporting.bdreporting.com` | 200 | 242,826 |
+| `app.bdreporting.com` | 200 | 242,826 |
+| **`zzz-negctl-9999.bdreporting.com`** (INVENTED) | **200** | **242,826** |
+| `billing.bdreporting.com` | 200 | 118,402 |
+| `api.bdreporting.com` | **429** | 63 (JSON) |
+| `clientview.bdreporting.com` | — | connection timeout |
+
+**A subdomain I invented returns the same byte count as `bi.`** -- so `bi`/`reporting`/`app` are a
+wildcard catch-all page, NOT distinct applications. **Subdomain existence is not a probeable oracle
+on this domain; only a response that DIFFERS from the catch-all is evidence.**
+
+*Second time in one session that an invented-input control killed an apparent hit -- and this one
+would have been reported as confirming the sovereign's own words about a BI endpoint. **The more a
+false positive agrees with what you were told to expect, the more it needs the control.***
+
+## REAL RESIDUE: `api.bdreporting.com` is a genuinely distinct service
+
+429 + `application/json` against a catch-all that returns 200 + HTML = a real, separate service.
+**DELIBERATELY NOT RETRIED. A 429 is a back-off instruction, and hammering a vendor endpoint to
+satisfy a probe is not a read I am willing to take** -- it risks the account for a lead that keeps.
+`clientview` does not resolve, so the ClientView half of Andrew's brief is not on this domain.
+
+**NEXT (unfired, needs no new word but does need a cool-off):** one spaced probe of
+`api.bdreporting.com` for an exportType-keyed route. If that is also negative, the human channel
+(CALL 2, approved) is the route, and browser observation remains its own scoped ask.
