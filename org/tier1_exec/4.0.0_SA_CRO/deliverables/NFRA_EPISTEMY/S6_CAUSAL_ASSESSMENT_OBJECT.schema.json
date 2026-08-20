@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "opal://nfra_epistemy/s6/causal_assessment_object/0.1.1",
-  "title": "Causal_Assessment_Object (NFRA_EPISTEMY S6, PROPOSED 0.1.1 -- CTO arch gate 63695 applied: PASS-TO-EXERCISE)",
+  "$id": "opal://nfra_epistemy/s6/causal_assessment_object/0.1.2",
+  "title": "Causal_Assessment_Object (NFRA_EPISTEMY S6, PROPOSED 0.1.2 -- CTO arch gate 63695 applied, ACCEPTED 63743; 0.1.2 = description-only F-S6-01)",
   "description": "Source of record for the causal-assessment object (PRD_EPISTEMIC_MECHANIZATION sec.2.4/2.5). An assessment is IMMUTABLE; current eligibility is a SEPARATE object (Eligibility_Evaluation). Authored at CRO base as registry executor; exercised by 4.0.0_SA_CRO~C against real atom_layer0 bundles (C9-RIDE). Status PROPOSED; CTO arch gate 63695 PASS-TO-EXERCISE (2026-08-20 2042Z) applied in 0.1.1: (a) single-member status enum CUT (proposed-ness is the PROJECT status, never a per-instance field); (b) the required set AUDITED for honest-populability -- every field the producer cannot honestly fill at produce vintage is nullable WITH A DECLARED ABSENCE SEMANTIC (null means the named state, never omitted); (c) result_status is READ-ONLY-BY-CONSTRUCTION for every downstream consumer. Final acceptance follows the first real instance (4.0.0_SA_CRO~C C9-RIDE Phase 1) + CVO verify. Rule-24 record: S6_CAUSAL_ASSESSMENT_OBJECT_RULE24_RECORD.md (same dir).",
   "type": "object",
   "additionalProperties": false,
@@ -23,7 +23,7 @@
       "required": ["defect_class", "subject_scope", "relevant_planes", "substrates", "time_window"],
       "properties": {
         "defect_class": {"type": "string"},
-        "subject_scope": {"type": "string", "description": "a PREDICATE over the canonical graph, never a hand roster"},
+        "subject_scope": {"type": "string", "description": "a PREDICATE over a DECLARED population -- canonical graph | atom_layer0 run ledger | registry | program manifest -- with the population NAMED in-field (0.1.2, F-S6-01: the first real instances were ledger/registry predicates; graph-only wording excluded them); never a hand roster. The population set is deliberately NOT an enum yet (YAGNI: no consumer branches on it); it becomes an axis with its Rule-24 record the day one does"},
         "relevant_planes": {"type": "array", "items": {"type": "string", "enum": ["DESIRED", "APPLIED", "EXERCISED"]}, "minItems": 1},
         "substrates": {"type": "array", "items": {"type": "string", "enum": ["aws", "portal", "codebase", "ms"]}, "minItems": 1},
         "time_window": {"type": "object", "required": ["start_utc", "end_utc"], "properties": {"start_utc": {"type": "string"}, "end_utc": {"type": "string"}}}
