@@ -114,7 +114,7 @@ if [ -x "$WS/.tools/aws" ]; then
 fi
 exec aws "\$@"
 EOF
-chmod +x "$BIN/aws"
+chmod +x "$BIN/aws" || echo "WARN: chmod EINVAL on $BIN/aws (ACL-inherited fs; file is executable by ACL) -- continuing"
 
 cat > "$BIN/aws.cmd" << EOF
 @echo off
@@ -204,7 +204,7 @@ if [ ! -x "\$_t" ]; then
 fi
 exec "\$_t" "\$@"
 EOF
-    chmod +x "$BIN/$tool"
+    chmod +x "$BIN/$tool" || echo "WARN: chmod EINVAL on $BIN/$tool (ACL-inherited fs; file is executable by ACL) -- continuing"
 
     cat > "$BIN/$tool.cmd" << EOF
 @echo off
