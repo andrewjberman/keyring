@@ -67,3 +67,20 @@ Seat LIVE PID 37712, Monitor `b4b76sy8j`, zero crons, inbox drained + acked. W5 
 4. **[3.0.0_SA_CVO~Z]** event-driven: the canonical-ten residual ferry (base CVO re-screen after W-15 Wave-1) when it arrives; W6/W5 port-time re-read.
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+# AMENDMENT 1305-1345Z -- the re-read, my own miss, and two sovereign words that landed mid-window
+
+**archetype:** VALIDATE (+ DIAGNOSE on the miss)
+
+1. **CVO~Z row clause -> a FORK at Andrew, not the COO-cell class.** CTO~Z (2221) grounded what I had not: NFRA_SYSPARITY.json carries Andrew's 07-20 reaffirmation ("STAYS live; NOT discharged by the 07-17 stand-down"), the 07-24 stand-down was "for the session", and the 08-19 kickoff names only the COO row's /drive. My "same class as the COO strike" (2202) was an inference over his word -- WITHDRAWN (2224). Carded to Andrew via MSTR~Z ((a) re-arm 13,43 / (b) strike in COO-cell form); default-if-silent = practice stands, row unstruck, nothing armed. Memory corrected at this seat.
+2. **Rule 24 WIDENED (Andrew-direct ~1315Z, imported @44266af516):** every schema-enumeration act (mint / ADD VALUES / ADOPT) carries its four-postulate record + token census on arrival; my Lifecycle_Stage proposal is the named compliant specimen. It binds my W5 re-read -> the catalog's five enumerated axes (verdict_class, firm, vintage_grain, family.axis, allowlist) need their records; doubts stated for the author's record (verdict_class = state-with-disposition, the rule's own type specimen; firm = four kinds on one axis and the gate's key).
+3. **My miss, Amendment 1 of the W5 record:** `vintage_grain` read "36/36 present" -- a FIELD-PRESENCE count where a VALUE check was owed; by value 15/36 clean {date 13, month 2}, 21/36 prose (19 + 2 NOT_MEASURABLE-- at @4f202ccd50). sec.8.2 rules {date|month|year} -> CONDITION 7. Same class I filed against the "16 channels" self-report an hour earlier; caught by running the axis census the widened law asked for, not by care.
+4. **The re-read of @4f202ccd50 (OpalETL~Z landed the six + amendments i-vii), every test at this seat:** 1-6 PASS (0 SEE-; 3/3 twins to the latest stamp with superseded named; disambiguation both directions; accessors 36/36 incl. the two-module export; census_ref 36/36 + semantics_provenance header+rows; TO-B proof D6-1..6 rc=0 unpiped); definition-as-code PASS (all counters printed; MERGED COUNT 89/276 with the structural predicate printed; corrections under their own heading; 12/12 synthetic tests; battery 40/40; LIVE 36/36, report byte-identical; runs/ untouched). **PORT HELD on two items: condition 7 + the five axis Rule-24 records.** COO~Z RAVC-4 (2242, incl. a D6-1..7 negative control that fired) corroborates.
+5. **Lifecycle addendum:** Andrew's question at the card ("what is the difference between winding_down and dissolving?") answered at the card's grain -- the test (after this vertical is gone, does anyone still do what it did?), two specimens, why two values (opposite TRANSITION remedies: retire vs re-home; Rule 24(iv) on the axis that counts), and the one-exit fallback (LEAVING + exit_form second field). Ferried via MSTR~Z (2247).
+
+**Commits this window:** @609182ae0d (both records amended). **Messages:** 2224/2225 (fork ACK), 2243-2246 (W5 re-read), 2247/2248 (Lifecycle addendum). **Compiler tools added:** proof-of-spec-check on the TO-B instance (D6-1..6 rc=0); pytest test_merged_definition 12/12; lift --report (counters + MERGED COUNT printed); battery 40/40; validate LIVE 36/36 (report byte-identical); yaml axis census x2.
+**Rate series, honest:** 1 shipped miss this window (vintage_grain field-presence-as-value), self-caught 40 minutes after filing, corrected in-record and in-fabric before the port moved. **Next:** OpalETL~Z ping on condition 7 + the records -> one line each -> port; Andrew's word on the cron card; the canonical-ten residual ferry.
+
+-- `3.0.0_SA_CVO~Z`
