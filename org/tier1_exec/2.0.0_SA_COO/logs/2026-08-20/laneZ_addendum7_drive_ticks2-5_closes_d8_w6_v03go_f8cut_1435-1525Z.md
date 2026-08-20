@@ -1,0 +1,37 @@
+# ADDENDUM 7 — 14:35–15:25Z: drive ticks 2–5, the swap executed, TO-F both halves live, D8 CLOSED, W6 COMPLETE (program close), v0.3 GO, F8 fence TO cut — 2.0.0_SA_COO~Z
+
+**Date:** 2026-08-20 (14:35–15:25Z) — continues addendum 6 (`@1c1a1c7c15`)
+**archetype:** COORDINATE + VALIDATE
+
+## Compiler Tools (addendum 7)
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| drive ticks 2–5 | get_live_agents · telemetry read (python, 19,2xx–19,4xx rows) · git log since-tick (workspace + portal) · deploy_ledger.py check --red (3/3 sentinels) · ps stream watchers · python reads of the D8 proof rows | PASS | logs `drive_log_20260820T1441Z/1453Z/1503Z/1511Z_laneZ_dfamily_tick{2,3,4,5}.md` (@e63ee90658, @c5735f93db, @18f0739a61, @6575e8ded6); markers 14:42:36 / 14:54:34 / 15:04:06 / 15:12:19Z |
+| proof-of-spec-check | D8 instance `D8-1..9` (twice: @b698bc5948 laptop flip; @981bf28609 DE~Z live halves) rc without pipe | rc=0 both; NEGATIVE CONTROL D8-1..10 rc=1 | the D8 live-halves validation basis |
+| test_authz_matrix.py | bare, twice (11 tests @4bede18189; 12 incl. the layer-coverage assertion @2e7fae20d3) | rc=0 11/11 → 12/12 | TO-F half (b) code-plane validation at my desk |
+| pytest | `integrations/ticketing/intake/tests` (twice) | 12+18 → 13 passed + 18 subtests | the intake OUTCOME limb's FETCH_FAILED closure |
+| commit-gate.sh | `lambda_function.py` | clean | |
+| git diff | `4bede18189 HEAD -- lambda_function.py` | empty | handler byte-unchanged; the apply request stands |
+| curl | `GET www.opalinvest.dev/api/scoped/portal-content` no token | 401 | one served-plane read of the applied D8 API (no secrets) |
+| git fetch + show | origin/CLOUD at 15:13Z: port record commit not yet on the ref (staged v0.2 file still present) | measured | the v0.3 GO's grounding stated honestly |
+| Get-CimInstance / Get-ScheduledTask (earlier), native | — | — | not re-run this window |
+| safe-commit | TO-F JOINT @b90722ea89; TO-F scope @44d1434e58; TO-F pending + D7F-12 fold @562a74f4f7; v0.3 V03-4 fold @43a17864a8; W6-T1 F8 TO @59244d9ccb; four drive logs | rc=0 each | lane, unpushed (MSTR~Z integrates) |
+
+## Delta
+
+1. **Tick 1 → the SWAP (CVO~Z → DE~Z) EXECUTED** (MSTR~Z, handoff-first @f5155c2aba; CTO~Z concurred as ruler): census measured at the event 6/6, six watchers, zero ghosts, no CVO~Z orphan child; DE~Z LIVE pid 31384, my pre-queued GO met it at registration (act 1 = D8-5/6, act 2 = TO-F half (a)). CVO~Z's re-seat trigger = the v0.3 landing.
+2. **TO-F both halves live:** split by half (CTO~Z 2337) → `issued_to` JOINT @b90722ea89; half (b) the write path COMMITTED @4bede18189 at OpalETL~Z (matrix as amended + `POST /api/scoped/tickets/submit` under svc-ticket-form + pure-add route; authz battery 11/11 incl. the D7F-9 mutant; CTO~Z gate read ZERO amendments; SoD STRICT in v1 ruled; my code-plane validation 2386) → LAPTOP APPLY REQUESTED via MSTR~Z's ferry 14:49:33Z, routed to 0.7.0_AE + the laptop COO 14:51Z (their sequencing vs W6-PORT) = ADVANCING-external; the read-principal ruling's `list` scope clarified (no `since` param — existing route shape; client-side cursor) @44d1434e58, matching CTO~Z's own clarification @2cb58ecf22; **TO-F → PENDING @562a74f4f7 at DE~Z's RAVC-2 ack (144924Z)**; D7F-12 folds the Rule-24 table for the authz matrix (the second widening @0ed408ab07) — landed by OpalETL~Z @2e7fae20d3 (12/12 incl. the routes==actions assertion; intake 13/13) and validated at my desk (2400).
+3. **D8 CLOSED @00d22532ac (CTO~Z gate):** the laptop apply landed (ledger L1/2/3/5/6, tag; battery 9/9 @b698bc5948) → my validation of D8-3/4/7 (2347) + the honest residue (D8-5/6 live halves computable, unexercised) → CTO~Z re-read 7/9 @21e8517079 → routed to DE~Z as its first act → **DE~Z delivered D8-5/D8-6 PASS @981bf28609** (two RS256 identities minted at its seat, six live runs on DEV against the applied API, both call sites, second-session render, non-employee no affordance, UI reset DELETE 200, residue 0, riders Q1/Q2/Q3 PASS live) → validated at my desk (2430; validator rc=0 + neg control rc=1; served endpoint 401 no-token) → **D8 directive COMPLETE.**
+4. **W6 COMPLETE @924b854787 = the OPAL_ANALYST PROGRAM CLOSE per §9.0 (CTO~Z):** the laptop W6-PORT + apply LANDED (applying seat's 1510Z frame; CTO~Z grounded the flip on the APPLIED plane by on-instance SSM reads — deployed catalog_gate.py sha == HEAD, deployed refs/DATA_CATALOG.yaml body hash == the released v0.2 with exactly the two declared deltas, `/query/v0` 401 live, service active 15:05:30Z, row 4 re-exercised). Validated at my desk as the program close (2430). **Coherence note surfaced, not adjudicated:** `OPAL_ANALYST.json` stays `active` — three OPAL_ANALYST-coded TOs are PENDING (W5-V03, W6-T1, W4b), so the PROJECT close (2-step JSON + REGISTRY) waits on them or on a CTO~Z re-code ruling; I flip nothing.
+5. **v0.3 GO FIRED (2406) on the applier's landed frame** with the grounding stated (the record commit not yet on origin/CLOUD at 15:13Z; the builder's first act after the `pending` flip = confirm the landed record on the ref before its first write). OpalETL~Z flipped W5-V03 → `pending` (on disk, its first act).
+6. **F8 FENCE TIGHTENING — Andrew-direct "rec approved" @ad2585793c (CTO~Z terminal ~15:1xZ):** TO `OPAL_ANALYST.W6-T1` cut PENDING @59244d9ccb (owner OpalETL~Z; the BG concierge fence fail-closed-and-loud on an unresolvable `$OPAL_AGENT_SERIAL` SCOPED to the BG seat's launch/identity path; F8-1..F8-6 with positive/negative/two-mutant controls; the outcome-set Rule-24 table; nothing beyond his word; BG relaunch = MSTR~Z's act) + GO (2422); CTO~Z: cut per its constraint, zero amendments; sequencing concurred as routing (TO-F (b) apply-confirm exercise → F8 → v0.3's one commit; v0.3's first act is a read, any time).
+7. **Ticks 2–5:** nothing blocked every tick; dispatches 1/0/1/0 (cap 5); the laptop apply leg verified moving (bus 14:49:33Z; routed 14:51Z; ordering theirs); `[STUCK]` held off the external legs; BG aged off the broker (event-driven; watcher live) — MSTR~Z's seat, noted; the two HELD-STALE fabric gates (Andrew/IT provisions) outside scope, noted not driven.
+
+## Gate-forward (15:25Z)
+- **At OpalETL~Z (sequenced by CTO~Z 2429):** TO-F (b) apply-confirm exercise (D7F-3..10 live rows, on the laptop's CONFIRM) → W6-T1 F8 (mechanism → controls → proof; BG relaunch with MSTR~Z) → W5-V03's ONE commit (record check on the ref first; census; exercise set; proof).
+- **At DE~Z:** TO-F half (a) — the form on DEV, D7F-1/2, the ONE proof instance with (b) rows cited, portal-side D7F-3..10 on the apply confirm.
+- **At CTO~Z:** acceptance acts (TO-F at D7F-12; F8 controls; v0.3 re-cert delta); the OPAL_ANALYST project-vs-program close ruling (note above); D7 leg-3 GO at D7F-3 first PASS.
+- **At MSTR~Z:** the laptop ticket-center apply CONFIRM (bus); D8 TO flip in its lane + DE~Z/portal gitlink integration; the port record commit import; CVO~Z re-seat at the v0.3 landing; BG relaunch coordination (drill word at Andrew).
+- **At Andrew (via MSTR~Z console):** the CVO~Z SYSPARITY-loop card (default practice stands); the BG drill word. (The DE~Z slot card is moot — swap executed; the backstop card superseded at 1329Z.)
+- **At me:** the `/drive` loop (cron ebf739a0, next tick on idle); validations as each lands (TO-F D7F-3..10 live rows; F8 F8-1..6; v0.3 V03-1..8); census at the next spawn/kill. Fabric 6/6 by process; the loop is the only cron here; all broker mail READ-acked through 2429.
