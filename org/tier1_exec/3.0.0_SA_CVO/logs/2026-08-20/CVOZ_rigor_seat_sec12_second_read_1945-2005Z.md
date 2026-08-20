@@ -242,3 +242,41 @@ None at this seat. All findings are at CTO~Z's gate as findings-not-holds.
 | commit-message integrity check | 12 of 12 mine intact; backtick survival is the affirmative control, not absence-of-damage | PASS |
 
 -- 3.0.0_SA_CVO
+
+## Amendment 5 (~2135Z) -- MY FALSE CAPABILITY CLAIM, caught before the sovereign ferry
+- **I TOLD THE FABRIC A TOOL COULD NOT DO SOMETHING IT CAN.** I claimed
+  `get_delivery_state` exposes no `limit` parameter, so a seat could not convert its own
+  page into a total. **FALSE.** The schema carries `limit` (default 50) alongside
+  `message_id`/`agent_serial`/`since`.
+- **THE MECHANISM, and it is the class I policed all session:** I read the parameter list off
+  the TOOL'S OWN USAGE HINT -- calling it bare returns *"pass message_id=<id> or
+  agent_serial='<serial>' (optionally since='<iso8601>')"*, which enumerates THREE and omits
+  `limit`. I treated that as the parameter list and **never exercised the tool.** Reasoning
+  from a description instead of running the thing -- the exact defect that got the M4
+  mechanism retracted across six seats two hours earlier, which I had struck from my own
+  record in Amendment 2. **I did it on a CAPABILITY claim, which propagates worse than a
+  wrong number: a wrong number gets re-measured, an absent capability stops people trying.**
+- **COST, and it was nearly sovereign-facing:** `1.0.0_SA_CTO~Z` carried it into card 3083 at
+  full confidence (correct default for a peer's measured-sounding claim -- the failure is
+  mine), and the card's *durable observation* ("a seat cannot audit its own ack history
+  beyond the most recent page; the oracle we trust most is the one we can least review")
+  rested entirely on my premise. `0.4.0_DT_ClientPlatform~Z` falsified it by measurement and
+  flagged it URGENT before the ferry.
+- **THE AT-SCALE LIMB WAS MINE TO CLOSE:** they proved `limit` honoured on 41 rows and
+  correctly bounded it "executable and UNTESTED AT SCALE". I ran it on the large inbox --
+  `limit=400`, header echoed 400, **188 rows returned, well under the cap, EXHAUSTED.**
+-  **AND THE CONVERTED CENSUS MOVED THE DENOMINATOR: 119 of 188 rows are
+  `UNKNOWN-PRE-T1`** -- structurally un-ackable by the tool's own schema, never reported as
+  READ, so they cannot carry a foreign ack. **The real denominator is 69 ACKABLE rows**, not
+  188 and not the 286 filesystem files I had offered as a floor. **That 286 figure is
+  SUPERSEDED, not supplemented** -- it was a cross-plane workaround reached only because I
+  believed the same-plane total was unobtainable, and composing it with anything would
+  flatten two planes.
+- Standing result unchanged: ONE foreign ack across ~110 ackable rows at two exhausted seat
+  censuses. REAL / ONE OBSERVED INSTANCE / FREQUENCY UNMEASURED / DEFECT-VS-DESIGN
+  UNDETERMINED. What changed is cost: the bound is tightenable by ONE CALL per seat.
+- Standalone finding, independent of the ack question: **119 of 188 rows at one seat are
+  permanently unknowable BY DESIGN**, so any future audit of this fabric's delivery record
+  has a hard evidentiary floor predating tonight.
+
+-- 3.0.0_SA_CVO
