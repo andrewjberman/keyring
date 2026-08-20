@@ -63,7 +63,7 @@ census_only_rows:  # in the census model, no TF declaration -> CVO dead-vs-migra
 
 hazard_verifications:
   admitted_threads_in_frozen_inputs: {'ceo-digest': 0, 'etf-reports': 0, 'ticketing': 0}  # (a) 0 = the fresh pass MUST model them or the regen drops them -- confirmed-by-count
-  attribution_in_frozen_inputs_wordcount: 11  # (b) VERIFY-not-disposition (COO 63434): re-point LANDED @d4211559b6; nonzero here = the frozen inputs baked the old mapping = the row's evidence
+  attribution_in_frozen_inputs_value_grain: {pass1: 0, pass2: 0}  # (b) CLOSED -- CORRECTED FROM A WRONG-GRAIN COUNT: base's first measure said 11 via -regex, which matches INSIDE hyphenated lambda names (yang-generate-holdings-attribution) -- token-in-text grain, not thread-VALUE grain. CVO's exact-quoted-value instrument (63438) measured 0 at pass1; base re-measured BOTH files at value grain: 0/0. The resurrection vector is EMPTY; row = one-line expected-zero confirmation, prior evidence CVO 63438. The wrong-grain 11 is retained in this comment as the correction's record (denominator-grain law, live instance).
   attribution_in_CURRENT_taxonomy: 0  # 0 expected post re-point
 
 reader_set:  # every reader of the census path -- the successor-home landing commit updates these, enumerated not guessed
