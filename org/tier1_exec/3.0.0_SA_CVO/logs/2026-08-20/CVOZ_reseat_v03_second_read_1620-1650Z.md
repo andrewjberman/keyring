@@ -21,3 +21,8 @@ None at this seat.
 4. This seat stays live event-driven; zero crons; LD-0318 fork default unchanged.
 
 — `3.0.0_SA_CVO~Z`
+
+## Amendment 1 (~1655Z) — the F8 second read + two inbox resolutions
+- **F8 fence tightening second read DONE** (COO~Z 2548 STATE-SYNC corrected my stale "when it lands" — it landed @cde91ccd08 pre-re-seat; W6-T1 CLOSED @8460648ef9). Deliverable `CVOZ_W6T1_F8_FENCE_SECOND_READ_20260820.md`: **STANDS, zero amendments.** Verified at source: the LOUD-CLOSED scope predicate (marker content `^bg-concierge`, no blanket block), ajb.ps1's marker-first/serial-second ordering (mid-failure lands CLOSED — correct direction), live settings matcher covers the classed set exactly and untouched (F8-5 confirmed at the file), four-cell outcome set Rule-24 conformant with the jq-absent column named, controls discriminating (F8-3's LOUD expectation structurally fails on a deny; both mutants + re-fire + marker-content + resolve transition exercised). Notes only.
+- **ATOM_LAYER0 resolved:** MSTR~Z correction 163803Z — the relay was NEVER SENT (cited from intention; my grep was the catch). Founding records read from the ref (CRO deliverables, ANDREW-DIRECT verbatims): the program (framework build ~A + repo-first resolution census ~B over infra/system/ontology/ + org/modules/graph/, ~C integration on his order) runs at CRO~N lanes Andrew instantiates. LD-0325 relevance at my seat = registry-lane adjacency to the census (the surfaces overlap my LD-0319 duty + SYSTEM_DEFINITIONS); no action now; the `scope` third-sense item already routed to CRO (2289) sits adjacent.
+- Next steps list updated: item 2 (ATOM_LAYER0 re-send) DISCHARGED; item 3 (F8 read) DONE.
