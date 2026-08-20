@@ -43,7 +43,7 @@ from org.modules.graph.extract_pipeline import (  # noqa: E402
     _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "bd-bronze", "inf-bronze", "cot-bronze", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "all", "bd", "inf")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "bd-bronze", "inf-bronze", "cot-bronze", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "advi", "all", "bd", "inf")
 
 # ---------------------------------------------------------------------------
 # NFRA_DEBTSCAN.TOOL-01: single-source tree registry for the all-trees deployed
@@ -105,12 +105,22 @@ def resolve_pipeline_from_arg(raw_script: str) -> str:
         if f"data/{_dir}/scripts/" in np or np.startswith(f"data/{_dir}/"):
             return _pk
     if _CODE_TREES is not None:
+        # LONGEST-PREFIX across every declared repo home (TRUNCLASS PSCRIPT2 P1, mirroring
+        # file_to_s3_target's OWN documented rule -- safe_deploy_core's 2026-08-18 advi row).
+        # The prior first-match dict-order iteration let mdpf's `data/assets/scripts/gold`
+        # home shadow advi's LONGER `data/assets/scripts/gold/runners_49f` subtree: standalone
+        # invocations swept the mdpf tree, matched 0, and emitted a clean false-ABSENT while
+        # the SAME file verified correctly inside safe-deploy (which rides file_to_s3_target).
+        # THAT first-match-vs-longest-prefix split was the standalone/in-harness divergence point.
+        best = None  # (len(repo_home), pipeline_key) -- longest declared home wins
         for tree in _CODE_TREES.values():
             for repo_home, _prefix in tree["layers"].values():
                 if np.startswith(repo_home + "/"):
                     resolved = _FIRM_TO_PIPELINE.get(tree["label"])
-                    if resolved:
-                        return resolved
+                    if resolved and (best is None or len(repo_home) > best[0]):
+                        best = (len(repo_home), resolved)
+        if best is not None:
+            return best[1]
     # Case 3 SUPERSEDED (Andrew-direct stub ruling 2026-07-30, extending @10d1bb29e3 to
     # `deployed` after ~C's exercise showed a mirrored bare basename silently answering
     # for bd with a clean MATCH rc=0 -- the exact wrong-tree class, on the deploy verifier
@@ -190,7 +200,8 @@ def _resolve_tree_from_path(raw):
     return (tree, layer, tree in _DATADIR_TO_PIPELINE)
 
 # --firm flag value -> pipeline-key.
-_FIRM_TO_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold", "mdpf": "mdpf"}
+_FIRM_TO_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold", "mdpf": "mdpf",
+                     "advi": "advi"}  # advi: the 49F runner chain (PSCRIPT2; key = CODE_TREES label)
 
 
 def _autowalk_pipeline_for_script(raw_id):
@@ -225,7 +236,11 @@ _ALL_DEPLOYED_TREES = [
     (_LABEL_TO_DEPLOYED_PIPELINE[label], bucket)
     for dirname, (bucket, label) in _DEPLOY_PIPELINE_MAP.items()
     if label in _LABEL_TO_DEPLOYED_PIPELINE
-] + [("mdpf", "opal-data-mdpf")]
+] + [("mdpf", "opal-data-mdpf")] + (
+    # advi appended (PSCRIPT2): bucket from the ONE declaration; absent CODE_TREES = absent
+    # row, and the sweep's per-tree loop reports what it iterates -- never a guessed bucket.
+    [("advi", _CODE_TREES["advi"]["bucket"])] if _CODE_TREES is not None else []
+)
 
 # ---------------------------------------------------------------------------
 # NFRA_DEBTSCAN.TOOL-03: bronze + auxiliary-prefix coverage.
@@ -360,6 +375,11 @@ def _build_dag(pipeline: str = None):
         return build_silver_dag(_WORKSPACE, "assets-gold", "data/assets/scripts/gold")
     if pipeline == "assets-silver":
         return build_silver_dag(_WORKSPACE, "assets-silver", "data/assets/scripts/silver")
+    # PSCRIPT2 P3: the 49F runner chain's io registry row. runners_49f is a SUBDIR of the
+    # shared assets gold home, invisible to assets-gold's non-recursive glob -- the chain
+    # had NO io coverage at all (a comp-tool coverage gap is a DEFECT, standing Andrew law).
+    if pipeline == "advi":
+        return build_silver_dag(_WORKSPACE, "advi", "data/assets/scripts/gold/runners_49f")
     if pipeline == "all":
         return build_multi_pipeline_dag(_WORKSPACE)
     # FALSE-CLEAN GUARD (TOOL-02): an unknown key must NEVER silently become
@@ -2053,6 +2073,13 @@ def cmd_deployed(args):
     if pipeline == "mdpf":
         S3_BUCKET = "opal-data-mdpf"
 
+    # ADVI override (TRUNCLASS PSCRIPT2): the 49F canonical runner chain deploys to the
+    # per-client bucket's BUCKET-ROOT _code/ (CTO GOLDHOME re-point 2026-08-18). Bucket
+    # derives from the ONE declaration, never a second literal.
+    if pipeline == "advi":
+        S3_BUCKET = (_CODE_TREES["advi"]["bucket"] if _CODE_TREES is not None
+                     else "opal-data-49financial")
+
     # cot pipeline override (NFRA_DTAFLP, Andrew sovereign 2026-06-10): cot is a
     # COMPLETELY separate firm pipeline. Its gold/silver/bronze deploy to
     # opal-data-cot/code/{gold,silver,bronze}/ (standard BD/INF layout, different
@@ -2161,6 +2188,10 @@ def cmd_deployed(args):
             f"s3://opal-data-mdpf/code/scripts/{{{_hdr_layers}}}"
         )
         print("  Runner: mdpf-daily-runner")
+    elif pipeline == "advi":
+        print(f"DEPLOYED STATUS [advi]: local repo vs s3://{S3_BUCKET}/_code/ "
+              "(49F canonical runner chain; repo home data/assets/scripts/gold/runners_49f "
+              "-- longest-prefix subtree of the shared assets gold home)")
     elif pipeline in ("bd-silver", "inf-silver", "cot-silver"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
     elif pipeline in ("bd-bronze", "inf-bronze", "cot-bronze"):
@@ -2273,6 +2304,56 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
+    elif pipeline == "advi":
+        # ADVI (TRUNCLASS PSCRIPT2): the 49F canonical runner chain, CODE_TREES-driven like
+        # mdpf -- layers derive from the ONE declaration, never a second dir list. Membership
+        # at _code/ is exact (runners_49f only, per the declaration's own note), so
+        # MISSING_ON_S3 is a REAL verdict here -- no shared-home NOT-A-MEMBER reclass.
+        skip_gold = False
+        if _CODE_TREES is None:
+            uncovered.append(
+                "[advi] CODE_TREES UNAVAILABLE -- safe_deploy_core did not import; "
+                "layer set UNKNOWN, refusing to guess"
+            )
+        else:
+            for _layer, (_repo_home, _s3_prefix) in sorted(_CODE_TREES["advi"]["layers"].items()):
+                _ldir = _WORKSPACE / _repo_home
+                if not _ldir.is_dir():
+                    uncovered.append(
+                        f"[advi:{_layer}] DECLARED repo_home MISSING: {_repo_home} "
+                        "-- declaration and repo disagree"
+                    )
+                    checked_any = True
+                    print(f"  [advi:{_layer}] {'(declared repo_home absent)':<44} {'UNCOVERED':<14}")
+                    print(f"             declared: {_repo_home}")
+                    continue
+                for p in sorted(_ldir.glob("*.py")):
+                    if p.name.startswith("__") or p.name.endswith("_fixtures.py"):
+                        continue
+                    # Filter matches stem OR posix subpath: _canonicalize_script_id keeps the
+                    # runners_49f/ segment for paths under the shared home, so a stem-only
+                    # test would skip the very file the caller named.
+                    if script_filter_lower and (script_filter_lower not in p.stem.lower()
+                                                and script_filter_lower not in p.as_posix().lower()):
+                        continue
+                    label = f"[advi:{_layer}] {p.name}"
+                    checked_any = True
+                    status, extras = _check_one("advi", label, p, f"{_s3_prefix}{p.name}")
+                    print(f"  [advi:{_layer}] {p.name:<44} {status:<14}")
+                    for line in extras:
+                        print(f"             {line}")
+                    if status == "MATCH":
+                        matched.append(label)
+                    elif status == "STALE":
+                        stale.append(label)
+                    elif status == "MISSING_ON_S3":
+                        missing_s3.append(label)
+                    elif status == "LOCAL_MISSING":
+                        local_missing.append(label)
+                    elif status == "TIMEOUT":
+                        timed_out.append(label)
+                    elif status == "AWS_UNREACHABLE":
+                        aws_unreach.append(label)
     elif pipeline in ("inf-gold",):
         # INF gold: check against opal-data-inf/code/gold/
         inf_dag = _build_dag("inf-gold")
@@ -2586,6 +2667,12 @@ def cmd_deployed(args):
             else {_l: _p for _l, (_rh, _p) in _CODE_TREES["mdpf"]["layers"].items()}
         )
         _aux_enum_names = set()
+    elif pipeline == "advi":
+        _enum_prefixes = (
+            {} if _CODE_TREES is None
+            else {_l: _p for _l, (_rh, _p) in _CODE_TREES["advi"]["layers"].items()}
+        )
+        _aux_enum_names = set()
     elif _firm_label:
         _enum_prefixes = {p: f"code/{p}/" for p in sorted(_STANDARD_CODE_PREFIXES)}
         _aux_enum_names = set()
@@ -2617,8 +2704,14 @@ def cmd_deployed(args):
                 _objs.append(_ep[3])
         _total_at_prefix = len(_objs)
         if script_filter_lower:
+            # PSCRIPT2: a canonicalized filter can carry a repo SUBPATH (runners_49f/x) that no
+            # S3 basename contains -- the old stem-only test then printed 'matched 0 of N' beside
+            # a MATCHed verdict row (a false-0 in the denominator's own frame). Match the
+            # filter's BASENAME as well; the full-string test keeps its precision when given.
+            _fstem = script_filter_lower.rsplit("/", 1)[-1]
             _objs = [o for o in _objs
-                     if script_filter_lower in o.rsplit(".", 1)[0].lower()]
+                     if script_filter_lower in o.rsplit(".", 1)[0].lower()
+                     or _fstem in o.rsplit(".", 1)[0].lower()]
         for _o in _objs:
             _basename_homes.setdefault(_o, set()).add(_ename)
         _unrendered = [o for o in _objs if f"{_eprefix}{o}" not in _checked_s3_keys]
@@ -2708,7 +2801,13 @@ def cmd_deployed(args):
         else:
             print("  All checked scripts are up-to-date on S3.")
     elif not checked_any and not uncovered:
-        print(f"  No scripts matched filter: {raw_filter!r}")
+        # PSCRIPT2 P2 -- THE ABSENCE LAW: an ABSENT verdict names its searched tree and the
+        # trees it did NOT search. A bare "no match" over one tree reads as estate-wide
+        # absence to every downstream consumer -- the clean false-ABSENT that dispatched
+        # this fix (a 404 in the wrong bucket is the wrong question asked cleanly).
+        _unsearched = sorted({_pk for _pk, _b in _ALL_DEPLOYED_TREES} - {pipeline})
+        print(f"  No scripts matched filter: {raw_filter!r} -- ABSENT IN TREE [{pipeline}] ONLY; "
+              f"trees NOT searched this run: {', '.join(_unsearched) or '(none)'}")
     if _nothing_verified:
         return 2  # UNVERIFIED -- consistent with this tool's existing rc=2 "cannot answer"
     return 0
