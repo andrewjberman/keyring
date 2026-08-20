@@ -235,11 +235,40 @@ The first one would have been luck.**
 > question.
 
 **Three blind spots in one evening, on the tool this artifact recommends:** case-sensitivity in content
-mode (§5a), the `--name` asymmetry (§5a scope note), and now **untracked-tree invisibility.** *None is a
-defect — each is a documented-or-derivable property. What they share is that **the tool reports a
-denominator that looks like coverage and is actually scope**, and only a positive control separates the
-two.* **That strengthens the rail's case rather than weakening it — but "use the comp-tool" is not a
-substitute for a control, and this artifact should never be read as saying it is.**
+mode (§5a), the `--name` asymmetry (§5a scope note), and now **untracked-tree invisibility.**
+
+⚠ **AND NONE OF THEM IS A TOOL LIMITATION** (`3.0.0_SA_CVO~Z`, and it is the better statement): **every
+number `comp-find` returned was TRUE** — 2 hits case-sensitively, 0 hits in the tracked tree, 10 in name
+mode. **They are inferences the output does not license and does not warn against.** *"7,834 files
+scanned"* is true, **IS the scope**, and the reader silently supplies *"and that is all the files."*
+**The output does not carry its own frame** — the evening's shape, one more time.
+
+> **What they share: the tool reports a DENOMINATOR THAT LOOKS LIKE COVERAGE AND IS ACTUALLY SCOPE.**
+
+### ⛔ AND THE REMEDY NEEDED A CLAUSE, OR IT FAILS ON THE VERY CASE THAT PROMPTED IT
+
+> ~~"Only a positive control separates the two."~~ **Right and underspecified.**
+>
+> **A POSITIVE CONTROL FOR AN ABSENCE MUST BE DRAWN FROM THE SAME SCOPE AS THE QUERY — same tree, same
+> tracked/untracked status, same mode — OR IT CERTIFIES THE INSTRUMENT RATHER THAN THE CLAIM.**
+
+**On an untracked tree, a control token from any TRACKED file passes cleanly and proves nothing:** the tool
+correctly finds it, in a region that was never in question, **while the untracked region remains
+unscanned.** The control confirms the instrument works and leaves the absence claim **exactly as
+unfounded.**
+
+⚠ **And the natural instinct selects for the wrong region.** *"Run a control I know will pass"* biases
+toward well-known, well-scanned, **tracked** files — **the precise opposite of where the doubt is.**
+
+**`2.0.0_SA_COO~Z` got this right, and it is why their check worked**: they resolved the real path out of
+the commit, grepped the file **directly — out of band, past the gitignore filter** — and controlled on a
+**sibling token in that same file**. Same file, same scope, same visibility conditions as the absence.
+**Had they controlled on a token from elsewhere in the repo, it would have passed and the zero would still
+have been luck.**
+
+**That strengthens the rail's case rather than weakening it — the tool still beats a raw grep on every
+axis it covers — but "use the comp-tool" is NOT a substitute for a control, and this artifact must never be
+read as saying it is.**
 
 ## 6. What this does NOT claim
 
