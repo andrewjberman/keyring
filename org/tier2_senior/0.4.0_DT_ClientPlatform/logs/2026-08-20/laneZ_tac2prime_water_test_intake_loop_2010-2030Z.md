@@ -51,6 +51,20 @@ No `comp-transform`/`comp-routes`/`comp-pipescript io`: nothing was BUILT or DEP
 ## Hygiene
 Signing key fetched to scratchpad only, overwritten and removed post-battery (verified absent). Both minted tokens scratchpad-only, 60-min expiry. Evidence set: `watertest/{WT_partner_submit_ack.png, WT.netlog, board_final.json, claim.json, complete.json}` + `board_before.json`/`board_after.json`.
 
+## Gate outcome — ACCEPTED, and the decisive plane was NOT mine
+
+`1.0.0_SA_CTO~Z` accepted TAC-2' **producer-scoped** @`c9459dfa2f` (msg 2889). The charge at this seat is discharged. Two amendments to the evidence above, both **narrowing** what this log certifies:
+
+⚠ **THE LOAD-BEARING CHECK WAS ON A PLANE NONE OF THE FOUR READBACKS TOUCHED — INCLUDING MINE.** Four seats verified that the buzz *existed and was correct*. **Nobody verified it came from the PRODUCTION SCHEDULE.** `1.0.0_SA_CTO~Z` read the Scheduled Task itself: `OPAL_D7_ticket_intake` State Ready / LastTaskResult 0 / Next 20:34:45Z / trigger PT5M / Execute = the repo `run_intake.cmd`, with cadence boundaries `:14:46 :19:46 :24:46 :29:46` matching the reported cycles exactly — so the 20:19:46 fire was a **scheduled production fire**.
+
+**This is decisive under our own law, not a nicety:** an ad-hoc run is a legitimate QA instrument but *never the production path, and its artifacts are never production evidence* (CLAUDE.md ad-hoc rule). An ad-hoc-produced buzz would have been a fine QA read and an **INVALID certification** — and every readback in half 2 would have looked identical. **I certified the OUTPUT and never established that the PRODUCER was the production producer.** Banked as a general lesson: reading the served artifact tells you the artifact is right; it says nothing about which producer made it.
+
+⚠ **DEEP LINK — CARRIES, NOT RESOLVES.** A 200 from `opalinvest.dev` is a **SPA catch-all default**; the negative control returns 200 too (`0.5.0_AE_OpalETL~Z`). My half-2 claim was correctly scoped — I asserted the link *carries* `?ticket=<id>`, which is what stands — but stating it explicitly so nobody later reads it as route evidence. **Nobody cites a 200 from that origin as proof a route resolves.**
+
+**Not in this log, verified:** `0.0.3_BG_BBGTerminal` retracted their readback's check-6 parenthesis (a true ASCII observation with an invented `ensure_ascii` cause — the composer does zero coercion). Grepped this file and the ruling record with a positive control: **0 matches, never propagated.** The observation stands, the attributed mechanism is struck.
+
+**Gate candidate status:** ROUTED TO ANDREW, **not implemented**, with `1.0.0_SA_CTO~Z`'s added condition — if ever built, **the lint must name its own scope in its refusal text**, because it cannot reach routing prose and a passing lint would otherwise become evidence for a claim it never evaluated. The framing that a body-text matcher is worse than no gate is upheld.
+
 ## Next
 1. `[1.0.0_SA_CTO~Z]` TAC-2' acceptance at the gate, producer-scoped.
 2. `[2.0.0_SA_COO~Z]` TAC rows close at the validation hold; D7 record line "intake loop LIVE PRODUCER-SIDE; the answering limb is the NAMED OPEN GAP with its fix in flight".

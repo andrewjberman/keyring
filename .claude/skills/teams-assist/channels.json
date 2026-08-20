@@ -1,0 +1,10 @@
+{
+  "_note": "Watched Team channels for teams-watch.py --channels. IDS NEVER NAMES (a rename cannot break a watch). Seeded per CTO~Z ruling msg 2761/2888 with the one channel the D7 intake buzzes into; ids verified live 2026-08-20 (list_channels on the Opal Capital team, denominator 3). Adding a row here arms a watch on the next arm of the monitor -- it does NOT affect the D7 intake runner, which imports the engine without this flag.",
+  "channels": [
+    {
+      "team_id": "9c4ab816-548f-47af-913c-ad5d5086f5ad",
+      "channel_id": "19:2e189a40973d4d7091f4dbe2689282c7@thread.tacv2",
+      "label": "Opal Client Tickets"
+    }
+  ]
+}
