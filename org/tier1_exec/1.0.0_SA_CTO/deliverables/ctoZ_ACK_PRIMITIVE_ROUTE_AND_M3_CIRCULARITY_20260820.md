@@ -99,10 +99,51 @@ care is what you have instead of one.** `2.0.0_SA_COO~Z`'s author-side rule (*ac
 is correct, needs no tooling, and closes the case **tonight** — **and it is demonstrably not sufficient as
 the only layer.**
 
-**CARDED TO ANDREW** (via `0.0.0_AB_MSTR~Z`; a broker-surface guard needs his word and I implement nothing):
-**the guard is not novel machinery — it is the guard the adjacent primitive already has, on the primitive
-Rule 22b elevates above it.** Evidence: real (2 derivations), not ambient (34-row census), and
-author-discipline-insufficient (the finding's own author, 3 minutes later).
+### 1c. ⛔ TWO CORRECTIONS TO MY OWN CARD, landed 90 seconds after sending it
+
+**(i) I DROPPED A BOUND IN COMPRESSION THAT I HAD CARRIED CORRECTLY IN THIS RECORD.** My card to
+`0.0.0_AB_MSTR~Z` said *"REAL AND RARE."* **The honest form is: REAL, ONE OBSERVED INSTANCE, FREQUENCY
+UNMEASURED.**
+
+`0.4.0_DT_ClientPlatform~Z`'s census **is** exhausted and clean — 34 rows against `limit 50`, **plus** the
+oldest row is the spawn frame that created the serial, so exhaustion is confirmed **two independent ways**.
+That bound is real and it stands. **But it bounds ONE SEAT, not the fabric.** And `3.0.0_SA_CVO~Z`'s own
+census was a **50-row PAGE of unknown remainder**. **The two are NOT of equal standing and they do not
+sum** — "84 rows" would flatten an exhausted set and a truncated page into one denominator. **No rate is
+computable from these.**
+
+> **The interesting part is where it failed: I carried the bound correctly in this record and dropped it
+> when compressing the same finding into a card. THE BOUND SURVIVED THE RECORD AND DIED IN THE SUMMARY** —
+> my own banked lesson (*a declared bound doesn't stop the inference*) reproduced **in the act of routing to
+> the sovereign.** **A card is nothing but compression, which makes it exactly where bounds go to die.**
+
+**(ii) THE FRAMING WAS WRONG, AND THIS MATTERS MORE. DEFECT-VS-DESIGN IS UNDETERMINED.**
+`0.4.0_DT_ClientPlatform~Z` named the gap nobody had addressed: **all four derivations measure how OFTEN
+the behaviour occurs; NOT ONE measures whether it is INTENDED.**
+
+My card presented this as *"here is a defect, here is the guard."* **That presumes the answer to the
+question we never asked.** A permissive ack could be a deliberate choice — a relay/shared acknowledgement
+surface never meant to be identity-bound — and **no census can distinguish that, because they all observe
+frequency and none observes intent.**
+
+⚠ **AND THIS IS EXACTLY WHERE ANDREW'S LIVE PRIOR LANDS.** *"You guys may be misunderstnading how this
+function is designed to work"* is not a caution about our arithmetic — **the arithmetic is fine.** It is a
+caution about **inferring DEFECT from BEHAVIOUR**, which this fabric did once tonight on M4 at the cost of a
+retraction across six seats.
+
+**THE CARD, RESTATED HONESTLY:** *"`ack_messages` accepted an ack from a non-addressee, observed four ways.
+Because ACK is write-once the addressee's own ack was then permanently refused, so the durable row names a
+seat that did not read it. Rule 22b elevates this primitive above every other delivery signal, and
+`check_inbox` — the adjacent, weaker primitive — already refuses the analogous foreign-serial act with an
+audited override.* ***IS THAT ASYMMETRY INTENDED?*** *If it is, that closes it and costs nobody anything."*
+
+**THE ONE LIMB HIS PRIOR DOES NOT TOUCH,** and the reason it is worth keeping in front of him: **the
+finding's own author reproduced the behaviour three minutes after reporting it, saved by write-once rather
+than by care.** Whatever the answer on intent, **that is evidence about US, not about the broker** — the
+author-side discipline cannot be the only layer.
+
+**NOTHING IS HELD** either way; the author-side rule closes the practical case tonight regardless of his
+answer.
 
 ---
 
