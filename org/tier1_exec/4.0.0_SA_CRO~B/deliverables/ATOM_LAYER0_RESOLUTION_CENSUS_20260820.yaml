@@ -14,6 +14,74 @@ resolution_predicate: >-
   carries the claimed content, and code cites rather than re-declares the
   vocabulary.
 
+rerun_contract:
+  row_rule: >-
+    Every row's evidence field is its exact file+anchor pair at read_vintage.
+    A stranger re-runs a file read with git show
+    602b73a1f99d889dabbc884525b10dd8e7bf2e56:<path> and selects the stated
+    line or line range. Multiple anchors are read together and compared.
+  o1_shorthand_expansion: >-
+    O1 results row N means line N of
+    org/tier1_exec/4.0.0_SA_CRO/deliverables/
+    O1_RESOLVES_VIA_RESULTS_20260819.jsonl as present at read_vintage.
+  instrument_commands:
+    comp_state_control: python .tools/comp-state --self-test
+    registry_control: python infra/system/ontology/check_system_definitions.py --self-test
+    registry_live: python infra/system/ontology/check_system_definitions.py
+    ontology_lint_control: python org/modules/graph/comp_ontolint.py self-test
+    ontology_lint_live: python org/modules/graph/comp_ontolint.py
+  spot_checks:
+    - row: R010
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:infra/system/ontology/SYSTEM_DEFINITIONS.yaml
+        lines 202-213 plus git show
+        602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml
+        lines 482-489 and 523-591
+      observed: PASS_two_live_segment_names_disagree
+    - row: R015
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:infra/system/ontology/SYSTEM_DEFINITIONS.yaml
+        lines 437-448 plus git show
+        602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml
+        lines 382-385
+      observed: PASS_registry_copy_omits_describes_rule_bank_includes_it
+    - row: R027
+      exact_read: >-
+        git show 602b73a1f99d889dabbc884525b10dd8e7bf2e56:org/modules/graph/comp_legacywriter.py
+        lines 761-770
+      observed: PASS_code_carries_lifecycle_enum_copy
+
+integration_interface:
+  consumer: future_4.0.0_SA_CRO_tilde_C
+  input_selector: rows[] where assessment_state equals ASSESSED
+  mapping_to_atom_layer0_run:
+    concept_name: row.concept
+    claimed_layer: population_artifact.surfaces[row.surface].role
+    authority_and_binding_reads: row.evidence under rerun_contract
+    resolution_start_state: row.resolution_state plus row.failure_classes
+    routing_candidate: row.owner
+    observation_vintage: read_vintage
+    proving_priority: display_verdict precedence then smallest evidence span
+  no_hand_translation: >-
+    The consumer parses this YAML and selects a row object directly. Unknown
+    consumers of the concept are discovered by atom_layer0 S0; they are not
+    guessed into the census row.
+  row_schema_rule_24:
+    declared_layer: one machine-consumable census finding row
+    required_fields: [id, surface, concept, assessment_state, resolution_state, failure_classes, display_verdict, evidence, owner]
+    optional_fields: [direct_read, known_residual, note]
+    mece: PASS_each_field_has_one_non_overlapping_record_purpose
+    same_grain: PASS_all_fields_describe_one_surface_x_concept_binding
+    intent_coherence: PASS_one_rerunnable_and_routable_finding_record
+    state_coherence: PASS_fields_version_and_rerun_as_one_row
+    token_hygiene_at_read_vintage:
+      corpus: infra/system/ontology/** plus org/modules/graph/**
+      word_boundary_counts: {id: 2459, surface: 1097, concept: 111, assessment_state: 0, resolution_state: 0, failure_classes: 0, display_verdict: 0, evidence: 658, owner: 204}
+      adjudication: >-
+        The four compound field names are unoccupied. Generic record words are
+        intentionally reused as local YAML keys, not minted as ontology terms;
+        their row-schema meanings are fixed by this interface.
+
 rule_24_record:
   finding: >-
     The supplied starting taxonomy flattened three axes: traversal/assessment
@@ -145,6 +213,13 @@ controls:
       - infra/system/ontology/SYSTEM_DEFINITIONS.yaml:437 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
       - org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:382 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
       - org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:385 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+    two_homes_discriminator: >-
+      SYSTEM_DEFINITIONS authority at line 439 is a healthy citation, but its
+      definition at line 438 separately copies both field lists. That stable
+      canonical declaration is independently editable and omits describes.
+      The rule bank at lines 382-385 is the second independently editable
+      authority and includes describes. The verdict rests on the copied member
+      declaration, not on counting the authority citation as a second home.
 
 surface_coverage:
   fully_assessed: [O01, O03, O15, G01, G02, G03, G04, G05, G06, G07, G08, G09, G12, G13, G14, G15]

@@ -57,6 +57,16 @@ set. That zero is bounded by the printed residue; it is not a repo-wide metaphys
 - `comp-ontolint`: seeded mutants PASS; live Role/Relation invariant PASS (10 base relations,
   3 composites, 14-role total order).
 
+The TWO_HOMES discriminator is explicit for `Contract_Record`: the registry's `authority` pointer is
+a healthy citation, but the registry `definition` separately copies both field lists and omits
+`describes`. That copied stable-canon declaration and the rule-bank declaration are independently
+editable; the citation itself is not counted as a home.
+
+Three rows were rerun from their exact pinned file+anchor pairs after Base's adversarial challenge:
+R010 Segment, R015 Contract_Record, and R027 comp_legacywriter Lifecycle_Class. All three reproduced
+their committed verdicts. The structured artifact gives the exact reads and defines how every O1 row
+shorthand expands to a pinned JSONL line.
+
 ## Rule-24 correction to the verdict schema
 
 The brief's starting list mixed three intents on one axis. The structured artifact separates
@@ -73,6 +83,14 @@ the declared strong binding-signature predicate. The nested `worldmodel/**` evid
 other graph subtrees are outside this pass's declared layer, not silently treated as clean. The dirty
 working-tree copy of `estate-coverage-resolver.json` predated this seat; the census read only the pinned
 Git object and did not touch that delta.
+
+## Runtime integration seam
+
+The YAML is executable input, not a prose-only report. A future CRO~C integration seat can select an
+assessed `rows[]` object directly and map `concept`, population surface role, evidence anchors,
+resolution state/failures, owner, and vintage into atom_layer0 S0 without hand translation. The row
+schema and its own Rule-24/token-hygiene record are attached in the machine artifact. Concept-consumer
+discovery remains atom_layer0 S0 work rather than a guessed census field.
 
 The machine-readable source of truth is
 `ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml`; this document is its rendered view.
