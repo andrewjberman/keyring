@@ -145,6 +145,33 @@ def main() -> int:
         rec("C-NORMAL-PATH-INTACT", all(m["id"] != mid3 for m in again),
             "a properly drained row is NOT re-offered -- the cap did not weaken the healthy path")
 
+        # ---- F: THE BOUND HOLDS UNDER A CONVERGENCE-SHAPED ACCESS PATTERN ----
+        # COO's age-monotonicity hypothesis was FALSIFIED by DS~B (a 1-copy message reached 36,
+        # EQUAL to one 26 minutes older -- copies CONVERGE, they do not descend), and COO asked
+        # whether this fix depended on the dead model. Reading my own predicate says no: offer_count
+        # is a PER-ROW counter with no age term. But a reading is not a measurement, so: many rows
+        # of DIFFERENT ages polled together, repeatedly, which is the convergence shape. Under a
+        # whole-queue re-append the counts rise TOGETHER; the cap must still bound EVERY row.
+        ages = ["2000-01-01T00:00:00+00:00", "2010-01-01T00:00:00+00:00", "2020-01-01T00:00:00+00:00"]
+        ids = [post("/send-message", {"from_serial": "T", "to_serial": "SEAT_CONV",
+                                      "subject": f"conv{i}", "text": "x"})["message_id"]
+               for i in range(3)]
+        seen = {i: 0 for i in ids}
+        con = sqlite3.connect(str(db))
+        for _round in range(cap + 5):
+            for mid_i, age in zip(ids, ages):      # DIFFERENT ages, polled in the SAME cycles
+                con.execute("UPDATE messages SET polled_at=? WHERE id=?", (age, mid_i))
+            con.commit()
+            for m in post("/poll-messages", {"serial": "SEAT_CONV"})["messages"]:
+                if m["id"] in seen:
+                    seen[m["id"]] += 1
+        con.close()
+        rec("F-BOUND-UNDER-CONVERGENCE", all(v == cap for v in seen.values()),
+            f"3 rows of DIFFERENT ages polled together {cap + 5} rounds -> offers {list(seen.values())} "
+            f"(each capped at {cap}). The bound is per-ROW and carries NO age term, so it holds under "
+            f"convergence exactly as it does under a gradient -- the falsified hypothesis was never "
+            f"load-bearing for this fix")
+
         # ---- E: capping loses no CONTENT ----
         body = post("/delivery-state", {"message_id": mid})["messages"][0]
         rec("E-NO-CONTENT-LOSS", body["id"] == mid and body["subject"] == "cap",
