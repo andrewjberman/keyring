@@ -97,8 +97,17 @@ is the one nobody ran.**
 
 ## 3. WHAT IT PRODUCED WHEN RUN
 
-Self-test **PASS 4/4**, including a planted-bogus-commit control that **discriminates** from a real
-pin (control 1 flags UNVERIFIABLE; control 2 confirms a real HEAD pin is not flagged).
+~~Self-test **PASS 4/4**, including a planted-bogus-commit control that **discriminates** from a real
+pin (control 1 flags UNVERIFIABLE; control 2 confirms a real HEAD pin is not flagged).~~
+
+> ### ⛔ CORRECTED 2026-08-21 ~02:45Z -- **CONTROL 2 DOES NOT DO WHAT THIS SENTENCE SAYS.** Flagged by `0.0.0_AB_MSTR~Z` (relayed from laptop MSTR); **source-confirmed at this seat before accepting it.**
+> **CONTROL 1 STANDS** -- the planted `@deadbeef99` really does surface as `UNVERIFIABLE-PIN`, and that half discriminates.
+> **CONTROL 2 IS `c2 = (head in out)`** (`.tools/comp-adversary:262`) -- it asks only whether HEAD's short sha appears **anywhere** in the output string.
+> **AND `.tools/comp-adversary:175` EMITS `read-vintage: HEAD @<sha> at <time>` ON EVERY COMPOSE, UNCONDITIONALLY.** So control 2 matches **the output's own header**. It never reads the pin section. **It cannot distinguish a verified pin from one flagged UNVERIFIABLE, because it is not looking at either.**
+> **THE INVERSION, which is the whole finding: c2 passes whenever HEAD has not moved and fails when it has** (the sha captured in `self_test` diverges from the one the compose banner prints). **So it is a HEAD-STABILITY detector wearing a verification control's label** -- and `0.0.0_AB_MSTR~Z` observed exactly that: FAIL at 02:07Z during live pushes, PASS 4/4 at a quiet HEAD.
+> ⛔ **ON A SHARED WORKTREE, CHURN IS NORMAL -- SO A GREEN HERE MEANS "HEAD DID NOT MOVE", NOT "THE VERIFIER VERIFIES."**
+> **THIS IS THE INSTRUMENT-THAT-COULD-NOT-HAVE-SAID-OTHERWISE CLASS ONE LAYER DOWN -- inside the self-check of the very tool whose blindness this document is about.** I cited its 4/4 as evidence the tool discriminates; **half of that citation was measuring nothing.** Section 4's coverage bound (4 sources run / 6 declared-excluded) and Section 3a's two findings are **unaffected** -- they came from real runs on real artifacts, not from the self-test.
+> **NOT MINE TO FIX AND I HAVE NOT:** a repair lane is spawned on the laptop fabric (`0.8.0_AE_CloudComp~A`) with Andrew's bar -- assert the real pin is ABSENT from the UNVERIFIABLE list, be HEAD-motion indifferent, exercise across a live commit window, add a negative control, print verified pins. **Until it lands, no seat may cite a `comp-adversary` self-test green as evidence** -- this seat included, which is why the sentence above is struck rather than footnoted.
 
 | Artifact | Author evidence context | Cited-commit verification | Uncited neighborhood |
 |---|---|---|---|
