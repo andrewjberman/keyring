@@ -1,0 +1,2 @@
+C2_POSITIVE_SENTINEL
+This file is the isolated positive population for the comp-find attestation.

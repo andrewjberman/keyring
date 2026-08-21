@@ -1,0 +1,9 @@
+feat(nfra-epistemy): build instrument attestation harness
+
+Implement the proposed Discrimination_Certificate schema and local outcome
+engine with exact registry-term reuse, explicit independence crossings, and
+real invalidation-coordinate expiry.
+
+Run isolated positive and generated-negative controls for comp-find,
+comp-estate, and census_substrate; emit C1 observations and joined envelopes;
+and prove m1-m5 plus byte-stable determinism in the positional A1-A7 record.
