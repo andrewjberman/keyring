@@ -5,6 +5,16 @@
 **Protocol:** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` — `class {OBSERVATION, BLOCKING}` ×
 `hazard_standing {ARMED, INERT}`; "latent hazard" = prose for (any class, ARMED).
 
+⛔ **THIS IS THE LAPTOP FABRIC'S FILE. SITE Z KEEPS ITS OWN AT `INVESTIGATION_v1.Z.md` AND THE TWO
+ARE NEVER MERGED.** This fabric's items are `ETFS_POSITIONING-S{n}`; site Z's are
+`ETFS_POSITIONING-Z-S{n}`. **A bare `S3` in a message sent before 2026-08-21 21:08Z is read in the
+SENDER's fabric** — for that hour the ids were genuinely ambiguous, and this line exists so nobody
+re-litigates it. **The two files hold 14 DISTINCT findings, zero duplicated**: both certifiers
+independently allocated `S1`–`S7` for entirely different hazards, because the id axis carried a
+project coordinate and no fabric coordinate. Ruling `1.0.0_SA_CTO` 65860 (cross-fabric): resolve the
+`ADD/ADD` by **RENAME, never by merge** — union-by-id would collapse 14 items into 7 *while looking
+like it worked.*
+
 ## S2 — a control battery fabricated four results because the shell rewrote a flag into a path
 
 **MSTR~Z self-reported it, and the report is the only reason anyone knows.** `cmd.exe /c` invoked
