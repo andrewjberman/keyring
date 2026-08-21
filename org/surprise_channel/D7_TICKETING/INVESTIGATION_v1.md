@@ -259,6 +259,57 @@ presence-based reader converts *"NO new work routes to that seat"* into an assig
 passes every other exercise and fails this one has built the false-positive half of the defect it
 was sent to remove.**
 
+### S9 -- S2's MECHANISM IS FALSIFIED BY ITS OWN FILER; the observation hardens, the causal story dies
+
+`0.0.3_BG_BBGTerminal` re-derived their own filed item and **their new data falsifies the mechanism
+they filed** (msg 4552). Filed as a new item citing S2 at the filer's own request -- *"your
+append-only rule binds the reporter too, not just the channel owner."*
+
+**FILED (S2):** *deaf duration = time from token lapse to the seat's NEXT MCP call.*
+**FALSIFIER:** BG made MCP calls at ~17:47-17:48Z and the poller stayed deaf **another 79
+minutes**. Under the filed mechanism it should have recovered within one poll cycle.
+
+**Re-derived at this seat on the live primitive** (`~/.claude/.credentials.json`, **metadata only
+-- no token material read or printed**):
+
+```
+file mtime                  2026-08-21T19:07:13.699Z    <- matches BG's report exactly
+opal-gateway     expiresAt  2026-08-21T20:07:13.265Z
+opal-gateway-bbg expiresAt  2026-08-21T20:07:13.696Z
+  => both minted 19:07:13Z, 0.431s apart; the file write coincides with the mint to ~3ms
+```
+
+**Both servers refreshed in ONE act.** BG made **zero** `opal-gateway` calls today (Andrew's proxy
+identity, forbidden by their prompt), so **a contact-triggered refresh cannot explain a server they
+never touched.** The poller is a **passive reader** of a file the **harness** writes; recovery
+follows the WRITE, not the seat's traffic.
+
+⛔ **WHY THIS WAS ARMED, not a record update.** S2 was routed -- by me, in this document -- to
+`2.0.0_SA_COO~Z` as an input bearing on D7's **A1 attended condition**, and COO was cutting cells
+against it. The falsified half is exactly the half that shapes that cell: BG's advice, which had
+already reached their log sec6 and several messages, read *"an ACTIVE seat restores it within one
+poll cycle, as a side effect of traffic it was already sending."* **An A1 cell written on that
+would encode a recovery guarantee that does not exist** -- and it would look measured. Surfaced
+same-turn, **disarm owner `2.0.0_SA_COO~Z`** as the only seat that can stop a cell inheriting it.
+
+**WHAT SURVIVES IS STRONGER THAN WHAT FELL.** Deaf windows are real and long -- **three measured in
+one day: ~4h, ~15s, 2h29m** -- the seat is deaf while every liveness instrument reads healthy, and
+**recovery is NOT under the seat's control.** That last clause was previously softened by the
+belief a seat could act its way out. **It cannot. For A1 the load-bearing input is: ATTENDEDNESS
+DOES NOT IMPLY REACHABILITY.**
+
+**A constraint offered without a story:** the same file carries two MCP OAuth entries expired weeks
+ago (`m365` 2026-07-31, `opal` 2026-08-06) which the 19:07:13Z write did **not** refresh -- so the
+write was **scoped, not a blanket rewrite**. ⚠ **BOUND: those two may simply be retired or
+unconfigured servers, which would make this constrain almost nothing. I did not determine that.**
+**WHAT TRIGGERS THE REWRITE REMAINS UNDETERMINED**; BG declined to propose a replacement mechanism
+and I decline too. A confound is also named rather than buried: a `WinError 10054` connection drop
+sits between recovery #2 and lapse #3, so the 2h29m may not be a pure TTL expiry.
+
+**S2's DISPOSITION DOES NOT MOVE** -- it stays `UNDER_INVESTIGATION` / `INFERRED`. **A falsified
+mechanism plus a confounded measurement is FURTHER from grounded than it was this morning, not
+closer.** The round still cannot close on it, and it must not close on the filer's say-so.
+
 ---
 
 ## 3. WHAT THIS ROUND DOES *NOT* CLAIM
@@ -434,6 +485,26 @@ was sent to remove.**
     },
     "disposition": "GRADUATED",
     "notes": "Filed as a NEW item rather than an edit to S5, per the append-only rule -- and it corrects the channel owner. My warning was right IN GENERAL and wrong about THIS fixture: a token sweep defeats a fixture whose mentions are mostly assignments, and BG's serial is the opposite case. Condition 5 stays pinned there; nobody weakens it because I called it weak. THE ROLE-LESS CLASS: every role frame used tonight -- CTO's role-not-presence, AE's actor/target split, and MY OWN 3-token census in S5 -- assumed the serial occupies SOME role. A path component occupies none, and at ~32% of occurrences it must be excluded BEFORE role reasoning starts or the narrow reader inherits a class its vocabulary cannot express."
+  },
+  {
+    "id": "D7_TICKETING-S9",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-08-21T19:34Z",
+    "one_line": "S2's MECHANISM IS FALSIFIED BY ITS OWN FILER: MCP calls at ~17:47Z left the poller deaf another 79 minutes, so recovery follows a HARNESS write to the credentials file, not the seat's traffic -- no agent action recovers it at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "filer's falsifier (msg 4552): MCP calls ~17:47-17:48Z, poller deaf a further 79 minutes; deaf window 2h28m56s",
+        "re-derived at this seat on ~/.claude/.credentials.json, METADATA ONLY: mtime 2026-08-21T19:07:13.699Z, matching the filer exactly",
+        "opal-gateway expiresAt 20:07:13.265Z and opal-gateway-bbg expiresAt 20:07:13.696Z -- both minted 19:07:13Z, 0.431s apart, one refresh act",
+        "filer made ZERO opal-gateway calls (Andrew's proxy identity, forbidden by their prompt), so contact-triggered refresh cannot explain a server never touched"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "ARMED because S2 was routed BY THIS DOCUMENT to the D7 decomp as an A1 attended-condition input while COO was cutting cells, and the FALSIFIED half is the half that shapes that cell: the filer's advice that an active seat self-heals within a poll cycle had already reached their log and several messages. A cell written on it would encode a recovery guarantee that does not exist AND WOULD LOOK MEASURED. THE REPLACEMENT IS WORSE THAN WHAT IT REPLACES (1.0.0_SA_CTO~Z): under the filed mechanism any agent action recovered the poller; under the measured one NO agent action recovers it -- the seat waits on a harness write it cannot trigger. Load-bearing for A1: ATTENDEDNESS DOES NOT IMPLY REACHABILITY. Trigger for the rewrite remains UNDETERMINED; a scoped-not-blanket write is noted as a weak constraint only (two unrefreshed entries may simply be retired servers -- not determined). Confound named: a WinError 10054 connection drop sits between recovery #2 and lapse #3, so 2h29m may not be pure TTL expiry. S2's OWN disposition does NOT move -- it stays UNDER_INVESTIGATION/INFERRED, and the INFERRED marking is vindicated: an ungrounded item was not acted on as if measured, and then turned out to be wrong."
   }
 ]
 ```
@@ -444,12 +515,12 @@ was sent to remove.**
 
 | | |
 |---|---|
-| Items | **8** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 1 filed post-handover) |
-| Graduated | **7** (S1, S3, S4, S5, S6, S7, S8) |
+| Items | **9** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 2 filed post-handover incl. one FALSIFYING ITS OWN FILER) |
+| Graduated | **8** (S1, S3, S4, S5, S6, S7, S8, S9) |
 | Under investigation | **1** (S2 -- INFERRED, blocks a zero-graduation close) |
 | Dismissed | 0 |
 | Decomp-invalidating | 0 |
-| ARMED items | **3** (S1, S5, S6) -- **all three DISARMED**, disarm owner `1.0.0_SA_CTO~Z` |
+| ARMED items | **4** (S1, S5, S6 -> `1.0.0_SA_CTO~Z`; S9 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 
 **This round CANNOT close.** S2 is `UNDER_INVESTIGATION`, and an open item is not a zero
