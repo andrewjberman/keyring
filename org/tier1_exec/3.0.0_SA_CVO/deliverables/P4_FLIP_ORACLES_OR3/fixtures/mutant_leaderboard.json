@@ -1,0 +1,7 @@
+{
+ "/platinum/advi/49financial/leaderboard.json": {
+  "or3_shape_mutant": true,
+  "key": "leaderboard",
+  "note": "well-formed JSON carrying NONE of this key's hasAnyKey probe keys -- the adviKeyRepoint shape gate MUST record fallback-shape-mismatch and emit the LOUD [P4-REPOINT-49F] SHAPE MISMATCH marker. One fixture per key, never shared (d12-pair rule)."
+ }
+}

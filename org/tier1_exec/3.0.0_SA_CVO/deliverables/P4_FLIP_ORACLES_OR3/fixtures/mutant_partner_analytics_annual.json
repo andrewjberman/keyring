@@ -1,0 +1,7 @@
+{
+ "/platinum/advi/49financial/partner_analytics_annual.json": {
+  "or3_shape_mutant": true,
+  "key": "partner_analytics_annual",
+  "note": "well-formed JSON carrying NONE of this key's hasAnyKey probe keys -- the adviKeyRepoint shape gate MUST record fallback-shape-mismatch and emit the LOUD [P4-REPOINT-49F] SHAPE MISMATCH marker. One fixture per key, never shared (d12-pair rule)."
+ }
+}
