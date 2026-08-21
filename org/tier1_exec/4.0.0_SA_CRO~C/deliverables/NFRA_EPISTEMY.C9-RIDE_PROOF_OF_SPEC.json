@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "to_id": "NFRA_EPISTEMY.C9-RIDE",
+  "phase": "BUILD-GENERAL",
+  "spec_ref": {
+    "doc": "org/projects/NFRA_EPISTEMY.json",
+    "group": "OTHER",
+    "vintage_commit": "badfd6647f1b0232b9ca59693d5d1bbd4536fec8"
+  },
+  "assignee": "4.0.0_SA_CRO~C",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~C/deliverables/NFRA_EPISTEMY_C9RIDE/S0_GROUND_READ.json",
+      "kind": "config_data",
+      "commit_or_etag": "44e7426e45",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "repo-only program artifact; no deploy surface in scope",
+      "artifact_covered_by": ["N1"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~C/deliverables/NFRA_EPISTEMY_C9RIDE/phase2/PHASE2_EXERCISE.json",
+      "kind": "config_data",
+      "commit_or_etag": "62c3b50e93",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "repo-only program artifact; no deploy surface in scope",
+      "artifact_covered_by": ["N4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~C/deliverables/NFRA_EPISTEMY_C9RIDE/phase3/PHASE3_PROTO_RECORDS.json",
+      "kind": "config_data",
+      "commit_or_etag": "9648b6cedb (batch-5 boundary emit; final close emit in the close commit)",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "repo-only program artifact; regenerated at every batch boundary and at the close, ledger-derived",
+      "artifact_covered_by": ["N2"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~C/deliverables/NFRA_EPISTEMY_C9RIDE/scripts/phase3_emit_proto_records.py",
+      "kind": "script",
+      "commit_or_etag": "223f2d3dd4",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "repo-only emitter; COMPLETED derived from the run ledger, never hand-listed (the Run-36 View_Time_Compiled repair)",
+      "artifact_covered_by": ["N2"]
+    },
+    {
+      "path_or_key": "workflows/atom_layer0/runs/matrix/compile_resolution_matrix.py",
+      "kind": "script",
+      "commit_or_etag": "in the 65-close commit at HEAD badfd6647f's successor",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "repo-only; view-time compiler over the 65 bundles' S4 sections -- the exit deliverable's engine",
+      "artifact_covered_by": ["N3", "N5"]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "N1",
+      "criterion_verbatim": "Phase 1: S0 ground-read of landed bundles + Rule-24 pre-record for the proto-record status axes.",
+      "method": "schema_validation",
+      "invocation": "python scripts/s0_ground_read.py; committed @44e7426e45 with PHASE1_RULE24_PRERECORD_PROTO_RECORD_STATUS_AXES.md",
+      "output_evidence": "S0_GROUND_READ.json: 26 bundles read at vintage 958f505aa7 with denominators (bundles_found 26 / subject_dirs 26) and the absent-by-manifest predicate stated",
+      "denominator": "26 of 26 landed bundles at the Phase-1 vintage; the manifest queue excluded by predicate, not silence",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "N2",
+      "criterion_verbatim": "The proto-record emitter re-runs at every batch boundary with no roster maintenance (recurrence).",
+      "method": "command",
+      "invocation": "python scripts/phase3_emit_proto_records.py -- at the batch-4 boundary, the batch-5 boundary, and the 65-close",
+      "output_evidence": "close emit: 'DENOMINATOR: 65 records from 65 landed bundles; envelope-valid 63/65; substantive KNOWN 62 / UNKNOWN 3; ACQUISITION_FAILED_NO_BUNDLE 0'. The 2 INVALID are the known C3/Territory null population_predicate; the 3 UNKNOWN are the decomposed subjects, where refusing to fabricate an S3-derived record is the accepted behaviour (base, Phase-3 receipt).",
+      "denominator": "65 of 65 landed bundles at the close; picked up every new bundle at each boundary with zero roster edits",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "N3",
+      "criterion_verbatim": "Program primacy: the ride never blocks or reorders the ATOM_LAYER0 sequence; C9 work lands only at batch boundaries.",
+      "method": "manual_read_with_citation",
+      "invocation": "the run ledger's commit stream, read in order -- citations: Phase 1 @44e7426e45, Phase 2 @62c3b50e93, Phase 3 @223f2d3dd4, boundary emits @2d532c5b12 and @9648b6cedb",
+      "output_evidence": "all C9-RIDE commits sit at batch boundaries or the close (Phase 1 @44e7426e45, Phase 2 @62c3b50e93, Phase 3 @223f2d3dd4, boundary re-emits @2d532c5b12-family and @9648b6cedb, the close emit in the close commit); the 65-run sequence itself proceeded rank-ordered with no C9-caused gap",
+      "denominator": "every C9-RIDE commit in the window, enumerated against the sequence's rank order",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "N4",
+      "criterion_verbatim": "Phase 2: exercise the S6 Causal_Assessment_Object against >=3 real bundles with a planted NOT_EXERCISABLE control.",
+      "method": "schema_validation",
+      "invocation": "python scripts/phase2_exercise.py @62c3b50e93",
+      "output_evidence": "PHASE2_EXERCISE.json: 4 instances (3 real + 1 planted control), 4/4 schema-valid, never-as-run 5/5; the planted NOT_EXERCISABLE control took its intended terminal (the discriminating case)",
+      "denominator": "4 of 4 instances against the S6 schema; the control is the known-negative that proves the instrument discriminates",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "N5",
+      "criterion_verbatim": "File the proof-of-spec at the 65-term close (deferred to the close by agreement with base).",
+      "method": "schema_validation",
+      "invocation": "this document, validated against org/standards/PROOF_OF_SPEC.schema.json before commit",
+      "output_evidence": "jsonschema validation PASS (run in the close window; see the close commit); filed at the agreed path at the agreed moment -- the 65-term close",
+      "denominator": "1 of 1 required proof instance",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "One resolved:true flipped to false in a scratch copy of the substrate bundle (B-AXIS-DESIGN-DOC), then the resolution matrix recompiled against the mutant ledger.",
+      "expected": "resolved falls 193->192, unresolved rises 76->77",
+      "observed": "resolved 192, unresolved 77 -- exactly the expected movement",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "compile_resolution_matrix.py run twice at one HEAD; outputs byte-compared with cmp",
+      "observed": "byte-identical JSON across both compiles",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {"item": "The two proto-records for decomposed subjects C3 and Territory remain INVALID (null population_predicate)", "reason": "a DECOMPOSITION_FOUND subject has no S3 legislation stage to derive the field from; fabricating one would be the defect -- base accepted refusal-to-fabricate as the finding's point at Phase-3 receipt"},
+    {"item": "Boundary_Declaration's proto-record is substantive-UNKNOWN", "reason": "the third decomposed subject, landed after Phase 3's first emit; same refusal-to-fabricate class"},
+    {"item": "The S6 object was exercised against bundles, not against live estate incidents", "reason": "the TO's Phase 2 scope is bundle exercise; live-incident application is post-review work"},
+    {"item": "Cloud execution space", "reason": "out of scope for this seat across the whole program, per founding constraints"}
+  ],
+  "surprises": [
+    "The atom_layer0 sequence's own 246-binding S4 population is reconciliation-point-shaped (Run 58) -- offered to WS-C8's owed enumerator as an enumeration-not-enumerator, with the counting question (two undefined dimensions) routed upstream of it.",
+    "The manifest's original hand-listed COMPLETED roster was itself the View_Time_Compiled defect class its own subject legislates (Run 36) -- severed to ledger-derivation, which is why every later boundary emit needed zero roster edits.",
+    "Two committed bundles carried a wrong-plane framing (Runs 52/53, corrected @b1e173b2af) -- the contract's own section 4.3 names the error class; recorded as instance five, mirror direction."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO~C/logs/2026-08-21/session_close_al0_65term_close_0300-0810Z.md",
+  "compiler_tools": [
+    {"tool": "comp-adversary", "invocation": "--self-test; compose over the seq-58 bundle and over the resolution matrix", "result": "self-test PASS 4/4; declarations composed (2 commits verified, 21 uncited siblings declared); profiler found 0 file:line cites in this corpus -- the locator-grammar close item, declared"},
+    {"tool": "validate_run.py (the program validator)", "invocation": "per-run + whole-ledger sweeps throughout", "result": "65/65 rc=0 at the close; every intermediate FAIL diagnosed by reading the derive rule, never by guessing"},
+    {"tool": "compile_resolution_matrix.py", "invocation": "close compile x2 + mutant compile", "result": "270 bindings / 193 resolved / 76 unresolved / 1 undetermined; grep-independent recount reproduced exactly; mutant FIRED-AS-EXPECTED; determinism STABLE"}
+  ]
+}
