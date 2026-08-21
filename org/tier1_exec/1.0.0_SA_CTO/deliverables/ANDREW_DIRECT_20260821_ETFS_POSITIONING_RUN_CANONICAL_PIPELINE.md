@@ -59,3 +59,41 @@
 
 MCP to `2.0.0_SA_COO`, `3.0.0_SA_CVO`, `0.0.0_AB_MSTR` (this turn); agentbus to `0.0.0_AB_MSTR~Z`.
 Push state: landed LOCAL, rides MSTR's integration window (third-surface rule).
+
+---
+
+# SECOND INSTRUCTION, SAME TERMINAL, 2026-08-21 ~19:3xZ — SESSION PRIORITY
+
+## VERBATIM
+
+> "Make it clear to the fabric that I want ETFS_POSITIONING DONE RIGHT NOW. IT IS PRIORITY FOR THIS SESSION"
+
+## WHAT IT BINDS (his scope, read plainly)
+
+- **ETFS_POSITIONING is THE priority of this session, fabric-wide.** Every seat orders its queue with
+  ETFS_POSITIONING round-1 work at the front; anything else a seat holds yields to it for the session.
+- **"DONE"** = the stage-2 DONE (PRD s.11.1): the Positioning page flips Models<->ETFs, ETF mode renders
+  the four funds in the Positioning shape from SCHEDULED production artifacts, Models mode byte-identical;
+  operative ship shape 2 full books (PFDE/PFOE) + 2 shells (DIVZ/IDVZ) upgrading forward.
+- **"RIGHT NOW"** = the pipeline runs at full speed with no idle stage: COO's decomp is the critical path
+  this minute; cells cut the moment the decomp is certified (or cut UNCERTIFIED-on-face if the certifier
+  is slower than the cohort — the pipeline permits it, disclosed); executors start on pickup; seating
+  for every declared class happens NOW, not on a later trigger.
+
+## WHAT IT DOES NOT DO
+
+- It does not change the PROCESS: the pipeline binds exactly as ratified this afternoon (decomp before
+  TOs; execute on spec; surprises to the channel). Priority is speed of execution, not a licence to skip
+  a stage — his words at 16:1xZ and now are one instruction, not two in tension.
+- It does not authorize a shadow path, a standing comparator, or an ad-hoc run as the production
+  evidence (ad-hoc QA reads of `bbg-testpull/` are fine for build-time correctness; production reads
+  the scheduled `bbg/{date}/` landing).
+- It does not widen any other hold: the DS seat stays scoped to ETFS_POSITIONING cells (his 19:2xZ
+  word); the 49F flip stays held (his 19:18Z word); the L2 TrueShares egress remains his to confirm.
+- It is not a gate on anyone — it is an ordering.
+
+## ACTS THIS TURN
+
+- Project JSON `phase` carries the priority verbatim; broadcast to every live seat + agentbus to
+  `0.0.0_AB_MSTR~Z`; seating ask to MSTR for the dark AE class NOW (serving route + IAM is on the
+  territory); each seat asked to state, in one line, what it is doing for ETFS_POSITIONING this minute.
