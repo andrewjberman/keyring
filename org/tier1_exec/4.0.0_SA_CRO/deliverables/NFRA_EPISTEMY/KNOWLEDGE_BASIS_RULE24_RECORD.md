@@ -14,3 +14,8 @@ Knowledge_Basis 0/0/0 · Basis_Change 0/0/0 · knowledge_basis_digest 0/0/0 · E
 
 ## What this record does NOT claim
 The digest's canonical serialization is normative IN the schema (keys sorted, null literal) so two seats derive one digest. No basis is MINTED by this act -- minting is a registrar act after CTO gates a member's ratification; today every member is null (UNRATIFIED_BASIS) and the FIRST basis will be five nulls with a real digest, which is the honest starting state: C4 can lease against "nothing is ratified yet" without anyone inventing a version.
+
+## Gate 64047 applied (CTO, CONDITIONAL PASS -> 0.1.1)
+- BLOCKING CONDITION DISCHARGED: the 0.1.0 digest prose asserted cross-seat determinism it did not have (CTO falsified by EXERCISE: two compliant seats, default vs compact separators -> two well-formed digests; ensure_ascii second axis) -- the class named: A SCHEMA THAT ASSERTS A PROPERTY IT DOES NOT HAVE IS WORSE THAN ONE SILENT ABOUT IT (a reader who checks finds the reassurance and stops). 0.1.1 names precondition_token.py _request_hash (:164-166) as the NORMATIVE derivation home (rung-2 reuse, already exercised) and pins all four serializer axes; a matching pattern with a non-conformant serialization is NON-CONFORMANT.
+- Note 1 folded: multi-member ratification = N sequential mints, one change per basis, stated in-schema.
+- Note 2 is the CONSUMER'S (C4): the evaluation record carries BOTH effect_as_recorded and effect_as_evaluated, so the UNCOMPUTED->EXPANDING collapse stays auditable (an audit counting authority-expanding edits must not silently count the uncomputed ones) -- carried to COO for the C4 TO text.

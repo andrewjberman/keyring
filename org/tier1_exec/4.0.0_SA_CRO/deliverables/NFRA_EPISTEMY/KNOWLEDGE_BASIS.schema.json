@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "opal://nfra_epistemy/s2/knowledge_basis/0.1.0",
-  "title": "Knowledge_Basis (NFRA_EPISTEMY, PRD sec.2.3, PROPOSED 0.1.0)",
+  "$id": "opal://nfra_epistemy/s2/knowledge_basis/0.1.1",
+  "title": "Knowledge_Basis (NFRA_EPISTEMY, PRD sec.2.3, PROPOSED 0.1.1 -- CTO gate 64047 condition applied)",
   "description": "The pinned five-member basis every assessment and lease evaluation cites (PRD sec.2.3, cited not copied). A basis is IMMUTABLE once minted; a change mints a NEW basis and a Basis_Change record. A signature edit or normalization change invalidates eligibility as surely as a new member -- invalidation is an ELIGIBILITY event, never a history edit. S6 0.1.2's knowledge_basis field carries these five members inline with the UNRATIFIED_BASIS null semantic; this object is the standalone form C4-LEASE evaluates against. Authored at CRO base (registry executor, S2); CTO arch gate precedes any consumer; exercised leg = C4-LEASE's first evaluation. Rule-24 record: KNOWLEDGE_BASIS_RULE24_RECORD.md (same dir).",
   "type": "object",
   "additionalProperties": false,
@@ -20,13 +20,13 @@
         "outcome_vocabulary": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}}
       }
     },
-    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "sha256 over the CANONICAL serialization of members (JSON, keys sorted, null members serialized as the literal null -- the serialization rule is part of this schema so two seats derive one digest). This is the knowledge_basis_digest the Mutation_Capability (S5) and S6 instances carry."},
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "sha256 over the CANONICAL serialization of members. NORMATIVE DERIVATION (0.1.1, CTO 64047 -- the 0.1.0 prose ASSERTED cross-seat determinism it did not have; CTO falsified it by exercise on two silent serializer axes): the derivation HOME is precondition_token.py _request_hash (:164-166, exercised) -- json.dumps(members, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=True) with null members as the literal null, .encode(\"utf-8\"), sha256, prefixed sha256: -- all four axes PINNED (sorted keys, compact separators, ensure_ascii=True stated, UTF-8); any other serialization is NON-CONFORMANT even if the digest pattern matches. This is the knowledge_basis_digest the Mutation_Capability (S5) and S6 instances carry."},
     "minted_at": {"type": "string", "format": "date-time"},
     "minted_by": {"type": "string", "description": "seat serial; minting is a base registrar act after CTO gate on any member's ratification"},
     "predecessor_basis_id": {"type": ["string", "null"], "description": "ABSENCE SEMANTIC: null = the FIRST basis (no predecessor) -- never an unrecorded lineage"},
     "change": {
       "type": ["object", "null"],
-      "description": "The Basis_Change that produced this basis from its predecessor. ABSENCE SEMANTIC: null iff predecessor_basis_id is null (the first mint has no change). Change ops are classified by COMPUTED AUTHORITY EFFECT (PRD sec.2.3: Allowed(K_after) minus Allowed(K_before)), NEVER by opcode -- an ADD can contract and a RETIRE can expand; the opcode records WHAT was edited, the effect records WHAT IT DID.",
+      "description": "The Basis_Change that produced this basis from its predecessor. ABSENCE SEMANTIC: null iff predecessor_basis_id is null (the first mint has no change). Change ops are classified by COMPUTED AUTHORITY EFFECT (PRD sec.2.3: Allowed(K_after) minus Allowed(K_before)), NEVER by opcode -- an ADD can contract and a RETIRE can expand; the opcode records WHAT was edited, the effect records WHAT IT DID. MULTI-MEMBER RATIFICATION (0.1.1, stated so no seat improvises): a change touching N members is N SEQUENTIAL MINTS, each basis carrying ONE change on ONE member -- lineage preserved, one effect computed per edit; there is no multi-member change object by design.",
       "additionalProperties": false,
       "required": ["op", "member", "authority_effect", "effect_computation_ref"],
       "properties": {
