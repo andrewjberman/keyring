@@ -203,12 +203,13 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
     "CVO RAN THE TOOL: comp-routes edge-versions prints 'DYNAMIC (5) -- these auto-update on terraform apply' and marks all five [OK], INCLUDING the three pinned ones. The misreport is live, not merely documented",
     "the tool reads the locals-block REFERENCE and cannot see the ignore_changes that defeats it (lambda-edge.tf:46)",
     "the file's own header at :36-37: 'Apply publishes a NEW Lambda version and CloudFront KEEPS SERVING THE OLD ONE'",
-    "SHARPEST LIMB, CVO-measured: comp-routes' own coverage disclosure says it is DESIRED-plane and 'a pinned stale Lambda@Edge version reads identical here (see edge-versions for the pinning axis)' -- IT CROSS-REFERENCES THE READER TO THE ONE INSTRUMENT THAT GETS THIS WRONG"
+    "SHARPEST LIMB, CVO-measured: comp-routes' own coverage disclosure says it is DESIRED-plane and 'a pinned stale Lambda@Edge version reads identical here (see edge-versions for the pinning axis)' -- IT CROSS-REFERENCES THE READER TO THE ONE INSTRUMENT THAT GETS THIS WRONG",
+    "DISARM+REMEDIATION VERIFIED AT CVO'S SEAT 21:20Z on the LIVE distribution -- the instrument lambda-edge.tf:42-43 calls 'the ONLY one that catches it'. EVTSA9VEHNZVH: public-data-router v7 on BOTH /api/general/* and /api/general/json-tiered/* origin-request. THE VERSION ADVANCED, which is exactly what the qualified_arn pin would have prevented. AE also proved the fix effective BEFORE the apply: the plan showed the distribution updating in-place with -/+ lambda_function_association pairs, and WITH THE PIN IN PLACE THAT RESOURCE PLANS AS NO-OP -- so the plan itself discriminated fixed from broken. MY FIRST QUERY WAS WRONG AND I CAUGHT IT BEFORE REPORTING: I read LambdaFunctionAssociations.Items[0] and got auth-validator-edge v18, a DIFFERENT function -- each behavior carries three associations by event type. Reporting that would have been a FALSE REFUTATION of a true claim. Fourth instance tonight of an instrument answering a question I did not ask, cleanly; the first one caught before it left my seat."
    ]
   },
   "disposition": "GRADUATED",
   "disarm_owner": "0.7.0_AE_CloudOps",
-  "notes": "AE's SECOND self-correction tonight, against a sentence they had already put in the contract, a commit message and two sends. It is false in the direction that ships a silently non-working route. THE PART THAT GENERALISES: the warning about this exact tool blind spot was written TODAY, by AE'S OWN LANE, in the very file they were editing -- and they used the instrument it warns against. Same shape as MSTR~Z's fabricated battery and my own masked-exit-code repeats: DOCUMENTATION IS NOT A DISARM, third measured instance today, and this one had the doc in the same file as the hazard. The 22a rungs all PASS here -- clean plan, genuine 0-diff re-plan, a version really published, route green on the OLD code -- so a 0-diff re-plan is the SYMPTOM, not the reassurance. DISARM = drop qualified_arn from ignore_changes at :197 IN THE SAME COMMIT as the branch edit (the remedy the file prescribes at :54-58, exercised already on shared_advisor_router @1fb2ad4abb). REMEDIATION = after apply, read the LIVE distribution's association ARN -- per :42-43 the only instrument that catches it. Mint is THREE edits, not two. AE is NOT bundling the other two pins, correctly, per :52. DS/DE unaffected: route decision, key, URL, shape and vocabulary all unchanged -- this is HOW THE MINT LANDS, not what is built."
+  "notes": "AE's SECOND self-correction tonight, against a sentence they had already put in the contract, a commit message and two sends. It is false in the direction that ships a silently non-working route. THE PART THAT GENERALISES: the warning about this exact tool blind spot was written TODAY, by AE'S OWN LANE, in the very file they were editing -- and they used the instrument it warns against. Same shape as MSTR~Z's fabricated battery and my own masked-exit-code repeats: DOCUMENTATION IS NOT A DISARM, third measured instance today, and this one had the doc in the same file as the hazard. The 22a rungs all PASS here -- clean plan, genuine 0-diff re-plan, a version really published, route green on the OLD code -- so a 0-diff re-plan is the SYMPTOM, not the reassurance. DISARM = drop qualified_arn from ignore_changes at :197 IN THE SAME COMMIT as the branch edit (the remedy the file prescribes at :54-58, exercised already on shared_advisor_router @1fb2ad4abb). REMEDIATION = after apply, read the LIVE distribution's association ARN -- per :42-43 the only instrument that catches it. Mint is THREE edits, not two. AE is NOT bundling the other two pins, correctly, per :52. DS/DE unaffected: route decision, key, URL, shape and vocabulary all unchanged -- this is HOW THE MINT LANDS, not what is built. || S6 CLOSED 21:20Z: disarm (ignore_changes drop in the same commit) AND remediation (live association read after apply) both discharged, both verified here."
  },
  {
   "id": "ETFS_POSITIONING-S7",
@@ -231,6 +232,119 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   "dismissal_reason": "NOT A SURPRISE -- it is the PRD's own headline finding, measured three ways before stage 1, and the ship shape it implies is Andrew's own scope call. The spec already states what the deliverable CONTAINS. Nothing re-opens; no TO amendment. The 'unwired vs nonexistent' cell the reporter deliberately left open is also answered at source: NONEXISTENT via filepoint (trust boundary), while the TrueShares arm is the UNWIRED one whose wiring is the L2 design -- and L2 is the single cell gated on Andrew's egress word.",
   "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
   "notes": "FILED AT CTO'S EXPLICIT REQUEST SO THE RECORD SHOWS THE QUESTION ARRIVED AND WAS ALREADY ANSWERED, RATHER THAN THAT IT WAS NEVER ASKED. That distinction is the whole value of the row: a future reader who re-derives this absence from the data -- and they will, because a 4-fund universe with 2-fund holdings looks exactly like a defect -- needs to find it already adjudicated with citations, not discover it fresh and re-escalate. MSTR~Z routed it correctly under Rule 27 (a spec question goes to the issuer, not the executing seat), stated its bounds properly with denominators and an enumerated tree, and explicitly declined to guess on the open cell. NONE OF THAT IS WASTED BY THE DISMISSAL -- an independent re-derivation of a PRD premise from the data side is corroboration, and the GICS tie-out that rode along (105/109, 4 gaps = the 4 fund rows, weighted rollup matching s.3.1 by an independent route) is a genuinely NEW input for TO-1's vocabulary act."
+ },
+ {
+  "id": "ETFS_POSITIONING-S8",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "the comp-find census for the model-list membership fact is QUOTE-DELIMITED and structurally cannot match the same fact written as a bare object key, a fixed-length array, or a repeat(N) count -- true denominator 12, not 5",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DE measured: six further in-plane sites plus one silent-drop filter were invisible to the quoted pattern",
+    "DISARMED SAME TURN by DE: all 12 now derive from ONE declaration and the true denominator is printed in the AC1 row",
+    "the original five were RIGHT -- the pattern's DOMAIN was too narrow, not its matches wrong"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.4.0_DE_ClientPlatform",
+  "notes": "DISARMED SAME TURN BY ITS OWN FINDER, and filed ARMED rather than INERT because DE is explicit that DISARMED IS NOT REMEDIATED: the pattern will read CLEAN on the next census while saying nothing about the three forms it cannot see. THIS IS CLAUDE.md RULE 21's UNDERCOUNT SHAPE, WHICH THE LAW ITSELF NAMES AS THE DANGEROUS HALF -- a zero invites suspicion, a plausible non-zero does not. 5 of 12 is exactly the plausible non-zero."
+ },
+ {
+  "id": "ETFS_POSITIONING-S9",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "the LIVE Models artifact is served GZIPPED (ContentEncoding gzip, magic 1f8b, 8,111 B compressed / 73,522 B raw) while the ETF artifact CONTRACT states no Content-Encoding -- a producer MIRRORING the Models producer would naturally gzip, and gzip bytes without the header reach the browser as binary and fail JSON.parse",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DE measured via s3api head-object on the live Models artifact",
+    "plain JSON is a valid choice; the hazard is the MISMATCH between the template a producer would copy and the contract it must meet",
+    "DS is the seat that would trip it and the Models producer is the obvious template"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "notes": "ROUTED, NOT CHASED -- DE flagged it to the contract owner rather than editing the contract or warning DS directly, which is correct conduct under a frozen spec. ONE LINE IN THE CONTRACT CLOSES IT. The hazard is precisely that the WRONG choice is the one a CAREFUL seat makes by following the best available example."
+ },
+ {
+  "id": "ETFS_POSITIONING-S10",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "decomp ETFS-f-5 says 'the SIX DEF-band sites OUTSIDE the plane' and then ENUMERATES SEVEN",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DE's live census agrees with the LIST, not the numeral: DEF=11 = 4 in-plane + 7 out-of-plane",
+    "one component contributes two sites (:130 and :212), which is where the numeral slipped",
+    "the LIST is what binds AC6 and the list is correct"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
+  "notes": "INERT and correctly so: the criterion is 'untouched', DE touched none, and nothing downstream reads the numeral to act on. DE's forward-looking note is why it is filed at all -- A ROUND-2 CLEANUP KEYED ON 'six' WOULD LEAVE ONE BEHIND. A wrong count beside a right list is harmless until someone trusts the count instead of reading the list."
+ },
+ {
+  "id": "ETFS_POSITIONING-S11",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "the portal's ETF category constants are an input to the sub_asset_class vocabulary act and already contain all four fund tickers -- but as HOLDINGS INSIDE MODEL BOOKS, not as books; and the file's segment vocabulary is duration buckets",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DE read it in-plane while executing TO-3",
+    "the four tickers appearing in a role easy to conflate with the book role is the specific hazard",
+    "the duration-bucket vocabulary IS the model vocabulary AE warned DS not to reuse for an ETF book of single securities"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
+  "notes": "Reported per COO's instruction and explicitly NOT coordinated by DE -- correct mid-round conduct. Filed because it is CONCRETE IN-PLANE CONFIRMATION of AE's two-grains warning rather than a new claim, and a confirmation reached independently on a second plane by a second seat is worth more than the original warning restated."
+ },
+ {
+  "id": "ETFS_POSITIONING-S12",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "the holdings aggregate weighting treats a book with no AUM as zero in BOTH numerator and denominator, so the survivors still sum to exactly 1.0 -- an 'Aggregate' computed over a SUBSET is indistinguishable on screen from one computed over the whole set",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DE measured it in-plane during TO-3; PRE-EXISTING, not introduced by this round",
+    "no error, no empty state, no zero row -- a PLAUSIBLE WRONG NUMBER on a client-facing page",
+    "DE left the behaviour UNCHANGED under the frozen spec, collapsed two verbatim copies into one helper, documented it at the site, and added a field exposing which books were dropped"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "UNASSIGNED -- routed to 2.0.0_SA_COO (TO issuer) same-turn for assignment; see notes",
+  "notes": "THE SHARPEST ITEM IN DE'S SET AND THE ONE I WOULD PUT IN FRONT OF A HUMAN: it is CLIENT-FACING and it FAILS SILENTLY IN THE PLAUSIBLE DIRECTION. Renormalising over survivors means the number ALWAYS LOOKS RIGHT -- no missing row, no NaN, no empty state, nothing on screen that differs between an aggregate over all books and one over a subset. ARMED WITH NO DISARM OWNER, WHICH THIS SCHEMA REQUIRES: DE correctly declined to take remediation unilaterally under a frozen spec, so the ownership question is genuinely open and I am NOT assigning it myself -- routed to COO as TO issuer. WHAT DE DID DO IS THE RIGHT HALF: made the hazard VISIBLE without changing behaviour, converting an invisible failure into a detectable one with no off-spec write. DISARMED WOULD NOT EQUAL REMEDIATED HERE EITHER."
+ },
+ {
+  "id": "ETFS_POSITIONING-S13",
+  "surfaced_by": "0.4.0_DE_ClientPlatform",
+  "surfaced_at": "2026-08-21T21:04Z",
+  "one_line": "two pre-existing records: stray untracked directories in the portal tree, and a portal type declaring a returns period set that does not match the one the live artifact actually carries",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "(a) is the lingering-portal-CWD artifact TO-3's own placement note warns about -- not DE's, not touched, not committed",
+    "(b) is pre-existing type-vs-live drift on the MODELS path, unrelated to this TO, untouched"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
+  "notes": "Filed as RECORDS rather than findings. (b) is the two-homes-diverged shape one layer up -- A TYPE AND A LIVE ARTIFACT DISAGREEING, WHERE THE TYPE READS AUTHORITATIVE AND IS STALE. Inert here because nothing in this round reads it, but it is exactly the class Rule 22a warns produces a clean verdict on the wrong plane."
  }
 ]
 ```
