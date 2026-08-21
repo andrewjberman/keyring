@@ -156,6 +156,55 @@ landed keys. **exercised** -- the artifacts' own CONTENT read (114 rows, 111 sha
 4-fund vs 2-fund coverage join, and the 0-of-114 `source='trueshares'` measurement, each with its
 denominator printed.
 
+---
+
+## 9. THE SERVING SURFACE -- measured, and it REFRAMES tomorrow's call
+
+Andrew's deferred D4 question is a SERVING question, so I read what is actually served rather
+than reasoning from the silver tier.
+
+**`opal-data-etfs/platinum/etf_ownership_dashboard.json`** (6,404 B, written today 16:00:03Z) is
+the live served surface. It answers **"which partner firms own how much of the four Opal ETFs"** --
+`grand_total_ownership_value` $655,865,245.20 over a universe of exactly `["DIVZ","IDVZ","PFDE","PFOE"]`,
+three partners each.
+
+**IT HAS ZERO DEPENDENCY ON THE HOLDINGS FEED.** Token counts over the entire served document:
+`holding` **0** · `shares` **0** · `cusip` **0** · `security_name` **0** · `nav` **0** ·
+`net_assets` **0**. It is built from the partner ownership files (`daily/{partner}/{date}.json`),
+not from the issuer holdings draw.
+
+**So the section-4 defect degrades NOTHING that is currently served.** The two things sit on
+different axes: the dashboard is *who owns the ETFs*; the holdings feed is *what the ETFs hold*.
+**That makes Phase B a "should we build the look-through" decision, not a "we are broken, repair
+it" one** -- and those are different questions with different answers. Stating it because the
+section-4 finding, read alone, invites the second framing.
+
+**Second, and it cuts the other way:** the served dashboard covers **all four** ETFs including
+DIVZ/IDVZ. So the ownership axis is complete while the holdings axis is 2 of 4. **A reader of the
+dashboard has no signal that the look-through would be half-empty** -- which is precisely the sort
+of thing to settle before serving a look-through, not after.
+
+**Cadence note, EXPLICITLY NOT A STALENESS FINDING.** Per-partner: 49financial `as_of=2026-08-19`
+(1 day), inflection `as_of=2026-08-20` (0), cottonwood `as_of=2026-08-17` (3). Counting in TRADING
+days from Thursday 2026-08-20: 08-19, 08-18, 08-17 -- so cottonwood is three trading days back,
+**not** a weekend artifact, and the honest thing is to say so rather than reach for NEVER#1 as a
+dismissal. **But the producer is not frozen and I checked rather than assumed:** `daily/cottonwood/2026-08-17.json`
+was WRITTEN TODAY at 10:30:30Z, and `daily/49financial/2026-08-19.json` today at 10:45:11Z. **Our
+pipeline ran today and emitted the newest data the source carries** -- an upstream cadence fact,
+not a producer defect. The dashboard's own `freshness` cell reads `current` for all three, so its
+author treated a 3-day cottonwood lag as within declared cadence. **Open question for the D4 owner,
+not a finding from me: is cottonwood's 3-trading-day lag its DECLARED cadence?** If it is, nothing
+to do; if nobody has declared one, then `freshness: "current"` is a verdict with no bar behind it.
+*(Relevant beside today's Cottonwood work: that feed lands with a lag, and it is the ownership feed,
+not the supervised-AUM plane investigated separately today.)*
+
+**`monthly_context: {"available": false}`** -- last monthly report is `platinum/reports/2026-07/`
+written 2026-08-01, consistent with a month-end cadence not yet due for August. Flagged as an
+observation only; I did not establish whether `available:false` means "not due" or "lookup failed",
+and those are different, so I am not claiming either.
+
+---
+
 **Time plane pinned before any timestamp was quoted.** `aws s3 ls` rendered `2026-08-20 18:00:15`
 for the same object `s3api head-object` renders `Thu, 20 Aug 2026 22:00:15 GMT` -- the 4h EDT
 offset, proven on one object with both tools. **My own pre-fetch baseline recorded the historical
