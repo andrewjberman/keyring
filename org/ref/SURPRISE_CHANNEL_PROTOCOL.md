@@ -74,6 +74,16 @@ shas side by side) -- every graduated item that day was graduated by measurement
   class -- it describes an item's SCOPE-EFFECT on stage 3, a different intent; putting it here
   would flatten two axes onto one (the exact Rule-24(iii) trap the ratified dialogue caught).
 
+### Standing constraint on ANY future axis in this domain (adopted from COO's `dep_stage` record, ratified CTO 64978)
+
+**THE CHANNEL IS A PROCESS CONCURRENT WITH EXECUTION, NEVER A POSITION IN IT.** COO drafted a
+`CHANNEL` value on the pipeline-stage axis and CUT IT: surprises surface same-turn DURING
+execution, so `EXECUTING` and `CHANNEL` would be simultaneously true and MECE would break on day
+one. **Any axis that tries to hold this channel as a STATE hits that failure** -- which is why the
+three axes here classify ITEMS (handling path, disposition, disarm/remediation state) and none of
+them classifies the channel. Carried as a constraint rather than an anecdote because the next
+author of an axis that touches the channel will be tempted by exactly that value.
+
 Class specimens (2026-08-21): BLOCKING = twins published to a bucket no portal route reads
 (DE P4R-3). OBSERVATION = portal `tsc --noEmit` passes its own mutant (DE). LATENT_HAZARD =
 T-C (above).
