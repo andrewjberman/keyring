@@ -79,6 +79,20 @@
       "commit_or_etag": "151eaf7e4c",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
       "deploy_evidence": "S2 schema act: Knowledge_Basis 0.1.1 (CTO gate 64047 condition discharged, cleared by exercise 64059) -- the C4-LEASE unblock"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C4_LEASE_ELIGIBILITY_SPEC_CERT_20260821.md",
+      "kind": "doc",
+      "commit_or_etag": "053b83f414",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S3 cert: C4 Lease + Eligibility_Evaluation CERTIFIED-WITH-ONE-ADJUDICATED-DEVIATION (D1 EXPIRED ruling); CTO gate 64117 PASSES no conditions"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/KB_FIRST_BASIS_INSTANCE.json",
+      "kind": "config_data",
+      "commit_or_etag": "053b83f414",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "FIRST Knowledge_Basis mint: kb-20260821-6ce229dd, five nulls, digest via the imported normative home, deterministic x2, schema-validated; independently re-derived by COO with no prior"
     }
   ],
   "acceptance": [
@@ -105,8 +119,8 @@
       "criterion_verbatim": "PER-COMPONENT SPEC CERTIFICATION as lanes deliver -- envelope FIRST (its cert unblocks every downstream ingest); each cert reads the deliverable against the PRD section of record and names any cite-not-copy deviation as a finding.",
       "method": "manual_read_with_citation",
       "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md @8a60f96758 + org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C3_IDENTITY_OBJECTS_SPEC_CERT_20260820.md @8ab037f1b1",
-      "output_evidence": "FOUR certs ISSUED: envelope (CERTIFIED-WITH-CONDITION -> RE-CERTIFIED on the R1 landing); C3-IDENTITY objects (reach x standing split, gate confirmed); Precondition_Token (CERTIFIED-WITH-CONDITIONS, gate passed); Discrimination_Certificate (CERTIFIED zero deviations, exercised at base) -- each read against its PRD section of record with deviations named",
-      "denominator": "4 of 4 delivered component schema acts certified; every cert names its deviations (1 + 2 + 2 + 0)",
+      "output_evidence": "FIVE certs ISSUED (envelope; C3 objects; Precondition_Token; Discrimination_Certificate; C4 Lease+Eligibility) -- each read against its section of record with deviations named and adjudicated (1+2+2+0+1); every CTO gate cleared, the last with no conditions",
+      "denominator": "5 of 5 delivered component schema acts certified; deviations named per cert",
       "status": "PASS"
     },
     {
@@ -141,7 +155,7 @@
       "criterion_verbatim": "Proof instance VALID rc=0 positional S1-S7 at the program's first review milestone (envelope cert), re-validated at each subsequent cert; RAVC to COO, cc CTO.",
       "method": "command",
       "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY.SPINE_PROOF_OF_SPEC.json S1,S2,S3,S4,S5,S6,S7",
-      "output_evidence": "VALID rc=0 at the envelope-cert milestone and RE-VALIDATED at each subsequent cert (C3-IDENTITY 2158Z; Precondition_Token/C2/Knowledge_Basis sweep 0122Z); each run twice byte-identical (commit bodies)",
+      "output_evidence": "VALID rc=0 at the envelope-cert milestone and RE-VALIDATED at each subsequent cert (latest: the 5-cert build-wave close, 0141Z); each run twice byte-identical (commit bodies)",
       "denominator": "7 of 7 expected criteria carried; 0 extra",
       "status": "PASS"
     }
