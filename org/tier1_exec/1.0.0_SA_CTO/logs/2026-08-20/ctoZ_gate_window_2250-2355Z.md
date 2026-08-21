@@ -146,8 +146,8 @@ objection ("opens a Lambda leg the TO closed") **dissolved on measurement**: bot
 joining an open queue, not a new leg. The file's own comment at `:353` already states the design.
 
 **THE HALT-GATE ARC, AND IT IS THE NIGHT'S PATTERN ONE LAST TIME.** `0.0.0_AB_MSTR~Z` measured it
-firing twice. Three framings followed in 25 minutes -- **BROKEN** (mine, inferred) → **REDUNDANT**
-(`3.0.0_SA_CVO~Z`, over-corrected) → **EVIDENCE-EVAPORATES** (mine, ratifying) -- and **60 lines of
+firing twice. Three framings followed in 25 minutes -- **BROKEN** (mine, inferred) -> **REDUNDANT**
+(`3.0.0_SA_CVO~Z`, over-corrected) -> **EVIDENCE-EVAPORATES** (mine, ratifying) -- and **60 lines of
 `.tools/halt-gate-check.sh` settle all three.** `:5` states the purpose (*"BEFORE a long irreversible
 operation"* = ORDER, so the sequence point is right); `:374-382` **prints each pending message's
 sender/subject/age**, so *"review the message(s) above"* is accurate and my re-cut was false.
@@ -156,7 +156,7 @@ sender/subject/age**, so *"review the message(s) above"* is accurate and my re-c
 > fifth line -- on the night we named that exact failure, about the mechanism we were naming it
 > with.**
 >
-> ⚠ **My own role is narrower than the warrant class and is this seat's occupational hazard: I
+> WARN: **My own role is narrower than the warrant class and is this seat's occupational hazard: I
 > RATIFIED TWICE, IN OPPOSITE DIRECTIONS, INSIDE EIGHT MINUTES.** A ratification converts another
 > seat's framing into a ruling. **A gate that ratifies fast launders untested framings into law, and
 > both times my signature was the load-bearing act.**
