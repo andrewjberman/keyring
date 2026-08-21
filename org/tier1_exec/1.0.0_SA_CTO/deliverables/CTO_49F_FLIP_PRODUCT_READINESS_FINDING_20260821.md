@@ -74,6 +74,39 @@ closes.** The word "backfill" does not appear in any option until obtainability 
 regression today whatever the remedy costs. What changed is the card: history = port-ability test;
 geo = scoped build; office/leaderboard = measure first.**
 
+## ⛔ THE COMPLETE PASS (DE 65377, recursive array/key diff over ALL TEN certified keys) + the reconciliation read (CVO 65382)
+
+**NINE OF TEN certified keys carry material regressions; exactly one (`clients-tab-slim`) is
+clean.** Beyond the six portal-reachable keys above: `timeseries_chart` / `_full` adv.data 2,422 →
+774; **`ownership_map` SEVERE** — 198 arrays shrunk, 48 keys dropped, per-advisor accounts ~halved
+(kyle_sims 844 → 352), certified + published with no portal reader (any non-portal consumer gets a
+half-populated book). Geo donut is 48 → 1 segments, not merely "collapsed". **Ruled: hold three
+more (ownership_map, timeseries_chart, timeseries_chart_full); clients-tab-slim stays 'flip'.
+Final DEV census FLIP 1 / HELD 13 / STRUCTURAL 1 (DE @6d0403a5 + the three-row follow-up). THE
+CUTOVER IS STAGED, NOT LANDED.** This is the canonical plane's extent showing through every key
+that carries history, geography, office, or population — not per-key bad luck.
+
+**Reconciliation read (CVO, 2026-08-18, both planes, own reads):** BD `gold/canonical/performance`
+relationship-grain 3,092 rows, `sum(aua_current)` $1,809,106,006.08 (claiming 6,478 accounts) vs
+Schwab `canonical_valuation` account-grain 7,315 rows, `sum(net_mv_plus_cash)` $1,802,835,074.50 —
+**delta −$6,270,931.58 (−0.347%), account universes differ by 837, measures differ.** Consistent
+with one firm's two books; NOT a tie. The history half is therefore a **scoped reconciliation
+program with a measured starting delta** (explain the basis difference, reconcile grain + universe,
+THEN splice) — never "a port," never "a backfill." CVO's quotable BD span: 2,422 partitions
+2020-01-02..2026-08-19 (holdings 2,423 from 2020-01-01). **Owner needed (bd lane):** every BD gold
+history object carries LastModified 2026-08-21T00:51Z — the whole plane was written this morning
+and is not long-settled; that goes on the reconciliation program's first page.
+
+**Exposure question CLOSED — nothing was exposed at any point.** Andrew-direct at the COO terminal
+~17:24Z, VERBATIM: *"DEV is fine dont worry about it thats purely local on my device"* (COO 65395,
+recorded + broadcast). Corroborated independently by DT (65401) and AE (65407), full 3-workflow
+denominator with a positive control: `ci.yml` (DEV) has ZERO aws/s3/cloudfront refs (its one
+"upload" is a GitHub Actions artifact); `deploy.yml` is the ONLY deployer and triggers on PROD alone
+(4 publish refs); `promote-to-prod.yml` is manual dispatch. **The DEV branch deploys nowhere;
+origin/PROD is untouched at 8a96c916; the deployed client bundle predates the flip and requests
+legacy URLs.** AE's route measurement (the router WILL serve twin bytes to a valid token) is true on
+the route plane and has no consumer — two planes, and the exposed one has no reader.
+
 ## Why the afternoon's controls were right and still missed this
 
 Pins measure values against DECLARED bands; certs cover route + value planes; the consumer-plane
