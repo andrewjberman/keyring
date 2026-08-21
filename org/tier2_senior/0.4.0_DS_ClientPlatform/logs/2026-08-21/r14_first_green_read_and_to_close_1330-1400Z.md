@@ -128,3 +128,54 @@ landed-partition verify) — PASS, 15 objects; the chain CLI itself (the exercis
 
 **State:** chain's live legs are CVO's pins + MSTR's LD-0090 amendment word; nothing waits at my
 seat. Standby on Monitor `bwtghhoe9`.
+
+---
+
+## ADDENDUM 2 — 14:25–15:15Z: the 10-key FIRST EMISSION (P4-EMIT executes the determination)
+
+Fast sequence: COO seated (LD-0440) and ruled the criterion amendment (64731: limb (a) split
+(a1)/(a2) + (a3) provenance + (a4) restatement disclosure; my routed no-log finding answered —
+structural: the `_logs/` upload is the SSM document's, not the entrypoint's; my verbatim log
+uploaded to `_logs/chain_adhoc_qa_20260821T1411Z_DSB_date0819.log`, 9,795 B ETag-verified,
+attribution corroborated by CTO 64735). CVO's group pin CLOSED @28bb34a56d (15 files, 4,613,107
+fields, ZERO undeclared divergences; my 08-19 fill + log cited in every file). CTO+COO
+determinations composed independently and MATCHED per-key (64760/64755): **10-KEY FLIP** (9
+clean + mix_summary) / HOLD 4 (gapped-ledger + the $56.7M composition-moved s2 finding) / d14
+structural.
+
+**My leg — the twins publish, executed:**
+1. Grant verified at the record: AE P4-PUBIAM grant-live 08-19 16:12Z (sim-proven, ledger
+   closed); port write gate = `--publish` + `OPAL_ADVI_PUBLISH_GRANT=1`.
+2. The port could not EXPRESS the determination (d13's `multi` publishes all three trio
+   leaves) → **`--hold-leaves` @1c9c3501bc**: held rows build/shape-check/hash/manifest but
+   structurally cannot reach publish_one; unknown hold-leaf REFUSES rc=2 (control EXERCISED:
+   typo'd leaf refused pre-staging — must not fail toward publishing a held key). COO 64771
+   ratified the shape: "a determination carried only in an operator's --keys argument is care;
+   this is a control."
+3. Dry-run at asof=2026-08-20 → 9 WOULD_PUBLISH + monthly HELD + mix_summary INPUT_MISSING →
+   a07 pair staged locally from the chain-landed 08-20 partition (the port's "no S3 home"
+   annex note is STALE — surfaced, not chased) → mix_summary clean.
+4. **LIVE PUBLISH 15:03–15:04Z: 10/10 PUBLISHED, root MINTED** at
+   `s3://opal-data-portal-v2/platinum/advi/49financial/`; immutable manifest
+   `_manifests/2026-08-20/933dfc1bf6b1.json` + latest.json. Verified THREE independent times:
+   port 13c per-key listing, my s3api listing (exactly 10 data keys + 2 manifests, no held key),
+   COO's own s3api listing 15:05:54Z (64771 — present/absent from ONE call, controlled).
+5. COO's evidentiary note banked: the manifest evidences the hold for PA-monthly ONLY; the
+   other three held keys rest on absence-from-`--keys`, so the S3 LISTINGS are the load-bearing
+   evidence for those — on the record at 64771, not reconstructed later.
+6. Proof instance `PROOF_OF_SPEC_P4EMIT_49F_emission-cleared-set_20260821~B.json` VALID rc=0
+   over P4E-1..P4E-8 (first instance under this TO; group grammar initiated; two schema-conform
+   passes — the checker caught 14→3→1→0 violations, including the artifact-coverage
+   zero-battery class).
+
+**Disclosures carried:** d12 pair byte-identical (7,260,521 B both) — CORRECT while the
+canonical domain (774d) sits under the 1,091d window; nna_atomic aliased 07-15→asof (dormant,
+declared); inputs staged once from the scheduled S3 partition, re-consumed pre-staged.
+
+**Compiler Tools (addendum 2):** comp-find (P4-PUBIAM census 27/14,814; PROOF_OF_SPEC_P4EMIT
+measured zero); commit-gate PASS; proof-of-spec-check VALID rc=0; s3api pre/post listings
+(rail-checked); the port CLI itself dry-run→live.
+
+**Chain state at close:** DE repoint = live leg (MSTR spawn call, triggered by my 64766);
+promote order MUST say 10 keys (COO 64771 verbatim). Held-key emission = future group on
+future clearance; d14 on DS~A's xwalk heal. My seat: standby.
