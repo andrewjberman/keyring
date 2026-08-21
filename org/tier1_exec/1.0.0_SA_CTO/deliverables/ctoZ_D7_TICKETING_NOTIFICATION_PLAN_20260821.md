@@ -24,7 +24,14 @@
 - **WE-4-PROHIBITED** (content-scope): events, description, source, created_by, status, claimed_by, assignee -- *stays withheld, unaffected by audience.*
 - **AUDIENCE-DEFERRED**: `title`, `requester.{email,name,firm}` -- **these are exactly the fields Andrew now asks for** (*"who is it from, subject line they included, body text"*).
 > **INTERNAL RELEASES THE DEFERRED SET AND ONLY THAT SET.** The seat's decision to keep the two reasons as two named tuples rather than one list is what makes this a **one-line re-cut instead of a re-derivation** -- had they been merged, releasing the audience half would have required re-litigating the prohibition half. **That is the payoff of a distinction made at authoring time.**
-> ⚠ **`body text` IS A NEW FIELD, NOT A RELEASED ONE.** It is neither in the prohibited tuple nor the deferred one -- W-E's cut carried `description` as **WE-4-PROHIBITED**. Andrew is now asking for the requester's submitted body **in an internal email**. **The prohibition was written for an undetermined audience; internal changes its basis.** This needs an explicit re-ruling at the gate, not a silent release under cover of the audience answer.
+> ⚠ **`body text` IS A NEW FIELD, NOT A RELEASED ONE.** It is neither in the prohibited tuple nor the deferred one -- W-E's cut carried `description` as **WE-4-PROHIBITED**.
+>
+> ### RULED 2026-08-21 ~06:3xZ (`1.0.0_SA_CTO~Z`): `description` IS RELEASED FOR THE INTERNAL EMAIL -- and the principle SHARPENS rather than bends
+> **The distinction that resolves it: IMMUTABLE INTAKE CONTENT vs EVOLVING TICKET STATE.**
+> - **WE-4's *pointer-not-home* guards against the email becoming a SECOND HOME for ticket state** -- against carrying something that can later **DIVERGE** from the ticket. **The requester's submitted body is authored ONCE, BY THE REQUESTER, and never changes. There is nothing for it to diverge from, so it cannot constitute a second home.**
+> - **WE-4's other limb -- no internal audit trail / routing / internal notes -- is about INTERNAL state leaking OUTWARD.** On an **internal** email that concern is **inapplicable by audience**, which is exactly what Andrew's ruling settles.
+> - **THE REST OF THE PROHIBITED TUPLE STAYS PROHIBITED, FOR THE UNCHANGED REASON:** `events`, `source`, `created_by`, `status`, `claimed_by`, `assignee` **ARE state and DO evolve.** Any of them in an email is a copy that goes stale the moment someone claims the ticket. **That is the second-home defect, and the audience answer does not touch it.**
+> **SO THE RULE IS NOT "internal means send everything."** It is: **the email may carry the INTAKE SNAPSHOT in full, and NO STATE.** A future reader who adds `status` because *"we already relaxed WE-4"* has misread this ruling.
 
 ---
 
@@ -42,6 +49,30 @@ resolve_recipients(firm) -> [addresses]
 
 **FORBIDDEN BY THIS DECLARATION:** a single hardcoded DL constant, or a `TICKET_DL` env var consulted directly at the send site. Either makes the eventual split a code change across the send path.
 **REQUIRED:** a resolution seam with the firm as its key, whose current configuration happens to be uniform. **The uniformity is DATA, never STRUCTURE.**
+
+> ### CORRECTED ~06:3xZ -- I CALLED THE RE-CUT "ONE LINE" AND THAT IS TRUE OF ONLY HALF OF IT
+> I told the build seat that INTERNAL makes this *"a one-line re-cut."* **True of the FIELD half; FALSE of the RECIPIENT half -- and the recipient half is in code already shipped.** Raised by `0.5.0_AE_OpalETL~Z`, AST-measured, re-derived independently at this seat:
+> ```
+> L122  module scope   TICKET_DL = os.environ.get("TICKET_DL", "").strip()
+> L444  notify_dl      if not TICKET_DL:
+> L452  notify_dl      msg["To"] = TICKET_DL
+> L453  notify_dl      send_raw_email(..., Destinations=[TICKET_DL], ...)
+> resolve_recipients defined: FALSE   |   notify_dl signature: (item) -- NO firm parameter
+> ```
+> **That is verbatim the shape the declaration forbids.** The uniformity is currently **STRUCTURE** and must become **DATA**.
+> **This is not a defect in an accepted stage** -- W-E's criterion set never mentioned per-firm resolution and the declaration post-dates the build. **It is the re-cut's true size, surfaced while the plan is unratified and cheap to shape**, rather than discovered against a TO written for "one line."
+
+### 1a. THE THREE REFUSAL CELLS -- ruled, because conflating them is the predictable error
+`0.5.0_AE_OpalETL~Z` flagged that WE-5's refuse-if-unset rests on **a bare string being empty**, and after the seam must rest on **the RESOLUTION**. Correct -- and it forces a grain split that Q4 as first posed did not have:
+
+| cell | condition | ruled behaviour |
+|---|---|---|
+| **UNCONFIGURED** | no recipients configured **anywhere** | **REFUSE LOUDLY** -- `DLAddressUnset`. WE-5 verbatim, **not negotiable**. |
+| **UNKNOWN FIRM, default present** | firm has no specific row; a default exists | **resolve to the default.** Today that is *every* firm -- the normal path, not an edge. |
+| **UNRESOLVABLE** | per-firm rows exist, firm matches none, **and no default** | **REFUSE LOUDLY.** A config that can silently drop a real client request is the defect. |
+
+> **THE FAILURE THIS PREVENTS, in the seat's words: a resolver that returns `[]` for an unmapped firm and proceeds is "a silent no-op wearing a successful send's clothes" -- and it is strictly EASIER to write than the refusing version.** WE-5's exercise must be re-pointed at the resolver, never retired with the string.
+> **WHAT REMAINS ANDREW'S (Q4, narrowed):** only the middle cell, and **only once firms are actually split** -- should an unrecognised firm then reach a catch-all, or refuse? **Today it is moot**, since uniform config makes unknown-firm behaviourally identical to every known firm. That is exactly why it is safe to defer and dangerous to hardcode.
 *(This is the same discipline the build seat already applied unprompted to the deep-link base -- it refused a baked route because a default string would pre-encode an answer. Same reasoning, one layer out.)*
 ⚠ **Rule-24 note:** `firm` as a routing key must resolve for a request whose firm is **absent or unrecognised**. That is a real cell -- an intake form can carry a firm the estate does not know. **Refuse-if-unresolvable vs fall-back-to-default is a ruling, not an implementation detail**, and it is on the open-questions list (Q4).
 
