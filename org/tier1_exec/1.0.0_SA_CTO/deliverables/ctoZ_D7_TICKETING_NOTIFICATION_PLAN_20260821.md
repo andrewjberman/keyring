@@ -62,6 +62,29 @@ resolve_recipients(firm) -> [addresses]
 > **That is verbatim the shape the declaration forbids.** The uniformity is currently **STRUCTURE** and must become **DATA**.
 > **This is not a defect in an accepted stage** -- W-E's criterion set never mentioned per-firm resolution and the declaration post-dates the build. **It is the re-cut's true size, surfaced while the plan is unratified and cheap to shape**, rather than discovered against a TO written for "one line."
 
+### 1b. RE-CUT ITEM 3 -- 13 SUPERSEDED AUDIENCE ASSERTIONS, and the two neither other item sweeps
+Raised by `0.5.0_AE_OpalETL~Z`, re-derived here. Andrew answered the audience, so **13 lines across 3 files are now records that do not know they have been superseded** -- the class where the more precisely a reader cites one, the more confidently they are wrong.
+Most die naturally: the `DL_NOTICE_DEFERRED` block goes with the field collapse; the TF env block is rewritten by the seam.
+**TWO ARE SWEPT BY NEITHER ENUMERATED ITEM AND BELONG IN THE TO:**
+- `lambda_function.py` **L469**, inside `notify_dl_isolated`'s docstring -- *"...(and the audience is open)"*. **Flatly false now**, in a function neither the seam nor the field collapse touches.
+- `test_we_dl_notice.py` **L13**, the module docstring's stated reason WE-2/WE-3 are untested -- *"its audience is an open sovereign question."* **The row stays UBC (the DL's EXISTENCE is the real blocker) but the stated reason is now the wrong one.**
+⛔ **TWO LINES ARE STILL CORRECT AND MUST NOT BE SWEPT WITH THE REST:** L132 and L135 -- *"audience-independent"* / *"ORTHOGONAL to audience"* -- **that is WE-4's content-scope limb, which ruling 1 explicitly PRESERVED for state fields. A blanket pass over the word "audience" would delete the reasoning that ruling just sharpened.**
+Three more (L118, L411, TF L237) are **imprecise, not false**: they call the link route *audience*-dependent when it is now **Q3-dependent**. The refusal to bake it stands on the same logic, one question over.
+
+### 1c. ⛔ SEARCH HYGIENE FOR THIS ENTIRE ESTATE -- worth more than the list above
+The seat's first census searched `[Aa]udience`, returned **7**, and read the **Terraform as ZERO**. Re-derived at this seat, both arms:
+
+| search | `lambda_function.py` | tests | `main.tf` | total |
+|---|---|---|---|---|
+| `grep -cE '[Aa]udience'` | 4 | 3 | **0** | **7** |
+| `grep -icE 'audience'` | 8 | 3 | **2** | **13** |
+
+**6 of 13 missed -- 46% -- and one whole file returned a clean, confident zero.**
+> **THE MISS IS NON-RANDOM, AND THAT IS WHAT MAKES IT DANGEROUS. This estate writes its load-bearing words in ALL CAPS**, so a case-sensitive census drops precisely the emphatic, decision-carrying lines and keeps the incidental prose. The six missed here were `AUDIENCE-DEFERRED`, `IF A TASK'S OUTPUT WOULD BE BYTE-IDENTICAL UNDER EITHER AUDIENCE ANSWER`, and `PRE-ENCODE THE AUDIENCE ANSWER` -- **every one a ruling.**
+> **THE MORE IMPORTANT THE SENTENCE, THE LIKELIER IT IS MISSED.**
+> **What caught it was neither care nor a control** -- the author's *recollection* disagreed with the instrument and they opened the source rather than trust the count. **That is luck with good posture, and it is recorded as such.** The durable remedy is the flag: **any token census over these records runs case-insensitive.**
+> ⚠ **`comp-find` bands do not rescue this** -- a case-sensitive pattern excludes the hit before banding sees it.
+
 ### 1a. THE THREE REFUSAL CELLS -- ruled, because conflating them is the predictable error
 `0.5.0_AE_OpalETL~Z` flagged that WE-5's refuse-if-unset rests on **a bare string being empty**, and after the seam must rest on **the RESOLUTION**. Correct -- and it forces a grain split that Q4 as first posed did not have:
 
