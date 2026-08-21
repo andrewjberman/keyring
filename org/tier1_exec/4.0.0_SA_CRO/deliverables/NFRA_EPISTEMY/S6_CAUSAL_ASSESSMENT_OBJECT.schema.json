@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opal://nfra_epistemy/s6/causal_assessment_object/0.1.2",
+  "title": "Causal_Assessment_Object (NFRA_EPISTEMY S6, PROPOSED 0.1.2 -- CTO arch gate 63695 applied, ACCEPTED 63743; 0.1.2 = description-only F-S6-01)",
+  "description": "Source of record for the causal-assessment object (PRD_EPISTEMIC_MECHANIZATION sec.2.4/2.5). An assessment is IMMUTABLE; current eligibility is a SEPARATE object (Eligibility_Evaluation). Authored at CRO base as registry executor; exercised by 4.0.0_SA_CRO~C against real atom_layer0 bundles (C9-RIDE). Status PROPOSED; CTO arch gate 63695 PASS-TO-EXERCISE (2026-08-20 2042Z) applied in 0.1.1: (a) single-member status enum CUT (proposed-ness is the PROJECT status, never a per-instance field); (b) the required set AUDITED for honest-populability -- every field the producer cannot honestly fill at produce vintage is nullable WITH A DECLARED ABSENCE SEMANTIC (null means the named state, never omitted); (c) result_status is READ-ONLY-BY-CONSTRUCTION for every downstream consumer. Final acceptance follows the first real instance (4.0.0_SA_CRO~C C9-RIDE Phase 1) + CVO verify. Rule-24 record: S6_CAUSAL_ASSESSMENT_OBJECT_RULE24_RECORD.md (same dir).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assessment_id", "knowledge_basis", "scope", "candidate_relation", "hypothesis_sets", "evidence_vector", "counterevidence", "discrimination", "policy_ref", "result_status", "derivation_trace", "producer", "vintage", "support_pointers", "invalidation_predicates"],
+  "properties": {
+    "assessment_id": {"type": "string", "pattern": "^ca-[0-9]{8}-[0-9a-f]{6,}$"},
+    "knowledge_basis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hypothesis_space_version", "normal_form_version", "compatibility_policy_version", "scope_ontology_version", "outcome_vocabulary_version"],
+      "properties": {
+        "hypothesis_space_version": {"type": ["string", "null"]}, "normal_form_version": {"type": ["string", "null"]},
+        "compatibility_policy_version": {"type": ["string", "null"]}, "scope_ontology_version": {"type": ["string", "null"]},
+        "outcome_vocabulary_version": {"type": ["string", "null"]}
+      },
+      "description": "PRD sec.2.3 -- pinned; any change is an invalidation event for eligibility, never for history. ABSENCE SEMANTIC (gate 63695): null = NO RATIFIED ARTIFACT EXISTS for that basis member at produce vintage (UNRATIFIED_BASIS) -- a declared state, never an omission; the producer MUST NOT invent a version string. Each null member is an open invalidation predicate by construction (a lease cannot evaluate support it cannot name)."
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["defect_class", "subject_scope", "relevant_planes", "substrates", "time_window"],
+      "properties": {
+        "defect_class": {"type": "string"},
+        "subject_scope": {"type": "string", "description": "a PREDICATE over a DECLARED population -- canonical graph | atom_layer0 run ledger | registry | program manifest -- with the population NAMED in-field (0.1.2, F-S6-01: the first real instances were ledger/registry predicates; graph-only wording excluded them); never a hand roster. The population set is deliberately NOT an enum yet (YAGNI: no consumer branches on it); it becomes an axis with its Rule-24 record the day one does"},
+        "relevant_planes": {"type": "array", "items": {"type": "string", "enum": ["DESIRED", "APPLIED", "EXERCISED"]}, "minItems": 1},
+        "substrates": {"type": "array", "items": {"type": "string", "enum": ["aws", "portal", "codebase", "ms"]}, "minItems": 1},
+        "time_window": {"type": "object", "required": ["start_utc", "end_utc"], "properties": {"start_utc": {"type": "string"}, "end_utc": {"type": "string"}}}
+      }
+    },
+    "candidate_relation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cause_ref", "effect_ref", "relation_kind", "stated_as"],
+      "properties": {
+        "cause_ref": {"type": "string"}, "effect_ref": {"type": "string"},
+        "relation_kind": {"type": "string", "enum": ["CONTRIBUTED_TO", "NECESSARY_FOR", "SUFFICIENT_FOR", "CORRELATED_UNDER_POLICY"]},
+        "stated_as": {"type": "string", "const": "HYPOTHESIS", "description": "never a truth claim inside the object"}
+      }
+    },
+    "hypothesis_sets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["space_ref", "live_candidates", "tested_set", "known_residual", "exclusions"],
+      "properties": {
+        "space_ref": {"type": ["string", "null"], "description": "ratified Space per defect class, @version. ABSENCE SEMANTIC: null = NO RATIFIED SPACE for this defect class at produce vintage -- live_candidates is then PRODUCER-ENUMERATED and discrimination.declared_total MUST be false (a complement cannot be printed against a space nobody ratified)"},
+        "live_candidates": {"type": "array", "items": {"type": "string"}},
+        "tested_set": {"type": "array", "items": {"type": "string"}},
+        "known_residual": {"type": "array", "items": {"type": "string"}, "description": "counts as SURVIVORS under every outcome (PRD sec.2.4)"},
+        "exclusions": {"type": "array", "items": {"type": "object", "required": ["member", "reason_class", "evidence_ref", "lease_ref"], "properties": {
+          "member": {"type": "string"},
+          "reason_class": {"type": "string", "enum": ["RULED_OUT_BY_EVIDENCE", "NOT_ADDRESSABLE_BY_EXPERIMENT", "DEFERRED", "OUTSIDE_CLAIM_SCOPE"], "description": "only RULED_OUT_BY_EVIDENCE removes from live_candidates; the others stay in known_residual"},
+          "evidence_ref": {"type": ["string", "null"]}, "lease_ref": {"type": ["string", "null"]}
+        }}}
+      }
+    },
+    "evidence_vector": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false,
+        "required": ["axis", "value", "basis", "instrument_attestation_ref", "grounding", "failure_direction", "denominator", "denominator_grain", "plane", "vintage"],
+        "properties": {
+          "axis": {"type": "string", "enum": ["TEMPORAL", "DEPENDENCY", "CO_CHANGE", "RUNTIME_TRACE", "SUBSTRATE_DRIFT", "RECENCY_HEAT", "TOPOLOGICAL", "DECLARED_RATIONALE", "INTERVENTION"]},
+          "value": {}, "basis": {"type": "string", "enum": ["desired", "applied", "exercised"]},
+          "instrument_attestation_ref": {"type": ["string", "null"], "description": "ABSENCE SEMANTIC: null = the instrument is NOT ATTESTED at produce vintage (no Instrument_Attestation exists); the row is admissible as evidence only at basis desired, never as a discriminating row"},
+          "grounding": {"type": "string", "description": "file:line @ commit, tool+output, or live primitive -- a citation without a vintage is not a citation"},
+          "failure_direction": {"type": "string"},
+          "denominator": {"type": ["integer", "null"], "minimum": 0}, "denominator_grain": {"type": ["string", "null"], "description": "ABSENCE SEMANTIC (both fields together): null = the datum is UNFRAMED -- the producer cannot state what it is a count OF; an unframed row is inadmissible to discrimination (worst_case_residual / guaranteed_elimination exclude it) and the count of unframed rows is printed by the consumer, never hidden"},
+          "plane": {"type": "string", "enum": ["DESIRED", "APPLIED", "EXERCISED"]}, "vintage": {"type": "string"}
+        }}
+    },
+    "counterevidence": {"type": "array", "description": "ABSENCE SEMANTIC: [] = NONE RECORDED by the producer, never none-exists (a bundle cannot enumerate its own absences)", "items": {"type": "object", "required": ["description", "grounding", "vintage"], "properties": {"description": {"type": "string"}, "grounding": {"type": "string"}, "vintage": {"type": "string"}}}},
+    "discrimination": {
+      "type": "object", "additionalProperties": false,
+      "required": ["worst_case_residual", "guaranteed_elimination", "instrument_failed_rows_excluded", "declared_total", "unmodeled_mechanism_open"],
+      "properties": {
+        "worst_case_residual": {"type": "integer", "minimum": 0}, "guaranteed_elimination": {"type": "integer", "minimum": 0},
+        "instrument_failed_rows_excluded": {"type": "boolean", "const": true},
+        "declared_total": {"type": "boolean"}, "unmodeled_mechanism_open": {"type": "boolean", "const": true}
+      },
+      "description": "PRD sec.2.4 floor fields; INSTRUMENT_FAILED is operational, never evidentiary; UNMODELED_MECHANISM is mechanically unclosable"
+    },
+    "policy_ref": {"type": ["string", "null"], "description": "named + versioned task policy under which this assessment was produced. ABSENCE SEMANTIC: null = NO NAMED POLICY existed at produce vintage -- itself a finding the consumer surfaces (PRD sec.2.5: every assessment is produced under a policy; a null here is the pre-policy regime, declared)"},
+    "result_status": {"type": "string", "enum": ["INFERRED", "EXPERIMENTALLY_CONSISTENT", "DISCRIMINATED_WITHIN", "INTERVENTION_SUPPORTED", "SOURCE_OR_GRAPH_CONFIRMED", "CONTRADICTED", "UNKNOWN"], "description": "the scoped status ladder as PRODUCED at vintage; DISCRIMINATED_WITHIN carries (tested_set, known_residual, scope) by reference. READ-ONLY-BY-CONSTRUCTION FOR EVERY DOWNSTREAM CONSUMER (gate 63695): a produced status is a fact about an act at a vintage and never changes; CURRENT status is recomputed by Eligibility_Evaluation -- two objects, two clocks; a consumer that writes this field has silently merged the clocks, and the merge validates, which is why it is forbidden here and not detected downstream"},
+    "derivation_trace": {"type": "array", "description": "ABSENCE SEMANTIC: [] = HAND_DERIVED (no named rule consumed evidence) -- declared, so a rule-engine trace and a hand trace are never confused", "items": {"type": "object", "required": ["rule_id", "consumed_evidence_refs"], "properties": {"rule_id": {"type": "string"}, "consumed_evidence_refs": {"type": "array", "items": {"type": "string"}}}}},
+    "producer": {"type": "object", "required": ["agent_or_service", "version"], "properties": {"agent_or_service": {"type": "string"}, "version": {"type": "string"}}},
+    "vintage": {"type": "object", "required": ["graph_snapshot", "registry_commit", "observed_at_utc"], "properties": {"graph_snapshot": {"type": ["string", "null"], "description": "ABSENCE SEMANTIC: null = no graph snapshot id was addressable at produce vintage (registry_commit still binds)"}, "registry_commit": {"type": "string"}, "observed_at_utc": {"type": "string"}}},
+    "support_pointers": {"type": "array", "items": {"type": "string"}, "description": "the support closure for lease evaluation (stage 4) -- content-digest grain where the claim is about content. ABSENCE SEMANTIC: [] = NO SUPPORT CLOSURE COMPUTED -- the assessment is UNLEASABLE (an Eligibility_Evaluation over it returns UNKNOWN, never ELIGIBLE)"},
+    "invalidation_predicates": {"type": "array", "items": {"type": "string"}, "description": "ABSENCE SEMANTIC: [] = NONE DECLARED -- the lease then has no named decay test and the assessment is UNLEASABLE on this axis too (stated, so an empty list is never read as nothing-can-invalidate-this)"},
+    "interim_status": {
+      "type": "object", "additionalProperties": false,
+      "description": "PRE-ENVELOPE interim axis (ruling 63662/63664): DERIVED from a source run bundle's stage_states+terminal when a bundle exists; the explicit member ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST -- the declared layer is the MANIFEST SUBJECT, never the run set",
+      "required": ["value", "derivation", "manifest_ref"],
+      "properties": {
+        "value": {"type": "string", "enum": ["DERIVED_FROM_BUNDLE", "ACQUISITION_FAILED_NO_BUNDLE"]},
+        "derivation": {"type": ["object", "null"], "properties": {"stage_states_ref": {"type": "string"}, "terminal": {"type": ["string", "null"]}}},
+        "manifest_ref": {"type": "string", "description": "the manifest subject + vintage that makes the absence branch reachable"}
+      }
+    }
+  }
+}

@@ -51,6 +51,20 @@ the DIRECTIVES.yaml D2 stance refresh, MSTR-pushed).**
 **SLIDE RULE (corrected):** miss FRIDAY's 12:45Z fire and every row slides
 trading-day-for-trading-day from there; weekends never count (NEVER#1).
 
+## FRIDAY CARRIES TWO ACCEPTANCE EVENTS AN HOUR APART -- INDEPENDENT AND SEAT-DISJOINT
+(added ~2048Z on 1.0.0_SA_CTO's ask 63717, after the COT clock correction 63706):
+- 11:30Z -- COT_SUPERVISED G4/G4b acceptance fire (the cot chain's 7:30 AM ET schedule,
+  Andrew-direct 2026-08-14; NOT "tonight ~02:00Z" -- that anchor was deleted in the same
+  change and was held stale at four seats today). Readers: 0.6.2_AE_PartnerETL (served
+  bytes: +2 supervised columns on 18,051 unchanged rows; sidecar; bronze sentinel; the G4
+  belt's first real per-row test) and 0.2.0_DS_PortfolioAnalytics (G4b: sentinel + silver
+  consuming). Watch armed, emits on landing AND overdue.
+- 12:45Z -> 13:15Z -> 13:30Z -- the R14/D2 single-green chain above. Readers:
+  0.4.0_DS_ClientPlatform~B, 1.0.0_SA_CTO, 3.0.0_SA_CVO.
+- NO SEAT HOLDS A READ IN BOTH CHAINS. The COT readers have no R14 obligation; the R14
+  readers have no COT obligation. No read collides with its holder's other duty. Stated so
+  nobody discovers a phantom conflict under Friday's clock.
+
 ## NAMED READER PER GREEN (adopted from CVO's closing finding; moratorium-conforming --
 ## an owned read in the calendar, not notification machinery)
 Today's abort surfaced 3 hours late because no row named whose read confirms the green.

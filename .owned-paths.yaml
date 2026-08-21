@@ -1449,6 +1449,19 @@ paths:
   "org/ref/**":
     lane: ANY_EXEC
 
+  # /daily-sprint's daily text (org/sprints/DAILY_SPRINT_YYYY-MM-DD.md): a rotating-author status
+  # artifact, not a governance record -- the skill invites any exec to run it, so its commit step
+  # must resolve for any exec. Gap measured 2026-08-20 ~2113Z: 1.0.0_SA_CTO ran /daily-sprint on
+  # Andrew's word and safe-commit refused "UNDEFINED (no matching path rule)" -- the directory was
+  # minted with the skill the same day and carried no rule. Added by 0.0.0_AB_MSTR as GRANTOR +
+  # register/skill owner (SoD: CTO was the grantee and did NOT self-land; no override used).
+  # LANE = TIER0_TIER1_STARTUP_DOCS (MSTR + CTO/COO/CVO/CRO both fabrics), NOT ANY_EXEC: the first
+  # draft of this rule used ANY_EXEC, which does not enumerate MSTR, and refused the register owner's
+  # own commit one minute later -- a title is not a grant, measured on the grantor.
+  "org/sprints/**":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "/daily-sprint daily status text -- MSTR + every exec may author/commit; MSTR base owns the template + skill"
+
   "org/templates/**":
     lane: BASE_EXEC
     note: "PRD + session-log templates — CTO/COO authorship (ADHC_COMPIL.003; ADHC_OWNPTH.009)"

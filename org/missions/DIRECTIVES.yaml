@@ -1,4 +1,5 @@
 # org/missions/DIRECTIVES.yaml -- Andrew's Items 0-9 as a rollup over the mission register.
+# RETIRED rows live in DIRECTIVES_RETIRED.yaml (machine-cut by comp-directives; the retired view is 100% machine-written -- hand edits FAIL `comp-directives check`).
 #
 # >> DERIVED VIEW ONLY. TRIPWIRE (CTO, verbatim): "recomputable from missions.yaml alone or it is
 #    rejected." A row here carries NO paths, NO attach, NO holes -- attribution lives in
@@ -101,9 +102,15 @@ directives:
     members:
       subgroups: [EXTERNAL.49FINANCIAL]
       projects: [OPAL_ANALYST]
-    stance: "SITEZ: SharePoint access + BBG pipe builds (off proven W7/W8) -- MSTR coordinates,
-      cross-fabric issuance never-implicit; laptop: the GraphQL query layer (Andrew's spec file =
-      the one open input); the Analyst's ticketing duty (D7) lands as a named responsibility."
+    stance: "RE-SCOPED per Andrew-direct 08-20 ~2100Z (CTO terminal, VERBATIM): 'the D6 item is simply
+      proceeding past partner GraphQL, the current initiative has developed into the mechanics of the
+      agent and its interfacing with various tooling, particularly so in the capacity of the Ticket
+      Center. There is also much more work to be done in the case of the Opal Analyst so there is
+      certainly not going to be any retiring of that for some time.' v0 delivered + OPAL_ANALYST project
+      CLOSED 08-20 (/query/v0 live, catalog v0.3 on-instance); the directive CONTINUES: agent mechanics +
+      tooling interfaces (Ticket Center foremost), speed addendum (sec11, ingestion speed mechanics-first),
+      memory/thread persistence, perpetual-operator frame. NOT a retire candidate. Member set to be
+      refreshed as successor projects register (the closed member is the v0 project only)."
   D7:
     title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
@@ -116,15 +123,6 @@ directives:
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
       (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
       2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
-  D8:
-    title: "Philosophy + benchmark modal live-edit (this week)"
-    directive: "docs/architecture/D8_LIVE_EDIT_MODALS_PRD.md"
-    placement: "SITEZ -- RULED (Andrew ~19:37Z: 'D8 Live-Edit modals can be done by sitez that is low-risk and i dont care about it particualrly' @7416fb46d0). TWO MECHANICAL RIDERS: (a) TF/Lambda apply legs execute through a laptop lane as mechanical applies of sitez-AUTHORED config (sitez is not a TF-apply site); (b) the portal leg prices the first-act dev-build proof. The TO-C auth-surface ruling stays at the CTO gate regardless of device."
-    members:
-      subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [OPAL_INVPHL]
-    stance: "Days of work: server-side content store (small AE leg) + edit surface on both modal
-      families (DE-class) + CTO gates the auth surface (Opal-employee scope)."
   D9:
     title: "Tax SMA ops (NEW; assess-first)"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"

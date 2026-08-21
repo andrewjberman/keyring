@@ -29,3 +29,18 @@
 - 20260819T233632Z LEG L5 closed: APPLIED plane, live primitives: schedule mdpf-feeder-backstop-daily ENABLED cron(52 12 * * ? *); rule mdpf-feeder-accele
 - 20260819T233633Z LEG L6 closed: CATCH-UP 4 of 4 RECOVERED (denominator = the 4 cells frozen at 2026-08-18): model_aua_positions/inflection, model_compos
 - 20260819T233706Z CLOSED -- all 6 legs proven
+
+## Downstream confirm (THU 2026-08-20 T-1 emitter read -- the last open follow-on)
+- 20260820T181xZ DOWNSTREAM CONFIRM (0.7.0_AE_CloudOps): the feeder chain ran UNATTENDED today
+  and produced a HEALTHY T-1 A7 -- the regression is FULLY RETIRED, not just repaired-by-hand.
+  Trading calendar resolved FIRST (NEVER#1): 2026-08-20 Thu is a trading day; as_of_date=2026-08-20.
+  Evidence (opal-data-assets/gold/mdpf_revamp/_aggregate_aua/2026-08-20.json, s3api UTC):
+  WROTE 2026-08-20T13:31:06Z (10,101 B) -- the NORMAL daily cadence (08-15..18 all ~13:31Z),
+  NOT my 23:33Z manual 08-19 catch-up, so the scheduled/accelerator path fired on its own.
+  Content HEALTHY + UNFORCED: partners=2 (49financial + inflection, sentinel_2 missing=[]);
+  reconciliation overall=PASS (identities 1/2/3 + sentinels 1/2/3 all PASS); cross-validation
+  sentinel_3 diff $0.00 (WS-A == independent recompute $1,786,176,820.80); non_model_aua MOVING
+  on BOTH partners (49f 158,973,324.47 -> 159,048,325.09; inflection 64,930,140.19 -> 65,137,060.31);
+  headline $1,786,176,820.80 vs 08-19 $1,785,860,733.99 = a +$316K day-move, not the ~310M-light
+  failed-read shape. The backstop schedule + event accelerator built @cd84ea585d are doing their
+  job unattended; the cadence resumed cleanly the day after the repair.

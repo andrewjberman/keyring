@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "to_id": "2.0.0_SA_COO-2026-08-20-epistemy-c7-closure",
+  "firm": "FABRIC",
+  "phase": "NON-BUILD-OTHER",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO~B/task_orders/NFRA_EPISTEMY.C7-CLOSURE.influence-closure-and-d3-population.md",
+    "group": "OTHER",
+    "vintage_commit": "b30b05d006"
+  },
+  "assignee": "4.0.0_SA_CRO~B",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/src/influence_closure.py",
+      "kind": "script",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Component-local read-only compiler; no shared engine or cloud mutation.",
+      "artifact_covered_by": ["C7-1", "C7-2", "C7-3", "C7-4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/generated/d3_population.json",
+      "kind": "config_data",
+      "commit_or_etag": "sha256:e58b79e2899835263bc3e54876e2274627c022c7f00ee444ed3aa072ab1984d4",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Generated only after scratch mutants fired; 175/175 rows validate process origin.",
+      "artifact_covered_by": ["C7-1", "C7-2", "C7-3"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/generated/d3_population.observation.json",
+      "kind": "config_data",
+      "commit_or_etag": "sha256:b15ae40a5752b7054d505b8b42398ea666dc432f682f9dacbafa10e6232aaa2e",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Landed C1 validate_record plus independent CLI validator PASS.",
+      "artifact_covered_by": ["C7-4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/rule24/C7_AXES_AND_PREDICATES_PRE_RECORD.json",
+      "kind": "config_data",
+      "commit_or_etag": "ed742cd929",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Pre-act record committed before compiler authorship; no registry enforcement armed.",
+      "artifact_covered_by": ["C7-5"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE_PROOF_OF_SPEC.json",
+      "kind": "doc",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Machine-readable positional acceptance record.",
+      "artifact_covered_by": ["C7-6"]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "C7-1",
+      "criterion_verbatim": "The influence-closure compiler exists and closes over the DECLARED influence-edge population (sources enumerated, denominators printed).",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/scripts/run_acceptance.py",
+      "output_evidence": "overall=PASS; 175 rows; CODE_BINDING=10, TRIGGER_TARGET=163, INVENTORY_DESCRIPTOR=2; REACHED=172, NOT_REACHED=2, UNKNOWN=1, FAILED=0.",
+      "denominator": "175 generated closure rows from 10 Pass-3 rows + 162 materialized trigger-target edges + 2 descriptors + 1 explicit trigger-map residue",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7-2",
+      "criterion_verbatim": "THE D3 POPULATION IS PROCESS-GENERATED: produced by the compiler from declared inputs, never hand-authored; the planted hand-authored row is DETECTED (mutant fires).",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/scripts/run_acceptance.py --write",
+      "output_evidence": "hand_authored_d3_row FIRED with generated_by mismatch; 175/175 production rows pass generation_run_id and recomputed row_id; two runs byte-identical.",
+      "denominator": "1 planted hand-authored mutant; 175 production rows; 2 same-input production compilations",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7-3",
+      "criterion_verbatim": "Pass-3 code-grain rows consumed as an input (cited by vintage).",
+      "method": "manual_read_with_citation",
+      "invocation": "Read generated population generation.input_manifest and CODE_BINDING rows",
+      "output_evidence": "Pass-3 blob 18d49c1611b3b75c27302a22017d36a90c171346 at b30b05d006; all 10 Pass-3 rows generated 10 CODE_BINDING rows.",
+      "denominator": "10 of 10 Pass-3 binding rows consumed",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7-4",
+      "criterion_verbatim": "Interim status shape DECLARED (pre-envelope) OR envelopes EMITTED (post-envelope) -- stated which; unreachable edges surface as their declared state, never as silent absence.",
+      "method": "schema_validation",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/validate_envelope.py org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/generated/d3_population.observation.json",
+      "output_evidence": "C1 landed at 6f944857c4, so C7 emitted a C1 envelope; validator PASS. Unreachable mutant emitted NOT_REACHED, malformed mutant FAILED, source delta UNKNOWN.",
+      "denominator": "1 C1 envelope; all 4 closure terminals exercised across production plus scratch",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7-5",
+      "criterion_verbatim": "Rule-24 record for every axis the compiler declares; base registry-executes; CTO gates.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read rule24/C7_AXES_AND_PREDICATES_PRE_RECORD.json at ed742cd929",
+      "output_evidence": "Pre-act record covers edge_kind, closure_state, is_process_generated, and is_production_terminal with four postulates each plus a pre-adoption token census; route names Base registry executor and CTO architecture gate.",
+      "denominator": "2 of 2 declared axes and 2 of 2 declared predicates Rule-24 recorded before compiler authorship",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C7-6",
+      "criterion_verbatim": "Proof instance VALID rc=0 positional C7-1..C7-6; RAVC close via base to COO, cc CTO.",
+      "method": "schema_validation",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE_PROOF_OF_SPEC.json C7-1,C7-2,C7-3,C7-4,C7-5,C7-6",
+      "output_evidence": "proof-of-spec-check structural=jsonschema; acceptance rows=6; violations=0; VALID; close routes through CRO Base.",
+      "denominator": "6 of 6 positional acceptance rows",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Three mutations challenge provenance, reachability, and malformed-edge handling: a hand-authored D3 row, an unreachable edge, and a malformed edge.",
+      "expected": "The hand-authored row is rejected, the unreachable edge emits NOT_REACHED with no witness path, and the malformed edge emits FAILED rather than disappearing.",
+      "observed": "3/3 FIRED: generated_by mismatch rejected the hand-authored row; unreachable_edge emitted NOT_REACHED; malformed_edge emitted FAILED.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Compile the complete declared input population twice in independent scratch directories and compare canonical population and C1 observation bytes.",
+      "observed": "Both population and observation were byte-identical; population digest sha256:8aa480d643ece2b02d49675a9861d2d8942e179a401438a329ad372230f39415.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "NFRA_EPISTEMY Component 3 identity/support closure",
+      "reason": "Explicitly excluded by the task order and intent-postulate ruling."
+    },
+    {
+      "item": "PRD section 2.9 harm surfaces",
+      "reason": "Explicit open requirements; not buildable."
+    },
+    {
+      "item": "shared graph engines, AWS, gates, monitors, and enforcement",
+      "reason": "C7 is a component-local, repo-read compiler and generated population only."
+    },
+    {
+      "item": "subscriber instance population",
+      "reason": "No subscriber-instance source exists in the declared input bundle; printed as traversal residue, never inferred complete."
+    }
+  ],
+  "surprises": [
+    "trigger-map declares 154 triggers but materializes 153 keyed rows; one UNKNOWN D3 row preserves the denominator residue and the source-owner finding was routed to Base"
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/SESSION_LOG.md",
+  "compiler_tools": [
+    {
+      "tool": "C7 acceptance compiler",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/scripts/run_acceptance.py --write",
+      "result": "PASS; 175 process-generated rows; 3/3 mutants fired; two-run determinism STABLE"
+    },
+    {
+      "tool": "C1 observation validator",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/validate_envelope.py org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/generated/d3_population.observation.json",
+      "result": "Observation_Record validation PASS"
+    },
+    {
+      "tool": "proof-of-spec-check",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE_PROOF_OF_SPEC.json C7-1,C7-2,C7-3,C7-4,C7-5,C7-6",
+      "result": "VALID with 6/6 positional rows and 0 violations"
+    }
+  ]
+}

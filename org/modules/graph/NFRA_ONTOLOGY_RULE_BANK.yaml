@@ -339,6 +339,7 @@ dynamic_rails:
       transform_at_hop: "the hop's EdgeKind (D1.edgekind_semantic): passthrough | rename | recompute_guarded."
       cadence:          { forward_where_undeclared: true, note: "the contracted run-frequency. NOT a native edge/node property (see D3.graph_evidence -- FLOWS_TO props carry NO cadence key). SOURCED FROM D3 (a contract); forward where no contract is declared." }
     graph_evidence:
+      as_of: "5d1161d70c3 2026-07-23 (1.0.0_SA_CTO~Z census) -- counts TRUE-AT-THAT-VINTAGE, never live; 6 of 11 measured drifted from live by 2026-08-20 (atom_layer0 Run 26); re-stamp as_of on any re-count"
       flow_edges:    { FLOWS_TO: 961, WRITES: 562, READS: 712, WRITES_S3: 275, READS_S3: 323, EMITS_TO: 144, FETCHES: 109, PUBLISHES_TO: 36 }
       control_edges: { RUNS: 248, TRIGGERS: 145, INVOKES: 41 }   # the cadence SKELETON (who fires whom); the promised TIME is a D3 obligation
       cadence_nodes: { EVENT_RULE: 141, EVENT_SOURCE: 95, SCHEDULE: 10, STATE_MACHINE: 1 }
@@ -717,8 +718,9 @@ c4_verticals:   # v1.4: LAYER RENAMED C4 SEGMENTS (Andrew 2026-07-30) -- five ag
 c3_dual_partition:   # v1.6: projection labels ratified -- i. DETERMINISTIC STRUCTURES / ii. SEMANTIC VERTICALS (Andrew 2026-07-30: hammer deterministic-vs-semantic; never reuse 'Systems' in the projection language)
   status: 'RATIFIED 2026-07-30. The C3 grain carries TWO complete partitions of the same
     C2-instance ground set (chains); ONE SCHEMA: C4 -> C3(i|ii) -> C2 -> C1 -> C0.'
-  c3_i: 'DETERMINISTIC STRUCTURES -- DISCOVERED never declared: deterministic union-find over shared
-    constituents; the semantic pass is NAMING ONLY (ladder rung 1 borrows from C3.ii, an
+  c3_i: 'DETERMINISTIC STRUCTURES -- DISCOVERED never declared: deterministic overlapping-domain-cover
+    (anchor-node keyed) over shared constituents [R3 REPAIR 2026-08-20: union-find wording superseded, that
+    model measured to over-merge]; the semantic pass is NAMING ONLY (ladder rung 1 borrows from C3.ii, an
     intra-rung borrow). Population: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c3_deterministic_structures.'
   c3_ii: 'SEMANTIC VERTICALS -- DECLARED never discovered: the legislated business partition of
     the same chains. Population: NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c3_ii_semantic_verticals.'

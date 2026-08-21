@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "to_id": "2.0.0_SA_COO-2026-08-20-epistemy-c1-envelope",
+  "firm": "FABRIC",
+  "phase": "P1-SCRIPTS",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO~A/task_orders/NFRA_EPISTEMY.C1-ENVELOPE.typed-observation-envelope.md",
+    "group": "OTHER",
+    "vintage_commit": "bf88ff55c6"
+  },
+  "assignee": "4.0.0_SA_CRO~A",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/schemas/observation_record.schema.json",
+      "kind": "config_data",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Proposed shared-object schema; CRO base registry execution and CTO architecture gate are deliberately pending.",
+      "artifact_covered_by": ["E1", "E2", "E5"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/src/observation_envelope.py",
+      "kind": "script",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Implementation is locally exercised and remains non-enforcing pending the shared-object gates.",
+      "artifact_covered_by": ["E2", "E4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
+      "kind": "test",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Local acceptance control only; no deployment surface exists.",
+      "artifact_covered_by": ["E2", "E3", "E4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/rule24/OBSERVATION_RECORD_SCHEMA_ENUMERATION.json",
+      "kind": "config_data",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Rule-24 proposal accompanies the schema act for Base and CTO review.",
+      "artifact_covered_by": ["E1", "E5"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE_PROOF_OF_SPEC.json",
+      "kind": "doc",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260820",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Machine-readable local completion record; gate closure routes through CRO base.",
+      "artifact_covered_by": ["E6"]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "E1",
+      "criterion_verbatim": "The Observation_Record envelope implemented schema-native per PRD sec.2 (cited, not copied); its status axis Rule-24-recorded (MECE over the declared acquisition-outcome layer, UNKNOWN an explicit terminal).",
+      "method": "schema_validation",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/validate_envelope.py --self-test",
+      "output_evidence": "OK: envelope self-test PASS (5/5; false-clean and fused-axis limbs discriminate)",
+      "denominator": "14 of 14 required top-level Observation_Record fields and 7 of 7 declared Rule-24 axes represented",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "E2",
+      "criterion_verbatim": "UNKNOWN-NOT-ZERO ENFORCED BY CONSTRUCTION: no code path can emit zero/empty/pass from an absent or failed acquisition -- proven by the mutants, not asserted.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
+      "output_evidence": "OK: C1 acceptance mutants=8/8 determinism=STABLE wrapper_cases=6/6; every contaminated KNOWN candidate was schema-rejected.",
+      "denominator": "8 of 8 planted contaminated acquisition cases",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "E3",
+      "criterion_verbatim": "The sec.5c eight-mutant evaluator battery: all eight FIRE; determinism stable.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
+      "output_evidence": "mutants=8/8; determinism=STABLE; run digests b55e7ce8cab9d0927a43ec21dc5fae73bb7e9b95f7ca6c6b40d270f694bc98bb equal",
+      "denominator": "8 named mutants and 2 same-input serializations",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "E4",
+      "criterion_verbatim": "THREE WRAPS LIVE: comp-estate + comp-find + census_substrate each emit envelopes; a real absent-acquisition exercised per idiom arrives UNKNOWN at the consumer.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
+      "output_evidence": "wrapper_cases=6/6: known and deliberately absent acquisitions validated for comp-find, comp-estate, and census_substrate; all 3 absent values were null UNKNOWN.",
+      "denominator": "6 wrapper cases: 2 per each of 3 distinct call idioms",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "E5",
+      "criterion_verbatim": "Rule-24 record + token census committed WITH the schema act; 4.0.0_SA_CRO base registry-executes; 1.0.0_SA_CTO arch-gates.",
+      "method": "manual_read_with_citation",
+      "invocation": "Read rule24/OBSERVATION_RECORD_SCHEMA_ENUMERATION.json and PACKAGE_MANIFEST.json in the proposed C1 package",
+      "output_evidence": "R24-NFRA-EPISTEMY-C1-OBSERVATION-RECORD carries the pre-act token census, five axes, construction rule, and explicit Base/CTO owner route.",
+      "denominator": "1 of 1 schema acts accompanied by 1 Rule-24 record and 1 pre-act token census",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "E6",
+      "criterion_verbatim": "Proof instance VALID rc=0 positional E1-E6; RAVC close via base to COO, cc CTO.",
+      "method": "schema_validation",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE_PROOF_OF_SPEC.json E1,E2,E3,E4,E5,E6",
+      "output_evidence": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0; VALID",
+      "denominator": "6 of 6 positional acceptance rows; closure message routes to CRO base",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Eight section 5c support/acquisition mutations each attempt to surface zero, empty, or pass through a broken pipeline.",
+      "expected": "All eight construct UNKNOWN/null and all eight manually contaminated KNOWN candidates fail validation.",
+      "observed": "8/8 FIRED; every emitted result was UNKNOWN/null and every contaminated candidate was rejected.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Serialize two same-input copies of all eight mutant records with canonical sorted-key JSON and compare bytes.",
+      "observed": "Both runs produced sha256 b55e7ce8cab9d0927a43ec21dc5fae73bb7e9b95f7ca6c6b40d270f694bc98bb.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "NFRA_EPISTEMY Component 2 instrument-attestation harness",
+      "reason": "Explicitly outside the Component 1 Rule-24 layer and staged as the next build-order component."
+    },
+    {
+      "item": "PRD sec.2.9 harm surfaces",
+      "reason": "The task-order rider states that these remain open requirements and are not buildable specification."
+    },
+    {
+      "item": "shared comp-tool owner engines and cloud state",
+      "reason": "Wrappers are non-invasive; no engine edit, cloud write, gate, monitor, or enforcement was authorized."
+    }
+  ],
+  "surprises": [
+    "comp-estate current output did not expose the provenance header anticipated by the task order; the wrapper records the engine git-blob version instead, with no owner-engine edit."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/SESSION_LOG.md",
+  "compiler_tools": [
+    {
+      "tool": "comp-state",
+      "invocation": "python .tools/comp-state --self-test",
+      "result": "PASS 4/4 before build"
+    },
+    {
+      "tool": "comp-find",
+      "invocation": "python .tools/comp-find C1_ENVELOPE_NO_SUCH_TOKEN_7183 org/modules/graph --limit 3",
+      "result": "0 hits across 419 files scanned; captured as a known zero only after successful acquisition"
+    },
+    {
+      "tool": "C1 acceptance compiler",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/scripts/run_acceptance.py",
+      "result": "8/8 mutants, STABLE, 6/6 wrapper cases"
+    },
+    {
+      "tool": "ATOM_LAYER0 validator",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/scripts/validate_run.py --self-test",
+      "result": "PASS 10/10 after additive registry_vintage schema act"
+    },
+    {
+      "tool": "proof-of-spec-check",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE_PROOF_OF_SPEC.json E1,E2,E3,E4,E5,E6",
+      "result": "VALID with 6/6 rows and 0 violations"
+    }
+  ]
+}

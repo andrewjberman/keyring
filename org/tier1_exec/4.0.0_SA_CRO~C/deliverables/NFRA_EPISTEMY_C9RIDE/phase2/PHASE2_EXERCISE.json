@@ -1,0 +1,676 @@
+{
+ "artifact": "NFRA_EPISTEMY C9-RIDE Phase 2 -- S6 Causal_Assessment_Object 0.1.1 exercised against real bundles + planted NOT_EXERCISABLE control",
+ "seat": "4.0.0_SA_CRO~C",
+ "status": "PROPOSED",
+ "read_vintage": {
+  "repo_commit": "5ac358270f515da16629c6b39cf890797bac680d",
+  "s6_schema_commit": "85f64c7142e32c3ec22c145c38ee4c3ed196a7ca",
+  "s6_schema_id": "opal://nfra_epistemy/s6/causal_assessment_object/0.1.1",
+  "manifest_commit": "958f505aa72bdb2271471c1a9291bc688104ee77"
+ },
+ "denominators": {
+  "real_bundles_exercised": 3,
+  "controls_planted": 1,
+  "instances": 4,
+  "instances_schema_valid": 4,
+  "evidence_rows_total": 10,
+  "unframed_rows_total": 3,
+  "never_as_run_checks_passed": 5,
+  "never_as_run_checks_total": 5
+ },
+ "per_instance": [
+  {
+   "subject": "d2",
+   "bundle": "workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json",
+   "assessment_id": "ca-20260820-765c7bcb07b0",
+   "schema_errors": [],
+   "evidence_rows": 3,
+   "unframed_rows": 0,
+   "stage_class": {
+    "grammar": "decomposition_grammar@1.0.0",
+    "map": {
+     "s0": "ACQUISITION",
+     "s1": "ACQUISITION",
+     "s2": "ACQUISITION",
+     "s3": "ACQUISITION",
+     "s4": "ACQUISITION",
+     "s5": "METHOD_ACCEPTANCE"
+    }
+   },
+   "substantive_result_A5": {
+    "value": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only D2 authorities/rail-block/cross-rail-pointers/embedded-evidence/consumers at fb4d8589709074717dfa3fc74b262995be2bbdcb)",
+    "why": "certificate issued",
+    "residue": [
+     "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ]
+   }
+  },
+  {
+   "subject": "territory",
+   "bundle": "workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json",
+   "assessment_id": "ca-20260820-55ea982715da",
+   "schema_errors": [],
+   "evidence_rows": 3,
+   "unframed_rows": 2,
+   "stage_class": {
+    "grammar": "decomposition_grammar@1.0.0",
+    "map": {
+     "s0": "ACQUISITION",
+     "s1": "ACQUISITION",
+     "s2": "ACQUISITION",
+     "s3": "ACQUISITION",
+     "s4": "ACQUISITION",
+     "s5": "METHOD_ACCEPTANCE"
+    }
+   },
+   "substantive_result_A5": {
+    "value": "UNKNOWN",
+    "why": "acquisition stage absent/failed: s3=STAGE_NOT_ASSESSED(ACQUISITION)",
+    "residue": [
+     "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ]
+   }
+  },
+  {
+   "subject": "role",
+   "bundle": "workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json",
+   "assessment_id": "ca-20260820-e5aed5316993",
+   "schema_errors": [],
+   "evidence_rows": 3,
+   "unframed_rows": 0,
+   "stage_class": {
+    "grammar": "decomposition_grammar@1.0.0",
+    "map": {
+     "s0": "ACQUISITION",
+     "s1": "ACQUISITION",
+     "s2": "ACQUISITION",
+     "s3": "ACQUISITION",
+     "s4": "ACQUISITION",
+     "s5": "METHOD_ACCEPTANCE"
+    }
+   },
+   "substantive_result_A5": {
+    "value": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Role authorities/values/role_priority/composite-seam/consumers at f2ed5d5b12449d3849caa182d5a798b936244ff7)",
+    "why": "certificate issued",
+    "residue": [
+     "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ]
+   }
+  },
+  {
+   "subject": "SCRATCH_CONTROL",
+   "bundle": "phase2/scratch_control/scratch_control_not_exercisable/atom_layer0_run.json",
+   "assessment_id": "ca-20260820-3ed949b89ead",
+   "schema_errors": [],
+   "evidence_rows": 1,
+   "unframed_rows": 1,
+   "stage_class": {
+    "grammar": "decomposition_grammar@1.0.0",
+    "map": {
+     "s0": "ACQUISITION",
+     "s1": "ACQUISITION",
+     "s2": "ACQUISITION",
+     "s3": "ACQUISITION",
+     "s4": "ACQUISITION",
+     "s5": "METHOD_ACCEPTANCE"
+    }
+   },
+   "substantive_result_A5": {
+    "value": "UNKNOWN",
+    "why": "acquisition stage absent/failed: s3=STAGE_NOT_ASSESSED(ACQUISITION), s4=STAGE_NOT_ASSESSED(ACQUISITION)",
+    "residue": [
+     "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ]
+   },
+   "control_bundle_validation": {
+    "rc": 0,
+    "errors": [],
+    "derived_from": "workflows/atom_layer0/runs/scope/20260820T204941Z/atom_layer0_run.json",
+    "source_sha256": "0bd209e81556a0da017389a82c610fd7a49351c76a74166e6f27e1d06df8420c"
+   },
+   "never_as_run": {
+    "result_status_is_UNKNOWN": true,
+    "interim_terminal_is_NOT_EXERCISABLE": true,
+    "evidence_row_unframed_and_excluded": true,
+    "A5_substantive_result_is_UNKNOWN": true,
+    "control_bundle_valid_rc0": true
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F-S6-01",
+   "class": "FIELD_QUESTION",
+   "field": "scope.subject_scope",
+   "text": "The schema describes subject_scope as 'a PREDICATE over the canonical graph'. Assessments about registry/bank TEXT (all three real instances) are naturally predicates over the RUN LEDGER or the REGISTRY, not the graph. Either the wording admits 'a predicate over a DECLARED population (graph | ledger | registry | manifest)' or such assessments are out of the object's scope -- routed to base; this exercise wrote ledger predicates and said so in-field.",
+   "routed_to": "4.0.0_SA_CRO"
+  },
+  {
+   "id": "F-S6-02",
+   "class": "OBSERVATION",
+   "field": "evidence_vector[].basis vs plane",
+   "text": "In the pre-attestation regime every row is forced to basis=desired (attestation null) while plane may read APPLIED (the live kuzu compare). basis and plane therefore DIVERGE BY DESIGN: plane says WHERE the evidence was read, basis says HOW STRONG it is admissible as. Not a defect; stated so a consumer does not read basis as the read-plane.",
+   "routed_to": "4.0.0_SA_CRO"
+  },
+  {
+   "id": "F-S6-03",
+   "class": "OBSERVATION",
+   "field": "interim_status (control)",
+   "text": "The control is NOT a manifest subject; its interim_status.manifest_ref therefore points at the manifest with an explicit 'not a manifest subject' note. A control that must carry a required manifest_ref shows the field's domain is the manifest, which is correct -- the control lives outside it and says so.",
+   "routed_to": "4.0.0_SA_CRO"
+  },
+  {
+   "id": "F-S6-04",
+   "class": "OBSERVATION",
+   "field": "A5 stage_class (applied outside the object)",
+   "text": "Applied base's 63827 ruling: for the three real bundles s5=METHOD_ACCEPTANCE NOT_ASSESSED is carried as residue and substantive_result is the certificate/decomposition; for the control, s3/s4 ACQUISITION NOT_ASSESSED fire UNKNOWN. The rule discriminates the control from the real runs exactly as intended. The S6 object has no slot for it (additionalProperties:false) -- the PROTO-RECORD carries stage_class; printed beside each instance here.",
+   "routed_to": "4.0.0_SA_CRO"
+  }
+ ],
+ "instances": [
+  {
+   "assessment_id": "ca-20260820-765c7bcb07b0",
+   "knowledge_basis": {
+    "hypothesis_space_version": null,
+    "normal_form_version": null,
+    "compatibility_policy_version": null,
+    "scope_ontology_version": null,
+    "outcome_vocabulary_version": null
+   },
+   "scope": {
+    "defect_class": "UNDATED_EMBEDDED_MEASUREMENT",
+    "subject_scope": "bundles under workflows/atom_layer0/runs/ whose s4_resolution.contracts contain binding_id == B-GRAPH-EVIDENCE-UNDATED (predicate over the run ledger; NOTE: the schema wording presumes the canonical graph -- routed, see findings)",
+    "relevant_planes": [
+     "APPLIED",
+     "DESIRED"
+    ],
+    "substrates": [
+     "codebase"
+    ],
+    "time_window": {
+     "start_utc": "2026-08-20T21:14:15Z",
+     "end_utc": "2026-08-20T21:14:15Z"
+    }
+   },
+   "candidate_relation": {
+    "cause_ref": "bank#dynamic_rails.D2_path_flow.graph_evidence carries NO as_of/vintage key",
+    "effect_ref": "its 11 embedded edge counts cannot be adjudicated stale-or-current (6/11 differ from the live snapshot, 5/11 match)",
+    "relation_kind": "CONTRIBUTED_TO",
+    "stated_as": "HYPOTHESIS"
+   },
+   "hypothesis_sets": {
+    "space_ref": null,
+    "live_candidates": [
+     "H1 the embedded census is a copy that drifted and carries no moment (as_of absent)",
+     "H3 the counts were measured on a different plane/instrument than CloudEdge.edge_type and are not comparable"
+    ],
+    "tested_set": [
+     "H1 the embedded census is a copy that drifted and carries no moment (as_of absent)",
+     "H2 the embedded counts are current (no drift)"
+    ],
+    "known_residual": [
+     "H3 the counts were measured on a different plane/instrument than CloudEdge.edge_type and are not comparable"
+    ],
+    "exclusions": [
+     {
+      "member": "H2 the embedded counts are current (no drift)",
+      "reason_class": "RULED_OUT_BY_EVIDENCE",
+      "evidence_ref": "ev-SEMANTIC",
+      "lease_ref": null
+     },
+     {
+      "member": "H3 the counts were measured on a different plane/instrument than CloudEdge.edge_type and are not comparable",
+      "reason_class": "NOT_ADDRESSABLE_BY_EXPERIMENT",
+      "evidence_ref": null,
+      "lease_ref": null
+     }
+    ]
+   },
+   "evidence_vector": [
+    {
+     "axis": "TOPOLOGICAL",
+     "value": {
+      "seam_axis": "MECHANICAL",
+      "passed": true,
+      "claim": "Every named kind resolves."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "comp-kuzu:11/11 kinds exist live @ fb4d8589709074717dfa3fc74b262995be2bbdcb (snapshot 5048107528270383466) (via workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json#B-GRAPH-EVIDENCE-UNDATED)",
+     "failure_direction": "{\"clean_condition\": \"The counts drift further every graph build and the block keeps asserting them with no moment attached -- a reader takes 'LIVE: 961' as current.\", \"clean_detector\": \"This run's compare (5/11 / 6/11, denominator printed); no guard reads both planes.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": 11,
+     "denominator_grain": "embedded flow/control edge kinds",
+     "plane": "APPLIED",
+     "vintage": "fb4d8589709074717dfa3fc74b262995be2bbdcb (snapshot 5048107528270383466)"
+    },
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": {
+      "seam_axis": "DECLARATIVE",
+      "passed": false,
+      "claim": "The measurement does not declare WHEN it was true. A count without its vintage is the 'line citation without a vintage' class one layer up -- it cannot be checked as stale or current because it names no moment."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "graph_evidence:keys: flow_edges, control_edges, cadence_nodes, motif_topology -- NO as_of, vintage, or pin key @ fb4d8589709074717dfa3fc74b262995be2bbdcb (via workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json#B-GRAPH-EVIDENCE-UNDATED)",
+     "failure_direction": "{\"clean_condition\": \"The counts drift further every graph build and the block keeps asserting them with no moment attached -- a reader takes 'LIVE: 961' as current.\", \"clean_detector\": \"This run's compare (5/11 / 6/11, denominator printed); no guard reads both planes.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": 4,
+     "denominator_grain": "graph_evidence keys",
+     "plane": "DESIRED",
+     "vintage": "fb4d8589709074717dfa3fc74b262995be2bbdcb"
+    },
+    {
+     "axis": "SUBSTRATE_DRIFT",
+     "value": {
+      "seam_axis": "SEMANTIC",
+      "passed": false,
+      "claim": "The live layer does not carry the embedded counts. This is EVIDENCE, not authority -- no consumer resolves through these numbers -- so the severity is low; but as written the block makes a claim nothing can verify. PROPOSED (owner act, one key): `as_of: <UTC> @ <graph snapshot>` on graph_evidence, making the census TRUE-AT-A-VINTAGE. Same shape noted at D1.edgekind_semantic's LIVE counts (for D1's run)."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "comp-kuzu vs the block:5/11 match (FLOWS_TO 961, WRITES_S3 275, READS_S3 323, FETCHES 109, RUNS 248); 6/11 differ (WRITES 562->582, READS 712->735, EMITS_TO 144->139, PUBLISHES_TO 36->35, TRIGGERS 145->151, INVOKES 41->42) @ fb4d8589709074717dfa3fc74b262995be2bbdcb (via workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json#B-GRAPH-EVIDENCE-UNDATED)",
+     "failure_direction": "{\"clean_condition\": \"The counts drift further every graph build and the block keeps asserting them with no moment attached -- a reader takes 'LIVE: 961' as current.\", \"clean_detector\": \"This run's compare (5/11 / 6/11, denominator printed); no guard reads both planes.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": 11,
+     "denominator_grain": "embedded counts compared against live",
+     "plane": "APPLIED",
+     "vintage": "fb4d8589709074717dfa3fc74b262995be2bbdcb"
+    }
+   ],
+   "counterevidence": [
+    {
+     "description": "5 of 11 embedded counts MATCH the live snapshot exactly (FLOWS_TO 961, WRITES_S3 275, READS_S3 323, FETCHES 109, RUNS 248) -- consistent with a copy taken recently, not with arbitrary numbers",
+     "grounding": "comp-kuzu DISTINCT e.edge_type,count(*) @ snapshot 5048107528270383466",
+     "vintage": "fb4d8589709074717dfa3fc74b262995be2bbdcb"
+    }
+   ],
+   "discrimination": {
+    "worst_case_residual": 2,
+    "guaranteed_elimination": 1,
+    "instrument_failed_rows_excluded": true,
+    "declared_total": false,
+    "unmodeled_mechanism_open": true
+   },
+   "policy_ref": null,
+   "result_status": "INFERRED",
+   "derivation_trace": [],
+   "producer": {
+    "agent_or_service": "4.0.0_SA_CRO~C/phase2_exercise.py",
+    "version": "0.1.0"
+   },
+   "vintage": {
+    "graph_snapshot": "5048107528270383466",
+    "registry_commit": "5ac358270f515da16629c6b39cf890797bac680d",
+    "observed_at_utc": "2026-08-20T21:14:15Z"
+   },
+   "support_pointers": [
+    "workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json @ fb4d8589709074717dfa3fc74b262995be2bbdcb sha256:a212123583ba7e9d6135a0640acfa0cb9f54779475ae2bf2ca70f1bd7b6f0698"
+   ],
+   "invalidation_predicates": [
+    "bank#dynamic_rails.D2_path_flow.graph_evidence gains an as_of/vintage key",
+    "SYSTEM_DEFINITIONS.yaml blob != 43b50adf5421f0a442c4db0acabff4f6f0ced083",
+    "a graph snapshot newer than 5048107528270383466 is addressed"
+   ],
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/d2/20260820T211415Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    },
+    "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77"
+   }
+  },
+  {
+   "assessment_id": "ca-20260820-55ea982715da",
+   "knowledge_basis": {
+    "hypothesis_space_version": null,
+    "normal_form_version": null,
+    "compatibility_policy_version": null,
+    "scope_ontology_version": null,
+    "outcome_vocabulary_version": null
+   },
+   "scope": {
+    "defect_class": "ACCIDENTAL_COMPOSITE_TWO_AXES_ONE_ENTRY",
+    "subject_scope": "bundles under workflows/atom_layer0/runs/ whose s4_resolution.contracts contain binding_id == B-MIGRATION-MAP (predicate over the run ledger; NOTE: the schema wording presumes the canonical graph -- routed, see findings)",
+    "relevant_planes": [
+     "DESIRED"
+    ],
+    "substrates": [
+     "codebase"
+    ],
+    "time_window": {
+     "start_utc": "2026-08-20T20:42:41Z",
+     "end_utc": "2026-08-20T20:42:41Z"
+    }
+   },
+   "candidate_relation": {
+    "cause_ref": "one registry entry (Territory) carried two axes -- Substrate x Deploy_State -- before its 2026-08-12 retirement",
+    "effect_ref": "the retirement map binds to TWO live children by design, so the resolution predicate (exactly one live authority) derives resolved=false on B-MIGRATION-MAP",
+    "relation_kind": "CONTRIBUTED_TO",
+    "stated_as": "HYPOTHESIS"
+   },
+   "hypothesis_sets": {
+    "space_ref": null,
+    "live_candidates": [
+     "H1 the accidental two-axes composition is what produces a two-target map",
+     "H2 the predicate's exactly-one rule is too strict for a governed retirement map (a design, not a defect)"
+    ],
+    "tested_set": [
+     "H1 the accidental two-axes composition is what produces a two-target map",
+     "H2 the predicate's exactly-one rule is too strict for a governed retirement map (a design, not a defect)"
+    ],
+    "known_residual": [],
+    "exclusions": []
+   },
+   "evidence_vector": [
+    {
+     "axis": "TOPOLOGICAL",
+     "value": {
+      "seam_axis": "MECHANICAL",
+      "passed": true,
+      "claim": "All four targets named; both axes live and certificated."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "the entry:the migration clause @ f45cae7ac29db97336cfb6c7ecce3ba011a839d4 (via workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json#B-MIGRATION-MAP)",
+     "failure_direction": "{\"clean_condition\": \"HONEST NOTE on the derived verdict: the resolution predicate demands EXACTLY ONE live authority per binding; a retirement map binds to TWO by design, so the operands derive resolved=false -- this is the predicate correctly refusing to call a two-target map 'resolved', not a defect in the map. The map is COMPLETE and correct; a consumer still reading a former value (LOCAL/GIT/AWS-CLOUD/MS-CLOUD) as live vocabulary is the actual clean-failure limb.\", \"clean_detector\": \"A usage census for the four retired tokens (owner act, named not run); Run 1 + Run 13 certificate the targets.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": 2,
+     "denominator_grain": "live children the map binds to",
+     "plane": "DESIRED",
+     "vintage": "f45cae7ac29db97336cfb6c7ecce3ba011a839d4"
+    },
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": {
+      "seam_axis": "DECLARATIVE",
+      "passed": true,
+      "claim": "Both halves of the map have been read from the children's sides; this row reads the whole map from the parent's side -- a DECLARED two-target map (live_authority_target_count=2 IS the shape of a retirement map), not a two-homes defect, and the validator-derived verdict below treats it honestly."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "Run 1's B-TERRITORY-MIGRATION:the Substrate half read at Run 1; the Deploy_State half read at Run 13's B-SUBSTRATE-ORTHOGONALITY @ f45cae7ac29db97336cfb6c7ecce3ba011a839d4 (via workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json#B-MIGRATION-MAP)",
+     "failure_direction": "{\"clean_condition\": \"HONEST NOTE on the derived verdict: the resolution predicate demands EXACTLY ONE live authority per binding; a retirement map binds to TWO by design, so the operands derive resolved=false -- this is the predicate correctly refusing to call a two-target map 'resolved', not a defect in the map. The map is COMPLETE and correct; a consumer still reading a former value (LOCAL/GIT/AWS-CLOUD/MS-CLOUD) as live vocabulary is the actual clean-failure limb.\", \"clean_detector\": \"A usage census for the four retired tokens (owner act, named not run); Run 1 + Run 13 certificate the targets.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": null,
+     "denominator_grain": null,
+     "plane": "DESIRED",
+     "vintage": "f45cae7ac29db97336cfb6c7ecce3ba011a839d4"
+    },
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": {
+      "seam_axis": "SEMANTIC",
+      "passed": true,
+      "claim": "Lossless: each former value maps to exactly one coordinate on one axis."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "the entry:consumers migrate ... @ f45cae7ac29db97336cfb6c7ecce3ba011a839d4 (via workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json#B-MIGRATION-MAP)",
+     "failure_direction": "{\"clean_condition\": \"HONEST NOTE on the derived verdict: the resolution predicate demands EXACTLY ONE live authority per binding; a retirement map binds to TWO by design, so the operands derive resolved=false -- this is the predicate correctly refusing to call a two-target map 'resolved', not a defect in the map. The map is COMPLETE and correct; a consumer still reading a former value (LOCAL/GIT/AWS-CLOUD/MS-CLOUD) as live vocabulary is the actual clean-failure limb.\", \"clean_detector\": \"A usage census for the four retired tokens (owner act, named not run); Run 1 + Run 13 certificate the targets.\", \"fails_clean\": true, \"fails_loud\": false, \"loud_condition\": \"\", \"loud_detector\": \"\"}",
+     "denominator": null,
+     "denominator_grain": null,
+     "plane": "DESIRED",
+     "vintage": "f45cae7ac29db97336cfb6c7ecce3ba011a839d4"
+    }
+   ],
+   "counterevidence": [],
+   "discrimination": {
+    "worst_case_residual": 2,
+    "guaranteed_elimination": 0,
+    "instrument_failed_rows_excluded": true,
+    "declared_total": false,
+    "unmodeled_mechanism_open": true
+   },
+   "policy_ref": null,
+   "result_status": "INFERRED",
+   "derivation_trace": [],
+   "producer": {
+    "agent_or_service": "4.0.0_SA_CRO~C/phase2_exercise.py",
+    "version": "0.1.0"
+   },
+   "vintage": {
+    "graph_snapshot": null,
+    "registry_commit": "5ac358270f515da16629c6b39cf890797bac680d",
+    "observed_at_utc": "2026-08-20T20:42:41Z"
+   },
+   "support_pointers": [
+    "workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json @ f45cae7ac29db97336cfb6c7ecce3ba011a839d4 sha256:73e84fb7011bb6a723e52c6019e7ea301ac805d899440651f1aeace9cb4b75ac"
+   ],
+   "invalidation_predicates": [
+    "the resolution predicate is amended to admit a declared N-target retirement map",
+    "SYSTEM_DEFINITIONS.yaml blob != 43b50adf5421f0a442c4db0acabff4f6f0ced083"
+   ],
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECOMPOSITION_FOUND"
+    },
+    "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77"
+   }
+  },
+  {
+   "assessment_id": "ca-20260820-e5aed5316993",
+   "knowledge_basis": {
+    "hypothesis_space_version": null,
+    "normal_form_version": null,
+    "compatibility_policy_version": null,
+    "scope_ontology_version": null,
+    "outcome_vocabulary_version": null
+   },
+   "scope": {
+    "defect_class": "COPIED_MEMBER_LIST_FAILURE_DIRECTION",
+    "subject_scope": "bundles under workflows/atom_layer0/runs/ whose s4_resolution.contracts contain binding_id == B-ROLE-PRIORITY (predicate over the run ledger; NOTE: the schema wording presumes the canonical graph -- routed, see findings)",
+    "relevant_planes": [
+     "DESIRED"
+    ],
+    "substrates": [
+     "codebase"
+    ],
+    "time_window": {
+     "start_utc": "2026-08-20T20:55:30Z",
+     "end_utc": "2026-08-20T20:55:30Z"
+    }
+   },
+   "candidate_relation": {
+    "cause_ref": "comp_ontolint.py (3) reads BOTH homes of the 14 roles (roles keys AND role_priority) and asserts totality",
+    "effect_ref": "role_priority copy drift fails LOUD -- the first copied-member list in the sequence with a loud limb (every earlier copy failed clean)",
+    "relation_kind": "NECESSARY_FOR",
+    "stated_as": "HYPOTHESIS"
+   },
+   "hypothesis_sets": {
+    "space_ref": null,
+    "live_candidates": [
+     "H1 a reader that compares BOTH homes is necessary for the copy to fail loud"
+    ],
+    "tested_set": [
+     "H1 a reader that compares BOTH homes is necessary for the copy to fail loud",
+     "H2 another existing reader (comp_system len(roles), O1 declared-vs-derived) would fail loud on role_priority drift anyway"
+    ],
+    "known_residual": [],
+    "exclusions": [
+     {
+      "member": "H2 another existing reader (comp_system len(roles), O1 declared-vs-derived) would fail loud on role_priority drift anyway",
+      "reason_class": "RULED_OUT_BY_EVIDENCE",
+      "evidence_ref": "ev-MECHANICAL",
+      "lease_ref": null
+     }
+    ]
+   },
+   "evidence_vector": [
+    {
+     "axis": "TOPOLOGICAL",
+     "value": {
+      "seam_axis": "MECHANICAL",
+      "passed": true,
+      "claim": "Checked this run: 14/14."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "yaml-parse:14 vs 14, set-equal @ f2ed5d5b12449d3849caa182d5a798b936244ff7 (via workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json#B-ROLE-PRIORITY)",
+     "failure_direction": "{\"clean_condition\": \"\", \"clean_detector\": \"\", \"fails_clean\": false, \"fails_loud\": true, \"loud_condition\": \"role_priority omits, duplicates, or adds a name relative to roles keys.\", \"loud_detector\": \"comp-ontolint (3) -- a violation string; exercised at source this run.\"}",
+     "denominator": 14,
+     "denominator_grain": "roles compared to role_priority",
+     "plane": "DESIRED",
+     "vintage": "f2ed5d5b12449d3849caa182d5a798b936244ff7"
+    },
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": {
+      "seam_axis": "DECLARATIVE",
+      "passed": true,
+      "claim": "The dual carrier is DECLARED by the entry -- GOVERNED_DUAL_CARRIER, not AMBIGUOUS_TWO_HOMES."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "the entry's authority line:#roles (+ role_priority) @ f2ed5d5b12449d3849caa182d5a798b936244ff7 (via workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json#B-ROLE-PRIORITY)",
+     "failure_direction": "{\"clean_condition\": \"\", \"clean_detector\": \"\", \"fails_clean\": false, \"fails_loud\": true, \"loud_condition\": \"role_priority omits, duplicates, or adds a name relative to roles keys.\", \"loud_detector\": \"comp-ontolint (3) -- a violation string; exercised at source this run.\"}",
+     "denominator": 2,
+     "denominator_grain": "homes declared together by the entry's authority line",
+     "plane": "DESIRED",
+     "vintage": "f2ed5d5b12449d3849caa182d5a798b936244ff7"
+    },
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": {
+      "seam_axis": "SEMANTIC",
+      "passed": true,
+      "claim": "A copied member list whose drift is a LINT VIOLATION -- the one copied-member binding in the sequence so far that fails LOUD."
+     },
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "comp_ontolint.py:72-88:(3) role_priority TOTALITY @ f2ed5d5b12449d3849caa182d5a798b936244ff7 (via workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json#B-ROLE-PRIORITY)",
+     "failure_direction": "{\"clean_condition\": \"\", \"clean_detector\": \"\", \"fails_clean\": false, \"fails_loud\": true, \"loud_condition\": \"role_priority omits, duplicates, or adds a name relative to roles keys.\", \"loud_detector\": \"comp-ontolint (3) -- a violation string; exercised at source this run.\"}",
+     "denominator": 3,
+     "denominator_grain": "comp-ontolint invariants",
+     "plane": "DESIRED",
+     "vintage": "f2ed5d5b12449d3849caa182d5a798b936244ff7"
+    }
+   ],
+   "counterevidence": [],
+   "discrimination": {
+    "worst_case_residual": 1,
+    "guaranteed_elimination": 1,
+    "instrument_failed_rows_excluded": true,
+    "declared_total": false,
+    "unmodeled_mechanism_open": true
+   },
+   "policy_ref": null,
+   "result_status": "INFERRED",
+   "derivation_trace": [],
+   "producer": {
+    "agent_or_service": "4.0.0_SA_CRO~C/phase2_exercise.py",
+    "version": "0.1.0"
+   },
+   "vintage": {
+    "graph_snapshot": null,
+    "registry_commit": "5ac358270f515da16629c6b39cf890797bac680d",
+    "observed_at_utc": "2026-08-20T20:55:30Z"
+   },
+   "support_pointers": [
+    "workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json @ f2ed5d5b12449d3849caa182d5a798b936244ff7 sha256:b1ad2dac266a5b1a3a69992a52b8d8540902069355bfd7458a3fde4fb22febda"
+   ],
+   "invalidation_predicates": [
+    "comp_ontolint.py lint (3) removed or no longer reads role_priority",
+    "comp_system.py begins comparing role_priority to roles keys"
+   ],
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "workflows/atom_layer0/runs/role/20260820T205530Z/atom_layer0_run.json#stage_states",
+     "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+    },
+    "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77"
+   }
+  },
+  {
+   "assessment_id": "ca-20260820-3ed949b89ead",
+   "knowledge_basis": {
+    "hypothesis_space_version": null,
+    "normal_form_version": null,
+    "compatibility_policy_version": null,
+    "scope_ontology_version": null,
+    "outcome_vocabulary_version": null
+   },
+   "scope": {
+    "defect_class": "PLANTED_CONTROL_NOT_EXERCISABLE",
+    "subject_scope": "the single scratch control bundle (predicate: run_id == AL0-SCRATCH-CONTROL-NOT-EXERCISABLE)",
+    "relevant_planes": [
+     "DESIRED"
+    ],
+    "substrates": [
+     "codebase"
+    ],
+    "time_window": {
+     "start_utc": "2026-08-20T20:49:41Z",
+     "end_utc": "2026-08-20T20:49:41Z"
+    }
+   },
+   "candidate_relation": {
+    "cause_ref": "the S2 splitter challenge",
+    "effect_ref": "an atomicity verdict on the control subject",
+    "relation_kind": "NECESSARY_FOR",
+    "stated_as": "HYPOTHESIS"
+   },
+   "hypothesis_sets": {
+    "space_ref": null,
+    "live_candidates": [
+     "H1 the control subject is atomic",
+     "H2 the control subject decomposes"
+    ],
+    "tested_set": [],
+    "known_residual": [
+     "H1 the control subject is atomic",
+     "H2 the control subject decomposes"
+    ],
+    "exclusions": []
+   },
+   "evidence_vector": [
+    {
+     "axis": "DECLARED_RATIONALE",
+     "value": "UNKNOWN",
+     "basis": "desired",
+     "instrument_attestation_ref": null,
+     "grounding": "phase2/scratch_control/scratch_control_not_exercisable/atom_layer0_run.json#s2_challenge.result=NOT_EXERCISABLE @ 5ac358270f515da16629c6b39cf890797bac680d",
+     "failure_direction": "the instrument did not run; any non-UNKNOWN value here would be a fabrication",
+     "denominator": null,
+     "denominator_grain": null,
+     "plane": "DESIRED",
+     "vintage": "5ac358270f515da16629c6b39cf890797bac680d"
+    }
+   ],
+   "counterevidence": [],
+   "discrimination": {
+    "worst_case_residual": 2,
+    "guaranteed_elimination": 0,
+    "instrument_failed_rows_excluded": true,
+    "declared_total": false,
+    "unmodeled_mechanism_open": true
+   },
+   "policy_ref": null,
+   "result_status": "UNKNOWN",
+   "derivation_trace": [],
+   "producer": {
+    "agent_or_service": "4.0.0_SA_CRO~C/phase2_exercise.py",
+    "version": "0.1.0"
+   },
+   "vintage": {
+    "graph_snapshot": null,
+    "registry_commit": "5ac358270f515da16629c6b39cf890797bac680d",
+    "observed_at_utc": "2026-08-20T20:49:41Z"
+   },
+   "support_pointers": [
+    "phase2/scratch_control/scratch_control_not_exercisable/atom_layer0_run.json sha256:f05e3c24dd7a1def4e640df5ff97f2939b3bc6137eda6c467d84286e8a1c0ae1"
+   ],
+   "invalidation_predicates": [
+    "the control bundle is re-run with an exercisable splitter"
+   ],
+   "interim_status": {
+    "value": "DERIVED_FROM_BUNDLE",
+    "derivation": {
+     "stage_states_ref": "phase2/scratch_control/scratch_control_not_exercisable/atom_layer0_run.json#stage_states",
+     "terminal": "NOT_EXERCISABLE"
+    },
+    "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 958f505aa72bdb2271471c1a9291bc688104ee77 (control is NOT a manifest subject -- stated)"
+   }
+  }
+ ]
+}

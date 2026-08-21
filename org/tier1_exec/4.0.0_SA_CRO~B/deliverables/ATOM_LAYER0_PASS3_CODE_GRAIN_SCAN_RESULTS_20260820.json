@@ -1,0 +1,2639 @@
+{
+  "assessment_commit": "f36d572be864e56b9175caac06b01f62fc141e2a",
+  "ast_parse_pass": 59,
+  "instrument": "ATOM_LAYER0_PASS3_CODE_GRAIN_SCAN",
+  "population_commit": "76ba5fec3d",
+  "population_count": 59,
+  "positive_type_control": {
+    "ast_parse": "PASS",
+    "authority_pointers": [
+      "NFRA_ONTOLOGY_RULE_BANK.yaml"
+    ],
+    "blob": "aadc75565875da5d5204e500be0d350e3666d428",
+    "governed_runtime_hits": {
+      "contract_record_fields": [
+        {
+          "line": 765,
+          "value": "locality"
+        },
+        {
+          "line": 765,
+          "value": "revalidate_by"
+        },
+        {
+          "line": 851,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 855,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 867,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 875,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 879,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1029,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1305,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1305,
+          "value": "revalidate_by"
+        },
+        {
+          "line": 1306,
+          "value": "locality"
+        },
+        {
+          "line": 1307,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1307,
+          "value": "revalidate_by"
+        },
+        {
+          "line": 1308,
+          "value": "locality"
+        },
+        {
+          "line": 1309,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1309,
+          "value": "locality"
+        },
+        {
+          "line": 1310,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1310,
+          "value": "revalidate_by"
+        },
+        {
+          "line": 1311,
+          "value": "locality"
+        },
+        {
+          "line": 1327,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1333,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1345,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1346,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1375,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1376,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1381,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1382,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1406,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1408,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1431,
+          "value": "intent_source"
+        },
+        {
+          "line": 1431,
+          "value": "lifecycle_class"
+        },
+        {
+          "line": 1431,
+          "value": "obligation"
+        }
+      ],
+      "lifecycle_class": [
+        {
+          "line": 766,
+          "value": "DORMANT"
+        },
+        {
+          "line": 766,
+          "value": "EVENT_CREATED"
+        },
+        {
+          "line": 766,
+          "value": "TRANSIENT"
+        },
+        {
+          "line": 767,
+          "value": "DORMANT"
+        },
+        {
+          "line": 767,
+          "value": "EVENT_CREATED"
+        },
+        {
+          "line": 767,
+          "value": "PERMANENT"
+        },
+        {
+          "line": 767,
+          "value": "TRANSIENT"
+        },
+        {
+          "line": 768,
+          "value": "LEGACY"
+        },
+        {
+          "line": 768,
+          "value": "RETIRED"
+        },
+        {
+          "line": 768,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 851,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 855,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 867,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1305,
+          "value": "TRANSIENT"
+        },
+        {
+          "line": 1307,
+          "value": "PERMANENT"
+        },
+        {
+          "line": 1309,
+          "value": "TRANSIENT"
+        },
+        {
+          "line": 1310,
+          "value": "TRANSIENT"
+        },
+        {
+          "line": 1327,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1328,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1333,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1345,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1376,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1406,
+          "value": "DORMANT"
+        }
+      ],
+      "system_terms": [
+        {
+          "line": 768,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 851,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 855,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 867,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1327,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1328,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1333,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1345,
+          "value": "UNDECLARED"
+        },
+        {
+          "line": 1376,
+          "value": "UNDECLARED"
+        }
+      ]
+    },
+    "line_count": 1588,
+    "literal_clusters": [
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_UNIVERSAL_REQUIRED",
+        "line": 765,
+        "members": [
+          "locality",
+          "revalidate_by"
+        ]
+      },
+      {
+        "authority_group": "lifecycle_class",
+        "binding": "GATED_CLASSES",
+        "line": 766,
+        "members": [
+          "DORMANT",
+          "EVENT_CREATED",
+          "TRANSIENT"
+        ]
+      },
+      {
+        "authority_group": "lifecycle_class",
+        "binding": "_LIFECYCLE_ENUM",
+        "line": 767,
+        "members": [
+          "DORMANT",
+          "EVENT_CREATED",
+          "LEGACY",
+          "PERMANENT",
+          "RETIRED",
+          "TRANSIENT",
+          "UNDECLARED"
+        ]
+      },
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_live",
+        "line": 1305,
+        "members": [
+          "lifecycle_class",
+          "locality",
+          "revalidate_by"
+        ]
+      },
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_perm",
+        "line": 1307,
+        "members": [
+          "lifecycle_class",
+          "locality",
+          "revalidate_by"
+        ]
+      },
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_half",
+        "line": 1309,
+        "members": [
+          "lifecycle_class",
+          "locality"
+        ]
+      },
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_stale",
+        "line": 1310,
+        "members": [
+          "lifecycle_class",
+          "locality",
+          "revalidate_by"
+        ]
+      },
+      {
+        "authority_group": "contract_record_fields",
+        "binding": "_class_scoped",
+        "line": 1431,
+        "members": [
+          "intent_source",
+          "lifecycle_class",
+          "obligation"
+        ]
+      }
+    ],
+    "path": "org/modules/graph/comp_legacywriter.py"
+  },
+  "receipts": [
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "d3593ab6358a22fe6a9f23d7988f7051b87d7a7b",
+      "governed_runtime_hits": {},
+      "line_count": 141,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_aggregate_honesty.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "b369ca224d2789bcb836a1ee821348537a2e043e",
+      "governed_runtime_hits": {},
+      "line_count": 131,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_api.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "ec25fd7698f08bab19113260dadbb6ee55344fbf",
+      "governed_runtime_hits": {
+        "c3_ii_verticals": [
+          {
+            "line": 460,
+            "value": "smartx"
+          },
+          {
+            "line": 464,
+            "value": "smartx"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 60,
+            "value": "source"
+          },
+          {
+            "line": 66,
+            "value": "source"
+          },
+          {
+            "line": 83,
+            "value": "source"
+          },
+          {
+            "line": 163,
+            "value": "source"
+          },
+          {
+            "line": 397,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 554,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_assets.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "57788c66dc18e244ede9d9cd841f4a333cdddada",
+      "governed_runtime_hits": {
+        "abstract_relations": [
+          {
+            "line": 986,
+            "value": "projects"
+          },
+          {
+            "line": 994,
+            "value": "projects"
+          }
+        ],
+        "concrete_edges": [
+          {
+            "line": 1377,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1379,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1390,
+            "value": "HAS_PROFILE"
+          },
+          {
+            "line": 1398,
+            "value": "ASSUMES"
+          },
+          {
+            "line": 1405,
+            "value": "HAS_POLICY"
+          },
+          {
+            "line": 1410,
+            "value": "HAS_POLICY"
+          },
+          {
+            "line": 1418,
+            "value": "ASSUMES"
+          },
+          {
+            "line": 1427,
+            "value": "DEAD_LETTERS_TO"
+          },
+          {
+            "line": 1436,
+            "value": "DEAD_LETTERS_TO"
+          },
+          {
+            "line": 1445,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1452,
+            "value": "HAS_POLICY"
+          },
+          {
+            "line": 1478,
+            "value": "GRANTS"
+          },
+          {
+            "line": 1490,
+            "value": "ORIGIN"
+          },
+          {
+            "line": 1494,
+            "value": "USES_OAC"
+          },
+          {
+            "line": 1497,
+            "value": "USES_OAI"
+          },
+          {
+            "line": 1509,
+            "value": "EMITS_TO"
+          },
+          {
+            "line": 1512,
+            "value": "EMITS_TO"
+          },
+          {
+            "line": 1516,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1519,
+            "value": "DEAD_LETTERS_TO"
+          },
+          {
+            "line": 1552,
+            "value": "NOTIFIES"
+          },
+          {
+            "line": 1556,
+            "value": "MONITORS"
+          },
+          {
+            "line": 1560,
+            "value": "DEAD_LETTERS_TO"
+          },
+          {
+            "line": 1570,
+            "value": "SUBSCRIBES"
+          },
+          {
+            "line": 1573,
+            "value": "SUBSCRIBES"
+          },
+          {
+            "line": 1589,
+            "value": "ASSUMES"
+          },
+          {
+            "line": 1593,
+            "value": "INVOKES"
+          },
+          {
+            "line": 1598,
+            "value": "LOGS_TO"
+          },
+          {
+            "line": 1609,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1633,
+            "value": "HAS_ROUTE"
+          },
+          {
+            "line": 1647,
+            "value": "USES_LAYER"
+          },
+          {
+            "line": 1656,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1670,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1674,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 1687,
+            "value": "NOTIFIES"
+          },
+          {
+            "line": 1690,
+            "value": "NOTIFIES"
+          },
+          {
+            "line": 1701,
+            "value": "IN_VPC"
+          },
+          {
+            "line": 1713,
+            "value": "INVOKES"
+          },
+          {
+            "line": 1722,
+            "value": "ASSUMES"
+          },
+          {
+            "line": 1728,
+            "value": "USES_SG"
+          },
+          {
+            "line": 1743,
+            "value": "USES_SG"
+          },
+          {
+            "line": 1773,
+            "value": "ALIAS_TO"
+          },
+          {
+            "line": 1807,
+            "value": "CAN_ASSUME"
+          },
+          {
+            "line": 1817,
+            "value": "READS"
+          },
+          {
+            "line": 1817,
+            "value": "READS"
+          },
+          {
+            "line": 1817,
+            "value": "READS"
+          },
+          {
+            "line": 1818,
+            "value": "WRITES"
+          },
+          {
+            "line": 1818,
+            "value": "WRITES"
+          },
+          {
+            "line": 1818,
+            "value": "WRITES"
+          },
+          {
+            "line": 1819,
+            "value": "READS"
+          },
+          {
+            "line": 1819,
+            "value": "READS"
+          },
+          {
+            "line": 1820,
+            "value": "READS"
+          },
+          {
+            "line": 1820,
+            "value": "READS"
+          },
+          {
+            "line": 1821,
+            "value": "WRITES"
+          },
+          {
+            "line": 1821,
+            "value": "WRITES"
+          },
+          {
+            "line": 1822,
+            "value": "WRITES"
+          },
+          {
+            "line": 1822,
+            "value": "WRITES"
+          },
+          {
+            "line": 1823,
+            "value": "WRITES"
+          },
+          {
+            "line": 1824,
+            "value": "READS_SECRET"
+          },
+          {
+            "line": 1825,
+            "value": "PUBLISHES_TO"
+          },
+          {
+            "line": 1827,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1827,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1828,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1828,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1829,
+            "value": "LOGS_TO"
+          },
+          {
+            "line": 1829,
+            "value": "LOGS_TO"
+          },
+          {
+            "line": 1839,
+            "value": "READS"
+          },
+          {
+            "line": 1839,
+            "value": "WRITES"
+          },
+          {
+            "line": 1841,
+            "value": "READS"
+          },
+          {
+            "line": 1841,
+            "value": "WRITES"
+          },
+          {
+            "line": 1843,
+            "value": "PUBLISHES_TO"
+          },
+          {
+            "line": 1843,
+            "value": "READS_SECRET"
+          },
+          {
+            "line": 1844,
+            "value": "ENCRYPTS_WITH"
+          },
+          {
+            "line": 1844,
+            "value": "LOGS_TO"
+          },
+          {
+            "line": 2037,
+            "value": "HAS_POLICY"
+          },
+          {
+            "line": 2048,
+            "value": "HAS_PROFILE"
+          },
+          {
+            "line": 2057,
+            "value": "GRANTS"
+          },
+          {
+            "line": 2061,
+            "value": "CAN_ASSUME"
+          },
+          {
+            "line": 2062,
+            "value": "GRANTS"
+          },
+          {
+            "line": 2062,
+            "value": "SUBSCRIBES"
+          },
+          {
+            "line": 2063,
+            "value": "CAN_ASSUME"
+          }
+        ],
+        "lifecycle_stage": [
+          {
+            "line": 670,
+            "value": "ACTIVE"
+          },
+          {
+            "line": 825,
+            "value": "ACTIVE"
+          }
+        ],
+        "node_types": [
+          {
+            "line": 250,
+            "value": "S3_BUCKET"
+          },
+          {
+            "line": 338,
+            "value": "S3_BUCKET_POLICY"
+          },
+          {
+            "line": 354,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 396,
+            "value": "LAMBDA"
+          },
+          {
+            "line": 414,
+            "value": "EVENT_RULE"
+          },
+          {
+            "line": 489,
+            "value": "SNS_TOPIC"
+          },
+          {
+            "line": 499,
+            "value": "Endpoint"
+          },
+          {
+            "line": 510,
+            "value": "SQS_QUEUE"
+          },
+          {
+            "line": 532,
+            "value": "DYNAMODB_TABLE"
+          },
+          {
+            "line": 568,
+            "value": "CLOUDFRONT_DISTRIBUTION"
+          },
+          {
+            "line": 583,
+            "value": "SECRET"
+          },
+          {
+            "line": 601,
+            "value": "KMS_KEY"
+          },
+          {
+            "line": 630,
+            "value": "LOG_GROUP"
+          },
+          {
+            "line": 641,
+            "value": "CW_ALARM"
+          },
+          {
+            "line": 667,
+            "value": "STATE_MACHINE"
+          },
+          {
+            "line": 719,
+            "value": "Type"
+          },
+          {
+            "line": 770,
+            "value": "API_GW"
+          },
+          {
+            "line": 805,
+            "value": "API_ROUTE"
+          },
+          {
+            "line": 895,
+            "value": "SECURITY_GROUP"
+          },
+          {
+            "line": 959,
+            "value": "SSM_DOCUMENT"
+          },
+          {
+            "line": 1029,
+            "value": "SCHEDULE"
+          },
+          {
+            "line": 1065,
+            "value": "LAMBDA_LAYER"
+          },
+          {
+            "line": 1093,
+            "value": "Type"
+          },
+          {
+            "line": 1154,
+            "value": "Type"
+          },
+          {
+            "line": 1156,
+            "value": "Type"
+          },
+          {
+            "line": 1194,
+            "value": "Type"
+          },
+          {
+            "line": 1200,
+            "value": "Type"
+          },
+          {
+            "line": 1339,
+            "value": "SERVICE_PRINCIPAL"
+          },
+          {
+            "line": 1344,
+            "value": "SERVICE_PRINCIPAL"
+          },
+          {
+            "line": 1346,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 2024,
+            "value": "EVENT_SOURCE"
+          },
+          {
+            "line": 2042,
+            "value": "IAM_POLICY"
+          },
+          {
+            "line": 2050,
+            "value": "INSTANCE_PROFILE"
+          },
+          {
+            "line": 2067,
+            "value": "SERVICE_PRINCIPAL"
+          },
+          {
+            "line": 2637,
+            "value": "IAM_POLICY"
+          },
+          {
+            "line": 2637,
+            "value": "INSTANCE_PROFILE"
+          },
+          {
+            "line": 2638,
+            "value": "SERVICE_PRINCIPAL"
+          }
+        ],
+        "system_terms": [
+          {
+            "line": 398,
+            "value": "Role"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 429,
+            "value": "source"
+          },
+          {
+            "line": 996,
+            "value": "source"
+          },
+          {
+            "line": 1316,
+            "value": "live"
+          },
+          {
+            "line": 1362,
+            "value": "source"
+          },
+          {
+            "line": 2007,
+            "value": "source"
+          },
+          {
+            "line": 2060,
+            "value": "source"
+          },
+          {
+            "line": 2063,
+            "value": "source"
+          },
+          {
+            "line": 2143,
+            "value": "source"
+          },
+          {
+            "line": 2447,
+            "value": "live"
+          },
+          {
+            "line": 2601,
+            "value": "live"
+          },
+          {
+            "line": 2622,
+            "value": "live"
+          },
+          {
+            "line": 2632,
+            "value": "live"
+          },
+          {
+            "line": 2644,
+            "value": "live"
+          },
+          {
+            "line": 3080,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 3174,
+      "literal_clusters": [
+        {
+          "authority_group": "concrete_edges",
+          "binding": "_ACTION_VERB",
+          "line": 1816,
+          "members": [
+            "ENCRYPTS_WITH",
+            "LOGS_TO",
+            "PUBLISHES_TO",
+            "READS",
+            "READS_SECRET",
+            "WRITES"
+          ]
+        },
+        {
+          "authority_group": "concrete_edges",
+          "binding": "prin_targets",
+          "line": 2062,
+          "members": [
+            "GRANTS",
+            "SUBSCRIBES"
+          ]
+        },
+        {
+          "authority_group": "node_types",
+          "binding": "_aux_types",
+          "line": 2637,
+          "members": [
+            "IAM_POLICY",
+            "INSTANCE_PROFILE",
+            "SERVICE_PRINCIPAL"
+          ]
+        },
+        {
+          "authority_group": "concrete_edges",
+          "binding": "<comparison>",
+          "line": 2062,
+          "members": [
+            "GRANTS",
+            "SUBSCRIBES"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_aws_cli.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "f5b713af6d5aeda6d42a866c26fb35d21fab8fed",
+      "governed_runtime_hits": {
+        "concrete_edges": [
+          {
+            "line": 411,
+            "value": "WRITES_S3"
+          },
+          {
+            "line": 417,
+            "value": "READS_S3"
+          },
+          {
+            "line": 440,
+            "value": "S3Key"
+          },
+          {
+            "line": 443,
+            "value": "S3Key"
+          },
+          {
+            "line": 454,
+            "value": "PROJECTS_TO"
+          },
+          {
+            "line": 454,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 454,
+            "value": "WRITES"
+          },
+          {
+            "line": 454,
+            "value": "WRITES_S3"
+          }
+        ],
+        "node_types": [
+          {
+            "line": 440,
+            "value": "S3Key"
+          },
+          {
+            "line": 443,
+            "value": "S3Key"
+          },
+          {
+            "line": 462,
+            "value": "DataFetch"
+          },
+          {
+            "line": 462,
+            "value": "Hook"
+          },
+          {
+            "line": 462,
+            "value": "PipelineFunction"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 198,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 570,
+      "literal_clusters": [
+        {
+          "authority_group": "concrete_edges",
+          "binding": "PRODUCER_EDGE_TYPES",
+          "line": 453,
+          "members": [
+            "PROJECTS_TO",
+            "TRIGGERS",
+            "WRITES",
+            "WRITES_S3"
+          ]
+        },
+        {
+          "authority_group": "node_types",
+          "binding": "FUNCTION_GRAIN_TYPES",
+          "line": 462,
+          "members": [
+            "DataFetch",
+            "Hook",
+            "PipelineFunction"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_blast_universe.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "265ad7ce9c967f795b3d005f0046deaca83780c2",
+      "governed_runtime_hits": {
+        "type_grain": [
+          {
+            "line": 350,
+            "value": "artifact"
+          },
+          {
+            "line": 353,
+            "value": "artifact"
+          }
+        ]
+      },
+      "line_count": 475,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_capability_provider.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "51ddce764805ade72f8e9d816382cf285fcbc244",
+      "governed_runtime_hits": {},
+      "line_count": 381,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_cochange.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "a364a5d1bb8c7ed3c01a971a2b2f5ce9cf15bc32",
+      "governed_runtime_hits": {},
+      "line_count": 682,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_constants_cli.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "70c89c2163f5bc3fbcc2ffd7b977eef76d7191f7",
+      "governed_runtime_hits": {
+        "c3_ii_verticals": [
+          {
+            "line": 191,
+            "value": "mdpf"
+          }
+        ],
+        "type_scope": [
+          {
+            "line": 191,
+            "value": "pipeline"
+          },
+          {
+            "line": 197,
+            "value": "firm"
+          }
+        ]
+      },
+      "line_count": 273,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_constants_complete.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "5ed734b9cade17016937391f649a584674a80268",
+      "governed_runtime_hits": {
+        "concrete_edges": [
+          {
+            "line": 521,
+            "value": "CONTAINS"
+          },
+          {
+            "line": 521,
+            "value": "RUNS"
+          },
+          {
+            "line": 523,
+            "value": "OWNED_BY"
+          },
+          {
+            "line": 803,
+            "value": "RUNS"
+          },
+          {
+            "line": 836,
+            "value": "CALLS"
+          },
+          {
+            "line": 838,
+            "value": "CALLS"
+          },
+          {
+            "line": 852,
+            "value": "CALLS"
+          },
+          {
+            "line": 857,
+            "value": "CALLS"
+          },
+          {
+            "line": 868,
+            "value": "CONTAINS"
+          },
+          {
+            "line": 868,
+            "value": "RUNS"
+          },
+          {
+            "line": 869,
+            "value": "OWNED_BY"
+          }
+        ],
+        "type_grain": [
+          {
+            "line": 944,
+            "value": "artifact"
+          }
+        ]
+      },
+      "line_count": 992,
+      "literal_clusters": [
+        {
+          "authority_group": "concrete_edges",
+          "binding": "stit",
+          "line": 868,
+          "members": [
+            "CONTAINS",
+            "OWNED_BY",
+            "RUNS"
+          ]
+        },
+        {
+          "authority_group": "concrete_edges",
+          "binding": "<comparison>",
+          "line": 521,
+          "members": [
+            "CONTAINS",
+            "RUNS"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_coverage_check.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "3ef0b5aefdd5650fcb9d05de7d2b631740416353",
+      "governed_runtime_hits": {},
+      "line_count": 99,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_coverage_view.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "bf0a18250cf3212bcccb4d26f79879d915e7aea8",
+      "governed_runtime_hits": {},
+      "line_count": 476,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_dataflow.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "2fc4800623c537f4362d22655c29c5678353dd5b",
+      "governed_runtime_hits": {},
+      "line_count": 325,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_debris.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "3a6ec0db51c73c86d7e1e7dde5207125402a68e7",
+      "governed_runtime_hits": {
+        "concrete_edges": [
+          {
+            "line": 43,
+            "value": "CALLS"
+          },
+          {
+            "line": 43,
+            "value": "FETCHES"
+          },
+          {
+            "line": 43,
+            "value": "READS_S3"
+          },
+          {
+            "line": 43,
+            "value": "REFERENCES_TYPE"
+          },
+          {
+            "line": 43,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 43,
+            "value": "WRITES_S3"
+          }
+        ]
+      },
+      "line_count": 255,
+      "literal_clusters": [
+        {
+          "authority_group": "concrete_edges",
+          "binding": "_BREADTH_EDGES",
+          "line": 43,
+          "members": [
+            "CALLS",
+            "FETCHES",
+            "READS_S3",
+            "REFERENCES_TYPE",
+            "TRIGGERS",
+            "WRITES_S3"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_depth_cli.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "47a0a957703da4bfb333634ed9c9d30446205ac3",
+      "governed_runtime_hits": {},
+      "line_count": 307,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_desc_sensitivity.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "7fc0a53c1bd32f86c558f5ee11ecf433752b9a54",
+      "governed_runtime_hits": {},
+      "line_count": 225,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_desc_sensitivity_test.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "f24b9e52bad0ac07c6df989f70ddb41a03df6cd9",
+      "governed_runtime_hits": {
+        "type_scope": [
+          {
+            "line": 178,
+            "value": "firm"
+          },
+          {
+            "line": 191,
+            "value": "firm"
+          },
+          {
+            "line": 214,
+            "value": "firm"
+          },
+          {
+            "line": 265,
+            "value": "firm"
+          },
+          {
+            "line": 277,
+            "value": "firm"
+          }
+        ]
+      },
+      "line_count": 295,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_dispatch.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "baa5ff448edcd39651a82e06ae09e9b688ff9a14",
+      "governed_runtime_hits": {},
+      "line_count": 242,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_gitdrill.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "db0167847df7fb411b3126f5817ba7252ac3df69",
+      "governed_runtime_hits": {},
+      "line_count": 452,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_honesty.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "eb824d6eb3d2ba9ec3d445fab41702569d97d315",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 154,
+            "value": "source"
+          },
+          {
+            "line": 212,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 230,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_iam_census.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "1ca98d045ad313aabb00e79990245a8fdf795663",
+      "governed_runtime_hits": {
+        "lifecycle_stage": [
+          {
+            "line": 178,
+            "value": "ACTIVE"
+          },
+          {
+            "line": 258,
+            "value": "ACTIVE"
+          }
+        ],
+        "system_terms": [
+          {
+            "line": 137,
+            "value": "Role"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 104,
+            "value": "source"
+          },
+          {
+            "line": 108,
+            "value": "source"
+          },
+          {
+            "line": 112,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 299,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_iam_investigate.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "d751cc04515ce64371135be82d605c5d37bc2854",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 187,
+            "value": "source"
+          },
+          {
+            "line": 205,
+            "value": "source"
+          },
+          {
+            "line": 207,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 461,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_iam_live.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "73f11a8f01146fb95355e3add8598ed0d938ad17",
+      "governed_runtime_hits": {
+        "node_types": [
+          {
+            "line": 101,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 239,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 241,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 243,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 245,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 247,
+            "value": "IAM_ROLE"
+          },
+          {
+            "line": 249,
+            "value": "IAM_ROLE"
+          }
+        ],
+        "system_terms": [
+          {
+            "line": 86,
+            "value": "Role"
+          },
+          {
+            "line": 197,
+            "value": "Role"
+          }
+        ]
+      },
+      "line_count": 333,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_iam_usage.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "dfec35df04db940af981ca2bcb6b38d90d3cca47",
+      "governed_runtime_hits": {
+        "d3_obligation_types": [
+          {
+            "line": 111,
+            "value": "completeness"
+          },
+          {
+            "line": 161,
+            "value": "completeness"
+          },
+          {
+            "line": 168,
+            "value": "completeness"
+          },
+          {
+            "line": 242,
+            "value": "completeness"
+          },
+          {
+            "line": 259,
+            "value": "completeness"
+          },
+          {
+            "line": 271,
+            "value": "completeness"
+          },
+          {
+            "line": 275,
+            "value": "completeness"
+          },
+          {
+            "line": 276,
+            "value": "completeness"
+          }
+        ]
+      },
+      "line_count": 370,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_icedrill.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "8dfb3a350299af9960d7d6792736e6114a5c0463",
+      "governed_runtime_hits": {
+        "type_scope": [
+          {
+            "line": 170,
+            "value": "pipeline"
+          }
+        ]
+      },
+      "line_count": 274,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_keys.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "3e0872f373dea45e0b9bc90de9c33da1a0e2b949",
+      "governed_runtime_hits": {
+        "system_terms": [
+          {
+            "line": 89,
+            "value": "C0"
+          },
+          {
+            "line": 92,
+            "value": "C0"
+          },
+          {
+            "line": 96,
+            "value": "C0"
+          },
+          {
+            "line": 110,
+            "value": "C0"
+          },
+          {
+            "line": 125,
+            "value": "C1"
+          },
+          {
+            "line": 136,
+            "value": "C1"
+          },
+          {
+            "line": 144,
+            "value": "C2"
+          },
+          {
+            "line": 152,
+            "value": "C3"
+          },
+          {
+            "line": 178,
+            "value": "C0"
+          },
+          {
+            "line": 189,
+            "value": "C0"
+          },
+          {
+            "line": 201,
+            "value": "C0"
+          },
+          {
+            "line": 201,
+            "value": "C1"
+          },
+          {
+            "line": 201,
+            "value": "C2"
+          },
+          {
+            "line": 201,
+            "value": "C3"
+          },
+          {
+            "line": 208,
+            "value": "C0"
+          },
+          {
+            "line": 208,
+            "value": "C1"
+          },
+          {
+            "line": 208,
+            "value": "C2"
+          },
+          {
+            "line": 208,
+            "value": "C3"
+          },
+          {
+            "line": 218,
+            "value": "C0"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 90,
+            "value": "source"
+          },
+          {
+            "line": 94,
+            "value": "source"
+          },
+          {
+            "line": 97,
+            "value": "source"
+          },
+          {
+            "line": 111,
+            "value": "source"
+          },
+          {
+            "line": 221,
+            "value": "source"
+          }
+        ],
+        "type_rail": [
+          {
+            "line": 89,
+            "value": "C0"
+          },
+          {
+            "line": 92,
+            "value": "C0"
+          },
+          {
+            "line": 96,
+            "value": "C0"
+          },
+          {
+            "line": 110,
+            "value": "C0"
+          },
+          {
+            "line": 125,
+            "value": "C1"
+          },
+          {
+            "line": 136,
+            "value": "C1"
+          },
+          {
+            "line": 144,
+            "value": "C2"
+          },
+          {
+            "line": 152,
+            "value": "C3"
+          },
+          {
+            "line": 178,
+            "value": "C0"
+          },
+          {
+            "line": 189,
+            "value": "C0"
+          },
+          {
+            "line": 201,
+            "value": "C0"
+          },
+          {
+            "line": 201,
+            "value": "C1"
+          },
+          {
+            "line": 201,
+            "value": "C2"
+          },
+          {
+            "line": 201,
+            "value": "C3"
+          },
+          {
+            "line": 208,
+            "value": "C0"
+          },
+          {
+            "line": 208,
+            "value": "C1"
+          },
+          {
+            "line": 208,
+            "value": "C2"
+          },
+          {
+            "line": 208,
+            "value": "C3"
+          },
+          {
+            "line": 218,
+            "value": "C0"
+          }
+        ]
+      },
+      "line_count": 273,
+      "literal_clusters": [
+        {
+          "authority_group": "system_terms",
+          "binding": "order",
+          "line": 201,
+          "members": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        },
+        {
+          "authority_group": "type_rail",
+          "binding": "order",
+          "line": 201,
+          "members": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        },
+        {
+          "authority_group": "system_terms",
+          "binding": "names",
+          "line": 208,
+          "members": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        },
+        {
+          "authority_group": "type_rail",
+          "binding": "names",
+          "line": 208,
+          "members": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_ladder.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "0fe3e2cf19470f594f31aa8e73b6e3d6723ea443",
+      "governed_runtime_hits": {
+        "type_scope": [
+          {
+            "line": 55,
+            "value": "estate"
+          },
+          {
+            "line": 56,
+            "value": "estate"
+          }
+        ]
+      },
+      "line_count": 216,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_learns_leg4_exercise.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "f939876d4304f17e960276bc42bc59f1cf0ec7bf",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 163,
+            "value": "source"
+          },
+          {
+            "line": 176,
+            "value": "source"
+          },
+          {
+            "line": 429,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 710,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_learns_score.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "2e5af0ade12631aba6610f9cb46411e62cc51f09",
+      "governed_runtime_hits": {},
+      "line_count": 421,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_log_auto.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "0331c473fa60bbbc67e953929cd08cdecf97eece",
+      "governed_runtime_hits": {
+        "concrete_edges": [
+          {
+            "line": 121,
+            "value": "CONTAINS"
+          },
+          {
+            "line": 121,
+            "value": "OWNED_BY"
+          },
+          {
+            "line": 121,
+            "value": "RUNS"
+          },
+          {
+            "line": 132,
+            "value": "CALLS"
+          },
+          {
+            "line": 132,
+            "value": "FETCHES"
+          },
+          {
+            "line": 132,
+            "value": "READS_S3"
+          },
+          {
+            "line": 132,
+            "value": "TRIGGERS"
+          },
+          {
+            "line": 132,
+            "value": "WRITES_S3"
+          },
+          {
+            "line": 235,
+            "value": "READS_S3"
+          },
+          {
+            "line": 235,
+            "value": "WRITES_S3"
+          }
+        ]
+      },
+      "line_count": 399,
+      "literal_clusters": [
+        {
+          "authority_group": "concrete_edges",
+          "binding": "_TRACEGRAPH_EDGE_TYPES",
+          "line": 132,
+          "members": [
+            "CALLS",
+            "FETCHES",
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ]
+        },
+        {
+          "authority_group": "concrete_edges",
+          "binding": "<complex-target>",
+          "line": 121,
+          "members": [
+            "CONTAINS",
+            "OWNED_BY",
+            "RUNS"
+          ]
+        },
+        {
+          "authority_group": "concrete_edges",
+          "binding": "<comparison>",
+          "line": 235,
+          "members": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_marker_read.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "34ff8c91d9c0a1bbf3b5eda1ff22a3163cced0a2",
+      "governed_runtime_hits": {
+        "type_grain": [
+          {
+            "line": 355,
+            "value": "artifact"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 158,
+            "value": "source"
+          },
+          {
+            "line": 303,
+            "value": "source"
+          },
+          {
+            "line": 572,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 664,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_msbeff_rebaseline.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "3fad558c0404a92afe3f1e7849ec6d7263eeb598",
+      "governed_runtime_hits": {
+        "d1_edge_kinds": [
+          {
+            "line": 251,
+            "value": "passthrough"
+          },
+          {
+            "line": 255,
+            "value": "passthrough"
+          }
+        ],
+        "type_scope": [
+          {
+            "line": 276,
+            "value": "firm"
+          },
+          {
+            "line": 285,
+            "value": "firm"
+          },
+          {
+            "line": 285,
+            "value": "firm"
+          },
+          {
+            "line": 302,
+            "value": "firm"
+          }
+        ]
+      },
+      "line_count": 314,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_parity_cli.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "0d74eb3281c4feaba174ba893b50db2b2c4b457f",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 231,
+            "value": "source"
+          },
+          {
+            "line": 231,
+            "value": "source"
+          },
+          {
+            "line": 256,
+            "value": "source"
+          },
+          {
+            "line": 294,
+            "value": "source"
+          },
+          {
+            "line": 523,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 802,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_passcraft.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "76a6c236cabe40d34b89e055edc23f3977472ac8",
+      "governed_runtime_hits": {},
+      "line_count": 148,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_potion_relevance.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "7445e258edd47f26aedf80f1fae0892cf13141b9",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 210,
+            "value": "source"
+          },
+          {
+            "line": 401,
+            "value": "source"
+          },
+          {
+            "line": 557,
+            "value": "source"
+          },
+          {
+            "line": 565,
+            "value": "source"
+          },
+          {
+            "line": 639,
+            "value": "source"
+          },
+          {
+            "line": 674,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 765,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_promote_lifecycle.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "34713689f4cfb111a54b27e24cc4dfb489cb4589",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 258,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 538,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_promote_materializer.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "0f2a3defc7e69bb91c7c235706fb234d1f5d16a4",
+      "governed_runtime_hits": {},
+      "line_count": 707,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_pulse.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "033cee134168b792691bf3551db2309e82cdb8a8",
+      "governed_runtime_hits": {},
+      "line_count": 366,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_pydeps.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "6d8dab2c8921f8a2100a194215c5ac3e96db5f63",
+      "governed_runtime_hits": {},
+      "line_count": 234,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_rail_audit.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "2870590bd2b478753970537d91c31ba76febf10c",
+      "governed_runtime_hits": {},
+      "line_count": 544,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_recognizer_sdk.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "6e9faf19cc25d53ee7f32ce5513902b235d35ddd",
+      "governed_runtime_hits": {},
+      "line_count": 468,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_recognizers_code.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "5492f6a046e7d14799b9b41cf2141219d6c3de78",
+      "governed_runtime_hits": {
+        "node_types": [
+          {
+            "line": 156,
+            "value": "SECRET"
+          }
+        ]
+      },
+      "line_count": 290,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_recognizers_config.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "d31edbeae916e1511eca30c3932e45d69164e9f0",
+      "governed_runtime_hits": {
+        "d1_edge_kinds": [
+          {
+            "line": 95,
+            "value": "rename"
+          },
+          {
+            "line": 707,
+            "value": "rename"
+          }
+        ]
+      },
+      "line_count": 850,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_recognizers_pyfield.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "09992d323dd2fc710283a91522ecb54c820ba51e",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 171,
+            "value": "source"
+          },
+          {
+            "line": 184,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 187,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_recognizers_ticket.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "cse_schema"
+      ],
+      "blob": "c8107eba8870b9684e708494d9f79adbf3f40638",
+      "governed_runtime_hits": {
+        "d1_edge_kinds": [
+          {
+            "line": 61,
+            "value": "passthrough"
+          },
+          {
+            "line": 62,
+            "value": "rename"
+          },
+          {
+            "line": 334,
+            "value": "recompute_guarded"
+          }
+        ]
+      },
+      "line_count": 352,
+      "literal_clusters": [
+        {
+          "authority_group": "d1_edge_kinds",
+          "binding": "_KIND_MAP",
+          "line": 60,
+          "members": [
+            "passthrough",
+            "rename"
+          ]
+        }
+      ],
+      "path": "org/modules/graph/comp_recognizers_tsx.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "7f57f542f5a12818cd10e17640d1bfe62adc1b92",
+      "governed_runtime_hits": {
+        "type_grain": [
+          {
+            "line": 588,
+            "value": "field"
+          }
+        ],
+        "type_scope": [
+          {
+            "line": 591,
+            "value": "estate"
+          },
+          {
+            "line": 592,
+            "value": "estate"
+          },
+          {
+            "line": 593,
+            "value": "estate"
+          },
+          {
+            "line": 594,
+            "value": "estate"
+          },
+          {
+            "line": 595,
+            "value": "estate"
+          },
+          {
+            "line": 596,
+            "value": "estate"
+          },
+          {
+            "line": 696,
+            "value": "estate"
+          },
+          {
+            "line": 748,
+            "value": "estate"
+          },
+          {
+            "line": 750,
+            "value": "estate"
+          },
+          {
+            "line": 759,
+            "value": "estate"
+          },
+          {
+            "line": 770,
+            "value": "estate"
+          },
+          {
+            "line": 776,
+            "value": "estate"
+          },
+          {
+            "line": 798,
+            "value": "estate"
+          },
+          {
+            "line": 798,
+            "value": "estate"
+          },
+          {
+            "line": 799,
+            "value": "estate"
+          },
+          {
+            "line": 800,
+            "value": "estate"
+          },
+          {
+            "line": 800,
+            "value": "estate"
+          },
+          {
+            "line": 801,
+            "value": "estate"
+          },
+          {
+            "line": 803,
+            "value": "estate"
+          }
+        ]
+      },
+      "line_count": 931,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "cd8a2eb6c6c22264a0e7c0b284c69bf62b1f3595",
+      "governed_runtime_hits": {},
+      "line_count": 285,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route_affinity.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "7860ae00ca8ebd35b5ed1b5d53053de9004f8b4e",
+      "governed_runtime_hits": {},
+      "line_count": 137,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route_affinity_ic.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "3ac25ea9488b8aed2d0d45ab53db31f51da5c11f",
+      "governed_runtime_hits": {},
+      "line_count": 847,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route_eval.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "a9de810a0d76e9584a71d8d148f483fda8a5b0dd",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 279,
+            "value": "source"
+          },
+          {
+            "line": 281,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 284,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route_outcome.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "b98e3162e9218d979d0e1a89515dc5667ac22e65",
+      "governed_runtime_hits": {},
+      "line_count": 227,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_route_shadow.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "714c64fecf7b749c2440b18e63dbc4404e14c454",
+      "governed_runtime_hits": {},
+      "line_count": 187,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_symbols.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "d26708468e5979bceea25e11da4c7dcf909af66f",
+      "governed_runtime_hits": {
+        "type_plane": [
+          {
+            "line": 492,
+            "value": "source"
+          }
+        ]
+      },
+      "line_count": 856,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_tool_health.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "ea690d7903eca121096d11dc28d775e721ecb8e6",
+      "governed_runtime_hits": {},
+      "line_count": 358,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_tool_health_gate.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [
+        "comp-coverage-map.yaml"
+      ],
+      "blob": "97bf28e1283c47adfc38de245e13ba31797746c6",
+      "governed_runtime_hits": {
+        "system_terms": [
+          {
+            "line": 237,
+            "value": "C1"
+          },
+          {
+            "line": 239,
+            "value": "C2"
+          }
+        ],
+        "type_grain": [
+          {
+            "line": 572,
+            "value": "artifact"
+          }
+        ],
+        "type_plane": [
+          {
+            "line": 90,
+            "value": "source"
+          },
+          {
+            "line": 94,
+            "value": "source"
+          },
+          {
+            "line": 98,
+            "value": "source"
+          },
+          {
+            "line": 102,
+            "value": "source"
+          },
+          {
+            "line": 106,
+            "value": "source"
+          },
+          {
+            "line": 111,
+            "value": "source"
+          },
+          {
+            "line": 115,
+            "value": "source"
+          },
+          {
+            "line": 119,
+            "value": "source"
+          },
+          {
+            "line": 263,
+            "value": "source"
+          },
+          {
+            "line": 535,
+            "value": "source"
+          },
+          {
+            "line": 677,
+            "value": "source"
+          }
+        ],
+        "type_rail": [
+          {
+            "line": 237,
+            "value": "C1"
+          },
+          {
+            "line": 239,
+            "value": "C2"
+          }
+        ]
+      },
+      "line_count": 806,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_toolgraph.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "d67c7ca3418450914313e43807666f31fae1e448",
+      "governed_runtime_hits": {
+        "abstract_relations": [
+          {
+            "line": 314,
+            "value": "triggers"
+          }
+        ]
+      },
+      "line_count": 344,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_trigger.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "d471a1742728fc36f7aaebff21dddfc97bdf8f5a",
+      "governed_runtime_hits": {},
+      "line_count": 258,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_which_signals.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "772caf8c42e13cb0fbec31e8e672451aa1c5a1be",
+      "governed_runtime_hits": {
+        "node_types": [
+          {
+            "line": 64,
+            "value": "LAMBDA"
+          },
+          {
+            "line": 176,
+            "value": "LAMBDA"
+          }
+        ]
+      },
+      "line_count": 248,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_ws4_crosswalk.py"
+    },
+    {
+      "ast_parse": "PASS",
+      "authority_pointers": [],
+      "blob": "e18ac8cb0eedda55dea2530197cbd8ad16c615b9",
+      "governed_runtime_hits": {
+        "node_types": [
+          {
+            "line": 38,
+            "value": "LAMBDA"
+          }
+        ]
+      },
+      "line_count": 276,
+      "literal_clusters": [],
+      "path": "org/modules/graph/comp_ws4_crosswalk_test.py"
+    }
+  ]
+}
+

@@ -1,0 +1,446 @@
+artifact: ATOM_LAYER0_RESOLUTION_CENSUS_PASS3_CODE_POPULATION
+status: POPULATION_FROZEN_PRE_VERDICTS
+seat: 4.0.0_SA_CRO~B
+path: B_RESOLUTION_CENSUS_PASS3
+opened: 2026-08-20
+
+vintage:
+  cohort_source_commit: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+  assessment_commit: f36d572be864e56b9175caac06b01f62fc141e2a
+  read_basis: git_object_not_working_tree
+  rule: >-
+    The cohort is the derived 59-engine complement frozen by the Pass-1
+    signature predicate at cohort_source_commit. Every Pass-3 engine read and
+    receipt is against that path's blob at assessment_commit.
+
+population_generation:
+  namespace_rule: >-
+    Top-level regular files matching org/modules/graph/comp_*.py at the cohort
+    source commit.
+  binding_signature_rule: >-
+    Include an engine in the strong-binding set when its committed blob names a
+    registry or NFRA ontology authority basename; estate-coverage; exact registry
+    status tokens reserved_ratified or contested_unresolved; Lifecycle_Class or
+    Lifecycle_Stage including snake-case forms; a named canonical block
+    c4_segments, c4_subject_function_grid, or c2_motif_families; contract_record;
+    intent_source; domain_axis; or resolves_via. Incidental English, including
+    the word deprecated in comp_which_signals.py prose, is not a registry-status
+    binding.
+  cohort_rule: >-
+    Pass 3 is the set difference namespace_rule minus binding_signature_rule,
+    sorted by repository path. It is derived, not hand-counted, and remains a
+    fixed cohort across the fresh assessment vintage.
+  reproducibility: >-
+    git ls-tree supplies the namespace; git show COMMIT:path supplies content;
+    git rev-parse COMMIT:path supplies each immutable blob object.
+
+denominators:
+  source_top_level_comp_python: 63
+  source_strong_binding: 4
+  pass3_fixed_cohort: 59
+  fresh_top_level_comp_python: 64
+  fixed_cohort_present_at_fresh_vintage: 59
+  fixed_cohort_missing_at_fresh_vintage: 0
+  fixed_cohort_with_new_strong_signature: 0
+
+source_strong_binding_positive_set:
+  - org/modules/graph/comp_legacywriter.py
+  - org/modules/graph/comp_ontolint.py
+  - org/modules/graph/comp_output_contract.py
+  - org/modules/graph/comp_system.py
+
+controls:
+  positive_type_control:
+    path: org/modules/graph/comp_legacywriter.py
+    membership: OUTSIDE_PASS3_FIXED_COHORT
+    purpose: >-
+      Calibrate CODE_REDECLARATION detection against its known runtime mirrors;
+      control results do not enter the 59-engine denominator.
+  resolves_via_drive:
+    state: FENCED
+    treatment: READ_ONLY_NO_AUTHORING
+  c7_closure:
+    state: HELD_UNTIL_PASS3_COMPLETE_AND_BASE_SIGNALED
+
+engines:
+  - id: P3E001
+    path: org/modules/graph/comp_aggregate_honesty.py
+    blob: d3593ab6358a22fe6a9f23d7988f7051b87d7a7b
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E002
+    path: org/modules/graph/comp_api.py
+    blob: b369ca224d2789bcb836a1ee821348537a2e043e
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E003
+    path: org/modules/graph/comp_assets.py
+    blob: ec25fd7698f08bab19113260dadbb6ee55344fbf
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E004
+    path: org/modules/graph/comp_aws_cli.py
+    blob: 57788c66dc18e244ede9d9cd841f4a333cdddada
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E005
+    path: org/modules/graph/comp_blast_universe.py
+    blob: f5b713af6d5aeda6d42a866c26fb35d21fab8fed
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E006
+    path: org/modules/graph/comp_capability_provider.py
+    blob: 265ad7ce9c967f795b3d005f0046deaca83780c2
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E007
+    path: org/modules/graph/comp_cochange.py
+    blob: 51ddce764805ade72f8e9d816382cf285fcbc244
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E008
+    path: org/modules/graph/comp_constants_cli.py
+    blob: a364a5d1bb8c7ed3c01a971a2b2f5ce9cf15bc32
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E009
+    path: org/modules/graph/comp_constants_complete.py
+    blob: 70c89c2163f5bc3fbcc2ffd7b977eef76d7191f7
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E010
+    path: org/modules/graph/comp_coverage_check.py
+    blob: 5ed734b9cade17016937391f649a584674a80268
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E011
+    path: org/modules/graph/comp_coverage_view.py
+    blob: 3ef0b5aefdd5650fcb9d05de7d2b631740416353
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E012
+    path: org/modules/graph/comp_dataflow.py
+    blob: bf0a18250cf3212bcccb4d26f79879d915e7aea8
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E013
+    path: org/modules/graph/comp_debris.py
+    blob: 2fc4800623c537f4362d22655c29c5678353dd5b
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E014
+    path: org/modules/graph/comp_depth_cli.py
+    blob: 3a6ec0db51c73c86d7e1e7dde5207125402a68e7
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E015
+    path: org/modules/graph/comp_desc_sensitivity.py
+    blob: 47a0a957703da4bfb333634ed9c9d30446205ac3
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E016
+    path: org/modules/graph/comp_desc_sensitivity_test.py
+    blob: 7fc0a53c1bd32f86c558f5ee11ecf433752b9a54
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E017
+    path: org/modules/graph/comp_dispatch.py
+    blob: f24b9e52bad0ac07c6df989f70ddb41a03df6cd9
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E018
+    path: org/modules/graph/comp_gitdrill.py
+    blob: baa5ff448edcd39651a82e06ae09e9b688ff9a14
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E019
+    path: org/modules/graph/comp_honesty.py
+    blob: db0167847df7fb411b3126f5817ba7252ac3df69
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E020
+    path: org/modules/graph/comp_iam_census.py
+    blob: eb824d6eb3d2ba9ec3d445fab41702569d97d315
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E021
+    path: org/modules/graph/comp_iam_investigate.py
+    blob: 1ca98d045ad313aabb00e79990245a8fdf795663
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E022
+    path: org/modules/graph/comp_iam_live.py
+    blob: d751cc04515ce64371135be82d605c5d37bc2854
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E023
+    path: org/modules/graph/comp_iam_usage.py
+    blob: 73f11a8f01146fb95355e3add8598ed0d938ad17
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E024
+    path: org/modules/graph/comp_icedrill.py
+    blob: dfec35df04db940af981ca2bcb6b38d90d3cca47
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E025
+    path: org/modules/graph/comp_keys.py
+    blob: 8dfb3a350299af9960d7d6792736e6114a5c0463
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E026
+    path: org/modules/graph/comp_ladder.py
+    blob: 3e0872f373dea45e0b9bc90de9c33da1a0e2b949
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E027
+    path: org/modules/graph/comp_learns_leg4_exercise.py
+    blob: 0fe3e2cf19470f594f31aa8e73b6e3d6723ea443
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E028
+    path: org/modules/graph/comp_learns_score.py
+    blob: f939876d4304f17e960276bc42bc59f1cf0ec7bf
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E029
+    path: org/modules/graph/comp_log_auto.py
+    blob: 2e5af0ade12631aba6610f9cb46411e62cc51f09
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E030
+    path: org/modules/graph/comp_marker_read.py
+    blob: 0331c473fa60bbbc67e953929cd08cdecf97eece
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E031
+    path: org/modules/graph/comp_msbeff_rebaseline.py
+    blob: 34ff8c91d9c0a1bbf3b5eda1ff22a3163cced0a2
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E032
+    path: org/modules/graph/comp_parity_cli.py
+    blob: 3fad558c0404a92afe3f1e7849ec6d7263eeb598
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E033
+    path: org/modules/graph/comp_passcraft.py
+    blob: 0d74eb3281c4feaba174ba893b50db2b2c4b457f
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E034
+    path: org/modules/graph/comp_potion_relevance.py
+    blob: 76a6c236cabe40d34b89e055edc23f3977472ac8
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E035
+    path: org/modules/graph/comp_promote_lifecycle.py
+    blob: 7445e258edd47f26aedf80f1fae0892cf13141b9
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E036
+    path: org/modules/graph/comp_promote_materializer.py
+    blob: 34713689f4cfb111a54b27e24cc4dfb489cb4589
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E037
+    path: org/modules/graph/comp_pulse.py
+    blob: 0f2a3defc7e69bb91c7c235706fb234d1f5d16a4
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E038
+    path: org/modules/graph/comp_pydeps.py
+    blob: 033cee134168b792691bf3551db2309e82cdb8a8
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E039
+    path: org/modules/graph/comp_rail_audit.py
+    blob: 6d8dab2c8921f8a2100a194215c5ac3e96db5f63
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E040
+    path: org/modules/graph/comp_recognizer_sdk.py
+    blob: 2870590bd2b478753970537d91c31ba76febf10c
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E041
+    path: org/modules/graph/comp_recognizers_code.py
+    blob: 6e9faf19cc25d53ee7f32ce5513902b235d35ddd
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E042
+    path: org/modules/graph/comp_recognizers_config.py
+    blob: 5492f6a046e7d14799b9b41cf2141219d6c3de78
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E043
+    path: org/modules/graph/comp_recognizers_pyfield.py
+    blob: d31edbeae916e1511eca30c3932e45d69164e9f0
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E044
+    path: org/modules/graph/comp_recognizers_ticket.py
+    blob: 09992d323dd2fc710283a91522ecb54c820ba51e
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E045
+    path: org/modules/graph/comp_recognizers_tsx.py
+    blob: c8107eba8870b9684e708494d9f79adbf3f40638
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E046
+    path: org/modules/graph/comp_route.py
+    blob: 7f57f542f5a12818cd10e17640d1bfe62adc1b92
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E047
+    path: org/modules/graph/comp_route_affinity.py
+    blob: cd8a2eb6c6c22264a0e7c0b284c69bf62b1f3595
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E048
+    path: org/modules/graph/comp_route_affinity_ic.py
+    blob: 7860ae00ca8ebd35b5ed1b5d53053de9004f8b4e
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E049
+    path: org/modules/graph/comp_route_eval.py
+    blob: 3ac25ea9488b8aed2d0d45ab53db31f51da5c11f
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E050
+    path: org/modules/graph/comp_route_outcome.py
+    blob: a9de810a0d76e9584a71d8d148f483fda8a5b0dd
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E051
+    path: org/modules/graph/comp_route_shadow.py
+    blob: b98e3162e9218d979d0e1a89515dc5667ac22e65
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E052
+    path: org/modules/graph/comp_symbols.py
+    blob: 714c64fecf7b749c2440b18e63dbc4404e14c454
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E053
+    path: org/modules/graph/comp_tool_health.py
+    blob: d26708468e5979bceea25e11da4c7dcf909af66f
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E054
+    path: org/modules/graph/comp_tool_health_gate.py
+    blob: ea690d7903eca121096d11dc28d775e721ecb8e6
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E055
+    path: org/modules/graph/comp_toolgraph.py
+    blob: 97bf28e1283c47adfc38de245e13ba31797746c6
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E056
+    path: org/modules/graph/comp_trigger.py
+    blob: d67c7ca3418450914313e43807666f31fae1e448
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E057
+    path: org/modules/graph/comp_which_signals.py
+    blob: d471a1742728fc36f7aaebff21dddfc97bdf8f5a
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E058
+    path: org/modules/graph/comp_ws4_crosswalk.py
+    blob: 772caf8c42e13cb0fbec31e8e672451aa1c5a1be
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+  - id: P3E059
+    path: org/modules/graph/comp_ws4_crosswalk_test.py
+    blob: e18ac8cb0eedda55dea2530197cbd8ad16c615b9
+    source_signature: absent
+    fresh_signature: absent
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate 0.8.0_AE_CloudComp"
+
+traversal_residue:
+  fresh_engines_outside_fixed_cohort:
+    count: 5
+    paths:
+      - org/modules/graph/comp_directives.py
+      - org/modules/graph/comp_legacywriter.py
+      - org/modules/graph/comp_ontolint.py
+      - org/modules/graph/comp_output_contract.py
+      - org/modules/graph/comp_system.py
+    disposition: NOT_IN_PASS3_FIXED_DENOMINATOR
+    note: >-
+      The four original strong-binding engines remain outside Pass 3. Any
+      post-source engine is also printed here rather than silently changing the
+      Andrew/Base-issued 59-engine population.
+  working_tree_only_comp_engines:
+    disposition: NOT_READ
+    note: >-
+      Uncommitted or staged engine files are excluded by the git-object read
+      basis and are not silently assessed.
+
+acceptance_state:
+  population_authored_before_verdicts: true
+  verdict_rows_authored: 0
+  code_grain_sweep_started: false
+  residue_printed: true
+

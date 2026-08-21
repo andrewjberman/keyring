@@ -1,0 +1,606 @@
+artifact: ATOM_LAYER0_INTEGRATION_ROADMAP
+seat: 4.0.0_SA_CRO~C
+date: 2026-08-20
+status: PROPOSED
+authorization: >-
+  Andrew banked order (ANDREW_DIRECT_20260820_ATOM_LAYER0_INTEGRATION_SEAT_C.md), relayed as
+  MSTR-DIRECT 63326; scope confirmed by base CRO 63335 with the per-row vintage-drift guard
+  addition. Mechanics from ~A (spec @47e3a54027) applied to the census from ~B (@50f35b1099).
+consumes:
+  census: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml
+  census_final_commit: 50f35b1099
+  framework: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/00_ATOM_LAYER0_SPEC.md
+  framework_final_commit: 47e3a54027
+  compiler: >-
+    python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/scripts/validate_run.py
+    --compile-census-row <census.yaml> --census-row-id <id> --output <run.json>
+schema_record: rule24/DISPOSITION_SCHEMA_RECORD.json
+vintage_guard_report: vintage_guard_report.json
+run_bundles_dir: run_bundles/
+
+denominators:
+  census_rows_total: 59
+  unresolved_rows: 30
+  unresolved_rows_dispositioned: 30
+  run_bundles_compiled: 30
+  vintage_guard: 30_of_30_CURRENT_AT_HEAD_zero_moved
+  workstreams_total: 14
+  workstreams_dispatchable: 13
+  workstreams_held_by_design: 1
+
+headline: >-
+  Zero of the 30 unresolved rows is an atomicity failure. The unresolved set decomposes into
+  17 broken bindings to declared authorities (S4), 8 record-vs-reality status drifts with no
+  authority binding (S0), 3 missing target-population declarations (S3), and 2 instrument
+  gaps. One concept (Contract_Record) carries a bounded atomicity certificate with unresolved
+  bindings -- the framework's atomic-but-unbound state, proven live by ~A's R015 proving run.
+  Thirty rows collapse to 14 owner workstreams, one of which (6 rows) is already held by
+  design on a declared event and needs NO dispatch.
+
+# rows are ordered worst-first per the census's display_verdict_precedence
+rows:
+  - id: R015
+    concept: Contract_Record
+    census_verdict: AMBIGUOUS_TWO_HOMES
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: EXISTS
+    certificate: >-
+      ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Contract_Record
+      authorities/schema/consumers at 602b73a1) -- ~A proving run @90120de83f,
+      revalidated @47e3a54027
+    display_disposition: ATOMIC_BUT_UNBOUND
+    workstream: WS-02
+    cross_links: [WS-01]
+    owner_act: >-
+      Disposition the four unresolved bindings from ~A's S4 contract table: (1) registry
+      definition copies both field lists against the registry header's cite-never-copy rule and
+      omits describes -- replace copy with citation; (2) LAYER_FIELD_ANATOMY.md repeats the
+      omission; (3) estate-contracts/README.md omits describes, retains retired scope where the
+      authority uses locality, cites a stale rule-bank version; (4) comp_legacywriter.py runtime
+      re-declaration (= WS-01).
+    run_bundle: run_bundles/R015_run.json
+    bundle_note: >-
+      scaffold only -- the ASSESSED authoritative run is
+      org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/R015_CONTRACT_RECORD/atom_layer0_run.json
+  - id: R010
+    concept: Segment
+    census_verdict: GOVERNED_DUAL_CARRIER
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-08
+    full_run_nomination: SECONDARY
+    owner_act: >-
+      Reconcile the extant one-member drift (andrew-infrastructure vs estate-infrastructure)
+      per the declared block precedence (segment_definitions is precedent); dual carry itself is
+      ratified and detected -- the repair is the one member, not the architecture.
+    run_bundle: run_bundles/R010_run.json
+  - id: R027
+    concept: Lifecycle_Class
+    census_verdict: CODE_REDECLARATION
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-01
+    owner_act: >-
+      Replace comp_legacywriter.py:761-770 GATED_CLASSES/_LIFECYCLE_ENUM copies with loads from
+      the rule bank. The healthy pattern already exists in the same directory:
+      comp_ontolint.py:39,54-88 loads Role/Relation values from the rule bank (census R029/R030,
+      RESOLVED). Code cites, code never re-declares.
+    run_bundle: run_bundles/R027_run.json
+  - id: R028
+    concept: Contract_Record
+    census_verdict: CODE_REDECLARATION
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-01
+    cross_links: [WS-02]
+    owner_act: >-
+      Compile _UNIVERSAL_REQUIRED (comp_legacywriter.py:762-766,1421-1431) from the rule-bank
+      authority instead of mirroring it; retain the existing drift test as the regression
+      control. Discharges R015 binding (4) in the same act.
+    run_bundle: run_bundles/R028_run.json
+  - id: R001
+    concept: Estate
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-06
+    owner_act: 'No independent act: inherits Substrate (R002) per the census; closes when R002 closes.'
+    run_bundle: run_bundles/R001_run.json
+  - id: R002
+    concept: Substrate
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-06
+    full_run_nomination: PRIME
+    owner_act: >-
+      Reconcile declared members vs materialized: declared codebase member absent while retired
+      pipeline and semctl remain materialized (O1 row 1). This is the ontology lock-down's own
+      named screaming instance (codebase=0); the fix direction (materialize vs re-legislate) is
+      the owner's call, not this seat's.
+    run_bundle: run_bundles/R002_run.json
+  - id: R018
+    concept: Domain
+    census_verdict: CONTENT_MISMATCH
+    owner: 0.4.0_DS_ClientPlatform
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-07
+    full_run_nomination: LISTED
+    owner_act: >-
+      Reconcile 9 declared vs 5 materialized anchors (O1 row 7): land the missing four or
+      re-legislate the declaration to the true population.
+    run_bundle: run_bundles/R018_run.json
+  - id: R021
+    concept: ops-internal.chain_count
+    census_verdict: CONTENT_MISMATCH
+    owner: 2.0.0_SA_COO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: CVO_L7_R1_82aa27590a
+    owner_act: >-
+      HELD BY DESIGN -- one of the four deliberately manifest-stale chain_counts pending the
+      resolver-commit word. Fires on the COO resolver commit; never file as a fresh finding.
+    run_bundle: run_bundles/R021_run.json
+  - id: R022
+    concept: portfolio-management.chain_count
+    census_verdict: CONTENT_MISMATCH
+    owner: 2.0.0_SA_COO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: CVO_L7_R1_82aa27590a
+    owner_act: HELD BY DESIGN -- same event as R021.
+    run_bundle: run_bundles/R022_run.json
+  - id: R023
+    concept: security-scanner.chain_count
+    census_verdict: CONTENT_MISMATCH
+    owner: 2.0.0_SA_COO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: CVO_L7_R1_82aa27590a
+    owner_act: HELD BY DESIGN -- same event as R021.
+    run_bundle: run_bundles/R023_run.json
+  - id: R024
+    concept: canonical-schwab.chain_count
+    census_verdict: CONTENT_MISMATCH
+    owner: 2.0.0_SA_COO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: CVO_L7_R1_82aa27590a
+    owner_act: HELD BY DESIGN -- same event as R021.
+    run_bundle: run_bundles/R024_run.json
+  - id: R025
+    concept: sys-estate-ops-platform.spans_verticals
+    census_verdict: CONTENT_MISMATCH
+    owner: 2.0.0_SA_COO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: CVO_L7_R1_82aa27590a
+    owner_act: HELD BY DESIGN -- same synchronization event.
+    run_bundle: run_bundles/R025_run.json
+  - id: R026
+    concept: W15_routing_snapshot
+    census_verdict: CONTENT_MISMATCH
+    owner: 0.8.0_AE_CloudComp
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-04
+    known_residual: resolver_commit_held_by_COO
+    owner_act: >-
+      HELD BY DESIGN -- HEAD blob of estate-coverage-resolver.json remains pre-landing while
+      manifest and canonical moved; the resolver commit is held by COO. The uncommitted
+      working-tree delta on this file predates ~B and stays untouched (census law).
+    run_bundle: run_bundles/R026_run.json
+  - id: R047
+    concept: code_content_design_status
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      Reconcile C2C3_NAMING_AND_DOMAINS.md intra-doc contradiction (top status says section-4
+      design not yet designed; section 4 says architecture locked); banner the superseded half.
+    run_bundle: run_bundles/R047_run.json
+  - id: R051
+    concept: implementation_status_claim_set
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      Reconcile GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md self-contradiction (version-pin DONE at
+      :79 then not-landed at :169-172) and the stale monotonicity NOT BUILT claim.
+    run_bundle: run_bundles/R051_run.json
+  - id: R052
+    concept: l1b_status_claim_set
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      Reconcile IMPLEMENTATION_LEVELS_AND_SEQUENCING.md: header and L1b section say
+      delivered/built; the intervening asymmetry section still says entirely unbuilt with no
+      detector.
+    run_bundle: run_bundles/R052_run.json
+  - id: R056
+    concept: boundary_report_status
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      Reconcile SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md (top calls the type a draft; section 7
+      calls it finalized; 24 conformance tests pass at the implemented type).
+    run_bundle: run_bundles/R056_run.json
+  - id: R059
+    concept: subcommand_declaration_bindings
+    census_verdict: CONTENT_MISMATCH
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: INSTRUMENT_GAP
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-11
+    owner_act: >-
+      Two acts, instrument first per precedence: (a) extend the manifest subcommand checker over
+      the 48 UNKNOWN shapes (48 of 76 declarations are structurally unverifiable today -- a
+      comp-tool coverage gap, a defect by standing ruling); (b) fix the 10 measured declaration
+      drifts the existing checker already established.
+    run_bundle: run_bundles/R059_run.json
+  - id: R020
+    concept: Lifecycle_Value
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03b
+    owner_act: >-
+      LAYER_FIELD_ANATOMY.md:760 still says contested after the registry (declared authority)
+      resolved Lifecycle_Value to a deprecated alias; update the derived doc to cite the
+      authority state.
+    run_bundle: run_bundles/R020_run.json
+  - id: R042
+    concept: curated_tool_directive_set
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      comp-tools.yaml still presents comp-adapter-audit as callable although the manifest
+      authority declares it retired and deleted -- the retired-alias class the estate's own law
+      polices (a stale callable presentation invites use). Remove or banner the entry.
+    run_bundle: run_bundles/R042_run.json
+  - id: R046
+    concept: version_pin_remedy_status
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      ARCHETYPAL_LEARNING_LOOP.md says the first version-pin remedy has not landed; the handoff
+      records it DONE at ef0257849. Update + banner.
+    run_bundle: run_bundles/R046_run.json
+  - id: R048
+    concept: content_prototype_build_status
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 3.0.0_SA_CVO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03c
+    owner_act: >-
+      CONTENT_MODULE_DESIGN.md still says nothing built and lists the prototype as next; the
+      validated iteration-3 reference implementation exists and self-tests pass. Update + banner.
+    run_bundle: run_bundles/R048_run.json
+  - id: R049
+    concept: version_pin_remedy_status
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03a
+    owner_act: >-
+      DOMAIN_AND_PREDICATE_ERROR_CLASSES.md still calls the remedy dispatched/not landed; the
+      handoff records it DONE. Same delta as R046 -- one sweep act.
+    run_bundle: run_bundles/R049_run.json
+  - id: R054
+    concept: directory_status_index
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S0_NOT_CONCEPT_GRAIN
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03b
+    owner_act: >-
+      infra/system/ontology/README.md hand-maintained index: still says L1b in build / remedy
+      not landed, and calls the retired estate axis unratified without surfacing its
+      supersession header.
+    run_bundle: run_bundles/R054_run.json
+  - id: R058
+    concept: Lifecycle_Stage_prose_token
+    census_verdict: SUPERSEDED_UNBANNERED
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-03b
+    owner_act: >-
+      LAYER_FIELD_ANATOMY.md:452 retains RETIREMENT-PENDING after the ratified Stage vocabulary
+      (declared authority) respelled both canonical occurrences to WINDING_DOWN; respell the
+      derived doc.
+    run_bundle: run_bundles/R058_run.json
+  - id: R006
+    concept: C0
+    census_verdict: NO_DECLARED_TARGET_CONTENT
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S3_LEGISLATION_GAP
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-09a
+    full_run_nomination: LISTED
+    owner_act: >-
+      Declare C0's target population (predicate + denominator-generation process per S3 law);
+      today it derives a current population with nothing to compare against. Near-term owner act
+      closes the row; a framework-proper S3 (after an S2 frontier closure) is the nominated
+      full-run path.
+    run_bundle: run_bundles/R006_run.json
+  - id: R007
+    concept: C1
+    census_verdict: NO_DECLARED_TARGET_CONTENT
+    owner: 4.0.0_SA_CRO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S3_LEGISLATION_GAP
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-09a
+    full_run_nomination: LISTED
+    owner_act: Same shape as R006, for C1.
+    run_bundle: run_bundles/R007_run.json
+  - id: R016
+    concept: Estate_Contracts
+    census_verdict: NO_DECLARED_TARGET_CONTENT
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S3_LEGISLATION_GAP
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-09b
+    full_run_nomination: LISTED
+    owner_act: >-
+      Declare Estate_Contracts target population; same S3 shape as R006/R007 at a CTO-owned
+      surface.
+    run_bundle: run_bundles/R016_run.json
+  - id: R012
+    concept: Chain
+    census_verdict: NON_INDEPENDENT_RESOLUTION
+    owner: 0.8.0_AE_CloudComp
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: S4_BINDING_REPAIR
+    atomicity_certificate: NONE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-10
+    owner_act: >-
+      Chain declares and derives from the same frozen resolver artifact, so O1's agreement is
+      vacuous (shared-derivation instruments cannot cross-check). Bind the declaration to an
+      independently-derived source, or declare the resolver the single authority WITH an
+      independent content check. Partially coupled to the WS-04 resolver event -- sequence
+      after it.
+    run_bundle: run_bundles/R012_run.json
+  - id: R045
+    concept: resolves_via_execution
+    census_verdict: NOT_EXERCISABLE
+    owner: 1.0.0_SA_CTO
+    census_currency: CURRENT_AT_HEAD
+    framework_closing_stage: INSTRUMENT_GAP
+    atomicity_certificate: NOT_APPLICABLE
+    display_disposition: FINDING_ROUTED_TO_OWNER
+    workstream: WS-05
+    owner_act: >-
+      Implement the specified resolves_via run-mode in check_system_definitions.py (today it
+      validates form/status/key only; TC01). RANKED FIRST among new acts: it mechanizes the
+      resolution predicate for all 18 resolves_via terms (9 unresolved per the O1 annex), makes
+      the ~B-named 9-of-18 completion drive cheap, and converts future censuses from hand reads
+      to instrument runs.
+    run_bundle: run_bundles/R045_run.json
+
+workstreams:
+  grouping_intent: >-
+    one dispatchable unit of owner work (one owner x one mechanism); every row has exactly one
+    primary workstream; cross-links recorded where one act also discharges another row's
+    sub-part
+  items:
+    - id: WS-01
+      owner: 1.0.0_SA_CTO
+      title: comp_legacywriter compile-from-authority
+      rows: [R027, R028]
+      also_discharges: R015 binding (4)
+      mechanism: >-
+        replace in-code vocabulary copies with rule-bank loads; healthy pattern in-tree at
+        comp_ontolint.py:39,54-88; retain existing drift tests as regression controls
+    - id: WS-02
+      owner: 1.0.0_SA_CTO
+      title: Contract_Record two-homes reconcile
+      rows: [R015]
+      mechanism: >-
+        disposition the four unresolved bindings from ~A's S4 contract table; the registry
+        copied member list -> citation is the core act; NOT to be silently bundled into method
+        registration (per ~A's owner-routing annex)
+    - id: WS-03a
+      owner: 1.0.0_SA_CTO
+      title: ontology-doc status banner sweep (CTO surfaces)
+      rows: [R042, R046, R047, R049, R051, R052, R056]
+      mechanism: >-
+        one sweep act: reconcile stale not-landed/not-built/draft claims with the landed
+        reality and banner superseded halves; the repeated delta is one class
+    - id: WS-03b
+      owner: 4.0.0_SA_CRO
+      title: CRO derived-doc reconcile sweep
+      rows: [R020, R054, R058]
+      mechanism: >-
+        update LAYER_FIELD_ANATOMY (2 tokens) + README index to cite current authority state
+    - id: WS-03c
+      owner: 3.0.0_SA_CVO
+      title: CONTENT_MODULE_DESIGN status update
+      rows: [R048]
+      mechanism: record the shipped iteration-3 prototype; banner the superseded build-status prose
+    - id: WS-04
+      owner: 2.0.0_SA_COO
+      title: W15 resolver-commit synchronization
+      rows: [R021, R022, R023, R024, R025, R026]
+      state: HELD_BY_DESIGN
+      mechanism: >-
+        six rows, one already-held event: the resolver commit COO holds. Fires on that commit;
+        NO new dispatch; re-run the six census row reads after it lands to confirm closure
+    - id: WS-05
+      owner: 1.0.0_SA_CTO
+      title: resolves_via run-mode (instrument)
+      rows: [R045]
+      rank: FIRST_AMONG_NEW_ACTS
+      mechanism: >-
+        implement the specified execution mode; unblocks mechanical re-census and the 9/18
+        completion drive
+    - id: WS-06
+      owner: 1.0.0_SA_CTO
+      title: Substrate/Estate member reconcile
+      rows: [R002, R001]
+      mechanism: >-
+        reconcile declared vs materialized members (codebase=0 is the lock-down's screaming
+        instance); R001 closes by inheritance
+    - id: WS-07
+      owner: 0.4.0_DS_ClientPlatform
+      title: Domain anchor reconcile
+      rows: [R018]
+      mechanism: '9 declared vs 5 materialized: land or re-legislate'
+    - id: WS-08
+      owner: 4.0.0_SA_CRO
+      title: Segment one-member reconcile
+      rows: [R010]
+      mechanism: apply declared block precedence to the one drifted member
+    - id: WS-09a
+      owner: 4.0.0_SA_CRO
+      title: C0/C1 target-population legislation
+      rows: [R006, R007]
+      mechanism: declare target populations (predicate + denominator process)
+    - id: WS-09b
+      owner: 1.0.0_SA_CTO
+      title: Estate_Contracts target-population legislation
+      rows: [R016]
+      mechanism: same S3 shape at the CTO surface
+    - id: WS-10
+      owner: 0.8.0_AE_CloudComp
+      title: Chain independent derivation
+      rows: [R012]
+      mechanism: independent source or declared-single-authority + independent check; sequence after WS-04
+    - id: WS-11
+      owner: 1.0.0_SA_CTO
+      title: manifest subcommand checker extension + drift fixes
+      rows: [R059]
+      mechanism: >-
+        extend checker over 48 UNKNOWN shapes (instrument half first), then fix the 10 measured
+        drifts
+
+full_run_nominations:
+  intent: >-
+    concepts the framework track should take through a full S0-S4 run (a value stream separate
+    from row closure -- no census row WAITS on these; sequencing is base CRO's and Andrew's
+    call)
+  ranked:
+    - concept: Substrate
+      priority: PRIME
+      why: >-
+        base-layer concept; member mismatch is the lock-down's named screaming instance; an
+        S2-closed frontier + S3 population legislation would settle the layer the whole estate
+        stands on
+    - concept: C0
+      priority: HIGH
+      why: >-
+        layer concept with no declared target; S3 act is pending anyway -- doing it
+        framework-proper costs little more
+    - concept: C1
+      priority: HIGH
+      why: same as C0
+    - concept: Domain
+      priority: MEDIUM
+      why: population-bearing concept with a measured declared-vs-materialized gap
+    - concept: Estate_Contracts
+      priority: MEDIUM
+      why: S3 shape at CTO surface
+    - concept: Segment
+      priority: SECONDARY
+      why: >-
+        governed dual carrier already detected + ruled; a certificate would formalize what
+        governance already holds
+
+residue:
+  not_dispositioned: []
+  out_of_scope_carried_from_census:
+    - >-
+      59 comp_* engines excluded by ~B's binding-signature predicate (named next allocation,
+      not started, not this seat's)
+    - resolves_via completion drive 9-of-18 (named next allocation; enabled by WS-05)
+    - cloud execution space (deferred by Andrew's sequencing)
+  zero_occupancy_values_retained: [ALREADY_RESOLVED_SINCE_CENSUS, MOVED_DEFECT_PERSISTS, SURFACE_RETIRED_AT_HEAD, GUARD_UNVERIFIABLE, S2_CHALLENGE_REQUIRED, DECOMPOSES, FULL_RUN_SCHEDULED]
+
+no_fixes: true

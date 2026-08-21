@@ -46,6 +46,12 @@
     "grammar_name": "decomposition_grammar",
     "grammar_version": "1.0.0",
     "grammar_commit": "FILL000",
+    "grammar_adequacy": {
+      "battery": null,
+      "specimens_total": 0,
+      "specimens_expressible": 0,
+      "demonstrated": false
+    },
     "splitter": {
       "identity": "",
       "differently_derived": null,
@@ -96,7 +102,9 @@
     "R24-AL0-008",
     "R24-AL0-009",
     "R24-AL0-010",
-    "R24-AL0-011"
+    "R24-AL0-011",
+    "R24-AL0-012",
+    "R24-AL0-013"
   ],
   "residue": {
     "stage_not_assessed": ["s0", "s1", "s2", "s3", "s4", "s5"],

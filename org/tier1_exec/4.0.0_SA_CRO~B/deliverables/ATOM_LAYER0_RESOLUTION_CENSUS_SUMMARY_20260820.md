@@ -1,19 +1,21 @@
 # ATOM_LAYER0 repo resolution census - CRO~B
 
-**Status:** PROPOSED | **read vintage:** `602b73a1f99d889dabbc884525b10dd8e7bf2e56` |
-**scope:** repo only; cloud execution explicitly deferred. The denominator-only population landed first
-at `ee9431a49b`. No fixes were made.
+**Status:** PROPOSED - PASS 2 COMPLETE | **Pass-1 vintage:**
+`602b73a1f99d889dabbc884525b10dd8e7bf2e56` | **Pass-2 vintage:**
+`6b48695dfab4c69f6c53b6beacd6947189b2d418` | **scope:** repo only; cloud execution explicitly
+deferred. The denominator-only population landed first at `ee9431a49b`. No fixes were made.
 
 ## Result
 
-The assessed claim set contains **45 rows**: **43 assessed** and **2 explicitly NOT_ASSESSED**.
-Of the assessed rows, **24 resolve and 19 do not**. These are row counts, not independent-defect
-counts: Estate inherits Substrate, and six W15 rows are one already-held synchronization residual.
+The claim set contains **59 rows, all assessed**: **29 resolve and 30 do not**. These are row counts,
+not independent-defect counts: Estate inherits Substrate, six W15 rows are one already-held
+synchronization residual, and several stale status claims share one landed implementation event.
 
 The surface denominator is **31 files**: 16 top-level ontology surfaces and 15 graph/consumer
-surfaces. Coverage is 16 fully assessed, 3 partially assessed, and 12 not assessed; all 31 are named
-in the structured artifact. The registry annex denominator is **18 terms carrying `resolves_via`**:
-9 resolve and 9 do not at the pinned vintage.
+surfaces. **All 31 are fully assessed; none remains partial or unassessed.** Pass 2 closed the 12
+skipped ontology files and completed `LAYER_FIELD_ANATOMY.md`, `comp-tools.yaml`, and
+`graph-call-manifest.yaml`. The separate registry annex denominator remains **18 terms carrying
+`resolves_via`**: 9 resolve and 9 do not at the Pass-1 vintage.
 
 ## Worst first
 
@@ -23,23 +25,28 @@ in the structured artifact. The registry annex denominator is **18 terms carryin
    `AMBIGUOUS_TWO_HOMES` with `CONTENT_MISMATCH`: its prohibited copied member list is an
    unauthorized second declaration, not legitimized by the adjacent healthy authority citation.
    Both were re-read directly. Owners: CRO and CTO respectively.
-2. **CODE_REDECLARATION - 2 rows, one engine.** `comp_legacywriter.py` copies the Lifecycle_Class
+2. **SUPERSEDED_UNBANNERED - 11 rows.** Pass 2 found eight stale status surfaces across the learning
+   loop, naming/content design, implementation handoff/spec, ontology index, and sensor-contract
+   record; two stale vocabulary claims in `LAYER_FIELD_ANATOMY.md`; and one retired tool still
+   presented as callable in `comp-tools.yaml`. The strongest repeated delta is "not landed/not built"
+   surviving after the cited target landed.
+3. **CONTENT_MISMATCH - 15 rows.** The original ten remain: `Contract_Record`, three O1 population
+   rows (`Estate`, `Substrate`, `Domain`), and six already-known W15 rows. Pass 2 adds four
+   intra-document or cross-document status contradictions and the manifest's measured
+   subcommand-declaration drift. Several of these rows also carry `SUPERSEDED_UNBANNERED`;
+   multi-label counts are occurrences, not independent defects.
+4. **CODE_REDECLARATION - 2 rows, one engine.** `comp_legacywriter.py` copies the Lifecycle_Class
    enum and Contract_Record required-field vocabulary into code. Its conformance test can detect a
    drift, but the code still has a second home. Owner: CTO.
-3. **CONTENT_MISMATCH - 10 rows.** Three O1 families (`Substrate` plus inherited `Estate`, and
-   `Domain`) remain open. Six rows are the already-known W15 L7 residual - four canonical
-   `chain_count`s, one `spans_verticals`, and the held generated-resolver refresh - and are **not new
-   findings**. Owner routing remains CTO / DS / COO+CloudComp as recorded per row.
-4. **SUPERSEDED_UNBANNERED - 1 row.** `LAYER_FIELD_ANATOMY.md:760` still says
-   `Lifecycle_Value` is contested/unresolved, while registry v3.11 records it as the deprecated
-   naming-history alias of `Lifecycle_Stage`. The file has a global subordination clause but no
-   local supersession marker on this claim. Owner: CRO.
 5. **NO_DECLARED_TARGET_CONTENT - 3 rows.** C0, C1, and Estate_Contracts derive current
    populations but declare no target population to compare. Owner routing is in-row.
 6. **NON_INDEPENDENT_RESOLUTION - 1 row.** Chain declares and derives from the same frozen
    resolver artifact; O1's vacuous agreement is not promoted to resolved. Owner: CloudComp.
 7. **NOT_EXERCISABLE - 1 row / tool gap.** `check_system_definitions.py` passes its form contract
    but does not implement the specified `resolves_via` execution mode. Owner: CTO.
+8. **INSTRUMENT_UNKNOWN - 1 multi-label row.** Of 76 `tools_index` declarations, the standing
+   checker can establish 28: 18 agree and 10 drift. The remaining 48 shapes are printed UNKNOWN,
+   not promoted to clean; this is attached to the same manifest row as the measured drift.
 
 No `DANGLING`, `UNRESOLVED_NO_AUTHORITY`, or `GRAIN_MISMATCH` row was established in the assessed
 set. That zero is bounded by the printed residue; it is not a repo-wide metaphysical zero.
@@ -58,6 +65,13 @@ set. That zero is bounded by the printed residue; it is not a repo-wide metaphys
 - `check_system_definitions.py`: self-test PASS 10/10; live PASS 65/0. It checks form, not resolution.
 - `comp-ontolint`: seeded mutants PASS; live Role/Relation invariant PASS (10 base relations,
   3 composites, 14-role total order).
+- `l0b_conformance.py`: PASS at its ratified bar, 13 satisfied plus 1 declared-exempt, 17/17 harness
+  cells; the document-derived denominator is 9 source-change and 5 input-degradation members.
+- `boundary_report` conformance: 24/24 tests PASS.
+- `content_relate_prototype.py`: synthetic mechanism floor and pooled-decoy control PASS; the artifact
+  remains explicitly reference-only pending the real-content blinded verdict.
+- `comp-manifest-check completeness`: PASS, 91 tracked executables accounted and 76 registered tools.
+  Its subcommand annex prints 10 standing drifts and 48 UNKNOWN shapes rather than hiding them.
 
 The TWO_HOMES discriminator is explicit for `Contract_Record`: the registry's `authority` pointer is
 a healthy citation, but the registry `definition` separately copies both field lists and omits
@@ -67,7 +81,8 @@ editable; the citation itself is not counted as a home.
 The discriminator is also explicit for `Segment`: its dual carry is ratified, block precedence is
 declared, and O1 exercises both blocks. The remaining mismatch is governed and detected; it is not
 an authority ambiguity. The structured artifact includes direct-read receipts for all 19 surfaces
-claimed fully or partially assessed at the Pass-1 vintage.
+claimed fully or partially assessed at the Pass-1 vintage and 15 Pass-2 receipts whose union is all
+31 declared surfaces.
 
 Three rows were rerun from their exact pinned file+anchor pairs after Base's adversarial challenge:
 R010 Segment, R015 Contract_Record, and R027 comp_legacywriter Lifecycle_Class. All three reproduced
@@ -85,12 +100,13 @@ two-home discriminator postulates, and the token-hygiene census.
 
 ## Residue
 
-Two enumerated surfaces have explicit NOT_ASSESSED rows (`comp-tools.yaml`, the 76-entry
-`graph-call-manifest.yaml`); 12 more surface IDs remain unexpanded, and 59 `comp_*.py` files failed
-the declared strong binding-signature predicate. The nested `worldmodel/**` evidence corpus and
-other graph subtrees are outside this pass's declared layer, not silently treated as clean. The dirty
-working-tree copy of `estate-coverage-resolver.json` predated this seat; the census read only the pinned
-Git object and did not touch that delta.
+No declared surface remains as traversal residue. What remains is only the population boundary named
+before verdicting: 59 `comp_*.py` engines that failed the strong binding-signature inclusion predicate,
+the nested `worldmodel/**` evidence corpus, other graph subtrees, and cloud execution deferred by
+Andrew's sequence. The dirty working-tree copy of `estate-coverage-resolver.json` predated this seat;
+Pass 1 read only its pinned Git object and did not touch that delta. The next two allocations named by
+Base - the 59-engine code-grain sweep and the 9/18 unresolved `resolves_via` completion drive - were
+not started or folded into Pass 2.
 
 ## Runtime integration seam
 

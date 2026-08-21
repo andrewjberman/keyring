@@ -37,25 +37,26 @@ sources. Where prose and schema disagree, the schema wins and the prose is the d
 
 ### 2.1 Resolution-census input seam
 
-The run schema accepts `source_census_row` directly. To compile one `~B` row into an
-unassessed but valid run bundle:
+The run schema accepts `source_census_row` directly. To select one `~B` row from its
+released YAML document and compile an unassessed but valid run bundle:
 
-`python scripts/validate_run.py --compile-census-row <row.json> --output <run.json>`
+`python scripts/validate_run.py --compile-census-row <census.yaml> --census-row-id <id> --output <run.json>`
 
-| Census row field | atom_layer0 field |
+The exact selected mapping is preserved in `source_census_row`; the compiler does not
+rename its fields. A standalone normalized JSON row remains supported as a compatibility
+form.
+
+| External census field | atom_layer0 field |
 |---|---|
-| `row_id` | `run_id` provenance |
+| `id` | `run_id` provenance |
 | `surface` + `concept` | default run scope |
 | `concept` | `subject.concept` |
-| optional `claimed_content` | `subject.definition` |
-| optional `declared_layer` | `subject.claimed_layer` |
-| optional `declared_grain` | `subject.declared_grain` |
-| optional `scope` | `subject.scope` |
-| `vintage` | run evidence vintage |
-| `verdict`, `verdict_schema`, `evidence_pointer`, `candidate_owner` | preserved unchanged in `source_census_row` |
+| enclosing document `read_vintage` | run evidence vintage |
+| `assessment_state`, `resolution_state`, `failure_classes`, `display_verdict`, `evidence`, `owner` | preserved unchanged in `source_census_row` |
 
-The census verdict is intentionally opaque to this package and carries its external
-schema pointer. `atom_layer0` does not copy or reinterpret `~B`'s verdict array. Missing
+The census verdict is intentionally opaque to this package and remains governed by the
+external document's Rule 24 interface. `atom_layer0` does not copy or reinterpret `~B`'s
+verdict arrays. Missing
 concept definition, layer, or grain remains null until S0 assesses it; the compiler does
 not manufacture ontology from a resolution finding.
 
@@ -84,12 +85,23 @@ An atomicity certificate exists if and only if:
 - the splitter result is `DECLARED_FRONTIER_EXHAUSTED`;
 - every production in the versioned grammar was exercised by a differently-derived
   splitter over the declared scope;
+- the grammar itself passed its declared retrodiction battery against known real
+  decompositions, so an under-generative production set cannot make closure cheap;
 - the normalized candidate frontier is empty;
 - no required instrument is unknown or unreachable;
 - the run prints its grammar version, scope, grain, evidence vintage, and residue.
 
 Failure to find is not frontier closure. Budget exhaustion, instrument failure, and an
 unavailable independent splitter all terminate in an honest lesser state.
+
+### 3.2.1 Grammar adequacy control
+
+Before any grammar version can support `DECLARED_FRONTIER_EXHAUSTED`, it must express
+every specimen in its committed retrodiction battery as schema-valid children plus one
+declared operator and a reconstruction rule. An inexpressible specimen is a method
+defect: propose a new grammar version, re-run affected current uses, and never grandfather
+the prior certificate. `schemas/retrodiction_battery.schema.json` and the validator make
+this precondition executable.
 
 ### 3.3 Resolution
 
@@ -179,6 +191,17 @@ S3 is prohibited until S2 earns `DECLARED_FRONTIER_EXHAUSTED`. Legislation inclu
   enums remain with their machine contract or producing package, differentiated by home.
 
 Adoption is an authoring act. Reused arrays and axes carry their own fresh record here.
+
+Package-record coverage is evaluated at the bundle's pinned vintage, never against the
+working tree by default. Resolution uses an issued certificate's `registry_vintage`
+first and otherwise the bundle's repository vintage. The certificate field accepts a
+7-40 lowercase-hex commit-ish token followed optionally by whitespace and provenance
+decoration; resolution uses the leading token and does not interpret the decoration. A
+valid pin predating the package maps explicitly to the first registered package record
+set; a nonexistent or unrelated pin fails closed as `VINTAGE_UNRESOLVABLE`. A record
+addition partitions historical and current bundles by record-count vintage rather than
+invalidating honest historical provenance. A grammar change remains a separate
+eligibility-invalidating event.
 
 ## 8. Resolution contract
 

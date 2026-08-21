@@ -15,7 +15,8 @@ import os
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-CENSUS = os.path.join(ROOT, "org", "tier1_exec", "3.0.0_SA_CVO", "logs", "2026-06-15", "estate_census")
+CENSUS = os.path.join(ROOT, "org", "modules", "graph", "estate_census")  # RE-POINTED 2026-08-20: the census-regen landing (CVO-named successor home, adjudication @d7a660b69c);
+# the 06-15 originals remain at org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/ as the dated record -- nothing reads them.
 # Routing source = the COMMITTED canonical manifest (CVO-authoritative, reproducible from a
 # fresh checkout). Each manifest entry: {family(=thread_id), named_thread, owning_tool, status,
 # tool_pointer, reason?, last_reviewed, debtscan_flags}.
@@ -39,7 +40,16 @@ def load_routing():
                     # (e.g. an EC2/ALB service like m365-mcp-gateway). Falls back to census when absent.
                     "description": e.get("description"), "producers": e.get("producers"),
                     "served_artifacts": e.get("served_artifacts"),
-                    "frontend_resolution": e.get("frontend_resolution")})
+                    "frontend_resolution": e.get("frontend_resolution"),
+                    # PROSE_FIELD homes (OPAL_KIMIPIPELINE.FIELDHOME F1, CTO 63386): an ADJUDICATED
+                    # classification/classification_reason/enrichment placed on the manifest row
+                    # WINS over the frozen 2026-06-15 census, exactly as `description` already does
+                    # (main():81). The manifest is committed + reproducible; the census is a dated
+                    # bootstrap default no adjudication may edit. This makes an adjudicated text
+                    # survive regen BY CONSTRUCTION rather than by re-landing discipline.
+                    "classification": e.get("classification"),
+                    "classification_reason": e.get("classification_reason"),
+                    "enrichment": e.get("enrichment")})
     return out
 
 
@@ -68,7 +78,15 @@ def main():
         flags = []
         if r["status"] == "unreviewed":
             flags.append("needs-consumer-trace")
-        rsn = (d.get("classification_reason") or "").lower()
+        # PROSE_FIELD homes (FIELDHOME F1): resolve each with manifest-wins-over-census, the :81
+        # `description` pattern applied to all four prose fields. An adjudicated manifest value
+        # wins; else the frozen census bootstrap. The orphan-candidate flag reads the RESOLVED
+        # classification_reason (not the raw census one) so an adjudicated reason correctly
+        # governs the flag -- the sovereign-plane value is authoritative for the derived signal too.
+        classification = r.get("classification") or d.get("classification", "")
+        classification_reason = r.get("classification_reason") or d.get("classification_reason", "")
+        enrichment = r.get("enrichment") or d.get("enrichment", "")
+        rsn = (classification_reason or "").lower()
         if "orphan" in rsn or "superseded" in rsn or "not invoked" in rsn or "no event source" in rsn:
             flags.append("orphan-candidate")
         seen.add(r["named_thread"])
@@ -82,6 +100,11 @@ def main():
             "producers": r.get("producers") or d.get("producers", []),
             "served_artifacts": r.get("served_artifacts") or d.get("served_artifacts", []),
             "frontend_resolution": r.get("frontend_resolution") or d.get("frontend_resolution", ""),
+            # FIELDHOME F1: the three prose fields now carried in the resolver output with
+            # manifest-wins precedence, so an adjudicated text is served AND survives regen.
+            "classification": classification,
+            "classification_reason": classification_reason,
+            "enrichment": enrichment,
         })
     # AUTHORITATIVE resource-level taxonomy (CVO 26b32687a): lambda -> named_thread, single source
     # the fixtures are also derived from. This is the resource enumeration `pipescript <name>` surfaces
@@ -102,7 +125,9 @@ def main():
     # `canonical-schwab` + `observability` ADDED same landing (the TO's optional act, taken): both are
     # populated verticals post-landing; a populated vertical absent from the deliberate order falls to
     # the sorted tail, which reads as an afterthought rather than a placement.
-    CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "model-portfolios", "news", "market-overview",
+    # `model-portfolios` REMOVED at the W-15 one-touch 2026-08-20: the 08-07 Andrew merge into
+    # mdpf MATERIALIZED (W-24 ratified form -- one row, both name-halves); mdpf carries the slot.
+    CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "news", "market-overview",
                      "macroeconomics", "factor-tilts", "valuation", "correlation", "positioning", "cma",
                      "portfolio-management", "trade-submission", "causality",
                      "security-scanner", "smartx", "canonical-schwab", "mdpf", "partners",

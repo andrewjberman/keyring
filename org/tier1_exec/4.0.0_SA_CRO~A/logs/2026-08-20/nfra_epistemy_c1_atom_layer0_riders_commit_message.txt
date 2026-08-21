@@ -1,0 +1,10 @@
+fix(nfra-epistemy): land C1 and vintage riders
+
+Discharge CTO condition 63744 by splitting Observation_Record verification
+plane from physical substrate and regenerating all six evidence observations.
+
+Evaluate ATOM_LAYER0 Rule-24 coverage at each bundle's resolved historical
+vintage, print per-vintage denominators, and fail closed when no pin resolves.
+
+Add the Rule-24 record for the vintage-aware predicate. Historical package
+record additions do not invalidate honest bundles; grammar changes still do.

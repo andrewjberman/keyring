@@ -1,0 +1,1080 @@
+artifact: ATOM_LAYER0_RESOLUTION_CENSUS_PASS3_CODE_GRAIN
+status: COMPLETE
+seat: 4.0.0_SA_CRO~B
+path: B_RESOLUTION_CENSUS_PASS3
+completed: 2026-08-20
+scope: repo_only
+
+vintage:
+  population_commit: 76ba5fec3d
+  assessment_commit: f36d572be864e56b9175caac06b01f62fc141e2a
+  C0_C1_declaration_ruling: d7fb8e5c54
+  C3_repair_ruling: 764c41fdbb
+  read_basis: git_object_not_working_tree
+
+resolution_predicate: >-
+  A binding resolves iff it points to exactly one live authority member at the
+  declared grain, the pointer resolves at the pinned Git object, the target
+  carries the claimed content, and code cites rather than re-declares the
+  vocabulary.
+
+verdict_axes:
+  assessment_state: [ASSESSED, NOT_ASSESSED]
+  resolution_state: [RESOLVED, UNRESOLVED]
+  failure_classes:
+    - UNRESOLVED_NO_AUTHORITY
+    - DANGLING
+    - GOVERNED_DUAL_CARRIER
+    - AMBIGUOUS_TWO_HOMES
+    - CONTENT_MISMATCH
+    - GRAIN_MISMATCH
+    - CODE_REDECLARATION
+    - SUPERSEDED_UNBANNERED
+    - NO_DECLARED_TARGET_CONTENT
+    - NON_INDEPENDENT_RESOLUTION
+    - INSTRUMENT_UNKNOWN
+    - NOT_EXERCISABLE
+  display_verdict_precedence:
+    - AMBIGUOUS_TWO_HOMES
+    - GOVERNED_DUAL_CARRIER
+    - CODE_REDECLARATION
+    - DANGLING
+    - UNRESOLVED_NO_AUTHORITY
+    - GRAIN_MISMATCH
+    - CONTENT_MISMATCH
+    - SUPERSEDED_UNBANNERED
+    - NO_DECLARED_TARGET_CONTENT
+    - NON_INDEPENDENT_RESOLUTION
+    - INSTRUMENT_UNKNOWN
+    - NOT_EXERCISABLE
+
+instrument:
+  source: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_PASS3_CODE_GRAIN_SCAN_20260820.py
+  machine_results: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_PASS3_CODE_GRAIN_SCAN_RESULTS_20260820.json
+  method: >-
+    Parse every pinned engine blob with Python AST; exclude module/function/class
+    docstrings; discover exact runtime literals and literal clusters against
+    vocabulary groups derived from the pinned registry, rule bank, C2/C3
+    canonical, cse_schema, and graph grain contract. Human adjudication then
+    separates bindings/mirrors from usage and lexical collisions.
+  machine_parse_result: 59_of_59_PASS
+
+controls:
+  positive_type_control:
+    path: org/modules/graph/comp_legacywriter.py
+    population_membership: OUTSIDE_59
+    expected:
+      - {concept: Contract_Record, line: 765, binding: _UNIVERSAL_REQUIRED, failure: CODE_REDECLARATION}
+      - {concept: Lifecycle_Class, lines: "766-768", bindings: "GATED_CLASSES + _LIFECYCLE_ENUM", failure: CODE_REDECLARATION}
+    observed: BOTH_EXPECTED_MIRRORS_DETECTED
+    verdict: PASS
+  negative_control:
+    path: org/modules/graph/comp_api.py
+    observed_runtime_clusters: 0
+    verdict: PASS
+  lexical_collision_control:
+    path: org/modules/graph/comp_toolgraph.py
+    observed: "C1/C2 at lines 237/239"
+    adjudication: >-
+      Local AC-0 registration clauses meaning catalogued/convention, not
+      ontology rails; no binding row minted.
+    verdict: PASS
+
+denominators:
+  engines_in_fixed_population: 59
+  engine_blobs_present: 59
+  ast_parse_pass: 59
+  engines_directly_read: 59
+  engines_with_adjudicated_binding_rows: 7
+  engines_with_unresolved_binding: 6
+  engines_with_resolved_binding: 1
+  engines_without_binding_row: 52
+  binding_rows: 10
+  resolved_rows: 1
+  unresolved_rows: 9
+  failure_class_occurrences:
+    CODE_REDECLARATION: 9
+    CONTENT_MISMATCH: 3
+  positive_control_rows_outside_denominator: 2
+
+population_controls:
+  population_first_commit: 76ba5fec3d
+  population_before_verdicts: PASS
+  fixed_population_count: 59
+  fresh_residue_printed: PASS
+  pass1_pass2_artifacts_mutated: false
+
+routing_controls:
+  census_not_chase: PASS
+  code_modified: false
+  resolves_via_drive:
+    state: FENCED
+    authored_changes: 0
+  c7_closure:
+    state: HELD_UNTIL_BASE_SIGNAL_AFTER_PASS3
+
+rows:
+  - id: P3R001
+    surface: P3E004
+    concept: concrete_graph_edge_vocabulary
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_aws_cli.py:1377-1844,2037-2063 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:86,136-158 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.7.0_AE_CloudOps primary; mixed-line candidates 0.6.0_AE_PartnerETL, 0.8.0_AE_CloudComp, 1.0.0_SA_CTO"
+    note: "The graph producer emits and interprets 26 governed concrete-edge tokens without loading the canonical rule bank."
+  - id: P3R002
+    surface: P3E004
+    concept: concrete_graph_node_type_vocabulary
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_aws_cli.py:250-1065,1339-1346,2024-2067,2637-2638 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:86,219-240 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.7.0_AE_CloudOps primary; mixed-line candidates 0.8.0_AE_CloudComp, 1.0.0_SA_CTO"
+    note: "The producer carries 26 governed node-type spellings and an auxiliary-type roster with no authority read."
+  - id: P3R003
+    surface: P3E005
+    concept: producer_edge_type_set
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION, CONTENT_MISMATCH]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_blast_universe.py:449-456 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:137,142,150-152 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.7.0_AE_CloudOps~A"
+    note: "PRODUCER_EDGE_TYPES is local; it calls TRIGGERS and PROJECTS_TO producer edges although the authority assigns them to trigger/composite semantics, while omitting six authority producer bindings."
+  - id: P3R004
+    surface: P3E005
+    concept: function_grain_node_type_set
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION, CONTENT_MISMATCH]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_blast_universe.py:458-462 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/comp-coverage-map.yaml:207,210 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.7.0_AE_CloudOps~A"
+    note: "FUNCTION_GRAIN_TYPES locally puts Hook and DataFetch at function grain; the governed grain contract puts only PipelineFunction there and places Hook/DataFetch at component grain."
+  - id: P3R005
+    surface: P3E010
+    concept: drilldown_rollup_direction_mapping
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_coverage_check.py:511-523,867-869 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/comp-coverage-map.yaml:278-285 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.8.0_AE_CloudComp~C"
+    note: "The engine reads the ledger but assemble_rollup separately hardcodes RUNS/CONTAINS forward and OWNED_BY reverse instead of deriving the direction map."
+  - id: P3R006
+    surface: P3E014
+    concept: breadth_edge_scope
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_depth_cli.py:39-43 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/comp_marker_read.py:123-132 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.8.0_AE_CloudComp~C"
+    note: "_BREADTH_EDGES copies a sibling runtime roster and is documented as kept in sync; importing MR makes derivation possible but the code does not use it."
+  - id: P3R007
+    surface: P3E026
+    concept: C0_C1_C2_C3_runtime_ladder
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION, CONTENT_MISMATCH]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_ladder.py:89-96,110,119-155,168-224 @ f36d572be864e56b9175caac06b01f62fc141e2a; infra/system/ontology/SYSTEM_DEFINITIONS.yaml:153-178 @ d7fb8e5c54; infra/system/ontology/SYSTEM_DEFINITIONS.yaml:178-196 @ 764c41fdbb; org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml:721-730 @ 764c41fdbb"
+    owner: "1.0.0_SA_CTO"
+    note: "Executable order/names copy C0-C3 and render one C3=SYSTEMS bucket; repaired authority carries C3.i deterministic overlap-cover plus C3.ii semantic verticals, so the code omits the live dual partition."
+  - id: P3R008
+    surface: P3E030
+    concept: drilldown_direction_fallback
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_marker_read.py:89-121 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/comp-coverage-map.yaml:278-285 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.8.0_AE_CloudComp~C and 0.8.0_AE_CloudComp~D"
+    note: "The normal path derives directions, but the fail-soft branch retains a separately editable canonical three-seam roster."
+  - id: P3R009
+    surface: P3E030
+    concept: tracegraph_edge_scope
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    failure_classes: [CODE_REDECLARATION]
+    display_verdict: CODE_REDECLARATION
+    direct_read: true
+    evidence: "org/modules/graph/comp_marker_read.py:123-132,220-240 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/comp_depth_cli.py:41-43 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.8.0_AE_CloudComp~D primary; 0.8.0_AE_CloudComp~C co-carrier"
+    note: "The frozen five-edge compatibility scope is a code roster and has already acquired a second code home in comp_depth."
+  - id: P3R010
+    surface: P3E045
+    concept: D1_EdgeKind_normalization
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    failure_classes: []
+    display_verdict: RESOLVED
+    direct_read: true
+    evidence: "org/modules/graph/comp_recognizers_tsx.py:47-64,70-82 @ f36d572be864e56b9175caac06b01f62fc141e2a; org/modules/graph/cse_schema.py:155-160 @ f36d572be864e56b9175caac06b01f62fc141e2a"
+    owner: "0.8.0_AE_CloudComp~D"
+    note: "Input serialization spellings are mapped to cse_schema.EdgeKind enum values; governed outputs are cited/loaded, not restated."
+
+engine_receipts:
+  - id: P3E001
+    path: org/modules/graph/comp_aggregate_honesty.py
+    blob: d3593ab6358a22fe6a9f23d7988f7051b87d7a7b
+    line_count: 141
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_aggregate_honesty.py:1-141 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E001"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E002
+    path: org/modules/graph/comp_api.py
+    blob: b369ca224d2789bcb836a1ee821348537a2e043e
+    line_count: 131
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_api.py:1-131 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E002"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E003
+    path: org/modules/graph/comp_assets.py
+    blob: ec25fd7698f08bab19113260dadbb6ee55344fbf
+    line_count: 554
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["c3_ii_verticals", "type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_assets.py:1-554 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E003"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "smartx is an asset-channel fixture value, not a C3.ii vertical declaration."
+  - id: P3E004
+    path: org/modules/graph/comp_aws_cli.py
+    blob: 57788c66dc18e244ede9d9cd841f4a333cdddada
+    line_count: 3174
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R001, P3R002]
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["abstract_relations", "concrete_edges", "lifecycle_stage", "node_types", "system_terms", "type_plane"]
+    raw_literal_cluster_count: 4
+    evidence: "org/modules/graph/comp_aws_cli.py:1-3174 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E004"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Runtime graph producer carries uncited concrete-edge and node-type vocabularies."
+  - id: P3E005
+    path: org/modules/graph/comp_blast_universe.py
+    blob: f5b713af6d5aeda6d42a866c26fb35d21fab8fed
+    line_count: 570
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R003, P3R004]
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["concrete_edges", "node_types", "type_plane"]
+    raw_literal_cluster_count: 2
+    evidence: "org/modules/graph/comp_blast_universe.py:1-570 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E005"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Local producer-edge and function-grain rosters are both independently editable and disagree with governed meanings."
+  - id: P3E006
+    path: org/modules/graph/comp_capability_provider.py
+    blob: 265ad7ce9c967f795b3d005f0046deaca83780c2
+    line_count: 475
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["type_grain"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_capability_provider.py:1-475 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E006"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E007
+    path: org/modules/graph/comp_cochange.py
+    blob: 51ddce764805ade72f8e9d816382cf285fcbc244
+    line_count: 381
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_cochange.py:1-381 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E007"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E008
+    path: org/modules/graph/comp_constants_cli.py
+    blob: a364a5d1bb8c7ed3c01a971a2b2f5ce9cf15bc32
+    line_count: 682
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_constants_cli.py:1-682 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E008"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E009
+    path: org/modules/graph/comp_constants_complete.py
+    blob: 70c89c2163f5bc3fbcc2ffd7b977eef76d7191f7
+    line_count: 273
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["c3_ii_verticals", "type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_constants_complete.py:1-273 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E009"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "firm/pipeline/mdpf are local completeness scopes and data identifiers, not a copied type_tuple roster."
+  - id: P3E010
+    path: org/modules/graph/comp_coverage_check.py
+    blob: 5ed734b9cade17016937391f649a584674a80268
+    line_count: 992
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R005]
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["concrete_edges", "type_grain"]
+    raw_literal_cluster_count: 2
+    evidence: "org/modules/graph/comp_coverage_check.py:1-992 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E010"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "The file reads comp-coverage-map, but assemble_rollup still re-encodes the drilldown direction mapping in code."
+  - id: P3E011
+    path: org/modules/graph/comp_coverage_view.py
+    blob: 3ef0b5aefdd5650fcb9d05de7d2b631740416353
+    line_count: 99
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_coverage_view.py:1-99 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E011"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E012
+    path: org/modules/graph/comp_dataflow.py
+    blob: bf0a18250cf3212bcccb4d26f79879d915e7aea8
+    line_count: 476
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_dataflow.py:1-476 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E012"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E013
+    path: org/modules/graph/comp_debris.py
+    blob: 2fc4800623c537f4362d22655c29c5678353dd5b
+    line_count: 325
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_debris.py:1-325 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E013"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E014
+    path: org/modules/graph/comp_depth_cli.py
+    blob: 3a6ec0db51c73c86d7e1e7dde5207125402a68e7
+    line_count: 255
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R006]
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["concrete_edges"]
+    raw_literal_cluster_count: 1
+    evidence: "org/modules/graph/comp_depth_cli.py:1-255 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E014"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "_BREADTH_EDGES is explicitly kept in sync with a sibling code roster rather than derived from it."
+  - id: P3E015
+    path: org/modules/graph/comp_desc_sensitivity.py
+    blob: 47a0a957703da4bfb333634ed9c9d30446205ac3
+    line_count: 307
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_desc_sensitivity.py:1-307 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E015"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E016
+    path: org/modules/graph/comp_desc_sensitivity_test.py
+    blob: 7fc0a53c1bd32f86c558f5ee11ecf433752b9a54
+    line_count: 225
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_desc_sensitivity_test.py:1-225 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E016"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E017
+    path: org/modules/graph/comp_dispatch.py
+    blob: f24b9e52bad0ac07c6df989f70ddb41a03df6cd9
+    line_count: 295
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_dispatch.py:1-295 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E017"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E018
+    path: org/modules/graph/comp_gitdrill.py
+    blob: baa5ff448edcd39651a82e06ae09e9b688ff9a14
+    line_count: 242
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_gitdrill.py:1-242 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E018"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E019
+    path: org/modules/graph/comp_honesty.py
+    blob: db0167847df7fb411b3126f5817ba7252ac3df69
+    line_count: 452
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_honesty.py:1-452 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E019"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E020
+    path: org/modules/graph/comp_iam_census.py
+    blob: eb824d6eb3d2ba9ec3d445fab41702569d97d315
+    line_count: 230
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_iam_census.py:1-230 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E020"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E021
+    path: org/modules/graph/comp_iam_investigate.py
+    blob: 1ca98d045ad313aabb00e79990245a8fdf795663
+    line_count: 299
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["lifecycle_stage", "system_terms", "type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_iam_investigate.py:1-299 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E021"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "ACTIVE is an AWS/runtime status token here, not Lifecycle_Stage."
+  - id: P3E022
+    path: org/modules/graph/comp_iam_live.py
+    blob: d751cc04515ce64371135be82d605c5d37bc2854
+    line_count: 461
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_iam_live.py:1-461 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E022"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E023
+    path: org/modules/graph/comp_iam_usage.py
+    blob: 73f11a8f01146fb95355e3add8598ed0d938ad17
+    line_count: 333
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["node_types", "system_terms"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_iam_usage.py:1-333 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E023"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E024
+    path: org/modules/graph/comp_icedrill.py
+    blob: dfec35df04db940af981ca2bcb6b38d90d3cca47
+    line_count: 370
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["d3_obligation_types"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_icedrill.py:1-370 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E024"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "completeness is an output-field/disclaimer noun here, not a D3 obligation-type declaration."
+  - id: P3E025
+    path: org/modules/graph/comp_keys.py
+    blob: 8dfb3a350299af9960d7d6792736e6114a5c0463
+    line_count: 274
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_keys.py:1-274 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E025"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E026
+    path: org/modules/graph/comp_ladder.py
+    blob: 3e0872f373dea45e0b9bc90de9c33da1a0e2b949
+    line_count: 273
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R007]
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["system_terms", "type_plane", "type_rail"]
+    raw_literal_cluster_count: 4
+    evidence: "org/modules/graph/comp_ladder.py:1-273 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E026"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "The executable carries the C0-C3 roster and legacy single-C3 meanings without an authority pointer."
+  - id: P3E027
+    path: org/modules/graph/comp_learns_leg4_exercise.py
+    blob: 0fe3e2cf19470f594f31aa8e73b6e3d6723ea443
+    line_count: 216
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_learns_leg4_exercise.py:1-216 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E027"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E028
+    path: org/modules/graph/comp_learns_score.py
+    blob: f939876d4304f17e960276bc42bc59f1cf0ec7bf
+    line_count: 710
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_learns_score.py:1-710 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E028"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E029
+    path: org/modules/graph/comp_log_auto.py
+    blob: 2e5af0ade12631aba6610f9cb46411e62cc51f09
+    line_count: 421
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_log_auto.py:1-421 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E029"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E030
+    path: org/modules/graph/comp_marker_read.py
+    blob: 0331c473fa60bbbc67e953929cd08cdecf97eece
+    line_count: 399
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: UNRESOLVED
+    binding_row_ids: [P3R008, P3R009]
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["concrete_edges"]
+    raw_literal_cluster_count: 3
+    evidence: "org/modules/graph/comp_marker_read.py:1-399 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E030"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "A derived main path coexists with a hardcoded drilldown fallback, and a separate frozen trace-edge roster is copied into code."
+  - id: P3E031
+    path: org/modules/graph/comp_msbeff_rebaseline.py
+    blob: 34ff8c91d9c0a1bbf3b5eda1ff22a3163cced0a2
+    line_count: 664
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_grain", "type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_msbeff_rebaseline.py:1-664 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E031"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E032
+    path: org/modules/graph/comp_parity_cli.py
+    blob: 3fad558c0404a92afe3f1e7849ec6d7263eeb598
+    line_count: 314
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["d1_edge_kinds", "type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_parity_cli.py:1-314 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E032"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "passthrough appears as an ordinary field value, not a local EdgeKind roster."
+  - id: P3E033
+    path: org/modules/graph/comp_passcraft.py
+    blob: 0d74eb3281c4feaba174ba893b50db2b2c4b457f
+    line_count: 802
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_passcraft.py:1-802 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E033"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E034
+    path: org/modules/graph/comp_potion_relevance.py
+    blob: 76a6c236cabe40d34b89e055edc23f3977472ac8
+    line_count: 148
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_potion_relevance.py:1-148 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E034"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E035
+    path: org/modules/graph/comp_promote_lifecycle.py
+    blob: 7445e258edd47f26aedf80f1fae0892cf13141b9
+    line_count: 765
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_promote_lifecycle.py:1-765 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E035"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E036
+    path: org/modules/graph/comp_promote_materializer.py
+    blob: 34713689f4cfb111a54b27e24cc4dfb489cb4589
+    line_count: 538
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_promote_materializer.py:1-538 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E036"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E037
+    path: org/modules/graph/comp_pulse.py
+    blob: 0f2a3defc7e69bb91c7c235706fb234d1f5d16a4
+    line_count: 707
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_pulse.py:1-707 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E037"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E038
+    path: org/modules/graph/comp_pydeps.py
+    blob: 033cee134168b792691bf3551db2309e82cdb8a8
+    line_count: 366
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_pydeps.py:1-366 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E038"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E039
+    path: org/modules/graph/comp_rail_audit.py
+    blob: 6d8dab2c8921f8a2100a194215c5ac3e96db5f63
+    line_count: 234
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_rail_audit.py:1-234 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E039"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E040
+    path: org/modules/graph/comp_recognizer_sdk.py
+    blob: 2870590bd2b478753970537d91c31ba76febf10c
+    line_count: 544
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_recognizer_sdk.py:1-544 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E040"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E041
+    path: org/modules/graph/comp_recognizers_code.py
+    blob: 6e9faf19cc25d53ee7f32ce5513902b235d35ddd
+    line_count: 468
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_recognizers_code.py:1-468 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E041"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E042
+    path: org/modules/graph/comp_recognizers_config.py
+    blob: 5492f6a046e7d14799b9b41cf2141219d6c3de78
+    line_count: 290
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["node_types"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_recognizers_config.py:1-290 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E042"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E043
+    path: org/modules/graph/comp_recognizers_pyfield.py
+    blob: d31edbeae916e1511eca30c3932e45d69164e9f0
+    line_count: 850
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["d1_edge_kinds"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_recognizers_pyfield.py:1-850 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E043"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E044
+    path: org/modules/graph/comp_recognizers_ticket.py
+    blob: 09992d323dd2fc710283a91522ecb54c820ba51e
+    line_count: 187
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_recognizers_ticket.py:1-187 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E044"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E045
+    path: org/modules/graph/comp_recognizers_tsx.py
+    blob: c8107eba8870b9684e708494d9f79adbf3f40638
+    line_count: 352
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: [P3R010]
+    authority_pointer_tokens: ["cse_schema"]
+    runtime_hit_categories: ["d1_edge_kinds"]
+    raw_literal_cluster_count: 1
+    evidence: "org/modules/graph/comp_recognizers_tsx.py:1-352 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E045"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Serialization spellings map to values read from cse_schema.EdgeKind; the target enum, not a copied target roster, governs."
+  - id: P3E046
+    path: org/modules/graph/comp_route.py
+    blob: 7f57f542f5a12818cd10e17640d1bfe62adc1b92
+    line_count: 931
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_grain", "type_scope"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route.py:1-931 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E046"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E047
+    path: org/modules/graph/comp_route_affinity.py
+    blob: cd8a2eb6c6c22264a0e7c0b284c69bf62b1f3595
+    line_count: 285
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route_affinity.py:1-285 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E047"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E048
+    path: org/modules/graph/comp_route_affinity_ic.py
+    blob: 7860ae00ca8ebd35b5ed1b5d53053de9004f8b4e
+    line_count: 137
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route_affinity_ic.py:1-137 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E048"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E049
+    path: org/modules/graph/comp_route_eval.py
+    blob: 3ac25ea9488b8aed2d0d45ab53db31f51da5c11f
+    line_count: 847
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route_eval.py:1-847 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E049"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E050
+    path: org/modules/graph/comp_route_outcome.py
+    blob: a9de810a0d76e9584a71d8d148f483fda8a5b0dd
+    line_count: 284
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route_outcome.py:1-284 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E050"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E051
+    path: org/modules/graph/comp_route_shadow.py
+    blob: b98e3162e9218d979d0e1a89515dc5667ac22e65
+    line_count: 227
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_route_shadow.py:1-227 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E051"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E052
+    path: org/modules/graph/comp_symbols.py
+    blob: 714c64fecf7b749c2440b18e63dbc4404e14c454
+    line_count: 187
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_symbols.py:1-187 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E052"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E053
+    path: org/modules/graph/comp_tool_health.py
+    blob: d26708468e5979bceea25e11da4c7dcf909af66f
+    line_count: 856
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["type_plane"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_tool_health.py:1-856 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E053"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E054
+    path: org/modules/graph/comp_tool_health_gate.py
+    blob: ea690d7903eca121096d11dc28d775e721ecb8e6
+    line_count: 358
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_tool_health_gate.py:1-358 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E054"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E055
+    path: org/modules/graph/comp_toolgraph.py
+    blob: 97bf28e1283c47adfc38de245e13ba31797746c6
+    line_count: 806
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: ["comp-coverage-map.yaml"]
+    runtime_hit_categories: ["system_terms", "type_grain", "type_plane", "type_rail"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_toolgraph.py:1-806 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E055"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "C1/C2 are local AC-0 registration clauses (catalogued/convention), not ontology rails; lexical collision adjudicated negative."
+  - id: P3E056
+    path: org/modules/graph/comp_trigger.py
+    blob: d67c7ca3418450914313e43807666f31fae1e448
+    line_count: 344
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["abstract_relations"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_trigger.py:1-344 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E056"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E057
+    path: org/modules/graph/comp_which_signals.py
+    blob: d471a1742728fc36f7aaebff21dddfc97bdf8f5a
+    line_count: 258
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: []
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_which_signals.py:1-258 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E057"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "No exact governed runtime token and no literal cluster detected."
+  - id: P3E058
+    path: org/modules/graph/comp_ws4_crosswalk.py
+    blob: 772caf8c42e13cb0fbec31e8e672451aa1c5a1be
+    line_count: 248
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["node_types"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_ws4_crosswalk.py:1-248 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E058"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+  - id: P3E059
+    path: org/modules/graph/comp_ws4_crosswalk_test.py
+    blob: e18ac8cb0eedda55dea2530197cbd8ad16c615b9
+    line_count: 276
+    ast_parse: PASS
+    assessment_state: ASSESSED
+    resolution_state: RESOLVED
+    binding_row_ids: []
+    authority_pointer_tokens: []
+    runtime_hit_categories: ["node_types"]
+    raw_literal_cluster_count: 0
+    evidence: "org/modules/graph/comp_ws4_crosswalk_test.py:1-276 @ f36d572be864e56b9175caac06b01f62fc141e2a; machine receipt P3E059"
+    owner_candidate: "ANY_EXEC_OR_AE path lane; operational candidate follows blame/header when a finding routes"
+    note: "Exact token hits were directly adjudicated as ordinary usage, identifiers, fixtures, or single-token references; no independently editable governed roster found."
+
+residue:
+  not_assessed: []
+  fresh_engine_outside_fixed_population:
+    - org/modules/graph/comp_directives.py
+  working_tree_only_engine_files:
+    disposition: NOT_READ_BY_GIT_OBJECT_RULE
+  no_binding_row_engines:
+    count: 52
+    disposition: ASSESSED_NO_BINDING_CLAIM
+  control_only_surface:
+    - org/modules/graph/comp_legacywriter.py
+  note: >-
+    Absence of a binding row is not absence of a receipt: all 59 blobs have an
+    engine_receipts entry and immutable blob id.
+
+acceptance_state:
+  population_first: PASS
+  fresh_vintage: PASS
+  receipts_per_engine: PASS_59_OF_59
+  positive_control: PASS
+  negative_control: PASS
+  residue_printed: PASS
+  resolves_via_fence: PASS
+  pass3_complete: true
+

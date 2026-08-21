@@ -1,10 +1,11 @@
 artifact: ATOM_LAYER0_RESOLUTION_CENSUS
-status: PROPOSED
+status: PROPOSED_PASS_2_COMPLETE
 seat: 4.0.0_SA_CRO~B
 path: B_RESOLUTION_CENSUS
 population_artifact: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_POPULATION_20260820.yaml
 population_commit: ee9431a49b
 read_vintage: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
+pass_2_read_vintage: 6b48695dfab4c69f6c53b6beacd6947189b2d418
 scope: repo_only
 cloud_execution_space: OUT_OF_SCOPE_BY_ANDREW_SEQUENCE
 
@@ -16,10 +17,12 @@ resolution_predicate: >-
 
 rerun_contract:
   row_rule: >-
-    Every row's evidence field is its exact file+anchor pair at read_vintage.
-    A stranger re-runs a file read with git show
-    602b73a1f99d889dabbc884525b10dd8e7bf2e56:<path> and selects the stated
-    line or line range. Multiple anchors are read together and compared.
+    Every row's evidence field is its exact file+anchor pair at the commit
+    printed in that field. R001-R041 and R044-R045 retain the Pass-1
+    read_vintage. Pass-2 re-verdicts R042-R043 and new rows R046-R059 use
+    pass_2_read_vintage. A stranger re-runs
+    a file read with git show <printed_commit>:<path> and selects the stated
+    line or range. Multiple anchors are read together and compared.
   o1_shorthand_expansion: >-
     O1 results row N means line N of
     org/tier1_exec/4.0.0_SA_CRO/deliverables/
@@ -60,7 +63,7 @@ integration_interface:
     authority_and_binding_reads: row.evidence under rerun_contract
     resolution_start_state: row.resolution_state plus row.failure_classes
     routing_candidate: row.owner
-    observation_vintage: read_vintage
+    observation_vintage: commit pin printed in row.evidence
     proving_priority: display_verdict precedence then smallest evidence span
   no_hand_translation: >-
     The consumer parses this YAML and selects a row object directly. Unknown
@@ -131,7 +134,7 @@ rule_24_record:
       two_home_discriminator:
         GOVERNED_DUAL_CARRIER: >-
           Multiple carriers are authorized by ruled design, authority or
-          precedence is explicit, and a live comparison instrument covers the
+          precedence is explicit, and a re-runnable comparison instrument covers the
           carriers. On an unresolved row this class means that instrument has
           detected extant drift; it does not mean the carriers are ambiguous.
         AMBIGUOUS_TWO_HOMES: >-
@@ -248,10 +251,10 @@ controls:
       declaration, not on counting the authority citation as a second home.
 
 surface_coverage:
-  fully_assessed: [O01, O03, O15, G01, G02, G03, G04, G05, G06, G07, G08, G09, G12, G13, G14, G15]
-  partially_assessed: [O11, G10, G11]
-  not_assessed: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
-  tie_out: 16_plus_3_plus_12_equals_31
+  fully_assessed: [O01, O02, O03, O04, O05, O06, O07, O08, O09, O10, O11, O12, O13, O14, O15, O16, G01, G02, G03, G04, G05, G06, G07, G08, G09, G10, G11, G12, G13, G14, G15]
+  partially_assessed: []
+  not_assessed: []
+  tie_out: 31_plus_0_plus_0_equals_31
 
 surface_read_receipts:
   read_vintage: 602b73a1f99d889dabbc884525b10dd8e7bf2e56
@@ -281,7 +284,52 @@ surface_read_receipts:
     - {surface: G14, path: org/modules/graph/comp_output_contract.py, rows: [R031, R032]}
     - {surface: G15, path: org/modules/graph/comp_system.py, rows: [R033, R034, R035]}
   count: 19
-  tie_out: 16_fully_assessed_plus_3_partially_assessed_equals_19
+  tie_out: historical_pass_1_receipts_16_full_plus_3_partial_equals_19
+
+pass_2_surface_read_receipts:
+  read_vintage: 6b48695dfab4c69f6c53b6beacd6947189b2d418
+  receipts:
+    - {surface: O02, path: infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md, rows: [R046]}
+    - {surface: O04, path: infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md, rows: [R047]}
+    - {surface: O05, path: infra/system/ontology/CONTENT_MODULE_DESIGN.md, rows: [R048]}
+    - {surface: O06, path: infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md, rows: [R049]}
+    - {surface: O07, path: infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md, rows: [R050]}
+    - {surface: O08, path: infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md, rows: [R051]}
+    - {surface: O09, path: infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md, rows: [R052]}
+    - {surface: O10, path: infra/system/ontology/L0B_CHANGE_TYPE_VOCABULARY.md, rows: [R053]}
+    - {surface: O12, path: infra/system/ontology/README.md, rows: [R054]}
+    - {surface: O13, path: infra/system/ontology/ROUTE_LOGIC_AND_THE_SEMANTIC_BOUNDARY.md, rows: [R055]}
+    - {surface: O14, path: infra/system/ontology/SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md, rows: [R056]}
+    - {surface: O16, path: infra/system/ontology/content_relate_prototype.py, rows: [R057]}
+    - {surface: O11, path: infra/system/ontology/LAYER_FIELD_ANATOMY.md, rows: [R020, R058]}
+    - {surface: G10, path: org/modules/graph/comp-tools.yaml, rows: [R042]}
+    - {surface: G11, path: org/modules/graph/graph-call-manifest.yaml, rows: [R043, R059]}
+  count: 15
+  unique_surface_tie_out: 19_pass_1_union_15_pass_2_minus_3_overlap_equals_31
+
+pass_2_assessment:
+  ontology_design_surfaces_completed: 12
+  partial_surfaces_completed: [O11, G10, G11]
+  surface_rows_residued_for_traversal: 0
+  direct_parse_denominators:
+    comp_tools_curated_directives: 38
+    comp_tools_live_tools_index_members: 35
+    comp_tools_retired_alias_collisions: 1
+    comp_tools_non_index_helper_commands: 2
+    graph_call_entries: 123
+    graph_call_tools_index: 76
+    graph_call_entry_id_duplicates: 0
+    graph_call_missing_entry_references: 0
+  controls:
+    l0b_conformance: PASS_13_SATISFIED_PLUS_1_DECLARED_EXEMPT_17_OF_17
+    boundary_report_conformance: PASS_24_TESTS
+    content_relate_self_test: PASS
+    manifest_completeness: PASS_91_TRACKED_EXECUTABLES_ACCOUNTED_76_REGISTERED
+    manifest_subcommand_declarations: 28_ESTABLISHABLE_10_DRIFTED_48_UNKNOWN
+  no_new_mechanism: >-
+    These are direct pinned reads plus already-existing self-tests and
+    comp-manifest-check completeness. No checker, gate, resolver, or source fix
+    was added for Pass 2.
 
 rows:
   - {id: R001, surface: O01, concept: Estate, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH], display_verdict: CONTENT_MISMATCH, evidence: 'infra/system/ontology/SYSTEM_DEFINITIONS.yaml:50 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56; O1 results row 2', owner: 1.0.0_SA_CTO, note: inherits Substrate failure; not an independent defect}
@@ -325,17 +373,31 @@ rows:
   - {id: R039, surface: G07, concept: taxonomy_source_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/opal_estate_infrastructure.py:763 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 0.8.0_AE_CloudComp}
   - {id: R040, surface: G08, concept: estate_resolver_cli_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/estate_infrastructure_cli.py:25-26,54 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 0.8.0_AE_CloudComp}
   - {id: R041, surface: G09, concept: graph_call_manifest_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'org/modules/graph/manifest_check_cli.py:50,287 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO}
-  - {id: R042, surface: G10, concept: tool_vocabulary_claim_set, assessment_state: NOT_ASSESSED, resolution_state: null, failure_classes: [], display_verdict: NOT_ASSESSED, evidence: 'org/modules/graph/comp-tools.yaml:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: full reference-row concept expansion deferred}
-  - {id: R043, surface: G11, concept: graph_call_type_tuple_claim_set, assessment_state: NOT_ASSESSED, resolution_state: null, failure_classes: [], display_verdict: NOT_ASSESSED, evidence: 'org/modules/graph/graph-call-manifest.yaml:1 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: 76-entry manifest requires a dedicated row-grain pass; not inferred from stage-2 subset}
+  - {id: R042, surface: G10, concept: curated_tool_directive_set, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'org/modules/graph/comp-tools.yaml:1-16,622-635; org/modules/graph/graph-call-manifest.yaml:63-67 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: '38 curated directives parse; comp-adapter-audit is still presented as callable although the authority declares it retired and deleted'}
+  - {id: R043, surface: G11, concept: tool_registration_membership, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, direct_read: true, evidence: 'org/modules/graph/graph-call-manifest.yaml:1-76,95-1704,1705-1784 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418; comp-manifest-check completeness', owner: 1.0.0_SA_CTO, note: '123 unique call entries; 76 tools_index members; zero dangling entry references; completeness accounts for 91 tracked executables'}
   - {id: R044, surface: O03, concept: C4, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, evidence: 'infra/system/ontology/C0_C1_C2_C3_C4_SYSTEM_LAYERS.md:1-42 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 4.0.0_SA_CRO, note: cite-not-restate and points at block-addressed canonical}
   - {id: R045, surface: O15, concept: resolves_via_execution, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [NOT_EXERCISABLE], display_verdict: NOT_EXERCISABLE, evidence: 'infra/system/ontology/check_system_definitions.py:1-126 @ 602b73a1f99d889dabbc884525b10dd8e7bf2e56', owner: 1.0.0_SA_CTO, note: checker validates form/status/key only; no run-mode executes resolves_via}
+  - {id: R046, surface: O02, concept: version_pin_remedy_status, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md:5-7,331; infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md:79 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'loop doc says first version-pin remedy has not landed; handoff records it DONE at ef0257849'}
+  - {id: R047, surface: O04, concept: code_content_design_status, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH, SUPERSEDED_UNBANNERED], display_verdict: CONTENT_MISMATCH, direct_read: true, evidence: 'infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md:4-6,50-63 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'top status says the section-4 design is not yet designed; section 4 says its architecture is locked'}
+  - {id: R048, surface: O05, concept: content_prototype_build_status, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'infra/system/ontology/CONTENT_MODULE_DESIGN.md:4-11,243; infra/system/ontology/content_relate_prototype.py:1-9 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 3.0.0_SA_CVO, note: 'design doc still says nothing built and lists the prototype as next; validated iteration-3 reference implementation exists and self-test passes'}
+  - {id: R049, surface: O06, concept: version_pin_remedy_status, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md:5-8,221-226; infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md:79 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'taxonomy still calls the remedy dispatched/not landed although the implementation handoff records it DONE'}
+  - {id: R050, surface: O07, concept: substrate_axis_supersession_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, direct_read: true, evidence: 'infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md:4-16 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'local supersession header maps retired estate/ajb_workspace vocabulary to Substrate/codebase and marks the remainder historical'}
+  - {id: R051, surface: O08, concept: implementation_status_claim_set, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH, SUPERSEDED_UNBANNERED], display_verdict: CONTENT_MISMATCH, direct_read: true, evidence: 'infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md:79-81,169-172; infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md:5,143-158 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'handoff says version-pin DONE then later not landed, and leaves monotonicity NOT BUILT after the reference sensor landed'}
+  - {id: R052, surface: O09, concept: l1b_status_claim_set, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH, SUPERSEDED_UNBANNERED], display_verdict: CONTENT_MISMATCH, direct_read: true, evidence: 'infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md:5,60-65,143-158 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'updated header and L1b section say delivered/built; intervening asymmetry section still says entirely unbuilt and no detector'}
+  - {id: R053, surface: O10, concept: l0b_vocabulary_binding, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, direct_read: true, evidence: 'infra/system/ontology/L0B_CHANGE_TYPE_VOCABULARY.md:1-14,23-62,119-158 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418; python infra/system/ontology/l0b_conformance.py', owner: 1.0.0_SA_CTO, note: 'v1.0 head is explicit; historical lower text is bannered; live conformance derives 9 source-change plus 5 degradation members and passes its ratified bar'}
+  - {id: R054, surface: O12, concept: directory_status_index, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'infra/system/ontology/README.md:128-141,159-165; infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md:5; infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md:4-10 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 4.0.0_SA_CRO, note: 'hand-maintained index still says L1b in build/remedy not landed and calls the retired estate axis unratified without surfacing its supersession header'}
+  - {id: R055, surface: O13, concept: route_logic_authority_pointer, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, direct_read: true, evidence: 'infra/system/ontology/ROUTE_LOGIC_AND_THE_SEMANTIC_BOUNDARY.md:1-38; docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md:1 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'pointer stub is locally bannered MOVED and names one doctrine target; no copied live route model remains'}
+  - {id: R056, surface: O14, concept: boundary_report_status, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH, SUPERSEDED_UNBANNERED], display_verdict: CONTENT_MISMATCH, direct_read: true, evidence: 'infra/system/ontology/SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md:5-8,110-118; org/modules/graph/boundary_report.py:1; org/modules/graph/tests/test_boundary_report_conformance.py:1 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 1.0.0_SA_CTO, note: 'top status calls the type a draft; section 7 calls it finalized and points to the implemented type whose 24 conformance tests pass'}
+  - {id: R057, surface: O16, concept: content_relatedness_reference_contract, assessment_state: ASSESSED, resolution_state: RESOLVED, failure_classes: [], display_verdict: RESOLVED, direct_read: true, evidence: 'infra/system/ontology/content_relate_prototype.py:1-31,288-355 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418; python infra/system/ontology/content_relate_prototype.py', owner: 1.0.0_SA_CTO, note: 'code explicitly claims reference-only status pending real-content blind control; synthetic mechanism floor and decoy control pass without promoting it to a registered tool'}
+  - {id: R058, surface: O11, concept: Lifecycle_Stage_prose_token, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [SUPERSEDED_UNBANNERED], display_verdict: SUPERSEDED_UNBANNERED, direct_read: true, evidence: 'infra/system/ontology/LAYER_FIELD_ANATOMY.md:452; infra/system/ontology/SYSTEM_DEFINITIONS.yaml:22,474; org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml:154,546 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418', owner: 4.0.0_SA_CRO, note: 'derived anatomy retains RETIREMENT-PENDING after the ratified Stage vocabulary respelled both canonical occurrences to WINDING_DOWN'}
+  - {id: R059, surface: G11, concept: subcommand_declaration_bindings, assessment_state: ASSESSED, resolution_state: UNRESOLVED, failure_classes: [CONTENT_MISMATCH, INSTRUMENT_UNKNOWN], display_verdict: CONTENT_MISMATCH, direct_read: true, evidence: 'org/modules/graph/graph-call-manifest.yaml:1705-1784 @ 6b48695dfab4c69f6c53b6beacd6947189b2d418; comp-manifest-check completeness', owner: 1.0.0_SA_CTO, note: '28 of 76 declarations are establishable by the existing checker: 10 drift, 18 agree; 48 shapes remain UNKNOWN rather than inferred clean'}
 
 counts:
-  rows_total: 45
-  assessed: 43
-  not_assessed_rows: 2
-  resolved: 24
-  unresolved: 19
+  rows_total: 59
+  assessed: 59
+  not_assessed_rows: 0
+  resolved: 29
+  unresolved: 30
   failure_class_occurrences:
     GOVERNED_DUAL_CARRIER: 1
     AMBIGUOUS_TWO_HOMES: 1
@@ -343,18 +405,19 @@ counts:
     DANGLING: 0
     UNRESOLVED_NO_AUTHORITY: 0
     GRAIN_MISMATCH: 0
-    CONTENT_MISMATCH: 10
-    SUPERSEDED_UNBANNERED: 1
+    CONTENT_MISMATCH: 15
+    SUPERSEDED_UNBANNERED: 11
     NO_DECLARED_TARGET_CONTENT: 3
     NON_INDEPENDENT_RESOLUTION: 1
-    INSTRUMENT_UNKNOWN: 0
+    INSTRUMENT_UNKNOWN: 1
     NOT_EXERCISABLE: 1
 
 direct_read_reverification:
   governed_dual_carrier_rows: [R010]
   ambiguous_rows: [R015]
   dangling_rows: []
-  result: PASS_ALL_TWO_HOME_AND_DANGLING_ROWS_DIRECT_READ
+  pass_2_supersession_rows: [R020, R042, R046, R047, R048, R049, R051, R052, R054, R056, R058]
+  result: PASS_ALL_TWO_HOME_DANGLING_AND_PASS2_SUPERSESSION_ROWS_DIRECT_READ
 
 tool_coverage_findings:
   - id: TC01
@@ -374,8 +437,6 @@ tool_coverage_findings:
     owner: 1.0.0_SA_CTO
 
 traversal_residue:
-  not_assessed_surface_ids: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
-  partial_surface_rows: [R020, R042, R043]
   comp_engines_not_eligible_by_signature: 59
   worldmodel_nested_corpus: OUT_OF_DECLARED_LAYER
   other_graph_subtrees: OUT_OF_DECLARED_LAYER
@@ -385,5 +446,14 @@ traversal_residue:
     state: modified_before_CRO_B_arrival
     assessed_object: HEAD_blob_at_602b73a1f9
     disposition: not_read_as_census_truth; not_touched
+
+pass_2_closure:
+  prior_not_assessed_surface_ids: [O02, O04, O05, O06, O07, O08, O09, O10, O12, O13, O14, O16]
+  prior_partial_surface_ids: [O11, G10, G11]
+  closed_at: 6b48695dfab4c69f6c53b6beacd6947189b2d418
+  remaining_surface_traversal_residue: 0
+  next_allocations_not_started:
+    - comp_engine_code_grain_sweep_59_excluded
+    - resolves_via_completion_drive_9_of_18_unresolved
 
 no_fixes: true

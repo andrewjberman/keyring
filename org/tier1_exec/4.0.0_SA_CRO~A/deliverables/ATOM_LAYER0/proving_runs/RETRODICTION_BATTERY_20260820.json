@@ -1,0 +1,131 @@
+{
+  "artifact": "atom_layer0 grammar retrodiction battery",
+  "status": "PROPOSED",
+  "grammar": "decomposition_grammar@1.0.0",
+  "grammar_commit": "462ac78311a3d5f1310a8da3f4f7638127d449bd",
+  "specimens": [
+    {
+      "id": "RB-01",
+      "label": "Territory axis factorization",
+      "source": {
+        "file": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+        "locator": "Territory entry",
+        "vintage": "b86a0bbb23",
+        "claim": "The former four-value axis decomposes without loss into Substrate x Deploy_State."
+      },
+      "declared_parent": "Territory classification schema",
+      "declared_grain": "one classification-schema factor for one estate-surface coordinate",
+      "expressible": true,
+      "operator": "CONJUNCTIVE_DECOMPOSITION",
+      "children": ["Substrate axis", "Deploy_State axis"],
+      "reconstruction_rule": "For each former Territory classification, reconstruct its meaning as the constrained Cartesian coordinate Substrate(value) AND Deploy_State(value); removal of either axis loses physical-home or deployment-state information.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "Axes are normalized as schema factors at one meta-grain; their member values retain their own domain grains. Grammar v1 explicitly admits products of independent axes."
+    },
+    {
+      "id": "RB-02",
+      "label": "Epistemic tag legend five-axis recast",
+      "source": {
+        "file": "org/tier1_exec/4.0.0_SA_CRO/deliverables/STATE_OF_SYSTEM_ONTOLOGY_EPISTEMOLOGY_FOR_EXTERNAL_REVIEW_20260820.md",
+        "locator": "epistemic convention table and amendment",
+        "vintage": "299ee069e6",
+        "claim": "A flat six-tag legend failed all four postulates and was recast as five orthogonal axes."
+      },
+      "declared_parent": "epistemic annotation coordinate",
+      "declared_grain": "one annotation-schema factor for one report claim",
+      "expressible": true,
+      "operator": "CONJUNCTIVE_DECOMPOSITION",
+      "children": ["Authority axis", "Realization axis", "Basis axis", "Resolution axis", "Genesis axis"],
+      "reconstruction_rule": "Reconstruct one annotation as the product of its independently optional/applicable Authority AND Realization AND Basis AND Resolution AND Genesis coordinates; omitted inapplicable coordinates carry declared null, not a sixth meaning.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "The source demonstrates composability such as RATIFIED plus BUILT and names five different intents/grains; conjunction with explicit nullability expresses the orthogonal product."
+    },
+    {
+      "id": "RB-03",
+      "label": "mutation_purpose five-axis act tuple",
+      "source": {
+        "file": "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_IV_HYPOTHESIS_SET_GOVERNANCE_20260820.md",
+        "locator": "1.1 and section 2",
+        "vintage": "bc03be2524",
+        "claim": "The adopted remedy is Epistemic_Intent x Operational_Objective x Transition_Form x Exposure_Class x Evidence_Output_Class with Gate_Profile derived from the tuple."
+      },
+      "declared_parent": "mutation act classification",
+      "declared_grain": "one classification-schema factor for one proposed act",
+      "expressible": true,
+      "operator": "CONJUNCTIVE_DECOMPOSITION",
+      "children": ["Epistemic_Intent axis", "Operational_Objective axis", "Transition_Form axis", "Exposure_Class axis", "Evidence_Output_Class axis"],
+      "reconstruction_rule": "Reconstruct an act classification as the Cartesian tuple of all five axis coordinates; derive Gate_Profile as the join of per-axis constraints rather than a maintained tuple roster.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "Each axis changes a distinct gate contribution, so removing one changes both classification and remedy."
+    },
+    {
+      "id": "RB-04",
+      "label": "trust-base membership rule factorization",
+      "source": {
+        "file": "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESPONSE_IV_HYPOTHESIS_SET_GOVERNANCE_20260820.md",
+        "locator": "1.5",
+        "vintage": "bc03be2524",
+        "claim": "The flattened rule is replaced by orthogonal Proof_Role and Empirical_Status axes."
+      },
+      "declared_parent": "trust-support coordinate",
+      "declared_grain": "one classification-schema factor for one proof component",
+      "expressible": true,
+      "operator": "CONJUNCTIVE_DECOMPOSITION",
+      "children": ["Proof_Role axis", "Empirical_Status axis"],
+      "reconstruction_rule": "Reconstruct one component's trust-support coordinate as Proof_Role(value) AND Empirical_Status(value); proof termination and observed failure standing vary independently and jointly scope reliance.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "The source's counterexample permits a TRUST_BASE member with any empirical status, directly exercising independence."
+    },
+    {
+      "id": "RB-05",
+      "label": "resolution census verdict taxonomy factorization",
+      "source": {
+        "file": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml",
+        "locator": "rule_24_record.axes",
+        "vintage": "bc03be2524",
+        "claim": "The starting verdict taxonomy is split into assessment state, resolution state, and zero-or-more failure mechanism labels."
+      },
+      "declared_parent": "one census finding state",
+      "declared_grain": "one classification-schema factor for one surface x concept binding",
+      "expressible": true,
+      "operator": "CONJUNCTIVE_DECOMPOSITION",
+      "children": ["assessment_state axis", "resolution_state axis", "failure_classes mechanism set"],
+      "reconstruction_rule": "Reconstruct a finding as assessment_state AND conditionally-applicable resolution_state AND zero-or-more failure_classes; NOT_ASSESSED maps resolution_state to null and failures to empty, while ASSESSED unresolved rows admit one or more mechanisms.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "This is a constrained product rather than an unconstrained roster. Conjunction expresses dependency constraints in reconstruction_rule without inventing a third operator."
+    },
+    {
+      "id": "RB-06",
+      "label": "Lifecycle contest split into Class and Stage",
+      "source": {
+        "file": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260819_LIFECYCLE_STAGE_TWO_OBJECTS.md",
+        "locator": "items 1-3",
+        "vintage": "b86a0bbb23",
+        "claim": "The contested umbrella resolves as two distinct objects: artifact-grain shape and vertical-grain position."
+      },
+      "declared_parent": "contested lifecycle semantic-sense set",
+      "declared_grain": "one semantic-sense partition of the formerly ambiguous lifecycle umbrella",
+      "expressible": true,
+      "operator": "DISJUNCTIVE_DECOMPOSITION",
+      "children": ["Lifecycle_Class semantic object", "Lifecycle_Stage semantic object"],
+      "reconstruction_rule": "Partition every formerly contested lifecycle assertion by its question and subject grain: artifact life-shape assertions map to Lifecycle_Class OR vertical position-in-life assertions map to Lifecycle_Stage; the union exhausts the two attested senses and the two children remain distinct.",
+      "admissibility": {"grain": true, "independence": true, "reconstruction": true, "consequence": true, "non_triviality": true},
+      "inexpressibility_reason": null,
+      "v2_operator_proposal": null,
+      "notes": "Normalization occurs at semantic-sense partition grain, not at artifact or vertical instance grain. The children retain different governed object grains; disjunction classifies the ambiguous parent sense set without flattening those object grains back together."
+    }
+  ],
+  "all_expressible": true,
+  "grammar_v2_required": false,
+  "conclusion": "Grammar v1 retrodicts all six measured decompositions: five as conjunctive axis products (including constrained products) and the cross-grain lifecycle ambiguity as a disjunctive partition at semantic-sense meta-grain. No v2 operator is required by this battery."
+}

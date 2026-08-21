@@ -1,0 +1,58 @@
+{
+  "component": "NFRA_EPISTEMY.C7-CLOSURE",
+  "seat": "4.0.0_SA_CRO~B",
+  "input_commit": "b30b05d00675f0b3758d1ed8ccbedf0004b901f5",
+  "phase1_commit": "ed742cd929",
+  "source_of_record": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sections 0, 2.1, and Component 7",
+  "artifacts": [
+    {
+      "path": "S0_GROUND_READ.md",
+      "kind": "ground_read",
+      "sha256": null,
+      "status": "COMMITTED"
+    },
+    {
+      "path": "rule24/C7_AXES_AND_PREDICATES_PRE_RECORD.json",
+      "kind": "rule24_pre_record",
+      "sha256": null,
+      "status": "COMMITTED_PROPOSED_FOR_BASE_AND_CTO_GATE"
+    },
+    {
+      "path": "src/influence_closure.py",
+      "kind": "compiler",
+      "sha256": "c95118d5187fde459ee882fc66311f1878647df3120acb1c5fa515699715d8d3",
+      "status": "STAGED_FOR_SAFE_COMMIT"
+    },
+    {
+      "path": "scripts/run_acceptance.py",
+      "kind": "scratch_first_acceptance",
+      "sha256": "0149c5c9696daa643aec7196de74dcdb267b3e58435cf8e7a770b9cb8c3b27dd",
+      "status": "STAGED_FOR_SAFE_COMMIT"
+    },
+    {
+      "path": "generated/d3_population.json",
+      "kind": "process_generated_d3_population",
+      "sha256": "e58b79e2899835263bc3e54876e2274627c022c7f00ee444ed3aa072ab1984d4",
+      "status": "GENERATED_AFTER_SCRATCH_CONTROLS"
+    },
+    {
+      "path": "generated/d3_population.observation.json",
+      "kind": "c1_observation_envelope",
+      "sha256": "b15ae40a5752b7054d505b8b42398ea666dc432f682f9dacbafa10e6232aaa2e",
+      "status": "C1_SCHEMA_VALID"
+    },
+    {
+      "path": "evidence/acceptance_results.json",
+      "kind": "machine_acceptance",
+      "sha256": "9d0604bc4d5bf8ab25a83c88890d5001b103229fa1fc7621d9de7e6822e6cfb3",
+      "status": "PASS"
+    }
+  ],
+  "declared_exclusions": [
+    "NFRA_EPISTEMY Component 3 identity/support closure",
+    "PRD section 2.9 harm surfaces",
+    "shared graph-engine edits and cloud writes",
+    "subscriber instance population not present in the declared C7 input bundle",
+    "gate, monitor, alert, or enforcement activation"
+  ]
+}

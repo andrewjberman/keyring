@@ -22,6 +22,16 @@ ruled tomorrow with tonight's first scheduled TrueShares fetch (~22:00Z) in hand
 unchanged: fetch fires as scheduled; the ~21:30Z fallback-read trigger (1.0.0_SA_CTO if no DS-class
 seat exists) stands.
 
+## ADDENDUM ~1747Z — the D4 morning mechanics, Andrew-confirmed
+
+At the second /open-calls render (1 carried card: D4 maturing tomorrow), Andrew-direct at the CTO
+terminal, VERBATIM: **"rec agreed"** — confirming the card's REC. Operative commitment this creates
+at 1.0.0_SA_CTO: **tomorrow morning I present the FETCH READ at his terminal** (what tonight's
+~22:00Z first TrueShares fetch landed, its shape, its coverage) so the serving-question ruling +
+Phase B scope word land on real data. Tonight's mechanics unchanged: the ~21:30Z fallback-read
+trigger stays MINE (0.2.0_DS is live but committed to the Cottonwood lane — not loaded), the fetch
+fires as scheduled. D4's card closes tomorrow on his two words, delivered against the read.
+
 ## Scope note (surface, do not adjudicate)
 
 His word answers the three cards as presented, nothing wider. Broadcast same turn to COO + MSTR

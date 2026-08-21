@@ -121,6 +121,7 @@ cost audits, tooling improvements, and miscellaneous operational tasks.
 | Code | Surface Area | Primary Owner |
 |------|-------------|---------------|
 | `ADHC` | Ad-hoc (no permanent surface area) | Varies per project |
+| `ATOM` | Conceptual-foundations research: atom-layer methods (true-atom discovery, resolution census, Rule-24-grounded layer establishment). Andrew-founded 2026-08-20; framework name `atom_layer0` is his. | 4.0.0_SA_CRO (method home; CTO registers) |
 
 ---
 

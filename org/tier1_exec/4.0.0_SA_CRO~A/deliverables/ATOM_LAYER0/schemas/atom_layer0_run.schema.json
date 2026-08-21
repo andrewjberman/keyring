@@ -140,11 +140,22 @@
     "s2_challenge": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["grammar_name", "grammar_version", "grammar_commit", "splitter", "frontier", "result", "result_evidence", "certificate_state", "atomicity_certificate"],
+      "required": ["grammar_name", "grammar_version", "grammar_commit", "grammar_adequacy", "splitter", "frontier", "result", "result_evidence", "certificate_state", "atomicity_certificate"],
       "properties": {
         "grammar_name": {"const": "decomposition_grammar"},
         "grammar_version": {"const": "1.0.0"},
         "grammar_commit": {"type": "string", "minLength": 7},
+        "grammar_adequacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["battery", "specimens_total", "specimens_expressible", "demonstrated"],
+          "properties": {
+            "battery": {"type": ["string", "null"]},
+            "specimens_total": {"type": "integer", "minimum": 0},
+            "specimens_expressible": {"type": "integer", "minimum": 0},
+            "demonstrated": {"type": "boolean"}
+          }
+        },
         "splitter": {
           "type": "object",
           "additionalProperties": false,
@@ -188,7 +199,11 @@
                 "scope": {"type": "string", "minLength": 1},
                 "grain": {"type": "string", "minLength": 1},
                 "frontier_denominator": {"type": "integer", "minimum": 1},
-                "evidence_vintage": {"type": "string", "minLength": 7}
+                "evidence_vintage": {"type": "string", "minLength": 7},
+                "registry_vintage": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{7,40}(\\s.*)?$"
+                }
               }
             }
           ]
@@ -252,23 +267,43 @@
   },
   "$defs": {
     "resolution_census_row": {
-      "type": "object",
-      "additionalProperties": true,
-      "required": ["row_id", "surface", "concept", "verdict", "verdict_schema", "evidence_pointer", "candidate_owner", "vintage"],
-      "properties": {
-        "row_id": {"type": "string", "minLength": 1},
-        "surface": {"type": "string", "minLength": 1},
-        "concept": {"type": "string", "minLength": 1},
-        "verdict": {"type": "string", "minLength": 1},
-        "verdict_schema": {"type": "string", "minLength": 1},
-        "evidence_pointer": {"type": "string", "minLength": 1},
-        "candidate_owner": {"type": "string", "minLength": 1},
-        "vintage": {"type": "string", "minLength": 7},
-        "claimed_content": {"type": "string"},
-        "declared_layer": {"type": "string"},
-        "declared_grain": {"type": "string"},
-        "scope": {"type": "string"}
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["row_id", "surface", "concept", "verdict", "verdict_schema", "evidence_pointer", "candidate_owner", "vintage"],
+          "properties": {
+            "row_id": {"type": "string", "minLength": 1},
+            "surface": {"type": "string", "minLength": 1},
+            "concept": {"type": "string", "minLength": 1},
+            "verdict": {"type": "string", "minLength": 1},
+            "verdict_schema": {"type": "string", "minLength": 1},
+            "evidence_pointer": {"type": "string", "minLength": 1},
+            "candidate_owner": {"type": "string", "minLength": 1},
+            "vintage": {"type": "string", "minLength": 7},
+            "claimed_content": {"type": "string"},
+            "declared_layer": {"type": "string"},
+            "declared_grain": {"type": "string"},
+            "scope": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["id", "surface", "concept", "assessment_state", "resolution_state", "failure_classes", "display_verdict", "evidence", "owner"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "surface": {"type": "string", "minLength": 1},
+            "concept": {"type": "string", "minLength": 1},
+            "assessment_state": {"type": "string", "minLength": 1},
+            "resolution_state": {"type": ["string", "null"]},
+            "failure_classes": {"type": "array", "items": {"type": "string"}},
+            "display_verdict": {"type": "string", "minLength": 1},
+            "evidence": {"type": "string", "minLength": 1},
+            "owner": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
     },
     "stage_state": {
       "type": "string",

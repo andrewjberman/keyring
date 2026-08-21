@@ -1,0 +1,84 @@
+{
+  "record_id": "R24-NFRA-EPISTEMY-C7-INFLUENCE-CLOSURE",
+  "status": "PRE_ACT_PROPOSAL_FOR_BASE_REGISTRY_EXECUTION_AND_CTO_GATE",
+  "seat": "4.0.0_SA_CRO~B",
+  "source_of_record": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sections 0, 2.1, and component 7 @ b30b05d00675f0b3758d1ed8ccbedf0004b901f5",
+  "declared_layer": "NFRA_EPISTEMY Component 7 only: one directed influence seed and its closure result; Component 3 and PRD section 2.9 are excluded",
+  "axes": [
+    {
+      "name": "edge_kind",
+      "grain": "one normalized directed influence seed edge",
+      "intent": "identify which declared input adapter generated the edge",
+      "members": ["CODE_BINDING", "TRIGGER_TARGET", "INVENTORY_DESCRIPTOR"],
+      "evaluation_order": "adapter identity assigns exactly one member",
+      "postulates": {
+        "mece": "PASS over the declared three-adapter input layer; each seed is emitted by exactly one adapter and every adapter maps to one member",
+        "same_grain": "PASS; every member labels one directed seed edge",
+        "intent_coherence": "PASS; source process only, never reachability or verdict",
+        "stability_frame": "PASS at compiler version plus pinned adapter/input digests; a new adapter requires a new adoption act"
+      }
+    },
+    {
+      "name": "closure_state",
+      "grain": "one generated D3 influence row after closure evaluation",
+      "intent": "state whether a valid seed reaches a declared production terminal",
+      "members": ["REACHED", "NOT_REACHED", "UNKNOWN", "FAILED"],
+      "evaluation_order": [
+        "FAILED: a present source member cannot be normalized or validated",
+        "UNKNOWN: source acquisition/population is incomplete or ambiguous, so reachability is not decidable",
+        "REACHED: a validated seed has a path witness to a declared production terminal",
+        "NOT_REACHED: a validated, fully-known seed has no terminal path under the pinned edge population"
+      ],
+      "postulates": {
+        "mece": "PASS; priority makes terminals disjoint and all normalized candidates terminate",
+        "same_grain": "PASS; one generated D3 row",
+        "intent_coherence": "PASS; reachability knowledge only, never enablement, ontology resolution, or operational health",
+        "stability_frame": "PASS at one pinned input bundle and compiler version; a new edge/input vintage is a new evaluation"
+      }
+    }
+  ],
+  "predicates": [
+    {
+      "name": "is_process_generated",
+      "grain": "one candidate D3 row",
+      "definition": "generated_by equals the C7 compiler id/version, generation_run_id equals the canonical input-bundle digest, and row_id recomputes from the normalized row payload",
+      "postulates": {
+        "mece": "PASS boolean partition over every candidate row; no third origin state is inferred",
+        "same_grain": "PASS one candidate row",
+        "intent_coherence": "PASS provenance authenticity only",
+        "stability_frame": "PASS under fixed compiler algorithm/version and canonical serialization"
+      }
+    },
+    {
+      "name": "is_production_terminal",
+      "grain": "one closure node",
+      "definition": "true only when the generating adapter marks the node as a production resource or production-control semantic endpoint; inventory API/frontier nodes are non-terminal",
+      "postulates": {
+        "mece": "PASS boolean partition over every closure node",
+        "same_grain": "PASS one node",
+        "intent_coherence": "PASS terminal eligibility only",
+        "stability_frame": "PASS under the pinned adapter contract; terminal rules cannot be inferred from node spelling"
+      }
+    }
+  ],
+  "token_hygiene_pre_adoption_at_b30b05d006": {
+    "population": "all Git-tracked text at b30b05d00675f0b3758d1ed8ccbedf0004b901f5, word-boundary git-grep occurrences",
+    "counts": {
+      "CODE_BINDING": 0,
+      "TRIGGER_TARGET": 0,
+      "INVENTORY_DESCRIPTOR": 0,
+      "REACHED": 65,
+      "NOT_REACHED": 0,
+      "UNKNOWN": 4452,
+      "FAILED": 1886,
+      "PROCESS_GENERATED": 0
+    },
+    "adjudication": "The three edge-kind tokens and NOT_REACHED/PROCESS_GENERATED are new scoped machine tokens. REACHED, UNKNOWN, and FAILED are existing generic status words; C7 narrows them only inside closure_state and does not claim workspace-wide ownership. UNKNOWN preserves the PRD/C1 failure direction."
+  },
+  "routing": {
+    "registry_executor": "4.0.0_SA_CRO",
+    "architecture_gate": "1.0.0_SA_CTO",
+    "authoring_effect": "PROPOSED_COMPONENT_LOCAL_ONLY",
+    "enforcement_armed": false
+  }
+}

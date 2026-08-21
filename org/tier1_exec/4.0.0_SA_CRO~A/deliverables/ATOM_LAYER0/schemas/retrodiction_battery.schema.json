@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/schemas/atom_layer0_retrodiction_battery.schema.json",
+  "title": "atom_layer0 grammar retrodiction battery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact", "status", "grammar", "grammar_commit", "specimens", "all_expressible", "grammar_v2_required", "conclusion"],
+  "properties": {
+    "artifact": {"const": "atom_layer0 grammar retrodiction battery"},
+    "status": {"const": "PROPOSED"},
+    "grammar": {"const": "decomposition_grammar@1.0.0"},
+    "grammar_commit": {"type": "string", "minLength": 7},
+    "specimens": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/specimen"}
+    },
+    "all_expressible": {"type": "boolean"},
+    "grammar_v2_required": {"type": "boolean"},
+    "conclusion": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "locator", "vintage", "claim"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "minLength": 7},
+        "claim": {"type": "string", "minLength": 1}
+      }
+    },
+    "v2_proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operator", "intent", "reconstruction_rule"],
+      "properties": {
+        "operator": {"type": "string", "minLength": 1},
+        "intent": {"type": "string", "minLength": 1},
+        "reconstruction_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "admissibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grain", "independence", "reconstruction", "consequence", "non_triviality"],
+      "properties": {
+        "grain": {"type": "boolean"},
+        "independence": {"type": "boolean"},
+        "reconstruction": {"type": "boolean"},
+        "consequence": {"type": "boolean"},
+        "non_triviality": {"type": "boolean"}
+      }
+    },
+    "specimen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "source", "declared_parent", "declared_grain", "expressible", "operator", "children", "reconstruction_rule", "admissibility", "inexpressibility_reason", "v2_operator_proposal", "notes"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "source": {"$ref": "#/$defs/source"},
+        "declared_parent": {"type": "string", "minLength": 1},
+        "declared_grain": {"type": "string", "minLength": 1},
+        "expressible": {"type": "boolean"},
+        "operator": {"type": ["string", "null"], "enum": [null, "CONJUNCTIVE_DECOMPOSITION", "DISJUNCTIVE_DECOMPOSITION"]},
+        "children": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "reconstruction_rule": {"type": ["string", "null"]},
+        "admissibility": {"$ref": "#/$defs/admissibility"},
+        "inexpressibility_reason": {"type": ["string", "null"]},
+        "v2_operator_proposal": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/v2_proposal"}]},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

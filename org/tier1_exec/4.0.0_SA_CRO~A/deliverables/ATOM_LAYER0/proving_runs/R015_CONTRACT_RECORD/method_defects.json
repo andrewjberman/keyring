@@ -1,0 +1,38 @@
+{
+  "artifact": "atom_layer0 S5 method defect record",
+  "status": "REPAIRED_PROPOSED",
+  "subject": "R015 Contract_Record",
+  "subject_selector": "4.0.0_SA_CRO~B via 4.0.0_SA_CRO",
+  "defects": [
+    {
+      "id": "AL0-MD-001",
+      "class": "EXTERNAL_INTERFACE_SHAPE_MISMATCH",
+      "found": true,
+      "pre_repair_behavior": "The adapter attempted json.load on the whole YAML census and returned INSTRUMENT_UNKNOWN before row selection.",
+      "evidence": "pre_repair_failure.txt",
+      "repair": "Load JSON or YAML, select exactly one rows[] member with --census-row-id, preserve that row object without hand translation, and take its vintage from the enclosing document.",
+      "regression": "The exact released YAML artifact at commit 3265c08100 compiles R015 and the output source_census_row remains byte-for-meaning field-identical to the selected YAML mapping.",
+      "pre_repair_would_fail_regression": true
+    },
+    {
+      "id": "AL0-MD-002",
+      "class": "EXTERNAL_SCHEMA_ALIAS_ASSUMPTION",
+      "found": true,
+      "pre_repair_behavior": "The local compiler required row_id, verdict, verdict_schema, evidence_pointer, candidate_owner, and vintage, none of which are fields on the released row schema.",
+      "evidence": "ATOM_LAYER0_RESOLUTION_CENSUS_20260820.yaml integration_interface.row_schema_rule_24 @ 3265c08100",
+      "repair": "Accept either the earlier normalized row or the external Rule-24 row as explicit schema alternatives; do not synthesize aliases into source_census_row.",
+      "regression": "Validator self-test covers the normalized compatibility form and the real R015 run covers the external form.",
+      "pre_repair_would_fail_regression": true
+    },
+    {
+      "id": "AL0-MD-003",
+      "class": "UNDER_GENERATIVE_GRAMMAR_CONTROL_ABSENT",
+      "found": true,
+      "pre_repair_behavior": "Frontier closure quantified over grammar productions but no control demonstrated that grammar v1 could express known real decompositions; a weak grammar could make closure cheap.",
+      "evidence": "CRO Base Drive 3 Msg-ID 63273 and pre-repair validator at 90120de83f",
+      "repair": "Added a schema-valid six-specimen retrodiction battery and made demonstrated full-battery expressibility a validator precondition for DECLARED_FRONTIER_EXHAUSTED.",
+      "regression": "The battery passes 6/6, while the self-test mutant certificate-without-grammar-adequacy is rejected.",
+      "pre_repair_would_fail_regression": true
+    }
+  ]
+}

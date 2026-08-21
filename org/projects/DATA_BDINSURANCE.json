@@ -1,0 +1,27 @@
+{
+  "project_code": "DATA_BDINSURANCE",
+  "macro_code": "DATA",
+  "name": "Black Diamond insurance/annuity asset ingestion + surfacing",
+  "description": "Ingest the Cottonwood insurance/annuity/held-away cohort from Black Diamond and surface it correctly. Origin: Stephen (via Manav, Teams 2026-08-20) flagged dashboard AUM as off; the ~$30M half was client-inputted outside assets (closed same day by COT_SUPERVISED's supervised filter), and the residual $8,617,838.30 -- exactly 100.0% of the supervised gap -- is 91 outside-custodian accounts (78 DTCCR_ 529s, 9 ASLAA_ held-away, 3 AEGON_ + 1 LNANN_ annuities) that BD's BI dashboard values but its DataMining export never returns. CORE ARCHITECTURAL RULING (Andrew-direct 2026-08-20 ~1900Z, 'prepare for the heavy route, but leading with the light route'): the light/heavy fork is a SERVING decision, not an INGEST decision -- INGEST HEAVY (insurance identity, carrier/product characteristics and riders preserved at full grain), SERVE LIGHT (folds into the existing alternatives presentation). A pivot to heavy is then a serving-layer change in days, not a re-ingest plus historical backfill. SCOPE NARROWED (Andrew-direct ~1915Z): BACKEND ONLY -- bring the assets in and tag them 'alternative'; no display surface in this project. THE SPEC QUESTION HE NAMED: these assets have no concrete timing data (NO_BD_TXN_EVER -- no trades, no flows, no daily pricing, no cost basis), so performance is structurally uncomputable and the integration risk is misattribution. Root issue named in PRD sec.4.4: the chain's value-change model has TWO buckets (market move, flow) and a statement-cycle asset introduces a THIRD -- RESTATEMENT -- which, unminted, gets silently poured into one of the other two on statement days while every total still ties. Proposed spec (four decisions): derived valuation_basis TRANSACTED|STATEMENT (never an enumerated roster), value_as_of carried per row distinct from date, exclusion from performance/flow BY CONSTRUCTION not by filter, and minting RESTATEMENT as the third change class. Measured precedent: the 49F tree already extends its 45-day AP gate to 180 days for insurance accounts after statement cycles caused structured_notes oscillation -- and the cot copy of that config has ZERO readers (dead mirrored config; Cottonwood carries the file without the protection).",
+  "prds": [
+    {
+      "path": "docs/architecture/DATA_BDINSURANCE_PRD.md",
+      "label": "DATA_BDINSURANCE PRD (CTO-authored; HAR-2-amended source section)",
+      "date": "2026-08-20"
+    }
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD authored + registered 2026-08-20 (CTO). Source surface RESOLVED by HAR-2 the same session: BD ships a purpose-built insurance application (/insurance/) whose API was exercised live at the CTO seat -- POST /request/api/offline/insurancerelationshiplist returns an ASYNC BULK EXPORT ({exportResultID, resultGuid}, the same run-then-fetch pattern our DataMining ETL already operates), and POST /account-api/query/accountdetailsearch returns per-account detail including insuranceCharacteristics + insuranceCharacteristicsRiders + currentEmv, with alternativeInvestment already a native account field. AUTH IS A SEPARATE AUTHORITY: that surface takes the /session/token bearer, NOT the /Auth/Token bearer used by DataMining and the dashboard (measured: DataMining token -> 401). qt6 'BI Billing' (the documented never-ingested query type) remains the candidate for value at Account x Month grain; the likely final shape is value from qt6/bulk-export joined to characteristics from the insurance API on account number. Awaiting COO decomposition of W1-W6. AMENDED ~1915Z: backend-only scope + the integration spec (PRD sec.4.4) is now the project's central design work.",
+  "blocking": "COO decomposition + GO. One open sovereign decision, deliberately not pre-answered: whether advisor demand justifies the HEAVY route's surfaces (Andrew, Teams 18:53Z -- 'depends on how much advisors care about insurance assets'); W6 prices it. Nothing in W1-W5 becomes waste under either ruling.",
+  "created": "2026-08-20",
+  "pods": [
+    "0.6.2",
+    "0.2.0",
+    "0.4.0",
+    "1.0.0",
+    "2.0.0"
+  ],
+  "pipeline": "cot (Cottonwood / Black Diamond) -- firm-separated, no bd/49F sharing",
+  "thread_counter": 0,
+  "threads": []
+}
