@@ -311,6 +311,26 @@ most likely deliberate act is the one S4 invites.**
     "disposition": "GRADUATED",
     "disarm_owner": "0.0.0_AB_MSTR~Z",
     "notes": "⛔ COUPLED TO ETFS_POSITIONING-S4, EDGE RECORDED ON BOTH SIDES per 1.0.0_SA_CTO~Z msg 4628. S5 IS DORMANT PRECISELY AS LONG AS S4'S OBJECTS STAY WHERE THEY ARE -- tracked separately with the same owner and window, a reader disposing of them one at a time discharges the provenance concern and arms the floor IN THE SAME ACT, each step locally reasonable. RULED: cleanup does not run before the floor is addressed, or they move together. THE TRIGGER CANNOT ARRIVE ON A TIMER: no lifecycle expiration, versioning never enabled, so it requires a DELIBERATE act -- which LOWERS the standing without closing it. BOUND carried from 0.7.0_AE_CloudOps~Z unsoftened: they measured lifecycle and versioning, NOT every conceivable deletion path (human/agent delete, future TF change, replication reconfiguration); the claim is that no STANDING configuration deletes anything. Stays ARMED because deliberate acts happen and the likeliest one is what S4 invites."
+  },
+  {
+    "id": "ETFS_POSITIONING-S6",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-08-21T20:12Z",
+    "one_line": "S3's conditional is RESOLVED and it INVERTS S3: L1-4 does not read as stalled, it PASSES DEGENERATELY -- all three acceptance fires compute the identical window 2026-08-21 -> 2026-08-21, so the increment behaviour L1-4 exists to prove is never exercised.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L1-4 wording established: 'run N+1's history window starts where run N's manifest ended' -- the wording S3 could not locate and declined to guess",
+        "live manifest s3://opal-data-etfs/bbg/2026-08-20/run_manifest.json read at this seat: as_of 2026-08-20, history_window_start 2026-08-20, history_window_end 2026-08-20, prior_window_end None",
+        "etf_daily_pull.py:105 skips d == asof_key, so the only prior prefix for fires 1/2/3 is 2026-08-20 -> prior_end 2026-08-20 -> start 2026-08-21",
+        "computed independently at this seat: fires 08/22, 08/23, 08/24 each yield window 2026-08-21 -> 2026-08-21, IDENTICAL; the first fire that ADVANCES the window is 08/25 (08-21 -> 08-24)"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "SUPERSEDES ETFS_POSITIONING-S3 AND CORRECTS ITS DIRECTION -- filed as a new item per append-only, and it is the THIRD self-correction by this seat tonight. S3 said a correct pipeline might be MISREAD AS STALLED (a read risk). THE ACTUAL HAZARD IS THE OPPOSITE AND WORSE: L1-4 READS SATISFIED. Run 2 does start where run 1 ended, so continuity is technically met -- DEGENERATELY, because the window never advances and the increment is never tested. S3's INFERRED marking was correct (the conditional was genuinely unmeasured and I declined to guess), but its conditional resolved AGAINST the direction I assumed. ⛔ THIS IS S1'S CLASS ONE LAYER UP: an acceptance criterion that cannot fail over its own evaluation window is not a criterion. The tripwire could not fire on any input; L1-4 cannot fail across 08/22-08/24. CONSEQUENCE FOR THE SOVEREIGN PRIORITY ITEM: 'L1 accepted on 08/24' would mean the criterion passed without exercising what it measures. If L1-4 is to mean anything its window must include 08/25, the first fire whose window advances. EDGE RECORDED ON BOTH L1-2 AND L1-4 per 1.0.0_SA_CTO~Z's standing instruction and the filer's note -- an edge on one side is found only by whoever reads that side. Disposition of the criterion is the issuer's; the class call was mine."
   }
 ]
 ```
@@ -321,8 +341,8 @@ most likely deliberate act is the one S4 invites.**
 
 | | |
 |---|---|
-| Items | **5** (3 surfaced at this seat, 2 inherited from `0.0.0_AB_MSTR~Z` item 4/5 with a COUPLED EDGE) |
-| Graduated | **4** (S1, S2, S4, S5) · Under investigation | **1** (S3, INFERRED) |
+| Items | **6** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 RESOLVING+INVERTING S3) |
+| Graduated | **5** (S1, S2, S4, S5, S6) · S3 SUPERSEDED by S6 (its conditional resolved, against the assumed direction) |
 | ARMED | **4** (S1, S2 trigger **2026-09-08**; S4 x S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 | Blocks tonight | **NOTHING** |
