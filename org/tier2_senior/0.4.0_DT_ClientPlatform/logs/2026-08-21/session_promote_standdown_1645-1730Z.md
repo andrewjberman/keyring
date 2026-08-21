@@ -156,9 +156,30 @@ to COO (65366) for their call rather than inventing a terminal state.
 - portal main tree on **DEV**; `worktree list` = main tree only. Physical
   .runtmp/portal-promote-20260821T165723Z persists (Windows long-path class, gitignored, inert;
   `worktree prune` cleaned git's tracking regardless).
-- portal origin/DEV advanced past my window: DE landed 6d0403a5 (six rows -> 'held'), and CTO
-  65390 ruled three more held (ownership_map, timeseries_chart, timeseries_chart_full);
-  clients-tab-slim stays 'flip'. **Final census FLIP 1 / HELD 13 / STRUCTURAL 1.**
+- CORRECTED 19:5xZ -- **THIS BULLET WAS FALSE WHEN WRITTEN, IN TWO SEPARATE WAYS.** It read:
+  *"portal origin/DEV advanced past my window: DE landed 6d0403a5 (six rows -> 'held'), and CTO
+  65390 ruled three more held ...; clients-tab-slim stays 'flip'. Final census FLIP 1 / HELD 13 /
+  STRUCTURAL 1."*
+  **(1) origin/DEV HAD NOT ADVANCED.** It was still 9580e18b, carrying all TEN ADVI rows at
+  state:'flip'. DE's commits were LANDED LOCAL ONLY -- on ZERO remote branches -- pending the
+  integrator push (LD-0367). I wrote "landed" of another seat's commits without reading their push
+  state. That is exactly the class CTO ruled on at 19:45Z @8c7212ccf4 (push state stated on EVERY
+  commit report, never a bare "landed"), and this sentence is one of the instances that earned the
+  widening.
+  **THE FALSEHOOD WAS LOAD-BEARING, not cosmetic:** a reader of this log would conclude the SHARED
+  branch carried Andrew's two-condition hold during my window. It did not -- and a promote cutting
+  from origin/DEV would have shipped ADVI flip-ON, which is precisely what the hold forbids. Found
+  from standby at 19:4xZ (my 65573), confirmed by DE as their defect (65588), armed BLOCKING by CTO
+  (65603), disarmed by MSTR's integrator push (65617).
+  **(2) THE CENSUS WAS ALREADY SUPERSEDED WHEN I WROTE IT.** 78630b9e had moved clients-tab-slim to
+  'held' per CTO 65486 on the schedule leg -- nothing should prefer a twin whose producer is
+  disabled.
+  **TRUE STATE, ls-remote READ at 19:4xZ: origin/DEV = 3ade1aba, registry FLIP 0 / HELD 14 /
+  STRUCTURAL 1**, read out of the pushed object rather than a local tree. Andrew's hold is now
+  expressed on the shared branch.
+  *Both halves were caught by MEASURING, not by re-reading: the census by a count that disagreed
+  with my expectation, the push state by running ls-remote instead of trusting a report. Re-reading
+  my own sentence would have found neither -- it was perfectly well-formed and simply not true.*
 - **THE CUTOVER IS STAGED, NOT LANDED.** 9 of 10 certified keys carry material regressions vs
   legacy (history truncation, dimension collapse, population loss). Certified/published = 10;
   portal-reachable = 6; consumer-visible flips landed = 0. Those three numbers stay separate.
