@@ -1,6 +1,28 @@
 # D7 TICKETING -- THE THREE-SIDED NOTIFICATION PLAN (structure, not build)
 
-**Author:** `1.0.0_SA_CTO~Z` - **Date:** 2026-08-21 ~04:5xZ - **Status:** PLAN FOR RATIFICATION. Nothing here is issued as a TO yet.
+**Author:** `1.0.0_SA_CTO~Z` - **Date:** 2026-08-21 ~04:5xZ - **Status:** ✅ **RATIFIED 2026-08-21 ~07:3xZ by ANDREW-DIRECT** -- VERBATIM: *"approved on all, ratify the plan and issue the TOs. dont worry about whos on the list for now we can add that later, just want all the pipes done"*. TOs issued: `org/tier2_senior/0.5.0_AE_OpalETL/task_orders/D7_NOTIFY.TO-SET.md`.
+
+> ### ⛔ THE RATIFICATION CARRIES ONE SCOPE CHANGE, AND IT SUPERSEDES Q1
+> *"dont worry about whos on the list for now we can add that later, just want all the pipes done."*
+> **DL MEMBERSHIP IS DEFERRED. THE PIPES ARE THE DELIVERABLE.**
+> **AND THIS IS NOT A DEGRADED BUILD -- IT IS THE REFUSAL PATH BECOMING THE ACCEPTANCE SURFACE.** WE-5 already demands refuse-if-unset, and sec. 1a rules that after the seam the refusal lives on the RESOLUTION. So with no list configured, **a COMPLETE pipe is one that resolves, finds nothing, and REFUSES LOUDLY with a named error** -- which is exercisable TODAY, with no DL, no tenant admin, and no waiting on a business decision.
+> **The configuration is the LAST act and the CHEAPEST one: adding rows to a map.** That is exactly what the firm-keyed seam was declared up front to make possible, and it is why "add that later" costs nothing now.
+> ⚠ **WHAT STILL CANNOT BE EXERCISED WITHOUT A LIST: WE-2/WE-3** -- the instantaneous-send latency and the on-the-wire sender header. **Those stay `UNCOMPUTABLE-BY-CONSTRUCTION` and no amount of pipe-completion substitutes for them.** Deferring the list defers the *proof*, never the *build*.
+
+### The other seven rulings, all VERBATIM *"approved on all"*
+| call | ruled |
+|---|---|
+| 2 DL membership | **superseded** -- deferred, pipes first (above) |
+| 3 certifier | **later.** Rectangle stays UNCERTIFIED and unconsumable; my acceptances rest on my own re-derivation |
+| 4 `/drive` row | **STRIKE.** Landed @`5e4a71d604` with the verbatim clause preserved struck |
+| 5 client submit-ack | **YES** -- a form that submits into silence reads as broken |
+| 6 "by who" | **FULL NAME** |
+| 7 Rule 21 | **AMEND.** Landed @`5e4a71d604` |
+| 8 commit-gate | **(b) suppress the "clean" summary when a WARN fired.** Routed, not built -- arming enforcement was NOT chosen |
+
+### Two I decided rather than asked (his *"somehow"* was latitude)
+- **Subject:** `[<FIRM>] <requester subject>` -- firm first so a mailbox sorts and filters on it.
+- **CTA link:** deep-link to the ticket **if a per-ticket route exists**, else the list page. **Resolves at J1 by measurement, not by decision.**
 **Authority:** ANDREW-DIRECT 2026-08-21 ~04:5xZ at the CTO~Z terminal. Recorded VERBATIM in sec. 0 -- **the phrasing IS the ruling.**
 
 ---
