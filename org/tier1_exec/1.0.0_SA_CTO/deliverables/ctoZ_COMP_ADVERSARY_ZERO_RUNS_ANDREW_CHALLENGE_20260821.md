@@ -13,7 +13,21 @@ doing full-scale atom_decomp and comp-adversary and etc or no?"*
 |---|---|
 | `comp-adversary` | **EXISTS.** `.tools/comp-adversary`, v1 functional, name ratified by Andrew @`7241d0dfd7` (2026-08-19). |
 | Its own mandate | Docstring, verbatim: *"MANDATE (Andrew-direct 2026-08-19 ~21:1xZ): **a MANDATORY element of the atom_decomp workflow's VALIDATION piece** -- the validator of returned work receives this tool's declaration so they know what the author's evidence context was and what it was NOT."* |
-| Runs today, all seats | **0**, across 1,157 lines of `org/mcp/comp-which-rail.log`. |
+| Runs, all seats | **0 mentions in the entire `comp-which-rail.log`** -- and see the corrected denominator below. |
+
+> STOP: **DENOMINATOR CORRECTED ~00:27Z, and this is the third scope-mislabel of the night.** I first
+> published *"0 across 1,157 rail-log lines **today**."* **The log spans 2026-07-29 to 2026-08-21 --
+> 23 days. Today is 216 lines.** I welded a TODAY label onto a LIFETIME line count, and carried it to
+> the sovereign. Caught by `0.0.0_AB_MSTR~Z`.
+>
+> **And the tempting correction is itself wrong: "0 in 23 days" is NOT the honest frame** --
+> comp-adversary was ratified 2026-08-19, so for 21 of those days a zero is meaningless because the
+> tool did not exist. **The informative statement is the smallest one: 0 runs in the ~2 days since
+> ratification, including 0 of today's 216 lines.** Weaker rhetoric, and the number that is true.
+>
+> **A NUMBER AND ITS LABEL ARE TWO SEPARATE CLAIMS AND ONLY ONE OF THEM GETS CHECKED.** I verified
+> the count and never verified the word beside it. Same class as the gateway-scoped `0` and the
+> `git log -3` total -- **committed in the sentence announcing the finding that this class exists.**
 | `atom_decomp` | **NOT AN EXECUTABLE ANYWHERE.** Referenced only in `.claude/skills/integrate/SKILL.md` and `.comp-graph/which/rank-*.yaml`. |
 
 > **The evening's dominant activity was seats validating each other's work by hand. The ratified
