@@ -298,6 +298,7 @@ dynamic_rails:
       partition: "a dated/keyed slice of an artifact (an S3 object key under a firm/date prefix; a table partition). node_type S3Key."
       row:       { forward: true, note: "a record within a partition (a DDB item, a parquet row). NOT materialized as a graph node today -- declared, unpopulated." }
       field:     "a column/attribute of a record (node_types Field, Prop)."
+    counts_as_of: "comp-kuzu 2026-07-23 -- EVERY embedded count in this block (edge_grain_binding all groups + grain_node_denominators) is TRUE-AT-THAT-VINTAGE, never live; re-stamp on any re-count (the D2 graph_evidence model at block scope; atom_layer0 Run 35)"
     edge_grain_binding:   # which LIVE edge types carry which grain, denominators printed (comp-kuzu 2026-07-23)
       field:
         FLOWS_TO:    "srcField -> dstField in props; 884/961 FLOWS_TO carry a non-null dstField (field grain)."

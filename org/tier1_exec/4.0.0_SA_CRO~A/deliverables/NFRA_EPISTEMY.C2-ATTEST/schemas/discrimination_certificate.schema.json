@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opal://nfra_epistemy/discrimination_certificate/0.1.0-proposed",
+  "title": "Discrimination_Certificate (NFRA_EPISTEMY Component 2)",
+  "$comment": "Source of record: docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.2. This in-lane implementation is proposed for registry execution by 4.0.0_SA_CRO and architecture gate by 1.0.0_SA_CTO; it is not a competing source of record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "certificate_id",
+    "source_of_record",
+    "instrument",
+    "plane",
+    "substrate",
+    "searched_population",
+    "denominator_grain",
+    "failure_directions",
+    "traversal_residue",
+    "isolated_positive_control",
+    "known_negative",
+    "observed_discrimination",
+    "shared_failure_domain",
+    "independence_crossings",
+    "vintage",
+    "invalidation_predicates",
+    "attestation_outcome",
+    "outcome_reasons"
+  ],
+  "properties": {
+    "certificate_id": {
+      "type": "string",
+      "pattern": "^dc:sha256:[0-9a-f]{64}$",
+      "description": "Normative derivation home: src/attestation_harness.py:25 canonical_bytes uses json.dumps(value, sort_keys=True, separators=(comma, colon), ensure_ascii=True), appends one trailing newline, and ASCII-encodes the result before SHA-256. Any other serialization is NON-CONFORMANT even if the resulting identifier matches this pattern."
+    },
+    "source_of_record": {"const": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.2"},
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "plane": {"type": "string", "enum": ["DESIRED", "APPLIED", "EXERCISED"]},
+    "substrate": {"type": "string", "enum": ["aws", "portal", "codebase", "ms"]},
+    "searched_population": {"type": "string", "minLength": 1},
+    "denominator_grain": {"type": "string", "minLength": 1},
+    "failure_directions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["condition", "wrong_as", "consumer_effect"],
+        "properties": {
+          "condition": {"type": "string", "minLength": 1},
+          "wrong_as": {"type": "string", "minLength": 1},
+          "consumer_effect": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "traversal_residue": {"type": "array", "items": {"type": "string"}},
+    "isolated_positive_control": {"$ref": "#/$defs/control"},
+    "known_negative": {
+      "allOf": [
+        {"$ref": "#/$defs/control"},
+        {
+          "type": "object",
+          "required": ["generation_provenance"],
+          "properties": {
+            "generation_provenance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "generator_id", "generator_version", "seed", "artifact", "artifact_digest"],
+              "properties": {
+                "kind": {"const": "GENERATED"},
+                "generator_id": {"type": "string", "minLength": 1},
+                "generator_version": {"type": "string", "minLength": 1},
+                "seed": {"type": "string", "minLength": 1},
+                "artifact": {},
+                "artifact_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "observed_discrimination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contrasts_observed", "contrasts_required", "passed"],
+      "properties": {
+        "contrasts_observed": {"type": "integer", "minimum": 0},
+        "contrasts_required": {"type": "integer", "minimum": 1},
+        "passed": {"type": "boolean"}
+      }
+    },
+    "shared_failure_domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instrument_dependencies", "control_dependencies", "shared_dependencies", "total_failure_shared"],
+      "properties": {
+        "instrument_dependencies": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "control_dependencies": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "shared_dependencies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "total_failure_shared": {"type": "boolean"}
+      }
+    },
+    "independence_crossings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cut", "instrument_side", "control_side", "observation_ref", "demonstrated"],
+        "properties": {
+          "cut": {"type": "string", "minLength": 1},
+          "instrument_side": {"type": "string", "minLength": 1},
+          "control_side": {"type": "string", "minLength": 1},
+          "observation_ref": {"type": "string", "minLength": 1},
+          "demonstrated": {"type": "boolean"}
+        }
+      }
+    },
+    "vintage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attested_at", "instrument_version"],
+      "properties": {
+        "attested_at": {"type": "string", "format": "date-time"},
+        "instrument_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "invalidation_predicates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["coordinate", "attested_value"],
+        "properties": {
+          "coordinate": {"type": "string", "minLength": 1},
+          "attested_value": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "attestation_outcome": {"type": "string", "enum": ["VALID", "INVALID", "UNKNOWN", "EXPIRED"]},
+    "outcome_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["control_id", "execution_mode", "request", "expected", "observed", "passed", "observation_ref"],
+      "properties": {
+        "control_id": {"type": "string", "minLength": 1},
+        "execution_mode": {"type": "string", "enum": ["ISOLATED_FROM_TARGET", "AGAINST_TARGET"]},
+        "request": {},
+        "expected": {},
+        "observed": {},
+        "passed": {"type": "boolean"},
+        "observation_ref": {"type": "string", "minLength": 1},
+        "generation_provenance": {}
+      }
+    }
+  }
+}

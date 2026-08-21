@@ -1,0 +1,43 @@
+{
+  "artifact": "NFRA_EPISTEMY Component 2 instrument-attestation harness",
+  "version": "0.1.0-proposed",
+  "status": "PROPOSED_AWAITING_REGISTRY_AND_ARCHITECTURE_GATE",
+  "author": "4.0.0_SA_CRO~A",
+  "source_of_record": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.2",
+  "members": [
+    "00_COMPONENT_SPEC.md",
+    "PACKAGE_MANIFEST.json",
+    "S0_GROUND_READ.md",
+    "SESSION_LOG.md",
+    "certificates/census_substrate.certificate.json",
+    "certificates/comp-estate.certificate.json",
+    "certificates/comp-find.certificate.json",
+    "evidence/acceptance_results.json",
+    "evidence/census_substrate_generated_negative.observation.json",
+    "evidence/census_substrate_positive.observation.json",
+    "evidence/comp_estate_generated_negative.observation.json",
+    "evidence/comp_estate_positive.observation.json",
+    "evidence/comp_find_generated_negative.observation.json",
+    "evidence/comp_find_positive.observation.json",
+    "fixtures/control_fixture.txt",
+    "joins/census_substrate.join.json",
+    "joins/comp-estate.join.json",
+    "joins/comp-find.join.json",
+    "rule24/DISCRIMINATION_CERTIFICATE_SCHEMA_ENUMERATION.json",
+    "schemas/discrimination_certificate.schema.json",
+    "scripts/run_acceptance.py",
+    "scripts/validate_attestation.py",
+    "src/attestation_harness.py"
+  ],
+  "shared_object_governance": {
+    "registry_executor": "4.0.0_SA_CRO",
+    "architecture_gate": "1.0.0_SA_CTO",
+    "lane_authority": "implementation proposal only; no independent field ownership"
+  },
+  "bounds": [
+    "No C1 envelope field or comp-tool owner engine is modified.",
+    "No cloud write, gate, alert, monitor, or enforcement is armed.",
+    "PRD sec.2.9 harm surfaces remain open and unimplemented.",
+    "Components 3 and 4 remain outside this package."
+  ]
+}

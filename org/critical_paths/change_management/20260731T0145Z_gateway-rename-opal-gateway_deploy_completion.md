@@ -113,3 +113,56 @@ comments — no schema, no state, no data migration. Nothing to unwind beyond th
   prefix (`.claude/settings.json`, `settings.local.json`, `~/.claude/settings.json` all 0), so bare
   names carry no hidden dependency. Bare names are also correct in BOTH key states simultaneously,
   which removes the transition ordering constraint rather than managing it.
+
+---
+
+## ON-BOX RESOLUTION OF THE CONTESTED DEPLOY DIRECTORY — 2026-08-21T02:2xZ (`0.7.0_AE_CloudOps`, LD-0428)
+
+**Why this section exists.** The `D7_TICKETING.GW-APPLY` TO recorded this record and the
+`20260815T0230Z_opal-gwrename-s3-cutover` record as a **CONTESTED PAIR** on the gateway's deploy
+directory: this record's leg-5 artifact row verifies `/opt/m365-mcp-gateway/app/tools.py` serving,
+while the 08-15 record says S4-14 deployed to `/opt/opal-gateway` and S6-15 REMOVED
+`/opt/m365-mcp-gateway`. Site Z marked it CONTESTED rather than flipping it record-vs-record, and
+the TO's ruling was **only the box settles it** — `safe-ec2-deploy` needs the right destination.
+
+**⛔ THE SUPERSEDED MARKER ON LINE 3 WAS ALREADY CORRECT, AND IT WAS NOT YET EVIDENCE.** It landed
+2026-08-18 @b9df62247f as part of MSTR's RED-disposition sweep — a **record-derived inference** from
+the 08-15 record, i.e. exactly the record-vs-record act the TO declined to rely on. This section does
+not change its verdict; it **grounds** it. A correct conclusion reached from the wrong plane is still
+the wrong plane, and the next reader needs to know which one they are holding.
+
+**Method — APPLIED/EXECUTING truth, not a staged read (CLAUDE.md Rule 22a).** Two read-only
+`AWS-RunShellScript` SSM invocations against `i-07dccb1615503ac99`
+(`ad2fc9fd-80d8-457d-a826-d3b2694fb318`, `0aa6ca13-1045-458b-aa85-6cd3816dd65c`, both `Success`,
+empty stderr). Rule 22a's EC2 clause binds: an S3-staged object may be inert, so the oracle is the
+**running process**, read through `/proc`.
+
+| Layer | Measurement | Result |
+|---|---|---|
+| Unit files present | `ls /etc/systemd/system/ \| grep -iE 'gateway\|m365'` | **`opal-gateway.service` ONLY** (950 B, Aug 20 16:19) |
+| Unit state, both names explicitly | `systemctl show -p LoadState/ActiveState` | `opal-gateway.service` **loaded/active/running/enabled**; `m365-mcp-gateway.service` **`load=not-found`** — the unit does not exist, it is not merely stopped |
+| ExecStart | `systemctl show -p ExecStart` | `/opt/opal-gateway/.venv/bin/uvicorn app.server:app --host 0.0.0.0 --port 8080` |
+| WorkingDirectory | `systemctl show -p WorkingDirectory` | `/opt/opal-gateway` |
+| **EXECUTING TRUTH** | `readlink -f /proc/2249865/cwd` | **`/opt/opal-gateway`** (MainPID 2249865, cmdline `/opt/opal-gateway/.venv/bin/python3.11 .../uvicorn app.server:app`) |
+| Contested path A | `[ -e /opt/m365-mcp-gateway ]` | **ABSENT** |
+| Contested path B | `[ -e /opt/opal-gateway ]` | **EXISTS**, 126M, mtime 2026-08-20 16:19:20 UTC |
+| `/opt` full inventory | `ls -la /opt` | exactly two entries: `aws`, `opal-gateway` — the ABSENT verdict has its denominator |
+| **NEGATIVE CONTROL** | `[ -e /opt/zzz-no-such-gateway-9999 ]` | **ABSENT** — the instrument discriminates; the ABSENT verdict above is not an undiscriminating "no" |
+
+**VERDICT: record (B) — `20260815T0230Z_opal-gwrename-s3-cutover` — is CORRECT ON THE BOX. This
+record's leg-5 artifact row (`/opt/m365-mcp-gateway/app/tools.py`) was TRUE WHEN WRITTEN on
+2026-07-31 and is SUPERSEDED IN FACT: that tree no longer exists, and its systemd unit is
+`not-found`.** The canonical deploy destination for `safe-ec2-deploy` is **`/opt/opal-gateway`**,
+which also matches `EC2_MANIFEST.json`'s `remote_path` (a third record, now grounded rather than
+merely concurring). **The historical rows above are NOT edited** — they are a closed ledger's record
+of what was true at its own vintage; this section is the annotation, per the TO's "annotate, never
+flip record-vs-record."
+
+**RESIDUAL, SURFACED NOT CHASED (routed to COO, no action taken here):**
+`infra/aws/terraform/opal-gateway/main.tf:191` user-data still runs
+`install -d -o ec2-user -g ec2-user /opt/m365-mcp-gateway` — so **an instance REPLACEMENT would
+re-create the old path** and the box would diverge from this resolution on first boot. Not touched:
+a TF change is an apply act, and no GO covers it.
+
+Read by `0.7.0_AE_CloudOps` under the LD-0428 item; discharges the `D7_TICKETING.GW-APPLY`
+prerequisite only — **it opens no apply and closes no G-criterion of that TO.**

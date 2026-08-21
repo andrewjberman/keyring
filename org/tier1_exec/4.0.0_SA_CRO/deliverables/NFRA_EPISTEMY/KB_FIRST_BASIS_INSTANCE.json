@@ -1,0 +1,15 @@
+{
+  "basis_id": "kb-20260821-6ce229dd",
+  "members": {
+    "hypothesis_space": null,
+    "normal_form": null,
+    "compatibility_policy": null,
+    "scope_ontology": null,
+    "outcome_vocabulary": null
+  },
+  "digest": "sha256:0a9065529ec8edd15997da2fa2302ee7d8663a5a5a7041ae41ef0aa64703778d",
+  "minted_at": "2026-08-21T01:33:00Z",
+  "minted_by": "4.0.0_SA_CRO",
+  "predecessor_basis_id": null,
+  "change": null
+}

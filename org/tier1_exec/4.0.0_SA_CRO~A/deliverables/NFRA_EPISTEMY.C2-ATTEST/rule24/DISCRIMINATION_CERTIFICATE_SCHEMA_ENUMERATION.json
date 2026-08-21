@@ -1,0 +1,50 @@
+{
+  "record_id": "R24-NFRA-EPISTEMY-C2-DISCRIMINATION-CERTIFICATE",
+  "source_of_record": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.2",
+  "declared_layer": "one NFRA_EPISTEMY Component 2 attestation act",
+  "owner_route": "4.0.0_SA_CRO base registry-executes; 1.0.0_SA_CTO architecture-gates",
+  "reused_registry_terms": [
+    "Failure_Direction",
+    "Known_Negative",
+    "Denominator_Grain",
+    "Traversal_Residue",
+    "searched population",
+    "vintage",
+    "positive controls"
+  ],
+  "new_schema_candidates": [
+    "shared_failure_domain",
+    "independence_crossings",
+    "invalidation_predicates"
+  ],
+  "attestation_outcome_axis": ["VALID", "INVALID", "UNKNOWN", "EXPIRED"],
+  "precedence": [
+    "INVALID when a known operand disproves discrimination, isolation, generated provenance, or the independence cut",
+    "EXPIRED when every structural operand is valid but any current invalidation coordinate differs from its attested value",
+    "UNKNOWN when structural operands do not disprove the act but a required current coordinate cannot be read",
+    "VALID only when every required operand passes, every coordinate is current, and at least one independence crossing is demonstrated"
+  ],
+  "four_postulates": {
+    "mece": "PASS: a known attestation defect, a changed coordinate, an unreadable coordinate, or a fully satisfied current act exhausts the declared terminal layer under the stated precedence.",
+    "same_grain": "PASS: every member types one attestation act over one instrument version, plane, searched population, and denominator grain.",
+    "intent_coherence": "PASS: all members answer whether this local discrimination certificate may currently be relied upon; none types the observation's substantive result.",
+    "state_coherence": "PASS: all members re-derive from the same controls, shared-failure-domain operands, crossings, and current invalidation coordinates; failure to re-attest cannot preserve VALID."
+  },
+  "nullable_fields": [],
+  "absence_semantics": "There are no nullable certificate fields. Missing required evidence fails schema validation; unavailable current invalidation coordinates derive UNKNOWN rather than creating a null hole.",
+  "token_census": {
+    "scope": [
+      "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml"
+    ],
+    "counts": {
+      "shared_failure_domain": 0,
+      "independence_crossings": 0,
+      "invalidation_predicates": 0
+    },
+    "denominator": "0 hits across 3 files scanned before this proposed schema act"
+  },
+  "component_positions": ["A1", "A2", "A3", "A4", "A5", "A6", "A7"],
+  "outside_component": ["Component 3 identity/support closure", "Component 4 lease service", "PRD sec.2.9 open harm surfaces"]
+}

@@ -57,6 +57,8 @@ BROKER_SCRIPT = Path(__file__).resolve().parent / "broker.py"
 COMMIT_WORKER = Path(__file__).resolve().parents[2] / ".tools" / "commit-worker.sh"  # repo/.tools/
 sys.path.insert(0, str(WORKSPACE_ROOT / ".tools"))  # for the shared python->bash resolver
 from git_bash_resolver import git_bash  # noqa: E402  NEVER bare 'bash' (python-spawned -> System32 WSL stub)
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # org/mcp on path BEFORE the guards import (harness-import safe)
+import broker_arg_guards  # noqa: E402  call-boundary guards (D0-T1, pure, same dir) -- see _install_strict_kwargs
 CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
@@ -1689,6 +1691,15 @@ async def send_message(
             _sender_note = " [sender unverified -- register_agent to send verified]"
     from_agent = claimed
 
+    # --- D0_T1 CHECK 2 (instance backstop; COO seating 64310 + amendment 64318 -- STRUCTURAL,
+    # ZERO THRESHOLDS): an empty body refuses, both directions, before any write. Nine measured
+    # empty sends in one night all carried "delivered" receipts; the receipt observes the
+    # envelope, never the content. Runs AFTER the identity gate (which must stay first so a
+    # forged sender is audited, not answered) and BEFORE any delivery state.
+    _env_refusal = broker_arg_guards.empty_envelope_refusal(subject, body)
+    if _env_refusal:
+        return _env_refusal
+
     # --- D0_TIGHTENING T1 primitive (i): recipient-LIST send.
     # The body-cc class is measured (LD-0424: DT's freeze release lost to an in-body
     # "cc" that copied nobody). A list parameter makes that class INEXPRESSIBLE: you
@@ -2242,6 +2253,37 @@ async def get_org_summary(ctx: Context = None) -> str:
                     parts.append(f"  - `{p['file']}`")
 
     return "\n".join(parts)
+
+
+# ---------------------------------------------------------------------------
+# D0_T1 CHECK 1 (the CLASS-level fix; CTO ruling 64300, settled spec MSTR 64327):
+# STRICT KWARGS AT THE TOOL BOUNDARY, for EVERY tool -- an unknown parameter REFUSES with a
+# did-you-mean instead of being silently dropped by pydantic's ignore-extras default. Installed
+# once, after every @mcp.tool() registration above, by wrapping ToolManager.call_tool: the check
+# runs BEFORE argument validation and BEFORE any tool body, so a refused call executes nothing
+# and writes nothing. NOT a governed gate (approves/holds/routes nothing to a human) and NOT
+# notification machinery (synchronous refusal on the call; nothing emitted, nothing watched).
+# ---------------------------------------------------------------------------
+
+def _install_strict_kwargs(mcp_instance) -> None:
+    _tm = mcp_instance._tool_manager
+    _orig_call = _tm.call_tool
+
+    async def _strict_call_tool(name, arguments, context=None, convert_result=False):
+        _tool = _tm.get_tool(name)
+        if _tool is not None and isinstance(arguments, dict):
+            _known = set(_tool.fn_metadata.arg_model.model_fields.keys())
+            if getattr(_tool, "context_kwarg", None):
+                _known.discard(_tool.context_kwarg)
+            _unknown = broker_arg_guards.unknown_kwargs(arguments, _known)
+            if _unknown:
+                raise ValueError(broker_arg_guards.strict_kwargs_message(name, _unknown, sorted(_known)))
+        return await _orig_call(name, arguments, context=context, convert_result=convert_result)
+
+    _tm.call_tool = _strict_call_tool
+
+
+_install_strict_kwargs(mcp)
 
 
 # ---------------------------------------------------------------------------

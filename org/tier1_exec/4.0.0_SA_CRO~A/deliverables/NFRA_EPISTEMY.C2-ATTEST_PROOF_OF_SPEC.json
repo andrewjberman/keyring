@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "to_id": "2.0.0_SA_COO-2026-08-20-epistemy-c2-attest",
+  "firm": "FABRIC",
+  "phase": "P1-SCRIPTS",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO~A/task_orders/NFRA_EPISTEMY.C2-ATTEST.instrument-attestation-harness.md",
+    "group": "OTHER",
+    "vintage_commit": "6f944857c42fb9013a3fe04542a487339a24f55f"
+  },
+  "assignee": "4.0.0_SA_CRO~A",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/schemas/discrimination_certificate.schema.json",
+      "kind": "config_data",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260821",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Proposed shared-object schema; CRO Base registry execution and CTO architecture gate remain the required downstream acts.",
+      "artifact_covered_by": ["A1", "A3", "A4"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/src/attestation_harness.py",
+      "kind": "script",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260821",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Local certificate construction and validation only; no enforcement or deployment surface.",
+      "artifact_covered_by": ["A1", "A3", "A4", "A6"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/evidence/acceptance_results.json",
+      "kind": "test",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260821",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Measured live-control and mutant output from the local harness.",
+      "artifact_covered_by": ["A2", "A3", "A4", "A5", "A6"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/rule24/DISCRIMINATION_CERTIFICATE_SCHEMA_ENUMERATION.json",
+      "kind": "config_data",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260821",
+      "deployed_state": "STAGED-AWAITING-GATE",
+      "deploy_evidence": "Four-postulate record and pre-act token census accompany the schema proposal to Base and CTO.",
+      "artifact_covered_by": ["A1"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST_PROOF_OF_SPEC.json",
+      "kind": "doc",
+      "commit_or_etag": "STAGED_FOR_SAFE_COMMIT_20260821",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Machine-readable positional completion record routed through CRO Base.",
+      "artifact_covered_by": ["A7"]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "A1",
+      "criterion_verbatim": "Discrimination_Certificate implemented schema-native per PRD sec.2.2; 7/10 fields reuse ratified vocabulary; Rule-24 record and token census accompany the schema act; every nullable carries absence semantics.",
+      "method": "schema_validation",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/validate_attestation.py --check-package",
+      "output_evidence": "23/23 package members; exact seven reused terms named; proposed-token census 0 hits/3 canonical files; zero nullable certificate fields.",
+      "denominator": "7 of 7 reused terms, 3 of 3 proposed-token surfaces, 1 of 1 Rule-24 records",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A2",
+      "criterion_verbatim": "Three live certificates: comp-find, comp-estate, census_substrate; each runs an isolated positive and generated negative and records discrimination with denominators.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/run_acceptance.py",
+      "output_evidence": "live_certificates=3/3; each positive=1/1, generated_negative=1/1, discrimination=1/1.",
+      "denominator": "3 instruments x 2 controls = 6 of 6 control executions",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A3",
+      "criterion_verbatim": "Independence crossing enforced by construction; a total shared failure domain cannot mint VALID.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/run_acceptance.py",
+      "output_evidence": "Each live certificate demonstrates 1/1 crossing; m1_total_shared_failure_domain derives INVALID.",
+      "denominator": "3 of 3 live crossings and 1 of 1 total-domain mutant",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A4",
+      "criterion_verbatim": "Expiry is real: vintage and invalidation predicates present; instrument-version change reads EXPIRED; failure to re-attest never preserves validity.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/run_acceptance.py",
+      "output_evidence": "m4_instrument_version_bump expected EXPIRED, actual EXPIRED, status FIRED.",
+      "denominator": "1 of 1 version-bump expiry controls",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A5",
+      "criterion_verbatim": "Envelope join: attested observations carry a non-null certificate ref; unattested observations remain null; plane and substrate are separate ratified fields.",
+      "method": "schema_validation",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/validate_attestation.py --check-package",
+      "output_evidence": "attested_non_null=3/3; unattested_null=3/3; every joined C1 record validates with plane enum plus substrate.",
+      "denominator": "3 of 3 attested and 3 of 3 unattested joins",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A6",
+      "criterion_verbatim": "Mutant battery m1-m5 all fire; determinism stable.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/scripts/run_acceptance.py",
+      "output_evidence": "mutants=5/5; determinism=STABLE across two same-input certificate builds.",
+      "denominator": "5 named mutants and 2 canonical serializations",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "A7",
+      "criterion_verbatim": "Proof instance VALID rc=0 positional A1-A7; RAVC close via Base to COO, cc CTO.",
+      "method": "schema_validation",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST_PROOF_OF_SPEC.json A1,A2,A3,A4,A5,A6,A7",
+      "output_evidence": "proof-of-spec-check structural=jsonschema, acceptance rows=7, violations=0, VALID.",
+      "denominator": "7 of 7 positional acceptance rows",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "m1 total shared domain; m2 non-isolated positive; m3 false generated provenance; m4 version bump; m5 anti-correlated total-failure instrument.",
+      "expected": "m1/m2/m3/m5 INVALID; m4 EXPIRED.",
+      "observed": "5/5 FIRED with the expected terminal.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Mint all three certificates twice from deep-copied same inputs and compare canonical bytes.",
+      "observed": "Byte-identical.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {"item": "Components 3 and 4", "reason": "Outside the Component 2 Rule-24 layer."},
+    {"item": "PRD sec.2.9 harm surfaces", "reason": "Open requirements, explicitly not buildable specification."},
+    {"item": "shared engines, cloud, and enforcement", "reason": "Wrappers and local evidence only; no owner-engine edit or armed control."}
+  ],
+  "surprises": [
+    "The exact seven reused terms were stated in Response II section 1.3; the initial draft used semantically equivalent names for three, then was corrected to reuse the ratified terms verbatim before packaging."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C2-ATTEST/SESSION_LOG.md",
+  "compiler_tools": [
+    {"tool": "comp-find", "invocation": "token census over definitions, rule bank, canonical", "result": "0 hits across 3 files"},
+    {"tool": "C2 acceptance", "invocation": "scripts/run_acceptance.py", "result": "3/3 live, 5/5 mutants, STABLE, 3/3 joins"},
+    {"tool": "C2 validator", "invocation": "scripts/validate_attestation.py --check-package", "result": "23/23 exact package closure"},
+    {"tool": "proof-of-spec-check", "invocation": "proof positional A1-A7", "result": "VALID, 7 rows, 0 violations"}
+  ]
+}

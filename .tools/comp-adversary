@@ -208,9 +208,12 @@ def compose(path, out_path, cap, open_mode=False):
     bad = [c for c, v in cr if v != "VERIFIED"]
     L.append("### source 1: cited-commit verification (%d attempted / %d verified / %d UNVERIFIABLE)"
              % (len(cr), len(cr) - len(bad), len(bad)))
+    # EVERY pin's verdict prints, VERIFIED included (MSTR finding 64159: a verified pin that is
+    # counted but never printed leaves nothing for a control to assert about the verification
+    # path -- the silence about successes is what made self-test control 2 reach for the
+    # read-vintage header and go anti-correlated in both directions).
     for c, v in cr:
-        if v != "VERIFIED":
-            L.append("  - @%s : %s" % (c, v))
+        L.append("  - @%s : %s" % (c, v))
     if cr and not bad:
         L.append("  - all cited commits resolve at read-vintage")
     L.append("")
@@ -261,8 +264,20 @@ def self_test():
         c1 = ("@deadbeef99 : UNVERIFIABLE-PIN" in out)
         print("control 1 (planted bogus commit flags UNVERIFIABLE): %s" % ("PASS" if c1 else "FAIL"))
         ok = ok and c1
-        c2 = (head in out)
-        print("control 2 (real HEAD pin present + not flagged -- discriminates): %s" % ("PASS" if c2 else "FAIL"))
+        # CONTROL 2, REWRITTEN (MSTR finding 64159, measured both directions at source): the old
+        # form `head in out` was ANTI-CORRELATED -- (a) it could not fail on its own subject (a
+        # verified pin was counted, never printed, so only the read-vintage header carried the
+        # sha: a regressed verifier flagging every real commit would still PASS) and (b) it
+        # failed falsely on HEAD churn (setup's HEAD vs compose's own HEAD read -- the NORMAL
+        # state on this shared worktree, not an edge case). This form asserts the VERIFICATION
+        # PATH's own printed claims: the planted real pin's VERIFIED line + the source-1
+        # denominator. Both fail if verification regresses; neither cares if HEAD moves after
+        # setup, because the planted sha remains a real commit in history regardless.
+        c2 = ("@%s : VERIFIED" % head in out
+              and "(2 attempted / 1 verified / 1 UNVERIFIABLE)" in out
+              and "@%s : UNVERIFIABLE" % head not in out)
+        print("control 2 (real pin VERIFIED on the printed verification path; source-1 denominator "
+              "2/1/1 -- discriminates, HEAD-churn-immune): %s" % ("PASS" if c2 else "FAIL"))
         ok = ok and c2
         oo = compose(None, None, cap=5, open_mode=True)
         c3 = ("mode: OPEN" in oo and "ZERO estate context" in oo and "source 1" not in oo)

@@ -79,6 +79,20 @@ RULES = [
      "how do I spin up / generalize our compiled semantic system (graph + ontology-binding + closed learning "
      "loop) to a NEW company -> comp-genesis (the NFRA_GENESIS SDK at infra/system/sdk/). Routes to the "
      "PROVISIONER for a NEW company; distinct from comp-system, which reads OPAL's OWN current-state"),
+    # comp-lease = NFRA_EPISTEMY C4 (0.8.0, 2026-08-21). Distinctive lease/eligibility/reliance vocabulary --
+    # deliberately DISJOINT from comp-closure's what-supports-this/identity-chain vocab (C3 answers "how far
+    # did the evidence get"; C4 answers "may I still rely on it NOW"). No sibling tool named here: a
+    # description is routing input, and naming a sibling hands it your intent.
+    (["lease", "lease still valid", "is the lease valid", "lease expired", "lease state",
+      "may i rely on", "can i rely on", "still rely on", "reliance", "re-evaluate", "reevaluate",
+      "re-evaluation", "eligibility", "eligibility evaluation", "eligible", "ineligible",
+      "knowledge basis", "basis digest", "support identity changed", "support member changed",
+      "invalidation pipeline", "exclusion proof", "waiver", "enumerated waiver", "four-state"],
+     "NFRA_EPISTEMY C4 -- four-state lease + eligibility over a support closure",
+     ["comp-lease evaluate <closure.json>", "comp-lease state <lease.json>"],
+     "is this lease still valid / may I rely on this claim now / eligibility of an edit under the current "
+     "knowledge basis / a support identity moved -> comp-lease (state is a READ-TIME partition tree: "
+     "binds? no -> EXPIRED; yes -> VALID|INVALID|UNKNOWN; failure to reevaluate never preserves validity)"),
     (["produce", "produces", "consume", "consumes", "who reads", "who writes", "what writes",
       "what reads", "artifact", "s3 key", "s3://", "parquet", "platinum/", "/gold/", "/silver/",
       # ~E COMPROUTE S1 L4 route-fix #1 (LD-0226): "what KEY/artifact does gold script X write" was a

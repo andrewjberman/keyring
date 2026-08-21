@@ -43,9 +43,12 @@ A hop that has NO build-input basis is REFUSED (m2: a filename-resolved hop smug
 
 BOUNDS: read-only live AWS (get-function / package download); the source map is a BUILD INPUT read
 and never rewritten; nothing armed; comp-iam floor: this tool runs under the operator's own
-credentials like comp-aws (no Lambda role is granted anything by it). `plane` is CARRIED OPAQUE
-(CTO 63744): never parsed, branched on, or keyed off. Lambda closures are PRESENCE_ONLY BY
-CONSTRUCTION tonight: no invokes are taken under the read-only bound, and every instance SAYS SO.
+credentials like comp-aws (no Lambda role is granted anything by it). Observation `plane` is the
+RATIFIED enum {DESIRED, APPLIED, EXERCISED} with `substrate` {aws, portal, codebase, ms} per the C1
+rider @6f944857c4 (the CTO 63744 carry-opaque condition is DISCHARGED): source-map + repo reads =
+DESIRED/codebase; live get-function + package = APPLIED/aws; on-instance read = APPLIED/aws; an
+exercised path = EXERCISED. No reach/standing value is computed from plane. Lambda closures are
+PRESENCE_ONLY BY CONSTRUCTION tonight: no invokes are taken, and every instance SAYS SO.
 
 Author: 0.8.0_AE_CloudComp (NFRA_EPISTEMY.C3-IDENTITY, COO GO 63813). Both NFRA_EPISTEMY fences held.
 """
@@ -68,7 +71,7 @@ WS = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 SOURCE_MAP = os.path.join(WS, "infra", "aws", "lambda", "ci", "lambda-source-map.json")
 ENVELOPE_SRC = os.path.join(WS, "org", "tier1_exec", "4.0.0_SA_CRO~A", "deliverables",
                             "NFRA_EPISTEMY.C1-ENVELOPE", "src")
-INSTRUMENT = {"id": "comp-closure", "version": "0.2.0"}
+INSTRUMENT = {"id": "comp-closure", "version": "0.3.0"}
 REACH = ("NONE", "PRESENCE_ONLY", "BEHAVIOR")            # member grain; MIN aggregates weakest-first
 STANDING = ("BROKEN", "AMBIGUOUS", "CURRENT", "INVALIDATED")   # closure grain; disjoint by construction
 HOP_CLASSES = ("DECLARATION", "ARTIFACT_POINTER", "DIGEST", "BYTES", "EXECUTION")
@@ -134,11 +137,13 @@ def _envelope():
     return env
 
 
-def _obs(env, *, request, status, plane, population, count, grain, process, value, reason,
+def _obs(env, *, request, status, plane, substrate, population, count, grain, process, value, reason,
          pointers, residue=None, invalidation=None):
+    """plane = the RATIFIED verification-plane enum {DESIRED, APPLIED, EXERCISED}; substrate = the physical
+    platform {aws, portal, codebase, ms} -- both per the C1 rider @6f944857c4 (CTO 63744 condition DISCHARGED)."""
     return env.build_record(
         instrument_id=INSTRUMENT["id"], instrument_version=INSTRUMENT["version"], request=request,
-        status=status, plane=plane, population_predicate=population, denominator_count=count,
+        status=status, plane=plane, substrate=substrate, population_predicate=population, denominator_count=count,
         denominator_grain=grain, denominator_process=process, substantive_value=value,
         unknown_reason=reason, observed_at=_now(), support_pointers=list(pointers),
         traversal_residue=list(residue or []), control_references=[],
@@ -150,7 +155,8 @@ def _obs(env, *, request, status, plane, population, count, grain, process, valu
 # and the envelope decides KNOWN vs UNKNOWN; the compiler never knows which reader it has.
 # ---------------------------------------------------------------------------------------------
 class LiveReader:
-    plane_label = "APPLIED"   # carried opaque: a label the instrument knows, never branched on
+    plane_label = "APPLIED"   # ratified verification plane of a live get-function/package read
+    substrate = "aws"
 
     def __init__(self, region="us-east-1"):
         import boto3  # noqa: PLC0415
@@ -272,7 +278,7 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
                "live_code_sha256": None, "last_deployed_commit": None, "repo_head": repo.head()}
     # --- H1 DECLARATION: the source-map entry (BUILD INPUT, read never rewritten) ---
     st = dict(OK) if entry else {"acquisition": "ABSENT", "transport": "SUCCEEDED", "enumeration": "SUCCEEDED", "parse": "SUCCEEDED"}
-    o1 = _obs(env, request={"op": "source_map_entry", "fn": name}, status=st, plane="SOURCE",
+    o1 = _obs(env, request={"op": "source_map_entry", "fn": name}, status=st, plane="DESIRED", substrate="codebase",
               population="functions{} of infra/aws/lambda/ci/lambda-source-map.json", count=len(fns),
               grain="source-map entry", process="json read of the committed map", value=entry,
               reason="no source-map entry for %s" % name, pointers=["infra/aws/lambda/ci/lambda-source-map.json"],
@@ -295,7 +301,7 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
     # --- H3 DIGEST: the live deployed package ---
     fn_resp, st3 = reader.get_function(name)
     cfg = (fn_resp or {}).get("Configuration", {}) if fn_resp else {}
-    o3 = _obs(env, request={"op": "lambda.get_function", "fn": name}, status=st3, plane=reader.plane_label,
+    o3 = _obs(env, request={"op": "lambda.get_function", "fn": name}, status=st3, plane=reader.plane_label, substrate=reader.substrate,
               population="the one live function named %s" % name, count=1 if fn_resp else None,
               grain="lambda function", process="lambda:GetFunction",
               value={"CodeSha256": cfg.get("CodeSha256"), "LastModified": cfg.get("LastModified")} if fn_resp else None,
@@ -320,7 +326,7 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
                 members = {n: z.read(n) for n in z.namelist() if not n.endswith("/")}
         except Exception:  # noqa: BLE001
             st3b = {"acquisition": "PRESENT", "transport": "SUCCEEDED", "enumeration": "FAILED", "parse": "FAILED"}
-    o3b = _obs(env, request={"op": "lambda.package_download", "fn": name}, status=st3b, plane=reader.plane_label,
+    o3b = _obs(env, request={"op": "lambda.package_download", "fn": name}, status=st3b, plane=reader.plane_label, substrate=reader.substrate,
                population="zip members of the deployed package", count=len(members) if members else None,
                grain="package member", process="Code.Location download + zip enumeration",
                value={"members": len(members), "package_sha256": _sha256(pkg) if pkg else None} if members else None,
@@ -364,7 +370,7 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
     compared = sum(1 for m in per_member if m.get("reach") != "NONE")
     o4 = _obs(env, request={"op": "repo_bytes_compare", "fn": name, "commit": dep_commit, "head": head},
               status=dict(OK) if compared else {"acquisition": "ABSENT", "transport": "SUCCEEDED", "enumeration": "SUCCEEDED", "parse": "SUCCEEDED"},
-              plane="SOURCE", population="declared members of the entry (files[]; shape %s)" % shape, count=compared,
+              plane="DESIRED", substrate="codebase", population="declared members of the entry (files[]; shape %s)" % shape, count=compared,
               grain="member file", process="git show at last_deployed_commit + HEAD; blob/basename home census",
               value=per_member if compared else None, reason="no member could be compared",
               pointers=["%s @ %s" % (src_dir, dep_commit)],
@@ -386,8 +392,12 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
                         m["reach"] = "BEHAVIOR"
                         m["executing_sha256"] = xr.get("digest")
                         m["executing_source"] = xr.get("source")
+        # an on-instance/runtime read is an APPLIED-plane observation; an exercised path (invoke + log) is EXERCISED --
+        # the supplier says which (default APPLIED); reach=BEHAVIOR is the closure's axis, plane is the record's
+        xplane = next(iter(execution_reads.values())).get("plane", "APPLIED")
         ox = _obs(env, request={"op": "execution_read", "fn": name, "members": sorted(execution_reads)}, status=dict(OK),
-                  plane="EXECUTING", population="members covered by the supplied executing read", count=len(execution_reads),
+                  plane=xplane if xplane in ("APPLIED", "EXERCISED") else "APPLIED", substrate="aws",
+                  population="members covered by the supplied executing read", count=len(execution_reads),
                   grain="member file", process=str({v.get("source") for v in execution_reads.values()}), value=execution_reads,
                   reason="", pointers=[v.get("source", "") for v in execution_reads.values()], invalidation=["the instance/runtime changes"])
         obs.append(ox)
@@ -465,7 +475,8 @@ def _finish(name, hops, standing, reasons, ambiguity, vintage, obs, *, members, 
                "invalidation_predicates": expires,
                "observation_record_refs": [o["request_hash"] for o in obs],
                "notes": [PRESENCE_NOTE if reach != "BEHAVIOR" else "an executing read was taken for every member",
-                         "plane carried OPAQUE (CTO 63744)"] + list(extra_notes or [])}
+                         "observation plane = ratified enum {DESIRED, APPLIED, EXERCISED} + substrate {aws, portal, codebase, ms} "
+                         "per the C1 rider @6f944857c4 (CTO 63744 bind-time condition DISCHARGED)"] + list(extra_notes or [])}
     bundle = {"object": "Identity_Bundle", "object_status": closure["object_status"], "subject": closure["subject"],
               "identities": identities if identities is not None else [
                   {"plane": "SOURCE", "locator": "repo@%s" % vintage.get("last_deployed_commit"), "digest_basis": "per-member sha256 (members[])"},
@@ -488,19 +499,35 @@ def compile_ec2_fixture(service, rows, env, fixture_source, recorded_at="2026-08
     Rule 22a: the staged S3 object is DESIRED (it may be INERT); only the on-instance read is APPLIED
     truth. A member with an on-box hash reaches BEHAVIOR; staged-only reaches PRESENCE_ONLY; closure
     reach = MIN. rows: [{onbox, onbox_sha, staged_key, staged_sha, repo, repo_sha}, ...]."""
-    o = _obs(env, request={"op": "ec2_fixture_rows", "service": service, "source": fixture_source}, status=dict(OK),
-             plane="FIXTURE", population="recorded staged/on-box/repo rows for %s" % service, count=len(rows),
-             grain="member file", process="NFRA_DEPLOYCENSUS recorded reads (head-object + SSM sha256sum) replayed as a fixture",
-             value=rows, reason="", pointers=[fixture_source], invalidation=["any of the three sides is re-read live"])
+    # three PLANE-PURE records (one plane per Observation_Record): staged S3 = DESIRED/aws (may be inert),
+    # repo = DESIRED/codebase, on-box = APPLIED/aws (the only applied-plane read of an EC2 box, Rule 22a)
+    fx_proc = "NFRA_DEPLOYCENSUS recorded reads replayed as a FIXTURE (%s)" % fixture_source
+    o_st = _obs(env, request={"op": "ec2_fixture_staged", "service": service, "source": fixture_source}, status=dict(OK),
+                plane="DESIRED", substrate="aws", population="recorded staged-object sha256 per member of %s" % service,
+                count=sum(1 for r in rows if r.get("staged_sha")), grain="member file", process="head-object sha256 -- " + fx_proc,
+                value=[{"member": os.path.basename(r.get("staged_key") or "?"), "staged_sha": r.get("staged_sha")} for r in rows],
+                reason="", pointers=[fixture_source], invalidation=["the staged object is re-read live"])
+    o_rp = _obs(env, request={"op": "ec2_fixture_repo", "service": service, "source": fixture_source}, status=dict(OK),
+                plane="DESIRED", substrate="codebase", population="recorded repo sha256 per member of %s" % service,
+                count=sum(1 for r in rows if r.get("repo_sha")), grain="member file", process="git blob sha256 -- " + fx_proc,
+                value=[{"member": os.path.basename(r.get("repo") or r.get("staged_key") or "?"), "repo_sha": r.get("repo_sha")} for r in rows],
+                reason="", pointers=[fixture_source], invalidation=["repo bytes at the path change"])
     n_exec = sum(1 for r in rows if r.get("onbox_sha"))
-    hops = [_hop("logical_fact", "build_input", "DECLARATION", "BUILD_INPUT:EC2_MANIFEST.staged_key", "KNOWN", o["request_hash"]),
-            _hop("build_input", "staged_bytes", "DIGEST", "BUILD_INPUT:staged_key(head-object sha256)", "KNOWN", o["request_hash"],
+    o_ob = _obs(env, request={"op": "ec2_fixture_onbox", "service": service, "source": fixture_source},
+                status=dict(OK) if n_exec else {"acquisition": "ABSENT", "transport": "NOT_ATTEMPTED", "enumeration": "NOT_ATTEMPTED", "parse": "NOT_ATTEMPTED"},
+                plane="APPLIED", substrate="aws", population="recorded on-instance sha256sum per member of %s" % service,
+                count=n_exec if n_exec else None, grain="member file", process="SSM sha256sum on the instance -- " + fx_proc,
+                value=[{"member": os.path.basename(r.get("onbox") or "?"), "onbox_sha": r.get("onbox_sha")} for r in rows if r.get("onbox_sha")] if n_exec else None,
+                reason="no recorded on-box read", pointers=[fixture_source], invalidation=["the instance is re-read live"])
+    hops = [_hop("logical_fact", "build_input", "DECLARATION", "BUILD_INPUT:EC2_MANIFEST.staged_key", "KNOWN", o_st["request_hash"]),
+            _hop("build_input", "staged_bytes", "DIGEST", "BUILD_INPUT:staged_key(head-object sha256)", "KNOWN", o_st["request_hash"],
                  "FIXTURE: recorded staged sha -- DESIRED plane, may be inert"),
             _hop("staged_bytes", "repo_bytes", "BYTES", "BUILD_INPUT:EC2_MANIFEST.repo_path",
-                 "KNOWN" if any(r.get("repo_sha") for r in rows) else "UNKNOWN", o["request_hash"]),
+                 "KNOWN" if any(r.get("repo_sha") for r in rows) else "UNKNOWN", o_rp["request_hash"]),
             _hop("staged_bytes", "executing", "EXECUTION", "BUILD_INPUT:executing-read-of-staged-member(on-instance sha256sum)",
-                 "KNOWN" if n_exec else "NOT_ATTEMPTED", o["request_hash"],
+                 "KNOWN" if n_exec else "NOT_ATTEMPTED", o_ob["request_hash"],
                  "FIXTURE: recorded SSM on-box read covers %d of %d member(s)" % (n_exec, len(rows)))]
+    obs = [o_st, o_rp, o_ob]
     members, member_reach, div, unread = [], {}, [], []
     for r in rows:
         m = os.path.basename(r.get("onbox") or r.get("staged_key") or "?")
@@ -531,7 +558,7 @@ def compile_ec2_fixture(service, rows, env, fixture_source, recorded_at="2026-08
     ids = [{"plane": "DESIRED", "locator": "staged S3 keys (members[].staged_key)", "digest_basis": "per-member staged_sha256"},
            {"plane": "SOURCE", "locator": "repo (members[].repo_path)", "digest_basis": "per-member repo_sha256"},
            {"plane": "APPLIED", "locator": "on-instance %s (SSM)" % service, "digest_basis": "per-member executing_sha256 (FIXTURE)"}]
-    return _finish(service, hops, "CURRENT", [], {"status": "UNKNOWN", "candidate_homes": []}, vintage, [o],
+    return _finish(service, hops, "CURRENT", [], {"status": "UNKNOWN", "candidate_homes": []}, vintage, obs,
                    members=members, member_reach=member_reach, digest_match=None, shape_d=False,
                    subject_kind="EC2_SERVICE_RUNS_CODE", extra_notes=notes, identities=ids, eq_override=eq)
 
@@ -562,7 +589,8 @@ def verify(closure_path, smap, reader, repo, env):
 # Fixtures for the self-test (offline; never AWS)
 # ---------------------------------------------------------------------------------------------
 class FixtureReader:
-    plane_label = "FIXTURE-APPLIED"
+    plane_label = "APPLIED"   # same plane as the live reader; fixture-ness rides the request/pointers, not the enum
+    substrate = "aws"
 
     def __init__(self, functions):
         self.functions = functions   # name -> {"CodeSha256": b64, "package": bytes} | "FAIL" | None
@@ -729,14 +757,34 @@ def self_test() -> int:
         c8["reach"]["per_member"] == {"m1.py": "BEHAVIOR", "m2.py": "PRESENCE_ONLY"} and c8["reach"]["value"] == "PRESENCE_ONLY")
     c9, b9, _ = compile_closure("fn-multi", smap, reader, repo, env, execution_reads={"m1.py": {"digest": _sha256(M1), "source": "fx"}, "m2.py": {"digest": _sha256(M2), "source": "fx"}})
     chk("8b every member covered by an executing read -> closure reach BEHAVIOR (the only way to reach it)", c9["reach"]["value"] == "BEHAVIOR" and "executing read" in b9["last_hop_honesty"])
+    # CTO 63933 specimen (CTO_D4_TRUESHARES_FETCH_READ_20260820_2200Z.md @25c1b4cca9 sec.5): an applied env flag + the
+    # token present in the deployed package + a green scheduled run -- every PRESENCE limb true, and the arm is inert.
+    # The presence chain compiles CURRENT/EQUIVALENT and reach stays PRESENCE_ONLY; only an EXERCISED-plane oracle
+    # read (does the output carry rows from the arm? 0 of 114) can lift a member to BEHAVIOR -- and then it says inert.
+    c14, b14, o14 = compile_closure("fn-clean", smap, reader, repo, env)
+    chk("14 CTO-63933 SPECIMEN: presence bar fully satisfied (CURRENT + EQUIVALENT) AND records genuinely APPLIED-plane -> reach "
+        "stays PRESENCE_ONLY. APPLIED says WHERE the evidence was taken; BEHAVIOR says HOW FAR the chain got -- orthogonal",
+        c14["standing"]["value"] == "CURRENT" and b14["equivalence_claim"]["state"] == "EQUIVALENT"
+        and c14["reach"]["value"] == "PRESENCE_ONLY" and "BEHAVIOR not" in b14["last_hop_honesty"]
+        and any(o["plane"] == "APPLIED" for o in o14))
+    # the mutant a future maintainer would actually write, thinking they were simplifying (CTO 63975):
+    # derive reach FROM the plane label. On the specimen it says BEHAVIOR where the truth is PRESENCE_ONLY.
+    mutant_reach = "BEHAVIOR" if any(o["plane"] == "APPLIED" for o in o14) else "NONE"
+    chk("14c MUTANT (reach inferred from plane) is DISCRIMINATED: on the specimen it claims BEHAVIOR, the constructor says "
+        "PRESENCE_ONLY -- a plane->reach inference cannot survive this battery",
+        mutant_reach == "BEHAVIOR" and c14["reach"]["value"] == "PRESENCE_ONLY" and mutant_reach != c14["reach"]["value"])
+    c14x, _b14x, o14x = compile_closure("fn-clean", smap, reader, repo, env, execution_reads={
+        "handler.py": {"digest": "oracle: output rows source=trueshares 0 of 114", "source": "exercised-path oracle (output parquet query)", "plane": "EXERCISED"}})
+    chk("14b the same closure with an EXERCISED-plane oracle read supplied -> reach BEHAVIOR via a KNOWN EXECUTION hop whose record is plane EXERCISED",
+        c14x["reach"]["value"] == "BEHAVIOR" and any(o["plane"] == "EXERCISED" for o in o14x))
     cA, _, _ = compile_closure("fn-clean", smap, reader, repo, env)
     cB, _, _ = compile_closure("fn-clean", smap, reader, repo, env)
 
     def strip(x):
         return json.dumps({k: v for k, v in x.items() if k not in ("vintage", "observation_record_refs")}, sort_keys=True)
     chk("9 determinism: two compiles of the same inputs agree on every field but timestamps", strip(cA) == strip(cB))
-    chk("10 plane carried OPAQUE: every record's plane is a string; no reach/standing value is computed from it",
-        all(isinstance(o["plane"], str) for o in obs))
+    chk("10 every record carries the RATIFIED plane enum + a substrate (C1 rider @6f944857c4); no reach/standing value is computed from plane",
+        all(o["plane"] in ("DESIRED", "APPLIED", "EXERCISED") and o["substrate"] in ("aws", "portal", "codebase", "ms") for o in obs + oX))
     chk("11 no ordering language survives on the objects: reach+standing are a PAIR, no 'precedence'/'terminal' field",
         "terminal_class" not in c and "precedence" not in json.dumps(c).lower())
     shutil.rmtree(d, ignore_errors=True)

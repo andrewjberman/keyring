@@ -217,9 +217,42 @@ nothing else is mixed in. Spot-confirmed in explicit UTC via `head-object`:
 
 > ### ⛔ THE MERGE-DIFF COUNT IS NOT THE DEPLOY COUNT. It is the CEILING.
 > The first report of this finding said **"~100 files deployed."** That was the count of files under
-> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys **what
-> DIFFERS**, not what the merge carries, and the true figure was **28**. *Two different denominators,
-> and the first was labelled with the second's meaning.*
+> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys a **NARROWER
+> SET** than the merge carries, and the true figure was **28**. *Two different denominators, and the
+> first was labelled with the second's meaning.*
+>
+> ### ⛔⛔ AND THE REASON IT IS NARROWER IS **NOT** "IT DEPLOYS WHAT DIFFERS." THAT SENTENCE WAS IN
+> THIS SKILL AND IT IS FALSE AT SOURCE — corrected 2026-08-21 after it produced a wrong prediction
+> that was broadcast to four seats and a peer fabric.
+> **`safe_deploy_core.py:548` runs `aws s3 cp` UNCONDITIONALLY**, then head-objects and compares
+> ETag to the local md5 at `:565`. **That is a POST-WRITE VERIFY, NOT A PRE-WRITE SKIP.** There is no
+> S3 comparison anywhere before the upload. **Every deploy-scope file in the change set is REWRITTEN,
+> even when its bytes are already identical.** The narrowing is a **DEPLOY-SCOPE filter** — `:351`
+> and `:389`, `if not norm.endswith(".py")` — nothing more.
+> ⛔ **AND `MATCH` IN THE GATE'S OUTPUT MEANS "UPLOADED AND VERIFIED," NOT "SKIPPED BECAUSE
+> IDENTICAL."** The word invites exactly the wrong reading, which is how the false sentence survived.
+> **Measured end-to-end on the 2026-08-21 leg-2 run:** 8 cot files in the merge diff, **6 written**
+> (all `.py`), 2 skipped (`account_attributes.json`, `gold_validate_config.yaml` — non-`.py`).
+> `cot_bronze_ingest.py` LastModified moved **18:06:50Z -> 01:04:18Z with an UNCHANGED ETag**
+> (`a1d81b96...`), and `account_attributes.json` stayed at **18:06:01Z**. Identical bytes, new object.
+> **THEREFORE, THE TWO THINGS AN INTEGRATOR MUST NOT SAY:** (1) never predict a leg is "inert"
+> because local bytes already match S3 — **byte-parity does not prevent the write, it only makes the
+> write invisible in the content**; the honest claim is *"the write will land CLOUD's own content, so
+> nothing can be DISPLACED"*, which is a claim about WHAT lands, not about WHETHER anything lands.
+> (2) never let a downstream seat pin an S3 `LastModified` as a drift detector across a merge —
+> **a rewrite-with-identical-bytes moves the timestamp and moves no hash**, so a timestamp-based
+> detector fires falsely and a hash-based one is blind to the rewrite. Tell affected owners which
+> of the two they are holding. *(Both errors were mine on the 08-21 run; the second reached
+> `0.6.2_AE_PartnerETL`, who had pinned timestamps for a next-morning acceptance.)*
+> **SHARPER FORM, `1.0.0_SA_CTO` on the same run — the two detectors have OPPOSITE blind spots and
+> neither is simply better:** `sha256` sees a content change and is blind to an identical-bytes
+> rewrite; `LastModified` sees any write **but cannot tell a rewrite from a real change.** So
+> *"LastModified moved"* is **not a stronger signal — it is a DIFFERENT QUESTION**, and for the only
+> question an acceptance asks (*did the executed bytes change?*) **the hash detector's blindness is
+> the CORRECT blindness.** ⛔ **THEREFORE THE TRAP: a verifier holding BOTH limbs and alarming on
+> disagreement FIRES FALSELY ON THE HEALTHY CASE — after any merge-triggered deploy leg,
+> `hash-same + timestamp-moved` is the NORMAL state, not an anomaly.** Drop the timestamp limb or
+> re-pin it; do not treat the pair as corroboration.
 > **So the pre-push enumeration below is the right instrument and must be read as a CEILING — never
 > reported as a deploy manifest.** (Self-corrected by `0.0.0_AB_MSTR~Z`, who measured it rather than
 > leaving it as an unverified number of their own.)
@@ -285,6 +318,24 @@ taking the deploy.
   `git diff --cached --stat`, and any path outside your resolution set gets `git reset HEAD -- <path>`
   and a note to its owner. **A gate candidate rides with this (CTO to route): safe-commit refusing
   to STAGE — not just to commit — while `.git/MERGE_HEAD` exists.**
+  ⛔ **(a) AND (b) ARE NOT TWO CONTROLS — (b) IS THE CONTROL AND (a) IS COURTESY. Do not let the
+  pair read as redundancy.** (a) is a SEAT-COOPERATION protocol and therefore carries a REACH
+  DEPENDENCY: it protects only seats that are registered, live, and reading. (b) is MECHANICAL and
+  holds whether or not any seat read anything. **Measured on the 2026-08-21 0051Z leg-1 run: the
+  hold broadcast reached 9 of 11 seats; the 2 that came back QUEUED (no live broker session) were
+  `4.0.0_SA_CRO~A` and `~B` — the two seats that had committed most recently (00:44Z, 00:47Z). THE
+  REACH GAP WAS ANTI-CORRELATED WITH NEED**, the orphan-watcher shape again: the seats a hold most
+  needs to reach are the ones least able to receive it (Codex lanes commit without holding a broker
+  registration). *Framing owed to `0.6.2_AE_PartnerETL`, same run: "you ran a real control and a
+  decorative one, and the decorative one is the one that failed — the intuitive fix (make the
+  broadcast more reliable) improves the decorative half, while the load-bearing half is already
+  sound and could simply be made the DECLARED mechanism."* **So: send (a), never COUNT it. Never
+  report N-of-M delivery as coverage. If (b) is skipped, the merge was unprotected no matter how
+  many seats acked.** Corollary measured the same run: a zero-conflict `git merge` AUTO-COMMITS, so
+  `MERGE_HEAD` may never be observable — a peer's `test -f .git/MERGE_HEAD` returning absent is
+  **byte-identical between not-yet-started and already-finished** and must not be read as either
+  (CTO declined to guess it mid-act, correctly). The CLOSE frame is the only signal that discharges
+  the hold.
 - **Push carries every lane's committed work, not just yours** — that is the LD-0367 rationale.
   Enumerate the payload (`git log --format='%an' origin/CLOUD..HEAD | sort | uniq -c`) so you can
   say what you carried.

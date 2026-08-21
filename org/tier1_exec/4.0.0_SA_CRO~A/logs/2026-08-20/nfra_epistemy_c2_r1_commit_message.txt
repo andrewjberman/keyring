@@ -1,0 +1,8 @@
+docs(nfra-epistemy): pin certificate id derivation home
+
+Name the normative canonical serialization for Discrimination_Certificate
+identifiers, including sorted keys, compact separators, ASCII encoding, and
+the otherwise-invisible trailing newline.
+
+Declare alternate serializations non-conformant even when their identifiers
+match the schema pattern, closing C2-R1 without a second gate cycle.
