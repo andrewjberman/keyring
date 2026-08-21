@@ -48,8 +48,51 @@ matching the ratified per-consumer mapping. **This binding is load-bearing preci
 two twins are byte-identical today (leg 5), so a cross-serve is invisible to values and to shape;
 the URL is the only discriminator until the 1,091-day truncation re-arms.**
 
-**EXERCISED half -- UNRUN. Dependency named, owner named:** a real bearer token through the auth
-path. DE holds no token (minting is AE's lane, 65048); AE runs the capture or supplies the bearer.
+### ⚡ EXERCISED HALF -- AMENDED 2026-08-21 ~17:00Z: THE CAPTURE RAN, AND IT CORRECTED THIS FILE'S DENOMINATOR
+
+**CONSUMER PLANE ESTABLISHED for 6 of 6 REACHABLE keys** (DE's netlog, real bearer, 180 requests
+in a 9s post-load window): `mix_summary` · `leaderboard` · `timeseries_overview` ·
+`cumulative_chart` · `partner_analytics_quarterly` · `partner_analytics_annual` -- all **200 at
+the twin URL**. That is the portal REQUESTING the twin, which AE's route fetch structurally could
+not establish. **HELD-KEY INVERTED ORACLES in the same capture: `dashboard`, `fee_efficiency`,
+`header_metrics` still served from `platinum/firm/` (200), ZERO twin requests for any held key --
+over-flipping is measured absent, not assumed.**
+
+⛔ **ROWS 12/13 ARE UNRUN-BY-CONSTRUCTION, NOT PENDING ANYONE'S EFFORT — and I verified the
+mechanism at source myself rather than accept the report** (`git show HEAD:` reads at this seat):
+- **Row 12 `timeseries_chart` (WINDOWED):** its only caller is `PartnerAnalytics.tsx:273`,
+  `enabled: usesStackedBars`, and `:171` derives that from `tenantLayout.features.barChart.stacked`.
+  **Measured across all four tenant layouts: `49financial` = `false`; only `inflection` = `true`.**
+  The 49F tenant NEVER requests it — and the one tenant whose gate is open has NO TWINS (the twins
+  are `platinum/advi/49financial/` only).
+- **Row 13 `timeseries_chart_full` (FULL-DOMAIN):** `getCumulativeChart` is a **DEAD EXPORT** — one
+  definition (`advisor-intelligence.ts:304`) and exactly three references, **all of them comments**
+  recording that `getTimeseriesOverview` replaced it. Zero importers.
+
+**THE DENOMINATOR THIS CORRECTS, stated plainly because it is mine to correct:** the portal-visible
+flip population for the 49financial tenant is **SIX**, not eight (DE's P4R-1 finding 2C was right
+as far as it went and two short) and not ten (rows 8/11 have no portal reader at all). **Certified
+set 10 · portal-reachable 6 · exercised 6/6.** Three different denominators, each true of its own
+plane, and none of them substitutable for another. **Nothing here says unpublish: rows 12/13 remain
+correctly published and certified — the portal simply is not their consumer today.**
+
+⚠ **MY OWN MANDATORY-L1 REQUIREMENT ON ROWS 12/13 IS THEREFORE UNSATISFIABLE, AND I AM RECORDING
+WHY RATHER THAN QUIETLY DROPPING IT.** I made it mandatory because the d12 pair is byte-identical,
+so the URL is the only cross-serve discriminator. That reasoning stands. What I had not measured is
+that **neither key has a live 49F consumer to cross-serve** — so there is no cross-serve to catch
+at this tenant today. **THE HAZARD IS DORMANT, NOT RETIRED: it re-arms the moment a consumer
+appears** (a tenant flipping `barChart.stacked` to true, or `getCumulativeChart` gaining an
+importer) **and it would then be invisible until the 1,091-day truncation re-arms the content
+plane.** Under the channel's axis that is `INERT` today with a named re-arm condition — not
+`ARMED`, because the bindings at source are CORRECT (`:305-310` and `:441-443` verified above) and
+the harm needs a future consumer wired wrong, not a present trap.
+
+**STILL RUNNING at DE's seat when this amendment landed:** L2 (my 8 mutant fixtures) and L4
+(`--fail` transport marker) for the six reachable keys. Those markers come to me raw; this file
+gets a second amendment when I have read them.
+
+**ORIGINAL PRE-CAPTURE TEXT, preserved:** *"UNRUN. Dependency named, owner named:* a real bearer
+token through the auth path. DE holds no token (minting is AE's lane, 65048); AE runs the capture or supplies the bearer.
 **Required artifacts: the netlog per plane (DEV, then PROD), L1 MANDATORY on rows 12/13, and the
 console markers from the 8 L2 mutant fixtures + the L4 `--fail` runs -- emitted, read by me, not
 summarized.** *DE's refusal to produce a token-less capture is correct and worth recording: it
