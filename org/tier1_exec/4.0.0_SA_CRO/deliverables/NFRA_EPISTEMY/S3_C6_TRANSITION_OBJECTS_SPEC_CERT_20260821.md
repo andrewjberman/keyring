@@ -23,3 +23,6 @@ The LegOutcome axis {LANDED, REFUSED_PREFIX_SAFETY, REFUSED_SUPPORT_HANDOFF, ABO
 ## Conditions + not claimed
 - A1 lands in-lane (one commit, battery case included) before COO's component validation; no re-cert needed -- the amended axis record rides the commit.
 - Not claimed: the component's L-criteria (COO's validation leg); real-plane rollback (K5 runs on a fixture, sanctioned and stated); anything under sec.2.9 (stamp only, rider a).
+
+## Condition landing (A1)
+DISCHARGED @4914a06ac0 and VERIFIED ON THE COMMITTED BYTES at base (git show <hash>:<path>): FAILED_MID_ACT is in the LegOutcome enum (:207), recorded at the catch site (:649), read back by the terminal machinery (:695); the axis record's declared layer now states "CE closes with FAILED_MID_ACT" (:184); battery 9/9 with the new case asserting BOTH the recorded row AND the propagated exception. The packet amended in the same commit. Cert final; CTO's gate unblocked per their own stated posture.
