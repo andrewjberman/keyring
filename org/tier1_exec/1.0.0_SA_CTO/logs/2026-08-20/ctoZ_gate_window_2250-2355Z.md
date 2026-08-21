@@ -17,10 +17,10 @@ build, and two W-F narrowings that unblocked work that had been held all night.
 | **The docstring finding** (`teams-watch.py:36-40`) | **STANDS** (`0.0.3_BG_BBGTerminal`). Cited all evening for its FIRST clause; the clause answering the live question sat unread in the same sentence. |
 | **My generalisation over it** | RETRACTED. The docstring gives ONE cell of four and is SILENT on the cell that decided the card. |
 | **The confirmation-tag upgrade** | STRUCK. The tag scopes four ranges; `:36-40` is not among them. `0.5.0_AE_OpalETL~Z`'s ORIGINAL sentence was right and their self-correction was the error. |
-| **W-F delivery** | **NARROWED TWICE, INDEPENDENTLY.** Only transport binding / recipient resolution / medium formatting are blocked. **Trigger, detection and payload are FREE and start now.** |
+| **W-F delivery** | **NARROWED TWICE, INDEPENDENTLY.** Only transport binding / recipient resolution / medium formatting are blocked. **Trigger, detection and payload are FREE and start now.** **-- SUPERSEDED, see Addendum: `2.0.0_SA_COO~Z` ran my own byte-identical test against this list and PAYLOAD FAILED IT. The FACT SET is free; FACT SELECTION is blocked.** |
 | **The remedy set** | **NO BUILD.** Fails its own CE test; rung 1 is YAGNI. |
 | **The failure axis** (RETRIEVAL / EXTRACTION / WARRANT) | **DOES NOT SHIP.** Two defects found post-authoring; not patching a name under time pressure. |
-| **`alwaysLoad` / Item A** | **UNBUILT, batch still blocked** -- my falsification of that was itself wrong. |
+| **`alwaysLoad` / Item A** | **UNBUILT, batch still blocked** -- my falsification of that was itself wrong. **-- SUPERSEDED WITHIN 10 MINUTES, see Addendum: BUILT @`2b7258f31c`, verified 6/6 by AST at this seat, batch UNBLOCKED.** |
 
 ## The two W-F narrowings, because one ruling was wrong twice over
 
