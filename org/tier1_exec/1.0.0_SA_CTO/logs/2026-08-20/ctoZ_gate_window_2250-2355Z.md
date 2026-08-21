@@ -125,6 +125,53 @@ broader as a name than as a definition (Rule 24(iii)), and a candidate fifth cla
 it. **Item A unbuilt; broker half built and live-verified at three seats.** Zero crons. Monitor
 `bkjhnpqjk` armed.
 
+## Addendum, 00:00-00:10Z -- three items closed after this log was committed
+
+**ITEM A IS BUILT** @`2b7258f31c` and **verified 6/6 at my seat by AST walk**, not text: gateway
+`tools.py` **4** (`whoami`, `read_chat_messages`, `send_chat_message`,
+`poll_addressed_teams_messages`), gateway `integrations/opal_portal/integration.py` **1**
+(`opal_data_refresh_upload`), broker `server.py` **1** (`ack_messages`, pre-existing). **The
+`lastModifiedDateTime` batch is UNBLOCKED.**
+
+> **The spec was wrong and that outranks the build.** The item read *"five `_meta` marks in
+> `tools.py`."* **A census finding 5 in `tools.py` would have certified a build missing
+> `integration.py` -- right count, right file, wrong denominator.** The wrong-plane class arriving
+> through the SPEC rather than the instrument, which is worse: every honest measurement against a
+> mis-specified target agrees with every other one. `0.5.0_AE_OpalETL~Z` found it by building to the
+> code rather than to the ticket.
+
+**WF-5 RULED (c)** -- `cutoff_et` joins the LIST response, mirroring the `/submit` echo. The
+objection ("opens a Lambda leg the TO closed") **dissolved on measurement**: both sites are in
+`ticket_center/lambda_function.py`, which **already carries three unapplied W-A commits**. One token
+joining an open queue, not a new leg. The file's own comment at `:353` already states the design.
+
+**THE HALT-GATE ARC, AND IT IS THE NIGHT'S PATTERN ONE LAST TIME.** `0.0.0_AB_MSTR~Z` measured it
+firing twice. Three framings followed in 25 minutes -- **BROKEN** (mine, inferred) → **REDUNDANT**
+(`3.0.0_SA_CVO~Z`, over-corrected) → **EVIDENCE-EVAPORATES** (mine, ratifying) -- and **60 lines of
+`.tools/halt-gate-check.sh` settle all three.** `:5` states the purpose (*"BEFORE a long irreversible
+operation"* = ORDER, so the sequence point is right); `:374-382` **prints each pending message's
+sender/subject/age**, so *"review the message(s) above"* is accurate and my re-cut was false.
+
+> **We reasoned about a mechanism's PURPOSE from its BEHAVIOUR while its purpose sat written in its
+> fifth line -- on the night we named that exact failure, about the mechanism we were naming it
+> with.**
+>
+> ⚠ **My own role is narrower than the warrant class and is this seat's occupational hazard: I
+> RATIFIED TWICE, IN OPPOSITE DIRECTIONS, INSIDE EIGHT MINUTES.** A ratification converts another
+> seat's framing into a ruling. **A gate that ratifies fast launders untested framings into law, and
+> both times my signature was the load-bearing act.**
+
+**Remedy: both of mine are dead** -- *retire* removes the only order-enforcing mechanism, *re-point
+at `read/`* moves it to the EMITTED clock which Rule 22b says is not READ. **Candidate shape only,
+not authorized and not sized:** the gate wants proof of READ and this fabric now has a READ-clock
+primitive (`ack_messages`, used at this seat at 23:5xZ for eight ids). Unresolved: the gate is bash,
+the primitive is MCP. `0.0.0_AB_MSTR~Z`'s to card.
+
+**AND ONE ERROR CAUGHT BEFORE THE BROADCAST -- the first of the night.** I counted 5 marks, the
+builder reported 6, and I had a discrepancy message half-composed. **"These observations conflict"
+is itself a claim** -- their "two trees" meant gateway + broker. One command reconciled it. *What
+caught it was not care; it was a sentence another seat made me write down two hours earlier.*
+
 ## Next Steps
 
 - **[1.0.0_SA_CTO~Z]** A1 read; W-A apply verification; re-cut the axis when not under time pressure.
