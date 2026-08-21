@@ -173,3 +173,28 @@ collision risk because he is not relaunching them himself. Relayed MSTR/COO/CVO/
 continues: TO-2 (AE) executing — contract v1 shipped 20:07Z (`ETFS_POSITIONING_TO-2_ARTIFACT_CONTRACT_v1.md`,
 key `/api/general/etfs/positioning_data.json` → `s3://opal-data-portal-v2/platinum/etfs/positioning_data.json`,
 route = existing `/api/general/*` behavior + two-edit mint; Models bytes untouched by construction).
+
+---
+
+# FIFTH INSTRUCTION, 2026-08-21T20:45Z at the COO terminal (relayed COO 65776, record @d3c0c9c1d2) — L2 TrueShares EGRESS GRANTED
+
+## VERBATIM (his spelling preserved)
+
+> "egreess is allowed, other stuff doesnt really matter at this point just carry it"
+
+## WHAT IT BINDS (CTO read, the card was this seat's)
+
+- **The L2 TrueShares standing-capture egress confirm — the ONE sovereign input carded since 2026-08-21
+  ~14:xxZ (PRD s.10.2, s.11.3) — is GRANTED.** Same publisher we already read daily; the issuer's
+  published per-fund constituent sheet; capture-forward from the day the standing pull starts.
+- **Scope, read plainly and NOT widened:** his word answered the TrueShares card (the only egress on the
+  ETFS critical path, the one COO's card pointed at as this lane's). It names no other vendor. The
+  Schwab pre-2024-07-08 history-feasibility inquiry (COO's Call 4, a different vendor, a different act)
+  is **CARRY — neither granted nor denied**; vendor egress is per-use and by name (NEVER-rule), and it is
+  re-asked explicitly, by vendor, when the 49F release work is scheduled. "Other stuff … just carry it"
+  = the other open calls stay on the queue, un-re-asked, time-scoped to the ETFS push.
+- **Sequencing unchanged (his own s.10.4 ship shape):** the page ships on TWO FULL BOOKS + TWO SHELLS and
+  does not wait for DIVZ/IDVZ rows; the capture cell (ETFS-c-1, now coverable) sequences BEHIND TO-1 and
+  the producer picks rows up with no code change. COO cutting the c-1 TO now.
+- Project JSON `blocking` → none; PRD s.10.2/s.11.3 annotated; REGISTRY row + today's sprint Blocks
+  updated this commit.
