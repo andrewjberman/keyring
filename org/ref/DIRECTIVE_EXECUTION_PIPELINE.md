@@ -44,6 +44,21 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   expressible, or the record lies to the next seat in whichever direction it happens to lag.
 - **Fallback (ratified REC):** on a MEASURED dark COO, CTO runs stage 3, disclosed on the
   decomp's face. Work never queues on an unseated stage.
+- **STAGE 3 IS A COO-OWNED RUN, NOT A SOLO ACT** *(CTO ruling 2026-08-21 ~16:5xZ on COO's
+  structural finding 65076 at the first project — the canonical atom-decomp package requires
+  status-missioned FAN-OUT with patch shapes merged only through the validator, and CERTIFICATION
+  by a standing certifier who is never the author)*: COO authors and merges; the FAN-OUT COHORT
+  and the CERTIFIER are **executor classes declared at stage-3 open** (the seating clause above
+  applies — dark class → MSTR same-turn). **Certifier of record = CVO** (standing certifier).
+  **Role-collision resolution:** CVO's channel role is RECORD + GRADUATE, never re-certifying its
+  own cert — a DECOMP-INVALIDATING item routes to the decomp OWNER (COO) to re-decomp, and the
+  RE-CERTIFICATION after invalidation is signed by a DIFFERENT independent seat (CRO, or base
+  CTO), which breaks the self-certification loop at the one point it bites. **Degraded states
+  are DISCLOSED, never silent:** a reduced cohort is stated on the decomp's face (never a solo
+  decomp presented as fan-out); an uncertified decomp may still cut TOs only with "UNCERTIFIED
+  DECOMP" on each TO's face, stated by the issuer. *The pipeline's single point of failure is
+  therefore wider than "a dark COO": an unavailable cohort or certifier also stops TOs from
+  existing — which is why the classes are declared and MSTR-seated, not assumed.*
 - **SEATING IS A PIPELINE STAGE, not ambient infrastructure** *(MSTR input, Andrew-directed
   relay 64953 — four staffing misses in one day; every chain stall was a seat absence, never a
   work defect)*: each TO declares its **EXECUTOR CLASS** (a class, never a serial — seats die)
