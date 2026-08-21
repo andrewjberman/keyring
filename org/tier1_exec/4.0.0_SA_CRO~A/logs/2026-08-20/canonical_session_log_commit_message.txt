@@ -1,0 +1,8 @@
+log(4.0.0_SA_CRO~A): close ATOM_LAYER0 and NFRA_EPISTEMY C1/C2 window
+
+Record the complete path-A session from ATOM_LAYER0 construction through C1
+and C2 implementation, independent closure, and the discharged C2-R1
+content-addressing rider.
+
+Include compiler-tool results, nine implementation commits, significant MCP
+coordination, decisions, zero-context current state, and owned next steps.
