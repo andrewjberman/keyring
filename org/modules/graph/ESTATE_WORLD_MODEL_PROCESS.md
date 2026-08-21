@@ -10,6 +10,24 @@ tool's registry entry (`comp-tools.yaml`) and the resolver's `generated_from` po
 
 ## 1. The four-layer granularity ladder (what exists, who says so, how it refreshes)
 
+> ⛔ **SUPERSEDED READING — READ THIS BEFORE THE TABLE. §6 (ONTOLOGY BINDING v1.3, 2026-07-30)
+> SUPERSEDES THE FOUR-LAYER-LADDER READING OF THIS SECTION, and §6 says so in its own title.**
+> The banner is here, at what you read FIRST, because the retirement notice sitting 100 lines
+> below is the failure class this document exists to kill: fifteen lines of confident tabular
+> detail meet the reader before the correction does.
+> **THE LOAD-BEARING CELL, measured (4.0.0_SA_CRO~C Run 46, routed to this doc's owner):** the L2
+> row types `family` as **"a D2 path instance"** — a CHAIN. **That is FALSE under §6.** `family`
+> is **C3.i — a deterministic STRUCTURE**, and the resolver settles it: 135 threads, exactly 14
+> `family` values joining one-for-one to C3.i `legacy_family_key`, 5 nulls = UNASSIGNED-RESIDUE.
+> **Three readings of this one field name have been observed in the wild**, which is why the
+> false one must not sit unmarked in the section agents read first for coherence.
+> **WHAT SURVIVES IN THIS SECTION, unchanged and still load-bearing:** the GRANULARITY LADDER
+> itself (four grains exist, in this order), each row's **derivation mode** (HAND / HAND-ADJUDICATED
+> / DERIVABLE / LIVE-DERIVED), its **refresh trigger**, and the cross-cutting determinations below
+> the table. **WHAT §6 REPLACES:** the ONTOLOGY TYPING of the rows (the "Ontology:" clauses) —
+> read those from §6, never from here. *(Owner act 2026-08-21, `3.0.0_SA_CVO`; same half-live
+> treatment applied the same day to `terminology_law.territory_vs_map`.)*
+
 | L | Unit | Count @07-30 | What it IS | Defined by | Derivation mode | Refresh |
 |---|---|---|---|---|---|---|
 | **L1** | `named_thread` — **a BUSINESS FUNCTION** (news, mdpf, advi-bd, smartx…) | 27 | a semantic commitment: "this cluster of machinery serves one business purpose." Ontology: C3-system-grade; a **Route-C naming act** — legislated, not discovered | **Andrew/CVO legislate the name**; catalog: `NAMED_THREAD_CATALOG.md` (d33fe4aab) | **HAND — necessarily.** There is no fact of the matter until named (ROUTE_LOGIC §8: C closes by deciding) | Only by explicit naming act. The loop SURFACES candidates (see §4); it never auto-names |

@@ -1,0 +1,29 @@
+{
+  "project_code": "MDPF_PROVCANON",
+  "macro_code": "MDPF",
+  "name": "MDPF provenance channels -- ONE canonical contract (class channel / source-identity channel / per-partner grain), applied identically across ALL four served scopes and BOTH producer trees",
+  "description": "FIRST PROJECT THROUGH THE DIRECTIVE EXECUTION PIPELINE (Andrew-ratified 2026-08-21; CLAUDE.md Rule 27; org/ref/DIRECTIVE_EXECUTION_PIPELINE.md). Andrew-direct 2026-08-21 ~16:3xZ at the base CTO terminal, VERBATIM: 'It is going to be the first case of the usecase of the new canonical execution process. I am ok with this in concept, but if we're going to do this, then we need to do it properly. What that means, is that if we do something we do it consistently across all firms. ... If this is a first class concept, then why does it not apply to cottonwood?' THE CONCEPT: the served MDPF aggregate-AUA timeseries artifacts carry provenance under keys whose intents are conflated -- the per-firm `cohort_provenance` key carries SOURCE NAMES on 49financial/inflection ({custody:'Schwab', model:'SmartX'}) while the frontend contract for that key is the CLASS channel (dated, class enums measured/absent/reconstructed/...); cottonwood carries dated class enums PLUS a fourth `non_model` leg the contract does not name, produced by a DIFFERENT producer in a DIFFERENT tree (data/assets/scripts/gold/build_cottonwood_mdpf_slice.py); global carries a per-partner composition under the same key name. Three (four) shapes under one key across four scopes because the concept was never defined once. THE REQUIREMENT, his: one definition, applied identically to 49financial, inflection, cottonwood AND global, across both producer trees -- the tree/lane boundary is a DECOMP fact (a cell with a different executor class), never a scope exclusion. LINEAGE: the 2026-08-18 CTO canonical-form ruling (docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md) diagnosed the one-intent-per-key defect; the old-process TOs cut under the never-registered code MDPF_PROVENANCE (T-A/T-B/T-C) were SUPERSEDED BY SOVEREIGN DECREE ~16:28Z ('no, none of this work matters ... i do not want this thrash and irrelevant effort') -- nothing from that thread is revived as-is; the cottonwood exclusion CTO ruled mid-flight is recorded as a process artifact, not a principle. What STANDS from that lineage: DE's name-tolerant reader (R-1, landed) and the T-B Half-1 count-carry re-point (landed 08-19, executing, exercised) -- neither is this project's work. OPEN CONTRACT QUESTION named at registration (for the PRD/decomp, or Andrew's word): is `non_model` a leg of the class-channel contract? If yes every scope emits it; if no cottonwood drops it -- decided once, never inside a rename.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_PROVCANON_PRD.md",
+      "label": "Stage-2 PRD -- purpose-level, comp-find grain: the concept defined once, the uniformity requirement, the territory named (four scopes, two producer trees, consolidator, reader tolerance, publisher, DT parity harness), the one open contract question",
+      "date": "2026-08-21"
+    },
+    {
+      "path": "docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md",
+      "label": "Lineage -- the 08-18 arch diagnosis (one intent per key); its R-2 execution is SUPERSEDED BY SOVEREIGN DECREE, preserved as record",
+      "date": "2026-08-18"
+    }
+  ],
+  "related": ["MDPF_CANPLAT", "MDPF_3FIRMS", "MDPF_REMED"],
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "phase": "STAGE 1 REGISTERED 2026-08-21 ~16:4xZ (1.0.0_SA_CTO, commissioning exec). Stage 2 PRD in authoring at the same seat; then stage 3 = COO operative-surface atom-decomp across ALL FOUR SCOPES + BOTH PRODUCER TREES before any TO exists; proof-of-spec derives from the decomp cells; CVO mans the channel from day one. Uniformity across firms is a FIRST-CLASS acceptance property, not a stretch goal.",
+  "blocking": "None. One named open contract question (non_model leg) rides the PRD for the decomp or Andrew's word; it does not block registration or PRD authoring.",
+  "created": "2026-08-21",
+  "pods": ["1.0", "2.0", "3.0", "0.4"],
+  "pipeline": "mdpf",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -67,7 +67,11 @@ Every inter-agent request follows **Request → Acknowledge → Validate → Clo
   still see things outside it. **Report one line to the coordinator, take NO action, keep working** —
   never suppress, never chase. **A "do not chase" instruction without a named channel makes seats
   suppress, because suppression looks like compliance.** Task-order authors: name the channel.
-  `docs/doctrine/THE_SURPRISE_CHANNEL.md` (Andrew-named 2026-08-06).
+  `docs/doctrine/THE_SURPRISE_CHANNEL.md` (Andrew-named 2026-08-06). **FORMALIZED 2026-08-21
+  (Andrew-ratified): `3.0.0_SA_CVO` MANS THE CHANNEL, and every new project runs the canonical
+  pipeline — register → PRD → COO decomp-before-TOs → execute ON SPEC (frozen mid-round) →
+  investigation/remediation rounds. Only BLOCKING/HAZARD classes interrupt; OBSERVATION never
+  does. Protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` (CLAUDE.md Rule 27).**
 - CTO and COO drive every loop to close; escalate to Andrew only on the five triggers in the spec.
 - **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
   characters**. The HALTGT deploy checkpoint classifies on it. **A routine message must never begin with

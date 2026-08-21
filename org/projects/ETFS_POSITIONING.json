@@ -23,6 +23,16 @@
       "path": "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md",
       "label": "The parent DIRECTIVE PRD -- D4 'ETF positioning variant'. ETFS_POSITIONING is D4's execution project, not a separate directive; D4 placement flips LAPTOP->SITEZ 2026-08-21",
       "date": "2026-08-19"
+    },
+    {
+      "path": "docs/briefs/etfs-positioning-bloomberg-pull-20260821.md",
+      "label": "MSTR~Z's delivered-pull brief -- 109x6y pull executed on the site-Z terminal, B-form books assembled + tied out (99.99/99.98 by an independent route), DIVZ/IDVZ refdata refusal proven non-entitlement, daily-vs-snapshot field matrix. Artifacts: s3://opal-data-etfs/bbg-testpull/ (code + combined + per-ticker)",
+      "date": "2026-08-21"
+    },
+    {
+      "path": "docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md",
+      "label": "L1 work order -- the daily scheduled ETF Bloomberg pull (site-Z defined deliverable), folding into the OPAL_BBGTML_daily_pull 07:00 vehicle, landing opal-data-etfs/bbg/{date}/",
+      "date": "2026-08-21"
     }
   ],
   "related": [
@@ -33,8 +43,8 @@
     "ETFS_CANON"
   ],
   "status": "active",
-  "phase": "PHASE 0 -- RESEARCH COMPLETE INCL. THE BLOOMBERG FIELD SPEC. BUILD NOT AUTHORIZED. OWNERSHIP: LAPTOP FABRIC (Andrew-direct 2026-08-21 ~05:5xZ, REVERSING the ~02:5xZ SITEZ handoff). Site Z's scope is now ONE bounded pull defined wholly in ETFS_POSITIONING_BLOOMBERG_ASK.md v2 -- they return PKLs, they do not own the design, the shape, the producer or the page. The former 'hinge' (does Bloomberg serve DIVZ/IDVZ constituents) is DEMOTED to secondary: the cheaper route is the issuer-side TS_HOLDINGS_ENABLED wiring, which is ordinary laptop lane work. D4's DIRECTIVES.yaml row needs a SECOND placement flip (SITEZ -> LAPTOP-owned + a scoped site-Z execution leg) -- specified for MSTR as register owner. ONE sovereign call remains at Andrew: ship 2 full books + 2 fund-level shells, or hold.",
-  "blocking": "Sequencing rests on ONE remaining Andrew call (scope: 2-full-plus-2-shell vs hold) -- the characteristics question he closed himself on 2026-08-21. The technical hinge is a single untested question, does Bloomberg serve constituent holdings for DIVZ/IDVZ, now owned by the SITEZ fabric as D4 and answerable in one MSTR~Z terminal session; a NO re-prices the project onto the issuer-side TS_HOLDINGS_ENABLED wiring route. The DIVZ/IDVZ absence is now settled beyond doubt (3 trees, 1,111 objects, 7,550 rows, all-time, with positive controls) -- it is a source that was never wired, not a pipeline that dropped rows. No gate is implemented on this project; nothing is held. The D4 DIRECTIVES.yaml row edit sits with MSTR as register owner by lane, not by hold.",
+  "phase": "PHASE 1 -- BUILD AUTHORIZED + EXECUTING (Andrew-direct 2026-08-21 ~14:1xZ at the base CTO terminal, verbatim in org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260821_ETFS_POSITIONING_BUILD_AUTHORIZED_DAILY_PULL.md: 'I want to get that project / directive formalized and executed end to end ... let's get that show on the road'). THE BOUNDED PULL IS DELIVERED (MSTR~Z, 2026-08-21 ~08:58Z, brief @ee65346eef, artifacts s3://opal-data-etfs/bbg-testpull/): B-form books assembled + tied out 99.99/99.98 by an independent route; DIVZ/IDVZ constituents via Bloomberg refdata = NO and provably NOT entitlement (zero NOT_AUTHORIZED; bogus-control-identical BAD_FLD); daily-vs-snapshot field matrix measured (px/aum/nav/yield/beta daily; te/fee/num_holdings/duration/credit snapshot-only -- their history can only accumulate from OUR daily captures forward). PRD s.10 is the reality adjustment + the production plan: L1 daily scheduled BBG pull (site Z, ORDERED -- fold into the OPAL_BBGTML_daily_pull 07:00 vehicle, land opal-data-etfs/bbg/{date}/); L2 TrueShares standing sheet capture (capture-forward, GATED on the one Andrew confirm); L3 projection producer + Rule-24 vocabulary act; L4 serving+IAM; L5 flip UI. OPERATIVE SHIP SHAPE under his end-to-end word: 2 full books (PFDE/PFOE) + 2 book-level shells (DIVZ/IDVZ), shells upgrading automatically when L2 lands rows. The former hinge is RETIRED as a question -- answered at both ends (BBG refdata NO @brief 3.1; issuer sheet YES @afd2d831fe provenance).",
+  "blocking": "ONE narrow sovereign confirm, carded 2026-08-21: extend the 2026-07-31 one-time TrueShares egress (@cfdddb5d8d) to a STANDING daily capture of the issuer's published constituent sheet (same publisher, page already scraped daily by etfs-netassets-daily, mechanism in-estate). URGENCY IS STRUCTURAL: the sheet is current-day-only, no backfill exists, every uncaptured day is permanently lost (~15 trading days already gone since 07-31). This gates L2 ONLY -- L1 (daily BBG pull, his explicit word), L3-L5, and the register refresh proceed regardless. No other block; no gate implemented on this project.",
   "created": "2026-08-21",
   "pods": [
     "1.0",

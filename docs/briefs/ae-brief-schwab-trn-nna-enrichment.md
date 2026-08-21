@@ -321,10 +321,10 @@ AE scope ends at Phase 5. Downstream consumer integration is DS + DE lanes.
 - **Investigation session log:** `org/tier2_senior/0.6.0_AE_PartnerETL/logs/2026-04-21/schwab_trn_nna_enrichment_investigation.md` — full phase-by-phase trace, findings, and TRN sync status
 - Investigation memory: `memory/project_schwab_trn_nna_enrichment.md` (agent-scoped persistent memory)
 
-### PoC scripts (saved to prevent wheel-reinvention during TO execution)
-- `data/schwab/analysis/README.md` — index + status
-- `data/schwab/analysis/trn_nna_classify_poc.py` — PoC TRN parser + NNA classifier (85-90% parity vs Schwab PDF on monthly totals)
-- `data/schwab/analysis/reconcile_schwab_bd_nna.py` — PoC account-level cross-reference Schwab TRN vs BD silver with delay-matching
+### PoC scripts (ARCHIVED -- ferry closed 2026-08-06, D-C009 / R-0020 delegation; paths below no longer live)
+- `data/schwab/analysis/README.md` — index + status *(ARCHIVED B-0011 @8c9cc51f14)*
+- `data/schwab/analysis/trn_nna_classify_poc.py` — PoC TRN parser + NNA classifier (85-90% parity vs Schwab PDF on monthly totals) *(ARCHIVED B-0012 @3e16b1f504; DS provenance repoint @41b0eff64f landed first)*
+- `data/schwab/analysis/reconcile_schwab_bd_nna.py` — PoC account-level cross-reference Schwab TRN vs BD silver with delay-matching *(ARCHIVED B-0011 @8c9cc51f14)*
 
 ### Existing infrastructure (reused, do not reinvent)
 - `data/black_diamond/scripts/bronze/sync_schwab_onedrive_to_s3.py` — OneDrive -> S3 uploader (0.4.0_DS, 2026-04-14)

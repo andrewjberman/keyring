@@ -82,9 +82,13 @@ directives:
       LAPTOP ruling -- THREE placements on this row in 3 days, all his, latest binds). VERBATIM:
       'I thought we might handle this on the sitez fabric because they have the bloomberg access but
       it probably makes more sense to decidedly own it here and just have MSTR~Z specifically operate
-      on a defined deliverable.' SITE Z RETAINS ONE SCOPED EXECUTION LEG ONLY -- a single bounded
-      Bloomberg pull defined wholly in docs/architecture/ETFS_POSITIONING_BLOOMBERG_ASK.md v2; they
-      return DATA and own none of the design, shape, producer or page.
+      on a defined deliverable.' SITE Z RETAINS ONE SCOPED EXECUTION LEG ONLY -- since 2026-08-21
+      ~14:1xZ that leg is the STANDING DAILY SCHEDULED Bloomberg pull per
+      docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md (extension made by Andrew's OWN
+      daily-pull word at the CTO terminal, record @1cf66d7d93 -- not by any seat widening the prior
+      'single bounded pull' sentence; order delivered-and-READ, MSTR~Z ack of bus msg 7c2d1e21 at
+      14:13:47Z, operative as inline spec). They return DATA on the standing schedule and own none
+      of the design, shape, producer or page.
       WHY THE REVERSAL IS GROUNDED RATHER THAN A PREFERENCE: the spec was thought to need Bloomberg
       access to read. It does not -- the live project is OneDrive-synced ON THE LAPTOP at
       '%USERPROFILE%/OneDrive - Opal Capital/Shared - Documents/OCIO Models/Dashboard/202511 Model
@@ -98,24 +102,23 @@ directives:
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
-    stance: "SCOPE CORRECTED by Andrew ~17:4xZ: an ETF VERSION of the Positioning page (flip
-      ETFs DIVZ/IDVZ/PFDE/PFOE vs Models), FULL-STACK. THE STATE ASSESSMENT IS DELIVERED, so the
-      build-out is MEASURED, no longer unknown: docs/architecture/ETFS_POSITIONING_PRD.md
-      @e0c7276d00, extended @1575dfab1e (s.9 placement, s.3.3 data census). Characteristics are a
-      DECLARED BLOOMBERG DEPENDENCY, not a gap -- Andrew same-turn, VERBATIM: 'clearly nobody has
-      access to the characteristics, but that's fine, as long as we have the shape, we can get this
-      done through Bloomberg.' THE OPEN HINGE, and it is the first question site Z answers: does
-      Bloomberg serve CONSTITUENT HOLDINGS for DIVZ US Equity and IDVZ US Equity? A clean NO is
-      VALUABLE -- it re-prices the project onto the issuer-side TS_HOLDINGS_ENABLED wiring route.
-      MEASURED and agreeing with base CTO's deployed-bytes read from the data side: across 3 trees /
-      1,111 objects / 7,550 rows there is not ONE DIVZ or IDVZ constituent row (silver/holdings
-      7,550 of 7,550 source='filepoint', DIVZ 0, IDVZ 0, positive control PFDE=5,920; snapshots are
-      FUND-LEVEL ONLY, 70 objects, today's a 4-record 2,876 B array with no constituent array;
-      opal-data-assets/trueshares/ 370 objects, 0 keys matching 'holding', positive control 220
-      matching 'netassets'). Mechanism from the producer's own note: filepoint ships an
-      ETF_Holdings.csv, TrueShares ships only a netassets HTML page -- A SOURCE NEVER WIRED TO
-      DELIVER HOLDINGS, not a pipeline dropping rows. The ETFS_CANON design gate RULED @6d62143d2d;
-      the four ETFs also join D1's taxonomy as SMA-category members -- one registry serves both."
+    stance: "EVENT-REFRESHED 2026-08-21 ~14:1xZ (register act by 0.0.0_AB_MSTR per CTO 64716 spec;
+      authority = Andrew-direct at the CTO terminal, record @1cf66d7d93): BUILD AUTHORIZED
+      END-TO-END -- his word ordered the project formalized and executed end to end, PRD adjusted
+      to the delivered pull's reality. STATE: the bounded Bloomberg pull is DELIVERED (brief
+      docs/briefs/etfs-positioning-bloomberg-pull-20260821.md @ee65346eef -- 109 tickers, B-form
+      books tied out to PRD s.3.1 at 99.99/99.98 by an independent route). THE OPEN HINGE IS
+      RETIRED, ANSWERED BOTH ENDS: BBG refdata serves NO DIVZ/IDVZ constituents (clean absence,
+      zero NOT_AUTHORIZED -- so no proven non-entitlement) / the issuer-side TrueShares sheet is
+      YES per D4b @afd2d831fe; the project re-prices onto issuer-side capture exactly as the prior
+      stance said a clean NO would do. OPERATIVE SHAPE: PRD s.10 reality adjustment + s.10.5
+      production plan (s.7 superseded) @1cf66d7d93; project JSON PHASE 1 EXECUTING; ship shape = 2
+      full + 2 shells upgrading forward; L1 = the standing daily site-Z pull (placement cell), L2
+      TrueShares standing capture gated on ONE narrow egress confirm (capture-forward, no backfill
+      exists). Prior stance's data census (3 trees / 1,111 objects / 7,550 rows, zero DIVZ/IDVZ
+      constituent rows, filepoint-vs-TrueShares mechanism) stands as the measured basis, retained
+      at this row's git history + PRD s.3.3. ETFS_CANON design gate RULED @6d62143d2d; the four
+      ETFs join D1's taxonomy as SMA-category members -- one registry serves both."
   D5:
     title: "Alt research (ongoing)"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"

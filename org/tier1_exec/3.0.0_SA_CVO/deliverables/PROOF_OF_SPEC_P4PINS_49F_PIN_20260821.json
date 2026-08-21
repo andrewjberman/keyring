@@ -1,0 +1,113 @@
+{
+ "schema_version": "1.0",
+ "to_id": "OPAL_ADVIPOINTERS.P4-PINS-CERT-49F",
+ "phase": "P4-PUBLISHERS",
+ "spec_ref": {
+  "doc": "org/tier1_exec/3.0.0_SA_CVO/task_orders/OPAL_ADVIPOINTERS.P4-PINS-CERT-49F.two-phase-pins-cutover-cert-p5-census-read.md",
+  "group": "OTHER",
+  "vintage_commit": "4953c9b094"
+ },
+ "assignee": "3.0.0_SA_CVO",
+ "artifacts_produced": [
+  {
+   "path_or_key": "data/assets/scripts/gold/runners_49f/pins/ (15 files, pin_{emitter}_{leaf}.json)",
+   "kind": "config_data",
+   "commit_or_etag": "with-this-instance",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "PRE-FLIP pin files per P4PINS_49F_PIN_FILE_SHAPE_20260818.md at content-date 2026-08-19; 14 measured + 1 INPUT-MISSING-LOUD (d14/advisor_nna_canonical, xwalk absent, remedy-holder DS~A)"
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "49F-PIN-PRECOND",
+   "criterion_verbatim": "AMENDED BY ISSUER @4953c9b094 (COO ruling 64729, CTO concurrence 64733/64734): (a1) serve-of-record health, measured frontier stated never asserted; (a2) same-content-date BINDING (false => enumeration refused); (b) UNCHANGED scheduled-write evidence; (a3) producer class stated per side; (a4) restatement disclosure",
+   "method": "command",
+   "invocation": "own reads: s3 get/head on 16 legacy keys (bytes-level data_as_of); own read of chain_20260821T124542Z.log; own partition listings both dates; lib/trading_calendar.py trading_days_behind; s3api LM on 5 silver 08-19 inputs",
+   "output_evidence": "(a1) TRUE: 16/16 LMs 05:01-05:43Z in-cadence, data_as_of=2026-08-19 from bytes, measured frontier T-2 per R1 @9988b2dd66; (a2) TRUE at content-date 2026-08-19 (canonical date=2026-08-19 present); (b) DISCHARGED by the SCHEDULED 08-20 write (CHAIN OK mode=production 16/16); (a3) served=SCHEDULED serve-of-record, canonical=AD-HOC QA on its face (DS~B 64718/64739, CTO GO 64714, run log chain_adhoc_qa_20260821T1411Z_DSB_date0819.log 9,795B); (a4) DISCHARGED-IMMATERIAL: all 5 canonical silver 08-19 inputs single-LM 2026-08-20T09:46Z, frozen before both productions, zero restatement in the 9h observation window",
+   "denominator": "16 keys read from bytes / 2 chain logs read / 5 silver inputs LM-checked / 3 frontier measurements",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "49F-PIN-FRESH",
+   "criterion_verbatim": "per key on the frozen list, the pre-flip pin is a FRESH-VINTAGE re-enumeration (served bytes @T vs canonical @T, content-date frame stated per ss5) -- NOT a re-read of the 08-06..08-11 predeclared_divergences_49f.json registry; the pin file per key is a projection of the registry shape (no new instrument; run-and-read), committed, stale-pin-fails-loud semantics kept. Pre-flip pin includes the MEASURED delta (incl. the $122.5M Schwab-canonical authority class @745ca6d78f where it lands on a key)",
+   "method": "command",
+   "invocation": "d_publisher_port.py dry-run at asof=2026-08-19 (14/15 built; TRUE_RC=1 = the honest d14 refusal) -> fit_harness.diff_surface (self-test PASS, 5 controls incl. mutants) over SAVED legacy bytes vs built payloads -> p4pins_project.py (run-and-read projection); stale-pin re-verify at write: 16/16 keys re-headed, 0 moved",
+   "output_evidence": "fresh measured deltas recorded per pinned field with registry number beside (RE-PINNED explicit, never copied forward); the $122.5M class RE-MEASURED: header total.aua -179,222,393.71 vs pinned -122,520,423.05, direction persists, magnitude beyond 1bp band -> RE-PINNED-WITH-SOVEREIGN-FINDING reported before any flip per P4PINS section 2; 6 band-number exceedances total, every one mechanism-attributed (gapped-ledger V2 x3, classifier-heal V35 x1, D5-at-monthly-grain x1, D5 header x1); ZERO undeclared divergences across all measured fields",
+   "denominator": "4,613,107 fields compared / 14 keys measured + 1 INPUT-MISSING-LOUD / 47 registry bands / 6 exceedances / 0 undeclared",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "49F-PIN-VINTAGE-STATED",
+   "criterion_verbatim": "every pin row carries both sides' vintages + content-date explicitly. R1 RIDER (CTO ruling @9988b2dd66): the SERVED side of every pin frames against the 04:00Z T-1 serve (true landing ~05:27Z), NEVER the 23:01Z T-2-evening preview",
+   "method": "manual_read_with_citation",
+   "invocation": "pin file enumeration blocks: served {vintage_lm, content_date, sha256, framing, emission} / canonical {vintage_partition, content_date, built_payload_sha256, port run + input_vintages + aliased_inputs}; a3 producer class both sides",
+   "output_evidence": "15/15 files carry both-side vintages, content-date framing, and the 04:00Z-serve emission line citing R1; measured LMs 05:01-05:43Z == the serve-of-record landing; the 23:01Z preview referenced nowhere; declared carries stated (fact_fam 08-10, nna_atomic 07-15 alias, role_aua degrade, canonical ledger gap 08-11..08-17)",
+   "denominator": "15 pin files / 15 enumeration blocks / 4 declared carries",
+   "status": "PASS"
+  },
+  {
+   "criterion_id": "P4P-VALID",
+   "criterion_verbatim": "proof instances VALID rc=0 positional per group",
+   "method": "command",
+   "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/3.0.0_SA_CVO/deliverables/PROOF_OF_SPEC_P4PINS_49F_PIN_20260821.json (unpiped rc)",
+   "output_evidence": "run at commit time; VALID rc=0 recorded in the commit message",
+   "denominator": "1 instance / this group",
+   "status": "PASS"
+  }
+ ],
+ "declared_exclusions": [
+  {
+   "item": "49F-CERT-PERKEY + 49F-CERT-INPUT-INDEPENDENT",
+   "reason": "group CERT -- lands per key at the 4c flip; the 6 band-exceedance rows + 1 input-missing are per-TO flip determination inputs at CTO+COO before any affected key flips"
+  },
+  {
+   "item": "49F-CENSUS-READ",
+   "reason": "group CENSUS -- P5-GATED, date derives from cert"
+  },
+  {
+   "item": "key 17 advisor_nna_canonical measurement",
+   "reason": "INPUT-MISSING-LOUD: d14's CLI requires rel_to_z_mapping.json (xwalk), measured zero on durable planes since 08-18; remedy-holder DS~A; this key's flip HOLDS per the TO reporting clause"
+  },
+  {
+   "item": "rows 4/5 (gated) legacy-side-only pins",
+   "reason": "row 4 gold/artifacts/clients_tab.json legacy side enumerated (sha e12058e87b9427f2, LM 05:01:16Z, data_as_of 08-19) and carried in the enumeration record; row 5 is a 3,751-object fleet -- frame recorded, not per-object pinned, per the frozen list's gated disposition"
+  }
+ ],
+ "compiler_tools": [
+  {
+   "tool": "comp-find",
+   "invocation": "--name '*P4E-1*' / 'P4E-1' / 'rel_to_z_mapping' / -i 'IC-STRATUM'",
+   "result": "frozen list + registry + xwalk-absence + lens spec located, denominators printed"
+  },
+  {
+   "tool": "comp-to",
+   "invocation": "comp-to OPAL_ADVIPOINTERS.P4-PINS-CERT-49F.two-phase-pins-cutover-cert-p5-census-read",
+   "result": "session TO context set (race-free per-session file)"
+  },
+  {
+   "tool": "fit_harness.py --self-test",
+   "invocation": "mutant self-test before any real read",
+   "result": "PASS: identity=0, undeclared mutant FAILED loud, declared-domain routed DESIGN, on-pin/off-pin discriminated, shadowed pin fired"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "fit_harness --self-test planted mutants, run BEFORE any real diff: undeclared leaf mutation, declared-domain mutation, on-pin/off-pin pinned-delta pair, shadowed pin behind an earlier broad band",
+   "expected": "undeclared mutant FAILS loud; declared-domain routes DESIGN; off-pin FAILS with pin_violation; shadowed pin fires through the broad band; identity diff = 0 rows",
+   "observed": "SELF-TEST PASS: identity=0 rows; undeclared mutant FAILED loud at firm_id; declared-domain routed DESIGN (D2); on-pin PINNED-OK / off-pin pin_violation; shadowed pin FIRED (368 fields, read-only)",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "the projection ran twice over the same saved legacy bytes + built payloads (pre-/post-attribution-patch runs); every repeated measured delta compared across runs (the d13 trio measured once -- first run had the path defect -- and is outside this claim's denominator)",
+   "observed": "identical measured deltas on all repeated fields across both runs (e.g. +89,124,366.09 / -1,993,181.56 / -0.17 / -179,222,393.71 byte-stable); field counts identical per surface",
+   "status": "STABLE"
+  }
+ },
+ "session_log": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-08-21/ (written at session close per SESSION_LOG_STANDARD; this instance precedes it -- the commit message is the interim record)",
+ "surprises": [
+  "limb (a) letter structurally unsatisfiable under R1 steady state (T-2 at every morning read) -- surfaced same turn, ruled by issuer @4953c9b094, not self-adjudicated",
+  "canonical ledger gap 08-11..08-17 dominates every window-dependent NNA delta (V2 mechanism); the twin would serve gapped-window values until backfill -- flip determination input",
+  "views.aua.m1.metrics.aua measured within $415K of the D5 pinned value -- the authority class expressed at monthly grain (attribution-by-magnitude, labeled as such)",
+  "the 08-19 ad-hoc run initially left no S3 chain log: the entrypoint never writes one on any path (SSM document owns the _logs/ upload); DS~B uploaded the tee capture + stated the structural gap once (64739)"
+ ]
+}

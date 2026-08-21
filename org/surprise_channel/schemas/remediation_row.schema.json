@@ -1,0 +1,202 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "surprise-channel remediation row (SURPRISE_CHANNEL_PROTOCOL.md section 5)",
+ "type": "object",
+ "required": [
+  "id",
+  "class",
+  "hazard_standing",
+  "mechanism",
+  "evidence",
+  "remedy",
+  "owner",
+  "round",
+  "remediation"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^[A-Z0-9_]+-S[0-9]+$",
+   "description": "== the graduated investigation item's id"
+  },
+  "class": {
+   "enum": [
+    "OBSERVATION",
+    "BLOCKING"
+   ],
+   "description": "INTERRUPTION RIGHT (ruled form @a35da72725)."
+  },
+  "mechanism": {
+   "type": "string",
+   "minLength": 12,
+   "description": "the GROUNDED attribution, carried verbatim"
+  },
+  "evidence": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "string",
+    "minLength": 8
+   }
+  },
+  "remedy": {
+   "type": "string",
+   "minLength": 8
+  },
+  "owner": {
+   "type": "string",
+   "minLength": 3,
+   "description": "the lane that builds the remediation"
+  },
+  "round": {
+   "type": "string",
+   "pattern": "^v[0-9]+$"
+  },
+  "disarm": {
+   "type": "object",
+   "required": [
+    "state",
+    "owner",
+    "at"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "state": {
+     "enum": [
+      "ARMED",
+      "DISARMED"
+     ]
+    },
+    "owner": {
+     "type": "string",
+     "minLength": 3
+    },
+    "at": {
+     "type": [
+      "string",
+      "null"
+     ],
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"
+    }
+   }
+  },
+  "remediation": {
+   "type": "object",
+   "required": [
+    "state",
+    "owner",
+    "round"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "state": {
+     "enum": [
+      "OPEN",
+      "REMEDIATED"
+     ]
+    },
+    "owner": {
+     "type": "string",
+     "minLength": 3
+    },
+    "round": {
+     "type": "string",
+     "pattern": "^v[0-9]+$"
+    }
+   }
+  },
+  "closed": {
+   "type": "boolean",
+   "description": "DISARMED IS NOT REMEDIATED: for LATENT_HAZARD, true requires disarm.state=DISARMED AND remediation.state=REMEDIATED; for other classes, remediation.state=REMEDIATED"
+  },
+  "hazard_standing": {
+   "enum": [
+    "ARMED",
+    "INERT"
+   ],
+   "description": "Whether the item, left alone, harms through future NORMAL operation. ARMED rows carry the two-state disarm block; 'latent hazard' is the prose name for (any class, ARMED)."
+  }
+ },
+ "allOf": [
+  {
+   "comment": "ARMED rows carry the two-state block -- two states, two owners, two clocks",
+   "if": {
+    "properties": {
+     "hazard_standing": {
+      "const": "ARMED"
+     }
+    },
+    "required": [
+     "hazard_standing"
+    ]
+   },
+   "then": {
+    "required": [
+     "disarm"
+    ]
+   }
+  },
+  {
+   "comment": "DISARMED IS NOT REMEDIATED: an ARMED row closes only when BOTH have landed",
+   "if": {
+    "properties": {
+     "hazard_standing": {
+      "const": "ARMED"
+     },
+     "closed": {
+      "const": true
+     }
+    },
+    "required": [
+     "hazard_standing"
+    ]
+   },
+   "then": {
+    "properties": {
+     "disarm": {
+      "properties": {
+       "state": {
+        "const": "DISARMED"
+       }
+      }
+     },
+     "remediation": {
+      "properties": {
+       "state": {
+        "const": "REMEDIATED"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "comment": "INERT rows close on REMEDIATED alone",
+   "if": {
+    "properties": {
+     "hazard_standing": {
+      "const": "INERT"
+     },
+     "closed": {
+      "const": true
+     }
+    },
+    "required": [
+     "hazard_standing"
+    ]
+   },
+   "then": {
+    "properties": {
+     "remediation": {
+      "properties": {
+       "state": {
+        "const": "REMEDIATED"
+       }
+      }
+     }
+    }
+   }
+  }
+ ]
+}
