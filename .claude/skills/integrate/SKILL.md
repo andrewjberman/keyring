@@ -217,9 +217,33 @@ nothing else is mixed in. Spot-confirmed in explicit UTC via `head-object`:
 
 > ### ⛔ THE MERGE-DIFF COUNT IS NOT THE DEPLOY COUNT. It is the CEILING.
 > The first report of this finding said **"~100 files deployed."** That was the count of files under
-> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys **what
-> DIFFERS**, not what the merge carries, and the true figure was **28**. *Two different denominators,
-> and the first was labelled with the second's meaning.*
+> `data/*/scripts/**` **in the merge diff** — the **exposure ceiling**. The gate deploys a **NARROWER
+> SET** than the merge carries, and the true figure was **28**. *Two different denominators, and the
+> first was labelled with the second's meaning.*
+>
+> ### ⛔⛔ AND THE REASON IT IS NARROWER IS **NOT** "IT DEPLOYS WHAT DIFFERS." THAT SENTENCE WAS IN
+> THIS SKILL AND IT IS FALSE AT SOURCE — corrected 2026-08-21 after it produced a wrong prediction
+> that was broadcast to four seats and a peer fabric.
+> **`safe_deploy_core.py:548` runs `aws s3 cp` UNCONDITIONALLY**, then head-objects and compares
+> ETag to the local md5 at `:565`. **That is a POST-WRITE VERIFY, NOT A PRE-WRITE SKIP.** There is no
+> S3 comparison anywhere before the upload. **Every deploy-scope file in the change set is REWRITTEN,
+> even when its bytes are already identical.** The narrowing is a **DEPLOY-SCOPE filter** — `:351`
+> and `:389`, `if not norm.endswith(".py")` — nothing more.
+> ⛔ **AND `MATCH` IN THE GATE'S OUTPUT MEANS "UPLOADED AND VERIFIED," NOT "SKIPPED BECAUSE
+> IDENTICAL."** The word invites exactly the wrong reading, which is how the false sentence survived.
+> **Measured end-to-end on the 2026-08-21 leg-2 run:** 8 cot files in the merge diff, **6 written**
+> (all `.py`), 2 skipped (`account_attributes.json`, `gold_validate_config.yaml` — non-`.py`).
+> `cot_bronze_ingest.py` LastModified moved **18:06:50Z -> 01:04:18Z with an UNCHANGED ETag**
+> (`a1d81b96...`), and `account_attributes.json` stayed at **18:06:01Z**. Identical bytes, new object.
+> **THEREFORE, THE TWO THINGS AN INTEGRATOR MUST NOT SAY:** (1) never predict a leg is "inert"
+> because local bytes already match S3 — **byte-parity does not prevent the write, it only makes the
+> write invisible in the content**; the honest claim is *"the write will land CLOUD's own content, so
+> nothing can be DISPLACED"*, which is a claim about WHAT lands, not about WHETHER anything lands.
+> (2) never let a downstream seat pin an S3 `LastModified` as a drift detector across a merge —
+> **a rewrite-with-identical-bytes moves the timestamp and moves no hash**, so a timestamp-based
+> detector fires falsely and a hash-based one is blind to the rewrite. Tell affected owners which
+> of the two they are holding. *(Both errors were mine on the 08-21 run; the second reached
+> `0.6.2_AE_PartnerETL`, who had pinned timestamps for a next-morning acceptance.)*
 > **So the pre-push enumeration below is the right instrument and must be read as a CEILING — never
 > reported as a deploy manifest.** (Self-corrected by `0.0.0_AB_MSTR~Z`, who measured it rather than
 > leaving it as an unverified number of their own.)
