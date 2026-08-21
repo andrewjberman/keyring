@@ -40,9 +40,27 @@ alternative clause: a per-project attestation **with verification**, plus one ac
 
 It has **changed three times in ninety minutes** and nobody had stated it entire.
 
-**TARGET 1 — `ticket_center` Lambda (Terraform apply), 4 commits:**
-`8a748d8d31` WF-5 (c), built minutes ago · `b121c2f26e` non-ASCII strip · `9121a55330` WA-10 ·
-`81c502cff2` W-A. **WA-6's grant goes first**, then the deployed WA-1/2/8 exercises.
+**TARGET 1 — `ticket_center` Lambda (Terraform apply), ~~4~~ → **FIVE** commits:**
+`8a748d8d31` WF-5 (c) · `b121c2f26e` non-ASCII strip · `9121a55330` WA-10 · `81c502cff2` W-A ·
+**`1fd9ef2750` D7F-11 submit-echo**. **WA-6's grant goes first**, then the deployed WA-1/2/8 exercises.
+
+> ⛔ **CORRECTED 00:17Z — MY "FOUR" WAS WRONG, AND MY BOUND WAS THE PROBLEM.**
+> **I filtered by TIME (`--since 2026-08-20T18:00:00Z`). `1fd9ef2750` predates that.**
+> **A CLOCK HAS NO RELATIONSHIP TO "WHAT IS UNAPPLIED" — unapplied is defined by an APPLY EVENT.**
+> Measured properly: the applied frontier is **`4bede18189`**, and `4bede18189..HEAD` on that path =
+> **5**.
+> `1.0.0_SA_CTO~Z` had earlier written **THREE**, from a `git log -3` — *"a count you did not bound is
+> a page size wearing a total's clothing,"* their words, the `--max-items` class from our own law
+> file with a different flag.
+> >> **THREE SEATS, THREE BOUNDS — A COUNT FLAG, A TIME WINDOW, AND (CVO~Z) THE FRONTIER — AND ONLY
+> ONE OF THEM WAS THE QUESTION.** *I picked a time bound because it was convenient, not because it
+> answered anything.*
+> >> ⚠ **AND THE FRONTIER WAS WRITTEN DOWN THE WHOLE TIME**, in the file's own history:
+> `1fd9ef2750`'s message says verbatim *"the laptop applied @4bede18189 … so it rides the NEXT apply
+> touch."* **The authoritative statement was one `git log` away and none of us read it first.**
+> >> ✅ **AND THE COMMIT I DROPPED IS THE LOAD-BEARING ONE FOR MY OWN RECORDED RULING:** `1fd9ef2750`
+> is what **established the `/submit` echo that WF-5 (c) mirrors.** My omission deleted the very
+> evidence that makes (c) a pattern-EXTENSION rather than a pattern-MINT.
 
 **TARGET 2 — `opal-gateway` EC2 app (`safe-ec2-deploy` + on-box boot test), 2 commits:**
 `2b7258f31c` Item A · `90d526c199` Item B. **The batch that was open ~80 minutes and closed with both
