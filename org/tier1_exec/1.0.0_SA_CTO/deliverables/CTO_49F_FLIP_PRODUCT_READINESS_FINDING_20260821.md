@@ -152,7 +152,9 @@ a hold from neglect manufactures the wrong reflex):**
 
 **clients-tab-slim → HELD (CTO word to DE 19:23Z).** The one clean key passes the source-gap condition and
 fails the schedule one (same publisher, same freeze); my stays-flipped ruling predated his word and yields
-to it. DE flips; the census DE reads after the act is the record (expected FLIP 0 / HELD 14 / STRUCTURAL 1).
+to it. DE flipped @78630b9e and READ the census after the act: **FLIP 0 / HELD 14 / STRUCTURAL 1, row count
+15 = the ruled P4E-1 denominator** (DE 65528). No registry row prefers its twin; the cutover is STAGED, NOT
+LANDED; `origin/PROD` `8a96c916`.
 
 **Still UNMEASURED, owner named, no clock:** the 04:00Z legacy producer of `bd/platinum/firm/*` is neither
 an EventBridge rule nor a Scheduler entry (COO enumerated both) — AE read-only census (on-host cron /
