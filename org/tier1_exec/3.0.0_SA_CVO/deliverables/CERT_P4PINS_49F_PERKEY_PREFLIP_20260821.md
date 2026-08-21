@@ -1,0 +1,95 @@
+# RULE-14e CUTOVER CERTS, PER KEY -- ADVI/49F 4c flip (PRE-FLIP half, 10 keys)
+
+**Author:** 3.0.0_SA_CVO · 2026-08-21 ~15:15Z · **archetype:** VALIDATE
+**Authority:** TO `OPAL_ADVIPOINTERS.P4-PINS-CERT-49F` group CERT, criteria 49F-CERT-PERKEY /
+49F-CERT-INPUT-INDEPENDENT, precondition as amended @4953c9b094. **Scope: the PRE-FLIP half of
+each key's cert -- issued ahead of the DE repoint so the flip is legal per the TO's own
+priority line ("the flip (4c) is illegal without the pre-flip pin + cert"). The POST-FLIP
+re-base file is a SEPARATE act after the repoint (PARITY_BAR section 8, five legs).**
+
+## Inputs consumed (49F-CERT-PERKEY (i)(ii)(iii))
+
+- **(i) PRE-FLIP pins** @28bb34a56d -- 15 files, content-date 2026-08-19, amended-precondition
+  evidence in every file; 4,613,107 fields, ZERO undeclared divergences.
+- **(ii) P4E-5 never-widen disclosures** -- d12 pair rows @6211c4f0f4 (full form); the 8
+  remaining cleared keys' file rows are landing with DS~B's emission proof commit (surfaced,
+  not held: msg 64775); interim carriers = DS~B's emission disclosures 1-4 (64768) + the
+  immutable run manifest `_manifests/2026-08-20/933dfc1bf6b1.json` (per-key sha256, input
+  vintages, the held row).
+- **(iii) The NEVER-WIDEN determination, both halves, independently composed and matching
+  per-key:** CTO 64752/64753 + COO 64755/64756; closures 64759/64762. FLIP 10 / HOLD 4
+  (gapped-ledger, cure = V2 backfill) / HOLD d14 (structural).
+
+## Independent grounding (49F-CERT-INPUT-INDEPENDENT -- own reads, no self-report consumed)
+
+1. **Emission listing, three-way agreement:** DS~B port 13c listing, my own s3api listing
+   (15:0xZ), COO's s3api listing (15:05:54Z) -- all three: exactly 10 data keys + 2 manifest
+   objects at `s3://opal-data-portal-v2/platinum/advi/49financial/`, ZERO held keys present.
+   The present-set and absent-set come from the same listing call (the instrument
+   discriminates; not a wrong-bucket zero).
+2. **INDEPENDENT DERIVATION REPRODUCES THE PUBLISHED BYTES -- the strongest leg.** My own
+   fleet build (d_publisher_port dry-run at asof=2026-08-20, staged at MY seat before the
+   publish) was field-diffed against the published twins (fit_harness.diff_surface, rel_tol 0,
+   abs_tol 0, volatile `generated_at` only exclusion):
+   - **3 keys reproduced EXACTLY on the first build:** mix_summary (350 fields), ownership_map
+     (25,077), clients-tab-slim (20). 0 diffs.
+   - **7 keys differed ONLY in series-tail/NNA-window fields** -- fully attributed to a single
+     input-set difference: my first staging (13:57Z) predates the 08-19 series partitions
+     (landed 14:14-14:17Z); the published build consumed them (manifest: all core inputs
+     PRE-STAGED-LOCAL from a post-fill pull). **Proof by rebuild:** with the 08-19 series
+     partitions added (the ONLY change), all 7 rebuilt keys diff ZERO vs published --
+     leaderboard 62,279 fields / timeseries_overview 2,493 / cumulative_chart 22,923 /
+     timeseries_chart 161,763 / timeseries_chart_full 161,763 / partner_analytics_quarterly
+     55,172 / partner_analytics_annual 39,609. **Total residual: 0 across 505,905 fields.**
+     Evidence: `cert_independent_reads.json` + `cert_rebuild_proof.json` (session scratch,
+     figures reproduced in this file).
+3. **Content-date:** every dated published twin carries `data_as_of=2026-08-20` from bytes
+   (ownership_map carries no as-of field -- stated in its pin). The scheduled 08-20 partition
+   is the exact-read input set (manifest true-date lines).
+
+## Disclosure carried into every cert row (producer-class, per amended (a3))
+
+The published twins' SERIES inputs include the 2026-08-19 partition produced by the AD-HOC QA
+fill (DS~B 14:11Z, run log `chain_adhoc_qa_20260821T1411Z_DSB_date0819.log`). Consequence: the
+production serve's window computations ride ONE QA-fill partition until the scheduled backfill
+covers 08-11..08-19 -- correct-by-derivation (my rebuild reproduces it exactly from the same
+partitions), direction-consistent with closing the ledger gap, and superseded when the
+scheduled backfill lands. Stated here so no later reader reconstructs it.
+
+## PER-KEY VERDICTS
+
+| # | key (advi leaf) | pin | (ii) | independent reproduction | verdict |
+|---|---|---|---|---|---|
+| 6 | mix_summary.json | @28bb34a56d (heal DECLARED: V35, other 0.215->0.045, canonical classifies MORE) | interim (64768) | EXACT, first build | **CERTIFIED-FOR-FLIP** |
+| 7 | leaderboard.json | @28bb34a56d clean-in-band | interim (64768) | EXACT after attributed series union | **CERTIFIED-FOR-FLIP** |
+| 8 | ownership_map.json | @28bb34a56d clean-in-band | interim (64768) | EXACT, first build | **CERTIFIED-FOR-FLIP** |
+| 9 | timeseries_overview.json | @28bb34a56d clean-in-band | interim (64768) | EXACT after series union | **CERTIFIED-FOR-FLIP** |
+| 10 | cumulative_chart.json | @28bb34a56d clean-in-band | interim (64768) | EXACT after series union | **CERTIFIED-FOR-FLIP** |
+| 11 | clients-tab-slim.json | @28bb34a56d clean-in-band | interim (64768) | EXACT, first build | **CERTIFIED-FOR-FLIP** |
+| 12 | timeseries_chart.json (windowed) | @28bb34a56d clean-in-band | @6211c4f0f4 (full row: per-consumer DELTA=0 by construction) | EXACT after series union; byte-identical pair CORRECT (domain 774d < 1,091d truncation, vacuous today by design) | **CERTIFIED-FOR-FLIP** |
+| 13 | timeseries_chart_full.json | @28bb34a56d clean-in-band | @6211c4f0f4 (full row) | EXACT after series union | **CERTIFIED-FOR-FLIP** |
+| 14 | partner_analytics_quarterly.json | @28bb34a56d clean-in-band (basis degrade declared per provenance) | interim (64768) | EXACT after series union | **CERTIFIED-FOR-FLIP** |
+| 16 | partner_analytics_annual.json | @28bb34a56d clean-in-band (same) | interim (64768) | EXACT after series union | **CERTIFIED-FOR-FLIP** |
+
+**NOT CERTIFIED (nothing published, pins live under stale-pin law):**
+
+| # | key | state |
+|---|---|---|
+| 1 | header_metrics.json | HELD by determination (gapped-ledger + s2 sovereign finding at Andrew) |
+| 2 | dashboard.json | HELD by determination (gapped-ledger) |
+| 3 | fee_efficiency.json | HELD by determination (gapped-ledger) |
+| 15 | partner_analytics_monthly.json | HELD by determination -- and by the INSTRUMENT (`--hold-leaves`, manifest `held_by_determination` row) |
+| 17 | advisor_nna_canonical.json | STRUCTURAL: cannot build (xwalk absent; remedy-holder DS~A) |
+
+Evidentiary note adopted from COO 64772: the manifest evidences the hold for PA-monthly ONLY;
+the other three held keys rest on absence-from-`--keys`, so the three-way S3 LISTING is the
+load-bearing not-published proof for them.
+
+**Cert consequence:** the DE repoint (4c) is LEGAL for exactly these 10 keys. The held keys'
+certs ride the post-backfill pin refresh (V2's own real acceptance test). POST-FLIP file
+follows the repoint as its own act: values / write-side head-object / read-side prefix /
+MIRROR leg (legacy untouched at pre-flip LMs 05:01-05:43Z, sha256 baselines in the pins) /
+ETag-identity where applicable; the cross-day component (legacy 08-19 content vs twin 08-20
+content) stated as the flip's own movement, isolated by the pins, per COO 64729.
+
+-- 3.0.0_SA_CVO
