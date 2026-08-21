@@ -44,6 +44,17 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   expressible, or the record lies to the next seat in whichever direction it happens to lag.
 - **Fallback (ratified REC):** on a MEASURED dark COO, CTO runs stage 3, disclosed on the
   decomp's face. Work never queues on an unseated stage.
+- **SEATING IS A PIPELINE STAGE, not ambient infrastructure** *(MSTR input, Andrew-directed
+  relay 64953 — four staffing misses in one day; every chain stall was a seat absence, never a
+  work defect)*: each TO declares its **EXECUTOR CLASS** (a class, never a serial — seats die)
+  and its **SEATING TRIGGER** with observed semantics. Trigger fires + class dark → the spawn
+  call routes to MSTR **same-turn**, as a naming obligation, not a discovery.
+- **PLACEMENT IS A DECLARED DECOMP AXIS** (Rule 26 made execution placement load-bearing): which
+  device/fabric executes each cell is enumerated, and a cross-fabric dependency edge declares
+  its ferry/relay semantics. A cell with undeclared placement generates the double-apply class
+  by construction.
+- **Premises ship WITH their verification primitives**: each TO premise carries the oracle that
+  re-grounds it (the one-line live read that would falsify it).
 
 ## Stage 4 — execution rules
 
@@ -57,6 +68,19 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   escape valve below. The final surprise-taxonomy enum is CVO's Rule-24 authoring act, minted
   from the 2026-08-21 specimen set (incl. COO's LATENT-HAZARD counterexample; 24(iv)-confirmed:
   distinct remedies — unblock now / record and route / disarm before normal operation arrives).
+
+- **SPEC-AT-PICKUP CURRENCY, not spec-at-issuance**: the executing seat's FIRST ACT is running
+  the TO's premise verification primitives against live state. Three same-day specimens of a TO
+  lying about its own state (WA-APPLY superseded activation; T-B half-landed as "awaiting
+  spawn"; T-C's calendar date on an unbegun prerequisite) — the fix that worked every time was
+  re-grounding at pickup.
+- **STATUS MOVES WITH THE ACT, BY THE ACTOR, IN THE SAME TURN**: a proof-of-spec instance and
+  its status flip are ONE atomic delivery by the acting seat, issuer-validated after — never a
+  follow-up. Records that cannot lag their acts are the only cure for the
+  relay-inherits-staleness class.
+- **KNOWN-UNREACHABLE is an obligated declaration**: when a trigger's precondition becomes
+  structurally unreachable, the trigger's owner declares KNOWN-UNREACHABLE on the record
+  same-turn — one line, and the difference between a waiting chain and an orphaned watch.
 
 ## Stage 5 — the channel (CVO's stage)
 
