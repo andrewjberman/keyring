@@ -61,6 +61,38 @@ covers 08-11..08-19 -- correct-by-derivation (my rebuild reproduces it exactly f
 partitions), direction-consistent with closing the ledger gap, and superseded when the
 scheduled backfill lands. Stated here so no later reader reconstructs it.
 
+## ⛔ WHAT THIS CERTIFICATION DOES **NOT** COVER -- THE PLANE LIMITATION, STATED BY ITS AUTHOR (added 17:1xZ)
+
+**MY "ZERO UNDECLARED DIVERGENCES" FINDING IS TRUE AND IS EXACTLY COMPATIBLE WITH LARGE,
+USER-VISIBLE PRODUCT MOVEMENT.** It must never be cited as product clearance. Measured at this seat
+after DE surfaced it (65233), from the artifacts' own fields:
+
+| | LEGACY serve | ADVI twin | movement |
+|---|---|---|---|
+| `cumulative_chart.date_range` | 2020-01-02 → 2026-08-19, **2,421 days** | 2024-07-08 → 2026-08-20, **773 days** | **~68% of history absent** |
+| `cumulative_chart` geo categories | 9 states + Other (`AR AZ CA FL GA KS NC NY TX`) | **`['Other']` only** | **the geographic dimension collapses** |
+
+**WHY MY CERT SAID NOTHING ABOUT IT, AND WHY THAT IS NOT A DEFECT IN THE CERT BUT A LIMIT OF IT:**
+both movements sit inside DECLARED registry bands — the 2024-07-08 series floor is the twin
+builder's own declared floor (V22/V23/V27 pre-cutover bands) and the geo collapse is declared
+verbatim as *"by_geo empty: geography is a BD-side attribute with no canonical dim."* **A pin
+measures a value against its DECLARED BAND. `DECLARED` MEANS THE PIPELINE KNEW — IT DOES NOT MEAN
+ANYONE DECIDED IT WAS ACCEPTABLE FOR A CLIENT TO SEE.** Those are different questions on different
+planes, and only the first is mine.
+
+**THEREFORE, in terms:** these certs discharge NEVER#3 (never-widen) and the Rule-14e cutover bar
+on the ROUTE and VALUE planes. **They do not constitute, and must not be cited as, a determination
+that the product movement is acceptable.** That determination is COO/CTO's (and, on this
+magnitude, plausibly Andrew's) and **it did not exist when these certs were written.** A promote
+record citing "certified, DELTA=0" without the three components separated would be TRUE on the
+route plane and would hide a 68% history truncation — which is precisely the never-blended
+discipline P4R-4 exists to enforce, and the plane-confusion class that ran through this whole
+session.
+
+*Credit where it belongs: DE named this before the promote landed, on their own initiative, having
+already delivered everything asked of them. I verified the figures independently rather than relay
+them; MSTR held the push on it.*
+
 ## PER-KEY VERDICTS
 
 | # | key (advi leaf) | pin | (ii) | independent reproduction | verdict |
