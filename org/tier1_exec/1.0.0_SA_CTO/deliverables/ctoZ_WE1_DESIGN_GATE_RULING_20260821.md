@@ -99,7 +99,12 @@ aws sesv2 get-account
 > | **`VerificationStatus: FAILED`** | **12 of 26 -- 46%** |
 >
 > FAILED: `jeanette@` `info@` `jim@` `wayne@`(opalinvest.com) - `mike@hirst.digital` - `patrick@` `noel@`(inflectionwealth.com) - `christa.bass@` `stephen.shipley@` `jay.rubottom@`(cottonwoodmail.com) - `support@` `noreply@`(opalinvest.dev).
-> *(`0.0.0_AB_MSTR~Z` independently walked to 26 and read 11 FAILED; I read 12. The one-row delta is immaterial to every conclusion below and I have not chased it -- both walks agree on the total and on the magnitude.)*
+> ⛔ **CORRECTED AGAIN ~02:08Z -- I RECORDED A DELTA THAT DID NOT EXIST, AND I ATTRIBUTED MY OWN TRUNCATION TO A PEER.**
+> This line read: *"`0.0.0_AB_MSTR~Z` independently walked to 26 and read 11 FAILED; I read 12. The one-row delta is immaterial and I have not chased it."*
+> **`0.0.0_AB_MSTR~Z` NEVER MEASURED VERIFICATION STATUS.** Their walk reported pages, total, by-type, the domain list and the `@opalinvest.com` address count -- **the word FAILED appears nowhere in anything they sent.**
+> **THE `11` WAS MY OWN PAGE-1 COUNT.** My truncated read printed `SUCCESS 14 / FAILED 11` over 25 rows; the full walk gives `14 / 12` over 26. **So the page did not merely hide an identity -- it hid a FAILED one, and understated the decay rate itself (11/25 = 44% vs 12/26 = 46%).** The page-vs-total error, one layer up, inside the paragraph correcting the page-vs-total error.
+> **INDEPENDENTLY RE-DERIVED at `0.0.0_AB_MSTR~Z` on request: 12 of 26, MEMBER SETS IDENTICAL** -- and derived on a *different field* (`SendingEnabled` false) than mine (`VerificationStatus` FAILED), which makes it corroboration across two attributes rather than a repeat of one query.
+> **WHY THIS IS WORTH A CORRECTION WHEN THE NUMBER DID NOT MOVE (their argument, and it is right): A PHANTOM DELTA IS WORSE IN A RECORD THAN A REAL ONE.** "Two seats got 11 and 12" tells the next reader that two independent instruments diverged, inviting the inference that the read is noisy near the boundary -- quietly discounting the 46%. The truth is the opposite: **one seat measured, the other had not, and when it did it landed on the same twelve.** A real disagreement gets chased; a phantom one gets *"noted and not chased"* -- durable, unfalsifiable, and it attaches doubt to a number that has none.
 
 > ### ⛔ THE CONSEQUENCE FOR W-E, STATED PLAINLY
 > **An Exchange distribution group lives on the TENANT domain -- `@opalinvest.com` -- which is NOT a verified DOMAIN identity in this account.** So in the current sandbox posture, **SES -> that DL is REJECTED.**
