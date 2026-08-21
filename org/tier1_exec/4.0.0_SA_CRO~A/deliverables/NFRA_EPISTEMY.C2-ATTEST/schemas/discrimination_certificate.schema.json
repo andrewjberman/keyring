@@ -26,7 +26,11 @@
     "outcome_reasons"
   ],
   "properties": {
-    "certificate_id": {"type": "string", "pattern": "^dc:sha256:[0-9a-f]{64}$"},
+    "certificate_id": {
+      "type": "string",
+      "pattern": "^dc:sha256:[0-9a-f]{64}$",
+      "description": "Normative derivation home: src/attestation_harness.py:25 canonical_bytes uses json.dumps(value, sort_keys=True, separators=(comma, colon), ensure_ascii=True), appends one trailing newline, and ASCII-encodes the result before SHA-256. Any other serialization is NON-CONFORMANT even if the resulting identifier matches this pattern."
+    },
     "source_of_record": {"const": "docs/architecture/PRD_EPISTEMIC_MECHANIZATION_20260820.md sec.2.2"},
     "instrument": {
       "type": "object",
