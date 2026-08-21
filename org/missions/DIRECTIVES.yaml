@@ -102,7 +102,29 @@ directives:
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
-    stance: "EVENT-REFRESHED 2026-08-21 ~14:1xZ (register act by 0.0.0_AB_MSTR per CTO 64716 spec;
+    stance: "EVENT-REFRESHED 2026-08-21 ~19:2xZ (register act by 0.0.0_AB_MSTR, sole writer, per
+      CTO 65453 request; authority = Andrew-direct ~17:5xZ at the base CTO terminal, VERBATIM:
+      'Ok time to use the canonical process for whatever directive the ETF POsitioning D(N) is,
+      get a project registered, do the PRD and let's run that end to end, i believe we should have
+      everything we need to run that'; record @e699d4d86a): >> ETFS_POSITIONING HAS ENTERED THE
+      DIRECTIVE EXECUTION PIPELINE (Rule 27) AND IS THE SECOND PROJECT TO DO SO. dep_stage: PRD.
+      Stages 1-2 discharged by CTO as commissioning exec WITHOUT minting a twin project -- 'get a
+      project registered' was satisfied by ENTERING the existing 02:1xZ registration rather than
+      duplicating it, which is the correct reading and avoids two codes for one body of work.
+      STAGE 3 (operative-surface atom-decomp BEFORE any TO) IS OPEN AT 2.0.0_SA_COO; certifier of
+      record 3.0.0_SA_CVO. PRD ss.1-10 are RE-CLASSED as research record + candidate maps =
+      DECOMP INPUTS, not a TO set -- COO may cut, merge, re-sequence or re-own any of it.
+      ⚠ IN FLIGHT AT ENTRY, COMPLETES UNDER ITS OWN SPEC AND IS NOT RE-PAPERED OR HELD: the L1
+      daily scheduled BBG pull at 0.0.0_AB_MSTR~Z (order acked 14:13:47Z; first scheduled fire
+      tomorrow 07:00 local). ⚠ SEATING: DS base is on Andrew's HOLD, so DS-class cells need an
+      MSTR spawn on COO's declared trigger or a declared DE/AE cohort -- a reduced cohort is
+      disclosed on the decomp's face, never silent. ⚠ NAMING RULED TO COO AS A REGISTRY ACT: TO
+      prefix D4_ETFPOS predates project code ETFS_POSITIONING; round-1 TOs mint under the PROJECT
+      code so the commit-gate keys on one. The one sovereign input still pending is the L2
+      TrueShares egress confirm (gates DIVZ/IDVZ constituent rows ONLY; the ship shape stands
+      without it). PRIOR STANCE PRESERVED BELOW AS THE MEASURED BASIS -- nothing in it is retired
+      by pipeline entry. <<
+      EVENT-REFRESHED 2026-08-21 ~14:1xZ (register act by 0.0.0_AB_MSTR per CTO 64716 spec;
       authority = Andrew-direct at the CTO terminal, record @1cf66d7d93): BUILD AUTHORIZED
       END-TO-END -- his word ordered the project formalized and executed end to end, PRD adjusted
       to the delivered pull's reality. STATE: the bounded Bloomberg pull is DELIVERED (brief
