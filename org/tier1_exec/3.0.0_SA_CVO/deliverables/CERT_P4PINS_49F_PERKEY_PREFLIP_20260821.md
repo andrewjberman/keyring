@@ -90,6 +90,35 @@ Evidentiary note adopted from COO 64772: the manifest evidences the hold for PA-
 the other three held keys rest on absence-from-`--keys`, so the three-way S3 LISTING is the
 load-bearing not-published proof for them.
 
+## SUBSTRATE + RE-EMISSION ADDENDUM (15:2x-15:3xZ, per COO ruling 64815 -- pins/certs STAND, no re-pin)
+
+The commissioned production-host backfill (SSM CommandId 6b96ab4b, log
+`chain_adhoc_qa`-successor `_logs/chain_backfill_0819_20260821T151733Z.log`) REPLACED the
+canonical 08-19 partition at 15:17Z -- a BYTE-plane re-emission (encoder environment; 16/16
+parquet differ, 14/14 JSON manifests byte-identical -- the discriminating control), ruled to
+bind stale-pin law on the VALUE plane (COO 64815: byte-identity sufficient, not necessary).
+The required reads both CLEAN: (A) accrual_materiality value-identical on all 10 columns
+incl. the content sha, no run-stamp column exists (DS~B via S3 versioning, 64834);
+(B) `_classifier_vintage` surfaces in NO published twin field and NO pinned path (DS~B grep
+over served bytes + pins dir, 64834) -- **and independently confirmed at FULL FIELD GRAIN at
+this seat: the entire fleet rebuilt from the production 08-19 bytes diffs ZERO against the
+prior builds (pin-side 14/14 payloads, 636,000+ fields) and ZERO against the published twins
+(twin-side 7/7 series-affected keys, 505,905 fields)** -- two independent producers agreeing
+at every measured value, the two-producer evidence in its strong form.
+**Derivation substrate note (per COO 64815):** this cert's reproduction proof originally ran
+against the LOCAL-seat 08-19 partition, SUPERSEDED-AS-LATEST at 15:17Z and recoverable by
+version-id (`qb7BGcGRXH2u.5wb28aIgOehvG9VBFYE` for accrual_materiality; bucket versioning
+enabled estate-side) -- and the proof is RE-DERIVED against the production bytes above, so
+the cert stands on the CURRENT substrate, not only the superseded one.
+**08-19 provenance disclosure, final (a)-form wording:** the 08-19 series point is
+re-produced by a RECORDED PRODUCTION-HOST backfill act (SSM CommandId 6b96ab4b, ledger
+20260821T1520Z, self-uploaded log) -- named actor, done date; the prior "superseded at
+backfill" sentence is retired.
+**Carried forward to the POST-BACKFILL re-pin of the held 4 (COO 64819 salvage):** pre-declare
+BOTH provenance rows in that re-pin's header -- a07 `_classifier_vintage` (stamp changes,
+determinism keys identical) and accrual_materiality (no stamp column, value-stable under
+re-emission; read (A) is the citation) -- declared, never discovered.
+
 **Cert consequence:** the DE repoint (4c) is LEGAL for exactly these 10 keys. The held keys'
 certs ride the post-backfill pin refresh (V2's own real acceptance test). POST-FLIP file
 follows the repoint as its own act: values / write-side head-object / read-side prefix /
