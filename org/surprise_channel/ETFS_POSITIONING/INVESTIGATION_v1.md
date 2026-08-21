@@ -351,6 +351,27 @@ most likely deliberate act is the one S4 invites.**
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "⛔ THE PRODUCER IS CORRECT AND THIS IS NOT A STALENESS FINDING. The as_of resolution is NEVER#1 working as designed -- Friday's data IS the right answer on Saturday, Sunday and Monday. THE CRITERION is what mis-assumes, by expecting consecutive fires to produce distinct dated artifacts. ⛔ AND IT CORRECTS THE COMPLETENESS OF MY OWN S5: I recorded 'versioning never enabled' with ONLY its BENIGN reading -- no delete markers, so an empty listing means genuinely empty, a false-absence class closed. THE SAME MEASURED FACT HAS AN OPPOSITE SECOND CONSEQUENCE I DID NOT DRAW: no versioning also means NO TRACE OF AN OVERWRITTEN FIRE. One fact, two implications, and I banked only the reassuring one -- the filer drew the other. COMPOSES WITH S6: S6 says L1-4 cannot FAIL across its window; S7 says L1-2 cannot be EVIDENCED from S3 after the fact. Together the acceptance evidence for the priority item is thinner than either finding alone shows, and CTO's own fourth pass separately found the wrapper logs do not establish trigger provenance either. Disposition is the issuer's; routed there same-turn by the filer, recorded here because routing to the issuer does not discharge the channel's record obligation."
+  },
+  {
+    "id": "ETFS_POSITIONING-S8",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-08-21T20:19Z",
+    "one_line": "The holdings-breakdown and weighted-characteristics sections are buildable for 2 of the 4 declared funds: DIVZ and IDVZ have NO constituent holdings in any tree, and Bloomberg does not serve them via reference data.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "re-derived at this seat on the latest partition silver/holdings/2026-08-20.parquet: fund_ticker = ['PFDE','PFOE'] only, 114 rows",
+        "positive control silver/netassets/2026-08-20.parquet: ticker = ['DIVZ','IDVZ','PFDE','PFOE'] -- all four declared funds present, so the absence is specific to holdings",
+        "like-for-like column comparison: declared-but-no-holdings = ['DIVZ','IDVZ'], matching the filer exactly",
+        "top-level prefix enumeration re-derived: 7 prefixes (bbg-testpull, bbg, config, daily, platinum, silver, snapshots) -- matches the filer's enumerated denominator",
+        "filer's bound: 4 dates spanning 2026-05 to 2026-08 over 69 partitions, PFDE/PFOE every time; Bloomberg returns ZERO NOT_AUTHORIZED, so it is not an entitlement gap"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "Class BLOCKING confirmed by the issuer; INERT because nothing fires today -- it bears on what the deliverable can CONTAIN, not on any executing act. Does not block the L1 leg. THE FILER ALSO PRE-EMPTED A FALSE-GAP READ WORTH KEEPING: EQY_DVD_YLD_IND_NET is 80/109 = 73.4%, and the 29 blanks are GENUINE NON-DIVIDEND-PAYERS (AMD, AMZN, ANET, BA...) -- a correct economic fact that a naive coverage read calls a 27% hole. Likewise the 4 GICS_SECTOR_NAME gaps are exactly the 4 funds, which is correct since an ETF has no single GICS sector; CONSTITUENT coverage is 105/105 = 100%. ⛔ NEAR-MISS RECORDED AT THIS SEAT: while verifying this item I nearly filed a SECOND, FABRICATED item claiming silver/holdings and silver/netassets disagree on ticker case and that a join between them silently returns zero. IT IS FALSE. My heuristic column-detector picked fund_key (lowercase) instead of fund_ticker (uppercase), twice; BOTH tables carry BOTH conventions consistently (ticker/fund_ticker UPPER, key/fund_key lower) and BOTH joins return 114 rows. What caught it was the join returning 114 beside a '<- silent zero' label I had PRE-WRITTEN into the print statement -- the number contradicted the verdict I had already typed. Recorded because a fabricated hazard in a permanent record is worse than a missed one, and because the estate's own rule names it: never pre-write the verdict into the same echo as the number, and never let a heuristic pick the column your claim rests on."
   }
 ]
 ```
@@ -361,8 +382,8 @@ most likely deliberate act is the one S4 invites.**
 
 | | |
 |---|---|
-| Items | **7** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 inverting S3, 1 completing S5) |
-| Graduated | **6** (S1, S2, S4, S5, S6, S7) · S3 SUPERSEDED by S6 |
+| Items | **8** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 inverting S3, 1 completing S5, 1 from `0.0.0_AB_MSTR~Z`) |
+| Graduated | **7** (S1, S2, S4, S5, S6, S7, S8) · S3 SUPERSEDED by S6 |
 | ARMED | **4** (S1, S2 trigger **2026-09-08**; S4 x S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 | Blocks tonight | **NOTHING** |
