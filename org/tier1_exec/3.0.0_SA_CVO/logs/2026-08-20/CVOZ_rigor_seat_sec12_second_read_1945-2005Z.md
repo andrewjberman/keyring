@@ -654,4 +654,49 @@ CLAUDE.md law-edit lesson pointed the other way round.
   PROCESS AT ALL"** -- smaller than it looks, and the one window where the gate is the only
   check, **which the seat cannot identify from inside** (Rule 22b anti-correlation).
 
+## comp-adversary RUN AT THIS SEAT -- FOUR BOUNDS, ONE ROOT (~0030Z)
+
+**Andrew asked, verbatim via `1.0.0_SA_CTO~Z`: *"are you guys actually registering process and
+doing full-scale atom_decomp and comp-adversary and etc or no?"* THE MEASURED ANSWER WAS NO** --
+0 runs since its 2026-08-19 ratification, including 0 of today's 216 rail-log lines (`1.0.0_SA_CTO~Z`
+first published "1,157 lines TODAY", self-corrected: that was the file's 23-day LIFETIME count
+wearing a TODAY label, and they **declined the more damning "0 in 23 days"** because the tool did
+not exist for 21 of them). **The ratified validation instrument sat unrun while five seats did
+validation by hand all night.**
+
+- **I RAN IT ON MY OWN SESSION LOG** -- the artifact that escaped scrutiny while I checked everyone
+  else's. `read-vintage HEAD @13b3dd5871`, artifact-vintage `8e6c39896a`: **15 commits attempted /
+  15 verified / 0 UNVERIFIABLE; 3 cited paths / 3 stable; 123 uncited siblings; 4 complement
+  sources run / 6 DECLARED-EXCLUDED.**
+- **FOUR BOUNDS WERE FOUND BY FOUR SEATS IN TWENTY MINUTES, AND THEY ARE ONE DEFECT:**
+  **WARRANT (mine)** -- source 1 verifies a pin RESOLVES, never that it SUPPORTS the claim made
+  about it; **the TO6 tag-scope error passes 1/1 verified**, and that was the night's most-populated
+  class. **PIN-FORM (`0.4.0_DT_ClientPlatform~Z`, reproduced here)** -- backtick-wrapped hashes are
+  invisible; their 0-of-3, and **my 15 is really 15 OF 16** (the missed pin ``@ `ab4f76c878` ``).
+  **COMPLEMENT SIZE (`0.5.0_AE_OpalETL~Z`)** -- source 3 expands from CITED paths, so 0 cited paths
+  renders "0 uncited siblings" on a directory holding six live intake files.
+- **THE ROOT, SINGULAR: EVERY comp-adversary NUMBER DESCRIBES WHAT THE AUTHOR PROVIDED, NOT WHAT
+  EXISTS** -- the pins it could PARSE, the paths the author CITED, the citation the author WROTE.
+  **The tool is faithful to its own name (a validation-CONTEXT declaration); the defect is that its
+  numbers are PHRASED as measurements of the artifact.** And the direction is the alarming one --
+  **THE CLEANEST OUTPUT IS PRODUCED BY THE WEAKEST INPUT**: an author who cites nothing declares an
+  empty complement. CLAUDE.md's anti-correlated-instrument shape, living inside a validation tool.
+- **REMEDY, NO CODE CHANGE: APPEND "…OF WHAT THE AUTHOR CITED" TO EVERY NUMBER BEFORE USING IT.**
+  "15 verified" -> *15 of the pins I could parse*; "0 uncited siblings" -> *0 siblings of the 0
+  paths cited*. All four bounds become visible in the act of reading.
+- ⛔ **AND IT CORRECTS MY 123 IN THE UNEXPECTED DIRECTION: 123 UNDERSTATES my blind spot** -- it is
+  the sibling set of the 3 paths I happened to cite, and every directory I did not cite is
+  invisible to source 3 entirely. **The number I offered as my humility measure is bounded by my
+  own citing behaviour and SHRINKS THE BETTER I LOOK.**
+- **`0.4.0_DT_ClientPlatform~Z` RAN `--self-test` BEFORE COMPOSING** -- *"an instrument I have never
+  run is not one I cite."* **Three of us composed without it. Their order was correct and ours was
+  not**, and it is the same discipline that failed at every other station tonight: validate the
+  instrument before quoting it.
+- **MY OWN 15/15 WAS PUBLISHED AS A RESULT AND THE DENOMINATOR WAS THE TOOL'S DETECTION COUNT.**
+  `0.4.0_DT_ClientPlatform~Z`'s 0 INVITED a check because they knew they had pins; **my 15 -- a
+  plausible, unremarkable number -- invited none. A detection miss is most dangerous at a
+  believable nonzero**, and mine is the common case. Fourth error tonight made inside a message
+  doing correction or bounding work: **I bounded the WARRANT axis correctly while sitting on an
+  unbounded DETECTION axis.**
+
 -- 3.0.0_SA_CVO
