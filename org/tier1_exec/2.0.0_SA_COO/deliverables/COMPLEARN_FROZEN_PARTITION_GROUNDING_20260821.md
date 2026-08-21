@@ -101,9 +101,7 @@ is the natural place to declare it, since that field exists precisely to say wha
    "frozen-by-retirement" marker in `source`) rather than left as a silent `[]`. **Not a new gate and
    not a widening of item 1's scope** -- item 1's own acceptance already requires that the private read
    and the new partition move in ONE change; this just says what the honest handling of the limb is.
-4. **(a) IS SURFACED, NOT CHASED.** Whether the two frozen partitions should be de-registered,
-   annotated, or left alone is a graph-producer/Terraform call and belongs to CTO/CTO~B's plane.
-   Recorded here; no clock; nobody is held on it.
+4. **(a) SURFACED TO CTO'S PLANE -- AND RULED THERE THE SAME HOUR. SEE §6.**
 5. **NOT ESCALATED TO ANDREW TONIGHT.** He already ruled on this file once, and the ruling is being
    honored. Nothing here needs his word.
 
@@ -114,5 +112,52 @@ do -- while silently staging a build at another seat. Grounding it took one sour
 writer and four measurements. **The finding everyone had was true and its implied remedy was
 backwards**, and the defect that was actually live (a scorer corpus with a silently-empty limb) was
 not the one being discussed.
+
+---
+
+## 6. ADDENDUM (same session, ~0356Z) -- CTO RULED THE CATALOG QUESTION, AND FOUND A SHARPER ONE
+
+`1.0.0_SA_CTO` ruled item (a) on their own plane within the hour (64391), re-deriving every figure
+at their seat first -- 5 partitions, 1,403 commits all-time, 0 since 2026-07-29, last write
+`c79b4537ca` 2026-07-29T23:48:06Z. **Their UTC rendering matches mine exactly**, which is a
+non-trivial agreement on the night the `--date=` local-rendering law landed.
+
+**RULING: ANNOTATE, DO NOT DE-REGISTER.** Three reasons, all of which I accept:
+1. **De-registration is a deletion warrant and nothing grants one.** Those partitions address
+   28,007 lines of real history. Rule 25 licenses stop-treating-as-live, never `rm` -- and this is
+   the most protected dormancy kind of the three, because **Andrew retired the WRITE and
+   deliberately PRESERVED the FILE.** De-registering would make history he chose to keep
+   unqueryable *while appearing to honour him.*
+2. **The defect is the catalog's SILENCE, not the partitions' EXISTENCE.** An annotated frozen
+   partition is legible; an absent one is indistinguishable from one that never existed, and a
+   later census would find 3 and be unable to tell retirement from never-built.
+3. **The remedy must match the layer below.** I ruled the scorer's limb should carry a typed
+   `frozen-by-retirement` marker rather than a silent `[]`. Same disease, same cure, two layers --
+   if the catalog de-registers while the scorer annotates, the two records disagree about whether
+   the thing exists at all.
+
+**⛔ AND CTO FOUND A SECOND STALE REFERENCE THAT IS WORSE, IN THE OPPOSITE DIRECTION.**
+`tool_activity.tf:22` still reads *"A CLOUD-MANAGED FRESHNESS ALARM (host-independent) watches this
+parquet's staleness..."*. **That alarm was TORN DOWN** -- `tool_activity_freshness.tf` removed
+@858554332d under the 2026-07-28 moratorium.
+
+> The frozen partition is **a real thing the record fails to describe.**
+> `:22` is **a described thing that is not real.**
+
+The second is the more dangerous shape: a future engineer reading `:22` concludes staleness here is
+watched and reasons accordingly. It is the same class CLAUDE.md's own Rule 4 correction names -- a
+record that **promises a control the estate does not have.** ⛔ **DO NOT REBUILD THE ALARM.** The
+moratorium stands and the teardown was correct; the remedy is to strike or amend the comment.
+
+**PLACEMENT (mine, per CTO 64391 "COO's to place, no clock"):** both items are record-hygiene on ONE
+file in ONE touch --
+  (i) a `frozen_by_retirement` annotation on the two partitions naming the Andrew-direct date
+      (2026-07-29), the verbatim instruction, and `@c79b4537ca`;
+  (ii) strike/amend the `:22` freshness-alarm sentence.
+⛔ **NOT AUTHORIZED BY THIS RECORD AND NOT A GATE.** A TF edit is an apply act; CTO explicitly fenced
+their ruling as a direction call, not a GO. It carries **no clock** and should **ride an existing
+globgrph-touching window rather than open one** -- the same disposition `main.tf:191/:193` received
+tonight, and for the same reason: a durable artifact beats a transient correction, and whoever next
+touches this file inherits both items in one place.
 
 -- 2.0.0_SA_COO, 2026-08-21
