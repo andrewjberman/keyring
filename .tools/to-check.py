@@ -31,7 +31,7 @@ SEP = "-" * 56
 
 # ASCII-fold: Windows console cp1252 cannot handle non-ASCII in print output.
 _ASCII = {
-    "—": "--", "–": "-", "…": "...", "→": "->",
+    "—": "--", "–": "-", "…": "...", "\u2192": "->",
     "‘": "'", "’": "'", "“": '"', "”": '"',
     "✓": "OK", "✗": "x", "×": "x", " ": " ", "•": "*",
     "�": "?",
@@ -95,6 +95,97 @@ def _extract_md_field(text: str, *labels: str) -> str | None:
     return None
 
 
+SERIAL_RE = re.compile(r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?")
+
+# ---------------------------------------------------------------------------------------------
+# FIX A -- SCHEMA BLINDNESS. _extract_tag reads CHILD ELEMENTS only, so on an attribute-form TO
+# (<task_order id="..." project="...">) BOTH to_id and project returned None and resolution fell
+# through to the FILENAME. Measured on the live corpus: 106 attribute-form / 655 child-form /
+# 1,316 neither, of 2,077 TO files (one grain, sums to the corpus).
+# ---------------------------------------------------------------------------------------------
+def _extract_attr(text: str, attr: str) -> str | None:
+    """Read `attr="value"` off the <task_order ...> open tag. Child element wins; this is the
+    fallback, so a TO carrying both forms keeps its historical answer."""
+    m = re.search(r"<task_order\b[^>]*>", text, re.IGNORECASE)
+    if not m:
+        return None
+    a = re.search(rf'\b{re.escape(attr)}\s*=\s*"([^"]*)"', m.group(0), re.IGNORECASE)
+    return a.group(1).strip() if a and a.group(1).strip() else None
+
+
+# ---------------------------------------------------------------------------------------------
+# FIX C -- ROLE RESOLUTION. THE TOOL'S DEFECT WAS NEVER "IT READS THE WRONG FIELD"; IT IS THAT A
+# SERIAL APPEARING IN A TO IS NOT AN ASSIGNMENT. One live <status> block carries three serials in
+# three roles (assigner / assignee / assignee), and corpus-wide the ACTOR notation outnumbers the
+# unambiguous TARGET notation 50 to 4 (occurrence counts, across 78 serial-bearing <status> blocks
+# -- TWO GRAINS, stated separately on purpose).
+#
+# SO THIS READER IS DELIBERATELY NARROW: an assignment is recognised ONLY in an unambiguous target
+# position; everything else is NOT-AN-ASSIGNMENT rather than assumed-one, and the residue is
+# COUNTED AND PRINTED. A narrow reader that declares its narrowness beats a broad one that cannot
+# defend its inclusions -- a token sweep would have passed the known exercise while misattributing
+# at fifty-file scale.
+# ---------------------------------------------------------------------------------------------
+_ACTOR_RE = re.compile(r"\b(?:by|per|from|via)\s+$", re.IGNORECASE)
+_TARGET_RE = re.compile(r"(?:->|=>|\u2192|=|\bto\b|:)\s*$", re.IGNORECASE)
+# LEAD POSITION: a serial that OPENS the field is its subject -- "<serial> (build; site-Z).
+# Laptop apply leg = ... via <other> ferry" names the assignee first and then annotates.
+# MEASURED: 6 of this seat's 7 live TOs use exactly that shape, and a LATER serial in the
+# same field is the ferry/actor, not a second assignee.
+_LEAD_RE = re.compile(r"^[\s*_`\"'(\[]*$")
+# GLOSS: "NAME (<serial>) = role" -- the serial is a parenthetical gloss and the assignment
+# marker follows the closing paren. Discriminating, MEASURED in one live field: the ferry
+# serial in that same field also sits inside parens but is not followed by ") =", so it
+# stays out. Keyed on the marker AFTER the paren, never on being inside one.
+_GLOSS_RE = re.compile(r"^\s*\)\s*(?:=(?!=)|->|:)")
+
+
+def _assignees_from_field(raw: str) -> tuple[list[str], int]:
+    """-> (assignee serials, unclassified serial occurrences) for ONE field's text.
+
+    Two shapes, and only two are trusted:
+      BARE     the field is essentially just serial(s) -- <issued_to>0.5.0_AE_OpalETL~Z</issued_to>
+               -- every serial is an assignee by construction. This is the common case and it is
+               what keeps the historical answers stable.
+      TARGETED prose, and the serial sits immediately after an explicit target marker (-> => to:).
+    Anything else is UNCLASSIFIED and counted, never assumed. An ACTOR marker (by/per/from/via)
+    is an explicit non-assignment and is not counted as residue.
+    """
+    if not raw:
+        return [], 0
+    text = _strip_xml_comments(raw)
+    serials = list(SERIAL_RE.finditer(text))
+    if not serials:
+        return [], 0
+    # BARE: an assignee LIST may carry per-serial role annotations in parens/brackets --
+    # "0.4.0_DS~B (DS-items) + 0.5.0_AE_OpalETL (store-writer)" is a TWO-ASSIGNEE FIELD, not
+    # prose. MEASURED: rejecting that shape dropped 20 live TOs from their own assignees.
+    # Annotations are stripped BEFORE the test, and this does NOT re-admit the assigner case:
+    # "site Z, seats assigned by X (note)" still leaves "site Z, seats assigned by" as residue
+    # and falls through to the per-serial role rules below, where "by" is an explicit no.
+    annot = re.sub(r"\([^)]*\)|\[[^\]]*\]", " ", text)
+    residue = SERIAL_RE.sub("", annot)
+    if not re.sub(r"[\s,;/&+|-]|\band\b|\bor\b", "", residue, flags=re.IGNORECASE):
+        return [m.group(0) for m in serials], 0
+    out, unclassified = [], 0
+    for m in serials:
+        before = text[max(0, m.start() - 24):m.start()]
+        if _LEAD_RE.match(text[:m.start()]):
+            out.append(m.group(0))       # the field opens with it: it is the subject
+            continue
+        after = text[m.end():m.end() + 10]
+        if _GLOSS_RE.match(after):
+            out.append(m.group(0))       # "NAME (<serial>) = role" -- a glossed assignee
+            continue
+        if _ACTOR_RE.search(before):
+            continue                      # explicit non-assignment: not residue, a known no
+        if _TARGET_RE.search(before):
+            out.append(m.group(0))
+        else:
+            unclassified += 1
+    return out, unclassified
+
+
 def _classify_status(raw: str) -> str:
     cleaned = _strip_xml_comments(raw).strip().lower()
     first = re.split(r"[\s\-\n]", cleaned)[0].rstrip(".,;:") if cleaned else ""
@@ -118,7 +209,12 @@ def _extract_project_code_from_to_id(to_id: str) -> str:
     code = parts[0].strip().upper()
     if re.match(r"^[A-Z][A-Z0-9_]{2,}$", code):
         return code
-    return to_id.upper()
+    # WAS `return to_id.upper()`. That NEVER returned empty for a non-empty to_id, so every
+    # caller's "if not project_code -> consult the DECLARED field" branch was UNREACHABLE and
+    # the TO's own <project> / project="..." statement was dead code. Returning "" is what
+    # makes the declared field REACHABLE. It deliberately does not make it DOMINANT: to_id
+    # stays primary, so historical classification does not move under a tooling fix.
+    return ""
 
 
 def parse_to_file(path: str) -> dict:
@@ -131,11 +227,14 @@ def parse_to_file(path: str) -> dict:
         # XML fields -- new schema with old-schema fallbacks
         to_id = _extract_tag_multi(text, "to_id") or ""
         if not to_id:
-            candidate = _extract_tag_multi(text, "id") or ""
+            candidate = _extract_tag_multi(text, "id") or _extract_attr(text, "id") or ""
             if re.match(r"^[A-Z][A-Z0-9_]{2,}", candidate.upper()):
                 to_id = candidate
 
-        project_field = _extract_tag_multi(text, "project", "project_code") or ""
+        # FIX A: attribute form is a FALLBACK, never an override -- a TO carrying both keeps its
+        # historical answer, so this widens coverage without moving anything already resolved.
+        project_field = (_extract_tag_multi(text, "project", "project_code")
+                         or _extract_attr(text, "project") or "")
         title = _extract_tag_multi(text, "title") or ""
         assigned_to = _extract_tag_multi(text, "assigned_to", "issued_to") or ""
         issued_by = _extract_tag_multi(text, "issued_by") or ""
@@ -163,11 +262,25 @@ def parse_to_file(path: str) -> dict:
         if not title:
             title = "(no title)"
 
-        # Project code resolution
+        # Project code resolution.
+        # FIX B -- PRECEDENCE, NOT EXTRACTION. _extract_project_code_from_to_id returns
+        # to_id.upper() when its regex does not match, so it NEVER returns empty for a non-empty
+        # to_id -- which made the `if not project_code` branch below UNREACHABLE and the DECLARED
+        # <project>/project="..." field dead code on every TO that had a to_id. The declared field
+        # is the TO's own statement of its project and now wins; the to_id-derived code remains the
+        # fallback, and the filename remains the last resort.
         project_code = _extract_project_code_from_to_id(to_id)
+        # THE DECLARED CODE IS AN ADDITIONAL WAY TO REACH THIS TO, NOT A COMPETITOR TO THE
+        # to_id-derived one. Making it WIN reclassified D7 wholesale (D7_TICKETING -> 0);
+        # leaving it as a fallback left it provably dead (no to_id in the corpus fails the
+        # code-shape test). Both codes are kept: to_id-derived for DISPLAY and grouping so
+        # nothing historical moves, and the union for FILTERING so a TO is findable under the
+        # project it DECLARES as well. The registration mismatch is then VISIBLE instead of
+        # silently adjudicated by a tool that has no standing to pick.
+        m_decl = re.match(r"^([A-Z][A-Z0-9_]{2,})", project_field.upper())
+        declared_code = m_decl.group(1) if m_decl else ""
         if not project_code:
-            m = re.match(r"^([A-Z][A-Z0-9_]{2,})", project_field)
-            project_code = m.group(1) if m else ""
+            project_code = declared_code
         if not project_code:
             m = re.match(r"^([A-Z][A-Z0-9_]{2,})", fname.upper())
             project_code = m.group(1) if m else "UNKNOWN"
@@ -188,11 +301,22 @@ def parse_to_file(path: str) -> dict:
 
         status_display = " ".join(_strip_xml_comments(status_raw).split())[:100]
 
+        # FIX C: resolve ROLE across BOTH recording sites. <issued_to> is prose that carries the
+        # assigner AND the assignee ("seats assigned by X ... -> Y"), so the same role rules apply
+        # to it -- reading only <status> would have left the live FALSE POSITIVE untouched.
+        a_field, u_field = _assignees_from_field(assigned_to)
+        a_status, u_status = _assignees_from_field(status_raw)
+        assignee_serials = list(dict.fromkeys(a_field + a_status))
+        unresolved_serials = u_field + u_status
+
         return {
             "to_id": to_id or fname.replace(".md", ""),
             "project_code": project_code,
+            "project_codes": [c for c in dict.fromkeys([project_code, declared_code]) if c],
             "title": title,
             "assigned_to": assigned_to or "(unassigned)",
+            "assignee_serials": assignee_serials,
+            "unresolved_serials": unresolved_serials,
             "issued_by": issued_by,
             "issued_date": issued_date,
             "status_raw": status_raw,
@@ -206,8 +330,11 @@ def parse_to_file(path: str) -> dict:
         return {
             "to_id": fname.replace(".md", ""),
             "project_code": "UNKNOWN",
+            "project_codes": ["UNKNOWN"],
             "title": "(parse error)",
             "assigned_to": "(unknown)",
+            "assignee_serials": [],
+            "unresolved_serials": 0,
             "issued_by": "",
             "issued_date": "",
             "status_raw": "",
@@ -497,14 +624,19 @@ def main():
 
     # Scope filter
     if project_filter:
-        active_tos = [t for t in active_tos if t["project_code"] == project_filter]
+        # match ANY code the TO is reachable by -- to_id-derived OR declared
+        active_tos = [t for t in active_tos
+                      if project_filter in t.get("project_codes", [t["project_code"]])]
     elif hot_codes is not None:
         active_tos = [t for t in active_tos if t["project_code"] in hot_codes]
 
     # Assignee filter
     if assignee_filter:
+        # ROLE, NOT SUBSTRING. The old form matched any occurrence in <issued_to> prose, so a TO
+        # reading "seats assigned BY <serial>" was returned as that serial's assignment -- a live
+        # false positive, in the same query and the same file as the known undercount.
         active_tos = [t for t in active_tos
-                      if assignee_filter in t["assigned_to"].lower()]
+                      if any(assignee_filter in s.lower() for s in t.get("assignee_serials", []))]
 
     # Sort: by project_code then issued_date (newest first within project)
     def sort_key(t: dict):
@@ -603,9 +735,19 @@ def main():
                 title_short = clean(t["title"])[:48]
                 print(f"    [{label}] {t['to_id']} -- {title_short}")
 
+    # THE DENOMINATOR. `scanned` is the corpus this answer is over; `unresolved_serials` is
+    # the NARROW role reader's residue. Printing both is the whole difference from a tool that
+    # answered "1" and meant nothing of the kind.
+    _unres = sum(t.get("unresolved_serials", 0) for t in active_tos)
     print(f"\nTO-CHECK-RESULT total={len(active_tos)} projects={len(by_project)} "
           f"blocked={sum(1 for t in active_tos if t['status_class']=='BLOCKED')} "
-          f"parse_errors={len(parse_errors)}")
+          f"parse_errors={len(parse_errors)} scanned={len(to_files)} "
+          f"unresolved_serials={_unres}")
+    if _unres:
+        print("  NOTE: " + str(_unres) + " serial-shaped token(s) in these TOs sit in NO "
+              "recognised assignment notation. They are UNCLASSIFIED, not counted as "
+              "non-assignments -- a real assignee written in an unusual notation lands here. "
+              "Widen the notation set; do not read this residue as zero.")
 
 
 if __name__ == "__main__":
