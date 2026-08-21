@@ -58,6 +58,27 @@
       "commit_or_etag": "8ab037f1b1",
       "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
       "deploy_evidence": "S3 spec certification of the C3-IDENTITY objects (Support_Closure / Identity_Bundle / terminal axis) CERTIFIED-WITH-AMENDMENTS -> re-stated -> base CONFIRMED + CTO gate CONFIRMED 2156Z"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_PRECONDITION_TOKEN_SPEC_CERT_20260820.md",
+      "kind": "doc",
+      "commit_or_etag": "3492d6d551",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S3 cert: Precondition_Token (C10-PRECOND) CERTIFIED-WITH-CONDITIONS; CTO gate 63944 PASSED"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C2_DISCRIMINATION_CERT_SPEC_CERT_20260821.md",
+      "kind": "doc",
+      "commit_or_etag": "bd36e8c1b0",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S3 cert: Discrimination_Certificate (C2-ATTEST) CERTIFIED, zero deviations, verified by exercise"
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/KNOWLEDGE_BASIS.schema.json",
+      "kind": "config_data",
+      "commit_or_etag": "151eaf7e4c",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "S2 schema act: Knowledge_Basis 0.1.1 (CTO gate 64047 condition discharged, cleared by exercise 64059) -- the C4-LEASE unblock"
     }
   ],
   "acceptance": [
@@ -84,8 +105,8 @@
       "criterion_verbatim": "PER-COMPONENT SPEC CERTIFICATION as lanes deliver -- envelope FIRST (its cert unblocks every downstream ingest); each cert reads the deliverable against the PRD section of record and names any cite-not-copy deviation as a finding.",
       "method": "manual_read_with_citation",
       "invocation": "read org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_ENVELOPE_SPEC_CERT_20260820.md @8a60f96758 + org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY/S3_C3_IDENTITY_OBJECTS_SPEC_CERT_20260820.md @8ab037f1b1",
-      "output_evidence": "TWO certs ISSUED: (1) envelope -- 11 PRD sec.2.1 rows read field-for-field, governing rule CONFORMS (structural allOf), ONE cite-not-copy deviation named (D1: plane x substrate fused) = CTO bind-time condition 63743 / COO rider R1; (2) C3-IDENTITY objects -- 7 spec-of-record claims read, CERTIFIED-WITH-AMENDMENTS (A1 terminal axis split reach x standing, precedence rule removed; A2 canon-surface census), amendments ABSORBED in the re-statement, base CONFIRMED + CTO gate CONFIRMED 2156Z",
-      "denominator": "2 of 2 delivered component schema acts certified (Component 1 envelope; Component 3 objects); 11 + 7 spec rows read; 1 deviation + 2 amendments named",
+      "output_evidence": "FOUR certs ISSUED: envelope (CERTIFIED-WITH-CONDITION -> RE-CERTIFIED on the R1 landing); C3-IDENTITY objects (reach x standing split, gate confirmed); Precondition_Token (CERTIFIED-WITH-CONDITIONS, gate passed); Discrimination_Certificate (CERTIFIED zero deviations, exercised at base) -- each read against its PRD section of record with deviations named",
+      "denominator": "4 of 4 delivered component schema acts certified; every cert names its deviations (1 + 2 + 2 + 0)",
       "status": "PASS"
     },
     {
@@ -120,7 +141,7 @@
       "criterion_verbatim": "Proof instance VALID rc=0 positional S1-S7 at the program's first review milestone (envelope cert), re-validated at each subsequent cert; RAVC to COO, cc CTO.",
       "method": "command",
       "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_EPISTEMY.SPINE_PROOF_OF_SPEC.json S1,S2,S3,S4,S5,S6,S7",
-      "output_evidence": "VALID rc=0 at the envelope-cert milestone (S3 issued @8a60f96758; first instance @26a5158732) and RE-VALIDATED at the second cert (C3-IDENTITY objects, 2158Z) per the criterion; each run twice byte-identical (see commit bodies)",
+      "output_evidence": "VALID rc=0 at the envelope-cert milestone and RE-VALIDATED at each subsequent cert (C3-IDENTITY 2158Z; Precondition_Token/C2/Knowledge_Basis sweep 0122Z); each run twice byte-identical (commit bodies)",
       "denominator": "7 of 7 expected criteria carried; 0 extra",
       "status": "PASS"
     }
