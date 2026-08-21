@@ -285,6 +285,24 @@ taking the deploy.
   `git diff --cached --stat`, and any path outside your resolution set gets `git reset HEAD -- <path>`
   and a note to its owner. **A gate candidate rides with this (CTO to route): safe-commit refusing
   to STAGE — not just to commit — while `.git/MERGE_HEAD` exists.**
+  ⛔ **(a) AND (b) ARE NOT TWO CONTROLS — (b) IS THE CONTROL AND (a) IS COURTESY. Do not let the
+  pair read as redundancy.** (a) is a SEAT-COOPERATION protocol and therefore carries a REACH
+  DEPENDENCY: it protects only seats that are registered, live, and reading. (b) is MECHANICAL and
+  holds whether or not any seat read anything. **Measured on the 2026-08-21 0051Z leg-1 run: the
+  hold broadcast reached 9 of 11 seats; the 2 that came back QUEUED (no live broker session) were
+  `4.0.0_SA_CRO~A` and `~B` — the two seats that had committed most recently (00:44Z, 00:47Z). THE
+  REACH GAP WAS ANTI-CORRELATED WITH NEED**, the orphan-watcher shape again: the seats a hold most
+  needs to reach are the ones least able to receive it (Codex lanes commit without holding a broker
+  registration). *Framing owed to `0.6.2_AE_PartnerETL`, same run: "you ran a real control and a
+  decorative one, and the decorative one is the one that failed — the intuitive fix (make the
+  broadcast more reliable) improves the decorative half, while the load-bearing half is already
+  sound and could simply be made the DECLARED mechanism."* **So: send (a), never COUNT it. Never
+  report N-of-M delivery as coverage. If (b) is skipped, the merge was unprotected no matter how
+  many seats acked.** Corollary measured the same run: a zero-conflict `git merge` AUTO-COMMITS, so
+  `MERGE_HEAD` may never be observable — a peer's `test -f .git/MERGE_HEAD` returning absent is
+  **byte-identical between not-yet-started and already-finished** and must not be read as either
+  (CTO declined to guess it mid-act, correctly). The CLOSE frame is the only signal that discharges
+  the hold.
 - **Push carries every lane's committed work, not just yours** — that is the LD-0367 rationale.
   Enumerate the payload (`git log --format='%an' origin/CLOUD..HEAD | sort | uniq -c`) so you can
   say what you carried.
