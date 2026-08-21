@@ -102,7 +102,33 @@ directives:
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
-    stance: "⛔ PRIORITY EVENT-REFRESH 2026-08-21 ~19:3xZ (register act by 0.0.0_AB_MSTR, sole
+    stance: "EVENT-REFRESH 2026-08-21 ~20:0xZ -- ETFS-g-1, the register cell (COO's stage-3 decomp
+      assigns it to MSTR as SOLE WRITER and to no round-1 seat; stated in the decomp so nobody
+      writes it 'helpfully'). STAGE 3 IS DELIVERED AND ROUND 1 IS EXECUTING: decomp
+      @308fcaea0d (workflows/atom_decomposition/etfs-positioning/20260821T194927Z/DECOMP.md, 352
+      lines), three round-1 TOs cut @10f94e4f13 -- TO-1 DS producer + sub-asset-class vocabulary,
+      TO-2 AE serving route + artifact CONTRACT + IAM, TO-3 DE the Models<->ETFs flip + the five
+      hardcoded sites. Both commits ON origin/CLOUD (ls-remote read @10f94e4f13), per the
+      push-state rule. NO DARK EXECUTOR CLASS IN ROUND 1: DS, DE, AE all seated and dispatched;
+      MSTR~Z holds ETFS-b-1 (the L1 pull) in flight. Every TO declares its executor CLASS -- never
+      a serial -- plus a seating trigger, so a mid-execution dark seat routes to MSTR SAME-TURN as
+      a naming obligation rather than a discovery.
+      ⚠ THE VOCABULARY RULING THAT KEEPS ROUND 1 HONEST -- bbg/{date}/ IS THREE THINGS AND EVERY
+      CELL THAT READS IT NAMES WHICH: (1) bbg-testpull/ = the FROZEN QA reference; (2) a SCHEDULED
+      bbg/{date}/ landing = THE PRODUCTION INPUT, WHICH DOES NOT EXIST YET (first fire 08-22 07:00
+      local); (3) bbg/2026-08-20/ = AD-HOC output resident in the production prefix. The producer
+      BUILDS against the contract and PROVES against the first scheduled landing -- build does not
+      wait, proof does. Disposition of the three ad-hoc objects is an OPEN CHANNEL ITEM at CVO,
+      deliberately not a mid-flight amendment and not round-1 build work; MSTR~Z's run_class
+      manifest field (A1, executed @6729f104b7) is the cheap forward fix. >> This vocabulary
+      exists because a cross-fabric bridge killed the premise 'the production input exists now'
+      BEFORE the producer cell was cut against it -- the agentbus is device-to-device, so that
+      correction was structurally invisible from the laptop fabric.
+      ⚠ INSTRUMENT WARNING BOUND INTO THE DECOMP, not left in a thread: any cell whose proof runs
+      a Windows-native command from a POSIX shell CARRIES A NEGATIVE CONTROL THAT MUST FAIL --
+      MSYS rewrote cmd.exe's /c FLAG into a path, cmd returned 0, and a baseline plus both mutants
+      'passed' while the chain never executed.
+      ⛔ PRIORITY EVENT-REFRESH 2026-08-21 ~19:3xZ (register act by 0.0.0_AB_MSTR, sole
       writer, per CTO 65562): ANDREW-DIRECT AT THE BASE CTO TERMINAL, VERBATIM: 'Make it clear to
       the fabric that I want ETFS_POSITIONING DONE RIGHT NOW. IT IS PRIORITY FOR THIS SESSION'.
       >> ETFS_POSITIONING ROUND-1 GOES TO THE FRONT OF EVERY SEAT'S QUEUE FOR THIS SESSION;
