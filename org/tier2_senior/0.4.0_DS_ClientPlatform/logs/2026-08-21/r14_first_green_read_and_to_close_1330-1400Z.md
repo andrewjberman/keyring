@@ -179,3 +179,55 @@ measured zero); commit-gate PASS; proof-of-spec-check VALID rc=0; s3api pre/post
 **Chain state at close:** DE repoint = live leg (MSTR spawn call, triggered by my 64766);
 promote order MUST say 10 keys (COO 64771 verbatim). Held-key emission = future group on
 future clearance; d14 on DS~A's xwalk heal. My seat: standby.
+
+---
+
+## ADDENDUM 3 — 15:10–15:35Z: the 08-19 production backfill, the DIFFER branch, and the two clean reads
+
+COO caught that my "superseded at backfill" disclosure had NO ACTOR (the daily chain derives
+T-1 only — 08-19 is structurally unreachable forever; the V2 window 08-11..08-17 excludes it).
+CTO ruled it true and commissioned the exit in my lane: ONE recorded production-host backfill.
+
+**The act (ledger 20260821T1520Z, opened before the send, CLOSED same-session @its commit):**
+SSM `AWS-RunShellScript` on bd-gold-layer-runner (the dedicated document hardcodes
+`--production` — P2D-3 QA-fire form was the legal shape; zero inline python, code from _code
+@b5b0f26238). CommandId 6b96ab4b, Success rc=0, CHAIN OK date=2026-08-19 wall=109.8s. Log
+SELF-UPLOADED to `_logs/chain_backfill_0819_20260821T151733Z.log` — the no-log gap closed by
+the act that needed it. Host started + returned stopped. **Custodial tail=2023 MEASURED on the
+PRODUCTION role** — CTO's bd-v2.55.0 exercised confirmation, a day early (their ledger
+discharged @23e2ed155d).
+
+**COO's byte-compare step fired its DIFFER branch — STOP-first honored:** 16/16 data.parquet
+differ (ETag+size) vs my pre-fire 30-object baseline; 14/14 manifest.json rewritten
+BYTE-IDENTICAL; normalized log diff = every content-identity signal matches, only substantive
+delta the a07 `_classifier_vintage` stamp. Reported (64807) before anything cited the act.
+
+**COO RULING (64814, reusable):** stale-pin law binds on the PLANE THE PIN MEASURES —
+byte-identity sufficient, never necessary; value-identity operative. The 14/14 JSON-manifest
+control accepted as the DISCRIMINATING mechanism evidence. Pins/certs STAND, no re-pin,
+subject to two required reads, both mine, both CLEAN:
+- **(A) DEFINITIVE via S3 versioning (Enabled bucket-wide):** recovered the pre-fire
+  accrual_materiality version (qb7BGcGRXH2u...) and value-diffed all 10 columns — ZERO diffs
+  incl. `measurement_version` (content sha equal); NO run-stamp column exists. +170B =
+  encoder-plane, proven not inferred.
+- **(B) vintage surfacing:** published mix_summary.json (the only a07-consuming twin) = 0
+  occurrences of the stamp/shas (served-artifact grep; mechanism = the port's SHAPE LAW,
+  provenance rides object metadata + manifest, never the body); 15 pin files = measured zero.
+
+**Outcome (64832):** disclosure upgraded to CTO's (a)-form with named actor + done date;
+byte-plane re-emission DISCLOSED with two controls as grounding; CVO carries the version-id as
+the cert substrate's surviving address + the two pre-declared rows for the held-4
+post-backfill re-pin (a07 vintage; accrual value-stability). COO's salvage of CTO's withdrawn
+rec (pre-declare at the certain future re-pin) and their moot-vs-rule line ("you cannot moot a
+question whose answer is the thing being established") both banked.
+
+**Compiler Tools (addendum 3):** s3api list-object-versions/get-object --version-id (the
+recovery); pre/post ETag compare (30 objects); normalized log diff; served-artifact grep;
+comp-find pins sweep (measured zero, -i); get-bucket-versioning.
+
+**Self-flag carried from the ledger:** my 64807 said "stop confirmed via wait" ~1 min before
+the wait completed — announcement-outran-act, minor, true-shortly-after, flagged in the ledger
+close rather than silently.
+
+**Seat state: everything owed is discharged.** DE spawn (MSTR) is the chain's only leg;
+held-4 + d14 as determined; b02 materiality PENDING-RULING at Andrew+CTO unchanged.
