@@ -94,7 +94,7 @@ rollback loses no history.
 - [x] **Rule 22a POST-STATE:** deployed package bytes re-downloaded and diffed against the build input
 - [x] **WA-6:** `simulate-principal-policy` re-run -> `implicitDeny` must flip to `allowed`, one `--resource-arns` per call, positive control as a SEPARATE invocation
 - [x] source map updated (`last_deployed_commit`, `artifact_sha256`, `last_deployed_at`)
-- [ ] tag + `push --follow-tags` (Rule 6)  <- NOT YET DONE at ledger-close-write; ticked only after the act
+- [x] tag + `push --follow-tags` (Rule 6) -- `ticket-center-v1.2.0` annotated + pushed `d8de793742..79242fd756`
 - [x] ledger CLOSED
 
 ## Close-out record (2026-08-21T14:07:57Z)
