@@ -104,6 +104,37 @@ not be cited as such (CVO wrote that limit into the cert itself, `@ab585bb00e`).
 **`advi-49f-publisher` IS DISABLED.** The twins have **no enabled producer schedule**. Flipping the
 product to them would point it at artifacts nothing refreshes.
 
+⛔ **CLASSIFIED AT SOURCE 2026-08-21 (CTO), AND THE CLASSIFICATION CHANGES THE REMEDY — READ IT BEFORE
+TOUCHING THE ENABLE FLAG. THIS IS `DELIBERATELY-HELD`, *NOT* `STALE-BY-NEGLECT`.**
+`infra/aws/terraform/opal-assets/advi_49f_publisher.tf` (AE `@1abc54fa4c`, 2026-08-19, OPAL_ADVIPOINTERS
+P4-PUBIAM-49F / **P4I-3**) declares `state = "DISABLED"` with the header verbatim:
+*"STATE = DISABLED, DELIBERATELY -- THIS IS THE CONTRACTED DESIGN, NOT A HALF-LANDING. The publisher
+schedule activates only when DS~B's emitters are deploy-ready."*
+
+**ACTIVATION IS ONE TF CHANGE, THREE STEPS, NAMED IN THAT SAME HEADER:**
+1. mint `aws_ssm_document.advi_49f_publisher_dispatch` with DS~B's contracted body (sync `_code` → the
+   contracted entrypoint → log upload → conditional self-halt, same frame as the chain document);
+2. append its name to the dispatcher's `ALLOWED_DOCUMENTS` env;
+3. flip `state` to `ENABLED`.
+
+⛔⛔ **THE OBVIOUS REFLEX — "just re-enable the schedule" — IS WRONG TWICE: it is not the remedy, AND it
+fails closed.** Per the header: *"even a stray manual enable fails CLOSED + LOUD -- the dispatcher
+refuses any document not on its allowlist, and the named document does not exist."* So a bare enable
+buys nothing and produces a loud refusal.
+
+**WHAT ACTUALLY LAPSED — and it is a sharper finding than a missing schedule:** the condition this hold
+waited on (**emitters deploy-ready**) **WAS MET 2026-08-21** — they ran, and the twins published
+(manually, 15:04Z) — **and nobody fired the activation, because every seat was on the cutover.
+A CORRECT HOLD OUTLIVED ITS CONDITION.** That is the Rule-22a classification lesson live: a detector
+that cannot tell a deliberate hold from neglect manufactures the wrong reflex, and here the wrong
+reflex (`enable`) is also the one the state most invites.
+
+**RELEASE PATH:** the schedule condition is therefore **NOT an open question and NOT a new build** — it
+is a **NAMED EXISTING ACT (P4I-3)** with a named owner class (**AE**, the TF author) and a named
+contract input (**DS~B's invocation form**: entrypoint + args). The activation TO is COO's to re-ground
+at pickup and issue when the hold lifts on BOTH conditions; it does not execute before then, but it
+**can be READY**.
+
 ⛔ This is the NEVER-rule class ruled after MDPF: *a production pipeline MUST have a schedule; a
 pipeline whose only trigger is another pipeline's success has no schedule and is a defect* — MDPF then
 froze for six days with fresh inputs sitting unused. **Here it is starker: not event-triggered, but
