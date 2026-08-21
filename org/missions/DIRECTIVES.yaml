@@ -77,15 +77,33 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a)."
+    placement: "SITEZ -- RULED (Andrew-direct 2026-08-21 ~02:5xZ, CTO~A terminal): the WHOLE
+      directive handed to the site-Z fabric. SUPERSEDES the 2026-08-19 LAPTOP ruling for this row.
+      NOTE, and it is load-bearing because D4 is the FIRST row to carry this shape: PLACEMENT
+      ATTACHES TO THE DIRECTIVE, NEVER TO A MEMBER. The subgroup PORTAL.MODEL_PORTFOLIOS is SHARED
+      with D1 and D3, and BOTH OF THOSE STAY LAPTOP -- a SITEZ row referencing that subgroup must
+      not be read as moving the subgroup or its other parents."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [ETFS_CANON]
+      projects: [ETFS_CANON, ETFS_POSITIONING]
     stance: "SCOPE CORRECTED by Andrew ~17:4xZ: an ETF VERSION of the Positioning page (flip
-      ETFs DIVZ/IDVZ/PFDE/PFOE vs Models), FULL-STACK -- first act is a state assessment of the
-      ETF data plane (canonical home opal-data-etfs, build-out honestly UNKNOWN); the ETFS_CANON design gate
-      RULED @6d62143d2d; the four ETFs also join D1's taxonomy as SMA-category
-      members -- one registry serves both."
+      ETFs DIVZ/IDVZ/PFDE/PFOE vs Models), FULL-STACK. THE STATE ASSESSMENT IS DELIVERED, so the
+      build-out is MEASURED, no longer unknown: docs/architecture/ETFS_POSITIONING_PRD.md
+      @e0c7276d00, extended @1575dfab1e (s.9 placement, s.3.3 data census). Characteristics are a
+      DECLARED BLOOMBERG DEPENDENCY, not a gap -- Andrew same-turn, VERBATIM: 'clearly nobody has
+      access to the characteristics, but that's fine, as long as we have the shape, we can get this
+      done through Bloomberg.' THE OPEN HINGE, and it is the first question site Z answers: does
+      Bloomberg serve CONSTITUENT HOLDINGS for DIVZ US Equity and IDVZ US Equity? A clean NO is
+      VALUABLE -- it re-prices the project onto the issuer-side TS_HOLDINGS_ENABLED wiring route.
+      MEASURED and agreeing with base CTO's deployed-bytes read from the data side: across 3 trees /
+      1,111 objects / 7,550 rows there is not ONE DIVZ or IDVZ constituent row (silver/holdings
+      7,550 of 7,550 source='filepoint', DIVZ 0, IDVZ 0, positive control PFDE=5,920; snapshots are
+      FUND-LEVEL ONLY, 70 objects, today's a 4-record 2,876 B array with no constituent array;
+      opal-data-assets/trueshares/ 370 objects, 0 keys matching 'holding', positive control 220
+      matching 'netassets'). Mechanism from the producer's own note: filepoint ships an
+      ETF_Holdings.csv, TrueShares ships only a netassets HTML page -- A SOURCE NEVER WIRED TO
+      DELIVER HOLDINGS, not a pipeline dropping rows. The ETFS_CANON design gate RULED @6d62143d2d;
+      the four ETFs also join D1's taxonomy as SMA-category members -- one registry serves both."
   D5:
     title: "Alt research (ongoing)"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
