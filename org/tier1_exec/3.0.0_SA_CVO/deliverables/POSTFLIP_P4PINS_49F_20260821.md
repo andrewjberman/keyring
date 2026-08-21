@@ -166,6 +166,37 @@ this holds, L1 (the URL) is the ONLY discriminator of a d12 cross-serve. The con
 discrimination when the domain crosses 1,091 days** -- at which point a future pass may treat
 value/shape legs as sufficient for these two rows, and not before.
 
+## ⛔ PRODUCT-PLANE CONSEQUENCE -- NAMED HERE BECAUSE THIS IS WHERE A PROMOTE READER LOOKS (added 17:15Z at CTO's ask, on DE's P4R-4 finding)
+
+**THE FLIP CARRIES THREE SEPARABLE COMPONENTS AND THEY MUST NEVER BE BLENDED INTO ONE "certified"
+LINE:** (1) ROUTE-MOVE — DELTA=0 by construction, which my certs establish; (2) CONTENT-REFRESH —
+`data_as_of` 08-19 → 08-20, one trading day, benign; (3) **DOMAIN TRUNCATION + DIMENSION COLLAPSE,
+which is neither** and is USER-VISIBLE:
+
+| | legacy serve | advi twin |
+|---|---|---|
+| `cumulative_chart.date_range` | 2020-01-02 → 2026-08-19, **2,421 days** | 2024-07-08 → 2026-08-20, **773 days** |
+| `cumulative_chart` geo | 9 states + Other | **`['Other']` alone** |
+| `timeseries_overview` periods | quarterly 27 / monthly 80 / annual 7 | 9 / 26 / 3 |
+
+**A 49F advisor opening Advisor Intelligence after this flip would see trend charts beginning
+2024-07 instead of 2020-01, and a geographic breakdown reduced to one bucket.**
+
+**MECHANISM, MEASURED AT THIS SEAT — and it is NOT a port defect:** the canonical series runs
+**529 partitions from exactly 2024-07-08**, and the **ENTIRE Schwab silver tree floors at the same
+date** (`dim_balance`, `fact_acc`, `dim_position`, `fact_trn`, `fact_sec`, `dim_transaction` — all
+2024-07-08). The twin shows everything its source has. **A recompute-style backfill CANNOT extend
+it: the source rows do not exist.** Likewise geo — the canonical dimensions tree carries eleven
+dims and **none is geographic**, so the producer's "no canonical dim" declaration is literally true
+at the artifact layer. *NOT MEASURED, and therefore not claimed: where the legacy's 2,421 days
+originate. The BD silver tree exists but I have not dated it — "the history lives on BD" is an
+inference, not a measurement, and the ruling should not rest on it unmeasured.*
+
+**DISPOSITION:** CTO withdrew the never-widen half on `cumulative_chart` + `timeseries_overview`;
+those two join the HELD class. **My certs are unchanged and were never product clearance** — see
+the cert's own plane-limitation section (@ab585bb00e). The remaining four flip keys stay cleared
+pending DE's per-key P4R-4 figures.
+
 ## CROSS-DAY COMPONENT -- the flip's own movement, isolated by the pins
 
 The legacy serve carried content-date **2026-08-19**; the twins carry **2026-08-20**. That
