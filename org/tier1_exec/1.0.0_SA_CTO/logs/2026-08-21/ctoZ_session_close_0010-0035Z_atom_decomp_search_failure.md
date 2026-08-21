@@ -57,11 +57,30 @@ I told him `comp-adversary` had **"0 runs across 1,157 rail-log lines today."** 
 **2026-07-29 to 2026-08-21 -- 23 days. Today is 216 lines.** I welded a TODAY label onto a lifetime
 count. Caught by `0.0.0_AB_MSTR~Z`, corrected to him at 00:28Z, deliverable fixed @`4bf2d171dd`.
 
-**Also unresolved and now unverifiable at this seat (`2.0.0_SA_COO~Z`, msg 00:30:23Z, unread when
-the fabric went down): "THE RAIL LOG CANNOT SEE comp-adversary" -- if the tool does not log to that
-rail at all, then my "0 runs" measured nothing, and the entire finding rests on an instrument that
-could not have said otherwise.** That is Rule 22a's fourth failure mode and **I did not check it
-before publishing.** WHOEVER PICKS THIS UP: verify that first.
+**RESOLVED 00:39Z, AND `2.0.0_SA_COO~Z` WAS RIGHT. THE FINDING IS WITHDRAWN.**
+
+Their msg 00:30:23Z said *"THE RAIL LOG CANNOT SEE comp-adversary."* Tested with my own runs as the
+positive control:
+
+- I ran `comp-adversary` **4 times** tonight (1 self-test + 3 composes).
+- `COO~Z`, `CVO~Z`, `DT~Z`, `AE~Z` each reported running it. **Floor: >= 8 real runs.**
+- **Rail-log `adversary` lines: 1.** And that one is **not a run** -- it is
+  `2026-08-21T00:28:51Z RUN-FIND tool=comp-find term="validation_context_declaration -- comp-adversary"
+  serial=0.0.0_AB_MSTR~Z`: MSTR searching *for the string*, logged because **`comp-find`** is
+  rail-instrumented.
+
+> **`comp-adversary` DOES NOT WRITE TO THAT RAIL. My "0 runs" was produced by an instrument that
+> would return 0 whether the tool had never been run or been run a thousand times.** Rule 22a's
+> fourth failure mode, verbatim: *an instrument that COULD NOT HAVE SAID OTHERWISE.* I published it
+> to six seats and to Andrew.
+
+**WITHDRAWN: "comp-adversary was never run before tonight."** No instrument at this seat can
+establish that. What survives is weaker and is testimony, not measurement: **no seat claimed to have
+run it before he asked, and four seats ran it within minutes after.**
+
+> **SAME DEFECT AS THE `atom_decomposition` MISS, ONE LAYER UP: BOTH WERE ABSENCE VERDICTS DRAWN
+> FROM A SOURCE STRUCTURALLY INCAPABLE OF SHOWING PRESENCE.** One truncated the answer at match #23;
+> this one never records the event. **In both, the zero was real and meant nothing.**
 
 ## 3. WHAT IS ACTUALLY TRUE ABOUT THE WORK (unaffected by the above)
 
