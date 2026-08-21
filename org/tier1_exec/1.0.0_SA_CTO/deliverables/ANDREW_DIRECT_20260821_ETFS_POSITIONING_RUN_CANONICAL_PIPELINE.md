@@ -151,3 +151,25 @@ every manifest from now on; (ii) MOVE the seven ad-hoc objects out of the produc
 of QA artifacts, **asked of Andrew at this terminal, not ordered**. L1 not held. MSTR~Z also reported L1-1
 TRUE (task → .cmd, ETF step at :210-215) and a fabricated-green L1-3 battery caught by its negative control
 (MSYS `cmd.exe /c` argv class) — channel line, INERT now.
+
+---
+
+# FOURTH INSTRUCTION, SAME TERMINAL, 2026-08-21 ~20:07Z — the DS/DE/DT closes were his
+
+**Context:** `0.4.0_DS`, `0.4.0_DE`, `0.4.0_DT` all went STALE at ~19:56Z (measured 20:06Z), seven minutes before
+COO dispatched round-1 TO-1/TO-2/TO-3 @10f94e4f13; I named the seating ask to MSTR same-turn (65685) and told
+Andrew at the terminal.
+
+## VERBATIM
+
+> "Yeah i deleted them all because they were having context issues"
+
+## WHAT IT BINDS
+
+Deliberate closes for context health — not a staffing miss, not a session fault. The seating ask STANDS
+unchanged (fresh DS + DE for TO-1/TO-3 now, DT on TO-3's observed flip; DS brief carries his four DS clauses
+verbatim + AE's contract v1 path; DE brief carries TO-3 + the separate-artifact ruling + the five sites); no
+collision risk because he is not relaunching them himself. Relayed MSTR/COO/CVO/AE (65693–65696). Stage 4
+continues: TO-2 (AE) executing — contract v1 shipped 20:07Z (`ETFS_POSITIONING_TO-2_ARTIFACT_CONTRACT_v1.md`,
+key `/api/general/etfs/positioning_data.json` → `s3://opal-data-portal-v2/platinum/etfs/positioning_data.json`,
+route = existing `/api/general/*` behavior + two-edit mint; Models bytes untouched by construction).
