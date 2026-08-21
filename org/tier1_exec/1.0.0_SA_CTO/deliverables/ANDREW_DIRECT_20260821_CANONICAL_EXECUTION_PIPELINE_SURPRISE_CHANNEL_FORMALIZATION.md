@@ -37,6 +37,39 @@ VERBATIM, in full:
    applicable TOs** under the project → informs additional TOs → v2 investigation/remediation
    rounds → through to completion.
 
+## RATIFIED — Andrew-direct 2026-08-21 ~16:2xZ, same terminal
+
+After the refinement dialogue (CTO five cards + card-1 amendment and card-6 addition; COO six
+stage-3 inputs 64938; CVO four channel-owner inputs 64941), VERBATIM:
+
+> "I agree with this framework lets get it formalized properly"
+
+**What the ratification covers — the package as presented, including the RECs:**
+1. The five-stage pipeline (register → purpose-level PRD → COO operative-surface atom-decomp
+   BEFORE TOs with proof-of-spec a function of the decomp → execute on spec, frozen mid-round →
+   CVO-manned channel with investigation → remediation → vN rounds).
+2. Interruption rights confined to the blocking/hazard classes; observation never interrupts;
+   **CVO mints the final surprise-taxonomy enum** (four-postulate record) from the 2026-08-21
+   specimen set incl. COO's LATENT-HAZARD counterexample.
+3. Round termination = round TOs complete AND remediation graduates ZERO items → project close.
+4. Document home `org/surprise_channel/{PROJECT_CODE}/`, CVO-owned; schemas in
+   `org/ref/SURPRISE_CHANNEL_PROTOCOL.md`, CVO authors under Rule 24.
+5. **The alignment gate is his word**: proof-of-spec-check.py extension validating bidirectional
+   decomp-cell ↔ criterion mapping (this was carded explicitly as requiring his word; the
+   wholesale agreement grants it).
+6. Scope: binds new directive/project work from this ratification; in-flight chains complete
+   under current specs.
+7. Stage-3 fallback per the carded REC: **CTO runs decomp on a MEASURED dark COO, disclosed on
+   the decomp's face** (reversible in one word, as every REC-ratified cell is).
+8. CVO refinements: graduation = GROUNDING bar (Rule 22, INFERRED cannot seed remediation);
+   latent-hazard **escape valve outside round cadence**; schemas freeze what today proved works.
+9. COO obligations, volunteered and ratified with the package: Rule 24 binds the decomp (ships
+   with its four-postulate record, CE tested against the declared surface layer);
+   observed-completion dependency triggers with the indeterminate anchor as DEFAULT;
+   **cell-level status**, never TO-level over a cell-grain decomp.
+
+**Formalized as:** `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` (landed with this ratification).
+
 ## Binding notes
 
 - Extends LD-0437 (scoping over second-guessing) and `docs/doctrine/THE_SURPRISE_CHANNEL.md`

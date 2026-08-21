@@ -1,0 +1,120 @@
+# DIRECTIVE EXECUTION PIPELINE — the canonical process for all directive/project work
+
+**Authority:** Andrew-direct 2026-08-21 ~16:1xZ (design, verbatim) + ~16:2xZ ratification
+(*"I agree with this framework lets get it formalized properly"*) + ~16:3xZ enforcement mandate
+(*"I do not want to be dealing with this shit ever again though so let's get it right here"*).
+Verbatim record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260821_CANONICAL_EXECUTION_PIPELINE_SURPRISE_CHANNEL_FORMALIZATION.md`.
+**Scope:** binds all NEW directive/project work from 2026-08-21. In-flight chains complete under
+their current specs; no retroactive re-papering.
+**Design inputs of record:** CTO cards (this file's spine) · COO stage-3 inputs (64938) + seam
+additions (64944) · CVO channel-owner inputs (64941) + banked constraints (64947). Every clause
+below traces to the ratified package; any single clause is reversible on Andrew's word.
+
+---
+
+## THE PIPELINE
+
+| stage | act | owner |
+|---|---|---|
+| 1 | **REGISTER** — project JSON + REGISTRY row. Nothing else exists until this does. | commissioning exec |
+| 2 | **PRD** — purpose-level: comp-find + shape scan. What and why; names the territory, does NOT enumerate surfaces. | PRD author (commissioning exec) |
+| 3 | **DECOMP → TOs** — COO finds the OPERATIVE SURFACES and runs atom-decomp on them BEFORE any TO exists. Proof-of-spec derives from decomp cells. | **COO** (fallback: CTO, §Stage-3 below) |
+| 4 | **EXECUTE ON SPEC. PERIOD.** — the spec is FROZEN mid-round. The only legal off-spec write is a surprise item. | executing seats |
+| 5 | **SURPRISE CHANNEL** — investigation → graduation → remediation → next round's TOs (re-entering at stage 3) → vN rounds to completion. | **CVO** |
+
+**Round termination / project close:** a project closes when a round's TOs complete AND that
+round's remediation doc graduates ZERO items. Loop-until-dry — completion is measured, never
+declared. Close then follows the existing 2-step atomic closure discipline.
+
+## Stage 3 — decomp rules (COO's stage, obligations ratified)
+
+- **Rule 24 binds the decomp**: it is a schema-enumeration act over the operative surfaces and
+  ships WITH its four-postulate record (axis, grain, intent, state frame). The CE half is tested
+  against the DECLARED surface layer — name the layer, then hunt the uncovered member. *Why: a
+  green proof-of-spec over a non-MECE decomp is a certificate of the decomp's own blind spot.*
+- **Alignment, both directions, denominators printed**: every proof-of-spec criterion cites the
+  decomp cell it discharges; every operative cell is covered by ≥1 criterion across the TO set.
+  An unmapped cell = an untested surface; an untraceable criterion = a test measuring something
+  the decomp never claimed. TOs carry `<decomp_ref>` naming the decomp run.
+- **Dependency edges carry OBSERVED-completion triggers**: a dependent TO's start condition
+  derives from its prerequisite's MEASURED completion, never a projected date. The indeterminate
+  anchor ("the day after X's first clean run") is the DEFAULT form. *A date you cannot ground is
+  worse than no date — it re-arms the lapsed-date hazard.*
+- **Status is CELL-level, never TO-level over a cell-grain decomp** — partial completion must be
+  expressible, or the record lies to the next seat in whichever direction it happens to lag.
+- **Fallback (ratified REC):** on a MEASURED dark COO, CTO runs stage 3, disclosed on the
+  decomp's face. Work never queues on an unseated stage.
+
+## Stage 4 — execution rules
+
+- **On spec, period.** Mid-round the spec is frozen. No executing seat adjudicates scope,
+  redesigns, or "improves" off-spec — the cost of a wrong spec is a surprise item and a better
+  next round, not a mid-flight fork.
+- **Interruption rights are confined to the hazard/blocking classes.** OBSERVATION-class
+  surprises NEVER interrupt: one line to CVO, no action, keep working. BLOCKING (spec cannot
+  physically execute) routes same-turn to the ISSUER for spec amendment, cc CVO. HAZARD classes
+  (the next on-spec act — yours or an armed artifact's — is destructive/irreversible) invoke the
+  escape valve below. The final surprise-taxonomy enum is CVO's Rule-24 authoring act, minted
+  from the 2026-08-21 specimen set (incl. COO's LATENT-HAZARD counterexample; 24(iv)-confirmed:
+  distinct remedies — unblock now / record and route / disarm before normal operation arrives).
+
+## Stage 5 — the channel (CVO's stage)
+
+- **Universal record**: every surprise of every class reaches CVO's channel (issuer-routed
+  classes arrive as a cc). Investigation docs are APPEND-ONLY during a round.
+- **Graduation is a GROUNDING bar, not a severity bar** (Rule 22): an item graduates to the
+  remediation doc only when MEASURED — mechanism attributed, denominators carried, remedy-holder
+  named. INFERRED items stay in the investigation doc and cannot seed a remediation row.
+  Severity decides WHERE a valid item lands; grounding decides WHETHER it graduates.
+- **Remediation is cut at round close** and handed over when the round's TOs complete; its rows
+  become the next round's TO inputs, re-entering at stage 3.
+- **THE ESCAPE VALVE (outside round cadence):** a LATENT-HAZARD surfaces SAME-TURN and is
+  disarmed immediately — it cannot wait for a handover. **The row names its DISARM OWNER at
+  surfacing time; if that seat is dark, it escalates same-turn to the spawn-holder** (a valve
+  whose actuator has no owner reads open and is shut).
+- **DISARMED ≠ REMEDIATED — two states, two owners, two clocks.** Disarm is urgent,
+  off-cadence, owned by whoever can act on the artifact NOW; remediation rides the round, owned
+  by the lane that builds the fix. A latent-hazard row closes only when BOTH have landed.
+  *A single terminal state converts dangerous-and-visible into safe-and-invisible.*
+- **DECOMP-INVALIDATING is its own disposition with a BACKWARD route:** a surprise revealing an
+  unenumerated operative surface is evidence the decomp failed postulate (i) — it REOPENS the
+  current round's scope at stage 3 rather than queuing behind it, because routing it forward
+  would certify an over-scoped completion. (Specimen: B2's three-legged oracle, discovered after
+  the card.)
+
+## Documents
+
+Home: **`org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_vN.md` + `REMEDIATION_vN.md`** —
+CVO-owned lane (owned-paths row to be added by COO as registry grantor). Schemas: CVO authors
+**`org/ref/SURPRISE_CHANNEL_PROTOCOL.md`** with four-postulate records per document type and for
+the taxonomy enum. Schema principle (ratified): **freeze what 2026-08-21 proved works** —
+one-line same-turn surfacing, measurement-first investigation, mechanism attribution,
+denominators + named remedy-holder per graduated row. No fresh ceremony.
+
+## ENFORCEMENT ARCHITECTURE (the "never again" design)
+
+**The choke-point principle: gate the NECK of the funnel, not every stage.** Nothing executes
+without a TO + GO. A TO that conformantly requires a decomp_ref structurally requires the decomp,
+which requires the PRD, which requires registration — **one gate at TO issuance enforces the
+entire upstream funnel** without taxing any other act.
+
+| layer | mechanism | state |
+|---|---|---|
+| 1. **Validation gate** | `proof-of-spec-check.py` extension: an instance for a pipeline-bound project is INVALID without a `decomp_ref` + bidirectional cell↔criterion mapping (denominators printed). No VALID instance → no `complete` flip. | **build routed** (tooling lane; Andrew's word granted in the ratification) |
+| 2. **Commit gate** | commit-time lint: a NEW TO file under `org/**/task_orders/` whose project is pipeline-registered must carry `<decomp_ref>` — refused otherwise. Teaches at violation time. | **build routed** (same lane) |
+| 3. **Machine-readable stage** | project JSON gains `pipeline_stage` (register → prd → decomp → executing-vN → closed); `comp-state`/`registry-check` sweep it — COO's TO sweep becomes an instrumented pass, not a heroic one. | **build routed** |
+| 4. **Law line** | ONE compact rule in `CLAUDE.md` (imperative + gate + pointer, per that file's own format law) — the per-agent imperative every seat carries: execute on spec, surprises to the channel, only hazard/blocking interrupt. Detail lives HERE, not there — prose taxes every context; gates teach at violation time. | **landed with this doc** |
+| 5. **Judgment residue** | The escape valve, graduation adjudication, and decomp quality are judgment and stay OWNED (CVO/COO/CTO per stage) — the schemas make them one-line-checkable but no machine adjudicates them. | by design |
+
+**Until layers 1–3 land:** the pipeline binds as protocol; issuers check alignment manually and
+state its denominators; CVO's certs check it independently. The gates convert "followed
+religiously" from a vow into a property.
+
+## Why this exists (one paragraph, the incident test applied)
+
+2026-08-21 ran every failure this pipeline kills, live: a criterion written against an unmeasured
+steady state, amended mid-flight; a TO re-dated after its premise silently lapsed; a destructive
+TO armed on a calendar date whose prerequisite never started; a fresh seat nearly redoing landed
+work off a stale status line; ~60 messages of multi-seat spec-repair that stage-3 decomp would
+have priced at authoring time. The judgment does not disappear — it moves to the spec stage,
+where it is cheap, and batches everywhere else.
