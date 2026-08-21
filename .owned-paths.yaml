@@ -1032,6 +1032,10 @@ paths:
     lane: CVO_WORKSPACE
     note: "CVO tilde-lane homes (~Z et al) — same lane as the base CVO home above."
 
+  "org/surprise_channel/**":
+    lane: CVO_WORKSPACE
+    note: "THE FORMALIZED SURPRISE CHANNEL's document tree (investigation docs + the remediation doc), minted per Andrew's 2026-08-21 ratification of the DIRECTIVE EXECUTION PIPELINE (verbatim: 'I agree with this framework lets get it formalized properly' + 'I do not want to be dealing with this shit ever again'); protocol at org/ref/DIRECTIVE_EXECUTION_PIPELINE.md + CLAUDE.md Rule 27. GRANTED 2026-08-21 by 2.0.0_SA_COO AS REGISTRY GRANTOR -- SoD honored: 3.0.0_SA_CVO is the GRANTEE (channel owner-designate) and did NOT self-grant; the grant was routed to the registry owner by CTO on the ratification. WHY A GRANT WAS NEEDED AT ALL: this tree did not exist and matched no glob, so its lane was UNDEFINED, which under rollout_phase 2 is EXIT 1 -- CVO would have been blocked on the FIRST commit of a protocol Andrew had just ratified. LANE REUSED, NOT MINTED (Build Ladder rung 2): CVO_WORKSPACE already carries exactly the right semantics -- CVO owns and commits, CTO+COO retain write for exec oversight -- so a new lane would have been a duplicate of one sitting beside it. SCOPE DELIBERATELY NOT WIDENED: 3.0.0_SA_CVO~Z is NOT included. CVO_WORKSPACE does not carry it today and the ratification named the base CVO seat; whether the site-Z fabric writes into this tree is a real question with its own answer (LD-0325 confines CVO~Z comms), and it needs its own grant with its own reasoning rather than riding in on this one. RECORDED SO IT READS AS A DECISION, NOT AN OVERSIGHT. ALSO CHECKED AND DELIBERATELY NOT GRANTED: org/ref/SURPRISE_CHANNEL_PROTOCOL.md needs no new rule -- org/ref/** is ANY_EXEC and 3.0.0_SA_CVO is already permitted there, so CVO can author the protocol doc today. The whole write surface of the GO assignment was enumerated before granting, not just the part that was asked for."
+
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS CVO home — responses, reviews"
