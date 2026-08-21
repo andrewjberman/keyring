@@ -75,7 +75,38 @@ A complete, live SES-from-Lambda implementation exists at `infra/aws/lambda/trad
 
 ---
 
-## 4. BLOCKING PRECONDITION -- **SES IS IN THE SANDBOX.** This is new and it is not a DKIM problem.
+## 4. BLOCKING PRECONDITION -- ~~**SES IS IN THE SANDBOX**~~ **DISCHARGED 2026-08-21 ~03:0xZ. PRODUCTION ACCESS REQUESTED AND GRANTED.**
+
+> ### ⛔ THIS SECTION IS RESOLVED. IT IS KEPT IN FULL BECAUSE THE REASONING BELOW IS STILL HOW THE PROBLEM WAS FOUND.
+> **Andrew-direct, ~02:5xZ, VERBATIM: *"Update the packet and send it."*** -- path (C) executed the same
+> hour it was surfaced. Packet updated to his framing (*"internal operations and agentic tooling for our
+> back office... internal ticketing and associated uses"*) @`2b97a0165e`, submitted via
+> `sesv2 put-account-details`, and **GRANTED ON SUBMISSION -- no review queue.**
+>
+> | | before | after |
+> |---|---|---|
+> | `ProductionAccessEnabled` | `false` | **`true`** |
+> | `Max24HourSend` | 200 | **50,000** |
+> | `MaxSendRate` | 1.0/s | **14.0/s** |
+> | `ReviewDetails` | absent | **`Status: GRANTED`, `CaseId: 178727932800843`** |
+>
+> **The status string alone would be weak evidence; the ENFORCED QUOTA MOVED ON THE SAME READ**, which is
+> the account's behaviour rather than its self-report. Two independent fields agree.
+>
+> **WHAT THIS CHANGES FOR W-E:**
+> - **The recipient restriction is gone.** An Opal DL on `@opalinvest.com` is reachable with no
+>   per-address verification. **WE-2/WE-3 can now be EXERCISED** once the DL exists.
+> - **Paths (A) and (B) below are MOOT.** The DL no longer has to sit on `opalinvest.dev`, and nobody has
+>   to hand-verify its address. ⚠ **AND THAT DECOUPLES THE DL's DOMAIN FROM THE AUDIENCE QUESTION** -- path
+>   (A) was audience-coupled, which was my reason for not choosing it. That coupling is now dissolved, and
+>   **the audience question itself is untouched and still Andrew's.**
+> - **The 12 FAILED identities stop mattering as recipients.** They were sandbox artefacts. They would
+>   still matter for any *sending* identity -- none are; all sending is from the `opalinvest.dev` domain.
+>
+> **WHAT DID NOT CHANGE:** sections 1, 2 and 3. Transport, sender and the reuse direction are unaffected --
+> production access was never an argument for or against SES-from-Lambda.
+
+**The original finding, preserved:** SES was in the sandbox, and it was not a DKIM problem.
 
 ```
 aws sesv2 get-account
@@ -130,11 +161,11 @@ aws sesv2 get-account
 | Item | Owner | State |
 |---|---|---|
 | **DL audience** -- internal / mixed / client-facing (criterion 2) | **ANDREW** | carded, unresolved. Gates W-F's *transport binding, recipient resolution, medium formatting* -- **and nothing else.** W-F's trigger, detection and invariant payload are FREE and already built. |
-| **SES sandbox** (sec. 4) | **ANDREW** (path C) or tenant admin (A/B) | **NEW -- this ruling is its first record.** Blocks WE-2 exercise, not the build. |
+| ~~**SES sandbox** (sec. 4)~~ | ~~ANDREW / tenant admin~~ | ✅ **DISCHARGED ~03:0xZ -- production access GRANTED, case `178727932800843`, quota 200 -> 50,000/day.** Surfaced and closed within the hour on his direct word. WE-2/WE-3 are now exercisable once the DL exists. |
 | **DL creation + address reported** | tenant admin (the "Opal Client Tickets" channel precedent -- Andrew created it by hand) | not started. Address is CONFIG, refuse-if-unset, never a baked default. |
 | **transport + sender** | this gate | **DISCHARGED** by this document. |
 
-**THE BUILD SEAT MAY NOW START** the transport-and-sender-dependent work: the SES call site in the CREATE Lambda write path, the `opalinvest.dev` sender wiring, WE-5's refuse-if-unset recipient handling, and WE-6's no-regression isolation (**the email leg erroring must still yield a 201 and a buzz** -- the runner and CREATE Lambda are live production infrastructure). **WE-2/WE-3 cannot be exercised until section 4 resolves**, and that is a *sequencing* fact, not a build block.
+**THE BUILD SEAT MAY NOW START** the transport-and-sender-dependent work: the SES call site in the CREATE Lambda write path, the `opalinvest.dev` sender wiring, WE-5's refuse-if-unset recipient handling, and WE-6's no-regression isolation (**the email leg erroring must still yield a 201 and a buzz** -- the runner and CREATE Lambda are live production infrastructure). ~~**WE-2/WE-3 cannot be exercised until section 4 resolves**~~ -- **section 4 RESOLVED ~03:0xZ; WE-2/WE-3 are exercisable as soon as the DL exists.** The only remaining prerequisite for exercise is the DL itself (tenant-admin act).
 
 ⚠ **HONEST BOUND, carried forward unchanged: SES has still not been exercised from this estate's ticket path.** The trade-pipeline implementation makes the pattern **proven in-estate**, which is stronger than the "architecture, not an exercised send" the TO recorded -- but it is still not *this* Lambda, *this* role, *this* recipient. **WE-2/WE-3 remain the exercised proof and nothing here substitutes for them.** The `comp-iam` floor read on the sending principal is a build-time step per the TO's compiler-tools mandate and a **new SES action on a new principal needs the live `simulate-principal-policy` primitive with ONE `--resource-arns` and a separately-invoked positive control** (Rule 22a) -- `comp-iam` models `(action)`, never `(action, resource)`.
 
