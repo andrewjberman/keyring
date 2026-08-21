@@ -30,10 +30,16 @@ from __future__ import annotations
 
 import difflib
 
-# Cross-tool parameter confusions, SEMANTIC not string-similar (difflib cannot suggest `body` for
-# `message` -- their ratio is ~0.36 -- yet that exact confusion produced all nine measured empty
-# sends: `message` is the parameter name of the OTHER messaging tool in this environment). The
-# alias map is consulted first; difflib remains the fallback for genuine typos (bodyy, subjct).
+# Cross-tool parameter confusions, SEMANTIC not string-similar. MEASURED (CTO arch gate 64378,
+# verified independently): ratio('message','body') = 0.0000 -- NO matching block at all, so difflib
+# cannot reach the spec's own canonical suggestion at ANY cutoff. ⛔ AND THE NAIVE FIX MISLEADS:
+# at cutoff 0.4, get_close_matches('message', ...) returns ['from_agent', 'to_agent'] -- the WRONG
+# parameters, confidently. A future maintainer who "simplifies away" this map and lowers the cutoff
+# converts a silent drop into a confidently misdirected call. Positive control: ratio('subjekt',
+# 'subject') = 0.857 -> ['subject'] -- difflib is genuinely useful for TYPOS and genuinely blind to
+# SEMANTIC aliases; you need both and neither substitutes. This exact confusion (`message` is the
+# OTHER messaging tool's parameter name) produced all nine measured empty sends.
+# The alias map is consulted first; difflib (default cutoff) remains the typo fallback.
 _KNOWN_CONFUSIONS = {"message": "body", "content": "body", "text": "body",
                      "recipient": "to_agent", "recipients": "to_agents", "to": "to_agent",
                      "sender": "from_agent", "from": "from_agent", "title": "subject"}
