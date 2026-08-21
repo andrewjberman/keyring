@@ -5,6 +5,8 @@
 **Subject:** the site-Z **L1 leg** -- `integrations/bloomberg/pipeline/etf_daily_pull.py`, appended to
 the `OPAL_BBGTML_daily_pull` 07:00 chain @`49501d1e55`.
 **Status:** APPEND-ONLY during this round.
+**Sibling file:** `INVESTIGATION_v1.md` on the CLOUD fabric -- a SEPARATE record carrying DIFFERENT findings under ids `ETFS_POSITIONING-S1..S7`. The two files are NEVER merged.
+**Namespace rule:** site-Z items carry a FABRIC COORDINATE -- `ETFS_POSITIONING-Z-S{n}`. CLOUD keeps the bare `{PROJECT}-S{n}` form; a bare `S{n}` in a message ALREADY SENT is read in the SENDER's fabric.
 
 ⛔ **THIS DOCUMENT CREATES NO SITE-Z D4 STAGE-3 LEG.** `1.0.0_SA_CTO~Z` ruled D4's placement
 LAPTOP (msg 4594, on Andrew's ~05:5xZ placement, latest-binds), and I am not reopening it. A
@@ -62,7 +64,7 @@ the source falsified my own hypothesis first.**
 
 ## 2. ITEM NARRATIVE
 
-### S1 -- the as-of TRIPWIRE compares an expression to ITSELF and cannot ever fire
+### Z-S1 -- the as-of TRIPWIRE compares an expression to ITSELF and cannot ever fire
 
 ```python
 :57  today    = pd.Timestamp.today().normalize()
@@ -85,9 +87,9 @@ today 2026-12-26: asof=2026-12-25 expected=2026-12-25  tripwire_fires=False
 establish that refuses rather than landing under a wrong key -- a wrong date is worse than a missing
 day, because a consumer cannot tell it is wrong."* **The implementation cannot deliver it.** This is
 CLAUDE.md's named class -- SELF-COMPARISON, and *an instrument that COULD NOT HAVE SAID OTHERWISE*
--- and it is the one control positioned to catch S2.
+-- and it is the one control positioned to catch Z-S2.
 
-### S2 -- `BDay` is holiday-blind, and diverges from the estate's canonical calendar
+### Z-S2 -- `BDay` is holiday-blind, and diverges from the estate's canonical calendar
 
 `BDay` is Mon-Fri only. Measured:
 
@@ -107,23 +109,23 @@ T-1, so the canonical is not obviously a drop-in.** I established that they disa
 lands on holidays. I did **not** establish the correct replacement expression. That is the owner's
 call.
 
-### S1 x S2 -- why they compose, and why they are filed separately
+### Z-S1 x Z-S2 -- why they compose, and why they are filed separately
 
 **Together they produce precisely the harm the author's comment names: on the first fire after a
 market holiday the run lands data under a holiday key, and its own refusal mechanism passes it
 green.**
 
 Filed as two items under Rule 24(iv), because **the remedies deliver different things**:
-- Repair **S1 alone** (compare `asof` against an *independent* oracle) -> the run **REFUSES** on
+- Repair **Z-S1 alone** (compare `asof` against an *independent* oracle) -> the run **REFUSES** on
   2026-09-08 rather than landing bad data. That is the designed behaviour, and it is arguably
   sufficient on its own.
-- Repair **S2 alone** (swap the date source) -> correct date, but the guard is **still dead** and
+- Repair **Z-S2 alone** (swap the date source) -> correct date, but the guard is **still dead** and
   the next date defect is undetected.
 
 A single change *can* move both (point the tripwire at the canonical calendar), but that is a
 remedy choice, not evidence they are one defect.
 
-### S3 -- the 08/22-08/24 acceptance window has a static as-of (a READ risk, not a defect)
+### Z-S3 -- the 08/22-08/24 acceptance window has a static as-of (a READ risk, not a defect)
 
 All three fires in L1-2's window resolve to the **same** as-of:
 
@@ -138,7 +140,7 @@ fire 08/25 (Tue) -> as_of 2026-08-24 (Mon)   <- first advance
 idempotent. **The risk is entirely at the ACCEPTANCE READ:** whoever evaluates continuity across
 those three runs sees a static as-of and can read a healthy pipeline as stalled. NEVER#1 is explicit
 that a false outage is not a safe error -- *"it manufactures pressure to fix a pipeline that is
-working, which is how a guard gets removed"* -- and given S1, **the guard most likely to be "fixed"
+working, which is how a guard gets removed"* -- and given Z-S1, **the guard most likely to be "fixed"
 under that pressure is the BDay logic, which is the correct half.**
 
 ⛔ **INFERRED, NOT GROUNDED.** I could not locate L1-4's exact wording in
@@ -146,19 +148,19 @@ under that pressure is the BDay logic, which is the correct half.**
 know whether L1-4 expects the window to advance.** This is a read-risk conditional on that wording,
 **not** an asserted criterion defect. It cannot seed a remediation row while INFERRED.
 
-### S4 x S5 -- THE COUPLED EDGE: the remedy one item invites is the act that fires the other
+### Z-S4 x Z-S5 -- THE COUPLED EDGE: the remedy one item invites is the act that fires the other
 
 Found by `0.7.0_AE_CloudOps~Z` (msg 4624) answering a bucket-configuration question **nobody had
 asked** -- *"if `bbg/` is ever emptied"* was sitting inside another item as an untested premise.
 Cross-item sequencing ruled by `1.0.0_SA_CTO~Z` (msg 4628), who directed this channel to **record
 the edge on BOTH items, because an edge written on only one side is found only by whoever reads
-that side.** That is why S4 and S5 below each carry it in full rather than one pointing at the other.
+that side.** That is why Z-S4 and Z-S5 below each carry it in full rather than one pointing at the other.
 
-**S4 -- PROVENANCE.** Seven ad-hoc objects sit in the production prefix and **no reader can
+**Z-S4 -- PROVENANCE.** Seven ad-hoc objects sit in the production prefix and **no reader can
 distinguish them from a scheduled landing** (`0.0.0_AB_MSTR~Z` item 4). The tidy, locally reasonable
 response is: delete the ad-hoc objects out of `bbg/`.
 
-**S5 -- THE HARDCODED FLOOR.** If `bbg/` yields no prior day prefix, the producer takes the
+**Z-S5 -- THE HARDCODED FLOOR.** If `bbg/` yields no prior day prefix, the producer takes the
 `prior_end=None` branch and starts from a hardcoded `2026-08-21`. From a fire months later that is a
 multi-month Bloomberg history request for the full universe **that nobody sized**.
 
@@ -180,7 +182,7 @@ source, etf_daily_pull.py:
    Deleting it takes the prefix count 1 -> 0 -> prior_end None -> the floor fires.
 ```
 
-**So S5 is dormant precisely as long as S4's objects stay where they are.** Tracked separately with
+**So Z-S5 is dormant precisely as long as Z-S4's objects stay where they are.** Tracked separately with
 the same owner and the same window, **a reader disposing of them one at a time discharges the
 provenance concern and arms the floor in the same act, each step locally reasonable.**
 
@@ -206,8 +208,8 @@ bucket and over an unversioned one are the same characters and different facts.
 ⚠ **BOUND, carried from the filer unsoftened:** they measured **lifecycle and versioning**, not
 every conceivable deletion path (an agent or human delete, a future TF change, a replication
 reconfiguration). The claim is that **no STANDING configuration on this bucket deletes anything** --
-which *lowers* S5's standing without closing it. **It stays ARMED: deliberate acts happen, and the
-most likely deliberate act is the one S4 invites.**
+which *lowers* Z-S5's standing without closing it. **It stays ARMED: deliberate acts happen, and the
+most likely deliberate act is the one Z-S4 invites.**
 
 ---
 
@@ -216,7 +218,7 @@ most likely deliberate act is the one S4 invites.**
 ```json
 [
   {
-    "id": "ETFS_POSITIONING-S1",
+    "id": "ETFS_POSITIONING-Z-S1",
     "surfaced_by": "3.0.0_SA_CVO~Z",
     "surfaced_at": "2026-08-21T19:48Z",
     "one_line": "The as-of TRIPWIRE in etf_daily_pull.py compares an expression to itself (asof vs an identical re-computation) and can never fire -- the one control positioned to catch a wrong as-of is structurally incapable of catching anything.",
@@ -236,7 +238,7 @@ most likely deliberate act is the one S4 invites.**
     "notes": "CLAUDE.md's named SELF-COMPARISON class and 'an instrument that COULD NOT HAVE SAID OTHERWISE'. A passing assertion never mutated has never been tested; this one passes on every input. Trigger 2026-09-08 -- DOES NOT block tonight and does not touch the 08/22-08/24 fires. Comment-at-the-config-site disarm available today at zero risk (precedent: 0.5.0_AE_OpalETL~Z @a4b1981cd5). DISARMED != REMEDIATED."
   },
   {
-    "id": "ETFS_POSITIONING-S2",
+    "id": "ETFS_POSITIONING-Z-S2",
     "surfaced_by": "3.0.0_SA_CVO~Z",
     "surfaced_at": "2026-08-21T19:48Z",
     "one_line": "etf_daily_pull.py derives its as-of from pandas BDay, which is Mon-Fri and HOLIDAY-BLIND, so the first fire after each market holiday lands the as_of ON the closed day -- and it diverges from lib/trading_calendar.py, which CLAUDE.md NEVER#1 names as the ONE frontier definition.",
@@ -253,10 +255,10 @@ most likely deliberate act is the one S4 invites.**
     },
     "disposition": "GRADUATED",
     "disarm_owner": "0.0.0_AB_MSTR~Z",
-    "notes": "Composes with S1 into the harm the author's own comment names: the run lands under a holiday key AND its refusal mechanism passes it green. Filed separately from S1 per Rule 24(iv) -- repairing S1 alone makes the run REFUSE on 09-08 (designed behaviour, arguably sufficient); repairing S2 alone leaves a dead guard. ⛔ THE REPLACEMENT EXPRESSION IS NOT DETERMINED: the canonical uses an inclusive 'last trading day <= date' convention while this pipeline wants T-1, so it is not obviously a drop-in. I measured the disagreement, not the fix. Trigger 2026-09-08."
+    "notes": "Composes with Z-S1 into the harm the author's own comment names: the run lands under a holiday key AND its refusal mechanism passes it green. Filed separately from Z-S1 per Rule 24(iv) -- repairing Z-S1 alone makes the run REFUSE on 09-08 (designed behaviour, arguably sufficient); repairing Z-S2 alone leaves a dead guard. ⛔ THE REPLACEMENT EXPRESSION IS NOT DETERMINED: the canonical uses an inclusive 'last trading day <= date' convention while this pipeline wants T-1, so it is not obviously a drop-in. I measured the disagreement, not the fix. Trigger 2026-09-08."
   },
   {
-    "id": "ETFS_POSITIONING-S3",
+    "id": "ETFS_POSITIONING-Z-S3",
     "surfaced_by": "3.0.0_SA_CVO~Z",
     "surfaced_at": "2026-08-21T19:48Z",
     "one_line": "All three fires in the L1-2 acceptance window (Sat 08/22, Sun 08/23, Mon 08/24) resolve to the SAME as_of 2026-08-21, so a reviewer checking whether the window advanced can read a correct, idempotent pipeline as stalled.",
@@ -271,13 +273,13 @@ most likely deliberate act is the one S4 invites.**
       ]
     },
     "disposition": "UNDER_INVESTIGATION",
-    "notes": "A READ risk, not a pipeline defect -- filed at that strength deliberately. INFERRED because the conditional half (what L1-4 requires) is unmeasured, so it cannot seed a remediation row. NEVER#1 is explicit that a false outage is not a safe error: it manufactures pressure to fix a working pipeline. Given S1, the guard most likely to be 'fixed' under that pressure is the BDay logic -- the correct half. Blocks a zero-graduation close on this round."
+    "notes": "A READ risk, not a pipeline defect -- filed at that strength deliberately. INFERRED because the conditional half (what L1-4 requires) is unmeasured, so it cannot seed a remediation row. NEVER#1 is explicit that a false outage is not a safe error: it manufactures pressure to fix a working pipeline. Given Z-S1, the guard most likely to be 'fixed' under that pressure is the BDay logic -- the correct half. Blocks a zero-graduation close on this round."
   },
   {
-    "id": "ETFS_POSITIONING-S4",
+    "id": "ETFS_POSITIONING-Z-S4",
     "surfaced_by": "0.0.0_AB_MSTR~Z",
     "surfaced_at": "2026-08-21T19:56Z",
-    "one_line": "Seven ad-hoc objects sit in the production prefix bbg/2026-08-20/ and no reader can distinguish them from a scheduled landing -- and they are the ENTIRE contents of bbg/, so the cleanup this invites is the act that fires S5's floor.",
+    "one_line": "Seven ad-hoc objects sit in the production prefix bbg/2026-08-20/ and no reader can distinguish them from a scheduled landing -- and they are the ENTIRE contents of bbg/, so the cleanup this invites is the act that fires Z-S5's floor.",
     "class": "OBSERVATION",
     "hazard_standing": "ARMED",
     "grounding": {
@@ -290,10 +292,10 @@ most likely deliberate act is the one S4 invites.**
     },
     "disposition": "GRADUATED",
     "disarm_owner": "0.0.0_AB_MSTR~Z",
-    "notes": "⛔ COUPLED TO ETFS_POSITIONING-S5 -- THE EDGE IS RECORDED ON BOTH ITEMS BY 1.0.0_SA_CTO~Z's DIRECTION (msg 4628): 'an edge written on only one side is found only by whoever reads that side.' The tidy remedy this item invites -- delete the ad-hoc objects -- takes bbg/ prefix count 1 -> 0, which sends the producer down the prior_end=None branch onto S5's hardcoded 2026-08-21 floor. RULED: THE CLEANUP DOES NOT RUN BEFORE THE FLOOR IS ADDRESSED, OR THEY MOVE TOGETHER. A remedy that fires another item's trigger is not a remedy, it is a trade. Found by 0.7.0_AE_CloudOps~Z asking a bucket-configuration question nobody had asked."
+    "notes": "⛔ COUPLED TO ETFS_POSITIONING-Z-S5 -- THE EDGE IS RECORDED ON BOTH ITEMS BY 1.0.0_SA_CTO~Z's DIRECTION (msg 4628): 'an edge written on only one side is found only by whoever reads that side.' The tidy remedy this item invites -- delete the ad-hoc objects -- takes bbg/ prefix count 1 -> 0, which sends the producer down the prior_end=None branch onto Z-S5's hardcoded 2026-08-21 floor. RULED: THE CLEANUP DOES NOT RUN BEFORE THE FLOOR IS ADDRESSED, OR THEY MOVE TOGETHER. A remedy that fires another item's trigger is not a remedy, it is a trade. Found by 0.7.0_AE_CloudOps~Z asking a bucket-configuration question nobody had asked."
   },
   {
-    "id": "ETFS_POSITIONING-S5",
+    "id": "ETFS_POSITIONING-Z-S5",
     "surfaced_by": "0.0.0_AB_MSTR~Z",
     "surfaced_at": "2026-08-21T19:56Z",
     "one_line": "If bbg/ yields no prior day prefix the producer takes prior_end=None and starts from a HARDCODED 2026-08-21 floor -- from a fire months later that is a multi-month Bloomberg history request for the full universe that nobody sized.",
@@ -310,19 +312,19 @@ most likely deliberate act is the one S4 invites.**
     },
     "disposition": "GRADUATED",
     "disarm_owner": "0.0.0_AB_MSTR~Z",
-    "notes": "⛔ COUPLED TO ETFS_POSITIONING-S4, EDGE RECORDED ON BOTH SIDES per 1.0.0_SA_CTO~Z msg 4628. S5 IS DORMANT PRECISELY AS LONG AS S4'S OBJECTS STAY WHERE THEY ARE -- tracked separately with the same owner and window, a reader disposing of them one at a time discharges the provenance concern and arms the floor IN THE SAME ACT, each step locally reasonable. RULED: cleanup does not run before the floor is addressed, or they move together. THE TRIGGER CANNOT ARRIVE ON A TIMER: no lifecycle expiration, versioning never enabled, so it requires a DELIBERATE act -- which LOWERS the standing without closing it. BOUND carried from 0.7.0_AE_CloudOps~Z unsoftened: they measured lifecycle and versioning, NOT every conceivable deletion path (human/agent delete, future TF change, replication reconfiguration); the claim is that no STANDING configuration deletes anything. Stays ARMED because deliberate acts happen and the likeliest one is what S4 invites."
+    "notes": "⛔ COUPLED TO ETFS_POSITIONING-Z-S4, EDGE RECORDED ON BOTH SIDES per 1.0.0_SA_CTO~Z msg 4628. Z-S5 IS DORMANT PRECISELY AS LONG AS Z-S4'S OBJECTS STAY WHERE THEY ARE -- tracked separately with the same owner and window, a reader disposing of them one at a time discharges the provenance concern and arms the floor IN THE SAME ACT, each step locally reasonable. RULED: cleanup does not run before the floor is addressed, or they move together. THE TRIGGER CANNOT ARRIVE ON A TIMER: no lifecycle expiration, versioning never enabled, so it requires a DELIBERATE act -- which LOWERS the standing without closing it. BOUND carried from 0.7.0_AE_CloudOps~Z unsoftened: they measured lifecycle and versioning, NOT every conceivable deletion path (human/agent delete, future TF change, replication reconfiguration); the claim is that no STANDING configuration deletes anything. Stays ARMED because deliberate acts happen and the likeliest one is what Z-S4 invites."
   },
   {
-    "id": "ETFS_POSITIONING-S6",
+    "id": "ETFS_POSITIONING-Z-S6",
     "surfaced_by": "0.7.0_AE_CloudOps~Z",
     "surfaced_at": "2026-08-21T20:12Z",
-    "one_line": "S3's conditional is RESOLVED and it INVERTS S3: L1-4 does not read as stalled, it PASSES DEGENERATELY -- all three acceptance fires compute the identical window 2026-08-21 -> 2026-08-21, so the increment behaviour L1-4 exists to prove is never exercised.",
+    "one_line": "Z-S3's conditional is RESOLVED and it INVERTS Z-S3: L1-4 does not read as stalled, it PASSES DEGENERATELY -- all three acceptance fires compute the identical window 2026-08-21 -> 2026-08-21, so the increment behaviour L1-4 exists to prove is never exercised.",
     "class": "BLOCKING",
     "hazard_standing": "ARMED",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "L1-4 wording established: 'run N+1's history window starts where run N's manifest ended' -- the wording S3 could not locate and declined to guess",
+        "L1-4 wording established: 'run N+1's history window starts where run N's manifest ended' -- the wording Z-S3 could not locate and declined to guess",
         "live manifest s3://opal-data-etfs/bbg/2026-08-20/run_manifest.json read at this seat: as_of 2026-08-20, history_window_start 2026-08-20, history_window_end 2026-08-20, prior_window_end None",
         "etf_daily_pull.py:105 skips d == asof_key, so the only prior prefix for fires 1/2/3 is 2026-08-20 -> prior_end 2026-08-20 -> start 2026-08-21",
         "computed independently at this seat: fires 08/22, 08/23, 08/24 each yield window 2026-08-21 -> 2026-08-21, IDENTICAL; the first fire that ADVANCES the window is 08/25 (08-21 -> 08-24)"
@@ -330,10 +332,10 @@ most likely deliberate act is the one S4 invites.**
     },
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
-    "notes": "SUPERSEDES ETFS_POSITIONING-S3 AND CORRECTS ITS DIRECTION -- filed as a new item per append-only, and it is the THIRD self-correction by this seat tonight. S3 said a correct pipeline might be MISREAD AS STALLED (a read risk). THE ACTUAL HAZARD IS THE OPPOSITE AND WORSE: L1-4 READS SATISFIED. Run 2 does start where run 1 ended, so continuity is technically met -- DEGENERATELY, because the window never advances and the increment is never tested. S3's INFERRED marking was correct (the conditional was genuinely unmeasured and I declined to guess), but its conditional resolved AGAINST the direction I assumed. ⛔ THIS IS S1'S CLASS ONE LAYER UP: an acceptance criterion that cannot fail over its own evaluation window is not a criterion. The tripwire could not fire on any input; L1-4 cannot fail across 08/22-08/24. CONSEQUENCE FOR THE SOVEREIGN PRIORITY ITEM: 'L1 accepted on 08/24' would mean the criterion passed without exercising what it measures. If L1-4 is to mean anything its window must include 08/25, the first fire whose window advances. EDGE RECORDED ON BOTH L1-2 AND L1-4 per 1.0.0_SA_CTO~Z's standing instruction and the filer's note -- an edge on one side is found only by whoever reads that side. Disposition of the criterion is the issuer's; the class call was mine."
+    "notes": "SUPERSEDES ETFS_POSITIONING-Z-S3 AND CORRECTS ITS DIRECTION -- filed as a new item per append-only, and it is the THIRD self-correction by this seat tonight. Z-S3 said a correct pipeline might be MISREAD AS STALLED (a read risk). THE ACTUAL HAZARD IS THE OPPOSITE AND WORSE: L1-4 READS SATISFIED. Run 2 does start where run 1 ended, so continuity is technically met -- DEGENERATELY, because the window never advances and the increment is never tested. Z-S3's INFERRED marking was correct (the conditional was genuinely unmeasured and I declined to guess), but its conditional resolved AGAINST the direction I assumed. ⛔ THIS IS Z-S1'S CLASS ONE LAYER UP: an acceptance criterion that cannot fail over its own evaluation window is not a criterion. The tripwire could not fire on any input; L1-4 cannot fail across 08/22-08/24. CONSEQUENCE FOR THE SOVEREIGN PRIORITY ITEM: 'L1 accepted on 08/24' would mean the criterion passed without exercising what it measures. If L1-4 is to mean anything its window must include 08/25, the first fire whose window advances. EDGE RECORDED ON BOTH L1-2 AND L1-4 per 1.0.0_SA_CTO~Z's standing instruction and the filer's note -- an edge on one side is found only by whoever reads that side. Disposition of the criterion is the issuer's; the class call was mine."
   },
   {
-    "id": "ETFS_POSITIONING-S7",
+    "id": "ETFS_POSITIONING-Z-S7",
     "surfaced_by": "0.7.0_AE_CloudOps~Z",
     "surfaced_at": "2026-08-21T20:10Z",
     "one_line": "L1-2's three fires land the SAME keys and, because versioning was never enabled, each overwrite is DESTRUCTIVE -- fires 1 and 2 leave no S3 trace, so the criterion's own named instrument cannot distinguish three fires from one Monday fire.",
@@ -350,10 +352,10 @@ most likely deliberate act is the one S4 invites.**
     },
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
-    "notes": "⛔ THE PRODUCER IS CORRECT AND THIS IS NOT A STALENESS FINDING. The as_of resolution is NEVER#1 working as designed -- Friday's data IS the right answer on Saturday, Sunday and Monday. THE CRITERION is what mis-assumes, by expecting consecutive fires to produce distinct dated artifacts. ⛔ AND IT CORRECTS THE COMPLETENESS OF MY OWN S5: I recorded 'versioning never enabled' with ONLY its BENIGN reading -- no delete markers, so an empty listing means genuinely empty, a false-absence class closed. THE SAME MEASURED FACT HAS AN OPPOSITE SECOND CONSEQUENCE I DID NOT DRAW: no versioning also means NO TRACE OF AN OVERWRITTEN FIRE. One fact, two implications, and I banked only the reassuring one -- the filer drew the other. COMPOSES WITH S6: S6 says L1-4 cannot FAIL across its window; S7 says L1-2 cannot be EVIDENCED from S3 after the fact. Together the acceptance evidence for the priority item is thinner than either finding alone shows, and CTO's own fourth pass separately found the wrapper logs do not establish trigger provenance either. Disposition is the issuer's; routed there same-turn by the filer, recorded here because routing to the issuer does not discharge the channel's record obligation."
+    "notes": "⛔ THE PRODUCER IS CORRECT AND THIS IS NOT A STALENESS FINDING. The as_of resolution is NEVER#1 working as designed -- Friday's data IS the right answer on Saturday, Sunday and Monday. THE CRITERION is what mis-assumes, by expecting consecutive fires to produce distinct dated artifacts. ⛔ AND IT CORRECTS THE COMPLETENESS OF MY OWN Z-S5: I recorded 'versioning never enabled' with ONLY its BENIGN reading -- no delete markers, so an empty listing means genuinely empty, a false-absence class closed. THE SAME MEASURED FACT HAS AN OPPOSITE SECOND CONSEQUENCE I DID NOT DRAW: no versioning also means NO TRACE OF AN OVERWRITTEN FIRE. One fact, two implications, and I banked only the reassuring one -- the filer drew the other. COMPOSES WITH Z-S6: Z-S6 says L1-4 cannot FAIL across its window; Z-S7 says L1-2 cannot be EVIDENCED from S3 after the fact. Together the acceptance evidence for the priority item is thinner than either finding alone shows, and CTO's own fourth pass separately found the wrapper logs do not establish trigger provenance either. Disposition is the issuer's; routed there same-turn by the filer, recorded here because routing to the issuer does not discharge the channel's record obligation."
   },
   {
-    "id": "ETFS_POSITIONING-S8",
+    "id": "ETFS_POSITIONING-Z-S8",
     "surfaced_by": "0.0.0_AB_MSTR~Z",
     "surfaced_at": "2026-08-21T20:19Z",
     "one_line": "The holdings-breakdown and weighted-characteristics sections are buildable for 2 of the 4 declared funds: DIVZ and IDVZ have NO constituent holdings in any tree, and Bloomberg does not serve them via reference data.",
@@ -382,14 +384,14 @@ most likely deliberate act is the one S4 invites.**
 
 | | |
 |---|---|
-| Items | **8** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 inverting S3, 1 completing S5, 1 from `0.0.0_AB_MSTR~Z`) |
-| Graduated | **7** (S1, S2, S4, S5, S6, S7, S8) · S3 SUPERSEDED by S6 |
-| ARMED | **4** (S1, S2 trigger **2026-09-08**; S4 x S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
+| Items | **8** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 inverting Z-S3, 1 completing Z-S5, 1 from `0.0.0_AB_MSTR~Z`) |
+| Graduated | **7** (Z-S1, Z-S2, Z-S4, Z-S5, Z-S6, Z-S7, Z-S8) · Z-S3 SUPERSEDED by Z-S6 |
+| ARMED | **4** (Z-S1, Z-S2 trigger **2026-09-08**; Z-S4 x Z-S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 | Blocks tonight | **NOTHING** |
 
-**This round cannot close** -- S3 is `UNDER_INVESTIGATION`, and an open item is not a zero.
-Closing S3 needs one thing: **L1-4's actual wording**, which the L1 owner or the brief's author can
+**This round cannot close** -- Z-S3 is `UNDER_INVESTIGATION`, and an open item is not a zero.
+Closing Z-S3 needs one thing: **L1-4's actual wording**, which the L1 owner or the brief's author can
 supply in a line.
 
 -- `3.0.0_SA_CVO~Z`, 2026-08-21
