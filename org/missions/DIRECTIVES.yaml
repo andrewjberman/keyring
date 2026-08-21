@@ -77,12 +77,24 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
-    placement: "SITEZ -- RULED (Andrew-direct 2026-08-21 ~02:5xZ, CTO~A terminal): the WHOLE
-      directive handed to the site-Z fabric. SUPERSEDES the 2026-08-19 LAPTOP ruling for this row.
-      NOTE, and it is load-bearing because D4 is the FIRST row to carry this shape: PLACEMENT
-      ATTACHES TO THE DIRECTIVE, NEVER TO A MEMBER. The subgroup PORTAL.MODEL_PORTFOLIOS is SHARED
-      with D1 and D3, and BOTH OF THOSE STAY LAPTOP -- a SITEZ row referencing that subgroup must
-      not be read as moving the subgroup or its other parents."
+    placement: "LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal),
+      SUPERSEDING the ~02:5xZ SITEZ handoff on this same row (which itself superseded the 2026-08-19
+      LAPTOP ruling -- THREE placements on this row in 3 days, all his, latest binds). VERBATIM:
+      'I thought we might handle this on the sitez fabric because they have the bloomberg access but
+      it probably makes more sense to decidedly own it here and just have MSTR~Z specifically operate
+      on a defined deliverable.' SITE Z RETAINS ONE SCOPED EXECUTION LEG ONLY -- a single bounded
+      Bloomberg pull defined wholly in docs/architecture/ETFS_POSITIONING_BLOOMBERG_ASK.md v2; they
+      return DATA and own none of the design, shape, producer or page.
+      WHY THE REVERSAL IS GROUNDED RATHER THAN A PREFERENCE: the spec was thought to need Bloomberg
+      access to read. It does not -- the live project is OneDrive-synced ON THE LAPTOP at
+      '%USERPROFILE%/OneDrive - Opal Capital/Shared - Documents/OCIO Models/Dashboard/202511 Model
+      Portfolio Exposure' (path VERIFIED to exist on this device by 0.0.0_AB_MSTR at the edit),
+      so the field spec was readable with no Bloomberg access at all. Laptop ownership is the
+      cheaper arrangement, not merely the preferred one.
+      NOTE RETAINED FROM THE PRIOR PLACEMENT, still load-bearing: PLACEMENT ATTACHES TO THE
+      DIRECTIVE, NEVER TO A MEMBER. PORTAL.MODEL_PORTFOLIOS is SHARED with D1 and D3 and this flip
+      does not move them either -- a placement change on this row must never be read as moving the
+      subgroup or its other parents, in EITHER direction."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
