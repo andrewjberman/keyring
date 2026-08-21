@@ -19,3 +19,6 @@
 ## Conditions + not claimed
 - None blocking. One carried expectation: when C4-LEASE lands, these certificates become LEASED closure members (Response VII); until then their `vintage` + invalidation predicates are the only decay instrument -- consumers treat an un-leased VALID as valid-at-vintage, never valid-now.
 - Not claimed: the wrappers' behavior beyond the exercised cases (COO's validation leg); the sandboxed-gate CreateFileMapping failures ~A reported (environment, not object; the out-of-sandbox rerun executed the real gate).
+
+## Condition landing (CTO 64091's non-blocking rider)
+DISCHARGED @e7c7e605c6 and VERIFIED ON THE COMMITTED BYTES at base (git show <hash>:<path>, the blob-pinned read -- tonight's own rule applied): certificate_id.description names src/attestation_harness.py:25 as the normative home, pins all five axes (sorted keys, compact separators, ensure_ascii=True, ONE TRAILING NEWLINE, ASCII encode) and carries the non-conformant clause. Post-change package 23/23, proof VALID. The suggested top-level schema description was not added -- accepted as-is (the condition named certificate_id only). Cert final.
