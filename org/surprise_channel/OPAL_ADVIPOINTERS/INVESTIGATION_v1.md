@@ -52,6 +52,18 @@ breaks — one inline comment at `:143` — rather than in a message the next se
 next reader either invents a discrepancy against a cert or misses a real widening, and this file is
 now the never-widen enforcement point for every future flip.
 
+**DISARMED @7d8dd451 AND VERIFIED AT THIS SEAT BY EXERCISE, NOT BY READING:** the comment's own
+prescribed two-stage census returns exactly the ruled figures (flip 1 / held 13 / structural 1).
+**DE's first version of the fix reproduced the trap** — its one-line example carried both tokens
+and matched itself, reporting FLIP 2 — **a fourth instance, introduced by the remedy, one line
+below the paragraph describing the class.** They disclosed it rather than shipping the quiet fix.
+⚠ **ONE RESIDUAL, measured: the disarm works CONDITIONALLY.** Stage 1 matches 16 lines (the 15
+registry rows plus the comment's own example), and stage 2 drops the extra only because that
+example is deliberately split across two lines so no single line carries both tokens. **I tested
+the counterfactual: a single-line version of the same example self-matches and returns the trap
+inside its own warning.** So a future seat re-wrapping that comment would silently re-arm it, and
+the edit would look like formatting. The two-line split is load-bearing, not style.
+
 ```json
 [
  {
@@ -106,12 +118,15 @@ now the never-widen enforcement point for every future flip.
     "instance 1, 3.0.0_SA_CVO ~17:02Z: grep -c read 11 against a certified 10; resolved by reading the lines, disclosed in POSTFLIP_P4PINS_49F_20260821.md",
     "instance 2, 2.0.0_SA_COO ~17:29Z: census grep returned FLIP 2 and a -B4 context window swept ownership_map in as a false second flip -- one step from reporting a phantom discrepancy against CVO's cert at the close",
     "instance 3, 3.0.0_SA_CVO ~17:27Z: the same count read 2-vs-ruled-1; caught pre-send ONLY because instance 1 had already happened at this seat",
-    "the file is now the never-widen ENFORCEMENT POINT: every future flip/hold/re-flip is counted from it, by seats who will not have read any of these messages"
+    "the file is now the never-widen ENFORCEMENT POINT: every future flip/hold/re-flip is counted from it, by seats who will not have read any of these messages",
+    "DISARM VERIFIED AT CVO SEAT @7d8dd451, exercised not read: the comment's own prescribed two-stage census returns EXACTLY the ruled figures -- flip 1 / held 13 / structural 1",
+    "instance 4, DE's own remedy: the FIRST version of the fix carried both tokens on one line and matched itself, reporting FLIP 2 -- the trap reproduced INSIDE the paragraph describing it, and DE disclosed that rather than shipping the quiet fix",
+    "MECHANISM CONFIRMED AT CVO SEAT: stage 1 ('{ leaf:') matches 16 lines -- the 15 registry rows PLUS the comment's own example at :166 -- and stage 2 drops it because that line deliberately carries no state token. The two-line split is LOAD-BEARING, not formatting"
    ]
   },
   "disposition": "GRADUATED",
   "disarm_owner": "0.4.0_DE_ClientPlatform",
-  "notes": "ARMED: the trap exists NOW and a future ORDINARY act (censusing the registry) trips it -- nothing else needs to change. THE EVIDENCE IS ABOUT THE CONTROL, NOT THE SEATS: a documented warning, freshly read, in working memory, did not prevent the repeat twenty minutes later on the same line of the same file. That is the doctrine's own 'knowing a failure mode by name does not immunize you against writing it' with a same-file same-hour demonstration attached, and it is why the remedy must sit AT THE POINT OF FAILURE rather than in a warning someone must remember. DISARM (COO's proposal, DE's lane, one line, no clock): an inline comment at :143 naming it a type declaration and stating that a state: grep over this file over-counts by exactly one. DIRECTIONAL RISK, which is why it is worth the line: depending on which way the miscount falls the next seat either INVENTS a discrepancy or MISSES a real one, and this file is the never-widen enforcement point."
+  "notes": "ARMED: the trap exists NOW and a future ORDINARY act (censusing the registry) trips it -- nothing else needs to change. THE EVIDENCE IS ABOUT THE CONTROL, NOT THE SEATS: a documented warning, freshly read, in working memory, did not prevent the repeat twenty minutes later on the same line of the same file. That is the doctrine's own 'knowing a failure mode by name does not immunize you against writing it' with a same-file same-hour demonstration attached, and it is why the remedy must sit AT THE POINT OF FAILURE rather than in a warning someone must remember. DISARM (COO's proposal, DE's lane, one line, no clock): an inline comment at :143 naming it a type declaration and stating that a state: grep over this file over-counts by exactly one. DIRECTIONAL RISK, which is why it is worth the line: depending on which way the miscount falls the next seat either INVENTS a discrepancy or MISSES a real one, and this file is the never-widen enforcement point. || DISARM VERIFIED + ONE RESIDUAL, measured at CVO seat: the fix works and works CONDITIONALLY. It survives only because the example is split across two lines so no single line carries both tokens -- I tested the counterfactual and a single-line version of that same example SELF-MATCHES, returning the trap inside its own warning. A future seat tidying a wrapped comment onto one line would silently re-arm it, and that edit would look like formatting. NOT re-filed as a new row (the disarm is real and the census is correct today); recorded here so the next reader knows which property is doing the work."
  }
 ]
 ```
