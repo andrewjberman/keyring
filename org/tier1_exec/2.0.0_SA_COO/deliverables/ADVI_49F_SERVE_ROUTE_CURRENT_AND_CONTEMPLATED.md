@@ -94,10 +94,49 @@ not be cited as such (CVO wrote that limit into the cert itself, `@ab585bb00e`).
 
 | gap | measured state | cost class |
 |---|---|---|
-| **History** | canonical series = **529 partitions, 2024-07-08 → 2026-08-20**; the twin's floor IS its source's first day. The floor is **INHERITED FROM SILVER** — all six Schwab silver tables share earliest **2024-07-08**, a TREE-WIDE floor. | **SOURCE-LIMITED.** A recompute cannot extend it — the rows do not exist. Reaching 2020 = ingesting ~4.5 yrs of vendor history not in the tree: a **vendor/ingest program with its own feasibility question**, not a backfill anyone can queue. ⛔ **Do not use the word "backfill" for this** until someone has measured that the history is obtainable. |
+| **History** | canonical series = **529 partitions, 2024-07-08 → 2026-08-20**; the twin's floor IS its source's first day. ⛔ **THE "TREE-WIDE FLOOR" CLAIM IS FALSIFIED — SEE THE CORRECTION BLOCK BELOW THIS TABLE.** | **STILL PROBABLY SOURCE-LIMITED, BUT THE STATED BASIS WAS WRONG.** A recompute may or may not extend it; the question is now OPEN, not settled. ⛔ **Do not use the word "backfill" for this** until someone has measured that the history is obtainable — that caution stands and is now doubly warranted. |
 | **Geography / state** | canonical dims tree = **eleven dims, none geographic**. BUT `schwab/08335338/silver/fact_acc` carries `ac_st` **100% populated (7,331/7,331), 48 distinct**, top values TX 3,576 / CA 505 / GA 408 / AR 362 / NC 263 / KS 247 / FL 204 — **the legacy chart's own state set** — plus city (1,071), zip (1,587), country, 3 address lines, all 100%. | **NOT source-limited. An UNBUILT DIM over data already held.** A dim build from `fact_acc`, no vendor involved. ⚠ The producer declaration *"geography is a BD-side attribute with no canonical dim"* is TRUE of the canonical layer and MISLEADING about availability. |
 | **Office** | `fact_acc.schwab_br_cd` 100% populated, **285 distinct branch codes** vs the legacy product's **NINE offices**. | **UNKNOWN — a GRAIN MISMATCH, not a match.** A Schwab branch code may or may not roll up to a 49F office. **CANDIDATE ONLY**; one measurement settles whether it behaves like state or like history. |
 | **Leaderboard** | 163 → 146, **twenty named advisors absent in every window** | **POSSIBLY A BUG, NOT AN EXTENT.** Advisor disappearance is not explained by a missing dimension. Needs its own measurement cell — *"not ready"* and *"broken"* take different answers. |
+
+⛔ **CORRECTION 2026-08-21T20:4xZ (2.0.0_SA_COO, own-lane) — THE HISTORY ROW'S MECHANISM WAS FALSE. MEASURED
+LIVE, NEGATIVE-CONTROLLED, DENOMINATOR PRINTED.**
+
+The row read: *"all six Schwab silver tables share earliest 2024-07-08, a **TREE-WIDE** floor."* **Both halves
+of that are wrong.**
+
+**MEASURED** — `aws s3 ls s3://opal-data-assets/schwab/08335338/silver/{table}/ | head -1`, **12 of 12 tables
+returned an earliest partition** (negative control: a nonexistent table name returns empty, so the instrument
+discriminates):
+
+| earliest partition | tables |
+|---|---|
+| `date=2023-07-12` | **`fact_rld`** — **782 partitions**, dense from that day. **A YEAR DEEPER than the claimed floor.** |
+| `date=2023-07-31` | `fact_rly` |
+| `date=2023-09-01` | `fact_rlu` · `fact_rtu` |
+| `date=2024-07-08` | `dim_asset` `dim_balance` `dim_position` `dim_transaction` `fact_acc` (534 partitions) `fact_fam` `fact_rps` `fact_rps_s2` |
+
+**TWO INDEPENDENT ERRORS:**
+1. **"six tables" — THERE ARE TWELVE.** The census that produced the claim covered **half the tree** and the
+   number was written as though it were the denominator. *A partial census reported as a total is the exact
+   floor-vs-denominator class this estate keeps re-learning.*
+2. **"TREE-WIDE" — IT IS NOT.** **Four of twelve floor EARLIER**, the deepest by **almost a full year**.
+
+⛔ **WHAT THIS DOES AND DOES NOT OVERTURN — stated precisely, because the conclusion may well survive:**
+- **OVERTURNED:** the *mechanism*. There is no tree-wide 2024-07-08 floor to inherit.
+- **NOT ESTABLISHED:** that the canonical series *can* reach deeper. **I have NOT measured which tables the
+  canonical series actually consumes**, and the `rl*`/`rtu` family reads like a rolling/derived grain that may
+  not be a usable input at all. **That measurement is the open cell.**
+- **SO:** *source-limited* is now an **OPEN QUESTION**, not a settled finding. It was recorded as settled on a
+  basis that does not hold.
+
+**WHY THIS MATTERS BEYOND THE ROW:** this row is the evidence base for a **sovereign call carried at Andrew**
+(*pursue ~4.5 yrs of vendor history, or accept ~2?*). **That call was framed as a cost/scope tradeoff on the
+strength of a floor that does not exist.** A decision taken on it would have been taken on a wrong premise —
+and the wrongness ran in the direction of *understating* what we already hold.
+
+*Found while grounding the carried call rather than answering it from the record — which is the only reason it
+was found at all: the record was internally consistent and confidently wrong.*
 
 ### (B) SCHEDULE — the independent leg
 
