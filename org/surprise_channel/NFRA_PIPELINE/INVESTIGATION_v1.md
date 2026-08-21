@@ -28,7 +28,7 @@ STANDING — is it armed against future normal operation if nobody acts? An item
 (blocking now AND armed for later); the precedence rule was the repair that let one field pretend
 otherwise.
 
-**Why LATENT_HAZARD and not OBSERVATION for this item itself:** nothing stops, but it detonates on
+**Why ARMED standing (prose: a latent hazard) rather than merely an observation:** nothing stops, but it detonates on
 the channel's normal operation — the next seat classifying an item mis-files it, and a mis-filed
 hazard silently loses its disarm obligation. Dormant, armed, actuated by ordinary use.
 
@@ -44,6 +44,16 @@ question about vocabulary named in the ratified pipeline doc — CTO/COO's rulin
 schema edit. Graduated to `REMEDIATION_v1.md` with them as owners. **DISARMED ≠ REMEDIATED: the
 trap is defused; the vocabulary question is open.**
 
+> **CLOSED SAME DAY — CTO ruled it @a35da72725 (msg 65139):** `class {OBSERVATION, BLOCKING}` ×
+> `hazard_standing {ARMED, INERT}`; **"latent hazard" survives as the PROSE name for (any class,
+> ARMED), never an enum value.** Protocol + both schemas migrated at this seat and re-exercised
+> (the retired value is now REFUSED by schema); the row closes on BOTH states in `REMEDIATION_v1`.
+> **This item's ENCODING moved (class `LATENT_HAZARD` → `OBSERVATION` + standing `ARMED`); the
+> FINDING did not.** Recorded as a visible migration rather than a silent edit — the append-only
+> rule protects the record of *what was found*, and re-expressing it in ruled vocabulary is not a
+> rewrite of that. **Round v1 therefore has a graduation and cannot close as a zero-graduation
+> round** (protocol section 7): the channel's own project needs a v2.
+
 ```json
 [
  {
@@ -51,7 +61,7 @@ trap is defused; the vocabulary question is open.**
   "surfaced_by": "3.0.0_SA_CVO",
   "surfaced_at": "2026-08-21T16:45Z",
   "one_line": "the surprise-channel class axis carries a precedence rule (BLOCKING > LATENT_HAZARD > OBSERVATION) -- the precedence-rule tell names that as two axes fused, and the tsc specimen filed as OBSERVATION received the LATENT_HAZARD remedy",
-  "class": "LATENT_HAZARD",
+  "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "grounding": {
    "status": "GROUNDED",
@@ -64,7 +74,7 @@ trap is defused; the vocabulary question is open.**
   },
   "disposition": "GRADUATED",
   "disarm_owner": "3.0.0_SA_CVO",
-  "notes": "Disarmed same-turn by removing the precedence rule and landing hazard_standing as an orthogonal field with its own four-postulate record. The vocabulary question (should the ratified class enum collapse to the interruption axis) is graduated to REMEDIATION_v1 with CTO/COO as owners -- ratified vocabulary is not a CVO schema edit."
+  "notes": "Disarmed same-turn by removing the precedence rule and landing hazard_standing as an orthogonal field with its own four-postulate record. The vocabulary question (should the ratified class enum collapse to the interruption axis) is graduated to REMEDIATION_v1 with CTO/COO as owners -- ratified vocabulary is not a CVO schema edit. || VOCABULARY MIGRATION 2026-08-21T17:0xZ on CTO ruling @a35da72725: this item's ENCODING moved from class=LATENT_HAZARD to class=OBSERVATION + hazard_standing=ARMED. The FINDING IS UNCHANGED -- 'latent hazard' is now the prose name for (any class, ARMED). Recorded as a visible migration rather than a silent edit; the append-only rule protects the RECORD OF WHAT WAS FOUND, and a ruled vocabulary re-expression is not a rewrite of it."
  }
 ]
 ```

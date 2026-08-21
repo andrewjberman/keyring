@@ -2,54 +2,147 @@
  "$schema": "http://json-schema.org/draft-07/schema#",
  "title": "surprise-channel investigation item (SURPRISE_CHANNEL_PROTOCOL.md section 4)",
  "type": "object",
- "required": ["id", "surfaced_by", "surfaced_at", "one_line", "class", "grounding", "disposition"],
+ "required": [
+  "id",
+  "surfaced_by",
+  "surfaced_at",
+  "one_line",
+  "class",
+  "grounding",
+  "disposition"
+ ],
  "additionalProperties": false,
  "properties": {
-  "id": {"type": "string", "pattern": "^[A-Z0-9_]+-S[0-9]+$"},
-  "surfaced_by": {"type": "string", "minLength": 3},
-  "surfaced_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
-  "one_line": {"type": "string", "minLength": 8},
-  "class": {"enum": ["BLOCKING", "OBSERVATION", "LATENT_HAZARD"], "description": "INTERRUPTION RIGHT -- what the item does to the current turn. Orthogonal to hazard_standing."},
-  "hazard_standing": {"enum": ["ARMED", "INERT"], "description": "Whether the item, LEFT ALONE, harms through the process's FUTURE NORMAL operation. Orthogonal to class: a BLOCKING or OBSERVATION item may also be ARMED, and then it carries a disarm owner. Replaced the removed precedence rule (channel item NFRA_PIPELINE-S1)."},
+  "id": {
+   "type": "string",
+   "pattern": "^[A-Z0-9_]+-S[0-9]+$"
+  },
+  "surfaced_by": {
+   "type": "string",
+   "minLength": 3
+  },
+  "surfaced_at": {
+   "type": "string",
+   "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"
+  },
+  "one_line": {
+   "type": "string",
+   "minLength": 8
+  },
+  "class": {
+   "enum": [
+    "OBSERVATION",
+    "BLOCKING"
+   ],
+   "description": "INTERRUPTION RIGHT -- what the item does to the current turn. Orthogonal to hazard_standing. RULED FORM (CTO @a35da72725): 'latent hazard' is the PROSE name for (any class, ARMED), never an enum value."
+  },
+  "hazard_standing": {
+   "enum": [
+    "ARMED",
+    "INERT"
+   ],
+   "description": "Whether the item, LEFT ALONE, harms through the process's FUTURE NORMAL operation. Orthogonal to class: a BLOCKING or OBSERVATION item may also be ARMED, and then it carries a disarm owner. Replaced the removed precedence rule (channel item NFRA_PIPELINE-S1)."
+  },
   "grounding": {
    "type": "object",
-   "required": ["status", "evidence"],
+   "required": [
+    "status",
+    "evidence"
+   ],
    "additionalProperties": false,
    "properties": {
-    "status": {"enum": ["INFERRED", "GROUNDED"]},
-    "evidence": {"type": "array", "items": {"type": "string", "minLength": 8}}
+    "status": {
+     "enum": [
+      "INFERRED",
+      "GROUNDED"
+     ]
+    },
+    "evidence": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 8
+     }
+    }
    }
   },
-  "disposition": {"enum": ["UNDER_INVESTIGATION", "GRADUATED", "DISMISSED_WITH_REASON", "DECOMP_INVALIDATING"]},
-  "dismissal_reason": {"type": "string", "minLength": 8},
-  "disarm_owner": {"type": "string", "minLength": 3},
-  "notes": {"type": "string"}
+  "disposition": {
+   "enum": [
+    "UNDER_INVESTIGATION",
+    "GRADUATED",
+    "DISMISSED_WITH_REASON",
+    "DECOMP_INVALIDATING"
+   ]
+  },
+  "dismissal_reason": {
+   "type": "string",
+   "minLength": 8
+  },
+  "disarm_owner": {
+   "type": "string",
+   "minLength": 3
+  },
+  "notes": {
+   "type": "string"
+  }
  },
  "allOf": [
   {
    "comment": "graduation is a GROUNDING bar: a GRADUATED item must be GROUNDED with nonempty evidence",
-   "if": {"properties": {"disposition": {"const": "GRADUATED"}}},
-   "then": {"properties": {"grounding": {"properties": {"status": {"const": "GROUNDED"}, "evidence": {"minItems": 1}}}}}
+   "if": {
+    "properties": {
+     "disposition": {
+      "const": "GRADUATED"
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "grounding": {
+      "properties": {
+       "status": {
+        "const": "GROUNDED"
+       },
+       "evidence": {
+        "minItems": 1
+       }
+      }
+     }
+    }
+   }
   },
   {
    "comment": "a bare dismissal is the rot with a tidier label",
-   "if": {"properties": {"disposition": {"const": "DISMISSED_WITH_REASON"}}},
-   "then": {"required": ["dismissal_reason"]}
-  },
-  {
-   "comment": "the escape valve has an actuator by construction: LATENT_HAZARD names its disarm owner AT SURFACING",
-   "if": {"properties": {"class": {"const": "LATENT_HAZARD"}}},
-   "then": {"required": ["disarm_owner"]}
-  },
-  {
-   "comment": "class LATENT_HAZARD IMPLIES ARMED standing -- the class is the armed case of the standing axis",
-   "if": {"properties": {"class": {"const": "LATENT_HAZARD"}, "hazard_standing": {}}, "required": ["hazard_standing"]},
-   "then": {"properties": {"hazard_standing": {"const": "ARMED"}}}
+   "if": {
+    "properties": {
+     "disposition": {
+      "const": "DISMISSED_WITH_REASON"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "dismissal_reason"
+    ]
+   }
   },
   {
    "comment": "ARMED obliges a named disarm owner WHATEVER the class -- this is the case the removed precedence rule could not express (the tsc specimen: OBSERVATION class, ARMED standing)",
-   "if": {"properties": {"hazard_standing": {"const": "ARMED"}}, "required": ["hazard_standing"]},
-   "then": {"required": ["disarm_owner"]}
+   "if": {
+    "properties": {
+     "hazard_standing": {
+      "const": "ARMED"
+     }
+    },
+    "required": [
+     "hazard_standing"
+    ]
+   },
+   "then": {
+    "required": [
+     "disarm_owner"
+    ]
+   }
   }
  ]
 }

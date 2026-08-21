@@ -37,8 +37,9 @@ quietly rewritten by the seat it indicts). The channel then:
 4. **hands the remediation doc over at completion of the round's TOs**, informing the next round's
    TOs (vN rounds). **A project closes only on a zero-graduation round.**
 
-**Interruption rights (ratified):** OBSERVATION never interrupts; BLOCKING goes to the issuer;
-LATENT-HAZARD rides the escape valve (section 6) outside round cadence.
+**Interruption rights (ratified):** `OBSERVATION` never interrupts; `BLOCKING` goes to the issuer;
+and ORTHOGONALLY, an `ARMED` item of EITHER class rides the escape valve (section 6) outside round
+cadence -- "latent hazard" is the prose name for that case, never an enum value.
 
 ## 2. THE GRADUATION BAR IS A GROUNDING BAR, NOT A SEVERITY BAR
 
@@ -51,20 +52,23 @@ speculation ledger. Specimens: the T-2 steady-state (3-point series), the SSM no
 (source-read of the dispatch document), the d12 cross-serve limitation (probe lists + identical
 shas side by side) -- every graduated item that day was graduated by measurement.*
 
-## 3. THE CLASS AXIS -- `class: BLOCKING | OBSERVATION | LATENT_HAZARD`
+## 3. THE TWO ORTHOGONAL AXES -- `class {OBSERVATION, BLOCKING}` x `hazard_standing {ARMED, INERT}`
 
-### Four-postulate record (Rule 24, authored with the axis)
-- **INTENT (one):** handling-path selection at surfacing time -- which interruption right and which
-  remedy route the item takes NOW. Not content-kind, not severity-magnitude, not validity.
-- **GRAIN:** one surfaced item, classified at the moment of surfacing.
-- **MECE:** one discriminating question. *Does it stop live in-scope work right now?* -> `BLOCKING`
-  (interrupts, routes to the issuer). *Else, is it armed against future normal operation?* ->
-  `LATENT_HAZARD`. *Else* -> `OBSERVATION`.
-  **CE against the declared layer** ("unexpected developments during on-spec execution"): the
-  questions partition the layer by construction; the member a two-value axis hid -- dormant, armed,
-  detonating on normal operation -- is the third value, found by counterexample before the enum
-  existed (COO 64939: MDPF_PROVENANCE T-C, a past-due TO whose scheduled execution would have
-  deleted the only working provenance path) and independently confirmed on postulate (iv).
+**RULED FORM (CTO @a35da72725, on the channel's own graduated item `NFRA_PIPELINE-S1`).**
+**"LATENT HAZARD" IS THE PROSE NAME FOR `(any class, ARMED)` -- NEVER AN ENUM VALUE.** It was a
+standing value sitting on an interruption axis, and the precedence rule that reconciled them was
+the tell. The prose meaning is unchanged everywhere it appears; only the encoding moved.
+
+### `class` -- four-postulate record (Rule 24, authored with the axis)
+- **INTENT (one):** INTERRUPTION RIGHT -- what the item does to the CURRENT turn. Not severity, not
+  standing, not validity.
+- **GRAIN:** one surfaced item, at surfacing.
+- **MECE:** one discriminating question -- *does it stop live in-scope work right now?* `BLOCKING`
+  (interrupts, routes to the issuer) vs `OBSERVATION` (does not interrupt). Exhaustive by negation,
+  disjoint by construction, **and needing no precedence -- which is the property its three-value
+  predecessor lacked.**
+- **STATE COHERENCE (iv):** two members, two remedies (unblock-now vs record-and-route), moving
+  independently of standing.
 - ⛔ **THE PRECEDENCE RULE THIS AXIS CARRIED FOR NINETY MINUTES IS REMOVED (channel item
   `NFRA_PIPELINE-S1`, disarmed 2026-08-21).** It read `BLOCKING > LATENT_HAZARD > OBSERVATION`, and
   the estate's own memory names precedence as THE TELL for two axes fused: *a single-intent MECE
@@ -88,17 +92,13 @@ shas side by side) -- every graduated item that day was graduated by measurement
 - **STATE COHERENCE (iv):** `ARMED` obliges a NAMED DISARM OWNER and an off-cadence disarm;
   `INERT` obliges nothing. Two members, two remedies, moving independently of `class` -- which is
   exactly why it could not live on the class axis.
-- **BINDING RULE:** `class: LATENT_HAZARD` implies `ARMED` (schema-enforced). **A `BLOCKING` or
-  `OBSERVATION` item MAY ALSO be `ARMED`** -- and then it carries a disarm owner exactly as a
-  hazard does. *The tsc specimen is the type case: OBSERVATION class (nothing stopped), ARMED
-  standing (a future seat gets a false green), disarm owner CTO -- which is what actually
-  happened before the field existed to say so.*
-- **STATE COHERENCE (iv):** the three values take three DIFFERENT remedies -- unblock-now /
-  record-and-route / disarm-then-remediate -- so one remedy cannot move all members; that failure
-  of move-together is exactly why the axis needs three values, stated as the frame's finding.
-- **NOT ON THIS AXIS, deliberately:** `DECOMP-INVALIDATING` is a DISPOSITION (section 4), not a
-  class -- it describes an item's SCOPE-EFFECT on stage 3, a different intent; putting it here
-  would flatten two axes onto one (the exact Rule-24(iii) trap the ratified dialogue caught).
+- **BINDING RULE (ruled form, CTO @a35da72725):** ANY class may be `ARMED`, and an `ARMED` item
+  carries a NAMED DISARM OWNER whatever its class. *The `tsc` specimen is the type case:
+  OBSERVATION class (nothing stopped), ARMED standing (a future seat gets a false green), disarm
+  owner CTO -- which is exactly what happened before the field existed to say so.*
+- **NOT ON EITHER AXIS, deliberately:** `DECOMP-INVALIDATING` is a DISPOSITION (section 4) -- it
+  describes an item's SCOPE-EFFECT on stage 3, a third intent; putting it on a class or standing
+  axis would flatten two axes onto one (the Rule-24(iii) trap the ratified dialogue caught).
 
 ### Standing constraint on ANY future axis in this domain (adopted from COO's `dep_stage` record, ratified CTO 64978)
 
@@ -131,7 +131,7 @@ CVO assembles; any seat surfaces.
 | `class` | section-3 enum |
 | `grounding` | `{status: INFERRED\|GROUNDED, evidence: [citations]}` -- Rule 22 projection; `GROUNDED` requires source/live-primitive evidence, never self-report |
 | `disposition` | `UNDER_INVESTIGATION \| GRADUATED \| DISMISSED_WITH_REASON \| DECOMP_INVALIDATING` |
-| `disarm_owner` | **LATENT_HAZARD only, REQUIRED AT SURFACING** (section 6) |
+| `disarm_owner` | **REQUIRED whenever `hazard_standing: ARMED`, any class** (section 6) |
 
 **Disposition axis, four-postulate record:** intent = where the item goes next (one intent);
 grain = one investigated item; MECE = `UNDER_INVESTIGATION` is the only active state, the three
@@ -171,7 +171,7 @@ without its citations is INFERRED wearing a row's clothing and does not belong h
 
 ## 6. THE ESCAPE VALVE -- LATENT_HAZARD rides outside round cadence
 
-A latent hazard is surfaced same-turn (one line, no action -- doctrine unchanged) and its DISARM
+An ARMED item (prose: a latent hazard) is surfaced same-turn (one line, no action -- doctrine unchanged) and its DISARM
 does not wait for round completion: T-C would have detonated before any handover. **The valve has
 an actuator by construction (COO 64943(c)): the surfacing line NAMES the disarm owner -- whoever
 can act on the armed artifact NOW. If that seat is dark, the item escalates SAME-TURN to the
