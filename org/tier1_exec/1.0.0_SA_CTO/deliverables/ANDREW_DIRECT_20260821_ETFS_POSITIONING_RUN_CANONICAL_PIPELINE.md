@@ -97,3 +97,45 @@ Push state: landed LOCAL, rides MSTR's integration window (third-surface rule).
 - Project JSON `phase` carries the priority verbatim; broadcast to every live seat + agentbus to
   `0.0.0_AB_MSTR~Z`; seating ask to MSTR for the dark AE class NOW (serving route + IAM is on the
   territory); each seat asked to state, in one line, what it is doing for ETFS_POSITIONING this minute.
+
+---
+
+# THIRD INSTRUCTION, SAME TERMINAL, 2026-08-21 ~19:4xZ — FOLLOW THE CANONICAL PROCESS EXPLICITLY
+
+## VERBATIM
+
+> "PLEASE MAKE SURE THE CANONICAL EXECUTION PROJECT I MANDATED IS FOLLOWED EXPLICITLY"
+
+## WHAT IT BINDS
+
+The priority word (19:3xZ) and this word are ONE instruction: full speed THROUGH the pipeline, never
+around it. Explicit conformance, stage by stage, checked at the time of his word:
+
+| stage | state | conformant? |
+|---|---|---|
+| 1 REGISTER | `ETFS_POSITIONING.json` `dep_stage: PRD`; REGISTRY row | YES |
+| 2 PRD | purpose-level PRD s.11; ss.1–10 re-classed as decomp inputs | YES |
+| 3 DECOMP → TOs | COO running the decomp; cohort + certifier (CVO) declared; NO TO cut yet; `dep_stage` flips PRD→DECOMP by COO when the decomp exists, DECOMP→EXECUTING at the first cell-derived TO | YES (in progress) |
+| 4 EXECUTE ON SPEC | DS/DE reading their planes, BUILDING NOTHING ahead of a TO with `decomp_ref` — stated by both seats | YES |
+| 5 CHANNEL | CVO certifier + channel; home mints on first item | YES |
+| in-flight | L1 at MSTR~Z completes under its pre-pipeline order per the pipeline's scope clause; COO's decomp covers its surface | YES, by the ratified clause |
+
+**Explicit-form obligations restated to the fabric (so "explicitly" is a checklist, not a mood):** no
+build before a TO carrying `decomp_ref`; a TO cut before cert says UNCERTIFIED DECOMP on its face;
+proof-of-spec criteria cite cells, both directions, denominators printed; status moves with the act by
+the actor; premises re-grounded at pickup; surprises → CVO one line, no mid-flight scope; placement
+declared per cell.
+
+## ONE SURPRISE FILED BY THIS SEAT (OBSERVATION / INERT) — found while grounding the build inputs live
+
+`s3://opal-data-etfs/bbg/2026-08-20/` ALREADY CARRIES a complete landing (7 objects, all written
+2026-08-21T14:22:16–19Z, as_of 2026-08-20 = correct BDay(-1), universe 109, `prior_window_end: null`,
+`objects_failed: []`) — nine minutes after MSTR~Z acked the L1 order, hours before the first SCHEDULED
+fire. The manifest carries no run_class. **Two readings, and the order did not discriminate them (my
+spec gap):** a manual QA run of the productionized step that wrote to the PRODUCTION prefix, or a first
+genuine landing. Consequences: (i) L3 has a REAL `bbg/{date}/` input TODAY (good — shortens the critical
+path); (ii) the L1-4 continuity chain now anchors on a manual run; (iii) L1-2 (three SCHEDULED fires)
+is untouched — a manual landing is not production evidence, and date keys differ. INERT: nothing armed,
+nothing to disarm. Remedy shape for round 1 (COO's cell, not a mid-flight amendment unless BLOCKING):
+manifest carries `run_class` (production | qa); QA runs land under a QA-marked key or not at all.
+MSTR~Z asked to state which it was.
