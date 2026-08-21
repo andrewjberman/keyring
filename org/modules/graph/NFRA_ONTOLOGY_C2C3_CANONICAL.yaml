@@ -673,11 +673,34 @@ terminology_law:
     SharePoint/OneDrive estate", 01_substrate.md) -- under the reservation, a platform is a
     SUBSTRATE of the Estate, never an estate of its own.
   territory_vs_map: >
-    NFRA_COMPUNIFY (Andrew-direct 5-surface apex): FOUR TERRITORY SURFACES where authoritative
-    state physically lives -- LOCAL, GIT, AWS-CLOUD, MS-CLOUD -- plus TRINO as the FEDERATION
-    surface (the derived join-layer across them, special, not a peer). The derived models
-    (Nessie -> Kuzu -> Iceberg) are the MAP layer over the territory: they can drift, the
-    territory cannot. "Territory" = where state lives; "map" = a derived representation of it.
+    SPLIT 2026-08-21 (3.0.0_SA_CVO owner act on 4.0.0_SA_CRO~C Runs 42/43, grounded on the
+    registry's own Territory entry at infra/system/ontology/SYSTEM_DEFINITIONS.yaml:114-119).
+    THIS BLOCK WAS HALF-LIVE: one paragraph carried a SURVIVING doctrine and a RETIRED
+    classification with nothing distinguishing them -- inside the file whose job is to fence
+    this word. The halves are now separated and labelled.
+
+    (a) SURVIVING -- THE DRIFT ASYMMETRY (Territory.binding_residue sense (a); the entry it is
+    preserved ON is Map). The derived models (Nessie -> Kuzu -> Iceberg) are the MAP layer: a map
+    CAN drift and therefore always carries provenance; the thing it represents cannot. "Map" = a
+    derived representation. THIS IS LIVE LAW and is the sense in which the pairing is still used.
+
+    (b) RETIRED -- THE FOUR-SURFACE CLASSIFICATION (LOCAL, GIT, AWS-CLOUD, MS-CLOUD as an apex of
+    "territory surfaces"). RETIRED 2026-08-12, Andrew-direct, VERBATIM: "Territory is not actually
+    useful here, that is already covered by substrate". WHY RETIRED RATHER THAN MERELY REDUNDANT:
+    the four values were TWO AXES FLATTENED ONTO ONE (Rule 24(ii)) -- LOCAL and GIT are DEPLOY
+    STATES of a code substrate; AWS-CLOUD and MS-CLOUD are SUBSTRATES -- and the word's existence
+    was the EVIDENCE that the deploy axis existed unnamed. It decomposes WITHOUT LOSS into
+    Substrate x Deploy_State, both ratified. MIGRATE: LOCAL/GIT -> Deploy_State; AWS-CLOUD ->
+    Substrate aws; MS-CLOUD -> Substrate ms. NFRA_COMPUNIFY_PRD.md#2's 5-surface apex is retained
+    as HISTORICAL, never as live canon. UNAFFECTED: TRINO's FEDERATION role -- Federation is its
+    own ratified entry (the derived join-layer, special, not a peer surface); the retirement bound
+    the four-value classification, not the federation layer above it.
+
+    SWEEP WARNING -- why this block is FENCED rather than deleted: a bare-word sweep matching
+    "territory" against the deprecation commits the homonym error (~30 false positives measured
+    2026-08-19 on this term alone). TWO senses survive unbound: (a) above, and the GRAPHLEARNS
+    territory-PREDICATE sense (an extractor's declared territory minus produced nodes). Adjudicate
+    WHICH SENSE in context; never match the bare word against the status.
   surface: >
     Scoped, not free: (a) a TERRITORY or FEDERATION surface (COMPUNIFY apex, above); (b) a
     tool's declared coverage space (boundary_report address_space); (c) genesis-surface doc
