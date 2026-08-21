@@ -114,66 +114,45 @@ def _local_rail_rows() -> list:
     return rows
 
 
-# The NFRA_COMPROUTE flywheel sink -- comp-which appends each live backstop route()'s training_row
-# here (append-only JSONL; gitignored + rotated). This is the loop CLOSING into the scorer: the live
-# router's own hedges become routing-friction candidates.
-ROUTING_SINK = "org/mcp/comproute-routing.jsonl"
-
-
-def parse_routing_log(path: str = "", max_rows: int = 50000) -> list:
-    """Read the comp-which flywheel sink -> route rows (each is a route().training_row:
-    intent/role/ranked/kind/cold_start/outcome). Best-effort: [] if absent; skips malformed lines."""
-    p = path or os.path.join(_WS, ROUTING_SINK)
-    rows: list = []
-    if not os.path.exists(p):
-        return rows
-    with open(p, encoding="utf-8", errors="replace") as fh:
-        for ln in fh:
-            ln = ln.strip()
-            if not ln:
-                continue
-            try:
-                rows.append(json.loads(ln))
-            except Exception:  # noqa: BLE001 -- a malformed line never fails the ingest
-                continue
-    return rows[-max_rows:]
-
-
-def maybe_rotate_routing_sink(max_bytes: int = 8_000_000) -> bool:
-    """Size-based rotation of the append-only sink (ingest-side hygiene, ~C handoff): rename to .1 when
-    it exceeds max_bytes so it stays bounded. Best-effort; returns True if it rotated."""
-    p = os.path.join(_WS, ROUTING_SINK)
-    try:
-        if os.path.exists(p) and os.path.getsize(p) > max_bytes:
-            os.replace(p, p + ".1")
-            return True
-    except Exception:  # noqa: BLE001 -- rotation is hygiene, never fatal
-        pass
-    return False
+# The routing sink's constants, parser and rotation hygiene live in THE CATALOG'S OWN HOME
+# (tool_activity_emit.ROUTING_SINK / parse_routing_sink / maybe_rotate_routing_sink) as of the
+# routing partition's landing -- CTO~D ruling 59074 item 1: the partition was built AND this
+# module's private read DELETED in the same change; load_corpus reads routing exactly ONE way.
+# The former private parser (parse_routing_log) is GONE, not aliased: a surviving alias is the
+# second path wearing the first one's name.
 
 
 def load_corpus() -> dict:
     """Acquire the seed corpus. Returns {rail, sessions, rolling, routing, source}. Reuses the emitter
     parsers when present (identical to the live catalog rows); degrades to a local rail parse otherwise.
-    `routing` = the live comp-which route rows (the flywheel closing into the scorer)."""
-    routing = parse_routing_log()
+    `routing` = the live comp-which route rows, read through THE CATALOG'S OWN PARSER
+    (tool_activity_emit.parse_routing_sink -- the ONE read path; no private fallback exists by ruling)."""
     tae = _emitter()
     if tae is None:
-        return {"rail": _local_rail_rows(), "sessions": [], "rolling": [], "routing": routing,
-                "source": "local-rail-only"}
+        return {"rail": _local_rail_rows(), "sessions": [], "rolling": [], "routing": [],
+                "source": "local-rail-only; routing=UNAVAILABLE (emitter parsers absent; the catalog "
+                          "parser is the one read path and no private fallback exists by ruling 59074)"}
+    routing = tae.parse_routing_sink(os.path.join(_WS, tae.ROUTING_SINK))
     rail = tae.parse_rail(os.path.join(_WS, tae.RAIL_LOG))
-    rolling = []
+    # THE ROLLING LIMB'S THREE STATES ARE DECLARED, NEVER COLLAPSED (COO grounding @dcb2519501 sec.4:
+    # frozen-by-order, parse-raised, and genuinely-zero were byte-identical downstream of a bare
+    # except -> []; an empty value carrying no reason, feeding a scorer, is the retrieval-control
+    # class). The FILE is real history Andrew chose to keep -- rows parse and are frozen at the
+    # retirement date; only a FAILURE is empty, and it says so.
+    rolling: list = []
+    rolling_state = ("frozen-by-retirement@2026-07-29 (Andrew-direct; the WRITE was retired "
+                     "@c79b4537ca, the file preserved -- rows are real history to that date)")
     try:
         rolling = tae.parse_rolling_log(os.path.join(_WS, tae.ROLLING_LOG))
-    except Exception:  # noqa: BLE001
-        rolling = []
+    except Exception as e:  # noqa: BLE001
+        rolling_state = "PARSE-FAILED(%s) -- a retrieval failure is never a silent zero" % type(e).__name__
     sessions = []
     try:
         sessions = tae.parse_session_logs(tae.SESSION_LOG_TIERS)
     except Exception:  # noqa: BLE001 -- session walk is optional enrichment (gap_text); rail is primary
         sessions = []
     return {"rail": rail, "sessions": sessions, "rolling": rolling, "routing": routing,
-            "source": "emitter-parsers"}
+            "source": "emitter-parsers; rolling=" + rolling_state}
 
 
 # ============================================================================================
