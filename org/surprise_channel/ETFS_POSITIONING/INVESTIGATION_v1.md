@@ -115,6 +115,65 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   "disposition": "GRADUATED",
   "disarm_owner": "0.0.0_AB_MSTR~Z",
   "notes": "CLASSIFIED ARMED WHERE FILED INERT, consistent with the tsc precedent rather than as a reflex: the trap EXISTS NOW on that box, and a NORMAL act -- a seat typing the obvious cmd.exe invocation from Git Bash to check something -- trips it and returns a confident green. That is the same test that made the tsc false-green ARMED. THE DECISIVE POINT AGAINST INERT IS TODAY'S OWN LESSON: this class is ALREADY documented in CLAUDE.md with a named guard, and the harness hit it anyway -- documentation is not a disarm, proven twice today (COO reproduced the line-143 trap twenty minutes after reading the warning). DISARM (owner MSTR~Z, their box): route cmd/native invocations through the msys_argv_guard / shim pattern so the trap cannot fire there, rather than relying on remembering it. CONTRAST WITH S2 ON THE ADVIPOINTERS BOARD, which I filed INERT: there the bindings were correct and harm needed a FUTURE consumer wired wrong; here the trap is present and ordinary use trips it."
+ },
+ {
+  "id": "ETFS_POSITIONING-S3",
+  "surfaced_by": "0.7.0_AE_CloudOps",
+  "surfaced_at": "2026-08-21T20:18Z",
+  "one_line": "any terraform apply in infra/aws/terraform/shared-infra DELETES the live CloudFront read grant for platinum/advi/* and 403s the ADVI serving route that went live today, because aws_s3_bucket_policy is FULL-REPLACE and TF's desired document carries 2 statements while live carries 3",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "CVO INDEPENDENTLY CONFIRMED ON THE APPLIED PLANE, not accepted as a self-report: aws s3api get-bucket-policy on opal-data-portal-v2 returns 3 statements, third Sid=AllowAdvisorRouterOAIPlatinumAdvi scoped arn:aws:s3:::opal-data-portal-v2/platinum/advi/*",
+    "TF desired state carries exactly 2 Sids (AllowCloudFrontOAI, AllowCloudFrontOACPublicData) at s3-portal-v2-import.tf -- so an apply writes a 2-statement document over a 3-statement live policy",
+    "the advi Sid appears in ZERO code: comp-find -i returns 6 hits, ALL band=DOC (a ledger, AE's own message, the amended TO). No terraform resource manages it",
+    "NEGATIVE CONTROL run: the same probe against opal-data-assets does not contain the Sid, so the instrument discriminates rather than matching anything",
+    "AE's plan -target on the resource returned 'Plan: 0 to add, 1 to change, 0 to destroy' where the change is the statement REMOVAL",
+    "corroborates COO's S-COO-4 independently: AllowCloudFrontOACPublicData is prefix-scoped to json/*, json-tiered/*, platinum/mdpf/* -- confirming a new platinum prefix is NOT CloudFront-readable"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "notes": "CONFIRMED, and the mechanism is the sharpest instance of the wrong-plane class the estate has produced. The P4R-3 close was CAREFUL -- live policy read back, all 3 statements confirmed, router controls mutation-tested, an EXERCISED fetch, deployed bytes hashed -- and it recorded a re-plan reading 'No changes'. THAT RE-PLAN WAS IN THE WRONG TERRAFORM ROOT (portal-auth, which owns the lambdas and distribution and does NOT own the bucket policy). EVERY CONTROL FIRED CORRECTLY AND EVERY ONE WAS ABOUT THE WRONG PLANE. A grant applied out-of-band is invisible to a plan you never run: verifying on the live primitive is sound for 'is it granted' and STRUCTURALLY SILENT on 'does code still describe reality'. AE surfaced it against their own prior session's close, named themselves disarm owner, applied nothing, and refused to write the restoring edit on their own authority. DISARM (effective now, needs nobody): no seat applies shared-infra until the TF carries the advi statement -- fabric-wide, not ETFS-only. REMEDIATION (different act, different clock): codify the statement so desired==live in the SAME edit that adds the etfs ARN, one safe-apply, re-plan IN shared-infra to 0-diff. COO has RULED (A): TO-2 Half 2 now carries the restore, so it is on-spec and not a mid-flight amendment."
+ },
+ {
+  "id": "ETFS_POSITIONING-S4",
+  "surfaced_by": "2.0.0_SA_COO",
+  "surfaced_at": "2026-08-21T20:11Z",
+  "one_line": "COO's Amendment A+B commit sits on ZERO remote branches while the decomp and the three TOs are on origin/CLOUD, so a fresh seat pulling TO-1 from the remote reads the superseded single-stage producer shape and would build it correctly against a stale spec with nothing to tell them",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "COO measured with git branch -r --contains: cc7eca2da3 on zero remote branches; 308fcaea0d and 10f94e4f13 on origin/CLOUD",
+    "Andrew closed the prior DS/DE seats for context health, so the seats that pick these up are FRESH and pull from origin",
+    "third instance today of the same mechanism: a correct artifact committed locally while the seat needing it reads the remote"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "notes": "Routed same-turn by COO before I saw it. DISARM = the integrator push. REMEDIATION is a different state with a different clock: the fresh seat's spec-at-pickup actually reading the amended TO. The spawn brief is the only live delivery surface during the push window, which is why COO sent the three load-bearing lines for it -- the brief is load-bearing, not redundant."
+ },
+ {
+  "id": "ETFS_POSITIONING-S5",
+  "surfaced_by": "0.7.0_AE_CloudOps",
+  "surfaced_at": "2026-08-21T20:11Z",
+  "one_line": "mdpf_egress_publisher.tf:46-48 records a 2026-07-28 measurement of 2 statements scoped to CloudFront; live is 3 and OAC-scoped to exactly json/*, json-tiered/*, platinum/mdpf/*, so the header is 24 days stale on count and scope",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "AE measured live; CVO's independent policy read above reproduces the three prefixes exactly",
+    "the zero-Denys half of the comment is still true, which is what makes the stale half credible"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "notes": "ARMED on COO's reasoning, which is a sharper standard than 'the comment is wrong' and I am adopting it: a seat inheriting that header concludes a new platinum prefix is CloudFront-readable -- IT IS NOT -- and the failure it produces is a MASKED HTML 403, because CF error rules dress JSON errors as HTML. So it does not merely mislead, it AIMS THE NEXT SEAT AT THE WRONG LAYER (routing bug rather than policy gap). Disarm is a comment correction, no apply."
  }
 ]
 ```
