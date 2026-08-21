@@ -91,11 +91,34 @@ that resolves to nothing. `ses:SendEmail` deliberately **not** granted.
 
 The edit put **4 U+26D4 glyphs into code that runs on AWS** — the same glyph, the same file, the same
 defect I fixed at `b121c2f26e` ("*I put a U+26D4 glyph into code that runs on AWS*"). Caught by an
-explicit byte-level scan, **not by the commit-gate**, which passed the file clean both before and
-after. Stripped to 0 non-ASCII / 0 CRLF.
+explicit byte-level scan and stripped to 0 non-ASCII / 0 CRLF before the gate ever ran.
 
 **Knowing a failure by name, having authored its fix, and being the same seat, did not prevent
 re-committing it four hours later.** The scan is the control; the memory of the incident is not.
+
+⛔ **CORRECTED 0442Z — this section first said the defect was caught "not by the commit-gate, which
+passed the file clean both before and after." That is literally true and MECHANISTICALLY MISLEADING,
+and I had already routed it upward before checking.** `.tools/commit_gate_runner.py:376`
+`_nonascii_lint_one` (called at `:691`/`:705`) **DOES detect it**, scoped to `infra/**` + `.tools/**`
+— which this file is in. Measured by calling the function directly on three fixtures: a glyph-bearing
+in-scope file emits `infra/probe.py:2 non-ASCII: U+26D4` **and returns 0**; an ASCII-clean in-scope
+file is silent (negative control — it discriminates); an out-of-scope glyph file is silent.
+
+>> **SO THE GATE FINDS IT, NAMES THE CODEPOINT AND THE LINE, AND PRINTS `All checks passed!` AND
+`pre-commit gate clean for 2 file(s)` IN THE SAME BREATH.** WARN-only by explicit design
+(*"announce-then-enforce… must not block a commit while it beds in"*). **That is worse than blindness:
+a blind gate is a gap you close by building a check; this one spells the defect out underneath the
+word "clean", which is the one word that stops an agent reading further.** The remedy is arming the
+enforcement or suppressing the clean summary when a WARN fired — routed to `1.0.0_SA_CTO~Z`, not built.
+
+⛔ **AND HOW I GOT IT WRONG IS THE SAME CLASS AS THE RELAPSE.** My first probe planted a glyph in a
+**scratchpad** file, ran the real gate, got rc=0 + "All checks passed!", and I read that as *the gate
+is blind*. **It was OUT OF SCOPE** — the lint returns 0 *silently* for any path outside `infra/`/
+`.tools/`. A clean, well-formed, confident answer to a question I had not asked. Second time in one
+session I took a scoped instrument's silence for a verdict. I also grepped `commit-gate.sh` for an
+ascii check, found none, and was one step from banking *"the gate has no non-ASCII check"* — **the
+`.sh` delegates to the runner; the `.sh` was the wrong file.** Checking before writing it down is what
+stopped it, not care.
 
 ## 6 — Two controls that changed what I was allowed to claim
 
@@ -116,7 +139,8 @@ could conclude Terraform is unavailable here.
 | `simulate-principal-policy` positive control, **separate invocation** | `dynamodb:GetItem` on `opal-tickets` → **allowed** | INSTRUMENT DISCRIMINATES |
 | `accessanalyzer validate-policy` + its negative control | real action → 0 findings; bogus → `INVALID_ACTION` | TYPO MODE CLOSED |
 | `terraform fmt / init -backend=false / validate` + scratch mutant | rc=0/0/0; mutant rc=1 "Unsupported attribute" | CONTROLLED PASS; no plan, no apply |
-| `commit-gate.sh` ×1 | rc=0 clean — **and it did not see the 4 non-ASCII glyphs**; a byte-level scan did | GATE CLEAN, SCAN CAUGHT IT |
+| `commit-gate.sh` ×1 | rc=0 clean (run **after** the strip, so it never saw the glyphs) | PASS |
+| `_nonascii_lint_one` called directly, 3 fixtures + negative control | glyph in-scope → **names `U+26D4` and the line, returns 0**; clean in-scope → silent; glyph out-of-scope → silent | ⛔ **NOT BLIND — WARN-ONLY UNDER A "clean" VERDICT.** Corrects my own first read, which tested an OUT-OF-SCOPE path and called it blindness |
 | `python -m py_compile` + AST call-site check | rc=0; call sites confirmed in `submit_form` + `create_ticket` by AST, not grep | PASS |
 | test batteries ×3 | W-E 19 OK · authz 15 OK · intake 42+25 OK, all rc=0 unpiped | NO REGRESSION |
 | `proof-of-spec-check` positional | VALID rc=0, rows=7, violations=0 | PASS |
