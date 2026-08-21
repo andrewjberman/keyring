@@ -74,6 +74,36 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-lease:
+    coverage: 'ONE subject per call. `evaluate <closure.json>`: the full coordinate set (five support-member
+      identities + the knowledge basis) is COARSE-INTERSECTED with OVER-inclusion enforced (a declared set
+      that under-includes is REFUSED); typed exclusion proofs replayed; residual recomputed; policy applied;
+      the evaluation record always carries BOTH effect_as_recorded and effect_as_evaluated. `state <lease.json>`:
+      all five support identities re-read live and the partition tree computed fresh -- state is never stored.
+      Denominators print per run: identities re-read (5), intersecting/residual coordinates, capped axes.'
+    blind_spots:
+      - 'A lease binds the five VINTAGE COORDINATES of one closure -- it does NOT re-run the closure''s member
+         byte-compares or home census: a change that moves none of the five identities (impossible for code
+         today, but stated) is invisible to `state`; recompile the closure for a fresh identity set.'
+      - 'repo_head is COMMIT-GRAIN on a shared multi-agent worktree: ANY peer commit moves it, so leases expire
+         within minutes of minting during active hours. That is honest (the closure''s HEAD-side identities
+         genuinely changed), not noise -- but a consumer wanting a coarser support grain needs a ratified
+         predicate waiver (e.g. scope: paths-disjoint-from-subject), never a silent tolerance.'
+      - 'The one-per refusal (m4) is PROCESS-LOCAL today (an in-memory seen-set per run); cross-session
+         duplicate evaluations are caught only by their digest-derived equal ids colliding at the artifact
+         store, not by the constructor. Declared, not fixed silently.'
+      - 'Null basis members CAP their governed axes at UNKNOWN and the lease NAMES them -- a VALID lease is a
+         claim about the SUPPORT-IDENTITY axes only; reading it as validity on a capped axis is a consumer
+         error the record''s own text warns against.'
+      - 'EXPIRED is not INVALID: INVALID is an evaluation''s result; EXPIRED means the minting evaluation no
+         longer binds (out of scope, not out-ranked; CRO D1 ruling). A consumer collapsing them re-fuses the
+         axes the partition tree separates.'
+    plane: applied         # live side re-reads (source map + get-function + git HEAD) at evaluate/state time
+    grain: artifact        # one closure / one lease per call
+    scope: single-artifact
+    exit: '0 = evaluation/state produced (read result/state + reasons, never rc alone) | 2 = REFUSED (typed:
+      m2 under-inclusion, m3 old-waiver, m4 duplicate, m5 untyped silence, unknown argument) | 1 = ERROR
+      (an acquisition the envelope could not wrap, a non-reproducing minted basis digest -- never a clean lease).'
   comp-closure:
     coverage: 'ONE subject per call: for `compile <lambda>`, the source-map entry (DECLARATION) + its artifact
       pointer (ARTIFACT_POINTER, UNKNOWN when absent -- the chain continues on source_dir+files[]) + the live

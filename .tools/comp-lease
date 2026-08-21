@@ -1,0 +1,20 @@
+#!/bin/bash
+# comp-lease -- NFRA_EPISTEMY C4: the FOUR-STATE LEASE SERVICE + Eligibility_Evaluation
+# (COO GO 64063; base spec cert + first basis mint @053b83f414; objects PROPOSED pending CTO gate).
+# A lease binds a C3 Support_Closure's IDENTITIES (never names); its state is a READ-TIME
+# partition-tree computation -- binds? no -> EXPIRED; yes -> VALID | INVALID | UNKNOWN --
+# "failure to reevaluate never preserves validity" is a branch, not a precedence rule.
+#
+#   comp-lease evaluate <closure.json> [--out DIR]  # ONE Eligibility_Evaluation; mints the lease it licenses
+#   comp-lease state <lease.json>                   # the lease's state NOW (live side re-read)
+#   comp-lease --self-test                          # offline battery m1-m5 + effect-pair + determinism
+#   comp-lease --help                               # usage, never writes; unknown flags REFUSE (rc 2)
+#
+# Digest derivations CONSUME the normative home (precondition_token.py _request_hash) -- any other
+# serialization is NON-CONFORMANT even if the pattern matches. Read-only AWS; nothing armed.
+# Rule-16 clean: cd / dirname / pwd / python only.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_lease.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-lease" "$*" $_exit 2>/dev/null
+exit $_exit
