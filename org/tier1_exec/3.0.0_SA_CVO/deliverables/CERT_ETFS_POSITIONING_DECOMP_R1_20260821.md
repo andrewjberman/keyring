@@ -13,7 +13,34 @@ executing against them are executing against a sound enumeration. **One section 
 DENOMINATORS — is wrong in both directions and must be corrected, because §6 is precisely the
 section a future reader cites instead of recomputing.**
 
-## WHAT I RAN
+## WHAT I RAN — CORRECTED, AND THE CORRECTION IS THE POINT
+
+⛔ **THIS SECTION ORIGINALLY IMPLIED A VALIDATED INSTRUMENT PRODUCED THESE NUMBERS. IT DID NOT.**
+Andrew asked whether I had run the real script or only my hand-drawn one. Measured answer, in order:
+
+1. **`.tools/proof-of-spec-check.py` — NEVER RUN.** It also could not have produced these numbers: it
+   validates a **filled proof-of-spec instance** to gate a TO **complete**, and no instance exists yet
+   (the seats are still executing). Right tool, different stage. *That is an explanation, not a defence.*
+2. **My own `align_check.py` — NOT RUN AT CERT TIME EITHER.** Its only artifacts were seven synthetic
+   mutant fixtures from the 6/6 exercise hours earlier.
+3. **What actually produced the numbers: an ad-hoc bash join written in the moment, exercised against
+   nothing.** The original text placed *"computed at this seat, not read"* (true) beside *"the checker
+   was already exercised 6/6"* (true of a script that did not execute). **A reader joins those two
+   sentences and concludes the exercised instrument produced the output. I INHERITED THE CREDIBILITY OF
+   A CONTROL I DID NOT RUN** — and this cert is the artifact that credibility would have been spent on.
+4. **`align_check.py` HAS NOW BEEN RUN on the real artifacts** (`decomp_real.json` / `proof_real.json`
+   built from the declarations and the TO criterion elements; build controlled at 21 cells / 19 criteria
+   so the JSON construction is not itself lossy). **It reproduces the bash join exactly** — 21 cells,
+   19 criteria, 13 of 21 mapped, 19 of 19 traced, the identical eight unmapped cells, zero ghost refs,
+   sole resolution mode `explicit cell_refs`. rc=1 (MISALIGNED), correctly.
+
+**SO THE FINDINGS BELOW STAND ON A RUN INSTRUMENT — but they did not when they were sent, and the two
+states are indistinguishable from the outside.** The numbers being right is the luckiest possible
+outcome, not evidence the method was sound: had the ad-hoc join been wrong, the cert would have carried
+the same confident sentences and COO would have had no way to see it. **Caught by Andrew, not by me** —
+one turn after I had reproduced this exact masked-exit-code family twice in an hour (`rc=$?` after a
+pipe reading `head`'s status, once on the `cmd.exe` probe and once while about to file a false
+fails-open defect against the routed tool).
 
 A bidirectional join, cells ↔ criteria, computed at this seat. Not a read.
 
