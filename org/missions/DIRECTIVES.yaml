@@ -102,7 +102,24 @@ directives:
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
-    stance: "EVENT-REFRESHED 2026-08-21 ~19:2xZ (register act by 0.0.0_AB_MSTR, sole writer, per
+    stance: "⛔ PRIORITY EVENT-REFRESH 2026-08-21 ~19:3xZ (register act by 0.0.0_AB_MSTR, sole
+      writer, per CTO 65562): ANDREW-DIRECT AT THE BASE CTO TERMINAL, VERBATIM: 'Make it clear to
+      the fabric that I want ETFS_POSITIONING DONE RIGHT NOW. IT IS PRIORITY FOR THIS SESSION'.
+      >> ETFS_POSITIONING ROUND-1 GOES TO THE FRONT OF EVERY SEAT'S QUEUE FOR THIS SESSION;
+      anything else a seat holds YIELDS to it. DONE = PRD s.11.1 (Positioning page flips
+      Models<->ETFs; ETF mode renders DIVZ/IDVZ/PFDE/PFOE in the Positioning shape FROM SCHEDULED
+      PRODUCTION ARTIFACTS; Models mode byte-identical; ship shape 2 full books + 2 shells
+      upgrading forward). RIGHT NOW = no idle stage.
+      ⛔ IT CHANGES PACE, NOT PROCESS. The Rule 27 pipeline binds exactly as ratified -- decomp
+      before TOs, execute on spec, surprises to the channel. His ~16:1xZ word and this one are ONE
+      instruction. NO shadow path, NO comparator, NO ad-hoc run as production evidence (ad-hoc QA
+      reads of bbg-testpull/ are fine for BUILD-TIME correctness; production reads the SCHEDULED
+      bbg/{date}/ landing). It WIDENS NO OTHER HOLD: DS stays scoped to ETFS_POSITIONING cells,
+      the 49F flip stays HELD on both of his conditions, L2 egress remains his word. It is an
+      ORDERING, not a gate on anyone. SEATING EXECUTED ON IT: 0.7.0_AE_CloudOps seated ~19:4xZ
+      AHEAD of the cell trigger (territory (e) serving = route + IAM), his priority word making
+      seating-now the cheap move. <<
+      EVENT-REFRESHED 2026-08-21 ~19:2xZ (register act by 0.0.0_AB_MSTR, sole writer, per
       CTO 65453 request; authority = Andrew-direct ~17:5xZ at the base CTO terminal, VERBATIM:
       'Ok time to use the canonical process for whatever directive the ETF POsitioning D(N) is,
       get a project registered, do the PRD and let's run that end to end, i believe we should have
