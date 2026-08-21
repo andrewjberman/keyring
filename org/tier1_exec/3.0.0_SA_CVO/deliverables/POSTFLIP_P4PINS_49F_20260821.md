@@ -7,13 +7,26 @@ an edit of the PRE-FLIP pins). **Consumes:** pins @28bb34a56d · certs @5c004cac
 @9580e18b (DE). **Scope: exactly the 10 certified keys.** Held 4 + d14 are untouched and their
 PRE-FLIP pins stay live under stale-pin law.
 
-## VERDICT
+## VERDICT — CURRENT STATE (amended twice; read this, not the superseded line below)
 
-**FOUR OF FIVE LEGS MEASURED CLEAN AT THIS SEAT. THE READ-SIDE LEG IS SPLIT: its DESIRED half is
-measured; its EXERCISED half is UNRUN with a named dependency and owner.** This file does not
-grade the flip complete, and section 8's own words are why: *"a grade that verifies (1)+(2) and
-ASSUMES (3) certifies a pipeline that may be serving a frozen vintage."* I will not close by
-assumption the one leg that discriminates a landed repoint from a stranded one.
+**ALL FIVE PARITY_BAR §8 LEGS ARE CLOSED FOR THE SIX PORTAL-REACHABLE KEYS**, every figure from my
+own reads: values ✅ · write-side ✅ · **read-side ✅ (consumer plane exercised, 6/6 twin requests
+200, both failure paths exercised, zero-control re-run at my seat)** · mirror ✅ · ETag-identity ✅.
+**THREE DENOMINATORS, each true of its own plane and none substitutable: CERTIFIED 10 ·
+PORTAL-REACHABLE 6 · EXERCISED 6 of 6.** Rows 12/13 are UNRUN-BY-CONSTRUCTION (no live 49F
+consumer, mechanism verified at source at this seat); rows 8/11 have no portal reader at all.
+**LD-0441's non-discharge obligation is DISCHARGED** — closed on the raw markers, not on PROD.
+
+> **SUPERSEDED, preserved as authored (the state at first landing, ~16:45Z):** *"FOUR OF FIVE LEGS
+> MEASURED CLEAN AT THIS SEAT. THE READ-SIDE LEG IS SPLIT: its DESIRED half is measured; its
+> EXERCISED half is UNRUN with a named dependency and owner. This file does not grade the flip
+> complete, and section 8's own words are why: 'a grade that verifies (1)+(2) and ASSUMES (3)
+> certifies a pipeline that may be serving a frozen vintage.' I will not close by assumption the one
+> leg that discriminates a landed repoint from a stranded one."*
+> **Kept because the refusal was the right call and the record should show it was made BEFORE the
+> capture existed, not after it succeeded** — and banner-at-the-top because a superseded verdict
+> sitting where the reader arrives first is the half-live-block class I corrected in two other
+> people's documents this same afternoon.
 
 ## LEG 1 -- VALUES (own reads)
 
@@ -87,9 +100,42 @@ plane.** Under the channel's axis that is `INERT` today with a named re-arm cond
 `ARMED`, because the bindings at source are CORRECT (`:305-310` and `:441-443` verified above) and
 the harm needs a future consumer wired wrong, not a present trap.
 
-**STILL RUNNING at DE's seat when this amendment landed:** L2 (my 8 mutant fixtures) and L4
-(`--fail` transport marker) for the six reachable keys. Those markers come to me raw; this file
-gets a second amendment when I have read them.
+### ⚡ SECOND AMENDMENT ~17:05Z -- LEG 3 IS CLOSED. I READ THE RAW ARTIFACTS MYSELF.
+
+Capture landed at `org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/p4r3_flip_capture_20260821/`
+(@cd89ff7e80, 15 git-tracked files, deliberately un-digested by DE). **Every figure below is my own
+read of those files, not DE's summary of them:**
+
+- **L1 CONSUMER PLANE — 6 distinct twin keys requested by the portal, EVERY twin request 200**
+  (`awk` over the netlog for any non-200 on a twin path returns EMPTY): `mix_summary` ·
+  `leaderboard` · `timeseries_overview` · `cumulative_chart` · `partner_analytics_quarterly` ·
+  `partner_analytics_annual`. **This is the plane AE's route fetch structurally could not
+  establish** — the portal ISSUING the request, not merely the URL answering one.
+- **NEVER-WIDEN AT THE CONSUMER PLANE (stronger than the listing-layer control):** all five
+  held/structural keys measured **0 twin requests each**, while `header_metrics`, `dashboard` and
+  `fee_efficiency` appear served from `platinum/firm/`. Over-flipping is now measured absent at the
+  plane where it would actually manifest.
+- **L2 (shape mutants) 6/6 LOUD:** every key emits `CONSOLE[error] [P4-REPOINT-49F] SHAPE MISMATCH
+  on {key}: twin ... returned 200 with an unrecognized shape. Serving legacy and reporting -- this
+  is a cutover defect, not a transport fallback.`
+- **L4 (forced 503) 6/6 QUIET:** every key emits `CONSOLE[warning] [P4-REPOINT-49F] {key}: twin
+  unavailable, serving legacy`, page still renders. **The designed asymmetry is visible in the raw
+  severities themselves — `error` vs `warning` — not merely in the wording.**
+- **ZERO-CONTROL, re-run at my seat:** `SHAPE MISMATCH` count in the L1 capture (no mutant, no
+  forced failure) = **0**. The marker grep can return zero, so its non-zeros mean something.
+- **ONE ARTIFACT OF MY OWN INSTRUMENT, recorded:** my first pass also grepped for the diagnostic
+  ENUM string `fallback-shape-mismatch` and got 0 across all six, which briefly looked like a
+  missing signal. Reading the raw text settled it: the console prints the human-readable marker;
+  the enum lives in the in-memory `adviReadDiagnostics()` record and is never emitted to console.
+  **My pattern was looking for a string that surface does not produce — a wrong-question zero, not
+  an absence.**
+
+**LEG 3 VERDICT: CLOSED for the 6 reachable keys** (DESIRED + EXERCISED both measured). Rows 12/13
+remain UNRUN-BY-CONSTRUCTION per the mechanism above; rows 8/11 have no portal reader at all.
+**LD-0441's non-discharge obligation is DISCHARGED by this read** — it closed on the raw markers,
+not on PROD being green.
+
+**FIVE-LEG STATE: values ✅ · write-side ✅ · read-side ✅ (6 reachable) · mirror ✅ · ETag-identity ✅.**
 
 **ORIGINAL PRE-CAPTURE TEXT, preserved:** *"UNRUN. Dependency named, owner named:* a real bearer
 token through the auth path. DE holds no token (minting is AE's lane, 65048); AE runs the capture or supplies the bearer.
