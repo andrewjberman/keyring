@@ -47,6 +47,50 @@ which values do not move together):
 
 ---
 
+## ⛔ AMENDMENT ~19:1xZ -- MY STAGE-1 ENUMERATION WAS ASYMMETRIC, AND `0.0.3_BG_BBGTerminal` CAUGHT IT
+
+**I enumerated D7's task orders exhaustively over FILES (12) and took the REGISTER at its word for
+D6 and D9.** Measured now:
+
+```
+D6 TO files: 1   D6_ANALYST.TO-CDBFG-SITEZ.analyst-bindings-and-graphql-layer.md
+D9 TO files: 2   D9_TAXSMA.TO-A-SITEZ.state-assessment-recon.md · D9_TAXSMA.TO-c1.daily-tracking-behind-the-guardrail-gate.md
+D7 TO files: 12
+```
+
+**So D6 and D9 both carry live task orders that my stage-1 table did not surface.** My D6 row said
+the re-scoped initiative *"has NO live project"* -- true about PROJECTS, and it left a live TO
+invisible.
+
+> **THE METHOD ERROR, AND IT IS THE ONE WORTH KEEPING: I ESTABLISHED THAT THE REGISTER WAS WRONG ON
+> ALL THREE DIRECTIVES, AND THEN KEPT RELYING ON IT FOR THE TWO I WAS NOT FOCUSED ON.** Thorough on
+> the hot directive, trusting on the cold ones -- which is exactly backwards, because the cold rows
+> are where a stale register survives longest without anyone tripping over it.
+
+### THE HAZARD UNDERNEATH IT, filed by `0.0.3_BG_BBGTerminal` as OBS-1 and now ARMED
+
+**`to-check.py --all --assignee <serial>` cannot see an assignment recorded in a TO's `<status>`
+field instead of `<issued_to>`.** Measured at their seat: the query returns **1**; they hold **2**.
+The missing one is the D6 leg above, whose `issued_to` reads *"site Z, seats assigned by
+0.0.0_AB_MSTR~Z"* while the real assignment sits in `<status>`.
+
+**Under Rule 27's standing axis this moved INERT -> ARMED the moment ASSESS started**, because
+ASSESS is the act it breaks. **And it fails as an UNDERCOUNT, not a zero** -- a confident number
+with no caveat, which reads as a finding rather than as a failure.
+
+**REMEDY, and it is a method not a patch: ENUMERATE LEGS OVER TO FILES, THEN READ `<status>` AS
+WELL AS `<issued_to>`. Never enumerate over the assignee query alone.** That is the form I used for
+D7 and failed to use for D6/D9.
+
+### WHAT THIS DOES *NOT* INVALIDATE
+
+**The membership finding stands and is unaffected** -- it was derived from the register's own member
+sets and from project-JSON existence, neither of which routes through `--assignee`. D7's count also
+stands: it was file-enumerated. **The correction is additive: D6 and D9 have MORE live work than I
+reported, not different work.**
+
+---
+
 ## STAGE 2 -- PROPOSED REGISTRATIONS
 
 ⚠ **PROPOSED, NOT LANDED. The register is `0.0.0_AB_MSTR~Z`'s surface** (`org/missions/.register-owner`),
