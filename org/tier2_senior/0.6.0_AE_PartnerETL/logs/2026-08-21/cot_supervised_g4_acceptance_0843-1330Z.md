@@ -86,6 +86,40 @@ the closed 0.6.2 seat via the TO + CTO annex @65aff2c124 and re-derived nothing 
 No comp-tool covers the S3 served-bytes read (comp-freshness is trading-frontier freshness, not
 row/column content verify) — the belt verifier + boto3/s3api is the TO-mandated instrument there.
 
+## Post-close triage + ADVI_BDAPIMIG.P1 re-ground (1330-1400Z addendum)
+
+**archetype:** DIAGNOSE
+
+- **TO triage routed to COO+CTO (64682/64683):** ADHC_GLDINC.P1 flipped superseded by ISSUER
+  @bd6195b34e (its shadow+standing-comparator mechanism is the 08-04 Andrew veto class; the I/O-cut
+  need survives for a sanctioned re-form). NIGHTLY-VERIFY + SS4c recommended supersede/re-confirm
+  to COO (dead 02:00Z premise / parent-program supersede). L4-GUARD flagged: staged deliverable is
+  moratorium-class, needs issuer re-confirmation before any GO. DC-OSINT + CUTOVER-1 parked as
+  queued/staged.
+- **ADVI_BDAPIMIG.P1 re-ground (read-only, all planes named):**
+  - `comp-freshness chain bd` returned an EMPTY table under a sovereign-hold config note — an
+    emptiness that must not carry a verdict; grounded on s3api instead.
+  - **Runner healthy + self-protecting:** fires nightly at ~00:0xZ off `bd-49f-session-daily`
+    (00:00Z, ENABLED) → `bd-49f-session-complete` (event rule; `bd-49f-runner-daily` cron(0 2)
+    DISABLED since 06-29 by CTO ruling). transactions + realized land DAILY (08-20/08-21 as-ofs
+    current, T-1 correct). auth_dead=False every run.
+  - **FINDING (vendor-side, NOT a pipeline defect — NEVER#1 discipline applied):** since the
+    07-09 stub fix, BD returns 0-DATA-ROW header-only snapshot exports for EVERY weekday as-of on
+    allocations + unrealized; the FIX-1 REJECT guard refuses them nightly (logs, 3/3 days read:
+    `REJECT: allocations @2026-08-1[8,9,20] export has 0 DATA ROWS (455x bytes)`), and the ONLY
+    full-size landings for 6 straight weeks are FRIDAY as-ofs written on the SUNDAY 00:1xZ run
+    (07-10, 07-17, 07-24, 07-31, 08-07, 08-14 — 124/68 dated xlsx enumerated, full pagination).
+    Same bearer lands transactions in the same invocation, so auth is refuted as the cause.
+    **Downstream implication: allocations/unrealized-derived silver rides a Friday snapshot all
+    week (up to 4 trading days behind intra-week).** Whether BD moved to weekly snapshot posting
+    or per-firm reporting cadence changed is NOT resolvable from our side -- routed, no action.
+  - **Phase-2 frontier:** all 4 scrape boxes (bd-allocations/transactions/assets/fees) exist and
+    are STOPPED, not decommissioned — EBS still held, EC2_MANIFEST rows live. Decommission stays
+    destructive + separate-GO.
+  - Trigger-shape surface (not adjudicated): the runner's ONLY trigger is another chain's
+    completion event; the chain ROOT is scheduled (00:00Z), so whether this satisfies the
+    production-pipelines-must-be-scheduled rule is CTO's read.
+
 ## Surprises (channel: one line to COO, no action taken)
 
 - The belt verifier's row-count check structurally passes on any nonzero count (`len(data)>0`,
