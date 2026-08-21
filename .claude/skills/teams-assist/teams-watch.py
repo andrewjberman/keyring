@@ -1,3 +1,11 @@
+# ============================================================================================
+# LIVE PRODUCTION -- IMPORTED at every fire of the Windows Scheduled Task OPAL_D7_ticket_intake, EVERY 5 MINUTES,
+# FROM THIS WORKING TREE. SAVING THIS FILE IS DEPLOYING IT: there is no build, no commit gate and
+# no deploy step between this text and the client-facing ticket buzz, and the fuse is <= 5 min.
+# ANY edit -- including a comment, a docstring or a typo fix -- is bound by bar A5-A7 (CTO~Z
+# ruling 3a @123071c5cd): exercise it in the SAME CONTINUOUS ACT, in THIS tree (not a scratch
+# copy), scored on OUTPUT. If you cannot finish the exercise inside the window, REVERT FIRST.
+# ============================================================================================
 #!/usr/bin/env python3
 """teams-watch.py -- the /teams-assist monitor ENGINE (like org/mcp/inbox-watch.sh, but for Teams).
 

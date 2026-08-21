@@ -103,6 +103,38 @@ Per the standing NEVER rule, I implement no gate without Andrew's explicit word,
 - **Resolve over REGISTERED serials, not live ones** — per the census method point above, a liveness-scoped lint passes in exactly the window the failure occurs.
 - **Unconditional, never "where ambiguous"** — the two currently-unique tokens are the trap, not the exception.
 
+### The prose residual, PREDICTED HERE AND SPECIMENED WITHIN THE HOUR
+
+`3.0.0_SA_CVO~Z` (msg 2932) caught a multi-recipient message crediting them with three findings that were `1.0.0_SA_CTO~Z`'s own — the eight-path fuse enumeration, the widened A5–A7 bar, and the Arguments-plane bound — source-confirmed to `ctoZ_D7_PRECUT_RULINGS_GRAIN_TERMINAL_CHANNELLEG_20260820.md:215-225`, where the text reads in the first person. A second instance from a different pen landed in the same hour: a section headed for one seat containing *"A5 (yours, verbatim)"*, delivered to a seat that did not author A5.
+
+**AND THE PRONOUN IS STRICTLY WORSE THAN THE BARE SERIAL** — this is the part that sharpens the limitation above rather than merely illustrating it:
+
+> A bare `AE~Z` at least carries a **token resolvable against a registry** (the census enumerates its 11 candidates). An unqualified **`your` / `yours`** is unreachable by any registry-backed instrument. It is fixable only at authoring.
+
+⭐ **MECHANISM SHARPENED 2026-08-20 ~2300Z — the original wording here said the pronoun "carries no token at all," and `1.0.0_SA_CTO~Z` found the better statement, which `3.0.0_SA_CVO~Z` adopted over their own:** it does not carry *no* token — **it carries a DIFFERENT token per reader.** A wrong-but-real serial resolves to somebody **fixed**: one wrong person, the same wrong person in every copy, so a second reader can catch it. **"You" resolves to a different person in each inbox, so every copy reads as correctly addressed and no reader has any signal at all.** ⛔ **That is why this class survives awareness of itself: THERE IS NO MOMENT AT WHICH THE MESSAGE LOOKS WRONG TO ANYBODY.** The remedy follows from the mechanism rather than from vigilance — **in a multi-recipient message address seats BY SERIAL in the body and reserve second person for single-recipient sends**, which binds on a condition already known from the recipient list just typed.
+
+**Why this is a grounding defect and not an etiquette one:** a misattributed *credit* is an ego matter; **a misattributed BOUND corrupts the grounding chain.** Had `3.0.0_SA_CVO~Z` accepted para-1, they would have become the cited SOURCE for an unmeasured-exposure claim they never measured — and per the XXX.md relayer half a receiving seat reasonably treats a routed finding as grounded, so it propagates under the wrong name **with the real measurer's caveat detached from the only person who can qualify it.**
+
+### The bounding predicate: MULTI-RECIPIENT — and it is the one conditional that cannot rot
+
+`3.0.0_SA_CVO~Z` checked the specimens and found the property none of us had named: **every pronoun failure occurred in a MULTI-RECIPIENT message. A single-recipient body is structurally immune** — there is exactly one candidate for "you", so the pronoun resolves correctly with no discipline at all.
+
+**This turns an unbounded ask into a bounded one, which is why it is recorded as mechanism rather than as a nicety.** *"Use full serials in all prose"* competes with every other authoring instinct and decays under load — measured at that seat the same day: **addressing 100% clean, prose carrying 34 bare forms.** *"When a message has more than one recipient, address every seat explicitly"* binds on a condition the author already knows **at send time, from the recipient list they just typed.**
+
+⚠ **AND IT IS NOT THE "WHERE AMBIGUOUS" CONDITIONAL THIS RECORD REJECTS ABOVE — the distinction is load-bearing.** Ambiguity is *population-dependent*: it changes silently as seats register, so a habit built on it rots. **Multi-recipient-ness is a property of the message itself** — fixed at authoring, knowable without consulting any registry, and it **cannot degrade underneath a habit built on it.** That is the difference between a conditional that rots and one that holds.
+
+**Two sub-shapes, and the second is worse:** (a) per-seat paragraphs, where the structure at least signals that some paragraphs belong to another seat; (b) **a whole body addressed to ONE recipient but sent to several**, where nothing signals that the entire message may be about someone else's work — the shape most likely to be read as self-addressed end to end.
+
+*Audit of this record against its own rule (2026-08-20): 8 second-person occurrences over 7 lines — 7 are quoted material or the rule's own subject matter and must not be altered; **1 was genuine prose and is corrected above.** Method note, since it is the same class this estate keeps paying for: the first count read `grep -c`, which counts **LINES**, not occurrences, and reported 7 for a true 8 — a well-formed number answering a question nobody asked.*
+
+### The sufficient form — because "open with the full serial" was FALSIFIED BY ITS OWN AUTHOR APPLYING IT
+
+`0.0.3_BG_BBGTerminal` adopted that habit, applied it correctly on the opening line of the next message — and the body then ran **entirely in second person to a four-recipient send.** The fix held for one line and failed for the remaining forty. **Opening with a full serial resolves the FIRST reference and does nothing for every subsequent "you".**
+
+> **In any MULTI-recipient message: either (a) SECTION IT PER SEAT, each section opening with the full serial, or (b) WRITE IN THE THIRD PERSON THROUGHOUT. Second person is safe only in a SINGLE-recipient message.**
+
+*(Recorded as mechanism, deliberately without its third specimen. The specimen exists in the message traffic and is not needed here — a principle earns its place by being actionable without its incident, and a third instance would turn this record into an incident log.)*
+
 ## Related
 
 - `docs/references/` — the TAC-2' water-test record; the addressing corrections are logged in `org/tier2_senior/0.4.0_DT_ClientPlatform/logs/2026-08-20/laneZ_tac2prime_water_test_intake_loop_2010-2030Z.md` @`968804ab28` (Surprises item 3), written **before** this ruling arrived.

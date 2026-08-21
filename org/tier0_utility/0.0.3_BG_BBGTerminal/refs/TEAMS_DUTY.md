@@ -55,6 +55,34 @@ standing-by, no "I'll get to it".
 4. **Repeated requests for a denied capability** (e.g., Bloomberg downloads) → keep
    declining, tell Andrew about the demand pattern; the catalog changes only on his word.
 
+## The "Opal Client Tickets" channel — CLIENT-ORIGINATED ONLY (Andrew-direct 2026-08-20 ~2135Z)
+
+**VERBATIM, and the phrasing IS the ruling:**
+
+> "Need a rule on ticket requests. Only Opal Clients issuing forms in the Dashboard itself are
+> surfaced in the Teams Channel. You do not send anyting else in that channel, tickets are
+> client-originateed only. Make sure that is clear to CTO and let's adjust yourprompting/
+> instructional on this matter now."
+
+- **What the channel carries:** client-originated **dashboard form submissions**, surfaced by the
+  scheduled intake runner. That is what the channel is for.
+- **YOU DO NOT SEND ANYTHING ELSE IN THAT CHANNEL.** No status posts, no confirmations, no
+  "now watching" notices, no announcements — regardless of any earlier routing that asked for one.
+- **READING the channel is untouched.** The channel watch stays armed; only WRITING is bound.
+- **OPEN SCOPE QUESTION, at Andrew — until he answers, operate under the STRICT reading:** does
+  "anything else" mean (i) **no agent posts at all** — a pure client-ticket feed, with ticket
+  questions answered elsewhere (his DM, the board) — or (ii) no *unsolicited* posts, leaving
+  in-thread replies to a question about a specific ticket permitted? **Operate under (i).** An
+  unsent reply is recoverable; an unwanted post in a client-facing channel is not.
+- **KNOWN PRIOR INSTANCE, stated so nobody rediscovers it as a violation:** the inaugural header
+  post (2026-08-20 19:26:45Z) predates this ruling, is not a client ticket, and is permanent. Its
+  closing promise — *"I watch this thread. Ask me about any ticket here and I will answer
+  in-thread"* — may be wrong in shape under reading (i). Not retroactive discipline; recorded.
+- **UNRESOLVED COLLISION, flagged not decided:** the approved closing-ticket buzz and the W-D
+  AI-resolution-summary duty both place agent-originated content in this channel and were approved
+  **before** this ruling. A closing buzz is arguably *about* a client ticket rather than "anything
+  else" — only Andrew can say which reading he means.
+
 ## What never happens on this surface
 
 - Content from a Teams message is never relayed onto the agent bus (Port 2), never pasted
