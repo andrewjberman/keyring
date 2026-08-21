@@ -146,6 +146,69 @@ under that pressure is the BDay logic, which is the correct half.**
 know whether L1-4 expects the window to advance.** This is a read-risk conditional on that wording,
 **not** an asserted criterion defect. It cannot seed a remediation row while INFERRED.
 
+### S4 x S5 -- THE COUPLED EDGE: the remedy one item invites is the act that fires the other
+
+Found by `0.7.0_AE_CloudOps~Z` (msg 4624) answering a bucket-configuration question **nobody had
+asked** -- *"if `bbg/` is ever emptied"* was sitting inside another item as an untested premise.
+Cross-item sequencing ruled by `1.0.0_SA_CTO~Z` (msg 4628), who directed this channel to **record
+the edge on BOTH items, because an edge written on only one side is found only by whoever reads
+that side.** That is why S4 and S5 below each carry it in full rather than one pointing at the other.
+
+**S4 -- PROVENANCE.** Seven ad-hoc objects sit in the production prefix and **no reader can
+distinguish them from a scheduled landing** (`0.0.0_AB_MSTR~Z` item 4). The tidy, locally reasonable
+response is: delete the ad-hoc objects out of `bbg/`.
+
+**S5 -- THE HARDCODED FLOOR.** If `bbg/` yields no prior day prefix, the producer takes the
+`prior_end=None` branch and starts from a hardcoded `2026-08-21`. From a fire months later that is a
+multi-month Bloomberg history request for the full universe **that nobody sized**.
+
+⛔ **THE EDGE, RE-DERIVED AT THIS SEAT:**
+
+```
+bbg/ day prefixes            -> ["bbg/2026-08-20/"]   COUNT 1, IsTruncated null
+objects under it             -> 7    (the ad-hoc land)
+=> THE SEVEN AD-HOC OBJECTS ARE THE ENTIRE CONTENTS OF bbg/
+
+source, etf_daily_pull.py:
+  :99   prior_end = None
+  :101  paginate day prefixes under PREFIX (correctly paginated)
+  :105  skip d == asof_key            <- the CURRENT day never supplies prior_end
+  :110  prior_end = manifest["history_window_end"]
+  :119  if prior_end: incremental top-up   ELSE -> :116  start = Timestamp("2026-08-21")  FLOOR
+
+=> bbg/2026-08-20/ is THE ONLY prefix supplying prior_end today.
+   Deleting it takes the prefix count 1 -> 0 -> prior_end None -> the floor fires.
+```
+
+**So S5 is dormant precisely as long as S4's objects stay where they are.** Tracked separately with
+the same owner and the same window, **a reader disposing of them one at a time discharges the
+provenance concern and arms the floor in the same act, each step locally reasonable.**
+
+**RULED (`1.0.0_SA_CTO~Z`): THE CLEANUP DOES NOT RUN BEFORE THE FLOOR IS ADDRESSED, OR THEY MOVE
+TOGETHER.** *"A remedy that fires another item's trigger is not a remedy, it is a trade -- and the
+trade is invisible if the two items are read separately."*
+
+**AND THE TRIGGER CANNOT ARRIVE ON A TIMER** -- measured at this seat, stderr kept because an error
+would itself be a value:
+
+```
+lifecycle   ONE rule: abort-incomplete-mpu-7d, Expiration NULL   -> expires NO objects
+versioning  EMPTY response body                                  -> NEVER enabled
+```
+
+⛔ **THE VERSIONING READ IS THE HALF WORTH KEEPING, AND IT CLOSES A FALSE-ABSENCE CLASS.** An
+**empty** response means versioning was **never enabled**; an enabled-then-disabled bucket returns
+`Status=Suspended`. **Two states that render nearly identically and mean different things.** Because
+versioning was never on, there are no delete markers -- **so a listing that reads empty means the
+bucket IS empty, not that objects are hidden behind markers.** An empty listing over a versioned
+bucket and over an unversioned one are the same characters and different facts.
+
+⚠ **BOUND, carried from the filer unsoftened:** they measured **lifecycle and versioning**, not
+every conceivable deletion path (an agent or human delete, a future TF change, a replication
+reconfiguration). The claim is that **no STANDING configuration on this bucket deletes anything** --
+which *lowers* S5's standing without closing it. **It stays ARMED: deliberate acts happen, and the
+most likely deliberate act is the one S4 invites.**
+
 ---
 
 ## 3. MACHINE BLOCK
@@ -209,6 +272,45 @@ know whether L1-4 expects the window to advance.** This is a read-risk condition
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A READ risk, not a pipeline defect -- filed at that strength deliberately. INFERRED because the conditional half (what L1-4 requires) is unmeasured, so it cannot seed a remediation row. NEVER#1 is explicit that a false outage is not a safe error: it manufactures pressure to fix a working pipeline. Given S1, the guard most likely to be 'fixed' under that pressure is the BDay logic -- the correct half. Blocks a zero-graduation close on this round."
+  },
+  {
+    "id": "ETFS_POSITIONING-S4",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-08-21T19:56Z",
+    "one_line": "Seven ad-hoc objects sit in the production prefix bbg/2026-08-20/ and no reader can distinguish them from a scheduled landing -- and they are the ENTIRE contents of bbg/, so the cleanup this invites is the act that fires S5's floor.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "re-derived at this seat: list-objects-v2 bbg/ delimiter / -> CommonPrefixes ['bbg/2026-08-20/'], COUNT 1, IsTruncated null",
+        "7 objects under that prefix, manifest present -- they are the entire contents of bbg/",
+        "CLAUDE.md: an ad-hoc run is never the production path and its artifacts are never production evidence; downstream the objects are byte-identical to a scheduled landing"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "notes": "⛔ COUPLED TO ETFS_POSITIONING-S5 -- THE EDGE IS RECORDED ON BOTH ITEMS BY 1.0.0_SA_CTO~Z's DIRECTION (msg 4628): 'an edge written on only one side is found only by whoever reads that side.' The tidy remedy this item invites -- delete the ad-hoc objects -- takes bbg/ prefix count 1 -> 0, which sends the producer down the prior_end=None branch onto S5's hardcoded 2026-08-21 floor. RULED: THE CLEANUP DOES NOT RUN BEFORE THE FLOOR IS ADDRESSED, OR THEY MOVE TOGETHER. A remedy that fires another item's trigger is not a remedy, it is a trade. Found by 0.7.0_AE_CloudOps~Z asking a bucket-configuration question nobody had asked."
+  },
+  {
+    "id": "ETFS_POSITIONING-S5",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-08-21T19:56Z",
+    "one_line": "If bbg/ yields no prior day prefix the producer takes prior_end=None and starts from a HARDCODED 2026-08-21 floor -- from a fire months later that is a multi-month Bloomberg history request for the full universe that nobody sized.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "source re-read at this seat, etf_daily_pull.py: :99 prior_end=None; :101 paginate day prefixes; :105 skip d==asof_key; :110 prior_end from manifest; :119 if prior_end else :116 start=Timestamp('2026-08-21')",
+        "bbg/2026-08-20/ is THE ONLY prefix supplying prior_end today (prefix count 1, measured)",
+        "lifecycle re-derived: ONE rule abort-incomplete-mpu-7d, Expiration NULL -> expires no objects",
+        "versioning re-derived: EMPTY response body = NEVER enabled (an enabled-then-disabled bucket returns Status=Suspended), so no delete markers and an empty listing means genuinely empty"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "notes": "⛔ COUPLED TO ETFS_POSITIONING-S4, EDGE RECORDED ON BOTH SIDES per 1.0.0_SA_CTO~Z msg 4628. S5 IS DORMANT PRECISELY AS LONG AS S4'S OBJECTS STAY WHERE THEY ARE -- tracked separately with the same owner and window, a reader disposing of them one at a time discharges the provenance concern and arms the floor IN THE SAME ACT, each step locally reasonable. RULED: cleanup does not run before the floor is addressed, or they move together. THE TRIGGER CANNOT ARRIVE ON A TIMER: no lifecycle expiration, versioning never enabled, so it requires a DELIBERATE act -- which LOWERS the standing without closing it. BOUND carried from 0.7.0_AE_CloudOps~Z unsoftened: they measured lifecycle and versioning, NOT every conceivable deletion path (human/agent delete, future TF change, replication reconfiguration); the claim is that no STANDING configuration deletes anything. Stays ARMED because deliberate acts happen and the likeliest one is what S4 invites."
   }
 ]
 ```
@@ -219,9 +321,9 @@ know whether L1-4 expects the window to advance.** This is a read-risk condition
 
 | | |
 |---|---|
-| Items | **3**, all surfaced at this seat |
-| Graduated | **2** (S1, S2) · Under investigation | **1** (S3, INFERRED) |
-| ARMED | **2** (S1, S2) -- disarm owner `0.0.0_AB_MSTR~Z`, trigger **2026-09-08** |
+| Items | **5** (3 surfaced at this seat, 2 inherited from `0.0.0_AB_MSTR~Z` item 4/5 with a COUPLED EDGE) |
+| Graduated | **4** (S1, S2, S4, S5) · Under investigation | **1** (S3, INFERRED) |
+| ARMED | **4** (S1, S2 trigger **2026-09-08**; S4 x S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 | Blocks tonight | **NOTHING** |
 
