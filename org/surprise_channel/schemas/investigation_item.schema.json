@@ -9,7 +9,8 @@
   "surfaced_by": {"type": "string", "minLength": 3},
   "surfaced_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
   "one_line": {"type": "string", "minLength": 8},
-  "class": {"enum": ["BLOCKING", "OBSERVATION", "LATENT_HAZARD"]},
+  "class": {"enum": ["BLOCKING", "OBSERVATION", "LATENT_HAZARD"], "description": "INTERRUPTION RIGHT -- what the item does to the current turn. Orthogonal to hazard_standing."},
+  "hazard_standing": {"enum": ["ARMED", "INERT"], "description": "Whether the item, LEFT ALONE, harms through the process's FUTURE NORMAL operation. Orthogonal to class: a BLOCKING or OBSERVATION item may also be ARMED, and then it carries a disarm owner. Replaced the removed precedence rule (channel item NFRA_PIPELINE-S1)."},
   "grounding": {
    "type": "object",
    "required": ["status", "evidence"],
@@ -38,6 +39,16 @@
   {
    "comment": "the escape valve has an actuator by construction: LATENT_HAZARD names its disarm owner AT SURFACING",
    "if": {"properties": {"class": {"const": "LATENT_HAZARD"}}},
+   "then": {"required": ["disarm_owner"]}
+  },
+  {
+   "comment": "class LATENT_HAZARD IMPLIES ARMED standing -- the class is the armed case of the standing axis",
+   "if": {"properties": {"class": {"const": "LATENT_HAZARD"}, "hazard_standing": {}}, "required": ["hazard_standing"]},
+   "then": {"properties": {"hazard_standing": {"const": "ARMED"}}}
+  },
+  {
+   "comment": "ARMED obliges a named disarm owner WHATEVER the class -- this is the case the removed precedence rule could not express (the tsc specimen: OBSERVATION class, ARMED standing)",
+   "if": {"properties": {"hazard_standing": {"const": "ARMED"}}, "required": ["hazard_standing"]},
    "then": {"required": ["disarm_owner"]}
   }
  ]

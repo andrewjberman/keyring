@@ -57,16 +57,42 @@ shas side by side) -- every graduated item that day was graduated by measurement
 - **INTENT (one):** handling-path selection at surfacing time -- which interruption right and which
   remedy route the item takes NOW. Not content-kind, not severity-magnitude, not validity.
 - **GRAIN:** one surfaced item, classified at the moment of surfacing.
-- **MECE:** two discriminating questions, asked in order. *Does it stop live in-scope work right
-  now?* -> `BLOCKING`. *Else: does its danger actuate through the FUTURE NORMAL operation of the
-  process (not through an error)?* -> `LATENT_HAZARD`. *Else* -> `OBSERVATION`. **Precedence rule
-  for multi-character items: BLOCKING > LATENT_HAZARD > OBSERVATION** -- classify by the path taken
-  now; a residual character re-surfaces as its own item once the first path is handled.
-  **CE against the declared layer** ("unexpected developments during on-spec execution"): the two
+- **MECE:** one discriminating question. *Does it stop live in-scope work right now?* -> `BLOCKING`
+  (interrupts, routes to the issuer). *Else, is it armed against future normal operation?* ->
+  `LATENT_HAZARD`. *Else* -> `OBSERVATION`.
+  **CE against the declared layer** ("unexpected developments during on-spec execution"): the
   questions partition the layer by construction; the member a two-value axis hid -- dormant, armed,
   detonating on normal operation -- is the third value, found by counterexample before the enum
   existed (COO 64939: MDPF_PROVENANCE T-C, a past-due TO whose scheduled execution would have
   deleted the only working provenance path) and independently confirmed on postulate (iv).
+- ⛔ **THE PRECEDENCE RULE THIS AXIS CARRIED FOR NINETY MINUTES IS REMOVED (channel item
+  `NFRA_PIPELINE-S1`, disarmed 2026-08-21).** It read `BLOCKING > LATENT_HAZARD > OBSERVATION`, and
+  the estate's own memory names precedence as THE TELL for two axes fused: *a single-intent MECE
+  axis never needs precedence -- its values are disjoint by construction; a precedence clause is a
+  repair for a MECE failure the author decided to live with, and it reads as rigour, which is why
+  it survives review.* **Measured proof it was fused, on my own specimen: the `tsc --noEmit` false
+  green was filed OBSERVATION and then received the LATENT_HAZARD remedy** (a same-turn off-cadence
+  disarm -- routed into the DT spawn brief, portal law landed @82d3f28f). The fused property is now
+  its own field below; an item that BOTH blocks and is armed carries both, and no ordering is
+  needed.
+
+### The `hazard_standing` axis -- `ARMED | INERT` (orthogonal to class; four-postulate record)
+
+- **INTENT (one):** whether the item, LEFT ALONE, causes harm through the process's future NORMAL
+  operation. Not urgency, not severity, not whether it interrupts -- those are `class`.
+- **GRAIN:** one surfaced item, at surfacing.
+- **MECE:** `ARMED` (a future ordinary act encounters it and is harmed -- a scheduled TO, a seat
+  typing the obvious command, a queued execution) vs `INERT` (nothing does; harm requires an error
+  or never arrives). Exhaustive by negation, disjoint by construction, **no precedence needed --
+  which is the property the removed rule lacked.**
+- **STATE COHERENCE (iv):** `ARMED` obliges a NAMED DISARM OWNER and an off-cadence disarm;
+  `INERT` obliges nothing. Two members, two remedies, moving independently of `class` -- which is
+  exactly why it could not live on the class axis.
+- **BINDING RULE:** `class: LATENT_HAZARD` implies `ARMED` (schema-enforced). **A `BLOCKING` or
+  `OBSERVATION` item MAY ALSO be `ARMED`** -- and then it carries a disarm owner exactly as a
+  hazard does. *The tsc specimen is the type case: OBSERVATION class (nothing stopped), ARMED
+  standing (a future seat gets a false green), disarm owner CTO -- which is what actually
+  happened before the field existed to say so.*
 - **STATE COHERENCE (iv):** the three values take three DIFFERENT remedies -- unblock-now /
   record-and-route / disarm-then-remediate -- so one remedy cannot move all members; that failure
   of move-together is exactly why the axis needs three values, stated as the frame's finding.
