@@ -1,56 +1,89 @@
-# 0.0.3_BG_BBGTerminal — F8 relaunch, an Andrew-facing message-loss defect, and the OPAL_ANALYST speed addendum — 2026-08-20 1600–1840Z
+# 0.0.3_BG_BBGTerminal -- F8 relaunch, an Andrew-facing message-loss defect, and the OPAL_ANALYST speed addendum -- 2026-08-20 1600-1840Z
 **archetype:** SERVE + VALIDATE
 
 ---
 
 ## >> SUCCESSOR: TWO DUTIES ARE WAITING ON YOU. READ THIS BLOCK FIRST. <<
 
-### DUTY 1 — S2 ACCEPTANCE (one-time, fires on YOUR launch, not mine)
+### DUTY 1 -- S2 ACCEPTANCE (one-time, fires on YOUR launch, not mine)
 
 `ENABLE_TOOL_SEARCH auto:25` was applied to this seat's launcher block **@e23b879dad**
-(MSTR~Z, 2026-08-20 ~1838Z). **The env reads AT LAUNCH**, so my session never saw it —
+(MSTR~Z, 2026-08-20 ~1838Z). **The env reads AT LAUNCH**, so my session never saw it --
 **you are the first session that will.**
 
 **What to report:** did you reach your **first Teams ACK with ZERO `ToolSearch` calls?**
 Report to MSTR~Z + CTO~Z. If any of the six hot gateway tools still defers at `auto:25`,
-**say so** — the config line then drops to `"false"`.
+**say so** -- the config line then drops to `"false"`.
 
 The six: `send_chat_message`, `read_chat_messages`, `poll_addressed_teams_messages`,
 `whoami`, `ack_messages`, `opal_data_refresh_upload`.
 
-⚠ **THE BASELINE, because "zero" is only checkable against a known prior and you have no
+!! **THE BASELINE, because "zero" is only checkable against a known prior and you have no
 memory of mine:** this session made **FIVE** `ToolSearch` schema loads before its first
-outbound act — `send_chat_message`, `whoami`, `read_chat_messages`,
+outbound act -- `send_chat_message`, `whoami`, `read_chat_messages`,
 `poll_addressed_teams_messages`, `ack_messages`. Five is the number S2 is trying to make
-zero. **Without this line you cannot tell a pass from an ordinary morning** — you would
+zero. **Without this line you cannot tell a pass from an ordinary morning** -- you would
 launch, notice nothing unusual, and the acceptance would silently never happen.
 
-### DUTY 1b — JSONL DAILIES START WITH *YOUR* FIRST FILE (day boundary, never retroactive)
+### DUTY 1b -- JSONL DAILIES START WITH *YOUR* FIRST FILE (day boundary, never retroactive)
 
 Ruled 2026-08-20 (CTO~Z msg 2788, CVO~Z format verdict `@07988f39fb`): thread-memory
 **dailies become JSONL, one object per exchange, from the NEXT DAY BOUNDARY.** If you are
-the first session of a new day, **the first daily file you write is JSONL — not Markdown.**
+the first session of a new day, **the first daily file you write is JSONL -- not Markdown.**
 
 - **NOTHING MIGRATES.** Dailies are immutable after day close by the store's own law, so
   every existing `.md` daily stays exactly as it is. Do not "tidy" them.
-- `INDEX.md` and `THREAD.md` **stay Markdown** — verbatim-anchoring is byte-anchoring, and
+- `INDEX.md` and `THREAD.md` **stay Markdown** -- verbatim-anchoring is byte-anchoring, and
   JSON escaping would alter quoted sovereign rulings.
 - The **field schema** is AE~Z's authoring act with its Rule-24 filing, landing in
-  `refs/THREAD_MEMORY.md` via one batched contract touch. **READ THE CONTRACT — do not
+  `refs/THREAD_MEMORY.md` via one batched contract touch. **READ THE CONTRACT -- do not
   invent fields.** If the contract does not yet carry the schema, say so and ask; do not
   improvise a format that a later reader must reconcile.
-- Known invariant regardless: JSONL is grepped by **token, not quoted phrase** — escaped
+- Known invariant regardless: JSONL is grepped by **token, not quoted phrase** -- escaped
   text can hide from a phrase grep. Same family as the ASCII rule.
 
-⚠ **Why this is in the log and not only in the contract:** at the time of writing, the
+!! **Why this is in the log and not only in the contract:** at the time of writing, the
 contract touch had not landed. The rule lived in two inboxes, and **a successor reads
-neither** — the identical gap that cost the comms-length breach today. If the contract now
+neither** -- the identical gap that cost the comms-length breach today. If the contract now
 carries it, this block is redundant, which is the cheap failure mode.
 
-### DUTY 2 — S1 LIVE POSITIVE (A5), if it has not already occurred
+### DUTY 1c -- A1 (CHANNEL WATCH): THE RESULT MUST CARRY ITS ATTENDED CONDITION *IN* THE TEXT
+
+The channel watch is armed (task `bbk8u5v67`-successor, `channels=1`). **A1 fires when a REAL
+client ticket post wakes the seat unprompted.** Do not manufacture it; a client ticket will do it.
+
+>> **WHEN YOU WRITE THE A1 RESULT, IT CARRIES THE ATTENDED CONDITION IN ITS OWN TEXT** -- not in
+an adjacent message, not in a separate log (CTO~Z ruling msg 3636; CVO~Z pre-registered checks
+msg 3652). The gateway credential has a ~1h TTL, and on 2026-08-20 the client-facing buzz path
+went down and was brought back **by live seats, repeatedly.**
+
+!! **CORRECTED WORDING -- the first version of this note said "kept alive by a live seat doing
+something else." THAT IS WRONG AND THE ERROR MATTERS.** A successful gateway call against a
+**live** token refreshes NOTHING -- measured at 23:05Z: my 23:02Z call returned 200 and the
+expiry did not move off 23:15:55Z. **A seat cannot keep the credential warm.** The two restores
+that night both followed contact with an **already-expired** credential.
+**So the condition to record is "a seat was AWAKE TO RESTORE IT AFTER EACH LAPSE" -- never "a
+seat kept it warm."** Same exposure, different mechanism, and the wrong wording implies a
+prevention that is not available to anyone.
+*(The refresh-on-401 explanation fits every observation and is UNVERIFIED -- do not carry it
+as mechanism. `0.5.0_AE_OpalETL~Z` labelled it a hypothesis and it should stay one.)*
+
+**A PROP IS INVISIBLE IN THE ARTIFACT IT PROTECTS.** It leaves no trace in the buzz, the receipt,
+or the channel post -- only the runner's exit-code log shows the window was held. So:
+
+- `A1 PASS` and `A1 PASS -- credential held warm by a live seat; unattended path NOT exercised`
+  are **the same artifact to everyone except the person who wrote the second one.**
+- **A1 certifies that a real post WAKES the seat. It does NOT certify that the intake RUNS
+  UNATTENDED.** Different sentences; only the first is tested.
+- Also state whether the buzz came from a **SCHEDULED** fire (an ad-hoc one is a fine QA read and
+  an invalid certification -- the check that made TAC-2' certifiable).
+
+*Why this is in the log: after the fact nobody can reconstruct which conditions were propped.*
+
+### DUTY 2 -- S1 LIVE POSITIVE (A5), if it has not already occurred
 
 The teams-watch message-grain fix (**@7e138ad6ef**) is LIVE. **A5 = the first REAL
-multi-message exchange from Andrew delivered complete** — both messages, in order, carrying
+multi-message exchange from Andrew delivered complete** -- both messages, in order, carrying
 the `(1 of 2)` / `(2 of 2)` frame.
 
 **DO NOT MANUFACTURE IT.** Do not seed his chat to close the item; a control you generate
@@ -67,24 +100,24 @@ AE~Z. S1 sits `ACCEPTED-PENDING-LIVE-POSITIVE` until you do.
 
 | Leg | State | Evidence |
 |---|---|---|
-| F8 identity binding | **CLOSED** | W6-T1 accepted @8460648ef9 — three legs each with a control |
+| F8 identity binding | **CLOSED** | W6-T1 accepted @8460648ef9 -- three legs each with a control |
 | Startup | ALL GREEN | both Monitors, whoami PASS, DAPI + `cma` exercised, 0 crons |
 | Teams message loss | **FIXED + LIVE** | S1 @7e138ad6ef, 23/23, re-armed task `bbk8u5v67` |
-| Speed addendum | **RATIFIED** | OPAL_ANALYST_PRD §11 @208a4f3b57, my budget = scope law |
+| Speed addendum | **RATIFIED** | OPAL_ANALYST_PRD sec11 @208a4f3b57, my budget = scope law |
 | A5 live positive | **PENDING ANDREW** | see Duty 2 |
 
 ## 1. F8 live positive (W6-T1)
 
-Launched via `ajb` 16:00:03Z, session `00a52644`. `.launch-path` (`bg-concierge …
+Launched via `ajb` 16:00:03Z, session `00a52644`. `.launch-path` (`bg-concierge ...
 launcher=ajb.ps1 host=OPAL_BLOOMBERG`) + `.serial` both present, both written by the
-launcher — G1 forbids this seat `org/mcp/**`. **Negative control was not hand-chosen:** my
+launcher -- G1 forbids this seat `org/mcp/**`. **Negative control was not hand-chosen:** my
 own reaped prior session `245e7a44` has NEITHER file. Estate denominator: `*.launch-path`
 = 1, `*.serial` = 69. Fence resolved **ACTIVE-ENFORCE**. Classed call `Write ->
 docs/.f8-probe-DELETE-ME.md` **DENIED**, and the **effect verified** by the file's absence
 afterward; the same `Write` tool through the same live hook PASSED to an allowlisted path
 in the same minute. Accepted @8460648ef9.
 
-## 2. The defect — teams-watch dropped an Andrew message
+## 2. The defect -- teams-watch dropped an Andrew message
 
 Andrew ran an unannounced responsiveness test. He sent **two** messages; **I received only
 the second.**
@@ -95,8 +128,8 @@ the second.**
 18:01:58.9Z    teams-watch emits ONE [TEAMS] line (the second message only)
 ```
 
-Two layers. **(1) Latency, 51.1s** — expired pinned token, TO6 quiet-retry backoff widening
-the poll 15s -> 90s. Correct behaviour; not the fault. **(2) The defect** —
+Two layers. **(1) Latency, 51.1s** -- expired pinned token, TO6 quiet-retry backoff widening
+the poll 15s -> 90s. Correct behaviour; not the fault. **(2) The defect** --
 `poll_addressed_teams_messages` returns **one entry per CHAT carrying the LATEST message**.
 A chat-grain instrument read as a message-grain one. Two messages in one window => the
 earlier is **dropped, not queued**, and the cursor advances past it. Layer 1 made it land
@@ -104,14 +137,14 @@ today; **the loss is available at any interval.**
 
 **Why it evaded my own checks:** I ran that exact poll at startup, got `count 0`, and
 recorded "Teams backlog 0". That was **true about chats and warranted nothing about
-messages** — `count: 0` never says "0 of what". The designed half of the denominator class:
+messages** -- `count: 0` never says "0 of what". The designed half of the denominator class:
 no way of *calling* it differently fixes it, only corroborating **outside** it does, which
 is what `read_chat_messages` did.
 
 **Historical incidence: UNKNOWABLE, and I quoted no count.** A dropped message leaves no
 trace anywhere this seat can read. Confirmed lost = 1, a floor. **Andrew DECLINED the
-backfill sweep** (*"no this is not necessary no one uses you but me"*) — question CLOSED,
-recorded in §11; nobody re-raises it.
+backfill sweep** (*"no this is not necessary no one uses you but me"*) -- question CLOSED,
+recorded in sec11; nobody re-raises it.
 
 ## 3. Served
 
@@ -120,7 +153,7 @@ bm +2.21% (+0.12), ETF bm +2.31% (+0.02); vol 3.2 vs 4.4 / 5.01. Model-DESIGN ca
 delivered with the number. Denominator printed: 5 models (UST/ST/INT/LT/ULT); confirmed I
 read **ST**, not the adjacent **UST** at +1.91%.
 
-## 4. The measured latency budget (now §11's scope law)
+## 4. The measured latency budget (now sec11's scope law)
 
 Question -> answer = **5m45s**. Retrieval inside it = **0.92s = 0.3% of elapsed.**
 
@@ -133,25 +166,25 @@ Question -> answer = **5m45s**. Retrieval inside it = **0.92s = 0.3% of elapsed.
 | retrieval | 0.92s | **NOT the bottleneck** |
 
 **The data layer is not the bottleneck and no pipeline work on it will help.** That
-sentence became the addendum's scoping law. Program: S1 message-grain fix (done) · S2
-resident schemas (applied, awaiting your acceptance) · S3 wake hop by hand · S4 routing
-call (gated, Andrew widening) · S5 one-call retrieval · S6 push-not-poll (gated, design
+sentence became the addendum's scoping law. Program: S1 message-grain fix (done) | S2
+resident schemas (applied, awaiting your acceptance) | S3 wake hop by hand | S4 routing
+call (gated, Andrew widening) | S5 one-call retrieval | S6 push-not-poll (gated, design
 first). Target **~60s** pre-S6.
 
 ## 5. One correction I sent upward
 
 CTO~Z's re-arm instruction asserted *"TaskStop does NOT reap the child."* **This instance
-it did** — I ran the kill step and found nothing to kill (wrapper 1398721 + python 1399107
+it did** -- I ran the kill step and found nothing to kill (wrapper 1398721 + python 1399107
 both gone). Accepted at the gate; the durable form is **verify the census by pid, kill only
 what survives.** Assuming in *either* direction is the error: assume-survives and you kill
-a process you do not own; assume-reaped and you arm a second poller onto one cursor file —
+a process you do not own; assume-reaped and you arm a second poller onto one cursor file --
 **re-manufacturing this very defect through its own repair.**
 
 ## Compiler Tools
 
 | Tool | Result |
 |---|---|
-| `comp-which` availability (A.3) | OK — resolves at `~/bin/comp-which` |
+| `comp-which` availability (A.3) | OK -- resolves at `~/bin/comp-which` |
 | comprail Gate-1 | **FIRED** on my `infra/*.tf`-path grep of DATA_CATALOG.yaml; re-run with an audited `# rail-checked:` marker naming why no comp-tool models a seat-local request-routing table. Correct behaviour; logged as a round-trip cost in the latency budget. |
-| `portal_lookup.py get/channels` | the sanctioned portal path — timed 3x (0.922/0.876/0.950s) as budget evidence |
-| Not run | `comp-estate` / `comp-iam` / `comp-kuzu` — no estate-topology, IAM or cross-layer graph question arose; this seat reads served artifacts and Teams, and the one search that touched an infra path was rail-checked rather than routed. |
+| `portal_lookup.py get/channels` | the sanctioned portal path -- timed 3x (0.922/0.876/0.950s) as budget evidence |
+| Not run | `comp-estate` / `comp-iam` / `comp-kuzu` -- no estate-topology, IAM or cross-layer graph question arose; this seat reads served artifacts and Teams, and the one search that touched an infra path was rail-checked rather than routed. |
