@@ -310,6 +310,73 @@ sits between recovery #2 and lapse #3, so the 2h29m may not be a pure TTL expiry
 mechanism plus a confounded measurement is FURTHER from grounded than it was this morning, not
 closer.** The round still cannot close on it, and it must not close on the filer's say-so.
 
+### S10 -- claim enrichment looks up `PK="USER#"+email`, which is the WRONG SHAPE for every real Opal human
+
+Filed by `0.5.0_AE_OpalETL~Z` (msg 4611) **against their own W-A build**, class **BLOCKING** x
+standing **ARMED**, before spending the Andrew-authorised test ticket.
+
+**Re-derived at this seat, source and live primitive:**
+
+```
+SOURCE   lambda_function.py:331   Key={"PK": f"USER#{email}", "SK": "PROFILE"}
+         lambda_function.py:308   docstring asserts PK = "USER#<email>" as if it were THE schema
+
+LIVE     get-item PK="USER#andrew@opalinvest.com" SK=PROFILE   -> None
+POS CTL  get-item PK="USER#user@opalinvest.com"   SK=PROFILE   -> resolves
+         => the null is a REAL ABSENCE, not a broken call
+```
+
+**Census re-derived independently, materialised client-side (no `--query length` on a paginated
+call; `LastEvaluatedKey` absent, so 48 is the whole set):**
+
+```
+                                 AE      CVO~Z
+USER#/PROFILE rows               48        48     EXACT
+  PK == USER#<email>             31        31     EXACT
+  PK == USER#<opaque>            17        17     EXACT   <- an email lookup MISSES these
+opal-capital principals          20        20     EXACT (after filter reconciliation)
+  ... OPAQUE pk                  15        15     EXACT   <- every real Opal human
+  ... EMAIL pk                    5         5     all service/test/vendor rows
+```
+
+⚠ **A 20-vs-18 gap appeared first and was NOT a discrepancy -- I hunted the missing column before
+filing one.** AE filtered on `org == opal-capital`; my first pass filtered on email domain. The two
+rows are `patricia@whitelabelcreative.com` and `patricia@thewhitelabelcreative.com` -- vendor
+accounts on a non-`opalinvest.com` domain, both email-form pk, exactly the *"patricia x2"* AE
+listed. **Every figure reconciles under both filters, and the load-bearing 15 never moved.**
+
+**REMEDY PATH CONFIRMED LIVE:** `describe-table` shows `email-index` keyed on `email`, status
+**ACTIVE**. It needs an IAM grant as well -- AE verified one `--resource-arns` per call that
+`Query` on both the index and the table return `implicitDeny` while their `GetItem` grant returns
+`allowed`, **so the instrument discriminates and the deny is real.**
+
+⛔ **WHY IT IS ARMED AND WHY IT HID: E-2's GRACEFUL DEGRADATION IS WORKING PERFECTLY AND MASKING
+IT.** Every failed lookup lands in the designed fallback -- the client pickup email reads *"An Opal
+advisor"* and logs `row_found_no_name` / `no_row_or_lookup_failed`. **That is byte-identical to a
+user who legitimately has no directory record.** A degradation path built to be graceful is
+concealing a lookup that fails for essentially every internal claimer.
+
+**Disarm owner `1.0.0_SA_CTO~Z`** -- the fix is code + TF/IAM + an apply, and applies are not
+lifted, so per §6 it escalates to the seat that can authorise rather than waiting for cadence.
+
+⛔ **AND THE FIXTURE-SHOPPING THEY DECLINED IS THE PART TO KEEP.** AE held the authorised test
+ticket rather than spending it on a guaranteed FAIL, and recorded that they were *"one keystroke
+away"* from choosing `user@opalinvest.com` as the actor -- a principal that **does** resolve. **That
+would have made WA-1 pass by selecting a fixture that dodges the defect.** A green acceptance row
+produced by fixture choice is worse than a red one.
+
+**THE ROOT IS IN THE DOCSTRING THAT WAS SUPPOSED TO PREVENT IT** (their words): *"KEY SHAPE IS
+MEASURED, NOT ASSUMED (live describe-table + a bounded 3-item sample)."* With 31 of 48 rows
+email-form, **a 3-item sample was overwhelmingly likely to be all-email and could not have
+falsified the rule.**
+
+> **SECOND INSTANCE OF ONE CLASS IN THIS ROUND, INDEPENDENTLY ARRIVED AT:** that sample could not
+> have said otherwise, and neither could my own positive control in the ETFS round (it proved the
+> search *engine* worked while my pattern set could not match `BDay`). **Both wore a control's
+> authority. Both were one step from a confident wrong answer.** The estate's doctrine names this
+> as *an instrument that COULD NOT HAVE SAID OTHERWISE*; two seats hit it in one session, in
+> different tools, both catching it only by going back to the source.
+
 ---
 
 ## 3. WHAT THIS ROUND DOES *NOT* CLAIM
@@ -505,6 +572,27 @@ closer.** The round still cannot close on it, and it must not close on the filer
     "disposition": "GRADUATED",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "ARMED because S2 was routed BY THIS DOCUMENT to the D7 decomp as an A1 attended-condition input while COO was cutting cells, and the FALSIFIED half is the half that shapes that cell: the filer's advice that an active seat self-heals within a poll cycle had already reached their log and several messages. A cell written on it would encode a recovery guarantee that does not exist AND WOULD LOOK MEASURED. THE REPLACEMENT IS WORSE THAN WHAT IT REPLACES (1.0.0_SA_CTO~Z): under the filed mechanism any agent action recovered the poller; under the measured one NO agent action recovers it -- the seat waits on a harness write it cannot trigger. Load-bearing for A1: ATTENDEDNESS DOES NOT IMPLY REACHABILITY. Trigger for the rewrite remains UNDETERMINED; a scoped-not-blanket write is noted as a weak constraint only (two unrefreshed entries may simply be retired servers -- not determined). Confound named: a WinError 10054 connection drop sits between recovery #2 and lapse #3, so 2h29m may not be pure TTL expiry. S2's OWN disposition does NOT move -- it stays UNDER_INVESTIGATION/INFERRED, and the INFERRED marking is vindicated: an ungrounded item was not acted on as if measured, and then turned out to be wrong."
+  },
+  {
+    "id": "D7_TICKETING-S10",
+    "surfaced_by": "0.5.0_AE_OpalETL~Z",
+    "surfaced_at": "2026-08-21T19:51Z",
+    "one_line": "Claim enrichment constructs PK=\"USER#\"+email, but 15 of 20 opal-capital principals -- every real Opal human -- carry an OPAQUE PK, so the deployed lookup returns null for essentially every internal claimer, and E-2's graceful degradation renders it as 'An Opal advisor'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE re-read at this seat: infra/aws/lambda/ticket_center/lambda_function.py:331 Key={'PK': f'USER#{email}', 'SK': 'PROFILE'}; :308 docstring asserts that shape as the schema",
+        "LIVE: get-item PK='USER#andrew@opalinvest.com' SK=PROFILE -> None; POSITIVE CONTROL PK='USER#user@opalinvest.com' -> resolves, so the null is a real absence not a broken call",
+        "census re-derived independently, materialised client-side, LastEvaluatedKey absent: 48 USER#/PROFILE rows, 31 email-form, 17 opaque -- EXACT match to the filer on every figure",
+        "principals reconciled: filer's org==opal-capital filter gives 20/15 opaque; my email-domain filter gave 18/15; the 2-row gap is patricia@whitelabelcreative.com + patricia@thewhitelabelcreative.com, both email-form vendor rows -- NOT a discrepancy, and the load-bearing 15 never moved",
+        "remedy path live-verified: describe-table shows email-index keyed on email, status ACTIVE; filer verified Query on index and table both implicitDeny while their GetItem grant returns allowed, so the deny instrument discriminates"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "Filed by the builder AGAINST THEIR OWN BUILD, before spending the Andrew-authorised test ticket. ARMED AND HIDDEN BY A CORRECT FEATURE: E-2's graceful degradation renders every failed lookup as 'An Opal advisor' with row_found_no_name -- byte-identical to a user who legitimately has no directory record, so the fallback conceals a lookup failing for nearly every internal claimer. Disarm owner is CTO~Z because the fix is code + TF/IAM + an apply and applies are not lifted, so per section 6 it escalates rather than waiting. THE FIXTURE-SHOPPING THEY DECLINED IS THE PART TO KEEP: they were 'one keystroke away' from choosing user@opalinvest.com as the actor, which DOES resolve and would have made WA-1 pass by dodging the defect. ROOT NAMED IN THEIR OWN DOCSTRING: 'KEY SHAPE IS MEASURED, NOT ASSUMED (live describe-table + a bounded 3-item sample)' -- with 31 of 48 rows email-form, a 3-item sample was overwhelmingly likely to be all-email and COULD NOT HAVE FALSIFIED THE RULE. Second instance in this round of an instrument that could not have said otherwise; the first was my own positive control in the ETFS_POSITIONING round."
   }
 ]
 ```
@@ -515,12 +603,12 @@ closer.** The round still cannot close on it, and it must not close on the filer
 
 | | |
 |---|---|
-| Items | **9** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 2 filed post-handover incl. one FALSIFYING ITS OWN FILER) |
-| Graduated | **8** (S1, S3, S4, S5, S6, S7, S8, S9) |
+| Items | **10** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 3 filed post-handover incl. one FALSIFYING ITS OWN FILER and one filed AGAINST ITS OWN BUILD) |
+| Graduated | **9** (S1, S3, S4, S5, S6, S7, S8, S9, S10) |
 | Under investigation | **1** (S2 -- INFERRED, blocks a zero-graduation close) |
 | Dismissed | 0 |
 | Decomp-invalidating | 0 |
-| ARMED items | **4** (S1, S5, S6 -> `1.0.0_SA_CTO~Z`; S9 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn |
+| ARMED items | **5** (S1, S5, S6, S10 -> `1.0.0_SA_CTO~Z`; S9 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 
 **This round CANNOT close.** S2 is `UNDER_INVESTIGATION`, and an open item is not a zero
