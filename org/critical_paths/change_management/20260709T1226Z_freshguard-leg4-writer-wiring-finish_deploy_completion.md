@@ -262,3 +262,19 @@ T_d' evaluation). No sovereign question on the alarm; MSTR's "another way" REC (
 edit. PENDING (0.7.0_AE_CloudOps): run the probe on the two deployed runtimes (ad-hoc QA, legal, run-and-read,
 nothing standing) -- SUPPORTED -> unblock; ABSENT -> move the boto3 pin first (its own change); IGNORED -> do
 not build the CAS on that runtime.
+
+=== PROBE PARKED BY MECHANISM RULING (CTO 63959, 2026-08-21 ~0048Z) ===
+The two-runtime probe run is PARKED, and taken at FIX-TIME rather than banked now: a capability
+verdict EXPIRES with the runtime it was measured against (a layer rebuild / runtime roll silently
+invalidates a SUPPORTED verdict, and the verdict does not carry its own runtime vintage into the
+moment someone cites it -- the same defect as a file:line citation with no commit-ish). So the probe
+runs as the FIRST STEP of the CAS fix whenever the CAS fix is actually wanted, on BOTH runtimes.
+MECHANISM PRE-SELECTED (so nobody re-litigates it at fix-time): a TF-managed scratch fn cloning the
+incremental_updater's runtime + layer (python3.12 + pyiceberg-nessie-deps:3), invoke the probe, then
+an authorized destroy. REJECTED en route: (b) a Rule-1 carve-out for a throwaway Lambda -- the easy
+case is the most dangerous case for a no-exceptions rule; (c) accepting a version read as evidence --
+version introspection is STRUCTURALLY BLIND to IGNORED, the one verdict the probe exists for, the same
+shape as the alarm dropped from these GO-conditions tonight.
+RUNTIME-2 PRIOR (a labelled PRIOR, never a verdict): the derive image's boto3==1.38.0 is source-pinned
+(infra/aws/globgrph/Dockerfile, same pip block as pyiceberg 0.9.1 / pyarrow 19.0.1) -- a strong
+SUPPORTED prior from a source pin past both conditional-write GA dates; NOT exercised; silent on IGNORED.
