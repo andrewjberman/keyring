@@ -50,6 +50,30 @@ history feasibility — does the vendor supply pre-2024-07 at grain, does it rec
 attribute dims in canonical; identity coverage for the leaderboard); **re-flip PER KEY as each
 closes.** The word "backfill" does not appear in any option until obtainability is measured.
 
+## ⛔ CORRECTIONS within 20 minutes of writing (two measurements that change the REMEDY, not the hold)
+
+1. **HISTORY EXISTS IN THE ESTATE — the "vendor procurement" framing above is RETRACTED** (CVO
+   65337, own retraction): `opal-data-bd/gold/canonical/` carries 2,423 dated entries
+   2020-01-02..2026-08-21 (performance, nna, holdings, account_gains) — the legacy chart's span.
+   The Schwab plane's tree-wide 2024-07-08 floor stands, so the remedy is a **CROSS-PLANE PORT**
+   (BD gold → Schwab-authority canonical) with one named feasibility test CVO is running now on my
+   word: **do the two vendors' books RECONCILE** (account universe, valuation basis, NNA
+   definition) across the 2024-07-08 seam? If not, a splice manufactures a discontinuity in a
+   client-facing trend chart — worse than the truncation. Nobody ports until that read lands.
+2. **GEOGRAPHY IS NOT SOURCE-LIMITED — "no geography available" was FALSE** (COO 65343, measured
+   at Andrew's direct prompt): `schwab/08335338/silver/fact_acc` carries `ac_st` at **100%
+   population (7,331/7,331, 48 states)** plus city/zip/country, and the top states ARE the legacy
+   chart's set. "No canonical geo DIM" (CVO) is true; the remedy is **an UNBUILT canonical
+   dimension over data we already hold** — a scoped dim build (DS lane; dim + two emit sites +
+   reader vocabulary + pin refresh), not a program. Sizing is mine; it is small.
+3. Still UNMEASURED and stated as such: **OFFICE** (the `views.ofc` collapse — is office a Schwab
+   field at grain or BD-side? measure before classing) and the **LEADERBOARD −20 named advisors**
+   (identity coverage vs defect — the one item that could be a BUG).
+
+**The hold on all six keys stands regardless — a twin serving `['Other']` today is a product
+regression today whatever the remedy costs. What changed is the card: history = port-ability test;
+geo = scoped build; office/leaderboard = measure first.**
+
 ## Why the afternoon's controls were right and still missed this
 
 Pins measure values against DECLARED bands; certs cover route + value planes; the consumer-plane
