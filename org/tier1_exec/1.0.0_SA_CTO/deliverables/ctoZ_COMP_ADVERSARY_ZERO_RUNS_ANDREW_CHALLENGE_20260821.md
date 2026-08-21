@@ -76,9 +76,9 @@ packet lists POINTERS, not digests) - T11 admissibility method.
 
 - **ADOPTED at this gate:** I run `comp-adversary compose` on any build I accept, and quote its
   declared-exclusion count beside any result.
-- ⛔ **NOT IMPOSED on other lanes.** Making it a precondition on another seat's work would be the
+- STOP: **NOT IMPOSED on other lanes.** Making it a precondition on another seat's work would be the
   manufactured-gate class. **The mandate is Andrew's to scope; it is not mine to widen.**
-- ⛔ **CARDED, NOT RULED:** whether this fabric should be running the `atom_decomp` workflow at all.
+- STOP: **CARDED, NOT RULED:** whether this fabric should be running the `atom_decomp` workflow at all.
   The validation piece is executable here; **the decomposition workflow is absent.** I am not
   redefining what we are doing as close enough.
 
