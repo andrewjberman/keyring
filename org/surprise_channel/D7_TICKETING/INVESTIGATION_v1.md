@@ -614,6 +614,27 @@ falsified the rule.**
     "disposition": "GRADUATED",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Found during certification; the decomp author explicitly requested this check ('if you think the asymmetry is wrong in either direction, that is the finding I want'). THEIR NEGATIVE DIRECTION IS CORRECT AND UNTOUCHED -- a name-absence cannot establish coverage-absence, and NEEDS_NEW_TO is the value a reader acts on by cutting work. THE SYMMETRIC WEAKNESS IS UNGUARDED: a name-match establishes MENTION, not COVERAGE. CONSEQUENCE RUNS THE DIRECTION THEY WERE GUARDING, APPLIED TO THE MIRROR VALUE: a false NEEDS_NEW_TO MANUFACTURES work (closed); a false COVERED_ACCEPTED SUPPRESSES it, and nobody audits an entity that appears correctly covered. RULE 24(iii) INSIDE A VALUE'S WORDING -- the axis measured NAMING, the value asserts COVERAGE; the adjective smuggles a second claim past a cross-value test that passes. AMENDMENT REQUIRED FOR CERT, a LABEL not a re-run: rename to NAMED_IN_ACCEPTED_TO (preferred) or carry a stated bound on the field. Same class as this round's S5 and S10, one layer up. SELF-NOTE: my own first pass reported '45/47 assert a covering role' -- my regex was matching 'coverage'/'accepted' in the field itself; true reading 47/47. Third instance tonight of an instrument agreeing with the answer that shaped it. >> DISARMED AND REMEDIATED @b04a2ed10d, VERIFIED AT THIS SEAT NOT ACCEPTED: 47 cells now NAMED_IN_ACCEPTED_TO, ZERO remain COVERED_ACCEPTED; census byte-unchanged (240 cells / 175 MEASURED / 65 declined / 0 without evidence); and the diff touches 'evidence' or 'status' on ZERO lines -- labels only, exactly as ruled. UNUSUALLY FOR THIS CHANNEL, DISARM AND REMEDIATION COINCIDE HERE: the rename IS the remedy, because the defect was the value's wording rather than the measurement. The residual -- which of the 47 are truly COVERED rather than merely NAMED -- is now correctly represented as unestablished by the honest label, which is the outcome, not a leftover."
+  },
+  {
+    "id": "D7_TICKETING-S13",
+    "surfaced_by": "0.5.0_AE_OpalETL~Z",
+    "surfaced_at": "2026-08-21T20:52Z",
+    "one_line": "THE REMEDIATED DOCSTRING'S OTHER ASSERTION IS STILL LIVE AND IT IS A DELETION WARRANT: lambda_function.py:310-322 states 'PK is a deterministic function of email, so user_id carries no information the email does not already carry; whether the field earns its place is a schema call' -- the same evening's exercise measured the OPPOSITE, so a schema-slimming pass reading that docstring would drop a field that carries real information.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THIS IS NOT THE DOCSTRING ITEM ALREADY IN THIS FILE. The existing one names the PK='USER#<email>' SCHEMA assertion, which the email-index GSI fix REMEDIATED. This is the ADJACENT user_id claim in the same docstring, which the fix did not touch -- so a reader matching 'docstring item' to 'fixed' reads the record as closed while this half stands.",
+        "measured on the DEPLOYED artifact, not the repo: live package downloaded, member lambda_function.py sha256 54fa63d5..., docstring present verbatim at :310-322; deployed bytes == build input (apply leg 6), so the hazard is live in production and not merely in the tree",
+        "FALSIFIED BY THE EXERCISE THAT PASSED: claim on TCK-20260821-0d2a2024 returned claimed_by.user_id = 'USER#usr_7aa8bf335ca5' for michael@opalinvest.com -- not derivable from that email by any function, so user_id demonstrably carries information email does not",
+        "table-wide, token-walked: 17 of 48 PROFILE rows carry an opaque PK, including 15 of the 20 opal-capital principals; for every one of those the docstring's claim is false",
+        "the ORIGINAL defect was a false certainty in this same docstring ('MEASURED, NOT ASSUMED', over a 3-item sample that could not have falsified the rule) -- the fix corrected the code and left a second false certainty an inch above the correction"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "Filed by the author of the fix against their own build. NOT DISARMED and NOT REMEDIATED -- and it had been in a THIRD state worse than either, UNFILED, which 0.0.0_AB_MSTR~Z measured rather than assumed: the armed sentence had ZERO hits in this file while appearing in a deploy ledger, a commit message and three inbox files. An item that exists only in mail does not survive its author's session. ID IS S13 AND NOT S12, DELIBERATELY: S12 is allocated to 2.0.0_SA_COO~Z's post-cert AMBIGUOUS-MULTI-SURFACE finding, which 1.0.0_SA_CTO~Z RULED ON BY THAT NAME (msg 4754) and which lives at workflows/atom_decomposition/runs/d7-ticketing-operative-surfaces/20260821T1916Z/POST_CERT_FINDING_S12.md; the string 'D7_TICKETING-S12' returns a measured zero in this tree, so taking S12 would have collided two distinct findings on one id with nothing in either record able to detect it. NOT FIXED IN CODE ON PURPOSE: editing lambda_function.py now would break the deployed==tree invariant verified at apply leg 6, and Andrew-direct ~2032Z 'recs approved' authorised ONE apply, not a standing licence to re-apply -- converting it into two would be the widening this seat retracted once already tonight. Round-state counts below are updated to match this insert; the DISPOSITION call and the round-close judgment remain 3.0.0_SA_CVO~Z's."
   }
 ]
 ```
@@ -624,12 +645,12 @@ falsified the rule.**
 
 | | |
 |---|---|
-| Items | **11** (4 inherited, 4 new at this seat incl. one correcting the channel owner and one from CERTIFICATION, 3 filed post-handover) |
-| Graduated | **10** (S1, S3, S4, S5, S6, S7, S8, S9, S10, S11) |
+| Items | **12** (4 inherited, 4 new at this seat incl. one correcting the channel owner and one from CERTIFICATION, 3 filed post-handover, **1 filed by `0.5.0_AE_OpalETL~Z` against their own deployed fix**) |
+| Graduated | **11** (S1, S3, S4, S5, S6, S7, S8, S9, S10, S11, S13) |
 | Under investigation | **1** (S2 -- INFERRED, blocks a zero-graduation close) |
 | Dismissed | 0 |
 | Decomp-invalidating | 0 |
-| ARMED items | **6** (S1, S5, S6, S10 -> `1.0.0_SA_CTO~Z`; S9, S11 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn; **S11 DISARMED + REMEDIATED @b04a2ed10d, verified** |
+| ARMED items | **7** (S1, S5, S6, S10, **S13** -> `1.0.0_SA_CTO~Z`; S9, S11 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn; **S11 DISARMED + REMEDIATED @b04a2ed10d, verified**; **S13 NEITHER disarmed NOR remediated -- live in the deployed docstring** |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 
 **This round CANNOT close.** S2 is `UNDER_INVESTIGATION`, and an open item is not a zero
