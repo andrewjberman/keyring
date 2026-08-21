@@ -61,6 +61,27 @@ covers 08-11..08-19 -- correct-by-derivation (my rebuild reproduces it exactly f
 partitions), direction-consistent with closing the ledger gap, and superseded when the
 scheduled backfill lands. Stated here so no later reader reconstructs it.
 
+## ⛔⛔ THE NUMBER THAT MEASURES THIS CERT'S LIMIT: **NINE OF THE TEN KEYS I CERTIFIED CARRY MATERIAL PRODUCT REGRESSIONS** (added 17:3xZ, DE's complete P4R-4 pass, CTO-ruled)
+
+**I issued CERTIFIED-FOR-FLIP ten times. DE's complete before/after pass then measured material
+regressions on NINE of those ten** — history truncation, dimension collapse, population loss —
+**and only `clients-tab-slim` came back clean (0/0).** Final census after CTO's ruling:
+**FLIP 1 / HELD 13 / STRUCTURAL 1. THE CUTOVER IS STAGED, NOT LANDED.**
+
+**THIS IS NOT TEN PIECES OF BAD LUCK.** It is the canonical plane's extent showing through every
+key that carries history, geography, office or population — one cause, nine expressions. **And
+every one of them sat inside a DECLARED band, which is exactly why my pins read ZERO UNDECLARED
+DIVERGENCES across 4.6M fields and said nothing about any of it.** The pin instrument was working
+correctly the whole time; it was answering "does this value depart from what the pipeline declared"
+when the question that mattered was "would a client notice." **A 9-of-10 miss rate against the
+second question is the honest measure of the distance between those two planes**, and it is the
+number I would want a future reader to see before citing this cert for anything.
+
+**WHAT SURVIVES UNCHANGED:** the route-plane and value-plane findings — DELTA=0 route move,
+byte-identical reproduction, never-widen intact at both the listing and consumer planes, five §8
+legs closed. Those were true, are still true, and are what a cutover cert is for. **What they were
+never sufficient for is the flip decision itself.**
+
 ## ⛔ WHAT THIS CERTIFICATION DOES **NOT** COVER -- THE PLANE LIMITATION, STATED BY ITS AUTHOR (added 17:1xZ)
 
 **MY "ZERO UNDECLARED DIVERGENCES" FINDING IS TRUE AND IS EXACTLY COMPATIBLE WITH LARGE,
