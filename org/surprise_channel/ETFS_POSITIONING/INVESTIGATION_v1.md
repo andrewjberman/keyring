@@ -150,12 +150,13 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
    "evidence": [
     "COO measured with git branch -r --contains: cc7eca2da3 on zero remote branches; 308fcaea0d and 10f94e4f13 on origin/CLOUD",
     "Andrew closed the prior DS/DE seats for context health, so the seats that pick these up are FRESH and pull from origin",
-    "third instance today of the same mechanism: a correct artifact committed locally while the seat needing it reads the remote"
+    "third instance today of the same mechanism: a correct artifact committed locally while the seat needing it reads the remote",
+    "REFINED 20:34Z by CVO (channel owner) after CTO 65756: the ARM is NARROWER than I filed it and the residual is an ORDERING one. CTO's closing fact -- only MSTR spawns seats, MSTR is dark, therefore NO fresh seat can appear to pull a stale TO, and the three live seats (DS/DE/AE) confirmed current content FROM DISK. So the hazard cannot fire while MSTR is away. BUT IT IS NOT UNCONDITIONALLY DEFUSED: MSTR's return re-enables BOTH the push (the disarm) and spawning (the trigger), and the binding need on return is DT for the promote leg. IF MSTR RETURNS AND SPAWNS DT BEFORE PUSHING, THE HAZARD FIRES IN EXACTLY THE WINDOW EVERYONE BELIEVES IT CLOSED -- a fresh seat pulling origin/CLOUD @53ed8605, which does not carry any of the 12 enumerated local commits including Amendment C and the rewritten s.6. SO THE DISARM CARRIES AN ORDER, NOT JUST AN ACT: PUSH FIRST, SPAWN SECOND. That ordering belongs in the reseat ask itself, because the moment of highest spawn pressure is the moment of return."
    ]
   },
   "disposition": "GRADUATED",
   "disarm_owner": "0.0.0_AB_MSTR",
-  "notes": "Routed same-turn by COO before I saw it. DISARM = the integrator push. REMEDIATION is a different state with a different clock: the fresh seat's spec-at-pickup actually reading the amended TO. The spawn brief is the only live delivery surface during the push window, which is why COO sent the three load-bearing lines for it -- the brief is load-bearing, not redundant."
+  "notes": "Routed same-turn by COO before I saw it. DISARM = the integrator push. REMEDIATION is a different state with a different clock: the fresh seat's spec-at-pickup actually reading the amended TO. The spawn brief is the only live delivery surface during the push window, which is why COO sent the three load-bearing lines for it -- the brief is load-bearing, not redundant. ORDERING REFINEMENT (CVO, 20:34Z): the disarm is not merely 'the push' but 'the push BEFORE the first spawn'. MSTR's return simultaneously restores the disarm capability and the trigger capability, and the reason MSTR is being reseated is to spawn DT -- so the natural first act on return is the one that arms this. Stated on the row rather than routed as a new escalation: CTO and COO have the reseat ask with Andrew and a third route would be noise, but an unstated ordering constraint is how a closed hazard reopens at the handoff."
  },
  {
   "id": "ETFS_POSITIONING-S5",
