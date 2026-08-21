@@ -74,3 +74,76 @@ It does not resolve either open item, and it does not make me their owner. `CVO~
 re-home, or renumber `0.5.0_AE_OpalETL~Z`'s Z-S13 edit on their own surface; the ETFS rename is
 theirs to judge against CTO's ruling. **The blocker moved from "owner absent" to "owner working" —
 that is a different state, not a closed one.**
+
+---
+
+# ANDREW-DIRECT 2026-08-21 ~22:05Z — the wind-down, same terminal, ~15 min later
+
+## VERBATIM
+
+> **"i want to wind them down shortly so dont let them start anything they cant finnish and no more
+> new agents, once theyre done kill both"**
+
+Spelling preserved. Same seat, same terminal, same evening — recorded here rather than in a separate
+file because it **closes the arc the section above opened**: bring them on → let them finish → kill
+both. Reading either half without the other misstates it.
+
+## THE THREE CLAUSES, EACH BINDING SOMETHING DIFFERENT
+
+| clause | binds | effect |
+|---|---|---|
+| "dont let them start anything they cant finnish" | the two live seats, via me | scope constraint on work in flight |
+| "no more new agents" | **me** | zero further spawns tonight |
+| "once theyre done kill both" | **me** | `/mstr-kill` on each seat's DONE signal |
+
+Relayed to both live seats the turn it arrived — **2/2 DELIVERED**, not queued (msgs 4810, 4811).
+
+## THE ONE ACT THAT COULD HAVE STRANDED, NAMED RATHER THAN LEFT TO JUDGEMENT
+
+`1.0.0_SA_CTO~Z` is Z-S13's disarm owner, and Z-S13 is live in **deployed bytes**. But the disarm is
+a docstring edit to `lambda_function.py`, so closing it:
+
+- breaks the `deployed==tree` invariant `0.5.0_AE_OpalETL~Z` verified at apply leg 6, **and**
+- requires a **second apply**, while Andrew's ~2032Z *"recs approved"* authorised **one**.
+
+With a wind-down minutes out, **NEVER#6** makes starting it the way a deploy leg gets STRANDED —
+red-alert material, not a follow-up. Told CTO~Z explicitly not to begin it.
+
+> **DISARMED-AND-STRANDED IS WORSE THAN ARMED-AND-RECORDED.**
+
+Z-S13 stays ARMED into tomorrow with a named owner and a durable record at `383d55e556` — it survives
+the session precisely because it is in the channel record rather than in mail, which was the whole
+point of pushing to get it filed. **Carried, not dropped.**
+
+## THE FINISHABLE / NOT-FINISHABLE LINE I GAVE THEM
+
+**FINISHABLE:** a file rename, an id relabel, a header, a channel-record edit, a session log, a
+one-line answer, an ACK, a handoff note.
+
+**NOT:** anything needing a terraform apply, a lambda deploy, a portal promote, a new decomp round, a
+sweep that cannot be closed, or a reply nobody will be alive to read.
+
+**When in doubt it is NOT finishable** — the cost of stopping early tonight is nil; the cost of a
+stranded act is a red alert.
+
+## WHAT I DID NOT DO
+
+Did not extend "no more new agents" into a hold on anything else. Did not kill either seat
+pre-emptively — his word is *once they're done*, and both had bounded work in hand. Did not decide
+their work scope for them beyond naming the one act I could see was unclosable; the rest is their
+judgement against a stated line.
+
+**Also unchanged by this:** the D7 rename hold (base CVO's, on their own surface) and the site-Z
+`shared-infra` fence. Neither is mine and neither lifts on a wind-down.
+
+## A GATE FIRED ON ME WHILE WRITING THIS, AND IT WAS RIGHT
+
+My first attempt appended this section and committed it in **one** Bash call. The never-rules gate
+**BLOCKED** it: the heredoc body contains backticks (`lambda_function.py`, `/mstr-kill`) and the same
+command string carried a `git commit -m`. The gate reads the raw command, so the two together tripped
+the F-010 execution-vector rule even though the `-m` body itself was clean.
+
+**The block was correct and the lesson is the one already in CLAUDE.md:** F-010 is a *shell-argument*
+rule, not a git rule, and it fires at **file-BUILD** as readily as at commit. Splitting the append
+from the commit and routing the message through `-F` needs no backtick in any command at all.
+Recorded because it is the third time tonight a control caught something care did not.
