@@ -85,6 +85,28 @@ Answers the DEV-exposure question. My independent CI measurement crossed his wor
 and AGREED. His word closes the two gaps my instrument structurally could not (Actions run
 history; out-of-band publishing). Complied with COO's STOP and spent nothing further on it.
 
+### SECOND ANDREW-DIRECT, 19:18Z (durable record + broadcast carried by COO 65460, doc @ad8bb50e56)
+
+**VERBATIM:** "the position on flipping this should be held until source gaps and schedule are
+addressed, that needs to be documented, including relevant publisher resources, paths, and etc
+for the switch covering what is the current route and what is the contemplated route."
+
+**THE HOLD IS RULED AND TWO-CONDITION -- BOTH required, NEITHER sufficient.** It binds the FLIP
+only; the canonical chain keeps running and the BD-migration work proceeds. This SUPERSEDES my
+Next-Steps line (amended above): a named flip set does not release the promote.
+
+**AND THE SECOND CONDITION IS A LEG NOBODY IN THIS CHAIN FOUND.** `advi-49f-publisher` is
+**DISABLED** (`cron(15 13 * * ? *)`, target `advi-49f-gold-dispatch`) -- **the twins have NO
+ENABLED PRODUCER SCHEDULE.** Today's publish was a MANUAL act and the twins have sat frozen at
+15:04:19Z since. So even with every source gap closed, flipping would have pointed the product
+at artifacts nothing refreshes -- the CLAUDE.md "a production pipeline MUST have a schedule"
+class, and starker than the MDPF instance that earned the rule (not event-triggered-only:
+disabled outright; MDPF froze after six days, this would have frozen on day one).
+**The stand-down was right for a second reason none of us had found.** Nine seats worked this
+chain and verified it at five planes; the schedule leg surfaced only because Andrew asked what
+is displayed on the daily schedule. Worth carrying: every plane we checked was a plane someone
+had thought to name, and PRODUCER LIVENESS was not one of them.
+
 ## Compiler Tools
 
 | tool | invocation | result | note |
@@ -149,11 +171,13 @@ to COO (65366) for their call rather than inventing a terminal state.
 
 ## Next steps
 
-- [0.4.0_DT_ClientPlatform] Re-run the promote from scratch when a flip set is named -- re-cut
-  from then-current origin/DEV, parity gate, typecheck + mutant control, hand MSTR the push.
-  ~10 minutes. **Today's typecheck/parity evidence is SPENT** (measured against 3ca099b1, which
-  no longer exists as a candidate); a future promote earns its own. **Open a deploy-completion
-  ledger entry at deploy-START next time.**
+- [0.4.0_DT_ClientPlatform] **AMENDED 19:2xZ -- SUPERSEDED BY ANDREW-DIRECT (below). This line
+  previously read "re-run the promote when a flip set is named", which is now FALSE:** a named
+  flip set is NOT sufficient and never was. The flip is HELD on TWO conditions, both required.
+  When they are met: re-cut from then-current origin/DEV, parity gate, typecheck + mutant
+  control, hand MSTR the push. ~10 minutes. **Today's typecheck/parity evidence is SPENT**
+  (measured against 3ca099b1, which no longer exists as a candidate); a future promote earns its
+  own. **Open a deploy-completion ledger entry at deploy-START next time.**
 - [2.0.0_SA_COO] Rule whether a retroactive stood-down ledger entry is wanted, and whether
   INF_D04.AUARENAME-FE's TO status flips to NO-OP by me or by the registrar.
 - [1.0.0_SA_CTO / 2.0.0_SA_COO] Carry the product-readiness card to Andrew (not mine).
