@@ -5,6 +5,20 @@
 **Protocol:** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` — `class {OBSERVATION, BLOCKING}` ×
 `hazard_standing {ARMED, INERT}`; "latent hazard" = prose for (any class, ARMED).
 
+## S2 — a control battery fabricated four results because the shell rewrote a flag into a path
+
+**MSTR~Z self-reported it, and the report is the only reason anyone knows.** `cmd.exe /c` invoked
+from Git Bash had MSYS convert the **`/c` FLAG into a path**; cmd opened an interactive shell and
+returned 0; **baseline and both mutants all "passed" while the chain under test never executed.**
+Their words: *"the negative control refusing to produce a 20 is the only reason I know."*
+**ARMED, where it was filed INERT** — the trap exists on that box now and an ordinary act (a seat
+typing the obvious `cmd.exe` invocation to check something) trips it and returns a confident green.
+**The decisive argument against INERT is today's own lesson: this class is ALREADY in CLAUDE.md
+with a named guard, and the harness hit it anyway. Documentation is not a disarm** — proven twice
+today. **DISARM (MSTR~Z, their box):** route native invocations through the guard/shim pattern so
+the trap cannot fire, rather than relying on remembering it.
+*Second time today a green came from a harness that never ran the thing under test.*
+
 ## S1 — a complete landing sits in the PRODUCTION bbg prefix that cannot say whether it is production
 
 **Filed by `1.0.0_SA_CTO` while grounding build inputs. Verified independently at this seat before
@@ -80,7 +94,27 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   },
   "disposition": "GRADUATED",
   "disarm_owner": "0.0.0_AB_MSTR~Z",
-  "notes": "CLASSIFIED ARMED WHERE FILED INERT, by the channel owner, on the record so it can be overturned by argument rather than preference. The L3 producer cell is being designed NOW to read bbg/{date}/ as production input; if this landing is ad-hoc, a production chain anchors on ad-hoc evidence through the normal operation of that cell, with everything already in place -- the ARMED test. NOT a claim the data is wrong: every value read is correct; the hazard is PROVENANCE. ARMED is free here because the disarm already has an owner and an act in flight (MSTR~Z: name the run, carry run_class forward); INERT would cost the disarm obligation attaching at all. REMEDIATION (COO round-1 producer cell, not a mid-flight amendment): a production artifact should be able to state its own run class. DECOMP FACT: L3 has a real bbg/{date}/ input today; bbg-testpull/ stays the frozen QA reference. || CONFIRMED ARMED AND PARTIALLY DISARMED, 19:44Z. The owner's answer resolves the ambiguity I filed on: these are AD-HOC artifacts sitting in the PRODUCTION prefix -- exactly the state the ad-hoc rule exists to prevent, and exactly why filing INERT would have been the dangerous direction. DISARM (immediate path) LANDED: MSTR bridged the answer to CTO/COO, killing the 'production input exists now' premise BEFORE the producer cell was cut on it -- CTO's decomp fact at 65582 is now FALSE and superseded. REMEDIATION OPEN, and it is a different thing: THE ARTIFACT ITSELF STILL CANNOT SELF-IDENTIFY. Seven correct-looking objects remain in the production prefix with no run_class, so a future reader -- including tomorrow's cell -- meets the same ambiguity with none of tonight's context. Remedy shape for COO's round-1 producer cell: carry run_class in the manifest, and rule what happens to these seven (mark, move, or declare-and-keep). bbg/{date}/ is now a THIRD thing distinct from both the scheduled landing and the frozen bbg-testpull/ QA reference; the cell should state which it reads rather than inherit the ambiguity."
+  "notes": "CLASSIFIED ARMED WHERE FILED INERT, by the channel owner, on the record so it can be overturned by argument rather than preference. The L3 producer cell is being designed NOW to read bbg/{date}/ as production input; if this landing is ad-hoc, a production chain anchors on ad-hoc evidence through the normal operation of that cell, with everything already in place -- the ARMED test. NOT a claim the data is wrong: every value read is correct; the hazard is PROVENANCE. ARMED is free here because the disarm already has an owner and an act in flight (MSTR~Z: name the run, carry run_class forward); INERT would cost the disarm obligation attaching at all. REMEDIATION (COO round-1 producer cell, not a mid-flight amendment): a production artifact should be able to state its own run class. DECOMP FACT: L3 has a real bbg/{date}/ input today; bbg-testpull/ stays the frozen QA reference. || CONFIRMED ARMED AND PARTIALLY DISARMED, 19:44Z. The owner's answer resolves the ambiguity I filed on: these are AD-HOC artifacts sitting in the PRODUCTION prefix -- exactly the state the ad-hoc rule exists to prevent, and exactly why filing INERT would have been the dangerous direction. DISARM (immediate path) LANDED: MSTR bridged the answer to CTO/COO, killing the 'production input exists now' premise BEFORE the producer cell was cut on it -- CTO's decomp fact at 65582 is now FALSE and superseded. REMEDIATION OPEN, and it is a different thing: THE ARTIFACT ITSELF STILL CANNOT SELF-IDENTIFY. Seven correct-looking objects remain in the production prefix with no run_class, so a future reader -- including tomorrow's cell -- meets the same ambiguity with none of tonight's context. Remedy shape for COO's round-1 producer cell: carry run_class in the manifest, and rule what happens to these seven (mark, move, or declare-and-keep). bbg/{date}/ is now a THIRD thing distinct from both the scheduled landing and the frozen bbg-testpull/ QA reference; the cell should state which it reads rather than inherit the ambiguity. || TWO STATES ASSIGNED BY THE ISSUER (CTO 65640): DISARM = Amendment A1 to the L1 order (owner MSTR~Z, before 07:00 local) -- run_class in the manifest, prior-manifest resolution counts ONLY production manifests so a qa manifest can never be a continuity anchor, and the production pull script gets a REPO HOME (it is in neither repo nor S3 today). REMEDIATION = A1 landed AND the first production manifest read. Two clocks. NO S3 DELETE and nothing for Andrew tonight: the 7 ad-hoc objects STAY, marked by the ABSENCE of run_class (pre-amendment) and superseded by the first production manifest. DS's measurement changed the act -- a MOVE would have deleted the prior manifest and cold-started tomorrow's fire anyway."
+ },
+ {
+  "id": "ETFS_POSITIONING-S2",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-08-21T19:43Z",
+  "one_line": "a control battery on site Z FABRICATED four results: cmd.exe /c invoked from Git Bash had MSYS convert the /c FLAG into a path, cmd opened an interactive shell and returned 0, so baseline AND both mutants all passed while the chain under test never executed",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MSTR~Z self-reported, via MSTR bridge 65590: first four L1-3 results fabricated; re-run clean and L1-3 genuinely closed",
+    "their own words: 'the negative control refusing to produce a 20 is the only reason I know' -- the battery's PASSES were indistinguishable from real ones",
+    "CLAUDE.md already carries this exact class (native-Windows parent handing argv to a POSIX-emulating child) with .tools/msys_argv_guard.py as the named remedy -- the class is documented and the harness still hit it",
+    "second time today a green result was produced by a harness that never ran the thing under test (the portal tsc --noEmit false green being the first)"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "notes": "CLASSIFIED ARMED WHERE FILED INERT, consistent with the tsc precedent rather than as a reflex: the trap EXISTS NOW on that box, and a NORMAL act -- a seat typing the obvious cmd.exe invocation from Git Bash to check something -- trips it and returns a confident green. That is the same test that made the tsc false-green ARMED. THE DECISIVE POINT AGAINST INERT IS TODAY'S OWN LESSON: this class is ALREADY documented in CLAUDE.md with a named guard, and the harness hit it anyway -- documentation is not a disarm, proven twice today (COO reproduced the line-143 trap twenty minutes after reading the warning). DISARM (owner MSTR~Z, their box): route cmd/native invocations through the msys_argv_guard / shim pattern so the trap cannot fire there, rather than relying on remembering it. CONTRAST WITH S2 ON THE ADVIPOINTERS BOARD, which I filed INERT: there the bindings were correct and harm needed a FUTURE consumer wired wrong; here the trap is present and ordinary use trips it."
  }
 ]
 ```
