@@ -197,6 +197,28 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   "disposition": "GRADUATED",
   "disarm_owner": "0.7.0_AE_CloudOps",
   "notes": "AE's SECOND self-correction tonight, against a sentence they had already put in the contract, a commit message and two sends. It is false in the direction that ships a silently non-working route. THE PART THAT GENERALISES: the warning about this exact tool blind spot was written TODAY, by AE'S OWN LANE, in the very file they were editing -- and they used the instrument it warns against. Same shape as MSTR~Z's fabricated battery and my own masked-exit-code repeats: DOCUMENTATION IS NOT A DISARM, third measured instance today, and this one had the doc in the same file as the hazard. The 22a rungs all PASS here -- clean plan, genuine 0-diff re-plan, a version really published, route green on the OLD code -- so a 0-diff re-plan is the SYMPTOM, not the reassurance. DISARM = drop qualified_arn from ignore_changes at :197 IN THE SAME COMMIT as the branch edit (the remedy the file prescribes at :54-58, exercised already on shared_advisor_router @1fb2ad4abb). REMEDIATION = after apply, read the LIVE distribution's association ARN -- per :42-43 the only instrument that catches it. Mint is THREE edits, not two. AE is NOT bundling the other two pins, correctly, per :52. DS/DE unaffected: route decision, key, URL, shape and vocabulary all unchanged -- this is HOW THE MINT LANDS, not what is built."
+ },
+ {
+  "id": "ETFS_POSITIONING-S7",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-08-21T20:18Z",
+  "one_line": "DIVZ and IDVZ have no constituent holdings anywhere in opal-data-etfs -- the declared universe is four funds and holdings exist for two (PFDE, PFOE) -- raised as a spec question about what the deliverable can CONTAIN",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "CVO SPOT-VERIFIED THE ABSENCE INDEPENDENTLY before reading CTO's call: silver/holdings/2026-08-20.parquet, 114 rows, fund_ticker = ['PFDE','PFOE'] only; POSITIVE CONTROL PFDE present, so the read discriminates",
+    "CVO VERIFIED THE SECOND LIMB TOO -- that the SPEC ALREADY SAYS THIS: ETFS_POSITIONING_PRD.md:697-698 'TWO FULL BOOKS (PFDE/PFOE, constituent holdings) + TWO BOOK-LEVEL SHELLS (DIVZ/IDVZ ... no constituent rows), shells upgrading forward automatically'; :740 attributes the ship shape to Andrew (s.10.4); :761 'the page-ship cell does not wait on DIVZ/IDVZ rows'",
+    "CTO's citation chain, deeper than mine: s.1 headline + two independent causes (the deployed TrueShares holdings arm is a NO-OP, source-confirmed on the deployed package; and the structural trust boundary -- filepoint administers PFDE/PFOE only, DIVZ/IDVZ sit on TrueShares/Polen)",
+    "s.3.3 Andrew-ordered snapshot: 3 trees / 1,111 objects / 7,550 holding rows ALL-TIME, never a DIVZ or IDVZ constituent row; positive control PFDE = 5,920",
+    "MSTR~Z's three traps are correct and already carried in s.10.1-10.3: a COUNT IS NOT A LIST (TOTAL_NUMBER_OF_HOLDINGS_IN_PORT returns DIVZ=30/IDVZ=46 and will not enumerate -- reads exactly like partial coverage and is not); ZERO NOT_AUTHORIZED so it is provably not an entitlement gap and cannot be bought out of; and the 73.4% dividend-yield field is 29 genuine non-dividend-payers, not a 27% hole"
+   ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "NOT A SURPRISE -- it is the PRD's own headline finding, measured three ways before stage 1, and the ship shape it implies is Andrew's own scope call. The spec already states what the deliverable CONTAINS. Nothing re-opens; no TO amendment. The 'unwired vs nonexistent' cell the reporter deliberately left open is also answered at source: NONEXISTENT via filepoint (trust boundary), while the TrueShares arm is the UNWIRED one whose wiring is the L2 design -- and L2 is the single cell gated on Andrew's egress word.",
+  "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
+  "notes": "FILED AT CTO'S EXPLICIT REQUEST SO THE RECORD SHOWS THE QUESTION ARRIVED AND WAS ALREADY ANSWERED, RATHER THAN THAT IT WAS NEVER ASKED. That distinction is the whole value of the row: a future reader who re-derives this absence from the data -- and they will, because a 4-fund universe with 2-fund holdings looks exactly like a defect -- needs to find it already adjudicated with citations, not discover it fresh and re-escalate. MSTR~Z routed it correctly under Rule 27 (a spec question goes to the issuer, not the executing seat), stated its bounds properly with denominators and an enumerated tree, and explicitly declined to guess on the open cell. NONE OF THAT IS WASTED BY THE DISMISSAL -- an independent re-derivation of a PRD premise from the data side is corroboration, and the GICS tie-out that rode along (105/109, 4 gaps = the 4 fund rows, weighted rollup matching s.3.1 by an independent route) is a genuinely NEW input for TO-1's vocabulary act."
  }
 ]
 ```
