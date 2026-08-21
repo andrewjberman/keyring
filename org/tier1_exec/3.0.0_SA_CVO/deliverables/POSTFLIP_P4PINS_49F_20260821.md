@@ -185,12 +185,41 @@ which is neither** and is USER-VISIBLE:
 **MECHANISM, MEASURED AT THIS SEAT — and it is NOT a port defect:** the canonical series runs
 **529 partitions from exactly 2024-07-08**, and the **ENTIRE Schwab silver tree floors at the same
 date** (`dim_balance`, `fact_acc`, `dim_position`, `fact_trn`, `fact_sec`, `dim_transaction` — all
-2024-07-08). The twin shows everything its source has. **A recompute-style backfill CANNOT extend
-it: the source rows do not exist.** Likewise geo — the canonical dimensions tree carries eleven
-dims and **none is geographic**, so the producer's "no canonical dim" declaration is literally true
-at the artifact layer. *NOT MEASURED, and therefore not claimed: where the legacy's 2,421 days
-originate. The BD silver tree exists but I have not dated it — "the history lives on BD" is an
-inference, not a measurement, and the ruling should not rest on it unmeasured.*
+2024-07-08). The twin shows everything its source has. Likewise geo — the canonical dimensions tree
+carries eleven dims and **none is geographic**, so the producer's "no canonical dim" declaration is
+literally true at the artifact layer.
+
+> ⛔ **BOTH OF THE ABOVE ARE PLANE-LIMITED TRUTHS WHOSE IMPLICATIONS I OVERREACHED, CORRECTED
+> WITHIN THE HOUR BY TWO OTHER SEATS. THE MEASUREMENTS STAND; THE INFERENCES DID NOT.**
+> **HISTORY:** I wrote that reaching 2020 needs data "not in this plane at all," which invited
+> *the data does not exist*. **It does** — I then measured `opal-data-bd/gold/canonical/`:
+> `performance`/`nna`/`account_gains` **2,422 filename-dated partitions 2020-01-02..2026-08-19**,
+> `holdings` 2,423 from 2020-01-01. *(Corrected: my first pass read 2,423 ending 2026-08-21 — the
+> regex swept the LastModified COLUMN as well as the filename, mixing write-dates into data-dates.
+> Substance unchanged, figures were not.)* So extending history is a **CROSS-PLANE PORT**, not a
+> vendor re-ingest — **and I then RAN the reconciliation (CTO's word): same date 2026-08-18, BD
+> `sum(aua_current)` $1,809,106,006.08 across 3,092 RELATIONSHIP rows vs Schwab
+> `sum(net_mv_plus_cash)` $1,802,835,074.50 across 7,315 ACCOUNT rows — DELTA −$6,270,931.58
+> (−0.347%), account-count delta 837. CLOSE, NOT EQUAL, AND AT DIFFERENT GRAINS: consistent with
+> two books of one firm, so a port is feasible-looking; not a tie, so a splice without a basis
+> reconciliation would put a visible step at 2024-07-08 in a client-facing chart.*
+> **GEO:** I wrote that a geo breakdown needs a dimension that does not exist — true of the
+> canonical layer, and it implied geography was *unavailable*. **It is not.** COO measured
+> (Andrew-prompted) `schwab/08335338/silver/fact_acc`: **`ac_st` 100% populated, 7,331/7,331 rows,
+> 48 states — and the top values ARE the legacy chart's own state set.** The geography Schwab
+> supplies is right there; the canonical layer simply never built a dim over it.
+> **THE PATTERN IN MY OWN WORK, named because it happened TWICE IN TEN MINUTES:** each time I
+> measured a plane correctly, flagged the adjacent plane as unmeasured — and then let the
+> unmeasured half carry weight in the framing anyway. **Flagging an unmeasured premise is not the
+> same as refusing to lean on it.** The session's own thesis, landing on its verifier: a sweep that
+> closes a blind spot while hiding its own is the same defect one level up.
+> **WHAT NEITHER OF US HAS MEASURED, and it is now the decisive one:** whether BD-plane history
+> RECONCILES with the Schwab-sourced canonical plane (same account universe, same valuation basis).
+> The planes overlap 2024-07-08..2026-08-20, so **it is testable** — and splicing two vendors' books
+> without that test would manufacture a discontinuity in a client-facing trend chart, which is worse
+> than the truncation. *Also observed, unexplained: every BD gold history object carries
+> LastModified 2026-08-21T00:51Z — the full 2,423-file span was materialised hours ago. Worth an
+> owner's read before anyone treats that plane as long-settled.*
 
 **DISPOSITION:** CTO withdrew the never-widen half on `cumulative_chart` + `timeseries_overview`;
 those two join the HELD class. **My certs are unchanged and were never product clearance** — see
