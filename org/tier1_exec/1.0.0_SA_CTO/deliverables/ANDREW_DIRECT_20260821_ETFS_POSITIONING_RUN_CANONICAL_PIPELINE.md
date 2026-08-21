@@ -139,3 +139,15 @@ is untouched — a manual landing is not production evidence, and date keys diff
 nothing to disarm. Remedy shape for round 1 (COO's cell, not a mid-flight amendment unless BLOCKING):
 manifest carries `run_class` (production | qa); QA runs land under a QA-marked key or not at all.
 MSTR~Z asked to state which it was.
+
+**CORRECTION ~19:45Z, same seat:** MSTR~Z answered (bridged by MSTR 65599): `bbg/2026-08-20/` = AD-HOC
+standalone runs of `etf_daily_pull.py` from the terminal, NOT a scheduled fire (task NextRun 2026-08-22
+07:00 local; not fired since the ETF leg was appended). Reading (a). **My 65580 consequence "L3 has a real
+production input today / shortens the critical path" was FALSE and is withdrawn** — stated on an artifact
+whose provenance the same message flagged as undetermined. Channel item RE-CLASSED OBSERVATION/**ARMED**:
+the next scheduled fire derives its history window from the prior manifest and would anchor the production
+continuity chain on an ad-hoc run, unmarked. Disarm owner MSTR~Z before 07:00 local: (i) `run_class` in
+every manifest from now on; (ii) MOVE the seven ad-hoc objects out of the production prefix — an S3 delete
+of QA artifacts, **asked of Andrew at this terminal, not ordered**. L1 not held. MSTR~Z also reported L1-1
+TRUE (task → .cmd, ETF step at :210-215) and a fabricated-green L1-3 battery caught by its negative control
+(MSYS `cmd.exe /c` argv class) — channel line, INERT now.
