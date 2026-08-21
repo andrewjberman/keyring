@@ -16,16 +16,34 @@ UNTESTED. **It was already tested, four times:** `20260808` (Sat), `20260809` (S
 
 ## Finding 2 -- TWO WEEKDAY 07:00 FIRES ARE MISSING
 
-| date | dow | 07:00 log |
-|---|---|---|
-| 08-11 | Tue | **ABSENT** -- no runs at all that day |
-| 08-13 | Thu | **ABSENT** -- but a 17:45:54 hand run exists, so the box was up |
+| date | dow | 07:00 log | classification |
+|---|---|---|---|
+| 08-11 | Tue | **ABSENT** -- no runs at all that day | **MISS (confirmed)** |
+| 08-13 | Thu | **ABSENT** at 07:00; a run exists at 17:45:54 | **INDETERMINATE** -- see correction |
+
+> ### CORRECTION (2026-08-21 ~2025Z, same reach as the original)
+> **This table first classified 08/13's 17:45:54 log as a HAND RUN and counted the day as a miss.
+> That classification is withdrawn.** `0.7.0_AE_CloudOps~Z` subsequently measured
+> **`StartWhenAvailable = True`** on the task, which means **a missed 07:00 window fires late** and
+> its log carries the catch-up time rather than `07:00:0x`.
+>
+> **So a non-07:00 stamp is not evidence of a hand run** -- and classifying by stamp is precisely the
+> heuristic this whole thread agreed is not a record. I applied it anyway, in the act of reporting on
+> instrument blindness.
+>
+> **Checked for a discriminator in the log itself and there is none:** the 08/13 run computes
+> `target: 20260812`, which is exactly what a catch-up for the missed 08/13 fire would also compute
+> (same day, same `today - 1 BDay` rule). The `notebooks:` path differs from 08/12's, but that is a
+> repo-path migration -- another code-change artifact, not provenance.
+>
+> **REVISED COUNT: 1 confirmed miss (08/11), 1 indeterminate (08/13).** Not 2. The finding is weaker
+> than first stated and still material -- see below.
 
 **Not a pruning artifact.** Surviving files run continuously 08-05..08-21 and a 30-run prune removes
 oldest-first; it cannot punch holes in the middle. `08-05` also lacks a 07:00 log and **is excluded** --
 it sits on the retention boundary. Denominator **16**, not 17.
 
-**Observed per-fire rate: 14/16.** L1-2 requires **three consecutive**.
+**Observed per-fire rate: 14/16 by 07:00-stamp presence, which is a FLOOR on fires and a CEILING on misses** -- a late catch-up fire is counted here as a miss. L1-2 requires **three consecutive**.
 No independence claim is made: **misses may cluster** (a box that is off is off for a span, and one
 outage spanning Sat-Sun-Mon takes all three fires), which makes the joint tail *worse*, not better.
 
