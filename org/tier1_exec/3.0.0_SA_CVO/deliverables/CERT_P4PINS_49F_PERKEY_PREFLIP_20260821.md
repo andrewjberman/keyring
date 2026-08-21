@@ -11,11 +11,16 @@ re-base file is a SEPARATE act after the repoint (PARITY_BAR section 8, five leg
 
 - **(i) PRE-FLIP pins** @28bb34a56d -- 15 files, content-date 2026-08-19, amended-precondition
   evidence in every file; 4,613,107 fields, ZERO undeclared divergences.
-- **(ii) P4E-5 never-widen disclosures** -- d12 pair rows @6211c4f0f4 (full form); the 8
-  remaining cleared keys' file rows are landing with DS~B's emission proof commit (surfaced,
-  not held: msg 64775); interim carriers = DS~B's emission disclosures 1-4 (64768) + the
-  immutable run manifest `_manifests/2026-08-20/933dfc1bf6b1.json` (per-key sha256, input
-  vintages, the held row).
+- **(ii) P4E-5 never-widen disclosures** -- d12 pair rows @6211c4f0f4 (full form, filed AHEAD
+  of emission per COO condition 3, the compliant specimen); the 8 remaining cleared keys'
+  rows are RETROACTIVE -- **P4E-5's own law ("a key emits only with its entry here") is a
+  PRECONDITION ON EMISSION, and the emission ran AHEAD of it for 8 of 10 keys: a
+  BREACH-WITH-NO-HARM, ruled in those words by COO 64777** (consequence to the served estate
+  zero, three-way-verified; nothing held, nothing re-opened; rows land marked retroactive,
+  never backdated -- my initial "ledger catching up" characterisation was WRONG and is
+  corrected here per that ruling, because a precondition satisfied retroactively and written
+  up as catch-up stops being a precondition). Interim carriers = DS~B's emission disclosures
+  1-4 (64768) + the immutable run manifest `_manifests/2026-08-20/933dfc1bf6b1.json`.
 - **(iii) The NEVER-WIDEN determination, both halves, independently composed and matching
   per-key:** CTO 64752/64753 + COO 64755/64756; closures 64759/64762. FLIP 10 / HOLD 4
   (gapped-ledger, cure = V2 backfill) / HOLD d14 (structural).
