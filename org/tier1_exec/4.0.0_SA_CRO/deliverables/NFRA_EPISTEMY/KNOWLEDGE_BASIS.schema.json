@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opal://nfra_epistemy/s2/knowledge_basis/0.1.0",
+  "title": "Knowledge_Basis (NFRA_EPISTEMY, PRD sec.2.3, PROPOSED 0.1.0)",
+  "description": "The pinned five-member basis every assessment and lease evaluation cites (PRD sec.2.3, cited not copied). A basis is IMMUTABLE once minted; a change mints a NEW basis and a Basis_Change record. A signature edit or normalization change invalidates eligibility as surely as a new member -- invalidation is an ELIGIBILITY event, never a history edit. S6 0.1.2's knowledge_basis field carries these five members inline with the UNRATIFIED_BASIS null semantic; this object is the standalone form C4-LEASE evaluates against. Authored at CRO base (registry executor, S2); CTO arch gate precedes any consumer; exercised leg = C4-LEASE's first evaluation. Rule-24 record: KNOWLEDGE_BASIS_RULE24_RECORD.md (same dir).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["basis_id", "members", "digest", "minted_at", "minted_by", "predecessor_basis_id", "change"],
+  "properties": {
+    "basis_id": {"type": "string", "pattern": "^kb-[0-9]{8}-[0-9a-f]{6,}$"},
+    "members": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hypothesis_space", "normal_form", "compatibility_policy", "scope_ontology", "outcome_vocabulary"],
+      "description": "Five fixed slots (PRD sec.2.3). Each is {ref, version} or null. ABSENCE SEMANTIC (S6 model): null = NO RATIFIED ARTIFACT EXISTS for that member at mint vintage (UNRATIFIED_BASIS) -- a declared state, never an omission; a consumer MUST NOT invent a version. Any null member is an open invalidation predicate by construction, and an Eligibility_Evaluation over an assessment citing a basis with null members returns at most UNKNOWN on the axes that member governs.",
+      "properties": {
+        "hypothesis_space": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}},
+        "normal_form": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}},
+        "compatibility_policy": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}},
+        "scope_ontology": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}},
+        "outcome_vocabulary": {"type": ["object", "null"], "required": ["ref", "version"], "properties": {"ref": {"type": "string"}, "version": {"type": "string"}}}
+      }
+    },
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "sha256 over the CANONICAL serialization of members (JSON, keys sorted, null members serialized as the literal null -- the serialization rule is part of this schema so two seats derive one digest). This is the knowledge_basis_digest the Mutation_Capability (S5) and S6 instances carry."},
+    "minted_at": {"type": "string", "format": "date-time"},
+    "minted_by": {"type": "string", "description": "seat serial; minting is a base registrar act after CTO gate on any member's ratification"},
+    "predecessor_basis_id": {"type": ["string", "null"], "description": "ABSENCE SEMANTIC: null = the FIRST basis (no predecessor) -- never an unrecorded lineage"},
+    "change": {
+      "type": ["object", "null"],
+      "description": "The Basis_Change that produced this basis from its predecessor. ABSENCE SEMANTIC: null iff predecessor_basis_id is null (the first mint has no change). Change ops are classified by COMPUTED AUTHORITY EFFECT (PRD sec.2.3: Allowed(K_after) minus Allowed(K_before)), NEVER by opcode -- an ADD can contract and a RETIRE can expand; the opcode records WHAT was edited, the effect records WHAT IT DID.",
+      "additionalProperties": false,
+      "required": ["op", "member", "authority_effect", "effect_computation_ref"],
+      "properties": {
+        "op": {"type": "string", "enum": ["ADD", "RETIRE", "SPLIT", "MERGE", "EDIT_SIGNATURE", "EDIT_SCOPE", "EDIT_PRECONDITIONS", "CHANGE_NORMALIZATION"], "description": "PRD sec.2.3's change protocol, reused not re-coined. A version re-pin with ZERO content change is NOT a change op -- it is the same basis (identity), stated so no-op bumps cannot manufacture invalidation events."},
+        "member": {"type": "string", "enum": ["hypothesis_space", "normal_form", "compatibility_policy", "scope_ontology", "outcome_vocabulary"]},
+        "authority_effect": {"type": ["string", "null"], "enum": ["EXPANDING", "CONTRACTING", "MIXED", "NEUTRAL", null], "description": "COMPUTED classification of Allowed(K_after) vs Allowed(K_before): EXPANDING (something newly allowed), CONTRACTING (something newly disallowed), MIXED (both), NEUTRAL (neither). ABSENCE SEMANTIC: null = UNCOMPUTED (the effect computation did not complete) -- an instrument state, NOT a fifth kind of effect (the NOT_EXERCISABLE lesson); every consumer gate treats an UNCOMPUTED effect as EXPANDING (fail toward the higher bar: authority-expanding edits take the sec.2.8 retirement machinery's scrutiny)."},
+        "effect_computation_ref": {"type": ["string", "null"], "description": "pointer to the computation's record (the derivation, its instrument, its vintage). ABSENCE SEMANTIC: null forces authority_effect null (a computed claim without its computation is an authored claim)"}
+      }
+    }
+  }
+}
