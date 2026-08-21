@@ -20,3 +20,10 @@ builder-applies at this seat).
 **Exercised confirmation point:** next scheduled 12:45Z chain fire — a01 prints
 `BD xref date=… (tail basis)` instead of `WARN: BD xref unavailable`; tail flips
 UNDETERMINED → MEASURED. Not chased today (no ad-hoc production run).
+**EXERCISED CONFIRMATION ARRIVED EARLY — 2026-08-21 ~15:17Z, on the RECORDED 08-19 backfill act
+(not chased; it rode a commissioned production-host act):** SSM CommandId
+`6b96ab4b-eeb1-4f1a-a0cb-23c156bf368c` on the production role — a01 ran the BD xref and printed
+`BD xref date=2026-08-19: 5,376 distinct schwab accounts (tail basis)` → `CUSTODIAL tail=2023`,
+matching the local-principal control run exactly (DS~B, 64808). The grant is verified at every
+rung: DESIRED (plan 0-diff) + APPLIED (get-role-policy, simulate triplet) + **EXERCISED on the
+granted principal**. Nothing further owed on this ledger.
