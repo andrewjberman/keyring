@@ -593,6 +593,27 @@ falsified the rule.**
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "Filed by the builder AGAINST THEIR OWN BUILD, before spending the Andrew-authorised test ticket. ARMED AND HIDDEN BY A CORRECT FEATURE: E-2's graceful degradation renders every failed lookup as 'An Opal advisor' with row_found_no_name -- byte-identical to a user who legitimately has no directory record, so the fallback conceals a lookup failing for nearly every internal claimer. Disarm owner is CTO~Z because the fix is code + TF/IAM + an apply and applies are not lifted, so per section 6 it escalates rather than waiting. THE FIXTURE-SHOPPING THEY DECLINED IS THE PART TO KEEP: they were 'one keystroke away' from choosing user@opalinvest.com as the actor, which DOES resolve and would have made WA-1 pass by dodging the defect. ROOT NAMED IN THEIR OWN DOCSTRING: 'KEY SHAPE IS MEASURED, NOT ASSUMED (live describe-table + a bounded 3-item sample)' -- with 31 of 48 rows email-form, a 3-item sample was overwhelmingly likely to be all-email and COULD NOT HAVE FALSIFIED THE RULE. Second instance in this round of an instrument that could not have said otherwise; the first was my own positive control in the ETFS_POSITIONING round."
+  },
+  {
+    "id": "D7_TICKETING-S11",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-21T20:06Z",
+    "one_line": "All 47 COVERED_ACCEPTED cells in the certified decomp rest on 'entity name cited by name in N accepted D7 document(s)' -- a NAME-MATCH -- while the value asserts COVERAGE; 26 of the 47 rest on a single document, and a false COVERED_ACCEPTED SUPPRESSES work that is needed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "recomputed from rectangle.final.json @ffe9e2c738, not read from FINAL_CELL_CENSUS: 80 entities / 240 cells / 175 MEASURED / 65 declined / 73% -- every figure EXACT",
+        "evidence-string census over all 47 COVERED_ACCEPTED: 47/47 phrased 'entity name cited by name in N accepted D7 document(s)'",
+        "citation-depth census: 26 of 47 rest on a SINGLE document; 11 on 2; 6 on 3; 1 on 4; 1 on 5; 2 on 12",
+        "live counter-specimen in this estate: 0.0.3_BG_BBGTerminal measured 13 documents naming their serial vs 2 assigning to it (~6.5x), and OPAL_ANALYST.W6:66 names a seat precisely to say NO work routes there",
+        "0/175 MEASURED cells lacked an evidence string, and the degraded-cohort disclosure was verified present on run.json's face (DARK, DEGRADED, independent perspectives, UNCERTIFIED)"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Found during certification; the decomp author explicitly requested this check ('if you think the asymmetry is wrong in either direction, that is the finding I want'). THEIR NEGATIVE DIRECTION IS CORRECT AND UNTOUCHED -- a name-absence cannot establish coverage-absence, and NEEDS_NEW_TO is the value a reader acts on by cutting work. THE SYMMETRIC WEAKNESS IS UNGUARDED: a name-match establishes MENTION, not COVERAGE. CONSEQUENCE RUNS THE DIRECTION THEY WERE GUARDING, APPLIED TO THE MIRROR VALUE: a false NEEDS_NEW_TO MANUFACTURES work (closed); a false COVERED_ACCEPTED SUPPRESSES it, and nobody audits an entity that appears correctly covered. RULE 24(iii) INSIDE A VALUE'S WORDING -- the axis measured NAMING, the value asserts COVERAGE; the adjective smuggles a second claim past a cross-value test that passes. AMENDMENT REQUIRED FOR CERT, a LABEL not a re-run: rename to NAMED_IN_ACCEPTED_TO (preferred) or carry a stated bound on the field. Same class as this round's S5 and S10, one layer up. SELF-NOTE: my own first pass reported '45/47 assert a covering role' -- my regex was matching 'coverage'/'accepted' in the field itself; true reading 47/47. Third instance tonight of an instrument agreeing with the answer that shaped it."
   }
 ]
 ```
@@ -603,12 +624,12 @@ falsified the rule.**
 
 | | |
 |---|---|
-| Items | **10** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 3 filed post-handover incl. one FALSIFYING ITS OWN FILER and one filed AGAINST ITS OWN BUILD) |
-| Graduated | **9** (S1, S3, S4, S5, S6, S7, S8, S9, S10) |
+| Items | **11** (4 inherited, 4 new at this seat incl. one correcting the channel owner and one from CERTIFICATION, 3 filed post-handover) |
+| Graduated | **10** (S1, S3, S4, S5, S6, S7, S8, S9, S10, S11) |
 | Under investigation | **1** (S2 -- INFERRED, blocks a zero-graduation close) |
 | Dismissed | 0 |
 | Decomp-invalidating | 0 |
-| ARMED items | **5** (S1, S5, S6, S10 -> `1.0.0_SA_CTO~Z`; S9 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn |
+| ARMED items | **6** (S1, S5, S6, S10 -> `1.0.0_SA_CTO~Z`; S9, S11 -> `2.0.0_SA_COO~Z`) -- all surfaced same-turn |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 
 **This round CANNOT close.** S2 is `UNDER_INVESTIGATION`, and an open item is not a zero
