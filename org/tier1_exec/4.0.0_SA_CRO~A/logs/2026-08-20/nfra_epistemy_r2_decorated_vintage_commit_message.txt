@@ -1,0 +1,7 @@
+fix(atom-layer0): resolve decorated registry vintages
+
+Declare the certificate registry_vintage wire format and resolve its leading
+commit-ish token while retaining optional provenance decoration.
+
+Add a valid decorated-certificate control and align the package specification
+and Rule-24 records with the declared normalization.

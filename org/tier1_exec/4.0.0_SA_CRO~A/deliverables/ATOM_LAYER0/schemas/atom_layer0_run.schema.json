@@ -200,7 +200,10 @@
                 "grain": {"type": "string", "minLength": 1},
                 "frontier_denominator": {"type": "integer", "minimum": 1},
                 "evidence_vintage": {"type": "string", "minLength": 7},
-                "registry_vintage": {"type": "string", "minLength": 7}
+                "registry_vintage": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{7,40}(\\s.*)?$"
+                }
               }
             }
           ]

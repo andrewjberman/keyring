@@ -194,11 +194,14 @@ Adoption is an authoring act. Reused arrays and axes carry their own fresh recor
 
 Package-record coverage is evaluated at the bundle's pinned vintage, never against the
 working tree by default. Resolution uses an issued certificate's `registry_vintage`
-first and otherwise the bundle's repository vintage. A valid pin predating the package
-maps explicitly to the first registered package record set; a nonexistent or unrelated
-pin fails closed as `VINTAGE_UNRESOLVABLE`. A record addition partitions historical and
-current bundles by record-count vintage rather than invalidating honest historical
-provenance. A grammar change remains a separate eligibility-invalidating event.
+first and otherwise the bundle's repository vintage. The certificate field accepts a
+7-40 lowercase-hex commit-ish token followed optionally by whitespace and provenance
+decoration; resolution uses the leading token and does not interpret the decoration. A
+valid pin predating the package maps explicitly to the first registered package record
+set; a nonexistent or unrelated pin fails closed as `VINTAGE_UNRESOLVABLE`. A record
+addition partitions historical and current bundles by record-count vintage rather than
+invalidating honest historical provenance. A grammar change remains a separate
+eligibility-invalidating event.
 
 ## 8. Resolution contract
 

@@ -263,14 +263,14 @@
       "declared_layer": "version coordinates on one issued atomicity certificate face",
       "axis_intent": "distinguish the registry authority vintage from the evidence population vintage",
       "grain": "one issued certificate",
-      "members": ["registry_vintage present", "registry_vintage absent for backward-compatible pre-extension certificates"],
+      "members": ["registry_vintage present as leading commit-ish token with optional provenance decoration", "registry_vintage absent for backward-compatible pre-extension certificates"],
       "postulates": {
         "mece": "PASS: an issued certificate either carries the optional registry coordinate or remains a valid pre-extension certificate.",
         "same_grain": "PASS: both cases concern one certificate face.",
-        "intent_coherence": "PASS: the field states only the registry authority vintage; evidence_vintage retains the measured population coordinate.",
+        "intent_coherence": "PASS: the leading commit-ish token states the registry authority vintage; optional trailing decoration carries provenance only, and evidence_vintage retains the measured population coordinate.",
         "state_coherence": "PASS: presence is additive and optional, so existing bundles retain their prior validity while newly coordinated runs can name both vintages."
       },
-      "layer_coverage_probe": "The certificate face can now distinguish registry authority bytes from evidence bytes without overloading evidence_vintage.",
+      "layer_coverage_probe": "The certificate face can distinguish registry authority bytes from evidence bytes without overloading evidence_vintage; bare and provenance-decorated pins resolve through the same leading token.",
       "verdict": "PASS"
     },
     {
@@ -282,7 +282,7 @@
       "grain": "one run bundle x one resolved vintage",
       "members": ["COVERAGE_VALID", "COVERAGE_INVALID", "VINTAGE_UNRESOLVABLE"],
       "precedence": [
-        "VINTAGE_UNRESOLVABLE when neither the certificate registry_vintage nor bundle repo vintage resolves to a known repository/package basis",
+        "VINTAGE_UNRESOLVABLE when neither the certificate registry_vintage leading commit token nor bundle repo vintage resolves to a known repository/package basis",
         "COVERAGE_INVALID when the vintage resolves and carried ids differ from that vintage's package record set",
         "COVERAGE_VALID only when the vintage resolves and the record sets agree exactly"
       ],
@@ -299,9 +299,9 @@
         "mece": "PASS: the vintage cannot resolve, or it resolves and exact record coverage either agrees or differs.",
         "same_grain": "PASS: every member types one bundle at one attempted vintage resolution.",
         "intent_coherence": "PASS: members answer historical package-record coverage only; grammar eligibility remains a separate invalidation law.",
-        "state_coherence": "PASS: all members re-evaluate through the same certificate-pin then bundle-pin resolution order and exact-set comparison."
+        "state_coherence": "PASS: all members re-evaluate through the same certificate-pin then bundle-pin resolution order, leading-token normalization, and exact-set comparison."
       },
-      "layer_coverage_probe": "Pre-12 11-record, post-12 12-record, and nonexistent-pin controls exercise every member; additions partition the population instead of turning historical bundles red.",
+      "layer_coverage_probe": "Pre-12 11-record, post-12 12-record bare and decorated-pin, and nonexistent-pin controls exercise every member; additions partition the population instead of turning historical bundles red.",
       "verdict": "PASS"
     }
   ],

@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import re
 import subprocess
 import sys
 from collections import Counter
@@ -46,6 +47,7 @@ PRE_12_VINTAGE = "602b73a1f99d889dabbc884525b10dd8e7bf2e56"
 INITIAL_RULE24_VINTAGE = "462ac78311a3d5f1310a8da3f4f7638127d449bd"
 STAGES = ("s0", "s1", "s2", "s3", "s4", "s5")
 SEAM_AXES = {"MECHANICAL", "DECLARATIVE", "SEMANTIC"}
+REGISTRY_VINTAGE_PATTERN = re.compile(r"^([0-9a-f]{7,40})(?:\s.*)?$")
 
 
 def _load(path: Path) -> Any:
@@ -67,7 +69,8 @@ def _bundle_registry_vintage(bundle: dict[str, Any]) -> str | None:
     if isinstance(challenge, dict):
         certificate = challenge.get("atomicity_certificate")
         if isinstance(certificate, dict) and certificate.get("registry_vintage"):
-            return str(certificate["registry_vintage"])
+            match = REGISTRY_VINTAGE_PATTERN.fullmatch(str(certificate["registry_vintage"]))
+            return match.group(1) if match else str(certificate["registry_vintage"])
     vintage = bundle.get("vintage")
     if isinstance(vintage, dict) and vintage.get("repo_commit"):
         return str(vintage["repo_commit"])
@@ -465,6 +468,12 @@ def self_test() -> int:
     base["rule24_record_ids"] = sorted(post_records)
     cases: list[tuple[str, dict[str, Any], bool, bool]] = []
     cases.append(("template", copy.deepcopy(base), False, True))
+
+    decorated = _load(PACKAGE_ROOT / "proving_runs" / "R015_CONTRACT_RECORD" / "atom_layer0_run.json")
+    decorated["s2_challenge"]["atomicity_certificate"]["registry_vintage"] = (
+        f"{POST_12_VINTAGE} (SYSTEM_DEFINITIONS.yaml blob 43b50adf54, v3.11)"
+    )
+    cases.append(("decorated-registry-vintage", decorated, False, True))
 
     pre_12 = copy.deepcopy(base)
     pre_12["vintage"]["repo_commit"] = PRE_12_VINTAGE
