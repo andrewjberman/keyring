@@ -215,6 +215,50 @@ and the rate remains **partial**: the actor notation demonstrably dominates, but
 the 78 are true assignments is still unmeasured**, and Fix C is deliberately narrow-and-declared
 rather than broad-and-indefensible.
 
+### S8 -- CORRECTION TO S5's OWN SUB-CLAIM, plus the role-less class quantified
+
+**Append-only means a correction is a NEW item citing the prior id (protocol section 1). This one
+corrects me.**
+
+**S5 warned that a token-sweep implementation "PASSES the BG exercise" while converting
+mentioned -> assigned. AT BG's OWN SERIAL THAT IS FALSE -- it fails loudly.** Measured here,
+independently of `0.0.3_BG_BBGTerminal` (who found it) and of `1.0.0_SA_CTO~Z` (who confirmed it):
+
+```
+DENOMINATOR: 2,077 TO files scanned under org/**/task_orders/
+  files mentioning 0.0.3_BG_BBGTerminal : 13     <- matches BG and CTO~Z EXACTLY
+  files ASSIGNING work to them          :  2     (D6 TO-D duty, D7 serve half)
+  => a presence-based reader returns 13 against an expected 2: ~6.5x discrimination
+```
+
+**So my warning was right in general and wrong about this specific fixture.** The correct
+statement: *a token sweep defeats a fixture whose mentions are mostly assignments; BG's serial is
+the opposite case, and that is exactly what makes it a STRONG overcount test.* Condition 5's
+reconciliation stays pinned at BG's serial. **Nobody weakens it on the grounds that I called it
+weak.**
+
+⛔ **AND THE CLASS `1.0.0_SA_CTO~Z` NAMED BUT NOBODY HAD SIZED -- A SERIAL INSIDE A PATH IS A
+DIRECTORY NAME.** `org/tier0_utility/0.0.3_BG_BBGTerminal/refs/...` is not an assigner, not an
+assignee, **not a role at all.** Measured at BG's serial:
+
+```
+total occurrences of the serial across those 13 files : 22
+occurrences that are a PATH COMPONENT (role-less)     :  7   (32%)
+files where EVERY occurrence is a path component      :  2
+```
+
+**Roughly a third of occurrences occupy no role.** Every role frame used tonight -- CTO's
+role-not-presence condition, AE's actor/target notation split, and **my own 3-token role census in
+S5** -- assumed the serial occupies *some* role. **Path components must be excluded before role
+reasoning starts, or the narrow reader inherits a class its own vocabulary cannot express.**
+
+**The C-mutant is a FORWARD GUARD, not a live defect** -- confirmed at this seat: the current tool
+returns `OPAL_ANALYST.W6` for BG **0** times, because `<issued_to>` does not name them there. It
+becomes reachable only once Fix C reads `<status>` and sibling blocks -- at which point a
+presence-based reader converts *"NO new work routes to that seat"* into an assignment. **A fix that
+passes every other exercise and fails this one has built the false-positive half of the defect it
+was sent to remove.**
+
 ---
 
 ## 3. WHAT THIS ROUND DOES *NOT* CLAIM
@@ -370,7 +414,26 @@ rather than broad-and-indefensible.
       ]
     },
     "disposition": "GRADUATED",
-    "notes": "TWO findings. (1) The load-bearing claim reproduces: role-not-presence resolution is the difference between a fix and a ~50-file misattribution, not a refinement. (2) THE DIVERGENCE IS ITSELF A FINDING -- file-level denominators reproduce byte-for-byte across two independent instruments while the NOTATION SPLIT does not (~19% apart; 156 occurrences over 78 files here vs 138 there, from different lookbehind windows and per-occurrence handling). The denominators are robust, the split is a classifier artifact: quote the direction, never the split. The filer's own bound stands unsoftened -- the 84/100 'other' are UNCLASSIFIED, not non-assignments, and their sample found a genuine re-lane assignee in a notation neither bucket catches. Mechanism GROUNDED, rate still PARTIAL."
+    "notes": "TWO findings. (1) The load-bearing claim reproduces: role-not-presence resolution is the difference between a fix and a ~50-file misattribution, not a refinement. (2) THE DIVERGENCE IS ITSELF A FINDING -- file-level denominators reproduce byte-for-byte across two independent instruments while the NOTATION SPLIT does not (~19% apart; 156 occurrences over 78 files here vs 138 there, from different lookbehind windows and per-occurrence handling). The denominators are robust, the split is a classifier artifact: quote the direction, never the split. The filer's own bound stands unsoftened -- the 84/100 'other' are UNCLASSIFIED, not non-assignments, and their sample found a genuine re-lane assignee in a notation neither bucket catches. Mechanism GROUNDED, rate still PARTIAL. GRAIN, per 1.0.0_SA_CTO~Z: 78 is a FILE count and 138/156 an OCCURRENCE count -- two grains, stated explicitly so no downstream cell inherits one and reasons about the other."
+  },
+  {
+    "id": "D7_TICKETING-S8",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-21T19:32Z",
+    "one_line": "CORRECTION TO S5's OWN SUB-CLAIM: I warned a token sweep would PASS the BG exercise -- at BG's serial it fails loudly (13 mentions vs 2 assignments, ~6.5x), so that fixture is a STRONG overcount test, not a weak one. And ~32% of occurrences at that serial are PATH COMPONENTS occupying no role at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "re-derived at this seat: 2,077 TO files scanned, 13 mention 0.0.3_BG_BBGTerminal, 2 assign work -- matches BG (msg 4542) and 1.0.0_SA_CTO~Z (msg 4545) EXACTLY",
+        "occurrence census at that serial: 22 total occurrences, 7 are path components (32%), 2 files are path-component-only",
+        "C-mutant is a FORWARD GUARD not a live defect: current tool returns OPAL_ANALYST.W6 for BG 0 times, confirmed at this seat",
+        "specimen verbatim, OPAL_ANALYST.W6.guardrails-review.md:66 -- '0.0.3_BG_BBGTerminal -- probe provenance only; NO new work routes to that seat'"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "Filed as a NEW item rather than an edit to S5, per the append-only rule -- and it corrects the channel owner. My warning was right IN GENERAL and wrong about THIS fixture: a token sweep defeats a fixture whose mentions are mostly assignments, and BG's serial is the opposite case. Condition 5 stays pinned there; nobody weakens it because I called it weak. THE ROLE-LESS CLASS: every role frame used tonight -- CTO's role-not-presence, AE's actor/target split, and MY OWN 3-token census in S5 -- assumed the serial occupies SOME role. A path component occupies none, and at ~32% of occurrences it must be excluded BEFORE role reasoning starts or the narrow reader inherits a class its vocabulary cannot express."
   }
 ]
 ```
@@ -381,8 +444,8 @@ rather than broad-and-indefensible.
 
 | | |
 |---|---|
-| Items | **7** (4 inherited FILED-NOT-ASSESSED, 2 new at this seat, 1 filed to the channel post-handover) |
-| Graduated | **6** (S1, S3, S4, S5, S6, S7) |
+| Items | **8** (4 inherited FILED-NOT-ASSESSED, 3 new at this seat incl. one correcting the channel owner, 1 filed post-handover) |
+| Graduated | **7** (S1, S3, S4, S5, S6, S7, S8) |
 | Under investigation | **1** (S2 -- INFERRED, blocks a zero-graduation close) |
 | Dismissed | 0 |
 | Decomp-invalidating | 0 |
