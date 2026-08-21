@@ -413,9 +413,14 @@ def self_test() -> int:  # noqa: PLR0915
     json.dump(closure, open(cp, "w", encoding="utf-8"))
     sides = FixtureSides(vint)
     basis = load_basis()
-    chk("0 the consumed basis is honest: %s; five members, digest via the NORMATIVE home (reproduced: %s)"
-        % ("MINTED" if not basis.get("fixture") else "LOCAL FIXTURE (declared)", basis["digest"] == rh(basis["members"]) if basis.get("fixture") else "n/a"),
-        set(basis["members"].keys()) == set(NULL_MEMBERS) and (not basis.get("fixture") or basis["digest"] == rh(basis["members"])))
+    # COO 64232 precision note (a): the reproduction is asserted UNCONDITIONALLY here -- on the
+    # minted path it is ALSO enforced upstream (load_basis refuses a non-reproducing mint), but a
+    # display that printed "n/a" there READ like "not checked" when it meant "cannot reach here
+    # otherwise". Cheap to re-assert; a reader's wrong inference is not.
+    chk("0 the consumed basis is honest: %s; five members, digest via the NORMATIVE home (reproduced HERE: %s; "
+        "minted path also enforced upstream at load_basis)"
+        % ("MINTED" if not basis.get("fixture") else "LOCAL FIXTURE (declared)", basis["digest"] == rh(basis["members"])),
+        set(basis["members"].keys()) == set(NULL_MEMBERS) and basis["digest"] == rh(basis["members"]))
     ev, lease, obs = evaluate(cp, sides, env, basis)
     chk("1 first evaluation over an unchanged closure -> ELIGIBLE with the null-cap stated; lease minted BY the evaluation "
         "(NEVER_EVALUATED unreachable); both effect fields present; observations envelope-valid",
