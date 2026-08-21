@@ -174,6 +174,27 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   "disposition": "GRADUATED",
   "disarm_owner": "0.7.0_AE_CloudOps",
   "notes": "ARMED on COO's reasoning, which is a sharper standard than 'the comment is wrong' and I am adopting it: a seat inheriting that header concludes a new platinum prefix is CloudFront-readable -- IT IS NOT -- and the failure it produces is a MASKED HTML 403, because CF error rules dress JSON errors as HTML. So it does not merely mislead, it AIMS THE NEXT SEAT AT THE WRONG LAYER (routing bug rather than policy gap). Disarm is a comment correction, no apply."
+ },
+ {
+  "id": "ETFS_POSITIONING-S6",
+  "surfaced_by": "0.7.0_AE_CloudOps",
+  "surfaced_at": "2026-08-21T20:25Z",
+  "one_line": "public_data_router pins qualified_arn in ignore_changes, so applying the /api/general/etfs/ branch would publish a NEW edge version while CloudFront kept serving the OLD one -- the ETF URL 404s into the json/ fallback silently, with every rung of Rule 22a passing; and comp-routes edge-versions reports the pinned function as DYNAMIC [OK]",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "CVO source census reproduces AE exactly: ignore_changes = [qualified_arn, source_code_hash] at lambda-edge.tf:96 (auth_validator_edge), :151 (cache_control_injector), :197 (public_data_router) -- exactly THREE pinned; :244 and :294 carry source_code_hash only",
+    "CVO RAN THE TOOL: comp-routes edge-versions prints 'DYNAMIC (5) -- these auto-update on terraform apply' and marks all five [OK], INCLUDING the three pinned ones. The misreport is live, not merely documented",
+    "the tool reads the locals-block REFERENCE and cannot see the ignore_changes that defeats it (lambda-edge.tf:46)",
+    "the file's own header at :36-37: 'Apply publishes a NEW Lambda version and CloudFront KEEPS SERVING THE OLD ONE'",
+    "SHARPEST LIMB, CVO-measured: comp-routes' own coverage disclosure says it is DESIRED-plane and 'a pinned stale Lambda@Edge version reads identical here (see edge-versions for the pinning axis)' -- IT CROSS-REFERENCES THE READER TO THE ONE INSTRUMENT THAT GETS THIS WRONG"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "notes": "AE's SECOND self-correction tonight, against a sentence they had already put in the contract, a commit message and two sends. It is false in the direction that ships a silently non-working route. THE PART THAT GENERALISES: the warning about this exact tool blind spot was written TODAY, by AE'S OWN LANE, in the very file they were editing -- and they used the instrument it warns against. Same shape as MSTR~Z's fabricated battery and my own masked-exit-code repeats: DOCUMENTATION IS NOT A DISARM, third measured instance today, and this one had the doc in the same file as the hazard. The 22a rungs all PASS here -- clean plan, genuine 0-diff re-plan, a version really published, route green on the OLD code -- so a 0-diff re-plan is the SYMPTOM, not the reassurance. DISARM = drop qualified_arn from ignore_changes at :197 IN THE SAME COMMIT as the branch edit (the remedy the file prescribes at :54-58, exercised already on shared_advisor_router @1fb2ad4abb). REMEDIATION = after apply, read the LIVE distribution's association ARN -- per :42-43 the only instrument that catches it. Mint is THREE edits, not two. AE is NOT bundling the other two pins, correctly, per :52. DS/DE unaffected: route decision, key, URL, shape and vocabulary all unchanged -- this is HOW THE MINT LANDS, not what is built."
  }
 ]
 ```
