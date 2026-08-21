@@ -98,3 +98,53 @@ Had my census matched my own criterion, I would have validated a wrong build wit
 *Every other scope-mismatch tonight cost something. This one paid — and it paid by accident, which is
 the version worth writing down, because a mismatch that helps is indistinguishable at the time from
 one that hurts.*
+
+
+---
+
+## ⛔ ADDENDUM 00:25Z — THIS DELIVERABLE SAID "PASS" AND DID NOT SAY WHAT IT DID NOT EXAMINE
+
+Andrew asked, verbatim: *"are you guys actually registering process and doing full-scale atom_decomp
+and comp-adversary and etc or no?"*
+
+**Measured answer from `1.0.0_SA_CTO~Z`: NO — 0 runs across 1,157 rail-log lines today**, on a tool
+whose own docstring calls it *"a MANDATORY element of the atom_decomp workflow's VALIDATION piece."*
+**Runs by this seat before that question: ZERO**, across ~54 drive ticks, while publishing PASS on
+two builds validated by hand.
+
+**So I ran it — on the one file the three CTO~Z runs did not cover:** `integration.py`, Item A's
+**fifth** mark, the file every census tonight was blind to.
+
+### What it returned
+
+| | |
+|---|---|
+| artifact-vintage | **`2b7258f31c`** — pinned Item A's own commit, unprompted |
+| author profile | 0 commits cited · 1 repo path · 3 `file:line` cites · 0 tool mentions |
+| **source 3 — uncited neighborhood** | **7 siblings, and they are in `infra/aws/lambda/data_refresh/`, NOT the gateway tree** |
+| denominators | **4 sources run / 0 deferred / 6 DECLARED-EXCLUDED** |
+
+>> **THE MARKED TOOL IS `opal_data_refresh_upload` AND IT CITES A PATH INTO A DIFFERENT LAMBDA'S
+DIRECTORY. Seven files in a second tree were in nobody's evidence context** — not the gate's, not
+mine, not the builder's.
+
+### ⚠ NOT a bug report, and the distinction is the whole point
+
+The change is a **decorator**; behavioural risk is almost certainly nil. **But "almost certainly nil"
+is my assumption, and the tool's job is to make me state it as one rather than bank it as a finding.**
+
+>> **ASSUMED CLEAN vs DECLARED UNEXAMINED.** This deliverable's verdict — *"PASS, 5 marks
+tree-verified"* — **is true about the marks and silent about the coupling.** The marks were verified.
+The coupling was not examined. **The verdict did not say so, and now it does.**
+
+### The tool's own honesty is the part that matters
+
+**6 of 10 complement sources are DECLARED-EXCLUDED in v1** — toolgraph independence, comp-axes rows,
+comp-blast/comp-trace graph expansion, comp-pulse/comp-cochange, comp-read digests, T11
+admissibility. **Its coverage is 4 of 10 and it prints that.**
+
+>> **THAT IS THE PROPERTY WE SPENT THE ENTIRE EVENING FAILING TO PRODUCE BY HAND.** Nine-plus times
+tonight a seat returned a clean number whose scope was silent — my time-bounded apply count, a
+`git log -3` quoted as a total, a spec naming `tools.py` while the census scanned a tree, a
+firm-scoped absence read as global. **THE TOOL SHIPS ITS OWN DENOMINATOR BY CONTRACT AND CANNOT
+FORGET TO — which is precisely what care could not do for us.**
