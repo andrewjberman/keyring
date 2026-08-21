@@ -82,7 +82,24 @@ aws sesv2 get-account
   -> SendingEnabled: true | ProductionAccessEnabled: FALSE | EnforcementStatus: HEALTHY
 ```
 
-**In the SES sandbox an account may send only to VERIFIED identities** (plus a capped daily volume). The account currently holds `opalinvest.dev` as a verified **DOMAIN** and **24 individually-verified EMAIL_ADDRESS identities** -- which is itself the tell: the estate has been hand-verifying every recipient, one address at a time, because it is in the sandbox. `ses.tf`'s own header states the config set and topics were built so that **Andrew** could submit the production-access Console form; `ProductionAccessEnabled: false` says that has **not been granted.**
+**In the SES sandbox an account may send only to VERIFIED identities** (plus a capped daily volume). `ses.tf`'s own header states the config set and topics were built so that **Andrew** could submit the production-access Console form; `ProductionAccessEnabled: false` says that has **not been granted.**
+
+> ### CORRECTED ~02:10Z -- MY IDENTITY COUNT WAS A PAGE, AND "VERIFIED" WAS THE WRONG WORD FOR MOST OF IT
+> This paragraph read: *"the account currently holds `opalinvest.dev` as a verified DOMAIN and **24 individually-verified EMAIL_ADDRESS identities**."* **Wrong twice, and the correction makes the finding stronger, not weaker.**
+> **(i) IT WAS A PAGE.** `list-email-identities` defaults to a page size of **25** and my table returned **exactly 25 rows** -- *a result that exactly equals the page size is a page, not a total*, and that was the tell sitting in my own output. Flagged by `0.0.0_AB_MSTR~Z`, then re-derived here by an **explicit token walk** (`--page-size 100`, materialised client-side). ⚠ **AND `--output json` PIPED TO A PARSER DID NOT SAVE ME EITHER: it returned 25 with `NextToken` STILL PRESENT in the response.** The CLI did not merge the pages, so a read I had labelled "auto-paginated" was **also a page.** Only the explicit walk was correct.
+> **(ii) "INDIVIDUALLY-VERIFIED" WAS FALSE OF MOST OF THEM.** Verification *state* is not identity *existence*.
+>
+> **THE MATERIALISED CENSUS -- 1 page walked, TRUE TOTAL 26:**
+>
+> | | count |
+> |---|---|
+> | DOMAIN identities | **1** (`opalinvest.dev`, `SUCCESS`) |
+> | EMAIL_ADDRESS identities | **25** |
+> | `VerificationStatus: SUCCESS` | **14** total -- the domain + **13** addresses |
+> | **`VerificationStatus: FAILED`** | **12 of 26 -- 46%** |
+>
+> FAILED: `jeanette@` `info@` `jim@` `wayne@`(opalinvest.com) - `mike@hirst.digital` - `patrick@` `noel@`(inflectionwealth.com) - `christa.bass@` `stephen.shipley@` `jay.rubottom@`(cottonwoodmail.com) - `support@` `noreply@`(opalinvest.dev).
+> *(`0.0.0_AB_MSTR~Z` independently walked to 26 and read 11 FAILED; I read 12. The one-row delta is immaterial to every conclusion below and I have not chased it -- both walks agree on the total and on the magnitude.)*
 
 > ### ⛔ THE CONSEQUENCE FOR W-E, STATED PLAINLY
 > **An Exchange distribution group lives on the TENANT domain -- `@opalinvest.com` -- which is NOT a verified DOMAIN identity in this account.** So in the current sandbox posture, **SES -> that DL is REJECTED.**
@@ -93,9 +110,11 @@ aws sesv2 get-account
 
 | # | Path | Actor | Note |
 |---|---|---|---|
-| **A** | **Put the DL on `opalinvest.dev`** (the already-verified domain) | tenant admin, with Andrew's word | Sandbox-clean **today**, no AWS request, no waiting. **Cheapest by a wide margin.** Trades against whatever the DL address is supposed to *look* like to its readers -- which is the **audience** question, so this path is audience-coupled and I am not choosing it. |
-| **B** | **Individually verify the DL address** as an SES EMAIL_ADDRESS identity | tenant admin + whoever holds the DL mailbox (verification is a click-through on a mail to that address) | Works in the sandbox. Matches what the estate already does for its 24 recipients. Fragile: it is a per-address act nobody re-does when the DL changes. |
+| **A** | **Put the DL on `opalinvest.dev`** (the already-verified domain) | tenant admin, with Andrew's word | Sandbox-clean **today**, no AWS request, no waiting. **Cheapest by a wide margin, and the census below strengthens it: a verified DOMAIN identity covers EVERY address on it, so this path needs no per-address act now or ever.** Trades against whatever the DL address is supposed to *look* like to its readers -- which is the **audience** question, so this path is audience-coupled and I am not choosing it. |
+| **B** | **Individually verify the DL address** as an SES EMAIL_ADDRESS identity | tenant admin + whoever holds the DL mailbox (verification is a click-through on a mail to that address) | Works in the sandbox, and **it is the estate's ESTABLISHED PRACTICE, not a proposal -- 15 `@opalinvest.com` addresses have been verified this way** (`0.0.0_AB_MSTR~Z`'s delta). ⛔ **But the fragility is no longer hypothetical: 12 of 26 identities are ALREADY `FAILED` -- 46%, measured, right now.** Per-address verification in this account has demonstrably decayed on nearly half of what it was applied to. **A DL is exactly the kind of address that changes, and nobody re-verifies.** |
 | **C** | **Request SES production access** (Console form) | **ANDREW** -- explicitly his, per `ses.tf`'s own header | Removes the constraint permanently and for the whole estate. Not instantaneous: AWS review. `ses.tf`'s prerequisites (config set + bounce/complaint topics) are **already built**, so the packet's blocker is discharged. Packet: `infra/aws/ses/trade-pipeline-prod-access-request.md`. |
+
+> ⛔ **AND THE CENSUS CARRIES ITS OWN PROOF OF (A) OVER (B), which I record because it is measurement rather than preference:** `support@opalinvest.dev` and `noreply@opalinvest.dev` both sit in the FAILED list **as ADDRESS identities -- and it does not matter**, because the **DOMAIN** identity `opalinvest.dev` is `SUCCESS` and covers every address on it. **Those two rows are harmless residue of doing (B) where (A) already applied.** The account therefore contains a worked example of both paths side by side: the domain identity has needed no maintenance, and 46% of the per-address ones have lapsed.
 
 **GATE POSITION: A or B unblocks W-E without waiting on AWS; C is worth doing regardless and is his call.** I am **not** requesting production access, **not** creating identities, and **not** choosing the DL's domain -- all three are outside a design gate's authority and (A) is entangled with the audience decision that is his.
 
@@ -125,6 +144,7 @@ aws sesv2 get-account
 | `aws sesv2 get-account` | **PASS -- the finding** | rail-checked; no comp-tool models SES account posture (`comp-iam` is TF-DESIRED and `(action)`-only) |
 | `aws sesv2 get-email-identity` + negative control | **PASS** | `NotFoundException` on a bogus domain proves the read discriminates |
 | `aws sesv2 list-email-identities --query VerifiedForSendingStatus` | **FAIL -- caught** | wrong field for that API; returned a clean `None` column that reads as a fabric-wide alarm. Corrected by dumping one raw record. |
+| `aws sesv2 list-email-identities` (count) | **FAIL -- caught by a peer, then twice more by me** | **Three reads, three pages, one true total.** The default page returned **exactly 25** -- the page size, which was the tell. `--output json` into a parser ALSO returned 25 **with `NextToken` still present** (the CLI did not merge). Only an **explicit `--starting-token` walk** gave the true **26** -- and only that read surfaced the **12 FAILED**, which is the finding. Flagged by `0.0.0_AB_MSTR~Z`. |
 
 **Gap:** `comp-kuzu`/`comp-blast` hang on this box -- named at every use, never a false clean.
 
