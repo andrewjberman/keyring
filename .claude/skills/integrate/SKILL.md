@@ -244,6 +244,15 @@ nothing else is mixed in. Spot-confirmed in explicit UTC via `head-object`:
 > detector fires falsely and a hash-based one is blind to the rewrite. Tell affected owners which
 > of the two they are holding. *(Both errors were mine on the 08-21 run; the second reached
 > `0.6.2_AE_PartnerETL`, who had pinned timestamps for a next-morning acceptance.)*
+> **SHARPER FORM, `1.0.0_SA_CTO` on the same run — the two detectors have OPPOSITE blind spots and
+> neither is simply better:** `sha256` sees a content change and is blind to an identical-bytes
+> rewrite; `LastModified` sees any write **but cannot tell a rewrite from a real change.** So
+> *"LastModified moved"* is **not a stronger signal — it is a DIFFERENT QUESTION**, and for the only
+> question an acceptance asks (*did the executed bytes change?*) **the hash detector's blindness is
+> the CORRECT blindness.** ⛔ **THEREFORE THE TRAP: a verifier holding BOTH limbs and alarming on
+> disagreement FIRES FALSELY ON THE HEALTHY CASE — after any merge-triggered deploy leg,
+> `hash-same + timestamp-moved` is the NORMAL state, not an anomaly.** Drop the timestamp limb or
+> re-pin it; do not treat the pair as corroboration.
 > **So the pre-push enumeration below is the right instrument and must be read as a CEILING — never
 > reported as a deploy manifest.** (Self-corrected by `0.0.0_AB_MSTR~Z`, who measured it rather than
 > leaving it as an unverified number of their own.)
