@@ -18,7 +18,7 @@ The landed route act compares the path's RESOLVED BUCKET to the caller's resolve
 the correct encoding for the topology it replaced, where bucket WAS tenant — and CTO ruled it
 correct, not a loosening, because a bare `pathFirm === firmId` would have refused two legitimate
 existing identities (the mockadv→bd alias, the opal-capital staff proxy) and made the route
-NARROWER than today's tenancy boundary. **But `platinum/mdpf/` already holds five firms in one
+NARROWER than today's tenancy boundary. **But `platinum/mdpf/` already holds THREE firms in one
 bucket, so the property breaks the moment `platinum/advi/` grows a second firm.** Not exploitable
 today (re-listed: 49financial only). **ARMED, because publishing a second firm's twins is a NORMAL
 act of this very program** — everything else is already in place. **DISARM (already shaped and
@@ -40,27 +40,39 @@ exist and then sits open forever with nobody able to close it.** The remedy is n
 a GUARD AT THE FUTURE WIRING POINT, or at minimum this recorded re-arm condition, which the next
 wiring seat will actually meet.
 
+## S3 -- the registry's TYPE DECLARATION makes every census of it over-count by one (filed 17:30Z)
+
+**Two senior seats hit this within one hour and THE SECOND HAD READ THE FIRST'S WRITTEN WARNING.**
+`adviKeyRepoint.ts:143` is `state: 'flip' | 'held' | 'structural'` — a type declaration that
+satisfies a `state:'flip'` grep, so a census of the never-widen registry reads one flip too many.
+**That is evidence about the CONTROL, not about either seat:** a documented, freshly-read warning
+in working memory did not prevent the repeat. The remedy therefore has to sit where the instrument
+breaks — one inline comment at `:143` — rather than in a message the next seat will never see.
+**Directional, which is why it earns the line:** depending on which way the miscount falls, the
+next reader either invents a discrepancy against a cert or misses a real widening, and this file is
+now the never-widen enforcement point for every future flip.
+
 ```json
 [
  {
   "id": "OPAL_ADVIPOINTERS-S1",
   "surfaced_by": "0.4.0_DE_ClientPlatform",
   "surfaced_at": "2026-08-21T16:40Z",
-  "one_line": "the route's tenant assertion compares RESOLVED BUCKETS, which encodes tenancy at the old topology's granularity -- the property breaks the moment platinum/advi/ holds a second firm, as platinum/mdpf/ already does with five",
+  "one_line": "the route's tenant assertion compares RESOLVED BUCKETS, which encodes tenancy at the old topology's granularity -- the property breaks the moment platinum/advi/ holds a second firm, as platinum/mdpf/ already does with three",
   "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "grounding": {
    "status": "GROUNDED",
    "evidence": [
     "DE 65048 read of the landed router: the assertion precedes origin selection (:333 before :337/:344/:346), so a cross-firm request never reaches S3 -- the control fired as scope_denied, not as a 404",
-    "platinum/mdpf/ holds five firms in one bucket -- bucket-as-tenant is already false elsewhere in the estate",
+    "CORRECTED FIGURE (filed as FIVE, measured THREE): platinum/mdpf/ holds 6 top-level prefixes of which THREE are firm directories (49financial, cottonwood, inflection) + 3 non-firm (_manifests, archive, global) -- AE 65227 caught it, CVO re-listed independently and confirmed. The FIVE was a prefix count read as a firm count. THE CONCLUSION IS UNCHANGED AND ARGUABLY STRONGER: the predicate is 'more than one', and mdpf is the SAME BUCKET one prefix over, already multi-tenant TODAY, while advi holds exactly one",
     "re-listed at DE's seat: platinum/advi/ holds 49financial only, so it is not exploitable today",
     "CTO 65005 ruling: resolved-bucket equality is the CORRECT encoding of the 64842 bound, not a loosening -- a bare pathFirm===firmId would refuse two legitimate identities and NARROW the boundary"
    ]
   },
   "disposition": "GRADUATED",
   "disarm_owner": "0.7.0_AE_CloudOps",
-  "notes": "ARMED because publishing a second firm's twins is a NORMAL act of this program with everything else in place. Disarm is already shaped and ruled: advTenant declaration-based tenancy, which does not expire when firms co-locate. Its Rule-24 record must declare what an identity with NO advTenant asserts against (COO 65128: the CE half against the declared layer) -- fail-closed BY CONSTRUCTION AND STATED, never by luck of how the comparison happens to be written."
+  "notes": "ARMED because publishing a second firm's twins is a NORMAL act of this program with everything else in place. Disarm is already shaped and ruled: advTenant declaration-based tenancy, which does not expire when firms co-locate. Its Rule-24 record must declare what an identity with NO advTenant asserts against (COO 65128: the CE half against the declared layer) -- fail-closed BY CONSTRUCTION AND STATED, never by luck of how the comparison happens to be written. || FIGURE CORRECTED 17:35Z (AE 65227, CVO-verified by independent listing): five -> three firm directories. Corrected VISIBLY in place rather than by a new item because it is a FACT correction to my own evidence line, not a re-writing of what was found -- the original figure and its correction both appear, so a later reader can reconstruct the claim. Scoping fact AE added and worth keeping: those three mdpf tenants are served by public-data-router, NOT shared-advisor-router, so they do not pass through the assertion today -- they are evidence of the SHAPE, not an instance of the defect."
  },
  {
   "id": "OPAL_ADVIPOINTERS-S2",
@@ -80,6 +92,26 @@ wiring seat will actually meet.
   },
   "disposition": "GRADUATED",
   "notes": "INERT, not ARMED, and the distinction is load-bearing (COO 65154): the bindings at source are CORRECT, so harm requires a FUTURE consumer wired wrong rather than a present trap -- and an INERT row filed as ARMED invites a disarm act that does not exist, leaving the row open forever with nobody able to close it. NO disarm_owner is named BECAUSE THERE IS NOTHING TO DISARM; the schema requires one only for ARMED, which is the axis doing its job. RE-ARM CONDITION (the mitigation actually available): a live 49F consumer appearing for either key -- a tenant flipping barChart.stacked true, or getCumulativeChart gaining an importer. At that moment L1 becomes runnable AND mandatory."
+ },
+ {
+  "id": "OPAL_ADVIPOINTERS-S3",
+  "surfaced_by": "2.0.0_SA_COO",
+  "surfaced_at": "2026-08-21T17:29Z",
+  "one_line": "adviKeyRepoint.ts:143 is a TYPE DECLARATION that satisfies a state:'flip' grep, so any census of the never-widen registry over-counts by exactly one -- two senior seats hit it within one hour, the second AFTER reading the first's written warning",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "instance 1, 3.0.0_SA_CVO ~17:02Z: grep -c read 11 against a certified 10; resolved by reading the lines, disclosed in POSTFLIP_P4PINS_49F_20260821.md",
+    "instance 2, 2.0.0_SA_COO ~17:29Z: census grep returned FLIP 2 and a -B4 context window swept ownership_map in as a false second flip -- one step from reporting a phantom discrepancy against CVO's cert at the close",
+    "instance 3, 3.0.0_SA_CVO ~17:27Z: the same count read 2-vs-ruled-1; caught pre-send ONLY because instance 1 had already happened at this seat",
+    "the file is now the never-widen ENFORCEMENT POINT: every future flip/hold/re-flip is counted from it, by seats who will not have read any of these messages"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.4.0_DE_ClientPlatform",
+  "notes": "ARMED: the trap exists NOW and a future ORDINARY act (censusing the registry) trips it -- nothing else needs to change. THE EVIDENCE IS ABOUT THE CONTROL, NOT THE SEATS: a documented warning, freshly read, in working memory, did not prevent the repeat twenty minutes later on the same line of the same file. That is the doctrine's own 'knowing a failure mode by name does not immunize you against writing it' with a same-file same-hour demonstration attached, and it is why the remedy must sit AT THE POINT OF FAILURE rather than in a warning someone must remember. DISARM (COO's proposal, DE's lane, one line, no clock): an inline comment at :143 naming it a type declaration and stating that a state: grep over this file over-counts by exactly one. DIRECTIONAL RISK, which is why it is worth the line: depending on which way the miscount falls the next seat either INVENTS a discrepancy or MISSES a real one, and this file is the never-widen enforcement point."
  }
 ]
 ```
