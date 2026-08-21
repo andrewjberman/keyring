@@ -80,9 +80,16 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   surprises NEVER interrupt: one line to CVO, no action, keep working. BLOCKING (spec cannot
   physically execute) routes same-turn to the ISSUER for spec amendment, cc CVO. HAZARD classes
   (the next on-spec act — yours or an armed artifact's — is destructive/irreversible) invoke the
-  escape valve below. The final surprise-taxonomy enum is CVO's Rule-24 authoring act, minted
-  from the 2026-08-21 specimen set (incl. COO's LATENT-HAZARD counterexample; 24(iv)-confirmed:
-  distinct remedies — unblock now / record and route / disarm before normal operation arrives).
+  escape valve below. **The surprise taxonomy is TWO ORTHOGONAL AXES — ruled 2026-08-21 ~16:5xZ on
+  CVO's channel item S1 (the channel's first real use was a finding against its own schema: the
+  one-axis form BLOCKING > LATENT_HAZARD > OBSERVATION fused INTERRUPTION RIGHT with HAZARD
+  STANDING and papered it with a precedence rule — the Rule-24(iii) tell; the tsc false-green
+  specimen was classed OBSERVATION and given the latent-hazard remedy, so the remedy disagreed
+  with the class): `class {OBSERVATION, BLOCKING}` × `standing {ARMED, INERT}`.** "Latent hazard"
+  survives as the PROSE NAME for (any class, ARMED) — never as an enum value. ARMED obliges a
+  named disarm owner whatever the class; LATENT_HAZARD-declared-INERT is refused by schema.
+  Ruled NOW, at the cheapest moment (the same day the names entered law), by the same principle
+  COO applied to `dep_stage`: a name is cheapest to change while few documents use it.
 
 - **SPEC-AT-PICKUP CURRENCY, not spec-at-issuance**: the executing seat's FIRST ACT is running
   the TO's premise verification primitives against live state. Three same-day specimens of a TO
