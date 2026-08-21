@@ -28,7 +28,25 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TERRAFORM="${SAFE_APPLY_TERRAFORM:-$SCRIPT_DIR/terraform.exe}"
+# Terraform resolution is DEVICE-AGNOSTIC (CLAUDE.md: derive, do not hardcode).
+# The sibling terraform.exe exists on some devices and NOT on others -- site Z has no
+# .tools/terraform.exe and resolves terraform v1.15.8 on PATH -- and Rule 26 routes every
+# apply to the device that owns the work. A baked sibling path therefore does not merely
+# fail: it makes the tag-authz gate below unable to produce a plan, which surfaces as
+# 'could not evaluate' and steers the operator toward TAGAUTHZ_OVERRIDE. Explicit override
+# wins, then the sibling, then PATH, then FAIL LOUD -- never an unresolved value.
+if [ -n "${SAFE_APPLY_TERRAFORM:-}" ]; then
+  TERRAFORM="$SAFE_APPLY_TERRAFORM"
+elif [ -x "$SCRIPT_DIR/terraform.exe" ]; then
+  TERRAFORM="$SCRIPT_DIR/terraform.exe"
+elif command -v terraform >/dev/null 2>&1; then
+  TERRAFORM="$(command -v terraform)"
+else
+  echo "safe-apply: ERROR -- no terraform binary found." >&2
+  echo "            Looked for: \$SAFE_APPLY_TERRAFORM, then $SCRIPT_DIR/terraform.exe, then PATH." >&2
+  echo "            Refusing to run. (Fail closed HERE, loudly, rather than later as a gate that cannot evaluate.)" >&2
+  exit 5
+fi
 HALT_GATE="$SCRIPT_DIR/halt-gate-check.sh"
 
 # Gate `apply` only -- refuse if no `apply` subcommand is present.
@@ -157,11 +175,13 @@ if [ "$DT_FOUND" -eq 1 ]; then
     TAG_TMP="$(mktemp 2>/dev/null || echo "${TMPDIR:-/tmp}/safe-apply-plan.$$")"
     CTZ="$COMP_TAGAUTHZ"; [ -x "$CTZ" ] || CTZ="comp-tagauthz"
     echo "safe-apply: $CHDIR_TREE sets default_tags -- running the comp-tagauthz pre-apply authorization gate." >&2
-    if "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TAG_TMP.bin" >/dev/null 2>&1 \
-       && "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} show -json "$TAG_TMP.bin" > "$TAG_TMP.json" 2>/dev/null; then
+    # stderr is CAPTURED, never discarded: the emptiness of this read carries a verdict
+    # (fail-closed), and a discarded cause is why a missing binary reads as a dangerous plan.
+    if "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TAG_TMP.bin" >/dev/null 2>"$TAG_TMP.err" \
+       && "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} show -json "$TAG_TMP.bin" > "$TAG_TMP.json" 2>>"$TAG_TMP.err"; then
       "$CTZ" check --default-tags-tree "$CHDIR_TREE" --from-plan "$TAG_TMP.json" >&2
       rc=$?
-      rm -f "$TAG_TMP" "$TAG_TMP.bin" "$TAG_TMP.json" 2>/dev/null
+      rm -f "$TAG_TMP" "$TAG_TMP.bin" "$TAG_TMP.json" "$TAG_TMP.err" 2>/dev/null
       if [ "$rc" -ne 0 ]; then
         echo "safe-apply: BLOCKED by comp-tagauthz (rc=$rc). This apply would overwrite an access-granting" >&2
         echo "            tag, or the gate could not evaluate. Route to CTO; do not TAGAUTHZ_OVERRIDE past a" >&2
@@ -170,10 +190,21 @@ if [ "$DT_FOUND" -eq 1 ]; then
       fi
       echo "safe-apply: comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag." >&2
     else
-      rm -f "$TAG_TMP" "$TAG_TMP.bin" "$TAG_TMP.json" 2>/dev/null
       echo "safe-apply: ERROR -- could not produce a plan JSON to run the tag-authz gate on $CHDIR_TREE." >&2
       echo "safe-apply: a gate that cannot evaluate must not pass. Refusing to apply. (Fail closed.)" >&2
-      echo "safe-apply: if the plan genuinely carries no tag-authz collision, re-run with TAGAUTHZ_OVERRIDE=\"reason\"." >&2
+      if [ -s "$TAG_TMP.err" ]; then
+        echo "safe-apply: ---- terraform stderr (THE CAUSE -- read this before anything else) ----" >&2
+        sed -e "s/^/            /" "$TAG_TMP.err" >&2
+        echo "safe-apply: ------------------------------------------------------------------" >&2
+      else
+        echo "safe-apply: terraform produced NO stderr, which is itself the finding -- suspect the binary or the tree." >&2
+      fi
+      echo "safe-apply: THIS IS MOST OFTEN AN ENVIRONMENT FAULT, NOT A DANGEROUS PLAN -- a missing or wrong" >&2
+      echo "            terraform, an uninitialised tree, or bad credentials. FIX THE CAUSE SO THE GATE RUNS." >&2
+      echo "            SAFE_APPLY_TERRAFORM=/path/to/terraform makes the gate RUN; TAGAUTHZ_OVERRIDE makes it" >&2
+      echo "            NOT RUN. Reach for the first. Do not bypass a gate to work around your own toolchain." >&2
+      echo "safe-apply: TAGAUTHZ_OVERRIDE=\"reason\" is a LAST RESORT and is audited -- it is not the remedy for this error." >&2
+      rm -f "$TAG_TMP" "$TAG_TMP.bin" "$TAG_TMP.json" "$TAG_TMP.err" 2>/dev/null
       exit 4
     fi
   fi
