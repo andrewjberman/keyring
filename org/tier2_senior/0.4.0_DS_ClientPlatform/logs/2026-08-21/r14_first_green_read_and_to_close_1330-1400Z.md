@@ -93,3 +93,38 @@ are closed. b02 materiality 1.7828% stays PENDING-RULING at Andrew+CTO — uncha
 3. [1.0.0_SA_CTO] bd-exporter-ec2-role ListBucket fix (their lane, their record).
 4. [0.4.0_DS_ClientPlatform~B] Event-driven standby on the Monitor; respond if the CVO leg or
    the promote surfaces anything at the data plane.
+
+---
+
+## ADDENDUM 14:00–14:25Z — the ad-hoc 08-19 QA run (CVO precondition repair)
+
+Items 1 + 3 above resolved fast: MSTR carried @ef0eb45f11 same-hour (64704, ls-remote verified)
+and CTO closed the ListBucket gap same-session (bd-v2.55.0, ledger @6b2d29afd9; exercised
+confirmation rides the next scheduled fire — 64707).
+
+Then the CVO leg's precondition read (64712) found limb (a) FALSE-AS-WRITTEN (the legacy serve's
+R1-accepted steady state is T-2 at any morning read, so "served as_of == T-1" is unsatisfiable by
+design) and asked me for ONE ad-hoc chain run at date=2026-08-19 to make same-content-date
+enumeration possible — conditioned on COO's word. COO measured dark (NOT REGISTERED, 9 unread).
+CTO 64714 ruled the run needs NO COO word (ad-hoc-runs rule sanctions it directly; my Rule-13
+lane; waiting on a dark seat for a sanctioned act = a manufactured hold) and routed the limb-(a)
+amendment to MSTR under LD-0090.
+
+**FIRED 14:11Z** (launch-only ack 64718-20 sent before results existed, per the
+no-announcement-outruns-its-act rule): `chain_49f_entrypoint.py --date 2026-08-19 --upload`,
+local seat, scratchpad workdir/mutex. **GREEN 14:18Z**: `CHAIN OK date=2026-08-19 wall=230.9s`,
+16/16 stages rc=0; all 8 tables verified on live S3 at `date=2026-08-19/` (14:14–14:17Z UTC).
+QA-minted, never production evidence. Read-and-report delivered (64722-24) with the vintage-mix
+disclosures for CVO's fit-diff: core tables date-pinned to 08-19; a06 crosswalk read map
+date=2026-08-21 (latest-semantics), jd1 stamp 08-21, a07 pair stamped 08-19 with today's
+classification content. **Bonus finding: the BD xref leg SUCCEEDED at my local principal —
+custodial tail MEASURED = 2023 accounts (basis 08-19), no AccessDenied** (the gap was
+role-specific; CTO's role-grant confirmation still rides tomorrow's scheduled fire). c00 on
+08-19: UNRESOLVED 0 rows $0.00 (cleaner than 08-20's 3-row FLAG); c04 zero FAIL; b02 materiality
+1.6904%, same PENDING-RULING class.
+
+**Compiler Tools (addendum):** raw `s3api list-objects-v2` x8 (`# rail-checked`, UTC-plane
+landed-partition verify) — PASS, 15 objects; the chain CLI itself (the exercised QA form) — rc=0.
+
+**State:** chain's live legs are CVO's pins + MSTR's LD-0090 amendment word; nothing waits at my
+seat. Standby on Monitor `bwtghhoe9`.
