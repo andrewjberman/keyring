@@ -1,0 +1,39 @@
+{
+  "project_code": "OPAL_TICKET_IA",
+  "macro_code": "OPAL",
+  "code": "OPAL_TICKET_IA",
+  "title": "Ticket Center as the Single Surface (IA merge)",
+  "name": "Ticket Center IA",
+  "description": "Merge /submit-request into /ticket-center as one multidisciplinary surface serving both client-human and internal-human principals. Tab 1 means NOT-YET-ACCEPTED (T1): clients see the submit form plus their own pending tickets labelled 'Submit'; internal sees the same tab labelled 'Open' carrying the queue. Downstream of D7_TICKETING W-C half (b), which grants client READ-OWN -- the estate's first scoped grant.",
+  "status": "active",
+  "owner": "1.0.0_SA_CTO~Z",
+  "authority": "ANDREW-DIRECT 2026-08-21 ~1552Z (verbatim: \"no need for 'Submit a Request' page and sidebar. the 'Ticket Center' page should simply be multidisciplinary\"), + ~1600Z rulings A/B (no firm exposure until rollout; T1 is the build target), + ~1935Z \"all recs approved\" closing client withdraw (yes, as the enum fix) and internal-origin tickets (same board, origin filter).",
+  "pods": [
+    "0.4",
+    "0.5"
+  ],
+  "created": "2026-08-21",
+  "current_phase": "STAGE 1 REGISTERED 2026-08-21 ~1940Z. Purpose-level PRD EXISTS: docs/architecture/D7_TICKET_CENTER_IA_VARIANT_SPEC.md @a76eb95c61. NEXT: stage 3 atom-decomp (2.0.0_SA_COO~Z authors, 3.0.0_SA_CVO~Z certifies) -- NO TO ISSUES UNTIL THE DECOMP CERTIFIES. Blocked-by: W-C half (b) grants client READ-OWN + the client PROJECTION ALLOWLIST; its activation condition is MEASURED-MET (W-A landed 2026-08-21 ~1409Z, deployed bytes byte-identical to HEAD at three seats).",
+  "prds": [
+    {
+      "path": "docs/architecture/D7_TICKET_CENTER_IA_VARIANT_SPEC.md",
+      "label": "IA variant spec (purpose-level PRD) -- axes, variant matrix, Andrew's rulings, open questions"
+    },
+    {
+      "path": "docs/architecture/D7_TICKETING_INTAKE_PRD.md",
+      "label": "Parent D7 intake PRD"
+    }
+  ],
+  "related": [
+    "OPAL_TICKET",
+    "D7_TICKETING",
+    "D7_NOTIFY"
+  ],
+  "history": [
+    {
+      "date": "2026-08-21T~1940Z",
+      "agent": "1.0.0_SA_CTO~Z",
+      "event": "REGISTERED under Rule 27 stage 1. RECORDED AGAINST MYSELF: I dispatched stage 3 (COO~Z decomp) BEFORE completing stage 1, and I had the lane to register this the whole time -- org/projects/ is ANY_EXEC. I conflated the DIRECTIVES.yaml membership row (MSTR's surface, correctly not mine) with project registration (mine), treated both as someone else's, and did neither. Caught by Andrew asking directly. Zero decomp cells had been cut, so nothing was built on the gap."
+    }
+  ]
+}
