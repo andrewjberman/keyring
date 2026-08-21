@@ -10,23 +10,23 @@
   "plane_condition": "CTO bind-time condition on the fused `plane` field is DISCHARGED at the schema pin -- plane is a ratified enum and substrate is its own field, measured at 6f944857c4; nothing here splits a fused string"
  },
  "read_vintage": {
-  "repo_commit": "8487fd2b7a839bee5644b908b20a793bfa1fb123",
+  "repo_commit": "71c46641de1d098cbc78d0cb8cc131a396f6f827",
   "envelope_schema_commit": "6f944857c42fb9013a3fe04542a487339a24f55f",
   "manifest_commit": "2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82"
  },
  "denominators": {
-  "bundles_landed": 36,
-  "records_emitted": 36,
-  "envelope_valid": 34,
+  "bundles_landed": 46,
+  "records_emitted": 46,
+  "envelope_valid": 44,
   "envelope_invalid": 2,
   "envelope_invalid_subjects": [
    "C3",
    "Territory"
   ],
   "envelope_invalid_reason": "all invalidity is F-C1-04 (decomposed subject has no population_predicate); emitted invalid deliberately rather than fabricating a required field",
-  "substantive_KNOWN": 34,
+  "substantive_KNOWN": 44,
   "substantive_UNKNOWN": 2,
-  "interim_DERIVED_FROM_BUNDLE": 36,
+  "interim_DERIVED_FROM_BUNDLE": 46,
   "interim_ACQUISITION_FAILED_NO_BUNDLE": 29,
   "absence_denominator_source": "the PROGRAM MANIFEST's queue (never the run set)",
   "manifest_terms_total": 65
@@ -58,6 +58,198 @@
   }
  ],
  "records": [
+  {
+   "subject": "Api_Serving",
+   "bundle": "workflows/atom_layer0/runs/api_serving/20260821T021544Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:a797bfef85b1e33b117b3e575f27f4db65848b8241832a3805fad17c39eafa2e",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the Domain axis's declared values (9 in the entry's definition) vs the ANCHOR_CATALOG keys in the deriving instrument (5)",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "The catalog was ast-parsed for ANCHOR_CATALOG only; other structures in its 589 lines were not read.",
+     "No live AWS read was made -- whether API gateways exist in the estate is a different question from whether the anchor type exists in the catalog, and only the latter is in scope.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "The catalog was ast-parsed for ANCHOR_CATALOG only; its other 589 lines were not read.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Api_Serving authorities/axis-membership/materialization-state at 98f0c0b12d9288fc8b767214bf6bfc5299c1bca3)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The anchor-vs-members pair charged as the two-parts challenge -- the strongest available, since the DEFINITION states both ('anchor type API_GW, routes as members') and this is the",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:15:44Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/api_serving/20260821T021544Z/atom_layer0_run.json @ 98f0c0b12d9288fc8b767214bf6bfc5299c1bca3 sha256:1adcfdf8dba7c956a792c3fafc8ab86157593b5f7e8ce9a0c670a6f88c029683"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (98f0c0b12d9288fc8b767214bf6bfc5299c1bca3 (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/api_serving/20260821T021544Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
+   "subject": "Artifact_Serving",
+   "bundle": "workflows/atom_layer0/runs/artifact_serving/20260821T022528Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:3f7cc17d8899f4b7ea7c4e65ba5cd63981fdbfd4e717c674e4b6e75eec96b40f",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the Domain axis's declared values vs the ANCHOR_CATALOG keys in the deriving instrument",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "Whether ServedURL exists as a live graph node type was NOT measured -- a comp-kuzu node-type query was attempted and exceeded its time budget; the claim in scope here is about the CATALOG, and the graph question is stated as unmeasured rather than assumed either way.",
+     "The catalog figure is cited from Run 38's parse at an adjacent pin with the blob verified unchanged, not re-parsed.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "ServedURL's presence as a live graph node type was not measured (query exceeded its time budget).",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Artifact_Serving authorities/axis-membership/materialization-state at a92e4181ff3b286a9b1f426c04b71f75cb2f4511)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The artifact-and-URL split charged against the anchor's anatomy, plus the AWS-vs-non-AWS partition charged from the spec's own 'ALL AWS-shaped' baseline -- the second is the distin",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:25:28Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/artifact_serving/20260821T022528Z/atom_layer0_run.json @ a92e4181ff3b286a9b1f426c04b71f75cb2f4511 sha256:4741e4235e591d69df045c18fb7cc52532e83ba31ae0895513814e264ec92ec2"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (a92e4181ff3b286a9b1f426c04b71f75cb2f4511 (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/artifact_serving/20260821T022528Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
   {
    "subject": "C0",
    "bundle": "workflows/atom_layer0/runs/c0/20260820T183345Z/atom_layer0_run.json",
@@ -1681,6 +1873,102 @@
    "envelope_schema_errors": []
   },
   {
+   "subject": "Federation",
+   "bundle": "workflows/atom_layer0/runs/federation/20260821T025153Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:26e19bbfca839aa7dbe0909e9cf368a989951aa0b73e4f03abd6a8eb48f074b0",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the surviving senses of the retired word 'territory' as declared exhaustively in Territory's binding_residue, and which of them Federation's definition uses",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "PRD#2 was read at Run 29 and cited here rather than re-read; the shared-section status finding is Run 29's and is carried, not re-derived.",
+     "The GRAPHLEARNS sense (b) was not traced to its own home this run -- it is named in the residue and was not needed, since sense-adjudication here turned on (a) vs the bound classification sense.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "PRD#2 cited from Run 29's read rather than re-read; the GRAPHLEARNS sense (b) not traced to its home.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Federation authorities/map-relation/territory-sense at 86c70be06b16643ce7e5a3c89c0029adadb71692)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The layer-vs-engine pair charged as the two-concepts challenge (the definition names both), plus federation-and-map charged as a stack composition -- adjudicated against the defini",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:51:53Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/federation/20260821T025153Z/atom_layer0_run.json @ 86c70be06b16643ce7e5a3c89c0029adadb71692 sha256:cb0d0b82fed3e9a747e46d37fc9aa60fabbcded2c301871bbf15a805d67a4201"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (86c70be06b16643ce7e5a3c89c0029adadb71692 (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/federation/20260821T025153Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
    "subject": "Function",
    "bundle": "workflows/atom_layer0/runs/function/20260820T200014Z/atom_layer0_run.json",
    "observation_record": {
@@ -2215,6 +2503,198 @@
      "value": "DERIVED_FROM_BUNDLE",
      "derivation": {
       "stage_states_ref": "workflows/atom_layer0/runs/motif/20260820T221758Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
+   "subject": "Observability",
+   "bundle": "workflows/atom_layer0/runs/observability/20260821T023737Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:6077e345371573de847a149a00ae1ad3d7bddf0e4a0e838b7055122ed719d2e9",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the Domain axis's declared values vs the ANCHOR_CATALOG keys, and the four 08-11 anchor types vs the live graph's node types",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "The 49 CW_ALARM nodes were counted but NOT inspected -- whether they correspond to alarms the moratorium would have prohibited building is a different question and out of scope.",
+     "The zero-chain vertical named by base was not itself read; base's note is carried as a standing instruction, not as a measurement of mine.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage; the graph limb reads the kuzu snapshot current at this run.",
+     "The 49 CW_ALARM nodes were counted, not inspected.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Observability authorities/axis-membership/materialization-state/anchor-graph-presence at f3734263eec9410f92f35da0115d42ed96364bc0)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The model-vs-build pair charged as the two-concepts challenge -- the distinguishing charge for THIS value among its four siblings, since it is the only one whose definition carries",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:37:37Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/observability/20260821T023737Z/atom_layer0_run.json @ f3734263eec9410f92f35da0115d42ed96364bc0 sha256:1733ade6cdc39ffecbe914b24e5397299a3e58dd418eec35f8a73e9ecd941fb6"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (f3734263eec9410f92f35da0115d42ed96364bc0 (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/observability/20260821T023737Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
+   "subject": "Observation_Not_Assertion",
+   "bundle": "workflows/atom_layer0/runs/observation_not_assertion/20260821T020546Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:5d0169cb23d4542cff7a427b9486e013866956535187b834b5d12f36339bde71",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the records of the estate-contracts registry (the assertion side) and the entries of the specimen observations file (the observation side)",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "The specimen doc was read at its head and scanned for assertion-shaped language; it was not read line-by-line in full (82 lines).",
+     "Only the two estate-contracts files were measured for the separation; no other registry claims to implement this discipline.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "The specimen doc was read at its head and scanned, not read line-by-line in full.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Observation_Not_Assertion authorities/separation-in-practice/provenance-repair at 223f2d3dd4de108eda5b7ca6ed70b8b53cfcf3b3)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The observation/assertion pair charged as the two-kinds challenge -- the strongest available, since the term's own NAME contains both relata -- adjudicated against the entry's non-",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:05:46Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/observation_not_assertion/20260821T020546Z/atom_layer0_run.json @ 223f2d3dd4de108eda5b7ca6ed70b8b53cfcf3b3 sha256:a8de38060a4e77e642678b1d56bf9919e109d5169c66c929de4cd3f18dd7ee3a"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (223f2d3dd4de108eda5b7ca6ed70b8b53cfcf3b3 (SYSTEM_DEFINITIONS.yaml blob cb8cc272ffecc283612dd6b9122ef79d645353ce, v3.16 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/observation_not_assertion/20260821T020546Z/atom_layer0_run.json#stage_states",
       "terminal": "DECLARED_FRONTIER_EXHAUSTED"
      },
      "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
@@ -3005,6 +3485,198 @@
    "envelope_schema_errors": []
   },
   {
+   "subject": "Surface",
+   "bundle": "workflows/atom_layer0/runs/surface/20260821T030859Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:69733e2abad2f7c8f7a5805fa101af4fd6fd97810301703987f66d1a44d1599a",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the three declared senses of Surface, and the state of the canonical block sense (a) anchors to",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "Senses (b) and (c) were not traced to their using surfaces -- the boundary_report address_space and the genesis-surface doc tags were not read; the run's finding concerns sense (a) only, and the other two are recorded as unexamined rather than as verified.",
+     "The six terminology_law entries were enumerated but only surface, territory_vs_map and plane were read in full.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "Senses (b) and (c) were not traced to their using surfaces; three of the six terminology_law entries were not read in full.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Surface authorities/three-sense-fence/sense-a-anchor at afda4b738a1c311fa73499bf98fdc21f25feca9a)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The three-senses split charged as the homonym challenge -- the strongest available and genuinely close, since three senses under one word is what a homonym IS and the estate HAS sp",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T03:08:59Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/surface/20260821T030859Z/atom_layer0_run.json @ afda4b738a1c311fa73499bf98fdc21f25feca9a sha256:0711213c15ba0ca51d3db75a3a82958652ab636456609733c689474f5ae556be"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (afda4b738a1c311fa73499bf98fdc21f25feca9a (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/surface/20260821T030859Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
+   "subject": "System",
+   "bundle": "workflows/atom_layer0/runs/system/20260821T032453Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:bcc9f34fd23588bdcd59a2d66d29462c670c1f4f9ce1efed72b1b0ef4805f746",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the top-level keys of c3_deterministic_structures (the members), their kind values, and the residue member's two declared chain encodings measured against the resolver",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "c3_cover.py and the substrate model doc -- named by the R3 repair as 'the implemented authority' -- were NOT read; the cover's behaviour is taken from the block's prose, not from its implementation.",
+     "Where the three literal-UNASSIGNED chains went after the regen is NOT established.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "c3_cover.py and the substrate model doc were not read; the fate of the three literal-UNASSIGNED chains is not established.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only System authorities/roster/kind-axis/residue-encodings at afb63e23b1675250073ca48bad050d801c19e6c7)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The system-is-its-chains split charged as the constituents challenge -- and charged HARDER here than at Run 44, because this projection's membership IS derived, so the empty-member",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T03:24:53Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/system/20260821T032453Z/atom_layer0_run.json @ afb63e23b1675250073ca48bad050d801c19e6c7 sha256:46dd68b005cc033a035d82f14600c0fbd7259734d7bef8328b7bfc700f5b8577"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (afb63e23b1675250073ca48bad050d801c19e6c7 (SYSTEM_DEFINITIONS.yaml blob 9ac335d7539900aa774ddb9ee48a9cecd507941b, v3.18 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/system/20260821T032453Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
    "subject": "Territory",
    "bundle": "workflows/atom_layer0/runs/territory/20260820T204241Z/atom_layer0_run.json",
    "observation_record": {
@@ -3098,6 +3770,102 @@
    "envelope_schema_errors": [
     "$.population_predicate: None is not of type 'string'"
    ]
+  },
+  {
+   "subject": "Ui_Dataflow",
+   "bundle": "workflows/atom_layer0/runs/ui_dataflow/20260821T024520Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:51f37dc401c6120c133089f133af58678ff1ce32ed7f8a438a9c872d681fe8c1",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the Domain axis's declared values vs the ANCHOR_CATALOG keys; the Field anchor population in the live graph",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "The CVO grain ruling is cited BY ITS TIMESTAMP (173143Z) inside the definition and was not opened as a separate record this run -- the definition carries its content and its character; the underlying record was not read.",
+     "The 4969 Field nodes were counted (twice, independently -- Run 35 from D1's side and Run 40's census), not inspected.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "The CVO grain ruling 173143Z was cited via the definition, not opened.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Ui_Dataflow authorities/grain-ruling/axis-membership/materialization-state/anchor-graph-presence at 1bcecba73b129140d60a0f50376fb3392b33f181)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The component-grain coarsening charged as the decomposition challenge -- and it is the one case in this sequence where the SUBJECT'S OWN DEFINITION names the rejected alternative, ",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T02:45:20Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/ui_dataflow/20260821T024520Z/atom_layer0_run.json @ 1bcecba73b129140d60a0f50376fb3392b33f181 sha256:c938cea3df92128f9e37054e90345ec0880655a84dec6e59535c503b182cbc6d"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (1bcecba73b129140d60a0f50376fb3392b33f181 (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/ui_dataflow/20260821T024520Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
   },
   {
    "subject": "UNDECLARED",
@@ -3386,6 +4154,102 @@
    "envelope_schema_errors": []
   },
   {
+   "subject": "Vertical",
+   "bundle": "workflows/atom_layer0/runs/vertical/20260821T031647Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:0d64ac742b52a5ea0689fd8bb8a9b7eaf4848b273d651772688293ba2d8100d4",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the keys of c3_ii_semantic_verticals.verticals (the legislated roster), and each member's chain span = resolver threads carrying that named_thread",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "The fresh census (@cef8e071e2) was NOT read -- so whether 'MODELED in the census' entails 'has resolver threads' is undetermined, and this run does not resolve the three zero-chain members either way.",
+     "The cross-partition matrix was not run; the bound_pairs were read from the block, not re-derived.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "The fresh census (@cef8e071e2) was not read; the cross-partition matrix was not run.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only Vertical authorities/roster/invariant/chain-span at 825556807d90cdc3814faea18df9cec9e792294f)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The vertical-is-its-chains split charged as the membership challenge -- the strongest available for a partition unit -- and adjudicated NOT by argument but by MEASUREMENT: three of",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T03:16:47Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/vertical/20260821T031647Z/atom_layer0_run.json @ 825556807d90cdc3814faea18df9cec9e792294f sha256:1bbb2bdcb912e76cc0d3d7f76f24ea2961d3d449912a7be4dc00f6cbf2b35f54"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (825556807d90cdc3814faea18df9cec9e792294f (SYSTEM_DEFINITIONS.yaml blob 4018da9186091b83b2c7c89d062669614d814059, v3.17 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/vertical/20260821T031647Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
    "subject": "View_Time_Compiled",
    "bundle": "workflows/atom_layer0/runs/view_time_compiled/20260821T013942Z/atom_layer0_run.json",
    "observation_record": {
@@ -3449,6 +4313,102 @@
      "value": "DERIVED_FROM_BUNDLE",
      "derivation": {
       "stage_states_ref": "workflows/atom_layer0/runs/view_time_compiled/20260821T013942Z/atom_layer0_run.json#stage_states",
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED"
+     },
+     "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
+     "absence_member_note": "ACQUISITION_FAILED_NO_BUNDLE is populated by predicate over the PROGRAM MANIFEST, never over the run set -- a bundle set cannot enumerate its own absences (ruled 63662/63664). Its denominator is the manifest's and is reported once, in this artifact's denominators block."
+    },
+    "stage_class": {
+     "grammar": "decomposition_grammar@1.0.0",
+     "map": {
+      "s0": "ACQUISITION",
+      "s1": "ACQUISITION",
+      "s2": "ACQUISITION",
+      "s3": "ACQUISITION",
+      "s4": "ACQUISITION",
+      "s5": "METHOD_ACCEPTANCE"
+     }
+    },
+    "substantive_result_A5": {
+     "state": "KNOWN",
+     "reason": null,
+     "residue": [
+      "s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+     ]
+    },
+    "validator_at_read": null,
+    "unknown_shapes_declared": {
+     "acquisition_absent": "status.acquisition ABSENT -> substantive_result UNKNOWN with reason",
+     "method_stage_not_assessed": "carried as traversal_residue, NEVER as UNKNOWN (A5)",
+     "not_exercisable": "a bundle whose terminal is NOT_EXERCISABLE yields substantive_result UNKNOWN and is never reported as run (Phase-2 control)"
+    },
+    "inexpressible_in_envelope": null
+   },
+   "envelope_schema_errors": []
+  },
+  {
+   "subject": "World_Model",
+   "bundle": "workflows/atom_layer0/runs/world_model/20260821T033505Z/atom_layer0_run.json",
+   "observation_record": {
+    "instrument": {
+     "id": "atom_layer0 run method",
+     "version": "0.1.0-proposed x decomposition_grammar@1.0.0@462ac78311a3d5f1310a8da3f4f7638127d449bd"
+    },
+    "request_hash": "sha256:6a1a813bff4c2d54a6ee9f940a5c09b589bd520f9f34ca5ce2537d6347896299",
+    "status": {
+     "acquisition": "PRESENT",
+     "transport": "SUCCEEDED",
+     "enumeration": "SUCCEEDED",
+     "parse": "SUCCEEDED"
+    },
+    "plane": "DESIRED",
+    "substrate": "codebase",
+    "population_predicate": "the six rung terms the World_Model definition recites; the authority doc's six sections; and the distinct values of the resolver's family field against the C3.i roster",
+    "denominator": {
+     "count": 24,
+     "grain": "declared grammar frontier cell (generator x operator x partition)",
+     "generated_by": "decomposition_grammar@1.0.0 @ 462ac78311a3d5f1310a8da3f4f7638127d449bd, fixed before subject selection"
+    },
+    "traversal_residue": [
+     "comp-estate's implementation was not read; the tool's behaviour is taken from the entry and the doc.",
+     "SS3-SS5 (refresh mechanics, evolution loop, perfection bar) were read only at heading level.",
+     "No claim of global generator exhaustiveness.",
+     "s5 rationale: production sequence run; the proving bar was satisfied by ~A's R015 run.",
+     "The certificate is bounded to grammar 1.0.0, the declared repo-only partitions, and the pinned vintage.",
+     "comp-estate's implementation was not read; SS3-SS5 read at heading level only.",
+     "VALIDATOR BASIS: 13 records at this pin.",
+     "A5 method-stage residue: s5=STAGE_NOT_ASSESSED(METHOD_ACCEPTANCE)"
+    ],
+    "substantive_result": {
+     "state": "KNOWN",
+     "value": {
+      "terminal": "DECLARED_FRONTIER_EXHAUSTED",
+      "certificate": "ATOMIC_WITHIN(decomposition_grammar@1.0.0 x repo-only World_Model authorities/rung-recitation/section-6-binding at c5626f7a8ac94306ba04c17bff6ab24f4f24a890)"
+     },
+     "reason": null
+    },
+    "control_references": [
+     "splitter: The ladder split -- 'a World_Model IS its rungs' -- charged with every proposed child already holding independent ratified standing, which is the strongest form this sequence has f",
+     "grammar adequacy battery: org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ATOM_LAYER0/proving_runs/RETRODICTION_BATTERY_20260820.json (6/6 expressible)",
+     "validate_run.py schema + cross-field laws (rc=0 at commit)"
+    ],
+    "discrimination_certificate_ref": null,
+    "observed_at": "2026-08-21T03:35:05Z",
+    "support_pointers": [
+     "workflows/atom_layer0/runs/world_model/20260821T033505Z/atom_layer0_run.json @ c5626f7a8ac94306ba04c17bff6ab24f4f24a890 sha256:13df19e759a564f913258d3a7b2b1da4dcf8cdb51c38bf862388c6b794f3e459"
+    ],
+    "invalidation_predicates": [
+     "decomposition_grammar moves off 462ac78311a3d5f1310a8da3f4f7638127d449bd (a grammar change invalidates; a record addition does not)",
+     "SYSTEM_DEFINITIONS.yaml moves off the certificate's registry_vintage (c5626f7a8ac94306ba04c17bff6ab24f4f24a890 (SYSTEM_DEFINITIONS.yaml blob 9ac335d7539900aa774ddb9ee48a9cecd507941b, v3.18 -- parsed from the git object))",
+     "the bundle blob at the support pointer changes"
+    ]
+   },
+   "pre_envelope": {
+    "declared_shape": "PRE-ENVELOPE SIDECAR, outside the Observation_Record BY CONSTRUCTION: the Component-1 envelope is additionalProperties:false over a closed 14-field required list, so these axes cannot be carried inside a valid record. Rider (c) asks that each proto-record declare its interim status shape IN THE ARTIFACT -- satisfied here at artifact level, not record level. Routed as a finding; no schema widened.",
+    "interim_status": {
+     "value": "DERIVED_FROM_BUNDLE",
+     "derivation": {
+      "stage_states_ref": "workflows/atom_layer0/runs/world_model/20260821T033505Z/atom_layer0_run.json#stage_states",
       "terminal": "DECLARED_FRONTIER_EXHAUSTED"
      },
      "manifest_ref": "workflows/atom_layer0/runs/manifest/PROGRAM_MANIFEST.yaml @ 2d532c5b12d46bbe71bfcf49d6c6a8a44bc40a82",
