@@ -331,6 +331,26 @@ most likely deliberate act is the one S4 invites.**
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "SUPERSEDES ETFS_POSITIONING-S3 AND CORRECTS ITS DIRECTION -- filed as a new item per append-only, and it is the THIRD self-correction by this seat tonight. S3 said a correct pipeline might be MISREAD AS STALLED (a read risk). THE ACTUAL HAZARD IS THE OPPOSITE AND WORSE: L1-4 READS SATISFIED. Run 2 does start where run 1 ended, so continuity is technically met -- DEGENERATELY, because the window never advances and the increment is never tested. S3's INFERRED marking was correct (the conditional was genuinely unmeasured and I declined to guess), but its conditional resolved AGAINST the direction I assumed. ⛔ THIS IS S1'S CLASS ONE LAYER UP: an acceptance criterion that cannot fail over its own evaluation window is not a criterion. The tripwire could not fire on any input; L1-4 cannot fail across 08/22-08/24. CONSEQUENCE FOR THE SOVEREIGN PRIORITY ITEM: 'L1 accepted on 08/24' would mean the criterion passed without exercising what it measures. If L1-4 is to mean anything its window must include 08/25, the first fire whose window advances. EDGE RECORDED ON BOTH L1-2 AND L1-4 per 1.0.0_SA_CTO~Z's standing instruction and the filer's note -- an edge on one side is found only by whoever reads that side. Disposition of the criterion is the issuer's; the class call was mine."
+  },
+  {
+    "id": "ETFS_POSITIONING-S7",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-08-21T20:10Z",
+    "one_line": "L1-2's three fires land the SAME keys and, because versioning was never enabled, each overwrite is DESTRUCTIVE -- fires 1 and 2 leave no S3 trace, so the criterion's own named instrument cannot distinguish three fires from one Monday fire.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "as_of resolution re-derived at this seat: fires 08/22, 08/23, 08/24 all -> as_of 2026-08-21, ONE distinct date",
+        "writes are s3.put_object to deterministic keys (verified at this seat during the idempotency check) -- overwrite, not append",
+        "versioning re-derived at this seat: EMPTY get-bucket-versioning response = NEVER enabled, so no noncurrent versions and no delete markers",
+        "composition: same keys + no versioning => after fire 3 the bucket holds exactly one object set, indistinguishable from a single Monday fire"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "⛔ THE PRODUCER IS CORRECT AND THIS IS NOT A STALENESS FINDING. The as_of resolution is NEVER#1 working as designed -- Friday's data IS the right answer on Saturday, Sunday and Monday. THE CRITERION is what mis-assumes, by expecting consecutive fires to produce distinct dated artifacts. ⛔ AND IT CORRECTS THE COMPLETENESS OF MY OWN S5: I recorded 'versioning never enabled' with ONLY its BENIGN reading -- no delete markers, so an empty listing means genuinely empty, a false-absence class closed. THE SAME MEASURED FACT HAS AN OPPOSITE SECOND CONSEQUENCE I DID NOT DRAW: no versioning also means NO TRACE OF AN OVERWRITTEN FIRE. One fact, two implications, and I banked only the reassuring one -- the filer drew the other. COMPOSES WITH S6: S6 says L1-4 cannot FAIL across its window; S7 says L1-2 cannot be EVIDENCED from S3 after the fact. Together the acceptance evidence for the priority item is thinner than either finding alone shows, and CTO's own fourth pass separately found the wrapper logs do not establish trigger provenance either. Disposition is the issuer's; routed there same-turn by the filer, recorded here because routing to the issuer does not discharge the channel's record obligation."
   }
 ]
 ```
@@ -341,8 +361,8 @@ most likely deliberate act is the one S4 invites.**
 
 | | |
 |---|---|
-| Items | **6** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 RESOLVING+INVERTING S3) |
-| Graduated | **5** (S1, S2, S4, S5, S6) · S3 SUPERSEDED by S6 (its conditional resolved, against the assumed direction) |
+| Items | **7** (3 at this seat, 2 inherited with a COUPLED EDGE, 1 inverting S3, 1 completing S5) |
+| Graduated | **6** (S1, S2, S4, S5, S6, S7) · S3 SUPERSEDED by S6 |
 | ARMED | **4** (S1, S2 trigger **2026-09-08**; S4 x S5 COUPLED, sequencing ruled) -- disarm owner `0.0.0_AB_MSTR~Z` |
 | Remediation | **all OPEN.** DISARMED != REMEDIATED |
 | Blocks tonight | **NOTHING** |
