@@ -43,10 +43,11 @@
         "P3-REPOINTS",
         "P4-PUBLISHERS",
         "P5-DECOMMISSION",
+        "BUILD-GENERAL",
         "INVESTIGATION",
         "NON-BUILD-OTHER"
       ],
-      "description": "build-program phase, or the two non-build values (Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase)"
+      "description": "What this proof's TO was: a phase of the DS-PIPELINE build program (P1..P5), ANY OTHER BUILD (BUILD-GENERAL -- component/tool/schema/gate builds outside that program), or the two non-build values. Rule-24: investigations and other non-build TOs prove to spec too, on their own axis value -- never shoehorned into a build phase. ADDED 2026-08-21 (BUILD-GENERAL, 2.0.0_SA_COO): the enum FAILED the CE half of postulate (i) against its own declared layer -- the five build members are the DS-pipeline program's phases ONLY, so every NON-DS build had no member and C6-KERNEL was FORCED to label itself NON-BUILD-OTHER, which is FALSE of a build. A NON-DS BUILD IS NEVER NON-BUILD-OTHER. Token chosen by census: the recommended 'BUILD-OTHER' is word-boundary-matched INSIDE its own sibling 'NON-BUILD-OTHER' (raw census 59 = 58 siblings + 1 real), so the two values would have been mutually unsearchable forever; BUILD-GENERAL is clean against all siblings at 0 prior occupancy. KNOWN RESIDUAL, DECLARED NOT HIDDEN: this axis carries TWO INTENTS -- which-phase-of-one-named-program x what-kind-of-work -- and therefore two grains, so it does not satisfy postulates (ii)/(iii); that defect PRE-EXISTS this member and is made visible by it, not caused by it. The Rule-24-correct remedy is a two-field split (work_kind x program_phase), DEFERRED under YAGNI per 4.0.0_SA_CRO until a consumer branches on the value -- none does today (proof-of-spec-check.py never reads phase; verified 0 mentions). Forward-only: committed instances are NOT relabelled (vintage law)."
     },
     "spec_ref": {
       "type": "object",
