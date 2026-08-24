@@ -106,6 +106,12 @@ paperwork step.
 
 Surfaced by `4.0.0_SA_CRO~E` via `~D` (msg 66390), one line, no action requested. Recorded so the
 content class is known BEFORE any promotion of that file to a cross-device or served record.
+**AMENDED 20:20Z on the surfacing seat's own correction (66440), which is the behaviour this channel wants:**
+`~D` retracted their own "(8 fields)" as relayed-not-measured; `~C` parsed the file at HEAD `f0fdb4152a` --
+**20,435 records / 15 distinct keys**, with **`serial` and `session_id` identity fields sitting beside
+`args_head`'s command-line literals.** The content class is therefore STRONGER than first written and the
+disposition is UNCHANGED (INERT: device-local, gitignored). *A seat correcting its own relayed figure
+before anyone challenged it is the relayer-half of the grounding law working.*
 
 ```json
 [
@@ -159,7 +165,8 @@ content class is known BEFORE any promotion of that file to a cross-device or se
    "status": "GROUNDED",
    "evidence": [
     "org/mcp/comp-tool-runs.jsonl args_head field = first ~80 chars of the comp-tool command line",
-    "CLAUDE.md quick-reference row + .gitignore:447 -- gitignored, device-local, not a cross-device record"
+    "CLAUDE.md quick-reference row + .gitignore:447 -- gitignored, device-local, not a cross-device record",
+    "AMENDED per the surfacing seat's own correction (66440): the '8 fields' figure was RELAYED, not measured; 4.0.0_SA_CRO~C parsed 20435 records / 15 distinct keys at HEAD f0fdb4152a, and identity fields serial + session_id sit BESIDE args_head -- content class is stronger than first written, conclusion (INERT) unchanged"
    ]
   },
   "disposition": "UNDER_INVESTIGATION",
