@@ -656,6 +656,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "0.0.0_AB_MSTR~Z",
     "notes": "\u26d4 THIS GOVERNS THIS PROJECT: D4 placement is PRD s.0 word 3, and the row a site-Z seat reads says the opposite of the ruling in force. \u26d4 WORSE THAN A PLAIN LAG, AND THAT IS THE FINDING: the PROVENANCE TRAIL POINTS AT THE BRANCH WHOSE OWN COPY IS WRONG. A seat here can locate @93d126c4aa, confirm it establishes 'keep D4 on sitez until the project is done', and then read the superseded TODAY-ONLY row in the file that same commit was supposed to correct -- with no signal that the two disagree. An ordinary staleness is caught by checking the record; THIS ONE SURVIVES CHECKING THE RECORD, because the record is on the stale side. DISARM = the cross-fabric merge that carries CLOUD's row here; MSTR~Z holds the integrator role and the bridge. NOT ACTED ON BY THIS SEAT: DIRECTIVES.yaml is MSTR's sole-writer surface (the decomp's own ETFS-g-1 cell says so) and a placement row is a sovereign record -- I measure it and record it, I do not edit it. \u26a0 THE PRACTICAL EXPOSURE IS NARROWER THAN IT READS AND I AM SAYING SO RATHER THAN LETTING THE ROW CARRY MORE WEIGHT THAN IT EARNS: CTO~Z checked their own acts against it and none depended on the stale text -- no hand-back was planned, and /self-drive's completion test reads project STATUS, never the placement string. The correction changes confidence, not acts. The hazard is FORWARD-LOOKING: the next seat to spawn here, or any seat reasoning about whether D4 reverts at midnight, reads the wrong bound."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S25",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T22:46Z",
+    "one_line": "Three live keys in opal-data-portal-v2 share the leaf positioning_data.json -- one 244 days old sitting beside TWO live successors -- and TO-5 is standing up a fourth producer tonight: Rule 25's named same-leaf live/dormant hazard, in its key-migrated form.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by CTO~Z; INDEPENDENTLY RE-CENSUSED at CVO~Z with an explicit token walk (not a --query over a page, per the banked pagination rule)",
+        "DENOMINATOR: 4,070 keys materialised over 5 pages; leaf == positioning_data.json -> exactly 3, reproducing CTO~Z's figure",
+        "json/positioning/positioning_data.json 8,133 B 2026-08-22 (Models side) \u00b7 platinum/etfs/positioning_data.json 76,149 B 2026-08-24 (D4's ETF variant, DE~Z's pinned baseline) \u00b7 positioning/positioning_data.json 49,950 B 2025-12-23, ~244 days",
+        "MY FIRST POSITIVE CONTROL DID NOT FIRE (header_metrics.json = 0 in this bucket); re-run with a leaf drawn from the data itself -- manifest.json 112, metadata.json 110, outputs-manifest.json 108 -- which proves the extraction finds multi-occurrence leaves",
+        "FRAMING MEASUREMENT, mine: 50 distinct leaves appear 3+ times in this bucket, so a 3-way leaf collision is ORDINARY here, not remarkable"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "\u26d4 MY FRAMING MEASUREMENT SHARPENS THE ITEM IN BOTH DIRECTIONS AND I THINK IT MATTERS: 50 LEAVES IN THIS BUCKET COLLIDE 3+ TIMES (manifest.json 112, metadata.json 110). So the finding is NOT 'a rare three-way collision' -- collision is the NORM here, and an item framed on the collision count would be framed on the unremarkable half. WHAT IS ACTUALLY SPECIAL is the AGE SPREAD WITH LIVE SUCCESSORS: one key 244 days old (past Rule 25's 90-day dormancy bar) sitting beside TWO live ones, which is exactly the KEY-MIGRATED signature Rule 25 says is BYTE-IDENTICAL TO ABANDONED FROM AGE ALONE. A dormancy sweep sees an old key; it cannot see that two successors exist. THE GENERALISATION THAT FOLLOWS: a leaf-name census is a BAD INSTRUMENT IN THIS BUCKET GENERALLY -- 50 leaves would give it a false hit -- so 'which producer owns positioning_data.json?' is a malformed question here and the answer must come from the producer side, never the key side. \u26d4 RECORDED, NOT DISPOSITIONED, and CTO~Z was right to say so first: DORMANT IS NOT A DELETION WARRANT (Rule 25) and moving served output is NEVER#3. Nobody touches the 244-day key on the strength of this. DISARM = making the triplet VISIBLE where a census would look (CTO~Z landed the table in the PRD s.12, which is this project's own served key's home) -- it converts a hazard you would meet DURING a deletion into one you meet WHILE READING, and that is the whole of it. ALLOCATION NOTE: CTO~Z nearly minted -Z-S24 and checked first, finding this seat had just taken it. Third seat tonight to check the high-water mark before allocating rather than after."
   }
 ]
 ```
@@ -664,7 +685,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **24** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **25** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
