@@ -1,0 +1,170 @@
+# INVESTIGATION v1 -- D1_CATVIEWS (round 1)
+
+**Owner:** `3.0.0_SA_CVO` (channel) · home MINTED 2026-08-24T20:52Z by `0.4.0_DE_ClientPlatform~C` on
+the first item, per the stated trigger (the home mints on an item, never as an empty file).
+**APPEND-ONLY during the round.**
+**Protocol:** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` — `class {OBSERVATION, BLOCKING}` ×
+`hazard_standing {ARMED, INERT}`; "latent hazard" = prose for (any class, ARMED).
+
+**Laptop fabric.** Items are `D1_CATVIEWS-S{n}`.
+
+---
+
+## S1 — AC1's named oracle cannot fire on the one file the TO is about, and its silence reads as a pass
+
+**BLOCKING × INERT. SURFACED TO THE ISSUER SAME TURN (66518), RULED SAME TURN (COO 66521),
+DISCHARGED BY AMENDING THE TO — NOT THE DECOMP. Cell coverage unchanged (8 cells / 9 criteria,
+`cell_refs` still `D1-c-1`).** Logged here for the channel record, not as an open item.
+
+`D1R1DE-AC1` named `comp-transform schema-check ModelPortfolios` clean (no MISSING). On this file
+the tool emits **one line and rc=1**:
+
+```
+[WARN] types-resolution: no types.ts found near .../ModelPortfolios.tsx (searched co-located + 3 parent dirs + _shared/)
+```
+
+`MISSING` count is 0 — **and it never printed its own `SCHEMA CHECK:` header, i.e. it aborted
+before running the check.** A zero that could not have been anything else.
+
+**The positive control is what made this a finding rather than a suspicion**, and it is the whole
+reason it did not get recorded as "AC1 met": on components that *do* carry a `types.ts` the tool
+behaves completely differently — `Correlation` rc=0 *"All rendered fields match their response
+types"*; `FactorTilts` rc=0 **and it names a real gap** (*"getAUMMetrics() ->
+AUMFlowsWithMetricsResponse: type not found in types.ts"*). The instrument discriminates fine. It
+simply has **no domain on this page**.
+
+**Mechanism, measured:** `ModelPortfolios.tsx` is a flat single-file page; its types are 4 **inline**
+declarations plus response types imported from `@/api/endpoints/aum` (`MdpfPerFirmTimeSeries`,
+`MdpfFirmAUMMetrics`). There is no `types.ts` for the resolver to find, and **no way of calling the
+tool differently creates one** — the DESIGNED half of the retrieval-control law, not a call-shape
+problem.
+
+**Why it mattered here specifically:** AC1's limb exists to catch *"renders a field the response
+type does not carry"* (MISSING = runtime undefined). This TO's entire content is rendering a **new**
+block with nested L1/L2 sub-nodes — exactly that failure class. The one instrument named to guard it
+is structurally silent on this exact file.
+
+**Ruling (COO, issuer):** declare the `category_views` response types in `@/api/endpoints/aum`
+beside the existing MDPF interfaces (Build Ladder rung 2 — the estate already has the pattern), and
+`bun run typecheck` (already AC9) becomes the exercised discriminator, **proven once with a mutant**
+(render a field absent from the type → typecheck FAILS → remove). The `comp-transform` call stays on
+record **run-with-its-domain-disclosed**; it is not deleted.
+
+---
+
+## S2 — a pre-existing React Query cache-key collision on the page this TO edits
+
+**OBSERVATION × INERT. No action taken; not mine to fix.** `comp-cache collisions` reports key
+`['model-portfolio-benchmarks']` shared by `portal/src/pages/ModelPortfolios.tsx:533` and
+`portal/src/components/ModelPortfolioModal.tsx:114`, both calling `getModelPortfolioBenchmarks()`.
+
+Recorded because it is **on my edit surface and constrains me**, not because it is a defect I am
+claiming: two call sites sharing one key with the same accessor is the benign shape of this pattern.
+The operative consequence for this TO is one line — **when `category_views` is wired, it gets its own
+key; no colliding key is added.** COO concurred (66521).
+
+---
+
+## S3 — the portal promote worktree is still registered and local PROD sits ahead of origin/PROD
+
+**OBSERVATION × INERT. DT's, not mine. No action taken.**
+
+Measured at `0.4.0_DE_ClientPlatform~C` startup:
+`git -C portal worktree list` still carries
+`.runtmp/portal-promote-20260824T124621Z` at `a239e4a9 [PROD]`, and
+`git -C portal rev-parse PROD origin/PROD` → local `a239e4a9023c…` vs origin `8a96c91654ed…` — a
+**staged local PROD ref ahead of the remote**, i.e. the pollution `/prod-deploy` Step 2/3 exists to
+clear.
+
+**Classified INERT, and the discriminator is stated rather than assumed:** the hazard fires only on a
+*promote action*, the disarm (`/prod-deploy` Step 3 `update-ref` + `worktree prune`) is a **mandatory
+step of the very procedure that would trigger it**, and the PROD push is currently held at Andrew's
+word. A latent hazard whose disarm is already a required step of its own trigger path is not ARMED.
+**Were the promote to be run outside that procedure, this would fire silently** — which is why it is
+on the record with the two hashes rather than left as a startup impression.
+
+My cells are DEV-only and nothing promote-adjacent is in flight at this seat. COO independently
+reached INERT (66521).
+
+---
+
+```json
+[
+ {
+  "id": "D1_CATVIEWS-S1",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C (executing seat, against its own ISSUER-authored criterion)",
+  "surfaced_at": "2026-08-24T20:42Z",
+  "one_line": "D1R1DE-AC1's named oracle (comp-transform schema-check ModelPortfolios) aborts at types-resolution on the one file this TO edits, so its 0-MISSING is a non-result that reads as a pass -- on the exact defect class (renders a field the response type does not carry) that this TO's new nested block is most likely to produce.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "comp-transform schema-check ModelPortfolios -> rc=1, single line '[WARN] types-resolution: no types.ts found near .../ModelPortfolios.tsx (searched co-located + 3 parent dirs + _shared/)'; MISSING count 0; the tool's own 'SCHEMA CHECK:' header is ABSENT, i.e. it aborted before checking",
+    "POSITIVE CONTROL, the reason this is a finding: comp-transform schema-check Correlation -> rc=0 'All rendered fields match their response types'; comp-transform schema-check FactorTilts -> rc=0 and names a real gap ('getAUMMetrics() -> AUMFlowsWithMetricsResponse: type not found in types.ts'). The instrument discriminates; it has no domain on this page",
+    "mechanism measured at source: portal/src/pages/ModelPortfolios.tsx is a flat single-file page with 4 inline type declarations and response types imported from @/api/endpoints/aum (MdpfPerFirmTimeSeries, MdpfFirmAUMMetrics); find portal/src -name types.ts -> 18 files, none co-located or within 3 parents of this page",
+    "DESIGNED not accidental: no call shape creates a types.ts, so corroboration must come from outside the instrument's domain"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "DISCHARGED SAME TURN by the issuer, not open. Routed BLOCKING x INERT to 2.0.0_SA_COO as 66518; ruled 66521: AC1 amended in place -- declare the category_views response types in @/api/endpoints/aum (Build Ladder rung 2, existing estate pattern) and exercise bun run typecheck (AC9) ONCE with a mutant (render a field absent from the type -> typecheck FAILS -> remove) as the real discriminator; the comp-transform call stays on record run-with-its-domain-disclosed and is NOT deleted. Decomp untouched; cell_refs D1-c-1 unchanged; alignment denominators unchanged (8 cells / 9 criteria). Filed by the executing seat against the issuer's own criterion -- the direction the channel exists to permit."
+ },
+ {
+  "id": "D1_CATVIEWS-S2",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C",
+  "surfaced_at": "2026-08-24T20:42Z",
+  "one_line": "Pre-existing React Query cache-key collision on this TO's edit surface: ['model-portfolio-benchmarks'] is shared by ModelPortfolios.tsx:533 and components/ModelPortfolioModal.tsx:114, both calling getModelPortfolioBenchmarks().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "comp-cache collisions, run at startup as AC1's second limb: Key ['model-portfolio-benchmarks'] -> portal/src/components/ModelPortfolioModal.tsx:114 and portal/src/pages/ModelPortfolios.tsx:533, same accessor getModelPortfolioBenchmarks()",
+    "benign shape: two call sites, one key, one accessor -- shared cache is the intended behaviour here, which is why this is recorded as a constraint and not as a defect"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Logged because it is ON the edit surface and constrains this TO, not as a defect claim. Operative consequence, one line: category_views gets its own cache key when wired; no colliding key is added. COO concurred (66521): not mine to fix."
+ },
+ {
+  "id": "D1_CATVIEWS-S3",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C",
+  "surfaced_at": "2026-08-24T20:42Z",
+  "one_line": "The portal ephemeral promote worktree .runtmp/portal-promote-20260824T124621Z is still registered at PROD a239e4a9 and portal local PROD is AHEAD of origin/PROD (a239e4a9 vs 8a96c916) -- a staged ref a promote run outside /prod-deploy would silently base on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git -C portal worktree list -> C:/.../portal d43b88c5 [DEV] AND C:/.../.runtmp/portal-promote-20260824T124621Z a239e4a9 [PROD]",
+    "git -C portal rev-parse PROD origin/PROD -> a239e4a9023c8bc25c4d514735564f6a790a2a70 (local) vs 8a96c91654ed282acbed04da1e9f0074dca42332 (origin) -- local PROD ahead of remote",
+    "INERT discriminator, stated not assumed: the hazard fires only on a promote action, and the disarm (/prod-deploy Step 3 update-ref + worktree prune) is a MANDATORY step of the very procedure that triggers it; the PROD push is separately held at Andrew's word",
+    "this seat's cells are DEV-only (portal main tree confirmed on DEV) and nothing promote-adjacent is in flight here"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DT lane's, not this seat's -- surfaced, no action taken, nothing chased. Recorded with both hashes rather than as a startup impression because a promote run OUTSIDE /prod-deploy would base on the staged merge silently. COO independently reached INERT (66521) and is not acting on it either."
+ },
+ {
+  "id": "D1_CATVIEWS-S4",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~F",
+  "surfaced_at": "2026-08-24T21:01Z",
+  "one_line": "A model's PRIMARY identity is carried by crosswalk model_key, never by its display label -- I read the label, reported 'Opal Conservative Growth' as an unregistered non-Primary model, and drove a COO ruling to register $34,585,361.39 of PRIMARY AUA as Custom. Caught at the keyboard before any write.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.4.0_DS_ClientPlatform~F -- DISARMED same turn: retraction to COO (66568, 210136Z), issuer re-ruled NO REGISTRATION (66572), r4 registration paused then resumed on the corrected basis, zero commits at any point. DISARMED, NOT REMEDIATED.",
+  "grounding": {
+   "status": "SOURCE-CONFIRMED",
+   "evidence": [
+    "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:146 -- CANONICAL_KEY['Opal Conservative Growth'] = 'opal_long_term_conservative' (the Cottonwood builder itself)",
+    "build_cottonwood_mdpf_slice.py:133-137 -- RULED Andrew-direct 2026-07-23 ~0215Z, PRD v1.23 @a41c582ba",
+    "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:91 -- 'LTC = SmartX \"Opal Conservative Growth\" (NOT \"Long-Term Conservative\"); ... Key by id, never the label.'",
+    "concurring independently: crosswalk:6, build_cottonwood_mdpf_pair.py:302, build_mdpf_process_backfill.py:103, mdpf_revamp_count_source_audit.py:80, aggregate_smartx_to_daily.py:40, aggregate_smartx_to_timeseries.py:69 -- 7 files, zero dissent",
+    "the TRUE premise that produced the FALSE inference: BD 'Opal Conservative Growth' (0e632e04, Model, 109 acct) and BD 'Opal Long Term Conservative' (c973839d, Strategy, 0 acct) ARE distinct rows -- measured correctly, and it licenses nothing about which row carries the Primary identity"
+   ]
+  },
+  "disposition": "DISARMED_PENDING_REMEDIATION",
+  "notes": "THE CLASS, which is why this is filed and not merely retracted: mdpf_category_registry's F5 duplicate guard keys on member_id, so a SECOND entry for the SAME REAL MODEL under a DIFFERENT id RAISES NOTHING. Every structural guard passes, self_test stays rc=0, and the only detector was reading the crosswalk. The direction of harm is the quiet one -- it moves a served client-facing number DOWN, out of Primary; build_cottonwood_mdpf_slice.py:137 records the mirror-image near-miss ('a name-hunch merge would move $31M on a guess -- it is now moved on a RULING, not a hunch'). REMEDIATION PROPOSED, NOT BUILT, NOT MINE TO BUILD (no-inferred-gates): a registry assert that every registered model member resolves to a distinct crosswalk model_key, or declares itself off-crosswalk with a reason -- so a same-model/different-id duplicate raises at import the way a same-id duplicate already does. Routed to COO/CTO as a proposal. Second-order note for the channel: the issuer retracted its own ruling on the executing seat's control (66572), which is the loop working, not a second defect."
+ }
+]
+```
