@@ -17,10 +17,18 @@ Layered: jsonschema (if installed) for structure, then the conditional rules the
 schema cannot express -- ALWAYS run, so absence of the jsonschema package degrades
 coverage LOUDLY rather than silently passing (the import-guard-answers-completion
 -not-presence class).
+
+PIPELINE GATE LAYER 1 (2026-08-24, 0.8.0_AE_CloudComp~F): every run also resolves the
+GOVERNING TO and checks decomp_ref + the bidirectional cell<->criterion alignment, with
+a denominator printed for each direction. ENFORCE vs ANNOUNCE is derived from that TO --
+a TO carrying <decomp_ref> obliges its instance to carry decomp_ref and to close the
+join; a TO without one is pre-pipeline work and stays VALID. The alignment frames print
+whether or not anything failed. See org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170.
 """
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -137,6 +145,255 @@ def coverage_check(inst: dict, expected_arg: str) -> list[str]:
     return v
 
 
+# ---------------------------------------------------------------------------
+# PIPELINE GATE LAYER 1 -- decomp_ref + bidirectional cell<->criterion alignment.
+# org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170 ("build routed", tooling lane;
+# Andrew's word granted in the ratification). Built by 0.8.0_AE_CloudComp~F.
+#
+# THE ENFORCE DISCRIMINATOR IS THE GOVERNING TO -- NEVER A DATE, NEVER AN OPERATOR
+# MARKER (CTO ruling 66492, 2026-08-24). If the TO governing this instance carries a
+# <decomp_ref>, the instance MUST carry decomp_ref and the join must close -> ENFORCE.
+# If the TO carries none, this is PRE-PIPELINE work completing under its own spec ->
+# ANNOUNCE, and it stays VALID. A date- or marker-based ramp would retroactively
+# invalidate the five in-flight instances measured 2026-08-24 (ETFS TO-1/2/3,
+# D1 TO-D1b, D3 TO-D3.1); deriving the switch from the artifact itself cannot, and
+# every TO cut from the ratification forward is enforced BY CONSTRUCTION because its
+# issuer writes <decomp_ref> on its face.
+#
+# NOTHING HERE IS DERIVED. cell_refs are read as DECLARED in the TO's issuance half.
+# A retrofitted derivation makes alignment LOOK satisfied while being FALSE -- the
+# same class as the pre-2026-08-19 exclusion-blob substring match at :104.
+WORKSPACE = Path(__file__).resolve().parent.parent
+
+# Cell-id grammar, validated against BOTH live decomps before encoding (2026-08-24):
+# etfs-positioning/20260821T194927Z -> 23 ids; d1-catviews/20260824T195537Z -> 28 ids,
+# which reproduces that decomp's OWN declared arithmetic ("Total: 28 cells"). Covers
+# ETFS-a-1 (prefix-group-index) and D1-inv-1 / D1-h-r1 (multi-letter group, lettered
+# index) alike.
+CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\d+\b")
+CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
+ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
+
+
+def _canonical_to_id(raw: str) -> str:
+    """The bare TO id. to_id fields carry trailing issuer/amendment prose in practice
+    ('ETFS_POSITIONING.TO-2 (issuer ... @10f94e4f13; Amendment C ...)'), so the id is
+    the leading whitespace-delimited token."""
+    return raw.strip().split()[0].rstrip(".,;:") if raw.strip() else ""
+
+
+def _project_code(raw_to_id: str) -> str:
+    return _canonical_to_id(raw_to_id).split(".", 1)[0].upper()
+
+
+def _dep_stage(code: str) -> str | None:
+    """Pipeline registration = a dep_stage key in the project JSON (enforcement layer 3,
+    landed @c4d8c0025d). Printed as FRAME; the enforce decision belongs to the TO."""
+    f = WORKSPACE / "org" / "projects" / f"{code}.json"
+    if not f.is_file():
+        return None
+    try:
+        return json.loads(f.read_text(encoding="utf-8")).get("dep_stage")
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
+    """(path, note, scanned). Resolution is CONTENT-based: a TO is the file that
+    DECLARES id="<canonical>", never the file whose NAME looks right (Rule 22a -- a
+    filename-resolved check reports drift where there is none and reads CLEAN where two
+    copies have silently diverged). An explicit decomp_ref.to_ref wins when present."""
+    declared = str(inst.get("decomp_ref", {}).get("to_ref", "")).strip()
+    if declared:
+        p = Path(declared)
+        if not p.is_absolute():
+            p = WORKSPACE / declared
+        if p.is_file():
+            return p, "declared via decomp_ref.to_ref", 0
+        return None, f"decomp_ref.to_ref '{declared}' does not resolve to a file", 0
+    cid = _canonical_to_id(str(inst.get("to_id", "")))
+    if not cid:
+        return None, "instance carries no parseable to_id", 0
+    needle = 'id="' + cid + '"'
+    hits, scanned = [], 0
+    for f in (WORKSPACE / "org").rglob("task_orders/*.md"):
+        scanned += 1
+        try:
+            if needle in f.read_text(encoding="utf-8", errors="replace")[:8000]:
+                hits.append(f)
+        except Exception:  # noqa: BLE001
+            continue
+    if not hits:
+        return None, "no TO declares " + needle, scanned
+    if len(hits) > 1:
+        rel = sorted(str(h.relative_to(WORKSPACE)) for h in hits)
+        return None, f"AMBIGUOUS -- {len(hits)} TOs declare {needle}: {rel}", scanned
+    return hits[0], "resolved by declared " + needle, scanned
+
+
+def _parse_to(text: str) -> dict:
+    """The TO's ISSUANCE half, read exactly as declared."""
+    m = re.search(r"<decomp_ref>(.*?)</decomp_ref>", text, re.S)
+    blob = m.group(1) if m else None
+    doc = ""
+    if blob:
+        d = re.search(r"(\S+DECOMP\.md)", blob)
+        doc = d.group(1) if d else ""
+    crits: dict[str, list[str]] = {}
+    no_refs: list[str] = []
+    for tag in CRITERION_TAG_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(tag.group(1)))
+        cid = attrs.get("id", "").strip()
+        if not cid:
+            continue
+        refs = [c.strip() for c in attrs.get("cell_refs", "").split(",") if c.strip()]
+        crits[cid] = refs
+        if not refs:
+            no_refs.append(cid)
+    exp = re.search(r"<expected_criteria>(.*?)</expected_criteria>", text, re.S)
+    return {
+        "has_decomp_ref": blob is not None,
+        "declared_cells": sorted(set(CELL_ID_RE.findall(blob))) if blob else [],
+        "decomp_doc": doc,
+        "criteria": crits,
+        "criteria_without_cell_refs": no_refs,
+        "expected_criteria": (
+            [c.strip() for c in exp.group(1).split(",") if c.strip()] if exp else []),
+    }
+
+
+def _decomp_cell_ids(rel_or_abs: str) -> tuple[set, str]:
+    """(ids, error). The id space the decomp actually declares."""
+    if not rel_or_abs:
+        return set(), "no DECOMP.md path found in the TO's <decomp_ref>"
+    p = Path(rel_or_abs)
+    if not p.is_absolute():
+        p = WORKSPACE / rel_or_abs
+    if not p.is_file():
+        return set(), f"decomp doc '{rel_or_abs}' does not resolve to a file"
+    try:
+        return set(CELL_ID_RE.findall(p.read_text(encoding="utf-8", errors="replace"))), ""
+    except Exception as exc:  # noqa: BLE001
+        return set(), f"decomp doc unreadable: {exc}"
+
+
+def alignment_check(inst: dict) -> tuple[list, list]:
+    """(violations, frames). FRAMES PRINT WHETHER OR NOT ANYTHING FAILS -- a count with
+    no denominator beside it is the exact class this gate exists to close, and a bare
+    'aligned' is as unreadable as a bare 0."""
+    frames: list[str] = []
+    v: list[str] = []
+    code = _project_code(str(inst.get("to_id", "")))
+    stage = _dep_stage(code)
+    frames.append(
+        f"alignment-frame: project={code or '<unparsed>'} "
+        f"dep_stage={stage if stage else 'ABSENT (not pipeline-registered)'}")
+
+    to_path, note, scanned = _resolve_governing_to(inst)
+    if to_path is None:
+        frames.append("alignment-frame: governing TO UNRESOLVED -- " + note
+                      + (f" (scanned {scanned} TO file(s))" if scanned else ""))
+        # FAIL CLOSED ON UNKNOWN, BUT ONLY WHERE UNKNOWN IS ACTUALLY A DEFECT.
+        # The enforce discriminator lives in the TO, so an unresolved TO means the gate
+        # DID NOT RUN. Returning no violation there would pass on UNKNOWN -- and the
+        # cheapest route around this whole gate would be a bogus to_ref. Two closures,
+        # deliberately narrow so the 126 of 131 instances whose projects are not
+        # pipeline-registered are untouched:
+        #   (a) a DECLARED decomp_ref.to_ref that does not resolve is a broken citation
+        #       and is always a violation -- the instance made a claim that is false.
+        #   (b) an id-scan miss on a PIPELINE-REGISTERED project is a violation: a
+        #       pipeline project's instance must be joinable to its TO. On a project
+        #       with no dep_stage it stays an announce, because there is nothing to
+        #       join to and no claim was made.
+        if str(inst.get("decomp_ref", {}).get("to_ref", "")).strip():
+            v.append(f"decomp_ref.to_ref: {note} -- a declared reference that does not "
+                     f"resolve is a false citation, and the alignment join CANNOT RUN "
+                     f"without it; this is UNKNOWN, not PASS")
+        elif stage:
+            v.append(f"alignment: governing TO UNRESOLVED ({note}) on a PIPELINE-REGISTERED "
+                     f"project (dep_stage={stage}) -- the enforce discriminator lives in "
+                     f"the TO, so this instance CANNOT be shown to satisfy layer 1; state "
+                     f"the TO with decomp_ref.to_ref. UNKNOWN is not PASS")
+        else:
+            frames.append(
+                "alignment: NOT EVALUATED -- no governing TO resolved and the project is "
+                "not pipeline-registered, so there is nothing to join to and nothing is "
+                "claimed. Announce only.")
+        return v, frames
+    frames.append(f"alignment-frame: governing TO={to_path.relative_to(WORKSPACE)} ({note}"
+                  + (f", scanned {scanned}" if scanned else "") + ")")
+
+    to = _parse_to(to_path.read_text(encoding="utf-8", errors="replace"))
+    if not to["has_decomp_ref"]:
+        frames.append(
+            "alignment: ANNOUNCE -- the governing TO carries NO <decomp_ref>, so this is "
+            "PRE-PIPELINE work completing under its own spec; decomp_ref is not required "
+            "and this instance stays VALID on that basis (CTO ruling 66492). A TO cut "
+            "under the pipeline carries <decomp_ref> and is enforced here by construction.")
+        return v, frames
+
+    # ENFORCE from here: the TO declared a decomp, so the instance owes the join.
+    dr = inst.get("decomp_ref")
+    if not isinstance(dr, dict):
+        v.append("decomp_ref: the governing TO carries <decomp_ref>, so this instance MUST "
+                 "carry a decomp_ref object (doc + vintage_commit + to_ref) -- pipeline "
+                 "gate layer 1; without it NO cell<->criterion join is computable at all")
+        frames.append(
+            "alignment: ENFORCE (TO carries <decomp_ref>) -- instance decomp_ref ABSENT")
+        return v, frames
+    frames.append("alignment: ENFORCE (TO carries <decomp_ref>)")
+
+    inst_doc = str(dr.get("doc", "")).strip()
+    if inst_doc and to["decomp_doc"] and (
+            Path(inst_doc).as_posix() != Path(to["decomp_doc"]).as_posix()):
+        v.append(f"decomp_ref.doc: instance names '{inst_doc}' but the governing TO names "
+                 f"'{to['decomp_doc']}' -- the instance and its TO disagree about which "
+                 f"decomp this work discharges")
+    cells, err = _decomp_cell_ids(to["decomp_doc"] or inst_doc)
+    if err:
+        v.append(f"decomp-resolution: {err} -- cell_refs cannot be checked against an "
+                 f"unreadable decomp, and an unresolvable citation is not a citation")
+        return v, frames
+    frames.append(f"alignment-frame: decomp id space = {len(cells)} distinct cell id(s) in "
+                  f"{to['decomp_doc'] or inst_doc}")
+
+    crits = to["criteria"]
+    n_crit = len(crits)
+    # FORWARD 1 -- every criterion names at least one cell.
+    missing = to["criteria_without_cell_refs"]
+    frames.append(f"alignment-forward-1 (criterion -> cell): "
+                  f"{n_crit - len(missing)}/{n_crit} criteria carry >=1 cell_ref")
+    for cid in missing:
+        v.append(f"alignment: criterion '{cid}' carries NO cell_refs -- REFUSED, never "
+                 f"retrofitted: a derived cell_ref makes alignment LOOK satisfied while "
+                 f"being FALSE")
+    # FORWARD 2 -- every named cell exists in the decomp's id space.
+    all_refs = sorted({c for refs in crits.values() for c in refs})
+    unknown = [c for c in all_refs if c not in cells]
+    frames.append(f"alignment-forward-2 (cell_ref -> decomp): "
+                  f"{len(all_refs) - len(unknown)}/{len(all_refs)} distinct cell_ref(s) "
+                  f"resolve to an id declared in the decomp")
+    for c in unknown:
+        owners = sorted(k for k, refs in crits.items() if c in refs)
+        v.append(f"alignment: cell_ref '{c}' (cited by {owners}) does NOT exist in "
+                 f"{to['decomp_doc']} -- a citation to a cell that is not there is worse "
+                 f"than no citation")
+    # BACKWARD -- every cell the TO declared is reachable from some criterion.
+    declared = to["declared_cells"]
+    reached = {c for c in declared if any(c in refs for refs in crits.values())}
+    frames.append(f"alignment-backward (declared cell -> criterion): "
+                  f"{len(reached)}/{len(declared)} cell(s) declared in the TO's "
+                  f"<decomp_ref> are reachable from >=1 criterion")
+    for c in sorted(set(declared) - reached):
+        v.append(f"alignment: declared cell '{c}' is named in the TO's <decomp_ref> but NO "
+                 f"criterion references it -- the TO claims a cell it never discharges")
+    frames.append(
+        "alignment-scope: this closes the TO against ITSELF and against the decomp's id "
+        "space. Whether the TO's declared set IS the decomp's complete criterion-bearing "
+        "set is a CVO cert judgment (enforcement layer 5), NOT asserted here.")
+    return v, frames
+
+
 def main() -> int:
     if len(sys.argv) not in (2, 3):
         print(__doc__)
@@ -168,9 +425,17 @@ def main() -> int:
                 violations.append(f"schema-fallback: missing required key '{k}'")
 
     violations.extend(conditional_checks(inst))
+    # PIPELINE GATE LAYER 1. Runs on EVERY instance: its own first act is to decide
+    # ENFORCE vs ANNOUNCE from the governing TO, so it must not be called conditionally
+    # here -- a caller-side condition would be a second, silently divergent copy of the
+    # discriminator.
+    align_violations, align_frames = alignment_check(inst)
+    violations.extend(align_violations)
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
+    for line in align_frames:
+        print(f"  {line}")
     for line in violations:
         print(f"  VIOLATION: {line}")
     print("VALID" if not violations else "INVALID")

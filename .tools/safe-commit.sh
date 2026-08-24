@@ -637,6 +637,69 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && printf '%s\n' "${PATHSPEC[@]}" | grep -qE '\.too
   fi
 fi
 
+# PIPELINE GATE LAYER 2 (org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:171; build routed to the
+# tooling lane on Andrew's word in the ratification; built 2026-08-24 by 0.8.0_AE_CloudComp~F).
+# A NEW task order for a PIPELINE-REGISTERED project must carry <decomp_ref>. The choke-point
+# principle (:164): nothing executes without a TO, so requiring the ref at ISSUANCE requires the
+# decomp, the PRD and the registration behind it -- one gate at the neck instead of four.
+#
+# SCOPED THREE WAYS so it cannot become a tax on anything else: NEW files only
+# (--diff-filter=A), under **/task_orders/ only, on projects carrying a dep_stage only
+# (10 of 326 project JSONs on 2026-08-24).
+#
+# ANNOUNCE BY DEFAULT: it prints and does NOT block until org/mcp/pipeline-gate2.enforce exists
+# (the NFRA_COMPRAIL announce-then-enforce ramp -- arming is one reviewable act, not a code
+# change). THE MARKER IS THE AUTHORITY, NOT THIS COMMENT: read the marker, never this paragraph,
+# to know whether it is enforcing (Rule 21's measured stale-comment class).
+#
+# Invoked with NO path arguments ON PURPOSE -- it derives its subject from
+# `git diff --cached --diff-filter=A`, which here is exactly what is about to be committed.
+# Passing $IN_SCOPE would hand it MODIFIED files too, and editing an existing TO is not
+# issuance: retro-fitting <decomp_ref> onto criteria never derived from cells produces the
+# false alignment the layer-1 checker exists to refuse.
+if [ -f "$SCRIPT_DIR/to-decomp-ref-lint.py" ]; then
+  # Self-contained override extraction (-m and the LD-0276-mandated -F). Deliberately NOT
+  # reusing CS_MSG: that variable is built only inside the comp-system gate's rc==2 branch, so
+  # an override keyed on it would silently work on some commits and not others.
+  G2_MSG=""; _g2k=0
+  while [ $_g2k -lt ${#COMMIT_ARGS[@]} ]; do
+    if [ "${COMMIT_ARGS[$_g2k]}" = "-m" ] && [ $((_g2k + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+      G2_MSG="${G2_MSG}"$'\n'"${COMMIT_ARGS[$((_g2k + 1))]}"; _g2k=$((_g2k + 2)); continue
+    fi
+    case "${COMMIT_ARGS[$_g2k]}" in
+      -F|--file)
+        if [ $((_g2k + 1)) -lt ${#COMMIT_ARGS[@]} ] && [ "${COMMIT_ARGS[$((_g2k + 1))]}" != "-" ]; then
+          G2_MSG="${G2_MSG}"$'\n'"$(cat -- "${COMMIT_ARGS[$((_g2k + 1))]}" 2>/dev/null || true)"
+        fi
+        _g2k=$((_g2k + 2)); continue ;;
+      --file=*)
+        G2_MSG="${G2_MSG}"$'\n'"$(cat -- "${COMMIT_ARGS[$_g2k]#--file=}" 2>/dev/null || true)"
+        _g2k=$((_g2k + 1)); continue ;;
+    esac
+    _g2k=$((_g2k + 1))
+  done
+  # Tolerate the trailer with or without a leading '#': a -F body carries it commented.
+  G2_OVR="$(printf '%s' "$G2_MSG" | sed -n 's/^[[:space:]]*#\?[[:space:]]*pipeline-gate2-override:[[:space:]]*//p' | head -1)"
+  if [ -n "$G2_OVR" ]; then
+    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" --override-reason "$G2_OVR" 2>&1)"; _g2_rc=$?
+  else
+    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" 2>&1)"; _g2_rc=$?
+  fi
+  if [ "$_g2_rc" -ne 0 ] || printf '%s' "$_g2_out" | grep -q 'REFUSED'; then
+    printf '%s\n' "$_g2_out" | sed 's/^/  [gate2] /' >&2
+  fi
+  if [ "$_g2_rc" -eq 1 ]; then
+    for _gf in $(git diff --cached --diff-filter=A --name-only 2>/dev/null); do
+      git reset -q HEAD -- "$_gf" 2>/dev/null || true
+    done
+    echo "ERROR: BLOCKED -- pipeline gate 2: a NEW task order for a pipeline-registered project" >&2
+    echo "  must carry <decomp_ref> naming its decomp run and cells. New files unstaged." >&2
+    echo "  FIX the TO, or state an audited reason in the commit message:" >&2
+    echo "    # pipeline-gate2-override: <reason>" >&2
+    exit 1
+  fi
+fi
+
 # Proceed with the actual scoped commit (plain invocation so the EXIT trap fires).
 #
 # AMENDMENT-1 belt: `commit --only` re-takes the WORKTREE state of the pathspec at
