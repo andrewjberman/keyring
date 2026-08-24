@@ -217,3 +217,68 @@ its plane could answer.)*
 
 **Relayed to `1.0.0_SA_CTO~Z` at 19:0xZ (msg 4829, DELIVERED).** Flag (a) -- D4's
 `TEMPORARY, TODAY ONLY` placement -- **remains open at Andrew.**
+
+
+---
+
+## 8. AMENDMENT 2 -- ANDREW-DIRECT: D4 STAYS SITEZ UNTIL DONE, and THE FULL GROUND-UP CHAIN
+
+**VERBATIM (both parts):**
+> *"keep D4 on sitez until the project is done."*
+> *"Furthermore, this is a good opportunity to build the ground-up, in pattern ingestion and
+> processing (bronze and silver) layers for all relevant ETFs working from their idiosyncratic
+> shapes, to unified parquet, to unified gold parquet format in opal-data-etfs/gold/ for platinum
+> json serving in opal-data-portal-v2."*
+
+**FLAG (a) IS CLOSED.** D4 placement is SITEZ until **the project is done** -- a COMPLETION
+condition, not a date. That is a materially different row: a date-bounded placement expires silently
+and correctly; a completion-bounded one **does not expire and must be reverted deliberately**, so the
+row should name what "done" is. **The row edit is `0.0.0_AB_MSTR`'s act (register owner);
+routed to them 2026-08-24 ~19:2xZ, not written from site Z.** Fifth placement on that row in six days.
+
+**THE SCOPE IS NOW THE FULL MEDALLION CHAIN, ground-up and in pattern:**
+```
+issuer idiosyncratic shapes
+  -> BRONZE   raw, per source, opal-data-assets, byte-for-byte (Rule 17a)
+  -> SILVER   unified parquet
+  -> GOLD     unified parquet, opal-data-etfs/gold/
+  -> PLATINUM json serving, opal-data-portal-v2
+```
+*"Ground-up" AND "in pattern" together:* build the tiers properly rather than bolting constituents
+onto what exists, **while conforming to the grammar both sources already use** (section 7).
+
+### THREE TENSIONS -- surfaced, NOT resolved. The PRD must address each.
+
+**(1) THE GOLD HOME CONTRADICTS CLAUDE.md RULE 17b AS AMENDED 2026-08-11.** He says
+`opal-data-etfs/gold/`; the amendment says the product-gold home is
+`opal-data-assets/portal/gold/{product}/{scope}/`. **His word is later and sovereign, so it binds** --
+but the divergence must be RECORDED, because a future reader hitting law-says-X / estate-does-Y with
+nothing between them will "correct" one of them. Either the PRD carries his ruling as a scoped
+exception or it routes a Rule 17b amendment. **Measured: `opal-data-etfs/gold/` is EMPTY (0 objects)**
+-- greenfield, which is precisely why "ground-up" is achievable here without touching anything.
+
+**(2) PLATINUM ALREADY EXISTS IN TWO PLACES AND ONE IS LIVE-SERVED TODAY.**
+`opal-data-etfs/platinum/etf_ownership_dashboard.json` was **written today 12:00:03Z**; monthly
+`platinum/reports/{YYYY-MM}/etf_ownership.{html,pdf}` sit beside it; and
+`opal-data-portal-v2/platinum/etfs/` already exists. His serving target is portal-v2, consistent with
+Rule 17b -- **but it leaves the live `opal-data-etfs/platinum` artifact unaddressed.**
+⛔ **Moving a served key is NEVER#3.** No move inside this build. The PRD states whether that artifact
+stays, is superseded, or is out of scope, **and names who decides.**
+
+**(3) "ALL RELEVANT ETFs" IS UNDEFINED -- A REAL SCOPE FORK, AND ANDREW'S TO SETTLE.**
+`opal-data-etfs/config/etf_universe.json` declares exactly four tickers (DIVZ, IDVZ, PFDE, PFOE), is
+**runtime-read** by the producers, and its own description says *"To add an ETF: append its ticker to
+'tickers'; no redeploy."* So the universe is extensible **by design**, and the pipeline **must be
+universe-driven, never hardcoded to four** -- that is the "in pattern" test.
+**But TrueShares publishes well beyond ours** -- their own Part F filings name `spcz fldz rnwz lrnz
+pvex oneh qber qbul paym payh onez` alongside `divz`/`idvz`. So "all relevant" may mean the four, or
+a wider set. **Design so either answer costs nothing; put the question to him in the PRD.**
+
+**RULE 24 NOW BINDS TWICE** -- once for the unified SILVER row shape, once for unified GOLD. They are
+**different grains and may not share an axis**; the four-postulate test applies to each at authoring.
+
+**And the two-silver-surfaces question (section 7) now matters MORE, not less**, because "unified
+parquet" at silver is a named deliverable and cannot be specified while
+`opal-data-etfs/silver/holdings/`'s producer is UNKNOWN-AT-MSTR~Z.
+
+**Relayed to `1.0.0_SA_CTO~Z` msg 4830, DELIVERED (live seat).**
