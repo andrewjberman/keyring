@@ -8,13 +8,18 @@ instance path, channel item id). Nothing here is derived from a message; every k
 
 ## A. Task orders issued THIS SESSION (issuer COO; CTO on fallback)
 
+Measured by me FROM THE TO FILES, never from a message.
+
 | measure | k / N | evidence |
 |---|---|---|
-| TOs issued this session | 0 / 0 (UNMEASURED -- none cut yet) | -- |
-| carrying `<decomp_ref>` | 0 / 0 | -- |
-| carrying printed cell<->criterion alignment denominators (BOTH directions) on the face | 0 / 0 | -- |
-| naming executor CLASS + single-project instance (one project per instance, @b705331f7d) | 0 / 0 | -- |
-| carrying premise-verification primitives | 0 / 0 | -- |
+| TOs issued this session | **2 / 2** (D1_CATVIEWS TO-R1-DS, TO-R1-DE; PERFRP DS/DE/AE cut in flight) | `0.4.0_DS_ClientPlatform~F/task_orders/`, `0.4.0_DE_ClientPlatform~C/task_orders/` @2f35896ff7 |
+| carrying `<decomp_ref>` | **2 / 2** | both name the certified run + their exact cell set |
+| carrying printed alignment denominators BOTH directions on the face | **2 / 2** | each carries an `<alignment_denominators>` element: DS "17 criterion-bearing cells; 9 criteria; unmapped 0; untraceable 0"; DE "8 cells; 9 criteria; unmapped 0; untraceable 0" |
+| naming executor CLASS + a single-project instance | **2 / 2** | both `<issued_to>` name the class AND the seated lane, each stating "ONE PROJECT PER INSTANCE (@b705331f7d)" |
+| carrying premise-verification primitives | **2 / 2** | O-1..O-4 spec-at-pickup oracle tables; DE~C ran all four at pickup and reported O-3 NOT FIRED rather than starting |
+
+**MY INDEPENDENT ALIGNMENT JOIN over both TOs against the certified decomp — an N/N gate:**
+criteria **18**, distinct cell_refs **25**, **(a)** criteria with zero cell_refs = **0**, **(b)** cell_refs not resolving to a declared cell = **0**, **(c)** in-scope cells reached by no criterion = **3** — and those three are `D1-f-1` (DARK) + `D1-g-1`/`D1-g-2` (boundary, criterion-free BY DECLARATION), which reconciles exactly to the decomp's own "criterion-bearing: 25 of 28". **The two TOs' scopes union to 28 of 28 declared cells with nothing unscoped.**
 
 ## B. Proof-of-spec on delivered returns (CVO runs `proof-of-spec-check <instance> <expected_ids>`)
 
