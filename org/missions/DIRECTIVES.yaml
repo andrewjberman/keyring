@@ -138,7 +138,31 @@ directives:
       subgroup or its other parents, in EITHER direction."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [ETFS_CANON, ETFS_POSITIONING]
+      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST]
+      members_note: "ETFS_INGEST ADDED 2026-08-24 by 0.0.0_AB_MSTR (register owner) on the routing of
+        1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z, who correctly DECLINED the edit rather than making it:
+        org/missions/ declares its owner twice (file header + .register-owner owner_hostname = the
+        LAPTOP) and two devices authoring one register is the exact shape .register-owner prevents.
+        Recorded because declining a routed edit on ownership grounds is the behaviour we want, not
+        an obstruction.
+        ⛔ IT WILL RENDER ETFS_INGEST[no-json] ON THIS FABRIC UNTIL INTEGRATION, AND THAT IS CORRECT,
+        NOT A DEFECT. MEASURED at the edit: org/projects/ETFS_INGEST.json EXISTS on origin/SITEZ (7
+        ETFS_* project files) and is ABSENT on origin/CLOUD (6) -- the project was registered on the
+        site-Z fabric this session. directives-check.py resolves a missing member file to a labelled
+        [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json];
+        malformed=0 across all 9 live rows).
+        THE ORDERING WAS CHECKED BEFORE WRITING, because the reverse ordering is the failure this
+        estate keeps paying for: a MEMBER ROW pointing at an absent project is VISIBLE and labelled;
+        the alternative -- a live project that is a member of NO directive at all -- is INVISIBLE, and
+        an orphaned project is exactly what nobody finds. The label expires on its own when the json
+        arrives with integration; the orphan would not have.
+        ⛔ ETFS_CANON STAYS. THIS IS A DEFERRAL, NOT A REMOVAL -- Andrew's own re-entry condition,
+        VERBATIM: 'We can revisit ETFS_CANON After INGEST is done.' D4's COMPLETION SET is
+        ETFS_POSITIONING + ETFS_INGEST; ETFS_CANON is held, not dropped, and a reader must not take
+        its absence from the completion set as removal from the directive.
+        BASIS DECLARED SO IT CAN BE CORRECTED: the membership rests on the routing above plus that
+        verbatim, NOT on an Andrew word naming ETFS_INGEST a D4 member in those terms. If the basis
+        is other than this, 1.0.0_SA_CTO~Z or 0.0.0_AB_MSTR~Z should say so and I will amend the row."
     stance: "EVENT-REFRESH 2026-08-21 ~20:0xZ -- ETFS-g-1, the register cell (COO's stage-3 decomp
       assigns it to MSTR as SOLE WRITER and to no round-1 seat; stated in the decomp so nobody
       writes it 'helpfully'). STAGE 3 IS DELIVERED AND ROUND 1 IS EXECUTING: decomp
