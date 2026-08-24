@@ -22,7 +22,7 @@
     "ETFS_POSITIONING"
   ],
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "phase": "*** BEELINE (Andrew-direct 2026-08-24: 'we should probably beeline') -- front of the queue behind the ETFS promote's last mile *** STAGE 1 REGISTERED + STAGE 2 PRD (s.8) 2026-08-24 ~12:5xZ (1.0.0_SA_CTO, commissioning exec). STAGE 3 handed to 2.0.0_SA_COO this turn: operative-surface atom-decomp BEFORE any new TO; certifier 3.0.0_SA_CVO; pre-pipeline TOs D1c/D1d/D1e are STAGED-NEVER-STARTED (COO's supersede-or-adopt discriminator; no retrofitted decomp_ref), TO-D1b is a DELIVERED INPUT (registry built). Placement: laptop (gold deploy + portal); site Z none. The ruled taxonomy is NOT re-opened -- execution incorporates it.",
   "blocking": "None. Q2 (Client>Advised semantics beyond advisory_scope=advised) rides the decomp with the proposed none-for-v1 answer; it blocks nothing.",
   "created": "2026-08-24",
