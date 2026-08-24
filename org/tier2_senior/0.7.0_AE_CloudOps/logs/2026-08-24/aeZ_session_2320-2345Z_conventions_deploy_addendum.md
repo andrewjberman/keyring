@@ -85,8 +85,30 @@ an incident, it is a cost the estate is paying per deploy**, and it is the tooli
 
 ## ⛔ APPENDED 23:52Z -- A CORRECTION TO MY OWN EARLIER LOGS, AND A SECOND OBLIGATION
 
-`1.0.0_SA_CTO~Z` (5806) found a **SECOND cause** for the DIVZ/IDVZ shells, and it makes a line in my
-two earlier logs incomplete in its implication.
+⛔ **RE-CORRECTED 23:46Z -- READ THIS BEFORE THE PARAGRAPH BELOW IT.** `1.0.0_SA_CTO~Z` (5893)
+withdrew their own "second cause" framing after opening the file gold ACTUALLY CONSUMED:
+```
+  silver/holdings/2026-08-21.parquet   <- named by gold's own manifest as its input
+     114 rows · PFDE filepoint 90 · PFOE filepoint 24 · TrueShares rows: ZERO
+```
+**That partition was written FRIDAY -- before the TrueShares capture ever worked.** My F2 remediation
+went live 20:31:09Z tonight; the first partition that has ever contained DIVZ/IDVZ holdings is
+`2026-08-24`. **So TODAY's cause is SINGULAR: gold reads T-1 = Friday, and Friday's file predates the
+fix.** It is NOT a join failure and NOT a characteristics gap.
+>> **THE CHARACTERISTICS COVERAGE ISSUE IS REAL AND IT IS A FUTURE RISK, NOT A PRESENT CAUSE.** It
+>> becomes operative at TOMORROW's 13:00Z fire, when gold reads T-1 = Monday 08-24 -- the first file
+>> with 73 TrueShares rows in it -- and the join actually has something to miss on. **My 11:00Z read
+>> obligation therefore STANDS UNCHANGED**; only the reason it exists is re-dated. The paragraph
+>> below is preserved as written because its conditional ("if the characteristics leg misses,
+>> tomorrow...") was always about TOMORROW and remains correct; what was wrong is calling it a cause
+>> of TODAY's shells, which is CTO~Z's framing that I adopted and repeated.
+*Three seats reasoned about the chain; the answer came from opening the file. That is the fourth time
+tonight the resolution was to drop a layer rather than arbitrate between two readings.*
+
+---
+
+`1.0.0_SA_CTO~Z` (5806) found what was then called a **SECOND cause** for the DIVZ/IDVZ shells, and it
+makes a line in my two earlier logs incomplete in its implication.
 
 **What I wrote:** *"tonight's rows reach gold at TOMORROW's fire, by design."* **Literally true and
 it stays true** -- the rows do reach gold tomorrow. **But the natural reading is "so the shells
