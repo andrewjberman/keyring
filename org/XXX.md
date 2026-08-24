@@ -144,6 +144,39 @@ only, **with no error.**
 
 ## Step 1b — MCP startup (MANDATORY, every session)
 
+### Codex runtime branch (use this instead of the Claude watcher/poller path)
+
+Codex sessions must read and follow `org/mcp/CODEX_INBOX_MONITOR.md`. The
+canonical parts are deliberately separate:
+
+| Role | Codex component | Launch rule |
+|---|---|---|
+| Registration + broker heartbeat | `org/mcp/codex-agent-heartbeat.py` | Start once with the full suffixed serial; keep it running. It imports `server.py`, registers, cancels the consuming broker poll task, and heartbeats separately. |
+| Non-consuming inbox detector | `org/mcp/codex-inbox-monitor.py` | Start once inside the documented persistent `functions.exec` bridge. It emits only `[HARD-NUDGE] <filename>` and repeats while the exact root-level `.md` remains unread. |
+| Codex notification bridge | The `notify()` + `yield_control()` bridge in `org/mcp/CODEX_INBOX_MONITOR.md` | Hand-draw in the Codex tool cell; it is host orchestration, not an OS script. |
+| Broker implementation dependency | `org/mcp/server.py` -> `org/mcp/broker.py` | Used by the heartbeat companion. Do not launch a second broker manually. |
+
+**Codex must NOT run** `inbox-watch.sh ... stream`, `check-inbox.sh`, or
+`agent-poller.py` alongside this path. The first two consume/move inbox files;
+the generic poller belongs to the Claude MCP-server lifecycle and documents the
+consuming watcher as its delivery companion.
+
+The detector sees existing backlog on its first scan and repeats every 15
+seconds until handling completes. At the start of every active Codex turn,
+also sweep the full suffixed serial's canonical unread root before other work.
+For a Base message: read the exact file -> ACK and begin immediately -> act ->
+move that exact file to `read/`. Never infer READ from a nudge or a moved file.
+
+**Host boundary:** Codex `notify()` can surface an event at an active tool
+boundary, but the currently exposed Codex host cannot start a new reasoning
+turn after a final response. Repeated non-consuming nudges prevent loss; exact
+dormant-turn parity with Claude's harness-native Monitor requires a Codex host
+wake/resume callback.
+
+The A/B/C commands below are the Claude runtime branch unless a paragraph says
+otherwise; their identity, inbox-path, task-order, and ACK semantics still bind
+Codex.
+
 **A. Register — use your FULL serial, including any `~lane` suffix:**
 ```python
 register_agent("{your_serial}", summary="Starting session")
