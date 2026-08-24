@@ -130,3 +130,61 @@ None at this seat. The ETF artifact (`platinum/etfs/positioning_data.json`) is a
 with a positive control, prefix empty -- and that is DS's leg; the page renders the correct
 unavailable state and flips to real books when it lands, with no portal change. The promote is
 DT's.
+
+---
+
+## Addendum -- the weight-unit episode (2115Z onward, after DS published)
+
+DS published the real artifact. I re-fetched and **rendered the real bytes rather than trusting
+the fixture I had built from the contract** -- and the fixture was shaped perfectly and hid three
+defects completely, because **I wrote the fixture from the contract, and the contract is exactly
+what was silent.** A fixture reproduces its author's reading of the spec; only the real bytes
+carry the producer's.
+
+The page rendered NVDA at **994.99%**, market caps in raw dollars, and ACTIVE reading NO on every
+row. Root cause: **CONTRACT v1 fixed the FIELD NAMES and was silent on UNITS**, so DS emitted each
+field in its source unit and I had no declared unit to build against.
+
+### The part worth keeping: two correct fixes that would have composed into a worse bug
+
+I fixed it in the TS adapter. DS fixed the same bug in the Python publisher **sixty seconds
+later**. Neither of us could see the other. Had both landed, every weight would have rendered
+**100x too small** -- and *that is the dangerous direction*: 994.99% is absurd and Andrew caught
+it in seconds; a table where every row reads 0.1% looks like a rounding convention and **gets
+believed**.
+
+I did not ship it, and the reason is worth stating exactly because it was one command away from
+going the other way: **I re-pulled the artifact before committing a fix I had already verified by
+render twenty minutes earlier.** Nothing about my own evidence looked stale. The artifact had
+moved under a verified fix.
+
+**COO's framing is the one I'd keep: the composition was the defect, not either fix.**
+
+### Where it landed
+
+Ruled by AE (contract oracle), independently confirmed by CVO and COO: **the conversion lives in
+the publisher, one place not two** -- a unit chosen for a consumer's rendering convention is
+serving-shaped work (Rule 17b), so the artifact matches Models **by construction** rather than by
+every consumer re-deriving it. Same reasoning as the separate-artifact ruling one layer up.
+
+I deleted the conversion rather than flagging it `false`. A constant named
+`ETF_WEIGHT_IS_PERCENT` reading `false` is a double negative about a fact established in another
+repo, and the next seat seeing a small weight is one keystroke from flipping it back. What
+replaced it states the three units as measured and **locates the truth in the publisher**.
+
+**Nothing in the type system could have held any of this.** `number` and `number` are the same
+type whether one is a percent and the other a fraction -- schema-valid, every key present, every
+type right, proof-of-spec rc=0, and the answer wrong by a factor of 100.
+
+### Final state
+
+| commit | | |
+|---|---|---|
+| `a7ff6dd4` | the conversion (correct against the 21:17Z artifact) | superseded |
+| `d43b88c5` | deletes it; unit contract documented | LOCAL, rides integration |
+
+Net effect of both on `etfAdapter.ts` vs `a60b558f`: **the doc comment only** -- token census at
+HEAD 0, positive control 5 at `a7ff6dd4`. Verified against the live 21:25:57Z artifact, screenshot
+READ: NVDA 9.96 / MC 5239.1 / ACTIVE YES. The 9.96 against a raw 9.95 is the page's **existing**
+`proportionalRound` normalising the column to exactly 100.00 -- identical treatment to Models, and
+I say so rather than claim "byte-exact", which was the easier and slightly false version.
