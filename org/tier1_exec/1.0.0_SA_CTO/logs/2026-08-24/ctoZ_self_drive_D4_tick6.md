@@ -40,3 +40,65 @@ At 21:49Z the 22:00Z fire had NOT fired: `trueshares/{DIVZ,IDVZ}/bronze/holdings
 ## Blockers
 
 None at this seat. At Andrew: three cards (above). Surfaced not chased: the deploy recorder's cp1252/CRLF defect; source-map `last_deployed_commit` map-wide staleness; the unmanaged sweep rule; `comp-closure` off PATH here.
+
+---
+
+## ⛔ CORRECTION AGAINST THIS LOG, 22:0xZ -- THE SECTION ABOVE MEASURED THE WRONG BUCKET
+
+**Appended, not rewritten.** The false reading and its correction both belong in the record; the
+section titled "THE EXERCISED LAYER IS STILL OPEN AT LOG TIME" was **true when written only in the
+sense that a wrong question is answered cleanly**, and its headline claim -- *"nobody has verified
+the pipeline WORKS"* -- was already false at the moment I committed it.
+
+**What I got wrong.** I read `s3://opal-data-etfs/trueshares/{DIVZ,IDVZ}/bronze/holdings/` and
+reported `0/0` with `netassets = 40` beside it as a control. The deployed function's APPLIED
+environment resolves bronze to a **different bucket**:
+
+```
+BRONZE_BUCKET  = opal-data-assets     <- bronze lands HERE
+BRONZE_GRAMMAR = monolith
+ETFS_BUCKET    = opal-data-etfs       <- silver / platinum ONLY
+```
+
+`lambda_function.py:120-129` states this in a comment (the C4 split: *"SILVER_ROOT quarantines the
+silver PREFIX; it does not quarantine the BUCKET"*). I derived the monolith key grammar correctly
+and paired it with the wrong bucket. **`s3://opal-data-etfs/bronze/` does not exist as a prefix at
+all**, so every reading I took was structurally incapable of returning non-zero.
+
+**The control did not save me, because the control was in the wrong bucket too** -- it was measuring
+a different tier in a bucket where neither target nor control could live. This is CLAUDE.md's own
+worked example (*"A 404 IN THE WRONG BUCKET IS NOT EVIDENCE OF ABSENCE -- IT IS THE WRONG QUESTION
+ASKED CLEANLY"*), and the wrong-PLANE clause that says **no control inside the wrong plane can catch
+a wrong-plane error**. I cited that rule at two other seats today before executing it here.
+
+**What actually caught it:** the control MOVED -- `40 -> 0` between two of my own reads, with nothing
+that should have moved it. A control that disagrees with your previous run is worth more than one
+that agrees with your hypothesis. I did not catch this by care; I caught it by a number changing.
+
+### THE TRUE STATE -- plane pinned on ONE object with BOTH tools before quoting
+
+`s3 ls` renders LOCAL unmarked; offset measured at exactly `-0400` on the object itself
+(`s3 ls` 18:00:11 == `head-object` `2026-08-24T22:00:11+00:00`).
+
+```
+opal-data-assets/trueshares/DIVZ/bronze/holdings/20260824/divz_holdings.csv  2,705 B  22:00:11Z
+opal-data-assets/trueshares/IDVZ/bronze/holdings/20260824/idvz_holdings.csv  4,026 B  22:00:12Z
+```
+
+First objects ever to exist under either prefix. Parsed, not eyeballed:
+
+| fund | data rows | cols | weights | Date | Net Assets |
+|---|---|---|---|---|---|
+| DIVZ | 29 | 10 | 99.80% | all `8/24/2026` | $308,141,496 |
+| IDVZ | 44 | 10 | 99.51% | all `8/24/2026` | $199,973,564 |
+
+Raw issuer CSV byte-for-byte (Rule 17a), bronze in `opal-data-assets` (Rule 17b). **`TS_HOLDINGS_ENABLED=1`
+is no longer a silent green no-op -- F2's remediation is EXERCISED. The capture-forward day was not lost.**
+
+⚠ **Row 1 of DIVZ is `SALXX` (State Street Instl US Govt MMKT) and both funds carry it** -- so A5 has
+real bytes and a real edge case: `SALXX` is alpha-leading, so the `[0].isalpha()` filter does NOT
+exclude it, and A5's `.fillna(False)` would INCLUDE a money-market fund in the Bloomberg universe if
+`is_cash` is null for that row. Named to MSTR~Z as a thing to read before editing, not after.
+
+**Correction broadcast same turn to all six seats** (5265-5270), including the instruction to CVO~Z
+that its armed watch sits on a prefix that structurally cannot fire.
