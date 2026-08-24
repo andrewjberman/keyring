@@ -1,4 +1,4 @@
-# ANDREW-DIRECT 2026-08-24 ~16:0xZ (base CTO terminal) -- 49 FINANCIAL AS A WHOLE: Advisor Intelligence via Schwab 0833 (limited history accepted for now); Fidelity as a comparable ingestion next; the ADVI project SPLITS into functions -- INSURANCE assets from Black Diamond's insurance endpoint as a separate project (backend bucket pattern + light gold + platinum + three frontend integration points; NEVER blended into asset-management calculations)
+# ANDREW-DIRECT 2026-08-24 ~16:0xZ (base CTO terminal) -- 49 FINANCIAL AS A WHOLE: Advisor Intelligence via Schwab 08335338 (limited history accepted for now); Fidelity as a comparable ingestion next; the ADVI project SPLITS into functions -- INSURANCE assets from Black Diamond's insurance endpoint as a separate project (backend bucket pattern + light gold + platinum + three frontend integration points; NEVER blended into asset-management calculations)
 
 **Recorded by:** `1.0.0_SA_CTO` (addressed seat) - **archetype:** SCRIBE / COORDINATE
 **Context:** his first of three findings from the 49 Financial meeting (Mike), delivered at the terminal
@@ -45,11 +45,11 @@ own records.
 
 ## WHAT IT BINDS (surfaced, unwidened; the phrasing is the ruling)
 
-1. **49F ADVI runs on Schwab 08335338 ("0833").** History is limited and **"that is fine for now"** --
-   this answers the D2 history fork for now: ACCEPT the 0833 floor; no frozen-tail act, no Schwab
+1. **49F ADVI runs on Schwab 08335338 ("0833" -- the shorthand in his sentences; the full number is the law).** History is limited and **"that is fine for now"** --
+   this answers the D2 history fork for now: ACCEPT the 08335338 floor; no frozen-tail act, no Schwab
    historical request, no BD history dependency is opened by this word. (The `ADVI_49FSRC` blend/
    history analysis stands as record; its stage-3 stays HELD -- see the second finding when it lands.)
-2. **Ingestion = Schwab 0833 primarily, "already ingesting/processing via opal-data-assets"**; **Fidelity**
+2. **Ingestion = Schwab 08335338 primarily, "already ingesting/processing via opal-data-assets"**; **Fidelity**
    is NEXT: a login is coming, and a **comparable ingestion/processing function** is to be created for it,
    **aggregated for ADVI for 49**. (A new custodian plane in the same grammar -- `opal-data-assets/
    fidelity/{firm}/{bronze,silver}` is the in-pattern candidate; not ruled here.)
