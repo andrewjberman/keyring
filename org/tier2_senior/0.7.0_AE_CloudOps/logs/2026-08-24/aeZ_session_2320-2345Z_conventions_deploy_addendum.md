@@ -155,8 +155,27 @@ session kept catching; this one is mine.*
   **Expect ONE invocation and ONE manifest. If three appear, the marshal fix did not take -- report
   that, do not reconcile it.**
   ⚠ **AC7 AND THE FILL ARE DIFFERENT QUESTIONS AND MUST NOT BE FUSED.** AC7 asks whether the
-  SCHEDULE fired correctly. Whether the books FILL depends on the 11:00Z characteristics leg, which
-  AC7 does not measure. **A green AC7 on empty books is a possible and correct outcome**, and
-  reporting it as a pass on the product would be the instrument-lies shape this project exists over.
+  SCHEDULE fired correctly. Whether the books FILL is a different question AC7 does not measure.
+  **A green AC7 on empty books is a possible and correct outcome**, and reporting it as a pass on the
+  product would be the instrument-lies shape this project exists over.
+  ⛔ **APPENDED 23:53Z -- THERE ARE NOW THREE INDEPENDENT REASONS THE BOOKS COULD STILL BE EMPTY
+  TOMORROW, AND AN OBSERVER WHO CHECKS ONLY THE FIRST TWO WILL MISATTRIBUTE THE THIRD:**
+  ```
+  (1) T-1 FILE PREDATED THE CAPTURE   -- today's singular cause. RESOLVES tomorrow by construction:
+      gold reads T-1 = Mon 08-24, the first partition that has ever held TrueShares rows (73).
+      Measured by CTO~Z: bronze trueshares holdings exists ONLY for 20260824/, and silver
+      08-19..08-23 are all 114 rows / trueshares 0. There was never anything earlier to read.
+  (2) CHARACTERISTICS COVERAGE        -- MY 11:00Z READ. Becomes operative tomorrow for the first
+      time, because only then does the join have TrueShares rows to miss on.
+  (3) ⭐ GLOBAL AS-OF -- A DESIGN DEFECT, NOT A TIMING ONE (Andrew ~23:5xZ, CTO~Z 5922).
+      His word: "We should be able to display data for all 4 ETFs every day." `resolve_as_of`
+      returns ONE GLOBAL as-of for all four funds, so ANY FUND WHOSE HISTORY STARTS LATER IS EMPTY
+      BY CONSTRUCTION. The fix is PER-FUND AS-OF. DS~Z's lane; not mine, and NOT fixed by anything
+      I deployed tonight.
+  ```
+  >> **SO IF TOMORROW'S BOOKS ARE STILL EMPTY, THE ANSWER IS NOT AUTOMATICALLY "THE DEPLOY FAILED"
+  >> OR "THE SCHEDULE FAILED."** Check the disjunction in order and name which one, on evidence.
+  >> **AND (3) IS THE ONE THAT SURVIVES A CLEAN (1) AND (2)** -- it is structural, so it will still
+  >> be there on a day when the file is right and the characteristics are right.
 - [tooling lane] `record-terraform-deploy.sh`: fails closed on cp1252, CRLF-rewrites under the UTF-8
   workaround. Routed around twice tonight.
