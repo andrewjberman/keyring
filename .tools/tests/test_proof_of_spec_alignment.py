@@ -171,6 +171,25 @@ TO_REL = "org/tier2_senior/0.8.0_AE_CloudComp/task_orders/FIX_PROJ.TO-1.fixture.
 CONFORMANT_REF = (
     f"<decomp_ref>{DECOMP_REL} -- cells FIX-a-1, FIX-a-2, FIX-b-1</decomp_ref>")
 
+# PRODUCTION-SHAPED FIXTURES. Modelled on the real ADVI_PERFRP round-1 TOs as they stood
+# BEFORE COO's relocation fix @249e0687c8: owned cells, a READ-DEPENDENCY clause and an
+# EXPLICIT EXCLUSION clause all inside the one element. Until these existed, every arm in
+# this battery exercised the harvest against a decomp_ref naming ONLY owned cells -- so
+# the shape that actually broke the gate in production could not fail any arm here.
+REF_UNDELIMITED_WITH_PROSE = (
+    f"<decomp_ref>{DECOMP_REL} -- cells FIX-a-1, FIX-a-2 "
+    f"(reads FIX-b-1; NOT in this TO: FIX-b-2)</decomp_ref>")
+REF_DELIMITED_WITH_PROSE = (
+    f"<decomp_ref>{DECOMP_REL} -- cells FIX-a-1, FIX-a-2 "
+    f"(reads FIX-b-1; NOT in this TO: FIX-b-2)"
+    f"<owned_cells>FIX-a-1, FIX-a-2</owned_cells></decomp_ref>")
+REF_DELIMITED_OVERCLAIM = (
+    f"<decomp_ref>{DECOMP_REL} -- the delimiter claims a cell no criterion discharges"
+    f"<owned_cells>FIX-a-1, FIX-a-2, FIX-b-1, FIX-b-2</owned_cells></decomp_ref>")
+REF_DELIMITER_CARRYING_PROSE = (
+    f"<decomp_ref>{DECOMP_REL}"
+    f"<owned_cells>FIX-a-1, FIX-a-2 (render half)</owned_cells></decomp_ref>")
+
 
 def _run(mod, ws: Path, inst: dict) -> tuple[list, list]:
     mod.WORKSPACE = ws
@@ -243,12 +262,9 @@ def main() -> int:
     # never discharges. A forward-only checker reads this as perfectly clean.
     with tempfile.TemporaryDirectory() as d:
         ws = Path(d)
-        _build(ws,
-               decomp_ref_line=f"<decomp_ref>{DECOMP_REL} -- cells FIX-a-1, FIX-a-2, "
-                               f"FIX-b-1, FIX-b-2</decomp_ref>",
-               criteria=CONFORMANT_CRITERIA)
+        _build(ws, decomp_ref_line=REF_DELIMITED_OVERCLAIM, criteria=CONFORMANT_CRITERIA)
         v, f = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
-        check("mutant unreached-cell: refused",
+        check("mutant unreached-cell (DELIMITED): refused",
               _has(v, "'FIX-b-2'") and _has(v, "never discharges"), str(v))
         check("mutant unreached-cell: backward denominator drops to 3/4",
               "3/4 cell(s) declared" in _frame(f, "backward"), _frame(f, "backward"))
@@ -329,6 +345,56 @@ def main() -> int:
             check(f"vintage: {label} -> REFUSED",
                   fired and _has(v2, "does NOT resolve to a commit"),
                   f"mutation_applied={fired}; violations={v2}")
+
+    # ---- ARMS 15-18: THE DELIMITED OWNED-CELLS CLAUSE (AE~G 66872, CTO 66893) ----
+    # THE DEFECT: the wide harvest read EVERY cell id in the whole <decomp_ref> as a cell
+    # the TO CLAIMS. A read-dependency became an unclaimed claim; an EXPLICIT EXCLUSION
+    # ("NOT in this TO: X") was INVERTED into a claim the TO was then faulted for not
+    # discharging -- a seat reading that violation without opening the TO would conclude
+    # the exact OPPOSITE of what the TO says. Measured in production on 5 round-1 TOs.
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=REF_UNDELIMITED_WITH_PROSE, criteria=CONFORMANT_CRITERIA)
+        v, f = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+        # THE INVERSION ARM. FIX-b-2 appears ONLY in "NOT in this TO:" -- the old code
+        # asserted a violation on it. It must now announce and stay clean.
+        check("undelimited + exclusion prose: NO violation asserted",
+              not v, str(v))
+        check("undelimited + exclusion prose: announced with the reason",
+              "UNDELIMITED" in _frame(f, "alignment-backward: UNDELIMITED"),
+              _frame(f, "alignment-backward: UNDELIMITED"))
+
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=REF_DELIMITED_WITH_PROSE, criteria=CONFORMANT_CRITERIA)
+        v, f = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+        check("delimited + exclusion prose: VALID (prose ignored, delimiter binds)",
+              not v, str(v))
+        check("delimited + exclusion prose: backward is 2/2 over the OWNED set only",
+              "2/2 cell(s) declared" in _frame(f, "backward")
+              and "<owned_cells>" in _frame(f, "backward"), _frame(f, "backward"))
+
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=REF_DELIMITER_CARRYING_PROSE, criteria=CONFORMANT_CRITERIA)
+        v, f = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+        check("prose INSIDE the delimiter is refused (ids-only is mechanical)",
+              _has(v, "non-id text"), str(v))
+
+    # THE PAIRED CONTROL, and it is the one that makes the three above mean anything:
+    # the SAME exclusion prose, one delimited and one not, differing ONLY in whether the
+    # <owned_cells> element is present. If both read the same way, the delimiter is inert.
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=REF_UNDELIMITED_WITH_PROSE, criteria=CONFORMANT_CRITERIA)
+        _, f_un = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=REF_DELIMITED_WITH_PROSE, criteria=CONFORMANT_CRITERIA)
+        _, f_de = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+    un_b, de_b = _frame(f_un, "backward"), _frame(f_de, "backward")
+    check("delimiter CHANGES the harvest (4-wide vs 2-owned), so it is not inert",
+          "4 cell(s)" in un_b and "2/2 cell(s)" in de_b, f"undelimited={un_b} | delimited={de_b}")
 
     # ---- ARM 10: SEAL -- the fixture instance is genuinely schema-valid ----
     # If it were not, every green arm above would be green for the wrong reason.

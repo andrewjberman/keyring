@@ -26,6 +26,9 @@ join; a TO without one is pre-pipeline work and stays VALID. The alignment frame
 whether or not anything failed. See org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170.
 decomp_ref.vintage_commit is also checked to RESOLVE to a real commit (CVO 66693,
 routed CTO 66702); CONTAINMENT of the doc at that vintage is a declared NON-GOAL.
+The BACKWARD direction enforces only against a DELIMITED <owned_cells> clause inside
+<decomp_ref> (CTO 66893): an undelimited element cannot distinguish an owned cell from
+one merely READ or explicitly EXCLUDED, so it ANNOUNCES rather than asserting.
 """
 from __future__ import annotations
 
@@ -174,6 +177,7 @@ WORKSPACE = Path(__file__).resolve().parent.parent
 # ETFS-a-1 (prefix-group-index) and D1-inv-1 / D1-h-r1 (multi-letter group, lettered
 # index) alike.
 CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\d+\b")
+OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
 
@@ -242,6 +246,25 @@ def _parse_to(text: str) -> dict:
     if blob:
         d = re.search(r"(\S+DECOMP\.md)", blob)
         doc = d.group(1) if d else ""
+    # THE DELIMITED OWNED-CELLS CLAUSE (CTO 66893). WHY IT EXISTS: the wide harvest read
+    # EVERY cell id in the whole <decomp_ref> element as a cell the TO CLAIMS, so a
+    # READ-DEPENDENCY became an unclaimed claim and -- the inversion AE~G named -- an
+    # EXPLICIT EXCLUSION CLAUSE ("NOT in this TO: ...") was reported as a claim the TO
+    # failed to discharge. A seat reading that violation without opening the TO would
+    # conclude the exact OPPOSITE of what the TO says.
+    owned = OWNED_CELLS_RE.search(blob) if blob else None
+    owned_raw = owned.group(1) if owned else ""
+    delimited = owned is not None
+    if delimited:
+        declared = sorted(set(CELL_ID_RE.findall(owned_raw)))
+        # "ids only, no prose inside the delimiter" is CTO's constraint (a) -- made
+        # MECHANICAL rather than aspirational: strip the ids and the separators, and
+        # anything with word characters left over is prose that crept back in.
+        residue = CELL_ID_RE.sub("", owned_raw)
+        stray = re.sub(r"[\s,;]+", "", residue)
+    else:
+        declared = sorted(set(CELL_ID_RE.findall(blob))) if blob else []
+        stray = ""
     crits: dict[str, list[str]] = {}
     no_refs: list[str] = []
     for tag in CRITERION_TAG_RE.finditer(text):
@@ -256,7 +279,9 @@ def _parse_to(text: str) -> dict:
     exp = re.search(r"<expected_criteria>(.*?)</expected_criteria>", text, re.S)
     return {
         "has_decomp_ref": blob is not None,
-        "declared_cells": sorted(set(CELL_ID_RE.findall(blob))) if blob else [],
+        "declared_cells": declared,
+        "delimited": delimited,
+        "delimiter_stray_text": stray,
         "decomp_doc": doc,
         "criteria": crits,
         "criteria_without_cell_refs": no_refs,
@@ -451,13 +476,33 @@ def alignment_check(inst: dict) -> tuple[list, list]:
                  f"{to['decomp_doc']} -- a citation to a cell that is not there is worse "
                  f"than no citation")
     # BACKWARD -- every cell the TO declared is reachable from some criterion.
+    # ENFORCE ONLY ON A DELIMITED SET (CTO 66893 constraint (b)). On an undelimited
+    # <decomp_ref> the harvest cannot tell an OWNED cell from one merely READ or
+    # explicitly EXCLUDED, so a mismatch there is NOT evidence of an over-claim and must
+    # not be asserted as one. It announces instead -- an honest "I cannot tell" beats a
+    # confident inversion of the TO's own words.
     declared = to["declared_cells"]
+    delimited = to["delimited"]
+    if to["delimiter_stray_text"]:
+        v.append(f"decomp_ref/<owned_cells>: contains non-id text "
+                 f"({to['delimiter_stray_text'][:60]!r}) -- the delimiter is machine-parsed "
+                 f"and carries CELL IDS ONLY; prose belongs in the <decomp_ref> body or a "
+                 f"sibling <decomp_context>, never inside the delimiter")
     reached = {c for c in declared if any(c in refs for refs in crits.values())}
+    src = "<owned_cells>" if delimited else "<decomp_ref> (UNDELIMITED, wide harvest)"
     frames.append(f"alignment-backward (declared cell -> criterion): "
                   f"{len(reached)}/{len(declared)} cell(s) declared in the TO's "
-                  f"<decomp_ref> are reachable from >=1 criterion")
-    for c in sorted(set(declared) - reached):
-        v.append(f"alignment: declared cell '{c}' is named in the TO's <decomp_ref> but NO "
+                  f"{src} are reachable from >=1 criterion")
+    unreached = sorted(set(declared) - reached)
+    if unreached and not delimited:
+        frames.append(
+            f"alignment-backward: UNDELIMITED -- {len(unreached)} harvested id(s) "
+            f"{unreached} are not reached by any criterion, but this <decomp_ref> has no "
+            f"<owned_cells> delimiter, so a READ-DEPENDENCY or an EXPLICIT EXCLUSION "
+            f"CLAUSE reads here as a claim. NOT asserted as a violation. Add "
+            f"<owned_cells>id, id</owned_cells> inside <decomp_ref> to make this enforceable.")
+    for c in unreached if delimited else []:
+        v.append(f"alignment: declared cell '{c}' is named in the TO's <owned_cells> but NO "
                  f"criterion references it -- the TO claims a cell it never discharges")
     frames.append(
         "alignment-scope: this closes the TO against ITSELF and against the decomp's id "
