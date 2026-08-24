@@ -635,6 +635,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "0.4.0_DE_ClientPlatform~Z",
     "notes": "DISARMED at surfacing: DE~Z PINNED THE BYTES THEMSELVES (@5550a5129a) rather than pinning a VersionId, and released the ad-hoc run without requiring anyone to sequence around their measurement -- they REMOVED the dependency instead of asking others to work around it. \u26d4 THE FINDING IS THAT THE OBVIOUS REMEDY WOULD HAVE FAILED QUIETLY. 'Versioning is Enabled, so an overwrite does not destroy the bytes' is TRUE and INCOMPLETE; the 14-day fuse is in a separate API call that nobody makes when the first one already said Enabled. A pinned VersionId carries NO indication at pin time that it expires, and T5-1 may cite this baseline later than 14 days out -- so the failure lands on a future reader resolving a citation, not on the person who pinned it. Bucket-WIDE filter means this applies to every object in opal-data-portal-v2, including every other platinum artifact anyone might pin as evidence. GENERAL FORM worth carrying past this project: WHEN RELYING ON A DURABILITY PROPERTY, READ THE EXPIRY POLICY IN THE SAME BREATH AS THE ENABLEMENT FLAG -- 'Enabled' answers whether old versions are KEPT, never for HOW LONG, and the two live in different API calls. The estate's own banked shape: an instrument whose clean answer is strongest exactly where it is least complete."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S24",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-08-24T22:39Z",
+    "one_line": "D4's placement row is STALE ON THE FABRIC THAT EXECUTES THE WORK: origin/SITEZ still reads 'TEMPORARY, TODAY ONLY' while origin/CLOUD carries the superseding 'UNTIL THE PROJECT IS DONE' -- and CLOUD's corrected row cites its proof commit as living on origin/SITEZ, so the record of the correction is here while the corrected text is there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by MSTR~Z, confirmed by CTO~Z on both refs, RE-DERIVED at CVO~Z",
+        "origin/SITEZ org/missions/DIRECTIVES.yaml D4 placement: 'SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ ... That can be their project for today.)'",
+        "origin/CLOUD same row: 'SITEZ -- UNTIL THE PROJECT IS DONE (Andrew-direct 2026-08-24, MSTR~Z terminal ...) VERBATIM: keep D4 on sitez until the project is done. SUPERSEDES the same-day TODAY-ONLY placement below.'",
+        "origin/CLOUD's corrected row cites its record as '@93d126c4aa on origin/SITEZ'; git branch -r --contains 93d126c4aa returns origin/SITEZ ONLY -- so the proof lives on our branch and the corrected text does not",
+        "The divergence is not one row: DIRECTIVES.yaml is 20,498 bytes on origin/SITEZ vs 24,587 on origin/CLOUD"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "notes": "\u26d4 THIS GOVERNS THIS PROJECT: D4 placement is PRD s.0 word 3, and the row a site-Z seat reads says the opposite of the ruling in force. \u26d4 WORSE THAN A PLAIN LAG, AND THAT IS THE FINDING: the PROVENANCE TRAIL POINTS AT THE BRANCH WHOSE OWN COPY IS WRONG. A seat here can locate @93d126c4aa, confirm it establishes 'keep D4 on sitez until the project is done', and then read the superseded TODAY-ONLY row in the file that same commit was supposed to correct -- with no signal that the two disagree. An ordinary staleness is caught by checking the record; THIS ONE SURVIVES CHECKING THE RECORD, because the record is on the stale side. DISARM = the cross-fabric merge that carries CLOUD's row here; MSTR~Z holds the integrator role and the bridge. NOT ACTED ON BY THIS SEAT: DIRECTIVES.yaml is MSTR's sole-writer surface (the decomp's own ETFS-g-1 cell says so) and a placement row is a sovereign record -- I measure it and record it, I do not edit it. \u26a0 THE PRACTICAL EXPOSURE IS NARROWER THAN IT READS AND I AM SAYING SO RATHER THAN LETTING THE ROW CARRY MORE WEIGHT THAN IT EARNS: CTO~Z checked their own acts against it and none depended on the stale text -- no hand-back was planned, and /self-drive's completion test reads project STATUS, never the placement string. The correction changes confidence, not acts. The hazard is FORWARD-LOOKING: the next seat to spawn here, or any seat reasoning about whether D4 reverts at midnight, reads the wrong bound."
   }
 ]
 ```
@@ -643,7 +664,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **23** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **24** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
