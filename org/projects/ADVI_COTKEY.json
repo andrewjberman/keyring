@@ -5,6 +5,16 @@
   "description": "Andrew-direct 2026-08-24 ~19:1xZ at the base CTO terminal, VERBATIM: 'Lastly, Cottonwood is going to need some deep analysis on their current ADVI process and setup because currently we are not keying them in the right way. I suspect that the place that they actually use to assign advisor relationships is the \"portfolio_group\" key or some derivation of \"portfolio group\", so that will need to be investigated.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ADVI_PARTNER_UNIFORMITY_PORT_INSURE_PERFRP_ALL_PARTNERS_COTTONWOOD_KEYING.md). Registered by the CTO on his explicit 'will need to be investigated' as a BOUNDED INVESTIGATION (atom-decomp over the Cottonwood ADVI identity/keying surfaces), not a build: the deliverable is a MEASURED keying map (how the cot tree keys advisor <-> relationship <-> account today, versus what Cottonwood's Black Diamond actually uses -- portfolio_group as the partition-like key, as measured for 49F) and a remedy plan with its own decomp. PRIOR ART reused as ARTIFACTS: the 49F Portfolio-Group keying scan (BD qt6 'BI Billing' with Portfolio Group as a native level; Primary Portfolio Group = the partition-like key; groups OVERLAP, never sum across groups -- D2 PRD s.2 / D3 run #12-#13); the BD-exclusive dependency map (dim_advisor_fee_role / dim_account_xref / fact_bd_allocation on the 49f side -- the cot side has its own blackdiamond/cottonwood/** tree); the cot runner chain (COT_RUNNER_REFACTOR, COT_ADVI_FIX, ADVI_COTETL, COT_SUPERVISED -- the supervised filter live). The artifacts are reused; their authors' lanes are not briefed (distribution restriction on the 49F subject). UNIFORMITY LAW (D2 PRD s.11): Cottonwood is Tier B (= Inflection's view exactly) + the insurance option; its PERFRP and D3 bindings and the INSURE port SEQUENCE AFTER this investigation lands -- a book keyed wrong yields every per-client figure keyed wrong. Placement LAPTOP (ADVI). Firm separation absolute (bd<->cot).",
   "prds": [
     {
+      "path": "docs/architecture/ADVI_COTKEY_PRD.md",
+      "label": "CTO stage-2 PURPOSE-LEVEL PRD v0.1 (2026-08-24 ~20:0xZ): the hypothesis CONFIRMED in its strong form (Portfolio Group values ARE the advisors; rep_code refuted as a key), the one ruling at Andrew (key of record), the remedy territory named for COO decomp",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ADVI_COTKEY_ATOMDECOMP/run_20260824.md",
+      "label": "GROUND TRUTH AT OUTSET run K1-K12 (live reads of opal-data-cot gold dims + silver account_attributes/holdings/allocations; A_01/A_00/silver-merge/template sources; INF_A_01 as the Tier-B reference)",
+      "date": "2026-08-24"
+    },
+    {
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ADVI_PARTNER_UNIFORMITY_PORT_INSURE_PERFRP_ALL_PARTNERS_COTTONWOOD_KEYING.md",
       "label": "The commissioning word (verbatim) + the partner uniformity law",
       "date": "2026-08-24"
@@ -26,9 +36,9 @@
     "DATA_BDINSURANCE"
   ],
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~19:2xZ (1.0.0_SA_CTO, on Andrew's explicit 'will need to be investigated'). STAGE 2 = a purpose-level PRD for the INVESTIGATION (declare the cot identity surfaces: the cot runner chain's advisor/relationship/account dims, Cottonwood's BD tree blackdiamond/cottonwood/**, the served cot ADVI keys, and Cottonwood's own BD portfolio-group structure) with a GROUND TRUTH run; STAGE 3 = COO decomp of the measurement cells; the REMEDY is a second stage-2 act once the map exists. Certifier CVO. Placement LAPTOP. Sequencing consequence, his: Cottonwood's Tier-B PERFRP / D3 bindings and the INSURE port wait on this map.",
-  "blocking": "None on any agent. Needs a measuring seat (DS-class) on spawn; the cot BD principal's read access for the portfolio-group probe is an existing vehicle (cot session bundle).",
+  "blocking": "None on any agent. ONE ruling at Andrew (PRD s.3): key of record = Portfolio Group (BD template 270648), value = advisor, No Advisor = explicit unassigned book. Decomp seat: COO in its DISPATCH_ORDER_20260824 slot (wave 3; PRD ready earlier). The remedy needs a DS-class measuring/building lane on spawn (one project); the cot BD session bundle is the existing read vehicle.",
   "created": "2026-08-24",
   "pods": [
     "1.0",
