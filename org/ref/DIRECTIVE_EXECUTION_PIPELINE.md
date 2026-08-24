@@ -19,7 +19,7 @@ below traces to the ratified package; any single clause is reversible on Andrew'
 | 1 | **REGISTER** — project JSON + REGISTRY row. Nothing else exists until this does. | commissioning exec |
 | 2 | **PRD** — purpose-level: comp-find + shape scan. What and why; names the territory, does NOT enumerate surfaces. | PRD author (commissioning exec) |
 | 3 | **DECOMP → TOs** — COO finds the OPERATIVE SURFACES and runs atom-decomp on them BEFORE any TO exists. Proof-of-spec derives from decomp cells. | **COO** (fallback: CTO, §Stage-3 below) |
-| 4 | **EXECUTE ON SPEC. PERIOD.** — the spec is FROZEN mid-round. The only legal off-spec write is a surprise item. | executing seats |
+| 4 | **EXECUTE ON SPEC. PERIOD.** — the spec is FROZEN mid-round. The only legal off-spec ACT is to SURFACE a surprise item — one line by MCP to CVO (cc the issuer); CVO files it under `org/surprise_channel/**`, which executing seats do not write (owned-paths: CVO_WORKSPACE; COO ruling 2026-08-24 ~21:0xZ). | executing seats |
 | 5 | **SURPRISE CHANNEL** — investigation → graduation → remediation → next round's TOs (re-entering at stage 3) → vN rounds to completion. | **CVO** |
 
 **Round termination / project close:** a project closes when a round's TOs complete AND that
