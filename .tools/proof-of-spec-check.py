@@ -24,11 +24,14 @@ a denominator printed for each direction. ENFORCE vs ANNOUNCE is derived from th
 a TO carrying <decomp_ref> obliges its instance to carry decomp_ref and to close the
 join; a TO without one is pre-pipeline work and stays VALID. The alignment frames print
 whether or not anything failed. See org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170.
+decomp_ref.vintage_commit is also checked to RESOLVE to a real commit (CVO 66693,
+routed CTO 66702); CONTAINMENT of the doc at that vintage is a declared NON-GOAL.
 """
 from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -277,6 +280,69 @@ def _decomp_cell_ids(rel_or_abs: str) -> tuple[set, str]:
         return set(), f"decomp doc unreadable: {exc}"
 
 
+def _vintage_resolves(vintage: str) -> bool:
+    """Does this hash name a real commit in THIS repo?
+
+    `^{commit}` is deliberate: it peels tags and REFUSES a hash that resolves to a
+    non-commit object, so a tree/blob hash cannot masquerade as a vintage.
+    """
+    if not vintage:
+        return False
+    try:
+        return subprocess.run(
+            ["git", "cat-file", "-e", f"{vintage}^{{commit}}"],
+            cwd=WORKSPACE, capture_output=True).returncode == 0
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def vintage_check(inst: dict) -> tuple[list, list]:
+    """decomp_ref.vintage_commit must RESOLVE. (violations, frames)
+
+    FOUND IN VERIFICATION, NOT IN AUTHORING -- 3.0.0_SA_CVO, 66693: the field was
+    REQUIRED by schema and its VALUE was never checked by any layer, so a hash ONE
+    CHARACTER OFF the true one read VALID. Reproduced at this seat on ETFS TO-3:
+    20c092c0da (real) VALID; 20c092c0db VALID; deadbeef99 VALID.
+
+    WHY THIS IS NOT PEDANTRY, in CVO's words: AN UNVERIFIED VINTAGE IS WORSE THAN A
+    MISSING ONE -- a missing one makes a reader ask, a wrong one makes them stop
+    asking. And the dangerous input is not `deadbeef99`; it is the one-character slip,
+    which looks exactly like a real hash and survives human review too. The field
+    exists to pin WHICH version of the decomp the work was built against (Rule 22: a
+    citation without a vintage is not a citation) -- an unresolvable one pins nothing
+    while looking like it does.
+
+    Runs whenever the instance CARRIES a decomp_ref, on either branch: the claim is
+    the instance's own, so it is checkable regardless of what the governing TO does.
+
+    NAMED NON-GOAL (CTO 66702, declared here rather than silently absent):
+    CONTAINMENT -- whether that vintage's tree actually contains decomp_ref.doc, and
+    whether the doc at that vintage carries the cited cells -- is NOT checked. It is
+    the layer-5 judgment residue's mechanical edge and costs a git read per check,
+    and the existence check already kills the one-char-off class that was measured.
+    A real instance citing a RESOLVING vintage whose tree lacks the doc re-opens this
+    as its own item.
+    """
+    frames: list[str] = []
+    v: list[str] = []
+    dr = inst.get("decomp_ref")
+    if not isinstance(dr, dict):
+        return v, frames
+    vintage = str(dr.get("vintage_commit", "")).strip()
+    if not vintage:
+        return v, frames  # absence is the schema's business, not this check's
+    if _vintage_resolves(vintage):
+        frames.append(f"vintage-frame: decomp_ref.vintage_commit {vintage} RESOLVES to a "
+                      f"commit in this repo (containment NOT checked -- declared non-goal)")
+    else:
+        v.append(f"decomp_ref.vintage_commit: '{vintage}' does NOT resolve to a commit in "
+                 f"this repo -- the field exists to pin WHICH decomp vintage the work was "
+                 f"built against, and an unresolvable hash pins nothing while looking like "
+                 f"it does. A one-character slip reads exactly like a real hash to a human "
+                 f"reviewer, which is why this is mechanical")
+    return v, frames
+
+
 def alignment_check(inst: dict) -> tuple[list, list]:
     """(violations, frames). FRAMES PRINT WHETHER OR NOT ANYTHING FAILS -- a count with
     no denominator beside it is the exact class this gate exists to close, and a bare
@@ -288,6 +354,12 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     frames.append(
         f"alignment-frame: project={code or '<unparsed>'} "
         f"dep_stage={stage if stage else 'ABSENT (not pipeline-registered)'}")
+
+    # The instance's OWN claim, checked on either branch -- an ANNOUNCE verdict must not
+    # launder an unresolvable vintage just because the governing TO is pre-pipeline.
+    vv, vf = vintage_check(inst)
+    v.extend(vv)
+    frames.extend(vf)
 
     to_path, note, scanned = _resolve_governing_to(inst)
     if to_path is None:

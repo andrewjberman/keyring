@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -75,7 +76,13 @@ CONFORMANT_CRITERIA = (
 )
 
 
-def _instance(decomp_doc: str, to_ref: str) -> dict:
+# Set by _build(): the real commit hash of the sealed fixture repo. The vintage check
+# runs `git cat-file -e <hash>^{commit}` with cwd = the (temp) WORKSPACE, so the fixture
+# must be a genuine repo or the conformant arm would fail for the wrong reason.
+FIXTURE_VINTAGE = "abc1234"
+
+
+def _instance(decomp_doc: str, to_ref: str, vintage: str = "") -> dict:
     """A schema-valid instance. Kept minimal but COMPLETE -- if it were not schema-valid
     the arms would go red for the wrong reason and the battery would be measuring the
     fixture instead of the gate."""
@@ -86,7 +93,9 @@ def _instance(decomp_doc: str, to_ref: str) -> dict:
         "spec_ref": {"doc": "docs/fixture.md", "group": "OTHER",
                      "vintage_commit": "abc1234"},
         "assignee": "0.8.0_AE_CloudComp~F",
-        "decomp_ref": {"doc": decomp_doc, "vintage_commit": "abc1234", "to_ref": to_ref},
+        "decomp_ref": {"doc": decomp_doc,
+                       "vintage_commit": vintage or FIXTURE_VINTAGE,
+                       "to_ref": to_ref},
         "artifacts_produced": [{
             "path_or_key": "docs/fixture_artifact.md", "kind": "doc",
             "commit_or_etag": "abc1234",
@@ -132,7 +141,29 @@ def _build(ws: Path, *, decomp_ref_line: str, criteria: str, dep_stage: bool = T
     to = tod / "FIX_PROJ.TO-1.fixture.md"
     to.write_text(
         TO_TEMPLATE.format(decomp_ref=decomp_ref_line, criteria=criteria), encoding="utf-8")
+    _init_repo(ws)
     return to
+
+
+def _git(ws: Path, *args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["git", "-c", "user.name=battery", "-c", "user.email=battery@opal.agent", *args],
+        cwd=ws, capture_output=True, text=True)
+
+
+def _init_repo(ws: Path) -> None:
+    """Make the sealed fixture a REAL repo so the vintage check exercises real git.
+
+    Bypassing it (pointing the resolver at the live repo) would test a code path the
+    production checker does not take, and would reintroduce the estate dependency the
+    sealed workspace exists to remove.
+    """
+    global FIXTURE_VINTAGE
+    _git(ws, "init", "-q")
+    _git(ws, "add", "-A")
+    _git(ws, "commit", "-q", "-m", "fixture")
+    out = _git(ws, "rev-parse", "HEAD").stdout.strip()
+    FIXTURE_VINTAGE = out[:10] if out else "abc1234"
 
 
 DECOMP_REL = "workflows/runs/fixture/DECOMP.md"
@@ -267,6 +298,37 @@ def main() -> int:
         v, f = _run(mod, ws, inst)
         check("scope: unresolvable TO on NON-pipeline project -> announce only",
               not v, str(v))
+
+    # ---- ARMS 11-14: VINTAGE RESOLUTION (CVO 66693, routed CTO 66702) ----
+    # THE DEFECT THESE CLOSE: decomp_ref.vintage_commit was REQUIRED by schema and its
+    # VALUE was never checked, so a hash ONE CHARACTER OFF the true one read VALID.
+    # My original battery could not have caught this -- every arm it had used the same
+    # fixture vintage, so no arm ever varied the field under test. Found by CVO in
+    # independent verification.
+    #
+    # EACH ARM ASSERTS ITS MUTATION ACTUALLY CHANGED THE ARTIFACT BEFORE ITS VERDICT
+    # COUNTS (CVO's rule, adopted into this battery's contract): CVO's own first probe
+    # mutated a field that DOES NOT EXIST behind an isinstance guard, the mutation never
+    # fired, and the run returned VALID -- which is BYTE-IDENTICAL to a mutation that
+    # fired and was wrongly accepted. A mutant that silently no-ops is not a control.
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=CONFORMANT_REF, criteria=CONFORMANT_CRITERIA)
+        real = FIXTURE_VINTAGE
+        base = _instance(DECOMP_REL, TO_REL)
+        v, f = _run(mod, ws, base)
+        check("vintage: real commit hash -> no violation (positive control)",
+              not v and bool(_frame(f, "RESOLVES")), str(v))
+        one_off = real[:-1] + ("b" if real[-1] != "b" else "c")
+        for label, bad in (("fabricated deadbeef99", "deadbeef99"),
+                           ("all zeros", "0000000000"),
+                           ("ONE CHARACTER OFF the true hash", one_off)):
+            mutated = _instance(DECOMP_REL, TO_REL, vintage=bad)
+            fired = mutated["decomp_ref"]["vintage_commit"] != base["decomp_ref"]["vintage_commit"]
+            v2, _ = _run(mod, ws, mutated)
+            check(f"vintage: {label} -> REFUSED",
+                  fired and _has(v2, "does NOT resolve to a commit"),
+                  f"mutation_applied={fired}; violations={v2}")
 
     # ---- ARM 10: SEAL -- the fixture instance is genuinely schema-valid ----
     # If it were not, every green arm above would be green for the wrong reason.
