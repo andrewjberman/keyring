@@ -4,8 +4,16 @@
 **Protocol:** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` (stage 5) · CLAUDE.md Rule 27
 **Project:** `ETFS_INGEST` -- the NO-BQL ETF constituent pipeline. PRD `docs/architecture/ETFS_INGEST_PRD.md`.
 **Certifier role:** this seat is also CERTIFIER OF RECORD for `2.0.0_SA_COO~Z`'s stage-3 decomp
-(`workflows/atom_decomposition/runs/etfs-ingest/20260824T195350Z/`). Per the pipeline's
-role-collision clause my channel role is RECORD + GRADUATE; I never re-certify my own cert.
+(`workflows/atom_decomposition/runs/etfs-ingest/**20260824T2010Z**/`) -- **CERTIFIED** at
+`fcdf042972`, certificate at
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/laneZ_ETFS_INGEST_STAGE3_DECOMP_CERTIFICATION_20260824.md`
+@`422bdb431b`. Per the pipeline's role-collision clause my channel role is RECORD + GRADUATE; I
+never re-certify my own cert.
+*(This line first read `20260824T195350Z` -- the run id in CTO~Z's welcome message, written before
+the run existed. Only `20260824T2010Z` was ever created on disk. Corrected rather than quietly
+overwritten: a citation to a path that never existed is the dangling-citation class, and I
+introduced it into my own document by copying a forward-looking id out of mail instead of reading
+the directory.)*
 **Status:** APPEND-ONLY during this round. A correction is a NEW item citing the prior id.
 
 ## Filename
@@ -416,6 +424,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "notes": "Raised mid-run so the author could fix it while still in the file; CLOSED at the certified vintage. THE INSTRUCTIVE MIDDLE VINTAGE: COO~Z's own 26->36 denominator correction fixed the TOTAL but SWAPPED which cell was orphaned (T6-6 -> T6-5) rather than closing the gap, because the stated total and the uncovered list were two separately-maintained hand-written facts -- the count stayed at 2 while looking repaired. A cell absent from BOTH directions is worse than an uncovered one: uncovered is a disclosed state with a reason, absent is invisible to the instrument. The two that fell out were T3-3 (the cell s4(iv) itself names as the stability defect) and the four-clocks as-of cell -- an enumeration drops its awkward members first. DURABLE REMEDY, still open and COO~Z's: DERIVE the uncovered list as ALL minus covered so the two can never disagree again; s5 already says 'RE-RUN, NEVER RE-TYPED', which is a rule needing a mechanism rather than a restatement. INERT: a mis-stated alignment misleads a reader but no scheduled act consumes it. MY OWN FIRST MEASUREMENT OF THIS WAS FALSE -- the first extractor reported 36 of 36 absent, because s5 writes ids BARE while s3 writes them PREFIXED and my pattern required the prefix, and because my negative control was INGEST-ZZ-99 which the decomp's own s4.1 quotes verbatim, so THE CONTROL FIRED POSITIVE and that is the only reason I looked. Third instance of that shape this session."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S14",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T20:44Z",
+    "one_line": "etf_daily_pull.py:88 does a bare unary ~ on is_cash, so the Bloomberg daily universe derivation RAISES TypeError the moment a TrueShares row with is_cash=None lands in silver/holdings -- which is exactly what INGEST-T0-3/T2-1 deliver this round.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Source verbatim at HEAD 9f03776fc5, integrations/bloomberg/pipeline/etf_daily_pull.py:88 -- `cons = sorted({str(t).strip() for t in h.loc[~h[\"is_cash\"], \"holding_ticker\"] ...})`",
+        "EXERCISED at CVO~Z independently of the surfacing seat: CONTROL filepoint-only [True,False,False] dtype=bool -> NO RAISE, keeps 2 rows",
+        "UNDER TEST filepoint+TrueShares [True,False,None] dtype=object -> TypeError: bad operand type for unary ~: 'NoneType'",
+        "NEGATIVE CONTROL all-None -> also raises, so the discriminator is the presence of a null and not the dtype alone",
+        "DS~Z's own prior reads at source: nulls SURVIVE the parquet write (_parquet_bytes casts only `inferred` at :889-890, never is_cash), so silver stores the tri-state correctly today and the defect is entirely on the CONSUMER side"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
+    "notes": "Coordinate allocated by the channel owner: the surfacing seat proposed S8 as high-water, which was correct when they measured and is superseded by the 20:45Z append -- S13 is high-water, so this is S14. BLOCKING class because it constrains which CONV-1 representations are ADMISSIBLE, not because it stops work today. ARMED with a trigger inside this round: the first TrueShares row to reach silver/holdings. DISARM (theirs, taken same-turn): CONV-1 rules a null-bearing representation inadmissible to a bare unary `~`, naming etf_daily_pull.py:88 as a consumer that must be adapted BEFORE T2-1 lands. DISARMED != REMEDIATED -- the consumer edit is NOT DS~Z's lane (integrations/bloomberg/pipeline/), so remediation carries its own owner and clock. ⛔ THE PART WORTH KEEPING, and it is the surfacing seat's own self-correction: they were wrong TWICE on the way here and BOTH wrong versions were more alarming AND more plausible than the truth -- first that None COERCES to False at write (silent tri-state destruction; FALSE, nulls survive), then, having written the consumer check as their own PARAPHRASE `~h['is_cash'].astype(bool)`, that it silently keeps cash rows. I re-ran the paraphrase: it DOES fail silent (keeps the None row) while THE REAL LINE RAISES. Had the paraphrase shipped they would have filed silent data corruption against a fail-loud mechanism. RUN THE REAL ARGV -- CLAUDE.md's own oracle rule firing on the seat that quoted it. VERIFIED AT THIS SEAT: source line read at a named vintage, and all three exercise arms re-run independently; DS~Z notes their cusip three-population reproduction of Z-S3 is same-plane corroboration rather than independent confirmation, which is the right distinction and is why the exercise above was run fresh rather than accepted."
   }
 ]
 ```
@@ -424,8 +453,9 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **13** (1 dismissed, 5 under investigation, 7 graduated). ARMED: **6** (Z-S1, Z-S4, Z-S5,
-  Z-S7, Z-S8, Z-S10) -- each with a named disarm owner, per the schema's conditional rule.
+- Items: **14** (1 dismissed, 5 under investigation, 8 graduated). ARMED: **7** (Z-S1, Z-S4, Z-S5,
+  Z-S7, Z-S8, Z-S10, Z-S14) -- each with a named disarm owner, per the schema's conditional rule.
+  Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
   *(At the 8-item version this line read "ARMED: 4" and omitted Z-S8 until the validator's own count
   contradicted it. Recorded rather than silently fixed: a hand-written denominator beside a
