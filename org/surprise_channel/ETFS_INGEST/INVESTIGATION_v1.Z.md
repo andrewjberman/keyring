@@ -467,6 +467,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "THE FINER AXIS MAKES IT WORSE, NOT BETTER: the finer the vocabulary the more information the colour channel was carrying, so swapping 11 -> 24 without a colour act converts a dead channel into a more conspicuously dead one. T5-1 IS THEREFORE TWO ACTS, NOT ONE -- the field swap AND a colour/vocabulary act for the new values; the second is a Rule 24 authoring event (per the 2026-08-20 widening, PROPOSING values to an existing axis is itself an authoring act requiring the four-postulate test plus a token-hygiene census). ARMED because the trigger is an ordinary in-round act: COO~Z cutting T5-1 as a single field swap, which is the natural reading of C3's ruling. *** DISARMED AT ISSUANCE 2026-08-24T21:04Z by 2.0.0_SA_COO~Z: TO-5 (@efa80f37a4, ETFS_INGEST.TO-5, cells T5-1 + T5-2) was AMENDED BEFORE THE GO and this consequence is now AC6 -- so the TO reached the executing seat already carrying the second act, and the hazard never had a chance to fire. That is the escape valve working at its cheapest possible moment: surfaced, measured, and folded into the spec before the seat read it. *** DISARM was: scope the TO's second half deliberately at cutting time. DE~Z explicitly did NOT mint the vocabulary and named it instead, which is the correct refusal. NOT A CHALLENGE TO C3 -- Andrew ruled GICS_INDUSTRY_GROUP_NAME and that ruling stands; this says the cell has a second half, nothing more. DE~Z's prediction is carried as MEASURED rather than inferred because I re-derived it at this seat with a firing positive control; an unmeasured 'it will also miss' would not have graduated."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S16",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T21:28Z",
+    "one_line": "The two issuers reach the unified row's `date`/`data_as_of` by DIFFERENT KINDS of source -- filepoint from the HOLDINGS FILE's own date, TrueShares from the NET-ASSETS PAGE as-of -- with no marker distinguishing them, and TrueShares' own sheet Date is DROPPED so those rows' true holdings as-of is discarded rather than merely unused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by DS~Z at TO-2; VERIFIED AT SOURCE at CVO~Z, vintage 80c36267a1, not taken from the report",
+        "filepoint: lambda_function.py:612 `holdings_date = _norm_date(fund_rows[0].get(\"Date\"))` -- a HOLDINGS-FILE date -- feeding :665 `\"net_assets_as_of\": holdings_date`",
+        "trueshares: :526 `\"net_assets_as_of\": _ts_asof_after(html, \">Net Assets<\")` -- a NET-ASSETS PAGE as-of, a different kind of thing entirely",
+        "Both land in the SAME field name, then :838 `\"data_as_of\": rec.get(\"net_assets_as_of\")` and :902 `\"date\": h[\"data_as_of\"]` -- so one column carries both, distinguished nowhere",
+        "TrueShares' own sheet `Date` appears at no consuming call site (the only `Date` consumption found is filepoint's :648 `nav_row.get(\"Rate Date\")`), confirming DS~Z's DROPPED finding"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
+    "notes": "Rule 24(ii) SAME GRAIN failing INSIDE one column -- the axis is 'as-of', and two values on it are measured from different things. \u26d4 IT ARMS TONIGHT: invisible until now ONLY because DIVZ/IDVZ carry zero holdings rows, and the 22:00Z fire lands the first TrueShares rows. Any consumer reading the column uniformly is then wrong for half the rows -- and INGEST-T3-3's tie-out is specified as a SAME-DAY compare of the Bloomberg count against 'that day's issuer row count', which is precisely the comparison a cross-issuer as-of mismatch corrupts. DISARM is a DECLARATION, not a code change, because the rows land regardless: the difference must be declared (DS~Z's proposed `as_of_basis`) before any consumer treats the column as a uniform holdings as-of. The two remedies COMPOSE and DS~Z checked that rather than assuming it -- `as_of_basis` makes the difference declared, and T2-3's superset row restores the discarded value as a vendor-verbatim column, which is Rule 17's no-slimming doing real work rather than being cited. \u26d4 WHY THIS ITEM EXISTS AT ALL: it is a surface the CERTIFIED decomp's cells did not name. It is NOT decomp-invalidating -- the cells that must carry it (CONV/T2-3/T2-4) all exist and the remedy lands inside them -- but it is a live instance of the cert's own stated limitation: REDUCED COHORT, one perspective, nobody having independently re-enumerated the operative surfaces. An executing seat found at pickup what the enumeration did not, which is the pipeline working, and is also exactly why that limitation was written on the certificate's face rather than buried."
   }
 ]
 ```
@@ -475,8 +496,8 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **15** (1 dismissed, 3 under investigation, 11 graduated). ARMED: **8** (Z-S1, Z-S4, Z-S5,
-  Z-S7, Z-S8, Z-S10, Z-S14, Z-S15) -- each with a named disarm owner, per the schema's conditional rule.
+- Items: **16** (1 dismissed, 3 under investigation, 12 graduated). ARMED: **9** (Z-S1, Z-S4, Z-S5,
+  Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
   *(At the 8-item version this line read "ARMED: 4" and omitted Z-S8 until the validator's own count
