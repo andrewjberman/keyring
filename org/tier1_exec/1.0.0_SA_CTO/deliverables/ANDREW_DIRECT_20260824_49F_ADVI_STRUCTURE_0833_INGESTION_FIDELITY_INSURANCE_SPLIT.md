@@ -90,3 +90,13 @@ own records.
 ## BROADCAST
 MCP to every live seat + the queued seats that will hold cells (MSTR, CRO; COO, CVO, DS, DE, AE, DT,
 0.6.0_AE_PartnerETL -- the BD vehicle owner). Same turn. Push state stated on the commit.
+
+## DISTRIBUTION RESTRICTION -- Andrew-direct ~16:1xZ, immediately after the broadcast above, VERBATIM
+> "Do not broadcast any of this to 4.0.0_SA_CRO i am working with them separately from this subject"
+
+Binds this subject (the 49F meeting findings, all three) at this seat and at every relay: **no further
+messages on it to `4.0.0_SA_CRO`.** Stated plainly for the record: finding 1 (66227) and the six
+open-calls rulings (66216) had already been delivered to CRO's inbox before this instruction; nothing
+further is sent, and no "disregard" is sent unless Andrew asks for one. Findings 2 and 3 are recorded
+and broadcast WITHOUT CRO on the recipient list. MSTR informed same turn so the restriction binds at
+the bridge.
