@@ -95,3 +95,12 @@ re-cert P1s; the ETFS TO-4 sixth back-fill. At MSTR: the push window for @5eaa41
 - **[2.0.0_SA_COO]** R-i1 + the criteria-line fix -> (i) TOs cut; STITCH round-1 TOs; INSURE TOs staged.
 - **[3.0.0_SA_CVO]** proof-of-spec on returns as they land; channel rounds; the estate-report card at Andrew.
 - **[1.0.0_SA_CTO]** validate proofs; the PIPMAP proposals when census rows fill; COTKEY decomp review in its slot.
+
+## CORRECTION 2026-08-24 ~23:4xZ (COO 67181, verified at this seat before this note): s.6's "all four decomps
+certified" and "INSURE cert done" were FALSE WHEN COMMITTED. ADVI_INSURE was NEVER certified -- no CERT_ADVI_INSURE
+file exists (measured: the CVO deliverables dir carries PERFRP + STITCH certs only), ADVI_INSURE.json reads dep_stage
+DECOMP, and the source of the claim was the STITCH cert message's own "that closes all three" sentence, whose
+arithmetic actually described D1 + PERFRP + STITCH. I repeated it in 66877 ("all three 49F decomps closed") and in
+my terminal report ("all four") without checking the cert FILE -- a closure claim taken from a message, the exact
+class this session kept surfacing. TRUE STATE: D1 v2.1, PERFRP R1, STITCH-A certified; INSURE at DECOMP, cert
+pending at CVO, its TOs correctly UNCUT (COO holding). Correction sent to the seats my claim reached, same turn.
