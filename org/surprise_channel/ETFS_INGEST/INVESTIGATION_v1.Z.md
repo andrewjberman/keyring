@@ -613,6 +613,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
     "notes": "\u26d4 RULE 24(iii) INSIDE A VALUE'S WORDING, AND THE AUTHOR CAUGHT IT AGAINST THEMSELVES: the axis measures WHAT THE VENDOR SAID; the value name `vendor-blank` asserts THE VENDOR DID NOT SAY. For a PRESENCE-FLAG encoding that is false -- the vendor did say, and it said NO, by leaving the cell empty. The axis cannot see whether emptiness is silence or a negative, so a value name that claims to is asserting past its own axis. THE SAME FAILURE DS~Z REJECTED `name-inferred` AND `none` FOR, SIX HOURS EARLIER, IN THIS SAME ENUM -- they wrote the enum against a mental model of a tri-state field and the vendor does not have one. \u26d4 AND THE ESTATE ALREADY KNEW: etf_schemas.py's DTYPE LAW states the encoding explicitly, and DS~Z had QUOTED THAT LINE APPROVINGLY the same evening as corroboration FOR the ruling it actually falsifies -- a document read for support rather than for test. WHAT MAKES THIS THE MODEL RESPONSE RATHER THAN THE DEFECT: they STOPPED, did not re-rule it mid-build, and routed to the issuer -- executing exactly what TO-4 AC2 instructs and what stage 4 of the pipeline requires (the executing seat's only legal off-spec write is a surprise item). An implementation that falsifies its own spec is the cheapest possible moment to find a Rule-24 defect, and it is only cheap if the seat stops. REMEDIATION: the CONV-1 re-ruling is the ISSUER's (COO~Z, with CTO~Z on the Rule-24 half); NOT this seat's and NOT DS~Z's. The channel records it; the enum is not mine to re-author."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S23",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T22:26Z",
+    "one_line": "S3 versioning is NOT an evidence-preservation mechanism on opal-data-portal-v2: a bucket-wide lifecycle rule expires noncurrent versions after 14 days, so 'the overwritten bytes are recoverable' is TRUE FOR 14 DAYS AND SILENTLY FALSE AFTER.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by DE~Z when their FIRST INSTINCT -- pin the VersionId -- was measured before being relied on rather than after",
+        "VERIFIED AT CVO~Z on the live primitive: get-bucket-versioning Status = Enabled",
+        "get-bucket-lifecycle-configuration: DENOMINATOR 2 rules; id=expire-noncurrent-versions-14d, Status Enabled, NoncurrentVersionExpiration {NoncurrentDays: 14}, Filter Prefix \"\" -- i.e. BUCKET-WIDE, not scoped to any prefix",
+        "second rule id=abort-incomplete-mpu-7d, unrelated",
+        "So a VersionId pinned today resolves for 14 days and 404s thereafter, with no signal at pin time that it has an expiry"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DE_ClientPlatform~Z",
+    "notes": "DISARMED at surfacing: DE~Z PINNED THE BYTES THEMSELVES (@5550a5129a) rather than pinning a VersionId, and released the ad-hoc run without requiring anyone to sequence around their measurement -- they REMOVED the dependency instead of asking others to work around it. \u26d4 THE FINDING IS THAT THE OBVIOUS REMEDY WOULD HAVE FAILED QUIETLY. 'Versioning is Enabled, so an overwrite does not destroy the bytes' is TRUE and INCOMPLETE; the 14-day fuse is in a separate API call that nobody makes when the first one already said Enabled. A pinned VersionId carries NO indication at pin time that it expires, and T5-1 may cite this baseline later than 14 days out -- so the failure lands on a future reader resolving a citation, not on the person who pinned it. Bucket-WIDE filter means this applies to every object in opal-data-portal-v2, including every other platinum artifact anyone might pin as evidence. GENERAL FORM worth carrying past this project: WHEN RELYING ON A DURABILITY PROPERTY, READ THE EXPIRY POLICY IN THE SAME BREATH AS THE ENABLEMENT FLAG -- 'Enabled' answers whether old versions are KEPT, never for HOW LONG, and the two live in different API calls. The estate's own banked shape: an instrument whose clean answer is strongest exactly where it is least complete."
   }
 ]
 ```
@@ -621,7 +642,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **22** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **23** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
