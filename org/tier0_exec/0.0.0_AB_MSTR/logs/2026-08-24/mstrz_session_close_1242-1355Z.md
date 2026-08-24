@@ -268,3 +268,55 @@ build against that surface until he rules.**
 
 Laptop state at bridge time: `origin/CLOUD` **`3943af6e72`** -- **a DATED pin; re-run
 `git ls-remote origin CLOUD` before acting.**
+
+### 11a. A4 + A4.1 -- the amendment made specific, and a CITATION TRAP the successor must not walk into
+
+`1.0.0_SA_CTO` issued **A4 + A4.1** to the L1 order at 16:01:11Z (`7bc23652-ddcf-468b-94c9-b048f82a9113`),
+**ISSUED, NOT DISPATCHED -- DECOMP-BOUND.** COO's ETFS round-2 decomp cells it on spawn; **the
+successor executes on the cut TO, not on this amendment alone.** Additive: it does NOT touch the
+L1-2 streak in flight.
+
+**A4's three legs -- and the split matters, because two of them run on DIFFERENT CLOCKS:**
+- **1a DERIVED layer from Bloomberg** (count, sector alloc, geo alloc, top-ten) -- plain
+  ReferenceDataRequest, **no BQL**, current-day only, **accrues from the FIRST run.** *(This is
+  section 2 of this log used as the input; the derived/list split I recommended was adopted.)*
+- **1b constituent LIST from Bloomberg** -- **BQL upgrade on Andrew's spend word ONLY**; the manifest
+  records `refused:entitlement` each run. **Gated, and must not be built against until he rules.**
+- **2 issuer FILL** (Pathfinder for PFDE/PFOE, already in `opal-data-etfs/silver/holdings`;
+  TrueShares per-fund sheet for DIVZ/IDVZ, egress GRANTED 08-21T20:45Z) -- **this RETIRES the laptop
+  TO-4 vehicle (`@4e5800fde0` + `TS_HOLDINGS_ENABLED`); the SOURCE survives, the vehicle does not.**
+- **3 Bloomberg ENRICH** per underlying holding on the union of 1+2.
+
+Bounds: isolation like L1-3; capture-forward only; **`lib/trading_calendar` is the ONE frontier (A2
+binds)**; no laptop-side deploy for this leg; **AE TO-5 stands and consumes the landing.**
+Acceptance appended: **L1-6** (script inside the vehicle, all four tickers, per-leg outcome per
+ticker in the manifest incl. honest refusals), **L1-7** (three consecutive scheduled fires accrue
+distinct as-ofs), **L1-8** (isolation exercised once).
+
+> ### THE CITATION TRAP -- MEASURED, and it fails toward a CONFIDENT WRONG READ
+> The order file `docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md` **exists on site Z, opens
+> cleanly, and is the WRONG VINTAGE.** Measured 16:0xZ with `A2` as a discriminating control:
+>
+> | version | lines | `A4` hits | `A2` hits (control) |
+> |---|---|---|---|
+> | worktree | 68 | **0** | **0** |
+> | `origin/SITEZ` | 68 | **0** | **0** |
+> | `origin/CLOUD` | **245** | 5 | 9 |
+>
+> **Site Z's copy is missing ~72% of the order and BOTH amendments -- including the A2 clause A4
+> itself says binds.** It does not error, it does not look truncated, and nothing in it announces a
+> missing amendment. **A successor reading the local path would build against a superseded order and
+> have no signal.** This is the parked cross-fabric merge showing through (section 3), not a new
+> defect -- the amendments arrive with the merge.
+> **UNTIL THAT MERGE LANDS, READ THE ORDER FROM `origin/CLOUD`:**
+> `MSYS_NO_PATHCONV=1 git show origin/CLOUD:docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md`
+> **-- and never `2>/dev/null` it** (a mangled ref prints `fatal:` on stderr and returns CLEAN EMPTY,
+> which reads as "file absent"). Positive-control any absence verdict with a token you KNOW is in it.
+>
+> Citation state re-derived rather than relayed, per the issuer's own instruction: A4 `d27c047e70`,
+> A4.1 `2675189d2e`, authority record `de481d0e06` were **local at send time and are now ALL on
+> `origin/CLOUD`** (`git branch -r --contains`). **So they resolve from site Z today** -- but via the
+> ref, not the working tree. `origin/CLOUD` was `7e52760e26` at 16:0xZ and is MOVING; re-derive.
+
+**THE ONE PLAIN FACT, issuer's words, for Andrew and the successor: the derived layer loses a
+calendar day per day until the script lands.** Leg 1a needs no spend decision to begin accruing.
