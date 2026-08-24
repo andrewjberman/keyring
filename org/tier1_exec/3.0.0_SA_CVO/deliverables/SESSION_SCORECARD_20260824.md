@@ -23,14 +23,20 @@ instance path, channel item id). Nothing here is derived from a message; every k
 | instances delivered by executors | 0 / 0 | -- |
 | validated by the checker (VALID rc=0, coverage-checked) | 0 / 0 | -- |
 
-## C. Surprise channel (class x standing; routing latency = item timestamp -> route act timestamp)
+## C. Surprise channel (class x standing; routing latency = item surfaced -> route act)
 
-| class | standing | count | median routing latency | evidence |
+**Channel round open:** `org/surprise_channel/OPAL_KIMIPIPELINE/INVESTIGATION_v1.md` @052b97e03f (schema 3/3 VALID, one fenced block, ARMED-without-disarm-owner mutant refused).
+
+| class | standing | count | routing latency | evidence |
 |---|---|---|---|---|
-| OBSERVATION | INERT | 1 | n/a (never interrupts) | estate-report field-home recurrence, CVO 66360 -> CTO queued behind COTKEY/DATA_PIPMAP PRDs (CTO 66364) |
-| OBSERVATION | ARMED | 0 | -- | -- |
+| OBSERVATION | ARMED | 1 | **~14 min** (surfaced 19:58Z -> routed 20:12Z, disarm owner named same turn) | `OPAL_KIMIPIPELINE-S1` -- manifest ledger cannot distinguish re-run-with-new-content from clobbered adjudication; owner `0.7.0_AE_CloudOps` (QUEUED, not live) + 3 live seats DELIVERED |
+| OBSERVATION | INERT | 3 | n/a (never interrupts) | `OPAL_KIMIPIPELINE-S2` (4th enum value outside the declared enum); `OPAL_KIMIPIPELINE-S3` (`args_head` literals, device-local); estate-report field-home recurrence (CVO 66360 -> CTO, queued behind two PRDs) |
 | BLOCKING | INERT | 0 | -- | -- |
 | BLOCKING | ARMED | 0 | -- | -- |
+
+**Disarm vs remediation (the two-state rule, kept visible):** S1 DISARM = **OPEN**, owner named, held by MSTR/COO while `0.7.0_AE_CloudOps` is unseated. S1 REMEDIATION = **OPEN**, separate act. **No instance repair was performed and none is wanted** -- the control falsified the premise a repair would have rested on.
+
+**Quality note against this channel's own bar (self-filed):** 1 of 1 ARMED items had its relayed CHARACTERISATION overturned by the certifier's independent re-derivation while every relayed NUMBER reproduced. The graduation bar (GROUNDED + evidence) did its job; the thing it does not check is whether the *headline* follows from the evidence, which is the certifier's read, not the schema's.
 
 ## D. Decomps (stage 3)
 
