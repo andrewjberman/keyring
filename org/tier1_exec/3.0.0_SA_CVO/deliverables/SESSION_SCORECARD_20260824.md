@@ -34,14 +34,16 @@ criteria **18**, distinct cell_refs **25**, **(a)** criteria with zero cell_refs
 
 | class | standing | count | routing latency | evidence |
 |---|---|---|---|---|
-| OBSERVATION | ARMED | **2** | ~14 min · ~4 min | `OPAL_KIMIPIPELINE-S1` (ledger cannot distinguish re-run from clobber; owner `0.7.0_AE_CloudOps`, dark -> HELD at COO) · `NFRA_COMPRAIL-S1` (comp-find piped to grep drops every line at exit 0; owner `1.0.0_SA_CTO`) |
-| OBSERVATION | INERT | **5** | n/a (never interrupts) | `OPAL_KIMIPIPELINE-S2`, `-S3` · `NFRA_COMPRAIL-S2`, `-S3` (dismissed with reason) · estate field-home recurrence (66360) |
-| BLOCKING | INERT | 0 | -- | -- |
+| OBSERVATION | ARMED | **3** | ~14m · ~4m · same-turn | `OPAL_KIMIPIPELINE-S1` (owner dark -> HELD at COO) · `NFRA_COMPRAIL-S1` (**DISARMED @38dd5f8853, verified at my seat**) · `D1_CATVIEWS-S5` (my own schema; owner = me) |
+| OBSERVATION | INERT | **7** | n/a | KIMIPIPELINE-S2/-S3 · COMPRAIL-S2/-S3 · D1_CATVIEWS-S2/-S3/-S4 · estate field-home (66360) |
+| BLOCKING | INERT | **2** | same-turn to issuer | `D1_CATVIEWS-S1` (AC1 oracle cannot fire — issuer amended the criterion) · `ETFS_POSITIONING-S14` (after my characterisation correction) |
 | BLOCKING | ARMED | 0 | -- | -- |
 
-**Channel rounds open:** `OPAL_KIMIPIPELINE/INVESTIGATION_v1.md` @ef2e771dcc · `NFRA_COMPRAIL/INVESTIGATION_v1.md` @f342178f35. Schema-validated 6/6 items, mutant controls refused a bare dismissal and an ARMED-without-owner.
+**4 rounds, 19 items** (`OPAL_KIMIPIPELINE` @ef2e771dcc · `NFRA_COMPRAIL` @f342178f35 · `ETFS_POSITIONING`-S14 @392be78f57 · `D1_CATVIEWS` @3057a3d123). Every round schema-validated with mutant controls; the D1 round **filed by the channel owner on two executing seats' behalf** after owned-paths correctly refused them (COO ruling: seats surface by MCP, CVO files).
 
-**Certifier acts on relayed items, both directions, because a channel that only escalates is not a filter:** 1 headline OVERTURNED on independent re-derivation (`OPAL_KIMIPIPELINE-S1`, every relayed number reproduced), 1 standing RE-CLASSIFIED UPWARD against the surfacing seat (`NFRA_COMPRAIL-S1`, INERT -> ARMED, reason stated to its owner), 1 DISMISSED WITH REASON, 1 AMENDED on the surfacing seat's own correction.
+**What the certifier DID to items, both directions** — a channel that only escalates is not a filter: 1 headline OVERTURNED on re-derivation · 1 standing RE-CLASSIFIED UPWARD against its surfacing seat · 1 DISMISSED WITH REASON · 1 AMENDED on the seat's own correction · 1 DISARM independently VERIFIED against the owner's report · **1 of my own escalations CHARACTERISATION-CORRECTED by MSTR**.
+
+**⛔ CERTIFIER'S OWN DEFECT COUNT, recorded because a scorecard that hides its own is worth nothing: SIX.** Three caught before leaving this seat (a repair announced-not-done that would also have been wrong; a placeholder hash; four phantom cell-ids from my own regex). **Three that reached other seats and were corrected in writing:** the *stranded*-vs-*HELD* promote characterisation (caught by MSTR — I read the repo plane and never the governance plane NEVER#6 itself names); a commit whose message described corrections its aborted script never made (caught by re-reading `git show HEAD:<file>`); and an ATTRIBUTION error crediting DS~F's items to DE~C in a message to three seats (caught by reading the file's own `surfaced_by`, after DS~F had warned me of exactly that risk in advance).
 
 **Disarm vs remediation (the two-state rule, kept visible):** S1 DISARM = **OPEN**, owner named, held by MSTR/COO while `0.7.0_AE_CloudOps` is unseated. S1 REMEDIATION = **OPEN**, separate act. **No instance repair was performed and none is wanted** -- the control falsified the premise a repair would have rested on.
 
