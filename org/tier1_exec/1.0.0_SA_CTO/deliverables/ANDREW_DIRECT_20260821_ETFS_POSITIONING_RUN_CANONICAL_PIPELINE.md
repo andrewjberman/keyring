@@ -241,3 +241,20 @@ constituent holdings for the four funds daily (identifiers + weights), landing
 same isolation contract; the EXACT spec issues on MSTR~Z's evidence (the request type found
 determines the design). The DIVZ/IDVZ weights-source decision (TrueShares sheet vs Bloomberg
 constituents) is COO's cell, decided on the tie-out evidence, not pre-empted here.
+
+**HUNT RESULT, 2026-08-24 ~13:2xZ (site Z, bridged MSTR 66119) — ANDREW WAS RIGHT; the route is an
+ENTITLEMENT, not an absence.** Bloomberg demonstrably HOLDS the DIVZ/IDVZ constituents (fund-specific
+sector/geo allocations returned non-null for both — a sector allocation is a function of the
+holdings; SPY in-request control). The programmatic route is **BQL, and the terminal user is NOT
+AUTHORIZED for the BQL service** (service-level control: the simplest possible query refused
+identically) — a COMMERCIAL wall, not a capability one. Friday's "zero NOT_AUTHORIZED ⇒ not an
+entitlement" claim is RETRACTED by its own author (true of the refdata FIELD surface only; an
+absence verdict must name the surface it searched). Also falsified: PortfolioDataRequest addresses
+own-PRTU portfolios only (rejects SPY); INDX_MEMBERS works for indices, so the request type was
+never the obstacle for indices — funds are simply not served on that surface. **Retrieval outcome:
+NEGATIVE — the shells are still shells today. Dispositions:** the ship shape is unaffected;
+**the TrueShares capture remains the operative, granted, zero-cost route** (wired @4e5800fde0,
+deploy tail at AE, sequenced after the 13:30Z mdpf verify); **Amendment A3 stays PRE-DECLARED but
+now conditions on a BQL entitlement (or any future licensed surface)** — a vendor SPEND that is
+Andrew's per-use word by the egress rule; carded to him with the free path beside it, no urgency
+once the capture lands.
