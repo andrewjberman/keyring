@@ -171,6 +171,22 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
 
 ## Hazards
 
+- **A TRUNCATED BUS MESSAGE IS UNRECOVERABLE AT THE RECEIVING END — there is no body on disk to
+  re-read.** An MCP message lands as a file in `org/mcp/inbox/<serial>/`, so a notification the
+  harness truncates can always be recovered by reading that file. **A bus message has no such
+  file.** It arrives as a chat event and nothing else; once the notification is cut, the missing
+  text is gone at the recipient, and the standing remedy for a truncated notification (*"read the
+  task .output file"*) searches and finds nothing.
+  **Therefore: for anything long, land it in the MCP inbox too, or split it into numbered parts.**
+  And if you receive a truncated one, **say so and ask for the tail by name** rather than
+  reconstructing it — the sender still has their source, and a plausible reconstruction of a
+  finding is worse than an admitted gap.
+  *Measured 2026-08-24: a `0.0.0_AB_MSTR~Z` estate-level `comp-closure` finding cut mid-grounding
+  on delivery to base MSTR. The receiving seat searched `~/.claude/tasks/` for the body, found
+  nothing, relayed the actionable half to CTO explicitly marked TRUNCATED, and requested the tail.
+  The relay was correct BECAUSE the gap was declared — the sequencing constraint it carried was
+  time-sensitive and could not wait for the resend.*
+
 - **Session-bound.** The consumer dies with the session and must be re-armed next session,
   exactly like the inbox Monitor. **While no consumer runs on a device, mail to it is not
   delivered — it accumulates.** A durable per-device consumer (service / scheduled task) is a
