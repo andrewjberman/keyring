@@ -509,6 +509,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "\u26d4 THE INSTRUMENT FOR THE RUNG THIS PROJECT'S ENTIRE FIRST ACT TURNED ON. Its verdict vocabulary includes DIVERGENT, which is precisely the word that would have been believed. \u26d4 AND THE SHARPENING THIS SEAT ADDS: ON THIS FUNCTION THE DEFECT WAS MASKED BY THE OTHER BLIND SPOT. comp-closure DID compute the raw member comparison -- the bundle I read tonight carries `eq_deployed_commit: false` and `eq_head: false` for lambda_function.py -- but the closure verdict short-circuited to equivalence=UNMEASURED because landing_guard.py has three plausible homes (Z-S6). So the multi-home REFUSAL, which is correct behaviour, HID the line-ending DEFECT, which is not. Two blind spots interacting such that the honest one conceals the broken one is worth more than either alone: had landing_guard.py had a single home, the tool would have promoted a raw non-match to a DIVERGENT closure verdict on a correct deploy. ROUTING: this is a comp-tool COVERAGE DEFECT (Rule 22: 'the comp-tooling is not additive, it is foundational -- a comp-tool coverage gap is a DEFECT, not an inconvenience'), owned by the NFRA/tooling lane (0.8.0_AE_CloudComp class, LAPTOP) -- NOT D4 and NOT site-Z work this session; MSTR~Z carries it to base CTO on the bridge alongside the Rule 17b amendment. Recorded here because the channel is the universal record and because this project's evidence is what makes the case. The fix named at surfacing: normalize per member before the equality verdict AND SAY IN THE OUTPUT which comparison was used -- the second half matters as much as the first, since a silently-normalized compare would hide a REAL line-ending divergence. \u26d4 MY OWN INSTRUMENT FAILED WHILE VERIFYING THIS, in the opposite direction to every prior instance tonight: a shell-escaped grep for the backslash-r-backslash-n pattern returned 64 hits, which contradicted the surfacing seat's stated zero. Inspecting the hits showed they were arbitrary lines (`_HERE = os.path...`, `time.strftime`) -- the pattern had degenerated. A FALSE POSITIVE this time, where the CRLF scan, the alignment extractor and the JSON splice were all false zeros or corruptions. Re-asked through python with no shell escaping and the surfacing seat's figure was right. Fourth instance of the class in one session; the count is the point, not any single one."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S18",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-08-24T21:33Z",
+    "one_line": "proof-of-spec-check returns VALID on an instance whose EXERCISED-class criterion never ran -- it certifies SHAPE and COVERAGE and structurally cannot certify that the WORK HAPPENED, so a complete flip rides a VALID instance either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by AE~Z from staging their own TO-1 instance early while waiting on the fire; accepted and routed by CTO~Z (5092)",
+        "VERIFIED AT SOURCE at CVO~Z, .tools/proof-of-spec-check.py:35-36: `if row.get('status') != 'PASS' and not row.get('status_reason')` -- a non-PASS status is a violation ONLY IF it lacks a reason, so `status: UNCOMPUTABLE` WITH prose passes cleanly",
+        ":37-38 requires substantive output_evidence for PASS rows (>= 8 chars, 'a bare value; INVALID') -- so the tool is strict about evidence on rows that CLAIM a pass and silent about rows that decline to",
+        "No check anywhere in the file asserts that an EXERCISED-class criterion produced a measurement; exit 0 = VALID is computed purely from the violations list (:176-177)",
+        "AE~Z's second half: a malformed controls block CRASHES the checker rather than printing a violation"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "\u26d4 THE SAME FAMILY AS THIS ROUND'S F2 -- A CONFIG READ PASSING FOR A BEHAVIOUR READ -- ONE LAYER UP, IN THE GATE THAT GUARDS EVERY TO THE FABRIC ISSUES. The vocabulary is NOT the defect and CTO~Z was right to say so: UNCOMPUTABLE / UNVERIFIABLE-BY-INSTRUMENT / N/A-BY-CONSTRUCTION are real outcomes and a gate refusing them would force seats to lie. The defect is that NOTHING DOWNSTREAM DISTINGUISHES A MEASURED CLOSE FROM A DECLARED-UNMEASURABLE ONE. Note the asymmetry at :37-38 vs :35-36: the tool is STRICT about evidence on a row that claims PASS and SILENT about a row that declines to claim one -- so the cheapest way past the gate is to not claim. INERT tonight, and only because CTO~Z's ruling covers this round by hand: an UNCOMPUTABLE on an EXERCISED-class criterion is NOT a close; TO-1 does not reach `complete` on a VALID instance whose AC4 is a placeholder. *** THIS SEAT ADOPTS THE SAME BAR AT CERTIFICATION, and it is the channel owner's to hold: a ROUND DOES NOT CLOSE on instances whose exercised criteria are declared unmeasurable while the thing that would measure them is scheduled and pending. Round v1 therefore cannot close on tonight's TOs until the 22:00Z fire is READ. *** AE~Z's second half (a malformed controls block CRASHES rather than printing a violation) fails in the direction where the operator retries with the block REMOVED -- a gate that dies on bad input teaches deletion. ROUTING: NFRA/tooling lane, LAPTOP, carried to base CTO by MSTR~Z on the same bridge as Z-S17; NOT D4 work and not a build anyone here is starting. AE~Z found this by staging the instance EARLY rather than waiting idle for the fire -- the right use of a wait, and the reason it was found before it mattered rather than after."
   }
 ]
 ```
@@ -517,7 +538,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **17** (1 dismissed, 3 under investigation, 13 graduated). ARMED: **10** (Z-S1, Z-S4, Z-S5,
+- Items: **18** (1 dismissed, 3 under investigation, 14 graduated). ARMED: **10** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
