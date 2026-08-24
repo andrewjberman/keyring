@@ -656,6 +656,16 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 - Inherited with attribution, NOT re-measured by this seat: Z-S2's bronze-HTML regex figures (author's own retraction @7ea7d45723), Z-S5's DAPI-shared-port and 6h-stability measurements (MSTR~Z, with their two UNMEASURED bounds carried forward as stated).
 - Non-findings recorded so they are not re-filed: the `opal-data-etfs/bbg/` partition gap (weekend + T-1, NEVER#1 discharged before reading).
 
+⛔ **THE ITEM COUNT CANNOT SEE A CLOSURE, AND I HAVE BEEN QUOTING IT ALL NIGHT.** Measured 2026-08-24
+~22:38Z against `origin/SITEZ`: **origin 23 items, local 23 items — the counts MATCH** — while two
+items' notes differ by +1,032 and +1,734 characters (`Z-S22`'s DISARMED+REMEDIATED close and
+`Z-S3`'s issuer-side attribution). **Both are content edits to EXISTING items, so the denominator is
+structurally blind to them.** A reader comparing item counts across the two refs would conclude the
+channel is in sync while a BLOCKING closure and a remedy-ownership finding sat only on one side.
+**State this document by `(item count, commit-ish)` — never by the count alone**, which is this
+round's own unstamped-denominator lesson pointed at the instrument I report with.
+
+
 ## 5. WHAT THIS DOCUMENT DOES NOT DO
 
 It does not certify COO~Z's stage-3 decomp -- that is a separate act by this seat against the
