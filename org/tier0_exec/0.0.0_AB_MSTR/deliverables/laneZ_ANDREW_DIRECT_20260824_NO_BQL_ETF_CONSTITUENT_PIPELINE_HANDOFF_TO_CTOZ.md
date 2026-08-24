@@ -160,3 +160,60 @@ fund page is **SEMI-ANNUAL N-PORT** (DIVZ `03/31/2026`, `09/30/2025`; IDVZ `01/3
 **Records:** `laneZ_ANDREW_DIRECT_20260824_BLOOMBERG_ETF_CONSTITUENTS.md` (the constituent hunt) ·
 `integrations/bloomberg/READ_HERE.md` §4-5 · `docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md`
 A4/A4.1 · session log `logs/2026-08-24/mstrz_session_close_1242-1355Z.md`.
+
+
+---
+
+## 7. AMENDMENT -- ANDREW-DIRECT, same day: FLAG (b) RESOLVED, and the canonical pattern already exists
+
+**VERBATIM:** *"we can manage bronze ingestion for both channels in opal-data-assets and proceed
+that way, I prefer that kind of structure actually, let CTO~Z know that, this gives us an
+opportunity to develop a canonical format/pattern from the start for this work."*
+
+**SECTION 4(c) IS SUPERSEDED.** Bronze for BOTH channels lives in `opal-data-assets`. **No
+migration, no consumer census, no re-pointing** -- Pathfinder's raw stays where it is and its live
+consumers are untouched. **The NEVER#3 never-widen tension is DISSOLVED, not managed.** His earlier
+*"all that work needs to be managed in the opal-data-etfs bucket"* is thereby SCOPED rather than
+contradicted: **raw vendor bytes -> `opal-data-assets`; the ETF pipeline PRODUCT -> `opal-data-etfs`.**
+The PRD states that boundary explicitly rather than leaving it inferred.
+
+**THE PATTERN HE WANTS TO "DEVELOP" ALREADY EXISTS AND BOTH SOURCES CONFORM** -- measured at S3 and
+at source 2026-08-24, and very likely why he prefers the structure. Build-ladder rung 2: **extend
+it, do not mint a second grammar beside it.**
+
+```
+{source}/{delivery_scope}/{bronze|silver|meta}/...
+  pathfinder/filepoint/bronze/holdings/{d8}/ETF_Holdings.csv        80 objects
+  pathfinder/PFDE/silver/  +  pathfinder/PFOE/silver/               80 + 80
+  trueshares/{DIVZ,IDVZ}/bronze/netassets/{d8}/{fund}.html          40 each
+  trueshares/{DIVZ,IDVZ}/silver/fact_netassets_page/date=.../       40 each
+  {source}/{scope}/meta/{conversions,pulls,backfill-status.json}
+```
+
+- **Scope asymmetry is a FEATURE, do not "fix" it:** Pathfinder's bronze scope is `filepoint` (ONE
+  file covering both funds) while its SILVER splits per fund; TrueShares is per-fund at both tiers.
+  The grammar absorbs both because **scope is a field, not an assumption**.
+- **Shared helper already used by both sources:** `_silver_key(source, scope, silver_feed, date)`
+  -> `sr.silver_key(sr.BronzeObject(...))`, `data/assets/scripts/silver/etf_conversion.py:207`.
+- **`convert_trueshares()` ALREADY EXISTS** (`:216`), converting `netassets_page` today.
+  **Adding holdings is a NEW FEED in that converter, not a new converter.**
+- **The bucket split he just endorsed is already architected:** `etfs-netassets-daily` carries a
+  documented **C4** property -- `BRONZE_BUCKET` and `S3_BUCKET` resolve SEPARATELY, *"bronze lands
+  in its OWN bucket."*
+
+### ⛔ ONE OPEN QUESTION -- NAME IT IN THE PRD, DO NOT ASSUME IT
+
+There appear to be **TWO silver surfaces** and I could not determine whether that is by design:
+1. `opal-data-assets/{source}/{scope}/silver/fact_*` -- the converter's output, per source.
+2. `opal-data-etfs/silver/holdings/{date}.parquet` -- **72 partitions, PFDE/PFOE only**, all-time
+   2026-05-18..08-23; it is what the L1 leg reads to derive its universe.
+
+**I could not find (ii)'s producer** in a repo sweep over 27,945 files. So: is (ii) the ETF-PRODUCT
+silver tier fed from (i), or a parallel path? **The canonical row shape cannot be specified without
+that answer**, because it decides whether the shape is authored at (i), at (ii), or once and shared.
+⚠ **Treat (ii)'s producer as UNKNOWN-AT-MSTR~Z, NOT as absent** -- mine was a REPO sweep, and a
+Lambda-only producer would not appear in it. *(The wrong-plane class: my sweep answered the question
+its plane could answer.)*
+
+**Relayed to `1.0.0_SA_CTO~Z` at 19:0xZ (msg 4829, DELIVERED).** Flag (a) -- D4's
+`TEMPORARY, TODAY ONLY` placement -- **remains open at Andrew.**
