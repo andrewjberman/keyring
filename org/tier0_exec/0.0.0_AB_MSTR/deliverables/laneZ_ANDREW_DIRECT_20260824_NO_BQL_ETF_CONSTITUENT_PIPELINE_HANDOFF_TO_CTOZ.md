@@ -63,10 +63,18 @@ Schema: `Date, Account, Stock Ticker, CUSIP, Security Name, Shares, Price, Marke
 Net Assets` -- **identical to the repo's 2026-07-31 oracle CSVs**, which is where those came from.
 DIVZ 29 rows / weights 99.80; IDVZ 44 rows / 99.51; both carry a `SALXX` cash line.
 
-⚠ **THE LINK IS INJECTED CLIENT-SIDE.** A `curl` of the fund page HTML does NOT contain it; it
-appears only once the page is RENDERED. Any fetcher must either hit the export URL directly (they
-appear stable per fund) or render. **Do not design a fetcher that greps the saved HTML** -- that is
-the exact wrong-plane error MSTR~Z made and corrected in `READ_HERE.md` section 5.
+⛔ **RETRACTED 2026-08-24 ~20:0xZ -- THIS PARAGRAPH WAS FALSE AND IT WAS DESIGN GUIDANCE.** It read:
+*"THE LINK IS INJECTED CLIENT-SIDE ... Do not design a fetcher that greps the saved HTML."*
+**THE LINK IS IN THE BYTES WE ALREADY STORE.** `1.0.0_SA_CTO~Z` measured it on the 08-23 bronze
+(1 id per fund, RAW and unescaped, mutant corpus 0); I re-verified on the **08-21 bronze -- the exact
+file my own sweep had read** (sheet id = 1, `exportFormat=csv` = 1, negative control 0). The deployed
+Lambda already derives the id from that page.
+**THE CAUSE, and it is not the one I first admitted:** my extraction DID capture the URL (one of 30).
+**My filter required a literal `.csv`; the URL says `exportFormat=csv` -- no dot.** The Playwright
+render "revealed" it only because that search also matched link TEXT ("DOWNLOAD HOLDINGS **CSV**").
+**I inferred a MECHANISM from a difference between two searches that differed in their PATTERNS, not
+their PLANES** -- then shipped it as an instruction telling the executor where NOT to look.
+*A positive control proves the ENGINE, never your PATTERN.* See `READ_HERE.md` s.5 v3.
 
 ⚠ **`PATHFINDER_FUNDS = ("PFDE","PFOE")`** in `data/assets/scripts/silver/etf_schemas.py` is
 hardcoded BY DESIGN -- it is a Pathfinder-specific converter, not a generic one. DIVZ/IDVZ were
