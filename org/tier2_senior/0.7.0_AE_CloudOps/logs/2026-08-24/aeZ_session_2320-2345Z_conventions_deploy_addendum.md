@@ -83,12 +83,49 @@ an incident, it is a cost the estate is paying per deploy**, and it is the tooli
   `OPAL_ETFS_PUBLISH_GRANT` only.
 - **Source map** 201 functions; both ETF rows current on all three Rule-4 fields.
 
+## ⛔ APPENDED 23:52Z -- A CORRECTION TO MY OWN EARLIER LOGS, AND A SECOND OBLIGATION
+
+`1.0.0_SA_CTO~Z` (5806) found a **SECOND cause** for the DIVZ/IDVZ shells, and it makes a line in my
+two earlier logs incomplete in its implication.
+
+**What I wrote:** *"tonight's rows reach gold at TOMORROW's fire, by design."* **Literally true and
+it stays true** -- the rows do reach gold tomorrow. **But the natural reading is "so the shells
+resolve tomorrow," and that is NOT established.** Measured by CTO~Z:
+```
+  bbg/2026-08-21/characteristics.parquet   109 rows
+  AAPL present · NVDA present     BBSEY ABSENT · AMX ABSENT · CPA ABSENT · BNPQY ABSENT
+  109 == the PRE-A5 universe count. The DIVZ/IDVZ constituents are not in the attribute file at all.
+```
+>> **HOLDINGS ARRIVING IS NECESSARY AND NOT SUFFICIENT.** The gold producer JOINS holdings to the
+>> Bloomberg per-security characteristics; if those do not cover the securities, the rows arrive with
+>> a NAME AND NOTHING ELSE -- *not a filled book, an empty one with more rows*.
+**TPG is today's one-row live specimen**: `2602335D` (a Bloomberg internal id where a ticker belongs)
+is ABSENT from characteristics, so it serves as `Equity / null / weight 0 / all-null returns` and
+renders "Other". **That is what all 73 TrueShares rows do if the join misses.**
+**I am recording this against my own log rather than leaving it to be discovered**, because a
+successor reading "by design" would reasonably infer the books fill and would be wrong for a reason
+my sentence does not contain. *An accurate statement with an unstated precondition is the shape this
+session kept catching; this one is mine.*
+
 ## Next Steps
 
 - [`0.4.0_DS_ClientPlatform~Z`] TO-7 step (2): the as-of VALUE fix at `:526`. **Input is now live.**
+- [`0.7.0_AE_CloudOps~Z`] ⏰ **NEW, and it comes FIRST: READ THE 07:00 ET LEG BEFORE 13:00Z**
+  (CTO~Z 5806, jointly with `0.0.0_AB_MSTR~Z`). **A READ, not an assumption:** the emitted
+  constituent count, and a spot-check that **BBSEY and AMX are present in the emitted
+  characteristics**. The 07:00 local fire is **11:00Z**; the producer fires **13:00Z**; **that ~2h
+  window is the only place this is cheap.**
+  ⛔ **THE RISK IS NAMED: A5 HAS NEVER BEEN EXERCISED END TO END.** MSTR~Z deployed it and correctly
+  declined a full-script run to avoid muddying which run tomorrow's evidence belongs to -- so
+  **tomorrow's 07:00 fire is A5's first real run, and the whole DIVZ/IDVZ fill sits behind it.** If
+  that leg fails, 13:00Z produces books with names and nulls.
 - [`0.7.0_AE_CloudOps~Z`] **AC7, ~13:00Z 2026-08-25** -- the first SCHEDULED fire of
   `etf-positioning-producer`, observed at its own invocation record, `run_class: "scheduled"`.
   **Expect ONE invocation and ONE manifest. If three appear, the marshal fix did not take -- report
   that, do not reconcile it.**
+  ⚠ **AC7 AND THE FILL ARE DIFFERENT QUESTIONS AND MUST NOT BE FUSED.** AC7 asks whether the
+  SCHEDULE fired correctly. Whether the books FILL depends on the 11:00Z characteristics leg, which
+  AC7 does not measure. **A green AC7 on empty books is a possible and correct outcome**, and
+  reporting it as a pass on the product would be the instrument-lies shape this project exists over.
 - [tooling lane] `record-terraform-deploy.sh`: fails closed on cp1252, CRLF-rewrites under the UTF-8
   workaround. Routed around twice tonight.
