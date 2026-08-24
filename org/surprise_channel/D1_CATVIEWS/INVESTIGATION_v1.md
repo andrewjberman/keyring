@@ -151,11 +151,12 @@ reached INERT (66521).
   "surfaced_at": "2026-08-24T21:01Z",
   "one_line": "A model's PRIMARY identity is carried by crosswalk model_key, never by its display label -- I read the label, reported 'Opal Conservative Growth' as an unregistered non-Primary model, and drove a COO ruling to register $34,585,361.39 of PRIMARY AUA as Custom. Caught at the keyboard before any write.",
   "class": "BLOCKING",
-  "hazard_standing": "ARMED",
+  "hazard_standing": "INERT",
   "disarm_owner": "0.4.0_DS_ClientPlatform~F -- DISARMED same turn: retraction to COO (66568, 210136Z), issuer re-ruled NO REGISTRATION (66572), r4 registration paused then resumed on the corrected basis, zero commits at any point. DISARMED, NOT REMEDIATED.",
   "grounding": {
-   "status": "SOURCE-CONFIRMED",
+   "status": "GROUNDED",
    "evidence": [
+    "SURFACING SEAT DECLARED grounding.status='SOURCE-CONFIRMED' (a Rule 22 reserved word, correctly used and STRONGER than this schema's top value); re-encoded to GROUNDED by the channel owner because the schema has no such value -- the strength claim is preserved here, not discarded",
     "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:146 -- CANONICAL_KEY['Opal Conservative Growth'] = 'opal_long_term_conservative' (the Cottonwood builder itself)",
     "build_cottonwood_mdpf_slice.py:133-137 -- RULED Andrew-direct 2026-07-23 ~0215Z, PRD v1.23 @a41c582ba",
     "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:91 -- 'LTC = SmartX \"Opal Conservative Growth\" (NOT \"Long-Term Conservative\"); ... Key by id, never the label.'",
@@ -163,8 +164,31 @@ reached INERT (66521).
     "the TRUE premise that produced the FALSE inference: BD 'Opal Conservative Growth' (0e632e04, Model, 109 acct) and BD 'Opal Long Term Conservative' (c973839d, Strategy, 0 acct) ARE distinct rows -- measured correctly, and it licenses nothing about which row carries the Primary identity"
    ]
   },
-  "disposition": "DISARMED_PENDING_REMEDIATION",
-  "notes": "THE CLASS, which is why this is filed and not merely retracted: mdpf_category_registry's F5 duplicate guard keys on member_id, so a SECOND entry for the SAME REAL MODEL under a DIFFERENT id RAISES NOTHING. Every structural guard passes, self_test stays rc=0, and the only detector was reading the crosswalk. The direction of harm is the quiet one -- it moves a served client-facing number DOWN, out of Primary; build_cottonwood_mdpf_slice.py:137 records the mirror-image near-miss ('a name-hunch merge would move $31M on a guess -- it is now moved on a RULING, not a hunch'). REMEDIATION PROPOSED, NOT BUILT, NOT MINE TO BUILD (no-inferred-gates): a registry assert that every registered model member resolves to a distinct crosswalk model_key, or declares itself off-crosswalk with a reason -- so a same-model/different-id duplicate raises at import the way a same-id duplicate already does. Routed to COO/CTO as a proposal. Second-order note for the channel: the issuer retracted its own ruling on the executing seat's control (66572), which is the loop working, not a second defect."
+  "disposition": "GRADUATED",
+  "notes": "⛔ CHANNEL-OWNER ENCODING ACT (3.0.0_SA_CVO): the surfacing seat wrote disposition='DISARMED_PENDING_REMEDIATION' AND grounding.status='SOURCE-CONFIRMED'. NEITHER IS A VALUE IN THIS SCHEMA. Their intent is preserved verbatim (in disarm_owner, in the evidence row above, and below); I re-encoded the STATE onto the current axes and did not touch the finding. ⛔ BOTH COINAGES ARE EVIDENCE OF GAPS IN MY OWN SCHEMA -- filed as D1_CATVIEWS-S5. One seat, one first use, reached past TWO independent axes. || THE CLASS, which is why this is filed and not merely retracted: mdpf_category_registry's F5 duplicate guard keys on member_id, so a SECOND entry for the SAME REAL MODEL under a DIFFERENT id RAISES NOTHING. Every structural guard passes, self_test stays rc=0, and the only detector was reading the crosswalk. The direction of harm is the quiet one -- it moves a served client-facing number DOWN, out of Primary; build_cottonwood_mdpf_slice.py:137 records the mirror-image near-miss ('a name-hunch merge would move $31M on a guess -- it is now moved on a RULING, not a hunch'). REMEDIATION PROPOSED, NOT BUILT, NOT MINE TO BUILD (no-inferred-gates): a registry assert that every registered model member resolves to a distinct crosswalk model_key, or declares itself off-crosswalk with a reason -- so a same-model/different-id duplicate raises at import the way a same-id duplicate already does. Routed to COO/CTO as a proposal. Second-order note for the channel: the issuer retracted its own ruling on the executing seat's control (66572), which is the loop working, not a second defect."
+ },
+ {
+  "id": "D1_CATVIEWS-S5",
+  "surfaced_by": "3.0.0_SA_CVO (channel owner), from 0.4.0_DE_ClientPlatform~C's FIRST use of the channel -- their two coined values are the evidence",
+  "surfaced_at": "2026-08-24T21:12Z",
+  "one_line": "TWO axes of the investigation schema were reached past by one seat on first use: hazard_standing {ARMED, INERT} has no DISARMED-WITH-REMEDIATION-OPEN state (so a disarmed item renders byte-identical to one never armed -- the exact collapse DISARMED != REMEDIATED exists to prevent, reproduced inside the schema written to enforce it), and grounding.status {INFERRED, GROUNDED} cannot express SOURCE-CONFIRMED, which is a RESERVED WORD in CLAUDE.md Rule 22's own grounding vocabulary.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "0.4.0_DE_ClientPlatform~C wrote disposition='DISARMED_PENDING_REMEDIATION' for an item disarmed same-turn with remediation open",
+    "the same seat wrote grounding.status='SOURCE-CONFIRMED' -- a Rule 22 RESERVED word, legal only on a source-confirmed claim, and their item is source-confirmed",
+    "schemas/investigation_item.schema.json: hazard_standing enum ['ARMED','INERT']; grounding.status enum ['INFERRED','GROUNDED'] -- neither carries the state the seat correctly observed",
+    "the disarmed state is expressible today ONLY as INERT + prose, which is what the channel owner did to make the document valid, and which loses the distinction on every machine read",
+    "the loss is named verbatim in the session log that authored this schema: 'DISARMED != REMEDIATED -- two states, two owners, two clocks; a single terminal state converts dangerous-and-visible into safe-and-invisible'",
+    "prior items at this seat (OPAL_KIMIPIPELINE-S1, NFRA_COMPRAIL-S1) encode the same state as GRADUATED + a prose note, i.e. an unenforced convention the schema does not know about",
+    "CLAUDE.md Rule 22 defines a THREE-level grounding vocabulary (INFERRED / grounded / SOURCE-CONFIRMED as a reserved word); this schema implements two, so the strongest legal claim in the estate's own law cannot be recorded in the channel that adjudicates grounding"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "3.0.0_SA_CVO (schema author + channel owner) -- DISARM (done this turn): both coinages and their re-encodings are stated on the face of the affected item, so no machine read is silently wrong and no seat's strength claim is lost. REMEDIATION (open, separate act, separate clock): a Rule-24 four-postulate record per axis.",
+  "notes": "DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
  }
 ]
 ```
