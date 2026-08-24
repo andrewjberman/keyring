@@ -488,6 +488,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
     "notes": "Rule 24(ii) SAME GRAIN failing INSIDE one column -- the axis is 'as-of', and two values on it are measured from different things. \u26d4 IT ARMS TONIGHT: invisible until now ONLY because DIVZ/IDVZ carry zero holdings rows, and the 22:00Z fire lands the first TrueShares rows. Any consumer reading the column uniformly is then wrong for half the rows -- and INGEST-T3-3's tie-out is specified as a SAME-DAY compare of the Bloomberg count against 'that day's issuer row count', which is precisely the comparison a cross-issuer as-of mismatch corrupts. DISARM is a DECLARATION, not a code change, because the rows land regardless: the difference must be declared (DS~Z's proposed `as_of_basis`) before any consumer treats the column as a uniform holdings as-of. The two remedies COMPOSE and DS~Z checked that rather than assuming it -- `as_of_basis` makes the difference declared, and T2-3's superset row restores the discarded value as a vendor-verbatim column, which is Rule 17's no-slimming doing real work rather than being cited. \u26d4 WHY THIS ITEM EXISTS AT ALL: it is a surface the CERTIFIED decomp's cells did not name. It is NOT decomp-invalidating -- the cells that must carry it (CONV/T2-3/T2-4) all exist and the remedy lands inside them -- but it is a live instance of the cert's own stated limitation: REDUCED COHORT, one perspective, nobody having independently re-enumerated the operative surfaces. An executing seat found at pickup what the enumeration did not, which is the pipeline working, and is also exactly why that limitation was written on the certificate's face rather than buried."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S17",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T21:32Z",
+    "one_line": "comp-closure -- the estate's designated Rule-22a code-layer instrument -- compares package members by RAW sha256 with no line-ending normalization, so it inherits Z-S4 by construction and would report a correct deploy as non-identical.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by CTO~Z after CORRECTING what COO~Z routed (the claim 'no comp-tool does this' is FALSE -- comp-closure's declared job IS build-input -> package -> deployed bytes -> repo bytes); VERIFIED AT SOURCE at CVO~Z",
+        "org/modules/graph/comp_closure.py:94-95 `def _sha256(b: bytes) -> str: return hashlib.sha256(b).hexdigest()` -- RAW BYTES; a difflib.SequenceMatcher ratio fallback is the only other comparison",
+        "Normalization census on that file, read via python to avoid shell-escaping ambiguity: literal backslash-r = 0, literal backslash-r-backslash-n = 0, actual CR bytes = 0, 'crlf' 0, 'CRLF' 0, 'normaliz' 0, 'splitlines' 0, 'universal' 0",
+        "POSITIVE CONTROLS proving the search reaches the comparison code: sha256 = 58, equivalence = 22, eq_head = 6, SequenceMatcher = 1. NEGATIVE CONTROL zzz_no_such_tok = 0",
+        "DEMONSTRATED, not theorised: this seat's own 6-commit scan of the pre-deploy artifact returned RAW 0 matches / CRLF-NORMALIZED exactly 1 (541a393798) -- so a raw member compare against the TRUE build commit returns non-identical on a correctly-deployed function"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "\u26d4 THE INSTRUMENT FOR THE RUNG THIS PROJECT'S ENTIRE FIRST ACT TURNED ON. Its verdict vocabulary includes DIVERGENT, which is precisely the word that would have been believed. \u26d4 AND THE SHARPENING THIS SEAT ADDS: ON THIS FUNCTION THE DEFECT WAS MASKED BY THE OTHER BLIND SPOT. comp-closure DID compute the raw member comparison -- the bundle I read tonight carries `eq_deployed_commit: false` and `eq_head: false` for lambda_function.py -- but the closure verdict short-circuited to equivalence=UNMEASURED because landing_guard.py has three plausible homes (Z-S6). So the multi-home REFUSAL, which is correct behaviour, HID the line-ending DEFECT, which is not. Two blind spots interacting such that the honest one conceals the broken one is worth more than either alone: had landing_guard.py had a single home, the tool would have promoted a raw non-match to a DIVERGENT closure verdict on a correct deploy. ROUTING: this is a comp-tool COVERAGE DEFECT (Rule 22: 'the comp-tooling is not additive, it is foundational -- a comp-tool coverage gap is a DEFECT, not an inconvenience'), owned by the NFRA/tooling lane (0.8.0_AE_CloudComp class, LAPTOP) -- NOT D4 and NOT site-Z work this session; MSTR~Z carries it to base CTO on the bridge alongside the Rule 17b amendment. Recorded here because the channel is the universal record and because this project's evidence is what makes the case. The fix named at surfacing: normalize per member before the equality verdict AND SAY IN THE OUTPUT which comparison was used -- the second half matters as much as the first, since a silently-normalized compare would hide a REAL line-ending divergence. \u26d4 MY OWN INSTRUMENT FAILED WHILE VERIFYING THIS, in the opposite direction to every prior instance tonight: a shell-escaped grep for the backslash-r-backslash-n pattern returned 64 hits, which contradicted the surfacing seat's stated zero. Inspecting the hits showed they were arbitrary lines (`_HERE = os.path...`, `time.strftime`) -- the pattern had degenerated. A FALSE POSITIVE this time, where the CRLF scan, the alignment extractor and the JSON splice were all false zeros or corruptions. Re-asked through python with no shell escaping and the surfacing seat's figure was right. Fourth instance of the class in one session; the count is the point, not any single one."
   }
 ]
 ```
@@ -496,8 +517,8 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **16** (1 dismissed, 3 under investigation, 12 graduated). ARMED: **9** (Z-S1, Z-S4, Z-S5,
-  Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16) -- each with a named disarm owner, per the schema's conditional rule.
+- Items: **17** (1 dismissed, 3 under investigation, 13 graduated). ARMED: **10** (Z-S1, Z-S4, Z-S5,
+  Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
   *(At the 8-item version this line read "ARMED: 4" and omitted Z-S8 until the validator's own count
