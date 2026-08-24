@@ -172,9 +172,44 @@ expiry, and somebody has to go and look.**
    by us from issuer weights. ⚠ **Re-locate by CONTENT -- my comment block moved the line numbers and
    CTO~Z's earlier `:141` was measured pre-edit.**
 3. **[0.0.0_AB_MSTR]** base, register owner: the D4 row edit, ROUTED not written -- see s.8.
-4. **[0.0.0_AB_MSTR~Z]** Tomorrow 07:00 ET: `RC_ETF`, the manifest (`run_class: scheduled`,
-   universe_count > 109), and the constituents leg's rc. **A 61 after A5 is a NEW finding.** The Z-S5
-   disarm is MINE.
+4. **[0.0.0_AB_MSTR~Z]** ⛔ **TOMORROW'S TWO FIRES -- READ THIS BEFORE FILING ANYTHING.** Criteria
+   sharpened at 23:1xZ against three findings that landed after the fire times were set. **Every
+   naive reading of tomorrow morning is WRONG in a way that looks right.**
+
+   **07:00 ET (the BBG L1 pull) -- MINE, the Z-S5 disarm.** Read `RC_ETF`, the constituents leg's rc,
+   and `bbg/{as-of}/run_manifest.json`. **A 61 after A5 is a NEW finding, not a recurrence.** On
+   rc 71-73, re-run the constituents leg same trading day as `run_class=adhoc`.
+   ⛔ **AND THE THING TO ACTUALLY CHECK IS `bbg/2026-08-24/` LANDING -- NOT whether the shells
+   filled.** Measured tonight: `bbg/` holds ONLY `2026-08-20/` and `2026-08-21/`; the pull is
+   **T-1 by construction** (manifest `as_of 2026-08-21`, `generated_utc 2026-08-24T11:02:47Z`,
+   `run_class scheduled`), so Monday's run wrote Friday's partition. **Tuesday's run writes
+   `bbg/2026-08-24/`, and GOLD CANNOT ADVANCE WITHOUT IT** -- gold's inputs are all `bbg/{d}/`, and
+   `resolve_as_of` STEPS BACK A TRADING DAY when the partition is absent. **A step-back produces a
+   WELL-FORMED manifest and a clean green run, identical in shape to success.**
+
+   **13:00Z (the first scheduled gold->platinum fire) -- AC7, AE~Z's, but I will be reading it.**
+   ⛔ **THE INVOCATION RECORD WILL READ *ERROR* ON WORK THAT FULLY SUCCEEDED.** The handler returns a
+   DataFrame -> `Runtime.MarshalError` AFTER gold is written and platinum published. EventBridge->
+   Lambda is ASYNC with no `EventInvokeConfig`, so AWS's default **2 retries** mean **the fire runs up
+   to THREE TIMES.** CTO~Z owns this against their own AC: the criterion names a single oracle without
+   asking whether that oracle could be wrong.
+   ⛔ **DO NOT COUNT MANIFESTS TO COUNT FIRES.** Platinum is ONE KEY, OVERWRITTEN -- three publishes
+   republish the same value, they do not triple served harm -- **but manifests are keyed per `run_id`,
+   so ONE scheduled fire yields THREE `status: published` manifests.** A manifest count silently stops
+   meaning what its name says.
+
+   **THE Z-S16 CLOCK, and it is why tonight was cheap:** the 13:00Z fire selects T-1 = Mon 08-24 and
+   tonight's 73 TrueShares rows flow through -- **so DIVZ/IDVZ stop being shells and the wrong
+   `data_as_of` reaches the SERVED surface in the same instant.** Today it is invisible because those
+   funds are `holdings 0` (verified on the live payload). Andrew ruled the provider's as-of IS the
+   provenance stamp; DS~Z owns `:526`; filepoint is correct by construction and is not touched.
+
+   **Baseline pinned tonight for tomorrow's compare (s3api UTC, never an `s3 ls` local render):**
+   `platinum/etfs/positioning_data.json` 76,149 B @ `2026-08-24T23:00:45Z` ETag `fba05e062bec...`;
+   portfolios DIVZ 0 / IDVZ 0 / PFDE 90 / PFOE 24; `data_as_of 2026-08-21`.
+   ⚠ **SIZE IS NOT A DETECTOR HERE:** tonight's publish is byte-length-IDENTICAL to the 12:30Z one
+   with a different sha256 -- exactly one differing leaf, `/generated_at`. **Compare hashes, and
+   expect `hash-moved + size-same` to be the NORMAL healthy shape.**
 5. **[Andrew]** ONE call remains open: the shared-infra fence LIFT or HOLD (condition MET on both
    planes; no live seat holds its context). The other three are RULED and recorded.
 
