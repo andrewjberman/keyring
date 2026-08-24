@@ -77,7 +77,27 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
-    placement: "SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ, base CTO terminal,
+    placement: "SITEZ -- UNTIL THE PROJECT IS DONE (Andrew-direct 2026-08-24, MSTR~Z terminal,
+      relayed by 0.0.0_AB_MSTR~Z, brief laneZ_ANDREW_DIRECT_20260824_NO_BQL_ETF_CONSTITUENT_PIPELINE_HANDOFF_TO_CTOZ.md
+      @93d126c4aa on origin/SITEZ). VERBATIM: 'keep D4 on sitez until the project is done'.
+      SUPERSEDES the same-day TODAY-ONLY placement below. FIFTH placement on this row in six days, all his.
+      ⛔ THE BOUND CHANGED KIND, NOT JUST LENGTH -- READ THIS BEFORE ACTING ON THE ROW: it was a DATE
+      ('today only') and is now a COMPLETION CONDITION. A date-bounded placement expires silently and
+      correctly; A COMPLETION-BOUNDED ONE NEVER EXPIRES AND MUST BE REVERTED DELIBERATELY. So the
+      revert is still 0.0.0_AB_MSTR's ACT (register owner), and it is now triggered by an EVENT nobody
+      has yet defined rather than by a clock everyone can read.
+      ⚠ THE CLOSING CONDITION IS NOT YET RULED AND I AM NOT INVENTING IT. His premise is the ETF
+      constituent pipeline running end to end (bronze+silver per ETF from idiosyncratic issuer shapes
+      -> unified parquet -> unified gold parquet in opal-data-etfs/gold/ -> platinum JSON serving in
+      opal-data-portal-v2, reaching the frontend daily publish). 1.0.0_SA_CTO~Z is drafting that PRD;
+      THE PRD DEFINES 'DONE' AND THIS ROW INHERITS IT. Until then the row is deliberately open-ended,
+      and that is recorded rather than papered -- a placement whose exit nobody can state is a
+      placement nobody dares touch.
+      SCOPE NOTE, same-day: he also closed BQL ('No we're not doing BQL'), so the constituent LIST no
+      longer waits on a spend word; bronze for both issuer channels stays in opal-data-assets. This is
+      a MULTI-WEEK POSTURE now, not a day's loan.
+      --- THE TODAY-ONLY PLACEMENT IT SUPERSEDES, preserved for provenance ---
+      SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ, base CTO terminal,
       relayed by 1.0.0_SA_CTO msg 66261, record ANDREW_DIRECT_20260824_ETFS_TO_SITEZ_TODAY_NO_0824_UNION_RECORDING_BD_DASHBOARD.md).
       VERBATIM: 'we can temporarily move the directive for that ETFs work over to sitez machine in
       Directives.yaml. That can be their project for today.'
