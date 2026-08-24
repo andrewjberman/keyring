@@ -1,0 +1,53 @@
+{
+  "project_code": "D3_MODELOVERLAY",
+  "macro_code": "ADVI",
+  "name": "D3 -- Account-Level Model Overlay onto Advisor Intelligence: per-partner model membership (the MDPF feeder contract at account grain) projected up the spine -- account / client-relationship-household / advisor / firm model-holdings breakdowns -- rendered in Books + the Book view",
+  "description": "Directive D3 (org/missions/DIRECTIVES.yaml; docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md v1.0 2026-08-19, v1.1 2026-08-24). This JSON is minted 2026-08-24 ~19:2xZ by the CTO to close a register gap: the D3 TOs (D3_MODELOVERLAY.TO-D3.1 DELIVERED @1914fa3fd6 -- the SMARTX_BD_EXACT_JOIN spec, 7,305 rows, residual 19 fully classified; TO-D3.1b ungated; TO-D3.2..D3.5 gated) existed under this code with NO project JSON and D3's DIRECTIVES member set was empty. Andrew-direct 2026-08-24 ~19:0xZ (record ANDREW_DIRECT_20260824_D3_ACCOUNT_MODEL_OVERLAY_ONTO_ADVI_PER_PARTNER_MODELS_SOURCE.md, verbatim in the PRD s.4b): a PLAN for the overlay onto ADVI -- assess where the models data source is per partner, process it into an ADDITIVE gold-runner giving account / client-relationship-household (one grain, partner-named) / advisor / firm model-holdings breakdowns; frontend in the relevant ADVI view pages on the same placement logic as ADVI_INSURE / ADVI_PERFRP. MEASURED at v1.1 (run #14-#18): 49F + Inflection land an account-grain model feed DAILY on the MDPF feeder contract s3://opal-data-mdpf/mdpf/feeds/model_aua_positions/{firm}/{date}.parquet (WSA contract s.3.1 schema; SmartX via the id-keyed crosswalk + registry v4; Eclipse/Orion for Inflection); Cottonwood is NOT on it (BD-side blackdiamond/cottonwood/silver/fact_model_assignment + gold/dim_model_portfolio, the consolidator's L1 leg). Andrew-direct ~19:1xZ on the v1.1 breakdown: 'all recs approved' -> PRD s.4c rulings (Cottonwood onto the feeder contract; one runner per firm tree, 49F first; level_key + level_label from the registry; advisor key = Primary Portfolio Group (49F) / partner dims, never sum across groups; the D1 registry vocabulary Primary / Custom / SMA; v1 figures = value, share, account count, current as-of, composition deferred; a Non-model row with WS-E semantics; DEV build now, PROD rides the 49F switch promote; owners DS / DS~B / 0.7.0 AE / DE / CVO / DT; sequencing D3.1b -> Cottonwood feeder -> runner on DEV -> publisher key -> tie-out -> frontend). UNIFORMITY LAW (D2 PRD s.11): one runner / publisher / interface bound to all three partners; Cottonwood's binding sequences after ADVI_COTKEY.",
+  "prds": [
+    {
+      "path": "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md",
+      "label": "D3 PRD v1.1 -- s.4b the overlay onto ADVI (per-partner models plane MEASURED; four-level additive runner contract; Books placement) + s.4c RULINGS (all recs approved 2026-08-24 ~19:1xZ) -- APPROVED FOR STAGE 3",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/D3_ATOMDECOMP/run_20260819.md",
+      "label": "GROUND TRUTH run #1-#18 + U1-U3 (#14-#18 absorbed 2026-08-24: the per-partner models plane)",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_D3_ACCOUNT_MODEL_OVERLAY_ONTO_ADVI_PER_PARTNER_MODELS_SOURCE.md",
+      "label": "The commissioning word for v1.1 (verbatim)",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/SMARTX_BD_EXACT_JOIN_SPEC_20260819.md",
+      "label": "TO-D3.1 DELIVERED: the SmartX<->BD exact-join spec + residual census (7,305 rows; 19 residual, fully classified)",
+      "date": "2026-08-19"
+    }
+  ],
+  "related": [
+    "D1_CATVIEWS",
+    "ADVI_PERFRP",
+    "ADVI_INSURE",
+    "ADVI_COTKEY",
+    "MDPF_3FIRMS",
+    "MDPF_CANPLAT",
+    "OPAL_ADVIPOINTERS"
+  ],
+  "status": "active",
+  "dep_stage": "PRD",
+  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 (this JSON, 2026-08-24 ~19:2xZ -- the TOs pre-date it under the old process). STAGE 2 PRD v1.1 APPROVED FOR STAGE 3 (Andrew ~19:1xZ, all recs). STAGE 3 = COO decomp on spawn: cells = the Cottonwood feeder (MDPF lane), the per-firm runner (49F first), the publisher key, the by_model tie-out, the Books/Book-view surfaces; pre-pipeline TOs D3.1b/D3.2-D3.5 are COO's adopt-or-supersede with decomp_ref (D3.1 DELIVERED). Gates: D1 registry (display names); DEV build now, PROD rides the 49F switch promote. Placement LAPTOP.",
+  "blocking": "None on any agent. Waits on the decomp seat. Cottonwood's binding waits on ADVI_COTKEY (his keying investigation).",
+  "created": "2026-08-19",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4",
+    "0.7"
+  ],
+  "pipeline": "MDPF feeder contract model_aua_positions/{firm} (49F SmartX; INF Eclipse/Orion; COT via a new WS-A feeder) + each firm's ADVI spine dims -> additive gold runner per firm tree (rows: level x level_key x model_key x as_of) -> platinum/advi/{firm}/model_overlay_* via the publisher -> Books L2/L3/L4 + advisorpublicprofile Book view; firm rollup ties to MDPF aum-metrics.by_model",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -1,0 +1,44 @@
+{
+  "project_code": "ADVI_COTKEY",
+  "macro_code": "ADVI",
+  "name": "Cottonwood Capital Advisors ADVI KEYING investigation -- a deep analysis of Cottonwood's current ADVI process and setup ('currently we are not keying them in the right way'); test the hypothesis that advisor relationships are assigned via portfolio_group (or a derivation); produce the measured keying map + the remedy plan that Cottonwood's Tier-B bindings (Performance Reporting, Model Overlay) and the Insurance port sequence after",
+  "description": "Andrew-direct 2026-08-24 ~19:1xZ at the base CTO terminal, VERBATIM: 'Lastly, Cottonwood is going to need some deep analysis on their current ADVI process and setup because currently we are not keying them in the right way. I suspect that the place that they actually use to assign advisor relationships is the \"portfolio_group\" key or some derivation of \"portfolio group\", so that will need to be investigated.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ADVI_PARTNER_UNIFORMITY_PORT_INSURE_PERFRP_ALL_PARTNERS_COTTONWOOD_KEYING.md). Registered by the CTO on his explicit 'will need to be investigated' as a BOUNDED INVESTIGATION (atom-decomp over the Cottonwood ADVI identity/keying surfaces), not a build: the deliverable is a MEASURED keying map (how the cot tree keys advisor <-> relationship <-> account today, versus what Cottonwood's Black Diamond actually uses -- portfolio_group as the partition-like key, as measured for 49F) and a remedy plan with its own decomp. PRIOR ART reused as ARTIFACTS: the 49F Portfolio-Group keying scan (BD qt6 'BI Billing' with Portfolio Group as a native level; Primary Portfolio Group = the partition-like key; groups OVERLAP, never sum across groups -- D2 PRD s.2 / D3 run #12-#13); the BD-exclusive dependency map (dim_advisor_fee_role / dim_account_xref / fact_bd_allocation on the 49f side -- the cot side has its own blackdiamond/cottonwood/** tree); the cot runner chain (COT_RUNNER_REFACTOR, COT_ADVI_FIX, ADVI_COTETL, COT_SUPERVISED -- the supervised filter live). The artifacts are reused; their authors' lanes are not briefed (distribution restriction on the 49F subject). UNIFORMITY LAW (D2 PRD s.11): Cottonwood is Tier B (= Inflection's view exactly) + the insurance option; its PERFRP and D3 bindings and the INSURE port SEQUENCE AFTER this investigation lands -- a book keyed wrong yields every per-client figure keyed wrong. Placement LAPTOP (ADVI). Firm separation absolute (bd<->cot).",
+  "prds": [
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ADVI_PARTNER_UNIFORMITY_PORT_INSURE_PERFRP_ALL_PARTNERS_COTTONWOOD_KEYING.md",
+      "label": "The commissioning word (verbatim) + the partner uniformity law",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "docs/architecture/D2_ADVI_49F_E2E_PRD.md",
+      "label": "s.11 THE ADVI PARTNER UNIFORMITY LAW (Tier A / Tier B; insurance option by partner fact); s.2 the 49F portfolio-group keying facts reused as artifacts",
+      "date": "2026-08-24"
+    }
+  ],
+  "related": [
+    "ADVI_INSURE",
+    "ADVI_PERFRP",
+    "D3_MODELOVERLAY",
+    "ADVI_COTETL",
+    "COT_ADVI_FIX",
+    "COT_RUNNER_REFACTOR",
+    "COT_SUPERVISED",
+    "DATA_BDINSURANCE"
+  ],
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~19:2xZ (1.0.0_SA_CTO, on Andrew's explicit 'will need to be investigated'). STAGE 2 = a purpose-level PRD for the INVESTIGATION (declare the cot identity surfaces: the cot runner chain's advisor/relationship/account dims, Cottonwood's BD tree blackdiamond/cottonwood/**, the served cot ADVI keys, and Cottonwood's own BD portfolio-group structure) with a GROUND TRUTH run; STAGE 3 = COO decomp of the measurement cells; the REMEDY is a second stage-2 act once the map exists. Certifier CVO. Placement LAPTOP. Sequencing consequence, his: Cottonwood's Tier-B PERFRP / D3 bindings and the INSURE port wait on this map.",
+  "blocking": "None on any agent. Needs a measuring seat (DS-class) on spawn; the cot BD principal's read access for the portfolio-group probe is an existing vehicle (cot session bundle).",
+  "created": "2026-08-24",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4",
+    "0.6"
+  ],
+  "pipeline": "INVESTIGATION (no producer): cot ADVI identity dims (cot runner chain) + blackdiamond/cottonwood/** + the served cot ADVI keys + Cottonwood BD portfolio-group structure (qt6-class probe on the cot principal) -> MEASURED keying map (what keys advisor<->relationship<->account today vs what BD uses) -> remedy plan (own decomp) -> unblocks Cottonwood's Tier-B bindings + the INSURE port",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
