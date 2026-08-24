@@ -530,6 +530,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "\u26d4 THE SAME FAMILY AS THIS ROUND'S F2 -- A CONFIG READ PASSING FOR A BEHAVIOUR READ -- ONE LAYER UP, IN THE GATE THAT GUARDS EVERY TO THE FABRIC ISSUES. The vocabulary is NOT the defect and CTO~Z was right to say so: UNCOMPUTABLE / UNVERIFIABLE-BY-INSTRUMENT / N/A-BY-CONSTRUCTION are real outcomes and a gate refusing them would force seats to lie. The defect is that NOTHING DOWNSTREAM DISTINGUISHES A MEASURED CLOSE FROM A DECLARED-UNMEASURABLE ONE. Note the asymmetry at :37-38 vs :35-36: the tool is STRICT about evidence on a row that claims PASS and SILENT about a row that declines to claim one -- so the cheapest way past the gate is to not claim. INERT tonight, and only because CTO~Z's ruling covers this round by hand: an UNCOMPUTABLE on an EXERCISED-class criterion is NOT a close; TO-1 does not reach `complete` on a VALID instance whose AC4 is a placeholder. *** THIS SEAT ADOPTS THE SAME BAR AT CERTIFICATION, and it is the channel owner's to hold: a ROUND DOES NOT CLOSE on instances whose exercised criteria are declared unmeasurable while the thing that would measure them is scheduled and pending. Round v1 therefore cannot close on tonight's TOs until the 22:00Z fire is READ. *** AE~Z's second half (a malformed controls block CRASHES rather than printing a violation) fails in the direction where the operator retries with the block REMOVED -- a gate that dies on bad input teaches deletion. ROUTING: NFRA/tooling lane, LAPTOP, carried to base CTO by MSTR~Z on the same bridge as Z-S17; NOT D4 work and not a build anyone here is starting. AE~Z found this by staging the instance EARLY rather than waiting idle for the fire -- the right use of a wait, and the reason it was found before it mattered rather than after."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S19",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T21:40Z",
+    "one_line": "ETFS_POSITIONING.TO-5's invocation contract is stale in three places after TO-3's C2 re-point, and the two errors CANCEL: the ENV override silently re-points the producer back to the OLD home, which is exactly where the stale IAM grants access -- so a fully-applied contract runs GREEN while Andrew's C2 ruling silently does not happen.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by DS~Z same-turn, AHEAD of their own commit; VERIFIED AT SOURCE at CVO~Z, vintage dea23978a7",
+        "TO-3's re-point landed in the CODE DEFAULTS: etf_positioning_gold.py:98-99 `GOLD_BUCKET = os.environ.get(\"ETFS_GOLD_BUCKET\", \"opal-data-etfs\")` / `GOLD_ROOT = os.environ.get(\"ETFS_GOLD_ROOT\", \"gold\")`; publisher identical at :62-63",
+        "os.environ.get(NAME, default) RETURNS THE ENV VALUE WHEN SET -- so the contract's s.7 ENV (ETFS_GOLD_BUCKET=opal-data-assets, ETFS_GOLD_ROOT=portal/gold/etfs/positioning) OVERRIDES the new defaults and re-points to the OLD home. The env is an override by construction.",
+        "The contract's s.8 IAM grants are scoped to opal-data-assets/portal/gold/etfs/positioning/* 'this prefix only' -- stale against a producer that now PUTs to opal-data-etfs/gold/*",
+        "THE WRITE-BOUNDARY GUARD DOES NOT CATCH IT: _assert_write_boundary at :180-183 tests `full.startswith(GOLD_BUCKET + '/' + GOLD_ROOT)` -- keyed to the CONFIGURED values, so under the env override it validates the WRONG target happily"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
+    "notes": "\u26d4 WHY BLOCKING RATHER THAN OBSERVATION, AND IT IS THE WHOLE POINT: THE TWO ERRORS CANCEL. The ENV error fails SILENT (re-points to the old home); the IAM error fails LOUD (AccessDenied on the new home). Applied TOGETHER the env sends the producer exactly where the stale grants permit, so NOTHING RAISES -- pipeline green, artifacts land, publisher serves, every instrument healthy, and C2 SILENTLY DID NOT HAPPEN. **A HALF-APPLIED CONTRACT WOULD HAVE FAILED VISIBLY; THE FULLY-APPLIED ONE FAILS INVISIBLY.** The loud failure was the only thing that would have told anyone and the silent one disarms it. This is F2's exact class -- applied-env disagreeing with running code, the reason this project has a first act at all -- arriving from the DEPLOY side instead of the code side, which is why nobody was watching for it there. TRIGGER: TO-5's apply, QUEUED and pickable. DISARM (theirs, taken this turn): routing it to the executing seat BEFORE the apply, which is the only act that can disarm a hazard whose trigger is another seat's next step -- and they did it ahead of their own commit. \u26d4 REMEDIATION IS NOT TAKEN AND THAT IS CORRECT: the contract edit is IN DS~Z's lane (their deliverable) but the spec is FROZEN mid-round and TO-3's scope is the SCRIPTS half, two .py files. Editing a cross-TO contract that drives ANOTHER seat's apply is scope widening, so they ROUTED IT AND REQUESTED AUTHORIZATION rather than taking it. That is stage-4 discipline working exactly as written -- the executing seat's only legal off-spec write is a surprise item. AUTHORIZATION IS 2.0.0_SA_COO~Z's (TO-set owner), with CTO~Z holding the C2 ruling; NOT the channel owner's -- I allocate the coordinate and record, I do not authorize scope. Stated because a BLOCKING row whose actuator is ambiguous reads open and is shut."
   }
 ]
 ```
@@ -538,7 +559,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **18** (1 dismissed, 3 under investigation, 14 graduated). ARMED: **10** (Z-S1, Z-S4, Z-S5,
+- Items: **19** (1 dismissed, 3 under investigation, 15 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
