@@ -15,13 +15,22 @@
       "date": "2026-08-18"
     }
   ],
-  "related": ["MDPF_CANPLAT", "MDPF_3FIRMS", "MDPF_REMED"],
+  "related": [
+    "MDPF_CANPLAT",
+    "MDPF_3FIRMS",
+    "MDPF_REMED"
+  ],
   "status": "active",
   "dep_stage": "REGISTERED",
-  "phase": "STAGE 1 REGISTERED 2026-08-21 ~16:4xZ (1.0.0_SA_CTO, commissioning exec). Stage 2 PRD in authoring at the same seat; then stage 3 = COO operative-surface atom-decomp across ALL FOUR SCOPES + BOTH PRODUCER TREES before any TO exists; proof-of-spec derives from the decomp cells; CVO mans the channel from day one. Uniformity across firms is a FIRST-CLASS acceptance property, not a stretch goal.",
+  "phase": "*** PARKED 2026-08-24 at the fabric close-out (Andrew-direct): stage 2 PRD in authoring at CTO (docs/architecture/MDPF_PROVCANON_PRD.md), no decomp, no TOs; resumes in the PRD-per-directive round, sequenced behind D1/D2 per the Monday push order. *** | STAGE 1 REGISTERED 2026-08-21 ~16:4xZ (1.0.0_SA_CTO, commissioning exec). Stage 2 PRD in authoring at the same seat; then stage 3 = COO operative-surface atom-decomp across ALL FOUR SCOPES + BOTH PRODUCER TREES before any TO exists; proof-of-spec derives from the decomp cells; CVO mans the channel from day one. Uniformity across firms is a FIRST-CLASS acceptance property, not a stretch goal.",
   "blocking": "None. One named open contract question (non_model leg) rides the PRD for the decomp or Andrew's word; it does not block registration or PRD authoring.",
   "created": "2026-08-21",
-  "pods": ["1.0", "2.0", "3.0", "0.4"],
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4"
+  ],
   "pipeline": "mdpf",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,

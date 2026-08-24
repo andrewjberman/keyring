@@ -85,6 +85,28 @@ Answers the DEV-exposure question. My independent CI measurement crossed his wor
 and AGREED. His word closes the two gaps my instrument structurally could not (Actions run
 history; out-of-band publishing). Complied with COO's STOP and spent nothing further on it.
 
+### SECOND ANDREW-DIRECT, 19:18Z (durable record + broadcast carried by COO 65460, doc @ad8bb50e56)
+
+**VERBATIM:** "the position on flipping this should be held until source gaps and schedule are
+addressed, that needs to be documented, including relevant publisher resources, paths, and etc
+for the switch covering what is the current route and what is the contemplated route."
+
+**THE HOLD IS RULED AND TWO-CONDITION -- BOTH required, NEITHER sufficient.** It binds the FLIP
+only; the canonical chain keeps running and the BD-migration work proceeds. This SUPERSEDES my
+Next-Steps line (amended above): a named flip set does not release the promote.
+
+**AND THE SECOND CONDITION IS A LEG NOBODY IN THIS CHAIN FOUND.** `advi-49f-publisher` is
+**DISABLED** (`cron(15 13 * * ? *)`, target `advi-49f-gold-dispatch`) -- **the twins have NO
+ENABLED PRODUCER SCHEDULE.** Today's publish was a MANUAL act and the twins have sat frozen at
+15:04:19Z since. So even with every source gap closed, flipping would have pointed the product
+at artifacts nothing refreshes -- the CLAUDE.md "a production pipeline MUST have a schedule"
+class, and starker than the MDPF instance that earned the rule (not event-triggered-only:
+disabled outright; MDPF froze after six days, this would have frozen on day one).
+**The stand-down was right for a second reason none of us had found.** Nine seats worked this
+chain and verified it at five planes; the schedule leg surfaced only because Andrew asked what
+is displayed on the daily schedule. Worth carrying: every plane we checked was a plane someone
+had thought to name, and PRODUCER LIVENESS was not one of them.
+
 ## Compiler Tools
 
 | tool | invocation | result | note |
@@ -134,9 +156,30 @@ to COO (65366) for their call rather than inventing a terminal state.
 - portal main tree on **DEV**; `worktree list` = main tree only. Physical
   .runtmp/portal-promote-20260821T165723Z persists (Windows long-path class, gitignored, inert;
   `worktree prune` cleaned git's tracking regardless).
-- portal origin/DEV advanced past my window: DE landed 6d0403a5 (six rows -> 'held'), and CTO
-  65390 ruled three more held (ownership_map, timeseries_chart, timeseries_chart_full);
-  clients-tab-slim stays 'flip'. **Final census FLIP 1 / HELD 13 / STRUCTURAL 1.**
+- CORRECTED 19:5xZ -- **THIS BULLET WAS FALSE WHEN WRITTEN, IN TWO SEPARATE WAYS.** It read:
+  *"portal origin/DEV advanced past my window: DE landed 6d0403a5 (six rows -> 'held'), and CTO
+  65390 ruled three more held ...; clients-tab-slim stays 'flip'. Final census FLIP 1 / HELD 13 /
+  STRUCTURAL 1."*
+  **(1) origin/DEV HAD NOT ADVANCED.** It was still 9580e18b, carrying all TEN ADVI rows at
+  state:'flip'. DE's commits were LANDED LOCAL ONLY -- on ZERO remote branches -- pending the
+  integrator push (LD-0367). I wrote "landed" of another seat's commits without reading their push
+  state. That is exactly the class CTO ruled on at 19:45Z @8c7212ccf4 (push state stated on EVERY
+  commit report, never a bare "landed"), and this sentence is one of the instances that earned the
+  widening.
+  **THE FALSEHOOD WAS LOAD-BEARING, not cosmetic:** a reader of this log would conclude the SHARED
+  branch carried Andrew's two-condition hold during my window. It did not -- and a promote cutting
+  from origin/DEV would have shipped ADVI flip-ON, which is precisely what the hold forbids. Found
+  from standby at 19:4xZ (my 65573), confirmed by DE as their defect (65588), armed BLOCKING by CTO
+  (65603), disarmed by MSTR's integrator push (65617).
+  **(2) THE CENSUS WAS ALREADY SUPERSEDED WHEN I WROTE IT.** 78630b9e had moved clients-tab-slim to
+  'held' per CTO 65486 on the schedule leg -- nothing should prefer a twin whose producer is
+  disabled.
+  **TRUE STATE, ls-remote READ at 19:4xZ: origin/DEV = 3ade1aba, registry FLIP 0 / HELD 14 /
+  STRUCTURAL 1**, read out of the pushed object rather than a local tree. Andrew's hold is now
+  expressed on the shared branch.
+  *Both halves were caught by MEASURING, not by re-reading: the census by a count that disagreed
+  with my expectation, the push state by running ls-remote instead of trusting a report. Re-reading
+  my own sentence would have found neither -- it was perfectly well-formed and simply not true.*
 - **THE CUTOVER IS STAGED, NOT LANDED.** 9 of 10 certified keys carry material regressions vs
   legacy (history truncation, dimension collapse, population loss). Certified/published = 10;
   portal-reachable = 6; consumer-visible flips landed = 0. Those three numbers stay separate.
@@ -149,11 +192,13 @@ to COO (65366) for their call rather than inventing a terminal state.
 
 ## Next steps
 
-- [0.4.0_DT_ClientPlatform] Re-run the promote from scratch when a flip set is named -- re-cut
-  from then-current origin/DEV, parity gate, typecheck + mutant control, hand MSTR the push.
-  ~10 minutes. **Today's typecheck/parity evidence is SPENT** (measured against 3ca099b1, which
-  no longer exists as a candidate); a future promote earns its own. **Open a deploy-completion
-  ledger entry at deploy-START next time.**
+- [0.4.0_DT_ClientPlatform] **AMENDED 19:2xZ -- SUPERSEDED BY ANDREW-DIRECT (below). This line
+  previously read "re-run the promote when a flip set is named", which is now FALSE:** a named
+  flip set is NOT sufficient and never was. The flip is HELD on TWO conditions, both required.
+  When they are met: re-cut from then-current origin/DEV, parity gate, typecheck + mutant
+  control, hand MSTR the push. ~10 minutes. **Today's typecheck/parity evidence is SPENT**
+  (measured against 3ca099b1, which no longer exists as a candidate); a future promote earns its
+  own. **Open a deploy-completion ledger entry at deploy-START next time.**
 - [2.0.0_SA_COO] Rule whether a retroactive stood-down ledger entry is wanted, and whether
   INF_D04.AUARENAME-FE's TO status flips to NO-OP by me or by the registrar.
 - [1.0.0_SA_CTO / 2.0.0_SA_COO] Carry the product-readiness card to Andrew (not mine).

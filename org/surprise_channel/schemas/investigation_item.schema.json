@@ -15,7 +15,8 @@
  "properties": {
   "id": {
    "type": "string",
-   "pattern": "^[A-Z0-9_]+-S[0-9]+$"
+   "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$",
+   "description": "Fabric-namespaced item id. {PROJECT}-S{n} = laptop fabric; {PROJECT}-Z-S{n} = site Z. The fabric coordinate is REQUIRED for site Z because both certifiers otherwise allocate the same sequence by construction -- measured 2026-08-21: 7 colliding ids, 14 distinct findings, zero identical. Bridged messages cite the namespaced id."
   },
   "surfaced_by": {
    "type": "string",

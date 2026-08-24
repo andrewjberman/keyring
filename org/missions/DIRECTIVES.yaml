@@ -57,7 +57,7 @@ directives:
     placement: "LAPTOP -- RULED, whole item incl. parity harness/analytics (Andrew, both consoles: 'D2 is certainly laptop fabric' / 'sitez does not work on advi, D2'); supersedes @a02f9ff5a4's D2-analytics-sitez row; sitez 0.8.0~Z spawn cancelled."
     members:
       subgroups: [PORTAL.ADVISOR_INTELLIGENCE, EXTERNAL.49FINANCIAL]
-      projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE]
+      projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE, ADVI_49FSRC, ADVI_INSURE, ADVI_STITCH, ADVI_PERFRP]
     stance: "Floor ENABLED on the 107.1s pin (@647c432a7d). RE-CUT per Andrew-direct 08-20 ~1553Z
       'Better do do it now (a)' (record ANDREW_DIRECT_20260820_D2_PROMOTE_SINGLE_GREEN_FRIDAY_A.md;
       THU 08-20 12:45Z fire ABORTED on the R14 T-1 derivation defect, fix pre-ruled, DS~B spawned):
@@ -77,7 +77,24 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
-    placement: "LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal),
+    placement: "SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ, base CTO terminal,
+      relayed by 1.0.0_SA_CTO msg 66261, record ANDREW_DIRECT_20260824_ETFS_TO_SITEZ_TODAY_NO_0824_UNION_RECORDING_BD_DASHBOARD.md).
+      VERBATIM: 'we can temporarily move the directive for that ETFs work over to sitez machine in
+      Directives.yaml. That can be their project for today.'
+      SCOPE OF 'THAT ETFs WORK': the L1 order A4/A4.1 scoped additional script -- the derived
+      Bloomberg layer accruing from the first run (current-day-only, so it loses a day per calendar
+      day), issuer fill, and the constituent LIST as a BQL upgrade on his spend word ONLY -- plus the
+      round-2 data-structure condition from his ~15:2xZ promote ruling. Whether the DEV-build frontend
+      condition (GICS -> sub-categories) rides site Z today or waits for a laptop DE seat is
+      0.0.0_AB_MSTR~Z's read of 'that ETFs work'; CTO did not adjudicate it and neither did I.
+      ⛔ TEMPORARY MEANS TEMPORARY: 'today' is HIS word and this row reverts to the LAPTOP-OWNED
+      placement preserved verbatim below without needing a new ruling -- but the revert is an ACT and
+      it is 0.0.0_AB_MSTR's, not something that happens by the date changing. THIS IS THE FOURTH
+      PLACEMENT ON THIS ROW IN FOUR DAYS, ALL HIS; a reader must take the latest and must not read
+      this flip as reopening the ones beneath it.
+      NOT A SPAWN-ORDER RATIFICATION: laptop lanes stay closed-out until his further word.
+      --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED, REVERT TARGET ---
+      LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal),
       SUPERSEDING the ~02:5xZ SITEZ handoff on this same row (which itself superseded the 2026-08-19
       LAPTOP ruling -- THREE placements on this row in 3 days, all his, latest binds). VERBATIM:
       'I thought we might handle this on the sitez fabric because they have the bloomberg access but
@@ -102,7 +119,72 @@ directives:
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [ETFS_CANON, ETFS_POSITIONING]
-    stance: "EVENT-REFRESHED 2026-08-21 ~14:1xZ (register act by 0.0.0_AB_MSTR per CTO 64716 spec;
+    stance: "EVENT-REFRESH 2026-08-21 ~20:0xZ -- ETFS-g-1, the register cell (COO's stage-3 decomp
+      assigns it to MSTR as SOLE WRITER and to no round-1 seat; stated in the decomp so nobody
+      writes it 'helpfully'). STAGE 3 IS DELIVERED AND ROUND 1 IS EXECUTING: decomp
+      @308fcaea0d (workflows/atom_decomposition/etfs-positioning/20260821T194927Z/DECOMP.md, 352
+      lines), three round-1 TOs cut @10f94e4f13 -- TO-1 DS producer + sub-asset-class vocabulary,
+      TO-2 AE serving route + artifact CONTRACT + IAM, TO-3 DE the Models<->ETFs flip + the five
+      hardcoded sites. Both commits ON origin/CLOUD (ls-remote read @10f94e4f13), per the
+      push-state rule. NO DARK EXECUTOR CLASS IN ROUND 1: DS, DE, AE all seated and dispatched;
+      MSTR~Z holds ETFS-b-1 (the L1 pull) in flight. Every TO declares its executor CLASS -- never
+      a serial -- plus a seating trigger, so a mid-execution dark seat routes to MSTR SAME-TURN as
+      a naming obligation rather than a discovery.
+      ⚠ THE VOCABULARY RULING THAT KEEPS ROUND 1 HONEST -- bbg/{date}/ IS THREE THINGS AND EVERY
+      CELL THAT READS IT NAMES WHICH: (1) bbg-testpull/ = the FROZEN QA reference; (2) a SCHEDULED
+      bbg/{date}/ landing = THE PRODUCTION INPUT, WHICH DOES NOT EXIST YET (first fire 08-22 07:00
+      local); (3) bbg/2026-08-20/ = AD-HOC output resident in the production prefix. The producer
+      BUILDS against the contract and PROVES against the first scheduled landing -- build does not
+      wait, proof does. Disposition of the three ad-hoc objects is an OPEN CHANNEL ITEM at CVO,
+      deliberately not a mid-flight amendment and not round-1 build work; MSTR~Z's run_class
+      manifest field (A1, executed @6729f104b7) is the cheap forward fix. >> This vocabulary
+      exists because a cross-fabric bridge killed the premise 'the production input exists now'
+      BEFORE the producer cell was cut against it -- the agentbus is device-to-device, so that
+      correction was structurally invisible from the laptop fabric.
+      ⚠ INSTRUMENT WARNING BOUND INTO THE DECOMP, not left in a thread: any cell whose proof runs
+      a Windows-native command from a POSIX shell CARRIES A NEGATIVE CONTROL THAT MUST FAIL --
+      MSYS rewrote cmd.exe's /c FLAG into a path, cmd returned 0, and a baseline plus both mutants
+      'passed' while the chain never executed.
+      ⛔ PRIORITY EVENT-REFRESH 2026-08-21 ~19:3xZ (register act by 0.0.0_AB_MSTR, sole
+      writer, per CTO 65562): ANDREW-DIRECT AT THE BASE CTO TERMINAL, VERBATIM: 'Make it clear to
+      the fabric that I want ETFS_POSITIONING DONE RIGHT NOW. IT IS PRIORITY FOR THIS SESSION'.
+      >> ETFS_POSITIONING ROUND-1 GOES TO THE FRONT OF EVERY SEAT'S QUEUE FOR THIS SESSION;
+      anything else a seat holds YIELDS to it. DONE = PRD s.11.1 (Positioning page flips
+      Models<->ETFs; ETF mode renders DIVZ/IDVZ/PFDE/PFOE in the Positioning shape FROM SCHEDULED
+      PRODUCTION ARTIFACTS; Models mode byte-identical; ship shape 2 full books + 2 shells
+      upgrading forward). RIGHT NOW = no idle stage.
+      ⛔ IT CHANGES PACE, NOT PROCESS. The Rule 27 pipeline binds exactly as ratified -- decomp
+      before TOs, execute on spec, surprises to the channel. His ~16:1xZ word and this one are ONE
+      instruction. NO shadow path, NO comparator, NO ad-hoc run as production evidence (ad-hoc QA
+      reads of bbg-testpull/ are fine for BUILD-TIME correctness; production reads the SCHEDULED
+      bbg/{date}/ landing). It WIDENS NO OTHER HOLD: DS stays scoped to ETFS_POSITIONING cells,
+      the 49F flip stays HELD on both of his conditions, L2 egress remains his word. It is an
+      ORDERING, not a gate on anyone. SEATING EXECUTED ON IT: 0.7.0_AE_CloudOps seated ~19:4xZ
+      AHEAD of the cell trigger (territory (e) serving = route + IAM), his priority word making
+      seating-now the cheap move. <<
+      EVENT-REFRESHED 2026-08-21 ~19:2xZ (register act by 0.0.0_AB_MSTR, sole writer, per
+      CTO 65453 request; authority = Andrew-direct ~17:5xZ at the base CTO terminal, VERBATIM:
+      'Ok time to use the canonical process for whatever directive the ETF POsitioning D(N) is,
+      get a project registered, do the PRD and let's run that end to end, i believe we should have
+      everything we need to run that'; record @e699d4d86a): >> ETFS_POSITIONING HAS ENTERED THE
+      DIRECTIVE EXECUTION PIPELINE (Rule 27) AND IS THE SECOND PROJECT TO DO SO. dep_stage: PRD.
+      Stages 1-2 discharged by CTO as commissioning exec WITHOUT minting a twin project -- 'get a
+      project registered' was satisfied by ENTERING the existing 02:1xZ registration rather than
+      duplicating it, which is the correct reading and avoids two codes for one body of work.
+      STAGE 3 (operative-surface atom-decomp BEFORE any TO) IS OPEN AT 2.0.0_SA_COO; certifier of
+      record 3.0.0_SA_CVO. PRD ss.1-10 are RE-CLASSED as research record + candidate maps =
+      DECOMP INPUTS, not a TO set -- COO may cut, merge, re-sequence or re-own any of it.
+      ⚠ IN FLIGHT AT ENTRY, COMPLETES UNDER ITS OWN SPEC AND IS NOT RE-PAPERED OR HELD: the L1
+      daily scheduled BBG pull at 0.0.0_AB_MSTR~Z (order acked 14:13:47Z; first scheduled fire
+      tomorrow 07:00 local). ⚠ SEATING: DS base is on Andrew's HOLD, so DS-class cells need an
+      MSTR spawn on COO's declared trigger or a declared DE/AE cohort -- a reduced cohort is
+      disclosed on the decomp's face, never silent. ⚠ NAMING RULED TO COO AS A REGISTRY ACT: TO
+      prefix D4_ETFPOS predates project code ETFS_POSITIONING; round-1 TOs mint under the PROJECT
+      code so the commit-gate keys on one. The one sovereign input still pending is the L2
+      TrueShares egress confirm (gates DIVZ/IDVZ constituent rows ONLY; the ship shape stands
+      without it). PRIOR STANCE PRESERVED BELOW AS THE MEASURED BASIS -- nothing in it is retired
+      by pipeline entry. <<
+      EVENT-REFRESHED 2026-08-21 ~14:1xZ (register act by 0.0.0_AB_MSTR per CTO 64716 spec;
       authority = Andrew-direct at the CTO terminal, record @1cf66d7d93): BUILD AUTHORIZED
       END-TO-END -- his word ordered the project formalized and executed end to end, PRD adjusted
       to the delivered pull's reality. STATE: the bounded Bloomberg pull is DELIVERED (brief

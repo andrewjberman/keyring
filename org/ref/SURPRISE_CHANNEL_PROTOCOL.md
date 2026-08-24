@@ -198,6 +198,42 @@ file carrying its own fenced `json` block -- section 0) · schemas at
 `org/surprise_channel/schemas/` · this protocol at `org/ref/`. CVO-owned lane (owned-paths row is
 COO's as registry grantor).
 
+⛔ **SCOPE, TIGHTENED 2026-08-21 21:2xZ AND THE TIGHTENING IS LOAD-BEARING: THIS APPLIES WHERE BOTH
+FABRICS *INDEPENDENTLY AUTHOR* A CHANNEL FOR ONE PROJECT -- NOT WHERE A FILE MERELY EXISTS AT THE SAME
+PATH ON BOTH BRANCHES.** A file one fabric authored and the other simply PULLED is a **MIRROR**: one
+author, one content, two branches, no ambiguity, and git resolves its `ADD/ADD` trivially.
+**RENAMING A MIRROR MANUFACTURES THE EXACT DEFECT THIS RULE PREVENTS** -- two files that agree today,
+drift apart forever, and have no mechanism to reconcile.
+**THE DISCRIMINATOR IS MECHANICAL AND COSTS ONE COMMAND: byte-identical whole file -> MIRROR, leave it
+alone; divergent content under shared ids -> COLLISION, rename.** From the file LIST alone the two are
+indistinguishable -- same path, present twice, both cases. *Measured that day across both remotes:
+**4 same-path files, exactly 1 real collision**; two more projects were byte-identical mirrors and a
+third existed on ONE fabric only and could not collide at all. My own first wording said "any project
+with a file at the same path" and would have forked three healthy files.*
+
+⛔ **ONE INVESTIGATION FILE PER *FABRIC* PER ROUND, WITH A FABRIC-DISTINCT FILENAME** -- laptop
+fabric keeps `INVESTIGATION_v{N}.md`; site Z writes `INVESTIGATION_v{N}.Z.md`. Same for
+`REMEDIATION_v{N}[.Z].md`, unless the two certifiers agree at handover on a single merged
+remediation authored by ONE of them. **THE TWO FILES ARE NEVER MERGED.** An `ADD/ADD` on this path
+resolves by **RENAME** (keep the laptop file at its path, land site Z's beside it under the `.Z`
+name; no content edit to either).
+
+**IDS CARRY A FABRIC COORDINATE:** `{PROJECT}-S{n}` is the laptop fabric; `{PROJECT}-Z-S{n}` is
+site Z. **Bridged messages cite the namespaced id.**
+
+⛔ **WHY, because the failure is invisible until the merge and the fix looks unnecessary before it
+(CVO, 2026-08-21, measured on this protocol's own first round):** the id axis was namespaced by
+**PROJECT** and never by **FABRIC**, so two certifiers working one project on two machines allocate
+the *same sequence by construction* -- **not a collision risk, a guarantee.** Measured at the first
+integrate: **7 colliding ids, 14 distinct findings, ZERO identical.** Every ordinary resolution
+destroys the record -- concatenation yields two `json` blocks (refused by this protocol's own
+validation), keep-one-side drops 8 items silently, and **union-by-id is the worst because it
+collapses 14 into 7 while looking like it worked.** The live half needed no merge at all: a bare
+`S3` in a bridged message named **two different hazards** depending on the reader's fabric.
+**The single-block-per-file rule was RIGHT; the FILE GRAIN was wrong** -- a Rule-24 missing-coordinate
+defect, repaired by adding the coordinate, never by renumbering (renumbering breaks every citation
+in flight). Ruling: `1.0.0_SA_CTO` 65860, cross-fabric.
+
 Validation extracts the fenced block from the document itself, so what is checked IS what is read:
 
 ```bash

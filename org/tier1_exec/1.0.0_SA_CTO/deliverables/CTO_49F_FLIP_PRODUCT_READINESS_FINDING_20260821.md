@@ -107,6 +107,60 @@ origin/PROD is untouched at 8a96c916; the deployed client bundle predates the fl
 legacy URLs.** AE's route measurement (the router WILL serve twin bytes to a valid token) is true on
 the route plane and has no consumer — two planes, and the exposed one has no reader.
 
+## ⛔ SOVEREIGN RULING 19:18Z — THE FLIP IS HELD ON TWO CONDITIONS, and the second one nobody had
+
+**Andrew-direct 2026-08-21 ~19:18Z (relayed COO 65457, recorded + broadcast), VERBATIM:** *"the position on
+flipping this should be held until source gaps and schedule are addressed, that needs to be documented,
+including relevant publisher resources, paths, and etc for the switch covering what is the current
+route and what is the contemplated route."* **The hold IS the decision, with two named release
+conditions — BOTH required, NEITHER sufficient alone.** It binds the FLIP only: the canonical chain
+runs daily, the BD-migration programs proceed, nothing else is held. The REC above ("keep legacy-served;
+run the programs; re-flip per key") is SUBSUMED by his ruling — the release now needs the schedule leg too.
+
+**The documentation he ordered lives at COO's seat and stays there as the MAINTAINED home:**
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ADVI_49F_SERVE_ROUTE_CURRENT_AND_CONTEMPLATED.md` @ad8bb50e56
+(current route: `opal-data-bd/platinum/firm/*`, D-series emitters `runners_49f/d01..d14`, 04:00Z serve of
+record; contemplated route: canonical → `d_publisher_port` → `portal-v2/platinum/advi/49financial`, CF
+path-class override, tenant assertion, `adviKeyRepoint` registry; the two hold conditions; BD-exclusive
+dims; what stands; five UNMEASURED items). The owned-paths gate refused it under `docs/architecture/`
+(ANY_CTO lane) and COO correctly did not override; I am NOT copying it into my lane — a second home for a
+document carrying five open measurements is the two-homes defect. This finding points at it.
+
+**THE SCHEDULE LEG — grounded at my seat, then CLASSIFIED at source (Rule 22a: a detector that cannot tell
+a hold from neglect manufactures the wrong reflex):**
+- APPLIED: `aws scheduler get-schedule advi-49f-publisher` → **State DISABLED**, `cron(15 13 * * ? *)`,
+  target `advi-49f-gold-dispatch`; `list-schedules --name-prefix advi-49f` → 2 (publisher DISABLED,
+  **`advi-49f-gold-floor` ENABLED**); `events list-rules --name-prefix advi-49f` → 0. *My first probe was
+  `events describe-rule` → ResourceNotFound — the wrong-SERVICE zero; CVO and DE hit the identical trap in
+  the same minute, DE with a positive control that fired inside the wrong plane. Three seats, one trap.*
+  The split explains the measured pattern exactly: canonical fresh (floor enabled), twins frozen at
+  15:03–15:04Z (publisher disabled; today's twin publish was manual).
+- DESIRED + CLASSIFICATION: **`infra/aws/terraform/opal-assets/advi_49f_publisher.tf` (AE @1abc54fa4c,
+  2026-08-19, OPAL_ADVIPOINTERS P4-PUBIAM-49F / P4I-3) declares `state = "DISABLED"` DELIBERATELY** —
+  header verbatim: *"STATE = DISABLED, DELIBERATELY — THIS IS THE CONTRACTED DESIGN, NOT A HALF-LANDING.
+  The publisher schedule activates only when DS~B's emitters are deploy-ready."* Activation = ONE TF
+  change, three steps named in the header: (1) mint `aws_ssm_document.advi_49f_publisher_dispatch` with
+  DS~B's contracted body; (2) append its name to the dispatcher's `ALLOWED_DOCUMENTS` env; (3) flip state
+  to ENABLED — and *"even a stray manual enable fails CLOSED + LOUD"* (allowlist refuses; document absent).
+  **So: DELIBERATELY-HELD, not stale-by-neglect; the reflex "re-enable it" is wrong twice (not the remedy,
+  and it fails closed).** What lapsed is the ACTIVATION ACT — its condition (emitters deploy-ready) was met
+  today and no seat fired it because every seat was on the cutover. A correct hold outlived its condition.
+- Consequence: the second release condition is a **named existing act (P4I-3 activation), AE-class, with a
+  named contract input (DS~B's entrypoint + args)** — not a new build, not an open question. Routed 19:23Z
+  (COO re-grounds P4I-3 at pickup; AE confirms authorability; AE queued — no live session at 19:23Z; MSTR
+  holds seating).
+
+**clients-tab-slim → HELD (CTO word to DE 19:23Z).** The one clean key passes the source-gap condition and
+fails the schedule one (same publisher, same freeze); my stays-flipped ruling predated his word and yields
+to it. DE flipped @78630b9e and READ the census after the act: **FLIP 0 / HELD 14 / STRUCTURAL 1, row count
+15 = the ruled P4E-1 denominator** (DE 65528). No registry row prefers its twin; the cutover is STAGED, NOT
+LANDED; `origin/PROD` `8a96c916`.
+
+**Still UNMEASURED, owner named, no clock:** the 04:00Z legacy producer of `bd/platinum/firm/*` is neither
+an EventBridge rule nor a Scheduler entry (COO enumerated both) — AE read-only census (on-host cron /
+systemd timers on the bd EC2 plane; event chain off `bd-49f-session-*`). **Nothing is decommissioned
+until it is named; nothing is being decommissioned now.**
+
 ## Why the afternoon's controls were right and still missed this
 
 Pins measure values against DECLARED bands; certs cover route + value planes; the consumer-plane
