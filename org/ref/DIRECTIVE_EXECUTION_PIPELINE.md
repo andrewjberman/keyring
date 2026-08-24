@@ -64,6 +64,27 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   work defect)*: each TO declares its **EXECUTOR CLASS** (a class, never a serial — seats die)
   and its **SEATING TRIGGER** with observed semantics. Trigger fires + class dark → the spawn
   call routes to MSTR **same-turn**, as a naming obligation, not a discovery.
+- **ONE PROJECT PER TIER-2 SEAT INSTANCE; PARALLELISM IS SEATS, NOT STACKING** *(Andrew-direct
+  2026-08-24 ~19:29Z at the base CTO terminal, VERBATIM: "Something I think that can be damaging is
+  when tier2 agents are instantiated and get many different TOs across states and projects
+  simultaneously; it is a lot easier if they are simply brought on to complete one project at a
+  time. For parallelization sake, we can simply bring on ~tilde agents if there are multiple
+  projects we want to pursue at once, which is the case here. Let's keep that in mind when issuing
+  TOs." Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ONE_PROJECT_PER_TIER2_SEAT_DECOMP_BEFORE_TOS_CVO_PROOF_OF_SPEC_CRO_OFFLIMITS.md`)*:
+  a TO's executor is an INSTANCE of its declared class whose open-TO set is THAT ONE PROJECT. N
+  projects wanted concurrently at one class = N `~lane` instances of the class, one project each,
+  spawned per the seating trigger above. The resource being protected is the seat's CONTEXT: a
+  seat holding TOs "across states and projects" reasons from the wrong project's premises and the
+  issuer cannot see it happen. **Issuer obligations:** (a) the TO names the executor CLASS and
+  states that the instance is single-project (the spawn brief carries exactly one project's
+  packet); (b) an EXISTING instance already holding open TOs on another pipeline project is NOT a
+  legal target -- re-address to a fresh lane (a re-address is an issuance act, cheap; the content
+  does not change); (c) a base seat's inherited multi-project heap is never the reason to widen a
+  new TO onto it -- the heap is triaged by the issuer, not carried by the executor. **Tier-1 exec
+  seats coordinate across projects by charter and are not re-shaped by this rule.** Gate candidate
+  (tooling lane, sequenced WITH enforcement layers 1-2 below): the TO commit-lint additionally
+  refuses a NEW TO whose executor instance holds an open TO on a DIFFERENT pipeline project unless
+  the TO names a fresh `~lane` instance -- proposed, NOT implemented (no gates without his word).
 - **PLACEMENT IS A DECLARED DECOMP AXIS** (Rule 26 made execution placement load-bearing): which
   device/fabric executes each cell is enumerated, and a cross-fabric dependency edge declares
   its ferry/relay semantics. A cell with undeclared placement generates the double-apply class
