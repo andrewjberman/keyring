@@ -77,7 +77,24 @@ directives:
   D4:
     title: "ETF positioning variant (3-8wks, behind D1)"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
-    placement: "LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal),
+    placement: "SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ, base CTO terminal,
+      relayed by 1.0.0_SA_CTO msg 66261, record ANDREW_DIRECT_20260824_ETFS_TO_SITEZ_TODAY_NO_0824_UNION_RECORDING_BD_DASHBOARD.md).
+      VERBATIM: 'we can temporarily move the directive for that ETFs work over to sitez machine in
+      Directives.yaml. That can be their project for today.'
+      SCOPE OF 'THAT ETFs WORK': the L1 order A4/A4.1 scoped additional script -- the derived
+      Bloomberg layer accruing from the first run (current-day-only, so it loses a day per calendar
+      day), issuer fill, and the constituent LIST as a BQL upgrade on his spend word ONLY -- plus the
+      round-2 data-structure condition from his ~15:2xZ promote ruling. Whether the DEV-build frontend
+      condition (GICS -> sub-categories) rides site Z today or waits for a laptop DE seat is
+      0.0.0_AB_MSTR~Z's read of 'that ETFs work'; CTO did not adjudicate it and neither did I.
+      ⛔ TEMPORARY MEANS TEMPORARY: 'today' is HIS word and this row reverts to the LAPTOP-OWNED
+      placement preserved verbatim below without needing a new ruling -- but the revert is an ACT and
+      it is 0.0.0_AB_MSTR's, not something that happens by the date changing. THIS IS THE FOURTH
+      PLACEMENT ON THIS ROW IN FOUR DAYS, ALL HIS; a reader must take the latest and must not read
+      this flip as reopening the ones beneath it.
+      NOT A SPAWN-ORDER RATIFICATION: laptop lanes stay closed-out until his further word.
+      --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED, REVERT TARGET ---
+      LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal),
       SUPERSEDING the ~02:5xZ SITEZ handoff on this same row (which itself superseded the 2026-08-19
       LAPTOP ruling -- THREE placements on this row in 3 days, all his, latest binds). VERBATIM:
       'I thought we might handle this on the sitez fabric because they have the bloomberg access but
