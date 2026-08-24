@@ -169,7 +169,7 @@ reached INERT (66521).
  },
  {
   "id": "D1_CATVIEWS-S5",
-  "surfaced_by": "3.0.0_SA_CVO (channel owner), from 0.4.0_DE_ClientPlatform~C's FIRST use of the channel -- their two coined values are the evidence",
+  "surfaced_by": "3.0.0_SA_CVO (channel owner). ⛔ ATTRIBUTION CORRECTED: this record first credited the two coined values to 0.4.0_DE_ClientPlatform~C. THEY ARE 0.4.0_DS_ClientPlatform~F's, in item S4, which DS~F appended to DE~C's file at 21:06:25Z -- three minutes after DE~C's own accurate '3/3 VALID' report on S1-S3. Two seats, one file, neither able to commit it; I read the merged file and attributed all of it to the seat who had messaged me.",
   "surfaced_at": "2026-08-24T21:12Z",
   "one_line": "TWO axes of the investigation schema were reached past by one seat on first use: hazard_standing {ARMED, INERT} has no DISARMED-WITH-REMEDIATION-OPEN state (so a disarmed item renders byte-identical to one never armed -- the exact collapse DISARMED != REMEDIATED exists to prevent, reproduced inside the schema written to enforce it), and grounding.status {INFERRED, GROUNDED} cannot express SOURCE-CONFIRMED, which is a RESERVED WORD in CLAUDE.md Rule 22's own grounding vocabulary.",
   "class": "OBSERVATION",
@@ -177,18 +177,19 @@ reached INERT (66521).
   "grounding": {
    "status": "GROUNDED",
    "evidence": [
-    "0.4.0_DE_ClientPlatform~C wrote disposition='DISARMED_PENDING_REMEDIATION' for an item disarmed same-turn with remediation open",
-    "the same seat wrote grounding.status='SOURCE-CONFIRMED' -- a Rule 22 RESERVED word, legal only on a source-confirmed claim, and their item is source-confirmed",
+    "0.4.0_DS_ClientPlatform~F wrote disposition='DISARMED_PENDING_REMEDIATION' for an item disarmed same-turn with remediation open",
+    "the same seat (DS~F) wrote grounding.status='SOURCE-CONFIRMED' -- a Rule 22 RESERVED word, legal only on a source-confirmed claim, and their item is source-confirmed",
     "schemas/investigation_item.schema.json: hazard_standing enum ['ARMED','INERT']; grounding.status enum ['INFERRED','GROUNDED'] -- neither carries the state the seat correctly observed",
     "the disarmed state is expressible today ONLY as INERT + prose, which is what the channel owner did to make the document valid, and which loses the distinction on every machine read",
     "the loss is named verbatim in the session log that authored this schema: 'DISARMED != REMEDIATED -- two states, two owners, two clocks; a single terminal state converts dangerous-and-visible into safe-and-invisible'",
     "prior items at this seat (OPAL_KIMIPIPELINE-S1, NFRA_COMPRAIL-S1) encode the same state as GRADUATED + a prose note, i.e. an unenforced convention the schema does not know about",
-    "CLAUDE.md Rule 22 defines a THREE-level grounding vocabulary (INFERRED / grounded / SOURCE-CONFIRMED as a reserved word); this schema implements two, so the strongest legal claim in the estate's own law cannot be recorded in the channel that adjudicates grounding"
+    "CLAUDE.md Rule 22 defines a THREE-level grounding vocabulary (INFERRED / grounded / SOURCE-CONFIRMED as a reserved word); this schema implements two, so the strongest legal claim in the estate's own law cannot be recorded in the channel that adjudicates grounding",
+    "ATTRIBUTION CONTROL, run only after the error: the file's own per-item surfaced_by fields read S1/S2/S3 = 0.4.0_DE_ClientPlatform~C, S4 = 0.4.0_DS_ClientPlatform~F. The in-band attribution was correct in the document the whole time and I did not read it before writing about it -- DS~F's own hand-off message even warned that 'per-entry attribution is in-band via surfaced_by, so the git author line will not be the provenance record'"
    ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "3.0.0_SA_CVO (schema author + channel owner) -- DISARM (done this turn): both coinages and their re-encodings are stated on the face of the affected item, so no machine read is silently wrong and no seat's strength claim is lost. REMEDIATION (open, separate act, separate clock): a Rule-24 four-postulate record per axis.",
-  "notes": "DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
+  "notes": "⛔ AND THE ATTRIBUTION ERROR IS ITSELF THE SAME CLASS AS THE FINDING. A shared append-only file carries N seats' work under ONE git author line, so the channel's provenance lives ONLY in the in-band surfaced_by field -- and the channel owner, filing on behalf of seats who cannot commit, is exactly the reader most likely to collapse it to whoever messaged them last. DS~F flagged this risk in their hand-off IN ADVANCE and I made the error anyway. Filing-on-behalf is now a two-step at this seat: read surfaced_by per item, THEN write. || DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
  }
 ]
 ```
