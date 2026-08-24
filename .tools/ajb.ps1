@@ -219,12 +219,36 @@ function ajb {
         $claudeArgs = @('--dangerously-skip-permissions')
         # Per-serial model/effort defaults. Keyed on BASE serial so lanes
         # inherit. Extend ONLY on Andrew's word.
+        #
+        # PRECEDENCE: this EXPLICIT table wins over the tier rule below, so a
+        # named seat can always be pinned against the tier default.
         $modelBySerial = @{
             '0.0.3_BG_BBGTerminal' = @('--model', 'claude-opus-5', '--effort', 'high')
         }
+        # TIER-2 DEFAULT -- Andrew-direct 2026-08-24 ~19:5xZ at the CTO~Z terminal, VERBATIM:
+        #   "For future reference, tier2 agents should always be instantiated with opus 5 model
+        #    on extra high effort."
+        # ("extra high" = the harness effort vocab's `xhigh`: low|medium|high|xhigh|max.)
+        #
+        # DERIVED FROM THE SERIAL, NOT ENUMERATED, and the grammar is ORG_CHART.md:12-14's own:
+        #     0.0.0        Tier 0 (MSTR)
+        #     0.0.N  N>0   Tier 0 UTILITY (BG / UA)      <- NOT tier 2
+        #     0.Y.0  Y>0   TIER 2 (Senior)               <- his rule lands here
+        #     0.Y.Z  Y>0,Z>0  Tier 3 (Junior, RD)        <- NOT named by his word
+        #     N.0.0  N>0   Tier 1 (SA: CTO/COO/CVO/CRO)  <- NOT named by his word
+        # WHY DERIVED: he said "ALWAYS". An enumerated list of today's tier-2 serials silently
+        # omits the next one minted -- the stale-hand-copied-list class this estate keeps paying
+        # for. The numeric triple already encodes tier, so deriving makes a new tier-2 seat
+        # inherit the rule by construction, with no edit and no one remembering.
+        # SCOPE HELD DELIBERATELY NARROW: tiers 1 and 3 are NOT widened into. He named tier 2.
         if ($modelBySerial.ContainsKey($base)) {
             $claudeArgs += $modelBySerial[$base]
             Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
+        }
+        elseif ($base -match '^0\.([1-9][0-9]*)\.0_') {
+            $tier2 = @('--model', 'claude-opus-5', '--effort', 'xhigh')
+            $claudeArgs += $tier2
+            Write-Host "[ajb] TIER-2 default for ${base}: $($tier2 -join ' ') (Andrew-direct 2026-08-24)" -ForegroundColor Cyan
         }
         # F8 (Andrew-direct 2026-08-20 "rec approved" @ad2585793c, OPAL_ANALYST.W6-T1): the BG seat's
         # identity is BOUND AT LAUNCH. Its own fence (bg-concierge-gate G1) forbids it the XXX.md A.1
