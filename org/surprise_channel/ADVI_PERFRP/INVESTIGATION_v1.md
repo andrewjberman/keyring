@@ -47,6 +47,27 @@ in the message that carried it.
   },
   "disposition": "DISMISSED_WITH_REASON",
   "dismissal_reason": "Withdrawn by its author on a wider measurement; PRF-d-6's premise is CORRECT and the cell executes as written. Recorded rather than deleted because a hedged claim withdrawn on its own author's wider read is the channel working -- and the wrong-plane component-tree read is the same class the certifier hit twice today, caught here before it entered a frozen spec."
+ },
+ {
+  "id": "ADVI_PERFRP-S3",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G (executing seat, first act after seating, premise verification against live state); CONFIRMED and STRENGTHENED by 3.0.0_SA_CVO on the live artifacts",
+  "surfaced_at": "2026-08-24T21:54Z",
+  "one_line": "twr_daily -- the canonical table the certified PERFRP projection consumes -- delivers r_net and r_gross physically NULL for every row across the five most recent partitions; AND the refused partitions carry 9 columns instead of 13, dropping bmv/emv/cf_net/cf_gross, so the returns cannot even be recomputed downstream from the partition itself.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "surfacing seat's census, full denominator: 529 partitions under twr_daily/ (2024-07-09..2026-08-21), ALL manifests read; 523 COMPUTED / 6 ALL-REFUSED; the 6 = 2025-01-09 plus the five most recent consecutive partitions 2026-08-10, 08-18, 08-19, 08-20, 08-21; last COMPUTED = 2026-08-07",
+    "CVO re-verified at the two endpoints: date=2026-08-21 -> 7,335 rows, status_census {REFUSED-NO-BMV: 7335}, manifest bmv_source 'ABSENT -- exercise mode, all rows refused', r_net non-null 0/7335, r_gross non-null 0/7335",
+    "CVO healthy contrast date=2026-08-07 -> 7,238 rows, {OK: 6329, UNCOMPUTABLE-ZERO-BMV: 901, REFUSED-NO-BMV: 8}, r_net float64 with 6,329 non-null, bmv resolved to 2026-08-06 -- so the read discriminates",
+    "CVO-ONLY LIMB (not in the surfacing report): the SCHEMA differs, not merely the values. Frontier = 9 columns; healthy = 13. ABSENT at the frontier: bmv, emv, cf_net, cf_gross -- the operands r_net is computed FROM. Nothing present at the frontier is absent from healthy.",
+    "CVO: all five recent refused partitions (08-10, 08-18, 08-19, 08-20, 08-21) carry 9 columns -- systematic, not a single bad write",
+    "NEVER#1 CLEARED EXPLICITLY BY THE SURFACING SEAT BEFORE THEY SPOKE: the T-1 partition EXISTS and is correctly dated (Monday 2026-08-24, T-1 = Friday 2026-08-21). This is a CONTENT finding on a present, correctly-dated partition. No wall-clock age appears anywhere in the evidence."
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "WHY THE CVO LIMB CHANGES THE SEVERITY: a null and a MISSING COLUMN fail differently in a consumer -- code written against the 13-column shape gets a missing-column error, not a null it can branch on -- and because the missing four ARE the return inputs, the refused partitions withhold the material from which the answer could be reconstructed. PRF-b-1's contract is being authored against this table NOW: a contract declaring r_net nullable is still wrong here, because bmv/emv/cf_net/cf_gross are not nullable, they are ABSENT. It also adds a FIFTH state to DE~D's parallel 'a null has 4 meanings' item -- the column does not exist at all -- which the render side cannot distinguish from the served shape. || NOT CLAIMED BY EITHER SEAT: no producer diagnosis. 'exercise mode' is the producer's OWN manifest self-description; whether it is deliberate or a regression is an ungrounded mechanism claim (Rule 22) and off both seats' spec. The surfacing seat's weak observation (08-11..08-14 are trading days with no partition) is reported-not-chased and the CVO did not investigate it. CVO checked two endpoints plus the five refusals -- a SAMPLE, stated as one; the 529-partition census remains the surfacing seat's measurement with their denominator. || BEARING ON THE CERT, recorded rather than buried: CVO certified ADVI_PERFRP R1 36/36 under the Q-p1 ruling that the projection consumes these live canonical tables. NEITHER the six original bar checks NOR the seventh (oracle viability, added ~1h earlier) would have caught this -- the cells are enumerated, aligned, and their oracles runnable; THE SUBSTRATE'S CONTENT IS A THIRD THING AGAIN. No eighth check is being added by reflex: a certifier who censuses every input table's content is re-doing the DS lane's work. The control that worked is the one that fired -- the executing seat's premise verification against live state, inside an hour of seating. THIRD instance today of an executing seat finding what no document-plane check could see (DE~C's aborting oracle, DE~D's non-existent bundles, this). That is the session's strongest evidence that premise-primitives-first is load-bearing rather than ceremonial."
  }
 ]
 ```
