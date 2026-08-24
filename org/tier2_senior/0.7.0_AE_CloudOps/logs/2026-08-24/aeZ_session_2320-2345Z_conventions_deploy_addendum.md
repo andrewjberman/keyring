@@ -177,5 +177,37 @@ session kept catching; this one is mine.*
   >> OR "THE SCHEDULE FAILED."** Check the disjunction in order and name which one, on evidence.
   >> **AND (3) IS THE ONE THAT SURVIVES A CLEAN (1) AND (2)** -- it is structural, so it will still
   >> be there on a day when the file is right and the characteristics are right.
+- [`0.7.0_AE_CloudOps~Z`] **DEPLOY TO-7's as-of VALUE fix -- DEADLINE 22:00Z 2026-08-25, *NOT* 13:00Z.**
+  Measured gap: `_v_ts_Date` tree 5 / deployed 2 -- it is in MY Lambda and NOT running.
+  ⛔ **DO NOT INHERIT THE 13:00Z CLOCK FROM THE ITEMS NEXT TO IT.** silver 08-24 was written
+  2026-08-24T22:00:17Z by the OLD code; 13:00Z gold READS that already-written partition, so a deploy
+  at any hour before it changes nothing about what 13:00Z serves. **The first partition the fix can
+  affect is the 08-25 silver write at 22:00Z.** Only the AC3 re-derive can change what 13:00Z serves.
+  **Do not deploy while DS~Z is mid-edit** -- packaging a half-finished tree against a deadline that
+  does not exist is the worst of both.
+- [`0.7.0_AE_CloudOps~Z`] **DEPLOY the AC3 bronze re-derive when DS~Z lands it** (CTO~Z 5934; DS~Z
+  build started, feasibility HIGH). **ACCEPTANCE IS A NETWORK ASSERTION, NOT AN INSPECTION:** it must
+  read existing bronze and perform **ZERO issuer HTTP** -- *exercise it and assert zero outbound
+  requests.* A grep answers PRESENCE; only the run answers BEHAVIOUR, and that gap is what this whole
+  session kept finding.
+  ⛔ **AND THE REQUIREMENT I AM MOST LIKELY TO SKIP: the re-derived partition must SELF-IDENTIFY.**
+  A scheduled-produced partition silently overwritten by an ad-hoc act, with nothing in the object
+  saying so, **is the provenance defect committed by the fix for it.** `run_class` is the precedent.
+  **Do not deploy a re-derive that lacks the equivalent.**
+  If it cannot be built AND verified before 13:00Z: **WITHHOLD** (CTO~Z (3)). One day of known-wrong
+  provenance, recorded and surfaced, beats a partition nobody can attest to.
+- ⛔ [`0.4.0_DS_ClientPlatform~Z` owns the disarm; recorded here because I deployed the bytes]
+  **ARMED HAZARD, LIVE NOW ON `etfs-netassets-daily`:** `:1183`
+  `run_date = event.get("run_date") or now.date().isoformat()` -- operator-supplied, with **no replay
+  path behind it** (rederive/from_bronze/SKIP_FETCH/BRONZE_REPLAY all 0). An invocation that LOOKS
+  like a replay -- `{"run_date":"2026-08-24"}` -- **re-fetches the CURRENT sheet and lands it under
+  the OLD date**: a FABRICATED OBSERVATION, reachable by one plausible call. Found by
+  `0.0.0_AB_MSTR~Z`, confirmed by me on the DEPLOYED bytes with controls.
+  **NOTHING IN THE AE LANE DISARMS THIS** -- the parameter is read inside the handler; IAM cannot see
+  an invocation payload. The only AE-lane control is an operational rule with no enforcement:
+  ***never invoke `etfs-netassets-daily` with a `run_date`*** -- stated as a stopgap and labelled as
+  one, because MSTR~Z's whole point is that a rule is not a control. **The real disarm is code, and
+  the AC3 build is its natural vehicle** (make `run_date` imply bronze-replay rather than re-fetch),
+  so doing AC3 properly closes this as a side effect. **It predates my deploys and survives them.**
 - [tooling lane] `record-terraform-deploy.sh`: fails closed on cp1252, CRLF-rewrites under the UTF-8
   workaround. Routed around twice tonight.
