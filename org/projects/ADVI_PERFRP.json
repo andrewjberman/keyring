@@ -1,0 +1,46 @@
+{
+  "project_code": "ADVI_PERFRP",
+  "macro_code": "ADVI",
+  "name": "49 Financial PERFORMANCE ATTRIBUTION + REPORTING per client -- built on the account -> client/relationship -> advisor -> firm spine (not reinvented), a comparable interface to the Black Diamond Performance Reporting dashboard folded into Advisor Intelligence, living ENTIRELY in the Books tab + the advisorpublicprofile Book toggle view",
+  "description": "Andrew-direct 2026-08-24 ~17:1xZ at the base CTO terminal, the THIRD of three findings from the 49 Financial meeting (Mike) -- the PURPOSE the other two serve; recorded VERBATIM in full at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_49F_PERFORMANCE_ATTRIBUTION_REPORTING_ON_THE_SPINE_BOOKS_TAB.md (@1cda24912a). His words that bind this project: 'We are doing all of this to facilitate our work on Performance Attribution and Reporting. ... We should not reinvent the wheel from scratch; rather we should use our account -> client/relationship -> advisor -> firm spine as the basis for how we design performance reporting on a per client basis. I Think a logical way of how to set this project up is that I will take some screenshots and do a little recording of operations on the existing BD Performance Reporting dashboard which we can use for inspiration on developing a comparable interface function that folds into the Advisor Intelligence platform. I foresee this function as living entirely in the \"Books\" tab and commensurately the advisorpublicprofile \"Book\" toggle view.' PROGRAM FRAME: findings 1 and 2 are PRECONDITIONS of this deliverable (no attribution while insurance is blended into AM calcs -> ADVI_INSURE; no SI series across the 2024 migration without the account classification -> ADVI_STITCH); the three are one program with its purpose stated last (MSTR 66255 observation, adopted). DECLARED INPUT, NOT YET LANDED: Andrew's screenshots + recording of the BD Performance Reporting dashboard -- the PRD's SHAPE section is a DECLARED GAP until it lands; the shape is then pinned atom-decomp style from the reference UI, exactly as the Positioning page's shape was pinned from the served artifact. BUILD LADDER RUNG 2 (measured 2026-08-24 ~17:2xZ): (a) ADVI_PERFORMANCE (active, 2026-07-29; Phase 1 DESIGN COMPLETE -- field audit, method contract, centralized Gold A/B/C boundary, firm-compatible Gold handoff, scheduling + cleanup designs; P-1..P-7 discharged 2026-08-18; docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md + siblings) -- THE method/field contract this project reuses; (b) the 49F canonical runner chain c-series at opal-data-49financial/gold/advi/canonical/ (twr_daily, nna_canonical, flow_ledger, canonical_valuation, nna_atomic, accrual_materiality, valuation_integrity, canonical_positions -- 8 tables, D2 run R1) -- the per-account performance facts already on the spine; (c) the D2 parity program (ADVI_BDPARITY P1/P2/P3, staged) -- the check-our-work harness against BD's own calculated outputs (D2 PRD s.4a); (d) portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx + _shared/AdvisorPublicProfile.tsx (the Books / Book surfaces he named) + _shared/components/PartnerAnalytics.tsx. CONSTRAINT INTERSECTION, STATED ONCE SO NO SEAT DERIVES IT UNDER PRESSURE (MSTR 66255, adopted): ADVI_PERFORMANCE's field contract has a CRO-lane author, and 4.0.0_SA_CRO is OFF THIS SUBJECT by Andrew's ~16:1xZ word -- REUSE THE ARTIFACT, DO NOT BRIEF ITS AUTHOR. The restriction binds the QUESTION, not just the document: asking CRO to extend/validate/adapt the contract FOR THIS PROJECT discloses the subject in the asking. Whoever needs it reads it; any extension is authored by a 49F-cleared lane. If the contract genuinely cannot be used without its author, that is a fact for ANDREW (he holds both sides), never solved locally. This line goes into the PRD's rung-2 section and COO's decomp brief. DISTRIBUTION RESTRICTION: nothing on this subject to 4.0.0_SA_CRO.",
+  "prds": [
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_49F_PERFORMANCE_ATTRIBUTION_REPORTING_ON_THE_SPINE_BOOKS_TAB.md",
+      "label": "The commissioning word -- finding 3 of 3, verbatim (@1cda24912a); the program shape the three findings draw",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "docs/architecture/ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md",
+      "label": "RUNG-2 PRIOR ART: the performance method/field contract + Gold A/B/C boundary (ADVI_PERFORMANCE, Phase 1 design complete) -- REUSE THE ARTIFACT; its author's lane is off this distribution",
+      "date": "2026-08-06"
+    },
+    {
+      "path": "docs/architecture/D2_ADVI_49F_E2E_PRD.md",
+      "label": "Parent directive PRD (D2): s.4a parity harness (check our work vs BD), s.10 (2026-08-24) the three-finding program shape; member-set edit REQUESTED of MSTR",
+      "date": "2026-08-19"
+    }
+  ],
+  "related": [
+    "ADVI_PERFORMANCE",
+    "ADVI_INSURE",
+    "ADVI_STITCH",
+    "ADVI_49FSRC",
+    "ADVI_BDPARITY",
+    "OPAL_ADVIPOINTERS"
+  ],
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 3). STAGE 2 purpose-level PRD at the same seat: purpose + spine + surfaces + rung-2 reuse can be written now; the SHAPE section waits on his screenshots + recording (declared input) and is pinned from them atom-decomp style. STAGE 3 = COO decomp before any TO; certifier CVO; placement LAPTOP. Preconditions: ADVI_INSURE (unblended insurance) and ADVI_STITCH (SI classification) -- neither gates the Books-tab interface work on the post-2024 canonical series. Directive = D2; this is the PURPOSE project of the 49F sub-program.",
+  "blocking": "None on any agent. At Andrew, by his own plan: the screenshots + recording of the BD Performance Reporting dashboard (the PRD's shape input). Not a hold on registration or on the non-shape sections.",
+  "created": "2026-08-24",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4"
+  ],
+  "pipeline": "49F canonical spine (opal-data-49financial/gold/advi/{dimensions: account -> relationship -> advisor -> firm; canonical: twr_daily, nna_canonical, flow_ledger, canonical_valuation ...}) + ADVI_INSURE current-state (separate, never blended) + ADVI_STITCH stitched history (SI, closed-period) -> per-client performance attribution + reporting artifacts under platinum/advi/49financial/ -> portal Advisor Intelligence Books tab + advisorpublicprofile Book toggle view ONLY (interface comparable to the BD Performance Reporting dashboard; BD = reference, not dependency)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

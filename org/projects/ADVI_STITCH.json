@@ -1,0 +1,48 @@
+{
+  "project_code": "ADVI_STITCH",
+  "macro_code": "ADVI",
+  "name": "49 Financial BD-HISTORY STITCHING -- migrate the Black Diamond history we hold (opal-data-bd backfill_v2 / forwardfill_v2 / legacy silver+gold) into opal-data-assets by methodical design, then classify every legacy account across the 2024 Schwab migration as MIGRATED / STAYED / DROPPED with an explicit what-we-cannot-know class -- the basis for since-inception attribution and reporting",
+  "description": "Andrew-direct 2026-08-24 ~17:0xZ at the base CTO terminal, the SECOND of three findings from the 49 Financial meeting (Mike); recorded VERBATIM in full at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_49F_BD_HISTORY_STITCHING_ACCOUNT_MIGRATION_KEY.md (@a5f1acd3ad). His words that bind this project: 'we do have all the black diamond historical data, which is important to have for the purpose of backfill and stitching (in the case of SI performance attribution and reporting specifically). However, because we do not really trust the BD data quality, specifically that during the migration to Schwab (which is evident by Schwab account data only starting in 2024) we have not yet truly clarified whether there is a stable key for account migration, to track what accounts migrated to new accounts, stayed in their same account, or were dropped. Accordingly, there will ultimately need to be a project done whereby we do a \"stitching\" where we assess what accounts existed in the legacy 2024 and pre-2024 data, and try to cross-reference what of those three eventualities occurred per account so we can create a basis for reliably and explainably showing what we know and what we don't/can't know. All this historical BD data is currently in the opal-data-bd bucket in the backfill/forwardfill downloads, so we will have to figure out how we want to migrate this to the opal-data-assets bucket and how we want to methodically design and handle that stitching process.' PROGRAM FRAME (finding 3, @1cda24912a): a PRECONDITION of since-inception attribution + reporting (ADVI_PERFRP) -- no SI series across the migration without knowing which accounts migrated, stayed or dropped. MEASURED AT REGISTRATION (2026-08-24 ~17:2xZ, s3api materialised censuses, IsTruncated=False): opal-data-bd/backfill_v2/ = 292 keys, 2.47 GB, flat BD DataMining xlsx exports (TXN_{date}.xlsx family from 2020-06-30); opal-data-bd/forwardfill_v2/ = 636 keys, 5.24 GB (transactions 214 / realized 155 / allocations 134 / unrealized 77 / assets 48; xlsx from 2026-01-16 + per-family _complete markers to 2026-08-24); opal-data-bd/bronze/ = 148 keys, 0.99 GB, dated dirs from 2026-07-02 (the daily bd bronze); backfill_v2 by family: TXN_{date}.xlsx 275 files / 1.92 GB / 2020-06-30..2026-01-06, AssetDimTXNs_OpalCapital_Daily 14 files / 383 MB, three undated Transactions_OpalCapital_Weekly exports; forwardfill_v2 by family: REALIZED_DAILY 109 (2026-03-27..08-24), ALLOC_DAILY 103 (01-16..06-18), TXN_DAILY 97 (01-27..06-18), UNREALIZED_DAILY 69 (03-27..08-21), TRANSACTIONS_DAILY 62 (06-24..08-24), ALLOCATIONS_DAILY 22 (06-24..08-21), AssetDimTXNs 48. AND THE DERIVED LEGACY PLANES, ALREADY OURS: opal-data-bd/silver/ = 7,913 keys, 2.79 GB -- fees 1,953 dates from 2020-03-06, assets 1,890 (2020-03-06..2026-06-18), transactions 1,876 (2020-03-06..2026-08-23), realized 1,306 (2021-01-04..), prices/allocations/unrealized 2026-only; opal-data-bd/gold/ = 73,526 keys, 32.83 GB -- canonical/performance 2,424 dates 2020-01-02..2026-08-21, canonical/nna 2,424, canonical/holdings 2,425 (2020-01-01..), positions_cube 2,425, canonical/account_gains 2,424, role_aua 2,374, advisor_fee_detail 2,244 (2020-06-30..), entities/accounts 8,259 keys, entities/clients 17,614, client_timeseries 10,947, plus gold/timeseries/account_performance.parquet + client_performance.parquet (lib/s3_layout.py:181-182) -- the exact series data/black_diamond/scripts/gold/D_00b.portal_timeseries.py serves as the legacy 2020-01-02 chart (ADVI_49FSRC run R8). So the BD-derived history is in our bucket in THREE planes (raw xlsx; legacy silver daily from 2020-03; legacy gold canonical daily from 2020-01) and the migration design must say which plane(s) move and which are re-derivable (Rule 17a: only the raw plane is bronze; the derived planes are our own computations over it). Schwab floors on the other side of the seam (run R4/R5): 08242234 from 2024-01-12 (positions) / 2024-01-16 (accounts, transactions); 08335338 from 2024-07-08. THE STABLE-KEY QUESTION IS MEASURABLE: blackdiamond/49f/silver/dim_account_xref carries schwab_account_id (run R9) -- the xref is the candidate key, and its coverage of the legacy account population (both directions, denominators printed) is the FIRST decomp cell; a01_dim_relationship already reads it. PRIOR ART: ADVI_HISTBF (COMPLETE 2026-05-04, the Inflection 6-yr Orion historical backfill -- the vendor-history backfill pattern); the D2 parity classification discipline (EXACT / EXACT-SHIFTED / TIGHT / LARGE / MIX with named mechanisms and a printed denominator -- the template for MIGRATED / STAYED / DROPPED / UNKNOWN); ADVI_49FSRC run R1-R16 (the two Schwab masters are one book; floors). LAWS THAT BIND: Rule 17a (the xlsx downloads land as BRONZE bytes in the canonical grammar -- opal-data-assets/blackdiamond/49financial/bronze/ candidate -- parquet is a silver act); Rule 24 (the eventualities + the unknowable residue are MECE against the legacy account population, one grain, denominators printed); Rule 25 (stitched pre-2024 history is a CLOSED-PERIOD-IMMUTABLE tier -- a refresh would be the defect); NEVER-SUM / NEVER-SUBSTITUTE across 08242234 / 08335338 stand. SEQUENCING, his word: 'ultimately' -- registered now; the migration DESIGN precedes any stitching run; gates nothing on the ADVI 08335338 route; the frozen-tail option priced this morning becomes a stitching OUTPUT, not a copy act. ADVI_49FSRC's history section is SUPERSEDED-BY-SPLIT into this project. DISTRIBUTION RESTRICTION (Andrew ~16:1xZ): nothing on this subject to 4.0.0_SA_CRO.",
+  "prds": [
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_49F_BD_HISTORY_STITCHING_ACCOUNT_MIGRATION_KEY.md",
+      "label": "The commissioning word -- finding 2 of 3, verbatim (@a5f1acd3ad)",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ADVI_49FSRC_ATOMDECOMP/run_20260824.md",
+      "label": "Ground truth on the Schwab side of the seam (R1-R9: one book, floors, legacy history source, xref carries schwab_account_id)",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "docs/architecture/D2_ADVI_49F_E2E_PRD.md",
+      "label": "Parent directive PRD (D2) -- s.10 (2026-08-24) carries the three-finding program shape; member-set edit REQUESTED of MSTR",
+      "date": "2026-08-19"
+    }
+  ],
+  "related": [
+    "ADVI_49FSRC",
+    "ADVI_PERFRP",
+    "ADVI_INSURE",
+    "ADVI_HISTBF",
+    "OPAL_ADVIPOINTERS",
+    "ADVI_BDPARITY"
+  ],
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 2). STAGE 2 purpose-level PRD = the MIGRATION + STITCHING DESIGN (his 'methodically design') with a GROUND TRUTH AT OUTSET run over: the three legacy planes in opal-data-bd (raw xlsx families x date ranges; legacy silver; legacy gold ACCOUNT_PERFORMANCE), the xref key coverage across the 2024 seam, the Schwab floors. STAGE 3 = COO decomp before any TO; certifier CVO; placement LAPTOP. 'Ultimately' = not started now; nothing on the 08335338 route waits on it. Directive = D2; sub-program of the 49F performance-reporting purpose (finding 3).",
+  "blocking": "None on any agent, and deliberately not urgent (his 'ultimately'). The design question the PRD must answer before any run: the stable key -- measurable via dim_account_xref coverage of the legacy population; if coverage is partial, the UNKNOWN class is the honest residue, never smoothed.",
+  "created": "2026-08-24",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4",
+    "0.6",
+    "0.7"
+  ],
+  "pipeline": "opal-data-bd/{backfill_v2,forwardfill_v2} xlsx + legacy silver/gold (2020-06-30 ->) -> MIGRATION by design into opal-data-assets/blackdiamond/49financial/{bronze,silver} (candidate) -> STITCHING: legacy account population x {MIGRATED, STAYED, DROPPED, UNKNOWN} keyed on dim_account_xref (candidate key), denominators printed -> a closed-period-immutable stitched history tier for SI attribution (ADVI_PERFRP) -- never a standing BD feed",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
