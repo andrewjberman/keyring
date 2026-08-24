@@ -26,9 +26,13 @@ table is kept here anyway so any citation already in flight resolves:
 
 | PRD s.12 label | channel id |
 |---|---|
-| `Z-S-A` | `ETFS_INGEST-Z-S1` |
-| `Z-S-B` | `ETFS_INGEST-Z-S2` |
-| `Z-S-C` | `ETFS_INGEST-Z-S3` |
+| `Z-S-A` (PRD) | `ETFS_INGEST-Z-S1` |
+| `Z-S-B` (PRD) | `ETFS_INGEST-Z-S2` |
+| `Z-S-C` (PRD) | `ETFS_INGEST-Z-S3` |
+| `Z-S-D` (decomp §7) | `ETFS_INGEST-Z-S9` |
+| `Z-S-E` (decomp §7) | `ETFS_INGEST-Z-S10` |
+| `Z-S-F` (decomp §7) | `ETFS_INGEST-Z-S11` |
+| `Z-S-G` (decomp §7) | `ETFS_INGEST-Z-S12` |
 
 ⚠ **`Z-S5` was allocated by other seats in MCP traffic before this document existed** (CTO~Z msg
 4881, MSTR~Z msg 4885, for BG's item). I have ADOPTED that number rather than renumbering --
@@ -178,7 +182,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "disarm_owner": "0.7.0_AE_CloudOps~Z",
-    "notes": "Standing moved INERT -> ARMED by the channel owner on the axis as ruled; accepted by the surfacing seat (CTO~Z msg 4849). See s.2. Disarm = the TF-only deploy of @4e5800fde0 under COO~Z's TO + GO (TO cut ~20:18Z); the deploy is BOTH the disarm and the remediation, so this row closes DISARMED + REMEDIATED in one act -- which is the exception, not the pattern. Lost-day count rests on the code alone: tonight's 22:00Z is the 5th. Andrew's C4 ruling ('all recs approved, proceed', ~20:0xZ) makes the Lambda the vehicle, so the disarm path is unconditional."
+    "notes": "*** CLOSED 2026-08-24T20:43Z: DISARMED + REMEDIATED in one act -- the deploy is both. VERIFIED AT THIS SEAT ON THE DEPLOYED BYTES, not taken from the deploy report and not from the commit message: live CodeSha256 BEITykjhmRlEvcM8p9cBUFmKX7doqEP+jHGRPhOprxo=, LastModified 2026-08-24T20:31:09Z; fresh Code.Location download censused -- fetch_trueshares_holdings 3, TS_HOLDINGS_ENABLED 6, positive control fetch_filepoint 4, negative control ZZZ_NO_SUCH_TOKEN_9999 = 0; CALL SITE present (items = fetch_trueshares_holdings(...)) and the SKIP branch present, both of which the old bytes lacked. This is the fourth independent verification (AE~Z, MSTR~Z, CTO~Z's RAVC read, mine) and it is at the CODE layer per Rule 22a -- the fire at 22:00Z tonight is the EXERCISED layer and is not yet evidence. *** Standing moved INERT -> ARMED by the channel owner on the axis as ruled; accepted by the surfacing seat (CTO~Z msg 4849). See s.2. Disarm = the TF-only deploy of @4e5800fde0 under COO~Z's TO + GO (TO cut ~20:18Z); the deploy is BOTH the disarm and the remediation, so this row closes DISARMED + REMEDIATED in one act -- which is the exception, not the pattern. Lost-day count rests on the code alone: tonight's 22:00Z is the 5th. Andrew's C4 ruling ('all recs approved, proceed', ~20:0xZ) makes the Lambda the vehicle, so the disarm path is unconditional."
   },
   {
     "id": "ETFS_INGEST-Z-S2",
@@ -239,7 +243,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
-    "notes": "DISARMED 2026-08-24 ~20:14Z by CTO~Z (msg 4873): PRD F2's grounding column now states the oracle as per-member CRLF-normalized compare against the commit ACTUALLY deployed and against HEAD after the deploy, plus 'state whether the new package is also CRLF'. REMEDIATION separate and OPEN until COO~Z's cut TO carries the corrected oracle text -- DISARMED != REMEDIATED. THE CLASS, which is why this is graduated rather than noted: every control passed because every control was inside the same wrong frame, and the false conclusion it supports is an ACCUSATION (code built from an uncommitted tree, a Rule-2 provenance alarm) rather than an absence. Second-order note for whoever runs the post-deploy check: comp-closure returns equivalence=UNMEASURED for this function for an INDEPENDENT reason (see Z-S6), so an UNMEASURED from that tool is not evidence against the deploy."
+    "notes": "*** POST-DEPLOY HALF ANSWERED 2026-08-24T20:43Z, MEASURED AT THIS SEAT: THE NEW PACKAGE IS LF, NOT CRLF. *** Fresh Code.Location download of the post-deploy artifact (sha BEITykjh...): 51,885 bytes, CRLF count = 0, and it matches HEAD on a RAW byte comparison (True) as well as normalized (True). So the condition that made the original premise oracle lie is GONE for this function, and a raw compare is once again sound HERE. ⛔ BOUND, because the useful reading is the narrow one: this establishes that THIS BUILD is LF; it does NOT establish that the edit-time mechanism cannot recur, and the next Windows-side edit could reintroduce it silently. The corrected oracle (normalized, per member, against the commit actually deployed) stays correct and costs nothing when the bytes happen to agree -- do not revert it on the strength of one clean build. This discharges the open criterion CTO~Z flagged as AE~Z's (msg 4976); AE~Z still states it in their own TO closure, and my measurement does not substitute for that. DISARMED 2026-08-24 ~20:14Z by CTO~Z (msg 4873): PRD F2's grounding column now states the oracle as per-member CRLF-normalized compare against the commit ACTUALLY deployed and against HEAD after the deploy, plus 'state whether the new package is also CRLF'. REMEDIATION separate and OPEN until COO~Z's cut TO carries the corrected oracle text -- DISARMED != REMEDIATED. THE CLASS, which is why this is graduated rather than noted: every control passed because every control was inside the same wrong frame, and the false conclusion it supports is an ACCUSATION (code built from an uncommitted tree, a Rule-2 provenance alarm) rather than an absence. Second-order note for whoever runs the post-deploy check: comp-closure returns equivalence=UNMEASURED for this function for an INDEPENDENT reason (see Z-S6), so an UNMEASURED from that tool is not evidence against the deploy."
   },
   {
     "id": "ETFS_INGEST-Z-S5",
@@ -318,7 +322,100 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "UNDER_INVESTIGATION",
     "disarm_owner": "1.0.0_SA_CTO~Z",
-    "notes": "Arose from tick 1's CALL 1, which proposed dropping ETFS_CANON from D4.members to make DONE reachable. VERDICT (this seat, msg 4895): REFUSED. Two premises failed -- (i) D4's PRD excludes the ownership PLANE (s.1:22), not the project, and the same PRD carries a D4 deliverable ABOUT ETFS_CANON (s.1:20 item (c), s.3b, and TO-D4a at :149 assigning CTO to rule its design gate); (ii) PRD:202's 'registry membership shared with D1' is MEASURABLY FALSE -- census over org/missions/DIRECTIVES.yaml, DENOMINATOR 9 directive rows, ETFS_CANON appears in 1 (D4 only); positive control ETFS_POSITIONING -> ['D4'], negative control ZZZ_NO_SUCH -> []. So the edit would orphan an Active project from the directive register entirely. STRUCTURAL REASON THE VERDICT WOULD HOLD ANYWAY: the proposal resolves a completion-test problem by editing the denominator the completion test reads, and the driver is the party that benefits from a smaller set. Not an imputation -- CTO~Z PITCHED it rather than executing it, which is the adjudication channel working as Andrew designed it this hour. THE SCOPE HALF IS RESERVED TO ANDREW: 'is D4 DONE when the composition plane ships, or only when the ownership plane ships too?' is a question about the extent of a sovereign directive, and no seat should convert 'the loop needs a reachable stop' into a narrowing of his directive. Disarm available to CTO~Z without any ruling: discharge TO-D4a, which is their own D4 deliverable and is what ETFS_CANON is blocked on -- it advances D4 however the scope question resolves. Skill-level remedy: a reachable test, or an explicit report-and-hold branch that surfaces at the stop instead of running forever."
+    "notes": "APPEND 20:40Z -- DISARMED @bc9bdb1362 by CTO~Z: /self-drive s.4 now classifies every member REACHABLE | UNREACHABLE(reason) each tick, surfaces an unreachable member ONCE as a RESERVED card, and terminates HELD-AT-STOP (final log, cron deleted, carrier clause struck as HELD-AT-STOP not DONE). The driver never edits the denominator it is measured against. REMEDIATION remains OPEN pending Andrew's scope answer. Arose from tick 1's CALL 1, which proposed dropping ETFS_CANON from D4.members to make DONE reachable. VERDICT (this seat, msg 4895): REFUSED. Two premises failed -- (i) D4's PRD excludes the ownership PLANE (s.1:22), not the project, and the same PRD carries a D4 deliverable ABOUT ETFS_CANON (s.1:20 item (c), s.3b, and TO-D4a at :149 assigning CTO to rule its design gate); (ii) PRD:202's 'registry membership shared with D1' is MEASURABLY FALSE -- census over org/missions/DIRECTIVES.yaml, DENOMINATOR 9 directive rows, ETFS_CANON appears in 1 (D4 only); positive control ETFS_POSITIONING -> ['D4'], negative control ZZZ_NO_SUCH -> []. So the edit would orphan an Active project from the directive register entirely. STRUCTURAL REASON THE VERDICT WOULD HOLD ANYWAY: the proposal resolves a completion-test problem by editing the denominator the completion test reads, and the driver is the party that benefits from a smaller set. Not an imputation -- CTO~Z PITCHED it rather than executing it, which is the adjudication channel working as Andrew designed it this hour. THE SCOPE HALF IS RESERVED TO ANDREW: 'is D4 DONE when the composition plane ships, or only when the ownership plane ships too?' is a question about the extent of a sovereign directive, and no seat should convert 'the loop needs a reachable stop' into a narrowing of his directive. Disarm available to CTO~Z without any ruling: discharge TO-D4a, which is their own D4 deliverable and is what ETFS_CANON is blocked on -- it advances D4 however the scope question resolves. Skill-level remedy: a reachable test, or an explicit report-and-hold branch that surfaces at the stop instead of running forever."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S9",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "The PRD's F8 '+1 DIVZ' is a trailing-newline row-count artifact -- the true DIVZ delta is ZERO -- and the surviving IDVZ '+2' was measured across a 21-day gap, so it is not yet a measurable quantity at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~Z, decomp 20260824T2010Z s1.1: the oracle CSVs do NOT end in a newline, so `wc -l` undercounts by one and the '-1 for the header' compounded it; DIVZ issuer rows = 30, Bloomberg 30, DELTA ZERO",
+        "0.0.0_AB_MSTR~Z re-measured at their own seat rather than accepting it, confirmed both halves (msg 4905), and corrected upward to Andrew who had received the original +1/+2",
+        "Second, independent defect in the same figure: the later numbers came from the LIVE 08-24 CSV compared against a Bloomberg count as-of 08-21 -- a cross-date comparison presented as a reconciliation gap",
+        "A 21-day (or 3-day) gap cannot discriminate a reconciliation defect from ordinary turnover in EITHER direction, including hiding a real gap behind an offsetting change"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "Alias: COO~Z's Z-S-D. INERT -- a wrong number in a PRD row harms nobody through normal operation; it is corrected by an amendment, which CTO~Z landed. TWO DEFECTS IN ONE FIGURE, not one. The sentence worth keeping is COO~Z's: 'my error read as a FINDING (+3, worse than the known +2), not as an error -- that is the direction nobody audits.' An error shaped like a discovery gets adopted; one shaped like a mistake gets checked. It had already reached Andrew. Remediation: cell INGEST-T3-3 carries an OBSERVED-completion dependency on INGEST-T0-3 rather than a date, because the same-day compare cannot exist until the deploy lands."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S10",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "opal-assets-silver-etf-sweep-daily is a LIVE ENABLED scheduled rule that comp-trigger reports as not found in infra/aws/**/*.tf -- a live schedule with no located Terraform.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~Z decomp 20260824T2010Z s7: comp-trigger reports the rule absent from infra/aws/**/*.tf while the rule is live and ENABLED",
+        "Estate precedent of the same shape: the platinum/advi/* grant with no TF resource, characterised at the time as 'a deletion scheduled for whenever someone next applies that root'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "0.7.0_AE_CloudOps~Z",
+    "notes": "Alias: COO~Z's Z-S-E. ARMED because nobody can reason about, version, or safely change this rule from the repo, and a future apply in a neighbouring root cannot destroy what it does not manage. THE BOUND COO~Z STATED AND I AM CARRYING VERBATIM: this is NOT a claim the rule is unmanaged -- comp-trigger reports a TEXT MISS, which is DECLARED-NESS ONLY. An absence verdict from a text search over one glob is not an absence in the world (CLAUDE.md's retrieval-control law; the same class as this round's Z-S4). Disarm = locate the managing root or record that it is unmanaged -- one grep over infra/, not a build. Explicitly NOT part of TO-1 (CTO~Z msg 4907, agreeing with COO~Z)."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S11",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "etf-positioning-producer is absent from lambda-source-map.json while its source dir exists, which Rule 4 requires.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~Z decomp 20260824T2010Z s7 (finding N1): source dir present, no source-map entry"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Z",
+    "notes": "Alias: COO~Z's Z-S-F. Closes as part of cell INGEST-T3-5 (TO-5's apply) rather than as separate work -- the entry lands with the deploy. Sibling of Z-S7 (STALE source-map fields on a DIFFERENT row): one row is missing entirely, the other is present-but-wrong, and the second is the more dangerous because it reads as an answer. Both are the Rule 4 blind spot the law already names."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S12",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "ETF holdings miss BOTH portal sub-asset-class lookups today -- 0 of 11 GICS sector names in SUB_ASSET_COLORS, 0 in SUB_ASSET_CLASS_DISPLAY_MAP -- so the page may have no styling for the values it renders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~Z: SUB_ASSET_COLORS (portal/src/lib/chartColors.ts:279) carries 21 keys, ZERO of the 11 GICS sector names, and no 'Cash & Cash Equivalents'",
+        "SUB_ASSET_CLASS_DISPLAY_MAP's 13 keys are ALL Models-side segment vocabulary",
+        "Negative control absent; positive control prints real Models keys -- so the lookup census discriminates",
+        "This FALSIFIED COO~Z's own prior hypothesis that moving 11 GICS sectors -> 24 industry groups would BREAK the color map: it cannot, because the map was never keyed on the ETF vocabulary at all"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Alias: COO~Z's Z-S-G. FILED AS A QUESTION, NOT AS AN ASSERTED DEFECT, and the bound is the point: WHETHER IT RENDERS WRONG IS UNMEASURED -- it needs a SCREENSHOT, not a grep. A lookup-miss census answers the DATA plane; 'does the page look wrong' is the RENDER plane, and no control inside the data plane can answer it (CLAUDE.md's wrong-plane class; the /frontend-dev law says a grep cannot see contrast). Direct input to the C3 cell (INGEST-T5-2) now that Andrew ruled GICS_INDUSTRY_GROUP_NAME rendered beside HB_INDUSTRY_SECTOR_ALLOCATION on DEV. Owner on seating: DE-class (0.4.0_DE_ClientPlatform~Z, seated 20:33Z). The falsification is the valuable half -- C3 is CHEAPER than feared on the color axis, and the measurement surfaced a different, PRE-EXISTING question instead."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S13",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T20:28Z",
+    "one_line": "The decomp's s5 alignment enumerated only 34 of its 36 cells, so two cells appeared in NEITHER the covered nor any uncovered list and no count in that section could ever have revealed them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Mechanical extraction over three vintages; four negative controls (T9-7/CONV-9/INV-8/T2-99) all absent, positive control T0-3 present",
+        "committed 796c92888c: s5 stated denominator 26, enumerated 34, absent INGEST-T3-3 + INGEST-T6-6",
+        "worktree b134d70230: s5 stated denominator 36, enumerated 34, absent INGEST-T3-3 + INGEST-T6-5",
+        "certified fcdf042972 (sha 1bc5eba5def48aa6...): s5 stated 36, enumerated 36, absent NONE -- closed by the author before certification",
+        "Certificate: org/tier1_exec/3.0.0_SA_CVO/deliverables/laneZ_ETFS_INGEST_STAGE3_DECOMP_CERTIFICATION_20260824.md @422bdb431b"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "Raised mid-run so the author could fix it while still in the file; CLOSED at the certified vintage. THE INSTRUCTIVE MIDDLE VINTAGE: COO~Z's own 26->36 denominator correction fixed the TOTAL but SWAPPED which cell was orphaned (T6-6 -> T6-5) rather than closing the gap, because the stated total and the uncovered list were two separately-maintained hand-written facts -- the count stayed at 2 while looking repaired. A cell absent from BOTH directions is worse than an uncovered one: uncovered is a disclosed state with a reason, absent is invisible to the instrument. The two that fell out were T3-3 (the cell s4(iv) itself names as the stability defect) and the four-clocks as-of cell -- an enumeration drops its awkward members first. DURABLE REMEDY, still open and COO~Z's: DERIVE the uncovered list as ALL minus covered so the two can never disagree again; s5 already says 'RE-RUN, NEVER RE-TYPED', which is a rule needing a mechanism rather than a restatement. INERT: a mis-stated alignment misleads a reader but no scheduled act consumes it. MY OWN FIRST MEASUREMENT OF THIS WAS FALSE -- the first extractor reported 36 of 36 absent, because s5 writes ids BARE while s3 writes them PREFIXED and my pattern required the prefix, and because my negative control was INGEST-ZZ-99 which the decomp's own s4.1 quotes verbatim, so THE CONTROL FIRED POSITIVE and that is the only reason I looked. Third instance of that shape this session."
   }
 ]
 ```
@@ -327,10 +424,14 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **8** (1 dismissed, 3 under investigation, 4 graduated). ARMED: **5** (Z-S1, Z-S4, Z-S5, Z-S7, Z-S8) -- each with a named disarm owner, per the schema's conditional rule.
-  *(This line read "4" and omitted Z-S8 until the validator's own count contradicted it. Recorded
-  rather than silently fixed: a hand-written denominator beside a machine-countable one is the
-  exact defect this document polices in others, and it survived my own proofread.)*
+- Items: **13** (1 dismissed, 5 under investigation, 7 graduated). ARMED: **6** (Z-S1, Z-S4, Z-S5,
+  Z-S7, Z-S8, Z-S10) -- each with a named disarm owner, per the schema's conditional rule.
+  **These figures are the validator's output, not a hand count** -- see the note below.
+  *(At the 8-item version this line read "ARMED: 4" and omitted Z-S8 until the validator's own count
+  contradicted it. Recorded rather than silently fixed: a hand-written denominator beside a
+  machine-countable one is the exact defect this document polices in others, and it survived my own
+  proofread. It is also, precisely, the defect I then found in the decomp's §5 -- Z-S13 -- which is
+  why that item is filed without any suggestion that I was immune to it.)*
 - Re-derived rather than inherited: **F2 in full** (comp-closure self-test 24/24 + independent package download + token census with a negative control), **Z-S3's identifier populations** (114/114 rows read at source), **the D4 member census** (9 directive rows, positive and negative controls).
 - Inherited with attribution, NOT re-measured by this seat: Z-S2's bronze-HTML regex figures (author's own retraction @7ea7d45723), Z-S5's DAPI-shared-port and 6h-stability measurements (MSTR~Z, with their two UNMEASURED bounds carried forward as stated).
 - Non-findings recorded so they are not re-filed: the `opal-data-etfs/bbg/` partition gap (weekend + T-1, NEVER#1 discharged before reading).
