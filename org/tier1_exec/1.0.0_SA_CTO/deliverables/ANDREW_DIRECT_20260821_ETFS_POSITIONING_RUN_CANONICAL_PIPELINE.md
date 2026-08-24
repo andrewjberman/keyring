@@ -198,3 +198,35 @@ route = existing `/api/general/*` behavior + two-edit mint; Models bytes untouch
   the producer picks rows up with no code change. COO cutting the c-1 TO now.
 - Project JSON `blocking` → none; PRD s.10.2/s.11.3 annotated; REGISTRY row + today's sprint Blocks
   updated this commit.
+
+---
+
+# SIXTH INSTRUCTION, 2026-08-24 ~13:0xZ (base CTO terminal) — Bloomberg DOES track ETF constituents; hunt the other request surfaces
+
+## VERBATIM
+
+> "there is absolutely no way bloomberg does not track constituent holdings for etfs"
+
+## WHAT IT BINDS (and why the record already agrees with him)
+
+He is right, and the measured negative was NARROWER than the sentence that reached him: MSTR~Z's
+Friday brief proved only that the REFERENCE-DATA FIELD surface refuses to enumerate DIVZ/IDVZ
+constituents (ten candidate mnemonics -> BAD_FLD identical to a bogus control; real portfolio
+fields -> NOT_APPLICABLE_TO_REF_DATA; ZERO NOT_AUTHORIZED) — while Bloomberg demonstrably HOLDS
+the data (TOTAL_NUMBER_OF_HOLDINGS_IN_PORT returns DIVZ=30 / IDVZ=46, and the terminal's own
+holdings screens exist). The brief's own sentence left the door open: *"the route, if ever wanted,
+is a different REQUEST TYPE."* His word is that route's commissioning.
+
+## DISPOSITION
+
+- **Bounded site-Z terminal task dispatched to `0.0.0_AB_MSTR~Z` (agentbus, this turn):** hunt
+  DIVZ/IDVZ constituents via the NON-refdata Bloomberg surfaces (BQL holdings functions, bulk/
+  override request forms, portfolio/holdings request types, screen-export paths) — one session,
+  same defined-deliverable shape as the Friday bounded pull. **Oracle in hand:** the 07-31
+  TrueShares CSVs (DIVZ 29 / IDVZ 43 constituents with weights) — any Bloomberg answer ties out
+  against an independent issuer-published truth. Authorization: his word above, Bloomberg on the
+  terminal box (the same egress frame as the daily-pull word).
+- **The TrueShares capture deploy is NOT held on this** — its loss is irreversible per day
+  (current-day-only sheet); the two routes run in parallel and the better one wins on evidence.
+  If Bloomberg turns out to serve constituents WITH HISTORY, the capture-forward urgency softens
+  and a backfill becomes possible — measured first, never assumed.
