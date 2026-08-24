@@ -6,7 +6,7 @@
   "prds": [
     {
       "path": "docs/architecture/ADVI_PERFRP_PRD.md",
-      "label": "CTO stage-2 PURPOSE-LEVEL PRD v0.2 (2026-08-24 ~18:2xZ) -- the SHAPE PINNED (s.6 rectangle with HAVE/BUILD/GAP/DEFERRED dispositions) from his two HAR recordings + 13 screenshots; s.8 candidate cell maps for the backend (B1-B9) and frontend (F1-F6) teams; NOT a TO set",
+      "label": "CTO stage-2 PRD v0.3 -- shape PINNED (v0.2) and APPROVED FOR STAGE 3 by Andrew 2026-08-24 ~18:5xZ (s.11: all fourteen recs accepted)",
       "date": "2026-08-24"
     },
     {
@@ -40,8 +40,8 @@
   ],
   "status": "active",
   "dep_stage": "PRD",
-  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 3). STAGE 2 PRD v0.1 DRAFT LANDED 2026-08-24 ~17:5xZ (docs/architecture/ADVI_PERFRP_PRD.md, run P1-P8): purpose + spine + surfaces + rung-2 reuse written; the SHAPE section is PINNED (v0.2, ~18:2xZ) from his declared input -- two HAR recordings + 13 screenshots of the BD Advisor BI dashboard and the Client View portfolio dashboard, read at the CTO seat; inputs stay LOCAL (tokens; client PII), structure only in the repo. s.8 carries candidate cell maps B1-B9 (backend) / F1-F6 (frontend) for COO's decomp. STAGE 3 = COO decomp before any TO; certifier CVO; placement LAPTOP. Preconditions: ADVI_INSURE (unblended insurance) and ADVI_STITCH (SI classification) -- neither gates the Books-tab interface work on the post-2024 canonical series. Directive = D2; this is the PURPOSE project of the 49F sub-program.",
-  "blocking": "None on any agent. The shape input has LANDED; nothing at Andrew for this project. The decomp (stage 3) waits on COO's spawn -- or on Andrew's word if he wants CTO to cut the round directly.",
+  "phase": "*** PRD v0.3 APPROVED FOR STAGE 3 -- Andrew-direct 2026-08-24 ~18:5xZ on the CTO breakdown + /draw + fourteen cards, verbatim: 'approved all'. RULINGS (PRD s.11): v1 = five client cards (Activity Summary, Performance, Allocation, Gain/Loss, Transactions) + Net Worth roster + the advisor Book view (4 tiles, 4 tabs; Wallet Share out); periods QTD/YTD/1Y/3Y/SI + custom, as-of T-1; groupings Account/Class/Asset; Gain/Loss sequenced last (lots projection, census first); Transactions = per-relationship paged key; L3 card grid with in-Books detail panels, L4 same cards, no new routes; CSV export v1, PDF v2; BD's three footnotes verbatim; SI from the Schwab floor labelled until the STITCH tier; PROD exposure rides the 49F switch promote (no new gate); parity on first emission accompanies the DEV render; method extensions DS-authored under CTO ruling, CVO-certified, never a question to the contract's author; owners DS / 0.7.0 AE / CVO / DE / DT. Package stage-3 ready. *** | IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 3). STAGE 2 PRD v0.1 DRAFT LANDED 2026-08-24 ~17:5xZ (docs/architecture/ADVI_PERFRP_PRD.md, run P1-P8): purpose + spine + surfaces + rung-2 reuse written; the SHAPE section is PINNED (v0.2, ~18:2xZ) from his declared input -- two HAR recordings + 13 screenshots of the BD Advisor BI dashboard and the Client View portfolio dashboard, read at the CTO seat; inputs stay LOCAL (tokens; client PII), structure only in the repo. s.8 carries candidate cell maps B1-B9 (backend) / F1-F6 (frontend) for COO's decomp. STAGE 3 = COO decomp before any TO; certifier CVO; placement LAPTOP. Preconditions: ADVI_INSURE (unblended insurance) and ADVI_STITCH (SI classification) -- neither gates the Books-tab interface work on the post-2024 canonical series. Directive = D2; this is the PURPOSE project of the 49F sub-program.",
+  "blocking": "None. PRD v0.3 approved for stage 3 (Andrew ~18:5xZ, all fourteen recs). Waits only on the decomp seat (COO spawn, or CTO on his word).",
   "created": "2026-08-24",
   "pods": [
     "1.0",
