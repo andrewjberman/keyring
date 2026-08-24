@@ -230,3 +230,14 @@ is a different REQUEST TYPE."* His word is that route's commissioning.
   (current-day-only sheet); the two routes run in parallel and the better one wins on evidence.
   If Bloomberg turns out to serve constituents WITH HISTORY, the capture-forward urgency softens
   and a backfill becomes possible — measured first, never assumed.
+
+**SEVENTH INSTRUCTION, same terminal, minutes later — VERBATIM:** *"yeah we need to have an adjusted
+script that pulls ETF data for this purpose"* — the constituents pull, once the hunt names its
+working surface, JOINS THE STANDING DAILY ETF PULL as an adjustment to the same script/vehicle
+(never a second parallel pull path — the no-shadow rule's shape). Disposition: **Amendment A3
+PRE-DECLARED, conditioned on the hunt's positive result** — extend `etf_daily_pull.py` to emit
+constituent holdings for the four funds daily (identifiers + weights), landing
+`bbg/{as-of}/constituents.*` beside the existing files, same manifest + `run_class` discipline,
+same isolation contract; the EXACT spec issues on MSTR~Z's evidence (the request type found
+determines the design). The DIVZ/IDVZ weights-source decision (TrueShares sheet vs Bloomberg
+constituents) is COO's cell, decided on the tie-out evidence, not pre-empted here.
