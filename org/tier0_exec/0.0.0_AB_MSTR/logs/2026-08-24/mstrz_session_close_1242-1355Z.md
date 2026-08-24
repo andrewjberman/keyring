@@ -90,7 +90,20 @@ control `cot`=16), and `data/assets/scripts/gold/build_cottonwood_mdpf_slice.py`
 **Verification primitive:** import `safe_deploy_core` and call `file_to_s3_target(path)`, positive-
 controlled with a bd gold path. MERGE HELD -- not opened during the close-out. It parks clean.
 
-## 4. OPEN FINDING -- the audit-archive tamper alarm is FALSE, and structurally so
+## 4. KNOWN ITEM (not a new finding) -- the audit-archive tamper alarm is FALSE, and structurally so
+
+> **CORRECTED AFTER FIRST WRITING, and the correction matters more than the finding.** I wrote this
+> section as an OPEN FINDING and reported it as one. **It is not new.** `0.0.3_BG_BBGTerminal`
+> surfaced that `1.0.0_SA_CTO~Z` answered it KNOWN on 08-21 as **`org/tier0/reviews/RV-0057.md`
+> F-001** (severity high, type audit_integrity, owner `3.0.0_SA_CVO` re-walk / `1.0.0_SA_CTO`
+> mechanism, due next review cycle) -- verified at this seat, the record resolves and F-001 names
+> the identical root cause: *".gitignore:68 is a blanket `*.log`, so every audit log is device-local
+> and untracked while the governance process that consumes them is git-shared."*
+> **What is genuinely additive is only that this is F-001's root cause reaching a SECOND CONSUMER:**
+> F-001 documents the `/mstr-review` audit WALK going blind; this section documents the
+> `audit-archive-invoker` EMITTING FALSE TAMPER FINDINGS, which is the same asymmetry pointed at a
+> different instrument. **A fresh seat must not open a new investigation -- it belongs to F-001's
+> open TO.** BG's framing is the right one and I am adopting it: *carried at their strength, not higher.*
 
 XXX.md A.2 emits **18 findings incl. 8 NON-APPEND-EDIT** (the highest-severity class) at every
 site-Z startup. **They are cross-device artifacts, not tampering.** `.gitignore:68` `*.log` makes the
@@ -196,9 +209,11 @@ probe, not a comp-tool** (section 6).
 2. **[Andrew]** Whether site Z restarts seats at all. 26 TOs are stranded on dead ones; his 08-21
    word was "no new agents" and I did not overturn it on my own reading.
 3. **[1.0.0_SA_CTO + Andrew]** The PRD-per-directive round. The D6 state assessment lands there.
-4. **[0.7.0_AE_CloudOps / 1.0.0_SA_CTO]** The audit-archive device-chain defect (section 4) -- create
-   `org/audit/archive/sitez/` or scope detection per device. Today it manufactures 8 false
-   NON-APPEND-EDIT findings at every site-Z startup, in the estate's tamper-evidence base.
+4. **[3.0.0_SA_CVO / 1.0.0_SA_CTO, under RV-0057 F-001's OPEN TO -- do NOT open a new one]** The
+   audit-archive device-chain defect (section 4) is F-001's root cause reaching a second consumer:
+   create `org/audit/archive/sitez/` or scope detection per device, alongside F-001's own
+   cross-device consolidation remedy. Today it manufactures 8 false NON-APPEND-EDIT findings at
+   every site-Z startup, inside the estate's tamper-evidence base.
 5. **[0.0.3_BG_BBGTerminal]** Re-register at next turn (section 5), and note the pruned entry in its
    own log so a fresh seat does not read it as a dead predecessor.
 6. **[0.0.0_AB_MSTR]** The cross-fabric merge parks CLEAN; resume on either MSTR's word after the
