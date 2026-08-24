@@ -218,3 +218,53 @@ probe, not a comp-tool** (section 6).
    own log so a fresh seat does not read it as a dead predecessor.
 6. **[0.0.0_AB_MSTR]** The cross-fabric merge parks CLEAN; resume on either MSTR's word after the
    PRD round. Nothing about it decays.
+
+---
+
+## 11. STANDING FOR THE SUCCESSOR -- Andrew-direct L1 amendment, arrived AFTER this seat closed
+
+**Bridged 2026-08-24T15:55:32Z (`e3d62e01-0f87-46e0-a8f3-07b8b5cfd80e`), explicitly NOT a reopen.**
+Recorded here because the assigned act was *"carry this into your successor's spawn brief"*, and a
+bus message dies with the session. **This is the WD-SITEZ failure mode pointed at my own fabric: the
+instruction would otherwise live only in laptop messages, and disk outlives messages.**
+
+**ANDREW-DIRECT ~15:2xZ at the base CTO terminal, VERBATIM (card 3 of six):**
+
+> *"This needs to be handled via Bloomberg pipeline structure. We should be accruing all data in
+> same shape via daily bloomberg /terminal-upload schedule with a scoped additional script for
+> this purpose, with that data accruiing in correct structure in a relevant opal-data-etfs
+> subfolder."*
+
+**VERBATIM (card 6) -- this is the SPEC for the scoped script, and the ORDER is load-bearing:**
+
+> *"If Bloomberg cannot provide consitutents, then we need to decide what we can get from Bloomberg,
+> and fill out the rest from Pathfinder and Trueshares sources, then enrich via the underlying
+> holdings as needed via Bloomber."*
+
+Layering: **Bloomberg FIRST** (decide what it CAN provide) -> **Pathfinder + TrueShares** for the
+rest -> **enrich via underlying holdings via Bloomberg**. That layering lives INSIDE the pipeline
+structure above, not beside it.
+
+**IT IS A VEHICLE CHANGE, NOT A SCOPE CHANGE.** TO-4 Half 2 was WIRED as a call site in the netassets
+Lambda (`@4e5800fde0` + a `TS_HOLDINGS_ENABLED` env flip); **that vehicle is NOT deployed and is not
+the path.** The capture instead rides the daily `/terminal-upload` schedule as a scoped additional
+script, landing in an `opal-data-etfs` subfolder. The DATA GOAL is unchanged (DIVZ/IDVZ constituents,
+so the two book-level shells flip to full books). **AE's TO-5 (producer schedule apply) STANDS.**
+
+**SECTION 2 OF THIS LOG IS THE INPUT TO STEP ONE.** "What Bloomberg CAN provide" is a measured
+question this session half-answers: Bloomberg HOLDS the constituents (fund-specific non-null
+sector/geo allocations, SPY control), and the route is BQL behind a SERVICE-LEVEL entitlement wall.
+**The BQL spend stays Andrew's per-use word -- it is a card, NOT a task, and no successor should
+build against that surface until he rules.**
+
+**Two further rulings from the same six cards, recorded so a fresh seat does not act against them:**
+- **ETF PAGE PROMOTE: NOT YET.** Two conditions: (i) the data pipeline COMPLETE with the FULL data
+  structure for daily Bloomberg data for ALL ETFs; (ii) it DISPLAYS PROPERLY on the DEV build with
+  **GICS REPLACED BY SUB-CATEGORIES** on the frontend. The staged promote stays staged, nothing
+  rolled back. Laptop `origin/PROD` `8a96c916` UNWRITTEN; base MSTR's PROD hold is discharged by
+  his answer -- **the push does not go.**
+- **49F SOURCING: HELD until Mike at 49 confirms.** No 49F promotes, ADVI_49FSRC stays stage 2, no
+  decomp, no TOs. The history fork is not relevant until Mike.
+
+Laptop state at bridge time: `origin/CLOUD` **`3943af6e72`** -- **a DATED pin; re-run
+`git ls-remote origin CLOUD` before acting.**
