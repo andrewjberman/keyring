@@ -198,6 +198,36 @@ expiry, and somebody has to go and look.**
    so ONE scheduled fire yields THREE `status: published` manifests.** A manifest count silently stops
    meaning what its name says.
 
+   ⛔⛔ **THE ~2h WINDOW BETWEEN THE TWO FIRES IS MINE AND IT IS THE ONLY CHEAP PLACE TO CATCH THIS.**
+   **HOLDINGS ARRIVING IS NECESSARY AND NOT SUFFICIENT.** The gold producer JOINS holdings to the
+   Bloomberg per-security characteristics file, and I verified at my own seat on a DISCRIMINATING
+   instrument (positive controls AAPL/NVDA/MSFT **PRESENT**, negative control **ABSENT**):
+   ```
+   bbg/2026-08-21/characteristics.parquet   DENOMINATOR 109 rows / 109 distinct tickers
+     BBSEY ABSENT · AMX ABSENT · CPA ABSENT · BNPQY ABSENT     <- the DIVZ/IDVZ constituents
+   ```
+   **109 is exactly the PRE-A5 universe count.** If the characteristics do not cover those securities,
+   the rows arrive with **a NAME AND NOTHING ELSE** -- not a filled book, an empty one with more rows,
+   and `2602335D`/TPG is today's live specimen of exactly that failure (name + nulls + weight 0 ->
+   renders "Other").
+   ⚠ **MY FIRST CHECK OF THIS READ *ABSENT* FOR EVERYTHING INCLUDING AAPL** -- the `security` column
+   carries Bloomberg-format identifiers (`AAPL US Equity`), and a bare-ticker comparison matches
+   nothing. **The positive control is the only reason I did not "confirm" the finding on a broken
+   instrument. Match on the ticker TOKEN, not the whole identifier.**
+
+   **THE CHAIN THAT MUST HOLD, watch it rather than hope it:**
+   ```
+   07:00 ET  L1 runs WITH A5 -> ~166 constituents incl. BBSEY/AMX -> characteristics COVERING THEM
+   13:00Z    gold joins holdings(08-24) x characteristics -> DIVZ/IDVZ FILL
+   ```
+   ⛔ **A5 HAS NEVER BEEN EXERCISED END TO END. Tomorrow 07:00 is its FIRST real run** (I deployed it
+   and deliberately declined a full-script run to keep the attribution clean -- right call, and this is
+   its cost). **The entire DIVZ/IDVZ fill sits behind that one leg.**
+   **MY CHECK IN THE WINDOW, before 13:00Z:** constituent count > 109, AND spot-check `BBSEY`/`AMX`
+   are IN the emitted `characteristics.parquet` -- **not just that the pull returned rc=0.**
+   **If characteristics do NOT cover them, 13:00Z produces books with names and nulls, and Andrew is
+   told "tomorrow" for the third time.**
+
    **THE Z-S16 CLOCK, and it is why tonight was cheap:** the 13:00Z fire selects T-1 = Mon 08-24 and
    tonight's 73 TrueShares rows flow through -- **so DIVZ/IDVZ stop being shells and the wrong
    `data_as_of` reaches the SERVED surface in the same instant.** Today it is invisible because those
