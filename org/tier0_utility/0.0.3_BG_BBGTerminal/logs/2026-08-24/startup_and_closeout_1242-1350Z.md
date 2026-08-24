@@ -170,9 +170,60 @@ armed and will die with this session: fabric inbox `bssk0ogz6` and Teams `bvx8fj
 |---|---|---|
 | Monday's scheduled pull ran clean | vintage 20260821, tripwire PASS both legs, ETF exit 0, at 07:00:01Z 2026-08-24 | `cat "$USERPROFILE/opal_bbg_logs/bbg_tplus1_<YYYYMMDD>_070001.log"` — **no file = no fire**, unambiguously. Retention is **30 RUNS, not 30 days**; a harness burst eats the window. |
 | Portal is serving the right vintage | `data_as_of 2026-08-21`, `generated_at 2026-08-22T11:06:01Z` | The publish leg of that same wrapper log prints it. **This is a 2026-08-24 reading and expires the moment the next fire publishes.** |
-| I am registered | LIVE, PID 6248, re-registered ~13:4xZ after a prune | `get_live_agents` — and if you are absent, check your PID first: same PID = prune, different PID = a live peer holds your serial (STOP, identity conflict). |
+| I am registered | LIVE, PID 6248 — **pruned and re-registered TWICE this session** (~13:4xZ and ~18:4xZ) | `get_live_agents` — and if you are absent, check your PID first: same PID = prune, different PID = a live peer holds your serial (STOP, identity conflict). **Expect this to recur; see below.** |
+
+**THE PRUNE IS NOT A ONE-OFF — IT HAPPENED TWICE IN ONE SESSION, AND THE SECOND TIME THE
+INSTRUMENT BLAMED ME FOR IT.** After ~5 hours holding quiet, my own `heartbeat` call returned
+**`0.0.3_BG_BBGTerminal is not registered. Call register_agent first.`** — PID 6248 unchanged
+throughout, watcher armed throughout, mail arriving normally throughout. The reading a fresh seat
+must not take from that string is "a prior seat died"; **the process never moved.**
+
+**The shape, stated so it is actionable without the incident:** a seat that is *correctly* quiet —
+holding, or running a long green sequence that produces evidence instead of emitting heartbeats —
+is exactly the seat that gets pruned. **A HOLD is a prune generator.** The failure is silent in the
+direction that matters: registration-keyed instruments read you ABSENT while inbox-keyed ones work
+fine, so `get_live_agents` and your mail disagree and only the mail is right.
+
+**What to do:** re-register (not heartbeat — the heartbeat is what reports the prune). Confirm the
+PID came back **identical**; that is the whole discriminator between a prune and a death. Then
+carry on — nothing was lost, because the loss is visibility, not delivery.
 | No Teams backlog | zero events from cursor `2026-08-20T21:31:22Z` | Read the Monitor's own output file; the arm banner prints the cursor. Do not infer from silence alone — confirm the banner shows both pin halves or the arm proved nothing. |
 | Bloomberg reachable | `ok: true`, `//blp/refdata`; `cma` env runnable (blpapi 3.26.4.2) | `bloomberg_health` **and** `C:\Anaconda\envs\cma\python.exe -c "import blpapi"`. Green MCP is a different interpreter than the pull — one does not evidence the other. |
+| Daily vehicle leg set | models + L1 ETF **+ a CONSTITUENTS leg added TODAY** | See the addendum below. **Today's 07:00 log shows only two legs and that is CORRECT for today** — do not read its absence as a failure. |
+
+### ADDENDUM (post-close-out, ~18:5xZ) — a third leg landed on my daily vehicle AFTER this morning's fire
+
+`0.0.0_AB_MSTR~Z` (msg 4826) pointed me at **`integrations/bloomberg/READ_HERE.md`** — the
+symptom-first Bloomberg playbook Andrew asked for (*"because I should never have to explain this"*).
+**Pointer verified, not assumed:** file present, 189 lines as stated, and the cited commit
+`13e6ec90ac` resolves locally and is HEAD. No dangling citation.
+
+**What changes for a fresh seat at this terminal, and I checked it at source rather than relaying it:**
+
+- `scheduled_daily_pull.cmd` now runs a **constituents leg** (`etf_constituents_pull.py`) after the
+  L1 ETF leg. Confirmed in the exact file the task executes — `(Get-ScheduledTask
+  'OPAL_BBGTML_daily_pull').Actions` = `cmd.exe /c "…\integrations\bloomberg\pipeline\
+  scheduled_daily_pull.cmd"`, i.e. **the working tree**, so the edit is already live on disk.
+- **Exit codes 70-73**, disjoint from models (0/1/9/20/30/40/50) and from L1 ETF (60-63). `RC_CONS`
+  never touches `%RC%` or `%RC_ETF%`. **`CONSTITUENTS LEG EXIT CODE: 71` = the terminal was down** →
+  that is READ_HERE section 2, and it is the one to act on.
+- **It runs even when the ETF leg failed — I verified all three paths reach `:cons_leg`**
+  (`.cmd:219` success `goto`, `:225` explicit `goto` after the failure codes, and `:etf_missing`
+  by fall-through). Deliberate: the derived constituent layer is **current-day-only at the source**,
+  so an uncaptured day is gone permanently and skipping on a sibling's fault would turn one leg's
+  failure into two legs' permanent loss.
+- **TOMORROW'S 07:00 ET FIRE IS THE FIRST WITH THIS LEG.** Today's 07:00 wrapper log predates the
+  commit and shows two legs. A fresh seat comparing the two logs must not read that as a regression.
+- One fragility, OBSERVATION class, surfaced to MSTR~Z and **not** acted on (I hold no git and am
+  in HOLD): the `:etf_missing` path reaches `:cons_leg` by **fall-through**, not an explicit `goto`.
+  It is correct today; anything later inserted between them breaks it silently, on the one path
+  where nobody is watching.
+
+**Also settled in that doc, so it is not re-derived:** Bloomberg *does* hold ETF constituents — the
+derived layer (count / top-ten / sector / geo) is served **today** on plain refdata; the constituent
+LIST is behind a **BQL entitlement wall**, Andrew's spend call, not a task. And the 08-21 brief's
+conclusion is **superseded**: a clean zero measured inside the refdata field surface said nothing
+about the BQL surface next door.
 
 **Site-Z state as of the close-out (cited from MSTR~Z msg 4824, not independently derived by me):**
 `origin/SITEZ a0d037464c`; cross-fabric merge-tree rc=0 CLEAN, overlap 2/121 = 1.65%, base
