@@ -182,6 +182,7 @@ def main() -> int:
     # "24350 scanned" reads as confirmed absence while N files sat unread and unnamed. Rule 22:
     # print the denominator of every scan you reason from, including the part you could not reach.
     skipped = 0
+    binary = 0         # in-scope files that are BINARY (NUL in the first 8000 bytes) -- not searched
 
     if name_mode:
         pat = pattern if any(c in pattern for c in "*?[") else "*%s*" % pattern
@@ -209,6 +210,17 @@ def main() -> int:
         for rel in files:
             full = os.path.join(WS, rel)
             try:
+                # BINARY FILES ARE NOT SEARCHED, AND THE SKIP IS COUNTED. git's own heuristic: a NUL
+                # in the first 8000 bytes. A tracked cache blob (measured 2026-08-24: 4 tracked files
+                # under infra/aws/ec2/opal-gateway/.ruff_cache/) matched a term and echoed NULs into
+                # stdout, so `comp-find | grep` reported "Binary file matches" and dropped every hit
+                # at exit 0 (NFRA_COMPRAIL-S1). errors="replace" cannot catch it -- NUL is valid
+                # UTF-8. Counted in the denominator, never silent: a zero over N scanned must say
+                # how many in-scope files were binary and unread.
+                with open(full, "rb") as bh:
+                    if b"\x00" in bh.read(8000):
+                        binary += 1
+                        continue
                 with open(full, "r", encoding="utf-8", errors="replace") as fh:
                     scanned += 1
                     for n, line in enumerate(fh, 1):
@@ -250,9 +262,10 @@ def main() -> int:
 
     mode = "name" if name_mode else "content"
     print("comp-find [%s] %r" % (mode, pattern))
-    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s%s"
+    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s%s%s"
           % (len(hits), scanned,
              (" | %d UNREADABLE, NOT searched" % skipped) if skipped else "",
+             (" | %d BINARY, NOT searched" % binary) if binary else "",
              (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
     counts = " ".join("%s=%d" % (b, len(by_band[b])) for b in _BANDS if by_band[b])
     print("  BANDS (true totals, not this page): %s" % (counts or "none"))
@@ -265,6 +278,9 @@ def main() -> int:
         if skipped:
             print("  ^ AND %d in-scope file(s) were UNREADABLE and never searched. Your zero does "
                   "NOT cover them." % skipped)
+        if binary:
+            print("  ^ AND %d in-scope file(s) were BINARY and never searched. Your zero does "
+                  "NOT cover them." % binary)
         print("  Widen with a pathspec, or -i, or check the pattern (see the BRE warning above if shown).")
     else:
         last_band = None
@@ -295,7 +311,8 @@ def main() -> int:
                 print(_comprail.ascii_safe(line))
 
     _comprail.log_rail(RAIL_LOG, "RUN-FIND", "comp-find", pattern,
-                       'mode=%s hits=%d scanned=%d page=%d/%d' % (mode, len(hits), scanned, page, pages))
+                       'mode=%s hits=%d scanned=%d binary=%d page=%d/%d'
+                       % (mode, len(hits), scanned, binary, page, pages))
     return 0
 
 

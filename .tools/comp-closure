@@ -12,6 +12,26 @@
 #   comp-closure --self-test                         # offline battery m1-m5 + controls (never AWS)
 #   comp-closure --help                              # usage, never writes; unknown flags REFUSE (rc 2)
 #
+# 
+# !! KNOWN COMPARISON DEFECT + SEQUENCING CONSTRAINT (2026-08-24, MSTR~Z via bridge 66713; Z-S4,
+# !! four seats reproduced on site Z): the byte compare is RAW -- a CRLF-deployed member vs LF
+# !! committed copies reads eq_deployed_commit:false / eq_head:false ON A CORRECT DEPLOY. Tonight
+# !! that wrong answer was MASKED by a correct refusal (landing_guard.py at THREE byte-identical
+# !! repo homes -> equivalence=UNMEASURED). THE TWO ARE NOT ADDITIVE: CONSOLIDATING THE MULTI-HOME
+# !! HELPER ARMS A CONFIDENT FALSE 'DIVERGENT' ON CORRECT DEPLOYS. FIX THE COMPARISON FIRST --
+# !! (1) normalize line endings PER MEMBER before comparing AND (2) STATE IN THE OUTPUT WHICH
+# !! COMPARISON WAS USED (a silent normalize hides a REAL divergence -- the hand-typed-'Z' class).
+# !! SUPERSEDED-IN-PART 2026-08-24 ~22:4xZ (MSTR 66909, carrying CTO~Z's settled form): the fix
+# !! ORDER INVERTS -- (a) PER-MEMBER COMPARISON DISCLOSURE FIRST (a row property, the only half
+# !! that SURVIVES the equivalence=UNMEASURED short-circuit), (b) normalization second. The
+# !! defect is LATENT, not fixed: the motivating function now reads eq=TRUE because the ARTIFACT
+# !! was rebuilt LF (comp_closure.py:94-95 still hashes raw bytes) -- a clean read today is not
+# !! a close; the next CRLF build silently reintroduces it. And the multi-home refusal is
+# !! UNDISCRIMINATING, not selectively concealing: UNMEASURED discards member results in BOTH
+# !! directions (hid a false yesterday, hides a true today).
+# !! Repair routed to the D0 tooling queue (after the cap repair); do NOT tidy the duplicate
+# !! helper before this lands. Read a DIVERGENT verdict from this tool as SUSPECT until then.
+#
 # Bounds: read-only live AWS; the lambda source map is a BUILD INPUT read and never rewritten;
 # nothing armed; `plane` carried opaque (CTO 63744). Rule-16 clean: cd / dirname / pwd / python only.
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
