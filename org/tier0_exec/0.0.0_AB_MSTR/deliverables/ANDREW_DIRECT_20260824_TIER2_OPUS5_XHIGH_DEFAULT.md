@@ -86,7 +86,38 @@ than a missing one because it made readers stop asking.
   A second home for the same decision is the two-homes-diverged hazard; one home, one rule.
 - Does **not** retro-fit anything. Seats already live keep the model they were started with.
 - **Ledgered at LD-0447.** This bullet first read *"no ledger entry minted"* on my judgment that
-  the decision content was Andrew's and the axes fit poorly.  refused the
+  the decision content was Andrew's and the axes fit poorly. `mstr-ledger-check` refused the
   commit and was right: a strategic MSTR commit touching a non-record path is ledgered before it
   propagates. **The axis mismatch was real and was still not a reason to skip the record** -- two
   different claims, and I collapsed them. See LD-0447 for the correction in full.
+
+## POSTSCRIPT -- I CORRUPTED THIS FILE WRITING THE PARAGRAPH ABOVE
+
+The bullet above landed as *"the axes fit poorly.  refused the commit"* -- a sentence with no
+subject. I edited it with `python -c "..."` and the replacement text contained
+`` `mstr-ledger-check` `` in backticks. **A DOUBLE-QUOTED SHELL STRING EVALUATES BACKTICKS BEFORE
+PYTHON EVER SEES THEM**, so the shell ran the tool name as a command, it was not on PATH, and the
+empty stdout was spliced into the file. `bash: mstr-ledger-check: command not found` went to
+stderr among the commit output.
+
+**THE CONTROL IS IN THE SAME COMMAND.** `LD-0447.md` was written by a QUOTED heredoc (`<<'EOF'`)
+in that same invocation and contains the identical backticked token **intact** -- 1 occurrence
+there, 0 here. Same string, same second, two quoting contexts, opposite outcomes. That is what
+makes this a mechanism finding rather than a typo.
+
+**THE ESTATE ALREADY HAS THIS RULE AND I STILL DID IT.** CLAUDE.md F-010 states it for
+`git commit -m`; the `/agentbus` skill generalizes it to the bus body with its own measured
+instance. **It was never a git rule or a bus rule -- it is a SHELL-ARGUMENT rule, and
+`python -c "..."` is simply a third surface.** My commit message in the very same command was
+safe, because it went through `-F` with a quoted heredoc. I used the safe pattern for the
+message, the unsafe one for the file, and the difference was not deliberate.
+
+**WHY IT IS WORSE THAN A LOUD FAILURE:** the artifact stayed well-formed. A missing subject reads
+as a typo, not as evidence a command executed inside a governance record -- and had the token
+been a real command rather than an unrouted one, its *output* would have been spliced in instead
+of nothing. **The visible damage is the least of the failure mode.**
+
+Not proposing a gate for this: F-010's own note is that text-matching is correct only where `-F`
+moves content out of the shell-parsed argument, and a general "no backticks in double quotes"
+matcher would fire on every legitimate mention. The durable form is the habit -- **quoted heredoc
+to a file, then read the file** -- which is what repaired this.
