@@ -75,6 +75,23 @@ T-1 for a Monday 08-24 read = Friday 08-21 (NEVER#1: trading days, not wall-cloc
    sets s.3.
 4. Confirm Phase 2 ordering (COO + CVO spawn for D1 while CTO drafts D2) -- CTO recommendation.
 
+## 4a. v0.2 -- ANDREW'S RULINGS APPLIED (~15:2xZ; record `ANDREW_DIRECT_20260824_OPEN_CALLS_49F_HELD_ON_MIKE_ETF_PROMOTE_CONDITIONS_BBG_PIPELINE_STRUCTURE.md`)
+
+| call | his word (short) | effect on the order |
+|---|---|---|
+| 1 spawn / 49F | 49F sourcing + promotes WAIT on Mike at 49 | `ADVI_49FSRC` parks at stage 2 (PRD = the brief for Mike); D2 sourcing drops OUT of Phase 2; spawn order itself NOT yet ratified |
+| 2 ETF promote | NOT YET: (i) full daily Bloomberg data structure for ALL ETFs; (ii) DEV build with GICS -> sub-categories | D4 gains a ROUND-2 SCOPE: ETFS PRD s.11 amendment (CTO) -> COO round-2 decomp -> DS / DE / site-Z / AE cells |
+| 3 TrueShares deploy | NOT as wired -- via the Bloomberg /terminal-upload pipeline structure, scoped additional script, same shape, opal-data-etfs subfolder | TO-4 Half 2 stands down as a vehicle; L1 order amendment at site Z (MSTR bridges); AE TO-5 stands |
+| 4 history fork | not relevant until Mike | parked with (1) |
+| 5 gap-day backfill | rec agreed: HOLD | DS cell on spawn |
+| 6 constituents | Bloomberg-first / Pathfinder + TrueShares fill / Bloomberg enrich | the A3 spec; inside (3) |
+
+**Revised Phase 2 (still at Andrew for the word):** COO + CVO (D1 cert/TOs; ETFS round-2 decomp) ->
+DS (cottonwood/global cell; D1 gold; ETF full data structure) -> DE (D1 portal; GICS -> sub-categories
+on DEV) -> AE (TO-5 apply; TO-4 as-wired STANDS DOWN) -> 0.8.0 (D0). Site Z: L1 amendment via MSTR.
+**Revised Phase 1 (CTO, now):** ETFS PRD s.11 amendment + the L1 order amendment (A4); ADVI_49FSRC
+PRD stays a draft for the Mike conversation.
+
 ## 5. WHAT THIS FILE IS NOT
 Not a gate (Rule: no gates without his word), not a dispatch (COO issues TOs), not a ruling on the
 history fork. It is the position map he asked for, with the ordering CTO recommends.
