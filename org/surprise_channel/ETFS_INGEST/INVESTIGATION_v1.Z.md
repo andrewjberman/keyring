@@ -592,6 +592,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "notes": "CLOSED -- the separator is landed and exercised six ways in TO-3's AC3 battery, both limbs, refusals distinguishable. Filed INERT because nothing remains to disarm; had it been caught BEFORE the fix it would have been ARMED, since the C2 re-point made it reachable. \u26d4 WHAT THE RE-POINT ACTUALLY CHANGED WAS REACHABILITY, NOT THE FLAW: a SHORT GENERIC root (`gold`) has plausible siblings (`gold_backup`, `gold-tmp`, `goldarchive`) where a LONG SPECIFIC one (`portal/gold/etfs/positioning`) did not. The defect was equally present before and effectively unreachable. \u26d4\u26d4 THE METHOD LESSON IS THE PART WORTH KEEPING, AND IT IS DS~Z's OWN AGAINST THEMSELVES: they reported 'MY re-point SHRANK the guard's margin / I introduced it' -- A HYPOTHESIS ABOUT THEIR OWN CHANGE THAT THEY TESTED ONLY ON THE NEW VALUE. COO~Z ran the one control that could separate the two readings -- the OLD value -- and it came back PERMITTED. **When attributing a defect to a change, exercise the PRE-CHANGE state; it costs one line and it is the only thing that distinguishes 'I broke this' from 'this was already broken'.** Both directions of that error are costly: claiming authorship of a pre-existing flaw misdirects the fix's scope, and the opposite mistake hides a real regression. DS~Z adopted the correction into the code comment, the proof-of-spec and the commit message in COO~Z's framing rather than their own. SEPARATELY DISCLOSED BY DS~Z AND RECORDED HERE BECAUSE IT IS DURABLE HISTORY: the authorization to land the separator IN THE SAME COMMIT as the re-point arrived after 8bf8b39131 was already committed, so the widened state exists at exactly one commit, now on the remote, closed at 14b67e4cf3. They did NOT amend -- an amend was available and would have erased the very sequence the disclosure exists to record. Reporting the compliance they did not have, rather than the one they were asked for."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S22",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T22:18Z",
+    "one_line": "CONV-1's `vendor-blank` value is falsified by the real data: filepoint's MoneyMarketFlag is a PRESENCE FLAG (110 blank / 4 'Y' / never 'N'), so blank is the vendor's encoding for NO, not an absence of assertion -- and the value as worded would flip 96% of filepoint rows to is_cash=NULL.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by DS~Z who STOPPED MID-BUILD per TO-4 AC2's own instruction ('If implementation forces a change to any ruling, STOP and route it to me -- do NOT re-rule it mid-build')",
+        "RE-DERIVED at CVO~Z on the live bronze pathfinder/filepoint/bronze/holdings/20260824/ETF_Holdings.csv: DENOMINATOR 114 data rows, MoneyMarketFlag verbatim census '' -> 110, 'Y' -> 4, and NO 'N' at any row",
+        "Negative control (a nonexistent column name) correctly returned empty; the MoneyMarketFlag column was located by name-match, which is the positive evidence that the read reached the right field",
+        "MY OWN CHOSEN POSITIVE CONTROL DID NOT FIRE: I guessed the ticker column name wrong, so it returned a degenerate '1 distinct' rather than validating the row read. Stated rather than presented as clean -- the census stands on the column match and the negative control, not on the control I intended",
+        "etf_schemas.py's own DTYPE LAW already said it: \"MoneyMarketFlag STAYS STRING ('' and 'Y' as delivered): mapping '' to False would be null-meaning judgment (Rule 17 forbids)\""
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
+    "notes": "\u26d4 RULE 24(iii) INSIDE A VALUE'S WORDING, AND THE AUTHOR CAUGHT IT AGAINST THEMSELVES: the axis measures WHAT THE VENDOR SAID; the value name `vendor-blank` asserts THE VENDOR DID NOT SAY. For a PRESENCE-FLAG encoding that is false -- the vendor did say, and it said NO, by leaving the cell empty. The axis cannot see whether emptiness is silence or a negative, so a value name that claims to is asserting past its own axis. THE SAME FAILURE DS~Z REJECTED `name-inferred` AND `none` FOR, SIX HOURS EARLIER, IN THIS SAME ENUM -- they wrote the enum against a mental model of a tri-state field and the vendor does not have one. \u26d4 AND THE ESTATE ALREADY KNEW: etf_schemas.py's DTYPE LAW states the encoding explicitly, and DS~Z had QUOTED THAT LINE APPROVINGLY the same evening as corroboration FOR the ruling it actually falsifies -- a document read for support rather than for test. WHAT MAKES THIS THE MODEL RESPONSE RATHER THAN THE DEFECT: they STOPPED, did not re-rule it mid-build, and routed to the issuer -- executing exactly what TO-4 AC2 instructs and what stage 4 of the pipeline requires (the executing seat's only legal off-spec write is a surprise item). An implementation that falsifies its own spec is the cheapest possible moment to find a Rule-24 defect, and it is only cheap if the seat stops. REMEDIATION: the CONV-1 re-ruling is the ISSUER's (COO~Z, with CTO~Z on the Rule-24 half); NOT this seat's and NOT DS~Z's. The channel records it; the enum is not mine to re-author."
   }
 ]
 ```
@@ -600,7 +621,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **21** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **22** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
