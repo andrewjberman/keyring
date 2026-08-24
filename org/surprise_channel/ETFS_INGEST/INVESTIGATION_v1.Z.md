@@ -1,0 +1,346 @@
+# ETFS_INGEST (D4) -- SURPRISE CHANNEL INVESTIGATION v1, SITE Z
+
+**Channel owner:** `3.0.0_SA_CVO~Z` · **Round:** v1 · **Opened:** 2026-08-24 ~20:2xZ
+**Protocol:** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` (stage 5) · CLAUDE.md Rule 27
+**Project:** `ETFS_INGEST` -- the NO-BQL ETF constituent pipeline. PRD `docs/architecture/ETFS_INGEST_PRD.md`.
+**Certifier role:** this seat is also CERTIFIER OF RECORD for `2.0.0_SA_COO~Z`'s stage-3 decomp
+(`workflows/atom_decomposition/runs/etfs-ingest/20260824T195350Z/`). Per the pipeline's
+role-collision clause my channel role is RECORD + GRADUATE; I never re-certify my own cert.
+**Status:** APPEND-ONLY during this round. A correction is a NEW item citing the prior id.
+
+## Filename
+
+`INVESTIGATION_v1.Z.md`, not `INVESTIGATION_v1.md`. `1.0.0_SA_CTO~Z`'s welcome (msg 4843) named
+the bare form; that was their typo and they confirmed it (msg 4849). The `.Z` coordinate is the
+ruled form -- `SURPRISE_CHANNEL_PROTOCOL.md` s.8 (CTO 65860) and `.owned-paths.yaml`:1035, which
+names exactly `INVESTIGATION_v1.Z.md` as this seat's permitted write. Authored at the coordinate
+from birth, so there is no mirror to rename later. Ratified by `0.0.0_AB_MSTR~Z` msg 4853.
+
+## Id allocation -- read this before citing an id
+
+Ids are `ETFS_INGEST-Z-S{n}` (site-Z fabric coordinate; schema pattern `^[A-Z0-9_]+-(Z-)?S[0-9]+$`).
+
+**The PRD s.12 labels were LETTERS (`Z-S-A/B/C`) and do not validate against the channel schema.**
+CTO~Z has since amended the PRD to the numeric ids showing the letters as "(was ...)". The alias
+table is kept here anyway so any citation already in flight resolves:
+
+| PRD s.12 label | channel id |
+|---|---|
+| `Z-S-A` | `ETFS_INGEST-Z-S1` |
+| `Z-S-B` | `ETFS_INGEST-Z-S2` |
+| `Z-S-C` | `ETFS_INGEST-Z-S3` |
+
+⚠ **`Z-S5` was allocated by other seats in MCP traffic before this document existed** (CTO~Z msg
+4881, MSTR~Z msg 4885, for BG's item). I have ADOPTED that number rather than renumbering --
+renumbering breaks every citation in flight, which is this protocol's own measured lesson (s.8: 7
+colliding ids, 14 distinct findings). **Going forward the channel owner allocates.** Concurrent
+allocation by non-owners is exactly how the 2026-08-21 collision happened, one axis over.
+
+---
+
+## 0. WHAT I RE-DERIVED RATHER THAN INHERITED
+
+Andrew's posture for this project is *validate SOT, do not inherit*; MSTR~Z restated it against
+their own F-numbers (*"do not inherit my F-numbers either ... F3 originated as MY error"*). So the
+PRD's F2 was re-measured at the live primitive before any item here was written.
+
+`comp-closure --self-test` -> **24/24** before use. Then `comp-closure compile etfs-netassets-daily`:
+`reach=PRESENCE_ONLY standing=AMBIGUOUS equivalence=UNMEASURED`, hops 5, observations 4 all
+envelope-valid. Independently I downloaded the package from `Code.Location`; my member digests
+reproduce the tool's exactly (`lambda_function.py` `f306aa23…`, `landing_guard.py` `a715b04b…`),
+so two independent retrievals agree.
+
+**F2 CONFIRMED IN SUBSTANCE.** Deployed carries the TrueShares fetch DEF and no CALL SITE while
+`TS_HOLDINGS_ENABLED=1` is applied -- Rule 22a's class exactly.
+
+Token census, deployed vs HEAD, negative control `ZZZ_NO_SUCH_TOKEN_9999` = 0 in both:
+
+| token | DEPLOYED (lines/occ) | HEAD (lines/occ) |
+|---|---|---|
+| `fetch_trueshares_holdings` | 1 / 1 (def at `:420`) | 3 / 3 (call at `:552`) |
+| `TS_HOLDINGS_ENABLED` | 1 / 2 (assignment at `:381`) | 5 / 6 (`if` at `:550`, SKIP at `:559`) |
+| `fetch_filepoint` (positive control) | 3 / 3 | 4 / 4 |
+
+Two corrections to the PRD's stated figures, neither changing the conclusion, both accepted by
+CTO~Z (msg 4849) -- recorded so the next reader does not re-measure this pair and think they found
+drift:
+
+- **"1083 / 1126 lines"** -- I measure 1084 / 1127. A counting convention (`wc -l` vs
+  newline-count+1), not a disagreement.
+- **"positive control `fetch_filepoint` = 3 in BOTH copies"** -- deployed 3, HEAD 4. The control
+  still discriminates. **`0.7.0_AE_CloudOps~Z` supplied the MECHANISM my correction lacked (msg
+  4878): commit `@4e5800fde0` added its own occurrence of the control token.** Their explanation is
+  better than my "the stated value was wrong", which is true and explains nothing. *A control whose
+  count moves because the commit under test added an occurrence of the control token is worth
+  carrying as its own lesson.*
+- The apparent 2/6-vs-1/5 split between AE~Z and me was never a disagreement: line-count vs
+  occurrence-count, the whole delta being one line that carries the token twice
+  (`TS_HOLDINGS_ENABLED = os.environ.get("TS_HOLDINGS_ENABLED", "0") == "1"`). Grain stated both
+  ways above.
+
+**NEVER#1 discharged before reading a gap.** `opal-data-etfs/bbg/` holds no partition after
+`2026-08-21`. Resolved the calendar FIRST: today is **Monday 2026-08-24**; 08-22/23 were the
+weekend; the 08-24 07:00 fire correctly landed under as-of **Friday 2026-08-21** (objects written
+`2026-08-24 07:02:52`, constituents `14:26:40`). A healthy pipeline plus a weekend. **Not a
+finding, and recorded here as a non-finding so nobody re-files it.**
+
+---
+
+## 1. THE MEASUREMENT THAT NEARLY BECAME A FALSE ACCUSATION (item Z-S4)
+
+The deployed `lambda_function.py` is **CRLF** (1083 CRLF pairs, 49,995 bytes). Every committed copy
+is **LF** (HEAD 51,885 bytes, 0 CRLF). So a raw byte comparison can never match, however perfect
+the deploy.
+
+I ran the raw comparison across every commit that has ever touched the file:
+
+```
+DENOMINATOR: 6 commits scanned.  RAW matches: 0.
+  positive control  HEAD vs HEAD  -> MATCH (retrieval works)
+  negative control  bogus ref     -> "fatal: invalid object name" (NOT sent to /dev/null)
+```
+
+**That clean, well-controlled zero supports the reading "the running code was built from a tree
+state that was never committed" -- a Rule-2 provenance alarm. IT IS FALSE.** Under CRLF
+normalization the same 6-commit scan returns exactly ONE match:
+
+```
+DEPLOYED == 541a393798  (2026-08-19T20:16:38-04:00, 0.4.0_DS_ClientPlatform,
+                         "D4c Phase A -- TrueShares holdings fetch path; DISABLED by default")
+deployed 20:16 EDT -> LastModified 2026-08-20T01:18:32Z, ~1h later. Everything reconciles.
+```
+
+⛔ **EVERY CONTROL PASSED BECAUSE EVERY CONTROL WAS INSIDE THE SAME WRONG FRAME.** A positive
+control proves the ENGINE, never the FRAME. The estate has this banked; this is a sharp instance
+because the false conclusion it supports is an **accusation**, not merely an absence.
+
+**The control that makes it airtight:** `landing_guard.py`, in the SAME package, is LF and matches
+the repo RAW (`True`). So this is not the packaging step normalizing everything -- it is edit-time
+on a Windows box. **One member drifted, one clean, which is exactly what a genuine partial drift
+looks like.** Maximally convincing and entirely wrong.
+
+**Why it is ARMED rather than a line-ending nit:** the AE~Z TO's premise oracle was written as
+*"a fresh package download vs HEAD @4e5800fde0"*. Run as a byte comparison, **that oracle returns
+DIVERGENT after a completely correct deploy.** `0.7.0_AE_CloudOps~Z` reached the CRLF fact
+independently before reading my message (msg 4878) -- corroboration, not an echo -- and their own
+detector failed first in a way worth recording: `grep -c $'\r'` returned the SAME answer on a
+known-CRLF fixture and a known-LF fixture. *A detector that gives the same answer on both controls
+is not a detector.*
+
+---
+
+## 2. WHY Z-S1's STANDING MOVED FROM INERT TO ARMED
+
+The PRD filed Z-S-A as `OBSERVATION / INERT`, reasoning *"not destructive -> INERT"*. The
+`hazard_standing` axis as ruled does not test destructiveness. It tests whether the item, LEFT
+ALONE, causes harm through the process's **future normal operation** -- `ARMED` being specified as
+*"a future ordinary act encounters it and is harmed -- a scheduled TO, a seat typing the obvious
+command, A QUEUED EXECUTION"*, `INERT` as *"nothing does; harm requires an error or never arrives"*.
+
+The 22:00Z scheduled fire is a queued execution, and it forgoes a day of a **current-day-only**
+source with no error involved.
+
+⛔ **The tell was already in the PRD's own text: it named a DISARM OWNER for an item it labelled
+INERT.** The schema requires a disarm owner only for `ARMED`. This is the `NFRA_PIPELINE-S1`
+specimen recurring -- the `tsc` false-green was filed OBSERVATION and then given the latent-hazard
+remedy, and *the remedy disagreeing with the class* was what exposed the fused axis. Here the
+remedy was right and the label lagged. Accepted by CTO~Z (msg 4849): *"your argument is the axis as
+ruled, not a preference."*
+
+**The lost-day count rests on the CODE alone and needs no env-var history:** with the call site
+absent, the flag's state changes nothing -- the capture cannot occur either way. Fires at 22:00Z on
+08-20/21/22/23 have passed on def-only bytes; tonight's is the 5th.
+
+---
+
+## 3. ITEMS
+
+```json
+[
+  {
+    "id": "ETFS_INGEST-Z-S1",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T19:55Z",
+    "one_line": "The deployed etfs-netassets-daily package carries the TrueShares holdings fetch DEF but not its CALL SITE, while TS_HOLDINGS_ENABLED=1 is applied -- so every 22:00Z fire is a silent green no-op for DIVZ/IDVZ holdings on a current-day-only source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-closure --self-test 24/24, then comp-closure compile etfs-netassets-daily: reach=PRESENCE_ONLY standing=AMBIGUOUS equivalence=UNMEASURED, 5 hops, 4 envelope-valid observations (2026-08-24T20:04:03Z)",
+        "Independent package download from Code.Location; member digests reproduce comp-closure exactly: lambda_function.py f306aa237e3ea3536ed9ff5316da0ce09ebc0b9d548792a3f2d9f02677594298",
+        "Token census deployed vs HEAD, negative control ZZZ_NO_SUCH_TOKEN_9999=0 in both: fetch_trueshares_holdings 1 occ (def :420) vs 3 occ (call :552); TS_HOLDINGS_ENABLED 2 vs 6; positive control fetch_filepoint 3 vs 4",
+        "APPLIED plane, aws lambda get-function-configuration: TS_HOLDINGS_ENABLED=1, BRONZE_BUCKET=opal-data-assets, ETFS_BUCKET=opal-data-etfs",
+        "Live CodeSha256 tHeVS53pKxV4hX9UXciJsigvO8t5v10T3CmN2VwQURI= == source-map artifact_sha256; LastModified 2026-08-20T01:18:32Z",
+        "Deployed bytes == commit 541a393798 under CRLF normalization (see Z-S4); that commit is the def-only 'DISABLED by default' version",
+        "0.7.0_AE_CloudOps~Z re-derived independently (msg 4878) with downloaded-zip sha == live CodeSha256, confirming the censused bytes are the RUNNING bytes"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Z",
+    "notes": "Standing moved INERT -> ARMED by the channel owner on the axis as ruled; accepted by the surfacing seat (CTO~Z msg 4849). See s.2. Disarm = the TF-only deploy of @4e5800fde0 under COO~Z's TO + GO (TO cut ~20:18Z); the deploy is BOTH the disarm and the remediation, so this row closes DISARMED + REMEDIATED in one act -- which is the exception, not the pattern. Lost-day count rests on the code alone: tonight's 22:00Z is the 5th. Andrew's C4 ruling ('all recs approved, proceed', ~20:0xZ) makes the Lambda the vehicle, so the disarm path is unconditional."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S2",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T19:55Z",
+    "one_line": "The Bloomberg brief cautioned that the TrueShares holdings-sheet link is injected client-side and that the saved HTML should not be grepped for it -- which would mean our stored bronze cannot yield the link.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Retracted by its own author, 0.0.0_AB_MSTR~Z, at @7ea7d45723, on re-running against the same bronze file their original sweep had read",
+        "PRD F3: bronze trueshares/{DIVZ,IDVZ}/bronze/netassets/20260823/*.html each carry exactly ONE docs.google.com/spreadsheets/export?...&exportFormat=csv link; ids byte-identical to the brief's URLs",
+        "The Lambda's own _TS_SHEET_RE returns 1 id on RAW and on html.unescape'd text; mutant corpus (docs.NOTGOOGLE.com) returns 0",
+        "True cause: a filter requiring a literal '.csv' against a URL reading 'exportFormat=csv' -- a pattern that could not match, read as the world"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The claim was withdrawn by its author on a re-measurement against the exact bytes in question, and the opposite is established: the link IS in the bronze we store, and the deployed derive-from-page design is exercised VALID on our own bytes. Nothing remains armed. Recorded rather than deleted because the RETRACTION is the durable half -- an author correcting their own mechanism on measurement is the specimen worth keeping.",
+    "notes": "Was PRD s.12 label Z-S-B. Discharged before this document opened; carried so the id resolves and so the retraction has a home in the round's record."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S3",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T19:55Z",
+    "one_line": "A Bloomberg ID sits in the cusip column of the issuer-fill rows (PFDE's TPG line), so the unified row's identifier spine carries more than one identifier kind under one column name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-derived by the channel owner, not inherited: s3://opal-data-etfs/bbg/2026-08-21/constituents/constituents_issuer_fill.csv read 2026-08-24",
+        "DENOMINATOR: 114 non-empty cusip values over 114 rows",
+        "BBG-shaped (BBG + 9 alnum): 1 -- BBG01Y2F01K3, fund_key=pfde, security_name='TPG Inc', holding_ticker=2602335D",
+        "9-char CUSIP-shaped: 111",
+        "other/unclassified: 2 -- the literal 'Cash&Other'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Was PRD s.12 label Z-S-C. MY MEASUREMENT WIDENS THE PRD's: the column carries THREE populations, not two -- the PRD names the BBGID but not the 'Cash&Other' literal, a non-identifier sentinel sitting in an identifier column. That matters for the s.5 identifier-spine convention: an id_kind enum with two values would be non-exhaustive on day one (Rule 24 CE against the declared layer). Stays UNDER_INVESTIGATION because the convention itself is a decomp cell and a Rule-24 value-enum act -- the ruling is COO~Z's decomp to make and mine to certify, not mine to pre-empt here. INERT: no scheduled act consumes this column AS a CUSIP today; harm needs a future spine implementation that skips the id_kind cell. Stated so the reasoning is checkable rather than asserted."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S4",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T20:13Z",
+    "one_line": "The F2 premise oracle as written ('a fresh package download vs HEAD @4e5800fde0') returns DIVERGENT after a completely correct deploy, because the deployed lambda_function.py is CRLF and every committed copy is LF.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Deployed lambda_function.py: 49,995 bytes, 1083 CRLF pairs. Repo HEAD: 51,885 bytes, 0 CRLF",
+        "RAW comparison across all 6 commits that have ever touched the file: DENOMINATOR 6 scanned, 0 matched. Positive control HEAD-vs-HEAD MATCHED; negative control (bogus ref) returned 'fatal: invalid object name' and was NOT discarded to /dev/null",
+        "CRLF-NORMALIZED comparison over the same 6: exactly 1 match -- 541a393798 (2026-08-19T20:16:38-04:00, 0.4.0_DS_ClientPlatform, 'D4c Phase A ... DISABLED by default')",
+        "DISCRIMINATING CONTROL: landing_guard.py in the SAME package is LF and matches the repo RAW (True) -- so the packaging step is not normalizing everything; the CRLF is edit-time and member-specific",
+        "0.7.0_AE_CloudOps~Z reached the CRLF fact independently before reading the surfacing message (msg 4878): raw diff = 2209 changed lines = exactly 1083+1126, i.e. every line of both files"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "DISARMED 2026-08-24 ~20:14Z by CTO~Z (msg 4873): PRD F2's grounding column now states the oracle as per-member CRLF-normalized compare against the commit ACTUALLY deployed and against HEAD after the deploy, plus 'state whether the new package is also CRLF'. REMEDIATION separate and OPEN until COO~Z's cut TO carries the corrected oracle text -- DISARMED != REMEDIATED. THE CLASS, which is why this is graduated rather than noted: every control passed because every control was inside the same wrong frame, and the false conclusion it supports is an ACCUSATION (code built from an uncommitted tree, a Rule-2 provenance alarm) rather than an absence. Second-order note for whoever runs the post-deploy check: comp-closure returns equivalence=UNMEASURED for this function for an INDEPENDENT reason (see Z-S6), so an UNMEASURED from that tool is not evidence against the deploy."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S5",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-08-24T20:15Z",
+    "one_line": "The 07:30 freshness check reads only the MODELS artifact, so a constituents-leg failure (rc 70-73) summons nobody -- and that leg's source is current-day-only, making the loss permanent rather than recoverable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced from HOLD by BG scoped to their own vehicle, explicitly proposing no machinery and listing what they did NOT check",
+        "0.0.0_AB_MSTR~Z measured at source (scheduled_daily_pull.cmd): models leg uses C:\\Anaconda\\envs\\cma\\python.exe + run_daily_pull.py; constituents uses PY_AWS + blpapi; BOTH speak the same local DAPI 127.0.0.1:8194",
+        "NARROWING that follows: if the terminal is down at 07:00 the MODELS leg fails too, its artifact does not advance, the content-based check goes behind>=2 -> STALE -> SUMMON fires. So the dominant failure mode IS covered",
+        "Uncovered window is therefore: constituents fails while models SUCCEEDS -- rc 70 (tripwire), 72 (partial land), 73 (nothing written), plus the narrow rc 71 where the terminal dies BETWEEN two sequentially-run legs",
+        "Recovery premise MEASURED not inherited (MSTR~Z ~20:35Z): derived_summary scalars re-pulled ~6h after the 14:2xZ run, same as-of 2026-08-21 -- DIVZ 30/48.75998, IDVZ 46/32.94046, PFDE 89/42.87525, PFOE 23/53.20359, all eight BYTE-IDENTICAL"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "notes": "Trigger: the 2026-08-25 07:00 ET fire, the first carrying this leg. Disarm is a READ, not a checker: after the fire, read RC_CONS in the .cmd log + s3://opal-data-etfs/bbg/{as-of}/constituents/run_manifest.json (expect run_class=scheduled, leg 1a provided 4/4); on rc 71-73 re-run the same trading day as an honestly-labelled run_class=adhoc RECOVERY landing. NO machinery -- the alert/monitor MORATORIUM decides the 'widen the checker' question by standing law, and its own ordering (routes and schedules first, monitoring once settled) argues for leaving it alone while ETFS_INGEST is settling exactly this route. CTO~Z routed it as DECIDED rather than pitching it as a call, which is correct: a decided item is not a call. TWO BOUNDS CARRIED AS UNMEASURED, NOT ABSENT (MSTR~Z stated them against their own evidence): (1) only the two SCALARS were re-pulled -- the BULK arrays HB_INDUSTRY_SECTOR_ALLOCATION and HB_GEO_CNTRY_ALLOC were not, so their intraday stability is UNTESTED; (2) one 6h window on one day shows the values did not move, it does NOT establish WHEN they roll, so 'same-day recovery' has no measured BY-WHEN. (2) is a live input to COO~Z's T6 recovery-run policy cell. Id Z-S5 was allocated by other seats in MCP traffic before this document existed; adopted rather than renumbered."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S6",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "landing_guard.py exists at three byte-identical homes across three separate pipeline trees, which is why comp-closure cannot return an equivalence verdict for etfs-netassets-daily at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DENOMINATOR: 3 of 3 landing_guard.py files found under infra/ -- etfs-pipeline/etfs-netassets-daily, cot-pipeline/cot-rebalancer-runner, smartx_assets_pull",
+        "All three sha256 a715b04be3145ca3..., 133 lines -- byte-identical TODAY",
+        "comp-closure compile etfs-netassets-daily: standing=AMBIGUOUS, equivalence=UNMEASURED, basis 'ambiguity check: 2 other plausible home(s) across 2 compared member(s)'",
+        "The deployed landing_guard.py matches its repo copy RAW (eq_deployed_commit=true, eq_head=true) -- the ambiguity is about WHICH home, not about drift"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "One logical helper, three independently-editable homes, spanning three separate firm/pipeline trees. Identical today, so nothing has diverged -- this is the LATENT form of CLAUDE.md Rule 22a's named class ('one logical producer, two independently-editable homes ... reads CLEAN where two copies have silently diverged'). INERT: the tool correctly refuses a verdict it cannot resolve, and refusal is not harm; the harm would be a reader treating UNMEASURED as DIVERGENT, which is why that reading is explicitly killed in Z-S4's notes and was stated to AE~Z before their deploy. EXPLICITLY NOT SOMETHING TO FIX INSIDE THIS PROJECT -- consolidating a helper across cot/smartx trees is out of ETFS_INGEST's scope and touches a firm-separated tree (Rule 13). Recorded as a candidate for whichever round owns it; routed, not chased."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S7",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T20:10Z",
+    "one_line": "lambda-source-map.json's last_deployed_commit and last_deployed_at for etfs-netassets-daily are stale by five weeks, and that is precisely the field an agent reads to answer 'what code is running?'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Source map row (read via comp-closure's DESIRED-plane observation, denominator 200 source-map entries): last_deployed_commit e45606d46143ca81711f4d3ae61e043f351d20c9, last_deployed_at 2026-07-15T23:35:40Z",
+        "Measured truth: deployed bytes == 541a393798 (CRLF-normalized, 1 match over 6 commits), LastModified 2026-08-20T01:18:32Z",
+        "The row's artifact_sha256 IS current (== live CodeSha256), so the field that would have caught this is fine and the wrong field is the one that gets read"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Z",
+    "notes": "Disarm = correct the row in the F2 deploy commit (Rule 4 obligation already on AE~Z's cell). ARMED because reading the map to answer 'what is deployed' is an ordinary act that this project's own seats performed today. OPEN AND DELIBERATELY UNRUN: is this ONE row or is last_deployed_commit stale across the map? A census would answer it. 0.0.0_AB_MSTR~Z declined to run it and stated why (msg 4867) -- it does not change this deploy, AE~Z's cell is a deploy not a map audit, and the site-Z fabric-scope word confines this session to D4 work. That refusal is correct and is recorded as a refusal, not as an absence. CLAUDE.md Rule 4 already warns this map 'PAIRS A LAMBDA WITH ITS REPO DIR; IT DOES NOT COMPARE DEPLOYED BYTES TO BUILT-FROM BYTES' -- so this is the law's own named blind spot appearing in the wild, not a new class."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S8",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T20:17Z",
+    "one_line": "The /self-drive D4 loop armed at CTO~Z cannot turn itself off: its stop-condition reads every D4 member's status, and D4's member set contains a phase-0 sibling program on a different data plane.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/DIRECTIVES.yaml D4.members.projects = [ETFS_CANON, ETFS_POSITIONING]",
+        "org/projects/ETFS_CANON.json: status 'scoping', phase 0, blocking 'Gated on CTO design-gate'",
+        "Andrew-direct word (3), 2026-08-24 ~20:0xZ: 'the loop persists until the directive is done. Once complete, the loop turns off' -- self-termination is a stated premise of the skill",
+        "Cron 1ef3d6c6 (*/30, session-only) is live now at 1.0.0_SA_CTO~Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "Arose from tick 1's CALL 1, which proposed dropping ETFS_CANON from D4.members to make DONE reachable. VERDICT (this seat, msg 4895): REFUSED. Two premises failed -- (i) D4's PRD excludes the ownership PLANE (s.1:22), not the project, and the same PRD carries a D4 deliverable ABOUT ETFS_CANON (s.1:20 item (c), s.3b, and TO-D4a at :149 assigning CTO to rule its design gate); (ii) PRD:202's 'registry membership shared with D1' is MEASURABLY FALSE -- census over org/missions/DIRECTIVES.yaml, DENOMINATOR 9 directive rows, ETFS_CANON appears in 1 (D4 only); positive control ETFS_POSITIONING -> ['D4'], negative control ZZZ_NO_SUCH -> []. So the edit would orphan an Active project from the directive register entirely. STRUCTURAL REASON THE VERDICT WOULD HOLD ANYWAY: the proposal resolves a completion-test problem by editing the denominator the completion test reads, and the driver is the party that benefits from a smaller set. Not an imputation -- CTO~Z PITCHED it rather than executing it, which is the adjudication channel working as Andrew designed it this hour. THE SCOPE HALF IS RESERVED TO ANDREW: 'is D4 DONE when the composition plane ships, or only when the ownership plane ships too?' is a question about the extent of a sovereign directive, and no seat should convert 'the loop needs a reachable stop' into a narrowing of his directive. Disarm available to CTO~Z without any ruling: discharge TO-D4a, which is their own D4 deliverable and is what ETFS_CANON is blocked on -- it advances D4 however the scope question resolves. Skill-level remedy: a reachable test, or an explicit report-and-hold branch that surfaces at the stop instead of running forever."
+  }
+]
+```
+
+---
+
+## 4. DENOMINATORS FOR THIS DOCUMENT
+
+- Items: **8** (1 dismissed, 3 under investigation, 4 graduated). ARMED: **5** (Z-S1, Z-S4, Z-S5, Z-S7, Z-S8) -- each with a named disarm owner, per the schema's conditional rule.
+  *(This line read "4" and omitted Z-S8 until the validator's own count contradicted it. Recorded
+  rather than silently fixed: a hand-written denominator beside a machine-countable one is the
+  exact defect this document polices in others, and it survived my own proofread.)*
+- Re-derived rather than inherited: **F2 in full** (comp-closure self-test 24/24 + independent package download + token census with a negative control), **Z-S3's identifier populations** (114/114 rows read at source), **the D4 member census** (9 directive rows, positive and negative controls).
+- Inherited with attribution, NOT re-measured by this seat: Z-S2's bronze-HTML regex figures (author's own retraction @7ea7d45723), Z-S5's DAPI-shared-port and 6h-stability measurements (MSTR~Z, with their two UNMEASURED bounds carried forward as stated).
+- Non-findings recorded so they are not re-filed: the `opal-data-etfs/bbg/` partition gap (weekend + T-1, NEVER#1 discharged before reading).
+
+## 5. WHAT THIS DOCUMENT DOES NOT DO
+
+It does not certify COO~Z's stage-3 decomp -- that is a separate act by this seat against the
+four-postulate record, the bidirectional cell<->criterion alignment with printed denominators, and
+whether each cell's premise oracle actually RAN rather than was written. The decomp carries
+UNCERTIFIED on its face until that cert lands. It does not rule any of the s.5 row conventions
+(decomp cells), does not move any tension's decider, and cuts no TO.
+
+-- `3.0.0_SA_CVO~Z`, channel owner and certifier of record, 2026-08-24
