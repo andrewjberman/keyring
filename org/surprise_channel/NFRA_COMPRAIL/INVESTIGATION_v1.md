@@ -110,6 +110,25 @@ new defect** -- recorded so the reported instance is not re-investigated as one.
   },
   "disposition": "DISMISSED_WITH_REASON",
   "dismissal_reason": "Not a new defect: this is the documented A.3 named-subset condition with a documented remedy (explicit .tools/ prefix or re-run the provisioner). Recorded to prevent re-investigation, not carried as an open item."
+ },
+ {
+  "id": "NFRA_COMPRAIL-S4",
+  "surfaced_by": "0.7.0_AE_CloudOps~G (found by running the gate against their OWN instance, then measuring whether it was theirs alone); CONFIRMED independently by 3.0.0_SA_CVO; REPAIRED by 2.0.0_SA_COO (TOs) and 0.8.0_AE_CloudComp~F (extraction)",
+  "surfaced_at": "2026-08-24T22:39Z",
+  "one_line": "proof-of-spec-check harvested EVERY cell id in the whole <decomp_ref> element and treated each as a cell the TO CLAIMS, failing 3 of 3 round-1 TOs that were internally correct -- and on the DS TO it INVERTED an explicit 'NOT in this TO' exclusion clause into a claim the author was then faulted for not discharging.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "proof-of-spec-check.py:176 CELL_ID_RE applied at :259 to the ENTIRE decomp_ref blob as declared_cells",
+    "CVO re-derived the harvest independently: AE 6 harvested vs 5 reachable; DS 22 vs 18; DE 13 vs 10 -- and in all three the TO's OWN stated count equals the reachable count, so the TOs are right and the extraction is wide",
+    "REPAIR VERIFIED THREE WAYS at the CVO seat: (1) all five repaired TOs now close both directions, 0 unreached and 0 refs-not-declared; (2) the exclusion prose SURVIVES in a sibling <decomp_context> element in all five -- relocation, not deletion; (3) battery 23 -> 29 arms true rc=0, and the REAL CORPUS reads 106 VALID / 0 INVALID over 106 instances"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.8.0_AE_CloudComp~F (extraction, LANDED) + 2.0.0_SA_COO (issuer TO repair, LANDED) -- both verified at the CVO seat",
+  "notes": "THE WRONG FIX WAS NAMED BY THE SURFACING SEAT BEFORE ANYONE REACHED FOR IT: deleting the read/exclusion prose to quiet a regex would destroy the only record of what a TO reads and deliberately excludes, and would edit a spec frozen mid-round. The issuer's repair honoured it exactly -- every sentence preserved VERBATIM and relocated to <decomp_context>. || ⛔ THE CERTIFIER'S OWN FAILURE, recorded here because it is the reusable half: the CVO had verified this same gate TWO HOURS EARLIER with a battery re-run, a live-instance exercise and a sealed-copy CHECKER-MUTATION test, and passed it. The battery's fixture was one clean line naming only owned cells, and the whole battery contained ZERO read-dependency or exclusion prose -- THE FAILING SHAPE DID NOT EXIST IN THE FIXTURE CORPUS, so no number of arms could have caught it. A checker-mutation test proves the arms are reachable from the gate's behaviour; it says NOTHING about whether the fixtures span the shapes production brings. Landed as rule 3 of the instrument-verification section in CERT_BAR_v2. The repair CLOSED that too: the battery now carries an explicit INVERSION ARM where a cell appears only inside 'NOT in this TO:'."
  }
 ]
 ```

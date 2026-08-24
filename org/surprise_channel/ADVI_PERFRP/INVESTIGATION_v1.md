@@ -68,6 +68,63 @@ in the message that carried it.
   },
   "disposition": "GRADUATED",
   "notes": "WHY THE CVO LIMB CHANGES THE SEVERITY: a null and a MISSING COLUMN fail differently in a consumer -- code written against the 13-column shape gets a missing-column error, not a null it can branch on -- and because the missing four ARE the return inputs, the refused partitions withhold the material from which the answer could be reconstructed. PRF-b-1's contract is being authored against this table NOW: a contract declaring r_net nullable is still wrong here, because bmv/emv/cf_net/cf_gross are not nullable, they are ABSENT. It also adds a FIFTH state to DE~D's parallel 'a null has 4 meanings' item -- the column does not exist at all -- which the render side cannot distinguish from the served shape. || NOT CLAIMED BY EITHER SEAT: no producer diagnosis. 'exercise mode' is the producer's OWN manifest self-description; whether it is deliberate or a regression is an ungrounded mechanism claim (Rule 22) and off both seats' spec. The surfacing seat's weak observation (08-11..08-14 are trading days with no partition) is reported-not-chased and the CVO did not investigate it. CVO checked two endpoints plus the five refusals -- a SAMPLE, stated as one; the 529-partition census remains the surfacing seat's measurement with their denominator. || BEARING ON THE CERT, recorded rather than buried: CVO certified ADVI_PERFRP R1 36/36 under the Q-p1 ruling that the projection consumes these live canonical tables. NEITHER the six original bar checks NOR the seventh (oracle viability, added ~1h earlier) would have caught this -- the cells are enumerated, aligned, and their oracles runnable; THE SUBSTRATE'S CONTENT IS A THIRD THING AGAIN. No eighth check is being added by reflex: a certifier who censuses every input table's content is re-doing the DS lane's work. The control that worked is the one that fired -- the executing seat's premise verification against live state, inside an hour of seating. THIRD instance today of an executing seat finding what no document-plane check could see (DE~C's aborting oracle, DE~D's non-existent bundles, this). That is the session's strongest evidence that premise-primitives-first is load-bearing rather than ceremonial."
+ },
+ {
+  "id": "ADVI_PERFRP-S4",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G (executing seat, on their own criterion, before asserting anything) -- MUTATION-PROVEN, not argued",
+  "surfaced_at": "2026-08-24T23:18Z",
+  "one_line": "PRF-a-2/AC3's gains-identity assertion is ALGEBRAICALLY INCAPABLE OF FAILING: market_growth is computed as the RESIDUAL and the drift check then tests the identity CONTAINING that residual, so it reduces to d_aua - d_aua = 0 for ANY inputs -- 6 of 6 mutants passed at drift 0.0000000000, including zeroed income, sign-flipped fees and 100x-inflated NNA.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "data/assets/scripts/gold/runners_49f/c00_account_gains.py:113 -- market_growth = d_aua - nna_total - income + fees_tax (the RESIDUAL)",
+    "same file :145-146 -- drift = abs(d_aua - (nna_total + income - fees_tax + market_growth)); substituting :113 gives d_aua - d_aua = 0 for any inputs",
+    "MUTANTS RUN, not reasoned: income ZEROED -> drift 0.0 PASS; fees SIGN-FLIPPED -> drift 0.0 PASS; nna INFLATED 100x -> drift 0.0 PASS; 6 of 6 including total garbage",
+    "proof committed at a84a8ca770, LANDED LOCAL with git branch -r --contains verified = 0 remote branches (the seat stated its own push state)"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "PUREST INSTANCE OF THE NIGHT'S PATTERN: CONTROLS_OVER_CARE's 'an instrument that could not have said otherwise', sitting inside an ACCEPTANCE CRITERION of a decomp the CVO certified 36/36. It is a floating-point representation test wearing a correctness test's clothes. || WHAT MAKES THE REPORT EXEMPLARY AND IS THE REUSABLE HALF: the seat did NOT argue vacuity from algebra. They noted that a claim a check is vacuous is ITSELF a claim, and ran the mutant battery to prove it -- corrupting inputs that each move a number an advisor reads. An algebraic argument would have been correct and would have been an assertion; the mutants are a measurement. || CERTIFIER NOTE: neither check 2 (CE against the declared layer) nor check 7 (oracle viability) reaches this. The oracle EXISTS and is RUNNABLE -- it simply cannot return a failing verdict. That is a THIRD property distinct from enumeration and from viability, and I am NOT minting a check 9 by reflex: an assertion's discriminating power is exactly what a mutant battery measures, and requiring the EXECUTOR to mutate their own acceptance assertions is cheaper and better-placed than a certifier re-deriving every criterion's algebra. Surfaced to CTO/COO as a candidate obligation on TO acceptance rows, not implemented."
+ },
+ {
+  "id": "ADVI_PERFRP-S5",
+  "surfaced_by": "0.7.0_AE_CloudOps~G (executing seat, on their OWN cell, against a ruling that had just been issued to them)",
+  "surfaced_at": "2026-08-24T23:10Z",
+  "one_line": "PRF-c-1's ruled per-entity key fan-out collides with the estate's single serving producer: d_publisher_port.py has NO branch on which an emitter can produce a data-dependent object set under a prefix -- every path binds ONE statically-named local file to ONE derived key -- so the cell as ruled is 'extend the publisher with a fan-out mode, THEN add 11 entries', a materially different build.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "d_publisher_port.py:421 publish_one -- serve_key = f'{SERVE_ROOT}/{row[leaf]}': ONE key from ONE static leaf name",
+    "run_emitter -- row['leaf'] = spec.get('leaf'), argv += ['--out', str(out_p)]: ONE fixed local path",
+    "pair_leaves -- TWO fixed paths; run_d13 multi -- THREE fixed names, all enumerated STATICALLY from the dict",
+    "known_leaves / total_leaves / hold_leaves are all statically enumerated; no branch accepts a data-dependent object set"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "The seat refused to start a materially larger build on their own reading of an issuer message -- 'I am not starting it on my own reading of your message' -- which is the correct handling of a spec/estate collision and the opposite of quietly absorbing scope. Routed to the issuer for the ruling; nothing built, nothing edited, no criterion flipped. NOTE THE DIRECTION: this seat is reporting that their OWN cell is bigger than it was ruled, which is the report a lane has the least incentive to make."
+ },
+ {
+  "id": "ADVI_PERFRP-S6",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~D (executing seat, on first contact with d-6, before writing picker code)",
+  "surfaced_at": "2026-08-24T23:20Z",
+  "one_line": "SI is not max: 'max' is DATA-DEFINED (the extent the payload happens to carry) while contract SI is RULING-DEFINED (pinned to the Schwab floor with a REQUIRED label 'since 2024-07-08'), so wiring SI -> max renders a declared label over a window whose true extent is whatever the data spans -- and STITCH is a scheduled event that makes them diverge.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "THREE non-aligning period vocabularies measured: RfsWindow types.ts:1141 = 3 values; FeeEfficiencyWindow types.ts:1818 = 5 values; contract PERIODS perfrp_contract.py:78 = 6 values (RATIFIED)",
+    "payload carries decomposition_qtd/_ytd/_max ONLY (types.ts:1327-1329, 2484-2486, 2514-2518)",
+    "contract SI_FLOOR_DATE = 2024-07-08 with SI_LABEL fixed, per PRD s.11 #10, which also names two labelled segments once the stitched tier exists",
+    "upstream already treats MAX as series-extent rather than a named period: NNA window_bounds keys are QTD|YTD|MAX|1Y|3Y (types.ts:2236) -- MAX coexists with 1Y/3Y as its own key"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE EPISTEMIC HANDLING IS THE PART TO CITE: the seat explicitly declined to assume SI and max coincide on today's data -- 'the equivalence is a RULING about what SI means, not a measurement I can take'. They could have measured today's extent, found it equal, and shipped; instead they identified that a measurement cannot settle a definitional question. Blocks ONE value, not the cell. Ties to ADVI_STITCH: the divergence is not hypothetical, it is scheduled."
  }
 ]
 ```
