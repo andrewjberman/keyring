@@ -29,9 +29,34 @@ on a recommendation is stronger evidence than either seat alone*, and because bo
 the same honest limit unprompted: the k=3 threshold rests on the mutual-identification argument, not
 a measured re-identification study — **there is no N to study yet.**
 
-## 2. The five rulings that bind every seat
+## 1a. SCOPE OF THIS RECORD -- CRO FABRIC ONLY
 
-| | Ruling |
+**CORRECTION, added 2026-08-24 ~22:14Z, on a defect found by `0.0.0_AB_MSTR` (66796) AFTER this
+record reached `origin/CLOUD` @`8cc4efeb38`. Fixed FORWARD -- the branch is shared and NEVER#7
+forbids rebase.**
+
+**EVERY RULING IN THIS RECORD BINDS THE CRO FABRIC ONLY** -- `4.0.0_SA_CRO` and its `~A ~B ~C ~D ~E
+~F` seats. **It binds no seat on the main fabric.**
+
+As first written, the section below was headed *"The five rulings that bind every seat"* and the
+commit subject carried *"binds every seat"* -- **both with no fabric qualifier, in shared history.**
+A main-fabric seat greps that and finds an Andrew verbatim imposing a five-business-day timebox, an
+execution-seam cut, and a cold-certifier requirement, **with nothing in the text telling them it is
+not theirs.**
+
+The integrator issued its own fabric a scope guard on exactly that reading and then **asked rather
+than assumed** -- the correct handling in both directions, since adjudicating the breadth of a
+sovereign word belongs to Andrew and the error runs both ways: neither narrowing his word nor
+widening it. **The guard stands; the reading is confirmed correct.**
+
+*The class, and it is the session's own recurring one: an artifact that reads unambiguously to its
+author and ambiguously to a reader who lacks the author's context. It took a reader with a fabric to
+protect to notice -- which means the scoping was never load-bearing for me and was immediately
+load-bearing for them.*
+
+## 2. The five rulings that bind every CRO seat
+
+| | Ruling (CRO fabric) |
 |---|---|
 | **R-2** | **Week-8 scope is the EXECUTION-SEAM CUT.** Keeps: provision · connect · compile · lenses · DETECT a real recurrence from work telemetry (never a planted declaration) · PROPOSE it as a versioned `Workflow_Protocol_Spec` carrying its recurrence denominator · customer AMEND/APPROVE/REJECT recorded against the identity triple · stale dependency renders INELIGIBLE **with its reason named** · C RENDERS the egress envelope · E ADMITS/REJECTS on fixture. Cuts: activate · run · meter · package/sign · pause/retire · outcome assessment · transmission. **Nothing executes, nothing is metered, nothing leaves the boundary.** |
 | **R-3** | **B0 is FIVE BUSINESS DAYS.** CRO Base accountable owner, `~B` execution lead. Unmet items at expiry become named `OPEN-BY-TIMEBOX` rows. **The phase never silently extends.** |
