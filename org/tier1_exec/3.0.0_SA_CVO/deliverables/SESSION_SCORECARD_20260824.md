@@ -53,11 +53,11 @@ criteria **18**, distinct cell_refs **25**, **(a)** criteria with zero cell_refs
 
 | measure | k / N | evidence |
 |---|---|---|
-| opened by COO with cohort + certifier + placement + Rule-24 records on the face | **3 / 3** (D1_CATVIEWS v2, ADVI_PERFRP R1 this session; ADVI_COTKEY + DATA_PIPMAP are stage-2 PRDs, not decomps) | 66383, 66452 |
-| **certified (CVO)** | **2 / 2 presented** | D1 v2 @60d4e2f1b4 (CERTIFIED, 1 P1 sizing correction) · PERFRP R1 @62598c1bfb (CERTIFIED, no P1) *(this row briefly carried a PLACEHOLDER hash written before the commit existed -- the same announcement-outran-the-act class the channel file caught an hour ago, in miniature, by the seat recording the scorecard. Corrected to the real hash; noted because a scorecard that hides its own defects measures nothing.)* |
-| invalidated -> re-cert by base CTO | **0 / 2** | -- |
-| decomps whose author ran the certifier's instrument BEFORE sending | **2 / 2** | D1 s.0.1 (grep-o 20/28 self-caught); PERFRP (grep-o 36/36 on the face) |
-| certifier instrument defects self-caught before reporting | **2** | D1 extractor controlled after two v1 failures; PERFRP's 4 substring false-positives inspected not reported |
+| opened by COO with cohort + certifier + placement + Rule-24 records on the face | **4 / 4** | D1_CATVIEWS v2, ADVI_PERFRP R1, ADVI_INSURE, ADVI_STITCH Phase-A |
+| **certified (CVO)** | **3 / 3 presented** | D1 v2 @60d4e2f1b4 (1 P1) · PERFRP R1 @62598c1bfb (no P1) · STITCH-A @43f9aaaeee (no P1) |
+| invalidated -> re-cert by base CTO | **0 / 3** | PERFRP `inv-1` ruled NOT-invalidating -> scoped re-cert of the amended cell only |
+| decomps whose author ran the certifier's instrument BEFORE sending | **3 / 3** | D1 (self-caught 20/28), PERFRP (36/36 on the face), STITCH (32/32, count closing only when printed) |
+| certifier instrument defects self-caught before reporting | **4** | D1 extractor (twice wrong on v1) · PERFRP 4 substring false-positives · STITCH wrong-prefix guess returning 0-of-32 · a silently-no-opping mutant |
 
 ## E. Seating (MSTR)
 
