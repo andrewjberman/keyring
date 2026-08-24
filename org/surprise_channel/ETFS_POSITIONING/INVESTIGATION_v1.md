@@ -345,6 +345,28 @@ production `bbg/{date}/` input today. `bbg-testpull/` remains the frozen QA refe
   "disposition": "GRADUATED",
   "disarm_owner": "n/a -- INERT, no disarm obligation attaches",
   "notes": "Filed as RECORDS rather than findings. (b) is the two-homes-diverged shape one layer up -- A TYPE AND A LIVE ARTIFACT DISAGREEING, WHERE THE TYPE READS AUTHORITATIVE AND IS STALE. Inert here because nothing in this round reads it, but it is exactly the class Rule 22a warns produces a clean verdict on the wrong plane."
+ },
+ {
+  "id": "ETFS_POSITIONING-S14",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C (one-line OBSERVATION, msg 66519) -- VERIFIED AND RE-CHARACTERISED by 3.0.0_SA_CVO; the surfacing seat and the issuer both read it as INERT housekeeping",
+  "surfaced_at": "2026-08-24T20:42Z",
+  "one_line": "A portal DEV->PROD promote is STRANDED: merge a239e4a9 (v2.1.165, ETFS_POSITIONING TO-3 + OPAL_ADVIPOINTERS P4-REPOINT-49F) was authored 12:50Z, sits on NO remote branch, CI never ran, the ephemeral worktree was never torn down -- and Andrew's ~15:2xZ ETF-promote HOLD landed AFTER it, so the next promote silently either pushes held content or discards a completed merge.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git -C portal ls-remote origin (REMOTE, not a local ref): refs/heads/PROD = 8a96c91654ed, refs/heads/DEV = d43b88c5124c",
+    "local PROD = a239e4a9, a DEV->PROD merge commit 'merge DEV->PROD: v2.1.165 -- ETFS_POSITIONING TO-3 ... + OPAL_ADVIPOINTERS P4-REPOINT-49F', authored 2026-08-24T08:50:03-04:00 by Andrew Berman",
+    "git -C portal branch -r --contains a239e4a9 -> EMPTY: the merge is on no remote branch, so CI never ran and PROD was never deployed",
+    "local PROD is 14 ahead / 0 behind origin/PROD; local DEV == remote DEV (DEV is fine, only PROD is stranded)",
+    "the ephemeral worktree .runtmp/portal-promote-20260824T124621Z is STILL REGISTERED at PROD a239e4a9 (workspace root .runtmp/, not portal/.runtmp/ -- correcting the surfacing seat's path); at least four promote worktrees from 08-04, 08-07 and today remain registered",
+    "the timing: the merge (12:50Z) PREDATES Andrew's ~15:2xZ ruling that the ETF page promote is NOT YET on two conditions (CTO 66217, record @de481d0e06)"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "DT (portal promote lane) -- the disarm is making the CHOICE VISIBLE before the next promote runs, not performing it; the ruling on push / park / roll back is above the CVO seat and likely Andrew's, since his hold is what changed the merge's meaning",
+  "notes": "WHY ARMED AND NOT INERT: /prod-deploy Step 2 re-asserts local PROD from origin, so the NEXT promote AUTOMATICALLY picks one of two harms with nobody deciding -- (a) push it and promote content under a live sovereign hold, or (b) silently discard a completed merge. No new act is required for the harm; that is the standing's own test. CVO touched nothing (verifier-not-fixer; portal promote is DT's lane). Cousin of this round's push-plane class ('a remediation is not fabric-wide until it is PUSHED') one layer over: there a fix was real locally and not for anyone else; here a PROMOTE is. NOT PROPOSED: no alarm, no monitor, no gate (moratorium + no-inferred-gates). Escalated loudly same-turn to COO + CTO + MSTR (66545/66546/66547) before this record was written."
  }
 ]
 ```
