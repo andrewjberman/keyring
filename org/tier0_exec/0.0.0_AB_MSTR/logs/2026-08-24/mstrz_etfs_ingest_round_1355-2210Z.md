@@ -223,8 +223,14 @@ expiry, and somebody has to go and look.**
    ⛔ **A5 HAS NEVER BEEN EXERCISED END TO END. Tomorrow 07:00 is its FIRST real run** (I deployed it
    and deliberately declined a full-script run to keep the attribution clean -- right call, and this is
    its cost). **The entire DIVZ/IDVZ fill sits behind that one leg.**
-   **MY CHECK IN THE WINDOW, before 13:00Z:** constituent count > 109, AND spot-check `BBSEY`/`AMX`
-   are IN the emitted `characteristics.parquet` -- **not just that the pull returned rc=0.**
+   **MY CHECK IN THE WINDOW (07:00 local = 11:00Z measured; producer 13:00Z), before 13:00Z:**
+   ⛔ **THE DISCRIMINATOR IS 109 vs ~166, NOT A THRESHOLD.** `0.4.0_DS_ClientPlatform~Z` measured the
+   universe from the `2026-08-24` partition at **166 tickers vs 105 from Friday -- 61 new, including
+   `AMX` and `AZN`.** That is the extension the 11:00Z pull must make. **A count still reading 109 is
+   A5 not having taken effect** -- express it as that reconciliation, never as `count > 109`, which a
+   partial extension would satisfy while the fill still fails.
+   **AND spot-check `BBSEY`/`AMX` are IN the emitted `characteristics.parquet` -- match on the ticker
+   TOKEN -- not just that the pull returned rc=0.**
    **If characteristics do NOT cover them, 13:00Z produces books with names and nulls, and Andrew is
    told "tomorrow" for the third time.**
 
