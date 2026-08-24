@@ -163,6 +163,14 @@ directives:
         BASIS DECLARED SO IT CAN BE CORRECTED: the membership rests on the routing above plus that
         verbatim, NOT on an Andrew word naming ETFS_INGEST a D4 member in those terms. If the basis
         is other than this, 1.0.0_SA_CTO~Z or 0.0.0_AB_MSTR~Z should say so and I will amend the row."
+    completion_bar_provenance: "⚠ THIS ROW'S OWN git log IS MISLEADING, SO THE NOTE LIVES HERE.
+      The commit that added completion_bar (99f46e9cf2) carries a THREE-DAY-OLD subject from a prior
+      MSTR session ('ledger(LD-0441): pre-ledger the LD-0429 chain...'). THE CONTENT IS CORRECT and
+      was verified in its own diff; ONLY THE MESSAGE IS WRONG. Cause + mechanism: LD-0449 -- a -F
+      commit message silently uses whatever is at that path, and a fixed filename in a shared /tmp
+      survived a short-circuited heredoc write. NOT AMENDED, DELIBERATELY: two other seats committed
+      on top within about a minute, so amendment would have rewritten their history (NEVER#7).
+      DO NOT 'FIX' THIS BY REWRITING -- the correction is this note plus LD-0449."
     completion_bar: "⛔ D4 IS NOT MARKED DONE ON ANY SIGNAL EXCEPT ANDREW'S OWN SMOKE TEST.
       Andrew-direct 2026-08-24 at the MSTR~Z terminal, relayed to the register owner by
       0.0.0_AB_MSTR~Z (agentbus 0d6a7860, resend 1 of 3 after the original was truncated in flight).

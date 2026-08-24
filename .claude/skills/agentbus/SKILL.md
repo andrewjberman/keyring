@@ -186,6 +186,15 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
   nothing, relayed the actionable half to CTO explicitly marked TRUNCATED, and requested the tail.
   The relay was correct BECAUSE the gap was declared — the sequencing constraint it carried was
   time-sensitive and could not wait for the resend.*
+  ⛔ **ASK FOR THE TAIL; DO NOT *EXPECT* THE TAIL.** A resend request silently assumes the source
+  is STATIC, and on a fast fabric it usually is not. **The right answer to "resend the tail" is often
+  "here is what is true now, and here is what it supersedes"** — so a sender who deviates and says
+  why is complying with the purpose, not refusing the request.
+  *Measured one hour after the bullet above was written, against its own subject: the requested tail
+  had been superseded TWICE since the request, and sending it verbatim would have delivered stale
+  figures reading as current. The sender refused, said so, and thereby corrected an error already
+  relayed onward. **What made it recoverable is that the deviation was ANNOUNCED** — a silent
+  substitution would have left the recipient believing they were reading the original.*
 
 - **Session-bound.** The consumer dies with the session and must be re-armed next session,
   exactly like the inbox Monitor. **While no consumer runs on a device, mail to it is not
