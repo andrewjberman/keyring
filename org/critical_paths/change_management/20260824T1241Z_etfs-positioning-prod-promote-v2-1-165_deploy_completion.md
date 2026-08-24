@@ -107,3 +107,50 @@ And the tool classifies a PRE-APPLY promote as "half-landed" -- `check` prints
 attempted**. NOT-YET-STARTED and PARTIALLY-DONE are opposite states taking opposite remedies
 (wait vs finish-or-roll-back), and the axis conflates them.
 Hence this prose annotation: the entry stays OPEN in the tool and carries its true state in words.
+
+---
+
+## ADJUDICATED **KNOWN-HELD / SOVEREIGN-GATED** by 2.0.0_SA_COO, out-of-band (msg 66102, 2026-08-24T13:16Z)
+
+**The RED this entry emits is a DECLARED FALSE POSITIVE for the duration of the gate, and it is
+COO's, not this seat's.** Recorded here because the tool cannot hold the state -- **disclosed as a
+tool limitation, not presented as a tool state.**
+
+- **gate:** sovereign
+- **gate-ref:** "Andrew: does shipping dormant ADVI cutover machinery (flip 0/15, behavior
+  byte-unchanged) to PROD sit inside his two-condition hold"
+- **COO ruling, verbatim in effect:** DO NOT RETRY THE HOLD (it is designed to refuse, and is right
+  to given what it can see) · DO NOT FORCE A WRONG STATE · DO NOT CLOSE AS ABORTED.
+- This seat is **NOT carrying an unowned alarm into session end.**
+
+### The finding, sharpened by COO at source -- and it is sharper than "no HELD value"
+`deploy_ledger.py:654-664`, `_qualifies_as_held` clause (a), its own docstring:
+
+    every APPLY/DEPLOY leg (kind != 'verify') is CLOSED-WITH-PROOF -- AN OPEN APPLY LEG IS A
+    GENUINELY HALF-LANDED DEPLOY -> DISQUALIFIED (stays RED). THIS is the anti-escape-hatch.
+
+**That sentence states the conflation AS A DEFINITION, and it is false for a never-started leg.**
+The predicate asks *"does any apply leg LACK PROOF?"* when the safety question is *"did any apply
+leg PARTIALLY WRITE?"* Those diverge at exactly one place: a staged, intact, never-begun deploy.
+
+⛔ **AND THE TOOL DISAGREES WITH THE LAW IT ENFORCES.** NEVER#6 binds a BEGUN deploy. `0.0.0_AB_MSTR`
+(66067) and `3.0.0_SA_CVO` (66080) INDEPENDENTLY determined this one has NOT BEGUN in NEVER#6's
+sense -- origin/PROD unchanged, merge on a local ref, 0 remote branches, no production write.
+**THE LAW SAYS NOT-BEGUN AND THE TOOL SAYS HALF-LANDED.**
+
+### The two findings are ONE (0.0.0_AB_MSTR 66098, source-confirmed)
+The HELD state is unreachable **BECAUSE** the predicate cannot separate NEVER-ATTEMPTED from
+ATTEMPTED-AND-INCOMPLETE. **Fixing the conflation fixes the reachability for free; fixing
+reachability alone -- by relaxing clause (a) -- WOULD BREAK THE ANTI-ESCAPE-HATCH and let a
+genuinely half-landed deploy hide. That is the worst available repair and it is the one that looks
+most direct.**
+
+### Remedy shape named by COO (routed to CTO, who authored the guardrails) -- NOT built here
+A THIRD leg state the ACTING SEAT DECLARES: **NOT-STARTED** (no write attempted), distinct from
+**OPEN** (attempted, unproven). A hold then qualifies when every non-verify leg is
+CLOSED-WITH-PROOF **or** actor-declared NOT-STARTED. **The anti-escape-hatch must survive any fix.**
+That moves the failure mode from "the tool was fooled" to "an actor lied in the record" -- a better
+class, already covered by the audit trail. Rule-24: a value ADDED to an existing axis is an
+authoring act (four-postulate test; CE half against the declared layer).
+**Not urgent (MSTR 66098): the failure mode is at the session-end sweep, not the next ten minutes.
+Ruling it during a live promote is how a good fix becomes a second incident.**
