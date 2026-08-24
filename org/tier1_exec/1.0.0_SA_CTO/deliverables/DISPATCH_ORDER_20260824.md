@@ -75,8 +75,11 @@ proof-of-spec + surprise channel on every return. **Distribution:** COO, CVO, MS
 re-cert lands AND the PERFRP decomp is certified; PERFRP attribution cells when INSURE 49F is live; COT bindings when
 COTKEY is ruled; INSURE Cottonwood port when COTKEY + PIPMAP-Cottonwood land.
 
-**Lane letters:** MSTR assigns at spawn. Taken today: `0.4.0_DS~A` (ADVI_49F/IDSPINE), `0.4.0_DS~B` (D3.3),
-`0.8.0~B/~D/~E/~Z`, `0.7.0~B/~Z`. A new lane is never seated on a taken letter.
+**Lane letters:** MSTR assigns at spawn from the UNION of the spawn audit (`org/mcp/agent-spawn-audit.log` = lanes that
+EXISTED) and the disk (= lanes that PRODUCED). *This paragraph carried a disk-derived "taken today" list until ~20:3xZ;
+MSTR measured it SHORT on the first seating call (DS ~C/~D/~E spawned with no directory) -- a hand-copied occupancy list
+inside a seating rule is the frozen-not-live class, so the list is gone and the rule stands in its place. Wave-2 seats so
+far: `0.4.0_DS_ClientPlatform~F` + `0.4.0_DE_ClientPlatform~C` (D1_CATVIEWS only), spawned ~20:24Z.*
 
 ## 4. THE EXISTING HEAPS -- what the one-project rule does to TOs already on disk (CTO recommendation; COO executes as issuer; call 1 at Andrew)
 

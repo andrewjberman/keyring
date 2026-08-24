@@ -85,6 +85,12 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   (tooling lane, sequenced WITH enforcement layers 1-2 below): the TO commit-lint additionally
   refuses a NEW TO whose executor instance holds an open TO on a DIFFERENT pipeline project unless
   the TO names a fresh `~lane` instance -- proposed, NOT implemented (no gates without his word).
+  **LANE-LETTER OCCUPANCY = the spawn audit UNION the disk, never either alone** (MSTR, 2026-08-24 ~20:24Z, on
+  the first seating call under this rule): `org/mcp/agent-spawn-audit.log` records lanes that EXISTED; a lane
+  directory is created by WORK, so the disk records lanes that PRODUCED -- measured: DS ~C/~D/~E spawned and left no
+  directory while DE~B has a directory and no audit line. A disk-only list offers a reused letter as "free", and a
+  reused letter collides in the spawn marker, kill-agent's grep, inbox pathing and attribution. The seating call
+  names its source; MSTR assigns from the union.
 - **PLACEMENT IS A DECLARED DECOMP AXIS** (Rule 26 made execution placement load-bearing): which
   device/fabric executes each cell is enumerated, and a cross-fabric dependency edge declares
   its ferry/relay semantics. A cell with undeclared placement generates the double-apply class
