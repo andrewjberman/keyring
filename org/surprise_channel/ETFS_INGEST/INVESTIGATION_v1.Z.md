@@ -703,6 +703,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "notes": "\u26d4 FILED AS A NON-DEFECT, DELIBERATELY. The guard is CORRECT and well-designed -- it steps back rather than mixing tiers, and REFUSES rather than publishing a partial. Recording it because the CHAIN is what nobody has said out loud: A5's fix is not only about the universe derivation, IT IS THE PRECONDITION FOR GOLD ADVANCING. An L1 exit-61 tomorrow means no bbg/2026-08-24/, which means gold steps back to 08-21, which means DIVZ/IDVZ STAY SHELLS -- and the output would look IDENTICAL to tonight's: correct as-of, calendar resolved, trading_days_behind stated, guard working. THE FAILURE AND THE SUCCESS PRODUCE THE SAME-SHAPED ARTIFACT, and only the presence of bbg/2026-08-24/ distinguishes them. \u26d4 SO THE THING TO CHECK TOMORROW IS NOT 'DID THE SHELLS FILL' -- it is 'DID bbg/2026-08-24/ LAND', and the shells are downstream of that. A seat checking only the shells sees a null result with no cause attached. SEPARATION THAT MUST HOLD, and both 0.4.0_DS_ClientPlatform~Z and 0.0.0_AB_MSTR~Z drew it correctly before I did: tonight's gold partition date=2026-08-21 IS THE CALENDAR AS-OF and is NOT Z-S16. Z-S16 is a ROW-LEVEL substitution inside the silver 2026-08-24 partition; the gold as-of is a PARTITION-LEVEL calendar selection. Two different dates for two different reasons, and conflating them would manufacture a Rule-17 finding out of NEVER#1 working correctly. MSTR~Z retracted a Z-S16-reaches-gold claim on exactly this distinction."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S27",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-08-24T23:25Z",
+    "one_line": "The served payload carries NO field distinguishing 'this security has no such value' from 'we failed to fetch it' -- so a CORRECT null renders identically to a fetch failure, and it cost the sovereign a false defect report on his first smoke test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Andrew-direct ~23:2xZ on his own visual smoke, VERBATIM: 'kind of patchy response on yield column, have most of it but missing key ones like Amazon AMZN for example'",
+        "CTO~Z measured the payload before routing; RE-DERIVED at CVO~Z on the live served artifact: 114 holding rows, yield populated 80, null 34",
+        "The 34 nulls are AMZN BA AMD MNST SNDK PLTR CIEN INTC CNC TSLA INCY ANET FTNT LITE -- overwhelmingly NON-DIVIDEND-PAYERS, so the nulls are CORRECT",
+        "MARKER-FIELD CENSUS on a holding row: candidate fields matching status/reason/exception/error/missing/source/quality/flag = NONE. A null row's non-null fields are only active, asset_class, aum, beta, name, returns, sub_asset_class, ticker, weight",
+        "So there is no in-payload way to tell a true zero from an absent measurement"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "notes": "\u26d4 IT HAS ALREADY FIRED, ON THE SOVEREIGN, ON HIS FIRST LOOK. His observation was ACCURATE -- the column IS patchy and AMZN IS blank -- and his attribution was THE ONLY ONE THE PAGE PERMITS. A page that renders a correct value identically to a failure does not merely risk a wrong conclusion; it makes the wrong conclusion the reasonable one. THE COST IS ALREADY PAID: a sovereign smoke-test defect report against a working field, and whatever effort it would have drawn had CTO~Z not measured the payload before routing it. \u26d4 THIS IS THE SAME SHAPE AS Z-S12 ONE LAYER OVER: there the colour channel rendered UNDIFFERENTIATED and could not be distinguished from a styling gap; here a null renders UNQUALIFIED and cannot be distinguished from a fetch failure. BOTH ARE THE PAGE FAILING TO CARRY THE PROVENANCE OF WHAT IT SHOWS, and both were invisible to every non-render instrument -- a grep, a schema check and a row count all pass on a payload that misleads a reader. REMEDY IS A DISPLAY/SEMANTICS ACT, NOT A DATA FIX: the data is correct. Either the payload carries a reason marker per null, or the page renders 'n/a' distinctly from blank. NOT MINE TO DESIGN -- it is a DE-class cell and a Rule-24 value act if a marker enum is minted. NOTE THE ADJACENT RECLASSIFICATIONS FROM THE SAME SMOKE, both CTO~Z's and both worth keeping separate from this one: (a) DIVZ/IDVZ show 'no HOLDINGS', not 'no data' -- book-level yield/cost/beta/aum ARE present, and only the holdings half waits on tomorrow; (b) PERFORMANCE IS A REAL AND TOTAL GAP -- 1D populated 109/114 and every other period 0/114, so the producer computes one day and nothing else. (b) is a BUILD, not a fix, and is genuinely what he saw."
   }
 ]
 ```
@@ -711,7 +732,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **26** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **27** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
