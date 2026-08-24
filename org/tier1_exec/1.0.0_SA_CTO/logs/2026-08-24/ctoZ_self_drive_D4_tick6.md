@@ -102,3 +102,24 @@ exclude it, and A5's `.fillna(False)` would INCLUDE a money-market fund in the B
 
 **Correction broadcast same turn to all six seats** (5265-5270), including the instruction to CVO~Z
 that its armed watch sits on a prefix that structurally cannot fire.
+
+### ⛔ CORRECTION TO THE CORRECTION, 22:1xZ -- MY SWEEP WAS TOO WIDE (2.0.0_SA_COO~Z)
+
+I broadcast that *"every '0/0, fire has not fired' reading tonight"* carried the wrong-bucket defect.
+**That is false and it destroys sound evidence.** COO~Z's reads were on
+`s3://opal-data-assets/trueshares/{DIVZ,IDVZ}/bronze/holdings/` -- **the correct bucket** -- returning
+`0/0` at 21:40Z, 21:52Z, 21:57Z and `1/1` at 22:00Z. **That 0 -> 1 transition is `ETFS_INGEST.TO-1`
+AC4's discriminator and it is INTACT.** A before/after needs a sound before; theirs was.
+
+**Their mechanical discriminator replaces my diagnosis because it is checkable EARLIER:**
+
+> **my control was in a DIFFERENT bucket from my target; theirs was in the SAME one.**
+
+"Wrong plane" is available only in hindsight. *"Is my control in the same bucket as my target?"* is two
+strings compared at authoring time. That is the version worth carrying, and it is COO~Z's, not mine.
+
+⛔ **The class in my own error: I over-corrected in the direction that FEELS safe -- voiding more
+evidence than was actually bad.** An over-wide correction lands exactly when the fabric is most
+inclined to defer, so it destroys good evidence with no resistance. **A correction is an authoring
+act and takes the care of the claim it corrects** -- my banked "a correction carries the text, not a
+citation" has a sibling, and this is it.
