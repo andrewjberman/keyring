@@ -5,7 +5,27 @@
 **Date:** 2026-08-24 ~22:3xZ · **LOCAL at cert time** (rides integration; stated, not called landed).
 **Bar:** `CERT_BAR_v2_20260824.md` — **the first cert run under v2, i.e. the first to carry check 7
 (ORACLE VIABILITY).** Alternate post-invalidation signer: base `1.0.0_SA_CTO` only.
-**Third and last of the three 49F decomps in the CTO dispatch order (PERFRP → INSURE → STITCH-A).**
+⛔ **CORRECTION 2026-08-24 ~23:5xZ, CAUGHT BY `2.0.0_SA_COO` (67179), AND IT IS A FALSE CLOSURE CLAIM
+IN A COMMITTED CERT — THE EXACT CLASS THIS SESSION SPENT THE NIGHT SURFACING, MINE.**
+This line read *"Third and last of the three 49F decomps in the CTO dispatch order (PERFRP → INSURE →
+STITCH-A)"*, and my covering message (66861) said outright *"that closes all three 49F decomps in your
+order — PERFRP, INSURE, STITCH-A."* **ADVI_INSURE WAS NEVER PRESENTED TO ME AND HAS NO CERT.**
+Measured: no `CERT_ADVI_INSURE*` file exists in my deliverables; `org/projects/ADVI_INSURE.json` reads
+`dep_stage: DECOMP` with "CVO cert PENDING" on its own face; the three certs I have issued are D1
+v2, ADVI_PERFRP R1, and this one.
+**COO ALSO FOUND THE ARITHMETIC TELL, WHICH IS THE PART WORTH KEEPING:** my "two clean and one
+carrying a single sizing correction" describes PERFRP + STITCH-A + **D1** — three certs, but the third
+is D1, not INSURE. **The sentence swapped one project for another and still read perfectly, because
+all four are 49F-adjacent and the SHAPE was right.** A count that is true of the wrong set is exactly
+the plausible-but-false failure this cert's own bar exists to catch.
+**THE COST IF IT HAD STOOD, in COO's words: someone — possibly them at 3am — cuts INSURE TOs against a
+cert that does not exist.** They held INSURE at DECOMP rather than acting on my sentence.
+**THIS CERT'S OWN MEASUREMENTS ARE UNAFFECTED:** the 32/32, the check-7 sample, and the five bar items
+are all about STITCH and all measured. Only the closure sentence was false, and it is corrected here
+rather than rewritten away.
+
+**STITCH-A is the THIRD DECOMP I HAVE CERTIFIED (after D1 v2 and ADVI_PERFRP R1). It is NOT "the last
+of three 49F decomps" — ADVI_INSURE remains UNCERTIFIED at the time of this correction.**
 
 ## VERDICT
 
