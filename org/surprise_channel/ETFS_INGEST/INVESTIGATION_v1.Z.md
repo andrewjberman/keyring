@@ -678,6 +678,26 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     "disposition": "GRADUATED",
     "disarm_owner": "1.0.0_SA_CTO~Z",
     "notes": "\u26d4 MY FRAMING MEASUREMENT SHARPENS THE ITEM IN BOTH DIRECTIONS AND I THINK IT MATTERS: 50 LEAVES IN THIS BUCKET COLLIDE 3+ TIMES (manifest.json 112, metadata.json 110). So the finding is NOT 'a rare three-way collision' -- collision is the NORM here, and an item framed on the collision count would be framed on the unremarkable half. WHAT IS ACTUALLY SPECIAL is the AGE SPREAD WITH LIVE SUCCESSORS: one key 244 days old (past Rule 25's 90-day dormancy bar) sitting beside TWO live ones, which is exactly the KEY-MIGRATED signature Rule 25 says is BYTE-IDENTICAL TO ABANDONED FROM AGE ALONE. A dormancy sweep sees an old key; it cannot see that two successors exist. THE GENERALISATION THAT FOLLOWS: a leaf-name census is a BAD INSTRUMENT IN THIS BUCKET GENERALLY -- 50 leaves would give it a false hit -- so 'which producer owns positioning_data.json?' is a malformed question here and the answer must come from the producer side, never the key side. \u26d4 RECORDED, NOT DISPOSITIONED, and CTO~Z was right to say so first: DORMANT IS NOT A DELETION WARRANT (Rule 25) and moving served output is NEVER#3. Nobody touches the 244-day key on the strength of this. DISARM = making the triplet VISIBLE where a census would look (CTO~Z landed the table in the PRD s.12, which is this project's own served key's home) -- it converts a hazard you would meet DURING a deletion into one you meet WHILE READING, and that is the whole of it. ALLOCATION NOTE: CTO~Z nearly minted -Z-S24 and checked first, finding this seat had just taken it. Third seat tonight to check the high-water mark before allocating rather than after."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S26",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-08-24T23:02Z",
+    "one_line": "NOT A DEFECT -- a dependency chain nobody has stated end to end: gold's as-of requires BOTH a silver/holdings partition AND a bbg/{date}/ landing for the SAME trading day, so tomorrow's 13:00Z gold fire is gated on tomorrow's ~11:00Z L1 fire, and an L1 failure steps gold back to 08-21 and leaves DIVZ/IDVZ as shells for another day -- looking exactly like tonight's correct output.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "etf_positioning_gold.py resolve_as_of :279-295 -- as_of comes from the DATA (newest silver/holdings partition), expected from the NYSE CALENDAR; two independent sources by design so the guard has an input that can make it fire",
+        ":318-326 -- `silver has {d} but bbg/{d}/ has not landed -- stepping back one trading day`, and if no day qualifies it RAISES 'refusing to publish' rather than publishing a partial",
+        "MEASURED NOW: silver/holdings/2026-08-24.parquet PRESENT \u00b7 silver/netassets/2026-08-24.parquet PRESENT \u00b7 bbg/2026-08-24/characteristics.parquet ABSENT \u00b7 bbg/2026-08-24/fund_daily.parquet ABSENT",
+        "bbg/2026-08-24/ lands at tomorrow's 07:00 ET L1 fire (~11:00Z), before the 13:00Z gold fire",
+        "Tonight's gold manifest confirms the resolution working: as_of 2026-08-21, expected_frontier 2026-08-24, trading_days_behind 1, all four inputs at 2026-08-21"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "\u26d4 FILED AS A NON-DEFECT, DELIBERATELY. The guard is CORRECT and well-designed -- it steps back rather than mixing tiers, and REFUSES rather than publishing a partial. Recording it because the CHAIN is what nobody has said out loud: A5's fix is not only about the universe derivation, IT IS THE PRECONDITION FOR GOLD ADVANCING. An L1 exit-61 tomorrow means no bbg/2026-08-24/, which means gold steps back to 08-21, which means DIVZ/IDVZ STAY SHELLS -- and the output would look IDENTICAL to tonight's: correct as-of, calendar resolved, trading_days_behind stated, guard working. THE FAILURE AND THE SUCCESS PRODUCE THE SAME-SHAPED ARTIFACT, and only the presence of bbg/2026-08-24/ distinguishes them. \u26d4 SO THE THING TO CHECK TOMORROW IS NOT 'DID THE SHELLS FILL' -- it is 'DID bbg/2026-08-24/ LAND', and the shells are downstream of that. A seat checking only the shells sees a null result with no cause attached. SEPARATION THAT MUST HOLD, and both 0.4.0_DS_ClientPlatform~Z and 0.0.0_AB_MSTR~Z drew it correctly before I did: tonight's gold partition date=2026-08-21 IS THE CALENDAR AS-OF and is NOT Z-S16. Z-S16 is a ROW-LEVEL substitution inside the silver 2026-08-24 partition; the gold as-of is a PARTITION-LEVEL calendar selection. Two different dates for two different reasons, and conflating them would manufacture a Rule-17 finding out of NEVER#1 working correctly. MSTR~Z retracted a Z-S16-reaches-gold claim on exactly this distinction."
   }
 ]
 ```
@@ -686,7 +706,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **25** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **26** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
