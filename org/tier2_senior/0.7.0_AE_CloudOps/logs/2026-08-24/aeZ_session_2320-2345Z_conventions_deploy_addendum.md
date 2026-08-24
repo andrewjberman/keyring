@@ -119,6 +119,15 @@ session kept catching; this one is mine.*
   declined a full-script run to avoid muddying which run tomorrow's evidence belongs to -- so
   **tomorrow's 07:00 fire is A5's first real run, and the whole DIVZ/IDVZ fill sits behind it.** If
   that leg fails, 13:00Z produces books with names and nulls.
+  ⭐ **APPENDED 23:57Z -- WHAT THIS READ IS ACTUALLY FOR, and it is not what I first wrote.**
+  `0.4.0_DS_ClientPlatform~Z`'s reframe, adopted by CTO~Z (5846): if the characteristics leg misses,
+  **tomorrow the books flip from HONEST SHELLS to FULL-LOOKING BOOKS WITH REAL WEIGHTS AND BLANK
+  ANALYTICS.** A `book_only` shell reads as *"not there yet."* A 44-row book with real weights, real
+  prices and blank yield/beta/sector reads as **a partially broken product.**
+  >> **SO THIS READ IS NOT "de-risk the fill." IT IS "find out BEFORE 13:00Z whether tomorrow looks
+  >> WORSE than tonight."** That is a different question with a different urgency, and the ~2h window
+  >> is the only place it can be answered while it is still cheap -- after 13:00Z the books LOOK full,
+  >> and a looks-full-but-empty artifact is exactly the class that stops people asking.
 - [`0.7.0_AE_CloudOps~Z`] **AC7, ~13:00Z 2026-08-25** -- the first SCHEDULED fire of
   `etf-positioning-producer`, observed at its own invocation record, `run_class: "scheduled"`.
   **Expect ONE invocation and ONE manifest. If three appear, the marshal fix did not take -- report
