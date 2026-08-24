@@ -29,10 +29,14 @@ instance path, channel item id). Nothing here is derived from a message; every k
 
 | class | standing | count | routing latency | evidence |
 |---|---|---|---|---|
-| OBSERVATION | ARMED | 1 | **~14 min** (surfaced 19:58Z -> routed 20:12Z, disarm owner named same turn) | `OPAL_KIMIPIPELINE-S1` -- manifest ledger cannot distinguish re-run-with-new-content from clobbered adjudication; owner `0.7.0_AE_CloudOps` (QUEUED, not live) + 3 live seats DELIVERED |
-| OBSERVATION | INERT | 3 | n/a (never interrupts) | `OPAL_KIMIPIPELINE-S2` (4th enum value outside the declared enum); `OPAL_KIMIPIPELINE-S3` (`args_head` literals, device-local); estate-report field-home recurrence (CVO 66360 -> CTO, queued behind two PRDs) |
+| OBSERVATION | ARMED | **2** | ~14 min · ~4 min | `OPAL_KIMIPIPELINE-S1` (ledger cannot distinguish re-run from clobber; owner `0.7.0_AE_CloudOps`, dark -> HELD at COO) · `NFRA_COMPRAIL-S1` (comp-find piped to grep drops every line at exit 0; owner `1.0.0_SA_CTO`) |
+| OBSERVATION | INERT | **5** | n/a (never interrupts) | `OPAL_KIMIPIPELINE-S2`, `-S3` · `NFRA_COMPRAIL-S2`, `-S3` (dismissed with reason) · estate field-home recurrence (66360) |
 | BLOCKING | INERT | 0 | -- | -- |
 | BLOCKING | ARMED | 0 | -- | -- |
+
+**Channel rounds open:** `OPAL_KIMIPIPELINE/INVESTIGATION_v1.md` @ef2e771dcc · `NFRA_COMPRAIL/INVESTIGATION_v1.md` @f342178f35. Schema-validated 6/6 items, mutant controls refused a bare dismissal and an ARMED-without-owner.
+
+**Certifier acts on relayed items, both directions, because a channel that only escalates is not a filter:** 1 headline OVERTURNED on independent re-derivation (`OPAL_KIMIPIPELINE-S1`, every relayed number reproduced), 1 standing RE-CLASSIFIED UPWARD against the surfacing seat (`NFRA_COMPRAIL-S1`, INERT -> ARMED, reason stated to its owner), 1 DISMISSED WITH REASON, 1 AMENDED on the surfacing seat's own correction.
 
 **Disarm vs remediation (the two-state rule, kept visible):** S1 DISARM = **OPEN**, owner named, held by MSTR/COO while `0.7.0_AE_CloudOps` is unseated. S1 REMEDIATION = **OPEN**, separate act. **No instance repair was performed and none is wanted** -- the control falsified the premise a repair would have rested on.
 
