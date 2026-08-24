@@ -1,0 +1,54 @@
+{
+  "project_code": "ETFS_INGEST",
+  "macro_code": "ETFS",
+  "name": "ETF constituent pipeline, NO-BQL, ground-up and in pattern -- issuer idiosyncratic raw (bronze, opal-data-assets) -> unified silver parquet -> unified gold parquet (opal-data-etfs/gold/) -> platinum JSON (opal-data-portal-v2) -> the Positioning page daily publish, for DIVZ / IDVZ / PFDE / PFOE",
+  "description": "Andrew-direct 2026-08-24 at the MSTR~Z terminal, five words in order, VERBATIM (records @78841bfa02, @93d126c4aa, MSTR~Z msgs 4830/4831): (1) 'No we're not doing BQL which means we have to wire up the rest and just work to design the structure in a manner that renders a consistent output shape. All that work needs to be managed in the opal-data-etfs bucket. I want you to hand this off to CTO~Z and have them draft PRDs and register the project to do so in line with the directives.yaml and your knowledge on what needs to be accomplished here. When they are done with their PRD, you need to read it and make sure its accurate to the relevant goals. At that point, we can have COO~Z and the relevant agents and ~Z spawned to take this project through completion. The premise is that it should cover all ingestion and pipeline mechanics, threading it all the way to the frontend daily publish.' (2) 'we can manage bronze ingestion for both channels in opal-data-assets and proceed that way, I prefer that kind of structure actually, let CTO~Z know that, this gives us an opportunity to develop a canonical format/pattern from the start for this work.' (3) 'keep D4 on sitez until the project is done.' (4) 'Furthermore, this is a good opportunity to build the ground-up, in pattern ingestion and processing (bronze and silver) layers for all relevant ETFs working from their idiosyncratic shapes, to unified parquet, to unified gold parquet format in opal-data-etfs/gold/ for platinum json serving in opal-data-portal-v2.' (5) 'For our purposes at this stage and for the forseeable future, all relevant ETFs means DIVZ IDVZ PFDE and PFOE.' Standing words that bind unchanged: the ~15:2xZ promote conditions ('Until data pipeline is complete with full data structure for daily bloomberg data for all ETFs, and it displays properly on DEV build with GICS replaced for sub-categories on frontend') and the Bloomberg-first / issuer-fill / Bloomberg-enrich layering; TrueShares egress GRANTED 08-21T20:45Z. BQL IS CLOSED -- no dormant branch. THE PROJECT: ETFS_POSITIONING round 1 delivered the producer / route / flip and ships 2 FULL books + 2 SHELLS; this project is the INGESTION + PIPELINE MECHANICS that fill the shells and thread the chain to the daily publish, and its DONE discharges ETFS_POSITIONING's two promote conditions. MEASURED AT REGISTRATION (CTO~Z, all with controls, PRD s.3): F1 the producer of opal-data-etfs/silver/holdings (MSTR~Z's open question) is the etfs-netassets-daily Lambda (cron 22:00Z; bronze to opal-data-assets by its own C4 split) -- so the 'consistent output shape' ALREADY EXISTS as its 17-column HOLDINGS_COLUMNS, both issuers normalizing into it, three live consumers; F2 THE DEPLOYED LAMBDA IS OLDER THAN ITS TREE WHILE THE ENV FLAG IS ON -- package (2026-08-20T01:18Z, 1083 lines) has fetch_trueshares_holdings's def and no call site, HEAD @4e5800fde0 (1126 lines) has the call at :550-559, live env TS_HOLDINGS_ENABLED=1 -- Rule 22a's exact class, every 22:00Z fire a silent green no-op for DIVZ/IDVZ; F3 the TrueShares sheet link IS in our stored bronze HTML for both funds (1 id each, byte-identical to the brief's URLs, the Lambda's own regex extracts it, mutant 0) -- the brief's 'client-side injected / do not grep the saved HTML' caution is inverted for the bytes we store; F5 two silvers from two producers off one bronze ((i) vendor-faithful fact_* in opal-data-assets, 0 in-repo readers found; (ii) the unified shape in opal-data-etfs, 3 readers); F6 opal-data-etfs/gold/ = 0 objects (his named home is greenfield) while TO-1's gold writes at the Rule-17b-amended home under opal-data-assets; F8 identifier hazards (a BBGID in PFDE's CUSIP column; IDVZ lines are US ADR tickers with CUSIPs; SALXX cash line in both issuers, flagged by one, declared unknown by the other; Bloomberg count +1/+2 above issuer rows, unreconciled). SEVEN TENSIONS surfaced in PRD s.6, none resolved silently: gold home vs Rule 17b (his later word binds; amendment routed to base CTO); ETFS_CANON's live platinum artifact STAYS, out of scope; universe = four (closed by word 5; the two site-Z scripts restating the list in code are an in-pattern cell); no bronze for the Bloomberg API legs; unified-at-silver vs Rule 17 no-slimming (superset row recommended); WHICH VEHICLE fetches the TrueShares CSV (rec: the Lambda that already does it, site-Z leg 2 reads silver -- flagged for his confirmation, not adjudicated); the +1/+2 owner. FOUR CALLS at Andrew via MSTR~Z's read-back (PRD s.7): gold home; the 'sub-categories' target vocabulary for condition (ii) (rec: one GICS level finer, rendered beside Bloomberg's HB_INDUSTRY_SECTOR labels on DEV); the TrueShares vehicle; the registration form (new code vs ETFS_POSITIONING round 2 -- ports unchanged either way).",
+  "prds": [
+    {
+      "path": "docs/architecture/ETFS_INGEST_PRD.md",
+      "label": "CTO~Z stage-2 purpose-level PRD v0.1 -- the five verbatims, the eight measured facts with controls, the chain tier by tier (exists / build / constraint), the canonical constituent row (Rule 24 v0.1 record + the three conventions the decomp owes), seven tensions with deciders, four calls, placement candidates (SITEZ until done), surprise items",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/laneZ_ANDREW_DIRECT_20260824_NO_BQL_ETF_CONSTITUENT_PIPELINE_HANDOFF_TO_CTOZ.md",
+      "label": "MSTR~Z handoff brief -- the NO-BQL ruling verbatim, the four measured facts (derived layer served / no non-BQL route, structural / current-day-only / both issuers publish a daily CSV), the two issuer channels' state, what the PRD must cover, the two flags (both since resolved by his word)",
+      "date": "2026-08-24"
+    },
+    {
+      "path": "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md",
+      "label": "The parent DIRECTIVE PRD -- D4; placement SITEZ until this project is done (Andrew-direct 2026-08-24)",
+      "date": "2026-08-19"
+    },
+    {
+      "path": "docs/architecture/ETFS_POSITIONING_PRD.md",
+      "label": "Sibling project's PRD -- s.4 the served Positioning shape (the gold/platinum target), s.10-11 round 1 (producer / route / flip, DELIVERED)",
+      "date": "2026-08-21"
+    },
+    {
+      "path": "docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md",
+      "label": "The site-Z daily vehicle order (L1 + A1/A2/A4/A4.1) -- in flight, completes under its own spec; the constituents script rides it",
+      "date": "2026-08-21"
+    },
+    {
+      "path": "integrations/bloomberg/READ_HERE.md",
+      "label": "The Bloomberg playbook -- s.4 what Bloomberg will and will not give (settled), s.5 the issuer channels",
+      "date": "2026-08-24"
+    }
+  ],
+  "related": [
+    "ETFS_POSITIONING",
+    "ETFS_CANON",
+    "ETFS_SETUP",
+    "ETFS_NETAST"
+  ],
+  "status": "active",
+  "dep_stage": "PRD",
+  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27; org/ref/DIRECTIVE_EXECUTION_PIPELINE.md) -- STAGE 1 REGISTERED + STAGE 2 PRD v0.1 landed 2026-08-24 ~19:5xZ by 1.0.0_SA_CTO~Z (commissioning exec, site Z) on the five Andrew-direct words in the description. The loop he set: CTO~Z drafts -> 0.0.0_AB_MSTR~Z reads it back against the goals (his explicit instruction; a read-back, not a gate on authorship) -> HIS spawn word for COO~Z + the executing ~Z seats -> 2.0.0_SA_COO~Z runs STAGE 3 (operative-surface atom-decomp BEFORE any TO; cohort + certifier classes declared at open; certifier 3.0.0_SA_CVO~Z; placement a declared axis, SITEZ until done per his word 3). NEXT ACTS after the read-back, in the order the PRD argues: the Lambda deploy of @4e5800fde0 (F2 -- the one act that fills the DIVZ/IDVZ shells with zero new code; TF-only, AE-class, on the device that owns the work) is the cheapest first cell of any decomp; the gold re-point + Rule 17b amendment routing (tension 1); the unified-row conventions (s.5) as Rule-24 cells; condition (ii) once he points at a vocabulary (C3). D4 register edit (member-set add ETFS_INGEST; placement SITEZ until done) REQUESTED of MSTR (sole register writer). Surprise channel: org/surprise_channel/ETFS_INGEST/ (CVO~Z), coordinate -Z-S{n}; three items surfaced at drafting (PRD s.12).",
+  "blocking": "None on any agent. At Andrew via MSTR~Z's read-back (PRD s.7): C2 gold home (opal-data-etfs/gold/ per his 08-24 word, with a Rule 17b amendment routed to base CTO -- rec) · C3 the 'sub-categories' target vocabulary for the frontend condition (rec: one GICS level finer, rendered on DEV beside Bloomberg's own sector labels for him to point at) · C4 confirm the TrueShares vehicle = the etfs-netassets-daily Lambda (rec) rather than a second fetcher on the site-Z box · C5 registration form (new code ETFS_INGEST per his 'register the project'; ports unchanged if he prefers ETFS_POSITIONING round 2). None of these gates the read-back or the decomp opening; C4 gates the first deploy cell only.",
+  "created": "2026-08-24",
+  "pods": ["1.0", "2.0", "3.0", "0.4", "0.7", "0.0", "SITEZ"],
+  "pipeline": "etfs",
+  "coo_lane": "2.0.0_SA_COO~Z",
+  "thread_counter": 0,
+  "threads": []
+}
