@@ -282,3 +282,55 @@ parquet" at silver is a named deliverable and cannot be specified while
 `opal-data-etfs/silver/holdings/`'s producer is UNKNOWN-AT-MSTR~Z.
 
 **Relayed to `1.0.0_SA_CTO~Z` msg 4830, DELIVERED (live seat).**
+
+
+---
+
+## 9. AMENDMENT 3 -- ANDREW-DIRECT: THE UNIVERSE IS FOUR. Tension (3) CLOSED.
+
+**VERBATIM:** *"For our purposes at this stage and for the forseeable future, all relevant ETFs
+means DIVZ IDVZ PFDE and PFOE."*
+
+**SETTLED:** the universe is **four**. The wider TrueShares family (`spcz fldz rnwz lrnz pvex oneh
+qber qbul paym payh onez`) is **OUT OF SCOPE**. Do not put the universe question to him in the PRD --
+it is answered. Scope the decomp, the TOs and the acceptance to four tickers.
+
+**NOT SETTLED INTO A HARDCODE, and the distinction is the point:** those four are **already the exact
+contents of `opal-data-etfs/config/etf_universe.json`**, which is **runtime-read**. So reading the
+config is **not speculative extensibility for a future he did not ask for -- it is the cheaper
+implementation of the answer he gave**, and it is the estate's own rule (*"DERIVE FROM ONE DECLARED
+AUTHORITY, NEVER RESTATE AT A CALL SITE"*). *"Foreseeable future" is not "never"*: a config read
+costs nothing today; a restatement costs a silent divergence later.
+
+### A LATENT DUPLICATE, FOUND WHILE CONFIRMING THIS -- and one of the two is MINE
+
+**The sanctioned pattern is live in THREE production Lambdas**, each reading the config at runtime
+with a `DEFAULT_UNIVERSE` fallback and a loud WARN when the config is unreadable:
+`bd-49f-etf-ownership-daily-canonical:57` · `cot-etf-ownership-daily:72` · `inf-etf-ownership-daily:88`.
+
+**Two pipeline scripts restate the universe in code instead:**
+```
+integrations/bloomberg/pipeline/etf_daily_pull.py:45         FUNDS = ["DIVZ","IDVZ","PFDE","PFOE"]
+integrations/bloomberg/pipeline/etf_constituents_pull.py:62  FUNDS = ["DIVZ","IDVZ","PFDE","PFOE"]
+```
+**The second is MINE, written today.** I copied the shape of the first without checking whether the
+estate already had a declared authority for it -- **the exact build-ladder rung-2 miss this brief
+tells CTO~Z to avoid, committed in the same file it tells them to extend.**
+
+**IT IS HARMLESS TODAY AND THAT IS WHY IT IS WORTH RECORDING.** All three lists agree right now, so
+nothing misbehaves. **The moment the config changes, the three Lambdas follow and these two scripts
+do not** -- a silent divergence with no error, found later by someone wondering why a fifth ticker
+appears in ownership and not in the daily pull. Not urgent (his answer stabilises the config), and
+**deliberately not fixed unilaterally mid-PRD-round**: it is precisely the *"ground-up, in pattern"*
+tidy-up his instruction covers, so it belongs in the spec. Offered to CTO~Z as a one-line fix per
+call site if they would rather have it now.
+
+### RETRIEVAL NOTE -- it nearly became a false finding in this very brief
+
+The first sweep for hardcoded tickers used `comp-find` with a filter and returned nothing. That was
+**page 1 of 348 (8,688 hits)** -- an artifact of truncation, not a measurement -- and it would have
+let this document assert *"nothing hardcodes the universe"* **while the file it was written in did.**
+A direct `grep` found it in one call. **Never answer an ABSENCE question from a truncated result set.**
+
+**Relayed to `1.0.0_SA_CTO~Z` msg 4831, DELIVERED.** Tensions (1) gold-home-vs-Rule-17b and
+(2) the live platinum artifact remain OPEN and are CTO~Z's.
