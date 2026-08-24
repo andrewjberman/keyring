@@ -42,9 +42,11 @@ instance path, channel item id). Nothing here is derived from a message; every k
 
 | measure | k / N | evidence |
 |---|---|---|
-| opened (COO, with cohort + certifier + placement + Rule-24 records on the face) | 0 / 0 this session (D1 v1 @3b103f1298 pre-dates; v2 absorption pending) | -- |
-| certified (CVO) | 0 / 0 | cert bar pre-stated: CVO 66357/66358 |
-| invalidated -> re-cert signed by base CTO | 0 / 0 | -- |
+| opened by COO with cohort + certifier + placement + Rule-24 records on the face | **3 / 3** (D1_CATVIEWS v2, ADVI_PERFRP R1 this session; ADVI_COTKEY + DATA_PIPMAP are stage-2 PRDs, not decomps) | 66383, 66452 |
+| **certified (CVO)** | **2 / 2 presented** | D1 v2 @60d4e2f1b4 (CERTIFIED, 1 P1 sizing correction) · PERFRP R1 @6a3e1f (CERTIFIED, no P1) |
+| invalidated -> re-cert by base CTO | **0 / 2** | -- |
+| decomps whose author ran the certifier's instrument BEFORE sending | **2 / 2** | D1 s.0.1 (grep-o 20/28 self-caught); PERFRP (grep-o 36/36 on the face) |
+| certifier instrument defects self-caught before reporting | **2** | D1 extractor controlled after two v1 failures; PERFRP's 4 substring false-positives inspected not reported |
 
 ## E. Seating (MSTR)
 
