@@ -6,7 +6,7 @@
   "prds": [
     {
       "path": "docs/architecture/ADVI_INSURE_PRD.md",
-      "label": "CTO stage-2 PURPOSE-LEVEL PRD v0.1 DRAFT (2026-08-24) -- references the run; NOT a TO set",
+      "label": "CTO stage-2 PRD v0.2 -- APPROVED FOR STAGE 3 by Andrew 2026-08-24 ~18:3xZ (s.11 rulings: all ten recs accepted)",
       "date": "2026-08-24"
     },
     {
@@ -40,8 +40,8 @@
   ],
   "status": "active",
   "dep_stage": "PRD",
-  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 1). STAGE 2 PRD v0.1 DRAFT LANDED 2026-08-24 ~17:5xZ (docs/architecture/ADVI_INSURE_PRD.md, run I1-I10) (rung-2 reuse of DATA_BDINSURANCE's resolved source surface + a GROUND TRUTH AT OUTSET run over: the BD insurance API on the 49F principal, the composition class axis, the Books/Book surfaces, the 49F gold home). STAGE 3 = 2.0.0_SA_COO operative-surface atom-decomp before any TO; certifier 3.0.0_SA_CVO; placement LAPTOP (D2 is laptop-ruled). Directive = D2; sub-program of the 49F performance-reporting purpose (finding 3). Sequenced in the session order's revised Phase 1 (CTO paper) -- spawns still at Andrew.",
-  "blocking": "None on any agent. One design call inside his words for the decomp: the exact opal-data-assets prefix (CTO recommends the in-grammar blackdiamond/49financial/{bronze,silver}/insurance_* form over a vendor/insurance/firm nesting). No sovereign call open -- HEAVY vs LIGHT is answered by finding 1 for 49F.",
+  "phase": "*** PRD v0.2 APPROVED FOR STAGE 3 -- Andrew-direct 2026-08-24 ~18:3xZ on the CTO step-by-step breakdown + /draw + ten ambiguity cards, verbatim: 'Agreed with all recs this one is good to go'. All ten recommendations are now rulings (PRD s.11): in-grammar prefix blackdiamond/49financial/{bronze,silver}/insurance_* (49f recorded as alias); BOTH source modes; gold keyed on bd_account_id with an unassigned class; NO class-axis change -- a NEW Total Assets element at L3/L4; header subtext form fixed; v1 fields = carrier/product, currentEmv, asOfDate; daily idempotent pull, asOfDate-advancing rows, no alarm; DEV from a QA emission, production with P4I-3; Cottonwood = pattern note only; owners 0.6.0 / DS / 0.7.0 / DE / DT / CVO. NEXT: stage 3 decomp (COO on spawn, or CTO on his word). *** | IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~17:3xZ (1.0.0_SA_CTO, commissioning exec, on Andrew's finding 1). STAGE 2 PRD v0.1 DRAFT LANDED 2026-08-24 ~17:5xZ (docs/architecture/ADVI_INSURE_PRD.md, run I1-I10) (rung-2 reuse of DATA_BDINSURANCE's resolved source surface + a GROUND TRUTH AT OUTSET run over: the BD insurance API on the 49F principal, the composition class axis, the Books/Book surfaces, the 49F gold home). STAGE 3 = 2.0.0_SA_COO operative-surface atom-decomp before any TO; certifier 3.0.0_SA_CVO; placement LAPTOP (D2 is laptop-ruled). Directive = D2; sub-program of the 49F performance-reporting purpose (finding 3). Sequenced in the session order's revised Phase 1 (CTO paper) -- spawns still at Andrew.",
+  "blocking": "None. PRD v0.2 approved for stage 3 (Andrew ~18:3xZ). Waits only on the decomp seat (COO spawn, or CTO on his word).",
   "created": "2026-08-24",
   "pods": [
     "1.0",
