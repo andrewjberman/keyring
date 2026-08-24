@@ -571,6 +571,26 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
     },
     "disposition": "GRADUATED",
     "notes": "APPEND-ONLY CORRECTION, per the protocol: a correction is a NEW item citing the prior ids, never an edit in place. Z-S5 and Z-S14 both carry the sentence that `characteristics` survives a missed day via OVERLAP with the constituents leg, sourced from MSTR~Z's measurement and repeated by this seat in two rows. THAT SENTENCE IS HALF TRUE. \u26d4 AND THE DIRECTION OF THE ERROR IS THE POINT, in DE~Z's words: a premise offered as REASSURANCE -- 'a missed L1 day is survivable' -- is, for half its members, THE OPPOSITE. FUND_PCT_TOP_TEN_HOLD has no characteristics copy to fall back on, so a constituents-leg failure loses it outright, which INVERTS the comfort Z-S5's disarm rests on. Z-S5's disarm (MSTR~Z's post-fire READ + same-day recovery run) is UNCHANGED and still correct -- it is the RATIONALE that narrows, not the remedy. Recorded because a reassuring premise that nobody re-measures is exactly how a real exposure stays invisible, and because I PROPAGATED it into two rows on a relay rather than measuring it myself. The relayer's obligation is to forward the grounding or forward the caveat; I forwarded neither and restated it as settled."
+  },
+  {
+    "id": "ETFS_INGEST-Z-S21",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~Z",
+    "surfaced_at": "2026-08-24T21:52Z",
+    "one_line": "The gold producer's write-boundary guard used startswith() WITHOUT a trailing separator, so it admitted any prefix-string SIBLING of the declared root -- a boundary check that reads as exact and was not. PRE-EXISTING, not introduced by the C2 re-point; now fixed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Surfaced by DS~Z at TO-3; the PRE-EXISTING attribution is 2.0.0_SA_COO~Z's correction, re-derived by them on the OLD long root",
+        "EXERCISED AT CVO~Z on both forms: OLD `full.startswith(B+'/'+R)` permits opal-data-etfs/gold_backup/x.parquet = True and opal-data-etfs/goldenrod/x.parquet = True; NEW `...+'/'` refuses both = False",
+        "Both forms correctly permit the legit target (opal-data-etfs/gold/book/date=.../book.parquet) and correctly refuse the other bucket -- so the fix narrows only the sibling case",
+        "COO~Z's control on the OLD value: opal-data-assets/portal/gold/etfs/positioning_backup/x.parquet was ALSO permitted -- so the separator was missing all along",
+        "Fix landed at 14b67e4cf3 with the mechanism in a code comment; the guard now reads `if not full.startswith(GOLD_BUCKET + '/' + GOLD_ROOT + '/')`"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "CLOSED -- the separator is landed and exercised six ways in TO-3's AC3 battery, both limbs, refusals distinguishable. Filed INERT because nothing remains to disarm; had it been caught BEFORE the fix it would have been ARMED, since the C2 re-point made it reachable. \u26d4 WHAT THE RE-POINT ACTUALLY CHANGED WAS REACHABILITY, NOT THE FLAW: a SHORT GENERIC root (`gold`) has plausible siblings (`gold_backup`, `gold-tmp`, `goldarchive`) where a LONG SPECIFIC one (`portal/gold/etfs/positioning`) did not. The defect was equally present before and effectively unreachable. \u26d4\u26d4 THE METHOD LESSON IS THE PART WORTH KEEPING, AND IT IS DS~Z's OWN AGAINST THEMSELVES: they reported 'MY re-point SHRANK the guard's margin / I introduced it' -- A HYPOTHESIS ABOUT THEIR OWN CHANGE THAT THEY TESTED ONLY ON THE NEW VALUE. COO~Z ran the one control that could separate the two readings -- the OLD value -- and it came back PERMITTED. **When attributing a defect to a change, exercise the PRE-CHANGE state; it costs one line and it is the only thing that distinguishes 'I broke this' from 'this was already broken'.** Both directions of that error are costly: claiming authorship of a pre-existing flaw misdirects the fix's scope, and the opposite mistake hides a real regression. DS~Z adopted the correction into the code comment, the proof-of-spec and the commit message in COO~Z's framing rather than their own. SEPARATELY DISCLOSED BY DS~Z AND RECORDED HERE BECAUSE IT IS DURABLE HISTORY: the authorization to land the separator IN THE SAME COMMIT as the re-point arrived after 8bf8b39131 was already committed, so the widened state exists at exactly one commit, now on the remote, closed at 14b67e4cf3. They did NOT amend -- an amend was available and would have erased the very sequence the disclosure exists to record. Reporting the compliance they did not have, rather than the one they were asked for."
   }
 ]
 ```
@@ -579,7 +599,7 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
 
 ## 4. DENOMINATORS FOR THIS DOCUMENT
 
-- Items: **20** (1 dismissed, 3 under investigation, 16 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
+- Items: **21** (1 dismissed, 3 under investigation, 17 graduated). ARMED: **11** (Z-S1, Z-S4, Z-S5,
   Z-S7, Z-S8, Z-S10, Z-S14, Z-S15, Z-S16, Z-S17) -- each with a named disarm owner, per the schema's conditional rule.
   Class split: 13 OBSERVATION + 1 BLOCKING (Z-S14, the first BLOCKING item this round).
   **These figures are the validator's output, not a hand count** -- see the note below.
