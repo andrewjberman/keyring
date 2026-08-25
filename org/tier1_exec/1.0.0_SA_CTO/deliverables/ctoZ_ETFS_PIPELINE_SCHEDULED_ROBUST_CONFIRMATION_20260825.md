@@ -25,8 +25,38 @@ proposes an alarm, an SNS topic, a freshness checker, or a gate.
 | 3 | gold parquet **+ platinum JSON** | `etf-positioning-producer-daily` `cron(0 13 * * ? *)` | AWS EventBridge | **ENABLED** |
 
 **EventBridge census: 137 rules materialised** (auto-paginated, filtered CLIENT-SIDE -- never a
-`--query` over a paginated list). 9 ETF-named. **ZERO rules at hour 11** -- which is not a gap, it is
-the positive confirmation that leg 1 is not in AWS at all.
+`--query` over a paginated list); 120 carry a `ScheduleExpression`, 17 do not.
+
+⛔ **CORRECTED 2026-08-25 ~08:4xZ -- THIS LINE READ "ZERO rules at hour 11" AND THAT IS FALSE. TEN
+RULES FIRE DURING HOUR 11.** Falsified by `0.4.0_DS_ClientPlatform~Z` (msg 8784) before it reached
+Andrew; re-derived independently at this seat, which found **one MORE than they did**.
+```
+MY TEST WAS      'cron(0 11' as a SUBSTRING  -> 0     (minute==0 AND hour==11)
+THE SENTENCE SAID  "fires in hour 11"        -> 10    (hour FIELD includes 11)
+   inf-api-reps-daily cron(2 11..) · inf-accounts-v2-daily cron(7 11..) ·
+   news-trending-analysis-daily cron(15 11,21..) · opal-inf-bronze-runner-cron cron(15 11..) ·
+   inf-api-assets-v2-daily cron(17 11..) · inf-api-eclipse-daily cron(18 11..) ·
+   inf-api-positions-daily cron(22 11..) · inf-api-txn-daily cron(32 11..) ·
+   news-api-845am cron(45 11..) · access-anomaly-scanner-schedule cron(0 * * * ? *)
+```
+**A TEST FOR "FIRES AT EXACTLY 11:00" WAS REPORTED AS "FIRES IN HOUR 11"** -- the pattern-frame class
+CLAUDE.md names: *the count was true about a NARROWER question than the sentence it became.*
+⛔ **AND MY TEST DID NOT EVEN ANSWER ITS OWN NARROW QUESTION.** `access-anomaly-scanner-schedule` is
+`cron(0 * * * ? *)` -- **minute 0 of EVERY hour, so it fires at 11:00:00Z daily** and a `cron(0 11`
+substring cannot see it. **A WILDCARD HOUR FIELD IS INVISIBLE TO A LITERAL-HOUR STRING MATCH**, so
+even "zero rules fire at exactly 11:00Z" was false. *(This is why my count is 10 and DS's was 9 --
+same class, one level down, and it bit the correction as well as the original.)*
+
+⭐ **THE POSTURE FINDING SURVIVES AND IS STRICTLY STRONGER -- USE THIS FORM, NOT THE HOUR FORM:**
+```
+rules whose NAME matches bbg|bloomberg|terminal (case-insensitive), ANY hour, ANY day:  0
+POSITIVE CONTROL, same matcher, 'etf':                                                  8
+```
+**NO EventBridge rule drives the Bloomberg pull anywhere in the account.** That is the true claim and
+it is unfalsifiable by an hour count. **The hour-11 slot is in fact one of the BUSIER hours in the
+estate (10 rules), which is exactly why the original phrasing invited "well, plenty runs at 11" and
+would have lost the argument it was making.** *A weaker sentence in service of a strong finding is
+worse than no sentence: it is the half a reader can refute.*
 
 ---
 
