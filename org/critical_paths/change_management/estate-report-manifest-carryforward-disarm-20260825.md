@@ -94,7 +94,7 @@ terraform validate / fmt -check            Success / clean
 |---|---|---|
 | 1 | `estate_report_runner.py` carry-forward | **CLOSED** -- commit-gate clean, 17/17 offline battery |
 | 2 | `iam.tf` one-ARN grant | **CLOSED** -- `validate` Success, `fmt -check` clean |
-| 3 | commit (code + TF) | **CLOSED** -- `b94d147844`, msg-verify MATCH len=4865. **LOCAL, rides integration** |
+| 3 | commit (code + TF) | **CLOSED** -- `b94d147844`, msg-verify MATCH len=4865. Written LOCAL; **since confirmed ON `origin/CLOUD`** (see the push-state note below) |
 | 4 | `safe-apply.sh` | **CLOSED** -- comp-tagauthz PASS, tombstone-gate CLEAN, `0 added / 1 changed / 0 destroyed`; re-plan `-detailed-exitcode` = **0** (no changes) |
 | 5 | IAM re-verified, APPLIED plane | **CLOSED** -- see the two-direction table below |
 | 6 | artifact upload + verify | **CLOSED** -- five ways, see below |
@@ -152,6 +152,22 @@ aws s3api copy-object --bucket opal-estate-report --key code/estate_report_runne
 
 The TF grant needs no revert: an unused read grant is inert, and reverting it would leave the
 rolled-back code unable to read a ledger it never reads.
+
+**Push state, read rather than assumed.** All three commits were written LOCAL under the
+integrator-only push gate, and the ledger said so. They have since been integrated and are **ON
+`origin/CLOUD`** -- confirmed against `git ls-remote origin refs/heads/CLOUD`
+(tip `317ded2eae`) with `merge-base --is-ancestor` per commit, NOT against the local
+remote-tracking ref, which only moves on fetch/push and can therefore agree with a stale belief:
+
+```
+b94d147844  code + TF                ON origin/CLOUD
+ad37d51a86  EC2_MANIFEST.json        ON origin/CLOUD
+84ee8fb3af  this ledger              ON origin/CLOUD
+```
+
+This paragraph exists because the ledger otherwise carried "LOCAL, rides integration" forever --
+true when written, false within the hour, and indistinguishable from the two stale
+`EC2_MANIFEST` fields this very deploy was correcting.
 
 **The deploy path is the service's own, not an improvised one:** ONE `s3api put-object`, NOT
 `safe-ec2-deploy.sh`. That wrapper takes a deploy SCRIPT and this service has `deploy_script: null`
