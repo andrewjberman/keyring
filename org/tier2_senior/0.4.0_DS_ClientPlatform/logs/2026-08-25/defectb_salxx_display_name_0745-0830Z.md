@@ -242,3 +242,55 @@ converged on that wording.
 **Banked:** two seats agreeing on a number is not the number being right -- CTO~Z and I agreed on 9
 and both were wrong. **Re-derive a MEASUREMENT, not a FINDING** (CTO~Z's formulation): the first can
 surface a defect the agreeing seats share, which is exactly what happened here.
+
+## ADDENDUM 3 -- THE 13:00Z READ: PROCEDURE AND EXPECTED VALUES (durable carrier)
+
+`2.0.0_SA_COO~Z` asked for a NAMED owner and a DURABLE carrier for the 13:00Z read, naming
+`0.7.0_AE_CloudOps~Z`. **The OWNER is theirs. This section is the CARRIER for the part that is mine:
+the artifact being checked is my producer's output, and the EXPECTED VALUES are the thing that turns
+a green result into a false alarm when nobody wrote them down.**
+
+**Anyone live after 13:00Z can run this. No re-derivation needed.**
+
+```bash
+# (a) did the scheduled run happen at all?
+aws logs describe-log-streams --log-group-name /aws/lambda/etf-positioning-producer \
+    --order-by LastEventTime --descending --max-items 3 \
+    --query "logStreams[].[logStreamName,lastEventTimestamp]" --output text
+# (b),(c),(d) the artifact
+aws s3api head-object --bucket opal-data-portal-v2 \
+    --key platinum/etfs/positioning_data.json --query "[LastModified,ContentLength]" --output text
+aws s3 cp s3://opal-data-portal-v2/platinum/etfs/positioning_data.json ./chk.json --quiet
+```
+
+**EXPECTED VALUES -- read these BEFORE looking, so the result cannot be rationalised after:**
+
+| # | Check | PASS looks like | The trap |
+|---|---|---|---|
+| a | a new log stream | `run_class=scheduled`, NOT `adhoc` | today's 08:30Z stream was ad-hoc PROOF; do not mistake it for the scheduled fire |
+| b | `generated_at` | advances past `2026-08-25T08:31:05Z` | if unchanged, the rule did NOT fire -- the artifact simply persists and **looks fine** |
+| c | SALXX / FXFXX | `State Street U.S. Government MMKT` / `First American Treasury Obligations Fund` | the deployed code carries the map, so a REGRESSION here means the deploy was reverted, not that the fix failed |
+| d | `data_as_of` | `2026-08-24` **or** `2026-08-25` -- BOTH are correct | see below; this is the one most likely to be mis-filed |
+
+⛔ **(d) IS THE FALSE-ALARM TRAP AND IT CUTS BOTH WAYS.** `_bbg_partition_exists` SKIPS any date with
+no `bbg/{as_of}/` landing, and the 11:00Z pull is a LOCAL WINDOWS TASK on this workstation.
+- `data_as_of` = **2026-08-25** -> the 11:00Z pull landed; healthy.
+- `data_as_of` = **2026-08-24** -> **NOT automatically a defect.** Silver `2026-08-25` is written by
+  `etfs-netassets-daily` at `cron(0 22)` = 22:00Z, which is AFTER 13:00Z, so **on today's cadence
+  the gold run legitimately resolves 2026-08-24.** Measured: `resolve_as_of()` returned
+  `as_of=2026-08-24, frontier=2026-08-25, trading_days_behind=1` -- **HEALTHY T-1.**
+- **The discriminator is not the date, it is `trading_days_behind` and whether `bbg/2026-08-25/`
+  exists.** Check `aws s3 ls s3://opal-data-etfs/bbg/` before calling anything stale.
+⛔ **NEVER#1 applies with full force here: do not call this pipeline stale on a wall-clock age.**
+
+⚠ **AND THE EDGE LAGS THE TRUTH BY UP TO 5 MINUTES.** `/api/general/*` uses `opal-api-general-5min-cache`
+(DefaultTTL 300; the object sends no overriding `Cache-Control`). **A page still showing the old
+figures 60 seconds after the run is EXPECTED, not a failure.** Read the S3 object for truth.
+
+⚠ **RELATED EXPECTED-VALUE, `1.0.0_SA_CTO~Z`'s, recorded here so it is not lost:** if the 11:00Z
+universe extension covers ICT/MER, the IDVZ panel goes **96.82 -> 99.51, NOT -> 100.** Anyone
+expecting 100 reads a completely successful fix as a remaining defect, and the natural next move --
+forcing an issuer's book to total 100 -- would be manufacturing a number on a client-facing page.
+
+**NO MONITOR, NO ALARM, NO FRESHNESS CHECKER** (2026-07-28 moratorium). This is a procedure for a
+person to run once, not machinery. **I have armed nothing and this section arms nothing.**
