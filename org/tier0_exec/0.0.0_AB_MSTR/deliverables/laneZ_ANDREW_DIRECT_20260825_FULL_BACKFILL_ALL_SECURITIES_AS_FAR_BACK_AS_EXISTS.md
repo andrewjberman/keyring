@@ -6,7 +6,36 @@
 
 ---
 
-## VERBATIM
+## ⛔⛔ QUALIFIED BY HIM ~04:09Z, ~7 MINUTES AFTER THE WORD BELOW. READ THIS FIRST.
+
+**PHASE 2 (the deep per-security backfill) IS HELD. The title of this file names the UNQUALIFIED
+form and is now only half-true.** His qualification, VERBATIM AND COMPLETE:
+
+> "actually we maybe should not do that, need to assess how much data that would be. I would think
+> 100 securities of deep backfill would not be a data quota issue, but its the kind of thing that we
+> should do one time and then from here on out, we just add one incremental row of lookback and
+> recalculate, never do that big pull again"
+
+**THREE THINGS IT SETTLES:**
+- **ASSESS BEFORE PULLING.** The size existed before the pull did: `1.0.0_SA_CTO~Z` measured
+  **~800–900k rows, 5–6x the existing `bbg-testpull` archive**, ragged per security (AAPL 1982,
+  AZN 1999, BBSEY nothing before 2000). **His instinct to size it first was correct.**
+- ⭐ **IT IS A ONE-TIME SEEDING ACT, NOT A REPEATABLE OPERATION** — *"do it one time and then from
+  here on out, we just add one incremental row of lookback and recalculate, never do that big pull
+  again."* **That changes what gets BUILT:** the seeding path must be **idempotent and resumable**,
+  and **the daily increment is the thing that has to be right forever.**
+- **The archive therefore becomes a STANDING ASSET**, so its home and its KEYING matter more than a
+  throwaway pull's would. ⚠ **Tonight produced TWO separate defects from partitions named for the
+  wrong date (`:1375`, and the `history_topup` re-key). Carry that into the design rather than
+  discovering it a third time.**
+
+✅ **PHASE 1 IS UNAFFECTED AND STILL RUNS:** ~400 calendar days x 169 securities fills **every** current
+return window (`RETURN_WINDOWS` longest = `1Y` = `as_of - 365d`), is small, and sits well inside the
+terminal's free window before 07:00 local.
+
+---
+
+## VERBATIM (the 04:0xZ word, qualified above)
 
 > "Yes I want full backfill for all of them because we want to be able to produce as far back as
 > exists for the "Performance" views for these ETFS"
