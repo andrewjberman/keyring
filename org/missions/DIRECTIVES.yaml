@@ -324,7 +324,23 @@ directives:
       RESULTS IN (49@opalinvest.com + inflection@opalinvest.com FOUND; Cottonwood NONE -- at Andrew;
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
       (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
-      2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
+      2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution.
+      ANDREW-DIRECT 2026-08-25 ~16:2xZ at the CTO terminal, VERBATIM: 'D7 is effectively on hold,
+      however with that said, I want the Submit a Ticket sidebar item pulled off dashboard. That
+      whole functionality is broken and shouldnt even be on the dashboard.' (relayed 1.0.0_SA_CTO
+      70751; recorded by 0.0.0_AB_MSTR, register owner.) D7 IS ON HOLD AND ITS CLIENT-FACING SURFACE
+      IS BEING REMOVED -- 0.3.0_DT_TradingOperations spawned 16:3xZ on his word to pull the nav item
+      and /prod-deploy. NOTE THE LABEL, it matters: he said Submit a Ticket and THAT STRING DOES NOT
+      EXIST in portal (measured zero over 1,088 files). The item is 'Submit a Request',
+      portal/src/App.tsx:122, live on PROD and allowlisted to 49financial + cottonwood + demo
+      (inflection deliberately not) -- so a broken client-facing form was reachable by three partner
+      tenants.
+      THE NO-MEMBERS STATE ON THIS ROW IS NOW READ DIFFERENTLY: CTO 70746 flagged it as the SHARP
+      membership defect -- live legs, zero registered projects, the opposite condition to D5's honest
+      empty set. ON HOLD does not make the empty set correct; it makes it NON-URGENT, because there
+      is no longer active work whose record is missing. The defect stands as a REGISTER item, not a
+      staffing one, and it must NOT be closed by minting a project for held work. Contrast D5
+      (LD-0454), whose empty set is correct on its own terms."
   D8:
     title: "Model Portfolios Pipeline Fortification (NEW; repair-first)"
     directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
