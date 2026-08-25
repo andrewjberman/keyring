@@ -63,6 +63,28 @@ full census with denominators:
 | **PENDING** | report landed, awaiting adjudication | the normal loop: pull -> adjudicate -> land -> flip |
 | ADJUDICATED / NO_SEMANTIC_CHANGES | done | nothing |
 
+⛔ **ALSO READ THREE FIELDS THIS TABLE HAS NO STATE FOR. THE RUNNER WRITES THEM AND, UNTIL
+2026-08-25, THIS SKILL DID NOT KNOW THEY EXISTED** (`OPAL_KIMIPIPELINE-S4`). They ride ALONGSIDE
+`status`, not on it — a day can be `PENDING` **and** carry a superseded verdict, and the status
+alone cannot tell you:
+
+| Field | Meaning | Action |
+|---|---|---|
+| `readjudication_required: true` + `superseded_verdict{}` | a producer re-run OVERWROTE a prior CVO verdict; the block carries `{status, by, at, repo_commit, superseded_at}` | **NOT a fresh day.** Read the superseded verdict FIRST, then adjudicate the NEW report on its own merits. Record the supersession in the day record |
+| `superseded_check: "FAILED …"` | the runner could not READ the prior manifest before overwriting it | **the carry-forward is BLIND for that day** — a verdict may have been lost with no block to show it. Treat the day's history as unknown, not as clean |
+
+**AND THE ABSENCE OF ALL THREE PROVES NOTHING.** On a day with no prior verdict the runner's
+carry-forward returns `{}` and writes none of them — **so they are absent whether the mechanism is
+working or not.** The read is silent in both worlds; it is not a health check and must never be
+quoted as one. *(Measured 2026-08-25: 0 of 23 days carried any of the three, positive-controlled
+against `contract`=v2 — a correct and completely uninformative zero.)*
+
+**WHY THIS MATTERS TO THE ORACLE:** the ledger is this pipeline's ONLY miss-detector by design, so a
+day reset to `PENDING` after a real adjudication reads as un-adjudicated and the MSTR backstop
+false-fires on work that was in fact done. Producer mechanism + its own limits:
+`estate_report_runner.py` `_carry_forward_verdict()`. **DISARMED != REMEDIATED: the disarm stops NEW
+clobbers; the already-clobbered 2026-08-06 entry is a separate repair.**
+
 **Why manifest-first + epoch, stated so nobody reverts it:** the v1 contract wrote the manifest
 LAST, so a dying run left the day ABSENT — and the default-alarming gate failed because the
 alarming entry was written by the process that died (A GUARD MUST NOT SHARE A FAILURE MODE WITH
