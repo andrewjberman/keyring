@@ -160,3 +160,94 @@ before anyone else could. **It was not sufficient in a single instance.**
 
 *The author is structurally the last person able to see what their own fix did not cover.* Not
 through carelessness — through having the model that produced the artifact.
+
+
+---
+
+# PART II — the overnight round, 2026-08-25 00:00–04:30Z
+
+**Thirteen principles above came from six seats reviewing each other. These came from two external
+adversarial passes plus the instruments built in response to them — and the pattern shifted:
+Part I's defects were mostly in seat plans, PART II's ARE ALMOST ALL IN COORDINATOR PLACEMENTS AND
+IN THE INSTRUMENTS BUILT TO CATCH THEM.**
+
+## 14. A UNIFORM, CONFIDENT, WELL-FORMED ANSWER IS AN INSTRUMENT SIGNATURE, NOT A DEFECT SIGNATURE.
+
+*N of N failing is not N independent corruptions. It is one systematic difference.*
+
+**Test: before reporting a total or near-total failure, ask what single cause would produce exactly
+this uniformity** — and test that cause first.
+
+*Instances, same night: `sha256sum` reported 5 of 5 published files failing their own filename (a
+newline-normalisation difference, artifacts fine); a bare `except` produced "all 14 rejected".
+Both were caught by the author declining to send, on this reasoning alone.*
+
+## 15. A DIGEST WITHOUT ITS NORMALISATION IS NOT AN IDENTITY.
+
+The algorithm prefix says *how* it was hashed and still not *what* was hashed. LF-normalised text and
+raw bytes give different digests for the same file, and on a CRLF platform that is every file.
+
+**Publish both, each labelled.** Publishing only one makes the artifact unverifiable with the other
+party's standard tool — which is how a correct mechanism generates confident false findings.
+
+## 16. A VALIDITY CHECK CANNOT SEE A DELETION THAT REMOVES VALID CONTENT.
+
+Syntax passes. Schema parses. The self-test passes **on what remains**. Every check asks whether what
+is left is valid; **none asks whether something left.**
+
+**The only instrument that sees it is a size delta**, which is why byte counts belong in every report
+rather than being noise. *Instance: 7,535 bytes and a document's central object deleted, both controls
+green, caught solely because the author prints byte counts by habit.*
+
+## 17. A REPLACE THAT MATCHES NOTHING IS A NO-OP THAT REPORTS SUCCESS.
+
+String-based patching fails silently when the target has moved. The edit "succeeds", the file is
+unchanged, and the next verification reads the old state as the new one.
+
+**Patch by index or by a pattern you assert on first, and verify the specific change** — never a
+generic marker, which a neighbouring edit can satisfy.
+
+*Committed twice in one file in one hour, plus a verification that returned a false green by finding
+a marker left by an unrelated earlier correction.*
+
+## 18. PROVENANCE IS NOT CORRECTNESS.
+
+A ruling is binding; **a coordinator's translation of it into a contract is not.** A faithful citation
+can still alter subject, grain, authority, timing, failure direction, or scope.
+
+**A placement records BOTH the decision it descends from AND the interpretation applied**, or a
+reviewer can only check that the edge exists — never whether the translation drifted.
+
+*Found by an external reviewer, in an instrument I had built to catch coordinator defects and had
+exempted one class of my own placements from.*
+
+## 19. AXES FIX FUSION. THEY DO NOT FIX CARDINALITY.
+
+Separating conflated dimensions is necessary and does not touch *"one claim = one evidence record."*
+A claim resting on two runs is not supported by one honest record of either.
+
+**And the cardinality must declare its CONTEXT KEY — "3 distinct" is not a requirement until it says
+3 distinct WHAT.**
+
+*Three rounds of correct de-fusing left the overclaiming incentive untouched, because nobody had
+questioned the record-per-claim assumption.*
+
+## 20. AN ARTIFACT MUTATED IN PLACE IS AN ARTIFACT ITS CONSUMERS CANNOT TRUST.
+
+Publication must be transactional: draft → checks → digest → immutable version → **then** the pointer
+moves. Consumers hold the prior version until the new one passes.
+
+**The broken file is the visible failure; the SILENT one is a partially-edited file that still
+parses** — read, adopted, and reported against a shape that was mid-flight, with nothing to show it
+happened.
+
+---
+
+## The Part II observation, and it is about the coordinator
+
+**Every principle in Part II except 14 and 16 came from a defect in something I built or placed.**
+Two external passes found five; the instruments I built in response then found four more in each
+other and in themselves.
+
+*The seats reviewed each other rigorously all night and were right almost every time. The reviewer
+nobody had was mine.*
