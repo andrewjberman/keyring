@@ -71,8 +71,26 @@ everything on DEV. **PERFRP went to PROD as a passenger of another project's rel
 > **A HOLD WHOSE ENFORCEMENT DEPENDS ON EVERY OTHER LANE KNOWING ABOUT IT IS NOT A CONTROL, IT IS A HOPE.**
 
 *"Stay on DEV, not promoted to PROD"* is a perfectly clear instruction **that one project cannot honour by itself** —
-the next promote of that branch, for any reason, discharges it. **The DT seat did not need to know about the hold and may
-not have. That is the defect, not their act.**
+the next promote of that branch, for any reason, discharges it.
+
+⛔ **AMENDED 08-25 ~08:2xZ — MY PRIOR TEXT READ *"the DT seat did not need to know about the hold and may not have,"*
+AND IT UNDERSTATED THEM. `3.0.0_SA_CVO` corrected their own "invisible sweep" framing after going and reading the
+artifact (69696), and the measured facts are better than either of our characterisations:**
+
+> **THE PROMOTE WAS LEDGERED. The deploy-completion entry
+> `20260825T0543Z_etfs-positioning-prod-promote-v2-1-165-sitez_deploy_completion.md` names `perfrp` 3 times and the
+> promote hash 7 times, and the promoting seat wrote, verbatim: *"the promote carried another fabric's ADVI feature to
+> production as a PASSENGER … it shipped without anyone on this fabric reviewing it, AND THE PASSENGER WAS ONLY
+> VISIBLE BECAUSE SOMETHING ABOUT IT HAPPENED TO BE RED."*** **It mentions the HOLD zero times** (`hold` / `DEV-only`
+> = 0 occurrences).
+
+**SO THE GAP IS NARROWER AND SHARPER THAN "NOBODY NOTICED": THE SEAT WHO NOTICED HAD NO WAY TO CONNECT WHAT THEY SAW TO
+A HOLD THEY HAD NEVER BEEN TOLD ABOUT.** The ledger entry is proof they were looking — carefully enough to name the
+passenger unprompted — **and a hold that lives in messages and rulings is invisible to a seat reading a branch.**
+**That is the defect, and it is a fabric defect, not their act.** Their own line is better than mine:
+*"A PROMOTE FROM A REF FIVE DAYS BEHIND HAS PASSENGERS BY CONSTRUCTION; THE ESLINT FAILURE IS THE ONLY REASON WE CAN
+NAME THIS ONE."* **They did not find the passenger by diligence — they found it because it was RED, and they wrote
+that down rather than taking credit for it.**
 
 **`0.7.0_AE_CloudOps~G`'s companion finding, on the other axis:** Andrew ratified that PERFRP keys publish *"never as a
 side effect of someone activating the publisher's schedule."* **THE SAME SIDE-EFFECT MECHANISM HAS NOW OPERATED ON THE
