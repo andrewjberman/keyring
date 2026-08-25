@@ -310,6 +310,12 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     · deploy-completion ledger at `org/critical_paths/change_management/`. ⚠ **Terraform is NOT at one path on
     every device — resolve the binary, do not assume the baked path.** Every existing gate binds unchanged, and
     **owning the apply means owning NEVER#6's completion obligation, not escaping it.**
+27. ⛔ **ORDERING PRECONDITION (2026-08-25): THE DIRECTIVE ROW LANDS BEFORE ITS PROJECTS ARE MINTED.**
+    Since Andrew's ~18:24Z ruling, a project not attached to `org/missions/DIRECTIVES.yaml` is CLOSED,
+    not merely unrecorded -- so **a project minted before its row exists is BORN CONDEMNED**, by a
+    correct predicate meeting a correct project in the wrong order. Row first, projects second.
+    *Costs one ordering step. Does not apply to a project you are deliberately minting under an
+    existing row, nor to a re-mint of something the sweep closed (that is the recovery path).*
 27. **EVERY new directive/project runs the DIRECTIVE EXECUTION PIPELINE: register → purpose-level PRD → COO
     atom-decomp of the operative surfaces BEFORE any TO exists (proof-of-spec derives from decomp cells,
     aligned BOTH directions with printed denominators) → EXECUTE ON SPEC → CVO's surprise channel.**
