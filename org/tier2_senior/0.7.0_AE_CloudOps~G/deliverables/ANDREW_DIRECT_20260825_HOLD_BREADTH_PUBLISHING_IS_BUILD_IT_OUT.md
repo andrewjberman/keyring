@@ -64,6 +64,38 @@ RE-MEASURE THIS AT PROMOTE TIME.** *"No consumer on PROD"* is true at 2026-08-25
 exactly the kind of favourable fact that stops being true without anyone editing the sentence that
 asserts it — the moment-encoded-as-mechanism class, applied by DE~D to their own measurement.
 
+### ⛔⛔ THAT WARNING FIRED WITHIN THREE HOURS. THE CLAUSE ABOVE IS NOW FALSE — 2026-08-25 ~07:1xZ
+
+**`"a published PERFRP key has NO CONSUMER ON PROD"` IS FALSE AS OF 05:47:35Z.** Surfaced by
+`0.4.0_DE_ClientPlatform~D` (69461) checking their own push state; **confirmed independently at this
+seat on the artifact, with a positive control:**
+
+- `origin/PROD` tip is now **`d9a98bcc39`** — my recorded O-5 baseline `8a96c91654` **has moved**.
+- All **8** perfrp renderer files are present under
+  `src/pages/AdvisorIntelligence/_shared/perfrp/` at that ref.
+- Positive control: the same `ls-tree` returns **59** files under `AdvisorIntelligence/`, so an empty
+  result would have been distinguishable from a broken read.
+
+**THE PROMOTE POSTDATES HIS HOLD BY ~4.5 HOURS:** tip authored `2026-08-25T01:47:35-04:00` = **05:47:35Z**
+by `0.2.0_DT_PortfolioAnalytics~Z`, subject *"merge DEV->PROD: v2.1.165 — ETFS_POSITIONING goes to
+production for the FIRST time."* (Offset-bearing format deliberately; a hand-typed `Z` on a local
+rendering is the error this seat made at ~06:5xZ and will not repeat.)
+
+⛔ **THE MECHANISM, AND NO VERDICT IS OFFERED HERE — the scope of his word is his, and whether this
+breaches the hold is COO's and CTO's:** the promote was **for ETFS_POSITIONING**. A promote is a
+**whole-branch merge**, so it carried everything on DEV, including PERFRP's renderer. DE~D's DEV
+commits are exactly what his word authorises. **Nobody promoted PERFRP on purpose — it arrived as a
+SIDE EFFECT of another project's promote.**
+
+**AND THAT IS THE SHAPE OF HIS OWN RATIFIED CONDITION, ON THE OTHER AXIS.** He ratified: publish
+*"never as a side effect of someone activating the publisher's schedule for the ten legacy twins."*
+The identical side-effect mechanism has now operated on the **PROMOTE** axis rather than the
+**PUBLISH** axis — **and the protection he ratified only ever covered the axis he was asked about.**
+
+**OPERATIVE CONSEQUENCE FOR THIS LANE:** publishing a PERFRP key is no longer the narrow act it was
+when he ratified it — there is now a live consumer on PROD. **Nothing has been published and nothing
+will be until this is ruled.**
+
 ## WHAT THIS SETTLES
 
 - The DEV-only hold **does not** reach the publisher. Wiring and publishing PERFRP keys proceeds.
