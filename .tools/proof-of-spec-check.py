@@ -182,6 +182,38 @@ CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
 
 
+_TRACKED_TOS = None
+
+
+def _tracked_task_orders() -> set:
+    """Repo-relative paths of TRACKED task-order files, posix-normalised.
+
+    COO 67721 / 67951: a corpus read from the shared WORKING TREE lets a peer's half-written
+    file change this gate's verdict, and nothing in the verdict records which state it was
+    built against. ~190 dirty paths live here; uncommitted work is visible to peer instruments
+    the moment it hits disk, and the remedy is on the READER.
+
+    FAIL-CLOSED-TO-EMPTY IS DELIBERATE: if `git ls-files` cannot run, this returns an EMPTY
+    set, which makes the corpus empty and the gate ANNOUNCE rather than refuse. A gate that
+    cannot establish committed state must not refuse anyone's commit on a corpus it could not
+    read -- and callers print the corpus denominator, so an empty one is visible, not silent.
+    """
+    global _TRACKED_TOS
+    if _TRACKED_TOS is None:
+        try:
+            out = subprocess.run(
+                ["git", "ls-files", "--", "*/task_orders/*.md"],
+                cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+            _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
+        except Exception:  # noqa: BLE001
+            _TRACKED_TOS = set()
+    return _TRACKED_TOS
+
+
+def _is_tracked(rel: str) -> bool:
+    return rel.replace("\\", "/") in _tracked_task_orders()
+
+
 def _canonical_to_id(raw: str) -> str:
     """The bare TO id. to_id fields carry trailing issuer/amendment prose in practice
     ('ETFS_POSITIONING.TO-2 (issuer ... @10f94e4f13; Amendment C ...)'), so the id is
@@ -216,14 +248,25 @@ def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
         if not p.is_absolute():
             p = WORKSPACE / declared
         if p.is_file():
+            rel = declared.replace("\\", "/")
+            if not _is_tracked(rel):
+                # EXISTS but UNCOMMITTED. Not a false citation -- an unstable one. Enforcing
+                # alignment against a half-written TO is the hazard itself, so this announces
+                # rather than either refusing or silently enforcing.
+                return None, (f"decomp_ref.to_ref '{declared}' resolves to an UNTRACKED file "
+                              f"-- committed state is required to enforce against it"), 0
             return p, "declared via decomp_ref.to_ref", 0
         return None, f"decomp_ref.to_ref '{declared}' does not resolve to a file", 0
     cid = _canonical_to_id(str(inst.get("to_id", "")))
     if not cid:
         return None, "instance carries no parseable to_id", 0
     needle = 'id="' + cid + '"'
+    tracked = _tracked_task_orders()
     hits, scanned = [], 0
     for f in (WORKSPACE / "org").rglob("task_orders/*.md"):
+        rel = str(f.relative_to(WORKSPACE)).replace("\\", "/")
+        if rel not in tracked:
+            continue          # never ADOPT a peer's in-flight TO as governing authority
         scanned += 1
         try:
             if needle in f.read_text(encoding="utf-8", errors="replace")[:8000]:
@@ -402,7 +445,12 @@ def alignment_check(inst: dict) -> tuple[list, list]:
         #       pipeline project's instance must be joinable to its TO. On a project
         #       with no dep_stage it stays an announce, because there is nothing to
         #       join to and no claim was made.
-        if str(inst.get("decomp_ref", {}).get("to_ref", "")).strip():
+        if "UNTRACKED" in note:
+            frames.append(
+                "alignment: NOT EVALUATED -- the governing TO exists but is UNCOMMITTED. "
+                "A peer's (or this seat's) in-flight edit must not become the authority a "
+                "verdict is built against; commit it and re-run. Not a violation.")
+        elif str(inst.get("decomp_ref", {}).get("to_ref", "")).strip():
             v.append(f"decomp_ref.to_ref: {note} -- a declared reference that does not "
                      f"resolve is a false citation, and the alignment join CANNOT RUN "
                      f"without it; this is UNKNOWN, not PASS")

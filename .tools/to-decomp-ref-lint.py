@@ -123,6 +123,38 @@ def dep_stage(code: str) -> str | None:
         return None
 
 
+_TRACKED_TOS = None
+
+
+def _tracked_task_orders() -> set:
+    """Repo-relative paths of TRACKED task-order files, posix-normalised.
+
+    COO 67721 / 67951: a corpus read from the shared WORKING TREE lets a peer's half-written
+    file change this gate's verdict, and nothing in the verdict records which state it was
+    built against. ~190 dirty paths live here; uncommitted work is visible to peer instruments
+    the moment it hits disk, and the remedy is on the READER.
+
+    FAIL-CLOSED-TO-EMPTY IS DELIBERATE: if `git ls-files` cannot run, this returns an EMPTY
+    set, which makes the corpus empty and the gate ANNOUNCE rather than refuse. A gate that
+    cannot establish committed state must not refuse anyone's commit on a corpus it could not
+    read -- and callers print the corpus denominator, so an empty one is visible, not silent.
+    """
+    global _TRACKED_TOS
+    if _TRACKED_TOS is None:
+        try:
+            out = subprocess.run(
+                ["git", "ls-files", "--", "*/task_orders/*.md"],
+                cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+            _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
+        except Exception:  # noqa: BLE001
+            _TRACKED_TOS = set()
+    return _TRACKED_TOS
+
+
+def _is_tracked(rel: str) -> bool:
+    return rel.replace("\\", "/") in _tracked_task_orders()
+
+
 _TOCHECK = None
 
 
@@ -170,19 +202,23 @@ def _pipeline_projects() -> set:
     return out
 
 
-def _open_to_index(exclude: set) -> tuple[dict, int, int, int]:
+def _open_to_index(exclude: set) -> tuple[dict, int, int, int, int]:
     """{serial: {PROJECT: [to_id]}} over OPEN TOs on PIPELINE-REGISTERED projects.
     Returns (index, tos_scanned, holdings_indexed, unclassified_serial_occurrences)."""
     pipeline = _pipeline_projects()
     resolve = _to_check_resolver()
     if resolve is None:
-        return {}, 0, 0, -1
+        return {}, 0, 0, -1, 0
     idx: dict = {}
-    scanned = held = unclassified = 0
+    scanned = held = unclassified = untracked_skipped = 0
+    tracked = _tracked_task_orders()
     for f in (WORKSPACE / "org").rglob("task_orders/*.md"):
         rel = str(f.relative_to(WORKSPACE)).replace("\\", "/")
         if rel in exclude:
             continue
+        if rel not in tracked:
+            untracked_skipped += 1
+            continue          # a peer's in-flight file is NOT a holding
         scanned += 1
         try:
             text = f.read_text(encoding="utf-8", errors="replace")
@@ -201,7 +237,7 @@ def _open_to_index(exclude: set) -> tuple[dict, int, int, int]:
         for serial in set(assignees):
             idx.setdefault(serial, {}).setdefault(code, []).append(tid)
             held += 1
-    return idx, scanned, held, unclassified
+    return idx, scanned, held, unclassified, untracked_skipped
 
 
 def seating_check(new_tos: list) -> tuple[list, list]:
@@ -238,11 +274,12 @@ def seating_check(new_tos: list) -> tuple[list, list]:
                       "prose. That fallback is what produced a false accusation against a lane "
                       "a TO had explicitly EXCLUDED. UNKNOWN is not a pass and not a refusal.")
         return v, frames
-    idx, scanned, held, unclassified = _open_to_index(
+    idx, scanned, held, unclassified, untracked = _open_to_index(
         exclude={rel for rel, _, _ in new_tos})
     frames.append(f"seating-frame: indexed {held} open-TO holding(s) across {len(idx)} seat "
-                  f"instance(s), from {scanned} existing TO file(s), scoped to "
-                  f"{len(_pipeline_projects())} pipeline-registered project(s); "
+                  f"instance(s), from {scanned} TRACKED TO file(s) ({untracked} untracked "
+                  f"in-flight file(s) SKIPPED -- a peer's uncommitted draft is not a holding), "
+                  f"scoped to {len(_pipeline_projects())} pipeline-registered project(s); "
                   f"{unclassified} serial occurrence(s) UNCLASSIFIED (not read as assignments, "
                   f"and not read as absences either)")
     for rel, code, text in new_tos:

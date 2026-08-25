@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -65,7 +66,26 @@ def _ws(tmp: Path, tos: list) -> Path:
             json.dumps(body), encoding="utf-8")
         (d / f"{code}.{tid}.fixture.md").write_text(
             TO.format(code=code, tid=tid, issued=issued, status=status), encoding="utf-8")
+    _commit_fixtures(tmp)
     return d
+
+
+def _git(ws: Path, *args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["git", "-c", "user.name=battery", "-c", "user.email=battery@opal.agent", *args],
+        cwd=ws, capture_output=True, text=True)
+
+
+def _commit_fixtures(ws: Path) -> None:
+    """The prior TOs must be TRACKED, because the gate now reads committed state only.
+
+    Fixing the FIXTURE rather than the check: pointing the tracked-state read at the live
+    repo would test a path production never takes AND destroy the sealed property. Same
+    call as the vintage repair, and the reason the batteries stay independently re-runnable.
+    """
+    _git(ws, "init", "-q")
+    _git(ws, "add", "-A")
+    _git(ws, "commit", "-q", "-m", "fixture corpus")
 
 
 def _subject(tmp: Path, code: str, tid: str, issued: str):
@@ -159,6 +179,35 @@ def main() -> int:
         _ws(tmp, [("PROJA", "TO-1", "0.9.9_XX_Fixture~A", "WAITING-ON-SOMETHING", True)])
         v, f = mod.seating_check(_subject(tmp, "PROJB", "TO-1", "0.9.9_XX_Fixture~A"))
         check("unknown status treated as OPEN (fail-closed) -> REFUSED", bool(v), str(v)[:160])
+
+    # ---- ARM 8: COMMITTED-STATE FILTER (COO 67721/67951) -- the PAIRED control ----
+    # The SAME holding file, tracked vs untracked, must give DIFFERENT verdicts. Without the
+    # pair this arm could pass merely because the corpus is empty for some other reason --
+    # which is exactly how the seating check was inert for its first hour.
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        mod.WORKSPACE = tmp
+        mod.PROJECTS = tmp / "org" / "projects"
+        mod._TRACKED_TOS = None
+        _ws(tmp, [("PROJA", "TO-1", "0.9.9_XX_Fixture~A", "ACTIVE", True)])   # commits it
+        v_tracked, _ = mod.seating_check(_subject(tmp, "PROJB", "TO-1", "0.9.9_XX_Fixture~A"))
+        # now add an UNTRACKED second holding on a THIRD project -- a peer's in-flight draft
+        extra = tmp / "org" / "tier2_senior" / "seat" / "task_orders" / "PROJC.TO-1.fixture.md"
+        (tmp / "org" / "projects" / "PROJC.json").write_text(
+            json.dumps({"code": "PROJC", "status": "active", "dep_stage": "EXECUTING"}),
+            encoding="utf-8")
+        extra.write_text(TO.format(code="PROJC", tid="TO-1",
+                                   issued="0.9.9_XX_Fixture~A", status="ACTIVE"),
+                         encoding="utf-8")
+        mod._TRACKED_TOS = None
+        v_untracked, f_u = mod.seating_check(
+            _subject(tmp, "PROJB", "TO-2", "0.9.9_XX_Fixture~A"))
+        check("committed holding still counts (filter is not inert)", bool(v_tracked),
+              str(v_tracked)[:120])
+        check("UNTRACKED peer draft does NOT become a holding",
+              not any("PROJC" in x for x in v_untracked), str(v_untracked)[:160])
+        check("the skip is COUNTED in the frame, not silent",
+              any("untracked in-flight file(s) SKIPPED" in x for x in f_u), str(f_u)[:200])
 
     width = max(len(n) for n, _, _ in results)
     for name, verdict, detail in results:
