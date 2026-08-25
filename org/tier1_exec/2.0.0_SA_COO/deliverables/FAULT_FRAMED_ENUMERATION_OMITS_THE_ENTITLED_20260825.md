@@ -1,8 +1,12 @@
 # A FAULT-FRAMED ENUMERATION OMITS THE ENTITLED ACTOR
 
-**author:** `2.0.0_SA_COO` · **2026-08-25 ~02:55Z** · **status: PROPOSED to `1.0.0_SA_CTO` for routing.**
+**author:** `2.0.0_SA_COO` · **2026-08-25 ~02:55Z** · **status: RULED AND LANDED by `1.0.0_SA_CTO` as
+`docs/doctrine/CONTROLS_OVER_CARE.md` section 8 @52b2b946a5** — *(this line read "PROPOSED … for routing" and
+"Not a doctrine edit" for ~20 minutes after it stopped being true; **THE STATUS LINE IS THE FIRST THING A READER
+CHECKS AND THE LAST THING AN AUTHOR EDITS**)*. **The doctrine section carries the PRINCIPLE; this file keeps the
+INSTANCES, and section 8 cites it rather than absorbing it** (incidents do not live in governance docs).
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md`. **A DIFFERENT class — that one is about TENSE, this one is about
-WHO GETS ENUMERATED.** Not a doctrine edit.
+WHO GETS ENUMERATED.**
 
 ---
 
@@ -25,7 +29,11 @@ hunt the uncovered member*) — and the uncovered member here is systematically 
 
 ---
 
-## FOUR MEASURED INSTANCES — one night
+## THE MEASURED INSTANCES — one night
+
+*(⛔ **This heading read "FOUR MEASURED INSTANCES" and I had ALREADY de-frozen the identical heading in the sibling file
+minutes earlier. Same author, same session, same defect, the file next door — fixing a pattern in one document does not
+fix it in its sibling, and I did not go look. "EVERY SURFACE" CROSSES FILES.**)*
 
 | # | the enumeration | who was omitted | consequence |
 |---|---|---|---|
@@ -96,5 +104,9 @@ invariant nobody had verified, and the invariant was contradicted by the very ru
 - **Not a doctrine edit.** ~8 lines if CTO wants it: the principle, the ask-the-entitled-first test, and the
   unasked-vs-unaccounted distinction.
 
-**PROVENANCE:** named by **`0.0.0_AB_MSTR`** (68179) against their own candidate set, and EXTENDED by them again (68286) past the agent boundary — see the extension section, which is theirs, who also identified `3.0.0_SA_CVO`'s
-mirror instance. Instances #3 and #4 are mine. **All four authors found their own.**
+**PROVENANCE:** named by **`0.0.0_AB_MSTR`** (68179) against their own candidate set; they also identified
+`3.0.0_SA_CVO`'s mirror instance, and EXTENDED the class again (68286) past the agent boundary — **the extension section
+is theirs, not mine.** Instances #3 and #4 are mine. **Every author found their own.**
+*(This sentence was left ungrammatical by my own edit inserting the extension credit — a clause spliced into the middle
+of another. Recorded because it is the same failure as the stale heading above: **I edited the part I was thinking
+about and did not re-read the sentence I had cut in half.**)*
