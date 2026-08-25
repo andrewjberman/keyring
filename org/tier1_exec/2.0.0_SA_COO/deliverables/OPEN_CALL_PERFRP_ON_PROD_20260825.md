@@ -114,12 +114,22 @@ needed.** The slot is passed **UNCONDITIONALLY**; no branch renders nothing (DE~
 Notes        PII-EXCLUDED-PERMANENT
 Description  NO-SOURCE-TODAY
 ```
-**THESE ARE STATUS VALUES WE MINTED FOR A SPEC TONIGHT.** Andrew ratified them as **DECLARED-ABSENCE STATES IN A
-SPECIFICATION** — a boundary telling a future SEAT not to "fix" the gap. **NOBODY RATIFIED THEM AS DISPLAY COPY, and
-that conversation was explicitly about the spec's enumeration, not the card's face.**
-> ⛔ **`PII-EXCLUDED-PERMANENT` IS THE WORST OF THE SET BY SOME DISTANCE: TO AN ADVISOR IT DOES NOT READ AS AN INTERNAL
-> STATE NAME — IT READS AS A STATEMENT ABOUT HOW WE HANDLE THEIR CLIENTS' PERSONAL DATA. We would not choose that
-> sentence for a client surface in any deliberation, and it is on one today.**
+⛔⛔ **CORRECTED AT ~07:30Z — I CARRIED A FALSE CLAIM ABOUT WHAT ANDREW APPROVED, IN AN ESCALATION TO HIM. HE WAS SHOWN
+THESE EXACT STRINGS AND HE RATIFIED THEM AS THE CARD'S FACE.** The `/open-calls` card put to him at 03:38Z carries **BOTH
+TOKENS AND THE PHRASE "ON ITS OWN FACE"**, verbatim: *"THE CARD NAMES BOTH ABSENCES ON ITS OWN FACE with DISTINCT
+reasons — Notes = PII-EXCLUDED-PERMANENT (a boundary, never to be 'fixed'), Description = NO-SOURCE-TODAY (an ordinary
+gap, re-openable)."* **His answer: *"rec accepted."*** Token census over the call+REC block: **2.**
+**A `/open-calls` CARD IS ONE ARTIFACT — the CALL on top, the REC beneath an internal divider — SO THE REC HALF IS PART
+OF WHAT HE READ.** *(Measured by `0.4.0_DE_ClientPlatform~D` from their own record; `3.0.0_SA_CVO`, whose claim it was,
+has WITHDRAWN IT IN FULL.)*
+> ⛔ **SO THE DISPLAY COPY IS RATIFIED, NOT ACCIDENTAL — AND THIS SUBSTANTIALLY DE-ESCALATES THE ITEM. The strings on
+> those faces are HIS CHOICE. What reached PROD early is the SURFACE, not unapproved copy.**
+**PRIOR TEXT, NOW FALSE AND STRUCK: *"nobody ratified them as display copy, and that conversation was explicitly about
+the spec's enumeration, not the card's face."* I did not verify it before putting it in a card FOR HIM about HIS OWN
+DECISION — the one claim in this document I was least entitled to carry second-hand.**
+*(`3.0.0_SA_CVO`'s reading — that to an advisor `PII-EXCLUDED-PERMANENT` reads as a statement about client data handling
+rather than an internal state name — **is preserved as a CONCERN worth his attention, NOT as an unapproved-copy claim.
+He chose it with the strings in front of him.**)*
 
 ⛔ **AND NO LEVER ANYONE CURRENTLY HOLDS REMOVES IT (`0.7.0_AE_CloudOps~G` 69525, killing a false comfort they were
 uniquely placed to see):** the shells render on `availableLeaves` being **EMPTY — which is the state their restraint
