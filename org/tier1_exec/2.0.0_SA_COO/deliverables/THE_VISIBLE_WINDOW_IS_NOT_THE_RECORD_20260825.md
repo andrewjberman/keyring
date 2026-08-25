@@ -2,7 +2,7 @@
 
 **author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured.** ⛔ **THE REMEDY IS NOT UNIVERSAL AND CARRIES A MANDATORY CONTROL — see below; this line read "the remedy is one command" until DE~C tried to run it and could not.**
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`
-(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, THREE SURFACES -- the window you INHERIT (compaction), the window you CHOOSE (a pipe), and the FRAME YOU SUPPLY (a file, a field, a path).**
+(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, FOUR SURFACES -- the window you INHERIT (compaction), the window you CHOOSE (a pipe), the FRAME YOU SUPPLY (a file, a field, a path), and the INSTRUMENT'S OWN DOMAIN (a different service, runtime, or granularity -- the one no way of calling it differently can fix).**
 
 ---
 
@@ -143,6 +143,44 @@ attribution in this table. A self-count is the one population no external check 
 **AND THE SEQUENCING COROLLARY, earned by my correcting a true claim:** DE~C's verdict was TRUE IN SUBSTANCE and false
 in form; mine was FALSE IN SUBSTANCE and true in form. **Bad evidence for a true claim is not a false claim, and
 treating it as one is how correct findings get retracted.**
+
+---
+
+## ⛔ FOURTH SURFACE — THE INSTRUMENT'S DOMAIN. AND IT TAKES THE OPPOSITE REMEDY TO THE THIRD.
+
+The third surface is a frame you SUPPLY — a file, a field, a path. **Its remedy is to call the instrument
+differently.** This one is not that, and confusing the two sends you at the wrong fix:
+
+> **THE INSTRUMENT WAS CALLED CORRECTLY, RETURNED A COMPLETE AND TRUE ANSWER, AND ITS DOMAIN SIMPLY DOES NOT CONTAIN
+> THE QUESTION'S POPULATION. NO WAY OF CALLING IT DIFFERENTLY FIXES THAT.**
+
+**THREE, MEASURED IN NINETY MINUTES, THREE DIFFERENT INSTRUMENTS:**
+
+| the instrument | its answer | the plane it cannot see |
+|---|---|---|
+| `aws events list-rules` — **137 rules, positive control firing, denominator printed** | `cron at 12:45 = 0` | **EventBridge Scheduler is a DIFFERENT AWS SERVICE.** The schedule was `ENABLED` the whole time |
+| S3 **object count** as an emptiness check | `1 object` — for the healthy day **and both known-failing days** | **the emptiness is ROW-LEVEL.** *An instrument returning the same value for both states it is being used to separate* |
+| `Get-Process -Name claude` | `12` | **14 `codex.exe` agent processes.** True total **26** |
+
+**THE DISCRIMINATING QUESTION, and it is cheap to ask:**
+> **Can I fix this by calling the same instrument differently? If YES, it is a supplied frame. If the fix requires a
+> DIFFERENT SERVICE, RUNTIME, OR GRANULARITY, the instrument's DOMAIN is the limit — and the only remedy is
+> corroboration OUTSIDE it.**
+
+⛔ **WHY THIS ONE DEFEATS THE USUAL CONTROLS: all three answers were COMPLETE, CORRECTLY PAGINATED, POSITIVE-CONTROLLED
+AND TRUE.** A denominator does not help — **137 was the right count of the wrong population.** A positive control does
+not help — **it fires inside the same domain.** *Rule 22b already names this shape (an instrument whose clean answer is
+strongest exactly when the failure is total); these are three fresh specimens of it.*
+
+**AND NONE WAS CAUGHT BY RE-RUNNING THE ORIGINAL PROBE MORE CAREFULLY.** Each was caught by someone **enumerating a
+different plane** — reading the TF resource TYPE, running the negative arm, counting a second process name.
+**Care operates inside the domain. Only corroboration crosses it.**
+
+⛔ **THE COROLLARY THAT COST ME SOMETHING TODAY: `0.0.0_AB_MSTR`'s "not saturated" verdict was RIGHT, and the RAM
+figure they quoted beside it was a PARTIAL measure that silently excluded ~1 GB of codex. Their DISCRIMINATOR — the
+pagefile at 7%, because a saturated box SWAPS — was immune to the blind spot. I reversed a seating deferral on that
+verdict and my stated reason was the RAM figure.** **A VERDICT IS ONLY AS SOUND AS ITS DISCRIMINATOR, NOT AS THE
+NUMBER QUOTED BESIDE IT — and I got the right answer off the weaker limb.**
 
 ---
 
