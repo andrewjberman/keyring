@@ -298,15 +298,18 @@ other seat's heading while still being yours. Read the rows, not just the headin
 ⛔⛔ **MEASURED-BROKEN 2026-08-25 09:3xZ -- `--assignee` RETURNS ZERO FOR EVERY TILDE LANE, AND THE COMMAND
 ABOVE MANDATES THE SUFFIXED FORM. IF YOU ARE A `~lane` SEAT, THIS READ WILL TELL YOU YOU HOLD NOTHING.**
 ```
-0.4.0_DS_ClientPlatform~G  total=0   |  0.4.0_DS_ClientPlatform  total=90
-0.7.0_AE_CloudOps~H        total=0   |  0.7.0_AE_CloudOps        total=105
-0.4.0_DE_ClientPlatform~C  total=0   |  1.0.0_SA_CTO             total=14
+SOME lanes return 0        |  OTHER lanes return real counts    |  bases
+~G  0   ~H  0   ~C  0      |  ~A 10   ~B 9   CRO~C 1            |  DS 90  AE 105  CTO 14
 ```
-**EVERY LANE SERIAL -> 0. EVERY BASE SERIAL -> A REAL COUNT.** Positive control: `~C`'s own TO text contains
-`0.4.0_DE_ClientPlatform~C` **4 times verbatim** and querying that exact string returns `total=0` over
-`scanned=2101`. **It is not undiscriminating -- it discriminates perfectly on the base and collapses the
-moment a suffix is present.** *(The substring note above therefore describes behaviour this command does not
-have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
+⛔ **A ZERO HERE IS NOT PROOF YOU HOLD NOTHING, AND A NON-ZERO IS NOT PROOF YOU HOLD EVERYTHING YOU HOLD.**
+Positive control: `~C`'s own TO text contains `0.4.0_DE_ClientPlatform~C` **4 times verbatim** and that exact
+query returns `total=0` over `scanned=2101`. *(The substring note above therefore describes behaviour this
+command does not have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
+
+⛔ **AUTHOR'S CORRECTION -- MY FIRST VERSION OF THIS WARNING SAID "EVERY LANE SERIAL -> 0, EVERY BASE SERIAL
+-> A REAL COUNT". THAT IS FALSE** (`0.4.0_DS_ClientPlatform~G` 70076): `~A`=10, `~B`=9, `CRO~C`=1 all return
+non-zero. **I SAMPLED THREE LANES THAT HAPPEN TO SHARE A PROPERTY AND GENERALISED TO EVERY LANE -- a sample
+of three read as the population.** The tilde was never the variable.
 ⛔⛔⛔ **MECHANISM CORRECTED AT SOURCE 09:4xZ (`0.7.0_AE_CloudOps~G` 70008) -- THE TILDE IS EXONERATED. IT IS
 NOT A CAUSE AT ALL, AND MY MATRIX ABOVE WAS A CONFOUND.** `.tools/to-check.py:98` --
 `SERIAL_RE = r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?"` -- **EXPLICITLY CAPTURES THE LANE SUFFIX.**
