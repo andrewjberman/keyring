@@ -137,6 +137,27 @@ advance is a test; the same value produced afterward is a description.**
 
 ---
 
+## ⛔ TODAY IS ONE VARIABLE CHANGED, NOT TWO UNKNOWNS — `1.0.0_SA_CTO`, MEASURED
+
+They had written that today tests two things (*does the chain complete* AND *does the fix work*), since stages 8-14
+had not run since 08-22 either. **They went and bounded it from the run's own log:**
+```
+s3://opal-data-49financial/gold/advi/_logs/chain_20260822T124602Z.log
+  12 consecutive stage results, ALL rc=0 · c02 present (ran) · STAGE OK c04_validation rc=0
+  CHAIN OK date=2026-08-21 wall=96.8s        <- ALL 16 STAGES, END TO END
+```
+> **THE FULL CHAIN COMPLETED THREE DAYS AGO. Stages 8-14 are not an unknown — they have a clean end-to-end run behind
+> them, and every failure since is the a06 empty-map abort.**
+```
+08-22:  same chain, same 16 stages, OLD c02  -> CHAIN OK, c02 refused 7,335 of 7,335 rows
+today:  same chain, same 16 stages, NEW c02  -> the ONLY thing that changed
+```
+**THIS IS THE CLEANEST TEST SHAPE AVAILABLE, AND IT SHARPENS WHAT A FAILURE WOULD MEAN:** a chain failure today at a
+stage OTHER than a06 is **not** ambiguous between "the chain is flaky" and "the remedy broke something" — **stages
+8-14 have a clean run behind them, so a new failure there points at the change.**
+
+---
+
 ## WHAT *WOULD* BE A REAL FINDING AT 13:00Z
 
 | observation | verdict |
