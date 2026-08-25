@@ -208,3 +208,76 @@ would be worse than never having run the test.
 landed DS work. Routed to CTO with DS~G and CVO copied. Rule 27: **BLOCKING x INERT.**
 
 **Nothing published. Zero PERFRP keys served. No schedule enabled, no document created, no entry removed.**
+
+---
+
+## ANDREW-DIRECT ~08:5xZ — THE BRANCH HALF IS RELEASED. THE DATA HALF IS THE WHOLE OF IT NOW.
+
+**RELAY, not received at this terminal.** Andrew-direct at the base `1.0.0_SA_CTO` terminal,
+2026-08-25 ~08:5xZ, relayed to this seat as 69835. Recorded here because it closes a question this
+record escalated.
+
+> **"I'm fine with it on PROD, let's just get the data part sorted"**
+
+### WHAT IT CLOSES — the question THIS record raised at 07:1xZ
+
+The ⛔⛔ block above ends *"Nothing has been published and nothing will be until this is ruled."*
+**IT IS NOW RULED: ACCEPT, NO REVERT.** The PERFRP renderer stays on PROD, nobody reverts anything,
+nobody holds a promote. CTO's own REC was REVERT and he ruled the other way; that is the end of it.
+
+### ⛔ WHAT IT DOES NOT CLOSE
+
+His 01:1xZ condition had two halves — *"stay on the DEV branch not promoted to PROD **until we know
+the data pipeline and all underlying data is verified end to end**."* **He released the BRANCH half.
+He did not release the DATA half, and "let's just get the data part sorted" positively asserts the
+data is NOT sorted.**
+
+**THE PUBLISH GATE STANDS AT THIS SEAT. ZERO PERFRP LEAVES SERVED REMAINS THE CORRECT STATE.**
+Reading this as a general lift would inverse his sentence: he removed the half that was protecting
+nothing and pointed at the half that is.
+
+### ⛔ AND IT UPGRADES THE PROTECTION THIS RECORD FOUND MISSING — the correction block above still stands
+
+The correction block established that the condition was holding on a DISABLED schedule and a MISSING
+SSM document — **an incomplete build, not a guard.** That measurement is unchanged and every number in
+it reproduces.
+
+**What changed is that there is now an EXPLICIT SOVEREIGN HOLD sitting on top of it.** A stated "the
+data is not sorted" is a real control in a way that unfinished infrastructure never was. **The
+accidental protection did not become a guard; a guard arrived beside it.**
+
+`3.0.0_SA_CVO` filed the finding as **ADVI_PERFRP-S16 @e3799ba2bf** and their reading is the one to
+carry: his ruling **SHARPENS** S16 rather than mooting it, because the half he kept is precisely the
+half whose only structural protection is work nobody has finished. The available misread — *"he is
+fine with PROD, so the PERFRP caution is relaxing"* — is exactly backwards.
+
+**Standing unchanged: BLOCKING x INERT.** The dispatch document still does not exist.
+
+---
+
+## ⛔ SELF-CORRECTION — MY ENTRY COUNTS IN THE CORRECTION BLOCK WERE UNDERCOUNTED BY ONE
+
+The correction block above is right in every load-bearing respect — **all 11 PERFRP families wired,
+only Transactions deferred, the mechanism gone** — and those figures are unaffected. But the
+registry TOTALS I derived while working were wrong, and the mechanism is worth more than the numbers:
+
+| | I counted | truth |
+|---|---|---|
+| EMITTERS entries, pre-PERFRP (`1c9c3501bc`) | 11 | **12** |
+| EMITTERS entries, at HEAD | 22 | **23** |
+
+**MY PREDICATE WAS `^    "[a-z0-9_]+":` AND THE REGISTRY CONTAINS A HYPHENATED KEY** —
+`"clients-tab-slim"` (`d_publisher_port.py:119`). The character class could not match it, so the sweep
+dropped exactly one entry and **returned a confident, plausible, uncaveated number.** That is Rule 21's
+undercount hazard precisely: a zero invites suspicion and an 11 does not.
+
+**IT WAS CAUGHT BY THE MEMBER LIST, NOT BY CARE.** `PUBLISHER_PRESTATE` in `perfrp_emitters.py`
+independently says 12; printing every candidate line then showed an entry whose `"script"`/`"legacy"`
+lines were present with **no key line above them** — the shape of a key the predicate could not see.
+A count alone could never have shown that.
+
+*(Also measured, and reported to its owner rather than fixed here: `perfrp_emitters.py`'s comment cites
+`d_publisher_port.py:566-568` for the derived denominator. That was accurate at the 2026-08-21 vintage
+and points at unrelated code today — the print is at `:627`. A line citation without a vintage.
+My first hypothesis, that my own commit moved it, was wrong: the full history shows 504 -> 545 -> 570
+-> 607 -> 627 across five vintages.)*
