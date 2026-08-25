@@ -381,3 +381,53 @@ directives:
       ADVI_TAXSMA -> PFMG_TAXSMA -> OPAL_TAXSMA, per OPAL_TAXSMA.json renamed_from). Grounding,
       the Rule-25 ABANDONED-vs-KEY-MIGRATED discriminator, and the OPEN CALL on whether
       OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454."
+  D10:
+    title: "Global Pipeline Structure (NEW; canon-first, pipeline by pipeline)"
+    directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
+    placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree."
+    members:
+      subgroups: []
+      projects: []
+    stance: "MINTED BY ANDREW HIMSELF 2026-08-25 ~18:4xZ at the CTO terminal (relayed 1.0.0_SA_CTO
+      71188; PRD @afcac062ce). VERBATIM: 'Ok let''s create this under Directive 10, this will be
+      Global Pipeline Structure. The premise is canonizing how things are ingested, taxonomy of
+      ingestion/bucket structure/naming, bronze always raw, silver always event triggered typed
+      parquet, both of which are staying in opal-data-assets. gold is always a per product or per
+      firm bucket depending (i will define which case), lambda pull from silver to gold unless its
+      really obnoxious/heavy and needs ec2, gold stays in parquet form. From here, there is a portal
+      publisher that pulls these things into platinum serving layer in opal-data-portal-v2, this
+      will be a json serving file format. I want to essentially go pipeline by pipeline, terraform
+      by terraform, and canonize every single thing, in this exact pattern. If there are exceptions,
+      then I will acknowledge what those are and we keep some kind of record of that with details.'
+      And, widening it himself: 'It''s actually bigger than gold, its a global taxonomy and structure
+      directive.'
+      MEMBER SET IS EMPTY AND THAT IS CORRECT, NOT A DEFECT. D10 is a MACRO -- several projects, one
+      per pipeline family -- and the first cannot be scoped until he answers D10-1. This row follows
+      the D5 precedent ruled today (LD-0454): an empty member set is honest where a plausible one is
+      not, and it must NOT be filled to make the row look complete.
+      THREE OPEN SOVEREIGN ITEMS, all reserved to him and none inferable:
+        D10-1  which scopes are PRODUCT-shaped vs FIRM-shaped. He reserved it in the same breath --
+               'i will define which case'. Nothing registers under D10 until this lands.
+        D10-2  the legacy bd / cot / inf disposition. Each carries a COMPLETE five-tier stack
+               (measured), so this is a real migration question and not a cleanup.
+        D10-3  the measurable threshold for 'really obnoxious/heavy' that sends a silver->gold pull
+               to EC2 rather than lambda.
+      ROW MINTED BEFORE ANY MEMBER BY DESIGN. Under his ~18:24Z membership ruling a project not
+      attached to this file is closed; a D10 project minted before this row existed would have been
+      swept on day one. Row first, projects second -- CTO flagged the ordering and it is the reason
+      this landed ahead of any decomposition.
+      MDPF_GLOBAL COUPLING, RECORDED SO THE AUTHORITY SURVIVES: MDPF_GLOBAL carries the
+      Andrew-ratified and explicitly UN-GATED T1-T5 plan from the 2026-08-03 voice memo (route and
+      trigger canon, ONE synchronized daily schedule across all four scopes, CloudFront/cache
+      census, MDPF silver dedup verification, legacy decommission gated on T1-T3). ALL FIVE SIT
+      INSIDE D10. MDPF_GLOBAL was HELD OUT of the 2026-08-25 spring-clean sweep (0.0.0_AB_MSTR
+      71098: live P0 subject, 0.4.0_DS_ClientPlatform~N investigating during a four-trading-day
+      client-facing outage) and is still active/untagged. WHETHER IT JOINS D10 AS A MEMBER OR ITS
+      T1-T5 ARE ABSORBED IS AN OPEN CALL, and the two are one decision: if it is ever closed without
+      the absorption recorded, the 08-03 sovereign authority is lost at the moment it is finally
+      being acted on.
+      RULE 17b RELATIONSHIP, stated because D8's row already flags the divergence: this directive is
+      the vehicle for the gold-home question CLAUDE.md Rule 17b currently answers differently. The
+      PRD isolates the amendment to ONE clause -- gold's HOME and gold's CODE-HOME -- and everything
+      else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
+      Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
