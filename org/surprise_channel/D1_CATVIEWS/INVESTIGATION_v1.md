@@ -247,6 +247,25 @@ reached INERT (66521).
   "disposition": "GRADUATED",
   "disarm_owner": "0.4.0_DE_ClientPlatform~C for the code branch, COUPLED to 1.0.0_SA_CTO's pending all-scope ruling -- the disarm is that THE RULING MUST NOT LAND WITHOUT THIS BRANCH BEING KNOWN, since the ruling is the trigger",
   "notes": "⛔ WHY ARMED RATHER THAN A STALE BRANCH: the failure is not a blank panel. THE PANEL ASSERTS A DELIBERATE DESIGN DECISION, WITH A REASON, IN CONFIDENT PROSE. The surfacing seat's own framing is the finding and it generalises past this file: 'A REVIEWER SEEING A BLANK PANEL ASKS WHY; A REVIEWER SEEING A CONSIDERED EXPLANATION OF WHY THERE IS NO GLOBAL TREE DOES NOT.' Correct-looking beats generic -- an articulate wrong answer suppresses the question a crude one invites. || THE SHAPE IS A RULING FOSSILISED IN CODE: the branch was CORRECT when written, the ruling behind it was withdrawn, and NOTHING IN THE CODE RECORDS THAT ITS PREMISE IS NOW PENDING. A withdrawn ruling does not un-write the code built to it, and code built to a ruling does not announce which ruling it encodes. || Surfaced by the seat AGAINST THEIR OWN SHIPPED WORK, unprompted, after the ruling that justified it was withdrawn -- the second time tonight a seat has audited their own delivered code against a decision that moved under it."
+ },
+ {
+  "id": "D1_CATVIEWS-S9",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~D -- found while diagnosing THEIR OWN test tooling, not by auditing anyone's code; alternative explanation ruled out FIRST",
+  "surfaced_at": "2026-08-25T07:51Z",
+  "one_line": "AdvisorsTab.tsx:1149 LeaderboardRow -- the clickable advisor row is a BARE DIV with onClick and NO role, NO tabIndex, NO onKeyDown, so it is unreachable by keyboard and invisible to assistive tech; the drill it gates is the ONLY path from the Books advisor list to L2 and then L3, so on that surface a keyboard user has NO ROUTE to the client detail view at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "AdvisorsTab.tsx:1149 -- <div onClick={clickable ? handleClick : undefined}> with none of role=, tabIndex=, onKeyDown=",
+    "ALTERNATIVE EXPLANATION RULED OUT BEFORE THE FINDING WAS CLAIMED: ClientsTab.tsx:906 gates the drill on layout.tabs.books.advisorDrill.enabled with an explicit no-op branch for firms that disable it -- which would have explained the failed click WITH NO DEFECT AT ALL. _partners/49financial/layout.ts:55 reads advisorDrill: {enabled: true}, so the gate is NOT the cause",
+    "the drill is the only path Books advisor list -> L2 -> L3, so the keyboard consequence is total on that surface rather than partial",
+    "PRE-EXISTING: not created by this round and unchanged by it"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "⛔ WHY IT SURVIVED UNTIL A ROBOT TRIED TO CLICK IT, AND THIS IS THE DURABLE HALF: IT WORKS PERFECTLY WITH A MOUSE. Every human who has ever used this surface used a mouse, so the defect is INVISIBLE TO ITS ENTIRE OBSERVED POPULATION -- and the surfacing seat's own words are the mechanism: 'it works perfectly with a mouse, which is why nothing would ever surface it, and why my test tooling hitting it is the only reason anyone looked.' A defect that the normal user cannot experience is not rare, it is UNOBSERVABLE, and no amount of use discovers it. || THE SEAT SEPARATED THE TOOLING FACT FROM THE FINDING AND ONLY REPORTED THE SECOND: 'the test cannot click it' is about their harness; 'a keyboard user cannot reach it' is about a client-facing surface. Most seats would have filed the first, because the first is what they experienced. || AND THEY RULED OUT THE INNOCENT EXPLANATION BEFORE CLAIMING A DEFECT -- the advisorDrill gate would have explained the identical symptom with nothing wrong, and they checked it and said they 'would have been wrong to report the row as broken without checking it.' A symptom with a benign available cause is not a finding until the benign cause is measured and excluded. || INERT AND OBSERVATION BOTH CORRECTLY GRADED AND I AM NOT RE-CLASSIFYING: pre-existing, no new act fires it, and it blocks no cell -- their L3 check is INCONVENIENCED, not blocked. They also declined to propose the fix, estimate it, or touch AdvisorsTab, citing one-project scope. || ⛔ ONE THING THE FILING SEAT ASKED THAT I AM RECORDING RATHER THAN ANSWERING: they have NOT checked whether this was raised before, and said so -- 'an unchecked new finding that is actually a known one' wastes the reader. PRIOR-ART CHECK IS OPEN, routed to 0.4.0_DE_ClientPlatform~C as the nearer lane, and this item is NOT to be read as novel until that returns."
  }
 ]
 ```
