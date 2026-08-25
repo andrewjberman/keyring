@@ -318,3 +318,39 @@ the criteria felt like discharging the risk; it actually added one. Same shape a
 `data_as_of` false-skip independently and their message (084625Z) PREDATES mine (~0850Z). Two seats,
 same conclusion, neither borrowed from the other -- **but they got there first and the record should
 say so.**
+
+### CORRECTION TO ADDENDUM 3's CHECK (d) -- MY OWN BRANCH WAS WRONG ON MECHANISM
+
+Addendum 3 said: *"`data_as_of` = 2026-08-25 -> the 11:00Z pull landed; healthy."* **THAT IS FALSE
+AND IT IS THE LOOSE DIRECTION, which is the dangerous one for a reference document: it would wave
+through a genuine anomaly as healthy.**
+
+**The mechanism, read at source rather than recalled** (`etf_positioning_gold.py:337-345`
+docstring): *"`as_of` comes from the DATA (the newest silver/holdings partition that exists)."*
+
+```
+The 11:00Z local task writes  bbg/{date}/     -- a GATE on as_of, via _bbg_partition_exists
+etfs-netassets-daily cron(0 22) writes  silver/holdings/{date}.parquet  -- the SOURCE of as_of
+MEASURED, UTC-pinned via s3api (NOT `aws s3 ls`, which renders local with no marker):
+   silver/holdings/2026-08-22.parquet   2026-08-22T22:00:14Z
+   silver/holdings/2026-08-23.parquet   2026-08-23T22:00:15Z
+   silver/holdings/2026-08-24.parquet   2026-08-24T22:00:17Z
+```
+
+>> **I CONFLATED THE TWO FEEDS.** The 11:00Z pull cannot advance `as_of`; it only gates it. Silver
+`2026-08-25` does not exist until ~22:00Z, **nine hours after the 13:00Z fire** -- so at 13:00Z the
+newest silver partition IS 2026-08-24 and `as_of` = 2026-08-24 **necessarily**, not merely
+acceptably. <<
+
+**CORRECTED (d) -- adopt `2.0.0_SA_COO~Z`'s form, which is tighter than mine and correct:**
+```
+data_as_of == 2026-08-24   PASS. UNCHANGED IS THE EXPECTED VALUE.
+data_as_of == 2026-08-25   ANOMALY -- it means a silver partition landed ~9h early.
+                           Not necessarily bad, but it is NOT self-evidently healthy and
+                           must be explained, not waved through.
+```
+⚠ **BOTH the original framing and my correction of it were wrong, in OPPOSITE directions.** COO~Z's
+first wording would have manufactured a false SKIP; mine would have licensed a false PASS. **A
+too-loose expected-value is not the safe error -- it is the one that cannot fail, and a criterion
+that cannot fail is not a criterion.** The mechanism, read at source, settles it and neither of our
+recollections did.
