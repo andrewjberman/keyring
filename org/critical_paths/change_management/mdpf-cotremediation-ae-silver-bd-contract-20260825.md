@@ -1,7 +1,8 @@
 # DEPLOY LEDGER — MDPF_COTREMEDIATION AE leg: silver blackdiamond holdings contract (21-col)
 
 **Opened:** 2026-08-25T17:07:45Z by 0.5.0_AE_OpalETL~B (deploy-start; NEVER#6 / COTR-inv-9)
-**Status:** OPEN
+**Status:** **CLOSED 2026-08-25T17:24Z** — applied, 0-diff, and verified on the DEPLOYED PACKAGE
+BYTES. All 7 legs landed. Tag `opal-assets-v0.45.0` (local; push rides integration per LD-0367).
 **Decomp:** `workflows/atom_decomposition/runs/mdpf-cotremediation/20260825T161149Z/DECOMP.md`
 @6afd608e0a (41 cells) — cells owned here: COTR-b-3, b-3a, b-4, b-5, b-5a, c-1, c-2, c-3
 **PRD:** `docs/architecture/MDPF_COTREMEDIATION_PRD.md` v1.0
@@ -59,12 +60,57 @@ and the bucket is versioned. Silver partitions are DS~M's leg and are not writte
 declaration can reach. `mirror_conversion.py` is vendored into four packages but is **not modified
 by this leg** — the other three are untouched bytes.
 
+## ⛔ THE ROOT WAS DIRTY — THE APPLY WAS TARGETED (discovered at execution)
+
+A full `plan` read **0 to add, 4 to change, 0 to destroy**, and only ONE was mine:
+
+| resource | mine? |
+|---|---|
+| `aws_iam_role_policy.bd49f_reporting_io` | NO |
+| `aws_iam_role_policy.emitter` | NO |
+| `module.emitter.aws_lambda_function.this` (`AGGREGATE_PREFIX` `gold/mdpf_revamp/_aggregate_aua/` -> `portal/gold/mdpf/_staging/aggregate_aua/`) | NO |
+| `module.silver_converter["blackdiamond"].aws_lambda_function.this` | **YES** |
+
+**A bare apply would have landed three other agents' unapplied changes — including a gold-prefix
+repoint — under cover of a P0 outage repair.** Applied `-target`ed to my resource alone.
+**Consequence stated: the post-apply 0-diff is SCOPED to my target.** The root still reads 3 changes;
+that is other work's, not residue of this leg. Routed to CTO/COO.
+
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] Code + manifest + ledger committed
-- [ ] Artifact built + uploaded, write VERIFIED (size + sha256)
-- [ ] Source map committed (tool-generated, not hand-authored)
-- [ ] `safe-apply` complete; post-apply 0-diff re-plan clean
-- [ ] COTR-c-2: deployed package BYTES contain `Account Supervised` + `Holding Supervised`
-- [ ] Tag created
-- [ ] CLOSED
+- [x] Code + manifest + ledger committed @`a3fb502194` (3 files; Rule-14 gate clean; msg-verify MATCH)
+- [x] Artifact built + uploaded — **single-function mode** (a pipeline-wide build would have rebuilt
+      `eclipse`, which `BUILD_MANIFEST.json` records as carrying a latent vendor-closure break "armed
+      for whoever rebuilds it next"). Write VERIFIED size=57707, sha256 metadata match.
+      Build-gate import-closure: OK, 9 files.
+- [x] Source map `artifact_sha256` committed @`a7777bc84d` — **TOOL-GENERATED** by
+      `build-and-upload.sh:133-134`, not hand-authored. One field, one line.
+- [x] `safe-apply` complete (HALTGT: 1 routine pending msg reviewed, `HALT_ACK=1`); targeted 0-diff
+      re-plan: *"No changes. Your infrastructure matches the configuration."*
+- [x] **COTR-c-2 — DEPLOYED PACKAGE BYTES** (downloaded from `Code.Location`, AST-read of the member,
+      never a config read): `("blackdiamond","holdings")` declares **21** columns,
+      `Account Supervised` **idx 8** (immediately BEFORE `AssetID` at idx 9), `Holding Supervised`
+      **idx 20**. Negative control `Zzz No Such Column 9999` -> **0**. Live CodeSha256
+      `XiJ6ZADpVAwtJcRR4U0l/IhO4+eFfzost0Mz9fnTIJA=`. **Exactly ONE member changed** vs the pre-deploy
+      package — the two rebalancer modules byte-identical, so the targeted vendor shipped nothing
+      extra, confirmed at the artifact rather than by intent.
+- [x] `comp-lambdamap reconcile-deployed` scoped: **1 already-in-parity, 0 HELD** (the estate's own
+      half-landed detector, independent of my read)
+- [x] Deploy record @`d3f760136b` — **HAND-SCOPED**, because `record-terraform-deploy.sh opal-assets`
+      was dry-predicted to write **7 updates, 6 of them for functions never applied** (2 fabricated
+      from `None`). Tool defect routed to CTO; not run.
+- [x] Tag `opal-assets-v0.45.0` on `d3f760136b` (local; push rides integration, LD-0367)
+- [x] **CLOSED 2026-08-25T17:24Z**
+
+## Push state (LD-0367 — integrator pushes, never the lane)
+
+`a3fb502194` **on `origin/CLOUD`** · `a7777bc84d` **on `origin/CLOUD`** · `d3f760136b` **LOCAL, rides
+integration** · tag **LOCAL**. Verified by `git merge-base --is-ancestor` against a freshly fetched
+`origin/CLOUD` = `ddc6cdabd1`, not by assumption.
+
+## What this leg does NOT close
+
+**The served payload is still frozen until DS~M's three-partition re-run lands and propagates.** This
+leg makes the producer capable of converting the 21-column file; it converts nothing by itself.
+`COTR-e-2` / `COTR-e-3` (payload `as_of_last` at the T-1 frontier, `49financial`+`inflection`
+byte-unchanged against the banked baseline) are DS~M's and remain OPEN.
