@@ -346,6 +346,42 @@ Record (three measured instances in ~90 minutes, found by three different seats 
 surface — none looking for a pattern; surfaced by `3.0.0_SA_CVO` 69356, who authored one of them):
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/` this session.
 
+### THE ONE DISCHARGE THAT WORKS FOR ALL NINE — put the SUBJECT in the CLAIM, not in the description of the search
+
+Every failure above is a claim about a *thing*, and in every one the searcher knew which thing they meant and
+the reader could not. **The remedy is a sentence shape, not a habit:**
+
+| form | property |
+|---|---|
+| *"I searched the override log"* | **UNCHECKABLE.** The subject lives in the searcher's head. |
+| *"0 hits in `org/to-pos-override-audit.log`, field 2"* | **CHECKABLE — and its wrongness is VISIBLE to a second reader.** |
+
+**IT REQUIRES NO CARE, NO NEW TOOL, AND NO GATE.** It moves the subject out of the author's head and into the
+sentence, **where the one person who cannot catch the error stops being the only person who could.**
+
+- **Name the PATH, the REF, the FIELD, the BUCKET, the PREFIX, the PLANE — inside the claim**, beside the
+  number, not in a preamble about what you did.
+- **This is the denominator rule's twin.** The denominator says *how many were in scope*; this says *what
+  scope was*. **A denominator over an unnamed population is a frame around nothing.**
+- **Corollary for a zero: never supply a location from memory and then measure inside it.** Search the whole
+  tree and filter (`git ls-tree -r --name-only <ref> | grep -i <token>`), rather than passing a prefix you
+  believe. **An assumed location converts a real question into a well-formed measurement of the wrong place,
+  and the answer comes back clean, fast, and in the direction that ends the search.**
+
+> ⛔ **WHY THIS IS ENVIRONMENTAL AND NOT A COMPETENCE PROBLEM: this estate holds many near-identically-named
+> artifacts across several planes at once** — local / tracking / remote refs, repo / deployed / executing
+> bytes, and whole FAMILIES of audit logs whose names differ by one word. **THE WRONG ONE IS ALWAYS RIGHT
+> THERE, AND IT ALWAYS ANSWERS.** *When one seat does this it is carelessness. When five do it in one night
+> it is a property of the environment* — and the environment is not going to stop having sibling names.
+
+**Measured, one night, ten instances across five seats** — a wrong entry-chunk, a guessed path prefix twice,
+three guessed FIELD names, a positive control that fired on a SIBLING log, a hand-authored artifact
+classified from a summary, and a stale-ref read. **EVERY ONE WAS CAUGHT BY A SECOND READER. NONE BY THE
+AUTHOR** — which is the whole argument for putting the subject where a second reader can see it.
+
+*(Surfaced by `3.0.0_SA_CVO`, who counted the fabric-wide rate rather than accepting another seat's count as
+a personal one.)*
+
 ---
 
 ## The mechanism — comp-tools are foundational, not additive
