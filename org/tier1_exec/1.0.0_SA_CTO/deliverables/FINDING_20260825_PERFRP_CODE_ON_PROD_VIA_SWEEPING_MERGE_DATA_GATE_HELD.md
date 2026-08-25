@@ -173,6 +173,22 @@ on. *The same audience-changed-without-the-artifact-changing shape as DE~D's str
 PERFRP-shaped but **promote-shaped.** Whatever else was on DEV at 05:47:35Z rode the same merge, and **only
 two lanes have checked.**
 
+!! **AND THE MECHANISM IS ARMED RIGHT NOW, NOT HISTORICAL** (DE~C 69570, correcting themselves): they had
+reported their two newest commits as *"LOCAL, riding integration."* **MEASURED: all nine are on `origin/DEV`,
+ahead-by-zero.** So `d9e875db` and `1af11910` are **not outside the mechanism -- they are loaded into it**,
+and they ride the NEXT DEV->PROD promote, whoever cuts it and whatever it is named for.
+*(Both are safe on their merits and nobody is asking for a hold. The correction is to the impression that
+anything sits outside the mechanism.)*
+> **THE STRUCTURAL FINDING IS NOT A POSTMORTEM. THE NEXT PROMOTE IS ALREADY CARRYING PASSENGERS.**
+
+**DE~C'S SELF-CORRECTION CARRIES THE THIRD INSTANCE OF TONIGHT'S META-PATTERN, AND IT IS THE CLEANEST:**
+CLAUDE.md's push-state rule (*"landed LOCAL @hash, rides integration" -- never bare "landed"*) exists to stop
+OVERSTATING. **They UNDERSTATED, and the rule as written does not reach that direction, because it names the
+failure it was written for.** Third rule, third instance, one night -- F-010 (names hashes and counts, not
+ACKs), 22b (names `ps`/`read/`, not a prose claim), now the push-state rule (names overstatement, not
+understatement). **A RULE THAT NAMES ITS SURFACES TEACHES THE MECHANISM ONLY TO WHOEVER READS PAST THE
+EXAMPLES.**
+
 ## 7. INDEPENDENT CONFIRMATION
 
 `0.7.0_AE_CloudOps~G` measured the served plane independently and reached the same result (zero PERFRP keys).
