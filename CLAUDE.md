@@ -191,40 +191,45 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     Estate-scoped broad Bash `grep`/`find`/`rg` DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob`
     = nudge-and-proceed; native `Read` + operational `aws` + pipe-greps = free. `/freeform` stands the rail
     down per-session. `docs/architecture/NFRA_COMPRAIL_PRD.md`.
-22. **EVIDENCE LAW -- FOUR QUESTIONS, AND WHO EATS THE ERROR DECIDES HOW MANY YOU ASK.**
-    (Rule 24 tests a SCHEMA; this tests a CLAIM. Doctrine + the failure catalogue:
-    `docs/doctrine/CONTROLS_OVER_CARE.md`.)
+22. **EVIDENCE LAW -- FOUR AXES, AND WHO EATS THE ERROR DECIDES HOW MANY YOU CHECK.**
+    **Rule 24 tests a SCHEMA; Rule 22 tests a CLAIM. THEY SHARE THREE AXES AND EACH ADDS WHAT ITS
+    OBJECT NEEDS** -- GRAIN, COVERAGE and STATE are the same axes in both; 24 adds EXCLUSIVITY +
+    INTENT (a schema needs them), 22 adds DISCRIMINATION (a claim needs it). Learn an axis once, apply
+    it in both. Failure catalogue: `docs/doctrine/CONTROLS_OVER_CARE.md`.
 
     | If being wrong costs... | Ask |
     |---|---|
     | me, this turn -- I just redo it | nothing. Act. |
-    | me later, or another seat | **THING + WHOLE** |
-    | the record -- a commit, a message sent, a TO, a report | **+ LAYER** |
-    | the world -- deploy, delete, grant, served key, a claim to Andrew | **+ NO** |
+    | me later, or another seat | **GRAIN + COVERAGE** |
+    | the record -- a commit, a message sent, a TO, a report | **+ STATE** |
+    | the world -- deploy, delete, grant, served key, a claim to Andrew | **+ DISCRIMINATION** |
 
-    **THING** -- the object I read IS the object I am claiming about, *at the vintage claimed*. A
-    different bucket / tree / copy / moment does not error: it answers cleanly about something else.
-    **WHOLE** -- my evidence spans the set I am claiming about. **Print the denominator.** A page is
-    not a total; a part is not the whole; a residual you named is not one you measured.
-    **LAYER** -- **DESIRED** (config, plan, source) != **APPLIED** (live state) != **EXERCISED** (it
-    ran, and would have failed if the claim were false). **A description is never a state.**
-    **NO** -- could this evidence have come out differently if the claim were false? If not, it is
-    not evidence. Run the control that fails.
+    **GRAIN** (24-ii) -- the object I read IS the object I am claiming about, *at the level and the
+    vintage claimed*. A different bucket / tree / copy / moment does not error: it answers cleanly
+    about something else. **24 fails mostly on LEVEL (a file-level value beside a cohort-level one);
+    22 fails mostly on IDENTITY (right key, wrong version) -- one axis, two failure modes.**
+    **COVERAGE** (24-i, the *collectively-exhaustive* half) -- my evidence spans the set I am claiming
+    about. **Print the denominator.** A page is not a total; a part is not the whole; a residual you
+    named is not one you measured.
+    **STATE** (24-iv) -- **DESIRED** (config, plan, source) != **APPLIED** (live state) != **EXERCISED**
+    (it ran, and would have failed if the claim were false). **A description is never a state.**
+    **DISCRIMINATION** -- could this evidence have come out differently if the claim were false? If
+    not, it is not evidence. Run the control that fails.
 
-    ⛔ **THE ORDER IS THE MECHANISM. `NO` PASSES INSIDE A WRONG `THING`/`WHOLE`/`LAYER`** -- and then
+    ⛔ **THE ORDER IS THE MECHANISM. `DISCRIMINATION` PASSES INSIDE A WRONG `GRAIN`/`COVERAGE`/`STATE`** -- and then
     every instrument agrees with every other, because all of them are about the same wrong thing.
-    **That is why careful agents still fail: they run `NO` hard and never ask the first three.**
+    **That is why careful agents still fail: they run `DISCRIMINATION` hard and never check the first three.**
 
     ⛔ **AND A SECOND SEAT'S CONFIRMATION IS NOT CORROBORATION IF IT USED THE FIRST SEAT'S METHOD.**
     Name your instrument and whether it DIFFERS from theirs; if it does not, it is a **REPETITION** --
     one measurement reported twice, wearing the authority of two. **It rides all four questions**,
-    because two seats can share a wrong `THING`, `WHOLE` or `LAYER`, and the agreement then raises
+    because two seats can share a wrong `GRAIN`, `COVERAGE` or `STATE`, and the agreement then raises
     confidence in exactly the wrong direction. *Costs one clause per confirmation. Does not apply when
     you are FIRST to the claim, when you are CITING a peer's published invocation rather than
     re-deriving it, or when the error-eater is "me, this turn."*
 
     **"proof / provably / root cause / definitively / source-confirmed" are RESERVED WORDS** -- legal
-    only on a claim that passed LAYER at EXERCISED. Cite grounding as `file:line @ <commit-ish>`:
+    only on a claim that passed STATE at EXERCISED. Cite grounding as `file:line @ <commit-ish>`:
     **a line citation without a vintage is not a citation.** A claim failing any postulate is
     `INFERRED` and NON-ACTIONABLE; the cert/dispatch owner withholds the GO.
 
@@ -274,11 +279,11 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     YOURS — a premise no instrument is pointed at is not a weak claim, it is an INVISIBLE one.** <<
     `memory/feedback_ses_sender_opalinvest_dev_standard.md`.
 24. **TAXONOMY LAW — FOUR POSTULATES, prerequisites for ANY classification schema an agent authors:**
-    **(i) MECE** — values mutually exclusive, collectively exhaustive, evaluated against the DECLARED LAYER the
-    schema covers (name the layer, then hunt the uncovered member); **(ii) SAME GRAIN** — every value provably
+    **(i) MECE** — values mutually exclusive (EXCLUSIVITY) and collectively exhaustive (COVERAGE, Rule 22's
+    axis) over the DECLARED DOMAIN the schema covers — *name the domain, then hunt the uncovered member*; **(ii) SAME GRAIN** (Rule 22's axis) — every value provably
     at one grain (never a file-level value beside a cohort-level value); **(iii) INTENT COHERENCE** — one axis
     serves ONE intent (mixing content-kind with handling-policy, or state with disposition, foundationally
-    breaks the schema); **(iv) STATE COHERENCE — a stability frame:** name the state axis, then ask whether ONE
+    breaks the schema); **(iv) STATE COHERENCE** (Rule 22's axis) **— a stability frame:** name the state axis, then ask whether ONE
     remedy moves every value together. **If building the obvious instrument delivers some values and
     structurally cannot deliver others, YOU MUST NAME WHICH VALUES DO NOT MOVE.**
     **This binds EVERY SCHEMA-ENUMERATION ACT** — minting an axis, proposing or adding values to an existing
