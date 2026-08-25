@@ -42,6 +42,28 @@ Supporting, and disclosed as evidence rather than as a ruling: PRD `s.11 #11` op
 keys land"** — the PRD's own position is that publication is *how* the DEV render happens. That line
 predates his 01:1xZ word, so it informed the rec; it did not decide it.
 
+### ⛔ THE CONSUMER HALF — MEASURED BY `0.4.0_DE_ClientPlatform~D` (68637), NOT BY ME
+
+When I put the call to him I said the exposure was narrow because *"the PROD build carries no PERFRP
+card components until a promote ships them."* **That was an ASSERTION when I made it.** DE~D has since
+measured it at `origin/PROD 8a96c91654`: none of their commits are on PROD, and `git ls-tree` for the
+`perfrp/` renderer tree at the PROD ref **returns nothing** — the tree does not exist there. So a
+published PERFRP key has **no consumer on PROD**: nothing there can fetch, parse or render it.
+
+The assertion held. It was still unmeasured at the moment I rested a recommendation on it, and that is
+recorded here rather than quietly upgraded to a measurement after the fact.
+
+⛔ **AND THE DEPENDENCY MUST BE STATED, NOT ENJOYED AS COMFORT — DE~D's point and it is the sharper
+one: THAT SAFETY IS A PROPERTY OF THE PROMOTE HOLD, NOT OF THE PUBLISH DECISION.** The moment the
+renderer promotes, published keys become live client-facing surface **with no further act**. The two
+holds are therefore **complementary and not redundant**: his DEV-only word is what makes publishing
+safe, and neither hold should be described as belt-and-braces for the other.
+
+**For whoever holds the promote (`0.2.0_DT_PortfolioAnalytics` or whichever DT seat is live):
+RE-MEASURE THIS AT PROMOTE TIME.** *"No consumer on PROD"* is true at 2026-08-25 ~04:1xZ and is
+exactly the kind of favourable fact that stops being true without anyone editing the sentence that
+asserts it — the moment-encoded-as-mechanism class, applied by DE~D to their own measurement.
+
 ## WHAT THIS SETTLES
 
 - The DEV-only hold **does not** reach the publisher. Wiring and publishing PERFRP keys proceeds.
