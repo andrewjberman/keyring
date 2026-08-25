@@ -186,7 +186,19 @@ session kept catching; this one is mine.*
   >> OR "THE SCHEDULE FAILED."** Check the disjunction in order and name which one, on evidence.
   >> **AND (3) IS THE ONE THAT SURVIVES A CLEAN (1) AND (2)** -- it is structural, so it will still
   >> be there on a day when the file is right and the characteristics are right.
-- [`0.7.0_AE_CloudOps~Z`] **DEPLOY TO-7's as-of VALUE fix -- DEADLINE 22:00Z 2026-08-25, *NOT* 13:00Z.**
+- ✅ **[DONE 00:09:54Z -- SUPERSEDES THE PENDING TEXT BELOW, WHICH I AM KEEPING FOR ITS REASONING]**
+  The as-of value fix @`55caa4acbf` **shipped in the same apply as AC3**: `_v_ts_Date` 2 -> 5 in the
+  deployed bytes, verified by COO~Z independently (`INGEST-TO7` AC1/AC2/AC4 ✅ in the deployed
+  package). **There is nothing pending here and no 22:00Z deadline to meet.**
+  ⛔ **I FOUND THIS BY PRINTING MY OWN CARRIED LIST INSTEAD OF TRUSTING MY MEMORY OF IT** -- the item
+  sat here reading PENDING, with a deadline, on work I had completed twenty minutes earlier. **A
+  successor would have deployed something already deployed, or waited on a clock that had no work
+  behind it.** Fourth staleness I have corrected in my own records tonight, and the only one where the
+  record was stale against *my own act* rather than against someone else's.
+  **The reasoning below is preserved because it is still TRUE and still useful** -- the deadline
+  distinction it draws (a deploy before 13:00Z cannot change what 13:00Z serves) is why the fix was
+  never urgent, and a later reader re-deriving that from scratch would waste the same hour I did.
+- ~~[`0.7.0_AE_CloudOps~Z`] **DEPLOY TO-7's as-of VALUE fix -- DEADLINE 22:00Z 2026-08-25, *NOT* 13:00Z.**~~
   Measured gap: `_v_ts_Date` tree 5 / deployed 2 -- it is in MY Lambda and NOT running.
   ⛔ **DO NOT INHERIT THE 13:00Z CLOCK FROM THE ITEMS NEXT TO IT.** silver 08-24 was written
   2026-08-24T22:00:17Z by the OLD code; 13:00Z gold READS that already-written partition, so a deploy
