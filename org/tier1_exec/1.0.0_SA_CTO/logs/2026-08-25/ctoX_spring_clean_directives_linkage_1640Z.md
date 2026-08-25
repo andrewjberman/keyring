@@ -1,7 +1,16 @@
 # CTO~X SESSION LOG -- SPRING CLEAN + DIRECTIVES-CHECK TIGHTENING -- 2026-08-25 16:40Z
 
 **Seat:** `1.0.0_SA_CTO~X` (lane X, PID 2164). **archetype:** MIXED. **secondary_archetypes:** DIAGNOSE, BUILD, COORDINATE.
-**Window:** 2026-08-25 ~16:03Z -> 16:40Z. **Commits this seat: 1** (`c06bb5a819`, LOCAL, rides integration).
+**Window:** 2026-08-25 ~16:03Z -> 16:55Z. **Commits THIS SESSION: 2 -- `c06bb5a819` (LINKAGE partition) and
+`9cdef47ebd` (this log). Both are ON `origin/CLOUD`** (ls-remote read, not a cached ref; MSTR's push carried them).
+
+⛔ **SESSION-vs-SERIAL, stated here because this log is the only durable place it survives:** `1.0.0_SA_CTO~X`
+carries earlier work from a **PREDECESSOR SESSION** -- `00004eac8b` (2026-08-25T00:19Z, the "Agg" positioning
+trace + `usePersistentToggle` + portal `d53049a0`). **That is NOT this session's work.** A future census keyed on
+`--author` will attribute it to "CTO~X" and be **right about the serial and wrong about the session**; `--author`
+matching cannot separate a predecessor from a successor, and the audit line has one identity field. Any defect
+rate derived from "CTO~X's commits" must state which session -- notably a `safe-commit` verify-helper SyntaxError
+reported as "2 of 4 commits", whose denominator belongs to the predecessor: **this session saw zero.**
 
 **MANDATE (Andrew-direct, ~15:47Z issued to base CTO, REASSIGNED to this lane ~16:0xZ):** handle spring
 cleaning + directives/directives-check tightening so base CTO can hold the fabric. His scope: assess
@@ -136,8 +145,10 @@ real breach gets waved through.
 
 - **Delivered:** COO relay `70754` (+ base CTO `70755`, MSTR `70756`), 3/3 DELIVERED, bodies verified
   non-empty at ~10.3KB each (an empty body and a real one return identical receipts).
-- **Landed LOCAL `@c06bb5a819`** -- `git branch -r --contains` returns nothing. **Rides MSTR's integration
-  window. NOT pushed.**
+- **`@c06bb5a819` + `@9cdef47ebd` are ON `origin/CLOUD`** -- verified by `git ls-remote` and `branch -r --contains`.
+  (Stated as "landed LOCAL" in msgs 70754-70756, which was TRUE WHEN WRITTEN and went stale when MSTR pushed;
+  corrected to the three recipients in 70768-70770. **MSTR has pushed twice more since -- re-read the tip rather
+  than pinning a hash.**)
 - **At Andrew, and NOT to be inferred:** (a) **the bar** -- Rule 25's 90d selects zero; 60d would select 12,
   30d would select 45. Picking it is a Rule 24 act and it is his. (b) **retro-tagging volume was already
   carded 08-24 and is unanswered**; his 08-24 ~14:12Z ruling was DIRECTION RATIFIED / MIGRATION NOT
@@ -149,3 +160,26 @@ real breach gets waved through.
 - **No gate created, nobody spawned, no approval step invented.** Sequencing S1-S5 is a recommendation to COO.
 
 **Blockers:** none at this seat.
+
+---
+
+## 9. A MIS-SOURCING I MADE, AND THE CLASS IT BELONGS TO
+
+In msgs 70768-70770 I corrected an attribution and **routed the correction at the wrong author.** I wrote
+*"MSTR's push message credits CTO~X with the AGG removal..."*. **The substance was right -- that work is a
+predecessor session's, and MSTR agrees -- but the SOURCE was wrong.** The message is **msg-id 67347, dated
+2026-08-25T00:20:46Z**: a *predecessor MSTR session*, sixteen hours before this seat existed. The current MSTR
+grepped its own sent traffic before replying and found no such claim, and correctly noted that `d53049a0` does
+not even resolve in this tree.
+
+**HOW I GOT IT WRONG:** a `heartbeat()` returned five queued messages in one block, and **I read the block as
+current traffic.** The oldest was 16 hours old. The envelope says `0.0.0_AB_MSTR` -- which is TRUE OF THE SERIAL
+and says nothing about the session.
+
+⛔ **THE CLASS IS THE ONE I WAS CORRECTING: I READ A SERIAL AS A SESSION, INSIDE THE ACT OF TELLING SOMEONE ELSE
+NOT TO.** Knowing a failure mode by name does not immunize you against writing it.
+
+**AND A CORRECTION DELIVERED TO THE WRONG AUTHOR IS WORSE THAN NONE** -- it reads as discharged while the real
+record stays uncorrected, and it puts a false claim about the *current* author into three inboxes.
+**MECHANISM, not care: a queued-message dump carries no recency frame. Read the `Msg-ID` and `Date` header on
+every message you act on -- the delivery order is not the authoring order.**
