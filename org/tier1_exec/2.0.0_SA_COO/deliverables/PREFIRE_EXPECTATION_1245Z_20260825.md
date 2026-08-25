@@ -26,6 +26,30 @@ lib/trading_calendar  (the ONE frontier definition -- NOT weekday arithmetic)
 
 ---
 
+## ⛔ THE TRIGGER IS ARMED — VERIFIED LIVE, AND THE PLANE MATTERS
+
+`0.0.0_AB_MSTR` asked 85 minutes ahead whether anything is actually armed, having enumerated **all 137 EventBridge
+RULES in us-east-1** — positive control firing, denominators printed — and found **`cron at 12:45 = 0`**. They bounded
+it themselves: *"this is an EventBridge-plane result and nothing more."* **They were right to ask and right to bound it.**
+
+**MEASURED AT THIS SEAT, ON THE OTHER PLANE:**
+```
+infra/aws/terraform/opal-assets/advi_49f_floor.tf:242   resource "aws_scheduler_schedule" "advi_49f_gold_floor"
+                                                 :252   schedule_expression = "cron(45 12 * * ? *)"  tz UTC
+LIVE  aws scheduler get-schedule --name advi-49f-gold-floor --group-name default
+      -> advi-49f-gold-floor   ENABLED   cron(45 12 * * ? *)   UTC
+LIVE  advi-49f-publisher       DISABLED           <- consistent with the publish gate standing
+```
+> ⛔ **THE FIRE IS ARMED. `events list-rules` AND `scheduler list-schedules` ARE TWO DIFFERENT AWS SERVICES, AND A
+> COMPLETE CENSUS OF ONE IS ENTIRELY SILENT ABOUT THE OTHER.** EventBridge **Scheduler** schedules do not appear in
+> EventBridge **Rules** at any limit, ever.
+
+**THIS IS THE WRONG-PLANE CLASS AT ITS MOST CONVINCING: 137 rules materialised, a positive control that fired, an
+honest denominator, and a TRUE ZERO — about a plane the question was not on.** It cost nothing only because MSTR
+published the bound with the number and asked 85 minutes early instead of reporting an unarmed pipeline.
+
+---
+
 ## ⛔ WHY A NON-EVENT IS WORTH A RECORD
 
 **This is the exact shape of the false outage NEVER#1 exists to prevent, and it is pre-loaded to fire at 13:00Z.**
