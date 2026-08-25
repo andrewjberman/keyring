@@ -1173,6 +1173,27 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "1.0.0_SA_CTO~Z",
   "notes": "*** THIS IS A THIRD CLASS AND IT DOES NOT FOLD INTO EITHER Z-S39 SHAPE. *** Z-S39 covers (a) resolves-to-nothing (ICT, loud) and (b) resolves-to-the-WRONG-security (MER, silent-but-detectable by a name compare). RBGLD is (c) RESOLVES CORRECTLY AND THE HISTORY LEG RETURNS NOTHING ANYWAY -- and no name compare can ever catch it, because the name is right. || \u26d4 IT IS THE WORST OF THE THREE TO DETECT AND THE BEST-CAMOUFLAGED ON THE PAGE: every visible attribute is correct, so the blank return reads as an ordinary missing datum -- pixel-identical to a cash line, to a non-dividend payer, and to the 58 securities correctly awaiting Phase-2 backfill. A reader has NO signal distinguishing 'this security's history genuinely does not exist' from 'our history leg silently dropped it'. || \u26a0 MECHANISM UNDETERMINED AND I AM NOT GUESSING IT. Candidates not adjudicated: the ADR may carry no DAY_TO_DAY_TOT_RETURN_GROSS_DVDS on that date; the history request may partially fail without surfacing; the security may be excluded upstream. THAT IS A SOURCE READ ON THE HISTORY LEG, and Rule 22 forbids me converting the observation into a cause without it -- I have already made exactly that error once tonight on Z-S42. || \u2b50 AND THE GENERAL POINT THE THREE-WAY SPLIT MAKES: THE CHARACTERISTICS LEG AND THE HISTORY LEG CAN DISAGREE ABOUT WHETHER A SECURITY EXISTS, AND NOTHING RECONCILES THEM. 170 versus 167 is a real, cheap, standing discrepancy that no artifact currently reports -- the manifest records rows.characteristics and rows.history_topup separately and never compares them, which is the same shape as the resolver listing a partition it never opens."
+ },
+ {
+  "id": "ETFS_INGEST-Z-S45",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~Z (data-plane falsification by 3.0.0_SA_CVO~Z)",
+  "surfaced_at": "2026-08-25T04:53Z",
+  "one_line": "THE DATA PASSED AND THE PAGE DOES NOT: 5 of 8 return windows render BLANK on fully populated data. The producer proof says 8/8 and the panel shows 3 -- and the three that DO render match the artifact to the decimal, so the page is reading the right bytes and dropping five columns.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "0.4.0_DE_ClientPlatform~Z measured it on the RENDER against the 04:45:15Z bytes: MSFT carries all eight windows in the artifact (1D 0.8422, WTD 0.8422, MTD 5.0593, 1M 27.9097, QTD 30.8861, 1Q 16.6426, YTD 1.4036, 1Y -3.1325) and the page shows only QTD +30.89%, YTD +1.40%, 1Y -3.13%. Same shape on GS, CVX, HD.",
+    "The three that render match the artifact TO THE DECIMAL, which is what establishes the page is reading the correct data rather than a stale or different source.",
+    "*** DATA-PLANE FALSIFICATION OF THE STATED CANDIDATE by 3.0.0_SA_CVO~Z at 04:53Z: the candidate path reads `positioningData?.current_holdings?.[selectedPortfolio]`, and a raw byte search of the served artifact returns 'current_holdings' = 0 OCCURRENCES, with POSITIVE CONTROLS 'portfolios' = 1 and 'returns' = 187. The zero is a real absence, not a failed retrieval. ***",
+    "An optional chain onto an absent key yields undefined, so that path predicts 0 of 8 rendered columns -- but 3 of 8 were measured. THE CANDIDATE DOES NOT PREDICT THE OBSERVATION.",
+    "All eight window tokens occur EXACTLY 187 times each in the artifact -- one per holding row, every one inside the `returns` object. There is no alternative path to QTD/YTD/1Y, so the path that renders those three is reading holdings[].returns."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.4.0_DE_ClientPlatform~Z",
+  "notes": "*** THIS IS THE PLANE BOUNDARY MADE CONCRETE, AND BOTH VERIFICATIONS ARE CORRECT. *** The producer proof (12/12 values exact against a pre-published oracle) and this render defect are simultaneously true, because they are measurements of different planes. A data verification cannot see a render defect and no amount of care on the data plane would have caught it -- only a render can. || \u2b50 THE INFERENCE THE ARITHMETIC SUPPORTS, LABELLED AS AN INFERENCE: since a single dead resolver predicts 0 of 8 and the measurement is 3 of 8, the panel has AT LEAST TWO resolution paths and only one is wired to the artifact -- the three that render reach holdings[].returns (proven, values match exactly), the five that blank read something that does not resolve. So the search is 'two resolvers, five columns on the wrong one', NOT 'the component reads a dead key'. || \u26a0 SCOPE: everything measured here is ON THE ARTIFACT. The two-resolver conclusion is an inference from 0.4.0_DE_ClientPlatform~Z's render measurement plus this seat's byte census, and the frontend source read that confirms or kills it belongs to them. I am not claiming to know what HoldingsTab.tsx does; I am claiming what the artifact does and does not contain. || \u26d4 AND IT IS THE VINDICATION OF ANDREW'S 04:30Z POSTURE IN ITS FIRST HOUR: proving end-to-end BEFORE accepting a scheduled publish is exactly what surfaced this. Had we waited for 13:00Z, the producer would have been 'proven' by a green scheduled run and the panel would still have shown 3 of 8 -- with the schedule's success standing as the evidence."
  }
 ]
 ```
