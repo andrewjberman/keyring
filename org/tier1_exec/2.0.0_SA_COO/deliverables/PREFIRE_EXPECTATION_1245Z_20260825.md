@@ -26,6 +26,44 @@ lib/trading_calendar  (the ONE frontier definition -- NOT weekday arithmetic)
 
 ---
 
+## ⛔⛔ AMENDED ~11:3xZ — THE EXPECTATION HOLDS BUT ITS *REASON* WAS WRONG, AND THE CHAIN HAS BEEN ABORTING
+
+`0.4.0_DS_ClientPlatform~G` (70295), found while answering the arming question. **SSM command history, materialised
+across 15 pages — the FIRST PAGE REPORTED ZERO WITH A `NextToken`, the pagination trap this estate's law names:**
+```
+2026-08-24 12:45:41  advi-49f-chain-dispatch  FAILED   src=advi.49f.scheduled-floor
+2026-08-23 12:45:41  advi-49f-chain-dispatch  FAILED   src=advi.49f.scheduled-floor
+2026-08-22 12:46:01  advi-49f-chain-dispatch  Success
+```
+**BOTH FAILURES, FROM THE RUNS' OWN LOGS:** `ValueError: empty allocation map partition` -> `CHAIN ABORT
+stage=a06_identity_crosswalk rc=1 wall=1.0s -- nothing after this stage ran.`
+> ⛔ **`c02_twr_daily` IS STAGE 15 OF 16. `a06` IS STAGE 7. TWR HAS NOT EXECUTED SINCE 2026-08-22.**
+> ⛔ **SO THE MISSING `date=2026-08-24` IS AN a06 ABORT — NOT the residue of the twr defect the remedy exists to close.**
+
+**THE MECHANISM, AND IT IS SYSTEMATIC RATHER THAN A ONE-OFF:** `a06_dim_identity_crosswalk.py:103` takes
+`map_dates[-1]` — the LATEST allocation-map partition — **with no trading-day filter and no non-empty check**
+(raise at `:49`). The map **emits EMPTY partitions on weekends**:
+```
+08-21 Fri 7,321 rows | 08-22 Sat 0 ROWS | 08-23 Sun 0 ROWS | 08-24 Mon 7,332 rows
+run 08-23 -> picks 08-22 (0) -> ABORT     run 08-24 -> picks 08-23 (0) -> ABORT     2/2, retrodicted
+```
+> ⛔ **THIS IS A SYSTEMATIC SUNDAY+MONDAY OUTAGE OF THE ENTIRE 49F GOLD CHAIN, BY CONSTRUCTION.** Not NEVER#1 — this
+> is not a stale reading misread as a defect; **it is a real abort with a stack trace, two days a week, unnoticed.**
+*(`~G` distinguished a THIRD failure rather than letting a partial fit pass: 08-20 aborted at `a00_dim_account` on
+`fact_acc has no partition date=2026-08-20` — **upstream availability, a different stage and a different cause.**
+The empty-map mechanism is **2/2 on the failures it claims** and does not claim 08-20.)*
+
+**TODAY BOTH PRECONDITIONS HOLD AND IT SHOULD PROCEED:** `a00` needs `fact_acc date=2026-08-24` — **PRESENT**;
+`a06` needs a non-empty latest map — **08-24 with 7,332 rows, and NO 08-25 partition exists as of 11:29:03Z.**
+⛔ **THE ONE RESIDUAL RISK, NAMED AND NOT EXCLUDED: if an EMPTY `date=2026-08-25` map partition lands before 12:45Z,
+`a06` takes it and aborts exactly as on Sunday and Monday.**
+
+**WHAT THIS CHANGES IN THIS DOCUMENT: only the WHY.** The expectation below is unchanged and still correct — today
+writes `date=2026-08-24` only, and an absent `08-25` is the pass. **What was wrong was the assumption that 08-24 was
+missing because of the twr defect. It was missing because the chain never reached stage 15.**
+
+---
+
 ## ⛔ THE TRIGGER IS ARMED — VERIFIED LIVE, AND THE PLANE MATTERS
 
 `0.0.0_AB_MSTR` asked 85 minutes ahead whether anything is actually armed, having enumerated **all 137 EventBridge
