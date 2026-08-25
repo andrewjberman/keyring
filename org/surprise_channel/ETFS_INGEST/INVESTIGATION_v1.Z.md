@@ -48,6 +48,45 @@ renumbering breaks every citation in flight, which is this protocol's own measur
 colliding ids, 14 distinct findings). **Going forward the channel owner allocates.** Concurrent
 allocation by non-owners is exactly how the 2026-08-21 collision happened, one axis over.
 
+### ⛔ AMENDED 2026-08-25T01:00Z after a collision I caused -- "the owner allocates" is only half a rule
+
+`Z-S31` meant TWO items for 24 minutes. `0.7.0_AE_CloudOps~Z` routed a live hazard to me at 00:01Z,
+asked for a coordinate, correctly refused to self-allocate, and **measured** the gap first (channel
+token `1183` = 0, against `Z-S29`=1 and `Z-S16`=5 as controls). **I did not answer.** The fabric then
+allocated `Z-S31` itself while I minted `Z-S31` for something else.
+
+> **A REGISTRY THAT DOES NOT ANSWER IS NOT NEUTRAL -- IT IS A SECOND MINTING AUTHORITY DELEGATED BY
+> SILENCE.** `1.0.0_SA_CTO~Z`'s half, and it is the sharper one: *"'only the owner mints' is safe
+> ONLY IF THE OWNER ANSWERS."* Their discipline (never self-assign) and my silence are each
+> individually correct; **the INTERACTION is what left a live hazard with no coordinate.** And note
+> the direction -- **their discipline made the gap SILENT, and an absence generates a guess rather
+> than an objection.**
+
+**THREE RULES, and the third is the only one that needs nothing built:**
+
+1. **AN ALLOCATION REQUEST IS A BLOCKING ITEM ON ME, answerable in one line, same turn.** An id costs
+   a line; the request is the trigger. This is the half that failed and it is mine.
+2. ⛔ **NEVER "requesters must wait."** A protocol that makes a correct requester wait on a busy
+   registry **converts my latency into their block** -- and tonight the thing needing a coordinate was
+   a live fabrication hazard on a deployed function. `AE~Z` did everything right.
+3. ⭐ **UNTIL AN ID EXISTS, CITE BY ROUTING-MESSAGE ID** (`the :1183 hazard, AE~Z msg 5959`), **never
+   by a guessed `Z-Sn`.** A guessed id collides SILENTLY and well-formedly; a message id is unique by
+   construction, already exists, and resolves to the full text. **This needs no schema change and is
+   available today.**
+
+**AN ID, ONCE MINTED, IS IMMUTABLE.** Tonight's renumber was forced (the losing meaning was already
+in committed Lambda source) and it cost a full-reach correction because I had broadcast the old
+coordinate to five seats sixteen minutes earlier. **Renumbering breaks every citation in flight** --
+this protocol's own measured lesson, s.8.
+
+📌 **PROPOSED, NOT ADOPTED -- filer-prefixed ids** (`ETFS_INGEST-Z-AE-S1`) would make concurrent
+minting collision-proof **by construction** rather than by my responsiveness. **It is not mine to
+adopt**: the current schema pattern `^[A-Z0-9_]+-(Z-)?S[0-9]+$` rejects it, and that schema is shared
+across channels -- widening it is a **Rule 24 schema-enumeration act** needing the four-postulate
+record and its own owner. Routed to the protocol owner; **rule 3 above covers the gap in the
+meantime.**
+
+
 ---
 
 ## 0. WHAT I RE-DERIVED RATHER THAN INHERITED
