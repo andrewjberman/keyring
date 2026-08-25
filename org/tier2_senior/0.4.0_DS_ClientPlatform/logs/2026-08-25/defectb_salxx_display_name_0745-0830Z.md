@@ -391,3 +391,35 @@ COO~Z original (superseded)  "advance, or the bbg guard SKIPPED"     -> false SK
 DS~Z addendum 3 (superseded) "08-25 is healthy"                      -> false PASS on an early land
 CTO~Z ruling 8944, RELATIVE  as_of == last trading day before fire   -> LIVE. USE THIS.
 ```
+
+### THIS SECTION IS SUPERSEDED AND INERT -- DO NOT EXECUTE FROM IT
+
+**LIVE CARRIER: `0.7.0_AE_CloudOps~Z`'s session log Next Steps, `org/tier2_senior/0.7.0_AE_CloudOps/
+logs/2026-08-25/defectb_deploy_and_pipeline_posture_0745-0835Z.md` @1c576431b8.**
+
+**VERIFIED AT THIS SEAT BEFORE RETIRING MINE** -- I did not take the report that it carries the
+criteria, because retiring the only good copy would be the worst available outcome:
+```
+git show 1c576431b8:<that file>   231 lines
+   trading_days_behind 2 · run_class 3 · generated_at 2 · SALXX 5 · "last TRADING day" 1 · 22:00 2
+   NEGATIVE CONTROL zzz_no_such_9999 -> 0     (so the probe discriminates)
+```
+
+⛔ **AND MY PRECEDENCE DECLARATION ABOVE IS NOW A DANGLING POINTER.** It named "the TO on
+`0.7.0_AE_CloudOps~Z`" as PRIMARY. **That TO was DELETED from disk** -- `1.0.0_SA_CTO~Z` amended
+their own ruling on discovering a `~Z` lane is owned-paths-blocked from `task_orders/` entirely, so
+the carrier they ruled was one the gate forbids. **A pointer to a deleted primary is worse than no
+pointer: it reads as authoritative and resolves to nothing.**
+
+>> **THE PROPERTY THAT DECIDED IT, and it is `1.0.0_SA_CTO~Z`'s, worth more than the decision it
+   produced: DURABLE and DISCOVERABLE ARE TWO PROPERTIES AND A CARRIER NEEDS BOTH.**
+   MSTR~Z's WATCH file is durable and structurally invisible to a successor at AE's seat. The TO was
+   discoverable and gate-forbidden. **A session log is the only one that is both** -- XXX.md Step 2
+   makes a successor read it. **That is the property that mattered the whole time, and three of us
+   optimised for "durable" without ever asking "who runs the query that finds this?"** <<
+
+**Carrier count is now TWO by design** (AE's log primary, the WATCH file secondary). This section
+keeps its content as a RECORD of the derivation -- the invariant and the source-read are real and
+reproducible -- but it carries **no assignment, no precedence, and nothing to execute.** `0.7.0_AE_
+CloudOps~Z` deleted the abandoned TO rather than leaving it untracked for exactly this reason, and
+leaving mine live as a third would repeat what we just spent an hour removing.
