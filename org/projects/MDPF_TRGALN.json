@@ -3,13 +3,24 @@
   "macro_code": "MDPF",
   "name": "Model Portfolios Trigger Alignment",
   "description": "Align every MDPF firm scope's serving vintage with 49 Financial's (all three T-1 at publish) by retiming the Cottonwood and Inflection upstream trigger chains ahead of the 13:30Z mdpf gold floor, and pulling the accrual bridge and platinum publisher 30 minutes earlier (13:40Z / 13:50Z). Root cause (measured 2026-08-13): the floor+accrual+publisher all ran before INF's monolith inputs landed (15:05Z, the inf ingest-mirror cron) and COT's (22:31Z, the cot ingest-mirror at 18:30 ET) -- structural ordering, not a failure. All changes ride Terraform; unmanaged schedules are imported before edit (no deployed/code drift). Every TO ships a machine-readable proof-of-spec JSON validated deterministically by COO against PRD section 3.",
-  "prds": [{"path": "docs/architecture/MDPF_TRGALN_PRD.md", "label": "v1.1 trigger alignment + section-8 addendum (Inflection backfill workstream, tonight-refresh bar, vendor ground-truth)", "date": "2026-08-14"}],
-  "status": "active",
-  "phase": "CLOSED-CONDITIONAL 2026-08-14 14:29Z (CTO RAVC4 ruling on COO's validated 37/37 close package @042e4ebf67). DONE: 14 retimes live+exercised (fires on-clock incl. unattended), all three firms serving T-1-labeled at the 13:50Z publish (COT/49F value-fresh; INF PASS_WITH_DISCLOSURE per PRD v1.4 -- $185,201.05/0.088% custody-leg stale-delta disclosed), TO-5 truth table validated 14/14 (7 empties adjudicated NOT-true-zero/eclipse-unfillable; 383 true zeros), all Terraform 0-diff. RIDERS: (1) 08-15 closing read = INF value tie-out + B2 slot (failure REOPENS TO-4 INF leg); (2) Andrew's three reserved words (A/B fill -> TO-6, silver-delete data-quality word, gate-cross adjudication); (3) CTO residual bank (force-path class, labels-vs-vintage, comp-trigger name-interpolation, proof-schema reconciliation); (4) tags/commits on MSTR's integration sweep. Full close when riders clear.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_TRGALN_PRD.md",
+      "label": "v1.1 trigger alignment + section-8 addendum (Inflection backfill workstream, tonight-refresh bar, vendor ground-truth)",
+      "date": "2026-08-14"
+    }
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: CLOSED-CONDITIONAL 2026-08-14 14:29Z (CTO RAVC4 ruling on COO's validated 37/37 close package @042e4ebf67). DONE: 14 retimes live+exercised (fires on-clock incl. unattended), all three firms serving T-1-labeled at the 13:50Z publish (COT/49F value-fresh; INF PASS_WITH_DISCLOSURE per PRD v1.4 -- $185,201.05/0.088% custody-leg stale-delta disclosed), TO-5 truth table validated 14/14 (7 empties adjudicated NOT-true-zero/eclipse-unfillable; 383 true zeros), all Terraform 0-diff. RIDERS: (1) 08-15 closing read = INF value tie-out + B2 slot (failure REOPENS TO-4 INF leg); (2) Andrew's three reserved words (A/B fill -> TO-6, silver-delete data-quality word, gate-cross adjudication); (3) CTO residual bank (force-path class, labels-vs-vintage, comp-trigger name-interpolation, proof-schema reconciliation); (4) tags/commits on MSTR's integration sweep. Full close when riders clear.",
   "blocking": "Andrew's A/B word gates TO-6; 08-15 closing read gates the TO-4 INF leg finalization",
   "created": "2026-08-14",
-  "pods": ["0.7", "1.0", "2.0"],
+  "pods": [
+    "0.7",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "mdpf + cot-pipeline + inf-pipeline + opal-assets",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

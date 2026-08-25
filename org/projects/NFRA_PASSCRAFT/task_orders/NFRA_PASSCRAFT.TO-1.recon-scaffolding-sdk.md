@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn (0.8.0_AE_CloudComp is UNREGISTERED). base-CTO consumes the reference immediately for his live hand-run pass (this scaffolds that pass, does not replace it).</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the single arch-gate pass before any GO)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_PASSCRAFT, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: pending</status>
 <dispatch>DISPATCHED 2026-07-10 by 2.0.0_SA_COO~A -> 0.8.0_AE_CloudComp, on Andrew's DIRECT spawn release ("Unblock immediately"). CTO~A arch-gate PASS on the TO set @ 8dfcf1e75. Agent-queue pointer: org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_PASSCRAFT.TO-1.recon-scaffolding-sdk.md. ROUTE EVERY BUILD DIFF back to 1.0.0_SA_CTO~A for the arch-gate before it is treated as landed (CTO~A gates diffs, not just the TO set).</dispatch>
 <priority>P1 -- FOUNDATION of the whole program. Its `ToolAudit` emission (TO-2) is TOOLGRAPH's node/edge source; the reference is consumable by base-CTO's live pass the moment it lands. `.tools/comp-passcraft` is a NEW tool (not an edit to an enforcer), so it does NOT inherit the `.tools/**->BASE_EXEC` daylight hold (PRD sec.6) -- build may start on spawn without waiting on the hold.</priority>
 <project>NFRA_PASSCRAFT</project>

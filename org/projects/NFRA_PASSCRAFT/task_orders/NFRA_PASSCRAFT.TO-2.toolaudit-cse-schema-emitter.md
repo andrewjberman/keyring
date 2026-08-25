@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn. Sequences behind TO-1 (the recon helper it wires the emitter into).</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_PASSCRAFT, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: pending</status>
 <dispatch>DISPATCHED 2026-07-10 by 2.0.0_SA_COO~A -> 0.8.0_AE_CloudComp, on the PASSCRAFT-TO-1 + TOOLGRAPH-TO-1 landing (15c8524a4, CTO~A arch-gate PASS). Agent-queue pointer: org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_PASSCRAFT.TO-2.toolaudit-cse-schema-emitter.md. TO-2 does NOT gate on R0 -- build the emitter; the OPTIONAL R0 fold is DEFERRED (TO-R0 is HELD off CVO's lane -- do NOT route it, do NOT assume R0 lands). Route diffs to 1.0.0_SA_CTO~A.</dispatch>
 <priority>P2 -- sequences behind TO-1; its output (the ToolAudit CSE stream) is what TOOLGRAPH.TO-2 (the Assurance plane) reads. The emitter is provenance-carrying; the schema is the envelope, never the judgment.</priority>
 <project>NFRA_PASSCRAFT</project>

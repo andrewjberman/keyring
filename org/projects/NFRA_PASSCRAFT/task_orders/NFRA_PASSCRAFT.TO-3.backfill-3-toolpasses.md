@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build, emitting the CSEs) with base-CTO consult (he ran the 3 hand passes; the verdict fields are his authored judgments, transcribed not recomputed). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn + TO-2 (the emitter must exist).</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_PASSCRAFT, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: staged</status>
 <priority>P3 -- sequences behind TO-2 (needs the emitter). Immediately valuable: it seeds TOOLGRAPH.TO-1's node set with 3 REAL, evidence-carrying tool-nodes (comp-aws + comp-blast are two of the hardest already-audited tools).</priority>
 <project>NFRA_PASSCRAFT</project>
 

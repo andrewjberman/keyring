@@ -4,16 +4,33 @@
   "name": "Onboard the Opal team to MCP (agent kit + partitioned portal read-areas)",
   "description": "Andrew-direct 2026-07-01 (MSTR charter LD-0237). Package the comp-tool + agent-org stack for Opal colleagues onboarding to the Opal MCP. TWO workstreams under ONE macro. A (how they get AGENTS): refresh the Desktop agent_org_blueprint_v1 -> a versioned self-contained agent_org_blueprint_vN a teammate unzips->registers->has a current correctly-railed correctly-routing agent -- current CLAUDE.md (rules+gates, strip Opal incident-history) + the comp-which RAIL harness (COMPRAIL + comp-grep/glob + HUD) + the ranking router MECHANISM (COMPROUTE posterior, now-default post-DRV-flip) + COMPUNIFY coverage-prior (transferable same-estate) + COMPLEARN COLD-START (per-teammate-agent, no Opal-affinity transplant); NO git/deploy machinery (read/reason kit). B (how they get INFORMATION): partitioned scoped read-areas over kuzu/nessie/iceberg so a teammate pulls portal-displayed data by panel cluster -- enumerate portal surfaces via TSGRAPH PanelCluster nodes, map each cluster->its served data source (SERVED_FROM fine-lineage), design per-team/per-surface scoped read-partitions. PAIRED with SCTY (the security twin): the read-scope IS a SCTY entitlement (maps onto the user-type-tier + read-only-scope model); onboarding is GATED on the SCTY guardrails live. This is the 'more agents' Andrew flagged on the SCTY deploy -- COMPTEAM+SCTY converge. Same Opal estate (not external productization). PRD docs/architecture/NFRA_COMPTEAM_PRD.md.",
   "prds": [
-    {"path": "docs/architecture/NFRA_COMPTEAM_PRD.md", "label": "COMPTEAM PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
+    {
+      "path": "docs/architecture/NFRA_COMPTEAM_PRD.md",
+      "label": "COMPTEAM PRD v1.0 (CTO-authored)",
+      "date": "2026-07-01"
+    }
   ],
-  "status": "active",
-  "phase": "A1 (kit-refresh) + B1 (TSGRAPH portal-surface->data-source map) both FULLY CLOSED (multiple CTO-accepted, schema-frozen commits from 2026-07-01). B2 (scoped read-partition design) design is BUILT and was CVO-cleared this morning (2026-07-07) to move into actual construction. Real gaps remain before either workstream is truly done: A1's kit was built+marked-closed but has NO recorded end-to-end verification run (unzip -> MCP-register -> cold-state -> route-correctly); its secrets-leak gate exists but is untested (not proven to catch a planted secret or pass a clean kit). B2's access-control layer doesn't exist yet -- design cleared, build not started; no proof yet it blocks cross-slice reads or unverified identities. No real teammate has been onboarded (Andrew-policy-gated). A new NFRA_COMPTEAM.B2-ACTIVATE TO (provisioning an actual non-Andrew teammate) is pending, Andrew-Directive-gated -- it's a reasonable follow-on to exercise the acceptance criteria live but is not itself a PRD-named deliverable.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: A1 (kit-refresh) + B1 (TSGRAPH portal-surface->data-source map) both FULLY CLOSED (multiple CTO-accepted, schema-frozen commits from 2026-07-01). B2 (scoped read-partition design) design is BUILT and was CVO-cleared this morning (2026-07-07) to move into actual construction. Real gaps remain before either workstream is truly done: A1's kit was built+marked-closed but has NO recorded end-to-end verification run (unzip -> MCP-register -> cold-state -> route-correctly); its secrets-leak gate exists but is untested (not proven to catch a planted secret or pass a clean kit). B2's access-control layer doesn't exist yet -- design cleared, build not started; no proof yet it blocks cross-slice reads or unverified identities. No real teammate has been onboarded (Andrew-policy-gated). A new NFRA_COMPTEAM.B2-ACTIVATE TO (provisioning an actual non-Andrew teammate) is pending, Andrew-Directive-gated -- it's a reasonable follow-on to exercise the acceptance criteria live but is not itself a PRD-named deliverable.",
   "blocking": "B2-ACTIVATE gated on Andrew's teammate-onboarding policy decision. Real remaining work: A1's end-to-end verification run + secrets-gate test; B2's actual access-control build (design cleared, not started) + its blocking-tests. Leash (every TO): read-only/no-git distribution; scoped-read = security surface -> SCTY-coordinated (no unscoped read); strip non-transferable Opal internals; ground portal-map vs TSGRAPH + live served.",
   "created": "2026-07-01",
-  "pods": ["0.5", "0.4", "0.8", "1.0", "2.0"],
+  "pods": [
+    "0.5",
+    "0.4",
+    "0.8",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "n/a (productization/distribution of the comp-tool + agent-org stack)",
   "thread_counter": 0,
   "threads": [],
-  "depends_on": ["SCTY_MCPGUARD", "SCTY_PREMCP", "NFRA_TSGRAPH", "NFRA_COMPRAIL", "NFRA_COMPROUTE"],
-  "depends_on_note": "The ENABLEMENT twin of SCTY (security) -- B's read-scope binds to the SCTY user-type-tier + read-only-scope entitlement model (do not ship an unscoped read); onboarding gated on the SCTY guardrails live. B uses NFRA_TSGRAPH PanelCluster + SERVED_FROM lineage (org/modules/graph/tsgraph_spike). A packages COMPRAIL (rail) + COMPROUTE (ranking, now-default post-DRV-flip) + COMPUNIFY prior; COMPLEARN cold-start. Directive-candidate (MSTR surfacing to Andrew; Andrew-direct-authorized-not-a-standing-mandate until ratified)."
+  "depends_on": [
+    "SCTY_MCPGUARD",
+    "SCTY_PREMCP",
+    "NFRA_TSGRAPH",
+    "NFRA_COMPRAIL",
+    "NFRA_COMPROUTE"
+  ],
+  "depends_on_note": "The ENABLEMENT twin of SCTY (security) -- B's read-scope binds to the SCTY user-type-tier + read-only-scope entitlement model (do not ship an unscoped read); onboarding gated on the SCTY guardrails live. B uses NFRA_TSGRAPH PanelCluster + SERVED_FROM lineage (org/modules/graph/tsgraph_spike). A packages COMPRAIL (rail) + COMPROUTE (ranking, now-default post-DRV-flip) + COMPUNIFY prior; COMPLEARN cold-start. Directive-candidate (MSTR surfacing to Andrew; Andrew-direct-authorized-not-a-standing-mandate until ratified).",
+  "closed": "2026-08-25"
 }

@@ -5,7 +5,7 @@
   "title": "Three Firms + Global: model / non-model representation across 49 Financial, Inflection, Cottonwood -- bronze->silver->gold->platinum, fee-basis Global, one flip",
   "name": "MDPF 3 Firms",
   "description": "Andrew-direct (CTO terminal, 2026-07-22 ~18:5xZ, first authorized act of the LD-0333 restart): supersedes MDPF_REVAMP, rolling forward every incomplete item (PRD s2.5 ledger, RF-1..RF-15). Goal: accurately represent model portfolio + non-model holdings for 49 Financial (AUA = schwab/08242234 fact_rps_s2, models = smartx fact_model_aum_daily), Inflection (AUA = orion fact_assets, models = eclipse fact_portfolios_full), Cottonwood (AUA = blackdiamond/cottonwood fact_holdings_s2, models = BD Rebalancer -> dim_model_portfolio), and Global. THE FEE-BASIS LAW: the Global aum-metrics radial includes only what Opal charges fees on = full(49F) + model(INF) + model(COT), basis-labelled fee_charged_v1. Sequencing (Andrew-explicit): WS-B bronze (scheduled ingestion + vendor-depth-evidenced backfill, never conflating endpoint shape with available data) -> WS-S silver (event+sweep parquet conversions, canonical _s2 shapes, Cottonwood grant) may pipeline per leg; WS-G gold (null-composition decision first per CVO STOP-BEFORE-BUILD, firm registry as the one N-firm enumeration, fee-basis artifacts, DDB review) opens only when ALL legs B+S verified; WS-P platinum (consumption-contract audit incl. the server-vs-client question, FE 3-firm parity) audits parallel-safe, builds gated on G; WS-F = THE ONE FLIP with Cottonwood inside the gate, single binding pin at the end. PRD: docs/architecture/MDPF_3FIRMS_PRD.md.",
-  "status": "active",
+  "status": "closed",
   "owner": "1.0.0_SA_CTO",
   "pods": [
     "0.4",
@@ -50,5 +50,7 @@
       "agent": "1.0.0_SA_CTO",
       "event": "Andrew-direct: MDPF_REVAMP + MDPF_3FIRMS 'essentially done' PENDING (1) MDPF-assets scheduling clean+clear and (2) the Global holdings-Count aggregation item. CTO ran the personal audit; verdict DATA (producer composition), not frontend. Closeout PRD authored + registered. Two live gates remain before either project closes; the scheduling condition is separately owned and NOT discharged here."
     }
-  ]
+  ],
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: Phase 0: PRD v1.0 authored + committed 2026-07-22 (grounded end-to-end in-session: 6-leg schedule/depth census, DDB contract, publisher PUBLISH_MAP, FE scoping mechanics, the Cottonwood zero-overlap resolved to its D+1-delivery mechanism). COO decomposition PENDING Andrew's cascade GO (fabric under the LD-0333 single-path hold; PRD creation was the authorized act, dispatch awaits his word). Open decisions D-1..D-5 at Andrew, none blocking WS-B/WS-S. Sibling dispositions recommended (WSE_COTMDL + MDPF_BASISSWITCH fold in; MDPF_VARFLAG independent), executed at decomposition on Andrew's nod."
 }

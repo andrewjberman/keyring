@@ -15,8 +15,8 @@
     "NFRA_GLOBGRPH",
     "NFRA_DEBTSCAN"
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD/DESIGN. PRD authored 2026-06-24 (1.0.0_SA_CTO; docs/architecture/NFRA_WRKFLW_PRD.md) formalizing the MSTR scoping-of-record (docs/briefs/oplmcp-workflow-scoping-20260624.md, Andrew-sovereign) into a buildable phased program. SEQUENCE: CTO PRD (DONE) -> COO decomposes the P1-P5 phases -> P1 (L0 foundation: the privacy-critical de-identification gap-closure + the two-zone hot/cold split + the token-level semantic-signature distill + result-shape-capture + sessionID-stitch + the separate least-privilege READ role) is the first leg + the first arch-gate (the two-zone privacy design is the security/privacy crux). The build PACES against the OPLMCP-completion + DATA_PLATFORM hot priorities (COO sequences capacity). Substrate ready: OPLMCP .05/R8 audit-lake LANDED 2026-06-24.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: PHASE 0 -- PRD/DESIGN. PRD authored 2026-06-24 (1.0.0_SA_CTO; docs/architecture/NFRA_WRKFLW_PRD.md) formalizing the MSTR scoping-of-record (docs/briefs/oplmcp-workflow-scoping-20260624.md, Andrew-sovereign) into a buildable phased program. SEQUENCE: CTO PRD (DONE) -> COO decomposes the P1-P5 phases -> P1 (L0 foundation: the privacy-critical de-identification gap-closure + the two-zone hot/cold split + the token-level semantic-signature distill + result-shape-capture + sessionID-stitch + the separate least-privilege READ role) is the first leg + the first arch-gate (the two-zone privacy design is the security/privacy crux). The build PACES against the OPLMCP-completion + DATA_PLATFORM hot priorities (COO sequences capacity). Substrate ready: OPLMCP .05/R8 audit-lake LANDED 2026-06-24.",
   "blocking": "None to PRD; the build paces against hot priorities (OPLMCP-completion + DATA_PLATFORM). Critical-path discipline: P1 (L0) is the privacy-critical foundation -- the de-identification-at-distillation gap-closure (the .05 lake currently persists user:email, contradicting the no-identity-persisted ruling) is the FIRST arch-gated leg; nothing mines until the scoping-lake holds zero identity. Mutating-workflow legs (L5) governed like deploys (staged rollout + kill-switch + audit-ledger + human-auth gate).",
   "created": "2026-06-24",
   "pods": [
@@ -32,5 +32,6 @@
   "scoping_owner": "0.0.0_AB_MSTR",
   "sovereign": "Andrew",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

@@ -2,7 +2,7 @@
   "project_code": "COT_CANON458",
   "macro_code": "ADVI",
   "name": "Cottonwood canonical firm total -- every served artifact reconciles to the number the client sees (458M), on current data",
-  "status": "active",
+  "status": "closed",
   "dep_stage": "PRD",
   "created": "2026-08-25",
   "created_by": "1.0.0_SA_CTO",
@@ -33,5 +33,7 @@
     "MDPF_CANPLAT"
   ],
   "blocking": "None on any agent. ONE question at Andrew: the directive home for this registration (D2 with the ADVI family vs its own row) -- MSTR lands the row on his word. CROSS-PROJECT DEPENDENCY, declared not hidden: surface (c) -- the STOPPED blackdiamond/cottonwood/silver/fact_holdings producer -- is ADVI_COTETL's by CTO ruling and does NOT move with this project's remedy (Rule 24(iv) failure across the registration boundary); COT-e-1 names it on its face. TOs cut by COO on registration; DS-class lane, one project.",
-  "pipeline": "cot"
+  "pipeline": "cot",
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT."
 }

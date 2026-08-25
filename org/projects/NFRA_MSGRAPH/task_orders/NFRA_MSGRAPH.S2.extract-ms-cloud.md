@@ -3,7 +3,7 @@
 <title>NFRA_MSGRAPH S2 -- EXTRACT_MS_CLOUD: ingest the MS doc-cloud (SharePoint + OneDrive structure/metadata/activity) into the single AWS Nessie/Iceberg globgrph via the S1-gated schema, with the gate-impossible content/comms structural cert PROVEN by an adversarial regression</title>
 <issued_to>0.8.0_AE_CloudComp (the unified AWS+MS compiler agent; S1 owner, CTO-PASS'd schema author -- S2 build authorized against that schema)</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_MSGRAPH, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: pending</status>
 <priority>P1 -- the ingestion foundation; makes the MS estate queryable via comp-kuzu (the substrate S3 heat-map + S4 findability comp-tools build on). Minimal-viable per CTO invariant #4 (do NOT gold-plate; S4 is the deliverable).</priority>
 <project>NFRA_MSGRAPH</project>
 

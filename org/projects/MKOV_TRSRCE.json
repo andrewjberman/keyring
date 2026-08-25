@@ -3,12 +3,22 @@
   "macro_code": "MKOV",
   "name": "Market Overview Dividend-Basis Correction (EAFE gross->net) + Published-TR Fallback",
   "description": "Andrew-direct 2026-07-07 (\"use the standard [net EAFE] one moving forward, make sure that gets implemented\"). Follow-on to MKOV_RETFIX, independent of it. REVISED v1.1 same-day: DS 0.2.0's deeper inspection found Yang already folds REAL (not synthetic) dividends into `return` -- US indices (S&P/Russell) need no fix (gross==net domestically); EAFE is the only material issue, a gross-vs-net dividend-BASIS problem, likely NOT requiring the full published-TR-ticker migration originally proposed. Primary path: correct EAFE's dividend basis to net, mechanism pending Yang's answer on how he sources/computes the dividend contribution. Fallback (only if Yang's pipeline can't cleanly net it): source NDDUEAFE directly for EAFE only (not all 4 benchmarks -- S&P/Russell/Agg confirmed unaffected). Full consumer audit (pipescript market-overview + model-portfolios threads) still applies to whichever path: in-scope = tiered generator, precompute_market_metrics, yang-model-portfolio-benchmarks; out of scope (price-based) = RSI generator, regime classifier, etf-returns (separate PKL), time-machine rollback. PRD docs/architecture/MKOV_TRSRCE_PRD.md (v1.1).",
-  "prds": [{"path": "docs/architecture/MKOV_TRSRCE_PRD.md", "label": "MKOV_TRSRCE PRD v1.1 (CTO-authored, Andrew-direct, scope-revised same-day)", "date": "2026-07-07"}],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD v1.1 authored 2026-07-07. Scope narrowed same-day after DS 0.2.0's dividend-mechanism correction (caught before any TO dispatched). Andrew wants this implemented, not left as a candidate.",
+  "prds": [
+    {
+      "path": "docs/architecture/MKOV_TRSRCE_PRD.md",
+      "label": "MKOV_TRSRCE PRD v1.1 (CTO-authored, Andrew-direct, scope-revised same-day)",
+      "date": "2026-07-07"
+    }
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: PHASE 0 -- PRD v1.1 authored 2026-07-07. Scope narrowed same-day after DS 0.2.0's dividend-mechanism correction (caught before any TO dispatched). Andrew wants this implemented, not left as a candidate.",
   "blocking": "COO decomposition + GO on the revised TOs. TO-1 (Yang: how is the dividend contribution sourced/computed -- a question, not a data pull) is the starting gate. TO-2 (implement whichever path TO-1 resolves to, EAFE-only) and TO-3 (re-verification) sequence after TO-1.",
   "created": "2026-07-07",
-  "pods": ["0.1", "0.2"],
+  "pods": [
+    "0.1",
+    "0.2"
+  ],
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

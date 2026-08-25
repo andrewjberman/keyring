@@ -4,7 +4,7 @@
 <issued_to>3.0.0_SA_CVO (owns R0 + the RAIL_SET, independent of the PASSCRAFT design so the grader stays independent of the graded). **STAGED -- HELD, DO NOT ROUTE TO CVO (CTO~A ruling 2026-07-10):** CVO is base-CTO's lane -- routing a rail-ruling to CVO is DRIVING CVO, which is base-CTO's to initiate, not COO~A's/CTO~A's; and COO~A's cross-agent messaging is not Andrew-cleared (same constraint as the base-CTO courtesy notice). R0 is a PROPOSED rail; route it ONLY when Andrew clears the CVO path OR base-CTO's front-pass chain picks up the R0 question on its own. **NOTHING is blocked by this hold** -- TO-2 does not gate on R0 (only its OPTIONAL R0 fold does). CVO is the certifier of this program; this ruling is a CVO deliverable, not a build dispatch -- it gates TO-2's R0 fold but nothing else.</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate. CTO~A REQUESTS the CVO ruling per PRD sec.3c.)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_PASSCRAFT, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: staged</status>
 <priority>GATING for TO-2's R0 fold ONLY -- the rest of PASSCRAFT does not block on it. Routed to CVO because R0 is a RAIL question (TOOLPASS sec.5a gives the rail set to CVO, not to the PASSCRAFT design PRD). The grader stays independent of the graded.</priority>
 <project>NFRA_PASSCRAFT</project>
 

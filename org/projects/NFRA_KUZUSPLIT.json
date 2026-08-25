@@ -2,17 +2,34 @@
   "project_code": "NFRA_KUZUSPLIT",
   "macro_code": "NFRA",
   "name": "Graph-refresh scheduling + comp-kuzu-full/comp-kuzu-inc split -- MSTR-startup pays the daily full, workers ride incremental; follow-on to NFRA_GLOBGRPH",
-  "status": "active",
+  "status": "closed",
   "current_phase": "P0 DELIVERED 2026-07-17 (@b0c94d9ff, 0.8.0_AE_CloudComp~D, COO-validated): AC-1 measured sizing basis -- full=482s(+35% vs PRD) / inc=5.2s / ambush~487s / rate~1-full-day-box / shared-warm CONFIRMED, all EXERCISED (Rule 22a), scratch-isolated. O-1 (the §5.1 fork: comp-kuzu-inc serves incremental-OR-LABELED-STALE, NEVER incremental-or-full) RATIFIED by Andrew. NOW P1 (split commands) -> CTO arch-gate (COO carries the GO); NFRA_COMPSIMILAR PH1-projection sequenced BEHIND P1 landing. HEADLINE (D-002 guard, still binding): the symmetric local incremental ALREADY EXISTS (kuzu_incremental_refresh.py, 07-08, CTO GO 195732Z, 92x faster) -- DO NOT REBUILD; the gap is scheduling+surfacing, not existence. Three-tool model RESOLVED at source (LD-0307): comp-aws derive = cloud producer (nightly, NEVER at MSTR startup) / comp-kuzu-full = local full projection (MSTR startup once) / comp-kuzu-inc = local incremental (workers, pre-query). O-2/O-3/O-4 resolved (P0-first confirmed; new follow-on not a GLOBGRPH reopen; P4 two-machine deferred-optional). Phases: P0 instrument [DONE @b0c94d9ff] -> P1 split commands [ACTIVE, CTO-gated] -> P2 MSTR-startup hook (idempotent) -> P3 document (ships WITH P1) -> P4 optional two-machine distribute.",
   "owner": "0.8.0_AE_CloudComp",
   "owner_note": "0.8.0_AE_CloudComp builds (NFRA_GLOBGRPH platform owner, deepest in the kuzu/derive surfaces); CTO arch-gates (owns the globgrph platform + arch-gated the original 2026-07-08 incremental); MSTR governs the CLAUDE.md/XXX.md/MEMORY.md doc-law edits (Art. VI, ships same wave as the code so docs never lead reality).",
   "coo_lane": "2.0.0_SA_COO",
   "created": "2026-07-17",
-  "pods": ["0.8.0", "1.0", "0.0.0"],
-  "depends_on": ["NFRA_GLOBGRPH"],
+  "pods": [
+    "0.8.0",
+    "1.0",
+    "0.0.0"
+  ],
+  "depends_on": [
+    "NFRA_GLOBGRPH"
+  ],
   "depends_on_note": "Follow-on to NFRA_GLOBGRPH (versioned-graph platform, CLOSED-COMPLETE 2026-06-16). Modifies that platform's local-projection refresh (kuzu_cli.py, .tools/comp-kuzu, kuzu_nessie_load / kuzu_incremental_refresh / _canonical.ensure_fresh); does NOT reopen the platform. The cloud 2a full-derive + 2b incremental_updater (globgrph) are UNCHANGED -- this project only splits + schedules the LOCAL projection.",
   "prds": [
-    {"path": "docs/architecture/NFRA_KUZUSPLIT_PRD.md", "label": "NFRA_KUZUSPLIT PRD v0.1 (CTO implementation contract; phases + ACs + open calls)", "date": "2026-07-17"},
-    {"path": "docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md", "label": "Design source of truth: the graph-refresh audit + kuzu-split (MSTR, LD-0307, incl. comp-aws-derive != comp-kuzu-full correction)", "date": "2026-07-17", "ref": "@5bd82a280"}
-  ]
+    {
+      "path": "docs/architecture/NFRA_KUZUSPLIT_PRD.md",
+      "label": "NFRA_KUZUSPLIT PRD v0.1 (CTO implementation contract; phases + ACs + open calls)",
+      "date": "2026-07-17"
+    },
+    {
+      "path": "docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md",
+      "label": "Design source of truth: the graph-refresh audit + kuzu-split (MSTR, LD-0307, incl. comp-aws-derive != comp-kuzu-full correction)",
+      "date": "2026-07-17",
+      "ref": "@5bd82a280"
+    }
+  ],
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: P0 DELIVERED 2026-07-17 (@b0c94d9ff, 0.8.0_AE_CloudComp~D, COO-validated): AC-1 measured sizing basis -- full=482s(+35% vs PRD) / inc=5.2s / ambush~487s / rate~1-full-day-box / shared-warm CONFIRMED, all EXERCISED (Rule 22a), scratch-isolated. O-1 (the §5.1 fork: comp-kuzu-inc serves incremental-OR-LABELED-STALE, NEVER incremental-or-full) RATIFIED by Andrew. NOW P1 (split commands) -> CTO arch-gate (COO carries the GO); NFRA_COMPSIMILAR PH1-projection sequenced BEHIND P1 landing. HEADLINE (D-002 guard, still binding): the symmetric local incremental ALREADY EXISTS (kuzu_incremental_refresh.py, 07-08, CTO GO 195732Z, 92x faster) -- DO NOT REBUILD; the gap is scheduling+surfacing, not existence. Three-tool model RESOLVED at source (LD-0307): comp-aws derive = cloud producer (nightly, NEVER at MSTR startup) / comp-kuzu-full = local full projection (MSTR startup once) / comp-kuzu-inc = local incremental (workers, pre-query). O-2/O-3/O-4 resolved (P0-first confirmed; new follow-on not a GLOBGRPH reopen; P4 two-machine deferred-optional). Phases: P0 instrument [DONE @b0c94d9ff] -> P1 split commands [ACTIVE, CTO-gated] -> P2 MSTR-startup hook (idempotent) -> P3 document (ships WITH P1) -> P4 optional two-machine distribute."
 }

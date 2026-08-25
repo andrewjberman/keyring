@@ -4,16 +4,35 @@
   "name": "The scanners as a quality-annotated graph (the missing QUALITY sensor of the COMPLEARN loop)",
   "description": "Andrew-direct via CTO~A (the holistic front of the tool-check generalization). Makes the comp-tool suite first-class in the estate graph -- the scanners are nodes, their shared substrates are edges, their archetypes are clusters -- and annotates every tool-node with its ASSURANCE verdict, then wires that verdict into the two places the fabric already reserves for it: comp_tool_health's stubbed EFFECTIVE axis and PROMOTE's promotion gate. The result is the quality sensor the loop is missing: it can finally tell a tool that WORKS from one that exits 0 while LYING. KEYSTONE FINDING (source-grounded): comp-tool-health's value signal is mean_outcome_value from the RESULT column (comp_tool_health.py:163,196), and RESULT = _classify_result() = exit-0->PASS (comp_log_auto.py:170) -- so the number meant to say 'this tool is correct' inherits the success-token-bound-to-the-wrong-step fallacy; the one axis that would catch 'does it reach the right answer' (EFFECTIVE) is stubbed None (:136). SMALLEST CHANGE / HIGHEST LEVERAGE: feed the exercised assurance verdict into the effective bool the code already reserves; the moment the wire lands, comp-freshness flips KEEP->FIX on the axis built for it. LOAD-BEARING RULING (CTO~A-owned): assurance is EVIDENCE, written like FEDOBS writes evidence -- Deny-fenced from mutating graph_nodes/edges/cse/tool_activity (PROMOTE alone materializes truth). Reads NFRA_PASSCRAFT (the ToolAudit CSE stream) + the live globgrph Trino federation (Estate x code_heat x tool_activity). Shares the CTO-owned Goodhart gate with NFRA_COMPLEARN sec.5 (one gate, both consumers).",
   "prds": [
-    {"path": "docs/architecture/NFRA_TOOLGRAPH_PRD.md", "label": "TOOLGRAPH PRD v0.1 (CTO~A-authored, Andrew-direct)", "date": "2026-07-10", "commit": "362272cce"}
+    {
+      "path": "docs/architecture/NFRA_TOOLGRAPH_PRD.md",
+      "label": "TOOLGRAPH PRD v0.1 (CTO~A-authored, Andrew-direct)",
+      "date": "2026-07-10",
+      "commit": "362272cce"
+    }
   ],
-  "related": ["NFRA_PASSCRAFT", "NFRA_COMPLEARN", "NFRA_PROMOTE", "NFRA_TOOLHEALTH", "NFRA_FEDOBS", "NFRA_COMPASSURANCE", "NFRA_TOOLCHECK"],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD v0.1 COMPLETE (CTO~A-authored 2026-07-10, 362272cce). DECOMPOSED by COO~A 2026-07-10 into 3 STAGED TOs (org/projects/NFRA_TOOLGRAPH/task_orders/): TO-1 the tool graph -- tracked node table (LEAD-1 committed census path folded) + mechanical SHARES_SUBSTRATE/WRITES/INVOKED_BY edges + the declared-vs-actual coupling diff that SEEDS a known undeclared edge (AC1/AC6, MEASURE-only, NOT daylight-held, runs parallel to PASSCRAFT-P1); TO-2 the Assurance plane as Trino state, evidence-only, Deny-fenced (AC5 simulate-principal-policy + positive control on LIVE); TO-3 the quality-sensor wire (feed the verdict into comp_tool_health.classify_full's effective bool :136, SMALLEST change) + the PROMOTE/comp-tool-health-gate extension + the quality-adjusted JOIN (AC2/AC3/AC4, EDIT daylight-held). ALL TOs STAGED, NOT DISPATCHED -- returned to CTO~A for the single arch-gate pass. Build dispatch Andrew-gated on the 0.8.0_AE_CloudComp spawn.",
+  "related": [
+    "NFRA_PASSCRAFT",
+    "NFRA_COMPLEARN",
+    "NFRA_PROMOTE",
+    "NFRA_TOOLHEALTH",
+    "NFRA_FEDOBS",
+    "NFRA_COMPASSURANCE",
+    "NFRA_TOOLCHECK"
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: PHASE 0 -- PRD v0.1 COMPLETE (CTO~A-authored 2026-07-10, 362272cce). DECOMPOSED by COO~A 2026-07-10 into 3 STAGED TOs (org/projects/NFRA_TOOLGRAPH/task_orders/): TO-1 the tool graph -- tracked node table (LEAD-1 committed census path folded) + mechanical SHARES_SUBSTRATE/WRITES/INVOKED_BY edges + the declared-vs-actual coupling diff that SEEDS a known undeclared edge (AC1/AC6, MEASURE-only, NOT daylight-held, runs parallel to PASSCRAFT-P1); TO-2 the Assurance plane as Trino state, evidence-only, Deny-fenced (AC5 simulate-principal-policy + positive control on LIVE); TO-3 the quality-sensor wire (feed the verdict into comp_tool_health.classify_full's effective bool :136, SMALLEST change) + the PROMOTE/comp-tool-health-gate extension + the quality-adjusted JOIN (AC2/AC3/AC4, EDIT daylight-held). ALL TOs STAGED, NOT DISPATCHED -- returned to CTO~A for the single arch-gate pass. Build dispatch Andrew-gated on the 0.8.0_AE_CloudComp spawn.",
   "blocking": "PHASE-0 -> arch-gate. (1) CTO~A single arch-gate pass (assurance-is-EVIDENCE-Deny-fenced is the load-bearing ruling; the SMALLEST-change wire must not re-architect comp_tool_health; the coupling-diff MUST seed a known undeclared edge -- a gate green on the current tree is not shown able to go red). (2) Andrew builder spawn: 0.8.0_AE_CloudComp UNREGISTERED. (3) `.tools/**->BASE_EXEC` daylight hold: TO-1 (measure) starts on spawn; TO-3's EFFECTIVE-axis wire + PROMOTE-gate edit sequence BEHIND the hold. Coordinate the PROMOTE-gate extension with NFRA_PROMOTE's owner (do NOT re-home the gate). Reads the NFRA_PASSCRAFT ToolAudit stream (TO-1 node seed = PASSCRAFT.TO-3). BOUNDARY (sovereign): no bd/49F/Schwab read or target.",
   "created": "2026-07-10",
-  "pods": ["1.0", "3.0", "2.0", "0.8"],
+  "pods": [
+    "1.0",
+    "3.0",
+    "2.0",
+    "0.8"
+  ],
   "pipeline": "NFRA (comp-tool quality graph -- no data pipeline)",
   "coo_lane": "COO~A (scoped EXCLUSIVELY to CTO~A's incoming PRDs, Andrew-direct 2026-07-10). Decompose + register + RETURN the TO set to CTO~A for the arch-gate; do NOT dispatch.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

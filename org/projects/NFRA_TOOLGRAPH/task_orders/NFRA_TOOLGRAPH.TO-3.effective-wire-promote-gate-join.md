@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build: tooling + gate). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn + TO-2 (the Assurance plane) + PASSCRAFT-P2. **EDIT side is DAYLIGHT-HELD (`.tools/**->BASE_EXEC`): the EFFECTIVE-axis wire + the PROMOTE-gate edit touch `.tools/` / org/modules/graph and sequence BEHIND the hold.** Coordinate the PROMOTE-gate extension with NFRA_PROMOTE's owner (do NOT re-home the gate).</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_TOOLGRAPH, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: staged</status>
 <priority>P3 -- the highest-leverage / smallest change: the code already flips KEEP<->FIX on the `effective` bool; the moment the wire lands, comp-freshness flips KEEP->FIX on the axis built for it. Sequences behind TO-2 + behind the daylight hold for the enforcer edits.</priority>
 <project>NFRA_TOOLGRAPH</project>
 

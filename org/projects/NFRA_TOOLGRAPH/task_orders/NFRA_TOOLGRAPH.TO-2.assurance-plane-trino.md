@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build: graph/federation). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn + PASSCRAFT.TO-2 (the ToolAudit source must exist). **MEASURE/READ side starts now; the plane WRITES as evidence only -- see the Deny-fence invariant.**</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_TOOLGRAPH, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: staged</status>
 <priority>P2 -- sequences behind PASSCRAFT-P2 (needs the ToolAudit stream). The plane is a 4th federation plane (or quality columns on `tool_activity` keyed by tool), read by TO-3's quality-sensor wire + quality-adjusted JOIN.</priority>
 <project>NFRA_TOOLGRAPH</project>
 

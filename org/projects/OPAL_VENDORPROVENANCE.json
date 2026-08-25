@@ -3,7 +3,7 @@
   "macro_code": "OPAL",
   "name": "Vendor As-Of Provenance + the Silver Pattern Canon",
   "description": "Andrew-direct 2026-08-03 (voice memo Task 4 + typed directive, verbatim in docs/references/MDPF_ARCH_CLEANUP_ANDREW_MEMO_20260803.md s.3). Establish, per (vendor, endpoint) feeding the estate, a grounded AS-OF CONTRACT -- does the endpoint provide an as-of datum, and what does its date label MEAN (settled-close / intraday / run-date-echo / file-vintage / loud UNKNOWN). This census is a NECESSARY PREREQUISITE (Andrew-explicit) to the silver pattern canon: silver deduplicated on a declared STABLE KEY per fact table per bucket, data complete and unadulterated. Once the contracts stand, sync everything to ONE NYSE weekend/holiday calendar authority so 'when is this data from, and are we missing data we should have' is answerable by lookup, not archaeology. Motivating incident: the Orion run-date-echo label defect (inflection July rebate basis understated $424,062.91 / 0.891%; T vs T-1 cross-partner divergence inside one paying artifact).",
-  "status": "active",
+  "status": "closed",
   "owner": "1.0.0_SA_CTO",
   "created": "2026-08-03",
   "created_by": "1.0.0_SA_CTO",
@@ -21,9 +21,16 @@
       "date": "2026-08-03"
     }
   ],
-  "phase": "PHASE 0 -- PRD v1.0 authored + registered 2026-08-03 from the Andrew-direct memo and typed directive. Grounded current state: 7 vendor sub-buckets in opal-data-assets; 19 silver tables in schwab/08242234 alone; two NYSE calendar authorities (lib/trading_calendar.py + _orion_vendor_asof.py hardcoded set); as-of semantics sealed for Orion only, UNKNOWN everywhere else. No decomposition, no dispatch yet.",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: PHASE 0 -- PRD v1.0 authored + registered 2026-08-03 from the Andrew-direct memo and typed directive. Grounded current state: 7 vendor sub-buckets in opal-data-assets; 19 silver tables in schwab/08242234 alone; two NYSE calendar authorities (lib/trading_calendar.py + _orion_vendor_asof.py hardcoded set); as-of semantics sealed for Orion only, UNKNOWN everywhere else. No decomposition, no dispatch yet.",
   "blocking": "COO decomposition into task orders. CTO holds D-1 (registry home/format), D-2 (bind legacy partner buckets too -- recommended YES), D-3 (stamp rollout order -- recommended Orion first, then SmartX/BlackDiamond as MDPF_GLOBAL's priority exemplars). No Andrew gate on starting WS-1 census work.",
-  "pods": ["0.4", "0.6", "0.7", "1.0", "2.0", "3.0"],
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "1.0",
+    "2.0",
+    "3.0"
+  ],
   "thread_counter": 0,
   "threads": [],
   "related": [
@@ -79,5 +86,6 @@
     "lib/trading_calendar.py (frontier authority, NEVER#1) + its parity CI (ETFS weekend)",
     "live s3 ls 2026-08-03: opal-data-assets vendor sub-buckets + schwab/08242234/silver table census"
   ],
-  "verification_bar": "Every (vendor, endpoint) feeding the estate has a grounded as-of contract row or a loud UNKNOWN; one calendar authority with parity-CI coverage over every copy; ingest stamps flowing on the MDPF-feeding vendors at minimum; every opal-data-assets silver fact table carries a declared, exercised stable dedup key and an evaluated completeness verdict over the serve window."
+  "verification_bar": "Every (vendor, endpoint) feeding the estate has a grounded as-of contract row or a loud UNKNOWN; one calendar authority with parity-CI coverage over every copy; ingest stamps flowing on the MDPF-feeding vendors at minimum; every opal-data-assets silver fact table carries a declared, exercised stable dedup key and an evaluated completeness verdict over the serve window.",
+  "closed": "2026-08-25"
 }
