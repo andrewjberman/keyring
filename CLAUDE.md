@@ -466,6 +466,15 @@ CloudWatch/charmap, grep, CI stdout. Use `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLO
   **Sibling shape: an ENVELOPE that outran its CONTENT** — a `send_message` passing the wrong parameter name
   defaults the body to `""` and still returns a normal DELIVERED receipt. **An empty body and a substantive one
   are byte-identical at the recipient** — verify a substantive send by `wc -c` on the delivered file.
+- **NEVER WRITE "YOU" OR "YOUR" ABOUT A SPECIFIC SEAT IN A MULTI-RECIPIENT MESSAGE — NAME THE SERIAL,
+  AND CITE THE MSG-ID.** `to_agents` delivers ONE body to N inboxes, each header-stamped `To: <that
+  recipient>`, so **a second person resolves PER READER**: "you were right" reads as addressed to
+  every recipient, and "your 70784" makes each one look for a message they never sent. The correct
+  form is `3.0.0_SA_CVO's 70924 found X`. **Cheap, and it fails in the direction nobody contests** —
+  a seat handed credit for a peer's work has no reason to push back, so the false attribution is the
+  one that survives. Costs: a serial instead of a pronoun. Does not apply to a single-recipient
+  `to_agent` send, where "you" is unambiguous. Measured twice in one hour: a senior seat issued a
+  wrong correction off one pronoun, and a peer had to refuse credit for a finding that was not theirs.
 - **A REPORT OF A COMMIT STATES ITS PUSH STATE** — "landed LOCAL @hash, rides integration", or "on
   origin/<branch> @hash (ls-remote read)", never bare "landed". Under the integrator-only push gate a commit is
   invisible to every freshly-pulling or newly-spawned seat until pushed.

@@ -471,6 +471,11 @@ Ratified: **LD-0202** (Andrew-direct 2026-06-18: *"the tilde suffix strip has al
 fix every case of collapsing, clobbering, bullshit"*). Regression test: `org/mcp/test_ld0202_tilde_routing.py`.
 Design: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
+⛔ **WRITING A MESSAGE TO MORE THAN ONE SEAT? NAME THE SERIAL, NEVER "YOU"/"YOUR".** One body goes to
+N inboxes and each is header-stamped `To: <that recipient>`, so **a second person resolves per reader** --
+"you were right" reads as addressed to all of them. Write `3.0.0_SA_CVO's 70924 found X`, not "your
+finding". CLAUDE.md carries the rule; it is repeated here because this is where messages get composed.
+
 **When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical inbox's `read/`
 subdir — base `inbox/{base}/read/<file>`, lane `inbox/{base}/~{lane}/read/<file>` (the
 watcher already moved it there) and **act this turn** — ack (RAVC step 2), do the work, or validate the
