@@ -65,7 +65,12 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The eleven ways you fail to see it *even though you looked*
+## The ways you fail to see it *even though you looked*
+
+> **This list has been 4, then 9, then 11, and its own discharge header still said NINE when it
+> reached 11.** Each addition was individually defensible; none was ever reviewed against the whole.
+> **A new entry must merge into an existing root or justify why it is not a variant of one** --
+> otherwise this file re-grows past the cut it was given, which is exactly what happened.
 
 *(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
 disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
@@ -417,7 +422,7 @@ the whole artifact, on a read whose scope was a part of it.**
 > somebody re-deriving at source who was not told which line to look at.** Budget for that reader; do not
 > expect the author to be them.
 
-### THE ONE DISCHARGE THAT WORKS FOR ALL NINE — put the SUBJECT in the CLAIM, not in the description of the search
+### THE ONE DISCHARGE THAT WORKS FOR ALL OF THEM — put the SUBJECT in the CLAIM, not in the description of the search
 
 Every failure above is a claim about a *thing*, and in every one the searcher knew which thing they meant and
 the reader could not. **The remedy is a sentence shape, not a habit:**
