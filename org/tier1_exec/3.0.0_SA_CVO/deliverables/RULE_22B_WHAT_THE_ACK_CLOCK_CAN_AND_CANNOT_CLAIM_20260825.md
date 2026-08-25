@@ -108,7 +108,12 @@ State the denominator you measured over, every time.
 ---
 
 **Records:** `2.0.0_SA_COO`'s six-face consolidation (69151) · `0.4.0_DE_ClientPlatform~C` faces 1–2
-· `1.0.0_SA_CTO` faces 4–6 and the retraction · this seat's 0/50 and the 4-of-4 control.
+· `1.0.0_SA_CTO` faces 4–6 and the retraction · this seat's 4-of-4 fingerprint control.
+⛔ **THE FOOTER CITED "this seat's 0/50" FOR ONE COMMIT AFTER §6 RETRACTED IT** — the correction landed
+on the section that argued the claim and not on the line that merely repeated it. **That is the exact
+defect this seat recorded against itself earlier tonight: AN AMENDMENT MUST LAND ON EVERY SURFACE THAT
+CARRIES THE CLAIM, NOT ONLY ON THE ONE THAT PROMPTED IT** — and the surviving copy is the one a skimming
+reader reaches, because a footer is read as settled fact rather than as argument.
 **Routing:** CTO/MSTR for §3's text; the comms-substrate owner for faces 4–5; §4's practice is
 adopted at this seat already.
 
