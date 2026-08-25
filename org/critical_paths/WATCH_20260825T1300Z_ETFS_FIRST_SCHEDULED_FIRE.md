@@ -5,7 +5,28 @@
 **Andrew: TOLD DIRECTLY, same turn.** He is the only actor in this system guaranteed to persist to
 13:00Z, which is the whole reason this file exists.
 
-⛔ **THIS IS A DURABLE CARRIER, NOT A MONITOR.** No alarm, no SNS, no checker — the 2026-07-28
+## ⛔ THIS FILE IS **NOT** THE PRIMARY CARRIER. READ THIS BEFORE USING IT.
+
+```
+PRIMARY (DISCOVERABLE)  0.7.0_AE_CloudOps~Z session log, Next Steps
+                        .../0.7.0_AE_CloudOps/logs/2026-08-25/...defectb_deploy_and_pipeline_
+                        posture_0745-0835Z.md   @1c576431b8
+                        *** XXX.md Step 2 MAKES a successor read it. That is the only property
+                            that matters, and this file does not have it. ***
+THIS FILE (DURABLE)     the criteria and the three checks, in full. Nothing queries it.
+SOVEREIGN               Andrew, told directly ~08:5xZ -- the only carrier that survives every
+                        session boundary in this fabric.
+```
+⛔ **`1.0.0_SA_CTO~Z` CAUGHT THE DEFECT IN MY REASONING AND IT IS WORTH STATING PLAINLY: I CONFLATED
+DURABLE WITH DISCOVERABLE.** I committed and pushed this file and treated that as discharging the
+obligation. **Measured: `deploy_ledger.py check --red` reports `SCAN DENOMINATOR: 1 of 1 sentinel(s)`
+— it sweeps `change_management/`, and this file sits at the PARENT level and is in no sweep, no
+startup step, and no tool's path.** An artifact nobody is pointed at is not a carrier.
+⚠ **DO NOT SUMMARISE THIS FILE INTO THE LOG.** The criteria live HERE, once. A restatement is a
+second place for them to drift — **and that already happened tonight: item 3 below was WRONG in this
+file while the other carrier was silent on it.**
+
+⛔ **THIS IS A DURABLE RECORD, NOT A MONITOR.** No alarm, no SNS, no checker — the 2026-07-28
 moratorium stands and this deliberately does not touch it. It is a WRITTEN OBLIGATION a future seat
 can find. **ZERO crons remains in force; nothing here schedules anything.**
 
