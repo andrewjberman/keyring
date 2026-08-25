@@ -3,6 +3,52 @@
 **Channel:** CTO terminal, direct to `1.0.0_SA_CTO`. **Recorded by:** `1.0.0_SA_CTO`.
 **Broadcast:** MSTR (action owner), same turn. **Record+broadcast law discharged.**
 
+---
+
+# ⛔ SCOPE AMENDED ~16:4xZ -- READ THIS BEFORE THE RECOMMENDATION BELOW. FULL REMOVAL, NOT PARTIAL.
+
+**The "SCOPE RECOMMENDATION" section further down is WITHDRAWN.** It recommended retaining the
+route, page and intake client so D7 could resume. **That is wrong and must not be executed.**
+
+Andrew-direct, same terminal, ~16:4xZ, VERBATIM:
+
+> "D7 is fine, the issue is some agent at some point some agent thought it would be a good idea to
+> make a separate page/function from Ticket Center rather than repurposing a client-facing version
+> of Ticket Center (which was the wrong direction) and this page has existed ever since and I do not
+> want it,"
+
+**HIS OBJECTION IS ARCHITECTURAL, NOT A PAUSE.** `SubmitRequest` should never have been built as a
+separate page; the correct shape was a client-facing MODE of Ticket Center. So the page is not an
+asset to preserve for a resumed D7 -- it is the mistake itself. Retaining it would preserve exactly
+what he is asking us to delete and would hand the next D7 seat the wrong starting point.
+
+**MY ERROR, NAMED:** I inferred from "D7 is on hold" that the artifact was paused work worth keeping.
+He had said nothing about the artifact's merit at that point, and I supplied a rationale
+("on hold is not licence to delete the work") that read as caution but was an unfounded assumption
+about WHY he wanted it gone. **The lesson is narrow and worth keeping: "on hold" describes the
+DIRECTIVE's status and says nothing about whether a given artifact under it is wanted.**
+
+**AMENDED SCOPE -- REMOVE ALL OF IT:**
+
+| path | disposition |
+|---|---|
+| `portal/src/App.tsx:122` | REMOVE -- nav entry |
+| `portal/src/App.tsx:34` | REMOVE -- lazy import |
+| `portal/src/App.tsx:480-486` | REMOVE -- the `<Route path="/submit-request">` |
+| `portal/src/lib/firmAccess.ts:52,83,98` | REMOVE -- three firm allowlist entries |
+| `portal/src/pages/SubmitRequest/` | REMOVE -- the page itself |
+| `portal/src/api/endpoints/ticket-intake.ts` | REMOVE **only if nothing else imports it** -- verify by reference search, not assumption; if something does, keep it and say so |
+
+**STILL NOT IN SCOPE -- TICKET CENTER SURVIVES.** `/ticket-center`, `tickets.ts` and
+`pages/TicketCenter/` all stay. His complaint is that Ticket Center was the RIGHT vehicle and
+something got built beside it, so Ticket Center is the survivor, not a co-casualty. A seat reading
+"remove the ticket stuff" quickly could take both; it must not.
+
+**ALSO NOT IN SCOPE:** the backend `/api/scoped/tickets/submit` route and the `opal-ticket-api`
+Lambda. This is a FRONTEND removal. Anything server-side is a separate act.
+
+---
+
 ## VERBATIM
 
 > "D7 is effectively on hold, however with that said, I want the "Submit a Ticket" sidebar item
