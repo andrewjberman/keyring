@@ -65,7 +65,7 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The ten ways you fail to see it *even though you looked*
+## The eleven ways you fail to see it *even though you looked*
 
 *(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
 disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
@@ -361,7 +361,7 @@ fast, plausible answer **about a different population than the claim.**
 - ⛔ **A PRINTED DENOMINATOR DOES NOT DISCHARGE THIS.** *"30 of 64"* HAD a denominator; it was printed; it
   was still wrong. **The denominator rule ensures a denominator EXISTS, not that both halves describe the
   same population.**
-- ⛔ **NOR DOES NAMING THE SUBJECT** (the discharge above). A claim can name its file perfectly and still be
+- ⛔ **NOR DOES NAMING THE SUBJECT** (the discharge below). A claim can name its file perfectly and still be
   about the wrong SET -- that discharge reaches the location shape and none of the other three.
 - **THE TEST, checkable in the moment: STATE THE SET YOU MEASURED AND THE SET YOU ARE CLAIMING ABOUT, AND SEE
   WHETHER THEY ARE THE SAME SENTENCE.** *What is this number OF, and is that what I ran against?*
@@ -380,6 +380,42 @@ retitled on the mechanism by `3.0.0_SA_CVO`, who ran the four postulates on it**
 failed (i) MECE and (iii) intent coherence, and the original title named an EXEMPLAR SURFACE rather than a
 TRIGGER CONDITION, which is the F-010 defect about to be installed into fresh doctrine. **A seat about to
 include its own log in a population is not thinking "denominator."***
+
+### 11. You read a PROPER PART of the RIGHT THING and claimed about the WHOLE
+
+**Right artifact. Correct retrieval. Incomplete coverage.** The line you grepped IS in that file. The item
+you listed IS in that job. The field you quoted IS in that message. **You then made a claim whose scope was
+the whole artifact, on a read whose scope was a part of it.**
+
+| shape | the part read | the claim made |
+|---|---|---|
+| **grep radius** | the line the finding names, confirmed | a consequence the *adjacent* lines settle differently |
+| **name taken for behaviour** | an item ENUMERATED in a list | what that item DOES — never looked up |
+| **the short summary** | a two-step precis of a many-step thing | the whole thing, as though the precis were exhaustive |
+| **the read-past field** | the message you are replying to | a consequence its OWN text states the opposite of |
+
+- ⛔ **NO CONTROL IN THIS FILE CATCHES IT, AND THAT IS THE DEFINING PROPERTY, NOT A GAP IN THE LIST. EVERY
+  CONTROL WE HAVE VALIDATES THE RETRIEVAL — AND THE RETRIEVAL WAS VALID.** The positive control fires. The
+  denominator prints. The file is the right file, the ref is the right ref, nothing is empty and nothing
+  errors. **The defect is not in the READ. It is in the SCOPE OF THE CLAIM RELATIVE TO THE READ, and no
+  instrument is pointed at that gap.**
+- ⛔ **NEITHER DISCHARGE REACHES IT.** Naming the SUBJECT (below) answers *which thing* — and the thing was
+  right. Item 10's test answers *which SET* — and the set was right. **Both are satisfied while the claim
+  still overruns the read.**
+- **THE TEST, and it is one question: WHAT ELSE IS IN THE ARTIFACT I READ PART OF?** Not *did I read the
+  right thing* — you did. *Did I read enough of it to say what I am about to say?*
+- **Corollary, for the shape that has no tell at all: ENUMERATING AN ITEM IS NOT READING IT.** Listing a step,
+  a leg, a column or a key puts it in your sentence without putting its CONTENT in your head, **and a name is
+  the least reliable description of a thing in any system where names are written by the thing's author.**
+- **A SUMMARY THAT IS SHORT DOES NOT ANNOUNCE THAT IT IS SHORT.** A precis repeated by several readers
+  accretes authority with each repetition and loses nothing visible; **the Nth repeater cannot tell it from a
+  complete account, and neither can the first.**
+
+> **THIS CLASS IS CAUGHT ALMOST EXCLUSIVELY BY A SECOND READER COVERING THE REST OF THE ARTIFACT — not by the
+> author being careful, because the author's evidence is genuinely good.** Where the other ten can be
+> self-caught by running a control, this one is structurally social: **the cheapest reliable detector is
+> somebody re-deriving at source who was not told which line to look at.** Budget for that reader; do not
+> expect the author to be them.
 
 ### THE ONE DISCHARGE THAT WORKS FOR ALL NINE — put the SUBJECT in the CLAIM, not in the description of the search
 
