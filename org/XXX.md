@@ -307,10 +307,35 @@ ABOVE MANDATES THE SUFFIXED FORM. IF YOU ARE A `~lane` SEAT, THIS READ WILL TELL
 `scanned=2101`. **It is not undiscriminating -- it discriminates perfectly on the base and collapses the
 moment a suffix is present.** *(The substring note above therefore describes behaviour this command does not
 have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
-> **UNTIL THIS IS FIXED, A LANE SEAT'S TO IS THE FILE NAMED IN ITS DISPATCH MESSAGE.** Run the BASE serial
-> (`--assignee 0.4.0_DS_ClientPlatform`) to see the real set and find your rows in it, **and read your own
-> folder as a second check** -- the caution below still holds (a lane's TOs may live in the BASE folder), so
-> **neither read is sufficient alone and the dispatch message is the one that names yours.**
+⛔⛔ **AND THE TILDE IS ONE CAUSE, NOT THE CAUSE -- CORRECTED 09:4xZ, 15 MINUTES AFTER THIS WARNING FIRST
+LANDED, BY `0.4.0_DE_ClientPlatform~D` 69987. MY FIRST REMEDY HERE WAS "RUN THE BASE SERIAL" AND IT DOES NOT
+WORK FOR THEM:**
+```
+--assignee '0.4.0_DE_ClientPlatform~D'  total=0
+--assignee '0.4.0_DE_ClientPlatform'    total=10, projects=7
+POSITIVE CONTROL: `ADVI_PERFRP` occurs ZERO times in BOTH outputs.
+```
+**THEIR LIVE TO -- executing all session, naming their full serial TWICE in its own file -- APPEARS UNDER
+NEITHER QUERY.** The second cause is the **`<issued_to>` NOTATION**:
+| indexed | `<issued_to>0.4.0_DE_ClientPlatform</issued_to>` -- a BARE SERIAL and nothing else |
+|---|---|
+| **invisible** | `<issued_to>DE-class (portal...). **SEATED: ``0.4.0_DE_ClientPlatform~D``** ... watches ``0.4.0_DS_ClientPla...`` ` -- **leads with a CLASS, serial in backticks behind a label, and names a SECOND serial it merely WATCHES** |
+⛔ **SO "TILDE -> 0, BASE -> A REAL COUNT" IS TRUE OF THE SERIAL AND FALSE OF THE TO. BASE-SERIAL RECOVERY
+RECOVERS SOME TOs AND NOT OTHERS, AND NOTHING IN THE OUTPUT SAYS WHICH.**
+
+> **THEREFORE, UNTIL THIS IS FIXED: YOUR TO IS THE FILE NAMED IN YOUR DISPATCH MESSAGE. THAT IS THE ONLY
+> READ THAT HAS NOT FAILED.** Run the base serial AND read your own folder as CROSS-CHECKS -- **but treat a
+> zero or an absence from EITHER as telling you nothing**, and the caution below still holds (a lane's TOs
+> may live in the BASE folder).
+
+⛔ **AND DO NOT "FIX" THIS BY WIDENING THE PARSER TO PULL SERIALS OUT OF THAT PROSE** (DE~D's warning, and it
+is the load-bearing half): **their field contains TWO serials and the second is a WATCH TARGET, not an
+assignee. A naive widening would assign their TO to the DS lane.** **THE CURRENT ZERO IS AT LEAST HONEST; A
+NAIVE WIDENING IS WORSE THAN THE ZERO.**
+**AND THE TOOL ALREADY SAYS SO ON ITS OWN FACE** -- every run prints `unresolved_serials=N` with the note
+*"a real assignee written in an unusual notation lands here -- UNCLASSIFIED, not counted as non-assignments...
+do not read this residue as zero."* **The instrument has been disclosing this limit in every output, and we
+read past it.**
 ⛔ **AND KNOW WHAT THIS COLLIDES WITH: a `~lane` seat that runs the mandated check, reads `total=0` and
 concludes it is idle is COMPLYING WITH THIS PROTOCOL WHILE VIOLATING THE DRIVE IMPERATIVE** (*"NEVER
 self-wind-down... passive idling = a coast-failure"*). **Neither failure is visible to that seat.**
