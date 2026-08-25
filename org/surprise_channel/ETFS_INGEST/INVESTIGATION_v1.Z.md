@@ -1285,6 +1285,25 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "2.0.0_SA_COO~Z",
   "notes": "*** THE ACCEPTANCE ORACLE, PUBLISHED BEFORE THE REMEDY (msg 8457-8461), VALUES FIXED IN ADVANCE: exactly FOUR names change -- JPM to JPMorgan Chase & Co., MRVL to Marvell Technology Inc, VZ to Verizon Communications Inc, SALXX to a proper-cased fund name -- and the other 162 stay BYTE-IDENTICAL. *** || THE PROPERTY THAT MAKES IT A REAL TEST: every remedy proposed so far CHANGES SOMETHING, and 'something changed' is the evidence each one offers. This oracle CANNOT BE PASSED BY CHANGING SOMETHING -- it requires changing EXACTLY four things and nothing else, so a remedy that improves the target while damaging the field fails visibly instead of reading as success. || THREE OF THE SEVEN ARE A PRODUCT JUDGMENT AND I AM NOT DECIDING THEM: whether an acronym company like BP or GSK should be touched at all is Andrew's call, not a measurement. The oracle names them as an OPEN FORK rather than folding them into either bucket -- a schema that forced them into 'wrong' would license exactly the damage this row exists to prevent. || ROOT SHAPE, SAME AS Z-S43/44/45/46: a display collapsing two different things onto one appearance. Here 'correctly uppercase' and 'wrongly uppercase' render identically, so the DETECTOR everyone reaches for (count the all-caps) is itself unable to tell the defect from the correct case."
+ },
+ {
+  "id": "ETFS_INGEST-Z-S49",
+  "surfaced_by": "3.0.0_SA_CVO~Z (against my own record)",
+  "surfaced_at": "2026-08-25T06:12Z",
+  "one_line": "THE ONE UNDONE VERIFICATION OF THE WHOLE DELIVERY IS BURIED INSIDE AN ITEM MARKED GRADUATED/INERT: nobody has RENDERED the page. A GRADUATED item carrying an open caveat is visually identical to a GRADUATED item that is complete -- which is the exact collapse this round documented five times, now in my own channel.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED across four rungs and recorded at Z-S45: DATA (served artifact, 8 windows, 161 of 169 distinct tickers at 8/8, 12/12 against a pre-published oracle), REF (origin/PROD d9a98bcc carries the spread at :97), DEPLOY (all 60 objects in s3://opalinvest-portal rewritten 05:55:06Z, after the 05:47:35Z promote), BYTES (assets/index-CJlD8UOW.js contains `...t.returns` with positive controls sub_asset_class=12 and QTD=1 firing in that same asset; the three-key allowlist in 0 of 49 js assets).",
+    "*** THE FIFTH RUNG IS NOT DONE: no seat has rendered the deployed page and watched eight columns appear. The shipped JavaScript CONTAINS the spread; that is evidence about the bundle, not about what a browser paints. ***",
+    "Z-S45 carries this caveat in its evidence, but Z-S45 is disposition GRADUATED and hazard_standing INERT -- so the only open verification of the night's delivery is recorded inside an item that renders, in every summary view, as finished."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.4.0_DE_ClientPlatform~Z",
+  "notes": "*** FILED AGAINST MY OWN RECORD-KEEPING, NOT AGAINST THE DELIVERY. *** The delivery is sound on every layer measured; what is defective is where I put the exception. A caveat inside a GRADUATED item is load-bearing text in a container whose whole purpose is to signal 'no longer needs attention'. || THIS IS THE ROUND'S OWN SYNTHESIS TURNED ON THE CHANNEL: Z-S43/44/45/46/48 are all 'two different things rendering identically', and a GRADUATED-with-open-caveat versus GRADUATED-complete is precisely that shape one level up, in the instrument I maintain. The channel schema has no field for 'closed except for X', so the exception had nowhere to live but prose. || WHY IT IS ARMED RATHER THAN INERT: seats are going offline (2 of 6 returned QUEUED at 06:10Z). An unrendered page verified only in the bundle is the state most likely to be inherited tomorrow as 'delivered and confirmed', because every artifact says so and the one gap is in a paragraph. || DISARM IS CHEAP AND IS 0.4.0_DE_ClientPlatform~Z's: render the deployed page, confirm eight columns, compare to the artifact AT THE MOMENT OF THE CHECK (not to fixed numbers -- the artifact moved twice tonight). I am deliberately NOT attempting the render myself: a portal render without the right auth returns the FAILURE state, and I would be measuring my own credentials rather than the page."
  }
 ]
 ```
