@@ -479,6 +479,26 @@ if printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_COMMIT" \
    && printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_DASH_M" \
    && printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_META"; then
     if ! printf '%s' "$CMD" | grep -qE -- "$OVERRIDE_RE"; then
+
+        # TOKEN ATTRIBUTION (CTO gate-shape repair 2026-08-25, on COO 67279's false-positive
+        # report: a record ABOUT the hazard was denied for DESCRIBING it, and the deny named
+        # nothing -- the seat had to guess which prose token tripped which regex). The MATCHER
+        # IS DELIBERATELY UNCHANGED: the in-file F-021 record above forbids the per-command
+        # "fix" (it executed a real commit message), and the error-direction trade stands.
+        # What changes is that the deny now NAMES the first line matching each of the three
+        # co-occurring tokens, so a false positive costs seconds to restructure, not minutes
+        # to diagnose -- a gate that explains itself is a gate that gets obeyed, not routed
+        # around.
+        _g3_a="$(printf '%s
+' "$_CMD_NOHEREDOC" | grep -nE -- "$_RE_COMMIT" | head -1 | cut -c1-160)"
+        _g3_b="$(printf '%s
+' "$_CMD_NOHEREDOC" | grep -nE -- "$_RE_DASH_M" | head -1 | cut -c1-160)"
+        _g3_c="$(printf '%s
+' "$_CMD_NOHEREDOC" | grep -nE -- "$_RE_META"   | head -1 | cut -c1-160)"
+        echo "  [gate3] co-occurring tokens (line:text, heredocs already stripped):" >&2
+        echo "  [gate3]   commit-token -> ${_g3_a:-<none>}" >&2
+        echo "  [gate3]   -m token     -> ${_g3_b:-<none>}" >&2
+        echo "  [gate3]   metachar     -> ${_g3_c:-<none>}" >&2
         if true; then
             deny "BLOCKED (CLAUDE.md Git / LD-0276): 'git commit -m' carrying a backtick or \$( -- A COMMIT MESSAGE IS AN EXECUTION VECTOR. The substitution is performed by the SHELL before git or safe-commit ever sees the argument, so it RUNS with your permissions and splices its stdout into the immutable record -- and a safe-commit lint structurally cannot catch it. Use -F instead: write the body to a file (heredoc -> file), then: safe-commit.sh --author \"...\" -F <file> -- <paths>. -F routes the body into a file the shell never parses, so the safe path needs no backtick in the command at all. (Yes, -m \"\$(cat <<'EOF'...)\" is technically inert -- it is still deprecated, because verifying it requires shell parsing and mandating -F makes the gate parse-free.) Audited override: '# never-override: <reason>'. Incident: MSTR corrupted 11c44632b writing the finding about this very hazard."
         fi
