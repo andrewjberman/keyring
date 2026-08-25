@@ -1,25 +1,26 @@
 {
-    "project_code": "OPAL_BGFALLBACK",
-    "macro_code": "OPAL",
-    "name": "Bloomberg Terminal Fallback -- site-Z Device Autonomy",
-    "description": "Make the site-Z Bloomberg pipeline self-healing so a Terminal logout no longer strands the client-facing OPAL_BBGTML dashboard until a human intervenes. Andrew-direct 2026-08-18: fix the autonomous fallback in BOTH trigger modes -- mid-session logout (Bloomberg session drops while the OS stays up; measured 2026-08-14..18, box up 4d18h with zero restarts yet the Terminal logged out and the 08-15/16/17 pulls failed on DAPI-down; confirmed in the Yang Liu/Alyssa Teams chronology) and device restart (MS/LDT overnight updates reboot the box into a locked login) -- then proceed through the rest of the outstanding site-Z calls. Owned + driven by 0.0.0_AB_MSTR~Z directly (CTO~Z would not instantiate -- new-session API issues 2026-08-18). Brief: org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md @caac7b3138.",
-    "prds": [
-        {
-            "path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md",
-            "label": "OPAL_BGFALLBACK Program Brief",
-            "date": "2026-08-18"
-        }
-    ],
-    "status": "in-progress",
-    "phase": "WS-1 COMPLETE -- VALIDATED END-TO-END 2026-08-18 ~1752Z (Andrew present, forced down-state): killed bbcomm, ran the wired fallback live -- DOWN -> P0 -> fire-once -> -Fresh full-tree kill (real 7-proc leftover dialog) -> fresh dialog -> fill -> VERIFY PASS (9/9 dots, username 77%) -> submit ONCE -> DAPI UP (exit 0) -- then the full production pull ran on the recovered session: tripwire PASS vintage 20260817, published, served-content verified, wrapper exit 0. TRUE ROOT CAUSE (falsifies the earlier WS-1/WS-1b fill theories): the FILL always worked unattended; bbg_verify.ps1's live-mode regions sampled ~110px above the fields (the blank band over the Bloomberg logo -- an all-dark region reads dots:1/user:''), so every correct fill was judged empty and aborted pre-submit (08-16/17/18). Fixed: live regions now equal the validated fixture regions (clamp-aware); positive (9-dot real shot PASS) + negative (7-dot fixture FAIL) controls both exercised. WS-1 hardening retained (fresh relaunch, settle, fill-retry, WS-1b tree-kill, WS-1c evidence scrub -- all exercised live). ALSO MEASURED: killing bbcomm does NOT force a down-state -- blpapi auto-starts bbcomm and the workstation token survives GUI logout + wintrv exit; the genuine down is server-side token expiry only. Terminal left LOGGED IN. Open refinement: dapi_check probe SPX -> .ST (login-scoped discriminator). WS-2 (restart auto-login+auto-launch) + WS-3 (Tailscale) staged, gated on WS-4 (one elevated in-person console session -- Andrew helping). WS-5 (freeze/UPS/AMT) + WS-6 (parity) queued.",
-    "blocking": "WS-1: none -- validated. WS-2/WS-3: gated on WS-4, one elevated in-person console session; Andrew is helping with the human-collaborative parts (Splashtop client on his laptop / console access).",
-    "created": "2026-08-18",
-    "pods": [
-        "0.0"
-    ],
-    "pipeline": "bloomberg / OPAL_BBGTML (integrations/bloomberg)",
-    "thread_counter": 0,
-    "threads": [],
-    "depends_on": [],
-    "depends_on_note": "Builds directly on the shipped in-pull sign-in fallback @072ff64bcb (LD-0413) and the exercised sign-in runbook (0.0.3_BG_BBGTerminal). WS-2/WS-3 consume the staged C:\\opal-elev\\ artifacts (AUTORECOVERY_DESIGN.md, install-tailscale.ps1, setup-autorecovery.ps1)."
+  "project_code": "OPAL_BGFALLBACK",
+  "macro_code": "OPAL",
+  "name": "Bloomberg Terminal Fallback -- site-Z Device Autonomy",
+  "description": "Make the site-Z Bloomberg pipeline self-healing so a Terminal logout no longer strands the client-facing OPAL_BBGTML dashboard until a human intervenes. Andrew-direct 2026-08-18: fix the autonomous fallback in BOTH trigger modes -- mid-session logout (Bloomberg session drops while the OS stays up; measured 2026-08-14..18, box up 4d18h with zero restarts yet the Terminal logged out and the 08-15/16/17 pulls failed on DAPI-down; confirmed in the Yang Liu/Alyssa Teams chronology) and device restart (MS/LDT overnight updates reboot the box into a locked login) -- then proceed through the rest of the outstanding site-Z calls. Owned + driven by 0.0.0_AB_MSTR~Z directly (CTO~Z would not instantiate -- new-session API issues 2026-08-18). Brief: org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md @caac7b3138.",
+  "prds": [
+    {
+      "path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_BGFALLBACK_BRIEF_20260818.md",
+      "label": "OPAL_BGFALLBACK Program Brief",
+      "date": "2026-08-18"
+    }
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: WS-1 COMPLETE -- VALIDATED END-TO-END 2026-08-18 ~1752Z (Andrew present, forced down-state): killed bbcomm, ran the wired fallback live -- DOWN -> P0 -> fire-once -> -Fresh full-tree kill (real 7-proc leftover dialog) -> fresh dialog -> fill -> VERIFY PASS (9/9 dots, username 77%) -> submit ONCE -> DAPI UP (exit 0) -- then the full production pull ran on the recovered session: tripwire PASS vintage 20260817, published, served-content verified, wrapper exit 0. TRUE ROOT CAUSE (falsifies the earlier WS-1/WS-1b fill theories): the FILL always worked unattended; bbg_verify.ps1's live-mode regions sampled ~110px above the fields (the blank band over the Bloomberg logo -- an all-dark region reads dots:1/user:''), so every correct fill was judged empty and aborted pre-submit (08-16/17/18). Fixed: live regions now equal the validated fixture regions (clamp-aware); positive (9-dot real shot PASS) + negative (7-dot fixture FAIL) controls both exercised. WS-1 hardening retained (fresh relaunch, settle, fill-retry, WS-1b tree-kill, WS-1c evidence scrub -- all exercised live). ALSO MEASURED: killing bbcomm does NOT force a down-state -- blpapi auto-starts bbcomm and the workstation token survives GUI logout + wintrv exit; the genuine down is server-side token expiry only. Terminal left LOGGED IN. Open refinement: dapi_check probe SPX -> .ST (login-scoped discriminator). WS-2 (restart auto-login+auto-launch) + WS-3 (Tailscale) staged, gated on WS-4 (one elevated in-person console session -- Andrew helping). WS-5 (freeze/UPS/AMT) + WS-6 (parity) queued.",
+  "blocking": "WS-1: none -- validated. WS-2/WS-3: gated on WS-4, one elevated in-person console session; Andrew is helping with the human-collaborative parts (Splashtop client on his laptop / console access).",
+  "created": "2026-08-18",
+  "pods": [
+    "0.0"
+  ],
+  "pipeline": "bloomberg / OPAL_BBGTML (integrations/bloomberg)",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": [],
+  "depends_on_note": "Builds directly on the shipped in-pull sign-in fallback @072ff64bcb (LD-0413) and the exercised sign-in runbook (0.0.3_BG_BBGTerminal). WS-2/WS-3 consume the staged C:\\opal-elev\\ artifacts (AUTORECOVERY_DESIGN.md, install-tailscale.ps1, setup-autorecovery.ps1).",
+  "closed": "2026-08-25"
 }

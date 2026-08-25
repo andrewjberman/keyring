@@ -3,8 +3,8 @@
   "macro_code": "NFRA",
   "name": "arxiv daily-harvest + contact-ID + ontology-relevance ranking pipeline",
   "description": "Andrew-direct 2026-07-23 (to CRO). A daily scraping/harvest pipeline over arxiv.org Computer Science papers, deterministically identifying, parsing, and RANKING new papers by their relevance to Opal's ontology + graph engineering (the infra/system vocabulary + Andrew's interest anchors: retrieval, agentic engineering, graph engineering, infrastructure, harness engineering, learning-loop design patterns). Runs as a LAMBDA in Opal's cloud (the only place arxiv egress happens; STANDING arxiv-scoped daily-egress grant, cloud-only, NOT a blanket vendor lift) on a daily EventBridge schedule. Output: a DDB columnar store (metadata + scores) + an attached S3 bucket (full papers: html/pdf/tarball/extracted text), linked by a stable taxonomy aligned to the columnar form. Harvest backbone = arxiv OAI-PMH (exhaustive daily-delta by from/until window) + an Atom-API keyword overlay; categories cs.AI/cs.LG/cs.SE/cs.IR/cs.DC/cs.DB/cs.MA. Ranking = RRF(BM25, potion-base-8M) over FULL TEXT vs a versioned ontology profile; derived_state_rank = recency_decay(submission-date) x nlp_score, RECOMPUTED daily for the whole corpus as time elapses. LOSSLESS: append-only, dedup by (arxiv_id, version), never delete, watermark advances only on a complete window. Contact-ID: author names/ids from OAI metadata; emails/affiliations parsed from full text. CONVERGES with infra/system/ontology/CONTENT_MODULE_DESIGN (RRF/BM25/Potion, materialized substrate, deterministic-pinned, ablate-don't-fuse, decoy-null threshold) -- the external/arxiv instance of that content module, in the .tools/content/ partition, NOT a parallel NLP stack.",
-  "status": "active",
-  "phase": "SPEC LANDED, pre-build. RCN-0003 teardown + build spec authored by CRO (org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md): arxiv surface teardown (grounded from 2 unique HARs; HTML bodies [BODY-NOT-CAPTURED] -> harvest via official OAI-PMH/Atom API, not DOM scraping), architecture (Lambda -> DDB + S3), lossless mechanics, DDB/S3 schema + stable taxonomy.yaml, the scoring model (versioned ontology profile, BM25+Potion axes stored separately, RRF fusion, recency decay, daily whole-corpus re-derive), acceptance criteria with CVO honesty controls (positive control = the SWE-Explore sample 2606.07297, decoy null, ablation, determinism, recompute-monotonicity, lossless invariant), contact-ID, deploy/IAM notes (CTO gate; new-resource IAM needs simulate-principal-policy per Rule 22a), suggested owners. NEXT: CTO program registration / arch-gate + convergence ratification with CONTENT_MODULE_DESIGN ('four names, one fact'); COO staffing (a cloud-ops lane + a content/NLP lane). Build/deploy is CTO-gated; CRO proposes owners, does not dispatch.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: SPEC LANDED, pre-build. RCN-0003 teardown + build spec authored by CRO (org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md): arxiv surface teardown (grounded from 2 unique HARs; HTML bodies [BODY-NOT-CAPTURED] -> harvest via official OAI-PMH/Atom API, not DOM scraping), architecture (Lambda -> DDB + S3), lossless mechanics, DDB/S3 schema + stable taxonomy.yaml, the scoring model (versioned ontology profile, BM25+Potion axes stored separately, RRF fusion, recency decay, daily whole-corpus re-derive), acceptance criteria with CVO honesty controls (positive control = the SWE-Explore sample 2606.07297, decoy null, ablation, determinism, recompute-monotonicity, lossless invariant), contact-ID, deploy/IAM notes (CTO gate; new-resource IAM needs simulate-principal-policy per Rule 22a), suggested owners. NEXT: CTO program registration / arch-gate + convergence ratification with CONTENT_MODULE_DESIGN ('four names, one fact'); COO staffing (a cloud-ops lane + a content/NLP lane). Build/deploy is CTO-gated; CRO proposes owners, does not dispatch.",
   "prds": [
     {
       "path": "org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md",
@@ -18,12 +18,17 @@
   "owner_note": "CRO (4.0.0_SA_CRO) authored + owns the spec and the append-only RECON_REGISTER RCN-0003 entry. Build/deploy owner staffed by CTO+COO. Suggested: 0.7.0_AE_CloudOps pattern for the cloud lane; a content-class build in .tools/content/ for the scorer.",
   "coo_lane": "2.0.0_SA_COO",
   "created": "2026-07-23",
-  "pods": ["4.0", "1.0", "2.0"],
+  "pods": [
+    "4.0",
+    "1.0",
+    "2.0"
+  ],
   "depends_on": [
     "NFRA_SYSTEM",
     "NFRA_ONTOLOGY"
   ],
   "depends_on_note": "CONSUMES the ontology vocabulary (NFRA_ONTOLOGY rule-bank Roles/Relations/Variance) + the infra/system graph-infra/learning-loop vocabulary as the scoring profile source; CONVERGES with infra/system/ontology/CONTENT_MODULE_DESIGN (the content-class RRF/BM25/Potion method + materialized-substrate pattern) as its external/arxiv instance.",
   "ledger_refs": [],
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

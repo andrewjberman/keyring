@@ -20,8 +20,8 @@
       "date": "2026-07-22"
     }
   ],
-  "status": "active",
-  "phase": "Phase 1: PRD + registry (data/firm_registry.json, seeded+grounded) + TRIGGER_LAYER doctrine LANDED 2026-07-22. Next: P1 gate build routing (~Z discretion: 0.8.0/main lanes), P2 rule-bank + variance_dimensions amendment (coordinated with 0.8.0_AE~C), P3 comp-findings gate build (0.8.0), CVO~Z verification per s.7 acceptance. || FAMILY (2026-07-23): NFRA_MSBEFF adopted as this program's measurement-and-remediation leg (main-CTO position via MSTR 150938Z; PSTMRT = doctrine/registry umbrella; CVO~Z verifies once for both).",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 1: PRD + registry (data/firm_registry.json, seeded+grounded) + TRIGGER_LAYER doctrine LANDED 2026-07-22. Next: P1 gate build routing (~Z discretion: 0.8.0/main lanes), P2 rule-bank + variance_dimensions amendment (coordinated with 0.8.0_AE~C), P3 comp-findings gate build (0.8.0), CVO~Z verification per s.7 acceptance. || FAMILY (2026-07-23): NFRA_MSBEFF adopted as this program's measurement-and-remediation leg (main-CTO position via MSTR 150938Z; PSTMRT = doctrine/registry umbrella; CVO~Z verifies once for both).",
   "blocking": "None (off-main-channel lane; builds route at ~Z discretion; G2b binding is main-fabric's)",
   "created": "2026-07-22",
   "pods": [
@@ -31,5 +31,6 @@
   ],
   "pipeline": "estate-wide (comp tooling / ontology / doctrine)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

@@ -3,8 +3,8 @@
   "macro_code": "OPAL",
   "name": "OPAL Alerts -- alarm-surface CENSUS (documentation of what exists; explicitly NOT building alarms)",
   "description": "Registers the alarm half of CVO's preempting brief (org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_SCHEDULE_AND_ALERTS_PREEMPTING_BRIEF_20260724.md @6543fd12ef; Andrew-direct ask 07-24). MEASURED BASIS 07-24: 51 live CloudWatch alarms with NO semantic census -- the alarm surface is the only estate capability with no product-grouped view, which is how bad denominators happen when scanning it. DELIVERABLE #1: alarm-map.json -- the exact twin of trigger-map.json (per-alarm: unit, tf_file, metric, threshold, actions, ENABLED/disabled, orphan-vs-TF-managed), plus an alarm-census.py and the same CI drift gate the trigger twin already has. THEN: the cleanup axis -- orphaned alarms (alarming on deleted resources), alarms whose SNS targets are dead, duplicates -- as RETIREMENT candidates routed through normal decommission discipline. MORATORIUM COMPLIANCE, STATED AT REGISTRATION SO IT CANNOT DRIFT: Andrew's standing moratorium (CLAUDE.md, 07-28: no new alarms/SNS/SES/monitors unless he explicitly asks) GOVERNS this project. This project is a CENSUS AND CLEANUP of what already exists -- it documents and RETIRES; it never creates. Any finding of a 'missing' alarm is recorded as a finding and STOPS there; building it requires Andrew's explicit word per the moratorium.",
-  "status": "active",
-  "phase": "REGISTERED 2026-07-29 by CTO -- closing the 4-day registration gap the mission register named (INFRASTRUCTURE.DEBT holes #1-#2: the brief was measured and handed to CTO 07-24; the trigger twin exists complete with CI drift gate, the alarm one does not). Scoped, unstaffed. Next: alarm-map.json + alarm-census.py cloned from the trigger-census pattern (mechanical, any AE hand, post-fires).",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: REGISTERED 2026-07-29 by CTO -- closing the 4-day registration gap the mission register named (INFRASTRUCTURE.DEBT holes #1-#2: the brief was measured and handed to CTO 07-24; the trigger twin exists complete with CI drift gate, the alarm one does not). Scoped, unstaffed. Next: alarm-map.json + alarm-census.py cloned from the trigger-census pattern (mechanical, any AE hand, post-fires).",
   "hazards": [
     "SCOPE INVERSION is the failure mode this registration text exists to prevent: an agent reading 'OPAL_ALERTS' as a mandate to BUILD alerting. The moratorium governs; this project only documents and retires. The name is inherited from Andrew's 07-24 ask; the scope is the census.",
     "An alarm retired without checking its ACTIONS chain may silently orphan an SNS topic or a downstream automation -- retirement candidates carry their action-target census before any destroy."
@@ -18,5 +18,6 @@
     "CLAUDE.md alert/alarm moratorium (Andrew-direct 2026-07-28, verbatim preserved there)"
   ],
   "verification_bar": "alarm-map.json exists, drift-gated in CI like its trigger twin, with a positive control (a known-live alarm present; a deliberately-mangled copy FAILS the gate); every row carries unit + tf_file + action targets; the census count reconciles to a live list-alarms enumeration with the delta explained member-by-member (sets compared both directions, not counts).",
-  "blocking": "None"
+  "blocking": "None",
+  "closed": "2026-08-25"
 }

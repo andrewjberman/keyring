@@ -17,8 +17,8 @@
     "ADVI_INFPRM",
     "DATA_SSOTMG"
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD AUTHORED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/ADVI_PRVSYS_PRD.md). Andrew-direct (the ad-hoc provisioning won't scale; end-state = partner self-service). SEQUENCE: COO decomposes; P1 LEADS (templating + the single-source-of-truth firm-scope fix -- the engine P2/P3 call + retires the cottonwood domain-drift class) -> P2 internal UI -> P3 partner-admin self-service (the tenant-isolation security is the load-bearing CVO-ratified gate). Engine = users/scripts/create_user_v2.py.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: PHASE 0 -- PRD AUTHORED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/ADVI_PRVSYS_PRD.md). Andrew-direct (the ad-hoc provisioning won't scale; end-state = partner self-service). SEQUENCE: COO decomposes; P1 LEADS (templating + the single-source-of-truth firm-scope fix -- the engine P2/P3 call + retires the cottonwood domain-drift class) -> P2 internal UI -> P3 partner-admin self-service (the tenant-isolation security is the load-bearing CVO-ratified gate). Engine = users/scripts/create_user_v2.py.",
   "blocking": "None to PRD/P1. P3 (self-service) is gated on the P1 templated engine + the P2 internal UI + the CVO tenant-isolation ratification (a cross-firm write must 403). COO decomposes; P1 = AE/DT (provisioning lane) + DS (config); P2 = DE/RD (portal); P3 = DE/RD + AE (auth/API) + CVO (security gate).",
   "created": "2026-06-29",
   "pods": [
@@ -30,5 +30,6 @@
   "pipeline": "partner provisioning: create_user_v2.py -> P1 templated library (declarative firm-scope config single-source-of-truth, idempotent, audited, 4-layer atomic) -> P2 internal admin UI (we operate) -> P3 partner-admin self-service portal page (firmRole=admin, tenant-scoped API, server-derived firmId, CVO-ratified isolation)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

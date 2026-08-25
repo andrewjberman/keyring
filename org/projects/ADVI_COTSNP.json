@@ -3,7 +3,7 @@
   "macro_code": "ADVI",
   "code": "ADVI_COTSNP",
   "title": "Cottonwood snapshot-first pipeline restructure",
-  "status": "active",
+  "status": "closed",
   "owner": "0.4.0_DS_ClientPlatform",
   "pods": [
     "0.4"
@@ -32,5 +32,7 @@
       "agent": "2.0.0_SA_COO",
       "event": "PROJECT REGISTERED (CTO ruling a96b9f098 directed COO to register + decompose). Meets the bar: multi-session, phased, never-widen-gated. Design pair = DS brief 9e045e02f + CTO ruling a96b9f098 (no re-authored PRD, brief is PRD-grade). P0 split ratified (merge-config holds tonight, qt3/qt4 rides observe-only). P0-P3 TO decomposition = next COO /charter task. cot S_00 fix (319a716cb, ADVI_COTETL D2X-DS-03) already deployed as pre-restructure tactical fix."
     }
-  ]
+  ],
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: P0 — DECOMPOSITION (registered 2026-06-12 ~20:32Z). Andrew-direct restructure: retire cot's txn-reverse-engineering core (A_03 FIFO cube / B_01 FIFO lots / S_00 4-tier prices) + dead Schwab fork machinery; SNAP_00 daily-state assembler from BD snapshots (qt1 holdings + qt4 unrealized + qt3 realized + qt5 allocations); txns become flows-only (NNA); B_03/C_*/D_* survive unchanged. GOVERNING DESIGN PAIR (no re-authored PRD per CTO efficiency ruling): DS brief 9e045e02f (PRD-grade) + CTO ruling a96b9f098 (5 design conditions). CTO APPROVED w/ conditions: shadow gate N=3 ('match'=EXPLAINED-not-byte-identical); P2 pre-declared never-widen DRIFT-ACCEPTANCE (served output moves toward snapshot truth -> full CTO+COO sign-off + 3-night divergence census); bd-securities stays SHARED (read-only IAM verify at P3); backfill = probe-then-floor (FIFO bridge rejected-by-default). P0 SPLIT (COO clean-baseline instinct CTO-ratified): cot_silver_merge.py TABLE_CONFIG deploy HOLDS until tomorrow (shared script carries tonight's served-chain inputs); qt3/qt4 landing validation RIDES tonight (observe-only, zero chain impact); holdings.json commit parity-gated (DS adjudicates, default hold). Tonight 02:00Z stays a CLEAN COTETL baseline. D2X hybrid_price_fill orphan closes at P3 (DEBTSCAN first ledger burn-down). NEXT: COO P0-P3 TO decomposition (P1 TO carries N=3 gate def; P2 TO carries drift-acceptance framing); 3-night shadow census -> CVO verification queue at P1."
 }

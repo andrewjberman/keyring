@@ -3,8 +3,8 @@
   "macro_code": "ADVI",
   "name": "fact_account_return -- canonical daily account return for 49F, Inflection, and Cottonwood",
   "description": "SOLE REGISTRY CARRIER for the reusable Advisor Intelligence account-return fact: the Black Diamond replacement, 49F runner field emit, OPAL_CONSOLIDATION serve, and vendor adapters are one fact with one owner. The 2026-08-06 ADVI_PERFORMANCE plan conditionally ratifies grain (firm, account, date, method/version), gross and net daily valuation TWR fields, flow/fee/reconciliation evidence, source provenance, quality state, and separate windowed projections. Account365 governs fee accrual/day-count behavior; Modified Dietz governs date-only within-period flow weighting; neither changes the return family from geometric daily TWR. This registration is not a build order: Andrew decisions P-1 through P-7 and the specified source probes/operational repairs remain gates. The shared per-runner source inventory must be consumed, not duplicated.",
-  "status": "active",
-  "phase": "CONDITIONAL CONTRACT RATIFICATION 2026-08-06 -- grain, columns, formulas, rollup laws, and serving mappings are specified in ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md. Build has not started. Ratification becomes final when Andrew resolves P-1 through P-7 and dim_return_method v1 is published.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: CONDITIONAL CONTRACT RATIFICATION 2026-08-06 -- grain, columns, formulas, rollup laws, and serving mappings are specified in ADVI_PERFORMANCE_E2E_STANDARDIZATION_PLAN_20260806.md. Build has not started. Ratification becomes final when Andrew resolves P-1 through P-7 and dim_return_method v1 is published.",
   "updated": "2026-08-06",
   "hazards": [
     "FORK HAZARD, the reason this code exists: four live threads describe this same fact. Any thread that starts emitting account returns under another name re-creates the fork this registration closes -- new return-emitting work cites ADVI_TWR or stops.",
@@ -21,5 +21,6 @@
     "org/missions/MISSIONS.md PORTAL.ADVISOR_INTELLIGENCE hole #1 (anchor 1308a5ced4; TWR search 5 hits all terminal / 0 active)"
   ],
   "verification_bar": "Daily account facts must conserve valuation, signed external flows, fees, and return dollars; geometrically link to every served window; roll up through return dollars and denominators without averaging percentages; quarantine incomplete or method-mismatched rows; and pass source-specific invariants, cross-grain reconciliation, 10-day shadow, rollback, and lineage tests defined in the end-to-end plan.",
-  "blocking": "Andrew decisions P-1 through P-7 in the end-to-end plan. The method row and schema must then be published before any return-emitting implementation begins. Credentialed Orion account-grain and Cottonwood Black Diamond full-roster probes are source-verification dependencies, not reasons to fork the canonical fact."
+  "blocking": "Andrew decisions P-1 through P-7 in the end-to-end plan. The method row and schema must then be published before any return-emitting implementation begins. Credentialed Orion account-grain and Cottonwood Black Diamond full-roster probes are source-verification dependencies, not reasons to fork the canonical fact.",
+  "closed": "2026-08-25"
 }

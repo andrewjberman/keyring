@@ -2,19 +2,38 @@
   "project_code": "OPAL_PRISTINE",
   "macro_code": "OPAL",
   "name": "Archetypal-by-construction -- operationalize the CVO archetype+cleanliness audit into a generator + gate-flips + burn-down loop + one trended debt score",
-  "status": "active",
+  "status": "closed",
   "current_phase": "PRD AUTHORED 2026-07-21 (CTO, from the CVO audit @eb3ad4855), FOR COO DECOMPOSITION. Thesis: cleanliness is a CONTROL not a cleanup; the archetype ladder is PROSE->TEMPLATE->GATE->DETECTOR and the estate has the DETECTOR rung (comp-tools) -- the leverage is TEMPLATE+GATE. Debt is SMALL+CONCENTRATED (15 TF-label collisions, 2-3 clobbers, 1 supersede cluster, a dead graveyard). 5 workstreams: WS-1 new-pipeline/new-firm GENERATOR (the #1 lever -- generalize infra/system/sdk genesis from new-company to new-Opal-DATA-PIPELINE, content = the OPAL_CONSOLIDATION A/B/C/D casebook) / WS-2 conformance gates (flip the BUILT WARN-first scheduler-grammar + OS-region lints; build the 3 prose-taxonomy lints: S3-key-grammar, fact_/dim_ naming, {resource}-role IAM) / WS-3 burn-down loop (standing worklist + verify-before-delete on the 4 concentrations: bd TF double-management, yang-generate-* supersede cluster, news/scraper stillborn graveyard, 4 idle EC2) / WS-4 ONE trended estate-debt score (accountability) / WS-5 sharpen the detectors (comp-drift --deep, comp-similar heat-join, comp-kuzu latency). Sequencing: flip-2-gates -> reap-unambiguous -> scope-generator -> stand-up-score -> prose-lints+owner-triage -> un-pause-absence-twins.",
   "owner": "1.0.0_SA_CTO",
   "coo_lane": "2.0.0_SA_COO",
   "verify_lane": "3.0.0_SA_CVO",
   "created": "2026-07-21",
-  "pods": ["3.0.0", "0.8.0", "1.0.0", "2.0.0"],
-  "related": ["OPAL_TAXONOMY", "OPAL_CONSOLIDATION", "NFRA_DEBTSCAN"],
+  "pods": [
+    "3.0.0",
+    "0.8.0",
+    "1.0.0",
+    "2.0.0"
+  ],
+  "related": [
+    "OPAL_TAXONOMY",
+    "OPAL_CONSOLIDATION",
+    "NFRA_DEBTSCAN"
+  ],
   "related_note": "Sibling of OPAL_TAXONOMY (the census->per-DC-ruling->lints-on-existing-hooks vehicle; its 16-DC catalogue is what PRISTINE's WS-2/WS-3 draw from). WS-1's generator content = the OPAL_CONSOLIDATION A/B/C/D casebook (WS-C:C7), designed while fresh. Andrew-direct 2026-07-21: create OPAL_PRISTINE as its own project (not folded into TAXONOMY).",
   "guardrails_note": "Verify-before-delete is DOCTRINE: never reap a live guard (opal-users/opal-firms/auth-validator-edge mix with stillborn cruft); cold-S3 is the WRITE half only (comp-whoread read-check FIRST); abandoned==rare-guard until owner-confirmed; NO new alarm/twin during the consolidation (Andrew 07-17 suspend -- WS-2 absence-twin is DEFERRED-target); self-cleaning transitional dup (schwab->consolidation) left to the migration; gate what you measured (every lint rides an EXISTING hook).",
   "verify_role_note": "CVO owns the VERIFY leg (verifies, does NOT build): each gate flip gets an independent 'does a violation actually get BLOCKED' exercise; each reap gets a verify-before-delete read; the debt score gets an independent recompute -- mirroring the MDPF 3-pass discipline.",
   "prds": [
-    {"path": "docs/architecture/OPAL_PRISTINE_PRD.md", "label": "OPAL_PRISTINE PRD v0.1 (CTO; 5 WS for COO decomposition; operationalizes the CVO audit)", "date": "2026-07-21"},
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_PRISTINE_archetype_cleanliness_audit_20260721.md", "label": "CVO archetype+cleanliness audit (@eb3ad4855) -- the grounded findings + citations the PRD operationalizes", "date": "2026-07-21"}
-  ]
+    {
+      "path": "docs/architecture/OPAL_PRISTINE_PRD.md",
+      "label": "OPAL_PRISTINE PRD v0.1 (CTO; 5 WS for COO decomposition; operationalizes the CVO audit)",
+      "date": "2026-07-21"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_PRISTINE_archetype_cleanliness_audit_20260721.md",
+      "label": "CVO archetype+cleanliness audit (@eb3ad4855) -- the grounded findings + citations the PRD operationalizes",
+      "date": "2026-07-21"
+    }
+  ],
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: PRD AUTHORED 2026-07-21 (CTO, from the CVO audit @eb3ad4855), FOR COO DECOMPOSITION. Thesis: cleanliness is a CONTROL not a cleanup; the archetype ladder is PROSE->TEMPLATE->GATE->DETECTOR and the estate has the DETECTOR rung (comp-tools) -- the leverage is TEMPLATE+GATE. Debt is SMALL+CONCENTRATED (15 TF-label collisions, 2-3 clobbers, 1 supersede cluster, a dead graveyard). 5 workstreams: WS-1 new-pipeline/new-firm GENERATOR (the #1 lever -- generalize infra/system/sdk genesis from new-company to new-Opal-DATA-PIPELINE, content = the OPAL_CONSOLIDATION A/B/C/D casebook) / WS-2 conformance gates (flip the BUILT WARN-first scheduler-grammar + OS-region lints; build the 3 prose-taxonomy lints: S3-key-grammar, fact_/dim_ naming, {resource}-role IAM) / WS-3 burn-down loop (standing worklist + verify-before-delete on the 4 concentrations: bd TF double-management, yang-generate-* supersede cluster, news/scraper stillborn graveyard, 4 idle EC2) / WS-4 ONE trended estate-debt score (accountability) / WS-5 sharpen the detectors (comp-drift --deep, comp-similar heat-join, comp-kuzu latency). Sequencing: flip-2-gates -> reap-unambiguous -> scope-generator -> stand-up-score -> prose-lints+owner-triage -> un-pause-absence-twins."
 }

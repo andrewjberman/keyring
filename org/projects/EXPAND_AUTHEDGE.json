@@ -24,13 +24,14 @@
     "NFRA_EXPAND",
     "NFRA_GLOBGRPH"
   ],
-  "status": "scoping",
-  "phase": "SCOPING -- NFRA_EXPAND Strand B. Cheap near-term graph enrichment (one derive change: add the auth-validator-edge as a CloudEdge). F4a dropped. Buildable now; needs the globgrph derive re-run + critical-surface verify.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: SCOPING -- NFRA_EXPAND Strand B. Cheap near-term graph enrichment (one derive change: add the auth-validator-edge as a CloudEdge). F4a dropped. Buildable now; needs the globgrph derive re-run + critical-surface verify.",
   "blocking": "None -- scoping. Small/cheap; a globgrph derive enrichment + CodeBuild re-derive (S3 source-zip) + comp-surface-check verify (critical graph).",
   "created": "2026-06-25",
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
   "threads": [],
-  "lane": "0.7.0_AE_CloudOps"
+  "lane": "0.7.0_AE_CloudOps",
+  "closed": "2026-08-25"
 }

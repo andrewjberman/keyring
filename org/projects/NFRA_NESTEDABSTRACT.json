@@ -10,17 +10,27 @@
       "date": "2026-07-18"
     }
   ],
-  "status": "active",
-  "phase": "P1 SETTLED 2026-07-18/19 (loop machine LIVE). P0 (loop+ledger+drift-gate DESIGN) arch-gated by CTO -- design @a9110d744 -> GO @e1d51d759 (LD-0314 folded as doctrinal grounding). P1 (build the machine + seed abstractions + seed the ledger) SETTLED @51bc106ac (CTO-ratify sdk-capability as the 3rd incorporation_mode + closed-set discipline): the abstraction loop is LIVE at infra/system/sdk/abstraction_loop/ (ABSTRACTION_LEDGER.jsonl + PLAYBOOK.md + ledger_schema.json). Ledger seeded with 5 entries NA-0001..NA-0005 (NA-0001 materialize applied-vs-emitted invariant / NA-0002 OWNS-as-governed-primitive / NA-0003 run-time coverage-denominator-vs-producer-axis / NA-0004 TERRITORY / NA-0005 additive-LLM-semantic-reading). FIRST full round-trip: NA-0003 INCORPORATED @5449be96e on the AC4 v2 raw-axis co-land (flip-trigger FIRED; incorporation_mode = shared-version-slot). Ledger state: 1 incorporated / 4 pending (NA-0001/0002/0004/0005 await their enhancement flip-triggers). P2 (the ENFORCEMENT drift-gate that makes it ONGOING) HELD for a fresh GENESIS build lane. ONGOING = the 3-step IDENTIFY->LOG->INCORPORATE loop runs on every core-mechanism enhancement (standing). Registry-JSON reconcile 2026-07-19 by 2.0.0_SA_COO (post-crash registry-lag pickup, CTO-flagged).",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: P1 SETTLED 2026-07-18/19 (loop machine LIVE). P0 (loop+ledger+drift-gate DESIGN) arch-gated by CTO -- design @a9110d744 -> GO @e1d51d759 (LD-0314 folded as doctrinal grounding). P1 (build the machine + seed abstractions + seed the ledger) SETTLED @51bc106ac (CTO-ratify sdk-capability as the 3rd incorporation_mode + closed-set discipline): the abstraction loop is LIVE at infra/system/sdk/abstraction_loop/ (ABSTRACTION_LEDGER.jsonl + PLAYBOOK.md + ledger_schema.json). Ledger seeded with 5 entries NA-0001..NA-0005 (NA-0001 materialize applied-vs-emitted invariant / NA-0002 OWNS-as-governed-primitive / NA-0003 run-time coverage-denominator-vs-producer-axis / NA-0004 TERRITORY / NA-0005 additive-LLM-semantic-reading). FIRST full round-trip: NA-0003 INCORPORATED @5449be96e on the AC4 v2 raw-axis co-land (flip-trigger FIRED; incorporation_mode = shared-version-slot). Ledger state: 1 incorporated / 4 pending (NA-0001/0002/0004/0005 await their enhancement flip-triggers). P2 (the ENFORCEMENT drift-gate that makes it ONGOING) HELD for a fresh GENESIS build lane. ONGOING = the 3-step IDENTIFY->LOG->INCORPORATE loop runs on every core-mechanism enhancement (standing). Registry-JSON reconcile 2026-07-19 by 2.0.0_SA_COO (post-crash registry-lag pickup, CTO-flagged).",
   "blocking": "P2 (enforcement drift-gate) HELD for a fresh GENESIS build lane (owner 0.8.0_AE_CloudComp~A + CTO's shared-version-slot incorporation_mode nod + 3rd-mode enum-ratify). NOT a loop blocker -- P0/P1 settled and the loop is live + running (NA-0003 already incorporated). The drift-gate cadence-owner role = 2.0.0_SA_COO (recorded durably; activates AT P2-build, then drives the first sweep-gap to close). Exec-locked pieces (any org/modules/graph registration for an SDK comp-tool, per NFRA_COMPREG) route to CTO as normal SoD.",
   "owner": "0.8.0_AE_CloudComp~A",
   "owner_note": "Andrew-direct 'conceptually a task for ~A' -- ~A owns the GENESIS SDK (infra/system/sdk/). CTO arch-gates the abstraction rulings (does X abstract / its abstract form / the drift-gate mechanism) + exec-locked pieces. COO coordinates the review loop.",
   "coo_lane": "2.0.0_SA_COO",
   "created": "2026-07-18",
-  "pods": ["0.8", "1.0", "2.0"],
+  "pods": [
+    "0.8",
+    "1.0",
+    "2.0"
+  ],
   "sovereign": "Andrew (direct, the ongoing-abstraction-loop mandate)",
-  "depends_on": ["NFRA_GENESIS", "NFRA_ONTOLOGY", "NFRA_SYSTEM", "NFRA_COMPREG"],
+  "depends_on": [
+    "NFRA_GENESIS",
+    "NFRA_ONTOLOGY",
+    "NFRA_SYSTEM",
+    "NFRA_COMPREG"
+  ],
   "depends_on_note": "KEEPS-LIVE NFRA_GENESIS (the SDK being kept in sync with the mechanism). SOURCES its seed concepts from NFRA_ONTOLOGY (the A/B planes -> territory abstraction; the LLM-classification overlay). ABSTRACTS FROM NFRA_SYSTEM (the evolving mechanism). REGISTERS any SDK comp-tool via NFRA_COMPREG (atomic-bundle flow). NON-goal: re-abstracting from scratch (GENESIS did the base; this keeps it LIVE) or re-platforming Opal.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

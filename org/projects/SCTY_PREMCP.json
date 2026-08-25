@@ -16,8 +16,8 @@
     "ADVI_BDAPIMIG",
     "NFRA_WRKFLW"
   ],
-  "status": "active",
-  "phase": "Roughly HALF-BUILT as of 2026-07-07 -- registry was stale by a few days understating both progress and the actual build-lane. 6 controls landed 2026-07-07 under 0.7.0_AE_CloudOps (NOT 0.5.0_AE, which was the original owner-of-record attribution -- correcting here): D1 VA-signature verify, B1 entitlements, B2 (partial), C1, C2, C3-WAF. Still open: secrets-rotation runbook + JWT/Fernet/Graph-secret break-glass (not written); per-capability OAuth token-scope split (not built); B2's read-only grant is coded but not turned on live (needs Andrew admin action); network isolation (gateway off public IP, encrypted internal LB-to-server) not started; opal-agent-comms broker security review not done; cached-token encryption key still lives on-disk not memory-only; several threat-catalog verification-only follow-ups still open (SSRF-to-cloud-creds route check, mailbox-rule-survives-token-revocation check, cross-user/cross-firm isolation check -- last one blocked on the multi-user Graph ingestion project); CVO live-testing of the deployed WAF (flood/legit/blocked-action) still pending.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Roughly HALF-BUILT as of 2026-07-07 -- registry was stale by a few days understating both progress and the actual build-lane. 6 controls landed 2026-07-07 under 0.7.0_AE_CloudOps (NOT 0.5.0_AE, which was the original owner-of-record attribution -- correcting here): D1 VA-signature verify, B1 entitlements, B2 (partial), C1, C2, C3-WAF. Still open: secrets-rotation runbook + JWT/Fernet/Graph-secret break-glass (not written); per-capability OAuth token-scope split (not built); B2's read-only grant is coded but not turned on live (needs Andrew admin action); network isolation (gateway off public IP, encrypted internal LB-to-server) not started; opal-agent-comms broker security review not done; cached-token encryption key still lives on-disk not memory-only; several threat-catalog verification-only follow-ups still open (SSRF-to-cloud-creds route check, mailbox-rule-survives-token-revocation check, cross-user/cross-firm isolation check -- last one blocked on the multi-user Graph ingestion project); CVO live-testing of the deployed WAF (flood/legit/blocked-action) still pending.",
   "blocking": "None to PRD. The /otp auth-model arch-GO is RULED (Option A) -- 0.7.0 un-blocked to build /otp/fetch. Phase-1 build sequences against the 0.7.0 gateway lane (busy on STEP-C + ETFS SES); durable, no deadline except the /otp near-term BD-auto-login need. Security-sensitive: /security-tree commits route through COO per SCTY; this PRD (docs/architecture) + JSON (org/projects) are CTO-authorable per the SCTY_PRD precedent.",
   "inbound_to_fold": [
     {
@@ -33,11 +33,18 @@
     }
   ],
   "created": "2026-06-25",
-  "pods": ["1.0", "3.0", "0.7", "0.6", "2.0"],
+  "pods": [
+    "1.0",
+    "3.0",
+    "0.7",
+    "0.6",
+    "2.0"
+  ],
   "pipeline": "MCP-surface hardening: grounded risk-surface inventory (gateway routes/auth/secrets/edge) -> prioritized defense-in-depth controls (token-revocation, write-entitlements, rate-limit/WAF, secrets-rotation, network-isolation, broker-review) -> CTO arch-gate each -> 0.7.0 build -> CVO verify-on-live. Frames+references NFRA_OPLMCP (owns the gateway) + ADVI_BDAPIMIG (the /otp consumer); does not duplicate.",
   "coo_lane": "2.0.0_SA_COO",
   "cvo_lane": "3.0.0_SA_CVO",
   "sovereign": "Andrew",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

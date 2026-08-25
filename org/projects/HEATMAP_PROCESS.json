@@ -19,13 +19,14 @@
     "NFRA_EXPAND",
     "NFRA_OPLMCP"
   ],
-  "status": "scoping",
-  "phase": "NFRA_EXPAND Strand C (process audit/mining) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). SCOPING -- part of NFRA_HEATMAP (LD-0215). TO candidates P0(L0 distill+de-identify)+P1(sessionize)+P2(mine/classify/rank)+P3(interview UX)+P4(synth/verify/adopt+live-router). SEQUENCES against OPLMCP .05 (R8 lake) landing -- decompose after OBJECT.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: NFRA_EXPAND Strand C (process audit/mining) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). SCOPING -- part of NFRA_HEATMAP (LD-0215). TO candidates P0(L0 distill+de-identify)+P1(sessionize)+P2(mine/classify/rank)+P3(interview UX)+P4(synth/verify/adopt+live-router). SEQUENCES against OPLMCP .05 (R8 lake) landing -- decompose after OBJECT.",
   "blocking": "*** DECOMPOSE-HOLD (CTO flag 2026-06-25 205707Z, Andrew-gated): HEATMAP_PROCESS (OPLMCP-traffic L0-L5 workflow-mining) is the SAME DOMAIN as NFRA_WRKFLW (also OPLMCP-traffic workflow-mining). CTO recommended to Andrew that they FOLD -- supersede HEATMAP_PROCESS, make NFRA_WRKFLW the Strand-C process arm. Andrew has NOT yet ruled. DO NOT decompose HEATMAP_PROCESS standalone until Andrew rules the dedup (else double-build, the MSTR-warned duplication). CTO pings COO when Andrew rules. *** Strand B (auth-edge/0.7.0) + Strand C-OBJECT (HEATMAP_OBJECT) proceed independently. Secondary sequencing: PROCESS also sequences against OPLMCP .05 (R8 audit-lake) landing.",
   "created": "2026-06-25",
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
   "threads": [],
-  "lane": "0.4.0_DE + DS + 0.5.0_AE"
+  "lane": "0.4.0_DE + DS + 0.5.0_AE",
+  "closed": "2026-08-25"
 }

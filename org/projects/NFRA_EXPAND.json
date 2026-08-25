@@ -32,8 +32,8 @@
     "NFRA_DEBTSCAN",
     "NFRA_TSGRAPH"
   ],
-  "status": "scoping",
-  "phase": "SLIMMED 2026-06-26 (Andrew-direct 'elevate MS to its own macro' 15:09Z): the MS vertical -- Strand A (EXPAND_MSCLOUD, SP/OneDrive ingestion) + the MS-instance of Strand C heat-map -- is CARVED OUT to the new first-class macro NFRA_MSGRAPH (+ a new MS comp-tools/index layer). NFRA_EXPAND RETAINS: Strand B (EXPAND_AUTHEDGE, auth-edge enrichment) + Strand C NON-MS (repo-file + MCP/OPLMCP heat_map, HEATMAP_OBJECT/PROCESS over the repo+MCP estate). The graph-SSOT vision + guardrails persist; the MS-cloud expansion is now NFRA_MSGRAPH's. [PRIOR] SCOPING -- CTO consolidation scoping landed 2026-06-25 (NFRA_EXPAND_SCOPING.md). Absorbs NFRA_HEATMAP (-> Strand C). Build order: B auth-edge + C-local repo/MCP heat_map buildable now; A MS-cloud ingestion the major expansion; C-global once A lands. COO decomposes; MSTR spawns.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: SLIMMED 2026-06-26 (Andrew-direct 'elevate MS to its own macro' 15:09Z): the MS vertical -- Strand A (EXPAND_MSCLOUD, SP/OneDrive ingestion) + the MS-instance of Strand C heat-map -- is CARVED OUT to the new first-class macro NFRA_MSGRAPH (+ a new MS comp-tools/index layer). NFRA_EXPAND RETAINS: Strand B (EXPAND_AUTHEDGE, auth-edge enrichment) + Strand C NON-MS (repo-file + MCP/OPLMCP heat_map, HEATMAP_OBJECT/PROCESS over the repo+MCP estate). The graph-SSOT vision + guardrails persist; the MS-cloud expansion is now NFRA_MSGRAPH's. [PRIOR] SCOPING -- CTO consolidation scoping landed 2026-06-25 (NFRA_EXPAND_SCOPING.md). Absorbs NFRA_HEATMAP (-> Strand C). Build order: B auth-edge + C-local repo/MCP heat_map buildable now; A MS-cloud ingestion the major expansion; C-global once A lands. COO decomposes; MSTR spawns.",
   "blocking": "None -- scoping. Strand B (auth-edge) + Strand C-local (repo-file + MCP heat_map) buildable now. Strand A (MS-cloud ingestion) is the major new build (Graph-API -> globgrph). Strand C-global gated on A.",
   "created": "2026-06-25",
   "sovereign": "Andrew",
@@ -44,5 +44,6 @@
     "Strand-B (auth-edge)": "0.7.0_AE_CloudOps",
     "Strand-C (heat_map)": "0.4.0_DE + DS + 0.5.0_AE",
     "Strand-A (SP/OneDrive ingestion)": "AE-cloud + m365-gateway owner"
-  }
+  },
+  "closed": "2026-08-25"
 }

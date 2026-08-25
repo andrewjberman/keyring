@@ -4,18 +4,30 @@
   "name": "Instrument improvements (five weak calls + nine routing frictions) + the drill tools",
   "description": "Andrew-direct via CVO~Z relay (2026-07-14 ~04:0xZ, verbatim in the brief): CTO~Z makes it, tests it, sends to CVO~Z to validate. Part 1: comp-iam (no bare GRANTED, structural simulate wrapper, DESIRED/APPLIED labels), comp-surface-check (portal visibility + blocking mode, LD-0273 fold), the NINE popular routing frictions (Andrew follow-on, verbatim demand intents from the backlog), comp-drift all-UNVERIFIABLE root-cause + loud verified-nothing exit, comp-freshness fail-closed basis (the Monday class made structural). Part 2: comp-gitdrill (node -> producer git history at vintage), comp-icedrill (partition/vintage drill over EXISTING substrates; Iceberg adoption surfaced separately, never smuggled), repo-wide Python import/call/egress edge graph incl .tools/ + org/modules (closes COMPRAIL F-5). Requirements doc: org/tier1_exec/3.0.0_SA_CVO/deliverables/CVOZ_INSTRUMENT_IMPROVEMENT_BRIEF_20260714.md @ ae81e209b (properties + acceptance shapes; mechanism/design/sequencing CTO~Z's; DECLINE-with-citation valid). Everything read-only tooling; INF hold + frozen three untouched.",
   "prds": [
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CVOZ_INSTRUMENT_IMPROVEMENT_BRIEF_20260714.md", "label": "CVO~Z requirements brief (Andrew-direct, ae81e209b)", "date": "2026-07-14"}
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CVOZ_INSTRUMENT_IMPROVEMENT_BRIEF_20260714.md",
+      "label": "CVO~Z requirements brief (Andrew-direct, ae81e209b)",
+      "date": "2026-07-14"
+    }
   ],
-  "status": "active",
-  "phase": "EXECUTING (CTO~Z solo, build+test; CVO~Z validates on handoff). Sequencing: item 3 (nine routing frictions, pure-vocabulary) -> 1 (comp-iam) -> 5 (comp-freshness) -> 4 (comp-drift diagnose) -> 2 (comp-surface-check) -> 8 (F-5 edge graph) -> 6/7 (gitdrill/icedrill) -> test sweep + handoff.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: EXECUTING (CTO~Z solo, build+test; CVO~Z validates on handoff). Sequencing: item 3 (nine routing frictions, pure-vocabulary) -> 1 (comp-iam) -> 5 (comp-freshness) -> 4 (comp-drift diagnose) -> 2 (comp-surface-check) -> 8 (F-5 edge graph) -> 6/7 (gitdrill/icedrill) -> test sweep + handoff.",
   "blocking": "None",
   "created": "2026-07-14",
-  "pods": ["1.0", "3.0"],
+  "pods": [
+    "1.0",
+    "3.0"
+  ],
   "pipeline": "comp-tools / NFRA",
   "thread_counter": 0,
   "threads": [],
   "cross_references": {
-    "follows": ["NFRA_COMPCLOSE (closed complete + verified SOUND @ 3d816c650)"],
-    "executes": ["comp-learns-backlog.md OPEN head (the 9 routing-friction entries + the F-5 graph-blindness entry -- the loop's reader routed them, the loop's builder builds them)"]
-  }
+    "follows": [
+      "NFRA_COMPCLOSE (closed complete + verified SOUND @ 3d816c650)"
+    ],
+    "executes": [
+      "comp-learns-backlog.md OPEN head (the 9 routing-friction entries + the F-5 graph-blindness entry -- the loop's reader routed them, the loop's builder builds them)"
+    ]
+  },
+  "closed": "2026-08-25"
 }

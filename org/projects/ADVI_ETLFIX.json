@@ -4,20 +4,47 @@
   "name": "Daily, correct, robust ETL from the data vendors to the Portal (49F + Inflection anchor; all Opal partners)",
   "description": "Andrew-direct 2026-07-02. Drive to CLEAN, VALIDATED pipelines for 49 Financial + Inflection ETL + PREDICTABLE, ROBUST Portal data refresh from those pipelines. End-state (Andrew, sharpened): DAILY, CORRECT ETL from the data VENDORS (Orion / Black Diamond / Schwab) down to the PORTAL, for ALL Opal partners (49F + Inflection are the anchor cases; the durable patterns generalize). A coordinating + HARDENING umbrella that turns the current reactive firefight (recurring served-AUA freezes: inf @06-30, bd-49F @06-29, MDPF @06-25) into a standing, monitored, validated, robust ETL by closing 5 systemic fragility classes: (1) fail-CATASTROPHIC converters (a single dim's vendor-pull miss aborts the whole nightly -- the inf INF_API_SILVER_TXN abort); (2) fail-SILENT degrades (a crash-fix that trades a loud-freeze for a silent-stale, no alarm); (3) vendor-source BRITTLENESS (Orion txn timeout, BD MFA scrape-break, Schwab ingest stall); (4) UNPREDICTABLE refresh + no uniform per-partner freshness SLA; (5) NON-UNIFORM validation (parity/never-widen/single-writer/no-clobber enforced heroically per-incident, not as a daily gate). 4 binding end-state properties: DAILY + CORRECT + VENDOR->PORTAL + ALL-PARTNERS. Base CTO/COO/CVO are ETL-DEDICATED per Andrew (the ~B fork takes a separate track). PRD docs/architecture/ADVI_ETLFIX_PRD.md.",
   "prds": [
-    {"path": "docs/architecture/ADVI_ETLFIX_PRD.md", "label": "ADVI_ETLFIX PRD v1.0 (CTO-authored; coordinating+hardening umbrella, 5 workstreams)", "date": "2026-07-02"}
+    {
+      "path": "docs/architecture/ADVI_ETLFIX_PRD.md",
+      "label": "ADVI_ETLFIX PRD v1.0 (CTO-authored; coordinating+hardening umbrella, 5 workstreams)",
+      "date": "2026-07-02"
+    }
   ],
-  "related": ["ADVI_BREAKS", "ADVI_INFREF", "ADVI_BDAPIMIG", "DATA_SSOTMG", "DATA_PLATFORM", "DATA_ANALYTICS", "MDPF_ASSETS"],
-  "status": "active",
-  "phase": "PHASE 0 CLOSED 2026-07-02 (ADVI_INFREF ledger close 4ce861729); Phase-1 durable-hardening dispatched same day, DE has since landed 10 build increments under WS-4 (portal-refresh robustness). Three partner pipelines' original un-freezes all cleared: (A) inf/Orion -- 0.6.1 txn-pull root fix + 0.4.0_DS~A converter guard landed. (B) 49F/Black-Diamond -- cookie-REST bypass proven + productionizing under ADVI_BDAPIMIG P1. (C) 49F/Schwab+MDPF -- custody flip fired, live-verified FRESH today (2026-07-07T17:32Z comp-freshness PASS, 0 trading days behind frontier -- an earlier same-day report of MDPF re-freezing does not hold up against current served state). TWO OPEN NEGATIVE ITEMS the registry previously omitted: (1) CVO's 2026-07-06 finding that WS-1 converter-guard alarm coverage is still incomplete for 2 of 3 affected steps -- flagged, not yet independently re-verified as still-open by this pass, treat as live until confirmed closed; (2) formal TO paperwork is thin (only 1 TO filed in 5 days despite multi-agent WS-1..5 activity) -- tracking gap, not a work gap.",
+  "related": [
+    "ADVI_BREAKS",
+    "ADVI_INFREF",
+    "ADVI_BDAPIMIG",
+    "DATA_SSOTMG",
+    "DATA_PLATFORM",
+    "DATA_ANALYTICS",
+    "MDPF_ASSETS"
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: PHASE 0 CLOSED 2026-07-02 (ADVI_INFREF ledger close 4ce861729); Phase-1 durable-hardening dispatched same day, DE has since landed 10 build increments under WS-4 (portal-refresh robustness). Three partner pipelines' original un-freezes all cleared: (A) inf/Orion -- 0.6.1 txn-pull root fix + 0.4.0_DS~A converter guard landed. (B) 49F/Black-Diamond -- cookie-REST bypass proven + productionizing under ADVI_BDAPIMIG P1. (C) 49F/Schwab+MDPF -- custody flip fired, live-verified FRESH today (2026-07-07T17:32Z comp-freshness PASS, 0 trading days behind frontier -- an earlier same-day report of MDPF re-freezing does not hold up against current served state). TWO OPEN NEGATIVE ITEMS the registry previously omitted: (1) CVO's 2026-07-06 finding that WS-1 converter-guard alarm coverage is still incomplete for 2 of 3 affected steps -- flagged, not yet independently re-verified as still-open by this pass, treat as live until confirmed closed; (2) formal TO paperwork is thin (only 1 TO filed in 5 days despite multi-agent WS-1..5 activity) -- tracking gap, not a work gap.",
   "blocking": "Phase-1 WS-1..5 hardening in progress across DS/AE/DE. Leash (every TO): degrade LOUD not catastrophic not silent; never-widen + single-writer + parity + no-clobber; ground on served/deployed not self-report (Rule 22); freshness SLA is a GATE; firm-separation (49F/inf/cot never cross); don't over-build a sunset source (BD bridge-vs-SSOTMG decision D); no ad-hoc gold runs to validate. Open: WS-1 alarm-coverage gap (CVO 07-06 finding, re-verify status); formal TO-filing discipline for WS-1..5 (informal-commit-tracking has drifted the registry stale before -- see MKOV_RETFIX/NFRA_CMTQUE same-class findings 2026-07-07).",
   "created": "2026-07-02",
-  "pods": ["0.5", "0.6", "0.7", "0.4", "1.0", "2.0", "3.0"],
+  "pods": [
+    "0.5",
+    "0.6",
+    "0.7",
+    "0.4",
+    "1.0",
+    "2.0",
+    "3.0"
+  ],
   "pipeline": "inf + bd(49F) + schwab(49F/MDPF) -> platinum -> portal (multi-vendor, multi-partner ETL)",
   "coo_lane": "2.0.0_SA_COO (base, ETL-dedicated). Decompose WS-1 (inf: 0.6.1 + 0.4.0_DS~A) / WS-2 (49F source: 0.7.0~A + 0.6.2 + 0.6.0 + DS~A) / WS-3 (MDPF: 0.5.0) / WS-4 (Portal refresh: 0.4.0_DE + AE alarm infra) / WS-5 (cross-cutting contract: CTO+CVO+COO). CVO validation gates; CTO arch-gates (robustness contract + the 4 Schwab-repoint decisions + never-widen + SLA-as-gate).",
   "cvo_lane": "3.0.0_SA_CVO (base, ETL-dedicated). Parity/freshness validation grounding engine; the un-freeze RAVC + the consolidated Andrew surface + the live-behavior certs (the converter-guard alarm+ceiling on the nightly sweep; the MDPF post-flip per-field parity).",
   "cto_lane": "1.0.0_SA_CTO (base, ETL-dedicated). Arch + this PRD + arch-gates. The ~B fork (1.0.0_SA_CTO~B / 2.0.0_SA_COO~B / 3.0.0_SA_CVO~B) takes a SEPARATE track per Andrew 2026-07-02.",
   "thread_counter": 0,
   "threads": [],
-  "depends_on": ["ADVI_INFREF", "ADVI_BDAPIMIG", "DATA_SSOTMG", "DATA_PLATFORM", "MDPF_ASSETS"],
-  "depends_on_note": "A coordinating+hardening umbrella (the DATA_SSOTMG thin-coordinating pattern) -- COORDINATES + hardens the SEAMS + the cross-cutting properties (robustness / freshness-SLA / validation) across the sibling execution projects; does NOT re-own their content. ADVI_BREAKS (assess) is the diagnostic predecessor; ADVI_ETLFIX is the durable-fix successor. INFREF stays the inf-arch home; BDAPIMIG the BD-auth home; DATA_SSOTMG/DATA_PLATFORM the Schwab homes; MDPF_ASSETS the aggregate home. The custody flip made the Schwab ingest (DATA_PLATFORM) load-bearing for MDPF -- a new seam this project owns."
+  "depends_on": [
+    "ADVI_INFREF",
+    "ADVI_BDAPIMIG",
+    "DATA_SSOTMG",
+    "DATA_PLATFORM",
+    "MDPF_ASSETS"
+  ],
+  "depends_on_note": "A coordinating+hardening umbrella (the DATA_SSOTMG thin-coordinating pattern) -- COORDINATES + hardens the SEAMS + the cross-cutting properties (robustness / freshness-SLA / validation) across the sibling execution projects; does NOT re-own their content. ADVI_BREAKS (assess) is the diagnostic predecessor; ADVI_ETLFIX is the durable-fix successor. INFREF stays the inf-arch home; BDAPIMIG the BD-auth home; DATA_SSOTMG/DATA_PLATFORM the Schwab homes; MDPF_ASSETS the aggregate home. The custody flip made the Schwab ingest (DATA_PLATFORM) load-bearing for MDPF -- a new seam this project owns.",
+  "closed": "2026-08-25"
 }

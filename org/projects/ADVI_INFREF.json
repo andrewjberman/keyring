@@ -3,15 +3,30 @@
   "macro_code": "ADVI",
   "name": "Inflection Pipeline Refactor (unified-flow)",
   "description": "Andrew-direct P1 (2026-06-30), born from ADVI_BREAKS. The DURABLE re-architecture of the inf pipeline that makes the ADVI_BREAKS tactical fixes structural + cleans accreted sprawl: (BRONZE) raw-native single-EC2 pull layer (the structural freeze fix -- removes the redundant inline perf re-pull hang locus), all-fields, two-domain separation (orion-api/eclipse-api, join only at gold), pull the full DATA_PLATFORM-cataloged surface, 4-dim parquet-at-bronze de-convert; (SILVER) one-dispatch full-fidelity parquet-normalization (never drop a field, snake_case, gold-accustomed governs, minimal disruption), consolidate converter sprawl, one partitioned layout; (GOLD) scripts unchanged -- chain-composition + partition-freshness contract, two flows (full+incremental), incremental refreshes current-day holdings, fail-loud on stale, single-writer preserved, eclipse gold pending; (RUNTIME) ONE data runner + decommission everything else, robust+observable auth (cookie-age alarm, loud JWT-fail), BD-style OTP relay (final step). Plus the Andrew-locked YAHOO price-thread removal (Orion daily snapshot self-prices the full book to 2020; repoint 4 consumers to positions_mv, retire canonical_prices/historical_prices/backfill_yahoo, per-consumer edge-check gating). CTO sees it E2E; Cottonwood only after full inf impl+validation+cleanup. No served-value change (orion-api throughout, parity-gated).",
-  "prds": ["docs/architecture/ADVI_INFREF_PRD.md"],
-  "related": ["ADVI_BREAKS", "DATA_PLATFORM", "ADVI_ORIAPI", "ADVI_INFLEC"],
-  "status": "active",
-  "phase": "COO decomposition happened same-day as registration (06-30). Since then: a full emergency cutover closed tri-attested GREEN, substantial P1 (unified-flow) build-out landed, and 6+ days of ongoing repair/data-bug fixes ran through 2026-07-06. P3 (decommission) was quietly RESCOPED OUT to ADVI_ETLFIX/NFRA_PIPELINE rather than finishing here -- the old per-dim pull Lambdas + separate inf-bronze-runner are NOT yet retired, still more than one live trigger path. Still open: Yahoo-price-fallback removal decided but not built (old backfill script + downstream consumers still un-repointed); login/auth hardening (expiring-cookie alarm, refresh-fail alert, Eclipse-login alarm, upgraded OTP relay) not built; pipeline has not yet run cleanly for a consecutive stretch (real data bugs still being found+fixed as of 07-06) so the safe-to-retire-old-pipeline checkpoint is not reached; Eclipse analytics build-out still undesigned; a flagged stale household-data leftover has only a monitoring-alarm proposal, not cleanup. No formal TO records exist for this project despite ~70+ commits of real work -- tracked informally via commit messages.",
+  "prds": [
+    "docs/architecture/ADVI_INFREF_PRD.md"
+  ],
+  "related": [
+    "ADVI_BREAKS",
+    "DATA_PLATFORM",
+    "ADVI_ORIAPI",
+    "ADVI_INFLEC"
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: COO decomposition happened same-day as registration (06-30). Since then: a full emergency cutover closed tri-attested GREEN, substantial P1 (unified-flow) build-out landed, and 6+ days of ongoing repair/data-bug fixes ran through 2026-07-06. P3 (decommission) was quietly RESCOPED OUT to ADVI_ETLFIX/NFRA_PIPELINE rather than finishing here -- the old per-dim pull Lambdas + separate inf-bronze-runner are NOT yet retired, still more than one live trigger path. Still open: Yahoo-price-fallback removal decided but not built (old backfill script + downstream consumers still un-repointed); login/auth hardening (expiring-cookie alarm, refresh-fail alert, Eclipse-login alarm, upgraded OTP relay) not built; pipeline has not yet run cleanly for a consecutive stretch (real data bugs still being found+fixed as of 07-06) so the safe-to-retire-old-pipeline checkpoint is not reached; Eclipse analytics build-out still undesigned; a flagged stale household-data leftover has only a monitoring-alarm proposal, not cleanup. No formal TO records exist for this project despite ~70+ commits of real work -- tracked informally via commit messages.",
   "blocking": "None to PRD/registration. Supersedes-in-place the ADVI_BREAKS tactical inf fixes as each structural equivalent lands. CVO holds the standing validation gate. Remaining real work: Yahoo-fallback removal, auth/login hardening (4 items), Eclipse analytics design, stale household-data cleanup, and reaching a clean consecutive-day run before old-pipeline retirement. Recommend formalizing at least the remaining items as filed TOs -- informal commit-tracking is why this registry entry drifted 6 days stale.",
   "created": "2026-06-30",
-  "pods": ["0.4", "0.7", "0.8", "3.0", "1.0", "2.0"],
+  "pods": [
+    "0.4",
+    "0.7",
+    "0.8",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "ADVI",
   "coo_lane": "Decompose P1-P5 from the PRD. DS~A = pull/silver/gold script + chain composition; AE = runner/EC2/EventBridge/decommission infra + auth; CVO independently validates each leg + the standing gate. Early gating tasks: the platinum/firm writer-map confirm (R-Point 4) + the yahoo per-consumer edge-check (R-Point 5). Inflection FULLY before Cottonwood.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

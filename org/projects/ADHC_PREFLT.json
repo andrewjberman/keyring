@@ -4,16 +4,25 @@
   "name": "Mandatory Test-Build PREFLIGHT Gate",
   "description": "Andrew-direct 2026-07-01 (born from the ADVI_INFREF v3 rebuild triple-failure that night: 3rd death = a 2h SSM ExecutionTimedOut on a recoverable, idempotent, --resume-capable job; 2 earlier deaths on desk-catchable mechanical bugs). Ship a mandatory preflight GATE (.tools/safe-ec2-run.sh + comp-preflight reflex) that REFUSES to fire any SSM/EC2/long-batch build without 3 blocking checks: (1) TIMEOUT/RUNTIME BUDGET with DETACHED-as-default >~30min (est_runtime x1.5 vs ceiling; detached+--resume+sentinel-OR-terminal watch eliminates the timeout class by construction), (2) MECHANICAL SEAM preflight (/seams --axis mechanical scoped: argparse-choices, reader-vs-bronze-format, path-ref, bash -n + comp-pipescript deployed MATCH) + stall-detection for the hang variant, (3) WATCHER TERMINAL-COVERAGE (fire on TimedOut/Failed/Cancelled, not only success sentinel). Refuse-semantics + preflight-record REUSE deploy_ledger.py (a preflight-record leg-class; inherits the RED-sweep + COO-alarm infra) + safe-apply-style audited override. Extends deploy-rule #5 (size resources deliberately) to SSM command ceilings. Proposal a62152e0f; DS~A seams_0352Z diagnosis.",
   "prds": [
-    {"path": "docs/architecture/ADHC_PREFLT_PRD.md", "label": "Preflight Gate PRD v1.0 (RATIFIED)", "date": "2026-07-01"}
+    {
+      "path": "docs/architecture/ADHC_PREFLT_PRD.md",
+      "label": "Preflight Gate PRD v1.0 (RATIFIED)",
+      "date": "2026-07-01"
+    }
   ],
-  "status": "active",
-  "phase": "Phase 1: COO-DECOMPOSED + GO'd 2026-07-01 (2.0.0_SA_COO, decomp org/tier1_exec/2.0.0_SA_COO/task_orders/ADHC_PREFLT_TO_decomposition.md). TO-1 (DS~A) = build .tools/safe-ec2-run.sh (3 checks + preflight-record via deploy_ledger.py + safe-apply-style refuse); TO-1b (DS~A) = canonical ssm-terminal-OR-sentinel watch helper; P3 follow-on = CLAUDE.md rule + gate-ramp (COO fabric-wide rollout). AE 0.6/0.7 co-consult. SEQUENCED: DS~A executes AFTER INFREF L5 cutover settles (not preempting the fire).",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 1: COO-DECOMPOSED + GO'd 2026-07-01 (2.0.0_SA_COO, decomp org/tier1_exec/2.0.0_SA_COO/task_orders/ADHC_PREFLT_TO_decomposition.md). TO-1 (DS~A) = build .tools/safe-ec2-run.sh (3 checks + preflight-record via deploy_ledger.py + safe-apply-style refuse); TO-1b (DS~A) = canonical ssm-terminal-OR-sentinel watch helper; P3 follow-on = CLAUDE.md rule + gate-ramp (COO fabric-wide rollout). AE 0.6/0.7 co-consult. SEQUENCED: DS~A executes AFTER INFREF L5 cutover settles (not preempting the fire).",
   "blocking": "SEQUENCING (not a hard blocker): DS~A is on INFREF L5 (validate_post_swap) as PRIMARY; the gate build is the follow-on, starts when the ADVI_INFREF cutover settles. GO issued; DS~A pulls it post-cutover. Not blocking ADVI_BREAKS (tonight's relaunch = raised-ceiling fix; this gate is the forward systemic fix).",
   "created": "2026-07-01",
-  "pods": ["0.4", "0.6", "0.7"],
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7"
+  ],
   "pipeline": "n/a (org/dev infrastructure -- gate wrapper)",
   "thread_counter": 0,
   "threads": [],
   "depends_on": [],
-  "depends_on_note": "No upstream blockers. Sibling to the safe-* gate family (ADHC_OWNPTH/safe-commit, ADHC_HALTGT/safe-apply, ADHC_DSFLOW/ds-commit-gate). Reuses .tools/deploy_ledger.py (a preflight-record leg-class). Empirically anchored on ADVI_INFREF (advi-infref-cutover-rebuild ledger) but architecturally independent of it."
+  "depends_on_note": "No upstream blockers. Sibling to the safe-* gate family (ADHC_OWNPTH/safe-commit, ADHC_HALTGT/safe-apply, ADHC_DSFLOW/ds-commit-gate). Reuses .tools/deploy_ledger.py (a preflight-record leg-class). Empirically anchored on ADVI_INFREF (advi-infref-cutover-rebuild ledger) but architecturally independent of it.",
+  "closed": "2026-08-25"
 }

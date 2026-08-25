@@ -3,15 +3,30 @@
   "macro_code": "ADVI",
   "name": "Pipeline Break Assessment & Validation — Inflection / 49F / Cottonwood",
   "description": "Andrew-sovereign P0 gate project (2026-06-30). Assess WHERE the breaks are in each custodian/partner served pipeline (Inflection, 49 Financial, Cottonwood) and VALIDATE each to GREEN. Origin: the Friday 2026-06-26 canonical-format exploration (DATA_PLATFORM/DATA_ANALYTICS) changed PROD somewhere; served AUA went frozen/clobbered on the live portal across pipelines. Anchor case (inf) traced live: a NEW 132-byte minimal stub producer is clobbering the mature 28830-byte INF_D_04/inf-portal-publisher HeaderMetricsResponse on the same served key (opal-data-inf/platinum/firm/header_metrics.json), AND nothing refreshed 06-30 (frozen) -- schema regression + freeze + false freshness, all live-grounded. Per-pipeline validation method (axes A map / B single-writer / C fresh / D correct-vs-custodian / E schema / F trigger) in the PRD. GATE: DATA_ANALYTICS and DATA_SSOTMG are BLOCKED until every in-scope pipeline validates GREEN with independent CVO confirmation + the prevention alarm live.",
-  "prds": ["docs/architecture/ADVI_BREAKS_PRD.md"],
-  "related": ["DATA_ANALYTICS", "DATA_SSOTMG", "DATA_PLATFORM", "NFRA_COMPDIFF"],
-  "status": "active",
-  "phase": "TO-1, TO-2, and TO-3 all closed/verified same-day -- COO's own 2026-06-30 log recorded 'all 3 ADVI_BREAKS pipelines served-GREEN... gate PASS' by 22:10Z. This registry entry was never advanced past its initial filing despite that same-day progress. Real gap remaining: no FINAL independent sign-off exists confirming all three pipelines (Inflection, 49F, Cottonwood) are validated GREEN AFTER that day's fixes landed -- the project's own closing rule (TO-5, CVO cross-cutting validation) requires this, and the only independent review on record predates the fixes. Also open: no confirmation the two downstream-blocked projects (DATA_ANALYTICS, DATA_SSOTMG) were ever actually un-blocked; Inflection hardening incomplete (only the one hanging vendor-pull got a timeout, not applied fabric-wide to every vendor-pull, and the disabled auto-recovery watchdog was never confirmed re-enabled); a related Black-Diamond filename-vs-content freeze fix may have landed under a DIFFERENT project name with unclear review coverage; Cottonwood's secondary gains/losses data gap was knowingly accepted as low-priority, not fixed.",
+  "prds": [
+    "docs/architecture/ADVI_BREAKS_PRD.md"
+  ],
+  "related": [
+    "DATA_ANALYTICS",
+    "DATA_SSOTMG",
+    "DATA_PLATFORM",
+    "NFRA_COMPDIFF"
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: TO-1, TO-2, and TO-3 all closed/verified same-day -- COO's own 2026-06-30 log recorded 'all 3 ADVI_BREAKS pipelines served-GREEN... gate PASS' by 22:10Z. This registry entry was never advanced past its initial filing despite that same-day progress. Real gap remaining: no FINAL independent sign-off exists confirming all three pipelines (Inflection, 49F, Cottonwood) are validated GREEN AFTER that day's fixes landed -- the project's own closing rule (TO-5, CVO cross-cutting validation) requires this, and the only independent review on record predates the fixes. Also open: no confirmation the two downstream-blocked projects (DATA_ANALYTICS, DATA_SSOTMG) were ever actually un-blocked; Inflection hardening incomplete (only the one hanging vendor-pull got a timeout, not applied fabric-wide to every vendor-pull, and the disabled auto-recovery watchdog was never confirmed re-enabled); a related Black-Diamond filename-vs-content freeze fix may have landed under a DIFFERENT project name with unclear review coverage; Cottonwood's secondary gains/losses data gap was knowingly accepted as low-priority, not fixed.",
   "blocking": "TO-5 (CVO final cross-cutting GREEN re-verify, post-fix) is the one genuinely missing closure step. This project BLOCKS DATA_ANALYTICS + DATA_SSOTMG by Andrew-direct order -- confirm whether that block has actually been lifted for either downstream project since 06-30.",
   "created": "2026-06-30",
-  "pods": ["0.4", "0.6", "0.7", "3.0", "1.0", "2.0"],
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "ADVI",
   "coo_lane": "P0 -- decompose TO-1..6 from the PRD, dispatch the inf rescue (TO-1/TO-2) first, parallel the 49F + COT sweeps (TO-3/TO-4), CVO holds TO-5 gate-release. Hold all DATA_ANALYTICS/DATA_SSOTMG dispatch until GREEN.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

@@ -4,14 +4,22 @@
   "name": "Inflection Fee-Classification Audit + Revision",
   "description": "Audit + revise the Inflection fee-paying / non-fee-paying / total-account accounting so the Books 'Firm Overview' + Distribution panels reconcile and are honest. Andrew live-smoked the panel 2026-07-06: Fee(789)+NonFee(1)=790 but Total=868, and 1 non-fee account holds $67M (1/3 of book). Root causes (source-confirmed): (A) non-fee is a residual across three MISMATCHED-GRAIN denominators in INF_D_04 _fee_block -- the $67M un-billed AUA collapses into a phantom count of 1; decisive tell = 13 non-fee clients but 1 non-fee account (impossible); (B) billing-dim coverage gap -- 78 of 868 custody accounts have no billing row; (C) FE stitches custody-grain Total(868) next to billing-grain fee splits(790). Fix = positively-measured non-fee count + explicit unclassified/unbilled bucket + one stated canonical grain (custody recommended). Frontend is a faithful passthrough; defects are upstream in the data.",
   "prds": [
-    {"path": "docs/architecture/ADVI_INFFEE_PRD.md", "label": "Inflection fee-classification audit + revision PRD (Andrew-direct)", "date": "2026-07-06"}
+    {
+      "path": "docs/architecture/ADVI_INFFEE_PRD.md",
+      "label": "Inflection fee-classification audit + revision PRD (Andrew-direct)",
+      "date": "2026-07-06"
+    }
   ],
-  "status": "active",
-  "phase": "TO-1 (billing-dim audit, 0.6.1_AE) COMPLETE + COO-accepted (commits 2e86bad0c, 548ac81f1). Findings OVERTURN the PRD's own default-recommended canonical grain: root cause is mostly MISSING PRICE DATA for 268 real fee-paying custody accounts (a data-quality gap), not truly-unbilled accounts as first suspected; audit recommends counting by HOLDINGS, not by custody record, contra the PRD default. TO-2 (gold revise, 0.4.0_DS~A) and TO-3 (frontend, 0.4.0_DE) NOT yet started -- gated on TO-2 first, must work from the corrected diagnosis above, not the original PRD framing.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: TO-1 (billing-dim audit, 0.6.1_AE) COMPLETE + COO-accepted (commits 2e86bad0c, 548ac81f1). Findings OVERTURN the PRD's own default-recommended canonical grain: root cause is mostly MISSING PRICE DATA for 268 real fee-paying custody accounts (a data-quality gap), not truly-unbilled accounts as first suspected; audit recommends counting by HOLDINGS, not by custody record, contra the PRD default. TO-2 (gold revise, 0.4.0_DS~A) and TO-3 (frontend, 0.4.0_DE) NOT yet started -- gated on TO-2 first, must work from the corrected diagnosis above, not the original PRD framing.",
   "blocking": "GO TO-2 (0.4.0_DS~A) against the corrected diagnosis (holdings-grain, missing-price-data root cause); TO-3 gated on TO-2's output format. No filed TO exists yet for any of the three items in the tracker -- TO-1 was executed+accepted informally; formalize TO-2/TO-3 as filed TOs when dispatched.",
   "created": "2026-07-06",
-  "pods": ["0.4", "0.6"],
+  "pods": [
+    "0.4",
+    "0.6"
+  ],
   "pipeline": "inf (Inflection gold INF_D_04 client_portal_summary + build_billing_dim silver + Books/Distribution frontend)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

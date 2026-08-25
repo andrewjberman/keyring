@@ -1,7 +1,7 @@
 {
   "project_code": "ATOM_LAYER0",
   "macro_code": "ATOM",
-  "name": "atom_layer0 \u2014 the true-atom conceptual-foundations framework",
+  "name": "atom_layer0 — the true-atom conceptual-foundations framework",
   "description": "Andrew-founded program (2026-08-20, CRO terminal; framework name his): discover the indivisible conceptual base of a concept, TEST that nothing sits beneath it, establish the layer through Rule 24, and require RESOLUTION wherever adjacent/above layers bind to it, especially in code. Registered as ONE portable proposed method package per its PACKAGE_MANIFEST.json (never the rendered report alone, never the validator split from its schema and Rule-24 records). Method status: PROPOSED. Owner findings are ROUTED, never repaired in-package.",
   "prds": [
     {
@@ -11,12 +11,12 @@
     },
     {
       "path": "org/tier1_exec/4.0.0_SA_CRO~C/deliverables/ATOM_LAYER0_INTEGRATION/ATOM_LAYER0_INTEGRATION_SUMMARY_20260820.md",
-      "label": "Integration roadmap (30/30 census rows dispositioned; the program's second half \u2014 does not gate and is not gated by this registration)",
+      "label": "Integration roadmap (30/30 census rows dispositioned; the program's second half — does not gate and is not gated by this registration)",
       "date": "2026-08-20"
     }
   ],
-  "status": "active",
-  "phase": "REGISTERED-PROPOSED 2026-08-20 (CTO registration act @this commit): framework arrives EXERCISED, not merely authored \u2014 R015 proving run @90120de83f (DECLARED_FRONTIER_EXHAUSTED, 24/24 bounded ATOMIC_WITHIN, 2 method defects found+repaired+regression-covered), grammar retrodiction 6/6 with validator gate, validate_run.py --self-test 10/10, and an INDEPENDENT 30/30 at-scale census-row compile by the non-author shepherd seat (~C). Lanes: ~A mechanics (Codex), ~B census (Codex), ~C integration (Claude, Andrew-pre-authorized). Owner-routing annex (4 unresolved Contract_Record bindings on CTO surfaces) is a SEPARATE CTO decision, deliberately NOT bundled into this registration; it rides the ~C roadmap's WS-01/WS-02 with COO sequencing.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: REGISTERED-PROPOSED 2026-08-20 (CTO registration act @this commit): framework arrives EXERCISED, not merely authored — R015 proving run @90120de83f (DECLARED_FRONTIER_EXHAUSTED, 24/24 bounded ATOMIC_WITHIN, 2 method defects found+repaired+regression-covered), grammar retrodiction 6/6 with validator gate, validate_run.py --self-test 10/10, and an INDEPENDENT 30/30 at-scale census-row compile by the non-author shepherd seat (~C). Lanes: ~A mechanics (Codex), ~B census (Codex), ~C integration (Claude, Andrew-pre-authorized). Owner-routing annex (4 unresolved Contract_Record bindings on CTO surfaces) is a SEPARATE CTO decision, deliberately NOT bundled into this registration; it rides the ~C roadmap's WS-01/WS-02 with COO sequencing.",
   "blocking": "None (registration complete; roadmap dispatch sequencing at COO; the CTO owner-routing annex decision is a separate act)",
   "created": "2026-08-20",
   "pods": [
@@ -27,5 +27,6 @@
   "threads": [],
   "siblings": {
     "NFRA_EPISTEMY": "SIBLING, NOT PARENT (CTO+CRO concurred 2026-08-20 @63612). NFRA_EPISTEMY builds the enforcement machinery; ATOM_LAYER0 is a method that both FEEDS it (grammar/frontier machinery is a component input to its stage 9) and CONSUMES it (atom_layer0 runs become Observation_Record emitters once stage 1 lands). Neither contains the other; do not mint a containment relation later."
-  }
+  },
+  "closed": "2026-08-25"
 }
