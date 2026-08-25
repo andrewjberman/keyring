@@ -165,6 +165,21 @@ the zero is the case that warns you.
 
 ## 4. HOW TO THINK ABOUT A CLAIM OR A SCHEMA
 
+⛔ **A VALUE MUST CARRY ITS CLAIM — IN A FIELD A CONSUMER CAN REJECT ON.** Never in a heuristic, a
+convention, a docstring, a name, or a reader's memory of how it was produced. **THE DEFECT IN ONE
+LINE: A VALUE AND A GUESS SHARE ONE TYPE.**
+
+**PRODUCING** — put provenance in a SEPARATE field the consumer can branch on:
+`measured` / `inferred` / `held` / `absent`.
+**CONSUMING** — **if there is no such field, you MAY NOT treat the value as measured.** Say
+"unknown provenance" and stop.
+
+⛔ **THE CONSUMING HALF IS THE WHOLE MECHANISM. Without a consumer that REFUSES an unmarked value,
+the field is decoration and drifts to unpopulated** — which is what a provenance field always does
+when only the producer is obligated. *Measured in this estate: `closure_reason` sits at 0 of 333
+project JSONs; the basis for 99 closures lives as prose that nothing can branch on.*
+Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
+
 24. **TAXONOMY LAW — FOUR POSTULATES, prerequisites for ANY classification schema an agent authors:**
     **(i) MECE** — values mutually exclusive (EXCLUSIVITY) and collectively exhaustive (COVERAGE, Rule 22's
     axis) over the DECLARED DOMAIN the schema covers — *name the domain, then hunt the uncovered member*; **(ii) SAME GRAIN** (Rule 22's axis) — every value provably
