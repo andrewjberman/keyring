@@ -119,11 +119,14 @@ the TO nor the decomp asked for that control, and nothing else in the round woul
         "ARM 2 POSITIVE CONTROL PutObject .../49f/silver/dim_account_xref/date=2026-07-14/data.parquet -> allowed",
         "ARM 3 DISCRIMINATION PutObject on a bucket outside our ownership -> allowed",
         "ARM 3b DISCRIMINATION organizations:LeaveOrganization on '*' -> allowed",
-        "STI-b-1 attributes the writes to '0.6.0/0.7.0', which are AGENT SERIALS and not IAM principals, so the referent is unresolved in the decomp as well as the TO"
+        "STI-b-1 attributes the writes to '0.6.0/0.7.0', which are AGENT SERIALS and not IAM principals, so the referent is unresolved in the decomp as well as the TO",
+        "RESOLUTION: iam get-role opal-advi-stitch-landing-role -> exists, created 2026-08-25T21:31:32Z (CVO's own live read, not the apply output)",
+        "RESOLUTION: iam get-role-policy opal-advi-stitch-landing-scoped -> 6 statements, 5 Allow + 1 Deny 'NeverTheLiveTiers'",
+        "RESOLUTION: post-mint AC2 arms return explicitDeny on 49f/bronze/allocation_390224/2026-07-14/data.xlsx and 49f/silver/dim_account_xref/date=2026-07-14/data.parquet, vs implicitDeny on ungranted prefixes -- the spread the admin principal could not produce"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "notes": "SEPARATE CAUSE FROM S1, not a continuation: S1 moved the RESOURCE, this is the PRINCIPAL, and a deny-arm against an admin returns allowed on the corrected live tree exactly as on the unminted one. Same criterion, same GREEN, second cause -- the two halves of Rule 22a's (action, resource) trap. Executing seat is NOT held and continues prep. Remedy shape is the issuer's: name a SCOPED WRITE ROLE as the principal. Method note: the seat ran arms 3/3b because arms 1 and 2 agreeing made them distrust the instrument -- a control neither the TO nor the decomp asked for."
+    "disposition": "GRADUATED",
+    "notes": "RESOLVED-AT-SOURCE 2026-08-25T21:31:32Z by the executing seat minting opal-advi-stitch-landing-role, which is the remedy shape named at surfacing. CVO verified the role LIVE (6 statements: 5 Allow + NeverTheLiveTiers Deny) rather than from the apply output. THE DISCRIMINATION IS THE PROOF: post-mint the same instrument returns THREE distinct verdicts on one principal -- allowed (targets + positive control), explicitDeny (live + prospective arms, the Deny firing), implicitDeny (schwab, nna_atomic, cottonwood, merely ungranted). explicitDeny != implicitDeny establishes the live-tier refusal as DELIBERATE. Against the pre-mint admin identity all four arms returned allowed. That contrast is the case for minting rather than borrowing, demonstrated rather than argued. SEPARATE CAUSE FROM S1: S1 moved the RESOURCE, this was the PRINCIPAL -- the two halves of Rule 22a's (action, resource) trap, where fixing one silently leaves the other. Executing seat was never held. Method note: the seat ran the admin discrimination arms because arms 1 and 2 agreeing made them distrust the instrument -- a control neither the TO nor the decomp asked for."
   }
 ]
 ```
