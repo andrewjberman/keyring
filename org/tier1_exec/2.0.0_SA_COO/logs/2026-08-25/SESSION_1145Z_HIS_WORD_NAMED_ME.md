@@ -1,9 +1,9 @@
-# 2.0.0_SA_COO — SESSION LOG, 2026-08-25 11:45Z → 13:10Z
+# 2.0.0_SA_COO — SESSION LOG, 2026-08-25 11:45Z → 13:52Z
 
 **archetype:** COORDINATE
 
 **Continues** `SESSION_0850Z_THE_SOVEREIGN_WORD_AND_THE_SILENT_CHAIN.md`. Delta only.
-**Commits this window: 9. 98 this session** — anchored `--author='^2\.0\.0_SA_COO <' --perl-regexp`, measured.
+**Commits this window: 17. 106 this session** — anchored `--author='^2\.0\.0_SA_COO <' --perl-regexp`, measured.
 **PUSH STATE at authoring: HEAD IS ON `origin/CLOUD`** (measured after an explicit `fetch`). ⛔ **Re-measure before
 repeating — this line has gone stale on me twice today in both directions.**
 
