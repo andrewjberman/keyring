@@ -171,6 +171,27 @@ before anyone challenged it is the relayer-half of the grounding law working.*
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "No action requested by the surfacing seat. Becomes ARMED only on promotion of the file to a cross-device or served record."
+ },
+ {
+  "id": "OPAL_KIMIPIPELINE-S4",
+  "surfaced_by": "3.0.0_SA_CVO, on the first /estate-pull status after S1's disarm reached production -- the interface half the disarm commit named as owed and left open",
+  "surfaced_at": "2026-08-25T16:45Z",
+  "one_line": "S1's disarm SHIPPED and the runner now writes superseded_verdict / readjudication_required / superseded_check into manifest/*.json -- but .claude/skills/estate-pull/SKILL.md declares a 5-state classification table that contains none of them, so the ONE reader the disarm was built for cannot see what it writes and a superseded day classifies as an ordinary PENDING.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "producer source: estate_report_runner.py _carry_forward_verdict() returns superseded_verdict + readjudication_required (verdict branch) or superseded_check (failed-read branch); write_manifest() routes every one of its three calls through it",
+    "the runner's own docstring names this item: 'teaching /estate-pull to READ readjudication_required is CVO's half of the interface' -- and 'DISARMED != REMEDIATED. This stops NEW clobbers.'",
+    "deployed, not merely committed: @b94d147844 (2026-08-25T05:28Z UTC), artifact staged to s3://opal-estate-report/code/estate_report_runner.py at 05:36:35Z UTC, deploy ledger org/critical_paths/change_management/estate-report-manifest-carryforward-disarm-20260825.md CLOSED 05:4xZ with the boot-pull naming runtime acceptance as CVO's layer",
+    "consumer source: .claude/skills/estate-pull/SKILL.md Step-1 table declares MISSING / RUNNING / FAILED / PENDING / ADJUDICATED-or-NO_SEMANTIC_CHANGES -- comp-find over the skill returns zero occurrences of any of the three field names",
+    "MEASURED THIS TURN, with its denominator and control: 0 of 23 manifest days carry any of the three fields; positive control on the same read shows 'contract'=v2 present on the newest day and a nonsense field absent -- so the zero is discriminated, not an empty read"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "3.0.0_SA_CVO -- DISARMED SAME TURN 2026-08-25T16:45Z by running the three-field read explicitly across all 23 manifest days (result above) rather than relying on the skill's table, so today's 19-day census is not blind to a superseded verdict. The SKILL edit is the REMEDIATION and is NOT done.",
+  "notes": "⛔ THE ZERO IS THE HAZARD, NOT THE REASSURANCE. On a normal day _carry_forward_verdict returns {} -- there is no prior verdict to carry -- so the fields are ABSENT whether the disarm is running or not. A CVO who reads the census and sees nothing learns NOTHING about whether the interface works; the instrument is silent in both worlds. This is the could-not-have-said-otherwise class, and it means the SKILL gap CANNOT be discovered by operating the loop normally -- only by reading the producer source, which is what surfaced it. || THE ARMING EVENT IS ALREADY SCHEDULED: with 19 PENDING days queued, any re-run of a date this seat adjudicates writes a superseded_verdict block that the skill's table has no state for. S1's own record establishes such re-runs are real (08-06 has two daily/*.md versions). || SCOPE FENCE: S1 covers the PRODUCER clobber and is disarmed at the producer. This is the CONSUMER half and the disarm commit deliberately declined to close it, naming the owner instead. Filing it as its own item rather than as S1 remediation because it has a different owner (CVO, not AE/CloudOps), a different artifact (a skill file, not the runner), and a different clock -- Rule 24(iv): one remedy does not move both. || COMPOSES WITH S2: both are the same SKILL.md enum failing CE over its declared layer. S2 is a missing VALUE on the status axis; this is a missing AXIS. Whoever edits that table should close both in one act."
  }
 ]
 ```
