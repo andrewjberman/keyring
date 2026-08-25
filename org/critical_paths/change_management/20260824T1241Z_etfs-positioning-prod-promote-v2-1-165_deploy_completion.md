@@ -154,3 +154,76 @@ class, already covered by the audit trail. Rule-24: a value ADDED to an existing
 authoring act (four-postulate test; CE half against the declared layer).
 **Not urgent (MSTR 66098): the failure mode is at the session-end sweep, not the next ten minutes.
 Ruling it during a live promote is how a good fix becomes a second incident.**
+
+
+---
+
+## DISPOSITION MEASURED BY `1.0.0_SA_CTO~Z`, 2026-08-25T16:5xZ -- **SUPERSEDED, NOT ABANDONED, NOT STRANDED**
+
+Taken because this entry has been emitting `BYPASS: UNINDEXED OPEN LEDGER ... age=22.6h` and nobody
+owned the disposition (`0.2.0_DT_PortfolioAnalytics~Z` surfaced it and CORRECTLY refused to close
+another session's record; `2.0.0_SA_COO~Z` is dead). **I am NOT changing the status field** -- see
+AUTHORITY below. This is the measurement, recorded so the next reader does not re-derive it.
+
+### THE NEED WAS MET ANOTHER WAY, AND THE POINTER IS NAMED
+
+**`org/critical_paths/change_management/20260825T0543Z_etfs-positioning-prod-promote-v2-1-165-sitez_deploy_completion.md`**
+-- opened 2026-08-25T05:43:53Z by `0.2.0_DT_PortfolioAnalytics~Z` on SITE Z, **CLOSED 060301Z,
+nothing stranded.** Site Z RE-CUT the same promote from a fresh ref rather than pushing this
+entry's staged merge.
+
+Measured just now, live, not read off either record:
+- `git merge-base --is-ancestor d43b88c5 origin/PROD` -> **TRUE.** This entry's payload IS on PROD.
+- `origin/PROD` = `0b37cc6e` (tag portal-v2.1.167), two promotes past this entry's `8a96c916`.
+- The merge THIS entry staged, `a239e4a9`, **never shipped**; `d9a98bcc` did. Its legs, as written,
+  are therefore unsatisfiable BY DESIGN -- they name a merge sha that was superseded, not one that
+  failed. **Closing this as `complete` would be false; the honest terminal is `superseded`.**
+
+### THE SOVEREIGN GATE'S SUBSTANCE IS RESOLVED -- RE-DERIVED ON PROD, NOT INHERITED
+
+The gate was: *does shipping DORMANT ADVI cutover machinery to PROD sit inside Andrew's
+2026-08-21T19:18Z two-condition flip hold?* Re-measured on `origin/PROD` today:
+- `src/api/endpoints/adviKeyRepoint.ts` **PRESENT** (positive control `advisor-intelligence.ts`
+  also present, so the probe discriminates). It was ABSENT at `8a96c916`, so it landed.
+- `ADVI_ROUTE_LIVE = true` (`:128`).
+- **Registry: `state: 'held'` = 14, and 0 keys flipped.** It landed DORMANT, exactly as this
+  entry's own scope decision predicted, and the site-Z record re-derived FLIP 0/15 independently
+  at its own cut ref.
+
+⚠ **A COUNT I ALMOST MIS-REPORTED, recorded because the trap is generic:** a grep for
+`state: 'flip'` on PROD returns **1**, which reads as "one key is flipped". Reading the hit instead
+of quoting the number shows it is line 196 -- **the TYPE DECLARATION**
+`state: 'flip' | 'held' | 'structural'`. The substring matched a union type, not a row. Quoting
+that 1 would have manufactured a PROD ADVI widening alarm out of a type definition.
+
+### NEVER#6: RE-VERIFIED, NOTHING STRANDED
+
+The local-state trap this entry documented (`refs/heads/PROD` intentionally at `a239e4a9`, ephemeral
+worktree `.runtmp/portal-promote-20260824T124621Z` left checked out) is **DISARMED on site Z**:
+`refs/heads/PROD` = `0b37cc6e` = `origin/PROD`, and `git worktree list` shows ONE tree, the main one
+on DEV. A later promote ran /prod-deploy Step 3 as that caution instructed. **Checked deliberately
+before site Z's next promote, since a stale staged merge is exactly what Step 3 exists to kill.**
+
+### AUTHORITY -- WHY I AM NOT SETTING THE STATUS MYSELF
+
+Two reasons, and neither is deference for its own sake:
+1. **CLAUDE.md: `superseded` / `cancelled` are set by COO or THE ISSUER, never a third seat.** The
+   issuer is `0.4.0_DT_ClientPlatform`, a LAPTOP-fabric seat. I am neither.
+2. **The tool cannot express it anyway.** `deploy_ledger.py` has {open, close-leg, close, hold,
+   check, list}; `close` refuses on unproven legs and there is no `supersede`. This is the SAME
+   expressiveness gap this entry already documents for HELD -- a terminal state that is true and
+   unreachable. Forcing `close` would put a false `complete` in the record to silence an alarm,
+   which is the trade this whole file argues against.
+
+**ROUTED:** to `0.0.0_AB_MSTR~Z` to carry cross-fabric to the issuer's fabric. Until then the
+`BYPASS/UNINDEXED` line stands as a **DECLARED FALSE POSITIVE**, on the same basis COO declared the
+RED one -- extended here to the supersession finding, with the proof above rather than on my word.
+
+**AND IT STRENGTHENS THE RULE-24 REMEDY ALREADY ROUTED TO CTO IN THIS FILE:** the proposed
+`NOT-STARTED` leg state fixes the NEVER-ATTEMPTED-vs-ATTEMPTED-AND-INCOMPLETE conflation, but this
+entry is a SECOND, DIFFERENT unreachable terminal -- **work that was never started AND is no longer
+wanted, because someone else did it.** `NOT-STARTED` would let it be HELD; it still could not be
+CLOSED, because the need is gone rather than met by these legs. A `superseded` terminal that takes a
+POINTER (per CLAUDE.md's "a terminal status without its pointer is the rot with a tidier label") is
+the missing member. Named here as a finding for whoever builds the fix -- **not built, and not
+authorized by this annotation.**
