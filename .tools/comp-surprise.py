@@ -82,9 +82,29 @@ def age_days(s):
 
 
 def defects(items):
-    """Schema-encoded obligations that are UNMET. The schema's conditionals ARE the law."""
+    """Schema-encoded obligations that are UNMET -- EACH PLANE JUDGED BY ITS OWN SCHEMA.
+
+    THE TWO PLANES ARE NOT INTERCHANGEABLE and the difference is deliberate:
+      INVESTIGATION_v*.md -> investigation_item.schema.json : ARMED requires `disarm_owner`
+      REMEDIATION_v*.md   -> remediation_row.schema.json    : requires a `disarm` OBJECT
+                                                              {state, owner, at} plus `remediation`,
+                                                              because a remediation row tracks disarm
+                                                              AND remediation on SEPARATE CLOCKS
+                                                              (the DISARMED != REMEDIATED property).
+    Applying the investigation conditional to a remediation row reports the estate's MOST COMPLETE
+    row -- owned, disarmed and remediated -- as an unowned armed hazard. Measured 2026-08-25: that
+    false positive was this tool's headline line on its first run. A tool that BORROWS a schema
+    inherits that schema's PLANE silently, and no control inside the wrong plane can catch it.
+    """
     out = []
     for r in items:
+        if r.get("_kind") == "REMEDIATION":
+            dis = r.get("disarm") or {}
+            if r.get("hazard_standing") == "ARMED" and not str(dis.get("owner") or "").strip():
+                out.append((r, "ARMED with NO disarm.owner"))
+            if not isinstance(r.get("remediation"), dict):
+                out.append((r, "remediation row with NO remediation{} object"))
+            continue
         d = r.get("disposition")
         # ARMED requires a NAMED disarm owner -- an armed hazard with nobody on it is the
         # one state the channel exists to make impossible.
@@ -125,8 +145,15 @@ def main():
     if a.project:
         items = [r for r in items if r["_project"].upper() == a.project.upper()]
 
-    openi = [r for r in items if r.get("disposition") in OPEN_DISPOSITIONS]
-    armed = [r for r in items if r.get("hazard_standing") == "ARMED"]
+    # THE PLANES ARE COUNTED SEPARATELY. remediation_row.schema.json declares its id "== the
+    # graduated investigation item's id", so a remediated finding appears in BOTH files under ONE
+    # id. Summing them double-counts it and inflates ARMED -- a finished row wearing an open one's
+    # clothes. The channel's live state is the INVESTIGATION plane; remediation rows are reported
+    # beside it, never merged into it.
+    inv = [r for r in items if r.get("_kind") != "REMEDIATION"]
+    rem = [r for r in items if r.get("_kind") == "REMEDIATION"]
+    openi = [r for r in inv if r.get("disposition") in OPEN_DISPOSITIONS]
+    armed = [r for r in inv if r.get("hazard_standing") == "ARMED"]
     shown = armed if a.armed else (items if a.all else openi)
     dfx = defects(items)
 
@@ -135,8 +162,11 @@ def main():
                           "defects": [{"id": r.get("id"), "project": r["_project"], "why": w}
                                       for r, w in dfx],
                           "malformed": malformed,
-                          "denominators": {"items": len(items), "open": len(openi),
-                                           "armed": len(armed), "files": files}},
+                          "remediation_rows": rem,
+                          "denominators": {"investigation_items": len(inv),
+                                           "remediation_rows": len(rem),
+                                           "open": len(openi), "armed": len(armed),
+                                           "files": files}},
                          indent=2, default=str))
         return
 
@@ -144,12 +174,21 @@ def main():
           % (os.path.relpath(CHANNEL, ROOT), datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d %H:%MZ")))
     print("  (read-only rollup over the per-project files CVO writes; it REPORTS, it never files or graduates)")
     projects = sorted({r["_project"] for r in items})
-    print("\n== DENOMINATORS ==")
-    print("  %d item(s) across %d project(s), from %d file(s)" % (len(items), len(projects), files))
-    print("  OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d" % len(openi))
-    print("  ARMED (can cause harm while unattended):          %d" % len(armed))
+    print("\n== DENOMINATORS (the two planes are NOT summed -- ids collide BY DESIGN) ==")
+    print("  INVESTIGATION plane: %d item(s) across %d project(s), from %d file(s)"
+          % (len(inv), len(projects), files))
+    print("    OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d" % len(openi))
+    print("    ARMED (can cause harm while unattended):          %d" % len(armed))
     for d in ("GRADUATED", "DISMISSED_WITH_REASON"):
-        print("  %-48s %d" % (d + ":", len([r for r in items if r.get("disposition") == d])))
+        print("    %-46s %d" % (d + ":", len([r for r in inv if r.get("disposition") == d])))
+    print("  REMEDIATION plane:   %d row(s)  -- a remediation row's id EQUALS its graduated"
+          % len(rem))
+    print("                       investigation item's id, so these are reported beside the")
+    print("                       investigation counts and never added to them.")
+    if rem:
+        done = len([r for r in rem if (r.get("remediation") or {}).get("state") == "REMEDIATED"])
+        dis = len([r for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"])
+        print("                       DISARMED %d | REMEDIATED %d  (two states, two clocks)" % (dis, done))
 
     if dfx:
         print("\n== SCHEMA OBLIGATIONS UNMET (%d) -- the schema's conditionals ARE the law ==\n%s" % (len(dfx), SEP))
@@ -169,8 +208,9 @@ def main():
         for m in malformed:
             print("   %s" % m)
 
-    print("\nCOMP-SURPRISE-RESULT items=%d open=%d armed=%d projects=%d files=%d defects=%d malformed=%d"
-          % (len(items), len(openi), len(armed), len(projects), files, len(dfx), len(malformed)))
+    print("\nCOMP-SURPRISE-RESULT investigation_items=%d remediation_rows=%d open=%d armed=%d "
+          "projects=%d files=%d defects=%d malformed=%d"
+          % (len(inv), len(rem), len(openi), len(armed), len(projects), files, len(dfx), len(malformed)))
 
 
 if __name__ == "__main__":
