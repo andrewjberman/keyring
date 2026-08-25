@@ -186,6 +186,26 @@ in the message that carried it.
   },
   "disposition": "GRADUATED",
   "notes": "⛔ THE MOST DANGEROUS FORM OF TONIGHT'S CLASS, AND THE ONLY ONE THAT PRODUCES AN ALARM RATHER THAN A SILENCE. Every other instance tonight failed toward a false GREEN -- an oracle that could not fire, an assertion that could not fail, a pass attributable to the tree. This one fails toward a false CATASTROPHE: '~92% of client holdings unclassified' reads as a data disaster, would have been escalated, and is entirely an artifact of joining on a shared column NAME across two different KEY SPACES. || AND THE TRAP INSIDE THE TRAP, which the seat named: the CORRECT join is also the one that returns the NICER number, so choosing it for that reason would have been right for the wrong reason and unfalsifiable afterwards. They grounded on both producers' source instead. A SHARED COLUMN NAME IS NOT A SHARED KEY SPACE, and nothing in either schema says so. || Recorded in the artifact rather than left for the next lane to rediscover -- correct, since no existing consumer joins these tables and the next one would meet the same trap cold."
+ },
+ {
+  "id": "ADVI_PERFRP-S10",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G and 0.4.0_DE_ClientPlatform~D, each self-scanning their OWN task order on the issuer's ask; filed at CLASS grain by the channel owner",
+  "surfaced_at": "2026-08-25T01:31Z",
+  "one_line": "The acceptance-row-names-a-field-that-does-not-exist class has FOUR measured instances across BOTH round-1 TOs, found by the executing seats reading their own task orders -- and one of them is a WRONG-SOURCE POINTER whose quiet substitution would produce a client-facing KPI that looks exactly right while being wrong.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "INSTANCE 1 (severe, DS~G): PRF-b-6/AC6 names 'a01 first/last-seen'. dim_relationship carries 14 columns and has NEITHER. The only first-seen nearby is dim_account.first_seen_date (a00), which has no last-seen either (nearest: closed_date, absent_from_feed_since). The criterion names a SOURCE and a FIELD PAIR that do not co-exist.",
+    "INSTANCE 2 (soft, DS~G, graded as soft rather than inflating the count): PRF-a-3 says a 'To Be Classified'-class; the live a07 values are UNCLASSIFIED-LOUD / alternatives / cash / equity / fixed_income -- no such string exists. Reads as a description rather than a literal, and the seat used the live value, so nothing was harmed.",
+    "INSTANCE 3 (DE~D): TO-R1-DE:67 PRF-d-7 'a Fidelity / position-only account renders known-not-held with custodian' -- the identical value-shaped string naming no source, echoing the BD dashboard column at PRD:86, with AC8:88 then requiring the field the plane does not carry",
+    "INSTANCE 4 (DE~D, render side): comp-find -i 'custodian' over portal/src = 34 hits / 425 files. BooksClientAccount -- the L4 shape the cards render from -- has 25 fields and NO custodian. Every occurrence in portal/src is a CONSTANT or static override, never data, AND THE CONSTANTS DISAGREE WITH EACH OTHER.",
+    "prior instance ADVI_PERFRP-S8 (AC7 custodian, no source anywhere) is the same class and was ruled exit (ii), sentinel, by the issuer"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "WHY INSTANCE 1 IS THE SEVERE ONE AND NOT THE COUNT: a lane building AC6 literally goes to a01, finds nothing, and either stalls or QUIETLY SUBSTITUTES -- and 'relationships new/lost' is a KPI on the advisor Book view, where A WRONG NEW/LOST COUNT LOOKS EXACTLY LIKE A RIGHT ONE. It is also NOT unbuildable, which shapes the remedy: the honest derivation is at ACCOUNT grain from a00 rolled to relationship via a01's mapping, and that raises a definitional question the TO's phrasing never reaches -- IS A RELATIONSHIP LOST WHEN ITS LAST ACCOUNT GOES, OR WHEN ANY ACCOUNT DOES? The seat refused to pick that silently because it changes the number. Issuer's ruling. || TWO METHOD POINTS WORTH MORE THAN THE INSTANCES. (1) DS~G graded severity rather than reporting a flat count: 'a self-scan that reports everything it finds at one level is as useless as one that finds nothing.' A self-audit that inflates its own findings is as untrustworthy as one that suppresses them. (2) DE~D's first sweep returned '0 hits across 0 files' from a bad relative path, and THE ZERO DENOMINATOR is what told them the sweep had not happened -- they re-ran scoped rather than reporting the clean zero. That is the printed-denominator law catching a false absence in the wild, at the executing seat, unprompted. || CERTIFIER NOTE, AND IT IS A REFUSAL: this class now has FOUR instances across two TOs plus S8, which is exactly the incidence that would justify a bar check. I am STILL not minting one. The instances were all found by EXECUTING SEATS READING THEIR OWN TASK ORDERS on the issuer's ask -- a control that is cheaper, better-placed, and already working. A certifier check would duplicate it at a worse vantage; the obligation belongs on the TO acceptance row and on the seat that will build against it. FOURTH refusal (substrate content, source extent, pass attribution, now this)."
  }
 ]
 ```
