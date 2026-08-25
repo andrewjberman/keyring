@@ -1262,6 +1262,26 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "1.0.0_SA_CTO~Z",
   "notes": "\u26d4 I FILED THIS ROW AS 'A RANGE QUERY SILENTLY OMITS A ROW' AND THAT IS FALSIFIED -- the range query was correct and the probe that appeared to contradict it was the fabricator. Left in place and RETITLED rather than deleted, because the underlying mechanism is real, is worse than the one I filed, and now has a name. || \u2b50 THE DURABLE FINDING IS THE MECHANISM, NOT THE SALXX ANSWER: a boundary-anchored query returns DATA THAT IS NOT THAT DATE'S, STAMPED WITH THAT DATE. Silent, plausible, and unfalsifiable from the response alone -- the single read that would 'confirm' a date is exactly the read that manufactures it. || \u26d4 AND THE CONTROL-DESIGN LESSON IS THE ONE TO CARRY: THE PROBE USED TO CHECK A DATE'S EXISTENCE WAS THE ONE INSTRUMENT THAT COULD NOT ANSWER THE QUESTION, BECAUSE ANCHORING ON THE DATE IS PRECISELY WHAT MANUFACTURES IT. A test whose SETUP creates the condition it tests for cannot fail, and it fails in the reassuring direction. || \u26a0 THREE POSITIONS IN TWENTY-TWO MINUTES (finding -> retraction -> retraction of the retraction), and the FINAL one is the only one carrying a discriminating test that distinguishes the two hypotheses. That is the right shape and the intermediate wobble was the cost of moving fast at reach -- but it is why a claim's AGE is not evidence of its soundness, and why I re-read the newest message before acting on the one before it. || DISARM OWNER 1.0.0_SA_CTO~Z holds it: the open question is whether ANY other tonight-derived value came from a boundary-anchored query. Their own two are retracted; nobody has swept the rest."
+ },
+ {
+  "id": "ETFS_INGEST-Z-S48",
+  "surfaced_by": "3.0.0_SA_CVO~Z (remedies killed by 0.4.0_DE_ClientPlatform~Z and 0.4.0_DS_ClientPlatform~Z)",
+  "surfaced_at": "2026-08-25T05:52Z",
+  "one_line": "THE ALL-CAPS NAME SET IS 7 NOT 6, AND IT IS NOT HOMOGENEOUS -- BP PLC and GSK PLC are ACRONYM COMPANIES, so a title-case remedy renders them Bp Plc / Gsk Plc, STRICTLY WORSE, while the all-caps count goes to zero and it presents as the fix. All-caps is not a defect class.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED on the served artifact (platinum/etfs/positioning_data.json @04:53:51Z, 169 distinct tickers), predicate = all alphabetic characters uppercase. THE EXACT SET IS SEVEN: BP (BP PLC), GSK (GSK PLC), JPM (JPMORGAN CHASE & CO.), MPLX (MPLX LP), MRVL (MARVELL TECHNOLOGY INC), SALXX (STATE STREET INST U.S. GOVERNMENT MMKT ADMN CLASS), VZ (VERIZON COMMUNICATIONS INC). The figure circulating in the thread was 6.",
+    "*** THE SET SPLITS AND NO STRING FUNCTION SEPARATES IT: GENUINELY WRONG (4) = JPM, MRVL, VZ, SALXX, word-names that should be title case. LEGITIMATELY UPPERCASE (3) = BP, GSK, MPLX, acronym companies where the capitals ARE the name. ***",
+    "CONTROL: 162 of 169 served names are already correct proper case (AAPL Apple Inc, ABBV AbbVie Inc, ADM Archer-Daniels-Midland Co, 2602335D TPG Inc), so the predicate discriminates rather than flagging everything.",
+    "THE THREE DEAD REMEDIES PLUS A FOURTH, EACH AGAINST THE ORACLE: (1) fix the bd-securities row only -> served unchanged, FAILS (0.4.0_DE_ClientPlatform~Z); (2) wire the producer to bd-securities -> 142 of 150 names WORSE, 0 better, FAILS (0.4.0_DS_ClientPlatform~Z); (3) seed etf-classifications now -> seed-etf-classifications.py:62 falls back to the ticker and SALXX is absent from the 115-entry override dict, writing the name as the bare ticker, FAILS (0.4.0_DS_ClientPlatform~Z); (4) title-case the all-caps set -> BP/GSK/MPLX become Bp Plc / Gsk Plc / Mplx Lp, FAILS -- NOT PREVIOUSLY NAMED."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "notes": "*** THE ACCEPTANCE ORACLE, PUBLISHED BEFORE THE REMEDY (msg 8457-8461), VALUES FIXED IN ADVANCE: exactly FOUR names change -- JPM to JPMorgan Chase & Co., MRVL to Marvell Technology Inc, VZ to Verizon Communications Inc, SALXX to a proper-cased fund name -- and the other 162 stay BYTE-IDENTICAL. *** || THE PROPERTY THAT MAKES IT A REAL TEST: every remedy proposed so far CHANGES SOMETHING, and 'something changed' is the evidence each one offers. This oracle CANNOT BE PASSED BY CHANGING SOMETHING -- it requires changing EXACTLY four things and nothing else, so a remedy that improves the target while damaging the field fails visibly instead of reading as success. || THREE OF THE SEVEN ARE A PRODUCT JUDGMENT AND I AM NOT DECIDING THEM: whether an acronym company like BP or GSK should be touched at all is Andrew's call, not a measurement. The oracle names them as an OPEN FORK rather than folding them into either bucket -- a schema that forced them into 'wrong' would license exactly the damage this row exists to prevent. || ROOT SHAPE, SAME AS Z-S43/44/45/46: a display collapsing two different things onto one appearance. Here 'correctly uppercase' and 'wrongly uppercase' render identically, so the DETECTOR everyone reaches for (count the all-caps) is itself unable to tell the defect from the correct case."
  }
 ]
 ```
