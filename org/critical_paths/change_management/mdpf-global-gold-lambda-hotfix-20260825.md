@@ -1,7 +1,9 @@
 # DEPLOY LEDGER — MDPF_GLOBAL: mdpf-gold-lambda spine hotfix (clause (vi) membership fix)
 
 **Opened:** 2026-08-25T19:35:11Z by 0.5.0_AE_OpalETL~B (deploy-start; NEVER#6)
-**Status:** OPEN
+**Status:** **CLOSED 2026-08-25T19:41:37Z** — applied, targeted 0-diff clean, and verified on the
+DEPLOYED package bytes downloaded post-apply. All 7 legs landed, nothing stranded.
+⛔ **THE DEPLOY IS CLOSED; THE OUTAGE IS NOT.** See "What this ledger does NOT close".
 **Ruling:** `2.0.0_SA_COO` 71246 — **PATH A, hotfix pin**. Build accepted 71265; ship on DS~N's green,
 no further ruling required. Decided on mechanism, not scope-creep: the new consolidator's
 `_shape_category_views` raises `SystemExit` during CONSTRUCTION (`:1190`) BEFORE the emit loop
@@ -73,14 +75,44 @@ re-apply targeted. Bucket is versioned; the prior bytes are recoverable by Versi
 
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] Artifact uploaded with `content-sha256` metadata; object VersionId recorded
-- [ ] `safe-apply` targeted complete; expect `0 added, 1 changed, 0 destroyed`
-- [ ] Targeted 0-diff re-plan clean
-- [ ] Live `CodeSha256` == predicted `UVT5XRX3R2O3zsr+g2QTPrD2DDYlQilSP+IfmjD2mIc=`
-- [ ] **DEPLOYED package downloaded post-apply**; spine member `count_membership` = 14, consolidator
-      `scopes_for` = 0 — proves what RUNS, not what was uploaded
-- [ ] Source-map record updated (scoped — the pipeline-wide recorder is unsafe on a dirty root)
-- [ ] CLOSED
+- [x] Artifact uploaded with `content-sha256` metadata. Verified on a **live `head-object`**, not the
+      `cp` exit code: VersionId `r819XZni2appiJCYjDj4ack.BzFrBnJq`, ContentLength 684,807,
+      `content-sha256` = `5154f95d…f69887`.
+- [x] `safe-apply` targeted (HALTGT: 1 routine pending message, `HALT_ACK=1`) —
+      **`Apply complete! Resources: 0 added, 1 changed, 0 destroyed.`** The plan carried exactly the
+      two expected field moves: `s3_object_version kBAYR2tk… -> r819XZni2app…` and
+      `source_code_hash b0d02760… -> 5154f95d…`, confirming the metadata mechanism end to end.
+- [x] Targeted 0-diff re-plan: *"No changes. Your infrastructure matches the configuration."*
+- [x] Live `CodeSha256` = `UVT5XRX3R2O3zsr+g2QTPrD2DDYlQilSP+IfmjD2mIc=` — **identical to the value
+      PREDICTED in this ledger before the upload.** LastModified 2026-08-25T19:38:55Z; runtime
+      python3.11 / 3008 MB / 900 s unchanged.
+- [x] **DEPLOYED package DOWNLOADED POST-APPLY** (proves what RUNS, not what was uploaded):
+      package sha256 b64 `UVT5XRX3…` · in-zip manifest pin **`530ba66971`**, commit `530ba66971d1`
+      · spine **175,795 B**, md5 `952bbc16ea07ed14cf51a497f1b4cde5`, **`count_membership` = 14
+      occurrences** · consolidator **55,629 B**, sha256 `8da6c0a19480fd98`, **`scopes_for` = 0 —
+      D1_CATVIEWS ABSENT, observed in the deployed artifact rather than inferred from the pin**
+      · member diff vs the pre-apply package: **21 compared, CHANGED 1 (the spine), UNCHANGED 20**
+      · negative control `Zzz_no_such_symbol_9999` → 0.
+- [x] Source-map record updated **SCOPED to `mdpf-gold-lambda`** — a 3-line diff in one entry.
+      `artifact_sha256` → the live `CodeSha256`; `last_deployed_at` → the live LastModified.
+      ⛔ **`last_deployed_commit` = the BUILD PIN `530ba66971…`, deliberately, and it is NOT on
+      CLOUD.** That is the honest value: the pin is the ONLY commit whose tree matches the deployed
+      package. Recording `1234c8779e` would falsely imply the package matches that commit's tree,
+      which it does not — the consolidator differs by design. A `verify-local` comparison will show
+      deployed ≠ HEAD, and **that is TRUE**: the deployed code deliberately omits D1_CATVIEWS.
+      *Semantics flagged to CTO rather than decided silently.*
+      **The pipeline-wide `record-terraform-deploy.sh` was NOT run** — it would write false records
+      for functions not applied (measured earlier today: 6 of 7).
+- [x] **CLOSED 2026-08-25T19:41:37Z**
+
+## Pre-state was WRONG on BOTH fields (pre-existing, now closed for this instance)
+
+```
+recorded artifact_sha256   t0w3vTNV0CpImT1EqzIdtVhUZlkwNzCrx3zA0zpM8/c=   != live sNAnYFKGr8d1… (pre-apply)
+recorded last_deployed_at  2026-08-11T03:20:00Z                           != live 2026-08-24T12:54:28Z
+```
+Something deployed this function on 08-24 without running any recorder. **Instance closed by this
+entry; the CLASS stays open** — routed to D0 / NFRA_DEPLOYLEDGER, same item raised at 70781.
 
 ## ⛔ What this ledger does NOT close
 
