@@ -194,17 +194,25 @@ session kept catching; this one is mine.*
   affect is the 08-25 silver write at 22:00Z.** Only the AC3 re-derive can change what 13:00Z serves.
   **Do not deploy while DS~Z is mid-edit** -- packaging a half-finished tree against a deadline that
   does not exist is the worst of both.
-- [`0.7.0_AE_CloudOps~Z`] **DEPLOY the AC3 bronze re-derive when DS~Z lands it** (CTO~Z 5934; DS~Z
-  build started, feasibility HIGH). **ACCEPTANCE IS A NETWORK ASSERTION, NOT AN INSPECTION:** it must
-  read existing bronze and perform **ZERO issuer HTTP** -- *exercise it and assert zero outbound
-  requests.* A grep answers PRESENCE; only the run answers BEHAVIOUR, and that gap is what this whole
-  session kept finding.
-  ⛔ **AND THE REQUIREMENT I AM MOST LIKELY TO SKIP: the re-derived partition must SELF-IDENTIFY.**
-  A scheduled-produced partition silently overwritten by an ad-hoc act, with nothing in the object
-  saying so, **is the provenance defect committed by the fix for it.** `run_class` is the precedent.
-  **Do not deploy a re-derive that lacks the equivalent.**
-  If it cannot be built AND verified before 13:00Z: **WITHHOLD** (CTO~Z (3)). One day of known-wrong
-  provenance, recorded and surfaced, beats a partition nobody can attest to.
+- ✅ **[DONE 00:09:54Z] DEPLOY the AC3 bronze re-derive** -- DS~Z built it @`63ef598d5a`, I deployed
+  it in the same act as the as-of value fix @`55caa4acbf`. **In the running bytes: `from_bronze` 0->1,
+  `replay` 0->7, `_v_ts_Date` 2->5, `as_of_basis` 7; package sha == live CodeSha256
+  `6RFz1jbzLMXXoWOmEkjIe3JoEZAf7EaHpQ4CsZXzuK8=`; byte-identical to tree.** Ledger
+  `20260825T0008Z_etfs-netassets-asof-and-bronze-replay` CLOSED 5/5.
+  ⛔ **THE RUN IS NOT DONE AND IS NOT MINE TO TAKE. DEPLOYED != EXECUTED.** The replay PATH is live;
+  executing it against `silver/holdings/2026-08-24.parquet` is a separate act needing CTO~Z's word.
+  That partition is **UNCHANGED at 21,073 B / 22:00:17Z**, TrueShares still dated `2026-08-21`.
+  ⏳ **AND THE RUN IS NOW DE-URGENTED OFF THE 13:00Z CLOCK** (COO~Z, on CTO~Z's Z-S29 retraction):
+  it "lands on merit, not on a timer." **So the WITHHOLD branch is moot -- there is no longer a race
+  to lose.** Recorded because my earlier text here said "withhold if it cannot be verified before
+  13:00Z", and a successor reading that would manufacture urgency the fabric has since removed.
+  ⛔ **THE REQUIREMENT THAT STILL BINDS WHENEVER THE RUN HAPPENS: the re-derived partition must
+  SELF-IDENTIFY.** A scheduled-produced partition silently overwritten by an ad-hoc act, with nothing
+  in the object saying so, **is the provenance defect committed by the fix for it.**
+  ⭐ The ZERO-issuer-HTTP property was **exercised by DS~Z, not by me** -- DIVZ 2,705 B + IDVZ 4,026 B
+  read from bronze, 0 http attempts, with a NEGATIVE control that raises under the same patch and a
+  REFUSAL control returning 0 attempts on a missing object. **I verified the CODE layer only.** Do not
+  read my deploy as having exercised it.
 - ⛔ [`0.4.0_DS_ClientPlatform~Z` owns the disarm; recorded here because I deployed the bytes]
   **ARMED HAZARD, LIVE NOW ON `etfs-netassets-daily`:** `:1183`
   `run_date = event.get("run_date") or now.date().isoformat()` -- operator-supplied, with **no replay
