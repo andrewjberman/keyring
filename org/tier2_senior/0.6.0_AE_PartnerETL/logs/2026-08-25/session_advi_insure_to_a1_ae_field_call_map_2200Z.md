@@ -131,9 +131,99 @@ specified against `carrier`/`product` without a populated specimen or a Ruling-6
 
 Commits landed **LOCAL on CLOUD**, riding integration — not yet on `origin/CLOUD`.
 
+---
+
+# ROUND 2 — VENDOR EGRESS GRANTED, LEG BUILT AND EXERCISED (2248Z–2330Z)
+
+**Status:** AC2 PASS · AC3 PASS · **AC1 FAIL, deliberately** · proof-of-spec `rc=0, violations=0, VALID`
+
+## The sovereign instruction, and the 54 seconds
+
+Andrew, direct to this terminal at **2026-08-25T224848Z**: *"Youhave vendor egress"*. Recorded
+verbatim @`a1e9fbcca7` and broadcast to COO/CTO/MSTR **same turn**, per the CLAUDE.md obligation.
+
+⛔ **That broadcast paid for itself immediately.** COO's 71623 (stamped **224942Z** — 54 seconds
+after the grant) reported the egress ask as still OPEN and said so *to Andrew as well as to me*.
+COO could not have known; Andrew writes directly to worker seats, which is precisely the window the
+broadcast rule exists to close. It closed in under four minutes and COO withdrew the re-ask.
+
+**I surfaced the DRY-constraint conflict rather than resolving it.** COO's Ruling 1 said "no socket";
+its stated premise ("until his word lands") was already discharged. A seat that decides for itself
+which of the issuer's constraints have expired is adjudicating scope **even when it would be right**.
+Cost: one message. COO lifted it in 71632 and confirmed the reasoning.
+
+## What was built
+
+`insurance_leg.py` @`d7583e51b2`, additive — the tax-SMA producer is untouched. It **owns no socket**:
+every call routes through the vehicle's `_request`, so the DRY_RUN gate binds *by construction*. Above
+that, a **per-surface egress allowlist**, because the sanction is surface-scoped and a hold that lives
+only in prose is not a hold. `/account-api/*` is refused **mechanically**.
+
+⛔ **The firm-sep guard would have refused the ruled tree** — it tests `startswith("blackdiamond/49f/")`
+with the trailing slash, which `blackdiamond/49financial/` fails. Widened to the firm, never past it.
+
+## Four measured results, each contradicting a documented premise
+
+1. **`carrier`/`product` ARE supplied** — `custodian.name` and `accountRegistrationType.identifier`,
+   on a sanctioned surface. My own v1 map called them ABSENT.
+2. ⛔ **The bulk export is the WRONG GRAIN for them.** It carries `Issuer`/`Product Type` at
+   *relationship* grain, **concatenated**. Over the full cohort: **13 of 106 disagree, all 13 carry a
+   comma, ZERO residual** → sourcing an account-level field there mis-attributes **12.3%** of accounts
+   *and looks correct on the 87% anyone would spot-check*. Near-miss: `dataFormatName` is the
+   **aggregator**, `name` is the **carrier**.
+3. **The join key is not gated** — `accountNumber` unmasked on **106 of 106**. The masking belongs to
+   `/portfolioreporting/*`, a third surface I had conflated; corrected in place, not dropped.
+4. **The two token authorities are BYTE-IDENTICAL** (`sha256[:16]=e3c20170eedbafd3`).
+   `AUTHENTICATION.md` called interchangeability *"untested"*. Now tested.
+
+## Two production bugs found only by exercising
+
+**Download is keyed on `exportResultID` (int), not `resultGuid`** — the guid 404s everywhere. And the
+**export is async, answering HTTP 400 (not 404) while building**, with no status endpoint: `282394`
+downloaded fine minutes later, `282396` returned 400 seconds after its run. Without a readiness poll
+the leg works every time a human tries it by hand and **fails intermittently in production** — the
+failure mode misdiagnosed as "the vendor is flaky". Also: `/Api/Offline/ExportResults/{guid}` returns
+**200 with 5.5KB of HTML**; a status-plus-size check lands a login page in bronze as data.
+
+## Why AC1 is FAIL
+
+AC1 is a **conjunction**; clause 3 asserted distinctness that measurement falsifies. Clauses 1 and 2
+are satisfied and the leg is built *and* exercised. **PASS would have silently retired a falsified
+premise as proven** — which is how a wrong premise survives into a build. I asked the issuer to amend
+rather than amending at my seat. **COO amended clause 3 exactly as specified in 71757 and explicitly
+did NOT convert the FAIL retroactively** — the amendment governs forward; the falsification is the
+deliverable.
+
+## Decisions
+
+- **Did not collapse the token routing** onto the identity result: it measures today's session, not a
+  contract BD owes us. Collapsing turns a future divergence into a silent 401. COO ratified.
+- **Preserved map §1–§8 verbatim** and added §9 — an overturned verdict that erases its prior state
+  leaves nobody able to see what changed.
+- **Did not deploy.** The leg is committed and exercised from the laptop; no deploy was *begun*, so
+  there is no half-landed deploy under NEVER#6.
+
+## Verification
+
+Commits verified **in git, the system of record** — not from the tool's stdout (COO 71738): all five
+hashes resolve, carry my author line, and contain the claimed artifacts. `HEAD dc23336ee3`,
+`origin/CLOUD 3960b0668c`, **ahead 100 — LOCAL, riding integration.**
+
+Cohort paginated to the **total** (77/77, not a page). Bronze verified by live `ListObjectsV2`.
+**Three negative controls all FIRE.** 0 calls to `/account-api/*`.
+
+## Outcome
+
+COO withdrew **both** Andrew-asks — the carrier/product deferral and the `/account-api/*` question —
+on these measurements. `0.4.0_DS_ClientPlatform~J`'s gold builder is unblocked on **all four** v1
+fields. My ARMED surprise item was independently reproduced and **fixed by CVO @`9c9b2fd96b`**;
+`0.7.0_AE_CloudOps~J` traced the triggering artifact to their own (1 of 152) and reshaped it.
+
 ## Next Steps
 
-1. Report AC2 to `2.0.0_SA_COO` with evidence (RAVC close on the startable third of the TO).
-2. Await Andrew's per-use vendor-egress word. On GO: build the insurance leg (AC1), then exercise
-   per-surface with denominators (AC3). On decline/defer: both stand as answered-with-dependency.
-3. The issuer's call on whether the **build** half of AC1 releases ahead of the egress word.
+1. Deploy the leg into the Lambda package — **not begun**; needs a change-management ledger opened at
+   deploy-start (NEVER#6). Awaiting COO's word.
+2. `/account-api/*` remains held and mechanically refused; worth asking for **v2**
+   (`insuranceCharacteristics` + riders, already deferred by Ruling 6). Not blocking.
+3. Open ruling, not a measurement: which of the record's dates Ruling 5's client-facing *"statement as
+   of MM/DD"* prints.
