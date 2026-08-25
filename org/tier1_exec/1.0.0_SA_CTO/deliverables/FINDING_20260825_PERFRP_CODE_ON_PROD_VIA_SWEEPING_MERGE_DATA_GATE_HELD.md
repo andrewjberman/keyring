@@ -104,6 +104,19 @@ audience was us and no such label was needed.**
 *"Every candidate source is client-sensitive (transaction memo and wire instructions). Deliberately not
 served, and not a gap to be closed later."*
 
+!! **FRAMING CORRECTED ~07:3xZ -- ANDREW HIMSELF RATIFIED THIS COPY, AND I PRESENTED IT AS AN UNNOTICED
+EXPOSURE.** `0.4.0_DE_ClientPlatform~D` 69557 measured the card as put to him at 03:38Z: it carries **BOTH
+LITERAL TOKENS** and the phrase **"THE CARD NAMES BOTH ABSENCES ON ITS OWN FACE"** -- *Notes =
+PII-EXCLUDED-PERMANENT (a boundary, never to be "fixed"), Description = NO-SOURCE-TODAY (an ordinary gap,
+re-openable).* **He was shown the literal strings, told they are face copy, and answered "rec accepted."**
+**SO THE COPY IS RATIFIED, NOT OVERLOOKED. WHAT MOVED IS THE AUDIENCE, NOT THE DECISION** -- and whether his
+ratification reaches a client audience is **HIS** scope call, not a defect anyone introduced.
+*(`3.0.0_SA_CVO` had asserted the tokens were absent from that card and has withdrawn it in full: they quoted
+the CALL line and reasoned about the CARD, when an `/open-calls` card is ONE artifact with the REC beneath an
+internal divider. Their own naming of it is the keeper: **STOPPING AT THE CONFIRMING LINE IS NOT READING THE
+ARTIFACT** -- and both seats argued about a file neither had opened, one hash away, in one of their own
+deliverables. **The dispute is what made both sides sure enough to skip the read.**)*
+
 > **AN ADVISOR ON PRODUCTION READS "PII-EXCLUDED-PERMANENT" AND A SENTENCE ABOUT WIRE INSTRUCTIONS.**
 > **NO CLIENT DATA IS EXPOSED AND NOTHING LEAKS** -- it is **internal engineering vocabulary and internal
 > PII rationale rendered on a client-facing surface.** DE~D wrote those strings deliberately and Andrew
@@ -112,9 +125,10 @@ served, and not a gap to be closed later."*
 > became wrong, an environment assumption under it was invalidated by an act in another lane.
 
 **REVISED REC: REVERT THE PERFRP FILES OFF PROD.** Three reasons, and the first is new since my original rec:
-1. **It is the only option that removes the internal-vocabulary exposure without shipping a further change.**
-   Editing the strings is also a DEV change needing its own promote, so it is not faster and it leaves
-   finished-looking cards with no data on a client surface.
+1. **It relocates RATIFIED-FOR-US copy off a client surface without shipping a further change.** *(Restated
+   from "removes the internal-vocabulary exposure" -- the copy is RATIFIED, see above; the issue is the
+   AUDIENCE it now reaches, not that anyone shipped unapproved text.)* Editing the strings is also a DEV
+   change needing its own promote, so it is not faster, and it leaves finished-looking empty cards regardless.
 2. It restores the letter of his condition, not only its substance.
 3. **Four cards with finished product names and no figures is its own poor look on a client surface**,
    independent of the vocabulary question.
