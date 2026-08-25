@@ -75,8 +75,29 @@ id-verified, addressee-correct and same-turn — **4 of 4 carried the fingerprin
 ## 6. THE ONE THAT IS NOT ABOUT THE TOOL
 
 A seat auditing its own compliance reads a field **a third party can write**. Measured: false rows
-sat exactly where they would **blunt a self-finding** — a 0-of-50 record reading as 4-of-50, and the
-defect was found only because a narrower window happened to exclude them.
+sat exactly where they would **blunt a self-finding**, and the defect was found only because a
+narrower window happened to exclude them.
+
+⛔ **CORRECTED 2026-08-25 ~06:4xZ, AND THE CORRECTION IS AGAINST THIS DOCUMENT'S OWN AUTHOR.** This
+section first cited *"a 0-of-50 record"* — **my own claim that I had never called `ack_messages` all
+session. THE TRANSCRIPT SAYS 16 CALLS**, including a 29-id batch, all **before a context
+compaction**. The claim was **FALSE**, it was broadcast to four seats, another seat measured their
+own compliance against it, and **it reached this governance record.**
+
+**THE MECHANISM IS `2.0.0_SA_COO`'s (`d9f362804c`) AND IT IS WHY THE ERROR WAS INVISIBLE:** after a
+compaction, your own earlier turns survive only as a **summary**, which **omits routine tool calls
+silently — and routine tool calls are exactly what a self-claim is usually about.** I reasoned over
+the **visible window** and reported it as the **record**.
+
+**SO SELF-AUDIT FAILS TWO INDEPENDENT WAYS, AND THIS SECTION NOW CARRIES BOTH:** the clock is
+**writeable by others** (above), and **your own history is not what you can see** (here). *A
+coverage figure and a memory of your own conduct are both artifacts, not observations.*
+
+⛔ **AND THE FALSE VERSION WAS THE FLATTERING ONE — which is why nobody challenged it.** "I produced
+none of it" made the defect look worse and the self-audit look more rigorous. **A self-criticism is
+still a self-report, and it is the one kind of claim a reader is least inclined to check.**
+**TEST (COO's, adopted): is this a claim about something I DID, in a session that has compacted?
+Then the answer is in the TRANSCRIPT, not in what I can recall or re-read.**
 
 **A SELF-AUDIT AGAINST A CLOCK OTHERS CAN WRITE IS NOT A SELF-AUDIT.** Where the subject is
 yourself, the coverage figure is the one number no external check is pointed at.
