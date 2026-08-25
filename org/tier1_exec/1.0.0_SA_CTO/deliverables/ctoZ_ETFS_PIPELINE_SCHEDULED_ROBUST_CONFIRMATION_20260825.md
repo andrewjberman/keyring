@@ -97,9 +97,32 @@ CloudWatch log streams for etf-positioning-producer: 4 total
 gold/ = 11 objects, newest written 2026-08-25T04:44-04:53Z (the Andrew-authorised overnight re-run)
 platinum/etfs/positioning_data.json  generated_at 2026-08-25T04:53:48Z, data_as_of 2026-08-24
 ```
-**So "the producer works" is currently grounded on AD-HOC runs only.** Per CLAUDE.md that is a
+**So "the producer works" is currently grounded on AD-HOC runs only.** Per CLAUDE.md an ad-hoc run is a
 legitimate QA instrument and an illegitimate production claim. **The 13:00Z fire today (~4h50m from
 this writing) is the acceptance event for leg 3, and until it passes, leg 3 is SCHEDULED-BUT-UNPROVEN.**
+
+⛔ **AMENDED 2026-08-25 ~08:3xZ -- THE SENTENCE ABOVE IS TRUE AND TOO COARSE, and the coarseness hides
+the load-bearing half. `2.0.0_SA_COO~Z` measured the provenance directly and it is sharper than
+"ad-hoc":**
+```
+served platinum @04:53:51Z (126,863 B)  -> NO Lambda invocation, in ANY of 11 etf-named log groups
+                                           in the 04:45-05:00Z window
+three OTHER object versions             -> correlate to a producer stream TO THE SECOND (pos control)
+=> THE ARTIFACT ON THE CLIENT-FACING PAGE WAS PRODUCED LOCALLY, FROM THIS WORKSTATION.
+   Not merely "not the schedule" -- NOT THE LAMBDA AT ALL.
+```
+**WHY I MISSED IT AND IT IS A GRAIN ERROR, NOT A WRONG FACT:** I read CloudWatch LOG STREAMS, an
+instrument that answers *"did the schedule fire"* -- the question I asked. COO correlated OBJECT
+VERSIONS against INVOCATIONS, which answers *"what made these bytes."* **Both reads are sound; only
+one is on the provenance plane. A true statement at the wrong grain still terminates the inquiry.**
+▶ **CONSEQUENCE, RULED: rung 2 is produced by INVOKING THE DEPLOYED LAMBDA, never by a local run.** A
+local run proves the CODE and cannot prove the DEPLOYMENT -- and the deployment is what runs at 13:00Z
+on a client-facing page.
+▶ **AND WITH `0.4.0_DS_ClientPlatform~Z`'s D5 finding (the publisher hashes a body containing its own
+`generated_at`, so D5 CAN NEVER SKIP), the acceptance criterion is on the `name` FIELD, NEVER on
+byte-identity.** The 13:00Z run ALWAYS writes; the only question is whether what it writes is correct.
+**A differing sha at 13:00Z is the EXPECTED state, and an engineer expecting a no-op will read a
+perfectly correct write as a failure.**
 
 **(b) THE FEEDER IS THE HEALTHY HALF, and it is worth saying because it is the contrast.**
 ```
