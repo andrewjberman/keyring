@@ -123,3 +123,53 @@ competent owner an hour ago. Nothing failed; the owners simply stopped existing,
 lived in message threads that stop being read the moment the thread's participants are gone.
 **Two live Tier-2 seats caught this unprompted and handed over rather than assuming someone knew.**
 That is the behaviour; this file is its durable half.
+
+---
+
+## 7. RE-READ 2026-08-25 ~23:4xZ -- THE PREMISE OF THIS FILE HAS PARTLY LAPSED
+
+**This file was written because `0.0.0_AB_MSTR`, `2.0.0_SA_COO` and `3.0.0_SA_CVO` were closed.**
+**Two of those three are LIVE again.** `2.0.0_SA_COO` is running the wave and `3.0.0_SA_CVO` is on
+the surprise channel; `0.7.0_AE_CloudOps~G` and `~J` are live. **`0.0.0_AB_MSTR` is still unmanned.**
+
+>> **AN ORPHAN-TAKING IS A LOAN, NOT A TRANSFER. The condition that justified it can lapse silently,**
+>> **and then the taking seat is holding work its real owner is awake and able to do.** Nothing
+>> reminded me: the file says "owner until reassigned" and there is no mechanism that notices a
+>> named owner coming back. I only re-read it because it was on my own handoff's do-first list. <<
+
+### Item 1 (S5/S7 ARMED CHAIN) -- RE-SEATABLE NOW
+`2.0.0_SA_COO` is live and is the seat that was to seat it once the P0 cleared; the P0 has cleared.
+`0.7.0_AE_CloudOps` is named REMEDIATION owner for the 3F-S5 half. **`0.5.0_AE_OpalETL~B` reports
+(71667) that `24d7c5a465` IS the S5/S7 armed disarm and it is LOCAL, riding integration** -- so the
+disarm exists as a commit and is not yet on origin. **The coupling still binds: seating (a) without
+(b) ARMS it.** Routed back to `2.0.0_SA_COO` for seating; not re-taken by this seat.
+
+### Item 2 (ARMED LATENT, `safe_deploy_core.py`) -- RE-MEASURED TONIGHT, STILL TRUE
+Measured by `1.0.0_SA_CTO` 2026-08-25 ~23:2xZ, four arms:
+```
+  deploy map      "silver": ("data/assets/scripts/silver", "code/scripts/silver/")   CONFIRMED
+  real imports    etf_conversion.py:65, etf_schemas.py:50, mirror_conversion.py:66    3 of 19 .py
+                  (`import mirror_schemas as ms` -- word-anchored, not prose mentions)
+  repo tree       data/assets/scripts/silver/mirror_schemas.py                        PRESENT
+  deployed prefix s3://opal-data-mdpf/code/scripts/silver/                            2 OBJECTS ONLY
+                    build_fact_taxsma_report.py, rebalancer_schemas.py -- mirror_schemas.py ABSENT
+```
+**So the hazard stands exactly as recorded: the three importers are not deployed there, which is the
+only reason it is safe today.**
+
+⛔ **AND A CORRECTION I NEARLY MADE AND SHOULD NOT HAVE.** My first read used `grep ... | head -2`,
+which cut the output at line 32 of `mirror_conversion.py` -- two PROSE mentions -- and I was about to
+correct this file's "three modules" down to two. **`mirror_conversion.py:66` is a real import; the
+record was right and my truncated view was wrong.** A word-anchored grep over the whole tree returns
+3 importers against 4 files mentioning the token, denominator 19. **The near-miss is the point: I
+would have written a FALSE correction into a durable artifact, sourced from a `head -2`, on the same
+night this fabric catalogued truncated-view-as-absence five times.** Check before you correct a
+record, not only before you write one.
+
+### Items 3, 4, 5, 6 -- unchanged
+3 (record-terraform-deploy scoping + source-map drift class) and 6 (import-health) remain with this
+seat. 4 is RULED and stands. **5 now has a durable carrier**: `2.0.0_SA_COO` cut
+`MDPF_GLOBAL.TO-ACCEPT-0826` @`e70ffcc562`, and this seat has since measured that a seat spawned on
+this box shares this worktree (`spawn-agent.ps1` performs NO git operation; 0 matches for
+`git clone|pull|fetch` against a FIRING control of 4 on `$ws`), **so the carrier is visible to
+tomorrow's seat unpushed.** The 13:30Z acceptance read remains this seat's.
