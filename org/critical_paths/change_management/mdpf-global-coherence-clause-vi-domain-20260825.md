@@ -218,7 +218,16 @@ This seat fired at **19:45:21Z**. The object predates the invocation. The log gr
 19:45:54Z  RequestId 51e5f8dc-0e3d-4e7d-880d-2c70d1c4903f  30.4s  12/12 errors=none  <- this seat
 ```
 This seat's run completed green but `conditional_put` found byte-identical content and correctly did
-not rewrite. **The restore belongs to whoever fired at ~19:43:5xZ; it is unclaimed as of this close.**
+not rewrite. **CLAIMED 19:51Z by `1.0.0_SA_CTO` (71318): Andrew-direct at their terminal ~19:42Z, verbatim *"Run
+gold for global now and let's see if we get the fresh file displaying"*.** They invoked
+`mdpf-gold-lambda` and then `opal-assets-mdpf-portal-publisher`, deliberately passing the scheduled
+floor's EXACT production payload read from `aws scheduler get-schedule --query Target.Input` rather
+than composing one. **THE RESTORE IS THEIRS.**
+⛔ **AND THE "DOUBLY-OWNED EDGE" I RECORDED ABOVE IS WITHDRAWN.** It was not an unowned edge taken
+twice by accident -- it was TWO AUTHORIZATION CHAINS ISSUED ~40 SECONDS APART, neither aware of the
+other: `2.0.0_SA_COO` 71292 assigned the fire to this seat at 19:41:22Z, and Andrew independently
+instructed `1.0.0_SA_CTO` at ~19:42Z while `2.0.0_SA_COO` was going non-live. Both acts authorized,
+by different sovereigns. That is a materially less alarming thing than what this entry first said.
 Recorded because a false attribution of a GOOD act is still a false attribution, and it is the one
 nobody contests.
 ⚠ **Two ad-hoc PRODUCTION gold runs fired 90 seconds apart.** The invocation went from an unassigned
@@ -258,5 +267,38 @@ across models, and both the gate (`:1745`) and the composition (`:2487`) total i
 `3.0.0_SA_CVO` (71095), escalated **ARMED** (71106), **disarm owner `2.0.0_SA_COO`**, sharpened by
 `1.0.0_SA_CTO` (71117) to *one served field name, three derivations, all labelled `count_basis:
 measured`*. **Does not ride this repair and is not discharged by this close.**
+
+-- `0.4.0_DS_ClientPlatform~N`
+
+
+---
+
+## ⛔ ADDENDUM -- `trigger.kind` IS A SELF-REPORT OF THE PAYLOAD AND CANNOT ATTRIBUTE A RUN
+**Whoever performs the 2026-08-26 acceptance read: DO NOT USE THIS FIELD.**
+
+Both of tonight's runs wrote a manifest under `portal/gold/mdpf/_manifests/2026-08-24/`:
+```
+20260825T194421Z.json  trigger {"kind":"scheduled","detail":{"source":"aws.events"}}  <- a MANUAL invoke
+20260825T194554Z.json  trigger {"kind":"manual",   "detail":{"source":""}}
+```
+The first reads `scheduled` because `1.0.0_SA_CTO` passed the scheduled floor's production payload --
+the right call for fidelity, with this side effect. **Mechanism, from the deployed handler:**
+```python
+src  = (event or {}).get("source") or ""
+kind = "scheduled" if src == "aws.events" else ("s3-marker" if "Records" in event else "manual")
+```
+**The classification is derived ENTIRELY from caller-supplied payload. Any invoker can claim any kind.**
+
+⛔ **CONSEQUENCE FOR THE ACCEPTANCE:** the durable record now holds a manifest stamped `scheduled`,
+dated 2026-08-25, produced by a person. The acceptance question is *"did the SCHEDULED path restore
+global by itself"* -- and the field that appears to answer it **cannot**. A reader checking it would
+conclude the scheduled path ran successfully tonight. It did not.
+`0.5.0_AE_OpalETL~B` measured that CloudTrail cannot supply it either: Lambda `Invoke` is a DATA
+event -- 0 events in the window, with a **firing positive control** of 1 on `UpdateFunctionCode`.
+**So the estate currently has NO SOUND INSTRUMENT for "was this run scheduled or manual."** Naming
+the gap, not building an alarm.
+**Cheap partial mitigation for one read, offered not asserted:** tomorrow's 13:30Z run is
+distinguishable by TIME alone provided nobody invokes manually in that window. That is sufficient for
+a single acceptance and is not a mechanism.
 
 -- `0.4.0_DS_ClientPlatform~N`
