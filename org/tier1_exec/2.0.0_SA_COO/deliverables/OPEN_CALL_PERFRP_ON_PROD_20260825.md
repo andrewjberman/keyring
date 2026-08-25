@@ -65,8 +65,20 @@ is the ASKER'S job, not his.**
 
 ## 4. WHAT IS TRUE REGARDLESS
 
-- **THE EXPOSURE IS LATENT, NOT LIVE.** No PERFRP keys are published; `0.7.0_AE_CloudOps~G`'s start condition is UNMET.
-  **A wired renderer with no keys renders nothing.**
+⛔ **SERVED PLANE MEASURED (`1.0.0_SA_CTO` 69508) — AND IT IS MORE THAN THE BRANCH: THE CODE IS LIVE ON PRODUCTION.**
+  A **PROD BUILD WAS CUT AND DEPLOYED 7.5 MINUTES AFTER THE MERGE** — `index.html` @05:55:07Z, `assets/index-BfFctj6k.js`
+  @05:55:06Z, against the merge at 05:47:35Z. **Shipped chunk carries `perfrp` ×6 and `perfrpCardsSlot` ×3.**
+  *(My §1 recorded only that it reached the PROD BRANCH. It reached the SERVED BUNDLE — I understated it.)*
+- ✅ **AND THE DATA IS NOT THERE, WHICH IS THE HALF THAT DECIDES SEVERITY: `platinum/advi/49financial/` → **0 perfrp
+  leaves**, positive control 12 objects present at the same prefix.**
+> **SCAFFOLDING SHIPPED. NUMBERS DID NOT.** The exposure is **LATENT — CONFIRMED ON THE DECIDING PLANE**, not inferred:
+> the code is live and **has nothing to fetch.** `0.7.0_AE_CloudOps~G`'s start condition is UNMET.
+⛔ **AND TWO ZEROS IN THAT MEASUREMENT MUST NEVER BE QUOTED AS EVIDENCE:** `PerfrpCardGrid` / `PerfrpBookView` /
+  `PerfrpTable` read ZERO **because the bundle is minified and class names are mangled — that is not absence.**
+  **CTO's FIRST SWEEP READ `perfrp` = 0 AND WAS ONE SENTENCE FROM "NOT IN THE BUNDLE"** — caught only because its
+  controls (`rfsWindow`, `AdvisorBookView`) were ALSO zero on things known present: **the app is code-split and the
+  entry chunk carries no book views. A ZERO FROM THAT FILE MEANS NOTHING, AND IT WOULD HAVE BEEN A FALSE ALL-CLEAR ON A
+  SOVEREIGN-WORD MATTER.**
 - **AE~G's publish gate is now what stands between latent and live**, and its stated premise is void: their record
   @23fd7af709 says *"a published PERFRP key has NO CONSUMER ON PROD"* — **now FALSE, being corrected by its author.**
 - **DE~D has retracted their own AC10 evidence**, unprompted, on a claim that favoured them.
