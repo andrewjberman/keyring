@@ -80,12 +80,84 @@ expressed: a branch-position hold needs a mechanism, or it needs to be a data-pl
 **THE CALL:** does a sweeping DEV->PROD merge for an unrelated project constitute "promoted to PROD" within
 your condition, and if so do you want the PERFRP files reverted off PROD?
 
-**REC: ACCEPT IT.** The condition's PURPOSE -- no unverified performance numbers in front of anyone -- is
-**intact and measured**: zero leaves, declared-absence faces only. A revert costs a promote cycle to restore
-a letter whose substance already holds. **If you want the letter restored, it is a clean revert and one word.**
+!! **REC REVISED ~07:2xZ -- MY FIRST RECOMMENDATION WAS "ACCEPT IT" AND IT RESTED ON AN INCOMPLETE READ OF
+THE RENDER PLANE. `0.4.0_DE_ClientPlatform~D` 69521 supplied the literal strings and they change the answer.**
+
+**WHAT AN ADVISOR ACTUALLY SEES ON PRODUCTION** (read at `origin/PROD`, from source -- unreadable from the
+minified bundle, which is why it had to come from the author):
+
+| card | subtitle, verbatim |
+|---|---|
+| Activity Summary | *"Beginning value, net additions, gain/loss, ending value"* |
+| Performance | *"Time-weighted return, net of advisory fees"* |
+| Allocation | *"Allocation by class, of total and of level"* |
+| Transactions | *"Per-relationship, paged"* |
+
+*(Gain/Loss is `requiresLeaf:true` and is HIDDEN -- **the one card that is invisible is the only one whose
+absence anyone designed for.**)*
+
+**THESE READ AS FINISHED PRODUCT.** Nothing says provisional, preview, or coming soon -- **on DEV the
+audience was us and no such label was needed.**
+
+!! **AND THE TRANSACTIONS CARD RENDERS INTERNAL TAXONOMY ON ITS FACE, IN AMBER:**
+`Notes -> PII-EXCLUDED-PERMANENT` - `Description -> NO-SOURCE-TODAY`, plus verbatim from `cards.ts`:
+*"Every candidate source is client-sensitive (transaction memo and wire instructions). Deliberately not
+served, and not a gap to be closed later."*
+
+> **AN ADVISOR ON PRODUCTION READS "PII-EXCLUDED-PERMANENT" AND A SENTENCE ABOUT WIRE INSTRUCTIONS.**
+> **NO CLIENT DATA IS EXPOSED AND NOTHING LEAKS** -- it is **internal engineering vocabulary and internal
+> PII rationale rendered on a client-facing surface.** DE~D wrote those strings deliberately and Andrew
+> ratified the two-state form at 04:00Z; **they are correct FOR AN AUDIENCE OF US.**
+> **THE AUDIENCE CHANGED WITHOUT THE STRINGS CHANGING** -- the same shape as everything else here: nothing
+> became wrong, an environment assumption under it was invalidated by an act in another lane.
+
+**REVISED REC: REVERT THE PERFRP FILES OFF PROD.** Three reasons, and the first is new since my original rec:
+1. **It is the only option that removes the internal-vocabulary exposure without shipping a further change.**
+   Editing the strings is also a DEV change needing its own promote, so it is not faster and it leaves
+   finished-looking cards with no data on a client surface.
+2. It restores the letter of his condition, not only its substance.
+3. **Four cards with finished product names and no figures is its own poor look on a client surface**,
+   independent of the vocabulary question.
+**IF HE PREFERS TO ACCEPT IT, THE SUBSTANCE STILL HOLDS** -- zero leaves, no wrong number reachable -- and
+that reading remains defensible. The call is his either way; only my recommendation moved.
+
+> **THE HONEST ONE-LINE SUMMARY, AND IT IS DE~D'S:** *four performance cards with finished-looking product
+> names, no figures, and two lines of internal data-governance vocabulary visible on one of them.* **"The
+> code reached PROD" understates it; "wrong figures are showing" overstates it; AND "four empty cards"
+> UNDERSTATES IT TOO** -- which is what my first recommendation rested on.
 
 **CARRIED SEPARATELY AND WORTH MORE THAN THE INSTANCE:** section 4. However you rule here, a branch-position
 hold is not a hold.
+
+## 6b. !! SCOPE WIDENED ~07:2xZ -- THE SAME PROMOTE CARRIED A SECOND LANE, AND ITS FACE IS LOUDER
+
+**THIS IS NOT ONE PROJECT'S SLICE.** `0.4.0_DE_ClientPlatform~C` 69534 measured their own lane against the
+same merge and found **SEVEN OF THEIR NINE COMMITS ON `origin/PROD`**, including **`d1f8f38a`, the commit
+that wires their panel into `ModelPortfolios.tsx`.** Same merge `d9a98bcc`, same mechanism, and **its subject
+named nothing of theirs either.**
+
+**SERVED DATA ABSENT ON EVERY SCOPE, CONTROLLED BOTH WAYS:** `platinum/mdpf/{49financial,inflection,
+cottonwood,global}/` category-views leaves = **0, 0, 0, 0**; positive controls in the same prefixes = **3, 3,
+4 objects present.** Same conclusion as PERFRP -- no wrong number, because there is no number.
+
+!! **BUT THE DECLARED-ABSENCE FACE IS LOUDER THAN PERFRP'S, AND THIS IS THE PART THAT CHANGES THE PICTURE.**
+Their accessor returns `{status:'absent_by_scope'}` on a 404 -- **a TRUTHY object** -- so the mount guard
+`{categoryViews && <CategoryViewTree .../>}` passes and the component renders. What renders is **not a hidden
+card: it is a full `Panel variant="chart"` titled `ASSET CATEGORY VIEWS`, carrying the line "No category view
+tree is published at this scope." On every firm, today.**
+
+> **AN ABSENT CARD READS AS INTENTIONAL; AN EMPTY TITLED PANEL READS AS BROKEN.** PERFRP's absence faces sit
+> inside an existing surface. **This ADDS A NEW TITLED PANEL to a client-facing page that then says it has
+> nothing.**
+
+**AND DE~C'S OWN CODE COMMENT PREDICTED THE MECHANISM AND MISSED THE EXPOSURE:** they had written that a
+stale observation *"goes stale VISIBLY -- the panel starts showing a tree."* Correct. **They never asked
+WHERE that panel would be visible FROM**, because they were reasoning about the DEV surface they were working
+on. *The same audience-changed-without-the-artifact-changing shape as DE~D's strings.*
+
+**THIS STRENGTHENS THE REVISED REC RATHER THAN COMPLICATING IT** -- and it means the revert question is not
+PERFRP-shaped but **promote-shaped.** Whatever else was on DEV at 05:47:35Z rode the same merge, and **only
+two lanes have checked.**
 
 ## 7. INDEPENDENT CONFIRMATION
 
