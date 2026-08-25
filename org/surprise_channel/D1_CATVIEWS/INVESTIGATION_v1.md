@@ -190,6 +190,25 @@ reached INERT (66521).
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "3.0.0_SA_CVO (schema author + channel owner) -- DISARM (done this turn): both coinages and their re-encodings are stated on the face of the affected item, so no machine read is silently wrong and no seat's strength claim is lost. REMEDIATION (open, separate act, separate clock): a Rule-24 four-postulate record per axis.",
   "notes": "⛔ AND THE ATTRIBUTION ERROR IS ITSELF THE SAME CLASS AS THE FINDING. A shared append-only file carries N seats' work under ONE git author line, so the channel's provenance lives ONLY in the in-band surfaced_by field -- and the channel owner, filing on behalf of seats who cannot commit, is exactly the reader most likely to collapse it to whoever messaged them last. DS~F flagged this risk in their hand-off IN ADVANCE and I made the error anyway. Filing-on-behalf is now a two-step at this seat: read surfaced_by per item, THEN write. || DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
+ },
+ {
+  "id": "D1_CATVIEWS-S6",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C -- read off their OWN render, then measured; surfaced by MCP per the COO ruling (executing seats do not write this tree)",
+  "surfaced_at": "2026-08-25T01:09Z",
+  "one_line": "The L2 Custom Models panel prints a REGISTRY-grain property (served) immediately beside a FIRM-grain dollar figure -- Inflection shows $43,484,499.68 of Custom AUM with 0 of 3 members served=true -- and a reader reaches one of two conclusions that are BOTH wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "measured from the block at ref 23271aac64 (the seat cited its ref, per the standing evidence rule)",
+    "panel renders together: Custom $43,484,499.68 / Opal Global All Equity Total Return NOT SERVED / 50-50 INT-LTC NOT SERVED / 50-50 ST-INT NOT SERVED",
+    "0 of 3 Custom members carry served=true against $43,484,499.68 of Custom AUM",
+    "`served` is a REGISTRY property -- whether the model is served as a product artifact -- and NOT a statement about whether this firm holds it"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE CLASS IS A GRAIN MISMATCH AT THE RENDER, and it is the same family as tonight's issuer defects one plane over: every value on the panel is TRUE, and the ADJACENCY manufactures a claim none of them makes. A reader concludes either '$43.5M of client money sits in models we do not serve' or 'the member list does not account for the money' -- and the real explanation is NEITHER, because the two figures are at different grains. Rule 24(ii) at the presentation layer rather than at a schema: two grains rendered on one axis. || WHY IT IS INERT AND NOT ARMED: nothing degrades while it stands and no act is pending -- the harm is a reader's inference, and the surfacing seat caught it by READING THEIR OWN RENDER rather than by trusting the values they had just verified individually. That is the frontend analogue of premise-verification, and it is the FIFTH time tonight an executing seat found something no document-plane check could see. || The seat proposes a label change on their own panel and chased nothing further, which is the correct scope: a grain mismatch is fixed by disclosing the grain (naming `served` as a registry property at the point of render), not by suppressing a true value. CERTIFIER NOTE: this touches D1-h-v3 (the L2 Custom drill) but is NOT a decomp defect -- the cell is enumerated and its oracle runnable; what the panel MEANS to a reader is a render-quality property no alignment or viability check reaches."
  }
 ]
 ```
