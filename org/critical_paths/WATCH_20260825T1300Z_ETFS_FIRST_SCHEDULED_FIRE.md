@@ -1,5 +1,34 @@
 # ⛔ TIME-TRIGGER — 2026-08-25T13:00Z — THE FIRST SCHEDULED FIRE OF `etf-positioning-producer`
 
+## ✅ DISCHARGED — 2026-08-25T16:0xZ by `0.0.0_AB_MSTR~Z`. THE FIRE HAPPENED AND IT WAS SCHEDULED.
+
+**Do not re-run these checks. This obligation is CLOSED.** Full six-check report with VALUES sent to
+`1.0.0_SA_CTO~Z` (delivered) + `2.0.0_SA_COO~Z` + `0.7.0_AE_CloudOps~Z` (queued, both seats dead in the
+~09:08Z reboot), broker msg ids 9048/9049/9050.
+
+```
+ATTRIBUTED ON CONTENT, not timing: the scheduled Lambda logged sha256 973f3e559a92f556... and the
+served bytes hash to 973f3e559a92f556... IDENTICAL. The served object IS the 13:00Z run's output.
+```
+| check | value |
+|---|---|
+| (a) | new stream `2026/08/25/[$LATEST]bc1a0224…` created 13:00:43Z · **`run_class=scheduled`** · CONTROL: prior 08:30:32Z stream reads `adhoc`, so the field discriminates |
+| (b) | `generated_at = 2026-08-25T13:01:21Z` (advances past 08:31:05Z) |
+| (c) | SALXX → `State Street U.S. Government MMKT` (DIVZ+IDVZ) · FXFXX → `First American Treasury Obligations Fund` (PFDE+PFOE) — all four books, deploy NOT reverted |
+| (d) | `data_as_of = 2026-08-24` (Mon), fire 2026-08-25 (Tue), `trading_days_behind = 1` via `lib/trading_calendar.py`. **No anomaly** — data_as_of ≠ fire date |
+| (e) | served sha `973f3e55…` vs 08:31Z object `98650407…` — differ, as predicted |
+| (f) | 4 books · 187 holding rows · 13 sub_asset_class values |
+
+⛔ **DEFECT FOUND IN CHECK (f) ITSELF — the criterion manufactures a false regression.** My first count
+returned **12** and read as a regression. It was a counting-rule ambiguity, not data drift. All three
+circulating numbers reconcile: **13** = distinct values INCLUDING the null bucket (the producer's
+`vocab_size`); **12** = distinct non-null (DT~Z's rendered "ASSET SUB-CATEGORIES (12)"); **3** = null rows
+(the producer's `sub_asset_class_unmapped`). **(f) should read "13 INCLUDING the unmapped/null bucket
+(12 non-null + 3 unmapped rows)."** A check that fires falsely on a healthy run is worse than no check.
+
+**NOT CLAIMED:** this read the S3 OBJECT, per the carrier — not the page. It says nothing about the edge
+(lags ~5 min) and nothing about RENDER. Rung 3 remains `0.2.0_DT_PortfolioAnalytics~Z`'s.
+
 **Opened:** 2026-08-25 ~08:5xZ by `0.0.0_AB_MSTR~Z` · **Raised by:** `2.0.0_SA_COO~Z`
 **Named owner:** `0.7.0_AE_CloudOps~Z` (COO recommendation, MSTR endorsed)
 **Andrew: TOLD DIRECTLY, same turn.** He is the only actor in this system guaranteed to persist to
