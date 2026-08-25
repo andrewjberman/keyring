@@ -165,3 +165,71 @@ the self-correction (4).
   predicted failure arriving. NOT tonight.
 - **`portal/` has no committer identity on site Z** -- filed; worked around per-invocation with
   `GIT_COMMITTER_*` rather than writing shared repo config.
+
+---
+
+## POSTSCRIPT 08:45Z -- THE RECORD ABOVE WAS TRUE WHEN WRITTEN AND IS NOW SUPERSEDED
+
+**A closed record carries no forward-reference to its own supersession**, so this is appended rather
+than left for a later reader to discover. Everything above stands as written; two things moved.
+
+**1. THE FIX REACHED PRODUCTION.** The body reports `f67b3a48` as *"on `origin/DEV`"*, which was the
+true and complete state at 08:35Z. It is now on **`origin/PROD` @`a7a7ff16`** (DT~Z's `--no-ff`
+merge), CI run **32827830122 conclusion SUCCESS**, **v2.1.166**. Verified at my own seat:
+`ls-remote refs/heads/PROD` -> `a7a7ff16`; `branch -r --contains f67b3a48` -> `origin/DEV` **and**
+`origin/PROD`; negative control (a workspace sha) errors as a malformed object in this repo, so the
+containment test discriminates. **Rung 3 -- the production render -- remains `0.2.0_DT_PortfolioAnalytics~Z`'s
+and is NOT discharged by this.**
+
+**2. A SECOND RENDER, because my first one had a gap I found and `2.0.0_SA_COO~Z` named
+independently.** `0.0.0_AB_MSTR~Z` held the PROD push for a visual check. My 08:22Z render used the
+live artifact as its fixture -- but that was the **PRE-FIX 04:53:51Z** copy, and the SALXX publish
+landed **8 minutes later**. So Q1 (populates) and Q2 (scale) were answered; **Q3 (the SALXX name on
+the page) genuinely was not.** Re-rendered against the `08:31:05Z` bytes: **both defects on one
+page**, SALXX reading `State Street U.S. Government MMKT`.
+
+>> **THE SCALE CHECK THAT MATTERS IS THE ONE I DID NOT COMPUTE.** MSTR asked me to hand-arithmetic a
+book. The page does it itself: DIVZ's sub-category column sums to **99.80**, and the asset-class bars
+on the SAME screenshot -- **a different code path that does not touch my seam** -- read
+`0.58 + 99.22 = 99.80`. A fraction-scaled column would read **0.998** against bars still saying
+99.80. **The 100x error cannot pass a cross-panel check, and my own arithmetic could never have
+established that, because I am the one who would have got it wrong.** <<
+
+**3. `0.2.0_DT_PortfolioAnalytics~Z` FOUND THE THING THE FILING ABOVE ONLY HALF-NAMED.** They ran the
+arithmetic check and derived the consequence: **the aggregation drops null-`sub_asset_class`
+holdings**, so IDVZ renders summing to 96.82 while the Holdings Breakdown one panel down still lists
+ICT and MER with weights. **They falsified their own vintage hypothesis first** -- fetched the prior
+VersionId and computed both -- before testing the null hypothesis. A wrong-vintage explanation was
+comfortable, exonerating, and available, and they killed it with a measurement.
+
+⛔ **THE PRECISION THAT DECIDES OWNERSHIP, MEASURED:** the drop is the **MODELS rule, inherited
+verbatim** -- `if (!subCategory) return` at `1af11910:373` pre-fix, unchanged at `f67b3a48:406`,
+and **`grep -c` against my own diff returns 0.** >> **The two goals are the same line: I could not
+have changed the null handling AND kept Models byte-identical, and the identical PNGs are the
+evidence I did not touch it.** << The models feed carries no nulls, so the rule had never met one.
+**My fix pointed a new source at an old rule and the rule met its first null** -- the same shape as
+the defect we were sent to fix: correct when written, meeting data it was never written for.
+**So there is no prior ETF behaviour to restore; any remedy is a NEW product decision, and I did not
+take one.**
+
+⚠ **AND THE SPLIT KEPT RE-COLLAPSING, INCLUDING BY ME:** `3.18 = 2.69` (nulls, ours) `+ 0.49` (IDVZ's
+own weights summing to 99.51, not ours). **If coverage is ever fixed IDVZ goes to 99.51, NOT 100** --
+anyone holding "sums to 100" as the success test reads a successful fix as a failure.
+
+## WHAT THIS WINDOW COST, AND THE ONE CLASS BEHIND IT
+
+**Six false claims in ninety minutes across five seats, every one a true measurement of a narrower
+question wearing the sentence of a wider one:**
+```
+"EventBridge ZERO rules at hour 11"     a cron(0 11  PREFIX test -> 9-10 rules actually fire
+"zero workspace commits since 07:35Z"   git --since reads LOCAL time -> filtered out the future
+"14 messages, ZERO render evidence"     ls -t | head -12 + a keyword grep -> outside the window
+"PROD ancestor? NO -- STOP"             awk split a worktree path containing a space
+"13 sub-categories"                     a per-value HOLDING count (187) read as a ROW count (12)
+"the 3.18 gap is ICT + MER + 2602335D"  MINE. Three true facts joined into a total I never added up
+```
+**None was a lie and none was carelessness.** Each was an instrument answering correctly and the
+sentence built on top of it claiming more. **Every one was caught by another seat doing the
+arithmetic, not by its author re-reading.** That is the whole argument for printing the denominator
+beside the number, and for a fabric where the correction is cheap enough that six of them land in an
+hour without anyone getting defensive.
