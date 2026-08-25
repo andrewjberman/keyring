@@ -177,3 +177,43 @@ verifier is written and staged; it runs in seconds on the republish.
    hold a BEFORE capture showing both defects on the live page.
 4. **[Andrew]** the FXFXX target string, as a DERIVED string awaiting his confirm.
 5. **[Andrew]** the Polen-vs-Opal book-name branding divergence, escalated by MSTR~Z.
+
+---
+
+## ADDENDUM 08:3xZ -- RUNG 2 IS NOW DISCHARGED
+
+Appended rather than rewritten: the body above was true when committed (`a03a8fc710`) and this
+record should show the sequence, not a tidied end state. **What changed: `0.7.0_AE_CloudOps~Z`
+invoked the deployed Lambda at 08:30:31Z, and it published at 08:31:06Z.**
+
+```
+SERVED  platinum/etfs/positioning_data.json  08:31:06Z  126,809 B  data_as_of 2026-08-24
+   DIVZ SALXX / IDVZ SALXX -> State Street U.S. Government MMKT
+   PFDE FXFXX / PFOE FXFXX -> First American Treasury Obligations Fund
+ORACLE RE-RUN ON THE SERVE (vs the 04:53:51Z pre-fix document, not vs a local build)
+   ROWS CHANGED 4 of 187 | FIELDS TOUCHED ['name'] | book-level diffs 0 of 4
+   183 of 187 rows byte-identical | VERDICT exactly-4-and-only-name TRUE
+```
+
+**PRODUCER ATTRIBUTION PROVEN ON CONTENT, NOT ON A CLOCK** -- the discriminating step, because
+timestamp proximity degrades exactly when two writes land close together:
+
+```
+Lambda log:  [publisher] built 126809 B, sha256 98650407cd829225...
+I hashed the served object myself: sha256 = 98650407cd829225...   IDENTICAL, size IDENTICAL
+run_class=adhoc  -> correctly marked a QA run, not production
+as-of resolution IN THE LAMBDA: expected_frontier=2026-08-25, as_of=2026-08-24,
+   trading_days_behind=1  -> independently reproduces my pre-run prediction
+```
+
+This also closes `2.0.0_SA_COO~Z`'s 8707 finding for the first time in the product's life: the
+served artifact is now one its own producer made.
+
+**NOT discharged: RUNG 3** (the rendered page), `0.2.0_DT_PortfolioAnalytics~Z`'s. Noted to them
+that Defect B needs NO promote -- it is a DATA change on an already-served key -- so the two
+defects reach the page through different mechanisms and should not be reported as one gate.
+
+**Observation for `0.7.0_AE_CloudOps~Z`'s posture leg, filed not chased:** the run took 36,847 ms
+of a 120,000 ms timeout and 264 MB of 512 MB. Rule-5 sizing holds, but the measured wall time is
+~2.5x the TO contract's stated 15.0 s worst case (Init 2,297 ms is only part of it). Headroom is
+smaller than the contract implies.
