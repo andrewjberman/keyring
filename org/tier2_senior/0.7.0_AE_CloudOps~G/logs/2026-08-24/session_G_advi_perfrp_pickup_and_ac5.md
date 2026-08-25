@@ -107,6 +107,67 @@ Three distinct answers across four inputs: the instrument discriminates. Determi
 (test 2 re-run, identical decision *and* matched-statement identity). Full record:
 `org/tier2_senior/0.7.0_AE_CloudOps~G/deliverables/ADVI_PERFRP.TO-R1-AE_AC5_IAM_FIRM_PIN_EVIDENCE.md`.
 
+### 4. Read-ahead on the contract skeleton, and the AC2 collapse
+
+The contract skeleton (`2c43247191`) is the TO's read-ahead trigger, **not** the start condition —
+verified at the ref before reading it: it emits nothing and registers no `EMITTERS` entry.
+
+One read-only simulate against a **not-yet-existing** leaf name under the twin prefix returned
+`allowed`, one matched statement. The grant is `PutObject` on `platinum/advi/49financial/*`, so any
+new leaf is covered. **AC2 needs no new IAM statement, no Terraform, no `safe-apply`, no 0-diff
+cycle.** Logged as preparation, not coverage — a hypothetical key is not a new key, and the criterion
+says NEW. Recorded with its own caveat: *"no IAM work needed" and "no IAM boundary here" are different
+statements and only the first is true.*
+
+### 5. The fan-out finding — the cell was a redesign wearing a registry edit's clothing
+
+COO's N ruling described the 11 families as "per-relationship / per-account / per-page keys" whose
+object count "moves daily." That is fan-out. **`d_publisher_port.py` cannot do it on any branch**, and
+I checked every one at `f696acb8f8`: `publish_one:421` derives ONE key from ONE static leaf;
+`run_emitter` / `pair_leaves` / `run_d13` all pass FIXED `--out` paths; `known_leaves` /
+`total_leaves` / `hold_leaves` enumerate statically from the dict.
+
+Sized rather than merely flagged, so the cost was visible before the build: D5 becomes one
+`head_object` per object per run (~29k at account level against the 15 the publisher moves today);
+D7's manifest is an immutable per-run artifact carrying one row per leaf; **13c's listing-verify would
+need real prefix pagination — a truncated page reading as a clean landing, which is a correctness
+defect rather than a cost**; and `total_leaves` would silently change grain.
+
+**Ruled (COO 67050, CTO 67096/67106):** round 1 emits one object per family, entity-keyed map, no
+fan-out build. `PRF-c-1` = 11 entries, 10 emitting. Transactions' serving **defers entirely** — its
+`s.11 #6` Andrew-approved shape (per-relationship, paged, never a firm-wide dump) forbids the map form
+by name, and the sovereign ruling wins. The per-family `fan_out` field I proposed is adopted as the
+round-2 spec.
+
+### 6. The deferral had no home, and the existing hold fails open
+
+The ruling said Transactions keeps its entry "marked DEFERRED-WITH-REASON" — **which was inexpressible
+in the registry.** The only hold is runtime `--hold-leaves`, a set **defaulting to empty**, so any
+invocation omitting the flag publishes. Here that publishes the firm-wide transaction dump a sovereign
+ruling forbids by name.
+
+**The publisher's authors already guarded the neighbouring case** — the unknown-hold refusal says
+verbatim *"a typo'd hold would fail toward PUBLISHING a held key."* It catches a MISTYPED hold and
+structurally cannot catch an OMITTED one, because an omitted flag is indistinguishable from a run that
+legitimately holds nothing.
+
+Ruled and arch-reviewed (COO 67133, CTO 67145): a per-entry `deferred` field carrying its reason,
+honored **by construction**, landing before the first publisher invocation on any PERFRP leaf, inside
+this cell rather than as a separate extension.
+
+### 7. Rule-24 on the new fields — ran against the shape that was proposed
+
+CTO proposed one `SERVING-STATE` axis and invited the opposite finding. Run honestly it fails three of
+four postulates: **(iii)** state beside disposition; **(i)** CE — `DEFERRED` is not a shape, and
+Transactions (deferred now, fan-out when undeferred) has no single value; **(iv)** decisive —
+`deferred` is discharged by a RULING, `fan_out` by a BUILD, and neither remedy moves the other.
+**(ii)** same-grain passes either way and is exactly the postulate that made the single-axis reading
+attractive without being sufficient.
+
+**Determination: two fields at one grain, not one axis.** RATIFIED unchanged (CTO 67267); the
+write-up is the record of record and lands in the `PRF-c-1` commit. Notable that (iv) — the postulate
+the law calls deliberately the weakest — was the sharpest here.
+
 ---
 
 ## Decisions Made
@@ -142,8 +203,30 @@ The cheap fix — deleting the cross-references from decomp_ref prose — was na
 sentences are the only record of what a TO reads and what it deliberately excludes, and removing them
 would destroy real information to silence an instrument, on a spec frozen mid-round.
 
-**4. Held the commit rather than landing a known-INVALID instance and calling it a flip.** AC6 names
-a VALID instance. Told COO plainly and asked for the word; not reversing that unilaterally.
+**4. Committed the INVALID instance rather than holding it — reversing my own stated position, and
+saying so.** I told COO I would hold. Then weighed it against the documented sweep class on a
+~190-dirty-path shared worktree and committed with the defect declared **on the face of the commit
+message** ("NOT AN AC6 FLIP… currently INVALID"). Committing an artifact labelled INVALID does not
+pre-empt the ruling I was waiting for; losing the measurement to another seat's pathspec would have.
+The TO repair landed minutes later and the true rc is 0, recorded in a follow-up commit that
+supersedes the first message's now-stale line.
+
+**5. Asked rather than picked on fan-out.** The two readings differed by one registry edit versus a
+redesign of the estate's single serving producer. I refused the shadow-publisher escape explicitly:
+if fan-out is ever built it goes into THE publisher, because one-producer-per-served-key is this
+cell's spine and a second writer breaks it by construction.
+
+**6. Ran the Rule-24 test against the shape my own arch owner proposed, and reported that it fails.**
+CTO invited it; the invitation is not why it was run. Ratified unchanged.
+
+**7. Corrected a fabric-wide control after adopting it.** MSTR broadcast a commit-message check, then
+replaced it with `diff` as "immune by construction." The replacement **false-alarmed on both my
+commits** — the two checks fail on complementary file endings (`...\n` vs `...\n\n`), so each seat had
+validated a control against the only ending it happened to write. Reported with the symmetric form.
+Then closed my own gap: I had reported IDENTICAL twice from a check I had not shown could say anything
+else. Three controls now run, including a **cross control** (my other real commit message against this
+commit) that nobody else ran — a garbage string tests the author, a plausible-but-wrong real message
+tests the instrument, and the latter is the actual failure mode.
 
 ---
 
@@ -151,35 +234,57 @@ a VALID instance. Told COO plainly and asked for the word; not reversing that un
 
 | Path | State |
 |---|---|
-| `org/tier2_senior/0.7.0_AE_CloudOps~G/deliverables/ADVI_PERFRP.TO-R1-AE_AC5_IAM_FIRM_PIN_EVIDENCE.md` | written, UNCOMMITTED |
-| `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/ADVI_PERFRP.TO-R1-AE_PROOF_OF_SPEC.json` | written, UNCOMMITTED — at the TO's declared base path, flagged as a lane/base discrepancy |
-| this log | written, UNCOMMITTED |
+| `…~G/deliverables/ADVI_PERFRP.TO-R1-AE_AC5_IAM_FIRM_PIN_EVIDENCE.md` | LANDED LOCAL `f3b6e91172`, rides integration |
+| `…0.7.0_AE_CloudOps/deliverables/ADVI_PERFRP.TO-R1-AE_PROOF_OF_SPEC.json` | LANDED LOCAL `f3b6e91172`, true-rc record `19e2eb77ac` — at the TO's declared BASE path; the lane/base discrepancy is declared in the instance, not silently relocated |
+| `…~G/deliverables/ADVI_PERFRP.TO-R1-AE_RULE24_SERVING_FIELDS_RECORD.md` | written — lands in the `PRF-c-1` commit beside the fields (CTO 67267) |
+| this log | written |
+
+Push state MEASURED, not assumed: `git branch -r --contains` returns 0 remote branches for both
+commits. Integrator-only push; MSTR pushes.
 
 **No infrastructure touched.** No Terraform, no policy edit, no deploy, no ledger entry opened, no
-tag. AC5 was read-only throughout.
+tag, no publisher edit. Everything this session was read-only against live AWS.
 
 ---
 
 ## Blockers
 
-**None that are mine to clear.** Two things I am waiting on, neither a hold on anyone:
+**None. Nothing is held on me and I hold nothing on anyone.** One thing I am waiting on:
 
-1. **Start condition unmet** — the DS lane's first local emission of a PERFRP leaf. Verified at this
-   seat, not taken on announcement: DS~G's only commit is `068ca0bebf` (PRF-a-1 column audit), which
-   is neither the b-1 contract skeleton nor an emission. A single-shot background wait is armed on
-   DS~G's next commit so I start at the event rather than at a message. **NOT YET STARTED is not
-   BLOCKED.**
-2. **The gate defect (66872)** — blocks AC6-class completion for all three round-1 lanes until the
-   extraction is scoped or an interim disposition is ruled. Routed to the issuer; the gate belongs to
-   the tooling lane.
+**Start condition unmet** — the DS lane's first local emission of a PERFRP leaf. Verified at this seat
+throughout, never taken on announcement. DS~G has reached `6263909c4a` (contract → 0.2.0-skeleton);
+the four commits so far are the column audit, the contract skeleton, the gains-identity mutant run and
+an SI ruling — **none is an emission**. **NOT YET STARTED is not BLOCKED.**
+
+Both items that *were* blocking are discharged, each by issuer amendment inside the round:
+- **The gate defect (66872)** → COO repaired all five round-1 TOs by RELOCATING the read/exclusion
+  prose into a sibling `<decomp_context>` element. True rc re-run: **VALID, rc=0**, backward 5/5.
+- **The fan-out collision (67037)** → ruled round-1 map form, no publisher extension.
+
+⚠ **A process note worth carrying: my start-condition detector was KILLED mid-flight** and I learned
+it from a task notification, not from a probe — DS~G's `a84a8ca770` landed inside that blind window. I
+re-armed and re-derived state from git rather than assuming the detector had been running. **A
+silently dead detector is the orphan-watcher geometry: the seat looks attentive and is not.**
 
 ---
 
 ## Current State
 
 AC5 PASS on all three planes with its controls run. AC1–AC4 and AC6 UNCOMPUTABLE, each with a stated
-reason rather than a blank. Proof instance and evidence written, uncommitted pending COO's word.
-Inbox Monitor live; four messages received, read and ACKed this session (66637, 66725, 66744, 66804).
+reason rather than a blank. Proof instance **VALID rc=0**. Inbox Monitor live all session; every
+message received was read and ACKed the same turn.
+
+**`PRF-c-1` is now fully specified and waiting only on the emission:** 11 `EMITTERS` entries, 10
+emitting; Transactions carrying a `deferred` reason string; the `deferred` field honored **by
+construction** and landing before the first publisher invocation on any PERFRP leaf; `--hold-leaves`
+left as the session-scoped operational hold with the docstring stating the distinction; the Rule-24
+two-field record landing beside the fields. AC2 collapses to eleven per-family simulates with no IAM,
+no Terraform, no apply.
+
+**Andrew-direct ~23:5xZ (via COO 67283, record @91011a1a1d):** the commit-message check belongs
+*inside* `safe-commit`, and the multi-seat re-derivation is duplicated work. **Complied immediately —
+stopped, no further traffic on that thread, back to this cell.** Form 4 is what we carry until the
+built-in lands; the build is CTO's.
 
 Known-relevant intelligence received and not re-derived: DS~G's `twr_daily` finding (returns refused
 at the frontier) as strengthened by CVO — the refused partitions carry **9 columns, not 13**, with
