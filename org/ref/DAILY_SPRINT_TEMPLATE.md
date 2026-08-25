@@ -10,32 +10,50 @@ rewrites these things in text because we are going to be doing it every single d
 must trace to a packet line, a commit hash, or a record read that day. Rewritten daily as
 `org/sprints/DAILY_SPRINT_YYYY-MM-DD.md` (yesterday's file is the base you rewrite FROM).
 
-## THE SHAPE (verbatim structure — keep the headings, the `Item N – Name – text` grammar, the terse register)
+## THE SHAPE (Andrew-direct 2026-08-25 ~2245Z: **"format these with better spacing and bullet points and etc"** -- the Teams-paste render below SUPERSEDES the prior dense form; keep the section order, the item axis and the terse register)
 
 ```
-Today Sprint:
-<5-9 one-line bullets: the day's LANDINGS and DECISIONS, highest-consequence first, plain English,
- numbers where they exist ($, counts, times), both fabrics; the last bullet may be a fabric line
- (commits / authors / seats / parity)>
-Projects:
-Item 0 – Infrastructure – <state + what moved today>
-Item 1 – Model Portfolios – <...>
-Item 2 – Advisor Intelligence – <...>
-Item 3 – Account-Level Model Overlay – <...>
-Item 4 – ETF "Positioning" variant – <...>
-Item 5 – Alt Research – <...>
-Item 6 – Opal Analyst – <...>
-Item 7 – Opal Ticketing – <...>
-Item 8 – "Philosophy"/modal edits – <...>
-Item 9 – Tax SMA Ops – <...>
-Process:
-Item 0 – <timing> – <status: Unblocked / Dependent on / Sequenced behind / DONE ...>
-... Item 1-9 same grammar ...
- 
-Blocks:
-<one line per genuine block: external (whose side, what it gates, self-heal/workaround) or a
- human act only Andrew can do; "none" if none — never pad>
+**TODAY SPRINT**
+
+<5-9 bullets, each on its OWN line with a BLANK LINE between them ("• " prefix), highest-consequence
+ first, plain English, numbers where they exist; the last bullet may be the fabric line>
+
+&nbsp;
+
+---
+
+**PROJECTS**
+
+**Item N — Name**
+<the state + what moved today, as a short paragraph under its own bold header -- NOT an inline
+ "Item N - Name - text" run-on; blank line between items>
+
+&nbsp;
+
+---
+
+**PROCESS**
+
+| Item | Timing | Status |
+|---|---|---|
+| N — Name | <timing> | <Unblocked / Held / Sequenced behind / Idle today / DONE> |
+
+&nbsp;
+
+---
+
+**BLOCKS**
+
+• **For Andrew — <subject>:** <the call, and what it gates>
+
+• **Carried, not revisited today:** <items carried from yesterday WITHOUT a measurement today,
+  labelled as such -- never restated as if measured>
 ```
+
+**WHY THE `&nbsp;` AND `---` LINES:** Teams collapses consecutive blank lines, so a bare blank line
+between sections disappears on paste and the whole text renders as one wall. The `&nbsp;` holds the
+gap and the rule gives the eye a section break. **Andrew pastes this straight into the Opal channel
+-- it has to survive the paste, not just look right in the repo.**
 
 ## THE FIRST RULE — LAYMAN, SHORT (Andrew-direct 2026-08-20, VERBATIM)
 
