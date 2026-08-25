@@ -53,6 +53,20 @@ run 08-23 -> picks 08-22 (0) -> ABORT     run 08-24 -> picks 08-23 (0) -> ABORT 
 `fact_acc has no partition date=2026-08-20` — **upstream availability, a different stage and a different cause.**
 The empty-map mechanism is **2/2 on the failures it claims** and does not claim 08-20.)*
 
+⛔ **CONFIRMED ON THE APPLIED PLANE BY `0.0.0_AB_MSTR`, AND THE DEAD PARTITIONS HAVE A FREE SIGNATURE:**
+```
+s3 smartx/platform/silver/fact_allocation_account_map
+  date=2026-08-21 Fri  775,217 B      date=2026-08-24 Mon  776,585 B
+  date=2026-08-22 Sat    4,507 B  DEAD    date=2026-08-23 Sun    4,507 B  DEAD   <- BYTE-IDENTICAL
+```
+**A parquet file with a schema and a footer and ZERO ROWS. The 175-fold gap is a free discriminator — a dead
+partition is distinguishable from a live one with `s3 ls` alone, no parquet read.** Put that in the remedy owner's
+hands.
+⛔ **AND MSTR's FIRST CONTROL COULD NOT HAVE CAUGHT IT: they checked "is the partition non-empty?" by OBJECT COUNT —
+`08-24` -> 1 object, reassuring. Then the negative control: `08-23` -> 1 object, `08-22` -> 1 object. IDENTICAL.
+THE EMPTINESS IS ROW-LEVEL AND AN OBJECT COUNT CANNOT SEE IT** — the control returned the same value for the healthy
+case and both known-failing cases. *An instrument that cannot separate the two states it is being used to separate.*
+
 **TODAY BOTH PRECONDITIONS HOLD AND IT SHOULD PROCEED:** `a00` needs `fact_acc date=2026-08-24` — **PRESENT**;
 `a06` needs a non-empty latest map — **08-24 with 7,332 rows, and NO 08-25 partition exists as of 11:29:03Z.**
 ⛔ **THE ONE RESIDUAL RISK, NAMED AND NOT EXCLUDED: if an EMPTY `date=2026-08-25` map partition lands before 12:45Z,
