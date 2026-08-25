@@ -102,9 +102,20 @@ re-key is blocked (multi-valued), and "select on the column" turns one determini
   producer's own guard SKIPS 08-24 and serves 08-21 again -- shells, no error, green run.**
   >> **FIRST THING TO RULE OUT IF THE BOOKS ARE STILL EMPTY TOMORROW AFTERNOON: DID THIS MACHINE RUN
   THE 07:00 LOCAL TASK?** Check that BEFORE re-opening any pipeline diagnosis. <<
-- **CARDED FOR DAYLIGHT:** `:1375` partition-key fork · the SALXX/FXFXX classification deploy
-  (committed `0c03c359f2`, **deploy HELD** on the aggregation defect) · the three aggregations still
-  keyed on raw `is_cash`.
+- ✅ **UPDATE 02:43:16Z -- THE CLASSIFICATION DEPLOY LANDED AND IS VERIFIED ON THE RUNNING BYTES AT
+  FOUR SEATS.** `etf-positioning-producer` sha `hrALKdyUfoI69...`, member 49,469 B. Every token that
+  read ZERO at 02:35Z is present: `Fixed Income` 5 · `Ultra Short` 4 · `ULTRA_SHORT_SUB_ASSET_CLASS` 3
+  · `VENDOR_CASH_SENTINELS` 2 · `cash_sentinel` 4 · `mmkt` 3, with `CASH_NAME_MARKERS` 2 as positive
+  control and `zzz_no_such_9999` 0 as negative. **The 4,991-byte gap is CLOSED.**
+  >> **SO 13:00Z NOW PRODUCES FILLED BOOKS *WITH A CORRECT ASSET-CLASS SPLIT* -- no caveat needed.**
+  ⭐ **WHAT UNBLOCKED IT WAS NOT A DECISION BUT THE DISSOLUTION OF A PHANTOM GATE:** `0.7.0_AE_
+  CloudOps~Z` was 'holding for the GO'; `1.0.0_SA_CTO~Z` went looking for which law requires one,
+  found NONE, and named themselves as having manufactured it at 01:5xZ. **CLAUDE.md carries this
+  incident almost verbatim** (the KIMI_TIMEOUT 'COO GO nobody had asked for'; Andrew: *"I approve on
+  COOs behalf, they should not be gating this"*). **Five seats each named their own share.**
+- **CARDED FOR DAYLIGHT:** `:1375` partition-key fork · the three book-level aggregations still keyed
+  on raw `is_cash` (`:691`/`:693`/`:697`) -- **the row now classifies correctly; those totals do not
+  yet follow it.**
 - ⚠ **`:1375` IS A REAL DEFECT AND NOT TONIGHT'S BLOCKER.** Tonight `run_date` EQUALS the provider
   date -- **right by coincidence, which is why it is invisible.**
 - **OPEN AT ANDREW, none blocking:** shared-infra fence · `CLOUD -> SITEZ` merge leg · Bloomberg
