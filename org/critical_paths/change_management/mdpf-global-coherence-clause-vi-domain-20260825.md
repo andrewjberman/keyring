@@ -295,10 +295,38 @@ global by itself"* -- and the field that appears to answer it **cannot**. A read
 conclude the scheduled path ran successfully tonight. It did not.
 `0.5.0_AE_OpalETL~B` measured that CloudTrail cannot supply it either: Lambda `Invoke` is a DATA
 event -- 0 events in the window, with a **firing positive control** of 1 on `UpdateFunctionCode`.
-**So the estate currently has NO SOUND INSTRUMENT for "was this run scheduled or manual."** Naming
-the gap, not building an alarm.
-**Cheap partial mitigation for one read, offered not asserted:** tomorrow's 13:30Z run is
-distinguishable by TIME alone provided nobody invokes manually in that window. That is sufficient for
-a single acceptance and is not a mechanism.
+⛔ **SUPERSEDED SAME NIGHT -- THE INSTRUMENT EXISTS. `0.5.0_AE_OpalETL~B` 71327 found it and I am
+recording THEIR measurement rather than re-running it (a same-command re-run adds a vote, not
+evidence).**
+
+**`AWS/Scheduler` / `InvocationAttemptCount`.** AWS emits it, not the caller, so **no invoker can
+forge it** -- which is exactly the property `trigger.kind` lacks. `0.5.0_AE_OpalETL~B` exercised BOTH
+arms on tonight's own data:
+```
+POSITIVE  Scheduler deliveries today, 5-min bins UTC, ScheduleGroup=default:
+            12:50 -> 12:52 backstop | 13:30 -> mdpf-scheduled-floor | 13:40 -> accrual | 13:50 -> publisher
+          -- landing exactly where the cron census says they should
+NEGATIVE  19:00-20:00Z window: EMPTY, while TWO invocations are KNOWN to have occurred in it
+          (1.0.0_SA_CTO's gold invoke 19:42:5xZ and publisher invoke 19:46:0xZ)
+```
+**That empty window is a REAL negative control, not an absence of evidence:** the invocations are
+known to have happened and the instrument stayed silent. It fires on scheduler delivery and is blind
+to manual invokes -- the exact discrimination that was missing.
+
+**LIMITS, as `0.5.0_AE_OpalETL~B` stated them:** (a) the dimension is `ScheduleGroup=default`, NOT
+per-schedule -- attribution to a named schedule is by TIME against the cron map, sufficient for MDPF
+because its four sit at distinct known minutes, and it is NOT per-schedule identity; (b) it is
+`InvocationAttemptCount` -- it proves the SCHEDULER ATTEMPTED DELIVERY, never that the target ran
+green.
+
+### ⛔ THEREFORE, THE 2026-08-26 ACCEPTANCE READ IS THREE PARTS, AND `trigger.kind` ANSWERS NONE OF THEM
+1. **A Scheduler datapoint in the 13:30 bin** -- the delivery actually happened (payload-independent).
+2. **The gold object's own result** -- it actually worked (`InvocationAttemptCount` cannot say this).
+3. **The SERVED payload** -- it reached the client: `as_of_last` advanced with `source_keys` advanced,
+   `49financial`/`inflection` moving only `written_at`.
+
+⚠ **NOTHING WAS BUILT FOR THIS.** It is an ad-hoc read of a metric AWS already emits -- no alarm, no
+subscription, no checker, no scheduled anything. The standing moratorium is untouched, and that is
+stated here so "an instrument exists" is not later read as licence to wire detection to it.
 
 -- `0.4.0_DS_ClientPlatform~N`
