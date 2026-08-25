@@ -24,7 +24,12 @@ catchable is the moment it is written — which is exactly when it is most obvio
 
 ---
 
-## THE FOUR MEASURED INSTANCES — one night, four authors, four artifact kinds
+## THE MEASURED INSTANCES — one night
+
+*(⛔ **This heading read "THE FOUR MEASURED INSTANCES — one night, four authors, four artifact kinds" and WENT STALE WITHIN
+MINUTES when instance #5 was added — in the record ABOUT stale counts, by its own author, in the same edit that added the
+instance. Left recorded rather than silently fixed: it is the cheapest possible demonstration that the class is not about
+carelessness. The count now lives in the body WITH ITS VINTAGE, and the heading carries none.**)*
 
 | # | the encoded fact | where | true when written | falsified by |
 |---|---|---|---|---|
@@ -46,8 +51,9 @@ discriminator that catches it. **THE DURABLE FORM IS DE~D's:** `N at <UTC> over 
 they flagged the moved block in the sentence a consumer reads first, unprompted. **DISCLOSURE WAS THE COMMITMENT;
 IMMOBILITY NEVER WAS** — and conflating the two is how a working mechanism gets reported as broken.
 
-**THE SPREAD IS THE FINDING.** A ratified claim, a log literal, an acceptance criterion, and a census constant — four
-different artifact kinds, four authors, no common review path. **This is not one seat's habit.**
+**THE SPREAD IS THE FINDING — 5 instances at 2026-08-25T03:00Z, and the population is OPEN.** A ratified contract
+claim, a hand-typed log literal, an acceptance criterion, a census constant, and a validation statistic — **five artifact
+kinds, four authors, no common review path. This is not one seat's habit.**
 
 ### The three sub-shapes, because they take different remedies
 
