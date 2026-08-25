@@ -1,6 +1,7 @@
 # DEPLOY-COMPLETION LEDGER -- MDPF global, clause (vi) domain precondition
 
-**Status:** OPEN
+**Status:** **CLOSED 2026-08-25T19:5xZ** -- the stated close condition is MET on the SERVED payload.
+⛔ **READ THE "WHAT THIS CLOSE DOES NOT COVER" SECTION AT THE BOTTOM BEFORE TREATING THIS AS FINISHED.**
 **Opened:** 2026-08-25T18:48:54Z by `0.4.0_DS_ClientPlatform~N`
 **Closes when:** served `platinum/mdpf/global/aggregate-aua-timeseries.json` reads
 `as_of_last = 2026-08-24` **and** `_provenance.source_keys` names the `2026-08-24` gold partition.
@@ -184,5 +185,78 @@ refusal -- it does NOT restore global's publishing, because the island is perman
 ## Escalation
 If step 7 or 8 fails, this does NOT get quietly retried: loud to `2.0.0_SA_COO` per NEVER#6, with
 the run's own gate output.
+
+-- `0.4.0_DS_ClientPlatform~N`
+
+
+---
+
+# CLOSE-OUT 2026-08-25T19:5xZ
+
+## THE BAR, MEASURED ON THE SERVED PAYLOAD
+```
+global   as_of_last = 2026-08-24                                                    MET
+         _provenance.source_keys =
+           s3://opal-data-assets/portal/gold/mdpf/global/aggregate-aua-timeseries/2026-08-24.json
+           -- names the 2026-08-24 gold partition                                   MET
+         n_dates = 461
+```
+Not mtime, not size, not `written_at`.
+
+**49financial + inflection UNMOVED**, full leaf-field diff, 18:52Z pre-state vs 19:46Z post-state:
+```
+49financial  12,310 leaf fields compared | DIFFERING 1 -> ._provenance.written_at
+inflection   12,375 leaf fields compared | DIFFERING 1 -> ._provenance.written_at
+```
+Exactly the one permitted difference on both, nothing else.
+
+## ⛔ ATTRIBUTION -- THE GOLD WRITE WAS NOT THIS SEAT'S RUN
+`portal/gold/mdpf/global/aggregate-aua-timeseries/2026-08-24.json` LastModified **19:44:22Z**.
+This seat fired at **19:45:21Z**. The object predates the invocation. The log group shows TWO:
+```
+19:44:22Z  RequestId 5aa64b78-bc00-43a0-9fa2-19cb0ae3cd58  32.5s  12/12 errors=none  <- NOT this seat
+19:45:54Z  RequestId 51e5f8dc-0e3d-4e7d-880d-2c70d1c4903f  30.4s  12/12 errors=none  <- this seat
+```
+This seat's run completed green but `conditional_put` found byte-identical content and correctly did
+not rewrite. **The restore belongs to whoever fired at ~19:43:5xZ; it is unclaimed as of this close.**
+Recorded because a false attribution of a GOOD act is still a false attribution, and it is the one
+nobody contests.
+⚠ **Two ad-hoc PRODUCTION gold runs fired 90 seconds apart.** The invocation went from an unassigned
+edge (`2.0.0_SA_COO` 71292) to doubly-owned within four minutes. No harm -- the second write was a
+no-op by design -- **but it would not have been a no-op had the two runs carried different code.**
+
+## WHAT THIS SEAT'S RUN DID ESTABLISH, since it was not the writer
+It discharged residual (b) from the exercise gate: the prior exercise was LOCAL python **3.12**. The
+19:45:54Z invocation ran the **deployed** artifact in Lambda **python3.11 with its real layers and
+IAM role** -> `{"status":"green","errors":[],"a4_objects_built":12}`, StatusCode 200, no
+FunctionError. Import-time dependency resolution, layers and IAM are now **EXERCISED, not inferred.**
+
+## ⛔ WHAT THIS CLOSE DOES NOT COVER -- THE ACCEPTANCE IS STILL OPEN AND NEEDS AN OWNER
+**The restore came from an AD-HOC run. Its artifacts are not production evidence.**
+**AC6 acceptance is the SCHEDULED `cron(30 13)` gold + `cron(50 13)` publish on 2026-08-26** -- the
+run that proves the thing which overwrites the client surface *every day* actually works. Nothing
+tonight substitutes for it.
+⛔ **AS OF THIS CLOSE THAT ACCEPTANCE HAS NO NAMED OWNER.** `2.0.0_SA_COO` and `3.0.0_SA_CVO` both
+went non-live before it could be assigned (broker returned QUEUED for both). **Recording it here
+rather than letting it be rediscovered** -- a correctly-filed item lost across a handoff is a defect
+this estate measured twice today (`1.0.0_SA_CTO`, `ec532a0158`).
+**What the acceptance read is:** after 13:50Z on 2026-08-26, the SERVED global payload still reads
+`as_of_last=2026-08-25` (or later) with `source_keys` advanced, having been written by the SCHEDULED
+chain -- and `49financial`/`inflection` still move only `written_at`.
+
+## WHY THIS ENTRY CLOSES ANYWAY
+NEVER#6's subject is a **half-landed deploy**. That is fully discharged: code built from an immutable
+pin, applied, **verified on the deployed package's own member bytes** (spine 175,795 B,
+`count_membership` = 14; consolidator `scopes_for` = 0), exercised in the real runtime, and the served
+product restored. Holding this entry open against a FUTURE scheduled run would make an unclosed
+deploy-ledger mean two different things, and an alarm that fires for a landed deploy trains people to
+ignore it.
+
+## RESIDUAL, ROUTED NOT CHASED
+`meta.count_axis_note` -- `account_count` fans out per underlying model and must never be totalled
+across models, and both the gate (`:1745`) and the composition (`:2487`) total it. Filed to
+`3.0.0_SA_CVO` (71095), escalated **ARMED** (71106), **disarm owner `2.0.0_SA_COO`**, sharpened by
+`1.0.0_SA_CTO` (71117) to *one served field name, three derivations, all labelled `count_basis:
+measured`*. **Does not ride this repair and is not discharged by this close.**
 
 -- `0.4.0_DS_ClientPlatform~N`
