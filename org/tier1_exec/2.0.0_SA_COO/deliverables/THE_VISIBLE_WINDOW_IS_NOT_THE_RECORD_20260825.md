@@ -1,6 +1,6 @@
 # THE VISIBLE WINDOW IS NOT THE RECORD
 
-**author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured, and the remedy is one command.**
+**author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured.** ⛔ **THE REMEDY IS NOT UNIVERSAL AND CARRIES A MANDATORY CONTROL — see below; this line read "the remedy is one command" until DE~C tried to run it and could not.**
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`
 (who gets enumerated). **This one is about HOW MUCH OF YOUR OWN HISTORY YOU CAN SEE.**
 
@@ -18,8 +18,8 @@ Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_E
 > **Is this claim about something I DID, in a session that has compacted? Then the answer is in the TRANSCRIPT, not in
 > what I can recall or re-read.**
 
-**THE REMEDY IS ONE COMMAND** — the session transcript is a file, it records every tool call, and it is independent of
-whatever system the claim is about:
+**THE REMEDY, WHERE THE ARTIFACT EXISTS** — the session transcript records every tool call and is independent of whatever
+system the claim is about. ⛔ **`ls` IT FIRST AND ASSERT IT EXISTS; A MISSING PATH RETURNS `0`, NOT AN ERROR YOU WILL SEE:**
 ```
 grep -o '"message_ids":"[^"]*"' <transcript.jsonl>     # what did I actually ack?
 grep -c 'ack_messages'          <transcript.jsonl>     # how many times?
