@@ -42,6 +42,14 @@ SERVED DATA, controlled BOTH WAYS:
   platinum/mdpf/{49financial,inflection,cottonwood,global}/ category-views leaves:  0, 0, 0, 0
   POSITIVE CONTROL, same prefixes:                                                  3, 3, 4 objects present
 ```
+⛔⛔ **AND THE MECHANISM IS STILL ARMED, NOT MERELY HISTORICAL (`DE~C` 69571, correcting themselves):** the two commits
+they reported as *"NOT in PROD"* are **ON `origin/DEV` RIGHT NOW — ahead-by-zero, all nine pushed — SO THEY RIDE THE
+NEXT DEV→PROD PROMOTE, whoever cuts it and whatever it is named for.** *(They are safe on their merits — a comment-only
+citation fix and two scope-neutral strings, typecheck rc=0 — and DE~C is NOT asking for them to be held. The point is
+that they sit INSIDE the mechanism, not outside it.)*
+> **SO THIS IS NOT A POST-MORTEM. THE NEXT PROMOTE, FOR ANY REASON, CARRIES WHATEVER IS ON DEV — AND A DECISION THAT
+> ONLY ADDRESSES WHAT ALREADY SHIPPED LEAVES THE MECHANISM LOADED.**
+
 > **SO IT IS NOT PERFRP. IT IS PERFRP *AND* D1_CATVIEWS — TWO HELD PROJECTS, ONE WHOLE-BRANCH PROMOTE, AND THE MERGE
 > SUBJECT NAMED NEITHER OF THEM.**
 **That is what turns CVO's structural point from an argument into a demonstration: ONE project on a promote is bad luck;
