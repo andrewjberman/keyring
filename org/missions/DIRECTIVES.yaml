@@ -149,7 +149,9 @@ directives:
         NOT A DEFECT. MEASURED at the edit: org/projects/ETFS_INGEST.json EXISTS on origin/SITEZ (7
         ETFS_* project files) and is ABSENT on origin/CLOUD (6) -- the project was registered on the
         site-Z fabric this session. directives-check.py resolves a missing member file to a labelled
-        [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json];
+        [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json] -- THAT PRECEDENT IS SPENT, resolved
+        2026-08-25 by 0.0.0_AB_MSTR: PFMG_TAXSMA was not an unregistered project but a SUPERSEDED
+        CODE (-> OPAL_TAXSMA, 2026-07-14), so the label was pointing at a rename, not at an absence;
         malformed=0 across all 9 live rows).
         THE ORDERING WAS CHECKED BEFORE WRITING: a MEMBER ROW pointing at an absent project is
         VISIBLE and labelled, and the label expires on its own when the json arrives with
@@ -352,9 +354,14 @@ directives:
     placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
     members:
       subgroups: []
-      projects: [PFMG_TAXSMA]
+      projects: [OPAL_TAXSMA]
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
       -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427
       (Andrew's ruling-8 YES executed 08-19; workflow-as-designed source now in-tree, ferried to the
-      sitez assessment seat)."
+      sitez assessment seat).
+      MEMBER CODE CORRECTED 2026-08-25 by 0.0.0_AB_MSTR (register owner): was [PFMG_TAXSMA],
+      which rendered [no-json]. NOT a missing project -- a SUPERSEDED CODE (lineage
+      ADVI_TAXSMA -> PFMG_TAXSMA -> OPAL_TAXSMA, per OPAL_TAXSMA.json renamed_from). Grounding,
+      the Rule-25 ABANDONED-vs-KEY-MIGRATED discriminator, and the OPEN CALL on whether
+      OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454."
