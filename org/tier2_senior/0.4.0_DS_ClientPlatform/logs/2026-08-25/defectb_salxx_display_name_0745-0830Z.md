@@ -217,3 +217,28 @@ defects reach the page through different mechanisms and should not be reported a
 of a 120,000 ms timeout and 264 MB of 512 MB. Rule-5 sizing holds, but the measured wall time is
 ~2.5x the TO contract's stated 15.0 s worst case (Init 2,297 ms is only part of it). Headroom is
 smaller than the contract implies.
+
+## ADDENDUM 2 -- MY OWN HOUR-11 COUNT WAS ALSO INCOMPLETE
+
+The findings table above records "9 rules fire in hour 11". **That number is mine and it is short.**
+`1.0.0_SA_CTO~Z` re-derived rather than accepting a correction they already agreed with, and found
+**TEN**: `access-anomaly-scanner-schedule` is `cron(0 * * * ? *)` -- **a WILDCARD hour field is
+invisible to a literal-hour matcher**, and mine tested `"11" in hour_field.split(",")`. So my
+matcher handled the list form (`11,21`) that CTO~Z's exact-match missed, and missed the wildcard
+that theirs caught. `0.7.0_AE_CloudOps~Z` layered it further: **9 / 10 / 19** depending on whether
+you count exact + list, plus every-hour, plus `rate()` rules.
+
+>> **THE SAME PATTERN-FRAME CLASS BIT THE ORIGINAL CLAIM AND BOTH CORRECTIONS, ONE LEVEL DOWN EACH
+   TIME.** I caught the prefix-vs-field error and then made a field-vs-*expression-language* error.
+   Parsing the field was the right move and it was not sufficient: a cron hour field is a small
+   language (literal, list, range, step, wildcard) and I enumerated two of its five forms. <<
+
+**The operative conclusion is unchanged and is the reason the exact count does not matter:** the
+hour-count framing should be RETIRED, not repaired. The claim that goes to Andrew is hour-independent
+and unfalsifiable by any of these numbers -- **ZERO rules match `bbg|bloomberg|terminal` at ANY hour
+(137 materialised; positive control `etf` = 8, so the matcher discriminates).** All four seats
+converged on that wording.
+
+**Banked:** two seats agreeing on a number is not the number being right -- CTO~Z and I agreed on 9
+and both were wrong. **Re-derive a MEASUREMENT, not a FINDING** (CTO~Z's formulation): the first can
+surface a defect the agreeing seats share, which is exactly what happened here.
