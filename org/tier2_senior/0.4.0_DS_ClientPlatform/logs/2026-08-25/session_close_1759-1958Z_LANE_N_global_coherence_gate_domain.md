@@ -123,7 +123,10 @@ usefully: I called `conditional_put`'s no-op luck; it is a **designed idempotenc
 
 ## Next Steps
 
-1. **[UNOWNED -- needs an owner]** The **2026-08-26 scheduled acceptance**. The restore came from an
+1. **[`1.0.0_SA_CTO` -- OWNED; corrected 21:2xZ, this log first said UNOWNED]** The **2026-08-26
+   scheduled acceptance**. `1.0.0_SA_CTO` claimed it in 71351 at 20:20Z (surfaced to me by
+   `3.0.0_SA_CVO` 71468 -- the claim went to CVO, not to me). It was already owned when this log was
+   written; the read below is the SPEC for its owner, not an open assignment. The restore came from an
    ad-hoc run; AC6 is the SCHEDULED `cron(30 13)` gold + `cron(50 13)` publish. `2.0.0_SA_COO` and
    `3.0.0_SA_CVO` both went non-live before it could be assigned (broker QUEUED). Raised to
    `1.0.0_SA_CTO` (71315) and written into the closed ledger. **The read is three parts:** an
