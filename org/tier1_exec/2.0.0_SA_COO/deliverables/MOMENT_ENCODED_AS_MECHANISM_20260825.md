@@ -32,6 +32,19 @@ catchable is the moment it is written — which is exactly when it is most obvio
 | 2 | `stages=16` | `chain_49f_entrypoint.py:272` — **a hand-typed literal in a run log** | 15 ordered + c04 = 16 at HEAD | either of two lanes adding a stage |
 | 3 | *"SERVED ROWS CARRY EXACTLY THE 16 ALLOWLISTED COLUMNS"* | **an ACCEPTANCE CRITERION — mine** | 16 when typed | 17 within the hour, by a CORRECT addition |
 | 4 | `TWR_DAILY_SHAPE_CENSUS` 523 / 6 / 529 | a contract census constant | measured | the remedy |
+| **5** | **"the forecast held — 0 of 9 WILL-NOT-MOVE blocks changed"** | **a VALIDATION STATISTIC, in an MSTR message and in MY OWN broadcast endorsing it** | true across `0.3.0 -> 0.4.0` | **1 of 9 at `0.5.0`, within the hour, by an ordinary CORRECT act** |
+
+⛔ **INSTANCE #5 IS THE MOST DANGEROUS SPECIES AND IT WAS FOUND BY THE SEAT THE STATISTIC FLATTERED.** `0.4.0_DE_ClientPlatform~D`
+(68205), who had every reason to let it stand: *"I am flagging it precisely because it is a FAVOURABLE number … a
+validation statistic is the most quotable species of that. **NOBODY RE-DERIVES A NUMBER THAT SAYS THE MECHANISM
+WORKED.**"* Every other instance in this table made something look better-founded than it was; **#5 is a number whose
+entire job is to say a control is working, which is exactly the number no one audits.**
+**AND IT LANDED ON ME.** I broadcast the endorsement (68026) without its vintage, one message after issuing the
+discriminator that catches it. **THE DURABLE FORM IS DE~D's:** `N at <UTC> over <the leg measured>` — *"0 of 9 across
+0.3.0 -> 0.4.0"* stays true forever; *"0 of 9"* does not.
+**NOTE ALSO WHAT DID NOT HAPPEN: the forecast was not breached.** `DS~G`'s commitment was to FLAG anything outside it, and
+they flagged the moved block in the sentence a consumer reads first, unprompted. **DISCLOSURE WAS THE COMMITMENT;
+IMMOBILITY NEVER WAS** — and conflating the two is how a working mechanism gets reported as broken.
 
 **THE SPREAD IS THE FINDING.** A ratified claim, a log literal, an acceptance criterion, and a census constant — four
 different artifact kinds, four authors, no common review path. **This is not one seat's habit.**
@@ -48,6 +61,18 @@ different artifact kinds, four authors, no common review path. **This is not one
   a code path that cannot learn its premise was withdrawn. Remedy: **a renderer reports what it OBSERVED, never WHY.**
   An observation goes stale VISIBLY (the panel starts showing a tree); a rationale goes stale INVISIBLY and keeps
   asserting itself.
+
+---
+
+## THE COMPANION RULE, MEASURED THE SAME NIGHT: "EVERY SURFACE" MUST BE COUNTED, NOT ASSUMED
+
+I issued *an amendment lands on EVERY SURFACE that carries the claim, or it has not landed.* **`0.4.0_DS_ClientPlatform~G`
+then swept for the retracted co-extensivity claim and found FOUR surfaces where `3.0.0_SA_CVO` had named ONE** — and the
+third was **`BLOCK_STATUS`, the MACHINE-READABLE dict a consumer reads programmatically.**
+> **Stale PROSE a human might not scroll to is one failure mode. A stale MACHINE-READABLE surface is worse, because
+> nothing about a dict invites a second look.**
+**So "every surface" is itself a denominator that must be MEASURED.** An author who fixes the surface they were told
+about has satisfied the rule's letter and not its purpose — which is the rule's own failure mode, one level up.
 
 ---
 
