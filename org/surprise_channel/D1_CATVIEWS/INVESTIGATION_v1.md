@@ -209,6 +209,25 @@ reached INERT (66521).
   },
   "disposition": "GRADUATED",
   "notes": "THE CLASS IS A GRAIN MISMATCH AT THE RENDER, and it is the same family as tonight's issuer defects one plane over: every value on the panel is TRUE, and the ADJACENCY manufactures a claim none of them makes. A reader concludes either '$43.5M of client money sits in models we do not serve' or 'the member list does not account for the money' -- and the real explanation is NEITHER, because the two figures are at different grains. Rule 24(ii) at the presentation layer rather than at a schema: two grains rendered on one axis. || WHY IT IS INERT AND NOT ARMED: nothing degrades while it stands and no act is pending -- the harm is a reader's inference, and the surfacing seat caught it by READING THEIR OWN RENDER rather than by trusting the values they had just verified individually. That is the frontend analogue of premise-verification, and it is the FIFTH time tonight an executing seat found something no document-plane check could see. || The seat proposes a label change on their own panel and chased nothing further, which is the correct scope: a grain mismatch is fixed by disclosing the grain (naming `served` as a registry property at the point of render), not by suppressing a true value. CERTIFIER NOTE: this touches D1-h-v3 (the L2 Custom drill) but is NOT a decomp defect -- the cell is enumerated and its oracle runnable; what the panel MEANS to a reader is a render-quality property no alignment or viability check reaches."
+ },
+ {
+  "id": "D1_CATVIEWS-S7",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C, self-scanning their OWN task order on the issuer's ask -- reported, not fixed; denominator stated first and severity graded",
+  "surfaced_at": "2026-08-25T01:49Z",
+  "one_line": "TO-R1-DE CONTRADICTS ITSELF about the D1-h-v4 unavailable case -- the cell description at :70 says '(Inflection today)' while AC5 at :87 in the SAME FILE says Inflection is NOT the unavailable case and ZERO firms exercise it -- because the issuer amendment landed on the ACCEPTANCE ROW and not on the CELL DESCRIPTION.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "DENOMINATOR STATED FIRST: 6 checkable factual claims in the TO; 2 are instances, 4 verified TRUE (members_for('Models > Custom') exists; O-4's view-plane flag premise holds with view_plane.excluded = ['Insurance']; the comp-cache collision sites are exactly as the tool reported; the 2,471-line count was true at issuance)",
+    "INSTANCE 1 (HIGH): TO-R1-DE:70 cell description says predicate unavailable '(Inflection today)'; TO-R1-DE:87 AC5 says 'Inflection is NOT the unavailable case -- it carries a live account-grain predicate (is_fee_earning, 911 accounts), so ZERO firms exercise this today'",
+    "INSTANCE 2 (MEDIUM): the tree table at :61 lists SMA nodes as 'Tax / Muni / DIVZ / PFOE' -- those are the STRATEGY IDS; the emitted block at ref 23271aac64 carries display_names 'Dividend SMA' / 'Opal Equity Growth SMA' / 'Muni SMA' / 'Tax-Managed SMA'",
+    "the seat rendered display_name and got it right BECAUSE the same sentence carries its own antidote ('render whatever the block carries'), not despite the list"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE GRADE IS ABOUT WHICH HALF IS STALE, NOT THAT ONE IS -- and that reasoning is the reusable part: 'the Cells section is where a seat goes for WHAT TO BUILD, the acceptance table is where it goes for HOW IT IS JUDGED.' A seat reading only the Cells section builds an Inflection fixture for a firm that is not the case. The surfacing seat read both and used the amended one, and named that as LUCK OF READING ORDER, NOT A CONTROL. || A DISTINCT SUB-SHAPE OF THE S10 CLASS, worth separating: this value WAS sourced and then FALSIFIED, where S10's instances were never sourced at all. Same failure mode -- a plausible specific value sitting in a spec with nothing marking it dead -- but the remedy differs: S10's is 'do not write example values', this one is 'AN AMENDMENT MUST LAND ON EVERY SURFACE THAT CARRIES THE CLAIM, NOT ONLY ON THE ROW THAT PROMPTED IT'. Issuer's act. || INSTANCE 2 GRADED MEDIUM FOR A NAMED REASON rather than by feel: the sentence carries its own antidote and removing seven words would make it HIGH. Grading by what the text DOES rather than by how wrong it looks. || SEE ALSO ADVI_PERFRP-S10: the same class, four instances, other project, also found by executing seats reading their own TOs. FIVE lanes have now self-scanned and every one found something; NO instance in this class was found by a certifier."
  }
 ]
 ```
