@@ -116,6 +116,51 @@ BROADCAST FIRST — I did it in the other order, and a hedge on PROVENANCE does 
 
 ---
 
+## 7b. ADDENDUM — 13:10Z → 13:52Z: BOTH TOs ACCEPTED, AND FOUR MORE CORRECTIONS OF MINE
+
+**BOTH Andrew-named projects DELIVERED and at CVO.** `D3_MODELOVERLAY` **45 min from seating** (VALID rc=0, 16/16);
+`ADVI_INSURE` (VALID rc=0, 14/14, pattern record cot-prefix **0 with a FIRING positive control**). Re-verified at my
+seat, not accepted on report. ⛔ **`~K` reported that their gate FAILED FIRST at rc=1 and they fixed and re-ran —
+disclosing a red arm that was invisible in the artifact.** *"A gate that only ever passed was never tested."*
+
+⛔ **THE CI THREAD: I WAS WRONG FOUR TIMES AND EVERY CORRECTION IMPROVED THE FINDING.**
+
+| # | I asserted | true | caught by |
+|---|---|---|---|
+| 1 | *"carries a failing build to PROD"* | build UNMEASURED; PROD typechecks independently and passed | MSTR, **at source before anyone acted** |
+| 2 | *"your typecheck means nothing"* | they ran BUILD MODE, 18.8s — **the local lane was doing it RIGHT and CI wrong** | `DE~D`, about their own work |
+| 3 | *"the state you just created"* | **the commit was on no remote** — and `~D` had SAID SO in the sentence I replied to | me, on CTO's prompt |
+| 4 | a P0 TO on a false-green premise | **`ci.yml:60` runs `tsc -b && vite build` — coverage EXISTS at step 5** | `~C`, **pre-flighting my own ordered change** |
+
+> ⛔ **ALL FOUR ARE ONE ACT: A CONSEQUENCE ASSERTED WITHOUT READING THE ONE FIELD THAT DETERMINES IT** — the workflow
+> file, the command, the push state, the next line. **I recorded the class (`PUBLISHING_WHILE_OTHERS_MEASURE`) and
+> produced instance 4 ten minutes later. WRITING THE RULE IS NOT OBEYING IT.**
+
+**AND I CAUGHT ONE MYSELF, WHICH IS THE FIRST TODAY:** my `PORTAL_CITYPECHECK` TO's `<issued_to>` claimed a spawn
+*"requested from MSTR ~13:35Z"* — **I never sent it.** ⛔ **The announcement-outran-the-act class IN A DURABLE ARTIFACT,
+where the law's `-F` exemption does not reach: that exemption rests on ATOMICITY, and a `<issued_to>` field is a claim
+about an act, written before it, in a file that persists whether the act happens or not.** **Cost to catch: one grep.**
+
+**THE OUTCOME WAS BETTER THAN ANY OF MY VERSIONS.** CI green on `fce757cb` **and the green is REAL** (step 5 typechecked
+it). **CTO and I both predicted accumulated type errors as "the correct cost"; `~D` predicted ZERO. Measured: ZERO** —
+`tsc -b` was never absent, only misnamed and misplaced. ⛔ **The surviving hazard is `~C`'s and it is the inverse of
+mine: coverage depends on a step whose NAME does not advertise it, so anyone splitting `tsc -b` out of `Build`
+silently removes the only type coverage CI has while the step that LOOKS like the guard stays green.**
+
+**`GLD-f-3` RESOLVED AS TWO STATES** — hazard CLOSED by the 12:45Z exercised evidence, **record gap OPEN with a named
+owner**, because one verdict would convert dangerous-and-visible into safe-and-invisible.
+
+⛔ **THE 106 NO-STATUS LEDGER RECORDS — AND THE FINDING UNDER IT.** I parked them as ownerless; **MSTR showed a LIVE
+Andrew-approved GO existed on that instrument — one I ISSUED AND GO'd MYSELF on 08-18.** Scope call made and
+CTO-confirmed: **NOT in that TO's scope (five sentinel rows vs 106 unfielded records — disjoint), but BLOCKED-ON-SEQUENCE
+behind it**, since that TO defines the lifecycle axis they would be classified against.
+> **I COULD NOT FIND MY OWN GO BECAUSE `NFRA_DEPLOYLEDGER` HAD NO PROJECT JSON UNTIL 12:35Z TODAY.** MSTR minted it
+> under Andrew's Fix 1 ninety minutes earlier. **AN UNREGISTERED PROJECT IS ONE WHOSE LIVE AUTHORIZATIONS CANNOT BE
+> FOUND BY THE PEOPLE WHO GRANTED THEM.** *Fix 1 demonstrated against the seat that granted the GO. I had been reading
+> it as records tidiness.*
+
+---
+
 ## 8. For the next seat
 
 1. **`GLD-f-3` IS STILL OPEN** — no deploy-completion entry for the twr mirror remedy or the 07:17Z push, **and it is
