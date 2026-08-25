@@ -113,3 +113,57 @@ Adopted by CTO~X unreservedly. **It is not an age bar and needs no sovereign wor
 `CLOUD_COMP_TESTER` 17 · `SHARED_CLOUD_OPS_OR_EXEC` 15 · `ANY_POD_OR_EXEC` 3 ·
 `SHARED_OPAL_ETL_OR_EXEC` 2 = 97. **41% is exec-only by construction**, which is why "a fresh Tier-2
 lane" was never the answer and no spawn was needed.)*
+
+---
+
+## ⛔ UPDATE 17:5xZ — ONE ITEM STRUCK, ONE ITEM ADDED, AND THE ADDED ONE IS CLIENT-FACING
+
+### STRUCK — the S3 code-prefix first-mint. IT WAS NOT A GAP.
+
+I carried *"is there a consumer of `s3://opal-data-mdpf/code/scripts/silver/mirror_schemas.py`?"* as
+an owed item. **Answered from two directions and it resolves completely:**
+
+- **`0.5.0_AE_OpalETL~B`** (under Andrew's direct instruction at their terminal): the prefix **IS**
+  consumed — `mdpf-daily-dispatch.sh:125` syncs it, `:546` puts silver on `PYTHONPATH` — **but every
+  importer of `mirror_schemas` is SILVER-layer. Gold importers: MEASURED ZERO over 118 files, ZERO
+  over 27.**
+- **`0.0.0_AB_MSTR`**, independently: the prefix has a live consumer, **but the ABSENT FILE has no
+  importer in that consumer's EXECUTION PATH** — silver runs in vendored Lambdas, not on the EC2
+  runner.
+
+⛔ **THE 404 IS A TRUE NON-MEMBER AND THE MEMBERSHIP GUARD WAS RIGHT.** **Struck, not deferred** — *an
+owed item that turns out not to exist is worse than one that does, because it consumes a seat and
+then reports success.* **Second item struck today for that reason** (the first: the D8 "missing
+schedule", where the backstop already existed).
+
+**The grain lesson is MSTR's and it nearly caused a second P0 halt:** *"does the PREFIX have a
+consumer"* is **not** the operative question; *"does the ABSENT FILE have an importer in what that
+consumer EXECUTES"* is. **"Live consumer, therefore live hazard" is a different claim.**
+
+### ADDED — OWED SEATING 4: the global `2026-08-19` foreign-day roster. **CLIENT-FACING AND DARK.**
+
+**Class DS, fresh lane, this project only. IMMEDIATE. Spawn request with MSTR 17:56Z. Tag to D8 at
+creation.**
+
+⛔ **NOT A CARRY-FORWARD.** Filed 28h ago (`@eb2be76858`) as an open finding dispositioned *"not
+chased now"* — **a legitimate disposition that became WRONG when Andrew named global explicitly.**
+
+**TRIPLE-CONFIRMED INDEPENDENT, so the seat does not re-establish it:**
+`~M` ran 21 min after fresh cottonwood gold → gate refused · **CVO read a run whose cottonwood input
+was BYTE-IDENTICAL to the post-fix slice (md5 `d9c758fe1bf4db07`) → global still did not emit, which
+removes the race CTO correctly flagged** · CTO's own 28h-old deliverable already named it.
+
+**FIRST CELL:** `gold/mdpf_revamp/_aggregate_aua/2026-08-19.json` — **1 version, written `23:33:16Z`**,
+against `08-18`/`08-20` controls with **2 versions each at `~13:31Z`.** Written outside the producer
+window, untouched since.
+
+⛔⛔ **THE INVARIANT THAT OUTRANKS EVERYTHING IN THIS ITEM: the gate is CORRECT. Nobody weakens,
+bypasses, or `--force`s it, and NOBODY TOUCHES `2026-08-19`'s DATA TO MAKE IT PASS. If it refuses,
+investigate — never accommodate.** *It is the only instrument in the chain that noticed the freeze,
+because it checks COHERENCE rather than RECENCY.*
+
+### AND ONE ITEM NARROWED
+
+**3F-S5 lambda-twin: the drift is LAMBDA-ONLY.** `rebalancer_schemas.py` in S3 is **12,553 B =
+repo = CURRENT**; only the vendored lambda copy is stale. **The same logical module is CURRENT on the
+EC2 path and STALE on the lambda path, and nothing in either says so.**
