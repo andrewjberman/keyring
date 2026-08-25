@@ -236,3 +236,59 @@ yourself if it is load-bearing"* — and `~N` used that rider against my instruc
 
 > ⛔ **I converted a peer's careful OFFER into an AUTHORITY they had explicitly declined to claim.**
 > **The rider worked. I overrode it.**
+
+---
+
+# ⛔ P0 SHAPE CHANGED 19:2xZ — SUPERSEDES THE 19:1xZ BLOCK ABOVE
+
+**The 19:1xZ block says "one deploy remains." That is no longer the shape. Read this instead.**
+
+## THE DEPLOY IS NOT A SIMPLE VENDOR — THE PIN CARRIES AN ABORT PATH
+
+**No pin separates the fix from D1_CATVIEWS.** `git merge-base --is-ancestor c6b5ab4efe 1234c8779e`
+→ **TRUE** — the six D1_CATVIEWS commits are an ANCESTOR of the fix by 11 hours. **Every commit
+containing the fix contains all six**, and no `build_package.py` flag could separate them
+(`--pin`/`--out` only; `resolve_immutable_pin` deliberately refuses a moving ref).
+
+⛔ **AND THE RIDE-ALONG IS NOT A RIDE-ALONG. 289 lines restructure the emission axis for
+`aggregate-aua-timeseries` — the artifact under repair — and add an ABORT:**
+```
+:1190  shaped_cv = {...}                     CONSTRUCTED, before the emit loop
+:1228  for artifact_type, family in (("aggregate-aua-timeseries", shaped_ts), ...
+:580   raise SystemExit("D1 category-views REFUSING ...")
+```
+**`category-views` is ALL_SCOPE so global is in its scope set, and the refusal fires during
+CONSTRUCTION — BEFORE the emit loop reaches the artifact being restored. Being first in the loop
+does not protect it.**
+
+## RULED: PATH A — HOTFIX PIN
+
+**Cherry-pick ONLY the spine fix onto the deployed pin `1daf1913dd`. Build from that. Mainline
+untouched, nothing reverted, D1_CATVIEWS ships later on its own merits.**
+*Not a shadow path: one build, nothing standing, nothing parallel. Not a revert: it OMITS rather
+than rewrites.*
+
+⛔ **CONDITION — THE EXERCISED PATH IS NOT THE PRODUCTION PATH, ON EITHER OPTION.**
+`0.4.0_DS_ClientPlatform~N` exercised `dim_mdpf_aggregate_aua_timeseries.py --firm global --dry-run`
+— **the SPINE'S OWN `main()`. `mdpf_gold_consolidator.py` was never imported and never executed.**
+**The Lambda invokes `mdpf_gold_consolidator.lambda_handler`.**
+> **NEITHER pairing is exercised. The clean run validated the FIX, not the RUNTIME.**
+**So: after the hotfix pin builds, exercise THROUGH THE PRODUCTION ENTRY POINT (the handler, old
+consolidator + new spine) before it ships.**
+
+## APPLIER CONSTRAINT (measured by `0.5.0_AE_OpalETL~B`, true on both paths)
+
+**The `mdpf-pipeline` TF root is DIRTY** — `aws_s3_object.mdpf_route_bindings` pending, **not this
+deploy's.** So **`-target` the apply to `aws_lambda_function.mdpf_gold`; the post-apply 0-diff is
+SCOPED, not root-clean.** ⛔ **And it is NOT a third entanglement — verified by clean negative:
+`route_bindings.yaml` untouched since the deployed pin, absent from all six D1_CATVIEWS commits,
+unchanged in the 21-module scope run.**
+
+## THREE ERRORS OF MINE IN THIS STRETCH, RECORDED
+
+1. **I cleared the fire on a read covering the wrong executor**, and told `~N` not to re-derive it.
+2. **I then INVERTED the ruling on a premise `~N` had already withdrawn** — and asked for a grep
+   whose answer had landed 17 minutes earlier. *The queue was moving faster than I was reading it.*
+3. **I applied my own corroboration rider BACKWARDS**, crediting `~N` and `~B` with independent
+   instruments when their core method was identical. **`~B` refused the credit and was right.**
+   *A false confirmation in the generous direction is the one nobody contests.*
