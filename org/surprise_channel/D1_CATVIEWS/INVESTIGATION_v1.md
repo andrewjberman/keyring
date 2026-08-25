@@ -228,6 +228,25 @@ reached INERT (66521).
   },
   "disposition": "GRADUATED",
   "notes": "THE GRADE IS ABOUT WHICH HALF IS STALE, NOT THAT ONE IS -- and that reasoning is the reusable part: 'the Cells section is where a seat goes for WHAT TO BUILD, the acceptance table is where it goes for HOW IT IS JUDGED.' A seat reading only the Cells section builds an Inflection fixture for a firm that is not the case. The surfacing seat read both and used the amended one, and named that as LUCK OF READING ORDER, NOT A CONTROL. || A DISTINCT SUB-SHAPE OF THE S10 CLASS, worth separating: this value WAS sourced and then FALSIFIED, where S10's instances were never sourced at all. Same failure mode -- a plausible specific value sitting in a spec with nothing marking it dead -- but the remedy differs: S10's is 'do not write example values', this one is 'AN AMENDMENT MUST LAND ON EVERY SURFACE THAT CARRIES THE CLAIM, NOT ONLY ON THE ROW THAT PROMPTED IT'. Issuer's act. || INSTANCE 2 GRADED MEDIUM FOR A NAMED REASON rather than by feel: the sentence carries its own antidote and removing seven words would make it HIGH. Grading by what the text DOES rather than by how wrong it looks. || SEE ALSO ADVI_PERFRP-S10: the same class, four instances, other project, also found by executing seats reading their own TOs. FIVE lanes have now self-scanned and every one found something; NO instance in this class was found by a certifier."
+ },
+ {
+  "id": "D1_CATVIEWS-S8",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C, against code they had ALREADY SHIPPED, on a ruling withdrawn after they built to it",
+  "surfaced_at": "2026-08-25T02:19Z",
+  "one_line": "Shipped renderer HARDCODES a withdrawn ruling: aum.ts:776 returns 'absent_by_scope' for global WITHOUT FETCHING, so if category-views is ruled all-scope the accessor never requests it and the panel renders a CONFIDENT, REASONED EXPLANATION of why no global tree exists -- forever, and correctly-looking.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "portal/src/api/endpoints/aum.ts:776 -- if (firmId === 'global') { return { status: 'absent_by_scope', scope: firmId } } : RETURNS WITHOUT FETCHING",
+    "the withdrawn ruling (66633) is what that branch encodes; the withdrawal's own load-bearing consequence was stated as 'a field whose EMPTINESS carried meaning cannot quietly start carrying an object'",
+    "if CTO rules category-views ALL-SCOPE and a global object is emitted, the accessor never requests it and the panel renders 'The category view tree is per-firm. Select a partner to see it.' plus a reasoned explanation that no global tree is published"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.4.0_DE_ClientPlatform~C for the code branch, COUPLED to 1.0.0_SA_CTO's pending all-scope ruling -- the disarm is that THE RULING MUST NOT LAND WITHOUT THIS BRANCH BEING KNOWN, since the ruling is the trigger",
+  "notes": "⛔ WHY ARMED RATHER THAN A STALE BRANCH: the failure is not a blank panel. THE PANEL ASSERTS A DELIBERATE DESIGN DECISION, WITH A REASON, IN CONFIDENT PROSE. The surfacing seat's own framing is the finding and it generalises past this file: 'A REVIEWER SEEING A BLANK PANEL ASKS WHY; A REVIEWER SEEING A CONSIDERED EXPLANATION OF WHY THERE IS NO GLOBAL TREE DOES NOT.' Correct-looking beats generic -- an articulate wrong answer suppresses the question a crude one invites. || THE SHAPE IS A RULING FOSSILISED IN CODE: the branch was CORRECT when written, the ruling behind it was withdrawn, and NOTHING IN THE CODE RECORDS THAT ITS PREMISE IS NOW PENDING. A withdrawn ruling does not un-write the code built to it, and code built to a ruling does not announce which ruling it encodes. || Surfaced by the seat AGAINST THEIR OWN SHIPPED WORK, unprompted, after the ruling that justified it was withdrawn -- the second time tonight a seat has audited their own delivered code against a decision that moved under it."
  }
 ]
 ```
