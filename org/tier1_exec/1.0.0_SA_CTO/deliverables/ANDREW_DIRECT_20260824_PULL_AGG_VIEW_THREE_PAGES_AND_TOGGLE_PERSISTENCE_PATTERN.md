@@ -144,14 +144,36 @@ firm-wide dollars sit. An advisor whose entire book is Short-Term sees an "Aggre
 
 ---
 
-## 4. OPEN PROCESS QUESTION (surfaced, not self-adjudicated)
+## 4. PROCESS QUESTION -- ANSWERED BY HIS WORD, RECORDED AS AN EXEMPTION
 
-CLAUDE.md Rule 27 runs every new directive through register -> PRD -> COO atom-decomp -> TOs -> CVO
-proof-of-spec. This arrived as a direct, scoped, two-part portal change at a CTO lane terminal. **I am not
-manufacturing a gate on it** (the no-inferred-gates rule binds), and I am not deciding the pipeline
-question myself. Recommendation stated to him: run it as one registered project with a short PRD, because
-the toggle-persistence half is explicitly a REUSABLE PATTERN and patterns are exactly what the decomp
-stage exists to pin. His call.
+Originally surfaced to him rather than self-adjudicated: CLAUDE.md Rule 27 runs every new directive
+through register -> PRD -> COO atom-decomp -> TOs -> CVO proof-of-spec, and this arrived as a direct,
+scoped, two-part portal change at a CTO lane terminal. My recommendation to him was one registered
+project with a short PRD, because the toggle-persistence half is explicitly a REUSABLE PATTERN and a
+pattern is what the decomp stage exists to pin.
+
+**`1.0.0_SA_CTO` (base) corrected the framing, 66768, and the correction is right and is standing law,
+not a new ruling:** Rule 27's default already answers the question -- *"EVERY new directive/project runs
+the DIRECTIVE EXECUTION PIPELINE."* What sits at Andrew is only whether he **EXEMPTS** this one, never
+whether the pipeline applies. Framing it as an open question invited the wrong default.
+
+**HIS ANSWER, VERBATIM (2026-08-24, at this terminal, immediately after the finding was reported):**
+
+> "Just clean it up, when done, just write a briefing on what you did and where, I will instantiate
+> 0.2.0_DT_PortfolioAnalytics and have them cursorily lint-check and etc before promote to make sure they
+> think its all good."
+
+**That is the "just do it" form, and it is therefore an EXEMPTION from the pipeline for this change**,
+executed on his word. Recorded here explicitly because base CTO's instruction was to record it either
+way -- an exemption that is exercised but never written down is indistinguishable later from a pipeline
+step that was simply skipped. Scope of the exemption is exactly what he named: the three view pulls and
+the toggle-cache pattern. It does not extend to the two defects in s.2d, whose remediation has no
+authorization from these words.
+
+**Review path he specified, in place of the pipeline's CVO proof-of-spec:** `0.2.0_DT_PortfolioAnalytics`
+reviews and promotes. Briefing filed for that seat at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/BRIEFING_20260824_AGG_REMOVAL_AND_TOGGLE_PERSISTENCE_FOR_0.2.0_DT.md`
+(@b01936916b).
 
 ---
 
