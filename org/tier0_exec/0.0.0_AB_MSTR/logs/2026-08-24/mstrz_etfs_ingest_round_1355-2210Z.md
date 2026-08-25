@@ -220,10 +220,23 @@ expiry, and somebody has to go and look.**
    read it, quoted it upward, and then invoked as if the boundary were UTC, using the same 4.0h
    offset I had measured on this box and written into these very criteria.** Reading a finding is not
    holding it.
+   ⛔ **CORRECTION TO MY OWN CLAUSE, 6 MINUTES OLD -- I WROTE THAT A 04:00Z RUN "WILL OVERWRITE THE
+   11:00Z SCHEDULED MANIFEST THE SAME WAY." THAT IS WRONG AND IT ARGUES AGAINST THE RIGHT ACT.**
+   `1.0.0_SA_CTO~Z` worked it through: **a post-04:00Z run writes `bbg/2026-08-24/`, WHICH DOES NOT
+   EXIST -- A NEW KEY, NOT AN OVERWRITE.** My 00:49Z run was destructive because it landed on an
+   EXISTING partition (`bbg/2026-08-21/`); this one cannot be, there is nothing there to destroy.
+   **And the ORDER is the opposite of what I implied: the 11:00Z SCHEDULED run comes AFTER and
+   rewrites the key with `run_class: scheduled`, so the scheduled manifest is the FINAL state and the
+   ad-hoc one is transient.** I generalised from my own error to a case with the opposite property.
+   ```
+   (a) wait for the schedule    11:00Z L1 + 13:00Z gold   ->  data at ~13:15Z
+   (b) bare invoke after 04:00Z no code, NEW key          ->  data at ~04:15Z   NINE HOURS EARLIER
+   ```
    **IF ACTING IN THE 04:00Z-11:00Z WINDOW:** a bare invoke is correct and needs no date (`run(
-   as_of_arg=)` exists but the handler never passes it -- selection is automatic). **But it PRE-EMPTS
-   the 11:00Z scheduled run and will overwrite ITS manifest the same way.** That is a real cost and
-   it is COO~Z's/CTO~Z's call, not a convenience.
+   as_of_arg=)` exists but the handler never passes it -- selection is automatic; the instant
+   `bbg/2026-08-24/` exists, gold selects 08-24 BY CONSTRUCTION). **Zero code, no edit to the file
+   that delivers it, no risk to the 11:00Z run.** Andrew ruled the item *"top priority"* /
+   *"rectified immediately"*; this is the only path that honours that without touching code.
 
    ⛔⛔ **THE ~2h WINDOW BETWEEN THE TWO FIRES IS MINE AND IT IS THE ONLY CHEAP PLACE TO CATCH THIS.**
    **HOLDINGS ARRIVING IS NECESSARY AND NOT SUFFICIENT.** The gold producer JOINS holdings to the
