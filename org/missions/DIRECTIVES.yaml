@@ -151,11 +151,21 @@ directives:
         site-Z fabric this session. directives-check.py resolves a missing member file to a labelled
         [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json];
         malformed=0 across all 9 live rows).
-        THE ORDERING WAS CHECKED BEFORE WRITING, because the reverse ordering is the failure this
-        estate keeps paying for: a MEMBER ROW pointing at an absent project is VISIBLE and labelled;
-        the alternative -- a live project that is a member of NO directive at all -- is INVISIBLE, and
-        an orphaned project is exactly what nobody finds. The label expires on its own when the json
-        arrives with integration; the orphan would not have.
+        THE ORDERING WAS CHECKED BEFORE WRITING: a MEMBER ROW pointing at an absent project is
+        VISIBLE and labelled, and the label expires on its own when the json arrives with
+        integration.
+        ⛔ CORRECTED 2026-08-25 BY ITS OWN AUTHOR -- THE ORIGINAL JUSTIFICATION HERE WAS FALSE.
+        This note argued that ETFS_INGEST had to be added because 'a live project that is a member of
+        NO directive at all is INVISIBLE, and an orphaned project is exactly what nobody finds.'
+        MEASURED WHEN THE SAME REASONING WAS ABOUT TO BE APPLIED TO COT_CANON458: only 10 of 327
+        project files are members of ANY directive -- a 3.1% membership rate. NOT BEING A DIRECTIVE
+        MEMBER IS THE NORM FOR 317 OF 327 PROJECTS, NOT AN ORPHAN CONDITION. ADVI_COTETL, an active
+        project with a live P0 history, is one of the 317.
+        THE EDIT STANDS ON THE BASIS ACTUALLY DECLARED ABOVE -- 1.0.0_SA_CTO~Z's routing plus his
+        ETFS_CANON verbatim -- which is why declaring the basis mattered. WHAT IS RETRACTED IS THE
+        ORPHAN RATIONALE DECORATING IT. A future reader must NOT take 'this project is in no
+        directive' as evidence that anything is wrong; on this register that describes the great
+        majority of projects, and acting on it would mint rows nobody asked for.
         ⛔ ETFS_CANON STAYS. THIS IS A DEFERRAL, NOT A REMOVAL -- Andrew's own re-entry condition,
         VERBATIM: 'We can revisit ETFS_CANON After INGEST is done.' D4's COMPLETION SET is
         ETFS_POSITIONING + ETFS_INGEST; ETFS_CANON is held, not dropped, and a reader must not take
