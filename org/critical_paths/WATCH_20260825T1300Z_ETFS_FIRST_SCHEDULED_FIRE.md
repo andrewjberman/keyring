@@ -69,8 +69,21 @@ can find. **ZERO crons remains in force; nothing here schedules anything.**
 2  read SALXX + FXFXX names out of the body.
    EXPECT "State Street U.S. Government MMKT" / "First American Treasury Obligations Fund".
    Reverted => the scheduled path does NOT carry the fix and PROD is serving a regression.
-3  read data_as_of.  ⛔ EXPECT **2026-08-24** -- AND THAT IS THE PASS.
+3  read data_as_of.  ⛔ EXPECT **THE LAST TRADING DAY BEFORE THE FIRE DATE** (`trading_days_behind
+   == 1`) -- AND THAT IS THE PASS. For today's 2026-08-25 fire that resolves to **2026-08-24**.
+   STRUCTURAL INVARIANT, not a coincidence: `silver/holdings/{D}.parquet` lands ~22:00Z on day D,
+   NINE HOURS AFTER that day's 13:00Z fire -- so the newest partition available to ANY 13:00Z run
+   is ALWAYS the prior trading day.
 ```
+⛔ **RELATIVE, NOT DATED — CORRECTED 09:0xZ, and this is the criterion's FOURTH move tonight.**
+`2.0.0_SA_COO~Z` measured that this file had stopped at move three (`EXPECT 2026-08-24`, a DATE)
+while the primary carrier had advanced to the relative form. **No effect today — 08-25 is a Tuesday
+and both resolve to 08-24 — but a DATED criterion in a file meant to be read by a stranger is
+correct exactly once and silently wrong every day after.**
+>> **THIS IS THE DIVERGENCE I DEMANDED BOTH CARRIERS GUARD AGAINST, LANDING IN MY OWN FILE, ON THE
+ONE LINE THAT HAD ALREADY BEEN CORRECTED ONCE, WITHIN TWENTY MINUTES OF MY WRITING THE WARNING.**
+Two durable records of one obligation drift from minute one — not as a principle, as a measurement
+taken on this file. <<
 ⛔ **CORRECTED 08:5xZ BY `1.0.0_SA_CTO~Z` BEFORE ANYONE CARRIED IT.** This item first read *"EXPECT
 2026-08-25 if the 11:00Z local pull landed; 2026-08-24 means the workstation leg did not run."*
 **THAT WOULD HAVE MANUFACTURED A FALSE SKIP TODAY.** Silver for 08-25 does not land until **22:00Z**,
