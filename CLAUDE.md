@@ -1,191 +1,40 @@
 # CLAUDE.md — Opal Capital Workspace
 
-**First: read `org/XXX.md`** — startup protocol, MCP registration, task orders, session logging.
-Rules below are law for every agent, every session. Format: **imperative + mechanism + pointer.**
-The *why* and the incident history live at the pointer. Full annotated history: `git log -p CLAUDE.md`.
+**This file is HOW WE WORK and HOW TO THINK. It exists to make you FAST and ACCURATE, in that order.**
+Read sections 1-3 before you act; the rest is reference you come back to.
+Startup mechanics live in `org/XXX.md`. Full annotated history: `git log -p CLAUDE.md`.
 
-## Before the rules: how much to check
+⛔ **RULE NUMBERS ARE STABLE IDs, NOT READING ORDER.** Hundreds of records cite "CLAUDE.md Rule N", so
+a rule keeps its number wherever it sits and the list has gaps. **Sections carry the order.**
 
-**Verification scales with the COST OF BEING WRONG. When the next check would not change what you
-do, STOP.** The test itself is **Rule 28 (EVIDENCE LAW)** -- four questions and a table saying how
-many to ask. Three clauses that are not obvious and were each measured:
-- **It governs SUPPLEMENTARY controls, NEVER THE SUBSTANCE OF THE ACT.** Reading the artifact you
-  are adjudicating IS the act, not a check on it.
-- **SIZE BY THE CLAIM YOUR WORK FEEDS, not only the act in front of you** -- a cheap act can feed an
-  expensive claim.
-- **RE-DERIVE WITH A DIFFERENT INSTRUMENT, OR CITE THE PEER'S INVOCATION. NEVER RE-RUN THE SAME
-  COMMAND.** A same-command re-run tests the peer's honesty, which is not this fabric's failure mode.
-  **The rule is per-seat; the waste is fabric-wide** (four seats independently md5'd one unedited
-  file in a session, each individually correct).
+---
 
-**Found something odd that is NOT your task? Do NOT halt and investigate.** One line to
-`3.0.0_SA_CVO` (cc the issuer) and **keep working** -- CVO files, investigates, and only material
-findings graduate to remediation. **Rabbit-holing on an off-scope anomaly is the failure this channel
-exists to prevent.** An ARMED hazard (can cause harm while you look away) still disarms same-turn via
-a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`.
-## NEVER (one miss = an incident)
+## 1. HOW WE WORK — the pipeline every piece of work runs
 
-- **NEVER call a pipeline stale/broken/frozen until you have RESOLVED THE TRADING CALENDAR — count in
-  TRADING DAYS, never wall-clock.** Every AUM/holdings/trading pipeline is **`T-1` unless it explicitly
-  qualifies otherwise**, so Friday's data IS Monday's correct answer and a Monday "77h stale" reading is
-  a healthy pipeline plus a weekend. Mechanism: `lib/trading_calendar.py` is the ONE frontier definition
-  (`expected_last_trading_day` / `trading_days_behind`); a `comp-freshness` entry lacking
-  `freshness_basis: trading-day-frontier` silently falls back to flat-hours and **will false-alarm every
-  Monday — so the instrument's verdict is not a second opinion, it is the same error.** A false outage
-  spends credibility and manufactures pressure to "fix" a working pipeline, which is how a guard gets
-  removed. Why: `memory/feedback_trading_calendar_before_staleness_tminus1_default.md`.
-- **NEVER** reference another firm's bucket from a pipeline tree (bd/cot/inf) — gate-blocked at commit + IAM Deny at runtime.
-- **NEVER** move served output without never-widen sign-off (CTO+COO); a verified DELTA=0 deploy needs no hold.
-- **NEVER** run bare `terraform apply` (use `safe-apply`), bare `git commit` (use `safe-commit.sh`), or
-  `aws lambda update-function-code` (Terraform only). ⛔ **ONLY THE FIRST LIMB IS GATED — MEASURED
-  2026-08-25, and this line claimed all three for months.** `.tools/hooks/never-rules-gate.sh` denies
-  `terraform apply|destroy` (`:422`); it has **NO** bare-`git commit` rule and **ZERO** occurrences of
-  `update-function-code`. Its other denies are rebase, `pull --rebase`, `stash`, `clean`, inbox-watch,
-  and `git commit -m` carrying a backtick (LD-0276) — **that last one is about MESSAGE INJECTION, not
-  about using the wrapper, and is easily mistaken for the bare-commit gate.** So **bare `git commit`
-  and a direct Lambda code push are IMPERATIVES ONLY, enforced by nobody.** Proven by accident: this
-  seat ran a bare `git commit --allow-empty --no-verify` and nothing stopped it. Audited override for
-  the gated limb: `# never-override: <reason>`. Why: `docs/references/INCIDENTS_2026-07-13.md`.
-- **AD-HOC GOLD RUNS ARE PERMITTED FOR QA. PRODUCTION PIPELINES MUST BE SCHEDULED.** An ad-hoc run is a
-  legitimate QA instrument — fire one to test or reproduce. But **a pipeline whose only trigger is another
-  pipeline's success has no schedule and is a defect**: it freezes silently when its upstream breaks.
-  Event-driven is fine as an *accelerator*, never as the only trigger. **An ad-hoc run is never the
-  production path and its artifacts are never production evidence.** Design: `docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md`.
-- **NEVER BUILD AN ALERT, ALARM, SNS TOPIC, SES SEND, NOTIFICATION, FRESHNESS CHECKER OR MONITOR UNLESS
-  ANDREW EXPLICITLY ASKS. Standing moratorium.** *"It is an anti-pattern, and a waste of time for all
-  parties."* **WHAT TO DO INSTEAD, and it is the reason this is an anti-pattern rather than merely
-  unwanted: a monitor on an unsettled route measures the wrong thing precisely, and must be rebuilt the
-  moment the route changes. Canonical routes and schedules FIRST; monitoring only once the thing being
-  monitored is settled.** A finding still lands as a gate or an owned blocking item — what is banned is
-  reaching for notification machinery as the deliverable. Why: `docs/architecture/MDPF_DEBTCLEAN_PRD.md` §11–§12.
-- **NEVER implement a gate on ANY work — no approval step, sign-off, co-sign, hold, or "X must approve
-  before Y" — unless Andrew EXPLICITLY asks for that gate.** Not from process symmetry, precedent,
-  prudence, a seat's charter, or an exec's routing habit. **The harm: an agent-manufactured approval step
-  is INVISIBLE TO ANDREW — work he believes is moving sits held on an approver he does not know exists.**
-  Pre-existing MECHANICAL enforcement stands (commit-gate, safe-commit/apply/deploy, owned-paths,
-  never-rules-gate); what is banned is creating NEW approval gates. Proposing a gate candidate to
-  Andrew/CTO is legal; implementing without his word is not.
-- **NEVER convert Andrew's instruction to ONE agent into a gate or stop on ANY OTHER agent — his word
-  binds the ADDRESSED seat, verbatim scope, nothing wider.** Relaying is mandatory; ADJUDICATING SCOPE is
-  prohibited in BOTH directions — neither narrowing a sovereign word nor widening it. If wider scope seems
-  plausible, ASK — never hold on the inference. Record:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260804_1827Z_NO_INFERRED_GATES_NO_SHADOW_PIPELINES.md`.
-- **NEVER stand up a shadow / shadow-fork / "build-alongside" pipeline, duplicate output path, or STANDING
-  PARITY COMPARATOR — BUILD IT CORRECTLY THE FIRST TIME AND PORT OVER.** (Andrew-direct, COMPLETE VETO:
-  *"these things never ever get decommissioned and they become debt and fuck us up forever… The comparator
-  is also a HORRIBLE idea because it just muddies the water even further."*) **The mechanism of harm: an
-  extra path outlives its test purpose as permanent debt, and a standing comparator adds a SECOND
-  instrument to adjudicate instead of clarifying the first.** The sanctioned method: build-time correctness
-  (tests, exercised tie-outs, an ad-hoc QA read — run-and-read, nothing standing), then a DIRECT port on the
-  production schedule with same-window rollback. Do NOT manufacture a replacement verification gate around
-  the port. A consolidation (one canonical builder replacing N) is fine; the veto hits the standing
-  second-channel delivery mechanism. Why: `memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md`.
-- **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
-- **NEVER** leave a confirmed deploy half-landed — a begun deploy FINISHES in-session (every prefix, leg,
-  activation step) or rolls back + escalates loud to COO. Mechanism: deploy-completion ledger entry in
-  `org/critical_paths/change_management/` opened at deploy-start, closed at completion; unclosed at session
-  end = COO alarm.
-- **NEVER rebase** — not `git rebase`, not `git pull --rebase` — on any shared branch (CLOUD/DEV/PROD/main).
-  It rewrites multi-agent history and a non-conflicting result is luck, not correctness. Rejected push =
-  `git pull` (merge) then re-push. Gate: `.tools/hooks/never-rules-gate.sh` closes all four cells incl.
-  PowerShell and a bare `git pull` under `pull.rebase=true`. Audited override: `# never-override: <reason>`.
-  **A silent non-conflicting rebase is indistinguishable from an honest merge — the gate is the only detector.**
-  A scratch-branch rebase is your own business.
-- **NEVER write device-specific logic into `ajb_workspace` or `portal` — DERIVE, DO NOT HARDCODE.** The repos
-  are DEVICE-AGNOSTIC BY DEFAULT; device-specific code must be "very finely scoped and rare."
-  **VIOLATIONS:** a hardcoded user path · a baked drive prefix (`/c/` vs `/cygdrive/c/`) · a hardcoded
-  workspace root · device-keyed branching outside an identity resolver · behavior that silently no-ops on
-  the other machine. **CORRECT PATTERN:** workspace root → `git rev-parse --show-toplevel`; drive prefix →
-  `test -d /cygdrive/c && echo /cygdrive/c || echo /c`; `ajb.ps1` → `OPAL_WS_ROOT` + derived-root fallback.
-  A claim is a coordination signal, never device ownership. **The narrow legitimate exception, made testable:
-  is being device-specific this code's PURPOSE, or an accident of where it was written?** Only the first
-  qualifies. ⛔ **DIRECTION RATIFIED — REMEDIATION IS NOT AUTHORIZED BY THIS LINE**: a non-conforming file is
-  surface-it, not chase-it. Record: `org/tier0/ledger/LD-0405.md`.
+27. **EVERY new directive/project runs the DIRECTIVE EXECUTION PIPELINE: register → purpose-level PRD → COO
+    atom-decomp of the operative surfaces BEFORE any TO exists (proof-of-spec derives from decomp cells,
+    aligned BOTH directions with printed denominators) → EXECUTE ON SPEC → CVO's surprise channel.**
+    **Mid-round the spec is FROZEN — an executing seat's only legal off-spec ACT is to SURFACE a surprise item**
+    (one line by MCP to `3.0.0_SA_CVO`, cc the issuer); **CVO files it under `org/surprise_channel/**` — executing
+    seats do not write that tree.** Surprise taxonomy is TWO ORTHOGONAL AXES: **class {OBSERVATION, BLOCKING} ×
+    standing {ARMED, INERT}**. OBSERVATION never interrupts (one line, keep working); BLOCKING routes same-turn
+    to the ISSUER for spec amendment; **any ARMED item disarms SAME-TURN via a NAMED disarm owner**, and
+    **DISARMED ≠ REMEDIATED** (two states, two owners, two clocks). **SEATING: a Tier-2 seat instance is
+    dispatched ONE PROJECT** — N concurrent projects = N `~lane` instances, one project each; the resource
+    protected is the seat's CONTEXT. Protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`.
 
-## Deployment Rules
+---
 
-**DEPLOYMENT + CLOUD OPS RULES LIVE IN THE `/cloud-ops` SKILL, NOT HERE** (moved 2026-08-25, Andrew-direct). Rules **4, 5, 6, 8, 9, 11, 12, 18** -- source map, Lambda sizing, deploy tagging, `EC2_MANIFEST.json`, the TF-owns-infra-not-code boundary, `verify-ec2.sh`, the S3 artifact store, and `safe-apply`/HALTGT -- are CANONICAL in `.claude/skills/cloud-ops/SKILL.md`, which loads for the seats that do cloud work. **Their NUMBERS are unchanged, so existing citations still resolve.** Rules 1, 2, 3, 7, 10 were DELETED the same day as unenforced restatements. The NEVER block above still carries the bare-`terraform apply` / bare-`git commit` / `update-function-code` prohibitions.
+## 2. HOW MUCH TO CHECK — the speed governor
 
-13. **DS owns the full commit→QA-deploy cycle** for `data/*/scripts/{gold,silver,bronze}/*.py` incl. `aws s3 cp`;
-    DT/AE = infra, PROD triggers, multi-pipeline only. Enforced by `.tools/safe-deploy.sh` (pre-push hook;
-    bypass audited). Bucket map = `safe_deploy_core.py` PIPELINE_MAP (bd/inf/cot/mdpf). SHARED repo homes
-    (`data/assets/scripts/{gold,silver}`) deploy under the S3-membership guard: key-exists=update enforced,
-    404=loud skip, first-mints explicit. **cot is a COMPLETELY separate firm pipeline from bd — never
-    mirror/sync** (gate + IAM enforced). Why: `docs/architecture/ADHC_DSFLOW.md`.
-14. **Every `.py` edit passes `.tools/commit-gate.sh` before commit** (py_compile + ds-precommit-check
-    AST/silver-ids + ruff py39, pin 0.15.11). Universal, all agents, all lanes.
-14a. **Commit via `.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- <paths>`
-    — do NOT pre-`git add`** (the wrapper stages your pathspec inside its lock). **`-F` not `-m`** for any
-    non-trivial message (see Git §F-010: a `-m` body is shell-evaluated before git sees it, so a backtick
-    or `$(` in it EXECUTES). ⛔ **AND `-F` PROTECTS YOU ONLY IF THE FILE ITSELF WAS NOT BUILT BY A SHELL.**
-    A `printf`/heredoc that CONSTRUCTS the message file re-opens the identical hole one step earlier --
-    the substitution happens on the way INTO the file, and `-F` then faithfully commits the corrupted
-    text. **Write the message with a non-shell writer (the Write tool, or python), THEN `-F` it.**
-    Measured 2026-08-25: a `-F` commit whose body was built by `printf` lost three backticked terms to
-    command substitution; it failed LOUD only because those terms were not real commands. A backticked
-    token that IS a command fails SILENT and splices its stdout into the immutable record. **`--force` BYPASSES ONLY THE CONTAMINATION / SENSITIVE-FILE CHECKS — IT DOES
-    NOT BYPASS A GATE FAILURE OR AN OWNED-PATHS REFUSAL** (`safe-commit.sh:547`). For a lane refusal the
-    sanctioned escape is `GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>` — audited, and **SINGULAR: one lane per commit**,
-    so a change spanning N lanes is N audited commits, never one `--force`. Why:
-    `memory/feedback_commit_only_flag.md`, `docs/architecture/ADHC_OWNPTH.md`.
-15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
-16. **Local-runtime bash uses only Git Bash 3.6.7 default-install utilities.** MISSING (guarded `command -v`
-    fallback required): `pgrep pkill flock pidof setsid wget`. Canonical pattern: `org/mcp/inbox-watch.sh`.
-    **`.tools/jq.exe` IS VENDORED AND TRACKED — resolve it first, `command -v jq` as guarded fallback, then
-    FAIL CLOSED AND LOUD.** ⛔ **NEVER `2>/dev/null` a read whose EMPTINESS carries a verdict** — a missing
-    binary then returns CLEAN EMPTY and renders a "quiet fabric" out of nothing. Ad-hoc JSON parsing prefers
-    python; a shell gate that must parse JSON uses the vendored resolution. EC2-side scripts exempt.
-    `docs/architecture/ADHC_BASHFIX.md`.
-17. **Silver = dedup + dtype standardization ONLY. NEVER slim fields, NEVER fillna/dropna/business-row-filter,
-    NEVER drop bronze columns** — anything needing judgment about field relevance or null meaning is
-    gold-tier business logic. Legacy violators migrate to passthrough on next touch.
-    `memory/feedback_silver_no_field_slimming.md`.
-17a. **BRONZE IS RAW AND UNTOUCHED — whatever the source delivers, byte-for-byte. PARQUET IS A *SILVER*
-    FORMAT.** A `.parquet` under `bronze/` is an architectural violation, not a format preference: it coerces
-    schema/dtypes AT INGEST, so the raw feed is **not recoverable**. **Each layer has exactly one job; doing a
-    later layer's job early is IRREVERSIBLE.** Gate: bucket-policy deny on `.parquet` under `bronze/` segments,
-    LIVE on opal-data-assets; other trees remain open (CTO to route). >> **WHEN DEPLOYED CODE AND THE REPO
-    DISAGREE, "which is RUNNING?" is the wrong question — "which is RIGHT?" is, and that is ARCHITECTURAL,
-    which no measurement answers. "It is deployed and it works" is not an architecture.** <<
-    `memory/feedback_bronze_is_raw_untouched_parquet_is_a_silver_conversion.md`.
-17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS AND EACH TIER HAS EXACTLY ONE HOME.**
-    `bronze` raw vendor + `silver` parquet queryable under **`opal-data-assets`**; `gold` processed
-    analytics under **a per-product or per-firm bucket, WITH THE GOLD PROCESS'S CODE IN THAT SAME
-    BUCKET**; `platinum` serving under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER**
-    -- per-consumer projection, display naming and route-shaping belong in platinum, NEVER in gold.
-    **GOLD IS PARQUET** (`{table}/date={D}/`); every platinum publisher READS PARQUET and is the
-    estate's ONLY JSON producer, so one-producer-per-served-key holds by construction.
-    ⛔ **DIRECTION RATIFIED — MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it
-    today; a non-conforming tree is NOT a violation and NOT a warrant to move anything. Moving a served
-    key is NEVER#3. **Which scopes are product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL.**
-    **One home per logical producer is a CORRECTNESS requirement, not tidiness** -- three seats spent
-    2026-08-25 deriving "which copy of this code actually runs" by hand from deployed bytes, and the
-    first derivation was wrong. Amendment history, the superseded clause, and the measured
-    non-conformance: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+⛔ **VERIFICATION SCALES WITH THE COST OF BEING WRONG. WHEN THE NEXT CHECK WOULD NOT CHANGE WHAT YOU
+DO, STOP.**
 
-19. **Portal main worktree stays on `DEV`, always.** Found it on PROD? `cd portal && git checkout DEV`
-    before any portal work -- that failure is discovered by accident, so the recovery stays visible here.
-    Promote procedure (ephemeral worktree, DT lane): the **`/prod-deploy`** skill.
+**Most work checks NOTHING.** The controls in section 4 are real and they catch real defects, but they
+are sized to the stakes — they are **not a ritual to perform on every read.** An unnecessary check is
+not free caution: it burns the context you will need for the high-stakes judgement later in the same
+session, which makes it a CORRECTNESS cost, not a speed one.
 
-20. **Check the dependency graph BEFORE you change anything** — (a) ahead of ANY cloud/infra/data change;
-    (b) before commit for ANY frontend change. Pick the tool from `org/modules/graph/graph-call-manifest.yaml`.
-    **Default to QUERY, never rebuild to answer a traversal.** **Read the provenance header on every call** —
-    `UNKNOWN VINTAGE` = freshness unverifiable; a scratch DB (`--db-path`) is a frozen vintage. Verify your OWN
-    just-made change against live AWS/served artifacts, never the graph. **`comp-surface-check` IS RETIRED** —
-    the MP/benchmark/ADVI surfaces now carry NO automated commit-time guard, stated here so it is not
-    discovered later as a gap. `docs/architecture/NFRA_GRAPHS.md`.
-21. **comp-which / a comp-tool is the DEFAULT for every search + inspection; a raw search is the
-    EXCEPTION.** Raw grep is text-local and connection-blind, so it MISSES coupled things. Reflex =
-    `comp-which "<plain-English question>"` -- it routes to the rich tool, else runs **`comp-find`**
-    (dependency context + a DENOMINATOR line + a BAND classification), and never dead-ends.
-    ⛔ **`comp-find` HAS TRAPS THAT WILL SILENTLY MIS-COUNT YOU** -- case-sensitivity, substring
-    matching, and a denominator that certifies the SWEEP and not the PATTERN. **Know them before you
-    quote any number from it:** `docs/architecture/NFRA_COMPRAIL_PRD.md` + `comp-find --help`.
-    **GATED, not banned:** the LIVE hard-deny is raw-`aws`-INSPECTION + `infra/*.tf` grep unless the
-    call carries `# rail-checked: <why>` (audited to `org/mcp/comp-which-rail.log`; a repeat override
-    for one intent = a coverage gap -> build the tool). Estate-scoped broad Bash `grep`/`find`/`rg`
-    DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob` = nudge-and-proceed; native `Read`
-    + operational `aws` + pipe-greps = free. `/freeform` stands the rail down per-session.
 22. **EVIDENCE LAW -- FOUR AXES, AND WHO EATS THE ERROR DECIDES HOW MANY YOU CHECK.**
     **Rule 24 tests a SCHEMA; Rule 22 tests a CLAIM. THEY SHARE THREE AXES AND EACH ADDS WHAT ITS
     OBJECT NEEDS** -- GRAIN, COVERAGE and STATE are the same axes in both; 24 adds EXCLUSIVITY +
@@ -228,6 +77,108 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     **a line citation without a vintage is not a citation.** A claim failing any postulate is
     `INFERRED` and NON-ACTIONABLE; the cert/dispatch owner withholds the GO.
 
+**Three clauses that are not obvious and were each measured:**
+- **It governs SUPPLEMENTARY controls, NEVER THE SUBSTANCE OF THE ACT.** Reading the artifact you are
+  adjudicating IS the act, not a check on it.
+- **SIZE BY THE CLAIM YOUR WORK FEEDS, not only the act in front of you** — a cheap act can feed an
+  expensive claim.
+- **RE-DERIVE WITH A DIFFERENT INSTRUMENT, OR CITE THE PEER'S INVOCATION. NEVER RE-RUN THE SAME
+  COMMAND.** A same-command re-run tests the peer's honesty, which is not this fabric's failure mode.
+  **The rule is per-seat; the waste is fabric-wide** — four seats independently md5'd one unedited
+  file in a single session, each individually correct.
+
+⛔ **FOUND SOMETHING ODD THAT IS NOT YOUR TASK? DO NOT HALT AND INVESTIGATE.** One line to
+`3.0.0_SA_CVO` (cc the issuer) and **KEEP WORKING** — CVO files it, investigates, and only material
+findings graduate to remediation. **Rabbit-holing on an off-scope anomaly is the single biggest
+avoidable drag on this fabric, and this channel exists to prevent it.** An ARMED hazard (something
+that can cause harm while you look away) still disarms same-turn via a named owner.
+`docs/doctrine/THE_SURPRISE_CHANNEL.md` — board: `comp-surprise`.
+
+⛔ **AND DO NOT MANUFACTURE FRICTION.** Two standing rulings belong here rather than in a prohibition
+list, because they are what keeps work moving:
+
+- **NEVER implement a gate on ANY work — no approval step, sign-off, co-sign, hold, or "X must approve
+  before Y" — unless Andrew EXPLICITLY asks for that gate.** Not from process symmetry, precedent,
+  prudence, a seat's charter, or an exec's routing habit. **The harm: an agent-manufactured approval step
+  is INVISIBLE TO ANDREW — work he believes is moving sits held on an approver he does not know exists.**
+  Pre-existing MECHANICAL enforcement stands (commit-gate, safe-commit/apply/deploy, owned-paths,
+  never-rules-gate); what is banned is creating NEW approval gates. Proposing a gate candidate to
+  Andrew/CTO is legal; implementing without his word is not.
+- **NEVER convert Andrew's instruction to ONE agent into a gate or stop on ANY OTHER agent — his word
+  binds the ADDRESSED seat, verbatim scope, nothing wider.** Relaying is mandatory; ADJUDICATING SCOPE is
+  prohibited in BOTH directions — neither narrowing a sovereign word nor widening it. If wider scope seems
+  plausible, ASK — never hold on the inference. Record:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260804_1827Z_NO_INFERRED_GATES_NO_SHADOW_PIPELINES.md`.
+
+---
+
+## 3. FINDING THINGS FAST
+
+**`comp-which "<plain-English question>"` is the reflex.** It routes to the rich tool, else runs
+`comp-find`, and never dead-ends. You do not need to know the ~60 tools.
+
+⛔ **NEVER PIPE `comp-find` THROUGH `head`.** It GRADES its hits into bands and `head` throws the
+grading away — you get the first 20 of an ungraded stream instead of the 3 that answer you. **Use the
+tool's own narrowing:**
+
+| flag | use it when |
+|---|---|
+| `--band HEAD` | the query is in the FILENAME — usually what you meant |
+| `--band DEF` | definitions, not mentions |
+| `--files` | "where does this live?" — collapse to filenames |
+| `--limit N` / `--page N` | real paging |
+| `--all` | you genuinely need the whole census |
+| `-i` | **any token census** — this estate CAPITALISES its load-bearing words, so a case-sensitive sweep drops precisely the rulings |
+
+⛔ **A PAGE IS NOT AN ANSWER.** `PAGE 1 of 263` means you have seen 0.4% of it. Narrow the query or
+take `--all`. **Never conclude from page 1.**
+
+⛔ **AND DO NOT STOP AT THE FIRST PLAUSIBLE HIT.** If what you need is not in `HEAD` or `DEF`, widen
+DELIBERATELY (down the bands, then `--all`) before concluding it is absent. **An early stop and a true
+absence are identical in your notes and opposite in the estate.**
+
+⚠ The `DENOMINATOR` line counts **FILES SCANNED**, never pattern coverage — it certifies the sweep,
+not the question. A confident non-zero count over a pattern that could not match is the failure mode;
+the zero is the case that warns you.
+
+21. **comp-which / a comp-tool is the DEFAULT for every search + inspection; a raw search is the
+    EXCEPTION.** Raw grep is text-local and connection-blind, so it MISSES coupled things. Reflex =
+    `comp-which "<plain-English question>"` -- it routes to the rich tool, else runs **`comp-find`**
+    (dependency context + a DENOMINATOR line + a BAND classification), and never dead-ends.
+    ⛔ **`comp-find` HAS TRAPS THAT WILL SILENTLY MIS-COUNT YOU** -- case-sensitivity, substring
+    matching, and a denominator that certifies the SWEEP and not the PATTERN. **Know them before you
+    quote any number from it:** `docs/architecture/NFRA_COMPRAIL_PRD.md` + `comp-find --help`.
+    **GATED, not banned:** the LIVE hard-deny is raw-`aws`-INSPECTION + `infra/*.tf` grep unless the
+    call carries `# rail-checked: <why>` (audited to `org/mcp/comp-which-rail.log`; a repeat override
+    for one intent = a coverage gap -> build the tool). Estate-scoped broad Bash `grep`/`find`/`rg`
+    DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob` = nudge-and-proceed; native `Read`
+    + operational `aws` + pipe-greps = free. `/freeform` stands the rail down per-session.
+20. **Check the dependency graph BEFORE you change anything** — (a) ahead of ANY cloud/infra/data change;
+    (b) before commit for ANY frontend change. Pick the tool from `org/modules/graph/graph-call-manifest.yaml`.
+    **Default to QUERY, never rebuild to answer a traversal.** **Read the provenance header on every call** —
+    `UNKNOWN VINTAGE` = freshness unverifiable; a scratch DB (`--db-path`) is a frozen vintage. Verify your OWN
+    just-made change against live AWS/served artifacts, never the graph. **`comp-surface-check` IS RETIRED** —
+    the MP/benchmark/ADVI surfaces now carry NO automated commit-time guard, stated here so it is not
+    discovered later as a gap. `docs/architecture/NFRA_GRAPHS.md`.
+
+---
+
+## 4. HOW TO THINK ABOUT A CLAIM OR A SCHEMA
+
+24. **TAXONOMY LAW — FOUR POSTULATES, prerequisites for ANY classification schema an agent authors:**
+    **(i) MECE** — values mutually exclusive (EXCLUSIVITY) and collectively exhaustive (COVERAGE, Rule 22's
+    axis) over the DECLARED DOMAIN the schema covers — *name the domain, then hunt the uncovered member*; **(ii) SAME GRAIN** (Rule 22's axis) — every value provably
+    at one grain (never a file-level value beside a cohort-level value); **(iii) INTENT COHERENCE** — one axis
+    serves ONE intent (mixing content-kind with handling-policy, or state with disposition, foundationally
+    breaks the schema); **(iv) STATE COHERENCE** (Rule 22's axis) **— a stability frame:** name the state axis, then ask whether ONE
+    remedy moves every value together. **If building the obvious instrument delivers some values and
+    structurally cannot deliver others, YOU MUST NAME WHICH VALUES DO NOT MOVE.**
+    **This binds EVERY SCHEMA-ENUMERATION ACT** — minting an axis, proposing or adding values to an existing
+    axis, and **ADOPTING a schema authored elsewhere (adoption is an authoring act).** **OUTCOME ARRAYS,
+    TYPED-RESULT SETS AND PREDICATES ARE SCHEMAS — they escape this gate precisely because they do not read as
+    schemas.** A value-enum proposal arrives WITH its four-postulate record and a token-hygiene census
+    (word-boundary occupancy over the canon files), or it is not a proposal. Remedy pattern for a violating
+    axis: the two-field split (RCG charters v2). Working record: `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
 22a. **INSTRUMENT TRAPS -- non-obvious failures of Rule 22 you cannot re-derive at the call site.**
     **CODE currency**: read the DEPLOYED artifact's bytes and diff against the source it is BUILT FROM,
     resolved through the BUILD INPUT (source-map / manifest), **NEVER by filename** -- a
@@ -251,6 +202,157 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     makes them stop asking.
     **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s three false-deny modes,
     `accessanalyzer validate-policy`): `/cloud-ops`.**
+- **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
+
+---
+
+## 5. HARD STOPS — unrecoverable, or invisible when they go wrong
+
+- **NEVER** move served output without never-widen sign-off (CTO+COO); a verified DELTA=0 deploy needs no hold.
+- **NEVER** leave a confirmed deploy half-landed — a begun deploy FINISHES in-session (every prefix, leg,
+  activation step) or rolls back + escalates loud to COO. Mechanism: deploy-completion ledger entry in
+  `org/critical_paths/change_management/` opened at deploy-start, closed at completion; unclosed at session
+  end = COO alarm.
+- **NEVER rebase** — not `git rebase`, not `git pull --rebase` — on any shared branch (CLOUD/DEV/PROD/main).
+  It rewrites multi-agent history and a non-conflicting result is luck, not correctness. Rejected push =
+  `git pull` (merge) then re-push. Gate: `.tools/hooks/never-rules-gate.sh` closes all four cells incl.
+  PowerShell and a bare `git pull` under `pull.rebase=true`. Audited override: `# never-override: <reason>`.
+  **A silent non-conflicting rebase is indistinguishable from an honest merge — the gate is the only detector.**
+  A scratch-branch rebase is your own business.
+- **NEVER call a pipeline stale/broken/frozen until you have RESOLVED THE TRADING CALENDAR — count in
+  TRADING DAYS, never wall-clock.** Every AUM/holdings/trading pipeline is **`T-1` unless it explicitly
+  qualifies otherwise**, so Friday's data IS Monday's correct answer and a Monday "77h stale" reading is
+  a healthy pipeline plus a weekend. Mechanism: `lib/trading_calendar.py` is the ONE frontier definition
+  (`expected_last_trading_day` / `trading_days_behind`); a `comp-freshness` entry lacking
+  `freshness_basis: trading-day-frontier` silently falls back to flat-hours and **will false-alarm every
+  Monday — so the instrument's verdict is not a second opinion, it is the same error.** A false outage
+  spends credibility and manufactures pressure to "fix" a working pipeline, which is how a guard gets
+  removed. Why: `memory/feedback_trading_calendar_before_staleness_tminus1_default.md`.
+- **NEVER stand up a shadow / shadow-fork / "build-alongside" pipeline, duplicate output path, or STANDING
+  PARITY COMPARATOR — BUILD IT CORRECTLY THE FIRST TIME AND PORT OVER.** (Andrew-direct, COMPLETE VETO:
+  *"these things never ever get decommissioned and they become debt and fuck us up forever… The comparator
+  is also a HORRIBLE idea because it just muddies the water even further."*) **The mechanism of harm: an
+  extra path outlives its test purpose as permanent debt, and a standing comparator adds a SECOND
+  instrument to adjudicate instead of clarifying the first.** The sanctioned method: build-time correctness
+  (tests, exercised tie-outs, an ad-hoc QA read — run-and-read, nothing standing), then a DIRECT port on the
+  production schedule with same-window rollback. Do NOT manufacture a replacement verification gate around
+  the port. A consolidation (one canonical builder replacing N) is fine; the veto hits the standing
+  second-channel delivery mechanism. Why: `memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md`.
+- **NEVER BUILD AN ALERT, ALARM, SNS TOPIC, SES SEND, NOTIFICATION, FRESHNESS CHECKER OR MONITOR UNLESS
+  ANDREW EXPLICITLY ASKS. Standing moratorium.** *"It is an anti-pattern, and a waste of time for all
+  parties."* **WHAT TO DO INSTEAD, and it is the reason this is an anti-pattern rather than merely
+  unwanted: a monitor on an unsettled route measures the wrong thing precisely, and must be rebuilt the
+  moment the route changes. Canonical routes and schedules FIRST; monitoring only once the thing being
+  monitored is settled.** A finding still lands as a gate or an owned blocking item — what is banned is
+  reaching for notification machinery as the deliverable. Why: `docs/architecture/MDPF_DEBTCLEAN_PRD.md` §11–§12.
+- **AD-HOC GOLD RUNS ARE PERMITTED FOR QA. PRODUCTION PIPELINES MUST BE SCHEDULED.** An ad-hoc run is a
+  legitimate QA instrument — fire one to test or reproduce. But **a pipeline whose only trigger is another
+  pipeline's success has no schedule and is a defect**: it freezes silently when its upstream breaks.
+  Event-driven is fine as an *accelerator*, never as the only trigger. **An ad-hoc run is never the
+  production path and its artifacts are never production evidence.** Design: `docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md`.
+- **NEVER write device-specific logic into `ajb_workspace` or `portal` — DERIVE, DO NOT HARDCODE.** The repos
+  are DEVICE-AGNOSTIC BY DEFAULT; device-specific code must be "very finely scoped and rare."
+  **VIOLATIONS:** a hardcoded user path · a baked drive prefix (`/c/` vs `/cygdrive/c/`) · a hardcoded
+  workspace root · device-keyed branching outside an identity resolver · behavior that silently no-ops on
+  the other machine. **CORRECT PATTERN:** workspace root → `git rev-parse --show-toplevel`; drive prefix →
+  `test -d /cygdrive/c && echo /cygdrive/c || echo /c`; `ajb.ps1` → `OPAL_WS_ROOT` + derived-root fallback.
+  A claim is a coordination signal, never device ownership. **The narrow legitimate exception, made testable:
+  is being device-specific this code's PURPOSE, or an accident of where it was written?** Only the first
+  qualifies. ⛔ **DIRECTION RATIFIED — REMEDIATION IS NOT AUTHORIZED BY THIS LINE**: a non-conforming file is
+  surface-it, not chase-it. Record: `org/tier0/ledger/LD-0405.md`.
+- **NEVER** run bare `terraform apply` (use `safe-apply`), bare `git commit` (use `safe-commit.sh`), or
+  `aws lambda update-function-code` (Terraform only). ⛔ **ONLY THE FIRST LIMB IS GATED — MEASURED
+  2026-08-25, and this line claimed all three for months.** `.tools/hooks/never-rules-gate.sh` denies
+  `terraform apply|destroy` (`:422`); it has **NO** bare-`git commit` rule and **ZERO** occurrences of
+  `update-function-code`. Its other denies are rebase, `pull --rebase`, `stash`, `clean`, inbox-watch,
+  and `git commit -m` carrying a backtick (LD-0276) — **that last one is about MESSAGE INJECTION, not
+  about using the wrapper, and is easily mistaken for the bare-commit gate.** So **bare `git commit`
+  and a direct Lambda code push are IMPERATIVES ONLY, enforced by nobody.** Proven by accident: this
+  seat ran a bare `git commit --allow-empty --no-verify` and nothing stopped it. Audited override for
+  the gated limb: `# never-override: <reason>`. Why: `docs/references/INCIDENTS_2026-07-13.md`.
+- **NEVER** reference another firm's bucket from a pipeline tree (bd/cot/inf) — gate-blocked at commit + IAM Deny at runtime.
+
+---
+
+## 6. LANE + COMMIT MECHANICS
+
+13. **DS owns the full commit→QA-deploy cycle** for `data/*/scripts/{gold,silver,bronze}/*.py` incl. `aws s3 cp`;
+    DT/AE = infra, PROD triggers, multi-pipeline only. Enforced by `.tools/safe-deploy.sh` (pre-push hook;
+    bypass audited). Bucket map = `safe_deploy_core.py` PIPELINE_MAP (bd/inf/cot/mdpf). SHARED repo homes
+    (`data/assets/scripts/{gold,silver}`) deploy under the S3-membership guard: key-exists=update enforced,
+    404=loud skip, first-mints explicit. **cot is a COMPLETELY separate firm pipeline from bd — never
+    mirror/sync** (gate + IAM enforced). Why: `docs/architecture/ADHC_DSFLOW.md`.
+14. **Every `.py` edit passes `.tools/commit-gate.sh` before commit** (py_compile + ds-precommit-check
+    AST/silver-ids + ruff py39, pin 0.15.11). Universal, all agents, all lanes.
+14a. **Commit via `.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- <paths>`
+    — do NOT pre-`git add`** (the wrapper stages your pathspec inside its lock). **`-F` not `-m`** for any
+    non-trivial message (see Git §F-010: a `-m` body is shell-evaluated before git sees it, so a backtick
+    or `$(` in it EXECUTES). ⛔ **AND `-F` PROTECTS YOU ONLY IF THE FILE ITSELF WAS NOT BUILT BY A SHELL.**
+    A `printf`/heredoc that CONSTRUCTS the message file re-opens the identical hole one step earlier --
+    the substitution happens on the way INTO the file, and `-F` then faithfully commits the corrupted
+    text. **Write the message with a non-shell writer (the Write tool, or python), THEN `-F` it.**
+    Measured 2026-08-25: a `-F` commit whose body was built by `printf` lost three backticked terms to
+    command substitution; it failed LOUD only because those terms were not real commands. A backticked
+    token that IS a command fails SILENT and splices its stdout into the immutable record. **`--force` BYPASSES ONLY THE CONTAMINATION / SENSITIVE-FILE CHECKS — IT DOES
+    NOT BYPASS A GATE FAILURE OR AN OWNED-PATHS REFUSAL** (`safe-commit.sh:547`). For a lane refusal the
+    sanctioned escape is `GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>` — audited, and **SINGULAR: one lane per commit**,
+    so a change spanning N lanes is N audited commits, never one `--force`. Why:
+    `memory/feedback_commit_only_flag.md`, `docs/architecture/ADHC_OWNPTH.md`.
+16. **Local-runtime bash uses only Git Bash 3.6.7 default-install utilities.** MISSING (guarded `command -v`
+    fallback required): `pgrep pkill flock pidof setsid wget`. Canonical pattern: `org/mcp/inbox-watch.sh`.
+    **`.tools/jq.exe` IS VENDORED AND TRACKED — resolve it first, `command -v jq` as guarded fallback, then
+    FAIL CLOSED AND LOUD.** ⛔ **NEVER `2>/dev/null` a read whose EMPTINESS carries a verdict** — a missing
+    binary then returns CLEAN EMPTY and renders a "quiet fabric" out of nothing. Ad-hoc JSON parsing prefers
+    python; a shell gate that must parse JSON uses the vendored resolution. EC2-side scripts exempt.
+    `docs/architecture/ADHC_BASHFIX.md`.
+
+---
+
+## 7. DATA ARCHITECTURE
+
+17. **Silver = dedup + dtype standardization ONLY. NEVER slim fields, NEVER fillna/dropna/business-row-filter,
+    NEVER drop bronze columns** — anything needing judgment about field relevance or null meaning is
+    gold-tier business logic. Legacy violators migrate to passthrough on next touch.
+    `memory/feedback_silver_no_field_slimming.md`.
+17a. **BRONZE IS RAW AND UNTOUCHED — whatever the source delivers, byte-for-byte. PARQUET IS A *SILVER*
+    FORMAT.** A `.parquet` under `bronze/` is an architectural violation, not a format preference: it coerces
+    schema/dtypes AT INGEST, so the raw feed is **not recoverable**. **Each layer has exactly one job; doing a
+    later layer's job early is IRREVERSIBLE.** Gate: bucket-policy deny on `.parquet` under `bronze/` segments,
+    LIVE on opal-data-assets; other trees remain open (CTO to route). >> **WHEN DEPLOYED CODE AND THE REPO
+    DISAGREE, "which is RUNNING?" is the wrong question — "which is RIGHT?" is, and that is ARCHITECTURAL,
+    which no measurement answers. "It is deployed and it works" is not an architecture.** <<
+    `memory/feedback_bronze_is_raw_untouched_parquet_is_a_silver_conversion.md`.
+17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS AND EACH TIER HAS EXACTLY ONE HOME.**
+    `bronze` raw vendor + `silver` parquet queryable under **`opal-data-assets`**; `gold` processed
+    analytics under **a per-product or per-firm bucket, WITH THE GOLD PROCESS'S CODE IN THAT SAME
+    BUCKET**; `platinum` serving under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER**
+    -- per-consumer projection, display naming and route-shaping belong in platinum, NEVER in gold.
+    **GOLD IS PARQUET** (`{table}/date={D}/`); every platinum publisher READS PARQUET and is the
+    estate's ONLY JSON producer, so one-producer-per-served-key holds by construction.
+    ⛔ **DIRECTION RATIFIED — MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it
+    today; a non-conforming tree is NOT a violation and NOT a warrant to move anything. Moving a served
+    key is NEVER#3. **Which scopes are product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL.**
+    **One home per logical producer is a CORRECTNESS requirement, not tidiness** -- three seats spent
+    2026-08-25 deriving "which copy of this code actually runs" by hand from deployed bytes, and the
+    first derivation was wrong. Amendment history, the superseded clause, and the measured
+    non-conformance: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
+
+---
+
+## 8. REFERENCE
+
+**DEPLOYMENT + CLOUD OPS RULES LIVE IN THE `/cloud-ops` SKILL, NOT HERE** (moved 2026-08-25,
+Andrew-direct). Rules **4, 5, 6, 8, 9, 11, 12, 18** — source map, Lambda sizing, deploy tagging,
+`EC2_MANIFEST.json`, the TF-owns-infra-not-code boundary, `verify-ec2.sh`, the S3 artifact store,
+`safe-apply`/HALTGT — plus the IAM instrument traps and the on-box wrapper set. **Their NUMBERS are
+unchanged, so existing citations still resolve.** Rules 1, 2, 3, 7, 10 were DELETED the same day as
+unenforced restatements.
+
+
+19. **Portal main worktree stays on `DEV`, always.** Found it on PROD? `cd portal && git checkout DEV`
+    before any portal work -- that failure is discovered by accident, so the recovery stays visible here.
+    Promote procedure (ephemeral worktree, DT lane): the **`/prod-deploy`** skill.
 23. **Every SES send uses `Source`/`EMAIL_FROM` on the `opalinvest.dev` domain** — DKIM-signed + DMARC-aligned.
     `opalinvest.com` is address-verified only (DKIM NOT_STARTED, SPF excludes SES) — unauthenticated, so EOP
     quarantines it **nondeterministically**. ✋ **`opalcapital.com` — WE DO NOT OWN THIS DOMAIN.** Never send
@@ -260,20 +362,6 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     FOR WHAT IS *DEPLOYED* AND ZERO FOR WHAT IS *OURS*. Grounding tells you what IS; it cannot tell you what is
     YOURS — a premise no instrument is pointed at is not a weak claim, it is an INVISIBLE one.** <<
     `memory/feedback_ses_sender_opalinvest_dev_standard.md`.
-24. **TAXONOMY LAW — FOUR POSTULATES, prerequisites for ANY classification schema an agent authors:**
-    **(i) MECE** — values mutually exclusive (EXCLUSIVITY) and collectively exhaustive (COVERAGE, Rule 22's
-    axis) over the DECLARED DOMAIN the schema covers — *name the domain, then hunt the uncovered member*; **(ii) SAME GRAIN** (Rule 22's axis) — every value provably
-    at one grain (never a file-level value beside a cohort-level value); **(iii) INTENT COHERENCE** — one axis
-    serves ONE intent (mixing content-kind with handling-policy, or state with disposition, foundationally
-    breaks the schema); **(iv) STATE COHERENCE** (Rule 22's axis) **— a stability frame:** name the state axis, then ask whether ONE
-    remedy moves every value together. **If building the obvious instrument delivers some values and
-    structurally cannot deliver others, YOU MUST NAME WHICH VALUES DO NOT MOVE.**
-    **This binds EVERY SCHEMA-ENUMERATION ACT** — minting an axis, proposing or adding values to an existing
-    axis, and **ADOPTING a schema authored elsewhere (adoption is an authoring act).** **OUTCOME ARRAYS,
-    TYPED-RESULT SETS AND PREDICATES ARE SCHEMAS — they escape this gate precisely because they do not read as
-    schemas.** A value-enum proposal arrives WITH its four-postulate record and a token-hygiene census
-    (word-boundary occupancy over the canon files), or it is not a proposal. Remedy pattern for a violating
-    axis: the two-field split (RCG charters v2). Working record: `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
 25. **STALE >= 90 DAYS = DORMANT — not in use — unless it carries a DECLARED exception.**
     ⛔ **SUPERSEDED AS THE CLOSE-OUT PREDICATE 2026-08-25 (Andrew-direct): a project not attached to
     `org/missions/DIRECTIVES.yaml` is CLOSED, on MEMBERSHIP, not on age.** 99 projects were closed on
@@ -296,23 +384,6 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     ⚠ **Terraform is NOT at one path on every device -- resolve the binary, never assume a baked one.**
     Every existing gate binds unchanged, and **owning the apply means owning NEVER#6's completion
     obligation, not escaping it.** On-box wrapper set + the deploy-completion ledger path: `/cloud-ops`.
-27. ⛔ **ORDERING PRECONDITION (2026-08-25): THE DIRECTIVE ROW LANDS BEFORE ITS PROJECTS ARE MINTED.**
-    Since Andrew's ~18:24Z ruling, a project not attached to `org/missions/DIRECTIVES.yaml` is CLOSED,
-    not merely unrecorded -- so **a project minted before its row exists is BORN CONDEMNED**, by a
-    correct predicate meeting a correct project in the wrong order. Row first, projects second.
-    *Costs one ordering step. Does not apply to a project you are deliberately minting under an
-    existing row, nor to a re-mint of something the sweep closed (that is the recovery path).*
-27. **EVERY new directive/project runs the DIRECTIVE EXECUTION PIPELINE: register → purpose-level PRD → COO
-    atom-decomp of the operative surfaces BEFORE any TO exists (proof-of-spec derives from decomp cells,
-    aligned BOTH directions with printed denominators) → EXECUTE ON SPEC → CVO's surprise channel.**
-    **Mid-round the spec is FROZEN — an executing seat's only legal off-spec ACT is to SURFACE a surprise item**
-    (one line by MCP to `3.0.0_SA_CVO`, cc the issuer); **CVO files it under `org/surprise_channel/**` — executing
-    seats do not write that tree.** Surprise taxonomy is TWO ORTHOGONAL AXES: **class {OBSERVATION, BLOCKING} ×
-    standing {ARMED, INERT}**. OBSERVATION never interrupts (one line, keep working); BLOCKING routes same-turn
-    to the ISSUER for spec amendment; **any ARMED item disarms SAME-TURN via a NAMED disarm owner**, and
-    **DISARMED ≠ REMEDIATED** (two states, two owners, two clocks). **SEATING: a Tier-2 seat instance is
-    dispatched ONE PROJECT** — N concurrent projects = N `~lane` instances, one project each; the resource
-    protected is the seat's CONTEXT. Protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`.
 
 ## Agent Autonomy
 
@@ -332,7 +403,6 @@ objects, stopping EC2, anything unrecoverable.
 a session winds down ONLY when Andrew explicitly says so. Deferring to a scheduled-nightly is legal ONLY when
 there is literally no other option (a hard external gate, stated plainly) — NEVER a default. "We'll monitor it
 tonight" / passive idling = a coast-failure. `memory/feedback_no_passive_monitor_tonight_drive_now.md`.
-
 ## Compiler Tools (comp-*) — situation → command
 
 All in `.tools/` (PATH). Catalog: `org/modules/graph/graph-call-manifest.yaml`; reference: `org/modules/graph/comp-tools.yaml`.
@@ -361,7 +431,6 @@ aws (invoke/deploy/cp/verify/TF, DDB data-plane) + generic `s3 ls` are NOT nudge
 ⚠ **A firm-partitioned absence verdict MUST NAME THE TREE IT SEARCHED.** A 404 in the wrong bucket does not
 error — it returns a clean, confident, well-formed ZERO. A cross-tree nonexistence claim requires enumerating
 every tree or it is not a claim.
-
 ## Code Quality
 
 **THE BUILD LADDER — every line of new code is a LAST resort. Run this gate IN ORDER before writing any.**
@@ -378,7 +447,6 @@ BUILD, because a fresh build is the cheapest-feeling deliverable — the same me
 
 **No emojis (no non-ASCII) in production code, logs, or anything that runs on AWS** — breaks
 CloudWatch/charmap, grep, CI stdout. Use `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLOCKED:`.
-
 ## Detailed Documentation
 
 - **Lambda / EC2 deploy protocols:** `docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md`,
@@ -395,7 +463,6 @@ CloudWatch/charmap, grep, CI stdout. Use `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLO
   **a refusal names the SURFACE, never the absence** — a clean zero on ONE surface says nothing about the
   surface next door; **the derived layer (count/sector/geo/top-ten) is CURRENT-DAY-ONLY**, so an uncaptured
   day is permanent. ⛔ Do NOT mint `data/bloomberg/` — `integrations/bloomberg/` is the ruled folder.
-
 ## Git
 
 - Working branch: `CLOUD`. Portal submodule: `DEV`/`PROD`. Terraform binary: resolve it (`.tools/terraform.exe`
@@ -479,11 +546,9 @@ CloudWatch/charmap, grep, CI stdout. Use `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLO
 - **A REPORT OF A COMMIT STATES ITS PUSH STATE** — "landed LOCAL @hash, rides integration", or "on
   origin/<branch> @hash (ls-remote read)", never bare "landed". Under the integrator-only push gate a commit is
   invisible to every freshly-pulling or newly-spawned seat until pushed.
-
 ## Portal
 
 - `portal/` — `bun install && bun run dev --port 5175`. Bun: resolve via the user profile, do not bake a path.
-
 ## Changing this file
 
 **A rule = imperative (≤2 lines) + mechanism + pointer.** New rules ideally ship WITH a gate — **gates teach at
