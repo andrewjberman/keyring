@@ -121,7 +121,13 @@ working, not a defect. That is INSURE's cell to own; recorded here so the trigge
 denominator rather than a hypothetical one.
 
 ## STATUS UNCHANGED BY THIS RATIFICATION
-The **exclusion figure and its scope remain UNAPPLIED**. He ratified the *composition finding*; he
+⛔ **SUPERSEDED 2026-08-25 ~03:0xZ — HE HAS SINCE SET BOTH.** The boundary is **BD's supervision
+flag** and the scope is **EVERY cot artifact** (record:
+`ANDREW_DIRECT_20260825_458M_IS_CANONICAL_ALL_ARTIFACTS.md`; project `COT_CANON458`). The paragraph
+below described the state at the time of writing and is retained for the record, **not as an open
+item** — nothing in it is pending at Andrew.
+
+~~The **exclusion figure and its scope remain UNAPPLIED**. He ratified the *composition finding*; he
 has not yet set the **boundary** (BD's flag → exclude $30,322,927.42, vs his 458M line → exclude
 ~$22M and keep ~$8.3M of property in Client-Supervised), and COO ruled the **scope** question
 (D1-only vs every Cottonwood artifact) above this lane.
