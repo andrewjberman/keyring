@@ -188,6 +188,13 @@ e4b241a80f  record: deploy ledger CLOSED, 4 legs
              needs both. MSTR~Z's WATCH file is durable and NOT discoverable -- no startup probe
              surfaces it and a successor has no reason to look in another seat's tree.)
   SECONDARY  org/critical_paths/WATCH_20260825T1300Z_ETFS_FIRST_SCHEDULED_FIRE.md (0.0.0_AB_MSTR~Z)
+             ⛔ A SECONDARY MUST NOT CARRY ITS OWN COPY OF (d) -- POINT AT THIS ENTRY FOR IT.
+             (d) has moved FOUR times; the secondary stopped at move three and went stale within
+             the hour (`:72` still dated `2026-08-24`, caught by 2.0.0_SA_COO~Z @9031). It did NOT
+             produce a wrong answer, because the secondary disclaims itself and names this entry
+             PRIMARY -- that is the two-carrier discipline WORKING. **A secondary that carries no
+             independent copy of a moving value cannot diverge from it again** (COO~Z's structural
+             point, and it is the durable fix rather than re-syncing the line).
   NOT USED   a task order -- `task_orders/` is owned-paths-blocked for the ~Z lane (measured, with
              a positive control on the sibling deliverables/ path). DO NOT RE-ATTEMPT IT.
   ```
