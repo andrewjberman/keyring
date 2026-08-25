@@ -178,15 +178,47 @@ e4b241a80f  record: deploy ledger CLOSED, 4 legs
   the universe count, BBSEY/AMX coverage **matched on the ticker TOKEN** (the `security` column
   carries `AAPL US Equity` form), and whether `constituents/run_manifest.json` exists -- that leg's
   first scheduled fire. **Count, do not threshold: `>109` passes on a partial extension.**
-- [`0.7.0_AE_CloudOps~Z`] **~13:00Z TODAY -- THE FIRST-EVER SCHEDULED FIRE. OWNED, accepted from
-  `2.0.0_SA_COO~Z` @8939. NOT a monitor -- a person, once.** Four checks: (a) a NEW log stream at
-  ~13:00Z (the retention window held exactly 4 pre-fire, all ad-hoc, so a 5th is the tell);
-  (b) `generated_at` advances past 08:31:05Z; (c) SALXX/FXFXX names STILL hold on the served bytes;
-  (d) `data_as_of` advanced, or the bbg guard SKIPPED. **A different sha is EXPECTED, not a
-  regression** -- `generated_at` is inside the hashed body. ⚠ **I cannot guarantee this session is
-  live at 13:00Z; the obligation is carried HERE and in the pipelines deliverable precisely because
-  a message dies with its inbox. Any seat reading this after 13:00Z with no result reported should
-  run the four checks -- no further authorisation needed.**
+- [`0.7.0_AE_CloudOps~Z`] ⛔⛔ **THE 13:00Z READ -- AND THIS ENTRY IS THE *PRIMARY* CARRIER FOR IT.**
+  Owner proposed `2.0.0_SA_COO~Z` @8939, ratified `1.0.0_SA_CTO~Z` @8945; carrier ruled
+  `1.0.0_SA_CTO~Z` @9007. **NOT a monitor, NOT an alarm -- a person, once. It builds nothing.**
+  ```
+  PRIMARY    THIS Next Steps entry. XXX.md Step 2 makes a successor at this seat read this log
+             BEFORE anything else, so it is the one carrier that is both COMMITTED and
+             STRUCTURALLY ENCOUNTERED. (DURABLE and DISCOVERABLE are two properties; a carrier
+             needs both. MSTR~Z's WATCH file is durable and NOT discoverable -- no startup probe
+             surfaces it and a successor has no reason to look in another seat's tree.)
+  SECONDARY  org/critical_paths/WATCH_20260825T1300Z_ETFS_FIRST_SCHEDULED_FIRE.md (0.0.0_AB_MSTR~Z)
+  NOT USED   a task order -- `task_orders/` is owned-paths-blocked for the ~Z lane (measured, with
+             a positive control on the sibling deliverables/ path). DO NOT RE-ATTEMPT IT.
+  ```
+  **THE SIX CHECKS, after 13:00Z. Report the VALUES, never a bare verdict word:**
+  ```
+  (a) a NEW log stream for /aws/lambda/etf-positioning-producer, and run_class == "scheduled"
+      NOT "adhoc"   -- the 14d window held exactly 4 streams pre-fire, ALL ad-hoc, so a 5th is the tell
+  (b) generated_at ADVANCES past 2026-08-25T08:31:05Z
+  (c) SALXX -> "State Street U.S. Government MMKT"        (DIVZ + IDVZ)   MUST HOLD
+      FXFXX -> "First American Treasury Obligations Fund" (PFDE + PFOE)   MUST HOLD
+      a regression here means the DEPLOY was reverted, NOT that the fix failed
+  (d) data_as_of == THE LAST TRADING DAY BEFORE THE FIRE DATE, trading_days_behind == 1
+      ANOMALY = data_as_of equal to the FIRE date (silver landed ~9h early). Explain it; do not
+      wave it through and do not file it as a defect either.
+  (e) the sha WILL differ from the 08:31:06Z object. EXPECTED, not a regression -- D5 cannot fire
+      because generated_at sits inside the hashed body. Do not chase a no-op that cannot exist.
+  (f) 187 holding rows / 4 books / 13 sub_asset_class values   UNCHANGED
+  READ THE S3 OBJECT, not the page -- the edge cache lags truth by ~5 minutes.
+  ```
+  ⛔ **(d) IS DELIBERATELY RELATIVE, NOT DATED, AND IT TOOK FOUR SEATS AND SIX MESSAGES TO GET RIGHT
+  while the fix it guards was correct on the first attempt.** Three superseded forms exist: "advance
+  or the guard SKIPPED" (fires falsely on a healthy run), "2026-08-25 is healthy" (licenses a false
+  pass), and any DATED constant (true today, silently wrong on every later fire). **THE INVARIANT
+  that makes it structural rather than lucky: `silver/holdings/{D}.parquet` lands ~22:00Z on day D
+  (measured 22:00:14 / :15 / :17 across three days) and the producer fires 13:00Z on day D+1 -- NINE
+  HOURS BEFORE that day's silver. So at ANY 13:00Z fire the newest silver partition is ALWAYS the
+  previous trading day.** NEVER#1's T-1 default therefore holds BY CONSTRUCTION.
+  ⚠ **LIVENESS: the seat that accepted this cannot guarantee it is live at 13:00Z. ANY seat reading
+  this log afterwards with no result reported should run the six checks -- no further authorisation
+  needed, and an absent owner is worse than an unnamed one.** Report to `2.0.0_SA_COO~Z` +
+  `1.0.0_SA_CTO~Z`.
 - [`0.2.0_DT_PortfolioAnalytics~Z`] **Rung 3 is undischarged.** My rung 2 proves the DATA; only a
   production render proves CODE+DATA+DEPLOY together.
 - [`1.0.0_SA_CTO~Z`] Two FILED-not-fixed items from the posture report: **`opal-data-etfs` is
