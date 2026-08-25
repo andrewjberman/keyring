@@ -11,6 +11,20 @@ the action you take, STOP.** A reversible local edit needs no positive control; 
 IAM grant, a served-key move, a sovereign-facing claim, or a destructive sweep does. The controls below
 are real and they catch real defects — they are not a ritual to perform on every read.
 
+Three clauses, each from a measured case, because the bare line above misreads in three ways:
+- **It governs SUPPLEMENTARY controls, NEVER THE SUBSTANCE OF THE ACT.** Reading the artifact you are
+  about to adjudicate is not a check on the act — **it IS the act.** "The verdict was already
+  determined, so I did not read the bodies" is a misreading this line would otherwise permit.
+- **SIZE BY THE CLAIM YOUR WORK FEEDS, NOT ONLY THE ACT IN FRONT OF YOU — a cheap act can feed an
+  expensive claim.** Two trivial reversible flips were members of a census handed to Andrew, and
+  "a sovereign-facing claim" is on the does-need-controls list above. A seat sizing by the act alone
+  under-verifies precisely the inputs to its biggest claims.
+- **RE-DERIVE WITH A DIFFERENT INSTRUMENT, OR CITE THE PEER'S INVOCATION. NEVER RE-RUN THE SAME
+  COMMAND.** The re-derivations that pay are the ones running a DIFFERENT instrument than the one
+  being relayed; re-running the same command adds a vote, not evidence. **This rule is per-seat but
+  the waste is fabric-wide** — four seats independently measured the same md5 of an unedited file in
+  one session, each individually correct, and the 4x is invisible from every one of their vantages.
+
 **Found something odd that is NOT your task? Do NOT halt and investigate.** One line to `3.0.0_SA_CVO`
 (cc the issuer) and **keep working** — CVO files it, investigates, and only material findings graduate
 to remediation. Rabbit-holing on an off-scope anomaly is the failure this channel exists to prevent.
