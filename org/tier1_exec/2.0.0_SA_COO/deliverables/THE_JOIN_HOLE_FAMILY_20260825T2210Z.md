@@ -1,4 +1,6 @@
-# THE JOIN-HOLE FAMILY — five shapes measured in one evening, one mechanism, and it is an ISSUER defect
+# THE JOIN-HOLE FAMILY — SIX shapes measured in one evening, one mechanism, and it is an ISSUER defect
+
+*(Title corrected from FIVE at ~22:3xZ. The sixth was found in the instrument built to police the fifth.)*
 
 **Author:** `2.0.0_SA_COO` · **Window:** 2026-08-25 20:14Z–22:10Z · **Every instance measured by a seat, not by me.**
 
@@ -46,6 +48,44 @@ identical; the remedies are not.**
 `<expected_criteria>` it returns `INVALID`, 4 violations, 3 named silent omissions. **A coverage gap
 and a clean pass are BYTE-IDENTICAL to anyone who runs it the easy way** — and the tool *discloses
 that limit on its own face*, where it is invisible to anyone who does not read it.
+
+## ⛔ AMENDMENT 2026-08-25 ~22:3xZ — A SIXTH SHAPE, AND IT IS THE TWIN OF MY OWN REMEDY 5
+
+**Measured by `0.4.0_DS_ClientPlatform~G` (`@a378cdb612`), who found it in the instrument THEY built
+and corrected the artifact itself at `@ce4583e189` rather than only the message.**
+
+| # | Where the fact sat | What the instrument said | What was true |
+|---|---|---|---|
+| **6** | A verdict derived from an artifact's **ABSENCE** | sweep column read **`SEAT`** (no proof instance exists) | the work was **APPLIED, ENABLED AND PRODUCING FOR SIX DAYS** |
+
+`OPAL_ADVIPOINTERS.P2-FLOOR-49F` was classified `SEAT`. Live state: `advi-49f-gold-floor`
+**ENABLED**, `cron(45 12 * * ? *)`, created `2026-08-19T17:32:28Z`, **7 of 8 canonical tables at
+`date=2026-08-24`** — T-1, the correct current answer on the trading-day frontier.
+
+> ⛔ **"NO-INSTANCE IS NOT NOT-STARTED."** — `0.4.0_DS_ClientPlatform~G`
+
+**WHY IT IS A DISTINCT SHAPE AND NOT SHAPE 5 RESTATED.** Shape 5 is a *stale present value*
+(`<status>` says `ACTIVE`, decayed). Shape 6 is an *inference from a missing value* — and the two
+have **opposite remedies**: shape 5 is fixed by not trusting a field, shape 6 by not trusting a
+field's ABSENCE. Rule 24(iv): one remedy does not move them together.
+
+⛔ **AND IT FALSIFIES THE SYMMETRY OF MY OWN REMEDY 5.** I wrote *"never read `<status>` as a work
+verdict — the discriminating read is proof-instance-exists."* **That remedy IS shape 6.** It replaces
+one record-derived inference with another and inherits the identical flaw pointed the other way.
+**AN ABSENCE-DERIVED VERDICT IS NOT SAFER THAN A PRESENCE-DERIVED ONE.**
+
+**THE MEASURED COST WAS A NEAR-MISS WITH A LIVE CONSEQUENCE, NOT A HYPOTHETICAL.** I built a seat ask
+to Andrew on that `SEAT` column and he spawned against it. Seating `P2-FLOOR` would have put an agent
+on six-day-old finished work. *The issuer read past a limit the author had not thought to declare —
+which is the family's own mechanism operating between two people instead of between a tool and a
+record.*
+
+**REMEDY 6 — the only sound one, and it is not cheap:** a seat/close verdict must be grounded on
+**LIVE OR SERVED STATE**, not on the presence or absence of a record artifact. That is an
+artifact-layer read per row, and `0.4.0_DS_ClientPlatform~G` correctly declined to do it for 34 rows
+because the ramp is real. ⛔ **SO THE HONEST FORM IS A TRIAGE, NOT A RULE: cheap record-layer verdicts
+are fine for ORDERING work, and must never be the basis of a SPAWN or a CLOSE.** The expensive read
+is owed only where a verdict has a live consequence.
 
 ## ⛔ AMENDMENT 2026-08-25 ~22:1xZ — TWO OF THE FIVE REMEDIES BELOW ARE FALSIFIED
 
