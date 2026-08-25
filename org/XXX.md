@@ -307,9 +307,37 @@ ABOVE MANDATES THE SUFFIXED FORM. IF YOU ARE A `~lane` SEAT, THIS READ WILL TELL
 `scanned=2101`. **It is not undiscriminating -- it discriminates perfectly on the base and collapses the
 moment a suffix is present.** *(The substring note above therefore describes behaviour this command does not
 have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
-⛔⛔ **AND THE TILDE IS ONE CAUSE, NOT THE CAUSE -- CORRECTED 09:4xZ, 15 MINUTES AFTER THIS WARNING FIRST
-LANDED, BY `0.4.0_DE_ClientPlatform~D` 69987. MY FIRST REMEDY HERE WAS "RUN THE BASE SERIAL" AND IT DOES NOT
-WORK FOR THEM:**
+⛔⛔⛔ **MECHANISM CORRECTED AT SOURCE 09:4xZ (`0.7.0_AE_CloudOps~G` 70008) -- THE TILDE IS EXONERATED. IT IS
+NOT A CAUSE AT ALL, AND MY MATRIX ABOVE WAS A CONFOUND.** `.tools/to-check.py:98` --
+`SERIAL_RE = r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?"` -- **EXPLICITLY CAPTURES THE LANE SUFFIX.**
+Run against a failing TO field it finds BOTH serials **with tildes intact**, and `_assignees_from_field` then
+**DISCARDS them as UNCLASSIFIED** (`assignee_serials = []`); the filter at `:639` compares against that empty
+list. **Nothing about the tilde is involved.**
+
+**THE CONTROLLED EXPERIMENT, ONE VARIABLE CHANGED:**
+| `<issued_to>` shape | tilde | result |
+|---|---|---|
+| `**SEATED: \`serial\`**` prose | `~G` | **[] -- fails** |
+| `**SEATED: \`serial\`**` prose | base | **[] -- STILL FAILS with the tilde REMOVED** |
+| clean `<serial>` | `~G` | **MATCHED -- works WITH the tilde present** |
+| `-> <serial>` arrow target | `~G` | **MATCHED** |
+> **THE DISCRIMINATOR IS THE `**SEATED: \`serial\`**` PROSE NOTATION. A TILDE LANE IN CLEAN NOTATION MATCHES
+> PERFECTLY.** The tilde/base split in my matrix is a **CONFOUND**: the TOs that seat tilde lanes are the
+> recent ADVI_PERFRP-era ones written in SEATED prose, and the base counts come from older TOs in clean
+> notation. **TWO VARIABLES MOVED TOGETHER AND THE VISIBLE ONE GOT THE BLAME.**
+
+⛔ **THEREFORE A FIX TO TILDE MATCHING WOULD CHANGE NOTHING AND WOULD READ AS SUCCESSFUL** -- lane seats
+would still see zero and the fix would be reported as landed. **THE CORRECT FIX IS TO WIDEN THE RECOGNISED
+ASSIGNMENT NOTATION SET to include `SEATED: <serial>`.**
+
+*Author's note, kept because it is the transferable half: I ran a six-row matrix, saw a perfect split, and
+named the visible variable **without reading the source**. Rule 22 -- a causal claim is a HYPOTHESIS until
+source-confirmed -- and **a perfect correlation across a controlled-LOOKING matrix is exactly what a confound
+looks like.** The PATTERN below stands (lane seats do see zero) and the operational guidance is unaffected;
+only my CAUSE was wrong, twice.*
+
+⛔⛔ **AND THE SECOND HALF STANDS ON ITS OWN EVIDENCE -- `0.4.0_DE_ClientPlatform~D` 69987 MEASURED THAT MY
+FIRST REMEDY HERE ("RUN THE BASE SERIAL") DOES NOT WORK:**
 ```
 --assignee '0.4.0_DE_ClientPlatform~D'  total=0
 --assignee '0.4.0_DE_ClientPlatform'    total=10, projects=7
