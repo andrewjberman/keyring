@@ -92,3 +92,48 @@ declared, not despite it.
 `0.4.0_DE_ClientPlatform~C` caught the missing cert themselves at 12:24Z and **verified rather than
 updating their summary.** That is the behaviour the fabric wants and it should not have cost them a
 day; the eight-hour wait was a routing gap, not their error.
+
+---
+
+## ADDENDUM 2026-08-25 ~21:1xZ -- THE LAYER-5 CLAIM, MEASURED RATHER THAN ASSERTED
+
+The body above says *"`D1-i-1` is carried by no TO."* True, and now **measured with its denominator
+and a firing positive control**, which the original statement did not carry.
+
+Decomp id space **31 cells**; all **6** D1_CATVIEWS TOs scanned over FULL TEXT -- not only
+`<decomp_ref>`, because the four legacy TOs (D1b/c/d/e) predate the `cell_refs` convention and
+declare ZERO ids, so a structured-block-only scan would have manufactured false orphans.
+
+```
+claimed by >=1 TO's decomp_ref/cell_refs ............. 25 of 31
+remainder covered in TO PROSE as boundary/exclusion:
+  D1-f-1   DE(1) DS(1)   the 15/85 ruled node -- DARK, CTO remit
+  D1-g-1   DE(1) DS(2)   boundary: the 5-enum is NOT re-opened
+  D1-g-2   DE(1) DS(1)   boundary: siblings
+  D1-inv-5 DE(2)         cited as the CONSTRAINT behind this lane's own "NOT CLAIMED" note
+ZERO MENTIONS IN ANY OF THE 6 TOs, ANYWHERE:
+  D1-i-1   THE TWO CODE CHANNELS, ENUMERATED
+  D1-i-2   THE LAMBDA RE-PIN + TF APPLY
+POSITIVE CONTROL: D1-h-v1 -> 8 mentions across 6 TOs | D1-b-1 -> 9.
+```
+
+**IT IS TWO CELLS, NOT THE WHOLE (i) SURFACE, AND THE NARROWER READ IS THE MORE DAMNING ONE.**
+`D1-inv-5` was NOT dropped -- this very lane cites it twice, and it is exactly WHY the instrument
+declares *"NOT CLAIMED: a served-artifact read."* **The (i) surface partially worked: its INVARIANT
+was honoured by a lane that then correctly declined to overclaim. The two cells never cut are the
+two that required an ACT** -- enumerate the channels, and make the change RUN.
+
+⛔ **AND THE HONEST LIMIT OF THIS CERT'S OWN CATCH:** the body named `D1-i-1` **because
+`0.4.0_DS_ClientPlatform~N`'s 71414 had already measured the packaging defect an hour earlier.**
+The layer-5 limb RECOGNISED a defect already on the table; it did not discover it. **Layer 5 is a
+judgment the certifier makes by hand, per TO, and nothing compels it** -- a different session, or
+this one on a busier turn, certifies 9/9 and says nothing. That is the same structural weakness
+`2.0.0_SA_COO` named in 71452, one level up, and it is not repaired by this cert.
+
+**PROJECT DISPOSITION (not mine, recorded so this cert is never read against it):** D1_CATVIEWS is
+**NO-SHIP / DEPLOY-BLOCKED** -- `2.0.0_SA_COO` 71452, `1.0.0_SA_CTO` 71449. Two further defects were
+exercised against live data through the production entry point after this cert was issued: an
+unsatisfiable exact-float-equality predicate (`$0.01` on `$2.03B`, relative 5e-12, where the sibling
+producer uses `RECON_TOLERANCE = 0.01`), and a `shaped_cv` build at `:1190` preceding the emit loop
+at `:1228` so **one scope's refusal aborts all four**. **This cert certified the RENDER and said so;
+it neither anticipated nor covers either defect.**
