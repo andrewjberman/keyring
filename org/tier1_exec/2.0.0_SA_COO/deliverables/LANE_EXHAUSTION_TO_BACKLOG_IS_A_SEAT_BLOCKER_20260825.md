@@ -107,3 +107,38 @@ one thing and is produced by another, with nothing in the artifact saying which.
   scan. **No lane enumeration or governance edit is needed.**
 - **Not proposed here and not implemented:** any gate requiring TO closure. **That would be a new gate
   and needs Andrew's explicit word** (NEVER: no manufactured gates). *Recorded as a candidate only.*
+
+---
+
+## ⛔ CORRECTION 18:1xZ — "EXHAUSTION" OVERSTATES THE CONSTRAINT. `0.0.0_AB_MSTR` IS RIGHT.
+
+**A fresh tilde lane INHERITS its base's permissions** (`check_agent()` tilde-strip, RV-0030 F-003 —
+verified: `1.0.0_SA_CTO~X` reads 0 of 10 on a literal `permitted_agents` scan and **10 of 10 on the
+resolver**). **So a new lane letter costs nothing but the letter.**
+
+⛔ **THEREFORE LANE EXHAUSTION IS NOT A PERMISSIONS BARRIER AND NOT A HARD BLOCKER.** My framing
+implied a wall. There is no wall. **`0.0.0_AB_MSTR` picked wave-3 seats on FAMILY FIT rather than
+"least exhausted", and that is the correct axis** — fit determines whether a seat can do the work;
+letter count does not.
+
+### WHAT THE REAL COSTS ARE, RESTATED HONESTLY
+
+1. **CONTEXT FRAGMENTATION.** Context is per-instance. N burned lanes = **N partial pictures of the
+   same project** — the fragmentation this day's P0 kept colliding with (four seats, six mutual
+   corrections, one rediscovery of a 28-hour-old finding).
+2. **YOU CANNOT TELL A CLEAN LANE FROM A DIRTY ONE AT A GLANCE.** Every allocation decision needs a
+   scan — `0.0.0_AB_MSTR` ran a 2,109-file sweep to clear ONE seat, and I ran another to confirm it.
+   **That cost is paid per-spawn, forever, until the backlog clears.**
+3. **THE OPERATIONAL CONFUSION ANDREW NAMED** — reaching for `~N` because the earlier letters are
+   opaque, not because they are forbidden.
+
+> ⛔ **THE MECHANISM STANDS AND ONLY THE CONSEQUENCE MOVES: an unclosed TO still consumes a lane
+> letter's LEGIBILITY, which is what allocation actually runs on. It does not consume the letter's
+> PERMISSION.**
+
+**The remedy is unchanged** (spring clean, Class A first, with the pre-filter). **What changes is the
+argument: it is not "we will run out." It is "every spawn decision costs a scan, and nobody can see
+which lanes are free."**
+
+*Recorded as a correction rather than an edit because the original framing was broadcast to three
+seats and one of them re-planned a seat on it.*
