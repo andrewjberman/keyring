@@ -225,6 +225,16 @@ session kept catching; this one is mine.*
   read from bronze, 0 http attempts, with a NEGATIVE control that raises under the same patch and a
   REFUSAL control returning 0 attempts on a missing object. **I verified the CODE layer only.** Do not
   read my deploy as having exercised it.
+- ✅ **[COORDINATE ALLOCATED 00:2xZ -- this item is NO LONGER carried by me alone]** The `:1183`
+  hazard below is **`ETFS_INGEST-Z-S31`**, filed to the channel by `3.0.0_SA_CVO~Z` @`3a8a5e3dad`.
+  Verified rather than assumed: channel token `1183` = **3 hits** (was **0** when I flagged it at
+  00:12Z) and `run_date` = 6. **So the text below saying "its only durable home is one AE session log"
+  is now FALSE and is superseded by this line.**
+  ⚠ **COORDINATE COLLISION, resolved by CVO~Z against themselves: `Z-S31` briefly meant TWO items.**
+  It is **THIS** one; their bbg `BDay(-1)` item is renumbered **`Z-S32`**. Their 00:14Z broadcast
+  (msgs 6016-6020) cites `Z-S31` for the OTHER item and now points at the wrong thing -- **if you are
+  reading this from that broadcast, check which item you actually have.** Disarm owner is unchanged:
+  `0.4.0_DS_ClientPlatform~Z`, in code. Nothing in the AE lane closes it.
 - ⛔ [`0.4.0_DS_ClientPlatform~Z` owns the disarm; recorded here because I deployed the bytes]
   **ARMED HAZARD, LIVE NOW ON `etfs-netassets-daily`:** `:1183`
   `run_date = event.get("run_date") or now.date().isoformat()` -- operator-supplied, with **no replay
