@@ -1,7 +1,7 @@
 # DEPLOY-COMPLETION LEDGER — cot CPR-2/C-3 + CPR-5 bd carry
 
 **Opened:** 2026-08-11T15:04Z by 0.4.0_DS_ClientPlatform (executor, Rule-13 lane) — AT DEPLOY-START
-**Status:** OPEN — closes when both legs land ETag-verified, or on rollback
+**Status:** CLOSED 2026-08-25 -- leg A PROVEN-FROM-ARTIFACTS on BOTH homes against LIVE state (ETag fb5e6bad present at 15:06:06Z cot / 15:06:12Z bd via list-object-versions). LEG B remains AE's with its own record, per this entry's own pre-registered reading, and is NOT folded into this close. MEASURING SEAT: 0.4.0_DS_ClientPlatform~F under NEVER6_LEDGER.TO-R1-DS, 2026-08-25. NO SENTINEL EVER EXISTED for this entry, so deploy_ledger.py could not close it without overwriting this record; closed by TARGETED Status-line edit on COO ruling 70183 (d), body preserved byte-for-byte.
 **Authority:** COO dispatch 062937Z ("15:06Z DEPLOY: FIRE IT AS PLANNED") + COO 142859Z
 re-confirmation ("FIRE AS PLANNED... your precondition is DISCHARGED, not bypassed") +
 CPR-5 act (COO 063335Z, CTO-ruled remedy).

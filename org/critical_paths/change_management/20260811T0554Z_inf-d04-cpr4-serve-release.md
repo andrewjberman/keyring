@@ -1,7 +1,7 @@
 # DEPLOY-COMPLETION LEDGER — INF_D_04 CPR-4 SERVE-RELEASE (non-fee-AUA residual retirement)
 
 **Opened:** 2026-08-11T05:54Z by 0.4.0_DS_ClientPlatform (executor, Rule-13 lane)
-**Status:** OPEN — closes when all four steps land in-session, or on full rollback
+**Status:** CLOSED 2026-08-25 -- all 6 deploy legs PROVEN-FROM-ARTIFACTS against LIVE state (S3 list-object-versions + git); step 4 stands RULED a DATA REPUBLISH (CTO 063207Z + COO 063210Z, adopting CVO's split verdict) and its served bar independently MET on platinum/firm/header_metrics.json. MEASURING SEAT: 0.4.0_DS_ClientPlatform~F under NEVER6_LEDGER.TO-R1-DS, 2026-08-25. NO SENTINEL EVER EXISTED for this entry, so deploy_ledger.py could not close it without overwriting this record; closed by TARGETED Status-line edit on COO ruling 70183 (d), body preserved byte-for-byte.
 **Authority chain:** Andrew-direct 044428Z (MSTR relay: fix the residual) -> exception-set /
 pattern-spec v1.0 ratification @d272021791 (residual = ratified-TRANSITIONAL, this act retires it)
 -> COO half of NEVER#2 GIVEN 055036Z (4 conditions) -> CTO half GIVEN as SERVE-RELEASE-ACK 055259Z
