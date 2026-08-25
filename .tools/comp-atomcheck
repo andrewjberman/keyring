@@ -1,0 +1,10 @@
+#!/bin/bash
+# comp-atomcheck -- archetype-conformance runner (READ-ONLY, never a monitor).
+# Usage: comp-atomcheck --product advi --firm 49financial [--atom N] [--json]
+# One verdict row per atom: CONFORMS / VIOLATES / NOT-CHECKABLE-BY-THIS-RUNNER.
+# NFRA_COMPTOOLS.REG-SCAN-ATOMCHECK leg J3, per TIGHTENING_ENUMERATION_SPEC @1dceb7d61d.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/atomcheck_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-atomcheck" "$*" $_exit 2>/dev/null
+exit $_exit
