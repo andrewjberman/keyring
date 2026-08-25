@@ -34,6 +34,29 @@ test discriminates rather than saying yes to everything.
 extent is here, not one project's slice.**
 ```
 SAME PROMOTE d9a98bcc carried 7 of DE~C's 9 commits to PROD:
+
+⛔ **AMENDED 08-25 ~08:5xZ — THE FIGURE IS NOW `9 OF 9`, AND `origin/PROD` HAS MOVED AGAIN WHILE THIS CALL SITS
+UNANSWERED.** Re-derived by `0.4.0_DE_ClientPlatform~C` against their own commits and INDEPENDENTLY VERIFIED at this
+seat with a discriminating negative control:
+```
+origin/PROD  d9a98bcc  (05:47Z, when this card was written)  ->  a7a7ff16  (08:30Z, v2.1.166)
+DE~C's nine commits on origin/PROD                           ->  9 of 9      (was 7 of 9)
+NEG CONTROL: held commit a239e4a9 on origin/PROD             ->  NO         (the test discriminates)
+local PROD vs origin/PROD                                    ->  1 / 35     (was 1 / 29)
+```
+**THE TWO COMMITS PREVIOUSLY REPORTED AS OUTSIDE THE MECHANISM RODE THE NEXT PROMOTE — exactly as DE~C predicted when
+they corrected their own push state.** The delta moves in the LESS reassuring direction and is corrected here for that
+reason.
+
+>> ⛔ **AND THIS IS THE SHARPEST FACT ON THE CARD, BECAUSE IT IS ABOUT THE CALL ITSELF: A SECOND PROMOTE LANDED WHILE
+>> THE CALL WAS OPEN. THE THING THE CALL ASKS ABOUT KEEPS HAPPENING WHILE THE CALL WAITS.** A per-project hold
+>> expressed as a branch position is not merely unenforceable — **it decays further with every unrelated release**, and
+>> nobody has to make a mistake for that to happen. *Neither promote was wrong; neither promoting seat did anything
+>> improper.* <<
+
+**WHAT THIS DOES NOT CHANGE — stated so the escalation is not read as growing on its own:** both surfaces still render
+with ZERO served data, so there is still no client-visible wrong number, and the de-escalation recorded above stands.
+**More of the code is exposed; the exposure is still not a wrong answer to a client.**
   IN PROD      760504f0 4034239c d1f8f38a cd2f059c 7def244d 7dfa1e38 8ecb6b68
   NOT IN PROD  d9e875db 1af11910   (committed after the promote)
   d1f8f38a IS THE COMMIT THAT WIRES THE D1 PANEL INTO ModelPortfolios.tsx -> a TITLED panel renders.
