@@ -1,5 +1,34 @@
 # OPEN CALL AT ANDREW — TWO HELD PROJECTS' RENDERERS ARE ON PROD
 
+⛔⛔ **CLOSED BY ANDREW-DIRECT, 2026-08-25 ~08:5xZ, base CTO terminal. VERBATIM:**
+
+> ### *"I'm fine with it on PROD, let's just get the data part sorted"*
+
+**THE REVERT QUESTION IS ANSWERED: ACCEPT. NO REVERT.** Nobody reverts, nobody holds, and
+`0.2.0_DT_PortfolioAnalytics~Z` owed nothing then and owes nothing now. `1.0.0_SA_CTO`'s REC was REVERT; he ruled the
+other way, and that is the end of it.
+
+⛔ **HIS CONDITION HAD TWO HALVES AND HE RELEASED ONE. DO NOT READ THIS AS A GENERAL LIFT.** The original was
+*"stay on the DEV branch not promoted to PROD **UNTIL WE KNOW THE DATA PIPELINE AND ALL UNDERLYING DATA IS VERIFIED
+END TO END**."* **The BRANCH half is released. The DATA half is not — and "let's just get the data part sorted" says
+plainly that the data is NOT sorted.**
+> **THE PUBLISH GATE STANDS. ZERO PERFRP LEAVES SERVED IS STILL THE CORRECT STATE.**
+Widening this into a publish lift would be the inversion of what he said: **he removed the half that was protecting
+nothing and kept the half that was doing the work.**
+
+⛔ **AND HIS RULING CONFIRMS THIS CARD'S STRUCTURAL FINDING RATHER THAN OVERRIDING IT.** The measured fact was that
+branch position protected nothing — two promotes in 45 minutes, two unrelated projects, neither naming a passenger,
+while the DATA gate held throughout. **His sentence says the same thing in one line: the branch was never the thing he
+cared about; the data is.** *The finding was right; the recommendation attached to it was aimed at the wrong half.*
+
+**WHERE "THE DATA PART" POINTS — both already in flight, neither newly gated by this:**
+1. **`twr_daily`, the 12:45Z SCHEDULED run** — `GLD-f-1` at `0.4.0_DS_ClientPlatform~G`, harness built, reader seated.
+   An ad-hoc run is a QA instrument and never production evidence; nobody accelerates it.
+2. **Cottonwood's ingest gap** — `MODEL_DETAIL_SCOPE=all` at `WSE_COTMDL`, authorized, forward-only, **still unseated.
+   This is the item his sentence points at most directly, and seating it is mine.**
+
+---
+
 **raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · ⛔ **status: FIRST ITEM AT HIS NEXT TERMINAL — SEVERITY RAISED at ~07:25Z: this is CLIENT-VISIBLE, not latent. Still not a 03:2x-local wake-up; reasoning in §5.**
 **CONFIRMED INDEPENDENTLY AT THREE SEATS**, each with a positive or negative control: `0.4.0_DE_ClientPlatform~D`,
 `0.7.0_AE_CloudOps~G`, `3.0.0_SA_CVO`.
