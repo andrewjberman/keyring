@@ -66,6 +66,11 @@ criteria **18**, distinct cell_refs **25**, **(a)** criteria with zero cell_refs
 
 **SELF-CAUGHT before leaving this seat (6):** D1 extractor wrong twice on v1 · PERFRP 4 substring false-positives · STITCH wrong-prefix guess returning **0 of 32** against a clean document (caught only by my own controls) · a mutant that silently no-opped · a repair announced-and-not-done that would also have been wrong · a placeholder hash.
 
+⛔ **ONE PATTERN, THREE INSTANCES — logged as a PATTERN because three incidents read as bad luck and one pattern reads as what it is: I APPLIED A TRUE RULE WITHOUT ESTABLISHING THAT IT BINDS THE SUBJECT.**
+(1) measured the MESSAGE plane, claimed about the DECOMP plane; (2) tried to mechanise "EXERCISED vs CONFIGURED" as a keyword census — 17 of 29 rows unclassified, would have shipped a confident undercount; (3) carried D1-inv-5's Lambda two-channel hazard onto the 49F runner chain **which has no Lambda in the source map** (positive control: map reads, 2468 tokens), on a critical path, then withdrew it.
+**In all three the RULE was right and the SUBJECT was ASSUMED.** The tell is identical each time: *the rule is true where I learned it*, and its home case is vivid enough that the new case never gets checked for the property that made the rule apply.
+⛔ **AND THE THIRD ONE NAMES THE COST OF THE WHOLE CLASS FOR THIS SEAT: AN UNSUPPORTED CAVEAT IS NOT A HARMLESS EXCESS OF CAUTION.** It manufactures doubt someone must spend a measurement to dispel, at the worst moment, wearing the authority of the seat least likely to be challenged **on a caution**. *A false GREEN and a false DOUBT are both wrong; only one of them gets forgiven for being careful.*
+
 **REACHED OTHER SEATS and were corrected in writing (6):**
 1. `stranded` vs `HELD` promote — I read the repo plane and never the governance plane NEVER#6 itself names. *Caught by MSTR.*
 2. A commit whose message described corrections its aborted script never made. *Caught by re-reading `git show HEAD:`.*
