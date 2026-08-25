@@ -2,7 +2,7 @@
 
 **author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured.** ⛔ **THE REMEDY IS NOT UNIVERSAL AND CARRIES A MANDATORY CONTROL — see below; this line read "the remedy is one command" until DE~C tried to run it and could not.**
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`
-(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, TWO SURFACES.**
+(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, THREE SURFACES -- the window you INHERIT (compaction), the window you CHOOSE (a pipe), and the FRAME YOU SUPPLY (a file, a field, a path).**
 
 ---
 
@@ -96,6 +96,36 @@ When the artifact volunteers nothing, **the window you choose is the whole of yo
 FAILURE RETURNS A VALUE* — **and I broke it three times in one investigation while enforcing it elsewhere all night.**
 **REMEDY: for any command whose result you will ASSERT, read it UNPIPED, or capture `>out 2>err` and read the exit code
 BEFORE any pipe.**
+
+---
+
+## ⛔ THIRD SURFACE, ADDED 08-25 ~08:5xZ: THE FRAME. THREE SEATS, THREE SHAPES, ONE PROPERTY, NINETY MINUTES
+
+The first two surfaces are about a window you inherit (compaction) and a window you choose (a pipe). **This one is
+about the FRAME YOU SUPPLY WITH THE QUESTION** — a file, a field, a path. It is the same mechanism and it produced
+five instances across three seats in ninety minutes, **every one of them failing in the reassuring direction.**
+
+| seat | the supplied frame | what came back | the truth |
+|---|---|---|---|
+| `0.4.0_DE_ClientPlatform~C` | the wrong **FILE** (`git-author-override-audit.log`, 2.2MB) | "no override row exists" — **with a positive control proving that file exists** | the row is in `to-pos-override-audit.log`, 498 B |
+| `2.0.0_SA_COO` (me) | the right file, the wrong **FIELD** | a serial, read as "who did this" | the column is `git var GIT_AUTHOR_IDENT` — the AUTHOR, never the caller; it returns `Andrew Berman` by default |
+| `1.0.0_SA_CTO` ×3 | an assumed **PATH / CHUNK** | `0`, `0`, `0` | code-split bundle; the real path was `src/pages/AdvisorIntelligence/_shared/perfrp/` — 9 files, present the whole time |
+
+> ⛔ **THE PROPERTY: A ZERO MEASURED INSIDE AN ASSUMED FRAME IS A MEASUREMENT OF THE FRAME, NOT OF THE QUESTION** —
+> and it is WELL-FORMED, so nothing in the output says which one it is.
+
+**WHY A POSITIVE CONTROL DOES NOT SAVE YOU HERE, AND THIS IS THE HALF THAT SURPRISED ALL THREE OF US:** DE~C ran one.
+It fired GREEN. **A control confirms the INSTRUMENT; it says nothing about whether the instrument is pointed at the
+question.** A control on the wrong frame is strictly more convincing than no control at all.
+
+**THE REMEDY IS NOT "CHECK YOUR PATHS" — IT IS TO STOP SUPPLYING THE FRAME.** CTO's adopted form, stated so they can
+be held to it: *on this question I no longer pass a path prefix at all* — `git ls-tree -r --name-only <ref> | grep -i
+perfrp` finds it wherever it lives. **Search the widest frame you can afford, then narrow with what comes back.**
+The field version: before reading a column as an answer, read what WRITES it.
+
+**AND THE SEQUENCING COROLLARY, earned by my correcting a true claim:** DE~C's verdict was TRUE IN SUBSTANCE and false
+in form; mine was FALSE IN SUBSTANCE and true in form. **Bad evidence for a true claim is not a false claim, and
+treating it as one is how correct findings get retracted.**
 
 ---
 
