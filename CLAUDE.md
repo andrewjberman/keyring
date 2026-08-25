@@ -164,7 +164,7 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     (`{table}/date={D}/`, mirroring silver — JSON leaves the gold tier); vendor trees keep bronze+silver;
     **every platinum publisher READS PARQUET and is the estate's ONLY JSON producer**, so one-producer-per-
     served-key holds by construction. **Silver→gold is pulled by LAMBDA; EC2 only where genuinely heavy.**
-    ⚠ **AMENDED 2026-08-25 BY D10 (Andrew-direct): gold's HOME and CODE-HOME moved OUT of `opal-data-assets`.
+    ⚠ **AMENDED 2026-08-25 BY D8 (Andrew-direct): gold's HOME and CODE-HOME moved OUT of `opal-data-assets`.
     The superseded clause named `opal-data-assets/portal/gold/{product}/{scope}/`. WHICH scopes are
     product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL — no seat infers it.** ⛔ **DIRECTION RATIFIED —
     MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it today (measured 2026-08-25:
@@ -172,7 +172,7 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     violation and NOT a warrant to move anything. Moving a served key is NEVER#3. **One home per logical
     producer is a CORRECTNESS requirement, not tidiness — three separate seats spent 2026-08-25 deriving
     "which copy of this code actually runs" by hand from deployed bytes, and the first derivation was wrong.**
-    Spec: `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+    Spec: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
 18. **`terraform apply` goes through `.tools/safe-apply.sh`** — HALTGT inbox checkpoint at the last reversible
     moment (routine pending msg → `HALT_ACK=1`; override audited via `HALT_OVERRIDE="reason"`). ⚠ **A HALTGT
     PASS IS NOT EVIDENCE YOU WERE NOT HALTED, and `[STOP]` does NOT reliably hard-block** — the checkpoint sees
