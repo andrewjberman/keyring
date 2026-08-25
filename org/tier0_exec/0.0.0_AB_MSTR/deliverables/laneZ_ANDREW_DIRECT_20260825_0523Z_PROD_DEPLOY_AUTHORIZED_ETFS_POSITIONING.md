@@ -29,7 +29,42 @@ he said run the prod-deploy, at a terminal where the prod-deploy was the live su
 narrower honest reading, and reading it as "spawn the seat but do not promote" would be the
 scope-adjudication CLAUDE.md's no-inferred-gates rule prohibits in BOTH directions.**
 
-## 3. AND BOTH OF HIS NAMED CONDITIONS WERE INDEPENDENTLY MET FIRST — MEASURED, NOT ASSERTED
+## 3. ⛔⛔ CORRECTED 07:5xZ — **CONDITION (ii) WAS *NOT* MET, AND I VERIFIED THE WRONG PLANE**
+
+**Caught by `0.2.0_DT_PortfolioAnalytics~Z` enumerating its passengers, ~40 minutes after I wrote
+the table below. Their sentence: *"HIS 08-24 CONDITION (ii) IS DEFECT A."* They are right.**
+
+His condition (ii), verbatim: *"and it displays properly on DEV build with **GICS replaced for
+sub-categories on frontend**."*
+
+>> **THAT CONDITION NAMES THE *ASSET SUB-CATEGORIES PANEL ON THE FRONTEND*. IT RENDERS `'—'`.**
+`PositioningSummary.tsx:361` gates the entire panel on `attributionData`, a MODELS-only feed
+disabled in ETF mode (`:562 enabled: caps.attribution`), so `segmentRows` is empty and `:489`
+pushes a placeholder. **The condition was NOT satisfied when the promote ran, and Andrew himself
+raised it as an open defect at ~07:3xZ.** <<
+
+⛔ **MY TWO PIECES OF EVIDENCE FOR (ii) WERE BOTH TRUE AND NEITHER WAS ABOUT THE CONDITION:**
+- *"his own words at the render ~05:06Z"* — those words were about the **PERFORMANCE** panel
+  (*"full performance for everything but still missing SALXX YTD and 1Y"*). **A different panel.**
+- *"`sub_asset_class` carries the GICS vocabulary, 13 values"* — that is the **DATA PLANE**. The
+  condition is about the **RENDER**. **The data carrying GICS is exactly what makes the panel's
+  blankness a FRONTEND defect rather than a data lack** — so my own evidence, read correctly,
+  pointed at the failure.
+
+**THE CLASS, AND IT IS THE ONE THIS SEAT SPENT THE NIGHT FILING AGAINST OTHERS:** *a sweep answers
+the question its plane can answer.* I checked the data plane and the sovereign's confirmation of a
+DIFFERENT panel, and reported a verdict about a THIRD thing. **No control inside the wrong plane
+can catch a wrong-plane error** — and here the authorship confidence made it worse: I had personally
+measured the 13-value vocabulary an hour earlier, so the fact felt checked.
+
+✅ **WHAT DOES NOT CHANGE: THE PROMOTE WAS STILL AUTHORIZED.** §2's direct instruction is
+independent of the conditions and sufficient on its own — he named the serial and the act, ~14 hours
+after setting the hold, at a terminal where the promote was the live subject. **The defect is in my
+CORROBORATION, not in the authorization.** ⛔ **But a record that overstates its evidence is exactly
+what a peer fabric's PROMOTE-HOLD REGISTER closes against, so this correction travels to
+`0.0.0_AB_MSTR` (base) the same way the original answer did — carried as TEXT, not as a path.**
+
+## 3a. THE ORIGINAL TABLE, KEPT FOR THE RECORD AND SUPERSEDED ON ROW (ii)
 
 | his condition | state at the promote | evidence |
 |---|---|---|
