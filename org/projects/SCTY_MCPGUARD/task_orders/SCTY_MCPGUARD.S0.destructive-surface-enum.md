@@ -3,7 +3,7 @@
 <title>SCTY_MCPGUARD S0 -- DESTRUCTIVE-SURFACE ENUMERATION: enumerate every destructive/write Graph call the m365 gateway exposes + its blast-radius profile, as the auditable registry every guardrail TO (G1-G6) consumes</title>
 <issued_to>CloudOps/AE gateway-surface owner (0.7.0_AE_CloudOps -- CloudOps + gateway/OTP owner; coordinate with 0.8.0_AE_CloudComp who grounded the gateway call-path for NFRA_MSGRAPH S2). Pin owner on GO.</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
-<status>pending -- GO HELD for Andrew's PRD review (his direct ask; deliverables ready for review). Not blocking (S5-phased). On Andrew go-ahead -> GO this S0 -> G1-G6 cut on its output.</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project SCTY_MCPGUARD is complete; this TO was last touched 2026-06-26, predating the project close 2026-07-07. Closed as a record act, not a work verdict. Prior status: pending -- GO HELD for Andrew's PRD review (his direct ask; deliverables ready for review). Not blocking (S5-phased). On Andrew go-ahead -> GO this S0 -> G1-G6 cut on its output.</status>
 <priority>P2 -- the gating enumeration; every guardrail TO (G1-G6) consumes this registry. Recon-first (no guardrail spec commits before the destructive surface is known). Not-urgent (aligned to NFRA_MSGRAPH S6 multi-user, later).</priority>
 <project>SCTY_MCPGUARD</project>
 

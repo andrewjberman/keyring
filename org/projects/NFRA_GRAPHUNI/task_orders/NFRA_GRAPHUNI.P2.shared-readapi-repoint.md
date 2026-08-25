@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P2 -- D2: build the ONE shared head-pinned graph-read API (extend comp-kuzu's marker-head path) + re-point comp-blast/trace/xref/platinum onto it. Per-tool CVO no-regression gate.</title>
 <issued_to>0.8.0_AE_CloudComp~D</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project NFRA_GRAPHUNI is complete; this TO was last touched 2026-06-30, predating the project close 2026-07-01. Closed as a record act, not a work verdict. Prior status: staged</status>
 <priority>P2 -- the unification payoff. Per-tool, gated on that tool's P1 coverage-complete + its CVO no-regression pass.</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>P1 (per-tool coverage complete) + P0-CVO (the fixture, for the no-regression gate). D1-before-D2 per-tool (Ruling 1).</dependencies>

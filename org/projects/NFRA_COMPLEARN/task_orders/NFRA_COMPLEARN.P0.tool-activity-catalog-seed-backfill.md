@@ -3,7 +3,7 @@
 <title>NFRA_COMPLEARN P0 -- the tool_activity BEHAVIOR CATALOG + 3-month SEED BACKFILL: ETL the 3 behavior logs into an Iceberg table bound as the 3rd Trino catalog on the LIVE globgrph-trino federation; dense from iteration 1.</title>
 <issued_to>0.8.0_AE_CloudComp~E (dedicated COMPLEARN lane, MSTR-spawned per the cap-call). DEPTH-INDEPENDENT -- runs in parallel with the GRAPHDEPTH substrate (zero substrate dependency).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged -- dispatch on ~E spawn (MSTR ALLOCATION-REQUEST 222838Z) + grant landed</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project NFRA_COMPLEARN is complete; this TO was last touched 2026-06-30, predating the project close 2026-07-29. Closed as a record act, not a work verdict. Prior status: staged -- dispatch on ~E spawn (MSTR ALLOCATION-REQUEST 222838Z) + grant landed</status>
 <priority>P0 -- the highest-leverage depth-INDEPENDENT start; the COMPLEARN loop's foundation; runs all night, uninterrupted (the reason it gets a dedicated lane, not a GRAPHDEPTH populator that pivots).</priority>
 <project>NFRA_COMPLEARN</project>
 <dependencies>NONE on the depth axis (behavior-plane ETL). The globgrph-trino federation is LIVE (iceberg + code_heat catalogs) -- ADD tool_activity as the 3rd catalog by REUSE, do NOT re-stand-up. The seed corpus exists (COO~B-verified: ~9.8K rolling-log rows + 1,472 session-log Compiler-Tools sections + 64 telemetry files + comp-which-rail.log).</dependencies>
