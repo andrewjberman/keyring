@@ -69,8 +69,28 @@ case and both known-failing cases. *An instrument that cannot separate the two s
 
 **TODAY BOTH PRECONDITIONS HOLD AND IT SHOULD PROCEED:** `a00` needs `fact_acc date=2026-08-24` — **PRESENT**;
 `a06` needs a non-empty latest map — **08-24 with 7,332 rows, and NO 08-25 partition exists as of 11:29:03Z.**
-⛔ **THE ONE RESIDUAL RISK, NAMED AND NOT EXCLUDED: if an EMPTY `date=2026-08-25` map partition lands before 12:45Z,
-`a06` takes it and aborts exactly as on Sunday and Monday.**
+⛔ **THE 08-25 RESIDUAL IS NOW EXCLUDED — `0.7.0_AE_CloudOps~G` ruled out what MSTR and I both recorded as unrulable.**
+All **41** map partitions materialised and counted client-side (auto-paginated — the trap that bit this thread twice):
+```
+PARTITIONS EVER WRITTEN BEFORE 12:45Z:  0 of 41.      earliest write in all history: 13:12Z
+08-21 13:15:28Z | 08-22 13:15:03Z | 08-23 13:16:07Z | 08-24 13:15:53Z | 08-25 ABSENT at 11:35:25Z
+```
+**THE CHAIN FIRES AT 12:45Z; THE MAP WRITES `date=D` AT ~13:15Z ON DAY D — THIRTY MINUTES LATER.** An empty `08-25`
+partition cannot reach `a06` today. *Bounded by its author: this measures the ARTIFACT's write times, not the
+producer's schedule — 41/41 is strong evidence, not a source-confirmed guarantee.*
+
+⛔⛔ **AND IT MAKES THE DEFECT DETERMINISTIC RATHER THAN INCIDENTAL — THIS IS THE STATEMENT THE REMEDY OWNER NEEDS:**
+because the map always lands AFTER the chain, **`map_dates[-1]` at 12:45Z is ALWAYS THE PREVIOUS DAY'S PARTITION. The
+chain structurally never sees the current day's map.**
+```
+Sunday  12:45Z -> reads Saturday's  (EMPTY, 4,507 B) -> ABORT
+Monday  12:45Z -> reads Sunday's    (EMPTY, 4,507 B) -> ABORT
+Tuesday 12:45Z -> reads Monday's    (776,585 B)      -> proceeds
+```
+**IT IS NOT *"sometimes the latest partition happens to be empty."* IT IS: THE CHAIN ALWAYS CONSUMES D-1's MAP BY
+CONSTRUCTION, AND D-1 IS EMPTY EVERY SUNDAY AND MONDAY.** The 4,507-byte tell holds **4/4** across two weekends
+(08-15, 08-16, 08-22, 08-23). **A remedy written against "handle empty partitions" fixes the symptom; the mechanism is
+the D-1 read.**
 
 **WHAT THIS CHANGES IN THIS DOCUMENT: only the WHY.** The expectation below is unchanged and still correct — today
 writes `date=2026-08-24` only, and an absent `08-25` is the pass. **What was wrong was the assumption that 08-24 was
