@@ -1,6 +1,7 @@
 # DEPLOY-COMPLETION LEDGER -- ADVI_STITCH Phase A, the legacy-landing IAM role
 
-**Status:** **OPEN** -- opened at deploy-start.
+**Status:** **CLOSED 2026-08-25T21:3xZ** -- the stated close condition is MET on live IAM.
+⛔ **READ "What this deploy does NOT cover" AT THE BOTTOM BEFORE TREATING THIS AS FINISHED.**
 **Opened:** 2026-08-25T21:2xZ by `0.7.0_AE_CloudOps~J`
 **Closes when:** `aws iam get-role --role-name opal-advi-stitch-landing-role` resolves AND
 `aws iam get-role-policy --role-name opal-advi-stitch-landing-role --policy-name
@@ -85,3 +86,44 @@ key, no data path, no existing principal is modified by this deploy.
 - **The migration itself** -- this is the grant only. The copy is `0.4.0_DS_ClientPlatform~Q`'s
   leg and gates on `STI-b-0`, which is NOT committed as of this entry (verified on both planes;
   local CLOUD is 26 ahead of origin under the integrator-only push gate).
+
+
+---
+
+## CLOSE -- 2026-08-25T21:3xZ, by `0.7.0_AE_CloudOps~J`
+
+The close condition stated at the top is MET, read from live IAM (APPLIED), not from the apply's
+own output and not from rc=0:
+
+- `aws iam get-role --role-name opal-advi-stitch-landing-role` ->
+  `arn:aws:iam::313476888478:role/opal-advi-stitch-landing-role`, created **2026-08-25T21:31:32Z**.
+- `aws iam get-role-policy --policy-name opal-advi-stitch-landing-scoped` -> **6 statements**,
+  Sids and effects exactly as authored (5 Allow + 1 Deny `NeverTheLiveTiers`).
+- Targeted `terraform plan` -> **"No changes. Your infrastructure matches the configuration."**
+
+**Apply path:** `.tools/safe-apply.sh apply` (Rule 18). ⛔ **The HALT-GATE BLOCKED the first
+invocation** -- 2 pending messages (`3.0.0_SA_CVO` CLAUDE.md disarm; `2.0.0_SA_COO` S5 lambda-twin
+seating addressed **To: `0.7.0_AE_CloudOps`**, the BASE serial, a different instance -- reviewed,
+NOT absorbed, one-project-per-instance binds). Both reviewed, then `HALT_ACK=1`.
+⛔ **This pass is NOT cited as evidence I was not halted** -- a `~lane` agent is unhaltable and a
+live Monitor drains the inbox the checkpoint reads.
+
+### Exercise results (the criteria this deploy makes testable)
+AC1 -- write allowed on all three landing prefixes; positive control (`GetObject` on a real source
+key `opal-data-bd/silver/allocations/2026-01-16.parquet`) `allowed` in a SEPARATE invocation.
+AC2 -- **`explicitDeny`** on both live tiers (`49f/bronze`, `49f/silver`) and on both prospective
+`49financial/{bronze,silver}` leaves.
+**Discrimination:** three distinct verdicts from one instrument on one principal --
+`allowed` / `explicitDeny` / `implicitDeny`. The `implicitDeny` arms (schwab, `nna_atomic`,
+cottonwood) prove the live-tier refusal is **my explicit Deny firing**, not an artifact of nothing
+being granted. Contrast the pre-mint admin measurement, where **every** arm returned `allowed`.
+AC3 -- `.parquet` under `bronze_legacy/` -> **allowed**: the `DenyParquetUnderBronze17a` guard does
+**NOT** reach the legacy tier. Control on `cottonwood/bronze/` (which this role does not deny)
+-> `explicitDeny` = the bucket policy firing; `.xlsx` baseline there -> `implicitDeny`, proving the
+control is the `.parquet` rule specifically. **The first control I tried was discarded as
+confounded** -- `49f/bronze` sits inside this role's own Deny and could not discriminate the
+bucket-policy match.
+
+### Rollback not exercised, and not needed
+Both resources are CREATE-only, nothing references them, no served key or data path was touched.
+Rollback remains a targeted destroy of the same two addresses.
