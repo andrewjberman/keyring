@@ -63,5 +63,5 @@
     "ref": "FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 63015): L4's recorded FAIL IS the designed verdict; close path = CAS merge fix d27000a68 (dormant, GLOBGRPH_MARKER_CAS=off) behind CTO GO-conditions incl. the 8c0b67afd runtime probe (UNRUN) and a MARKER_CAS_* metric-filter alarm -- alarm-building sits under the Andrew 2026-07-28 moratorium, so this gate needs Andrew's word, then a fresh T_d' cycle. Re-dated deliberately; staleness on this entry is NOT drift."
   },
   "held_at": "2026-07-09T13:11:12.866381+00:00",
-  "last_held_nudge_at": "2026-08-19T21:30:47.529939+00:00"
+  "last_held_nudge_at": "2026-08-25T03:46:32.110457+00:00"
 }
