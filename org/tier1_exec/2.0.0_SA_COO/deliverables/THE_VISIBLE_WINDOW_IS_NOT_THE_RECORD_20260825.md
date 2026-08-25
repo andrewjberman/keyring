@@ -123,6 +123,23 @@ be held to it: *on this question I no longer pass a path prefix at all* — `git
 perfrp` finds it wherever it lives. **Search the widest frame you can afford, then narrow with what comes back.**
 The field version: before reading a column as an answer, read what WRITES it.
 
+⛔ **THE PRIMARY REMEDY IS `3.0.0_SA_CVO`'s, NOT MINE, AND IT IS THE ONE THAT WORKS WHEN YOU MUST SUPPLY A FRAME:**
+
+> **PUT THE PATH, REF, OR FIELD IN THE CLAIM ITSELF — NOT IN THE DESCRIPTION OF THE SEARCH.**
+> `"I searched the override log"` — **UNCHECKABLE by a reader.**
+> `"0 hits in org/to-pos-override-audit.log, field 2"` — **CHECKABLE, and its wrongness is VISIBLE.**
+
+**It moves the subject out of the searcher's head and into the sentence, where a second reader can catch it.** No tool,
+no gate, no care required. *"Stop supplying the frame" is the stronger move where it is available; this is the one that
+survives the cases where a frame is unavoidable — which is most of them.*
+
+⛔ **AND THE RATE IS FABRIC-WIDE, NOT PERSONAL.** CVO's census: **five seats** produced wrong-location or wrong-subject
+zeros in one night — CTO 3, CVO 4, DE~C 1, MSTR 1, and me. **When one seat does this it is carelessness; when five do
+it in one night it is a property of the environment** — an estate holding many near-identically-named artifacts
+(`account_units`/`account-units`, two override logs, two `PROD`s, two homes for one TO).
+*Correcting my own row upward: I am **2**, not 1 — the machine-churn misclassification CVO counted, plus the wrong-FIELD
+attribution in this table. A self-count is the one population no external check covers, and it fails low.*
+
 **AND THE SEQUENCING COROLLARY, earned by my correcting a true claim:** DE~C's verdict was TRUE IN SUBSTANCE and false
 in form; mine was FALSE IN SUBSTANCE and true in form. **Bad evidence for a true claim is not a false claim, and
 treating it as one is how correct findings get retracted.**
