@@ -7,7 +7,9 @@
   "created": "2026-08-25",
   "directive": "D8",
   "pipeline": "mdpf",
-  "pods": ["PORTAL.MODEL_PORTFOLIOS"],
+  "pods": [
+    "PORTAL.MODEL_PORTFOLIOS"
+  ],
   "prds": [
     {
       "path": "docs/architecture/MDPF_COTREMEDIATION_PRD.md",
@@ -21,10 +23,10 @@
     }
   ],
   "description": "Directive D8 -- Model Portfolios Pipeline Fortification (RE-MINTED 2026-08-25; the prior D8 'Philosophy + benchmark modal live-edit' was CUT to DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one). Authority: Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260825_D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_AND_THE_COT_GLOBAL_0819_FREEZE.md @903f6c8512, verbatim: 'we fucked up cottonwood's model portfolios ingestion (on august 20 or so I'd guess) and as a result their model portfolios and Global are now stuck on august 19. That needs to get fixed immediately'. MEASURED AT THE CTO SEAT 2026-08-25 ~14:2xZ on s3://opal-data-portal-v2/platinum/mdpf/{partner}/aggregate-aua-timeseries.json field as_of_last: 49financial 2026-08-24 (correct T-1), inflection 2026-08-24 (correct T-1), cottonwood 2026-08-19 FROZEN, global 2026-08-19 FROZEN. NEVER#1 discharged FIRST -- expected_last_trading_day(2026-08-25) = 2026-08-25 via lib/trading_calendar, so 08-19 is FOUR TRADING DAYS behind and this is not a weekend. THE STRUCTURAL FINDING: all four served objects were REWRITTEN 2026-08-25T13:50:49-51Z, so the publisher runs, emits and succeeds and the staleness is INSIDE THE PAYLOAD -- every object-mtime freshness instrument (comp-freshness, s3 ls age, head-object LastModified) reports these HEALTHY and each is CORRECT ABOUT THE FILE. A served key rewritten daily with frozen contents passes every instrument this estate owns, which is why a four-day client-facing freeze was found by Andrew rather than by us.",
-  "phase": "PRD v1.0 written 2026-08-25 ~14:35Z. NEXT: COO atom-decomp of the operative surfaces (Rule 27 stage 3) BEFORE any TO exists. DIAGNOSE BEFORE REMEDY -- five leads (s.3) are falsifiable and unread; the first cell reads the producer at source.",
+  "phase": "PRD v1.0 2026-08-25 ~14:35Z. ROOT CAUSE LOCALIZED at the CTO seat ~15:0xZ (see root_cause_localized): the cottonwood SILVER fact_holdings transform has not run since 2026-08-20T11:46:11Z while its BRONZE input continues to arrive daily. NEXT: COO atom-decomp (Rule 27 stage 3). The remaining unknown is WHY the transform stopped -- a scheduler/trigger/runner read, one hop from here.",
   "blocking": "Nothing blocked. Awaiting COO atom-decomp (Rule 27 stage 3). The fabric was wound down by Andrew ~14:3xZ for a device reboot; this project is registered so it survives the restart.",
   "leads": [
-    "L1 cottonwood 'dates' array is almost ENTIRELY None -- hundreds of nulls with a single real value (2026-08-19) at the end. NOT a stalled feed: a stall truncates, it does not null-fill.",
+    "L1 RESOLVED-INTO-CHAIN: the null-filled cottonwood 'dates' array in the SERVED artifact is downstream of a silver transform that stopped 2026-08-20; see root_cause_localized. The null-fill itself is still unexplained at the emitter and remains an open question for AC5.",
     "L2 global's tail REPEATS 2026-07-22 ~15x before 2026-08-18, 2026-08-19 -- forward-fill / last-value-carried signature; opal-data-cot carries a forwardfill_v2/ prefix.",
     "L3 global is a ROLLUP INCLUDING cottonwood, so one root cause plausibly explains both -- do NOT treat them as two defects until proven.",
     "L4 dim_mdpf_account_distribution.py:328 COTTONWOOD_UNITS_KEY = 'gold/mdpf_revamp/cottonwood/account_units.json' + _cottonwood_sidecar() :331 -- a Cottonwood-ONLY sidecar on an mdpf_revamp/ prefix, while data/served_freshness_config.yaml:174 points the served config at portal/gold/mdpf/cottonwood/. A real special case, UNREAD.",
@@ -36,7 +38,27 @@
   ],
   "acceptance_summary": "AC1 root cause at source (file:line @ commit) as a MECHANISM not a symptom; AC2 cottonwood as_of_last at correct T-1 read on the PAYLOAD; AC3 global likewise WITH its relationship to cottonwood proven (one cause or two); AC4 49financial + inflection UNCHANGED, byte-compared -- a fix that moves a healthy partner is a defect; AC5 the null-filled dates array EXPLAINED, not merely absent; AC6 verified on a SCHEDULED run, never ad-hoc; AC7 a payload-frontier READ demonstrated to FAIL against the frozen state and PASS against the good one. NO CRITERION IS DISCHARGED BY AN OBJECT TIMESTAMP. AC7 IS NOT A MONITOR -- the alarm/SES moratorium stands.",
   "trap_recorded_before_decomp": "The reflex remedy for a frozen partner is a backfill or a re-run. A RE-RUN THAT PRODUCES CORRECT DATA DOES NOT ESTABLISH THE CAUSE -- it establishes that the producer works when run today. L1's null-filled array is the discriminator: if a re-run yields good data and nobody can say why the array was null-filled, AC1 and AC5 are UNMET and the defect recurs on whatever condition caused it. Same shape as the a06 weekend outage ruled 2026-08-25 ~11:5xZ, where the obvious fix would have inverted the map/chain ordering and broken the four working days.",
-  "related": ["MDPF_3FIRMS", "MDPF_GLOBAL", "MDPF_CANPLAT", "WSE_COTMDL", "COT_CANON458"],
+  "related": [
+    "MDPF_3FIRMS",
+    "MDPF_GLOBAL",
+    "MDPF_CANPLAT",
+    "WSE_COTMDL",
+    "COT_CANON458"
+  ],
   "threads": [],
-  "thread_counter": 0
+  "thread_counter": 0,
+  "root_cause_localized": {
+    "measured_at": "2026-08-25T15:0xZ, CTO seat, live S3",
+    "chain": [
+      "blackdiamond/cottonwood/bronze/  -> NEWEST OBJECT 2026-08-25T11:45:54Z (holdings/_complete/2026-08-24.json). VENDOR FEED IS LIVE AND ARRIVING DAILY.",
+      "blackdiamond/cottonwood/silver/fact_holdings/ -> NEWEST OBJECT 2026-08-20T11:46:11Z. LAST PARTITION date=2026-08-19. THE TRANSFORM HAS NOT RUN IN 5 DAYS. <<< THE BREAK",
+      "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py reads blackdiamond/cottonwood/silver/fact_holdings/date={d}/data.parquet (:339,:393,:400) -> emits gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json",
+      "that slice: OBJECT WRITTEN 2026-08-25T13:30:46Z (fresh) but CONTENT frozen -- dates LAST 2026-08-19, meta.covered_dates LAST 2026-08-19 (n=17), cohort_provenance measured LAST 2026-08-19",
+      "dim_mdpf_aggregate_aua_timeseries.py:1915 load_cottonwood_slice() reads it -> platinum/mdpf/cottonwood + global, as_of_last 2026-08-19"
+    ],
+    "why_no_gate_fired": "load_cottonwood_slice() is aggressively FAIL-CLOSED with four SystemExit paths -- artifact absent/unreadable, lacks dates/by_model, meta.composed_backfill absent (un-composed), and covered_dates != cohort_provenance measured (scope-consistency). ALL FOUR WERE MEASURED AND ALL FOUR PASS: readable, has dates/by_model, composed_backfill True, covered==measured True. EVERY GATE CHECKS STRUCTURE; NONE CHECKS FRONTIER. A frozen-but-well-formed upstream satisfies the entire contract. Its own docstring says 'the refusal IS the outage signal' -- and the only outage it can signal is structural, never temporal.",
+    "andrew_guess_confirmed": "He said 'on august 20 or so I'd guess'. The last silver write is 2026-08-20T11:46:11Z. Exact.",
+    "control_that_did_NOT_discriminate": "A cross-partner control on blackdiamond/{49financial,inflection}/silver/fact_holdings/ returned None -- those partners are NOT in that tree (they run on the MDPF feeder contract s3://opal-data-mdpf/mdpf/feeds/model_aua_positions/). The control tells us the tree is cottonwood-specific; it is NOT evidence the other partners are healthy and was not used as such.",
+    "still_unknown": "WHY the silver transform stopped. That is one hop: the runner/schedule/trigger behind blackdiamond/cottonwood/silver/fact_holdings. NOT YET READ. Bronze writes ~11:45Z daily and silver's last write was 11:46:11Z, so it ran one minute behind bronze until it stopped -- consistent with an event-trigger or a scheduled job, and NOT yet distinguished between them."
+  }
 }
