@@ -1,7 +1,9 @@
 # DEPLOY-COMPLETION LEDGER — MDPF ATOMIC WINDOW (RP-W1 + RP-W2 + RP-W3)
 
 **Opened:** 2026-08-11T01:50Z by 2.0.0_SA_COO (window caller/coordinator)
-**Status:** OPEN — closes only when every leg lands + the post-window QA read completes, or on full rollback
+**Status:** **CLOSED 2026-08-11T034xZ** by 2.0.0_SA_COO (window caller) — see `## CLOSE` and the final line, *"THE WINDOW IS CLOSED. This ledger entry is discharged."*
+> ⛔ **HEADER CORRECTED 2026-08-25T03:54Z by `2.0.0_SA_COO~Z`. THE WORK WAS NEVER OPEN AFTER 08-11 — ONLY THIS LINE WAS.** The original condition read *"OPEN — closes only when every leg lands + the post-window QA read completes, or on full rollback"*; it was satisfied that night (L-C re-fire GREEN 12/12, L-D CTO-verified 033621Z) and recorded in the body, **but this header was never updated.**
+> **THE DEFECT IS TWO STATUS CARRIERS WITH NOTHING SYNCING THEM.** Closure goes in the body; every sweep reads the header — so a discharged ledger reports in-flight forever, and a NEVER#6 census over-reports. Found 2026-08-25 while sweeping for stranded deploys: **3 of 8 header-OPEN ledgers were already closed in-body, one of them 12 minutes after opening.** **This header is PRIMARY; close it when you close the body.**
 **Authority chain:** Andrew plan-order (via CTO @dbbbfa9cd3) → Andrew all-four ruling ~2334Z (Call 1
 route (b): W1+W3 one atomic change; clock floor 13:30 / pulls 13:02) → COO topology decision (W2 in
 the atomic set) → gate 1 DS BUILD-READY @bf74d031c1 (004145Z) → gate 2 clock ruling (satisfied
