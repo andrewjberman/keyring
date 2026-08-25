@@ -48,11 +48,19 @@ can find. **ZERO crons remains in force; nothing here schedules anything.**
 2  read SALXX + FXFXX names out of the body.
    EXPECT "State Street U.S. Government MMKT" / "First American Treasury Obligations Fund".
    Reverted => the scheduled path does NOT carry the fix and PROD is serving a regression.
-3  read data_as_of. EXPECT 2026-08-25 if the 11:00Z local pull landed; 2026-08-24 means the
-   workstation leg did not run and the producer correctly skipped.
+3  read data_as_of.  ⛔ EXPECT **2026-08-24** -- AND THAT IS THE PASS.
 ```
-**Item 3 failing is NOT the same defect as item 2 failing** — one is the local-task dependency, the
-other is the fix. **Do not report them as one.**
+⛔ **CORRECTED 08:5xZ BY `1.0.0_SA_CTO~Z` BEFORE ANYONE CARRIED IT.** This item first read *"EXPECT
+2026-08-25 if the 11:00Z local pull landed; 2026-08-24 means the workstation leg did not run."*
+**THAT WOULD HAVE MANUFACTURED A FALSE SKIP TODAY.** Silver for 08-25 does not land until **22:00Z**,
+so at 13:00Z the producer has no 08-25 input by design. **An UNCHANGED `data_as_of` of 2026-08-24 is
+the CORRECT outcome, not evidence of a missed pull.**
+>> **I POSED TWO OUTCOMES AS IF THEY WERE THE ONLY TWO, AND TODAY THE TRUE OUTCOME IS NEITHER.** A
+criterion that offers a false dichotomy does not fail loudly — **it hands a successor a confident
+wrong verdict about a healthy run**, at 13:00Z, with none of tonight's context to check it against.
+**That is the whole hazard this file exists to prevent, reproduced inside the file itself.** <<
+✅ **Items 1 and 2 stand unchanged. Item 2 failing is the FIX regressing; item 1 failing is the RULE
+not firing. Do not report them as one, and do not read item 3 as either.**
 
 ## IF IT REGRESSES
 
