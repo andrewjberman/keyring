@@ -129,6 +129,52 @@ Every one of these is a real workstream, and the list is the deliverable at this
 - **A live outage is in flight** (MDPF_COTREMEDIATION, global still frozen). **This work does not
   start on top of it.**
 
+## ⛔ GAP CLOSED ~18:0xZ -- THE FULL BUCKET CENSUS, AND THE PROBLEM IS WIDER THAN GOLD
+
+The limits section below said eight buckets were listed but unsearched. **They are now searched.**
+Medallion-tier prefixes across all 16 `opal-data-*` buckets:
+
+| bucket | bronze | silver | gold | platinum | code |
+|---|---|---|---|---|---|
+| `opal-data-bd` | Y | Y | **Y** | **Y** | Y |
+| `opal-data-cot` | Y | Y | **Y** | **Y** | Y |
+| `opal-data-inf` | Y | Y | **Y** | **Y** | Y |
+| `opal-data-etfs` | - | Y | **Y** | **Y** | - |
+| `opal-data-49financial` | - | - | **Y** | - | Y (`_code`) |
+| `opal-data-assets` | (per-vendor) | (per-vendor) | **Y** | - | Y |
+| `opal-data-mdpf` | (under `mdpf/`) | - | - | - | Y |
+| `opal-data-demo` | - | - | - | **Y** | - |
+| `opal-data-portal-v2` | - | - | - | **Y** | - |
+| `opal-data-imo` | - | - | - | - | Y |
+| astn · news-av · news-v2 · pm · portfolio · trade-submissions | - | - | - | - | - |
+
+**THREE HEADLINE COUNTS:**
+1. **GOLD LIVES IN SIX BUCKETS** -- `bd`, `cot`, `inf`, `etfs`, `49financial`, `assets` (the last
+   carrying THREE separate gold trees of its own: `gold/mdpf/`, `gold/mdpf_revamp/`,
+   `portal/gold/`). Not the three or four the first pass showed.
+2. ⛔ **PLATINUM LIVES IN FIVE BUCKETS -- `bd`, `cot`, `inf`, `etfs`, `demo` -- PLUS
+   `opal-data-portal-v2`. RULE 17b SAYS PLATINUM IS THE SERVING TIER AND LIVES IN
+   `opal-data-portal-v2`.** This is a larger and more surprising divergence than the gold sprawl,
+   and **it is NOT in the directive's stated scope** -- his instruction addresses gold and leaves
+   "a platinum publisher writes JSON to opal-data-portal-v2" unchanged. **Surfaced, not folded in.**
+   Whether those five are live serving tiers, legacy residue, or intermediate staging is UNKNOWN and
+   is its own question.
+3. **CODE LIVES IN SIX BUCKETS** -- `49financial/_code`, `assets/code`, `bd/code`, `cot/code`,
+   `inf/code`, `imo/code`, plus `mdpf/code`. **That is his complaint measured exactly: "some
+   fragment of a process" can be in any of seven places.**
+
+**THE REFERENCE IMPLEMENTATION IS `opal-data-etfs`, AND THE TARGET MDPF BUCKET IS THE EMPTIEST ONE.**
+`etfs` already carries `silver/ gold/ platinum/` in something close to the target shape.
+`opal-data-mdpf` carries `code/` and `mdpf/` and **no medallion tiers at all** -- so the largest,
+most-contested product has the least-built target bucket. That inverts the natural build order:
+**the hardest migration has the least scaffolding, and the easiest one is already nearly done.**
+
+**AND THE THREE LEGACY BUCKETS ARE NOT MERELY OLD NAMES.** `bd`, `cot`, `inf` each carry a COMPLETE
+five-tier stack. Andrew's instruction names them only as a naming-collision hazard ("so it doesn't
+get confused with… old layers"). **Their DISPOSITION is unstated and it is the biggest unknown in
+this directive** -- a full stack is not decommissionable by assumption, and MDPF_GLOBAL's T5 (legacy
+decommission, gated on T1-T3) is plausibly the same question already scoped elsewhere.
+
 ## HONEST LIMITS OF THIS MAP
 
 - The prefix scan covers the **top two levels** of `opal-data-assets` plus the named target buckets.
