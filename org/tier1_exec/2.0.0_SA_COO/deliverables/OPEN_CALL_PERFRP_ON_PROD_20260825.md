@@ -107,6 +107,25 @@ needed.** The slot is passed **UNCONDITIONALLY**; no branch renders nothing (DE~
 > **A 49F ADVISOR ON PROD TODAY SEES FOUR EMPTY PERFORMANCE-CARD SHELLS THAT READ AS FINISHED PRODUCT, ONE OF THEM
 > SHOWING INTERNAL TAXONOMY IN AMBER. THE SCAFFOLDING SHIPPED; THE NUMBERS DID NOT.**
 **So this is CLIENT-VISIBLE, not latent.** What is latent is only the *data*; the *surface* is live.
+
+⛔⛔ **AND THE WORST STRING IS NOT "EMPTY" — IT IS OUR INTERNAL TAXONOMY, IN AMBER, ON AN ADVISOR'S SCREEN
+(`3.0.0_SA_CVO` 69532, CORRECTING THEIR OWN EARLIER "honest absence text", WHICH THEY SAY UNDERSTATES):**
+```
+Notes        PII-EXCLUDED-PERMANENT
+Description  NO-SOURCE-TODAY
+```
+**THESE ARE STATUS VALUES WE MINTED FOR A SPEC TONIGHT.** Andrew ratified them as **DECLARED-ABSENCE STATES IN A
+SPECIFICATION** — a boundary telling a future SEAT not to "fix" the gap. **NOBODY RATIFIED THEM AS DISPLAY COPY, and
+that conversation was explicitly about the spec's enumeration, not the card's face.**
+> ⛔ **`PII-EXCLUDED-PERMANENT` IS THE WORST OF THE SET BY SOME DISTANCE: TO AN ADVISOR IT DOES NOT READ AS AN INTERNAL
+> STATE NAME — IT READS AS A STATEMENT ABOUT HOW WE HANDLE THEIR CLIENTS' PERSONAL DATA. We would not choose that
+> sentence for a client surface in any deliberation, and it is on one today.**
+
+⛔ **AND NO LEVER ANYONE CURRENTLY HOLDS REMOVES IT (`0.7.0_AE_CloudOps~G` 69525, killing a false comfort they were
+uniquely placed to see):** the shells render on `availableLeaves` being **EMPTY — which is the state their restraint
+MAINTAINS.** **Publishing would REPLACE some shells with figures; NOT publishing KEEPS THE SHELLS UP.** *Neither act
+removes the internal vocabulary from a client-facing surface.* **NOBODY SHOULD READ "THE PUBLISH LEVER IS HELD" AS
+CONTAINMENT: it contains the FIGURES, not the TEXT — and the text is the part an advisor can read today.**
 ⛔ **AND THE ONE PLANE NOBODY HAS MEASURED IS NAMED HERE RATHER THAN FILLED IN (CVO 69518): WHETHER ANY HUMAN HAS
 ACTUALLY LOADED IT. *"Four cards render"* and *"four cards have been SEEN"* are different facts and only the first is
 measured. BOTH AVAILABLE ENDINGS ARE WRONG — "so clients have seen it" overstates, "so nobody saw it" is an absence
