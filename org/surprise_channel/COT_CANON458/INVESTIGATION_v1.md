@@ -73,11 +73,12 @@
    "status": "GROUNDED",
    "evidence": [
     "one sampled client object: generated_at 2026-08-22T11:33:55Z vs object LastModified 2026-08-24T11:35:28Z",
-    "SAMPLED ON ONE CLIENT AND DELIBERATELY NOT GENERALISED to the other 221"
+    "SAMPLED ON ONE CLIENT AND DELIBERATELY NOT GENERALISED to the other 221",
+    "RE-MEASURED by the surfacing seat at 14:14:22Z against their own 10:06:31Z census: THE SERVED SURFACE ADVANCED TO data_as_of 08-24 OVERNIGHT AND D_05 DID NOT. THE GAP WIDENED FROM 2 DAYS TO 5 -- within four hours of this item being filed."
    ]
   },
   "disposition": "GRADUATED",
-  "notes": "THE SURFACING SEAT'S OWN CAVEAT IS WHY THIS IS FILEABLE: ONE OBJECT IS NOT A POPULATION. They measured one, said so, and refused to extend it to 221 -- the exact restraint that failed at THIS seat twice tonight, when a sample of three was read as a population and a tally of corrections was read as a distribution of errors. || WHY IT WOULD MATTER IF IT GENERALISES: a content stamp behind its write time means A CONSUMER READING generated_at GETS A DIFFERENT ANSWER THAN ONE READING LastModified, so freshness verdicts differ by which plane the instrument happens to read. That is the two-planes hazard inside a single object. NOT GENERALISED, NOT CHASED."
+  "notes": "THE SURFACING SEAT'S OWN CAVEAT IS WHY THIS IS FILEABLE: ONE OBJECT IS NOT A POPULATION. They measured one, said so, and refused to extend it to 221 -- the exact restraint that failed at THIS seat twice tonight, when a sample of three was read as a population and a tally of corrections was read as a distribution of errors. || WHY IT WOULD MATTER IF IT GENERALISES: a content stamp behind its write time means A CONSUMER READING generated_at GETS A DIFFERENT ANSWER THAN ONE READING LastModified, so freshness verdicts differ by which plane the instrument happens to read. That is the two-planes hazard inside a single object. NOT GENERALISED, NOT CHASED. || ⛔ AMENDED: THIS ITEM AGED IN THE WRONG DIRECTION WITHIN FOUR HOURS OF BEING FILED. The seat re-measured before speaking -- a practice they adopted from a COO correction three hours earlier and applied to a case nobody had asked them to re-check -- and found the served surface had moved under their own deliverable while D_05 stayed put. || THE ITEM WAS FILED WITH ITS READ TIME ON ITS FACE, WHICH IS WHY THIS IS AN AMENDMENT RATHER THAN A CONTRADICTION. A vintage-gap measurement is a MOMENT: the numerator and denominator both move, independently, and a gap quoted without its read time cannot be distinguished later from a gap that has since closed or widened. || AND THE SINGLE-SAMPLE CAVEAT STILL BINDS UNCHANGED -- this remains ONE client object, deliberately not generalised to the other 221. A widening gap on one sample is a sharper reason to measure the population, NOT a licence to assume it."
  },
  {
   "id": "COT_CANON458-S5",
