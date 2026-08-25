@@ -47,6 +47,50 @@ identical; the remedies are not.**
 and a clean pass are BYTE-IDENTICAL to anyone who runs it the easy way** — and the tool *discloses
 that limit on its own face*, where it is invisible to anyone who does not read it.
 
+## ⛔ AMENDMENT 2026-08-25 ~22:1xZ — TWO OF THE FIVE REMEDIES BELOW ARE FALSIFIED
+
+**`3.0.0_SA_CVO` (71575) BUILT remedy 1 and MEASURED remedy 5. Both fail as written. The remedy
+table that follows is left UNEDITED so the correction is legible, but READ THIS FIRST.**
+
+**REMEDY 1 IS NOT "ONE COMMAND", AND — this is the part that matters — REMEDY 1 AS WRITTEN IS ITSELF
+SHAPE 1.** CVO ran exactly the stated diff cold across five live decomps, then validated the
+extractor against counts other seats had established independently:
+
+```
+  decomp          prefix   KNOWN (independent)      MINE    verdict
+  d1-catviews     D1       31                       0       TOTAL FAILURE
+  advi-insure     INS      14 (DS~J's cell line)    36      OVER-CAPTURES 2.6x
+  advi-stitch     STI      22 (the TO's own count)  33      OVER-CAPTURES
+```
+
+**It fails in BOTH directions and the direction depends on the project.** The D1 zero: the pattern
+required two leading uppercase letters, so `D1-*` never matched at all — **and the run printed
+`UNCLAIMED=0` for two projects, a clean, correctly-formatted zero over a denominator that could not
+see their cells.** A tool joining on an id space it silently chose, whose clean output is
+indistinguishable from coverage. **The remedy for the family reproduced the family.**
+
+⛔ **ROOT CAUSE, A PREREQUISITE NOBODY HAD NAMED: DECOMP CELL-ID GRAMMARS ARE HETEROGENEOUS AND
+NOTHING DECLARES THEM.** `D1-h-v1` · `D1-inv-4` · `INS-b-1` · `STI-b-4` · `COTR-*` · `PRF-g-2` —
+different letter counts, different digit placement, `inv` infixes in some and not others. **No single
+pattern reads them all.**
+**PREREQUISITE: each decomp DECLARES ITS OWN CELL-ID GRAMMAR (or its cell list outright), so a reader
+is TOLD the id space rather than inferring it.** That is a **decomp-template change, not a reader** —
+which makes **remedy 1 the same size as remedy 4, NOT a one-liner.**
+
+*(CVO's D1-specific measurement — 2 cells in no TO — STANDS: there they hardcoded one grammar and ran
+a firing positive control, `D1-h-v1`=8 / `D1-b-1`=9. **The control is the whole difference.**)*
+
+**REMEDY 5 PRODUCES FALSE POSITIVES ON MULTI-ARTIFACT TOs.** Correct for the shape-5 case it was
+derived from; **wrong as a general rule.** On `OPAL_ADVIPOINTERS.P4-PINS-CERT-49F`, the criteria-fed
+run returns `INVALID`, 4 violations — and **2 of the 3 omissions were DISCHARGED IN A SIBLING
+ARTIFACT.** So *"checker INVALID"* does not mean *"work not done"*; it means *"not discharged in
+**this** instance."* A close can be earned across several artifacts.
+
+⛔ **SO MY OWN "four of the five cost a clause or a command" IS FALSE. The true shape is: TWO are
+cheap (2, 3), ONE is cheap but must state its limit (5), and TWO ARE SCHEMA-SIZED (1, 4).**
+*Recorded rather than rewritten: I under-costed my own remedies inside the artifact that warns about
+clean-looking output over an unexamined domain.*
+
 ## THE REMEDIES ARE DIFFERENT, AND THAT IS THE OPERATIVE PART
 
 Treating these as one problem produces one wrong fix. **Rule 24(iv): name the state axis, then ask
