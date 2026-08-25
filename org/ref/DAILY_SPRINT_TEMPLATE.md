@@ -55,6 +55,31 @@ between sections disappears on paste and the whole text renders as one wall. The
 gap and the rule gives the eye a section break. **Andrew pastes this straight into the Opal channel
 -- it has to survive the paste, not just look right in the repo.**
 
+## THE SECOND RULE — HIGHLIGHTS, NOT A CHANGE LOG (Andrew-direct 2026-08-25 ~2250Z)
+
+> **VERBATIM:** *"need better than this, tell me about the actual work done today on the directives,
+> explaining bugs and commit counts and shit doesnt sound good to anybody, we need HIGHLIGHTS, the
+> entire point of this is highlights"*
+
+**THE POINT OF THIS TEXT IS HIGHLIGHTS.** Every line answers *what did we DELIVER on this directive
+today* — a capability that now exists, a number that got better, a decision Andrew made.
+
+⛔ **DO NOT LEAD WITH, AND MOSTLY DO NOT INCLUDE:**
+- **Commit counts, author counts, seat counts.** They measure typing, not delivery. **The fabric
+  line is CUT** — it was in the shape and Andrew named it directly.
+- **Bugs and internal defects AS THE STORY.** A defect belongs in the text only where it changed
+  what the business gets — *"release is held on two fixes"* is status; the mechanism of the bug is
+  not. **A day narrated through its defects reads as a bad day even when it was a strong one.**
+- **Process vocabulary and the machinery of how work is run.**
+
+**THE TEST, applied per line:** *does this tell Andrew something he would want a partner to know?*
+If the honest answer is "it tells him the machine is working", cut it.
+
+**AND THE FAILURE THIS RULE CLOSES, recorded because it is easy to repeat:** the packet hands you
+denominators (commits, authors, closed counts), and a writer grounding every sentence in the packet
+drifts into REPORTING THE PACKET. **The packet is the grounding; the highlights are the deliverable.
+Ground on it, then say what got BUILT.**
+
 ## THE FIRST RULE — LAYMAN, SHORT (Andrew-direct 2026-08-20, VERBATIM)
 
 > Something key to mention for the daily sprint skill is that the sprint lines (and descriptions
