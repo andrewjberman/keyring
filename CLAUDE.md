@@ -104,21 +104,8 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
 
 ## Deployment Rules
 
-1. **Terraform is the only Lambda deploy mechanism.** No console, no `deploy.sh`, no direct code pushes.
-2. **Commit before apply.** code → TF → source map → commit → plan → apply → 0-diff → tag → push `--follow-tags`.
-3. **Dependencies go in Lambda Layers.** No `pip install -t .` into source dirs; inline vendoring needs approval.
-4. **Update the source map** — every Lambda has an entry in `infra/aws/lambda/ci/lambda-source-map.json`.
-   ⚠ **The map PAIRS a Lambda with its repo dir; it does NOT compare deployed bytes to built-from bytes.**
-   Code currency is Rule 22a's CODE layer and is the assignee's read, not this map's.
-5. **Size Lambda resources deliberately** — never leave `yang-lambda` defaults (256MB/30s) on data-processing Lambdas.
-6. **Tag after deploy:** `git tag -a {pipeline}-v{X.Y.Z}` + push `--follow-tags` after every 0-diff apply.
-7. **EC2 deploys go through `safe-ec2-deploy.sh`** — never run service-specific deploy scripts directly.
-8. **`EC2_MANIFEST.json` is the source of truth** — every EC2 service registered; CI/CD depends on it.
-9. **Terraform manages EC2 infrastructure, not code** — code deploys via `safe-ec2-deploy.sh` / SSM.
-10. **Never push code directly into EC2 Docker images** — fix locally, deploy through the normal cycle.
-11. **Verify parity before EC2 work:** `./infra/aws/ec2/verify-ec2.sh`.
-12. **S3 is the artifact store for ALL EC2 code** — never write code on a VM, never inline Python in SSM.
-    Local → S3 → EC2 pulls → execute, even for ad-hoc diagnostics. `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`.
+**DEPLOYMENT + CLOUD OPS RULES LIVE IN THE `/cloud-ops` SKILL, NOT HERE** (moved 2026-08-25, Andrew-direct). Rules **4, 5, 6, 8, 9, 11, 12, 18** -- source map, Lambda sizing, deploy tagging, `EC2_MANIFEST.json`, the TF-owns-infra-not-code boundary, `verify-ec2.sh`, the S3 artifact store, and `safe-apply`/HALTGT -- are CANONICAL in `.claude/skills/cloud-ops/SKILL.md`, which loads for the seats that do cloud work. **Their NUMBERS are unchanged, so existing citations still resolve.** Rules 1, 2, 3, 7, 10 were DELETED the same day as unenforced restatements. The NEVER block above still carries the bare-`terraform apply` / bare-`git commit` / `update-function-code` prohibitions.
+
 13. **DS owns the full commit→QA-deploy cycle** for `data/*/scripts/{gold,silver,bronze}/*.py` incl. `aws s3 cp`;
     DT/AE = infra, PROD triggers, multi-pipeline only. Enforced by `.tools/safe-deploy.sh` (pre-push hook;
     bypass audited). Bucket map = `safe_deploy_core.py` PIPELINE_MAP (bd/inf/cot/mdpf). SHARED repo homes
@@ -130,12 +117,18 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
 14a. **Commit via `.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- <paths>`
     — do NOT pre-`git add`** (the wrapper stages your pathspec inside its lock). **`-F` not `-m`** for any
     non-trivial message (see Git §F-010: a `-m` body is shell-evaluated before git sees it, so a backtick
-    or `$(` in it EXECUTES). **`--force` BYPASSES ONLY THE CONTAMINATION / SENSITIVE-FILE CHECKS — IT DOES
+    or `$(` in it EXECUTES). ⛔ **AND `-F` PROTECTS YOU ONLY IF THE FILE ITSELF WAS NOT BUILT BY A SHELL.**
+    A `printf`/heredoc that CONSTRUCTS the message file re-opens the identical hole one step earlier --
+    the substitution happens on the way INTO the file, and `-F` then faithfully commits the corrupted
+    text. **Write the message with a non-shell writer (the Write tool, or python), THEN `-F` it.**
+    Measured 2026-08-25: a `-F` commit whose body was built by `printf` lost three backticked terms to
+    command substitution; it failed LOUD only because those terms were not real commands. A backticked
+    token that IS a command fails SILENT and splices its stdout into the immutable record. **`--force` BYPASSES ONLY THE CONTAMINATION / SENSITIVE-FILE CHECKS — IT DOES
     NOT BYPASS A GATE FAILURE OR AN OWNED-PATHS REFUSAL** (`safe-commit.sh:547`). For a lane refusal the
     sanctioned escape is `GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>` — audited, and **SINGULAR: one lane per commit**,
     so a change spanning N lanes is N audited commits, never one `--force`. Why:
     `memory/feedback_commit_only_flag.md`, `docs/architecture/ADHC_OWNPTH.md`.
-15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). Gate-enforced.
+15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
 16. **Local-runtime bash uses only Git Bash 3.6.7 default-install utilities.** MISSING (guarded `command -v`
     fallback required): `pgrep pkill flock pidof setsid wget`. Canonical pattern: `org/mcp/inbox-watch.sh`.
     **`.tools/jq.exe` IS VENDORED AND TRACKED — resolve it first, `command -v jq` as guarded fallback, then
@@ -156,31 +149,24 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     which no measurement answers. "It is deployed and it works" is not an architecture.** <<
     `memory/feedback_bronze_is_raw_untouched_parquet_is_a_silver_conversion.md`.
 17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS AND EACH TIER HAS EXACTLY ONE HOME.**
-    `bronze` raw vendor · `silver` parquet queryable — both under **`opal-data-assets`**; `gold` processed
-    analytics — under **A PER-PRODUCT OR PER-FIRM BUCKET** (`opal-data-mdpf`, `opal-data-etfs`,
-    `opal-data-49financial`, …) **AND THE GOLD PROCESS'S CODE LIVES IN THAT SAME BUCKET**; `platinum`
-    serving — under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER: per-consumer projection,
-    display naming and route-specific reshaping belong in platinum, NEVER in gold.** **GOLD IS PARQUET**
-    (`{table}/date={D}/`, mirroring silver — JSON leaves the gold tier); vendor trees keep bronze+silver;
-    **every platinum publisher READS PARQUET and is the estate's ONLY JSON producer**, so one-producer-per-
-    served-key holds by construction. **Silver→gold is pulled by LAMBDA; EC2 only where genuinely heavy.**
-    ⚠ **AMENDED 2026-08-25 BY D8 (Andrew-direct): gold's HOME and CODE-HOME moved OUT of `opal-data-assets`.
-    The superseded clause named `opal-data-assets/portal/gold/{product}/{scope}/`. WHICH scopes are
-    product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL — no seat infers it.** ⛔ **DIRECTION RATIFIED —
-    MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it today (measured 2026-08-25:
-    gold in SIX buckets, code in SEVEN, platinum in FIVE beyond portal-v2); a non-conforming tree is NOT a
-    violation and NOT a warrant to move anything. Moving a served key is NEVER#3. **One home per logical
-    producer is a CORRECTNESS requirement, not tidiness — three separate seats spent 2026-08-25 deriving
-    "which copy of this code actually runs" by hand from deployed bytes, and the first derivation was wrong.**
-    Spec: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
-18. **`terraform apply` goes through `.tools/safe-apply.sh`** — HALTGT inbox checkpoint at the last reversible
-    moment (routine pending msg → `HALT_ACK=1`; override audited via `HALT_OVERRIDE="reason"`). ⚠ **A HALTGT
-    PASS IS NOT EVIDENCE YOU WERE NOT HALTED, and `[STOP]` does NOT reliably hard-block** — the checkpoint sees
-    only unread files directly under `inbox/<serial>/`, so a live Monitor guarantees a silent empty-inbox
-    `exit 0`, and a `~lane` agent is unhaltable regardless. **NOBODY CITES A HALTGT PASS.**
-    `docs/architecture/ADHC_HALTGT.md`, `org/tier0/ledger/LD-0267.md`.
-19. **Portal main worktree stays on `DEV`, always.** Promotes run in an ephemeral worktree (`/prod-deploy`
-    skill, DT lane). Found it on PROD? `cd portal && git checkout DEV` before any portal work.
+    `bronze` raw vendor + `silver` parquet queryable under **`opal-data-assets`**; `gold` processed
+    analytics under **a per-product or per-firm bucket, WITH THE GOLD PROCESS'S CODE IN THAT SAME
+    BUCKET**; `platinum` serving under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER**
+    -- per-consumer projection, display naming and route-shaping belong in platinum, NEVER in gold.
+    **GOLD IS PARQUET** (`{table}/date={D}/`); every platinum publisher READS PARQUET and is the
+    estate's ONLY JSON producer, so one-producer-per-served-key holds by construction.
+    ⛔ **DIRECTION RATIFIED — MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it
+    today; a non-conforming tree is NOT a violation and NOT a warrant to move anything. Moving a served
+    key is NEVER#3. **Which scopes are product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL.**
+    **One home per logical producer is a CORRECTNESS requirement, not tidiness** -- three seats spent
+    2026-08-25 deriving "which copy of this code actually runs" by hand from deployed bytes, and the
+    first derivation was wrong. Amendment history, the superseded clause, and the measured
+    non-conformance: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+
+19. **Portal main worktree stays on `DEV`, always.** Found it on PROD? `cd portal && git checkout DEV`
+    before any portal work -- that failure is discovered by accident, so the recovery stays visible here.
+    Promote procedure (ephemeral worktree, DT lane): the **`/prod-deploy`** skill.
+
 20. **Check the dependency graph BEFORE you change anything** — (a) ahead of ANY cloud/infra/data change;
     (b) before commit for ANY frontend change. Pick the tool from `org/modules/graph/graph-call-manifest.yaml`.
     **Default to QUERY, never rebuild to answer a traversal.** **Read the provenance header on every call** —
@@ -188,24 +174,18 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     just-made change against live AWS/served artifacts, never the graph. **`comp-surface-check` IS RETIRED** —
     the MP/benchmark/ADVI surfaces now carry NO automated commit-time guard, stated here so it is not
     discovered later as a gap. `docs/architecture/NFRA_GRAPHS.md`.
-21. **comp-which / a comp-tool is the DEFAULT for every search + inspection; a raw search is the EXCEPTION.**
-    Raw grep is text-local and connection-blind, so it MISSES coupled things. Reflex =
-    `comp-which "<plain-English question>"` — it routes to the rich tool, else runs **`comp-find`** (search
-    with each hit's dependency context, a DENOMINATOR line, and a BAND classification).
-    ⛔ **`comp-find` IS CASE-SENSITIVE BY DEFAULT AND MATCHES SUBSTRINGS. Its denominator counts FILES
-    SCANNED, never PATTERN COVERAGE.** On a ZERO result it guards you (it names `-i` itself). **The unguarded
-    cases are the UNDERCOUNT and the OVERCOUNT — a partial case-miss returns a confident non-zero with no
-    caveat, and a substring match inflates it (`egress` returned 19 hits, all `regression`).** This estate
-    CAPITALISES its load-bearing words, so a case-sensitive census drops precisely the decision-carrying
-    lines: measured `[Aa]udience` = 7 vs `-i` = 13, and every one of the six dropped was a ruling.
-    **Run `comp-find -i` for any token census; anchor the token or read the hits before quoting a number.**
-    Inline `**` emphasis breaks a phrase search at any case — search the shortest distinctive fragment.
-    ⚠ `comp-find` counts LINES, not AST nodes. **GATED, not banned:** the LIVE hard-deny is
-    raw-`aws`-INSPECTION + `infra/*.tf` grep unless the call carries `# rail-checked: <why>` (audited to
-    `org/mcp/comp-which-rail.log`; a repeat override for one intent = a coverage gap → build the tool).
-    Estate-scoped broad Bash `grep`/`find`/`rg` DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob`
-    = nudge-and-proceed; native `Read` + operational `aws` + pipe-greps = free. `/freeform` stands the rail
-    down per-session. `docs/architecture/NFRA_COMPRAIL_PRD.md`.
+21. **comp-which / a comp-tool is the DEFAULT for every search + inspection; a raw search is the
+    EXCEPTION.** Raw grep is text-local and connection-blind, so it MISSES coupled things. Reflex =
+    `comp-which "<plain-English question>"` -- it routes to the rich tool, else runs **`comp-find`**
+    (dependency context + a DENOMINATOR line + a BAND classification), and never dead-ends.
+    ⛔ **`comp-find` HAS TRAPS THAT WILL SILENTLY MIS-COUNT YOU** -- case-sensitivity, substring
+    matching, and a denominator that certifies the SWEEP and not the PATTERN. **Know them before you
+    quote any number from it:** `docs/architecture/NFRA_COMPRAIL_PRD.md` + `comp-find --help`.
+    **GATED, not banned:** the LIVE hard-deny is raw-`aws`-INSPECTION + `infra/*.tf` grep unless the
+    call carries `# rail-checked: <why>` (audited to `org/mcp/comp-which-rail.log`; a repeat override
+    for one intent = a coverage gap -> build the tool). Estate-scoped broad Bash `grep`/`find`/`rg`
+    DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob` = nudge-and-proceed; native `Read`
+    + operational `aws` + pipe-greps = free. `/freeform` stands the rail down per-session.
 22. **EVIDENCE LAW -- FOUR AXES, AND WHO EATS THE ERROR DECIDES HOW MANY YOU CHECK.**
     **Rule 24 tests a SCHEMA; Rule 22 tests a CLAIM. THEY SHARE THREE AXES AND EACH ADDS WHAT ITS
     OBJECT NEEDS** -- GRAIN, COVERAGE and STATE are the same axes in both; 24 adds EXCLUSIVITY +
@@ -248,28 +228,14 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     **a line citation without a vintage is not a citation.** A claim failing any postulate is
     `INFERRED` and NON-ACTIONABLE; the cert/dispatch owner withholds the GO.
 
-22a. **INSTRUMENT TRAPS -- non-obvious failures of Rule 28 you cannot re-derive at the call site.**
-    **CODE currency**: read the DEPLOYED artifact's bytes and diff against the source it is BUILT
-    FROM, resolved through the BUILD INPUT (source-map / manifest), **NEVER by filename** -- a
+22a. **INSTRUMENT TRAPS -- non-obvious failures of Rule 22 you cannot re-derive at the call site.**
+    **CODE currency**: read the DEPLOYED artifact's bytes and diff against the source it is BUILT FROM,
+    resolved through the BUILD INPUT (source-map / manifest), **NEVER by filename** -- a
     filename-resolved check reports drift where there is none AND reads clean where two copies have
-    diverged. On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED** (first-boot-only pulls
-    leave the staged object INERT), so applied truth is an on-instance read or the runner's exit-log
-    -- **an expected log's ABSENCE is evidence too**. ⛔ A function whose running bytes are older than
-    its built-from bytes **passes every rung**: plan 0-diff is true (TF does not manage code
-    currency), `get-function-configuration` is true (it is about env), and it runs green on the old code.
-    **IAM**: `comp-iam` models `(action)`, never `(action, resource)` -- a role holding `s3:GetObject`
-    on ANY bucket reports `[GRANTED]` for every other. It also cannot see returned-buffer calls
-    (`batch_writer`) or `generate_presigned_url`'s action-at-REDEMPTION. >> **AN UNDER-REPORTING IAM
-    INSTRUMENT DOES NOT CAUSE AccessDenied -- IT CAUSES A FUTURE ENGINEER DOING LEAST-PRIVILEGE
-    CLEANUP TO DELETE A NEEDED GRANT AS "UNUSED". SILENCE IS THE DEFECT. NEVER read a comp-iam
-    operation list as a deletion warrant.** << Treat it as a FLOOR. For a NEW bucket/table/ARN verify
-    live: `aws iam simulate-principal-policy --policy-source-arn <role> --action-names <a>
-    --resource-arns <exact key>` -- which has **THREE false-deny modes**: 2+ `--resource-arns` flips
-    held ones to `implicitDeny`; a conditioned statement with no `--context-entries` returns
-    `implicitDeny` byte-identical to a real deny; and **it does not validate action names, so a TYPO
-    is indistinguishable from a missing grant** (use `aws accessanalyzer validate-policy`).
-    **ONE `--resource-arns` per call; run the positive control as a SEPARATE invocation** -- mode (1)
-    silently disarms it.
+    diverged. On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED**; applied truth is an
+    on-instance read or the runner's exit-log, and **an expected log's ABSENCE is evidence too.**
+    ⛔ A function whose running bytes are older than its built-from bytes **passes every rung**: plan
+    0-diff is true, `get-function-configuration` is true, and it runs green on the old code.
     **DELIVERY**: three clocks, routinely conflated -- **SENT** (filename/mtime; `mv` preserves the
     sender's clock forever), **EMITTED** (a watcher claimed it, not that a consumer existed), **READ**
     (agent-side ACK -- the only sound oracle, and the one an orphan cannot forge). An orphaned watcher
@@ -283,7 +249,8 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     --date=format:'...Z'` **renders local and stamps a literal `Z`** -- use `%aI`/`--date=iso-strict`
     and **never type a `Z` into a format string.** A missing marker makes a reader ask; a false one
     makes them stop asking.
-
+    **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s three false-deny modes,
+    `accessanalyzer validate-policy`): `/cloud-ops`.**
 23. **Every SES send uses `Source`/`EMAIL_FROM` on the `opalinvest.dev` domain** — DKIM-signed + DMARC-aligned.
     `opalinvest.com` is address-verified only (DKIM NOT_STARTED, SPF excludes SES) — unauthenticated, so EOP
     quarantines it **nondeterministically**. ✋ **`opalcapital.com` — WE DO NOT OWN THIS DOMAIN.** Never send
@@ -307,7 +274,12 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     schemas.** A value-enum proposal arrives WITH its four-postulate record and a token-hygiene census
     (word-boundary occupancy over the canon files), or it is not a proposal. Remedy pattern for a violating
     axis: the two-field split (RCG charters v2). Working record: `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
-25. **STALE >= 90 DAYS = DORMANT — not in use — unless it carries a DECLARED exception.** The default that
+25. **STALE >= 90 DAYS = DORMANT — not in use — unless it carries a DECLARED exception.**
+    ⛔ **SUPERSEDED AS THE CLOSE-OUT PREDICATE 2026-08-25 (Andrew-direct): a project not attached to
+    `org/missions/DIRECTIVES.yaml` is CLOSED, on MEMBERSHIP, not on age.** 99 projects were closed on
+    that test the same day. 90d survives only as the DORMANCY DEFAULT for things a directive DOES
+    claim -- and as a bar it selected ZERO of 124 open projects when measured, which is why the axis
+    was replaced rather than lowered. The default that
     TERMINATES the stale-but-reachable hold. 90d is structurally clear of the trading-calendar/T-1 class; only
     QUARTERLY cadence lands near the bar and must declare. **An exception DECLARES ITS KIND, because the two
     kinds take OPPOSITE remedies (Rule 24(iv)): LONG-TTL-LIVE** (e.g. capital market assumptions, 1yr — age
@@ -317,14 +289,13 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     CONCLUDING: dormant-because-ABANDONED and dormant-because-KEY-MIGRATED are byte-identical from age alone
     and take OPPOSITE actions.** Same-leaf-name live/dormant twins fail toward deleting the LIVE one.
     `memory/feedback_90_day_dormancy_default_with_declared_exceptions.md`.
-26. **THE APPLY RUNS ON THE DEVICE THAT OWNS THE WORK. NEVER FERRY AN APPLY ACROSS FABRICS.** A seat that BUILT
-    a change APPLIES it, on its own box, under the normal wrappers. **Why: the builder holds the context the
-    applier needs, and a ferry is exactly the step that separates them** — a ferried apply had four disagreeing
-    on-box sources and had to be re-framed mid-flight. Mechanism, present on both devices: `.tools/safe-apply.sh`
-    · `infra/aws/ec2/safe-ec2-deploy.sh` (**NOT `.tools/`**) · `.tools/safe-deploy.sh` · `infra/aws/ec2/verify-ec2.sh`
-    · deploy-completion ledger at `org/critical_paths/change_management/`. ⚠ **Terraform is NOT at one path on
-    every device — resolve the binary, do not assume the baked path.** Every existing gate binds unchanged, and
-    **owning the apply means owning NEVER#6's completion obligation, not escaping it.**
+26. **THE APPLY RUNS ON THE DEVICE THAT OWNS THE WORK. NEVER FERRY AN APPLY ACROSS FABRICS.**
+    A seat that BUILT a change APPLIES it, on its own box, under the normal wrappers. **Why: the
+    builder holds the context the applier needs, and a ferry is exactly the step that separates them**
+    -- a ferried apply had four disagreeing on-box sources and had to be re-framed mid-flight.
+    ⚠ **Terraform is NOT at one path on every device -- resolve the binary, never assume a baked one.**
+    Every existing gate binds unchanged, and **owning the apply means owning NEVER#6's completion
+    obligation, not escaping it.** On-box wrapper set + the deploy-completion ledger path: `/cloud-ops`.
 27. ⛔ **ORDERING PRECONDITION (2026-08-25): THE DIRECTIVE ROW LANDS BEFORE ITS PROJECTS ARE MINTED.**
     Since Andrew's ~18:24Z ruling, a project not attached to `org/missions/DIRECTIVES.yaml` is CLOSED,
     not merely unrecorded -- so **a project minted before its row exists is BORN CONDEMNED**, by a

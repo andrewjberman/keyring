@@ -1,11 +1,11 @@
 ---
 name: cloud-ops
-description: Operational reference + permissions profile for AE_CloudOps agents. Loads when the agent will be running AWS CLI, Terraform, EC2/SSM operations, or any other cloud-infrastructure work. Pre-approves the wildcards in .claude/settings.json so the agent is not interrupted with permission prompts for routine cloud ops. Confirms the CLAUDE.md non-negotiables that pre-approval does NOT override.
+description: Operational reference + permissions profile for AE_CloudOps agents. Loads when the agent will be running AWS CLI, Terraform, EC2/SSM operations, or any other cloud-infrastructure work. Pre-approves the wildcards in .claude/settings.json so the agent is not interrupted with permission prompts for routine cloud ops. Confirms the CLAUDE.md non-negotiables that pre-approval does NOT override. CANONICAL HOME for the deployment rules (4,5,6,8,9,11,12,18) as of 2026-08-25 -- they were moved off CLAUDE.md so they load for the seats that do cloud work instead of taxing every agent's context; rule NUMBERS are preserved so existing citations still resolve.
 ---
 
 # cloud-ops
 
-**Refreshed:** 2026-05-27 (ws CTO hygiene pass; CLAUDE.md Rules 1-19 cross-reference + LD-0034 / 0049 / 0066 / 0072 / 0082 / 0084 / 0090 / 0113 / 0115 / 0116 operating-doctrine pointers + current pipeline + bucket + secrets + KMS inventory snapshot)
+**Refreshed:** 2026-08-25 (1.0.0_SA_CTO~X, Andrew-direct: the DEPLOYMENT RULES now live HERE as their canonical home, not in CLAUDE.md. Prior pass 2026-05-27 -- CLAUDE.md Rules 1-19 cross-reference + LD-0034 / 0049 / 0066 / 0072 / 0082 / 0084 / 0090 / 0113 / 0115 / 0116 operating-doctrine pointers + current pipeline + bucket + secrets + KMS inventory snapshot)
 
 You are operating in a pre-approved cloud-ops profile. The wildcards in `.claude/settings.json` cover the routine AWS / Terraform / EC2 / SSM / CloudFormation / .tools surfaces. Run them autonomously — do not pause to ask the user "should I run this?" for any pattern that already matches.
 
@@ -49,34 +49,123 @@ If your task hits a tool the user has not pre-approved, ask once briefly — don
 
 For these, surface the command + the reason + ask before running.
 
-## Current CLAUDE.md rule cross-reference (refreshed 2026-05-27)
+## THE DEPLOYMENT RULES -- canonical home (moved off CLAUDE.md 2026-08-25, Andrew-direct)
 
-CLAUDE.md is canonical for all the deployment + commit + code-quality rules. Snapshot of the rules that bind AE 0.7 specifically:
+**These used to live in CLAUDE.md and were read by every agent in the fabric, most of whom never
+touch a Lambda.** They now live here, where they load for the seats that actually do cloud work.
+**THIS SECTION IS CANONICAL** -- it is not a refresher and not a mirror. CLAUDE.md keeps a pointer,
+not a copy.
 
-| Rule | Substance | Binding tool |
-|---|---|---|
-| **1** | Terraform-only Lambda deploy | `.tools/safe-apply.sh` (NOT `aws lambda update-function-code`) |
-| **2** | Commit before apply | `safe-commit.sh` -> push -> `terraform plan` -> `safe-apply.sh` -> verify 0-diff -> tag -> `push --follow-tags` |
-| **3** | Dependencies in Lambda Layers | NOT `pip install -t .` into Lambda source |
-| **4** | Update source map | `infra/aws/lambda/ci/lambda-source-map.json` entry per Lambda |
-| **5** | Size Lambda resources deliberately | Set `memory_size` + `timeout`; don't leave yang-lambda module defaults |
-| **6** | Tag after deploy | `git tag -a {pipeline}-v{X.Y.Z}` + `git push --follow-tags` |
-| **7** | `safe-ec2-deploy.sh` wrapper for EC2 | `EC2_MANIFEST.json` source of truth |
-| **8** | `EC2_MANIFEST.json` source of truth | Every EC2 service registered |
-| **9** | Terraform manages EC2 infra, not code | TF owns instance/IAM/SG; code via `safe-ec2-deploy.sh` or SSM |
-| **10** | Never push code directly to EC2 Docker | Script fixes in local repo; Docker via deploy cycle |
-| **11** | `verify-ec2.sh` before EC2 work | Drift check between local source + deployed code |
-| **12** | S3 is artifact store for EC2 code | Write locally -> S3 -> EC2 pulls. No inline Python in SSM. |
-| **13** | DS owns commit→QA-deploy cycle for gold/silver/bronze; `.tools/safe-deploy.sh` enforces atomically | Pre-push hook auto-fires; bypass `--allow-stale --reason "..."` audits to `org/safe-deploy-bypass-audit.log` |
-| **14** | Pre-commit gate `.tools/commit-gate.sh` for every `.py` edit | py_compile + ds-precommit-check.py + ruff |
-| **14a** | Commit via `.tools/safe-commit.sh` | `--force` audits to `org/git-author-override-audit.log` |
-| **15** | `from __future__ import annotations` as FIRST import in every `data/*/scripts/{gold,silver,bronze}/*.py` | Enables PEP-604 on Python 3.9 runners |
-| **16** | Local-runtime bash scripts use Git Bash 3.6.7 utilities only | `pgrep`/`pkill`/`flock`/`pidof`/`setsid`/`wget` MISSING; use `ps`/`awk`/`grep`/`timeout` |
-| **17** | Silver = clean shape, preserved content. No field slimming, no fillna, no business-row filtering. | Field-pruning + null-handling + business-logic belongs in gold |
-| **18** | `terraform apply` via `.tools/safe-apply.sh` (HALT-gate checkpoint); `HALT_OVERRIDE="<reason>"` audited bypass | Audited to `org/halt-gate-override-audit.log` |
-| **19** | Portal main worktree stays on DEV; PROD promotions via `git worktree add` ephemeral | Andrew direct ratify; check `cd portal && git checkout DEV` if stranded |
+⛔ **THE NUMBERS ARE LOAD-BEARING AND DELIBERATELY UNCHANGED.** 41 files cite "CLAUDE.md Rule 4", 35
+cite Rule 12, 17 cite Rule 6. Renumbering would dangle every one of those citations, so a rule keeps
+its number forever even when the list has gaps. **Gaps are correct**: 1, 2, 3, 7 and 10 were deleted
+2026-08-25 (Terraform-only-Lambda, commit-before-apply, layers, the EC2 wrapper mandate, and the
+Docker-push ban) as unenforced restatements of rules that survive elsewhere.
 
-Read CLAUDE.md if unsure — this skill is a refresher, not a substitute.
+### 4. UPDATE THE SOURCE MAP
+Every Lambda has an entry in `infra/aws/lambda/ci/lambda-source-map.json`.
+⚠ **The map PAIRS a Lambda with its repo dir. It does NOT compare deployed bytes to built-from
+bytes.** It read "(CI drift detection)" until 2026-08-12 and promised a control the estate does not
+have -- measured that day on a live Lambda running bytes older than its own tree, where plan 0-diff,
+`get-role-policy`, `get-function-configuration` and a green scheduled run ALL passed. Code currency
+is CLAUDE.md Rule 22a's CODE layer and it is the assignee's read, not this map's.
+*Compliance measured 2026-08-25: 192 of 198 live functions carry an entry (97%).*
+
+### 5. SIZE LAMBDA RESOURCES DELIBERATELY
+Set `memory_size` + `timeout` explicitly. Never leave the `yang-lambda` module defaults (256MB/30s)
+on a data-processing Lambda.
+*Measured 2026-08-25: 14 of 198 sit at the exact default, and none of them is data-shaped.*
+
+### 6. TAG AFTER DEPLOY
+`git tag -a {pipeline}-v{X.Y.Z}` + `git push --follow-tags` after every 0-diff apply.
+*Measured 2026-08-25: 864 of 927 tags match the form (93%).*
+
+### 8. `EC2_MANIFEST.json` IS THE SOURCE OF TRUTH
+`infra/aws/ec2/EC2_MANIFEST.json` -- every EC2 service registered; CI/CD depends on it.
+⚠ **Its entries are SERVICES, not instances, and the two counts will never match.** Measured
+2026-08-25: 27 service entries against 32 instances (4 running + 28 stopped) -- the fleet is
+stopped-when-idle batch runners, so comparing those numbers directly manufactures a gap that is not
+there. Name the grain before you diff.
+
+### 9. TERRAFORM MANAGES EC2 INFRASTRUCTURE, NOT CODE
+TF owns the instance, IAM and security groups. Code deploys via `infra/aws/ec2/safe-ec2-deploy.sh`
+or SSM. **This boundary is the one that matters and it absorbed the old Rules 7 and 10** (the wrapper
+mandate and the Docker-push ban), both of which restated it in a form nothing could check.
+
+### 11. VERIFY PARITY BEFORE EC2 WORK
+`./infra/aws/ec2/verify-ec2.sh` -- drift check between local source and deployed code, reads
+`EC2_MANIFEST.json`.
+
+### 12. S3 IS THE ARTIFACT STORE FOR ALL EC2 CODE
+Never write code on a VM. Never inline Python in an SSM command. Local -> S3 -> EC2 pulls ->
+execute, **even for ad-hoc diagnostics.** Spec: `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`.
+
+### 18. `terraform apply` GOES THROUGH `.tools/safe-apply.sh`
+HALTGT inbox checkpoint at the last reversible moment (routine pending msg -> `HALT_ACK=1`; override
+audited via `HALT_OVERRIDE="reason"`).
+⚠ **A HALTGT PASS IS NOT EVIDENCE YOU WERE NOT HALTED, and `[STOP]` does NOT reliably hard-block.**
+The checkpoint sees only unread files directly under `inbox/<serial>/`, so a live Monitor (which
+moves the message first) guarantees a silent empty-inbox `exit 0`, and a `~lane` agent is unhaltable
+regardless. **NOBODY CITES A HALTGT PASS.** `docs/architecture/ADHC_HALTGT.md`, `org/tier0/ledger/LD-0267.md`.
+
+### IAM INSTRUMENT TRAPS -- moved from CLAUDE.md Rule 22a, 2026-08-25
+
+⛔ **`comp-iam` IS NOT SUFFICIENT FOR A NEW RESOURCE, AND IT FAILS *GREEN*.** It models `(action)`,
+never `(action, resource)` -- **a role holding `s3:GetObject` on ANY bucket reports `[GRANTED]` for a
+call to EVERY other.** It also cannot see returned-buffer calls (`batch_writer`) or
+`generate_presigned_url`'s action-at-REDEMPTION.
+
+>> **AN UNDER-REPORTING IAM INSTRUMENT DOES NOT CAUSE AccessDenied -- IT CAUSES A FUTURE ENGINEER
+DOING LEAST-PRIVILEGE CLEANUP TO DELETE A NEEDED GRANT AS "UNUSED". SILENCE IS THE DEFECT; THE TRACE
+IS A BONUS. NEVER read a comp-iam operation list as a deletion warrant.** << Treat it as a FLOOR.
+
+For a NEW bucket/table/ARN, verify on the live primitive:
+```
+aws iam simulate-principal-policy --policy-source-arn <role> --action-names <action> \
+    --resource-arns <exact key>
+```
+⛔ **THAT INSTRUMENT HAS THREE INDEPENDENT FALSE-DENY MODES:**
+1. **2+ `--resource-arns` in one call flips the HELD ones to `implicitDeny`.**
+2. **It EVALUATES `Condition` blocks** -- with no `--context-entries`, a conditioned statement returns
+   `implicitDeny` **byte-identical to a real deny**.
+3. **It does NOT validate action names** -- a nonexistent action returns `implicitDeny` too, so **a
+   TYPO is indistinguishable from a missing grant** (exercised: `s3:ZzzNoSuchActionName9999` ->
+   `implicitDeny`).
+
+**THEREFORE: ONE `--resource-arns` PER CALL - run the positive control as a SEPARATE INVOCATION -
+pass `--context-entries` for any conditioned statement - and NEVER use it to check whether an action
+name is REAL** (use `aws accessanalyzer validate-policy`: bogus -> `INVALID_ACTION` naming the right
+one; real -> 0 findings).
+
+*A POSITIVE CONTROL IS ONLY A CONTROL IF IT IS RUN IN ISOLATION FROM THE TARGET* -- mode (1) silently
+disarms the very control this rule leans on.
+
+### THE ON-BOX WRAPPER SET -- moved from CLAUDE.md Rule 26, 2026-08-25
+
+CLAUDE.md Rule 26 still carries the ruling (**the apply runs on the device that owns the work; never
+ferry an apply across fabrics**). The tooling it names lives here:
+
+| purpose | path |
+|---|---|
+| Terraform apply (HALTGT checkpoint) | `.tools/safe-apply.sh` |
+| EC2 code deploy | `infra/aws/ec2/safe-ec2-deploy.sh` — **NOT** `.tools/` |
+| data-script deploy (DS lane) | `.tools/safe-deploy.sh` |
+| EC2 parity check | `infra/aws/ec2/verify-ec2.sh` |
+| deploy-completion ledger | `org/critical_paths/change_management/` |
+
+⚠ **Terraform is NOT at the same path on every device.** CLAUDE.md's Git section names
+`.tools/terraform.exe`; that file **does not exist on site Z**, where `terraform` resolves on PATH.
+**Resolve the binary; never assume the baked path** -- same device-agnosticism rule as every other
+hardcoded path.
+
+### WHAT STAYED IN CLAUDE.md, AND WHY
+These bind every agent, not just cloud seats, so they did not move: **13** (DS lane ownership of
+gold/silver/bronze), **14 / 14a** (the universal commit gate and `safe-commit.sh`), **15**
+(`from __future__ import annotations`), **16** (Git Bash utility limits), **17 / 17a / 17b** (the
+medallion architecture), **19** (portal worktree stays on DEV). The NEVER block also still carries
+the bare-`terraform apply`, bare-`git commit` and `aws lambda update-function-code` prohibitions --
+⛔ **and only the first of those three is actually gated** (`never-rules-gate.sh:422`); the other two
+are imperatives enforced by nobody. Measured 2026-08-25.
 
 ## Pre-flight checklist (before any cloud apply)
 
