@@ -146,6 +146,46 @@ in the message that carried it.
   },
   "disposition": "GRADUATED",
   "notes": "THE SURFACING SEAT NAMED THE CLASS AGAINST THEMSELVES AND THE NAMING IS RIGHT: 'TRUE, and not carrying what a consumer needs to act on it' -- the same shape as the three issuer defects earlier tonight, except this one is theirs, and DE~D is building against the contract it feeds. A verdict that collapses two situations a consumer must distinguish is a frame defect, not a measurement defect: every number in a-1 was correct. || ⛔ CERTIFIER NOTE -- WHAT THIS IS AND IS NOT FOR THE BAR. Check 7 asks whether an oracle names an artifact that EXISTS. It does NOT ask whether that artifact SPANS THE PERIOD THE CELL NEEDS. Existence and extent are different properties and check 7 reaches only the first. I am deliberately NOT minting a check 9 and NOT extending check 7 tonight: the night's own lesson, ratified by Andrew's duplicated-work ruling and MSTR's self-criticism, is that AMPLIFYING A CONTROL AFTER ONE INSTANCE AND BEFORE ANYONE HAS TRIED TO BREAK IT is the error -- I have now watched five seats do it in one hour and did it myself. Recorded as a CANDIDATE refinement to check 7 (existence -> existence AND sufficient extent), to be weighed when a second instance exists or an owner routes it, with its Rule-24 record. || WHAT ACTUALLY CAUGHT THIS was the executing seat re-measuring their own delivered audit before a consumer built on it -- the fourth time tonight that premise-verification by the seat holding the artifact beat every document-plane check, including mine."
+ },
+ {
+  "id": "ADVI_PERFRP-S8",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G, on their own criterion, with every candidate source ENUMERATED rather than assumed",
+  "surfaced_at": "2026-08-25T01:22Z",
+  "one_line": "AC7 requires known-not-held rows to carry a CUSTODIAN and there is no custodian source anywhere on the live plane -- and a plausible wrong value was sitting in the TO's own parenthetical, which is what makes it dangerous rather than safe.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "every candidate enumerated and checked: dim_account 37 cols none; dim_account_xref 10 cols none; dim_identity_crosswalk 8 cols (SmartX uuids + schwab_account_number) none",
+    "comp-find -i 'custodian' over runners_49f = 10 hits across 87 files, ALL prose and comments, ZERO data fields",
+    "the PRD's 'Custodian (Fidelity IWS / Schwab)' at PRD:86 describes THE BD DASHBOARD'S OWN COLUMN -- the reference UI, not a field we hold",
+    "emission half SATISFIED: 866 known-not-held rows emitted as TWO populations never collapsed -- MATCHED-NOT-IN-A00 (40, a coverage gap in our dim) vs UNRESOLVED-NO-MATCH (826, a true fact about the client's holdings); opposite remedies",
+    "every row emits custodian='UNAVAILABLE-NO-SOURCE' rather than a filled value"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE SEAT'S OWN SENTENCE IS THE FINDING AND IT GENERALISES PAST THIS CELL: 'A PLAUSIBLE VALUE BEING AVAILABLE IS WHAT MAKES IT DANGEROUS, NOT WHAT MAKES IT SAFE.' They declined to fill custodian='Fidelity' from their own task order's parenthetical, and named why it was tempting: the value was right there, it would have rendered beautifully, and it would have been AN INFERENCE ABOUT A REAL CLIENT'S REAL ACCOUNT CUSTODIAN ON A CLIENT-FACING CARD, SOURCED FROM PROSE. Same shape as the summed-return mutant and the SI-to-max alias -- wrong in a way nobody downstream could detect. || THE CLASS FOR THE ISSUER: the cell is BUILDABLE and the CRITERION names a field the live plane does not carry. That is distinct from an unrunnable oracle (check 7) and from an unenumerated surface (check 8): here the surface is enumerated, the oracle runs, and the ACCEPTANCE ROW asks for a value that does not exist. Three honest exits named by the seat, none taken unilaterally: drop custodian from AC7 / emit the sentinel and render an unavailable state / source it, which is not a round-1 act. Issuer's ruling. || CERTIFIER NOTE: not a decomp defect and no re-cert triggered."
+ },
+ {
+  "id": "ADVI_PERFRP-S9",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G -- reported as CONTEXT to a-3 rather than as a surprise item; filed here by the channel owner because the rule it establishes outlives the cell",
+  "surfaced_at": "2026-08-25T01:22Z",
+  "one_line": "Two tables carry a column named `security_key` AND THEY ARE DIFFERENT KEY SPACES -- joining on the shared NAME matches 190 of 2,269 keys and reports ~92% OF CLIENT HOLDINGS UNCLASSIFIED, a catastrophic-looking finding a reviewer would plausibly have believed; joining on cusip matches 2,269 of 2,270.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "a07 builds security_key TICKER-preferring (a07:248-252); b01 takes it from dim_security joined ON CUSIP (b01:11,:61)",
+    "name-join: 190 of 2,269 keys matched -> would have reported ~92% of client holdings unclassified",
+    "cusip-join: 2,269 of 2,270 matched",
+    "no existing consumer joins these two tables, so the collision had never fired before",
+    "the join was grounded on BOTH PRODUCERS' SOURCE, not selected because it returned a better number"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "⛔ THE MOST DANGEROUS FORM OF TONIGHT'S CLASS, AND THE ONLY ONE THAT PRODUCES AN ALARM RATHER THAN A SILENCE. Every other instance tonight failed toward a false GREEN -- an oracle that could not fire, an assertion that could not fail, a pass attributable to the tree. This one fails toward a false CATASTROPHE: '~92% of client holdings unclassified' reads as a data disaster, would have been escalated, and is entirely an artifact of joining on a shared column NAME across two different KEY SPACES. || AND THE TRAP INSIDE THE TRAP, which the seat named: the CORRECT join is also the one that returns the NICER number, so choosing it for that reason would have been right for the wrong reason and unfalsifiable afterwards. They grounded on both producers' source instead. A SHARED COLUMN NAME IS NOT A SHARED KEY SPACE, and nothing in either schema says so. || Recorded in the artifact rather than left for the next lane to rediscover -- correct, since no existing consumer joins these tables and the next one would meet the same trap cold."
  }
 ]
 ```
