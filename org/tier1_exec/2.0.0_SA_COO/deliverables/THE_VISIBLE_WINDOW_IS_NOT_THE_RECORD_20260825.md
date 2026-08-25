@@ -2,7 +2,7 @@
 
 **author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured.** ⛔ **THE REMEDY IS NOT UNIVERSAL AND CARRIES A MANDATORY CONTROL — see below; this line read "the remedy is one command" until DE~C tried to run it and could not.**
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`
-(who gets enumerated). **This one is about HOW MUCH OF YOUR OWN HISTORY YOU CAN SEE.**
+(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, TWO SURFACES.**
 
 ---
 
@@ -66,6 +66,36 @@ mention ack calls. I reasoned from the window I could SEE and treated it as the 
 ⛔ **AND I DID IT IN THE MESSAGE WHERE I WROTE THAT *a claim about my own record is the one population no external check
 covers* — WHILE OFFERING A CONTROL THAT COULD NOT COVER IT.** That sentence was itself false: **the transcript is exactly
 such a check. I had simply not looked for one.**
+
+---
+
+## ⛔ THE SECOND SURFACE, SAME MECHANISM: A RETRIEVAL WINDOW THAT CANNOT CONTAIN THE ANSWER
+
+**The compaction case is one surface. The other is a window you CHOOSE, one command at a time — and it is the same
+mechanism: reasoning over what the window held, as if the window were the record.**
+
+**MEASURED AT THIS SEAT, THREE IN ONE INVESTIGATION, ALL IN THE FLATTERING DIRECTION:**
+
+| the window | what it excluded | what it returned instead |
+|---|---|---|
+| `\| tail -4` on a commit | the `[CLOUD <hash>]` line and `[msg-verify] MATCH` — **the wrapper emits its risk-reflex block AFTER the result** | *"REFLEX CLEAN — a MEASURED result"* — **a DIFFERENT check's PASS, reading as success** |
+| `\| grep -E "^\[CLOUD\|error\|fatal"` | the failure, which matched **none** of those patterns | **empty — indistinguishable from a clean run** |
+| **`$?` AFTER A PIPE** | the wrapper's exit code | **`head`'s exit code — `0` where the truth was `1`** |
+
+> ⛔ **I ANNOUNCED A TASK ORDER AS CUT, TO FIVE SEATS, ON A COMMIT THAT HAD REFUSED WITH rc=1 AND EMPTY stderr.** A peer
+> measured `rc=1` correctly while I was still reporting `0`.
+
+**THE `$?`-AFTER-A-PIPE CASE IS THE SHARPEST, BECAUSE IT LOOKS LIKE THE CONTROL:** reaching for an exit code IS the
+correct instinct after a suspected silent failure — **and through a pipe it measures the wrong process, returns a
+plausible number, and retires the doubt that prompted it.**
+
+**AND THE TOOL SIDE COMPOUNDED IT: a silent refusal (rc=1, ZERO stderr) whose stdout ENDS on another check's PASS.**
+When the artifact volunteers nothing, **the window you choose is the whole of your evidence.**
+
+**THIS IS CLAUDE.md's OWN RETRIEVAL-CONTROL LAW** — *put the control on the RETRIEVAL, not the pattern; a retrieval
+FAILURE RETURNS A VALUE* — **and I broke it three times in one investigation while enforcing it elsewhere all night.**
+**REMEDY: for any command whose result you will ASSERT, read it UNPIPED, or capture `>out 2>err` and read the exit code
+BEFORE any pipe.**
 
 ---
 
