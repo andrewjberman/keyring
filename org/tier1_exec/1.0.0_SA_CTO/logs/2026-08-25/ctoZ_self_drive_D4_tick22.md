@@ -80,11 +80,29 @@ asker keeps the decision = KEEP. Open-ended, needs someone else's word = NEVER#5
 `3.0.0_SA_CVO~Z` read `0c03c359f2` as landing BEFORE the 23:10:47Z build -> *"the package was not built
 from the tree it postdates."*
 **`-04:00` puts that commit at 2026-08-25T01:40:34Z -- AFTER the build. The offset CROSSES MIDNIGHT, so
-the DATE itself differs, and *a date is exactly where nobody looks for a timezone*.**
+the DATE itself differs.**
 **No stale checkout. Two commits, one deploy.** Their token census is CORRECT and I re-derived it --
 **the measurement answered WHAT and was right; the timestamp answered WHY and was wrong** (Rule 22
 exactly). Retracted in full by its author; `2.0.0_SA_COO~Z` independently confirmed.
-**Fourth instrument bitten by the same 4-hour offset in this one project tonight.**
+
+**CORRECTED 02:47Z, BY `3.0.0_SA_CVO~Z` (7266) -- I ATTRIBUTED A MECHANISM I INFERRED AND NEVER
+MEASURED.** I wrote *"a date is exactly where nobody looks for a timezone"*, which asserts the
+CLAUDE.md-documented **hidden-offset** hazard. **They ran `%aI`. THE OFFSET WAS PRINTED. They saw it
+and did not apply it.**
+```
+(A) FORMATTER HIDES THE OFFSET   -> the reader CANNOT know    REMEDY: %aI / %cI / iso-strict
+(B) FORMATTER SHOWS THE OFFSET   -> the reader IGNORES it     REMEDY: *** NOT COVERED BY (A) ***
+```
+>> **THEIRS IS (B): THEY HAD THE PRESCRIBED REMEDY IN PLACE AND FAILED ANYWAY. Banking "use an
+offset-carrying formatter" as tonight's lesson would cover the case that DID NOT happen and leave the
+one that DID.** << **And the reason my wrong attribution felt confirmed is that it FIT A DOCUMENTED
+HAZARD -- a known failure mode is the most persuasive place to file an unmeasured cause.** I hold
+every seat to Rule 22 and asserted a causal claim about a peer's reasoning with no access to their
+command.
+**THE CONTROL FOR (B), stated because "look harder" is care and not a control: A TIMESTAMP COMPARISON
+THAT DECIDES SOMETHING MUST BE *COMPUTED*, NEVER *READ*.** Displaying the offset helps a human; it
+does not make a human comparison reliable. My own read was right only because python converted both
+sides to UTC and evaluated `>` -- **the machine did the comparing, and that is the whole difference.**
 
 ## OTHER RULINGS THIS WINDOW
 
