@@ -323,6 +323,29 @@ directives:
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
       (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
       2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
+  D8:
+    title: "Model Portfolios Pipeline Fortification (NEW; repair-first)"
+    directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
+    placement: "LAPTOP -- RULED (criterion a: MDPF/MP primary work, same basis as D1/D3; the producers are data/mdpf/scripts/gold and the served surface is opal-data-portal-v2/platinum/mdpf)."
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: [MDPF_COTREMEDIATION]
+    stance: "RE-MINT, not an edit: the prior D8 ('Philosophy + benchmark modal live-edit') was CUT to
+      DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one -- the code is
+      reused, the directive is new. Authority Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal
+      (record ANDREW_DIRECT_20260825_D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_AND_THE_COT_GLOBAL_0819_FREEZE.md
+      @903f6c8512). MEASURED: cottonwood + global served as_of_last = 2026-08-19 while 49financial +
+      inflection read 2026-08-24 -- FOUR TRADING DAYS (NEVER#1 discharged: expected frontier 08-25).
+      The served objects are REWRITTEN DAILY (all four within 2s at 13:50:49-51Z), so the publisher
+      succeeds and the staleness is INSIDE THE PAYLOAD -- every object-mtime freshness instrument
+      reads HEALTHY and is correct about the FILE. That blindness is the condition D8 exists to end.
+      TWO HALVES, DELIBERATELY SEPARATE PROJECTS: MDPF_COTREMEDIATION runs on the OUTAGE's clock
+      (his 'fixed immediately'); the pattern-conformance census and the gold-bucket architecture run
+      on D8's ('take this as an opportunity'). The conformance axis is NOT inherited -- D8 establishes
+      it, and that enumeration is a Rule 24 authoring act. His target architecture (ALL ingestion
+      bronze+silver in opal-data-assets; GOLD in a purpose-specific bucket per product; platinum in
+      opal-data-portal-v2) is RECORDED AS DIRECTION in the PRD s.3 -- it diverges from CLAUDE.md
+      Rule 17b, and NEITHER the law amendment NOR any migration is authorized by it."
   D9:
     title: "Tax SMA ops (NEW; assess-first)"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
