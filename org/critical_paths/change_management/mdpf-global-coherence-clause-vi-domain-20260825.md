@@ -18,7 +18,11 @@ NEVER#6: a begun deploy FINISHES in-session or rolls back + escalates loud to CO
 cross-axis coherence gate's clause (vi): the triple `tot[i-1], tot[i], tot[i+1]` is compared only
 where the SAME LEGS contribute a roster at all three dates.
 
-- Commit: **`1234c8779e`** (author `0.4.0_DS_ClientPlatform~N`), **LOCAL on CLOUD, NOT PUSHED**
+- Commit: **`1234c8779e`** (author `0.4.0_DS_ClientPlatform~N`) -- **ON `origin/CLOUD`**, verified
+  2026-08-25T19:4xZ. (Recorded as LOCAL when this entry was opened; an integrator pushed since. The
+  check was `git rev-parse origin/CLOUD` == `git ls-remote origin CLOUD` FIRST -- a tracking ref can
+  be stale, and an ancestry test against a stale ref is not a push claim -- then `merge-base
+  --is-ancestor` per commit. All four of this repair's commits are on origin.)
 - Also committed: `data/mdpf/scripts/gold/tests/test_cross_axis_membership_domain.py` (5 arms)
 - Authorization: `2.0.0_SA_COO` 71118 (remedy (C) over (B)); `1.0.0_SA_CTO` 71117 raised no
   architectural objection; 71149 confirms owner + status.
@@ -114,7 +118,7 @@ this entry's subject.
 | 1 | Fix committed + control set committed | **DONE** `1234c8779e` (local) |
 | 2 | `commit-gate` / ruff / py_compile clean | **DONE** |
 | 3 | 4 arms re-run against the REAL patched implementation | **DONE** A/B/C/D as predicted |
-| 4 | Integrator pushes `1234c8779e` to `origin/CLOUD` | **PENDING** -- integrator-only |
+| 4 | Integrator pushes `1234c8779e` to `origin/CLOUD` | **DONE** -- verified ON ORIGIN 2026-08-25T19:4xZ |
 | 5 | S3 code sync -- covers the **EC2 library leg only** | **LANDED 18:48:07Z**, not by this seat |
 | 6 | `comp-pipescript deployed --pipeline mdpf` reads MATCH | **DONE** for the S3 leg |
 | 6a | **Rebuild `mdpf-gold-lambda` + Terraform apply** -- HOTFIX PIN `530ba66971` | **BUILT** by `0.5.0_AE_OpalETL~B`; apply pending |
