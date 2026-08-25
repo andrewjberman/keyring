@@ -37,8 +37,15 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
 - **NEVER** reference another firm's bucket from a pipeline tree (bd/cot/inf) — gate-blocked at commit + IAM Deny at runtime.
 - **NEVER** move served output without never-widen sign-off (CTO+COO); a verified DELTA=0 deploy needs no hold.
 - **NEVER** run bare `terraform apply` (use `safe-apply`), bare `git commit` (use `safe-commit.sh`), or
-  `aws lambda update-function-code` (Terraform only). Gate: `.tools/hooks/never-rules-gate.sh` (PreToolUse).
-  Audited override: `# never-override: <reason>`. Why: `docs/references/INCIDENTS_2026-07-13.md`.
+  `aws lambda update-function-code` (Terraform only). ⛔ **ONLY THE FIRST LIMB IS GATED — MEASURED
+  2026-08-25, and this line claimed all three for months.** `.tools/hooks/never-rules-gate.sh` denies
+  `terraform apply|destroy` (`:422`); it has **NO** bare-`git commit` rule and **ZERO** occurrences of
+  `update-function-code`. Its other denies are rebase, `pull --rebase`, `stash`, `clean`, inbox-watch,
+  and `git commit -m` carrying a backtick (LD-0276) — **that last one is about MESSAGE INJECTION, not
+  about using the wrapper, and is easily mistaken for the bare-commit gate.** So **bare `git commit`
+  and a direct Lambda code push are IMPERATIVES ONLY, enforced by nobody.** Proven by accident: this
+  seat ran a bare `git commit --allow-empty --no-verify` and nothing stopped it. Audited override for
+  the gated limb: `# never-override: <reason>`. Why: `docs/references/INCIDENTS_2026-07-13.md`.
 - **AD-HOC GOLD RUNS ARE PERMITTED FOR QA. PRODUCTION PIPELINES MUST BE SCHEDULED.** An ad-hoc run is a
   legitimate QA instrument — fire one to test or reproduce. But **a pipeline whose only trigger is another
   pipeline's success has no schedule and is a defect**: it freezes silently when its upstream breaks.
@@ -148,16 +155,24 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     DISAGREE, "which is RUNNING?" is the wrong question — "which is RIGHT?" is, and that is ARCHITECTURAL,
     which no measurement answers. "It is deployed and it works" is not an architecture.** <<
     `memory/feedback_bronze_is_raw_untouched_parquet_is_a_silver_conversion.md`.
-17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS ACROSS TWO BUCKETS — AND PLATINUM IS THE SERVING TIER.**
-    `bronze` raw vendor · `silver` parquet queryable · `gold` processed analytics — all under
-    **`opal-data-assets`**; `platinum` serving — under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS
-    OWN TIER: per-consumer projection, display naming and route-specific reshaping belong in platinum, NEVER
-    in gold.** Product-gold home is `opal-data-assets/portal/gold/{product}/{scope}/`; **GOLD IS PARQUET**
+17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS AND EACH TIER HAS EXACTLY ONE HOME.**
+    `bronze` raw vendor · `silver` parquet queryable — both under **`opal-data-assets`**; `gold` processed
+    analytics — under **A PER-PRODUCT OR PER-FIRM BUCKET** (`opal-data-mdpf`, `opal-data-etfs`,
+    `opal-data-49financial`, …) **AND THE GOLD PROCESS'S CODE LIVES IN THAT SAME BUCKET**; `platinum`
+    serving — under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER: per-consumer projection,
+    display naming and route-specific reshaping belong in platinum, NEVER in gold.** **GOLD IS PARQUET**
     (`{table}/date={D}/`, mirroring silver — JSON leaves the gold tier); vendor trees keep bronze+silver;
     **every platinum publisher READS PARQUET and is the estate's ONLY JSON producer**, so one-producer-per-
-    served-key holds by construction. ⛔ **DIRECTION RATIFIED — MIGRATION IS NOT AUTHORIZED BY THIS LINE.**
-    The estate does not match it today; a non-conforming tree is NOT a violation and NOT a warrant to move
-    anything. Moving a served key is NEVER#3. Records: `org/tier1_exec/1.0.0_SA_CTO/deliverables/`.
+    served-key holds by construction. **Silver→gold is pulled by LAMBDA; EC2 only where genuinely heavy.**
+    ⚠ **AMENDED 2026-08-25 BY D10 (Andrew-direct): gold's HOME and CODE-HOME moved OUT of `opal-data-assets`.
+    The superseded clause named `opal-data-assets/portal/gold/{product}/{scope}/`. WHICH scopes are
+    product-shaped vs firm-shaped is ANDREW'S PER-CASE CALL — no seat infers it.** ⛔ **DIRECTION RATIFIED —
+    MIGRATION IS NOT AUTHORIZED BY THIS LINE.** The estate does not match it today (measured 2026-08-25:
+    gold in SIX buckets, code in SEVEN, platinum in FIVE beyond portal-v2); a non-conforming tree is NOT a
+    violation and NOT a warrant to move anything. Moving a served key is NEVER#3. **One home per logical
+    producer is a CORRECTNESS requirement, not tidiness — three separate seats spent 2026-08-25 deriving
+    "which copy of this code actually runs" by hand from deployed bytes, and the first derivation was wrong.**
+    Spec: `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
 18. **`terraform apply` goes through `.tools/safe-apply.sh`** — HALTGT inbox checkpoint at the last reversible
     moment (routine pending msg → `HALT_ACK=1`; override audited via `HALT_OVERRIDE="reason"`). ⚠ **A HALTGT
     PASS IS NOT EVIDENCE YOU WERE NOT HALTED, and `[STOP]` does NOT reliably hard-block** — the checkpoint sees
