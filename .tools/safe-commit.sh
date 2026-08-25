@@ -490,7 +490,7 @@ if [ -n "$IN_SCOPE" ] && echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.
     echo "  [coverage-check] WARN: comp-coverage-check NOT ON PATH -- the COMPUNIFY gate did NOT" >&2
     echo "  [coverage-check]       run for this commit. Fix: bash .tools/provision-path-shims.sh" >&2
   else
-    _cc_out="$(comp-coverage-check check 2>&1)"; _cc_rc=$?
+    _cc_out="$(comp-coverage-check check 2>&1)" && _cc_rc=0 || _cc_rc=$?
     printf '%s\n' "$_cc_out" | sed 's/^/  [coverage-check] /'
     if [ "$_cc_rc" -eq 1 ]; then
       echo "BLOCKED: comp-coverage-check FAIL -- the comp-tool coverage map has drifted from the" >&2
@@ -681,9 +681,9 @@ if [ -f "$SCRIPT_DIR/to-decomp-ref-lint.py" ]; then
   # Tolerate the trailer with or without a leading '#': a -F body carries it commented.
   G2_OVR="$(printf '%s' "$G2_MSG" | sed -n 's/^[[:space:]]*#\?[[:space:]]*pipeline-gate2-override:[[:space:]]*//p' | head -1)"
   if [ -n "$G2_OVR" ]; then
-    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" --override-reason "$G2_OVR" 2>&1)"; _g2_rc=$?
+    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" --override-reason "$G2_OVR" 2>&1)" && _g2_rc=0 || _g2_rc=$?
   else
-    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" 2>&1)"; _g2_rc=$?
+    _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" 2>&1)" && _g2_rc=0 || _g2_rc=$?
   fi
   if [ "$_g2_rc" -ne 0 ] || printf '%s' "$_g2_out" | grep -q 'REFUSED'; then
     printf '%s\n' "$_g2_out" | sed 's/^/  [gate2] /' >&2
@@ -715,10 +715,46 @@ if [ -n "$_late_pyc" ]; then
     [ -n "$_p" ] && echo "SKIP: pycache-artifact (never committed): $_p" >&2
   done <<< "$_late_pyc"
 fi
-_commit_out="$(git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)"
-_commit_rc=$?
+# set-e-safe rc capture -- THE SAME IDIOM AS :569, AND THE REASON IS MEASURED, NOT STYLISTIC.
+# `set -euo pipefail` (:30) KILLS THE SHELL on a bare `x="$(cmd)"` whose command exits NONZERO.
+# So on a hook-BLOCKED commit the shell died ON THIS LINE: `_commit_rc` was never assigned, the
+# printf below never ran, and the gate's BLOCKED text -- which IS captured into `_commit_out` by
+# the `2>&1` -- was discarded with it. The seat saw SILENCE and its files stayed STAGED, which is
+# indistinguishable from a slow commit or a no-op.
+# BOTH ARMS EXERCISED 2026-08-25 (1.0.0_SA_CTO), one variable changed: the fragile form loses the
+# text and dies; this form captures rc, prints the text, and reaches `exit $_commit_rc` at :end.
+# Symptom reported by 2.0.0_SA_COO (71511); `set -e` mechanism found by 3.0.0_SA_CVO (71562).
+_commit_out="$(git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)" && _commit_rc=0 || _commit_rc=$?
 printf '%s
 ' "$_commit_out"
+
+# ============================================================================
+# REFUSAL RESIDUE (measured 2026-08-25 by 2.0.0_SA_COO, 3.0.0_SA_CVO, 0.5.0_AE_OpalETL~B).
+# A REFUSED commit leaves THIS CALL'S staging sitting in the index. On a ~12-seat shared
+# worktree the next seat's safe-commit ADOPTS those files under THEIR author line and subject
+# -- not hypothetical: it swept a CLAUDE.md Rule 17b edit into 6df0f160c6 under a foreign
+# author tonight. Unstage ONLY what THIS call staged -- staged-now MINUS the lock-entry
+# BASELINE -- so a caller's or a peer's pre-existing staging is never touched.
+# THIS ADDS NO GATE: the refusal is git's / the hook's and has ALREADY happened; this only
+# cleans up after it and says so. A file that could NOT be unstaged is REPORTED, never
+# silently left -- an unreported residue is the whole hazard.
+# ============================================================================
+if [ "$_commit_rc" -ne 0 ]; then
+  _resid=0; _stuck=0
+  while IFS= read -r _sf; do
+    [ -z "$_sf" ] && continue
+    [ -n "${BASELINE_SET[$_sf]+x}" ] && continue
+    if git reset -q HEAD -- "$_sf" 2>/dev/null; then _resid=$((_resid + 1)); else _stuck=$((_stuck + 1)); fi
+  done < <(git diff --cached --name-only 2>/dev/null || true)
+  echo "ERROR: safe-commit did NOT commit (rc=$_commit_rc). The refusal text is printed above." >&2
+  echo "       Unstaged $_resid file(s) staged by THIS call; anything staged beforehand is untouched." >&2
+  if [ "$_stuck" -gt 0 ]; then
+    echo "  WARN: $_stuck file(s) could NOT be unstaged and REMAIN STAGED -- another seat can adopt" >&2
+    echo "        them under their author line. Clear them yourself: git reset HEAD -- <path>" >&2
+  fi
+  echo "       REMINDER: '[msg-verify] committed <hash>' prints on SUCCESS ONLY -- its ABSENCE means" >&2
+  echo "       no commit, whatever a pipeline rc says. Capture-then-read, never pipe-then-read." >&2
+fi
 
 # ============================================================================
 # MESSAGE SELF-VERIFY (Andrew-direct 2026-08-24 ~23:5xZ, COO record @91011a1a1d:
@@ -765,7 +801,7 @@ if [ "$_commit_rc" -eq 0 ]; then
   _sv_subject="$(git log -1 --pretty=format:%s "$_sv_hash" 2>/dev/null)"
   echo "  [msg-verify] committed ${_sv_hash:0:10}  subject: ${_sv_subject:0:100}"
   if [ -n "$_sv_file" ] && [ -f "$_sv_file" ]; then
-    _sv_out="$(python "$SCRIPT_DIR/safe_commit_msg_verify.py" "$_sv_file" "$_sv_hash" 2>&1)"; _sv_rc=$?
+    _sv_out="$(python "$SCRIPT_DIR/safe_commit_msg_verify.py" "$_sv_file" "$_sv_hash" 2>&1)" && _sv_rc=0 || _sv_rc=$?
     if [ "$_sv_rc" -ne 0 ]; then
       printf '%s
 ' "$_sv_out" | sed 's/^/  [msg-verify] /' >&2
