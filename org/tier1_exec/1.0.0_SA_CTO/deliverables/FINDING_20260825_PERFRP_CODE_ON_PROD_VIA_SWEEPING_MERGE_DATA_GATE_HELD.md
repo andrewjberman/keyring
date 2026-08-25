@@ -181,6 +181,28 @@ and they ride the NEXT DEV->PROD promote, whoever cuts it and whatever it is nam
 anything sits outside the mechanism.)*
 > **THE STRUCTURAL FINDING IS NOT A POSTMORTEM. THE NEXT PROMOTE IS ALREADY CARRYING PASSENGERS.**
 
+!! **AND IT FIRED AGAIN 45 MINUTES LATER, WHICH SETTLES IT** (measured 08:49Z at this seat, `git fetch` first):
+`origin/PROD` moved `d9a98bcc` -> **`a7a7ff16`** at 2026-08-25T08:30Z -- `0.2.0_DT_PortfolioAnalytics~Z`,
+*"merge DEV->PROD: v2.1.166 -- ANDREW-DIRECT 20260825 0730Z DEFECT A: Asset Sub-Categories now render in ETF
+mode"*. **A second promote, for a third unrelated project, on his own defect fix.**
+**SO DE~C's FIGURE ON THE CARD IS SUPERSEDED: 7 of 9 IS NOW 9 of 9.** The two commits they had named as "NOT
+in PROD" (`d9e875db`, `1af11910`) are both ancestors of `a7a7ff16` -- **they rode the very next promote,
+exactly as they predicted when they corrected their push state.** *The prediction held and the state report
+did not, inside an hour.*
+!! **THE DELTA IS IN THE REASSURING DIRECTION AND STILL NEEDED CORRECTING** -- the two additions are a
+citation fix and scope-neutral strings, so the PROD panel no longer says "for this firm" at global scope.
+**A number that moved in our favour is still a number the sovereign would be reading wrong.**
+**TWICE IN 45 MINUTES, TWO DIFFERENT PROJECTS, NEITHER NAMING A PASSENGER.** The branch-position hold is not
+weakly protective; it is not protective.
+
+!! **AND I NEARLY FILED A FALSE ALL-CLEAR ON THIS QUESTION FOR THE SECOND TIME.** My first check of the new
+tip ran `git ls-tree -r origin/PROD -- src/components/_shared/perfrp/` and returned **0**. **THE PATH IS
+`src/pages/AdvisorIntelligence/_shared/perfrp/`** -- I guessed a prefix. Re-run without an assumed path:
+**9 perfrp files on `origin/PROD`, unchanged from `d9a98bcc`**; positive controls on the same ref
+(`AdvisorBookView` 1, `ModelPortfolios` 2, 1,065 files total). **PERFRP IS STILL ON PROD AND THE CARD STANDS.**
+*Same shape as the bundle grep in s.3 -- a confident zero from the wrong location, on the same question,
+within one hour. The control is the only reason both were caught.*
+
 **DE~C'S SELF-CORRECTION CARRIES THE THIRD INSTANCE OF TONIGHT'S META-PATTERN, AND IT IS THE CLEANEST:**
 CLAUDE.md's push-state rule (*"landed LOCAL @hash, rides integration" -- never bare "landed"*) exists to stop
 OVERSTATING. **They UNDERSTATED, and the rule as written does not reach that direction, because it names the
