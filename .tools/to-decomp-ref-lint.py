@@ -35,6 +35,14 @@ OVERRIDE: audited, and it must be a DELIBERATE SENTENCE, not a flag. Put
 org/mcp/pipeline-gate2-override.log with the file and the reason. A repeat override for
 one recurring intent is a COVERAGE GAP, not a habit -- route it, do not keep overriding.
 
+SEATING LINT (added 2026-08-25, Andrew-direct ~00:2xZ -- "Yeah thats fine you can build it"):
+the SAME new-TO pass also refuses a TO addressed to an instance ALREADY HOLDING OPEN TOs ON
+ANOTHER PIPELINE PROJECT -- one project per tier-2 seat instance, his 2026-08-24 ~19:29Z rule.
+"Unless it names a fresh lane" needs no separate detection: a fresh lane holds nothing and so
+passes BY CONSTRUCTION. Scoped to pipeline-registered projects on BOTH sides per Rule 27's own
+wording; unscoped it would fire on legacy debt (the base 0.8.0 serial alone carries 80 open
+pre-pipeline TOs) instead of on seating.
+
 Usage:
   to-decomp-ref-lint [--enforce] [--override-reason TEXT] [paths...]
     no paths -> the STAGED ADDED files (git diff --cached --diff-filter=A --name-only)
@@ -58,6 +66,16 @@ CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\d+\b")
 TO_ID_RE = re.compile(r'<task_order\b[^>]*\bid\s*=\s*"([^"]+)"')
 PROJECT_ATTR_RE = re.compile(r'<task_order\b[^>]*\bproject\s*=\s*"([^"]+)"')
 PROJECT_TAG_RE = re.compile(r"<project(?:_code)?>(.*?)</project(?:_code)?>", re.S)
+ISSUED_TO_RE = re.compile(r"<issued_to>(.*?)</issued_to>", re.S)
+STATUS_RE = re.compile(r"<status>(.*?)</status>", re.S)
+# A concrete seat instance, lane suffix included. Deliberately does NOT match a CLASS token
+# ("AE-class"), because the seating rule binds an INSTANCE, not a class.
+SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9]*(?:~[A-Za-z0-9]+)?\b")
+# MEASURED from the live corpus 2026-08-25, not invented (Rule 24: classify the axis that
+# exists, do not mint one). Leading token only -- real statuses carry trailing prose
+# ("CLOSED -- COO STALE-TO SWEEP", "COMPLETE -- CLOSED 2026-08-2").
+TERMINAL_STATUS = {"COMPLETE", "CLOSED", "SUPERSEDED", "CANCELLED", "DONE",
+                   "CLOSED-SUPERSEDED"}
 
 
 def staged_added() -> list[str]:
@@ -105,6 +123,165 @@ def dep_stage(code: str) -> str | None:
         return None
 
 
+_TOCHECK = None
+
+
+def _to_check_resolver():
+    """to-check.py's `_assignees_from_field`, loaded once.
+
+    NO NAIVE FALLBACK BY DESIGN. If this cannot load, the seating check reports NOT EVALUATED
+    and refuses nothing -- because the fallback I would otherwise write is exactly the prose
+    harvest that produced a false accusation against a lane the TO had EXPLICITLY EXCLUDED.
+    A gate that cannot resolve its subject must say so, not guess.
+    """
+    global _TOCHECK
+    if _TOCHECK is None:
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location(
+                "to_check_mod", WORKSPACE / ".tools" / "to-check.py")
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            _TOCHECK = mod._assignees_from_field
+        except Exception:  # noqa: BLE001
+            _TOCHECK = False
+    return _TOCHECK or None
+
+
+def _is_open(text: str) -> bool:
+    """UNKNOWN COUNTS AS OPEN -- fail-closed, deliberately. An unrecognised status makes the
+    seat look MORE occupied, so the lint refuses more rather than less. A false refusal is
+    loud and gets argued with; a false pass is believed."""
+    m = STATUS_RE.search(text)
+    if not m:
+        return True
+    lead = re.split(r"[\s\-]", m.group(1).strip().upper(), maxsplit=1)[0].strip()
+    return lead not in TERMINAL_STATUS
+
+
+def _pipeline_projects() -> set:
+    out = set()
+    for f in PROJECTS.glob("*.json"):
+        try:
+            if "dep_stage" in json.loads(f.read_text(encoding="utf-8")):
+                out.add(f.stem.upper())
+        except Exception:  # noqa: BLE001
+            continue
+    return out
+
+
+def _open_to_index(exclude: set) -> tuple[dict, int, int, int]:
+    """{serial: {PROJECT: [to_id]}} over OPEN TOs on PIPELINE-REGISTERED projects.
+    Returns (index, tos_scanned, holdings_indexed, unclassified_serial_occurrences)."""
+    pipeline = _pipeline_projects()
+    resolve = _to_check_resolver()
+    if resolve is None:
+        return {}, 0, 0, -1
+    idx: dict = {}
+    scanned = held = unclassified = 0
+    for f in (WORKSPACE / "org").rglob("task_orders/*.md"):
+        rel = str(f.relative_to(WORKSPACE)).replace("\\", "/")
+        if rel in exclude:
+            continue
+        scanned += 1
+        try:
+            text = f.read_text(encoding="utf-8", errors="replace")
+        except Exception:  # noqa: BLE001
+            continue
+        code, _ = project_code(text, rel)
+        if code not in pipeline or not _is_open(text):
+            continue
+        m = ISSUED_TO_RE.search(text)
+        if not m:
+            continue
+        tid = TO_ID_RE.search(text)
+        tid = tid.group(1) if tid else Path(rel).name
+        assignees, unres = resolve(m.group(1))
+        unclassified += unres
+        for serial in set(assignees):
+            idx.setdefault(serial, {}).setdefault(code, []).append(tid)
+            held += 1
+    return idx, scanned, held, unclassified
+
+
+def seating_check(new_tos: list) -> tuple[list, list]:
+    """ONE PROJECT PER TIER-2 SEAT INSTANCE (Andrew-direct 2026-08-24 ~19:29Z, verbatim:
+    "it is a lot easier if they are simply brought on to complete one project at a time. For
+    parallelization sake, we can simply bring on ~tilde agents if there are multiple projects
+    we want to pursue at once"). Gate authorized Andrew-direct 2026-08-25 ~00:2xZ.
+
+    THE RULE REDUCES TO ONE TEST: a NEW TO on project P addressed to instance S is refused if S
+    already holds an OPEN TO on some pipeline project Q != P. "Unless it names a fresh lane"
+    needs no separate detection -- a fresh lane holds nothing, so it satisfies the test BY
+    CONSTRUCTION.
+
+    SCOPE, both sides restricted to PIPELINE-REGISTERED projects, and this is load-bearing
+    rather than convenient. CLAUDE.md Rule 27 says it in those words ("an instance already
+    holding open TOs on another PIPELINE project is not a legal target"), and unscoped the lint
+    would fire on LEGACY DEBT instead of on seating: the base 0.8.0 serial alone carries 80 open
+    pre-pipeline TOs across 34 projects, which would make every base serial permanently illegal
+    and the refusal meaningless. DECLARED RESIDUAL: a seat carrying non-pipeline TOs is not
+    counted as multi-project here.
+
+    NEW FILES ONLY (the caller's --diff-filter=A). A re-address EDITS an existing TO's
+    issued_to, and that re-address is the REMEDY for the heaps -- a lint that blocked the fix
+    would be the defect. Andrew's authorization carried this condition on the card's face.
+    """
+    frames: list[str] = []
+    v: list[str] = []
+    if not new_tos:
+        return v, frames
+    resolve = _to_check_resolver()
+    if resolve is None:
+        frames.append("seating: NOT EVALUATED -- to-check.py's assignee resolver could not be "
+                      "loaded, and this gate will NOT fall back to harvesting serials out of "
+                      "prose. That fallback is what produced a false accusation against a lane "
+                      "a TO had explicitly EXCLUDED. UNKNOWN is not a pass and not a refusal.")
+        return v, frames
+    idx, scanned, held, unclassified = _open_to_index(
+        exclude={rel for rel, _, _ in new_tos})
+    frames.append(f"seating-frame: indexed {held} open-TO holding(s) across {len(idx)} seat "
+                  f"instance(s), from {scanned} existing TO file(s), scoped to "
+                  f"{len(_pipeline_projects())} pipeline-registered project(s); "
+                  f"{unclassified} serial occurrence(s) UNCLASSIFIED (not read as assignments, "
+                  f"and not read as absences either)")
+    for rel, code, text in new_tos:
+        m = ISSUED_TO_RE.search(text)
+        if not m:
+            frames.append(f"seating: {rel} names no <issued_to> -- NOT EVALUATED (no instance "
+                          f"to test; this is UNKNOWN, not a pass)")
+            continue
+        assignees, unres = resolve(m.group(1))
+        serials = sorted(set(assignees))
+        if not serials:
+            frames.append(f"seating: {rel} <issued_to> resolves to NO assignee instance in a "
+                          f"recognised notation ({unres} serial occurrence(s) unclassified) -- "
+                          f"NOT EVALUATED. A class-addressed TO becomes testable at the seating "
+                          f"act, and a serial merely MENTIONED in the field is not an assignment "
+                          f"(to-check.py's rule, and the one my first cut broke)")
+            continue
+        for s in serials:
+            other = {q: ids for q, ids in idx.get(s, {}).items() if q != code}
+            if not other:
+                frames.append(f"seating: {rel} -> {s} holds 0 open TO(s) on any OTHER pipeline "
+                              f"project. Legal target.")
+                continue
+            detail = "; ".join(f"{q} ({len(ids)} open: {', '.join(sorted(ids)[:3])}"
+                               f"{'...' if len(ids) > 3 else ''})" for q, ids in sorted(other.items()))
+            v.append(
+                f"{rel}\n"
+                f"      SEATING: this NEW task order for {code} is addressed to {s}, which "
+                f"already holds open TOs on {len(other)} OTHER pipeline project(s): {detail}\n"
+                f"      ONE PROJECT PER TIER-2 SEAT INSTANCE (Andrew-direct 2026-08-24 ~19:29Z). "
+                f"The resource protected is the SEAT'S CONTEXT, not the box.\n"
+                f"      FIX: address this TO to a FRESH LANE of that class (e.g. {s.split('~')[0]}~<letter>) "
+                f"-- a fresh lane holds nothing and passes by construction. MSTR assigns the letter "
+                f"from the spawn-audit UNION disk; do not reuse one.\n"
+                f"      NOT a reason to widen an existing lane's load: re-addressing an EXISTING TO "
+                f"is an edit and never trips this lint.")
+    return v, frames
+
+
 def audit_override(reason: str, files: list[str]) -> None:
     try:
         OVERRIDE_LOG.parent.mkdir(parents=True, exist_ok=True)
@@ -134,6 +311,7 @@ def main(argv: list[str]) -> int:
     in_scope = [p for p in paths if is_task_order(p)]
 
     findings: list[str] = []
+    seating_subjects: list = []
     checked = 0
     out_of_scope_unregistered = 0
     for rel in in_scope:
@@ -147,6 +325,7 @@ def main(argv: list[str]) -> int:
             out_of_scope_unregistered += 1
             continue
         checked += 1
+        seating_subjects.append((rel, code, text))
         m = DECOMP_REF_RE.search(text)
         if not m:
             findings.append(
@@ -169,11 +348,16 @@ def main(argv: list[str]) -> int:
                 f"      layer-1 alignment check has nothing to close against.\n"
                 f"      FIX: name the cells this TO discharges inside the <decomp_ref>.")
 
+    seat_v, seat_frames = seating_check(seating_subjects)
+    findings.extend(seat_v)
+
     mode = "ENFORCE" if enforce else "ANNOUNCE"
     print(f"to-decomp-ref-lint | mode={mode} | considered={considered} file(s), "
           f"{len(in_scope)} under task_orders/, {checked} on pipeline-registered projects, "
           f"{out_of_scope_unregistered} skipped (project not pipeline-registered) | "
           f"findings={len(findings)}")
+    for line in seat_frames:
+        print(f"  {line}")
     for fnd in findings:
         print(f"  REFUSED: {fnd}")
 
