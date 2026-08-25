@@ -150,13 +150,22 @@ session kept catching; this one is mine.*
   >> WORSE than tonight."** That is a different question with a different urgency, and the ~2h window
   >> is the only place it can be answered while it is still cheap -- after 13:00Z the books LOOK full,
   >> and a looks-full-but-empty artifact is exactly the class that stops people asking.
-- [`0.7.0_AE_CloudOps~Z`] **AC7, ~13:00Z 2026-08-25** -- the first SCHEDULED fire of
+- ⚠ **ID DISAMBIGUATION -- TWO OPEN `AC7`s EXIST AT THIS SEAT AND A BARE SEARCH HITS THE WRONG ONE.**
+  `ETFS-TO5-AC7` (below) is the scheduled-fire observation. **`ETFS-TO2-AC7` is a DIFFERENT, ALSO-OPEN
+  item** -- the exercised ADVI fetch, *"PARTIALLY DISCHARGED, deferred by issuer ruling 65790, NOT
+  waived"* -- and it lives in **my own prior log** (`session_close_0821T1945-0824T1352Z.md:194`).
+  So a successor at THIS seat grepping `AC7` gets two open items in their own logs and no signal
+  which is which. **Every reference below is project-qualified for that reason**, per CTO~Z's own
+  ruling after the two-live-`TO-5` collision: *a TO reference carries its PROJECT CODE, always.*
+  (Found by `1.0.0_SA_CTO~Z` 5966 checking whether the 11:00Z item was durably carried; the collision
+  is worse at my seat than at theirs, because both AC7s are mine.)
+- [`0.7.0_AE_CloudOps~Z`] **ETFS-TO5-AC7, ~13:00Z 2026-08-25** -- the first SCHEDULED fire of
   `etf-positioning-producer`, observed at its own invocation record, `run_class: "scheduled"`.
   **Expect ONE invocation and ONE manifest. If three appear, the marshal fix did not take -- report
   that, do not reconcile it.**
-  ⚠ **AC7 AND THE FILL ARE DIFFERENT QUESTIONS AND MUST NOT BE FUSED.** AC7 asks whether the
-  SCHEDULE fired correctly. Whether the books FILL is a different question AC7 does not measure.
-  **A green AC7 on empty books is a possible and correct outcome**, and reporting it as a pass on the
+  ⚠ **ETFS-TO5-AC7 AND THE FILL ARE DIFFERENT QUESTIONS AND MUST NOT BE FUSED.** ETFS-TO5-AC7 asks whether the
+  SCHEDULE fired correctly. Whether the books FILL is a different question ETFS-TO5-AC7 does not measure.
+  **A green ETFS-TO5-AC7 on empty books is a possible and correct outcome**, and reporting it as a pass on the
   product would be the instrument-lies shape this project exists over.
   ⛔ **APPENDED 23:53Z -- THERE ARE NOW THREE INDEPENDENT REASONS THE BOOKS COULD STILL BE EMPTY
   TOMORROW, AND AN OBSERVER WHO CHECKS ONLY THE FIRST TWO WILL MISATTRIBUTE THE THIRD:**
