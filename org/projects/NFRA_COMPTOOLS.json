@@ -1,0 +1,20 @@
+{
+  "project_code": "NFRA_COMPTOOLS",
+  "macro_code": "NFRA",
+  "name": "comp-tool hardening -- paginated prefix reads (pipescript io) and the runners-registry state scan / atom check",
+  "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ. D0 member with no project JSON. TWO TOs on disk at 0.8.0_AE_CloudComp, both issued off the CTO ruling set @dfb5fd8f48: REG-SCAN-ATOMCHECK is 'pending -- GO received 2026-08-18T170938Z (COO @dfb5fd8f48)' (staged->pending @541624e822); PREFIX-READS is 'staged -- DATED 2026-08-19, owner named, awaiting spawn'. MINTED active because one TO carries a live GO and the other is staged-awaiting-spawn -- neither is delivered.",
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "phase": "TO-issued; REG-SCAN-ATOMCHECK pending on GO, PREFIX-READS staged awaiting spawn",
+  "blocking": "PREFIX-READS awaits a spawn at 0.8.0_AE_CloudComp. REG-SCAN-ATOMCHECK has its GO and is executable.",
+  "prds": [],
+  "pods": [
+    "0.8.0_AE_CloudComp"
+  ],
+  "pipeline": null,
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-08-25",
+  "related": [],
+  "thread_counter": 0,
+  "threads": []
+}
