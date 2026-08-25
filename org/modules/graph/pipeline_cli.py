@@ -1557,16 +1557,28 @@ def cmd_io(args):
         sio = dag.scripts[script_id]
 
     if args.json:
+        # NFRA_COMPTOOLS.PREFIX-READS: the JSON surface gets the prefix edges too. Leaving it
+        # keyed on dag.s3_keys alone would keep every MACHINE consumer blind while the text
+        # output reads complete -- the same silence this TO closes, in the surface where it is
+        # harder to notice. Purely ADDITIVE: existing entries keep their shape, so a consumer
+        # reading `reads` sees more rows, never differently-shaped ones.
+        _lpr = getattr(sio, 'local_prefix_reads', {})
+        _reads = [{"constant": c, "s3_key": dag.s3_keys[c].s3_path,
+                   "kind": "PREFIX" if dag.s3_keys[c].is_prefix else "KEY"}
+                  for c in sio.reads if c in dag.s3_keys]
+        _reads += [{"constant": c, "s3_key": p, "kind": "PREFIX", "source": "local-const"}
+                   for c, p in sorted(_lpr.items()) if p]
         print(json.dumps({
             "script_id": script_id,
             "filename": sio.filename,
             "pipeline": sio.pipeline,
             "group": sio.group,
             "run_order": sio.run_order,
-            "reads": [{"constant": c, "s3_key": dag.s3_keys[c].s3_path}
-                      for c in sio.reads if c in dag.s3_keys],
+            "reads": _reads,
             "writes": [{"constant": c, "s3_key": dag.s3_keys[c].s3_path}
                        for c in sio.writes if c in dag.s3_keys],
+            # NEVER dropped -- an empty list is a measured zero, not an absent field.
+            "unresolved_prefix_reads": sorted(c for c, p in _lpr.items() if not p),
         }, indent=2))
         return
 
@@ -1578,21 +1590,28 @@ def cmd_io(args):
         print(f"  READS ({len(sio.reads)}):")
         for const in sio.reads:
             sk = dag.s3_keys.get(const)
+            # NFRA_COMPTOOLS.PREFIX-READS: a locally-defined prefix constant has no s3_layout
+            # entry, so it resolves from the script's own module scope instead.
+            local_pfx = getattr(sio, 'local_prefix_reads', {}).get(const)
             if sk:
                 key = sk.s3_path
+            elif local_pfx:
+                key = local_pfx
             elif const.startswith('[hardcoded] '):
                 key = const[len('[hardcoded] '):]
             else:
                 key = '?'
-            prefix_tag = " [PREFIX]" if sk and sk.is_prefix else ""
+            is_prefix_row = bool((sk and sk.is_prefix) or local_pfx)
+            prefix_tag = " [PREFIX]" if is_prefix_row else ""
             func_tag = " [FUNC]" if sk and sk.is_function else ""
             hc_tag = " [HARDCODED]" if const.startswith('[hardcoded] ') else ""
+            local_tag = " [LOCAL-CONST]" if local_pfx and not sk else ""
             # Show who writes this key (direct edges)
             writers = dag._writers.get(key, [])
             writers = [w for w in writers if w != script_id]
             # GAP 2: for PREFIX reads, also check implicit FUNC-write providers
             implicit = []
-            if sk and sk.is_prefix:
+            if is_prefix_row:
                 implicit = [w for w in dag._implicit_writers.get(key, [])
                             if w != script_id and w not in writers]
             if writers and implicit:
@@ -1604,9 +1623,20 @@ def cmd_io(args):
             else:
                 writer_str = " <- (external/silver)"
             display_const = key if const.startswith('[hardcoded] ') else const
-            print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{writer_str}")
+            print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{local_tag}{writer_str}")
     else:
         print("  READS: (none detected)")
+
+    # NFRA_COMPTOOLS.PREFIX-READS: a Prefix= argument the extractor could NOT resolve to a
+    # literal. Printed ALWAYS and never folded into the count above, because the whole defect
+    # this closes is an unseeable input reading as no input -- an unresolved prefix must cost
+    # the reader a visible row, not silence. The trace is the bonus; the row is the mechanism.
+    _unresolved_pfx = sorted(k for k, v in getattr(sio, 'local_prefix_reads', {}).items() if not v)
+    if _unresolved_pfx:
+        print()
+        print(f"  UNRESOLVED-PREFIX ({len(_unresolved_pfx)}) -- a paginated read whose Prefix= is dynamic:")
+        for arg in _unresolved_pfx:
+            print(f"    {arg}: <dynamic> [UNRESOLVED-PREFIX] <- (cannot resolve statically; open the script)")
 
     # Bundle item 4 (CTO 20260722T211318Z): monolith silver reads are DYNAMIC-KEY
     # (silver_table(s3, "fact_x", date)), structurally invisible to the path

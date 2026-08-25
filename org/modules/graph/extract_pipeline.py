@@ -51,6 +51,11 @@ class ScriptIO:
     # FUNC keys that appear in both reads and writes: likely rolling-window prior-run reads.
     # Removed from read_keys/reads to avoid false circular-dep edges; surfaced as warnings.
     rolling_window_candidates: list[str] = field(default_factory=list)
+    # NFRA_COMPTOOLS.PREFIX-READS: paginated PREFIX reads whose constant is defined LOCALLY
+    # (module-level in the script itself), not imported from lib.s3_layout. Maps constant name
+    # -> resolved S3 prefix, or "" when the Prefix= argument is dynamic (UNRESOLVED-PREFIX).
+    # An UNRESOLVED entry is NEVER dropped: silence is the defect this field exists to end.
+    local_prefix_reads: dict[str, str] = field(default_factory=dict)
     # Pipeline label: [bd-gold], [inf-gold], [bd-silver], [inf-silver], [bronze]
     pipeline: str = "bd-gold"
 
@@ -547,6 +552,79 @@ def _extract_module_s3_constants(content: str) -> dict[str, str]:
     return constants
 
 
+# NFRA_COMPTOOLS.PREFIX-READS -------------------------------------------------
+# A paginated PREFIX read is a script's PRIMARY INPUT as often as a Key= read is, and until
+# this pass `io` could not see one unless its constant came from lib.s3_layout. Three
+# independent causes, each sufficient on its own (all source-confirmed on B_00 2026-08-25):
+#   C1  _extract_module_s3_constants' regex requires a medallion-tier root, so a constant
+#       rooted anywhere else ('schwab/...') never registers.
+#   C2  that same regex requires a FILE EXTENSION -- and a prefix ends in '/', so NO prefix
+#       can EVER match it. The exclusion is structural, not a tuning gap.
+#   C3  _extract_script_io gates module-constant resolution behind `if not imported_names`,
+#       so a HYBRID script (some keys imported, others local) is skipped entirely.
+# Fixing any subset leaves the read invisible while the run reads clean -- which is the same
+# confident-over-a-narrower-domain shape this TO exists to close.
+#
+# THE DISCRIMINATOR IS THE USAGE, NOT THE PATH SHAPE. A constant is a prefix read because it
+# is passed to Prefix=, not because its string looks like a prefix; inferring from the path
+# would both miss real prefixes (any non-medallion root) and invent false ones.
+_PREFIX_ARG_RE = re.compile(r'Prefix\s*=\s*([^,)]+)')
+
+
+def _extract_prefix_reads(content: str) -> dict[str, str]:
+    """Find paginated/list PREFIX reads whose constant is defined at module level.
+
+    Returns {name: resolved_prefix}, where a value of "" means the Prefix= argument is
+    DYNAMIC and could not be resolved to a literal -- an UNRESOLVED-PREFIX row that callers
+    MUST print rather than drop. The key for an unresolved entry is the raw argument text.
+
+    Detects the read through its USAGE (`Prefix=<x>`), which covers list_objects_v2,
+    get_paginator('list_objects_v2').paginate, and Bucket().objects.filter alike, since all
+    three name the argument identically.
+    """
+    # Module-level UPPERCASE constants bound to a '/'-terminated string literal.
+    # ⛔ THE TRAILING ANCHOR IS LOAD-BEARING, NOT TIDINESS. Without `$` this regex matches the
+    # FIRST literal of a concatenation -- `X = 'schwab/' + ACCT + '/fact_rps/'` resolved to a
+    # confident, truncated `schwab/`. That is WORSE than the silence this TO exists to end: a
+    # wrong prefix that looks resolved, where an unresolved one would have printed a loud row.
+    # Caught by the CP-3 mutant, which is the only thing that could have caught it -- the
+    # un-anchored version passed CP-1 and CP-2 cleanly.
+    prefix_consts: dict[str, str] = {}
+    const_re = re.compile(
+        r'^([A-Z][A-Z0-9_]+)\s*=\s*[\'"]([^\'"]*/)[\'"]\s*(?:#.*)?$',
+        re.MULTILINE,
+    )
+    for m in const_re.finditer(content):
+        prefix_consts[m.group(1)] = m.group(2)
+
+    found: dict[str, str] = {}
+    collapsed = _collapse_multiline_calls(content)
+    for line in collapsed.splitlines():
+        stripped = line.strip()
+        if stripped.startswith(('#', 'def ', 'class ', '"""', "'''")):
+            continue
+        for m in _PREFIX_ARG_RE.finditer(line):
+            arg = m.group(1).strip()
+            # A bare literal prefix: Prefix='schwab/.../'
+            lit = re.fullmatch(r'[\'"]([^\'"]*)[\'"]', arg)
+            if lit:
+                found[f"[literal] {lit.group(1)}"] = lit.group(1)
+                continue
+            # A bare identifier that resolves to a module-level literal.
+            if re.fullmatch(r'[A-Za-z_][A-Za-z_0-9]*', arg):
+                if arg in prefix_consts:
+                    found[arg] = prefix_consts[arg]
+                    continue
+                # A name we cannot resolve here -- keep it, marked UNRESOLVED. It may be a
+                # parameter, a caller-supplied value, or an s3_layout import the caller
+                # filters out; what it must NOT be is silently absent.
+                found.setdefault(arg, "")
+                continue
+            # Anything else (f-string, concatenation, call, subscript) is dynamic.
+            found.setdefault(arg, "")
+    return found
+
+
 def _extract_s3_calls_with_constants(
     content: str,
     module_constants: dict[str, str],
@@ -935,6 +1013,21 @@ def _extract_script_io(
                     sio.reads.append(hc_name)
                 if path not in sio.read_keys:
                     sio.read_keys.append(path)
+
+    # Step 4 (NFRA_COMPTOOLS.PREFIX-READS): paginated PREFIX reads. Runs UNCONDITIONALLY --
+    # deliberately NOT behind Step 3's `if not imported_names` gate, which is cause C3: it
+    # skips exactly the hybrid scripts (some keys imported from s3_layout, the prefix defined
+    # locally) that this defect was found on. Names already imported from s3_layout are left
+    # to _classify_constant, which already resolves and tags them, so nothing double-reports.
+    for pname, presolved in _extract_prefix_reads(content).items():
+        if pname in imported_names:
+            continue
+        sio.local_prefix_reads[pname] = presolved
+        if presolved:
+            if pname not in sio.reads:
+                sio.reads.append(pname)
+            if presolved not in sio.read_keys:
+                sio.read_keys.append(presolved)
 
     # Deduplicate
     sio.reads = sorted(set(sio.reads))
