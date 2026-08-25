@@ -89,6 +89,33 @@ run.** Taken by this seat.
 
 ---
 
+## 6. ⛔ RULED 2026-08-25 ~21:2xZ -- THE IMPORT-HEALTH GAP. SECOND INSTANCE, SAME DAY.
+
+Item 2 above (`safe_deploy_core.py:217`) is **not a one-off.** A second instance surfaced hours later
+in a different packager: `0.4.0_DS_ClientPlatform~N` built the D1_CATVIEWS tree **from
+`build_package.py`'s own 21-member PACKAGE list**, imported it, and got
+`ModuleNotFoundError: No module named 'mdpf_category_registry'` at `mdpf_gold_consolidator.py:84`.
+
+**AND IT PASSED CERTIFICATION.** `2.0.0_SA_COO`'s line, which is the one that generalises:
+*"A fully certified round produced an artifact that bricks the Lambda at import."* Both TOs 9/9 PASS,
+DS certified @`989a92e806`, DE half certified @`4f1d53fd11` -- **and the code cannot run.**
+
+⛔ **THAT IS NOT A CERTIFIER FAILURE.** Every criterion was checked and every check was honest.
+**No criterion asked whether the packaged artifact IMPORTS.** A cert answers the questions the decomp
+wrote down and is silent on the ones nobody wrote -- **and "does it run" was not among them.**
+
+**RULING (narrow, deliberately): any decomp whose deliverable is DEPLOYED CODE carries a cell whose
+oracle is THE PACKAGED ARTIFACT IMPORTED AND EXERCISED** -- not a source read, not a green gate, not
+a verified upload. **`~N` demonstrated the oracle in one command: build from the packager's own
+manifest list, import it.**
+
+**THE CLASS, stated without either incident: A MODULE THE CODE IMPORTS, ABSENT FROM WHAT GETS
+PACKAGED, IS INVISIBLE UNTIL SOMEBODY BUILDS -- and the agent who builds inherits a break they did
+not write.** Two instances, one day, two different packagers.
+**The estate has no import-health gate at package time.** Routed to `3.0.0_SA_CVO` as a standing
+proof-of-spec question for code-deliverable decomps, and to D0 as a gate candidate. **Owner until
+reassigned: `1.0.0_SA_CTO`.**
+
 ## THE CLASS, FOR THE NEXT CLOSE
 
 **A SEAT CLOSING IS EXACTLY WHEN AN UNASSIGNED EDGE GOES INVISIBLE.** Every item above had a named,
