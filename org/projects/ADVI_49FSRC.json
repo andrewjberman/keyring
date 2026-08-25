@@ -71,5 +71,6 @@
   "pipeline": "opal-data-assets/schwab/{08335338,08242234}/{bronze,silver} (daily ~12:18Z, both masters) -> [THIS PROJECT: the blended account x date value/history plane + light join dims] -> data/assets/scripts/gold/runners_49f (a00..c04) -> opal-data-49financial/gold/advi/{canonical,dimensions,reference} -> d_publisher_port twins -> opal-data-portal-v2/platinum/advi/49financial/*.json -> portal Advisor Intelligence (switch HELD on two conditions)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D2"
 }

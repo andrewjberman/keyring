@@ -74,5 +74,6 @@
   "pipeline": "portal Positioning page <- opal-data-portal-v2/json/positioning/positioning_data.json (gzip, produced by yang-generate-positioning) || PROPOSED ETF book: opal-data-etfs silver/holdings (weight_pct, PFDE/PFOE) + silver/netassets (all 4 funds) + [GAP: DIVZ/IDVZ constituents, benchmark block, GICS sector, per-holding analytics] -> Bloomberg or issuer-side wiring -> platinum ETF-positioning artifact -> same serving convention",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D4"
 }

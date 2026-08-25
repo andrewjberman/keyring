@@ -62,5 +62,6 @@
     "p4_publishers": "bec5b12387 + 889ccea071 (CPR-4 delta-cert) · 097f8c1691 (parity bar SS8) · 8b4e8d9100 (port-fidelity doctrine) · 6d9d350b58 + a326ed2ad3 + 3fcd979395 + 986c3b4757 (B_00 basis prereg/hold/correction/fee-heal PASS)",
     "law_and_gates": "546e7cb0b5 + 9d8217cb15 (Rule 25) · 7ed7b4600b (22a CODE layer + Rule 4) · 1465c9383b (22a EC2 amendment) · 82daaa05bc + 88113704bf (Rule 16 + jq-ban + GATE 5) · 76ee261895 + d9a9ce7b80 + d943f3e4bf + 0ebc62d543 + da318438ee (proof-of-spec + stage-8 lint) · eb5a199a99 + 16b6fde1f1 (gate register + VOID-terminal) · 28c364ec55 + a6b8b1dbda (deploy_ledger reader) · 9f234a4974 (bd/cot key-prefix gate) · eabab5363e (SYSTEM_CURRENT_REGEN lane) · 826bc9b2c9 (non-crying-wolf comparator)",
     "doctrine": "a26ecbfd7b (the SIXTH way -- the LABEL supplied a claim the CONTENT never made) · db365bb06c (P5 debt-identification methodology)"
-  }
+  },
+  "directive": "D2"
 }

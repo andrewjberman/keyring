@@ -50,5 +50,6 @@
   "pipeline": "INVESTIGATION (no producer): cot ADVI identity dims (cot runner chain) + blackdiamond/cottonwood/** + the served cot ADVI keys + Cottonwood BD portfolio-group structure (qt6-class probe on the cot principal) -> MEASURED keying map (what keys advisor<->relationship<->account today vs what BD uses) -> remedy plan (own decomp) -> unblocks Cottonwood's Tier-B bindings + the INSURE port",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D2"
 }

@@ -59,5 +59,6 @@
   "pipeline": "opal-data-bd/{backfill_v2,forwardfill_v2} xlsx + legacy silver/gold (2020-06-30 ->) -> MIGRATION into opal-data-assets/blackdiamond/49financial/{bronze_legacy,silver_legacy} (RULED 08-24: legacy planes unmistakably distinct from live tiers) + BD-calculated series frozen as opal-data-49financial/gold/advi/reference/bd_legacy_* -> STITCHING: legacy account population x {MIGRATED, STAYED, DROPPED, UNKNOWN} keyed on dim_account_xref (candidate key), denominators printed -> a closed-period-immutable stitched history tier for SI attribution (ADVI_PERFRP) -- never a standing BD feed",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D2"
 }

@@ -59,5 +59,6 @@
   "pipeline": "BD insurance application API (insurancerelationshiplist async export + accountdetailsearch; /session/token bearer) on the 49F principal -> opal-data-assets/blackdiamond/49financial/{bronze,silver}/insurance_* (candidate) -> opal-data-49financial/gold/advi/... additive current-state parquet (very light, no analytics) -> opal-data-portal-v2/platinum/advi/49financial/insurance*.json -> portal Advisor Intelligence: PartnerAnalytics header subtext NAV; account-level Insurance segment; Books tab + advisorpublicprofile Book view aggregation ONLY",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D2"
 }

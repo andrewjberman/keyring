@@ -97,5 +97,6 @@
     }
   ],
   "phase": "RE-GROUNDED 2026-08-20 ~1440Z (2.0.0_SA_COO, per MSTR~Z record carry; the prior 'P1 EXECUTING (0.5.0_AE_OpalETL~A sovereign delegate)' header was stale on three counts, each commit-verified at reconcile): (1) OWNER LANE DEAD -- 0.5.0_AE_OpalETL~A never respawns; owner field retained as historical registration, live seat-or-supersede disposition rides the standing AUG-4 COO+MSTR TAXSMA triage item, unresolved here. (2) SCOPING TO SUPERSEDED @709917f918 (2026-08-19: inherits Andrew's #42 ruling, superseded-with-pointer @3c8c3f1035). (3) D9_TAXSMA RECON COMPLETE @1113a2b984 (2026-08-19: TO-A-SITEZ RAVC-4 ACCEPT 7/7 at base-COO, mutation-tested, no REWORK) with c1 STAGED at 0.7.0_AE_CloudOps. Operator cadence (daily /tax-pt1, Andrew-ruled 'Yes B now') and the guardrail (trade file GENERATED never executed) stand unchanged. The full P1 narrative this header replaces (guardrails/validator/cadence/step-2 retraction/step-5 descope) is preserved verbatim in current_phase and the history array -- nothing deleted, only the stale header corrected.",
-  "blocking": "None blocking. Timing-not-blocks: /tax-pt3 live-validation on a fresh Tax Lot date (runner buildable now). Parked non-blocking: Yang 07-01 swap word, backfill ack."
+  "blocking": "None blocking. Timing-not-blocks: /tax-pt3 live-validation on a fresh Tax Lot date (runner buildable now). Parked non-blocking: Yang 07-01 swap word, backfill ack.",
+  "directive": "D9"
 }
