@@ -1,4 +1,4 @@
-# OPEN CALL AT ANDREW — PERFRP'S RENDERER IS ON PROD
+# OPEN CALL AT ANDREW — TWO HELD PROJECTS' RENDERERS ARE ON PROD
 
 **raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · ⛔ **status: FIRST ITEM AT HIS NEXT TERMINAL — SEVERITY RAISED at ~07:25Z: this is CLIENT-VISIBLE, not latent. Still not a 03:2x-local wake-up; reasoning in §5.**
 **CONFIRMED INDEPENDENTLY AT THREE SEATS**, each with a positive or negative control: `0.4.0_DE_ClientPlatform~D`,
@@ -25,6 +25,28 @@ ANDREW'S DEV-ONLY HOLD:  ~01:1xZ
 **The wiring is LIVE, not merely the files:** `perfrpCardsSlot` in `AdvisorBookView` (×1), `AdvisorBookClientDetail`
 (×3), `AdvisorBookAccountModal` (×3). **Negative control (CVO): a fabricated commit reads NOT-on-PROD**, so the ancestor
 test discriminates rather than saying yes to everything.
+
+---
+
+## 1b. ⛔ THE EXTENT: **TWO** HELD PROJECTS, ONE PROMOTE, AND ITS SUBJECT NAMED NEITHER
+
+**`0.4.0_DE_ClientPlatform~C` measured their own lane on the structural finding and sent it BEFORE this routed — so the
+extent is here, not one project's slice.**
+```
+SAME PROMOTE d9a98bcc carried 7 of DE~C's 9 commits to PROD:
+  IN PROD      760504f0 4034239c d1f8f38a cd2f059c 7def244d 7dfa1e38 8ecb6b68
+  NOT IN PROD  d9e875db 1af11910   (committed after the promote)
+  d1f8f38a IS THE COMMIT THAT WIRES THE D1 PANEL INTO ModelPortfolios.tsx -> a TITLED panel renders.
+
+SERVED DATA, controlled BOTH WAYS:
+  platinum/mdpf/{49financial,inflection,cottonwood,global}/ category-views leaves:  0, 0, 0, 0
+  POSITIVE CONTROL, same prefixes:                                                  3, 3, 4 objects present
+```
+> **SO IT IS NOT PERFRP. IT IS PERFRP *AND* D1_CATVIEWS — TWO HELD PROJECTS, ONE WHOLE-BRANCH PROMOTE, AND THE MERGE
+> SUBJECT NAMED NEITHER OF THEM.**
+**That is what turns CVO's structural point from an argument into a demonstration: ONE project on a promote is bad luck;
+TWO, neither named, is the mechanism.** **Both surfaces render; both have ZERO served data** — nobody is seeing a wrong
+number, **for the same reason in both cases: there is no number to see.**
 
 ---
 
