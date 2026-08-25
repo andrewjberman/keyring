@@ -65,7 +65,7 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The eight ways you fail to see it *even though you looked*
+## The nine ways you fail to see it *even though you looked*
 
 *(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
 disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
@@ -316,6 +316,35 @@ care is spent enumerating the population the question named.
   If the second list is missing, the enumeration has not started.
 
 Record (four measured instances, one night): `org/tier1_exec/2.0.0_SA_COO/deliverables/FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`.
+
+### 9. The ABSENCE was the encoded ruling, and you read it as a gap
+
+**A missing entry in a registry is not evidence of a gap. THE ABSENCE MAY BE THE DECISION.** A
+raise-rather-than-default, an unlisted key, an acceptance with no exercise oracle — each can be the
+mechanism *carrying* a ruling rather than the place one has not been made yet.
+
+**The dangerous half is the REMEDY, not the misread.** Filling the gap does not merely waste effort;
+**it manufactures a false fact** — a business term minted into an infrastructure vocabulary, a
+fee-taking fact about a client base that does not exist, un-doable remediation raised in the
+sovereign's name on a critical path.
+
+**Why it recurs: a PRESENT-BUT-WRONG entry announces itself** — someone reads it and disagrees. **AN
+ABSENCE ANNOUNCES NOTHING**, so the reader supplies the explanation, and *"nobody got to it yet"* is
+always available and always plausible. **The gap reading wins because it is the only reading that
+suggests an action.**
+
+- **THE TEST, one question before filing any absence as a finding: WOULD THE ENTRY, IF PRESENT,
+  ASSERT SOMETHING TRUE?** If it would state a fact nobody can source, **the absence IS the
+  assertion**, and the guard that refuses to default is the mechanism carrying it.
+- **This is the constructive twin of *"a 404 in the wrong bucket is the wrong question asked
+  cleanly"*** (CLAUDE.md Rule 21): that rule says a MEASURED absence may be an instrument artifact;
+  **this says a REAL absence may be a DECISION.** Neither is a gap, and they fail toward different
+  wrong acts.
+- **Discharge:** name what the entry would say, then find its source. No source, no gap.
+
+Record (three measured instances in ~90 minutes, found by three different seats each owning the
+surface — none looking for a pattern; surfaced by `3.0.0_SA_CVO` 69356, who authored one of them):
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/` this session.
 
 ---
 
