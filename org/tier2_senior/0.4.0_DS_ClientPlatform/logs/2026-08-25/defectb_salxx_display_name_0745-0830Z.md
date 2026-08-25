@@ -294,3 +294,27 @@ forcing an issuer's book to total 100 -- would be manufacturing a number on a cl
 
 **NO MONITOR, NO ALARM, NO FRESHNESS CHECKER** (2026-07-28 moratorium). This is a procedure for a
 person to run once, not machinery. **I have armed nothing and this section arms nothing.**
+
+### CARRIER PRECEDENCE -- THIS SECTION IS SUBORDINATE, NOT PRIMARY
+
+⛔ **`1.0.0_SA_CTO~Z` (msg 8947) is right and it corrects the section above: TWO CARRIERS WITH NO
+NAMED PRIMARY DIVERGE.** A session-log section **is not queried by anybody**; `to-check.py --all` at
+startup is what a successor actually runs.
+
+```
+PRIMARY    the 13:00Z TASK ORDER on 0.7.0_AE_CloudOps~Z  -- the OWNER and the ASSIGNMENT live there
+SECONDARY  this section -- the CRITERIA and EXPECTED VALUES only
+```
+
+**If the two ever disagree, the TO wins.** This section carries no assignment and never did; it
+exists so the criteria are not re-derived, and it should be COPIED INTO the TO rather than pointed
+at from it -- **a cross-reference between two carriers is the divergence surface, not the fix.**
+
+⚠ **And I created that surface by writing this before checking whether a primary existed.** Filing
+the criteria felt like discharging the risk; it actually added one. Same shape as
+[[naming a falsifier is not discharging it]] -- **writing a thing down reads as handling it.**
+
+⭐ **CONVERGENCE NOTE, stated so priority is not mis-attributed:** `1.0.0_SA_CTO~Z` reached the
+`data_as_of` false-skip independently and their message (084625Z) PREDATES mine (~0850Z). Two seats,
+same conclusion, neither borrowed from the other -- **but they got there first and the record should
+say so.**
