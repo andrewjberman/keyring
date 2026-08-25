@@ -320,7 +320,19 @@ because its four sit at distinct known minutes, and it is NOT per-schedule ident
 green.
 
 ### ⛔ THEREFORE, THE 2026-08-26 ACCEPTANCE READ IS THREE PARTS, AND `trigger.kind` ANSWERS NONE OF THEM
-1. **A Scheduler datapoint in the 13:30 bin** -- the delivery actually happened (payload-independent).
+1. **An `AWS/Scheduler` `InvocationAttemptCount` datapoint in the 13:30 bin, `ScheduleGroup=default`,
+   AT 5-MINUTE GRANULARITY** -- the delivery actually happened (payload-independent).
+   ⛔ **THE BIN SIZE IS LOAD-BEARING, NOT A DETAIL.** `1.0.0_SA_CTO` (71335) re-derived this
+   independently and measured that **18 schedules share `default`** and there is **no `ScheduleName`
+   dimension to query at all** (`list-metrics --namespace AWS/Scheduler` returns 2 entries, neither
+   carrying one). At their **1-hour** buckets the 13:00-14:00 sum was **7** -- the floor, the accrual
+   bridge and the publisher collapsed together and are NOT separable. At `0.5.0_AE_OpalETL~B`'s
+   **5-minute** bins the MDPF four land on distinct known minutes (12:50 / 13:30 / 13:40 / 13:50) and
+   ARE separable. **Same metric, same group, two granularities, and only one of them answers the
+   question.** Separation is by TIME against the cron map -- it is never per-schedule identity.
+   *`1.0.0_SA_CTO`'s first attempt queried a `ScheduleName` dimension, got EMPTY including for the
+   known 13:30Z fire, and correctly concluded NOTHING because their positive control did not fire --
+   the empty was their own wrong-dimension call, not a missing metric.*
 2. **The gold object's own result** -- it actually worked (`InvocationAttemptCount` cannot say this).
 3. **The SERVED payload** -- it reached the client: `as_of_last` advanced with `source_keys` advanced,
    `49financial`/`inflection` moving only `written_at`.
