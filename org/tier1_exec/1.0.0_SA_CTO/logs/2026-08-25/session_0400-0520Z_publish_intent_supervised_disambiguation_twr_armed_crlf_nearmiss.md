@@ -18,7 +18,7 @@ critical path to a sovereign publish intent, not a diagnostic.
 which is the whole 458m. Then there is 'Supervised' AUM from the perspective of Opal, which is the derived value where
 we take the residual account value of any account with Opal Models contained within the portfolio. For our purposes in
 Model Portfolios display taxonomy, we are referring to the Opal Definition."*
-⛔ **IT LANDED TEN MINUTES AFTER I RULED A SUPERVISED FIGURE ON THE WRONG BASIS.** My 68689 quoted
+!! **IT LANDED TEN MINUTES AFTER I RULED A SUPERVISED FIGURE ON THE WRONG BASIS.** My 68689 quoted
 `$303,397,550.13` against a Cottonwood-supervision predicate; **WITHDRAWN**. The Custom-Models half
 (`$6,622,450.40`, the name+location supersession) STANDS -- it turned on model-ness, not supervision.
 COT_CANON458's 458M basis is UNAFFECTED and correct there. **RULED: every artifact/criterion/card carrying a
@@ -45,7 +45,7 @@ by a vintage). **A vintage cannot fix a perspectival collision; only a declared 
   `{OK: 6393, UNCOMPUTABLE-ZERO-BMV: 922, NO-PRIOR-BALANCE-ACCOUNT-ABSENT: 17}`, **REFUSED-NO-BMV = ZERO, acceptance
   satisfied AS WRITTEN**.
 
-## 3. ⛔ MY ERROR: I CARRIED AN UNMEASURED DEPLOY CLAIM ONTO THE CRITICAL PATH
+## 3. !! MY ERROR: I CARRIED AN UNMEASURED DEPLOY CLAIM ONTO THE CRITICAL PATH
 DS~H reported their work "committed local, unpushed, therefore undeployed"; **I repeated it into a push request to
 MSTR and told Andrew it was the highest-leverage item he had.** It was already pushed AND deployed. DS~H retracted
 against themselves, CVO stopped it with a controlled ls-remote read, COO upheld, MSTR closed it from the integrator
@@ -64,7 +64,7 @@ closed a critical-path item having changed nothing, and an ACT THAT CANNOT FAIL 
 fix with nothing human in the path.** Per Andrew's own rule the SCHEDULED run's artifact is the evidence -- never the
 QA exercise.
 
-## 5. ⛔ THE CRLF NEAR-MISS -- the defect I documented caught its own documenter
+## 5. !! THE CRLF NEAR-MISS -- the defect I documented caught its own documenter
 My first verification hashed the deployed object against `git show <mint>:<path>`: **MISMATCH** (`22b0a5c2` vs
 `1c270bed`). That reads as *"deployed from an uncommitted working tree"* -- a **provenance accusation against DS~H's
 deploy**, and FALSE. **Normalised CRLF->LF: IDENTICAL** (`1c270bed` == `1c270bed`; deployed 240 CRLF pairs, blob 0).
@@ -104,7 +104,7 @@ The 49F performance backend was computing ZERO returns (twr_daily refused 7,335 
 per-run mirror staged only date=D while `c02_twr_engine.py` reads BMV from date=D-1 in that same mirror. Both halves
 of the remedy -- the D-1 pull in `chain_49f_entrypoint.py` and the minted `NO-PRIOR-BALANCE-ACCOUNT-ABSENT` status in
 `c02_twr_engine.py` -- are ON origin/CLOUD and IN `s3://opal-data-49financial/_code/`. The runner syncs that prefix
-fresh每 run, so the 12:45Z scheduled fire executes them. QA exercise gave OK 6,393 / zero-BMV 922 / absent-at-D-1 17 /
+fresh every run, so the 12:45Z scheduled fire executes them. QA exercise gave OK 6,393 / zero-BMV 922 / absent-at-D-1 17 /
 REFUSED-NO-BMV 0. Andrew's publish gate is EXERCISED backend validation; the scheduled artifact is the evidence.
 
 ## Next Steps
