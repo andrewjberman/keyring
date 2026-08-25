@@ -167,3 +167,72 @@ because it checks COHERENCE rather than RECENCY.*
 **3F-S5 lambda-twin: the drift is LAMBDA-ONLY.** `rebalancer_schemas.py` in S3 is **12,553 B =
 repo = CURRENT**; only the vendored lambda copy is stale. **The same logical module is CURRENT on the
 EC2 path and STALE on the lambda path, and nothing in either says so.**
+
+---
+
+# ⛔ LIVE P0 STATE AT 19:1xZ — MDPF_COTREMEDIATION. READ THIS FIRST IF YOU ARE A SUCCESSOR.
+
+**MEASURED at 19:06:16Z, not reported:**
+```
+expected_last_trading_day = 2026-08-25
+49financial  as_of_last=2026-08-24  behind=1  src=2026-08-24.json   OK (T-1)
+inflection   as_of_last=2026-08-24  behind=1  src=2026-08-24.json   OK (T-1)
+cottonwood   as_of_last=2026-08-24  behind=1  src=2026-08-24.json   RESTORED
+global       as_of_last=2026-08-19  behind=4  src=2026-08-19.json   *** STILL DARK ***
+gold global object  LastModified Thu 20 Aug 13:31:05 GMT            5 days, unchanged
+```
+⚠ **`global._provenance.written_at` reads TODAY.** The object is republished daily over frozen data.
+**It looks alive and is not. Key on `source_keys` / `as_of_last`.**
+
+## WHAT REMAINS: ONE DEPLOY
+
+The fix is **written, committed, exercised clean (exit 0, both gates, frontier 2026-08-24)** and
+**deployed to the S3 gold prefix.** ⛔ **It is NOT in the artifact that governs acceptance.**
+
+| executor | code source | carries the fix? |
+|---|---|---|
+| EC2 dispatch (`mdpf-daily-dispatch.sh:125`) | syncs `code/scripts/` at run start | **YES** |
+| **`mdpf-gold-lambda`** — target of `mdpf-scheduled-floor` `cron(30 13)` | **its OWN VENDORED copy, fetches nothing from S3** | ⛔ **NO — pre-patch** |
+
+**Target bytes:** `175,795 B` · LF-normalised md5 `952bbc16ea07ed14cf51a497f1b4cde5` ·
+`count_membership` occurrences **14** (deployed currently **0**).
+
+**OWNER OF THE DEPLOY: `0.5.0_AE_OpalETL~B`.** Terraform only, `safe-apply`, Rule 26 (apply on this
+device), **NEVER#6 ledger opened at deploy-START**, and **verify the DEPLOYED PACKAGE BYTES** — not
+the build's success report.
+
+**OWNER OF COMPLETION: `0.4.0_DS_ClientPlatform~N`.** ⛔ **NEVER#6 does not discharge on the commit,
+the deploy, or the gold write — only when the SERVED payload reads `as_of_last=2026-08-24` with
+`source_keys` advanced.**
+
+## ⛔ WHY NOBODY FIRES THE AD-HOC RUN UNTIL THE LAMBDA IS PATCHED
+
+**I cleared the fire at 18:59Z and it was WRONG.** `~N` held anyway and the hold is correct.
+
+> **Ad-hoc EC2 run restores global → tomorrow's `cron(30 13)` Lambda run, still pre-patch, refuses at
+> the same gate → platinum republishes stale. GLOBAL FLIPS TO CORRECT AND BACK, ON A CLIENT SURFACE,
+> WITH A GREEN "RESTORED" REPORT ALREADY FILED AGAINST IT.**
+
+**That is worse than staying dark.** *An ad-hoc restore that a scheduled run undoes is not a partial
+fix; it is a fix plus a false record.*
+
+## THE INVARIANTS THAT SURVIVED THE WHOLE DAY — DO NOT RELAX THEM UNDER PRESSURE
+
+1. **Nobody weakens, bypasses or `--force`s the coherence gate.**
+2. **Nobody touches `2026-08-19`'s data to make it pass.** *A run to OBSERVE is not the same act as
+   editing data to satisfy an instrument.*
+3. **`49financial` and `inflection` move ZERO data-bearing fields.** `written_at` is the only
+   permitted difference — measured, 112 leaf fields, exactly one moves.
+4. **Acceptance is the SCHEDULED run** (`cron(30 13)` gold + `cron(50 13)` publish), never an ad-hoc.
+
+## THE MISTAKE THAT NEARLY SHIPPED, RECORDED AGAINST ME
+
+**I answered "which artifact executes this?" with ONE seat's read of ONE executor and closed the
+question — in the same ruling where I had written *"resolve it from SOURCE, not by assumption."*
+Then I told `~N` explicitly: *"their read is sound and I am not asking you to re-derive it."***
+
+**`3.0.0_SA_CVO` had offered their read with a rider — *"offered, not authoritative; verify it
+yourself if it is load-bearing"* — and `~N` used that rider against my instruction and caught it.**
+
+> ⛔ **I converted a peer's careful OFFER into an AUTHORITY they had explicitly declined to claim.**
+> **The rider worked. I overrode it.**
