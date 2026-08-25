@@ -125,6 +125,27 @@ in the message that carried it.
   },
   "disposition": "GRADUATED",
   "notes": "THE EPISTEMIC HANDLING IS THE PART TO CITE: the seat explicitly declined to assume SI and max coincide on today's data -- 'the equivalence is a RULING about what SI means, not a measurement I can take'. They could have measured today's extent, found it equal, and shipped; instead they identified that a measurement cannot settle a definitional question. Blocks ONE value, not the cell. Ties to ADVI_STITCH: the divergence is not hypothetical, it is scheduled."
+ },
+ {
+  "id": "ADVI_PERFRP-S7",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~G -- a CORRECTION TO THEIR OWN a-1 audit, filed before anyone built further on it",
+  "surfaced_at": "2026-08-25T00:31Z",
+  "one_line": "a-1's MAPPED verdict collapsed two materially different situations -- MAPPED-with-FULL-history and MAPPED-with-SHALLOW-history -- and 8 of 13 sources are shallow: every one floors 2026-07-14 or later while the contract's earliest period start is QTD at 2026-07-01, so THEY SERVE NO CONTRACT PERIOD AT ALL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "13 sources, ALL partitions listed rather than sampled",
+    "FULL (reach the 2024-07-08 SI floor), 5: canonical_valuation 530 / flow_ledger 530 / nna_canonical 530 / dim_transaction 535 / twr_daily 529",
+    "SHALLOW, 8: canonical_positions 4 / dim_asset_classification 4 / valuation_integrity 4 / accrual_materiality 4 / nna_atomic 1 / dim_account 6 / dim_relationship 6 / dim_account_xref 29",
+    "every shallow source floors 2026-07-14 or later; the contract's earliest period start is QTD 2026-07-01",
+    "a-1's N=56 = M=46 + K=10 arithmetic is UNCHANGED and stands -- the correction is to what MAPPED MEANS, not to the count",
+    "it lands on RULED-IN v1 cards: PRF-a-3 classification coverage rests on canonical_positions x dim_asset_classification, 4 partitions each"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE SURFACING SEAT NAMED THE CLASS AGAINST THEMSELVES AND THE NAMING IS RIGHT: 'TRUE, and not carrying what a consumer needs to act on it' -- the same shape as the three issuer defects earlier tonight, except this one is theirs, and DE~D is building against the contract it feeds. A verdict that collapses two situations a consumer must distinguish is a frame defect, not a measurement defect: every number in a-1 was correct. || ⛔ CERTIFIER NOTE -- WHAT THIS IS AND IS NOT FOR THE BAR. Check 7 asks whether an oracle names an artifact that EXISTS. It does NOT ask whether that artifact SPANS THE PERIOD THE CELL NEEDS. Existence and extent are different properties and check 7 reaches only the first. I am deliberately NOT minting a check 9 and NOT extending check 7 tonight: the night's own lesson, ratified by Andrew's duplicated-work ruling and MSTR's self-criticism, is that AMPLIFYING A CONTROL AFTER ONE INSTANCE AND BEFORE ANYONE HAS TRIED TO BREAK IT is the error -- I have now watched five seats do it in one hour and did it myself. Recorded as a CANDIDATE refinement to check 7 (existence -> existence AND sufficient extent), to be weighed when a second instance exists or an owner routes it, with its Rule-24 record. || WHAT ACTUALLY CAUGHT THIS was the executing seat re-measuring their own delivered audit before a consumer built on it -- the fourth time tonight that premise-verification by the seat holding the artifact beat every document-plane check, including mine."
  }
 ]
 ```
