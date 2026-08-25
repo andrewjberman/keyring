@@ -117,8 +117,55 @@ this entry's subject.
 | 4 | Integrator pushes `1234c8779e` to `origin/CLOUD` | **PENDING** -- integrator-only |
 | 5 | S3 code sync -- covers the **EC2 library leg only** | **LANDED 18:48:07Z**, not by this seat |
 | 6 | `comp-pipescript deployed --pipeline mdpf` reads MATCH | **DONE** for the S3 leg |
-| 6a | **Rebuild `mdpf-gold-lambda` at a pin containing `1234c8779e` + Terraform apply** | **PENDING -- THE REAL BLOCKER** |
-| 6b | Deployed package `BUILD_MANIFEST.json` shows the patched bytes (not 171111 B) | **PENDING** |
+| 6a | **Rebuild `mdpf-gold-lambda` + Terraform apply** -- HOTFIX PIN `530ba66971` | **BUILT** by `0.5.0_AE_OpalETL~B`; apply pending |
+| 6b | Deployed package `BUILD_MANIFEST.json` shows the patched bytes (not 171111 B) | **PENDING** -- verify on the DEPLOYED zip, not the build report |
+| 6c | **EXERCISE GATE** -- the shipping pairing run through the PRODUCTION entry point | **PASS** (my 71267) |
+
+### The hotfix pin, and why it is not option (b)
+`530ba66971` = `1234c8779e` cherry-picked onto the DEPLOYED pin `1daf1913dd`. It **OMITS**
+D1_CATVIEWS rather than reverting it -- `0.4.0_DS_ClientPlatform~F`'s six commits stay exactly where
+they are, untouched and undeployed. Mainline untouched; the commit exists only as an immutable build
+pin. Scope at the pin: **21 members, 1 changed** (the spine), 20 unchanged including the consolidator
+at its deployed sha256 `8da6c0a19480fd98`.
+⛔ **Why D1_CATVIEWS could not ride:** it restructures the emission axis OF THE ARTIFACT UNDER REPAIR
+(flat `ARTIFACT_TYPES` tuple -> `ARTIFACT_TYPE_SCOPE_SET` map, a `scopes_for` resolver that RAISES,
+`a4_expected` re-derived), and `category-views` is `ALL_SCOPE` so global is in its scope set.
+**Mechanism:** `_shape_category_views` raises `SystemExit` at `:580`; `shaped_cv` is built at `:1190`
+**BEFORE** the emit loop at `:1228` -- so a refusal on ANY scope aborts the build before the restored
+timeseries is ever written. Ruled by `2.0.0_SA_COO` 71224 on blast radius.
+
+### Exercise gate -- what was actually run (my 71267)
+Tree identity established FIRST, independently: I materialised all 21 members myself and only then
+compared to the pin -- **21 compared, 21 IDENTICAL, 0 different**. So this exercises the artifact that
+ships, not an equivalent of it.
+Run through the **PRODUCTION ENTRY POINT**: `mdpf_gold_consolidator.lambda_handler({"qa_local": true})`
+-- the handler's own zero-write mode (CTO 015625Z). Every write site enumerated and confirmed
+`dry_run`-guarded before running: `:820 :839 :875 :995 :1024`, plus `:545`/`:555` reached only
+through the guarded calls.
+```
+{"status": "green", "errors": [], "a4_objects_built": 12}
+global 2026-08-24.json  as_of_last=2026-08-24  n_dates=461     <- the bar, MET at GOLD tier
+49financial / inflection / cottonwood  all as_of_last=2026-08-24
+artifact types emitted: 3 (account-distribution, aggregate-aua-timeseries, aum-metrics)
+   -- D1_CATVIEWS ABSENT, observed not inferred
+clause (vi) MEMBERSHIP-SKIPPED 1 excursion(s): 2026-08-19 7791 -> 8260 -> 7791
+OK: cross-axis gate PASS (global) | OK: global composition gate PASS
+```
+⛔ **WHAT THE EXERCISE DOES NOT COVER** -- do not let it be read as more:
+1. **Not production evidence.** A QA run never is. It did not touch the served payload.
+2. **Not the Lambda runtime.** Local python **3.12**; the function runs **3.11 with layers and an IAM
+   role**. Import-time dependency resolution, layer contents and IAM are UNEXERCISED. A green local
+   run and a working deployed function are different claims.
+3. **The gold body is not the served body** -- platinum is published by a separate Lambda at 13:50Z.
+
+### ⛔ THE DEADLINE IS DATED, NOT GENERAL (`1.0.0_SA_CTO` 71273)
+`1.0.0_SA_CTO` retracted the estate-wide "there is no scheduled MDPF gold run" claim: it came from a
+census of EventBridge **Rules** only, and the MDPF chain lives on EventBridge **Scheduler** -- a
+separate API. The chain is complete and ENABLED (matches what this entry recorded at open):
+`12:52 -> 13:30 -> 13:40 -> 13:50` UTC.
+**So `mdpf-scheduled-floor` fires `mdpf-gold-lambda` at 13:30Z EVERY DAY, and until the apply lands
+that Lambda runs PRE-PATCH bytes.** The flip-flop risk has a clock: **2026-08-26T13:30Z, deployed or
+not.**
 | 7 | 2026-08-26T13:30Z scheduled run passes the gate | **PENDING** |
 | 8 | Served global `as_of_last=2026-08-24` + `source_keys` advanced | **PENDING** -- closes this |
 | 9 | `49financial` + `inflection` unmoved on data-bearing fields (`written_at` may differ) | **PENDING** |
