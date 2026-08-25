@@ -755,7 +755,7 @@ if [ "$_commit_rc" -eq 0 ]; then
   # reported a PEER'S hash and subject for MY commit -- the exact shared-worktree HEAD class
   # this feature exists to kill, reintroduced inside the fix. `git commit` prints
   # "[BRANCH abcdef123] subject" and that hash is ITS OWN, immune to any concurrent write.
-  _sv_hash="$(printf '%s' "$_commit_out" | sed -n 's/^\[[^ ]* \([0-9a-f]\{7,40\}\)\].*//p' | head -1)"
+  _sv_hash="$(printf '%s' "$_commit_out" | sed -n 's/^\[[^ ]* \([0-9a-f]\{7,40\}\)\].*/\1/p' | head -1)"
   if [ -z "$_sv_hash" ]; then
     # FAIL LOUD, never fall back to HEAD: an unparsed hash means the output shape changed,
     # and silently reading HEAD is precisely the defect above.
