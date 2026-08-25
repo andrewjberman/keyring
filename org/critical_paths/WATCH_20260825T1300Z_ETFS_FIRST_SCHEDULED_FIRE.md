@@ -1,0 +1,67 @@
+# ⛔ TIME-TRIGGER — 2026-08-25T13:00Z — THE FIRST SCHEDULED FIRE OF `etf-positioning-producer`
+
+**Opened:** 2026-08-25 ~08:5xZ by `0.0.0_AB_MSTR~Z` · **Raised by:** `2.0.0_SA_COO~Z`
+**Named owner:** `0.7.0_AE_CloudOps~Z` (COO recommendation, MSTR endorsed)
+**Andrew: TOLD DIRECTLY, same turn.** He is the only actor in this system guaranteed to persist to
+13:00Z, which is the whole reason this file exists.
+
+⛔ **THIS IS A DURABLE CARRIER, NOT A MONITOR.** No alarm, no SNS, no checker — the 2026-07-28
+moratorium stands and this deliberately does not touch it. It is a WRITTEN OBLIGATION a future seat
+can find. **ZERO crons remains in force; nothing here schedules anything.**
+
+---
+
+## WHY THIS ONE FIRE MATTERS AND THE OTHERS DO NOT
+
+```
+13:00Z  cron(0 13 * * ? *) fires on etf-positioning-producer for the FIRST TIME EVER
+        (log group created 2026-08-24T22:52:48Z -- ZERO 13:00Z instants have elapsed)
+```
+**THREE THINGS COINCIDE ON ONE FIRE, and no session is scheduled to see any of them:**
+1. **The schedule's first-ever acceptance** — an untested trigger, not a proven one.
+2. **The first PRODUCTION publication of Andrew's fix.** Everything on the page today was
+   hand-invoked. **An ad-hoc run is never the production path** (CLAUDE.md, ad-hoc/scheduled rule).
+3. **An UNCONDITIONAL overwrite of a client-facing artifact** we hand-published twice tonight.
+   `generated_at` sits inside the hashed body, so no no-op guard can fire.
+
+## WHAT IT SHOULD DO, AND WHY BOTH FAILURE MODES ARE SILENT
+
+**It carries the CORRECT code** — `etf-positioning-producer` moved to the fixed package at
+**08:19:03Z** (sha `p/mc7hvScGyYxxMK...`), so it *should* reproduce SALXX =
+`State Street U.S. Government MMKT` and FXFXX = `First American Treasury Obligations Fund`.
+
+⛔ **BUT:**
+- **If the rule does not fire at all**, the artifact simply stays as-is. **No error, no alarm, and
+  the page keeps working** — indistinguishable from success without checking the timestamp.
+- **If it fires and regresses**, it overwrites a correct client-facing artifact with a wrong one.
+  **Also silent.** The page renders; the names revert.
+- ⚠ **AND ITS INPUT DEPENDS ON A LOCAL WINDOWS TASK.** The Bloomberg L1 pull (`OPAL_BBGTML_daily_pull`)
+  runs on THIS WORKSTATION, not in AWS — **zero EventBridge rules match `bbg|bloomberg|terminal` at
+  ANY hour** (positive control `etf` = 8). If this box sleeps, `bbg/{date}/` never lands, the
+  producer's own guard SKIPS the day, and it serves stale on a green run.
+
+## THE CHECK — three reads, no tooling required
+
+```
+1  aws s3api head-object --bucket opal-data-portal-v2 --key platinum/etfs/positioning_data.json
+   EXPECT LastModified ~13:00-13:05Z today.  Still 08:31:06Z => THE RULE DID NOT FIRE.
+2  read SALXX + FXFXX names out of the body.
+   EXPECT "State Street U.S. Government MMKT" / "First American Treasury Obligations Fund".
+   Reverted => the scheduled path does NOT carry the fix and PROD is serving a regression.
+3  read data_as_of. EXPECT 2026-08-25 if the 11:00Z local pull landed; 2026-08-24 means the
+   workstation leg did not run and the producer correctly skipped.
+```
+**Item 3 failing is NOT the same defect as item 2 failing** — one is the local-task dependency, the
+other is the fix. **Do not report them as one.**
+
+## IF IT REGRESSES
+
+The remedy is already proven: re-invoke the producer (the ad-hoc path used at 08:31:06Z). **PROD's
+frontend at `a7a7ff16` is unaffected either way** — the render fix lives in the bundle, not the
+artifact. **Only the NAMES ride the artifact.**
+
+## RECORD
+
+Fix chain: `2e9737af49` (publisher map) → apply 08:19:03Z → invoke 08:31:05Z → served verified at
+four seats. Frontend: `f67b3a48` → promote `a7a7ff16` → PROD deploy SUCCESS, site build 08:42:19Z.
+Directive: `laneZ_ANDREW_DIRECT_20260825_0730Z_FIX_SUBCATEGORIES_AND_SALXX_NAME_THIS_AND_ONLY_THIS.md`
