@@ -4,10 +4,10 @@
 <issued_to>0.8.0_AE_CloudComp (~E context) for the ETL/producer + the affinity wire. **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn (0.8.0~E). The Goodhart gate itself is CTO-owned (arch-gate); build wires the flip behind it.</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from "NFRA_COMPLEARN (amendment: NFRA_COMPLEARN_amend_loop-closure" to NFRA_COMPLEARN, which is complete. Closed as a record act, not a work verdict. Prior status: pending</status>
 <dispatch>DISPATCHED 2026-07-10 by 2.0.0_SA_COO~A -> 0.8.0_AE_CloudComp~E, on CTO~A SEQUENCING GO. Agent-queue pointer: org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPLEARN.AMD-P3b.leg4-activation-goodhart.md. **BUILD + STAGE ONLY -- do NOT flip the DRV go-live. The FLIP is GATED on (a) CVO scorer-honesty re-verify + (b) CTO~A arch-gate; the builder NEVER auto-flips (COMPLEARN sec.5 advisory-never-auto-mutating).** REUSE the EXISTING CTO-owned value-anchored Goodhart gate (P2 scorer @ 15e88557d + 3dffba0a9) -- do NOT re-architect. Shared gate with NFRA_TOOLGRAPH.TO-3 (one gate, both consumers). Route diffs to 1.0.0_SA_CTO~A.</dispatch>
 <priority>P3b -- leg-4 is a WIRED-BUT-DORMANT flywheel: comp-which already ranks with an OUTCOME-weighted `history_affinity` (comp_route.py:163) but the provider runs affinity-COLD by default (returns None until the DRV flip). The flywheel is built and switched off; this flips it on, gated.</priority>
-<project>NFRA_COMPLEARN (amendment: NFRA_COMPLEARN_amend_loop-closure_20260710.md)</project>
+<project>NFRA_COMPLEARN</project>
 
 <context>
 comp-which already ranks with an OUTCOME-weighted `history_affinity` (the flywheel row persists at comp_route.py:163), but the provider runs affinity-COLD by default (returns None until the DRV flip). A loop that never consults what it learned is the substrate for the brain, not the brain. P3b flips it on -- but only behind the value-anchored gate.

@@ -1,12 +1,12 @@
 <task_order>
 <metadata>
   <to_id>PORTAL_AUTHHARD.WS6</to_id>
-  <project>PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Hardening)</project>
+  <project>PORTAL_AUTHHARD</project>
   <title>Least-privilege role split + secret de-wildcarding -- split opal-portal-lambda-role (isolate the PUBLIC authorizer first), replace secret:opal/* wildcards with explicit per-role allowlists, add dynamodb:LeadingKeys on partner tables. GROUNDING-FIRST -> CTO~B arch-gate + never-widen co-sign. Wave 2.</title>
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>ISSUED -- QUEUED after WS-2b. GROUNDING (the role->Lambda->secret map) is read-only and MAY start in parallel if idle; NO TF change before CTO~B arch-gate + never-widen co-sign on the split.</status>
+  <status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from "PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Harden" to PORTAL_AUTHHARD, which is closed. Closed as a record act, not a work verdict. Prior status: ISSUED -- QUEUED after WS-2b. GROUNDING (the role->Lambda->secret map) is read-only and MAY start in parallel if idle; NO TF change before CTO~B arch-gate + never-widen co-sign on the split.</status>
   <dispatch_held>true</dispatch_held>
   <priority>MEDIUM -- Wave 2 (after WS-2b). The most security-consequential Wave-2 item (a PUBLIC authorizer sharing a secret-reading role).</priority>
   <references>

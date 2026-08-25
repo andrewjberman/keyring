@@ -1,12 +1,12 @@
 <task_order>
 <id>NFRA_COMPLEARN.AMD-P3d</id>
 <disposition date="2026-07-10">CODE-LANDED + verified + CTO~A arch-gate PASS (c1919a60a producer/reader + 26c25c343 derives_from; both my load-bearing points EXERCISED -- additive-compat via the real reader, no-firm-sep via consumer audit). Deploy ledger 20260710T2021Z CLOSED-DEFERRED (8f0af8095; NEVER#6 satisfied -- L1/L3 proven, L2/L4 NOT-FIRED, nothing landed, served JSON unchanged v1, 0 stranded; COO~A-verified + `deploy_ledger check --red` clean). SERVED-WRITE DEFERRED (CTO~A DEFER ruling; COO~A + ~B concur): a derive :latest rebuild from CLOUD HEAD would sweep the HELD FRESHGUARD leg-4 into a live deploy (never-force-couple-a-held-leg). The v2 served-write RIDES the leg-4 SHARED-IMAGE clearance -- a FRESH ledger + ONE joint rebuild when leg-4's gate lifts; served-write RAVC2 to COO~A then. No separate follow-on TO (rides leg-4); this TO stays pending on the served-write leg only.</disposition>
-<project>NFRA_COMPLEARN (amendment follow-on; = CTO~A's "B4")</project>
+<project>NFRA_COMPLEARN</project>
 <title>AMD P3d (B4) -- catalog-vintage seam: comp_learns_produce.py:189 stamps its own fresh computed_at without reading the catalog vintage, so a fresh-looking served status JSON can hide a stale catalog. Disclose the source vintage (D-4 terminal-lies fix)</title>
 <assigned_to>0.8.0_AE_CloudComp~E (lead) coordinating with 0.7.0_AE_CloudOps~B (the shared seam ~B flagged in P3a)</assigned_to>
 <issued_by>2.0.0_SA_COO~A (formalizing CTO~A's B4 assignment as a COMPLEARN amendment follow-on, because it touches a SERVED artifact -- served-touches go on the record with a diff-gate. Foreshadowed by AMD-P3a's "catalog-vintage gate on the downstream nightly status producer.")</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from "NFRA_COMPLEARN (amendment follow-on; = CTO~A's "B4")" to NFRA_COMPLEARN, which is complete. Closed as a record act, not a work verdict. Prior status: pending</status>
 <priority>Follow-on to the COMPLEARN amendment; NON-URGENT. BUILD is GATED on CTO~A's arch-gate of the filed design (3e6f9c499) -- do NOT build ahead of that gate.</priority>
 <dispatch>GO-to-DESIGN already in flight (CTO~A-assigned, design filed 3e6f9c499, routed to CTO~A arch-gate). This TO formalizes it for served-artifact traceability + /to-check visibility. Build after CTO~A arch-gate.</dispatch>
 <served_artifact_classification note="LOAD-BEARING -- recorded so a future reader knows why never-widen/firm-sep did NOT apply">

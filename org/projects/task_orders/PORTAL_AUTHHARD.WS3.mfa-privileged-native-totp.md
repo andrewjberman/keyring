@@ -1,12 +1,12 @@
 <task_order>
 <metadata>
   <to_id>PORTAL_AUTHHARD.WS3</to_id>
-  <project>PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Hardening)</project>
+  <project>PORTAL_AUTHHARD</project>
   <title>MFA for privileged roles -- native TOTP step-up (NOT Cognito, arch-decided A.1) gated on admin/internal/Dev/architect. Enrollment + verify + amr claim. DESIGN-FIRST -> CTO~B arch-gate. Wave 2.</title>
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>ISSUED -- QUEUED after WS-2b + WS-6. DESIGN-FIRST; no build before CTO~B arch-gate. Build-vs-Cognito is DECIDED (native TOTP, PRD A.1) -- do NOT re-open it.</status>
+  <status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from "PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Harden" to PORTAL_AUTHHARD, which is closed. Closed as a record act, not a work verdict. Prior status: ISSUED -- QUEUED after WS-2b + WS-6. DESIGN-FIRST; no build before CTO~B arch-gate. Build-vs-Cognito is DECIDED (native TOTP, PRD A.1) -- do NOT re-open it.</status>
   <dispatch_held>true</dispatch_held>
   <priority>HIGH -- Wave 2 (privileged accounts on a single human-chosen password today).</priority>
   <references>
