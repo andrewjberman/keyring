@@ -5,13 +5,25 @@ Execution Pipeline stage 5, CLAUDE.md Rule 27).
 
 **Round opened** 2026-08-25T16:4xZ on three items routed to this seat while it was dark, both
 issuers filing correctly rather than writing this tree themselves (executing seats are barred from
-it -- COO ruling 2026-08-24). **All three are OBSERVATION x INERT** -- no BLOCKING item, no ARMED
-item, no disarm owner required. The live client-facing hazard (cottonwood + global served payloads
+it -- COO ruling 2026-08-24). The live client-facing hazard (cottonwood + global served payloads
 frozen at 2026-08-19, four trading days, NEVER#1 discharged) is **already owned under D8** and is
 not a channel item; nothing here adds exposure to it.
 
-**Issuer messages:** `1.0.0_SA_CTO` 70743 (16:09Z) · `2.0.0_SA_COO` 70753 (16:30Z). Both ACKed by
-this seat 16:3xZ.
+⚠ **NO TALLY IS RECORDED IN THIS HEADER, AND THAT IS DELIBERATE. IT WENT STALE TWICE IN TWENTY
+MINUTES.** V1 read *"All three are OBSERVATION x INERT -- no BLOCKING item, no ARMED item, no disarm
+owner required"* (true at 16:4xZ; false twelve minutes later when `0.5.0_AE_OpalETL~B` surfaced two
+BLOCKING items). V2 replaced it with a corrected 6-item tally **in the same edit as a paragraph
+warning that tallies decay** -- and S7 falsified it five minutes later. **I wrote the warning and
+then did the thing, which is the most honest available demonstration that a hand-maintained
+derived figure loses to the record it summarises.**
+
+**THE FIX IS NOT A FRESHER NUMBER, IT IS NO NUMBER.** Counts, class and standing splits, and the
+ARMED-without-owner check are all DERIVED FROM THE BLOCK BELOW -- run the protocol's extractor
+(`SURPRISE_CHANNEL_PROTOCOL.md` section 8), which prints its own denominator. **A round summary is
+the one field in this document that no reader needs and every editor forgets.**
+
+**Issuer messages:** `1.0.0_SA_CTO` 70743 (16:09Z) · `2.0.0_SA_COO` 70753 (16:30Z) ·
+`0.5.0_AE_OpalETL~B` 70783 (16:55Z). All ACKed by this seat.
 
 **Verifier note on S1:** the relay was re-derived at source by this seat before graduation, and the
 re-derivation **widened it** -- see the item's `notes`. A relay carries its grounding or its caveat
@@ -76,6 +88,91 @@ re-derivation **widened it** -- see the item's `notes`. A relay carries its grou
   },
   "disposition": "GRADUATED",
   "notes": "⛔ EXPLICITLY BARRED FROM RIDING THE OUTAGE REPAIR, and the reason is the item's operative half: folding a data-quality investigation into a P0 makes the P0 wait on it. Routed to D8 as 'in pattern' work per Andrew's own two-part instruction ('fixed immediately' AND 'take this as an opportunity'). || INERT is the correct standing and it is a real defect at the same time: wrong dates in a client-facing series is a genuine quality problem, but nothing about it is armed or time-critical -- no future ordinary act encounters it and is harmed. Standing is not severity. || METHOD NOTE WORTH KEEPING PAST THIS ITEM, carried from the issuer: both S2 and S3 came out of running ONE set difference in BOTH directions. The other direction returned the tightest confirmation of the outage on the page. AN ASYMMETRIC CHECK WOULD HAVE PRODUCED A CLEAN, CORRECT, COMPLETE-LOOKING CONFIRMATION AND REVEALED NEITHER ITEM."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S4",
+  "surfaced_by": "0.5.0_AE_OpalETL~B (msg 70783), pre-execution measurement -- nothing built, nothing applied, nothing committed; the seat refused to run its own leg as written and escalated instead",
+  "surfaced_at": "2026-08-25T16:55Z",
+  "one_line": "Running the AE vendor leg AS WRITTEN would ship a 33-day-old UNDEPLOYED silver shape change as a side effect of the P0 contract repair -- vendor-manifest.sh copy mode has NO module filter, so it re-vendors rebalancer_conversion.py + rebalancer_schemas.py (the entire 3F-S5 provenance sidecar: 5 new columns on 4 tables, dedup narrowed to vendor-columns-only) alongside the one module the repair needs.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "RE-DERIVED AT SOURCE BY 3.0.0_SA_CVO, not taken on relay: infra/aws/lambda/ci/vendor-manifest.sh:23 MODE=${2:-copy} -- only two modes exist (copy, --check); :38 iterates EVERY vendored_modules[] entry; :47 cp $src $dst is UNCONDITIONAL, no filter, no allowlist, no per-file flag anywhere in the 2201-byte script",
+    "surfacing seat's three-plane md5, all 8 members: DEPLOYED == VENDORED on every module (deployed.zip pulled from Code.Location and members hashed); mirror_schemas.py 85fc671e equal on all three planes; rebalancer_conversion.py and rebalancer_schemas.py have SOURCE AHEAD of vendored+deployed",
+    "vendor-manifest.sh --check -> rc=1, 2 of 8 DRIFT, DENOMINATOR: 8 module(s) processed",
+    "git timeline showing DELIBERATE DEFERRAL THAT NEVER FINISHED: 2281825996 (2026-07-22, 0.6.2_AE_PartnerETL~A) vendored the rebalancer pair; 1351c74d96 (2026-07-23, 0.4.0_DS_ClientPlatform) landed 3F-S5 into SOURCE ONLY, subject ending 'CTO gates; 0.7.0 lambda-twin rides TF' -- the ride never happened",
+    "independent corroboration of the baseline: the surfacing seat's two-home md5 85fc671e matches COO's decomp measurement, derived separately"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.5.0_AE_OpalETL~B -- ALREADY DISARMED AT SURFACING by refusing to execute the leg and escalating. The disarm is the refusal itself; it holds only while that seat holds, so the RULING is what makes it durable.",
+  "notes": "THIS IS THE OUTAGE'S OWN ROOT-CAUSE SHAPE, ABOUT TO REPEAT ON THE REPAIR FOR IT. CTO's 16:09Z overturn established the mechanism as AN INTERNAL CHANGE WITH AN UNSEQUENCED DOWNSTREAM LEG -- we amended the vendor template and never told the silver contract. Option (a) carry-all-8 is that same shape: a shape change riding a different change's deploy, unsequenced, under time pressure, unverified by anyone currently live. THE SEAT THAT WOULD HAVE EXECUTED IT IS THE ONE THAT CAUGHT IT. || CVO BACKS THE SURFACING SEAT'S RECOMMENDATION (b) TARGETED VENDOR. Ruling authority is CTO (sequencing) with COO as TO issuer -- CVO endorsement is NOT an approval step and this filing gates nothing (no-inferred-gates law binds; the channel gates nothing by design). || WHAT MAKES THE REFUSAL CORRECT RATHER THAN MERELY CAUTIOUS: the seat priced BOTH options with their costs, named the residual its own preferred option creates, and stated a fact that weakens its own framing (see S5's falsifier). A recommendation that hides its own cost is advocacy; this one is not. || THE S5 LAMBDA-TWIN DEPLOY IS THE REMEDIATION and it has waited 33 days -- 0.7.0_AE_CloudOps was the named owner. It can wait for a clean sequenced act; it must not ride this one."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S5",
+  "surfaced_by": "0.5.0_AE_OpalETL~B (msg 70783) answering a falsifier CTO asked it to run against CTO's own lane ruling -- and reporting the half that weakens its own position",
+  "surfaced_at": "2026-08-25T16:55Z",
+  "one_line": "The premise 'nothing in the source-map entry becomes false' is FALSE at source -- build-and-upload.sh:133-134 writes artifact_s3_key + artifact_sha256 unconditionally after every verified upload and :381 stages the file for commit, so 'do not edit the source map' and 'run the sanctioned build' cannot both hold; AND one cell is ALREADY stale, with a true cell beside it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "infra/aws/lambda/ci/build-and-upload.sh:133-134 read at 5a7aff866c -- sm.functions[fn].artifact_s3_key = key; sm.functions[fn].artifact_sha256 = sha; executed unconditionally after every verified upload (:348-354)",
+    "build-and-upload.sh:381 instructs git add infra/aws/lambda/ci/lambda-source-map.json -- the tool stages its own mutation for commit",
+    "record-terraform-deploy.sh:265-269 likewise writes last_deployed_commit + last_deployed_at",
+    "MEASURED PRE-EXISTING STALENESS: source map last_deployed_at = 2026-07-15T15:05:17Z vs live LastModified = 2026-07-23T14:47:39Z (aws lambda get-function, the live primitive)",
+    "THE DISCRIMINATING CONTROL, and it is what makes this an item rather than a complaint: artifact_sha256 P9VvxJnsa7nea5xhuk+ZL5+0hyqFBXTVIjO7JpJt13Y= DOES match live CodeSha256 -- so one cell of the entry is TRUE while another is FALSE"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE SHARP HALF IS THE MIXED-TRUTH ENTRY: THE CODE RECORD IS ACCURATE AND THE DATE RECORD IS NOT, IN ONE OBJECT, WITH NOTHING MARKING WHICH. A reader who spot-checks artifact_sha256 -- the cell most likely to be checked, because it is the one Rule 22a trains you to check -- gets a TRUE answer and carries away confidence in the whole entry. CLAUDE.md Rule 4 already warns the map 'does not compare deployed bytes to built-from bytes'; this is that warning landing on a DIFFERENT FIELD than the rule anticipated, which is why the rule did not catch it. || INERT, not ARMED, and the distinction is real: an 8-day-stale date harms nobody through future normal operation. It is a record defect, not a hazard. Standing is not severity. || CVO READ FOR CTO, WHO RULES: option (a) -- let the sanctioned tool write the entry and commit the result on the AE lane AS A BUILD ARTIFACT, explicitly labelled. A hand-edit is worse (it is the thing the rule bans) and suppressing the tool's write is worse still (it makes the map silently wrong while looking untouched). || THE 07-15/07-23 STALENESS IS A SEPARATE PRE-EXISTING REPAIR AND MUST NOT RIDE THIS DEPLOY -- the identical sequencing rule as S4, applied to the record instead of the code. Fixing it here would be a second unsequenced change on a P0. || PROVENANCE NOTE WORTH KEEPING: the surfacing seat ran a falsifier against a ruling in its own favour and reported that the ruling's PREMISE died while its CONCLUSION survived. Reporting the half that hurts your own framing is what makes the surviving half credible."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S6",
+  "surfaced_by": "3.0.0_SA_CVO, on reviewing S4 -- the residual that option (b) CREATES, filed here because I told CTO it needs a named owner rather than a sentence in a handover, and putting it only in a message would have BEEN that sentence",
+  "surfaced_at": "2026-08-25T17:00Z",
+  "one_line": "If the ruling is (b) TARGETED VENDOR, vendor-manifest.sh --check stays rc=1 on this lambda dir AFTER the leg completes -- a parity gate deliberately left red, with nothing at the gate's own surface saying WHICH 2 of 8 are expected-red or until when, so the gate stops discriminating real drift from sanctioned residue.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "vendor-manifest.sh:50-53 -- --check compares each vendored copy to its source with cmp -s and sets RC=1 on any mismatch; there is no suppression list, no expected-drift file, and no per-module waiver anywhere in the script",
+    "the surfacing seat priced this itself, verbatim: 'vendor-manifest.sh --check stays rc=1 after my leg -- a knowingly red parity gate. Anyone running it reads DRIFT and must not read it as MY leg's failure'",
+    "the two expected-red modules are already identified: rebalancer_conversion.py and rebalancer_schemas.py, source-ahead by the 3F-S5 sidecar since 2026-07-23",
+    "RULED 17:00Z: 1.0.0_SA_CTO 70794 ('I under-ruled the red gate ... CVO's correction is accepted in full') and 2.0.0_SA_COO 70798 ('CVO filed it BLOCKING and was right that this under-prices it'). Both independently converged on the same disarm surface.",
+    "BUILD-LADDER RUNG 2, NOT A NEW MECHANISM: BUILD_MANIFEST.json ALREADY carries vendor_closure_note and it is ALREADY used for this exact class -- it records the WS-5 lazy-import decision, the stream_parquet.py latent break, and ends by naming a still-armed sibling: 'ECLIPSE=NOT VENDORED -- eclipse carries the identical latent break, armed for whoever rebuilds it next.'"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "RULED AND DISARMED-PARTIAL. Authored 17:00Z as a conditional INERT residual; both CTO and COO ruled within five minutes and the condition became fact, so it is filed ARMED with its disarm in place. || THE DISARM IS PARTIAL AND CTO DECLARED IT PARTIAL RATHER THAN PAPERING IT -- recorded here at CTO's explicit request. THE MARKER SITS BESIDE THE GATE, NOT IN ITS OUTPUT. A reader who opens BUILD_MANIFEST.json is protected; A READER WHO RUNS --check AND READS ONLY rc=1 IS NOT. The complete fix is putting the expected-red set into the script's own output, and that is a TOOLING CHANGE DELIBERATELY NOT AUTHORISED DURING A P0. Routed as a candidate. || WHY DECLARING THE PARTIALITY MATTERS AND IS NOT PEDANTRY: a single terminal state converts dangerous-and-visible into safe-and-invisible -- the channel manufacturing the exact loss it exists to prevent. DISARMED-PARTIAL keeps the residue visible. || FRAMING, load-bearing and carried from both rulings: 'pre-existing rc=1, 2 of 8, NOT created by this leg, owner 0.7.0_AE_CloudOps.' THE GATE READS RED BEFORE AE~B TOUCHES ANYTHING. The leg does not create the red; it declines to silently green it by shipping something unreviewed. || NO MONITOR, NO ALARM, NO CHECKER, NO SCHEDULED ANYTHING -- a durable annotation at the artifact's own surface. The NEVER#13 moratorium is untouched and CTO named that explicitly so nobody reads this as licence to build detection.",
+  "disarm_owner": "0.5.0_AE_OpalETL~B -- DISARMED-PARTIAL, same turn, inside the leg: a durable marker in infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/BUILD_MANIFEST.json's EXISTING vendor_closure_note field. REMEDIATION owner is 0.7.0_AE_CloudOps (the S5 lambda-twin deploy), seated by 2.0.0_SA_COO once the P0 is clear -- two states, two owners, two clocks."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S7",
+  "surfaced_by": "0.5.0_AE_OpalETL~B (msg 70783) flagged-not-chased as DS-lane data and the comp-rail correctly gated them; routed to 3.0.0_SA_CVO by 2.0.0_SA_COO (70798). Re-derived at source by CVO, and the re-derivation found a SECOND, ARMED consequence the routing did not name.",
+  "surfaced_at": "2026-08-25T17:05Z",
+  "one_line": "rebalancer_schemas.py:83 declares PROVENANCE_CONTRACT_START = '2026-07-23' -- but the code that produces those columns has NEVER been deployed, so the constant's boundary and the code's real boundary have diverged by 33 days; AND rebalancer_conversion.py:589's force-guard is drawn at the CONTRACT date, not the DEPLOY date, so it will NOT fire on exactly the 33-day gap where fabricating provenance is the one thing the design forbids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "data/assets/scripts/silver/rebalancer_schemas.py:83 -- PROVENANCE_CONTRACT_START = \"2026-07-23\" (DEF band; comp-find DENOMINATOR 4 hits / 26,578 files, BANDS DEF=1 SURFACED=2 DOC=1)",
+    "the constant's OWN comment declares a TWO-STATE vocabulary: a partition without the _ columns 'PREDATES-CONTRACT -- honest and expected for every date before this constant, NEVER provenance unknown/failed'",
+    "the design doc conditioned it and the condition was never met: MDPF_3FIRMS_3F-S5_REBALANCER_PROVENANCE_DESIGN_20260722.md:177 -- 'rebalancer_schemas.PROVENANCE_CONTRACT_START, CONDITIONED on 0.7.0's lambda-twin deploying'",
+    "the twin never deployed: S4's evidence establishes DEPLOYED == VENDORED and SOURCE AHEAD for rebalancer_conversion.py and rebalancer_schemas.py, deferred at 1351c74d96 (2026-07-23) with 'CTO gates; 0.7.0 lambda-twin rides TF'",
+    "THE FORCE-GUARD'S BOUNDARY, read at source: rebalancer_conversion.py:589 -- 'if force and date < rs.PROVENANCE_CONTRACT_START' raises. The predicate is date < CONTRACT_START, so dates ON OR AFTER 2026-07-23 PASS the guard",
+    "the design states the prohibition the guard exists to enforce: 'reprocess scope is NONE (synthesizing provenance for rows whose provenance was never observed fabricates the exact metadata these columns exist to guarantee)'",
+    "NOT CLAIMED AND DELIBERATELY NOT MEASURED: whether any partition in 2026-07-23..2026-08-25 exists or what it contains. That is DS-lane data and CVO did not cross the rail AE~B correctly respected. THIS ITEM IS A CLAIM ABOUT THE CODE BOUNDARY, READ AT SOURCE -- not about the data."
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "2.0.0_SA_COO -- the actor who can act NOW, because they seat the S5 lambda-twin deploy once the P0 is clear (70798) and the disarm is a CONDITION ATTACHED TO THAT SEATING. It must be attached BEFORE the deploy, not after: the hazard arms the moment the twin ships.",
+  "notes": "THE ROUTED ITEM WAS 'a contract asserts a start date for behaviour the deployed code has never produced' -- true, and a DECLARATIVE drift. RE-DERIVATION FOUND A SECOND CONSEQUENCE THAT IS ARMED, and it is the one that matters. || THE CONTRACT'S VOCABULARY HAS TWO STATES AND REALITY IS IN A THIRD. Declared: PREDATES-CONTRACT (before 07-23, no columns, expected) and carries-columns (on/after 07-23). Actual: on/after 07-23 WITH NO COLUMNS, for 33 days, because the converter was never deployed. A reader applying the contract classifies those partitions as anomalous or failed when the honest description is 'the code was never shipped' -- Rule 24 CE failing over the declared layer. || THE ARMED HALF, AND IT IS A GUARD PROTECTING THE WRONG BOUNDARY: the design's central prohibition is NEVER synthesize provenance for rows whose provenance was never observed. The force-guard enforces it at date < CONTRACT_START. But the rows at risk are 2026-07-23..the actual deploy date -- ON OR AFTER the constant -- so THEY PASS THE GUARD. After the twin ships, a seat backfilling the gap to 'fill in the missing provenance columns' does the exact forbidden thing, and the guard written to stop it does not fire. || THE GUARD IS NOT WRONG; ITS PREMISE EXPIRED. It was correct on 2026-07-23 when the twin was expected to ride the same day. Thirty-three undeployed days made a correct constant into a misplaced boundary -- and NOTHING AT THE CONSTANT'S OWN SURFACE RECORDS THAT ITS CONDITION WAS NEVER MET. Same class as S6 one layer down: the knowledge lived in a design doc's conditional clause, and the artifact says nothing. || DISARM SHAPE (named, not built -- CVO does not build remedies): the S5 seating carries an explicit decision on the 07-23..deploy-date gap, and the honest options are (i) move the constant to the ACTUAL deploy date so the gap is correctly PREDATES-CONTRACT, or (ii) keep the date and add an explicit no-backfill window the guard enforces. (i) is a one-line change that makes the existing guard correct again; I have NOT priced whether anything downstream reads 2026-07-23 as a promise, and that read belongs to the DS lane. || SEQUENCING, unchanged from S4/S5: this does NOT ride the P0. It rides the S5 deploy it belongs to."
  }
 ]
 ```
