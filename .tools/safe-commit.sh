@@ -716,4 +716,53 @@ if [ -n "$_late_pyc" ]; then
   done <<< "$_late_pyc"
 fi
 git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}"
-exit $?
+_commit_rc=$?
+
+# ============================================================================
+# MESSAGE SELF-VERIFY (Andrew-direct 2026-08-24 ~23:5xZ, COO record @91011a1a1d:
+# "seems to me like the 'checker' should have that built in") -- after a
+# SUCCESSFUL commit, compare the message of THIS COMMIT'S OWN HASH against the
+# -F/--file source, trailing newlines stripped from BOTH, and FAIL LOUD naming
+# the first differing character index. WHY HERE AND NOWHERE ELSE: safe-commit is
+# the only actor holding both the message file and its own new hash at the
+# moment of the act. Every after-the-fact form broke on a reconstruction step --
+# flag spelling (%B vs pretty=format:%B disagree by exactly one byte), a peer's
+# HEAD in a 15-seat shared worktree (two false hash claims in one night), or
+# newline normalisation (four control variants falsified in an hour, LD-0449).
+# This block reads its own hash inside the wrapper's flow (never a latest-commit
+# read) and normalises both sides identically (raw cat-file object; rstrip CR/LF
+# only). A mismatch does NOT undo the commit (a commit is a fact); it exits 3 so
+# the seat corrects SAME-TURN instead of broadcasting a stale message as landed.
+# Prints the new hash + subject either way -- a claim about the commit starts
+# from the commit's own bytes, never from git log -1 in a shared worktree.
+# ============================================================================
+if [ "$_commit_rc" -eq 0 ]; then
+  _sv_file=""; _svk=0
+  while [ $_svk -lt ${#COMMIT_ARGS[@]} ]; do
+    case "${COMMIT_ARGS[$_svk]}" in
+      -F|--file)
+        [ $((_svk + 1)) -lt ${#COMMIT_ARGS[@]} ] && [ "${COMMIT_ARGS[$((_svk + 1))]}" != "-" ] && _sv_file="${COMMIT_ARGS[$((_svk + 1))]}"
+        _svk=$((_svk + 2)); continue ;;
+      --file=*) _sv_file="${COMMIT_ARGS[$_svk]#--file=}"; _svk=$((_svk + 1)); continue ;;
+    esac
+    _svk=$((_svk + 1))
+  done
+  _sv_hash="$(git rev-parse HEAD 2>/dev/null)"
+  _sv_subject="$(git log -1 --pretty=format:%s "$_sv_hash" 2>/dev/null)"
+  echo "  [msg-verify] committed ${_sv_hash:0:10}  subject: ${_sv_subject:0:100}"
+  if [ -n "$_sv_file" ] && [ -f "$_sv_file" ]; then
+    _sv_out="$(python "$SCRIPT_DIR/safe_commit_msg_verify.py" "$_sv_file" "$_sv_hash" 2>&1)"; _sv_rc=$?
+    if [ "$_sv_rc" -ne 0 ]; then
+      printf '%s
+' "$_sv_out" | sed 's/^/  [msg-verify] /' >&2
+      echo "ERROR: msg-verify FAILED -- the COMMITTED message differs from the -F file." >&2
+      echo "  The commit $_sv_hash STANDS (a commit is a fact); the -F path was stale or" >&2
+      echo "  swapped (LD-0449 class). CORRECT SAME-TURN: read the committed message" >&2
+      echo "  (git cat-file commit <hash>), decide which text is true, follow up, and" >&2
+      echo "  never broadcast the file's text as this commit's message." >&2
+      exit 3
+    fi
+    echo "  [msg-verify] ${_sv_out}"
+  fi
+fi
+exit $_commit_rc
