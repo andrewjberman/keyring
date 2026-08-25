@@ -242,7 +242,16 @@ def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
     DECLARES id="<canonical>", never the file whose NAME looks right (Rule 22a -- a
     filename-resolved check reports drift where there is none and reads CLEAN where two
     copies have silently diverged). An explicit decomp_ref.to_ref wins when present."""
-    declared = str(inst.get("decomp_ref", {}).get("to_ref", "")).strip()
+    _dref = inst.get("decomp_ref", {})
+    if not isinstance(_dref, dict):
+        # SHAPE ERROR, NOT A VERDICT. decomp_ref must be the OBJECT form
+        # ({doc, vintage_commit, to_ref}). A bare string used to reach .get() and raise
+        # AttributeError, which exited rc=1 -- BYTE-IDENTICAL to a legitimate INVALID.
+        # Surfaced by 0.6.0_AE_PartnerETL (71621), reproduced on a committed peer instance.
+        raise TypeError(
+            f"decomp_ref must be an OBJECT (doc/vintage_commit/to_ref), got {type(_dref).__name__}"
+        )
+    declared = str(_dref.get("to_ref", "")).strip()
     if declared:
         p = Path(declared)
         if not p.is_absolute():
@@ -608,4 +617,23 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # ⛔ A CRASH IS NOT A VERDICT, AND IT MUST NOT BORROW ONE'S EXIT CODE.
+    # rc=1 means INVALID -- a real adjudication about the caller's instance. rc=2 means
+    # "this tool could not answer" (the existing READ-ERROR convention at main()).
+    # An UNCAUGHT exception used to fall through Python's default rc=1, so a tool crash and
+    # a legitimate INVALID were INDISTINGUISHABLE to a caller checking only the rc -- and
+    # every TO comment in the estate instructs callers to check the rc. That is an
+    # instrument failing in the direction of its own normal-looking output.
+    # Class surfaced by 0.6.0_AE_PartnerETL (71621) on the decomp_ref-as-string case;
+    # this handler closes the CLASS, not that one field.
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        import traceback
+
+        traceback.print_exc()
+        print(f"TOOL-ERROR: {type(exc).__name__}: {exc}")
+        print("NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1).")
+        sys.exit(2)
