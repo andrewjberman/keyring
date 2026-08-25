@@ -4,33 +4,25 @@
 Rules below are law for every agent, every session. Format: **imperative + mechanism + pointer.**
 The *why* and the incident history live at the pointer. Full annotated history: `git log -p CLAUDE.md`.
 
-## Proportionality — read this before the rules
+## Before the rules: how much to check
 
-**Verification effort scales with BLAST RADIUS x IRREVERSIBILITY. When the next check would not change
-the action you take, STOP.** A reversible local edit needs no positive control; a deletion warrant, an
-IAM grant, a served-key move, a sovereign-facing claim, or a destructive sweep does. The controls below
-are real and they catch real defects — they are not a ritual to perform on every read.
-
-Three clauses, each from a measured case, because the bare line above misreads in three ways:
-- **It governs SUPPLEMENTARY controls, NEVER THE SUBSTANCE OF THE ACT.** Reading the artifact you are
-  about to adjudicate is not a check on the act — **it IS the act.** "The verdict was already
-  determined, so I did not read the bodies" is a misreading this line would otherwise permit.
-- **SIZE BY THE CLAIM YOUR WORK FEEDS, NOT ONLY THE ACT IN FRONT OF YOU — a cheap act can feed an
-  expensive claim.** Two trivial reversible flips were members of a census handed to Andrew, and
-  "a sovereign-facing claim" is on the does-need-controls list above. A seat sizing by the act alone
-  under-verifies precisely the inputs to its biggest claims.
+**Verification scales with the COST OF BEING WRONG. When the next check would not change what you
+do, STOP.** The test itself is **Rule 28 (EVIDENCE LAW)** -- four questions and a table saying how
+many to ask. Three clauses that are not obvious and were each measured:
+- **It governs SUPPLEMENTARY controls, NEVER THE SUBSTANCE OF THE ACT.** Reading the artifact you
+  are adjudicating IS the act, not a check on it.
+- **SIZE BY THE CLAIM YOUR WORK FEEDS, not only the act in front of you** -- a cheap act can feed an
+  expensive claim.
 - **RE-DERIVE WITH A DIFFERENT INSTRUMENT, OR CITE THE PEER'S INVOCATION. NEVER RE-RUN THE SAME
-  COMMAND.** The re-derivations that pay are the ones running a DIFFERENT instrument than the one
-  being relayed; re-running the same command adds a vote, not evidence. **This rule is per-seat but
-  the waste is fabric-wide** — four seats independently measured the same md5 of an unedited file in
-  one session, each individually correct, and the 4x is invisible from every one of their vantages.
+  COMMAND.** A same-command re-run tests the peer's honesty, which is not this fabric's failure mode.
+  **The rule is per-seat; the waste is fabric-wide** (four seats independently md5'd one unedited
+  file in a session, each individually correct).
 
-**Found something odd that is NOT your task? Do NOT halt and investigate.** One line to `3.0.0_SA_CVO`
-(cc the issuer) and **keep working** — CVO files it, investigates, and only material findings graduate
-to remediation. Rabbit-holing on an off-scope anomaly is the failure this channel exists to prevent.
-Exception: an ARMED hazard (something that can cause harm while you look away) disarms same-turn via a
-named owner. Doctrine: `docs/doctrine/THE_SURPRISE_CHANNEL.md`; protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`.
-
+**Found something odd that is NOT your task? Do NOT halt and investigate.** One line to
+`3.0.0_SA_CVO` (cc the issuer) and **keep working** -- CVO files, investigates, and only material
+findings graduate to remediation. **Rabbit-holing on an off-scope anomaly is the failure this channel
+exists to prevent.** An ARMED hazard (can cause harm while you look away) still disarms same-turn via
+a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`.
 ## NEVER (one miss = an incident)
 
 - **NEVER call a pipeline stale/broken/frozen until you have RESOLVED THE TRADING CALENDAR — count in
@@ -199,67 +191,71 @@ named owner. Doctrine: `docs/doctrine/THE_SURPRISE_CHANNEL.md`; protocol: `org/r
     Estate-scoped broad Bash `grep`/`find`/`rg` DENIES; non-estate broad-grep is a nudge. Native `Grep`/`Glob`
     = nudge-and-proceed; native `Read` + operational `aws` + pipe-greps = free. `/freeform` stands the rail
     down per-session. `docs/architecture/NFRA_COMPRAIL_PRD.md`.
-22. **Ground the MECHANISM, not just the symptom — a causal claim is a HYPOTHESIS until source/graph-confirmed,
-    and a hypothesis CANNOT authorize a fix, ruling, dispatch, or cert.** Live state grounds *what*; only
-    SOURCE + the dependency graph grounds *why*. **Gate:** any fix/ruling/cert resting on a causal claim must
-    CITE its grounding (`file:line @ <commit-ish>` or comp-tool + output). **"proof / provably / root cause /
-    definitively / source-confirmed" are RESERVED WORDS** — legal only on a source-confirmed claim.
-    **A LINE CITATION WITHOUT A VINTAGE IS NOT A CITATION.** **Put the control on the RETRIEVAL: print the
-    denominator of every scan you reason from** — and note a retrieval FAILURE returns a VALUE (`grep -c`
-    counts zero in an error message). Doctrine: `docs/doctrine/CONTROLS_OVER_CARE.md` (genchi genbutsu — go and
-    see for yourself): one root, plus the ways you fail to see it HAVING LOOKED — chiefly a PROXY · the
-    DESCRIPTION not the STATE · SELF-COMPARISON · an instrument that COULD NOT HAVE SAID OTHERWISE ·
-    the WRONG POPULATION. **The list is the doctrine's, not this file's — do not freeze its count here.**
-    **A comp-tool coverage gap is a DEFECT, not an inconvenience.** Spec: `docs/architecture/NFRA_COMPRAIL_GROUNDING_DOCTRINE.md`.
-22a. **Ground a verification claim on the RIGHT LAYER.**
-    **STATE/IAM** → cite the comp-tool (DESIRED) **AND** the live primitive (`get-role-policy`/`head-object`/
-    `describe-*`) for APPLIED truth — a comp-tool cannot tell **landed** from **planned**.
-    **CODE** → read the **DEPLOYED ARTIFACT'S BYTES** and diff against the source that artifact is built from,
-    **resolved through the BUILD INPUT (source-map / package manifest), NEVER by filename.** ⛔ On EC2, STAGED
-    code is *desired* and EXECUTING code is *applied*: a Lambda's package bytes ARE its executing bytes, but an
-    EC2's S3-staged object may be INERT (first-boot-only pulls). **Reading an artifact proves what is THERE,
-    never what RUNS** — applied truth for EC2 code is an on-instance read (SSM) or the runner's exit-log, and
-    **an expected log's ABSENCE is evidence too.**
-    **BEHAVIOR / "works" / "GREEN"** → **EXERCISE the path** (the test that fails if the claim is false), never
-    a config read.
-    ⛔ **A function whose running bytes are older than its built-from bytes PASSES EVERY RUNG** — plan 0-diff is
-    true (TF does not manage code currency), `get-function-configuration` is true (it is about env, not code),
-    and it runs green on the OLD code. ⛔ **And "does deployed match REPO?" is MALFORMED when the repo holds two
-    copies of the file** — a filename-resolved check reports drift where there is none AND reads CLEAN where two
-    copies have silently diverged; the second is the real defect.
-    A DESIRED-only applied-claim, or a config-read behavioral-claim, is `INFERRED` and NON-ACTIONABLE. RAVC
-    `grounding:` carries `desired` + `applied` + `exercised`.
-    **`comp-iam` IS NOT SUFFICIENT FOR A NEW RESOURCE, AND IT FAILS *GREEN*.** It models `(action)`, never
-    `(action, resource)` — a role holding `s3:GetObject` on ANY bucket reports `[GRANTED]` for a call to every
-    other. Remaining blind axes: role-mapping (prints `[UNKNOWN]`, fail-closed and honest, not sufficient);
-    unmapped-method silence; returned-buffer calls (`batch_writer`) and `generate_presigned_url`'s
-    action-at-REDEMPTION. >> **EVERY BLIND AXIS COLLAPSES TO ONE RISK CLASS, AND IT IS NOT THE INTUITIVE ONE: an
-    UNDER-REPORTING IAM instrument does not cause AccessDenied — it causes a FUTURE ENGINEER DOING
-    LEAST-PRIVILEGE CLEANUP TO DELETE A NEEDED GRANT AS "UNUSED." SILENCE IS THE DEFECT; THE TRACE IS A BONUS.
-    NEVER read a comp-iam operation list as a deletion warrant.** << Treat the operation list as a FLOOR.
-    A boto3 call against a **new bucket/table/ARN** is verified on the live primitive:
-    `aws iam simulate-principal-policy --policy-source-arn <role> --action-names <action> --resource-arns <exact key>`
-    **THAT INSTRUMENT HAS THREE INDEPENDENT FALSE-DENY MODES:** **(1)** 2+ `--resource-arns` flips HELD ones to
-    `implicitDeny`; **(2)** it evaluates `Condition` blocks, so with no `--context-entries` a conditioned
-    statement returns `implicitDeny` byte-identical to a real deny; **(3)** it does NOT validate action names —
-    a nonexistent action returns `implicitDeny` too, so **a TYPO is indistinguishable from a missing grant.**
-    **THEREFORE: ONE `--resource-arns` PER CALL · run the positive control as a SEPARATE INVOCATION · pass
-    `--context-entries` for any conditioned statement · NEVER use it to check whether an action name is REAL**
-    (use `aws accessanalyzer validate-policy`). *A positive control is only a control if it is run in isolation
-    from the target* — mode (1) silently disarms it.
-    >> **CARE IS NOT A CONTROL. CARE IS WHAT YOU HAVE INSTEAD OF ONE.** Before recording a PASS: *could this
-    have failed?* Run the positive control. Run the mutant. **Look at what actually came back.** <<
-    Principles: `docs/doctrine/CONTROLS_OVER_CARE.md`. Incidents: `docs/references/INCIDENTS_2026-07-13.md`.
-22b. **NEVER assert DELIVERED or READ from a file, an mtime, a `ps` match, or a send receipt — only an
-    agent-side ACK establishes READ.** Three clocks, routinely conflated: **SENT** (filename + `read/` mtime —
-    `mv` preserves mtime, so `read/` carries the *sender's* clock forever), **EMITTED** (`.unread-deliveries`
-    append — *a* watcher claimed it, not that a live consumer existed), **READ** (agent-side ACK — the only
-    sound oracle, and the one an orphan cannot forge). `ps`/`read/`/`TaskOutput`/`channel push` are **hints,
-    not receipts**: an orphaned watcher drives "reachable" AND "inbox empty" while its agent is deaf — the
-    verdict is **ANTI-CORRELATED**, reading REACHABLE *because* the agent is deaf, so it PASSES the
-    random-input control that catches undiscriminating tools. **Producer-side signals are blind to consumer
-    death; consumer-side signals are blind to the coupling; only a round trip crosses both.** A sovereign
-    `[STOP]`/prohibition broadcast requires an ACK-or-escalate loop. Why: `org/tier0/ledger/LD-0271.md`.
+22. **EVIDENCE LAW -- FOUR QUESTIONS, AND WHO EATS THE ERROR DECIDES HOW MANY YOU ASK.**
+    (Rule 24 tests a SCHEMA; this tests a CLAIM. Doctrine + the failure catalogue:
+    `docs/doctrine/CONTROLS_OVER_CARE.md`.)
+
+    | If being wrong costs... | Ask |
+    |---|---|
+    | me, this turn -- I just redo it | nothing. Act. |
+    | me later, or another seat | **THING + WHOLE** |
+    | the record -- a commit, a message sent, a TO, a report | **+ LAYER** |
+    | the world -- deploy, delete, grant, served key, a claim to Andrew | **+ NO** |
+
+    **THING** -- the object I read IS the object I am claiming about, *at the vintage claimed*. A
+    different bucket / tree / copy / moment does not error: it answers cleanly about something else.
+    **WHOLE** -- my evidence spans the set I am claiming about. **Print the denominator.** A page is
+    not a total; a part is not the whole; a residual you named is not one you measured.
+    **LAYER** -- **DESIRED** (config, plan, source) != **APPLIED** (live state) != **EXERCISED** (it
+    ran, and would have failed if the claim were false). **A description is never a state.**
+    **NO** -- could this evidence have come out differently if the claim were false? If not, it is
+    not evidence. Run the control that fails.
+
+    ⛔ **THE ORDER IS THE MECHANISM. `NO` PASSES INSIDE A WRONG `THING`/`WHOLE`/`LAYER`** -- and then
+    every instrument agrees with every other, because all of them are about the same wrong thing.
+    **That is why careful agents still fail: they run `NO` hard and never ask the first three.**
+
+    **"proof / provably / root cause / definitively / source-confirmed" are RESERVED WORDS** -- legal
+    only on a claim that passed LAYER at EXERCISED. Cite grounding as `file:line @ <commit-ish>`:
+    **a line citation without a vintage is not a citation.** A claim failing any postulate is
+    `INFERRED` and NON-ACTIONABLE; the cert/dispatch owner withholds the GO.
+
+22a. **INSTRUMENT TRAPS -- non-obvious failures of Rule 28 you cannot re-derive at the call site.**
+    **CODE currency**: read the DEPLOYED artifact's bytes and diff against the source it is BUILT
+    FROM, resolved through the BUILD INPUT (source-map / manifest), **NEVER by filename** -- a
+    filename-resolved check reports drift where there is none AND reads clean where two copies have
+    diverged. On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED** (first-boot-only pulls
+    leave the staged object INERT), so applied truth is an on-instance read or the runner's exit-log
+    -- **an expected log's ABSENCE is evidence too**. ⛔ A function whose running bytes are older than
+    its built-from bytes **passes every rung**: plan 0-diff is true (TF does not manage code
+    currency), `get-function-configuration` is true (it is about env), and it runs green on the old code.
+    **IAM**: `comp-iam` models `(action)`, never `(action, resource)` -- a role holding `s3:GetObject`
+    on ANY bucket reports `[GRANTED]` for every other. It also cannot see returned-buffer calls
+    (`batch_writer`) or `generate_presigned_url`'s action-at-REDEMPTION. >> **AN UNDER-REPORTING IAM
+    INSTRUMENT DOES NOT CAUSE AccessDenied -- IT CAUSES A FUTURE ENGINEER DOING LEAST-PRIVILEGE
+    CLEANUP TO DELETE A NEEDED GRANT AS "UNUSED". SILENCE IS THE DEFECT. NEVER read a comp-iam
+    operation list as a deletion warrant.** << Treat it as a FLOOR. For a NEW bucket/table/ARN verify
+    live: `aws iam simulate-principal-policy --policy-source-arn <role> --action-names <a>
+    --resource-arns <exact key>` -- which has **THREE false-deny modes**: 2+ `--resource-arns` flips
+    held ones to `implicitDeny`; a conditioned statement with no `--context-entries` returns
+    `implicitDeny` byte-identical to a real deny; and **it does not validate action names, so a TYPO
+    is indistinguishable from a missing grant** (use `aws accessanalyzer validate-policy`).
+    **ONE `--resource-arns` per call; run the positive control as a SEPARATE invocation** -- mode (1)
+    silently disarms it.
+    **DELIVERY**: three clocks, routinely conflated -- **SENT** (filename/mtime; `mv` preserves the
+    sender's clock forever), **EMITTED** (a watcher claimed it, not that a consumer existed), **READ**
+    (agent-side ACK -- the only sound oracle, and the one an orphan cannot forge). An orphaned watcher
+    reads REACHABLE *because* the agent is deaf, so the verdict is **ANTI-CORRELATED** and passes the
+    random-input control. **Producer-side signals are blind to consumer death; only a round trip
+    crosses both.** A sovereign `[STOP]` needs an ACK-or-escalate loop.
+    **RETRIEVAL**: a failed retrieval returns a VALUE -- `grep -c` counts zero in an error message.
+    ⛔ `--query 'length(...)'` on a paginated `list-*` returns the PAGE count, and **`--no-paginate`
+    is the hazard, not the remedy**: omit it, let the CLI paginate, count the materialised set.
+    ⛔ `aws s3 ls` renders LOCAL time unmarked while `s3api` renders UTC; and `git log
+    --date=format:'...Z'` **renders local and stamps a literal `Z`** -- use `%aI`/`--date=iso-strict`
+    and **never type a `Z` into a format string.** A missing marker makes a reader ask; a false one
+    makes them stop asking.
+
 23. **Every SES send uses `Source`/`EMAIL_FROM` on the `opalinvest.dev` domain** — DKIM-signed + DMARC-aligned.
     `opalinvest.com` is address-verified only (DKIM NOT_STARTED, SPF excludes SES) — unauthenticated, so EOP
     quarantines it **nondeterministically**. ✋ **`opalcapital.com` — WE DO NOT OWN THIS DOMAIN.** Never send
