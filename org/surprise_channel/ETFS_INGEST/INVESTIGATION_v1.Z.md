@@ -1151,6 +1151,28 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "0.4.0_DS_ClientPlatform~Z",
   "notes": "Rule 24(i) evaluated against the DECLARED LAYER the axis covers, which is 'every holding in the book': a bucket set that cannot express `None` is not collectively exhaustive. || \u2b50 THE REMEDY IS ALREADY LIVE ONE FIELD OVER AND SHOULD BE ADOPTED, NOT MINTED -- 1.0.0_SA_CTO~Z's point, and it is build-ladder rung 2: 'Other' is an EXISTING live member on the geography axis. Re-coining a new label beside a ratified term is the duplicate the ladder exists to stop. || \u26d4 AND THE TRAP TO REFUSE, ALSO 1.0.0_SA_CTO~Z's: DO NOT NORMALISE THE BUCKETS TO 100. The books' own holdings do not sum to exactly 100 (DIVZ sector and geography BOTH read 99.80) -- that is the issuer's data, not our arithmetic. Normalising would manufacture precision the source does not have AND silently absorb the missing weight into the other buckets, converting a visible shortfall into an invisible misstatement. The residue bucket makes it visible; normalisation makes it invisible AND wrong. || \u26a0 PLANE DISCIPLINE, STATED BECAUSE THIS ROW IS EASY TO OVERCLAIM: what is MEASURED here is that the SERVED DATA omits the weight and carries no bucket for it. Whether a reader SEES a shortfall is a RENDERING question on 0.4.0_DE_ClientPlatform~Z's plane, and no S3 read can answer it. I am not claiming the panel is silently wrong on screen -- I am claiming the data handed to it cannot express where the weight went."
+ },
+ {
+  "id": "ETFS_INGEST-Z-S44",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-08-25T04:49Z",
+  "one_line": "RBGLD RESOLVES PERFECTLY AND STILL HAS NO HISTORY -- a THIRD defect class distinct from both Z-S39 shapes: reference data succeeds, the history leg silently returns nothing, no error is raised anywhere, and the page renders a COMPLETE-LOOKING row (right name, right sector, right weight) with a blank return.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED on the 2026-08-24 bronze: characteristics.parquet holds 170 securities, history_topup.parquet holds 167. The 3-security gap, read with its __error__ column: ICT (__error__ = 'Unknown/Invalid Security [nid:19533]'), MER (NAME='MERRILL LYNCH & CO INC', __error__ = null), RBGLD (NAME='RECKITT BENCKISER-SPON ADR', GICS_SECTOR_NAME='Consumer Staples', CNTRY_OF_DOMICILE='GB', __error__ = null).",
+    "*** SO 2 OF THE 3 RESOLVE CLEANLY AND STILL RETURN NO HISTORY -- the gap is NOT coextensive with identifier failure. ***",
+    "RBGLD is CORRECTLY resolved end to end: 'RBGLD US Equity' really is Reckitt Benckiser's sponsored ADR, GB-domiciled, and the served IDVZ row carries name='Reckitt Benckiser Group PLC', asset_class='Equity', sub_asset_class='Consumer Staples', weight=0.0297. NOTHING about that row looks wrong.",
+    "Served evidence from the 04:45:15Z ad-hoc publish: RBGLD is one of the 8 holding rows (of 187) with a null 1D. The other 7 are ICT + MER (Z-S39 identifier failures) and FXFXX x2, CASH&OTHER x2, 2602335D (cash/sentinel and identifier lines). RBGLD is the ONLY one of the eight that is a correctly-identified, correctly-classified ordinary equity.",
+    "It is not new to the universe: absent from the 08-20 characteristics (109 securities), present in both 08-21 and 08-24 (170 each). So this is not a first-day artifact.",
+    "__error__ discriminates rather than being undiscriminating: it is non-null on exactly 1 of 170 rows (ICT), and null on all 137 rows that DID return a yield."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "notes": "*** THIS IS A THIRD CLASS AND IT DOES NOT FOLD INTO EITHER Z-S39 SHAPE. *** Z-S39 covers (a) resolves-to-nothing (ICT, loud) and (b) resolves-to-the-WRONG-security (MER, silent-but-detectable by a name compare). RBGLD is (c) RESOLVES CORRECTLY AND THE HISTORY LEG RETURNS NOTHING ANYWAY -- and no name compare can ever catch it, because the name is right. || \u26d4 IT IS THE WORST OF THE THREE TO DETECT AND THE BEST-CAMOUFLAGED ON THE PAGE: every visible attribute is correct, so the blank return reads as an ordinary missing datum -- pixel-identical to a cash line, to a non-dividend payer, and to the 58 securities correctly awaiting Phase-2 backfill. A reader has NO signal distinguishing 'this security's history genuinely does not exist' from 'our history leg silently dropped it'. || \u26a0 MECHANISM UNDETERMINED AND I AM NOT GUESSING IT. Candidates not adjudicated: the ADR may carry no DAY_TO_DAY_TOT_RETURN_GROSS_DVDS on that date; the history request may partially fail without surfacing; the security may be excluded upstream. THAT IS A SOURCE READ ON THE HISTORY LEG, and Rule 22 forbids me converting the observation into a cause without it -- I have already made exactly that error once tonight on Z-S42. || \u2b50 AND THE GENERAL POINT THE THREE-WAY SPLIT MAKES: THE CHARACTERISTICS LEG AND THE HISTORY LEG CAN DISAGREE ABOUT WHETHER A SECURITY EXISTS, AND NOTHING RECONCILES THEM. 170 versus 167 is a real, cheap, standing discrepancy that no artifact currently reports -- the manifest records rows.characteristics and rows.history_topup separately and never compares them, which is the same shape as the resolver listing a partition it never opens."
  }
 ]
 ```
