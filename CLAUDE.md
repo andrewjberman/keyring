@@ -215,6 +215,14 @@ a named owner. `docs/doctrine/THE_SURPRISE_CHANNEL.md` -- board: `comp-surprise`
     every instrument agrees with every other, because all of them are about the same wrong thing.
     **That is why careful agents still fail: they run `NO` hard and never ask the first three.**
 
+    ⛔ **AND A SECOND SEAT'S CONFIRMATION IS NOT CORROBORATION IF IT USED THE FIRST SEAT'S METHOD.**
+    Name your instrument and whether it DIFFERS from theirs; if it does not, it is a **REPETITION** --
+    one measurement reported twice, wearing the authority of two. **It rides all four questions**,
+    because two seats can share a wrong `THING`, `WHOLE` or `LAYER`, and the agreement then raises
+    confidence in exactly the wrong direction. *Costs one clause per confirmation. Does not apply when
+    you are FIRST to the claim, when you are CITING a peer's published invocation rather than
+    re-deriving it, or when the error-eater is "me, this turn."*
+
     **"proof / provably / root cause / definitively / source-confirmed" are RESERVED WORDS** -- legal
     only on a claim that passed LAYER at EXERCISED. Cite grounding as `file:line @ <commit-ish>`:
     **a line citation without a vintage is not a citation.** A claim failing any postulate is
