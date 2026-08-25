@@ -319,6 +319,77 @@ def print_linkage(lk, show_all):
     print(SEP)
 
 
+def seats(projects):
+    """assignee -> {projects, directives} over OPEN task orders. Read-only aggregation.
+
+    An assignee is recorded ONLY in the TO. There is no seat->project index anywhere else in the
+    estate, which is why "what is this seat on?" could not be asked. This does not create the link;
+    it reads the one place it already lives.
+    """
+    import glob as _g
+    COMPLETE = {"complete", "completed", "closed", "cancelled", "canceled", "superseded", "done",
+                "merged", "decommissioned", "dropped", "archived", "shipped", "implemented"}
+    SERIAL = re.compile(r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?")
+
+    def _strip(t):
+        return re.sub(r"<!--.*?-->", "", t, flags=re.DOTALL)
+
+    def _tag(t, n):
+        m = re.search(rf"<{n}>(.*?)</{n}>", t, re.DOTALL | re.I)
+        return _strip(m.group(1)).strip() if m else None
+
+    def _attr(t, a):
+        m = re.search(r"<task_order\b[^>]*>", t, re.I)
+        if not m:
+            return None
+        x = re.search(rf'\b{a}\s*=\s*"([^"]*)"', m.group(0), re.I)
+        return x.group(1).strip() if x and x.group(1).strip() else None
+
+    out = {}
+    unassigned = 0
+    for f in _g.glob("org/**/task_orders/*.md", recursive=True):
+        t = open(f, encoding="utf-8", errors="replace").read()
+        raw = _tag(t, "status") or ""
+        if not raw.strip():
+            continue
+        if re.split(r"[\s\-\n]", _strip(raw).strip().lower())[0].rstrip(".,;:") in COMPLETE:
+            continue
+        p = _tag(t, "project") or _attr(t, "project") or ""
+        who = _tag(t, "issued_to") or _tag(t, "to") or ""
+        hits = SERIAL.findall(who)
+        if not hits:
+            unassigned += 1
+            continue
+        d = (projects.get(p) or {}).get("directive")
+        for h in set(hits):
+            e = out.setdefault(h, {"n": 0, "projects": set(), "dirs": set(), "nodir": set()})
+            e["n"] += 1
+            if p:
+                e["projects"].add(p)
+                (e["dirs"].add(d) if d else e["nodir"].add(p))
+    return out, unassigned
+
+
+def print_seats(sts, unassigned):
+    print("\n== SEATS -- who holds open work, and under which directive ==\n" + SEP)
+    if not sts:
+        print("  (no assignee-bearing open task orders)")
+        return
+    print("  %-30s %4s  %-16s %s" % ("ASSIGNEE", "TOs", "DIRECTIVES", "PROJECTS WITH NO DIRECTIVE"))
+    for who in sorted(sts, key=lambda w: -sts[w]["n"]):
+        e = sts[who]
+        dirs = ",".join(sorted(d for d in e["dirs"] if d)) or "-"
+        nod = ",".join(sorted(e["nodir"])[:3]) + ("..." if len(e["nodir"]) > 3 else "")
+        print("  %-30s %4d  %-16s %s" % (who[:30], e["n"], dirs, nod or "-"))
+    print(SEP)
+    orphan_seats = [w for w, e in sts.items() if e["nodir"] and not e["dirs"]]
+    print("  SEATS HOLDING ONLY DIRECTIVE-LESS WORK: %d %s"
+          % (len(orphan_seats), sorted(orphan_seats) if orphan_seats else ""))
+    print("  open TOs with NO parseable assignee:    %d  (not counted above, not assumed unassigned)"
+          % unassigned)
+    print(SEP)
+
+
 def print_live(rows, full):
     for i, r in enumerate(rows, 1):
         pj = ", ".join(f"{p}[{s}]" for p, s in r["projects"].items()) or "-"
@@ -384,6 +455,8 @@ def main():
         print_retired(ret_doc, retired)
     if show_live and not a.code:
         print_linkage(lk, a.orphans)
+        _s, _u = seats(projects)
+        print_seats(_s, _u)
     if malformed:
         print(f"\nWARN: MALFORMED ROWS ({len(malformed)}) -- surfaced, fix these:")
         for c, e in malformed:
