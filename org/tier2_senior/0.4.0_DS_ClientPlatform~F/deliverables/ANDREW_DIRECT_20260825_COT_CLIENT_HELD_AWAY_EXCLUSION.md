@@ -127,3 +127,31 @@ has not yet set the **boundary** (BD's flag → exclude $30,322,927.42, vs his 4
 (D1-only vs every Cottonwood artifact) above this lane.
 
 **Author:** `0.4.0_DS_ClientPlatform~F`.
+
+
+---
+
+# ⛔⛔ RETRACTED 2026-08-25 ~02:0xZ — THE RATIFIED COMPOSITION CLAIM ABOVE IS WRONG
+
+**THE `~$8.3M = PropertyHome` ATTRIBUTION IN THE RATIFIED SECTION ABOVE IS RETRACTED.** Full record
+and measurement: `ANDREW_DIRECT_20260825_OPEN_CALLS_R2_AND_THE_458M_RETRACTION.md`.
+
+**WHAT WAS ACTUALLY WRONG: A DATE.** Andrew's 458M dashboard is **08/21**; every figure in the
+section above was measured at **08/19**. Supervised measured at 08-21 is **458,053,742.19** against
+his dashboard's **458,053,742** — a **$0.19** delta, with three of four portfolio-group rows tying to
+the cent. The `458,053,742 − 449,733,561 = 8,320,181` gap is **two days of market movement**, not a
+missing asset class.
+
+**HIS ~$22M WAS A CROSS-DATE SUBTRACTION THAT THIS LANE ENABLED:** his 458M (08/21 supervised) minus
+the 480M (08/19 ALL) *that this lane supplied him*. Measured within one date, held-away is **~$30.3M
+on both dates** (30,322,927.42 @08-19; 30,356,366.76 @08-21).
+
+**WHAT SURVIVES:** `PropertyHome = $8,378,664` is still a true measurement of what sits INSIDE the
+unsupervised bucket. The insurance corroboration (227 policies / 3 valued ≈ $885K) is UNAFFECTED and
+still stands. **What does not survive is the CAUSAL attribution** — two independent ~$8.3M quantities
+existed and this lane fused them on magnitude alone.
+
+⛔ **A COINCIDENCE OF MAGNITUDE SURVIVED THIS LANE'S CHECK, ANDREW'S CHECK, AND A FORMAL
+RATIFICATION** — because every party compared the same two figures and nobody re-derived them at the
+SAME VINTAGE. The control costs one line: measure both sides at one date before attributing a
+difference. **Ratification is not verification.**
