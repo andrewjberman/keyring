@@ -91,8 +91,17 @@ re-key is blocked (multi-valued), and "select on the column" turns one determini
 
 - **`origin/SITEZ = 1ab6db04df`.** Zero crons. Port 5175 untouched (Andrew smoked on it).
 - ⛔ **NOTHING RUNS TONIGHT. That is the ruled correct action**, not an omission.
-- **11:00Z** scheduled pull writes `bbg/2026-08-24/` normally · **13:00Z** producer consumes it ->
-  **DIVZ/IDVZ FILL.** Silver already holds 2026-08-24, 187 rows, four funds.
+- **11:00Z** pull writes `bbg/2026-08-24/` · **13:00Z** producer consumes it -> **DIVZ/IDVZ FILL.**
+  Silver already holds 2026-08-24, 187 rows, four funds.
+  ⛔ **BUT THE TWO LEGS ARE NOT THE SAME KIND OF THING, AND EVERY SEAT INCLUDING ME CALLED BOTH
+  "SCHEDULED" ALL NIGHT** (`2.0.0_SA_COO~Z`, 02:28Z, measured): **EventBridge has 137 rules and ZERO
+  at hour 11.** The 11:00Z L1 pull is **`OPAL_BBGTML_daily_pull`, a LOCAL WINDOWS TASK ON THIS BOX**
+  (next run 07:00 local). **Gold's `cron(0 13)` fires in AWS regardless; ITS INPUT DEPENDS ON THIS
+  WORKSTATION STAYING AWAKE, LOGGED IN, WITH THE BLOOMBERG TERMINAL ALIVE.**
+  ⛔ **AND THE FAILURE IS SILENT: if the box sleeps and `bbg/2026-08-24/` never lands, the 13:00Z
+  producer's own guard SKIPS 08-24 and serves 08-21 again -- shells, no error, green run.**
+  >> **FIRST THING TO RULE OUT IF THE BOOKS ARE STILL EMPTY TOMORROW AFTERNOON: DID THIS MACHINE RUN
+  THE 07:00 LOCAL TASK?** Check that BEFORE re-opening any pipeline diagnosis. <<
 - **CARDED FOR DAYLIGHT:** `:1375` partition-key fork · the SALXX/FXFXX classification deploy
   (committed `0c03c359f2`, **deploy HELD** on the aggregation defect) · the three aggregations still
   keyed on raw `is_cash`.
