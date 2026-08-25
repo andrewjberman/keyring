@@ -198,6 +198,33 @@ expiry, and somebody has to go and look.**
    so ONE scheduled fire yields THREE `status: published` manifests.** A manifest count silently stops
    meaning what its name says.
 
+   ⛔⛔ **AND BEFORE ANY OF THAT: THE 04:00Z LOCAL-MIDNIGHT GATE, AND I LEARNED IT BY BREAKING IT.**
+   Andrew ruled DIVZ/IDVZ *"top priority"* / *"rectified immediately"* at ~00:45Z. The one unblocking
+   act is the L1 pull writing `bbg/2026-08-24/`. **I RAN IT AT 00:49Z AND IT LANDED UNDER
+   `bbg/2026-08-21/`** -- `etf_daily_pull.py:66` uses `pd.Timestamp.today()`, which is **LOCAL**, and
+   locally it was still Monday 20:49 EDT. `BDay(-1)` resolved to FRIDAY.
+   ```
+   LOCAL MIDNIGHT = 04:00Z. Only THEN does today()=2026-08-25 -> BDay(-1)=2026-08-24.
+   Before 04:00Z a bare invoke CANNOT produce bbg/2026-08-24/, however many times it is run.
+   ```
+   ⛔ **AND IT COST EVIDENCE: the run OVERWROTE `bbg/2026-08-21/run_manifest.json`** -- the scheduled
+   11:02:47Z record (`run_class scheduled`, universe 109, source = the SUNDAY partition) is GONE,
+   replaced by `run_class adhoc` / universe 170. **That manifest was cited in three live threads
+   including MY OWN Z-S5 criterion. I deleted the artifact my own obligation was keyed to.** The
+   figures survive only in message traffic.
+   ✅ The one real gain: `bbg/2026-08-21/characteristics.parquet` 109 -> 170 rows, now covering
+   `BBSEY`/`AMX`/`CPA`/`BNPQY` (controls fired). That was never the blocker -- **holdings are**, and
+   `silver/holdings/2026-08-21.parquet` has ZERO TrueShares rows and always will.
+   >> **THE LESSON, AND IT IS NOT "CHECK THE CLOCK": `3.0.0_SA_CVO~Z` SOURCE-CONFIRMED THIS EXACT
+   LINE AN HOUR EARLIER and predicted the partition lands "~11:00Z" -- which IS local rollover. I
+   read it, quoted it upward, and then invoked as if the boundary were UTC, using the same 4.0h
+   offset I had measured on this box and written into these very criteria.** Reading a finding is not
+   holding it.
+   **IF ACTING IN THE 04:00Z-11:00Z WINDOW:** a bare invoke is correct and needs no date (`run(
+   as_of_arg=)` exists but the handler never passes it -- selection is automatic). **But it PRE-EMPTS
+   the 11:00Z scheduled run and will overwrite ITS manifest the same way.** That is a real cost and
+   it is COO~Z's/CTO~Z's call, not a convenience.
+
    ⛔⛔ **THE ~2h WINDOW BETWEEN THE TWO FIRES IS MINE AND IT IS THE ONLY CHEAP PLACE TO CATCH THIS.**
    **HOLDINGS ARRIVING IS NECESSARY AND NOT SUFFICIENT.** The gold producer JOINS holdings to the
    Bloomberg per-security characteristics file, and I verified at my own seat on a DISCRIMINATING
