@@ -752,8 +752,12 @@ if [ "$_commit_rc" -ne 0 ]; then
     echo "  WARN: $_stuck file(s) could NOT be unstaged and REMAIN STAGED -- another seat can adopt" >&2
     echo "        them under their author line. Clear them yourself: git reset HEAD -- <path>" >&2
   fi
-  echo "       REMINDER: '[msg-verify] committed <hash>' prints on SUCCESS ONLY -- its ABSENCE means" >&2
-  echo "       no commit, whatever a pipeline rc says. Capture-then-read, never pipe-then-read." >&2
+  echo "       DO NOT grep THIS OUTPUT to decide whether it committed. Ask the REPOSITORY:" >&2
+  echo "         git log -1 --format=%h~%an~%s <hash>   (negative control: a bogus hash must fail)" >&2
+  echo "       A tool stdout line is the TOOL DESCRIBING ITSELF; git log is the REPOSITORY" >&2
+  echo "       ANSWERING. Measured 2026-08-25 by 0.4.0_DS_ClientPlatform~J: this reminder used to" >&2
+  echo "       quote the success marker verbatim, so a naive grep for it returned PASS on a FAILED" >&2
+  echo "       commit. A check that parses a tool prose inherits every future edit to that prose." >&2
 fi
 
 # ============================================================================
