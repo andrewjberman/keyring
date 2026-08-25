@@ -715,8 +715,10 @@ if [ -n "$_late_pyc" ]; then
     [ -n "$_p" ] && echo "SKIP: pycache-artifact (never committed): $_p" >&2
   done <<< "$_late_pyc"
 fi
-git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}"
+_commit_out="$(git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)"
 _commit_rc=$?
+printf '%s
+' "$_commit_out"
 
 # ============================================================================
 # MESSAGE SELF-VERIFY (Andrew-direct 2026-08-24 ~23:5xZ, COO record @91011a1a1d:
@@ -747,7 +749,19 @@ if [ "$_commit_rc" -eq 0 ]; then
     esac
     _svk=$((_svk + 1))
   done
-  _sv_hash="$(git rev-parse HEAD 2>/dev/null)"
+  # !! THE HASH COMES FROM `git commit`'S OWN OUTPUT, NEVER FROM `git rev-parse HEAD`.
+  # MEASURED 2026-08-25 ~03:3xZ IN THIS VERY BLOCK, ON ITS AUTHOR: a peer commit landed
+  # BETWEEN the commit and the rev-parse in this 15-seat shared worktree, so msg-verify
+  # reported a PEER'S hash and subject for MY commit -- the exact shared-worktree HEAD class
+  # this feature exists to kill, reintroduced inside the fix. `git commit` prints
+  # "[BRANCH abcdef123] subject" and that hash is ITS OWN, immune to any concurrent write.
+  _sv_hash="$(printf '%s' "$_commit_out" | sed -n 's/^\[[^ ]* \([0-9a-f]\{7,40\}\)\].*//p' | head -1)"
+  if [ -z "$_sv_hash" ]; then
+    # FAIL LOUD, never fall back to HEAD: an unparsed hash means the output shape changed,
+    # and silently reading HEAD is precisely the defect above.
+    echo "  [msg-verify] CANNOT PARSE the commit hash from git commit output -- NOT falling back to HEAD (that is the race this replaced). Verify by hand: git log -1 --format=%H -- <your paths>" >&2
+    exit "$_commit_rc"
+  fi
   _sv_subject="$(git log -1 --pretty=format:%s "$_sv_hash" 2>/dev/null)"
   echo "  [msg-verify] committed ${_sv_hash:0:10}  subject: ${_sv_subject:0:100}"
   if [ -n "$_sv_file" ] && [ -f "$_sv_file" ]; then
