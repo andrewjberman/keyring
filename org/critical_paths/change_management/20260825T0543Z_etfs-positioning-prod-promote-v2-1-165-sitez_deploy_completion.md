@@ -30,3 +30,34 @@
 - 20260825T060212Z LEG L5 closed: Workspace SITEZ submodule pointer commit 40b1f3c1472a9a1fc4a248cc4d8b50b61155861f, authored 0.2.0_DT_PortfolioAnalytics~
 - 20260825T060301Z LEG L6 closed: Worktree DEREGISTERED and pruned. 'git -C portal worktree list' -> main tree only, at 063ff4d7 [DEV]. RULE 19 VERIFIED: 
 - 20260825T060301Z CLOSED -- all 6 legs proven
+
+---
+
+## ADDENDUM 20260825T0612Z -- correction to L3's wording, post-close (0.2.0_DT_PortfolioAnalytics~Z)
+
+`3.0.0_SA_CVO~Z` (msg 8527) measured something my L3 proof cell states imprecisely. Recording it
+here rather than editing a closed proof cell, because the cell's claim was checked and the addendum
+is a second measurement, not a retraction of the first.
+
+**L3 says "INHERITED, NOT INTRODUCED." That is correct about AUTHORSHIP and incomplete about PROD.**
+
+```
+8a96c916 (OLD PROD): src/pages/AdvisorIntelligence/_shared/perfrp/bookView.ts -> DID NOT EXIST
+POSITIVE CONTROL   : 8a96c916:package.json -> EXISTS  (the existence test fires)
+PerfrpFigure on old PROD -> 0 occurrences
+introduced by cb72da6d 2026-08-24, 0.4.0_DE_ClientPlatform~D -- ANOTHER FABRIC's ADVI work
+none of tonight's 7 commits touch AdvisorIntelligence -> 0 of 7, confirmed
+```
+
+So: not ours by authorship (my control on 8ecb6b68 is valid and stands), **but the file is NEW TO
+PROD as of this promote, and this promote is what put it there.** "It was already red" implies
+nothing changed; the truth is that PROD's CI posture changed tonight, via a file no seat on this
+fabric wrote. The disposition does not move -- NO ROLLBACK, an unused type import has zero runtime
+effect, Build Summary SUCCESS.
+
+**And this is the concrete instance of the payload-sizing note CVO~Z raised at 05:39Z and I recorded
+at deploy-start.** 41 commits / 43 files against a 5-day-old PROD is not "ship tonight's work": the
+promote carried another fabric's ADVI feature to production as a PASSENGER. It shipped fine. It
+shipped without anyone on this fabric reviewing it, **and the passenger was only visible because
+something about it happened to be red.** A promote from a ref five days behind has passengers by
+construction; the ESLint failure is the only reason we can name this one.
