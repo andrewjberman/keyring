@@ -53,12 +53,77 @@ any BD-Unsupervised account that holds Opal Models, which contradicts the Client
 the same breath (accounts holding Opal Models are Supervised).
 
 **So the exclusion is the intersection: BD-Unsupervised ∧ no Opal Model exposure.** This lane is
-measuring that intersection rather than applying the $30.3M single-flag figure. If the intersection
-lands near ~$22M, his recollection was of the correct quantity and the mechanism is confirmed from
-both ends.
+measuring that intersection rather than applying the $30.3M single-flag figure.
+
+⛔ **THAT HYPOTHESIS WAS MEASURED AND FALSIFIED — see the RATIFIED section below.** The intersection
+does NOT land near ~$22M: **ALL 317 Opal-exposed accounts are BD-Supervised**, so zero
+BD-Unsupervised accounts hold Opal Models and **intersection == single flag == $30,322,927.42**. The
+AND and the one-flag filter coincide on this vintage, so the simpler filter is correct. His ~$22M is
+separately explained as a **dated figure** (the series read ~$22M around 2026-06-25 and grew with
+onboarding), and the residual 458M-vs-449.7M gap is **PropertyHome**, ratified as canonical state.
+**NOTE THE NEAR-MISS THAT PRODUCED THE FIRST ANSWER:** the initial intersection run joined
+`fact_model_assignment` on `account_id` (an internal numeric id) against the BD `z0...` key —
+**0 of 944 overlap** — so every account read `opal_exposed=False` and the cross-tab returned the
+SAME final figure with a clean, perfectly-partitioned table. A well-formed zero pointing at the right
+answer for no reason. Correct key is `external_id` (934/944); the re-run ties its opal-exposed count
+to the independent upstream figure (317 == 317) as a positive control.
 
 **MAGNITUDE OF GETTING THIS WRONG:** excluding the superset understates Cottonwood's client-facing
 total by up to ~$8M and removes assets that carry Opal exposure. NEVER#3 territory — a served total
 moving on an inferred discriminator.
 
 **Author:** `0.4.0_DS_ClientPlatform~F`. **Cells:** D1-h-c1/c2/c3, D1-b-1, D1-h-p2 (the cot total).
+
+---
+
+# RATIFIED 2026-08-25 ~01:3xZ — ANDREW-DIRECT. THIS IS CANONICAL STATE.
+
+## VERBATIM
+
+> No your discovery makes sense and should be recognized as canonical state. I just checked their
+> insurance page, there are 227 policies on there but only 3 with dollar value attached, so your
+> 800k or so assessment does tie with those figures as well.
+
+## WHAT IS NOW SETTLED
+
+**The composition finding is CANONICAL STATE by his word.** The `~$8.3M` reconciling his 458M line
+to the measured 449.7M is **`PropertyHome` ($8,378,664 / 9 accounts)** — real property, not
+insurance. The `~8m in insurance assets` figure in his prior message is **superseded by his own
+check** and is not carried forward.
+
+**INDEPENDENT CORROBORATION, from a source this lane never touched.** He read Cottonwood's insurance
+page directly: **227 policies, only 3 carrying a dollar value.** This lane measured, from the account
+dimension, **$885,016.86 across 5 accounts** whose type or registration names insurance/annuity/life.
+The two agree in magnitude. **Two instruments on different planes — a vendor page and a gold account
+dimension — converging on the same sub-$1M figure is the strongest form the earlier reading could
+have taken**, and neither was derived from the other.
+
+**Reading (a) is CLOSED.** There is no unmeasured ~$8M insurance block sitting outside the dataset.
+The coverage gap this lane flagged as the more serious of the two possibilities **does not exist.**
+
+## TWO CONSEQUENCES THIS OPENS — surfaced, not adjudicated
+
+### 1. INSURANCE ASSETS ARE CURRENTLY INSIDE `Client`, NOT IN THE `Insurance` NODE
+The taxonomy's 5-enum carries `insurance` as a top-level peer, and the registry has **ZERO Insurance
+members**, so this lane's cot emit reports `Insurance: 0.00` and the emit guard correctly does not
+fire. But ~$885K of genuinely-insurance assets exists and is classified into **Client** (inside the
+held-away/unsupervised bucket). That is a CLASSIFICATION GAP, not an arithmetic one — no number is
+wrong today, but the node that should hold them is empty and another node holds them instead.
+**Materially it self-cancels for cot right now:** those accounts sit inside the held-away block, so
+under the exclusion they leave the figures regardless of which node they are attributed to.
+
+### 2. `227 POLICIES, 3 VALUED` IS THE ADVI_INSURE TRIGGER CONDITION, MEASURED
+The TO names a cross-project edge: `ADVI_INSURE`'s first-insurance-member cell carries the observed
+trigger **"D1 p2/inv-4 re-verified with Insurance > 0"**. His figure supplies the standing state:
+**224 of 227 policies carry no dollar value.** If insurance is ever valued in the feed, the Insurance
+node becomes non-zero and **this lane's emit guard REFUSES the emit by design** — which is the guard
+working, not a defect. That is INSURE's cell to own; recorded here so the trigger has a measured
+denominator rather than a hypothetical one.
+
+## STATUS UNCHANGED BY THIS RATIFICATION
+The **exclusion figure and its scope remain UNAPPLIED**. He ratified the *composition finding*; he
+has not yet set the **boundary** (BD's flag → exclude $30,322,927.42, vs his 458M line → exclude
+~$22M and keep ~$8.3M of property in Client-Supervised), and COO ruled the **scope** question
+(D1-only vs every Cottonwood artifact) above this lane.
+
+**Author:** `0.4.0_DS_ClientPlatform~F`.
