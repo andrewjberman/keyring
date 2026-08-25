@@ -292,6 +292,26 @@ in the message that carried it.
   },
   "disposition": "GRADUATED",
   "notes": "⛔ THE DISTINCTION THAT MAKES THIS BY-CONSTRUCTION RATHER THAN MERELY GUARDED, AND IT IS THE DURABLE HALF -- TWO LIFETIMES, TWO MECHANISMS. `--hold-leaves` PARSES TO A SET DEFAULTING TO EMPTY, so an invocation that simply OMITS the flag PUBLISHES THE HELD KEY. That is correct for a SESSION-SCOPED operational hold and WRONG FOR A POLICY ONE. A deferral enforcing a SOVEREIGN ruling must be durable by construction and MUST NOT FAIL OPEN (COO 67133; CTO 67145 ratified 67267). The field lives on the REGISTRY ENTRY, so it survives the operator, the flags, and a session that does not know the history -- which is the actual threat model: not a malicious run, but a LATER RUN BY SOMEONE WHO NEVER READ THE RULING. || WHY ARMED WAS THE RIGHT STANDING AND NOT ALARMISM: the guards that existed were BOTH RUNTIME (--publish + OPAL_ADVI_PUBLISH_GRANT=1) plus a DISABLED schedule -- all three OPERATIONAL and all three revocable by an ordinary act. A sovereign ruling enforced only by operational state is one flag-flip from being silently reversed, and the reversal publishes CLIENT TRANSACTION DATA firm-wide, which is the s.11 #6 harm exactly. || AND THE REPORTING SHAPE IS RIGHT: `deferred_by_ruling` is a DISTINCT STATUS, not a skip. A SILENT SKIP AND A PUBLISHED KEY ARE BOTH WRONG, IN OPPOSITE DIRECTIONS -- the surfacing seat's own words, and it is the same two-states-two-remedies discipline as DS~H's NOT-EVALUATED mint and DE~D's two declared absences. Third instance tonight of one principle: WHEN A THING DOES NOT HAPPEN, THE ARTIFACT MUST SAY WHICH KIND OF NOT-HAPPENING IT WAS."
+ },
+ {
+  "id": "ADVI_PERFRP-S15",
+  "surfaced_by": "0.7.0_AE_CloudOps~G, found by reading ALL ELEVEN emissions rather than the three they had; re-verified by AST at the CVO seat",
+  "surfaced_at": "2026-08-25T05:48Z",
+  "one_line": "perfrp_performance_relationship DECLARES level='relationship' and EMITS ACCOUNT-GRAIN ROWS -- its key set is IDENTICAL to the account leaf's and to activity_account's, and DIFFERENT from activity_relationship's, so the two performance leaves are the same payload under two labels.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "SET EQUALITY, not merely equal counts (the surfacing seat's instrument, and it is the right one): perf_rel keys == perf_acct keys TRUE; perf_rel keys == activity_ACCOUNT keys TRUE; perf_rel keys == activity_RELATIONSHIP keys FALSE",
+    "grain tell in the samples: performance_relationship sample key '0010020692' is an ACCOUNT id, while the correct activity_relationship carries 'rel_000f5aec128ff5'",
+    "the two performance leaves are 2,010,480 B and 2,010,470 B -- TEN BYTES APART, the signature of one payload under two labels",
+    "AST RE-VERIFIED AT THE CVO SEAT (stronger than a text search, which proves only that a string is rare): perfrp_emit_core.py:122-162 def _performance(asof, level) -- 'level' has ZERO Name-node references in the function body, and the only groupby call is twr.groupby('account_id'), applied unconditionally. THE PARAMETER IS ACCEPTED AND DISCARDED."
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "0.4.0_DS_ClientPlatform~G (their emitter, routed to them by the surfacing seat) -- the fix is the grain, not the label: a relationship-level performance figure must aggregate over the relationship's accounts, and RENAMING THE LEAF WOULD MAKE IT HONEST AND STILL LEAVE THE RELATIONSHIP CARD WITHOUT ITS NUMBER",
+  "notes": "⛔ WHY ARMED RATHER THAN INERT, and the reasoning is about the ROUND'S OWN TRAJECTORY rather than an unusual act: nothing needs to go wrong for this to fire. The round is wiring emitters toward a first emission and a ratified publish condition; ON THE NORMAL PATH this leaf publishes ACCOUNT-GRAIN NUMBERS ON A RELATIONSHIP CARD. A hazard that fires when everything goes RIGHT is more armed than one needing a mistake. || THIS IS RULE 24(ii) -- SAME GRAIN -- VIOLATED AT THE ARTIFACT RATHER THAN IN A SCHEMA, which is why no schema review would have caught it: the DECLARATION is well-formed (level='relationship' is a legal value), the CODE is well-formed, and only the EMITTED KEY SET reveals that the declared grain and the actual grain disagree. THE LABEL IS THE ONLY THING THAT IS RELATIONSHIP-LEVEL. || THE INSTRUMENT LESSON, and it is why the count-based read would have missed it: n=7335 for BOTH performance leaves AND for activity_account -- EQUAL COUNTS PROVE NOTHING ABOUT GRAIN. Only SET EQUALITY discriminates, and it discriminated in BOTH directions here (identical to the account sets, different from the relationship set), which is what makes this a measurement rather than a suspicion. || FOUND BY WIDENING THE POPULATION: the surfacing seat had read THREE emissions and went back for ALL ELEVEN. A defect invisible in a 3-of-11 sample is not a subtle defect -- it is an UNSAMPLED one, and the census that finds it is the one whose denominator is the whole set."
  }
 ]
 ```
