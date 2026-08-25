@@ -9,6 +9,7 @@
 | **Established** | **Andrew-direct, 2026-07-22** |
 | **Predecessor serials** | `0.4.0_DS_ClientPlatform~Z` → `0.9.0_FR_ExtResearch` → this. Both retired same-day; see §7 |
 | **Register** | [`RECON_REGISTER.md`](RECON_REGISTER.md) — every engagement, tagged and indexed |
+| **Codex seats** | ⛔ **If you are a CODEX agent on this lane, read [`CODEX_SEAT_SETUP.md`](CODEX_SEAT_SETUP.md) FIRST** — no `/watcher`, no Monitor tool, no auto-registration; the verified manual equivalents live there |
 
 ---
 

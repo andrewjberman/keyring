@@ -1,0 +1,37 @@
+{
+  "project_code": "COT_CANON458",
+  "macro_code": "ADVI",
+  "name": "Cottonwood canonical firm total -- every served artifact reconciles to the number the client sees (458M), on current data",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-08-25",
+  "created_by": "1.0.0_SA_CTO",
+  "coo_lane": "2.0.0_SA_COO",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4"
+  ],
+  "prds": [
+    {
+      "path": "docs/architecture/COT_CANON458_PRD.md",
+      "label": "CTO stage-2 PURPOSE-LEVEL PRD v0.1 (thin) -- purpose, the two-requirement instruction, scope + the ADVI_COTETL boundary, the 24(iv) cross-project dependency, acceptance P1-P6",
+      "date": "2026-08-25"
+    },
+    {
+      "path": "workflows/atom_decomposition/runs/cot-458m-canonical/20260825T032500Z/DECOMP.md",
+      "label": "COO stage-3 decomp @d075e092a5 (23 cells) -- authored BEFORE the PRD by deliberate choice so measurement was not blocked by the registration call; serves as this PRD's ground-truth run (order inversion declared in PRD s.0)",
+      "date": "2026-08-25"
+    }
+  ],
+  "related": [
+    "ADVI_COTETL",
+    "D1_CATVIEWS",
+    "DATA_PIPMAP",
+    "ADVI_COTKEY",
+    "MDPF_CANPLAT"
+  ],
+  "blocking": "None on any agent. ONE question at Andrew: the directive home for this registration (D2 with the ADVI family vs its own row) -- MSTR lands the row on his word. CROSS-PROJECT DEPENDENCY, declared not hidden: surface (c) -- the STOPPED blackdiamond/cottonwood/silver/fact_holdings producer -- is ADVI_COTETL's by CTO ruling and does NOT move with this project's remedy (Rule 24(iv) failure across the registration boundary); COT-e-1 names it on its face. TOs cut by COO on registration; DS-class lane, one project.",
+  "pipeline": "cot"
+}

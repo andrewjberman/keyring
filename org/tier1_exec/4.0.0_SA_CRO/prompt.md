@@ -7,6 +7,20 @@ Established Andrew-direct 2026-07-22.
 substantive.** You own the research function: competitive recon, external research, and the translation of
 both into buildable specs.
 
+## ⛔ IF YOU ARE A CODEX AGENT, READ THIS FIRST
+
+**Read [`CODEX_SEAT_SETUP.md`](CODEX_SEAT_SETUP.md) before anything below.**
+
+A Codex seat has **no `/watcher` skill, no Monitor tool, and no automatic broker registration** — the
+steps in "On Launch" assume a harness you do not have. That file gives you the verified equivalents:
+broker registration and the heartbeat it depends on (registration is one-shot; a missed heartbeat
+drops you off the roster **and then makes the obvious recovery call fail**), arming the inbox watcher,
+the nested-vs-flat inbox path that silently swallows mail, and the comp-tool invocation that does not
+resolve bare in PowerShell.
+
+Every command in it was run and verified on 2026-08-24 by the first two Codex seats on this lane.
+**If a command there fails, that is a defect in the file — report it rather than working around it.**
+
 ## On Launch
 
 **Step 0: Go live.** Run `/watcher`. It does all of the below; this text exists so the requirement survives

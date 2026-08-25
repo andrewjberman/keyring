@@ -34,6 +34,32 @@ param(
     [string[]]$Extra
 )
 
+# --- Tier-2 model/effort DERIVED DEFAULT (Andrew-direct 2026-08-24) ---------
+# VERBATIM: "For future reference, tier2 agents should always be instantiated
+# with opus 5 model on extra high effort."
+# Tier 2 (Senior) is the serial grammar 0.Y.0 where Y > 0 (org/ORG_CHART.md:13).
+# A ~lane suffix is an instance marker, not a tier -- 0.4.0_DS_X~G is Tier 2.
+#
+# DERIVED, NEVER HARDCODED PER CALL. "Always" is a property of the SPAWN PATH,
+# not of the operator's memory: six lanes were seated by hand the day he said
+# it, and a context-clear or a successor MSTR loses the instruction silently
+# while every spawn still looks normal. That is the failure this closes.
+#
+# An EXPLICIT -Model/-Effort ALWAYS WINS -- this only fills an unset flag, so
+# it is a default, not an override, and never a gate on anyone's choice.
+$tierDefaulted = @()
+if ($Serial -match '^0\.([0-9]+)\.0_' -and [int]$Matches[1] -gt 0) {
+    if (-not $Model)  { $Model  = 'claude-opus-5'; $tierDefaulted += 'model=claude-opus-5' }
+    if (-not $Effort) { $Effort = 'xhigh';         $tierDefaulted += 'effort=xhigh' }
+}
+# SAY SO WHEN YOU DEFAULT. A silent default and an explicit choice look
+# identical in the audit log, so an operator cannot tell whether the tier rule
+# fired or someone typed the flags -- and a default nobody can see is one
+# nobody can find when it is wrong.
+if ($tierDefaulted.Count -gt 0) {
+    Write-Host "[spawn-agent] tier-2 default applied for ${Serial}: $($tierDefaulted -join ', ') (Andrew-direct 2026-08-24; pass -Model/-Effort to override)"
+}
+
 # Repo root from THIS FILE'S OWN LOCATION (never a user path -- a second device
 # clones elsewhere and every spawn/kill/audit path must follow the clone).
 # OPAL_WS_ROOT: device-level escape hatch, checked FIRST -- an env var lives

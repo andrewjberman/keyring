@@ -36,6 +36,33 @@
       ],
       "description": "OPTIONAL, additive (ratified with TIGHTENING J1, CTO G-C @42317a4aab): the firm this instance proves work for, stated exactly instead of derived from to_id grammar. The proof-board (to-check.py --proof-board) prefers this field; absent it, the DECLARED derivation is leading to_id token in this same enum, else UNPARSED -- never guessed. Existing instances without it remain valid. FABRIC added 2026-08-19 (CTO, on 0.8.0's Rule-24 exhaustiveness finding 220017Z): fabric-infrastructure work (D0-class -- broker, comp-tools, gates) proves work for NO client firm, and the J1 declare-on-next-touch instruction was unsatisfiable without a value for it -- an inexhaustive enum on a ratified schema forces either a false firm or a permanent violation."
     },
+    "decomp_ref": {
+      "type": "object",
+      "description": "PIPELINE GATE LAYER 1 (org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170, build routed to the tooling lane on Andrew's word in the ratification). OPTIONAL AT THE SCHEMA LEVEL, CONDITIONALLY REQUIRED BY THE CHECKER: proof-of-spec-check.py requires this object when, and only when, the instance's project is PIPELINE-REGISTERED (a dep_stage key present in org/projects/{CODE}.json -- 10 of 326 projects on 2026-08-24). It is optional here so the 126 of 131 existing instances belonging to non-pipeline projects remain schema-valid; making it a root-level required key would invalidate them wholesale for a rule that does not bind them. WHY THE FIELD HAD TO BE ADDED AT ALL: this schema's root is additionalProperties:false, so before this there was NO SLOT for a decomp_ref, and the estate had already routed around the gap -- ETFS_POSITIONING.TO-2's delivered instance carries its decomp_ref as PROSE inside spec_ref.doc. That is the schema forcing a free-text workaround, not an assignee defect, and free text cannot be joined against a decomp.",
+      "required": [
+        "doc",
+        "vintage_commit",
+        "to_ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "type": "string",
+          "minLength": 3,
+          "description": "path to the stage-3 decomp run artifact this work discharges, e.g. workflows/atom_decomposition/runs/etfs-positioning/20260821T194927Z/DECOMP.md"
+        },
+        "vintage_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$",
+          "description": "the decomp vintage built against. Same discipline as spec_ref.vintage_commit: a citation without a vintage is not a citation -- a decomp path alone resolves at every vintage, to different cells."
+        },
+        "to_ref": {
+          "type": "string",
+          "minLength": 3,
+          "description": "path to the TO file whose ISSUANCE half carries the machine-readable <criterion id=.. cell_refs=../> declarations and the <decomp_ref> declared cell set. STATED, NEVER DERIVED FROM to_id BY FILENAME: Rule 22a's build-input rule -- a filename-resolved lookup reports drift where there is none and reads clean where two copies have diverged. The bidirectional alignment check is a JOIN against this file; cell_refs are read as DECLARED and are never inferred, because a retrofitted derivation makes alignment LOOK satisfied while being FALSE."
+        }
+      }
+    },
     "phase": {
       "enum": [
         "P1-SCRIPTS",

@@ -19,7 +19,7 @@ below traces to the ratified package; any single clause is reversible on Andrew'
 | 1 | **REGISTER** — project JSON + REGISTRY row. Nothing else exists until this does. | commissioning exec |
 | 2 | **PRD** — purpose-level: comp-find + shape scan. What and why; names the territory, does NOT enumerate surfaces. | PRD author (commissioning exec) |
 | 3 | **DECOMP → TOs** — COO finds the OPERATIVE SURFACES and runs atom-decomp on them BEFORE any TO exists. Proof-of-spec derives from decomp cells. | **COO** (fallback: CTO, §Stage-3 below) |
-| 4 | **EXECUTE ON SPEC. PERIOD.** — the spec is FROZEN mid-round. The only legal off-spec write is a surprise item. | executing seats |
+| 4 | **EXECUTE ON SPEC. PERIOD.** — the spec is FROZEN mid-round. The only legal off-spec ACT is to SURFACE a surprise item — one line by MCP to CVO (cc the issuer); CVO files it under `org/surprise_channel/**`, which executing seats do not write (owned-paths: CVO_WORKSPACE; COO ruling 2026-08-24 ~21:0xZ). | executing seats |
 | 5 | **SURPRISE CHANNEL** — investigation → graduation → remediation → next round's TOs (re-entering at stage 3) → vN rounds to completion. | **CVO** |
 
 **Round termination / project close:** a project closes when a round's TOs complete AND that
@@ -64,6 +64,33 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   work defect)*: each TO declares its **EXECUTOR CLASS** (a class, never a serial — seats die)
   and its **SEATING TRIGGER** with observed semantics. Trigger fires + class dark → the spawn
   call routes to MSTR **same-turn**, as a naming obligation, not a discovery.
+- **ONE PROJECT PER TIER-2 SEAT INSTANCE; PARALLELISM IS SEATS, NOT STACKING** *(Andrew-direct
+  2026-08-24 ~19:29Z at the base CTO terminal, VERBATIM: "Something I think that can be damaging is
+  when tier2 agents are instantiated and get many different TOs across states and projects
+  simultaneously; it is a lot easier if they are simply brought on to complete one project at a
+  time. For parallelization sake, we can simply bring on ~tilde agents if there are multiple
+  projects we want to pursue at once, which is the case here. Let's keep that in mind when issuing
+  TOs." Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ONE_PROJECT_PER_TIER2_SEAT_DECOMP_BEFORE_TOS_CVO_PROOF_OF_SPEC_CRO_OFFLIMITS.md`)*:
+  a TO's executor is an INSTANCE of its declared class whose open-TO set is THAT ONE PROJECT. N
+  projects wanted concurrently at one class = N `~lane` instances of the class, one project each,
+  spawned per the seating trigger above. The resource being protected is the seat's CONTEXT: a
+  seat holding TOs "across states and projects" reasons from the wrong project's premises and the
+  issuer cannot see it happen. **Issuer obligations:** (a) the TO names the executor CLASS and
+  states that the instance is single-project (the spawn brief carries exactly one project's
+  packet); (b) an EXISTING instance already holding open TOs on another pipeline project is NOT a
+  legal target -- re-address to a fresh lane (a re-address is an issuance act, cheap; the content
+  does not change); (c) a base seat's inherited multi-project heap is never the reason to widen a
+  new TO onto it -- the heap is triaged by the issuer, not carried by the executor. **Tier-1 exec
+  seats coordinate across projects by charter and are not re-shaped by this rule.** Gate candidate
+  (tooling lane, sequenced WITH enforcement layers 1-2 below): the TO commit-lint additionally
+  refuses a NEW TO whose executor instance holds an open TO on a DIFFERENT pipeline project unless
+  the TO names a fresh `~lane` instance -- proposed, NOT implemented (no gates without his word).
+  **LANE-LETTER OCCUPANCY = the spawn audit UNION the disk, never either alone** (MSTR, 2026-08-24 ~20:24Z, on
+  the first seating call under this rule): `org/mcp/agent-spawn-audit.log` records lanes that EXISTED; a lane
+  directory is created by WORK, so the disk records lanes that PRODUCED -- measured: DS ~C/~D/~E spawned and left no
+  directory while DE~B has a directory and no audit line. A disk-only list offers a reused letter as "free", and a
+  reused letter collides in the spawn marker, kill-agent's grep, inbox pathing and attribution. The seating call
+  names its source; MSTR assigns from the union.
 - **PLACEMENT IS A DECLARED DECOMP AXIS** (Rule 26 made execution placement load-bearing): which
   device/fabric executes each cell is enumerated, and a cross-fabric dependency edge declares
   its ferry/relay semantics. A cell with undeclared placement generates the double-apply class

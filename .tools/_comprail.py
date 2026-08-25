@@ -98,11 +98,20 @@ def harden_stdout() -> None:
             pass
 
 
+# Control bytes other than TAB / LF / CR are replaced on emit. NFRA_COMPRAIL-S1 (CVO, 2026-08-24):
+# a NUL echoed from matched content made `comp-find | grep` print "Binary file (standard input)
+# matches" and drop EVERY hit at exit 0 -- a retrieval failure returning a well-formed value on
+# the path Rule 21 mandates. ASCII-encoding alone does not catch it: NUL is valid ASCII.
+_CTRL_TABLE = {c: "?" for c in range(0x00, 0x20) if c not in (0x09, 0x0A, 0x0D)}
+_CTRL_TABLE[0x7F] = "?"
+
+
 def ascii_safe(s: str) -> str:
-    """Force a string to ASCII (CLAUDE.md: no non-ASCII in tool stdout). Belt to the
-    harden_stdout suspenders -- keeps output grep/CloudWatch-clean regardless of codepage."""
+    """Force a string to printable ASCII (CLAUDE.md: no non-ASCII in tool stdout). Belt to the
+    harden_stdout suspenders -- keeps output grep/CloudWatch-clean regardless of codepage. Control
+    bytes (NUL, BS, ESC, ...) become '?' so a pipe downstream never sees a "binary" stream."""
     try:
-        return s.encode("ascii", "replace").decode("ascii")
+        return s.encode("ascii", "replace").decode("ascii").translate(_CTRL_TABLE)
     except Exception:
         return s
 

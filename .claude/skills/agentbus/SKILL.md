@@ -171,6 +171,28 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
 
 ## Hazards
 
+- **A TRUNCATED BUS NOTIFICATION IS RECOVERABLE — READ THE CONSUMER MONITOR'S OWN OUTPUT FILE.**
+  The `watch` consumer runs as a Monitor task, and **the harness writes its full stdout to that
+  task's output file**, so every bus body it has emitted this session is on disk even when the
+  chat notification was cut.
+  **Recover it:** `TaskOutput(<consumer_task_id>, block=false)` names the path in its result
+  (`.../tasks/<task_id>.output`); then grep that file for the message id or a distinctive phrase.
+  *Measured 2026-08-24: a truncated `comp-closure` finding's missing GROUNDING section was found
+  intact at line 1063 of a 102,834-byte consumer output file — including the exact token the
+  notification had cut mid-word.*
+  ⛔ **THE ASYMMETRY THAT IS REAL, AND IT IS ABOUT DURABILITY, NOT RECOVERABILITY.** An MCP
+  message lands as a file **in the repo** (`org/mcp/inbox/<serial>/`) and survives the session. A
+  bus body lives only in the **session-scoped** Monitor output file: recoverable **while the
+  session lives**, and this skill does NOT claim it survives session end or that the file never
+  rotates — neither has been measured. **So for anything long, still land it in the MCP inbox
+  too**; the reason is durability and cross-session citation, not that the text is lost now.
+  ⛔ **THIS BULLET PREVIOUSLY SAID THE OPPOSITE — that a bus body has no file and truncation is
+  unrecoverable. THAT WAS FALSE, and it was written after searching `~/.claude/tasks/`, which is
+  NOT where the harness puts it.** A wrong-path search returned empty and the emptiness was
+  recorded as a property of the transport. The cost was two resend requests for content already on
+  disk. **A guessed path that returns nothing is UNRESOLVED, never ABSENT** — the rule this file's
+  own author was citing at the time.
+
 - **Session-bound.** The consumer dies with the session and must be re-armed next session,
   exactly like the inbox Monitor. **While no consumer runs on a device, mail to it is not
   delivered — it accumulates.** A durable per-device consumer (service / scheduled task) is a
