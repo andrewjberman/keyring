@@ -1,6 +1,6 @@
 ---
 name: directives-check
-description: The DIRECTIVES REGISTER dashboard -- the /registry-check of org/missions/DIRECTIVES.yaml. Bare `/directives-check` renders the LIVE directives (one numbered row each: title, placement device + PRD, member sub-groups and every member PROJECT with its registry status, open task orders summed over member projects, the human stance compacted, per-row freshness from git blame, and flags WITH THEIR BASIS -- MEMBERS-ALL-CLOSED (membership currency, NOT work completion), MEMBERS-STALE? (stance moved after the member set), NO-MEMBERS -- hints for the register owner, never an act); `/directives-check --all` adds the RETIRED partition (DIRECTIVES_RETIRED.yaml, machine-cut by comp-directives, each cut's authority + frozen vintage); `--retired` alone; `--code D7` one directive in full; `--json` machine rows. Read-only, pure filesystem+git+yaml, denominators printed, malformed rows surfaced never dropped. Engine `.tools/directives-check.py`.
+description: The DIRECTIVES REGISTER dashboard -- the /registry-check of org/missions/DIRECTIVES.yaml. Bare `/directives-check` renders the LIVE directives (one numbered row each: title, placement device + PRD, member sub-groups and every member PROJECT with its registry status, open task orders summed over member projects, the human stance compacted, per-row freshness from git blame, and flags WITH THEIR BASIS -- MEMBERS-ALL-CLOSED (membership currency, NOT work completion), MEMBERS-STALE? (stance moved after the member set), NO-MEMBERS -- hints for the register owner, never an act); `/directives-check --all` adds the RETIRED partition (DIRECTIVES_RETIRED.yaml, machine-cut by comp-directives, each cut's authority + frozen vintage); `--retired` alone; `--code D7` one directive in full; `--json` machine rows; `--orphans` the full UNAFFILIATED list. Every live run also prints the LINKAGE partition -- the project<->directive reconciliation in BOTH directions (coverage, unaffiliated open projects grouped by macro_code, back-pointer migration denominator, ghost members, and any project claiming a directive that does not claim it back). Read-only, pure filesystem+git+yaml, denominators printed, malformed rows surfaced never dropped. Engine `.tools/directives-check.py`.
 ---
 
 # /directives-check — the directives register dashboard
@@ -18,7 +18,8 @@ the retired view is comp-directives' surface; a status lens touches neither).
 | `/directives-check --all` | LIVE + RETIRED partitions. |
 | `/directives-check --retired` | RETIRED partition only (cuts, authorities, frozen vintages, ever_minted). |
 | `/directives-check --code D7` | one directive, every cell in full (placement text included). |
-| `/directives-check --json` | machine rows (respects the scope flags). |
+| `/directives-check --json` | machine rows (respects the scope flags); adds `linkage` + `open_tos_total`. |
+| `/directives-check --orphans` | the full UNAFFILIATED list rather than the per-macro_code head. |
 
 Execute: `python .tools/directives-check.py [--all|--retired] [--code Dn] [--json]`
 
@@ -49,6 +50,49 @@ Execute: `python .tools/directives-check.py [--all|--retired] [--code Dn] [--jso
   `NO-MEMBERS` = empty member set (honest where a plausible one is not). `RETIRED-FACT-PRESENT
   (awaiting emit)` = the fact is on the live row but comp-directives has not cut it yet. None of
   these is an act; retirement is the FACT + MOVE + CHECK chain on Andrew's word.
+## Reading the LINKAGE partition
+
+Added 2026-08-25 (Andrew-direct: *"maybe need to build out the directives-check skill to tie those
+in harder"*). **The defect it closes: membership was ONE-DIRECTIONAL.** The engine read
+`DIRECTIVES.yaml -> members.projects` and nothing read back, so the board could not see a project
+belonging to no directive -- **and its rows read as though they covered the estate while showing
+about an eighth of the open project population.**
+
+```
+== LINKAGE -- project <-> directive reconciliation ==
+  COVERAGE:      15 of 124 open projects are members of a live directive (12.1%)
+  UNAFFILIATED:  109 open project(s) belong to NO directive -- invisible to the board above
+  BACK-POINTERS: 1 of 333 project JSONs carry a 'directive' field (0.3%) -- the migration denominator
+  GHOST MEMBERS: n board member(s) have NO registration JSON: CODE, CODE
+  DISAGREEMENT:  n project(s) claim a directive that does not claim them
+  STATUS RESIDUE: n project(s) in NEITHER the open nor the terminal set -- NOT assumed either way
+```
+
+- **COVERAGE / UNAFFILIATED** answer the question the board could not previously ask: *what is NOT
+  on it?* Unaffiliated projects are grouped by `macro_code`, which already correlates with
+  directives in practice (D0 members are all `NFRA`, D1/D8 `MDPF`, D4 `ETFS`) -- so the grouping is
+  a **drafting aid for whoever proposes membership**, never an assignment. The tool does not infer
+  membership from `macro_code` and must not: correlation across seven rows is not a mapping.
+- **BACK-POINTERS** is deliberately reported as a fraction of ALL projects. It reads `1 of 333`
+  today and that is the honest migration denominator, not a failure.
+- **DISAGREEMENT** fires when a project's own `directive` field names a directive that does not
+  list it back, or names a code that is not live. It is the only check that can catch the two
+  records drifting apart, and it is **silent today because they agree** -- the branch is exercised
+  by planted-mutant controls, not by the live corpus.
+- **STATUS RESIDUE** prints projects whose status is in neither the declared open set nor the
+  terminal set. They are **excluded from every count above and assumed in neither direction** --
+  the status axis carries 17 distinct strings over 333 JSONs (four spellings of the hold concept
+  alone), which is a Rule-24 defect in the axis itself; this line surfaces it rather than
+  normalising it away.
+- **Per-row TO counts now carry the estate denominator** (`19 of 385 open estate-wide`). A bare
+  count carries no frame, which is the exact retrieval-control class CLAUDE.md names.
+
+**Still status, not action.** Nothing here edits the register (MSTR's surface,
+`org/missions/.register-owner`) or any project JSON (`ANY_EXEC_OR_AE` lane). An unaffiliated
+project is a worklist entry for the register owner, **not** a defect and **not** a warrant to tag
+anything -- retro-tagging volume is a sovereign call and was carded to Andrew 2026-08-24, unanswered
+at the time of writing.
+
 ## The render (visible analysis) — part of THIS skill
 
 Andrew-direct 2026-08-20 ~2105Z, VERBATIM: *"/directives-check which is for me internally and shows

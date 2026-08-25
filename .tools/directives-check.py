@@ -77,6 +77,9 @@ def project_status(code):
     return f"{st} {str(when)[5:10]}".strip() if st in ("closed", "complete", "completed") and when else st
 
 
+TO_TOTAL = [0]   # estate-wide open-TO denominator, so a per-row count arrives with its frame
+
+
 def open_tos():
     """project -> open-TO count, parsed from to-check.py --all (its denominator, not ours)."""
     out = {}
@@ -86,6 +89,9 @@ def open_tos():
         txt = subprocess.run([sys.executable, TOCHECK, "--all"], capture_output=True, text=True, timeout=120).stdout
     except Exception:
         return out
+    mt = re.search(r"\|\s*(\d+) active TOs", txt)
+    if mt:
+        TO_TOTAL[0] = int(mt.group(1))
     for m in re.finditer(r"^Project: (\S+)\s+\((.+?)\)", txt, re.M):
         n = sum(int(x) for x in re.findall(r"(\d+) (?:ACTIVE|PENDING|BLOCKED|UNKNOWN)", m.group(2)))
         out[m.group(1)] = n
@@ -200,6 +206,119 @@ def load_retired():
     return d, rows
 
 
+# =================================================================================================
+# LINKAGE (added 2026-08-25, 1.0.0_SA_CTO~X, Andrew-direct "tie those in harder").
+#
+# THE DEFECT THIS CLOSES: membership was ONE-DIRECTIONAL. The engine read DIRECTIVES.yaml ->
+# members.projects and NOTHING read the other way, so the board could not see a project that
+# belongs to no directive, nor a project claiming a directive that does not list it. Measured at
+# build time: 104 of 118 open projects (88.1%) were members of NO directive and therefore
+# INVISIBLE to this board, while its rows read as though they covered the estate.
+#
+# All three additions are READ-ONLY set arithmetic over data the engine already loads. This tool
+# REPORTS; the register is MSTR's surface (org/missions/.register-owner) and project JSONs are the
+# ANY_EXEC_OR_AE lane. Nothing here edits either.
+# =================================================================================================
+
+# The OPEN set is DECLARED, not inferred, and the residue is PRINTED rather than bucketed. Four
+# spellings of the hold concept are live in the corpus (inactive / on-hold / on_hold /
+# suspended-indefinite) -- that is a Rule-24 MECE defect in the STATUS axis itself; it is surfaced
+# by the STATUS RESIDUE line rather than silently normalised away here.
+OPEN_STATUSES = {"active", "scoping", "in-progress", "in_progress",
+                 "on-hold", "on_hold", "inactive", "suspended-indefinite"}
+TERMINAL_STATUSES = {"complete", "completed", "closed", "cancelled", "canceled", "merged",
+                     "deprecated", "build-complete", "complete-as-superseded", "dormant"}
+
+
+def load_projects():
+    """code -> {status, directive, macro_code}. MALFORMED is surfaced, never dropped."""
+    out = {}
+    if not os.path.isdir(PROJECTS):
+        return out
+    for f in sorted(os.listdir(PROJECTS)):
+        if not f.endswith(".json"):
+            continue
+        code = f[:-5]
+        try:
+            d = json.load(open(os.path.join(PROJECTS, f), encoding="utf-8"))
+        except Exception as e:
+            out[code] = {"status": "MALFORMED(%s)" % type(e).__name__,
+                         "directive": None, "macro_code": None}
+            continue
+        out[code] = {"status": str(d.get("status", "<absent>")).lower().strip(),
+                     "directive": d.get("directive"),
+                     "macro_code": d.get("macro_code")}
+    return out
+
+
+def linkage(rows, projects):
+    """Bidirectional membership reconciliation. Pure set arithmetic -- surfaces, never acts."""
+    fwd = {}                                    # project -> [directive codes], from DIRECTIVES.yaml
+    for r in rows:
+        for p in r["projects"]:
+            fwd.setdefault(p, []).append(r["code"])
+    rev = {c: v["directive"] for c, v in projects.items() if v.get("directive")}
+
+    open_codes = {c for c, v in projects.items() if v["status"] in OPEN_STATUSES}
+    unknown = {c for c, v in projects.items()
+               if v["status"] not in OPEN_STATUSES and v["status"] not in TERMINAL_STATUSES}
+
+    orphans = sorted(open_codes - set(fwd))                # open, member of no directive
+    ghosts = sorted(p for p in fwd if p not in projects)   # on the board, no registration JSON
+
+    live_codes = {r["code"] for r in rows}
+    disagree = []
+    for c, dv in rev.items():
+        listed = fwd.get(c, [])
+        if dv not in listed:
+            why = ("code is not a LIVE directive" if dv not in live_codes
+                   else "directive does not list this project")
+            disagree.append((c, dv, listed, why))
+
+    by_macro = {}
+    for c in orphans:
+        by_macro.setdefault(projects[c].get("macro_code") or "<none>", []).append(c)
+
+    return {"orphans": orphans, "ghosts": ghosts, "disagree": disagree,
+            "back_pointers": len(rev), "projects_total": len(projects),
+            "open_total": len(open_codes), "on_board": len(open_codes & set(fwd)),
+            "unknown_status": sorted(unknown),
+            "orphans_by_macro": {k: sorted(v) for k, v in
+                                 sorted(by_macro.items(), key=lambda kv: -len(kv[1]))}}
+
+
+def print_linkage(lk, show_all):
+    print("\n== LINKAGE -- project <-> directive reconciliation ==\n" + SEP)
+    ob, ot = lk["on_board"], lk["open_total"]
+    pct = (100.0 * ob / ot) if ot else 0.0
+    bp, pt = lk["back_pointers"], lk["projects_total"]
+    print("  COVERAGE:      %d of %d open projects are members of a live directive (%.1f%%)" % (ob, ot, pct))
+    print("  UNAFFILIATED:  %d open project(s) belong to NO directive -- invisible to the board above"
+          % len(lk["orphans"]))
+    print("  BACK-POINTERS: %d of %d project JSONs carry a 'directive' field (%.1f%%) -- the migration denominator"
+          % (bp, pt, (100.0 * bp / pt) if pt else 0.0))
+    if lk["ghosts"]:
+        print("  GHOST MEMBERS: %d board member(s) have NO registration JSON: %s"
+              % (len(lk["ghosts"]), ", ".join(lk["ghosts"])))
+    if lk["disagree"]:
+        print("  DISAGREEMENT:  %d project(s) claim a directive that does not claim them:" % len(lk["disagree"]))
+        for c, dv, listed, why in lk["disagree"]:
+            print("      %s: claims %s; board says %s  [%s]" % (c, dv, listed or "no directive", why))
+    if lk["unknown_status"]:
+        print("  STATUS RESIDUE: %d project(s) whose status is in NEITHER the open nor the terminal set"
+              % len(lk["unknown_status"]))
+        print("                  -- NOT counted above and NOT assumed either way: %s"
+              % ", ".join(lk["unknown_status"][:12]))
+    print(SEP)
+    print("  UNAFFILIATED BY MACRO_CODE (the coarse grouping that already correlates with directives):")
+    for mc, codes in lk["orphans_by_macro"].items():
+        shown = ", ".join(codes) if show_all else ", ".join(codes[:6]) + (" ..." if len(codes) > 6 else "")
+        print("      %-16s %3d   %s" % (mc, len(codes), shown))
+    if not show_all and lk["orphans"]:
+        print("      (--orphans for the full list)")
+    print(SEP)
+
+
 def print_live(rows, full):
     for i, r in enumerate(rows, 1):
         pj = ", ".join(f"{p}[{s}]" for p, s in r["projects"].items()) or "-"
@@ -207,7 +326,8 @@ def print_live(rows, full):
         print(f"{i:>2}. {r['code']}  {r['title']}{flags}")
         print(f"     Where:   {r['device']} -- {r['directive'] or '-'}{'' if r['prd_exists'] else '  [PRD PATH MISSING]'}")
         print(f"     Members: subgroups {r['subgroups'] or '-'}; projects {pj}")
-        print(f"     TOs:     {r['open_tos']} open across member projects")
+        den = f" of {TO_TOTAL[0]} open estate-wide" if TO_TOTAL[0] else ""
+        print(f"     TOs:     {r['open_tos']}{den} across member projects")
         print(f"     Stance:  {r['stance'] if full else compact(r['stance'], 150) or '-'}")
         if full:
             print(f"     Placed:  {r['placement']}")
@@ -233,10 +353,14 @@ def main():
     ap.add_argument("--retired", action="store_true")
     ap.add_argument("--code")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--orphans", action="store_true",
+                    help="full UNAFFILIATED list (open projects on no directive)")
     a = ap.parse_args()
 
     live_doc, live, malformed = load_live()
     ret_doc, retired = load_retired()
+    projects = load_projects()
+    lk = linkage(live, projects)
     if a.code:
         live = [r for r in live if r["code"] == a.code]
         retired = [r for r in retired if r["code"] == a.code]
@@ -245,7 +369,8 @@ def main():
 
     if a.json:
         print(json.dumps({"live": live if show_live else [], "retired": retired if show_ret else [],
-                          "malformed": malformed, "ever_minted": ret_doc.get("ever_minted")}, indent=2, default=str))
+                          "malformed": malformed, "ever_minted": ret_doc.get("ever_minted"),
+                          "linkage": lk, "open_tos_total": TO_TOTAL[0]}, indent=2, default=str))
         return
     print(f"DIRECTIVES REGISTER -- live as_of {live_doc.get('as_of', '?')} (org/missions/DIRECTIVES.yaml)  "
           f"| {datetime.datetime.now(datetime.UTC):%Y-%m-%d %H:%MZ}")
@@ -257,12 +382,17 @@ def main():
     if show_ret:
         print(f"\n== RETIRED ({len(retired)}) -- org/missions/DIRECTIVES_RETIRED.yaml, machine-cut, byte-frozen ==\n{SEP}")
         print_retired(ret_doc, retired)
+    if show_live and not a.code:
+        print_linkage(lk, a.orphans)
     if malformed:
         print(f"\nWARN: MALFORMED ROWS ({len(malformed)}) -- surfaced, fix these:")
         for c, e in malformed:
             print(f"   {c}: {e}")
     print(f"\nDIRECTIVES-CHECK-RESULT live={len(live)} retired={len(retired)} "
-          f"ever_minted={len(ret_doc.get('ever_minted') or [])} malformed={len(malformed)}")
+          f"ever_minted={len(ret_doc.get('ever_minted') or [])} malformed={len(malformed)} "
+          f"projects={len(projects)} open_projects={lk['open_total']} "
+          f"unaffiliated={len(lk['orphans'])} back_pointers={lk['back_pointers']} "
+          f"ghosts={len(lk['ghosts'])} open_tos={TO_TOTAL[0]}")
 
 
 if __name__ == "__main__":
