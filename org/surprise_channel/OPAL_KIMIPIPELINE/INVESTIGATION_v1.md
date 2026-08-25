@@ -192,6 +192,27 @@ before anyone challenged it is the relayer-half of the grounding law working.*
   "disposition": "GRADUATED",
   "disarm_owner": "3.0.0_SA_CVO -- DISARMED SAME TURN 2026-08-25T16:45Z by running the three-field read explicitly across all 23 manifest days (result above) rather than relying on the skill's table, so today's 19-day census is not blind to a superseded verdict. The SKILL edit is the REMEDIATION and is NOT done.",
   "notes": "⛔ THE ZERO IS THE HAZARD, NOT THE REASSURANCE. On a normal day _carry_forward_verdict returns {} -- there is no prior verdict to carry -- so the fields are ABSENT whether the disarm is running or not. A CVO who reads the census and sees nothing learns NOTHING about whether the interface works; the instrument is silent in both worlds. This is the could-not-have-said-otherwise class, and it means the SKILL gap CANNOT be discovered by operating the loop normally -- only by reading the producer source, which is what surfaced it. || THE ARMING EVENT IS ALREADY SCHEDULED: with 19 PENDING days queued, any re-run of a date this seat adjudicates writes a superseded_verdict block that the skill's table has no state for. S1's own record establishes such re-runs are real (08-06 has two daily/*.md versions). || SCOPE FENCE: S1 covers the PRODUCER clobber and is disarmed at the producer. This is the CONSUMER half and the disarm commit deliberately declined to close it, naming the owner instead. Filing it as its own item rather than as S1 remediation because it has a different owner (CVO, not AE/CloudOps), a different artifact (a skill file, not the runner), and a different clock -- Rule 24(iv): one remedy does not move both. || COMPOSES WITH S2: both are the same SKILL.md enum failing CE over its declared layer. S2 is a missing VALUE on the status axis; this is a missing AXIS. Whoever edits that table should close both in one act."
+ },
+ {
+  "id": "OPAL_KIMIPIPELINE-S5",
+  "surfaced_by": "3.0.0_SA_CVO, found while reading the two zero-proposal days before flipping them -- the reports disclose it themselves in plain English and nobody has acted on it",
+  "surfaced_at": "2026-08-25T17:15Z",
+  "one_line": "EVERY estate report in the 19-day PENDING backlog was generated against a decision corpus FROZEN at 2026-07-31T02:23:07Z (commit 649fa25a4) -- corpus_predates_window is True on all of them -- so the 160 proposals awaiting Andrew's ratification cite a [SOVEREIGN] ruling set that excludes 25 days of his rulings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED ACROSS THE BACKLOG, 8 days sampled spanning 08-06..08-25: corpus_newest_source_commit_utc = 2026-07-31T02:23:07+00:00 on EVERY one, nuggets_total = 153 on every one, corpus_predates_window = True on every one",
+    "source_vintages.rulings_ledger.commit = 649fa25a4, last_commit_utc 2026-07-31T02:23:07+00:00",
+    "the instrument DISCLOSES it rather than hiding it -- corpus_freshness reads 'STALE -- the newest corpus source last changed 2026-07-31T02:23:07+00:00, which is BEFORE this report's window opened'; degraded_sources is [] because a frozen source is not a degraded one",
+    "the reports say it in prose too: 2026-08-09 'the tool that would feed new captures into it has not been built yet'; 2026-08-10 'the uploader that would keep it current has never been built'",
+    "consequence measured this session: 160 proposals across 19 PENDING days, 31 entities, 60 (resource,field) decision points, 33 whose newest formulation is MEASURED"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "3.0.0_SA_CVO -- DISARMED SAME TURN by carrying the caveat INTO the ratification ask rather than presenting the 33 decisions as if their grounding were current. The disarm is that Andrew is told before he rules, not after.",
+  "notes": "THE HAZARD IS NOT A BROKEN REPORT -- IT IS A SOVEREIGN RATIFICATION ACT RESTING ON STALE GROUND. Semantic changes are NAMING ACTS: the pipeline proposes, Andrew ratifies, CVO lands. A proposal grounded on a corpus missing 25 days of rulings can contradict something he decided two weeks ago, and the ratification would make the contradiction canonical. ARMED because the next ordinary act -- me bringing 33 proposals to him -- is the harmful one. || THIS IS A DISCLOSED LIMITATION NOBODY ACTED ON, WHICH IS THE INTERESTING PART. The instrument is honest: it prints STALE, it prints the vintage, it says the uploader was never built. NOTHING IS HIDDEN AND NOTHING WAS CAUGHT -- because the disclosure lives in a field (corpus_freshness) that a reader adjudicating PROPOSALS has no reason to open. A caveat is only a control if it is on the path the reader actually walks. || AND IT COMPOUNDS WITH THE BACKLOG: the loop stalling for 19 days is what made the staleness matter. One stale-corpus day is a minor caveat; 19 days x 160 proposals against a frozen ruling set is a systematic skew, and the two defects were each individually tolerable. || DISARMED != REMEDIATED. The remediation is the capture/uploader tool that was never built -- NOT CVO's to build, and NOT to be reached for as a monitor (NEVER#13 binds; this is a missing INPUT, not missing detection). Owner routing is CTO's call. The disarm only covers the ratification I am about to run."
  }
 ]
 ```

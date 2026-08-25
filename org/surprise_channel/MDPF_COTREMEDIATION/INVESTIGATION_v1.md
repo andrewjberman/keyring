@@ -173,6 +173,64 @@ re-derivation **widened it** -- see the item's `notes`. A relay carries its grou
   "disposition": "GRADUATED",
   "disarm_owner": "2.0.0_SA_COO -- the actor who can act NOW, because they seat the S5 lambda-twin deploy once the P0 is clear (70798) and the disarm is a CONDITION ATTACHED TO THAT SEATING. It must be attached BEFORE the deploy, not after: the hazard arms the moment the twin ships.",
   "notes": "THE ROUTED ITEM WAS 'a contract asserts a start date for behaviour the deployed code has never produced' -- true, and a DECLARATIVE drift. RE-DERIVATION FOUND A SECOND CONSEQUENCE THAT IS ARMED, and it is the one that matters. || THE CONTRACT'S VOCABULARY HAS TWO STATES AND REALITY IS IN A THIRD. Declared: PREDATES-CONTRACT (before 07-23, no columns, expected) and carries-columns (on/after 07-23). Actual: on/after 07-23 WITH NO COLUMNS, for 33 days, because the converter was never deployed. A reader applying the contract classifies those partitions as anomalous or failed when the honest description is 'the code was never shipped' -- Rule 24 CE failing over the declared layer. || THE ARMED HALF, AND IT IS A GUARD PROTECTING THE WRONG BOUNDARY: the design's central prohibition is NEVER synthesize provenance for rows whose provenance was never observed. The force-guard enforces it at date < CONTRACT_START. But the rows at risk are 2026-07-23..the actual deploy date -- ON OR AFTER the constant -- so THEY PASS THE GUARD. After the twin ships, a seat backfilling the gap to 'fill in the missing provenance columns' does the exact forbidden thing, and the guard written to stop it does not fire. || THE GUARD IS NOT WRONG; ITS PREMISE EXPIRED. It was correct on 2026-07-23 when the twin was expected to ride the same day. Thirty-three undeployed days made a correct constant into a misplaced boundary -- and NOTHING AT THE CONSTANT'S OWN SURFACE RECORDS THAT ITS CONDITION WAS NEVER MET. Same class as S6 one layer down: the knowledge lived in a design doc's conditional clause, and the artifact says nothing. || DISARM SHAPE (named, not built -- CVO does not build remedies): the S5 seating carries an explicit decision on the 07-23..deploy-date gap, and the honest options are (i) move the constant to the ACTUAL deploy date so the gap is correctly PREDATES-CONTRACT, or (ii) keep the date and add an explicit no-backfill window the guard enforces. (i) is a one-line change that makes the existing guard correct again; I have NOT priced whether anything downstream reads 2026-07-23 as a promise, and that read belongs to the DS lane. || SEQUENCING, unchanged from S4/S5: this does NOT ride the P0. It rides the S5 deploy it belongs to."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S8",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~M (msg 70819), measured on their own leg and explicitly not chased -- cc'd to the issuer",
+  "surfaced_at": "2026-08-25T17:11Z",
+  "one_line": "mirror_schemas.py has FIVE homes, not the two the decomp records -- data/assets/scripts/silver/ plus four opal-assets-silver-{blackdiamond,eclipse,etf,orion} packages -- and eclipse/etf/orion are ALREADY divergent from source (md5 5a4cc946 vs 85fc671e, 626 vs 635 lines), pre-existing and not created by the repair commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "five homes enumerated by the surfacing seat: data/assets/scripts/silver/mirror_schemas.py + infra/aws/lambda/opal-assets/opal-assets-silver-{blackdiamond,eclipse,etf,orion}/mirror_schemas.py",
+    "divergence measured, not inferred: md5 5a4cc946 vs 85fc671e, 626 vs 635 lines",
+    "PRE-EXISTING, established against the seat's own commit 288807f747 rather than assumed",
+    "THE CONTROL THAT MAKES IT INERT AND IT WAS RUN BEFORE CONCLUDING: the divergence is NOT in DECLARED -- 13/13 keys present in both, and the ('blackdiamond','holdings') tuple is equal at 19 cols pre-edit; the three packages never process blackdiamond keys",
+    "INDEPENDENT CORROBORATION FROM A DIFFERENT SEAT ON THE SIBLING FILE: 3.0.0_SA_CVO measured mirror_conversion.py (S1) at FIVE definition homes across the SAME five packages. Two seats, two files, one structural fact."
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "THE DECOMP AND BOTH EXECS CARRIED 'TWO HOMES'; THE MEASURED COUNT IS FIVE. COTR-b-3 names two, CTO's 70743 named the mirror_schemas.py:460 pair, and this seat measured five. Rule 22a's two-homes class with the denominator itself understated -- and an understated denominator is the more dangerous half, because a fix scoped to 'both homes' reads COMPLETE while three packages keep their own copy. || CONVERGENCE WORTH RECORDING: S1 (mirror_conversion.py, CVO) and S8 (mirror_schemas.py, DS~M) found the SAME five packages independently, from different questions. The converter family vendors as a unit; any file in it should be assumed five-homed until counted. || INERT IS CORRECT AND IT IS EARNED BY A CONTROL, NOT BY OPTIMISM: the seat checked WHERE the divergence sits (not in DECLARED) and WHETHER those packages touch blackdiamond keys (they do not) BEFORE calling it inert. An uncontrolled 'probably fine' on the same facts would have been a guess wearing a verdict's clothes. || SCOPE: this does NOT widen the P0 repair, which is blackdiamond-only. It widens any FUTURE contract edit to this family -- including S1's rename."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S9",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~M (msg 70819) -- EXERCISED, not predicted: they ran the 2026-08-19 file against their own new declaration and watched it refuse",
+  "surfaced_at": "2026-08-25T17:11Z",
+  "one_line": "After the contract edit, DECLARED[('blackdiamond','holdings')] expresses exactly ONE shape (21 cols), so replaying ANY pre-2026-08-20 partition now REFUSES with VendorDriftError -- and a backfill is the reflex remedy the MDPF_COTREMEDIATION PRD itself names, so someone will meet this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "EXERCISED BY THE SURFACING SEAT: the 2026-08-19 file REFUSED with VendorDriftError under the new declaration -- the test that fails if the claim is false, not a config read",
+    "mechanism is inherent to a single-declaration exact-tuple contract: one shape per (vendor,table) key, no version axis",
+    "the seat established they did not introduce it -- it follows from the contract's existing shape, not from their edit",
+    "the PRD names backfill as a remedy, which is what guarantees a future seat meets this"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "STANDING: I CONSIDERED ARMED AND RULED INERT, AND THE REASONING BELONGS IN THE RECORD BECAUSE IT IS A CLOSE CALL. The case for ARMED: the PRD names backfill as the remedy, so a future ordinary act meets this. The case for INERT, which wins: IT FAILS LOUD. VendorDriftError raises, the seat sees it immediately, and nothing wrong lands. Compare S7, where the guard silently PASSES and lets fabrication through -- THAT is armed. Here the cost is time and a wrong expectation, not a corrupted artifact. Standing measures harm-through-normal-operation, not inconvenience. || THE ACTIONABLE HALF IS A DOCUMENT, NOT THE CODE: the PRD names a remedy that will refuse. Whoever owns the PRD should correct the remedy text before a seat burns a cycle discovering it. That is the cheap fix and it is why this was worth filing while cheap rather than when it fires. || NOTE THE SEAT'S OWN FRAMING, which is the right instinct: 'naming it while it is cheap rather than when it fires.' A trap named before anyone walks into it costs one line."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S10",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~M (msg 70819), handed over explicitly as 'not a claim, a pointer' -- found while discharging AC5, with the seat stating they have NOT read L4",
+  "surfaced_at": "2026-08-25T17:11Z",
+  "one_line": "A SECOND mdpf_revamp/ artifact exists beside the PRD's unread L4 lead -- global.meta.cottonwood_composed_backfill.source_key = 'gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries_interpolated.json' -- suggesting mdpf_revamp/ is where cottonwood's COMPOSED artifacts live, which may be the whole of L4's 'real special case'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "global.meta.cottonwood_composed_backfill.source_key = gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries_interpolated.json, read from the artifact",
+    "carries its own provenance: Andrew-direct 2026-07-28 sanctioned interpolated backfill, n_backfilled 44, first_measured_date 2026-07-20",
+    "the L4 lead it sits beside: dim_mdpf_account_distribution.py:328 COTTONWOOD_UNITS_KEY = gold/mdpf_revamp/cottonwood/account_units.json, plus a _cottonwood_sidecar()",
+    "EXPLICITLY NOT CLAIMED: the surfacing seat states they have NOT read L4 and are not asserting the connection -- and CTO's 70736 said the same of the original lead ('It is a LEAD, not a diagnosis. I have not read it.')"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "TWO SEATS HAVE NOW DECLINED TO DIAGNOSE THIS AND BOTH SAID SO EXPLICITLY. CTO surfaced COTTONWOOD_UNITS_KEY as 'a LEAD, not a diagnosis -- I have not read it'; DS~M adds a second artifact under the same prefix and says 'I have NOT read L4 and am NOT claiming it.' The pointer is now stronger than either seat's claim, WHICH IS THE CORRECT STATE -- evidence accumulating without anyone inflating it into a conclusion. || WHAT IT IS WORTH: whoever reads L4 starts one step in, with two artifacts and a prefix hypothesis rather than one filename. That is the entire value of a pointer filed honestly. || UNDER_INVESTIGATION, not graduated: there is no mechanism here yet, only a location. Graduating it would put a remediation row on a hypothesis, which is what the grounding bar exists to prevent."
  }
 ]
 ```
