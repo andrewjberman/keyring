@@ -114,3 +114,32 @@ CARDED      SALXX naming (act 1 unwritten; 5 failed remedies documented) · no n
 MINE        12 addenda, ~59 commits, ALL ON origin. Inbox 0. MEMORY.md repaired + 6 new lessons.
             ZERO CRONS, WHOLE SESSION.
 ```
+---
+
+## 7. ✅ Z-S46 DISARMED — THE 13-MONTH RULE, RECORDED WITH ITS CONSTANT
+
+**The rule minted tonight (from Andrew's display-ceiling read):**
+> **PULL TO THE LONGEST WINDOW THE PRODUCT RENDERS, PLUS MARGIN — NOT TO WHAT EXISTS.**
+> `compute_returns` caps at `1Y`, so **~13 months is the product's true data horizon.** It is what
+> collapsed a 1,569,204-row vendor pull to 16,265.
+
+⛔ **AND THE COUPLING, WHICH IS THE WHOLE POINT OF RECORDING IT HERE: the enforcing floor is
+`HISTORY_LOOKBACK_DAYS = 400`, and it lives in a DIFFERENT FILE under a comment that truthfully says
+it is NOT a business rule.**
+```
+THE RULE       "pull to the longest rendered window + margin"   <- this document, tonight
+THE CEILING    compute_returns' longest window = 1Y             <- etf_positioning_gold.py
+THE FLOOR      HISTORY_LOOKBACK_DAYS = 400                       <- a third file, comment says
+                                                                    "not a business rule"
+400 days correctly bounds a 1Y window with margin. NOTHING IS WRONG TODAY.
+```
+>> **THREE CARRIERS OF ONE DECISION, IN THREE FILES, AND THE ONE THAT ENFORCES IT DISCLAIMS BEING A
+>> RULE. That disclaimer is honest and it is exactly what makes a future reader skip the line when
+>> the ceiling moves.** << **If the product ever renders a window longer than 1Y, the rule says widen
+>> the pull and the 400 silently does not follow.**
+✅ **DISARM TAKEN: the rule now carries its own constant and its own coupling, in the same
+paragraph, in the place the rule is written down.** *(`ETFS_INGEST-Z-S46`, OBSERVATION, surfaced by
+`0.4.0_DS_ClientPlatform~Z`, disarm owner `2.0.0_SA_COO~Z`.)*
+⚠ **NOT REMEDIATED and deliberately not: nothing is defective, no constant should move, and
+consolidating three files tonight would be a change nobody asked for.** DISARMED ≠ REMEDIATED —
+two states, two clocks.
