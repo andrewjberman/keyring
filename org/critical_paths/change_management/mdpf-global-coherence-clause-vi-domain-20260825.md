@@ -35,7 +35,50 @@ and no 2026-08-19 data was touched. Fixing a clause's DOMAIN is not relaxing it 
 four-arm control set in which the proposed clause still refuses a planted foreign-day roster
 (`+66` on 2026-07-06, the exact case clause (vi) was built from).
 
-## Deploy path and its ORDER PROBLEM (open question, surfaced not assumed)
+## ⛔ CORRECTION 2026-08-25T19:0xZ -- THE DEPLOY PATH BELOW WAS WRONG. TWO EXECUTORS, NOT ONE.
+
+The section that follows named the S3 code-prefix sync as the deploy path. That is **correct for the
+EC2 leg and WRONG for the scheduled acceptance path**, and the ledger is corrected here rather than
+rewritten so the error stays legible.
+
+**MEASURED (Rule 22a, CODE layer, deployed bytes read):**
+1. `mdpf-scheduled-floor cron(30 13)` targets **`mdpf-gold-lambda`** -- and
+   `/aws/lambda/mdpf-gold-lambda` carries this script's own stdout, including
+   `2026-08-24T13:31:04Z` and `2026-08-25T13:31:03Z` `CROSS-AXIS COHERENCE GATE FAILED (global)`,
+   with `2026-08-18T13:31:04Z OK: cross-axis gate PASS (global)` as the control that the group
+   carries PASS lines too. **The scheduled refusals are the Lambda's.**
+2. That Lambda **VENDORS** the module: handler `mdpf_gold_consolidator.lambda_handler`,
+   `:70 sys.path.insert(0, _HERE)`, `:78 import dim_mdpf_aggregate_aua_timeseries as spine`;
+   `download_file`/`CODE_PREFIX`/`s3.*scripts` -> **0 hits each**, positive control `import ` -> 21.
+   It fetches no code from S3.
+3. The vendored copy is **PRE-PATCH**: `BUILD_MANIFEST.json` bytes=171111,
+   sha256 `a7db07bb68f465d5197bed499bf6ee052506fb92a64b803ae0ed04f66cda5dee`;
+   `count_membership` occurrences **DEPLOYED 0 / patched local 14 / pre-patch snapshot 0**;
+   LF-normalised md5 `2b59630a...` == the pre-patch snapshot.
+4. The **EC2 `mdpf-daily-runner` leg does use the module -- as a LIBRARY, not an entry**
+   (`mdpf-daily-dispatch.sh:157`, `:500` "library-not-entry since this swap", `:605` existence
+   check). It syncs `code/scripts/` at run start, so **that leg DOES pick up the S3 copy.**
+
+**CONSEQUENCE: the S3 sync is real and useful for the EC2 leg and DOES NOT REACH the scheduled
+acceptance path.** A census of "1 S3 copy across code/ prefixes" is TRUE about S3 and blind to a copy
+vendored inside a function package -- the executing population is 2, not 1.
+
+**THE REAL DEPLOY PATH for the Lambda** (`lambda-source-map.json` -> `functions["mdpf-gold-lambda"]`):
+```
+tf_file      infra/aws/terraform/mdpf-pipeline/gold-lambda.tf
+tf_resource  aws_lambda_function.mdpf_gold
+source_dir   infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda   (the BUILDER, not the runtime source)
+_build_note  package is ASSEMBLED FROM A PINNED COMMIT by build_package.py (git show <pin>:<path>)
+```
+Bump the pin to a commit containing `1234c8779e`, rebuild, **Terraform apply** (Deployment Rule 1:
+Terraform is the only Lambda deploy mechanism; never `aws lambda update-function-code`).
+**NOT STARTED** -- awaiting `2.0.0_SA_COO`, and the pin should reference a PUSHED commit.
+
+**Also unresolved, recorded not assumed:** the `2026-08-25T18:48:07Z` upload to
+`s3://opal-data-mdpf/code/scripts/gold/` was **not performed by this seat**. It is byte-correct; it
+should be attributed rather than assumed.
+
+## Deploy path AS FIRST RECORDED (superseded by the correction above -- kept, not deleted)
 Deployed target: `s3://opal-data-mdpf/code/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py`
 Measured 2026-08-25T18:4xZ (`comp-pipescript deployed --pipeline mdpf`):
 ```
@@ -72,8 +115,10 @@ this entry's subject.
 | 2 | `commit-gate` / ruff / py_compile clean | **DONE** |
 | 3 | 4 arms re-run against the REAL patched implementation | **DONE** A/B/C/D as predicted |
 | 4 | Integrator pushes `1234c8779e` to `origin/CLOUD` | **PENDING** -- integrator-only |
-| 5 | S3 code sync (rides the push hook, else explicit `safe-deploy.sh`) | **PENDING** |
-| 6 | `comp-pipescript deployed --pipeline mdpf` reads MATCH | **PENDING** |
+| 5 | S3 code sync -- covers the **EC2 library leg only** | **LANDED 18:48:07Z**, not by this seat |
+| 6 | `comp-pipescript deployed --pipeline mdpf` reads MATCH | **DONE** for the S3 leg |
+| 6a | **Rebuild `mdpf-gold-lambda` at a pin containing `1234c8779e` + Terraform apply** | **PENDING -- THE REAL BLOCKER** |
+| 6b | Deployed package `BUILD_MANIFEST.json` shows the patched bytes (not 171111 B) | **PENDING** |
 | 7 | 2026-08-26T13:30Z scheduled run passes the gate | **PENDING** |
 | 8 | Served global `as_of_last=2026-08-24` + `source_keys` advanced | **PENDING** -- closes this |
 | 9 | `49financial` + `inflection` unmoved on data-bearing fields (`written_at` may differ) | **PENDING** |
