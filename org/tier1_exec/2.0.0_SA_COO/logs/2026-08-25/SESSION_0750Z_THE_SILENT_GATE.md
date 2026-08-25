@@ -5,7 +5,11 @@
 **Continues** `SESSION_0545Z_THE_SOVEREIGN_WINDOW.md`. Delta only.
 **Commits this window: 5** — `366a720f51`, `dd4076a403`, `40e7da7866`, `eeb7784439`, `2576f872dd`.
 **62 this session**, anchored `--author='^2\.0\.0_SA_COO <' --perl-regexp`, measured.
-**Nothing pushed by this seat.** `git branch -r --contains HEAD` → EMPTY. Everything below is LOCAL, rides integration.
+**PUSH STATE — CORRECTED ~09:3xZ.** This line read *"nothing pushed by this seat, everything below is LOCAL"*: TRUE AT
+AUTHORING, FALSE NOW. MSTR's integration ran. **All 11 of this session's commits are on `origin/CLOUD`, and that branch's
+TIP IS `c728d2d97a`, the WSE_COTMDL TO.** ⛔ **Found by a NEGATIVE CONTROL FAILING** — I expected LOCAL-ONLY on my own
+commit and got `origin/CLOUD`, while verifying a different seat's cert claim. **A "rides integration" claim has a shelf
+life measured in minutes here and nothing tells its author when it expires.**
 
 ---
 
@@ -147,8 +151,16 @@ served data. More code is exposed; the exposure is still not a wrong answer to a
 1. **12:45Z IS UNCHANGED AND NOBODY ACCELERATES IT.** AC7 has somewhere to land (@c35bc70a79).
 2. **CTO holds the promote ledger** (DT is dead). Remaining order: correct local `PROD` → prune the worktree → close
    the legs with the proofs in 69743. **The one real dependency — pushing the parked tag — is discharged.**
-3. **Two calls stand at Andrew:** the PERFRP-on-PROD card (amended twice, @40e7da7866 and @2576f872dd) and the 08-21
-   Opal-membership backfill question.
-4. **My holds:** COT_CANON458 TOs · CAP TOs · INSURE (CTO alternate-signer re-cert) · STITCH (unseated by choice).
+3. **ONE call stands at Andrew** — the 08-21 Opal-membership backfill. **The PERFRP-on-PROD card is CLOSED** by his
+   ~08:5xZ word *"I'm fine with it on PROD, let's just get the data part sorted"* (@3a6af2a355). **He released the
+   BRANCH half and KEPT the DATA half — the publish gate stands; this is not a general lift.**
+4. ⛔ **MY HOLDS — TESTED, AND TWO OF FOUR WERE STALE.** `COT_CANON458`: registration **and** PRD are BOTH discharged
+   (`org/projects/COT_CANON458.json`, `docs/architecture/COT_CANON458_PRD.md`); **7 cells are executable now**, seating
+   deferred on capacity, emit still STOPPED. `ADVI_INSURE`: **CERTIFIED @7397dfd83e at 00:01:03Z, on origin/CLOUD AND
+   origin/SITEZ — I carried it as pending for NINE HOURS.** `CAP`: genuinely pending (no project JSON, no PRD) — that
+   one was accurate. `STITCH`: unseated by choice. **A hold whose blocker is cleared BY SOMEONE ELSE never notifies the
+   holder — treat every line of a holds list as a claim under test, not as a record.**
 5. **CRO remains off-limits this session.** Alternate certification signer is base `1.0.0_SA_CTO` only.
-6. **Say "LOCAL @hash, rides integration."** Nothing here is pushed.
+6. **Re-measure push state before quoting it.** Everything in this log is now on `origin/CLOUD` (measured ~09:3xZ after
+   an explicit `git fetch`). *"LOCAL @hash, rides integration"* is right at authoring and **goes stale silently** — say
+   it, then check it again before you repeat it.
