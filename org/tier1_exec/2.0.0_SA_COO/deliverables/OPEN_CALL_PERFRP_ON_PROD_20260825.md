@@ -1,6 +1,6 @@
 # OPEN CALL AT ANDREW — PERFRP'S RENDERER IS ON PROD
 
-**raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · **status: CARD FOR HIS NEXT TERMINAL. Not escalated at 03:20 local — reasoning in §5.**
+**raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · ⛔ **status: FIRST ITEM AT HIS NEXT TERMINAL — SEVERITY RAISED at ~07:25Z: this is CLIENT-VISIBLE, not latent. Still not a 03:2x-local wake-up; reasoning in §5.**
 **CONFIRMED INDEPENDENTLY AT THREE SEATS**, each with a positive or negative control: `0.4.0_DE_ClientPlatform~D`,
 `0.7.0_AE_CloudOps~G`, `3.0.0_SA_CVO`.
 
@@ -71,8 +71,26 @@ is the ASKER'S job, not his.**
   *(My §1 recorded only that it reached the PROD BRANCH. It reached the SERVED BUNDLE — I understated it.)*
 - ✅ **AND THE DATA IS NOT THERE, WHICH IS THE HALF THAT DECIDES SEVERITY: `platinum/advi/49financial/` → **0 perfrp
   leaves**, positive control 12 objects present at the same prefix.**
-> **SCAFFOLDING SHIPPED. NUMBERS DID NOT.** The exposure is **LATENT — CONFIRMED ON THE DECIDING PLANE**, not inferred:
-> the code is live and **has nothing to fetch.** `0.7.0_AE_CloudOps~G`'s start condition is UNMET.
+⛔⛔ **AND "LATENT" IS TOO GENEROUS — DE~D READ THE LITERAL STRINGS AT `origin/PROD` (69522) AND FOUR CARDS RENDER AS
+FINISHED PRODUCT:**
+```
+Activity Summary   "Beginning value, net additions, gain/loss, ending value"
+Performance        "Time-weighted return, net of advisory fees"
+Allocation         "Allocation by class, of total and of level"
+Transactions       "Per-relationship, paged"      <- ALSO RENDERS INTERNAL TAXONOMY, IN AMBER, ON ITS FACE
+Gain/Loss          requiresLeaf:true -> HIDDEN     <- the ONE invisible card is the only one whose absence was designed for
+```
+**NOTHING ON ANY FACE SAYS PROVISIONAL, PREVIEW, OR COMING SOON — because on DEV the audience was us and no such label was
+needed.** The slot is passed **UNCONDITIONALLY**; no branch renders nothing (DE~D, mutant-proven).
+> **A 49F ADVISOR ON PROD TODAY SEES FOUR EMPTY PERFORMANCE-CARD SHELLS THAT READ AS FINISHED PRODUCT, ONE OF THEM
+> SHOWING INTERNAL TAXONOMY IN AMBER. THE SCAFFOLDING SHIPPED; THE NUMBERS DID NOT.**
+**So this is CLIENT-VISIBLE, not latent.** What is latent is only the *data*; the *surface* is live.
+⛔ **AND THE ONE PLANE NOBODY HAS MEASURED IS NAMED HERE RATHER THAN FILLED IN (CVO 69518): WHETHER ANY HUMAN HAS
+ACTUALLY LOADED IT. *"Four cards render"* and *"four cards have been SEEN"* are different facts and only the first is
+measured. BOTH AVAILABLE ENDINGS ARE WRONG — "so clients have seen it" overstates, "so nobody saw it" is an absence
+nobody measured. THE HONEST STATE IS `NOT MEASURED`, and that is stronger than a number nobody trusts.**
+*(CVO's certifier call: FOUR PLANES, FOUR SEATS, FOUR METHODS, CONVERGING — **stop measuring. A fifth pass is cost
+without discrimination.**)*
 ⛔ **AND TWO ZEROS IN THAT MEASUREMENT MUST NEVER BE QUOTED AS EVIDENCE:** `PerfrpCardGrid` / `PerfrpBookView` /
   `PerfrpTable` read ZERO **because the bundle is minified and class names are mangled — that is not absence.**
   **CTO's FIRST SWEEP READ `perfrp` = 0 AND WAS ONE SENTENCE FROM "NOT IN THE BUNDLE"** — caught only because its
