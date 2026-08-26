@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json",
+  "title": "L0 GRAPH SUBSTRATE MANIFEST -- the portable container of every part required to instantiate the graph",
+  "description": "L0 is FOUNDATIONAL SUBSTRATE: the physical stores, the materializers that write them, and the tools that read them. NOTHING ABOVE L0 CAN BE CONTRACTED UNTIL L0'S GROUND TRUTH IS ESTABLISHED -- L1's spine promises to resolve a reference to a canonical entity, and that promise is only as good as the surfaces underneath it. Andrew-direct 2026-08-26: a manifest covering EVERY graph surface, EVERY materializer, EVERY substrate, EVERY operational tool, so there is 'a portable, defined container of the necessary parts for graph instantiation'. Shape follows the document-envelope + execution-receipt pattern: a registered part declares how it came to exist, what it claims temporally, where it lives, what it is a projection of, and WHAT DIGEST PRODUCED IT.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "as_of", "compiled_by", "denominator", "parts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "compiled_by": {"type": "string", "minLength": 1},
+    "as_of": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compiled_utc", "commit_ish"],
+      "properties": {
+        "compiled_utc": {"type": "string", "minLength": 20},
+        "commit_ish": {"type": "string", "minLength": 7}
+      }
+    },
+    "denominator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["method", "population_searched", "parts_registered", "known_unsearched"],
+      "description": "A manifest claiming completeness MUST print how it looked and what it could not see. A census without a denominator is a list.",
+      "properties": {
+        "method": {"type": "string", "minLength": 1},
+        "population_searched": {"type": "string", "minLength": 1},
+        "parts_registered": {"type": "integer", "minimum": 0},
+        "known_unsearched": {"type": "array", "items": {"type": "string"},
+          "description": "Planes deliberately or unavoidably NOT swept. Empty array is a claim of total coverage and had better be true."}
+      }
+    },
+    "parts": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/part"}
+    }
+  },
+  "$defs": {
+    "part": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "part_class", "home", "authority_role", "temporal_claim",
+                   "lineage", "generation", "population_status", "vintage", "basis", "evidence", "owner"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "part_class": {
+          "enum": ["store", "materializer", "projection", "reader_tool", "spec_artifact", "output_artifact", "other"],
+          "x-enum-definitions": {
+            "store": "A persistent surface holding graph state (Iceberg table, DB, bucket prefix).",
+            "materializer": "Code that WRITES a store or artifact.",
+            "projection": "A rebuildable view derived from a store. MUST name lineage.projection_of.",
+            "reader_tool": "Code that READS graph state without writing it.",
+            "spec_artifact": "A declared input a materializer consumes (a catalog, a motif spec, a rule bank).",
+            "output_artifact": "A file produced by a materializer that is not itself a store.",
+            "other": "Closes the population honestly rather than forcing a fit."
+          },
+          "x-rule24": {
+            "domain": "role a registered part plays in graph instantiation",
+            "grain": "part",
+            "intent": "tell a reader whether this part PRODUCES, HOLDS, DERIVES or CONSUMES graph state",
+            "mece": "'other' covers members the four operative roles cannot express",
+            "state_coherence": "a part's class is stable; a materializer promoted to a store is a new part",
+            "verdict": "pass-with-escape-hatch"
+          }
+        },
+        "home": {"type": "string", "minLength": 1,
+          "description": "EXACT location. Iceberg table name, s3 URI, repo path, DB path."},
+        "authority_role": {"enum": ["source", "projection", "evidence", "reference", "none"]},
+        "temporal_claim": {
+          "enum": ["current_state", "point_in_time", "timeless", "unknown"],
+          "description": "What the part CLAIMS about its own currency. A part claiming current_state while measurably stale is an expressible, testable violation -- which is the point of recording the claim separately from the vintage."
+        },
+        "lineage": {
+          "type": "object", "additionalProperties": false,
+          "required": ["projection_of", "source_identity"],
+          "properties": {
+            "projection_of": {"type": "array", "items": {"type": "string"},
+              "description": "What this part is derived FROM. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."},
+            "source_identity": {"type": ["string", "null"],
+              "description": "The upstream truth this ultimately descends from."}
+          }
+        },
+
+        "generation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["materializer", "materializer_standing", "declared_opinions", "cadence", "trigger"],
+          "description": "HOW THIS PART COMES TO EXIST. The receipt half of the manifest.",
+          "properties": {
+            "materializer": {"type": ["string", "null"],
+              "description": "The code that writes this part. NULL means nothing writes it -- a frozen or orphaned surface, which is a finding."},
+            "materializer_digest": {"type": ["string", "null"],
+              "description": "Digest of the materializer AS IT PRODUCED THIS PART. This is what turns 'is this from a deprecated script' from archaeology into a lookup. Null is honest and loud."},
+            "materializer_standing": {
+              "enum": ["canonical", "historical_in_use", "superseded", "unknown"],
+              "x-enum-definitions": {
+                "canonical": "The one intended producer for this part going forward.",
+                "historical_in_use": "Predates the canonical intent and is STILL CONSUMED. The most dangerous value -- it works, so nothing surfaces it.",
+                "superseded": "Replaced and no longer consumed.",
+                "unknown": "Currency not measured. HONEST -- never default to canonical because it ran recently."
+              },
+              "x-rule24": {
+                "domain": "standing of the code that produced this part",
+                "grain": "materializer-part pair",
+                "intent": "let a consumer refuse output from a producer that is not the intended one",
+                "mece": "canonical/historical_in_use/superseded partition the measured cases; 'unknown' covers the unmeasured member",
+                "state_coherence": "unknown resolves by measurement; historical_in_use -> superseded requires a MIGRATION, not a re-read -- different clocks",
+                "verdict": "pass"
+              }
+            },
+            "declared_opinions": {
+              "type": ["array", "null"],
+              "items": {"type": "string"},
+              "description": "⛔ THE SEMANTIC-DEFECT AXIS, AND THE REASON THIS FIELD EXISTS. Every filter, threshold, exclusion, cutoff and definitional choice the materializer makes -- enumerated. A materializer can run this morning and still encode a deprecated opinion, and EVERY freshness instrument (mtime, snapshot id, last-write, a wave as_of) is STRUCTURALLY BLIND to it. No scanner discriminates a bad definition. The only thing that does is REQUIRING THE OPINIONS BE DECLARED RATHER THAN BURIED, so they become reviewable. NULL means the opinions are embedded in code and this part is UNREVIEWABLE ON THE SEMANTIC AXIS -- which is itself the finding, and the honest value."
+            },
+            "cadence": {"type": ["string", "null"],
+              "description": "NULL means nothing refreshes it on a rhythm -- a defect, not a config gap."},
+            "trigger": {"type": ["string", "null"],
+              "description": "What ACTUALLY fires it. A part whose only trigger is another process's success has no schedule and freezes silently when its upstream breaks."}
+          }
+        },
+
+        "population_status": {
+          "enum": ["production", "test", "orphaned", "unknown"],
+          "description": "⛔ ADDED ON A LIVE FINDING: two cse_test_* tables were measured sitting in the PRODUCTION warehouse. A test surface indistinguishable from a production one is a substrate defect, not a tidiness issue -- a consumer cannot refuse what it cannot see.",
+          "x-enum-definitions": {
+            "production": "Intended to be read by production consumers.",
+            "test": "A test/scratch surface. Its presence in a production plane is a FINDING.",
+            "orphaned": "No live producer and no known consumer.",
+            "unknown": "Not determined."
+          },
+          "x-rule24": {
+            "domain": "intended operational standing of a registered part",
+            "grain": "part",
+            "intent": "let a consumer refuse a non-production surface",
+            "mece": "production/test/orphaned partition the determined cases; 'unknown' covers the rest",
+            "state_coherence": "test -> production is a promotion act; orphaned -> production requires an owner, not a re-read",
+            "verdict": "pass"
+          }
+        },
+
+        "vintage": {
+          "type": "object", "additionalProperties": false,
+          "required": ["measured_utc", "method"],
+          "properties": {
+            "measured_utc": {"type": ["string", "null"]},
+            "method": {"type": "string", "minLength": 1,
+              "description": "HOW the vintage was read. ⛔ A lexicographically-last metadata file is NOT the chronologically newest one, and sort_by on a paginated list-* sorts PER PAGE. State the method so the number can be judged."},
+            "age_note": {"type": ["string", "null"]}
+          }
+        },
+
+        "coverage": {
+          "type": ["object", "null"], "additionalProperties": false,
+          "properties": {
+            "population": {"type": ["string", "null"]},
+            "denominator": {"type": ["string", "null"]}
+          }
+        },
+
+        "consumers": {"type": ["array", "null"], "items": {"type": "string"},
+          "description": "Known readers. An empty array on a live store is a candidate orphan; null means not measured."},
+
+        "basis": {"enum": ["measured", "inferred", "held", "absent"]},
+        "evidence": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1,
+          "description": "Who owns the remedy for this part. 'UNOWNED' is legal and loud."}
+      }
+    }
+  }
+}
