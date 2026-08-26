@@ -340,7 +340,11 @@ directives:
       empty set. ON HOLD does not make the empty set correct; it makes it NON-URGENT, because there
       is no longer active work whose record is missing. The defect stands as a REGISTER item, not a
       staffing one, and it must NOT be closed by minting a project for held work. Contrast D5
-      (LD-0454), whose empty set is correct on its own terms."
+      (LD-0454), whose empty set is correct on its own terms. || CADENCE, ANDREW-AUTHORED
+      2026-08-26 (his own words in the day's operating report, routed by 1.0.0_SA_CTO 74029):
+      'AJ and I have set up a recurring weekly meeting to drive this project forward.'
+      D7 therefore has a STANDING HUMAN CADENCE and its quiet weeks are EXPECTED, not
+      stalled -- do not read low activity here as a staffing gap. No work created by this."
   D8:
     title: "Model Portfolios Pipeline Fortification"
     directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
@@ -380,7 +384,13 @@ directives:
       which rendered [no-json]. NOT a missing project -- a SUPERSEDED CODE (lineage
       ADVI_TAXSMA -> PFMG_TAXSMA -> OPAL_TAXSMA, per OPAL_TAXSMA.json renamed_from). Grounding,
       the Rule-25 ABANDONED-vs-KEY-MIGRATED discriminator, and the OPEN CALL on whether
-      OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454."
+      OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454. || SCOPE, ANDREW-AUTHORED
+      2026-08-26: he retitled this directive 'Tax SMA Ops + YCharts' in the day's operating
+      report -- YCharts FOLDS INTO D9 rather than carrying a directive or project of its own.
+      His timing words: 'YCharts I figure we will have time to discuss later next week.'
+      So YCharts is IN SCOPE and DEFERRED, which are TWO DIFFERENT FACTS: it needs no register
+      home, and its lack of movement this week is deliberate rather than a gap. The Tax half's
+      gating dependency is unchanged (the meeting with Yang and Alyssa)."
   D10:
     title: "Global Pipeline Structure"
     directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
