@@ -172,6 +172,12 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   Never flattened to "AC4 passed" ×3.
 - **Currency vocabulary, final operative form (73307):** UNVERIFIED = generator exists, currency
   unestablished · NOT_APPLICABLE = absence MEASURED · neither = unworked row.
+- **DTX part-count bar (COO~X 73328, SC-m-4 closed BOUNDED):** the manifest must NOT adopt 37/39/43
+  or any lane sum as a part count — the identity is not in the strings (a key strict enough to catch
+  false splits merges `kuzu_nessie_db` with its S3 twin; measured, both directions). DT~X's part_id
+  is where identities get MINTED, not consumed; UNRESOLVED markers + known_unsearched are the
+  conforming answers where resolution fails. A precise part count in the manifest without minted
+  identities behind it is the over-count-as-thoroughness failure.
 
 ## Standing context
 
