@@ -90,185 +90,209 @@ reached INERT (66521).
 
 ```json
 [
- {
-  "id": "D1_CATVIEWS-S1",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C (executing seat, against its own ISSUER-authored criterion)",
-  "surfaced_at": "2026-08-24T20:42Z",
-  "one_line": "D1R1DE-AC1's named oracle (comp-transform schema-check ModelPortfolios) aborts at types-resolution on the one file this TO edits, so its 0-MISSING is a non-result that reads as a pass -- on the exact defect class (renders a field the response type does not carry) that this TO's new nested block is most likely to produce.",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "comp-transform schema-check ModelPortfolios -> rc=1, single line '[WARN] types-resolution: no types.ts found near .../ModelPortfolios.tsx (searched co-located + 3 parent dirs + _shared/)'; MISSING count 0; the tool's own 'SCHEMA CHECK:' header is ABSENT, i.e. it aborted before checking",
-    "POSITIVE CONTROL, the reason this is a finding: comp-transform schema-check Correlation -> rc=0 'All rendered fields match their response types'; comp-transform schema-check FactorTilts -> rc=0 and names a real gap ('getAUMMetrics() -> AUMFlowsWithMetricsResponse: type not found in types.ts'). The instrument discriminates; it has no domain on this page",
-    "mechanism measured at source: portal/src/pages/ModelPortfolios.tsx is a flat single-file page with 4 inline type declarations and response types imported from @/api/endpoints/aum (MdpfPerFirmTimeSeries, MdpfFirmAUMMetrics); find portal/src -name types.ts -> 18 files, none co-located or within 3 parents of this page",
-    "DESIGNED not accidental: no call shape creates a types.ts, so corroboration must come from outside the instrument's domain"
-   ]
+  {
+    "id": "D1_CATVIEWS-S1",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C (executing seat, against its own ISSUER-authored criterion)",
+    "surfaced_at": "2026-08-24T20:42Z",
+    "one_line": "D1R1DE-AC1's named oracle (comp-transform schema-check ModelPortfolios) aborts at types-resolution on the one file this TO edits, so its 0-MISSING is a non-result that reads as a pass -- on the exact defect class (renders a field the response type does not carry) that this TO's new nested block is most likely to produce.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-transform schema-check ModelPortfolios -> rc=1, single line '[WARN] types-resolution: no types.ts found near .../ModelPortfolios.tsx (searched co-located + 3 parent dirs + _shared/)'; MISSING count 0; the tool's own 'SCHEMA CHECK:' header is ABSENT, i.e. it aborted before checking",
+        "POSITIVE CONTROL, the reason this is a finding: comp-transform schema-check Correlation -> rc=0 'All rendered fields match their response types'; comp-transform schema-check FactorTilts -> rc=0 and names a real gap ('getAUMMetrics() -> AUMFlowsWithMetricsResponse: type not found in types.ts'). The instrument discriminates; it has no domain on this page",
+        "mechanism measured at source: portal/src/pages/ModelPortfolios.tsx is a flat single-file page with 4 inline type declarations and response types imported from @/api/endpoints/aum (MdpfPerFirmTimeSeries, MdpfFirmAUMMetrics); find portal/src -name types.ts -> 18 files, none co-located or within 3 parents of this page",
+        "DESIGNED not accidental: no call shape creates a types.ts, so corroboration must come from outside the instrument's domain"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "DISCHARGED SAME TURN by the issuer, not open. Routed BLOCKING x INERT to 2.0.0_SA_COO as 66518; ruled 66521: AC1 amended in place -- declare the category_views response types in @/api/endpoints/aum (Build Ladder rung 2, existing estate pattern) and exercise bun run typecheck (AC9) ONCE with a mutant (render a field absent from the type -> typecheck FAILS -> remove) as the real discriminator; the comp-transform call stays on record run-with-its-domain-disclosed and is NOT deleted. Decomp untouched; cell_refs D1-c-1 unchanged; alignment denominators unchanged (8 cells / 9 criteria). Filed by the executing seat against the issuer's own criterion -- the direction the channel exists to permit."
   },
-  "disposition": "GRADUATED",
-  "notes": "DISCHARGED SAME TURN by the issuer, not open. Routed BLOCKING x INERT to 2.0.0_SA_COO as 66518; ruled 66521: AC1 amended in place -- declare the category_views response types in @/api/endpoints/aum (Build Ladder rung 2, existing estate pattern) and exercise bun run typecheck (AC9) ONCE with a mutant (render a field absent from the type -> typecheck FAILS -> remove) as the real discriminator; the comp-transform call stays on record run-with-its-domain-disclosed and is NOT deleted. Decomp untouched; cell_refs D1-c-1 unchanged; alignment denominators unchanged (8 cells / 9 criteria). Filed by the executing seat against the issuer's own criterion -- the direction the channel exists to permit."
- },
- {
-  "id": "D1_CATVIEWS-S2",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C",
-  "surfaced_at": "2026-08-24T20:42Z",
-  "one_line": "Pre-existing React Query cache-key collision on this TO's edit surface: ['model-portfolio-benchmarks'] is shared by ModelPortfolios.tsx:533 and components/ModelPortfolioModal.tsx:114, both calling getModelPortfolioBenchmarks().",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "comp-cache collisions, run at startup as AC1's second limb: Key ['model-portfolio-benchmarks'] -> portal/src/components/ModelPortfolioModal.tsx:114 and portal/src/pages/ModelPortfolios.tsx:533, same accessor getModelPortfolioBenchmarks()",
-    "benign shape: two call sites, one key, one accessor -- shared cache is the intended behaviour here, which is why this is recorded as a constraint and not as a defect"
-   ]
+  {
+    "id": "D1_CATVIEWS-S2",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C",
+    "surfaced_at": "2026-08-24T20:42Z",
+    "one_line": "Pre-existing React Query cache-key collision on this TO's edit surface: ['model-portfolio-benchmarks'] is shared by ModelPortfolios.tsx:533 and components/ModelPortfolioModal.tsx:114, both calling getModelPortfolioBenchmarks().",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-cache collisions, run at startup as AC1's second limb: Key ['model-portfolio-benchmarks'] -> portal/src/components/ModelPortfolioModal.tsx:114 and portal/src/pages/ModelPortfolios.tsx:533, same accessor getModelPortfolioBenchmarks()",
+        "benign shape: two call sites, one key, one accessor -- shared cache is the intended behaviour here, which is why this is recorded as a constraint and not as a defect"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Logged because it is ON the edit surface and constrains this TO, not as a defect claim. Operative consequence, one line: category_views gets its own cache key when wired; no colliding key is added. COO concurred (66521): not mine to fix."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "notes": "Logged because it is ON the edit surface and constrains this TO, not as a defect claim. Operative consequence, one line: category_views gets its own cache key when wired; no colliding key is added. COO concurred (66521): not mine to fix."
- },
- {
-  "id": "D1_CATVIEWS-S3",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C",
-  "surfaced_at": "2026-08-24T20:42Z",
-  "one_line": "The portal ephemeral promote worktree .runtmp/portal-promote-20260824T124621Z is still registered at PROD a239e4a9 and portal local PROD is AHEAD of origin/PROD (a239e4a9 vs 8a96c916) -- a staged ref a promote run outside /prod-deploy would silently base on.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "git -C portal worktree list -> C:/.../portal d43b88c5 [DEV] AND C:/.../.runtmp/portal-promote-20260824T124621Z a239e4a9 [PROD]",
-    "git -C portal rev-parse PROD origin/PROD -> a239e4a9023c8bc25c4d514735564f6a790a2a70 (local) vs 8a96c91654ed282acbed04da1e9f0074dca42332 (origin) -- local PROD ahead of remote",
-    "INERT discriminator, stated not assumed: the hazard fires only on a promote action, and the disarm (/prod-deploy Step 3 update-ref + worktree prune) is a MANDATORY step of the very procedure that triggers it; the PROD push is separately held at Andrew's word",
-    "this seat's cells are DEV-only (portal main tree confirmed on DEV) and nothing promote-adjacent is in flight here"
-   ]
+  {
+    "id": "D1_CATVIEWS-S3",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C",
+    "surfaced_at": "2026-08-24T20:42Z",
+    "one_line": "The portal ephemeral promote worktree .runtmp/portal-promote-20260824T124621Z is still registered at PROD a239e4a9 and portal local PROD is AHEAD of origin/PROD (a239e4a9 vs 8a96c916) -- a staged ref a promote run outside /prod-deploy would silently base on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal worktree list -> C:/.../portal d43b88c5 [DEV] AND C:/.../.runtmp/portal-promote-20260824T124621Z a239e4a9 [PROD]",
+        "git -C portal rev-parse PROD origin/PROD -> a239e4a9023c8bc25c4d514735564f6a790a2a70 (local) vs 8a96c91654ed282acbed04da1e9f0074dca42332 (origin) -- local PROD ahead of remote",
+        "INERT discriminator, stated not assumed: the hazard fires only on a promote action, and the disarm (/prod-deploy Step 3 update-ref + worktree prune) is a MANDATORY step of the very procedure that triggers it; the PROD push is separately held at Andrew's word",
+        "this seat's cells are DEV-only (portal main tree confirmed on DEV) and nothing promote-adjacent is in flight here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "DT lane's, not this seat's -- surfaced, no action taken, nothing chased. Recorded with both hashes rather than as a startup impression because a promote run OUTSIDE /prod-deploy would base on the staged merge silently. COO independently reached INERT (66521) and is not acting on it either."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "notes": "DT lane's, not this seat's -- surfaced, no action taken, nothing chased. Recorded with both hashes rather than as a startup impression because a promote run OUTSIDE /prod-deploy would base on the staged merge silently. COO independently reached INERT (66521) and is not acting on it either."
- },
- {
-  "id": "D1_CATVIEWS-S4",
-  "surfaced_by": "0.4.0_DS_ClientPlatform~F",
-  "surfaced_at": "2026-08-24T21:01Z",
-  "one_line": "A model's PRIMARY identity is carried by crosswalk model_key, never by its display label -- I read the label, reported 'Opal Conservative Growth' as an unregistered non-Primary model, and drove a COO ruling to register $34,585,361.39 of PRIMARY AUA as Custom. Caught at the keyboard before any write.",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "disarm_owner": "0.4.0_DS_ClientPlatform~F -- DISARMED same turn: retraction to COO (66568, 210136Z), issuer re-ruled NO REGISTRATION (66572), r4 registration paused then resumed on the corrected basis, zero commits at any point. DISARMED, NOT REMEDIATED.",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "SURFACING SEAT DECLARED grounding.status='SOURCE-CONFIRMED' (a Rule 22 reserved word, correctly used and STRONGER than this schema's top value); re-encoded to GROUNDED by the channel owner because the schema has no such value -- the strength claim is preserved here, not discarded",
-    "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:146 -- CANONICAL_KEY['Opal Conservative Growth'] = 'opal_long_term_conservative' (the Cottonwood builder itself)",
-    "build_cottonwood_mdpf_slice.py:133-137 -- RULED Andrew-direct 2026-07-23 ~0215Z, PRD v1.23 @a41c582ba",
-    "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:91 -- 'LTC = SmartX \"Opal Conservative Growth\" (NOT \"Long-Term Conservative\"); ... Key by id, never the label.'",
-    "concurring independently: crosswalk:6, build_cottonwood_mdpf_pair.py:302, build_mdpf_process_backfill.py:103, mdpf_revamp_count_source_audit.py:80, aggregate_smartx_to_daily.py:40, aggregate_smartx_to_timeseries.py:69 -- 7 files, zero dissent",
-    "the TRUE premise that produced the FALSE inference: BD 'Opal Conservative Growth' (0e632e04, Model, 109 acct) and BD 'Opal Long Term Conservative' (c973839d, Strategy, 0 acct) ARE distinct rows -- measured correctly, and it licenses nothing about which row carries the Primary identity"
-   ]
+  {
+    "id": "D1_CATVIEWS-S4",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~F",
+    "surfaced_at": "2026-08-24T21:01Z",
+    "one_line": "A model's PRIMARY identity is carried by crosswalk model_key, never by its display label -- I read the label, reported 'Opal Conservative Growth' as an unregistered non-Primary model, and drove a COO ruling to register $34,585,361.39 of PRIMARY AUA as Custom. Caught at the keyboard before any write.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.4.0_DS_ClientPlatform~F -- DISARMED same turn: retraction to COO (66568, 210136Z), issuer re-ruled NO REGISTRATION (66572), r4 registration paused then resumed on the corrected basis, zero commits at any point. DISARMED, NOT REMEDIATED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SURFACING SEAT DECLARED grounding.status='SOURCE-CONFIRMED' (a Rule 22 reserved word, correctly used and STRONGER than this schema's top value); re-encoded to GROUNDED by the channel owner because the schema has no such value -- the strength claim is preserved here, not discarded",
+        "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:146 -- CANONICAL_KEY['Opal Conservative Growth'] = 'opal_long_term_conservative' (the Cottonwood builder itself)",
+        "build_cottonwood_mdpf_slice.py:133-137 -- RULED Andrew-direct 2026-07-23 ~0215Z, PRD v1.23 @a41c582ba",
+        "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:91 -- 'LTC = SmartX \"Opal Conservative Growth\" (NOT \"Long-Term Conservative\"); ... Key by id, never the label.'",
+        "concurring independently: crosswalk:6, build_cottonwood_mdpf_pair.py:302, build_mdpf_process_backfill.py:103, mdpf_revamp_count_source_audit.py:80, aggregate_smartx_to_daily.py:40, aggregate_smartx_to_timeseries.py:69 -- 7 files, zero dissent",
+        "the TRUE premise that produced the FALSE inference: BD 'Opal Conservative Growth' (0e632e04, Model, 109 acct) and BD 'Opal Long Term Conservative' (c973839d, Strategy, 0 acct) ARE distinct rows -- measured correctly, and it licenses nothing about which row carries the Primary identity"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "\u26d4 CHANNEL-OWNER ENCODING ACT (3.0.0_SA_CVO): the surfacing seat wrote disposition='DISARMED_PENDING_REMEDIATION' AND grounding.status='SOURCE-CONFIRMED'. NEITHER IS A VALUE IN THIS SCHEMA. Their intent is preserved verbatim (in disarm_owner, in the evidence row above, and below); I re-encoded the STATE onto the current axes and did not touch the finding. \u26d4 BOTH COINAGES ARE EVIDENCE OF GAPS IN MY OWN SCHEMA -- filed as D1_CATVIEWS-S5. One seat, one first use, reached past TWO independent axes. || THE CLASS, which is why this is filed and not merely retracted: mdpf_category_registry's F5 duplicate guard keys on member_id, so a SECOND entry for the SAME REAL MODEL under a DIFFERENT id RAISES NOTHING. Every structural guard passes, self_test stays rc=0, and the only detector was reading the crosswalk. The direction of harm is the quiet one -- it moves a served client-facing number DOWN, out of Primary; build_cottonwood_mdpf_slice.py:137 records the mirror-image near-miss ('a name-hunch merge would move $31M on a guess -- it is now moved on a RULING, not a hunch'). REMEDIATION PROPOSED, NOT BUILT, NOT MINE TO BUILD (no-inferred-gates): a registry assert that every registered model member resolves to a distinct crosswalk model_key, or declares itself off-crosswalk with a reason -- so a same-model/different-id duplicate raises at import the way a same-id duplicate already does. Routed to COO/CTO as a proposal. Second-order note for the channel: the issuer retracted its own ruling on the executing seat's control (66572), which is the loop working, not a second defect."
   },
-  "disposition": "GRADUATED",
-  "notes": "⛔ CHANNEL-OWNER ENCODING ACT (3.0.0_SA_CVO): the surfacing seat wrote disposition='DISARMED_PENDING_REMEDIATION' AND grounding.status='SOURCE-CONFIRMED'. NEITHER IS A VALUE IN THIS SCHEMA. Their intent is preserved verbatim (in disarm_owner, in the evidence row above, and below); I re-encoded the STATE onto the current axes and did not touch the finding. ⛔ BOTH COINAGES ARE EVIDENCE OF GAPS IN MY OWN SCHEMA -- filed as D1_CATVIEWS-S5. One seat, one first use, reached past TWO independent axes. || THE CLASS, which is why this is filed and not merely retracted: mdpf_category_registry's F5 duplicate guard keys on member_id, so a SECOND entry for the SAME REAL MODEL under a DIFFERENT id RAISES NOTHING. Every structural guard passes, self_test stays rc=0, and the only detector was reading the crosswalk. The direction of harm is the quiet one -- it moves a served client-facing number DOWN, out of Primary; build_cottonwood_mdpf_slice.py:137 records the mirror-image near-miss ('a name-hunch merge would move $31M on a guess -- it is now moved on a RULING, not a hunch'). REMEDIATION PROPOSED, NOT BUILT, NOT MINE TO BUILD (no-inferred-gates): a registry assert that every registered model member resolves to a distinct crosswalk model_key, or declares itself off-crosswalk with a reason -- so a same-model/different-id duplicate raises at import the way a same-id duplicate already does. Routed to COO/CTO as a proposal. Second-order note for the channel: the issuer retracted its own ruling on the executing seat's control (66572), which is the loop working, not a second defect."
- },
- {
-  "id": "D1_CATVIEWS-S5",
-  "surfaced_by": "3.0.0_SA_CVO (channel owner). ⛔ ATTRIBUTION CORRECTED: this record first credited the two coined values to 0.4.0_DE_ClientPlatform~C. THEY ARE 0.4.0_DS_ClientPlatform~F's, in item S4, which DS~F appended to DE~C's file at 21:06:25Z -- three minutes after DE~C's own accurate '3/3 VALID' report on S1-S3. Two seats, one file, neither able to commit it; I read the merged file and attributed all of it to the seat who had messaged me.",
-  "surfaced_at": "2026-08-24T21:12Z",
-  "one_line": "TWO axes of the investigation schema were reached past by one seat on first use: hazard_standing {ARMED, INERT} has no DISARMED-WITH-REMEDIATION-OPEN state (so a disarmed item renders byte-identical to one never armed -- the exact collapse DISARMED != REMEDIATED exists to prevent, reproduced inside the schema written to enforce it), and grounding.status {INFERRED, GROUNDED} cannot express SOURCE-CONFIRMED, which is a RESERVED WORD in CLAUDE.md Rule 22's own grounding vocabulary.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "0.4.0_DS_ClientPlatform~F wrote disposition='DISARMED_PENDING_REMEDIATION' for an item disarmed same-turn with remediation open",
-    "the same seat (DS~F) wrote grounding.status='SOURCE-CONFIRMED' -- a Rule 22 RESERVED word, legal only on a source-confirmed claim, and their item is source-confirmed",
-    "schemas/investigation_item.schema.json: hazard_standing enum ['ARMED','INERT']; grounding.status enum ['INFERRED','GROUNDED'] -- neither carries the state the seat correctly observed",
-    "the disarmed state is expressible today ONLY as INERT + prose, which is what the channel owner did to make the document valid, and which loses the distinction on every machine read",
-    "the loss is named verbatim in the session log that authored this schema: 'DISARMED != REMEDIATED -- two states, two owners, two clocks; a single terminal state converts dangerous-and-visible into safe-and-invisible'",
-    "prior items at this seat (OPAL_KIMIPIPELINE-S1, NFRA_COMPRAIL-S1) encode the same state as GRADUATED + a prose note, i.e. an unenforced convention the schema does not know about",
-    "CLAUDE.md Rule 22 defines a THREE-level grounding vocabulary (INFERRED / grounded / SOURCE-CONFIRMED as a reserved word); this schema implements two, so the strongest legal claim in the estate's own law cannot be recorded in the channel that adjudicates grounding",
-    "ATTRIBUTION CONTROL, run only after the error: the file's own per-item surfaced_by fields read S1/S2/S3 = 0.4.0_DE_ClientPlatform~C, S4 = 0.4.0_DS_ClientPlatform~F. The in-band attribution was correct in the document the whole time and I did not read it before writing about it -- DS~F's own hand-off message even warned that 'per-entry attribution is in-band via surfaced_by, so the git author line will not be the provenance record'"
-   ]
+  {
+    "id": "D1_CATVIEWS-S5",
+    "surfaced_by": "3.0.0_SA_CVO (channel owner). \u26d4 ATTRIBUTION CORRECTED: this record first credited the two coined values to 0.4.0_DE_ClientPlatform~C. THEY ARE 0.4.0_DS_ClientPlatform~F's, in item S4, which DS~F appended to DE~C's file at 21:06:25Z -- three minutes after DE~C's own accurate '3/3 VALID' report on S1-S3. Two seats, one file, neither able to commit it; I read the merged file and attributed all of it to the seat who had messaged me.",
+    "surfaced_at": "2026-08-24T21:12Z",
+    "one_line": "TWO axes of the investigation schema were reached past by one seat on first use: hazard_standing {ARMED, INERT} has no DISARMED-WITH-REMEDIATION-OPEN state (so a disarmed item renders byte-identical to one never armed -- the exact collapse DISARMED != REMEDIATED exists to prevent, reproduced inside the schema written to enforce it), and grounding.status {INFERRED, GROUNDED} cannot express SOURCE-CONFIRMED, which is a RESERVED WORD in CLAUDE.md Rule 22's own grounding vocabulary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.4.0_DS_ClientPlatform~F wrote disposition='DISARMED_PENDING_REMEDIATION' for an item disarmed same-turn with remediation open",
+        "the same seat (DS~F) wrote grounding.status='SOURCE-CONFIRMED' -- a Rule 22 RESERVED word, legal only on a source-confirmed claim, and their item is source-confirmed",
+        "schemas/investigation_item.schema.json: hazard_standing enum ['ARMED','INERT']; grounding.status enum ['INFERRED','GROUNDED'] -- neither carries the state the seat correctly observed",
+        "the disarmed state is expressible today ONLY as INERT + prose, which is what the channel owner did to make the document valid, and which loses the distinction on every machine read",
+        "the loss is named verbatim in the session log that authored this schema: 'DISARMED != REMEDIATED -- two states, two owners, two clocks; a single terminal state converts dangerous-and-visible into safe-and-invisible'",
+        "prior items at this seat (OPAL_KIMIPIPELINE-S1, NFRA_COMPRAIL-S1) encode the same state as GRADUATED + a prose note, i.e. an unenforced convention the schema does not know about",
+        "CLAUDE.md Rule 22 defines a THREE-level grounding vocabulary (INFERRED / grounded / SOURCE-CONFIRMED as a reserved word); this schema implements two, so the strongest legal claim in the estate's own law cannot be recorded in the channel that adjudicates grounding",
+        "ATTRIBUTION CONTROL, run only after the error: the file's own per-item surfaced_by fields read S1/S2/S3 = 0.4.0_DE_ClientPlatform~C, S4 = 0.4.0_DS_ClientPlatform~F. The in-band attribution was correct in the document the whole time and I did not read it before writing about it -- DS~F's own hand-off message even warned that 'per-entry attribution is in-band via surfaced_by, so the git author line will not be the provenance record'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "3.0.0_SA_CVO (schema author + channel owner) -- DISARM (done this turn): both coinages and their re-encodings are stated on the face of the affected item, so no machine read is silently wrong and no seat's strength claim is lost. REMEDIATION (open, separate act, separate clock): a Rule-24 four-postulate record per axis.",
+    "notes": "\u26d4 AND THE ATTRIBUTION ERROR IS ITSELF THE SAME CLASS AS THE FINDING. A shared append-only file carries N seats' work under ONE git author line, so the channel's provenance lives ONLY in the in-band surfaced_by field -- and the channel owner, filing on behalf of seats who cannot commit, is exactly the reader most likely to collapse it to whoever messaged them last. DS~F flagged this risk in their hand-off IN ADVANCE and I made the error anyway. Filing-on-behalf is now a two-step at this seat: read surfaced_by per item, THEN write. || DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "disarm_owner": "3.0.0_SA_CVO (schema author + channel owner) -- DISARM (done this turn): both coinages and their re-encodings are stated on the face of the affected item, so no machine read is silently wrong and no seat's strength claim is lost. REMEDIATION (open, separate act, separate clock): a Rule-24 four-postulate record per axis.",
-  "notes": "⛔ AND THE ATTRIBUTION ERROR IS ITSELF THE SAME CLASS AS THE FINDING. A shared append-only file carries N seats' work under ONE git author line, so the channel's provenance lives ONLY in the in-band surfaced_by field -- and the channel owner, filing on behalf of seats who cannot commit, is exactly the reader most likely to collapse it to whoever messaged them last. DS~F flagged this risk in their hand-off IN ADVANCE and I made the error anyway. Filing-on-behalf is now a two-step at this seat: read surfaced_by per item, THEN write. || DELIBERATELY NOT FIXED BY REFLEX. Adding a value to a ratified axis is precisely the schema-enumeration act Rule 24 binds (08-20 widening: authoring AND adopting AND proposing values), and doing it inside the round that found it would be the haste the postulate exists to catch. At least three candidate shapes for the standing axis (a DISARMED value; a separate disarm_state field; a remediation_ref pointer) and they do NOT move together under postulate (iv). The grounding axis is a separate act again -- aligning it to Rule 22's three levels is arguably ADOPTION of an existing ratified vocabulary rather than a mint, which is a lower bar but still an authoring event. TWO axes, two records, one owner: me."
- },
- {
-  "id": "D1_CATVIEWS-S6",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C -- read off their OWN render, then measured; surfaced by MCP per the COO ruling (executing seats do not write this tree)",
-  "surfaced_at": "2026-08-25T01:09Z",
-  "one_line": "The L2 Custom Models panel prints a REGISTRY-grain property (served) immediately beside a FIRM-grain dollar figure -- Inflection shows $43,484,499.68 of Custom AUM with 0 of 3 members served=true -- and a reader reaches one of two conclusions that are BOTH wrong.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "measured from the block at ref 23271aac64 (the seat cited its ref, per the standing evidence rule)",
-    "panel renders together: Custom $43,484,499.68 / Opal Global All Equity Total Return NOT SERVED / 50-50 INT-LTC NOT SERVED / 50-50 ST-INT NOT SERVED",
-    "0 of 3 Custom members carry served=true against $43,484,499.68 of Custom AUM",
-    "`served` is a REGISTRY property -- whether the model is served as a product artifact -- and NOT a statement about whether this firm holds it"
-   ]
+  {
+    "id": "D1_CATVIEWS-S6",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C -- read off their OWN render, then measured; surfaced by MCP per the COO ruling (executing seats do not write this tree)",
+    "surfaced_at": "2026-08-25T01:09Z",
+    "one_line": "The L2 Custom Models panel prints a REGISTRY-grain property (served) immediately beside a FIRM-grain dollar figure -- Inflection shows $43,484,499.68 of Custom AUM with 0 of 3 members served=true -- and a reader reaches one of two conclusions that are BOTH wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured from the block at ref 23271aac64 (the seat cited its ref, per the standing evidence rule)",
+        "panel renders together: Custom $43,484,499.68 / Opal Global All Equity Total Return NOT SERVED / 50-50 INT-LTC NOT SERVED / 50-50 ST-INT NOT SERVED",
+        "0 of 3 Custom members carry served=true against $43,484,499.68 of Custom AUM",
+        "`served` is a REGISTRY property -- whether the model is served as a product artifact -- and NOT a statement about whether this firm holds it"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "THE CLASS IS A GRAIN MISMATCH AT THE RENDER, and it is the same family as tonight's issuer defects one plane over: every value on the panel is TRUE, and the ADJACENCY manufactures a claim none of them makes. A reader concludes either '$43.5M of client money sits in models we do not serve' or 'the member list does not account for the money' -- and the real explanation is NEITHER, because the two figures are at different grains. Rule 24(ii) at the presentation layer rather than at a schema: two grains rendered on one axis. || WHY IT IS INERT AND NOT ARMED: nothing degrades while it stands and no act is pending -- the harm is a reader's inference, and the surfacing seat caught it by READING THEIR OWN RENDER rather than by trusting the values they had just verified individually. That is the frontend analogue of premise-verification, and it is the FIFTH time tonight an executing seat found something no document-plane check could see. || The seat proposes a label change on their own panel and chased nothing further, which is the correct scope: a grain mismatch is fixed by disclosing the grain (naming `served` as a registry property at the point of render), not by suppressing a true value. CERTIFIER NOTE: this touches D1-h-v3 (the L2 Custom drill) but is NOT a decomp defect -- the cell is enumerated and its oracle runnable; what the panel MEANS to a reader is a render-quality property no alignment or viability check reaches."
   },
-  "disposition": "GRADUATED",
-  "notes": "THE CLASS IS A GRAIN MISMATCH AT THE RENDER, and it is the same family as tonight's issuer defects one plane over: every value on the panel is TRUE, and the ADJACENCY manufactures a claim none of them makes. A reader concludes either '$43.5M of client money sits in models we do not serve' or 'the member list does not account for the money' -- and the real explanation is NEITHER, because the two figures are at different grains. Rule 24(ii) at the presentation layer rather than at a schema: two grains rendered on one axis. || WHY IT IS INERT AND NOT ARMED: nothing degrades while it stands and no act is pending -- the harm is a reader's inference, and the surfacing seat caught it by READING THEIR OWN RENDER rather than by trusting the values they had just verified individually. That is the frontend analogue of premise-verification, and it is the FIFTH time tonight an executing seat found something no document-plane check could see. || The seat proposes a label change on their own panel and chased nothing further, which is the correct scope: a grain mismatch is fixed by disclosing the grain (naming `served` as a registry property at the point of render), not by suppressing a true value. CERTIFIER NOTE: this touches D1-h-v3 (the L2 Custom drill) but is NOT a decomp defect -- the cell is enumerated and its oracle runnable; what the panel MEANS to a reader is a render-quality property no alignment or viability check reaches."
- },
- {
-  "id": "D1_CATVIEWS-S7",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C, self-scanning their OWN task order on the issuer's ask -- reported, not fixed; denominator stated first and severity graded",
-  "surfaced_at": "2026-08-25T01:49Z",
-  "one_line": "TO-R1-DE CONTRADICTS ITSELF about the D1-h-v4 unavailable case -- the cell description at :70 says '(Inflection today)' while AC5 at :87 in the SAME FILE says Inflection is NOT the unavailable case and ZERO firms exercise it -- because the issuer amendment landed on the ACCEPTANCE ROW and not on the CELL DESCRIPTION.",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "DENOMINATOR STATED FIRST: 6 checkable factual claims in the TO; 2 are instances, 4 verified TRUE (members_for('Models > Custom') exists; O-4's view-plane flag premise holds with view_plane.excluded = ['Insurance']; the comp-cache collision sites are exactly as the tool reported; the 2,471-line count was true at issuance)",
-    "INSTANCE 1 (HIGH): TO-R1-DE:70 cell description says predicate unavailable '(Inflection today)'; TO-R1-DE:87 AC5 says 'Inflection is NOT the unavailable case -- it carries a live account-grain predicate (is_fee_earning, 911 accounts), so ZERO firms exercise this today'",
-    "INSTANCE 2 (MEDIUM): the tree table at :61 lists SMA nodes as 'Tax / Muni / DIVZ / PFOE' -- those are the STRATEGY IDS; the emitted block at ref 23271aac64 carries display_names 'Dividend SMA' / 'Opal Equity Growth SMA' / 'Muni SMA' / 'Tax-Managed SMA'",
-    "the seat rendered display_name and got it right BECAUSE the same sentence carries its own antidote ('render whatever the block carries'), not despite the list"
-   ]
+  {
+    "id": "D1_CATVIEWS-S7",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C, self-scanning their OWN task order on the issuer's ask -- reported, not fixed; denominator stated first and severity graded",
+    "surfaced_at": "2026-08-25T01:49Z",
+    "one_line": "TO-R1-DE CONTRADICTS ITSELF about the D1-h-v4 unavailable case -- the cell description at :70 says '(Inflection today)' while AC5 at :87 in the SAME FILE says Inflection is NOT the unavailable case and ZERO firms exercise it -- because the issuer amendment landed on the ACCEPTANCE ROW and not on the CELL DESCRIPTION.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DENOMINATOR STATED FIRST: 6 checkable factual claims in the TO; 2 are instances, 4 verified TRUE (members_for('Models > Custom') exists; O-4's view-plane flag premise holds with view_plane.excluded = ['Insurance']; the comp-cache collision sites are exactly as the tool reported; the 2,471-line count was true at issuance)",
+        "INSTANCE 1 (HIGH): TO-R1-DE:70 cell description says predicate unavailable '(Inflection today)'; TO-R1-DE:87 AC5 says 'Inflection is NOT the unavailable case -- it carries a live account-grain predicate (is_fee_earning, 911 accounts), so ZERO firms exercise this today'",
+        "INSTANCE 2 (MEDIUM): the tree table at :61 lists SMA nodes as 'Tax / Muni / DIVZ / PFOE' -- those are the STRATEGY IDS; the emitted block at ref 23271aac64 carries display_names 'Dividend SMA' / 'Opal Equity Growth SMA' / 'Muni SMA' / 'Tax-Managed SMA'",
+        "the seat rendered display_name and got it right BECAUSE the same sentence carries its own antidote ('render whatever the block carries'), not despite the list"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "THE GRADE IS ABOUT WHICH HALF IS STALE, NOT THAT ONE IS -- and that reasoning is the reusable part: 'the Cells section is where a seat goes for WHAT TO BUILD, the acceptance table is where it goes for HOW IT IS JUDGED.' A seat reading only the Cells section builds an Inflection fixture for a firm that is not the case. The surfacing seat read both and used the amended one, and named that as LUCK OF READING ORDER, NOT A CONTROL. || A DISTINCT SUB-SHAPE OF THE S10 CLASS, worth separating: this value WAS sourced and then FALSIFIED, where S10's instances were never sourced at all. Same failure mode -- a plausible specific value sitting in a spec with nothing marking it dead -- but the remedy differs: S10's is 'do not write example values', this one is 'AN AMENDMENT MUST LAND ON EVERY SURFACE THAT CARRIES THE CLAIM, NOT ONLY ON THE ROW THAT PROMPTED IT'. Issuer's act. || INSTANCE 2 GRADED MEDIUM FOR A NAMED REASON rather than by feel: the sentence carries its own antidote and removing seven words would make it HIGH. Grading by what the text DOES rather than by how wrong it looks. || SEE ALSO ADVI_PERFRP-S10: the same class, four instances, other project, also found by executing seats reading their own TOs. FIVE lanes have now self-scanned and every one found something; NO instance in this class was found by a certifier."
   },
-  "disposition": "GRADUATED",
-  "notes": "THE GRADE IS ABOUT WHICH HALF IS STALE, NOT THAT ONE IS -- and that reasoning is the reusable part: 'the Cells section is where a seat goes for WHAT TO BUILD, the acceptance table is where it goes for HOW IT IS JUDGED.' A seat reading only the Cells section builds an Inflection fixture for a firm that is not the case. The surfacing seat read both and used the amended one, and named that as LUCK OF READING ORDER, NOT A CONTROL. || A DISTINCT SUB-SHAPE OF THE S10 CLASS, worth separating: this value WAS sourced and then FALSIFIED, where S10's instances were never sourced at all. Same failure mode -- a plausible specific value sitting in a spec with nothing marking it dead -- but the remedy differs: S10's is 'do not write example values', this one is 'AN AMENDMENT MUST LAND ON EVERY SURFACE THAT CARRIES THE CLAIM, NOT ONLY ON THE ROW THAT PROMPTED IT'. Issuer's act. || INSTANCE 2 GRADED MEDIUM FOR A NAMED REASON rather than by feel: the sentence carries its own antidote and removing seven words would make it HIGH. Grading by what the text DOES rather than by how wrong it looks. || SEE ALSO ADVI_PERFRP-S10: the same class, four instances, other project, also found by executing seats reading their own TOs. FIVE lanes have now self-scanned and every one found something; NO instance in this class was found by a certifier."
- },
- {
-  "id": "D1_CATVIEWS-S8",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~C, against code they had ALREADY SHIPPED, on a ruling withdrawn after they built to it",
-  "surfaced_at": "2026-08-25T02:19Z",
-  "one_line": "Shipped renderer HARDCODES a withdrawn ruling: aum.ts:776 returns 'absent_by_scope' for global WITHOUT FETCHING, so if category-views is ruled all-scope the accessor never requests it and the panel renders a CONFIDENT, REASONED EXPLANATION of why no global tree exists -- forever, and correctly-looking.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "portal/src/api/endpoints/aum.ts:776 -- if (firmId === 'global') { return { status: 'absent_by_scope', scope: firmId } } : RETURNS WITHOUT FETCHING",
-    "the withdrawn ruling (66633) is what that branch encodes; the withdrawal's own load-bearing consequence was stated as 'a field whose EMPTINESS carried meaning cannot quietly start carrying an object'",
-    "if CTO rules category-views ALL-SCOPE and a global object is emitted, the accessor never requests it and the panel renders 'The category view tree is per-firm. Select a partner to see it.' plus a reasoned explanation that no global tree is published"
-   ]
+  {
+    "id": "D1_CATVIEWS-S8",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~C, against code they had ALREADY SHIPPED, on a ruling withdrawn after they built to it",
+    "surfaced_at": "2026-08-25T02:19Z",
+    "one_line": "Shipped renderer HARDCODES a withdrawn ruling: aum.ts:776 returns 'absent_by_scope' for global WITHOUT FETCHING, so if category-views is ruled all-scope the accessor never requests it and the panel renders a CONFIDENT, REASONED EXPLANATION of why no global tree exists -- forever, and correctly-looking.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/endpoints/aum.ts:776 -- if (firmId === 'global') { return { status: 'absent_by_scope', scope: firmId } } : RETURNS WITHOUT FETCHING",
+        "the withdrawn ruling (66633) is what that branch encodes; the withdrawal's own load-bearing consequence was stated as 'a field whose EMPTINESS carried meaning cannot quietly start carrying an object'",
+        "if CTO rules category-views ALL-SCOPE and a global object is emitted, the accessor never requests it and the panel renders 'The category view tree is per-firm. Select a partner to see it.' plus a reasoned explanation that no global tree is published"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "0.4.0_DE_ClientPlatform~C for the code branch, COUPLED to 1.0.0_SA_CTO's pending all-scope ruling -- the disarm is that THE RULING MUST NOT LAND WITHOUT THIS BRANCH BEING KNOWN, since the ruling is the trigger",
+    "notes": "\u26d4 WHY ARMED RATHER THAN A STALE BRANCH: the failure is not a blank panel. THE PANEL ASSERTS A DELIBERATE DESIGN DECISION, WITH A REASON, IN CONFIDENT PROSE. The surfacing seat's own framing is the finding and it generalises past this file: 'A REVIEWER SEEING A BLANK PANEL ASKS WHY; A REVIEWER SEEING A CONSIDERED EXPLANATION OF WHY THERE IS NO GLOBAL TREE DOES NOT.' Correct-looking beats generic -- an articulate wrong answer suppresses the question a crude one invites. || THE SHAPE IS A RULING FOSSILISED IN CODE: the branch was CORRECT when written, the ruling behind it was withdrawn, and NOTHING IN THE CODE RECORDS THAT ITS PREMISE IS NOW PENDING. A withdrawn ruling does not un-write the code built to it, and code built to a ruling does not announce which ruling it encodes. || Surfaced by the seat AGAINST THEIR OWN SHIPPED WORK, unprompted, after the ruling that justified it was withdrawn -- the second time tonight a seat has audited their own delivered code against a decision that moved under it."
   },
-  "disposition": "GRADUATED",
-  "disarm_owner": "0.4.0_DE_ClientPlatform~C for the code branch, COUPLED to 1.0.0_SA_CTO's pending all-scope ruling -- the disarm is that THE RULING MUST NOT LAND WITHOUT THIS BRANCH BEING KNOWN, since the ruling is the trigger",
-  "notes": "⛔ WHY ARMED RATHER THAN A STALE BRANCH: the failure is not a blank panel. THE PANEL ASSERTS A DELIBERATE DESIGN DECISION, WITH A REASON, IN CONFIDENT PROSE. The surfacing seat's own framing is the finding and it generalises past this file: 'A REVIEWER SEEING A BLANK PANEL ASKS WHY; A REVIEWER SEEING A CONSIDERED EXPLANATION OF WHY THERE IS NO GLOBAL TREE DOES NOT.' Correct-looking beats generic -- an articulate wrong answer suppresses the question a crude one invites. || THE SHAPE IS A RULING FOSSILISED IN CODE: the branch was CORRECT when written, the ruling behind it was withdrawn, and NOTHING IN THE CODE RECORDS THAT ITS PREMISE IS NOW PENDING. A withdrawn ruling does not un-write the code built to it, and code built to a ruling does not announce which ruling it encodes. || Surfaced by the seat AGAINST THEIR OWN SHIPPED WORK, unprompted, after the ruling that justified it was withdrawn -- the second time tonight a seat has audited their own delivered code against a decision that moved under it."
- },
- {
-  "id": "D1_CATVIEWS-S9",
-  "surfaced_by": "0.4.0_DE_ClientPlatform~D -- found while diagnosing THEIR OWN test tooling, not by auditing anyone's code; alternative explanation ruled out FIRST",
-  "surfaced_at": "2026-08-25T07:51Z",
-  "one_line": "AdvisorsTab.tsx:1149 LeaderboardRow -- the clickable advisor row is a BARE DIV with onClick and NO role, NO tabIndex, NO onKeyDown, so it is unreachable by keyboard and invisible to assistive tech; the drill it gates is the ONLY path from the Books advisor list to L2 and then L3, so on that surface a keyboard user has NO ROUTE to the client detail view at all.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "AdvisorsTab.tsx:1149 -- <div onClick={clickable ? handleClick : undefined}> with none of role=, tabIndex=, onKeyDown=",
-    "ALTERNATIVE EXPLANATION RULED OUT BEFORE THE FINDING WAS CLAIMED: ClientsTab.tsx:906 gates the drill on layout.tabs.books.advisorDrill.enabled with an explicit no-op branch for firms that disable it -- which would have explained the failed click WITH NO DEFECT AT ALL. _partners/49financial/layout.ts:55 reads advisorDrill: {enabled: true}, so the gate is NOT the cause",
-    "the drill is the only path Books advisor list -> L2 -> L3, so the keyboard consequence is total on that surface rather than partial",
-    "PRE-EXISTING: not created by this round and unchanged by it",
-    "PRIOR-ART CHECK RETURNED by 0.4.0_DE_ClientPlatform~C and CONFIRMED INDEPENDENTLY AT SOURCE: AdvisorsTab.tsx LeaderboardRow :1149 -- role= 0, tabIndex 0, onKeyDown 0, against onClick= 10 and <button 4. THE FILE HAS SIX MORE CLICK HANDLERS THAN BUTTONS, so it is not a one-row fact.",
-    "NO PRIOR RECORD FOUND, WITH THE SEARCH'S LIMIT STATED BY ITS RUNNER: grep -rl 'AdvisorsTab' org/ returns only audit logs mentioning the filename incidentally -- no finding, no ruling, no cosmetic determination. LIMIT: the search was BY FILENAME, so a prior finding describing the BEHAVIOUR without naming the file would not appear. This is NO RECORD FOUND BY FILENAME, never NEVER RAISED.",
-    "COUNTER-SPECIMEN FOUND IN-ESTATE by 3.0.0_SA_CVO while verifying an unrelated pre-empt: CategoryViewTree.tsx:197 uses A REAL <button> with the reasoning in a comment -- 'a real <button>, NOT a clickable div: keyboard-reachable, announced to assistive tech, and drivable by the screenshot harness's --click'. The correct pattern EXISTS in this codebase, is deliberate, and is documented at its site."
-   ]
+  {
+    "id": "D1_CATVIEWS-S9",
+    "surfaced_by": "0.4.0_DE_ClientPlatform~D -- found while diagnosing THEIR OWN test tooling, not by auditing anyone's code; alternative explanation ruled out FIRST",
+    "surfaced_at": "2026-08-25T07:51Z",
+    "one_line": "AdvisorsTab.tsx:1149 LeaderboardRow -- the clickable advisor row is a BARE DIV with onClick and NO role, NO tabIndex, NO onKeyDown, so it is unreachable by keyboard and invisible to assistive tech; the drill it gates is the ONLY path from the Books advisor list to L2 and then L3, so on that surface a keyboard user has NO ROUTE to the client detail view at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AdvisorsTab.tsx:1149 -- <div onClick={clickable ? handleClick : undefined}> with none of role=, tabIndex=, onKeyDown=",
+        "ALTERNATIVE EXPLANATION RULED OUT BEFORE THE FINDING WAS CLAIMED: ClientsTab.tsx:906 gates the drill on layout.tabs.books.advisorDrill.enabled with an explicit no-op branch for firms that disable it -- which would have explained the failed click WITH NO DEFECT AT ALL. _partners/49financial/layout.ts:55 reads advisorDrill: {enabled: true}, so the gate is NOT the cause",
+        "the drill is the only path Books advisor list -> L2 -> L3, so the keyboard consequence is total on that surface rather than partial",
+        "PRE-EXISTING: not created by this round and unchanged by it",
+        "PRIOR-ART CHECK RETURNED by 0.4.0_DE_ClientPlatform~C and CONFIRMED INDEPENDENTLY AT SOURCE: AdvisorsTab.tsx LeaderboardRow :1149 -- role= 0, tabIndex 0, onKeyDown 0, against onClick= 10 and <button 4. THE FILE HAS SIX MORE CLICK HANDLERS THAN BUTTONS, so it is not a one-row fact.",
+        "NO PRIOR RECORD FOUND, WITH THE SEARCH'S LIMIT STATED BY ITS RUNNER: grep -rl 'AdvisorsTab' org/ returns only audit logs mentioning the filename incidentally -- no finding, no ruling, no cosmetic determination. LIMIT: the search was BY FILENAME, so a prior finding describing the BEHAVIOUR without naming the file would not appear. This is NO RECORD FOUND BY FILENAME, never NEVER RAISED.",
+        "COUNTER-SPECIMEN FOUND IN-ESTATE by 3.0.0_SA_CVO while verifying an unrelated pre-empt: CategoryViewTree.tsx:197 uses A REAL <button> with the reasoning in a comment -- 'a real <button>, NOT a clickable div: keyboard-reachable, announced to assistive tech, and drivable by the screenshot harness's --click'. The correct pattern EXISTS in this codebase, is deliberate, and is documented at its site."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "\u26d4 WHY IT SURVIVED UNTIL A ROBOT TRIED TO CLICK IT, AND THIS IS THE DURABLE HALF: IT WORKS PERFECTLY WITH A MOUSE. Every human who has ever used this surface used a mouse, so the defect is INVISIBLE TO ITS ENTIRE OBSERVED POPULATION -- and the surfacing seat's own words are the mechanism: 'it works perfectly with a mouse, which is why nothing would ever surface it, and why my test tooling hitting it is the only reason anyone looked.' A defect that the normal user cannot experience is not rare, it is UNOBSERVABLE, and no amount of use discovers it. || THE SEAT SEPARATED THE TOOLING FACT FROM THE FINDING AND ONLY REPORTED THE SECOND: 'the test cannot click it' is about their harness; 'a keyboard user cannot reach it' is about a client-facing surface. Most seats would have filed the first, because the first is what they experienced. || AND THEY RULED OUT THE INNOCENT EXPLANATION BEFORE CLAIMING A DEFECT -- the advisorDrill gate would have explained the identical symptom with nothing wrong, and they checked it and said they 'would have been wrong to report the row as broken without checking it.' A symptom with a benign available cause is not a finding until the benign cause is measured and excluded. || INERT AND OBSERVATION BOTH CORRECTLY GRADED AND I AM NOT RE-CLASSIFYING: pre-existing, no new act fires it, and it blocks no cell -- their L3 check is INCONVENIENCED, not blocked. They also declined to propose the fix, estimate it, or touch AdvisorsTab, citing one-project scope. || \u26d4 ONE THING THE FILING SEAT ASKED THAT I AM RECORDING RATHER THAN ANSWERING: they have NOT checked whether this was raised before, and said so -- 'an unchecked new finding that is actually a known one' wastes the reader. PRIOR-ART CHECK IS OPEN, routed to 0.4.0_DE_ClientPlatform~C as the nearer lane, and this item is NOT to be read as novel until that returns. || \u26d4 PRIOR-ART CHECK CLOSED, AND ITS RUNNER STATED THE ZERO'S LIMIT RATHER THAN LETTING IT READ AS ABSENCE. `0.4.0_DE_ClientPlatform~C` searched by FILENAME and said so: a prior finding that described the behaviour without naming AdvisorsTab.tsx would not appear. THAT IS THE DIFFERENCE BETWEEN A MEASURED ZERO AND A CLAIM OF ABSENCE, and it is the same discipline comp-find's own NO HITS banner enforces -- a zero is a fact about a pattern over a scope, never about the estate. || \u26d4 AND THEY SUPPLIED A DENOMINATOR THE FILING SEAT COULD NOT: 114 files contain onClick=, 103 contain <button, 16 contain onClick= AND NO <button AT ALL; `role=\"button\"` appears 0 times across src/ and `tabIndex` appears 2. THEY LABELLED IT COARSE AND LINE-LEVEL AND FORBADE QUOTING IT AS A DEFECT COUNT -- a file with both may still carry inaccessible divs and a file with neither may be fine. WHAT THE DENOMINATOR DOES SUPPORT IS NARROWER AND STRONGER THAN A COUNT: role=\"button\" = 0 AND tabIndex = 2 ACROSS THE ENTIRE FRONTEND MEANS THE ACCESSIBLE-DIV PATTERN IS ESSENTIALLY ABSENT AS A CONVENTION. That reframes the item from ONE ROW'S DEFECT to A MISSING CONVENTION, which has a different owner and a different remedy -- and is NOT a warrant to sweep 16 files, which nobody has asked for and which no cell covers. || ROUTING CORRECTED BY THE RECIPIENT: they state this is NOT nearer their lane. The prior-art question is answered and the OWNERSHIP question is now open and unassigned -- recorded as open rather than parked on them by default. || \u26d4 THE REFRAME IN THIS ITEM IS PARTLY FALSIFIED AND THE CORRECTION CHANGES THE REMEDY. I recorded that `role=\"button\"` = 0 and `tabIndex` = 2 across src/ means THE ACCESSIBLE PATTERN IS ESSENTIALLY ABSENT AS A CONVENTION. THE COUNT IS TRUE AND IT MEASURES THE WRONG THING: A REAL <button> NEEDS NEITHER TOKEN -- it is accessible BY CONSTRUCTION -- so a zero on those two counts THE DIV-WORKAROUND, NOT ACCESSIBILITY. A COUNT OF A WORKAROUND IS NOT A COUNT OF THE PROPERTY THE WORKAROUND ACHIEVES, AND ITS ZERO IS INDISTINGUISHABLE FROM A CODEBASE THAT NEVER NEEDED IT. || SO THE REMEDY THIS ITEM POINTED AT WAS WRONG: it reads as 'add role/tabIndex to the divs.' THE REMEDY THE ESTATE'S OWN NEWER CODE DEMONSTRATES IS USE A REAL <button> -- simpler, no ARIA, and already the house style where someone thought about it. The specimen is in a sibling file rather than in a standard nobody has written, which also means this needs no new convention authored -- only the existing one applied. || THE FINDING ITSELF IS UNWEAKENED: AdvisorsTab's rows remain keyboard-unreachable and the drill remains the only path to L2/L3. What changed is WHAT SHOULD REPLACE THEM."
   },
-  "disposition": "GRADUATED",
-  "notes": "⛔ WHY IT SURVIVED UNTIL A ROBOT TRIED TO CLICK IT, AND THIS IS THE DURABLE HALF: IT WORKS PERFECTLY WITH A MOUSE. Every human who has ever used this surface used a mouse, so the defect is INVISIBLE TO ITS ENTIRE OBSERVED POPULATION -- and the surfacing seat's own words are the mechanism: 'it works perfectly with a mouse, which is why nothing would ever surface it, and why my test tooling hitting it is the only reason anyone looked.' A defect that the normal user cannot experience is not rare, it is UNOBSERVABLE, and no amount of use discovers it. || THE SEAT SEPARATED THE TOOLING FACT FROM THE FINDING AND ONLY REPORTED THE SECOND: 'the test cannot click it' is about their harness; 'a keyboard user cannot reach it' is about a client-facing surface. Most seats would have filed the first, because the first is what they experienced. || AND THEY RULED OUT THE INNOCENT EXPLANATION BEFORE CLAIMING A DEFECT -- the advisorDrill gate would have explained the identical symptom with nothing wrong, and they checked it and said they 'would have been wrong to report the row as broken without checking it.' A symptom with a benign available cause is not a finding until the benign cause is measured and excluded. || INERT AND OBSERVATION BOTH CORRECTLY GRADED AND I AM NOT RE-CLASSIFYING: pre-existing, no new act fires it, and it blocks no cell -- their L3 check is INCONVENIENCED, not blocked. They also declined to propose the fix, estimate it, or touch AdvisorsTab, citing one-project scope. || ⛔ ONE THING THE FILING SEAT ASKED THAT I AM RECORDING RATHER THAN ANSWERING: they have NOT checked whether this was raised before, and said so -- 'an unchecked new finding that is actually a known one' wastes the reader. PRIOR-ART CHECK IS OPEN, routed to 0.4.0_DE_ClientPlatform~C as the nearer lane, and this item is NOT to be read as novel until that returns. || ⛔ PRIOR-ART CHECK CLOSED, AND ITS RUNNER STATED THE ZERO'S LIMIT RATHER THAN LETTING IT READ AS ABSENCE. `0.4.0_DE_ClientPlatform~C` searched by FILENAME and said so: a prior finding that described the behaviour without naming AdvisorsTab.tsx would not appear. THAT IS THE DIFFERENCE BETWEEN A MEASURED ZERO AND A CLAIM OF ABSENCE, and it is the same discipline comp-find's own NO HITS banner enforces -- a zero is a fact about a pattern over a scope, never about the estate. || ⛔ AND THEY SUPPLIED A DENOMINATOR THE FILING SEAT COULD NOT: 114 files contain onClick=, 103 contain <button, 16 contain onClick= AND NO <button AT ALL; `role=\"button\"` appears 0 times across src/ and `tabIndex` appears 2. THEY LABELLED IT COARSE AND LINE-LEVEL AND FORBADE QUOTING IT AS A DEFECT COUNT -- a file with both may still carry inaccessible divs and a file with neither may be fine. WHAT THE DENOMINATOR DOES SUPPORT IS NARROWER AND STRONGER THAN A COUNT: role=\"button\" = 0 AND tabIndex = 2 ACROSS THE ENTIRE FRONTEND MEANS THE ACCESSIBLE-DIV PATTERN IS ESSENTIALLY ABSENT AS A CONVENTION. That reframes the item from ONE ROW'S DEFECT to A MISSING CONVENTION, which has a different owner and a different remedy -- and is NOT a warrant to sweep 16 files, which nobody has asked for and which no cell covers. || ROUTING CORRECTED BY THE RECIPIENT: they state this is NOT nearer their lane. The prior-art question is answered and the OWNERSHIP question is now open and unassigned -- recorded as open rather than parked on them by default. || ⛔ THE REFRAME IN THIS ITEM IS PARTLY FALSIFIED AND THE CORRECTION CHANGES THE REMEDY. I recorded that `role=\"button\"` = 0 and `tabIndex` = 2 across src/ means THE ACCESSIBLE PATTERN IS ESSENTIALLY ABSENT AS A CONVENTION. THE COUNT IS TRUE AND IT MEASURES THE WRONG THING: A REAL <button> NEEDS NEITHER TOKEN -- it is accessible BY CONSTRUCTION -- so a zero on those two counts THE DIV-WORKAROUND, NOT ACCESSIBILITY. A COUNT OF A WORKAROUND IS NOT A COUNT OF THE PROPERTY THE WORKAROUND ACHIEVES, AND ITS ZERO IS INDISTINGUISHABLE FROM A CODEBASE THAT NEVER NEEDED IT. || SO THE REMEDY THIS ITEM POINTED AT WAS WRONG: it reads as 'add role/tabIndex to the divs.' THE REMEDY THE ESTATE'S OWN NEWER CODE DEMONSTRATES IS USE A REAL <button> -- simpler, no ARIA, and already the house style where someone thought about it. The specimen is in a sibling file rather than in a standard nobody has written, which also means this needs no new convention authored -- only the existing one applied. || THE FINDING ITSELF IS UNWEAKENED: AdvisorsTab's rows remain keyboard-unreachable and the drill remains the only path to L2/L3. What changed is WHAT SHOULD REPLACE THEM."
- }
+  {
+    "id": "D1_CATVIEWS-S10",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-08-26T03:30Z",
+    "one_line": "Repairing the D1 packaging brick removed an ACCIDENTAL INTERLOCK: the import failure was the only thing preventing a build-and-deploy of an artifact whose fatal exact-float-equality predicate is unchanged, so a LOUD failure became a SILENT one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEFECT 1 FIXED: build_package.py:149 now carries mdpf_category_registry.py (88f687c7a5), plus an import-closure gate (a88fa7abf0)",
+        "DEFECT 2 UNCHANGED: mdpf_category_registry.py:992 still reads `if gold_sum != round(float(total_aua), 2): raise ViewPlaneError(` -- EXACT float equality",
+        "RECON_TOLERANCE / tolerance / abs( in that file: 0 occurrences",
+        "POSITIVE CONTROL (2.0.0_SA_COO, own seat): the SIBLING producer carries one -- mdpf_aggregate_aua.py:84 RECON_TOLERANCE = 0.01, used at :667 as abs(resid1) <= RECON_TOLERANCE -- so the zero is measured against a matcher proven able to find the thing elsewhere",
+        "shaped_cv is still built at :1190 BEFORE the emit loop at :1228, so one scope's refusal still aborts all four",
+        "BOUNDED: deployed CodeSha256 UVT5XRX3R2O3zsr+g2QTPrD2DDYlQilSP+IfmjD2mIc= (LastModified 2026-08-25T19:38:55Z) is the verified D1-FREE deploy; the 13:30Z scheduled acceptance runs those bytes and is SAFE",
+        "both packaging commits measured LOCAL ONLY, not on origin -- the trigger is a rebuild-and-deploy once they ride integration",
+        "the import-closure gate the seat added verifies imports RESOLVE and says nothing about a runtime assertion -- it makes the BUILD safer without making the ARTIFACT safe"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "notes": "DISARMED SAME-TURN by 2.0.0_SA_COO, who verified every limb independently at their own seat with the sibling-producer positive control rather than accepting the report. || THE TRANSFERABLE FINDING IS NOT THE INTERLOCK, IT IS WHAT THE ISSUER SAID ABOUT THEIR OWN REASONING: A DEFERRAL RESTS ON A PREMISE, AND THE PREMISE CAN EXPIRE WITHOUT ANYONE REVISITING THE DEFERRAL. They deferred defect 2 twice (23:50Z, 01:20Z) on the reasoning 'nothing degrades by it waiting'. That was TRUE while the brick stood, because a package that cannot import cannot ship. The repair -- correct, ordered, and necessary -- SPENT THE PREMISE, and nothing in the estate re-examines a standing deferral when the fact it rested on changes. The deferral did not become wrong; it became UNGROUNDED, which is invisible because the deferral itself never moved. || NOBODY MADE A MISTAKE. Defect 1 had to be fixed; defect 2 is unfixed because it was not yet ruled. THE HAZARD IS THE ORDER -- the interlock came out before the hazard went in -- and the issuer named the order as theirs. || NOT PROPOSED: reversing the packaging fix. It is correct work the estate needs. The remedy is the tolerance per CTO's 21:14Z ruling -- abs(gold_sum - total_aua) <= RECON_TOLERANCE WITH a control proving it still refuses a REAL partition break in dollars, not cents -- because a tolerance without that control is a weakened guard rather than a corrected one."
+  }
 ]
 ```
