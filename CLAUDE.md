@@ -202,7 +202,8 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     minimal pin takes file CONTENT, so `merge-base --is-ancestor` returns a controlled, persuasive
     NOT-DEPLOYED while the bytes are running (two seats, DIFFERENT questions and commit pairs, four
     ephemeral pins in one day, 2026-08-26 -- one was a message away from a false alarm with a serve
-    armed; discovery-independence unestablished, distinctness measured). **Read the content at
+    armed; independence and distinctness both MEASURED -- the second seat walked in with the first
+    seat's warning still unread in its inbox). **Read the content at
     the packaged vintage** (`git show <pin>:<file>`), with a negative control at the pre-fix pin.
     *Ancestry stays the correct instrument for a merge-based pin; costs one content read; does not
     apply when the pin IS an ancestor-merged commit.* On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED**; applied truth is an
