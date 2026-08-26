@@ -171,6 +171,43 @@ rigour.** Recorded rather than quietly repaired, and the corrected label is in t
   **The ad-hoc TESTS; the scheduled fire remains the acceptance.**
 - **THE SERVE** -- Andrew's word alone. **A green is not a release.**
 - **opal-assets-daily-emitter.** Its vendored crosswalk copy is now COMMITTED (`aaf2be288f`, my lane)
-  but **that lambda is NOT redeployed by this entry and still runs pre-fix crosswalk bytes.** A
-  vendored copy committed and a vendored copy deployed are two states; only the first is true.
-  Surfaced to `1.0.0_SA_CTO` / `2.0.0_SA_COO` rather than answered by assumption.
+  but **that lambda is NOT redeployed by this entry and still runs pre-fix crosswalk bytes** (deployed
+  2026-08-11T01:28:40Z, 57,412 B). A vendored copy committed and a vendored copy deployed are two
+  states; only the first is true. `2.0.0_SA_COO` 73546 s.2 ruled **NO deploy tonight** (not on the
+  serve path, and a live serve-critical window is the wrong moment for an unrelated apply) and
+  authorized the READ that decides it.
+
+### KNOWN VINTAGE LAG -- MEASURED, BENIGN, AND OWNED (`0.6.2_AE_PartnerETL~A`, 2026-08-26 ~20:35Z)
+
+**QUESTION (COO 73546 s.2):** does the emitter's OWN output carry a model-keyed surface where the
+un-registered `opal_fixed_income` produces a **wrong or refused** value?
+**ANSWER: NO.** Method: loaded the crosswalk **from the deployed emitter zip's own bytes** and the
+committed copy (`aaf2be288f`) side by side and exercised **11 surfaces** -- every attribute
+`channel_sources.py` actually consumes (`CORE_MODEL_KEYS`, `build_rmid_bridge`, `resolve_rmid`,
+`resolve_eclipse_id`, `UnknownModelError`, `ROSTER_OPEN_STATUS`, `ADVISOR_49F`,
+`KNOWN_EXCLUDED_ECLIPSE_IDS`) plus the internal lookup dicts. **11 of 11 IDENTICAL, 0 differing.**
+
+**THE DECIDING ARM -- the poison test.** The emitter's model-keyed surface is reached ONLY through
+`model_id` (`bridge = build_rmid_bridge(open49)` -> `resolve_rmid(rmid, bridge)` ->
+`resolve_model_id`), and `opal_fixed_income` carries `model_id=None`. The one way an id-less entry
+could still reach it is by poisoning the lookup dict with a `None` key. **It does not:**
+`_MODEL_ID_TO_ENTRY` is **size 8 with `None` NOT admitted as a key on BOTH copies** (same for
+`_ECLIPSE_ID_TO_ENTRY` and `_ORION_ID_TO_ENTRY`, 9 each). `CORE_MODEL_KEYS` is byte-identical --
+Fixed Income cannot enter it (`served=False` AND `model_id=None`, and CORE requires both).
+**So the key is STRUCTURALLY UNREACHABLE in this emitter, not merely absent.**
+**CONTROLS THAT CAN FAIL, both exercised:** an unknown `eclipse_id` (999999) raises
+`UnknownModelError` on both copies; an unbridged rmid raises `UnknownModelError` against a real
+8-entry bridge.
+
+⛔ **MY FIRST PASS AT THIS READ WAS PARTLY VACUOUS AND I AM RECORDING THAT, NOT ONLY ITS REPAIR.**
+Round 1 scored 7 surfaces "IDENTICAL" -- but it called `build_rmid_bridge()`/`resolve_rmid()` with
+missing positional arguments and `resolve_eclipse_id()` with model_key STRINGS when it takes an
+**int**. Those raised the same error on both sides, so the harness compared **my own call error, not
+the surfaces**: **3 of 7 verdicts were unearned, and they read exactly like the other 4.** Round 2
+called each one the way `channel_sources.py:297,314` actually calls it. **A probe that fails
+identically on both arms produces a clean IDENTICAL and says nothing** -- the same shape as an arm
+that cannot fire, wearing a passing verdict.
+
+**DISPOSITION:** benign vintage lag, **rides the next ordinary touch of `opal-assets-daily-emitter`**.
+No deploy is owed on its account. Owner `0.6.2_AE_PartnerETL~A`. Recorded here so it is not
+rediscovered as unexplained drift later.
