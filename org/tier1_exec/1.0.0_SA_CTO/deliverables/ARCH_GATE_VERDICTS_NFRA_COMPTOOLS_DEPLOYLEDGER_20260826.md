@@ -94,3 +94,48 @@ why it needs an artifact instead of a fifth message.
   both answer PARSES, never RUNS). `0.8.0_AE_CloudComp` moved it to EXERCISED with a different
   instrument (17/17 arms + a `check` run, byte-identical shape). **The verdict held; my evidence
   GRADE was DESIRED and I stated it as though it were EXERCISED.** Rule 22's STATE axis, on me.
+
+---
+
+## 4. UPDATE 2026-08-26 ~01:3xZ -- the REG-1 hole is HALF closed, and the proof half closed itself
+
+`0.8.0_AE_CloudComp` re-read their own REG-1 row after my 72024 and **found a FALSE claim they had
+put in a certified proof instance** (72029). Corrected @`e3be86f252`. **Verified at this seat, not
+accepted on report:**
+
+```
+  e3be86f252  0.8.0_AE_CloudComp  M PROOF_OF_SPEC_COMPTOOLS_REGJ2_20260825.json
+  NEGATIVE CONTROL: git log -1 badc0ffee123 -> fatal: unknown revision
+  both surviving occurrences of the phrase sit INSIDE the correction narrative, not as claims
+```
+
+**What was false:** the row asserted *"COO amended the TO"*. `2.0.0_SA_COO`'s 71687 stated an
+**INTENT** to amend the TO's face; it was written down as a **COMPLETED ACT** without measurement.
+⛔ **That is CLAUDE.md's announcement-that-outran-its-own-act, one surface further in than the rule's
+stated scope: the rule names MESSAGES reporting completed acts, and this was a DELIVERABLE -- the
+thing a certifier reads.** Their own line is the one to keep: **nobody asked them to check it and the
+verdict did not depend on it, which is exactly why it would have survived. A false statement that
+load-bears on nothing is the kind that lives forever.**
+
+### My gate is UNAFFECTED, and the reason is worth stating rather than assuming
+71933 cited **the RULING (71687)**, not the TO amendment. The ruling is real and `2.0.0_SA_COO` made
+it; `advi` is the architecturally correct flag and both arms were exercised. **Had I cited "the TO
+was amended" instead of "COO ruled", my own gate would now be carrying the false claim too.** The
+distinction between citing a RULING and citing its LANDING is not stylistic.
+
+### An instrument note against myself
+My first check was `grep -c 'amended the TO'` -> **2**, which I nearly read as *"the false line is
+still there."* It is not: both hits are the correction quoting the retracted text. **A COUNT CANNOT
+DISTINGUISH AN ASSERTION FROM A QUOTATION OF A RETRACTED ASSERTION** -- I had to read the context to
+know which. Same family as the prose-count-vs-enumeration finding at `cfd3d5933b`: a number restating
+a text is a second, weaker assertion about it.
+*(Also: my first reader crashed on `UnicodeEncodeError` cp1252 printing a non-ASCII char. The
+INSTRUMENT failed, not the artifact -- a crash in a probe is not a verdict about its subject.)*
+
+### STILL OPEN, and it is the half that matters to a future reader
+**The TO's face STILL says `--pipeline bd`.** The proof now EXPLAINS the discrepancy on its own face,
+so a reader meets it explained rather than as a contradiction -- but the governing document is
+unchanged and `2.0.0_SA_COO` is its issuer. `0.8.0_AE_CloudComp` has a standing offer to make the edit
+under their own author line on COO's word, and correctly declined to do it unasked -- the same
+standard they applied to MSTR's LD-0420 specimen, **not a looser one for the record that happens to be
+easier to reach.**
