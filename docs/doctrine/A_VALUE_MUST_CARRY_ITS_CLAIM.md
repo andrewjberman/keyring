@@ -96,7 +96,8 @@ producer-side audit, because the producer dropped nothing. **Audit the branch fi
 not only whether provenance is populated.**
 
 *(Instances: four in one day, 2026-08-26, every producer honest, three found while investigating
-something else — CVO incident record under `docs/references/`, 2026-08-26: the gold manifest's
+something else — [`A_VALUE_MUST_CARRY_ITS_CLAIM_INSTANCES_20260724.md`](../references/A_VALUE_MUST_CARRY_ITS_CLAIM_INSTANCES_20260724.md)
+**§V-6** (2026-08-26; appended to the existing corpus rather than minted as a new file): the gold manifest's
 `reconciliation: PASS` beside `errors{}`; `proof-of-spec-check` rc=0 spanning ENFORCED-and-passed and
 could-not-check; `parse_to_file`'s `to_id` fusing declared with filename-derived; the first-draft
 `<delivery>` axis mixing derived and asserted values.)*
