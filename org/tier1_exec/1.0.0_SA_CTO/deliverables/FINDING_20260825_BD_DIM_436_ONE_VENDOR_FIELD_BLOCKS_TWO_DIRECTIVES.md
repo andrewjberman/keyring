@@ -81,8 +81,26 @@ generator. **An honest missing leg beats a leg that is right most of the time.**
 
 **Add BD dimension 436 (Primary Portfolio Group) to template 390224 and re-pull.**
 
-It is a vendor-side template configuration change at Black Diamond, **fixable by no code in this
-estate and by neither lane.** I am not proposing an internal workaround, because every candidate
+It is a vendor-side template configuration change at Black Diamond. **AMENDED 2026-08-26 (measured
+counter-example, 0.4.0_DS_ClientPlatform~S 72193 + CVO 72204):** this finding originally said
+*"fixable by no code in this estate and by neither lane"* -- **that clause was too strong and is
+retracted.** The estate HAS an exercised template-amendment instrument:
+`org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_SUPERVISED/g4_amend_holdings_template.py`
+PUT-amended BD template 226355 in place on 2026-08-20 (pre-image saved, rollback by re-POST;
+POST-with-id mints a clone, PUT /{id} is the in-place form). **What survives unchanged:** the change
+is still a WRITE TO A PARTNER SYSTEM, so it remains RESERVED -- Andrew's per-use word, availability
+is not authorization. What the counter-example changes is the SHAPE of the ask: not "ask BD support
+to reconfigure" but "authorize one amendment we already have tooling and a rollback for."
+⛔ **FEASIBILITY IS UNVERIFIED AND THE PROBE IS ITSELF VENDOR-GATED:** no landed artifact enumerates
+what BD OFFERS on 390224's Portfolio Group level (the enriched GET returns the SELECTION, not the
+CATALOG -- 105/105 selected, dim 436 absent entirely, so there is no bit to flip), and the cot
+precedent is a different query type on a different firm tree. Closing it needs a BD UI look or a
+catalog API read -- **also a vendor call, also his word.** So the card is TWO-STEP: (1) authorize a
+catalog READ to verify 436 is addable at that level; (2) if addable, authorize the amendment.
+Sequencing per DS~S's rec: verify BEFORE the amendment ask, so he authorizes a change known to be
+possible.
+
+I am still not proposing an internal workaround, because every candidate
 workaround is a heuristic partition key (bare-advisor-name vs "- Local Ops" vs division) which
 would be **our reading of vendor intent presented as vendor fact** -- exactly what the runner
 already refuses at `:31`.
