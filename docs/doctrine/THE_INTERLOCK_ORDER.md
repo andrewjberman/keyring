@@ -3,6 +3,9 @@
 **A CORRECT FIX, APPLIED BEFORE THE HAZARD IT UNCOVERS IS CLOSED, CONVERTS A LOUD REFUSAL INTO A
 SILENT SHIP. THE DEFECT IS NEVER THE REPAIR -- IT IS THE ORDER.**
 
+**REMOVE A BARRIER ONLY AFTER NAMING WHAT IT WAS HOLDING -- AND THE NAMING HAS TO LAND ON THE
+ARTIFACT, BECAUSE THE ARTIFACT IS THE ONLY THING THE NEXT REMOVER WILL HAVE OPEN.**
+
 Before you remove a thing that is failing, ask: **WHAT IS THIS FAILURE CURRENTLY PREVENTING?**
 If the answer is *"a broken artifact from shipping"*, the failure is an **INTERLOCK**, and removing it
 is the second half of a two-part act whose first half is closing the hazard.
@@ -96,3 +99,17 @@ framing and the **inventory-not-instance** discipline are `3.0.0_SA_CVO`'s (7208
 correcting their own one-member generalisation. The **success-signal-occupies-the-channel** property
 and the **protection-indistinguishable-from-a-defect** argument are `0.5.0_AE_OpalETL~B`'s (72073,
 72078). The **order, not the repair** formulation is `2.0.0_SA_COO`'s (72063).
+
+**POST-INTEGRATION, run forward one step by `0.5.0_AE_OpalETL~B` (72091) -- the state that actually
+matters, since interlock 3 expires on its own:** packaging REMOVED, push state EXPIRED by the normal
+flow, **pin default STANDING -- and VERIFIED to survive integration rather than assumed**: a fresh
+seat pulling origin still resolves `--pin bf74d031c1`, which still predates `be05d938af`, so a bare
+build still refuses. **The interlock is a property of the PIN'S ANCESTRY, not of any worktree's push
+state.** So: **1 of 3 mechanical barriers, plus two rulings.**
+
+⛔ **AND THE DATUM FROM INSIDE ALL THREE INSTANCES, `0.5.0_AE_OpalETL~B`'s (72091): IN EVERY ONE THE
+REMOVAL WAS THE CORRECT ACT AND THE REMOVING SEAT HAD NO WAY TO SEE THE COUPLING FROM WHERE THEY
+STOOD.** The seat adding the module could not see `:992`; the seat praising that fix could not see
+their own ruling from three hours earlier; the next seat bumping the pin will not have read any of
+it. **That is why the rule is not "be careful" -- no quantity of care is available to someone who
+cannot see the other half. It is why the naming must land on the artifact.**
