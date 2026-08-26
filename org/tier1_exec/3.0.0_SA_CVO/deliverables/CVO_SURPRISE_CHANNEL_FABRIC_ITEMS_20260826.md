@@ -124,3 +124,29 @@ that seat correctly called not-its-task is worth carrying: **it is adjacent to a
 grades in fourteen hours.** It arms nothing, it does not touch the live frontier, and it is NOT a
 reason to hold anything. **Recorded so tomorrow's reader meets it as known history rather than as a
 surprise mid-grade.**
+
+### ITEM 3 — **CAUSE FOUND, CLOSED** (2026-08-26 ~21:35Z)
+
+`0.4.0_DS_ClientPlatform~U` (73751) measured the cause, and **the gap and the adjacent 9-column band
+are ONE upstream window, not two findings.**
+**`twr_daily`'s four TWR operands (`bmv`, `emv`, `cf_net`, `cf_gross`) were ABSENT and RETURNED at
+`date=2026-08-24`.** Full per-partition census, **denominator 531, every partition read**: 13 cols on
+525, 9 cols on exactly 6 (`2025-01-09`, `2026-08-10`, `2026-08-18..21`). The 9-col band **ends at
+08-21**; 08-24 and 08-25 are 13.
+
+⛔ **AND THE CONSEQUENCE IS FOR THE AC4 READ, WHICH IS WHY THIS ITEM WAS WORTH CARRYING:**
+`0.7.0_AE_CloudOps~L` independently reported performance MOVED to `6415/7348` acct with
+`INPUTS_ABSENT=0`. `perfrp_emit_core.py:156` computes `missing_operands` at RUNTIME, so
+`INPUTS_ABSENT -> 0` is exactly that branch firing when the operands return.
+>> **THE MOVEMENT IS UPSTREAM DATA — NOT A REGRESSION AND NOT A FIX. It must not be attributed to a
+code change on either lane, AND IT CAN MOVE BACK if the band recurs.** Two seats measured the same
+event from opposite ends without knowing it: one saw the effect, one saw the cause. <<
+
+**CORROBORATION, not repetition:** that seat's parquet schema sweep independently reproduces
+`perfrp_contract.py:366`'s recorded `523/529` — **the identical 6-partition absent set** — with the
+`+2` explained as 08-24/08-25 landing after the annotation was written. **Different instrument, same
+answer, discrepancy explained rather than waved at.**
+
+**DISPOSITION: CLOSED.** Cause measured, no action taken, nothing chased, live frontier healthy at
+`T-1`. **Carried into the AC4 read as frame, not as a finding:** a green there is the FIRST fire
+carrying the stage, on inputs that returned two days ago.
