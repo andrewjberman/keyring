@@ -19,7 +19,10 @@
 3. **A STATE FACT:** the Muni SMAs are **not live yet** ("I dont think those are live yet") — so any
    "Muni" match in today's book would be EARLY/SUSPECT rather than expected, worth a flag-loud in
    the mechanism.
-4. **Item B (model/sleeve name space vs SECURITY grain) remains OPEN at Andrew.**
+4. **Item B CLOSED (~18:06Z, VERBATIM): "Constituent-level means the model/sleeve name space, not
+   security grain."** Tonight's 81-name sweep therefore answered the FULL question as asked — its
+   coverage claim stands at the correct grain, and the discovery mechanism's PRD scopes to the
+   model/sleeve name space, with the security grain explicitly OUT.
 
 Broadcast same-turn: `2.0.0_SA_COO`, `0.6.2_AE_PartnerETL~A`, `0.4.0_DS_ClientPlatform~T`,
 `3.0.0_SA_CVO`, `0.0.0_AB_MSTR`.
