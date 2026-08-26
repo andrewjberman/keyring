@@ -44,7 +44,7 @@ directives:
   D1:
     title: "Model Portfolios: Asset-Category Views"
     directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a: oversight-heavy MP/ADVI primary work)."
+    placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D1 is 'all model portfolio stuff' (CATVIEWS + NAMEDISCOVERY). SEQUENCING (1.0.0_SA_CTO, inside his 'can push'): work IN FLIGHT completes under its CURRENT laptop seat per Rule 27's scope clause; NEW D1 TOs cut at sitez. Rule 26 rides every move -- no ferried applies. This row is the DIRECTIVE-OWNERSHIP fact; it creates ZERO spawns (MSTR allocation freeze)."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [D1_CATVIEWS, D1_NAMEDISCOVERY]
@@ -348,7 +348,7 @@ directives:
   D8:
     title: "Model Portfolios Pipeline Fortification"
     directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a: MDPF/MP primary work, same basis as D1/D3; the producers are data/mdpf/scripts/gold and the served surface is opal-data-portal-v2/platinum/mdpf)."
+    placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D8 is named EXPLICITLY in his words. ⛔ NOTHING SERVING MOVES MID-SERVE (1.0.0_SA_CTO sequencing): the 08-27 13:30Z fire COMPLETES on the laptop-applied chain under his 20:15Z arm-(a) word; the DIRECTIVE transfers on the register NOW and the fire's ACCEPTANCE READ re-routes to the sitez CVO seat with it. Work in flight completes under its current seat; NEW D8 TOs cut at sitez. Rule 26 rides; no ferried applies. ZERO spawns."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [MDPF_COTREMEDIATION]
@@ -394,7 +394,7 @@ directives:
   D10:
     title: "Global Pipeline Structure"
     directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
-    placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree."
+    placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree. CONFIRMED 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('global pipeline' named). Resting per his products-first word; placement is unaffected by rest."
     members:
       subgroups: []
       projects: []
@@ -444,7 +444,7 @@ directives:
   D11:
     title: "Substrate/Tooling Enhancements"
     directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
-    placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator."
+    placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator. CONFIRMED UNCONDITIONAL 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('substrate' named). The D11 group is one of the two seat-sets Andrew kept live in the same-night drawdown."
     members:
       subgroups: [INFRASTRUCTURE.GRAPH]
       projects: [NFRA_SUBSTRATECARDING]
