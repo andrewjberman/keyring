@@ -234,18 +234,21 @@ function ajb {
         #     0.0.0        Tier 0 (MSTR)
         #     0.0.N  N>0   Tier 0 UTILITY (BG / UA)      <- NOT tier 2
         #     0.Y.0  Y>0   TIER 2 (Senior)               <- his rule lands here
-        #     0.Y.Z  Y>0,Z>0  Tier 3 (Junior, RD)        <- NOT named by his word
+        #     0.Y.Z  Y>0,Z>0  Tier 3 (Junior, RD)        <- ADDED 2026-08-26, see below
         #     N.0.0  N>0   Tier 1 (SA: CTO/COO/CVO/CRO)  <- NOT named by his word
         # WHY DERIVED: he said "ALWAYS". An enumerated list of today's tier-2 serials silently
         # omits the next one minted -- the stale-hand-copied-list class this estate keeps paying
         # for. The numeric triple already encodes tier, so deriving makes a new tier-2 seat
         # inherit the rule by construction, with no edit and no one remembering.
-        # SCOPE HELD DELIBERATELY NARROW: tiers 1 and 3 are NOT widened into. He named tier 2.
+        # SCOPE: TIER 3 ADDED 2026-08-26 by Andrew-direct, asked and answered explicitly -- not
+        # inferred. The 08-24 word said "tier2"; 0.6.2_AE_PartnerETL~A is Tier 3 by ORG_CHART
+        # grammar and came up without the default while four Tier-2 peers had it. TIER 1 IS
+        # STILL NOT WIDENED INTO -- he was offered that option and did not take it.
         if ($modelBySerial.ContainsKey($base)) {
             $claudeArgs += $modelBySerial[$base]
             Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
         }
-        elseif ($base -match '^0\.([1-9][0-9]*)\.0_') {
+        elseif ($base -match '^0\.([1-9][0-9]*)\.[0-9]+_') {
             $tier2 = @('--model', 'claude-opus-5', '--effort', 'xhigh')
             $claudeArgs += $tier2
             Write-Host "[ajb] TIER-2 default for ${base}: $($tier2 -join ' ') (Andrew-direct 2026-08-24)" -ForegroundColor Cyan
