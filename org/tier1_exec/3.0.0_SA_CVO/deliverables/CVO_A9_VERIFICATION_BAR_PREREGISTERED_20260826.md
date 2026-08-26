@@ -74,6 +74,61 @@ Then A9 is **NOT REACHED** — not failed. Tomorrow's 13:30Z fire runs the `15:2
 fire predates that bundle, so a divergent log points at the **scheduled-vs-ad-hoc path**, not at the
 fix. Adopted into the fall-back's text by CTO at 72757.
 
+---
+
+## AMENDMENT 1 — 2026-08-26 ~17:52Z, WRITTEN BEFORE THE APPLY, BEFORE ANY RESULT
+
+**Trigger:** Andrew-direct 17:42/17:45Z (@`9261c99991`, relayed `1.0.0_SA_CTO` 72809). He looked at
+the Anna accounts himself, withdrew his own ~$22M bet — *"your estimate of 2.87m checks out"* — and
+ruled the **DIVZ sleeve is an OPAL SMA**: it buckets to SMAs(L0)/DIVZ(L1), **not** to
+Client - Opal Supervised. `2.0.0_SA_COO` sequenced **(i)**: hold the apply, fold a second re-cut into
+the same pin, apply once.
+
+**STATE AT AMENDMENT:** `mdpf-gold-lambda` still LastModified **2026-08-26T15:29:34.000+0000**,
+CodeSha256 unchanged. **The apply has still NOT landed. This amendment precedes the result, which is
+the only condition under which an added criterion is a criterion at all.**
+
+### A5 splits three ways and the split is the point
+
+| id | expected | source |
+|---|---|---|
+| **A5a** Client - Opal Supervised | **~$1,476,313.07** (unallocated-weight portion) | his ruling + the itemisation already held |
+| **A5b** SMAs / DIVZ | **$1,393,065.98** (the DIVZ sleeve) | same |
+| **A5 total** (unchanged) | **$2,869,379.04** | sovereign-confirmed at account level |
+
+⛔ **A5a + A5b MUST SUM TO A5.** That is the arm: the re-bucketing MOVES money between two Opal
+buckets and must not create or destroy any. **If the two parts do not sum to $2,869,379.04, the
+re-cut has done something other than re-route** — and that is a refusal, not a rounding note.
+⛔ **CONFIRMED BY MEASUREMENT, NOT ASSUMED** (72809's own words). I grade the OBSERVED split, not the
+expected one restated.
+
+### The key-spelling arm — the one most likely to pass wrongly
+
+Measured on the served plane this turn:
+`s3://opal-data-portal-v2/platinum/mdpf/global/aggregate-aua-timeseries.json` carries
+**`opal_div_sma` (2 occurrences)**; **`DIVZ` uppercase: 0**; **`Client - Opal Supervised`: 0**.
+
+⛔ **A re-cut emitting `DIVZ` would MINT A NEW KEY BESIDE AN EXISTING ONE rather than route into it** —
+a fresh canonical-key question wearing the appearance of bucket reuse. **I check the emitted key
+against the served union's spelling, not against the ruling's taxonomy prose.** The ruling is written
+in taxonomy terms; the served key is `opal_div_sma`; those are different name spaces and the ruling
+does not relax the served-union canonical-key guard.
+
+### What the second zero means, and it is good news worth stating
+
+`Client - Opal Supervised` is **absent from the served artifact today**. So **nothing client-facing
+currently carries the mis-bucketed $1.39M — the correction lands before the segment ever serves.**
+This is not a repair of something public, and my verdict will say so rather than let a reader infer
+a live defect.
+
+### Binding, unchanged in spirit
+
+If the apply lands before a further amendment is warranted, I grade against **this** bar. If A5a/A5b
+arrive ungraded or unmeasured, I report them **UNGRADED — not MET and not FAILED.** I will not
+back-fit a criterion to a result.
+
+---
+
 ## 6. NOT IN SCOPE OF THIS READ
 
 The **SERVE decision** on the corrected ~$44.6M split is **Andrew's** and is open at him. **A green
