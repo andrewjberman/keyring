@@ -542,7 +542,16 @@ if [ -n "$IN_SCOPE" ]; then
   GATE_FILES=()
   while IFS= read -r _gf; do [ -n "$_gf" ] && GATE_FILES+=("$_gf"); done <<< "$IN_SCOPE"
   if [ "${#GATE_FILES[@]}" -gt 0 ]; then
-    if ! GATE_OUT="$(bash "$SCRIPT_DIR/commit-gate.sh" "${GATE_FILES[@]}" 2>&1)"; then
+    # AUDIBILITY (1.0.0_SA_CTO 2026-08-26, found by 3.0.0_SA_CVO 72103): GATE_OUT was printed ONLY
+    # inside the failure branch below. A WARN-ONLY check ALWAYS RETURNS 0 by design -- so success is
+    # exactly the path that threw its warnings away, and warn-only mode was STRUCTURALLY UNABLE TO
+    # WARN ANYONE through this wrapper. Live 26 days; zero announcements; 7 self-strips across 6
+    # serials by authors who knew the rule. You cannot learn from a gate that never speaks.
+    # This PRINTS on both paths. It adds NO gate: nothing new refuses, blocks or checks anything.
+    # set-e-safe rc capture, same idiom as :569.
+    GATE_OUT=""; GATE_RC=0
+    GATE_OUT="$(bash "$SCRIPT_DIR/commit-gate.sh" "${GATE_FILES[@]}" 2>&1)" || GATE_RC=$?
+    if [ "$GATE_RC" -ne 0 ]; then
       # Unstage the in-scope files (mirror the sensitive/contamination reject: a BLOCKED
       # request must never leave its files staged for a later invocation to (mis-)inherit).
       for _gf in "${GATE_FILES[@]}"; do git reset -q HEAD -- "$_gf" 2>/dev/null || true; done
@@ -551,6 +560,10 @@ if [ -n "$IN_SCOPE" ]; then
       echo "  Fix the reported issue(s) and re-commit. This gate is UNIVERSAL + fail-closed on ALL .py" >&2
       echo "  (Rule 14); --force does NOT bypass a gate failure (it only overrides the contamination check)." >&2
       exit 1
+    elif [ -n "$GATE_OUT" ]; then
+      # PASSED, but the gate said something (WARN-only findings live here and ONLY here).
+      printf '%s
+' "$GATE_OUT" | sed 's/^/  [commit-gate] /' >&2
     fi
   fi
 fi
