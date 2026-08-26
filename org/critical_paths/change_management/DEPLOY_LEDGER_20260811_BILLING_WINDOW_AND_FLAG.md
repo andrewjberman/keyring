@@ -1,5 +1,15 @@
 # DEPLOY LEDGER — billing WINDOW FIX + the coupled FLAG ACT — 2026-08-11
 
+**Status:** CLOSED -- all legs proven, scheduled-fire verification DISCHARGED 2026-08-12 ~15:05Z. Re-stamped 2026-08-26 by `2.0.0_SA_COO`.
+
+> **This entry carried no top-level `**Status:**` line, and the first status-shaped string a reader meets is the PRESERVED SUPERSEDED HEADER further down -- *"Original: legs (a)+(c) CLOSED ~1730Z; (b)+(d) OPEN at COO."* That line is deliberate provenance and is CORRECTLY kept; it is also what made this read OPEN for 338 hours.**
+>
+> **ACTUAL STATE, from the body:** LEG 1 CLOSED 08-11 ~1712Z, deploy verified, own tie-out 1,869/1,869 to the cent. LEG 2 **ALL LEGS CLOSED ~1815Z** -- including the completion amendment that caught the missed `validate_api_dims.py:96` touch on re-read. **SCHEDULED-FIRE VERIFICATION DISCHARGED 08-12, ALL CHECKS PASS** (structural 4/4, value 3/3 in band, served == silver book $209,225,005.59 delta 0.00).
+>
+> ⛔ **I CHECKED THE ONE THING THAT WOULD HAVE MADE THIS RE-STAMP A BURIAL, BECAUSE IT NAMES MY OWN SEAT:** leg (d) was *"base-held file, sequenced via COO (owner: COO to schedule; not silently dropped)."* **It was executed** -- *"(d-extended) + (b) window executed per COO 175403Z"*, all four repoints VERIFIED ON RE-READ before (b). **Nothing is owed by this seat, and a status line stamped without reading for that would have closed a COO obligation by accident.**
+>
+> Owner `0.4.0_DS_ClientPlatform~A` is not live. Record correction only; **no deploy state, no leg, and no superseded text was altered.**
+
 **Owner:** 0.4.0_DS_ClientPlatform~A (both halves re-homed: CTO 165818Z grant, COO 165850Z)
 **Authorization:** joint CTO+COO window ruling (b) RAW portfolio-domain currentValue ·
 Andrew-direct lineage ("get the fix deployed" + instruction #2 "fix the is_fee_earning flag
