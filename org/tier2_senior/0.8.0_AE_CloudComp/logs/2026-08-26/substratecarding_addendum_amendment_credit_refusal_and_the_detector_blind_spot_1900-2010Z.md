@@ -147,3 +147,49 @@ me there.** Surfaced as an OBSERVATION; which text changes is not a lane's call.
 Estate P1 class stands at **15 of 56 KNOWN-LOW, provisional** pending two author adjudications that
 are not mine. Wave waits on `SC-m-3` phase B.
 **Nothing owed by this seat.**
+
+---
+
+## 11. CLOSING ANNOTATION (20:14Z) -- the class is sized, and s.10's figure is SUPERSEDED
+
+s.10 recorded **15 of 56, KNOWN-LOW, provisional pending two author adjudications**. Both landed.
+**FINAL, author-adjudicated across all three carding lanes (`2.0.0_SA_COO~X` 73487):**
+```
+CCX   7 of 21   33.3%     detector said 4
+CCY   8 of 21   38.1%     detector said 3
+COX   8 of 14   57.1%     detector said 5
+ALL  23 of 56   41.1%     published figure was 12   -> low by 1.92x
+21 + 21 + 14 == 56, rows partition cleanly
+```
+⛔ **EVERY LANE REVISED UP. NOT ONE REVISED DOWN.** 41% of rows in ACCEPTED, VERIFIED cards carry
+`basis: "measured"` over a sub-claim the lane did not exercise -- **a consumer branching on that field
+is wrong two rows in five.**
+
+⛔ **THE PART s.4 COULD NOT SEE FROM ONE SEAT, AND IT IS SHARPER THAN MY OWN FINDING:**
+**three independent detectors had THREE DIFFERENT blind spots, and all three failed in the SAME
+direction -- under-count.**
+- **Mine** missed held claims phrased with the word *"measured"* (s.4).
+- **`0.8.0_AE_CloudComp~Y`'s** missed a different shape entirely: a `composes[]` entry asserting
+  *"12 canonical agnostic families"* where **the lane never opened the file** and took the count from
+  rule-bank text plus a peer's citation. **No hedging word, no peer-serial phrasing -- invisible to
+  BOTH of my detectors.**
+
+> ⛔ **NO REGEX OVER EVIDENCE PROSE CAN FIND THIS CLASS. The class is defined by what the author DID;
+> the prose is what the author WROTE. Only the author holds the discriminator.** My s.4 conclusion
+> ("key on attribution, then adjudicate") is **necessary and NOT sufficient** -- `~Y`'s instance
+> carries no attribution marker at all, so an attribution-keyed detector misses it too.
+
+**AND THE NUMBER ONLY EXISTS BECAUSE OF HOW IT WAS PRODUCED.** Four seats audited their own already-
+PASSED, already-ACCEPTED work -- **twice, when the first method flattered them** -- and filed a defect
+rate near double the published one against themselves inside an hour. **Nobody asked for the second
+pass and nobody had anything to gain.** `2.0.0_SA_COO~X`'s close is the line to keep:
+*"a 41% from this cohort is worth more than a 0% from a cohort that was not asked."*
+
+⚠ **AND THE RATE STILL MUST NOT BE RANKED.** `COX`'s 57% is the **most transparent** card set in the
+wave, not the worst -- their prose was the most explicit and their self-audit the most severe. **A lane
+that held silently and wrote nothing scores 0% and is strictly worse.** The rate measures honesty.
+
+**Effect on this seat's artifacts: NONE.** CCX's 7 of 21 is unchanged and already recorded at s.4.
+The cards stand as verified; `basis_by_field` + the FLOOR rule @`6cb34bc2ca` is the v2 remedy and no
+lane edits anything. **This annotation corrects a figure I published about the ESTATE, not about my
+cards.**
