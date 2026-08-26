@@ -67,7 +67,7 @@ UTC now            2026-08-26T00:10:49Z      <- date HAS rolled
 this box, local    2026-08-25T20:10:49-0400  <- still says the 25th
 ```
 
-⛔ **A seat writing "today" from the clock in front of them writes `2026-08-25` when the UTC date is
+WARN: **A seat writing "today" from the clock in front of them writes `2026-08-25` when the UTC date is
 `2026-08-26`.** No slip required. `"2026-08-25"` is a well-formed date with nothing about it that
 looks wrong, and being a day early re-opens exactly the window the constant closes -- **failing in
 the same silent direction as the original S7 defect** (the uncovered window PASSES the force-guard).
