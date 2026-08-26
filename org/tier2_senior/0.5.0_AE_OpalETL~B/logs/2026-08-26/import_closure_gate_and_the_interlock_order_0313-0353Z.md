@@ -145,6 +145,31 @@ refuses. 0 non-ASCII bytes.
   misresolved. Refused the credit and named what actually is mine. CTO corrected at 72099;
   `2.0.0_SA_COO` had refused the same credit independently from the same pronoun.
 
+### 7. CORRECTION to my own hygiene commit a7d97db9d0 -- I quoted a count without auditing the predicate
+
+That commit says "THIRD MEASURED INSTANCE IN THIS FABRIC TONIGHT" and asserts "there is no ASCII
+check on .md". BOTH ARE WRONG, and I falsified them myself one call after committing.
+
+  COUNT. Since 2026-08-25T00:00 local, SIX commits are an author stripping non-ASCII they had
+  themselves committed: 47df3ed30d (1.0.0_SA_CTO), a35ac8e8f8 (0.4.0_DS_ClientPlatform~F),
+  06a5de80bf (0.4.0_DS_ClientPlatform~G), e1027bff91 (my predecessor instance), 890536ca1d
+  (0.8.0_AE_CloudComp), a7d97db9d0 (mine). I was the SIXTH, not the third. I quoted the three I
+  happened to have seen -- two from my reinstatement brief, one from a grep -- and called it a
+  measurement. My first census predicate was ALSO over-broad: `--grep "non-ASCII"` matches every
+  commit that MENTIONS the subject, so it returned ~35 rows and would have over-counted just as
+  confidently as my under-count. The right predicate is the ACT, not the topic.
+
+  LINT. A non-ASCII lint EXISTS -- d543ce6816 added it to .tools/commit_gate_runner.py. It is
+  WARN-first (does not block) and scoped to infra/** + .tools/**, which EXCLUDES org/** where every
+  session log lives. So logs are uncovered -- my conclusion was right and my stated reason was
+  false, which is the worse of the two errors: a correct verdict resting on a wrong mechanism
+  survives review and teaches the next reader the wrong fix.
+
+  This is the same class as everything else in this log, turned on myself, and it is the third
+  time in one window I have had to catch a claim about MY OWN record: the "0 non-ASCII bytes"
+  measured on the wrong file, and now a count and a mechanism both quoted before being measured.
+  Self-subject claims are the one population no external check covers.
+
 ---
 
 ## Decisions Made
