@@ -500,6 +500,15 @@ _STATUS_LINE_PATTERNS = (
     re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(.*?)\*\*", re.IGNORECASE),
     # 3. HEADING form:                                            ## Status: VALUE
     re.compile(r"^\s*#{1,6}\s*status:\s*(.*)$", re.IGNORECASE),
+    # 4. UNTERMINATED bold span (LAST -- it is the loosest, and order is load-bearing:
+    #    patterns 1-3 must get first refusal or this one would swallow their values).
+    #    A hand-authored `**Status: CLOSED ... ` whose bold span runs on for several
+    #    LINES never closes on its own line, so pattern 2's non-greedy `(.*?)\*\*`
+    #    finds no terminator and the whole file reads as having NO status -- measured
+    #    2026-08-26 on a ledger that says CLOSED in its third line and had been
+    #    unreadable for 41 days. Structural, not another enumerated spelling: the value
+    #    is simply "the rest of the line" when the span does not terminate on it.
+    re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(?!.*\*\*)(.*)$", re.IGNORECASE),
 )
 
 # ===========================================================================================
@@ -582,8 +591,12 @@ def _md_status(md_path: Path) -> str | None:
     return None
 
 
+# `**Opened/closed:** <start>-<end>` is the single-leg in-session hand-authored form: it
+# states the close IN THE SAME FIELD as the open, so neither the status patterns nor the
+# close-marker pattern could see it. 8 such ledgers were unreportable (measured 2026-08-26).
 _CLOSE_MARKER_PAT = re.compile(
-    r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|closed):\*\*\s*\S", re.IGNORECASE)
+    r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|opened\s*/\s*closed|closed):\*\*\s*\S",
+    re.IGNORECASE)
 
 
 def _has_close_marker(md_path: Path) -> bool:
@@ -642,7 +655,15 @@ def _is_terminal_status(status: str) -> bool:
     a value leading with '**', and .lstrip() alone (whitespace-only) left it
     unreadable -- the THIRD spelling variant of the :424 class (COO source-read
     2026-08-11, 4 false REDs); the reader loosens, the records stay untouched."""
-    head = status.upper().lstrip("*_ \t")
+    # STRIP LEADING NON-ALPHANUMERICS, not an enumerated set: a status written
+    # `**Status: [GREEN-CIRCLE] CLOSED ...**` defeated .lstrip("*_ \t") because the
+    # emoji is none of those characters, so a genuinely CLOSED ledger read NON-TERMINAL
+    # and sat unreportable (measured 2026-08-26: GLDRNS_B1_AOR_RELEASE_WINDOW_20260715,
+    # closed 07-16, invisible for 41 days). Enumerating emojis would be the
+    # enumerated-spellings mistake this module already retired once for status lines --
+    # every terminal token begins with a LETTER, so stripping to the first alphanumeric
+    # is structural and cannot manufacture a false terminal from punctuation.
+    head = re.sub(r"^[^0-9A-Z]+", "", status.upper())
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
 
 
@@ -768,6 +789,42 @@ def _held_age_days(state: dict, now: datetime) -> float | None:
         return None
 
 
+_LEG_TABLE_PAT = re.compile(r"^\|\s*(?:leg|L\d+|id)\s*\|", re.M | re.I)
+_LEDGER_CLASS_PAT = re.compile(r"\*\*Class:\*\*\s*deploy-completion", re.I)
+_MANIFEST_HEAD_PAT = re.compile(r"^#{1,6}\s*Manifest\b", re.M | re.I)
+# A doc whose OWN H1 calls it a deploy(-)completion ledger is one, even when it renders
+# its evidence as free-form tables rather than the canonical `| leg |` manifest. Without
+# this the shape filter silently drops hand-authored ledgers -- trading the filename
+# blind spot for a layout blind spot, which is the same defect one axis over.
+_LEDGER_TITLE_PAT = re.compile(r"^#{1,6}\s*DEPLOY[\s-]*(?:COMPLETION|LEDGER)", re.M | re.I)
+
+
+def _is_deploy_ledger_shaped(md: Path) -> bool:
+    """Is this .md a DEPLOY LEDGER, decided on CONTENT rather than on its filename?
+
+    WHY THIS EXISTS: the scanner used to glob `*_deploy_completion.md`, so its population
+    was a NAMING CONVENTION. Measured 2026-08-26: 122 of 551 entries sat outside that glob
+    and 74 of them were non-terminal, while `check` reported 1 -- and SEVEN differed by a
+    single character (`-deploy_completion.md`, hyphen where the glob wanted an underscore).
+    A detector built to catch false-clean gate-bypasses had one of its own: it printed an
+    honest denominator that certified the SWEEP and never the QUESTION.
+
+    WHY NOT JUST WIDEN THE GLOB: the directory also holds ~51 approval records, plans,
+    scan-findings and event logs that carry no status line and never had legs. Reporting
+    those as "open or malformed" would trade a silent miss for a 51-entry false RED -- the
+    over-reaping inversion. So the population is widened and the FILTER moves to content:
+    a deploy ledger declares its class, renders a leg manifest, or heads a Manifest block.
+    """
+    try:
+        text = md.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    return bool(_LEDGER_CLASS_PAT.search(text)
+                or _LEG_TABLE_PAT.search(text)
+                or _MANIFEST_HEAD_PAT.search(text)
+                or _LEDGER_TITLE_PAT.search(text))
+
+
 def _unindexed_open_ledgers(covered: set) -> list:
     """change_management/*_deploy_completion.md ledgers that represent an OPEN
     (non-terminal) deploy yet carry NO matching .open_deploys sentinel -- the
@@ -781,7 +838,9 @@ def _unindexed_open_ledgers(covered: set) -> list:
     if not CM_DIR.is_dir():
         return out
     now = _now()
-    for md in sorted(CM_DIR.glob("*_deploy_completion.md")):
+    for md in sorted(CM_DIR.glob("*.md")):
+        if not _is_deploy_ledger_shaped(md):
+            continue  # an approval record / plan / event log is not a deploy ledger
         try:
             if md.resolve() in covered:
                 continue  # tracked by a live sentinel -- already reported above
