@@ -48,6 +48,39 @@
 Image 6 (mapping): satellite → {asset model, model weight}; 1–2 rows per satellite; weights 25/50/75/100.
 Image 5 (allocation): satellite → {Equity, Fixed Income, Gold, Cash, Hedge, Total=100%}.
 
+## Follow-on rulings (same session)
+
+**Positioning redirect (Andrew-direct, ~21:4xZ, verbatim):** *"They are asking for this to go in
+"Model Portfolios", but it seems to me that the much more likely fold-in location would be in
+"Positioning", as a specific view available to Cottonwood only for their firm-id, and therefore to
+Opal as well. … gauge how we could effectively fold this "Satellites" product in as a top-of-page
+toggle that would sit in the same toggle selector as MODELS & ETFS."*
+
+**Name mapping ruling (Andrew-direct, ~22:0xZ, verbatim):** *"Opal Conservative Growth is the same as
+the "LT Model""*. This closes the viability gate ~Y raised: with the existing display-alias map
+("Long-Term Aggressive" → ULT, "Short-Term" → ST, "Ultra Short-Term" → UST, "Intermediate-Term" →
+INT), **every satellite constituent now resolves to one of the five served primary model books**:
+
+| Satellite | Constituents (model book · weight, image-6 STRUCTURE) |
+|---|---|
+| Opal Satellite 15 | ST 100 |
+| Opal Satellite 30 | INT 25 · ST 75 |
+| Opal Satellite 40 | INT 50 · ST 50 |
+| Opal Satellite 50 | INT 75 · ST 25 |
+| Opal Satellite 60 | INT 100 |
+| Opal Satellite 70 | LT 50 · INT 50 |
+| Opal Satellite 80 | LT 100 |
+| Opal Satellite 90 | ULT 100 |
+| Opal Ultra Short Term | UST 100 |
+
+*(Weights transcribed as the STRUCTURAL mapping per his figure-provenance ruling; they are the
+static registry entries Manav/Yang confirm once, then frozen. The derived allocation/yield figures
+are never taken from the images.)* Consequence: the Satellites fold-in is a **portal-only build** —
+every Positioning Summary field (incl. yield/duration/credit), Portfolio Composition, and Holdings
+Breakdown derives client-side from the already-served models payload by the existing custom-blend
+arithmetic (POSN_CUSTOM.001). The "Opal Conservative Growth" → LT alias must be added to the
+display-name alias map when built.
+
 ## Disposition
 
 `1.0.0_SA_CTO~Y` produced placement options + a rec for discussion with Andrew (this session);
