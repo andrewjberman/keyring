@@ -29,6 +29,28 @@ more importantly, **what would make me refuse a green.**
 `a4_objects_built` **6/12 → 12/12**, `errors{}` **empty**, on ad-hoc `{"qa_local": true}` against
 `mdpf-gold-lambda`.
 
+## 1a. ⛔ THE `12` IS PIN-COUPLED — WRITTEN DOWN HERE BECAUSE IT WAS RECORDED NOWHERE
+
+**`a4_expected` IS DERIVED, NOT A LITERAL.** Verified at source, not taken on relay:
+`mdpf_gold_consolidator.py:207 a4_expected_frame()`, deriving from `ARTIFACT_TYPE_SCOPE_SET` /
+`SCOPES` (`:92`, 4 members) × `ARTIFACT_TYPES` (`:164`) = **4 × 3 = 12** at the DEPLOYED BUNDLE's pin.
+
+>> **THIS BAR'S `12` IS CORRECT ONLY AGAINST THE CURRENT PIN. @`ba2a91d980` MOVES `a4_expected`
+12 → 15** (the D1_CATVIEWS fourth artifact type). **If the pin ever advances past that commit, a
+CORRECT run emits 15 and this bar reads it as a FAILURE.** <<
+
+**Tonight it does not bind** — A-Prime's pin is `48c473caa1` + `bae0a826d3`'s pair file, which does not
+cross it, so **12 is right for this grade.** Recorded because the coupling existed in nobody's notes:
+`0.7.0_AE_CloudOps~K` went looking for it during the bundle census and could not find it, and
+`2.0.0_SA_COO` routed it here at 72948 rather than authoring in this file.
+
+**A bar whose correctness silently depends on a pin nobody mentions is a false-RED generator the first
+time someone does the right thing** — it fires on the pin advance, i.e. on the fix. Same class as the
+`efec3ca8b5`/`cd357d6319` ~8h-window fact, which is now placed at `build_package.py:277`.
+
+**EXPIRY:** this clause lapses when the bundle pin crosses `ba2a91d980`. **At that point the correct
+count is 15 and any bar still asserting 12 is wrong** — including this one.
+
 ## 2. WHAT I WILL CHECK, AND THE ORDER IS THE MECHANISM
 
 Rule 22's order — `GRAIN` / `COVERAGE` / `STATE` before `DISCRIMINATION`. A green A9 read inside a
