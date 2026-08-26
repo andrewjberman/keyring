@@ -268,7 +268,16 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
 - **NEVER** leave a confirmed deploy half-landed — a begun deploy FINISHES in-session (every prefix, leg,
   activation step) or rolls back + escalates loud to COO. Mechanism: deploy-completion ledger entry in
   `org/critical_paths/change_management/` opened at deploy-start, closed at completion; unclosed at session
-  end = COO alarm.
+  end = COO alarm. ⛔ **CROSS-FABRIC INVERSION (measured 2026-08-26): an unclosed entry is evidence THIS
+  DEVICE did not observe completion, NOT that the deploy is unfinished.** A promote executed from the other
+  fabric leaves the entry OPEN forever — correct about itself, wrong about the world — and the alarm then
+  MANUFACTURES the urgency to "finish" a deploy that is already live, which is a REWIND (nearly executed
+  2026-08-26: a `--red` 51h PAST-WINDOW line produced a sovereign card whose act was a five-release PROD
+  rewind; one seat's measured refusal was the entire control set). **Before acting on ANY open/`--red`
+  entry, measure the ARTIFACT**: `rev-parse origin/<branch>` + `describe --tags` + `merge-base
+  --is-ancestor` WITH a positive control. World says done → close the entry SUPERSEDED with that evidence;
+  NEVER re-execute. *Does not apply to single-fabric deploys where the ledger's device is the deploy's
+  device — there the alarm binds exactly as written.*
 - **NEVER rebase** — not `git rebase`, not `git pull --rebase` — on any shared branch (CLOUD/DEV/PROD/main).
   It rewrites multi-agent history and a non-conflicting result is luck, not correctness. Rejected push =
   `git pull` (merge) then re-push. Gate: `.tools/hooks/never-rules-gate.sh` closes all four cells incl.
