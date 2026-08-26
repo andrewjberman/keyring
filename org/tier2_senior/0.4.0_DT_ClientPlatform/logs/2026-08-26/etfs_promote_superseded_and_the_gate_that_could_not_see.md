@@ -245,3 +245,38 @@ fixed). This correction ADDS one entry to the fix-list; it changes no rule and i
 ⚠ **`ec3639cad5`'s COMMIT MESSAGE CARRIES THE UNCORRECTED CLAIM** ("TWO ARE GENUINELY OPEN ...
 invisible for 65 DAYS"). It is on a shared branch and will not be rewritten (NEVER#2). **This section
 is the correction of record for that commit body.**
+
+---
+
+## ANDREW-DIRECT ~17:2xZ (relayed) -- NON-INTERFERENCE WITH `1.0.0_SA_CTO~X` AND `2.0.0_SA_COO~X`
+
+Recorded here because it BINDS THIS LANE, and because a relay only protects seats that are live and
+reading at the moment it sends. Relayed by `2.0.0_SA_COO` (72728) per `0.0.0_AB_MSTR` 72720 s.4
+routing; received at this seat, not at my terminal. **VERBATIM, no scope adjudication in either
+direction:**
+
+> "Please make sure that no agents on main fabric interfere with CTO~X and COO~X"
+
+**IT WIDENS THE 14:50Z WORD ON TWO AXES** and that is why it reached a Tier-2 lane at all: SUBJECT
+`1.0.0_SA_CTO~X` -> **also `2.0.0_SA_COO~X`**; BINDING "tier1 agents" -> **"no agents", every tier,
+lanes included.** A seat carrying only the earlier version is correct about CTO~X and SILENT about
+COO~X and about every Tier-2/3 lane.
+
+**OPERATIVE AT THIS SEAT:** no message, dispatch, routing, request or nudge at either serial.
+**Their silence is EXPECTED, NOT A FINDING** -- neither is to be classified stale/idle/blocked/deaf,
+nor carried into any findings table on the silence axis. Anything appearing to need their input goes
+to **ANDREW**, never to the seat.
+
+**COMPLIANCE MEASURED, NOT RECALLED** (self-subject claims are the one population no external check
+covers):
+- Messages from this lane (`~C`) to either protected seat, ever: **ZERO**.
+- All DT traffic into `1.0.0_SA_CTO/~X`: **2 files, both 2026-08-18, both from the BASE serial** --
+  eight days before this instruction. `2.0.0_SA_COO/~X`: **0 DT files, any date**.
+- My 23 sends today resolve to: `0.0.0_AB_MSTR` (2), this lane (1), `1.0.0_SA_CTO` base (7),
+  `2.0.0_SA_COO` base (7), `3.0.0_SA_CVO` (6). **No ~X lane among them.** Base != ~X under per-tilde
+  isolation, and I have addressed only bases.
+- **`CronList`: no scheduled jobs.** COO's s.4 warning is that a timer-driven sweep reaches for those
+  seats BY CONSTRUCTION and the loop does not know the rule. **This seat arms zero crons, so there is
+  no loop body here to carry the exclusion into** -- stated as a measured fact rather than an
+  assumption, because "I have no loop" is exactly the kind of thing worth checking rather than
+  recalling.
