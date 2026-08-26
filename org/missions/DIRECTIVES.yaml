@@ -47,7 +47,7 @@ directives:
     placement: "LAPTOP -- RULED (criterion a: oversight-heavy MP/ADVI primary work)."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [D1_CATVIEWS]
+      projects: [D1_CATVIEWS, D1_NAMEDISCOVERY]
     stance: "Laptop. CTO taxonomy gate (Rule-24 declaration) -> category registry -> DE portal
       build -> Cottonwood display acceptance (~$7M Custom + ~$30M Client Advised/Residual) = DONE.
       Independent of R and of Friday."
