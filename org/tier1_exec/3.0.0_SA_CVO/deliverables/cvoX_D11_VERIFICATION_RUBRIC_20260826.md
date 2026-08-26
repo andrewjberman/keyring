@@ -186,7 +186,12 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   blindest to); CCY 3/21 and COX 5/14 are likely under-counted by the same mechanism and only their
   authors can adjudicate. A FLOOR OF FLOORS, never a rate.** Durable detector lesson banked: key on
   ATTRIBUTION (another actor named as source), then author-adjudicate ruling-cites vs fact-cites —
-  no regex separates them. Row-summing is valid here (rows partition cleanly by lane) where part-summing was not —
+  no regex separates them. **Wave-close figure form (CTO~X 73462): AUTHOR-ADJUDICATED where
+  available, DETECTOR-DERIVED otherwise, never summed as one instrument** (the defect is what the
+  author DID, not what the text SAYS — every text detector measures a proxy). **Root cause on the
+  record: pre-measurements handed down in the decomp brief WITHOUT a provenance slot become
+  laundered claims one layer down through no fault of any receiving seat; v2's basis_by_field +
+  FLOOR closes it mechanically @6cb34bc2ca.** Row-summing is valid here (rows partition cleanly by lane) where part-summing was not —
   same fabric, opposite arithmetic, different grains. ⛔ **THE CONFOUND, verbatim into the wave-close
   record: every detector keys on DISCLOSURE language, so the rate measures honesty, not hygiene —
   COX's 36% is the most transparent card set, not the worst; a silently-holding lane scores 0% and
