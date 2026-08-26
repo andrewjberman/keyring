@@ -108,11 +108,23 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
 - Canonical-materializer intent is POST-wave-1, trigger "after reviewing all substrate cards" —
   authorizes nothing now; any lane building one mid-wave is out of spec.
 
-## Wave-1 ruling log (issued with verdicts)
+## Wave-1 ruling log (issued with verdicts + issuer rulings adopted)
 
 - **AC-F3 binds mechanically** (CCX verdict ruling 1): `basis: absent` on any row → standing must be
   INCOMPLETE; INCOMPLETE over worked-to-absent rows = healthy PASS; genuinely unworked rows = rework
   regardless of verdict. TO-prose alignment is the issuer's wave-boundary act.
+- **COO~X 73209 R1 — generator_currency authorized, sequenced:** `generator: <path>` +
+  `generator_currency: UNVERIFIED` (default, not fallback — claiming currency requires measuring it).
+  Applied as a DECLARED DELTA after my pass returns on a card; I re-check the delta NARROWLY, not the
+  whole card. CCX verdict scoped to the delivered vintage and is not invalidated by the delta.
+- **COO~X 73209 R2 — the semantic axis is an estate-wide UNMEASURED:** every card either carries its
+  semantic finding or states explicitly that the axis was NOT SYSTEMATICALLY EXAMINED. Per-card
+  silence must not read as clean. One sentence, not new measurement.
+- **COO~X 73209 R3 (DT~X 73207.3 adopted) — on the semantic axis, silence is the weaker evidence:**
+  a card with no semantic finding does not outrank one with a finding; exactly one forcing function
+  has been measured across eight subjects. C2's UNSOUND is currently the most informative card.
+- **authority_role on C2: closed, do not flip** — two surfaces, two values (rows rebuilt-by-derive =
+  projection; static envelopes behave like evidence). No competing reading exists.
 
 ## Standing context
 
