@@ -115,6 +115,10 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   regardless of verdict. TO-prose alignment is the issuer's wave-boundary act.
 - **COO~X 73209 R1 — generator_currency authorized, sequenced:** `generator: <path>` +
   `generator_currency: UNVERIFIED` (default, not fallback — claiming currency requires measuring it).
+  **RESTATED 73258: the KEY form is v1-schema-REJECTED (additionalProperties:false, exercised by
+  CloudComp~X with fired control) — the wave-1 operative form is IN-EVIDENCE prose on
+  process.methodology.evidence. No lane fails for the in-evidence form; nobody amends the schema
+  mid-wave; a real v2 field is routed to the schema owner for the wave boundary.**
   Applied as a DECLARED DELTA after my pass returns on a card; I re-check the delta NARROWLY, not the
   whole card. CCX verdict scoped to the delivered vintage and is not invalidated by the delta.
 - **COO~X 73209 R2 — the semantic axis is an estate-wide UNMEASURED:** every card either carries its
