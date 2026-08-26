@@ -234,6 +234,16 @@
             },
             "basis_by_field": {
               "$ref": "#/$defs/basis_by_field"
+            },
+            "declared_opinions": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "THE SEMANTIC-DEFECT AXIS. Every filter, threshold, exclusion, cutoff and definitional choice this subject's producer makes -- ENUMERATED. \u26d4 ADDED MID-WAVE-2 AND OPTIONAL BY DESIGN: 2.0.0_SA_COO~X dispatched wave 2 with a KNOWN CONTRACT GAP on every TO face -- the field existed in L0_GRAPH_SUBSTRATE_MANIFEST.schema.json but NOT here, though it is the ONE field the canonical-materializer consumer reads, so lanes were told to put it in methodology.how as PROSE and disclose the reason in evidence. That is knowingly the F-2 shape: a claim living where a validator cannot branch on it. The gap is mine. NULL IS LEGAL AND LOUD -- it means the producer's opinions are BURIED IN CODE and this subject is UNREVIEWABLE on the semantic axis, which is itself the finding. OMITTING the field entirely is ALSO CONFORMING, because wave-2 lanes were dispatched against the contract without it and no in-flight card may be invalidated by an additive change. Why a contract and not a scanner: a producer can have run this morning and still encode a deprecated opinion, and every freshness instrument -- mtime, snapshot id, last-write, a wave as_of -- is STRUCTURALLY BLIND to it. No instrument in this estate discriminates a bad definition. The only thing that makes one reviewable is REQUIRING IT BE DECLARED RATHER THAN BURIED, because the defect is not 'wrong opinion', it is 'opinion that cannot be found'."
             }
           },
           "allOf": [
