@@ -108,12 +108,13 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "how",
-            "determinism",
-            "composes",
-            "invents",
             "basis",
+            "composes",
+            "determinism",
             "evidence",
+            "how",
+            "invents",
+            "materializer_standing",
             "owner"
           ],
           "properties": {
@@ -214,6 +215,17 @@
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "materializer_standing": {
+              "enum": [
+                "canonical",
+                "historical_in_use",
+                "superseded",
+                "unknown",
+                "not_applicable"
+              ],
+              "description": "THE GENERATOR-CURRENCY CLAIM, AS A FIELD A CONSUMER CAN REJECT ON. v2 ADDITION, on 2.0.0_SA_COO~X's finding 73259: their wave-1 ruling had to carry this as PROSE inside `evidence` because v1's blocks are additionalProperties:false and no field existed -- which is finding F-2's shape (a requirement living where a validator cannot branch on it) reproduced inside the remedy for a missing-currency claim. VOCABULARY REUSED, NOT RE-COINED: identical values and identical meaning to `generation.materializer_standing` in L0_GRAPH_SUBSTRATE_MANIFEST.schema.json, where the four-postulate x-rule24 record lives. Naming it `generator_currency` here and `materializer_standing` there would have been one concept in two id spaces -- this estate's most repeated defect, inside my own two contracts. 'not_applicable' covers a subject that no materializer produces.",
+              "x-rule24-record-at": "L0_GRAPH_SUBSTRATE_MANIFEST.schema.json#/$defs/part/properties/generation/properties/materializer_standing -- legitimate reuse with the record at source, same pattern as authority_role and basis."
             }
           },
           "allOf": [
