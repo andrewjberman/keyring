@@ -80,6 +80,60 @@ denominators (commits, authors, closed counts), and a writer grounding every sen
 drifts into REPORTING THE PACKET. **The packet is the grounding; the highlights are the deliverable.
 Ground on it, then say what got BUILT.**
 
+## THE SECOND RULE, AMENDED — **A FIX IS A WIN. SAY IT LIKE ONE.** (Andrew-direct 2026-08-26)
+
+> **VERBATIM:** *"it needs to be specified that we are looking for highlights and to make shit
+> sound good, if we fix a bug that sounds good, if we build something that sounds good, we do not
+> want pedantic stuff, and we want to tie it back to directives.yaml headliner items for the most
+> part."*
+
+⛔ **THIS AMENDS THE RULE ABOVE AND THE TWO ARE EASY TO READ AS CONTRADICTING. THEY DO NOT.**
+The 08-25 rule bars **the MECHANISM of a defect** as the story. This one says **the OUTCOME of
+fixing it is a headline.** One sentence settles it:
+
+> **DO NOT NARRATE THE BUG. DO CLAIM THE FIX.**
+
+| do not write | write |
+|---|---|
+| "a filter was dropping accounts whose parent model was not flagged Opal" | **"Found and fixed a gap that was under-reporting $43.7M of client money in the model views."** |
+| "the identity gate refused on a delta beyond rounding tolerance" | **"Our own checks caught it before it reached a client. Fixed same day."** |
+| "added a registry entry and tightened a derivation predicate" | **"Fixed today, verified, and serving tomorrow."** |
+
+**WHY THE AMENDMENT EXISTS:** read alone, the 08-25 rule makes a writer *omit* a day whose main
+achievement was a repair — and **a fix IS delivery.** A day spent finding and closing a real
+problem is a GOOD day and must read as one. **The prior rule stops the text sounding like a
+change log; this one stops it sounding like nothing happened.**
+
+### MAKE IT SOUND GOOD — AND THAT IS NOT SPIN
+
+**We did the work. Say so in the register a partner would recognise as a win.** Confident, plain,
+active. *"Shipped." "Fixed." "Live." "Caught it before it reached a client."*
+⛔ **THE ONE LINE THAT DOES NOT BEND: never invent a win.** Sounding good is about REGISTER, never
+about CONTENT — if nothing shipped on a directive, that item says so briefly and moves on. **The
+rule is: when there IS a win, do not bury it in hedging, qualifiers, or the machinery that
+produced it.** A real achievement written timidly is the failure this rule closes.
+
+### NO PEDANTRY
+
+⛔ **CUT:** counts of anything internal · sequencing and process detail · caveats a partner would
+not act on · "which lane did it" · anything that reads as showing the work rather than the result.
+**If a clause exists to be precise for an internal reader, it is pedantry HERE** — precision lives
+in the logs, the certs and the records. **This text is the highlight reel.**
+
+### TIE IT TO THE HEADLINER — "FOR THE MOST PART"
+
+**Each Item is a directive, and each directive has a HEADLINER in `org/missions/DIRECTIVES.yaml`
+(`title:`)** — *MDPF asset-category views · ADVI 49F end-to-end · Account-level model overlay ·
+ETF positioning variant · Model Portfolios Pipeline Fortification · Tax SMA ops · Substrate
+Analysis*, etc.
+**Write the day's line as PROGRESS AGAINST THAT HEADLINE**, in the headline's own words where they
+fit. The reader should be able to see *what this directive is for* and *how much closer it got*
+without knowing anything else.
+**"For the most part" is his and it is deliberate:** if the day's real highlight does not belong to
+a headliner — a sovereign decision, a partner-facing outcome, something new that matters — **it
+still goes in.** Do not drop a genuine win because it lacks a directive to hang on. **The tie is
+the default, not a filter.**
+
 ## THE FIRST RULE — LAYMAN, SHORT (Andrew-direct 2026-08-20, VERBATIM)
 
 > Something key to mention for the daily sprint skill is that the sprint lines (and descriptions

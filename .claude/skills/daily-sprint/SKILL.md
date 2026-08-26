@@ -1,6 +1,6 @@
 ---
 name: daily-sprint
-description: Rewrite Andrew's DAILY SPRINT text (Today Sprint / Projects Item 0-9 / Process Item 0-9 / Blocks) for the day, grounded on a compiled packet -- comp-state (self-test gated), the git census across BOTH fabrics since 00:00Z, the directives dashboard, open-TO totals, the day's Andrew-direct records, projects closed, ledger entries -- then rewrite yesterday's file into today's in the FIXED template (org/ref/DAILY_SPRINT_TEMPLATE.md) at org/sprints/DAILY_SPRINT_YYYY-MM-DD.md and print it. Bare `/daily-sprint` = today; `/daily-sprint --date YYYY-MM-DD`; `/daily-sprint --packet` = packet only, no rewrite. Andrew-commissioned 2026-08-20 because "we are going to be doing it every single day." Engine `.tools/daily-sprint.py`; MSTR-base primary, any exec may run it.
+description: Rewrite Andrew's DAILY SPRINT text (Today Sprint / Projects Item 0-9 / Process Item 0-9 / Blocks) for the day. THE DELIVERABLE IS A HIGHLIGHT REEL, NOT A CHANGE LOG (Andrew-direct 2026-08-26) -- a fix is a WIN and reads like one ("do not narrate the bug, claim the fix"), a build is a WIN, no pedantry (no internal counts, sequencing, lane attribution or partner-irrelevant caveats), and every line ties to the directive's HEADLINER (`title:` in org/missions/DIRECTIVES.yaml) as progress against it -- "for the most part", so a genuine win with no directive to hang on still goes in. Register only, never content: never invent a win; nothing shipped = say so in one line. Grounded on a compiled packet -- comp-state (self-test gated), the git census across BOTH fabrics since 00:00Z, the directives dashboard, open-TO totals, the day's Andrew-direct records, projects closed, ledger entries -- then rewrite yesterday's file into today's in the FIXED template (org/ref/DAILY_SPRINT_TEMPLATE.md) at org/sprints/DAILY_SPRINT_YYYY-MM-DD.md and print it. Bare `/daily-sprint` = today; `/daily-sprint --date YYYY-MM-DD`; `/daily-sprint --packet` = packet only, no rewrite. Andrew-commissioned 2026-08-20 because "we are going to be doing it every single day." Engine `.tools/daily-sprint.py`; MSTR-base primary, any exec may run it.
 ---
 
 # /daily-sprint — the day's status text, rewritten against a grounded packet
@@ -23,8 +23,11 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    live/retired with per-row freshness + flags, open-TO totals, the day's Andrew-direct records,
    projects closed, ledger entries. These are the numbers the text may quote.
 3. **Read yesterday's file** (the packet names it). Today's text is a REWRITE of it, not an append:
-   every Item line is re-stated against today's evidence; "no movement today" is a legitimate and
-   preferred line over invented progress (a directive row whose `Last` is yesterday did not move).
+   every Item line is re-stated against today's evidence. **"No movement today" is legitimate and
+   is always better than invented progress** (a directive row whose `Last` is yesterday did not
+   move) — **but it is the fallback, NOT the target. Look for the win first.** If the day held a
+   fix, a build, a decision or a number that got better, **that is the line**; a quiet item gets
+   one short sentence and the space goes to the items that moved.
 4. **Rewrite today's file in the template's exact shape** — headings, `Item N – Name – text`
    grammar, terse register, Today-Sprint bullets highest-consequence first, Blocks = genuine
    external blocks or human-only acts (an inter-item dependency is Process, not a Block).
@@ -55,6 +58,22 @@ else.
 
 ## Discipline
 
+- **HIGHLIGHTS, AND MAKE IT SOUND GOOD (Andrew-direct 2026-08-26).** *"if we fix a bug that sounds
+  good, if we build something that sounds good, we do not want pedantic stuff, and we want to tie
+  it back to directives.yaml headliner items for the most part."*
+  **DO NOT NARRATE THE BUG — DO CLAIM THE FIX.** A repair is delivery and reads as a win; the
+  mechanism that produced it does not appear. Confident, plain, active register.
+  ⛔ **Register only, never content: NEVER invent a win.** Nothing shipped on an item = say so in
+  one line. The rule bites the other way — **when there IS a win, do not bury it in hedging or in
+  the machinery behind it.**
+  **NO PEDANTRY:** internal counts, sequencing, lane attribution, caveats a partner would not act
+  on. Precision lives in the logs and certs; this text is the highlight reel.
+  Full rule + worked before/after table: the template's **SECOND RULE, AMENDED**.
+- **Tie each line to the directive's HEADLINER** — its `title:` in `org/missions/DIRECTIVES.yaml`
+  (*"MDPF asset-category views"*, *"ADVI 49F end-to-end"*, *"Model Portfolios Pipeline
+  Fortification"*…). Write the day as **progress against that headline**, in its own words where
+  they fit. **"For the most part" is deliberate: a genuine win with no directive to hang on still
+  goes in.** The tie is the default, not a filter.
 - The packet gates the prose; never write a number the packet or a cited read does not carry.
 - Items map 1:1 to `org/missions/DIRECTIVES.yaml` D0-D9; a RETIRED directive keeps its Item line
   marked DONE/RETIRED until Andrew drops it from the text.
