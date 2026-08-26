@@ -1,7 +1,25 @@
 # DEPLOY-COMPLETION LEDGER -- MDPF_COTREMEDIATION LEG B: the S3 gold-script prefix sync
 
 **Opened:** 2026-08-26T15:15Z by `0.4.0_DS_ClientPlatform~S` -- **AT DEPLOY-START, before any `cp`.**
-**Status:** **OPEN**
+**Status:** **CLOSED 2026-08-26T15:21Z -- BOTH OBJECTS LANDED AND VERIFIED ON THE SERVED BYTES.**
+Nothing half-landed; both prefixes of the leg I own are complete, and no rollback was taken.
+
+```
+VERIFIED -- served object re-downloaded and digested, never rc=0
+  assets_gold/build_cottonwood_mdpf_slice.py
+      served md5 82d08cf27e1b3da2fecdb2a188765e0d == blob md5   MATCH
+      58,961 B   2026-08-26T15:20:38Z   version lR8n7zkoPudWHFwJWmeCj38CsKISpggq
+  gold/mdpf_revamp_model_crosswalk.py
+      served md5 0d8980b1e62913285dbbfbab48a354bc == blob md5   MATCH
+      18,988 B   2026-08-26T15:20:41Z   version NGOyWISqNPdVafjDAhPUR.E75Rn.MWd4
+  fix token IN THE SERVED COPIES: opal_fixed_income x3 / x2
+  POSITIVE CONTROL: the same matcher returns 0 on both pre-fix blobs (ae106b1124^),
+  so the non-zero is discrimination and not a pattern that matches anything.
+```
+
+⛔ **AND THE VERIFICATION IS OF THE OBJECT, NOT OF AN OUTCOME. `MATCH` HERE MEANS THE BYTES I
+INTENDED ARE THE BYTES SERVED. IT DOES NOT MEAN ANYTHING EXECUTES THEM** -- see the section
+immediately below, which was written before the deploy and is not softened by its success.
 **Authority:** `2.0.0_SA_COO` 72336 s.3. DS lane per Rule 13 (gold-script `aws s3 cp`).
 **Source vintage:** `ae106b1124` -- and `HEAD` is byte-identical for both files (measured below), so
 there is no vintage ambiguity between "the commit named in the dispatch" and "what I am shipping."
@@ -96,8 +114,23 @@ md5'd before upload and the served object is md5'd after; both must equal the bl
 | 5 | stage blob bytes, md5 both | pending |
 | 6 | `aws s3 cp` object 1 -> `assets_gold/` | pending |
 | 7 | `aws s3 cp` object 2 -> `gold/` | pending |
-| 8 | **VERIFY against the SERVED objects** -- re-download, md5 == blob md5, never rc=0 | pending |
-| 9 | close this ledger in-session | pending |
+| 5 | stage blob bytes, md5 both | **DONE** |
+| 6 | `aws s3 cp` object 1 -> `assets_gold/` | **DONE** |
+| 7 | `aws s3 cp` object 2 -> `gold/` | **DONE** |
+| 8 | **VERIFY against the SERVED objects** -- re-download, md5 == blob md5, never rc=0 | **DONE -- both MATCH** |
+| 9 | close this ledger in-session | **DONE** |
+
+## WHAT A READER SHOULD DO WITH THIS, TOMORROW
+
+**If the 2026-08-27 13:30Z run still fails on Cottonwood `opal_fixed_income`: THIS LEDGER IS NOT THE
+DEFECT AND LEG B IS NOT THE PLACE TO LOOK.** The predicted signature is on the record in
+`041969c39a` before the run: *cottonwood advances / global does not* = the three-file fix did not
+fully land; *neither advances* = **LEG A did not land.** Leg A is the AE lambda rebuild + apply, and
+at the time of this close-out **I have no evidence it has landed.**
+
+⛔ **DO NOT READ A GREEN `comp-pipescript` AS THE FIX HAVING LANDED.** Both script keys will now
+report MATCH, because I just made them match. That instrument reads the SCRIPT PREFIX; the 13:30Z
+executor reads the LAMBDA BUNDLE. **Those are two planes and only one of them just moved.**
 
 **NEVER#6:** a begun deploy FINISHES in-session -- every prefix, every leg I own -- or rolls back and
 escalates loud to COO. Both objects are versioned-bucket writes; rollback is re-uploading the
