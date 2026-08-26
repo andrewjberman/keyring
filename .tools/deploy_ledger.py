@@ -79,6 +79,41 @@ GATE_TYPES = {"sovereign", "external"}          # (c) the structured gate class 
 DEFAULT_HELD_STALE_DAYS = 4.0                    # a HELD hold older than this escalates to HELD-STALE
 HELD_STATUS = "HELD-SOVEREIGN-GATED"
 HELD_NUDGE_SUPPRESS_HOURS = 24.0                # re-nudge a HELD-STALE hold at most once/day
+
+# ---------------------------------------------------------------------------
+# NFRA_DEPLOYLEDGER.HELD-STATE (Andrew-approved 2026-08-18 ~1537Z; CTO gates the schema act).
+#
+# THE DEFECT THIS CLOSES, in one line: A HELD DECLARED WHEN TO LOOK AGAIN, AND NOTHING CARRIED IT.
+# `gate.ref` already had to NAME a specific dependency, so the hold-REASON half was real. But the
+# RE-READ half lived in DEFAULT_HELD_STALE_DAYS -- a GLOBAL CONVENTION, identical for every hold --
+# so no consumer could branch on THIS hold's own stated condition. A value and a guess shared one
+# type: "4 days old" and "past the moment its owner said to look again" rendered the same.
+#
+# RULE 24, stated because a schema act requires it (HS-3 also states it in the deliverable):
+#   AXIS + INTENT  -- ONE axis: the ledger's LIFECYCLE state. It does NOT encode disposition,
+#                     severity, or ownership; those are separate axes and mixing them here would
+#                     break the schema foundationally (24-iii).
+#   DOMAIN         -- every sentinel ledger in STATE_DIR.
+#   VALUES (MECE)  -- OPEN (work outstanding) | HELD (deliberate, gated, well-formed) | terminal
+#                     (CLOSED/ROLLBACK/etc). Exhaustive over the domain and mutually exclusive: a
+#                     ledger is in exactly one, and HELD is reachable ONLY through the structural
+#                     guardrails, never by asserting a status string.
+#   SAME GRAIN     -- all three are LEDGER-level. HELD-PAST-REREAD and HELD-STALE are NOT values on
+#                     this axis: they are RE-SURFACE CONDITIONS *of* HELD, reported as their own
+#                     finding classes. Putting them on the lifecycle axis would mix a state with a
+#                     staleness observation -- two grains, one enum (24-ii).
+#   STATE COHERENCE (24-iv) -- the three values move under DIFFERENT remedies and that is the whole
+#                     point: OPEN closes by DOING THE WORK; HELD clears by the NAMED GATE MOVING,
+#                     which is by construction not the ledger owner's act; terminal moves under
+#                     nothing. WARNING: ONE REMEDY DOES NOT MOVE THEM TOGETHER, which is exactly why a
+#                     detector that cannot tell a hold from neglect manufactures the wrong reflex.
+#
+# WARNING: THE EASIEST-PASS ROUTE IS REFUSED BY CONSTRUCTION: labelling neglect "HELD" with no reason and
+# no re-read condition is the cheapest possible escape, so a hold missing EITHER is NOT a valid HELD
+# and stays RED. A state anyone can claim for free is not a state, it is a label.
+REREAD_KINDS = {"date", "event"}   # (d) WHEN to look again: a real date, or a NAMED event
+# An EVENT-gated hold cannot go "past" a date, so it is never HELD-PAST-REREAD; it re-surfaces on the
+# age cadence instead, with its named event printed. Encoded so the two are not silently conflated.
 DRIFT_WARN_SUPPRESS_HOURS = 24.0                # re-warn an entry-vs-sentinel DRIFT at most once/day
 
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
@@ -348,10 +383,26 @@ def cmd_hold(args) -> int:
     if not args.gate_ref.strip():
         sys.exit("ERROR: --gate-ref must NAME the specific dependency (e.g. 'Andrew cross-region PAT'), "
                  "not prose -- a vague 'waiting on something' is refused.")
+    # HS-1: the re-read condition is REQUIRED and EXCLUSIVE -- exactly one of date|event. Refused at
+    # set-time as well as at check-time, so the easiest-pass route never reaches the sentinel at all.
+    if bool(args.reread_date) == bool(args.reread_event):
+        sys.exit("ERROR: setting a hold requires EXACTLY ONE of --reread-date YYYY-MM-DD or "
+                 "--reread-event '<named event>'.\n"
+                 "A hold must say WHEN to look at it again. Without that the only answer available is "
+                 "a global default identical for every hold -- a convention, not THIS hold's claim, "
+                 "and neglect labelled HELD is indistinguishable from a deliberate one.")
+    if args.reread_date:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", args.reread_date.strip()):
+            sys.exit("ERROR: --reread-date must be YYYY-MM-DD (got %r)" % args.reread_date)
+        reread = {"kind": "date", "value": args.reread_date.strip()}
+    else:
+        if not args.reread_event.strip():
+            sys.exit("ERROR: --reread-event must NAME the awaited event, not prose.")
+        reread = {"kind": "event", "value": args.reread_event.strip()}
     # Provisionally attach the gate, THEN verify the conjunction -- REFUSE if an apply leg is open
     # (the anti-escape-hatch, enforced at set-time as well as at check-time).
     trial = dict(state)
-    trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip()}
+    trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip(), "reread": reread}
     ok, reason = _qualifies_as_held(trial)
     if not ok:
         sys.exit(f"REFUSED: cannot HELD '{args.slug}' -- {reason}.\n"
@@ -677,8 +728,23 @@ def _qualifies_as_held(state: dict) -> tuple:
         return False, "gate.type must be one of %s (got %r)" % (sorted(GATE_TYPES), gate.get("type"))
     if not (gate.get("ref") or "").strip():
         return False, "gate.ref is empty -- name the SPECIFIC dependency, not prose"
-    return True, ("all apply legs proven; only verify open; structured %s gate (%s)"
-                  % (gate["type"], gate["ref"]))
+    # (d) HS-1: a REQUIRED re-read condition -- WHEN to look at this hold again. Without it the
+    # only answer available is a global default identical for every hold, which is a convention,
+    # not this hold's claim. A hold that cannot say when to revisit it is indistinguishable from
+    # neglect wearing the word HELD, so it does NOT qualify and stays RED.
+    rr = gate.get("reread")
+    if not isinstance(rr, dict):
+        return False, ("no re-read condition (need gate.reread {kind: date|event, value}) -- a hold "
+                       "that cannot say WHEN to look again is indistinguishable from neglect")
+    if rr.get("kind") not in REREAD_KINDS:
+        return False, "gate.reread.kind must be one of %s (got %r)" % (sorted(REREAD_KINDS), rr.get("kind"))
+    rv = (rr.get("value") or "").strip()
+    if not rv:
+        return False, "gate.reread.value is empty -- give a real date or NAME the awaited event"
+    if rr["kind"] == "date" and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", rv):
+        return False, "gate.reread.value must be YYYY-MM-DD for kind=date (got %r)" % rv
+    return True, ("all apply legs proven; only verify open; structured %s gate (%s); re-read %s=%s"
+                  % (gate["type"], gate["ref"], rr["kind"], rv))
 
 
 def _held_age_days(state: dict, now: datetime) -> float | None:
@@ -884,10 +950,36 @@ def cmd_check(args) -> int:
         if held_ok:
             gate = state["gate"]
             held_days = _held_age_days(state, now)
+            rr = gate.get("reread") or {}
+            # HS-2: a hold past ITS OWN stated re-read date is its own finding class with its own
+            # line vocabulary. It is NEVER merged into an aged OPEN (that would call a deliberate
+            # hold neglect) and never into HELD-STALE (that is the GLOBAL age cadence, a different
+            # claim about a different thing). Checked BEFORE the age cadence so the sharper,
+            # owner-stated condition wins when both would fire.
+            # WARNING: PRINT-ONLY BY CONSTRUCTION -- no nudge, no alert, no inbox write. The notification
+            # moratorium stands and this class deliberately reaches for none: it surfaces in the
+            # existing check output and nothing more.
+            past_reread = False
+            if rr.get("kind") == "date":
+                try:
+                    past_reread = datetime.strptime(rr["value"], "%Y-%m-%d").replace(
+                        tzinfo=timezone.utc) < now
+                except (ValueError, KeyError, TypeError):
+                    past_reread = False   # a malformed date cannot fire the class; (d) already gates it
+            if past_reread:
+                exit_flag = True
+                hd = f"{held_days:.1f}d" if held_days is not None else "?"
+                print(f"HELD-PAST-REREAD: {state['slug']} re-read-due={rr['value']} (stated by the "
+                      f"hold itself) held={hd} gate={gate['type']}/{gate['ref']} "
+                      f"open-verify={open_legs} author={state['author']} "
+                      "-- the hold's OWN re-read date has passed: re-read it, do not treat it as "
+                      "neglect and do not treat it as closed")
+                continue
             if held_days is not None and held_days > stale_days:
                 exit_flag = True    # a legit hold sat too long -> a DISTINCT nudge (not the half-land RED)
                 print(f"HELD-STALE: {state['slug']} held={held_days:.1f}d (>{stale_days}d) "
-                      f"gate={gate['type']}/{gate['ref']} open-verify={open_legs} "
+                      f"gate={gate['type']}/{gate['ref']} "
+                      f"re-read={rr.get('kind')}={rr.get('value')} open-verify={open_legs} "
                       f"author={state['author']} -- nudge the gate or reconsider")
                 if args.red:
                     last = state.get("last_held_nudge_at")
@@ -901,6 +993,7 @@ def cmd_check(args) -> int:
                 held_count += 1
                 hd = f"{held_days:.1f}d" if held_days is not None else "?"
                 print(f"HELD: {state['slug']} [{HELD_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
+                      f"re-read={rr.get('kind')}={rr.get('value')} "
                       f"open-verify={open_legs} author={state['author']} "
                       "-- apply legs proven, only verify open; tracked-not-stranded")
             continue
@@ -1032,6 +1125,14 @@ def main() -> int:
     p.add_argument("--gate-ref",
                    help="the SPECIFIC named dependency (e.g. 'Andrew cross-region PAT') -- not prose; "
                         "a vague 'waiting on something' is refused")
+    p.add_argument("--reread-date", metavar="YYYY-MM-DD",
+                   help="REQUIRED (or --reread-event): the date to look at this hold again. Past it, "
+                        "the hold re-surfaces as HELD-PAST-REREAD -- its OWN finding class, never an "
+                        "aged OPEN")
+    p.add_argument("--reread-event", metavar="'<named event>'",
+                   help="REQUIRED (or --reread-date): the NAMED event that ends the hold. An "
+                        "event-gated hold cannot go past a date, so it re-surfaces on the age cadence "
+                        "with its event printed -- never silently conflated with a date-gated one")
     p.add_argument("--release", action="store_true", help="clear the hold -> back to OPEN")
     p.set_defaults(fn=cmd_hold)
 

@@ -18,11 +18,11 @@ VERDICT ENUM -- one axis, one grain, MECE over the declared domain (Rule 24):
 v1 checks six legs (atoms 1, 3, 5-floor, 7-spelling, 8-coverage, 9). Every other atom, and
 the non-checkable HALF of atoms 5 and 7, prints NOT-CHECKABLE-BY-THIS-RUNNER with its reason.
 
-⛔ NEVER A MONITOR. Run-and-read, no schedule, no standing comparator, no alarm -- the
+WARNING: NEVER A MONITOR. Run-and-read, no schedule, no standing comparator, no alarm -- the
 fit_harness form and the standing estate moratorium. Read-only by construction: S3 GET/LIST,
 EventBridge/Scheduler describe/list, and pyarrow schema reads. It writes nothing, anywhere.
 
-⛔ THREE SPEC-VS-ESTATE DIVERGENCES ARE ENCODED HERE DELIBERATELY, each measured 2026-08-25
+WARNING: THREE SPEC-VS-ESTATE DIVERGENCES ARE ENCODED HERE DELIBERATELY, each measured 2026-08-25
 before a line was written, because building to the spec's literal text would have produced a
 confident answer about the wrong plane in all three cases:
 
@@ -135,10 +135,10 @@ def _err(e) -> str:
 def _list_keys(bucket: str, prefix: str) -> tuple[list[str], str | None]:
     """List every key under a prefix, MATERIALISED.
 
-    ⛔ NO length()-style page arithmetic and NO single-page read. A paginated list answers
+    WARNING: NO length()-style page arithmetic and NO single-page read. A paginated list answers
     with a PAGE, and a page is not a total; page 1 comes back as a clean, complete-looking
     result. Page through, materialise the set, count client-side, print the number.
-    ⛔ NO BARE except. An instrument failure must become a NOT-CHECKABLE row carrying the
+    WARNING: NO BARE except. An instrument failure must become a NOT-CHECKABLE row carrying the
     error, never a verdict -- a swallowed error would render an unread plane as a clean
     CONFORMS, the exact anti-correlation this runner exists to avoid.
     """
@@ -402,7 +402,7 @@ def atom9_provenance(cfg, bucket, parts):
         return _row(9, "provenance columns", NOT_CHECKABLE,
                     "schema reader unavailable in this environment: %s" % e,
                     "%d intermediate table(s) would be read" % len(tables),
-                    why="pyarrow/s3fs not importable here. ⛔ AN IMPORT GUARDED BY try/except "
+                    why="pyarrow/s3fs not importable here. WARNING: AN IMPORT GUARDED BY try/except "
                         "answers COMPLETION, NEVER PRESENCE -- so this reports NOT-CHECKABLE rather "
                         "than letting a missing dependency read as a clean pass.")
     return _row(9, "provenance columns", NOT_CHECKABLE,
