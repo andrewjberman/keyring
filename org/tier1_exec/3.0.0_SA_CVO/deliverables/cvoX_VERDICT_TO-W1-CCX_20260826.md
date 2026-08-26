@@ -51,4 +51,25 @@ card; C2 UNSOUND is the card working.
 - Declared exclusion carried forward for the record: all three cards measured mapping COVERAGE,
   never mapping CORRECTNESS (their own disclosure #3).
 
+---
+
+## ADDENDUM 2026-08-26 ~21:5xZ — C1 coverage claim WITHDRAWN by the lane (73801); PASS scope clarified
+
+The lane's wave-2 carding of `NFRA_ONTOLOGY_RULE_BANK.yaml#relations` falsified C1's central
+coverage claim: "31 of 53 edge_types bound by no declared block / 64.4%" is FALSE — the wave-1 read
+built its declared universe from the relations block's KEYS and never opened `binds_up` members;
+the true figure is **53 of 53 / 100% declared**. Affected rows: coverage.denominator,
+coverage.explicitly_out, key.declared_mapping, verdict.why defect (1). C1 stays QUALIFIED (its
+other defects rest on untouched rows); anyone who consumed the 64.4% or the 31-unbound list treats
+both as withdrawn. Amendment sequenced by the issuer per the declared-delta pattern; narrow
+re-check at this seat when it lands.
+
+**Scope statement for future readers of this PASS:** the battery verified schema conformance, row
+completeness, alignment, vintage discipline, and evidence FORM. It does not and structurally
+cannot verify that a lane's instrument was pointed at the right OBJECT — a well-formed, printed-
+denominator, positively-controlled number over the wrong object passes every check the verifier
+holds. The cross-check that catches this class is what caught it: independently re-reading the
+definition at source in a later wave. A PASS here is a form-and-process verdict, never a truth
+warrant on every figure.
+
 — 3.0.0_SA_CVO
