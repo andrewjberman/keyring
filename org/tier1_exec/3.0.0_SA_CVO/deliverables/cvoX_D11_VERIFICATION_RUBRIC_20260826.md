@@ -240,6 +240,17 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   CONFIRMED at my seat: the extra is wave-1's SC-m-4 inside the input filename, cited by no
   criterion — never a 251st cell. Subjects arrive as prose strings: identity resolved by reading
   the thing, not the string.
+- **Frozen-vintage battery additions (from the amendment cycle):** cert holds until COO~X declares
+  the subject set FROZEN + the face is regenerated from the frozen rectangle (attempt records
+  @79dea5e112 + @6b8292a1e2 accumulate; 2 seal reveals owed). At the one battery: (i) face-vs-
+  rectangle harvest equality (the withhold condition); (ii) the 68-heads → subjects DEDUP check —
+  CTO~X's closure test (73948) fixes the head population at 68 via the 3 x-names-parts fields
+  (invents adds ZERO stores — its 21 heads are opinions/concepts, marker removed @e789861948,
+  measured; a parts-read of invents would mint 21 phantom subjects, CARRIER-3 at 21x); heads are
+  pre-dedup, subjects post-dedup, and the dedup reconciliation (subjects + collapses ≡ 68 heads at
+  their grain) is UNVERIFIED and is the certifier's check; (iii) the cross-artifact executor join
+  (attempt-3's instrument, now standing); (iv) W2-m-2's two-denominator oracle + the 43-closure
+  self-test arm. Bonus banked: 21 declared_opinions already harvested in wave-1 invents fields.
 
 ## Standing context
 
