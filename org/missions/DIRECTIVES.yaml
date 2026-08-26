@@ -138,7 +138,7 @@ directives:
       subgroup or its other parents, in EITHER direction."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST]
+      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST, ETFS_SATELLITES]
       members_note: "ETFS_INGEST ADDED 2026-08-24 by 0.0.0_AB_MSTR (register owner) on the routing of
         1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z, who correctly DECLINED the edit rather than making it:
         org/missions/ declares its owner twice (file header + .register-owner owner_hostname = the
