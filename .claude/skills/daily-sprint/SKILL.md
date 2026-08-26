@@ -76,6 +76,17 @@ else.
   **NO PEDANTRY:** internal counts, sequencing, lane attribution, caveats a partner would not act
   on. Precision lives in the logs and certs; this text is the highlight reel.
   Full rule + worked before/after table: the template's **SECOND RULE, AMENDED**.
+- **THE VOLUME LINE CLOSES `TODAY SPRINT` (Andrew-direct 2026-08-26 ~21:5xZ):** *"how many commits
+  over how many agents today? i think that should be the final line of the 'Sprint' section."*
+  **Always last, always present, bare and flat:** `• N commits across M agents today.`
+  `git log --all --since='<DAY>T00:00:00Z'` — **`--all` is load-bearing (both fabrics, every ref)**;
+  commits = `| wc -l`, agents = `--pretty='%an' | sort -u | wc -l`.
+  ⛔ **NARROWS the 08-25 cut, does not reverse it** — ONE line, LAST, in TODAY SPRINT only; never in
+  an Item line, PROCESS, BLOCKS, or as a lead bullet, and **a count never stands in for a highlight.**
+  ⚠ **M is DISTINCT AUTHOR IDENTITIES, not a headcount** — lanes committing under a base author line
+  are invisible to `%an` (measured 08-26: one base serial showed 62 commits of which that seat wrote
+  10). **Write "across M agents", never "M agents were running."** Full rule: the template's
+  **FOURTH RULE**.
 - **Tie each line to the directive's HEADLINER** — its `title:` in `org/missions/DIRECTIVES.yaml`
   (*"MDPF asset-category views"*, *"ADVI 49F end-to-end"*, *"Model Portfolios Pipeline
   Fortification"*…). Write the day as **progress against that headline**, in its own words where

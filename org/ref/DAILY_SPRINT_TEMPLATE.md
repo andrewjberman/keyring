@@ -16,7 +16,11 @@ must trace to a packet line, a commit hash, or a record read that day. Rewritten
 **TODAY SPRINT**
 
 <5-9 bullets, each on its OWN line with a BLANK LINE between them ("• " prefix), highest-consequence
- first, plain English, numbers where they exist; the last bullet may be the fabric line>
+ first, plain English, numbers where they exist>
+
+• <THE VOLUME LINE — ALWAYS LAST, ALWAYS PRESENT. "N commits across M agents today." Bare and
+  flat, no adjectives. THE FOURTH RULE governs it, including why M is "across M agents" and
+  never "M agents were running.">
 
 &nbsp;
 
@@ -68,8 +72,12 @@ previously read *"a decision Andrew made"*, which instructs the writer to produc
 the voice rule forbids. Amended 2026-08-26 for consistency, not as a new rule.)
 
 ⛔ **DO NOT LEAD WITH, AND MOSTLY DO NOT INCLUDE:**
-- **Commit counts, author counts, seat counts.** They measure typing, not delivery. **The fabric
-  line is CUT** — it was in the shape and Andrew named it directly.
+- ~~**Commit counts, author counts, seat counts.** They measure typing, not delivery. **The fabric
+  line is CUT** — it was in the shape and Andrew named it directly.~~
+  ⛔ **PARTIALLY REINSTATED 2026-08-26 — SEE THE FOURTH RULE.** The volume line is BACK, in ONE
+  fixed place: **the final line of TODAY SPRINT**. It is still barred from every other position,
+  and counts still never carry an Item line. **Struck rather than deleted so a reader can see the
+  cut happened and was narrowed, not reversed wholesale.**
 - **Bugs and internal defects AS THE STORY.** A defect belongs in the text only where it changed
   what the business gets — *"release is held on two fixes"* is status; the mechanism of the bug is
   not. **A day narrated through its defects reads as a bad day even when it was a strong one.**
@@ -136,6 +144,45 @@ without knowing anything else.
 a headliner — a sovereign decision, a partner-facing outcome, something new that matters — **it
 still goes in.** Do not drop a genuine win because it lacks a directive to hang on. **The tie is
 the default, not a filter.**
+
+## THE FOURTH RULE — THE VOLUME LINE CLOSES **TODAY SPRINT** (Andrew-direct 2026-08-26 ~21:5xZ)
+
+> **VERBATIM:** *"how many commits over how many agents today? i think that should be the final line
+> of the 'Sprint' section"*
+
+**THE LAST BULLET OF `TODAY SPRINT` IS THE VOLUME LINE. Every day. Fixed position.**
+
+```
+• 348 commits across 28 agents today.
+```
+
+**Register: bare and flat.** It is the scale of the day, not an achievement — no adjectives, no
+"impressive", no comparison to yesterday unless the comparison is itself the point.
+
+### ⛔ THIS NARROWS THE 08-25 CUT, IT DOES NOT REVERSE IT
+
+The 08-25 rule cut the fabric line because counts *"measure typing, not delivery"* — **that reasoning
+still holds everywhere else.** So:
+- **ONE line, LAST, in TODAY SPRINT only.**
+- **NEVER in an Item line, never in PROCESS, never in BLOCKS, never as a lead bullet.**
+- **A count never stands in for a highlight.** If the day's Item lines are thin, the volume line does
+  not compensate — it sits at the bottom and says what it says.
+
+### ⛔ HOW TO COUNT IT, AND THE TRAP THAT MAKES THE SECOND NUMBER SOFT
+
+```
+commits: git log --all --since='<DAY>T00:00:00Z' --oneline | wc -l
+agents:  git log --all --since='<DAY>T00:00:00Z' --pretty='%an' | sort -u | wc -l
+```
+**`--all` is load-bearing — it spans BOTH fabrics and every ref.** Without it the count is one
+branch's and reads low.
+
+⚠ **THE SECOND NUMBER IS DISTINCT AUTHOR IDENTITIES, NOT A HEADCOUNT OF LIVE AGENTS.** Measured
+2026-08-26: `3.0.0_SA_CVO` shows **62** commits of which the base seat wrote **10** — the other 52 are
+`~X`'s work **committed under the base author line.** Lanes that commit under a base identity are
+INVISIBLE to `%an`, so the number can undercount seats; a seat using two identities would overcount.
+**It is the right number for a scale line and the WRONG number to quote as "we had N agents running."**
+**Write "across N agents" and never "N agents were running."**
 
 ## THE THIRD RULE — WRITTEN IN ANDREW'S VOICE (Andrew-direct 2026-08-26 ~21:2xZ, VERBATIM)
 
