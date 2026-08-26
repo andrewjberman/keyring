@@ -92,7 +92,7 @@ the only condition under which an added criterion is a criterion at all.**
 
 | id | expected | source |
 |---|---|---|
-| **A5a** Client - Opal Supervised | **~$1,476,313.07** (unallocated-weight portion) | his ruling + the itemisation already held |
+| ~~**A5a** Client - Opal Supervised~~ | ~~**~$1,476,313.07** (unallocated-weight portion)~~ | ~~his ruling + the itemisation already held~~ **— MIS-GRAINED, see AMENDMENT 3** |
 | **A5b** SMAs / DIVZ | **$1,393,065.98** (the DIVZ sleeve) | same |
 | **A5 total** (unchanged) | **$2,869,379.04** | sovereign-confirmed at account level |
 
@@ -183,6 +183,50 @@ A serving run means the artifacts reach consumers, so I asked what is **NEW on t
 >> **NO EXISTING SERVED VALUE IS OVERWRITTEN BY THIS CHANGE. Both affected structures are new to the
 served plane.** That is why the raised stakes do not require a new consumer-side arm — checked, not
 assumed. <<
+
+---
+
+## AMENDMENT 3 — 2026-08-26 ~18:15Z: **THE DEFECT WAS IN MY OWN BAR.** A5a named the SEGMENT and carried a COMPONENT's value
+
+**STATE:** lambda still `15:29:34Z`. Apply still not landed. Written before the result.
+
+**Trigger:** `0.4.0_DS_ClientPlatform~T`'s 72932 caught a **$780,381.91** gap between the serve
+conditional's `~$1.48M` and the field that actually ships; `1.0.0_SA_CTO` ruled **(a)** at 72938 —
+the artifact is right, the headline was the subset grain, and Andrew's definition says **ANY** account
+containing Opal Models, with no parent-type qualifier.
+
+### ⛔ AND THE SAME DEFECT IS IN AMENDMENT 1, WHICH IS MINE
+
+My A5a row read **`Client - Opal Supervised | ~$1,476,313.07`**. That row **names the SERVED SEGMENT
+and gives the value of ONE COMPONENT of it** — the unallocated-weight portion of the non-Opal-parent
+2-account subset. The parenthetical said "unallocated-weight portion," so it was not unlabelled; it
+was **mis-attached**, which is worse, because a qualifier in parentheses reads as a description of
+the segment rather than as a different population.
+
+**CORRECTED — both grains, each carrying its denominator ON THE SAME LINE as the number:**
+
+| id | population | expected |
+|---|---|---|
+| **A5a** Client - Opal Supervised — **THE SERVED FIELD** | **3 accounts**, full segment | **$2,256,694.98** |
+| **A5a′** non-Opal-parent subset | **2 accounts** (Anna \*9237, \*9238) | **$1,476,313.07** |
+| **A5b** SMAs → `opal_div_sma` | **1 account** (Anna \*9237) | **$1,393,065.98** |
+
+Itemisation of A5a: sleeve **$780,381.91** + unattributed-leg **$0.00** + unallocated **$1,476,313.07**
+= **$2,256,694.98**. Re-derived independently at exact decimal; reconstructs to the cent.
+**The `$0.00` unattributed-leg limb IS the DIVZ leg leaving** — a check arm that exists only because
+the residual was itemised rather than left as a remainder.
+
+**I GRADE THE SERVED FIELD AT A5a (full, 3 accounts) and report A5a′ beside it.** Grading only the
+subset would score a serving figure against a population that is not what ships.
+
+### THE COUNT, AND WHY I AM PUTTING IT IN MY OWN RECORD
+
+**This is the FIFTH instance tonight of one correct number travelling with a wrong population** —
+$38.1M/129-accounts · "$2,869,379.04 across all 129" · A5b's 1-vs-2 · the serve conditional's 2-vs-3 ·
+**and this row, in the verifier's own pre-registered bar.** I filed the boundary-precision note on
+someone else's claim at 72826 and carried the identical defect in an artifact I had committed twice.
+**The axis does not spare the seat that polices it.** Nothing here changes an arm; it changes which
+number an arm is pointed at, which is the whole failure mode.
 
 ### BINDING, UNCHANGED AND NOW LOAD-BEARING
 
