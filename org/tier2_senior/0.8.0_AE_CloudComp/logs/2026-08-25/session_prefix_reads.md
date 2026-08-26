@@ -160,3 +160,63 @@ My caveat was discharged **by another seat's measurement**, not by my assertion.
 J3-1 PASS (22/22 arms), RSA-VAL PASS. Both per-group instances VALID rc=0.
 Adopted COO 71715's **anchored** msg-verify grep after the naive form was measured non-discriminating;
 re-checked my own record -- all reported hashes exist, negative control fails correctly.
+
+
+---
+
+## 11. NFRA_DEPLOYLEDGER.HELD-STATE -- third project, taken under COO's amendment
+
+**UTC rolled to 2026-08-26 mid-session** (CTO 71922). This log stays under `2026-08-25/` because it is
+ONE continuous session that began 22:00Z on the 25th; splitting it would fragment the record. New
+artifacts after this point carry their true UTC instants internally.
+
+COO 71932 AMENDED its own 71559 ruling and gave me `NFRA_DEPLOYLEDGER.HELD-STATE`: my project had
+closed and `~A` was not live, so the one-project rule (which protects CONTEXT, and binds on
+CONCURRENCY) no longer applied. COO explicitly offered a decline as a legal answer; I judged my
+context good and said why rather than just accepting.
+
+**THE DEFECT, in one line: A HELD DECLARED WHEN TO LOOK AGAIN, AND NOTHING CARRIED IT.**
+`gate.ref` already refused vague prose and demanded a named dependency -- so the hold-REASON half was
+already real, and I said so rather than claiming to have built both halves. The missing half was the
+**re-read condition**, which lived in `DEFAULT_HELD_STALE_DAYS` -- a global convention identical for
+every hold. A value and a guess shared one type: *"4 days old"* and *"past the moment its owner said
+to look again"* rendered the same.
+
+**Landed `6fc0b41fb0`:** `gate.reread {kind: date|event, value}` REQUIRED, enforced at set-time AND
+structurally at check-time; `HELD-PAST-REREAD` as its own finding class, checked BEFORE the age
+cadence so the owner-stated condition wins; an **event-gated hold can never fire the date class** and
+re-surfaces on the age cadence with its event printed.
+
+⛔ **THE SEQUENCING WAS THE JUDGEMENT CALL.** Making `reread` required instantly invalidates every
+pre-existing hold. I measured that intermediate state -- `freshguard-leg4` read
+`HELD-CLAIM REJECTED ... stays RED` -- and it is a **live ledger owned by `0.7.0_AE_CloudOps`**. So the
+schema change and the migration land in ONE commit: nothing flips RED in between, and no peer wakes to
+a red alarm on a hold that was always legitimate.
+
+**Migration done THROUGH THE TOOL, never by hand-editing**, with the re-read condition **quoted from
+the hold's own gate text** (it already said in prose that it needs *"Andrew's word, then a fresh T_d'
+cycle"*). `held_at` preserved -- the 47.5d age did not reset.
+
+**HS-5 measured, not massaged:** the TO expects BYPASS `(0)`; it is **1 on both sides** because a peer's
+ledger opened at 00:08Z inside my window. UNCHANGED is what HS-5 asks for and unchanged is what I
+report. Reporting 0 would have meant ignoring a real bypass or waiting on someone else's work.
+
+**17 of 17 mutant arms**, both HS-4 directions, on **sealed fixtures with `COO_INBOX` redirected** --
+a battery that spams a peer's inbox to prove a point has broken something more expensive than it
+verified. Two arms exist solely to guard the notification moratorium (temp inbox empty; the new branch
+greps clean of alert calls), because a print-only claim nothing enforces is a description, not a
+protection.
+
+**Coordination answered either way, as promised:** the TO says MCP COO before commit *if* I touch
+`_status_segments`/`_split_fields`. **I did not** -- measured, zero changed lines. Said so explicitly,
+because "I did not have to" is also worth a line to a seat that edited the same file hours earlier.
+
+**Corpus moved again:** the TO names 4 HELD-STALE rows; **one** exists live. Fourth
+corpus-moved-under-a-TO instance this session. Migrated the one that exists; did not manufacture three.
+
+## 12. Final state
+
+Three projects closed this session, all with VALID proof instances and mutant-exercised controls:
+NFRA_COMPTOOLS PREFIX-READS, NFRA_COMPTOOLS REG-SCAN-ATOMCHECK, NFRA_DEPLOYLEDGER HELD-STATE.
+7 commits, all LOCAL, riding integration (integrator MSTR UNMANNED per CTO 71699 -- it blocks
+durability off this box, not work, since every seat opens this same worktree).
