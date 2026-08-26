@@ -69,7 +69,8 @@ the entire gate delta — which is what moves this from *a* cause to **the** cau
 | A3 | Opal Fixed Income recovered | **$8,442,396.91** |
 | A4 | **TOTAL recovered** | **$43,676,557.12** — the identity-gate delta, to the cent |
 | ~~A5~~ | ~~`Client - Opal Supervised` residual~~ | ~~$2,869,379.04~~ **SUPERSEDED -- see A5a/A5b** |
-| **A5a** | `Client - Opal Supervised` (unallocated-weight portion) | **$1,476,313.07** |
+| **A5a** | `Client - Opal Supervised` -- **FULL SEGMENT** | **$2,256,694.98** |
+| **A5a'** | `Client - Opal Supervised` -- **non-Opal-parent grain** (the grain first registered) | **$1,476,313.07** |
 | **A5b** | `SMAs` (L0) -> served key **`opal_div_sma`** -- the Opal SMA sleeve, **denominator: 1 account (`Anna *9237`)** | **$1,393,065.98** |
 | A6 | decomposed total | $147,047,720.63 -> **$190,724,277.75**, matching dim opal EXACTLY |
 | A7 | identity gate | **FAIL -> PASS** |
@@ -97,6 +98,27 @@ tuned to.**
 **THE BUCKETING IS NOW THREE-WAY AND COMPLETE ON HIS WORDS:** Opal Models -> Models (Primary/Custom) · Opal SMAs -> SMAs (by strategy) · remainder -> `Client - Opal Supervised`.
 
 **PRECEDENT, so this joins a bucket rather than minting one:** the served `by_model` union already carries `opal_div_sma` as a key on 49financial. Classify from that precedent and the D1 registry -- **never a predicate minted in this repair, and implement it as a ROUTING BRANCH, not a module-level dependency** (that instruction is what produced the import edge the first time).
+
+### 2a-ii. GRADED 2026-08-26 ~18:0xZ -- ALL MET, AND MY BAR CARRIED ONLY ONE OF TWO GRAINS
+
+`0.4.0_DS_ClientPlatform~T` @`bae0a826d3` (amends `4e0410825e`). **Routing answer measured NO** -- `opal_div_sma` reaches neither `by_model` (6 keys, unchanged) nor the sidecar's `by_model_unit_values`, so `GLOBAL_ACCOUNT_DIST_DISPLAY` is never consulted and **no crosswalk edit was needed.** Sequencing (i) held.
+
+| | expected | observed | |
+|---|---|---|---|
+| A5a full-segment | 2,256,694.98 | 2,256,694.98 | **MET** |
+| A5a' non-Opal-parent grain | 1,476,313.07 | 1,476,313.07 | **MET** |
+| A5b `opal_div_sma`, 1 account | 1,393,065.98 | 1,393,065.98 | **MET** |
+| A5a + A5b total | 3,649,760.96 | 3,649,760.96 | **UNCHANGED** |
+
+⚠ **MY BAR CARRIED ONLY THE NON-OPAL-PARENT GRAIN.** That lane graded BOTH and named which was which; **had it graded only mine, the full-segment figure would have gone unstated and a later reader would have had one number for a two-grain quantity.** Corrected above -- the record now carries both.
+
+**PLACEMENT, per CTO constraint (4):** key `opal_div_sma` (the SERVED key -- `DIVZ` would mint a new one beside it); structure `meta.sma_l0.by_key` in both artifacts; **NOT in** `by_model`, the sidecar, `leaves_agg`, the identity-(i) sum, or the supervised residual. SMA legs partition out BEFORE the attribution split -- routing an Opal SMA into that split is what put it in the residual originally.
+
+⛔ **THE FIRST CUT OF THIS BRANCH WAS WRONG AND THE PRE-REGISTRATION IS THE ONLY THING THAT CAUGHT IT.** It keyed the routing table lower-cased (`"divz sma"`); `_norm` is **whitespace-only BY DESIGN** and deliberately does not case-fold, because folding would silently merge genuinely different model names. The lookup matched nothing and the run emitted **SMAs = $0.00 with the residual unchanged** -- **a key failure wearing the shape of a real answer.** Absent the pre-registered $1,393,065.98, a silent empty SMA bucket reads as *"no SMAs here"* and ships. **Caught in one read because a uniform $0.00 is an INSTRUMENT SIGNATURE, not a result** -- doctrine `0.6.2_AE_PartnerETL~A` earned from three uniform-zero probes earlier the same evening, paid back to a different lane within the hour.
+
+**And the itemisation's unattributed-leg limb going to exactly `0.00` IS the DIVZ leg leaving** -- a check arm that exists only because the residual was ITEMISED rather than left as a remainder.
+
+**STILL AT ANDREW (card 72894):** `Sleeve - Tax-Free Bond` $374,583.32 · `Sleeve - Equity` $390,190.96 · `Sleeve - Core Money Market` $15,607.64 remain in the residual. **The ruled SMA list is an OPEN enumeration, so absence by name is not evidence of non-membership**, and mapping on resemblance is the minting 72604 forbids.
 
 ### 2a-i. TWO PRE-EMIT CORRECTIONS ADDED 2026-08-26 ~17:5xZ, BEFORE THE BRANCH WAS WRITTEN
 
