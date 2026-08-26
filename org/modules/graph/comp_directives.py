@@ -156,6 +156,16 @@ def _emit_retired(doc: dict) -> str:
         body.append("    frozen_row: |")
         for ln in row["frozen_row"].splitlines():
             body.append("      " + ln if ln.strip() else "")
+        # KEY LINEAGE (2026-08-26): emitted ONLY when present, and emitted HERE rather than
+        # left to a hand edit, because this serializer is an ALLOWLIST -- a field it does not
+        # know is DROPPED at the next `retire`, and the emit_hash seal makes a hand edit
+        # detectable but not durable. A marker the tool does not write is not a marker.
+        kr = row.get("key_reused_on")
+        if kr:
+            body.append("    key_reused_on:")
+            for k in ("at", "by_commit", "note"):
+                if k in kr:
+                    body.append("      %s: %s" % (k, json.dumps(kr[k])))
         rv = row["retired_vintage"]
         body.append("    retired_vintage:")
         for k in ("cut_at", "stances_as_of", "row_sha256"):
@@ -236,6 +246,30 @@ def retire(dry_run: bool = False) -> int:
     return 0
 
 
+def mark_reused(did: str, note: str, by_commit: str = "") -> int:
+    """Declare that a RETIRED directive's KEY has been re-issued to a new live directive.
+
+    Exists because the retired view is SEALED (emit_hash) and its serializer is an ALLOWLIST:
+    a hand-added marker breaks the seal now and is dropped at the next `retire`. This routes the
+    edit through the emitter, so the marker persists and the seal stays machine-computed.
+    """
+    doc, _raw = _load_retired()
+    dirs = (doc.get("directives") or {}) if doc else {}
+    if did not in dirs:
+        print("  REFUSED: %s is not in the retired view -- nothing to mark." % did, file=sys.stderr)
+        return 2
+    live_ids = [d for d, _ in _split_rows(_read(LIVE))[1]]
+    if did not in live_ids:
+        print("  REFUSED: %s is not LIVE -- a key that is not re-issued is not re-minted; this "
+              "marker would assert a re-mint that has not happened." % did, file=sys.stderr)
+        return 2
+    dirs[did]["key_reused_on"] = {"at": _now(), "by_commit": by_commit, "note": note}
+    with open(RETIRED, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(_emit_retired(doc))
+    print("  MARKED %s key_reused_on -- retired view re-emitted and re-sealed." % did)
+    return 0
+
+
 def check() -> int:
     """The CHECK. rc 0 = all invariants hold | 2 = violation (each printed) | 1 = tool error.
     Every verdict prints its denominator."""
@@ -249,8 +283,20 @@ def check() -> int:
     ret_ids = list(dirs)
     # 1. PARTITION -----------------------------------------------------------------------------
     both = sorted(set(live_ids) & set(ret_ids))
-    if both:
-        v.append("PARTITION: %s appear in BOTH views" % ", ".join(both))
+    # A RE-MINT is a legal both-views state: the KEY is re-issued to a NEW directive while the
+    # prior one stays frozen in the retired view. It is exempt ONLY when the retired row DECLARES
+    # it (key_reused_on). An undeclared both-views key is still a breach -- the marker is what
+    # separates a deliberate re-mint from a partition failure, and without it the two are
+    # byte-identical to this check.
+    reused = [d for d in both if (dirs.get(d) or {}).get("key_reused_on")]
+    undeclared = [d for d in both if d not in reused]
+    if undeclared:
+        v.append("PARTITION: %s appear in BOTH views" % ", ".join(undeclared))
+    if reused:
+        # NOT a violation, but NEVER silent: an exemption nobody can see is how a real breach
+        # later hides behind a marker somebody added years ago.
+        print("  KEY-LINEAGE: %s re-minted (declared); PARTITION exempt for %d key(s)."
+              % (", ".join(reused), len(reused)))
     for did in ret_ids:
         if _complete_record(dirs[did].get("frozen_row", "")) is None:
             v.append("PARTITION/FORM: retired %s lacks a COMPLETE retired record (at/by/authority)"
@@ -432,6 +478,18 @@ def main(argv=None) -> int:
     if not args or "--help" in args or "-h" in args:
         print(_USAGE)
         return 0
+    if args[0] == "mark-reused":
+        # <Dn> <note>  -- declare a re-minted key. Positional, so it does not pass through the
+        # exact-match `known` filter below.
+        if len(args) < 3:
+            print("comp-directives mark-reused <Dn> <note> [<by_commit>] -- REFUSED (rc 2), "
+                  "nothing written.", file=sys.stderr)
+            return 2
+        try:
+            return mark_reused(args[1], args[2], args[3] if len(args) > 3 else "")
+        except Exception as e:  # noqa: BLE001
+            print("comp-directives: ERROR (%s: %s)" % (type(e).__name__, e), file=sys.stderr)
+            return 1
     known = {"retire", "check", "--self-test", "--dry-run"}
     unknown = [a for a in args if a not in known]
     if unknown:
