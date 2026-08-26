@@ -610,6 +610,21 @@ def main() -> int:
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
     for line in align_frames:
         print(f"  {line}")
+    # ALIGNMENT AND SCHEMA ARE DIFFERENT ORACLES, AND THE ALIGNMENT LINES ARE BYTE-IDENTICAL
+    # ON A VALID AND AN INVALID INSTANCE. Measured 2026-08-26 on one real instance: stripping
+    # NINE required properties left forward-1 13/13, forward-2 22/22 and backward 22/22
+    # completely unchanged while the run went rc=0 -> rc=1. So a seat quoting "alignment closes
+    # both directions" states something TRUE that carries ZERO information about structural
+    # validity -- and those sub-lines do get quoted in certs and returns.
+    # The rc and the VALID/INVALID line already discriminate; this annotates the lines that do
+    # not, so the figures cannot be lifted out of an INVALID run and read as reassurance.
+    # Surfaced by 0.4.0_DS_ClientPlatform~Q, who hit it by modelling an instance on a peer's
+    # file instead of on the schema and then READ THE OUTPUT HONESTLY.
+    if align_frames and violations:
+        print("  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those "
+              "figures describe the criterion-to-cell MAPPING ONLY and are identical to what a "
+              "VALID instance prints -- they are NOT evidence of validity. Do not quote them "
+              "without the verdict.")
     for line in violations:
         print(f"  VIOLATION: {line}")
     print("VALID" if not violations else "INVALID")
@@ -617,7 +632,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    # ⛔ A CRASH IS NOT A VERDICT, AND IT MUST NOT BORROW ONE'S EXIT CODE.
+    # A CRASH IS NOT A VERDICT, AND IT MUST NOT BORROW ONE'S EXIT CODE.
     # rc=1 means INVALID -- a real adjudication about the caller's instance. rc=2 means
     # "this tool could not answer" (the existing READ-ERROR convention at main()).
     # An UNCAUGHT exception used to fall through Python's default rc=1, so a tool crash and
