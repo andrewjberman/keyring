@@ -217,6 +217,47 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     makes them stop asking.
     **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s three false-deny modes,
     `accessanalyzer validate-policy`): `/cloud-ops`.**
+28. **THE SUBSTRATE TEST -- BEFORE YOU BUILD ON A RESOURCE, QUALIFY IT: SEVEN QUESTIONS, THREE
+    DECLARED GRAINS.** A resource you are about to make LOAD-BEARING earns a SUBSTRATE CARD; a
+    resource you are merely reading does not. Andrew-direct 2026-08-26.
+
+    | grain | # | the question |
+    |---|---|---|
+    | **PROCESS** *(how it comes to exist)* | 1 | **METHODOLOGY** -- how is it defined/assembled? What does it COMPOSE vs INVENT? |
+    | | 2 | **CADENCE** -- what rhythm, what actually TRIGGERS it, and does the LIVE instance match that rhythm? (DESIRED vs APPLIED) |
+    | **ARTIFACT** *(what it leaves behind)* | 3 | **PERSISTENCE** -- is the definition persisted? on whose authority? in what form? |
+    | | 4 | **LOCATION** -- exactly where: Iceberg/Nessie, a kuzu projection, S3, disk -- or NOWHERE |
+    | **TRUST** *(can I stand on it)* | 5 | **COVERAGE** -- what universe does it span, what is explicitly OUT, **PRINT THE DENOMINATOR** |
+    | | 6 | **KEY** -- what identity space; is the key STABLE; does it CROSS spaces |
+    | | 7 | **FAILURE MODE** -- what does it return when it CANNOT answer, and is that DISTINGUISHABLE from a genuine negative? |
+
+    ⛔ **EVERY ROW CARRIES ITS OWNER.** Rule 24(iv): a stale cache, a missing id grammar and a silent
+    failure mode take THREE remedies, THREE owners, THREE clocks. **A card without owners is a wish list.**
+
+    ⛔ **5, 6 AND 7 ARE THE ONES ALWAYS SKIPPED, AND THEY ARE THE ONES THAT DRAW BLOOD.** The obvious
+    four (methodology/cadence/persistence/location) describe a resource; only the TRUST grain says
+    whether it can be stood on. Each was measured failing in-estate 2026-08-26: a cell-extractor
+    returned a clean `0` against a known 31, and a firm-separation test read `bd=0` and rendered
+    `purity=1.000` as a perfect pass (**COVERAGE**); six surfaces carried one concept across several
+    id spaces with nothing declaring the mapping (**KEY**); a resolver whose substrate was absent
+    returned `UNADDRESSED`, byte-identical to a genuine miss (**FAILURE MODE**).
+
+    **COST, AND WHEN IT DOES NOT APPLY:** about one source read plus one or two probes per resource.
+    ⛔ **It binds ONLY when the resource becomes LOAD-BEARING** -- you will build on it, join to it,
+    or cite it in a claim another seat acts on. **It does NOT bind** a one-off read, a resource you
+    just authored yourself (you hold its provenance), or anything whose error-eater is Rule 22's
+    "me, this turn". **Carding a resource you are merely consulting is exactly the over-verification
+    section 2 exists to prevent.**
+
+    **Rule 24 record (this schema was tested before it landed):** (i) MECE -- the bare four failed
+    EXCLUSIVITY (persistence bundled state + authority + form) and EXHAUSTIVENESS (5/6/7 uncovered
+    over the declared domain "what must be true before I build on this"); (ii) SAME GRAIN -- failed
+    until the three grains were DECLARED, because 1-2 describe the process and 3-4 the artifact;
+    (iii) INTENT COHERENCE -- holds on the single intent *can I stand on this*; (iv) STATE COHERENCE
+    -- the values do NOT move together, which is precisely why the OWNER column is mandatory.
+    **First exercised card, `nerves_resolve`:** design sound (composes 4 resolvers, states
+    confidence, UNADDRESSED is a finding) -- but cadence NONE, persistence NONE, substrate 19.7d
+    stale, coverage 2,249 of ~27,000 nodes (~11%), failure mode SILENT, self-test RED.
 - **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
 
 ---
