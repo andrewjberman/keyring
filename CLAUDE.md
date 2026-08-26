@@ -276,7 +276,8 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
   rewind; one seat's measured refusal was the entire control set). **Before acting on ANY open/`--red`
   entry, measure the ARTIFACT**: `rev-parse origin/<branch>` + `describe --tags` + `merge-base
   --is-ancestor` WITH a positive control. World says done → close the entry SUPERSEDED with that evidence;
-  NEVER re-execute. *Does not apply to single-fabric deploys where the ledger's device is the deploy's
+  NEVER re-execute. *Cost: one artifact read per red entry acted on — cheaper than the card it
+  prevents. Does not apply to single-fabric deploys where the ledger's device is the deploy's
   device — there the alarm binds exactly as written.*
 - **NEVER rebase** — not `git rebase`, not `git pull --rebase` — on any shared branch (CLOUD/DEV/PROD/main).
   It rewrites multi-agent history and a non-conflicting result is luck, not correctness. Rejected push =
