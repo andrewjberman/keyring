@@ -478,6 +478,23 @@ a session winds down ONLY when Andrew explicitly says so. Deferring to a schedul
 there is literally no other option (a hard external gate, stated plainly) — NEVER a default. "We'll monitor it
 tonight" / passive idling = a coast-failure. `memory/feedback_no_passive_monitor_tonight_drive_now.md`.
 
+29. **A REPORT IS NOT THE DELIVERABLE WHILE UNBLOCKED WORK REMAINS — THE TURN ENDS WHEN THE WORK DOES,
+    NOT WHEN THE SUMMARY DOES.** If work is expected beyond a report and nothing blocks you from doing it,
+    the WORK occupies the turn; the report comes AFTER the last act you can take. ⛔ **THE TELL IS A
+    FORWARD-LOOKING CLOSER** — a turn that ends on *"cutting the TOs now"*, *"doing X next"*, *"proceeding
+    to..."* — **an announcement that outran its own act, turn-sized.** The finished summary FEELS like
+    closure precisely because it is well-written; that feeling is the defect's mechanism, not evidence of
+    completion. **MECHANISM — before ending ANY turn, run the one-question gate: "is there an act this
+    turn SAID it would do that it has NOT done?" If yes and unblocked → DO IT, in this turn, and report
+    after.** Sibling law, one level down: the Git-section rule that bans composing a completion report in
+    the same tool call as its act — that one bans the report OUTRUNNING the act; this one bans the report
+    REPLACING it. **NON-APPLICATION (required clause):** ending on a report is CORRECT when the next act
+    is blocked, gated on another seat or Andrew, or outside your lane — SAY WHICH, by name, so the reader
+    can tell a handoff from a stall. **Cost: zero — this rule only reorders a turn.** Measured the other
+    way: three stalls in one day at one seat (2026-08-26, Andrew-direct at the COO~X terminal — wave-2
+    decomp landed, TOs announced, turn ended, TOs uncut, third instance; the seat's own diagnosis:
+    *"I've been treating the report to you as the deliverable"*).
+
 ⛔ **AND "WAITING FOR THE SCHEDULED RUN" IS THE SAME COAST-FAILURE WEARING A PROCESS ARGUMENT.**
 **Andrew-direct 2026-08-26 ~16:2xZ, VERBATIM:** *"Never postpone to tomorrow what can be done this session.
 Tomorrow and any events we'd need to assess are coming regardless of our actions, which means we drive NOW.
