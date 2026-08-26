@@ -169,8 +169,9 @@ complied with; nothing of mine is staged for push.
 
 ## Current State
 
-**MDPF 08-27 fire is the live acceptance.** Bar: BOTH `as_of_last` AND `_provenance.written_at`
-advancing for `global` and `cottonwood` on the served plane
+**MDPF 08-27 fire is the live acceptance. WARN: THE BAR BELOW WAS SUPERSEDED AT 16:2xZ, AFTER THIS
+LOG WAS COMMITTED -- see the amendment at the end of this section.** Original bar: BOTH `as_of_last`
+AND `_provenance.written_at` advancing for `global` and `cottonwood` on the served plane
 (`s3://opal-data-portal-v2/platinum/mdpf/{scope}/aggregate-aua-timeseries.json`). No ad-hoc invoke.
 Andrew ruled `Opal Fixed Income` a CUSTOM model (verbatim in COO 72416), which supplied the INTENT no
 instrument here could reach; `0.6.2_AE_PartnerETL~A` supplied the structure. Leg A is applied,
@@ -192,6 +193,36 @@ to the repair when both publish together.
 `649fa25a4` (2026-07-31T02:23:07Z) -- grounded by me at source. WARN: The manifest CANNOT express this:
 its corpus block is four counts plus `degraded_sources: []`, no vintage. Read the day's report JSON
 `corpus_coverage.source_vintages` when the question is corpus currency.
+
+
+### AMENDMENT 16:2xZ -- the bar above is SUPERSEDED, and the reason generalises
+
+Andrew-direct ~16:2xZ (verbatim in COO 72542): *"Never postpone to tomorrow what can be done this
+session... If we are waiting on a scheduled run, run an ad-hoc/QA run to test, do not wait."* COO's
+standing "no ad-hoc invoke" is WITHDRAWN -- it protected a discriminator for a question already
+answered (did the scheduled path fire: YES, settled today).
+
+A successful ad-hoc writes gold and moves `as_of_last` off 2026-08-24, so the ORIGINAL BAR IS
+PRE-SATISFIED AND CAN NO LONGER FAIL. **The defect is that it was phrased as a DELTA. A bar phrased
+as a delta is destroyed by any prior write; a bar phrased as an ABSOLUTE VALUE is not.**
+
+RE-FRAMED BAR (issued 72544, before the ad-hoc fired), six limbs, all able to fail:
+  L1 `a4_objects_built == a4_expected == 12` and `errors{}` EMPTY -- the primary limb, not
+     pre-satisfiable because tomorrow's run writes its own manifest
+  L2 `_provenance.source_keys` names the **2026-08-26** gold partition on all four -- an ad-hoc today
+     produces `data_as_of 2026-08-25`, so this limb is structurally beyond its reach
+  L3 `as_of_last == 2026-08-26` (absolute, not "advanced")
+  L4 `_provenance.written_at` inside 13:50:4x-5xZ -- the SCHEDULED publisher window
+  L5 manifest `trigger.kind "scheduled"` / `aws.events` / `process_start` ~13:30:3xZ (corroborates,
+     does not prove -- caller-supplied)
+  L6 global `by_model` carries 10 keys incl. `opal_fixed_income` AND the other nine by name
+
+EVIDENCE-DESTRUCTION EXCEPTION CHECKED, NOT ASSUMED: manifests are per-run under
+`_manifests/{data_as_of}/{RUNSTAMP}.json` (four distinct 2026-08-24 manifests read today), so an
+ad-hoc writes a NEW key and cannot overwrite `20260826T133106Z.json` -- the artifact carrying today's
+6-of-12 failure and both tracebacks survives.
+
+An ad-hoc artifact is still NEVER production evidence; the scheduled run remains the acceptance.
 
 **My open TOs:** `D3_MODELOVERLAY.TO-D3.5` (staged, gated on TO-D3.4) and
 `OPAL_ADVIPOINTERS.P4-PINS-CERT-49F` (group pin + cert closed 2026-08-21 by the issuer -- a candidate
