@@ -93,6 +93,10 @@ PER REC.
 ### 6. FINDING B -- the gate-bypass detector had its own gate-bypass
 `_unindexed_open_ledgers` globbed ONE filename suffix, so its population was a naming convention:
 **551 .md | 429 matched | 122 STRUCTURALLY INVISIBLE | 74 of those non-terminal | `check` reported 1.**
+⚠ **GRAIN NOTE for anyone re-running this census: the 74 recomputes to 65 under the FIXED predicates**
+(3.0.0_SA_CVO, 72655 s.3). That is not drift and neither figure is wrong -- 74 was measured with the
+PRE-fix reader, and the five fixes exist to recognise closure it could not parse, so the number MUST
+fall. The two figures answer different questions.
 Seven differ from a covered ledger by **a single character** (`-deploy_completion.md`, hyphen where
 the glob wants an underscore). Same lesson as Rule 22a's never-resolve-by-filename, measured inside
 the completion gate itself.
