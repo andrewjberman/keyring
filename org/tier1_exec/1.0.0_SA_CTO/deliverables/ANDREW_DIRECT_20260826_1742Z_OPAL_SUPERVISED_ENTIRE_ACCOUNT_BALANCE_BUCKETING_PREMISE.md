@@ -1,9 +1,9 @@
-# ANDREW-DIRECT 2026-08-26 ~17:42Z — the Opal-Supervised premise, step by step: ENTIRE account balance is supervised; NON-model balance buckets to Client - Opal Supervised
+# ANDREW-DIRECT 2026-08-26 ~17:42Z + ~17:45Z — the Opal-Supervised bucketing premise, THEN his own account-level verification: the $2.87M residual CHECKS OUT, and the DIVZ SMA sleeve is an OPAL SMA belonging in SMAs>DIVZ
 
-**Channel:** Andrew, live at the `1.0.0_SA_CTO` terminal, correcting Call 1 of the 17:39Z
-/open-calls set (the serve-or-hold card and the $2.87M residual figure beneath it).
+**Channel:** Andrew, live at the `1.0.0_SA_CTO` terminal, on Call 1 of the 17:39Z /open-calls set.
+Two messages minutes apart; the second is his own verification of the first's bet. BOTH verbatim.
 
-## VERBATIM
+## VERBATIM 1 (~17:42Z — the premise)
 
 > Call 1 shows a misunderstanding of the meaning of "Supervised". The "Client" (L0) and "Opal
 > Supervised" (L1) portion here is much larger than a 2.87m residual, unless all of the two Anna
@@ -16,37 +16,39 @@
 > that are not, and if that is the case, then that balance would be included in Client, more
 > specifically Client - Opal Supervised.
 
-## The premise, structured (recorder's rendering; the phrasing above is the ruling)
+## VERBATIM 2 (~17:45Z — his own look at the accounts)
 
-1. **Supervision status is ACCOUNT-grain:** an account whose portfolio holdings contain ANY named
-   Opal Model is Opal-Supervised over its ENTIRE BALANCE — including balance not inside a model.
-2. **Bucketing consequence:** within such an account, dollars **actually in named Opal Models** →
-   the Models bucket (Primary/Custom); dollars **NOT in Opal Models** → **Client - Opal Supervised**
-   (L0 Client, L1 Opal Supervised).
-3. **His empirical bet:** the two Anna accounts (~$46.5M) are NOT ~94% in named Opal Models; he
-   estimates **~$22M is outside the models**, which would belong to Client - Opal Supervised — not
-   the $2.87M the blend-weight arithmetic produced.
+> I just looked into the accounts, you have the correct approach, however there is akey item you
+> are missing. You are right about Client Supervised which appears to be a low seven-figure
+> residual mathematically so i figure your estimate of 2.87m checks out there. Something I noticed
+> however is the "DIVZ SMA" in *9237. That is an Opal SMA, and something that should be in included
+> in SMAs (L0) category, then DIVZ (L1) drilldown of SMAs category.
 
-## What this challenges (stated precisely, not widened)
+## What stands, combined (recorder's structure; the phrasing above is the ruling)
 
-The measured chain (dim + pair decomposition + tonight's A1–A8) is **internally consistent on the
-BLEND-WEIGHT basis**: `account_value x blend_weight` reproduced the dim to the cent. His premise
-makes the decisive question the one nobody measured: **do the accounts' ACTUAL HOLDINGS match the
-blend weights?** If actual in-model dollars ≈ $22M rather than ≈ $43.7M, then:
-- the Models attribution over-states by ~$22M on the blend basis, and
-- Client - Opal Supervised under-states by the same amount ($2.87M vs ~$24M).
-The verification proved the decomposition reproduces the dim; it did not prove the dim's basis
-(weights) matches the holdings truth his premise names. "Weight-correct" ≠ "holdings-correct."
+1. **The SUPERVISION premise (verbatim 1, unchanged by verbatim 2):** an account whose holdings
+   contain any Opal Model is Opal-Supervised over its ENTIRE balance. Bucketing inside such an
+   account: Opal-Model dollars → Models; non-model balance → Client - Opal Supervised.
+2. **His ~$22M bet is self-resolved:** he looked; the accounts are in fact predominantly in Opal
+   Models, and the low-seven-figure residual "checks out." The blend-weight arithmetic survives
+   his account-level verification. **No attribution-basis change.**
+3. **THE NEW RULING — the "DIVZ SMA" sleeve in \*9237 is an OPAL SMA:** it buckets to **SMAs (L0)
+   → DIVZ (L1)** — NOT to Client - Opal Supervised, where the current itemisation carries it
+   ($1,393,065.98 = 0.07 × 19,900,942.52, itemised as the "unattributed leg" of the $2.87M).
+4. **Arithmetic consequence (recorder's derivation, to be CONFIRMED by measurement, not assumed):**
+   Client - Opal Supervised residual ≈ $2,869,379.04 − $1,393,065.98 = **$1,476,313.07** (the
+   unallocated-weight portion); SMAs>DIVZ gains **$1,393,065.98**.
+5. Three-way bucketing of a supervised account, now complete on his words:
+   **Opal Models → Models (Primary/Custom) · Opal SMAs → SMAs (by strategy, e.g. DIVZ) ·
+   remainder → Client - Opal Supervised.** Consistent with the ruled taxonomy's SMA members
+   (divz/pfoe/muni/tax, PRD :57) — the defect was classifying the DIVZ sleeve as non-Opal.
 
-## Immediate consequences
+## Consequence for the in-flight fix
 
-- **Call 1's REC (SERVE) is SUSPENDED** pending the holdings measurement — serving the corrected
-  split could publish a Models figure over-attributed by ~$22M if his bet is right.
-- The measurement is dispatched same-turn: for accounts 658509237/658509238, actual dollars sitting
-  in named Opal Model positions vs total account value, from the HOLDINGS plane (not the blend).
-- If holdings diverge from weights, the attribution BASIS of the dim and the pair fix needs a
-  sovereign-consistent re-rule (holdings-basis vs weight-basis) — bigger than tonight's fix, and
-  NOT assumed either way until the measurement lands.
+Tonight's re-cut (@4e0410825e) routes the whole residual (incl. the DIVZ sleeve) to the
+Client - Opal Supervised label — now a known $1.39M misclassification BETWEEN TWO OPAL BUCKETS on a
+never-served row. Sequencing of the correction (fold into the pending apply vs apply-then-amend) is
+the dispatch owner's; the classification itself is ruled above and is not open.
 
-Broadcast same-turn: `2.0.0_SA_COO`, `3.0.0_SA_CVO`, `0.6.2_AE_PartnerETL~A`,
-`0.4.0_DS_ClientPlatform~T`, `0.0.0_AB_MSTR`.
+Broadcast same-turn: `2.0.0_SA_COO`, `0.4.0_DS_ClientPlatform~T`, `0.6.2_AE_PartnerETL~A`,
+`3.0.0_SA_CVO`, `0.0.0_AB_MSTR`.
