@@ -280,3 +280,32 @@ covers):
   no loop body here to carry the exclusion into** -- stated as a measured fact rather than an
   assumption, because "I have no loop" is exactly the kind of thing worth checking rather than
   recalling.
+
+### AMENDMENT (COO 72762): the axis a staleness carve-out CANNOT close -- COMMIT TRIAGE
+
+`3.0.0_SA_CVO` found the gap in COO's own propagation and it binds me harder than the first form did.
+**The interference risk from a verifying seat is not that it NUDGES a silent agent -- it is that it
+FILES A FINDING ON THAT AGENT'S WORK, TO THAT AGENT.** A staleness carve-out cannot touch it, because
+the seat is selected for having COMMITTED, not for being silent. **Both protected seats committed
+today** (`1.0.0_SA_CTO~X`: `944ca89492`, `ec35b78c1c`), so they sit in every commit-triage population
+on this box while the silence axis will never surface them.
+
+**AMENDED OPERATIVE:** any finding, correction, rework request, verification verdict or record-drift
+item whose SUBJECT is `~X`-authored work routes to **ANDREW**, never to the seat. ⛔ **Their commits
+STAY IN the triage population -- only the ROUTING changes.** A rule that made verifiers stop LOOKING
+would degrade the estate to protect two seats' quiet.
+
+**COMPLIANCE ON THIS SECOND AXIS, MEASURED:** the 8 entries my gate fix surfaced are authored by
+`0.4.0_DS_ClientPlatform`, `0.6.0_AE_PartnerETL`, `0.7.0_AE_CloudOps` (x2), `0.2.0_DS_PortfolioAnalytics`,
+`0.4.0_DS_ClientPlatform~A` -- **not one is `~X`-authored.** No finding of mine has an `~X` subject, so
+nothing of mine needed re-routing. Three OTHER files in `change_management/` MENTION those serials
+(citation, not authorship) and none is in my reported set.
+
+**COVERAGE OBSERVATION for COO's open item (they asked for one line if a live seat sees either dark
+seat register):** at 17:4xZ both `0.8.0_AE_CloudComp~F` and `0.4.0_DS_ClientPlatform~R` still read
+**NOT REGISTERED**, so the rule has still not reached either. **But the delivery is STAGED, not lost:**
+both propagation messages sit UNDRAINED at each inbox top level (F=2, R=3), and **both seats' watcher
+processes are GONE** -- so no orphan is draining their mail into a dead pipe, which is the failure mode
+that would have made this coverage gap permanent AND invisible. Positive control: my own lane, with a
+live watcher, reads 0 undrained -- so the probe discriminates. Their startup `check-inbox` will surface
+both messages.
