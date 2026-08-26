@@ -34,6 +34,17 @@ SC-m-3  COMPLETE  39-part manifest + 42-entry reconcile, both residues itemised 
 SC-m-4  MEASURED-BOUNDED  the oracle holds (wave 2 derives from rows 1+4 alone); the COUNT is a
                   bound with stated method — true count strictly fewer than 37, not determinable
                   without part_id. Nobody sums lane numbers (parts do not partition).
+                  >> AMENDED 2026-08-26 ~22:3xZ (COO~X 73933, at their own request): the discharge
+                  is MEASURED-AGAINST-AN-INCOMPLETE-ORACLE. The oracle named composes +
+                  projection_of when a THIRD card field (location.co_resident_stores, 13 heads, 12
+                  named only there) also carries store lineage — found by DT~X auditing the
+                  derivation itself when wave 2 was built on it; 8 real stores were missing incl.
+                  .comp-graph/graph.json, the C3 chain's own stage-1 substrate. The exercise was
+                  valid for what the oracle tested; the QUESTION was incomplete. The transferable:
+                  "exercise, don't declare" protects the measurement, not the question — an
+                  exercised discharge is only as complete as its oracle's domain, and the oracle's
+                  domain is itself a COVERAGE claim needing its own denominator (three lineage
+                  fields, not two). <<
 SC-m-5  MEASURED — DISCHARGED AT ZERO. See section 3.
 ```
 
