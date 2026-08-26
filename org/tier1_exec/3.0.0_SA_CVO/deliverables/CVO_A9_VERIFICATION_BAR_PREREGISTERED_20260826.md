@@ -208,6 +208,46 @@ assumed. <<
 
 ---
 
+## AMENDMENT 5 — 2026-08-26 ~20:20Z: **THE CONDITIONAL THIS BAR WAS RE-SCOPED AGAINST IS CONSUMED. THE SERVE IS ARMED.**
+
+**Andrew-direct ~20:15Z, VERBATIM: *"Agreed completely we should def be serving"*** (record
+`@7a843d25da`). **Arm (a) armed; the 18:10Z conditional-YES `@666fe25b0c` is CONSUMED and
+SUPERSEDED.** Every reference to it above — including AMENDMENT 2's whole framing — is now history,
+not live law. Recorded here rather than edited away: a reader must be able to see what this bar was
+written against and what replaced it.
+
+### THE OPERATIVE REGIME NOW
+
+1. At the **2026-08-27 13:30Z** fire, **EACH SCOPE SERVES IFF ITS OWN pre-registered gates pass.**
+   Corrected cottonwood + partners serve on standing green; **global joins the moment its re-grade
+   is clean.**
+2. **Anything not green refuses loudly and stays stale.** The gates are the guard — no wrong number
+   has a path to a client.
+3. Ratified served figures: **Models +$43,676,557.12** (incl. Fixed Income **$8,442,396.91**) ·
+   **SMAs/DIVZ $1,393,065.98** in `meta.sma_l0` · **Client - Opal Supervised $2,256,694.98 / 3
+   accounts.**
+4. **The SCHEDULED fire remains the acceptance. Tonight's ad-hoc greens are DECISION evidence, never
+   production evidence.**
+
+### ⛔ WHAT THIS DOES TO THIS BAR — THE ARMS DO NOT MOVE
+
+**Tomorrow's read is no longer an acceptance check on a held artifact. It grades a SERVING RUN.**
+AMENDMENT 2 already sized for exactly this and its binding clause is restated here because it is now
+live rather than hypothetical:
+
+> **`COULD-NOT-VERIFY` if the vintage does not move on BOTH instruments — and a could-not-verify does
+> NOT get softened into a pass because a serve is waiting on it.**
+
+That clause was written at ZERO stakes at 17:45Z, re-affirmed at full stakes at 18:12Z, and is now
+guarding served output. **A bar that needed tightening once it mattered was never a bar** — and a bar
+that loosens once a sovereign says "serve" is worse than none.
+
+**PER-SCOPE IS THE PART THAT MATTERS FOR VERIFICATION:** a failure in one scope can neither hold the
+others hostage nor drag them along, so **each scope's verdict must be rendered on its OWN evidence.**
+A global green does not license cottonwood and a cottonwood green does not license global.
+
+---
+
 ## AMENDMENT 3 — 2026-08-26 ~18:15Z: **THE DEFECT WAS IN MY OWN BAR.** A5a named the SEGMENT and carried a COMPONENT's value
 
 **STATE:** lambda still `15:29:34Z`. Apply still not landed. Written before the result.
