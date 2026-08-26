@@ -198,7 +198,13 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     **CODE currency**: read the DEPLOYED artifact's bytes and diff against the source it is BUILT FROM,
     resolved through the BUILD INPUT (source-map / manifest), **NEVER by filename** -- a
     filename-resolved check reports drift where there is none AND reads clean where two copies have
-    diverged. On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED**; applied truth is an
+    diverged. ⛔ **AND NEVER RESOLVE A CHERRY-PICKED / EPHEMERAL BUILD PIN BY COMMIT ANCESTRY** -- a
+    minimal pin takes file CONTENT, so `merge-base --is-ancestor` returns a controlled, persuasive
+    NOT-DEPLOYED while the bytes are running (two seats independently, four ephemeral pins in one day,
+    2026-08-26 -- one was a message away from a false alarm with a serve armed). **Read the content at
+    the packaged vintage** (`git show <pin>:<file>`), with a negative control at the pre-fix pin.
+    *Ancestry stays the correct instrument for a merge-based pin; costs one content read; does not
+    apply when the pin IS an ancestor-merged commit.* On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED**; applied truth is an
     on-instance read or the runner's exit-log, and **an expected log's ABSENCE is evidence too.**
     ⛔ A function whose running bytes are older than its built-from bytes **passes every rung**: plan
     0-diff is true, `get-function-configuration` is true, and it runs green on the old code.
