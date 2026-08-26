@@ -469,6 +469,23 @@ objects, stopping EC2, anything unrecoverable.
 a session winds down ONLY when Andrew explicitly says so. Deferring to a scheduled-nightly is legal ONLY when
 there is literally no other option (a hard external gate, stated plainly) — NEVER a default. "We'll monitor it
 tonight" / passive idling = a coast-failure. `memory/feedback_no_passive_monitor_tonight_drive_now.md`.
+
+⛔ **AND "WAITING FOR THE SCHEDULED RUN" IS THE SAME COAST-FAILURE WEARING A PROCESS ARGUMENT.**
+**Andrew-direct 2026-08-26 ~16:2xZ, VERBATIM:** *"Never postpone to tomorrow what can be done this session.
+Tomorrow and any events we'd need to assess are coming regardless of our actions, which means we drive NOW.
+If we are waiting on a scheduled run, run an ad-hoc/QA run to test, do not wait."*
+**MECHANISM: fire the ad-hoc QA run.** A fix that is deployed and unexercised is UNVERIFIED — the scheduled
+fire is not a test you are running, it is a test you are HOPING passes, and if it fails you learn it at the
+fire with the window gone. **The ad-hoc run converts a wait into a measurement.** The estate already permits
+this (see NEVER "AD-HOC GOLD RUNS ARE PERMITTED FOR QA"); this line removes the excuse for not using it.
+⛔ **WHAT IT DOES NOT LICENSE, because the two halves are not in tension:** an ad-hoc run TESTS, it never
+becomes the ACCEPTANCE — *"an ad-hoc run is never the production path and its artifacts are never production
+evidence."* So run it, read it, fix what it finds — and let the scheduled fire still be the acceptance.
+**The ONE case where the ad-hoc genuinely must not fire is when it would DESTROY the discriminator the
+scheduled run exists to produce** (measured 2026-08-26: time-of-day was the only evidence that a *scheduled*
+path fired, because `trigger.kind` is caller-supplied and CloudTrail cannot see Lambda invokes). **That is a
+narrow, nameable, EVIDENCE-SHAPED exception — not "we'll see tomorrow." If you invoke it, say what evidence
+would be destroyed and why nothing else can carry it.** Absent that, waiting is the defect.
 ## Compiler Tools (comp-*) — situation → command
 
 All in `.tools/` (PATH). Catalog: `org/modules/graph/graph-call-manifest.yaml`; reference: `org/modules/graph/comp-tools.yaml`.
