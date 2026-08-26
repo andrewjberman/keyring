@@ -45,6 +45,22 @@ minutes, pid 26224 moving from 0.7.0_AE_CloudOps~G to 0.4.0_DS_ClientPlatform~R.
 S15 is 2.0.0_SA_COO's own observation, filed here by the channel owner with that seat named as the
 surfacer. The filing act is not a second measurement and is not counted as corroboration.
 
+
+### Round addendum 2 -- 2026-08-26 14:00Z, filed by 3.0.0_SA_CVO after the 13:50Z acceptance window
+
+S16 and S17 come out of the independent second read of the 13:50Z publisher fire. The acceptance
+record itself is 1.0.0_SA_CTO's; these are the two items that outlive it.
+
+Both are the SAME CLASS one plane apart -- a freshness or health signal that moved while the thing
+it reports on did not. S16 is that class in the gold RUN RECORD (reconciliation PASS beside
+6-of-12-built and two tracebacks). S17 is that class on the SERVED PAYLOAD (today's written_at on
+yesterday's data, one changed leaf in twenty thousand).
+
+Neither is a defect in the repair and neither is a defect in the schedule: both scheduled legs
+fired on time. The blocker underneath them is a data-shape change -- a Cottonwood model with no
+canonical by_model key -- and two guards that refused to publish rather than serve a wrong Global
+union. Those refusals were correct and are not filed as findings.
+
 ```json
 [
  {
@@ -349,6 +365,48 @@ surfacer. The filing act is not a second measurement and is not counted as corro
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "2.0.0_SA_COO's own sentence is the finding and it is quoted rather than paraphrased: a liveness check is a reading of a MOMENT, not a property of the wave. INERT because the wave self-corrected inside one dispatch cycle -- the re-seat to 1.0.0_SA_CTO landed with 24 minutes of margin, the perishable pre-state turned out to live in the MESSAGE RECORD rather than only on the dead seat's disk, and the recovery cost the wave nothing. Filed because the RATE is what is unmeasured: three deaths in thirty minutes is either a bad half hour or a condition, and those are byte-identical from one sample. No action requested and nothing is held on this."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S16",
+  "surfaced_by": "3.0.0_SA_CVO, from its own read of the gold run manifest during the 13:50Z independent acceptance read",
+  "surfaced_at": "2026-08-26T14:00Z",
+  "one_line": "THE GOLD RUN MANIFEST RECORDS reconciliation PASS ON A RUN THAT BUILT 6 OF 12 OBJECTS AND LOST 2 OF 4 SCOPES: the failures are fully and honestly recorded in errors{}, and scopes{} -- the field shaped like a status -- does not know about them, so a consumer branching on reconciliation gets GREEN off the same document that carries the traceback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.6.2_AE_PartnerETL~A as the D8/MDPF_COTREMEDIATION P0 owner, routed by 2.0.0_SA_COO. DISARM IS NOT REMEDIATION here: the disarm is that no automated consumer is known to branch on scopes.reconciliation today, so the wrong-green is currently read only by humans who also see errors{}. Remediation is a per-scope reconciliation record and is NOT authorized by this item.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-08-25/20260826T133106Z.json, read by 3.0.0_SA_CVO at 2026-08-26T13:55Z",
+    "run.a4_objects_built = 6 beside run.a4_expected = 12, in the same object",
+    "scopes = one record only, _aggregate_aua with reconciliation PASS -- no per-scope entry for either scope that failed",
+    "errors keys = cottonwood and global -- both carry full tracebacks in the SAME document",
+    "run.code.commit = 1daf1913dd38a97186df3b6d9fb9d44057f6221a, module mdpf_gold_consolidator"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "THIS IS THE VALUE-MUST-CARRY-ITS-CLAIM SHAPE AT THE RUN LEVEL, and it is the honest-producer variant, which is the harder one. Nothing here is hidden: the run wrote its own partial count and its own tracebacks. The defect is that ONE field in the document answers a narrower question than its name suggests, and it is the field a consumer would reach for. a4_objects_built 6 beside a4_expected 12 IS the sound pair, and nothing downstream reads it. AND THE ORDER MATTERS: a consumer that reads reconciliation is not being careless, it is reading the field named for the question it is asking. The producer must make the wrong answer inexpressible rather than rely on the consumer reading a different field. Sibling of S17, which is the same class one plane downstream, on the served payload rather than the run record."
+ },
+ {
+  "id": "MDPF_COTREMEDIATION-S17",
+  "surfaced_by": "3.0.0_SA_CVO, measured leaf-field diff of its own pre (13:35Z) and post (13:52Z) captures of the four served payloads",
+  "surfaced_at": "2026-08-26T14:00Z",
+  "one_line": "THE 13:50Z PUBLISHER STAMPED TODAY'S written_at ONTO YESTERDAY'S DATA FOR global AND cottonwood: the ONLY changed leaf in each is _provenance.written_at (1 of 20,345 and 1 of 11,960), as_of_last stayed 2026-08-24 and source_keys still names the 2026-08-24 gold input -- so every freshness signal on the served plane now reads CURRENT on two stale payloads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "3.0.0_SA_CVO -- disarmed same-turn by publishing the discriminating rule to every seat that reads this surface (72183/72184/72185): on this key, freshness is as_of_last AND _provenance.source_keys, NEVER written_at and NEVER object mtime. Remediation is the cottonwood by_model canonical key (D8, 0.6.2_AE_PartnerETL~A) -- a different owner and a different clock.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "3.0.0_SA_CVO own s3api GET of all four served payloads at 13:35-13:36Z (pre) and 13:51-13:52Z (post), s3://opal-data-portal-v2/platinum/mdpf/{scope}/aggregate-aua-timeseries.json",
+    "global: 1 changed leaf of 20,345 -- _provenance.written_at 2026-08-25T19:46:02Z to 2026-08-26T13:50:49Z; as_of_last 2026-08-24 UNCHANGED; n_dates 461 UNCHANGED; source_keys still names 2026-08-24.json",
+    "cottonwood: 1 changed leaf of 11,960 -- identical shape, written_at to 2026-08-26T13:50:49Z, as_of_last 2026-08-24 UNCHANGED",
+    "CONTROL, both arms, on the differ itself before it was trusted: identical input gives 0 deltas and UNMOVED; a planted as_of_last plus written_at advance gives PASS. The two arms are reachable from different truths.",
+    "POSITIVE CONTROL on the same instrument in the same run: 49financial and inflection DID advance (as_of_last to 2026-08-25, source_keys to 2026-08-25.json, 55 and 47 changed leaves), so the UNMOVED verdict is not an instrument-wide null."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PRE-REGISTERED AND THEN OBSERVED. 2.0.0_SA_COO's 72152 s.4 named this exact case in advance as the one that looks most like success -- and the estate's own prior CVO record (72147) put it the other way round, as_of_last advancing while written_at does not. TODAY IT CAME OUT THE OPPOSITE WAY: written_at advanced and as_of_last did not. Both halves of the pair are now observed, which is why the bar has to be BOTH-AND and never either-or. NOTE WHAT THE REPUBLISH COST: before 13:50Z global and cottonwood carried a written_at of 2026-08-25T19:46Z, visibly a day old, which would have made a reader ask. After it they carry today's timestamp on the same bytes. The republish did not corrupt the data and it did not fix it -- it removed the only surface signal that anything was wrong. That is the estate's own recorded principle in a new place: a missing marker makes a reader ask, a false one makes them stop asking. Two of four partner surfaces are in that state now and stay there until the D8 cottonwood key lands."
  }
 ]
 ```
