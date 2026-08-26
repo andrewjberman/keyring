@@ -1,0 +1,39 @@
+{
+  "project_code": "ETFS_SATELLITES",
+  "macro_code": "ETFS",
+  "name": "Opal Satellites on the Positioning page -- a third book-family mode (MODELS | ETFS | SATELLITES) for Cottonwood's firm-id + Opal, rendering the Opal Satellite blends with rebalancer-measured weights as the basis for every Characteristics / Performance / Weights display",
+  "description": "Andrew-direct 2026-08-26 at the 1.0.0_SA_CTO~Y terminal (verbatim records: org/tier1_exec/1.0.0_SA_CTO~Y/deliverables/ANDREW_DIRECT_20260826_OPAL_SATELLITES_CW_DISPLAY.md @6c3c05e4da +a757e0568e +d376f68b8f). Product from the Tax SMA Teams thread (Manav Shah / Yang Liu / Andrew, 08-25..08-26): Cottonwood's 'Opal Satellites' -- Opal-named BD rebalancer models each composed of 1-2 Opal primary models at fixed weights -- displayed with their model mapping, derived Equity/FI/Gold/Cash/Hedge allocation, and YIELD per satellite. RULED: (1) fold-in location = the POSITIONING page as a top-of-page mode pill in the SAME selector as MODELS & ETFS, available to Cottonwood's firm-id and therefore Opal (his ~21:4xZ word overrides the thread's Model-Portfolios ask); (2) 'Opal Conservative Growth is the same as the LT Model' (name mapping); (3) /open-calls ~22:1xZ: register D4-adjacent APPROVED, and THE WEIGHTS COME DIRECTLY FROM THE REBALANCING PIPELINES' displayed weights -- 'These weights should provide the basis for the various Characteristics and Performance and Weights calculations that will be required to display throughout the rest of the page for each Satellite'; (4) figure-provenance: the thread images bind STRUCTURE only, never figures. MEASURED AT REGISTRATION (2026-08-26, ~Y): weights substrate LIVE -- s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_model_detail/{date}/{model_id}.json carries hierarchy.children[].relativeAllocation (cot-rebalancer-runner lambda_function.py:20,:314; opal_closure seeding covers every Opal-named satellite by construction; exercised: Opal Satellite 40 = Opal Intermediate-Term 0.5 + Opal Short-Term 0.5 at today's partition); roster 2026-08-26 = 64 models, TEN Opal satellites {15,30,40,50,60,70,80,90,98,Ultra Short Term} -- Satellite 98 (11 accounts) is ABSENT from Manav's image-6 table, membership therefore derives from the measured Opal-named-satellite predicate, never a hand list; non-Opal families (Core|Satellite N, Core|Satellite Tax-Free N, blends) are OUT of the display product. Frontend substrate: the Positioning plane's book-family machinery is declared-membership-per-mode (bookSet.ts -- PositioningMode, MODE_LABELS, POSITIONING_MODES, capabilitiesFor, CHARACTERISTIC_FIELDS) and the blend arithmetic exists as POSN_CUSTOM.001 (customBlend.ts, client-side weighted average over the served models payload); the display-name alias map resolves every constituent with ONE addition ('Opal Conservative Growth' -> LT, his ruling). The ONE structurally new seam: the Positioning page carries ZERO firm-id references today -- the mode membership must become viewer-firm-derived.",
+  "prds": [
+    {
+      "path": "docs/architecture/D4_OPAL_SATELLITES_PRD.md",
+      "label": "Stage-2 purpose-level PRD (1.0.0_SA_CTO~Y, commissioning exec, 2026-08-26) -- purpose, ruled facts, territory named for COO stage-3 decomp, substrate measurements",
+      "date": "2026-08-26"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO~Y/deliverables/ANDREW_DIRECT_20260826_OPAL_SATELLITES_CW_DISPLAY.md",
+      "label": "The verbatim Andrew-direct record: commission, figure-provenance ruling, Positioning redirect, name mapping, /open-calls rulings",
+      "date": "2026-08-26"
+    }
+  ],
+  "related": [
+    "ETFS_POSITIONING",
+    "D1_CATVIEWS",
+    "WSE_COTMDL"
+  ],
+  "status": "active",
+  "dep_stage": "PRD",
+  "phase": "STAGE 1 REGISTERED + STAGE 2 PRD landed 2026-08-26 ~22:2xZ by 1.0.0_SA_CTO~Y (commissioning exec) on the /open-calls approval. STAGE 3 handed to 2.0.0_SA_COO this turn: operative-surface atom-decomp BEFORE any TO (Rule 27); certifier 3.0.0_SA_CVO. Placement: laptop (portal DE-class + a small weights-derivation leg off the cot rebalancer bronze already landing daily); COO may re-cut. Scope fence: display product = the OPAL-NAMED satellites only; membership derives from the rebalancer roster predicate, never a hand list; weights derive from rebalancer_model_detail relativeAllocation, never the thread images.",
+  "blocking": "None. The weights substrate is live and measured; the firm-gate seam is a build item, not a blocker.",
+  "created": "2026-08-26",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4"
+  ],
+  "pipeline": "cot rebalancer bronze (opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_model_detail/{date}/) -> satellite weight mapping -> Positioning page third mode pill (portal/src/pages/Positioning/, bookSet.ts declared membership + POSN_CUSTOM.001 blend arithmetic over the served models payload)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "directive": "D4"
+}
