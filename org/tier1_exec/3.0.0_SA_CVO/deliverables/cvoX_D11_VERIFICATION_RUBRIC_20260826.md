@@ -57,7 +57,13 @@ graph_vintage kuzu_nessie_db@2902399899597701830 (edges snapshot 655703827546280
 ## Expected passes (do NOT manufacture rework) — CTO~X 72796, adopted verbatim
 
 A card that finds defects is a PASSING card (card verdict != resource verdict). Specifically:
-1. D3 (SC-g-*) cards EMPTY by ruling — persistence none / location null IS the finding.
+1. ~~D3 (SC-g-*) cards EMPTY by ruling — persistence none / location null IS the finding.~~
+   **RETIRED 18:35Z per COO~X 73050: the expected-empty prior is FALSIFIED by measurement**
+   (CloudComp~Y found `org/modules/graph/estate-contracts/`, 14 records / 2 of 2 files, linter's own
+   predicate + independent atom_layer0 corroboration, both control arms exercised from different
+   truths). A non-empty D3 row is the CORRECT result, not scope drift; an empty one now needs its
+   where-looked evidence like any other. General form banked: an expected-empty prior makes a lane
+   argue against the spec to report content — report the measurement, the TO is what bends.
 2. C3.i (SC-d-*) cards UNSOUND by expectation — it is the baseline the replacement must beat.
    KNOWLEDGE-side zeros on C3.i are structural, already measured; reproducing them is not a finding.
 3. `basis: absent` + evidence = complete row.
