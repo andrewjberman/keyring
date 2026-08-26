@@ -154,6 +154,25 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   decomp wording aligns at boundary); non-ASCII in 5 of 8 cards routed to schema owner as
   OBSERVATION (outside the ASCII rule's stated scope; no lane changes anything).
 
+## Wave-close checklist (this seat's obligations, discharged by MEASUREMENT never declaration)
+
+- **SC-m-5 (mine):** zero commits by a carding lane touching a subject's own generator during the
+  wave — measure over the wave's commit set (each lane's completion commits already read clean at
+  verification; the wave-close pass sweeps the full window).
+- **Live estate hazard to flag in the wave-close record (COO~X 73307 ask):** D3's contract validator
+  returns rc=0 from BOTH arms (real PASS and planted-mutant REJECT) — anything gating on its exit
+  code is not gating. Named owner on the D3 card; hazard is estate-wide beyond the card.
+- **Absence claims built on `composes`/`projection_of` arrays inherit the spelling-collision defect**
+  (COO~X 73295: 51 raw vs 43 distinct, 6 subjects with multiple spellings; the dedup key is a stated
+  heuristic, not an identity function). "X is not in any projection_of" may be reading a different
+  spelling of X. v2 joinable_ref {id, note} fix landed @efd36a8169, wave-boundary only; L0 manifest
+  arrays deliberately untouched mid-wave.
+- **AC4 three-way outcome (COO~X 73307, verbatim adopted):** CCX vacuous-true (not established) ·
+  CCY vacuous-defensible-static · COX negatively-satisfied (the only reproducibility MEASUREMENT).
+  Never flattened to "AC4 passed" ×3.
+- **Currency vocabulary, final operative form (73307):** UNVERIFIED = generator exists, currency
+  unestablished · NOT_APPLICABLE = absence MEASURED · neither = unworked row.
+
 ## Standing context
 
 - nerves_resolve is the worked REFERENCE card (CTO~X's, pre-wave vintage): not a wave member, not
