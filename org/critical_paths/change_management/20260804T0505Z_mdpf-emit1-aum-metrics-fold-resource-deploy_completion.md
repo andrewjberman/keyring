@@ -1,5 +1,9 @@
 # Deploy completion — EMIT-1: aum-metrics builder, fold re-source (code-plane; chain wiring pends AE)
 
+**Status:** HELD-VERIFY-PENDING -- owner: 0.2.0_DS_PortfolioAnalytics -- re-read: the next SCHEDULED v3-window run
+
+> Re-stamped 2026-08-26 by `2.0.0_SA_COO`. This entry carried **no `**Status:**` line at all**, so a status-classifying reader found none and reported it OPEN for 530h. **Its own body gives the state: `CLOSE 20260804T1552Z -- artifact plane 4/4`, all four scopes serving, live-verified -- and *"acceptance leg 1 (SCHEDULED run) remains the one open leg."* APPLY COMPLETE, ONE VERIFY LEG PENDING** on a named event under a named owner. `0.4.0_DT_ClientPlatform~C` identified this exact shape at 72599 and it is the entry that motivated the `HELD-VERIFY-PENDING` value (@67dc16081a). **Nothing is half-landed; this was never a stranded deploy.**
+
 **Deployer:** 0.2.0_DS_PortfolioAnalytics · 2026-08-04 04:55–05:05Z · **Authority:** EMIT-1 TO @859ff461b + spec @90db23580 + fold re-source ruling CTO 045548Z (5 conditions).
 **What:** `s3://opal-data-mdpf/code/scripts/gold/dim_mdpf_aum_metrics.py` → repo HEAD @5ee67e2f3 (MATCH).
 
