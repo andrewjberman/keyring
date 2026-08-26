@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "carded_by": "1.0.0_SA_CTO~X",
+  "subject": {
+    "id": "nerves_resolve",
+    "kind": "tool",
+    "declared_domain": "resolution of an arbitrary estate reference to canonical node ids, across the graph / compiler / repo / cloud id spaces, with a stated confidence"
+  },
+  "as_of": {
+    "carded_utc": "2026-08-26T18:26:07Z",
+    "commit_ish": "292d24518f",
+    "graph_vintage": "reads .comp-graph/graph.json last written 2026-08-06T22:49:11Z -- NOT the canonical kuzu/Iceberg vintage; this tool does not read the canonical graph at all"
+  },
+  "process": {
+    "methodology": {
+      "how": "Pure function, lru_cached, composing FOUR resolvers in a declared precedence order: (1) trace_graph via .comp-graph/graph.json, (2) the comp_pydeps compiler layer, (3) repo tracked-file basenames, (4) cloud-ref shapes (ARN / s3:// / hyphenated cloud name). Returns Resolution{ref, node_ids PLURAL, kind, confidence, source}. Three lookup indices are built from the graph: by_path, by_base, by_leaf -- the last catching bare function names and bare artifact keys that have no file_path basename to match on. An unresolvable ref returns kind=UNADDRESSED with the raw ref preserved rather than being dropped.",
+      "determinism": "deterministic",
+      "inference_detail": null,
+      "composes": [
+        "trace_graph (.comp-graph/graph.json)",
+        "comp_pydeps.py (the compiler layer)",
+        "git tracked-file basenames",
+        "cloud-ref shape matching (ARN / s3 URI / cloud name regex)"
+      ],
+      "invents": [],
+      "basis": "measured",
+      "evidence": "org/modules/graph/nerves_resolve.py:33-160 @292d24518f -- read at source; the module's own docstring states 'IT DOES NOT RE-IMPLEMENT RESOLUTION. It COMPOSES the resolvers that already exist, in precedence order'. Exercised: resolve() returned REPO_PATH/STRONG, COMPILER/EXACT, GRAPH/STRONG and UNADDRESSED/NONE on four distinct ref shapes.",
+      "owner": "1.0.0_SA_CTO~Z (module author per file docstring, NFRA_NERVES L2)"
+    },
+    "cadence": {
+      "declared_rhythm": null,
+      "actual_trigger": "on-demand call only. NO SCHEDULE EXISTS. Nothing refreshes this tool or its inputs on a rhythm.",
+      "live_matches_declared": "not_applicable",
+      "live_instance_age": "the tool itself is stateless; its PRIMARY INPUT .comp-graph/graph.json measured at 472.2 hours = 19.7 DAYS old",
+      "basis": "measured",
+      "evidence": "No cron, no scheduler entry, no trigger of any kind found for this module; it is imported and called. Input age measured directly: os.path.getmtime('.comp-graph/graph.json') -> 2026-08-06T22:49:11Z, 472.2h before carded_utc.",
+      "owner": "UNOWNED -- no seat is named anywhere as owning the refresh of .comp-graph/graph.json. This is the single most consequential UNOWNED row on this card."
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": false,
+      "authority_role": "none",
+      "mutation_policy": "not_applicable",
+      "form": "in-memory functools.lru_cache only (maxsize=20000 on resolve, maxsize=1 on each substrate loader); dies with the process",
+      "basis": "measured",
+      "evidence": "org/modules/graph/nerves_resolve.py -- @functools.lru_cache decorators at :66 :79 :92 :118 :142 :159; zero json.dump / open(...,'w') / table writes in the module @292d24518f.",
+      "owner": "1.0.0_SA_CTO~Z"
+    },
+    "location": {
+      "home": null,
+      "projection_of": [
+        ".comp-graph/graph.json",
+        "org/modules/graph/comp_pydeps.py",
+        "git tracked file list",
+        ".tools/ (on-disk tool inventory)"
+      ],
+      "co_resident_stores": [
+        "the canonical kuzu_nessie_db and the Iceberg graph_nodes table both model the same estate at a DIFFERENT and much larger population; this tool reads NEITHER"
+      ],
+      "basis": "measured",
+      "evidence": "Module resolves _WS then reads the four inputs above; no output path exists. Population disparity measured: trace_graph 2,249 nodes vs Iceberg graph_nodes 27,061 @292d24518f.",
+      "owner": "1.0.0_SA_CTO~Z"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "the union of what its four substrates can address: 2,249 trace_graph nodes, 22,424 repo basenames, 115 on-disk tools, 5 pydeps entries. Lookup indices built from the graph: by_path 486, by_base 315, by_leaf 1,662.",
+      "denominator": "2,249 of 27,061 canonical graph nodes = 8.3% (graph-tier coverage). Repo tier is separately broad at 22,424 basenames but resolves to REPO_PATH/WEAK, not to graph nodes.",
+      "explicitly_out": [
+        "the canonical kuzu/Iceberg graph population entirely -- 24,812 of 27,061 nodes are unreachable at the GRAPH tier",
+        "the estate-report producer/thread id space -- 'estate-report-runner' returns UNADDRESSED, exercised",
+        "MS / SharePoint item ids (ms: prefixed nodes) -- no resolver tier claims them",
+        "the bash shim id space -- its own self-test arm gap1.bash_shim_addressable is currently RED"
+      ],
+      "basis": "measured",
+      "evidence": "Indices counted in-process: len(by_path)=486, len(by_base)=315, len(by_leaf)=1662, len(_repo_basenames())=22424, len(_tools_on_disk())=115, pydeps=5, trace_graph.nodes=2249. Canonical denominator 27,061 from ICEBERG_NODES_WRITTEN in the 2026-08-26 02:00Z derive.",
+      "owner": "UNOWNED -- extending graph-tier coverage has no named owner."
+    },
+    "key": {
+      "identity_space": "MULTI-SPACE BY DESIGN -- accepts GRAPH node ids, COMPILER tool names, REPO paths, and CLOUD refs (ARN / s3:// / hyphenated names) through one call, and returns canonical node_ids PLURAL with a stated confidence band.",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "org/modules/graph/nerves_resolve.py:16-26 -- the four-tier precedence order and the EXACT/STRONG/WEAK/NONE confidence bands are declared in the module docstring and implemented in resolve(). This is the ONLY declared cross-space mapping found in the estate to date.",
+      "basis": "measured",
+      "evidence": "Exercised @292d24518f: 'infra/aws/ec2/estate-report-runner/estate_report_runner.py' -> REPO_PATH/STRONG/1; 'comp-pulse' -> COMPILER/EXACT/1; 'opal-data-assets' -> GRAPH/STRONG/1; 'totally-not-a-real-thing-xyz' -> UNADDRESSED/NONE/0 (negative control fires).",
+      "owner": "1.0.0_SA_CTO~Z"
+    },
+    "failure_mode": {
+      "returns_on_failure": "UNADDRESSED / confidence NONE / node_ids [] -- WHICH IS BYTE-IDENTICAL TO ITS ANSWER FOR A GENUINE MISS. When a substrate is absent the tool does not error and does not warn; the affected tier simply stops answering while the other tiers continue, so the tool reads ALIVE while a whole resolution class is silently gone.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "_trace_graph() returns None on ANY exception (bare except at :77) -> _graph_index() returns three empty dicts -> every GRAPH-tier ref resolves UNADDRESSED with no signal",
+        "_pydeps() returns (None, None) on any exception -> the COMPILER tier vanishes silently",
+        "a STALE .comp-graph/graph.json degrades nothing visibly: the tool answers confidently from a 19.7-day-old world model"
+      ],
+      "basis": "measured",
+      "evidence": "EXERCISED, not read: with _trace_graph monkeypatched to None, 'gold:A_00.accounts_dimension' -> UNADDRESSED/NONE/0 while 'comp-which' -> COMPILER/EXACT/1 and 's3://opal-data-assets' -> CLOUD/STRONG/1 continued answering. Bare except confirmed at nerves_resolve.py:77 @292d24518f.",
+      "owner": "1.0.0_SA_CTO~Z"
+    }
+  },
+  "verdict": {
+    "standing": "UNSOUND",
+    "why": "THE DESIGN IS SOUND AND THE SUBSTRATE IS NOT -- and the two must not be collapsed. Composition-over-reimplementation, plural node_ids, stated confidence bands and UNADDRESSED-as-a-finding are exactly the properties an estate-wide entity spine needs, and this is the only declared cross-space mapping found to date. But three measured defects block load-bearing use: (1) its primary substrate is 19.7 DAYS stale with NO cadence and NO named owner, so nothing will ever refresh it on a schedule; (2) graph-tier coverage is 2,249 of 27,061 = 8.3%, which is a sample rather than a spine; (3) the failure mode is SILENT and indistinguishable from a true negative, so a degraded resolver and a correct one produce identical output. UNSOUND is a verdict about STANDING AS LOAD-BEARING SUBSTRATE TODAY, not a judgement on the design, and all three defects are remediable without redesign.",
+    "blocking_defects": [
+      "substrate staleness 19.7d with no cadence and no owner (cadence row, UNOWNED)",
+      "graph-tier coverage 8.3% of the canonical population (coverage row, UNOWNED)",
+      "silent degrade: SUBSTRATE-ABSENT is byte-identical to GENUINELY-UNADDRESSED (failure_mode row)",
+      "self-test currently RED on gap1.bash_shim_addressable"
+    ]
+  }
+}
