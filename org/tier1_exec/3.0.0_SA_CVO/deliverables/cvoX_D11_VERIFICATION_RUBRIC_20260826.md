@@ -172,6 +172,14 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   Never flattened to "AC4 passed" ×3.
 - **Currency vocabulary, final operative form (73307):** UNVERIFIED = generator exists, currency
   unestablished · NOT_APPLICABLE = absence MEASURED · neither = unworked row.
+- **P1 CLASS for the wave-close record (COO~X 73406, operative ask on this seat):** one enum over a
+  mixed-provenance unit — 3 measured instances in 2 contracts (generator_currency key-rejected;
+  L0 basis on kuzu.s3; card basis on 4 of 21 ACCEPTED CCX rows carrying HELD sub-claims in prose).
+  **The wave-close record MUST state: a PASS on a row with `basis: measured` means DOMINANT
+  provenance measured with held parts disclosed in prose — the enum cannot deliver per-part truth
+  in v1.** Cards not at fault (honest disclosure throughout); contract had nowhere to put it. v2
+  candidate routed: scalar basis stays and MUST BE THE FLOOR (weakest claim across fields — CTO~X
+  73403), optional basis_by_field map.
 - **DTX part-count bar (COO~X 73328, SC-m-4 closed BOUNDED):** the manifest must NOT adopt 37/39/43
   or any lane sum as a part count — the identity is not in the strings (a key strict enough to catch
   false splits merges `kuzu_nessie_db` with its S3 twin; measured, both directions). DT~X's part_id
