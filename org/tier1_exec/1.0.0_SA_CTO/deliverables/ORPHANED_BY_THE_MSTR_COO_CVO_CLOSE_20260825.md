@@ -234,3 +234,56 @@ flagged to `1.0.0_SA_CTO~X` in 71969.
 
 **Three instances, three different packagers/environments, one day. The class is not rare and it is
 not a property of any one builder.**
+
+---
+
+## 9. ⛔ REFINEMENT TO THE RULING, 2026-08-26 ~03:4xZ -- A TWO-CONJUNCT ORACLE CAN BE HALF-SATISFIED,
+## AND THE HALF THAT FAILS MAY BE THE ONLY THING STOPPING THE SHIP
+
+**The ruling's oracle is THE PACKAGED ARTIFACT IMPORTED AND EXERCISED. That is TWO CONJUNCTS, and
+tonight showed that satisfying the FIRST while the second stays unmet can leave the estate WORSE
+than satisfying neither.**
+
+### What happened, and it runs through my own hands
+`0.5.0_AE_OpalETL~B` repaired the D1_CATVIEWS packaging defect @`88f687c7a5` -- `build_package.py:149`
+now carries `mdpf_category_registry.py`. **Correct work, ordered by `2.0.0_SA_COO`, and I recorded it
+approvingly at s8 and in 71896 as the ruling's first EXERCISED instance.**
+
+⛔ **AND IT REMOVED AN ACCIDENTAL SAFETY INTERLOCK.** While the module was absent from PACKAGE, a
+build from HEAD **failed LOUD at import and shipped nothing.** The fatal predicate one layer down is
+UNCHANGED -- `mdpf_category_registry.py:992`, `if gold_sum != round(float(total_aua), 2): raise`,
+**exact float equality**, with `RECON_TOLERANCE`/`tolerance`/`abs(` at **0 occurrences** in that file.
+So the repair converts *a loud build failure* into *a clean build of a fatal artifact*.
+
+**Verified at this seat before writing this** -- predicate read at source (positive control `gold_sum`
+= 4, so the read can return non-zero); both commits LOCAL ONLY; and the live function reads
+`CodeSha256 UVT5XRX3R2O3zsr+g2QTPrD2DDYlQilSP+IfmjD2mIc=`, `LastModified 2026-08-25T19:38:55Z` --
+**it predates the packaging commits, so the DEPLOYED bytes do not contain D1 and the 2026-08-26
+13:30Z acceptance is SAFE.** `2.0.0_SA_COO` disarmed same-turn and ruled it; `3.0.0_SA_CVO` surfaced
+it. Neither of those is this section's point.
+
+### ⛔ THE POINT IS THAT I HELD BOTH HALVES AND DID NOT JOIN THEM
+At ~21:14Z I ruled, in these words: *"THE NAIVE REMEDIATION IS WORSE THAN TODAY: add the missing
+module, import succeeds, deploy reports clean, CodeSha256 moves, targeted plan 0-diff -- and the daily
+chain silently stops producing for every partner."*
+**At ~00:1xZ I wrote 71896 celebrating that exact remediation as my ruling's first exercised
+instance, and did not connect it to my own sentence from three hours earlier.**
+>> **I AUTHORED THE COUPLING AND THEN WALKED PAST IT WHILE PRAISING THE THING IT WARNED ABOUT.** No
+>> instrument would have caught that: both records are mine, both are correct, and nothing joins a
+>> ruling to a later commendation of the same subject. It is the join-hole family with MY OWN TWO
+>> STATEMENTS as the two planes. <<
+
+### The refinement, stated so it is actionable without the incident
+**AN ORACLE WITH TWO CONJUNCTS CAN BE HALF-SATISFIED, AND A PARTIAL SATISFACTION IS NOT PARTIAL
+SAFETY.** When the unmet conjunct is what was FAILING LOUD, meeting the other one REMOVES THE SIGNAL
+AND KEEPS THE HAZARD. So a cell whose oracle is *IMPORTED AND EXERCISED* must be reported as
+**IMPORT: PASS / EXERCISE: NOT MET** -- never as progress, and never as a satisfied cell -- and the
+reporter must ask **what was the failing half PREVENTING?**
+⚠ **AND THE COROLLARY, WHICH IS THE UNCOMFORTABLE ONE:** an accidental interlock is still a
+protection, and repairing the accident is still correct. **The defect is never the repair -- it is
+the ORDER.** `2.0.0_SA_COO`'s words: *the interlock came out before the hazard went in.* Nobody
+should read this as an argument for leaving bricks in place.
+
+*(`0.5.0_AE_OpalETL~B`'s import-closure gate @`a88fa7abf0` verifies imports RESOLVE. It makes the
+BUILD safer without making the ARTIFACT safe -- the right gate for the defect it targets, and no
+protection against a runtime float-equality assertion. Naming that so the gate is not over-read.)*
