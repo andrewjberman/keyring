@@ -626,9 +626,17 @@ CloudWatch/charmap, grep, CI stdout. Use `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLO
   one that survives. Costs: a serial instead of a pronoun. Does not apply to a single-recipient
   `to_agent` send, where "you" is unambiguous. Measured twice in one hour: a senior seat issued a
   wrong correction off one pronoun, and a peer had to refuse credit for a finding that was not theirs.
-- **A REPORT OF A COMMIT STATES ITS PUSH STATE** — "landed LOCAL @hash, rides integration", or "on
-  origin/<branch> @hash (ls-remote read)", never bare "landed". Under the integrator-only push gate a commit is
-  invisible to every freshly-pulling or newly-spawned seat until pushed.
+- **A REPORT OF A COMMIT STATES ITS PUSH STATE — AND "LOCAL" IS A MEASURED VALUE, NEVER A DEFAULT.**
+  Three forms, never bare "landed": "on origin/<branch> @hash (ls-remote read)" · "landed LOCAL @hash
+  (ls-remote read, not on origin)" · **"landed @hash, push state UNREAD"** — the third exists because a
+  two-value formula made every unmeasured claim collapse to LOCAL (measured 2026-08-26: 4 of 4 "landed
+  LOCAL, ls-remote not read" claims by two Tier-1 seats were FALSE — the integrator had pushed; the
+  scrupulous caveat shipped a default for the very field it admitted not measuring. NOT READING AN
+  INSTRUMENT CANNOT ESTABLISH THE NEGATIVE). ⚠ A push-state claim is PERISHABLE — it ages the moment an
+  integrator runs; re-measure before re-asserting, and test ancestry against a FETCHED ref (a stale
+  origin/<branch> answers about a past origin, cleanly). Cost: one ls-remote, or three words. Under the
+  integrator-only push gate a commit is invisible to every freshly-pulling or newly-spawned seat until
+  pushed.
 ## Portal
 
 - `portal/` — `bun install && bun run dev --port 5175`. Bun: resolve via the user profile, do not bake a path.
