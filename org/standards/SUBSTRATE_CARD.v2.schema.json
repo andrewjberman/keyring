@@ -888,6 +888,63 @@
           }
         }
       }
+    },
+    "forward_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standing",
+        "set_by",
+        "basis"
+      ],
+      "description": "WHAT BECOMES OF THIS SUBJECT IN THE CANONICAL REBUILD. Andrew-direct 2026-08-26, VERBATIM: 'do a wave 2 substrate carding to get all the definitions of these things as they stand currently, but some of them i think we can safely say will be deprecated, and we will want to go through and identify and mark those cards with some kind of deprecation tag AFTER carding.' \u26d4 THE WORD 'AFTER' IS THE DESIGN. A card DESCRIBES what is; a disposition DECIDES what should be. Mixing them would be Rule 24(iii) intent incoherence -- and worse, a lane that carded and dispositioned in one pass would be adjudicating its own subject. Born UNDECIDED and set in a SECOND pass by a seat with the authority to retire something.\n\nNAMED forward_disposition, NOT 'disposition': that token already carries a DIFFERENT meaning in this project (0.4.0_DT_ClientPlatform~X's manifest reconcile, where a 'disposition' is how a residue item was classified to sum to 42). One word, two meanings, is the estate's most repeated defect and it would have been minted here on the day this project measured it five times.",
+      "properties": {
+        "standing": {
+          "enum": [
+            "keep",
+            "replace",
+            "deprecate",
+            "undecided"
+          ],
+          "x-enum-definitions": {
+            "keep": "Survives the canonical rebuild substantially as-is.",
+            "replace": "A canonical agnostic materializer supersedes it; the FUNCTION continues, this IMPLEMENTATION does not.",
+            "deprecate": "Retired, and nothing replaces it -- the need itself is gone or was never real.",
+            "undecided": "THE BORN STATE. Not yet adjudicated. Never defaulted to 'keep' because a thing currently runs."
+          },
+          "x-rule24": {
+            "domain": "what becomes of one carded subject in the canonical rebuild",
+            "grain": "subject (one card)",
+            "intent": "ONE intent -- decide the subject's forward fate. Deliberately NOT what the card's other rows do, which is DESCRIBE its present state.",
+            "mece": "keep / replace / deprecate partition the decided cases (survives \u00b7 function survives but implementation does not \u00b7 nothing survives); 'undecided' covers the not-yet-adjudicated member, which is the state EVERY card is born in per the 'after carding' instruction.",
+            "state_coherence": "THE VALUES DO NOT MOVE TOGETHER. undecided -> any is an ADJUDICATION. keep -> deprecate is a RETIREMENT DECISION with an owner and a blast radius, never a re-reading. replace -> keep means the canonical materializer FAILED to cover the case, which is a finding about the rebuild and not about this subject.",
+            "token_census": "word-boundary occupancy at 275fe497c7 over org/standards + the D11 PRD + the rule bank: disposition 2 (DIFFERENT meaning, see description), deprecate 0, deprecated 2, replace 1, retire 2, supersede 0. 'forward_disposition' 0 -- no collision.",
+            "verdict": "pass"
+          }
+        },
+        "set_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Serial of the seat that adjudicated. NULL while undecided. \u26d4 MUST NOT be the carding lane for its own subject -- describing and deciding are different acts and the carding seat has a stake in the second."
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        },
+        "evidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decided_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
     }
   },
   "$defs": {
