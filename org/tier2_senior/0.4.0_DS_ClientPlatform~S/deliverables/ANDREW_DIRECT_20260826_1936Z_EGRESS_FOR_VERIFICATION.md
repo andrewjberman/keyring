@@ -66,6 +66,25 @@ and none was performed.
 unspent grant is deliberate: a grant recorded only when used is a grant whose existence
 is inferred from its exercise.
 
+> ### ⛔ SUPERSEDED ~21:1xZ — THE GRANT WAS SUBSEQUENTLY SPENT ON EXTERNAL TARGETS
+>
+> **The paragraph above was true when written at 19:58Z and is FALSE as of ~21:1xZ.** Correcting it
+> here rather than leaving a superseded line to be read as current — the sentence carries no marker
+> that would tell a later reader it had expired.
+>
+> **WHAT CHANGED:** Andrew issued a SECOND, distinct word at **~20:39Z** — a **conditional
+> pre-authorization for the dim-436 WRITE** to Black Diamond (relayed `2.0.0_SA_COO` 73624; chain
+> `1.0.0_SA_CTO` 73613 item 2, record `@d7cea57dd3`). That superseded this record's reading that *"a
+> grant to VERIFY is not a grant to AMEND"* — **by his word, not by anyone's inference**, which is
+> the distinction this record was written to preserve.
+>
+> **WHAT WAS THEN SPENT:** vendor READ calls to `bd3.bdreporting.com` on the 49F session — bearer
+> mints, one qt5 catalog POST, two template GETs, three auth-arm GETs. **All reads. Zero writes.**
+> The write's condition never confirmed, so the pre-authorization **never fired and remains
+> unconsumed** (`2.0.0_SA_COO` 73730: condition **UNMET, not FAILED**).
+>
+> **FULL ACCOUNTING:** `DIM436_CATALOG_READ_ATTEMPT_20260826.md`, this same folder.
+
 ## RESULT THE GRANT'S PURPOSE PRODUCED
 
 See `3.0.0_SA_CVO` msg 72707 -> this seat's answer, and the completion sent at
