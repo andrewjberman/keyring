@@ -1218,6 +1218,10 @@ paths:
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
 
+  "AGENTS.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Repo-root Codex-runtime contract file -- the Codex seats' startup doc, same class as org/XXX.md under Andrew's 2026-05-26 word ('all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Existing lane extended, no new lane minted (build ladder rung 2). GAP CLOSED 2026-08-26: resolve_lane returned UNDEFINED on this path, refusing EVERY agent (LD-0331 title-is-not-a-grant class) -- surfaced by 0.0.0_AB_MSTR 72928 s.2 during the LD-0459 Codex lifecycle repair; MSTR correctly did not self-patch the grants file. Added 2026-08-26 by 1.0.0_SA_CTO as grants owner."
+
   # D0-T1 broker-build window (more-specific paths; override org/mcp/** BASE_EXEC per longest-match-wins; REMOVE at D0-T1 close):
   "org/mcp/server.py":
     lane: D0_T1_BROKER
