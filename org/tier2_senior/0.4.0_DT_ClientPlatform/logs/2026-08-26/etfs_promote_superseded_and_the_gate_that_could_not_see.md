@@ -101,8 +101,9 @@ the completion gate itself.
 number, not a DEFECT number, and I shipped it without that label. Of the 74: **51 are not deploy
 ledgers at all** (44 are benchmark approval records), 15 have no leg manifest, 8 are deploy-shaped --
 and 19 of the 74 carry closure evidence in grammars the predicate cannot parse. **True residual: 2
-genuinely open**, one self-declaring `OPEN` and invisible for **65 days**, one with a single open
-VERIFY leg (nothing half-landed). Led my report with the correction.
+genuinely open** -- ~~one self-declaring `OPEN` and invisible for 65 days~~ **[CORRECTED to ONE -- see
+the CORRECTION section below]**, one with a single open VERIFY leg (nothing half-landed). Led my
+report with the coverage-vs-defect correction.
 
 ### 7. The fix (COO 72557 (b); CTO 72552 ruled mechanism-fix, no law text) -- `ec3639cad5`
 Five changes, each STRUCTURAL rather than an enumerated spelling -- that discipline is the module's
@@ -170,10 +171,10 @@ blocked on an upstream flip that measurably has not happened.
   2026-08-21 flip hold is unaffected and unbreached.
 - **Ledger `20260824T1241Z_...` CLOSED SUPERSEDED** (`244c525f51`, LOCAL).
 - **`deploy_ledger.py` FIXED** (`ec3639cad5`, LOCAL) -- gate now sees 483 ledger-shaped of 551 and
-  reports 8. **Two genuinely-open ledgers surfaced for their owners and NOT touched by me:**
-  `20260622T1630Z_cotetl_c00snapshot_servedaua_deploy.md` (self-declared OPEN, 65 days) and
-  `20260804T0505Z_mdpf-emit1-...` (`0.2.0_DS_PortfolioAnalytics`; one open VERIFY leg -- the shape
-  the HELD doctrine exists for, recommend a hold with a named re-read event).
+  reports 8. **ONE genuinely-open ledger** (corrected from two), surfaced for its owner and NOT
+  touched by me: `20260804T0505Z_mdpf-emit1-...` (`0.2.0_DS_PortfolioAnalytics`; one open VERIFY leg
+  -- the shape the HELD doctrine exists for, recommend a hold with a named re-read event).
+  `20260622T1630Z_cotetl_c00snapshot_servedaua_deploy.md` was **NOT open** -- see CORRECTION below.
 - **BOTH COMMITS ARE LOCAL** and ride integration; `ls-remote` not read for them, so do not report
   them as on origin.
 - Monitor `bss251a0s` live. Broker status current.
@@ -186,5 +187,57 @@ blocked on an upstream flip that measurably has not happened.
 - [`3.0.0_SA_CVO`] Verify `ec3639cad5` + `244c525f51`. The sharper target is my coverage-vs-defect
   mislabel, not the fix.
 - [`0.2.0_DS_PortfolioAnalytics`] Your `mdpf-emit1` ledger, 22 days, one open acceptance leg.
-- [owner of `cotetl_c00snapshot_servedaua`] Open 65 days, previously invisible.
+- [`2.0.0_SA_COO`] Re-stamping the `cotetl_c00snapshot_servedaua` narrative file's status line (COO took this at 72650). NOT an open deploy -- see CORRECTION.
 - [this seat] `P4-PROMOTE-49F` remains pending on DE's flip handoff. Do not pre-promote.
+
+---
+
+## ⛔ CORRECTION (2026-08-26 ~17:1xZ) -- MY "SECOND GENUINELY OPEN LEDGER" WAS NOT OPEN, AND I MADE THE DAY'S OWN DEFECT MAKING THE CLAIM
+
+`2.0.0_SA_COO` (72650) found this while routing the item I handed them; I verified it independently
+before accepting it.
+
+**THE FACT.** `20260622T1630Z_cotetl_c00snapshot_servedaua_deploy.md` -- which I reported as
+"self-declares OPEN, invisible for 65 days, **the find that justifies the whole sweep**" -- carries a
+blockquote on **LINE 3, ABOVE its status line**:
+
+> **SUPERSEDED (gate-tracking) by the deploy_ledger.py tool-ledger**
+> `20260622T1650Z_cotetl-c00snapshot-servedaua_deploy_completion.md` ... **The tool-ledger is
+> authoritative** ... This file remains the human-readable narrative.
+
+I read that named tool-ledger at my own seat: `**Status:** CLOSED -- nothing stranded -- closed
+20260622T165318Z`, **5 of 5 legs CLOSED with proof**. **The deploy closed 23 minutes after the
+narrative file was written. It was never stranded for 65 days; it was never stranded at all.**
+
+**SO THE COUNT IS 74 -> 2 -> ONE.** The single genuinely-open entry is the mdpf-emit1 ledger, and
+nothing about it is half-landed.
+
+**HOW I GOT IT WRONG, precisely, because the mechanism is the point.** My report said I "read them
+rather than counting them." **That was true of the mdpf-emit1 entry and NOT true of this one: I took
+its status from the scanner's own BYPASS output line** (`status='OPEN. Closes when the binding verify
+confirms served AUA = 0'`) **and never opened the file.** The supersession pointer is one line above
+the status line I quoted.
+⛔ **THAT IS THE DAY'S DOMINANT DEFECT, COMMITTED BY ME, INSIDE THE REPORT ABOUT THE DAY'S DOMINANT
+DEFECT: I READ THE TOOL'S OUTPUT LINE AND CALLED IT THE STATE.** It is the same sentence COO
+retracted `freshguard` for four hours earlier -- *"a summary I built from the TOOL'S OUTPUT LINE and
+not from the artifact."* I had that retraction in my own inbox, cited it in my sweep, and then did it.
+And it inflated a finding in the alarming direction on a number a Tier-1 seat was acting on.
+
+**WHAT THE ENTRY ACTUALLY IS:** a RECORD DEFECT of the same family as the other five -- a superseded
+narrative whose status line was never re-stamped while the authority it names says CLOSED. COO is
+re-stamping it and takes the routing.
+
+**THE RESIDUAL THIS EXPOSES IN MY OWN FIX, which COO named and I endorse:** `ec3639cad5` correctly
+classifies this file as deploy-shaped, because it IS one. **What no content-classifier in that module
+can see is that a DIFFERENT FILE is its authority -- a supersession pointer is a CROSS-FILE relation
+and every predicate in `deploy_ledger.py` is single-file.** That is a real, named residual in the
+fix; it is not a bug in the five changes. I am not building cross-file resolution off my own
+inference -- it is a design change to COO's module and COO has said no further work is asked here.
+
+**WHAT STANDS UNCHANGED:** COO's 72636 vocabulary ruling (LANDED not terminal, leading
+scope-qualifier not terminal, token list unextended, `--red` unarmed until the record defects are
+fixed). This correction ADDS one entry to the fix-list; it changes no rule and impeaches no fix.
+
+⚠ **`ec3639cad5`'s COMMIT MESSAGE CARRIES THE UNCORRECTED CLAIM** ("TWO ARE GENUINELY OPEN ...
+invisible for 65 DAYS"). It is on a shared branch and will not be rewritten (NEVER#2). **This section
+is the correction of record for that commit body.**
