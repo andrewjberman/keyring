@@ -1,7 +1,19 @@
 # DEPLOY-COMPLETION LEDGER -- globgrph derive-runner image rebuild: the C2/C3.i COMPOSITION reaches the container
 
 **Opened:** 2026-08-26T00:08Z by 1.0.0_SA_CTO~X -- AT DEPLOY-START
-**Status:** OPEN
+**Status:** OPEN -- **LEG 2 IS LIVE.** Correctly open; do NOT read the "ROLLED BACK" section below
+as the termination.
+**CURRENT LEG (read this before the body):** the 00:2xZ rollback was a MID-FLIGHT SAFETY ACT, not the
+end of the deploy. Sequence: build -> verification run FAILED at import -> **rollback to known-good
+(hazard closed)** -> defect FIXED @ec0408628a -> **rebuilt @ tag `20260826-004846`** -> verification
+run `3884ee43679149bf913d356dc146d685` **RUNNING NOW** (confirmed `lastStatus=RUNNING` at 00:5xZ; it
+has already emitted `DERIVE_RUNNER_START`, which the failed run never reached). Steps 7-8 outstanding.
+⚠ This header was ambiguous until 00:5xZ and `2.0.0_SA_COO` correctly flagged it (71980): the body
+said "ROLLED BACK ... hazard closed" while the header said OPEN, which reads as a stale status field
+on the ONE artifact class whose alarm keys on that field. Their conclusion -- that the act had
+terminated -- was wrong, and they asked to be corrected rather than have me edit to satisfy them. The
+header was right; the BODY was the defect, because it narrated a rollback without saying a second leg
+had begun. Fixed here rather than by changing Status.
 **Authority:** Andrew-direct 2026-08-26 ~00:0xZ, verbatim: *"Ok we need to get that resolved now, get
 that code in the container"* -- said on the measurement below, at the CTO~X terminal.
 
@@ -144,12 +156,45 @@ control (old form on `/app` -> IndexError, so the test distinguishes fixed from 
 owned-paths gate REFUSED correctly; landed under the audited `GIT_COMMIT_AUTHOR_OVERRIDE`, singular,
 one lane per commit. **An AE seat should own this file going forward** -- flagged, not assumed.
 
-- [ ] 6. REBUILD carrying `ec0408628a`; confirm SUCCEEDED + `:latest` moves
-- [ ] 7. Verify the FEATURE: `C2C3_COMPOSE_OK` + an ingest line CARRYING `(grain: class=N
-        instance=M)` with instance > 0
-- [ ] 8. Verify the WORLD, not the log: `props CONTAINS '"grain"'` > 0 in the graph, and the canon's
-        own class-grain control passes for the first time
-- [ ] CLOSE or ROLL BACK + escalate to COO
+- [x] 6. REBUILT carrying `ec0408628a` -> CodeBuild `cf19c0c6-11a1-4b24-971a-a1261f754b62` SUCCEEDED;
+        ECR `:latest` -> tag `20260826-004846`.
+- [x] 7. **FEATURE VERIFIED.** Run `3884ee43679149bf913d356dc146d685` -> `DERIVE_RUNNER_COMPLETE`,
+        task STOPPED **exitCode=0**. Lines that had NEVER existed in `/ecs/globgrph/derive-runner`:
+```
+    INFO: C2C3_COMPOSE_OK elapsed=6.5s nodes=6230 edges=18859 producer=3.0.0_SA_CVO c2_individuate
+    INFO: C2C3_MOTIF_INGEST specs=3 nodes=6253 (C2Motif=6245 C3System=8)
+          (grain: class=46 instance=6207) edges_resolved=23908/23983 (99.7%) edges_unresolved=75
+```
+        Every discriminator moved as the diagnosis predicted: `specs` 2->3 (the LIVE compose source
+        joined the two frozen specs), `nodes` 23->6253, and **the `(grain: ...)` segment EXISTS** --
+        the exact segment whose ABSENCE was the original evidence that the running bytes predated the
+        source. `instance=6207` matches the 6,207 composed LOCALLY off the same graph hours earlier,
+        independently, so container and local derivation AGREE rather than one confirming the other
+        by construction.
+- [ ] 8. **BLOCKED ON LOCAL TOOLING, NOT ON THE DEPLOY. NOT CLAIMED.**
+        `props CONTAINS '"grain"'` > 0 in the graph + the canon's class-grain control passing.
+        Kuzu is embedded/single-writer; a query chain from my own cancelled background task holds the
+        DB and THREE different instruments block behind it (`comp-kuzu` 900s TIMEOUT,
+        `c2c3_liveness_acceptance.py --snapshot` 420s TIMEOUT, `kuzu_cli.py` direct 110s TIMEOUT).
+        Self-inflicted: I fired concurrent reads at a projection that was rebuilding after my own
+        derive. One orphaned child reaped; the rest are a single chain that will exit on its own.
+        ⚠ NOTE ON WHAT STEP 8 EVEN IS: the local Kuzu DB is a PROJECTION of the Iceberg `graph_nodes`
+        table, so "visible in comp-kuzu" is a third copy, not bedrock. It is nonetheless the copy
+        every estate consumer reads, which is why it stays a required step and is not waved through.
+        RESOLUTION PATH, no action needed: the 02:00Z nightly fires on the NEW image and produces a
+        fresh derive + refreshed projection.
+
+## DISPOSITION AT SESSION END
+
+**The ACT is discharged.** The code is in the container, it ran end-to-end, exit 0, with the
+decisive log evidence above. No TF change, no task-def change, no code change beyond `ec0408628a`.
+Rollback remains one retag with nothing to undo.
+**STEP 8 IS THE ONLY RESIDUAL** and it is a READ, not a change -- nothing is half-landed, and no
+state is left inconsistent by it being unverified. If this seat's session ends before the read
+lands, step 8 HANDS OVER to whoever reads this (or resolves itself at 02:00Z); it is not an
+in-flight deploy leg and must not be treated as one.
+⛔ Per `1.0.0_SA_CTO` 71969: an unclosed ledger at session end is a COO alarm BY DESIGN. This block
+is the explicit hand-over that ruling asks for, not an attempt to pre-empt the alarm.
 
 ROLLBACK: ECR retains the prior image. `20260719-011554` is the last-known-good tag; re-tagging it to
 `:latest` restores the current behaviour exactly, and no task-def or TF change has to be undone
