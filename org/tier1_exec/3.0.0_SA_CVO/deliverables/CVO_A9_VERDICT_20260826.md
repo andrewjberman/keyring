@@ -101,6 +101,62 @@ nobody re-checked.
 - **NOT** a re-derivation of A1–A8. Those are the executing seat's exercise against a pre-registered
   bar with a working PRE-FIX control; re-running them by the same method would be a **REPETITION**.
 
+---
+
+## AMENDMENT — 2026-08-26 ~20:00Z: **THIS VERDICT IS ABOUT THE 18:24Z RUN AND IS NOW SUPERSEDED AS CURRENT STATE**
+
+The NOT-MET above is a true record of the **18:24Z** `qa_local` run. It is **NOT** the verdict on the
+authorized real-chain exercise that followed. Recording that here so a reader landing on this file
+does not take a superseded verdict as the live position.
+
+### WHAT CHANGED
+
+**GATE (ii): MET TO THE CENT, over the RIGHT input.**
+`opal_fixed_income @2026-08-25 = 8,442,396.91` · `sum(by_model cohort=model) = 1,802,566,138.35` vs
+`model_aua = 1,802,566,138.36` · identity delta **0.01** (was `-8,442,396.92`) · movement
+**+8,442,396.91** against a pre-registered **+8,442,396.92**. **One cent, float.**
+`model_aua` now reads **byte-for-byte the number in the original FATAL line** — the two sides of the
+failed identity agree, and the side that moved is the one the fix was built to move. The probe
+confirmed `SLICE READ BY THE FOLD — opal_fixed_income present: True`, which is exactly what the
+earlier STOP existed to force.
+
+**GATE (i): CLEAN — and NOT on my read.** See the instrument note below.
+
+### ⛔ INSTRUMENT NOTE — GATE (i) IS NOT DOUBLY CONFIRMED
+
+`1.0.0_SA_CTO` and I both took the fold-branch read `0.4.0_DS_ClientPlatform~T` asked a non-author to
+take. **On the `gap = True` limb we are a REPETITION** — same file, same lines, one measurement
+reported twice.
+
+| limb | who read it | what it establishes |
+|---|---|---|
+| `:2490-2519` — `gap = True` fires, cell poisons to `None` | **CTO and me** (repetition) | the branch fires |
+| `:2519` `gap` is LOCAL to one (key,date) cell; `:1890-1893` band/total treats a per-key `None` as a **NON-CONTRIBUTION**, `s = None if ALL None else sum(non-None)` | **CTO only** | **it does not matter** |
+
+**ONLY THE SECOND LIMB CLOSES THE GATE, AND EXACTLY ONE SEAT READ IT.** I had the mechanism of the
+firing and not the mechanism of the harmlessness. **"CVO and CTO both cleared gate (i)" is FALSE.**
+
+**And the strongest evidence is not about code:** both sides carry zero Fixed Income on those 18
+dates because **the model did not exist before 08-25**. The agreement is a fact about the world the
+code faithfully represents — not a skip, not luck, and not something a re-implemented predicate could
+have shown.
+
+### ⛔ WHAT THE EXERCISE DOES NOT COVER
+
+**THE LAMBDA.** Tonight proved the **CODE** by running it directly. The 13:30Z fire runs the
+**BUNDLE**, which still carries the old 9-key `GLOBAL_MODEL_KEYS` and the old crosswalk. **Without
+the rebuild, the fire re-fails at 18:24Z's exact site on a now-correct slice.** The (b) lift is GO as
+of ~19:59Z. Until it lands and the lambda path re-runs, **no verdict here covers the scheduled run.**
+
+### CARRIED FORWARD, not tonight's scope
+
+`gap = True` is a **MISLABEL** on a not-yet-existing model's pre-existence dates — the honest state is
+*"model outside its existence window"*, not *"contributing firm, missing measurement"*. Output
+identical, arithmetic unaffected, **but it misleads anyone grepping gap counts.** Rides the next
+deliberate touch of the fold, alongside the five-of-seven summary-counter defect recorded above.
+
+---
+
 ## THE GATE REFUSING IS THE SYSTEM WORKING
 
 A composition identity caught a real inconsistency **before it served.** Had A9 read 12/12 with this
