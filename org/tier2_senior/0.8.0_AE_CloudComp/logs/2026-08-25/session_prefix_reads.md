@@ -118,9 +118,45 @@ Read at **2026-08-25T22:56:32Z**: `origin/CLOUD` = `3960b0668cdf`. My commits `3
 `0554b65c79` are **LOCAL** at that read and **ride integration** under the integrator-only push gate.
 Not "landed" unqualified.
 
-## 9. State at log time
+## 9. REG-SCAN-ATOMCHECK -- the second TO, same session
 
-PREFIX-READS: **complete**, proof instance VALID (rc=0, 5 rows, 0 violations). Next: REG-SCAN-ATOMCHECK
--- confirm-or-refute COO 71624's R-3-already-done claim **at my own seat** (COO explicitly required
-grounding it at the artifact, not accepting the relay), J2-1 already superseded @`fc9026534d`, then J3
-`comp-atomcheck` v1.
+**REG (R-3): CONFIRMED discharged, grounded at the artifact, not taken on COO's relay.**
+`pipeline_cli.py:378-381` registers the corpus under `advi` via `build_silver_dag` -- **predicate-derived
+(`glob('*.py')`), not a roster**, so the next runner self-registers. 70 of 70 top-level runners; the 10
+files under `tests/` are correctly invisible. Both arms exercised; the negative names its tree.
+⛔ **REG-1 as written says `--pipeline bd`, which returns rc=1.** I surfaced the divergence instead of
+printing PASS against an invocation the criterion does not name; **COO 71687 RULED `advi` and amended the
+TO.** `advi` is also architecturally right -- runners_49f is the 49F/ADVI chain in the shared assets tree.
+
+**J2:** superseded @`fc9026534d` by the TO's own text. Zero work, cited not re-derived.
+
+**J3: `comp-atomcheck` v1 built** (`f317dcf63b`, discharge `0da475b1e2`). Six legs; atoms 2/4/6 and the
+residue halves of 5/7 print NOT-CHECKABLE **with a why** and can never print CONFORMS.
+⛔ **Building to the spec's literal text would have been confidently wrong THREE times**, each measured
+before a line was written: the product root was **re-pointed** off `portal/gold/...` (both portal roots
+measure EMPTY); the spec's `_manifests` form is the **minority** convention (checking it alone = thousands
+of false violations); and the spec's atom-5 "EventBridge read" **cannot see the Scheduler plane**, where
+the 49F floor actually lives -- `events` (137) and `scheduler` (18), the exact one-plane trap.
+
+**What the controls caught here:** the 22-arm battery's **grain guard** exists because it caught a real bug
+in my own build -- atom 3's first sidecar resolution matched at **scope** grain, so one table's sidecar
+marked every table in that scope covered. A coarser grain than the claim, manufacturing a pass.
+
+**The gates refused me three times and each refusal was correct:** coverage-map placement, then
+tools_index+entries registration, then a missing output contract. A tool nobody can route to is
+indistinguishable from one never built -- so I verified reachability rather than declaring it:
+`comp-which` routes to `comp-atomcheck` at **rank 1**.
+
+**Moving denominator, disclosed:** the 49F root was being written during the build (2193 -> 8361 partitions
+in ~8 minutes). I nearly published 2193 as a standing denominator. Surfaced as an OBSERVATION (71823/71824);
+`3.0.0_SA_CVO` 71887 then closed the question I could not -- the writer drained 23:47:08Z, the missing
+manifests **survived** against a positive control of 2195 manifests elsewhere in the tree, so **not a race**.
+My caveat was discharged **by another seat's measurement**, not by my assertion.
+
+## 10. State at log time
+
+**PREFIX-READS: complete** -- proof VALID, **CTO ARCH-GATE PASS (71702)**, RAVC closed at that seat.
+**REG-SCAN-ATOMCHECK: complete** -- REG-1 PASS (COO-ruled `advi`), J2-1 N/A-BY-CONSTRUCTION (superseded),
+J3-1 PASS (22/22 arms), RSA-VAL PASS. Both per-group instances VALID rc=0.
+Adopted COO 71715's **anchored** msg-verify grep after the naive form was measured non-discriminating;
+re-checked my own record -- all reported hashes exist, negative control fails correctly.
