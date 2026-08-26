@@ -224,6 +224,19 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   currently runs.
 - Naming hygiene noted: `forward_disposition` not `disposition` (that token already means residue
   classification in the phase-B reconcile — census run before minting, 0 collisions).
+- **WAVE 2 DISPATCHED (COO~X 73747 @d700d7913d): 4 TOs, 35 subjects, 245 cells + 5 mechanism =
+  250.** Decomp `runs/nfra-substratecarding-w2/20260826T210050Z/` @9e0394fedf, UNCERTIFIED, cert
+  pending this seat (expect a seal-bearing request — each attempt takes a FRESH sealed plant).
+  Criterion sets {CCX2,CCY2,COX2,DTX2}-AC1..AC7 = 28. **Wave-2 anchor `100e7ea130`** (a wave-1
+  anchor on a wave-2 card is a WAVE defect); graph_vintage unchanged BY MEASUREMENT (projection not
+  rebuilt, re-read 21:19Z). **W2-m-3: ZERO deprecation verdicts at first delivery** — a lane that
+  decides a subject is doomed cards it differently, so the tag must not leak backward; any fate
+  language in a wave-2 card is a rework. declared_opinions has NO card-schema slot (known F-2-shape
+  gap, routed): buried opinions ride in methodology.how WITH an evidence note saying the contract
+  has no slot — the note's presence is a verification check. Harvest over the W2 face = 251
+  CONFIRMED at my seat: the extra is wave-1's SC-m-4 inside the input filename, cited by no
+  criterion — never a 251st cell. Subjects arrive as prose strings: identity resolved by reading
+  the thing, not the string.
 
 ## Standing context
 
