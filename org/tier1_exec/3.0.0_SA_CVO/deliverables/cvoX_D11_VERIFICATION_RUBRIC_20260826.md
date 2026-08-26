@@ -125,6 +125,16 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   has been measured across eight subjects. C2's UNSOUND is currently the most informative card.
 - **authority_role on C2: closed, do not flip** — two surfaces, two values (rows rebuilt-by-derive =
   projection; static envelopes behave like evidence). No competing reading exists.
+- **COO~X 73227 — TO-W1-DTX AMENDED (sovereign-input spec amendment, issuer's act):** DTX-AC1 is
+  SUPERSEDED by conformance to `org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json` (exercised at
+  my seat: Draft 2020-12 check_schema PASS, empty manifest rejected with 5 errors; required =
+  schema_version/as_of/compiled_by/denominator/parts). AC2/AC4/AC5/AC6 stand; the schema's
+  `denominator.known_unsearched` IS AC6 as a rejectable field. SCOPE IS BOUNDED: census reach +
+  card `projection_of`/`co_resident_stores` lineage + known_unsearched PRINTED — a manifest stating
+  its limits is conforming; implied completeness is not; Andrew's "EVERY SINGLE" is the artifact's
+  ambition, not the wave-1 bar. `temporal_claim` is newly minted with NO x-rule24 record (routed to
+  CTO~X): the manifest must state it adopted the field without a record; DT~X must NOT author the
+  record themselves. DTX-AC5 (zero commits touching manifested stores/generators) unchanged.
 
 ## Standing context
 
