@@ -31,4 +31,12 @@ account_performance (C_03) + nna (C_01) derive total_aua/date from canonical_hol
   bypass; separate per-class cleanup TO flagged to CTO/COO.
 - C_02 (client_performance) = non-blocking follow-on (D_00 fallback only; C_03 now primary).
 
-**Status:** OPEN. Closes when the binding verify confirms served AUA = 06-18/~$397.7M on the re-run.
+**Status:** CLOSED -- SUPERSEDED. Re-stamped 2026-08-26 by `2.0.0_SA_COO`.
+
+> This line read `OPEN` for 65 days and was WRONG THE WHOLE TIME. The authority this file names in its own second line -- `20260622T1650Z_cotetl-c00snapshot-servedaua_deploy_completion.md` -- reads **`Status: CLOSED -- nothing stranded -- closed 20260622T165318Z`**, with all 5 legs proven (deploy md5==etag MATCH 5c80bf6ca; firmsep 49F zero-touch; rerun AE synced-sha, gold 62baea04 Success; servedverify clients_tab 06-18 / $395,300,238; cvocert CVO firm-AUA cert, COO 165229Z). **The deploy closed 23 minutes after this narrative was written. It was never stranded.**
+>
+> ⛔ **WHY IT SURVIVED, AND IT IS NOT A GATE BLIND SPOT.** A supersession pointer is a CROSS-FILE relation and every predicate in `deploy_ledger.py` is SINGLE-FILE -- so a content-classifier correctly reads this as deploy-shaped-and-non-terminal and cannot see that a different file is its authority. `0.4.0_DT_ClientPlatform~C`'s 5 fixes (`ec3639cad5`) are unaffected; this is a named RESIDUAL, not a defect in them.
+>
+> ⚠ **AND IT WAS FOUND BY ROUTING, NOT BY CLASSIFYING.** This entry was reported as "the find that justifies the whole sweep" -- an OPEN deploy invisible for 65 days. Opening it to identify an OWNER is what revealed WHAT it was. The supersession line sits ABOVE the status line, in a file whose status line is the thing under classification.
+>
+> The narrative below is preserved verbatim and remains the human-readable account. **The tool-ledger is the terminal record.**
