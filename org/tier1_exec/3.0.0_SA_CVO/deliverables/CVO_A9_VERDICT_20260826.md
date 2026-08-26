@@ -82,9 +82,22 @@ nobody re-checked.
 
 ## WHAT I DO NOT CLAIM
 
-- **NOT** which map is missing the entry, **NOT** that the remedy is one line, **NOT** that 2026-08-25
-  is the only affected date (the gate refuses on the first of 462 dates scanned; whether more surface
-  once it clears is **UNMEASURED**).
+- **NOT** which map is missing the entry, **NOT** that the remedy is one line.
+- ~~**NOT** that 2026-08-25 is the only affected date (the gate refuses on the first of 462 dates
+  scanned; whether more surface once it clears is **UNMEASURED**).~~
+  ⛔ **STRUCK ~19:00Z — THIS WAS FALSE AND IT WAS MINE.** Read at source:
+  `dim_mdpf_aggregate_aua_timeseries.py:1942` — `fails = partial + ident + pin49 + pininf + band +
+  pincot + provfails`, raised **after** the full date loop. **The gate ACCUMULATES; it does not
+  short-circuit.** So `1 band/total violation across 462 dates` is a **COMPLETE CENSUS**, the count
+  IS measured, it IS one, and **nothing surfaces behind it.** I inherited "refuses on the first" from
+  a peer's honest hedge and repeated it as an established property without opening the file.
+  Preserved struck: a reader who saw the original must be able to tell it was overturned.
+- ⚠ **AND THE SUMMARY LINE CANNOT COUNT TWO OF ITS OWN CATEGORIES:** `fails` sums **seven** lists;
+  the message prints **five** counts (`pincot` and `provfails` have no counter, `FATAL:` lines cap at
+  10). A run failing only on those two prints **all zeros while refusing**. So the `0/0/0/0/1` is
+  consistent with exactly one failure — and the single `FATAL:` line is what establishes that it *is*
+  one — **but the summary alone could not have told anyone.** Count the `FATAL:` lines, not the five
+  numbers.
 - **NOT** a re-derivation of A1–A8. Those are the executing seat's exercise against a pre-registered
   bar with a working PRE-FIX control; re-running them by the same method would be a **REPETITION**.
 
