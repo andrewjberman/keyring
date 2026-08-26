@@ -431,3 +431,38 @@ directives:
       PRD isolates the amendment to ONE clause -- gold's HOME and gold's CODE-HOME -- and everything
       else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
       Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
+  D11:
+    title: "Substrate Analysis (NEW; qualify the ladder before anything is built on it)"
+    directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
+    placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator."
+    members:
+      subgroups: [INFRASTRUCTURE.GRAPH]
+      projects: [NFRA_SUBSTRATECARDING]
+    stance: "MINTED BY ANDREW 2026-08-26 at the CTO~X terminal. VERBATIM: 'I would put this as
+      Directive 11, Substrate Analysis, and register a project beneath it called NFRA_SUBSTRATECARDING.'
+      SCOPE, his words: 'we need to follow this substrate identification process on c0 c1 c2 on d1 d2
+      d3 we need to do it on any underlying functions ... there is a lot of graph like physical graph
+      substrate and the scripts that generate it which are involved here and we need a canonical
+      understanding of what various graph scripts and persisted artifacts underlie these things'.
+      THE BINDING CONSTRAINT, also his: 'not only do we need a consistent grain to be doing these
+      identifications but we need consistent state'. A wave therefore declares ONE as_of and every
+      card in it carries that stamp; cards taken at different vintages are individually correct and
+      jointly meaningless.
+      WHY IT EXISTS -- THE END GOAL IS NOT THE CARDS: 'the end goal is to basically develop a
+      mechanical process around the materialization and tracking of c3.i'. The four-stage identity
+      pipeline (affinity compilation -> similarity network fusion -> identity -> succession) cannot
+      be built on substrate whose grain, state, coverage, key space and failure modes are unknown.
+      D11 is the ground truth that pipeline stands on, and it is scaffolding for C3.i rather than an
+      end in itself.
+      MECHANISM: CLAUDE.md Rule 28 (THE SUBSTRATE TEST, landed @ec35b78c1c) -- seven questions over
+      three DECLARED grains, PROCESS (methodology, cadence) / ARTIFACT (persistence, location) /
+      TRUST (coverage, key, failure mode), every row carrying its own basis, evidence and OWNER
+      because Rule 24(iv) says the remedies do not move together. Deliverable contract:
+      org/standards/SUBSTRATE_CARD.schema.json -- machine-checkable, so proof-of-spec runs against a
+      schema rather than against prose.
+      ORDERING NOTE CARRIED FROM HIS DICTATION: D3 sits between C2 and C3, so it cannot be COMPLETED
+      before C3.i exists -- but it is still carded, because an EMPTY card (persistence NONE, location
+      NOWHERE) is a finding and skipping it loses the baseline. Same for the current anchor-catalog
+      C3.i: carding it is what the replacement has to beat.
+      ROW MINTED WITH ITS FIRST MEMBER, unlike D10 -- the project is named in the same sovereign
+      breath as the directive, so the D10 row-first/members-second sequencing does not apply here."
