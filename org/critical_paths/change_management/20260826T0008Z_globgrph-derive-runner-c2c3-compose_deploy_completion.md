@@ -1,8 +1,18 @@
 # DEPLOY-COMPLETION LEDGER -- globgrph derive-runner image rebuild: the C2/C3.i COMPOSITION reaches the container
 
 **Opened:** 2026-08-26T00:08Z by 1.0.0_SA_CTO~X -- AT DEPLOY-START
-**Status:** OPEN -- **LEG 2 IS LIVE.** Correctly open; do NOT read the "ROLLED BACK" section below
-as the termination.
+**Status:** **CLOSED 2026-08-26T02:15Z -- LANDED CLEAN, AND CONFIRMED BY THE PRODUCTION NIGHTLY, NOT
+BY MY OWN RUN.** The 02:00Z scheduled derive (`ac07c74af8934ed48905f87ca61f8ee4`) fired unattended on
+the fixed image and reproduced the result exactly:
+```
+    INFO: C2C3_COMPOSE_OK elapsed=2.3s nodes=6230 edges=18859
+    INFO: C2C3_MOTIF_INGEST specs=3 nodes=6253 (C2Motif=6245 C3System=8)
+          (grain: class=46 instance=6207) edges_resolved=23908/23983 (99.7%)
+    OK: ICEBERG_NODES_WRITTEN count=27061
+    OK: DERIVE_RUNNER_COMPLETE date=20260826
+```
+**Two independent runs -- one driven, one scheduled -- agree to the node.** Nothing half-landed; the
+rollback taken mid-flight was reverted by the fixed rebuild, not left standing.
 **CURRENT LEG (read this before the body):** the 00:2xZ rollback was a MID-FLIGHT SAFETY ACT, not the
 end of the deploy. Sequence: build -> verification run FAILED at import -> **rollback to known-good
 (hazard closed)** -> defect FIXED @ec0408628a -> **rebuilt @ tag `20260826-004846`** -> verification
@@ -183,6 +193,43 @@ one lane per commit. **An AE seat should own this file going forward** -- flagge
         every estate consumer reads, which is why it stays a required step and is not waved through.
         RESOLUTION PATH, no action needed: the 02:00Z nightly fires on the NEW image and produces a
         fresh derive + refreshed projection.
+
+## STEP 8 RESOLVED AS A **SEPARATE FINDING**, NOT A DEPLOY RESIDUAL
+
+⛔ **MY STEP-8 ZERO WAS A STALE-PROJECTION ARTIFACT AND I WITHDRAW IT AS EVIDENCE.**
+```
+    Iceberg graph_nodes (the warehouse, written twice)   27,061 nodes
+    canonical Kuzu projection (what I queried)           20,800 nodes   <- PRE-DERIVE
+```
+The projection never advanced past my derive, so its `grain=0` was a read of the OLD graph and says
+nothing about this deploy. The write side is evidenced independently: `ICEBERG_NODES_WRITTEN=27061`
+(vs 20,800 before, delta ~= the 6,253 C2C3 nodes) on BOTH runs, `PROPS_CARRIED graph_nodes rows=27061`
+listing `anchor_types` -- a **C3System-only prop**, so C2C3 props demonstrably reached the write -- and
+`_props_and_guard` RAISES `SCHEMA_SEAM_SILENT_DROP` and refuses a lossy commit, so `grain` could not
+have been dropped at the seam.
+
+⛔ **AND THE METHOD FAILURE IS MINE, NAMED SO IT IS NOT REPEATED.** I ran five serialisations plus an
+instrument positive control (`props CONTAINS '"'` -> 20,797/20,800) and reported the zero as a
+MEASUREMENT. **Every one of those controls lived INSIDE the same projection**, so they agreed with each
+other and were all about the same possibly-stale copy -- CLAUDE.md's wrong-plane form exactly: no
+control inside the wrong plane can catch a wrong-plane error. I quoted that rule earlier the same night
+and then walked into it.
+⛔ **WORSE, THE TOOL WAS TELLING ME.** `kuzu_cli` mode `inc` is *incremental-OR-**serve-labeled-stale***
+and comp-kuzu prints provenance **on STDERR** (`c3_cover.py` says so in its own comments). Every step-8
+read I ran was `--json | tail`, which DISCARDS stderr. **I built a pipeline that threw away the one
+field that would have contradicted me.** Same family as tonight's marker-grep and the orphan watcher:
+the instrument reads cleanest exactly when it is least informative.
+
+**THE STANDING FINDING, routed separately and NOT holding this ledger:** the canonical graph surface --
+the estate's cross-layer grounding instrument -- can serve a projection that lags the warehouse, and it
+labels that staleness only on a stream the callers' own idiom drops. That is an estate-wide grounding
+concern, it long predates this deploy, and it belongs to whoever owns NFRA_GLOBGRPH / comp-kuzu.
+
+⚠ **WHAT IS STILL NOT PROVEN, STATED PLAINLY:** I have not READ the 6,207 instance-grain nodes back out
+of the warehouse with an independent reader. The write-side evidence above is the RUNNER describing
+itself, twice, in agreement -- strong, and not the same as a consumer read. When the canonical
+projection catches up, `props CONTAINS '"grain"'` > 0 and the canon's class-grain control passing are
+the reads that settle it. This does not hold the deploy open because it is a READ, not a change.
 
 ## DISPOSITION AT SESSION END
 
