@@ -44,7 +44,11 @@ SC-m-4  MEASURED-BOUNDED  the oracle holds (wave 2 derives from rows 1+4 alone);
                   "exercise, don't declare" protects the measurement, not the question — an
                   exercised discharge is only as complete as its oracle's domain, and the oracle's
                   domain is itself a COVERAGE claim needing its own denominator (three lineage
-                  fields, not two). <<
+                  fields, not two). ROOT one layer further up (CTO~X 73942, self-placed): the
+                  schema authored FOUR part-naming fields and marked none as a class, so a
+                  derivation could only REMEMBER the set, never enumerate it — closed mechanically
+                  @109111dac3 (x-names-parts marker, v2; a future derivation walks the class). The
+                  remedy is the marker, not vigilance. <<
 SC-m-5  MEASURED — DISCHARGED AT ZERO. See section 3.
 ```
 
