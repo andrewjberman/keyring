@@ -31,7 +31,7 @@ as_of: "2026-08-19"  # stance cells D4/D7/D9 event-refreshed 20:3xZ per CTO vali
 
 directives:
   D0:
-    title: "Infrastructure (ongoing)"
+    title: "Agent Infrastructure (Process Management)"
     directive: "docs/architecture/D0_INFRA_TIGHTENING_PRD.md"
     placement: "LAPTOP -- RULED (criterion b: ontology/infra local). The T1/kill-fix EXERCISE legs run on BOTH fabrics as small ferried verification kickoffs post-build, never as moved builds. Ontology lock-down tranche (T6/T7/T8, s3 set, T12) pinned LOCAL as a class."
     members:
@@ -42,7 +42,7 @@ directives:
       LD-0424 kill-instrument self-exclusion fix, GLDRNS wrapper disambiguation (08-25),
       the CRO-led infra-graph program."
   D1:
-    title: "MDPF asset-category views (~2wks)"
+    title: "Model Portfolios: Asset-Category Views"
     directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
     placement: "LAPTOP -- RULED (criterion a: oversight-heavy MP/ADVI primary work)."
     members:
@@ -52,7 +52,7 @@ directives:
       build -> Cottonwood display acceptance (~$7M Custom + ~$30M Client Advised/Residual) = DONE.
       Independent of R and of Friday."
   D2:
-    title: "ADVI 49F end-to-end (Fri PM target)"
+    title: "Advisor Intelligence"
     directive: "docs/architecture/D2_ADVI_49F_E2E_PRD.md"
     placement: "LAPTOP -- RULED, whole item incl. parity harness/analytics (Andrew, both consoles: 'D2 is certainly laptop fabric' / 'sitez does not work on advi, D2'); supersedes @a02f9ff5a4's D2-analytics-sitez row; sitez 0.8.0~Z spawn cancelled."
     members:
@@ -66,7 +66,7 @@ directives:
       then the parity program (census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green,
       COT third. FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
   D3:
-    title: "Account-level model overlay (~6-7wks, pends D1+D2)"
+    title: "Account-Level Model Overlay"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
     placement: "LAPTOP -- RULED (criterion a)."
     members:
@@ -75,7 +75,7 @@ directives:
     stance: "CTO writes the PRD now (Mike-call user story verbatim); the SmartX<->BD/Schwab
       EXACT-JOIN spec is the early-startable precondition; build launches the day D1+D2 clear."
   D4:
-    title: "ETF positioning variant (3-8wks, behind D1)"
+    title: 'Satellites "Positioning" Variant'
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
     placement: "SITEZ -- UNTIL THE PROJECT IS DONE (Andrew-direct 2026-08-24, MSTR~Z terminal,
       relayed by 0.0.0_AB_MSTR~Z, brief laneZ_ANDREW_DIRECT_20260824_NO_BQL_ETF_CONSTITUENT_PIPELINE_HANDOFF_TO_CTOZ.md
@@ -289,7 +289,7 @@ directives:
       at this row's git history + PRD s.3.3. ETFS_CANON design gate RULED @6d62143d2d; the four
       ETFs join D1's taxonomy as SMA-category members -- one registry serves both."
   D5:
-    title: "Alt research (ongoing)"
+    title: "Alt Research"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
     placement: "LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop)."
     members:
@@ -298,7 +298,7 @@ directives:
     stance: "CRO ingest lane continues; the build queue activates on Andrew's prioritization word.
       No register home yet -- an empty member set is honest where a plausible one is not."
   D6:
-    title: "Opal Analyst + partner GraphQL (v0 ~2wks; SITEZ box legs + laptop cloud)"
+    title: "Opal Analyst"
     directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
     placement: "SITEZ -- RULED (Andrew): TO-C SharePoint binding + TO-D BBG standing read (sitez-only identity opal-gateway-bbg); LAPTOP: the GraphQL query layer. Kickoff ferries on CVO clearance."
     members:
@@ -314,7 +314,7 @@ directives:
       memory/thread persistence, perpetual-operator frame. NOT a retire candidate. Member set to be
       refreshed as successor projects register (the closed member is the v0 project only)."
   D7:
-    title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
+    title: "Opal Ticketing"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
     placement: "SITEZ -- RULED (Andrew): TO-A + TO-C one workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A DELIVERED same evening); LAPTOP: TO-B (real build per the CVO-P0 verdict, intake identity opalsupport@opalinvest.com per Andrew ~19:4xZ) + TO-D."
     members:
@@ -342,7 +342,7 @@ directives:
       staffing one, and it must NOT be closed by minting a project for held work. Contrast D5
       (LD-0454), whose empty set is correct on its own terms."
   D8:
-    title: "Model Portfolios Pipeline Fortification (NEW; repair-first)"
+    title: "Model Portfolios Pipeline Fortification"
     directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
     placement: "LAPTOP -- RULED (criterion a: MDPF/MP primary work, same basis as D1/D3; the producers are data/mdpf/scripts/gold and the served surface is opal-data-portal-v2/platinum/mdpf)."
     members:
@@ -365,7 +365,7 @@ directives:
       opal-data-portal-v2) is RECORDED AS DIRECTION in the PRD s.3 -- it diverges from CLAUDE.md
       Rule 17b, and NEITHER the law amendment NOR any migration is authorized by it."
   D9:
-    title: "Tax SMA ops (NEW; assess-first)"
+    title: "Tax SMA Ops + YCharts"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
     placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
     members:
@@ -382,7 +382,7 @@ directives:
       the Rule-25 ABANDONED-vs-KEY-MIGRATED discriminator, and the OPEN CALL on whether
       OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454."
   D10:
-    title: "Global Pipeline Structure (NEW; canon-first, pipeline by pipeline)"
+    title: "Global Pipeline Structure"
     directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
     placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree."
     members:
@@ -432,7 +432,7 @@ directives:
       else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
       Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
   D11:
-    title: "Substrate Analysis (NEW; qualify the ladder before anything is built on it)"
+    title: "Substrate/Tooling Enhancements"
     directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
     placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator."
     members:

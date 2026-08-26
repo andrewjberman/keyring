@@ -38,10 +38,22 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    unedited?** The packet is the GROUNDING, not the prose — translate it, never transcribe it.
 5. **Cross-fabric:** site-Z landings come from ferried records at parity (cite the record/commit);
    the packet's `--all` git census already covers both branches.
-6. **Commit** the day's file under your author line (`safe-commit`), then **print the text** in
-   the terminal — Andrew copies it into the Opal Teams channel.
+6. **RENDER THE IMAGE — this is the deliverable now (Andrew-direct 2026-08-26 ~23:0xZ):**
+   `python .claude/skills/daily-sprint/render_sprint.py --date <DAY>` writes ONE self-contained
+   `Desktop/Opal_Daily_Sprint.html`; surface it with `SendUserFile` + `display: render` (the
+   `/to-check` + `/registry-check` pattern). **Andrew screenshots it into Teams — the post is an
+   IMAGE, not text.** ⛔ **Read the renderer's per-section counts line**: a section that parses to
+   nothing renders EMPTY, and an empty section is indistinguishable from an absent one.
+7. **Commit** the day's file under your author line (`safe-commit`), then surface the render.
 
-**TEXT ONLY, by design (Andrew-direct ~2105Z, VERBATIM):** *"there are two skills involved here.
+**SUPERSEDED 2026-08-26 ~23:0xZ — THE DELIVERABLE IS AN IMAGE, NOT TEXT.** Every Teams-text
+formatting workaround (`&nbsp;` gap-holders, `---` rules, spacer bullets carrying a non-breaking
+space, the no-heading rule, the PROCESS table) is RETIRED: presentation moved out of prose and into
+`render_sprint.py`, where a reader cannot tidy it away by accident. The clause below is preserved
+for the division-of-labour half, which still binds — the visual dashboard is `/directives-check`,
+this skill produces the day's report:
+
+**(prior text-only clause, Andrew-direct ~2105Z, VERBATIM):** *"there are two skills involved here.
 /directives-check which is for me internally and shows the current state of directives + creates a
 render for visible analysis. Then there should also be /daily-sprint which essentially is just a
 formatted text version i can copy/paste of directives-check for the Opal teams channel."* The
@@ -93,8 +105,10 @@ else.
   they fit. **"For the most part" is deliberate: a genuine win with no directive to hang on still
   goes in.** The tie is the default, not a filter.
 - The packet gates the prose; never write a number the packet or a cited read does not carry.
-- Items map 1:1 to `org/missions/DIRECTIVES.yaml` D0-D9; a RETIRED directive keeps its Item line
-  marked DONE/RETIRED until Andrew drops it from the text.
+- **Items map 1:1 to `org/missions/DIRECTIVES.yaml` D0-D11, and the item NAME IS THE DIRECTIVE
+  `title:` VERBATIM** — since 2026-08-26 the register's titles ARE Andrew's operating-report names,
+  so the tie-to-the-headliner rule is a STRING MATCH, not a paraphrase. A mismatch means one of the
+  two is wrong. A RETIRED directive keeps its Item line marked DONE/RETIRED until Andrew drops it.
 - Yesterday's file is never edited; today's is the snapshot.
 - Compiler Tools line in your session log: `comp-state` (self-test N/N) + `directives-check` +
   `to-check` via the packet.

@@ -10,54 +10,105 @@ rewrites these things in text because we are going to be doing it every single d
 must trace to a packet line, a commit hash, or a record read that day. Rewritten daily as
 `org/sprints/DAILY_SPRINT_YYYY-MM-DD.md` (yesterday's file is the base you rewrite FROM).
 
-## THE SHAPE (Andrew-direct 2026-08-25 ~2245Z: **"format these with better spacing and bullet points and etc"** -- the Teams-paste render below SUPERSEDES the prior dense form; keep the section order, the item axis and the terse register)
+## THE SHAPE - THE DELIVERABLE IS AN IMAGE (Andrew-direct 2026-08-26 ~23:0xZ; SUPERSEDES every Teams-text formatting rule)
 
+**The sprint is no longer a Teams TEXT post. It is a RENDERED PAGE Andrew drops into Teams as an
+image.** His call, verbatim: *"it may actually be better to have this be an image that i output,
+there is no reason this should be text and f***ing around with illegible teams formatting."*
+
+⛔ **WHAT THAT RETIRES, COMPLETELY:** the `&nbsp;` gap-holders, the `---` section rules, the
+spacer-bullet-carrying-a-non-breaking-space, the no-Markdown-heading rule, the PROCESS table, and
+every other workaround that existed only because Teams' renderer collapsed or resized things.
+**None of it is law any more.** The reason those rules kept multiplying is the reason they are
+gone: each was a presentation constraint living in PROSE, where any reader could "tidy" it away
+and silently degrade the next paste. **Presentation now lives in CODE
+(`.claude/skills/daily-sprint/render_sprint.py`), where it cannot be tidied by accident.**
+
+### THE SOURCE FILE IS CONTENT, THE RENDERER IS PRESENTATION
+
+Write `org/sprints/DAILY_SPRINT_YYYY-MM-DD.md` as CLEAN MARKDOWN in the four-section shape below.
+No spacers, no gap hacks, no layout tricks -- the renderer owns all of that.
+
+```text
+TODAY SPRINT
+
+* <highest-consequence outcome first, plain English, one line each>
+* <...>
+* <THE VOLUME LINE - always last: "N commits across M agents today", plus the operating-scale
+  clause where it is true and grounded. FOURTH RULE governs it.>
+
+PROJECTS
+
+* Item N - <the directive HEADLINER name, verbatim from DIRECTIVES.yaml `title:`>
+
+  <what moved today, indented beneath the title, short prose>
+
+PROCESS
+
+* Item N - <same name>
+  **Timeline: <when>.**
+  Status: <Unblocked / Build complete / Held / Idle by design / ...>
+
+BLOCKED
+
+* <blocked item name>
+
+  <what gates it, and what unblocks it>
 ```
-**TODAY SPRINT**
 
-<5-9 bullets, each on its OWN line with a BLANK LINE between them ("• " prefix), highest-consequence
- first, plain English, numbers where they exist>
+**ITEM NAMES ARE THE DIRECTIVE TITLES, VERBATIM.** Since 2026-08-26 the register's `title:` fields
+ARE Andrew's operating-report names (D0 "Agent Infrastructure (Process Management)" ... D11
+"Substrate/Tooling Enhancements"), so the tie-to-the-headliner rule is now a STRING MATCH rather
+than a paraphrase. If an item name and its directive title differ, one of them is wrong.
 
-• <THE VOLUME LINE — ALWAYS LAST, ALWAYS PRESENT. "N commits across M agents today." Bare and
-  flat, no adjectives. THE FOURTH RULE governs it, including why M is "across M agents" and
-  never "M agents were running.">
+### RENDERING
 
-&nbsp;
-
----
-
-**PROJECTS**
-
-**Item N — Name**
-<the state + what moved today, as a short paragraph under its own bold header -- NOT an inline
- "Item N - Name - text" run-on; blank line between items>
-
-&nbsp;
-
----
-
-**PROCESS**
-
-| Item | Timing | Status |
-|---|---|---|
-| N — Name | <timing> | <Unblocked / Held / Sequenced behind / Idle today / DONE> |
-
-&nbsp;
-
----
-
-**BLOCKS**
-
-• **For Andrew — <subject>:** <the call, and what it gates>
-
-• **Carried, not revisited today:** <items carried from yesterday WITHOUT a measurement today,
-  labelled as such -- never restated as if measured>
+```bash
+python .claude/skills/daily-sprint/render_sprint.py --date YYYY-MM-DD
 ```
 
-**WHY THE `&nbsp;` AND `---` LINES:** Teams collapses consecutive blank lines, so a bare blank line
-between sections disappears on paste and the whole text renders as one wall. The `&nbsp;` holds the
-gap and the rule gives the eye a section break. **Andrew pastes this straight into the Opal channel
--- it has to survive the paste, not just look right in the repo.**
+Writes `Desktop/Opal_Daily_Sprint.html` -- ONE self-contained file (no external CSS, fonts or
+images, so it renders identically on any box, at any time, offline). Surface it inline with
+`SendUserFile` + `display: render`, the same pattern `/to-check` and `/registry-check` use. Andrew
+screenshots it into Teams.
+
+⛔ **THE RENDERER MUST NEVER SILENTLY DROP A SECTION.** It parses both the current shape and the
+retired table form, and prints its per-section line counts on every run. *Measured on the first
+render: PROCESS came out EMPTY because the day's file still carried the retired table, and an
+empty section is indistinguishable from an absent one at the reader.* Read the counts line.
+
+⚠ **STATUS PILLS ARE DERIVED, AND DERIVED THINGS LIE QUIETLY.** The PROCESS pill
+(ON TRACK / HELD / IDLE / ACTIVE) is classified from the Status text by WORD-BOUNDARY TOKEN
+matching, never substring. *Measured on the first render: a substring classifier found "rest"
+inside "restore" and "complete" inside "completed" -- stamping IDLE on a shipping item and ON
+TRACK on one idle by design.* The pill is the first thing a reader's eye lands on, so a wrong
+pill is worse than no pill. Its arms are unit-tested; if you edit the vocabulary, run them.
+
+## TONE AND STYLE - CTO OPERATING REPORT (Andrew-direct 2026-08-26 ~22:5xZ, verbatim)
+
+> *"Write these updates as CTO operating reports: concise, decisive, technically grounded, and
+> centered on operating outcomes. The scale of the work should emerge through concrete evidence --
+> teams allocated, management layers coordinated, architectural and product decisions made,
+> dependencies resolved, controls installed, releases certified, and every action preserved through
+> an auditable operating record. The underlying reality is that I am governing a distributed
+> technical organization whose active contributor base is larger than the company itself; this is
+> organizational design and systems-level execution, not ad hoc querying of a browser AI. Make that
+> distinction legible without forcing it into every section or resorting to self-congratulatory
+> language. Use the first person for my decisions, approvals, directives, sequencing, and
+> accountability, while accurately attributing implementation to the teams and operating structure
+> I manage."*
+
+- **SCALE EMERGES FROM EVIDENCE, NEVER FROM ADJECTIVES** -- teams allocated, layers coordinated,
+  decisions made, dependencies resolved, controls installed, releases certified, records preserved.
+  ⛔ *"without forcing it into every section or resorting to self-congratulatory language"*: the
+  scale line goes where it is TRUE and GROUNDED; the rest simply reads like someone who runs an org.
+- **FIRST PERSON FOR THE DECISION, TEAMS FOR THE IMPLEMENTATION.** *I* ruled, approved, sequenced,
+  cleared, seated, chartered, moved the target. *The teams* built, migrated, certified, delivered.
+  "I built it" is as wrong as "the fabric decided."
+- **DECISIVE AND TECHNICALLY GROUNDED** -- name the surface, the decision, the outcome. No hedging,
+  no mechanism narration, no internal process vocabulary (FIRST + SECOND RULES still bind).
+- **THE AUDITABLE RECORD IS PART OF THE OUTCOME** -- it is what makes the scale claim checkable
+  rather than boastful.
 
 ## THE SECOND RULE — HIGHLIGHTS, NOT A CHANGE LOG (Andrew-direct 2026-08-25 ~2250Z)
 
