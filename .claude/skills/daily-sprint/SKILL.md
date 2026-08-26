@@ -58,6 +58,13 @@ else.
 
 ## Discipline
 
+- **WRITTEN IN ANDREW'S VOICE (Andrew-direct 2026-08-26 ~21:2xZ, VERBATIM):** *"These have to be
+  written in my voice, do not refer to me as im the one who is allegedly saying these things."*
+  He pastes the text as HIS OWN channel message — **never write "Andrew ruled/approved/set…"**;
+  decisions render as bare outcomes ("Ruled: …", "Approved: …", "Target moved to today") or first
+  person where ownership is the point, and a "For Andrew" block renders "**Pending my call:** …".
+  The test: read every line as if you are Andrew posting it. Full form + before/after table: the
+  template's **THIRD RULE**.
 - **HIGHLIGHTS, AND MAKE IT SOUND GOOD (Andrew-direct 2026-08-26).** *"if we fix a bug that sounds
   good, if we build something that sounds good, we do not want pedantic stuff, and we want to tie
   it back to directives.yaml headliner items for the most part."*

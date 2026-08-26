@@ -134,6 +134,30 @@ a headliner — a sovereign decision, a partner-facing outcome, something new th
 still goes in.** Do not drop a genuine win because it lacks a directive to hang on. **The tie is
 the default, not a filter.**
 
+## THE THIRD RULE — WRITTEN IN ANDREW'S VOICE (Andrew-direct 2026-08-26 ~21:2xZ, VERBATIM)
+
+> *"These have to be written in my voice, do not refer to me as im the one who is allegedly saying
+> these things"*
+
+**Andrew pastes this text into the channel AS HIS OWN MESSAGE. A line that says "Andrew ruled…" /
+"Andrew approved…" / "Andrew set the labels…" reads as someone reporting ABOUT him inside his own
+post — absurd on arrival.** Never write his name as the actor.
+
+**HOW DECISIONS RENDER INSTEAD:**
+| wrong (third person about him) | right (his voice) |
+|---|---|
+| "Andrew ruled the client labels himself" | "Set the client-facing labels: …" / "I set the labels: …" |
+| "Andrew opened the floodgates: all products drive to done" | "Opening the floodgates: performance reporting, insurance views, … all drive to done this week" |
+| "Andrew's Black Diamond decisions unblocked the build" | "The Black Diamond calls are made — advisor keying is settled and the build is unblocked" |
+| "waiting on Andrew's look and word" | "ships on my sign-off" / "ships once I've seen the demo" |
+
+**Bare-outcome form is usually better than first person** — "Ruled: …", "Approved: …", "Target
+moved to today" — it reads naturally whether or not the reader knows who decided. First person
+("I ruled…") is fine where ownership of the call is the point. **The test: read every line as if
+YOU are Andrew posting it — any line that mentions Andrew as a third party fails.** This binds the
+whole file: Today-Sprint bullets, Item lines, Process cells, and Blocks (a "For Andrew" block
+renders as "**Pending my call:** …").
+
 ## THE FIRST RULE — LAYMAN, SHORT (Andrew-direct 2026-08-20, VERBATIM)
 
 > Something key to mention for the daily sprint skill is that the sprint lines (and descriptions
