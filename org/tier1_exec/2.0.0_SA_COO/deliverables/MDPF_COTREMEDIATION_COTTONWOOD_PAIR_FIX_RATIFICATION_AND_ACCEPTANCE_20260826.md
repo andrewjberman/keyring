@@ -70,7 +70,7 @@ the entire gate delta — which is what moves this from *a* cause to **the** cau
 | A4 | **TOTAL recovered** | **$43,676,557.12** — the identity-gate delta, to the cent |
 | ~~A5~~ | ~~`Client - Opal Supervised` residual~~ | ~~$2,869,379.04~~ **SUPERSEDED -- see A5a/A5b** |
 | **A5a** | `Client - Opal Supervised` (unallocated-weight portion) | **$1,476,313.07** |
-| **A5b** | `SMAs` (L0) -> `DIVZ` (L1) -- the Opal SMA sleeve | **$1,393,065.98** |
+| **A5b** | `SMAs` (L0) -> served key **`opal_div_sma`** -- the Opal SMA sleeve, **denominator: 1 account (`Anna *9237`)** | **$1,393,065.98** |
 | A6 | decomposed total | $147,047,720.63 -> **$190,724,277.75**, matching dim opal EXACTLY |
 | A7 | identity gate | **FAIL -> PASS** |
 | A8 | `by_model` key count | 5 -> **6** (gains `Fixed Income`) |
@@ -97,6 +97,15 @@ tuned to.**
 **THE BUCKETING IS NOW THREE-WAY AND COMPLETE ON HIS WORDS:** Opal Models -> Models (Primary/Custom) · Opal SMAs -> SMAs (by strategy) · remainder -> `Client - Opal Supervised`.
 
 **PRECEDENT, so this joins a bucket rather than minting one:** the served `by_model` union already carries `opal_div_sma` as a key on 49financial. Classify from that precedent and the D1 registry -- **never a predicate minted in this repair, and implement it as a ROUTING BRANCH, not a module-level dependency** (that instruction is what produced the import edge the first time).
+
+### 2a-i. TWO PRE-EMIT CORRECTIONS ADDED 2026-08-26 ~17:5xZ, BEFORE THE BRANCH WAS WRITTEN
+
+⛔ **THE SERVED KEY IS `opal_div_sma`, NOT `DIVZ`.** `3.0.0_SA_CVO` measured the served plane (`s3://opal-data-portal-v2/platinum/mdpf/global/aggregate-aua-timeseries.json`): `opal_div_sma` **2 occurrences**, `DIVZ` uppercase **0**, `Client - Opal Supervised` **0**. Positive control: the object parsed and carries `by_model`, so those zeros are real absences.
+**The ruling is written in TAXONOMY terms (`SMAs(L0)/DIVZ(L1)`); the SERVED KEY is `opal_div_sma`. Emitting `DIVZ` would MINT A NEW KEY beside an existing one** -- a fresh canonical-key question rather than the bucket reuse the ruling intends. **Route INTO the existing key.** This is the node-vs-label distinction this same file already got right an hour ago, arriving one layer out.
+
+⛔ **A5b's DENOMINATOR IS ONE ACCOUNT, NOT TWO.** `0.6.2_AE_PartnerETL~A` measured: $1,393,065.98 = `0.07 x 19,900,942.52` from **`Anna *9237` ALONE** -- `Anna *9238`'s blend carries NO DIVZ leg. A5a spans 2 accounts; A5b spans 1; the filter's blast radius was 129. **My first amendment stated A5b's VALUE and omitted its DENOMINATOR -- my omission, corrected here.** This thread has now been bitten THREE times by a correct number travelling with the wrong population attached ($38.1M over 129 accounts; the 2-vs-129 recovered population; this one).
+
+⚠ **AND THE CORRECTION LANDS BEFORE THE SEGMENT EVER SERVES:** `Client - Opal Supervised` is absent from the served artifact today, so nothing client-facing carries the mis-bucketed $1.39M. This is not a repair of something already public.
 
 **SEQUENCING RULED (i) at 72819:** the apply was measured NOT LANDED (lambda still 15:29:34Z / `3/897ecG...`, and `0.6.2_AE_PartnerETL~A` had deliberately not opened a NEVER#6 ledger across the hold), so the DIVZ re-cut folds into the SAME pin and the bundle is applied ONCE.
 
