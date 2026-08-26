@@ -69,8 +69,18 @@ COO_INBOX = WORKSPACE / "org" / "mcp" / "inbox" / "2.0.0_SA_COO"
 LEG_KINDS = {"git", "s3-prefix", "activation", "ec2-baked-asset", "verify", "tf-lambda"}
 DEFAULT_WINDOW_HOURS = 4.0
 
-# HELD / SOVEREIGN-GATED state (CTO-designed 2026-07-09; the dormant-sovereign-hold doctrine encoded
-# into the never-half-land gate). An APPLY/DEPLOY leg is any leg whose work MUTATES state (git push,
+# HELD / SOVEREIGN-GATED state. PROVENANCE, TWO FIELDS ON PURPOSE -- designed by 1.0.0_SA_CTO,
+# AUTHORED by 2.0.0_SA_COO~B @f6f0a543aa3 (2026-07-09), clause (d)+HELD-PAST-REREAD extended by
+# 0.8.0_AE_CloudComp @6fc0b41fb0 (2026-08-26). This line used to read only "CTO-designed 2026-07-09"
+# and that is TRUE-BUT-INCOMPLETE IN A WAY THAT READS AS COMPLETE: 2026-08-26, a seat sourced
+# provenance from it, propagated it into a message CORRECTING an attribution, and dropped the
+# author -- with `git blame` one command away, unrun, BECAUSE THE COMMENT AGREED WITH WHAT THEY
+# ALREADY BELIEVED. A line that confirms you does not feel like a claim under test; it feels like a
+# citation. DESIGNER and AUTHOR are DIFFERENT FIELDS and a record carrying one cannot tell them
+# apart -- CLAUDE.md: a value must carry its claim in a field a consumer can reject on, never in a
+# comment. Amend this block when a name changes; do not let it collapse back to one name.
+# The dormant-sovereign-hold doctrine is encoded
+# into the never-half-land gate. An APPLY/DEPLOY leg is any leg whose work MUTATES state (git push,
 # code landed, TF apply, activation, baked asset); a VERIFY leg is a post-deploy live-state check. The
 # distinction is load-bearing: HELD requires EVERY apply leg proven + ONLY verify legs open, so a real
 # half-landed strand (an open apply leg) can NEVER claim HELD to escape the RED. See _qualifies_as_held.
