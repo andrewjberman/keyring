@@ -91,6 +91,29 @@ A card that finds defects is a PASSING card (card verdict != resource verdict). 
 - ANY remediation by the carding lane — qualify-do-not-fix; a fix is out-of-spec regardless of
   card quality.
 
+## Andrew-direct 1907Z operative rows (DT~X 73174 relay, first-hand at their terminal) — bind cards
+delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
+
+- A historical materializer's OUTPUT is not evidence of a CURRENT layer — such artifacts take
+  `authority_role: evidence`, never source. (A card that holds the rebuilt-graph surface and the
+  static-output surface APART, naming both, satisfies this without an enum flip — CCX ruling 2.)
+- Generator tags carry a qualified currency: `generator: <path>` + `generator_currency: UNVERIFIED`
+  unless currency was actually measured. An omitted row and an unqualified row are opposite facts
+  that look identical.
+- The suspicion axis is SEMANTIC, not vintage: "deprecated opinionation, filtering, questionable
+  definitions" — age/mtime/snapshot instruments are blind to it. A methodology row resting on "the
+  generator ran recently" is non-responsive to this axis.
+- SC-d-* (C3.i): Andrew states NO stable C3 layer exists — the ABSENCE is the finding; a card
+  presenting a C3-shaped one-off materialization as "the C3 layer" is wrong on its face.
+- Canonical-materializer intent is POST-wave-1, trigger "after reviewing all substrate cards" —
+  authorizes nothing now; any lane building one mid-wave is out of spec.
+
+## Wave-1 ruling log (issued with verdicts)
+
+- **AC-F3 binds mechanically** (CCX verdict ruling 1): `basis: absent` on any row → standing must be
+  INCOMPLETE; INCOMPLETE over worked-to-absent rows = healthy PASS; genuinely unworked rows = rework
+  regardless of verdict. TO-prose alignment is the issuer's wave-boundary act.
+
 ## Standing context
 
 - nerves_resolve is the worked REFERENCE card (CTO~X's, pre-wave vintage): not a wave member, not
