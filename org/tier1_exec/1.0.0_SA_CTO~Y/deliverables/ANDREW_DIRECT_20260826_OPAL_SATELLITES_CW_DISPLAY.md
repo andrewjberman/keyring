@@ -96,6 +96,20 @@ weights are the single basis for every per-satellite Characteristics / Performan
 calculation across the page. The image-6 table above is hereby demoted to a cross-check expectation;
 the rebalancer surface is the source of truth.
 
+## Subsumption ruling (Andrew-direct, ~22:5xZ, verbatim)
+
+> "Yes this needs to subsume D4 if it has not already"
+
+**Reading executed:** ETFS_SATELLITES is a FULL D4 MEMBER — subsumed into the directive, not
+"D4-adjacent" (the adjacency phrasing was this seat's card language; his word supersedes it). The
+membership half was already landed by `0.0.0_AB_MSTR` @`5780da5da5` (D4 projects:
+[ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST, ETFS_SATELLITES], ON origin) — "if it has not already"
+satisfied. **Consequence applied, stated plainly so one line corrects it if unintended:** with no
+carve-out spoken, the D4 register row's own clause ("PLACEMENT ATTACHES TO THE DIRECTIVE, NEVER TO
+A MEMBER") gives the member D4's placement — **SITEZ** ("keep D4 on sitez until the project is
+done", Andrew-direct 2026-08-24). The pending laptop-vs-SITEZ call closes on this word: the
+stage-3 decomp routes to the site-Z fabric; the laptop COO's queue is released of it.
+
 ## Disposition
 
 `1.0.0_SA_CTO~Y` produced placement options + a rec for discussion with Andrew (this session);

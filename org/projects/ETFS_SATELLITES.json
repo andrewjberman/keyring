@@ -22,14 +22,15 @@
   ],
   "status": "active",
   "dep_stage": "PRD",
-  "phase": "STAGE 1 REGISTERED + STAGE 2 PRD landed 2026-08-26 ~22:2xZ by 1.0.0_SA_CTO~Y (commissioning exec) on the /open-calls approval. STAGE 3 handed to 2.0.0_SA_COO this turn: operative-surface atom-decomp BEFORE any TO (Rule 27); certifier 3.0.0_SA_CVO. Placement: AT ANDREW (device call pending at the ~Y terminal, surfaced 73960/73962) -- this seat's REC = laptop (portal DE-class + a small weights-derivation leg off the cot rebalancer bronze already landing daily), labelled as a RECOMMENDATION: the prior bare 'laptop' here was a rec wearing a ruled field's clothes (self-corrected 73955/73960; COO 73971 carries it as a measured NFRA_TORECORD-class instance). D4's directive placement is SITEZ by Andrew's 08-24 word and forbids member-placement inference in either direction; his one-line ruling settles this field and this text is then replaced by it. Scope fence: display product = the OPAL-NAMED satellites only; membership derives from the rebalancer roster predicate, never a hand list; weights derive from rebalancer_model_detail relativeAllocation, never the thread images.",
-  "blocking": "Placement (laptop vs D4-SITEZ inheritance) AT ANDREW -- one-line call pending at the ~Y terminal; the stage-3 decomp starts (or re-routes to the site-Z fabric) on his word. Everything else: none -- the weights substrate is live and measured; the firm-gate seam is a build item.",
+  "phase": "STAGE 1 REGISTERED + STAGE 2 PRD landed 2026-08-26 ~22:2xZ by 1.0.0_SA_CTO~Y (commissioning exec) on the /open-calls approval. STAGE 3 RE-ROUTED to the SITE-Z fabric's COO lane on the subsumption ruling (~22:5xZ; originally handed to laptop 2.0.0_SA_COO, released by the same word): operative-surface atom-decomp BEFORE any TO (Rule 27); certifier = that fabric's CVO seat. Placement: SITEZ BY SUBSUMPTION -- Andrew-direct 2026-08-26 ~22:5xZ at the ~Y terminal, VERBATIM: 'Yes this needs to subsume D4 if it has not already.' Full D4 membership (landed @5780da5da5, ON origin), no carve-out spoken, so the D4 row's placement-attaches-to-the-directive clause gives the member D4's SITEZ ('keep D4 on sitez until the project is done', 08-24). The stage-3 decomp routes to the site-Z fabric (site-Z COO lane; certifier per that fabric's CVO seat); the laptop 2.0.0_SA_COO queue is released of it. Provenance history of this field (a rec that read as ruled, then AT-ANDREW): @25b116f8ac -> @96f5f4edfb -> this ruling. Scope fence: display product = the OPAL-NAMED satellites only; membership derives from the rebalancer roster predicate, never a hand list; weights derive from rebalancer_model_detail relativeAllocation, never the thread images.",
+  "blocking": "None. Placement RESOLVED by Andrew's subsumption word (~22:5xZ): SITEZ via D4. The weights substrate is live and measured; the firm-gate seam is a build item. Next actor: the site-Z fabric's COO lane for the stage-3 decomp (routed via 0.0.0_AB_MSTR, cross-device).",
   "created": "2026-08-26",
   "pods": [
     "1.0",
     "2.0",
     "3.0",
-    "0.4"
+    "0.4",
+    "SITEZ"
   ],
   "pipeline": "cot rebalancer bronze (opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_model_detail/{date}/) -> satellite weight mapping -> Positioning page third mode pill (portal/src/pages/Positioning/, bookSet.ts declared membership + POSN_CUSTOM.001 blend arithmetic over the served models payload)",
   "coo_lane": "2.0.0_SA_COO",
