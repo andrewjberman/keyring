@@ -789,6 +789,78 @@ def _held_age_days(state: dict, now: datetime) -> float | None:
         return None
 
 
+# ==========================================================================================
+# HELD-VERIFY-PENDING -- THE THIRD LIFECYCLE STATE (COO ruling @be7d73eb2a, dispatch 72668).
+#
+# THE STATE THE AXIS COULD NOT EXPRESS: apply COMPLETE, but a VERIFY leg pending on a NAMED
+# FUTURE EVENT under a DIFFERENT OWNER. None of the ten TERMINAL_STATUS_TOKENS can say that, so
+# authors reached for prose and each reached for DIFFERENT prose -- the estate carries SIX
+# independent one-off coinages for this one state (HELD-SOVEREIGN-GATED, DEFERRED-TO-POST-
+# CONSOLIDATION, RESOLVED-PARKED, plus three prose forms), each used exactly once. An n=1 value
+# is the signature of a MISSING VOCABULARY, not a careless author.
+#
+# WHY THIS IS NOT THE ENUMERATED-SPELLINGS TREADMILL THIS MODULE ALREADY RETIRED: the treadmill
+# adds SPELLINGS for a state the axis HAS. This adds the STATE.
+#
+# WHY THE TOKEN IS NOT THE OBVIOUS BARE `HELD`: bare HELD has ZERO status-line occupancy (0 of
+# 468) and would be perfectly safe for this status-line-anchored reader -- and that is the trap.
+# It occupies 102 of 551 files as ORDINARY PROSE ("held behind", "held before"), so any future
+# free-text grep or comp-find census over the token returns a confident, well-formed count of
+# something else. THE READER IS NOT THE ONLY CONSUMER OF A STATUS VALUE; THE NEXT AGENT WITH A
+# QUESTION IS. HELD-VERIFY-PENDING has zero occupancy on every probe and composes into the
+# HELD-* family the corpus already started.
+#
+# ⛔ THE CONSUMING HALF IS THE WHOLE MECHANISM -- CLAUDE.md "A VALUE MUST CARRY ITS CLAIM".
+# _qualified_held_verify_pending REFUSES a value that does not carry BOTH an OWNER and a NAMED
+# RE-READ EVENT, and the caller then reports it as OPEN. Without that refusal this becomes the
+# most attractive place in the estate to park anything inconvenient and drifts to unpopulated
+# exactly as `closure_reason` did at 0 of 333 project JSONs. A hold with no named owner and no
+# named event is indistinguishable from an ABANDONMENT and is MORE dangerous than an OPEN,
+# because it reads as deliberate.
+#
+# ⛔ THE UNCOVERED MEMBER, NAMED SO IT IS NOT DISCOVERED LATER AS A GAP: apply-complete with a
+# verify pending on NO NAMED EVENT is NOT this value and stays OPEN. An unnamed re-read event is
+# precisely how a hold becomes permanent.
+#
+# GRAMMAR (both fields REQUIRED, and required IN THE STATUS VALUE ITSELF, not merely somewhere in
+# the file -- a file-wide scan would let an unrelated "owner:" elsewhere qualify a bare hold, and
+# the failure direction of a loose parser here is INVISIBLE PARKING):
+#     **Status:** HELD-VERIFY-PENDING -- owner: <serial> -- re-read: <named event>
+# Field labels accepted: owner|author for the owner; re-read|reread|re-read-event|event for the
+# event. Separator-liberal, field-strict.
+# ==========================================================================================
+HELD_VERIFY_PENDING_TOKEN = "HELD-VERIFY-PENDING"
+_HVP_OWNER_PAT = re.compile(r"\b(?:owner|author)\s*[:=]\s*([^\n]+?)(?=\s+(?:--|\u00b7|\||;)\s+|$)",
+                            re.IGNORECASE)
+_HVP_EVENT_PAT = re.compile(
+    r"\b(?:re-?read(?:-event)?|event)\s*[:=]\s*([^\n]+?)(?=\s+(?:--|\u00b7|\||;)\s+|$)",
+    re.IGNORECASE)
+
+
+def _is_held_verify_pending(status: str) -> bool:
+    """True if the status value LEADS with the HELD-VERIFY-PENDING token. Leading-token match
+    only, mirroring _is_terminal_status, so a mid-string mention cannot claim the state."""
+    if not status:
+        return False
+    head = re.sub(r"^[^0-9A-Z]+", "", status.upper())
+    return head.startswith(HELD_VERIFY_PENDING_TOKEN)
+
+
+def _qualified_held_verify_pending(status: str) -> tuple:
+    """(is_qualified, owner, event) for a HELD-VERIFY-PENDING status.
+
+    REFUSES -- returns is_qualified False -- unless BOTH an owner and a named re-read event are
+    carried in the value. The caller MUST then treat the entry as OPEN. This refusal is half (b)
+    of the ruling and the half that keeps the value honest."""
+    if not _is_held_verify_pending(status):
+        return (False, None, None)
+    o = _HVP_OWNER_PAT.search(status)
+    e = _HVP_EVENT_PAT.search(status)
+    owner = o.group(1).strip().strip("*_ ") if o else None
+    event = e.group(1).strip().strip("*_ ") if e else None
+    return (bool(owner and event), owner or None, event or None)
+
+
 _LEG_TABLE_PAT = re.compile(r"^\|\s*(?:leg|L\d+|id)\s*\|", re.M | re.I)
 _LEDGER_CLASS_PAT = re.compile(r"\*\*Class:\*\*\s*deploy-completion", re.I)
 _MANIFEST_HEAD_PAT = re.compile(r"^#{1,6}\s*Manifest\b", re.M | re.I)
@@ -854,6 +926,25 @@ def _unindexed_open_ledgers(covered: set) -> list:
         if _has_terminal_status_anywhere(md):
             continue  # CLOSE-BLOCK-at-foot shape: a terminal status line ANYWHERE
             #           in the doc's own status grammar (fix b, CTO GO 144651Z)
+        # HELD-VERIFY-PENDING -- the third lifecycle state. A QUALIFIED one (owner + named
+        # re-read event) is neither terminal nor open: --red must neither fire on it nor
+        # swallow it, so it is skipped here. An UNQUALIFIED one is REFUSED and falls through
+        # to be reported as OPEN, naming the missing field -- half (b) of ruling be7d73eb2a.
+        if status is not None and _is_held_verify_pending(status):
+            ok, owner, event = _qualified_held_verify_pending(status)
+            if ok:
+                continue
+            missing = " and ".join(
+                m for m, v in (("an owner", owner), ("a named re-read event", event)) if not v)
+            reason = (f"REFUSED HELD-VERIFY-PENDING (missing {missing}) -- read as OPEN: "
+                      "a hold without both is indistinguishable from an abandonment")
+            try:
+                mtime = datetime.fromtimestamp(md.stat().st_mtime, timezone.utc)
+                age_h = (now - mtime).total_seconds() / 3600.0
+            except OSError:
+                age_h = -1.0
+            out.append((md, reason, age_h))
+            continue
         if status is None:
             reason = "no **Status:** and no close-date marker (open or malformed)"
         else:
