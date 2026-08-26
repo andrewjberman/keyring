@@ -198,14 +198,16 @@
               "items": {
                 "$ref": "#/$defs/joinable_ref"
               },
-              "description": "What it reuses. Empty array is a claim, not a gap."
+              "description": "What it reuses. Empty array is a claim, not a gap. || x-names-parts: TRUE. \u26d4 THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
             },
             "invents": {
               "type": "array",
               "items": {
                 "$ref": "#/$defs/joinable_ref"
               },
-              "description": "What it originates. A resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge."
+              "description": "What it originates. A resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge. || x-names-parts: TRUE. \u26d4 THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
             },
             "basis": {
               "allOf": [
@@ -521,7 +523,8 @@
               "items": {
                 "$ref": "#/$defs/joinable_ref"
               },
-              "description": "THE LINEAGE, AND THE MANIFEST CONSUMES IT. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."
+              "description": "THE LINEAGE, AND THE MANIFEST CONSUMES IT. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection. || x-names-parts: TRUE. \u26d4 THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
             },
             "co_resident_stores": {
               "type": [
@@ -531,7 +534,8 @@
               "items": {
                 "$ref": "#/$defs/joinable_ref"
               },
-              "description": "Other stores holding the same or overlapping content -- the duplicate-store census."
+              "description": "Other stores holding the same or overlapping content -- the duplicate-store census. || x-names-parts: TRUE. \u26d4 THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
             },
             "basis": {
               "allOf": [
