@@ -129,3 +129,61 @@ the amendment must copy.
 ~X-authored subject); the `build_package.py:266` trap met armed — read in full, no pin-advance
 inference drawn; no gate manufactured — the refusal binds only this cert's own signature, and the (i)
 TO cut is explicitly recommended forward.
+
+---
+
+# ADDENDUM — DISCHARGE CERT, 2026-08-26 ~21:5xZ (same seat, same worksheet)
+
+**Object:** DECOMP.md §4b @`eb73d94342` (COO absorbing amendment, signal 73756). Read as a full diff
+`ce04a311eb..eb73d94342` against the §3 worksheet above — the worksheet is the check, not the frame
+the amendment was required to copy.
+
+## Absorption verification, item by item
+
+A1→`D1-k-1` · A2→`D1-k-2` · A3→`D1-k-3` (declared edge, 4a-UU form) · A4→`D1-i-3` · A5→`D1-k-4`
+(verify-or-add, membership-stated-never-inferred oracle) — **all five absorbed with correct
+citations and discriminating oracles** (`k-1` reads the EMISSION, not the source — the right plane).
+B1–B9 → §4b.2, all nine shifts absorbed faithfully, none softened. Counts: 31→36 cells ✓,
+criterion-bearing 28→33 ✓, struck 0 ✓.
+
+**`D1-i-3` placement (COO's invited check): CONCUR.** Its intent is path-to-execution, not rule —
+postulate (iii) puts it on (i). My own §3 worksheet derived it under path-to-live; independent
+agreement, not deference.
+
+**The TO-I1-DS trap: CONFIRMED as COO stated it.** `TO-I1-DS` @`35f7ea8ced` covers `i-1`/`i-2`/
+`inv-5` only (alignment 3 cells / 4 criteria); `i-3` joins the surface WITHOUT joining the TO and is
+NOT-YET-EVALUABLE until cut post-cert.
+
+## Second CE hunt over the amended domain (postulate (i), re-derived again by this seat)
+
+Candidates re-tested and resolved: the gold→platinum serving leg (inside the producer's own A4 emit —
+`b-1`/`i-2` cover it); the CF wildcard route (confirmed 3/3 sibling types; now inside `i-3`'s render-
+path statement); the scheduled-floor trigger (acceptance instrument, not a change surface); registry
+`:992` float-tolerance (remediation execution-state, CVO 72375's TO — not an enumeration member);
+tonight's Opal-Satellites/Positioning product (OUT of D1's declared purpose — different page, its own
+placement open at Andrew). **No further uncovered member found.**
+
+## Four postulates on the amended artifact
+
+**(i) MECE — PASS.** Exclusivity holds ((k) does not overlap (h)/(i): rule ≠ render ≠ route);
+coverage now spans every member of both my derivations. **(ii) SAME GRAIN — PASS** (k-cells all
+rule-level; `i-3` route-level, consistent with (i)). **(iii) INTENT COHERENCE — PASS** ((k) one
+intent, `i-3` correctly excluded from it). **(iv) STATE COHERENCE — PASS, and §4b.3's record is the
+right shape:** four values, four remedies, four owners, `k-3` explicitly outside this project's power
+— which is exactly why it is a declared edge, not a task.
+
+## VERDICT: **CERTIFIED** — the decomp @`eb73d94342`, 36 cells, passes the four postulates. The
+whole-artifact refusal of §6 is **DISCHARGED.**
+
+Two riders, neither blocking the cert:
+- **CONDITION (pre-criteria):** the 9 amended identities still carry their SUPERSEDED oracles in the
+  §2 tables (`r1`'s row still targets `members_for('Client > Supervised')`, a dead node), corrected
+  only by §4b.2 prose. Before criteria cut on any amended cell, its oracle is restated in place or on
+  the TO face — a reader of §2.h.1 must not inherit a dead oracle two pages above its correction.
+- **COUNT NOTATION:** "Amended cells: 9" reaches 9 only by counting `v2`/`v4` jointly and excluding
+  `R-h1` (a record, not a cell). State the convention or print 10 — a denominator that needs a
+  convention to reconcile invites the exact misread §0's "Total: 28" annotation exists to prevent.
+
+**Effect:** NOTHING-ELSE-CUTS lifts on re-cert per COO 73756 §5 — criteria may now cut on the 5 new
+and 9 amended cells (honoring the CONDITION above); `TO-I1-DS` proceeds unaffected; NO-SHIP on
+D1_CATVIEWS remains until Andrew's by-name lift, untouched by this cert.
