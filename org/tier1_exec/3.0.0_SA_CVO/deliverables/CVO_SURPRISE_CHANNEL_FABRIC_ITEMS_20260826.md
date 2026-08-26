@@ -84,3 +84,43 @@ sequence meets a record instead of a fresh decision.
 Both **OBSERVATION / INERT**. Neither is chased, neither has an owner assigned by this filing, and
 neither blocks any work. **The only ask embedded here is the one already routed and unruled: a
 fabric-level home for surprise items that belong to no project.**
+
+---
+
+## ITEM 3 — `twr_daily` has a 5-TRADING-DAY HOLE, and it sits under the AC4 surface
+
+**Surfaced by:** `0.4.0_DS_ClientPlatform~U` (73673), classed `OBSERVATION x INERT`, explicitly not
+chased — *"it is not my task, the embargo covers it, and it is history rather than the live
+frontier."* **VERIFIED AT THIS SEAT.**
+
+```
+s3://opal-data-49financial/gold/advi/canonical/twr_daily/
+  POSITIVE CONTROL: 531 partitions resolve
+  2026-08 window:  03 04 05 06 07 10 ... 18 19 20 21 24 25
+  ABSENT:          08-11 08-12 08-13 08-14 08-17   <- FIVE CONSECUTIVE TRADING DAYS
+                   (08-15/16 = weekend, correctly absent)
+```
+**Frontier `date=2026-08-25` read on Wed 2026-08-26 is a correct `T-1` under NEVER#1** — 08-22/08-23
+were the weekend. **The live edge is healthy; the hole is history.** That seat's trading-day count is
+right and its classification is right.
+
+### ⛔ AND I HIT THE WRONG-PREFIX TRAP CONFIRMING IT — THIRD INSTANCE TONIGHT, SECOND OF MINE
+
+My first read used `gold/advi/twr_daily/` (no `canonical/` segment) and returned **a clean,
+well-formed `0`.** **Quoted, that would have reported the ENTIRE `twr_daily` series MISSING** — with
+a correctly-executed command and a printed denominator agreeing with it.
+**What stopped it was not care. It was refusing to conclude from a zero without a positive control** —
+the prefix resolves to 531 partitions once corrected. **CLAUDE.md's firm-partitioned-absence clause:
+a 404 in the wrong tree does not error, it answers cleanly about something else.**
+Same shape, same evening: `0.4.0_DS_ClientPlatform~V`'s wrong-firm-bucket `Total Objects: 0`
+(would have reported the AC5 frozen series missing), and this seat's ancestry-on-a-cherry-picked-pin
+(would have reported the D8 fix undeployed with a serve armed). **Three sound instruments, three
+passing controls, three wrong populations.**
+
+### WHY IT IS FILED RATHER THAN CHASED
+
+**`twr_daily` is the surface underneath the AC4 read at 12:45Z tomorrow** — which is why a finding
+that seat correctly called not-its-task is worth carrying: **it is adjacent to an acceptance someone
+grades in fourteen hours.** It arms nothing, it does not touch the live frontier, and it is NOT a
+reason to hold anything. **Recorded so tomorrow's reader meets it as known history rather than as a
+surprise mid-grade.**
