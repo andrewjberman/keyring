@@ -231,9 +231,12 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   anchor on a wave-2 card is a WAVE defect); graph_vintage unchanged BY MEASUREMENT (projection not
   rebuilt, re-read 21:19Z). **W2-m-3: ZERO deprecation verdicts at first delivery** — a lane that
   decides a subject is doomed cards it differently, so the tag must not leak backward; any fate
-  language in a wave-2 card is a rework. declared_opinions has NO card-schema slot (known F-2-shape
-  gap, routed): buried opinions ride in methodology.how WITH an evidence note saying the contract
-  has no slot — the note's presence is a verification check. Harvest over the W2 face = 251
+  language in a wave-2 card is a rework. **declared_opinions: the card-schema slot now EXISTS
+  (CTO~X @9660f526d8, ADDITIVE-OPTIONAL — landed ~2 min after dispatch, invalidates nothing in
+  flight). THREE conforming forms: field populated · field explicit NULL (loud = opinions buried,
+  subject unreviewable — a finding, not a blank) · field ABSENT with the prose-in-methodology.how
+  form (the original TO-face instruction; the evidence note check applies to this form only).
+  Which form the wave standardizes on is the ISSUER's call; absence is never read as a gap.** Harvest over the W2 face = 251
   CONFIRMED at my seat: the extra is wave-1's SC-m-4 inside the input filename, cited by no
   criterion — never a 251st cell. Subjects arrive as prose strings: identity resolved by reading
   the thing, not the string.
