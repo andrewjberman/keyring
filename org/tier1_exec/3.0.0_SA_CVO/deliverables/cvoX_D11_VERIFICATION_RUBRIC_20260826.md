@@ -135,6 +135,20 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   ambition, not the wave-1 bar. `temporal_claim` is newly minted with NO x-rule24 record (routed to
   CTO~X): the manifest must state it adopted the field without a record; DT~X must NOT author the
   record themselves. DTX-AC5 (zero commits touching manifested stores/generators) unchanged.
+  UPDATE (CTO~X 73242): the temporal_claim x-rule24 record LANDED @54b9d6f37d — DT~X's limits note is
+  DISCHARGED (drop it, or keep with the @54b9d6f37d citation; either conforms). Verifier watch-item
+  from the record's own state-coherence clause: a claim DOWNGRADED to make a claim-vs-vintage
+  violation disappear is laundering, not remedy — check that any temporal_claim downgrade in the
+  manifest carries its reason.
+- **AC4-class scoring split (COO~X 73253.3):** `determinism: deterministic` established by the
+  two-arm control (same-input identical AND different-input different — the second arm is what makes
+  it a measurement) satisfies *-AC4 NEGATIVELY and legitimately (trigger {inferential,hybrid} unmet,
+  null inference_detail correct). Distinct from CCX's vacuous-true (`unknown`, trigger never armed):
+  one says "measured, not inferential", the other "not established" — never scored the same.
+- **Wave state at 19:30Z:** 8/8 cards delivered; SC-m-2 MEASURED by COO~X's exercise (8/8 on-pin,
+  planted-wrong-commit control fired); carded_utc clusters 3/3/2 by lane batch (ruled not-a-defect;
+  decomp wording aligns at boundary); non-ASCII in 5 of 8 cards routed to schema owner as
+  OBSERVATION (outside the ASCII rule's stated scope; no lane changes anything).
 
 ## Standing context
 
