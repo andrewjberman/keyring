@@ -6,6 +6,9 @@ every rule (incidents, measured numbers, history) is `docs/doctrine/CLAUDE_ANNEX
 a rule's reasoning is contested. Startup mechanics: `org/XXX.md`.
 
 ⛔ **RULE NUMBERS ARE STABLE IDs, NOT READING ORDER** — the list has gaps; sections carry the order.
+Rules 4–12, 18 live in `/cloud-ops`; rules **15, 17, 17a, 17b** (data architecture) and **19, 23,
+25, 26** (portal/SES/dormancy/apply-locality) live in `docs/doctrine/CLAUDE_ANNEX.md` — numbers
+stable, citations resolve there. DS/AE seats read their sections before touching those surfaces.
 
 ---
 
@@ -69,6 +72,11 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     (no commit-time guard on MP/benchmark/ADVI). `docs/architecture/NFRA_GRAPHS.md`.
 
 ## 4. CLAIMS AND SCHEMAS
+
+**THE BUILD LADDER — new code is the LAST resort, in order:** (1) YAGNI; (2) the estate already has it —
+`comp-which` for code, `comp-estate --layers/--definitions` for infra + ratified terms; (3) stdlib;
+(4) native platform feature; (5) already-installed dependency; (6) one line; (7) only then the MINIMUM
+code that works. **No non-ASCII in production code/logs/AWS** — use `OK:`/`WARN:`/`ERROR:`/`SKIP:`/`BLOCKED:`.
 
 ⛔ **A VALUE MUST CARRY ITS CLAIM — in a field a consumer can reject on** (`measured/inferred/held/absent`);
 no such field → you may NOT treat it as measured. **The consuming half is the whole mechanism** — an
@@ -140,36 +148,6 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     guarded fallback). `.tools/jq.exe` is vendored — resolve it first, fail closed loud. ⛔ **Never
     `2>/dev/null` a read whose EMPTINESS carries a verdict.** `docs/architecture/ADHC_BASHFIX.md`.
 
-## 7. DATA ARCHITECTURE
-
-17. **Silver = dedup + dtype standardization ONLY** — no field-slimming, fillna/dropna, or business filters
-    (that judgment is gold-tier). Legacy violators migrate on next touch.
-17a. **Bronze is RAW, byte-for-byte; parquet is a SILVER format** — parquet under `bronze/` coerces at
-    ingest and the raw feed is unrecoverable (bucket-policy deny live on opal-data-assets).
-17b. **Medallion = four tiers, one home each:** bronze+silver `opal-data-assets`; gold per-product/firm
-    bucket WITH its code; platinum serving `opal-data-portal-v2/platinum/` — serving is its OWN tier; gold
-    is parquet; platinum publishers are the only JSON producers. ⛔ Direction ratified, MIGRATION NOT
-    AUTHORIZED; product-vs-firm shape is Andrew's per-case call. `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
-15. **Every gold/silver/bronze `.py` begins `from __future__ import annotations`** (gate fires on touch;
-    untouched legacy uncovered).
-
-## 8. REFERENCE
-
-**Deployment + cloud-ops rules live in the `/cloud-ops` skill** (rules 4,5,6,8,9,11,12,18 — numbers
-unchanged; 1,2,3,7,10 deleted as unenforced restatements).
-
-19. **Portal main worktree stays on `DEV`, always** — found on PROD → checkout DEV before any portal work.
-    Promotes: the `/prod-deploy` skill (DT lane).
-23. **Every SES send uses `opalinvest.dev`** (DKIM+DMARC). `opalinvest.com` = unauthenticated, EOP
-    quarantines nondeterministically. ✋ **`opalcapital.com` is NOT OUR DOMAIN — never send/cert/build on
-    it.** `memory/feedback_ses_sender_opalinvest_dev_standard.md`.
-25. **Close-out predicate = DIRECTIVES.yaml MEMBERSHIP, not age** (Andrew-direct 2026-08-25). 90d survives
-    as the dormancy default for claimed things; exceptions DECLARE their kind (LONG-TTL-LIVE vs
-    CLOSED-PERIOD-IMMUTABLE — opposite remedies). ⛔ Dormant is not a deletion warrant; check for a
-    successor first (abandoned vs key-migrated take opposite actions). Annex §25.
-26. **The apply runs on the device that owns the work — never ferry an apply across fabrics.** Resolve the
-    terraform binary per device. Owning the apply owns NEVER-2's completion obligation. `/cloud-ops`.
-
 ## Agent Autonomy
 
 **Do NOT ask permission** to read/write/build/test/commit/push CLOUD-DEV/run scripts/call Opal-owned APIs.
@@ -188,31 +166,6 @@ discriminator the scheduled run exists to produce — name that evidence or the 
     act this turn said it would do that it has not done?"* — yes + unblocked → do it, report after.
     Ending on a report is CORRECT only when the next act is blocked/gated/out-of-lane — SAY WHICH. Cost
     zero: the rule reorders a turn. `LD-0461`.
-
-## Compiler Tools — situation → command
-
-Catalog: `org/modules/graph/graph-call-manifest.yaml`. Unknown tool → `comp-which "<question>"`.
-| Situation | Command |
-|---|---|
-| grep/find the repo | `comp-find <pat>` (`-i` for any census; bands; never through `head`) |
-| pipeline first contact | `comp-estate <name>` (⚠ `served:` mixes live + snapshot — ground on the live primitive) |
-| editing a gold script | `comp-pipescript io [script] --pipeline <tree>` (flag REQUIRED) |
-| running a gold script | `comp-pipescript deployed [script]` |
-| ad-hoc run post-steps | `comp-pipescript postdeps [script] --firm <bd\|inf\|cot\|mdpf>` (flagless defaults bd) |
-| cross-layer graph | `comp-kuzu "MATCH ..."` (read the header) |
-| gold done, signal AE | `comp-validate [script] --artifact <f>` (`NO_CONFIG`/`ZERO_CHECKS` = never signal SAFE) |
-| blast radius | `comp-blast [fn]` · portal component: `comp-transform schema-check` · 4xx: `comp-routes behaviors` |
-| new boto3 / iam.tf | `comp-iam service [lambda]` — necessary, NOT sufficient (Rule 22a) |
-
-⚠ **A firm-partitioned absence verdict NAMES THE TREE IT SEARCHED** — a 404 in the wrong bucket returns a
-clean, confident zero.
-
-## Code Quality
-
-**THE BUILD LADDER — new code is the LAST resort, in order:** (1) YAGNI; (2) the estate already has it —
-`comp-which` for code, `comp-estate --layers/--definitions` for infra + ratified terms; (3) stdlib;
-(4) native platform feature; (5) already-installed dependency; (6) one line; (7) only then the MINIMUM
-code that works. **No non-ASCII in production code/logs/AWS** — use `OK:`/`WARN:`/`ERROR:`/`SKIP:`/`BLOCKED:`.
 
 ## Detailed Documentation
 
