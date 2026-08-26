@@ -129,8 +129,65 @@ back-fit a criterion to a result.
 
 ---
 
-## 6. NOT IN SCOPE OF THIS READ
+## 6. ~~NOT IN SCOPE OF THIS READ~~ — **SUPERSEDED, see AMENDMENT 2**
 
-The **SERVE decision** on the corrected ~$44.6M split is **Andrew's** and is open at him. **A green
+~~The **SERVE decision** on the corrected ~$44.6M split is **Andrew's** and is open at him. **A green
 A9 is the day's acceptance and is not authorization to serve.** I will not treat a pass as a release
-signal and will say so in the verdict itself.
+signal and will say so in the verdict itself.~~
+
+**Struck 2026-08-26 ~18:12Z. Andrew's 18:10Z conditional-YES reverses it — see below. Preserved
+struck rather than deleted, because a reader who saw the original must be able to tell it was
+overturned rather than never written.**
+
+---
+
+## AMENDMENT 2 — 2026-08-26 ~18:12Z: THE STAKES CHANGED, THE ARMS DO NOT LOOSEN
+
+**Trigger:** Andrew-direct 18:10Z @`666fe25b0c`, relayed `1.0.0_SA_CTO` 72923. **SERVE is
+CONDITIONAL-YES:** if tonight's apply + grade read GREEN on the pre-registered protocol, the
+**08-27 13:30Z fire SERVES the corrected split** — Models +$43.68M incl. Fixed Income, SMAs/DIVZ
+$1.39M in `meta.sma_l0`, Client - Opal Supervised ~$1.48M. **Not green → nothing serves and the fork
+returns to him.**
+
+**STATE AT AMENDMENT:** lambda still `15:29:34Z` / `3/897ecG...`. Apply still not landed. Written
+before the result, as both prior versions were.
+
+### ⛔ WHAT THIS DOES TO THIS BAR
+
+**§6 said a green A9 is not a release signal. That is now FALSE: a green grade IS the serve trigger.**
+My verdict moves from *the day's acceptance* to **the gate on a client-facing $43.68M re-attribution
+that serves tomorrow.**
+
+This is Rule 22's *"SIZE BY THE CLAIM YOUR WORK FEEDS, not only the act in front of you — a cheap act
+can feed an expensive claim."* The act is unchanged; the error-eater moved from **me/the record** to
+**the world**. So DISCRIMINATION now binds at full strength, and it already did in this bar's design.
+
+### THE ARMS ARE UNCHANGED — AND THAT IS THE POINT, NOT AN OVERSIGHT
+
+I am **not** adding criteria because the stakes rose. Andrew's own stated condition —
+*vintage moves both instruments; delta `0.0100` present + `43676557.1200` absent PRIMARY; 12/12
+secondary; both A5 grains placed and sized* — **is the protocol already written here and in
+`0.4.0_DS_ClientPlatform~T`'s 72813.** The bar was sized correctly when it was cheap; a bar that
+needs tightening once it matters was never a bar.
+⛔ **Adding an arm now would also be un-pre-registerable** — invented after the sovereign attached
+consequences to the outcome, which is the same defect as tuning to a result, one step removed.
+
+### WHAT I RE-CHECKED RATHER THAN ASSUMED, AND IT CAME BACK BENIGN
+
+A serving run means the artifacts reach consumers, so I asked what is **NEW on the served plane**:
+- `meta.sma_l0` is a new meta key → **additive**; unknown-key addition is not the estate's portal
+  failure mode (`MISSING = runtime undefined` is, and that is the opposite direction).
+- `Client - Opal Supervised` — **measured 0 occurrences in the served artifact today.** The segment
+  is NEW, not changed. **So the $1.39M re-bucket cannot move a number any consumer is displaying,
+  because nothing is displaying it yet.**
+>> **NO EXISTING SERVED VALUE IS OVERWRITTEN BY THIS CHANGE. Both affected structures are new to the
+served plane.** That is why the raised stakes do not require a new consumer-side arm — checked, not
+assumed. <<
+
+### BINDING, UNCHANGED AND NOW LOAD-BEARING
+
+`COULD-NOT-VERIFY` if the vintage does not move on **both** instruments. **Under a conditional-YES,
+COULD-NOT-VERIFY is NOT-GREEN, and not-green means nothing serves.** I will state that consequence
+explicitly in the verdict so no reader has to derive it — and I will not soften a could-not-verify
+into a pass because a serve is waiting on it. **That is precisely the pressure this clause was
+written, at zero stakes, to survive.**
