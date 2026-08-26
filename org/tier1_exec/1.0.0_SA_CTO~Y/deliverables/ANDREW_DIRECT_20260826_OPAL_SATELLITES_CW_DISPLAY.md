@@ -81,6 +81,21 @@ Breakdown derives client-side from the already-served models payload by the exis
 arithmetic (POSN_CUSTOM.001). The "Opal Conservative Growth" → LT alias must be added to the
 display-name alias map when built.
 
+## /open-calls rulings (Andrew-direct, ~22:1xZ, verbatim)
+
+> "Call 1 yes approved. Call 2, we should be able to get these weights directly from the Rebalancing
+> pipelines via the weights that they literally display there. These weights should provide the basis
+> for the various "Characteristics" and "Performance" and "Weights" calculations that will be
+> required to display throughout the rest of the page for each Satellite."
+
+**Effect:** (1) the build registers **D4/ETFS_POSITIONING-adjacent** (Call 1, option (a) approved) —
+registration + stage-2 PRD executed by `1.0.0_SA_CTO~Y` same turn, stage-3 decomp to `2.0.0_SA_COO`.
+(2) **The satellite→model weights are MEASURED FROM THE REBALANCING PIPELINES' own displayed
+weights — never hand-frozen from the thread images and not waiting on a Manav/Yang confirm.** Those
+weights are the single basis for every per-satellite Characteristics / Performance / Weights
+calculation across the page. The image-6 table above is hereby demoted to a cross-check expectation;
+the rebalancer surface is the source of truth.
+
 ## Disposition
 
 `1.0.0_SA_CTO~Y` produced placement options + a rec for discussion with Andrew (this session);
