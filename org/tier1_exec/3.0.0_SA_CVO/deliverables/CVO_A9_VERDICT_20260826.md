@@ -157,6 +157,58 @@ deliberate touch of the fold, alongside the five-of-seven summary-counter defect
 
 ---
 
+---
+
+# FINAL CVO VERDICT — 2026-08-26 ~20:32Z: **A9 MET.** The bar is satisfied.
+
+Graded against `e4b4966fc3` + amendments `835ee813e5` / `b6be686905` / `970f128bba` / `5a536a1efb`
+/ `08e1b8dff9` — **every one committed before the result it governs.**
+Subject run: `0.4.0_DS_ClientPlatform~T` fired **20:27:07Z**, after the (b) bundle apply at
+**20:21:10Z**.
+
+| arm | verdict | instrument |
+|---|---|---|
+| **1 STATE** — vintage moved on BOTH | **PASS** | **MINE.** Measured at 20:28:07Z: `20:21:10Z` / `57V6D/ZNiAGSKBe2UkJ33aevjHDCLj0HNRphN//+iKg=`, third distinct vintage today. **`COULD-NOT-VERIFY` does not fire.** |
+| **2 GRAIN** — run post-dates apply | **PASS** | run 20:27:07Z > apply 20:21:10Z |
+| **4 DISCRIMINATION (PRIMARY)** | **PASS** | `delta = 0.0100` PRESENT; `43676557.1200` **0 occurrences**. The gate flipped on the SAME comparison that failed at 43,676,557.12. |
+| **3 COVERAGE** — `errors{}` empty | **PASS** | `errors=none`; **`FATAL:` lines counted directly over 717 log lines = 0**, NOT read off the 5-of-7 summary counter |
+| **A5a / A5a' / A5b** | **MET** | $2,256,694.98 / 3 accts · $1,476,313.07 / 2 · $1,393,065.98 / 1 — from the LAMBDA's run, matching the ratified set to the cent |
+
+**BUNDLE CONTENT VERIFIED AT MY OWN HAND** (`1b96f70ad3`): `GLOBAL_MODEL_KEYS` carries
+`+ opal_fixed_income`; `ModelEntry("opal_fixed_income"` count **1**; `BLEND_MODEL_KEYS` predicate
+**tightened** to `model_id is None and eclipse_id is not None`. Negative control at pre-fix
+`48c473caa1`: old tuple, ModelEntry count **0**.
+
+## ⛔ THE INSTRUMENT TRAP I WALKED INTO AND CAUGHT — RECORD IT, IT WILL RECUR
+
+Checking whether the new bundle carried the fix, I used **COMMIT ANCESTRY**. All four fix commits
+read **NOT ancestor** of `1b96f70ad3`, **with a passing positive control** (`530ba66971` IS an
+ancestor, so the test could say yes).
+
+>> **THAT WOULD HAVE PRODUCED A CONFIDENT, WELL-CONTROLLED "THE FIX IS NOT DEPLOYED" AT 20:28Z WITH
+A SERVE ARMED.** <<
+
+**These are EPHEMERAL BUILD PINS** — *"running vintage + specific files ONLY. Not for merge."* The
+FILES are cherry-picked in; the COMMITS are legitimately not ancestors. **Ancestry is the right
+instrument for a merge-based pin and STRUCTURALLY WRONG for this one**, and the positive control
+passing is exactly what made it persuasive.
+**Rule 22a's code-currency trap, one axis over: never resolve deployment by FILENAME — and never
+resolve a CHERRY-PICKED build by ANCESTRY. Read the content.**
+
+## WHAT THIS VERDICT IS NOT
+
+**It is the DAY'S acceptance. It is NOT production acceptance and NOT a serve authorization.** Per
+Andrew's 20:15Z terms the **13:30Z scheduled fire remains the acceptance**; tonight's greens are
+**decision evidence, never production evidence**. Arm (a) is armed: each scope serves tomorrow IFF
+its own gates pass, and **anything not green refuses loudly and stays stale.**
+
+⚠ **CARRIED INTO TOMORROW:** `mdpf_aggregate_aua.py` remains at the OLD vintage — the pin carries
+three files and that is not one. `:699/:703/:1124` are live at the packaged vintage, **contained by
+`_isolated`** (`BaseException`, names `SystemExit`, re-raises only `KeyboardInterrupt`) ->
+`manifest["errors"]` -> `ok = False`. **The chain survives; a fire is not necessarily clean.**
+
+---
+
 ## THE GATE REFUSING IS THE SYSTEM WORKING
 
 A composition identity caught a real inconsistency **before it served.** Had A9 read 12/12 with this
