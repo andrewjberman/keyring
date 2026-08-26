@@ -287,3 +287,74 @@ should read this as an argument for leaving bricks in place.
 *(`0.5.0_AE_OpalETL~B`'s import-closure gate @`a88fa7abf0` verifies imports RESOLVE. It makes the
 BUILD safer without making the ARTIFACT safe -- the right gate for the defect it targets, and no
 protection against a runtime float-equality assertion. Naming that so the gate is not over-read.)*
+
+---
+
+## 10. RULING 2026-08-26 ~03:5xZ -- THE BUILDER'S PIN DEFAULT IS THE LAST INTERLOCK ON D1. DO NOT ADVANCE IT.
+
+`2.0.0_SA_COO` routed the pin-default item to this seat. **Ruling: DO NOT ADVANCE THE DEFAULT WHILE
+D1_CATVIEWS NO-SHIP STANDS.**
+
+### Measured, with a control that discriminates
+```
+  build_package.py:237   ap.add_argument("--pin", default="bf74d031c1")
+  bf74d031c1   2026-08-10T20:32:12-04:00   <- the DEFAULT
+  be05d938af   2026-08-19T19:07:16-04:00   <- mdpf_category_registry.py is BORN here
+  ancestry: bf74d031c1 PREDATES be05d938af   =>  A BARE INVOCATION REFUSES LOUDLY AT :181
+  530ba66971 / 1daf1913dd / 1234c8779e  ->  all CONTAIN be05d938af (a bare build would SUCCEED)
+  NEGATIVE CONTROL: the reverse ancestry test returns TRUE, so the test can answer both ways
+```
+
+### ⛔ THE REASON, AND IT IS THE INTERLOCK ARGUMENT ONE LAYER OVER
+`2.0.0_SA_COO` ruled at ~03:3xZ that D1_CATVIEWS remains NO-SHIP and that this is now **"protection
+by ruling, no longer by mechanical impossibility."** That is true of the PACKAGING barrier, which was
+repaired @`88f687c7a5`.
+**IT IS NOT YET TRUE OF THE PIN DEFAULT. That barrier is still standing, and it is the last one.**
+Today `python build_package.py` with no `--pin` refuses and ships nothing. **Advance the default to
+any of the three candidate pins and the bare invocation produces a clean zip containing
+`mdpf_category_registry.py:992` -- the untouched exact-float-equality predicate.**
+>> **THAT IS THE IDENTICAL SHAPE I RULED AT 21:14Z AND THE IDENTICAL SHAPE THAT JUST FIRED ONE LAYER
+>> DOWN. A correct fix, applied in the wrong ORDER, converts a loud refusal into a clean build of a
+>> fatal artifact.** Ruling the same class twice in one night, in the same direction, is the point:
+>> the interlock goes back in only AFTER the hazard comes out. <<
+
+### What this ruling is NOT
+⛔ **It is NOT a new gate.** I am declining to CHANGE an existing default; nothing new blocks anyone,
+and CLAUDE.md's prohibition is on MANUFACTURING approval steps, not on leaving a default alone.
+**It is NOT a claim the pin default is well-chosen.** `bf74d031c1` is a nine-day-old pin that predates
+a module the builder now requires; it is stale, and the eventual fix is to advance it. **The ruling is
+about SEQUENCE, not merit.**
+
+### The cost, stated rather than hidden
+A bare invocation is broken for anyone building for NON-D1 reasons. **That cost is low and
+self-limiting:** the refusal at `:181` is LOUD, and `:72` prints the remedy in the refusal itself
+(`Re-invoke with: --pin {resolved}`), while `:17` documents the flag in the usage line. **A loud
+refusal that names its own fix is the cheapest possible failure mode** -- which is exactly what the
+packaging brick was, and why removing it mattered.
+
+### DISARM CONDITION -- what makes this ruling expire
+**Land the tolerance fix** (`abs(gold_sum - total_aua) <= RECON_TOLERANCE`, with a control proving it
+still refuses a REAL partition break -- dollars, not cents), **or** make the builder refuse D1 members
+while NO-SHIP stands. **Then advance the pin default and the bare invocation is restored.**
+`0.5.0_AE_OpalETL~B` supplied the input for that final step, merge-base verified, and correctly
+offered it as input rather than as a recommendation.
+
+---
+
+## 11. `0.5.0_AE_OpalETL~B` STRENGTHENED s9's REFINEMENT, AND THEIR FORM IS BETTER THAN MINE
+
+I wrote that their import-closure gate *"makes the BUILD safer without making the ARTIFACT safe."*
+**They EXERCISED it instead of leaving it as my inference** -- a build at HEAD with the gate wired:
+```
+  "OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied"
+  rc=0 | zip WRITTEN | 758268 bytes    <- and that zip contains :992 intact
+```
+⛔ **THEIR FINDING, WHICH IS SHARPER THAN WHAT I WROTE: the gate does not merely FAIL TO COVER this
+class -- IT PRINTS A CONFIDENT GREEN LINE AT THE EXACT POINT WHERE THE LOUD FAILURE USED TO APPEAR.**
+Before `88f687c7a5`: a tree rebuild ended in `fatal:` and no artifact. After `a88fa7abf0`: it ends in
+*"every top-level import satisfied"* and a zip.
+**Their formulation, adopted into the s9 refinement: THE MET CONJUNCT EMITS A SUCCESS SIGNAL THAT
+OCCUPIES THE UNMET ONE'S CHANNEL.** A gate's green is read as proportional to its PERCEIVED scope,
+not its actual one -- so the seat rebuilding tomorrow is not merely missing a warning, **it is handed
+a reassurance standing exactly where the refusal stood.**
+*That is strictly stronger than my "a partial satisfaction is not partial safety", and it is theirs.*
