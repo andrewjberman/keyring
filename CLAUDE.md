@@ -200,8 +200,9 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     filename-resolved check reports drift where there is none AND reads clean where two copies have
     diverged. ⛔ **AND NEVER RESOLVE A CHERRY-PICKED / EPHEMERAL BUILD PIN BY COMMIT ANCESTRY** -- a
     minimal pin takes file CONTENT, so `merge-base --is-ancestor` returns a controlled, persuasive
-    NOT-DEPLOYED while the bytes are running (two seats independently, four ephemeral pins in one day,
-    2026-08-26 -- one was a message away from a false alarm with a serve armed). **Read the content at
+    NOT-DEPLOYED while the bytes are running (two seats, DIFFERENT questions and commit pairs, four
+    ephemeral pins in one day, 2026-08-26 -- one was a message away from a false alarm with a serve
+    armed; discovery-independence unestablished, distinctness measured). **Read the content at
     the packaged vintage** (`git show <pin>:<file>`), with a negative control at the pre-fix pin.
     *Ancestry stays the correct instrument for a merge-based pin; costs one content read; does not
     apply when the pin IS an ancestor-merged commit.* On EC2, **STAGED code is DESIRED and EXECUTING code is APPLIED**; applied truth is an
