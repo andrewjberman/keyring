@@ -53,6 +53,14 @@ graph_vintage kuzu_nessie_db@2902399899597701830 (edges snapshot 655703827546280
      verifier judgment.
    - Good-empty vs bad-empty (CCY-AC7 / DTX-AC2): evidence must name WHERE the lane looked and the
      search's DENOMINATOR. Unevidenced "nothing persists it" is indistinguishable from "did not look".
+   - **Census-instrument trap check on every ABSENCE row** (two traps measured in-wave, 2026-08-26):
+     (a) comp-find with a content pattern AND `--name` in one call scans 0 files — a 0-hits/0-scanned
+     evidence line is a sweep that never ran, not an absence (DT~X 72991 4-arm + COO~X 73004 5-arm;
+     `--files`/`--band`/`--limit` alongside `--name` are fine, COO~X 73050); (b) comp-keys prefix
+     displays 40 rows by default with the true total printed BELOW them — an S3 absence needs `--all`
+     or a full-pagination read (DT~X 73077: false-absence direction only, it can only hide keys).
+     Verification form: the absence evidence must carry a scanned/total denominator consistent with
+     the population it claims; a piped-rows count without the totals line is not a denominator.
 
 ## Expected passes (do NOT manufacture rework) — CTO~X 72796, adopted verbatim
 
