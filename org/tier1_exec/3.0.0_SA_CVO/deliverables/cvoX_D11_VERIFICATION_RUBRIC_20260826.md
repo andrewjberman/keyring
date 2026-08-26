@@ -205,6 +205,26 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   conforming answers where resolution fails. A precise part count in the manifest without minted
   identities behind it is the over-count-as-thoroughness failure.
 
+## WAVE 2 — verification bar (Andrew-ruled 2026-08-26 ~20:5xZ at the CTO~X terminal, via 73663)
+
+- **Scope: ALL 43 candidates, Andrew's word verbatim** ("Let's go through these anyway... all the
+  definitions of these things as they stand currently"). My 73651 scope adjudication is SUPERSEDED
+  and not operative — his word governs. The 33/10 measurement survives as decomp PRIORITISATION only.
+- **The dedup amendment SURVIVES on its own basis** (scope-independent — it is a fact about the
+  candidate list): the two spellings of c2_individuate.py are ONE subject; COO~X accepted it as
+  binding on any wave-2 decomp (73658 s.1) before the scope ruling and nothing in the ruling
+  touches it. Cert check when the decomp routes.
+- **Contract: SUBSTRATE_CARD.v2.schema.json** — four constraints v1 lacked: joinable_ref {id,note};
+  basis_by_field + FLOOR (scalar = weakest claim across fields); materializer_standing (field, not
+  prose); forward_disposition.
+- **forward_disposition rules (the word "after" is the design):** born UNDECIDED · OPTIONAL at top
+  level — ABSENT on a wave-2 card is CONFORMING, not a gap · **a CARDING lane that FILLS it is OUT
+  OF SPEC** (set_by must not be the carding lane; dispositioning is a second pass with a separate
+  owner, whose identity is Andrew's to say) · undecided never defaults to keep because a thing
+  currently runs.
+- Naming hygiene noted: `forward_disposition` not `disposition` (that token already means residue
+  classification in the phase-B reconcile — census run before minting, 0 collisions).
+
 ## Standing context
 
 - nerves_resolve is the worked REFERENCE card (CTO~X's, pre-wave vintage): not a wave member, not
