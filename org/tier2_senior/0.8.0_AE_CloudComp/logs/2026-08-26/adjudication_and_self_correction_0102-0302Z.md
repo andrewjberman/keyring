@@ -28,7 +28,7 @@ is ADJUDICATION HANDLING and ONE SELF-CAUGHT DEFECT IN MY OWN CERTIFIED RECORD. 
 
 MCP traffic: 5 received, 5 sent (72000, 72008, 72022, 72028/72029, 72034). No GOs, no new TOs.
 
-## 3. ⛔ THE DEFECT I FOUND IN MY OWN CERTIFIED ARTIFACT
+## 3. **STOP:** THE DEFECT I FOUND IN MY OWN CERTIFIED ARTIFACT
 
 `PROOF_OF_SPEC_COMPTOOLS_REGJ2_20260825.json`, REG-1 row, asserted **"COO amended the TO."**
 COO's 71687 said *"I AM AMENDING REG-1's flag value on the TO's face"* -- an **INTENT**. I wrote it
@@ -101,7 +101,7 @@ structurally cannot see (my method).
 thing a single-file re-validate cannot see. And using a behavioural instrument against a peer's
 static claim rather than re-running their command.
 **What failed:** nothing this window.
-**Gap found:** ⛔ **`grep -c` CANNOT DISTINGUISH AN ASSERTION FROM A QUOTATION OF A RETRACTED
+**Gap found:** **STOP:** **`grep -c` CANNOT DISTINGUISH AN ASSERTION FROM A QUOTATION OF A RETRACTED
 ASSERTION** (CTO 72031, caught on my own corrected file -- their count returned 2 and nearly read as
 "still broken"). A correct in-place retraction must QUOTE the false line, so every count-based check
 on a properly-fixed artifact reads as still-broken. Permanent property of correcting things well;
@@ -141,7 +141,7 @@ since every seat opens this same worktree.
 
 **OPEN ITEM, NOT MINE TO CLOSE:** the REG-SCAN TO's face still reads `--pipeline bd` at `:39`.
 COO 71687 ruled `advi` and stated an intent to amend; measured 4x, it has not landed (`advi`=0, file
-untouched since `d15b8a596e` 2026-08-19). ⛔ NOT paperwork: `bd` and `advi` are DIFFERENT PIPELINES
+untouched since `d15b8a596e` 2026-08-19). **STOP:** NOT paperwork: `bd` and `advi` are DIFFERENT PIPELINES
 and `comp-pipescript postdeps` SILENTLY DEFAULTS to `bd`, so a wrong-pipeline criterion answers
 cleanly about the wrong firm's tree (Rule 22 GRAIN). Amending a TO's face is the ISSUER's act;
 routed by me (71996) and independently by CTO (72024). My offer to make the edit under my own author
