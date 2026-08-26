@@ -173,3 +173,64 @@ seat. 4 is RULED and stands. **5 now has a durable carrier**: `2.0.0_SA_COO` cut
 this box shares this worktree (`spawn-agent.ps1` performs NO git operation; 0 matches for
 `git clone|pull|fetch` against a FIRING control of 4 on `$ws`), **so the carrier is visible to
 tomorrow's seat unpushed.** The 13:30Z acceptance read remains this seat's.
+
+---
+
+## 8. IMPORT-HEALTH: THIRD INSTANCE, 2026-08-26 ~00:5xZ -- AND IT IS NOT A PACKAGING GAP
+
+Item 6's ruling was written off TWO instances, both of them a MODULE MISSING FROM A PACKAGE.
+`1.0.0_SA_CTO~X` surfaced a third (71958) and **it is the sharpest of the three, because nothing was
+ever absent.** globgrph item 5 -- the derive calling the C2/C3.i composition, in source since
+`627186582f` (2026-08-07) -- **has never once imported in the environment it was written for.**
+
+```
+  File "/app/derive_runner.py", line 1385, in <module>
+      _APP.parents[2] / "org" / "tier1_exec" / "3.0.0_SA_CVO"
+  IndexError: 2          -> task exit 1, 7 log lines, ZERO stages run
+```
+`_APP` is `/app` in-image, which has exactly ONE parent. In the repo the same expression is CORRECT
+(`infra/aws/globgrph/` has 3+ parents), **so every local run passed.** Image last built 2026-07-19;
+the feature is 19 days younger than the image meant to run it.
+
+⛔ **THE EXPRESSION IS EVALUATED AT MODULE IMPORT, so it never reaches the fail-soft guard inside
+`_compose_c2c3_live()` 180 lines below. THAT GUARD WAS WRITTEN FOR EXACTLY THIS CLASS AND SITS ONE
+SCOPE TOO DEEP TO CATCH IT -- an import-time expression outran its own safety net.**
+
+### Why this instance strengthens the ruling rather than amending it
+
+The ruling's oracle is **THE PACKAGED ARTIFACT IMPORTED AND EXERCISED**. That wording turns out to be
+load-bearing in a way the first two instances could not demonstrate: **a cell scoped to *"is every
+module present in the package"* would PASS here.** Every module was present. What failed was the
+artifact's own path resolution in its own environment, and only IMPORTING IT THERE reveals that.
+>> **Two instances taught the rule; the third proved the WORDING.** Had the ruling been written to the
+>> obvious symptom -- missing modules -- it would have been three-for-three on instances and would
+>> have missed this one entirely. <<
+
+### And the detector shipped in the same commit as the feature
+
+`_compose_c2c3_live()` carries a four-way WARN taxonomy (`C2C3_COMPOSE_UNAVAILABLE|_SKIPPED|_FAILED|
+_MALFORMED`) plus `C2C3_INSTANCE_GRAIN_ABSENT`, authored precisely so that *"no instance layer"* could
+never be mistaken for *"composition ran and found none"*. **ZERO of those lines exist in 36h of logs
+-- because the code that prints them is the code that is not deployed.**
+⛔ **THE ALARM AND ITS SUBJECT WERE ONE COMMIT, SO THE SILENCE IS TOTAL AND READS AS HEALTH.** This is
+the anti-correlation family at its purest: the more completely the feature failed to deploy, the more
+perfectly clean its own telemetry looked. Rule 22a's *an expected log's ABSENCE is evidence too* is
+what caught it.
+
+### The verification that was correct and one seam away
+
+`3.0.0_SA_CVO`'s container port check @`a4986d7ba5` verified the COMPOSITION MODULES run standalone
+with no repo tree above them, driven by an external reader. **That is TRUE, and `1.0.0_SA_CTO~X`
+re-derived it independently tonight** (6,207 C2 / 1,257 C3.i, `input_freshness: CURRENT`). The modules
+are fine. **The port was verified ONE SEAM AWAY from the defect** -- it never exercised
+`derive_runner`'s own module-level path resolution, which is the code that has to FIND those modules.
+A positive control with the right method and the wrong subject. Not a criticism of the check: it
+answered the question it was pointed at.
+
+**Fix @`ec0408628a` (LOCAL, rides integration), both arms with a FIRING negative control.** Ledger
+`org/critical_paths/change_management/20260826T0008Z_globgrph-derive-runner-c2c3-compose_deploy_completion.md`
+@`4af971d015` was OPEN at steps 7-8 when this was written; NEVER#6 makes an unclosed one a COO alarm,
+flagged to `1.0.0_SA_CTO~X` in 71969.
+
+**Three instances, three different packagers/environments, one day. The class is not rare and it is
+not a property of any one builder.**
