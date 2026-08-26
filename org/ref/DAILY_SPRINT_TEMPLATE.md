@@ -62,7 +62,10 @@ gap and the rule gives the eye a section break. **Andrew pastes this straight in
 > entire point of this is highlights"*
 
 **THE POINT OF THIS TEXT IS HIGHLIGHTS.** Every line answers *what did we DELIVER on this directive
-today* — a capability that now exists, a number that got better, a decision Andrew made.
+today* — a capability that now exists, a number that got better, **a decision that got made**
+(⚠ **the decision is a highlight; the DECIDER is not named — see THE THIRD RULE.** This line
+previously read *"a decision Andrew made"*, which instructs the writer to produce the exact phrasing
+the voice rule forbids. Amended 2026-08-26 for consistency, not as a new rule.)
 
 ⛔ **DO NOT LEAD WITH, AND MOSTLY DO NOT INCLUDE:**
 - **Commit counts, author counts, seat counts.** They measure typing, not delivery. **The fabric
