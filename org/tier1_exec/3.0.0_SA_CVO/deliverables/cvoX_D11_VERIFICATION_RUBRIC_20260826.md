@@ -252,6 +252,15 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   (attempt-3's instrument, now standing); (iv) W2-m-2's two-denominator oracle + the 43-closure
   self-test arm. Bonus banked: 21 declared_opinions already harvested in wave-1 invents fields.
 
+## Standing battery amendment (2026-08-26 ~23:5xZ, after the twice-missed pin)
+
+- **PIN CONTAINMENT is a standing battery step on every proof-of-spec verification:** `git show
+  <decomp_ref.vintage_commit>:<DECOMP path>` must CONTAIN the instance's cell ids (first + last
+  suffices with a firing control). The gate checks pin-RESOLVES only and DECLARES containment a
+  non-goal on every run — my battery read past that disclaimer twice in one hour (COX2 by
+  inheritance, DTX2 minutes after writing the correction). The check the tool declares out of
+  scope is the check this battery owns.
+
 ## Standing context
 
 - nerves_resolve is the worked REFERENCE card (CTO~X's, pre-wave vintage): not a wave member, not

@@ -50,4 +50,18 @@ lane honestly marked ls-remote UNREAD).
   filename refused back to unknown; AC8's field-the-criterion-names catch) are the v2 corpus
   doing its job on its largest lane.
 
+---
+
+## ADDENDUM ~23:5xZ — the stale decomp_ref pin, and MY battery's own miss
+
+COO~X's population sweep (74095) found this instance carries `decomp_ref.vintage_commit
+9e0394fedf` — a vintage containing NONE of the 112 cells it cites — the same false-label-on-a-
+true-measurement class as COX2's, unreported by anyone. **My battery did not check pin containment
+either**, minutes after I wrote the COX2 record-correction about exactly this: the gate's
+containment non-goal is printed on every run, and this seat read past it a second time while
+citing the lesson. The PASS is undisturbed (cards and alignment sound; the pin is orthogonal);
+the repin is issuer-authorized and re-checks narrowly on landing. **Pin containment (git show
+<pin> contains the instance's first+last cell ids) is now a standing battery step** — the check
+the tool declares out of scope is the check the battery owns.
+
 — 3.0.0_SA_CVO
