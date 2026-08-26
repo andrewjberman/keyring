@@ -196,14 +196,14 @@
             "composes": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/$defs/joinable_ref"
               },
               "description": "What it reuses. Empty array is a claim, not a gap."
             },
             "invents": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/$defs/joinable_ref"
               },
               "description": "What it originates. A resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge."
             },
@@ -415,9 +415,9 @@
             "projection_of": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/$defs/joinable_ref"
               },
-              "description": "THE GRAPH-OBJECT LINEAGE. What this artifact is derived FROM. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."
+              "description": "THE LINEAGE, AND THE MANIFEST CONSUMES IT. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."
             },
             "co_resident_stores": {
               "type": [
@@ -425,7 +425,7 @@
                 "null"
               ],
               "items": {
-                "type": "string"
+                "$ref": "#/$defs/joinable_ref"
               },
               "description": "Other stores holding the same or overlapping content -- the duplicate-store census."
             },
@@ -703,6 +703,31 @@
       "type": "string",
       "minLength": 1,
       "description": "Serial or role who owns the REMEDY for this row. Rule 24(iv): a stale cache, a missing id grammar and a silent failure mode are three remedies, three owners, three clocks. A card without owners is a wish list. 'UNOWNED' is a legal and loud value."
+    },
+    "joinable_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id"
+      ],
+      "description": "\u26d4 AN IDENTITY AND A DESCRIPTION ARE TWO FIELDS, NOT ONE STRING. v2 addition on 2.0.0_SA_COO~X's finding 73294: with these arrays typed as bare strings, lanes correctly wrote entries like 'kuzu_nessie_db -- EMBEDDED COUNT SURFACES ONLY (...)' -- individually more informative than a bare id, and jointly UNJOINABLE. Measured across 8 wave-1 cards: 51 raw entries, 43 distinct subjects, 6 subjects carrying MULTIPLE SPELLINGS, and a consumer taking them at face value would enumerate 51 parts where 43 exist -- AN OVER-COUNT THAT LOOKS LIKE THOROUGHNESS, the most dangerous shape a census error can take. NO LANE COULD HAVE AVOIDED IT WHILE FOLLOWING THE SCHEMA; the defect was the field type.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "THE JOINABLE IDENTITY, and nothing else. A bare identifier a consumer matches on WITHOUT parsing prose. No ' -- ', no parentheticals, no qualification. ENFORCED, not merely asked: an id containing ' -- ' or ' (' is REJECTED. Those are the exact two prose markers 2.0.0_SA_COO~X's dedup heuristic had to key on across 8 cards, which is the measurement that says they are the shapes that actually occur. Without this the fix separates the SLOTS and lets the prose walk straight back into the identity -- a fix that looks applied and is not.",
+          "not": {
+            "pattern": " -- | \\("
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The qualification that would otherwise be jammed into the id. Free prose, never joined on, and its presence is why the id can stay clean."
+        }
+      }
     }
   },
   "allOf": [
