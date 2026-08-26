@@ -11,8 +11,10 @@ Base persona: `org/ref/prompts/aws_engineer.md`
 
 1. **MCP tool call:** `register_agent("0.7.0_AE_CloudOps", summary="<session purpose>")`
 2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), ABSOLUTE path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 0.7.0_AE_CloudOps stream`
-
+   RESOLVE THE DRIVE PREFIX FIRST -- never a baked `/c/` (non-`auto` mount, died at reboot before, LD-0340; a wrong prefix arms NOTHING: the Monitor returns a task id and the `exit 127` death arrives as a separate notification while every reachability probe still reads healthy):
+   `PFX=$(test -d /cygdrive/c && echo /cygdrive/c || echo /c)`
+   `bash $PFX/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 0.7.0_AE_CloudOps stream`
+   (Canonical form + the full arm procedure: org/XXX.md Step 1b-C / the /watcher skill -- if this line and those disagree, THOSE govern.)
 **CORRECTED 2026-07-10 (CTO) -- this step previously ordered three BANNED things.**
 The old text ordered `inbox-watch.sh` under the Bash tool's `run_in_background`, via a relative bare path,
 in legacy (non-`stream`) mode. `org/XXX.md` Step 1b C bans all three. The Bash tool notifies only on **exit**
