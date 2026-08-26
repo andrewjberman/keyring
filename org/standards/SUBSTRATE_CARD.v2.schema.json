@@ -208,7 +208,12 @@
               "description": "What it originates. A resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
@@ -226,6 +231,9 @@
               ],
               "description": "THE GENERATOR-CURRENCY CLAIM, AS A FIELD A CONSUMER CAN REJECT ON. v2 ADDITION, on 2.0.0_SA_COO~X's finding 73259: their wave-1 ruling had to carry this as PROSE inside `evidence` because v1's blocks are additionalProperties:false and no field existed -- which is finding F-2's shape (a requirement living where a validator cannot branch on it) reproduced inside the remedy for a missing-currency claim. VOCABULARY REUSED, NOT RE-COINED: identical values and identical meaning to `generation.materializer_standing` in L0_GRAPH_SUBSTRATE_MANIFEST.schema.json, where the four-postulate x-rule24 record lives. Naming it `generator_currency` here and `materializer_standing` there would have been one concept in two id spaces -- this estate's most repeated defect, inside my own two contracts. 'not_applicable' covers a subject that no materializer produces.",
               "x-rule24-record-at": "L0_GRAPH_SUBSTRATE_MANIFEST.schema.json#/$defs/part/properties/generation/properties/materializer_standing -- legitimate reuse with the record at source, same pattern as authority_role and basis."
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
           },
           "allOf": [
@@ -256,6 +264,28 @@
                       "failure_is_loud"
                     ],
                     "description": "MECHANICAL as of v2. invocations_per_run is a COST figure, not a curiosity -- it is how a nested model implementation gets priced when the system is operated."
+                  }
+                }
+              }
+            },
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
                   }
                 }
               }
@@ -305,15 +335,47 @@
               "description": "Measured age of the current instance, if read."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
-          }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     },
@@ -384,15 +446,47 @@
               "description": "e.g. 'Iceberg table', 'JSON on disk', 'in-memory lru_cache only'."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
-          }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "location": {
           "type": "object",
@@ -430,15 +524,47 @@
               "description": "Other stores holding the same or overlapping content -- the duplicate-store census."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
-          }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     },
@@ -484,7 +610,12 @@
               "description": "What is KNOWN to be outside. Naming the exclusions is what makes a clean zero readable."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
@@ -498,6 +629,9 @@
                 "null"
               ],
               "description": "REQUIRED when denominator is null. 'Print the denominator' has exactly one lawful exception: a stated reason why the population is not countable. A bare null is the omission Rule 28 q5 exists to forbid."
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
           },
           "allOf": [
@@ -520,6 +654,28 @@
                   "denominator_absent_reason": {
                     "type": "string",
                     "minLength": 1
+                  }
+                }
+              }
+            },
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
                   }
                 }
               }
@@ -567,15 +723,47 @@
               "description": "Where the cross-space mapping is DECLARED, or null if it is only derivable by convention."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
-          }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "failure_mode": {
           "type": "object",
@@ -612,15 +800,47 @@
               "description": "Named routes by which the resource can answer confidently from a degraded state."
             },
             "basis": {
-              "$ref": "#/$defs/basis"
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
             },
             "evidence": {
               "$ref": "#/$defs/evidence"
             },
             "owner": {
               "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
             }
-          }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     },
@@ -728,6 +948,19 @@
           "description": "The qualification that would otherwise be jammed into the id. Free prose, never joined on, and its presence is why the id can stay clean."
         }
       }
+    },
+    "basis_by_field": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "enum": [
+          "measured",
+          "inferred",
+          "held",
+          "absent"
+        ]
+      },
+      "description": "PER-SUB-CLAIM PROVENANCE, keyed by the field it covers. v2 addition on the P1 class measured across TWO contracts and THREE instances by 0.4.0_DT_ClientPlatform~X, 0.8.0_AE_CloudComp~X and 2.0.0_SA_COO~X: one enum over a unit containing mixed-provenance parts forces a single value, and the truth survives only as prose in `evidence`, where no validator can branch on it. MEASURED CONSEQUENCE: 4 of 21 rows in ACCEPTED, VERIFIED cards read basis='measured' while carrying a HELD sub-claim. THE CARDS WERE NOT AT FAULT -- every one disclosed the held part in prose. The contract had nowhere to put the truth."
     }
   },
   "allOf": [
