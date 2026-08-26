@@ -1,110 +1,197 @@
-# Codex non-consuming inbox monitor
+# Codex inbox monitor with real turn wake
 
-This is the Codex counterpart to the Claude-oriented consuming stream watcher.
-It is a local session mechanism, not a standard Codex configuration setting.
+This is the Codex counterpart to Claude's harness-owned `/watcher`. It is a
+local Codex host mechanism, not a `config.toml` notification setting.
 
-## Components
+This contract is complete and repository-closed. Codex agents must not browse
+the web, consult external/OpenAI documentation, or infer missing setup steps.
+Use only the checked-in launcher, handoff, heartbeat, bridge, detector, and
+instructions named here. A missing or conflicting local behavior is a repo
+defect to report, not an invitation to research or improvise.
 
-- `codex-inbox-monitor.py` detects root-level `.md` arrivals and writes only
-  `[HARD-NUDGE] <filename>` to stdout. It repeats the line every 15 seconds
-  while the file remains unread. It cannot read, move, delete, or ACK.
-- A persistent Codex `functions.exec` bridge forwards each detector line with
-  `notify(line)` and immediately calls `yield_control()`.
-- `codex-agent-heartbeat.py` separately registers the full serial and maintains
-  broker/liveness heartbeats. It cancels the Claude-oriented broker poller so it
-  cannot compete with the detector for message delivery.
+## Required architecture
+
+```text
+non-consuming detector
+        |
+        v
+shared app-server turn bridge ----> active thread: turn/steer
+        |                           idle thread: turn/start
+        v
+interactive TUI on the same app-server
+        |
+        v
+agent reads exact file -> ACKs/begins -> acts -> moves exact file to read/
+```
+
+The shared app-server is load-bearing. On Windows, a bare `codex queue` starts
+a separate embedded app-server. It can persist a queued message, but it cannot
+wake a thread that is already idle in another embedded process. The canonical
+launcher therefore hosts both the TUI and bridge on one loopback WebSocket
+app-server.
 
 ## Canonical tool inventory
 
-Give this table to any Codex lane. Paths are workspace-relative and
-device-independent.
-
 | Reference | Classification | Codex use |
 |---|---|---|
-| `org/mcp/codex-inbox-monitor.py` | **CODEX — REQUIRED** | Non-consuming root-level `.md` detector; initial backlog + 15-second repeat nudges. |
-| `org/mcp/codex-agent-heartbeat.py` | **CODEX — REQUIRED** | Full-serial registration and independent broker heartbeat; disables the consuming broker poll task. |
-| `org/mcp/CODEX_INBOX_MONITOR.md` | **CODEX — REQUIRED STARTUP GUIDE** | Contains the persistent `functions.exec` `notify()`/`yield_control()` bridge and handling order. |
-| `AGENTS.md` | **CODEX — AUTO STARTUP POINTER** | Routes a newly opened Codex workspace session to `org/XXX.md` and this guide. |
-| `org/XXX.md` Step 1b, Codex runtime branch | **SHARED STARTUP AUTHORITY** | Identity/path/ACK rules and the Codex-vs-Claude branch. |
-| `org/mcp/server.py` | **DEPENDENCY — DO NOT START MANUALLY** | Registration/heartbeat implementation imported by the Codex companion. |
-| `org/mcp/broker.py` | **DEPENDENCY — DO NOT DUPLICATE** | SQLite-backed broker singleton used through `server.py`. |
-| `org/mcp/inbox-watch.sh` | **CLAUDE — FORBIDDEN FOR CODEX** | Consuming stream watcher; moves mail before emitting. |
-| `org/mcp/check-inbox.sh` | **CONSUMING — FORBIDDEN FOR CODEX MONITORING** | Consuming inbox check; not a Codex sweep. |
-| `org/mcp/agent-poller.py` | **CLAUDE LIFECYCLE — DO NOT USE FOR CODEX** | Generic MCP-server-PID poller whose documented inbox companion is consuming. |
-| `.claude/skills/watcher/SKILL.md` | **REFERENCE ONLY** | Explains Claude's harness-native Monitor behavior; not a Codex skill or launcher. |
+| `.tools/ajb2.ps1` / `ajb2` | **CODEX — REQUIRED ENTRY ALIAS** | Mirrors Claude's `ajb`: creates the exact-serial Windows Terminal tab, sets the color signal, and delegates to the seat launcher. |
+| `org/mcp/start-codex-seat.ps1` | **CODEX — REQUIRED LAUNCHER** | Owns the shared loopback app-server, TUI, turn bridge, and heartbeat lifecycle; applies the full-serial tab title and interactive color environment; and pins both app-server and TUI to `:danger-full-access` with approval policy `never`. |
+| `org/mcp/handoff-codex-seat.ps1` | **CODEX — MIGRATION HANDOFF** | Waits for one verified legacy `codex.exe` PID to exit, then resumes through the canonical launcher without inline-command quoting. |
+| `org/mcp/codex-inbox-turn-bridge.py` | **CODEX — REQUIRED TURN BRIDGE** | Converts detector output into `turn/steer` for an active turn or direct `turn/start` for an idle turn; same-host queue is a race fallback. |
+| `org/mcp/codex-inbox-monitor.py` | **CODEX — REQUIRED DETECTOR** | Emits root-level `[HARD-NUDGE] <filename>` without reading, moving, deleting, or ACKing mail. The turn bridge starts it; do not launch a duplicate. |
+| `org/mcp/codex-agent-heartbeat.py` | **CODEX — REQUIRED HEARTBEAT** | Registers the full serial and maintains independent broker/liveness heartbeats. The launcher starts it. |
+| `org/mcp/CODEX_INBOX_MONITOR.md` | **CODEX — REQUIRED STARTUP GUIDE** | This architecture and operating contract. |
+| `AGENTS.md` | **CODEX — AUTO STARTUP POINTER** | Routes every new Codex workspace session here. |
+| `org/XXX.md` Step 1b, Codex runtime branch | **SHARED STARTUP AUTHORITY** | Identity, path, ACK, and post-action handling rules. |
+| `org/mcp/server.py` -> `org/mcp/broker.py` | **DEPENDENCY — DO NOT START MANUALLY** | Registration and broker implementation used by the heartbeat companion. |
+| `org/mcp/inbox-watch.sh` | **CLAUDE — FORBIDDEN FOR CODEX** | Consuming stream watcher; moves mail before notification. |
+| `org/mcp/check-inbox.sh` | **CONSUMING — FORBIDDEN FOR CODEX MONITORING** | Consumes mail during a check. |
+| `org/mcp/agent-poller.py` | **CLAUDE LIFECYCLE — DO NOT USE FOR CODEX** | Generic poller whose inbox companion is consuming. |
+| `.claude/skills/watcher/SKILL.md` | **REFERENCE ONLY** | Documents Claude's harness-native Monitor behavior. |
 
-Never run `inbox-watch.sh <serial> stream`, `check-inbox.sh`, or another
-consuming watcher for the same serial while this mechanism is active.
+Never run `inbox-watch.sh ... stream`, `check-inbox.sh`, another
+`codex-inbox-monitor.py`, or the old `notify()`/`yield_control()` bridge for the
+same serial while the shared-host launcher is active.
 
-## Codex bridge
+Before its duplicate-process assertion, the launcher invokes the existing
+serial-scoped registration cleanup hook. That hook delegates to
+`.tools/kill-orphans --serial <FULL_SERIAL> --force`; the reaper recognizes the
+Codex heartbeat, turn bridge, and detector, including their native Windows
+Python processes. The final conflict scan remains an exact-serial assertion.
+Never replace this with an unscoped `kill-orphans --force` call.
 
-Run the heartbeat companion as one persistent command:
+## Startup
+
+For migration from an older embedded Codex session:
+
+1. Record `CODEX_THREAD_ID` and finish the current turn/session log.
+2. Stop the old same-serial watcher and heartbeat helpers.
+3. **Exit the old Codex TUI completely.** The TUI owns the thread's persistence
+   writer; stopping helper scripts does not release it.
+4. From a separate PowerShell prompt, use the handoff helper below. It waits
+   for the verified old `codex.exe` PID and launches only after it exits.
 
 ```powershell
-python -u org/mcp/codex-agent-heartbeat.py --serial '4.0.0_SA_CRO~A'
+powershell -NoExit -ExecutionPolicy Bypass `
+  -File org/mcp/handoff-codex-seat.ps1 `
+  -Serial '4.0.0_SA_CRO~A' `
+  -ThreadId '01xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' `
+  -LegacyCodexPid 12345
 ```
 
-Run the detector from a persistent `functions.exec` cell. The bridge logic is:
+Do not assemble an inline `-Command` string containing `$Host`; an outer
+PowerShell can expand it before the child starts. The checked-in handoff script
+sets its own title without a second parsing layer.
 
-```javascript
-const started = await tools.exec_command({
-  cmd: "python -u org/mcp/codex-inbox-monitor.py --serial '4.0.0_SA_CRO~A'",
-  shell: "powershell",
-  login: false,
-  workdir: WORKSPACE_ROOT,
-  yield_time_ms: 10000,
-});
-let state = started;
-let pending = "";
-while (state.session_id) {
-  pending += state.output || "";
-  const lines = pending.split(/\r?\n/);
-  pending = lines.pop() || "";
-  let nudged = false;
-  for (const line of lines) {
-    if (/^\[HARD-NUDGE\] [^\\/]+\.md$/i.test(line)) {
-      notify(line);
-      nudged = true;
-    }
-  }
-  if (nudged) yield_control();
-  state = await tools.write_stdin({session_id: state.session_id, yield_time_ms: 5000});
-}
+Launch through the `ajb2 <FULL_SERIAL>` alias. Mirroring the established Claude
+`ajb` path, `ajb2` creates a Windows Terminal tab with the exact serial as its
+creation title; the machine's `profiles.defaults.suppressApplicationTitle`
+setting keeps Codex's dynamic title from replacing it. The seat launcher also
+removes an inherited `NO_COLOR`, replaces
+`TERM=dumb` for the foreground TUI, and supplies standard color-capability
+variables. Those environment changes are scoped to the interactive Codex
+process and are restored when it exits.
+
+The launcher supplies the same permission-profile overrides to the shared
+app-server and to both foreground TUI paths (new thread and resumed thread):
+
+```powershell
+-c 'default_permissions=":danger-full-access"' `
+-c 'approval_policy="never"'
 ```
 
-The workspace root is supplied by the active Codex session; neither script
-contains a device-specific workspace path.
+This is intentionally the current permission-profile mechanism, not a legacy
+`sandbox_mode` override. It prevents a bridge-originated `turn/start` from
+falling back to managed `workspace-write` / `on-request` defaults. Permission
+state is snapshotted into a turn context, so changing `/permissions` cannot
+repair an already-active turn: exit and relaunch/resume through `ajb2`, then
+verify the first new `turn_context` records `approval_policy = never`,
+`sandbox_policy = danger-full-access`, and `permission_profile = disabled`.
 
-## Required handling order
+From the workspace root, launch a new Codex seat:
+
+```powershell
+ajb2 '4.0.0_SA_CRO~A'
+```
+
+To resume a known Codex thread on the shared host:
+
+```powershell
+ajb2 '4.0.0_SA_CRO~A' `
+  -ThreadId '01xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+```
+
+With `-ThreadId`, the launcher preflights `thread/resume` before starting the
+heartbeat, bridge, or replacement TUI. If the old TUI still owns the active
+writer, it stops with an explicit close-old-TUI message and cleans up the whole
+launcher-owned app-server process tree. Never work around the writer lock by
+starting another app-server or copying the rollout file.
+
+When `-ThreadId` is omitted, the bridge waits for the one loaded CLI thread the
+new remote TUI creates in this workspace and binds to it. Runtime logs are
+written under the ignored `.runtime/codex-seats/<serial>/` directory. Exiting
+the TUI stops only the launcher-owned app-server, bridge, detector, and
+heartbeat process trees, including CLI-shim descendants.
+
+Requirements:
+
+- Codex CLI with `app-server`, `--remote`, `turn/start`, `thread/queue/add`, `turn/steer`, and
+  thread runtime statuses. This implementation was built and tested against
+  `codex-cli 0.149.1`.
+- Python package `websockets` (version 16 is installed on the reference host).
+- A loopback WebSocket endpoint. The launcher never exposes a non-loopback
+  listener.
+
+## Delivery state machine
+
+For every exact detector line:
+
+1. Query `thread/read(includeTurns=true)` on the shared app-server.
+2. If `active`, steer the exact in-progress turn using its ID.
+3. If `idle`, call `turn/start` directly. This instantiates a model turn while
+   no prior turn is active.
+4. If `notLoaded`, resume the thread on the shared host, then call `turn/start`.
+5. If a non-steerable review/compact turn rejects steering, defer without
+   queueing; the detector retries after the active boundary.
+6. For the rare resume/start status race, keep at most one same-host queued
+   submission per `(serial, filename)`.
+7. Recheck the exact root-level file immediately before every start, steer, or
+   queue dispatch. A background cancellation task deletes all matching queued
+   submissions as soon as the file moves out of unread.
+8. At bridge startup, reconcile legacy queue state: delete every stale-file
+   nudge and collapse live-file duplicates to one.
+
+The prompt names only the detected filename and states the handling order. It
+does not include message contents; reading remains an explicit agent act.
+
+## Required agent handling order
 
 1. Read the exact filename from the canonical unread root.
 2. Treat a CRO Base message as immediate Go unless its body explicitly says hold.
-3. ACK and begin the order immediately.
+3. ACK by naming specific message content and begin immediately.
 4. Complete the required first action/handling.
-5. Move that exact file to `read/`.
+5. Move only that exact file into `read/`.
 
-The monitor never performs step 5. That mutation remains an explicit agent action.
+Neither detector nor bridge performs step 5.
 
-## Claude `/watcher` comparison and Codex boundary
+## Why the old bridge did not work
 
-Claude's immediate interruption comes from its harness-native persistent Monitor
-task. The consuming shell watcher is only the detector; it is not what starts a
-model turn. Codex `notify()` plus `yield_control()` can surface detector output at
-an active tool boundary, but the currently exposed Codex tools cannot create a
-new reasoning turn after the agent has yielded its final response.
-
-The repeat nudge closes a reliability gap: a transient notification or bridge
-restart cannot make a still-unread file disappear from attention. It does not
-claim to supply the missing dormant-turn wake primitive. Exact Claude parity
-requires a Codex host callback that resumes the agent when `notify()` fires (or
-an equivalent native monitor/automation trigger). Until then, every active turn
-must begin by sweeping the canonical unread root before doing other work.
+`notify()` plus `yield_control()` injects detector output at a tool boundary of
+an already-active model turn. After the agent yields its final response there
+is no model-side execution left to call either function, so it cannot create a
+new turn. The dormant-wake primitive belongs to the conversation host:
+`turn/start`; the same-host queue is retained only as a durable race fallback.
 
 ## Tests
 
 ```powershell
-python -m unittest org.mcp.tests.test_codex_inbox_monitor -v
+python -m unittest `
+  org.mcp.tests.test_codex_inbox_monitor `
+  org.mcp.tests.test_codex_inbox_turn_bridge -v
 ```
 
-The tests assert exact output, root-only matching, repeat nudges, and that the
-unread file still exists with identical content after every nudge.
+The detector tests prove exact output and non-consumption. The turn-bridge
+tests prove direct idle -> start, active -> steer, unloaded -> resume/start,
+single-entry race fallback, non-steerable deferral, exact-file cancellation,
+legacy duplicate collapse, and cancellation after a file move without another
+detector event.
