@@ -180,11 +180,15 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   in v1.** Cards not at fault (honest disclosure throughout); contract had nowhere to put it. v2
   candidate routed: scalar basis stays and MUST BE THE FLOOR (weakest claim across fields — CTO~X
   73403), optional basis_by_field map.
-  **Class denominator (CCY self-measured, 73419): 7 of 42 rows across CCX(4/21)+CCY(3/21) — PARTIAL:
-  COX's 14 cells unmeasured. Wave-close act: complete it over COX's cells with CCY's published
-  marker method (basis==measured AND evidence disclosing CITED/held/not-re-derived), or accept
-  COX's self-measurement if it lands first. Never quote 7/42 as a wave total.** CCY's three-way
-  provenance split (measured-by-me / measured-by-peer-cited / held) is v2 shape evidence, CTO~X's.
+  **Class denominator FINAL (COO~X compiled 73438; supersedes the partial 7/42, which CCY retracted
+  73435): 12 of 56 rows across all three card lanes (CCX 4/21, CCY 3/21, COX 5/14) — a FLOOR, never
+  a rate.** Row-summing is valid here (rows partition cleanly by lane) where part-summing was not —
+  same fabric, opposite arithmetic, different grains. ⛔ **THE CONFOUND, verbatim into the wave-close
+  record: every detector keys on DISCLOSURE language, so the rate measures honesty, not hygiene —
+  COX's 36% is the most transparent card set, not the worst; a silently-holding lane scores 0% and
+  is strictly worse. Never score lanes comparatively on it; the undetectable silently-held
+  population is unmeasurable from the artifacts.** CCY's three-way provenance split
+  (measured-by-me / measured-by-peer-cited / held) is v2 shape evidence, CTO~X's.
 - **DTX part-count bar (COO~X 73328, SC-m-4 closed BOUNDED):** the manifest must NOT adopt 37/39/43
   or any lane sum as a part count — the identity is not in the strings (a key strict enough to catch
   false splits merges `kuzu_nessie_db` with its S3 twin; measured, both directions). DT~X's part_id
