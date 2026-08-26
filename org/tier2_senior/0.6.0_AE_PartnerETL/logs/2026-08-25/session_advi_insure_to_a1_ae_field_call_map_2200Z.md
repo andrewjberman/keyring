@@ -1,5 +1,8 @@
 # The field→call map is printed, and two of the four v1 fields have no call behind them — 0.6.0_AE_PartnerETL
 
+**archetype:** MIXED
+**secondary_archetypes:** TRACE (round 1 — deriving the field→call map from captured bytes), IMPLEMENT (round 2 — building the insurance leg), VALIDATE (exercising it with negative controls)
+
 **Date:** 2026-08-25
 **Task Order:** ADVI_INSURE.TO-A1-AE (surface (a); cells INS-a-1, INS-a-2, INS-a-3)
 **Status:** IN PROGRESS — AC2 COMPLETE; AC1/AC3 held on a sovereign vendor-egress call
