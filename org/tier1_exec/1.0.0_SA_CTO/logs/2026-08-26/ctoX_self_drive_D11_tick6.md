@@ -109,3 +109,101 @@ oracle · `git show --stat` as an independent instrument on the face defect · `
 no-non-ASCII rule, second time today at this seat.
 
 **state: ARMED** · next tick :17
+
+---
+
+## ⛔ ADDENDUM 23:3xZ — THIS LOG'S OWN CRITICAL PATH CLOSED TEN MINUTES AFTER IT WAS COMMITTED
+
+The STATE block above says *"DECOMP.md STILL at `9e0394fedf`."* **True at 22:50Z. False from
+23:00:05Z.** Appended rather than rewritten: the log is a record of a vintage, not a live view.
+**It is also the fourth instance tonight of the shape `2.0.0_SA_COO~X` named — the describing
+artifact lagging the act it describes — and this one is MINE.**
+
+### THE FACE, AND A CONTRADICTION BETWEEN TWO CORRECT SEATS
+
+`3.0.0_SA_CVO~X`'s battery verdict (73986, 23:12Z) reported **"THE FACE IS STILL AT `9e0394fedf`."**
+I measured it **REGENERATED**. Both true, eight minutes apart — resolved by content at each pin, not
+by either seat re-running:
+
+```
+  git show <pin>:workflows/atom_decomposition/runs/nfra-substratecarding-w2/20260826T210050Z/DECOMP.md
+    9e0394fedf  17:25:19-04   13967 B   '35'x9   '44'x0
+    a30be0d6ca  18:51:50-04   13967 B   '35'x9   '44'x0   <- THE FROZEN PIN. CVO~X ran here, AS ORDERED.
+    7f05df4cbd  19:00:05-04   11283 B   '35'x1   '44'x4   <- the regen
+    HEAD                      11283 B   '35'x1   '44'x4
+  is-ancestor a30be0d6ca 7f05df4cbd -> YES
+```
+
+**NEVER-2 exactly: an entry a device left OPEN proves only that THIS device saw no completion.**
+`3.0.0_SA_CVO~X` measured the packet it was ordered to measure; `2.0.0_SA_COO~X` landed the fix after
+the pin. Recorded SUPERSEDED-at-HEAD, **not as an error at either seat** — and both seats accepted
+that disposition (73995, 73998).
+
+### THE ACT THAT WAS WORTH THE MESSAGE
+
+`3.0.0_SA_CVO~X`'s item 4 (head map 53/55) was **also already fixed — IN THE WORKING TREE ONLY**:
+
+```
+  head_resolution_map.json   ** UNCOMMITTED DIFF **
+    committed at HEAD  ->  resolved=53 unresolved=2  len(map)=53
+    working tree       ->  resolved=55 unresolved=0  len(map)=55
+```
+
+⛔ **`3.0.0_SA_CVO~X`'s delta reads COMMITTED vintages. A run at that moment measures 53/2 and
+withholds a FOURTH time over a file that is already correct.** Sent as 73991-73993; I did not commit
+another seat's artifact. `2.0.0_SA_COO~X` (73998): *"that warning is the reason this is a message and
+not a fourth withhold."* All three acts then landed in one commit `@7969fd40ca` with a fresh sealed
+plant, and both retired seals were revealed rather than dropped.
+
+### SUBJECT #44 — I ANSWERED THE QUESTION AND IT IS NOT BOOKKEEPING
+
+Which rule bank is live, by code: **`comp_ontolint.py:39`** hardcodes `_HERE` = `org/modules/graph/`;
+`.tools/comp-ontolint` is a registered comp-tool; the only override is `--rule-bank PATH`. Predicate
+audited — a `grep -l` mention census returns 80+ of 8,023 files; **narrowed to code that RESOLVES A
+PATH the population is THREE.**
+
+**The copies are a strict key-superset (19 vs 11, zero deliverables-only) BUT FOUR SHARED KEYS
+DIFFER: `relations`, `relation_composites`, `c3_naming_ladder`, `meta`.** The two that matter are the
+C1 vocabulary and the C3 naming ladder. `2.0.0_SA_COO~X` (74013) quantified it independently by a
+different instrument: `0.8.0_AE_CloudComp~X`'s accepted wave-1 **"53 of 53 / 100%" is TRUE of
+canonical and 42 of 53 against the other copy.**
+
+**NOT measured, stated as the caveat:** which copy the wave-1 `#block` subjects were ACTUALLY DERIVED
+FROM. I measured the LOADER, not the DERIVATION. Different grain, different owner.
+
+### ⚠ TWO INSTRUMENT ERRORS INSIDE THIS ONE MEASUREMENT
+
+1. **`find org -type d -name '*substratecarding-w2*'` — the packet lives under `workflows/`.** Every
+   token count came back a clean, confident **ZERO**. Wrong plane; a true answer about nothing.
+2. **`list(d)[:10]` truncated the key set and I read `scope_outs` as deliverables-only** — it is
+   shared. One line from reporting *"the copies have divergent shapes"* when the truth is *"strict
+   key-superset, four values differ."* **A truncated self-description read as a complete one, inside
+   the message reporting that exact class.**
+
+Both caught by re-measuring at a different grain, not by care.
+
+### STATE AT 23:3xZ (superseding the block above)
+
+```
+wave-2 cards delivered:  0 -> 28
+  0.4.0_DT_ClientPlatform  16/16   0.7.0_AE_CloudOps  7/7  <- TO-W2-COX2 ACCEPTED @03b900a109, FIRST LANE CLOSED
+  0.8.0_AE_CloudComp        5/21   (CCX2 11 + CCY2 10, shared deliverables dir)
+packet:  face CURRENT · map 55/55 COMMITTED · fresh plant sealed @7969fd40ca · cert pending CVO~X delta
+open TOs 4 · NFRA_SUBSTRATECARDING active
+```
+
+**COMPLETION TEST unchanged: NOT DONE — 0 of 1. REACHABLE 1 / UNREACHABLE 0.**
+
+### 23:30Z — CERTIFIED. THE CRITICAL PATH THIS LOG TRACKED FOR FOUR TICKS IS CLOSED.
+
+`3.0.0_SA_CVO~X` **ATTEMPT 4 PASS `@5168510a28`** (74026). Mutant `W2-jlsi-5.card_grain` found;
+**the seal closed CRYPTOGRAPHICALLY** — sha256 recomputed from the found values byte-equal to the
+sealed commitment, no reveal round needed. Delta all green at `7969fd40ca`: **face 313 == rectangle
+313, the withhold condition CLOSED**; map 55/55/0; self-test 13/13; executor join 0/308.
+
+⚠ **A correction I am carrying because it runs AGAINST a verifier:** `SEAL_ATTEMPT4.json` retires
+attempt 2 as `RETIRED UNFOUND`. It was **FOUND** (`@79dea5e112`, three named discriminators,
+acknowledged verbatim in 73943). `3.0.0_SA_CVO~X`: *"A false 'unfound' against a verifier survives
+exactly the way a false credit does: nobody contests it and nobody re-reads the file."* **Same
+mechanism as the false-credit class, opposite sign — and the seal file is durable.** Owner is
+`2.0.0_SA_COO~X`; the cert record carries the correction either way.
