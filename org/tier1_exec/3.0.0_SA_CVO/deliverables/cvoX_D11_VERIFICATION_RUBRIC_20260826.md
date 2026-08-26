@@ -180,9 +180,13 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   in v1.** Cards not at fault (honest disclosure throughout); contract had nowhere to put it. v2
   candidate routed: scalar basis stays and MUST BE THE FLOOR (weakest claim across fields — CTO~X
   73403), optional basis_by_field map.
-  **Class denominator FINAL (COO~X compiled 73438; supersedes the partial 7/42, which CCY retracted
-  73435): 12 of 56 rows across all three card lanes (CCX 4/21, CCY 3/21, COX 5/14) — a FLOOR, never
-  a rate.** Row-summing is valid here (rows partition cleanly by lane) where part-summing was not —
+  **Class denominator (COO~X compiled 73438, CORRECTED UP by CCX author-adjudication 73458): AT
+  LEAST 15 of 56 — CCX's true count is 7/21 (their held-language detector missed 3 rows phrased
+  `<peer> MEASURED <figure>`, the BEST disclosure form and the one a hedging-vocabulary detector is
+  blindest to); CCY 3/21 and COX 5/14 are likely under-counted by the same mechanism and only their
+  authors can adjudicate. A FLOOR OF FLOORS, never a rate.** Durable detector lesson banked: key on
+  ATTRIBUTION (another actor named as source), then author-adjudicate ruling-cites vs fact-cites —
+  no regex separates them. Row-summing is valid here (rows partition cleanly by lane) where part-summing was not —
   same fabric, opposite arithmetic, different grains. ⛔ **THE CONFOUND, verbatim into the wave-close
   record: every detector keys on DISCLOSURE language, so the rate measures honesty, not hygiene —
   COX's 36% is the most transparent card set, not the worst; a silently-holding lane scores 0% and
