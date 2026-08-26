@@ -68,7 +68,9 @@ the entire gate delta — which is what moves this from *a* cause to **the** cau
 | A2 | Opal Ultra Short-Term Income recovered | **$11,896,309.76** |
 | A3 | Opal Fixed Income recovered | **$8,442,396.91** |
 | A4 | **TOTAL recovered** | **$43,676,557.12** — the identity-gate delta, to the cent |
-| A5 | `Client - Opal Supervised` residual | **$2,869,379.04** |
+| ~~A5~~ | ~~`Client - Opal Supervised` residual~~ | ~~$2,869,379.04~~ **SUPERSEDED -- see A5a/A5b** |
+| **A5a** | `Client - Opal Supervised` (unallocated-weight portion) | **$1,476,313.07** |
+| **A5b** | `SMAs` (L0) -> `DIVZ` (L1) -- the Opal SMA sleeve | **$1,393,065.98** |
 | A6 | decomposed total | $147,047,720.63 -> **$190,724,277.75**, matching dim opal EXACTLY |
 | A7 | identity gate | **FAIL -> PASS** |
 | A8 | `by_model` key count | 5 -> **6** (gains `Fixed Income`) |
@@ -76,6 +78,27 @@ the entire gate delta — which is what moves this from *a* cause to **the** cau
 
 **Pre-registered before the edit is the whole point: a pass is then a prediction met, not a number
 tuned to.**
+
+---
+
+## 2a. AMENDMENT 2026-08-26 ~17:5xZ -- A5 SPLITS IN TWO ON A SOVEREIGN RULING
+
+**Andrew-direct 17:42/17:45Z (recorded by `1.0.0_SA_CTO` @9261c99991, relayed 72806).** Two things happened and only one of them changes a number:
+
+**(1) THE BASIS SURVIVED SOVEREIGN VERIFICATION.** He bet that ~$22M of the Anna accounts sat outside named Opal Models, then **looked at the accounts himself and withdrew his own bet** -- *"you have the correct approach... your estimate of 2.87m checks out."* The blend-weight arithmetic is confirmed at account level by the sovereign. **A1-A4 and A6-A8 are UNTOUCHED.**
+
+**(2) THE BUCKETING OF ONE SLEEVE WAS WRONG.** The `DIVZ SMA` sleeve in *9237 is an **OPAL SMA**. It buckets to **SMAs (L0) -> DIVZ (L1)**, NOT to `Client - Opal Supervised`. The original A5 and the landed re-cut `4e0410825e` both carry that $1,393,065.98 inside the residual label. **The prior classification of the sleeve as NON-Opal is the defect.**
+
+⛔ **A5a AND A5b ARE PRE-REGISTERED HERE BEFORE EITHER VALUE EXISTS** -- same discipline as A1-A9, and committed for the same reason: the message scrolls, the artifact persists.
+⚠ **A5a + A5b = $2,869,379.05 against the original A5's $2,869,379.04.** One cent, float. **Stated NOW so a 1c gap at grade time reads as a met prediction rather than a discrepancy someone has to chase.**
+
+⛔ **THESE ARE EXPECTATIONS TO BE CONFIRMED BY MEASUREMENT, NOT ASSUMED** (CTO's own condition). **A5b is a re-bucket BETWEEN TWO OPAL BUCKETS -- firm AUM does not move. If it moves, that is a finding, not a rounding story.**
+
+**THE BUCKETING IS NOW THREE-WAY AND COMPLETE ON HIS WORDS:** Opal Models -> Models (Primary/Custom) · Opal SMAs -> SMAs (by strategy) · remainder -> `Client - Opal Supervised`.
+
+**PRECEDENT, so this joins a bucket rather than minting one:** the served `by_model` union already carries `opal_div_sma` as a key on 49financial. Classify from that precedent and the D1 registry -- **never a predicate minted in this repair, and implement it as a ROUTING BRANCH, not a module-level dependency** (that instruction is what produced the import edge the first time).
+
+**SEQUENCING RULED (i) at 72819:** the apply was measured NOT LANDED (lambda still 15:29:34Z / `3/897ecG...`, and `0.6.2_AE_PartnerETL~A` had deliberately not opened a NEVER#6 ledger across the hold), so the DIVZ re-cut folds into the SAME pin and the bundle is applied ONCE.
 
 ⚠ **A5 CARRIES A CORRECTION, AND THE SUPERSEDED FIGURE MUST NOT BE USED.**
 `0.6.2_AE_PartnerETL~A` corrected itself at 72622 s.1: the residual is **$2,869,379.04**, NOT the
