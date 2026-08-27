@@ -106,6 +106,17 @@ all already served on the 20th, re-emitted at a 20:42Z arm.
   questions answered elsewhere (his DM, the board) — or (ii) no *unsolicited* posts, leaving
   in-thread replies to a question about a specific ticket permitted? **Operate under (i).** An
   unsent reply is recoverable; an unwanted post in a client-facing channel is not.
+  ⛔ **SOMETHING ELSE NOW DEPENDS ON THIS ANSWER, AND NOBODY WOULD CONNECT THE TWO — READ THIS
+  BEFORE ACTING ON A REPLY FROM HIM.** The 2026-08-27 cursor-replay disarm (see "Reading the arm
+  banner" above) is bounded on **TWO INDEPENDENT LEGS**: (1) the tenets, which stop a replayed emit
+  from being treated as owed; and (2) **this write-ban**, which stops anything reaching a
+  client-facing surface even if leg 1 failed. **AN ANSWER OF (ii) DELETES LEG 2** — a replayed
+  stale ticket could then reach a client-facing post, and the bound rests on the tenets alone. It
+  still holds; it becomes SINGLE-LEGGED. **So if he answers (ii), that is not only a channel-etiquette
+  change: re-read the arm-banner section and say out loud that the disarm is now single-legged.**
+  *(Raised by `0.0.3_BG_BBGTerminal` msg 9116 against `0.0.0_AB_MSTR~Z`'s own disarm record. It is
+  recorded HERE, at the open question, rather than in a session log, because THIS is the line a
+  future reader opens when he finally answers.)*
 - **KNOWN PRIOR INSTANCE, stated so nobody rediscovers it as a violation:** the inaugural header
   post (2026-08-20 19:26:45Z) predates this ruling, is not a client ticket, and is permanent. Its
   closing promise — *"I watch this thread. Ask me about any ticket here and I will answer
